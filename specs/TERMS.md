@@ -68,6 +68,11 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   `Projectivization.range_momentMap` (same module): `Set.range momentMap = stdSimplex ℝ (Fin (n + 1))`,
   `⊆` the normalisation and `⊇` the ray of `(√t₀, …, √tₙ)` (`sqrtVec`, `momentMap_mk_sqrtVec`). That is
   the moment polytope of *this* action, by direct computation.
+* **Also backed (2026-09-09, G13):** the `U(n+1)` moment map — `Projectivization.expectation H`, the
+  expectation value `⟪z, Hz⟫.re / ‖z‖²` on rays, is (up to the factor `-2`) the Hamiltonian of the
+  Schrödinger flow `exp(-itH)` for the Fubini–Study form
+  (`schrodingerField_isHamiltonianVectorField`, `Instances/ProjectiveSpaceSchrodingerFlow.lean`);
+  the torus moment map is its diagonal case (`schrodingerHamiltonian_neg_diagonal`).
 * **NOT established:** the Atiyah–Guillemin–Sternberg convexity theorem itself (the polytope of a
   general Hamiltonian torus action — here the simplex is exhibited, not deduced from convexity), and
   smoothness of the field as a section of the tangent bundle (G3). Marker: `TERM-SCOPE(MomentMap)`.
@@ -111,8 +116,14 @@ alarming and is not.
   `C^∞` energy, through the `0`-form API of `ExteriorDerivative.lean` (`zeroFormFamily`,
   `toFlat_mextDeriv_zeroFormFamily`: `d` of a `0`-form is its differential) and `d ∘ d = 0`. The
   converse is false and not stated: closed-not-exact is the flux obstruction below.
-  **NOT established:** existence of `X_H` from non-degeneracy (G2/G3), smoothness of `torusField` as
-  a section, and the arena statement `R-016`. Marker: `TERM-SCOPE(Hamiltonian)`.
+  **The Schrödinger flow is Hamiltonian (2026-09-09, G13):** ★★★
+  `Projectivization.schrodingerField_isHamiltonianVectorField`
+  (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceSchrodingerFlow.lean`) — for every Hermitian
+  `H`, the velocity field of `p ↦ exp(-itH) • p` on `ℂℙⁿ` (the corpus's `schrodingerUnitary`, proved to
+  be that velocity) satisfies `ι_X ω_FS = dH` with `H = -2 ⟨H⟩ = -2 ⟪z, Hz⟫.re / ‖z‖²`; the torus (G6) is
+  the diagonal case. This is the manifold form of the `U(n+1)` moment map.
+  **NOT established:** existence of `X_H` from non-degeneracy (G2/G3), smoothness of `torusField` or
+  `schrodingerField` as a section, and the arena statement `R-016`. Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,
   so no global generator exists). Retained deliberately for pin stability, with the correction at

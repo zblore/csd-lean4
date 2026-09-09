@@ -1,0 +1,444 @@
+/-
+Copyright (c) 2026 Zayn Blore. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Zayn Blore
+-/
+module
+
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
+public import CsdLean4.LF4.ManyToOneSchrodingerDerived
+
+/-!
+# The Schrödinger flow on `ℂℙⁿ` is Hamiltonian, with Hamiltonian `-2 ⟨H⟩`
+
+**TERM-SCOPE(Kahler)** **TERM-SCOPE(Hamiltonian)** **TERM-SCOPE(MomentMap)** — this module uses
+the *restricted* senses of these words; `specs/TERMS.md` records what is backed and what is not.
+
+**Category:** 1-Mathlib-staging in its mathematics; it consumes the corpus's
+`CSD.LF4.schrodingerUnitary` (the unitary `exp(-itH)`) and its derivative
+`CSD.LF4.schrodingerUnitary_hasDerivAt` as the flow whose generator it identifies.
+
+Brick **G13** of `specs/generator-layer-scoping.md`: the `U(n+1)` moment map. For a Hermitian
+`H`, the unitary flow `p ↦ exp(-itH) • p` on `ℂℙⁿ` — the corpus's projected Schrödinger flow — is
+Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, the expectation value
+`⟪z, Hz⟫ / ‖z‖²` up to the form's convention. Brick G6 (the torus) is the diagonal case.
+
+* `expectation H p = ⟪z, Hz⟫.re / ‖z‖²` — the expectation value on rays (`expectation_mk`,
+  `continuous_expectation`); `schrodingerHamiltonian H = -2 • expectation H`;
+* `insertZeroCLM i` — the tangent lift of the affine chart (`0` in slot `i`), an `ℝ`-linear map;
+  `insertOne i w = insertOne i 0 + insertZeroCLM i w`, so `hasFDerivAt_insertOne`; and the lift
+  preserves the inner products the model form is written in (`inner_insertZeroCLM_insertZeroCLM`,
+  `inner_insertZeroCLM_insertOne`, `norm_sq_insertOne_toLpCLM`);
+* `schrodingerChartField H i w` — the velocity in chart `i`, `-i ((Hv)_{sⱼ} - (Hv)_i wⱼ)` for
+  `v = insertOne i w`; ★ `hasDerivAt_chartFun_schrodingerUnitary` — **it is the velocity of the
+  flow**: the `t`-derivative at `0` of `t ↦ chartFun i (exp(-itH) • chartInv i w)`;
+* `schrodingerChartHam`, `hasFDerivAt_schrodingerChartHam` — the chart Hamiltonian
+  `-2 ⟪v, Hv⟫.re / ‖v‖²` and its derivative, through `HasFDerivAt.inner` along the affine lift;
+* ★★ `fsModelForm_schrodingerChartField` — **the chart identity `ω_w (X_w, u) = dH_w u`**, proved
+  in the ambient inner product: the lifted velocity is `-i (Hv - (Hv)_i v)`, the `(Hv)_i` terms
+  cancel, and what remains is the symmetry of `H` and `Im (i z) = Re z`;
+* ★★★ `schrodingerField_isHamiltonianVectorField` — **`IsHamiltonianVectorField fsForm
+  (schrodingerField H) (schrodingerHamiltonian H)`: the Schrödinger flow on `ℂℙⁿ` is Hamiltonian
+  for the Fubini–Study form, with `-2 ⟨H⟩` as its Hamiltonian**;
+* `schrodingerChartField_neg_diagonal`, `schrodingerHamiltonian_neg_diagonal` — for
+  `H = -diag θ` the field and the Hamiltonian are G6's `torusChartField` and `torusHamiltonian`:
+  the torus is the diagonal case.
+
+## Honest scope
+
+⚠️ **The sign and the factor are conventions.** `fsChartForm` carries the `-4` of its potential,
+which makes the generator of the torus `2 · momentMap` (G6); the corpus's Schrödinger flow is
+`exp(-itH)`, so its Hamiltonian is `-2 ⟨H⟩`. Nothing here rescales either; the statement shows
+both.
+
+⚠️ **The flow is consumed, not built.** `schrodingerUnitary` and its derivative come from
+`LF4/ManyToOneSchrodingerDerived.lean`, under the `L2Operator` matrix norm (the one under which
+`hasDerivAt_exp_smul_const` synthesises); this module opens that scope and adds nothing to it.
+
+⚠️ **A family, not a smooth section, and no integral curves.** As in G6, `schrodingerField` is a
+vector-field family; that the flow's orbits are its integral curves on the *manifold* is not
+stated (G3/G4), and Liouville for it is the unitary invariance of `fsVolume` (G10), nothing more.
+
+⚠️ **Posits untouched.** Posit 1 asserts that the dynamics generates the pointer torus; this
+module says which Hamiltonian a *given* unitary flow has, for every Hermitian `H`, and does not
+touch what generates it.
+
+References: `specs/generator-layer-scoping.md` (G13, G6); `Instances/ProjectiveSpaceMomentMap.lean`
+(`torusChartField`, `torusHamiltonian`, `torusField_isHamiltonianVectorField`);
+`Geometry/Manifold/HamiltonianVectorField.lean` (G1); `Instances/ProjectiveSpaceFubiniStudyMass.lean`
+(`fsModelForm_apply`, `toLpCLM_apply`); `Instances/ProjectiveSpaceUnitaryAction.lean`
+(`chartFun_smul_chartInv`); `LF4/ProjectedDynamics.lean` (`schrodingerUnitary`,
+`expNegITH_unitary_group`); `LF4/ManyToOneSchrodingerDerived.lean` (`schrodingerUnitary_hasDerivAt`);
+`specs/TERMS.md` (Hamiltonian, moment map); `specs/POSITS.md` (Posit 1); `specs/future-work.md`.
+-/
+
+@[expose] public section
+
+open scoped Manifold ContDiff LinearAlgebra.Projectivization Matrix Matrix.Norms.L2Operator
+open Kahler DifferentialForm
+
+noncomputable section
+
+namespace Projectivization
+
+variable {n : ℕ}
+
+/-! ### The expectation value, on rays -/
+
+/-- `⟨H⟩` at a ray: `⟪z, Hz⟫.re / ‖z‖²`, on any representative. -/
+def expectation (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (p : ℙ ℂ (Ambient n)) : ℝ :=
+  (inner ℂ p.rep (Matrix.toEuclideanLin H p.rep)).re / ‖p.rep‖ ^ 2
+
+theorem expectation_ratio_smul (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (c : ℂ) (hc : c ≠ 0)
+    (v : Ambient n) :
+    (inner ℂ (c • v) (Matrix.toEuclideanLin H (c • v))).re / ‖c • v‖ ^ 2
+      = (inner ℂ v (Matrix.toEuclideanLin H v)).re / ‖v‖ ^ 2 := by
+  rw [map_smul, inner_smul_left, inner_smul_right, ← mul_assoc, Complex.conj_mul', norm_smul,
+    mul_pow, ← Complex.ofReal_pow, Complex.re_ofReal_mul]
+  exact mul_div_mul_left _ _ (pow_ne_zero 2 (norm_ne_zero_iff.2 hc))
+
+/-- The expectation value at a representative. -/
+theorem expectation_mk (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (ψ : Ambient n) (hψ : ψ ≠ 0) :
+    expectation H (mk ℂ ψ hψ) = (inner ℂ ψ (Matrix.toEuclideanLin H ψ)).re / ‖ψ‖ ^ 2 := by
+  obtain ⟨a, ha⟩ := (mk_eq_mk_iff ℂ (mk ℂ ψ hψ).rep ψ (rep_nonzero _) hψ).mp (mk_rep _)
+  unfold expectation
+  rw [← ha]
+  simp only [Units.smul_def]
+  exact expectation_ratio_smul H (↑a) (Units.ne_zero a) ψ
+
+theorem continuous_expectation (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :
+    Continuous (expectation (n := n) H) := by
+  rw [continuous_iff_continuous_comp_mk']
+  have hcomp : (expectation H ∘ (mk' ℂ : _ → ℙ ℂ (Ambient n)))
+      = fun v : {v : Ambient n // v ≠ 0} =>
+          (inner ℂ (v : Ambient n) (Matrix.toEuclideanLin H v)).re / ‖(v : Ambient n)‖ ^ 2 := by
+    funext v
+    exact expectation_mk H v v.2
+  rw [hcomp]
+  have hT : Continuous (Matrix.toEuclideanLin H) := LinearMap.continuous_of_finiteDimensional _
+  have hnum : Continuous fun v : {v : Ambient n // v ≠ 0} =>
+      (inner ℂ (v : Ambient n) (Matrix.toEuclideanLin H v)).re :=
+    Complex.continuous_re.comp
+      ((continuous_inner (𝕜 := ℂ)).comp
+        (continuous_subtype_val.prodMk (hT.comp continuous_subtype_val)))
+  have hden : Continuous fun v : {v : Ambient n // v ≠ 0} => ‖(v : Ambient n)‖ ^ 2 :=
+    continuous_subtype_val.norm.pow 2
+  exact hnum.div hden fun v => pow_ne_zero _ (norm_ne_zero_iff.mpr v.2)
+
+/-- The Hamiltonian of the Schrödinger flow `exp(-itH)`: `-2 ⟨H⟩`. -/
+def schrodingerHamiltonian (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (p : ℙ ℂ (Ambient n)) : ℝ :=
+  -2 * expectation H p
+
+theorem continuous_schrodingerHamiltonian (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :
+    Continuous (schrodingerHamiltonian (n := n) H) :=
+  continuous_const.mul (continuous_expectation H)
+
+/-! ### The tangent lift of the affine chart -/
+
+/-- Insert `0` in slot `i`, as an `ℝ`-linear map: the lift of chart tangent vectors. -/
+def insertZeroCLM (i : Fin (n + 1)) : (Fin n → ℂ) →L[ℝ] Ambient n :=
+  LinearMap.toContinuousLinearMap
+    { toFun := fun u => WithLp.toLp 2 (i.insertNth 0 u)
+      map_add' := fun u u' => by
+        ext k
+        rcases Fin.eq_self_or_eq_succAbove i k with rfl | ⟨j, rfl⟩ <;> simp
+      map_smul' := fun c u => by
+        ext k
+        rcases Fin.eq_self_or_eq_succAbove i k with rfl | ⟨j, rfl⟩ <;> simp }
+
+theorem insertZeroCLM_apply (i : Fin (n + 1)) (u : Fin n → ℂ) :
+    insertZeroCLM i u = WithLp.toLp 2 (i.insertNth 0 u) := rfl
+
+@[simp] theorem insertZeroCLM_apply_same (i : Fin (n + 1)) (u : Fin n → ℂ) :
+    insertZeroCLM i u i = 0 := by
+  simp [insertZeroCLM_apply]
+
+@[simp] theorem insertZeroCLM_apply_succAbove (i : Fin (n + 1)) (u : Fin n → ℂ) (j : Fin n) :
+    insertZeroCLM i u (i.succAbove j) = u j := by
+  simp [insertZeroCLM_apply]
+
+theorem insertOne_eq_add (i : Fin (n + 1)) (w : Fin n → ℂ) :
+    insertOne i w = insertOne i 0 + insertZeroCLM i w := by
+  ext k
+  rcases Fin.eq_self_or_eq_succAbove i k with rfl | ⟨j, rfl⟩ <;> simp [insertOne]
+
+theorem hasFDerivAt_insertOne (i : Fin (n + 1)) (w : Fin n → ℂ) :
+    HasFDerivAt (insertOne i) (insertZeroCLM i) w := by
+  have h : insertOne (n := n) i = fun w => insertOne i 0 + insertZeroCLM i w :=
+    funext (insertOne_eq_add i)
+  rw [h]
+  exact (insertZeroCLM i).hasFDerivAt.const_add _
+
+theorem inner_insertZeroCLM_insertZeroCLM (i : Fin (n + 1)) (u u' : Fin n → ℂ) :
+    inner ℂ (insertZeroCLM i u) (insertZeroCLM i u') = inner ℂ (toLpCLM u) (toLpCLM u') := by
+  simp only [PiLp.inner_apply]
+  rw [Fin.sum_univ_succAbove _ i]
+  simp
+
+theorem inner_insertZeroCLM_insertOne (i : Fin (n + 1)) (u w : Fin n → ℂ) :
+    inner ℂ (insertZeroCLM i u) (insertOne i w) = inner ℂ (toLpCLM u) (toLpCLM w) := by
+  simp only [PiLp.inner_apply]
+  rw [Fin.sum_univ_succAbove _ i]
+  simp
+
+theorem inner_insertOne_insertZeroCLM (i : Fin (n + 1)) (w u : Fin n → ℂ) :
+    inner ℂ (insertOne i w) (insertZeroCLM i u) = inner ℂ (toLpCLM w) (toLpCLM u) := by
+  simp only [PiLp.inner_apply]
+  rw [Fin.sum_univ_succAbove _ i]
+  simp
+
+theorem norm_sq_insertOne_toLpCLM (i : Fin (n + 1)) (w : Fin n → ℂ) :
+    ‖insertOne i w‖ ^ 2 = 1 + ‖toLpCLM w‖ ^ 2 := by
+  rw [norm_sq_insertOne, EuclideanSpace.norm_sq_eq]
+  simp
+
+/-! ### The velocity and the Hamiltonian in the chart -/
+
+/-- The velocity of `t ↦ exp(-itH) • p` in chart `i`: `-i ((Hv)_{sⱼ} - (Hv)_i wⱼ)`,
+`v = insertOne i w`. -/
+def schrodingerChartField (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (i : Fin (n + 1))
+    (w : Fin n → ℂ) : Fin n → ℂ :=
+  fun j => -Complex.I * ((H *ᵥ (insertOne i w).ofLp) (i.succAbove j)
+    - (H *ᵥ (insertOne i w).ofLp) i * w j)
+
+/-- The lift of the chart velocity to the ambient space: `-i (Hv - (Hv)_i v)`. -/
+theorem insertZeroCLM_schrodingerChartField (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+    (i : Fin (n + 1)) (w : Fin n → ℂ) :
+    insertZeroCLM i (schrodingerChartField H i w)
+      = (-Complex.I) • (Matrix.toEuclideanLin H (insertOne i w)
+          - (H *ᵥ (insertOne i w).ofLp) i • insertOne i w) := by
+  ext k
+  rcases Fin.eq_self_or_eq_succAbove i k with rfl | ⟨j, rfl⟩
+  · simp
+  · simp [schrodingerChartField]
+
+/-- The chart Hamiltonian `-2 ⟪v, Hv⟫.re / ‖v‖²`. -/
+def schrodingerChartHam (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (i : Fin (n + 1))
+    (w : Fin n → ℂ) : ℝ :=
+  -2 * ((inner ℂ (insertOne i w) (Matrix.toEuclideanLin H (insertOne i w))).re
+    * (‖insertOne i w‖ ^ 2)⁻¹)
+
+theorem schrodingerHamiltonian_chartInv (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+    (i : Fin (n + 1)) (w : Fin n → ℂ) :
+    schrodingerHamiltonian H (chartInv i w) = schrodingerChartHam H i w := by
+  unfold schrodingerHamiltonian schrodingerChartHam chartInv
+  rw [expectation_mk, div_eq_mul_inv]
+
+theorem norm_sq_insertOne_pos (i : Fin (n + 1)) (w : Fin n → ℂ) : 0 < ‖insertOne i w‖ ^ 2 :=
+  pow_pos (norm_pos_iff.2 (insertOne_ne_zero i w)) 2
+
+/-- The derivative of the chart Hamiltonian, by the product and inverse rules from
+`HasFDerivAt.inner` along the affine lift. -/
+def schrodingerChartHamDeriv (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (i : Fin (n + 1))
+    (w : Fin n → ℂ) : (Fin n → ℂ) →L[ℝ] ℝ :=
+  (-2 : ℝ) • ((inner ℂ (insertOne i w) (Matrix.toEuclideanLin H (insertOne i w))).re
+      • ((ContinuousLinearMap.toSpanSingleton ℝ (-((‖insertOne i w‖ ^ 2) ^ 2)⁻¹)).comp
+          (Complex.reCLM.comp ((fderivInnerCLM ℂ (insertOne i w, insertOne i w)).comp
+            ((insertZeroCLM i).prod (insertZeroCLM i)))))
+    + (‖insertOne i w‖ ^ 2)⁻¹
+      • (Complex.reCLM.comp ((fderivInnerCLM ℂ
+          (insertOne i w, Matrix.toEuclideanCLM (𝕜 := ℂ) H (insertOne i w))).comp
+            ((insertZeroCLM i).prod
+              (((Matrix.toEuclideanCLM (𝕜 := ℂ) H).restrictScalars ℝ).comp (insertZeroCLM i))))))
+
+theorem hasFDerivAt_schrodingerChartHam (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+    (i : Fin (n + 1)) (w : Fin n → ℂ) :
+    HasFDerivAt (schrodingerChartHam H i) (schrodingerChartHamDeriv H i w) w := by
+  unfold schrodingerChartHam schrodingerChartHamDeriv
+  have hv : HasFDerivAt (insertOne i) (insertZeroCLM i) w := hasFDerivAt_insertOne i w
+  have hTv : HasFDerivAt (fun w => Matrix.toEuclideanCLM (𝕜 := ℂ) H (insertOne i w))
+      (((Matrix.toEuclideanCLM (𝕜 := ℂ) H).restrictScalars ℝ).comp (insertZeroCLM i)) w :=
+    ((Matrix.toEuclideanCLM (𝕜 := ℂ) H).restrictScalars ℝ).hasFDerivAt.comp w hv
+  have hN : HasFDerivAt
+      (fun w => (inner ℂ (insertOne i w) (Matrix.toEuclideanCLM (𝕜 := ℂ) H (insertOne i w))).re)
+      (Complex.reCLM.comp ((fderivInnerCLM ℂ
+          (insertOne i w, Matrix.toEuclideanCLM (𝕜 := ℂ) H (insertOne i w))).comp
+            ((insertZeroCLM i).prod
+              (((Matrix.toEuclideanCLM (𝕜 := ℂ) H).restrictScalars ℝ).comp (insertZeroCLM i))))) w :=
+    Complex.reCLM.hasFDerivAt.comp w (hv.inner (𝕜 := ℂ) hTv)
+  have hD : HasFDerivAt (fun w => ‖insertOne i w‖ ^ 2)
+      (Complex.reCLM.comp ((fderivInnerCLM ℂ (insertOne i w, insertOne i w)).comp
+        ((insertZeroCLM i).prod (insertZeroCLM i)))) w := by
+    refine (Complex.reCLM.hasFDerivAt.comp w (hv.inner (𝕜 := ℂ) hv)).congr_of_eventuallyEq
+      (Filter.Eventually.of_forall fun y => ?_)
+    exact (inner_self_eq_norm_sq (𝕜 := ℂ) (insertOne i y)).symm
+  have hinv : HasFDerivAt (fun w => (‖insertOne i w‖ ^ 2)⁻¹)
+      ((ContinuousLinearMap.toSpanSingleton ℝ (-((‖insertOne i w‖ ^ 2) ^ 2)⁻¹)).comp
+        (Complex.reCLM.comp ((fderivInnerCLM ℂ (insertOne i w, insertOne i w)).comp
+          ((insertZeroCLM i).prod (insertZeroCLM i))))) w :=
+    (hasFDerivAt_inv (norm_sq_insertOne_pos i w).ne').comp w hD
+  exact (hN.mul hinv).const_mul (-2)
+
+theorem schrodingerChartHamDeriv_apply (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+    (i : Fin (n + 1)) (w u : Fin n → ℂ) :
+    schrodingerChartHamDeriv H i w u
+      = -2 * ((inner ℂ (insertOne i w) (Matrix.toEuclideanLin H (insertOne i w))).re
+            * (-((‖insertOne i w‖ ^ 2) ^ 2)⁻¹
+              * (inner ℂ (insertOne i w) (insertZeroCLM i u)
+                  + inner ℂ (insertZeroCLM i u) (insertOne i w)).re)
+          + (‖insertOne i w‖ ^ 2)⁻¹
+            * (inner ℂ (insertOne i w) (Matrix.toEuclideanLin H (insertZeroCLM i u))
+                + inner ℂ (insertZeroCLM i u) (Matrix.toEuclideanLin H (insertOne i w))).re) := by
+  have hc : ∀ z, Matrix.toEuclideanCLM (𝕜 := ℂ) H z = Matrix.toEuclideanLin H z := fun _ => rfl
+  simp only [schrodingerChartHamDeriv, add_apply, smul_apply, ContinuousLinearMap.comp_apply,
+    ContinuousLinearMap.prod_apply, ContinuousLinearMap.toSpanSingleton_apply,
+    fderivInnerCLM_apply, Complex.reCLM_apply, ContinuousLinearMap.coe_restrictScalars',
+    smul_eq_mul, hc]
+  ring
+
+/-! ### The chart identity `ι_X ω = dH`, in the ambient inner product -/
+
+/-- ★★ **The chart identity**: the Fubini–Study model form pairs the Schrödinger velocity with `u`
+exactly as the derivative of the chart Hamiltonian does. Lifted to the ambient space, the velocity
+is `-i (Hv - (Hv)_i v)`; the `(Hv)_i` terms cancel, and what remains is `Im (i z) = Re z` together
+with the symmetry of `H`. -/
+theorem fsModelForm_schrodingerChartField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) (i : Fin (n + 1)) (w u : Fin n → ℂ) :
+    fsModelForm w ![schrodingerChartField H i w, u] = schrodingerChartHamDeriv H i w u := by
+  rw [fsModelForm_apply, schrodingerChartHamDeriv_apply, ← inner_insertZeroCLM_insertZeroCLM i,
+    ← inner_insertZeroCLM_insertOne i, ← inner_insertOne_insertZeroCLM i, ← norm_sq_insertOne_toLpCLM i,
+    insertZeroCLM_schrodingerChartField]
+  have hT : (Matrix.toEuclideanLin H).IsSymmetric := Matrix.isSymmetric_toEuclideanLin_iff.2 hH
+  set v := insertOne i w with hv
+  set y := insertZeroCLM i u with hy
+  set c : ℂ := (H *ᵥ v.ofLp) i with hc
+  set T := Matrix.toEuclideanLin H with hTdef
+  have h1 : inner ℂ v (T y) = inner ℂ (T v) y := (hT v y).symm
+  have h2 : inner ℂ y (T v) = (starRingEnd ℂ) (inner ℂ (T v) y) := (inner_conj_symm _ _).symm
+  have h3 : inner ℂ y v = (starRingEnd ℂ) (inner ℂ v y) := (inner_conj_symm _ _).symm
+  have h4 : (inner ℂ (T v) v).im = 0 := Complex.conj_eq_iff_im.1 (hT.conj_inner_sym v v)
+  have h5 : (inner ℂ v (T v)).re = (inner ℂ (T v) v).re := by
+    rw [← inner_conj_symm (T v) v, Complex.conj_re]
+  have he1 : (inner ℂ v v).re = ‖v‖ ^ 2 := by simpa using inner_self_eq_norm_sq (𝕜 := ℂ) v
+  have he2 : (inner ℂ v v).im = 0 := by simpa using inner_self_im (𝕜 := ℂ) v
+  have hne : ‖v‖ ^ 2 ≠ 0 := (norm_sq_insertOne_pos i w).ne'
+  simp only [inner_smul_left, inner_sub_left, Complex.conj_neg_I, h1, h2, h3, h5]
+  set a := inner ℂ (T v) y with ha
+  set b := inner ℂ v y with hb
+  set d := inner ℂ (T v) v with hd
+  set e := inner ℂ v v with he
+  simp only [Complex.mul_im, Complex.mul_re, Complex.sub_re, Complex.sub_im, Complex.add_re,
+    Complex.I_re, Complex.I_im, Complex.conj_re, Complex.conj_im, h4, he1, he2]
+  field_simp
+  ring
+
+/-! ### The manifold statement -/
+
+/-- The velocity field of the Schrödinger flow `p ↦ exp(-itH) • p` on `ℂℙⁿ`, read in the chart at
+each point. -/
+def schrodingerField (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (x : ℙ ℂ (Ambient n)) :
+    TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x :=
+  schrodingerChartField H (idx x) (chartFun (idx x) x)
+
+theorem hasMFDerivAt_schrodingerHamiltonian (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+    (x : ℙ ℂ (Ambient n)) :
+    HasMFDerivAt (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ ℝ)
+      (schrodingerHamiltonian H) x (schrodingerChartHamDeriv H (idx x) (chartFun (idx x) x)) := by
+  refine ⟨(continuous_schrodingerHamiltonian H).continuousAt, ?_⟩
+  have hw : writtenInExtChartAt (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ ℝ) x
+      (schrodingerHamiltonian H) = schrodingerChartHam H (idx x) := by
+    funext w
+    simp only [writtenInExtChartAt, Function.comp, extChartAt_model_space_eq_id,
+      PartialEquiv.refl_coe, id, extChartAt_coe_symm, modelWithCornersSelf_coe_symm]
+    exact schrodingerHamiltonian_chartInv H (idx x) w
+  rw [hw]
+  exact (hasFDerivAt_schrodingerChartHam H (idx x) (chartFun (idx x) x)).hasFDerivWithinAt
+
+/-- ★★★ **The Schrödinger flow on `ℂℙⁿ` is Hamiltonian for the Fubini–Study form, with `-2 ⟨H⟩`
+as its Hamiltonian**: `ι_X ω_FS = dH` on the manifold, for every Hermitian `H`. -/
+theorem schrodingerField_isHamiltonianVectorField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) :
+    IsHamiltonianVectorField (fun x => fsForm x) (schrodingerField H)
+      (schrodingerHamiltonian H) := by
+  intro x v
+  rw [(hasMFDerivAt_schrodingerHamiltonian H x).mfderiv]
+  exact fsModelForm_schrodingerChartField hH (idx x) (chartFun (idx x) x) v
+
+/-! ### The field is the velocity of the flow -/
+
+/-- The entry `k` of `M *ᵥ v`, as an `ℝ`-linear functional of the matrix. -/
+def mulVecEntryCLM (v : Fin (n + 1) → ℂ) (k : Fin (n + 1)) :
+    Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ →L[ℝ] ℂ :=
+  (LinearMap.toContinuousLinearMap
+    { toFun := fun M : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ => (M *ᵥ v) k
+      map_add' := fun M M' => by simp [Matrix.add_mulVec]
+      map_smul' := fun c M => by simp [Matrix.smul_mulVec] } :
+        Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ →L[ℂ] ℂ).restrictScalars ℝ
+
+theorem mulVecEntryCLM_apply (v : Fin (n + 1) → ℂ) (k : Fin (n + 1))
+    (M : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) : mulVecEntryCLM v k M = (M *ᵥ v) k := rfl
+
+theorem schrodingerUnitary_zero_val {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) :
+    (CSD.LF4.schrodingerUnitary hH 0 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) = 1 :=
+  congrArg Subtype.val (CSD.LF4.expNegITH_unitary_group hH).2
+
+/-- ★ **The field is the velocity of the flow**: at every chart point, `schrodingerChartField` is
+the `t`-derivative at `0` of `t ↦ exp(-itH) • p`, read in the chart. -/
+theorem hasDerivAt_chartFun_schrodingerUnitary {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) (i : Fin (n + 1)) (w : Fin n → ℂ) :
+    HasDerivAt (fun t : ℝ => chartFun i (CSD.LF4.schrodingerUnitary hH t • chartInv i w))
+      (schrodingerChartField H i w) 0 := by
+  simp_rw [chartFun_smul_chartInv]
+  refine hasDerivAt_pi.2 fun j => ?_
+  have hentry : ∀ k, HasDerivAt
+      (fun t : ℝ => ((CSD.LF4.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+        *ᵥ (insertOne i w).ofLp) k)
+      (-Complex.I * (H *ᵥ (insertOne i w).ofLp) k) 0 := by
+    intro k
+    have h := (mulVecEntryCLM (insertOne i w).ofLp k).hasFDerivAt.comp_hasDerivAt (0 : ℝ)
+      (CSD.LF4.schrodingerUnitary_hasDerivAt H hH 0)
+    refine h.congr_deriv ?_
+    rw [mulVecEntryCLM_apply, schrodingerUnitary_zero_val hH, one_mul, Matrix.smul_mulVec]
+    simp
+  have hnum := hentry (i.succAbove j)
+  have hden := hentry i
+  have hden0 : ((CSD.LF4.schrodingerUnitary hH 0 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+      *ᵥ (insertOne i w).ofLp) i = 1 := by
+    rw [schrodingerUnitary_zero_val hH, Matrix.one_mulVec]
+    exact insertOne_apply_same i w
+  have hnum0 : ((CSD.LF4.schrodingerUnitary hH 0 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+      *ᵥ (insertOne i w).ofLp) (i.succAbove j) = w j := by
+    rw [schrodingerUnitary_zero_val hH, Matrix.one_mulVec]
+    exact insertOne_apply_succAbove i w j
+  show HasDerivAt (fun t : ℝ =>
+    ((CSD.LF4.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+        *ᵥ (insertOne i w).ofLp) (i.succAbove j)
+      / ((CSD.LF4.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+        *ᵥ (insertOne i w).ofLp) i) (schrodingerChartField H i w j) 0
+  refine (hnum.div hden (by rw [hden0]; exact one_ne_zero)).congr_deriv ?_
+  rw [hden0, hnum0]
+  simp only [schrodingerChartField]
+  ring
+
+/-! ### The torus is the diagonal case (G6) -/
+
+theorem schrodingerChartField_neg_diagonal (θ : Fin (n + 1) → ℝ) (i : Fin (n + 1))
+    (w : Fin n → ℂ) :
+    schrodingerChartField (-(Matrix.diagonal fun k => (θ k : ℂ))) i w = torusChartField i θ w := by
+  funext j
+  simp only [schrodingerChartField, torusChartField, Matrix.neg_mulVec, Matrix.mulVec_diagonal,
+    Pi.neg_apply, insertOne_apply_same, insertOne_apply_succAbove, Complex.ofReal_sub]
+  ring
+
+theorem schrodingerHamiltonian_neg_diagonal (θ : Fin (n + 1) → ℝ) :
+    schrodingerHamiltonian (-(Matrix.diagonal fun k => (θ k : ℂ)))
+      = torusHamiltonian (n := n) θ := by
+  funext p
+  unfold schrodingerHamiltonian expectation torusHamiltonian CSD.LF4.momentMap
+  have hrep : ∀ k, (Matrix.toEuclideanLin (-(Matrix.diagonal fun k => (θ k : ℂ))) p.rep) k
+      = -((θ k : ℂ) * p.rep k) := fun k => by
+    show ((-(Matrix.diagonal fun k => (θ k : ℂ))) *ᵥ p.rep.ofLp) k = _
+    rw [Matrix.neg_mulVec, Pi.neg_apply, Matrix.mulVec_diagonal]
+  have hk : ∀ k, (inner ℂ (p.rep k) (-((θ k : ℂ) * p.rep k))).re = -(θ k * ‖p.rep k‖ ^ 2) := by
+    intro k
+    rw [RCLike.inner_apply, neg_mul, mul_assoc, mul_comm (p.rep k), Complex.conj_mul',
+      Complex.neg_re, ← Complex.ofReal_pow, ← Complex.ofReal_mul, Complex.ofReal_re]
+  rw [PiLp.inner_apply, Complex.re_sum]
+  simp_rw [hrep, hk]
+  simp only [Finset.sum_neg_distrib, neg_div, mul_neg, neg_mul, neg_neg, Finset.sum_div,
+    Finset.mul_sum]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  ring
+
+end Projectivization

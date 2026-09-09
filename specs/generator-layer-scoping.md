@@ -40,8 +40,22 @@ chart bridge) — and ★ `IsHamiltonianVectorField.isLocallyHamiltonian` (`Hami
 `ι_X ω = dH` as families, so `d(ι_X ω) = d(dH) = 0` by `mextDeriv_mextDeriv`, for a `C^∞` energy.
 The **M** came in under: the one non-mechanical point was the module-system instance path
 (`Trivial M ℝ x` vs `TangentSpace 𝓘(ℝ, ℝ) (H x)`), finished pointwise through `toFlat` and `trans`,
-never by `rw`. The converse (locally Hamiltonian ⇒ Hamiltonian) is false and not stated. G2–G5, G7,
-G12–G13 not built. Every rating for step (4)
+never by `rw`. The converse (locally Hamiltonian ⇒ Hamiltonian) is false and not stated. **G13 BUILT
+2026-09-09 (new module `Instances/ProjectiveSpaceSchrodingerFlow.lean`, 25 pins)**: ★★★
+`schrodingerField_isHamiltonianVectorField` — for every Hermitian `H` the flow `p ↦ exp(-itH) • p`
+(the corpus's projected Schrödinger flow, `CSD.LF4.schrodingerUnitary`, ★ proved to be the velocity
+through `schrodingerUnitary_hasDerivAt` and a matrix-entry functional under the `L2Operator` norm)
+is Hamiltonian for `fsForm` with Hamiltonian `-2 ⟨H⟩ = -2 ⟪z, Hz⟫.re/‖z‖²` (`expectation`,
+`schrodingerHamiltonian`); G6's torus is the diagonal case (`schrodingerHamiltonian_neg_diagonal`).
+The **M–L** came in as **M**, and by a different route than G6's: the chart identity ★★
+`fsModelForm_schrodingerChartField` is proved in the AMBIENT inner product — the tangent lift
+`insertZeroCLM` preserves the inner products `fsModelForm_apply` is written in, the lifted velocity
+is `-i (Hv - (Hv)_i v)`, the `(Hv)_i` terms cancel, and what remains is `Im (i z) = Re z` plus the
+symmetry of `H` (`isSymmetric_toEuclideanLin_iff`); the chart Hamiltonian is differentiated by
+`HasFDerivAt.inner` along the affine lift, no coordinate sums anywhere. Shelf facts: this Mathlib's
+`RCLike.inner_apply` puts the conjugate on the RIGHT; `inner_self_eq_norm_sq_to_K` casts through
+`RCLike.ofReal`, not `Complex.ofReal`, so work with `re`/`im` of the atoms instead. Posit 1 untouched.
+G2–G5, G7, G12 not built. Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
 tree now. Every shelf claim below was grep-probed at the pin on 2026-09-08, per
@@ -183,7 +197,7 @@ earlier the same evening.
 | **G10** ✅ built 2026-09-09 | The torus flow preserves the Fubini–Study volume: `Measure.map (torusUnitary θ • ·) (fsVolume n) = fsVolume n` | S | High | Medium | A one-line corollary of `fsVolume_map_smul`. Liouville in the dynamics sense for the flow G6 built, without G5. |
 | **G11** ✅ built 2026-09-09 | Hamiltonian implies locally Hamiltonian | M | High | Low–medium | `mextDeriv` of a 0-form family is `mfderiv` (flat half upstream: `extDeriv_constOfIsEmpty`) plus smoothness of the 0-form section and `d ∘ d = 0`. |
 | **G12** | `fsForm` is analytic, not merely `C^∞` | M–L | Medium | Low | Real-analyticity of `log(1 + ‖z‖²)`; registry line only. |
-| **G13** | The `U(n+1)` moment map `⟨z, iAz⟩/‖z‖²` for a general skew-Hermitian `A` | M–L | Medium | Low–medium | The G6 computation with a non-diagonal velocity; the corpus uses the torus. |
+| **G13** ✅ built 2026-09-09 | The `U(n+1)` moment map `⟨z, iAz⟩/‖z‖²` for a general skew-Hermitian `A` — built as: the Schrödinger flow `exp(-itH)` is Hamiltonian with Hamiltonian `-2 ⟨H⟩`, `A = -iH` | M–L | Medium | Low–medium | The G6 computation with a non-diagonal velocity; the corpus uses the torus. |
 
 ### G8, planned
 

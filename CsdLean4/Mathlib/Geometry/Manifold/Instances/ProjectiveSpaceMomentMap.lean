@@ -84,8 +84,10 @@ specialised to `diag(e^{iθ})`. It is not a manifold-level Liouville theorem for
 `ConstraintDynamics.flow_preserves` (Posit 3), whose measurement pieces are not globally
 Hamiltonian.
 
-⚠️ **The torus only.** The `U(n+1)` moment map `⟨z, iAz⟩/‖z‖²` for a general skew-Hermitian `A`
-is not stated; the torus is what the corpus's `momentMap` is about.
+⚠️ **The torus here; the general generator in `ProjectiveSpaceSchrodingerFlow.lean` (G13).** For a
+general Hermitian `H` the flow `exp(-itH) • p` is Hamiltonian with Hamiltonian `-2 ⟨H⟩`
+(`schrodingerField_isHamiltonianVectorField`), and the torus is its diagonal case
+(`schrodingerHamiltonian_neg_diagonal`); the torus is what the corpus's `momentMap` is about.
 
 References: `specs/generator-layer-scoping.md` (G6, G8–G10);
 `Geometry/Manifold/HamiltonianVectorField.lean`

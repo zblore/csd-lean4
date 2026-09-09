@@ -3990,6 +3990,123 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.IsHamiltonianVectorField.isLocallyHamiltonian
 
+/-! ### G13: the Schrödinger flow on CP^n is Hamiltonian, with Hamiltonian -2 ⟨H⟩ (ProjectiveSpaceSchrodingerFlow.lean, 2026-09-09) -/
+
+-- Brick G13 of specs/generator-layer-scoping.md §8, the U(n+1) moment map. For a Hermitian H,
+-- ★★★ schrodingerField_isHamiltonianVectorField: the velocity field of p ↦ exp(-itH) • p — the
+-- corpus's projected Schrödinger flow, and proved to be that velocity
+-- (hasDerivAt_chartFun_schrodingerUnitary, through CSD.LF4.schrodingerUnitary_hasDerivAt under the
+-- L2Operator norm and a matrix-entry functional) — satisfies ι_X ω_FS = dH on the MANIFOLD with
+-- H = schrodingerHamiltonian = -2 ⟨H⟩ = -2 ⟪z, Hz⟫.re/‖z‖². The chart identity
+-- (★★ fsModelForm_schrodingerChartField) is proved in the AMBIENT inner product, not by coordinate
+-- sums as G6 was: the chart tangent lift insertZeroCLM preserves the inner products the model
+-- form is written in, the lifted velocity is -i (Hv - (Hv)_i v), the (Hv)_i terms cancel, and what
+-- remains is Im (i z) = Re z plus the symmetry of H (isSymmetric_toEuclideanLin_iff). The chart
+-- Hamiltonian is differentiated by HasFDerivAt.inner along the affine lift. G6's torus is the
+-- diagonal case: schrodingerChartField_neg_diagonal, schrodingerHamiltonian_neg_diagonal. The sign
+-- and the factor 2 are the -4 convention of fsChartForm plus the corpus's exp(-itH). Posit 1 is
+-- untouched (which Hamiltonian a GIVEN flow has, not what generates it).
+
+/-- info: 'Projectivization.expectation_ratio_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_ratio_smul
+
+/-- info: 'Projectivization.expectation_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_mk
+
+/-- info: 'Projectivization.continuous_expectation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.continuous_expectation
+
+/-- info: 'Projectivization.continuous_schrodingerHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.continuous_schrodingerHamiltonian
+
+/-- info: 'Projectivization.insertZeroCLM_apply_same' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.insertZeroCLM_apply_same
+
+/-- info: 'Projectivization.insertZeroCLM_apply_succAbove' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.insertZeroCLM_apply_succAbove
+
+/-- info: 'Projectivization.insertOne_eq_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.insertOne_eq_add
+
+/-- info: 'Projectivization.hasFDerivAt_insertOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasFDerivAt_insertOne
+
+/-- info: 'Projectivization.inner_insertZeroCLM_insertZeroCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_insertZeroCLM_insertZeroCLM
+
+/-- info: 'Projectivization.inner_insertZeroCLM_insertOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_insertZeroCLM_insertOne
+
+/-- info: 'Projectivization.inner_insertOne_insertZeroCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_insertOne_insertZeroCLM
+
+/-- info: 'Projectivization.norm_sq_insertOne_toLpCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_sq_insertOne_toLpCLM
+
+/-- info: 'Projectivization.insertZeroCLM_schrodingerChartField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.insertZeroCLM_schrodingerChartField
+
+/-- info: 'Projectivization.schrodingerHamiltonian_chartInv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerHamiltonian_chartInv
+
+/-- info: 'Projectivization.norm_sq_insertOne_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_sq_insertOne_pos
+
+/-- info: 'Projectivization.hasFDerivAt_schrodingerChartHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasFDerivAt_schrodingerChartHam
+
+/-- info: 'Projectivization.schrodingerChartHamDeriv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerChartHamDeriv_apply
+
+/-- info: 'Projectivization.fsModelForm_schrodingerChartField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_schrodingerChartField
+
+/-- info: 'Projectivization.hasMFDerivAt_schrodingerHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasMFDerivAt_schrodingerHamiltonian
+
+/-- info: 'Projectivization.schrodingerField_isHamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerField_isHamiltonianVectorField
+
+/-- info: 'Projectivization.mulVecEntryCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mulVecEntryCLM_apply
+
+/-- info: 'Projectivization.schrodingerUnitary_zero_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerUnitary_zero_val
+
+/-- info: 'Projectivization.hasDerivAt_chartFun_schrodingerUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasDerivAt_chartFun_schrodingerUnitary
+
+/-- info: 'Projectivization.schrodingerChartField_neg_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerChartField_neg_diagonal
+
+/-- info: 'Projectivization.schrodingerHamiltonian_neg_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerHamiltonian_neg_diagonal
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

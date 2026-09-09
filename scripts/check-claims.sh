@@ -260,7 +260,8 @@ trivialKahlerOnticSetup
 IsSymplectic
 IsHamiltonianVectorField
 IsLocallyHamiltonian
-torusHamiltonian"
+torusHamiltonian
+schrodingerHamiltonian"
 #
 # PARITY LEDGER (why each name is earned).
 # ⚠️ Corrected 2026-08-04, same day it was written: the first draft asserted "all on
@@ -337,6 +338,14 @@ torusHamiltonian"
 #       the same module: torusField_isHamiltonianVectorField proves ι_X ω_FS = d(torusHamiltonian)
 #       on the MANIFOLD for the velocity field of the torus action (itself proved to be that
 #       velocity, hasDerivAt_chartFun_torusUnitary). Arena CP^n, real dimension 2n.   EVEN.
+#                                                                  EARNED (manifold-level).
+#     schrodingerHamiltonian — (Instances/ProjectiveSpaceSchrodingerFlow.lean, 2026-09-09, brick
+#       G13) the real function -2 ⟨H⟩ = -2 ⟪z, Hz⟫.re/‖z‖² on CP^n, for a Hermitian H. The word
+#       is earned by the GENERATION THEOREM in the same module:
+#       schrodingerField_isHamiltonianVectorField proves ι_X ω_FS = d(schrodingerHamiltonian) on
+#       the MANIFOLD for the velocity field of the flow exp(-itH) • p (itself proved to be that
+#       velocity, hasDerivAt_chartFun_schrodingerUnitary); G6's torus is the diagonal case
+#       (schrodingerHamiltonian_neg_diagonal). Arena CP^n, real dimension 2n.        EVEN.
 #                                                                  EARNED (manifold-level).
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
@@ -622,6 +631,15 @@ liouville_isProbability"
 #     on the exterior derivative of the 0-form H (ExteriorDerivative.lean's 0-form API). Both
 #     words name established predicates; the conclusion is closedness. The converse is not
 #     stated (the flux obstruction). Generic 2n-manifold over a real model, parity as G1's.
+#   continuous_schrodingerHamiltonian / schrodingerHamiltonian_chartInv /
+#   hasMFDerivAt_schrodingerHamiltonian / schrodingerHamiltonian_neg_diagonal — (2026-09-09,
+#     Instances/ProjectiveSpaceSchrodingerFlow.lean, G13) inherit the word from
+#     schrodingerHamiltonian (declared above): continuity, the chart expression, the manifold
+#     derivative, and the diagonal case being torusHamiltonian. CP^n, EVEN.
+#   schrodingerField_isHamiltonianVectorField — (2026-09-09, same module, G13) PROVES the
+#     equation ι_X ω_FS = dH for the velocity field of exp(-itH) • p on CP^n and
+#     H = -2 ⟨H⟩: the Schrödinger flow on the symplectic MANIFOLD is Hamiltonian, for every
+#     Hermitian generator. The word names the established equation. CP^n, EVEN.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -683,6 +701,11 @@ mdifferentiable_torusHamiltonian
 eq_add_const_of_isHamiltonianVectorField
 eq_torusHamiltonian_of_nonneg_of_sum
 isLocallyHamiltonian
+continuous_schrodingerHamiltonian
+schrodingerHamiltonian_chartInv
+hasMFDerivAt_schrodingerHamiltonian
+schrodingerField_isHamiltonianVectorField
+schrodingerHamiltonian_neg_diagonal
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH
