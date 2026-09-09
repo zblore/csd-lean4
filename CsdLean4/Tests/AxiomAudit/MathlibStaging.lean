@@ -3948,6 +3948,48 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.measurePreserving_torusUnitary_smul
 
+/-! ### G11: Hamiltonian implies locally Hamiltonian, via d of a 0-form (ExteriorDerivative.lean, HamiltonianVectorField.lean, 2026-09-09) -/
+
+-- Brick G11 of specs/generator-layer-scoping.md §8. The 0-form API that ExteriorDerivative.lean's
+-- header listed as "not here": zeroFormFamily f (a function as a 0-form family, x ↦ constOfIsEmpty
+-- (f x)), its local representative (the function read in the chart, via trivializationAt_snd —
+-- compContinuousLinearMap is invisible on an empty index), its smoothness as a section
+-- (contMDiffAt_section + constOfIsEmptyLIE ∘ f), and ★ toFlat_mextDeriv_zeroFormFamily: d of a
+-- 0-form IS its differential, (df)_x = ofSubsingleton 0 (mfderiv f x), transported from Mathlib's
+-- extDeriv_constOfIsEmpty with the chart bridge MDifferentiableAt.mfderiv + writtenInExtChartAt on
+-- the boundaryless model. Then ★ IsHamiltonianVectorField.isLocallyHamiltonian: ι_X α = dH as
+-- families (pointwise, through toFlat — never a rw across the TangentSpace/Trivial instance
+-- path), so d(ι_X α) = d(dH) = 0 by mextDeriv_mextDeriv, for a C^∞ energy. The converse is
+-- FALSE and not stated (closed-not-exact = the flux obstruction, RecordLayer/PiecewiseHamiltonian).
+
+/-- info: 'DifferentialForm.trivializationAt_zeroFormFamily_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.trivializationAt_zeroFormFamily_snd
+
+/-- info: 'DifferentialForm.localRep_zeroFormFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.localRep_zeroFormFamily
+
+/-- info: 'DifferentialForm.contMDiff_zeroFormFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contMDiff_zeroFormFamily
+
+/-- info: 'DifferentialForm.toFlat_mextDeriv_zeroFormFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.toFlat_mextDeriv_zeroFormFamily
+
+/-- info: 'DifferentialForm.toFlat_mextDeriv_zeroForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.toFlat_mextDeriv_zeroForm
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.interiorProduct_eq_mextDeriv_zeroFormFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.interiorProduct_eq_mextDeriv_zeroFormFamily
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.isLocallyHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.isLocallyHamiltonian
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

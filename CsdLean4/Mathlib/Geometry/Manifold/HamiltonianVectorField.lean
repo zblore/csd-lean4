@@ -18,9 +18,9 @@ public import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
 **Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 
-Brick **G1** of `specs/generator-layer-scoping.md`: the defining equation of a Hamiltonian vector
-field, `ι_X ω = dH`, at manifold level, together with the pointwise facts that follow from it by
-alternation and linearity alone.
+Bricks **G1**, **G8** (in part) and **G11** of `specs/generator-layer-scoping.md`: the defining
+equation of a Hamiltonian vector field, `ι_X ω = dH`, at manifold level, the pointwise facts that
+follow from it by alternation and linearity alone, and the passage to the closed 1-form `d(ι_X ω) = 0`.
 
 * `DifferentialForm.interiorProduct ω X` — the interior product `ι_X ω`, `x ↦ (ω x).curryLeft (X x)`,
   a 1-form *family* (`interiorProduct_apply`);
@@ -34,7 +34,10 @@ alternation and linearity alone.
   Hamiltonian vector field of `H` is unique** where `ω` is non-degenerate, in particular for a
   symplectic form), `h.add`, `h.smul` (linearity in `H`), `IsHamiltonianVectorField.const`
   (the zero field is Hamiltonian for a constant), and `h.mfderiv_eq` (two Hamiltonians of one field
-  have the same derivative — the input to uniqueness up to a constant, brick G8).
+  have the same derivative — the input to uniqueness up to a constant, brick G8);
+* `h.interiorProduct_eq_mextDeriv_zeroFormFamily` (`ι_X ω = dH` with `dH` the exterior derivative
+  of the `0`-form `H`, `ExteriorDerivative.lean`) and ★ `h.isLocallyHamiltonian` — **Hamiltonian
+  implies locally Hamiltonian** (G11): `d(ι_X ω) = d(dH) = 0` for a `C^∞` energy, by `d ∘ d = 0`.
 
 ## Honest scope
 
@@ -46,14 +49,15 @@ to the family `ι_X ω`, which is meaningful when that family is smooth (brick G
 ⚠️ **No existence.** That a non-degenerate `ω` and an `H` *produce* a Hamiltonian field is brick
 G2 (pointwise, finite-dimensional linear algebra) and G3 (its smoothness); only uniqueness is here.
 
-⚠️ **Not yet: "Hamiltonian implies locally Hamiltonian".** `d(dH) = 0` needs `dH` as the exterior
-derivative of the 0-form `H` — the flat half exists upstream (`extDeriv_constOfIsEmpty`), the
-manifold half (`mextDeriv` of a 0-form family is `mfderiv`) is the first item of G3.
+⚠️ **The converse of G11 is false and not stated.** A locally Hamiltonian field need not be
+Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
+`RecordLayer/PiecewiseHamiltonian.lean`, and `H¹` decides it. Nothing here touches that.
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
-References: `specs/generator-layer-scoping.md` (G1); `Geometry/Manifold/SymplecticForm.lean`
-(`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`);
+References: `specs/generator-layer-scoping.md` (G1, G8, G11); `Geometry/Manifold/SymplecticForm.lean`
+(`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `zeroFormFamily`,
+`toFlat_mextDeriv_zeroFormFamily`, `mextDeriv_mextDeriv`);
 `Analysis/InnerProductSpace/HamiltonianVectorField.lean` (the linear duality this lifts);
 `RecordLayer/CellLawForced.lean` (`IsPhaseHamiltonian`, the linear moment-map equation);
 `Mathlib/Analysis/Normed/Module/Alternating/Curry.lean`; `specs/TERMS.md` (Hamiltonian);
@@ -242,5 +246,36 @@ theorem IsHamiltonianVectorField.unique_of_isSymplectic
     (h : IsHamiltonianVectorField (fun x => β x) X H)
     (h' : IsHamiltonianVectorField (fun x => β x) Y H) : X = Y :=
   funext fun x => h.eq_of_nondegenerate h' x (hβ.nondegenerate x)
+
+/-! ### Hamiltonian implies locally Hamiltonian (G11) -/
+
+namespace IsHamiltonianVectorField
+
+variable {α} {X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : M → ℝ}
+
+/-- `ι_X α = dH` as `1`-form families, with `dH` the exterior derivative of the `0`-form `H`. -/
+theorem interiorProduct_eq_mextDeriv_zeroFormFamily (h : IsHamiltonianVectorField α X H)
+    (hH : ∀ x, MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x) :
+    interiorProduct α X = _root_.mextDeriv (zeroFormFamily (E := E) H) := by
+  funext x
+  refine ContinuousAlternatingMap.ext fun v => ?_
+  have h1 : (interiorProduct α X x v : ℝ)
+      = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x (v 0) :=
+    h.interiorProduct_eq x v
+  have h2 : toFlat (_root_.mextDeriv (zeroFormFamily (E := E) H) x) v
+      = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x (v 0) := by
+    rw [toFlat_mextDeriv_zeroFormFamily (E := E) (hH x)]
+    exact ContinuousAlternatingMap.ofSubsingleton_apply_apply ℝ E ℝ (0 : Fin 1) _ v
+  exact h1.trans h2.symm
+
+/-- ★ **Hamiltonian implies locally Hamiltonian**: `d(ι_X α) = d(dH) = 0` for a `C^∞` energy. -/
+theorem isLocallyHamiltonian (h : IsHamiltonianVectorField α X H)
+    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) :
+    IsLocallyHamiltonian α X := by
+  intro x
+  rw [h.interiorProduct_eq_mextDeriv_zeroFormFamily fun x => (hH x).mdifferentiableAt (by simp)]
+  exact _root_.mextDeriv_mextDeriv _ (contMDiff_zeroFormFamily hH) x
+
+end IsHamiltonianVectorField
 
 end DifferentialForm

@@ -106,6 +106,11 @@ alarming and is not.
   and a vector-field family, with `dH (X) = 0` and uniqueness for a symplectic form proved from it.
   **Inhabited on `ℂℙⁿ` (2026-09-08, G6):** `torusField_isHamiltonianVectorField` — the torus action
   is Hamiltonian for `fsForm` with `2 ∑ θₖ momentMap` as its Hamiltonian (see the moment-map entry).
+  **Hamiltonian implies locally Hamiltonian (2026-09-09, G11):** ★
+  `DifferentialForm.IsHamiltonianVectorField.isLocallyHamiltonian` — `d(ι_X ω) = d(dH) = 0` for a
+  `C^∞` energy, through the `0`-form API of `ExteriorDerivative.lean` (`zeroFormFamily`,
+  `toFlat_mextDeriv_zeroFormFamily`: `d` of a `0`-form is its differential) and `d ∘ d = 0`. The
+  converse is false and not stated: closed-not-exact is the flux obstruction below.
   **NOT established:** existence of `X_H` from non-degeneracy (G2/G3), smoothness of `torusField` as
   a section, and the arena statement `R-016`. Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the

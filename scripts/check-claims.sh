@@ -616,6 +616,12 @@ liouville_isProbability"
 #     non-negative family of Hamiltonians for the phase fields summing to 2 IS
 #     torusHamiltonian = 2 · momentMap. The word names the established object; the standard
 #     symplectic argument of POSITS.md bullet 1 as a theorem. Posit 1 unchanged. CP^n, EVEN.
+#   isLocallyHamiltonian — (2026-09-09, HamiltonianVectorField.lean, G11) the theorem
+#     IsHamiltonianVectorField.isLocallyHamiltonian PROVES that a Hamiltonian vector field
+#     (G1's predicate, a hypothesis) is locally Hamiltonian: d(ι_X ω) = d(dH) = 0 by d ∘ d = 0
+#     on the exterior derivative of the 0-form H (ExteriorDerivative.lean's 0-form API). Both
+#     words name established predicates; the conclusion is closedness. The converse is not
+#     stated (the flux obstruction). Generic 2n-manifold over a real model, parity as G1's.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -676,6 +682,7 @@ torusHamiltonian_single
 mdifferentiable_torusHamiltonian
 eq_add_const_of_isHamiltonianVectorField
 eq_torusHamiltonian_of_nonneg_of_sum
+isLocallyHamiltonian
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH

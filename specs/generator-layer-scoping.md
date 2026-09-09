@@ -31,8 +31,17 @@ this action by computation, the Atiyah–Guillemin–Sternberg theorem untouched
 `fsVolume_map_torusUnitary_smul` / `measurePreserving_torusUnitary_smul` — every map of the torus
 flow preserves `fsVolume n`, with `torusUnitary_add_smul` the one-parameter group law; a corollary
 of `fsVolume_map_smul`, Liouville in the dynamics sense for this one flow, G5 still unscheduled and
-**Posit 3 untouched**. The **S–M** and **S** held; nothing non-mechanical. G2–G5, G7, G11–G13 not
-built. Every rating for step (4)
+**Posit 3 untouched**. The **S–M** and **S** held; nothing non-mechanical. **G11 BUILT 2026-09-09 (7
+pins)**: the `0`-form API `ExteriorDerivative.lean`'s header listed as absent — `zeroFormFamily f`,
+`localRep_zeroFormFamily`, `contMDiff_zeroFormFamily` (the section is `C^∞`, by `contMDiffAt_section`
+and `constOfIsEmptyLIE ∘ f`), the bundled `zeroForm`, ★ `toFlat_mextDeriv_zeroFormFamily` (**`d` of a
+`0`-form is its differential**, from `extDeriv_constOfIsEmpty` and the `MDifferentiableAt.mfderiv`
+chart bridge) — and ★ `IsHamiltonianVectorField.isLocallyHamiltonian` (`HamiltonianVectorField.lean`):
+`ι_X ω = dH` as families, so `d(ι_X ω) = d(dH) = 0` by `mextDeriv_mextDeriv`, for a `C^∞` energy.
+The **M** came in under: the one non-mechanical point was the module-system instance path
+(`Trivial M ℝ x` vs `TangentSpace 𝓘(ℝ, ℝ) (H x)`), finished pointwise through `toFlat` and `trans`,
+never by `rw`. The converse (locally Hamiltonian ⇒ Hamiltonian) is false and not stated. G2–G5, G7,
+G12–G13 not built. Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
 tree now. Every shelf claim below was grep-probed at the pin on 2026-09-08, per
@@ -172,7 +181,7 @@ earlier the same evening.
 | **G8** | **A moment map is unique up to a constant, and the normalisation pins it.** (A) On `ℂℙⁿ`, two `MDifferentiable` Hamiltonians `H, K` of the same field for the same 2-form family differ by a constant. (B) If `Hₖ` is a Hamiltonian for the `k`-th phase field `torusField (Pi.single k 1)`, `Hₖ ≥ 0`, and `∑ₖ Hₖ = 2` (the form's scale), then `Hₖ = torusHamiltonian (Pi.single k 1) = 2 · momentMap · k`. | **M** | High | **High** (ledgers) | The sentence `POSITS.md` bullet 1 calls "the standard symplectic argument, unformalised" becomes a theorem, given G6. **Posit 1 is unchanged**: it asserts that the *dynamics* generates the torus action; G8 only says the map that action has is the corpus's. Appends to `Instances/ProjectiveSpaceMomentMap.lean` (no new file). |
 | **G9** ✅ built 2026-09-09 | The image of `momentMap` is exactly the standard simplex | S–M | High | Medium | `momentMap_sum_eq_one` and `momentMap_nonneg` give `⊆`; `⊇` by exhibiting `mk (fun k => √tₖ)`. Closes the "moment polytope" line for this action, without the convexity theorem. |
 | **G10** ✅ built 2026-09-09 | The torus flow preserves the Fubini–Study volume: `Measure.map (torusUnitary θ • ·) (fsVolume n) = fsVolume n` | S | High | Medium | A one-line corollary of `fsVolume_map_smul`. Liouville in the dynamics sense for the flow G6 built, without G5. |
-| **G11** | Hamiltonian implies locally Hamiltonian | M | High | Low–medium | `mextDeriv` of a 0-form family is `mfderiv` (flat half upstream: `extDeriv_constOfIsEmpty`) plus smoothness of the 0-form section and `d ∘ d = 0`. |
+| **G11** ✅ built 2026-09-09 | Hamiltonian implies locally Hamiltonian | M | High | Low–medium | `mextDeriv` of a 0-form family is `mfderiv` (flat half upstream: `extDeriv_constOfIsEmpty`) plus smoothness of the 0-form section and `d ∘ d = 0`. |
 | **G12** | `fsForm` is analytic, not merely `C^∞` | M–L | Medium | Low | Real-analyticity of `log(1 + ‖z‖²)`; registry line only. |
 | **G13** | The `U(n+1)` moment map `⟨z, iAz⟩/‖z‖²` for a general skew-Hermitian `A` | M–L | Medium | Low–medium | The G6 computation with a non-diagonal velocity; the corpus uses the torus. |
 

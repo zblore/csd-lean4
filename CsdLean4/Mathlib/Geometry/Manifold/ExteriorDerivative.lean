@@ -40,7 +40,13 @@ chart by chart and glued by the flat naturality lemma `extDeriv_pullback`:
   `DifferentialForm.mextDeriv` is the bundled operator
   `DifferentialForm 𝓘(ℝ, E) M ∞ (Fin k) G → DifferentialForm 𝓘(ℝ, E) M ∞ (Fin (k+1)) G`;
 * ★★ `mextDeriv_mextDeriv`, `DifferentialForm.mextDeriv_mextDeriv` — **`d ∘ d = 0`**,
-  transported from `extDeriv_extDeriv_apply`.
+  transported from `extDeriv_extDeriv_apply`;
+* **`0`-forms (brick G11 of `specs/generator-layer-scoping.md`, 2026-09-09):** `zeroFormFamily f`
+  (a function `f : M → G` as a `0`-form family), `localRep_zeroFormFamily`,
+  `contMDiff_zeroFormFamily` (the section is `C^∞` when `f` is), the bundled `zeroForm f hf`, and
+  ★ `toFlat_mextDeriv_zeroFormFamily` / `toFlat_mextDeriv_zeroForm` — **the exterior derivative
+  of a `0`-form is its differential**, `(df)_x = ofSubsingleton 0 (mfderiv f x)`, transported from
+  `extDeriv_constOfIsEmpty`.
 
 The design decisions the scoping note's §4 asked for, all taken the cheap way:
 
@@ -61,8 +67,8 @@ needing `d` on a `C^n` manifold or on a manifold with corners needs a generalisa
 smoothness arithmetic that this file deliberately avoids would come with it.
 
 ⚠️ **What is not here:** the Palais formula, naturality `d(f^*ω) = f^*(dω)` for maps of
-manifolds, linearity, `d` of a `0`-form as the differential, and the Leibniz rule (which needs
-the wedge of *sections*; `specs/exterior-derivative-scoping.md` §5).
+manifolds, linearity, and the Leibniz rule (which needs the wedge of *sections*;
+`specs/exterior-derivative-scoping.md` §5).
 
 ⚠️ **The chart at `x` is `chartAt E x`**, the atlas's own choice. `mextDeriv` is defined through
 it; `localRep_mextDeriv` is what shows the value is the same in every chart.
@@ -72,7 +78,9 @@ References: `specs/exterior-derivative-scoping.md` (the plan, and its §3a on wh
 (step (2a)); `Mathlib/Analysis/Calculus/DifferentialForm/Basic.lean` (`extDeriv`,
 `extDeriv_pullback`, `extDeriv_extDeriv_apply`); `MATHLIB-GAPS.md` (Kahler / symplectic
 manifold API); `specs/BACKLOG.md` (XL, "Manifold exterior calculus"); `specs/future-work.md`.
-Consumer: `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyForm.lean` (`fsForm_mextDeriv`).
+Consumers: `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyForm.lean` (`fsForm_mextDeriv`);
+`Geometry/Manifold/HamiltonianVectorField.lean` (`IsHamiltonianVectorField.isLocallyHamiltonian`, the
+`0`-form API).
 -/
 
 @[expose] public section
@@ -362,5 +370,82 @@ theorem mextDeriv_mextDeriv (α : DifferentialForm (modelWithCornersSelf ℝ E) 
   apply ContMDiffSection.ext
   intro x
   exact _root_.mextDeriv_mextDeriv _ α.contMDiff_toFun x
+
+end DifferentialForm
+
+/-! ### `0`-forms: the exterior derivative is the differential -/
+
+namespace DifferentialForm
+
+/-- A function `f : M → G` as a `0`-form family, `x ↦ constOfIsEmpty (f x)`. -/
+def zeroFormFamily (f : M → G) (x : M) :
+    TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin 0]→L[ℝ] Bundle.Trivial M G x :=
+  (ContinuousAlternatingMap.constOfIsEmpty ℝ E (Fin 0) (f x) : E [⋀^Fin 0]→L[ℝ] G)
+
+theorem trivializationAt_zeroFormFamily_snd (f : M → G) (x₀ y : M)
+    (hy : y ∈ (chartAt E x₀).source) :
+    (trivializationAt (E [⋀^Fin 0]→L[ℝ] G)
+      (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin 0]→L[ℝ] Bundle.Trivial M G x)
+      x₀ ⟨y, zeroFormFamily (E := E) f y⟩).2
+      = ContinuousAlternatingMap.constOfIsEmpty ℝ E (Fin 0) (f y) := by
+  rw [trivializationAt_snd _ x₀ y hy]
+  ext v
+  simp [zeroFormFamily]
+
+/-- The local representative of a `0`-form family is the function read in the chart. -/
+theorem localRep_zeroFormFamily (f : M → G) (x₀ : M) {w : E} (hw : w ∈ (chartAt E x₀).target) :
+    localRep (zeroFormFamily (E := E) f) x₀ w
+      = ContinuousAlternatingMap.constOfIsEmpty ℝ E (Fin 0) (f ((chartAt E x₀).symm w)) :=
+  trivializationAt_zeroFormFamily_snd f x₀ _ ((chartAt E x₀).map_target hw)
+
+/-- The `0`-form family of a `C^∞` function is a `C^∞` section. -/
+theorem contMDiff_zeroFormFamily {f : M → G}
+    (hf : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ G) ∞ f) :
+    ContMDiff (modelWithCornersSelf ℝ E)
+      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^Fin 0]→L[ℝ] G))) ∞
+      (fun x : M => TotalSpace.mk' (E [⋀^Fin 0]→L[ℝ] G) x (zeroFormFamily (E := E) f x)) := by
+  intro x₀
+  rw [contMDiffAt_section]
+  have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ (E [⋀^Fin 0]→L[ℝ] G)) ∞
+      (fun x : M => ContinuousAlternatingMap.constOfIsEmpty ℝ E (Fin 0) (f x)) x₀ :=
+    ((ContinuousAlternatingMap.constOfIsEmptyLIE (𝕜 := ℝ) (E := E) G (Fin 0)).contDiff.contDiffAt
+      (x := f x₀)).contMDiffAt.comp x₀ (hf x₀)
+  refine h1.congr_of_eventuallyEq ?_
+  filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
+  exact trivializationAt_zeroFormFamily_snd f x₀ y hy
+
+/-- ★ **The exterior derivative of a `0`-form is its differential**: for `f` differentiable at
+`x`, `d (zeroFormFamily f) x = ofSubsingleton 0 (mfderiv f x)`, i.e. `(df)_x v = mfderiv f x (v 0)`.
+Stated on the model, as every identity of this file is. -/
+theorem toFlat_mextDeriv_zeroFormFamily {f : M → G} {x : M}
+    (hf : MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ G) f x) :
+    toFlat (_root_.mextDeriv (zeroFormFamily (E := E) f) x)
+      = ContinuousAlternatingMap.ofSubsingleton ℝ E G (0 : Fin 1)
+          (mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ G) f x) := by
+  rw [toFlat_mextDeriv]
+  have hev : localRep (zeroFormFamily (E := E) f) x =ᶠ[𝓝 (chartAt E x x)]
+      fun w => ContinuousAlternatingMap.constOfIsEmpty ℝ E (Fin 0) (f ((chartAt E x).symm w)) := by
+    filter_upwards [(chartAt E x).open_target.mem_nhds (mem_chart_target E x)] with w hw
+    exact localRep_zeroFormFamily f x hw
+  rw [hev.extDeriv_eq, extDeriv_constOfIsEmpty]
+  congr 1
+  rw [hf.mfderiv]
+  simp only [writtenInExtChartAt, Function.comp_def, extChartAt_model_space_eq_id,
+    PartialEquiv.refl_coe, id, extChartAt_coe_symm, extChartAt_coe, modelWithCornersSelf_coe,
+    modelWithCornersSelf_coe_symm, Set.range_id, fderivWithin_univ]
+
+/-- A `C^∞` function as a `0`-form. -/
+def zeroForm (f : M → G)
+    (hf : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ G) ∞ f) :
+    DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 0) G :=
+  ⟨zeroFormFamily (E := E) f, contMDiff_zeroFormFamily hf⟩
+
+/-- ★ `d f` is the differential of `f`, for the bundled `0`-form. -/
+theorem toFlat_mextDeriv_zeroForm {f : M → G}
+    (hf : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ G) ∞ f) (x : M) :
+    toFlat ((zeroForm f hf).mextDeriv x)
+      = ContinuousAlternatingMap.ofSubsingleton ℝ E G (0 : Fin 1)
+          (mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ G) f x) :=
+  toFlat_mextDeriv_zeroFormFamily ((hf x).mdifferentiableAt (by simp))
 
 end DifferentialForm
