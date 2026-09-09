@@ -18,9 +18,10 @@ public import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
 **Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 
-Bricks **G1**, **G8** (in part) and **G11** of `specs/generator-layer-scoping.md`: the defining
-equation of a Hamiltonian vector field, `ι_X ω = dH`, at manifold level, the pointwise facts that
-follow from it by alternation and linearity alone, and the passage to the closed 1-form `d(ι_X ω) = 0`.
+Bricks **G1**, **G2**, **G8** (in part) and **G11** of `specs/generator-layer-scoping.md`: the
+defining equation of a Hamiltonian vector field, `ι_X ω = dH`, at manifold level, the pointwise facts
+that follow from it by alternation and linearity alone, its existence and uniqueness from
+non-degeneracy, and the passage to the closed 1-form `d(ι_X ω) = 0`.
 
 * `DifferentialForm.interiorProduct ω X` — the interior product `ι_X ω`, `x ↦ (ω x).curryLeft (X x)`,
   a 1-form *family* (`interiorProduct_apply`);
@@ -37,7 +38,15 @@ follow from it by alternation and linearity alone, and the passage to the closed
   have the same derivative — the input to uniqueness up to a constant, brick G8);
 * `h.interiorProduct_eq_mextDeriv_zeroFormFamily` (`ι_X ω = dH` with `dH` the exterior derivative
   of the `0`-form `H`, `ExteriorDerivative.lean`) and ★ `h.isLocallyHamiltonian` — **Hamiltonian
-  implies locally Hamiltonian** (G11): `d(ι_X ω) = d(dH) = 0` for a `C^∞` energy, by `d ∘ d = 0`.
+  implies locally Hamiltonian** (G11): `d(ι_X ω) = d(dH) = 0` for a `C^∞` energy, by `d ∘ d = 0`;
+* **G2, existence.** `flatAt α x : E →ₗ[ℝ] Module.Dual ℝ E` (the flat map `v ↦ α x (v, ·)`),
+  `flatAt_injective` (non-degeneracy at `x` is its injectivity), `flatEquiv` (hence bijective, `E`
+  finite-dimensional: `Subspace.dual_finrank_eq`), `hamiltonianVectorAt α x hnd L` (the unique `v`
+  with `α x (v, ·) = L`, ★ `apply_hamiltonianVectorAt`, `eq_hamiltonianVectorAt`), and ★★
+  `hamiltonianVectorField α hnd H = fun x => (ω♭ₓ)⁻¹ (dH_x)` with ★★
+  `hamiltonianVectorField_isHamiltonianVectorField` (**existence**) and
+  `h.eq_hamiltonianVectorField` (**uniqueness**: every Hamiltonian vector field of `H` is it);
+  `IsSymplectic.hamiltonianVectorField` and its two theorems specialise to a symplectic form.
 
 ## Honest scope
 
@@ -46,8 +55,9 @@ follow from it by alternation and linearity alone, and the passage to the closed
 to the family `ι_X ω`, which is meaningful when that family is smooth (brick G3) and junk otherwise
 — exactly as `fderiv` of a non-differentiable function is junk.
 
-⚠️ **No existence.** That a non-degenerate `ω` and an `H` *produce* a Hamiltonian field is brick
-G2 (pointwise, finite-dimensional linear algebra) and G3 (its smoothness); only uniqueness is here.
+⚠️ **Existence is pointwise.** `hamiltonianVectorField` is a family `Π x, TangentSpace 𝓘 x` built
+by finite-dimensional linear algebra at each point; that it is a *smooth section* when `α` and `H`
+are smooth is brick G3, not here.
 
 ⚠️ **The converse of G11 is false and not stated.** A locally Hamiltonian field need not be
 Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
@@ -55,7 +65,7 @@ Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
-References: `specs/generator-layer-scoping.md` (G1, G8, G11); `Geometry/Manifold/SymplecticForm.lean`
+References: `specs/generator-layer-scoping.md` (G1, G2, G8, G11); `Geometry/Manifold/SymplecticForm.lean`
 (`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `zeroFormFamily`,
 `toFlat_mextDeriv_zeroFormFamily`, `mextDeriv_mextDeriv`);
 `Analysis/InnerProductSpace/HamiltonianVectorField.lean` (the linear duality this lifts);
@@ -229,6 +239,117 @@ theorem mfderiv_eq (h : IsHamiltonianVectorField α X H) (h' : IsHamiltonianVect
 
 end IsHamiltonianVectorField
 
+/-! ### Existence: the Hamiltonian vector field of `H` from non-degeneracy (G2) -/
+
+/-- `![v, w]` updated in its second slot. -/
+theorem update_vecCons_one {β : Type*} (v w z : β) :
+    Function.update ![v, w] 1 z = ![v, z] := by
+  funext i
+  fin_cases i <;> simp
+
+theorem apply_add_right (x : M) (v a b : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    α x ![v, a + b] = α x ![v, a] + α x ![v, b] := by
+  have h := (α x).map_update_add ![v, a] 1 a b
+  simpa only [update_vecCons_one] using h
+
+theorem apply_smul_right (x : M) (c : ℝ) (v a : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    α x ![v, c • a] = c • α x ![v, a] := by
+  have h := (α x).map_update_smul ![v, a] 1 c a
+  simpa only [update_vecCons_one] using h
+
+/-- The flat map of a 2-form family at `x`, `v ↦ α x (v, ·)`, as a linear map into the dual of
+the model space. -/
+def flatAt (x : M) : E →ₗ[ℝ] Module.Dual ℝ E :=
+  LinearMap.mk₂ ℝ (fun v w => (α x ![v, w] : ℝ))
+    (fun a b w => apply_add_left α x a b w)
+    (fun c a w => apply_smul_left α x c a w)
+    (fun v a b => apply_add_right α x v a b)
+    (fun c v a => apply_smul_right α x c v a)
+
+theorem flatAt_apply (x : M) (v w : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    flatAt α x v w = α x ![v, w] := rfl
+
+/-- Non-degeneracy at `x` is injectivity of the flat map. -/
+theorem flatAt_injective (x : M)
+    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0) :
+    Function.Injective (flatAt α x) := by
+  refine (injective_iff_map_eq_zero _).2 fun v hv => ?_
+  by_contra hne
+  obtain ⟨w, hw⟩ := hnd v hne
+  exact hw (LinearMap.congr_fun hv w)
+
+section FiniteDimensional
+
+variable [FiniteDimensional ℝ E]
+
+/-- The flat map as a linear equivalence, where `α` is non-degenerate at `x`: injective
+(`flatAt_injective`), hence bijective since `E` and its dual have the same finite dimension
+(`Subspace.dual_finrank_eq`, `LinearMap.linearEquivOfInjective`). -/
+def flatEquiv (x : M)
+    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0) :
+    E ≃ₗ[ℝ] Module.Dual ℝ E :=
+  LinearMap.linearEquivOfInjective (flatAt α x) (flatAt_injective α x hnd)
+    Subspace.dual_finrank_eq.symm
+
+theorem flatEquiv_apply (x : M)
+    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
+    (v : E) : flatEquiv α x hnd v = flatAt α x v :=
+  LinearMap.linearEquivOfInjective_apply _ _ _
+
+/-- **The Hamiltonian vector of a covector**: the unique tangent vector `v` at `x` with
+`α x (v, ·) = L`, where `α` is non-degenerate at `x`. -/
+def hamiltonianVectorAt (x : M)
+    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
+    (L : E →L[ℝ] ℝ) : TangentSpace (modelWithCornersSelf ℝ E) x :=
+  (flatEquiv α x hnd).symm (L : E →ₗ[ℝ] ℝ)
+
+/-- ★ The defining property: `α x (X_L, w) = L w`. -/
+theorem apply_hamiltonianVectorAt (x : M)
+    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
+    (L : E →L[ℝ] ℝ) (w : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    (α x ![hamiltonianVectorAt α x hnd L, w] : ℝ) = L w := by
+  have h := LinearMap.congr_fun ((flatEquiv α x hnd).apply_symm_apply (L : E →ₗ[ℝ] ℝ)) w
+  rw [flatEquiv_apply] at h
+  exact h
+
+/-- Uniqueness: any tangent vector with `α x (v, ·) = L` is the Hamiltonian vector of `L`. -/
+theorem eq_hamiltonianVectorAt (x : M)
+    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
+    (L : E →L[ℝ] ℝ) {v : TangentSpace (modelWithCornersSelf ℝ E) x}
+    (hv : ∀ w, (α x ![v, w] : ℝ) = L w) : v = hamiltonianVectorAt α x hnd L := by
+  apply (flatEquiv α x hnd).injective
+  rw [hamiltonianVectorAt, LinearEquiv.apply_symm_apply]
+  exact (flatEquiv_apply α x hnd v).trans (LinearMap.ext fun w => hv w)
+
+/-- ★★ **The Hamiltonian vector field of `H`**, for a 2-form family non-degenerate at every point:
+`x ↦ (ω♭ₓ)⁻¹ (dH_x)`. -/
+def hamiltonianVectorField
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (H : M → ℝ) (x : M) : TangentSpace (modelWithCornersSelf ℝ E) x :=
+  hamiltonianVectorAt α x (hnd x)
+    (mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x)
+
+/-- ★★ **Existence**: the constructed field is a Hamiltonian vector field of `H`. -/
+theorem hamiltonianVectorField_isHamiltonianVectorField
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (H : M → ℝ) : IsHamiltonianVectorField α (hamiltonianVectorField α hnd H) H :=
+  fun x v => apply_hamiltonianVectorAt α x (hnd x) _ v
+
+variable {α} in
+/-- **Uniqueness**: every Hamiltonian vector field of `H` is the constructed one. -/
+theorem IsHamiltonianVectorField.eq_hamiltonianVectorField
+    {X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : M → ℝ}
+    (h : IsHamiltonianVectorField α X H)
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0) :
+    X = hamiltonianVectorField α hnd H :=
+  funext fun x => eq_hamiltonianVectorAt α x (hnd x) _ (h x)
+
+end FiniteDimensional
+
+
 /-! ### Locally Hamiltonian fields, and uniqueness for a symplectic form -/
 
 variable [IsManifold (modelWithCornersSelf ℝ E) ∞ M]
@@ -277,5 +398,34 @@ theorem isLocallyHamiltonian (h : IsHamiltonianVectorField α X H)
   exact _root_.mextDeriv_mextDeriv _ (contMDiff_zeroFormFamily hH) x
 
 end IsHamiltonianVectorField
+
+/-! ### The Hamiltonian vector field of a symplectic form (G2) -/
+
+section Symplectic
+
+variable [FiniteDimensional ℝ E]
+
+/-- The Hamiltonian vector field of `H` for a symplectic form. -/
+def IsSymplectic.hamiltonianVectorField
+    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x :=
+  DifferentialForm.hamiltonianVectorField (fun x => β x) hβ.nondegenerate H
+
+/-- ★★ For a symplectic form, `H` has a Hamiltonian vector field. -/
+theorem IsSymplectic.hamiltonianVectorField_isHamiltonianVectorField
+    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) :
+    IsHamiltonianVectorField (fun x => β x) (hβ.hamiltonianVectorField H) H :=
+  DifferentialForm.hamiltonianVectorField_isHamiltonianVectorField (fun x => β x) hβ.nondegenerate H
+
+/-- For a symplectic form, every Hamiltonian vector field of `H` is `hβ.hamiltonianVectorField H`. -/
+theorem IsHamiltonianVectorField.eq_isSymplectic_hamiltonianVectorField
+    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    {X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : M → ℝ}
+    (h : IsHamiltonianVectorField (fun x => β x) X H) : X = hβ.hamiltonianVectorField H :=
+  h.eq_hamiltonianVectorField hβ.nondegenerate
+
+end Symplectic
+
 
 end DifferentialForm

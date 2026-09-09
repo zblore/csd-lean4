@@ -122,8 +122,17 @@ alarming and is not.
   `H`, the velocity field of `p ↦ exp(-itH) • p` on `ℂℙⁿ` (the corpus's `schrodingerUnitary`, proved to
   be that velocity) satisfies `ι_X ω_FS = dH` with `H = -2 ⟨H⟩ = -2 ⟪z, Hz⟫.re / ‖z‖²`; the torus (G6) is
   the diagonal case. This is the manifold form of the `U(n+1)` moment map.
-  **NOT established:** existence of `X_H` from non-degeneracy (G2/G3), smoothness of `torusField` or
-  `schrodingerField` as a section, and the arena statement `R-016`. Marker: `TERM-SCOPE(Hamiltonian)`.
+  **Existence and uniqueness from non-degeneracy (2026-09-09, G2):** ★★
+  `DifferentialForm.hamiltonianVectorField α hnd H = fun x => (ω♭ₓ)⁻¹ (dH_x)` (same module as G1) —
+  where the 2-form family is non-degenerate at every point and the model is finite-dimensional,
+  every `H` has a Hamiltonian vector field (`hamiltonianVectorField_isHamiltonianVectorField`) and
+  it is the only one (`IsHamiltonianVectorField.eq_hamiltonianVectorField`);
+  `IsSymplectic.hamiltonianVectorField` for a symplectic form. The torus and Schrödinger fields on
+  `ℂℙⁿ` are these constructed fields (`torusField_eq_hamiltonianVectorField`,
+  `schrodingerField_eq_hamiltonianVectorField`). Pointwise: a family, not yet a smooth section.
+  **NOT established:** smoothness of `hamiltonianVectorField`, `torusField` or `schrodingerField` as
+  a section of the tangent bundle (G3), and the arena statement `R-016`. Marker:
+  `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,
   so no global generator exists). Retained deliberately for pin stability, with the correction at

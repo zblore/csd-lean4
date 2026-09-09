@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
 public import CsdLean4.LF4.ManyToOneSchrodingerDerived
 
 /-!
@@ -18,7 +19,7 @@ the *restricted* senses of these words; `specs/TERMS.md` records what is backed 
 `CSD.LF4.schrodingerUnitary` (the unitary `exp(-itH)`) and its derivative
 `CSD.LF4.schrodingerUnitary_hasDerivAt` as the flow whose generator it identifies.
 
-Brick **G13** of `specs/generator-layer-scoping.md`: the `U(n+1)` moment map. For a Hermitian
+Brick **G13** of `specs/generator-layer-scoping.md` (and the two G2 corollaries): the `U(n+1)` moment map. For a Hermitian
 `H`, the unitary flow `p ↦ exp(-itH) • p` on `ℂℙⁿ` — the corpus's projected Schrödinger flow — is
 Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, the expectation value
 `⟪z, Hz⟫ / ‖z‖²` up to the form's convention. Brick G6 (the torus) is the diagonal case.
@@ -42,7 +43,10 @@ Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, th
   for the Fubini–Study form, with `-2 ⟨H⟩` as its Hamiltonian**;
 * `schrodingerChartField_neg_diagonal`, `schrodingerHamiltonian_neg_diagonal` — for
   `H = -diag θ` the field and the Hamiltonian are G6's `torusChartField` and `torusHamiltonian`:
-  the torus is the diagonal case.
+  the torus is the diagonal case;
+* `torusField_eq_hamiltonianVectorField`, `schrodingerField_eq_hamiltonianVectorField` — both
+  fields are **the** Hamiltonian vector fields `(ω♭)⁻¹ dH` of their Hamiltonians for the symplectic
+  form `fsForm` (G2's existence-and-uniqueness construction, `IsSymplectic.hamiltonianVectorField`).
 
 ## Honest scope
 
@@ -440,5 +444,22 @@ theorem schrodingerHamiltonian_neg_diagonal (θ : Fin (n + 1) → ℝ) :
     Finset.mul_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   ring
+
+/-! ### Both fields are THE Hamiltonian vector fields of their Hamiltonians (G2) -/
+
+/-- The torus field is the Hamiltonian vector field `(ω♭)⁻¹ dH` of `torusHamiltonian θ` for the
+symplectic form `fsForm` (G2 + G6). -/
+theorem torusField_eq_hamiltonianVectorField (θ : Fin (n + 1) → ℝ) :
+    torusField θ = (fsForm_isSymplectic n).hamiltonianVectorField (torusHamiltonian θ) :=
+  (torusField_isHamiltonianVectorField θ).eq_isSymplectic_hamiltonianVectorField
+    (fsForm_isSymplectic n)
+
+/-- The Schrödinger field is the Hamiltonian vector field `(ω♭)⁻¹ dH` of `-2 ⟨H⟩` for the
+symplectic form `fsForm` (G2 + G13). -/
+theorem schrodingerField_eq_hamiltonianVectorField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) :
+    schrodingerField H = (fsForm_isSymplectic n).hamiltonianVectorField (schrodingerHamiltonian H) :=
+  (schrodingerField_isHamiltonianVectorField hH).eq_isSymplectic_hamiltonianVectorField
+    (fsForm_isSymplectic n)
 
 end Projectivization

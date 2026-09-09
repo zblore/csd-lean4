@@ -261,7 +261,9 @@ IsSymplectic
 IsHamiltonianVectorField
 IsLocallyHamiltonian
 torusHamiltonian
-schrodingerHamiltonian"
+schrodingerHamiltonian
+hamiltonianVectorAt
+hamiltonianVectorField"
 #
 # PARITY LEDGER (why each name is earned).
 # ⚠️ Corrected 2026-08-04, same day it was written: the first draft asserted "all on
@@ -346,6 +348,15 @@ schrodingerHamiltonian"
 #       the MANIFOLD for the velocity field of the flow exp(-itH) • p (itself proved to be that
 #       velocity, hasDerivAt_chartFun_schrodingerUnitary); G6's torus is the diagonal case
 #       (schrodingerHamiltonian_neg_diagonal). Arena CP^n, real dimension 2n.        EVEN.
+#                                                                  EARNED (manifold-level).
+#     hamiltonianVectorAt / hamiltonianVectorField — (Geometry/Manifold/HamiltonianVectorField.lean,
+#       2026-09-09, brick G2) the vector (ω♭ₓ)⁻¹ L at a point where the 2-form family is
+#       non-degenerate, and the family x ↦ (ω♭ₓ)⁻¹ (dH_x). The word is earned by the theorems
+#       beside them: apply_hamiltonianVectorAt (α x (X_L, ·) = L) and
+#       hamiltonianVectorField_isHamiltonianVectorField (the family IS a Hamiltonian vector field
+#       of H, G1's predicate), with uniqueness IsHamiltonianVectorField.eq_hamiltonianVectorField.
+#       Generic manifold over a finite-dimensional real model; parity as G1's predicate (EVEN
+#       whenever non-degeneracy holds everywhere — the same argument as IsSymplectic).
 #                                                                  EARNED (manifold-level).
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
@@ -640,6 +651,19 @@ liouville_isProbability"
 #     equation ι_X ω_FS = dH for the velocity field of exp(-itH) • p on CP^n and
 #     H = -2 ⟨H⟩: the Schrödinger flow on the symplectic MANIFOLD is Hamiltonian, for every
 #     Hermitian generator. The word names the established equation. CP^n, EVEN.
+#   apply_hamiltonianVectorAt / eq_hamiltonianVectorAt /
+#   hamiltonianVectorField_isHamiltonianVectorField — (2026-09-09, HamiltonianVectorField.lean, G2)
+#     the defining property, uniqueness, and EXISTENCE of the Hamiltonian vector field from
+#     non-degeneracy (declared objects above); the last one PROVES G1's predicate for the
+#     constructed family. Generic 2n-manifold over a finite-dimensional real model, parity as G1's.
+#   IsSymplectic — the guard reads dotted names up to the dot; the theorem is
+#     IsSymplectic.hamiltonianVectorField_isHamiltonianVectorField (2026-09-09, G2): for a
+#     symplectic form every H has a Hamiltonian vector field. The structure IsSymplectic is
+#     declared in the def inventory; this line is its theorem-namespace twin. EVEN.
+#   torusField_eq_hamiltonianVectorField / schrodingerField_eq_hamiltonianVectorField —
+#     (2026-09-09, ProjectiveSpaceSchrodingerFlow.lean, G2 corollaries) the torus field (G6) and the
+#     Schrödinger field (G13) ARE the constructed Hamiltonian vector fields of their Hamiltonians
+#     for fsForm, by uniqueness. CP^n, EVEN.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -706,6 +730,12 @@ schrodingerHamiltonian_chartInv
 hasMFDerivAt_schrodingerHamiltonian
 schrodingerField_isHamiltonianVectorField
 schrodingerHamiltonian_neg_diagonal
+apply_hamiltonianVectorAt
+eq_hamiltonianVectorAt
+hamiltonianVectorField_isHamiltonianVectorField
+IsSymplectic
+torusField_eq_hamiltonianVectorField
+schrodingerField_eq_hamiltonianVectorField
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH

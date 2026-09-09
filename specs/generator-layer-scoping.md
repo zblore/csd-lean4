@@ -55,7 +55,20 @@ symmetry of `H` (`isSymmetric_toEuclideanLin_iff`); the chart Hamiltonian is dif
 `HasFDerivAt.inner` along the affine lift, no coordinate sums anywhere. Shelf facts: this Mathlib's
 `RCLike.inner_apply` puts the conjugate on the RIGHT; `inner_self_eq_norm_sq_to_K` casts through
 `RCLike.ofReal`, not `Complex.ofReal`, so work with `re`/`im` of the atoms instead. Posit 1 untouched.
-G2–G5, G7, G12 not built. Every rating for step (4)
+**G2 BUILT 2026-09-09 (14 pins, `HamiltonianVectorField.lean` + two corollaries in
+`ProjectiveSpaceSchrodingerFlow.lean`)** exactly as §2 priced: `flatAt α x : E →ₗ[ℝ] Module.Dual ℝ E`
+is `v ↦ α x (v, ·)` (`LinearMap.mk₂` on the four slot-linearity lemmas), non-degeneracy at `x` is its
+injectivity, `Subspace.dual_finrank_eq` makes it a `LinearEquiv`, and ★★ `hamiltonianVectorField α hnd
+H = fun x => (ω♭ₓ)⁻¹ (dH_x)` with **existence** (`hamiltonianVectorField_isHamiltonianVectorField`)
+and **uniqueness** (`IsHamiltonianVectorField.eq_hamiltonianVectorField`); `IsSymplectic.
+hamiltonianVectorField` specialises. On `ℂℙⁿ` the torus field and the Schrödinger field ARE the
+constructed fields (`torusField_eq_hamiltonianVectorField`, `schrodingerField_eq_hamiltonianVectorField`).
+The **M** held; the only friction was the instance path `E` vs `TangentSpace 𝓘 x` — every `rw` of a
+`flatAt_apply`-shaped lemma across it fails, `exact`/`trans` by defeq succeeds — and the fact that
+inside a `theorem IsSymplectic.foo` declaration a bare name resolves into `IsSymplectic.` first (write
+`DifferentialForm.foo`). Pointwise only; the smooth section is G3. Shelf fact: nobody imported
+`Instances/ProjectiveSpaceFubiniStudySymplectic.lean` before this — it was a root-only leaf.
+G3–G5, G7, G12 not built. Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
 tree now. Every shelf claim below was grep-probed at the pin on 2026-09-08, per
@@ -109,7 +122,7 @@ consumed in chart form and the general pullback was never built).
 | # | Brick | Cx | P(success) | Value | Depends on | What it lands, honestly |
 |---|---|---|---|---|---|---|
 | **G1** | `IsHamiltonianVectorField ω X H`: for a 2-form `ω`, a vector field `X : Π x, TangentSpace 𝓘 x` and `H : M → ℝ`, the equation `∀ x v, ω x ![X x, v] = mfderiv 𝓘 𝓘(ℝ, ℝ) H x v`; with `IsLocallyHamiltonian ω X := mextDeriv (ι_X ω) = 0` beside it | **S** | High | Medium | — | The word "Hamiltonian" at manifold level, which `TERMS.md` lacks. A predicate, nothing derived; the ℂℙⁿ inhabitants come from G6. `ι_X ω` is `curryLeft` pointwise; it is a 1-form as a *family*, and its smoothness is G3's problem, not G1's |
-| **G2** | Existence and uniqueness of `X_H` pointwise: on a finite-dimensional tangent space `ω♭ x : v ↦ ω x (v, ·)` is injective by non-degeneracy, hence bijective, so `X_H x := (ω♭ x)⁻¹ (dH x)` | **M** | High | Medium | G1 | `TangentSpace 𝓘 x = E` by `rfl`; `LinearMap.injective_iff_surjective` on `E` and its dual. Pointwise only |
+| **G2** ✅ built 2026-09-09 | Existence and uniqueness of `X_H` pointwise: on a finite-dimensional tangent space `ω♭ x : v ↦ ω x (v, ·)` is injective by non-degeneracy, hence bijective, so `X_H x := (ω♭ x)⁻¹ (dH x)` | **M** | High | Medium | G1 | `TangentSpace 𝓘 x = E` by `rfl`; `LinearMap.injective_iff_surjective` on `E` and its dual. Pointwise only |
 | **G3** | `X_H` is a smooth section of the tangent bundle | **M–L** | Medium–high | Medium (gates G4) | G2 | Inversion of `ω♭` along the bundle: `contDiffAt_ring_inverse` on the units plus the `localRep` chart plumbing that `ExteriorDerivative.lean` already does for forms. This is the `VectorBundle/Hom.lean` pattern again |
 | **G4** | Integral curves of `X_H` exist and are unique, and `H` is conserved along them (`ι_X ω (X) = 0` by alternation) | **S–M** | High | Medium | G3 | Direct application of Mathlib's `exists_isMIntegralCurveAt_of_contMDiffAt` and `isMIntegralCurve_eq_of_contMDiff`; lifts `conserved_along_translationCurve` from the chart to the manifold |
 | **G5** | Liouville at manifold level: the time-`t` map of `X_H` preserves `topFormMeasure (ω^{∧n})` | **XL** | Low | Medium, and less than it looks | G3, and two absent Mathlib layers | ⛔ Needs global flows (absent) and `L_X ω = 0` by Cartan's formula (absent). It would replace the posit `ConstraintDynamics.flow_preserves` by a theorem — **for Hamiltonian flows only**, and the corpus's measurement pieces are *not* globally Hamiltonian (the flux correction), so it would not touch the dynamics the record layer actually uses. **Not scheduled** |
