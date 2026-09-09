@@ -4179,6 +4179,90 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.schrodingerField_eq_hamiltonianVectorField
 
+/-! ### G3: the Hamiltonian vector field is a C^∞ section (HamiltonianVectorField.lean, ProjectiveSpaceSchrodingerFlow.lean, 2026-09-09) -/
+
+-- Brick G3 of specs/generator-layer-scoping.md. ★★★ contMDiff_hamiltonianVectorField: for a C^∞
+-- 2-form family non-degenerate everywhere and a C^∞ energy, G2's field x ↦ (ω♭ₓ)⁻¹ (dH_x) is a C^∞
+-- section of the tangent bundle. Route (the VectorBundle/Hom pattern): in the tangent
+-- trivialisation at x₀ the field is localHamiltonianVector — ContinuousLinearMap.inverse of
+-- curryLeft (localRep α x₀ w) applied to ofSubsingletonLIE (fderiv (H ∘ chart⁻¹) w) — by uniqueness
+-- at the flat level (★★ trivializationAt_hamiltonianVectorField_snd: the trivialisation intertwines
+-- α with its local representative, trivializationAt_snd, and dH with the chart derivative,
+-- mfderiv_comp); the local representative is non-degenerate on the chart target
+-- (localRep_nondegenerate, through symmL/continuousLinearMapAt); and ★★
+-- contDiffAt_localHamiltonianVector is contDiffAt_map_inverse at the invertible point (flatCLE:
+-- G2's flatEquiv on the model, made continuous by finite dimension), curryLeft a bounded linear map,
+-- contDiffAt_localRep, and fderiv_right. Corollaries on CP^n: both Hamiltonians are C^∞
+-- (inner-product calculus in the chart, contMDiffAt_iff), so the torus field (G6) and the
+-- Schrödinger field (G13) are C^∞ vector fields. Shelf facts: the alternating-map space has no
+-- FiniteDimensional instance and `→L` types over it pick the raw topological-module instances, so
+-- the flat map is stated through curryLeft and boundedness, never as a CLM on that space; a
+-- constant family `fun _ => ξ` must be wrapped (flatFamily) to be syntactically fibre-typed.
+
+/-- info: 'DifferentialForm.flatFamily_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.flatFamily_nondegenerate
+
+/-- info: 'DifferentialForm.apply_flatVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.apply_flatVec
+
+/-- info: 'DifferentialForm.eq_flatVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.eq_flatVec
+
+/-- info: 'DifferentialForm.flatCLE_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.flatCLE_apply
+
+/-- info: 'DifferentialForm.coe_flatCLE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.coe_flatCLE
+
+/-- info: 'DifferentialForm.inverse_curryLeft_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.inverse_curryLeft_apply
+
+/-- info: 'DifferentialForm.localRep_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.localRep_nondegenerate
+
+/-- info: 'DifferentialForm.trivializationAt_hamiltonianVectorField_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.trivializationAt_hamiltonianVectorField_snd
+
+/-- info: 'DifferentialForm.contDiffAt_localHamiltonianVector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contDiffAt_localHamiltonianVector
+
+/-- info: 'DifferentialForm.contMDiff_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contMDiff_hamiltonianVectorField
+
+/-- info: 'DifferentialForm.IsSymplectic.contMDiff_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.contMDiff_hamiltonianVectorField
+
+/-- info: 'Projectivization.contDiff_schrodingerChartHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_schrodingerChartHam
+
+/-- info: 'Projectivization.contMDiff_schrodingerHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_schrodingerHamiltonian
+
+/-- info: 'Projectivization.contMDiff_torusHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_torusHamiltonian
+
+/-- info: 'Projectivization.contMDiff_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_schrodingerField
+
+/-- info: 'Projectivization.contMDiff_torusField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_torusField
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

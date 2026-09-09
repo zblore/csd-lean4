@@ -19,7 +19,7 @@ the *restricted* senses of these words; `specs/TERMS.md` records what is backed 
 `CSD.LF4.schrodingerUnitary` (the unitary `exp(-itH)`) and its derivative
 `CSD.LF4.schrodingerUnitary_hasDerivAt` as the flow whose generator it identifies.
 
-Brick **G13** of `specs/generator-layer-scoping.md` (and the two G2 corollaries): the `U(n+1)` moment map. For a Hermitian
+Brick **G13** of `specs/generator-layer-scoping.md` (with the G2 and G3 corollaries): the `U(n+1)` moment map. For a Hermitian
 `H`, the unitary flow `p ↦ exp(-itH) • p` on `ℂℙⁿ` — the corpus's projected Schrödinger flow — is
 Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, the expectation value
 `⟪z, Hz⟫ / ‖z‖²` up to the form's convention. Brick G6 (the torus) is the diagonal case.
@@ -46,7 +46,11 @@ Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, th
   the torus is the diagonal case;
 * `torusField_eq_hamiltonianVectorField`, `schrodingerField_eq_hamiltonianVectorField` — both
   fields are **the** Hamiltonian vector fields `(ω♭)⁻¹ dH` of their Hamiltonians for the symplectic
-  form `fsForm` (G2's existence-and-uniqueness construction, `IsSymplectic.hamiltonianVectorField`).
+  form `fsForm` (G2's existence-and-uniqueness construction, `IsSymplectic.hamiltonianVectorField`);
+* `contDiff_schrodingerChartHam`, ★ `contMDiff_schrodingerHamiltonian`, ★ `contMDiff_torusHamiltonian`
+  (both Hamiltonians are `C^∞` on `ℂℙⁿ`), and ★★ `contMDiff_schrodingerField`, ★★
+  `contMDiff_torusField` — **both fields are `C^∞` vector fields**, `C^∞` sections of the tangent
+  bundle, by G2's identification and G3's smoothness theorem.
 
 ## Honest scope
 
@@ -59,9 +63,9 @@ both.
 `LF4/ManyToOneSchrodingerDerived.lean`, under the `L2Operator` matrix norm (the one under which
 `hasDerivAt_exp_smul_const` synthesises); this module opens that scope and adds nothing to it.
 
-⚠️ **A family, not a smooth section, and no integral curves.** As in G6, `schrodingerField` is a
-vector-field family; that the flow's orbits are its integral curves on the *manifold* is not
-stated (G3/G4), and Liouville for it is the unitary invariance of `fsVolume` (G10), nothing more.
+⚠️ **No integral curves.** `schrodingerField` and `torusField` are `C^∞` sections now (G3), but
+that the flow's orbits are their integral curves on the *manifold* is not stated (G4), and
+Liouville for the flow is the unitary invariance of `fsVolume` (G10), nothing more.
 
 ⚠️ **Posits untouched.** Posit 1 asserts that the dynamics generates the pointer torus; this
 module says which Hamiltonian a *given* unitary flow has, for every Hermitian `H`, and does not
@@ -461,5 +465,74 @@ theorem schrodingerField_eq_hamiltonianVectorField {H : Matrix (Fin (n + 1)) (Fi
     schrodingerField H = (fsForm_isSymplectic n).hamiltonianVectorField (schrodingerHamiltonian H) :=
   (schrodingerField_isHamiltonianVectorField hH).eq_isSymplectic_hamiltonianVectorField
     (fsForm_isSymplectic n)
+
+/-! ### The Hamiltonians are `C^∞`, so both fields are `C^∞` vector fields (G3) -/
+
+/-- The chart Hamiltonian is `C^∞`: inner-product calculus along the affine lift. -/
+theorem contDiff_schrodingerChartHam (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (i : Fin (n + 1)) :
+    ContDiff ℝ ∞ (schrodingerChartHam H i) := by
+  have hv : ContDiff ℝ ∞ (insertOne (n := n) i) := by
+    have h : insertOne (n := n) i = fun w => insertOne i 0 + insertZeroCLM i w :=
+      funext (insertOne_eq_add i)
+    rw [h]
+    exact contDiff_const.add (insertZeroCLM i).contDiff
+  have hT : ContDiff ℝ ∞ (fun w => Matrix.toEuclideanCLM (𝕜 := ℂ) H (insertOne i w)) :=
+    ((Matrix.toEuclideanCLM (𝕜 := ℂ) H).restrictScalars ℝ).contDiff.comp hv
+  have hN : ContDiff ℝ ∞
+      (fun w => (inner ℂ (insertOne i w) (Matrix.toEuclideanCLM (𝕜 := ℂ) H (insertOne i w))).re) :=
+    Complex.reCLM.contDiff.comp (hv.inner (𝕜 := ℂ) hT)
+  have hD : ContDiff ℝ ∞ (fun w => ‖insertOne i w‖ ^ 2) := by
+    have e : (fun w => ‖insertOne i w‖ ^ 2)
+        = fun w => (inner ℂ (insertOne i w) (insertOne i w)).re :=
+      funext fun w => by simpa using (inner_self_eq_norm_sq (𝕜 := ℂ) (insertOne i w)).symm
+    rw [e]
+    exact Complex.reCLM.contDiff.comp (hv.inner (𝕜 := ℂ) hv)
+  have hinv : ContDiff ℝ ∞ (fun w => (‖insertOne i w‖ ^ 2)⁻¹) :=
+    hD.inv fun w => (norm_sq_insertOne_pos i w).ne'
+  exact contDiff_const.mul (hN.mul hinv)
+
+/-- ★ The Hamiltonian of the Schrödinger flow is `C^∞` on `ℂℙⁿ`. -/
+theorem contMDiff_schrodingerHamiltonian (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :
+    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ ℝ) ∞
+      (schrodingerHamiltonian (n := n) H) := by
+  intro x
+  rw [contMDiffAt_iff]
+  refine ⟨(continuous_schrodingerHamiltonian H).continuousAt, ?_⟩
+  have hw : (extChartAt (modelWithCornersSelf ℝ ℝ) (schrodingerHamiltonian H x)
+      ∘ schrodingerHamiltonian H ∘ (extChartAt (modelWithCornersSelf ℝ (Fin n → ℂ)) x).symm)
+      = schrodingerChartHam H (idx x) := by
+    funext w
+    simp only [Function.comp, extChartAt_model_space_eq_id, PartialEquiv.refl_coe, id,
+      extChartAt_coe_symm, modelWithCornersSelf_coe_symm]
+    exact schrodingerHamiltonian_chartInv H (idx x) w
+  rw [hw, modelWithCornersSelf_coe, Set.range_id, contDiffWithinAt_univ]
+  exact (contDiff_schrodingerChartHam H (idx x)).contDiffAt
+
+/-- ★ The Hamiltonian of the torus action is `C^∞` on `ℂℙⁿ` (the diagonal case). -/
+theorem contMDiff_torusHamiltonian (θ : Fin (n + 1) → ℝ) :
+    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ ℝ) ∞
+      (torusHamiltonian (n := n) θ) := by
+  rw [← schrodingerHamiltonian_neg_diagonal]
+  exact contMDiff_schrodingerHamiltonian _
+
+/-- ★★ **The Schrödinger vector field on `ℂℙⁿ` is a `C^∞` vector field** (a `C^∞` section of the
+tangent bundle): it is the Hamiltonian vector field of a `C^∞` energy for the symplectic form
+`fsForm` (G2), and those are smooth (G3). -/
+theorem contMDiff_schrodingerField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) :
+    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
+      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod (modelWithCornersSelf ℝ (Fin n → ℂ))) ∞
+      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (schrodingerField H x)) := by
+  rw [schrodingerField_eq_hamiltonianVectorField hH]
+  exact (fsForm_isSymplectic n).contMDiff_hamiltonianVectorField _
+    (contMDiff_schrodingerHamiltonian H)
+
+/-- ★★ **The torus vector field on `ℂℙⁿ` is a `C^∞` vector field.** -/
+theorem contMDiff_torusField (θ : Fin (n + 1) → ℝ) :
+    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
+      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod (modelWithCornersSelf ℝ (Fin n → ℂ))) ∞
+      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (torusField θ x)) := by
+  rw [torusField_eq_hamiltonianVectorField]
+  exact (fsForm_isSymplectic n).contMDiff_hamiltonianVectorField _ (contMDiff_torusHamiltonian θ)
 
 end Projectivization

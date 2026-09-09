@@ -263,7 +263,9 @@ IsLocallyHamiltonian
 torusHamiltonian
 schrodingerHamiltonian
 hamiltonianVectorAt
-hamiltonianVectorField"
+hamiltonianVectorField
+localHamiltonianVector
+hamiltonianVectorFieldSection"
 #
 # PARITY LEDGER (why each name is earned).
 # ⚠️ Corrected 2026-08-04, same day it was written: the first draft asserted "all on
@@ -358,6 +360,13 @@ hamiltonianVectorField"
 #       Generic manifold over a finite-dimensional real model; parity as G1's predicate (EVEN
 #       whenever non-degeneracy holds everywhere — the same argument as IsSymplectic).
 #                                                                  EARNED (manifold-level).
+#     localHamiltonianVector / hamiltonianVectorFieldSection — (HamiltonianVectorField.lean,
+#       2026-09-09, brick G3) the field read in a chart (ContinuousLinearMap.inverse of curryLeft
+#       of the local representative, applied to the chart derivative of H), and the field bundled
+#       as a C^∞ section of the tangent bundle. The word is earned by
+#       trivializationAt_hamiltonianVectorField_snd (the chart reading IS the trivialised field of
+#       G2) and contMDiff_hamiltonianVectorField (the section is C^∞). Same arena and parity as
+#       hamiltonianVectorField above.                              EARNED (manifold-level).
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
 #     pointerLiouville        — PointerArena: CP^{N-1} x T^2 x CP^K, 2(N-1)+2+2K.     EVEN.
@@ -664,6 +673,14 @@ liouville_isProbability"
 #     (2026-09-09, ProjectiveSpaceSchrodingerFlow.lean, G2 corollaries) the torus field (G6) and the
 #     Schrödinger field (G13) ARE the constructed Hamiltonian vector fields of their Hamiltonians
 #     for fsForm, by uniqueness. CP^n, EVEN.
+#   trivializationAt_hamiltonianVectorField_snd / contDiffAt_localHamiltonianVector /
+#   contMDiff_hamiltonianVectorField — (2026-09-09, HamiltonianVectorField.lean, G3) the chart
+#     reading of G2's field, its smoothness, and the SECTION theorem: the Hamiltonian vector field
+#     of a C^∞ energy for a C^∞ non-degenerate 2-form is a C^∞ section of the tangent bundle.
+#     Words inherited from the declared objects. Generic 2n-manifold, parity as G1's.
+#   contMDiff_schrodingerHamiltonian / contMDiff_torusHamiltonian — (2026-09-09,
+#     ProjectiveSpaceSchrodingerFlow.lean, G3 corollaries) the two Hamiltonians are C^∞ on CP^n;
+#     words inherited from schrodingerHamiltonian / torusHamiltonian. CP^n, EVEN.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -736,6 +753,11 @@ hamiltonianVectorField_isHamiltonianVectorField
 IsSymplectic
 torusField_eq_hamiltonianVectorField
 schrodingerField_eq_hamiltonianVectorField
+trivializationAt_hamiltonianVectorField_snd
+contDiffAt_localHamiltonianVector
+contMDiff_hamiltonianVectorField
+contMDiff_schrodingerHamiltonian
+contMDiff_torusHamiltonian
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH

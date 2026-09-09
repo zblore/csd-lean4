@@ -129,10 +129,16 @@ alarming and is not.
   it is the only one (`IsHamiltonianVectorField.eq_hamiltonianVectorField`);
   `IsSymplectic.hamiltonianVectorField` for a symplectic form. The torus and Schrödinger fields on
   `ℂℙⁿ` are these constructed fields (`torusField_eq_hamiltonianVectorField`,
-  `schrodingerField_eq_hamiltonianVectorField`). Pointwise: a family, not yet a smooth section.
-  **NOT established:** smoothness of `hamiltonianVectorField`, `torusField` or `schrodingerField` as
-  a section of the tangent bundle (G3), and the arena statement `R-016`. Marker:
-  `TERM-SCOPE(Hamiltonian)`.
+  `schrodingerField_eq_hamiltonianVectorField`).
+  **Smoothness (2026-09-09, G3):** ★★★ `DifferentialForm.contMDiff_hamiltonianVectorField` (same
+  module) — for a `C^∞` 2-form family non-degenerate everywhere and a `C^∞` energy, the constructed
+  field is a `C^∞` section of the tangent bundle (`hamiltonianVectorFieldSection`,
+  `IsSymplectic.contMDiff_hamiltonianVectorField`); the chart reading is the inverse of the flat map
+  of the local representative, smooth at invertible points. On `ℂℙⁿ` both Hamiltonians are `C^∞`
+  and so **the torus field and the Schrödinger field are `C^∞` vector fields**
+  (`contMDiff_torusField`, `contMDiff_schrodingerField`, `Instances/ProjectiveSpaceSchrodingerFlow.lean`).
+  **NOT established:** that the unitary flows' orbits are the integral curves of these fields on the
+  manifold (G4), and the arena statement `R-016`. Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,
   so no global generator exists). Retained deliberately for pin stability, with the correction at

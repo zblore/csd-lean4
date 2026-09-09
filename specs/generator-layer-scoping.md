@@ -68,7 +68,33 @@ The **M** held; the only friction was the instance path `E` vs `TangentSpace �
 inside a `theorem IsSymplectic.foo` declaration a bare name resolves into `IsSymplectic.` first (write
 `DifferentialForm.foo`). Pointwise only; the smooth section is G3. Shelf fact: nobody imported
 `Instances/ProjectiveSpaceFubiniStudySymplectic.lean` before this — it was a root-only leaf.
-G3–G5, G7, G12 not built. Every rating for step (4)
+**G3 BUILT 2026-09-09 (16 pins, `HamiltonianVectorField.lean` + five corollaries in
+`ProjectiveSpaceSchrodingerFlow.lean`)** by the route §2 priced — the `VectorBundle/Hom.lean` pattern:
+★★★ `contMDiff_hamiltonianVectorField`, **G2's field `x ↦ (ω♭ₓ)⁻¹ (dH_x)` is a `C^∞` section of the
+tangent bundle** for a `C^∞` non-degenerate 2-form and a `C^∞` energy. In the tangent trivialisation
+at `x₀` the field is `localHamiltonianVector` — `ContinuousLinearMap.inverse (curryLeft (localRep α x₀
+w))` applied to the chart derivative of `H` — by *uniqueness at the flat level* (★★
+`trivializationAt_hamiltonianVectorField_snd`: `trivializationAt_snd` intertwines `α` with its local
+representative, `mfderiv_comp` intertwines `dH` with the chart derivative; `localRep_nondegenerate`
+carries non-degeneracy across through `symmL`/`continuousLinearMapAt`); and ★★
+`contDiffAt_localHamiltonianVector` is `contDiffAt_map_inverse` at the invertible point (`flatCLE`,
+G2's `flatEquiv` made continuous by `LinearEquiv.toContinuousLinearEquiv`), with `curryLeft` a bounded
+linear map, `contDiffAt_localRep`, and `fderiv_right`. Corollaries: both Hamiltonians on `ℂℙⁿ` are
+`C^∞` (`contMDiff_schrodingerHamiltonian`, inner-product calculus in the chart + `contMDiffAt_iff`;
+`contMDiff_torusHamiltonian` by the diagonal identity), so ★★ **the torus field (G6) and the
+Schrödinger field (G13) are `C^∞` vector fields** (`contMDiff_torusField`, `contMDiff_schrodingerField`).
+The **M–L** came in as **L**: `contDiffAt_ring_inverse` was never needed (`contDiffAt_map_inverse` on
+`E ≃L (E [⋀^Fin 1]→L ℝ)` is the tool), but the plumbing had three walls worth recording. (1) The
+alternating-map space `E [⋀^Fin 2]→L ℝ` has no `FiniteDimensional` instance, and any `→L` type
+*declared* with it as domain picks the raw topological-module instances, which do not unify with
+Mathlib's normed-space lemmas — so the flat map is stated through `curryLeft` (Mathlib's
+`curryLeftLI`/`norm_curryLeft`) and its smoothness through `IsBoundedLinearMap.contDiff` with the
+witness elaborated *against the lemma's expected type*, never as a CLM on that space. (2) A constant
+family `fun _ : E => ξ` is only defeq-typed as a bundle family; every `rw` on a goal containing it
+fails with "not type-correct under implicit transparency" — wrap it in a def (`flatFamily`) so it
+is syntactically fibre-typed. (3) `ω` is scoped notation under `open scoped ContDiff` and cannot
+be a binder name; a leading `.foo` on a new line is a dot-ident against the expected type, not
+dot notation. G4, G5, G7, G12 not built. Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
 tree now. Every shelf claim below was grep-probed at the pin on 2026-09-08, per
@@ -123,7 +149,7 @@ consumed in chart form and the general pullback was never built).
 |---|---|---|---|---|---|---|
 | **G1** | `IsHamiltonianVectorField ω X H`: for a 2-form `ω`, a vector field `X : Π x, TangentSpace 𝓘 x` and `H : M → ℝ`, the equation `∀ x v, ω x ![X x, v] = mfderiv 𝓘 𝓘(ℝ, ℝ) H x v`; with `IsLocallyHamiltonian ω X := mextDeriv (ι_X ω) = 0` beside it | **S** | High | Medium | — | The word "Hamiltonian" at manifold level, which `TERMS.md` lacks. A predicate, nothing derived; the ℂℙⁿ inhabitants come from G6. `ι_X ω` is `curryLeft` pointwise; it is a 1-form as a *family*, and its smoothness is G3's problem, not G1's |
 | **G2** ✅ built 2026-09-09 | Existence and uniqueness of `X_H` pointwise: on a finite-dimensional tangent space `ω♭ x : v ↦ ω x (v, ·)` is injective by non-degeneracy, hence bijective, so `X_H x := (ω♭ x)⁻¹ (dH x)` | **M** | High | Medium | G1 | `TangentSpace 𝓘 x = E` by `rfl`; `LinearMap.injective_iff_surjective` on `E` and its dual. Pointwise only |
-| **G3** | `X_H` is a smooth section of the tangent bundle | **M–L** | Medium–high | Medium (gates G4) | G2 | Inversion of `ω♭` along the bundle: `contDiffAt_ring_inverse` on the units plus the `localRep` chart plumbing that `ExteriorDerivative.lean` already does for forms. This is the `VectorBundle/Hom.lean` pattern again |
+| **G3** ✅ built 2026-09-09 | `X_H` is a smooth section of the tangent bundle | **M–L** | Medium–high | Medium (gates G4) | G2 | Inversion of `ω♭` along the bundle: `contDiffAt_ring_inverse` on the units plus the `localRep` chart plumbing that `ExteriorDerivative.lean` already does for forms. This is the `VectorBundle/Hom.lean` pattern again |
 | **G4** | Integral curves of `X_H` exist and are unique, and `H` is conserved along them (`ι_X ω (X) = 0` by alternation) | **S–M** | High | Medium | G3 | Direct application of Mathlib's `exists_isMIntegralCurveAt_of_contMDiffAt` and `isMIntegralCurve_eq_of_contMDiff`; lifts `conserved_along_translationCurve` from the chart to the manifold |
 | **G5** | Liouville at manifold level: the time-`t` map of `X_H` preserves `topFormMeasure (ω^{∧n})` | **XL** | Low | Medium, and less than it looks | G3, and two absent Mathlib layers | ⛔ Needs global flows (absent) and `L_X ω = 0` by Cartan's formula (absent). It would replace the posit `ConstraintDynamics.flow_preserves` by a theorem — **for Hamiltonian flows only**, and the corpus's measurement pieces are *not* globally Hamiltonian (the flux correction), so it would not touch the dynamics the record layer actually uses. **Not scheduled** |
 | **G6** | The moment map of the torus action on ℂℙⁿ at manifold level: the fundamental vector field `X_A` of `p ↦ exp(tA)·p` (the `t`-derivative of `uTrans`, which `contDiffOn_uTrans` already makes smooth), `μ_A [z] = ⟨z, iA z⟩/‖z‖²`, and ★★★ `IsHamiltonianVectorField fsForm X_A μ_A`; for `A = diag(iθ)` this is `LF4.momentMap` | **L** | Medium | **High** | G1 only (the field is given, G2/G3 are not needed) | Closes the `TERMS.md` moment-map line "NOT established: that it is the moment map of a Hamiltonian torus action on the symplectic *manifold*". It is also exactly the route the 2026-08-02 review recorded for the Hamiltonian-origin row: unitary rotations on a compact Kähler pointer are globally Hamiltonian (`H¹(ℂℙ^K) = 0`). The computation is `fsModelForm_apply` (M7) against the derivative of the action in the chart; half of it exists |

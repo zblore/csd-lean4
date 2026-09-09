@@ -18,10 +18,10 @@ public import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
 **Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 
-Bricks **G1**, **G2**, **G8** (in part) and **G11** of `specs/generator-layer-scoping.md`: the
-defining equation of a Hamiltonian vector field, `ι_X ω = dH`, at manifold level, the pointwise facts
-that follow from it by alternation and linearity alone, its existence and uniqueness from
-non-degeneracy, and the passage to the closed 1-form `d(ι_X ω) = 0`.
+Bricks **G1**, **G2**, **G3**, **G8** (in part) and **G11** of `specs/generator-layer-scoping.md`:
+the defining equation of a Hamiltonian vector field, `ι_X ω = dH`, at manifold level, the pointwise
+facts that follow from it by alternation and linearity alone, its existence and uniqueness from
+non-degeneracy, its smoothness, and the passage to the closed 1-form `d(ι_X ω) = 0`.
 
 * `DifferentialForm.interiorProduct ω X` — the interior product `ι_X ω`, `x ↦ (ω x).curryLeft (X x)`,
   a 1-form *family* (`interiorProduct_apply`);
@@ -46,18 +46,27 @@ non-degeneracy, and the passage to the closed 1-form `d(ι_X ω) = 0`.
   `hamiltonianVectorField α hnd H = fun x => (ω♭ₓ)⁻¹ (dH_x)` with ★★
   `hamiltonianVectorField_isHamiltonianVectorField` (**existence**) and
   `h.eq_hamiltonianVectorField` (**uniqueness**: every Hamiltonian vector field of `H` is it);
-  `IsSymplectic.hamiltonianVectorField` and its two theorems specialise to a symplectic form.
+  `IsSymplectic.hamiltonianVectorField` and its two theorems specialise to a symplectic form;
+* **G3, smoothness.** `flatVec` (G2's construction on the model), `flatCLE` / `coe_flatCLE` /
+  `inverse_curryLeft_apply` (where `ξ` is non-degenerate `curryLeft ξ` is a continuous linear
+  equivalence and the flat-level Hamiltonian vector is `ContinuousLinearMap.inverse` of it),
+  `localHamiltonianVector` (the field read in a chart), `localRep_nondegenerate`, ★★
+  `trivializationAt_hamiltonianVectorField_snd` (the tangent trivialisation of `X_H` is the local
+  Hamiltonian vector — uniqueness at the flat level), ★★ `contDiffAt_localHamiltonianVector`
+  (smooth, by `contDiffAt_map_inverse`), and ★★★ `contMDiff_hamiltonianVectorField` — **the
+  Hamiltonian vector field of a `C^∞` energy for a `C^∞` non-degenerate 2-form is a `C^∞` section
+  of the tangent bundle**; bundled as `hamiltonianVectorFieldSection`, and
+  `IsSymplectic.contMDiff_hamiltonianVectorField`.
 
 ## Honest scope
 
 ⚠️ **Predicates on families, not on smooth sections.** `X` is any `Π x, TangentSpace 𝓘 x` and
-`ω` any family; nothing here asserts or needs smoothness. `IsLocallyHamiltonian` applies `mextDeriv`
-to the family `ι_X ω`, which is meaningful when that family is smooth (brick G3) and junk otherwise
-— exactly as `fderiv` of a non-differentiable function is junk.
+`ω` any family; the predicates neither assert nor need smoothness. Smoothness is a separate
+theorem (G3) about the constructed field, under `C^∞` hypotheses on `ω` and `H`.
 
-⚠️ **Existence is pointwise.** `hamiltonianVectorField` is a family `Π x, TangentSpace 𝓘 x` built
-by finite-dimensional linear algebra at each point; that it is a *smooth section* when `α` and `H`
-are smooth is brick G3, not here.
+⚠️ **`IsLocallyHamiltonian` is stated on families.** It applies `mextDeriv` to `ι_X α`, which is
+meaningful when that family is smooth — and for `hamiltonianVectorField` of a `C^∞` energy it now
+is (G3) — and junk otherwise, exactly as `fderiv` of a non-differentiable function is junk.
 
 ⚠️ **The converse of G11 is false and not stated.** A locally Hamiltonian field need not be
 Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
@@ -65,7 +74,7 @@ Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
-References: `specs/generator-layer-scoping.md` (G1, G2, G8, G11); `Geometry/Manifold/SymplecticForm.lean`
+References: `specs/generator-layer-scoping.md` (G1, G2, G3, G8, G11); `Geometry/Manifold/SymplecticForm.lean`
 (`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `zeroFormFamily`,
 `toFlat_mextDeriv_zeroFormFamily`, `mextDeriv_mextDeriv`);
 `Analysis/InnerProductSpace/HamiltonianVectorField.lean` (the linear duality this lifts);
@@ -426,6 +435,314 @@ theorem IsHamiltonianVectorField.eq_isSymplectic_hamiltonianVectorField
   h.eq_hamiltonianVectorField hβ.nondegenerate
 
 end Symplectic
+
+/-! ### Smoothness: the Hamiltonian vector field is a `C^∞` section (G3) -/
+
+section Smooth
+
+variable [FiniteDimensional ℝ E]
+
+/-- A 2-form on the model, as a constant 2-form family on the manifold `E` — the shape G2's
+constructions take, so that the model-level statements below are their instances. -/
+def flatFamily (ξ : E [⋀^Fin 2]→L[ℝ] ℝ) (x : E) :
+    TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial E ℝ x := ξ
+
+omit [FiniteDimensional ℝ E] in
+theorem flatFamily_nondegenerate (ξ : E [⋀^Fin 2]→L[ℝ] ℝ)
+    (hξ : ∀ v : E, v ≠ 0 → ∃ u, ξ ![v, u] ≠ 0) (x : E) :
+    ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, flatFamily ξ x ![v, w] ≠ 0 :=
+  fun v hv => hξ v hv
+
+/-- The Hamiltonian vector of a covector `L` for a non-degenerate 2-form `ξ` on the model: G2's
+`hamiltonianVectorAt`, with model-typed data. -/
+def flatVec (ξ : E [⋀^Fin 2]→L[ℝ] ℝ) (hξ : ∀ v : E, v ≠ 0 → ∃ u, ξ ![v, u] ≠ 0)
+    (L : E →L[ℝ] ℝ) : E :=
+  hamiltonianVectorAt (flatFamily ξ) 0 (flatFamily_nondegenerate ξ hξ 0) L
+
+theorem apply_flatVec (ξ : E [⋀^Fin 2]→L[ℝ] ℝ) (hξ : ∀ v : E, v ≠ 0 → ∃ u, ξ ![v, u] ≠ 0)
+    (L : E →L[ℝ] ℝ) (u : E) : ξ ![flatVec ξ hξ L, u] = L u :=
+  apply_hamiltonianVectorAt (flatFamily ξ) 0 (flatFamily_nondegenerate ξ hξ 0) L u
+
+theorem eq_flatVec (ξ : E [⋀^Fin 2]→L[ℝ] ℝ) (hξ : ∀ v : E, v ≠ 0 → ∃ u, ξ ![v, u] ≠ 0)
+    (L : E →L[ℝ] ℝ) {v : E} (hv : ∀ u, ξ ![v, u] = L u) : v = flatVec ξ hξ L :=
+  eq_hamiltonianVectorAt (flatFamily ξ) 0 (flatFamily_nondegenerate ξ hξ 0) L hv
+
+/-- Where `ξ` is non-degenerate, `curryLeft ξ : E →L[ℝ] (E [⋀^Fin 1]→L[ℝ] ℝ)` is a continuous
+linear equivalence: G2's `flatEquiv` on the model, followed by `ofSubsingletonLIE`, made continuous
+by finite dimension (`LinearEquiv.toContinuousLinearEquiv`). -/
+def flatCLE (ξ : E [⋀^Fin 2]→L[ℝ] ℝ) (hξ : ∀ v : E, v ≠ 0 → ∃ u, ξ ![v, u] ≠ 0) :
+    E ≃L[ℝ] (E [⋀^Fin 1]→L[ℝ] ℝ) :=
+  (((flatEquiv (flatFamily ξ) 0 (flatFamily_nondegenerate ξ hξ 0)).trans
+    (LinearMap.toContinuousLinearMap : (E →ₗ[ℝ] ℝ) ≃ₗ[ℝ] (E →L[ℝ] ℝ))).trans
+      (ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ)
+        (0 : Fin 1)).toLinearEquiv).toContinuousLinearEquiv
+
+theorem flatCLE_apply (ξ : E [⋀^Fin 2]→L[ℝ] ℝ) (hξ : ∀ v : E, v ≠ 0 → ∃ u, ξ ![v, u] ≠ 0)
+    (v : E) (m : Fin 1 → E) : flatCLE ξ hξ v m = ξ ![v, m 0] :=
+  rfl
+
+theorem coe_flatCLE (ξ : E [⋀^Fin 2]→L[ℝ] ℝ) (hξ : ∀ v : E, v ≠ 0 → ∃ u, ξ ![v, u] ≠ 0) :
+    (flatCLE ξ hξ : E →L[ℝ] (E [⋀^Fin 1]→L[ℝ] ℝ)) = ContinuousAlternatingMap.curryLeft ξ := by
+  ext v m
+  rw [ContinuousLinearEquiv.coe_coe, flatCLE_apply, ContinuousAlternatingMap.curryLeft_apply_apply]
+  congr 1
+  funext i
+  fin_cases i <;> rfl
+
+/-- The flat-level Hamiltonian vector is `ContinuousLinearMap.inverse` of `curryLeft ξ` — the
+form in which its smoothness in `ξ` and `L` is visible. -/
+theorem inverse_curryLeft_apply (ξ : E [⋀^Fin 2]→L[ℝ] ℝ)
+    (hξ : ∀ v : E, v ≠ 0 → ∃ u, ξ ![v, u] ≠ 0) (L : E →L[ℝ] ℝ) :
+    ContinuousLinearMap.inverse (ContinuousAlternatingMap.curryLeft ξ)
+      (ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ) (0 : Fin 1) L)
+      = flatVec ξ hξ L := by
+  rw [← coe_flatCLE ξ hξ, ContinuousLinearMap.inverse_equiv, ContinuousLinearEquiv.coe_coe,
+    ContinuousLinearEquiv.symm_apply_eq]
+  ext m
+  rw [flatCLE_apply, apply_flatVec]
+  rfl
+
+variable (α : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ) (H : M → ℝ)
+
+/-- The Hamiltonian vector field read in the chart at `x₀`: the flat-level Hamiltonian vector of
+the local representative of `α` for the chart derivative of `H`. -/
+def localHamiltonianVector (x₀ : M) (w : E) : E :=
+  ContinuousLinearMap.inverse (ContinuousAlternatingMap.curryLeft (localRep (fun x => α x) x₀ w))
+    (ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ) (0 : Fin 1)
+      (fderiv ℝ (H ∘ (chartAt E x₀).symm) w))
+
+omit [FiniteDimensional ℝ E] in
+/-- The local representative of a non-degenerate 2-form is non-degenerate on the chart target: the
+tangent trivialisation carries non-degeneracy across (`trivializationAt_snd`,
+`tangent_symmL_eq_fderiv`, `Trivialization.symmL_continuousLinearMapAt`). -/
+theorem localRep_nondegenerate
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (x₀ : M) {w : E} (hw : w ∈ (chartAt E x₀).target) :
+    ∀ v : E, v ≠ 0 → ∃ u, localRep (fun x => α x) x₀ w ![v, u] ≠ 0 := by
+  intro v hv
+  have hys : (chartAt E x₀).symm w ∈ (chartAt E x₀).source := (chartAt E x₀).map_target hw
+  have hwy : chartAt E x₀ ((chartAt E x₀).symm w) = w := (chartAt E x₀).right_inv hw
+  have hloc : localRep (fun x => α x) x₀ w
+      = (toFlat (α ((chartAt E x₀).symm w))).compContinuousLinearMap
+          (fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w) := by
+    have h := trivializationAt_snd (fun x => α x) x₀ ((chartAt E x₀).symm w) hys
+    rw [hwy] at h
+    exact h
+  have hDsymm : (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ
+      ((chartAt E x₀).symm w)
+      = fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w := by
+    rw [tangent_symmL_eq_fderiv x₀ _ hys, hwy]
+  have hyb : (chartAt E x₀).symm w
+      ∈ (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).baseSet := hys
+  have hDv : fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w v ≠ 0 := by
+    intro h0
+    have h := Trivialization.continuousLinearMapAt_symmL (R := ℝ)
+      (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀) hyb v
+    rw [hDsymm] at h
+    have h2 : (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt
+        ℝ ((chartAt E x₀).symm w)
+        (fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w v) = 0 := by
+      rw [h0]
+      exact map_zero _
+    exact hv (h.symm.trans h2)
+  obtain ⟨u, hu⟩ := hnd _ _ hDv
+  refine ⟨(trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt
+    ℝ ((chartAt E x₀).symm w) u, ?_⟩
+  have hDu : fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w
+      ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt
+        ℝ ((chartAt E x₀).symm w) u) = u := by
+    rw [← hDsymm]
+    exact Trivialization.symmL_continuousLinearMapAt (R := ℝ)
+      (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀) hyb u
+  rw [hloc, ContinuousAlternatingMap.compContinuousLinearMap_apply]
+  have hcomp : (⇑(fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w)
+      ∘ ![v, (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt
+        ℝ ((chartAt E x₀).symm w) u])
+      = ![fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w v, u] := by
+    funext i
+    fin_cases i
+    · rfl
+    · exact hDu
+  rw [hcomp]
+  exact hu
+
+/-- ★★ **The trivialised Hamiltonian vector field is the local Hamiltonian vector**: on the chart
+source of `x₀`, the tangent trivialisation of `X_H y` is `localHamiltonianVector α H x₀` at the
+chart coordinate of `y`. Proved by uniqueness at the flat level (`eq_flatVec`): the trivialised
+vector satisfies the local equation, because the trivialisation intertwines `α` with its local
+representative (`trivializationAt_snd`) and `dH` with the chart derivative (`mfderiv_comp`). -/
+theorem trivializationAt_hamiltonianVectorField_snd
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H)
+    (x₀ : M) {y : M} (hy : y ∈ (chartAt E x₀).source) :
+    (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀
+        ⟨y, hamiltonianVectorField (fun x => α x) hnd H y⟩).2
+      = localHamiltonianVector α H x₀ (chartAt E x₀ y) := by
+  have hwt : chartAt E x₀ y ∈ (chartAt E x₀).target := (chartAt E x₀).map_source hy
+  have hyw : (chartAt E x₀).symm (chartAt E x₀ y) = y := (chartAt E x₀).left_inv hy
+  have hω := localRep_nondegenerate α hnd x₀ hwt
+  rw [localHamiltonianVector, inverse_curryLeft_apply _ hω]
+  refine eq_flatVec _ hω _ fun u => ?_
+  -- the local representative at `chartAt E x₀ y`, through the trivialisation
+  have hloc : localRep (fun x => α x) x₀ (chartAt E x₀ y)
+      = (toFlat (α y)).compContinuousLinearMap
+          (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y)) := by
+    have h := trivializationAt_snd (fun x => α x) x₀ y hy
+    show (trivializationAt (E [⋀^Fin 2]→L[ℝ] ℝ)
+      (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial M ℝ x)
+      x₀ ⟨(chartAt E x₀).symm (chartAt E x₀ y), α ((chartAt E x₀).symm (chartAt E x₀ y))⟩).2 = _
+    rw [hyw]
+    exact h
+  have hyb : y ∈ (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).baseSet := hy
+  have hDsymm : (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ y
+      = fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) :=
+    tangent_symmL_eq_fderiv x₀ y hy
+  -- the trivialised vector, and its image under the transition derivative
+  have hv : (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀
+        ⟨y, hamiltonianVectorField (fun x => α x) hnd H y⟩).2
+      = (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt ℝ y
+          (hamiltonianVectorField (fun x => α x) hnd H y) :=
+    (Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ)
+      (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀) hyb _).symm
+  have hDv : fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y)
+      ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt ℝ y
+        (hamiltonianVectorField (fun x => α x) hnd H y))
+      = hamiltonianVectorField (fun x => α x) hnd H y := by
+    rw [← hDsymm]
+    exact Trivialization.symmL_continuousLinearMapAt (R := ℝ)
+      (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀) hyb _
+  -- the chart derivative of `H` is `dH_y` composed with the transition derivative
+  have hsymm : MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E)
+      (chartAt E x₀).symm (chartAt E x₀ y) :=
+    mdifferentiableAt_atlas_symm (chart_mem_atlas E x₀) hwt
+  have hchain : fderiv ℝ (H ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u
+      = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H y
+          (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u) := by
+    have hHy : MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H
+        ((chartAt E x₀).symm (chartAt E x₀ y)) := (hH _).mdifferentiableAt (by simp)
+    have hcomp := mfderiv_comp (chartAt E x₀ y) hHy hsymm
+    have hsd : mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (chartAt E x₀).symm
+        (chartAt E x₀ y)
+        = fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) := by
+      rw [hsymm.mfderiv]
+      simp only [writtenInExtChartAt, Function.comp_def, extChartAt_model_space_eq_id,
+        PartialEquiv.refl_symm, PartialEquiv.refl_coe, id, extChartAt_coe, modelWithCornersSelf_coe,
+        Set.range_id, fderivWithin_univ, hyw]
+      rfl
+    have hpt : (mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H
+        ((chartAt E x₀).symm (chartAt E x₀ y)) : E →L[ℝ] ℝ)
+        = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H y := by
+      rw [hyw]
+    have e2 : (mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (chartAt E x₀).symm
+        (chartAt E x₀ y) u : E)
+        = fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u :=
+      congrArg (fun L : E →L[ℝ] E => L u) hsd
+    rw [← mfderiv_eq_fderiv, hcomp]
+    exact (congrArg (fun v : E => mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H
+      ((chartAt E x₀).symm (chartAt E x₀ y)) v) e2).trans
+      (congrArg (fun L : E →L[ℝ] ℝ =>
+        L (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u)) hpt)
+  rw [hloc, ContinuousAlternatingMap.compContinuousLinearMap_apply, hchain]
+  have hcomp : (⇑(fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y))
+      ∘ ![(trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀
+            ⟨y, hamiltonianVectorField (fun x => α x) hnd H y⟩).2, u])
+      = ![hamiltonianVectorField (fun x => α x) hnd H y,
+          fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u] := by
+    funext i
+    fin_cases i
+    · show fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) _ = _
+      rw [hv]
+      exact hDv
+    · rfl
+  rw [hcomp]
+  exact hamiltonianVectorField_isHamiltonianVectorField (fun x => α x) hnd H y _
+
+/-- ★★ The local Hamiltonian vector is `C^∞` at the chart image of `x₀`: inversion of `curryLeft`
+is smooth at an invertible point (`contDiffAt_map_inverse`), the local representative is smooth
+(`contDiffAt_localRep`), and the chart derivative of a `C^∞` energy is `C^∞`. -/
+theorem contDiffAt_localHamiltonianVector
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) (x₀ : M) :
+    ContDiffAt ℝ ∞ (localHamiltonianVector α H x₀) (chartAt E x₀ x₀) := by
+  have hw₀ : chartAt E x₀ x₀ ∈ (chartAt E x₀).target := mem_chart_target E x₀
+  have hω := localRep_nondegenerate α hnd x₀ hw₀
+  -- `curryLeft` is a bounded linear map (`curryLeft_add`, `curryLeft_smul`, `norm_curryLeft`);
+  -- the boundedness witness is elaborated against the shape `IsBoundedLinearMap.contDiff` expects
+  have hΦ : ContDiffAt ℝ ∞
+      (fun w => ContinuousAlternatingMap.curryLeft (localRep (fun x => α x) x₀ w))
+      (chartAt E x₀ x₀) :=
+    (IsBoundedLinearMap.contDiff (𝕜 := ℝ) (n := ∞)
+      (f := fun ξ : E [⋀^Fin 2]→L[ℝ] ℝ => ContinuousAlternatingMap.curryLeft ξ)
+      ⟨⟨fun ξ ξ' => ContinuousAlternatingMap.curryLeft_add ξ ξ',
+        fun c ξ => ContinuousAlternatingMap.curryLeft_smul c ξ⟩,
+        1, one_pos, fun ξ => le_of_eq
+          ((ContinuousAlternatingMap.norm_curryLeft ξ).trans (one_mul _).symm)⟩).contDiffAt.comp _
+      (contDiffAt_localRep (fun x => α x) α.contMDiff_toFun x₀ hw₀)
+  have hinv : ContDiffAt ℝ ∞
+      (fun w => ContinuousLinearMap.inverse
+        (ContinuousAlternatingMap.curryLeft (localRep (fun x => α x) x₀ w)))
+      (chartAt E x₀ x₀) := by
+    have : CompleteSpace E := FiniteDimensional.complete ℝ E
+    have h := contDiffAt_map_inverse (𝕜 := ℝ) (n := ∞) (flatCLE _ hω)
+    rw [coe_flatCLE] at h
+    exact h.comp (chartAt E x₀ x₀) hΦ
+  have hHloc : ContDiffAt ℝ ∞ (H ∘ (chartAt E x₀).symm) (chartAt E x₀ x₀) := by
+    rw [← contMDiffAt_iff_contDiffAt]
+    have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ∞
+        (chartAt E x₀).symm (chartAt E x₀ x₀) :=
+      (contMDiffOn_chart_symm (n := ∞) (x := x₀)).contMDiffAt
+        ((chartAt E x₀).open_target.mem_nhds hw₀)
+    exact (hH _).comp _ h1
+  have hL : ContDiffAt ℝ ∞
+      (fun w => ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ) (0 : Fin 1)
+        (fderiv ℝ (H ∘ (chartAt E x₀).symm) w)) (chartAt E x₀ x₀) :=
+    (ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ)
+      (0 : Fin 1)).contDiff.contDiffAt.comp _ (hHloc.fderiv_right (by simp))
+  exact hinv.clm_apply hL
+
+/-- ★★★ **The Hamiltonian vector field is a `C^∞` section of the tangent bundle**, for a `C^∞`
+2-form family non-degenerate at every point and a `C^∞` energy. -/
+theorem contMDiff_hamiltonianVectorField
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) :
+    ContMDiff (modelWithCornersSelf ℝ E)
+      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ E)) ∞
+      (fun x : M => TotalSpace.mk' E x (hamiltonianVectorField (fun x => α x) hnd H x)) := by
+  intro x₀
+  rw [contMDiffAt_section]
+  have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ∞
+      (fun y => localHamiltonianVector α H x₀ (chartAt E x₀ y)) x₀ :=
+    (contDiffAt_localHamiltonianVector α H hnd hH x₀).contMDiffAt.comp x₀
+      (contMDiffAt_extChartAt (n := ∞) (I := modelWithCornersSelf ℝ E) (x := x₀))
+  refine h1.congr_of_eventuallyEq ?_
+  filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
+  exact trivializationAt_hamiltonianVectorField_snd α H hnd hH x₀ hy
+
+/-- The Hamiltonian vector field of `H`, as a `C^∞` vector field (a `C^∞` section of the tangent
+bundle). -/
+def hamiltonianVectorFieldSection
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) :
+    ContMDiffSection (modelWithCornersSelf ℝ E) E ∞
+      (TangentSpace (modelWithCornersSelf ℝ E) : M → Type _) :=
+  ⟨hamiltonianVectorField (fun x => α x) hnd H, contMDiff_hamiltonianVectorField α H hnd hH⟩
+
+/-- ★★★ For a symplectic form, the Hamiltonian vector field of a `C^∞` energy is a `C^∞` vector
+field. -/
+theorem IsSymplectic.contMDiff_hamiltonianVectorField
+    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) :
+    ContMDiff (modelWithCornersSelf ℝ E)
+      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ E)) ∞
+      (fun x : M => TotalSpace.mk' E x (hβ.hamiltonianVectorField H x)) :=
+  DifferentialForm.contMDiff_hamiltonianVectorField β H hβ.nondegenerate hH
+
+end Smooth
 
 
 end DifferentialForm
