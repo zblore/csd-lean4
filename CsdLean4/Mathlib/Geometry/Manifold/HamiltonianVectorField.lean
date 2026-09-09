@@ -8,6 +8,8 @@ module
 public import CsdLean4.Mathlib.Geometry.Manifold.SymplecticForm
 public import Mathlib.Analysis.Normed.Module.Alternating.Curry
 public import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
+public import Mathlib.Geometry.Manifold.IntegralCurve.ExistUnique
+public import Mathlib.Analysis.Calculus.MeanValue
 
 /-!
 # Hamiltonian vector fields on a manifold
@@ -18,10 +20,11 @@ public import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
 **Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 
-Bricks **G1**, **G2**, **G3**, **G8** (in part) and **G11** of `specs/generator-layer-scoping.md`:
-the defining equation of a Hamiltonian vector field, `ι_X ω = dH`, at manifold level, the pointwise
-facts that follow from it by alternation and linearity alone, its existence and uniqueness from
-non-degeneracy, its smoothness, and the passage to the closed 1-form `d(ι_X ω) = 0`.
+Bricks **G1**, **G2**, **G3**, **G4**, **G8** (in part) and **G11** of
+`specs/generator-layer-scoping.md`: the defining equation of a Hamiltonian vector field,
+`ι_X ω = dH`, at manifold level, the pointwise facts that follow from it by alternation and
+linearity alone, its existence and uniqueness from non-degeneracy, its smoothness, its integral
+curves, and the passage to the closed 1-form `d(ι_X ω) = 0`.
 
 * `DifferentialForm.interiorProduct ω X` — the interior product `ι_X ω`, `x ↦ (ω x).curryLeft (X x)`,
   a 1-form *family* (`interiorProduct_apply`);
@@ -56,7 +59,13 @@ non-degeneracy, its smoothness, and the passage to the closed 1-form `d(ι_X ω)
   (smooth, by `contDiffAt_map_inverse`), and ★★★ `contMDiff_hamiltonianVectorField` — **the
   Hamiltonian vector field of a `C^∞` energy for a `C^∞` non-degenerate 2-form is a `C^∞` section
   of the tangent bundle**; bundled as `hamiltonianVectorFieldSection`, and
-  `IsSymplectic.contMDiff_hamiltonianVectorField`.
+  `IsSymplectic.contMDiff_hamiltonianVectorField`;
+* **G4, integral curves.** ★ `h.hasDerivAt_comp_of_isMIntegralCurve` and ★★
+  `h.comp_eq_of_isMIntegralCurve` — **energy conservation**: `H` is constant along every integral
+  curve of a Hamiltonian vector field of `H`, by `dH (X) = 0` and the mean value theorem; ★★
+  `exists_isMIntegralCurveAt_hamiltonianVectorField` (**local existence**, Picard–Lindelöf on the
+  `C^1` section of G3) and ★★ `isMIntegralCurve_hamiltonianVectorField_eq` (**uniqueness** of
+  global integral curves on a Hausdorff manifold); the three `IsSymplectic.` forms specialise.
 
 ## Honest scope
 
@@ -68,18 +77,25 @@ theorem (G3) about the constructed field, under `C^∞` hypotheses on `ω` and `
 meaningful when that family is smooth — and for `hamiltonianVectorField` of a `C^∞` energy it now
 is (G3) — and junk otherwise, exactly as `fderiv` of a non-differentiable function is junk.
 
+⚠️ **No global flow.** G4 gives local existence, uniqueness and conservation for integral
+curves; that a global flow `ℝ × M → M` exists (completeness of the field, e.g. on a compact
+manifold) is not stated — Mathlib has no flows of vector fields on manifolds, which is why G5
+(Liouville at manifold level) is unscheduled.
+
 ⚠️ **The converse of G11 is false and not stated.** A locally Hamiltonian field need not be
 Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
 `RecordLayer/PiecewiseHamiltonian.lean`, and `H¹` decides it. Nothing here touches that.
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
-References: `specs/generator-layer-scoping.md` (G1, G2, G3, G8, G11); `Geometry/Manifold/SymplecticForm.lean`
+References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G8, G11); `Geometry/Manifold/SymplecticForm.lean`
 (`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `zeroFormFamily`,
 `toFlat_mextDeriv_zeroFormFamily`, `mextDeriv_mextDeriv`);
 `Analysis/InnerProductSpace/HamiltonianVectorField.lean` (the linear duality this lifts);
 `RecordLayer/CellLawForced.lean` (`IsPhaseHamiltonian`, the linear moment-map equation);
-`Mathlib/Analysis/Normed/Module/Alternating/Curry.lean`; `specs/TERMS.md` (Hamiltonian);
+`Mathlib/Analysis/Normed/Module/Alternating/Curry.lean`;
+`Mathlib/Geometry/Manifold/IntegralCurve/ExistUnique.lean` (`exists_isMIntegralCurveAt_of_contMDiffAt`,
+`isMIntegralCurve_eq_of_contMDiff`); `specs/TERMS.md` (Hamiltonian);
 `specs/future-work.md`.
 -/
 
@@ -743,6 +759,113 @@ theorem IsSymplectic.contMDiff_hamiltonianVectorField
   DifferentialForm.contMDiff_hamiltonianVectorField β H hβ.nondegenerate hH
 
 end Smooth
+
+/-! ### Integral curves: existence, uniqueness, and energy conservation (G4) -/
+
+section IntegralCurve
+
+omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] in
+variable {α} in
+/-- ★ **Infinitesimal energy conservation along an integral curve**: if `X` is a Hamiltonian
+vector field of `H` and `γ` is an integral curve of `X`, then `H ∘ γ` has zero derivative
+(`mfderiv_apply_self`: `dH (X) = α (X, X) = 0`). -/
+theorem IsHamiltonianVectorField.hasDerivAt_comp_of_isMIntegralCurve
+    {X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : M → ℝ}
+    (h : IsHamiltonianVectorField α X H) {γ : ℝ → M} (hγ : IsMIntegralCurve γ X) {t : ℝ}
+    (hH : MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H (γ t)) :
+    HasDerivAt (H ∘ γ) 0 t := by
+  have h1 : HasMFDerivAt (modelWithCornersSelf ℝ ℝ) (modelWithCornersSelf ℝ ℝ) (H ∘ γ) t
+      ((mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H (γ t)).comp
+        ((1 : ℝ →L[ℝ] ℝ).smulRight (X (γ t)))) :=
+    hH.hasMFDerivAt.comp t (hγ t)
+  have h2 : HasFDerivAt (H ∘ γ)
+      (((mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H (γ t)).comp
+        ((1 : ℝ →L[ℝ] ℝ).smulRight (X (γ t))) : ℝ →L[ℝ] ℝ)) t :=
+    hasMFDerivAt_iff_hasFDerivAt.mp h1
+  show HasFDerivAt (H ∘ γ) ((1 : ℝ →L[ℝ] ℝ).smulRight (0 : ℝ)) t
+  refine h2.congr_fderiv (ContinuousLinearMap.ext_ring ?_)
+  simp [h.mfderiv_apply_self (γ t)]
+  rfl
+
+omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] in
+variable {α} in
+/-- ★★ **Energy conservation**: `H` is constant along every integral curve of a Hamiltonian
+vector field of `H` (a differentiable energy). -/
+theorem IsHamiltonianVectorField.comp_eq_of_isMIntegralCurve
+    {X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : M → ℝ}
+    (h : IsHamiltonianVectorField α X H) {γ : ℝ → M} (hγ : IsMIntegralCurve γ X)
+    (hH : MDifferentiable (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H) (t s : ℝ) :
+    H (γ t) = H (γ s) :=
+  is_const_of_deriv_eq_zero
+    (fun u => (h.hasDerivAt_comp_of_isMIntegralCurve hγ (hH (γ u))).differentiableAt)
+    (fun u => (h.hasDerivAt_comp_of_isMIntegralCurve hγ (hH (γ u))).deriv) t s
+
+end IntegralCurve
+
+section IntegralCurveSmooth
+
+variable [FiniteDimensional ℝ E]
+variable (α : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ) (H : M → ℝ)
+
+/-- ★★ **Local existence**: through every point, at every time, passes an integral curve of the
+Hamiltonian vector field of a `C^∞` energy (Picard–Lindelöf in the chart,
+`exists_isMIntegralCurveAt_of_contMDiffAt`, on the `C^1` section G3 provides). -/
+theorem exists_isMIntegralCurveAt_hamiltonianVectorField
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) (x₀ : M) (t₀ : ℝ) :
+    ∃ γ : ℝ → M, γ t₀ = x₀ ∧
+      IsMIntegralCurveAt γ (hamiltonianVectorField (fun x => α x) hnd H) t₀ := by
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
+  exact exists_isMIntegralCurveAt_of_contMDiffAt (t₀ := t₀)
+    ((contMDiff_hamiltonianVectorField α H hnd hH).of_le (m := 1)
+      (mod_cast (le_top : (1 : ℕ∞) ≤ ⊤)) x₀)
+    BoundarylessManifold.isInteriorPoint
+
+/-- ★★ **Uniqueness**: two global integral curves of the Hamiltonian vector field of a `C^∞`
+energy that agree at one time agree everywhere (`isMIntegralCurve_eq_of_contMDiff`, on a Hausdorff
+manifold). -/
+theorem isMIntegralCurve_hamiltonianVectorField_eq [T2Space M]
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) {γ γ' : ℝ → M}
+    (hγ : IsMIntegralCurve γ (hamiltonianVectorField (fun x => α x) hnd H))
+    (hγ' : IsMIntegralCurve γ' (hamiltonianVectorField (fun x => α x) hnd H)) {t₀ : ℝ}
+    (h : γ t₀ = γ' t₀) : γ = γ' :=
+  isMIntegralCurve_eq_of_contMDiff (fun _ => BoundarylessManifold.isInteriorPoint)
+    ((contMDiff_hamiltonianVectorField α H hnd hH).of_le (m := 1)
+      (mod_cast (le_top : (1 : ℕ∞) ≤ ⊤)))
+    hγ hγ' h
+
+/-- ★★ For a symplectic form: local existence of integral curves of the Hamiltonian vector field
+of a `C^∞` energy. -/
+theorem IsSymplectic.exists_isMIntegralCurveAt_hamiltonianVectorField
+    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H)
+    (x₀ : M) (t₀ : ℝ) :
+    ∃ γ : ℝ → M, γ t₀ = x₀ ∧ IsMIntegralCurveAt γ (hβ.hamiltonianVectorField H) t₀ :=
+  DifferentialForm.exists_isMIntegralCurveAt_hamiltonianVectorField β H hβ.nondegenerate hH x₀ t₀
+
+/-- ★★ For a symplectic form: uniqueness of global integral curves of the Hamiltonian vector
+field of a `C^∞` energy. -/
+theorem IsSymplectic.isMIntegralCurve_hamiltonianVectorField_eq [T2Space M]
+    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H)
+    {γ γ' : ℝ → M} (hγ : IsMIntegralCurve γ (hβ.hamiltonianVectorField H))
+    (hγ' : IsMIntegralCurve γ' (hβ.hamiltonianVectorField H)) {t₀ : ℝ} (h : γ t₀ = γ' t₀) :
+    γ = γ' :=
+  DifferentialForm.isMIntegralCurve_hamiltonianVectorField_eq β H hβ.nondegenerate hH hγ hγ' h
+
+/-- ★★ For a symplectic form: the energy is conserved along every integral curve of its
+Hamiltonian vector field. -/
+theorem IsSymplectic.comp_eq_of_isMIntegralCurve_hamiltonianVectorField
+    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) (hH : MDifferentiable (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H)
+    {γ : ℝ → M} (hγ : IsMIntegralCurve γ (hβ.hamiltonianVectorField H)) (t s : ℝ) :
+    H (γ t) = H (γ s) :=
+  (hβ.hamiltonianVectorField_isHamiltonianVectorField H).comp_eq_of_isMIntegralCurve hγ hH t s
+
+end IntegralCurveSmooth
 
 
 end DifferentialForm

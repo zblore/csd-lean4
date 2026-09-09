@@ -19,7 +19,7 @@ the *restricted* senses of these words; `specs/TERMS.md` records what is backed 
 `CSD.LF4.schrodingerUnitary` (the unitary `exp(-itH)`) and its derivative
 `CSD.LF4.schrodingerUnitary_hasDerivAt` as the flow whose generator it identifies.
 
-Brick **G13** of `specs/generator-layer-scoping.md` (with the G2 and G3 corollaries): the `U(n+1)` moment map. For a Hermitian
+Brick **G13** of `specs/generator-layer-scoping.md` (with the G2, G3 and G4 corollaries): the `U(n+1)` moment map. For a Hermitian
 `H`, the unitary flow `p ↦ exp(-itH) • p` on `ℂℙⁿ` — the corpus's projected Schrödinger flow — is
 Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, the expectation value
 `⟪z, Hz⟫ / ‖z‖²` up to the form's convention. Brick G6 (the torus) is the diagonal case.
@@ -50,7 +50,12 @@ Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, th
 * `contDiff_schrodingerChartHam`, ★ `contMDiff_schrodingerHamiltonian`, ★ `contMDiff_torusHamiltonian`
   (both Hamiltonians are `C^∞` on `ℂℙⁿ`), and ★★ `contMDiff_schrodingerField`, ★★
   `contMDiff_torusField` — **both fields are `C^∞` vector fields**, `C^∞` sections of the tangent
-  bundle, by G2's identification and G3's smoothness theorem.
+  bundle, by G2's identification and G3's smoothness theorem;
+* `exists_isMIntegralCurveAt_schrodingerField`, `isMIntegralCurve_schrodingerField_eq`, ★★
+  `expectation_eq_of_isMIntegralCurve_schrodingerField` (**`⟨H⟩` is conserved** along every
+  integral curve of the field), ★★★ `isMIntegralCurve_schrodingerUnitary_smul` — **the
+  Schrödinger flow `t ↦ exp(-itH) • p` is the integral curve of its field**, for every `p` — and
+  ★★ `expectation_schrodingerUnitary_smul` (`⟨H⟩` is conserved by the flow), all G4.
 
 ## Honest scope
 
@@ -63,9 +68,10 @@ both.
 `LF4/ManyToOneSchrodingerDerived.lean`, under the `L2Operator` matrix norm (the one under which
 `hasDerivAt_exp_smul_const` synthesises); this module opens that scope and adds nothing to it.
 
-⚠️ **No integral curves.** `schrodingerField` and `torusField` are `C^∞` sections now (G3), but
-that the flow's orbits are their integral curves on the *manifold* is not stated (G4), and
-Liouville for the flow is the unitary invariance of `fsVolume` (G10), nothing more.
+⚠️ **The torus orbits are not restated.** `isMIntegralCurve_schrodingerUnitary_smul` is stated for
+the Schrödinger flow; that `t ↦ diag(e^{itθ}) • p` is the integral curve of `torusField θ` would
+follow the same way from `hasDerivAt_chartFun_torusUnitary` and `torusUnitary_add_smul` and is not
+written out. Liouville for either flow is the unitary invariance of `fsVolume` (G10), nothing more.
 
 ⚠️ **Posits untouched.** Posit 1 asserts that the dynamics generates the pointer torus; this
 module says which Hamiltonian a *given* unitary flow has, for every Hermitian `H`, and does not
@@ -381,6 +387,10 @@ theorem schrodingerUnitary_zero_val {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (CSD.LF4.schrodingerUnitary hH 0 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) = 1 :=
   congrArg Subtype.val (CSD.LF4.expNegITH_unitary_group hH).2
 
+theorem schrodingerUnitary_zero_val' {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) : CSD.LF4.schrodingerUnitary hH 0 = 1 :=
+  (CSD.LF4.expNegITH_unitary_group hH).2
+
 /-- ★ **The field is the velocity of the flow**: at every chart point, `schrodingerChartField` is
 the `t`-derivative at `0` of `t ↦ exp(-itH) • p`, read in the chart. -/
 theorem hasDerivAt_chartFun_schrodingerUnitary {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
@@ -534,5 +544,98 @@ theorem contMDiff_torusField (θ : Fin (n + 1) → ℝ) :
       (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (torusField θ x)) := by
   rw [torusField_eq_hamiltonianVectorField]
   exact (fsForm_isSymplectic n).contMDiff_hamiltonianVectorField _ (contMDiff_torusHamiltonian θ)
+
+/-! ### Integral curves on `ℂℙⁿ`: the Schrödinger flow is one, and `⟨H⟩` is conserved (G4) -/
+
+/-- Local existence of integral curves of the Schrödinger field, through every point. -/
+theorem exists_isMIntegralCurveAt_schrodingerField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) (x₀ : ℙ ℂ (Ambient n)) (t₀ : ℝ) :
+    ∃ γ : ℝ → ℙ ℂ (Ambient n), γ t₀ = x₀ ∧ IsMIntegralCurveAt γ (schrodingerField H) t₀ := by
+  rw [schrodingerField_eq_hamiltonianVectorField hH]
+  exact (fsForm_isSymplectic n).exists_isMIntegralCurveAt_hamiltonianVectorField _
+    (contMDiff_schrodingerHamiltonian H) x₀ t₀
+
+/-- Uniqueness of global integral curves of the Schrödinger field. -/
+theorem isMIntegralCurve_schrodingerField_eq {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) {γ γ' : ℝ → ℙ ℂ (Ambient n)} (hγ : IsMIntegralCurve γ (schrodingerField H))
+    (hγ' : IsMIntegralCurve γ' (schrodingerField H)) {t₀ : ℝ} (h : γ t₀ = γ' t₀) : γ = γ' := by
+  rw [schrodingerField_eq_hamiltonianVectorField hH] at hγ hγ'
+  exact (fsForm_isSymplectic n).isMIntegralCurve_hamiltonianVectorField_eq _
+    (contMDiff_schrodingerHamiltonian H) hγ hγ' h
+
+/-- ★★ **`⟨H⟩` is conserved** along every integral curve of the Schrödinger field. -/
+theorem expectation_eq_of_isMIntegralCurve_schrodingerField
+    {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ} (hH : H.IsHermitian) {γ : ℝ → ℙ ℂ (Ambient n)}
+    (hγ : IsMIntegralCurve γ (schrodingerField H)) (t s : ℝ) :
+    expectation H (γ t) = expectation H (γ s) := by
+  have h := (schrodingerField_isHamiltonianVectorField hH).comp_eq_of_isMIntegralCurve hγ
+    (fun x => (contMDiff_schrodingerHamiltonian H x).mdifferentiableAt (by simp)) t s
+  exact mul_left_cancel₀ (by norm_num : (-2 : ℝ) ≠ 0) h
+
+/-- ★★★ **The Schrödinger flow is the integral curve of its field**: `t ↦ exp(-itH) • p` is a
+global integral curve of `schrodingerField H`, for every `p`. In the chart at `exp(-itH) • p` the
+curve is `s ↦ chartFun (exp(-i(s-t)H) • q)`, whose derivative at `s = t` is the chart velocity
+(`hasDerivAt_chartFun_schrodingerUnitary`, shifted by the group law `expNegITH_unitary_group`). -/
+theorem isMIntegralCurve_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) (p : ℙ ℂ (Ambient n)) :
+    IsMIntegralCurve (fun t : ℝ => CSD.LF4.schrodingerUnitary hH t • p) (schrodingerField H) := by
+  have hUmat : Continuous
+      fun t : ℝ => (CSD.LF4.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :=
+    continuous_iff_continuousAt.2 fun t => (CSD.LF4.schrodingerUnitary_hasDerivAt H hH t).continuousAt
+  have hU : Continuous fun t : ℝ => CSD.LF4.schrodingerUnitary hH t := hUmat.subtype_mk _
+  have hcont : Continuous fun t : ℝ => CSD.LF4.schrodingerUnitary hH t • p := hU.smul continuous_const
+  intro t
+  refine ⟨hcont.continuousAt, ?_⟩
+  -- the curve in the chart at `q := exp(-itH) • p`
+  have hq : chartInv (idx (CSD.LF4.schrodingerUnitary hH t • p))
+      (chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p)) (CSD.LF4.schrodingerUnitary hH t • p))
+      = CSD.LF4.schrodingerUnitary hH t • p :=
+    chartInv_chartFun _ _ (idx_spec _)
+  have hfun : (fun s : ℝ => chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
+        (CSD.LF4.schrodingerUnitary hH s • p))
+      = fun s : ℝ => chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
+        (CSD.LF4.schrodingerUnitary hH (s - t) • chartInv (idx (CSD.LF4.schrodingerUnitary hH t • p))
+          (chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
+            (CSD.LF4.schrodingerUnitary hH t • p))) := by
+    funext s
+    rw [hq, ← mul_smul, ← (CSD.LF4.expNegITH_unitary_group hH).1, sub_add_cancel]
+  have hd : HasDerivAt (fun s : ℝ => chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
+      (CSD.LF4.schrodingerUnitary hH s • p))
+      (schrodingerField H (CSD.LF4.schrodingerUnitary hH t • p)) t := by
+    rw [hfun]
+    have h0 := hasDerivAt_chartFun_schrodingerUnitary hH
+      (idx (CSD.LF4.schrodingerUnitary hH t • p))
+      (chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p)) (CSD.LF4.schrodingerUnitary hH t • p))
+    have h1 : HasDerivAt (fun s : ℝ => s - t) 1 t :=
+      (hasDerivAt_sub_const_iff t).2 (hasDerivAt_id' t)
+    have h0' : HasDerivAt (fun τ : ℝ => chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
+        (CSD.LF4.schrodingerUnitary hH τ • chartInv (idx (CSD.LF4.schrodingerUnitary hH t • p))
+          (chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
+            (CSD.LF4.schrodingerUnitary hH t • p))))
+        (schrodingerChartField H (idx (CSD.LF4.schrodingerUnitary hH t • p))
+          (chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
+            (CSD.LF4.schrodingerUnitary hH t • p))) (t - t) := by
+      rw [sub_self]
+      exact h0
+    have h2 := HasDerivAt.scomp (h := fun s : ℝ => s - t) (x := t) h0' h1
+    exact h2.congr_deriv (one_smul ℝ _)
+  have hw : writtenInExtChartAt (modelWithCornersSelf ℝ ℝ) (modelWithCornersSelf ℝ (Fin n → ℂ)) t
+      (fun s : ℝ => CSD.LF4.schrodingerUnitary hH s • p)
+      = fun s : ℝ => chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
+          (CSD.LF4.schrodingerUnitary hH s • p) := by
+    funext s
+    simp only [writtenInExtChartAt, Function.comp, extChartAt_model_space_eq_id,
+      PartialEquiv.refl_symm, PartialEquiv.refl_coe, id, extChartAt_coe, modelWithCornersSelf_coe]
+    rfl
+  rw [hw]
+  exact hd.hasFDerivAt.hasFDerivWithinAt
+
+/-- ★★ **`⟨H⟩` is conserved by the Schrödinger flow**: `⟨H⟩_{exp(-itH) • p} = ⟨H⟩_p`. -/
+theorem expectation_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) (p : ℙ ℂ (Ambient n)) (t : ℝ) :
+    expectation H (CSD.LF4.schrodingerUnitary hH t • p) = expectation H p := by
+  have h := expectation_eq_of_isMIntegralCurve_schrodingerField hH
+    (isMIntegralCurve_schrodingerUnitary_smul hH p) t 0
+  rwa [schrodingerUnitary_zero_val' hH, one_smul] at h
 
 end Projectivization

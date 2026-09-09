@@ -4263,6 +4263,78 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.contMDiff_torusField
 
+/-! ### G4: integral curves -- existence, uniqueness, energy conservation; the Schrödinger flow is one (HamiltonianVectorField.lean, ProjectiveSpaceSchrodingerFlow.lean, 2026-09-09) -/
+
+-- Brick G4 of specs/generator-layer-scoping.md. Generic: ★ hasDerivAt_comp_of_isMIntegralCurve
+-- (H ∘ γ has zero derivative along an integral curve of a Hamiltonian vector field of H, by G1's
+-- dH (X) = 0), ★★ comp_eq_of_isMIntegralCurve (ENERGY CONSERVATION, is_const_of_deriv_eq_zero), ★★
+-- exists_isMIntegralCurveAt_hamiltonianVectorField (LOCAL EXISTENCE: Picard–Lindelöf in the chart,
+-- exists_isMIntegralCurveAt_of_contMDiffAt on the C^1 section G3 provides, boundaryless model), ★★
+-- isMIntegralCurve_hamiltonianVectorField_eq (UNIQUENESS of global integral curves on a Hausdorff
+-- manifold, isMIntegralCurve_eq_of_contMDiff); the IsSymplectic forms specialise. On CP^n: the same
+-- three for schrodingerField, ★★ expectation_eq_of_isMIntegralCurve_schrodingerField (⟨H⟩ is
+-- conserved along every integral curve), and ★★★ isMIntegralCurve_schrodingerUnitary_smul — THE
+-- SCHRÖDINGER FLOW t ↦ exp(-itH) • p IS THE INTEGRAL CURVE OF ITS FIELD: in the chart at
+-- exp(-itH) • p the curve is s ↦ chartFun (exp(-i(s-t)H) • q) by the group law
+-- expNegITH_unitary_group, whose derivative at s = t is the chart velocity of G13
+-- (hasDerivAt_chartFun_schrodingerUnitary) through the scalar chain rule; continuity from
+-- schrodingerUnitary_hasDerivAt and the ContinuousSMul instance. Hence ★★
+-- expectation_schrodingerUnitary_smul: ⟨H⟩ is conserved by the flow. NOT stated: a global flow of
+-- a general Hamiltonian field (no flows on manifolds in Mathlib — G5's wall), and the torus orbits
+-- (would follow the same way from hasDerivAt_chartFun_torusUnitary + torusUnitary_add_smul).
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.hasDerivAt_comp_of_isMIntegralCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.hasDerivAt_comp_of_isMIntegralCurve
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.comp_eq_of_isMIntegralCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.comp_eq_of_isMIntegralCurve
+
+/-- info: 'DifferentialForm.exists_isMIntegralCurveAt_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.exists_isMIntegralCurveAt_hamiltonianVectorField
+
+/-- info: 'DifferentialForm.isMIntegralCurve_hamiltonianVectorField_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.isMIntegralCurve_hamiltonianVectorField_eq
+
+/-- info: 'DifferentialForm.IsSymplectic.exists_isMIntegralCurveAt_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.exists_isMIntegralCurveAt_hamiltonianVectorField
+
+/-- info: 'DifferentialForm.IsSymplectic.isMIntegralCurve_hamiltonianVectorField_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.isMIntegralCurve_hamiltonianVectorField_eq
+
+/-- info: 'DifferentialForm.IsSymplectic.comp_eq_of_isMIntegralCurve_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.comp_eq_of_isMIntegralCurve_hamiltonianVectorField
+
+/-- info: 'Projectivization.schrodingerUnitary_zero_val'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerUnitary_zero_val'
+
+/-- info: 'Projectivization.exists_isMIntegralCurveAt_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_isMIntegralCurveAt_schrodingerField
+
+/-- info: 'Projectivization.isMIntegralCurve_schrodingerField_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isMIntegralCurve_schrodingerField_eq
+
+/-- info: 'Projectivization.expectation_eq_of_isMIntegralCurve_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_eq_of_isMIntegralCurve_schrodingerField
+
+/-- info: 'Projectivization.isMIntegralCurve_schrodingerUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isMIntegralCurve_schrodingerUnitary_smul
+
+/-- info: 'Projectivization.expectation_schrodingerUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_schrodingerUnitary_smul
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

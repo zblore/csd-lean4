@@ -137,8 +137,17 @@ alarming and is not.
   of the local representative, smooth at invertible points. On `ℂℙⁿ` both Hamiltonians are `C^∞`
   and so **the torus field and the Schrödinger field are `C^∞` vector fields**
   (`contMDiff_torusField`, `contMDiff_schrodingerField`, `Instances/ProjectiveSpaceSchrodingerFlow.lean`).
-  **NOT established:** that the unitary flows' orbits are the integral curves of these fields on the
-  manifold (G4), and the arena statement `R-016`. Marker: `TERM-SCOPE(Hamiltonian)`.
+  **Integral curves (2026-09-09, G4):** ★★ `exists_isMIntegralCurveAt_hamiltonianVectorField`,
+  `isMIntegralCurve_hamiltonianVectorField_eq` (local existence, global uniqueness) and ★★
+  `IsHamiltonianVectorField.comp_eq_of_isMIntegralCurve` — **energy conservation**, `H` constant along
+  every integral curve of a Hamiltonian vector field of `H`. On `ℂℙⁿ`, ★★★
+  `isMIntegralCurve_schrodingerUnitary_smul`: **the Schrödinger flow `t ↦ exp(-itH) • p` is the
+  integral curve of its Hamiltonian vector field**, and `⟨H⟩` is conserved by it
+  (`expectation_schrodingerUnitary_smul`).
+  **NOT established:** a global flow of a general Hamiltonian vector field (Mathlib has no flows on
+  manifolds — G5), that the torus orbits `t ↦ diag(e^{itθ}) • p` are the integral curves of
+  `torusField` (same route as the Schrödinger case, not written), and the arena statement `R-016`.
+  Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,
   so no global generator exists). Retained deliberately for pin stability, with the correction at

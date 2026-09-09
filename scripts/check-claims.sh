@@ -681,6 +681,11 @@ liouville_isProbability"
 #   contMDiff_schrodingerHamiltonian / contMDiff_torusHamiltonian — (2026-09-09,
 #     ProjectiveSpaceSchrodingerFlow.lean, G3 corollaries) the two Hamiltonians are C^∞ on CP^n;
 #     words inherited from schrodingerHamiltonian / torusHamiltonian. CP^n, EVEN.
+#   exists_isMIntegralCurveAt_hamiltonianVectorField / isMIntegralCurve_hamiltonianVectorField_eq —
+#     (2026-09-09, HamiltonianVectorField.lean, G4) local existence and global uniqueness of
+#     integral curves of the declared field (Picard–Lindelöf in the chart on G3's C^1 section;
+#     isMIntegralCurve_eq_of_contMDiff on a Hausdorff manifold). Words inherited from
+#     hamiltonianVectorField. Generic 2n-manifold over a real model, parity as G1's.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -758,6 +763,8 @@ contDiffAt_localHamiltonianVector
 contMDiff_hamiltonianVectorField
 contMDiff_schrodingerHamiltonian
 contMDiff_torusHamiltonian
+exists_isMIntegralCurveAt_hamiltonianVectorField
+isMIntegralCurve_hamiltonianVectorField_eq
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH
