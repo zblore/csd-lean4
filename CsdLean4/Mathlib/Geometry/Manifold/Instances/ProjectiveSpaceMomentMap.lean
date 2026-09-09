@@ -8,20 +8,23 @@ module
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianVectorField
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
 public import CsdLean4.LF4.MomentMap
+public import Mathlib.Analysis.Convex.StdSimplex
 
 /-!
 # The moment map of the torus action on `ℂℙⁿ`, at manifold level
 
-**TERM-SCOPE(Kahler)** **TERM-SCOPE(Hamiltonian)** **TERM-SCOPE(MomentMap)** — this module uses
-the *restricted* senses of these words; `specs/TERMS.md` records what is backed and what is not.
+**TERM-SCOPE(Kahler)** **TERM-SCOPE(Hamiltonian)** **TERM-SCOPE(MomentMap)** **TERM-SCOPE(Liouville)**
+— this module uses the *restricted* senses of these words; `specs/TERMS.md` records what is backed
+and what is not.
 
 **Category:** 1-Mathlib-staging in its mathematics; it consumes the corpus's `CSD.LF4.momentMap`
 as the function whose manifold equation it proves.
 
-Brick **G6** of `specs/generator-layer-scoping.md`. The torus `T^{n+1}` acts on `ℂℙⁿ` by
-`p ↦ diag(e^{iθ}) • p`. This module proves the moment-map equation for that action on the
-*manifold*: the velocity field of the action is the Hamiltonian vector field, for the
-Fubini–Study form `fsForm`, of `2 ∑ₖ θₖ · momentMap p k`.
+Bricks **G6**, **G8**, **G9** and **G10** of `specs/generator-layer-scoping.md`. The torus `T^{n+1}`
+acts on `ℂℙⁿ` by `p ↦ diag(e^{iθ}) • p`. This module proves the moment-map equation for that
+action on the *manifold*: the velocity field of the action is the Hamiltonian vector field, for
+the Fubini–Study form `fsForm`, of `2 ∑ₖ θₖ · momentMap p k` — then its uniqueness, its image, and
+the invariance of the Fubini–Study volume under the flow it generates.
 
 * `torusChartField i θ w` — the velocity in the affine chart `i`, `wⱼ ↦ i (θ_{sⱼ} − θᵢ) wⱼ`;
   `torusField θ` — the same as a family over `ℂℙⁿ`, read in the chart at each point;
@@ -46,7 +49,15 @@ Fubini–Study form `fsForm`, of `2 ∑ₖ θₖ · momentMap p k`.
   (`is_const_of_fderiv_eq_zero`), and `[1 : ⋯ : 1]` (`allOnes`) lies in every chart; and
   ★★★ `eq_torusHamiltonian_of_nonneg_of_sum` — **the normalisation pins the constant**: a
   non-negative family of Hamiltonians for the phase fields summing to `2` is `2 · momentMap`. This
-  is the "standard symplectic argument" of `specs/POSITS.md` bullet 1, formalised.
+  is the "standard symplectic argument" of `specs/POSITS.md` bullet 1, formalised;
+* **G9, the image.** `momentMap_mem_stdSimplex`, `sqrtVec` (the vector `(√t₀, …, √tₙ)`),
+  `momentMap_mk_sqrtVec`, and ★★ `range_momentMap` — **the image of the moment map is exactly the
+  standard simplex** `stdSimplex ℝ (Fin (n + 1))`: `⊆` is the normalisation, `⊇` the ray of
+  `(√t₀, …, √tₙ)`;
+* **G10, the flow.** `torusUnitary_zero`, `torusUnitary_add`, `torusUnitary_add_smul` (the
+  one-parameter group law of `t ↦ diag(e^{itθ})`), and ★ `fsVolume_map_torusUnitary_smul` /
+  `measurePreserving_torusUnitary_smul` — **every time-`t` map of the torus flow preserves the
+  Fubini–Study volume `fsVolume n`**, a corollary of the unitary invariance `fsVolume_map_smul`.
 
 ## Honest scope
 
@@ -63,24 +74,34 @@ convention; nothing here rescales either, and the statement shows the factor.
 section of the tangent bundle is not proved (that is brick G3's plumbing), and nothing here needs
 it: `IsHamiltonianVectorField` is pointwise.
 
-⚠️ **Not the moment polytope.** The Atiyah–Guillemin–Sternberg convexity of the image is not
-touched; only the defining equation is.
+⚠️ **The polytope by computation, not by convexity.** `range_momentMap` (G9) exhibits the image
+as the simplex for *this* action; the Atiyah–Guillemin–Sternberg convexity theorem is neither used
+nor proved.
+
+⚠️ **Liouville for one flow only.** `fsVolume_map_torusUnitary_smul` (G10) is unitary invariance
+specialised to `diag(e^{iθ})`. It is not a manifold-level Liouville theorem for Hamiltonian flows
+(G5, not scheduled: Mathlib has no global flows and no Cartan formula), and it does not touch
+`ConstraintDynamics.flow_preserves` (Posit 3), whose measurement pieces are not globally
+Hamiltonian.
 
 ⚠️ **The torus only.** The `U(n+1)` moment map `⟨z, iAz⟩/‖z‖²` for a general skew-Hermitian `A`
 is not stated; the torus is what the corpus's `momentMap` is about.
 
-References: `specs/generator-layer-scoping.md` (G6); `Geometry/Manifold/HamiltonianVectorField.lean`
+References: `specs/generator-layer-scoping.md` (G6, G8–G10);
+`Geometry/Manifold/HamiltonianVectorField.lean`
 (G1); `LF4/MomentMap.lean` (`momentMap`, `momentMap_mk`, `continuous_momentMap`);
 `RecordLayer/CellLawForced.lean` (`IsPhaseHamiltonian`, the linear-level equation);
 `Instances/ProjectiveSpaceFubiniStudyMass.lean` (`fsModelForm_apply`, `toLpCLM_apply`);
-`Instances/ProjectiveSpaceUnitaryAction.lean` (`chartFun_smul_chartInv`); `specs/TERMS.md`
-(moment map, Hamiltonian); `specs/future-work.md`.
+`Instances/ProjectiveSpaceUnitaryAction.lean` (`chartFun_smul_chartInv`);
+`Instances/ProjectiveSpaceFubiniStudyVolume.lean` (`fsVolume`, `fsVolume_map_smul`);
+`Mathlib/Analysis/Convex/StdSimplex.lean` (`stdSimplex`); `specs/TERMS.md` (moment map,
+Hamiltonian, Liouville); `specs/POSITS.md` (Posits 1 and 3); `specs/future-work.md`.
 -/
 
 @[expose] public section
 
 open scoped Manifold ContDiff LinearAlgebra.Projectivization Matrix
-open Kahler DifferentialForm
+open Kahler DifferentialForm MeasureTheory
 
 noncomputable section
 
@@ -497,5 +518,86 @@ theorem eq_torusHamiltonian_of_nonneg_of_sum (H : Fin (n + 1) → ℙ ℂ (Ambie
   intro k p
   rw [hc k, hall k, add_zero]
 
+
+/-! ### The image of the moment map is the standard simplex (G9) -/
+
+/-- Every value of the moment map lies in the standard simplex: `momentMap_nonneg` and
+`momentMap_sum_eq_one`. -/
+theorem momentMap_mem_stdSimplex (p : ℙ ℂ (Ambient n)) :
+    CSD.LF4.momentMap p ∈ stdSimplex ℝ (Fin (n + 1)) :=
+  ⟨CSD.LF4.momentMap_nonneg p, CSD.LF4.momentMap_sum_eq_one p⟩
+
+/-- The vector `(√t₀, …, √tₙ)`: the representative whose ray realises the simplex point `t`. -/
+def sqrtVec (t : Fin (n + 1) → ℝ) : Ambient n :=
+  WithLp.toLp 2 fun k => ((Real.sqrt (t k) : ℝ) : ℂ)
+
+theorem norm_sqrtVec_apply_sq (t : Fin (n + 1) → ℝ) (k : Fin (n + 1)) (ht : 0 ≤ t k) :
+    ‖sqrtVec t k‖ ^ 2 = t k := by
+  show ‖((Real.sqrt (t k) : ℝ) : ℂ)‖ ^ 2 = t k
+  rw [Complex.norm_of_nonneg (Real.sqrt_nonneg _), Real.sq_sqrt ht]
+
+theorem norm_sqrtVec_sq (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fin (n + 1))) :
+    ‖sqrtVec t‖ ^ 2 = 1 := by
+  rw [CSD.LF4.euclidean_norm_sq_eq_sum,
+    Finset.sum_congr rfl fun k _ => norm_sqrtVec_apply_sq t k (ht.1 k)]
+  exact ht.2
+
+theorem sqrtVec_ne_zero (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fin (n + 1))) :
+    sqrtVec t ≠ 0 := by
+  intro h
+  have h1 := norm_sqrtVec_sq t ht
+  rw [h, norm_zero] at h1
+  norm_num at h1
+
+/-- The ray of `(√t₀, …, √tₙ)` maps to `t`. -/
+theorem momentMap_mk_sqrtVec (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fin (n + 1))) :
+    CSD.LF4.momentMap (Projectivization.mk ℂ (sqrtVec t) (sqrtVec_ne_zero t ht)) = t := by
+  funext k
+  rw [CSD.LF4.momentMap_mk, norm_sqrtVec_sq t ht, norm_sqrtVec_apply_sq t k (ht.1 k), div_one]
+
+/-- ★★ **The image of the moment map is exactly the standard simplex** — the moment polytope of
+the torus action on `ℂℙⁿ`, by direct computation: `⊆` is the normalisation, `⊇` is the ray of
+`(√t₀, …, √tₙ)`. The Atiyah–Guillemin–Sternberg convexity theorem is neither used nor proved. -/
+theorem range_momentMap :
+    Set.range (CSD.LF4.momentMap (N := n + 1)) = stdSimplex ℝ (Fin (n + 1)) :=
+  Set.Subset.antisymm (Set.range_subset_iff.2 momentMap_mem_stdSimplex)
+    fun t ht => ⟨_, momentMap_mk_sqrtVec t ht⟩
+
+/-! ### The torus flow preserves the Fubini–Study volume (G10) -/
+
+theorem torusUnitary_zero : torusUnitary (0 : Fin (n + 1) → ℝ) = 1 := by
+  apply Subtype.ext
+  rw [torusUnitary_val, Matrix.UnitaryGroup.one_val, ← Matrix.diagonal_one]
+  congr 1
+  funext k
+  simp
+
+theorem torusUnitary_add (θ θ' : Fin (n + 1) → ℝ) :
+    torusUnitary (θ + θ') = torusUnitary θ * torusUnitary θ' := by
+  apply Subtype.ext
+  rw [Matrix.UnitaryGroup.mul_val, torusUnitary_val, torusUnitary_val, torusUnitary_val,
+    Matrix.diagonal_mul_diagonal]
+  congr 1
+  funext k
+  rw [Pi.add_apply, Complex.ofReal_add, add_mul, Complex.exp_add]
+
+/-- The one-parameter group law of the torus flow `t ↦ diag(e^{itθ})`: the maps `torusUnitary
+(t • θ)` compose as a flow. -/
+theorem torusUnitary_add_smul (θ : Fin (n + 1) → ℝ) (s t : ℝ) :
+    torusUnitary ((s + t) • θ) = torusUnitary (s • θ) * torusUnitary (t • θ) := by
+  rw [add_smul, torusUnitary_add]
+
+/-- ★ **The torus flow preserves the Fubini–Study volume**: every map `p ↦ diag(e^{iθ}) • p` — in
+particular every time-`t` map `diag(e^{itθ})` of the flow whose generator G6 built — preserves
+`fsVolume n`. A corollary of the unitary invariance `fsVolume_map_smul`: Liouville in the dynamics
+sense for this one flow, with no manifold-level flow theory (G5) involved. -/
+theorem fsVolume_map_torusUnitary_smul (θ : Fin (n + 1) → ℝ) :
+    Measure.map (fun p : ℙ ℂ (Ambient n) => torusUnitary θ • p) (fsVolume n) = fsVolume n :=
+  fsVolume_map_smul (torusUnitary θ)
+
+/-- The same, as a measure-preserving map. -/
+theorem measurePreserving_torusUnitary_smul (θ : Fin (n + 1) → ℝ) :
+    MeasurePreserving (fun p : ℙ ℂ (Ambient n) => torusUnitary θ • p) (fsVolume n) (fsVolume n) :=
+  ⟨(continuous_const_smul (torusUnitary θ)).measurable, fsVolume_map_smul (torusUnitary θ)⟩
 
 end Projectivization

@@ -3891,6 +3891,63 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.eq_torusHamiltonian_of_nonneg_of_sum
 
+/-! ### G9 + G10: the image of the moment map is the simplex; the torus flow preserves the Fubini-Study volume (ProjectiveSpaceMomentMap.lean, 2026-09-09) -/
+
+-- Bricks G9 and G10 of specs/generator-layer-scoping.md §8. G9: ★★ range_momentMap — the image
+-- of momentMap on CP^n is EXACTLY stdSimplex ℝ (Fin (n+1)): ⊆ is momentMap_nonneg +
+-- momentMap_sum_eq_one (momentMap_mem_stdSimplex); ⊇ is the ray of (√t₀, …, √tₙ) (sqrtVec,
+-- momentMap_mk_sqrtVec). The image polytope of THIS action by direct computation; the
+-- Atiyah–Guillemin–Sternberg convexity theorem is neither used nor proved. G10: ★
+-- fsVolume_map_torusUnitary_smul — every map p ↦ diag(e^{iθ}) • p, hence every time-t map of the
+-- flow G6 built (torusUnitary_add_smul is its group law), preserves fsVolume n: a one-line
+-- corollary of fsVolume_map_smul, also as MeasurePreserving. Liouville in the dynamics sense for
+-- this ONE flow; no manifold-level flow theory (G5 stays unscheduled), and Posit 3 (the constraint
+-- dynamics preserves μL) is untouched — the measurement pieces are not globally Hamiltonian.
+
+/-- info: 'Projectivization.momentMap_mem_stdSimplex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.momentMap_mem_stdSimplex
+
+/-- info: 'Projectivization.norm_sqrtVec_apply_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_sqrtVec_apply_sq
+
+/-- info: 'Projectivization.norm_sqrtVec_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_sqrtVec_sq
+
+/-- info: 'Projectivization.sqrtVec_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.sqrtVec_ne_zero
+
+/-- info: 'Projectivization.momentMap_mk_sqrtVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.momentMap_mk_sqrtVec
+
+/-- info: 'Projectivization.range_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.range_momentMap
+
+/-- info: 'Projectivization.torusUnitary_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.torusUnitary_zero
+
+/-- info: 'Projectivization.torusUnitary_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.torusUnitary_add
+
+/-- info: 'Projectivization.torusUnitary_add_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.torusUnitary_add_smul
+
+/-- info: 'Projectivization.fsVolume_map_torusUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolume_map_torusUnitary_smul
+
+/-- info: 'Projectivization.measurePreserving_torusUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.measurePreserving_torusUnitary_smul
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

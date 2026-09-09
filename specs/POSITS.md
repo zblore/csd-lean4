@@ -105,11 +105,19 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   field**, posited of every model, not derived (see `specs/TERMS.md`, "Liouville").
 * **What backs it short of derivation.** The dynamics sense is what the downstream typicality
   arguments actually use (`LF4/BornFlowLinkage.lean`), and it is standard for a Hamiltonian flow.
-* **⚠️ Scope.** That this measure **is** the Kähler top-power volume `ω^{∧n}/n!` is *not*
-  established — same manifold wall as Posit 1. `LF4/KahlerVolumeForced.lean` proves the
-  normalisation core and leaves the top-power identity open.
+* **⚠️ Scope** *(corrected 2026-09-09; the previous wording predated step (3))*. That this measure
+  **is** the Kähler top-power volume is now a theorem on `ℂℙⁿ`:
+  `Projectivization.fsVolume_eq_smul_fubiniStudyMeasure` (`ω_FS^{∧n} = (4π)ⁿ · μ_FS`, 2026-09-08;
+  the textbook `ω^{∧n}/n!` is a renormalisation of it). `LF4/KahlerVolumeForced.lean` proves the
+  normalisation core. And preservation **is** a theorem for one Hamiltonian flow — the torus flow
+  of G6: `fsVolume_map_torusUnitary_smul` (G10, 2026-09-09), a corollary of unitary invariance.
+  **The posit stands as written**: it is about the *constraint dynamics*, whose measurement pieces
+  are only locally Hamiltonian (the flux correction of `PiecewiseHamiltonian.lean`), so the torus
+  instance does not reach it.
 * **What would discharge it.** Constructing the flow from a Hamiltonian and proving preservation,
-  rather than positing it as a field — blocked on the same manifold API.
+  rather than positing it as a field — needs global flows and Cartan's formula on a manifold (G5
+  of `generator-layer-scoping.md`, absent from Mathlib, not scheduled), and even then only for
+  the globally Hamiltonian pieces.
 
 ## Posit 4 — the typicality reading (probability *is* volume ratio)
 

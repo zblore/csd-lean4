@@ -64,9 +64,13 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   unique (G8):** `eq_add_const_of_isHamiltonianVectorField` (any Hamiltonian of the same field differs
   by a constant) and `eq_torusHamiltonian_of_nonneg_of_sum` (non-negativity and the sum-two
   normalisation pin a family of phase-field Hamiltonians to `2 · momentMap`).
-* **NOT established:** the moment *polytope* in the Atiyah–Guillemin–Sternberg sense (convexity of
-  the image), and smoothness of the field as a section of the tangent bundle (G3). Marker:
-  `TERM-SCOPE(MomentMap)`.
+* **Also backed (2026-09-09, G9):** the image of `momentMap` is exactly the standard simplex — ★★
+  `Projectivization.range_momentMap` (same module): `Set.range momentMap = stdSimplex ℝ (Fin (n + 1))`,
+  `⊆` the normalisation and `⊇` the ray of `(√t₀, …, √tₙ)` (`sqrtVec`, `momentMap_mk_sqrtVec`). That is
+  the moment polytope of *this* action, by direct computation.
+* **NOT established:** the Atiyah–Guillemin–Sternberg convexity theorem itself (the polytope of a
+  general Hamiltonian torus action — here the simplex is exhibited, not deduced from convexity), and
+  smoothness of the field as a section of the tangent bundle (G3). Marker: `TERM-SCOPE(MomentMap)`.
 * ⚠️ **Why this entry is late (added 2026-09-06).** This file is indexed by *words*, and "moment
   map" matched none of the Kähler / Hamiltonian / Liouville patterns, so the ratchet could not see
   it — even though `momentMap` is the most load-bearing named object in the corpus. It **is** the
@@ -117,6 +121,7 @@ alarming and is not.
   model, not derived), and `liouville_isProbability` for the Kähler instance.
 * **Established (2026-09-08):** `Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean`) — the **normalised** measure of the top power of the Fubini–Study form IS `fubiniStudyMeasure p₀`, with no premise: the volume is `U(n+1)`-invariant, finite and nonzero (`specs/top-power-scoping.md`, M1–M6; the premise version of the morning survives as `_of_ne_zero`).
 * **Established with its constant (2026-09-08, later the same day):** `Projectivization.fsVolume_eq_smul_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyMass.lean`) — `fsVolume n = (4π)ⁿ • fubiniStudyMeasure p₀`, the mass `(4π)ⁿ` computed (`fsVolume_univ`). So "this measure **is** the Kähler top-power volume" is now a theorem on `ℂℙⁿ` with every factor visible; the textbook `ω^{∧n}/n!` is a renormalisation of it (the chart form carries the potential's `-4`, the wedge its own normalisation), not a further claim.
+* **Established for the torus flow (2026-09-09, G10):** `Projectivization.fsVolume_map_torusUnitary_smul` and `measurePreserving_torusUnitary_smul` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`) — every map `p ↦ diag(e^{iθ}) • p`, hence every time-`t` map of the Hamiltonian flow G6 built (`torusUnitary_add_smul` is the group law), preserves `fsVolume n`. Liouville in the dynamics sense for **one** Hamiltonian flow on `ℂℙⁿ`, obtained from unitary invariance (`fsVolume_map_smul`), not from a manifold-level flow theory (G5, not scheduled). `ConstraintDynamics.flow_preserves` (Posit 3) is untouched: the constraint dynamics' measurement pieces are not globally Hamiltonian.
 * **NOT established:** nothing on the `ℂℙⁿ` side of this entry remains open. The arena-level volume (`ℂℙⁿ × T² × …`) is a product of this with Haar factors and is not restated as a top power; `LF4/KahlerVolumeForced.lean` proves the normalisation core. Marker: `TERM-SCOPE(Liouville)`.
 * ⚠️ **Precedent:** `nullSeamLiouville` was renamed because it named a measure on an
   odd-dimensional space, which cannot be symplectic (CONVENTIONS §8.3a). That is the failure this
