@@ -49,9 +49,17 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   `Projectivization.contMDiff_omega_fsForm` / `fsFormAnalytic` (**the Fubini–Study form is an analytic
   section**, a term of the `ω` type; `Instances/ProjectiveSpaceFubiniStudyForm.lean`). Nothing downstream is
   restated at `ω`.
-* **NOT established:** the integrability of `J`
-  as a vanishing Nijenhuis tensor — what turns "almost Kähler" into "Kähler" in the tensor sense —
-  and `J` as a smooth section of the endomorphism bundle. Marker: `TERM-SCOPE(Kahler)`.
+* **Also backed (2026-09-10, G14a):** the Kähler predicate itself — `DifferentialForm.IsKahler β J J₀`
+  (`Mathlib/Geometry/Manifold/HamiltonianVectorField.lean`: almost Kähler, and `J` is the model's
+  complex structure `J₀` through the tangent trivialisation of every chart, so every chart transition
+  is holomorphic, `IsKahler.fderiv_chart_transition_comm` — the textbook definition, a complex manifold
+  with a Hermitian metric whose fundamental form is closed) and its inhabitant ★★★
+  `Projectivization.fsForm_isKahler` (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`):
+  **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is a Kähler manifold.**
+* **NOT established (queued as G14b / G15 in `specs/generator-layer-scoping.md` §9):** the tensor
+  formulation of integrability — the Nijenhuis tensor of `J` vanishes (Mathlib has
+  `VectorField.mlieBracket` at the pin, so this is M–L) — and `J` as a smooth section of the
+  endomorphism bundle. Marker: `TERM-SCOPE(Kahler)`.
 
 ## moment map
 
@@ -173,7 +181,7 @@ alarming and is not.
   model, not derived), and `liouville_isProbability` for the Kähler instance.
 * **Established (2026-09-08):** `Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean`) — the **normalised** measure of the top power of the Fubini–Study form IS `fubiniStudyMeasure p₀`, with no premise: the volume is `U(n+1)`-invariant, finite and nonzero (`specs/top-power-scoping.md`, M1–M6; the premise version of the morning survives as `_of_ne_zero`).
 * **Established with its constant (2026-09-08, later the same day):** `Projectivization.fsVolume_eq_smul_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyMass.lean`) — `fsVolume n = (4π)ⁿ • fubiniStudyMeasure p₀`, the mass `(4π)ⁿ` computed (`fsVolume_univ`). So "this measure **is** the Kähler top-power volume" is now a theorem on `ℂℙⁿ` with every factor visible; the textbook `ω^{∧n}/n!` is a renormalisation of it (the chart form carries the potential's `-4`, the wedge its own normalisation), not a further claim.
-* **Established for the torus flow (2026-09-09, G10):** `Projectivization.fsVolume_map_torusUnitary_smul` and `measurePreserving_torusUnitary_smul` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`) — every map `p ↦ diag(e^{iθ}) • p`, hence every time-`t` map of the Hamiltonian flow G6 built (`torusUnitary_add_smul` is the group law), preserves `fsVolume n`. Liouville in the dynamics sense for **one** Hamiltonian flow on `ℂℙⁿ`, obtained from unitary invariance (`fsVolume_map_smul`), not from a manifold-level flow theory (G5, not scheduled). `ConstraintDynamics.flow_preserves` (Posit 3) is untouched: the constraint dynamics' measurement pieces are not globally Hamiltonian.
+* **Established for the torus flow (2026-09-09, G10):** `Projectivization.fsVolume_map_torusUnitary_smul` and `measurePreserving_torusUnitary_smul` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`) — every map `p ↦ diag(e^{iθ}) • p`, hence every time-`t` map of the Hamiltonian flow G6 built (`torusUnitary_add_smul` is the group law), preserves `fsVolume n`. Liouville in the dynamics sense for **one** Hamiltonian flow on `ℂℙⁿ`, obtained from unitary invariance (`fsVolume_map_smul`), not from a manifold-level flow theory (G5, queued at XL in `specs/generator-layer-scoping.md` §9). `ConstraintDynamics.flow_preserves` (Posit 3) is untouched: the constraint dynamics' measurement pieces are not globally Hamiltonian.
 * **NOT established:** nothing on the `ℂℙⁿ` side of this entry remains open. The arena-level volume (`ℂℙⁿ × T² × …`) is a product of this with Haar factors and is not restated as a top power; `LF4/KahlerVolumeForced.lean` proves the normalisation core. Marker: `TERM-SCOPE(Liouville)`.
 * ⚠️ **Precedent:** `nullSeamLiouville` was renamed because it named a measure on an
   odd-dimensional space, which cannot be symplectic (CONVENTIONS §8.3a). That is the failure this

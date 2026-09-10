@@ -116,8 +116,9 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   instance does not reach it.
 * **What would discharge it.** Constructing the flow from a Hamiltonian and proving preservation,
   rather than positing it as a field — needs global flows and Cartan's formula on a manifold (G5
-  of `generator-layer-scoping.md`, absent from Mathlib, not scheduled), and even then only for
-  the globally Hamiltonian pieces.
+  of `generator-layer-scoping.md`, queued at XL in its §9; Mathlib has uniform-time global integral
+  curves at the pin and no Lie derivative of forms), and even then only for the globally
+  Hamiltonian pieces.
 
 ## Posit 4 — the typicality reading (probability *is* volume ratio)
 

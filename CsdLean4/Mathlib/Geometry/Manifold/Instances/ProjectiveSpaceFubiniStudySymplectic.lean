@@ -43,15 +43,20 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
   compatible metric `g = ω (J ·, ·)` positive definite (`fsForm_metric_self_pos`); and ★
   `fderiv_chart_transition_smul_I` / `fsJ_symmL` — **`J` is the complex structure of the atlas**:
   the chart transitions are holomorphic (`contDiffOn_uTrans`), so their derivatives are
-  `ℂ`-linear and `J = i·` reads as `i·` in every chart.
+  `ℂ`-linear and `J = i·` reads as `i·` in every chart;
+* **G14a (2026-09-10).** `modelJ` (`i·` on the model as a real-linear map) and ★★★ `fsForm_isKahler`
+  — **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is a Kähler manifold**
+  (`DifferentialForm.IsKahler`: almost Kähler, and `J` is the complex structure of the holomorphic
+  atlas, by `fsJ_symmL`).
 
 ## Honest scope
 
-⚠️ **Almost Kähler, not "Kähler manifold" in the tensor sense.** `fsForm_isAlmostKahler`
-packages symplectic + compatible `J` on the manifold, and `fderiv_chart_transition_smul_I` shows
-the `J` is the holomorphic atlas's; the integrability of `J` as a vanishing Nijenhuis tensor is
-not stated, and `J` is a family, not a smooth section of the endomorphism bundle. The pointwise
-triple `IsFubiniStudyKahler` on the flat model is the origin's case.
+⚠️ **Kähler in the atlas sense.** `fsForm_isKahler` packages symplectic + compatible `J` + `J` is
+the complex structure of the holomorphic atlas (`fsJ_symmL`, `fderiv_chart_transition_smul_I`),
+which is the textbook definition. The tensor formulation of integrability (a vanishing Nijenhuis
+tensor; G14b of `specs/generator-layer-scoping.md`) is not stated, and `J` is a family, not a
+smooth section of the endomorphism bundle (G15). The pointwise triple `IsFubiniStudyKahler` on the
+flat model is the origin's case.
 
 ⚠️ **No volume.** Non-degeneracy plus closedness does not produce the top-power identity
 `ωⁿ/n! = μ_FS`; that is step (3), top forms → measures, and is not attempted.
@@ -271,5 +276,23 @@ theorem fsJ_symmL (x₀ y : ℙ ℂ (Ambient n)) (hy : y ∈ (chartAt (Fin n →
     exact mem_chart_source _ y
   unfold fsJ
   exact (fderiv_chart_transition_smul_I x₀ y hy' v).symm
+
+/-! ### ★★★ `ℂℙⁿ` is a Kähler manifold (G14a) -/
+
+/-- The complex structure of the model `Fin n → ℂ`: multiplication by `i`, as a real-linear map. -/
+noncomputable def modelJ : (Fin n → ℂ) →L[ℝ] (Fin n → ℂ) :=
+  (Complex.I • ContinuousLinearMap.id ℂ (Fin n → ℂ)).restrictScalars ℝ
+
+@[simp] theorem modelJ_apply (v : Fin n → ℂ) : modelJ v = Complex.I • v := rfl
+
+/-- ★★★ **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is a Kähler manifold**: almost Kähler
+(`fsForm_isAlmostKahler`), and `J` is the complex structure of the holomorphic atlas — `i·` in
+every chart (`fsJ_symmL`, from the holomorphy of the transitions `contDiffOn_uTrans`). Kähler in
+the atlas sense of `DifferentialForm.IsKahler`; the tensor sense is G14b. -/
+theorem fsForm_isKahler (n : ℕ) : IsKahler (fsForm (n := n)) fsJ modelJ where
+  toIsAlmostKahler := fsForm_isAlmostKahler n
+  J_symmL := fun x₀ y hy v => by
+    rw [modelJ_apply]
+    exact fsJ_symmL x₀ y hy v
 
 end Projectivization

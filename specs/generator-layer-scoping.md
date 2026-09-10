@@ -127,7 +127,7 @@ section of the endomorphism bundle. The **M** held. One shelf fact: a type ascri
 definitionally equal term is *erased* — `(v : Fin n → ℂ)` for `v : TangentSpace 𝓘 x` leaves `v`
 tangent-typed, so `Complex.I • v` finds no `ℂ`-action; the reducible cast `tangentToModel` (the
 `toFlat` idiom) is what actually changes the elaborated type.
-**The step-(4) ladder is now complete except G5 (unscheduled); G12 was built 2026-09-10.**
+**The step-(4) ladder is complete except G5, which is queued at XL in §9 with the rest of the residue; G12 and G14a were built 2026-09-10.**
 Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
@@ -185,7 +185,7 @@ consumed in chart form and the general pullback was never built).
 | **G2** ✅ built 2026-09-09 | Existence and uniqueness of `X_H` pointwise: on a finite-dimensional tangent space `ω♭ x : v ↦ ω x (v, ·)` is injective by non-degeneracy, hence bijective, so `X_H x := (ω♭ x)⁻¹ (dH x)` | **M** | High | Medium | G1 | `TangentSpace 𝓘 x = E` by `rfl`; `LinearMap.injective_iff_surjective` on `E` and its dual. Pointwise only |
 | **G3** ✅ built 2026-09-09 | `X_H` is a smooth section of the tangent bundle | **M–L** | Medium–high | Medium (gates G4) | G2 | Inversion of `ω♭` along the bundle: `contDiffAt_ring_inverse` on the units plus the `localRep` chart plumbing that `ExteriorDerivative.lean` already does for forms. This is the `VectorBundle/Hom.lean` pattern again |
 | **G4** ✅ built 2026-09-09 | Integral curves of `X_H` exist and are unique, and `H` is conserved along them (`ι_X ω (X) = 0` by alternation) | **S–M** | High | Medium | G3 | Direct application of Mathlib's `exists_isMIntegralCurveAt_of_contMDiffAt` and `isMIntegralCurve_eq_of_contMDiff`; lifts `conserved_along_translationCurve` from the chart to the manifold |
-| **G5** | Liouville at manifold level: the time-`t` map of `X_H` preserves `topFormMeasure (ω^{∧n})` | **XL** | Low | Medium, and less than it looks | G3, and two absent Mathlib layers | ⛔ Needs global flows (absent) and `L_X ω = 0` by Cartan's formula (absent). It would replace the posit `ConstraintDynamics.flow_preserves` by a theorem — **for Hamiltonian flows only**, and the corpus's measurement pieces are *not* globally Hamiltonian (the flux correction), so it would not touch the dynamics the record layer actually uses. **Not scheduled** |
+| **G5** | Liouville at manifold level: the time-`t` map of `X_H` preserves `topFormMeasure (ω^{∧n})` | **XL** | Low | Medium, and less than it looks | G3, and two absent Mathlib layers | ⛔ Needs global flows (absent) and `L_X ω = 0` by Cartan's formula (absent). It would replace the posit `ConstraintDynamics.flow_preserves` by a theorem — **for Hamiltonian flows only**, and the corpus's measurement pieces are *not* globally Hamiltonian (the flux correction), so it would not touch the dynamics the record layer actually uses. **Queued** — §9, re-priced there (the author's decision, 2026-09-10) |
 | **G6** | The moment map of the torus action on ℂℙⁿ at manifold level: the fundamental vector field `X_A` of `p ↦ exp(tA)·p` (the `t`-derivative of `uTrans`, which `contDiffOn_uTrans` already makes smooth), `μ_A [z] = ⟨z, iA z⟩/‖z‖²`, and ★★★ `IsHamiltonianVectorField fsForm X_A μ_A`; for `A = diag(iθ)` this is `LF4.momentMap` | **L** | Medium | **High** | G1 only (the field is given, G2/G3 are not needed) | Closes the `TERMS.md` moment-map line "NOT established: that it is the moment map of a Hamiltonian torus action on the symplectic *manifold*". It is also exactly the route the 2026-08-02 review recorded for the Hamiltonian-origin row: unitary rotations on a compact Kähler pointer are globally Hamiltonian (`H¹(ℂℙ^K) = 0`). The computation is `fsModelForm_apply` (M7) against the derivative of the action in the chart; half of it exists |
 | **G7** ✅ built 2026-09-09 (as `IsAlmostKahler`) | A manifold-level Kähler predicate `IsKahler ω J g` on ℂℙⁿ: `J = i·` on each tangent space (chart-independent because the transitions are ℂ-analytic, `contDiffOn_uTrans`), `g = ω(·, J·)`, the pointwise triple `IsFubiniStudyKahler` lifted | **M** | High | Low–medium | — | Packages words the corpus already has pointwise; closes the last non-analyticity item of the `TERMS.md` Kähler line. Gates nothing |
 
@@ -254,7 +254,7 @@ is wrong: state it on `TangentSpace` directly and never through a `Fin 1`-form.
 ## 6. Rating
 
 **L** for the recommended pair G1 + G6, P(success) medium, value high (the moment-map line). **XL** for
-G5, not scheduled. `R-016′` **L**, medium, value medium, and it is a statement, not a discharge.
+G5, queued (§9). `R-016′` **L**, medium, value medium, and it is a statement, not a discharge.
 Nothing here has been "attempted and walled"; every absence above was a grep.
 
 ## 8. Additions after G1 and G6 (2026-09-08, late): G8–G13
@@ -337,6 +337,52 @@ Hamiltonian layer and the top-power measure are all on the `∞` form `fsForm`, 
 section (`fsFormAnalytic_apply` is `rfl`), not a second object with its own theory. Analyticity of the
 Hamiltonian vector fields (`torusField`, `schrodingerField`) would follow the G3 route at `ω` and is not
 written.
+
+### G14a, built (2026-09-10)
+
+**What.** `DifferentialForm.IsKahler β J J₀` (`HamiltonianVectorField.lean`): `IsAlmostKahler β J` plus one
+field, `J_symmL` — `J` is the model's complex structure `J₀ : E →L[ℝ] E` through the tangent trivialisation
+of every chart. That single field is integrability *in the atlas sense*: ★ `IsKahler.apply_eq` (`J y = J₀` in
+`y`'s own chart, from `tangent_symmL_eq_fderiv` at `x₀ = y` and the identity transition's derivative,
+`fderiv_chart_transition_self`), ★ `IsKahler.fderiv_chart_transition_comm` (**every chart transition has
+`J₀`-linear derivative** — the Cauchy–Riemann equations of the atlas, i.e. the atlas is holomorphic and `J` is
+its complex structure), `IsKahler.J₀_J₀`; and `IsAlmostKahler.metric_J_J` (the metric is Hermitian). So
+`IsKahler` is the textbook definition — a complex manifold with a Hermitian metric whose fundamental form is
+closed. On `ℂℙⁿ`: `modelJ` (`i·` on `Fin n → ℂ` as a real-linear map, the `complexStructureL` pattern) and
+★★★ `fsForm_isKahler` (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`), whose `J_symmL` is G7's
+`fsJ_symmL` verbatim. **S**, as priced. 9 pins.
+
+**Why one field.** A second field "every transition is holomorphic" would be redundant: with `J` a single
+family, reading it as `J₀` in two charts at a common point forces the transition derivative to commute with
+`J₀` — which is the proof of `fderiv_chart_transition_comm`. One shelf fact, the G7 trap again: after
+`rw [tangent_symmL_eq_fderiv]` the identity CLM sits on the `TangentSpace` instance path, so
+`ContinuousLinearMap.id_apply` and `rw [h.apply_eq]` both fail "not type-correct under implicit
+transparency"; finish with `exact h1` (defeq) and `h1.symm.trans (h.apply_eq y _)`.
+
+**What it does not do.** The tensor form — the Nijenhuis tensor `N_J(X, Y) = [JX, JY] − J[JX, Y] − J[X, JY]
+− [X, Y]` vanishes — is not stated (G14b); `J` is a family of maps, not a smooth section of the
+endomorphism bundle (G15). Nothing in `LF4` consumes `IsKahler` yet (W1).
+
+## 9. The residue, every item priced (2026-09-10)
+
+**Policy (the author's, 2026-09-10).** No row is "not scheduled". Every residue of the ladder is a numbered,
+priced row here, and the author decides when it is built; work that Mathlib later lands is deprecated in
+favour of Mathlib's version. Prices are honest — an XL is an XL — but a price is information, not a verdict.
+Every shelf claim below was grep-probed at the pin on 2026-09-10; note that two absences the earlier sections
+recorded have since been filled upstream (`VectorField.mlieBracket`, and uniform-time global integral curves
+`exists_isMIntegralCurve_of_isMIntegralCurveOn`).
+
+| # | Brick | Cx | P(success) | Value | What it lands, honestly — and the Mathlib gap it fills |
+|---|---|---|---|---|---|
+| **G5** | **Liouville at manifold level**: the time-`t` map of `X_H` preserves `topFormMeasure (ω^{∧n})`. Three milestones. **(a)** the global flow of a `C^1` vector field on a compact manifold — global integral curves exist (`exists_isMIntegralCurve_of_isMIntegralCurveOn` at the pin gives them from a uniform local existence time; compactness supplies the uniform time), are unique (G4), and assemble into a `Flow` (`Mathlib/Dynamics/Flow.lean`); **(b)** the Lie derivative of a manifold form along the flow and Cartan's formula `L_X = d ∘ ι_X + ι_X ∘ d` — the genuine Mathlib gap (no `lieDeriv`, no Cartan at the pin; needs pullback of `DifferentialForm` along a smooth map and `mextDeriv` commuting with it); **(c)** `L_X ω = d(ι_X ω) = d(dH) = 0` (G11's `isLocallyHamiltonian` is exactly `d(ι_X ω) = 0`), so the flow preserves `ω`, hence `ω^{∧n}`, hence `topFormMeasure` (`topFormMeasure_map_eq`). | (a) **M–L**, (b) **L–XL**, (c) **M**; **XL** in all | Low–medium | Medium | Replaces `ConstraintDynamics.flow_preserves` by a theorem for the globally Hamiltonian pieces only; the measurement pieces are locally Hamiltonian (the flux correction), so Posit 3 stands even then. |
+| **G14a** ✅ built 2026-09-10 | The Kähler predicate, atlas sense; `ℂℙⁿ` is Kähler | S–M (took **S**) | — | Medium | See §G14a above. |
+| **G14b** | **Kähler in the tensor sense**: the Nijenhuis tensor `N_J` of a family `J` via `VectorField.mlieBracket` (at the pin), and `N_J = 0` for `IsKahler` — the easy direction of Newlander–Nirenberg (a holomorphic atlas makes `N_J` vanish, a chart computation: in a chart `J = J₀` is constant, and the bracket of coordinate-constant fields is `0`). The converse (`N_J = 0` ⇒ holomorphic atlas) is the hard PDE theorem and is **not** this row. | **M–L** | Medium | Low | Closes the `TERMS.md` "tensor sense" line; `IsKahler.nijenhuis_eq_zero`. Needs `J` as a section (G15) to state `[JX, JY]`. |
+| **G15** | **`J` as a smooth section of `End(TM)`**: `fun x => (x, fsJ x)` is `C^∞` into the bundle of continuous linear maps `TangentSpace x →L[ℝ] TangentSpace x` (`Mathlib/Geometry/Manifold/VectorBundle/Hom.lean` at the pin); generically, `IsKahler` implies the section is `C^∞` because `J` is constant in every chart. | **S–M** | High | Low | The `TERMS.md` "smooth section" line; prerequisite of G14b. |
+| **G16** | **The torus orbits are integral curves**: `t ↦ torusUnitary (t • θ) • p` is `IsMIntegralCurve` for `torusField θ`, and `momentMap` is conserved along it. | **S** | High | Low | The route of `isMIntegralCurve_schrodingerUnitary_smul` with `hasDerivAt_chartFun_torusUnitary` and `torusUnitary_add_smul`; the G4 write-up left it unwritten. |
+| **G17** | **The Riemannian volume of the Fubini–Study metric is `fsVolume` up to the constant** (the `TERMS.md` Fubini–Study line "normalised Riemannian volume"). Needs the Riemannian volume measure of a metric on a manifold — absent at the pin (`VectorBundle/Riemannian.lean` has Riemannian *bundles*, no volume) — built as `topFormMeasure` of the volume form `√det g`; then `vol_g = ω^{∧n}/n!` is the algebraic Kähler identity from `g = ω (J ·, ·)` (G14a). | **L** | Low–medium | Low | Fills a Mathlib gap (Riemannian volume); nothing in the corpus consumes it. |
+| **G18** | **Darboux's theorem** (the `TERMS.md` symplectic line): every symplectic form is locally the standard one. Moser's trick: needs G5(a) flows, G5(b) Cartan, and a Poincaré lemma on a ball. | **XL** | Low | Low | Nothing in the corpus consumes it; it is the classical theorem a symplectic library owes. |
+| **W1** | **Wire the physics to the manifold layer**: the `ℂℙⁿ` instances of `KahlerOnticSetup` (`trivialKahlerOnticSetup`, `unitaryFlowSetup`, `manyToOneSetup`) get theorems that their `liouvilleMeasure` is `(4π)⁻ⁿ • fsVolume n` (the symplectic volume of `fsForm`, `fsVolume_eq_smul_fubiniStudyMeasure`), that `flow_preserves_volume` is `fsVolume_map_smul`, and that the sector carries `fsForm_isKahler`; and the four stale ledgers are corrected — link L1 of `specs/connectivity-manifest.md`, the `kahler_pointwise` docstring, and the `TERMS.md` Fubini–Study and symplectic entries, all of which still call the manifold residual open. The two projective-space types are definitionally equal (`ℙ ℂ (Ambient n)` is `CPN (n + 1)`). | **M** | High | **High** | This is what turns "we start from an FS, Kähler, Liouville space" into "the sector is the standard object, proved". Posit 3 is untouched by it. |
+| **G19** | Analyticity of the Hamiltonian fields: `torusField`, `schrodingerField` are `ω` sections (the G3 route at `ω`; `hamiltonianVectorFieldSection` is `C^ω` for a `C^ω` form and energy). | **S–M** | High | Low | The G12 write-up left it unwritten. |
 
 ## References
 

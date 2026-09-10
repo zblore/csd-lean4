@@ -20,11 +20,11 @@ public import Mathlib.Analysis.Calculus.MeanValue
 **Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 
-Bricks **G1**, **G2**, **G3**, **G4**, **G7**, **G8** (in part) and **G11** of
+Bricks **G1**, **G2**, **G3**, **G4**, **G7**, **G8** (in part), **G11** and **G14a** of
 `specs/generator-layer-scoping.md`: the defining equation of a Hamiltonian vector field,
 `ι_X ω = dH`, at manifold level, the pointwise facts that follow from it by alternation and
 linearity alone, its existence and uniqueness from non-degeneracy, its smoothness, its integral
-curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähler predicate.
+curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähler and Kähler predicates.
 
 * `DifferentialForm.interiorProduct ω X` — the interior product `ι_X ω`, `x ↦ (ω x).curryLeft (X x)`,
   a 1-form *family* (`interiorProduct_apply`);
@@ -69,8 +69,14 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
 * **G7, almost Kähler.** `apply_swap` (antisymmetry of a 2-form family), the predicate
   `IsAlmostKahler β J` — a symplectic form with a compatible almost complex structure: `J² = -1`,
   `J`-invariance, and taming `β (J v, v) > 0` — with its metric `h.metric x u v = β x (J u, v)`,
-  ★ `metric_comm`, ★ `metric_self_pos`, and `apply_eq_metric` (`β = g (·, J ·)`). Its inhabitant
-  on `ℂℙⁿ` is `fsForm_isAlmostKahler` (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`).
+  ★ `metric_comm`, ★ `metric_self_pos`, `metric_J_J` (Hermitian), and `apply_eq_metric`
+  (`β = g (·, J ·)`). Its inhabitant on `ℂℙⁿ` is `fsForm_isAlmostKahler`
+  (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`);
+* **G14a, Kähler.** `IsKahler β J J₀` — almost Kähler, and `J` is the model's complex structure
+  `J₀` through the tangent trivialisation of every chart (`J_symmL`), i.e. integrable in the atlas
+  sense; ★ `IsKahler.apply_eq` (`J y = J₀` in `y`'s chart), ★ `IsKahler.fderiv_chart_transition_comm`
+  (**every chart transition is holomorphic**: its derivative commutes with `J₀`), `IsKahler.J₀_J₀`.
+  Its inhabitant on `ℂℙⁿ` is ★★★ `fsForm_isKahler` (same module as G7's).
 
 ## Honest scope
 
@@ -82,10 +88,13 @@ theorem (G3) about the constructed field, under `C^∞` hypotheses on `ω` and `
 meaningful when that family is smooth — and for `hamiltonianVectorField` of a `C^∞` energy it now
 is (G3) — and junk otherwise, exactly as `fderiv` of a non-differentiable function is junk.
 
-⚠️ **Almost Kähler, not Kähler.** `IsAlmostKahler` packages symplectic + compatible `J`; the
-integrability of `J` (vanishing Nijenhuis tensor), which turns almost Kähler into Kähler, is not
-stated. On `ℂℙⁿ` the `J` is that of the holomorphic atlas (`fderiv_chart_transition_smul_I`), which
-is integrability in the atlas sense, but the tensor formulation is not built.
+⚠️ **Kähler in the atlas sense, not the tensor sense.** `IsKahler β J J₀` is `IsAlmostKahler` plus
+integrability *by the atlas*: `J` is the model's `J₀` through every chart's tangent trivialisation,
+which makes every chart transition holomorphic (`IsKahler.fderiv_chart_transition_comm`). That is
+the textbook definition. The equivalent tensor formulation — the Nijenhuis tensor of `J` vanishes —
+is not stated (it needs Lie brackets of vector fields on manifolds, absent from Mathlib; G14b of
+`specs/generator-layer-scoping.md`), nor is `J` packaged as a smooth section of the endomorphism
+bundle (G15).
 
 ⚠️ **No global flow.** G4 gives local existence, uniqueness and conservation for integral
 curves; that a global flow `ℝ × M → M` exists (completeness of the field, e.g. on a compact
@@ -98,7 +107,7 @@ Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
-References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G7, G8, G11); `Geometry/Manifold/SymplecticForm.lean`
+References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G7, G8, G11, G14a); `Geometry/Manifold/SymplecticForm.lean`
 (`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `zeroFormFamily`,
 `toFlat_mextDeriv_zeroFormFamily`, `mextDeriv_mextDeriv`);
 `Analysis/InnerProductSpace/HamiltonianVectorField.lean` (the linear duality this lifts);
@@ -951,7 +960,76 @@ theorem apply_eq_metric (h : IsAlmostKahler β J) (x : M)
   unfold metric
   exact (h.invariant x u v).symm
 
+/-- The compatible metric is Hermitian: `J` is an isometry of `g`. -/
+theorem metric_J_J (h : IsAlmostKahler β J) (x : M)
+    (u v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    h.metric x (J x u) (J x v) = h.metric x u v := by
+  unfold metric
+  rw [h.J_J, apply_neg_left (fun x => β x) x u (J x v), ← h.invariant x (J x u) v, h.J_J,
+    apply_neg_left (fun x => β x) x u (J x v)]
+
 end IsAlmostKahler
+
+/-! ### Kähler structures: `J` is the complex structure of a holomorphic atlas (G14a) -/
+
+/-- **A Kähler structure**: an almost Kähler structure whose `J` is *integrable in the atlas
+sense* — `J` is the complex structure `J₀` of the model `E`, read through the tangent
+trivialisation of every chart. The trivialisations of two charts differ by the derivative of the
+chart transition, so this says every chart transition has `J₀`-linear derivative, i.e. is
+holomorphic (`IsKahler.fderiv_chart_transition_comm`, the Cauchy–Riemann equations of the atlas):
+the atlas is a holomorphic atlas and `J` is its complex structure. That is the textbook definition
+of a Kähler manifold — a complex manifold with a Hermitian metric (`IsAlmostKahler.metric_J_J`)
+whose fundamental form is closed (`isSymplectic`). The equivalent tensor formulation, a vanishing
+Nijenhuis tensor (Newlander–Nirenberg), is not what is stated. -/
+structure IsKahler (β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ)
+    (J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →
+      TangentSpace (modelWithCornersSelf ℝ E) x) (J₀ : E →L[ℝ] E) : Prop
+    extends IsAlmostKahler β J where
+  /-- `J` is `J₀` through the tangent trivialisation of every chart. -/
+  J_symmL : ∀ (x₀ y : M), y ∈ (chartAt E x₀).source → ∀ v : E,
+    J y ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ y v)
+      = (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ y (J₀ v)
+
+namespace IsKahler
+
+variable {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ}
+  {J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →
+    TangentSpace (modelWithCornersSelf ℝ E) x} {J₀ : E →L[ℝ] E}
+
+omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] in
+/-- The chart transition from the chart at `y` to itself is the identity near `y`'s point, so its
+derivative there is the identity. -/
+theorem fderiv_chart_transition_self (y : M) :
+    fderiv ℝ (chartAt E y ∘ (chartAt E y).symm) (chartAt E y y) = ContinuousLinearMap.id ℝ E := by
+  have h : (chartAt E y ∘ (chartAt E y).symm) =ᶠ[𝓝 (chartAt E y y)] id := by
+    filter_upwards [(chartAt E y).open_target.mem_nhds (mem_chart_target _ y)] with w hw
+    exact (chartAt E y).right_inv hw
+  rw [h.fderiv_eq, fderiv_id]
+
+/-- ★ `J` is `J₀` on the tangent space at `y` itself (`TangentSpace 𝓘(ℝ, E) y` is `E`): the chart
+at `y` reads `J y` as `J₀`. -/
+theorem apply_eq (h : IsKahler β J J₀) (y : M) (v : E) : J y v = J₀ v := by
+  have h1 := h.J_symmL y y (mem_chart_source E y) v
+  rw [tangent_symmL_eq_fderiv y y (mem_chart_source E y), fderiv_chart_transition_self] at h1
+  exact h1
+
+/-- ★ **Every chart transition is holomorphic**: its derivative commutes with `J₀` — the
+Cauchy–Riemann equations of the atlas, at the point of the chart at `x₀` corresponding to `y`. -/
+theorem fderiv_chart_transition_comm (h : IsKahler β J J₀) (x₀ y : M)
+    (hy : y ∈ (chartAt E x₀).source) (v : E) :
+    fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) (J₀ v)
+      = J₀ (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) v) := by
+  have h1 := h.J_symmL x₀ y hy v
+  rw [tangent_symmL_eq_fderiv x₀ y hy] at h1
+  exact h1.symm.trans
+    (h.apply_eq y (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) v))
+
+/-- `J₀² = -1` on the model, transported from `J² = -1` at any point of `M`. -/
+theorem J₀_J₀ (h : IsKahler β J J₀) (y : M) (v : E) : J₀ (J₀ v) = -v := by
+  rw [← h.apply_eq y (J₀ v), ← h.apply_eq y v]
+  exact h.J_J y v
+
+end IsKahler
 
 end AlmostKahler
 

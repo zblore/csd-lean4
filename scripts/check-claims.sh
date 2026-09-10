@@ -266,7 +266,8 @@ hamiltonianVectorAt
 hamiltonianVectorField
 localHamiltonianVector
 hamiltonianVectorFieldSection
-IsAlmostKahler"
+IsAlmostKahler
+IsKahler"
 #
 # PARITY LEDGER (why each name is earned).
 # ⚠️ Corrected 2026-08-04, same day it was written: the first draft asserted "all on
@@ -374,6 +375,14 @@ IsAlmostKahler"
 #       whose metric g = β (J ·, ·) is symmetric and positive definite (metric_comm,
 #       metric_self_pos). "Almost" is deliberate: integrability of J (Nijenhuis) is NOT part of
 #       it. Inhabited by fsForm_isAlmostKahler (CP^n with J = i·, real dimension 2n).   EVEN.
+#                                                                  EARNED (manifold-level).
+#     IsKahler — (Geometry/Manifold/HamiltonianVectorField.lean, 2026-09-10, brick G14a) the
+#       PREDICATE: IsAlmostKahler (so symplectic, EVEN) plus integrability in the ATLAS sense —
+#       J is the model's complex structure J₀ through the tangent trivialisation of every chart
+#       (field J_symmL), whence every chart transition is holomorphic
+#       (IsKahler.fderiv_chart_transition_comm). The textbook definition (complex manifold +
+#       Hermitian metric + closed fundamental form). The tensor form (Nijenhuis) is NOT stated
+#       (G14b, queued). Inhabited by fsForm_isKahler (CP^n, real dimension 2n).   EVEN.
 #                                                                  EARNED (manifold-level).
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
@@ -708,6 +717,11 @@ isSymplectic"
 #     (fsForm_isSymplectic), J² = -1, (1,1)-form (fsForm_smul_I_smul_I), tamed
 #     (fsSection_smul_I_neg with g = ω (J ·, ·)). The word names the established predicate,
 #     and the "almost" is kept: the Nijenhuis integrability is not stated. CP^n, EVEN.
+#   fsForm_isKahler — (2026-09-10, Instances/ProjectiveSpaceFubiniStudySymplectic.lean, G14a)
+#     PROVES that CP^n with the Fubini–Study form and J = i· is Kähler in the atlas sense of the
+#     declared predicate IsKahler: almost Kähler (fsForm_isAlmostKahler) and J is the complex
+#     structure of the holomorphic atlas (fsJ_symmL). The word names the established predicate;
+#     the tensor form of integrability is G14b, queued. CP^n, EVEN.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -788,6 +802,7 @@ contMDiff_torusHamiltonian
 exists_isMIntegralCurveAt_hamiltonianVectorField
 isMIntegralCurve_hamiltonianVectorField_eq
 fsForm_isAlmostKahler
+fsForm_isKahler
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH

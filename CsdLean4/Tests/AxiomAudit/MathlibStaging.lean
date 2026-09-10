@@ -4454,6 +4454,49 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsFormAnalytic_apply
 
+-- G14a (2026-09-10): the Kahler predicate in the atlas sense. IsKahler beta J J0 is
+-- IsAlmostKahler plus one field: J is the model's complex structure J0 through the tangent
+-- trivialisation of every chart. From it: J y = J0 in y's own chart (apply_eq), and every chart
+-- transition has J0-linear derivative (fderiv_chart_transition_comm, the Cauchy-Riemann
+-- equations of the atlas) -- the textbook definition of a Kahler manifold. CP^n with the
+-- Fubini-Study form and J = i. is one (fsForm_isKahler, from G7's fsJ_symmL). The tensor
+-- form of integrability (Nijenhuis) is G14b, queued.
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_J_J' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.metric_J_J
+
+/-- info: 'DifferentialForm.IsKahler' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsKahler
+
+/-- info: 'DifferentialForm.IsKahler.fderiv_chart_transition_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsKahler.fderiv_chart_transition_self
+
+/-- info: 'DifferentialForm.IsKahler.apply_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsKahler.apply_eq
+
+/-- info: 'DifferentialForm.IsKahler.fderiv_chart_transition_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsKahler.fderiv_chart_transition_comm
+
+/-- info: 'DifferentialForm.IsKahler.J₀_J₀' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsKahler.J₀_J₀
+
+/-- info: 'Projectivization.modelJ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.modelJ
+
+/-- info: 'Projectivization.modelJ_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.modelJ_apply
+
+/-- info: 'Projectivization.fsForm_isKahler' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_isKahler
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling
