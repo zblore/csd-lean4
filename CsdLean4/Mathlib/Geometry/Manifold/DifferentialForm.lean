@@ -98,7 +98,8 @@ bundle over it is then an analytic vector bundle (step (2a)'s instance); and onl
 type of analytic `ι`-forms on `ℂℙⁿ` well-formed at all.
 
 ⚠️ The witness here is the **zero** form; the Fubini–Study form as a section is
-`Projectivization.fsForm` in `Instances/ProjectiveSpaceFubiniStudyForm.lean`. -/
+`Projectivization.fsForm` in `Instances/ProjectiveSpaceFubiniStudyForm.lean`, and its analytic
+reading over the real model is `Projectivization.fsFormAnalytic` there (G12). -/
 theorem projectiveDifferentialForm_nonempty (m : ℕ) :
     Nonempty (DifferentialForm (IM := modelWithCornersSelf ℂ (Fin m → ℂ))
       (M := ℙ ℂ (Ambient m)) (n := ω) (ι := ι) (G := ℂ)) :=

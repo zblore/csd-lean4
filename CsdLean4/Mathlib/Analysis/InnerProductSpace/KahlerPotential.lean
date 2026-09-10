@@ -35,7 +35,10 @@ construction does exactly that:
 * `ddcForm K := extDeriv (dcForm K)` — the `dd^c` 2-form of the potential.
 * ★ `extDeriv_ddcForm` — **`dd^c K` is closed for every smooth potential `K`**.
 * `fsPotential z = log (1 + ‖z‖²)`, `contDiff_fsPotential` — the Fubini–Study chart potential is
-  smooth (`1 + ‖z‖² ≥ 1 > 0`, so the logarithm never meets its singularity).
+  smooth (`1 + ‖z‖² ≥ 1 > 0`, so the logarithm never meets its singularity); ★
+  `contDiff_omega_fsPotential` / `analyticAt_fsPotential` — **it is real-analytic** (the same
+  argument at `ω`; G12 of `specs/generator-layer-scoping.md`), and `contDiff_omega_dcForm` carries
+  analyticity through `d^c`.
 * ★★ `extDeriv_fsChartForm` — **the Fubini–Study chart form is closed.**
 
 ## ⚠️ Honest scope — read before citing
@@ -65,6 +68,7 @@ narrows), `specs/mathlib-gaps-plan.md` (MG-4).
 @[expose] public section
 
 open ContinuousAlternatingMap
+open scoped ContDiff
 
 namespace Kahler
 
@@ -135,6 +139,14 @@ lemma contDiff_dcForm {K : E → ℝ} (hK : ContDiff ℝ (⊤ : ℕ∞) K) :
     (ContinuousLinearMap.contDiff compJL).comp hfd
   exact (ContinuousLinearMap.contDiff (packL (E := E))).comp hcomp
 
+/-- `d^c K` is analytic when `K` is: the route of `contDiff_dcForm` at `ω`, where `ω + 1 = ω`, so
+the derivative keeps the order (`ContDiff.fderiv_right` with `le_top`). -/
+lemma contDiff_omega_dcForm {K : E → ℝ} (hK : ContDiff ℝ ω K) : ContDiff ℝ ω (dcForm K) := by
+  have hfd : ContDiff ℝ ω (fderiv ℝ K) := hK.fderiv_right le_top
+  have hcomp : ContDiff ℝ ω (fun x => compJL (fderiv ℝ K x)) :=
+    (ContinuousLinearMap.contDiff compJL).comp hfd
+  exact (ContinuousLinearMap.contDiff (packL (E := E))).comp hcomp
+
 /-- ★ **The `dd^c` form of any smooth potential is closed.** Immediate from `d² = 0` once the
 form is presented as an exterior derivative — which is what the `dd^c` construction does. -/
 theorem extDeriv_ddcForm {K : E → ℝ} (hK : ContDiff ℝ (⊤ : ℕ∞) K) :
@@ -156,6 +168,17 @@ lemma contDiff_fsPotential : ContDiff ℝ (⊤ : ℕ∞) (fsPotential (E := E)) 
     contDiff_const.add (contDiff_norm_sq ℂ)
   refine contDiff_iff_contDiffAt.mpr fun z => ?_
   exact hsq.contDiffAt.log (by positivity)
+
+/-- ★ **The Fubini–Study potential is real-analytic** (`C^ω`, G12): `‖·‖²` is a polynomial and
+`log` is analytic away from `0`, which `1 + ‖z‖² ≥ 1` guarantees — the proof of
+`contDiff_fsPotential`, at `ω` (`ContDiff.log` and `contDiff_norm_sq` are generic in the order). -/
+lemma contDiff_omega_fsPotential : ContDiff ℝ ω (fsPotential (E := E)) := by
+  have hsq : ContDiff ℝ ω (fun z : E => 1 + ‖z‖ ^ 2) := contDiff_const.add (contDiff_norm_sq ℂ)
+  exact hsq.log fun z => by positivity
+
+/-- The Fubini–Study potential is analytic at every point. -/
+lemma analyticAt_fsPotential (z : E) : AnalyticAt ℝ (fsPotential (E := E)) z :=
+  contDiff_omega_fsPotential.contDiffAt.analyticAt
 
 /-- **The Fubini–Study form of an affine chart**, defined by its potential. -/
 noncomputable def fsChartForm : E → (E [⋀^Fin 2]→L[ℝ] ℝ) :=

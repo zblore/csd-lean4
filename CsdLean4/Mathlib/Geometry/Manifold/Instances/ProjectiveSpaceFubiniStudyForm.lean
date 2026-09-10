@@ -36,6 +36,11 @@ forms `fsChartForm = dd^c log(1 + ‖z‖²)` of `KahlerPotential.lean` using th
   potential, pulled back along a linear map);
 * ★★ `fsForm` — **the Fubini–Study form as a `C^∞` global 2-form on `ℂℙⁿ`**, a term of
   `DifferentialForm 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n)) ∞ (Fin 2) ℝ`;
+* ★★ `contMDiff_omega_fsForm` / `fsFormAnalytic` — **the Fubini–Study form is analytic** (G12,
+  2026-09-10): the same chain at `ω` — the potential is analytic (`contDiff_omega_fsPotential`),
+  `dd^c` and the pullback are generic in the order (`contDiff_omega_fsChartForm`,
+  `contDiff_omega_fsModelForm`), and the chart is analytic because the manifold is
+  (`contMDiffAt_omega_fsSection`); `fsFormAnalytic` is the section as a term of the `ω` type;
 * ★★ `fsForm_ne_zero` — it is **not the zero form** (`n ≥ 1`): at a chart origin it is `-4`
   times the flat fundamental form (`fsChartForm_zero`), which pairs `e` with `i • e` to `‖e‖²`;
 * ★★★ `fsForm_mextDeriv` — **`d ω_FS = 0` on `ℂℙⁿ`**: the Fubini–Study form is closed at
@@ -46,9 +51,11 @@ forms `fsChartForm = dd^c log(1 + ‖z‖²)` of `KahlerPotential.lean` using th
 
 ## Honest scope
 
-⚠️ **`C^∞`, not `ω`.** The manifold is analytic over `ℝ` (`instIsManifoldReal`), but the
-potential `log(1 + ‖z‖²)` is only known `C^∞` here (`contDiff_fsPotential`), so the section is
-`C^∞`. Analyticity of the potential would upgrade every statement verbatim.
+⚠️ **Two orders, one section.** `fsForm` is the `C^∞` form the downstream predicates
+(`IsSymplectic`, `IsAlmostKahler`, the Hamiltonian layer) are stated on, and `fsFormAnalytic` is the
+same section as a term of the `ω` type (`fsFormAnalytic_apply`); nothing downstream is restated at
+`ω`. Analyticity of the chart *transitions* is `instIsManifoldReal`; analyticity of the *section* is
+`contMDiff_omega_fsForm`.
 
 ⚠️ **Real smooth, not holomorphic.** The section is over the real model `𝓘(ℝ, Fin n → ℂ)`; the
 form is real-valued and `ℝ`-alternating, as a Kähler form is. No `(1,1)`-type statement is made
@@ -62,6 +69,7 @@ non-degeneracy at every point and the top-power identity `ωⁿ/n! = μ_FS` are 
 it; `localRep_fsSection` is what shows the value does not depend on the choice.
 
 References: `Geometry/Manifold/DifferentialForm.lean` (the type; step (2a));
+`specs/generator-layer-scoping.md` (G12, the analytic upgrade);
 `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `d ∘ d = 0`; step (2b));
 `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudy.lean` (chart invariance);
 `Geometry/Manifold/Instances/ProjectiveSpace.lean` (the atlas);
@@ -171,16 +179,20 @@ theorem localRep_fsSection (x₀ y : ℙ ℂ (Ambient n))
 
 /-! ### Smoothness of the model form -/
 
+/-- The chart form is the alternatization of the derivative of `d^c fsPotential` — `dd^c` of the
+potential, in the shape the smoothness lemmas need. -/
+theorem fsChartForm_eq_alternatizeUncurryFinCLM_fderiv :
+    fsChartForm (E := EuclideanSpace ℂ (Fin n))
+      = fun x => ContinuousAlternatingMap.alternatizeUncurryFinCLM ℝ (EuclideanSpace ℂ (Fin n)) ℝ
+          (fderiv ℝ (dcForm (fsPotential (E := EuclideanSpace ℂ (Fin n)))) x) := by
+  funext x
+  rw [fsChartForm, ddcForm, extDeriv, ContinuousAlternatingMap.alternatizeUncurryFinCLM_apply]
+
 /-- The chart form is `C^∞`: `dd^c` of the `C^∞` potential, i.e. the alternatization of the
 derivative of `d^c fsPotential`. -/
 theorem contDiff_fsChartForm :
     ContDiff ℝ (⊤ : ℕ∞) (fsChartForm (E := EuclideanSpace ℂ (Fin n))) := by
-  have h : fsChartForm (E := EuclideanSpace ℂ (Fin n))
-      = fun x => ContinuousAlternatingMap.alternatizeUncurryFinCLM ℝ (EuclideanSpace ℂ (Fin n)) ℝ
-          (fderiv ℝ (dcForm (fsPotential (E := EuclideanSpace ℂ (Fin n)))) x) := by
-    funext x
-    rw [fsChartForm, ddcForm, extDeriv, ContinuousAlternatingMap.alternatizeUncurryFinCLM_apply]
-  rw [h]
+  rw [fsChartForm_eq_alternatizeUncurryFinCLM_fderiv]
   have hfd : ContDiff ℝ (⊤ : ℕ∞) (fderiv ℝ (dcForm (fsPotential (E := EuclideanSpace ℂ (Fin n))))) :=
     (contDiff_dcForm contDiff_fsPotential).fderiv_right (by simp)
   exact (ContinuousAlternatingMap.alternatizeUncurryFinCLM ℝ (EuclideanSpace ℂ (Fin n)) ℝ).contDiff.comp
@@ -234,6 +246,78 @@ noncomputable def fsForm :
   ⟨fsSection, contMDiff_fsSection⟩
 
 @[simp] theorem fsForm_apply (x : ℙ ℂ (Ambient n)) : fsForm x = fsSection x := rfl
+
+/-! ### ★ Analyticity: the section is `ω`, not merely `C^∞` (G12)
+
+The manifold is analytic (`instIsManifoldReal`) and so is the potential
+(`contDiff_omega_fsPotential`); every step of the `C^∞` chain above is generic in the order, so the
+same chain at `ω` makes `fsForm` an analytic form. -/
+
+/-- ★ The chart form is analytic: `dd^c` of the analytic potential. -/
+theorem contDiff_omega_fsChartForm : ContDiff ℝ ω (fsChartForm (E := EuclideanSpace ℂ (Fin n))) := by
+  rw [fsChartForm_eq_alternatizeUncurryFinCLM_fderiv]
+  have hfd : ContDiff ℝ ω (fderiv ℝ (dcForm (fsPotential (E := EuclideanSpace ℂ (Fin n))))) :=
+    (contDiff_omega_dcForm contDiff_omega_fsPotential).fderiv_right le_top
+  exact (ContinuousAlternatingMap.alternatizeUncurryFinCLM ℝ (EuclideanSpace ℂ (Fin n)) ℝ).contDiff.comp
+    hfd
+
+/-- ★ The model form is analytic: the chart form pulled back along the linear identification. -/
+theorem contDiff_omega_fsModelForm : ContDiff ℝ ω (fsModelForm (n := n)) := by
+  have h : fsModelForm (n := n)
+      = fun w => ContinuousAlternatingMap.compContinuousLinearMapCLM
+          (toLpCLM : (Fin n → ℂ) →L[ℝ] EuclideanSpace ℂ (Fin n)) (fsChartForm (toLpCLM w)) := by
+    funext w; rfl
+  rw [h]
+  exact (ContinuousAlternatingMap.compContinuousLinearMapCLM
+      (toLpCLM : (Fin n → ℂ) →L[ℝ] EuclideanSpace ℂ (Fin n))).contDiff.comp
+    (contDiff_omega_fsChartForm.comp
+      (toLpCLM : (Fin n → ℂ) →L[ℝ] EuclideanSpace ℂ (Fin n)).contDiff)
+
+/-- ★ `fsSection` is an analytic section at every point: the proof of `contMDiffAt_fsSection`,
+at `ω` (the chart is analytic because the manifold is). -/
+theorem contMDiffAt_omega_fsSection (x₀ : ℙ ℂ (Ambient n)) :
+    ContMDiffAt (modelWithCornersSelf ℝ (Fin n → ℂ))
+      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod
+        (modelWithCornersSelf ℝ ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ω
+      (fun x => TotalSpace.mk' ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ) x (fsSection x)) x₀ := by
+  rw [contMDiffAt_section]
+  have hchart : ContMDiffAt (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ (Fin n → ℂ)) ω
+      (chartFun (idx x₀)) x₀ :=
+    contMDiffAt_extChartAt (n := ω) (I := modelWithCornersSelf ℝ (Fin n → ℂ)) (x := x₀)
+  have h1 : ContMDiffAt (modelWithCornersSelf ℝ (Fin n → ℂ))
+      (modelWithCornersSelf ℝ ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ)) ω
+      (fun y => fsModelForm (chartFun (idx x₀) y)) x₀ :=
+    (contDiff_omega_fsModelForm.contMDiff.contMDiffAt (x := chartFun (idx x₀) x₀)).comp x₀ hchart
+  refine h1.congr_of_eventuallyEq ?_
+  filter_upwards [(chartAt (Fin n → ℂ) x₀).open_source.mem_nhds (mem_chart_source _ x₀)] with y hy
+  exact localRep_fsSection x₀ y hy
+
+/-- ★ `fsSection` is an analytic section. -/
+theorem contMDiff_omega_fsSection :
+    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
+      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod
+        (modelWithCornersSelf ℝ ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ω
+      (fun x : ℙ ℂ (Ambient n) =>
+        TotalSpace.mk' ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ) x (fsSection x)) :=
+  fun x₀ => contMDiffAt_omega_fsSection x₀
+
+/-- ★★ **The Fubini–Study form is analytic**: the section of `fsForm` is `C^ω`, not merely `C^∞` —
+the manifold is analytic and so is the potential. -/
+theorem contMDiff_omega_fsForm :
+    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
+      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod
+        (modelWithCornersSelf ℝ ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ω
+      (fun x : ℙ ℂ (Ambient n) =>
+        TotalSpace.mk' ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ) x (fsForm x)) :=
+  contMDiff_omega_fsSection
+
+/-- ★★ **The Fubini–Study form as an analytic global 2-form on `ℂℙⁿ`**: the section of `fsForm`,
+as a term of the `ω` type. -/
+noncomputable def fsFormAnalytic :
+    DifferentialForm (modelWithCornersSelf ℝ (Fin n → ℂ)) (ℙ ℂ (Ambient n)) ω (Fin 2) ℝ :=
+  ⟨fsSection, contMDiff_omega_fsSection⟩
+
+@[simp] theorem fsFormAnalytic_apply (x : ℙ ℂ (Ambient n)) : fsFormAnalytic x = fsForm x := rfl
 
 /-! ### Non-vacuity -/
 

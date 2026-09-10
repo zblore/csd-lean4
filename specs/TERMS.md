@@ -44,7 +44,12 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   `Projectivization.fsForm_isAlmostKahler` (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`):
   **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is almost Kähler**; `fderiv_chart_transition_smul_I`
   shows the chart transitions are holomorphic, so `J = i·` is the complex structure of the atlas.
-* **NOT established:** analyticity (the potential is only known `C^∞`, G12), the integrability of `J`
+* **Also backed (2026-09-10, G12):** analyticity — `Kahler.contDiff_omega_fsPotential` (the potential
+  `log(1 + ‖z‖²)` is real-analytic; `Analysis/InnerProductSpace/KahlerPotential.lean`) and ★★
+  `Projectivization.contMDiff_omega_fsForm` / `fsFormAnalytic` (**the Fubini–Study form is an analytic
+  section**, a term of the `ω` type; `Instances/ProjectiveSpaceFubiniStudyForm.lean`). Nothing downstream is
+  restated at `ω`.
+* **NOT established:** the integrability of `J`
   as a vanishing Nijenhuis tensor — what turns "almost Kähler" into "Kähler" in the tensor sense —
   and `J` as a smooth section of the endomorphism bundle. Marker: `TERM-SCOPE(Kahler)`.
 

@@ -127,7 +127,7 @@ section of the endomorphism bundle. The **M** held. One shelf fact: a type ascri
 definitionally equal term is *erased* — `(v : Fin n → ℂ)` for `v : TangentSpace 𝓘 x` leaves `v`
 tangent-typed, so `Complex.I • v` finds no `ℂ`-action; the reducible cast `tangentToModel` (the
 `toFlat` idiom) is what actually changes the elaborated type.
-**The step-(4) ladder is now complete except G5 (unscheduled) and G12 (registry).**
+**The step-(4) ladder is now complete except G5 (unscheduled); G12 was built 2026-09-10.**
 Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
@@ -269,7 +269,7 @@ earlier the same evening.
 | **G9** ✅ built 2026-09-09 | The image of `momentMap` is exactly the standard simplex | S–M | High | Medium | `momentMap_sum_eq_one` and `momentMap_nonneg` give `⊆`; `⊇` by exhibiting `mk (fun k => √tₖ)`. Closes the "moment polytope" line for this action, without the convexity theorem. |
 | **G10** ✅ built 2026-09-09 | The torus flow preserves the Fubini–Study volume: `Measure.map (torusUnitary θ • ·) (fsVolume n) = fsVolume n` | S | High | Medium | A one-line corollary of `fsVolume_map_smul`. Liouville in the dynamics sense for the flow G6 built, without G5. |
 | **G11** ✅ built 2026-09-09 | Hamiltonian implies locally Hamiltonian | M | High | Low–medium | `mextDeriv` of a 0-form family is `mfderiv` (flat half upstream: `extDeriv_constOfIsEmpty`) plus smoothness of the 0-form section and `d ∘ d = 0`. |
-| **G12** | `fsForm` is analytic, not merely `C^∞` | M–L | Medium | Low | Real-analyticity of `log(1 + ‖z‖²)`; registry line only. |
+| **G12** ✅ built 2026-09-10 | `fsForm` is analytic, not merely `C^∞` | M–L (was **S**) | Medium | Low | Real-analyticity of `log(1 + ‖z‖²)` — `Kahler.contDiff_omega_fsPotential`, the `C^∞` proof at `ω` — pushed through `d^c`, `dd^c`, the pullback and the chart, every step of which was already generic in the order: ★★ `contMDiff_omega_fsForm` (**the Fubini–Study form is an analytic section**) and `fsFormAnalytic`, the section as a term of the `ω` type. The "registry line" turned out to be an S brick; see §G12. |
 | **G13** ✅ built 2026-09-09 | The `U(n+1)` moment map `⟨z, iAz⟩/‖z‖²` for a general skew-Hermitian `A` — built as: the Schrödinger flow `exp(-itH)` is Hamiltonian with Hamiltonian `-2 ⟨H⟩`, `A = -iH` | M–L | Medium | Low–medium | The G6 computation with a non-diagonal velocity; the corpus uses the torus. |
 
 ### G8, planned
@@ -309,6 +309,34 @@ takes — state (A) with `HasMFDerivAt` hypotheses instead of `MDifferentiable` 
 build a manifold-level constancy lemma for one consumer.
 
 **Rating: M, P(success) high, value high for the ledgers and nil for the posit count.**
+
+### G12, built (2026-09-10)
+
+**What was expected.** The row was priced M–L and marked "registry line only": analyticity of the potential
+`log(1 + ‖z‖²)` was assumed to need a real-analytic calculus the corpus had never touched, and the value is
+low — nothing downstream consumes `ω`.
+
+**What it took.** S. Mathlib's `ContDiff.log`, `contDiff_norm_sq`, `ContDiff.fderiv_right`,
+`ContinuousLinearMap.contDiff`, `contMDiffAt_extChartAt`, `contMDiffAt_section` and the corpus's own
+alternating-bundle instance are all generic in the order `n : WithTop ℕ∞`, and the manifold was already
+`IsManifold 𝓘(ℝ, Fin n → ℂ) ω` (`instIsManifoldReal`). So the `C^∞` proofs of `contDiff_fsPotential`,
+`contDiff_dcForm`, `contDiff_fsChartForm`, `contDiff_fsModelForm` and `contMDiffAt_fsSection` re-run verbatim at
+`ω`, with `ω + 1 ≤ ω` discharged by `le_top` where the `∞` proofs used `by simp`. The `∞` lemmas are kept
+(their consumers pass `(⊤ : ℕ∞)` through elaboration in a dozen places; generalising the statements to an
+implicit order would have left metavariables at the `.contDiffAt.of_le` sites), and the `ω` lemmas are
+`contDiff_omega_*` / `contMDiff_omega_*` alongside them.
+
+**What it lands.** `Kahler.contDiff_omega_fsPotential`, `analyticAt_fsPotential`, `contDiff_omega_dcForm`
+(`KahlerPotential.lean`); `fsChartForm_eq_alternatizeUncurryFinCLM_fderiv` (the shape both orders' proofs
+use), `contDiff_omega_fsChartForm`, `contDiff_omega_fsModelForm`, `contMDiffAt_omega_fsSection`,
+`contMDiff_omega_fsSection`, ★★ `contMDiff_omega_fsForm`, `fsFormAnalytic`, `fsFormAnalytic_apply`
+(`Instances/ProjectiveSpaceFubiniStudyForm.lean`). 11 pins.
+
+**What it does not do.** Nothing downstream is restated at `ω`: `IsSymplectic`, `IsAlmostKahler`, the
+Hamiltonian layer and the top-power measure are all on the `∞` form `fsForm`, and `fsFormAnalytic` is the same
+section (`fsFormAnalytic_apply` is `rfl`), not a second object with its own theory. Analyticity of the
+Hamiltonian vector fields (`torusField`, `schrodingerField`) would follow the G3 route at `ω` and is not
+written.
 
 ## References
 

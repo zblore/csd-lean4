@@ -4404,6 +4404,56 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsJ_symmL
 
+-- G12 (2026-09-10): the Fubini-Study form is analytic. The potential log(1 + |z|^2) is
+-- real-analytic (ContDiff.log and contDiff_norm_sq are generic in the order), and every step
+-- of the C^infinity chain -- d^c, dd^c, the pullback along toLpCLM, the chart -- is generic in
+-- the order too, so the same chain at omega makes fsSection an analytic section:
+-- contMDiff_omega_fsForm, and fsFormAnalytic is the section as a term of the omega type.
+-- Nothing downstream is restated at omega; fsFormAnalytic_apply is rfl.
+/-- info: 'Kahler.contDiff_omega_dcForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.contDiff_omega_dcForm
+
+/-- info: 'Kahler.contDiff_omega_fsPotential' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.contDiff_omega_fsPotential
+
+/-- info: 'Kahler.analyticAt_fsPotential' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Kahler.analyticAt_fsPotential
+
+/-- info: 'Projectivization.fsChartForm_eq_alternatizeUncurryFinCLM_fderiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsChartForm_eq_alternatizeUncurryFinCLM_fderiv
+
+/-- info: 'Projectivization.contDiff_omega_fsChartForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_omega_fsChartForm
+
+/-- info: 'Projectivization.contDiff_omega_fsModelForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_omega_fsModelForm
+
+/-- info: 'Projectivization.contMDiffAt_omega_fsSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiffAt_omega_fsSection
+
+/-- info: 'Projectivization.contMDiff_omega_fsSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_omega_fsSection
+
+/-- info: 'Projectivization.contMDiff_omega_fsForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_omega_fsForm
+
+/-- info: 'Projectivization.fsFormAnalytic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsFormAnalytic
+
+/-- info: 'Projectivization.fsFormAnalytic_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsFormAnalytic_apply
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling
