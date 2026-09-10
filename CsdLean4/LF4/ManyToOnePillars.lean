@@ -95,7 +95,8 @@ on the fibre. The two Kähler-geometry fields mirror `unitaryFlowSetup`
 `liouville_isProbability` carries the normalized-volume core (`kMuL` is a
 probability measure, `instProbKMuL`); `kahler_pointwise : IsFubiniStudyKahler N`
 carries the genuine pointwise FS Kähler-compatibility core (proved,
-`isFubiniStudyKahler`), only the manifold `dω = 0` residual remaining. -/
+`isFubiniStudyKahler`); the manifold `dω = 0` residual is proved and wired since 2026-09-10
+(`LF4/SectorManifold.lean`, W1: `manyToOneSetup_isKahler_liouville`). -/
 noncomputable def manyToOneSetup
     (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ) (p₀ : CPN N) :
     KahlerOnticSetup N where

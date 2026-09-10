@@ -207,6 +207,7 @@ public import CsdLean4.LF4.SingletKahler
 public import CsdLean4.LF4.SingletKahlerFlow
 public import CsdLean4.LF4.KahlerWignerLift
 public import CsdLean4.LF4.KahlerVolumeForced
+public import CsdLean4.LF4.SectorManifold
 public import CsdLean4.LF4.SchrodingerKahlerInvariance
 public import CsdLean4.LF4.SingleQubitKahler
 public import CsdLean4.LF4.SingletObservables

@@ -56,6 +56,13 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   with a Hermitian metric whose fundamental form is closed) and its inhabitant ★★★
   `Projectivization.fsForm_isKahler` (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`):
   **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is a Kähler manifold.**
+* **Wired to the physics (2026-09-10, W1):** `LF4/SectorManifold.lean` — the `ℂℙⁿ` instances of
+  `KahlerOnticSetup` have `liouvilleMeasure = fsVolumeNormalized n`, the normalised top power of the
+  Kähler form (★★★ `unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized`), their flows preserve
+  `fsVolume n` itself, the forced volume of `KahlerVolumeForced.lean` IS that top power
+  (`fsVolumeNormalized_isForcedKahlerVolume`), and ★★★ `unitaryFlowSetup_isKahler_liouville` /
+  `manyToOneSetup_isKahler_liouville` state each sector as the standard object. The structure's
+  fields are unchanged; Posit 3 is untouched.
 * **NOT established (queued as G14b / G15 in `specs/generator-layer-scoping.md` §9):** the tensor
   formulation of integrability — the Nijenhuis tensor of `J` vanishes (Mathlib has
   `VectorField.mlieBracket` at the pin, so this is M–L) — and `J` as a smooth section of the
@@ -182,6 +189,7 @@ alarming and is not.
 * **Established (2026-09-08):** `Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean`) — the **normalised** measure of the top power of the Fubini–Study form IS `fubiniStudyMeasure p₀`, with no premise: the volume is `U(n+1)`-invariant, finite and nonzero (`specs/top-power-scoping.md`, M1–M6; the premise version of the morning survives as `_of_ne_zero`).
 * **Established with its constant (2026-09-08, later the same day):** `Projectivization.fsVolume_eq_smul_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyMass.lean`) — `fsVolume n = (4π)ⁿ • fubiniStudyMeasure p₀`, the mass `(4π)ⁿ` computed (`fsVolume_univ`). So "this measure **is** the Kähler top-power volume" is now a theorem on `ℂℙⁿ` with every factor visible; the textbook `ω^{∧n}/n!` is a renormalisation of it (the chart form carries the potential's `-4`, the wedge its own normalisation), not a further claim.
 * **Established for the torus flow (2026-09-09, G10):** `Projectivization.fsVolume_map_torusUnitary_smul` and `measurePreserving_torusUnitary_smul` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`) — every map `p ↦ diag(e^{iθ}) • p`, hence every time-`t` map of the Hamiltonian flow G6 built (`torusUnitary_add_smul` is the group law), preserves `fsVolume n`. Liouville in the dynamics sense for **one** Hamiltonian flow on `ℂℙⁿ`, obtained from unitary invariance (`fsVolume_map_smul`), not from a manifold-level flow theory (G5, queued at XL in `specs/generator-layer-scoping.md` §9). `ConstraintDynamics.flow_preserves` (Posit 3) is untouched: the constraint dynamics' measurement pieces are not globally Hamiltonian.
+* **Wired to the sectors (2026-09-10, W1):** on the `ℂℙⁿ` instances of `KahlerOnticSetup` the posited field `flow_preserves_volume` preserves exactly `ω_FS^{∧n}`: `CSD.LF4.unitaryFlowSetup_flow_measurePreserving_fsVolume`, `manyToOneSetup_flow_measurePreserving_fsVolume_prod` (`LF4/SectorManifold.lean`), and the Liouville measure IS the normalised top power (`unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized`).
 * **NOT established:** nothing on the `ℂℙⁿ` side of this entry remains open. The arena-level volume (`ℂℙⁿ × T² × …`) is a product of this with Haar factors and is not restated as a top power; `LF4/KahlerVolumeForced.lean` proves the normalisation core. Marker: `TERM-SCOPE(Liouville)`.
 * ⚠️ **Precedent:** `nullSeamLiouville` was renamed because it named a measure on an
   odd-dimensional space, which cannot be symplectic (CONVENTIONS §8.3a). That is the failure this
@@ -195,9 +203,13 @@ alarming and is not.
   `Projectivization.fsForm_isSymplectic`: **`ℂℙⁿ` with the Fubini–Study form is a symplectic
   manifold** (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`; real dimension `2n`).
   Before that date zero declarations carried either word at manifold level.
-* **NOT established:** anything *derived* from the structure — Darboux, the symplectic volume
-  (top-power identity), generators of flows on the manifold, moment maps. Those keep the marker
-  `TERM-SCOPE(Hamiltonian)` (same wall as the Hamiltonian entry).
+* **Also backed (2026-09-08/09):** derived from the structure — the symplectic volume
+  (`fsVolume`, `fsVolume_eq_smul_fubiniStudyMeasure`), Hamiltonian vector fields with existence,
+  uniqueness, smoothness and integral curves (`HamiltonianVectorField.lean`, G1–G4), moment maps of
+  the torus and `U(n+1)` actions (G6, G13), the Kähler predicate (G7, G14a) — see the Hamiltonian,
+  moment map and Kähler entries.
+* **NOT established (queued in `specs/generator-layer-scoping.md` §9):** Darboux (G18) and Liouville
+  for a general Hamiltonian flow (G5). Those keep the marker `TERM-SCOPE(Hamiltonian)`.
 
 ## Fubini–Study
 
@@ -205,9 +217,15 @@ alarming and is not.
   Haar-on-`U(N)` pushforward.
 * **Backed by:** `fubiniStudyMeasure_unique` — it is the *unique* `U(N)`-invariant probability
   measure, proved; plus `fubiniStudyMeasure_smul_invariant`.
-* **NOT established:** that it is the normalised Riemannian volume of the Fubini–Study *metric*,
-  or the top power of the Kähler form. Cited as background, not as a corpus result (see the
-  glossary entry `fubini-study-measure`). Marker: `TERM-SCOPE(Kahler)` where that reading is used.
+* **Also backed (2026-09-08/10):** it IS the normalised top power of the Kähler form —
+  `Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure` and, with the constant,
+  `fsVolume_eq_smul_fubiniStudyMeasure` (`ω_FS^{∧n} = (4π)ⁿ · μ_FS`); and on the sectors,
+  `CSD.LF4.unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized` /
+  `fsVolumeNormalized_isForcedKahlerVolume` (`LF4/SectorManifold.lean`, W1).
+* **NOT established (queued, G17 of `specs/generator-layer-scoping.md` §9):** that it is the normalised
+  Riemannian volume of the Fubini–Study *metric* (no Riemannian volume on manifolds at the pin). The
+  glossary entry `fubini-study-measure` still cites the metric reading as background. Marker:
+  `TERM-SCOPE(Kahler)` where that reading is used.
 * ⚠️ **Since CR-4 (2026-09-06) the Born headlines no longer route through it.** The dependency cone
   of `globalBasin_born` contains **no** `fubiniStudyMeasure`: the fibred route is
   `epistemicMeasure = Dirac ⊗ Haar`, the basin measure is a torus-cell width, and the value is the

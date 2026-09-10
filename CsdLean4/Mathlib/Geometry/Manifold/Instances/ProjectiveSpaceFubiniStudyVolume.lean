@@ -169,7 +169,7 @@ theorem fsVolume_map_smul (U : Matrix.unitaryGroup (Fin (n + 1)) ℂ) :
 
 /-- ★ The Fubini–Study volume is a finite measure (`ℂℙⁿ` is compact and the density is
 continuous). -/
-theorem isFiniteMeasure_fsVolume (n : ℕ) : IsFiniteMeasure (fsVolume n) :=
+instance isFiniteMeasure_fsVolume (n : ℕ) : IsFiniteMeasure (fsVolume n) :=
   isFiniteMeasure_topFormMeasure volume (stdBasis n) _ (fsTopForm n).contMDiff_toFun
     (affineChartCover n)
 

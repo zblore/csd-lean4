@@ -25,8 +25,10 @@ this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
 
 * `kahler_pointwise : IsFubiniStudyKahler N` — the pointwise compatibility core of "`Σ` has a closed
   2-form `ω` compatible with a complex structure `J`". The manifold residual (`dω = 0`, top-power)
-  is genuinely **blocked**: Mathlib has no symplectic/Kähler-form API (KG-1 / link L1;
-  MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)).
+  was blocked while nothing supplied a symplectic/Kähler-form API — Mathlib still has none at the pin
+  (KG-1 / link L1; MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)); the corpus built
+  its own (`Mathlib/Geometry/Manifold/`, 2026-09-07/08) and `LF4/SectorManifold.lean` proves the
+  sectors' volumes ARE its top power (W1, 2026-09-10).
 * `liouville_isProbability` — the *normalisation* core of "`liouvilleMeasure` is the top-power
   Kähler volume `ω^{∧n}/n!`" (fix C5). **This module upgrades that content** from "it is *a* probability
   measure" to "it is *the* volume forced by the space and its symmetry".
@@ -46,7 +48,9 @@ and prove `fubiniStudyMeasure` satisfies it (`fubiniStudyMeasure_isForcedKahlerV
 measure-theoretic content of "`μ = ω^{∧n}/n!`": the Kähler volume is **determined by `Σ` and its
 `U(N)`-symmetry**, an *outcome* of the space, not posited data. It is exactly the physically
 load-bearing half of the Kähler posit — the volume is what the Born reading (typicality = volume
-ratio) consumes; the differential-geometric 2-form packaging is the part that stays blocked (KG-1).
+ratio) consumes; the differential-geometric 2-form packaging, once blocked (KG-1), is built and wired since 2026-09-10
+(`LF4/SectorManifold.lean`: `fsVolumeNormalized_isForcedKahlerVolume` — the forced volume IS the
+normalised top power of the form).
 
 ## Delivered on the concrete sectors
 

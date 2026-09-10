@@ -35,9 +35,11 @@ measure is **forced by the symmetry**, not selected.
 
 ## ⚠️ Why this is the right reading of "Liouville"
 
-The textbook definition is the top exterior power of the Kähler form, and it is **not available and
-will not be**: `specs/connectivity-manifest.md` L1 records that manifold residual (`dω = 0`, the
-top-power volume identity) as blocked on Mathlib, with `Q8` rating the fix XL.
+The textbook definition is the top exterior power of the Kähler form. It was **not available** when
+this module was written (`specs/connectivity-manifest.md` L1, `Q8` rated the fix XL); since 2026-09-08
+it is (`Projectivization.fsVolume_eq_smul_fubiniStudyMeasure`), and `LF4/SectorManifold.lean` shows the
+two readings agree (`fsVolumeNormalized_isForcedKahlerVolume`, 2026-09-10). Symmetry-uniqueness stays
+the reading this module proves — now a theorem about the same measure, not a substitute for it.
 
 Symmetry-uniqueness is the formalisable content of the same fact — on a homogeneous space the
 Liouville measure *is* the invariant one — and it is the reading the corpus already uses for the

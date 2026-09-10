@@ -44,7 +44,7 @@ the types, which is why it never appears in `#print axioms`. See
 - The sector is posited: the sector itself is posited, never derived.
 - Instrument results are relative to a stated dilation.
 - Each measurement witness pays one price under the proved trilemma.
-- No symplectic manifold is built in Lean; "Kähler" names the geometric reading of the measures.
+- Liouville for a general Hamiltonian flow on the sector is not proved; the flows proved to preserve the symplectic volume of the Kähler form are the unitary ones (`LF4/SectorManifold.lean`).
 
 Full list: [`docs/TOUR.md`](docs/TOUR.md).
 

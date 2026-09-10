@@ -381,8 +381,42 @@ recorded have since been filled upstream (`VectorField.mlieBracket`, and uniform
 | **G16** | **The torus orbits are integral curves**: `t ↦ torusUnitary (t • θ) • p` is `IsMIntegralCurve` for `torusField θ`, and `momentMap` is conserved along it. | **S** | High | Low | The route of `isMIntegralCurve_schrodingerUnitary_smul` with `hasDerivAt_chartFun_torusUnitary` and `torusUnitary_add_smul`; the G4 write-up left it unwritten. |
 | **G17** | **The Riemannian volume of the Fubini–Study metric is `fsVolume` up to the constant** (the `TERMS.md` Fubini–Study line "normalised Riemannian volume"). Needs the Riemannian volume measure of a metric on a manifold — absent at the pin (`VectorBundle/Riemannian.lean` has Riemannian *bundles*, no volume) — built as `topFormMeasure` of the volume form `√det g`; then `vol_g = ω^{∧n}/n!` is the algebraic Kähler identity from `g = ω (J ·, ·)` (G14a). | **L** | Low–medium | Low | Fills a Mathlib gap (Riemannian volume); nothing in the corpus consumes it. |
 | **G18** | **Darboux's theorem** (the `TERMS.md` symplectic line): every symplectic form is locally the standard one. Moser's trick: needs G5(a) flows, G5(b) Cartan, and a Poincaré lemma on a ball. | **XL** | Low | Low | Nothing in the corpus consumes it; it is the classical theorem a symplectic library owes. |
-| **W1** | **Wire the physics to the manifold layer**: the `ℂℙⁿ` instances of `KahlerOnticSetup` (`trivialKahlerOnticSetup`, `unitaryFlowSetup`, `manyToOneSetup`) get theorems that their `liouvilleMeasure` is `(4π)⁻ⁿ • fsVolume n` (the symplectic volume of `fsForm`, `fsVolume_eq_smul_fubiniStudyMeasure`), that `flow_preserves_volume` is `fsVolume_map_smul`, and that the sector carries `fsForm_isKahler`; and the four stale ledgers are corrected — link L1 of `specs/connectivity-manifest.md`, the `kahler_pointwise` docstring, and the `TERMS.md` Fubini–Study and symplectic entries, all of which still call the manifold residual open. The two projective-space types are definitionally equal (`ℙ ℂ (Ambient n)` is `CPN (n + 1)`). | **M** | High | **High** | This is what turns "we start from an FS, Kähler, Liouville space" into "the sector is the standard object, proved". Posit 3 is untouched by it. |
+| **W1** ✅ built 2026-09-10 | **Wire the physics to the manifold layer**: the `ℂℙⁿ` instances of `KahlerOnticSetup` (`trivialKahlerOnticSetup`, `unitaryFlowSetup`, `manyToOneSetup`) get theorems that their `liouvilleMeasure` is `(4π)⁻ⁿ • fsVolume n` (the symplectic volume of `fsForm`, `fsVolume_eq_smul_fubiniStudyMeasure`), that `flow_preserves_volume` is `fsVolume_map_smul`, and that the sector carries `fsForm_isKahler`; and the four stale ledgers are corrected — link L1 of `specs/connectivity-manifest.md`, the `kahler_pointwise` docstring, and the `TERMS.md` Fubini–Study and symplectic entries, all of which still call the manifold residual open. The two projective-space types are definitionally equal (`ℙ ℂ (Ambient n)` is `CPN (n + 1)`). | **M** | High | **High** | This is what turns "we start from an FS, Kähler, Liouville space" into "the sector is the standard object, proved". Posit 3 is untouched by it. |
 | **G19** | Analyticity of the Hamiltonian fields: `torusField`, `schrodingerField` are `ω` sections (the G3 route at `ω`; `hamiltonianVectorFieldSection` is `C^ω` for a `C^ω` form and energy). | **S–M** | High | Low | The G12 write-up left it unwritten. |
+
+### W1, built (2026-09-10)
+
+**What.** New module `LF4/SectorManifold.lean` (imports `LF4/KahlerVolumeForced.lean` and the Mass and
+Symplectic instance modules; the manifold tree imports nothing from `LF4` except the two moment-map
+modules, so no cycle). For the `ℂℙⁿ` instances of `KahlerOnticSetup` at `N = n + 1`: ★★★
+`unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized` and the `trivialKahlerOnticSetup` twin
+(`liouvilleMeasure = fsVolumeNormalized n`, by `fsVolumeNormalized_eq_fubiniStudyMeasure`), ★★
+`fsVolume_eq_smul_unitaryFlowSetup_liouvilleMeasure` (the `(4π)ⁿ`), ★★
+`unitaryFlowSetup_flow_measurePreserving_fsVolume` (every time-`t` map preserves `fsVolume n` itself:
+`fsVolume_map_smul`), ★★★ `fsVolumeNormalized_isForcedKahlerVolume` (the normalised top power satisfies
+`IsForcedKahlerVolume`, so the `LF4` symmetry characterisation and the manifold layer's Kähler-form
+characterisation pin the same measure), the three many-to-one facts (`kMuL = fsVolumeNormalized n ⊗ Haar`,
+base marginal, flow preserves `fsVolume n ⊗ Haar`), and ★★★ `unitaryFlowSetup_isKahler_liouville` /
+`manyToOneSetup_isKahler_liouville` — Kähler target (`fsForm_isKahler`) ∧ Liouville = normalised top power
+∧ flow preserves it. **M** as priced; took S–M. 10 pins.
+
+**What it corrects.** The stale set was larger than the four ledgers the row named: `KahlerOnticSetup.lean`
+(two docstrings), `KahlerVolumeForced.lean`, `LiouvilleUnique.lean`, `ManyToOnePillars.lean`,
+`NonTrivialSetup.lean`, `connectivity-manifest.md` (L1 DISCHARGED, three spots), `reconstruction-status.md`
+(A1, L1), `future-work.md` (KG-1 DONE), `TERMS.md` (Fubini–Study and symplectic entries, Kähler and
+Liouville entries extended), `README.md` (the "no symplectic manifold is built" non-claim replaced by the
+honest residual: Liouville for a general Hamiltonian flow), `docs/TOUR.md` (the Kähler row, and the
+propagator's reason). The `MATHLIB-ABSENT` sentinel in `KahlerVolumeForced.lean` is kept: Mathlib still has
+no manifold differential forms at the pin; the corpus has its own.
+
+**What it does not do.** `KahlerOnticSetup` is unchanged — its fields are still posited for an abstract `Σ`;
+this module proves the `ℂℙⁿ` instances' posited data *are* the standard objects. The pointwise field
+`kahler_pointwise` (ambient `ℂ^{N}`) and the manifold predicate `fsForm_isKahler` (the target `ℂℙⁿ`,
+tangent model `ℂⁿ`) are on different spaces and no implication is stated. Posit 3 stands: the flows here
+are unitary. Two shelf facts: a theorem stated on `(setup).flow t` cannot be reused in a `MeasurePreserving.prod`
+— the `SFinite` instance search runs on the setup's bundled `instMeasurable` projection, which is opaque
+to instance-reducible unfolding — so state the base factor on `CPN (n + 1)` directly; and `ℙ` needs
+`open scoped LinearAlgebra.Projectivization`, which `LF4` modules replace by the abbrev `CPN`.
 
 ## References
 

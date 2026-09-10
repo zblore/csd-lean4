@@ -722,6 +722,26 @@ isSymplectic"
 #     declared predicate IsKahler: almost Kähler (fsForm_isAlmostKahler) and J is the complex
 #     structure of the holomorphic atlas (fsJ_symmL). The word names the established predicate;
 #     the tensor form of integrability is G14b, queued. CP^n, EVEN.
+#   unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized /
+#   trivialKahlerOnticSetup_liouvilleMeasure_eq_fsVolumeNormalized /
+#   fsVolume_eq_smul_unitaryFlowSetup_liouvilleMeasure /
+#   manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod /
+#   manyToOneSetup_map_pi_liouvilleMeasure_eq_fsVolumeNormalized — (2026-09-10, LF4/SectorManifold.lean,
+#     W1) PROVE that the posited field liouvilleMeasure of the CP^n instances of KahlerOnticSetup IS
+#     fsVolumeNormalized n, the normalised measure of the top power of the Fubini–Study form (with the
+#     constant (4π)ⁿ in the smul form; ⊗ Haar and its base marginal on the many-to-one sector). The
+#     words are the field's and the object's; the conclusion identifies the posited measure with the
+#     symplectic volume. CP^n (× T²), real dimension 2n (+ 2), EVEN.
+#   fsVolumeNormalized_isForcedKahlerVolume — (2026-09-10, same module, W1) PROVES that the normalised
+#     top power of the Fubini–Study form satisfies the declared predicate IsForcedKahlerVolume (the
+#     unique U(n+1)-invariant probability measure): the symmetry and Kähler-form characterisations of
+#     the sector's volume coincide. CP^n, EVEN.
+#   unitaryFlowSetup_isKahler_liouville / manyToOneSetup_isKahler_liouville — (2026-09-10, same module,
+#     W1) the sector as the standard object, one conjunction each: the target is Kähler
+#     (fsForm_isKahler, atlas sense), the Liouville measure is the normalised top power of that form
+#     (⊗ Haar on the many-to-one sector), and the flow preserves that volume (fsVolume_map_smul, the
+#     unitary invariance). Both words name established predicates/identities. Nothing about the
+#     constraint dynamics' measurement pieces (Posit 3 untouched). CP^n (× T²), EVEN.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -803,6 +823,14 @@ exists_isMIntegralCurveAt_hamiltonianVectorField
 isMIntegralCurve_hamiltonianVectorField_eq
 fsForm_isAlmostKahler
 fsForm_isKahler
+unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized
+trivialKahlerOnticSetup_liouvilleMeasure_eq_fsVolumeNormalized
+fsVolume_eq_smul_unitaryFlowSetup_liouvilleMeasure
+fsVolumeNormalized_isForcedKahlerVolume
+unitaryFlowSetup_isKahler_liouville
+manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod
+manyToOneSetup_map_pi_liouvilleMeasure_eq_fsVolumeNormalized
+manyToOneSetup_isKahler_liouville
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH

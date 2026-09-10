@@ -74,8 +74,10 @@ fix C5, connectivity link L1):
   `unitaryFlowSetup_liouville_isProbability`.
 * `kahler_pointwise : IsFubiniStudyKahler N` — the **genuine formalizable
   core**: the pointwise Fubini–Study Kähler compatibility on the tangent model
-  (proved, `isFubiniStudyKahler`). Only the manifold closedness
-  `dω = 0` (no Mathlib API) stays the honestly-named residual. -/
+  (proved, `isFubiniStudyKahler`). The manifold closedness `dω = 0`, once
+  the honestly-named residual, is proved (`fsForm_mextDeriv`) and wired to this
+  sector in `LF4/SectorManifold.lean` (W1, 2026-09-10:
+  `unitaryFlowSetup_isKahler_liouville`). -/
 noncomputable def unitaryFlowSetup (N : ℕ)
     (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ)
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :

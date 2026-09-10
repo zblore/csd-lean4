@@ -232,6 +232,54 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.manyToOneSetup_liouville_eq_product
 
+-- W1 (2026-09-10, LF4/SectorManifold.lean): the CP^n sectors ARE the standard objects. The
+-- Liouville measure of unitaryFlowSetup / trivialKahlerOnticSetup is fsVolumeNormalized n, the
+-- normalised top power of the Kahler form (fsVolume_eq_smul_fubiniStudyMeasure with the constant);
+-- the sector's flow preserves fsVolume n itself; the forced Kahler volume of KahlerVolumeForced IS
+-- that normalised top power; on the many-to-one sector kMuL = fsVolumeNormalized n x Haar with the
+-- same flow statement; and the two *_isKahler_liouville conjunctions state the sector as Kahler
+-- (fsForm_isKahler, G14a) + Liouville = symplectic volume + flow preserves it. The structure
+-- KahlerOnticSetup is unchanged; Posit 3 is untouched.
+/-- info: 'CSD.LF4.unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized
+
+/-- info: 'CSD.LF4.trivialKahlerOnticSetup_liouvilleMeasure_eq_fsVolumeNormalized' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.trivialKahlerOnticSetup_liouvilleMeasure_eq_fsVolumeNormalized
+
+/-- info: 'CSD.LF4.fsVolume_eq_smul_unitaryFlowSetup_liouvilleMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fsVolume_eq_smul_unitaryFlowSetup_liouvilleMeasure
+
+/-- info: 'CSD.LF4.unitaryFlowSetup_flow_measurePreserving_fsVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.unitaryFlowSetup_flow_measurePreserving_fsVolume
+
+/-- info: 'CSD.LF4.fsVolumeNormalized_isForcedKahlerVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fsVolumeNormalized_isForcedKahlerVolume
+
+/-- info: 'CSD.LF4.unitaryFlowSetup_isKahler_liouville' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.unitaryFlowSetup_isKahler_liouville
+
+/-- info: 'CSD.LF4.manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod
+
+/-- info: 'CSD.LF4.manyToOneSetup_map_pi_liouvilleMeasure_eq_fsVolumeNormalized' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSetup_map_pi_liouvilleMeasure_eq_fsVolumeNormalized
+
+/-- info: 'CSD.LF4.manyToOneSetup_flow_measurePreserving_fsVolume_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSetup_flow_measurePreserving_fsVolume_prod
+
+/-- info: 'CSD.LF4.manyToOneSetup_isKahler_liouville' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSetup_isKahler_liouville
+
 -- Connectivity fix C2 (manifest link L3, off the trivial witness): the W-series
 -- Schrödinger capstone sigmaFlow_schrodinger_form FIRED on the genuine Φ≠id
 -- rotation flow. The rotation R(t) is a one-parameter unitary group (trivial

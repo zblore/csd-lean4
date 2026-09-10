@@ -120,8 +120,11 @@ the complex structure and positive* content — proved axiom-free
 structure's `kahler_pointwise` field (2026-08-06 tightening; formerly an
 instance-supplied abstract `Prop`, historically `True` before 2026-07-19).
 The manifold-level closedness `dω = 0` and the top-power identity
-`ω^{∧(N-1)}/(N-1)! = μ_FS` need exterior calculus absent from Mathlib and remain the
-honestly-named residual (connectivity link L1). -/
+`ω^{∧(N-1)}/(N-1)! = μ_FS` were the honestly-named residual (connectivity link L1) until the
+corpus built the manifold layer (2026-09-07/08: `Projectivization.fsForm_mextDeriv`,
+`fsVolume_eq_smul_fubiniStudyMeasure`) and `LF4/SectorManifold.lean` wired it to the `ℂℙⁿ`
+sectors (2026-09-10, W1). This flat triple remains the field's type; the manifold predicate on the
+sector's target itself is `fsForm_isKahler`. -/
 def IsFubiniStudyKahler (N : ℕ) : Prop :=
   ∀ u v : EuclideanSpace ℂ (Fin N),
     Kahler.complexStructure (Kahler.complexStructure u) = -u
@@ -163,8 +166,10 @@ structure KahlerOnticSetup (N : ℕ) where
   triple on the tangent model of the projective target — `J² = -1`,
   `ω = g∘J`, `g = ω∘J`, `ω` a `(1,1)`-form, `ω u (Ju) = ‖u‖²`. The
   **manifold** residual (closedness `dω = 0` and the top-power identity
-  `ω^{∧(N-1)}/(N-1)! = μ_FS`) needs exterior calculus absent from Mathlib
-  and stays the honestly-named open piece (connectivity link L1). -/
+  `ω^{∧(N-1)}/(N-1)! = μ_FS`) is PROVED on the sector's target
+  (`fsForm_mextDeriv`, `fsVolume_eq_smul_fubiniStudyMeasure`, `fsForm_isKahler`)
+  and wired to the `ℂℙⁿ` instances in `LF4/SectorManifold.lean` (W1,
+  2026-09-10; connectivity link L1 discharged). -/
   kahler_pointwise : IsFubiniStudyKahler N
   /-- GENUINE: the Liouville / typicality measure on `Σ`. -/
   liouvilleMeasure : Measure Sigma
