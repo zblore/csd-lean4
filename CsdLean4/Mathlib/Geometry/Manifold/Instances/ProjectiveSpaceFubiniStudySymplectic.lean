@@ -49,16 +49,18 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
   (`DifferentialForm.IsKahler`: almost Kähler, and `J` is the complex structure of the holomorphic
   atlas, by `fsJ_symmL`);
 * **G15 (2026-09-10).** `fsJL` (`J = i·` as a continuous linear map on each tangent space) and ★★
-  `contMDiff_fsJL` — **`J` is a `C^∞` section of `Hom(TM, TM)`**, constant `i·` in every chart.
+  `contMDiff_fsJL` — **`J` is a `C^∞` section of `Hom(TM, TM)`**, constant `i·` in every chart;
+* **G14b (2026-09-10).** ★★ `nijenhuis_fsJ_eq_zero` — **the Nijenhuis tensor of `J = i·` vanishes**
+  (`IsKahler.nijenhuis_eq_zero` on `fsForm_isKahler`): `ℂℙⁿ` is Kähler in the tensor sense too.
 
 ## Honest scope
 
 ⚠️ **Kähler in the atlas sense.** `fsForm_isKahler` packages symplectic + compatible `J` + `J` is
 the complex structure of the holomorphic atlas (`fsJ_symmL`, `fderiv_chart_transition_smul_I`),
 which is the textbook definition. The tensor formulation of integrability (a vanishing Nijenhuis
-tensor; G14b of `specs/generator-layer-scoping.md` §9) is not stated. `J` as a smooth section of
-the endomorphism bundle is `contMDiff_fsJL` (G15), for the linear-map version `fsJL` of `fsJ`. The
-pointwise triple `IsFubiniStudyKahler` on the flat model is the origin's case.
+tensor) is `nijenhuis_fsJ_eq_zero` (G14b). `J` as a smooth section of the endomorphism bundle is
+`contMDiff_fsJL` (G15), for the linear-map version `fsJL` of `fsJ`. The pointwise triple
+`IsFubiniStudyKahler` on the flat model is the origin's case.
 
 ⚠️ **No volume.** Non-degeneracy plus closedness does not produce the top-power identity
 `ωⁿ/n! = μ_FS`; that is step (3), top forms → measures, and is not attempted.
@@ -316,5 +318,21 @@ theorem contMDiff_fsJL :
         (modelWithCornersSelf ℝ ((Fin n → ℂ) →L[ℝ] (Fin n → ℂ)))) ∞
       (fun x : ℙ ℂ (Ambient n) => TotalSpace.mk' ((Fin n → ℂ) →L[ℝ] (Fin n → ℂ)) x (fsJL x)) :=
   (fsForm_isKahler n).contMDiff_hom_section fsJL fun _ _ => rfl
+
+/-! ### The Nijenhuis tensor of `J = i·` vanishes (G14b) -/
+
+/-- ★★ **`J = i·` is integrable in the tensor sense on `ℂℙⁿ`**: its Nijenhuis tensor vanishes on
+vector fields differentiable at the point (`IsKahler.nijenhuis_eq_zero` on `fsForm_isKahler`). -/
+theorem nijenhuis_fsJ_eq_zero
+    {V W : ∀ x : ℙ ℂ (Ambient n), TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x}
+    (x₀ : ℙ ℂ (Ambient n))
+    (hV : MDifferentiableAt (modelWithCornersSelf ℝ (Fin n → ℂ))
+      (modelWithCornersSelf ℝ (Fin n → ℂ)).tangent
+      (fun x => TotalSpace.mk' (Fin n → ℂ) x (V x)) x₀)
+    (hW : MDifferentiableAt (modelWithCornersSelf ℝ (Fin n → ℂ))
+      (modelWithCornersSelf ℝ (Fin n → ℂ)).tangent
+      (fun x => TotalSpace.mk' (Fin n → ℂ) x (W x)) x₀) :
+    nijenhuis fsJ V W x₀ = 0 :=
+  (fsForm_isKahler n).nijenhuis_eq_zero x₀ hV hW
 
 end Projectivization

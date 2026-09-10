@@ -4591,6 +4591,42 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.contMDiff_omega_torusField
 
+-- G14b (2026-09-10): Kahler in the tensor sense. nijenhuis J V W is the Nijenhuis tensor
+-- [JV, JW] - J[JV, W] - J[V, JW] - [V, W] with Mathlib's manifold Lie bracket mlieBracket; on
+-- a Kahler manifold (IsKahler, atlas sense) it vanishes on vector fields differentiable at the
+-- point: in the chart at x0 every bracket is the flat bracket of the chart pullbacks
+-- (mlieBracketWithin_apply, the chart's derivative being the identity at its base point), J
+-- pulls back to the constant J0 (mpullback_extChartAt_symm_apply_J), and the flat expression
+-- for a constant J0 with J0^2 = -1 cancels (flat_nijenhuis_eq_zero). The easy direction of
+-- Newlander-Nirenberg; the converse is not stated. CP^n: nijenhuis_fsJ_eq_zero.
+/-- info: 'DifferentialForm.nijenhuis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.nijenhuis
+
+/-- info: 'DifferentialForm.inverse_mfderiv_extChartAt_symm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.inverse_mfderiv_extChartAt_symm
+
+/-- info: 'DifferentialForm.flat_nijenhuis_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.flat_nijenhuis_eq_zero
+
+/-- info: 'DifferentialForm.flatField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.flatField
+
+/-- info: 'DifferentialForm.IsKahler.mpullback_extChartAt_symm_apply_J' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsKahler.mpullback_extChartAt_symm_apply_J
+
+/-- info: 'DifferentialForm.IsKahler.nijenhuis_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsKahler.nijenhuis_eq_zero
+
+/-- info: 'Projectivization.nijenhuis_fsJ_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.nijenhuis_fsJ_eq_zero
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

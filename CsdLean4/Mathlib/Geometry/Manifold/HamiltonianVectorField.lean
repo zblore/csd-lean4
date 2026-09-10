@@ -11,6 +11,7 @@ public import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
 public import Mathlib.Geometry.Manifold.IntegralCurve.ExistUnique
 public import Mathlib.Analysis.Calculus.MeanValue
 public import Mathlib.Geometry.Manifold.VectorBundle.Hom
+public import Mathlib.Geometry.Manifold.VectorField.LieBracket
 
 /-!
 # Hamiltonian vector fields on a manifold
@@ -21,7 +22,7 @@ public import Mathlib.Geometry.Manifold.VectorBundle.Hom
 **Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 
-Bricks **G1**, **G2**, **G3**, **G4**, **G7**, **G8** (in part), **G11**, **G14a**, **G15** and **G19** of
+Bricks **G1**, **G2**, **G3**, **G4**, **G7**, **G8** (in part), **G11**, **G14a**, **G14b**, **G15** and **G19** of
 `specs/generator-layer-scoping.md`: the defining equation of a Hamiltonian vector field,
 `ι_X ω = dH`, at manifold level, the pointwise facts that follow from it by alternation and
 linearity alone, its existence and uniqueness from non-degeneracy, its smoothness, its integral
@@ -84,7 +85,13 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
   Its inhabitant on `ℂℙⁿ` is ★★★ `fsForm_isKahler` (same module as G7's);
 * **G15, `J` as a section.** ★★ `IsKahler.contMDiff_hom_section` — **the complex structure of a
   Kähler structure, given by continuous linear maps, is a `C^∞` section of `Hom(TM, TM)`**: in every
-  chart it is the constant `J₀`. On `ℂℙⁿ`: `fsJL`, ★★ `contMDiff_fsJL`.
+  chart it is the constant `J₀`. On `ℂℙⁿ`: `fsJL`, ★★ `contMDiff_fsJL`;
+* **G14b, the tensor sense.** `nijenhuis J V W` — **the Nijenhuis tensor**
+  `[JV, JW] − J[JV, W] − J[V, JW] − [V, W]` with Mathlib's `VectorField.mlieBracket` — and ★★★
+  `IsKahler.nijenhuis_eq_zero`: **on a Kähler manifold it vanishes** on vector fields differentiable
+  at the point (every bracket is the flat bracket of the chart pullbacks, `J` reads as the constant
+  `J₀` there, and the flat expression for a constant `J₀` with `J₀² = -1` is zero). The easy direction
+  of Newlander–Nirenberg; the converse is not stated. On `ℂℙⁿ`: ★★ `nijenhuis_fsJ_eq_zero`.
 
 ## Honest scope
 
@@ -96,13 +103,14 @@ theorem (G3) about the constructed field, under `C^∞` hypotheses on `ω` and `
 meaningful when that family is smooth — and for `hamiltonianVectorField` of a `C^∞` energy it now
 is (G3) — and junk otherwise, exactly as `fderiv` of a non-differentiable function is junk.
 
-⚠️ **Kähler in the atlas sense, not the tensor sense.** `IsKahler β J J₀` is `IsAlmostKahler` plus
-integrability *by the atlas*: `J` is the model's `J₀` through every chart's tangent trivialisation,
-which makes every chart transition holomorphic (`IsKahler.fderiv_chart_transition_comm`). That is
-the textbook definition. The equivalent tensor formulation — the Nijenhuis tensor of `J` vanishes —
-is not stated (G14b of `specs/generator-layer-scoping.md` §9, via `VectorField.mlieBracket`); `J` as
-a smooth section of the endomorphism bundle is G15, `IsKahler.contMDiff_hom_section`, stated for a
-`J` supplied as continuous linear maps (the predicate's `J` is a family of functions).
+⚠️ **Kähler in the atlas sense, with the tensor sense derived.** `IsKahler β J J₀` is `IsAlmostKahler`
+plus integrability *by the atlas*: `J` is the model's `J₀` through every chart's tangent trivialisation,
+which makes every chart transition holomorphic (`IsKahler.fderiv_chart_transition_comm`). That is the
+textbook definition. The tensor formulation follows: the Nijenhuis tensor vanishes
+(`IsKahler.nijenhuis_eq_zero`, G14b). The converse — `N_J = 0` implies a holomorphic atlas, the
+Newlander–Nirenberg theorem — is not stated. `J` as a smooth section of the endomorphism bundle is
+G15, `IsKahler.contMDiff_hom_section`, stated for a `J` supplied as continuous linear maps (the
+predicate's `J` is a family of functions), and `nijenhuis` takes the family.
 
 ⚠️ **No global flow.** G4 gives local existence, uniqueness and conservation for integral
 curves; that a global flow `ℝ × M → M` exists (completeness of the field, e.g. on a compact
@@ -115,7 +123,8 @@ Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
-References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G7, G8, G11, G14a, G15, G19); `Geometry/Manifold/SymplecticForm.lean`
+References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G7, G8, G11, G14a, G14b, G15, G19);
+`Mathlib/Geometry/Manifold/VectorField/LieBracket.lean` (`mlieBracket`, `mlieBracketWithin_apply`); `Geometry/Manifold/SymplecticForm.lean`
 (`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `zeroFormFamily`,
 `toFlat_mextDeriv_zeroFormFamily`, `mextDeriv_mextDeriv`);
 `Analysis/InnerProductSpace/HamiltonianVectorField.lean` (the linear duality this lifts);
@@ -1143,6 +1152,158 @@ theorem contMDiff_hom_section (h : IsKahler β J J₀)
 end IsKahler
 
 end AlmostKahler
+
+/-! ### The Nijenhuis tensor, and its vanishing on a Kähler manifold (G14b) -/
+
+section Nijenhuis
+
+open VectorField
+
+/-- **The Nijenhuis tensor** of a family `J` of endomorphisms of the tangent spaces, evaluated on
+two vector fields with Mathlib's manifold Lie bracket `mlieBracket`:
+`N_J(V, W) = [JV, JW] − J[JV, W] − J[V, JW] − [V, W]`. Its vanishing is the tensor formulation of
+the integrability of `J`. -/
+def nijenhuis (J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x → TangentSpace (modelWithCornersSelf ℝ E) x)
+    (V W : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x) (x : M) : TangentSpace (modelWithCornersSelf ℝ E) x :=
+  mlieBracket (modelWithCornersSelf ℝ E) (fun y => J y (V y)) (fun y => J y (W y)) x
+    - J x (mlieBracket (modelWithCornersSelf ℝ E) (fun y => J y (V y)) W x)
+    - J x (mlieBracket (modelWithCornersSelf ℝ E) V (fun y => J y (W y)) x)
+    - mlieBracket (modelWithCornersSelf ℝ E) V W x
+
+/-- The inverse of the derivative of the inverse chart, at a point of the chart's target, is the
+derivative of the chart at the corresponding point of the source (Mathlib's two composition
+identities, read through `ContinuousLinearMap.inverse_eq`). -/
+theorem inverse_mfderiv_extChartAt_symm (x₀ : M) {w : E}
+    (hw : w ∈ (extChartAt (modelWithCornersSelf ℝ E) x₀).target) :
+    (mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm w).inverse
+      = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀) ((extChartAt (modelWithCornersSelf ℝ E) x₀).symm w) := by
+  have h1 := mfderivWithin_extChartAt_symm_comp_mfderiv_extChartAt (I := (modelWithCornersSelf ℝ E)) hw
+  have h2 := mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm (I := (modelWithCornersSelf ℝ E)) hw
+  simp only [modelWithCornersSelf_coe, Set.range_id, mfderivWithin_univ] at h1 h2
+  exact ContinuousLinearMap.inverse_eq h1 h2
+
+/-- The flat Nijenhuis expression of a constant linear `J₀` with `J₀² = -1` vanishes: with
+`[V, W] = DW·V − DV·W` and `D(J₀ ∘ X) = J₀ ∘ DX`, the four brackets cancel. -/
+theorem flat_nijenhuis_eq_zero (J₀ : E →L[ℝ] E) (hJ : ∀ v, J₀ (J₀ v) = -v) (A B : E →L[ℝ] E)
+    (a b : E) :
+    (J₀ (B (J₀ a)) - J₀ (A (J₀ b))) - J₀ (B (J₀ a) - J₀ (A b)) - J₀ (J₀ (B a) - A (J₀ b))
+      - (B a - A b) = 0 := by
+  simp only [map_sub, hJ]
+  abel
+
+/-- A vector field on the model space `E`, read as a plain function `E → E` — a reducible cast
+(`TangentSpace 𝓘(ℝ, E) w` is `E`), so that the flat `lieBracket` API matches it syntactically. -/
+abbrev flatField (X : ∀ w : E, TangentSpace (modelWithCornersSelf ℝ E) w) : E → E := fun w => X w
+
+namespace IsKahler
+
+variable {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ}
+  {J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x → TangentSpace (modelWithCornersSelf ℝ E) x} {J₀ : E →L[ℝ] E}
+
+/-- In the chart at `x₀`, the pullback of `J X` along the inverse chart is `J₀` applied to the
+pullback of `X`, at every point of the chart's target: `J` reads as the constant `J₀`. -/
+theorem mpullback_extChartAt_symm_apply_J (h : IsKahler β J J₀) (x₀ : M)
+    (X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x) {w : E} (hw : w ∈ (extChartAt (modelWithCornersSelf ℝ E) x₀).target) :
+    mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (X y)) w
+      = J₀ (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm X w) := by
+  have hy : (extChartAt (modelWithCornersSelf ℝ E) x₀).symm w ∈ (chartAt E x₀).source := by
+    have := (extChartAt (modelWithCornersSelf ℝ E) x₀).map_target hw
+    rwa [extChartAt_source] at this
+  have hb : (extChartAt (modelWithCornersSelf ℝ E) x₀).symm w
+      ∈ (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).baseSet := hy
+  rw [mpullback_apply, mpullback_apply, inverse_mfderiv_extChartAt_symm x₀ hw,
+    ← TangentBundle.continuousLinearMapAt_trivializationAt hy]
+  have hX : X ((extChartAt (modelWithCornersSelf ℝ E) x₀).symm w)
+      = (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ ((extChartAt (modelWithCornersSelf ℝ E) x₀).symm w)
+        ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt ℝ
+          ((extChartAt (modelWithCornersSelf ℝ E) x₀).symm w) (X ((extChartAt (modelWithCornersSelf ℝ E) x₀).symm w))) :=
+    ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL_continuousLinearMapAt hb _).symm
+  rw [hX, h.J_symmL x₀ _ hy]
+  exact ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt_symmL
+      hb _).trans
+    (congrArg J₀ ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt_symmL
+      hb _).symm)
+
+variable [FiniteDimensional ℝ E]
+
+/-- ★★★ **The complex structure of a Kähler manifold is integrable in the tensor sense** (G14b):
+the Nijenhuis tensor of `J` vanishes on vector fields differentiable at the point. In the chart at
+`x₀` every bracket is the flat bracket of the pulled-back fields (`mlieBracketWithin_apply`, with the
+chart's derivative the identity at its base point), `J` reads as the constant `J₀`
+(`mpullback_extChartAt_symm_apply_J`), and the flat Nijenhuis expression of a constant linear `J₀`
+with `J₀² = -1` is identically zero. This is the easy direction of Newlander–Nirenberg; the converse
+is not stated. -/
+theorem nijenhuis_eq_zero (h : IsKahler β J J₀) {V W : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} (x₀ : M)
+    (hV : MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E).tangent (fun x => TotalSpace.mk' E x (V x)) x₀)
+    (hW : MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E).tangent (fun x => TotalSpace.mk' E x (W x)) x₀) :
+    nijenhuis J V W x₀ = 0 := by
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
+  have hrange : Set.range (modelWithCornersSelf ℝ E) = Set.univ := by simp
+  -- every bracket at `x₀` is the flat bracket of the pullbacks along the inverse chart
+  have key : ∀ A B : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x,
+      mlieBracket (modelWithCornersSelf ℝ E) A B x₀
+        = lieBracket ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm A)) (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm B)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) := by
+    intro A B
+    have hid : ∀ v : E,
+        (ContinuousLinearMap.id ℝ (TangentSpace (modelWithCornersSelf ℝ E) x₀)).inverse v = v := by
+      intro v
+      rw [ContinuousLinearMap.inverse_id]
+      rfl
+    rw [← mlieBracketWithin_univ, mlieBracketWithin_apply, mfderiv_extChartAt_self]
+    refine (hid _).trans ?_
+    simp only [hrange, mpullbackWithin_univ, Set.preimage_univ, Set.univ_inter]
+    exact congrFun (lieBracketWithin_univ (𝕜 := ℝ) (V := flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm A)) (W := flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm B))) _
+  -- the pullbacks of `JV`, `JW` are `J₀ ∘` the pullbacks of `V`, `W`, near the base point
+  have hJV : flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (V y)))
+      =ᶠ[nhds (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)] fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm V) w) := by
+    filter_upwards [extChartAt_target_mem_nhds x₀] with w hw
+    exact h.mpullback_extChartAt_symm_apply_J x₀ V hw
+  have hJW : flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (W y)))
+      =ᶠ[nhds (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)] fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm W) w) := by
+    filter_upwards [extChartAt_target_mem_nhds x₀] with w hw
+    exact h.mpullback_extChartAt_symm_apply_J x₀ W hw
+  -- the pullbacks are differentiable at the base point
+  have hpb : ∀ X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x,
+      MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E).tangent (fun x => TotalSpace.mk' E x (X x)) x₀ →
+      DifferentiableAt ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm X)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) := by
+    intro X hX
+    have h1 := MDifferentiableWithinAt.differentiableWithinAt_mpullbackWithin_vectorField
+      (I := (modelWithCornersSelf ℝ E)) (s := Set.univ) (x := x₀) hX.mdifferentiableWithinAt
+    simp only [hrange, mpullbackWithin_univ, Set.preimage_univ, Set.univ_inter] at h1
+    exact differentiableWithinAt_univ.1 h1
+  have hV' := hpb V hV
+  have hW' := hpb W hW
+  -- the derivative of `J₀ ∘ X'` is `J₀ ∘ DX'`
+  have hDJ : ∀ X' : E → E, DifferentiableAt ℝ X' (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) →
+      fderiv ℝ (fun w => J₀ (X' w)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)
+        = J₀.comp (fderiv ℝ X' (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)) := by
+    intro X' hX'
+    rw [show (fun w => J₀ (X' w)) = J₀ ∘ X' from rfl,
+      fderiv_comp _ J₀.differentiableAt hX', J₀.fderiv]
+  -- assemble
+  unfold nijenhuis
+  rw [key, key, key, key, h.apply_eq x₀, h.apply_eq x₀]
+  have e1 : lieBracket ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (V y)))) (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (W y))))
+        (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)
+      = lieBracket ℝ (fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm V) w)) (fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm W) w))
+        (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) := by
+    rw [← lieBracketWithin_univ, ← lieBracketWithin_univ]
+    exact hJV.lieBracketWithin_vectorField_eq_nhds hJW
+  have e2 : lieBracket ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (V y)))) (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm W)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)
+      = lieBracket ℝ (fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm V) w)) (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm W)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) := by
+    rw [← lieBracketWithin_univ, ← lieBracketWithin_univ]
+    exact hJV.lieBracketWithin_vectorField_eq_nhds (Filter.EventuallyEq.refl _ _)
+  have e3 : lieBracket ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm V)) (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (W y)))) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)
+      = lieBracket ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm V)) (fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm W) w)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) := by
+    rw [← lieBracketWithin_univ, ← lieBracketWithin_univ]
+    exact (Filter.EventuallyEq.refl _ _).lieBracketWithin_vectorField_eq_nhds hJW
+  rw [e1, e2, e3]
+  simp only [lieBracket_eq, hDJ _ hV', hDJ _ hW', ContinuousLinearMap.comp_apply]
+  exact flat_nijenhuis_eq_zero J₀ (h.J₀_J₀ x₀) _ _ _ _
+
+end IsKahler
+
+end Nijenhuis
 
 
 end DifferentialForm

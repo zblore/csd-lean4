@@ -67,9 +67,14 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   `DifferentialForm.IsKahler.contMDiff_hom_section` (for a Kähler structure whose `J` is given as
   continuous linear maps, `x ↦ J x` is a `C^∞` section of `Hom(TM, TM)`: constant `J₀` in every
   chart) and its instance `Projectivization.contMDiff_fsJL` on `ℂℙⁿ`.
-* **NOT established (queued as G14b in `specs/generator-layer-scoping.md` §9):** the tensor
-  formulation of integrability — the Nijenhuis tensor of `J` vanishes (Mathlib has
-  `VectorField.mlieBracket` at the pin, so this is M–L). Marker: `TERM-SCOPE(Kahler)`.
+* **Also backed (2026-09-10, G14b):** the tensor formulation of integrability —
+  `DifferentialForm.nijenhuis` (the Nijenhuis tensor, with Mathlib's manifold Lie bracket
+  `VectorField.mlieBracket`) and ★★★ `DifferentialForm.IsKahler.nijenhuis_eq_zero` (**on a Kähler
+  manifold it vanishes** on vector fields differentiable at the point), with
+  `Projectivization.nijenhuis_fsJ_eq_zero` on `ℂℙⁿ`. The easy direction of Newlander–Nirenberg.
+* **NOT established:** the converse, that a vanishing Nijenhuis tensor yields a holomorphic atlas
+  (the Newlander–Nirenberg theorem, a PDE result nothing here needs), and the Riemannian reading of
+  the volume (G17 of `specs/generator-layer-scoping.md` §9). Marker: `TERM-SCOPE(Kahler)`.
 
 ## moment map
 
