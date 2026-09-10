@@ -47,16 +47,18 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 * **G14a (2026-09-10).** `modelJ` (`i·` on the model as a real-linear map) and ★★★ `fsForm_isKahler`
   — **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is a Kähler manifold**
   (`DifferentialForm.IsKahler`: almost Kähler, and `J` is the complex structure of the holomorphic
-  atlas, by `fsJ_symmL`).
+  atlas, by `fsJ_symmL`);
+* **G15 (2026-09-10).** `fsJL` (`J = i·` as a continuous linear map on each tangent space) and ★★
+  `contMDiff_fsJL` — **`J` is a `C^∞` section of `Hom(TM, TM)`**, constant `i·` in every chart.
 
 ## Honest scope
 
 ⚠️ **Kähler in the atlas sense.** `fsForm_isKahler` packages symplectic + compatible `J` + `J` is
 the complex structure of the holomorphic atlas (`fsJ_symmL`, `fderiv_chart_transition_smul_I`),
 which is the textbook definition. The tensor formulation of integrability (a vanishing Nijenhuis
-tensor; G14b of `specs/generator-layer-scoping.md`) is not stated, and `J` is a family, not a
-smooth section of the endomorphism bundle (G15). The pointwise triple `IsFubiniStudyKahler` on the
-flat model is the origin's case.
+tensor; G14b of `specs/generator-layer-scoping.md` §9) is not stated. `J` as a smooth section of
+the endomorphism bundle is `contMDiff_fsJL` (G15), for the linear-map version `fsJL` of `fsJ`. The
+pointwise triple `IsFubiniStudyKahler` on the flat model is the origin's case.
 
 ⚠️ **No volume.** Non-degeneracy plus closedness does not produce the top-power identity
 `ωⁿ/n! = μ_FS`; that is step (3), top forms → measures, and is not attempted.
@@ -294,5 +296,25 @@ theorem fsForm_isKahler (n : ℕ) : IsKahler (fsForm (n := n)) fsJ modelJ where
   J_symmL := fun x₀ y hy v => by
     rw [modelJ_apply]
     exact fsJ_symmL x₀ y hy v
+
+/-! ### `J` as a smooth section of the endomorphism bundle (G15) -/
+
+/-- `J = i·` on each tangent space, as a continuous linear map: the section of `Hom(TM, TM)`. -/
+noncomputable def fsJL (x : ℙ ℂ (Ambient n)) :
+    TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x →L[ℝ]
+      TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x :=
+  modelJ
+
+@[simp] theorem fsJL_apply (x : ℙ ℂ (Ambient n))
+    (v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) : fsJL x v = fsJ x v := rfl
+
+/-- ★★ **`J` is a smooth section of `Hom(TM, TM)` on `ℂℙⁿ`**: in every chart it is the constant
+`i·` (`IsKahler.contMDiff_hom_section` on `fsForm_isKahler`). -/
+theorem contMDiff_fsJL :
+    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
+      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod
+        (modelWithCornersSelf ℝ ((Fin n → ℂ) →L[ℝ] (Fin n → ℂ)))) ∞
+      (fun x : ℙ ℂ (Ambient n) => TotalSpace.mk' ((Fin n → ℂ) →L[ℝ] (Fin n → ℂ)) x (fsJL x)) :=
+  (fsForm_isKahler n).contMDiff_hom_section fsJL fun _ _ => rfl
 
 end Projectivization

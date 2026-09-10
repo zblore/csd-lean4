@@ -127,7 +127,7 @@ section of the endomorphism bundle. The **M** held. One shelf fact: a type ascri
 definitionally equal term is *erased* — `(v : Fin n → ℂ)` for `v : TangentSpace 𝓘 x` leaves `v`
 tangent-typed, so `Complex.I • v` finds no `ℂ`-action; the reducible cast `tangentToModel` (the
 `toFlat` idiom) is what actually changes the elaborated type.
-**The step-(4) ladder is complete except G5, which is queued at XL in §9 with the rest of the residue; G12 and G14a were built 2026-09-10.**
+**The step-(4) ladder is complete except G5, which is queued at XL in §9 with the rest of the residue; G12, G14a, G15 and G16 were built 2026-09-10.**
 Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
@@ -377,8 +377,8 @@ recorded have since been filled upstream (`VectorField.mlieBracket`, and uniform
 | **G5** | **Liouville at manifold level**: the time-`t` map of `X_H` preserves `topFormMeasure (ω^{∧n})`. Three milestones. **(a)** the global flow of a `C^1` vector field on a compact manifold — global integral curves exist (`exists_isMIntegralCurve_of_isMIntegralCurveOn` at the pin gives them from a uniform local existence time; compactness supplies the uniform time), are unique (G4), and assemble into a `Flow` (`Mathlib/Dynamics/Flow.lean`); **(b)** the Lie derivative of a manifold form along the flow and Cartan's formula `L_X = d ∘ ι_X + ι_X ∘ d` — the genuine Mathlib gap (no `lieDeriv`, no Cartan at the pin; needs pullback of `DifferentialForm` along a smooth map and `mextDeriv` commuting with it); **(c)** `L_X ω = d(ι_X ω) = d(dH) = 0` (G11's `isLocallyHamiltonian` is exactly `d(ι_X ω) = 0`), so the flow preserves `ω`, hence `ω^{∧n}`, hence `topFormMeasure` (`topFormMeasure_map_eq`). | (a) **M–L**, (b) **L–XL**, (c) **M**; **XL** in all | Low–medium | Medium | Replaces `ConstraintDynamics.flow_preserves` by a theorem for the globally Hamiltonian pieces only; the measurement pieces are locally Hamiltonian (the flux correction), so Posit 3 stands even then. |
 | **G14a** ✅ built 2026-09-10 | The Kähler predicate, atlas sense; `ℂℙⁿ` is Kähler | S–M (took **S**) | — | Medium | See §G14a above. |
 | **G14b** | **Kähler in the tensor sense**: the Nijenhuis tensor `N_J` of a family `J` via `VectorField.mlieBracket` (at the pin), and `N_J = 0` for `IsKahler` — the easy direction of Newlander–Nirenberg (a holomorphic atlas makes `N_J` vanish, a chart computation: in a chart `J = J₀` is constant, and the bracket of coordinate-constant fields is `0`). The converse (`N_J = 0` ⇒ holomorphic atlas) is the hard PDE theorem and is **not** this row. | **M–L** | Medium | Low | Closes the `TERMS.md` "tensor sense" line; `IsKahler.nijenhuis_eq_zero`. Needs `J` as a section (G15) to state `[JX, JY]`. |
-| **G15** | **`J` as a smooth section of `End(TM)`**: `fun x => (x, fsJ x)` is `C^∞` into the bundle of continuous linear maps `TangentSpace x →L[ℝ] TangentSpace x` (`Mathlib/Geometry/Manifold/VectorBundle/Hom.lean` at the pin); generically, `IsKahler` implies the section is `C^∞` because `J` is constant in every chart. | **S–M** | High | Low | The `TERMS.md` "smooth section" line; prerequisite of G14b. |
-| **G16** | **The torus orbits are integral curves**: `t ↦ torusUnitary (t • θ) • p` is `IsMIntegralCurve` for `torusField θ`, and `momentMap` is conserved along it. | **S** | High | Low | The route of `isMIntegralCurve_schrodingerUnitary_smul` with `hasDerivAt_chartFun_torusUnitary` and `torusUnitary_add_smul`; the G4 write-up left it unwritten. |
+| **G15** ✅ built 2026-09-10 | **`J` as a smooth section of `End(TM)`**: `fun x => (x, fsJ x)` is `C^∞` into the bundle of continuous linear maps `TangentSpace x →L[ℝ] TangentSpace x` (`Mathlib/Geometry/Manifold/VectorBundle/Hom.lean` at the pin); generically, `IsKahler` implies the section is `C^∞` because `J` is constant in every chart. | **S–M** | High | Low | The `TERMS.md` "smooth section" line; prerequisite of G14b. |
+| **G16** ✅ built 2026-09-10 | **The torus orbits are integral curves**: `t ↦ torusUnitary (t • θ) • p` is `IsMIntegralCurve` for `torusField θ`, and `momentMap` is conserved along it. | **S** | High | Low | The route of `isMIntegralCurve_schrodingerUnitary_smul` with `hasDerivAt_chartFun_torusUnitary` and `torusUnitary_add_smul`; the G4 write-up left it unwritten. |
 | **G17** | **The Riemannian volume of the Fubini–Study metric is `fsVolume` up to the constant** (the `TERMS.md` Fubini–Study line "normalised Riemannian volume"). Needs the Riemannian volume measure of a metric on a manifold — absent at the pin (`VectorBundle/Riemannian.lean` has Riemannian *bundles*, no volume) — built as `topFormMeasure` of the volume form `√det g`; then `vol_g = ω^{∧n}/n!` is the algebraic Kähler identity from `g = ω (J ·, ·)` (G14a). | **L** | Low–medium | Low | Fills a Mathlib gap (Riemannian volume); nothing in the corpus consumes it. |
 | **G18** | **Darboux's theorem** (the `TERMS.md` symplectic line): every symplectic form is locally the standard one. Moser's trick: needs G5(a) flows, G5(b) Cartan, and a Poincaré lemma on a ball. | **XL** | Low | Low | Nothing in the corpus consumes it; it is the classical theorem a symplectic library owes. |
 | **W1** ✅ built 2026-09-10 | **Wire the physics to the manifold layer**: the `ℂℙⁿ` instances of `KahlerOnticSetup` (`trivialKahlerOnticSetup`, `unitaryFlowSetup`, `manyToOneSetup`) get theorems that their `liouvilleMeasure` is `(4π)⁻ⁿ • fsVolume n` (the symplectic volume of `fsForm`, `fsVolume_eq_smul_fubiniStudyMeasure`), that `flow_preserves_volume` is `fsVolume_map_smul`, and that the sector carries `fsForm_isKahler`; and the four stale ledgers are corrected — link L1 of `specs/connectivity-manifest.md`, the `kahler_pointwise` docstring, and the `TERMS.md` Fubini–Study and symplectic entries, all of which still call the manifold residual open. The two projective-space types are definitionally equal (`ℙ ℂ (Ambient n)` is `CPN (n + 1)`). | **M** | High | **High** | This is what turns "we start from an FS, Kähler, Liouville space" into "the sector is the standard object, proved". Posit 3 is untouched by it. |
@@ -417,6 +417,31 @@ are unitary. Two shelf facts: a theorem stated on `(setup).flow t` cannot be reu
 — the `SFinite` instance search runs on the setup's bundled `instMeasurable` projection, which is opaque
 to instance-reducible unfolding — so state the base factor on `CPN (n + 1)` directly; and `ℙ` needs
 `open scoped LinearAlgebra.Projectivization`, which `LF4` modules replace by the abbrev `CPN`.
+
+### G15 and G16, built (2026-09-10)
+
+**G15.** ★★ `DifferentialForm.IsKahler.contMDiff_hom_section` (`HamiltonianVectorField.lean`, now
+importing `Mathlib/Geometry/Manifold/VectorBundle/Hom.lean`): for a Kähler structure whose `J` is supplied
+as continuous linear maps `JL` (`JL x v = J x v`), the section `x ↦ JL x` of `Hom(TM, TM)` is `C^∞`. Proof:
+`contMDiffAt_section` on the Hom bundle, whose trivialisation at `x₀` reads a section as
+`continuousLinearMapAt y ∘ JL y ∘ symmL y` (`hom_trivializationAt`, `continuousLinearMap_apply`, both
+`rfl`); by `J_symmL` and `continuousLinearMapAt_symmL` that is the constant `J₀` on the chart source, so
+`contMDiffAt_const.congr_of_eventuallyEq`. On `ℂℙⁿ`: `fsJL x := modelJ` (the linear-map version of
+`fsJ`, `fsJL_apply` is `rfl`) and ★★ `contMDiff_fsJL`. **S–M** as priced; took S. Compiled first try.
+
+**G16.** In `Instances/ProjectiveSpaceSchrodingerFlow.lean`, where the torus corollaries of G2/G3
+already live: `continuous_torusUnitary_smul` (`Continuous.matrix_diagonal` on `torusUnitary_val`), ★★★
+`isMIntegralCurve_torusUnitary_smul` — the G4 proof of `isMIntegralCurve_schrodingerUnitary_smul` with
+`hasDerivAt_chartFun_torusUnitary` and `torusUnitary_add_smul`, plus one `show` to unfold the
+cross-module `torusField` at the derivative — `isMIntegralCurve_torusField_eq`, ★★
+`eq_torusUnitary_smul_of_isMIntegralCurve` (every global integral curve through `p` at `0` IS the orbit),
+★★ `torusHamiltonian_eq_of_isMIntegralCurve_torusField` and ★★ `torusHamiltonian_torusUnitary_smul`
+(`2 ∑ θₖ μₖ` conserved along the curves and by the flow). **S** as priced. 10 pins for the pair.
+
+**What they do not do.** G15 is stated for a `J` given as linear maps; the predicate's `J` stays a family
+of functions (packaging `J` as linear maps inside `IsKahler` would change G14a's structure for no
+consumer). G16 conserves the torus Hamiltonian, not each `μₖ` separately along the flow of a general `θ`
+(true, by the diagonal action; not written). Neither touches G5.
 
 ## References
 

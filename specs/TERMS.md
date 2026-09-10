@@ -63,10 +63,13 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   (`fsVolumeNormalized_isForcedKahlerVolume`), and ★★★ `unitaryFlowSetup_isKahler_liouville` /
   `manyToOneSetup_isKahler_liouville` state each sector as the standard object. The structure's
   fields are unchanged; Posit 3 is untouched.
-* **NOT established (queued as G14b / G15 in `specs/generator-layer-scoping.md` §9):** the tensor
+* **Also backed (2026-09-10, G15):** `J` as a smooth section of the endomorphism bundle — ★★
+  `DifferentialForm.IsKahler.contMDiff_hom_section` (for a Kähler structure whose `J` is given as
+  continuous linear maps, `x ↦ J x` is a `C^∞` section of `Hom(TM, TM)`: constant `J₀` in every
+  chart) and its instance `Projectivization.contMDiff_fsJL` on `ℂℙⁿ`.
+* **NOT established (queued as G14b in `specs/generator-layer-scoping.md` §9):** the tensor
   formulation of integrability — the Nijenhuis tensor of `J` vanishes (Mathlib has
-  `VectorField.mlieBracket` at the pin, so this is M–L) — and `J` as a smooth section of the
-  endomorphism bundle. Marker: `TERM-SCOPE(Kahler)`.
+  `VectorField.mlieBracket` at the pin, so this is M–L). Marker: `TERM-SCOPE(Kahler)`.
 
 ## moment map
 
@@ -171,9 +174,12 @@ alarming and is not.
   `isMIntegralCurve_schrodingerUnitary_smul`: **the Schrödinger flow `t ↦ exp(-itH) • p` is the
   integral curve of its Hamiltonian vector field**, and `⟨H⟩` is conserved by it
   (`expectation_schrodingerUnitary_smul`).
-  **NOT established:** a global flow of a general Hamiltonian vector field (Mathlib has no flows on
-  manifolds — G5), that the torus orbits `t ↦ diag(e^{itθ}) • p` are the integral curves of
-  `torusField` (same route as the Schrödinger case, not written), and the arena statement `R-016`.
+  **Also backed (2026-09-10, G16):** the torus orbits `t ↦ diag(e^{itθ}) • p` are the integral
+  curves of `torusField θ` — ★★★ `Projectivization.isMIntegralCurve_torusUnitary_smul`, unique
+  through `p` (`eq_torusUnitary_smul_of_isMIntegralCurve`) — and `2 ∑ θₖ μₖ` is conserved along
+  them and by the flow (`torusHamiltonian_torusUnitary_smul`).
+  **NOT established:** a global flow of a general Hamiltonian vector field (G5, queued at XL in
+  `specs/generator-layer-scoping.md` §9), and the arena statement `R-016`.
   Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,

@@ -10,6 +10,7 @@ public import Mathlib.Analysis.Normed.Module.Alternating.Curry
 public import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
 public import Mathlib.Geometry.Manifold.IntegralCurve.ExistUnique
 public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Geometry.Manifold.VectorBundle.Hom
 
 /-!
 # Hamiltonian vector fields on a manifold
@@ -20,7 +21,7 @@ public import Mathlib.Analysis.Calculus.MeanValue
 **Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 
-Bricks **G1**, **G2**, **G3**, **G4**, **G7**, **G8** (in part), **G11** and **G14a** of
+Bricks **G1**, **G2**, **G3**, **G4**, **G7**, **G8** (in part), **G11**, **G14a** and **G15** of
 `specs/generator-layer-scoping.md`: the defining equation of a Hamiltonian vector field,
 `ι_X ω = dH`, at manifold level, the pointwise facts that follow from it by alternation and
 linearity alone, its existence and uniqueness from non-degeneracy, its smoothness, its integral
@@ -76,7 +77,10 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
   `J₀` through the tangent trivialisation of every chart (`J_symmL`), i.e. integrable in the atlas
   sense; ★ `IsKahler.apply_eq` (`J y = J₀` in `y`'s chart), ★ `IsKahler.fderiv_chart_transition_comm`
   (**every chart transition is holomorphic**: its derivative commutes with `J₀`), `IsKahler.J₀_J₀`.
-  Its inhabitant on `ℂℙⁿ` is ★★★ `fsForm_isKahler` (same module as G7's).
+  Its inhabitant on `ℂℙⁿ` is ★★★ `fsForm_isKahler` (same module as G7's);
+* **G15, `J` as a section.** ★★ `IsKahler.contMDiff_hom_section` — **the complex structure of a
+  Kähler structure, given by continuous linear maps, is a `C^∞` section of `Hom(TM, TM)`**: in every
+  chart it is the constant `J₀`. On `ℂℙⁿ`: `fsJL`, ★★ `contMDiff_fsJL`.
 
 ## Honest scope
 
@@ -92,9 +96,9 @@ is (G3) — and junk otherwise, exactly as `fderiv` of a non-differentiable func
 integrability *by the atlas*: `J` is the model's `J₀` through every chart's tangent trivialisation,
 which makes every chart transition holomorphic (`IsKahler.fderiv_chart_transition_comm`). That is
 the textbook definition. The equivalent tensor formulation — the Nijenhuis tensor of `J` vanishes —
-is not stated (it needs Lie brackets of vector fields on manifolds, absent from Mathlib; G14b of
-`specs/generator-layer-scoping.md`), nor is `J` packaged as a smooth section of the endomorphism
-bundle (G15).
+is not stated (G14b of `specs/generator-layer-scoping.md` §9, via `VectorField.mlieBracket`); `J` as
+a smooth section of the endomorphism bundle is G15, `IsKahler.contMDiff_hom_section`, stated for a
+`J` supplied as continuous linear maps (the predicate's `J` is a family of functions).
 
 ⚠️ **No global flow.** G4 gives local existence, uniqueness and conservation for integral
 curves; that a global flow `ℝ × M → M` exists (completeness of the field, e.g. on a compact
@@ -107,7 +111,7 @@ Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
-References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G7, G8, G11, G14a); `Geometry/Manifold/SymplecticForm.lean`
+References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G7, G8, G11, G14a, G15); `Geometry/Manifold/SymplecticForm.lean`
 (`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `zeroFormFamily`,
 `toFlat_mextDeriv_zeroFormFamily`, `mextDeriv_mextDeriv`);
 `Analysis/InnerProductSpace/HamiltonianVectorField.lean` (the linear duality this lifts);
@@ -1028,6 +1032,29 @@ theorem fderiv_chart_transition_comm (h : IsKahler β J J₀) (x₀ y : M)
 theorem J₀_J₀ (h : IsKahler β J J₀) (y : M) (v : E) : J₀ (J₀ v) = -v := by
   rw [← h.apply_eq y (J₀ v), ← h.apply_eq y v]
   exact h.J_J y v
+
+/-- ★★ **The complex structure is a smooth section of the endomorphism bundle** (G15): if the `J`
+of a Kähler structure is given by continuous linear maps `JL`, the section `x ↦ JL x` of
+`Hom(TM, TM)` is `C^∞` — in the tangent trivialisation over the chart at `x₀` it is the constant
+`J₀` (`J_symmL`, then `continuousLinearMapAt_symmL`). -/
+theorem contMDiff_hom_section (h : IsKahler β J J₀)
+    (JL : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →L[ℝ]
+      TangentSpace (modelWithCornersSelf ℝ E) x)
+    (hJL : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), JL x v = J x v) :
+    ContMDiff (modelWithCornersSelf ℝ E)
+      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E →L[ℝ] E))) ∞
+      (fun x : M => TotalSpace.mk' (E →L[ℝ] E) x (JL x)) := by
+  intro x₀
+  rw [contMDiffAt_section]
+  refine (contMDiffAt_const (c := J₀)).congr_of_eventuallyEq ?_
+  filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
+  have hb : y ∈ (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).baseSet := hy
+  show ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt
+      ℝ y).comp ((JL y).comp
+        ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ y)) = J₀
+  ext v
+  rw [ContinuousLinearMap.comp_apply, ContinuousLinearMap.comp_apply, hJL, h.J_symmL x₀ y hy v,
+    (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt_symmL hb]
 
 end IsKahler
 

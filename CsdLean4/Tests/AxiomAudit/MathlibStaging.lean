@@ -4497,6 +4497,52 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsForm_isKahler
 
+-- G15 + G16 (2026-09-10). G15: the complex structure of a Kahler structure, given as continuous
+-- linear maps, is a C^infinity section of Hom(TM, TM) -- constant J0 in every chart
+-- (IsKahler.contMDiff_hom_section); on CP^n, fsJL and contMDiff_fsJL. G16: the torus orbit
+-- t |-> diag(e^{it theta}) . p is THE integral curve of torusField theta (the G4 route with
+-- hasDerivAt_chartFun_torusUnitary and the group law), unique through p at 0, and the torus
+-- Hamiltonian 2 sum theta_k mu_k is conserved along it and by the flow.
+/-- info: 'DifferentialForm.IsKahler.contMDiff_hom_section' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsKahler.contMDiff_hom_section
+
+/-- info: 'Projectivization.fsJL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsJL
+
+/-- info: 'Projectivization.fsJL_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsJL_apply
+
+/-- info: 'Projectivization.contMDiff_fsJL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_fsJL
+
+/-- info: 'Projectivization.continuous_torusUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.continuous_torusUnitary_smul
+
+/-- info: 'Projectivization.isMIntegralCurve_torusUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isMIntegralCurve_torusUnitary_smul
+
+/-- info: 'Projectivization.isMIntegralCurve_torusField_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isMIntegralCurve_torusField_eq
+
+/-- info: 'Projectivization.eq_torusUnitary_smul_of_isMIntegralCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.eq_torusUnitary_smul_of_isMIntegralCurve
+
+/-- info: 'Projectivization.torusHamiltonian_eq_of_isMIntegralCurve_torusField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.torusHamiltonian_eq_of_isMIntegralCurve_torusField
+
+/-- info: 'Projectivization.torusHamiltonian_torusUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.torusHamiltonian_torusUnitary_smul
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

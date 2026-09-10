@@ -742,6 +742,11 @@ isSymplectic"
 #     (⊗ Haar on the many-to-one sector), and the flow preserves that volume (fsVolume_map_smul, the
 #     unitary invariance). Both words name established predicates/identities. Nothing about the
 #     constraint dynamics' measurement pieces (Posit 3 untouched). CP^n (× T²), EVEN.
+#   torusHamiltonian_eq_of_isMIntegralCurve_torusField / torusHamiltonian_torusUnitary_smul —
+#     (2026-09-10, Instances/ProjectiveSpaceSchrodingerFlow.lean, G16) inherit the word from
+#     torusHamiltonian (declared above): it is conserved along every integral curve of torusField
+#     (G4's energy conservation on G6's field) and hence by the torus flow, which
+#     isMIntegralCurve_torusUnitary_smul shows IS that integral curve. CP^n, EVEN.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -831,6 +836,8 @@ unitaryFlowSetup_isKahler_liouville
 manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod
 manyToOneSetup_map_pi_liouvilleMeasure_eq_fsVolumeNormalized
 manyToOneSetup_isKahler_liouville
+torusHamiltonian_eq_of_isMIntegralCurve_torusField
+torusHamiltonian_torusUnitary_smul
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH
