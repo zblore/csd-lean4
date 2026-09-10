@@ -265,7 +265,8 @@ schrodingerHamiltonian
 hamiltonianVectorAt
 hamiltonianVectorField
 localHamiltonianVector
-hamiltonianVectorFieldSection"
+hamiltonianVectorFieldSection
+IsAlmostKahler"
 #
 # PARITY LEDGER (why each name is earned).
 # ⚠️ Corrected 2026-08-04, same day it was written: the first draft asserted "all on
@@ -367,6 +368,13 @@ hamiltonianVectorFieldSection"
 #       trivializationAt_hamiltonianVectorField_snd (the chart reading IS the trivialised field of
 #       G2) and contMDiff_hamiltonianVectorField (the section is C^∞). Same arena and parity as
 #       hamiltonianVectorField above.                              EARNED (manifold-level).
+#     IsAlmostKahler — (Geometry/Manifold/HamiltonianVectorField.lean, 2026-09-09, brick G7) the
+#       PREDICATE: a symplectic form (IsSymplectic, so closed and non-degenerate, EVEN) with a
+#       compatible almost complex structure J — J² = -1, J-invariance, taming β (J v, v) > 0 —
+#       whose metric g = β (J ·, ·) is symmetric and positive definite (metric_comm,
+#       metric_self_pos). "Almost" is deliberate: integrability of J (Nijenhuis) is NOT part of
+#       it. Inhabited by fsForm_isAlmostKahler (CP^n with J = i·, real dimension 2n).   EVEN.
+#                                                                  EARNED (manifold-level).
 #   CONCRETE ARENA — parity verified by reading the definition:
 #     arenaLiouville          — UnifiedArena: CP^{N-1} x T^2 x (bank), even factors.  EVEN.
 #     pointerLiouville        — PointerArena: CP^{N-1} x T^2 x CP^K, 2(N-1)+2+2K.     EVEN.
@@ -590,14 +598,20 @@ CsdLean4/Thermo/Equilibration.lean|Q12"
 DECLARED_VOCAB_FIELDS="kahler_pointwise
 liouville
 liouvilleMeasure
-liouville_isProbability"
+liouville_isProbability
+isSymplectic"
 #
-# FIELD LEDGER: all six are fields of `KahlerOnticSetup` (LF4/KahlerOnticSetup.lean),
+# FIELD LEDGER: the first four are fields of `KahlerOnticSetup` (LF4/KahlerOnticSetup.lean),
 # whose `Sigma` is abstract — so, as above, they carry no parity claim in themselves.
 # Note `IsKahlerSector : Prop` and `IsLiouvilleKahlerVolume : Prop` are the honest
 # shape: the Kähler and Liouville conditions are *obligations the instantiator must
 # discharge*, not adjectives asserted by fiat. That is CONVENTIONS 8.3a option (1),
 # and it is why these names are earned where a bare `…Liouville` would not be.
+#   isSymplectic : β.IsSymplectic — (2026-09-09, Geometry/Manifold/HamiltonianVectorField.lean,
+#     brick G7) the first field of the Prop-structure `IsAlmostKahler β J`: the same honest
+#     shape, an OBLIGATION the instantiator discharges (fsForm_isAlmostKahler discharges it
+#     with fsForm_isSymplectic). Its type is the declared predicate `IsSymplectic` (closed +
+#     non-degenerate), so the word is carried by a proved predicate, not asserted. EVEN.
 
 # (7c) THEOREM/LEMMA names carrying the vocabulary. Most inherit their object's word
 # (`trivialKahlerOnticSetup_*`, `hamiltonian_*`) and assert nothing new; the ones that
@@ -686,6 +700,14 @@ liouville_isProbability"
 #     integral curves of the declared field (Picard–Lindelöf in the chart on G3's C^1 section;
 #     isMIntegralCurve_eq_of_contMDiff on a Hausdorff manifold). Words inherited from
 #     hamiltonianVectorField. Generic 2n-manifold over a real model, parity as G1's.
+#   (IsAlmostKahler itself is a structure, inventoried in (7a) above; its theorems
+#     metric_comm / metric_self_pos / apply_eq_metric sit in `namespace IsAlmostKahler`, so
+#     no `theorem IsAlmostKahler.…` line exists and the dotted-name read has nothing to see.)
+#   fsForm_isAlmostKahler — (2026-09-09, Instances/ProjectiveSpaceFubiniStudySymplectic.lean,
+#     G7) PROVES that CP^n with the Fubini–Study form and J = i· is almost Kähler: symplectic
+#     (fsForm_isSymplectic), J² = -1, (1,1)-form (fsForm_smul_I_smul_I), tamed
+#     (fsSection_smul_I_neg with g = ω (J ·, ·)). The word names the established predicate,
+#     and the "almost" is kept: the Nijenhuis integrability is not stated. CP^n, EVEN.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -765,6 +787,7 @@ contMDiff_schrodingerHamiltonian
 contMDiff_torusHamiltonian
 exists_isMIntegralCurveAt_hamiltonianVectorField
 isMIntegralCurve_hamiltonianVectorField_eq
+fsForm_isAlmostKahler
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH

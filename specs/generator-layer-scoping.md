@@ -111,7 +111,23 @@ to its `smulRight` form and use `congr_fderiv` + `ContinuousLinearMap.ext_ring` 
 `HasDerivAt` at a shifted point wants a named `have` at `t - t`, not an inline `by rw [sub_self]`, before
 `HasDerivAt.scomp (h := fun s => s - t) (x := t)`. Not stated: a global flow of a general Hamiltonian
 field (Mathlib has no flows on manifolds — G5's wall), and the torus orbits (same route, not written).
-**The step-(4) ladder is now complete except G5 (unscheduled), G7 (cosmetic) and G12 (registry).**
+**G7 BUILT 2026-09-09 (13 pins)**: `DifferentialForm.IsAlmostKahler β J` (`HamiltonianVectorField.lean`)
+— a symplectic form with a compatible almost complex structure, `J² = -1`, `J`-invariance, taming
+`β (J v, v) > 0` — with its metric `g = β (J ·, ·)` symmetric (★ `metric_comm`, from `J`-invariance,
+`J² = -1` and the new antisymmetry lemma `apply_swap`) and positive definite; on `ℂℙⁿ` ★★
+`fsForm_isAlmostKahler` (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`): **`ℂℙⁿ` with the
+Fubini–Study form and `J = i·` is almost Kähler** — `fsForm_smul_I_smul_I` (a `(1,1)`-form, by
+`fsModelForm_apply`) and the taming `fsSection_smul_I_neg`, its `-4` sign absorbed by the convention
+`g = ω (J ·, ·)` (so the spec's `g = ω(·, J·)` became `ω = g(·, J·)`, `apply_eq_metric`); and ★
+`fderiv_chart_transition_smul_I` / `fsJ_symmL` — **`J` is the complex structure of the atlas**: the
+transitions are `uTrans 1` (`chart_transition_eq_uTrans`), holomorphic by `contDiffOn_uTrans`, so
+their derivatives are `ℂ`-linear and `J = i·` reads as `i·` in every chart. Named *almost* Kähler
+on purpose: integrability of `J` as a vanishing Nijenhuis tensor is not stated, nor is `J` a smooth
+section of the endomorphism bundle. The **M** held. One shelf fact: a type ascription on a
+definitionally equal term is *erased* — `(v : Fin n → ℂ)` for `v : TangentSpace 𝓘 x` leaves `v`
+tangent-typed, so `Complex.I • v` finds no `ℂ`-action; the reducible cast `tangentToModel` (the
+`toFlat` idiom) is what actually changes the elaborated type.
+**The step-(4) ladder is now complete except G5 (unscheduled) and G12 (registry).**
 Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
@@ -171,7 +187,7 @@ consumed in chart form and the general pullback was never built).
 | **G4** ✅ built 2026-09-09 | Integral curves of `X_H` exist and are unique, and `H` is conserved along them (`ι_X ω (X) = 0` by alternation) | **S–M** | High | Medium | G3 | Direct application of Mathlib's `exists_isMIntegralCurveAt_of_contMDiffAt` and `isMIntegralCurve_eq_of_contMDiff`; lifts `conserved_along_translationCurve` from the chart to the manifold |
 | **G5** | Liouville at manifold level: the time-`t` map of `X_H` preserves `topFormMeasure (ω^{∧n})` | **XL** | Low | Medium, and less than it looks | G3, and two absent Mathlib layers | ⛔ Needs global flows (absent) and `L_X ω = 0` by Cartan's formula (absent). It would replace the posit `ConstraintDynamics.flow_preserves` by a theorem — **for Hamiltonian flows only**, and the corpus's measurement pieces are *not* globally Hamiltonian (the flux correction), so it would not touch the dynamics the record layer actually uses. **Not scheduled** |
 | **G6** | The moment map of the torus action on ℂℙⁿ at manifold level: the fundamental vector field `X_A` of `p ↦ exp(tA)·p` (the `t`-derivative of `uTrans`, which `contDiffOn_uTrans` already makes smooth), `μ_A [z] = ⟨z, iA z⟩/‖z‖²`, and ★★★ `IsHamiltonianVectorField fsForm X_A μ_A`; for `A = diag(iθ)` this is `LF4.momentMap` | **L** | Medium | **High** | G1 only (the field is given, G2/G3 are not needed) | Closes the `TERMS.md` moment-map line "NOT established: that it is the moment map of a Hamiltonian torus action on the symplectic *manifold*". It is also exactly the route the 2026-08-02 review recorded for the Hamiltonian-origin row: unitary rotations on a compact Kähler pointer are globally Hamiltonian (`H¹(ℂℙ^K) = 0`). The computation is `fsModelForm_apply` (M7) against the derivative of the action in the chart; half of it exists |
-| **G7** | A manifold-level Kähler predicate `IsKahler ω J g` on ℂℙⁿ: `J = i·` on each tangent space (chart-independent because the transitions are ℂ-analytic, `contDiffOn_uTrans`), `g = ω(·, J·)`, the pointwise triple `IsFubiniStudyKahler` lifted | **M** | High | Low–medium | — | Packages words the corpus already has pointwise; closes the last non-analyticity item of the `TERMS.md` Kähler line. Gates nothing |
+| **G7** ✅ built 2026-09-09 (as `IsAlmostKahler`) | A manifold-level Kähler predicate `IsKahler ω J g` on ℂℙⁿ: `J = i·` on each tangent space (chart-independent because the transitions are ℂ-analytic, `contDiffOn_uTrans`), `g = ω(·, J·)`, the pointwise triple `IsFubiniStudyKahler` lifted | **M** | High | Low–medium | — | Packages words the corpus already has pointwise; closes the last non-analyticity item of the `TERMS.md` Kähler line. Gates nothing |
 
 **Recommended order: G1 → G6.** Together **L**, P(success) medium, value high — the one brick on
 this ladder that discharges a line of `TERMS.md` rather than adding a word to it. G2–G4 are Mathlib

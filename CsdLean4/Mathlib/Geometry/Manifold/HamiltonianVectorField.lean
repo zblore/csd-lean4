@@ -14,17 +14,17 @@ public import Mathlib.Analysis.Calculus.MeanValue
 /-!
 # Hamiltonian vector fields on a manifold
 
-**TERM-SCOPE(Hamiltonian)** — this module uses the *restricted* sense of "Hamiltonian";
-`specs/TERMS.md` records what is backed and what is not.
+**TERM-SCOPE(Hamiltonian)** **TERM-SCOPE(Kahler)** — this module uses the *restricted* senses of
+"Hamiltonian" and "Kahler"; `specs/TERMS.md` records what is backed and what is not.
 
 **Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 
-Bricks **G1**, **G2**, **G3**, **G4**, **G8** (in part) and **G11** of
+Bricks **G1**, **G2**, **G3**, **G4**, **G7**, **G8** (in part) and **G11** of
 `specs/generator-layer-scoping.md`: the defining equation of a Hamiltonian vector field,
 `ι_X ω = dH`, at manifold level, the pointwise facts that follow from it by alternation and
 linearity alone, its existence and uniqueness from non-degeneracy, its smoothness, its integral
-curves, and the passage to the closed 1-form `d(ι_X ω) = 0`.
+curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähler predicate.
 
 * `DifferentialForm.interiorProduct ω X` — the interior product `ι_X ω`, `x ↦ (ω x).curryLeft (X x)`,
   a 1-form *family* (`interiorProduct_apply`);
@@ -65,7 +65,12 @@ curves, and the passage to the closed 1-form `d(ι_X ω) = 0`.
   curve of a Hamiltonian vector field of `H`, by `dH (X) = 0` and the mean value theorem; ★★
   `exists_isMIntegralCurveAt_hamiltonianVectorField` (**local existence**, Picard–Lindelöf on the
   `C^1` section of G3) and ★★ `isMIntegralCurve_hamiltonianVectorField_eq` (**uniqueness** of
-  global integral curves on a Hausdorff manifold); the three `IsSymplectic.` forms specialise.
+  global integral curves on a Hausdorff manifold); the three `IsSymplectic.` forms specialise;
+* **G7, almost Kähler.** `apply_swap` (antisymmetry of a 2-form family), the predicate
+  `IsAlmostKahler β J` — a symplectic form with a compatible almost complex structure: `J² = -1`,
+  `J`-invariance, and taming `β (J v, v) > 0` — with its metric `h.metric x u v = β x (J u, v)`,
+  ★ `metric_comm`, ★ `metric_self_pos`, and `apply_eq_metric` (`β = g (·, J ·)`). Its inhabitant
+  on `ℂℙⁿ` is `fsForm_isAlmostKahler` (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`).
 
 ## Honest scope
 
@@ -76,6 +81,11 @@ theorem (G3) about the constructed field, under `C^∞` hypotheses on `ω` and `
 ⚠️ **`IsLocallyHamiltonian` is stated on families.** It applies `mextDeriv` to `ι_X α`, which is
 meaningful when that family is smooth — and for `hamiltonianVectorField` of a `C^∞` energy it now
 is (G3) — and junk otherwise, exactly as `fderiv` of a non-differentiable function is junk.
+
+⚠️ **Almost Kähler, not Kähler.** `IsAlmostKahler` packages symplectic + compatible `J`; the
+integrability of `J` (vanishing Nijenhuis tensor), which turns almost Kähler into Kähler, is not
+stated. On `ℂℙⁿ` the `J` is that of the holomorphic atlas (`fderiv_chart_transition_smul_I`), which
+is integrability in the atlas sense, but the tensor formulation is not built.
 
 ⚠️ **No global flow.** G4 gives local existence, uniqueness and conservation for integral
 curves; that a global flow `ℝ × M → M` exists (completeness of the field, e.g. on a compact
@@ -88,7 +98,7 @@ Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
-References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G8, G11); `Geometry/Manifold/SymplecticForm.lean`
+References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G7, G8, G11); `Geometry/Manifold/SymplecticForm.lean`
 (`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `zeroFormFamily`,
 `toFlat_mextDeriv_zeroFormFamily`, `mextDeriv_mextDeriv`);
 `Analysis/InnerProductSpace/HamiltonianVectorField.lean` (the linear duality this lifts);
@@ -866,6 +876,84 @@ theorem IsSymplectic.comp_eq_of_isMIntegralCurve_hamiltonianVectorField
   (hβ.hamiltonianVectorField_isHamiltonianVectorField H).comp_eq_of_isMIntegralCurve hγ hH t s
 
 end IntegralCurveSmooth
+
+/-! ### Almost Kähler structures: a symplectic form with a compatible `J` (G7) -/
+
+section AlmostKahler
+
+omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] in
+theorem apply_neg_left (x : M) (a v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    α x ![-a, v] = -α x ![a, v] := by
+  have h := apply_smul_left α x (-1 : ℝ) a v
+  simp only [neg_one_smul] at h
+  exact h
+
+omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] in
+/-- Antisymmetry of a 2-form family, from alternation and bilinearity. -/
+theorem apply_swap (x : M) (a b : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    α x ![a, b] = -α x ![b, a] := by
+  have h0 : α x ![a + b, a + b] = 0 :=
+    (α x).map_eq_zero_of_eq ![a + b, a + b] (i := 0) (j := 1) rfl (by decide)
+  have haa : α x ![a, a] = 0 := (α x).map_eq_zero_of_eq ![a, a] (i := 0) (j := 1) rfl (by decide)
+  have hbb : α x ![b, b] = 0 := (α x).map_eq_zero_of_eq ![b, b] (i := 0) (j := 1) rfl (by decide)
+  rw [apply_add_left, apply_add_right, apply_add_right, haa, hbb, zero_add, add_zero] at h0
+  exact eq_neg_of_add_eq_zero_left h0
+
+/-- **An almost Kähler structure**: a symplectic form `β` with a compatible almost complex
+structure `J` — a family of maps on the tangent spaces with `J² = -1` — such that `β` is
+`J`-invariant and `J`-tamed, `β (J v, v) > 0` for `v ≠ 0`. The compatible metric is
+`g (u, v) = β (J u, v)` (`IsAlmostKahler.metric`), the convention `ω = g (J ·, ·)`. Integrability
+of `J` — the Kähler condition proper — is not part of the predicate. -/
+structure IsAlmostKahler (β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ)
+    (J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →
+      TangentSpace (modelWithCornersSelf ℝ E) x) : Prop where
+  /-- `β` is closed and non-degenerate. -/
+  isSymplectic : β.IsSymplectic
+  /-- `J² = -1`. -/
+  J_J : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), J x (J x v) = -v
+  /-- `β` is `J`-invariant, a `(1,1)`-form. -/
+  invariant : ∀ (x : M) (u v : TangentSpace (modelWithCornersSelf ℝ E) x),
+    β x ![J x u, J x v] = β x ![u, v]
+  /-- `β` tames `J`: `β (J v, v) > 0` for `v ≠ 0`. -/
+  pos : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    0 < (β x ![J x v, v] : ℝ)
+
+namespace IsAlmostKahler
+
+variable {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ}
+  {J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →
+    TangentSpace (modelWithCornersSelf ℝ E) x}
+
+/-- The compatible metric, `g (u, v) = β (J u, v)`. -/
+def metric (_h : IsAlmostKahler β J) (x : M) (u v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    ℝ :=
+  β x ![J x u, v]
+
+/-- ★ The compatible metric is symmetric: `J`-invariance, `J² = -1` and antisymmetry of `β`. -/
+theorem metric_comm (h : IsAlmostKahler β J) (x : M)
+    (u v : TangentSpace (modelWithCornersSelf ℝ E) x) : h.metric x u v = h.metric x v u := by
+  unfold metric
+  calc (β x ![J x u, v] : ℝ)
+      = β x ![J x (J x u), J x v] := (h.invariant x (J x u) v).symm
+    _ = β x ![-u, J x v] := by rw [h.J_J]
+    _ = -β x ![u, J x v] := apply_neg_left (fun x => β x) x u (J x v)
+    _ = β x ![J x v, u] := by rw [apply_swap (fun x => β x) x u (J x v), neg_neg]
+
+/-- ★ The compatible metric is positive definite. -/
+theorem metric_self_pos (h : IsAlmostKahler β J) (x : M)
+    {v : TangentSpace (modelWithCornersSelf ℝ E) x} (hv : v ≠ 0) : 0 < h.metric x v v :=
+  h.pos x v hv
+
+/-- The form is recovered from the metric: `β (u, v) = g (u, J v)`. -/
+theorem apply_eq_metric (h : IsAlmostKahler β J) (x : M)
+    (u v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    (β x ![u, v] : ℝ) = h.metric x u (J x v) := by
+  unfold metric
+  exact (h.invariant x u v).symm
+
+end IsAlmostKahler
+
+end AlmostKahler
 
 
 end DifferentialForm

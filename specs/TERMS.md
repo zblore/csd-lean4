@@ -37,9 +37,16 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   and the top-power identity with its constant — ★★★ `fsVolume_eq_smul_fubiniStudyMeasure`,
   `ω_FS^{∧n} = (4π)ⁿ · μ_FS` (`Instances/ProjectiveSpaceFubiniStudyMass.lean`; see the Liouville
   entry for the convention behind `(4π)ⁿ`).
-* **NOT established:** analyticity (the potential is only known `C^∞`), and a manifold-level Kähler
-  *predicate* packaging `J`, `g` and `ω` on `ℂℙⁿ` (`specs/generator-layer-scoping.md`, G7 — cosmetic,
-  the triple is proved pointwise). Marker: `TERM-SCOPE(Kahler)`.
+* **Also backed (2026-09-09, G7):** the manifold-level predicate — `DifferentialForm.IsAlmostKahler β J`
+  (`Mathlib/Geometry/Manifold/HamiltonianVectorField.lean`: a symplectic form with a compatible almost
+  complex structure, `J² = -1`, `J`-invariance, taming `β (J v, v) > 0`, and the compatible metric
+  `g = β (J ·, ·)` symmetric and positive definite) and its inhabitant ★★
+  `Projectivization.fsForm_isAlmostKahler` (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`):
+  **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is almost Kähler**; `fderiv_chart_transition_smul_I`
+  shows the chart transitions are holomorphic, so `J = i·` is the complex structure of the atlas.
+* **NOT established:** analyticity (the potential is only known `C^∞`, G12), the integrability of `J`
+  as a vanishing Nijenhuis tensor — what turns "almost Kähler" into "Kähler" in the tensor sense —
+  and `J` as a smooth section of the endomorphism bundle. Marker: `TERM-SCOPE(Kahler)`.
 
 ## moment map
 

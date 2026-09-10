@@ -4335,6 +4335,75 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.expectation_schrodingerUnitary_smul
 
+/-! ### G7: the almost Kähler predicate, and CP^n with J = i· as its inhabitant (HamiltonianVectorField.lean, ProjectiveSpaceFubiniStudySymplectic.lean, 2026-09-09) -/
+
+-- Brick G7 of specs/generator-layer-scoping.md. DifferentialForm.IsAlmostKahler β J: a symplectic
+-- form with a compatible almost complex structure — J² = -1, J-invariance, and taming
+-- β (J v, v) > 0 — whose metric g = β (J ·, ·) is symmetric (metric_comm: J-invariance, J² = -1
+-- and the antisymmetry apply_swap, itself from alternation + bilinearity) and positive definite;
+-- β = g (·, J ·) (apply_eq_metric). On CP^n: fsJ = i· on each tangent space (through the
+-- reducible cast tangentToModel — the tangent space exposes no ℂ-action), fsJ_fsJ, ★
+-- fsForm_smul_I_smul_I (the Fubini–Study form is a (1,1)-form, by fsModelForm_apply), and ★★
+-- fsForm_isAlmostKahler: CP^n WITH THE FUBINI–STUDY FORM AND J = i· IS ALMOST KÄHLER — the taming
+-- is fsSection_smul_I_neg with the sign of the -4 convention absorbed by g = ω (J ·, ·). ★
+-- fderiv_chart_transition_smul_I / fsJ_symmL: the chart transitions are holomorphic
+-- (contDiffOn_uTrans, chart_transition_eq_uTrans identifies them with uTrans 1), so their
+-- derivatives are ℂ-linear and J = i· is the complex structure of the ATLAS, chart-independent.
+-- NOT stated: integrability of J as a vanishing Nijenhuis tensor (what "Kähler" adds to "almost
+-- Kähler"), J as a smooth section of the endomorphism bundle, and analyticity (G12).
+
+/-- info: 'DifferentialForm.apply_neg_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.apply_neg_left
+
+/-- info: 'DifferentialForm.apply_swap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.apply_swap
+
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.metric_comm
+
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_self_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.metric_self_pos
+
+/-- info: 'DifferentialForm.IsAlmostKahler.apply_eq_metric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.apply_eq_metric
+
+/-- info: 'Projectivization.fsJ_fsJ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsJ_fsJ
+
+/-- info: 'Projectivization.fsModelForm_smul_I_smul_I' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_smul_I_smul_I
+
+/-- info: 'Projectivization.fsForm_smul_I_smul_I' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_smul_I_smul_I
+
+/-- info: 'Projectivization.fsForm_isAlmostKahler' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_isAlmostKahler
+
+/-- info: 'Projectivization.fsForm_metric_self_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_metric_self_pos
+
+/-- info: 'Projectivization.chart_transition_eq_uTrans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chart_transition_eq_uTrans
+
+/-- info: 'Projectivization.fderiv_chart_transition_smul_I' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fderiv_chart_transition_smul_I
+
+/-- info: 'Projectivization.fsJ_symmL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsJ_symmL
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

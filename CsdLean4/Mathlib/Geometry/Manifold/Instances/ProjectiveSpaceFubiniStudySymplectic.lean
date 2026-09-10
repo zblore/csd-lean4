@@ -7,6 +7,8 @@ module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyForm
 public import CsdLean4.Mathlib.Geometry.Manifold.SymplecticForm
+public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianVectorField
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
 
 /-!
 # `ℂℙⁿ` with the Fubini–Study form is a symplectic manifold
@@ -33,23 +35,35 @@ public import CsdLean4.Mathlib.Geometry.Manifold.SymplecticForm
   `i • v` in the model;
 * ★★★ `fsForm_isSymplectic` — **`ℂℙⁿ` with the Fubini–Study form is a symplectic manifold**
   (`DifferentialForm.IsSymplectic`: closed by `fsForm_mextDeriv`, non-degenerate by
-  `fsForm_nondegenerate`). Real dimension `2n`, even, as the word requires.
+  `fsForm_nondegenerate`). Real dimension `2n`, even, as the word requires;
+* **G7 (2026-09-09).** `fsJ` (`J = i·` on each tangent space), `fsJ_fsJ` (`J² = -1`), ★
+  `fsForm_smul_I_smul_I` (`ω` is `J`-invariant, a `(1,1)`-form), and ★★ `fsForm_isAlmostKahler` —
+  **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is almost Kähler**
+  (`DifferentialForm.IsAlmostKahler`: symplectic, `J² = -1`, `J`-invariant, `J`-tamed), with the
+  compatible metric `g = ω (J ·, ·)` positive definite (`fsForm_metric_self_pos`); and ★
+  `fderiv_chart_transition_smul_I` / `fsJ_symmL` — **`J` is the complex structure of the atlas**:
+  the chart transitions are holomorphic (`contDiffOn_uTrans`), so their derivatives are
+  `ℂ`-linear and `J = i·` reads as `i·` in every chart.
 
 ## Honest scope
 
-⚠️ **Symplectic, not yet "Kähler manifold".** Compatibility of `fsForm` with the complex
-structure at manifold level (that `fsForm x (v, i • v) < 0` for every `v ≠ 0` is stated here
-in the model, `fsSection_smul_I_neg`, and is the taming half) and with a metric are not
-packaged as a manifold-level Kähler predicate; the pointwise triple remains
-`IsFubiniStudyKahler` on the flat model.
+⚠️ **Almost Kähler, not "Kähler manifold" in the tensor sense.** `fsForm_isAlmostKahler`
+packages symplectic + compatible `J` on the manifold, and `fderiv_chart_transition_smul_I` shows
+the `J` is the holomorphic atlas's; the integrability of `J` as a vanishing Nijenhuis tensor is
+not stated, and `J` is a family, not a smooth section of the endomorphism bundle. The pointwise
+triple `IsFubiniStudyKahler` on the flat model is the origin's case.
 
 ⚠️ **No volume.** Non-degeneracy plus closedness does not produce the top-power identity
 `ωⁿ/n! = μ_FS`; that is step (3), top forms → measures, and is not attempted.
 
-⚠️ **Sign convention.** With `fsChartForm = dd^c log(1+‖z‖²)` the taming value is negative
-(`-4` at the origin); nothing downstream depends on the sign, only on non-vanishing.
+⚠️ **Sign convention.** With `fsChartForm = dd^c log(1+‖z‖²)` the taming value `ω (v, J v)` is
+negative (`-4` at the origin); the almost Kähler predicate absorbs it by the metric convention
+`g = ω (J ·, ·)`, so `ω (J v, v) > 0`. Nothing downstream depends on the sign, only on
+non-vanishing.
 
 References: `Geometry/Manifold/SymplecticForm.lean` (the predicate);
+`Geometry/Manifold/HamiltonianVectorField.lean` (`IsAlmostKahler`, `apply_swap`);
+`Instances/ProjectiveSpaceUnitaryAction.lean` (`contDiffOn_uTrans`, `chartFun_smul_chartInv`);
 `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyForm.lean` (`fsForm`, `fsForm_mextDeriv`);
 `Analysis/InnerProductSpace/KahlerPotential.lean` (`fsChartForm_apply`);
 `Analysis/InnerProductSpace/KahlerForm.lean` (the taming identity, `complexStructure`);
@@ -110,7 +124,7 @@ end Kahler
 
 namespace Projectivization
 
-open Kahler
+open Kahler Matrix.UnitaryGroup DifferentialForm
 
 variable {n : ℕ}
 
@@ -145,5 +159,117 @@ theorem fsForm_nondegenerate (x : ℙ ℂ (Ambient n))
 (`fsForm_mextDeriv`) and non-degenerate at every point (`fsForm_nondegenerate`). -/
 theorem fsForm_isSymplectic (n : ℕ) : (fsForm (n := n)).IsSymplectic :=
   ⟨fsForm_mextDeriv, fsForm_nondegenerate⟩
+
+/-! ### The almost Kähler structure of `ℂℙⁿ`: `J = i·` (G7) -/
+
+/-- Definitional identification of a tangent vector of `ℂℙⁿ` with a model vector (the model
+carries the `ℂ`-action the tangent space does not expose). -/
+abbrev tangentToModel {x : ℙ ℂ (Ambient n)}
+    (v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) : Fin n → ℂ := v
+
+/-- The complex structure of `ℂℙⁿ`: multiplication by `i` on each tangent space, read in the
+chart at the point. -/
+def fsJ (x : ℙ ℂ (Ambient n)) (v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) :
+    TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x :=
+  Complex.I • tangentToModel v
+
+theorem fsJ_fsJ (x : ℙ ℂ (Ambient n)) (v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) :
+    fsJ x (fsJ x v) = -v := by
+  show Complex.I • (Complex.I • tangentToModel v) = -tangentToModel v
+  rw [smul_smul, Complex.I_mul_I, neg_one_smul]
+
+/-- `J`-invariance of the model form: `fsModelForm w (i • u, i • v) = fsModelForm w (u, v)`. -/
+theorem fsModelForm_smul_I_smul_I (w u v : Fin n → ℂ) :
+    fsModelForm w ![Complex.I • u, Complex.I • v] = fsModelForm w ![u, v] := by
+  have hu : toLpCLM (Complex.I • u) = Complex.I • toLpCLM u := by
+    ext k
+    simp
+  have hv : toLpCLM (Complex.I • v) = Complex.I • toLpCLM v := by
+    ext k
+    simp
+  simp only [fsModelForm_apply, hu, hv, inner_smul_left, inner_smul_right, Complex.conj_I,
+    Complex.mul_im, Complex.mul_re, Complex.neg_re, Complex.neg_im, Complex.I_re, Complex.I_im]
+  ring
+
+/-- ★ `J`-invariance of the Fubini–Study form: it is a `(1,1)`-form. -/
+theorem fsForm_smul_I_smul_I (x : ℙ ℂ (Ambient n))
+    (u v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) :
+    fsForm x ![fsJ x u, fsJ x v] = fsForm x ![u, v] := by
+  show fsSection x ![Complex.I • tangentToModel u, Complex.I • tangentToModel v]
+    = fsSection x ![tangentToModel u, tangentToModel v]
+  exact fsModelForm_smul_I_smul_I _ _ _
+
+/-- ★★ **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is almost Kähler**: symplectic
+(`fsForm_isSymplectic`), `J² = -1`, `ω` is `J`-invariant, and `ω (J v, v) > 0` — the taming
+`fsSection_smul_I_neg`, its sign (the `-4` of the potential) absorbed by the metric convention
+`g = ω (J ·, ·)`. -/
+theorem fsForm_isAlmostKahler (n : ℕ) : IsAlmostKahler (fsForm (n := n)) fsJ where
+  isSymplectic := fsForm_isSymplectic n
+  J_J := fsJ_fsJ
+  invariant := fsForm_smul_I_smul_I
+  pos := fun x v hv => by
+    have h : fsSection x ![tangentToModel v, Complex.I • tangentToModel v] < 0 :=
+      fsSection_smul_I_neg x hv
+    have hs : fsSection x ![tangentToModel v, Complex.I • tangentToModel v]
+        = -fsSection x ![Complex.I • tangentToModel v, tangentToModel v] :=
+      apply_swap (fun x => fsForm x) x v (fsJ x v)
+    show 0 < fsSection x ![Complex.I • tangentToModel v, tangentToModel v]
+    linarith
+
+/-- The compatible metric of `ℂℙⁿ` is positive definite: the Fubini–Study metric, up to the
+convention. -/
+theorem fsForm_metric_self_pos (x : ℙ ℂ (Ambient n))
+    {v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x} (hv : v ≠ 0) :
+    0 < (fsForm_isAlmostKahler n).metric x v v :=
+  (fsForm_isAlmostKahler n).metric_self_pos x hv
+
+/-! ### `J` is the complex structure of the atlas -/
+
+/-- The chart transition of `ℂℙⁿ` is the unitary-action chart map for `U = 1`. -/
+theorem chart_transition_eq_uTrans (x₀ y : ℙ ℂ (Ambient n)) :
+    (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) = uTrans 1 (idx x₀) (idx y) := by
+  funext w
+  show chartFun (idx y) (chartInv (idx x₀) w) = _
+  rw [← chartFun_smul_chartInv (1 : Matrix.unitaryGroup (Fin (n + 1)) ℂ), one_smul]
+
+/-- ★ **`J` is the complex structure of the atlas**: the derivative of every chart transition is
+`ℂ`-linear, because the transitions are holomorphic (`contDiffOn_uTrans`). So `J = i·` in one
+chart is `J = i·` in every chart. -/
+theorem fderiv_chart_transition_smul_I (x₀ y : ℙ ℂ (Ambient n)) {w : Fin n → ℂ}
+    (hy : (chartAt (Fin n → ℂ) x₀).symm w ∈ (chartAt (Fin n → ℂ) y).source) (v : Fin n → ℂ) :
+    fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) w (Complex.I • v)
+      = Complex.I • fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) w v := by
+  rw [chart_transition_eq_uTrans]
+  have hmem : w ∈ {w : Fin n → ℂ |
+      toEuclideanLinearEquiv (1 : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (insertOne (idx x₀) w)
+        (idx y) ≠ 0} := by
+    show toEuclideanLinearEquiv (1 : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (insertOne (idx x₀) w)
+      (idx y) ≠ 0
+    rw [toEuclideanLinearEquiv_one, LinearEquiv.refl_apply]
+    exact (mem_chartSource_mk (idx y) _ (insertOne_ne_zero _ _)).1 hy
+  have hd : DifferentiableAt ℂ (uTrans 1 (idx x₀) (idx y)) w :=
+    ((contDiffOn_uTrans 1 (idx x₀) (idx y)).contDiffAt
+      ((isOpen_uDomain 1 (idx x₀) (idx y)).mem_nhds hmem)).differentiableAt (by simp)
+  have hR : HasFDerivAt (uTrans 1 (idx x₀) (idx y))
+      ((fderiv ℂ (uTrans 1 (idx x₀) (idx y)) w).restrictScalars ℝ) w :=
+    hd.hasFDerivAt.restrictScalars ℝ
+  rw [hR.fderiv]
+  simp only [ContinuousLinearMap.coe_restrictScalars', map_smul]
+
+/-- ★ `J` commutes with the tangent trivialisation: in the chart at `x₀`, `J y` is still `i·`
+for every `y` in the chart source. -/
+theorem fsJ_symmL (x₀ y : ℙ ℂ (Ambient n)) (hy : y ∈ (chartAt (Fin n → ℂ) x₀).source)
+    (v : Fin n → ℂ) :
+    fsJ y ((trivializationAt (Fin n → ℂ) (TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ))) x₀).symmL
+        ℝ y v)
+      = (trivializationAt (Fin n → ℂ) (TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ))) x₀).symmL
+          ℝ y (Complex.I • v) := by
+  rw [tangent_symmL_eq_fderiv x₀ y hy]
+  have hy' : (chartAt (Fin n → ℂ) x₀).symm (chartAt (Fin n → ℂ) x₀ y)
+      ∈ (chartAt (Fin n → ℂ) y).source := by
+    rw [(chartAt (Fin n → ℂ) x₀).left_inv hy]
+    exact mem_chart_source _ y
+  unfold fsJ
+  exact (fderiv_chart_transition_smul_I x₀ y hy' v).symm
 
 end Projectivization
