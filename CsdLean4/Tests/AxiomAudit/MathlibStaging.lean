@@ -4543,6 +4543,54 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.torusHamiltonian_torusUnitary_smul
 
+-- G19 (2026-09-10): the Hamiltonian fields are analytic. G3's chain re-run at omega on an
+-- analytic manifold: a C^omega section has C^omega local representatives
+-- (contDiffAt_omega_localRep), the local Hamiltonian vector is C^omega (inversion of curryLeft,
+-- contDiffAt_map_inverse, is order-generic), so the Hamiltonian vector field of a C^omega energy
+-- for a C^omega non-degenerate 2-form is a C^omega section (contMDiff_omega_hamiltonianVectorField;
+-- ofOmega reads the omega form as the infinity form G3's constructions are typed on). On CP^n both
+-- Hamiltonians are C^omega (the inner-product calculus is order-generic), so the Schrodinger and
+-- torus fields are analytic vector fields, for the analytic form fsFormAnalytic of G12.
+/-- info: 'DifferentialForm.contDiffAt_omega_localRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contDiffAt_omega_localRep
+
+/-- info: 'DifferentialForm.ofOmega' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.ofOmega
+
+/-- info: 'DifferentialForm.ofOmega_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.ofOmega_apply
+
+/-- info: 'DifferentialForm.contDiffAt_omega_localHamiltonianVector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contDiffAt_omega_localHamiltonianVector
+
+/-- info: 'DifferentialForm.contMDiff_omega_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contMDiff_omega_hamiltonianVectorField
+
+/-- info: 'Projectivization.contDiff_omega_schrodingerChartHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_omega_schrodingerChartHam
+
+/-- info: 'Projectivization.contMDiff_omega_schrodingerHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_omega_schrodingerHamiltonian
+
+/-- info: 'Projectivization.contMDiff_omega_torusHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_omega_torusHamiltonian
+
+/-- info: 'Projectivization.contMDiff_omega_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_omega_schrodingerField
+
+/-- info: 'Projectivization.contMDiff_omega_torusField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_omega_torusField
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

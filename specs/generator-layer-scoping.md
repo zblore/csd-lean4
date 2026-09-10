@@ -127,7 +127,7 @@ section of the endomorphism bundle. The **M** held. One shelf fact: a type ascri
 definitionally equal term is *erased* — `(v : Fin n → ℂ)` for `v : TangentSpace 𝓘 x` leaves `v`
 tangent-typed, so `Complex.I • v` finds no `ℂ`-action; the reducible cast `tangentToModel` (the
 `toFlat` idiom) is what actually changes the elaborated type.
-**The step-(4) ladder is complete except G5, which is queued at XL in §9 with the rest of the residue; G12, G14a, G15 and G16 were built 2026-09-10.**
+**The step-(4) ladder is complete except G5, which is queued at XL in §9 with the rest of the residue; G12, G14a, G15, G16 and G19 were built 2026-09-10.**
 Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
@@ -382,7 +382,7 @@ recorded have since been filled upstream (`VectorField.mlieBracket`, and uniform
 | **G17** | **The Riemannian volume of the Fubini–Study metric is `fsVolume` up to the constant** (the `TERMS.md` Fubini–Study line "normalised Riemannian volume"). Needs the Riemannian volume measure of a metric on a manifold — absent at the pin (`VectorBundle/Riemannian.lean` has Riemannian *bundles*, no volume) — built as `topFormMeasure` of the volume form `√det g`; then `vol_g = ω^{∧n}/n!` is the algebraic Kähler identity from `g = ω (J ·, ·)` (G14a). | **L** | Low–medium | Low | Fills a Mathlib gap (Riemannian volume); nothing in the corpus consumes it. |
 | **G18** | **Darboux's theorem** (the `TERMS.md` symplectic line): every symplectic form is locally the standard one. Moser's trick: needs G5(a) flows, G5(b) Cartan, and a Poincaré lemma on a ball. | **XL** | Low | Low | Nothing in the corpus consumes it; it is the classical theorem a symplectic library owes. |
 | **W1** ✅ built 2026-09-10 | **Wire the physics to the manifold layer**: the `ℂℙⁿ` instances of `KahlerOnticSetup` (`trivialKahlerOnticSetup`, `unitaryFlowSetup`, `manyToOneSetup`) get theorems that their `liouvilleMeasure` is `(4π)⁻ⁿ • fsVolume n` (the symplectic volume of `fsForm`, `fsVolume_eq_smul_fubiniStudyMeasure`), that `flow_preserves_volume` is `fsVolume_map_smul`, and that the sector carries `fsForm_isKahler`; and the four stale ledgers are corrected — link L1 of `specs/connectivity-manifest.md`, the `kahler_pointwise` docstring, and the `TERMS.md` Fubini–Study and symplectic entries, all of which still call the manifold residual open. The two projective-space types are definitionally equal (`ℙ ℂ (Ambient n)` is `CPN (n + 1)`). | **M** | High | **High** | This is what turns "we start from an FS, Kähler, Liouville space" into "the sector is the standard object, proved". Posit 3 is untouched by it. |
-| **G19** | Analyticity of the Hamiltonian fields: `torusField`, `schrodingerField` are `ω` sections (the G3 route at `ω`; `hamiltonianVectorFieldSection` is `C^ω` for a `C^ω` form and energy). | **S–M** | High | Low | The G12 write-up left it unwritten. |
+| **G19** ✅ built 2026-09-10 | Analyticity of the Hamiltonian fields: `torusField`, `schrodingerField` are `ω` sections (the G3 route at `ω`; `hamiltonianVectorFieldSection` is `C^ω` for a `C^ω` form and energy). | **S–M** | High | Low | The G12 write-up left it unwritten. |
 
 ### W1, built (2026-09-10)
 
@@ -442,6 +442,32 @@ cross-module `torusField` at the derivative — `isMIntegralCurve_torusField_eq`
 of functions (packaging `J` as linear maps inside `IsKahler` would change G14a's structure for no
 consumer). G16 conserves the torus Hamiltonian, not each `μₖ` separately along the flow of a general `θ`
 (true, by the diagonal action; not written). Neither touches G5.
+
+### G19, built (2026-09-10)
+
+**What.** G3's chain at `ω`. `ExteriorDerivative.lean`: ★ `contDiffAt_omega_localRep` (a `C^ω` section has
+`C^ω` local representatives; the `∞` proof with `contMDiffOn_chart_symm (n := ω)`, on an analytic
+manifold). `HamiltonianVectorField.lean`, new section `SmoothAnalytic` with `[IsManifold 𝓘(ℝ, E) ω M]`:
+`ofOmega` (a `C^ω` 2-form read as the `C^∞` form G2/G3's constructions are typed on — `⟨α, α.contMDiff_toFun.of_le
+le_top⟩`, so `ofOmega α x = α x` is `rfl`), ★★ `contDiffAt_omega_localHamiltonianVector` (the `∞` proof at `ω`:
+`IsBoundedLinearMap.contDiff`, `contDiffAt_map_inverse`, `ContDiffAt.clm_apply` and `fderiv_right` are all
+generic in the order; `ω + 1 ≤ ω` is `le_top`), ★★★ `contMDiff_omega_hamiltonianVectorField` (**the
+Hamiltonian vector field of a `C^ω` energy for a `C^ω` non-degenerate 2-form is a `C^ω` section**), reusing
+G3's pointwise identity `trivializationAt_hamiltonianVectorField_snd` on `ofOmega α` with `hH.of_le le_top`.
+On `ℂℙⁿ` (`ProjectiveSpaceSchrodingerFlow.lean`): `contDiff_omega_schrodingerChartHam` (the inner-product
+calculus is order-generic), ★ `contMDiff_omega_schrodingerHamiltonian`, ★ `contMDiff_omega_torusHamiltonian`,
+★★ `contMDiff_omega_schrodingerField`, ★★ `contMDiff_omega_torusField` — for the analytic form
+`fsFormAnalytic` of G12, whose family is `fsForm`'s definitionally. **S–M** as priced; took S. 10 pins.
+
+**Two shelf facts.** `omit [IsManifold 𝓘(ℝ, E) ∞ M] in` is refused ("cannot omit referenced section
+variable") on anything mentioning `localRep` or `localHamiltonianVector`, because those defs carry the `∞`
+instance; so the `ω` section keeps both instances and omits only on the `rfl` lemma. And the `∞`-typed API is
+reused rather than duplicated: `ofOmega` is the one-line bridge, and `exact` crosses `ofOmega α x ≡ α x` and
+`fsFormAnalytic x ≡ fsForm x` (both exposed defs) without help.
+
+**What it does not do.** No `C^ω` twin of `hamiltonianVectorFieldSection` (no consumer); `IsSymplectic` stays
+on the `∞` form, so the `ℂℙⁿ` statements take `(fsForm_isSymplectic n).nondegenerate` directly. The residue of
+§9 is now G5, G14b, G17, G18.
 
 ## References
 

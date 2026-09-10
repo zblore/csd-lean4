@@ -747,6 +747,15 @@ isSymplectic"
 #     torusHamiltonian (declared above): it is conserved along every integral curve of torusField
 #     (G4's energy conservation on G6's field) and hence by the torus flow, which
 #     isMIntegralCurve_torusUnitary_smul shows IS that integral curve. CP^n, EVEN.
+#   contDiffAt_omega_localHamiltonianVector / contMDiff_omega_hamiltonianVectorField — (2026-09-10,
+#     HamiltonianVectorField.lean, G19) the G3 pair at ω: the local Hamiltonian vector of a C^ω
+#     form and energy is C^ω, and the Hamiltonian vector field is a C^ω section of the tangent
+#     bundle on an analytic manifold. Words inherited from hamiltonianVectorField; the conclusion
+#     is a smoothness order. Generic 2n-manifold over a real model, parity as G1's.
+#   contMDiff_omega_schrodingerHamiltonian / contMDiff_omega_torusHamiltonian — (2026-09-10,
+#     Instances/ProjectiveSpaceSchrodingerFlow.lean, G19) inherit the word from
+#     schrodingerHamiltonian / torusHamiltonian: both are real-analytic on CP^n (the G3 proofs at
+#     ω). CP^n, EVEN.
 #   IsHamiltonianVectorField — the guard reads dotted names up to the dot; the theorem is
 #     IsHamiltonianVectorField.unique_of_isSymplectic (2026-09-08, Mathlib/Geometry/Manifold/
 #     HamiltonianVectorField.lean, brick G1). It PROVES that two vector fields satisfying the
@@ -838,6 +847,10 @@ manyToOneSetup_map_pi_liouvilleMeasure_eq_fsVolumeNormalized
 manyToOneSetup_isKahler_liouville
 torusHamiltonian_eq_of_isMIntegralCurve_torusField
 torusHamiltonian_torusUnitary_smul
+contDiffAt_omega_localHamiltonianVector
+contMDiff_omega_hamiltonianVectorField
+contMDiff_omega_schrodingerHamiltonian
+contMDiff_omega_torusHamiltonian
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH

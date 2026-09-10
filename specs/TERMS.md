@@ -178,6 +178,11 @@ alarming and is not.
   curves of `torusField θ` — ★★★ `Projectivization.isMIntegralCurve_torusUnitary_smul`, unique
   through `p` (`eq_torusUnitary_smul_of_isMIntegralCurve`) — and `2 ∑ θₖ μₖ` is conserved along
   them and by the flow (`torusHamiltonian_torusUnitary_smul`).
+  **Also backed (2026-09-10, G19):** analyticity — ★★★
+  `DifferentialForm.contMDiff_omega_hamiltonianVectorField` (the Hamiltonian vector field of a `C^ω`
+  energy for a `C^ω` non-degenerate 2-form is a `C^ω` section, on an analytic manifold: G3 at `ω`)
+  and, on `ℂℙⁿ`, `contMDiff_omega_schrodingerField` / `contMDiff_omega_torusField` (both fields are
+  analytic vector fields, for the analytic form `fsFormAnalytic` of G12).
   **NOT established:** a global flow of a general Hamiltonian vector field (G5, queued at XL in
   `specs/generator-layer-scoping.md` §9), and the arena statement `R-016`.
   Marker: `TERM-SCOPE(Hamiltonian)`.

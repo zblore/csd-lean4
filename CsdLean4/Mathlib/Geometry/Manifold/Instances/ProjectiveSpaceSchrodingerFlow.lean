@@ -19,7 +19,7 @@ the *restricted* senses of these words; `specs/TERMS.md` records what is backed 
 `CSD.LF4.schrodingerUnitary` (the unitary `exp(-itH)`) and its derivative
 `CSD.LF4.schrodingerUnitary_hasDerivAt` as the flow whose generator it identifies.
 
-Brick **G13** of `specs/generator-layer-scoping.md` (with the G2, G3, G4 and G16 corollaries): the `U(n+1)` moment map. For a Hermitian
+Brick **G13** of `specs/generator-layer-scoping.md` (with the G2, G3, G4, G16 and G19 corollaries): the `U(n+1)` moment map. For a Hermitian
 `H`, the unitary flow `p ↦ exp(-itH) • p` on `ℂℙⁿ` — the corpus's projected Schrödinger flow — is
 Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, the expectation value
 `⟪z, Hz⟫ / ‖z‖²` up to the form's convention. Brick G6 (the torus) is the diagonal case.
@@ -62,7 +62,12 @@ Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, th
   `isMIntegralCurve_torusField_eq`, ★★ `eq_torusUnitary_smul_of_isMIntegralCurve` (every integral
   curve through `p` at `0` IS the orbit); ★★ `torusHamiltonian_eq_of_isMIntegralCurve_torusField`
   and ★★ `torusHamiltonian_torusUnitary_smul` (**`2 ∑ θₖ μₖ` is conserved** along the curves and by
-  the flow).
+  the flow);
+* **G19 (2026-09-10).** `contDiff_omega_schrodingerChartHam`, ★ `contMDiff_omega_schrodingerHamiltonian`,
+  ★ `contMDiff_omega_torusHamiltonian` (both Hamiltonians are real-analytic on `ℂℙⁿ`), and ★★
+  `contMDiff_omega_schrodingerField`, ★★ `contMDiff_omega_torusField` — **both fields are analytic
+  vector fields**, `C^ω` sections of the tangent bundle: the Hamiltonian vector fields of `C^ω`
+  energies for the `C^ω` form `fsFormAnalytic` (G12), by G19's `contMDiff_omega_hamiltonianVectorField`.
 
 ## Honest scope
 
@@ -741,5 +746,75 @@ theorem torusHamiltonian_torusUnitary_smul (θ : Fin (n + 1) → ℝ) (p : ℙ �
   have h := torusHamiltonian_eq_of_isMIntegralCurve_torusField θ
     (isMIntegralCurve_torusUnitary_smul θ p) t 0
   rwa [zero_smul, torusUnitary_zero, one_smul] at h
+
+/-! ### The Hamiltonians and both fields are analytic (G19) -/
+
+/-- The chart Hamiltonian is real-analytic: the proof of `contDiff_schrodingerChartHam` at `ω`. -/
+theorem contDiff_omega_schrodingerChartHam (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+    (i : Fin (n + 1)) : ContDiff ℝ ω (schrodingerChartHam H i) := by
+  have hv : ContDiff ℝ ω (insertOne (n := n) i) := by
+    have h : insertOne (n := n) i = fun w => insertOne i 0 + insertZeroCLM i w :=
+      funext (insertOne_eq_add i)
+    rw [h]
+    exact contDiff_const.add (insertZeroCLM i).contDiff
+  have hT : ContDiff ℝ ω (fun w => Matrix.toEuclideanCLM (𝕜 := ℂ) H (insertOne i w)) :=
+    ((Matrix.toEuclideanCLM (𝕜 := ℂ) H).restrictScalars ℝ).contDiff.comp hv
+  have hN : ContDiff ℝ ω
+      (fun w => (inner ℂ (insertOne i w) (Matrix.toEuclideanCLM (𝕜 := ℂ) H (insertOne i w))).re) :=
+    Complex.reCLM.contDiff.comp (hv.inner (𝕜 := ℂ) hT)
+  have hD : ContDiff ℝ ω (fun w => ‖insertOne i w‖ ^ 2) := by
+    have e : (fun w => ‖insertOne i w‖ ^ 2)
+        = fun w => (inner ℂ (insertOne i w) (insertOne i w)).re :=
+      funext fun w => by simpa using (inner_self_eq_norm_sq (𝕜 := ℂ) (insertOne i w)).symm
+    rw [e]
+    exact Complex.reCLM.contDiff.comp (hv.inner (𝕜 := ℂ) hv)
+  have hinv : ContDiff ℝ ω (fun w => (‖insertOne i w‖ ^ 2)⁻¹) :=
+    hD.inv fun w => (norm_sq_insertOne_pos i w).ne'
+  exact contDiff_const.mul (hN.mul hinv)
+
+/-- ★ The Hamiltonian of the Schrödinger flow is real-analytic on `ℂℙⁿ`. -/
+theorem contMDiff_omega_schrodingerHamiltonian (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :
+    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ ℝ) ω
+      (schrodingerHamiltonian (n := n) H) := by
+  intro x
+  rw [contMDiffAt_iff]
+  refine ⟨(continuous_schrodingerHamiltonian H).continuousAt, ?_⟩
+  have hw : (extChartAt (modelWithCornersSelf ℝ ℝ) (schrodingerHamiltonian H x)
+      ∘ schrodingerHamiltonian H ∘ (extChartAt (modelWithCornersSelf ℝ (Fin n → ℂ)) x).symm)
+      = schrodingerChartHam H (idx x) := by
+    funext w
+    simp only [Function.comp, extChartAt_model_space_eq_id, PartialEquiv.refl_coe, id,
+      extChartAt_coe_symm, modelWithCornersSelf_coe_symm]
+    exact schrodingerHamiltonian_chartInv H (idx x) w
+  rw [hw, modelWithCornersSelf_coe, Set.range_id, contDiffWithinAt_univ]
+  exact (contDiff_omega_schrodingerChartHam H (idx x)).contDiffAt
+
+/-- ★ The Hamiltonian of the torus action is real-analytic on `ℂℙⁿ`. -/
+theorem contMDiff_omega_torusHamiltonian (θ : Fin (n + 1) → ℝ) :
+    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ ℝ) ω
+      (torusHamiltonian (n := n) θ) := by
+  rw [← schrodingerHamiltonian_neg_diagonal]
+  exact contMDiff_omega_schrodingerHamiltonian _
+
+/-- ★★ **The Schrödinger vector field on `ℂℙⁿ` is an analytic vector field**: the Hamiltonian
+vector field of a `C^ω` energy for the `C^ω` form `fsFormAnalytic` (G12), by
+`contMDiff_omega_hamiltonianVectorField` (G19). -/
+theorem contMDiff_omega_schrodingerField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) :
+    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
+      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod (modelWithCornersSelf ℝ (Fin n → ℂ))) ω
+      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (schrodingerField H x)) := by
+  rw [schrodingerField_eq_hamiltonianVectorField hH]
+  exact contMDiff_omega_hamiltonianVectorField fsFormAnalytic _ (fsForm_isSymplectic n).nondegenerate
+    (contMDiff_omega_schrodingerHamiltonian H)
+
+/-- ★★ **The torus vector field on `ℂℙⁿ` is an analytic vector field.** -/
+theorem contMDiff_omega_torusField (θ : Fin (n + 1) → ℝ) :
+    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
+      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod (modelWithCornersSelf ℝ (Fin n → ℂ))) ω
+      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (torusField θ x)) := by
+  rw [torusField_eq_hamiltonianVectorField]
+  exact contMDiff_omega_hamiltonianVectorField fsFormAnalytic _ (fsForm_isSymplectic n).nondegenerate
+    (contMDiff_omega_torusHamiltonian θ)
 
 end Projectivization

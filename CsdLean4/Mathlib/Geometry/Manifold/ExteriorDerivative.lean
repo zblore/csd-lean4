@@ -449,3 +449,33 @@ theorem toFlat_mextDeriv_zeroForm {f : M → G}
   toFlat_mextDeriv_zeroFormFamily ((hf x).mdifferentiableAt (by simp))
 
 end DifferentialForm
+
+/-! ### Analytic sections have analytic local representatives (G19) -/
+
+namespace DifferentialForm
+
+/-- ★ A `C^ω` section has `C^ω` local representatives (on the chart's target): the proof of
+`contDiffAt_localRep` at `ω`, on an analytic manifold. -/
+theorem contDiffAt_omega_localRep [IsManifold (modelWithCornersSelf ℝ E) ω M]
+    (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
+    (hs : ContMDiff (modelWithCornersSelf ℝ E)
+      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] G))) ω
+      (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] G) x (s x)))
+    (x₀ : M) {w : E} (hw : w ∈ (chartAt E x₀).target) :
+    ContDiffAt ℝ ω (localRep s x₀) w := by
+  rw [← contMDiffAt_iff_contDiffAt]
+  have hy : (chartAt E x₀).symm w ∈ (chartAt E x₀).source := (chartAt E x₀).map_target hw
+  have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] G)) ω
+      (fun x => (trivializationAt (E [⋀^ι]→L[ℝ] G)
+        (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
+        x₀ ⟨x, s x⟩).2) ((chartAt E x₀).symm w) :=
+    ((trivializationAt (E [⋀^ι]→L[ℝ] G)
+      (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
+      x₀).contMDiffAt_section_iff ⟨hy, Set.mem_univ _⟩).mp (hs _)
+  have h2 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ω
+      (chartAt E x₀).symm w :=
+    (contMDiffOn_chart_symm (n := ω) (x := x₀)).contMDiffAt
+      ((chartAt E x₀).open_target.mem_nhds hw)
+  exact h1.comp w h2
+
+end DifferentialForm

@@ -21,7 +21,7 @@ public import Mathlib.Geometry.Manifold.VectorBundle.Hom
 **Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 
-Bricks **G1**, **G2**, **G3**, **G4**, **G7**, **G8** (in part), **G11**, **G14a** and **G15** of
+Bricks **G1**, **G2**, **G3**, **G4**, **G7**, **G8** (in part), **G11**, **G14a**, **G15** and **G19** of
 `specs/generator-layer-scoping.md`: the defining equation of a Hamiltonian vector field,
 `ι_X ω = dH`, at manifold level, the pointwise facts that follow from it by alternation and
 linearity alone, its existence and uniqueness from non-degeneracy, its smoothness, its integral
@@ -73,6 +73,10 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
   ★ `metric_comm`, ★ `metric_self_pos`, `metric_J_J` (Hermitian), and `apply_eq_metric`
   (`β = g (·, J ·)`). Its inhabitant on `ℂℙⁿ` is `fsForm_isAlmostKahler`
   (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`);
+* **G19, analytic.** `ofOmega` (a `C^ω` 2-form read as `C^∞`), ★★
+  `contDiffAt_omega_localHamiltonianVector` and ★★★ `contMDiff_omega_hamiltonianVectorField` — **the
+  Hamiltonian vector field of a `C^ω` energy for a `C^ω` non-degenerate 2-form is a `C^ω` section**:
+  G3 at `ω`, on an analytic manifold (`contDiffAt_omega_localRep` for the local representative);
 * **G14a, Kähler.** `IsKahler β J J₀` — almost Kähler, and `J` is the model's complex structure
   `J₀` through the tangent trivialisation of every chart (`J_symmL`), i.e. integrable in the atlas
   sense; ★ `IsKahler.apply_eq` (`J y = J₀` in `y`'s chart), ★ `IsKahler.fderiv_chart_transition_comm`
@@ -111,7 +115,7 @@ Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
-References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G7, G8, G11, G14a, G15); `Geometry/Manifold/SymplecticForm.lean`
+References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G7, G8, G11, G14a, G15, G19); `Geometry/Manifold/SymplecticForm.lean`
 (`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `zeroFormFamily`,
 `toFlat_mextDeriv_zeroFormFamily`, `mextDeriv_mextDeriv`);
 `Analysis/InnerProductSpace/HamiltonianVectorField.lean` (the linear duality this lifts);
@@ -782,6 +786,86 @@ theorem IsSymplectic.contMDiff_hamiltonianVectorField
   DifferentialForm.contMDiff_hamiltonianVectorField β H hβ.nondegenerate hH
 
 end Smooth
+
+section SmoothAnalytic
+
+variable [FiniteDimensional ℝ E] [IsManifold (modelWithCornersSelf ℝ E) ω M]
+
+/-- A `C^ω` 2-form read as a `C^∞` one — the same section — so that the `∞`-typed constructions of
+G2/G3 (`localHamiltonianVector`, `trivializationAt_hamiltonianVectorField_snd`) apply to it. -/
+def ofOmega (α : DifferentialForm (modelWithCornersSelf ℝ E) M ω (Fin 2) ℝ) :
+    DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ :=
+  ⟨α, α.contMDiff_toFun.of_le le_top⟩
+
+variable (α : DifferentialForm (modelWithCornersSelf ℝ E) M ω (Fin 2) ℝ) (H : M → ℝ)
+
+omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] [FiniteDimensional ℝ E] in
+@[simp] theorem ofOmega_apply (x : M) : ofOmega α x = α x := rfl
+
+/-- ★★ The local Hamiltonian vector of a `C^ω` form and a `C^ω` energy is `C^ω`: the proof of
+`contDiffAt_localHamiltonianVector` at `ω` — `contDiffAt_map_inverse`, `IsBoundedLinearMap.contDiff`
+and `ContDiffAt.fderiv_right` are generic in the order, and the local representative is `C^ω` by
+`contDiffAt_omega_localRep`. -/
+theorem contDiffAt_omega_localHamiltonianVector
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ω H) (x₀ : M) :
+    ContDiffAt ℝ ω (localHamiltonianVector (ofOmega α) H x₀) (chartAt E x₀ x₀) := by
+  have hw₀ : chartAt E x₀ x₀ ∈ (chartAt E x₀).target := mem_chart_target E x₀
+  have hω := localRep_nondegenerate (ofOmega α) hnd x₀ hw₀
+  have hΦ : ContDiffAt ℝ ω
+      (fun w => ContinuousAlternatingMap.curryLeft (localRep (fun x => ofOmega α x) x₀ w))
+      (chartAt E x₀ x₀) :=
+    (IsBoundedLinearMap.contDiff (𝕜 := ℝ) (n := ω)
+      (f := fun ξ : E [⋀^Fin 2]→L[ℝ] ℝ => ContinuousAlternatingMap.curryLeft ξ)
+      ⟨⟨fun ξ ξ' => ContinuousAlternatingMap.curryLeft_add ξ ξ',
+        fun c ξ => ContinuousAlternatingMap.curryLeft_smul c ξ⟩,
+        1, one_pos, fun ξ => le_of_eq
+          ((ContinuousAlternatingMap.norm_curryLeft ξ).trans (one_mul _).symm)⟩).contDiffAt.comp _
+      (contDiffAt_omega_localRep (fun x => α x) α.contMDiff_toFun x₀ hw₀)
+  have hinv : ContDiffAt ℝ ω
+      (fun w => ContinuousLinearMap.inverse
+        (ContinuousAlternatingMap.curryLeft (localRep (fun x => ofOmega α x) x₀ w)))
+      (chartAt E x₀ x₀) := by
+    have : CompleteSpace E := FiniteDimensional.complete ℝ E
+    have h := contDiffAt_map_inverse (𝕜 := ℝ) (n := ω) (flatCLE _ hω)
+    rw [coe_flatCLE] at h
+    exact h.comp (chartAt E x₀ x₀) hΦ
+  have hHloc : ContDiffAt ℝ ω (H ∘ (chartAt E x₀).symm) (chartAt E x₀ x₀) := by
+    rw [← contMDiffAt_iff_contDiffAt]
+    have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ω
+        (chartAt E x₀).symm (chartAt E x₀ x₀) :=
+      (contMDiffOn_chart_symm (n := ω) (x := x₀)).contMDiffAt
+        ((chartAt E x₀).open_target.mem_nhds hw₀)
+    exact (hH _).comp _ h1
+  have hL : ContDiffAt ℝ ω
+      (fun w => ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ) (0 : Fin 1)
+        (fderiv ℝ (H ∘ (chartAt E x₀).symm) w)) (chartAt E x₀ x₀) :=
+    (ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ)
+      (0 : Fin 1)).contDiff.contDiffAt.comp _ (hHloc.fderiv_right le_top)
+  exact hinv.clm_apply hL
+
+/-- ★★★ **The Hamiltonian vector field of a `C^ω` energy for a `C^ω` non-degenerate 2-form is a
+`C^ω` section of the tangent bundle** (G19): `contMDiff_hamiltonianVectorField` at `ω`, on an
+analytic manifold. -/
+theorem contMDiff_omega_hamiltonianVectorField
+    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ω H) :
+    ContMDiff (modelWithCornersSelf ℝ E)
+      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ E)) ω
+      (fun x : M => TotalSpace.mk' E x (hamiltonianVectorField (fun x => α x) hnd H x)) := by
+  intro x₀
+  rw [contMDiffAt_section]
+  have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ω
+      (fun y => localHamiltonianVector (ofOmega α) H x₀ (chartAt E x₀ y)) x₀ :=
+    (contDiffAt_omega_localHamiltonianVector α H hnd hH x₀).contMDiffAt.comp x₀
+      (contMDiffAt_extChartAt (n := ω) (I := modelWithCornersSelf ℝ E) (x := x₀))
+  refine h1.congr_of_eventuallyEq ?_
+  filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
+  exact trivializationAt_hamiltonianVectorField_snd (ofOmega α) H hnd (hH.of_le le_top) x₀ hy
+
+end SmoothAnalytic
 
 /-! ### Integral curves: existence, uniqueness, and energy conservation (G4) -/
 
