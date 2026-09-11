@@ -1672,6 +1672,17 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.ChannelCapacity.dephasing_classical_vs_quantum
 
+-- W8/W10 (2026-09-11): the two-element Holevo quantity is the general one and is non-negative
+-- (concavity, Klein's full-support condition on the average) -- the bound the header could not
+-- assert before.
+/-- info: 'CSD.Empirical.CSDBridge.ChannelCapacity.holevoChi2_eq_holevoChi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ChannelCapacity.holevoChi2_eq_holevoChi
+
+/-- info: 'CSD.Empirical.CSDBridge.ChannelCapacity.holevoChi2_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.ChannelCapacity.holevoChi2_nonneg
+
 -- EraserDynamics (2026-08-03, Empirical/CSD/EraserDynamics.lean; dynamical no-signalling
 -- brick 3b — the eraser PROCESS). The two eraser arms are the corpus's local Lüders maps on
 -- the Bell path–marker state. MARK (computational marker): localProjB_bellE — the post-state

@@ -120,6 +120,30 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'QuantumInfo.holevoChi_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.holevoChi_nonneg
 
+-- HolevoBound (2026-09-11, W10): mixtures of density matrices are density matrices; the Holevo
+-- bound chi <= S(average) <= log dim (no support hypothesis); the single-letter Holevo range of a
+-- channel and its log-dim bound.
+/-- info: 'QuantumInfo.isHermitian_finset_sum_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.isHermitian_finset_sum_smul
+
+/-- info: 'QuantumInfo.posSemidef_finset_sum_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.posSemidef_finset_sum_smul
+
+/-- info: 'QuantumInfo.trace_finset_sum_smul_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.trace_finset_sum_smul_eq_one
+
+/-- info: 'QuantumInfo.holevoChi_le_vonNeumannEntropy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.holevoChi_le_vonNeumannEntropy
+
+/-- info: 'QuantumInfo.holevoChi_le_log_card' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.holevoChi_le_log_card
+
+/-- info: 'QuantumInfo.holevoRange' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.holevoRange
+
+/-- info: 'QuantumInfo.holevoRange_le_log_card' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.holevoRange_le_log_card
+
 /-- info: 'QuantumInfo.Channel.traceOutChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.Channel.traceOutChannel_apply
 

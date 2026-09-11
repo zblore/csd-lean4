@@ -41,6 +41,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Helstrom
 public import CsdLean4.Mathlib.QuantumInfo.Entropy
 public import CsdLean4.Mathlib.QuantumInfo.PureState
 public import CsdLean4.Mathlib.QuantumInfo.Concavity
+public import CsdLean4.Mathlib.QuantumInfo.HolevoBound
 public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
 public import CsdLean4.Mathlib.QuantumInfo.Fidelity
@@ -257,6 +258,7 @@ public import CsdLean4.LF6.GHZLocalFlow
 public import CsdLean4.LF6.Decoherence
 public import CsdLean4.LF6.DecoherenceChannel
 public import CsdLean4.LF6.MeasurementFlowChannel
+public import CsdLean4.LF6.DeisolationCapacity
 public import CsdLean4.LF6.MaxEntangledDeisolationFlow
 public import CsdLean4.LF6.PartialSchmidtCorrelation
 public import CsdLean4.LF6.GisinTheorem

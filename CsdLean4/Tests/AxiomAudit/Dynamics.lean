@@ -593,6 +593,25 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.measurementFlow_traceRight_barycenter_unitSection
 
+-- W10 (2026-09-11), LF6/DeisolationCapacity.lean: the single-letter Holevo capacity of the
+-- de-isolation channel is one classical bit -- IsGreatest (holevoRange (deisolationChannel 2))
+-- (log 2): the Holevo bound caps every ensemble, the classical bit ensemble attains it.
+/-- info: 'CSD.LF6.deisolationChannel_apply_eq_decohereReducedN' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.deisolationChannel_apply_eq_decohereReducedN
+
+/-- info: 'CSD.LF6.deisolationChannel_apply_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.deisolationChannel_apply_single
+
+/-- info: 'CSD.LF6.holevoChi_classicalBit_deisolation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.holevoChi_classicalBit_deisolation
+
+/-- info: 'CSD.LF6.deisolationChannel_holevoCapacity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.deisolationChannel_holevoCapacity
+
 -- LF6-B.2 (Decoherence, 2026-06-29): the QUANTITATIVE purity-drop / irreversibility witness.
 -- The reduced state is a genuine density operator (decohereReduced_trace, Tr = ‖ψ‖², via
 -- partialTraceRight_trace + deisolation_conservative Vᴴ V = 1); its purity Tr(ρ_red²) =

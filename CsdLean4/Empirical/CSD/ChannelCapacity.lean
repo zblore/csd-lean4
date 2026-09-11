@@ -8,6 +8,8 @@ module
 public import CsdLean4.Empirical.CSD.Einselection
 public import CsdLean4.Mathlib.QuantumInfo.Entropy
 
+public import CsdLean4.Mathlib.QuantumInfo.Concavity
+
 /-!
 # Empirical/CSD: channel capacities of the de-isolation / dephasing channel (Build 15e)
 
@@ -28,11 +30,14 @@ equal-weight two-element ensemble `{(½,ρ0),(½,ρ1)}`. This is the **single-le
 single-shot** Holevo quantity, NOT the regularized classical capacity (a limit over
 many channel uses with additivity, which is not formalised here).
 
-**Honest scope on the general bound.** `holevoChi2 ≥ 0` in general is concavity of the
-von Neumann entropy `S(∑pᵢρᵢ) ≥ ∑pᵢS(ρᵢ)`. Entropy concavity is NOT in the K1 API
-(`Subadditivity.lean` proves `S(ρAB) ≤ S(ρA)+S(ρB)`, a different statement; the SSA
-fork is open). So no general `holevo_nonneg` is asserted here; instead the headline
-value `χ = log 2 > 0` is obtained by DIRECT computation on the concrete channel.
+**The general bound.** `holevoChi2 ≥ 0` in general is concavity of the von Neumann entropy
+`S(∑pᵢρᵢ) ≥ ∑pᵢS(ρᵢ)`, which is a theorem since 2026-09-11 (W8,
+`Mathlib/QuantumInfo/Concavity.lean`, `vonNeumannEntropy_mixture_ge`, under Klein's full-support
+condition on the average); `holevoChi2_nonneg` at the end of this file is that theorem
+specialised, via `holevoChi2_eq_holevoChi`. The headline value `χ = log 2 > 0` below is
+still obtained by DIRECT computation on the concrete channel, and
+`LF6/DeisolationCapacity.lean` promotes it to the single-letter Holevo capacity of the genuine
+de-isolation channel (`deisolationChannel_holevoCapacity`).
 
 ## Part B: the classical-yes / quantum-no contrast (direct computation)
 
@@ -270,6 +275,43 @@ theorem dephasing_classical_vs_quantum :
         classical_avg_isHermitian = Real.log 2 :=
   ⟨fun i => dephasing_fixes_basis_state i, dephasing_plus_eq_half_one,
    plus_entropy_zero, dephasing_plus_output_entropy, holevo_classical_eq_log_two⟩
+
+/-! ### The two-element Holevo quantity is the general one, and is non-negative (W8) -/
+
+open scoped ComplexOrder
+
+
+/-- `holevoChi2` is the general `holevoChi` of the equal-weight `Fin 2` ensemble. -/
+theorem holevoChi2_eq_holevoChi {N : ℕ} {ρ0 ρ1 : Matrix (Fin N) (Fin N) ℂ}
+    (h0 : ρ0.IsHermitian) (h1 : ρ1.IsHermitian)
+    (havg : ((↑((1 : ℝ) / 2) : ℂ) • ρ0 + (↑((1 : ℝ) / 2) : ℂ) • ρ1).IsHermitian) :
+    holevoChi2 h0 h1 havg
+      = holevoChi (fun _ : Fin 2 => (1 : ℝ) / 2)
+          (fun i : Fin 2 => (by fin_cases i; exact h0; exact h1 : (![ρ0, ρ1] i).IsHermitian))
+          (by rw [Fin.sum_univ_two]; exact havg) := by
+  have hsum : (∑ i : Fin 2, (((fun _ : Fin 2 => (1 : ℝ) / 2) i : ℝ) : ℂ) • ![ρ0, ρ1] i)
+      = (↑((1 : ℝ) / 2) : ℂ) • ρ0 + (↑((1 : ℝ) / 2) : ℂ) • ρ1 := by
+    rw [Fin.sum_univ_two]; rfl
+  unfold holevoChi2 holevoChi
+  rw [QuantumInfo.vonNeumannEntropy_congr_of_eq _ havg hsum]
+  congr 1
+  rw [Fin.sum_univ_two]
+  rfl
+
+/-- ★ **`holevoChi2 ≥ 0`**: the general non-negativity the module header could not assert before
+W8, under Klein's full-support condition on the average. -/
+theorem holevoChi2_nonneg {N : ℕ} {ρ0 ρ1 : Matrix (Fin N) (Fin N) ℂ}
+    (h0 : ρ0.PosSemidef) (h1 : ρ1.PosSemidef) (htr0 : ρ0.trace = 1) (htr1 : ρ1.trace = 1)
+    (hpd : ((↑((1 : ℝ) / 2) : ℂ) • ρ0 + (↑((1 : ℝ) / 2) : ℂ) • ρ1).PosDef) :
+    0 ≤ holevoChi2 h0.1 h1.1 hpd.1 := by
+  rw [holevoChi2_eq_holevoChi]
+  have hpd' : (∑ i : Fin 2, (((fun _ : Fin 2 => (1 : ℝ) / 2) i : ℝ) : ℂ) • (![ρ0, ρ1] i)).PosDef := by
+    rw [Fin.sum_univ_two]; exact hpd
+  have h := holevoChi_nonneg (fun _ : Fin 2 => (1 : ℝ) / 2) (fun _ => by norm_num)
+    (by rw [Fin.sum_univ_two]; norm_num) ![ρ0, ρ1] (fun i => by fin_cases i <;> assumption)
+    (fun i => by fin_cases i <;> assumption) hpd'
+  exact h
+
 
 end ChannelCapacity
 end CSDBridge
