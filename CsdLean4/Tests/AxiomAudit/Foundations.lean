@@ -185,6 +185,46 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.channel_traceDist_preparation_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.channel_traceDist_preparation_le
 
+-- W3 (2026-09-11), LF2/PreparationBarycenter.lean: the density operator of a preparation IS the
+-- barycentre of the rank-one projectors along the projective law, entrywise
+-- rho_jk = integral of psi_j conj psi_k against pi_* muprep. The barycentre is packaged as a
+-- DensityOperator (Hermitian by integral_conj, trace one by sum |psi_j|^2 = 1 under the integral,
+-- PSD by its quadratic form being integral |<u, psi>|^2), its trace form is the integral of the
+-- effect function, and the identification is the uniqueness half of effect_gleason_representation.
+-- The rho_ep form takes absolute continuity of the projective law as a hypothesis.
+/-- info: 'CSD.LF2.barycenterMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterMatrix
+
+/-- info: 'CSD.LF2.trace_barycenterMatrix_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.trace_barycenterMatrix_mul
+
+/-- info: 'CSD.LF2.barycenterMatrix_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterMatrix_isHermitian
+
+/-- info: 'CSD.LF2.barycenterMatrix_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterMatrix_trace
+
+/-- info: 'CSD.LF2.barycenterMatrix_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterMatrix_posSemidef
+
+/-- info: 'CSD.LF2.barycenterDensity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterDensity
+
+/-- info: 'CSD.LF2.barycenterDensity_traceForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterDensity_traceForm
+
+/-- info: 'CSD.LF2.preparationBarycenter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparationBarycenter
+
+/-- info: 'CSD.LF2.preparationDensity_eq_barycenter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparationDensity_eq_barycenter
+
+/-- info: 'CSD.LF2.preparationDensity_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparationDensity_apply
+
+/-- info: 'CSD.LF2.preparationDensity_apply_rnDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparationDensity_apply_rnDeriv
+
 -- Direct pin (landing-surface axiom reconciliation, 2026-08-09): the rank-one density
 -- uniqueness lemma. It was carried as a named axiom in earlier revisions and in the
 -- published LF-series papers, discharged 2026-05-18 via

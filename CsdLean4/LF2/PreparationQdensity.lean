@@ -47,9 +47,10 @@ data `fromPreparation` takes. The sector is posited (`specs/POSITS.md` Posit 2);
 derive it. What it proves is: **given** the posited sector, the QIT quantities of its preparations
 obey the QIT theorems.
 
-⚠️ **Gleason witness, not yet the barycentre.** `preparationDensity` is characterised by its trace
-form (uniquely), not constructed as `∫ |ψ⟩⟨ψ| ρ_ep dμ_FS`; that identification is W3 of the scoping
-note. Nothing below depends on it.
+**Gleason witness here, barycentre one module up.** `preparationDensity` is characterised below by
+its trace form (uniquely); that it *is* the barycentre `∫ |ψ⟩⟨ψ| d(π_* μprep)` — entrywise, and in the
+`ρ_ep dμ_FS` form under absolute continuity — is `LF2/PreparationBarycenter.lean` (W3,
+`preparationDensity_eq_barycenter`, `preparationDensity_apply`). Nothing below depends on it.
 
 ⚠️ **Channels are still bare.** `channel_traceDist_preparation_le` takes any `QuantumInfo.Channel`;
 that the channel *comes from* a `Σ`-flow is W5/W6.

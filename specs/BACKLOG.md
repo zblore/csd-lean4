@@ -52,8 +52,11 @@
 > Priced rows **W2–W12** there (critical path W2 → W3 → W6 → W7). **W2 and W12 DONE 2026-09-11**:
 > `LF2/PreparationQdensity.lean` — `preparationDensity` (the density operator of a preparation on `Σ`,
 > `effect_gleason_representation` on `fromPreparation`), the instantiation lemmas, and the first consumers
-> `vonNeumannEntropy_preparation_nonneg` / `_le_log` and `channel_traceDist_preparation_le`. Next on the path:
-> W3 the barycentre (M), W6 channels from Σ-flows (L). The author decides.
+> `vonNeumannEntropy_preparation_nonneg` / `_le_log` and `channel_traceDist_preparation_le`. **W3 DONE
+> 2026-09-11**: `LF2/PreparationBarycenter.lean` — that density operator IS the barycentre
+> `∫ |ψ⟩⟨ψ| d(π_* μprep)` (`preparationDensity_eq_barycenter`, entrywise `preparationDensity_apply`, the
+> `ρ_ep dμ_FS` form under absolute continuity). Next on the path: W6 channels from Σ-flows (L); W5 (S–M)
+> and W4's remaining half (`= 0 ↔ pure`) are open. The author decides.
 >
 > *Closed by the 2026-09-11 scan (were "not scheduled"):* the C2 Mathlib-gap pair — the metric on `ℙ`
 > **exists** (`Mathlib/LinearAlgebra/Projectivization/Metric.lean`, the gap metric, a Mathlib-upstream

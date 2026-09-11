@@ -90,9 +90,13 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   `preparation_qdensity_unique`: `effect_gleason_representation` composed with `fromPreparation`). Its
   von Neumann entropy is `preparationEntropy`, non-negative and at most `log N`; two preparations'
   trace distance contracts under any channel (`channel_traceDist_preparation_le`).
-* **NOT established (queued as W3/W6 in `specs/qit-chain-scoping.md`):** that it is the barycentre
-  `∫ |ψ⟩⟨ψ| ρ_ep dμ_FS` of the preparation's projective density, and that the channels it is fed to come
-  from `Σ`-flows.
+* **Also backed (2026-09-11, W3):** it IS the barycentre `∫ |ψ⟩⟨ψ| d(π_* μprep)` of the rank-one projectors
+  along the preparation's projective law — `preparationDensity_eq_barycenter`, entrywise
+  `preparationDensity_apply` (`LF2/PreparationBarycenter.lean`); in the `ρ_ep dμ_FS` form when the
+  projective law is absolutely continuous w.r.t. `μFS` (`preparationDensity_apply_rnDeriv`).
+* **NOT established (queued as W5/W6 in `specs/qit-chain-scoping.md`):** that the channels it is fed to
+  come from `Σ`-flows; and the `LF2` and `SigmaLayer` preparation interfaces are not identified, so the
+  `SigmaLayer` theorem that region preparations *have* a `ρ_ep` is not composed with the `ρ_ep` form.
 
 ## moment map
 
