@@ -69,9 +69,10 @@
 > the environment marginal of LF5's `measurementFlow`). **W6″ DONE 2026-09-11** (`Projectivization.unitSection`, measurable, so the lift is unconditional for
 > projective actions and LF5's flow produces the de-isolation channel with no section hypothesis). **W5 DONE 2026-09-11** (`LF2/ChannelBridge.lean`: `QuantumChannel ≃ QuantumInfo.Channel`,
 > the parallel type marked an interface, DPI for LF2 channels). **W4's `= 0 ↔ pure` half DONE 2026-09-11** (`LF2/PreparationPurity.lean`: zero entropy iff the projective law is a
-> Dirac mass at one ray; Cat-1 `vonNeumannEntropy_eq_zero_iff`). Open on the QIT
-> chain: W4's coarse-graining half (needs W8), W8 concavity
-> (M), W9 SSA fork, W10 Holevo (M after W8), W11 QEC on Σ (M). The author decides.
+> Dirac mass at one ray; Cat-1 `vonNeumannEntropy_eq_zero_iff`). **W8 + W4's coarse-graining half DONE 2026-09-11** (Cat-1 concavity `vonNeumannEntropy_mixture_ge`,
+> `holevoChi_nonneg`; `preparationEntropy_mixture_ge`: mixing preparations never lowers entropy on average). Open on
+> the QIT chain: W9 SSA fork, W10 Holevo χ and one capacity (M, `holevoChi_nonneg` now in hand), W11 QEC on Σ (M).
+> The author decides.
 >
 > *Closed by the 2026-09-11 scan (were "not scheduled"):* the C2 Mathlib-gap pair — the metric on `ℙ`
 > **exists** (`Mathlib/LinearAlgebra/Projectivization/Metric.lean`, the gap metric, a Mathlib-upstream

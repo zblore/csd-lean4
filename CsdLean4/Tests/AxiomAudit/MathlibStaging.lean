@@ -99,6 +99,27 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'QuantumInfo.vonNeumannEntropy_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.vonNeumannEntropy_eq_zero_iff
 
+-- Concavity (2026-09-11, W8): S(sum p_i rho_i) >= sum p_i S(rho_i) under Klein's full-support
+-- condition on the mixture, via S(sigma) - sum p_i S(rho_i) = sum p_i D(rho_i || sigma) >= 0;
+-- the Holevo quantity and its non-negativity.
+/-- info: 'QuantumInfo.vonNeumannEntropy_congr_of_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.vonNeumannEntropy_congr_of_eq
+
+/-- info: 'QuantumInfo.re_trace_self_log_eq_neg_vonNeumannEntropy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.re_trace_self_log_eq_neg_vonNeumannEntropy
+
+/-- info: 'QuantumInfo.re_trace_finset_sum_smul_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.re_trace_finset_sum_smul_mul
+
+/-- info: 'QuantumInfo.vonNeumannEntropy_mixture_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.vonNeumannEntropy_mixture_ge
+
+/-- info: 'QuantumInfo.holevoChi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.holevoChi
+
+/-- info: 'QuantumInfo.holevoChi_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.holevoChi_nonneg
+
 /-- info: 'QuantumInfo.Channel.traceOutChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.Channel.traceOutChannel_apply
 

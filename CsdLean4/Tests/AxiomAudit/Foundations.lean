@@ -368,6 +368,24 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.preparationEntropy_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.preparationEntropy_eq_zero_iff
 
+-- W4 coarse-graining half / W8 applied (2026-09-11), LF2/PreparationCoarseGraining.lean: the
+-- barycentre is affine in the measure, so the entropy of a mixed preparation is at least the
+-- weighted average of the components' entropies (concavity, Klein's full-support condition).
+/-- info: 'CSD.LF2.barycenterMatrix_finset_sum_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterMatrix_finset_sum_smul
+
+/-- info: 'CSD.LF2.isProbabilityMeasure_finset_sum_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.isProbabilityMeasure_finset_sum_smul
+
+/-- info: 'CSD.LF2.vonNeumannEntropy_barycenter_mixture_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.vonNeumannEntropy_barycenter_mixture_ge
+
+/-- info: 'CSD.LF2.map_finset_sum_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.map_finset_sum_smul
+
+/-- info: 'CSD.LF2.preparationEntropy_mixture_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparationEntropy_mixture_ge
+
 -- Direct pin (landing-surface axiom reconciliation, 2026-08-09): the rank-one density
 -- uniqueness lemma. It was carried as a named axiom in earlier revisions and in the
 -- published LF-series papers, discharged 2026-05-18 via

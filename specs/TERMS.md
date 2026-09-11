@@ -103,6 +103,10 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
 * **Also backed (2026-09-11, W4, `LF2/PreparationPurity.lean`):** its entropy vanishes iff the preparation is
   pure, i.e. its projective law is a Dirac mass at a single ray (`preparationEntropy_eq_zero_iff`, with the
   canonical measurable unit section as representative; matrix level `vonNeumannEntropy_eq_zero_iff`).
+* **Also backed (2026-09-11, W8, `LF2/PreparationCoarseGraining.lean`):** it is affine in the preparation
+  measure, and its entropy is concave: the entropy of a mixture of preparations is at least the weighted
+  average of the components' entropies (`preparationEntropy_mixture_ge`; Cat-1
+  `vonNeumannEntropy_mixture_ge`, Klein's full-support condition on the mixture).
 * **Also backed (2026-09-11, W7, `Thermo/SigmaSecondLaw.lean`):** its entropy is conserved along the ontic
   flow and does not decrease under pinching the flowed state or under de-isolation (the second law on
   `Σ`, `vonNeumannEntropy_le_pinching_flow` / `vonNeumannEntropy_le_deisolation`; TH2's `pinch` IS the
