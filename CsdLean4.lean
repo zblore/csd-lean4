@@ -409,6 +409,7 @@ public import CsdLean4.Thermo.Equilibration
 public import CsdLean4.Thermo.SecondLaw
 public import CsdLean4.Thermo.FreeEnergy
 public import CsdLean4.Thermo.Landauer
+public import CsdLean4.Thermo.SigmaSecondLaw
 public import CsdLean4.SigmaLayer.ConstraintSurface
 public import CsdLean4.SigmaLayer.ConstraintDynamics
 public import CsdLean4.SigmaLayer.RecordedFact

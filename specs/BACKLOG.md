@@ -61,8 +61,13 @@
 > Stinespring channel of `U` applied to the system's density operator (`traceRight_barycenter_flow`; mixed
 > environment = barycentre of the environment preparation, `traceRight_barycenter_flow_prod`). W5's witness
 > half landed with it (`LF6/DecoherenceChannel.lean`: `decohereReduced` is a channel output). ⚠️ The W6 row's
-> gloss of `IsJointLift` was wrong (it is the pointer-arena stroke predicate); corrected in the note. Next on
-> the path: W7 (S), W6′ the joint-index instance (S–M), W5's remaining bridge (S). The author decides.
+> gloss of `IsJointLift` was wrong (it is the pointer-arena stroke predicate); corrected in the note. **W7
+> DONE 2026-09-11**: `Thermo/SigmaSecondLaw.lean` — the second law, data processing and Landauer on `Σ`
+> (`vonNeumannEntropy_le_pinching_flow`, `vonNeumannEntropy_le_deisolation`, `traceDist_traceRight_flow_le`,
+> `landauer_flow`), with TH2's coarse-graining identified as the de-isolation channel
+> (`deisolationChannel_apply_eq_pinch`). **The critical path W2 → W3 → W6 → W7 is complete.** Open on the QIT
+> chain: W6′ the joint-index instance (S–M), W5's remaining bridge (S), W4's `= 0 ↔ pure` (S–M), W8 concavity
+> (M), W9 SSA fork, W10 Holevo (M after W8), W11 QEC on Σ (M). The author decides.
 >
 > *Closed by the 2026-09-11 scan (were "not scheduled"):* the C2 Mathlib-gap pair — the metric on `ℙ`
 > **exists** (`Mathlib/LinearAlgebra/Projectivization/Metric.lean`, the gap metric, a Mathlib-upstream

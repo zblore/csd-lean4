@@ -100,6 +100,12 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   Stinespring channel `ρ ↦ Tr_env (U (ρ ⊗ σ) Uᴴ)` applied to the system's density operator
   (`traceRight_barycenter_flow`, `traceRight_barycenter_flow_prod`); LF6's `decohereReduced` is such a
   channel output (`deisolationChannel_apply_outerProduct`).
+* **Also backed (2026-09-11, W7, `Thermo/SigmaSecondLaw.lean`):** its entropy is conserved along the ontic
+  flow and does not decrease under pinching the flowed state or under de-isolation (the second law on
+  `Σ`, `vonNeumannEntropy_le_pinching_flow` / `vonNeumannEntropy_le_deisolation`; TH2's `pinch` IS the
+  de-isolation channel, `deisolationChannel_apply_eq_pinch`); de-isolation cannot increase two
+  preparations' trace distance (`traceDist_traceRight_flow_le`); Landauer's bound holds for a product
+  preparation whose bath preparation has the Gibbs barycentre (`landauer_flow`).
 * **NOT established:** the `LF2` and `SigmaLayer` preparation interfaces are not identified, so the
   `SigmaLayer` theorem that region preparations *have* a `ρ_ep` is not composed with the `ρ_ep` form; the
   joint-index instance of the lift for LF5's reindexed `measurementFlow` (W6′); the

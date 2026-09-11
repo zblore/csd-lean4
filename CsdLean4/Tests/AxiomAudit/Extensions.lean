@@ -534,6 +534,40 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.landauer_one_bit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.landauer_one_bit
 
+-- W7 (2026-09-11), Thermo/SigmaSecondLaw.lean: TH2, data processing and TH4 instantiated on
+-- preparations under Sigma-flows (W3 barycentre + W6 lifted-flow evolution). The de-isolation
+-- channel IS the pointer-basis pinching (deisolationChannel_apply_eq_pinch); entropy is conserved
+-- along the ontic flow and does not decrease under pinching the flowed state (the second law on
+-- Sigma) nor under de-isolation (reduced flowed state = pinching); de-isolation cannot increase
+-- the trace distance of two preparations; Landauer's bound for a product preparation whose bath
+-- preparation has the Gibbs barycentre. Hypotheses inherited from TH2/TH4 (full support).
+/-- info: 'CSD.Thermo.vonNeumannEntropy_congr_of_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.vonNeumannEntropy_congr_of_eq
+
+/-- info: 'CSD.Thermo.deisolationChannel_apply_eq_pinch' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.deisolationChannel_apply_eq_pinch
+
+/-- info: 'CSD.Thermo.isProbabilityMeasure_projectiveLaw_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.isProbabilityMeasure_projectiveLaw_flow
+
+/-- info: 'CSD.Thermo.vonNeumannEntropy_flow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.vonNeumannEntropy_flow_eq
+
+/-- info: 'CSD.Thermo.vonNeumannEntropy_le_pinching_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.vonNeumannEntropy_le_pinching_flow
+
+/-- info: 'CSD.Thermo.traceDist_traceRight_flow_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.traceDist_traceRight_flow_le
+
+/-- info: 'CSD.Thermo.vonNeumannEntropy_le_deisolation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.vonNeumannEntropy_le_deisolation
+
+/-- info: 'CSD.Thermo.barycenter_flow_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.barycenter_flow_prod
+
+/-- info: 'CSD.Thermo.landauer_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.landauer_flow
+
 -- OscillatorBorn (EFT Stage 0: the truncated CV mode as a record-layer measurement, 2026-07-25). The
 -- oscillator Hamiltonian is diagonal → number basis = standard basis → the mode's number/energy
 -- measurement IS the record-layer measurement. numberMeasurement_prob (= ‖⟨n|ψ⟩‖²),

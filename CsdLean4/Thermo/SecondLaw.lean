@@ -59,7 +59,11 @@ H-theorem for a SPECIFIC coarse-graining (the pointer-basis pinch), not a
 universal second law, and it is a statement about the coarse-graining map,
 not a proof that a given state thermalises dynamically (that needs
 mixing / ETH; the CSD-microdynamics reading rests on the shared SO-1/D1
-residue, as across the thermo track).
+residue, as across the thermo track). That specific coarse-graining is,
+however, not chosen by hand: `pinch` is the action of the de-isolation
+channel on Hermitian inputs (`CSD.Thermo.deisolationChannel_apply_eq_pinch`,
+`Thermo/SigmaSecondLaw.lean`), and the inequality is instantiated there on
+preparations under `Σ`-flows.
 
 ## Provenance
 
