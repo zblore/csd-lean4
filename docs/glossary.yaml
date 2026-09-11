@@ -43,7 +43,7 @@ meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: bb22c534347f2db8fe6ccb0b6e4225a52306a616
+  sha: 2731fc41d7cac1ab6efb0abf11eda94786149897
 
 # ---------------------------------------------------------------------------
 # refs — the external reference registry.
@@ -1225,6 +1225,7 @@ entries:
     related: [fubini-study-measure, von-neumann-entropy, born-weight]
 
   - slug: bargmann
+    reviewed: 2026-09-11
     hook: >
       One phase survives every convention: multiply three overlaps around a cycle. It is
       also the fingerprint that tells unitary from anti-unitary.
@@ -2888,7 +2889,7 @@ entries:
         url: https://plato.stanford.edu/entries/kochen-specker/
 
   - slug: hidden-variables
-    reviewed: 2026-08-25
+    reviewed: 2026-09-11
     hook: >
       The no-go theorems do not kill hidden variables. They price them. CSD reads the price
       tag and pays.
@@ -2939,7 +2940,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Hidden-variable_theory
 
   - slug: measurement-problem
-    reviewed: 2026-09-04
+    reviewed: 2026-09-11
     hook: >
       Quantum mechanics contains two incompatible rules and no instruction for when to
       switch. CSD replaces the switch with a theorem about what no dynamics can do.
@@ -2992,7 +2993,7 @@ entries:
         url: https://plato.stanford.edu/entries/qt-issues/
 
   - slug: collapse
-    reviewed: 2026-09-04
+    reviewed: 2026-09-11
     hook: >
       The state never jumps here -- and that is a theorem about volume-preserving maps, not
       a preference about interpretations.
@@ -3988,7 +3989,7 @@ entries:
       only if the waiting-time law is exponential. The forward direction turns the race
       into a moment family via the k-clock instantiation, and atomlessness and support in
       the positive reals come out derived rather than assumed.
-    reviewed: 2026-08-25
+    reviewed: 2026-09-11
     term: First-passage race
     status: proved-in-corpus
     source: curated
@@ -4069,15 +4070,19 @@ entries:
       about how the arena is weighted is left to taste.
     mathematical: >
       The arena is CP^(N-1) x T^2 with the flat torus fibre carrying normalised Haar
-      measure. Basins are preimages of arcs under the first fibre coordinate, with the
-      arc endpoints set by the context's rate field. The N >= 3 argument is not a
+      measure. Since September 2026 the base factor of that product measure is proved to
+      be the normalised symplectic volume of the Fubini-Study form
+      (manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod, LF4/SectorManifold.lean),
+      so the arena measure is derived from the volume form on the base and Haar on the
+      fibre, not posited as a product. Basins are preimages of arcs under the first fibre
+      coordinate, with the arc endpoints set by the context's rate field. The N >= 3 argument is not a
       Gleason-type theorem -- CSD's partitions are contextual, so Gleason and
       Kochen-Specker do not apply -- but a chain of machine-checked necessary conditions on
       a base-only radial density: disjoint supports, and vanishing below a threshold rising
       with dimension. It leaves very little room and stops short of closing it. Two inputs
       are undischarged and the terminal step needs machinery Mathlib does not have, so the
       base-only route is open in both directions and parked as such.
-    reviewed: 2026-08-25
+    reviewed: 2026-09-11
     term: Fibre
     status: definition
     source: curated
@@ -4364,7 +4369,7 @@ entries:
     related: [carving, projective-sector, constraint-surface]
 
   - slug: field-arena
-    reviewed: 2026-08-25
+    reviewed: 2026-09-11
     hook: >
       Take finitely many field modes, cut the ladder at N quanta, and the whole
       quantum-field toolbox -- propagators, light cones, Wick's theorem, KMS states
@@ -5327,7 +5332,7 @@ entries:
     related: [von-neumann-entropy, partial-trace, landauer-principle, gibbs-state]
 
   - slug: schrodinger-from-records
-    reviewed: 2026-08-25
+    reviewed: 2026-09-11
     hook: >
       The Schrodinger equation is not postulated here. Preserving record
       statistics forces unitarity, unitarity plus continuity forces a
@@ -5375,7 +5380,11 @@ entries:
       unit-modulus phase satisfying a coboundary condition, an anti-Hermitian
       generator, and a C^1 derivative hypothesis. The coboundary condition is not
       a convenience -- the corpus proves it necessary, so the phase lift exists
-      exactly when it holds. What the capstone adds over the ray-level form is
+      exactly when it holds. Since September 2026 the same module carries the
+      form that needs neither datum: projectedFlow_schrodinger_form_of_continuous_flow
+      reaches the same conclusion from continuity of the lifted family alone, the
+      coboundary supplied by the one-parameter Bargmann lift and the generator by
+      the finite-dimensional continuity-only Stone theorem. What the capstone adds over the ray-level form is
       that it genuinely consumes the sector fields, the flow, the projection and
       projectability, rather than restating a result about an already-projected
       map. The record-level conversion equates the operational premise with the
@@ -6562,7 +6571,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Hadamard_test
 
   - slug: amplitude-amplification
-    reviewed: 2026-08-29
+    reviewed: 2026-09-11
     hook: >
       The theorem Grover's algorithm is a shadow of: any quantum procedure with any success
       probability can have that probability pumped up by pure interference, quadratically
@@ -6630,7 +6639,7 @@ entries:
         url: https://arxiv.org/abs/quant-ph/0005055
 
   - slug: amplitude-estimation
-    reviewed: 2026-08-29
+    reviewed: 2026-09-11
     hook: >
       Point phase estimation at the amplitude-amplification rotation and the success
       probability itself becomes measurable, quadratically faster than sampling could ever
@@ -6776,7 +6785,7 @@ entries:
         url: https://arxiv.org/abs/quant-ph/0406196
 
   - slug: steane-code
-    reviewed: 2026-08-29
+    reviewed: 2026-09-11
     hook: >
       Seven qubits protecting one: the first code to correct any single-qubit error using the
       same classical Hamming code twice, once for bit flips and once for phase flips.
@@ -6843,7 +6852,7 @@ entries:
         url: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.77.793
 
   - slug: magic-state
-    reviewed: 2026-08-29
+    reviewed: 2026-09-11
     hook: >
       The fuel of quantum advantage: a single special state that, consumed by otherwise
       classical-trackable Clifford circuits, unlocks the gate the Gottesman-Knill theorem
