@@ -1026,6 +1026,30 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.kahler_preparations_overlap
 
+-- PreparationDensityBridge (2026-09-11): the SigmaLayer and LF2 preparation interfaces agree on
+-- the density operator -- the LF2 adapter of a projective sector with group data, and W3's rho_ep
+-- form with Q28's Radon-Nikodym density, absolute continuity now a theorem; on the Kahler arena
+-- with kSectorData / kBridgeData (c = 1) and the canonical unit section, no hypotheses at all.
+/-- info: 'CSD.SigmaLayer.ProjectiveSector.toSectorData' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.ProjectiveSector.toSectorData
+
+/-- info: 'CSD.SigmaLayer.ProjectiveSector.toMeasureBridgeData' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.ProjectiveSector.toMeasureBridgeData
+
+/-- info: 'CSD.SigmaLayer.preparationDensity_apply_rhoEp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.preparationDensity_apply_rhoEp
+
+/-- info: 'CSD.SigmaLayer.kahler_preparationDensity_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.kahler_preparationDensity_apply
+
+/-- info: 'CSD.SigmaLayer.kahler_preparationDensity_apply_unitSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.kahler_preparationDensity_apply_unitSection
+
 /-- info: 'CSD.SigmaLayer.kMuL_fibre_null' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.kMuL_fibre_null

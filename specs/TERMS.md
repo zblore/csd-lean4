@@ -113,8 +113,12 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   de-isolation channel, `deisolationChannel_apply_eq_pinch`); de-isolation cannot increase two
   preparations' trace distance (`traceDist_traceRight_flow_le`); Landauer's bound holds for a product
   preparation whose bath preparation has the Gibbs barycentre (`landauer_flow`).
-* **NOT established:** the `LF2` and `SigmaLayer` preparation interfaces are not identified, so the
-  `SigmaLayer` theorem that region preparations *have* a `ρ_ep` is not composed with the `ρ_ep` form.
+* **Also backed (2026-09-11, `SigmaLayer/PreparationDensityBridge.lean`):** the `LF2` and `SigmaLayer`
+  preparation interfaces agree on it — for a region preparation of the `SigmaLayer` with a bridge, the
+  `LF2` density operator of its conditional law is `∫ ρ_ep |ψ⟩⟨ψ| dμ_FS` with `ρ_ep` Q28's Radon–Nikodym
+  density (`preparationDensity_apply_rhoEp`; absolute continuity is a theorem there, not a hypothesis),
+  and on the Kähler arena with `kSectorData` / `kBridgeData` and the canonical unit section it holds
+  with no hypotheses (`kahler_preparationDensity_apply_unitSection`).
   (The `LF2.QuantumChannel ↔ QuantumInfo.Channel` bridge is `LF2/ChannelBridge.lean`, W5, 2026-09-11.)
 * **Also backed (2026-09-11, W6′/W6″):** LF5's `measurementFlow` produces the de-isolation channel
   (`measurementFlow_traceRight_barycenter_unitSection`, `LF6/MeasurementFlowChannel.lean`), with the

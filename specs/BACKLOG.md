@@ -70,7 +70,8 @@
 > projective actions and LF5's flow produces the de-isolation channel with no section hypothesis). **W5 DONE 2026-09-11** (`LF2/ChannelBridge.lean`: `QuantumChannel ≃ QuantumInfo.Channel`,
 > the parallel type marked an interface, DPI for LF2 channels). **W4's `= 0 ↔ pure` half DONE 2026-09-11** (`LF2/PreparationPurity.lean`: zero entropy iff the projective law is a
 > Dirac mass at one ray; Cat-1 `vonNeumannEntropy_eq_zero_iff`). **W8 + W4's coarse-graining half DONE 2026-09-11** (Cat-1 concavity `vonNeumannEntropy_mixture_ge`,
-> `holevoChi_nonneg`; `preparationEntropy_mixture_ge`: mixing preparations never lowers entropy on average). Open on
+> `holevoChi_nonneg`; `preparationEntropy_mixture_ge`: mixing preparations never lowers entropy on average). **The two preparation interfaces identified 2026-09-11** (`SigmaLayer/PreparationDensityBridge.lean`:
+> W3's `ρ_ep` form with Q28's density, hypothesis-free on the Kähler arena). Open on
 > the QIT chain: W9 SSA fork, W10 Holevo χ and one capacity (M, `holevoChi_nonneg` now in hand), W11 QEC on Σ (M).
 > The author decides.
 >

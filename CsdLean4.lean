@@ -520,6 +520,7 @@ public import CsdLean4.CV.PriceAttainment
 public import CsdLean4.CV.EntangledWeights
 public import CsdLean4.RecordLayer.EntangledMeasure
 public import CsdLean4.SigmaLayer.PreparationDensity
+public import CsdLean4.SigmaLayer.PreparationDensityBridge
 public import CsdLean4.RecordLayer.EpistemicDisintegration
 public import CsdLean4.RecordLayer.PBRPreparation
 public import CsdLean4.Mathlib.Analysis.NormedSpace.TrotterGeneral

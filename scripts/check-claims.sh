@@ -768,6 +768,11 @@ isSymplectic"
 #     liouville_apply it instantiates; the statement genuinely concerns the Liouville
 #     preparation (the package built from kMuL). No new Liouville claim.
 #   kahlerFstSector_projectiveLaw / kahler_preparation_density /
+#   kahler_preparationDensity_apply / kahler_preparationDensity_apply_unitSection —
+#     (2026-09-11, SigmaLayer/PreparationDensityBridge.lean) statements ABOUT the same concrete
+#     Kähler arena: the LF2 density operator of a region preparation, for kSectorData /
+#     kBridgeData, is the rho_ep integral against the Fubini-Study measure; no Kähler property
+#     is asserted of anything else. Same justification as the Q28 trio above.
 #   kahler_preparations_overlap — (2026-08-21, Q28 items 3-4,
 #     SigmaLayer/PreparationDensity.lean) all three are statements ABOUT the concrete
 #     Kähler arena KSigma N (the c = 1 base pushforward of kMuL; ρ_ep against μFS; the
@@ -801,6 +806,8 @@ DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 kahlerFstSector_projectiveLaw
 kahlerFstSector_epistemicMeasure_projectiveLaw
 kahler_preparation_density
+kahler_preparationDensity_apply
+kahler_preparationDensity_apply_unitSection
 kahler_preparations_overlap
 kSectorData_fromPreparation_liouville_apply
 arenaLiouville_sys_marginal

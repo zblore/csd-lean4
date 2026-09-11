@@ -42,12 +42,13 @@ distribution — the object Papers C and TN2 write as `∫ |ψ⟩⟨ψ| ρ_ep(ψ
 
 ## Honest scope
 
-⚠️ **The `ρ_ep` form takes absolute continuity as a hypothesis.** For region preparations in the
-`SigmaLayer` interface it is a theorem (`SigmaLayer/PreparationDensity.lean`,
-`projectivePreparationLaw_withDensity`); the two preparation interfaces (`SigmaLayer.Preparation`
-with a `ProjectiveSector`, and `LF2.SectorData` with a `MeasureBridgeData`) are not yet identified
-with each other, so that theorem is not composed here. The barycentre identification itself
-(`preparationDensity_eq_barycenter`) needs no such hypothesis.
+**The `ρ_ep` form takes absolute continuity as a hypothesis here**, in the abstract `SectorData`
+interface. For region preparations of the `SigmaLayer` interface it is a theorem
+(`projectivePreparationLaw_absolutelyContinuous`), and `SigmaLayer/PreparationDensityBridge.lean`
+composes the two: `preparationDensity_apply_rhoEp` is this formula with Q28's Radon–Nikodym density
+and no hypothesis, and `kahler_preparationDensity_apply` is its instance on the Kähler arena with
+`c = 1`. The barycentre identification itself (`preparationDensity_eq_barycenter`) needs no such
+hypothesis.
 
 ⚠️ **Same posits as W2.** The sector is posited (`specs/POSITS.md` Posit 2); what is proved is
 that, given it, the density operator of a preparation is the barycentre.
