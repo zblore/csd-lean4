@@ -65,8 +65,12 @@ normalised top power of the form).
 
 ## Honest scope
 
-This discharges the **formalisable core** of the Liouville-volume posit (volume forced by symmetry),
-not the full differential-geometric 2-form content, which remains Mathlib-blocked. And
+This discharges the **formalisable core** of the Liouville-volume posit (volume forced by symmetry).
+The full differential-geometric 2-form content — once Mathlib-blocked — is built in the corpus's own
+manifold layer and wired to this module's sectors in `LF4/SectorManifold.lean` (2026-09-10:
+`fsVolumeNormalized_isForcedKahlerVolume`, the forced volume IS the normalised top power of `ω_FS`;
+and 2026-09-11, `riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure`, it is the normalised
+Riemannian volume of the Fubini–Study metric too). And
 it is FORWARD: it characterises the *posited* sector volume intrinsically; it does NOT derive the
 `U(N)`-symmetry itself from the deterministic dynamics (that reverse — deriving `G` — is SO-1,
 the sector-origin problem, untouched). "The volume is forced by the symmetry" still takes the symmetry `G = U(N)` as given.

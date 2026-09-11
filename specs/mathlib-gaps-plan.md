@@ -196,7 +196,10 @@ Converts the research-gated Q28 item 5 into a bounded three-brick chain with no 
 > **Honest residue, recorded in the module and the ledger:** the chart form is *defined* by its
 > potential (the standard potential-theoretic definition); identifying it with the pullback of
 > `Kahler.fundamentalForm` is a second-derivative computation NOT done here, and the manifold
-> spelling stays Mathlib-blocked. So the Kähler row is narrowed, not closed.
+> spelling stays Mathlib-blocked. So the Kähler row is narrowed, not closed. *(Both since done:
+> the identification `fsChartForm_apply` 2026-09-01, and the manifold spelling — symplectic, Kähler
+> in both senses, top power = `(4π)ⁿ μ_FS`, Riemannian volume = top power / n! — by the G series,
+> `generator-layer-scoping.md`, 2026-09-07 → 2026-09-11. Row CLOSED.)*
 > *Snags:* the smoothness index is `WithTop ℕ∞` — `∞` is scoped notation, use `(⊤ : ℕ∞)`, and
 > `minSmoothness ℝ 2 ≤ ↑⊤` needs the numeral pushed through `WithTop.coe_le_coe` by hand
 > (`exact_mod_cast` does not see `(2 : WithTop ℕ∞)` as a coercion).

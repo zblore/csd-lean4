@@ -532,6 +532,75 @@ with the Jacobian in place of the top-form rule); on `ℂℙⁿ` it is inherited
 No orientation is chosen, so `vol_g = ω^{∧n}/n!` is an identity of measures, not of forms. The residue
 of §9 is now G5, G17b, G18.
 
+## 10. What the G series achieved, in plain terms (2026-09-11)
+
+**The question it answers.** Paper C describes the ontic arena as a compact Kähler manifold with
+its symplectic volume as the typicality measure and a Hamiltonian flow on it. Until September 2026
+the Lean corpus *used* those words but did not *build* those objects: the state space was a
+`Projectivization` type with a measure defined by symmetry, the "Kähler" field was a pointwise
+identity on flat vectors, and "Liouville", "moment map" and "Hamiltonian" were names attached to
+posited structure fields. The corpus was honest about this (the `TERMS.md` restricted senses, the
+`TERM-SCOPE` markers, connectivity link L1 "PARTIAL"), but a reader could fairly ask whether CSD was
+resting on mathematics it had proved or on mathematics it had named.
+
+**What is now proved, layer by layer.** Every item is a Lean theorem with an axiom pin; none is a
+posit.
+
+1. *The arena is a manifold.* `ℂℙⁿ` is an analytic manifold with the affine charts as its atlas
+   (step 0). Not assumed — the chart transitions are proved holomorphic.
+2. *The Fubini–Study form is a genuine differential form on it.* Built from the potential
+   `log(1 + ‖z‖²)` chart by chart, proved to glue (chart invariance), proved smooth, then analytic
+   (G12). Closed (`dω = 0`, step 2b) and non-degenerate: **`ℂℙⁿ` is a symplectic manifold** (step 4a).
+3. *It is Kähler, in both textbook senses.* With `J = i·`: almost Kähler (G7); the complex
+   structure of a holomorphic atlas (G14a); Nijenhuis tensor zero (G14b); `J` a smooth section of the
+   endomorphism bundle (G15). The compatible metric is the Fubini–Study metric.
+4. *Its volume is what the physics said it was — three ways, all the same measure.* The
+   Fubini–Study measure had been *defined* as the unique unitary-invariant probability measure. It
+   is now *proved* to equal the normalised top power `ω^{∧n}` of the Kähler form, with the constant
+   `(4π)ⁿ` visible (step 3, M7), and the normalised Riemannian volume of the Fubini–Study metric,
+   with `ω^{∧n}/n!` (G17). The measure theory this needed — a measure from a top form on a manifold,
+   and a Riemannian volume — did not exist in Mathlib and was built here.
+5. *The dynamics is Hamiltonian, as a theorem.* The defining equation `ι_X ω = dH` is stated on the
+   manifold (G1). For every Hermitian `H`, the Schrödinger flow `exp(-itH)` on `ℂℙⁿ` is the flow of
+   the Hamiltonian vector field of `−2⟨H⟩` (G13), that field exists, is unique, smooth and analytic
+   (G2, G3, G19), the flow is literally its integral curve (G4), and `⟨H⟩` is conserved along it.
+   The torus action is the diagonal case, with `2 ∑ θₖ μₖ` as Hamiltonian (G6): **the moment map
+   is a moment map**, unique up to a constant, pinned by the normalisation (G8), with image exactly
+   the simplex (G9); its orbits are the integral curves (G16). Every time-`t` map preserves the
+   symplectic volume (G10, W1).
+6. *The physics layer cites all of it.* The abstract sector structure `KahlerOnticSetup` is
+   unchanged, but its `ℂℙⁿ` instances now come with theorems that their posited Liouville measure IS
+   the symplectic volume and their posited preservation IS the invariance of that volume (W1,
+   `LF4/SectorManifold.lean`); connectivity link L1 is discharged; the glossary and the landing
+   surface say so.
+
+**So: is CSD grounded in proven mathematics rather than in naming?** For the *geometry of the
+sector* — yes, now. The words symplectic, Kähler, Fubini–Study volume, Liouville measure (for the
+unitary flows), moment map, Hamiltonian vector field, and integral curve all name objects that are
+constructed and theorems that are proved, on the manifold the paper means, from Mathlib's
+foundations plus the corpus's own staged manifold layer, with zero imported axioms beyond the
+foundational triple.
+
+**What it did not change, said plainly.** The G series builds the arena's geometry; it does not
+derive the arena. Three things remain posits, exactly as before:
+* *Posit 2, the sector itself* — that the ontic typicality measure is Fubini–Study. The geometry is
+  now proved to *agree* with the symmetry argument that carries the Born derivation; it does not
+  replace it, and the sector is still posited and constrained, not derived.
+* *Posit 3, Liouville for the constraint dynamics* — proved for the unitary flows by invariance;
+  the measurement pieces are only locally Hamiltonian, and a manifold-level Liouville theorem for
+  a general Hamiltonian flow is G5 (XL, §9).
+* *Posit 1, the cell law* — that the dynamics generates the torus action. G6/G8 show the map that
+  action *has* is the corpus's moment map; they do not show the dynamics produces the action.
+
+And two theorem-shaped residues on the ladder itself: Darboux (G18) and the chart-independence of
+the generic Riemannian-volume construction (G17b), neither consumed by the physics.
+
+**How to cite this.** The one-line version for a referee: *the sector's Kähler geometry, its
+symplectic volume, and the Hamiltonian character of its unitary flows are theorems on `ℂℙⁿ`
+(`fsForm_isKahler`, `fsVolume_eq_smul_fubiniStudyMeasure`, `riemannianVolume_fsMetric`,
+`schrodingerField_isHamiltonianVectorField`), and the corpus's sector instances are proved to carry
+them (`unitaryFlowSetup_isKahler_liouville`); the sector's *selection* remains a posit.*
+
 ## References
 
 [`BACKLOG.md`](BACKLOG.md) (list 3, and the `R-016` row of list 1);

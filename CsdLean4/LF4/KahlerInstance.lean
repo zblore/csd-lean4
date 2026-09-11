@@ -51,12 +51,15 @@ genuine flat-Kähler volumes with no measure-isomorphism machinery.
 marginal (`Measure.fst_prod`, `c = 1`), citing only the foundational triple —
 `invariant_measure_uniqueness` is **not** needed here (cf. `LF4/Instance.lean`).
 
-**Formalisation boundary (honest scope).** "Compact Kähler" above is the
-*mathematical reading* of these objects, not a formalised structure: in Lean,
-`KSigma` is a product **type** and `kMuL` a product **measure**. No manifold
-structure, symplectic form, or Kähler metric is constructed, and `kMuL` is not
-*derived* from a volume form — Mathlib has no Kähler API (MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)), and the
-corpus does not build one. What **is** machine-verified is the measure-theoretic content:
+**Formalisation boundary (honest scope; boundary MOVED 2026-09-10).** In this module
+`KSigma` is a product **type** and `kMuL` a product **measure**, and nothing here constructs a
+manifold structure, symplectic form, or Kähler metric on them — Mathlib has no Kähler API
+(MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)). Since 2026-09-10 the corpus's
+own manifold layer supplies exactly that on the base factor, and `LF4/SectorManifold.lean` proves
+`kMuL = fsVolumeNormalized n ⊗ Haar` with `fsVolumeNormalized` the normalised top power of the
+Fubini–Study form (`manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod`), so `kMuL` IS
+derived from the volume form on the base; the fibre factor stays Haar on `T²`, which is its own
+Liouville measure. What this module itself machine-verifies is the measure-theoretic content:
 `fubiniStudyMeasure` (the Haar-on-`U(N)` pushforward, which mathematically *is*
 the FS Kähler volume), its `U(N)`-invariance and uniqueness, the product
 marginal bridge, and everything downstream. The identification of these

@@ -35,10 +35,14 @@ After step (2a), a differential form on a manifold is an object:
 have is a **derivative**. Until `d` exists:
 
 * `dω = 0` at manifold level is not statable, so the Kähler closedness the corpus proves flat
-  (`Kahler.extDeriv_fundamentalFormAlt`) stays flat;
+  (`Kahler.extDeriv_fundamentalFormAlt`) stays flat; *(built: `fsForm_mextDeriv`, this note's payoff)*
 * the top-power identity `ω^(N-1)/(N-1)! = μ_FS` is sayable (steps (0)+(1)) but has no route
   to a proof, because everything downstream of it is integration of `dω`-shaped objects;
+  *(built 2026-09-08: `fsVolume_eq_smul_fubiniStudyMeasure`, step (3), `top-power-scoping.md`)*
 * `R-016` — the arena-level `ι_X ω = dH` — has no manifold-level `d` to be stated against.
+  *(the `d` now exists; the ℂℙⁿ-level `ι_X ω = dH` is proved for the torus and Schrödinger
+  flows, G6/G13; the ARENA-level statement `R-016` itself remains the open row, §9 of
+  `generator-layer-scoping.md`)*
 
 ⚠️ **None of that means the corpus is blocked on it.** It is not: `μ_FS` is pinned by
 uniqueness-under-symmetry, the moment-map equation is proved at the linear level, and

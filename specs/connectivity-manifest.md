@@ -189,7 +189,8 @@ do not sell the epistemic witness as completing the reconstruction. Σ is the fl
   `IsLiouvilleKahlerVolume` carry genuine content (`IsProbabilityMeasure μ_FS`,
   the normalized-volume core) and consumed it (`unitaryFlowSetup_liouville_isProbability`).
   `IsKahlerSector` honestly demoted to an unformalizable interpretive posit
-  (no Mathlib Kähler API) — documented in `PLACEHOLDERS.md` and the structure
+  (no Mathlib Kähler API at the time; the corpus built the API 2026-09-07/11 and L1 is
+  now DISCHARGED, see the L1 row) — documented in `PLACEHOLDERS.md` and the structure
   docstring; no doc implies the Kähler differential geometry is load-bearing.
 
 **Phase 2b — genuine many-to-one projection (Paper C A3; medium).**
