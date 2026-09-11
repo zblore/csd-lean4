@@ -194,8 +194,14 @@ alarming and is not.
   energy for a `C^ω` non-degenerate 2-form is a `C^ω` section, on an analytic manifold: G3 at `ω`)
   and, on `ℂℙⁿ`, `contMDiff_omega_schrodingerField` / `contMDiff_omega_torusField` (both fields are
   analytic vector fields, for the analytic form `fsFormAnalytic` of G12).
-  **NOT established:** a global flow of a general Hamiltonian vector field (G5, queued at XL in
-  `specs/generator-layer-scoping.md` §9), and the arena statement `R-016`.
+  **Also backed (2026-09-11, Q29(a)):** the global flow — on a compact manifold the Hamiltonian
+  vector field of a `C^∞` energy has a global integral curve through every point
+  (`DifferentialForm.IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField`), and the flow
+  `integralFlow` exists with the group law `integralFlow_add`
+  (`Mathlib/Geometry/Manifold/IntegralCurve/GlobalFlow.lean`; Mathlib has no flows on manifolds).
+  **NOT established:** joint continuity of the flow in `(t, x)` (Q29(a′)), that its time-`t` maps
+  preserve the symplectic volume (Q29(b′)–(d′), `BACKLOG.md` ▶ OUTSTANDING), and the arena statement
+  `R-016`.
   Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,

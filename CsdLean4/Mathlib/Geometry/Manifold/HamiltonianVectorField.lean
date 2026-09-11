@@ -12,6 +12,7 @@ public import Mathlib.Geometry.Manifold.IntegralCurve.ExistUnique
 public import Mathlib.Analysis.Calculus.MeanValue
 public import Mathlib.Geometry.Manifold.VectorBundle.Hom
 public import Mathlib.Geometry.Manifold.VectorField.LieBracket
+public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.GlobalFlow
 
 /-!
 # Hamiltonian vector fields on a manifold
@@ -62,6 +63,9 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
   Hamiltonian vector field of a `C^∞` energy for a `C^∞` non-degenerate 2-form is a `C^∞` section
   of the tangent bundle**; bundled as `hamiltonianVectorFieldSection`, and
   `IsSymplectic.contMDiff_hamiltonianVectorField`;
+* **Q29(a), global flows.** ★★ `IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField` — on a
+  compact manifold the Hamiltonian vector field of a `C^∞` energy has a global integral curve through
+  every point, so its flow `integralFlow` (`IntegralCurve/GlobalFlow.lean`) exists with the group law;
 * **G4, integral curves.** ★ `h.hasDerivAt_comp_of_isMIntegralCurve` and ★★
   `h.comp_eq_of_isMIntegralCurve` — **energy conservation**: `H` is constant along every integral
   curve of a Hamiltonian vector field of `H`, by `dH (X) = 0` and the mean value theorem; ★★
@@ -112,12 +116,11 @@ Newlander–Nirenberg theorem — is not stated. `J` as a smooth section of the 
 G15, `IsKahler.contMDiff_hom_section`, stated for a `J` supplied as continuous linear maps (the
 predicate's `J` is a family of functions), and `nijenhuis` takes the family.
 
-⚠️ **No global flow.** G4 gives local existence, uniqueness and conservation for integral
-curves; that a global flow `ℝ × M → M` exists (completeness of the field, e.g. on a compact
-manifold) is not stated — Mathlib has no flows of vector fields on manifolds
-(MATHLIB-ABSENT(IsMIntegralCurve.flow); it has uniform-time global integral curves,
-`exists_isMIntegralCurve_of_isMIntegralCurveOn`, from which a flow on a compact manifold is
-milestone (a) of Q29 / G5, `BACKLOG.md` ▶ OUTSTANDING, priced M–L).
+⚠️ **The global flow exists on a compact manifold (Q29(a), 2026-09-11)** —
+`IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField` and `integralFlow` with `integralFlow_add`
+(`IntegralCurve/GlobalFlow.lean`; Mathlib has no flows of vector fields on manifolds,
+MATHLIB-ABSENT(IsMIntegralCurve.flow)). Not stated: joint continuity of the flow in `(t, x)` (Q29(a′)),
+and that the time-`t` maps preserve the symplectic volume (Q29(b′)–(d′), `BACKLOG.md` ▶ OUTSTANDING).
 
 ⚠️ **The converse of G11 is false and not stated.** A locally Hamiltonian field need not be
 Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
@@ -982,6 +985,18 @@ theorem IsSymplectic.comp_eq_of_isMIntegralCurve_hamiltonianVectorField
     {γ : ℝ → M} (hγ : IsMIntegralCurve γ (hβ.hamiltonianVectorField H)) (t s : ℝ) :
     H (γ t) = H (γ s) :=
   (hβ.hamiltonianVectorField_isHamiltonianVectorField H).comp_eq_of_isMIntegralCurve hγ hH t s
+
+/-- ★★ **The Hamiltonian flow exists globally on a compact manifold** (Q29(a)): for a symplectic
+form and a `C^∞` energy, every point lies on a global integral curve of the Hamiltonian vector
+field (`exists_isMIntegralCurve_of_compactSpace` on G3's `C^1` section). The flow itself is
+`integralFlow` of `IntegralCurve/GlobalFlow.lean`, with its group law. -/
+theorem IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField [CompactSpace M] [T2Space M]
+    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H)
+    (x : M) : ∃ γ : ℝ → M, γ 0 = x ∧ IsMIntegralCurve γ (hβ.hamiltonianVectorField H) := by
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
+  exact exists_isMIntegralCurve_of_compactSpace
+    ((hβ.contMDiff_hamiltonianVectorField H hH).of_le (mod_cast (le_top : (1 : ℕ∞) ≤ ⊤))) x
 
 end IntegralCurveSmooth
 

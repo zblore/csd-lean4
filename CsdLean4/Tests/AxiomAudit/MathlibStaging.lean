@@ -2813,6 +2813,65 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms AddCircle.instIsManifoldProd
 
+-- Q29(a) (2026-09-11), IntegralCurve/GlobalFlow.lean: global flows of a C^1 vector field on a
+-- compact manifold. Mathlib has local existence, uniqueness and the uniform-time principle
+-- (exists_isMIntegralCurve_of_isMIntegralCurveOn) but not the uniform epsilon. Route: Picard-
+-- Lindelof with the Lipschitz ball inside a prescribed neighbourhood and the solution's
+-- confinement exposed (ContDiffAt.isPicardLindelof_subset, ..._mem_closedBall, ..._mem), so one
+-- epsilon serves a whole chart ball of initial points with the chart curves staying in the
+-- chart target (exists_nhds_forall_exists_isMIntegralCurveOn_Ioo); a finite subcover and the
+-- minimum epsilon give every point a global curve (exists_isMIntegralCurve_of_compactSpace);
+-- uniqueness makes it a flow with the group law (integralFlow, integralFlow_add). Joint
+-- continuity in (t, x) is not stated (Q29(a')). The Hamiltonian instance:
+-- IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField.
+/-- info: 'ContDiffAt.isPicardLindelof_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContDiffAt.isPicardLindelof_subset
+
+/-- info: 'IsPicardLindelof.exists_eq_forall_mem_Icc_hasDerivWithinAt_mem_closedBall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms IsPicardLindelof.exists_eq_forall_mem_Icc_hasDerivWithinAt_mem_closedBall
+
+/-- info: 'ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt_mem
+
+/-- info: 'exists_nhds_forall_exists_isMIntegralCurveOn_Ioo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_nhds_forall_exists_isMIntegralCurveOn_Ioo
+
+/-- info: 'exists_isMIntegralCurve_of_compactSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_isMIntegralCurve_of_compactSpace
+
+/-- info: 'integralFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms integralFlow
+
+/-- info: 'integralFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms integralFlow_zero
+
+/-- info: 'isMIntegralCurve_integralFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms isMIntegralCurve_integralFlow
+
+/-- info: 'integralFlow_eq_of_isMIntegralCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms integralFlow_eq_of_isMIntegralCurve
+
+/-- info: 'integralFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms integralFlow_add
+
+/-- info: 'continuous_integralFlow_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms continuous_integralFlow_time
+
+/-- info: 'DifferentialForm.IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField
+
 /-! ### The Fubini-Study chart form is chart-invariant (ProjectiveSpaceFubiniStudy.lean, 2026-09-07) -/
 
 -- The mathematical heart of "the Fubini-Study form is a global object on CP^n": under the affine

@@ -644,6 +644,26 @@ only locally Hamiltonian (`RecordLayer/PiecewiseHamiltonian.lean`), so Posit 3 s
 (`POSITS.md`). **P(success): medium.** Milestone (a) alone is a self-contained M–L with its own
 payoff: global flows on compact manifolds, a Mathlib gap.
 
+**Q29(a) BUILT 2026-09-11 (M–L as priced, took M).** `IntegralCurve/GlobalFlow.lean`. The pricing note
+above said the compactness step was "the work"; it was, and the shape is worth recording. Mathlib's local
+theorem hides the existence interval inside `IsMIntegralCurveAt`'s `∀ᶠ`, and its proof confines the chart
+solution to the chart's target by continuity *at the one initial point*. For a uniform `ε` on a ball of
+initial points the confinement must be uniform too. Two Mathlib facts make it so without continuous
+dependence: `ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt` (one `ε` for a
+closed ball of initial points — the "ball" version of Picard–Lindelöf, present), and the Picard structure's
+own `mul_max_le : L·ε ≤ a − r`, which confines every solution to `closedBall x₀ a`
+(`ODE.FunSpace.compProj_mem_closedBall`, public). So: rebuild Mathlib's `IsPicardLindelof.of_contDiffAt_one`
+with the Lipschitz ball intersected with a prescribed neighbourhood (`ContDiffAt.isPicardLindelof_subset`),
+restate `exists_eq_forall_mem_Icc_hasDerivWithinAt` with the confinement conclusion, take the prescribed
+neighbourhood to be `interior (extChartAt x₀).target`, and Mathlib's own manifold-transport proof goes
+through verbatim with `hf3 t` in place of its neighbourhood argument
+(`exists_nhds_forall_exists_isMIntegralCurveOn_Ioo`). Then `CompactSpace.elim_nhds_subcover`, `Finset.inf'`,
+and `exists_isMIntegralCurve_of_isMIntegralCurveOn`. The flow: `integralFlow` by `choose`, group law from
+`IsMIntegralCurve.comp_add` + uniqueness. **Also found:** Mathlib HAS Lipschitz (hence continuous) dependence
+of the local flow on the initial point (`IsPicardLindelof.exists_forall_mem_closedBall_eq_hasDerivWithinAt_lipschitzOnWith`),
+so joint continuity of `integralFlow` — Q29(a′) — is S–M (glue along the cover), and what (b′) genuinely
+lacks is *differentiable* dependence, the variational equation. 12 pins.
+
 ### Q30 (= G17b): chart-independence of the Gram-density Riemannian volume — `S–M`
 
 **What it would prove.** `RiemannianMetric.riemannianVolume` (`RiemannianVolume.lean`) does not
