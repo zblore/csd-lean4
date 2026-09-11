@@ -571,6 +571,22 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.deisolationChannel_apply
 
+-- W6' (2026-09-11), LF6/MeasurementFlowChannel.lean: LF5's measurementFlow (the reindexed projective
+-- action of vnUnitary) lifts vnUnitary on the joint index for any unit section of the ray map, so the
+-- reduced flowed state of a product preparation IS deisolationChannel applied to the system state, and
+-- the second law holds under LF5's flow. Unit section and product form are hypotheses (W6'' residue).
+/-- info: 'CSD.LF6.isUnitaryLift_measurementFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.isUnitaryLift_measurementFlow
+
+/-- info: 'CSD.LF6.measurementFlow_traceRight_barycenter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.measurementFlow_traceRight_barycenter
+
+/-- info: 'CSD.LF6.measurementFlow_vonNeumannEntropy_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.measurementFlow_vonNeumannEntropy_le
+
 -- LF6-B.2 (Decoherence, 2026-06-29): the QUANTITATIVE purity-drop / irreversibility witness.
 -- The reduced state is a genuine density operator (decohereReduced_trace, Tr = ‖ψ‖², via
 -- partialTraceRight_trace + deisolation_conservative Vᴴ V = 1); its purity Tr(ρ_red²) =

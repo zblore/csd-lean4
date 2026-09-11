@@ -72,11 +72,12 @@ unitary action through `rep`; for the corpus's `KahlerOnticSetup` flows it is a 
 means. Which unitary a given de-isolation flow lifts is the physics (LF5's `vnUnitary` for the
 von Neumann coupling; `LF6/DecoherenceChannel.lean` instantiates it).
 
-⚠️ **Index generality.** The theorems are over any finite index; the projective-action instance
+**Index generality.** The theorems are over any finite index; the projective-action instance
 `isUnitaryLift_of_smul` is at `Fin N` because the corpus's projective unitary action
-(`Mathlib/LinearAlgebra/Projectivization/Unitary.lean`) is. Feeding a joint `Fin N × Fin E`
-sector through it needs a reindexing (`Fin N × Fin E ≃ Fin m`), LF5's existing device — the
-priced residue W6′ in `specs/qit-chain-scoping.md`.
+(`Mathlib/LinearAlgebra/Projectivization/Unitary.lean`) is. A joint `Fin N × Fin E` sector is fed
+through it by reindexing (`Fin N × Fin E ≃ Fin m`, LF5's device): `isUnitaryLift_of_reindex`
+transports the lift along `piLpCongrLeft`, and `LF6/MeasurementFlowChannel.lean` applies it to
+LF5's `measurementFlow` (W6′).
 
 References: `specs/qit-chain-scoping.md` (W6, W5); `LF2/PreparationBarycenter.lean` (W3);
 `Mathlib/QuantumInfo/Stinespring.lean` (`Channel.ofIsometry`, `ofIsometry_apply`);
@@ -533,6 +534,45 @@ theorem traceRight_barycenter_flow_prod (D : SectorData (SigmaS × SigmaE) (PS �
     barycenterMatrix_prod rep repS repE hprod]
 
 end Product
+
+/-! ### Reindexing the lift -/
+
+section Reindex
+
+variable {ι κ : Type*} [Fintype ι] [Fintype κ]
+
+/-- Transporting a vector along `piLpCongrLeft e` transports its projector along `reindex e e`. -/
+theorem outerProduct_piLpCongrLeft (e : ι ≃ κ) (v : EuclideanSpace ℂ ι) :
+    outerProduct (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e v)
+      = Matrix.reindex e e (outerProduct v) := by
+  ext a b
+  rfl
+
+/-- `reindex e e` is multiplicative and commutes with `ᴴ`, so it respects conjugation. -/
+theorem reindex_mul_mul_conjTranspose (e : ι ≃ κ) (U A : Matrix ι ι ℂ) :
+    Matrix.reindex e e (U * A * Uᴴ)
+      = Matrix.reindex e e U * Matrix.reindex e e A * (Matrix.reindex e e U)ᴴ := by
+  simp only [Matrix.reindex_apply, Matrix.conjTranspose_submatrix, Matrix.submatrix_mul_equiv]
+
+variable {SigmaSpace P G : Type*}
+  [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
+  [MeasurableSpace P]
+  [Group G]
+  [MulAction G SigmaSpace] [MulAction G P]
+  [MulAction.IsPretransitive G P]
+
+/-- **The lift transports along a reindexing.** If the representative on the reindexed space is
+the transport of `rep`, a lift of the reindexed unitary is a lift of the unitary. -/
+theorem isUnitaryLift_of_reindex (D : SectorData SigmaSpace P G) (Φ : SigmaSpace → SigmaSpace)
+    (e : ι ≃ κ) (rep : P → EuclideanSpace ℂ ι) (U : Matrix ι ι ℂ)
+    (h : IsUnitaryLift D Φ (fun p => LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (rep p))
+      (Matrix.reindex e e U)) :
+    IsUnitaryLift D Φ rep U := fun x => by
+  have hx := h x
+  simp only [outerProduct_piLpCongrLeft, ← reindex_mul_mul_conjTranspose] at hx
+  exact (Matrix.reindex e e).injective hx
+
+end Reindex
 
 end LF2
 end CSD

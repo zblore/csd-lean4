@@ -249,6 +249,7 @@ public import CsdLean4.LF6.LocalDeisolationFlow
 public import CsdLean4.LF6.GHZLocalFlow
 public import CsdLean4.LF6.Decoherence
 public import CsdLean4.LF6.DecoherenceChannel
+public import CsdLean4.LF6.MeasurementFlowChannel
 public import CsdLean4.LF6.MaxEntangledDeisolationFlow
 public import CsdLean4.LF6.PartialSchmidtCorrelation
 public import CsdLean4.LF6.GisinTheorem
