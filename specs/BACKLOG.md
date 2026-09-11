@@ -72,8 +72,9 @@
 > Dirac mass at one ray; Cat-1 `vonNeumannEntropy_eq_zero_iff`). **W8 + W4's coarse-graining half DONE 2026-09-11** (Cat-1 concavity `vonNeumannEntropy_mixture_ge`,
 > `holevoChi_nonneg`; `preparationEntropy_mixture_ge`: mixing preparations never lowers entropy on average). **The two preparation interfaces identified 2026-09-11** (`SigmaLayer/PreparationDensityBridge.lean`:
 > W3's `ρ_ep` form with Q28's density, hypothesis-free on the Kähler arena). **W10 DONE 2026-09-11** (`LF6/DeisolationCapacity.lean`: the single-letter Holevo capacity of the
-> de-isolation channel is one classical bit, `deisolationChannel_holevoCapacity`; Cat-1 Holevo bound). Open on
-> the QIT chain: W9 SSA fork, W11 QEC on Σ (M).
+> de-isolation channel is one classical bit, `deisolationChannel_holevoCapacity`; Cat-1 Holevo bound). **W11 DONE 2026-09-11** (`Empirical/CSD/QEC/ThreeQubit.lean`: the bit-flip channel is the environment marginal
+> of a concrete `Σ`-flow on `ℂℙ³`; the four error regions of `Σ` are pairwise disjoint; both unused bundle binders
+> gone, the bundle deleted). Open on the QIT chain: W9 SSA fork only.
 > The author decides.
 >
 > *Closed by the 2026-09-11 scan (were "not scheduled"):* the C2 Mathlib-gap pair — the metric on `ℙ`

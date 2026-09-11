@@ -688,6 +688,42 @@ info: 'CSD.Empirical.CSDBridge.QEC.csd_three_qubit_corrects_single_bitflip' depe
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.QEC.csd_three_qubit_corrects_single_bitflip
 
+-- W11 (2026-09-11): the CSD three-qubit theorem carries no bundle any more. The bit-flip channel
+-- is produced by a Sigma-flow (general sector with a lift; concretely bitFlipFlow on cpSectorData
+-- over CP^3 with no lift hypothesis), and the code / error regions of Sigma: the four error regions
+-- are pairwise disjoint and recovery returns each to the code region.
+/-- info: 'CSD.Empirical.CSDBridge.QEC.bitFlipChannel_traceRight_barycenter_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.bitFlipChannel_traceRight_barycenter_flow
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.bitFlipFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.bitFlipFlow
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.isUnitaryLift_bitFlipFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.isUnitaryLift_bitFlipFlow
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.bitFlipFlow_traceRight_barycenter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.bitFlipFlow_traceRight_barycenter
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.codeRegion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.codeRegion
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.errorRegion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.errorRegion
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.errorRegion_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.errorRegion_disjoint
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.recovery_mem_codeRegion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.recovery_mem_codeRegion
+
 -- Stern-Gerlach: representative pin (the iconic 1/2 split) + completeness.
 -- All six transport theorems share the same foundational-triple axiom set.
 /--
@@ -1371,9 +1407,10 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 -- (three_qubit_recover_density: Xⱼ(Xⱼ ρ Xⱼᴴ)Xⱼᴴ = ρ); qec_corrects_decoherence bundles the
 -- Stinespring origin + syndrome-distinctness + exact vector recovery (bitflip_recovers).
 -- Non-vacuity: the SAME channel corrupts a bare qubit (bitFlipChannel_corrupts_bare_qubit:
--- Φ(|0⟩⟨0|) ≠ |0⟩⟨0| for 0<p). csd_qec_decoherence_corrected transports it through a
--- CSDThreeQubitBundle. QM-OPERATIONAL (channel + correction) discharged here; the ontic
--- Σ-volume / partial-trace-volume-loss origin is GATED to the entangled tier (LF6 / D1).
+-- Φ(|0⟩⟨0|) ≠ |0⟩⟨0| for 0<p). csd_qec_decoherence_corrected restates it (its former
+-- CSDThreeQubitBundle binder was removed 2026-09-11, W11, when the ontic origin of the bit-flip
+-- channel became the theorem bitFlipFlow_traceRight_barycenter in QEC/ThreeQubit.lean).
+-- QM-OPERATIONAL (channel + correction) discharged here.
 -- Foundational triple only (off busch).
 /-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.bitflip_error_cptp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

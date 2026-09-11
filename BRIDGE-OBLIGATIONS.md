@@ -161,15 +161,24 @@ certifies that a local-realist reading of the source cannot match CSD's
 *derived* Tsirelson value (`Empirical/CSD/BellVolume.lean`). The
 transport is a clean reduction with no externally-supplied ontic posit.
 
-### 2.3.3 CSD three-qubit-code bundle (added 2026-06-04)
+### 2.3.3 CSD three-qubit-code bundle (added 2026-06-04; **RETIRED 2026-09-11**)
 
-Used by `Empirical/CSD/QEC/ThreeQubit.lean`. The first QEC reading.
+Was used by `Empirical/CSD/QEC/ThreeQubit.lean` and `Empirical/CSD/QECDecoherence.lean`. The
+tag bundle `CSDThreeQubitBundle` (no fields beyond `Context D`) asserted, externally and
+undischarged, that the bit-flip code is realised on `Σ`: the codespace a sub-surface, the error a
+decoherence (system→environment volume flow, Liouville-conserved jointly), the syndrome an
+extraction of the environment's record. Both consumers bound it as an unused binder.
 
-| Bundle | Field | What it asserts | LF4-todo |
-|---|---|---|---|
-| `Empirical.CSDBridge.QEC.CSDThreeQubitBundle` | (whole bundle's CSD-realisability content) | The three-qubit bit-flip code is realised on the substrate of `D`: the codespace is a sub-surface (`ℂℙ¹ ⊂ ℂℙ⁷`) of `Σ`; the physical error is **decoherence** — the system entangling with the environment, so its coherent volume flows out of `Σ_sys` into system–environment correlation (Liouville-conserved on the joint `Σ_sys × Σ_env`, the `hΦ_pres` field; the discretised Pauli errors are the QEC basis representation); the syndrome measurement reads the environment's record and re-concentrates the system; recovery is the unitary return to the codespace. The four syndrome weights are Fubini–Study volumes. | §13 + §14, **and load-bearingly CPTP channels** (`Σ_env` + joint flow + partial trace) plus the **dynamical-origin** (`Φ ≠ id`) layer. |
-
-This is a **tag bundle** (no fields beyond `Context D`); `csd_three_qubit_corrects_single_bitflip` transports the QM-side (discretised) correction theorem by Context extraction. The realisability here is the most directly *dynamical and channel-dependent* of all the bridge obligations: the error model **is** a CPTP channel and the "volume loss" **is** its partial-trace step — so the honest ontic statement is gated on the (not-yet-built) channels keystone, not just on `Φ ≠ id`. No new LF4-todo entry (reuses §13/§14 + the open dynamical-origin question + the channels infrastructure tranche).
+**Discharged as theorems on 2026-09-11 (W6, W11) and the bundle deleted.**
+`Empirical/CSD/QEC/ThreeQubit.lean` now proves: the bit-flip channel is the environment marginal
+of a `Σ`-flow lifting the joint unitary `U_p` (`bitFlipChannel_traceRight_barycenter_flow`), and
+concretely of `bitFlipFlow` on `cpSectorData` over `ℂℙ³` with no lift hypothesis
+(`bitFlipFlow_traceRight_barycenter`); the code space is a region of `Σ` whose four error images
+are pairwise disjoint (`errorRegion_disjoint`) and returned to it by recovery
+(`recovery_mem_codeRegion`). `csd_three_qubit_corrects_single_bitflip` and
+`csd_qec_decoherence_corrected` carry no binder. What is not a theorem: the syndrome-conditioned
+recovery as one channel on the mixed state, and the joint flow on the three-qubit register ⊗
+environment (the flow theorem is for one qubit's error channel).
 
 ### 2.4 CSD Kochen-Specker assignment bundle (added 2026-05-21)
 

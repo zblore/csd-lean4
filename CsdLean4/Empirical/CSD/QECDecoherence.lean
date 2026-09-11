@@ -47,9 +47,10 @@ trace), and QEC **restores the lost volume** for correctable errors. The full on
 flow on `Σ_sys × Σ_env`, and partial trace on `Σ`. That is the **entangled-tier debt (LF6 /
 D1)**, gated and NOT discharged here (see `LF5/SyndromeFlow.lean`'s identical gating and
 `Empirical/CSD/QEC/ThreeQubit.lean`). What is dischargeable now is the channel/operational
-decoherence (the CPTP map + its Stinespring dilation) + the syndrome recovery. The
-`csd_qec_decoherence_corrected` transport carries a `CSDThreeQubitBundle` whose ontic
-realisability is **load-bearing, externally supplied, undischarged**.
+decoherence (the CPTP map + its Stinespring dilation) + the syndrome recovery. Since
+2026-09-11 the ontic origin of the bit-flip channel is a theorem
+(`Empirical/CSD/QEC/ThreeQubit.lean`, `bitFlipFlow_traceRight_barycenter`: the channel is the
+environment marginal of a `Σ`-flow), so `csd_qec_decoherence_corrected` carries no bundle.
 
 All exports are foundational-triple-only (off `busch_effect_gleason`): concrete `Matrix`
 algebra over the K2 `Channel` / Stinespring machinery.
@@ -344,12 +345,11 @@ and partial trace on `Σ` — the **entangled-tier / D1 debt (LF6)**, gated and 
 here (`Φ = id` in every concrete `SectorData`). What is discharged is the channel/operational
 decoherence + the in-code channel correction of the correctable branch (the full mixed-channel
 syndrome-conditioned recovery is the deeper unformalised statement; see
-`qec_corrects_decoherence`). The `CSDThreeQubitBundle` carries the ontic realisability as an
-externally-supplied obligation (see `Empirical/CSD/QEC/ThreeQubit.lean`,
-`BRIDGE-OBLIGATIONS.md`). -/
+`qec_corrects_decoherence`). The ontic origin of the error channel — the bit-flip channel as
+the environment marginal of a `Σ`-flow — is `bitFlipFlow_traceRight_barycenter`
+(`Empirical/CSD/QEC/ThreeQubit.lean`, 2026-09-11); the former `CSDThreeQubitBundle` binder is
+gone. -/
 theorem csd_qec_decoherence_corrected
-    {D : CSD.LF2.SectorData SigmaSpace P G}
-    (_bundle : CSD.Empirical.CSDBridge.QEC.CSDThreeQubitBundle D)
     (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (a b : ℂ) (ρ : Matrix (Fin 2) (Fin 2) ℂ) :
     ((bitFlipChannel p hp0 hp1).apply ρ
           = Matrix.traceRight ((bitFlipChannel p hp0 hp1).stinespringIsom * ρ

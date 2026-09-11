@@ -814,6 +814,24 @@ info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_phaseflip' depends on ax
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.bitFlipChannel_apply
 
+-- BitFlipDilation (2026-09-11, W11): the bit-flip channel IS the Stinespring channel of the joint
+-- unitary U_p = CX (I (x) R_p) with the environment ready in |0>, as channels.
+/-- info: 'CSD.Empirical.QM.QEC.bitFlipUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.bitFlipUnitary
+
+/-- info: 'CSD.Empirical.QM.QEC.bitFlipUnitary_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.bitFlipUnitary_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.krausBlock_bitFlipUnitary_embedEnv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.krausBlock_bitFlipUnitary_embedEnv
+
+/-- info: 'CSD.Empirical.QM.QEC.stinespringChannel_bitFlipUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.stinespringChannel_bitFlipUnitary
+
 /-! ### Tranche 1 Tier A gates (added 2026-05-22)
 
 Pure linear-algebra gate identities + CSD-side bundle framework.
