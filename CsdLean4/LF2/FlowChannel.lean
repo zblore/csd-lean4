@@ -9,6 +9,7 @@ public import CsdLean4.LF2.PreparationBarycenter
 public import CsdLean4.Mathlib.QuantumInfo.Stinespring
 public import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitSection
 public import Mathlib.MeasureTheory.Integral.Prod
 
 /-!
@@ -66,10 +67,12 @@ product sector: the environment state is then *the barycentre of the environment
 (`barycenterMatrix_prod`, Fubini), and the reduced flowed system state is that channel applied to
 the system's density operator.
 
-⚠️ **The lift hypothesis is a hypothesis.** `IsUnitaryLift` says the ontic flow projects to a
-unitary action through `rep`; for the corpus's `KahlerOnticSetup` flows it is a theorem
-(`isUnitaryLift_of_smul`), for an abstract `SectorData` it is what "the flow is the lift of `U`"
-means. Which unitary a given de-isolation flow lifts is the physics (LF5's `vnUnitary` for the
+**The lift hypothesis, discharged for projective actions.** `IsUnitaryLift` says the ontic flow
+projects to a unitary action through `rep`; for the corpus's `KahlerOnticSetup` flows it is a
+theorem for any unit section (`isUnitaryLift_of_smul`) and unconditional with the canonical
+measurable unit section `Projectivization.unitSection` (`isUnitaryLift_unitSection`,
+`Mathlib/LinearAlgebra/Projectivization/UnitSection.lean`); for an abstract `SectorData` it is
+what "the flow is the lift of `U`" means. Which unitary a given de-isolation flow lifts is the physics (LF5's `vnUnitary` for the
 von Neumann coupling; `LF6/DecoherenceChannel.lean` instantiates it).
 
 **Index generality.** The theorems are over any finite index; the projective-action instance
@@ -372,6 +375,16 @@ theorem isUnitaryLift_of_smul (D : SectorData SigmaSpace (ℙ ℂ (EuclideanSpac
     rw [hconj, Matrix.trace_smul, htr, smul_eq_mul, mul_one] at h1
     exact h1
   rw [hconj, hone, one_smul]
+
+/-- ★ **The lift hypothesis is unconditional for the projective action.** With the canonical
+measurable unit section `Projectivization.unitSection` as representative, every ontic flow that
+projects to the action of a unitary lifts it. -/
+theorem isUnitaryLift_unitSection (D : SectorData SigmaSpace (ℙ ℂ (EuclideanSpace ℂ (Fin N))) G)
+    (Φ : SigmaSpace → SigmaSpace) (U : Matrix.unitaryGroup (Fin N) ℂ)
+    (hproj : ∀ x, D.π (Φ x) = U • D.π x) :
+    IsUnitaryLift D Φ Projectivization.unitSection U.val :=
+  isUnitaryLift_of_smul D Φ U hproj Projectivization.unitSection Projectivization.norm_unitSection
+    Projectivization.unitSection_ne_zero Projectivization.mk_unitSection
 
 end Projective
 

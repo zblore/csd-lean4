@@ -587,6 +587,12 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.measurementFlow_vonNeumannEntropy_le
 
+-- W6'' (2026-09-11): the same with the canonical measurable unit section supplied, no section
+-- hypothesis left.
+/-- info: 'CSD.LF6.measurementFlow_traceRight_barycenter_unitSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.measurementFlow_traceRight_barycenter_unitSection
+
 -- LF6-B.2 (Decoherence, 2026-06-29): the QUANTITATIVE purity-drop / irreversibility witness.
 -- The reduced state is a genuine density operator (decohereReduced_trace, Tr = ‖ψ‖², via
 -- partialTraceRight_trace + deisolation_conservative Vᴴ V = 1); its purity Tr(ρ_red²) =

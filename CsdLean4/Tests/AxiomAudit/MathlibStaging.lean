@@ -878,6 +878,50 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Projectivization.lift_measurable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.lift_measurable
 
+-- UnitSection (2026-09-11, W6''): the canonical measurable unit section of the ray map of a
+-- finite-dimensional EuclideanSpace -- unit-norm representative with first non-zero coordinate
+-- real and positive; scale-invariant so it descends through Projectivization.lift, measurable
+-- as a finite sum of candidate representatives on the measurable sets "first index = i".
+/-- info: 'Projectivization.firstIndex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.firstIndex
+
+/-- info: 'Projectivization.firstIndex_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.firstIndex_eq_iff
+
+/-- info: 'Projectivization.unitRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.unitRep
+
+/-- info: 'Projectivization.unitRep_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.unitRep_smul
+
+/-- info: 'Projectivization.unitSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.unitSection
+
+/-- info: 'Projectivization.norm_unitSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_unitSection
+
+/-- info: 'Projectivization.mk_unitSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mk_unitSection
+
+/-- info: 'Projectivization.measurableSet_firstIndex_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.measurableSet_firstIndex_eq
+
+/-- info: 'Projectivization.measurable_unitRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.measurable_unitRep
+
+/-- info: 'Projectivization.measurable_unitSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.measurable_unitSection
+
 /-- info: 'Projectivization.measurable_iff_measurable_comp_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.measurable_iff_measurable_comp_mk'
 

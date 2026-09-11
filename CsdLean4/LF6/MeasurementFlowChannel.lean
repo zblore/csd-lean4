@@ -36,11 +36,11 @@ reindexing and instantiates the W6/W7 theorems on LF5's flow:
 
 ## Honest scope
 
-⚠️ **The unit section is a hypothesis.** The theorems take a unit-norm measurable section
-`rep'` of the ray map (`mk (rep' p) = p`), as `fromPreparation` does; the corpus's concrete
-consumers supply constant representatives for Dirac preparations. Constructing a measurable unit
-section of `ℙ ℂ (ℂᵐ)` (a Borel selection, e.g. normalising the first non-zero coordinate to be
-real and positive) is not done here; it is the priced residue W6″ in the scoping note.
+**The unit section.** The general theorems take a unit-norm measurable section `rep'` of the ray
+map (`mk (rep' p) = p`), as `fromPreparation` does; `Projectivization.unitSection`
+(`Mathlib/LinearAlgebra/Projectivization/UnitSection.lean`, W6″) is one, canonical and Borel
+measurable, and `measurementFlow_traceRight_barycenter_unitSection` is the theorem with it
+supplied, so no section hypothesis remains.
 
 ⚠️ **The product form is a hypothesis.** That the joint preparation is the system preparation
 tensored with the ready apparatus, at the projector level and almost everywhere, is what "the
@@ -148,6 +148,28 @@ theorem measurementFlow_vonNeumannEntropy_le (e : Fin N × Fin N ≃ Fin m)
     ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e).symm.continuous.measurable.comp hrep_meas)
     repS hrepS_unit hrepS_meas
     (isUnitaryLift_measurementFlow e D Φ hproj rep' hrep_unit hrep_ne hsec) hprod hpos
+
+/-- ★★ **Unconditional form**: with the canonical measurable unit section as representative, the
+section hypotheses disappear. The reduced density operator of the flowed preparation is the
+de-isolation channel applied to the system's density operator, for every preparation on a sector
+whose flow projects to LF5's measurement flow and is a product with the apparatus ready. -/
+theorem measurementFlow_traceRight_barycenter_unitSection (e : Fin N × Fin N ≃ Fin m)
+    (D : SectorData SigmaSpace (ℙ ℂ (EuclideanSpace ℂ (Fin m))) G)
+    (μprep : Measure SigmaSpace) [IsProbabilityMeasure μprep]
+    (Φ : SigmaSpace → SigmaSpace) (hΦ : Measurable Φ)
+    (hproj : ∀ x, D.π (Φ x) = measurementFlow N e (D.π x))
+    (repS : ℙ ℂ (EuclideanSpace ℂ (Fin m)) → EuclideanSpace ℂ (Fin N)) (hrepS_meas : Measurable repS)
+    (hprod : ∀ᵐ x ∂μprep,
+      outerProduct ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e).symm
+          (Projectivization.unitSection (D.π x)))
+        = outerProduct (repS (D.π x)) ⊗ₖ outerProduct (EuclideanSpace.single (0 : Fin N) (1 : ℂ))) :
+    Matrix.traceRight (barycenterMatrix
+        (fun p => (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e).symm (Projectivization.unitSection p))
+        (Measure.map D.π (Measure.map Φ μprep)))
+      = (deisolationChannel N).apply (barycenterMatrix repS (Measure.map D.π μprep)) :=
+  measurementFlow_traceRight_barycenter e D μprep Φ hΦ hproj Projectivization.unitSection
+    Projectivization.norm_unitSection Projectivization.unitSection_ne_zero
+    Projectivization.mk_unitSection Projectivization.measurable_unitSection repS hrepS_meas hprod
 
 end LF6
 end CSD

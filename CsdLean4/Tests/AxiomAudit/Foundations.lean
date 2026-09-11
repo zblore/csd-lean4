@@ -311,6 +311,11 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.isUnitaryLift_of_reindex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.isUnitaryLift_of_reindex
 
+-- W6'' (2026-09-11): the lift is unconditional for projective actions with the canonical
+-- measurable unit section Projectivization.unitSection as representative.
+/-- info: 'CSD.LF2.isUnitaryLift_unitSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.isUnitaryLift_unitSection
+
 -- Direct pin (landing-surface axiom reconciliation, 2026-08-09): the rank-one density
 -- uniqueness lemma. It was carried as a named axiom in earlier revisions and in the
 -- published LF-series papers, discharged 2026-05-18 via

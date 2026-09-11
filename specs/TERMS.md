@@ -108,9 +108,11 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   preparation whose bath preparation has the Gibbs barycentre (`landauer_flow`).
 * **NOT established:** the `LF2` and `SigmaLayer` preparation interfaces are not identified, so the
   `SigmaLayer` theorem that region preparations *have* a `ρ_ep` is not composed with the `ρ_ep` form; the
-  `LF2.QuantumChannel ↔ QuantumInfo.Channel` bridge (W5's second half); a measurable unit section of the
-  ray map, which W6′ (`LF6/MeasurementFlowChannel.lean`, LF5's `measurementFlow` produces the de-isolation
-  channel) takes as a hypothesis (W6″).
+  `LF2.QuantumChannel ↔ QuantumInfo.Channel` bridge (W5's second half).
+* **Also backed (2026-09-11, W6′/W6″):** LF5's `measurementFlow` produces the de-isolation channel
+  (`measurementFlow_traceRight_barycenter_unitSection`, `LF6/MeasurementFlowChannel.lean`), with the
+  canonical measurable unit section `Projectivization.unitSection` as representative, so no section
+  hypothesis remains between the ontic flow and the channel.
 
 ## moment map
 
