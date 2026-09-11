@@ -346,6 +346,28 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.QuantumChannel.traceDist_channelApply_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.QuantumChannel.traceDist_channelApply_le
 
+-- W4 (2026-09-11), LF2/PreparationPurity.lean: a preparation has zero entropy iff its projective
+-- law is a Dirac mass at one ray (with the canonical measurable unit section as representative).
+-- A barycentre that is a projector forces almost every ray to be that projector's ray (equality in
+-- Cauchy-Schwarz under the integral); a probability measure concentrated on a point is the Dirac.
+/-- info: 'CSD.LF2.vonNeumannEntropy_eq_zero_iff_outerProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.vonNeumannEntropy_eq_zero_iff_outerProduct
+
+/-- info: 'CSD.LF2.trace_outerProduct_mul_barycenterMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.trace_outerProduct_mul_barycenterMatrix
+
+/-- info: 'CSD.LF2.ae_outerProduct_eq_of_barycenterMatrix_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.ae_outerProduct_eq_of_barycenterMatrix_eq
+
+/-- info: 'CSD.LF2.mk_eq_mk_of_outerProduct_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.mk_eq_mk_of_outerProduct_eq
+
+/-- info: 'CSD.LF2.eq_dirac_of_ae_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.eq_dirac_of_ae_eq
+
+/-- info: 'CSD.LF2.preparationEntropy_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparationEntropy_eq_zero_iff
+
 -- Direct pin (landing-surface axiom reconciliation, 2026-08-09): the rank-one density
 -- uniqueness lemma. It was carried as a named axiom in earlier revisions and in the
 -- published LF-series papers, discharged 2026-05-18 via

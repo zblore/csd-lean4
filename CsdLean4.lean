@@ -39,6 +39,7 @@ public import CsdLean4.Mathlib.QuantumInfo.DataProcessing
 public import CsdLean4.Mathlib.QuantumInfo.UnitaryPerturbation
 public import CsdLean4.Mathlib.QuantumInfo.Helstrom
 public import CsdLean4.Mathlib.QuantumInfo.Entropy
+public import CsdLean4.Mathlib.QuantumInfo.PureState
 public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
 public import CsdLean4.Mathlib.QuantumInfo.Fidelity
@@ -110,6 +111,7 @@ public import CsdLean4.LF2.BornWrapper
 public import CsdLean4.LF2.EffectGleason
 public import CsdLean4.LF2.PreparationQdensity
 public import CsdLean4.LF2.PreparationBarycenter
+public import CsdLean4.LF2.PreparationPurity
 public import CsdLean4.LF2.FlowChannel
 public import CsdLean4.LF2.ReducedDensity
 public import CsdLean4.LF2.MixedEnsembleIx

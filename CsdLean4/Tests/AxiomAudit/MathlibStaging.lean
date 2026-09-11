@@ -87,6 +87,18 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'QuantumInfo.Channel.comp_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.Channel.comp_apply
 
+-- PureState (2026-09-11, W4): zero von Neumann entropy characterises pure states (the converse of
+-- vonNeumannEntropy_eq_zero_of_pure): eigenvalues in [0,1] summing to one with vanishing negMulLog
+-- terms are {0,1}-valued with exactly one 1; the spectral theorem in projector form finishes it.
+/-- info: 'QuantumInfo.negMulLog_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.negMulLog_eq_zero_iff
+
+/-- info: 'QuantumInfo.isHermitian_eq_sum_eigenvalues_smul_vecMulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.isHermitian_eq_sum_eigenvalues_smul_vecMulVec
+
+/-- info: 'QuantumInfo.vonNeumannEntropy_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.vonNeumannEntropy_eq_zero_iff
+
 /-- info: 'QuantumInfo.Channel.traceOutChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.Channel.traceOutChannel_apply
 

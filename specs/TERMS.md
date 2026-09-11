@@ -100,6 +100,9 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   Stinespring channel `ρ ↦ Tr_env (U (ρ ⊗ σ) Uᴴ)` applied to the system's density operator
   (`traceRight_barycenter_flow`, `traceRight_barycenter_flow_prod`); LF6's `decohereReduced` is such a
   channel output (`deisolationChannel_apply_outerProduct`).
+* **Also backed (2026-09-11, W4, `LF2/PreparationPurity.lean`):** its entropy vanishes iff the preparation is
+  pure, i.e. its projective law is a Dirac mass at a single ray (`preparationEntropy_eq_zero_iff`, with the
+  canonical measurable unit section as representative; matrix level `vonNeumannEntropy_eq_zero_iff`).
 * **Also backed (2026-09-11, W7, `Thermo/SigmaSecondLaw.lean`):** its entropy is conserved along the ontic
   flow and does not decrease under pinching the flowed state or under de-isolation (the second law on
   `Σ`, `vonNeumannEntropy_le_pinching_flow` / `vonNeumannEntropy_le_deisolation`; TH2's `pinch` IS the
