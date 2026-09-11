@@ -1,0 +1,120 @@
+# From CSD's posits to the end of the QIT layer: scoping note
+
+**Status:** SCOPED 2026-09-11, after a full anchoring survey of `CsdLean4/Mathlib/QuantumInfo/` (24 modules),
+`Empirical/CSD/` (the QIT-touching twins), and the `LF2`/`SigmaLayer`/`RecordLayer` bridge modules. Every claim
+below was read from theorem *types*, not headers. Nothing here is built yet; §5 prices what would be.
+
+## 1. The question
+
+Can a reader start from CSD's posits (an ontic sector `Σ = ℂℙⁿ × T²` with its Liouville measure and flow,
+`specs/POSITS.md`) and, following only Lean theorems, arrive at the quantum-information results the corpus
+proves — von Neumann entropy, trace distance and the data-processing inequality, subadditivity, strong
+subadditivity, Holevo, Stinespring, the three-qubit code, the algorithms? Today: **no**, and the reason is
+not that the bridge is missing. It is that the bridge exists as two theorems that are never composed, and
+the QIT layer is stated on bare matrices that nothing CSD-side ever instantiates.
+
+## 2. What the QIT layer is anchored on
+
+Every module in `Mathlib/QuantumInfo/` is Category 1-Mathlib, imports nothing from `LF*`/`SigmaLayer`/
+`RecordLayer`/`Empirical` (verified), and takes as input a bare `ρ : Matrix n n ℂ` with `PosSemidef` and
+`trace = 1` hypotheses (or a bare `EuclideanSpace ℂ ι` vector, or a `Channel` as a Kraus family). That is
+correct for a Mathlib-staging layer, and none of it should change. The question is what *feeds* it.
+
+| What feeds it today | Where | Verdict |
+|---|---|---|
+| `LF6.decohereReduced ψ` — the partial trace of the LF5 von Neumann isometry applied to `ψ`, with each diagonal entry proved equal to an ontic typicality volume (`decoherence_diagonal_eq_pointer_volume`), fed to `vonNeumannEntropy_eq_zero_of_pure` (`decoherence_vonNeumann_irreversibility_capstone`, `LF6/Decoherence.lean:560`) | one theorem | **The one genuine CSD → QIT consequence in the corpus.** Its input is a Hilbert-space isometry, not a Σ-flow; its output entries are Σ-volumes. |
+| `ledgerState` in `Empirical/CSD/QuantumChaos/EntropyLedger.lean` — `diag(1−e, e)` from a set's measure, `vonNeumannEntropy_ledgerState` | one theorem | A CSD-derived density matrix reaching a QIT theorem; special-purpose. |
+| `CV/ChannelRG.lean` — consumes `channel_traceDist_le`, `traceDist_conj_sub_le` | on the CV field model's bare matrices | Not a Σ object. |
+| Every other QIT theorem | — | **No CSD-side instantiation.** |
+
+The `Empirical/CSD/` twins that touch QIT (`NoCloning`, `NoBroadcasting`, `NoCommunication`, `NoDeleting`,
+`QEC/ThreeQubit`, `QECDecoherence`, `Resources/*`, `Crypto/QuantumMoney`, `Contextuality/KS18`,
+`MerminPeres`) each take a `CSDBridge.Context D` bundle and prove the QM statement. In `QEC/ThreeQubit.lean:116`
+and `QECDecoherence.lean:350` the bundle is bound as `_b` / `_bundle` — an **unused binder**. Their own
+tags say TRANSPORT-ONLY and SCHEMA-MISMATCH; `EMPIRICAL.md` calls the bundle "the structural slot for the
+ontic interpretation". A slot, not a derivation. `ChannelCapacity.lean` and `Einselection.lean` carry the
+Category tag "6-Local" while every theorem type is a bare `Matrix (Fin N)` statement; their headers admit
+it in prose, the tag overstates it.
+
+The genuinely CSD-anchored empirical twins — the sequential-measurement crypto (`BB84Sequential`, `B92`,
+`Wiesner`: calibrated-swap dynamics on Σ), the contextuality volumes (`KCBSVolume`, `KS18Volume`,
+`MerminPeresVolume`: basin frequencies on `ℂℙᴹ × T²`), `Darwinism` (record strokes), and
+`MixedStateBornVolume` — produce **no QIT object** (no density operator, channel, or entropy). They stop
+at Born numbers.
+
+## 3. The bridge as it exists
+
+The chain `CSD posit → sector → preparation → density operator` is two proved theorems:
+
+1. **Preparation → operational package.** `CSD.LF2.OperationalPackage.fromPreparation`
+   (`LF2/Preparation.lean:155`): from `SectorData`, a `MeasureBridgeData`, a probability measure `μprep`
+   on Σ and a representation `rep : P → ℂᴺ`, an `OperationalPackage N` whose effect probabilities are
+   `∫ effectProjFn rep E ∂(π_* μprep)`.
+2. **Operational package → density operator.** `CSD.LF2.OperationalPackage.effect_gleason_representation`
+   (`LF2/EffectGleason.lean:1409`): `∃! ρ : DensityOperator N, ∀ E, OP.p E = traceForm ρ E`, witness
+   `OP.qdensity`. Foundational triple, pinned.
+
+**2 ∘ 1 is never stated as a theorem**, and `(fromPreparation …).qdensity` is consumed nowhere outside
+`LF2/EffectGleason.lean` and `Headlines.lean`. The pure special case is composed (`born_rank_one`); the mixed
+case is not. The region-preparation density `ρ_ep` (`SigmaLayer/PreparationDensity.lean`) is a function on
+`ℂℙⁿ⁻¹`, and its identification with `qdensity` as a barycentre `∫ |ψ⟩⟨ψ| ρ_ep dμ_FS` is **absent** (no
+declaration of that shape anywhere).
+
+The next link, `density operator → channel`, has one witness: `LF6.decohereReduced`, whose Kraus form is the
+partial trace of the vN isometry. The general-N version `decohereReducedN` is **posited**
+(`Einselection.lean:414`, a `Matrix.diagonal` map). "A channel is the environment-marginal of a
+measure-preserving flow on `Σ_sys × Σ_env`" (`Stinespring.lean` header, `channels-plan.md §3`) is prose: no
+declaration takes a Σ-flow and returns a `QuantumInfo.Channel`. And the corpus carries **two parallel
+Kraus types** — `CSD.LF2.QuantumChannel ι N M` and `QuantumInfo.Channel n m ι` — with no bridge lemma.
+
+## 4. Link-by-link
+
+| Link | Status |
+|---|---|
+| posit → sector | (iii) posited as structure fields; (ii) inhabited by a witness (`kMuL`, `fubiniStudyMeasure`); the sector's *geometry* proved by the G series (`generator-layer-scoping.md` §10) |
+| sector → preparation | (i) proved for pure and region preparations; mixed preparations (ii) defined only from a given `ρ` (`mixedSwapPrep`) |
+| preparation → density operator | (i) proved as two theorems, **never composed, never consumed by QIT**; barycentre identification (iv) absent |
+| density operator → channel | (ii) one witness (`decohereReduced`); Σ-flow ⇒ `Channel` (iii) prose; `LF2.QuantumChannel` ↔ `QuantumInfo.Channel` bridge (iv) absent |
+| channel → entropy, trace distance, DPI, subadditivity | (i) proved on bare matrices |
+| strong subadditivity | (iii) conditional on an explicit `hDPI` hypothesis (`StrongSubadditivity.lean:374`); `lieb-dpi-scoping.md` recommends leaving it |
+| Holevo / capacity | (iv) absent beyond one single-shot example; entropy concavity not in the corpus |
+| QEC | (i) on `(Fin 2)³` matrices; CSD twins are transports with unused binders |
+| algorithms | (i) on `QReg`; a CSD reading of circuits (iv) absent by design (`nqubit-register-plan.md §4`) |
+
+## 5. What would be needed, priced
+
+The programme, in order. Each row is a brick; the author decides. `P` is P(success); `V` is value for the
+question in §1.
+
+| # | Brick | Cx | P | V | What it lands |
+|---|---|---|---|---|---|
+| **W2** | **Compose the bridge.** `preparation_qdensity : ∀ (D bridge μprep rep …), ∃! ρ : DensityOperator N, ∀ E, (fromPreparation D bridge μprep rep).p E = traceForm ρ E` — literally `effect_gleason_representation` applied to `fromPreparation`, named and pinned, with `qdensity_fromPreparation` exposing the witness. Then the **instantiation lemmas**: for that `ρ`, `ρ.M.PosSemidef` and `ρ.M.trace = 1` in the exact form `Entropy.lean` / `Subadditivity.lean` / `TraceDistance.lean` take. | **S** | High | **High** — this is the missing spine; after it every K1/K3 theorem applies to a CSD preparation by one `exact` |
+| **W3** | **The barycentre.** For a region preparation with projective law `μ_FS.withDensity ρ_ep`, `qdensity = ∫ |ψ⟩⟨ψ| ρ_ep(ψ) dμ_FS(ψ)` (a Bochner integral of rank-one projectors). This is what makes the density operator *the* ontic object rather than a Gleason witness. Needs integration of matrix-valued functions over `ℂℙⁿ` against `μ_FS` — `MeasureTheory.integral` on `Matrix` is present; the identification is `traceForm` linearity + `effectProjFn` = `Tr(|ψ⟩⟨ψ| E)`. | **M** | High | High |
+| **W4** | **Entropy of a preparation.** `vonNeumannEntropy_fromPreparation`, `= 0 ↔ pure` (`SigmaLayer/PreparationDensity` has purity), monotone under coarse-graining of regions (needs W3 + concavity, see W8). | **S–M** after W2 | High | Medium — the first QIT quantity *of a Σ-region* |
+| **W5** | **Channels from flows, the witness first.** State `LF6.decohereReduced` as a `QuantumInfo.Channel` (Kraus = partial-trace-of-isometry, `Stinespring.ofIsometry` is present) and prove `Channel.apply = decohereReduced`; then the bridge `LF2.QuantumChannel ↔ QuantumInfo.Channel` (both are Kraus families; a `toChannel` + `apply_eq`). Retire the parallel type or mark it an interface. | **S–M** | High | Medium |
+| **W6** | **Channels from flows, general.** For a measure-preserving flow `Φ_t` on `Σ_sys × Σ_env` that is the lift of a unitary `U_t` on `ℂᴺ ⊗ ℂᴱ` (the corpus's `jointLift` / `IsJointLift`, `SigmaLayer/JointFlowTransfer.lean`), the map `ρ ↦ Tr_env (U_t (ρ ⊗ σ_env) U_tᴴ)` is a `QuantumInfo.Channel` whose action on `qdensity` of a preparation is `qdensity` of the *flowed* preparation. This is the theorem the `Stinespring.lean` header calls the "CSD reading"; it needs W2, W5, and the joint-lift API. | **L** | Medium | **High** — the CSD origin of every channel the QIT layer then reasons about |
+| **W7** | **DPI and the second law on Σ.** With W6: `channel_traceDist_le` and `vonNeumannEntropy_le_pinching` instantiated on flowed preparations — the corpus's `Thermo/SecondLaw.lean` and `Landauer.lean` become statements about Σ-regions under de-isolation. | **S** after W6 | High | High |
+| **W8** | **Concavity of von Neumann entropy** (`S(∑ pᵢ ρᵢ) ≥ ∑ pᵢ S(ρᵢ)`): needed for Holevo ≥ 0, for W4's coarse-graining, and for any capacity statement. The corpus has `matrix_log_concave`/`matrix_rpow_concave` (`OperatorConvexBridge.lean`) but not `S`; Mathlib has `CFC.concaveOn_log` since 2026-08-30. Route: `S(ρ) = −Tr(ρ log ρ)` and operator concavity of `x log x`'s negative via the CFC. | **M** | Medium–high | Medium |
+| **W9** | **SSA unconditional** — the `hDPI` hypothesis of `strong_subadditivity_of_relEntropy_monotone`. `lieb-dpi-scoping.md` (2026-09-01) found physlib's `Sᵥₙ_strong_subadditivity` sorry-free on identical pins and recommends *leave `hDPI` honest, or bridge*; its Gate 0 (`#print axioms`) is unrun. Do that gate before pricing further. | **L–XL** (build) / **S** (bridge if Gate 0 passes) | Low / High | Medium |
+| **W10** | **Holevo χ and one capacity.** With W8: `holevo_nonneg`, `holevo_le_log_dim`, and the single-letter classical capacity of the dephasing witness as a *theorem* rather than an example (`ChannelCapacity.lean` has the arithmetic). Regularised capacity not in scope. | **M** after W8 | Medium | Low–medium |
+| **W11** | **QEC on Σ.** `three_qubit_corrects_single_bitflip` with the bit-flip channel produced by W6 from a Σ-flow, and the code space read as a Σ-region (`RecordLayer` basins). Removes the unused `_bundle` binders honestly. | **M** after W6 | Medium | Medium |
+| **W12** | **Ledger fixes now, no Lean:** re-tag `ChannelCapacity.lean` and `Einselection.lean` from "6-Local" to what they are; mark the unused-binder twins as such in `EMPIRICAL.md`; the three stale notes the survey found (`StrongSubadditivity.lean:80` — the fork is no longer build-vs-axiom; `Pauli.lean:28` and `Clifford.lean:37` say stabiliser measurement is "not attempted" while `Stabilizer.lean` proves it; `channels-plan.md:104` lists DPI as deferred, it landed 2026-06-09). | **S** | High | Site accuracy |
+
+**The critical path is W2 → W3 → W6 → W7.** After W2 (an afternoon) every entropy, distance, and DPI theorem
+in the corpus is *available* to a CSD preparation; after W6 (L) the channels those theorems talk about
+*come from* Σ-flows. That is the point at which "from the base posit to the end of the QIT" is a chain of
+theorems rather than a chain of headers. W8–W11 extend the reach; W9 is a Mathlib-depth fork the author
+has already been asked to rule on.
+
+**What this does not change.** The posits stay posits (`POSITS.md`): the sector is selected, not derived,
+and the flow's Liouville property for the constraint dynamics is Posit 3. Every QIT statement reached by
+this programme is of the form "given CSD's posited sector and flow, the following quantum-information
+quantities of its preparations obey these theorems". That is a consequence of the posits, which is what §1
+asks; it is not a derivation of the posits, which the CHARTER says is a non-question.
+
+## References
+
+`EMPIRICAL.md` (the two layers; "structural slot"); `specs/channels-plan.md`, `specs/lieb-dpi-scoping.md`,
+`specs/nqubit-register-plan.md`; `LF2/Preparation.lean`, `LF2/EffectGleason.lean`, `LF6/Decoherence.lean`,
+`SigmaLayer/PreparationDensity.lean`, `SigmaLayer/JointFlowTransfer.lean`, `Empirical/CSD/Framework.lean`;
+`Mathlib/QuantumInfo/*`; `specs/generator-layer-scoping.md` §10 (the geometry side of the same question).

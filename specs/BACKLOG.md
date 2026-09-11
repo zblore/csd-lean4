@@ -45,6 +45,13 @@
 > | ~~**Q32**~~ **DONE 2026-09-11** | Glossary staleness sweep: 11 entries flagged STALE, 1 never reviewed, `meta.sha` re-pinned. Each re-read against its module's diff since `reviewed:`; **two needed content** (`fibre`: the base measure is now derived from the volume form, W1; `schrodinger-from-records`: the continuity-only form exists), ten were docstring-only changes and got the date. Guard: 0 STALE, 0 never reviewed. | **S** | — | — | `docs/glossary.yaml` |
 > | *(push)* | Fourteen local commits (G9+G10 … G17) are unpushed; CI has not seen the manifold layer past `46be6c6`. | — | — | — | The author's call. |
 >
+> ⚠️ **QIT chain SCOPED 2026-09-11** — [`qit-chain-scoping.md`](qit-chain-scoping.md): can a reader go from CSD's
+> posits to the QIT layer by theorems alone? No: the bridge `preparation → density operator` exists as TWO
+> proved theorems (`fromPreparation`, `effect_gleason_representation`) never composed and never consumed by
+> QIT; every K1/K3 theorem is on bare matrices; the QEC twins bind their CSD bundle as an unused `_b`.
+> Priced rows **W2–W12** there (critical path W2 → W3 → W6 → W7: compose the bridge (S), the barycentre (M),
+> channels from Σ-flows (L), DPI/second law on Σ (S)). The author decides.
+>
 > *Closed by the 2026-09-11 scan (were "not scheduled"):* the C2 Mathlib-gap pair — the metric on `ℙ`
 > **exists** (`Mathlib/LinearAlgebra/Projectivization/Metric.lean`, the gap metric, a Mathlib-upstream
 > candidate) and `segre_range_null` was **dissolved** (MG-2, 2026-08-22: the consumer never needed it).
