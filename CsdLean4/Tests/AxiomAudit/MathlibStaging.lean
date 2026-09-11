@@ -4747,6 +4747,70 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure
 
+-- Q30 / G17b (2026-09-11): the Riemannian volume is canonical. For a bilinear metric family
+-- (IsBilinear, four pointwise equations) the local representative pulls back along a chart
+-- transition's derivative (localRep_transition), so the Gram matrix transforms by congruence
+-- A^T G A and sqrt(det G) by |det A| (chartDensity_transition, the Jacobian rule for Gram
+-- densities); change of variables then gives chart-independence (chartMeasure_congr) and
+-- cover-independence (riemannianVolume_congr_cover), by the TopFormMeasure proofs with the Gram
+-- rule in place of the top-form rule. The Fubini-Study metric is bilinear (isBilinear_fsMetric),
+-- so vol_g = fsVolume n / n! for EVERY cover (riemannianVolume_fsMetric_congr_cover).
+/-- info: 'RiemannianMetric.IsBilinear' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.IsBilinear
+
+/-- info: 'RiemannianMetric.localRep_add_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.localRep_add_left
+
+/-- info: 'RiemannianMetric.localRep_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.localRep_smul_left
+
+/-- info: 'RiemannianMetric.localRep_add_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.localRep_add_right
+
+/-- info: 'RiemannianMetric.localRep_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.localRep_smul_right
+
+/-- info: 'RiemannianMetric.localRepBilin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.localRepBilin
+
+/-- info: 'RiemannianMetric.gram_eq_toMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.gram_eq_toMatrix
+
+/-- info: 'RiemannianMetric.localRep_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.localRep_transition
+
+/-- info: 'RiemannianMetric.chartDensity_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.chartDensity_transition
+
+/-- info: 'RiemannianMetric.chartMeasure_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.chartMeasure_congr
+
+/-- info: 'RiemannianMetric.riemannianVolume_apply_of_subset_source' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.riemannianVolume_apply_of_subset_source
+
+/-- info: 'RiemannianMetric.riemannianVolume_congr_cover' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.riemannianVolume_congr_cover
+
+/-- info: 'Projectivization.isBilinear_fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isBilinear_fsMetric
+
+/-- info: 'Projectivization.riemannianVolume_fsMetric_congr_cover' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.riemannianVolume_fsMetric_congr_cover
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

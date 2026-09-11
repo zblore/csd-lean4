@@ -248,10 +248,13 @@ alarming and is not.
   `riemannianVolume_fsMetric` (`vol_g = fsVolume n / n!`, the Kähler identity `vol_g = ω^{∧n}/n!`).
   All three textbook readings of `μ_FS` — unique invariant measure, normalised top power of the Kähler
   form, normalised Riemannian volume of the metric — are now theorems identifying the same measure.
-* **NOT established (queued, G17b of `specs/generator-layer-scoping.md` §9):** chart-independence
-  of the Gram-density construction of `riemannianVolume` for a metric that is *not* identified chart
-  by chart with a top-form density (on `ℂℙⁿ` it is, so independence is inherited from
-  `topFormMeasure_congr_cover`). Marker: `TERM-SCOPE(Kahler)` where that reading is used.
+* **Also backed (2026-09-11, Q30 / G17b):** the Riemannian volume is canonical —
+  `RiemannianMetric.riemannianVolume_congr_cover` (cover-independence for any bilinear metric family,
+  by the Jacobian rule for Gram densities `chartDensity_transition`) and
+  `Projectivization.riemannianVolume_fsMetric_congr_cover` (`vol_g = fsVolume n / n!` for every
+  cover). Not stated: basis-independence of the Gram construction, and that isometries preserve
+  `riemannianVolume`; nothing consumes either. Marker: `TERM-SCOPE(Kahler)` where that reading is
+  used.
 * ⚠️ **Since CR-4 (2026-09-06) the Born headlines no longer route through it.** The dependency cone
   of `globalBasin_born` contains **no** `fubiniStudyMeasure`: the fibred route is
   `epistemicMeasure = Dirac ⊗ Haar`, the basin measure is a torus-cell width, and the value is the
