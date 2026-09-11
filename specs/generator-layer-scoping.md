@@ -601,6 +601,109 @@ symplectic volume, and the Hamiltonian character of its unitary flows are theore
 `schrodingerField_isHamiltonianVectorField`), and the corpus's sector instances are proved to carry
 them (`unitaryFlowSetup_isKahler_liouville`); the sector's *selection* remains a posit.*
 
+## 11. The next pieces, priced with the evidence (2026-09-11)
+
+Every ingredient below was grep-probed at the Mathlib pin on 2026-09-11; "absent" means the grep
+found nothing, "present" names the declaration. Prices are honest; the author decides (§9 policy).
+Rows are the `Q`-ids of `BACKLOG.md` ▶ OUTSTANDING with their `G`-ids in brackets.
+
+### Q29 (= G5): Liouville at manifold level — `XL`, but the route has changed
+
+**What it would prove.** Every time-`t` map of the flow of a Hamiltonian vector field preserves
+the symplectic volume `topFormMeasure (ω^{∧n})`. Today this is proved for the unitary flows on `ℂℙⁿ`
+(W1, by invariance), and posited for the constraint dynamics (Posit 3).
+
+**The route §9 priced (Cartan).** (a) global flows; (b) `L_X ω = d ι_X ω + ι_X dω` on a manifold;
+(c) `L_X ω = 0` from G11. Milestone (b) is a Lie derivative of manifold forms, which is absent at the
+pin (no `lieDeriv`, no Cartan anywhere under `Mathlib/Geometry/Manifold/` or
+`Analysis/Calculus/DifferentialForm/`), and it is the reason for the XL.
+
+**The route the corpus's own infrastructure suggests (chart-level ODE), found 2026-09-11.**
+`topFormMeasure_map_eq` (`TopFormMeasure.lean`) already proves that a homeomorphism `g` preserves the
+measure of a top form *given a chart-level pullback identity* `hinv`: in every chart, the local
+representative pulled back along the chart expression of `g` equals the local representative. So
+Liouville reduces to proving that identity for `g = φ_t`, which is a **flat** statement about the
+chart flow `Φ_t := chart ∘ φ_t ∘ chart⁻¹` on an open set of `E`: `(Φ_t)^* ω_loc = ω_loc`. That is the
+flat Liouville theorem, provable by the ODE `d/dt [(Φ_t)^* ω_loc] = (Φ_t)^* [L_X ω_loc]` where the
+flat Lie derivative is `L_X ω = D_X ω + ω(DX ·, ·) + ω(·, DX ·)` — no manifold Lie derivative, no
+manifold Cartan. The flat Cartan formula for a 2-form on a normed space is a finite identity of
+alternating maps once `extDeriv_apply` is unfolded (`Mathlib/Analysis/Calculus/DifferentialForm/Basic.lean`,
+present). Milestones on this route:
+
+| | Milestone | Cx | Evidence at the pin |
+|---|---|---|---|
+| (a) | **Global flow of a `C^1` field on a compact manifold**: from `exists_isMIntegralCurve_of_isMIntegralCurveOn` (present, `IntegralCurve/UniformTime.lean`; needs a uniform `ε` — on a compact manifold the local existence time of `exists_isMIntegralCurveAt_of_contMDiffAt` is bounded below by compactness, a Lebesgue-number argument) and G4's uniqueness, assemble `φ : ℝ → M → M` with `φ (s+t) = φ s ∘ φ t` (`Mathlib/Dynamics/Flow.lean`, `structure Flow`, present) and each `φ t` a homeomorphism (`Flow.toHomeomorph`, present). | **M–L** | Both Mathlib halves present; the compactness step is the work. |
+| (b′) | **Flat Liouville**: on an open `U ⊆ E`, for `X` `C^1` and `ω_loc` a `C^1` 2-form with the flat `L_X ω_loc = 0`, the flow `Φ_t` of `X` satisfies `(Φ_t)^* ω_loc = ω_loc` on its domain. Proof: fix `u, v`; `f(t) := ω_loc (Φ_t x) (DΦ_t u, DΦ_t v)` has `f' = 0` by the product rule and the variational equation `d/dt DΦ_t = DX ∘ DΦ_t`; `is_const_of_deriv_eq_zero`. The variational equation needs smooth dependence of the flow on initial data, which is **absent** at the pin (`Mathlib/Analysis/ODE/PicardLindelof.lean` gives existence and uniqueness only) — this is the genuine gap on this route, smaller than Cartan but real. | **L** | `is_const_of_deriv_eq_zero` present; smooth dependence on initial data absent. |
+| (c′) | **`L_X ω = 0` for a Hamiltonian field, flat**: `L_X ω = d(ι_X ω) + ι_X dω` is the flat Cartan identity (a `Fin 2`-alternating-map computation from `extDeriv_apply`, present) and both terms vanish: `d(ι_X ω) = d(dH) = 0` (`extDeriv_extDeriv`, present; G11 gives the manifold form) and `dω = 0` (`fsForm_mextDeriv` read in the chart, `toFlat_mextDeriv`). | **M** | All present. |
+| (d′) | **Assembly on `ℂℙⁿ`**: (a) gives `φ_t` as homeomorphisms; (b′)+(c′) in each chart give `hinv` for `topFormMeasure_map_eq`; conclude `Measure.map (φ_t) (fsVolume n) = fsVolume n` for every `C^∞` Hamiltonian `H`. Then `flow_preserves_volume` of `KahlerOnticSetup` is a theorem for every Hamiltonian flow, not only the unitary ones. | **M** | `topFormMeasure_map_eq` present in-corpus. |
+
+**Re-price:** **L–XL** on the chart route (was XL on the Cartan route), with the smooth dependence
+on initial data in (b′) the one Mathlib gap, itself an L. **Value: medium.** It would make Posit 3 a
+theorem *for the globally Hamiltonian pieces of the constraint dynamics*; the measurement pieces are
+only locally Hamiltonian (`RecordLayer/PiecewiseHamiltonian.lean`), so Posit 3 stands regardless
+(`POSITS.md`). **P(success): medium.** Milestone (a) alone is a self-contained M–L with its own
+payoff: global flows on compact manifolds, a Mathlib gap.
+
+### Q30 (= G17b): chart-independence of the Gram-density Riemannian volume — `S–M`
+
+**What it would prove.** `RiemannianMetric.riemannianVolume` (`RiemannianVolume.lean`) does not
+depend on the chart cover, for any metric family — today it is canonical on `ℂℙⁿ` only because it
+is identified chart by chart with a top-form measure (`riemannianVolume_eq_smul_topFormMeasure`).
+
+**Route.** The proof of `DifferentialForm.chartMeasure_congr` (`TopFormMeasure.lean`) verbatim, with
+one lemma swapped: where the top-form proof uses `compContinuousLinearMap_apply_basis`
+(`Alternating/TopForm.lean`: the coefficient of a pulled-back top form is `det` times the coefficient),
+the Gram proof uses `√det (AᵀGA) = |det A| √det G`, which is `LinearMap.BilinForm.toMatrix_comp` +
+`Matrix.det_mul` + `Matrix.det_transpose` + `Real.sqrt_mul_self` — all present, and the first three
+were used in G17 (`det_toMatrix_fsModelMetric_mulVec`). Then `riemannianVolume_congr_cover` by the
+proof of `topFormMeasure_congr_cover`. **Cx S–M, P high, value low** (no consumer; makes the generic
+construction library-grade). The natural companion is `riemannianVolume_map_eq` (isometries preserve
+the volume), the twin of `topFormMeasure_map_eq`, same price.
+
+### Q31 (= G18): Darboux — `XL`
+
+**What it would prove.** Every symplectic form is locally the standard one. **Route** (Moser): a
+local flow (Q29(a), locally — easier), the Poincaré lemma on a star-shaped set (**absent** at the pin:
+`Mathlib/Geometry/Manifold/PoincareConjecture.lean` is the conjecture, not the lemma; nothing under
+`DifferentialForm/`), and Moser's trick, which needs the flat Lie derivative and the ODE of Q29(b′).
+So Q31 strictly contains Q29(b′) and adds the Poincaré lemma (M–L on a ball, by the explicit homotopy
+operator). **Cx XL, P low–medium, value low** (nothing consumes it; it is the theorem a symplectic
+library owes).
+
+### R-016′: the arena-level `ι_X ω = dH` — `L`, statement-level
+
+**What it would state.** That the record layer's joint-arena propagators (`RecordLayer/…`,
+`H_int = g(t)(ι+1)δ·p_R`) are the time-`T` flows of Hamiltonian vector fields on the arena
+`ℂℙⁿ × T² × …` for a product symplectic form. **What exists:** the manifold API on `ℂℙⁿ` (G1–G19),
+`IsHamiltonianVectorField` for any real boundaryless manifold. **What is missing:** the arena as a
+product *manifold* with a product symplectic form (product charted spaces and `IsManifold` for
+products are present in Mathlib; a product `DifferentialForm` and its non-degeneracy is corpus work,
+M), and the piecewise pieces stated on it. **Cx L, P medium, value medium** — it turns "Hamiltonian
+generation stated, not formalised" (`TOUR.md`, `record-layer-plan.md`) into a stated theorem-shape;
+a *discharge* is the `H_int` frontier (paper-side). Read `specs/frozen-base-obstruction-scoping.md`
+first.
+
+### Q32: glossary staleness sweep — `S`
+
+11 entries flagged STALE by `check-glossary` (module moved since `reviewed:`), `bargmann` never
+reviewed, `meta.sha` 147 commits behind. Re-read each against its module, correct, bump. Pure prose;
+the guard lists the entries. **Value: site accuracy.**
+
+### R-019: the relaxation H-theorem — `XL`, research
+
+Blocked on first-passage asymptotics for the hyperbolic fibre; `relaxation_requires_hyperbolic_fibre`
+(2026-09-06) is the proved precondition. Not a Mathlib gap, a mathematics gap. Highest value
+*outside* the programme (new predictions). See `cr-queue.md` CR-14.
+
+### The link-in audit (2026-09-11), for the record
+
+Every G-series capstone traced to its consumers. Three physics sites should have cited the manifold
+theorems and did not — `LF4/MomentMap.lean` (the object's own header), `LF4/ObservableFlow.lean`
+(its conservation law is Noether for G16), `docs/TOUR.md` (no Hamiltonian row) — fixed in `d2063e5`.
+Three capstones (`fsVolume_map_torusUnitary_smul`, `expectation_schrodingerUnitary_smul`, the
+analytic twins) have no physics consumer and correctly none: corollaries whose content is carried
+by their generic parents.
+
 ## References
 
 [`BACKLOG.md`](BACKLOG.md) (list 3, and the `R-016` row of list 1);
