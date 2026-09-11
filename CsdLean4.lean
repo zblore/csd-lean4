@@ -549,6 +549,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.DifferentialForm
 public import CsdLean4.Mathlib.Geometry.Manifold.ExteriorDerivative
 public import CsdLean4.Mathlib.Geometry.Manifold.SymplecticForm
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.GlobalFlow
+public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianVectorField
 public import CsdLean4.Mathlib.Geometry.Manifold.TopFormMeasure
 public import CsdLean4.Mathlib.Geometry.Manifold.RiemannianVolume

@@ -245,10 +245,12 @@ alarming and is not.
   vector field of a `C^∞` energy has a global integral curve through every point
   (`DifferentialForm.IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField`), and the flow
   `integralFlow` exists with the group law `integralFlow_add`
-  (`Mathlib/Geometry/Manifold/IntegralCurve/GlobalFlow.lean`; Mathlib has no flows on manifolds).
-  **NOT established:** joint continuity of the flow in `(t, x)` (Q29(a′)), that its time-`t` maps
-  preserve the symplectic volume (Q29(b′)–(d′), `BACKLOG.md` ▶ OUTSTANDING), and the arena statement
-  `R-016`.
+  (`Mathlib/Geometry/Manifold/IntegralCurve/GlobalFlow.lean`; Mathlib has no flows on manifolds),
+  and (2026-09-12, Q29(a′)) it is jointly continuous in `(t, x)` (`continuous_integralFlow`,
+  `IntegralCurve/FlowContinuity.lean`), so each time-`t` map is a homeomorphism.
+  **NOT established:** that its time-`t` maps preserve the symplectic volume (Q29(b′)–(d′),
+  `BACKLOG.md` ▶ OUTSTANDING; (b′) needs differentiable dependence of the flow on initial data,
+  absent from Mathlib), and the arena statement `R-016`.
   Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,

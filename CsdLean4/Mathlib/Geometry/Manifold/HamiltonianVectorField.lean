@@ -65,7 +65,8 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
   `IsSymplectic.contMDiff_hamiltonianVectorField`;
 * **Q29(a), global flows.** ★★ `IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField` — on a
   compact manifold the Hamiltonian vector field of a `C^∞` energy has a global integral curve through
-  every point, so its flow `integralFlow` (`IntegralCurve/GlobalFlow.lean`) exists with the group law;
+  every point, so its flow `integralFlow` (`IntegralCurve/GlobalFlow.lean`) exists with the group law
+  and is jointly continuous (`continuous_integralFlow`, `IntegralCurve/FlowContinuity.lean`, Q29(a′));
 * **G4, integral curves.** ★ `h.hasDerivAt_comp_of_isMIntegralCurve` and ★★
   `h.comp_eq_of_isMIntegralCurve` — **energy conservation**: `H` is constant along every integral
   curve of a Hamiltonian vector field of `H`, by `dH (X) = 0` and the mean value theorem; ★★

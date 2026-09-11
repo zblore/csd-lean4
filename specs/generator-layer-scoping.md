@@ -664,6 +664,21 @@ of the local flow on the initial point (`IsPicardLindelof.exists_forall_mem_clos
 so joint continuity of `integralFlow` — Q29(a′) — is S–M (glue along the cover), and what (b′) genuinely
 lacks is *differentiable* dependence, the variational equation. 12 pins.
 
+**Q29(a′) BUILT 2026-09-12 (S–M as priced, took M).** `IntegralCurve/FlowContinuity.lean`, 8 pins,
+★★ `continuous_integralFlow : Continuous fun p : ℝ × M => integralFlow hv p.1 p.2`. The glue was not
+"along the cover" but along the *group law*: (i) Mathlib's Lipschitz Picard–Lindelöf restated with the
+confinement conjunct (`…_lipschitzOnWith_mem`), (ii) a jointly continuous local flow in the chart
+(`ContDiffAt.exists_localFlow`: Lipschitz in the initial point uniformly in time, continuous in time, so
+`continuousOn_prod_of_continuousOn_lipschitzOnWith'`), (iii) transport to `M` factored out of the (a)
+proof (`chartField`, `isMIntegralCurveOn_extChartAt_symm_comp`) and identification with `integralFlow`
+for `|t| < ε` by uniqueness on an open interval (`isMIntegralCurveOn_Ioo_eqOn_of_contMDiff_boundaryless`),
+giving local joint continuity `exists_nhds_continuousOn_integralFlow`; (iv) compactness for one `ε₀`
+(`exists_forall_continuous_integralFlow_of_abs_lt`), `integralFlow_nsmul` (iteration of the group law)
+for continuity in the initial point at every time (`continuous_integralFlow_point`), and
+`φ t x = φ (t − t₀) (φ t₀ x)` composed with the local statement at `(0, φ t₀ x₀)` for joint continuity.
+Each `integralFlow hv t` is therefore a homeomorphism (inverse `integralFlow hv (−t)`, continuous), which
+is the hypothesis shape `topFormMeasure_map_eq` takes; (b′) is now the only gap before (d′).
+
 ### Q30 (= G17b): chart-independence of the Gram-density Riemannian volume — `S–M`
 
 **What it would prove.** `RiemannianMetric.riemannianVolume` (`RiemannianVolume.lean`) does not

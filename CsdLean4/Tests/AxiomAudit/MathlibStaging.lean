@@ -2996,6 +2996,43 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms continuous_integralFlow_time
 
+-- Q29(a') (2026-09-12), IntegralCurve/FlowContinuity.lean: the flow is JOINTLY continuous.
+-- Picard-Lindelof with Lipschitz dependence on the initial point plus confinement; a jointly
+-- continuous local flow in the chart; uniqueness identifies it with integralFlow near t = 0;
+-- compactness gives a uniform small time, iteration of the group law gives continuity in the
+-- initial point at every time, and the group law gives joint continuity everywhere.
+/-- info: 'IsPicardLindelof.exists_forall_mem_closedBall_eq_hasDerivWithinAt_lipschitzOnWith_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms IsPicardLindelof.exists_forall_mem_closedBall_eq_hasDerivWithinAt_lipschitzOnWith_mem
+
+/-- info: 'ContDiffAt.exists_localFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContDiffAt.exists_localFlow
+
+/-- info: 'isMIntegralCurveOn_extChartAt_symm_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms isMIntegralCurveOn_extChartAt_symm_comp
+
+/-- info: 'exists_nhds_continuousOn_integralFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_nhds_continuousOn_integralFlow
+
+/-- info: 'exists_forall_continuous_integralFlow_of_abs_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_forall_continuous_integralFlow_of_abs_lt
+
+/-- info: 'integralFlow_nsmul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms integralFlow_nsmul
+
+/-- info: 'continuous_integralFlow_point' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms continuous_integralFlow_point
+
+/-- info: 'continuous_integralFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms continuous_integralFlow
+
 /-- info: 'DifferentialForm.IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField
