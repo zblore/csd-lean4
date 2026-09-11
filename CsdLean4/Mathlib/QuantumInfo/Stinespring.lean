@@ -44,6 +44,10 @@ From these:
 measure-preserving joint flow on `Σ_sys × Σ_env` and `traceRight` is the environment
 average, so a channel *is* the environment-marginal of a genuine `Φ ≠ id` flow — the
 structural on-ramp to the dynamics frontier (decoherence = environment volume flow).
+Since 2026-09-11 this reading is a theorem, not a gloss: `CSD.LF2.traceRight_barycenter_flow`
+(`LF2/FlowChannel.lean`) shows that for an ontic flow lifting a unitary `U`, the reduced density
+operator of the flowed preparation is `(ofIsometry (U * embedEnv e₀) _).apply` of the system's
+density operator.
 -/
 
 @[expose] public section

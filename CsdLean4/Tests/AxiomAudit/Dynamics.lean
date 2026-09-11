@@ -552,6 +552,25 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.decoherence_capstone
 
+-- W5 witness half (2026-09-11), LF6/DecoherenceChannel.lean: decohereReduced IS the action of a
+-- QuantumInfo.Channel -- the Stinespring channel of vnUnitary with the apparatus ready in a0
+-- (LF2/FlowChannel.lean's stinespringChannel; embedGround = embedEnv a0).
+/-- info: 'CSD.LF6.embedGround_eq_embedEnv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.embedGround_eq_embedEnv
+
+/-- info: 'CSD.LF6.deisolationChannel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.deisolationChannel
+
+/-- info: 'CSD.LF6.deisolationChannel_apply_outerProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.deisolationChannel_apply_outerProduct
+
+/-- info: 'CSD.LF6.deisolationChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.deisolationChannel_apply
+
 -- LF6-B.2 (Decoherence, 2026-06-29): the QUANTITATIVE purity-drop / irreversibility witness.
 -- The reduced state is a genuine density operator (decohereReduced_trace, Tr = ‖ψ‖², via
 -- partialTraceRight_trace + deisolation_conservative Vᴴ V = 1); its purity Tr(ρ_red²) =

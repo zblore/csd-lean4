@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF2.PreparationQdensity
+public import CsdLean4.LF2.ReducedDensity
 public import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
 
 /-!
@@ -64,33 +65,36 @@ open scoped ComplexOrder
 namespace CSD
 namespace LF2
 
-variable {N : ℕ} {Q : Type*} [MeasurableSpace Q]
+variable {N : ℕ} {ι : Type*} [Fintype ι] {Q : Type*} [MeasurableSpace Q]
 
+/-! ### The barycentre of rank-one projectors, over any finite index -/
 /-- The entry function `p ↦ (rep p)ⱼ · conj (rep p)ₖ` of the rank-one projector `|rep p⟩⟨rep p|`. -/
-noncomputable def entryFn (rep : Q → EuclideanSpace ℂ (Fin N)) (j k : Fin N) (p : Q) : ℂ :=
+noncomputable def entryFn (rep : Q → EuclideanSpace ℂ ι) (j k : ι) (p : Q) : ℂ :=
   (rep p) j * star ((rep p) k)
 
 /-- The entrywise barycentre of the rank-one projectors `|rep p⟩⟨rep p|` against `μ`. -/
-noncomputable def barycenterMatrix (rep : Q → EuclideanSpace ℂ (Fin N)) (μ : Measure Q) :
-    Matrix (Fin N) (Fin N) ℂ :=
+noncomputable def barycenterMatrix (rep : Q → EuclideanSpace ℂ ι) (μ : Measure Q) :
+    Matrix ι ι ℂ :=
   Matrix.of fun j k => ∫ p, entryFn rep j k p ∂μ
 
 /-- Each coordinate of a unit vector has modulus at most `1`. -/
-theorem norm_coord_le_one (v : EuclideanSpace ℂ (Fin N)) (hv : ‖v‖ = 1) (j : Fin N) :
+theorem norm_coord_le_one (v : EuclideanSpace ℂ ι) (hv : ‖v‖ = 1) (j : ι) :
     ‖v j‖ ≤ 1 := hv ▸ PiLp.norm_apply_le v j
 
+omit [Fintype ι] in
 /-- The coordinate map `p ↦ (rep p) j` is measurable. -/
-theorem measurable_coord (rep : Q → EuclideanSpace ℂ (Fin N)) (hrep_meas : Measurable rep)
-    (j : Fin N) : Measurable fun p => (rep p) j :=
-  (measurable_pi_apply j).comp ((WithLp.measurable_ofLp 2 (Fin N → ℂ)).comp hrep_meas)
+theorem measurable_coord (rep : Q → EuclideanSpace ℂ ι) (hrep_meas : Measurable rep)
+    (j : ι) : Measurable fun p => (rep p) j :=
+  (measurable_pi_apply j).comp ((WithLp.measurable_ofLp 2 (ι → ℂ)).comp hrep_meas)
 
-theorem measurable_entryFn (rep : Q → EuclideanSpace ℂ (Fin N)) (hrep_meas : Measurable rep)
-    (j k : Fin N) : Measurable (entryFn rep j k) :=
+omit [Fintype ι] in
+theorem measurable_entryFn (rep : Q → EuclideanSpace ℂ ι) (hrep_meas : Measurable rep)
+    (j k : ι) : Measurable (entryFn rep j k) :=
   (measurable_coord rep hrep_meas j).mul (continuous_star.measurable.comp (measurable_coord rep hrep_meas k))
 
 /-- The entry functions are integrable: measurable and bounded by `1`. -/
-theorem entryFn_integrable (rep : Q → EuclideanSpace ℂ (Fin N)) (hrep_unit : ∀ p, ‖rep p‖ = 1)
-    (hrep_meas : Measurable rep) (μ : Measure Q) [IsFiniteMeasure μ] (j k : Fin N) :
+theorem entryFn_integrable (rep : Q → EuclideanSpace ℂ ι) (hrep_unit : ∀ p, ‖rep p‖ = 1)
+    (hrep_meas : Measurable rep) (μ : Measure Q) [IsFiniteMeasure μ] (j k : ι) :
     Integrable (entryFn rep j k) μ := by
   refine Integrable.of_bound (measurable_entryFn rep hrep_meas j k).aestronglyMeasurable 1 ?_
   refine ae_of_all _ fun p => ?_
@@ -100,6 +104,88 @@ theorem entryFn_integrable (rep : Q → EuclideanSpace ℂ (Fin N)) (hrep_unit :
         mul_le_mul (norm_coord_le_one _ (hrep_unit p) j) (norm_coord_le_one _ (hrep_unit p) k)
           (norm_nonneg _) zero_le_one
     _ = 1 := one_mul 1
+
+/-! ### The barycentre is a density operator -/
+
+omit [Fintype ι] in
+/-- The barycentre is Hermitian: conjugating an entry integral conjugates the integrand, and
+`conj ((rep p)ₖ conj (rep p)ⱼ) = (rep p)ⱼ conj (rep p)ₖ`. -/
+theorem barycenterMatrix_isHermitian (rep : Q → EuclideanSpace ℂ ι) (μ : Measure Q) :
+    (barycenterMatrix rep μ).IsHermitian := by
+  refine Matrix.IsHermitian.ext fun j k => ?_
+  simp only [barycenterMatrix, Matrix.of_apply]
+  rw [← starRingEnd_apply, ← integral_conj]
+  congr 1
+  funext p
+  rw [starRingEnd_apply]
+  unfold entryFn
+  rw [star_mul, star_star]
+
+omit [MeasurableSpace Q] in
+/-- The diagonal entries of `|v⟩⟨v|` sum to `‖v‖² = 1`. -/
+theorem sum_entryFn_diag (rep : Q → EuclideanSpace ℂ ι) (hrep_unit : ∀ p, ‖rep p‖ = 1)
+    (p : Q) : ∑ j, entryFn rep j j p = 1 := by
+  have h : ∑ j, entryFn rep j j p = ((‖rep p‖ ^ 2 : ℝ) : ℂ) := by
+    rw [EuclideanSpace.norm_sq_eq, Complex.ofReal_sum]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    unfold entryFn
+    rw [← starRingEnd_apply, Complex.mul_conj, Complex.normSq_eq_norm_sq]
+  rw [h, hrep_unit p, one_pow, Complex.ofReal_one]
+
+/-- The barycentre against a probability measure has trace one. -/
+theorem barycenterMatrix_trace (rep : Q → EuclideanSpace ℂ ι)
+    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
+    (μ : Measure Q) [IsProbabilityMeasure μ] : (barycenterMatrix rep μ).trace = 1 := by
+  simp only [Matrix.trace, Matrix.diag_apply, barycenterMatrix, Matrix.of_apply]
+  rw [← integral_finsetSum _ (fun j _ => entryFn_integrable rep hrep_unit hrep_meas μ j j)]
+  simp_rw [sum_entryFn_diag rep hrep_unit]
+  simp
+
+omit [MeasurableSpace Q] in
+/-- Pointwise: the quadratic form of `|rep p⟩⟨rep p|` at `u` is `|⟨u, rep p⟩|²`, expanded. -/
+theorem normSq_dotProduct_eq_sum (rep : Q → EuclideanSpace ℂ ι) (u : ι → ℂ) (p : Q) :
+    ((Complex.normSq (star u ⬝ᵥ ⇑(rep p)) : ℝ) : ℂ)
+      = ∑ j, ∑ k, star (u j) * (entryFn rep j k p * u k) := by
+  rw [← Complex.mul_conj, starRingEnd_apply, ← star_dotProduct_star, star_star]
+  simp only [dotProduct, Pi.star_apply, Finset.sum_mul_sum, entryFn]
+  refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
+  ring
+
+/-- The quadratic form of the barycentre at `u` is the integral of `|⟨u, rep p⟩|²`. -/
+theorem dotProduct_barycenterMatrix_mulVec (rep : Q → EuclideanSpace ℂ ι)
+    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
+    (μ : Measure Q) [IsFiniteMeasure μ] (u : ι → ℂ) :
+    star u ⬝ᵥ (barycenterMatrix rep μ *ᵥ u)
+      = ∫ p, ((Complex.normSq (star u ⬝ᵥ ⇑(rep p)) : ℝ) : ℂ) ∂μ := by
+  simp_rw [normSq_dotProduct_eq_sum]
+  simp only [dotProduct, mulVec, barycenterMatrix, Matrix.of_apply, Pi.star_apply]
+  rw [integral_finsetSum _ (fun j _ => integrable_finsetSum _ (fun k _ =>
+    ((entryFn_integrable rep hrep_unit hrep_meas μ j k).mul_const _).const_mul _))]
+  refine Finset.sum_congr rfl fun j _ => ?_
+  rw [integral_finsetSum _ (fun k _ =>
+    ((entryFn_integrable rep hrep_unit hrep_meas μ j k).mul_const _).const_mul _), Finset.mul_sum]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [integral_const_mul, integral_mul_const]
+
+/-- The barycentre is positive semidefinite: its quadratic form is an integral of `|⟨u, ψ⟩|²`. -/
+theorem barycenterMatrix_posSemidef (rep : Q → EuclideanSpace ℂ ι)
+    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
+    (μ : Measure Q) [IsFiniteMeasure μ] : (barycenterMatrix rep μ).PosSemidef := by
+  refine Matrix.PosSemidef.of_dotProduct_mulVec_nonneg (barycenterMatrix_isHermitian rep μ) fun u => ?_
+  rw [dotProduct_barycenterMatrix_mulVec rep hrep_unit hrep_meas μ u, integral_complex_ofReal]
+  exact Complex.zero_le_real.mpr (integral_nonneg fun p => Complex.normSq_nonneg _)
+
+/-- **The barycentre density operator, index-parametric**: `∫ |rep p⟩⟨rep p| dμ(p)` as a
+`DensityOperatorIx ι` (the structure partial traces live on). -/
+noncomputable def barycenterDensityIx [DecidableEq ι] (rep : Q → EuclideanSpace ℂ ι)
+    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
+    (μ : Measure Q) [IsProbabilityMeasure μ] : DensityOperatorIx ι where
+  M := barycenterMatrix rep μ
+  isHermitian := barycenterMatrix_isHermitian rep μ
+  nonneg := barycenterMatrix_posSemidef rep hrep_unit hrep_meas μ
+  trace_one := barycenterMatrix_trace rep hrep_unit hrep_meas μ
+
+/-! ### The `Fin N` case: trace form against effects, and the `DensityOperator N` packaging -/
 
 omit [MeasurableSpace Q] in
 /-- The effect function is the real part of `tr(|rep p⟩⟨rep p| · E)`, and that trace is real
@@ -134,75 +220,6 @@ theorem trace_barycenterMatrix_mul (rep : Q → EuclideanSpace ℂ (Fin N))
   rw [integral_finsetSum _ (fun k _ => (entryFn_integrable rep hrep_unit hrep_meas μ j k).mul_const _)]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [integral_mul_const]
-
-/-! ### The barycentre is a density operator -/
-
-/-- The barycentre is Hermitian: conjugating an entry integral conjugates the integrand, and
-`conj ((rep p)ₖ conj (rep p)ⱼ) = (rep p)ⱼ conj (rep p)ₖ`. -/
-theorem barycenterMatrix_isHermitian (rep : Q → EuclideanSpace ℂ (Fin N)) (μ : Measure Q) :
-    (barycenterMatrix rep μ).IsHermitian := by
-  refine Matrix.IsHermitian.ext fun j k => ?_
-  simp only [barycenterMatrix, Matrix.of_apply]
-  rw [← starRingEnd_apply, ← integral_conj]
-  congr 1
-  funext p
-  rw [starRingEnd_apply]
-  unfold entryFn
-  rw [star_mul, star_star]
-
-omit [MeasurableSpace Q] in
-/-- The diagonal entries of `|v⟩⟨v|` sum to `‖v‖² = 1`. -/
-theorem sum_entryFn_diag (rep : Q → EuclideanSpace ℂ (Fin N)) (hrep_unit : ∀ p, ‖rep p‖ = 1)
-    (p : Q) : ∑ j, entryFn rep j j p = 1 := by
-  have h : ∑ j, entryFn rep j j p = ((‖rep p‖ ^ 2 : ℝ) : ℂ) := by
-    rw [EuclideanSpace.norm_sq_eq, Complex.ofReal_sum]
-    refine Finset.sum_congr rfl fun j _ => ?_
-    unfold entryFn
-    rw [← starRingEnd_apply, Complex.mul_conj, Complex.normSq_eq_norm_sq]
-  rw [h, hrep_unit p, one_pow, Complex.ofReal_one]
-
-/-- The barycentre against a probability measure has trace one. -/
-theorem barycenterMatrix_trace (rep : Q → EuclideanSpace ℂ (Fin N))
-    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
-    (μ : Measure Q) [IsProbabilityMeasure μ] : (barycenterMatrix rep μ).trace = 1 := by
-  simp only [Matrix.trace, Matrix.diag_apply, barycenterMatrix, Matrix.of_apply]
-  rw [← integral_finsetSum _ (fun j _ => entryFn_integrable rep hrep_unit hrep_meas μ j j)]
-  simp_rw [sum_entryFn_diag rep hrep_unit]
-  simp
-
-omit [MeasurableSpace Q] in
-/-- Pointwise: the quadratic form of `|rep p⟩⟨rep p|` at `u` is `|⟨u, rep p⟩|²`, expanded. -/
-theorem normSq_dotProduct_eq_sum (rep : Q → EuclideanSpace ℂ (Fin N)) (u : Fin N → ℂ) (p : Q) :
-    ((Complex.normSq (star u ⬝ᵥ ⇑(rep p)) : ℝ) : ℂ)
-      = ∑ j, ∑ k, star (u j) * (entryFn rep j k p * u k) := by
-  rw [← Complex.mul_conj, starRingEnd_apply, ← star_dotProduct_star, star_star]
-  simp only [dotProduct, Pi.star_apply, Finset.sum_mul_sum, entryFn]
-  refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
-  ring
-
-/-- The quadratic form of the barycentre at `u` is the integral of `|⟨u, rep p⟩|²`. -/
-theorem dotProduct_barycenterMatrix_mulVec (rep : Q → EuclideanSpace ℂ (Fin N))
-    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
-    (μ : Measure Q) [IsFiniteMeasure μ] (u : Fin N → ℂ) :
-    star u ⬝ᵥ (barycenterMatrix rep μ *ᵥ u)
-      = ∫ p, ((Complex.normSq (star u ⬝ᵥ ⇑(rep p)) : ℝ) : ℂ) ∂μ := by
-  simp_rw [normSq_dotProduct_eq_sum]
-  simp only [dotProduct, mulVec, barycenterMatrix, Matrix.of_apply, Pi.star_apply]
-  rw [integral_finsetSum _ (fun j _ => integrable_finsetSum _ (fun k _ =>
-    ((entryFn_integrable rep hrep_unit hrep_meas μ j k).mul_const _).const_mul _))]
-  refine Finset.sum_congr rfl fun j _ => ?_
-  rw [integral_finsetSum _ (fun k _ =>
-    ((entryFn_integrable rep hrep_unit hrep_meas μ j k).mul_const _).const_mul _), Finset.mul_sum]
-  refine Finset.sum_congr rfl fun k _ => ?_
-  rw [integral_const_mul, integral_mul_const]
-
-/-- The barycentre is positive semidefinite: its quadratic form is an integral of `|⟨u, ψ⟩|²`. -/
-theorem barycenterMatrix_posSemidef (rep : Q → EuclideanSpace ℂ (Fin N))
-    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
-    (μ : Measure Q) [IsFiniteMeasure μ] : (barycenterMatrix rep μ).PosSemidef := by
-  refine Matrix.PosSemidef.of_dotProduct_mulVec_nonneg (barycenterMatrix_isHermitian rep μ) fun u => ?_
-  rw [dotProduct_barycenterMatrix_mulVec rep hrep_unit hrep_meas μ u, integral_complex_ofReal]
-  exact Complex.zero_le_real.mpr (integral_nonneg fun p => Complex.normSq_nonneg _)
 
 /-- **The barycentre density operator** `∫ |rep p⟩⟨rep p| dμ(p)` of a unit-norm measurable
 representative against a probability measure. -/

@@ -55,8 +55,14 @@
 > `vonNeumannEntropy_preparation_nonneg` / `_le_log` and `channel_traceDist_preparation_le`. **W3 DONE
 > 2026-09-11**: `LF2/PreparationBarycenter.lean` — that density operator IS the barycentre
 > `∫ |ψ⟩⟨ψ| d(π_* μprep)` (`preparationDensity_eq_barycenter`, entrywise `preparationDensity_apply`, the
-> `ρ_ep dμ_FS` form under absolute continuity). Next on the path: W6 channels from Σ-flows (L); W5 (S–M)
-> and W4's remaining half (`= 0 ↔ pure`) are open. The author decides.
+> `ρ_ep dμ_FS` form under absolute continuity). **W6 DONE 2026-09-11**: `LF2/FlowChannel.lean` — if the ontic
+> flow lifts a unitary (`IsUnitaryLift`, a theorem for the projective unitary actions), the density operator of
+> the flowed preparation is `U ρ Uᴴ` (`barycenter_flow`) and, on a joint sector, the reduced flowed state is the
+> Stinespring channel of `U` applied to the system's density operator (`traceRight_barycenter_flow`; mixed
+> environment = barycentre of the environment preparation, `traceRight_barycenter_flow_prod`). W5's witness
+> half landed with it (`LF6/DecoherenceChannel.lean`: `decohereReduced` is a channel output). ⚠️ The W6 row's
+> gloss of `IsJointLift` was wrong (it is the pointer-arena stroke predicate); corrected in the note. Next on
+> the path: W7 (S), W6′ the joint-index instance (S–M), W5's remaining bridge (S). The author decides.
 >
 > *Closed by the 2026-09-11 scan (were "not scheduled"):* the C2 Mathlib-gap pair — the metric on `ℙ`
 > **exists** (`Mathlib/LinearAlgebra/Projectivization/Metric.lean`, the gap metric, a Mathlib-upstream

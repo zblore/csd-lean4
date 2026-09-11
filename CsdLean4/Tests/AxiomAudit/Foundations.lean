@@ -225,6 +225,81 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.preparationDensity_apply_rnDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.preparationDensity_apply_rnDeriv
 
+-- W6 (2026-09-11), LF2/FlowChannel.lean: channels from Sigma-flows. If the ontic flow lifts a
+-- unitary U through the projection and the representative (IsUnitaryLift, projector level,
+-- phase-free; a theorem for the projective action of a unitary with any unit section,
+-- isUnitaryLift_of_smul), the barycentre of the flowed preparation is U rho U^H (closed system,
+-- barycenter_flow); for a joint sector with the environment ready in e0 the reduced flowed state
+-- is the Stinespring channel of U applied to the system's density operator
+-- (traceRight_barycenter_flow); for a product preparation on a product sector it is the
+-- mixed-environment channel whose environment state is the barycentre of the environment
+-- preparation (traceRight_barycenter_flow_prod, spectral Kraus family stinespringChannelMixed).
+/-- info: 'CSD.LF2.barycenterDensityIx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterDensityIx
+
+/-- info: 'CSD.LF2.outerProduct_toEuclideanLin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.outerProduct_toEuclideanLin
+
+/-- info: 'CSD.LF2.barycenterMatrix_map' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterMatrix_map
+
+/-- info: 'CSD.LF2.barycenterMatrix_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterMatrix_conj
+
+/-- info: 'CSD.LF2.barycenterMatrix_kronecker_of_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterMatrix_kronecker_of_ae
+
+/-- info: 'CSD.LF2.embedEnv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.embedEnv
+
+/-- info: 'CSD.LF2.embedEnv_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.embedEnv_conjTranspose_mul
+
+/-- info: 'CSD.LF2.embedEnv_mul_mul_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.embedEnv_mul_mul_conjTranspose
+
+/-- info: 'CSD.LF2.stinespringChannel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.stinespringChannel
+
+/-- info: 'CSD.LF2.stinespringChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.stinespringChannel_apply
+
+/-- info: 'CSD.LF2.IsUnitaryLift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.IsUnitaryLift
+
+/-- info: 'CSD.LF2.isUnitaryLift_of_vector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.isUnitaryLift_of_vector
+
+/-- info: 'CSD.LF2.barycenter_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenter_flow
+
+/-- info: 'CSD.LF2.unitaryChannel_apply_barycenter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.unitaryChannel_apply_barycenter
+
+/-- info: 'CSD.LF2.traceRight_barycenter_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.traceRight_barycenter_flow
+
+/-- info: 'CSD.LF2.ae_outerProduct_kronecker_of_embed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.ae_outerProduct_kronecker_of_embed
+
+/-- info: 'CSD.LF2.isUnitaryLift_of_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.isUnitaryLift_of_smul
+
+/-- info: 'CSD.LF2.isHermitian_eq_sum_eigenvalues_smul_outerProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.isHermitian_eq_sum_eigenvalues_smul_outerProduct
+
+/-- info: 'CSD.LF2.stinespringChannelMixed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.stinespringChannelMixed
+
+/-- info: 'CSD.LF2.stinespringChannelMixed_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.stinespringChannelMixed_apply
+
+/-- info: 'CSD.LF2.barycenterMatrix_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterMatrix_prod
+
+/-- info: 'CSD.LF2.traceRight_barycenter_flow_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.traceRight_barycenter_flow_prod
+
 -- Direct pin (landing-surface axiom reconciliation, 2026-08-09): the rank-one density
 -- uniqueness lemma. It was carried as a named axiom in earlier revisions and in the
 -- published LF-series papers, discharged 2026-05-18 via

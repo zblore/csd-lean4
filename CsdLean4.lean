@@ -108,6 +108,7 @@ public import CsdLean4.LF2.BornWrapper
 public import CsdLean4.LF2.EffectGleason
 public import CsdLean4.LF2.PreparationQdensity
 public import CsdLean4.LF2.PreparationBarycenter
+public import CsdLean4.LF2.FlowChannel
 public import CsdLean4.LF2.ReducedDensity
 public import CsdLean4.LF2.MixedEnsembleIx
 public import CsdLean4.LF2.ChoiConverse
@@ -247,6 +248,7 @@ public import CsdLean4.LF6.GHZMerminCarve
 public import CsdLean4.LF6.LocalDeisolationFlow
 public import CsdLean4.LF6.GHZLocalFlow
 public import CsdLean4.LF6.Decoherence
+public import CsdLean4.LF6.DecoherenceChannel
 public import CsdLean4.LF6.MaxEntangledDeisolationFlow
 public import CsdLean4.LF6.PartialSchmidtCorrelation
 public import CsdLean4.LF6.GisinTheorem

@@ -94,9 +94,16 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   along the preparation's projective law — `preparationDensity_eq_barycenter`, entrywise
   `preparationDensity_apply` (`LF2/PreparationBarycenter.lean`); in the `ρ_ep dμ_FS` form when the
   projective law is absolutely continuous w.r.t. `μFS` (`preparationDensity_apply_rnDeriv`).
-* **NOT established (queued as W5/W6 in `specs/qit-chain-scoping.md`):** that the channels it is fed to
-  come from `Σ`-flows; and the `LF2` and `SigmaLayer` preparation interfaces are not identified, so the
-  `SigmaLayer` theorem that region preparations *have* a `ρ_ep` is not composed with the `ρ_ep` form.
+* **Also backed (2026-09-11, W6):** it evolves along `Σ`-flows as the QIT layer says it does — if the
+  ontic flow lifts a unitary `U` (`IsUnitaryLift`, `LF2/FlowChannel.lean`), the density operator of the
+  flowed preparation is `U ρ Uᴴ` (`barycenter_flow`), and on a joint sector the reduced flowed state is the
+  Stinespring channel `ρ ↦ Tr_env (U (ρ ⊗ σ) Uᴴ)` applied to the system's density operator
+  (`traceRight_barycenter_flow`, `traceRight_barycenter_flow_prod`); LF6's `decohereReduced` is such a
+  channel output (`deisolationChannel_apply_outerProduct`).
+* **NOT established:** the `LF2` and `SigmaLayer` preparation interfaces are not identified, so the
+  `SigmaLayer` theorem that region preparations *have* a `ρ_ep` is not composed with the `ρ_ep` form; the
+  joint-index instance of the lift for LF5's reindexed `measurementFlow` (W6′); the
+  `LF2.QuantumChannel ↔ QuantumInfo.Channel` bridge (W5's second half).
 
 ## moment map
 
