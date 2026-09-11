@@ -33,9 +33,19 @@ whose **conserved quantities are exactly the Born weights**:
   the typicality volumes.** This is the concrete realisation of "the measurement context
   constrains the volumes in `Σ`."
 
+**TERM-SCOPE(Hamiltonian)** — the reading below uses the restricted sense; `specs/TERMS.md` records what is backed.
+
 **Honest scope.** The proof of conservation is light (the phases have modulus one). The
 content is the *identification*: a measure-preserving `Φ ≠ id` whose conserved quantities are
 the Born volumes (`momentMap_obsFlow`), tying the observable's dynamics to those volumes.
+⚠️ *Since 2026-09-10 the light proof has a heavy reading:* `obsFlow` is the torus flow
+`t ↦ torusUnitary (t • λ) • p` of `Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`,
+which is the integral curve of the Hamiltonian vector field of `2 ∑ λₖ momentMap · k` for the
+Fubini–Study symplectic form (`isMIntegralCurve_torusUnitary_smul`, G16), and
+`momentMap_obsFlow` is then the conservation of that Hamiltonian along its own flow
+(`torusHamiltonian_torusUnitary_smul`) — Noether's theorem for the phase symmetry, on the
+manifold. Nothing in this module's proofs changes; the manifold layer explains *why* they are
+light.
 The `Φ ≠ id` claim is now separately witnessed by `obsFlow_ne_id` (mirroring `kFlow_ne_id`):
 because `obsFlow` is a *diagonal phase* flow, every computational basis ray `[eᵢ]` is an
 eigenvector and is **fixed**, so the witness is necessarily a **superposition** ray — the

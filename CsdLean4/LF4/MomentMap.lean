@@ -11,7 +11,21 @@ public import Mathlib.Analysis.InnerProductSpace.PiL2
 /-!
 # LF4 Tranche 1: the Born weights as the torus moment map on ℂℙ^{N-1}
 
-**TERM-SCOPE(MomentMap)** — this module uses the *restricted* (symplectic-manifold) sense of "moment map"; `specs/TERMS.md` records what is backed and what is not.
+**TERM-SCOPE(MomentMap)** **TERM-SCOPE(Hamiltonian)** — this module uses the *restricted* (symplectic-manifold) senses of "moment map" and "Hamiltonian"; `specs/TERMS.md` records what is backed and what is not.
+
+⚠️ **The manifold-level theorems about this object live downstream** (they import this module;
+the G series of `specs/generator-layer-scoping.md`, 2026-09-08 → 2026-09-10,
+`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean` and `…SchrodingerFlow.lean`):
+★★★ `Projectivization.torusField_isHamiltonianVectorField` — the velocity field of the torus
+action IS the Hamiltonian vector field of `2 ∑ θₖ momentMap · k` for the Fubini–Study
+symplectic form, so `momentMap` is a moment map in the textbook sense; ★★★
+`eq_torusHamiltonian_of_nonneg_of_sum` — non-negativity and the sum-one normalisation pin
+any family of phase-field Hamiltonians to `2 · momentMap` (uniqueness); ★★ `range_momentMap` —
+the image is exactly `stdSimplex ℝ (Fin (n + 1))`; ★★★ `isMIntegralCurve_torusUnitary_smul` —
+the torus orbits are the integral curves of the field; `torusHamiltonian_torusUnitary_smul` —
+`2 ∑ θₖ μₖ` is conserved along them (which is `momentMap_obsFlow` of `ObservableFlow.lean`,
+read as Noether's theorem). The word "moment map" below names the object; those theorems are
+what make the name earned.
 
 The Kähler structure on `ℂℙ^{N-1}` carries a canonical object the CSD corpus
 never invokes: the **moment map** of the maximal-torus action. For the standard
