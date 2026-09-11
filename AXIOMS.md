@@ -133,9 +133,9 @@ The payoff is real and stateable without overclaim: in the ontic stratum the Bor
 
 ### 3.1 `OnticSetup.μL` is a finite measure (preparation-measure origin)
 
-`μL` is a structural field of `OnticSetup`. The Lean tree does not derive `μL` from a symplectic / Kähler volume form on `Σ`. The class of `OnticSetup`s the corpus cares about is `μL`-preserving deterministic flows, but the Lean abstraction is wider: it works for any measurable `Φ` and any finite `μL`. The LF1 frequency theorem is therefore strictly more general than the physical reading suggests.
+`μL` is a structural field of `OnticSetup`. The abstract structure does not derive `μL` from a symplectic / Kähler volume form on `Σ` — it works for any measurable `Φ` and any finite `μL`, so the LF1 frequency theorem is strictly more general than the physical reading suggests. ⚠️ *Updated 2026-09-11:* on the `ℂℙⁿ` **instances** the derivation is now a theorem. `LF4/SectorManifold.lean` proves that `unitaryFlowSetup`'s and `manyToOneSetup`'s `liouvilleMeasure` IS the normalised top power of the Fubini–Study form (`unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized`, `manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod`), the Fubini–Study form is a Kähler form on the sector's manifold (`fsForm_isKahler`), and its Riemannian volume agrees (`riemannianVolume_fsMetric`) — the G series of `specs/generator-layer-scoping.md`, built in the corpus's own manifold layer since Mathlib has no differential forms on manifolds at the pin.
 
-This is the **preparation-measure-origin assumption**. Discharge target: LF4 instantiation of `SigmaSpace` as a compact Kähler manifold, with `μL` constructed from the Kähler volume form (and, beyond that, the flow `Φ` itself derived rather than asserted — a theory-level question).
+This is the **preparation-measure-origin assumption**. The first half of its former discharge target — `SigmaSpace` as a compact Kähler manifold with `μL` constructed from the Kähler volume form — is discharged on the `ℂℙⁿ` instances (connectivity link L1). What remains posited is the *selection* of that sector (`specs/POSITS.md` Posit 2) and, beyond that, the flow `Φ` itself derived rather than asserted — a theory-level question.
 
 ### 3.2 `OnticSetup.hΦ_pres` is structural payload (not consumed)
 

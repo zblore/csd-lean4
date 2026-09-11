@@ -19,6 +19,10 @@ explicit ontic fibre outcome cells rather than postulated as an independent
 probability law; and outcome conditioning reproduces the Lüders update.
 Basis-selective decoherence is proved for a supplied measurement context.
 
+That geometry is built, not assumed: `ℂℙ^{N-1}` is a Kähler manifold whose Kähler
+volume is the Fubini-Study measure, `exp(-itH)` is the Hamiltonian flow of `-2⟨H⟩`,
+and the sector's posited measure and flow are these objects (`LF4/SectorManifold.lean`).
+
 ## Results
 
 | Result | Theorem | `#print axioms` |
@@ -44,7 +48,7 @@ the types, which is why it never appears in `#print axioms`. See
 - The sector is posited: the sector itself is posited, never derived.
 - Instrument results are relative to a stated dilation.
 - Each measurement witness pays one price under the proved trilemma.
-- Liouville for a general Hamiltonian flow on the sector is not proved; the flows proved to preserve the symplectic volume of the Kähler form are the unitary ones (`LF4/SectorManifold.lean`).
+- Liouville is proved for the unitary flows only, not for a general Hamiltonian flow.
 
 Full list: [`docs/TOUR.md`](docs/TOUR.md).
 
