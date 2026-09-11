@@ -22,9 +22,11 @@ of the joint-arena Hamiltonian argument.
 The joint-arena route (`BACKLOG.md` A2) turns on one algebraic step: the control weights
 Poisson-commute, hence are constants of motion of the true joint flow, hence the pointer
 sees the fixed weight vector the existing analysis assumes. Stating that on the arena
-needs `ω⁻¹dH` and a manifold Poisson bracket — the one arrow Mathlib does not have
-(manifolds, `ContMDiff`, `IntegralCurve` yes; symplectic form and Poisson bracket no; the
-flat-space `extDeriv` has since landed in the pin — BACKLOG A4 — but not the manifold form).
+needs `ω⁻¹dH` and a manifold Poisson bracket on the ARENA. `ω⁻¹dH` exists on `ℂℙⁿ` since
+2026-09-08 (`DifferentialForm.hamiltonianVectorField`, `HamiltonianVectorField.lean`; the Poisson
+bracket of two Hamiltonians is `ω(X_H, X_K)`, not yet named); the arena's product form and the
+bracket on it are `R-016′` (`BACKLOG.md` ▶ OUTSTANDING, L). Mathlib itself still has none of it
+(MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)).
 
 What *is* expressible, and is proved here, is the same step in a **Darboux chart**: on
 `(Fin n → ℝ) × (Fin n → ℝ)` with canonical coordinates, the bracket is an explicit

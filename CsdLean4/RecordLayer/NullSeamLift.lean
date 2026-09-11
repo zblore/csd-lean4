@@ -43,11 +43,14 @@ Kähler factors, so the product admits a symplectic structure, and the invariant
 the corresponding volume — the name `nullSeamLiftMeasure` no longer asserts something the
 space cannot carry.
 
-⚠️ **NOT earned, and deliberately not claimed:** the symplectic form itself is still not
-constructed. Mathlib has no symplectic-manifold API (verified 2026-08-04), so "this measure
-*is* the Liouville volume of `ω^3/3!`" remains the same §2a-scoped statement as everywhere
-else in the corpus (`MATHLIB-GAPS.md`, A4). Even dimension is *necessary*, not sufficient,
-and the guard's parity ledger records this arena as even without asserting the form. The
+⚠️ **NOT earned, and deliberately not claimed:** the symplectic form on THIS arena is not
+constructed. When this was written Mathlib had no symplectic-manifold API (verified 2026-08-04);
+since 2026-09-07/11 the corpus stages one and proves the `ℂℙⁿ` base's form and volume
+(`fsForm_isSymplectic`, `fsVolume_eq_smul_fubiniStudyMeasure`), but the product form on the
+seam arena and "this measure *is* the Liouville volume of `ω^3/3!`" are `R-016′`'s product
+construction, not yet built (`BACKLOG.md` ▶ OUTSTANDING, L). Even dimension is *necessary*,
+not sufficient, and the guard's parity ledger records this arena as even without asserting the
+form. The
 horn's other prices are unchanged: exactness is at the Dirac-calibrated ready pointer, and
 "Born" is still carried by the free cell-split parameter `r` rather than by a preparation's
 moment map (`NullSeamWitness.lean`'s scope note).

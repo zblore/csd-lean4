@@ -51,7 +51,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- NOT THE NO-GO. It constrains g; it does not refute it. Untouched: the generic-psi requirement
 -- (everything here comes from the n basis-vector preps), and the harmonic argument (g(|<psi|phi>|^2)
 -- integrated over a fixed region has components of every degree (k,k) while the target is pure
--- (1,1)) -- which needs harmonic analysis on CP^{n-1} that Mathlib does not have.
+-- (1,1)) -- which needs harmonic analysis on CP^{n-1} that Mathlib does not have (MATHLIB-ABSENT(file:Mathlib/Analysis/Fourier/Projectivization)).
 /-- info: 'CSD.SigmaLayer.ae_eq_zero_of_setIntegral_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.ae_eq_zero_of_setIntegral_eq_zero
@@ -136,7 +136,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- because Lebesgue measure on the line is infinite. On the circle it is a statement about the WHOLE
 -- space, because the whole space has measure one. That is the compactness paying for itself.
 -- ⚠️ SCOPE unchanged: compactness + Haar probability measure YES; A1 in full NO (no Kahler structure
--- on the fibre; dw=0 needs manifold exterior calculus Mathlib lacks -- permanently scoped, see
+-- on the fibre; dw=0 needed manifold exterior calculus Mathlib lacks (MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)) -- was permanently scoped; DISCHARGED 2026-09-07 on CP^n, fsForm_mextDeriv; see
 -- reconstruction-status.md 2a). Measure exhibited as Haar, not SHOWN Liouville. And the general-N A7
 -- question is PARKED, not settled (specs/sigma-fibre-contextuality.md).
 /-- info: 'CSD.RecordLayer.circleRecordSemantics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -180,7 +180,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- FibreRecord/Measurement/RecordLayerClosure still run on the R fibre and would need re-plumbing
 -- onto this one -- NOT done (CircleRecord.lean is a PARALLEL counterpart, not a migration).
 -- ⚠️ CORRECTED 2026-07-30: this block previously said the missing Kahler structure needed "the
--- manifold exterior calculus Mathlib lacks; see reconstruction-status.md 2a scoping decision".
+-- manifold exterior calculus Mathlib lacks (MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)); see reconstruction-status.md 2a" -- the CP^n half discharged 2026-09-07/11, the arena half is R-016'.
 -- That was a MISCLASSIFICATION. CP^{n-1} x AddCircle 1 has real dimension 2n-1 -- ODD -- and no
 -- odd-dimensional manifold admits a symplectic, hence Kahler, structure. It is a PARITY fact, not
 -- a tooling gap, and no Mathlib API repairs it. See TorusFibre.lean, which moves the partition to
@@ -481,7 +481,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- record after -- which rules out an identity flow or a pre-existing label sold as record creation.
 -- ⚠️ SCOPE, and item 3 IS NOT CLOSED. (1) THE HAMILTONIAN GENERATION IS STATED, NOT FORMALISED: the
 -- propagator is constructed explicitly and every required property proved OF it, but that it is the
--- time-T_M flow of that H_int is symplectic geometry and Mathlib has no manifold Hamiltonian-flow
+-- time-T_M flow of that H_int is symplectic geometry on the arena and (at the time) Mathlib had no manifold Hamiltonian-flow
 -- API (the section 2a permanently-scoped row). The plan's "propagator PROVED TO ARISE FROM that
 -- Hamiltonian" is therefore HALF done. Do not cite this as a formalised H_int. (2) MEASURE
 -- PRESERVATION IS NOT PROVED -- and it matters, because it is what makes this a DYNAMICS rather than
@@ -2730,7 +2730,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 -- ChartBracket (2026-08-04, SigmaLayer/ChartBracket.lean; BACKLOG A3 -- the formalisable
 -- fragment of the joint-arena Poisson argument). Stating {w_i,w_j}=0 on the ARENA needs
--- omega^-1 dH, the one arrow Mathlib lacks. In a DARBOUX CHART it is a computation: the
+-- omega^-1 dH, the one arrow Mathlib lacks (MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm); the corpus has it on CP^n since G2). In a DARBOUX CHART it is a computation: the
 -- bracket is an explicit fderiv expression and the Hamiltonian field is the explicit
 -- swap-and-negate (no omega^-1 needed in canonical coordinates).
 -- ★ poissonBracket_eq_zero_of_disjoint — the FAITHFUL statement, and NOT the naive one:
@@ -2926,7 +2926,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- ★★ nullSeamLiftClosure — the third horn on an even-dimensional arena; ★ born_left/right
 -- exact r and 1-r via Measure.prod_prod; seam still null (two points x T^1).
 -- EARNED: the parity obstruction is gone. NOT EARNED and not claimed: the symplectic FORM
--- itself -- Mathlib has no symplectic API, so "this measure IS the Liouville volume of
+-- itself -- Mathlib has no symplectic API (MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm); the arena's product form is R-016'), so "this measure IS the Liouville volume of
 -- omega^3/3!" stays section-2a scoped (A4). Even dimension is necessary, not sufficient.
 /-- info: 'CSD.RecordLayer.nullSeamLiftClosure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.nullSeamLiftClosure
@@ -3158,7 +3158,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- (P6 isolation = conditioning), torusOutcome_eq_record (the ontic selection IS the
 -- record), and the Born weight ||psi i||^2 unchanged from the R and S^1 fibres.
 -- HONEST SCOPE, in the module: no Kaehler form is constructed on the arena and the fibre
--- measure is not shown to be a Liouville volume for one (Mathlib has no manifold forms
+-- measure is not shown to be a Liouville volume for one (Mathlib has no manifold forms, MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm); the CP^n base's IS since W1
 -- API; standing KG-1 block). Parity was a NECESSARY condition that was violated and now is
 -- not. That is not sufficiency, and no A1 discharge is claimed.
 /-- info: 'CSD.RecordLayer.torusOutcome_eq_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/

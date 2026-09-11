@@ -68,8 +68,10 @@ Because `swapG` is an **involution**, the repair is to fire it on crossings in *
 * **The Lüders theorem is NOT in this file** — see `SwapLuders.lean` for the post-measurement
   marginal. This file supplies the witness and its protocol properties.
 * **The Hamiltonian generation is stated, not formalised**, exactly as for the shear: the swap stage
-  is the ontic analogue of a controlled kick applied at the readout time, but Mathlib has no
-  manifold Hamiltonian-flow API, so no claim is made that this propagator arises from an `H_int`.
+  is the ontic analogue of a controlled kick applied at the readout time; the arena-level
+  Hamiltonian statement is `R-016′` (the `ℂℙⁿ` API exists since 2026-09-08, the arena's product
+  form is not built; `BACKLOG.md` ▶ OUTSTANDING), so no claim is made that this propagator arises
+  from an `H_int`.
 * The bank is *consumed*: one measurement uses one calibration of the slots. Resetting a slot is
   erasure, with the Landauer cost `collapse_accuracy_bound` prices; the reset is deliberately
   outside the protocol.

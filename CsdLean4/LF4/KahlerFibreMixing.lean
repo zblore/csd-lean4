@@ -59,7 +59,7 @@ ontic space.** Σ is unchanged here: `KTorus` is the fibre the Kähler instance 
   Σ-flow would be, so this is a witness that the *mixing* half of `Q12-d` is satisfiable on `T²`,
   not yet a physically admissible de-isolation dynamics. The invertible case is a **hyperbolic
   toral automorphism** (`[[2,1],[1,1]]`, the cat map): the character argument is the same shape, and
-  the extra cost is Haar-invariance of a toral automorphism, which Mathlib does not provide.
+  the extra cost is Haar-invariance of a toral automorphism, which Mathlib does not provide as a named lemma (MATHLIB-ABSENT(AddCircle.map_toralAutomorphism_volume); the corpus proves the cat-map case in `Dynamics/CatMapWitness.lean`).
 * ⚠️ **Mixing is not the race.** Even with a mixing fibre map, `Q12-d` needs first-passage times to
   be *exponential at moment-map rates*. That link — hitting times of small sets in mixing systems
   are asymptotically exponential — is Galves–Schmitt/Abadi, rated research-grade and not upstream in

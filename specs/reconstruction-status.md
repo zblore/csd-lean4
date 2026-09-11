@@ -111,31 +111,47 @@ anywhere), so "not formalised" is exact. Worth stating plainly: after the A7 cor
 **The scoping decision.** Five rows read "Partial", which invites reading the whole map as
 unfinished. It is not: the rows fail for *different reasons*, and only some are work.
 
-**(i) Permanently scoped — blocked on Mathlib, not on us.** These will not be discharged here and
-should not be counted against the reconstruction.
+**(i) Permanently scoped — blocked on Mathlib, not on us.** ⚠️ **Re-classified 2026-09-11.** This
+category was written when the manifold API was absent and *staying* absent was the working
+assumption. The corpus then built the API itself (the G series, `generator-layer-scoping.md`).
+Nothing below is permanently scoped any more: one item is DISCHARGED, two have moved to (iii) as
+priced bricks. The heading is kept so that older citations of "§2a (i)" still resolve; read the
+bullets for the current state.
 
-* **A1, the exterior-calculus half** — `dω = 0` and `ωⁿ/n! = μ_FS` need a manifold exterior-calculus
-  API that Mathlib does not have. ⚠️ *Narrowed 2026-09-07:* the API is now staged in this repository
-  (`Mathlib/Geometry/Manifold/{DifferentialForm,ExteriorDerivative}.lean`) and **`dω = 0` is proved on
-  `ℂℙⁿ`** (`Projectivization.fsForm_mextDeriv`); only `ωⁿ/n! = μ_FS` is still open. The *formalizable core is done and consumed*
-  (`IsFubiniStudyKahler`, proved axiom-free, since 2026-08-06 the concrete structure field `kahler_pointwise`). The Kähler condition is
-  the slot to strengthen if Mathlib ever grows the API.
+* **A1, the exterior-calculus half** — ✅ **DISCHARGED 2026-09-07 → 2026-09-11 on the `ℂℙⁿ` base.**
+  `dω = 0` is `Projectivization.fsForm_mextDeriv`; `ωⁿ/n! = μ_FS` is `fsVolume_eq_smul_fubiniStudyMeasure`
+  (`ω^{∧n} = (4π)ⁿ μ_FS`, the constant visible) and `riemannianVolume_fsMetric` (`vol_g = ω^{∧n}/n!`);
+  the Kähler predicate itself is `fsForm_isKahler` (atlas sense) with `nijenhuis_fsJ_eq_zero` (tensor
+  sense); and the sector's `liouvilleMeasure` is proved to be this volume on every `ℂℙⁿ` instance
+  (`LF4/SectorManifold.lean`, connectivity link L1 discharged). The *formalizable core*
+  (`IsFubiniStudyKahler`, `kahler_pointwise`) is unchanged and remains the field's type. What is
+  NOT done: the same on the *fibred* arena `ℂℙⁿ × T²` as one Kähler manifold (the fibre's `T²` is
+  Haar, not a Kähler factor; parity is even) — that is the arena half of `R-016′`, below.
   ⚠️ **Scope of this bullet, narrowed 2026-07-30.** It covers the exterior calculus **on `KSigma`**
   and nothing else. It was being cited to excuse the *fibred* Σ's missing Kähler structure as well —
   including by `CircleFibre.lean` and by the ★★ `BACKLOG.md` row. **That citation was wrong.** The
   fibred Σ's problem is dimension parity (see the ★ paragraph below), which no Mathlib API can
   repair. Do not use this bullet to classify an odd-dimensional arena as "scoped".
-* **A3, smoothness of `π`** — Lean requires *measurability*, which is what every downstream proof
-  actually uses. Smoothness needs the same absent differential-geometry API. Nothing is weakened by
-  the substitution; the witness `π = Prod.fst` is genuinely many-to-one.
-* **Hamiltonian generation of the measurement witnesses** *(classified 2026-08-02, user decision)* —
-  the shear and calibrated-swap propagators are explicit, with every required property proved *of*
-  them (correlation, measure preservation, persistence, Lüders); that they arise as time-`T` flows
-  of `H_int = g(t)(ι+1)δ·p_R` (+ the record-triggered kick) is a symplectic-geometry statement
-  Mathlib cannot yet express (no manifold Hamiltonian-flow API). ⚠️ *Verified before classifying,
-  per the parity lesson:* this is a genuine tooling gap, **not** a falsity — the generating
-  Hamiltonians are written down and the claim is standard physics; nothing here is odd-dimensional.
-  Revisit if Mathlib grows the API.
+* **A3, smoothness of `π`** — ➡ **moved to (iii) 2026-09-11 as `Q33`, S–M.** Lean requires
+  *measurability*, which is what every downstream proof uses, and nothing is weakened by the
+  substitution; but "smoothness needs the absent API" is no longer true: `ℂℙⁿ` is an analytic
+  manifold (`instIsManifoldReal`), and `ContMDiff` of `Prod.fst` on a product manifold is Mathlib's
+  `contMDiff_fst`. The one missing piece is a manifold instance on the fibre `KTorus = AddCircle 1 ×
+  AddCircle 1` (Mathlib has `Circle` charted, not `AddCircle`, at the pin), transportable along
+  `AddCircle 1 ≃ Circle`. The witness `π = Prod.fst` is genuinely many-to-one.
+* **Hamiltonian generation of the measurement witnesses** *(classified 2026-08-02, user decision;
+  re-classified 2026-09-11)* — ➡ **moved to (iii) as `R-016′`, L.** The shear and calibrated-swap
+  propagators are explicit, with every required property proved *of* them (correlation, measure
+  preservation, persistence, Lüders); that they arise as time-`T` flows of `H_int = g(t)(ι+1)δ·p_R`
+  (+ the record-triggered kick) is a symplectic-geometry statement on the joint arena. When
+  classified, Mathlib could not express it (no manifold Hamiltonian-flow API). Since 2026-09-08
+  the corpus can, on `ℂℙⁿ`: `IsHamiltonianVectorField`, existence/uniqueness/smoothness of `X_H`,
+  integral curves, and the unitary flows proved Hamiltonian (`schrodingerField_isHamiltonianVectorField`).
+  What remains is the *arena* — the product manifold `ℂℙⁿ × T² × pointer` with a product symplectic
+  form, and the piecewise pieces stated on it — which is a brick, not a wall. ⚠️ *Still true and
+  still verified:* the generating Hamiltonians are written down, the claim is standard physics,
+  nothing here is odd-dimensional; and a *discharge* (proving the propagators ARE those flows) is the
+  `H_int` frontier, paper-side. The statement-shape is `R-016′`.
 
 **(ii) Scoped by doctrine, not by tooling.**
 

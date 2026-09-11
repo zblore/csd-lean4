@@ -49,8 +49,11 @@ context cells) and the joint continuity of the full arena propagator are brick 2
 landing, Born accounting, and the protocol are bricks 3–4. `pointerRot_eq_exp` upgrades
 brick 1's honest-scope note: the closed form **is** now identified with the exponential of
 its Hermitian generator — the generation statement at the formalisable level for the
-single-plane rotation. The moment-map (symplectic) reading of "Hamiltonian" remains prose:
-Mathlib has no symplectic API (`MATHLIB-GAPS.md`).
+single-plane rotation. The moment-map (symplectic) reading of "Hamiltonian" was prose when this
+was written (no symplectic API); on `ℂℙⁿ` it is a theorem since 2026-09-09 —
+`Projectivization.schrodingerField_isHamiltonianVectorField` (the flow of any Hermitian `H` is the
+Hamiltonian flow of `-2⟨H⟩` for the Fubini–Study form). The *arena* reading, on
+`ℂℙⁿ × T² × pointer`, is `R-016′` (`BACKLOG.md` ▶ OUTSTANDING).
 
 ## References
 

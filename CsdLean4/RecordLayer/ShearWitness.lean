@@ -63,8 +63,10 @@ it there. Two independent routes agreeing is the reason to believe this is the r
 
 1. **The Hamiltonian generation is stated, not formalised.** The propagator is *constructed
    explicitly* and every required property is proved of it. That it is the time-`T_M` flow of the
-   `H_int` above is a calculation in symplectic geometry, and Mathlib has no manifold symplectic /
-   Hamiltonian-flow API (`reconstruction-status.md` §2a, the *permanently scoped* row). So the plan's
+   `H_int` above is a calculation in symplectic geometry on the joint arena. The manifold
+   Hamiltonian-flow API exists on `ℂℙⁿ` since 2026-09-08; the arena statement is `R-016′`
+   (`reconstruction-status.md` §2a row (iii), re-classified 2026-09-11 from "permanently scoped" to
+   an L brick; `BACKLOG.md` ▶ OUTSTANDING). So the plan's
    "an explicit propagator **proved to arise from** that Hamiltonian" is **half done**: explicit
    propagator yes, proof of Hamiltonian origin no. Do not cite this as a formalised `H_int`.
    The chart-level generation is proved (`SigmaLayer/ChartIntegralCurve.lean`); transporting it

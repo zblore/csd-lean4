@@ -28,8 +28,10 @@ dynamical outcome sectors carry the **Born weights**.
 ## ⚠️ Scope
 
 Unchanged from `ShearWitness`: the propagator is explicit and every property is proved *of* it, but
-**the Hamiltonian generation is stated, not formalised** (Mathlib has no manifold Hamiltonian-flow
-API). This file closes the *Born* half of item 4, not item 3.
+**the Hamiltonian generation is stated, not formalised** — on the arena. The manifold
+Hamiltonian-flow API exists on `ℂℙⁿ` since 2026-09-08 (`HamiltonianVectorField.lean`); stating
+the propagator on the joint arena is `R-016′` (`BACKLOG.md` ▶ OUTSTANDING, L). This file closes
+the *Born* half of item 4, not item 3.
 
 ## References
 

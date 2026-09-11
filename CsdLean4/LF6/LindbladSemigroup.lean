@@ -46,7 +46,7 @@ genuinely-Mathlib-scale half recorded on the LF6-9 row.~~ **Superseded
 (`lindbladSemigroup_posSemidef`, via the de-skewed Banach-algebra Trotter
 formula), together with its stability under every ancilla amplification of
 the generator (`lindbladSemigroup_amplified_posSemidef`). The "needs a
-Lie–Trotter limit theorem Mathlib does not have" wall was stale — the
+Lie–Trotter limit theorem Mathlib does not have" wall (MATHLIB-ABSENT(Matrix.exp_add_lieTrotter)) was stale — the
 theorem was buildable in-corpus. What this module still delivers is the
 tier below: the semigroup exists, solves the master equation, and preserves
 trace and Hermiticity for arbitrary `H, {Lₖ}`.

@@ -17,9 +17,12 @@ public import Mathlib.Analysis.Complex.Basic
 **Category:** 1-Mathlib (CSD-free; the form-level analogue of `fubiniStudyMeasure`).
 
 Mathlib has no Kähler-geometry API (no manifold differential forms, no exterior derivative, no
-almost-complex structure — see `KahlerVolumeForced.lean` for the audit). So the full closed 2-form
-`ω` on `ℂℙ^{N-1}` with `dω = 0` and `ω^{∧(N-1)}/(N-1)! = μ_FS` cannot be built without first
-developing differential geometry in Lean. What **is** bounded — and is built here — is the
+almost-complex structure; MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)). When this
+module was written that meant the full closed 2-form `ω` on `ℂℙ^{N-1}` with `dω = 0` and
+`ω^{∧(N-1)}/(N-1)! = μ_FS` could not be built; since 2026-09-07/11 the corpus has built the
+differential geometry itself (`Mathlib/Geometry/Manifold/`, the G series) and both statements are
+theorems (`Projectivization.fsForm_isKahler`, `fsVolume_eq_smul_fubiniStudyMeasure`). What **is**
+bounded — and is built here — is the
 **pointwise** (linear-algebra) core of that form: on any complex inner-product space `E` (the tangent
 model of `ℂℙ^{N-1}` at a ray is `ψ^⊥ ⊆ E`), the flat Hermitian structure gives the Kähler triple
 

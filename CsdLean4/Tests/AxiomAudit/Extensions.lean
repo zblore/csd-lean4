@@ -362,7 +362,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- de-isolation dynamics.  ★ DISCHARGED 2026-09-01 by Mathlib/Dynamics/CatMapWitness.lean:
 -- cat_hasCorrelationDecay gives the same envelope for Arnold's cat map, which IS a bijection
 -- (bijective_cat).  ⚠️ Two claims in the sentence this replaces were WRONG.  (a) "the extra cost
--- is Haar-invariance of a toral automorphism, which Mathlib does not provide": Mathlib provides
+-- is Haar-invariance of a toral automorphism, which Mathlib does not provide" (MATHLIB-ABSENT(AddCircle.map_toralAutomorphism_volume)): Mathlib provides
 -- it -- AddMonoidHom.measurePreserving, the to_additive twin of MonoidHom.measurePreserving,
 -- takes continuity + surjectivity + equal total mass, and measurePreserving_cat is three lines.
 -- (b) "the character argument has the same shape": the doubling witness contains NO character

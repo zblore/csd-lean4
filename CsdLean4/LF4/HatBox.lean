@@ -18,7 +18,7 @@ The single-axis crux integral for the **context-fixed** qubit measurement (Paper
 context-fixed proof reduces to (via `ρ_m = 2(m·λ) + 2|m·λ|` and the hemisphere indicator
 `= ½(1 + sign(λ·n))`).
 
-It is **not** raw `S²` integration (Mathlib lacks that): it reduces to the proved fact that the
+It is **not** raw `S²` integration (Mathlib lacks that: MATHLIB-ABSENT(MeasureTheory.Measure.sphere)): it reduces to the proved fact that the
 moment coordinate is `Uniform[0,1]` (`fs_moment_pushforward_uniform`, the ℂℙ¹ Duistermaat–Heckman /
 Archimedes result) plus the elementary 1-D integral `∫_{[0,1]} |2t−1| dt = ½`. Foundational-triple,
 no `sorry`.

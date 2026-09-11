@@ -80,7 +80,8 @@ nor proved.
 
 ⚠️ **Liouville for one flow only.** `fsVolume_map_torusUnitary_smul` (G10) is unitary invariance
 specialised to `diag(e^{iθ})`. It is not a manifold-level Liouville theorem for Hamiltonian flows
-(G5, not scheduled: Mathlib has no global flows and no Cartan formula), and it does not touch
+(Q29 / G5, `BACKLOG.md` ▶ OUTSTANDING, priced L–XL on the chart route: Mathlib has no global
+flows and no Cartan formula, MATHLIB-ABSENT(IsMIntegralCurve.flow)), and it does not touch
 `ConstraintDynamics.flow_preserves` (Posit 3), whose measurement pieces are not globally
 Hamiltonian.
 

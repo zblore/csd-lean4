@@ -46,7 +46,8 @@ projected volume structure."
    ratio is the same for the parallelepiped and the simplex). Lifting it to the
    μ_FS-volume on the ontic `Σ = ℂℙ^{N-1}` itself is the Duistermaat–Heckman
    pushforward `Φ∗μ_FS = uniform_Δ` (slice 2), which needs symplectic-volume
-   machinery Mathlib lacks.
+   machinery Mathlib lacks (MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm); the corpus
+   stages it since 2026-09-08, `Instances/ProjectiveSpaceFubiniStudyVolume.lean`).
 
 **Category:** conceptually 1-Mathlib (affine/measure geometry); kept in `CSD.LF4`
 as it drives the carve-out programme. Extraction candidate (LF4-todo §10).

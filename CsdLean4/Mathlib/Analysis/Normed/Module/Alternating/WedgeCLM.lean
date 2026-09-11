@@ -38,7 +38,7 @@ two smooth sections smooth:
 ⚠️ The constant in `norm_wedge_le` is the crude one (the number of shuffle classes times
 `‖B‖`); no sharp bound is claimed. ⚠️ Associativity, graded commutativity and the Leibniz rule
 of the wedge are still not here (they are algebraic facts about `AlternatingMap.domCoprod`
-first, and Mathlib does not have them either).
+first, and Mathlib does not have them either; MATHLIB-ABSENT(ContinuousAlternatingMap.wedgeL)).
 
 References: `specs/top-power-scoping.md` (M2); `Alternating/Wedge.lean` (the wedge);
 `Geometry/Manifold/WedgeForm.lean` (the consumer: the wedge of sections); `specs/future-work.md`.

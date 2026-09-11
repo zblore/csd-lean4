@@ -14,7 +14,7 @@ public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 # The race of iid clocks: the exponential law is forced
 
 **Category:** 1-Mathlib. No CSD content: this is the classical competing-risks characterisation,
-which Mathlib does not have.
+which Mathlib does not have (MATHLIB-ABSENT(ProbabilityTheory.competingExponentials)).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/first-passage-race/
 Plain-language, CSD-role and formal statements of the first-passage race, with this module as the

@@ -58,7 +58,7 @@ This is finite-**sample** confidence: Hoeffding concentration of the CHSH
 estimator. It is **not** a composable finite-key security proof. A full
 finite-key analysis (Renner smooth min-entropy, the leftover-hash / privacy-
 amplification accounting, the entropy-accumulation theorem) needs infrastructure
-Mathlib does not have; none of it is claimed here. The per-round independence and
+Mathlib does not have (MATHLIB-ABSENT(file:Mathlib/InformationTheory/QuantumKeyDistribution)); none of it is claimed here. The per-round independence and
 boundedness are explicit modelling hypotheses (not derived). QM-validity
 inner-product layer; no CSD ontology. Foundational triple only (no `busch`).
 

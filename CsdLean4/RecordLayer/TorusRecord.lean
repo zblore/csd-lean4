@@ -44,12 +44,13 @@ fibre and the A1-admissible arena are finally the same object:
 What this delivers is an **active** record fibre on a compact,
 even-dimensional arena: the outcome is read off the fibre coordinate
 rather than pulled back from the base, and the arena's dimension no longer
-forbids the structure Paper C A1 asks for. It does **not** construct a
-Kähler form on that arena, and does not prove the fibre measure is a
-Liouville volume for one: Mathlib has no manifold differential-forms API,
-which is the standing KG-1 block. Parity is a necessary condition that was
-previously violated and now is not; it is not sufficiency, and no A1
-discharge is claimed here.
+forbids the structure Paper C A1 asks for. This module does **not** construct a
+Kähler form on that arena. Since 2026-09-10 the base factor's is constructed
+elsewhere and the sector's measure is proved to be its volume
+(`Projectivization.fsForm_isKahler`, `CSD.LF4.manyToOneSetup_isKahler_liouville`
+in `LF4/SectorManifold.lean`: `kMuL = ω_FS^{∧n}-volume ⊗ Haar`); the fibre factor
+is Haar on `T²`. Parity is a necessary condition that was previously violated
+and now is not; the A1 discharge on the `ℂℙⁿ` base is W1's, recorded there.
 
 ## References
 

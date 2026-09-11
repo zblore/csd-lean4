@@ -19,7 +19,7 @@ Strong subadditivity (SSA, Lieb–Ruskai) is the inequality
 for a tripartite density operator `ρ_ABC` on `(a × b × c)`. Every standard proof rests on a deep
 operator-convexity input — Lieb's concavity theorem, joint convexity of the quantum relative
 entropy `(ρ,σ) ↦ D(ρ‖σ)`, or, equivalently, **monotonicity of relative entropy under partial
-trace (DPI)** `D(Tr_C ρ ‖ Tr_C σ) ≤ D(ρ ‖ σ)`. **Mathlib does not have any of these** (see the
+trace (DPI)** `D(Tr_C ρ ‖ Tr_C σ) ≤ D(ρ ‖ σ)`. **Mathlib does not have any of these** (MATHLIB-ABSENT(Matrix.relativeEntropy); see the
 scout note at the end of this docstring).
 
 ## What this file delivers (honest scope)
@@ -351,7 +351,7 @@ relative entropy does not increase under the partial trace that maps the `BC`-sy
   `D(ρ_AB ‖ ρ_A ⊗ ρ_B) ≤ D(ρ_ABC ‖ ρ_A ⊗ ρ_BC)`.
 
 `hDPI` is the standard deep input (= DPI / joint convexity of relative entropy / Lieb concavity);
-**Mathlib does not have it** (see the module docstring's scout). The reduction is genuine:
+**Mathlib does not have it** (MATHLIB-ABSENT(Matrix.relativeEntropy); see the module docstring's scout). The reduction is genuine:
 
 * `D(ρ_ABC ‖ ρ_A ⊗ ρ_BC) = S(ρ_A) + S(ρ_BC) − S(ρ_ABC)` (mutual information `I(A:BC)`), and
 * `D(ρ_AB ‖ ρ_A ⊗ ρ_B) = S(ρ_A) + S(ρ_B) − S(ρ_AB)` (mutual information `I(A:B)`),

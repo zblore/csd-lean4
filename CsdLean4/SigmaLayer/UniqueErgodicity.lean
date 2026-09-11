@@ -30,7 +30,7 @@ precisely locating the ergodic face of the SO-1/L7 frontier.
 **What is NOT proved here — and why.** The target `BornFromFlow` (`TheoremTargets.lean`) is
 the *pointwise* (a.e.) statement `(1/n) ∑_{k<n} 𝟙_region(Φ_k x) → μL(region)`. Deriving it
 from `IsErgodicForOutcomeRegions` requires the **pointwise (Birkhoff) ergodic theorem**, which
-**Mathlib does not have** (it has only the von Neumann *mean* ergodic theorem,
+**Mathlib does not have** (MATHLIB-ABSENT(MeasureTheory.birkhoff_pointwise); it has only the von Neumann *mean* ergodic theorem,
 `ContinuousLinearMap.tendsto_birkhoffAverage_orthogonalProjection`, and the Birkhoff-sum
 *definitions*). So this module supplies the ergodicity side of the reduction and names the
 remaining gap; it does not close `BornFromFlow`.

@@ -298,7 +298,7 @@ theorem eq_of_forall_integral_mul_pow_eq {μ : Measure (Set.Icc a b)}
 
 /-! ### The carrier: Lebesgue measure on a compact interval
 
-Mathlib has no `MeasureSpace` instance on the subtype `Set.Icc a b`, so the measure the results
+Mathlib has no `MeasureSpace` instance on the subtype `Set.Icc a b` (MATHLIB-ABSENT(Set.Icc.instMeasureSpace)), so the measure the results
 above are stated against has to be built. It is the comap of `volume`, and it has the two
 properties they need: finiteness, and full support (which is what turns "equal almost everywhere"
 into "equal"). -/

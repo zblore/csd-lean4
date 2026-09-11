@@ -35,10 +35,10 @@ module. We deliberately provide NO inhabitants here.
   `bell_singlet_frequency_convergence_joint` family); T12 (entangled predictions inconsistent with any
   local model) is exactly `NoLocalHiddenVariableTable` (T14). Both are recorded as awaiting the parked
   P3 derivation for a sector-intrinsic statement.
-* **Mixed-state / density-matrix gap.** Mathlib has NO density-matrix or mixed-state type (no
+* **Mixed-state / density-matrix gap.** Mathlib has NO density-matrix or mixed-state type (MATHLIB-ABSENT(Matrix.DensityOperator); no
   `Mathlib/QuantumInfo`, no trace-one-state structure). The repository's own `CSD.LF2.DensityOperatorIx`
   (trace-one positive semidefinite Hermitian, with `reduced`/`reducedLeft` partial traces) is the only
-  primitive available. The corpus supplies what Mathlib lacks: `DensityOperatorIx.IsPure` below adds the
+  primitive available. The corpus supplies what Mathlib lacks (MATHLIB-ABSENT(Matrix.DensityOperator)): `DensityOperatorIx.IsPure` below adds the
   purity predicate (see also `SigmaLayer/MixedState.lean`), and the convex-ensemble representation with
   the mixed Born rule is `LF2/MixedEnsembleIx.lean` (`traceForm_ensemble`, `mixedEnsemble_capstone`).
 -/

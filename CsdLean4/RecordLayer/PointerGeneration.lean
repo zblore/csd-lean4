@@ -51,9 +51,12 @@ stated as a theorem rather than left implicit.
   a constant-generator ODE on a punctured interval. Outside `[0,1]` the factor vanishes and
   the ODE reads `U̇ = 0` — persistence, as an ODE.
 * The **symplectic/moment-map reading** of "the flow of `H_eff` is the Hamiltonian flow of
-  the FS moment map" remains prose: Mathlib has no symplectic-manifold API
-  (`MATHLIB-GAPS.md`) — the *same* §2a-scoped boundary as A1/A3, but with no flux
-  obstruction hiding behind it.
+  the FS moment map" is, on `ℂℙⁿ`, a theorem since 2026-09-09
+  (`Projectivization.schrodingerField_isHamiltonianVectorField`,
+  `isMIntegralCurve_schrodingerUnitary_smul`: `exp(-itH)` IS the integral curve of the Hamiltonian
+  vector field of `-2⟨H⟩`; the torus case `torusField_isHamiltonianVectorField`). On the *arena*
+  it is `R-016′` (`BACKLOG.md` ▶ OUTSTANDING, L) — no longer a missing API, a brick not yet built,
+  and with no flux obstruction hiding behind it.
 * ⚠️ *Boundary sharpened 2026-08-03 (fourth external review, verified both ways):* the
   generation is **fibrewise**, not joint-arena. The arena propagator's generator is
   vertical, `(0, V_Q)`, while the natural joint scalar `𝓗(x,q) = μ_{H_eff(w(x))}(q)` has

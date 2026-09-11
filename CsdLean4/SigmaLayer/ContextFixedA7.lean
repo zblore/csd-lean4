@@ -62,7 +62,7 @@ and a genuine `N ≥ 3` impossibility theorem:
    `g(|⟨ψ|φ⟩|²)` integrated over a fixed region produces, as a function of `ψ`, components of
    every degree `(k,k)`, while the target `|⟨eᵢ|ψ⟩|²` is pure degree `(1,1)`; killing the higher
    harmonics for all regions and all contexts is what should fail at `N ≥ 3`. Formalising that
-   needs representation theory / harmonic analysis on `ℂℙⁿ⁻¹` for which Mathlib has no API.
+   needs representation theory / harmonic analysis on `ℂℙⁿ⁻¹` for which Mathlib has no API (MATHLIB-ABSENT(file:Mathlib/Analysis/Fourier/Projectivization)).
 
 So: this is step one of the no-go, and it is honest about being step one.
 

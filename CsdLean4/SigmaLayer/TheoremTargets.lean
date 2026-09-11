@@ -58,7 +58,7 @@ def BornFromFlow (D : ConstraintDynamics Sigma) (region : Set Sigma) (value : EN
 /-- **B7 (ergodic branch): the flow is ergodic on the outcome regions.** Every measurable set invariant
 under the time-1 flow map, among the relevant sigma-algebra, is null or co-null under `muL`. Defined,
 not assumed. `BornFromFlow` WOULD follow from this together with the pointwise (Birkhoff) ergodic
-theorem — which Mathlib does not have (`SigmaLayer/UniqueErgodicity.lean` names the gap precisely),
+theorem — which Mathlib does not have (MATHLIB-ABSENT(MeasureTheory.birkhoff_pointwise); `SigmaLayer/UniqueErgodicity.lean` names the gap precisely),
 so NOTHING in the corpus proves `BornFromFlow`, conditionally or otherwise; T3 is open (= the SO-1
 face, `reconstruction-status.md` T3/L7). *(Corrected 2026-08-13: this line previously said "is
 proved from this ... in concrete models" — prose stronger than the corpus; the contradictions

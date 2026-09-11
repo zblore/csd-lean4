@@ -121,7 +121,7 @@ theorem fidelity_comm {ρ σ : Matrix n n ℂ} (hρ : ρ.PosSemidef) (hσ : σ.P
 
 /-! ### The Hilbert–Schmidt Cauchy–Schwarz inequality
 
-Mathlib has no inner-product structure on `Matrix` (only the Frobenius *norm*), so the
+Mathlib has no inner-product structure on `Matrix` (only the Frobenius *norm*; MATHLIB-ABSENT(Matrix.instInnerProductSpace)), so the
 inequality is obtained by transporting matrices to `EuclideanSpace ℂ (n × n)`, where
 `norm_inner_le_norm` is Cauchy–Schwarz. -/
 
@@ -232,7 +232,7 @@ factor of `X` has trace `F`; writing that trace as a Hilbert–Schmidt inner pro
 
 ⚠️ Positive-definiteness is load-bearing, not decorative: it is what makes `X` invertible, and
 the elementary polar decomposition used here (`U = X P⁻¹`) exists only for invertible `X`.
-Mathlib has no general polar/singular-value factorisation to remove the hypothesis with. -/
+Mathlib has no general polar/singular-value factorisation to remove the hypothesis with (MATHLIB-ABSENT(Matrix.polarDecomposition)). -/
 theorem fidelity_le_one {ρ σ : Matrix n n ℂ} (hρ : ρ.PosDef) (hσ : σ.PosDef)
     (hρ1 : ρ.trace = 1) (hσ1 : σ.trace = 1) :
     fidelity hρ.posSemidef hσ.posSemidef ≤ 1 := by

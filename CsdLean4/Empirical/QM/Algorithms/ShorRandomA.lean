@@ -1032,7 +1032,7 @@ The GOOD bound is then the mechanical complement against `two_mul_card_pi_diag_l
 per-element valuations. `Finset.induction` on the binary `Nat.factorization_lcm` (whose Finsupp `⊔`
 is `max` at the prime `2`, `Finsupp.sup_apply`), with `Finset.lcm_insert` / `Finset.sup_insert` and
 the `GCDMonoid.lcm = Nat.lcm` bridge `lcm_eq_nat_lcm`. The nonzero side-condition needed by
-`Nat.factorization_lcm` is `finset_lcm_ne_zero`. Mathlib has no Finset-level `factorization_lcm`. -/
+`Nat.factorization_lcm` is `finset_lcm_ne_zero`. Mathlib has no Finset-level `factorization_lcm` (MATHLIB-ABSENT(Nat.factorization_lcm_finset)). -/
 theorem finset_lcm_ne_zero {ι : Type*} (s : Finset ι) (g : ι → ℕ)
     (hg : ∀ i ∈ s, g i ≠ 0) : s.lcm g ≠ 0 := by
   classical

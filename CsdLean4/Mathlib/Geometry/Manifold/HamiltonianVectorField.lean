@@ -114,8 +114,10 @@ predicate's `J` is a family of functions), and `nijenhuis` takes the family.
 
 ⚠️ **No global flow.** G4 gives local existence, uniqueness and conservation for integral
 curves; that a global flow `ℝ × M → M` exists (completeness of the field, e.g. on a compact
-manifold) is not stated — Mathlib has no flows of vector fields on manifolds, which is why G5
-(Liouville at manifold level) is unscheduled.
+manifold) is not stated — Mathlib has no flows of vector fields on manifolds
+(MATHLIB-ABSENT(IsMIntegralCurve.flow); it has uniform-time global integral curves,
+`exists_isMIntegralCurve_of_isMIntegralCurveOn`, from which a flow on a compact manifold is
+milestone (a) of Q29 / G5, `BACKLOG.md` ▶ OUTSTANDING, priced M–L).
 
 ⚠️ **The converse of G11 is false and not stated.** A locally Hamiltonian field need not be
 Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of

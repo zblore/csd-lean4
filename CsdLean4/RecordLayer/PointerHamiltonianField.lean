@@ -42,8 +42,10 @@ formalisable level: the energy generates the field (here), the field generates t
 model space is the linear `ℂ^{K+1}`, and `ω` is the pointwise fundamental form. The
 **joint-arena manifold** statement — `𝓗(x,q) = Σⱼ wⱼ(x)hⱼ(q)` as a scalar on the product
 manifold, `X_𝓗` on the quotient, weight conservation along the true joint flow — remains
-the §2a boundary (Mathlib has no manifold symplectic API; flat-space `extDeriv` landed
-upstream but manifold forms are explicitly TODO there). The chart-level Poisson half of
+the §2a boundary — now `R-016′` (`BACKLOG.md` ▶ OUTSTANDING, L): the manifold symplectic API
+exists on `ℂℙⁿ` since 2026-09-08 (`HamiltonianVectorField.lean`, `IsHamiltonianVectorField`), and
+what is not built is the product manifold `ℂℙⁿ × T² × …` with a product form. The chart-level
+Poisson half of
 that story is A3 (`ChartBracket.lean`); the measure-level transport is A1
 (`JointFlowTransfer.lean`); this module is the third fragment, and the three together are
 what the corpus can honestly say about A4 today.

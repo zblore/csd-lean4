@@ -338,7 +338,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.vonNeumannEntropy_diagonal
 
--- K1-B.1 (specs/k1-plan.md): matrix partial trace (Mathlib has none). Load-bearing results:
+-- K1-B.1 (specs/k1-plan.md): matrix partial trace (Mathlib has none; MATHLIB-ABSENT(Matrix.partialTrace)). Load-bearing results:
 -- trace preservation (partialTraceRight_trace), tensor reduction with the trace of the
 -- TRACED-OUT factor multiplying the surviving one (partialTraceRight_kronecker), PSD
 -- preservation via the v⊗eₖ witness vectors (partialTraceRight_posSemidef /
@@ -4961,7 +4961,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- correlation decay forces time averages to the space average, with an explicit rate.
 -- ROUTE DECISION, and it is the whole feasibility question: the antecedent is stated as an
 -- explicit bound |<(f.Phi^s)(f.Phi^t)> - <f>^2| <= eps(dist s t), NOT as abstract mixing.
--- Mathlib has no mixing definition and no pointwise Birkhoff, so the abstract route stops at
+-- Mathlib has no mixing definition and no pointwise Birkhoff (MATHLIB-ABSENT(MeasureTheory.birkhoff_pointwise)), so the abstract route stops at
 -- once. WALL NOTE CORRECTED AT SOURCE: Mathlib DOES have the von Neumann mean ergodic theorem
 -- (ContinuousLinearMap.tendsto_birkhoffAverage_orthogonalProjection); the arc plan said
 -- otherwise and was stale. It is still not what E4 needs -- no rate, and its limit is the
@@ -5120,7 +5120,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'MeasureTheory.eq_of_forall_integral_mul_pow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms MeasureTheory.eq_of_forall_integral_mul_pow_eq
 
--- The CARRIER (2026-08-24): Mathlib has no MeasureSpace instance on the subtype Set.Icc a b, so
+-- The CARRIER (2026-08-24): Mathlib has no MeasureSpace instance on the subtype Set.Icc a b (MATHLIB-ABSENT(Set.Icc.instMeasureSpace)), so
 -- the measure these results are stated against had to be built -- intervalMeasure, the comap of
 -- volume -- together with its two needed properties.  Finiteness is immediate; full support
 -- (isOpenPosMeasure_intervalMeasure) needs a < b and is what upgrades "equal almost everywhere"
@@ -5182,7 +5182,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- exponential.  The ⇐ half is hasRaceProperty_expMeasure; exists_eq_expMeasure is the ⇒ half.
 -- ★ THE ROUTE MEMO'S THREE MAPPED ASSEMBLIES WERE ALL UNNECESSARY, and so was its §5a successor.
 -- Steps 3/3' were built to compare H_c(u) = G(c * G-inverse(u)) against u^c, which needs the
--- quantile G-inverse as a continuous function on a CLOSED interval -- machinery Mathlib lacks.
+-- quantile G-inverse as a continuous function on a CLOSED interval -- machinery Mathlib lacks (MATHLIB-ABSENT(Set.Icc.instMeasureSpace)).
 -- survival_natMul_ae sidesteps all of it: restrict the ratio to a NATURAL NUMBER m, and G(t)^m is
 -- itself a product of m survival factors at rate 1, so ALL THREE terms of the expansion of
 -- int (G(mt) - G(t)^m)^2 dmu are instances of the SAME race family --

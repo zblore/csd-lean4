@@ -22,10 +22,17 @@
 >
 > ### ▶ OUTSTANDING — the priced residue, all lists (recorded 2026-09-11)
 >
-> Every open item that touches the manifold layer or was ever marked "not scheduled", as a
-> numbered priced row (repository ids `Q29`–`Q32`; the scoping note's `G` ids are given in
-> brackets — `G` is a paper prefix, CONVENTIONS §12). The author decides; nothing here is
-> "unscheduled". Mathlib landings deprecate the corpus's version.
+> Every open item that touches the manifold layer or was ever marked "not scheduled" or
+> "permanently scoped", as a numbered priced row (repository ids `Q29`–`Q33`; the scoping note's
+> `G` ids are given in brackets — `G` is a paper prefix, CONVENTIONS §12). The author decides;
+> nothing here is "unscheduled". Mathlib landings deprecate the corpus's version.
+> ⚠️ *2026-09-11 re-plan:* `reconstruction-status.md` §2a (i) "permanently scoped — blocked on
+> Mathlib" held three items. After the G series: A1 is **discharged** on `ℂℙⁿ`; A3 (smoothness of
+> `π`) and the Hamiltonian generation of the witnesses are **re-classified as bricks** — `Q33` and
+> `R-016′` here — because the API they waited for now exists in the corpus. The 48 "Mathlib has
+> no …" claims in module docstrings were all re-read the same day: 20 were about the manifold
+> API and are rewritten to point at the theorems or at `R-016′`; the rest are tagged with
+> pin-checked sentinels (`check-mathlib-absence`: 80 sentinels, 0 untagged).
 >
 > | # | Item | Cx | P | Value | Where / what it lands |
 > |---|---|---|---|---|---|
@@ -34,6 +41,7 @@
 > | **Q31** (= G18) | Darboux's theorem (Moser's trick: needs G5(a)(b) and a Poincaré lemma on a ball). | **XL** | Low | Low | The classical theorem a symplectic library owes; no consumer. |
 > | `R-016′` (existing row) | The ARENA-level `ι_X ω = dH` for the joint-arena propagators of the record layer — the manifold identification of `H_int`'s flows (`reconstruction-status.md` A2/A4 "no manifold Hamiltonian-flow API"). The API now exists on `ℂℙⁿ`; the arena `ℂℙⁿ × T² × …` needs the product manifold structure and the piecewise-Hamiltonian pieces stated on it. | **L** | Medium | Medium | Statement-level: makes the "Hamiltonian origin stated, not formalised" residue of `record-layer-plan.md` and `TOUR.md` a stated theorem-shape rather than prose; a discharge is the H_int frontier (paper-side). |
 > | `R-019` (existing row) | The relaxation H-theorem for the fibre (Track B / Valentini): blocked on first-passage asymptotics for the hyperbolic fibre; `relaxation_requires_hyperbolic_fibre` (2026-09-06) is the proved precondition. | **XL** | Low | Highest *outside* the programme | `cr-queue.md` CR-14, `residues.tsv`. The only route to new predictions past the empirically-identical ceiling. Re-listed here with a price (was "not scheduled"). |
+> | **Q33** (= A3 of `reconstruction-status.md` §2a, re-classified 2026-09-11 from "permanently scoped") | **Smoothness of the projection `π = Prod.fst : ℂℙⁿ × T² → ℂℙⁿ`**: a `ChartedSpace` + `IsManifold` instance on `AddCircle 1` (transport along `AddCircle 1 ≃ Circle`, whose instance Mathlib has in `Instances/Sphere.lean`), hence on `KTorus` and the product arena; then `ContMDiff π` is `contMDiff_fst`. | **S–M** | High | Low–medium | Discharges the last "needs the absent API" excuse in §2a; a prerequisite of `R-016′` (the arena as a manifold). Nothing downstream consumes smoothness of `π` today. |
 > | ~~**Q32**~~ **DONE 2026-09-11** | Glossary staleness sweep: 11 entries flagged STALE, 1 never reviewed, `meta.sha` re-pinned. Each re-read against its module's diff since `reviewed:`; **two needed content** (`fibre`: the base measure is now derived from the volume form, W1; `schrodinger-from-records`: the continuity-only form exists), ten were docstring-only changes and got the date. Guard: 0 STALE, 0 never reviewed. | **S** | — | — | `docs/glossary.yaml` |
 > | *(push)* | Fourteen local commits (G9+G10 … G17) are unpushed; CI has not seen the manifold layer past `46be6c6`. | — | — | — | The author's call. |
 >

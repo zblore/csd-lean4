@@ -12,7 +12,7 @@ public import Mathlib.LinearAlgebra.Matrix.Trace
 /-!
 # Mathlib upstream candidate: partial trace of a matrix over a tensor factor
 
-**Category:** 1-Mathlib (CSD-free; Mathlib has no partial-trace construction).
+**Category:** 1-Mathlib (CSD-free; Mathlib has no partial-trace construction, MATHLIB-ABSENT(Matrix.partialTrace)).
 
 For a matrix `A` on a product index `m × n` — i.e. an operator on `ℂ^m ⊗ ℂ^n` in
 the Kronecker realisation — the **partial traces** trace out one tensor factor:
@@ -42,7 +42,7 @@ onto) a `Mathlib/LinearAlgebra/Matrix/PartialTrace.lean`, no symbol rename.
 
 Needed for the CSD empirical suite's no-communication theorem in reduced-density
 form (E3b) and no-broadcasting (E2): see `specs/qm-empirical-tests.md` §3bis and
-`specs/partial-trace-plan.md`. Mathlib has no partial trace as of the pinned
+`specs/partial-trace-plan.md`. Mathlib has no partial trace (MATHLIB-ABSENT(Matrix.partialTrace)) as of the pinned
 revision (Lean 4.29.0-rc8).
 
 ## Consumers

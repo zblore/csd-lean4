@@ -39,7 +39,7 @@ deliberately avoided.
 * `cat` is an `AddMonoidHom` (`catHom`), continuous and surjective, so it preserves Haar measure —
   `measurePreserving_cat`, from `AddMonoidHom.measurePreserving`. ⚠️ This is the step
   `MATHLIB-GAPS.md` recorded as the missing piece ("Haar invariance of a toral automorphism, which
-  Mathlib does not provide"); that row was **factually wrong** and is corrected — the lemma is
+  Mathlib does not provide", MATHLIB-ABSENT(AddCircle.map_toralAutomorphism_volume)); that row was **factually wrong** and is corrected — the lemma is
   upstream, it is the `to_additive` twin of `MonoidHom.measurePreserving`.
 * Characters `chi (m,n) (x,y) = e^{2πimx} e^{2πiny}` transport by the **transpose**
   `catZ (m,n) = (2m+n, m+n)` (`chi_cat`), so a correlation at lag `u` is an integral of characters

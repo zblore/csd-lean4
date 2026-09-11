@@ -89,8 +89,9 @@ homogenisation (`IsTorusGenerated`), not by manifold theory, so no quotient mach
 exists — `Projectivization.torusField_isHamiltonianVectorField`
 (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`, `ι_X ω_FS = d(2 ∑ θₖ momentMap)`
 on `ℂℙⁿ` with `fsForm`). This module's posit and proof are unchanged — they rest on the linear-level
-`IsPhaseHamiltonian` — and what changed is only that "Mathlib has no symplectic manifold API" is no
-longer the reason the manifold form was absent.
+`IsPhaseHamiltonian` — and what changed is only that "Mathlib has no symplectic manifold API"
+(MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm), still true of Mathlib) is no
+longer the reason the manifold form was absent: the corpus built its own.
 
 **Three conventions are visible in the predicate and should stay visible.** `IsTorusGenerated` asks
 for a Hamiltonian defined and differentiable on all of `ℂᴺ`; `momentContext` supplies one

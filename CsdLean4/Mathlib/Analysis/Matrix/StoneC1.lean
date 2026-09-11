@@ -32,7 +32,7 @@ A one-parameter unitary group of `N x N` complex matrices is `t ↦ exp (t • A
 skew-Hermitian generator `A`. This is the load-bearing content of Stone's theorem in finite
 dimensions: the group IS the exponential of its generator.
 
-Mathlib has no Stone theorem (the `Stone*` names there are Stone-Weierstrass /
+Mathlib has no Stone theorem (MATHLIB-ABSENT(file:Mathlib/Analysis/OneParameterGroup); the `Stone*` names there are Stone-Weierstrass /
 Stone-Cech / Stone separation). This file supplies the forward direction, first under a
 smoothness hypothesis (`stone_c1`), then — **the full-continuity strengthening
 (`stone_continuous`, 2026-07-23)** — for a merely *strongly continuous* group, deriving the

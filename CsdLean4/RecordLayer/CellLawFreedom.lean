@@ -21,10 +21,13 @@ map for the `Tⁿ` action on connected `ℂℙ^{N−1}` is unique up to an addit
 non-negativity pin the constant to zero. (At the form's fixed scale — the corpus normalisation
 `ω u (J u) = ‖u‖²` of `IsFubiniStudyKahler`; rescaling `ω ↦ λω` readmits a family `λΦ + c`.)
 
-**But that argument is unformalised, and what Lean verifies does not carry it.** Mathlib has no
-symplectic API, so the corpus never states the moment-map equation `ι_{X_i} ω = dΦᵢ` — see the
-boundary note in `LF4/MomentMap.lean`. `momentMap` is *defined* by the coordinate formula, and what
-is machine-checked about it is that formula plus its symmetries. This module shows those do **not**
+**But that argument is unformalised HERE, and what this module verifies does not carry it.** When
+this was written Mathlib had no symplectic API and the corpus did not state the moment-map equation
+`ι_{X_i} ω = dΦᵢ`. Since 2026-09-08 it does, on the manifold (`Projectivization.torusField_isHamiltonianVectorField`,
+`eq_torusHamiltonian_of_nonneg_of_sum` — the standard argument above as a theorem, G6/G8); see
+`LF4/MomentMap.lean`'s header. This module's own claim is unchanged: `momentMap` is *defined* by
+the coordinate formula, and what is machine-checked about it here is that formula plus its
+symmetries. This module shows those do **not**
 pin it down: `globalBasin_prob` holds for **every** `ContextField`, `momentContext` is one field
 among many, and `bornRate` is a definition. Relative to the machine-checked corpus the cell law is a
 **structural posit**, and the prose that cites `momentMap_mk` for "forced" is citing a
