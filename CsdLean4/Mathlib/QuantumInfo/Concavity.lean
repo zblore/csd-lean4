@@ -12,19 +12,21 @@ public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
-* ★ `vonNeumannEntropy_mixture_ge` — **concavity**: for a finite mixture `σ = ∑ᵢ pᵢ ρᵢ` of
-  density matrices with weights `pᵢ ≥ 0` summing to one, `∑ᵢ pᵢ S(ρᵢ) ≤ S(σ)`, under Klein's
-  full-support condition on `σ`. The proof is the identity
+* ★ `vonNeumannEntropy_mixture_ge_of_posDef` — **concavity**: for a finite mixture
+  `σ = ∑ᵢ pᵢ ρᵢ` of density matrices with weights `pᵢ ≥ 0` summing to one, `∑ᵢ pᵢ S(ρᵢ) ≤ S(σ)`,
+  under Klein's full-support condition on `σ`. The condition is removed in
+  `ConcavityFull.lean` (`vonNeumannEntropy_mixture_ge`), by mixing with the maximally mixed
+  state and passing to the limit. The proof is the identity
   `S(σ) − ∑ᵢ pᵢ S(ρᵢ) = ∑ᵢ pᵢ D(ρᵢ ‖ σ)`: the cross term `Re Tr(σ log σ)` is the `p`-average of
   `Re Tr(ρᵢ log σ)` (`re_trace_finset_sum_smul_mul`), and Klein's inequality
   (`klein_inequality`, `Subadditivity.lean`) bounds each by `Re Tr(ρᵢ log ρᵢ) = −S(ρᵢ)`
   (`re_trace_self_log_eq_neg_vonNeumannEntropy`);
 * `holevoChi` — the Holevo quantity `χ = S(∑ᵢ pᵢ ρᵢ) − ∑ᵢ pᵢ S(ρᵢ)` of an ensemble, and
-  ★ `holevoChi_nonneg`.
+  ★ `holevoChi_nonneg_of_posDef`.
 
 The full-support hypothesis is the same discipline as `relEntropy_nonneg` and
 `vonNeumannEntropy_le_pinching`: without it the junk value of `log` at `0` enters the cross term.
-Removing it (by continuity, or by restricting to the support of the mixture) is a separate step.
+`ConcavityFull.lean` removes it for concavity (and hence for `holevoChi_nonneg`) by continuity.
 
 Consumers: `CsdLean4/LF2/PreparationCoarseGraining.lean` (coarse-graining a preparation on `Σ`
 does not decrease its entropy).
@@ -69,7 +71,7 @@ matrices with weights `pᵢ ≥ 0` summing to one, and `σ` of full support (Kle
 `∑ᵢ pᵢ S(ρᵢ) ≤ S(σ)`. Proof: `S(σ) − ∑ᵢ pᵢ S(ρᵢ) = ∑ᵢ pᵢ D(ρᵢ ‖ σ) ≥ 0` — the cross term
 `Re Tr(σ log σ)` is the `p`-average of `Re Tr(ρᵢ log σ)`, and Klein's inequality bounds each by
 `Re Tr(ρᵢ log ρᵢ) = −S(ρᵢ)`. -/
-theorem vonNeumannEntropy_mixture_ge {ι : Type*} [Fintype ι] (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i)
+theorem vonNeumannEntropy_mixture_ge_of_posDef {ι : Type*} [Fintype ι] (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i)
     (hp1 : ∑ i, p i = 1) (ρ : ι → Matrix n n ℂ) (hρ : ∀ i, (ρ i).PosSemidef)
     (htr : ∀ i, (ρ i).trace = 1) (hpd : (∑ i, ((p i : ℝ) : ℂ) • ρ i).PosDef) :
     ∑ i, p i * vonNeumannEntropy (hρ i).1 ≤ vonNeumannEntropy hpd.1 := by
@@ -105,10 +107,10 @@ noncomputable def holevoChi {ι : Type*} [Fintype ι] (p : ι → ℝ) {ρ : ι 
   vonNeumannEntropy hσ - ∑ i, p i * vonNeumannEntropy (hρ i)
 
 /-- ★ **The Holevo quantity is non-negative** (concavity restated). -/
-theorem holevoChi_nonneg {ι : Type*} [Fintype ι] (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i)
+theorem holevoChi_nonneg_of_posDef {ι : Type*} [Fintype ι] (p : ι → ℝ) (hp : ∀ i, 0 ≤ p i)
     (hp1 : ∑ i, p i = 1) (ρ : ι → Matrix n n ℂ) (hρ : ∀ i, (ρ i).PosSemidef)
     (htr : ∀ i, (ρ i).trace = 1) (hpd : (∑ i, ((p i : ℝ) : ℂ) • ρ i).PosDef) :
     0 ≤ holevoChi p (fun i => (hρ i).1) hpd.1 :=
-  sub_nonneg.mpr (vonNeumannEntropy_mixture_ge p hp hp1 ρ hρ htr hpd)
+  sub_nonneg.mpr (vonNeumannEntropy_mixture_ge_of_posDef p hp hp1 ρ hρ htr hpd)
 
 end QuantumInfo

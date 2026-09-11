@@ -111,14 +111,14 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'QuantumInfo.re_trace_finset_sum_smul_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.re_trace_finset_sum_smul_mul
 
-/-- info: 'QuantumInfo.vonNeumannEntropy_mixture_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms QuantumInfo.vonNeumannEntropy_mixture_ge
+/-- info: 'QuantumInfo.vonNeumannEntropy_mixture_ge_of_posDef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.vonNeumannEntropy_mixture_ge_of_posDef
 
 /-- info: 'QuantumInfo.holevoChi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.holevoChi
 
-/-- info: 'QuantumInfo.holevoChi_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms QuantumInfo.holevoChi_nonneg
+/-- info: 'QuantumInfo.holevoChi_nonneg_of_posDef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.holevoChi_nonneg_of_posDef
 
 -- HolevoBound (2026-09-11, W10): mixtures of density matrices are density matrices; the Holevo
 -- bound chi <= S(average) <= log dim (no support hypothesis); the single-letter Holevo range of a
@@ -143,6 +143,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 /-- info: 'QuantumInfo.holevoRange_le_log_card' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.holevoRange_le_log_card
+
+-- ConcavityFull (2026-09-11): the full-support hypothesis of concavity removed by mixing with the
+-- maximally mixed state (explicit spectrum, vonNeumannEntropy_mixOne) and closedness in epsilon.
+/-- info: 'QuantumInfo.mixOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.mixOne
+
+/-- info: 'QuantumInfo.mixOne_posDef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.mixOne_posDef
+
+/-- info: 'QuantumInfo.sum_smul_mixOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.sum_smul_mixOne
+
+/-- info: 'QuantumInfo.vonNeumannEntropy_mixOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.vonNeumannEntropy_mixOne
+
+/-- info: 'QuantumInfo.vonNeumannEntropy_mixture_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.vonNeumannEntropy_mixture_ge
+
+/-- info: 'QuantumInfo.holevoChi_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.holevoChi_nonneg
 
 /-- info: 'QuantumInfo.Channel.traceOutChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.Channel.traceOutChannel_apply

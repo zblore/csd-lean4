@@ -6,7 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF2.PreparationBarycenter
-public import CsdLean4.Mathlib.QuantumInfo.Concavity
+public import CsdLean4.Mathlib.QuantumInfo.ConcavityFull
 
 /-!
 # Coarse-graining a preparation does not decrease its entropy
@@ -16,7 +16,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Concavity
 A preparation on `Σ` that is a mixture of preparations, `μ = ∑ᵢ cᵢ μᵢ`, has for its density
 operator the mixture of the components' density operators, because the barycentre is affine in
 the measure (`barycenterMatrix_finset_sum_smul`). Concavity of the von Neumann entropy
-(`Mathlib/QuantumInfo/Concavity.lean`) then says:
+(`Mathlib/QuantumInfo/ConcavityFull.lean`) then says:
 
 * ★★ `vonNeumannEntropy_barycenter_mixture_ge`, ★★ `preparationEntropy_mixture_ge` — **the entropy
   of the mixed preparation is at least the weighted average of the entropies of the
@@ -28,13 +28,13 @@ weights summing to one is one), `map_finset_sum_smul` (pushforward is affine).
 
 ## Honest scope
 
-Klein's full-support condition is inherited: the mixture's density operator is assumed positive
-definite. The components are arbitrary preparations on `Σ`; "coarse-graining of regions" is the
+No support hypothesis (since `ConcavityFull.lean`). The components are arbitrary preparations on
+`Σ`; "coarse-graining of regions" is the
 case where the `μᵢ` are the conditional measures of a partition of a region and the `cᵢ` their
 Liouville weights, which is one instance of this statement.
 
 References: `specs/qit-chain-scoping.md` (W4, W8); `LF2/PreparationQdensity.lean` (W2);
-`LF2/PreparationBarycenter.lean` (W3); `Mathlib/QuantumInfo/Concavity.lean`.
+`LF2/PreparationBarycenter.lean` (W3); `Mathlib/QuantumInfo/ConcavityFull.lean`.
 -/
 
 @[expose] public section
@@ -75,21 +75,20 @@ theorem isProbabilityMeasure_finset_sum_smul (c : ι → ℝ) (hc : ∀ i, 0 ≤
 
 /-- ★★ **Coarse-graining does not decrease entropy, on average.** For preparations `μᵢ` on the
 projective target with weights `pᵢ`, the entropy of the barycentre of the mixture is at least
-the weighted average of the entropies of the barycentres of the components (Klein's full-support
-condition on the mixture). Forgetting which component prepared the system costs entropy. -/
+the weighted average of the entropies of the barycentres of the components. Forgetting which
+component prepared the system costs entropy. No support hypothesis. -/
 theorem vonNeumannEntropy_barycenter_mixture_ge (rep : Q → EuclideanSpace ℂ (Fin N))
     (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
     (c : ι → ℝ) (hc : ∀ i, 0 ≤ c i) (hc1 : ∑ i, c i = 1)
-    (μ : ι → Measure Q) [∀ i, IsProbabilityMeasure (μ i)]
-    (hpd : (barycenterMatrix rep (∑ i, ENNReal.ofReal (c i) • μ i)).PosDef) :
+    (μ : ι → Measure Q) [∀ i, IsProbabilityMeasure (μ i)] :
     ∑ i, c i * vonNeumannEntropy (barycenterMatrix_isHermitian rep (μ i))
-      ≤ vonNeumannEntropy hpd.1 := by
+      ≤ vonNeumannEntropy (barycenterMatrix_isHermitian rep (∑ i, ENNReal.ofReal (c i) • μ i)) := by
   have hmix := barycenterMatrix_finset_sum_smul rep hrep_unit hrep_meas c hc μ
-  have hpd' : (∑ i, ((c i : ℝ) : ℂ) • barycenterMatrix rep (μ i)).PosDef := hmix ▸ hpd
   have h := vonNeumannEntropy_mixture_ge c hc hc1 (fun i => barycenterMatrix rep (μ i))
     (fun i => barycenterMatrix_posSemidef rep hrep_unit hrep_meas (μ i))
-    (fun i => barycenterMatrix_trace rep hrep_unit hrep_meas (μ i)) hpd'
-  rw [vonNeumannEntropy_congr_of_eq hpd.1 hpd'.1 hmix]
+    (fun i => barycenterMatrix_trace rep hrep_unit hrep_meas (μ i))
+  rw [vonNeumannEntropy_congr_of_eq _ (posSemidef_finset_sum_smul Finset.univ c hc
+    (fun i => barycenterMatrix_posSemidef rep hrep_unit hrep_meas (μ i))).1 hmix]
   exact h
 
 /-- Pushing a finite mixture of measures forward is the mixture of the pushforwards. -/
@@ -111,16 +110,13 @@ variable {SigmaSpace P G : Type*}
 
 /-- ★★ **Coarse-graining a preparation on `Σ` does not decrease its entropy, on average** (W4's
 second half). For preparations `μᵢ` on `Σ` mixed with weights `cᵢ`, the entropy of the mixed
-preparation is at least the weighted average of the entropies of the components, under Klein's
-full-support condition on the mixture's density operator. -/
+preparation is at least the weighted average of the entropies of the components. No support
+hypothesis. -/
 theorem preparationEntropy_mixture_ge (D : SectorData SigmaSpace P G) (μFS : Measure P)
     [IsProbabilityMeasure μFS] (bridge : MeasureBridgeData D μFS)
     (c : ι → ℝ) (hc : ∀ i, 0 ≤ c i) (hc1 : ∑ i, c i = 1)
     (μprep : ι → Measure SigmaSpace) [∀ i, IsProbabilityMeasure (μprep i)]
-    (rep : P → EuclideanSpace ℂ (Fin N)) (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
-    (hpd : (haveI := isProbabilityMeasure_finset_sum_smul c hc hc1 μprep
-      preparationDensity D μFS bridge (∑ i, ENNReal.ofReal (c i) • μprep i) rep hrep_unit
-        hrep_meas).M.PosDef) :
+    (rep : P → EuclideanSpace ℂ (Fin N)) (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep) :
     haveI := isProbabilityMeasure_finset_sum_smul c hc hc1 μprep
     ∑ i, c i * preparationEntropy D μFS bridge (μprep i) rep hrep_unit hrep_meas
       ≤ preparationEntropy D μFS bridge (∑ i, ENNReal.ofReal (c i) • μprep i) rep hrep_unit
@@ -131,16 +127,12 @@ theorem preparationEntropy_mixture_ge (D : SectorData SigmaSpace P G) (μFS : Me
       (preparationDensity D μFS bridge ν rep hrep_unit hrep_meas).M
         = barycenterMatrix rep (Measure.map D.π ν) := fun ν _ => by
     rw [preparationDensity_eq_barycenter]; rfl
-  have hpd' : (barycenterMatrix rep (∑ i, ENNReal.ofReal (c i) • Measure.map D.π (μprep i))).PosDef := by
-    have h := hpd
-    rw [hB, hmap] at h
-    exact h
   have : ∀ i, IsProbabilityMeasure (Measure.map D.π (μprep i)) :=
     fun i => isProbabilityMeasure_projectiveLaw D (μprep i)
   have key := vonNeumannEntropy_barycenter_mixture_ge rep hrep_unit hrep_meas c hc hc1
-    (fun i => Measure.map D.π (μprep i)) hpd'
+    (fun i => Measure.map D.π (μprep i))
   unfold preparationEntropy
-  rw [vonNeumannEntropy_congr_of_eq _ hpd'.1 (by rw [hB, hmap])]
+  rw [vonNeumannEntropy_congr_of_eq _ (barycenterMatrix_isHermitian rep _) (by rw [hB, hmap])]
   refine le_trans (le_of_eq ?_) key
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [vonNeumannEntropy_congr_of_eq _ (barycenterMatrix_isHermitian rep _) (hB (μprep i))]

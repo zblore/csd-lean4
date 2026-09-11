@@ -8,7 +8,7 @@ module
 public import CsdLean4.Empirical.CSD.Einselection
 public import CsdLean4.Mathlib.QuantumInfo.Entropy
 
-public import CsdLean4.Mathlib.QuantumInfo.Concavity
+public import CsdLean4.Mathlib.QuantumInfo.ConcavityFull
 
 /-!
 # Empirical/CSD: channel capacities of the de-isolation / dephasing channel (Build 15e)
@@ -32,9 +32,9 @@ many channel uses with additivity, which is not formalised here).
 
 **The general bound.** `holevoChi2 ≥ 0` in general is concavity of the von Neumann entropy
 `S(∑pᵢρᵢ) ≥ ∑pᵢS(ρᵢ)`, which is a theorem since 2026-09-11 (W8,
-`Mathlib/QuantumInfo/Concavity.lean`, `vonNeumannEntropy_mixture_ge`, under Klein's full-support
-condition on the average); `holevoChi2_nonneg` at the end of this file is that theorem
-specialised, via `holevoChi2_eq_holevoChi`. The headline value `χ = log 2 > 0` below is
+`Mathlib/QuantumInfo/ConcavityFull.lean`, `vonNeumannEntropy_mixture_ge`, with no support
+hypothesis); `holevoChi2_nonneg` at the end of this file is that theorem specialised, via
+`holevoChi2_eq_holevoChi`. The headline value `χ = log 2 > 0` below is
 still obtained by DIRECT computation on the concrete channel, and
 `LF6/DeisolationCapacity.lean` promotes it to the single-letter Holevo capacity of the genuine
 de-isolation channel (`deisolationChannel_holevoCapacity`).
@@ -299,17 +299,15 @@ theorem holevoChi2_eq_holevoChi {N : ℕ} {ρ0 ρ1 : Matrix (Fin N) (Fin N) ℂ}
   rfl
 
 /-- ★ **`holevoChi2 ≥ 0`**: the general non-negativity the module header could not assert before
-W8, under Klein's full-support condition on the average. -/
+W8, with no support hypothesis (`ConcavityFull.lean`). -/
 theorem holevoChi2_nonneg {N : ℕ} {ρ0 ρ1 : Matrix (Fin N) (Fin N) ℂ}
     (h0 : ρ0.PosSemidef) (h1 : ρ1.PosSemidef) (htr0 : ρ0.trace = 1) (htr1 : ρ1.trace = 1)
-    (hpd : ((↑((1 : ℝ) / 2) : ℂ) • ρ0 + (↑((1 : ℝ) / 2) : ℂ) • ρ1).PosDef) :
-    0 ≤ holevoChi2 h0.1 h1.1 hpd.1 := by
+    (havg : ((↑((1 : ℝ) / 2) : ℂ) • ρ0 + (↑((1 : ℝ) / 2) : ℂ) • ρ1).IsHermitian) :
+    0 ≤ holevoChi2 h0.1 h1.1 havg := by
   rw [holevoChi2_eq_holevoChi]
-  have hpd' : (∑ i : Fin 2, (((fun _ : Fin 2 => (1 : ℝ) / 2) i : ℝ) : ℂ) • (![ρ0, ρ1] i)).PosDef := by
-    rw [Fin.sum_univ_two]; exact hpd
   have h := holevoChi_nonneg (fun _ : Fin 2 => (1 : ℝ) / 2) (fun _ => by norm_num)
     (by rw [Fin.sum_univ_two]; norm_num) ![ρ0, ρ1] (fun i => by fin_cases i <;> assumption)
-    (fun i => by fin_cases i <;> assumption) hpd'
+    (fun i => by fin_cases i <;> assumption)
   exact h
 
 

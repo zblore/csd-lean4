@@ -106,7 +106,7 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
 * **Also backed (2026-09-11, W8, `LF2/PreparationCoarseGraining.lean`):** it is affine in the preparation
   measure, and its entropy is concave: the entropy of a mixture of preparations is at least the weighted
   average of the components' entropies (`preparationEntropy_mixture_ge`; Cat-1
-  `vonNeumannEntropy_mixture_ge`, Klein's full-support condition on the mixture).
+  `vonNeumannEntropy_mixture_ge`, no support hypothesis since 2026-09-12).
 * **Also backed (2026-09-11, W10, `LF6/DeisolationCapacity.lean`):** the channel it passes through under
   de-isolation transmits exactly one classical bit — `log 2` is the greatest single-letter Holevo quantity
   of any qubit ensemble through `deisolationChannel 2` (`deisolationChannel_holevoCapacity`; Cat-1 Holevo

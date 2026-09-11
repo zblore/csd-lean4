@@ -42,6 +42,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Entropy
 public import CsdLean4.Mathlib.QuantumInfo.PureState
 public import CsdLean4.Mathlib.QuantumInfo.Concavity
 public import CsdLean4.Mathlib.QuantumInfo.HolevoBound
+public import CsdLean4.Mathlib.QuantumInfo.ConcavityFull
 public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
 public import CsdLean4.Mathlib.QuantumInfo.Fidelity
