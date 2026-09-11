@@ -77,8 +77,11 @@ the Löwner order, the integral / Löwner-matrix route to operator convexity of 
 `x ↦ x log x`, the perspective-function joint-convexity lift, and the partial-trace DPI corollary.
 That is a genuine **multi-week** infrastructure build (the `Rpow/IntegralRepresentation` scaffold
 already in Mathlib is the template, but it only handles `p ∈ (0,1)` monotonicity, not convexity and
-not the two-variable perspective). The **fork** (build Lieb vs. axiom-state SSA) is the user's; this
-file isolates the wall as `hDPI` and does not paper it.
+not the two-variable perspective). The **fork** was "build Lieb vs. axiom-state SSA"; since 2026-09-01
+(`specs/lieb-dpi-scoping.md` W4) it is three-way — build, bridge to physlib's sorry-free
+`Sᵥₙ_strong_subadditivity` on identical pins, or leave `hDPI` honest (the note's recommendation) — and
+its Gate 0 (`#print axioms` on the physlib theorem) is unrun. This file isolates the wall as `hDPI` and
+does not paper it. The QIT-chain plan lists it as W9 (`specs/qit-chain-scoping.md`).
 
 **No `axiom`, no `sorry`. Foundational-triple-only on everything that lands.** See `specs/k1-plan.md`
 §K1-C for the ledger.

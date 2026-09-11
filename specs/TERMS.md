@@ -82,6 +82,18 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
 * **NOT established:** the converse of Newlander–Nirenberg (a vanishing Nijenhuis tensor yields a
   holomorphic atlas — a PDE result nothing here needs). Marker: `TERM-SCOPE(Kahler)`.
 
+## density operator of a preparation
+
+* **Means here (backed, 2026-09-11, W2):** `CSD.LF2.preparationDensity` (`LF2/PreparationQdensity.lean`)
+  — the unique `DensityOperator N` whose trace form is the effect probabilities of the operational
+  package `fromPreparation` builds from a preparation measure on `Σ` (`preparation_traceForm`,
+  `preparation_qdensity_unique`: `effect_gleason_representation` composed with `fromPreparation`). Its
+  von Neumann entropy is `preparationEntropy`, non-negative and at most `log N`; two preparations'
+  trace distance contracts under any channel (`channel_traceDist_preparation_le`).
+* **NOT established (queued as W3/W6 in `specs/qit-chain-scoping.md`):** that it is the barycentre
+  `∫ |ψ⟩⟨ψ| ρ_ep dμ_FS` of the preparation's projective density, and that the channels it is fed to come
+  from `Σ`-flows.
+
 ## moment map
 
 * **Means here (backed):** the coordinate function `Φ([z])ᵢ = |zᵢ|²/‖z‖²` on `ℂℙ^{N−1}`

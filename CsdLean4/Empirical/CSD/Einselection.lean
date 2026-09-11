@@ -11,8 +11,10 @@ public import CsdLean4.Empirical.QM.Gates.SingleQubit
 /-!
 # Empirical/CSD: einselection / pointer-basis selection (Build 15a)
 
-**Category:** 6-Local (the open-system / decoherence stratum of D1; the first
-einselection result on the LF6-B decoherence machinery).
+**Category:** 3-Local (re-tagged 2026-09-11 from the undefined "6-Local"; CONVENTIONS §1 has three
+categories). The theorems are on `decohereReduced ψ`, a matrix built from the LF5 isometry; the
+ontic link is `LF6/Decoherence.lean`'s `decoherence_diagonal_eq_pointer_volume`, one file up. The first
+einselection result on the LF6-B decoherence machinery.
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/pointer-basis/
 Plain-language, CSD-role and formal statements of the pointer basis, with this

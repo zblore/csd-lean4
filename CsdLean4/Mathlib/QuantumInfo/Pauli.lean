@@ -25,7 +25,8 @@ operators on the register, with the algebra that makes the stabiliser formalism 
   form of their labels vanishes in `𝔽₂`.
 * **Character orthogonality** (`sum_pauliSign`): `∑_z (−1)^{b·z} = 2ⁿ·[b = 0]`, hence
   ★ **every non-identity Pauli is traceless** (`pauliOp_trace`) — the seed of the
-  stabiliser-state uniqueness argument (`tr(2⁻ⁿ ∑_{s∈S} s) = 1`, GK-3, not attempted here).
+  stabiliser-state uniqueness argument (`tr(2⁻ⁿ ∑_{s∈S} s) = 1`), which `Stabilizer.lean` carries
+  out (`stabState_exists`, `stabState_unique`; GK-3, done).
 * **Unitarity in the coordinate sense** (`inner_pauliOp`): Paulis preserve the inner product.
 
 Design note: every sign is `signChar` of an `𝔽₂`-valued form (`bdot`), never an `ℕ` parity —

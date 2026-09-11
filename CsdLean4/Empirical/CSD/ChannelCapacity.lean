@@ -11,8 +11,10 @@ public import CsdLean4.Mathlib.QuantumInfo.Entropy
 /-!
 # Empirical/CSD: channel capacities of the de-isolation / dephasing channel (Build 15e)
 
-**Category:** 6-Local (the open-system / decoherence stratum of D1; the K1
-von-Neumann-entropy reading of the de-isolation channel of 15a-d).
+**Category:** 3-Local (re-tagged 2026-09-11 from the undefined "6-Local"; CONVENTIONS §1 has three
+categories). Every theorem here is a statement about bare `Matrix (Fin N)` objects and the posited
+dephasing map `decohereReducedN`; the open-system / D1 reading is prose, and the header below says so.
+The K1 von-Neumann-entropy reading of the de-isolation channel of 15a-d.
 
 A dephasing (de-isolation) channel transmits CLASSICAL information but destroys
 QUANTUM coherence. This file gives the entropy-based, single-shot contrast on the

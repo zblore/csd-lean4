@@ -34,8 +34,9 @@ description of a state (n commuting Paulis) is carried through any circuit of th
 linear algebra over `𝔽₂`. That closure is proved here in full. **Honest scope:** the
 "classically simulable in polynomial time" reading is a complexity claim about that update
 rule; the corpus has no computation model and does not state it — no circuit datatype, no
-gate count, no measurement-update rule (the stabiliser-measurement layer is GK-3 in the plan,
-gated). `hGate j` is the single-qubit sibling of `Hadamard.lean`'s all-qubits `H^⊗n`, not a
+gate count. The measurement-update rule for stabiliser measurement is in `Stabilizer.lean`
+(`meas_deterministic`, `meas_prob_half`, the `measProj` section; GK-3, done since this note was
+written). `hGate j` is the single-qubit sibling of `Hadamard.lean`'s all-qubits `H^⊗n`, not a
 replacement for it.
 -/
 

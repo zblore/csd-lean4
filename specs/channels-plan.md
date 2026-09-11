@@ -101,7 +101,9 @@ Consumers (no-comm CPTP, QEC error channel) and the CSD reading land in `Empiric
 - Full complete-positivity characterisation (Choi-PSD ⟺ CP). *Note:* Kraus channels are CP
   by construction, so CP is available for everything in C1–C4 without this; only the abstract
   equivalence is hard.
-- Data-processing inequality (channels contract trace distance) — needs **K3**.
+- ~~Data-processing inequality (channels contract trace distance) — needs **K3**.~~ **DONE 2026-06-09**
+  (`Mathlib/QuantumInfo/DataProcessing.lean`, `channel_traceDist_le`); applied to preparations on `Σ`
+  2026-09-11 (`LF2/PreparationQdensity.lean`, `channel_traceDist_preparation_le`, W2).
 - Composition, identity, capacities.
 
 ## 3. The CSD reading (`Empirical/CSD/`)

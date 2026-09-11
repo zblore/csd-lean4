@@ -149,6 +149,42 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.OperationalPackage.effect_gleason_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms OperationalPackage.effect_gleason_representation
 
+-- W2 (2026-09-11), LF2/PreparationQdensity.lean: the spine from a preparation on Sigma to the
+-- QIT layer. fromPreparation composed with effect_gleason_representation, named
+-- (preparationDensity, preparation_traceForm, preparation_qdensity_unique), its PosSemidef and
+-- trace-one fields exposed in the hypothesis forms Mathlib/QuantumInfo takes, and the first two
+-- consumers: the von Neumann entropy of a preparation (non-negative, at most log N) and the
+-- data-processing inequality for two preparations under any channel. Every proof is one exact.
+/-- info: 'CSD.LF2.preparationDensity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparationDensity
+
+/-- info: 'CSD.LF2.preparation_traceForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparation_traceForm
+
+/-- info: 'CSD.LF2.preparation_qdensity_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparation_qdensity_unique
+
+/-- info: 'CSD.LF2.preparationDensity_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparationDensity_isHermitian
+
+/-- info: 'CSD.LF2.preparationDensity_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparationDensity_posSemidef
+
+/-- info: 'CSD.LF2.preparationDensity_trace_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparationDensity_trace_one
+
+/-- info: 'CSD.LF2.preparationEntropy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.preparationEntropy
+
+/-- info: 'CSD.LF2.vonNeumannEntropy_preparation_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.vonNeumannEntropy_preparation_nonneg
+
+/-- info: 'CSD.LF2.vonNeumannEntropy_preparation_le_log' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.vonNeumannEntropy_preparation_le_log
+
+/-- info: 'CSD.LF2.channel_traceDist_preparation_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.channel_traceDist_preparation_le
+
 -- Direct pin (landing-surface axiom reconciliation, 2026-08-09): the rank-one density
 -- uniqueness lemma. It was carried as a named axiom in earlier revisions and in the
 -- published LF-series papers, discharged 2026-05-18 via

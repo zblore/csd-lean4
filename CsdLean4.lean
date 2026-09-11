@@ -106,6 +106,7 @@ public import CsdLean4.LF2.MeasureBridge
 public import CsdLean4.LF2.Weights
 public import CsdLean4.LF2.BornWrapper
 public import CsdLean4.LF2.EffectGleason
+public import CsdLean4.LF2.PreparationQdensity
 public import CsdLean4.LF2.ReducedDensity
 public import CsdLean4.LF2.MixedEnsembleIx
 public import CsdLean4.LF2.ChoiConverse
