@@ -33,6 +33,7 @@ public import CsdLean4.Mathlib.Probability.IidClockRace
 public import CsdLean4.Mathlib.QuantumInfo.Channel
 public import CsdLean4.Mathlib.QuantumInfo.Stinespring
 public import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
+public import CsdLean4.Mathlib.QuantumInfo.ChannelComp
 public import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 public import CsdLean4.Mathlib.QuantumInfo.DataProcessing
 public import CsdLean4.Mathlib.QuantumInfo.UnitaryPerturbation
@@ -120,6 +121,7 @@ public import CsdLean4.LF2.Interface
 public import CsdLean4.LF2.POVM
 public import CsdLean4.LF2.EffectAux
 public import CsdLean4.LF2.QuantumChannel
+public import CsdLean4.LF2.ChannelBridge
 public import CsdLean4.LF3.Setup
 public import CsdLean4.LF3.Spinor
 public import CsdLean4.LF3.SharedContextMap

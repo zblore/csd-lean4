@@ -67,8 +67,9 @@
 > `landauer_flow`), with TH2's coarse-graining identified as the de-isolation channel
 > (`deisolationChannel_apply_eq_pinch`). **The critical path W2 → W3 → W6 → W7 is complete.** **W6′ DONE 2026-09-11** (`LF6/MeasurementFlowChannel.lean`: the de-isolation channel is
 > the environment marginal of LF5's `measurementFlow`). **W6″ DONE 2026-09-11** (`Projectivization.unitSection`, measurable, so the lift is unconditional for
-> projective actions and LF5's flow produces the de-isolation channel with no section hypothesis). Open on the QIT
-> chain: W5's remaining bridge (S), W4's `= 0 ↔ pure` (S–M), W8 concavity
+> projective actions and LF5's flow produces the de-isolation channel with no section hypothesis). **W5 DONE 2026-09-11** (`LF2/ChannelBridge.lean`: `QuantumChannel ≃ QuantumInfo.Channel`,
+> the parallel type marked an interface, DPI for LF2 channels). Open on the QIT
+> chain: W4's `= 0 ↔ pure` (S–M), W8 concavity
 > (M), W9 SSA fork, W10 Holevo (M after W8), W11 QEC on Σ (M). The author decides.
 >
 > *Closed by the 2026-09-11 scan (were "not scheduled"):* the C2 Mathlib-gap pair — the metric on `ℙ`

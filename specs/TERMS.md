@@ -107,8 +107,8 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   preparations' trace distance (`traceDist_traceRight_flow_le`); Landauer's bound holds for a product
   preparation whose bath preparation has the Gibbs barycentre (`landauer_flow`).
 * **NOT established:** the `LF2` and `SigmaLayer` preparation interfaces are not identified, so the
-  `SigmaLayer` theorem that region preparations *have* a `ρ_ep` is not composed with the `ρ_ep` form; the
-  `LF2.QuantumChannel ↔ QuantumInfo.Channel` bridge (W5's second half).
+  `SigmaLayer` theorem that region preparations *have* a `ρ_ep` is not composed with the `ρ_ep` form.
+  (The `LF2.QuantumChannel ↔ QuantumInfo.Channel` bridge is `LF2/ChannelBridge.lean`, W5, 2026-09-11.)
 * **Also backed (2026-09-11, W6′/W6″):** LF5's `measurementFlow` produces the de-isolation channel
   (`measurementFlow_traceRight_barycenter_unitSection`, `LF6/MeasurementFlowChannel.lean`), with the
   canonical measurable unit section `Projectivization.unitSection` as representative, so no section

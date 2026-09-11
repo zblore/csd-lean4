@@ -80,6 +80,13 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'QuantumInfo.Channel.unitaryChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.Channel.unitaryChannel_apply
 
+-- ChannelComp (2026-09-11, W5): channels compose, index-generic, with the composed action.
+/-- info: 'QuantumInfo.Channel.comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.Channel.comp
+
+/-- info: 'QuantumInfo.Channel.comp_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms QuantumInfo.Channel.comp_apply
+
 /-- info: 'QuantumInfo.Channel.traceOutChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms QuantumInfo.Channel.traceOutChannel_apply
 

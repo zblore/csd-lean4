@@ -34,6 +34,13 @@ density operators (this tranche). Later tranches add the Stinespring dilation an
 Built on `LF2.DensityOperator` and Mathlib's `Matrix.PosSemidef.mul_mul_conjTranspose_same`,
 `Matrix.posSemidef_sum`, `Matrix.trace_mul_comm`.
 
+**Interface status (2026-09-11).** This type is the same data as `QuantumInfo.Channel (Fin N)
+(Fin M) ι` with the index order swapped; `LF2/ChannelBridge.lean` provides the equivalence
+(`toChannel`, `ofChannel`, `channelEquiv`) and shows the actions, dilations, unitary channels and
+compositions correspond. It is kept as an **interface** for its Choi layer (`choiMatrix`,
+`LF2/ChoiConverse.lean`) and its existing consumers, and is not extended; new work states channels
+as `QuantumInfo.Channel`, which every theorem of `Mathlib/QuantumInfo/` takes.
+
 References: `LF2/BornWrapper.lean` (`DensityOperator`, `traceForm`); `LF2/ReducedDensity.lean`
 (`partialTrace*`, for the forthcoming Stinespring tranche); `specs/future-work.md`.
 -/

@@ -316,6 +316,36 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.isUnitaryLift_unitSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.isUnitaryLift_unitSection
 
+-- W5 second half (2026-09-11), LF2/ChannelBridge.lean: LF2.QuantumChannel IS QuantumInfo.Channel
+-- (index order swapped) -- the equivalence, agreement of actions / dilations / unitary channels /
+-- compositions, and the data-processing inequality for LF2 channels through the bridge.
+/-- info: 'CSD.LF2.QuantumChannel.toChannel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.QuantumChannel.toChannel
+
+/-- info: 'CSD.LF2.QuantumChannel.ofChannel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.QuantumChannel.ofChannel
+
+/-- info: 'CSD.LF2.QuantumChannel.channelEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.QuantumChannel.channelEquiv
+
+/-- info: 'CSD.LF2.QuantumChannel.toChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.QuantumChannel.toChannel_apply
+
+/-- info: 'CSD.LF2.QuantumChannel.channelApply_M_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.QuantumChannel.channelApply_M_eq
+
+/-- info: 'CSD.LF2.QuantumChannel.toChannel_stinespringIsom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.QuantumChannel.toChannel_stinespringIsom
+
+/-- info: 'CSD.LF2.QuantumChannel.unitaryChannel_apply_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.QuantumChannel.unitaryChannel_apply_eq
+
+/-- info: 'CSD.LF2.QuantumChannel.toChannel_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.QuantumChannel.toChannel_comp
+
+/-- info: 'CSD.LF2.QuantumChannel.traceDist_channelApply_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.QuantumChannel.traceDist_channelApply_le
+
 -- Direct pin (landing-surface axiom reconciliation, 2026-08-09): the rank-one density
 -- uniqueness lemma. It was carried as a named axiom in earlier revisions and in the
 -- published LF-series papers, discharged 2026-05-18 via

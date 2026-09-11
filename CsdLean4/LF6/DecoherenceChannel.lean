@@ -31,9 +31,9 @@ So every channel theorem of the QIT layer (`apply_posSemidef`, `apply_trace`, da
 results become statements about a channel produced by a `Σ`-flow (`traceRight_barycenter_flow`
 in `LF2/FlowChannel.lean` with `U := vnUnitary N`, `e₀ := a₀`).
 
-⚠️ Scope: the channel-level bridge only. The second half of W5 — `LF2.QuantumChannel ↔
-QuantumInfo.Channel` (`toChannel` + `apply_eq`, retiring the parallel type or marking it an
-interface) — is not here.
+Scope: the channel-level bridge for the decohered state. The other half of W5, the equivalence
+`LF2.QuantumChannel ≃ QuantumInfo.Channel` with the parallel type marked an interface, is
+`LF2/ChannelBridge.lean`.
 
 References: `specs/qit-chain-scoping.md` (W5, W6); `LF2/FlowChannel.lean`;
 `LF5/DilationFromFlow.lean` (`embedGround`, `vnDilationV`, `vnDilationV_isom`);
