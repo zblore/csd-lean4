@@ -111,7 +111,7 @@ refs:
 
 entries:
   - slug: fubini-study-measure
-    reviewed: 2026-08-25
+    reviewed: 2026-09-11
     hook: >
       There is exactly one fair way to measure the space of quantum states. The Born rule is
       what that ruler reports.
@@ -149,10 +149,14 @@ entries:
       CP^(N-1) is the compact homogeneous space U(N)/(U(1) x U(N-1)). The Fubini-Study
       measure is the unique U(N)-invariant Borel probability measure on it -- equivalently,
       as standard mathematics, the normalised Riemannian volume of the Fubini-Study metric,
-      or the top power of the Kahler form over n factorial. Those last two are cited as
-      background, not as corpus results: the manifold-level top-power identity is NOT
-      formalised here and is recorded as blocked, so the invariance characterisation is the
-      one that carries the weight. See the Kahler form entry, which states that residual.
+      or the top power of the Kahler form over n factorial. Since September 2026 all three
+      readings are theorems identifying the same measure: the top power of the Fubini-Study
+      form is (4 pi)^n times the measure (fsVolume_eq_smul_fubiniStudyMeasure), and the
+      Riemannian volume of the Fubini-Study metric is that top power over n factorial
+      (riemannianVolume_fsMetric), so the measure is the normalised Riemannian volume
+      (riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure). The invariance
+      characterisation still carries the weight in the Born derivation; the other two are
+      now corpus results rather than background. See the Kahler form entry.
 
       The proof is Haar uniqueness carried downstairs. The unitary group has a unique
       invariant probability measure by compactness; the state space is a quotient of the
@@ -849,7 +853,7 @@ entries:
     related: [landauer-principle]
 
   - slug: liouville-measure
-    reviewed: 2026-08-25
+    reviewed: 2026-09-11
     hook: >
       A deterministic substrate needs a notion of volume its own motion cannot distort. On
       CSD's sector, that volume is forced -- and it is the Born measure.
@@ -881,12 +885,18 @@ entries:
     mathematical: >
       For the unitary-flow sector, the Liouville measure equals the Fubini-Study measure,
       and it is the forced Kahler volume -- determined by the state space and its unitary
-      symmetry, not posited.
+      symmetry, not posited. Since September 2026 it is also proved to be the symplectic
+      volume: the normalised top power of the Fubini-Study form
+      (unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized), which the sector's flow
+      preserves (unitaryFlowSetup_flow_measurePreserving_fsVolume), and the forced volume
+      and the symplectic volume are the same measure (fsVolumeNormalized_isForcedKahlerVolume).
 
       Scope, stated plainly because it is load-bearing: measure-preservation of the flow is
       carried as a structure field, an ontic postulate listed in the axiom ledger, not
-      derived. What is proved is the conditional -- IF the sector is this one, THEN its
-      volume is forced. The theorem is about the sector, not a derivation of it.
+      derived for the constraint dynamics in general. It IS a theorem for the unitary flows,
+      by invariance. What is proved is the conditional -- IF the sector is this one, THEN its
+      volume is forced and is the symplectic volume. The theorem is about the sector, not a
+      derivation of it.
     person: >
       Joseph Liouville (1809-1882) was born at Saint-Omer and trained at the Ecole
       Polytechnique, teaching there, at the College de France and at the Sorbonne. The
@@ -907,7 +917,7 @@ entries:
     related: [fubini-study-measure, kahler-form, born-weight]
 
   - slug: kahler-form
-    reviewed: 2026-08-25
+    reviewed: 2026-09-11
     hook: >
       Distance, area, and a quarter-turn from the complex numbers all lock together on the
       space of states. That lock is what makes its volume nobody's choice.
@@ -930,25 +940,36 @@ entries:
       chosen -- which is the difference between deriving the Born rule and restating it with
       more steps.
 
-      What the corpus actually proves is the pointwise compatibility, on the tangent model:
-      the quarter-turn squares to minus one, area is metric-composed-with-turn and vice
-      versa, the form survives turning both slots, and pairing a vector with its own turn
-      returns its squared length. Flat closedness is proved there too.
+      The corpus proves the pointwise compatibility on the tangent model -- the quarter-turn
+      squares to minus one, area is metric-composed-with-turn and vice versa, the form
+      survives turning both slots, and pairing a vector with its own turn returns its
+      squared length -- and, since September 2026, the manifold statement itself: the
+      Fubini-Study form on projective space is closed and non-degenerate (a symplectic
+      manifold), the quarter-turn is the complex structure of its holomorphic atlas (a Kahler
+      manifold, in both the atlas and the Nijenhuis-tensor senses), and its top power is the
+      Fubini-Study measure up to the constant (4 pi)^n.
 
-      But read the next register before repeating any of this, because the limitation is not
-      a technicality, and the corpus's own rules forbid overselling it.
+      What that does NOT do is change what carries the Born derivation, which still runs
+      through the invariance characterisation. Read the next register for the exact claims.
     mathematical: >
       With g the real part of the inner product, omega the imaginary part, and J
       multiplication by i: J squared is minus one, omega equals g after J, g equals omega
       after J, omega is type (1,1), and omega(u, Ju) equals the squared norm of u. All
       proved axiom-free, pointwise, on the tangent model.
 
-      Now the disclosure. The MANIFOLD residual is not formalised: closedness of the form on
-      the projective space itself, and the top-power identity equating omega^(N-1)/(N-1)!
-      with the Fubini-Study measure there, await manifold differential-form machinery the
-      proof assistant does not have. The corpus's permitted-claims list explicitly forbids
-      calling Kahler differential geometry load-bearing. The uniqueness argument that
-      actually carries the programme runs through Haar measure, not through this geometry.
+      The manifold statements, all proved in the corpus's own manifold layer (Mathlib has no
+      differential forms on manifolds at the pin): fsForm_isSymplectic (the Fubini-Study
+      form is closed and non-degenerate on CP^n), fsForm_isKahler (with J the multiplication
+      by i, read through the holomorphic atlas), IsKahler.nijenhuis_eq_zero (the Nijenhuis
+      tensor vanishes), fsVolume_eq_smul_fubiniStudyMeasure (the top power of the form is
+      (4 pi)^n times the Fubini-Study measure), and riemannianVolume_fsMetric (the Riemannian
+      volume of the compatible metric is that top power over n factorial). The sector's
+      posited Liouville measure is proved to be this volume (LF4/SectorManifold.lean).
+
+      What remains as stated: the corpus's permitted-claims list still forbids calling Kahler
+      geometry load-bearing for the Born rule, because the uniqueness argument that carries
+      the programme runs through Haar measure. The geometry is now proved to agree with it,
+      not to replace it.
     person: >
       Erich Kahler (1906-2000) was born in Leipzig, took his doctorate there at twenty-two,
       and after the war -- including a spell as a French prisoner of war -- held chairs at
@@ -965,8 +986,8 @@ entries:
     eponyms: [Kahler]
     status: proved-in-corpus
     lean:
-      module: CsdLean4/LF4/KahlerOnticSetup.lean
-      theorem: isFubiniStudyKahler
+      module: CsdLean4/Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudySymplectic.lean
+      theorem: fsForm_isKahler
     related: [liouville-measure, fubini-study-measure]
 
   - slug: luders-rule
@@ -4430,6 +4451,7 @@ entries:
     related: [de-isolation, epistemic-measure, collapse, measurement-problem]
 
   - slug: moment-map
+    reviewed: 2026-09-11
     hook: >
       The Born probabilities are coordinates. The moment map reads them straight off
       the geometry of the state space, no measurement postulate consulted.
@@ -4467,6 +4489,15 @@ entries:
       on the open simplex -- the flat Dirichlet law -- proved via the Gaussian
       representation and a product-index bridge, and consumed by the unconditional
       volume-ratio and frequency theorems at every N.
+
+      Since September 2026 the defining equation is proved at manifold level: the velocity
+      field of the torus action is the Hamiltonian vector field of 2 sum theta_k mu_k for
+      the Fubini-Study symplectic form (torusField_isHamiltonianVectorField), a moment map
+      is unique up to a constant and the normalisation pins it, its image is exactly the
+      standard simplex (range_momentMap), and the torus orbits are its integral curves. For
+      any Hermitian H the Schrodinger flow is the Hamiltonian flow of minus twice the
+      expectation of H (schrodingerField_isHamiltonianVectorField); the torus is the
+      diagonal case.
     term: Moment map
     status: standard-mathematics
     source: curated

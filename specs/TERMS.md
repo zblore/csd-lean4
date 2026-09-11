@@ -72,9 +72,11 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   `VectorField.mlieBracket`) and ★★★ `DifferentialForm.IsKahler.nijenhuis_eq_zero` (**on a Kähler
   manifold it vanishes** on vector fields differentiable at the point), with
   `Projectivization.nijenhuis_fsJ_eq_zero` on `ℂℙⁿ`. The easy direction of Newlander–Nirenberg.
-* **NOT established:** the converse, that a vanishing Nijenhuis tensor yields a holomorphic atlas
-  (the Newlander–Nirenberg theorem, a PDE result nothing here needs), and the Riemannian reading of
-  the volume (G17 of `specs/generator-layer-scoping.md` §9). Marker: `TERM-SCOPE(Kahler)`.
+* **Also backed (2026-09-11, G17):** the Riemannian reading — `fsMetric = ω(J·,·)` is the compatible
+  metric of `fsForm_isAlmostKahler` (`fsMetric_eq_metric`, rfl), and its Riemannian volume is
+  `ω^{∧n}/n!` (`riemannianVolume_fsMetric`, `Instances/ProjectiveSpaceFubiniStudyRiemannian.lean`).
+* **NOT established:** the converse of Newlander–Nirenberg (a vanishing Nijenhuis tensor yields a
+  holomorphic atlas — a PDE result nothing here needs). Marker: `TERM-SCOPE(Kahler)`.
 
 ## moment map
 
@@ -238,10 +240,18 @@ alarming and is not.
   `fsVolume_eq_smul_fubiniStudyMeasure` (`ω_FS^{∧n} = (4π)ⁿ · μ_FS`); and on the sectors,
   `CSD.LF4.unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized` /
   `fsVolumeNormalized_isForcedKahlerVolume` (`LF4/SectorManifold.lean`, W1).
-* **NOT established (queued, G17 of `specs/generator-layer-scoping.md` §9):** that it is the normalised
-  Riemannian volume of the Fubini–Study *metric* (no Riemannian volume on manifolds at the pin). The
-  glossary entry `fubini-study-measure` still cites the metric reading as background. Marker:
-  `TERM-SCOPE(Kahler)` where that reading is used.
+* **Also backed (2026-09-11, G17):** it IS the normalised Riemannian volume of the Fubini–Study
+  *metric* — `RiemannianMetric.riemannianVolume` (`Mathlib/Geometry/Manifold/RiemannianVolume.lean`,
+  chart Gram densities `√det G` glued along a cover) and ★★★
+  `Projectivization.riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure`
+  (`Instances/ProjectiveSpaceFubiniStudyRiemannian.lean`): `vol_g = ((4π)ⁿ/n!) · μ_FS`, via ★★★
+  `riemannianVolume_fsMetric` (`vol_g = fsVolume n / n!`, the Kähler identity `vol_g = ω^{∧n}/n!`).
+  All three textbook readings of `μ_FS` — unique invariant measure, normalised top power of the Kähler
+  form, normalised Riemannian volume of the metric — are now theorems identifying the same measure.
+* **NOT established (queued, G17b of `specs/generator-layer-scoping.md` §9):** chart-independence
+  of the Gram-density construction of `riemannianVolume` for a metric that is *not* identified chart
+  by chart with a top-form density (on `ℂℙⁿ` it is, so independence is inherited from
+  `topFormMeasure_congr_cover`). Marker: `TERM-SCOPE(Kahler)` where that reading is used.
 * ⚠️ **Since CR-4 (2026-09-06) the Born headlines no longer route through it.** The dependency cone
   of `globalBasin_born` contains **no** `fubiniStudyMeasure`: the fibred route is
   `epistemicMeasure = Dirac ⊗ Haar`, the basin measure is a torus-cell width, and the value is the

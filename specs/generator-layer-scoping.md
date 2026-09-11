@@ -127,7 +127,7 @@ section of the endomorphism bundle. The **M** held. One shelf fact: a type ascri
 definitionally equal term is *erased* — `(v : Fin n → ℂ)` for `v : TangentSpace 𝓘 x` leaves `v`
 tangent-typed, so `Complex.I • v` finds no `ℂ`-action; the reducible cast `tangentToModel` (the
 `toFlat` idiom) is what actually changes the elaborated type.
-**The step-(4) ladder is complete except G5, which is queued at XL in §9 with the rest of the residue; G12, G14a, G14b, G15, G16 and G19 were built 2026-09-10.**
+**The step-(4) ladder is complete except G5, which is queued at XL in §9 with the rest of the residue; G12, G14a, G14b, G15, G16 and G19 were built 2026-09-10; G17 on 2026-09-11.**
 Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
@@ -379,7 +379,8 @@ recorded have since been filled upstream (`VectorField.mlieBracket`, and uniform
 | **G14b** ✅ built 2026-09-10 | **Kähler in the tensor sense**: the Nijenhuis tensor `N_J` of a family `J` via `VectorField.mlieBracket` (at the pin), and `N_J = 0` for `IsKahler` — the easy direction of Newlander–Nirenberg (a holomorphic atlas makes `N_J` vanish, a chart computation: in a chart `J = J₀` is constant, and the bracket of coordinate-constant fields is `0`). The converse (`N_J = 0` ⇒ holomorphic atlas) is the hard PDE theorem and is **not** this row. | **M–L** | Medium | Low | Closes the `TERMS.md` "tensor sense" line; `IsKahler.nijenhuis_eq_zero`. Needs `J` as a section (G15) to state `[JX, JY]`. |
 | **G15** ✅ built 2026-09-10 | **`J` as a smooth section of `End(TM)`**: `fun x => (x, fsJ x)` is `C^∞` into the bundle of continuous linear maps `TangentSpace x →L[ℝ] TangentSpace x` (`Mathlib/Geometry/Manifold/VectorBundle/Hom.lean` at the pin); generically, `IsKahler` implies the section is `C^∞` because `J` is constant in every chart. | **S–M** | High | Low | The `TERMS.md` "smooth section" line; prerequisite of G14b. |
 | **G16** ✅ built 2026-09-10 | **The torus orbits are integral curves**: `t ↦ torusUnitary (t • θ) • p` is `IsMIntegralCurve` for `torusField θ`, and `momentMap` is conserved along it. | **S** | High | Low | The route of `isMIntegralCurve_schrodingerUnitary_smul` with `hasDerivAt_chartFun_torusUnitary` and `torusUnitary_add_smul`; the G4 write-up left it unwritten. |
-| **G17** | **The Riemannian volume of the Fubini–Study metric is `fsVolume` up to the constant** (the `TERMS.md` Fubini–Study line "normalised Riemannian volume"). Needs the Riemannian volume measure of a metric on a manifold — absent at the pin (`VectorBundle/Riemannian.lean` has Riemannian *bundles*, no volume) — built as `topFormMeasure` of the volume form `√det g`; then `vol_g = ω^{∧n}/n!` is the algebraic Kähler identity from `g = ω (J ·, ·)` (G14a). | **L** | Low–medium | Low | Fills a Mathlib gap (Riemannian volume); nothing in the corpus consumes it. |
+| **G17** ✅ built 2026-09-11 | **The Riemannian volume of the Fubini–Study metric is `fsVolume` up to the constant** (the `TERMS.md` Fubini–Study line "normalised Riemannian volume"). Needs the Riemannian volume measure of a metric on a manifold — absent at the pin (`VectorBundle/Riemannian.lean` has Riemannian *bundles*, no volume) — built as `topFormMeasure` of the volume form `√det g`; then `vol_g = ω^{∧n}/n!` is the algebraic Kähler identity from `g = ω (J ·, ·)` (G14a). | **L** | Low–medium | Low | Fills a Mathlib gap (Riemannian volume); nothing in the corpus consumes it. |
+| **G17b** | **Chart-independence of the Riemannian volume**: `√det (DφᵀGDφ) = \|det Dφ\| √det G` along a chart transition, then `RiemannianMetric.chartMeasure_congr` by the proof of `DifferentialForm.chartMeasure_congr` with the Jacobian rule for Gram matrices in place of the one for top-form coefficients; then `riemannianVolume_congr_cover`. | **S–M** | High | Low | Makes `riemannianVolume` canonical for a metric not identified chart by chart with a top form; nothing in the corpus needs it (on `ℂℙⁿ` independence is inherited from `topFormMeasure_congr_cover`). |
 | **G18** | **Darboux's theorem** (the `TERMS.md` symplectic line): every symplectic form is locally the standard one. Moser's trick: needs G5(a) flows, G5(b) Cartan, and a Poincaré lemma on a ball. | **XL** | Low | Low | Nothing in the corpus consumes it; it is the classical theorem a symplectic library owes. |
 | **W1** ✅ built 2026-09-10 | **Wire the physics to the manifold layer**: the `ℂℙⁿ` instances of `KahlerOnticSetup` (`trivialKahlerOnticSetup`, `unitaryFlowSetup`, `manyToOneSetup`) get theorems that their `liouvilleMeasure` is `(4π)⁻ⁿ • fsVolume n` (the symplectic volume of `fsForm`, `fsVolume_eq_smul_fubiniStudyMeasure`), that `flow_preserves_volume` is `fsVolume_map_smul`, and that the sector carries `fsForm_isKahler`; and the four stale ledgers are corrected — link L1 of `specs/connectivity-manifest.md`, the `kahler_pointwise` docstring, and the `TERMS.md` Fubini–Study and symplectic entries, all of which still call the manifold residual open. The two projective-space types are definitionally equal (`ℙ ℂ (Ambient n)` is `CPN (n + 1)`). | **M** | High | **High** | This is what turns "we start from an FS, Kähler, Liouville space" into "the sector is the standard object, proved". Posit 3 is untouched by it. |
 | **G19** ✅ built 2026-09-10 | Analyticity of the Hamiltonian fields: `torusField`, `schrodingerField` are `ω` sections (the G3 route at `ω`; `hamiltonianVectorFieldSection` is `C^ω` for a `C^ω` form and energy). | **S–M** | High | Low | The G12 write-up left it unwritten. |
@@ -497,6 +498,39 @@ again): finish with `exact`/`.trans`.
 **What it does not do.** The converse of Newlander–Nirenberg (`N_J = 0` ⇒ holomorphic atlas), a genuine PDE
 theorem, is not stated and nothing here needs it. `nijenhuis` takes the family `J`; the smooth-section
 version (G15) is separate. The residue of §9 is now G5, G17, G18.
+
+### G17, built (2026-09-11)
+
+**What.** Two new modules. `Geometry/Manifold/RiemannianVolume.lean` (generic): for a metric family `g`
+on a manifold, `RiemannianMetric.localRep g x₀ w u v` (the metric under the chart, on tangent vectors read
+through `symmL`), `gram e g x₀ w` (its Gram matrix against a basis `e` of the model), `chartDensity =
+ENNReal.ofReal √det`, `chartMeasure` (pushed to `M` by the chart), and ★★ `riemannianVolume μ e g c`
+(glued along a `ChartCover`, the `TopFormMeasure` construction verbatim with the Gram density in place
+of the top-form coefficient); ★★ `riemannianVolume_eq_smul_topFormMeasure` — if in every chart of the
+cover the Gram density is `k` times a top form's coefficient density, the volume is `k` times the
+top-form measure. `Instances/ProjectiveSpaceFubiniStudyRiemannian.lean`: `fsMetric = ω(J·,·)`
+(rfl-equal to the almost Kähler metric), the model metric `fsModelMetric w` as a `BilinForm`,
+★ `localRep_fsMetric` (in every chart the metric reads as the model metric: `fsJ_symmL` and a pointwise
+form of `localRep_fsSection`, `fsForm_symmL_symmL`), ★★ `det_toMatrix_fsModelMetric` (the Gram
+determinant is `(4ⁿ (1 + ‖w‖²)^{-(n+1)})²` — the `wedgePow_fsModelForm_stdBasis` route: rotate `w` to
+the first axis by a unitary, whose real determinant is `1`; scale to the origin along `fsScale`,
+`BilinForm.toMatrix_comp` and `LinearMap.det_toMatrix` giving `det² · det G₀`; at the origin the Gram
+matrix is `4·1` because the standard basis is orthonormal for `Re⟪·,·⟫`, `stdBasis_inner_re`),
+★★ `chartDensity_fsMetric` (`√det G = (1/n!) · |coeff of ω^{∧n}|`), ★★★ `riemannianVolume_fsMetric`
+(**`vol_g = fsVolume n / n!`**) and ★★★ `riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure`
+(**`vol_g = ((4π)ⁿ/n!) · μ_FS`**). **L** as priced; took M–L. 27 pins.
+
+**Three shelf facts.** (a) `LinearMap.BilinForm.toMatrix_comp` must be given both bases and both maps
+explicitly, else its index type's `DecidableEq` is stuck. (b) `mulVecCLM` from the Mass module lives in
+`(Fin n → ℂ) →L[ℝ] _` and its `n` is not inferred from `fsScale`'s type — wrap it as the `→ₗ` map
+`mulVecL` with `det_mulVecL`. (c) `∞` is ambiguous between `ℝ≥0∞` and `ℕ∞ω` once both scopes are open —
+write `⊤` for the extended-real one.
+
+**What it does not do.** Chart-independence of the Gram-density construction for a general metric is
+**G17b** (S–M: `√det (DφᵀGDφ) = |det Dφ| √det G` along a transition, then the `chartMeasure_congr` proof
+with the Jacobian in place of the top-form rule); on `ℂℙⁿ` it is inherited from the top-form side.
+No orientation is chosen, so `vol_g = ω^{∧n}/n!` is an identity of measures, not of forms. The residue
+of §9 is now G5, G17b, G18.
 
 ## References
 

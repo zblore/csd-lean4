@@ -532,12 +532,14 @@ public import CsdLean4.Mathlib.Geometry.Manifold.ExteriorDerivative
 public import CsdLean4.Mathlib.Geometry.Manifold.SymplecticForm
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianVectorField
 public import CsdLean4.Mathlib.Geometry.Manifold.TopFormMeasure
+public import CsdLean4.Mathlib.Geometry.Manifold.RiemannianVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.WedgeForm
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerWedge
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPluriharmonic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudy
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyForm
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyRiemannian
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceChartCover
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyVolume

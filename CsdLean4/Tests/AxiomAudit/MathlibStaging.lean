@@ -4627,6 +4627,126 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.nijenhuis_fsJ_eq_zero
 
+-- G17 (2026-09-11): the Riemannian volume of a metric on a manifold (Geometry/Manifold/
+-- RiemannianVolume.lean: chart Gram densities sqrt(det G) glued along a ChartCover, the
+-- TopFormMeasure construction with the Gram density in place of the top-form coefficient;
+-- riemannianVolume_eq_smul_topFormMeasure is the chart-by-chart bridge to a top-form measure),
+-- and on CP^n (Instances/ProjectiveSpaceFubiniStudyRiemannian.lean) the Fubini-Study metric
+-- g = omega(J., .) has Gram determinant (4^n (1+|w|^2)^{-(n+1)})^2 against the standard basis
+-- (rotate to the first axis by a unitary, scale to the origin where the Gram matrix is 4.1), so
+-- its Riemannian chart density is 1/n! times the density of omega^{wedge n}:
+-- riemannianVolume_fsMetric (vol_g = fsVolume n / n!, the Kahler identity at the level of
+-- measures) and riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure (vol_g = ((4 pi)^n/n!) mu_FS:
+-- the Fubini-Study measure IS the normalised Riemannian volume of the Fubini-Study metric).
+-- No chart-independence theorem for the Gram construction itself (G17b, queued).
+/-- info: 'RiemannianMetric.localRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.localRep
+
+/-- info: 'RiemannianMetric.gram' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.gram
+
+/-- info: 'RiemannianMetric.chartDensity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.chartDensity
+
+/-- info: 'RiemannianMetric.chartMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.chartMeasure
+
+/-- info: 'RiemannianMetric.chartMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.chartMeasure_apply
+
+/-- info: 'RiemannianMetric.riemannianVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.riemannianVolume
+
+/-- info: 'RiemannianMetric.riemannianVolume_eq_smul_topFormMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms RiemannianMetric.riemannianVolume_eq_smul_topFormMeasure
+
+/-- info: 'Projectivization.fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric
+
+/-- info: 'Projectivization.fsMetric_eq_metric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric_eq_metric
+
+/-- info: 'Projectivization.fsModelMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelMetric
+
+/-- info: 'Projectivization.fsForm_symmL_symmL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_symmL_symmL
+
+/-- info: 'Projectivization.localRep_fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.localRep_fsMetric
+
+/-- info: 'Projectivization.gram_fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.gram_fsMetric
+
+/-- info: 'Projectivization.mulVecL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mulVecL
+
+/-- info: 'Projectivization.det_mulVecL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.det_mulVecL
+
+/-- info: 'Projectivization.fsModelMetric_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelMetric_mulVec
+
+/-- info: 'Projectivization.det_toMatrix_fsModelMetric_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.det_toMatrix_fsModelMetric_mulVec
+
+/-- info: 'Projectivization.fsModelMetric_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelMetric_single
+
+/-- info: 'Projectivization.det_toMatrix_fsModelMetric_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.det_toMatrix_fsModelMetric_single
+
+/-- info: 'Projectivization.fsModelMetric_zero_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelMetric_zero_apply
+
+/-- info: 'Projectivization.stdBasis_inner_re' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.stdBasis_inner_re
+
+/-- info: 'Projectivization.toMatrix_fsModelMetric_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.toMatrix_fsModelMetric_zero
+
+/-- info: 'Projectivization.det_toMatrix_fsModelMetric_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.det_toMatrix_fsModelMetric_zero
+
+/-- info: 'Projectivization.det_toMatrix_fsModelMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.det_toMatrix_fsModelMetric
+
+/-- info: 'Projectivization.chartDensity_fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartDensity_fsMetric
+
+/-- info: 'Projectivization.riemannianVolume_fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.riemannianVolume_fsMetric
+
+/-- info: 'Projectivization.riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure
+
 -- Wigner uniqueness clause (CL-024 follow-up, 2026-08-06, WignerUniqueness.lean): the
 -- inducing (anti)unitary of wigner_rigidity is unique up to a global phase, in the
 -- theorem's own projMap/conjProj vocabulary. The matrix-vocabulary sibling

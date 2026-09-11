@@ -18,6 +18,10 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 
 **Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/kahler-form/
+Plain-language, CSD-role and formal statements of the Kahler form, with
+this module as its Lean anchor (`fsForm_isKahler`). Kept symmetric by `scripts/check-glossary.sh`.
+
 `ProjectiveSpaceFubiniStudyForm.lean` built the Fubini–Study form `fsForm` as a `C^∞` global
 2-form on `ℂℙⁿ` and proved it closed (`fsForm_mextDeriv`). This module proves it
 **non-degenerate at every point** and concludes that `ℂℙⁿ` is a symplectic manifold:

@@ -17,9 +17,9 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
 
 **Category:** 3-Local (the Kähler ontic-sector interface).
 
-**Glossary:** https://glossary.constraintsurfacedynamics.com/kahler-form/
-Plain-language, CSD-role and formal statements of the Kahler form, with
-this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+**Glossary:** the `kahler-form` entry's Lean anchor moved 2026-09-11 to
+`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudySymplectic.lean` (`fsForm_isKahler`,
+the manifold predicate); this module holds the pointwise triple it was built on.
 
 This module packages the CSD Kähler-sector assumptions as a single Lean
 structure, `KahlerOnticSetup N`, whose fields are sector-level HYPOTHESES.
