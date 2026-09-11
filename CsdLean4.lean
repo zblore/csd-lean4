@@ -547,6 +547,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerFlow
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCircle
 public import CsdLean4.LF4.ProjectiveManifold
 public import CsdLean4.Empirical.QM.Darwinism
 public import CsdLean4.Empirical.CSD.Darwinism

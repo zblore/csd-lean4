@@ -2780,6 +2780,39 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.instIsManifoldReal
 
+-- Q33 (2026-09-11), Instances/AddCircle.lean: a charted space and all its groupoids transport
+-- along a homeomorphism (the transported atlas's transitions ARE the source's, on the nose), so
+-- AddCircle T (T != 0) is an analytic manifold via AddCircle.homeomorphCircle -- Mathlib charts
+-- Circle, not AddCircle, and lists the quotient IsManifold as a TODO -- and the torus
+-- AddCircle T x AddCircle T' is one by the product instance.
+/-- info: 'Homeomorph.transportChartedSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Homeomorph.transportChartedSpace
+
+/-- info: 'Homeomorph.transport_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Homeomorph.transport_transition
+
+/-- info: 'Homeomorph.hasGroupoid_transport' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Homeomorph.hasGroupoid_transport
+
+/-- info: 'Homeomorph.isManifold_transport' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Homeomorph.isManifold_transport
+
+/-- info: 'AddCircle.instChartedSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms AddCircle.instChartedSpace
+
+/-- info: 'AddCircle.instIsManifold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms AddCircle.instIsManifold
+
+/-- info: 'AddCircle.instIsManifoldProd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms AddCircle.instIsManifoldProd
+
 /-! ### The Fubini-Study chart form is chart-invariant (ProjectiveSpaceFubiniStudy.lean, 2026-09-07) -/
 
 -- The mathematical heart of "the Fubini-Study form is a global object on CP^n": under the affine

@@ -56,6 +56,10 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   with a Hermitian metric whose fundamental form is closed) and its inhabitant ★★★
   `Projectivization.fsForm_isKahler` (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`):
   **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is a Kähler manifold.**
+* **Also backed (2026-09-11, Q33):** the arena `ℂℙⁿ × T²` is an analytic manifold
+  (`CSD.LF4.ksigma_isManifold`; `AddCircle` made a manifold by transport along
+  `AddCircle.homeomorphCircle`, `Mathlib/Geometry/Manifold/Instances/AddCircle.lean`) and the sector
+  projection `π` is `C^ω` (`manyToOneSetup_pi_contMDiff`) — Paper C's A3.
 * **Wired to the physics (2026-09-10, W1):** `LF4/SectorManifold.lean` — the `ℂℙⁿ` instances of
   `KahlerOnticSetup` have `liouvilleMeasure = fsVolumeNormalized n`, the normalised top power of the
   Kähler form (★★★ `unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized`), their flows preserve

@@ -280,6 +280,25 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.manyToOneSetup_isKahler_liouville
 
+-- Q33 (2026-09-11): the arena KSigma = CP^n x T^2 is an analytic manifold and the sector
+-- projection pi = Prod.fst is analytic (contMDiff_fst) -- Paper C's A3, which
+-- reconstruction-status.md section 2a had carried as blocked on an absent API.
+/-- info: 'CSD.LF4.ktorus_isManifold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.ktorus_isManifold
+
+/-- info: 'CSD.LF4.ksigma_isManifold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.ksigma_isManifold
+
+/-- info: 'CSD.LF4.contMDiff_ksigma_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_ksigma_fst
+
+/-- info: 'CSD.LF4.manyToOneSetup_pi_contMDiff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSetup_pi_contMDiff
+
 -- Connectivity fix C2 (manifest link L3, off the trivial witness): the W-series
 -- Schrödinger capstone sigmaFlow_schrodinger_form FIRED on the genuine Φ≠id
 -- rotation flow. The rotation R(t) is a one-parameter unitary group (trivial

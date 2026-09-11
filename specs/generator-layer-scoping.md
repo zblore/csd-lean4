@@ -705,6 +705,29 @@ Blocked on first-passage asymptotics for the hyperbolic fibre; `relaxation_requi
 (2026-09-06) is the proved precondition. Not a Mathlib gap, a mathematics gap. Highest value
 *outside* the programme (new predictions). See `cr-queue.md` CR-14.
 
+### Q33, built (2026-09-11) — A3 discharged
+
+**What.** `Mathlib/Geometry/Manifold/Instances/AddCircle.lean` (Category 1): `Homeomorph.transportChartedSpace`
+(the atlas `{ f.symm ≫ₕ e }`), `transport_transition` (the transported transitions ARE the source's, on the
+nose: `f ≫ₕ f.symm` cancels by `Homeomorph.self_trans_symm` + `refl_toOpenPartialHomeomorph`), ★
+`hasGroupoid_transport` / `isManifold_transport` (every groupoid transports), then `AddCircle.instChartedSpace`,
+★ `AddCircle.instIsManifold` (`[Fact (T ≠ 0)]`, along `AddCircle.homeomorphCircle`) and ★ `instIsManifoldProd`
+(the torus, Mathlib's product instance). Mathlib's `Instances/Quotient.lean` lists the quotient `IsManifold` as
+its own TODO, so the transport is a genuine staging candidate. `LF4/ProjectiveManifold.lean`: `ktorus_isManifold`,
+★★ `ksigma_isManifold` (the arena `ℂℙⁿ × T²`, over the REAL model of `ℂℙⁿ` — the one `fsForm` lives on — times
+`(𝓡 1).prod (𝓡 1)`), ★★ `contMDiff_ksigma_fst`; `LF4/SectorManifold.lean`: ★★ `manyToOneSetup_pi_contMDiff`.
+**S–M** as priced; took S. 11 pins.
+
+**Two shelf facts.** (a) `Homeomorph.chartedSpace` (Mathlib's push-forward along `IsLocalHomeomorph.chartedSpace`)
+has NO `IsManifold` companion and its atlas goes through `localInverseAt`, opaque to `rw`; building the transported
+atlas directly as `f.symm ≫ₕ e` makes the transition identity a five-lemma `rw`. A class-valued `def` needs
+`@[instance_reducible]`. (b) The W1 trap again: `(manyToOneSetup U p₀).pi` has domain `(…).Sigma`, opaque to
+instance search — state on `KSigma (n+1)` with a `show`.
+
+**What it does not do.** `homeomorphCircle` is not shown `C^ω` for the transported structure (identity in
+charts; nothing consumes it). The arena's model is `𝓘(ℝ, Fin n → ℂ) × (𝓡 1 × 𝓡 1)`; a product *symplectic form*
+on it is `R-016′`, for which this is now the prerequisite.
+
 ### The link-in audit (2026-09-11), for the record
 
 Every G-series capstone traced to its consumers. Three physics sites should have cited the manifold

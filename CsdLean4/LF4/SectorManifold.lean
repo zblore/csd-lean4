@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF4.KahlerVolumeForced
+public import CsdLean4.LF4.ProjectiveManifold
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
 
@@ -50,7 +51,9 @@ witness (`trivialKahlerOnticSetup`):
 * ★★★ `unitaryFlowSetup_isKahler_liouville` / `manyToOneSetup_isKahler_liouville` — **the sector is the
   standard object**, in one statement: its target is a Kähler manifold (`fsForm_isKahler`, G14a), its
   Liouville measure is the normalised top power of that Kähler form, and its flow preserves that
-  volume.
+  volume;
+* ★★ `manyToOneSetup_pi_contMDiff` (Q33, 2026-09-11) — **the sector projection is analytic** on the
+  arena manifold `ℂℙⁿ × T²` (`LF4/ProjectiveManifold.lean`, `ksigma_isManifold`): Paper C's A3.
 
 ## Honest scope
 
@@ -180,6 +183,21 @@ theorem manyToOneSetup_isKahler_liouville
         ((fsVolume n).prod (volume : Measure KTorus)) ((fsVolume n).prod (volume : Measure KTorus)) :=
   ⟨fsForm_isKahler n, manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod U p₀,
     manyToOneSetup_flow_measurePreserving_fsVolume_prod U p₀⟩
+
+/-! ### The sector projection is smooth (Q33) -/
+
+open scoped Manifold ContDiff in
+/-- ★★ **The many-to-one sector's projection is analytic**: `(manyToOneSetup U p₀).pi = Prod.fst`
+on the arena manifold `KSigma (n+1) = ℂℙⁿ × T²` (`ksigma_isManifold`), by `contMDiff_fst`. This is
+Paper C's A3, "smooth many-to-one projection", which `reconstruction-status.md` §2a had carried
+as blocked on an absent API; the measurability the proofs use is unchanged. -/
+theorem manyToOneSetup_pi_contMDiff (U : ℝ → Matrix.unitaryGroup (Fin (n + 1)) ℂ)
+    (p₀ : CPN (n + 1)) :
+    ContMDiff ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod ((𝓡 1).prod (𝓡 1)))
+      (modelWithCornersSelf ℝ (Fin n → ℂ)) ω
+      (fun p : KSigma (n + 1) => (manyToOneSetup U p₀).pi p) := by
+  show ContMDiff _ _ ω (Prod.fst : KSigma (n + 1) → CPN (n + 1))
+  exact contMDiff_ksigma_fst n
 
 end LF4
 end CSD
