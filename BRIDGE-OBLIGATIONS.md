@@ -182,8 +182,11 @@ projectors are a projective measurement on the register, `recoveryChannel` has K
 `Eₖ Pₖ`, and `recoveryChannel_apply_singleFlipChannel_apply` returns every code-supported
 operator from the whole single-error mixture; `syndrome_recovery_corrects_mixed` is the last
 conjunct of `csd_qec_decoherence_corrected`; `syndromeProj_fixes_errorRegion` identifies the
-projectors with the error regions of `Σ`). What is not a theorem: the joint flow on the
-three-qubit register ⊗ environment (the flow theorem is for one qubit's error channel).
+projectors with the error regions of `Σ`). The joint flow on the three-qubit register ⊗
+environment is `Empirical/CSD/QEC/RegisterFlow.lean` (2026-09-12): `registerFlow` on `ℂℙ³¹`
+lifts the register's joint unitary with no hypothesis, its environment marginal is the single-error
+channel, and `registerFlow_recovery` is QEC on `Σ` end to end. What is not a theorem: the
+independent-noise channel `(bit-flip_p)^{⊗3}` itself (its double flips are not correctable).
 
 ### 2.4 CSD Kochen-Specker assignment bundle (added 2026-05-21)
 

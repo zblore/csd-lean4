@@ -249,6 +249,14 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.barycenterMatrix_kronecker_of_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.barycenterMatrix_kronecker_of_ae
 
+-- 2026-09-12 (QEC on Sigma): the barycentre only sees the representative a.e., and a preparation
+-- a.e. fixed by a projector-like P has its barycentre fixed by conjugation with P.
+/-- info: 'CSD.LF2.barycenterMatrix_congr_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterMatrix_congr_ae
+
+/-- info: 'CSD.LF2.barycenterMatrix_conj_self_of_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.LF2.barycenterMatrix_conj_self_of_ae
+
 /-- info: 'CSD.LF2.embedEnv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.embedEnv
 

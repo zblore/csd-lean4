@@ -162,6 +162,27 @@ theorem barycenterMatrix_kronecker_of_ae {n e : Type*}
   show entryFn rep (a, i) (b, l) p = entryFn repS a b p * σ i l
   rw [entryFn_eq_outerProduct, entryFn_eq_outerProduct, hp, Matrix.kronecker_apply]
 
+omit [Fintype ι] in
+/-- The barycentre only sees the representative almost everywhere. -/
+theorem barycenterMatrix_congr_ae (rep rep' : Q → EuclideanSpace ℂ ι) (μ : Measure Q)
+    (h : ∀ᵐ p ∂μ, rep p = rep' p) :
+    barycenterMatrix rep μ = barycenterMatrix rep' μ := by
+  ext j k
+  simp only [barycenterMatrix, Matrix.of_apply]
+  exact integral_congr_ae (h.mono fun p hp => by simp only [entryFn, hp])
+
+/-- **A preparation living in a subspace has its barycentre there.** If the representative is a.e.
+fixed by a Hermitian projector-like matrix `P` (`P (rep p) = rep p`), the barycentre satisfies
+`P B Pᴴ = B`. -/
+theorem barycenterMatrix_conj_self_of_ae [DecidableEq ι] (rep : Q → EuclideanSpace ℂ ι)
+    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep) (μ : Measure Q)
+    [IsFiniteMeasure μ] (P : Matrix ι ι ℂ)
+    (h : ∀ᵐ p ∂μ, Matrix.toEuclideanLin P (rep p) = rep p) :
+    P * barycenterMatrix rep μ * Pᴴ = barycenterMatrix rep μ := by
+  rw [← barycenterMatrix_conj rep (fun p => Matrix.toEuclideanLin P (rep p)) hrep_unit hrep_meas μ P
+    (fun p => outerProduct_toEuclideanLin P (rep p))]
+  exact barycenterMatrix_congr_ae _ _ μ h
+
 /-! ### The ready-environment embedding and the Stinespring channel of a unitary -/
 
 section Stinespring

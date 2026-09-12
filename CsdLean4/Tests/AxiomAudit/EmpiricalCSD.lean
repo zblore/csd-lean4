@@ -730,6 +730,49 @@ info: 'CSD.Empirical.CSDBridge.QEC.csd_three_qubit_corrects_single_bitflip' depe
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.QEC.syndromeProj_fixes_errorRegion
 
+-- 2026-09-12 (CSD/QEC/RegisterFlow.lean): the three-qubit register (x) four-level environment as
+-- ONE Sigma-flow on CP^31 (the projective action of registerUnitary, lifting it with no
+-- hypothesis through the canonical unit section); the register's single-error channel is its
+-- environment marginal (registerFlow_traceRight_barycenter); and QEC on Sigma end to end
+-- (registerFlow_recovery): for a preparation living in the code region, the syndrome-conditioned
+-- recovery applied to the environment marginal of the flowed preparation returns the register's
+-- density operator. Closes the register (x) environment residue of QEC/ThreeQubit.lean.
+/-- info: 'CSD.Empirical.CSDBridge.QEC.registerEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.registerEquiv
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.registerU32' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.registerU32
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.registerFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.registerFlow
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.measurable_registerFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.measurable_registerFlow
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.registerRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.registerRep
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.measurable_registerRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.measurable_registerRep
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.isUnitaryLift_registerFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.isUnitaryLift_registerFlow
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.registerFlow_traceRight_barycenter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.registerFlow_traceRight_barycenter
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.registerFlow_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.registerFlow_recovery
+
 -- Stern-Gerlach: representative pin (the iconic 1/2 split) + completeness.
 -- All six transport theorems share the same foundational-triple axiom set.
 /--

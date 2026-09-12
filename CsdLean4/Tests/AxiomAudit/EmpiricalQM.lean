@@ -692,6 +692,59 @@ info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_bitflip' depends on axio
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.comp_recoveryChannel_singleFlipChannel_apply
 
+-- The register's single-error channel as a joint unitary with a four-level environment
+-- (2026-09-12, QM/QEC/RegisterDilation.lean): errorVec = sum sqrt(q_k) e_k (unit), errorRotation a
+-- unitary with that first column (exists_unitary_e_zero_eq, Classical.choose), controlledError =
+-- blockDiagonal errorOp, registerUnitary = controlledError * (1 kron R); its environment blocks
+-- with the environment ready are sqrt(q_k) E_k, so it IS singleFlipChannel as channels.
+/-- info: 'CSD.Empirical.QM.QEC.errorVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.errorVec
+
+/-- info: 'CSD.Empirical.QM.QEC.norm_errorVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.norm_errorVec
+
+/-- info: 'CSD.Empirical.QM.QEC.errorRotation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.errorRotation
+
+/-- info: 'CSD.Empirical.QM.QEC.errorRotation_apply_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.errorRotation_apply_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.controlledError' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.controlledError
+
+/-- info: 'CSD.Empirical.QM.QEC.controlledError_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.controlledError_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.registerUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.registerUnitary
+
+/-- info: 'CSD.Empirical.QM.QEC.registerUnitary_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.registerUnitary_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.kronecker_one_mul_embedEnv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.kronecker_one_mul_embedEnv
+
+/-- info: 'CSD.Empirical.QM.QEC.krausBlock_blockDiagonal_mul_embedEnv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.krausBlock_blockDiagonal_mul_embedEnv
+
+/-- info: 'CSD.Empirical.QM.QEC.krausBlock_registerUnitary_embedEnv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.krausBlock_registerUnitary_embedEnv
+
+/-- info: 'CSD.Empirical.QM.QEC.stinespringChannel_registerUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.stinespringChannel_registerUnitary
+
 /-- info: 'CSD.Empirical.QM.QEC.syndrome_X1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.syndrome_X1

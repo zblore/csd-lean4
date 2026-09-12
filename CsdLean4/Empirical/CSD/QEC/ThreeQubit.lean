@@ -76,10 +76,12 @@ partial trace. **Since 2026-09-11 (W6, W11) that is what this module has**, in t
   post-error state — `Empirical/CSD/QECDecoherence.lean`, `syndrome_recovery_corrects_mixed`, the
   conjunct `csd_qec_decoherence_corrected` gained on 2026-09-12.
 
-What is *not* here: the joint flow on the three-qubit register ⊗ environment (the flow theorem is
-stated for one qubit's error channel; the register-level error is `singleFlipChannel`, the
-correctable part of independent noise with free weights). The `LF5/SyndromeFlow.lean` tranche
-carries the coherent-error syndrome flow.
+The joint flow on the three-qubit register ⊗ environment, and QEC on `Σ` end to end, are
+`Empirical/CSD/QEC/RegisterFlow.lean` (2026-09-12): `registerFlow` on `ℂℙ³¹` produces the
+register's single-error channel as its environment marginal, and the syndrome-conditioned recovery
+returns every code-region preparation's density operator from it (`registerFlow_recovery`). What is
+*not* here: the independent-noise channel `(bit-flip_p)^{⊗3}` itself (uncorrectable double flips).
+The `LF5/SyndromeFlow.lean` tranche carries the coherent-error syndrome flow.
 
 ## Source
 
