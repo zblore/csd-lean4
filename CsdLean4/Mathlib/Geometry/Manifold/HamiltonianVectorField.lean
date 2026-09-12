@@ -717,46 +717,42 @@ theorem trivializationAt_hamiltonianVectorField_snd
   rw [hcomp]
   exact hamiltonianVectorField_isHamiltonianVectorField (fun x => α x) hnd H y _
 
-/-- ★★ The local Hamiltonian vector is `C^∞` at the chart image of `x₀`: inversion of `curryLeft`
-is smooth at an invertible point (`contDiffAt_map_inverse`), the local representative is smooth
-(`contDiffAt_localRep`), and the chart derivative of a `C^∞` energy is `C^∞`. -/
+/-- ★★ The local Hamiltonian vector is `C^∞` at every point of the chart's target: inversion of
+`curryLeft` is smooth at an invertible point (`contDiffAt_map_inverse`), the local representative
+is smooth (`contDiffAt_localRep`), and the chart derivative of a `C^∞` energy is `C^∞`. -/
 theorem contDiffAt_localHamiltonianVector
     (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) (x₀ : M) :
-    ContDiffAt ℝ ∞ (localHamiltonianVector α H x₀) (chartAt E x₀ x₀) := by
-  have hw₀ : chartAt E x₀ x₀ ∈ (chartAt E x₀).target := mem_chart_target E x₀
-  have hω := localRep_nondegenerate α hnd x₀ hw₀
-  -- `curryLeft` is a bounded linear map (`curryLeft_add`, `curryLeft_smul`, `norm_curryLeft`);
-  -- the boundedness witness is elaborated against the shape `IsBoundedLinearMap.contDiff` expects
+    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) (x₀ : M) {w : E}
+    (hw : w ∈ (chartAt E x₀).target) :
+    ContDiffAt ℝ ∞ (localHamiltonianVector α H x₀) w := by
+  have hω := localRep_nondegenerate α hnd x₀ hw
   have hΦ : ContDiffAt ℝ ∞
-      (fun w => ContinuousAlternatingMap.curryLeft (localRep (fun x => α x) x₀ w))
-      (chartAt E x₀ x₀) :=
+      (fun w => ContinuousAlternatingMap.curryLeft (localRep (fun x => α x) x₀ w)) w :=
     (IsBoundedLinearMap.contDiff (𝕜 := ℝ) (n := ∞)
       (f := fun ξ : E [⋀^Fin 2]→L[ℝ] ℝ => ContinuousAlternatingMap.curryLeft ξ)
       ⟨⟨fun ξ ξ' => ContinuousAlternatingMap.curryLeft_add ξ ξ',
         fun c ξ => ContinuousAlternatingMap.curryLeft_smul c ξ⟩,
         1, one_pos, fun ξ => le_of_eq
           ((ContinuousAlternatingMap.norm_curryLeft ξ).trans (one_mul _).symm)⟩).contDiffAt.comp _
-      (contDiffAt_localRep (fun x => α x) α.contMDiff_toFun x₀ hw₀)
+      (contDiffAt_localRep (fun x => α x) α.contMDiff_toFun x₀ hw)
   have hinv : ContDiffAt ℝ ∞
       (fun w => ContinuousLinearMap.inverse
-        (ContinuousAlternatingMap.curryLeft (localRep (fun x => α x) x₀ w)))
-      (chartAt E x₀ x₀) := by
+        (ContinuousAlternatingMap.curryLeft (localRep (fun x => α x) x₀ w))) w := by
     have : CompleteSpace E := FiniteDimensional.complete ℝ E
     have h := contDiffAt_map_inverse (𝕜 := ℝ) (n := ∞) (flatCLE _ hω)
     rw [coe_flatCLE] at h
-    exact h.comp (chartAt E x₀ x₀) hΦ
-  have hHloc : ContDiffAt ℝ ∞ (H ∘ (chartAt E x₀).symm) (chartAt E x₀ x₀) := by
+    exact h.comp w hΦ
+  have hHloc : ContDiffAt ℝ ∞ (H ∘ (chartAt E x₀).symm) w := by
     rw [← contMDiffAt_iff_contDiffAt]
     have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ∞
-        (chartAt E x₀).symm (chartAt E x₀ x₀) :=
+        (chartAt E x₀).symm w :=
       (contMDiffOn_chart_symm (n := ∞) (x := x₀)).contMDiffAt
-        ((chartAt E x₀).open_target.mem_nhds hw₀)
+        ((chartAt E x₀).open_target.mem_nhds hw)
     exact (hH _).comp _ h1
   have hL : ContDiffAt ℝ ∞
       (fun w => ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ) (0 : Fin 1)
-        (fderiv ℝ (H ∘ (chartAt E x₀).symm) w)) (chartAt E x₀ x₀) :=
+        (fderiv ℝ (H ∘ (chartAt E x₀).symm) w)) w :=
     (ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ)
       (0 : Fin 1)).contDiff.contDiffAt.comp _ (hHloc.fderiv_right (by simp))
   exact hinv.clm_apply hL
@@ -774,7 +770,7 @@ theorem contMDiff_hamiltonianVectorField
   rw [contMDiffAt_section]
   have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ∞
       (fun y => localHamiltonianVector α H x₀ (chartAt E x₀ y)) x₀ :=
-    (contDiffAt_localHamiltonianVector α H hnd hH x₀).contMDiffAt.comp x₀
+    (contDiffAt_localHamiltonianVector α H hnd hH x₀ (mem_chart_target E x₀)).contMDiffAt.comp x₀
       (contMDiffAt_extChartAt (n := ∞) (I := modelWithCornersSelf ℝ E) (x := x₀))
   refine h1.congr_of_eventuallyEq ?_
   filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy

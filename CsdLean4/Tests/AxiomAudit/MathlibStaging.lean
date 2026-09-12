@@ -3066,6 +3066,51 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ContDiffAt.exists_localFlow_form_invariant
 
+-- Q29(c') (2026-09-12), Geometry/Manifold/HamiltonianLieDerivative.lean: Cartan's formula on a
+-- normed space (L_X omega = d(iota_X omega) + iota_X d omega, from extDeriv_apply), and for the
+-- local representative of a symplectic form along its local Hamiltonian vector both terms
+-- vanish (iota_X omega_loc = d(H o chart^-1) so d of it is d d = 0; d omega_loc = 0 from closedness
+-- through localRep_mextDeriv): the flat Lie derivative is zero on the chart's target.
+/-- info: 'flatInteriorProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms flatInteriorProduct
+
+/-- info: 'differentiableAt_flatInteriorProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms differentiableAt_flatInteriorProduct
+
+/-- info: 'fderiv_apply_vecCons_const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms fderiv_apply_vecCons_const
+
+/-- info: 'ContinuousAlternatingMap.apply_swap_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.apply_swap_two
+
+/-- info: 'flatLieDeriv_eq_extDeriv_flatInteriorProduct_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms flatLieDeriv_eq_extDeriv_flatInteriorProduct_add
+
+/-- info: 'DifferentialForm.localRep_apply_localHamiltonianVector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.localRep_apply_localHamiltonianVector
+
+/-- info: 'DifferentialForm.flatInteriorProduct_localHamiltonianVector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.flatInteriorProduct_localHamiltonianVector
+
+/-- info: 'DifferentialForm.extDeriv_flatInteriorProduct_localHamiltonianVector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.extDeriv_flatInteriorProduct_localHamiltonianVector
+
+/-- info: 'DifferentialForm.extDeriv_localRep_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.extDeriv_localRep_eq_zero
+
+/-- info: 'DifferentialForm.flatLieDeriv_localHamiltonianVector_localRep_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.flatLieDeriv_localHamiltonianVector_localRep_eq_zero
+
 /-- info: 'DifferentialForm.IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField

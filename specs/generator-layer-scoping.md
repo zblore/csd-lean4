@@ -697,6 +697,16 @@ downstream); `ProperSpace E` (finite dimensions in the application). One thing f
 `hG` asks for `ContDiffAt ℝ ∞` of the chart expression of `g` but its proof uses only differentiability, so (d′)
 needs it weakened to `DifferentiableAt` (an S edit), not `C^∞` dependence of the flow.
 
+**Q29(c′) BUILT 2026-09-12 (M as priced, took M).** `Geometry/Manifold/HamiltonianLieDerivative.lean`, 10 pins. ★
+`flatLieDeriv_eq_extDeriv_flatInteriorProduct_add` is Cartan's formula on a normed space, a `Fin 2`/`Fin 3`
+computation from `extDeriv_apply` with the product rule `fderiv_continuousAlternatingMap_apply_apply` and the
+antisymmetry of the form; ★★ `flatLieDeriv_localHamiltonianVector_localRep_eq_zero`: for a symplectic `α` and a
+`C^∞` energy, the flat Lie derivative of `localRep α x₀` along `localHamiltonianVector α H x₀` vanishes at every
+point of the chart's target, because `ι_X ω_loc = d(H ∘ chart⁻¹)` (the defining identity of the local vector, read
+through `inverse_curryLeft_apply` / `apply_flatVec`) so its `extDeriv` is `d∘d = 0`, and `d ω_loc = 0` is closedness
+through `localRep_mextDeriv`. `contDiffAt_localHamiltonianVector` was generalised from the chart image of `x₀` to
+every point of the target (its proof never used the base point). (d′) is now assembly only.
+
 ### Q30 (= G17b): chart-independence of the Gram-density Riemannian volume — `S–M`
 
 **What it would prove.** `RiemannianMetric.riemannianVolume` (`RiemannianVolume.lean`) does not

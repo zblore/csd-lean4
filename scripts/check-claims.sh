@@ -704,6 +704,14 @@ isSymplectic"
 #   contMDiff_schrodingerHamiltonian / contMDiff_torusHamiltonian — (2026-09-09,
 #     ProjectiveSpaceSchrodingerFlow.lean, G3 corollaries) the two Hamiltonians are C^∞ on CP^n;
 #     words inherited from schrodingerHamiltonian / torusHamiltonian. CP^n, EVEN.
+#   localRep_apply_localHamiltonianVector / flatInteriorProduct_localHamiltonianVector /
+#   extDeriv_flatInteriorProduct_localHamiltonianVector /
+#   flatLieDeriv_localHamiltonianVector_localRep_eq_zero — (2026-09-12,
+#     HamiltonianLieDerivative.lean, Q29(c')) the chart identities of the declared local Hamiltonian
+#     vector: omega_loc(X_loc, u) = d(H o chart^-1) u, iota_X omega_loc is that differential, its
+#     exterior derivative is zero (d d = 0), and the flat Lie derivative of the local representative
+#     of a SYMPLECTIC form along it vanishes on the chart's target (Cartan). Words inherited from
+#     localHamiltonianVector. Generic 2n-manifold over a real model, parity as G1's.
 #   exists_isMIntegralCurveAt_hamiltonianVectorField / isMIntegralCurve_hamiltonianVectorField_eq —
 #     (2026-09-09, HamiltonianVectorField.lean, G4) local existence and global uniqueness of
 #     integral curves of the declared field (Picard–Lindelöf in the chart on G3's C^1 section;
@@ -837,6 +845,10 @@ torusField_eq_hamiltonianVectorField
 schrodingerField_eq_hamiltonianVectorField
 trivializationAt_hamiltonianVectorField_snd
 contDiffAt_localHamiltonianVector
+localRep_apply_localHamiltonianVector
+flatInteriorProduct_localHamiltonianVector
+extDeriv_flatInteriorProduct_localHamiltonianVector
+flatLieDeriv_localHamiltonianVector_localRep_eq_zero
 contMDiff_hamiltonianVectorField
 contMDiff_schrodingerHamiltonian
 contMDiff_torusHamiltonian
