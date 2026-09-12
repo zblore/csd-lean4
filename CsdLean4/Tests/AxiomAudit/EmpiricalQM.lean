@@ -646,6 +646,52 @@ info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_bitflip' depends on axio
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.three_qubit_corrects_single_bitflip
 
+-- Syndrome-conditioned recovery as ONE channel (2026-09-12, QM/QEC/SyndromeRecovery.lean): the
+-- syndrome projectors P_k = E_k P_0 E_k are pairwise orthogonal and sum to 1 (a projective
+-- measurement on the register); the errored codeword E_k psi_L lies in the k-th subspace only;
+-- recoveryChannel (Kraus E_k P_k) returns EVERY code-supported operator, mixed or pure, from the
+-- mixed single-error state singleFlipChannel q (any weights): R (N_q rho) = rho, and the same for
+-- the composite Channel.comp. Knill-Laflamme collapse P_j E_k P_0 = delta_jk P_k E_k.
+/-- info: 'CSD.Empirical.QM.QEC.codeProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.codeProj
+
+/-- info: 'CSD.Empirical.QM.QEC.syndromeProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.syndromeProj
+
+/-- info: 'CSD.Empirical.QM.QEC.syndromeProj_mul_syndromeProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.syndromeProj_mul_syndromeProj
+
+/-- info: 'CSD.Empirical.QM.QEC.sum_syndromeProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.sum_syndromeProj
+
+/-- info: 'CSD.Empirical.QM.QEC.syndromeProj_errorOp_logical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.syndromeProj_errorOp_logical
+
+/-- info: 'CSD.Empirical.QM.QEC.syndromeProj_errorOp_logical_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.syndromeProj_errorOp_logical_of_ne
+
+/-- info: 'CSD.Empirical.QM.QEC.recoveryChannel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.recoveryChannel
+
+/-- info: 'CSD.Empirical.QM.QEC.singleFlipChannel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.singleFlipChannel
+
+/-- info: 'CSD.Empirical.QM.QEC.recoveryChannel_apply_singleFlipChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.recoveryChannel_apply_singleFlipChannel_apply
+
+/-- info: 'CSD.Empirical.QM.QEC.comp_recoveryChannel_singleFlipChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.comp_recoveryChannel_singleFlipChannel_apply
+
 /-- info: 'CSD.Empirical.QM.QEC.syndrome_X1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.syndrome_X1

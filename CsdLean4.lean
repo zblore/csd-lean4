@@ -300,6 +300,7 @@ public import CsdLean4.Empirical.QM.QEC.ErrorDiscretization
 public import CsdLean4.Empirical.QM.QEC.SyndromeCollapse
 public import CsdLean4.Empirical.QM.QEC.BitFlipChannel
 public import CsdLean4.Empirical.QM.QEC.BitFlipDilation
+public import CsdLean4.Empirical.QM.QEC.SyndromeRecovery
 public import CsdLean4.Empirical.QM.QEC.Steane
 public import CsdLean4.Empirical.QM.Uncertainty
 public import CsdLean4.Empirical.QM.Ozawa

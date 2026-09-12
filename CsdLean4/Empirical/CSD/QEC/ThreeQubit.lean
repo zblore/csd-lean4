@@ -8,6 +8,7 @@ module
 public import CsdLean4.Empirical.CSD.Framework
 public import CsdLean4.Empirical.QM.QEC.ThreeQubit
 public import CsdLean4.Empirical.QM.QEC.BitFlipDilation
+public import CsdLean4.Empirical.QM.QEC.SyndromeRecovery
 public import CsdLean4.LF4.Instance
 public import CsdLean4.LF5.MeasurementFlow
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitSection
@@ -66,11 +67,19 @@ partial trace. **Since 2026-09-11 (W6, W11) that is what this module has**, in t
   syndromes, hence their error — so the syndrome measurement is the ontic selection of which of
   four disjoint regions the trajectory occupies. `recovery_mem_codeRegion`: re-applying the
   identified error returns every point of its error region to the code region.
+* **The syndrome measurement is a projective measurement whose outcomes are the regions**
+  (2026-09-12). `QM/QEC/SyndromeRecovery.lean` builds the syndrome projectors `Pₖ` (pairwise
+  orthogonal, summing to `1`) and ★ `syndromeProj_fixes_errorRegion` here says every point of the
+  `k`-th error region is fixed by `Pₖ` and annihilated by every other `Pⱼ`: the projectors *are*
+  the indicator of the partition. The syndrome-conditioned recovery `R` (Kraus `Eₖ Pₖ`: "if in
+  region `k`, apply `Eₖ`") is then **one channel** that returns every code state from the mixed
+  post-error state — `Empirical/CSD/QECDecoherence.lean`, `syndrome_recovery_corrects_mixed`, the
+  conjunct `csd_qec_decoherence_corrected` gained on 2026-09-12.
 
-What is *not* here: the syndrome-conditioned recovery as a single channel on the mixed
-(post-decoherence) state, and the joint flow on the three-qubit register ⊗ environment (the
-theorems above are stated for one qubit's error channel and for the register's code regions).
-The `LF5/SyndromeFlow.lean` tranche carries the coherent-error syndrome flow.
+What is *not* here: the joint flow on the three-qubit register ⊗ environment (the flow theorem is
+stated for one qubit's error channel; the register-level error is `singleFlipChannel`, the
+correctable part of independent noise with free weights). The `LF5/SyndromeFlow.lean` tranche
+carries the coherent-error syndrome flow.
 
 ## Source
 
@@ -204,10 +213,6 @@ end Concrete
 
 section Region
 
-/-- The four errors `{I, X₁, X₂, X₃}` as operators on the three-qubit register. -/
-noncomputable def errorOp : Fin 4 → Matrix (Fin 2 × Fin 2 × Fin 2) (Fin 2 × Fin 2 × Fin 2) ℂ :=
-  ![1, X1, X2, X3]
-
 /-- **The code region**: the rays of the codespace `{a|000⟩ + b|111⟩}` in the projective space of
 the three-qubit register — the sub-surface `ℂℙ¹ ⊂ ℂℙ⁷` of `Σ`. -/
 def codeRegion : Set (ℙ ℂ H3) :=
@@ -257,6 +262,18 @@ theorem errorRegion_disjoint {i j : Fin 4} (hij : i ≠ j) : Disjoint (errorRegi
   have h1 := key Z1Z2 _ _ hi.1 hj.1
   have h2 := key Z2Z3 _ _ hi.2 hj.2
   exact hij (three_qubit_syndromes_distinct (Prod.ext h1 h2))
+
+/-- ★ **The syndrome projectors are the indicator of the error regions.** Every point of the
+`k`-th error region has a representative fixed by the `k`-th syndrome projector and annihilated by
+every other: the projective measurement `{Pₖ}` of `QM/QEC/SyndromeRecovery.lean` reads off which
+of the four disjoint regions of `Σ` the trajectory occupies. -/
+theorem syndromeProj_fixes_errorRegion (k : Fin 4) (q : ℙ ℂ H3) (hq : q ∈ errorRegion k) :
+    ∃ (v : H3) (hv : v ≠ 0), q = Projectivization.mk ℂ v hv
+      ∧ Matrix.toEuclideanLin (syndromeProj k) v = v
+      ∧ ∀ j, j ≠ k → Matrix.toEuclideanLin (syndromeProj j) v = 0 := by
+  obtain ⟨a, b, h, rfl⟩ := hq
+  exact ⟨_, h, rfl, syndromeProj_errorOp_logical k a b,
+    fun j hj => syndromeProj_errorOp_logical_of_ne hj a b⟩
 
 /-- **Recovery returns to the code region**: re-applying the identified error sends every point of
 its error region back into the code region (each `Xⱼ` is self-inverse). -/

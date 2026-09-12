@@ -184,6 +184,37 @@ theorem recover_channel_compose_error_on_code (a b : ℂ) :
   · rw [Channel.unitaryChannel_apply, Channel.unitaryChannel_apply, X3_conjTranspose]
     exact conj_self_inv X3_mul_X3
 
+/-- The code projector fixes the logical states, as a `mulVec` identity. -/
+lemma codeProj_mulVec_logical (a b : ℂ) : codeProj *ᵥ (logical a b) = logical a b := by
+  have h := codeProj_logical a b
+  rw [Matrix.toLpLin_apply] at h
+  exact congrArg WithLp.ofLp h
+
+/-- **The encoded density is supported on the code**: `P₀ |ψ_L⟩⟨ψ_L| P₀ = |ψ_L⟩⟨ψ_L|`. -/
+theorem codeProj_encodeDensity (a b : ℂ) :
+    codeProj * encodeDensity a b * codeProj = encodeDensity a b := by
+  have hv : codeProj *ᵥ (fun i => logical a b i) = fun i => logical a b i :=
+    codeProj_mulVec_logical a b
+  have hw : (fun i => star (logical a b i)) ᵥ* codeProj = fun i => star (logical a b i) := by
+    rw [← codeProj_conjTranspose, Matrix.vecMul_conjTranspose]
+    have hs : (star fun i => star (logical a b i)) = fun i => logical a b i := by
+      funext i; simp
+    rw [hs, hv]
+    rfl
+  rw [encodeDensity, Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, hv, hw]
+
+/-- ★★ **Syndrome-conditioned recovery corrects the mixed post-error state, as one channel.** For
+every single-error mixture `N_q = ∑ₖ qₖ Eₖ · Eₖ` on the register (`qₖ ≥ 0`, `∑ qₖ = 1`), the
+recovery channel `R` — project onto the syndrome subspace, apply the correction it names — returns
+the encoded density: `R (N_q |ψ_L⟩⟨ψ_L|) = |ψ_L⟩⟨ψ_L|`. This is the end-to-end statement the
+branch-by-branch `recover_channel_compose_error_on_code` lacked: one CPTP map, the whole mixed
+error, exact. -/
+theorem syndrome_recovery_corrects_mixed (q : Fin 4 → ℝ) (hq0 : ∀ k, 0 ≤ q k)
+    (hq1 : ∑ k, q k = 1) (a b : ℂ) :
+    recoveryChannel.apply ((singleFlipChannel q hq0 hq1).apply (encodeDensity a b))
+      = encodeDensity a b :=
+  recoveryChannel_apply_singleFlipChannel_apply q hq0 hq1 _ (codeProj_encodeDensity a b)
+
 /-- **Non-vacuity: the error genuinely acts on the encoded state.** The `X₁` error moves the
 codeword `|000⟩` (`logical 1 0`): `X₁ · |000⟩ = |100⟩ ≠ |000⟩` (they differ at coordinate
 `(0,0,0)`, value `0` vs `1`). So `recover_channel_compose_error_on_code` is not vacuous: it
@@ -290,14 +321,17 @@ headline).** For the three-qubit bit-flip code on `ψ_L = a|000⟩ + b|111⟩`, 
    genuinely displaces `|000⟩`);
 4. **vector recovery (syndrome-identified)** — `Xⱼ (Xⱼ ψ_L) = ψ_L` (`bitflip_recovers`).
 
-**Honest scope (correctable / discrete branch).** What is formalised is the correction of the
-discretised `X` Kraus branch (the standard QEC error-discretisation): the deterministic
-single-qubit bit-flip, perfectly reversed (weight 1). The FULL mixed channel
-`Φ = (1−p)·I + p·X` corrected END-TO-END via syndrome-conditioned recovery — i.e. the recovery
-channel as a sum of syndrome-projector-conditioned corrections, `R(ρ) = ∑_s Pₛ-conditioned Xₛ`,
-giving `recover ∘ Φ ∘ encode = encode` for the whole CPTP map — is the deeper statement and is
-NOT formalised here. QM-operational; the ontic Σ-volume-loss origin of the partial trace is
-gated to LF6 (see the module docstring and `csd_qec_decoherence_corrected`). -/
+5. **syndrome-conditioned recovery as one channel on the mixed state** (2026-09-12) — for every
+   single-error mixture `N_q = ∑ₖ qₖ Eₖ · Eₖ` on the register, the recovery channel
+   `R = ∑ₖ Eₖ Pₖ · Pₖ Eₖ` (`QM/QEC/SyndromeRecovery.lean`) returns the encoded density from the
+   mixed post-error state: `R (N_q |ψ_L⟩⟨ψ_L|) = |ψ_L⟩⟨ψ_L|` (`syndrome_recovery_corrects_mixed`).
+
+**Honest scope.** Items 3–4 are the correction of the discretised `X` Kraus branch, one branch at
+a time; item 5 is the end-to-end statement for the whole single-error CPTP map, with the recovery
+as a sum of syndrome-projector-conditioned corrections. Not formalised: the independent-noise
+channel `(bit-flip_p)^{⊗3}` itself (its double- and triple-flip branches are not correctable, so
+the code corrects it only to first order). QM-operational; the ontic Σ-volume-loss origin of the
+partial trace is gated to LF6 (see the module docstring and `csd_qec_decoherence_corrected`). -/
 theorem qec_corrects_decoherence (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (a b : ℂ)
     (ρ : Matrix (Fin 2) (Fin 2) ℂ) :
     ((bitFlipChannel p hp0 hp1).apply ρ
@@ -314,11 +348,15 @@ theorem qec_corrects_decoherence (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (a b 
             ((Channel.unitaryChannel X3 X3_unitary).apply (encodeDensity a b)) = encodeDensity a b)
     ∧ (Matrix.toEuclideanLin X1 (Matrix.toEuclideanLin X1 (logical a b)) = logical a b
         ∧ Matrix.toEuclideanLin X2 (Matrix.toEuclideanLin X2 (logical a b)) = logical a b
-        ∧ Matrix.toEuclideanLin X3 (Matrix.toEuclideanLin X3 (logical a b)) = logical a b) :=
+        ∧ Matrix.toEuclideanLin X3 (Matrix.toEuclideanLin X3 (logical a b)) = logical a b)
+    ∧ (∀ (q : Fin 4 → ℝ) (hq0 : ∀ k, 0 ≤ q k) (hq1 : ∑ k, q k = 1),
+        recoveryChannel.apply ((singleFlipChannel q hq0 hq1).apply (encodeDensity a b))
+          = encodeDensity a b) :=
   ⟨bitflip_error_is_decoherence p hp0 hp1 ρ,
    three_qubit_syndromes_distinct,
    recover_channel_compose_error_on_code a b,
-   bitflip_recovers a b⟩
+   bitflip_recovers a b,
+   fun q hq0 hq1 => syndrome_recovery_corrects_mixed q hq0 hq1 a b⟩
 
 /-! ### (4) The CSD reading + entangled-tier gating -/
 
@@ -343,9 +381,9 @@ The conservative joint flow is Liouville (`hΦ_pres`); the loss is on the system
 trace-volume-loss ORIGIN needs `Σ_env`, the entangled joint Liouville flow on `Σ_sys × Σ_env`,
 and partial trace on `Σ` — the **entangled-tier / D1 debt (LF6)**, gated and NOT discharged
 here (`Φ = id` in every concrete `SectorData`). What is discharged is the channel/operational
-decoherence + the in-code channel correction of the correctable branch (the full mixed-channel
-syndrome-conditioned recovery is the deeper unformalised statement; see
-`qec_corrects_decoherence`). The ontic origin of the error channel — the bit-flip channel as
+decoherence + the in-code channel correction, branch by branch and (2026-09-12) as one channel
+on the whole mixed single-error state (`syndrome_recovery_corrects_mixed`, the last conjunct;
+see `qec_corrects_decoherence`). The ontic origin of the error channel — the bit-flip channel as
 the environment marginal of a `Σ`-flow — is `bitFlipFlow_traceRight_barycenter`
 (`Empirical/CSD/QEC/ThreeQubit.lean`, 2026-09-11); the former `CSDThreeQubitBundle` binder is
 gone. -/
@@ -365,7 +403,10 @@ theorem csd_qec_decoherence_corrected
             ((Channel.unitaryChannel X3 X3_unitary).apply (encodeDensity a b)) = encodeDensity a b)
     ∧ (Matrix.toEuclideanLin X1 (Matrix.toEuclideanLin X1 (logical a b)) = logical a b
         ∧ Matrix.toEuclideanLin X2 (Matrix.toEuclideanLin X2 (logical a b)) = logical a b
-        ∧ Matrix.toEuclideanLin X3 (Matrix.toEuclideanLin X3 (logical a b)) = logical a b) :=
+        ∧ Matrix.toEuclideanLin X3 (Matrix.toEuclideanLin X3 (logical a b)) = logical a b)
+    ∧ (∀ (q : Fin 4 → ℝ) (hq0 : ∀ k, 0 ≤ q k) (hq1 : ∑ k, q k = 1),
+        recoveryChannel.apply ((singleFlipChannel q hq0 hq1).apply (encodeDensity a b))
+          = encodeDensity a b) :=
   qec_corrects_decoherence p hp0 hp1 a b ρ
 
 end QECDecoherence

@@ -176,9 +176,14 @@ concretely of `bitFlipFlow` on `cpSectorData` over `ℂℙ³` with no lift hypot
 (`bitFlipFlow_traceRight_barycenter`); the code space is a region of `Σ` whose four error images
 are pairwise disjoint (`errorRegion_disjoint`) and returned to it by recovery
 (`recovery_mem_codeRegion`). `csd_three_qubit_corrects_single_bitflip` and
-`csd_qec_decoherence_corrected` carry no binder. What is not a theorem: the syndrome-conditioned
-recovery as one channel on the mixed state, and the joint flow on the three-qubit register ⊗
-environment (the flow theorem is for one qubit's error channel).
+`csd_qec_decoherence_corrected` carry no binder. **2026-09-12:** the syndrome-conditioned recovery
+as one channel on the mixed state is a theorem (`QM/QEC/SyndromeRecovery.lean`: the syndrome
+projectors are a projective measurement on the register, `recoveryChannel` has Kraus operators
+`Eₖ Pₖ`, and `recoveryChannel_apply_singleFlipChannel_apply` returns every code-supported
+operator from the whole single-error mixture; `syndrome_recovery_corrects_mixed` is the last
+conjunct of `csd_qec_decoherence_corrected`; `syndromeProj_fixes_errorRegion` identifies the
+projectors with the error regions of `Σ`). What is not a theorem: the joint flow on the
+three-qubit register ⊗ environment (the flow theorem is for one qubit's error channel).
 
 ### 2.4 CSD Kochen-Specker assignment bundle (added 2026-05-21)
 

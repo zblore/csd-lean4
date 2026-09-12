@@ -724,6 +724,12 @@ info: 'CSD.Empirical.CSDBridge.QEC.csd_three_qubit_corrects_single_bitflip' depe
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.QEC.recovery_mem_codeRegion
 
+-- 2026-09-12: the syndrome projectors of QM/QEC/SyndromeRecovery.lean are the indicator of the
+-- error regions (every point of region k is fixed by P_k and killed by every other P_j).
+/-- info: 'CSD.Empirical.CSDBridge.QEC.syndromeProj_fixes_errorRegion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.syndromeProj_fixes_errorRegion
+
 -- Stern-Gerlach: representative pin (the iconic 1/2 split) + completeness.
 -- All six transport theorems share the same foundational-triple axiom set.
 /--
@@ -1435,6 +1441,18 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 /-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.recover_channel_compose_error_on_code' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.QECDecoherence.recover_channel_compose_error_on_code
+
+-- 2026-09-12: the encoded density is code-supported (P_0 rho P_0 = rho), so the syndrome-
+-- conditioned recovery channel returns it from the whole mixed single-error state, as ONE channel
+-- (syndrome_recovery_corrects_mixed; now the last conjunct of qec_corrects_decoherence and
+-- csd_qec_decoherence_corrected, the former "NOT formalised here" statement).
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.codeProj_encodeDensity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.codeProj_encodeDensity
+
+/-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.syndrome_recovery_corrects_mixed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QECDecoherence.syndrome_recovery_corrects_mixed
 
 /-- info: 'CSD.Empirical.CSDBridge.QECDecoherence.error_moves_codeword' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
