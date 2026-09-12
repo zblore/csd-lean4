@@ -83,16 +83,47 @@ is self-contained. The reader-type paths (physicist / Lean reader / skeptic) are
 
 ## 5 · Quantum information & channels
 
+The staged layer, on bare matrices:
+
 1. `CsdLean4/Mathlib/QuantumInfo/{Entropy, Subadditivity, StrongSubadditivity}.lean` — von
    Neumann entropy, Klein, subadditivity, Araki–Lieb; SSA conditional on DPI (the recorded
-   operator-convexity wall — see [`MATHLIB-GAPS.md`](../MATHLIB-GAPS.md)).
-2. `CsdLean4/Mathlib/QuantumInfo/{Channel, TraceDistance, PartialTrace, Helstrom}.lean` —
-   CPTP/Kraus/Stinespring, the trace-distance metric with data processing, partial trace,
-   minimum-error discrimination.
-3. `CsdLean4/Empirical/QM/{NoCloning, NoBroadcasting, NoDeleting, NoCommunication, USD}.lean`
+   operator-convexity wall — see [`MATHLIB-GAPS.md`](../MATHLIB-GAPS.md) and
+   [`specs/lieb-dpi-scoping.md`](../specs/lieb-dpi-scoping.md) §6 for the external bridge that
+   discharges it outside the corpus).
+2. `CsdLean4/Mathlib/QuantumInfo/{Channel, ChannelComp, Stinespring, TraceDistance, PartialTrace,
+   Helstrom}.lean` — CPTP/Kraus, composition, the Stinespring dilation, the trace-distance metric
+   with data processing, partial trace, minimum-error discrimination.
+3. `CsdLean4/Mathlib/QuantumInfo/{Concavity, ConcavityFull, HolevoBound, PureState}.lean` —
+   concavity of entropy (no support hypothesis), the Holevo bound and a channel's single-letter
+   Holevo range, zero entropy iff pure.
+4. `CsdLean4/Empirical/QM/{NoCloning, NoBroadcasting, NoDeleting, NoCommunication, USD}.lean`
    — the no-go suite and state discrimination.
-4. `CsdLean4/Empirical/Resources/…` — teleportation, superdense coding.
-5. `REFERENCES.json` — the Lean-QIT cross-reference (cited, not imported).
+5. `CsdLean4/Empirical/Resources/…` — teleportation, superdense coding.
+6. `REFERENCES.json` — the Lean-QIT cross-reference (cited, not imported).
+
+**From `Σ` to that layer** (the `W` chain, [`specs/qit-chain-scoping.md`](../specs/qit-chain-scoping.md)),
+read in this order:
+
+7. `CsdLean4/LF2/{PreparationQdensity, PreparationBarycenter}.lean` — the density operator of a
+   preparation on `Σ` (`preparationDensity`, `preparation_qdensity_unique`) and its identification with the barycentre of the
+   preparation's rays (`preparationDensity_eq_barycenter`); the `ρ_ep` form via
+   `SigmaLayer/PreparationDensityBridge.lean`.
+8. `CsdLean4/LF2/{PreparationPurity, PreparationCoarseGraining}.lean` — entropy of a preparation:
+   zero iff a Dirac law at one ray; never lowered by coarse-graining.
+9. `CsdLean4/LF2/{FlowChannel, ChannelBridge}.lean` — channels from `Σ`-flows: a flow lifting a
+   unitary conjugates the barycentre (`barycenter_flow`), and its environment marginal is the
+   Stinespring channel of the lifted unitary (`traceRight_barycenter_flow`); the two channel
+   structures are equivalent (`channelEquiv`).
+10. `CsdLean4/LF6/{DecoherenceChannel, MeasurementFlowChannel, DeisolationCapacity}.lean` — the
+    de-isolation channel, produced by LF5's measurement flow with no section hypothesis
+    (`measurementFlow_traceRight_barycenter_unitSection`, via the Cat-1 measurable unit section
+    `Mathlib/LinearAlgebra/Projectivization/UnitSection.lean`); its Holevo capacity is one bit.
+11. `CsdLean4/Thermo/SigmaSecondLaw.lean` — the second law, data processing and Landauer on `Σ`
+    (`vonNeumannEntropy_le_pinching_flow`, `traceDist_traceRight_flow_le`, `landauer_flow`).
+12. `CsdLean4/Empirical/QM/QEC/{BitFlipDilation, SyndromeRecovery, RegisterDilation}.lean` and
+    `CsdLean4/Empirical/CSD/QEC/{ThreeQubit, RegisterFlow}.lean` — the three-qubit code on `Σ`:
+    the error channel as a flow's environment marginal, the syndrome as a partition of `Σ`,
+    recovery as one channel, and `registerFlow_recovery` end to end.
 
 ## 6 · Cryptography
 

@@ -53,7 +53,8 @@ Shor Deutsch Jozsa Elitzur Vaidman Zehnder Mach Malus Leggett Garg Hong Mandel
 Stern Gerlach Tsirelson Gisin Sorkin Prokhorov Cauchy Schwarz Lipschitz Borel
 Lebesgue Radon Nikodym Birkhoff Stone Kronecker Loewner Löwner Grothendieck
 Nagasawa Madelung Bohm Koopman Nelson Fisher Rao Bloch Pauli Everett Planck
-Euclidean Hermitian Hermite Euclid Poisson Jacobi Noether Casimir Frobenius Weyl"
+Euclidean Hermitian Hermite Euclid Poisson Jacobi Noether Casimir Frobenius Weyl
+Holevo Stinespring Klein Kraus Knill Laflamme Picard Lindelof Lindelöf"
 
 FILES="$(git ls-files "$SRC/**/*.lean")"
 [ -z "$FILES" ] && { echo "  FAIL  no source files found"; exit 1; }

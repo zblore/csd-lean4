@@ -13,6 +13,12 @@ public import CsdLean4.Mathlib.QuantumInfo.Channel
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/holevo-bound/
+Plain-language, CSD-role and formal statements of the Holevo bound, with this module as
+its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+**On upstreaming:** this is a Category 1 file. Strip this Glossary block before any
+Mathlib or Physlib PR; a personal project link has no place in a canonical header.
+
 * `isHermitian_finset_sum_smul`, `posSemidef_finset_sum_smul`, `trace_finset_sum_smul_eq_one` —
   a mixture of density matrices is a density matrix;
 * `holevoChi_le_vonNeumannEntropy`, ★ `holevoChi_le_log_card` — **the Holevo bound**

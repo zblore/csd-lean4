@@ -13,6 +13,12 @@ public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/stinespring-dilation/
+Plain-language, CSD-role and formal statements of the Stinespring dilation, with this
+module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+**On upstreaming:** this is a Category 1 file. Strip this Glossary block before any
+Mathlib or Physlib PR; a personal project link has no place in a canonical header.
+
 This file (phase C2 of `specs/channels-plan.md`) gives the **Stinespring / dilation form**
 of a finite-dimensional quantum channel and the Kraus ↔ Stinespring bridge. A channel
 `Φ : Matrix n n ℂ → Matrix m m ℂ` is realised as

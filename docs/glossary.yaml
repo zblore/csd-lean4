@@ -90,7 +90,7 @@ meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: 2731fc41d7cac1ab6efb0abf11eda94786149897
+  sha: 0adcc9b021ce81a4829627d060e60660d9f6d70c
 
 # ---------------------------------------------------------------------------
 # refs: the external reference registry.
@@ -255,7 +255,7 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper B derives the Born rule from this measure
-    related: [duistermaat-heckman, liouville-measure, kahler-form, born-weight]
+    related: [born-weight, liouville-measure, kahler-form, haar-measure, typicality-volume]
 
   - slug: born-weight
     reviewed: 2026-08-25
@@ -333,7 +333,7 @@ entries:
     lean:
       module: CsdLean4/LF4/MomentBornN.lean
       theorem: fs_born_volume_ratio_N
-    related: [fubini-study-measure, duistermaat-heckman, gleason-theorem]
+    related: [fubini-study-measure, born-volume-ratio, typicality-volume, outcome-region, is-the-born-rule-derived]
 
   - slug: duistermaat-heckman
     reviewed: 2026-08-25
@@ -402,7 +402,7 @@ entries:
     lean:
       module: CsdLean4/LF4/MomentBornN.lean
       theorem: fs_volume_eq_dirichlet
-    related: [fubini-study-measure, born-weight]
+    related: [moment-map, kahler-form, fubini-study-measure, liouville-measure, dirichlet-distribution]
 
   - slug: gleason-theorem
     reviewed: 2026-09-04
@@ -489,7 +489,7 @@ entries:
     papers:
       - doi: 10.5281/zenodo.20100580
         note: LF2, the measure bridge and Born-weight wrapper
-    related: [born-weight, fubini-study-measure]
+    related: [born-weight, naimark-dilation, hilbert-space, does-kochen-specker-rule-out-csd, epistemic-measure]
 
   - slug: wigner-rigidity
     reviewed: 2026-08-25
@@ -562,7 +562,7 @@ entries:
     lean:
       module: CsdLean4/Mathlib/LinearAlgebra/Projectivization/WignerRigidity.lean
       theorem: wigner_rigidity
-    related: [fubini-study-measure, stone-theorem]
+    related: [stone-theorem, bargmann, schrodinger-from-records, projective-sector, hilbert-space]
 
   - slug: stone-theorem
     reviewed: 2026-09-11
@@ -629,10 +629,10 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Analysis/Matrix/StoneC1.lean
       theorem: Matrix.StoneC1.stone_continuous
-    related: [wigner-rigidity]
+    related: [wigner-rigidity, schrodinger-equation, schrodinger-from-records, hermitian-operator, bargmann]
 
   - slug: bell-chsh
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       No pre-written answer sheet for all four measurement settings can match what a
       singlet pair of particles does, and the corpus proves this as a theorem about every
@@ -709,10 +709,10 @@ entries:
     papers:
       - doi: 10.5281/zenodo.20354293
         note: LF3, the machine-verified singlet kernel and empirical chain
-    related: [ghz-state, tsirelson-bound]
+    related: [tsirelson-bound, contextuality, singlet-contextual-model, hidden-variables, does-csd-violate-bell]
 
   - slug: ghz-state
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       Three particles can contradict local realism with certainty in a single run: no
       statistics, no inequality and no margin of error.
@@ -770,7 +770,7 @@ entries:
     lean:
       module: CsdLean4/LF6/GHZContextuality.lean
       theorem: no_product_partition_realises_ghz
-    related: [bell-chsh, tsirelson-bound]
+    related: [bell-chsh, mermin-inequality, contextuality, hidden-variables, no-signalling]
 
   - slug: tsirelson-bound
     reviewed: 2026-08-25
@@ -836,10 +836,10 @@ entries:
     lean:
       module: CsdLean4/SigmaLayer/BellGenerality.lean
       theorem: qm_chsh_le_tsirelson
-    related: [bell-chsh, ghz-state]
+    related: [bell-chsh, cglmp-inequality, mermin-inequality, no-signalling, does-csd-violate-bell]
 
   - slug: landauer-principle
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       Forgetting costs heat, at a rate set by temperature alone. This is the point at which
       information stops being an abstraction and acquires a physical price.
@@ -875,6 +875,14 @@ entries:
       principle, a rule that singles out a state by making some quantity as small or as
       large as it can be, and then proves the Landauer bound in those earned terms. It is
       the tightest link the development has between information and physical cost.
+
+      The bound is also stated on the constraint surface. Take a preparation of a system
+      together with a bath, in product form, whose bath component has a Gibbs state as its
+      density operator, and let a volume-preserving flow lifting a unitary act on the pair.
+      The entropy the system loses is then bounded by the heat the bath receives, with the
+      same constant as the matrix-level theorem. Nothing about the flow is posited beyond its
+      lifting the joint unitary, so the thermodynamic cost of erasure is read off the
+      substrate's own dynamics.
     mathematical: >
       The entropy removed from a system is bounded by beta times the heat delivered to the
       bath. The proof route is this: unitary evolution on an initially product state
@@ -888,6 +896,11 @@ entries:
       is proved only at positive-definite marginal scope. Naming them is the point, because
       several informal derivations of the principle are known to smuggle assumptions at
       exactly the step this version makes visible.
+
+      landauer_flow (Thermo/SigmaSecondLaw.lean) is landauer_bound applied to the barycentres
+      of a product preparation flowed by a lift of the joint unitary, with the bath
+      preparation's barycentre equal to the Gibbs state; the full-rank hypotheses of the
+      matrix theorem are inherited, not removed.
     person: >
       Rolf Landauer (1927-1999) was born in Stuttgart; his family fled to New York in 1938
       after his father's death. He took his degrees at Harvard and joined IBM in 1952,
@@ -907,7 +920,7 @@ entries:
     lean:
       module: CsdLean4/Thermo/Landauer.lean
       theorem: landauer_bound
-    related: [von-neumann-entropy]
+    related: [von-neumann-entropy, entropy-subadditivity, gibbs-state, klein-inequality, de-isolation]
 
   - slug: von-neumann-entropy
     reviewed: 2026-08-25
@@ -947,6 +960,18 @@ entries:
       three-part inequality, strong subadditivity, separately, derived from an explicitly
       stated data-processing assumption rather than proved from scratch. Both are scope
       decisions recorded in the corpus's ledger, not something a reader has to discover.
+
+      The corpus also assigns an entropy to a preparation on the constraint surface itself,
+      not only to a matrix handed in from outside. A preparation is a probability measure on
+      the surface; its density operator is the average of the rank-one projectors of the rays
+      it occupies, and the entropy of the preparation is the entropy of that operator. Three
+      things are proved about it. It is zero exactly when the preparation sits on a single
+      ray, so purity and zero entropy are the same condition on the surface. Coarse-graining a
+      preparation, mixing several of them with weights, never lowers it, with no side
+      condition on the states involved. And along a volume-preserving flow it is conserved,
+      while the coarse-graining that a measurement performs on the system alone can only raise
+      it: that is the second law read on the surface, produced by the environment being
+      ignored rather than by any loss in the dynamics.
     mathematical: >
       For a bipartite density operator, the entropy of the whole is at most the sum of the
       entropies of the marginals. Proved here at positive-definite marginal scope, which for
@@ -958,6 +983,20 @@ entries:
       Strong subadditivity, the three-party inequality of Lieb and Ruskai from which most
       structural results of quantum information follow, is not re-proved from scratch: it
       is derived from an explicit data-processing hypothesis, and the ledger says so.
+
+      On the surface: preparationDensity is the Gleason witness of a preparation and
+      preparationDensity_eq_barycenter identifies it with the Bochner integral of the outer
+      products of a unit section along the projective law (LF2/PreparationBarycenter.lean);
+      preparationEntropy_eq_zero_iff (LF2/PreparationPurity.lean) says the entropy vanishes
+      exactly when the projective law is a Dirac mass at one ray, through the matrix-level
+      vonNeumannEntropy_eq_zero_iff. Concavity, vonNeumannEntropy_mixture_ge
+      (Mathlib/QuantumInfo/ConcavityFull.lean), holds for arbitrary density matrices: the
+      positive-definite case is Klein's inequality averaged, and the support hypothesis is
+      removed by mixing with the maximally mixed state, whose entropy is explicit, and passing
+      to the closed set of mixing parameters on which the inequality holds. The second law on
+      the surface is vonNeumannEntropy_le_pinching_flow (Thermo/SigmaSecondLaw.lean): the
+      flowed preparation has the same entropy, and the de-isolation channel, which is the
+      pinching of the second-law module, does not lower it.
     person: >
       John von Neumann (1903-1957) was born Neumann Janos in Budapest, into an ennobled
       banking family. He took a chemistry degree in Zurich and a mathematics doctorate in
@@ -977,7 +1016,7 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Subadditivity.lean
       theorem: vonNeumannEntropy_subadditive
-    related: [landauer-principle]
+    related: [entropy-subadditivity, klein-inequality, holevo-bound, landauer-principle, canonical-typicality]
 
   - slug: liouville-measure
     reviewed: 2026-09-11
@@ -1054,10 +1093,10 @@ entries:
     lean:
       module: CsdLean4/LF4/KahlerVolumeForced.lean
       theorem: unitaryFlowSetup_liouville_isForcedKahlerVolume
-    related: [fubini-study-measure, kahler-form, born-weight]
+    related: [fubini-study-measure, kahler-form, constraint-surface, typicality, poisson-bracket]
 
   - slug: kahler-form
-    reviewed: 2026-09-11
+    reviewed: 2026-09-12
     hook: >
       On the space of quantum states, distance, area and a quarter-turn coming from the
       complex numbers lock together. That lock is what makes the volume of the space
@@ -1138,10 +1177,10 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudySymplectic.lean
       theorem: fsForm_isKahler
-    related: [liouville-measure, fubini-study-measure]
+    related: [fubini-study-measure, liouville-measure, moment-map, poisson-bracket, duistermaat-heckman]
 
   - slug: luders-rule
-    reviewed: 2026-09-04
+    reviewed: 2026-09-12
     hook: >
       The textbook's second rule, which says how a state changes when it is measured, is
       not a second rule in CSD. It is what the record layer does.
@@ -1210,7 +1249,7 @@ entries:
     lean:
       module: CsdLean4/RecordLayer/PointerLudersMarginal.lean
       theorem: pointer_luders_born_prep
-    related: [born-weight, naimark-dilation]
+    related: [collapse, measurement-flow, pointer-basis, naimark-dilation, measurement-context]
 
   - slug: naimark-dilation
     reviewed: 2026-08-25
@@ -1289,7 +1328,7 @@ entries:
     lean:
       module: CsdLean4/LF4/BornRegionUncond.lean
       theorem: povm_born_eq_dilated_volume_uncond
-    related: [born-weight, luders-rule]
+    related: [stinespring-dilation, born-weight, luders-rule, measurement-flow, gleason-theorem]
 
   - slug: no-exact-finite-ccr
     reviewed: 2026-08-25
@@ -1348,10 +1387,10 @@ entries:
     lean:
       module: CsdLean4/CV/ApproxCCR.lean
       theorem: no_exact_finite_ccr
-    related: [canonical-typicality]
+    related: [field-arena, wick-theorem, hermitian-operator, robertson-uncertainty, lie-trotter-formula]
 
   - slug: canonical-typicality
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       A small piece of a large quantum system looks thermal not because anything prepared
       it that way, but because almost every state of the whole makes it look that way.
@@ -1426,7 +1465,7 @@ entries:
     lean:
       module: CsdLean4/Thermo/CanonicalTypicality.lean
       theorem: canonical_typicality_expectation
-    related: [fubini-study-measure, von-neumann-entropy, born-weight]
+    related: [gibbs-state, typicality, von-neumann-entropy, fubini-study-measure, kms-condition]
 
   - slug: bargmann
     reviewed: 2026-09-11
@@ -1519,6 +1558,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Wigner%27s_theorem
+    related: [wigner-rigidity, schrodinger-from-records, stone-theorem, projective-sector, hilbert-space]
 
   - slug: bloch-sphere
     hook: >
@@ -1582,6 +1622,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Bloch_sphere
+    related: [pauli-matrices, fubini-study-measure, hilbert-space, stern-gerlach, ramsey-interferometry]
 
   - slug: borel-set
     hook: >
@@ -1641,6 +1682,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Borel_set
+    related: [outcome-region, epistemic-measure, liouville-measure, euclidean-space, typicality-volume]
 
   - slug: cglmp-inequality
     hook: >
@@ -1699,6 +1741,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://doi.org/10.1103/PhysRevLett.88.040404
+    related: [bell-chsh, tsirelson-bound, mermin-inequality, gisin-theorem, contextuality]
 
   - slug: deutsch-jozsa
     hook: >
@@ -1760,6 +1803,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Deutsch%E2%80%93Jozsa_algorithm
+    related: [bernstein-vazirani, simon-algorithm, grover-algorithm, hadamard-test, quantum-fourier-transform]
 
   - slug: dirichlet-distribution
     hook: >
@@ -1819,6 +1863,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Dirichlet_distribution
+    related: [fubini-study-measure, born-volume-ratio, duistermaat-heckman, typicality-volume, haar-measure]
 
   - slug: elitzur-vaidman
     hook: >
@@ -1879,6 +1924,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Elitzur%E2%80%93Vaidman_bomb-tester
+    related: [mach-zehnder, hong-ou-mandel, collapse, what-happens-during-measurement, de-isolation]
 
   - slug: euclidean-space
     hook: >
@@ -1938,6 +1984,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Euclidean_space
+    related: [hilbert-space, hermitian-operator, kronecker-product, borel-set, fubini-study-measure]
 
   - slug: fisher-information
     hook: >
@@ -1995,6 +2042,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Fisher_information
+    related: [ramsey-interferometry, phase-estimation, born-weight, amplitude-estimation, robertson-uncertainty]
 
   - slug: gibbs-state
     hook: >
@@ -2060,6 +2108,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Gibbs_measure
+    related: [canonical-typicality, kms-condition, landauer-principle, klein-inequality, von-neumann-entropy]
 
   - slug: gisin-theorem
     hook: >
@@ -2119,6 +2168,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Nicolas_Gisin
+    related: [bell-chsh, cglmp-inequality, peres-criterion, bell-not-join, hidden-variables]
 
   - slug: grover-algorithm
     hook: >
@@ -2190,7 +2240,7 @@ entries:
     term: Grover's algorithm
     eponyms: [Grover]
     status: standard-mathematics
-    related: [amplitude-amplification]
+    related: [amplitude-amplification, amplitude-estimation, shor-algorithm, deutsch-jozsa, hadamard-test]
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Grover%27s_algorithm
@@ -2267,6 +2317,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Haar_measure
+    related: [fubini-study-measure, liouville-measure, dirichlet-distribution, born-weight, typicality]
 
   - slug: hermitian-operator
     hook: >
@@ -2338,6 +2389,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Hermitian_matrix
+    related: [hilbert-space, pauli-matrices, loewner-order, stone-theorem, robertson-uncertainty]
 
   - slug: hilbert-space
     hook: >
@@ -2406,6 +2458,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Hilbert_space
+    related: [euclidean-space, hermitian-operator, projective-sector, bloch-sphere, kronecker-product]
 
   - slug: hong-ou-mandel
     hook: >
@@ -2470,6 +2523,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Hong%E2%80%93Ou%E2%80%93Mandel_effect
+    related: [mach-zehnder, elitzur-vaidman, bell-not-join, typicality-volume, ramsey-interferometry]
 
   - slug: jacobi-identity
     hook: >
@@ -2547,6 +2601,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Jacobi_identity
+    related: [poisson-bracket, kahler-form, liouville-measure, moment-map, schrodinger-from-records]
 
   - slug: kronecker-product
     hook: >
@@ -2613,6 +2668,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Kronecker_product
+    related: [partial-trace, hilbert-space, bell-not-join, field-arena, stinespring-dilation]
 
   - slug: leggett-garg
     hook: >
@@ -2671,6 +2727,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Leggett%E2%80%93Garg_inequality
+    related: [bell-chsh, contextuality, kochen-specker, single-trajectory, hidden-variables]
 
   - slug: loewner-order
     hook: >
@@ -2733,6 +2790,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Loewner_order
+    related: [hermitian-operator, klein-inequality, lindblad-equation, choi-theorem, von-neumann-entropy]
 
   - slug: mach-zehnder
     hook: >
@@ -2793,6 +2851,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Mach%E2%80%93Zehnder_interferometer
+    related: [elitzur-vaidman, hong-ou-mandel, ramsey-interferometry, malus-law, collapse]
 
   - slug: malus-law
     hook: >
@@ -2853,6 +2912,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Malus%27s_law
+    related: [born-weight, stern-gerlach, mach-zehnder, bloch-sphere, born-volume-ratio]
 
   - slug: mermin-inequality
     hook: >
@@ -2914,6 +2974,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/GHZ_experiment
+    related: [ghz-state, bell-chsh, tsirelson-bound, cglmp-inequality, contextuality]
 
   - slug: pauli-matrices
     hook: >
@@ -2977,6 +3038,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Pauli_matrices
+    related: [bloch-sphere, hermitian-operator, gottesman-knill, shor-code, steane-code]
 
   - slug: peres-criterion
     hook: >
@@ -3039,6 +3101,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Peres%E2%80%93Horodecki_criterion
+    related: [gisin-theorem, bell-not-join, partial-trace, kronecker-product, no-signalling]
 
   - slug: poisson-bracket
     hook: >
@@ -3115,6 +3178,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Poisson_bracket
+    related: [jacobi-identity, kahler-form, liouville-measure, moment-map, schrodinger-equation]
 
   - slug: ramsey-interferometry
     hook: >
@@ -3176,6 +3240,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Ramsey_interferometry
+    related: [fisher-information, mach-zehnder, phase-estimation, bloch-sphere, stern-gerlach]
 
   - slug: schrodinger-equation
     hook: >
@@ -3248,6 +3313,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation
+    related: [schrodinger-from-records, stone-theorem, hermitian-operator, lindblad-equation, poisson-bracket]
 
   - slug: shor-algorithm
     hook: >
@@ -3313,6 +3379,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Shor%27s_algorithm
+    related: [quantum-fourier-transform, phase-estimation, grover-algorithm, simon-algorithm, shor-code]
 
   - slug: stern-gerlach
     hook: >
@@ -3376,9 +3443,10 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Stern%E2%80%93Gerlach_experiment
+    related: [malus-law, bloch-sphere, pointer-basis, measurement-flow, ramsey-interferometry]
 
   - slug: contextuality
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       For some sets of quantum questions, no consistent answer sheet exists at all. CSD's
       response is to stop demanding one answer per question and to say instead what the
@@ -3439,9 +3507,10 @@ entries:
     external:
       - text: "Stanford Encyclopedia: the Kochen-Specker theorem"
         url: https://plato.stanford.edu/entries/kochen-specker/
+    related: [bell-chsh, kochen-specker, singlet-contextual-model, hidden-variables, measurement-context]
 
   - slug: hidden-variables
-    reviewed: 2026-09-11
+    reviewed: 2026-09-12
     hook: >
       The no-go theorems do not kill hidden variables; they price them. CSD reads the price
       tag and pays it.
@@ -3492,6 +3561,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Hidden-variable_theory
+    related: [contextuality, bell-chsh, is-csd-a-hidden-variable-theory, bohmian-mechanics, psi-epistemic]
 
   - slug: measurement-problem
     reviewed: 2026-09-11
@@ -3551,6 +3621,7 @@ entries:
     external:
       - text: "Stanford Encyclopedia: measurement in quantum theory"
         url: https://plato.stanford.edu/entries/qt-issues/
+    related: [collapse, de-isolation, record-layer, what-happens-during-measurement, copenhagen]
 
   - slug: collapse
     reviewed: 2026-09-11
@@ -3601,6 +3672,7 @@ entries:
     external:
       - text: "Stanford Encyclopedia: collapse theories"
         url: https://plato.stanford.edu/entries/qm-collapse/
+    related: [measurement-problem, de-isolation, luders-rule, record-layer, spontaneous-collapse]
 
   - slug: typicality
     reviewed: 2026-08-25
@@ -3661,6 +3733,7 @@ entries:
     external:
       - text: "Goldstein, typicality in statistical mechanics and quantum theory"
         url: https://arxiv.org/abs/1110.1349
+    related: [typicality-volume, born-weight, canonical-typicality, where-do-probabilities-come-from, fubini-study-measure]
 
   - slug: psi-epistemic
     reviewed: 2026-08-25
@@ -3746,7 +3819,7 @@ entries:
     lean:
       module: CsdLean4/SigmaLayer/IsolationPreparation.lean
       theorem: conditional_not_mutuallySingular
-    related: [does-csd-conflict-with-pbr, epistemic-measure, ontic-vs-epistemic, hidden-variables]
+    related: [ontic-vs-epistemic, epistemic-measure, does-csd-conflict-with-pbr, is-the-wavefunction-real, hidden-variables]
     external:
       - text: "Epistemic views of the quantum state"
         url: https://en.wikipedia.org/wiki/Epistemic_view_of_quantum_states
@@ -3802,6 +3875,7 @@ entries:
     external:
       - text: "Stanford Encyclopedia: causal determinism"
         url: https://plato.stanford.edu/entries/determinism-causal/
+    related: [single-trajectory, where-do-probabilities-come-from, is-csd-superdeterministic, typicality, constraint-surface]
 
   - slug: kochen-specker
     hook: >
@@ -3869,6 +3943,7 @@ entries:
     external:
       - text: "Stanford Encyclopedia: the Kochen-Specker theorem"
         url: https://plato.stanford.edu/entries/kochen-specker/
+    related: [contextuality, does-kochen-specker-rule-out-csd, hidden-variables, bell-chsh, measurement-context]
 
   - slug: copenhagen
     hook: >
@@ -3913,6 +3988,7 @@ entries:
     external:
       - text: "Stanford Encyclopedia: the Copenhagen interpretation"
         url: https://plato.stanford.edu/entries/qm-copenhagen/
+    related: [many-worlds, bohmian-mechanics, qbism, measurement-problem, collapse]
 
   - slug: many-worlds
     hook: >
@@ -3970,6 +4046,7 @@ entries:
     external:
       - text: "Stanford Encyclopedia: Everett's relative-state formulation"
         url: https://plato.stanford.edu/entries/qm-everett/
+    related: [copenhagen, bohmian-mechanics, spontaneous-collapse, single-trajectory, measurement-problem]
 
   - slug: bohmian-mechanics
     hook: >
@@ -4019,6 +4096,7 @@ entries:
     external:
       - text: "Stanford Encyclopedia: Bohmian mechanics"
         url: https://plato.stanford.edu/entries/qm-bohm/
+    related: [csd-vs-bohmian-mechanics, hidden-variables, many-worlds, single-trajectory, determinism]
 
   - slug: spontaneous-collapse
     hook: >
@@ -4069,6 +4147,7 @@ entries:
     external:
       - text: "Stanford Encyclopedia: collapse theories"
         url: https://plato.stanford.edu/entries/qm-collapse/
+    related: [collapse, copenhagen, many-worlds, qbism, does-csd-make-new-predictions]
 
   - slug: qbism
     hook: >
@@ -4118,6 +4197,7 @@ entries:
     external:
       - text: "Stanford Encyclopedia: QBism and quantum Bayesianism"
         url: https://plato.stanford.edu/entries/quantum-bayesian/
+    related: [copenhagen, psi-epistemic, ontic-vs-epistemic, is-the-wavefunction-real, spontaneous-collapse]
 
   - slug: constraint-surface
     reviewed: 2026-08-25
@@ -4179,7 +4259,7 @@ entries:
     source: curated
     lean:
       module: CsdLean4/LF1/Setup.lean
-    related: [liouville-measure, projective-sector, typicality, determinism, fibre]
+    related: [projective-sector, liouville-measure, projectability, fibre, single-trajectory]
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper A builds outcome frequencies on exactly this arena
@@ -4229,7 +4309,7 @@ entries:
     term: Ontic vs epistemic
     status: definition
     source: curated
-    related: [constraint-surface, outcome-region, psi-epistemic, typicality-volume, collapse]
+    related: [psi-epistemic, epistemic-measure, is-the-wavefunction-real, constraint-surface, many-to-one-projection]
 
   - slug: projectability
     reviewed: 2026-08-25
@@ -4280,7 +4360,7 @@ entries:
     source: curated
     lean:
       module: CsdLean4/LF2/Setup.lean
-    related: [constraint-surface, projective-sector, many-to-one-projection]
+    related: [constraint-surface, projective-sector, many-to-one-projection, wigner-rigidity, schrodinger-from-records]
 
   - slug: projective-sector
     reviewed: 2026-08-25
@@ -4331,7 +4411,7 @@ entries:
     source: curated
     lean:
       module: CsdLean4/SigmaLayer/ProjectiveSector.lean
-    related: [projectability, fubini-study-measure, constraint-surface, kahler-form]
+    related: [constraint-surface, projectability, fubini-study-measure, hilbert-space, kahler-form]
 
   - slug: record-layer
     hook: >
@@ -4382,7 +4462,7 @@ entries:
     term: Record layer
     status: definition
     source: curated
-    related: [outcome-region, de-isolation, pointer-basis, collapse, measurement-problem]
+    related: [de-isolation, measurement-flow, pointer-basis, collapse, record-light-cone]
 
   - slug: de-isolation
     hook: >
@@ -4433,6 +4513,14 @@ entries:
       chosen, and the rates, which Kac's formula reads off any ergodic flow: for a flow that
       visits every region in proportion to its volume, the average time between visits to a
       region is fixed by that volume.
+
+      De-isolation also has an operational face, and the corpus proves the two agree. The flow
+      that couples system and pointer, watched from the system alone, is a channel that keeps
+      the pointer-basis diagonal of the density operator and discards the rest. Entropy never
+      decreases under it, the second law of the thermodynamics track is its coarse-graining,
+      and the classical information it lets through is exactly one bit per qubit. So the same
+      de-isolation dynamics that realises the Born weights as volumes also realises
+      decoherence as a channel, with no second mechanism.
     mathematical: >
       The measurement-dynamics tier: a von Neumann de-isolation flow on the dilated space,
       measure-preserving and distinct from the identity, whose pointer-block volumes and
@@ -4446,10 +4534,17 @@ entries:
       law is weaker than the exact Born identity already proved, and one deterministic
       trajectory supplies no independent clocks. The clock law and the Kac-formula rates
       survive.
+
+      deisolationChannel N (LF6/DecoherenceChannel.lean) is stinespringChannel of the von
+      Neumann coupling unitary with the pointer ready; deisolationChannel_apply_outerProduct
+      recovers decohereReduced on rank-one inputs, deisolationChannel_apply_eq_pinch
+      identifies it with the pinching of the second-law module,
+      vonNeumannEntropy_le_deisolation is the entropy non-decrease and
+      deisolationChannel_holevoCapacity the one-bit capacity.
     term: De-isolation
     status: definition
     source: curated
-    related: [collapse, measurement-problem, record-layer, pointer-basis, naimark-dilation, first-passage-race]
+    related: [measurement-flow, stinespring-dilation, holevo-bound, record-layer, isolation]
 
   - slug: typicality-volume
     reviewed: 2026-08-25
@@ -4502,7 +4597,7 @@ entries:
     lean:
       module: CsdLean4/LF4/BornRegionUncond.lean
       theorem: born_frequency_convergence_N_uncond
-    related: [typicality, born-weight, fubini-study-measure, liouville-measure, canonical-typicality]
+    related: [born-weight, typicality, born-volume-ratio, outcome-region, fubini-study-measure]
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper A is the volume-based account of outcome frequencies
@@ -4566,7 +4661,7 @@ entries:
     lean:
       module: CsdLean4/RecordLayer/GlobalBasin.lean
       theorem: globalBasin_born
-    related: [record-layer, epistemic-measure, born-weight, contextuality, fibre]
+    related: [born-weight, typicality-volume, preparation-region, carving, borel-set]
 
   - slug: epistemic-measure
     reviewed: 2026-08-25
@@ -4624,7 +4719,7 @@ entries:
     lean:
       module: CsdLean4/RecordLayer/EpistemicDisintegration.lean
       theorem: epistemicMeasure_eq_disintegration
-    related: [liouville-measure, haar-measure, outcome-region, typicality, ontic-vs-epistemic]
+    related: [ontic-vs-epistemic, psi-epistemic, born-weight, typicality, preparation-region]
 
   - slug: carving
     hook: >
@@ -4671,7 +4766,7 @@ entries:
     term: Carving
     status: definition
     source: curated
-    related: [typicality-volume, duistermaat-heckman, born-weight, fubini-study-measure]
+    related: [outcome-region, measurement-context, pointer-basis, fibre, record-layer]
 
   - slug: first-passage-race
     hook: >
@@ -4745,7 +4840,7 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Probability/IidClockRace.lean
       theorem: hasRaceProperty_iff_exists_expMeasure
-    related: [fibre, de-isolation, record-layer, born-weight]
+    related: [de-isolation, fibre, record-layer, measurement-flow, single-trajectory]
 
   - slug: fibre
     hook: >
@@ -4861,7 +4956,7 @@ entries:
     source: curated
     lean:
       module: CsdLean4/LF4/KahlerInstance.lean
-    related: [constraint-surface, outcome-region, record-layer, contextuality, haar-measure, first-passage-race]
+    related: [many-to-one-projection, constraint-surface, first-passage-race, carving, record-layer]
 
   - slug: many-to-one-projection
     hook: >
@@ -4915,7 +5010,7 @@ entries:
     term: Many-to-one projection
     status: definition
     source: curated
-    related: [projectability, projective-sector, fibre, epistemic-measure]
+    related: [fibre, constraint-surface, projectability, ontic-vs-epistemic, projective-sector]
 
   - slug: pointer-basis
     reviewed: 2026-09-11
@@ -5000,7 +5095,7 @@ entries:
     lean:
       module: CsdLean4/Empirical/CSD/Einselection.lean
       theorem: einselectionN
-    related: [de-isolation, record-layer, collapse, von-neumann-entropy]
+    related: [measurement-flow, de-isolation, luders-rule, record-layer, stern-gerlach]
 
   - slug: preparation-region
     reviewed: 2026-08-25
@@ -5056,7 +5151,7 @@ entries:
     source: curated
     lean:
       module: CsdLean4/LF1/Preparation.lean
-    related: [constraint-surface, typicality, typicality-volume, liouville-measure]
+    related: [outcome-region, epistemic-measure, born-weight, von-neumann-entropy, typicality-volume]
 
   - slug: measurement-context
     hook: >
@@ -5109,7 +5204,7 @@ entries:
     term: Measurement context
     status: definition
     source: curated
-    related: [outcome-region, contextuality, kochen-specker, record-layer]
+    related: [contextuality, carving, luders-rule, kochen-specker, pointer-basis]
 
   - slug: single-trajectory
     hook: >
@@ -5156,7 +5251,7 @@ entries:
     term: Single trajectory
     status: definition
     source: curated
-    related: [determinism, constraint-surface, typicality, many-worlds]
+    related: [determinism, constraint-surface, where-do-probabilities-come-from, first-passage-race, typicality]
 
   - slug: witness-and-engine
     hook: >
@@ -5200,10 +5295,10 @@ entries:
     term: Witness and engine
     status: definition
     source: curated
-    related: [carving, projective-sector, constraint-surface]
+    related: [lf1-main-theorem, what-is-machine-checked, measurement-flow, born-volume-ratio, de-isolation]
 
   - slug: field-arena
-    reviewed: 2026-09-11
+    reviewed: 2026-09-12
     hook: >
       Take finitely many field modes, cap the number of quanta each can hold, and the
       whole toolbox of quantum field theory, propagators, light cones, Wick's theorem and
@@ -5255,7 +5350,7 @@ entries:
     source: curated
     lean:
       module: CsdLean4/CV/ArenaBridge.lean
-    related: [constraint-surface, kronecker-product, no-exact-finite-ccr, gibbs-state]
+    related: [lieb-robinson-bound, wick-theorem, no-exact-finite-ccr, record-light-cone, interaction-price]
 
   - slug: isolation
     hook: >
@@ -5300,7 +5395,7 @@ entries:
     term: Isolation
     status: definition
     source: curated
-    related: [de-isolation, epistemic-measure, collapse, measurement-problem]
+    related: [de-isolation, no-signalling, field-arena, lieb-robinson-bound, constraint-surface]
 
   - slug: moment-map
     reviewed: 2026-09-11
@@ -5365,7 +5460,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Moment_map
       - text: "Atiyah, Convexity and commuting Hamiltonians, Bull. LMS 1982"
         url: https://doi.org/10.1112/blms/14.1.1
-    related: [duistermaat-heckman, born-weight, kahler-form, fubini-study-measure, dirichlet-distribution]
+    related: [kahler-form, duistermaat-heckman, poisson-bracket, fubini-study-measure, liouville-measure]
 
   - slug: lf1-main-theorem
     reviewed: 2026-08-25
@@ -5420,7 +5515,7 @@ entries:
     lean:
       module: CsdLean4/LF1/MainTheorem.lean
       theorem: LF1_main_theorem_ae
-    related: [typicality, typicality-volume, preparation-region, constraint-surface]
+    related: [born-weight, typicality, witness-and-engine, born-volume-ratio, what-is-machine-checked]
 
   - slug: born-volume-ratio
     reviewed: 2026-08-25
@@ -5476,7 +5571,7 @@ entries:
     lean:
       module: CsdLean4/LF4/BornRegionUncond.lean
       theorem: fs_born_volume_ratio_N_uncond
-    related: [born-weight, fubini-study-measure, moment-map, duistermaat-heckman, typicality-volume]
+    related: [born-weight, typicality-volume, fubini-study-measure, lf1-main-theorem, naimark-dilation]
 
   - slug: measurement-flow
     reviewed: 2026-08-25
@@ -5516,6 +5611,15 @@ entries:
       open question that remains; the earlier form of that question, deriving the fibre
       mechanism from a mixing flow, was retired as mis-specified, as the fibre entry
       explains.
+
+      Seen from the system alone, the measurement flow is a channel. Trace out the pointer
+      after the flow has acted on a preparation that starts with the pointer ready, and the
+      system's density operator is the de-isolation channel applied to its density operator
+      before the measurement: the operator is kept on the pointer basis and its coherences
+      between different pointer readings are removed. No representative of the rays has to be
+      chosen for this to hold, because the corpus supplies a canonical measurable one. The
+      channel keeps entropy from decreasing, and the amount of classical information it
+      transmits is exactly one bit per qubit, the pointer bit and nothing else.
     mathematical: >
       measurement_flow_born_frequency (LF5 capstone, CsdLean4/LF5/Capstone.lean): the
       de-isolation flow is Fubini-Study measure-preserving with pointer-block volumes
@@ -5525,15 +5629,23 @@ entries:
 
       The disjointness of the pointer blocks and the outcome map per microstate are
       separate, reusable theorems.
+
+      measurementFlow_traceRight_barycenter_unitSection (LF6/MeasurementFlowChannel.lean): the
+      environment marginal of the flowed barycentre is deisolationChannel applied to the
+      system's barycentre, with Projectivization.unitSection as the representative, so no
+      section hypothesis remains. deisolationChannel_apply_eq_pinch identifies the channel's
+      action with the pinching of Thermo/SecondLaw.lean, deisolationChannel_holevoCapacity
+      (LF6/DeisolationCapacity.lean) gives log 2 as the greatest element of its single-letter
+      Holevo range, and measurementFlow_vonNeumannEntropy_le is the entropy statement.
     term: Measurement flow
     status: proved-in-corpus
     source: curated
     lean:
       module: CsdLean4/LF5/Capstone.lean
       theorem: measurement_flow_born_frequency
-    related: [de-isolation, pointer-basis, naimark-dilation, born-weight]
+    related: [de-isolation, stinespring-dilation, pointer-basis, holevo-bound, naimark-dilation]
   - slug: singlet-contextual-model
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       One machine-checked theorem settles both halves of the Bell question: an
       explicit model in which outcomes depend on the measurement context
@@ -5607,10 +5719,10 @@ entries:
     lean:
       module: CsdLean4/LF6/C1BellConsistency.lean
       theorem: c1_singlet_contextual_capstone
-    related: [bell-chsh, contextuality, hidden-variables, no-signalling, gisin-theorem]
+    related: [bell-chsh, contextuality, no-signalling, hidden-variables, does-csd-violate-bell]
 
   - slug: no-signalling
-    reviewed: 2026-09-04
+    reviewed: 2026-09-12
     hook: >
       Nothing done to the far wing of an entangled pair changes the statistics
       seen at the near wing, and CSD proves this exactly, for every state,
@@ -5670,10 +5782,10 @@ entries:
     lean:
       module: CsdLean4/CV/CompositeArena.lean
       theorem: composite_no_signalling
-    related: [bell-chsh, singlet-contextual-model, bell-not-join, field-arena]
+    related: [singlet-contextual-model, bell-not-join, isolation, field-arena, tsirelson-bound]
 
   - slug: bell-not-join
-    reviewed: 2026-09-04
+    reviewed: 2026-09-12
     hook: >
       The arena CSD assigns to two systems together is strictly larger than the
       two arenas simply paired, and the Bell state is a point of the excess:
@@ -5734,10 +5846,10 @@ entries:
     lean:
       module: CsdLean4/CV/CompositeArena.lean
       theorem: bell_not_join
-    related: [no-signalling, bell-chsh, ghz-state, field-arena, kronecker-product]
+    related: [no-signalling, field-arena, peres-criterion, kronecker-product, hong-ou-mandel]
 
   - slug: lieb-robinson-bound
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       Even without relativity, influence in a quantum system with local
       interactions has a speed limit, and on CSD's finite field arena that limit
@@ -5812,10 +5924,10 @@ entries:
     lean:
       module: CsdLean4/CV/LiebRobinson.lean
       theorem: norm_commutator_velocity_le
-    related: [field-arena, record-light-cone, no-signalling]
+    related: [field-arena, record-light-cone, interaction-price, isolation, wick-theorem]
 
   - slug: wick-theorem
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       The bookkeeping rule at the heart of quantum field theory, which reduces
       any correlation of field operators to a sum over pairings, survives a
@@ -5882,10 +5994,10 @@ entries:
     lean:
       module: CsdLean4/CV/Wick.lean
       theorem: timeFourPoint_wick
-    related: [field-arena, gibbs-state, kms-condition]
+    related: [field-arena, kms-condition, no-exact-finite-ccr, lieb-robinson-bound, gibbs-state]
 
   - slug: kms-condition
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       The algebraic signature of thermal equilibrium holds exactly on CSD's
       finite field arena, and cooling the thermal state all the way down
@@ -5948,10 +6060,10 @@ entries:
     lean:
       module: CsdLean4/CV/ThermalPropagator.lean
       theorem: thermal_kms
-    related: [gibbs-state, field-arena, wick-theorem, von-neumann-entropy]
+    related: [gibbs-state, wick-theorem, canonical-typicality, field-arena, landauer-principle]
 
   - slug: lindblad-equation
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       The master equation of open quantum systems is formalised end to end: the
       evolution generated by every Lindblad generator is proved to be completely
@@ -6021,7 +6133,7 @@ entries:
     lean:
       module: CsdLean4/LF6/LindbladPositivity.lean
       theorem: lindbladSemigroup_completelyPositive
-    related: [quantum-channel, choi-theorem, pointer-basis, lie-trotter-formula]
+    related: [quantum-channel, lie-trotter-formula, de-isolation, choi-theorem, schrodinger-equation]
 
   - slug: lie-trotter-formula
     reviewed: 2026-08-25
@@ -6088,10 +6200,10 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Analysis/NormedSpace/TrotterGeneral.lean
       theorem: trotter_product
-    related: [lindblad-equation, stone-theorem, schrodinger-equation]
+    related: [lindblad-equation, stone-theorem, schrodinger-equation, what-is-machine-checked, quantum-channel]
 
   - slug: choi-theorem
-    reviewed: 2026-09-04
+    reviewed: 2026-09-12
     hook: >
       A transformation of quantum states is physically allowed exactly when one
       matrix built from it passes a single positivity test. CSD proves both
@@ -6152,10 +6264,10 @@ entries:
     lean:
       module: CsdLean4/LF2/ChoiConverse.lean
       theorem: choi_iff_posSemidef
-    related: [quantum-channel, lindblad-equation, loewner-order]
+    related: [quantum-channel, stinespring-dilation, lindblad-equation, loewner-order, kronecker-product]
 
   - slug: quantum-channel
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       The most general thing that can happen to a quantum state is captured in
       CSD as a concrete structure, a family of operators with one completeness
@@ -6190,6 +6302,18 @@ entries:
       The layer is breadth on the operational stratum, formalised to the
       corpus's usual standard: no property of a channel is used anywhere
       without a named theorem carrying it.
+
+      Since the constraint surface carries both the system and its environment, the channels
+      the programme reasons about are not introduced by hand. A volume-preserving flow on the
+      surface that lifts a unitary on the joint state space acts on a preparation, and the
+      density operator of the flowed preparation, seen from the system alone, is a channel
+      applied to the density operator of the original preparation. The channel is the
+      environment's marginal of the flow. The measurement flow produces the de-isolation
+      channel in this way, and the bit-flip errors of the three-qubit code are produced by a
+      flow on the register together with a four-level environment. The corpus keeps two
+      spellings of the notion, an indexed Kraus family in the operational layer and the staged
+      Mathlib structure, and proves them equivalent, with actions, dilations and compositions
+      agreeing.
     mathematical: >
       QuantumChannel is an indexed Kraus family with the completeness law
       summing adjoint-products to the identity; apply is the Kraus sum.
@@ -6199,16 +6323,29 @@ entries:
       Choi, with the converse in the companion module closing the
       equivalence. Composition and the dilation-side constructions live where
       their consumers need them.
+
+      The bridge channelEquiv (LF2/ChannelBridge.lean) is an equivalence between
+      QuantumChannel and the staged Channel, with the action, the unitary channels, the
+      Stinespring dilations and the composition Channel.comp
+      (Mathlib/QuantumInfo/ChannelComp.lean) transported. Channels from flows:
+      traceRight_barycenter_flow (LF2/FlowChannel.lean) states that for a flow lifting a
+      unitary on system times environment, and a preparation that is a product with the
+      environment ready, the reduced barycentre of the flowed preparation equals
+      stinespringChannel applied to the system's barycentre; stinespringChannelMixed covers a
+      mixed environment through its spectral Kraus family. Instances:
+      measurementFlow_traceRight_barycenter_unitSection (LF6/MeasurementFlowChannel.lean),
+      bitFlipFlow_traceRight_barycenter and registerFlow_traceRight_barycenter
+      (Empirical/CSD/QEC/).
     term: Quantum channel
     status: proved-in-corpus
     source: curated
     lean:
       module: CsdLean4/LF2/QuantumChannel.lean
       theorem: choiMatrix_posSemidef
-    related: [choi-theorem, lindblad-equation, naimark-dilation]
+    related: [stinespring-dilation, choi-theorem, partial-trace, de-isolation, holevo-bound]
 
   - slug: record-light-cone
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       Records are safe from distant meddling by theorem: anything that happens
       outside the light cone can shift the outcome written into the arena's
@@ -6262,7 +6399,7 @@ entries:
     lean:
       module: CsdLean4/CV/FibredArenaBridge.lean
       theorem: record_lightcone
-    related: [lieb-robinson-bound, record-layer, fibre, field-arena]
+    related: [lieb-robinson-bound, record-layer, field-arena, no-signalling, interaction-price]
 
   - slug: partial-trace
     reviewed: 2026-08-25
@@ -6304,6 +6441,13 @@ entries:
       work on entangled weights needed them without the rest of the entropy
       machinery they were moved to sit beside the definition. The rule is that
       the defining property of an operation lives with the operation.
+
+      On the constraint surface the partial trace is the operation that turns the joint
+      description into the system's own. A preparation of system and environment together is
+      flowed, its density operator on the joint space is formed, and tracing out the
+      environment gives the system's density operator after the interaction. That reduced
+      operator is what a channel acts on, so the partial trace is the exact point at which the
+      programme's ontic flows become the operational channels of quantum information.
     mathematical: >
       partialTraceRight and partialTraceLeft on Matrix (n x m) (n x m), with
       bundled linearity; trace preservation; Kronecker reduction, the trace of
@@ -6312,13 +6456,20 @@ entries:
 
       The reduced-trace identities Tr(M (X (x) I)) = Tr(Tr_B M X) and its
       mirror are proved alongside. All foundational-triple-only.
+
+      Two spellings coexist: Matrix.traceRight and Matrix.traceLeft in
+      Mathlib/LinearAlgebra/Matrix/PartialTrace.lean, and the QuantumInfo pair above; the
+      Stinespring module uses the former. The reduced flowed barycentre is computed by
+      barycenterMatrix_kronecker_of_ae (a product preparation has a Kronecker barycentre,
+      almost everywhere in the representative) and traceRight_barycenter_flow
+      (LF2/FlowChannel.lean).
     term: Partial trace
     status: proved-in-corpus
     source: curated
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/PartialTrace.lean
       theorem: partialTraceRight
-    related: [quantum-channel, von-neumann-entropy, entropy-subadditivity, kronecker-product]
+    related: [stinespring-dilation, quantum-channel, entropy-subadditivity, kronecker-product, de-isolation]
 
   - slug: entropy-subadditivity
     reviewed: 2026-08-25
@@ -6382,10 +6533,10 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Subadditivity.lean
       theorem: vonNeumannEntropy_subadditive
-    related: [von-neumann-entropy, partial-trace, landauer-principle, gibbs-state]
+    related: [von-neumann-entropy, klein-inequality, landauer-principle, partial-trace, holevo-bound]
 
   - slug: schrodinger-from-records
-    reviewed: 2026-09-11
+    reviewed: 2026-09-12
     hook: >
       CSD does not postulate the Schrodinger equation. Preserving the statistics
       of records forces the dynamics to be unitary, unitarity together with
@@ -6465,10 +6616,10 @@ entries:
     lean:
       module: CsdLean4/LF4/PhaseLift.lean
       theorem: sigmaFlow_schrodinger_form
-    related: [schrodinger-equation, wigner-rigidity, stone-theorem, bargmann]
+    related: [schrodinger-equation, wigner-rigidity, stone-theorem, bargmann, projectability]
 
   - slug: shor-code
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       Shor's nine-qubit code was the first proof that quantum information can be
       protected against any error on any single qubit without ever being read,
@@ -6526,6 +6677,20 @@ entries:
       the code exists. Encoders, syndromes and corrections are explicit maps with
       theorems about them, rather than an abstract framework for such codes cited
       from outside and assumed to apply.
+
+      The bit-flip half of the code is also read on the constraint surface, and every step of
+      that reading is proved. The error is not posited as a channel: a volume-preserving flow
+      on the three-qubit register together with a four-level environment, lifting a concrete
+      joint unitary, produces the single-error channel as its environment marginal. The code
+      space is a region of the surface, and the four error images of that region are pairwise
+      disjoint, so the syndrome measurement is a partition of the surface into four regions,
+      and the projective measurement that reads the syndrome is exactly the indicator of those
+      regions. Recovery is one channel: measure the syndrome, apply the correction it names.
+      That single channel returns every code state, mixed or pure, from the mixed post-error
+      state, and applied to the environment marginal of the flowed preparation it returns the
+      register's density operator whenever the preparation lies in the code region. What the
+      code does not do is also stated: two flips at once are miscorrected, so the
+      independent-noise channel is corrected only to first order.
     mathematical: >
       The recovery theorems shor_corrects_X, shor_corrects_Z_degenerate and
       shor_corrects_XZ state that for every block position and every logical
@@ -6538,13 +6703,23 @@ entries:
       from these three cases covers the single-qubit error set. Stabiliser
       fixing lemmas certify the code space: the encoded states are fixed by the
       stabiliser checks.
+
+      Three-qubit half on the surface: bitFlipFlow_traceRight_barycenter and
+      registerFlow_traceRight_barycenter (Empirical/CSD/QEC/) produce the one-qubit bit-flip
+      channel and the register's single-error channel as environment marginals of flows on the
+      complex projective spaces of dimension three and thirty-one; errorRegion_disjoint and
+      syndromeProj_fixes_errorRegion read the syndrome as a partition of the surface;
+      recoveryChannel_apply_singleFlipChannel_apply (Empirical/QM/QEC/SyndromeRecovery.lean)
+      is the Knill-Laflamme collapse for the recovery channel with Kraus operators E_k P_k;
+      and registerFlow_recovery (Empirical/CSD/QEC/RegisterFlow.lean) composes them into error
+      correction on the surface end to end.
     term: Shor code
     status: proved-in-corpus
     source: curated
     lean:
       module: CsdLean4/Empirical/QM/QEC/ShorNine.lean
       theorem: shor_corrects_XZ
-    related: [shor-algorithm, pauli-matrices, quantum-channel]
+    related: [steane-code, pauli-matrices, stinespring-dilation, quantum-channel, gottesman-knill]
 
   - slug: ozawa-error-disturbance
     hook: >
@@ -6638,7 +6813,7 @@ entries:
         url: https://doi.org/10.1103/PhysRevA.67.042105
       - text: "Rozema et al., Violation of Heisenberg's measurement-disturbance relationship by weak measurements, Phys. Rev. Lett. 109, 100404 (2012)"
         url: https://doi.org/10.1103/PhysRevLett.109.100404
-    related: [robertson-uncertainty, hermitian-operator, measurement-problem, collapse]
+    related: [robertson-uncertainty, luders-rule, measurement-flow, fisher-information, collapse]
 
   - slug: robertson-uncertainty
     reviewed: 2026-08-25
@@ -6714,10 +6889,10 @@ entries:
     lean:
       module: CsdLean4/LF4/UncertaintyKahler.lean
       theorem: kahler_robertson_ontic_variance
-    related: [hermitian-operator, pauli-matrices, poisson-bracket]
+    related: [ozawa-error-disturbance, hermitian-operator, no-exact-finite-ccr, fisher-information, pauli-matrices]
 
   - slug: interaction-price
-    reviewed: 2026-08-25
+    reviewed: 2026-09-12
     hook: >
       Switching on an interaction between field modes makes local quantities
       spread at a rate proportional to the coupling, and the corpus proves the
@@ -6784,7 +6959,7 @@ entries:
     lean:
       module: CsdLean4/CV/PriceAttainment.lean
       theorem: price_linear_attained
-    related: [field-arena, lieb-robinson-bound, no-exact-finite-ccr]
+    related: [field-arena, lieb-robinson-bound, record-light-cone, isolation, wick-theorem]
 
   - slug: does-csd-violate-bell
     kind: question
@@ -6852,7 +7027,7 @@ entries:
     term: Does CSD violate Bell's theorem?
     status: definition
     source: curated
-    related: [bell-chsh, singlet-contextual-model, hidden-variables, contextuality, no-signalling, is-csd-superdeterministic]
+    related: [bell-chsh, singlet-contextual-model, no-signalling, is-csd-superdeterministic, is-csd-a-hidden-variable-theory]
 
   - slug: excess-baggage
     kind: question
@@ -6918,7 +7093,7 @@ entries:
         url: https://doi.org/10.1016/j.shpsb.2003.12.001
       - text: "Montina, Exponential complexity and ontological theories of quantum mechanics, Phys. Rev. A 2008"
         url: https://doi.org/10.1103/PhysRevA.77.022104
-    related: [hidden-variables, is-csd-a-hidden-variable-theory, does-csd-conflict-with-pbr, epistemic-measure]
+    related: [ontic-vs-epistemic, fibre, many-to-one-projection, does-csd-conflict-with-pbr, is-the-wavefunction-real]
 
   - slug: does-csd-conflict-with-pbr
     kind: question
@@ -7021,7 +7196,7 @@ entries:
     external:
       - text: "Pusey, Barrett and Rudolph, On the reality of the quantum state, Nature Physics 2012"
         url: https://doi.org/10.1038/nphys2309
-    related: [psi-epistemic, epistemic-measure, hidden-variables, is-the-wavefunction-real, ontic-vs-epistemic]
+    related: [psi-epistemic, is-the-wavefunction-real, excess-baggage, ontic-vs-epistemic, epistemic-measure]
 
   - slug: is-the-born-rule-derived
     kind: question
@@ -7087,7 +7262,7 @@ entries:
     term: Is the Born rule derived or assumed in CSD?
     status: definition
     source: curated
-    related: [born-weight, born-volume-ratio, fubini-study-measure, typicality-volume, carving, gleason-theorem]
+    related: [born-weight, typicality, fubini-study-measure, where-do-probabilities-come-from, lf1-main-theorem]
 
   - slug: where-do-probabilities-come-from
     kind: question
@@ -7142,7 +7317,7 @@ entries:
     term: If CSD is deterministic, where do probabilities come from?
     status: definition
     source: curated
-    related: [typicality, typicality-volume, preparation-region, single-trajectory, determinism, lf1-main-theorem]
+    related: [typicality, determinism, single-trajectory, is-the-born-rule-derived, typicality-volume]
 
   - slug: is-csd-a-hidden-variable-theory
     kind: question
@@ -7200,7 +7375,7 @@ entries:
     term: Is CSD a hidden-variable theory?
     status: definition
     source: curated
-    related: [hidden-variables, contextuality, does-csd-violate-bell, does-kochen-specker-rule-out-csd, bohmian-mechanics]
+    related: [hidden-variables, contextuality, does-csd-violate-bell, csd-vs-bohmian-mechanics, does-kochen-specker-rule-out-csd]
 
   - slug: does-kochen-specker-rule-out-csd
     kind: question
@@ -7254,7 +7429,7 @@ entries:
     term: Does the Kochen-Specker theorem rule out CSD?
     status: definition
     source: curated
-    related: [kochen-specker, contextuality, measurement-context, mermin-inequality, is-csd-a-hidden-variable-theory]
+    related: [kochen-specker, contextuality, measurement-context, is-csd-a-hidden-variable-theory, gleason-theorem]
 
   - slug: is-csd-superdeterministic
     kind: question
@@ -7307,7 +7482,7 @@ entries:
     term: Is CSD superdeterministic?
     status: definition
     source: curated
-    related: [does-csd-violate-bell, singlet-contextual-model, contextuality, determinism, hidden-variables]
+    related: [determinism, does-csd-violate-bell, single-trajectory, no-signalling, hidden-variables]
 
   - slug: is-the-wavefunction-real
     kind: question
@@ -7361,7 +7536,7 @@ entries:
     term: Is the wavefunction real in CSD?
     status: definition
     source: curated
-    related: [psi-epistemic, does-csd-conflict-with-pbr, many-to-one-projection, ontic-vs-epistemic, fibre]
+    related: [ontic-vs-epistemic, psi-epistemic, does-csd-conflict-with-pbr, qbism, excess-baggage]
 
   - slug: what-happens-during-measurement
     kind: question
@@ -7417,7 +7592,7 @@ entries:
     term: What happens during a measurement in CSD?
     status: definition
     source: curated
-    related: [de-isolation, measurement-problem, collapse, outcome-region, record-layer, measurement-flow]
+    related: [de-isolation, measurement-flow, collapse, record-layer, measurement-problem]
 
   - slug: what-is-machine-checked
     kind: question
@@ -7467,13 +7642,21 @@ entries:
       Classical.choice and Quot.sound; the corpus imports no axiom of its own. The staging
       tree contributes Mathlib-candidate infrastructure, the partial trace and the general
       Lie-Trotter formula among it, built CSD-free.
+
+      The quantum-information layer is reached from the posits by theorems rather than by
+      instantiation: the density operator of a preparation on the surface is the barycentre of
+      its rays, channels are the environment marginals of volume-preserving flows that lift a
+      unitary, and the second law, data processing, Landauer's bound, concavity, the Holevo
+      capacity of the de-isolation channel and error correction on the three-qubit register
+      are all stated for preparations on the surface. Strong subadditivity remains conditional
+      on an explicit data-processing hypothesis, which the audit records.
     term: What exactly is machine-checked in CSD?
     status: definition
     source: curated
     site_link:
       url: https://www.constraintsurfacedynamics.com/formalisation
       text: The formalisation page tracks the Lean corpus and its scope
-    related: [partial-trace, lie-trotter-formula, lf1-main-theorem, witness-and-engine]
+    related: [witness-and-engine, lf1-main-theorem, partial-trace, lie-trotter-formula, does-csd-make-new-predictions]
 
   - slug: does-csd-make-new-predictions
     kind: question
@@ -7524,7 +7707,7 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page states what is and is not claimed
-    related: [what-is-machine-checked, hidden-variables, copenhagen, is-the-born-rule-derived]
+    related: [what-is-machine-checked, spontaneous-collapse, record-light-cone, interaction-price, where-do-probabilities-come-from]
 
   - slug: csd-vs-bohmian-mechanics
     kind: question
@@ -7584,7 +7767,7 @@ entries:
     term: How does CSD differ from Bohmian mechanics?
     status: definition
     source: curated
-    related: [bohmian-mechanics, hidden-variables, fubini-study-measure, is-csd-a-hidden-variable-theory, determinism]
+    related: [bohmian-mechanics, is-csd-a-hidden-variable-theory, single-trajectory, determinism, hidden-variables]
 
   # -------------------------------------------------------------------------
   # 2026-08-29 tranche: the quantum-algorithm layer, completed. Prompted by the
@@ -7658,7 +7841,7 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Fourier.lean
       theorem: qft_unitary
-    related: [phase-estimation, shor-algorithm, deutsch-jozsa]
+    related: [shor-algorithm, phase-estimation, simon-algorithm, hadamard-test, amplitude-estimation]
     external:
       - text: "Overview"
         url: https://en.wikipedia.org/wiki/Quantum_Fourier_transform
@@ -7719,7 +7902,7 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/PhaseEstimation.lean
       theorem: phase_estimation_lower_bound
-    related: [quantum-fourier-transform, shor-algorithm]
+    related: [quantum-fourier-transform, amplitude-estimation, shor-algorithm, fisher-information, hadamard-test]
     external:
       - text: "Overview"
         url: https://en.wikipedia.org/wiki/Quantum_phase_estimation_algorithm
@@ -7780,7 +7963,7 @@ entries:
     term: Simon's algorithm
     eponyms: [Simon]
     status: standard-mathematics
-    related: [deutsch-jozsa, bernstein-vazirani, shor-algorithm]
+    related: [deutsch-jozsa, bernstein-vazirani, shor-algorithm, quantum-fourier-transform, grover-algorithm]
     external:
       - text: "Overview"
         url: https://en.wikipedia.org/wiki/Simon%27s_problem
@@ -7830,7 +8013,7 @@ entries:
     term: Bernstein-Vazirani algorithm
     eponyms: [Bernstein, Vazirani]
     status: standard-mathematics
-    related: [deutsch-jozsa, simon-algorithm, grover-algorithm]
+    related: [deutsch-jozsa, simon-algorithm, hadamard-test, grover-algorithm, quantum-fourier-transform]
     external:
       - text: "Overview"
         url: https://en.wikipedia.org/wiki/Bernstein%E2%80%93Vazirani_algorithm
@@ -7877,7 +8060,7 @@ entries:
       phase.
     term: swap test
     status: standard-mathematics
-    related: [hadamard-test, hong-ou-mandel]
+    related: [hadamard-test, amplitude-estimation, hong-ou-mandel, fisher-information, grover-algorithm]
     external:
       - text: "Overview"
         url: https://en.wikipedia.org/wiki/Swap_test
@@ -7926,7 +8109,7 @@ entries:
       one theorem.
     term: Hadamard test
     status: standard-mathematics
-    related: [swap-test, quantum-fourier-transform]
+    related: [swap-test, phase-estimation, deutsch-jozsa, bernstein-vazirani, amplitude-estimation]
     external:
       - text: "Overview"
         url: https://en.wikipedia.org/wiki/Hadamard_test
@@ -8006,7 +8189,7 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/AmplitudeAmplification.lean
       theorem: amplitude_amplification
-    related: [grover-algorithm, phase-estimation, quantum-fourier-transform, amplitude-estimation]
+    related: [grover-algorithm, amplitude-estimation, phase-estimation, swap-test, quantum-fourier-transform]
     external:
       - text: "BHMT, Quantum Amplitude Amplification and Estimation (quant-ph/0005055)"
         url: https://arxiv.org/abs/quant-ph/0005055
@@ -8093,7 +8276,7 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/AmplitudeEstimation.lean
       theorem: amplitude_estimation
-    related: [amplitude-amplification, phase-estimation, quantum-fourier-transform, grover-algorithm]
+    related: [amplitude-amplification, phase-estimation, grover-algorithm, fisher-information, swap-test]
     external:
       - text: "BHMT, Quantum Amplitude Amplification and Estimation (quant-ph/0005055), Thm 12"
         url: https://arxiv.org/abs/quant-ph/0005055
@@ -8176,7 +8359,7 @@ entries:
       David Gross on Clifford orbits and designs.
     term: Gottesman-Knill theorem
     eponyms: [Gottesman, Knill]
-    related: [steane-code, magic-state]
+    related: [steane-code, shor-code, magic-state, pauli-matrices, grover-algorithm]
     status: proved-in-corpus
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Clifford.lean
@@ -8260,7 +8443,7 @@ entries:
     lean:
       module: CsdLean4/Empirical/QM/QEC/Steane.lean
       theorem: steaneZero_stabilised
-    related: [gottesman-knill]
+    related: [shor-code, gottesman-knill, magic-state, pauli-matrices, quantum-channel]
     external:
       - text: "Steane, Error correcting codes in quantum theory (PRL 77, 793)"
         url: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.77.793
@@ -8330,7 +8513,182 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Magic.lean
       theorem: tGate_conj_X_not_pauli
-    related: [gottesman-knill]
+    related: [gottesman-knill, steane-code, shor-code, pauli-matrices, amplitude-amplification]
     external:
       - text: "Bravyi-Kitaev, Universal quantum computation with ideal Clifford gates and noisy ancillas (PRA 71, 022316)"
         url: https://arxiv.org/abs/quant-ph/0403025
+
+  - slug: holevo-bound
+    reviewed: 2026-09-12
+    hook: >
+      A quantum system can be prepared in infinitely many distinct ways, yet no reader can extract
+      more classical information from it than from a classical system of the same size, and the
+      measurement channel of CSD is proved to pass exactly one bit per qubit.
+    layman: >
+      A single qubit, the quantum unit of information, can be prepared in a continuum of different
+      states, and it is natural to hope that this continuum could be used to store more than one
+      bit. Holevo's bound says it cannot. Suppose a sender chooses one of several states with known
+      probabilities and hands the system over. The most a receiver can learn about which state was
+      chosen, whatever measurement is performed, is bounded by the entropy of the average state,
+      and entropy in turn is bounded by the logarithm of the number of perfectly distinguishable
+      states the system has. For a qubit that is one bit. The continuum of preparations is real,
+      but the states in it are not distinguishable from one another, and the bound measures exactly
+      how much distinguishability is available.
+
+      The quantity in the bound is the difference between the entropy of the average state and the
+      average of the entropies of the individual states. It is zero when the states are identical,
+      it is largest when they are perfectly distinguishable, and it is never negative. The last
+      fact is not a triviality: it is the statement that mixing states never lowers their average
+      entropy, which is a concavity property of the entropy itself.
+    in_csd: >
+      The bound is proved in the corpus with no side conditions, for any finite collection of
+      states and any weights, and it is then applied to a channel the programme produces rather
+      than posits. The de-isolation channel, which is what the measurement flow looks like from the
+      measured system alone, keeps the pointer basis intact and removes everything else. Its
+      single-letter classical capacity, the largest amount of information any collection of input
+      states can carry through it in one use, is proved to be exactly one bit for a qubit: the bound
+      caps every collection, and the two pointer states attain it. That is the information-theoretic
+      reading of a record. A measurement extracts the pointer bit and nothing more, and the flow that
+      creates the record is the same flow that limits what it can carry.
+    mathematical: >
+      holevoChi p rho is S(sum p_i rho_i) minus sum p_i S(rho_i). holevoChi_nonneg is concavity of
+      the von Neumann entropy without a support hypothesis (Mathlib/QuantumInfo/ConcavityFull.lean).
+      holevoChi_le_vonNeumannEntropy and holevoChi_le_log_card are the bound and its dimension form,
+      using only non-negativity of the components' entropies. holevoRange of a channel is the set of
+      Holevo quantities of its outputs over all finite ensembles of density matrices, bounded by
+      holevoRange_le_log_card, and deisolationChannel_holevoCapacity (LF6/DeisolationCapacity.lean)
+      states that log 2 is the greatest element of the range of the de-isolation channel on a qubit.
+      The regularised capacity over many uses is not defined, and the converse direction, that the
+      bound is asymptotically attainable, is not proved.
+    person: >
+      Alexander Holevo, born in 1943, has spent his career at the Steklov Mathematical Institute in
+      Moscow. The bound appears in a 1973 paper in the Soviet journal Problems of Information
+      Transmission, at a time when quantum information was not yet a field, and it stood for a
+      quarter of a century as a limit before the matching achievability result, proved
+      independently by Holevo and by Schumacher and Westmoreland in the late 1990s, turned it into
+      the capacity formula for classical information over quantum channels. He received the
+      Shannon Award of the IEEE Information Theory Society in 2016.
+    term: Holevo bound
+    eponyms: [Holevo]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/HolevoBound.lean
+      theorem: holevoChi_le_log_card
+    related: [von-neumann-entropy, klein-inequality, de-isolation, measurement-flow, quantum-channel]
+
+  - slug: stinespring-dilation
+    reviewed: 2026-09-12
+    hook: >
+      Every noisy quantum process is a reversible process on a larger system with part of that
+      system ignored, and in CSD the larger system is the constraint surface itself: every channel
+      the programme uses is the environment's marginal of a volume-preserving flow.
+    layman: >
+      The basic evolution of quantum mechanics is reversible: nothing is lost, and running it
+      backwards recovers the starting state exactly. Real processes are not like that. A qubit
+      stored in a device gradually loses its coherence, a photon in a fibre is sometimes absorbed,
+      a measurement leaves the system changed in a way that cannot be undone. The general
+      description of such a process is a channel, a rule that turns states into states while
+      respecting probabilities, and channels can lose information.
+
+      Stinespring's theorem reconciles the two pictures. Any channel, however lossy, is a
+      reversible evolution of the system together with an environment, followed by ignoring the
+      environment. Ignoring means averaging over everything the environment could be doing, an
+      operation called the partial trace. The information is not destroyed; it has moved into
+      correlations with the environment, where a description of the system alone cannot see it. A
+      bit flip that happens with some probability, for instance, is a reversible interaction with a
+      single environment qubit that records whether the flip occurred, seen from the side that does
+      not read that record.
+    in_csd: >
+      The theorem is the hinge between the programme's ontic and operational layers. The
+      constraint surface carries system and environment together, and its dynamics is a
+      volume-preserving flow that lifts a reversible evolution of the joint state space. The corpus
+      proves that when such a flow acts on a preparation whose environment starts in a ready state,
+      the density operator of the flowed preparation, seen from the system alone, is a channel
+      applied to the density operator of the original preparation, and it identifies which channel:
+      the one Stinespring's construction assigns to the joint evolution and the ready state. So the
+      channels of quantum information are not introduced into the programme; they are what its flows
+      look like from inside. The measurement flow yields the de-isolation channel in this way, and
+      the bit-flip errors of the three-qubit code arise from a flow on the register with a four-level
+      environment. A mixed environment is covered as well, through the spectral decomposition of
+      its density operator.
+    mathematical: >
+      Channel.ofIsometry builds the channel Tr_env(V rho V^H) from an isometry V into system times
+      environment, and apply_eq_traceRight_stinespring together with stinespringIsom_isom shows
+      every Kraus channel arises this way, with the Kraus operators as the environment blocks of V.
+      stinespringChannel U hU e_0 (LF2/FlowChannel.lean) is the channel of a joint unitary with a
+      ready environment, and traceRight_barycenter_flow states that for a flow lifting U in the
+      projector sense (IsUnitaryLift) and a preparation that is a product with the environment ready,
+      almost everywhere in the representative, the reduced barycentre of the flowed preparation is
+      that channel applied to the system's barycentre. isUnitaryLift_unitSection removes the section
+      hypothesis for projective actions, stinespringChannelMixed handles a mixed environment, and
+      channelEquiv (LF2/ChannelBridge.lean) transports the construction between the corpus's two
+      channel structures.
+    person: >
+      W. Forrest Stinespring (1929-2012) taught at the University of Illinois at Chicago for most of
+      his career. The dilation theorem is in a short 1955 paper in the Proceedings of the American
+      Mathematical Society, written in the language of positive maps on operator algebras and
+      generalising Naimark's dilation of a positive operator measure. Its reading as the statement
+      that every quantum channel is a unitary on a larger space, with the environment traced away,
+      came with Kraus's work on operator-sum representations in the 1970s and 1980s, long after the
+      mathematics was settled.
+    term: Stinespring dilation
+    eponyms: [Stinespring]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/Stinespring.lean
+      theorem: apply_eq_traceRight_stinespring
+    related: [quantum-channel, naimark-dilation, partial-trace, de-isolation, measurement-flow]
+
+  - slug: klein-inequality
+    reviewed: 2026-09-12
+    hook: >
+      One quantum state is never negatively distinguishable from another: the relative entropy of a
+      state with respect to a second is at least zero, and that single inequality drives the second
+      law, subadditivity, concavity and the Holevo bound in the corpus.
+    layman: >
+      Relative entropy measures how surprised you should be, on average, if you believe a system is
+      in one state when it is really in another. It compares the true state with the assumed one,
+      and it is the quantum version of a quantity that appears throughout statistics and
+      information theory. Klein's inequality says that this surprise is never negative and is zero
+      only when the two states coincide. Believing something false about a system can never make its
+      behaviour look more predictable than the truth would.
+
+      The statement sounds obvious and is not. Quantum states are matrices, the logarithm of a
+      matrix is defined through its eigenvalues, and two states generally have different
+      eigenvectors, so the two logarithms do not simply line up. The proof expands one state in the
+      eigenbasis of the other and uses the fact that the overlaps between the two sets of
+      eigenvectors form a doubly stochastic pattern, one whose rows and columns each sum to one,
+      which is enough to pull the ordinary convexity of the logarithm through the matrix algebra.
+    in_csd: >
+      The inequality is proved once in the corpus and spent many times. The thermodynamics track
+      uses it for the H-theorem, the statement that coarse-graining a state onto a fixed basis can
+      only raise its entropy, and that theorem is exactly what the de-isolation channel does to the
+      measured system, so the second law on the constraint surface rests on it. Subadditivity of
+      entropy, the Landauer bound that follows from subadditivity, the concavity of entropy under
+      mixing and the Holevo bound on how much classical information a channel carries are all
+      consequences. In each case the inequality supplies the one step that informal accounts tend to
+      wave through.
+    mathematical: >
+      klein_inequality (Mathlib/QuantumInfo/Subadditivity.lean): for rho positive semidefinite of
+      unit trace and sigma positive definite, relEntropy is non-negative. The proof is the doubly
+      stochastic overlap expansion in the two eigenbases with the convexity of x log x. Consumers:
+      vonNeumannEntropy_subadditive and landauer_bound; vonNeumannEntropy_le_pinching
+      (Thermo/SecondLaw.lean), which is the H-theorem; the concavity theorem
+      vonNeumannEntropy_mixture_ge, obtained from the positive-definite case by mixing with the
+      maximally mixed state and closedness in the mixing parameter; and holevoChi_nonneg. The
+      equality case, that zero forces the two states to coincide, is not formalised.
+    person: >
+      Oskar Klein (1894-1977) was a Swedish physicist better known for the Kaluza-Klein fifth
+      dimension, the Klein-Gordon equation and the Klein-Nishina formula. The inequality comes from
+      a 1931 paper in the Zeitschrift für Physik on the quantum-mechanical foundation of the second
+      law of thermodynamics, written in Stockholm, where he had just taken the chair of theoretical
+      physics. His aim was the H-theorem: to show that the entropy of a quantum system, once its
+      fine-grained coherences are discarded, can only increase. The inequality was the tool, and it
+      outlived the argument it was built for.
+    term: Klein's inequality
+    eponyms: [Klein]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/Subadditivity.lean
+      theorem: klein_inequality
+    related: [von-neumann-entropy, entropy-subadditivity, holevo-bound, landauer-principle, gibbs-state]

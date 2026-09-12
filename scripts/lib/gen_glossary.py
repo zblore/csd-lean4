@@ -146,6 +146,10 @@ CSS = (
     "padding:1.3rem 1.4rem}"
     ".r3 p{margin:0;font-size:.97rem;line-height:1.66;color:var(--mut)}"
     ".r3 h2{margin-bottom:.7rem}"
+    ".r5 ul{list-style:none;margin:0;padding:0}"
+    ".r5 li{margin:0 0 .85rem;line-height:1.55}"
+    ".r5 li a{font-weight:600}"
+    ".r5 li span{display:block;font-size:.93rem;color:var(--mut)}"
     "code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85em;"
     "color:var(--code)}"
     ".foot{border-top:1px solid var(--line);padding-top:1.6rem;margin-top:3.4rem;"
@@ -276,6 +280,7 @@ SITE_LINE = ('<p class="note">Part of <a href="' + SITE_MAIN
              + '<a href="' + REPO + '">csd-lean4</a>.</p>')
 
 idx_items, q_items, sitemap, llms, md = [], [], [SITE + "/"], [], []
+BY_SLUG = {e["slug"]: e for e in entries}
 
 for e in entries:
     slug, term, st = e["slug"], e["term"], e["status"]
@@ -330,10 +335,19 @@ for e in entries:
                      + E(sl["text"]) + "</a>"))
     for x in e.get("external") or []:
         rows.append(("Background", '<a href="' + x["url"] + '">' + E(x["text"]) + "</a>"))
-    rel = ", ".join('<a href="' + SITE + "/" + r + '/">' + E(r.replace("-", " ")) + "</a>"
-                    for r in e.get("related") or [])
-    if rel:
-        rows.append(("Related", rel))
+    # Related entries are a section of the page, not a footnote: five pages a reader of
+    # THIS entry would go to next, each with its own hook so the choice is informed
+    # (author direction, 2026-09-12). A related slug with no entry is a check-glossary
+    # warning; it is skipped here rather than shipped as a dead link.
+    rel_items = []
+    for r in e.get("related") or []:
+        re_ = BY_SLUG.get(r)
+        if re_ is None:
+            continue
+        rel_items.append('<li><a href="' + SITE + "/" + r + '/">' + E(re_["term"])
+                         + "</a><span>" + E(" ".join(re_["hook"].split())) + "</span></li>")
+    related_section = ('<section class="r5"><h2>Related entries</h2><ul>'
+                       + "".join(rel_items) + "</ul></section>") if rel_items else ""
     if sources:
         rows.append(("Referenced", ", ".join(
             '<a href="' + u + '">' + E(s) + "</a>"
@@ -358,6 +372,7 @@ for e in entries:
         # form. Rendered last because it is context, not content.
         + ('<section class="r4"><h2>The name</h2><p>' + s_person + "</p></section>"
            if s_person else "")
+        + related_section
         + '<div class="foot"><dl>'
         + "".join("<dt>" + k + "</dt><dd>" + v + "</dd>" for k, v in rows)
         + "</dl>"

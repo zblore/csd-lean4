@@ -60,6 +60,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Hermitian operator](https://glossary.constraintsurfacedynamics.com/hermitian-operator/) | `` | standard-mathematics |
 | [Hidden variables](https://glossary.constraintsurfacedynamics.com/hidden-variables/) | `no_product_partition_realises_singlet` | proved-in-corpus |
 | [Hilbert space](https://glossary.constraintsurfacedynamics.com/hilbert-space/) | `` | standard-mathematics |
+| [Holevo bound](https://glossary.constraintsurfacedynamics.com/holevo-bound/) | `holevoChi_le_log_card` | proved-in-corpus |
 | [Hong-Ou-Mandel effect](https://glossary.constraintsurfacedynamics.com/hong-ou-mandel/) | `` | standard-mathematics |
 | [How does CSD differ from Bohmian mechanics?](https://glossary.constraintsurfacedynamics.com/csd-vs-bohmian-mechanics/) | `` | question |
 | [If CSD is deterministic, where do probabilities come from?](https://glossary.constraintsurfacedynamics.com/where-do-probabilities-come-from/) | `` | question |
@@ -71,6 +72,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Isolation](https://glossary.constraintsurfacedynamics.com/isolation/) | `` | definition |
 | [Jacobi identity](https://glossary.constraintsurfacedynamics.com/jacobi-identity/) | `` | standard-mathematics |
 | [Kahler form](https://glossary.constraintsurfacedynamics.com/kahler-form/) | `fsForm_isKahler` | proved-in-corpus |
+| [Klein's inequality](https://glossary.constraintsurfacedynamics.com/klein-inequality/) | `klein_inequality` | proved-in-corpus |
 | [KMS condition](https://glossary.constraintsurfacedynamics.com/kms-condition/) | `thermal_kms` | proved-in-corpus |
 | [Kochen-Specker theorem](https://glossary.constraintsurfacedynamics.com/kochen-specker/) | `` | standard-mathematics |
 | [Kronecker product](https://glossary.constraintsurfacedynamics.com/kronecker-product/) | `` | standard-mathematics |
@@ -126,6 +128,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Spontaneous collapse (GRW)](https://glossary.constraintsurfacedynamics.com/spontaneous-collapse/) | `` | definition |
 | [Steane code](https://glossary.constraintsurfacedynamics.com/steane-code/) | `steaneZero_stabilised` | proved-in-corpus |
 | [Stern-Gerlach experiment](https://glossary.constraintsurfacedynamics.com/stern-gerlach/) | `` | standard-mathematics |
+| [Stinespring dilation](https://glossary.constraintsurfacedynamics.com/stinespring-dilation/) | `apply_eq_traceRight_stinespring` | proved-in-corpus |
 | [Stone's theorem](https://glossary.constraintsurfacedynamics.com/stone-theorem/) | `Matrix.StoneC1.stone_continuous` | proved-in-corpus |
 | [swap test](https://glossary.constraintsurfacedynamics.com/swap-test/) | `` | standard-mathematics |
 | [Tsirelson bound](https://glossary.constraintsurfacedynamics.com/tsirelson-bound/) | `qm_chsh_le_tsirelson` | proved-in-corpus |
