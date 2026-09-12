@@ -9,6 +9,7 @@ public import CsdLean4.LF4.KahlerVolumeForced
 public import CsdLean4.LF4.ProjectiveManifold
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerFlow
 
 /-!
 # The sector is the standard object: `KahlerOnticSetup`'s `ℂℙⁿ` instances, wired to the manifold layer
@@ -53,7 +54,15 @@ witness (`trivialKahlerOnticSetup`):
   Liouville measure is the normalised top power of that Kähler form, and its flow preserves that
   volume;
 * ★★ `manyToOneSetup_pi_contMDiff` (Q33, 2026-09-11) — **the sector projection is analytic** on the
-  arena manifold `ℂℙⁿ × T²` (`LF4/ProjectiveManifold.lean`, `ksigma_isManifold`): Paper C's A3.
+  arena manifold `ℂℙⁿ × T²` (`LF4/ProjectiveManifold.lean`, `ksigma_isManifold`): Paper C's A3;
+* **Q29(e) (2026-09-12).** `manyToOneSchrodingerSetup_projectedFlow_eq_hamiltonianFlow`,
+  `manyToOneSchrodingerSetup_flow_eq_hamiltonianFlow` — the general-`N` Schrödinger sector's flow is
+  the Hamiltonian flow of `-2⟨H⟩` on the base (`hamiltonianFlow_schrodingerHamiltonian`), the
+  identity on the fibre; ★★★ `manyToOneSchrodingerSetup_flow_preserves_volume_derived`, ★★
+  `unitaryFlowSetup_schrodingerUnitary_flow_preserves_volume_derived` — **the posited field
+  `flow_preserves_volume` is a theorem on these sectors by Liouville's theorem for the Hamiltonian
+  flow** (Q29, `fsVolumeNormalized_map_schrodingerUnitary_smul`), not by unitary invariance; the
+  field is not consumed in the proof.
 
 ## Honest scope
 
@@ -63,12 +72,14 @@ field `kahler_pointwise : IsFubiniStudyKahler N` lives on the ambient `ℂ^{N}` 
 on `EuclideanSpace ℂ (Fin N)`), the manifold predicate `fsForm_isKahler` on the sector's target
 `ℂℙⁿ` itself (tangent model `ℂⁿ`, `N = n + 1`); they are different spaces, and no implication between
 them is stated. `flow_preserves_volume` remains a field: what this module adds is that on `ℂℙⁿ` the
-measure it preserves is `ω_FS^{∧n}` and the preservation is the unitary invariance of that top power.
+measure it preserves is `ω_FS^{∧n}`, that the preservation is the unitary invariance of that top power
+for an arbitrary unitary family, and that for the Schrödinger family `exp(-itH)` it is also Liouville's
+theorem for the Hamiltonian flow of `-2⟨H⟩` (the `_derived` twins).
 
 ⚠️ **Posit 3 (`specs/POSITS.md`) is untouched.** The flows here are unitary, hence Hamiltonian
-(`schrodingerField_isHamiltonianVectorField`, G13) and volume-preserving by invariance; the constraint
-dynamics' measurement pieces are not globally Hamiltonian, and Liouville for a general Hamiltonian
-flow on a manifold is G5 of `specs/generator-layer-scoping.md` §9.
+(`schrodingerField_isHamiltonianVectorField`, G13) and volume-preserving both by invariance and by the
+manifold-level Liouville theorem (Q29, `HamiltonianFlowVolume.lean`); the constraint dynamics'
+measurement pieces are not globally Hamiltonian, which is what keeps the field a posit.
 
 ⚠️ **`n + 1`, not `N`.** The manifold layer indexes `ℂℙⁿ` by the chart dimension `n`; the sector by the
 ambient dimension `N`. Every statement here is at `N = n + 1`, which is every `N ≥ 1`; `N = 0` has an
@@ -198,6 +209,54 @@ theorem manyToOneSetup_pi_contMDiff (U : ℝ → Matrix.unitaryGroup (Fin (n + 1
       (fun p : KSigma (n + 1) => (manyToOneSetup U p₀).pi p) := by
   show ContMDiff _ _ ω (Prod.fst : KSigma (n + 1) → CPN (n + 1))
   exact contMDiff_ksigma_fst n
+
+/-! ### The Schrödinger sector's flow is the Hamiltonian flow, and the posited field is derived (Q29(e)) -/
+
+/-- The projected flow of the general-`N` Schrödinger sector is the Hamiltonian flow of `-2⟨H⟩`. -/
+theorem manyToOneSchrodingerSetup_projectedFlow_eq_hamiltonianFlow
+    (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (n + 1)) (t : ℝ)
+    (p : CPN (n + 1)) :
+    (manyToOneSchrodingerSetup H hH p₀).projectedFlow t p
+      = (fsForm_isSymplectic n).hamiltonianFlow (contMDiff_schrodingerHamiltonian H) t p :=
+  (hamiltonianFlow_schrodingerHamiltonian hH t p).symm
+
+/-- The flow of the general-`N` Schrödinger sector is the Hamiltonian flow of `-2⟨H⟩` on the base,
+the identity on the fibre. -/
+theorem manyToOneSchrodingerSetup_flow_eq_hamiltonianFlow
+    (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (n + 1)) (t : ℝ)
+    (x : KSigma (n + 1)) :
+    (manyToOneSchrodingerSetup H hH p₀).flow t x
+      = ((fsForm_isSymplectic n).hamiltonianFlow (contMDiff_schrodingerHamiltonian H) t x.1, x.2) := by
+  show (schrodingerUnitary hH t • x.1, x.2) = _
+  rw [hamiltonianFlow_schrodingerHamiltonian hH t x.1]
+
+/-- ★★★ **The posited field, derived.** On the general-`N` Schrödinger sector the field
+`flow_preserves_volume` is a theorem: the flow preserves the Liouville measure because its base is
+the Hamiltonian flow of `-2⟨H⟩` and Liouville's theorem holds on `ℂℙⁿ`
+(`fsVolumeNormalized_map_schrodingerUnitary_smul`, from `fsVolume_map_hamiltonianFlow`), not
+because `exp(-itH)` is unitary. The field itself is not consumed. -/
+theorem manyToOneSchrodingerSetup_flow_preserves_volume_derived
+    (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (n + 1)) (t : ℝ) :
+    MeasurePreserving ((manyToOneSchrodingerSetup H hH p₀).flow t)
+      (manyToOneSchrodingerSetup H hH p₀).liouvilleMeasure
+      (manyToOneSchrodingerSetup H hH p₀).liouvilleMeasure := by
+  rw [manyToOneSchrodingerSetup, manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod]
+  show MeasurePreserving
+    (Prod.map (fun p : CPN (n + 1) => schrodingerUnitary hH t • p) (id : KTorus → KTorus)) _ _
+  have hbase : MeasurePreserving (fun p : CPN (n + 1) => schrodingerUnitary hH t • p)
+      (fsVolumeNormalized n) (fsVolumeNormalized n) :=
+    ⟨(continuous_const_smul _).measurable, fsVolumeNormalized_map_schrodingerUnitary_smul hH t⟩
+  exact hbase.prod (MeasurePreserving.id _)
+
+/-- ★★ The same on the `π = id` sector driven by `exp(-itH)`. -/
+theorem unitaryFlowSetup_schrodingerUnitary_flow_preserves_volume_derived
+    (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (hH : H.IsHermitian) (p₀ : CPN (n + 1)) (t : ℝ) :
+    MeasurePreserving ((unitaryFlowSetup (n + 1) (schrodingerUnitary hH) p₀).flow t)
+      (unitaryFlowSetup (n + 1) (schrodingerUnitary hH) p₀).liouvilleMeasure
+      (unitaryFlowSetup (n + 1) (schrodingerUnitary hH) p₀).liouvilleMeasure := by
+  rw [unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized]
+  show MeasurePreserving (fun p : CPN (n + 1) => schrodingerUnitary hH t • p) _ _
+  exact ⟨(continuous_const_smul _).measurable, fsVolumeNormalized_map_schrodingerUnitary_smul hH t⟩
 
 end LF4
 end CSD

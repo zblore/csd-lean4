@@ -299,6 +299,27 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.manyToOneSetup_pi_contMDiff
 
+-- Q29(e) (2026-09-12, SectorManifold.lean): the general-N Schrodinger sector's flow is the
+-- Hamiltonian flow of -2<H> on the base and the identity on the fibre, and its posited field
+-- flow_preserves_volume is DERIVED from Liouville's theorem for that Hamiltonian flow (Q29),
+-- not from unitary invariance; the field is not consumed in the proof.
+
+/-- info: 'CSD.LF4.manyToOneSchrodingerSetup_projectedFlow_eq_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSchrodingerSetup_projectedFlow_eq_hamiltonianFlow
+
+/-- info: 'CSD.LF4.manyToOneSchrodingerSetup_flow_eq_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSchrodingerSetup_flow_eq_hamiltonianFlow
+
+/-- info: 'CSD.LF4.manyToOneSchrodingerSetup_flow_preserves_volume_derived' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.manyToOneSchrodingerSetup_flow_preserves_volume_derived
+
+/-- info: 'CSD.LF4.unitaryFlowSetup_schrodingerUnitary_flow_preserves_volume_derived' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.unitaryFlowSetup_schrodingerUnitary_flow_preserves_volume_derived
+
 -- Connectivity fix C2 (manifest link L3, off the trivial witness): the W-series
 -- Schrödinger capstone sigmaFlow_schrodinger_form FIRED on the genuine Φ≠id
 -- rotation flow. The rotation R(t) is a one-parameter unitary group (trivial

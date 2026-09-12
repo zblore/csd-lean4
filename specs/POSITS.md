@@ -120,7 +120,10 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   on `ℂℙⁿ`, `fsVolume_map_hamiltonianFlow` — the Hamiltonian flow of *every* smooth energy preserves
   the symplectic volume. What it does not reach is the constraint dynamics itself: its measurement
   pieces are only locally Hamiltonian (the flux correction), so the posit is discharged only for
-  the globally Hamiltonian pieces, and stands as written for the dynamics as a whole.
+  the globally Hamiltonian pieces, and stands as written for the dynamics as a whole. On the
+  Schrödinger sectors this is now explicit: `manyToOneSchrodingerSetup_flow_preserves_volume_derived`
+  (`LF4/SectorManifold.lean`, Q29(e)) proves the field's statement from Liouville's theorem for the
+  Hamiltonian flow of `−2⟨H⟩`, without consuming the field.
 
 ## Posit 4 — the typicality reading (probability *is* volume ratio)
 

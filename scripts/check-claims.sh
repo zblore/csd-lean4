@@ -809,6 +809,16 @@ isSymplectic"
 #     Instances/ProjectiveSpaceHamiltonianFlow.lean) the CP^n instance: the Hamiltonian flow of
 #     EVERY smooth H : CP^n -> R preserves fsVolume n and fsVolumeNormalized n (= fubiniStudyMeasure).
 #     Before this only the unitary flows were known to (fsVolume_map_smul, torus G10). CP^n, EVEN.
+#   hamiltonianFlow_schrodingerHamiltonian / hamiltonianFlow_torusHamiltonian — (2026-09-12,
+#     Q29(e), Instances/ProjectiveSpaceSchrodingerFlow.lean) the IDENTIFICATIONS: the Hamiltonian
+#     flow (IsSymplectic.hamiltonianFlow, the integralFlow of the Hamiltonian vector field) of
+#     -2<H> IS p |-> exp(-itH) . p, and of 2 sum theta_k mu_k IS the torus orbit, by uniqueness of
+#     integral curves. Words inherited from the declared objects; the content is an equation of
+#     flows. CP^n, EVEN.
+#   manyToOneSchrodingerSetup_projectedFlow_eq_hamiltonianFlow /
+#   manyToOneSchrodingerSetup_flow_eq_hamiltonianFlow — (2026-09-12, Q29(e), LF4/SectorManifold.lean)
+#     the sector-side restatements: the general-N Schrodinger sector's projected flow / flow is the
+#     Hamiltonian flow of -2<H> (on the base; identity on the fibre). CP^n x T^2, EVEN.
 #   measurable_hamiltonianShift / hamiltonianShift_eq_zero_of_offCorridor /
 #   hamiltonianShift_eq_strokeCurve_one / isJointLift_hamiltonianShift /
 #   jointLift_hamiltonianShift_measurePreserving — (2026-09-02, RecordLayer/
@@ -888,6 +898,10 @@ contMDiff_omega_hamiltonianVectorField
 chartField_hamiltonianVectorField
 fsVolume_map_hamiltonianFlow
 fsVolumeNormalized_map_hamiltonianFlow
+hamiltonianFlow_schrodingerHamiltonian
+hamiltonianFlow_torusHamiltonian
+manyToOneSchrodingerSetup_projectedFlow_eq_hamiltonianFlow
+manyToOneSchrodingerSetup_flow_eq_hamiltonianFlow
 contMDiff_omega_schrodingerHamiltonian
 contMDiff_omega_torusHamiltonian
 hamiltonianField_base_eq_zero

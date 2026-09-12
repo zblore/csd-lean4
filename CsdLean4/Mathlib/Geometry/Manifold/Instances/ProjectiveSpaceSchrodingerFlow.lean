@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceHamiltonianFlow
 public import CsdLean4.LF4.ManyToOneSchrodingerDerived
 
 /-!
@@ -67,7 +68,15 @@ Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, th
   ★ `contMDiff_omega_torusHamiltonian` (both Hamiltonians are real-analytic on `ℂℙⁿ`), and ★★
   `contMDiff_omega_schrodingerField`, ★★ `contMDiff_omega_torusField` — **both fields are analytic
   vector fields**, `C^ω` sections of the tangent bundle: the Hamiltonian vector fields of `C^ω`
-  energies for the `C^ω` form `fsFormAnalytic` (G12), by G19's `contMDiff_omega_hamiltonianVectorField`.
+  energies for the `C^ω` form `fsFormAnalytic` (G12), by G19's `contMDiff_omega_hamiltonianVectorField`;
+* **Q29(e) (2026-09-12).** ★★ `hamiltonianFlow_schrodingerHamiltonian`, ★★
+  `hamiltonianFlow_torusHamiltonian` — **the Schrödinger flow and the torus flow ARE the Hamiltonian
+  flows** `IsSymplectic.hamiltonianFlow` (`HamiltonianFlowVolume.lean`) of `-2⟨H⟩` and of
+  `2 ∑ θₖ μₖ`: the manifold flow of the Hamiltonian vector field is `p ↦ exp(-itH) • p`, by
+  uniqueness of integral curves (`integralFlow_eq_of_isMIntegralCurve`); hence ★★
+  `fsVolume_map_schrodingerUnitary_smul`, `fsVolumeNormalized_map_schrodingerUnitary_smul` —
+  **Liouville for the Schrödinger flow from the Hamiltonian**, a corollary of the manifold-level
+  theorem `fsVolume_map_hamiltonianFlow` (Q29(d′)), not of unitary invariance.
 
 ## Honest scope
 
@@ -80,8 +89,11 @@ both.
 `LF4/ManyToOneSchrodingerDerived.lean`, under the `L2Operator` matrix norm (the one under which
 `hasDerivAt_exp_smul_const` synthesises); this module opens that scope and adds nothing to it.
 
-⚠️ **Liouville for either flow is the unitary invariance of `fsVolume`** (G10, and W1 on the
-sectors), not a manifold-level flow theorem (G5 of `specs/generator-layer-scoping.md` §9).
+⚠️ **Two routes to Liouville, both in the corpus.** `fsVolume_map_torusUnitary_smul` (G10) and
+`fsVolume_map_smul` (W1 on the sectors) are unitary invariance; `fsVolume_map_schrodingerUnitary_smul`
+here is the manifold-level flow theorem (Q29, formerly G5) applied through the identification of the
+flows. They prove the same equation by independent arguments; the second is the one that generalises
+to a non-unitary Hamiltonian flow.
 
 ⚠️ **Posits untouched.** Posit 1 asserts that the dynamics generates the pointer torus; this
 module says which Hamiltonian a *given* unitary flow has, for every Hermitian `H`, and does not
@@ -816,5 +828,66 @@ theorem contMDiff_omega_torusField (θ : Fin (n + 1) → ℝ) :
   rw [torusField_eq_hamiltonianVectorField]
   exact contMDiff_omega_hamiltonianVectorField fsFormAnalytic _ (fsForm_isSymplectic n).nondegenerate
     (contMDiff_omega_torusHamiltonian θ)
+
+/-! ### The flows are the Hamiltonian flows, and Liouville from the Hamiltonian (Q29(e)) -/
+
+section HamiltonianFlows
+
+open MeasureTheory
+
+/-- ★★ **The Schrödinger flow IS the Hamiltonian flow of `-2⟨H⟩`**: for Hermitian `H`, the manifold
+flow of the Hamiltonian vector field of `schrodingerHamiltonian H` is `p ↦ exp(-itH) • p`, by
+uniqueness of integral curves. -/
+theorem hamiltonianFlow_schrodingerHamiltonian {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) (t : ℝ) (p : ℙ ℂ (Ambient n)) :
+    (fsForm_isSymplectic n).hamiltonianFlow (contMDiff_schrodingerHamiltonian H) t p
+      = CSD.LF4.schrodingerUnitary hH t • p := by
+  have hγ : IsMIntegralCurve (fun t : ℝ => CSD.LF4.schrodingerUnitary hH t • p)
+      ((fsForm_isSymplectic n).hamiltonianVectorField (schrodingerHamiltonian H)) := by
+    rw [← schrodingerField_eq_hamiltonianVectorField hH]
+    exact isMIntegralCurve_schrodingerUnitary_smul hH p
+  have h0 : (fun t : ℝ => CSD.LF4.schrodingerUnitary hH t • p) 0 = p := by
+    simp only [(CSD.LF4.expNegITH_unitary_group hH).2, one_smul]
+  have h := integralFlow_eq_of_isMIntegralCurve
+    ((fsForm_isSymplectic n).contMDiff_hamiltonianVectorField_tangent
+      (contMDiff_schrodingerHamiltonian H)) hγ h0
+  exact (congrFun h t).symm
+
+/-- ★★ **The torus flow IS the Hamiltonian flow of `2 ∑ θₖ μₖ`**: the manifold flow of the
+Hamiltonian vector field of `torusHamiltonian θ` is `p ↦ diag(e^{itθ}) • p`. -/
+theorem hamiltonianFlow_torusHamiltonian (θ : Fin (n + 1) → ℝ) (t : ℝ) (p : ℙ ℂ (Ambient n)) :
+    (fsForm_isSymplectic n).hamiltonianFlow (contMDiff_torusHamiltonian θ) t p
+      = torusUnitary (t • θ) • p := by
+  have hγ : IsMIntegralCurve (fun t : ℝ => torusUnitary (t • θ) • p)
+      ((fsForm_isSymplectic n).hamiltonianVectorField (torusHamiltonian θ)) := by
+    rw [← torusField_eq_hamiltonianVectorField θ]
+    exact isMIntegralCurve_torusUnitary_smul θ p
+  have h0 : (fun t : ℝ => torusUnitary (t • θ) • p) 0 = p := by
+    simp only [zero_smul, torusUnitary_zero, one_smul]
+  have h := integralFlow_eq_of_isMIntegralCurve
+    ((fsForm_isSymplectic n).contMDiff_hamiltonianVectorField_tangent
+      (contMDiff_torusHamiltonian θ)) hγ h0
+  exact (congrFun h t).symm
+
+/-- ★★ **Liouville for the Schrödinger flow, from the Hamiltonian**: `p ↦ exp(-itH) • p` preserves
+the Fubini–Study volume because it is the Hamiltonian flow of `-2⟨H⟩`
+(`fsVolume_map_hamiltonianFlow`), not because it is unitary (`fsVolume_map_smul`). -/
+theorem fsVolume_map_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) (t : ℝ) :
+    Measure.map (fun p : ℙ ℂ (Ambient n) => CSD.LF4.schrodingerUnitary hH t • p) (fsVolume n)
+      = fsVolume n := by
+  rw [show (fun p : ℙ ℂ (Ambient n) => CSD.LF4.schrodingerUnitary hH t • p)
+      = (fsForm_isSymplectic n).hamiltonianFlow (contMDiff_schrodingerHamiltonian H) t from
+    funext fun p => (hamiltonianFlow_schrodingerHamiltonian hH t p).symm]
+  exact fsVolume_map_hamiltonianFlow _ t
+
+/-- The same for the normalised volume, `fubiniStudyMeasure p₀`. -/
+theorem fsVolumeNormalized_map_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) (t : ℝ) :
+    Measure.map (fun p : ℙ ℂ (Ambient n) => CSD.LF4.schrodingerUnitary hH t • p)
+      (fsVolumeNormalized n) = fsVolumeNormalized n := by
+  rw [fsVolumeNormalized, Measure.map_smul, fsVolume_map_schrodingerUnitary_smul]
+
+end HamiltonianFlows
 
 end Projectivization

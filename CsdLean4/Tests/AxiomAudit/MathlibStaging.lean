@@ -4984,6 +4984,27 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.contMDiff_omega_torusField
 
+-- Q29(e) (2026-09-12): the Schrodinger flow exp(-itH) . p and the torus flow ARE the Hamiltonian
+-- flows IsSymplectic.hamiltonianFlow of -2<H> and 2 sum theta_k mu_k (uniqueness of integral
+-- curves, integralFlow_eq_of_isMIntegralCurve), so Liouville for the Schrodinger flow follows from
+-- the manifold-level theorem fsVolume_map_hamiltonianFlow rather than from unitary invariance.
+
+/-- info: 'Projectivization.hamiltonianFlow_schrodingerHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hamiltonianFlow_schrodingerHamiltonian
+
+/-- info: 'Projectivization.hamiltonianFlow_torusHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hamiltonianFlow_torusHamiltonian
+
+/-- info: 'Projectivization.fsVolume_map_schrodingerUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolume_map_schrodingerUnitary_smul
+
+/-- info: 'Projectivization.fsVolumeNormalized_map_schrodingerUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolumeNormalized_map_schrodingerUnitary_smul
+
 -- G14b (2026-09-10): Kahler in the tensor sense. nijenhuis J V W is the Nijenhuis tensor
 -- [JV, JW] - J[JV, W] - J[V, JW] - [V, W] with Mathlib's manifold Lie bracket mlieBracket; on
 -- a Kahler manifold (IsKahler, atlas sense) it vanishes on vector fields differentiable at the

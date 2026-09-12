@@ -567,12 +567,14 @@ posit.
    The torus action is the diagonal case, with `2 ∑ θₖ μₖ` as Hamiltonian (G6): **the moment map
    is a moment map**, unique up to a constant, pinned by the normalisation (G8), with image exactly
    the simplex (G9); its orbits are the integral curves (G16). Every time-`t` map preserves the
-   symplectic volume (G10, W1).
+   symplectic volume (G10, W1), and both flows ARE the manifold Hamiltonian flows of their
+   Hamiltonians, preserving the volume by Liouville's theorem (Q29(d′), (e)).
 6. *The physics layer cites all of it.* The abstract sector structure `KahlerOnticSetup` is
    unchanged, but its `ℂℙⁿ` instances now come with theorems that their posited Liouville measure IS
    the symplectic volume and their posited preservation IS the invariance of that volume (W1,
-   `LF4/SectorManifold.lean`); connectivity link L1 is discharged; the glossary and the landing
-   surface say so.
+   `LF4/SectorManifold.lean`) — and, for the Schrödinger sectors, IS Liouville's theorem for the
+   Hamiltonian flow of `−2⟨H⟩` (Q29(e), the `_derived` twins); connectivity link L1 is discharged;
+   the glossary and the landing surface say so.
 
 **So: is CSD grounded in proven mathematics rather than in naming?** For the *geometry of the
 sector* — yes, now. The words symplectic, Kähler, Fubini–Study volume, Liouville measure (for the
@@ -731,6 +733,21 @@ manifold Cartan; the Mathlib gaps filled along the way are (a) global flows on c
 continuity, (b′) `C¹` dependence on initial data with the variational equation. `KahlerOnticSetup.flow_preserves_volume`
 is now a theorem for **every** smooth Hamiltonian flow on `ℂℙⁿ`, not only the unitary ones; Posit 3 stands as written
 (the constraint dynamics' measurement pieces are only locally Hamiltonian, `PiecewiseHamiltonian.lean`).
+
+**Q29(e) BUILT 2026-09-12 (S–M as priced, took S).** The identification and the sector wiring, 8 pins. ★★
+`Projectivization.hamiltonianFlow_schrodingerHamiltonian` / `hamiltonianFlow_torusHamiltonian`
+(`Instances/ProjectiveSpaceSchrodingerFlow.lean`): the Hamiltonian flow of `−2⟨H⟩` IS `p ↦ exp(−itH) • p` and the
+Hamiltonian flow of `2 ∑ θₖ μₖ` IS the torus orbit — `integralFlow_eq_of_isMIntegralCurve` on G4's/G16's integral-curve
+theorems, with `schrodingerField_eq_hamiltonianVectorField` / `torusField_eq_hamiltonianVectorField` and
+`schrodingerUnitary hH 0 = 1`. Hence ★★ `fsVolume_map_schrodingerUnitary_smul` (and the normalised one): Liouville for the
+Schrödinger flow **from the Hamiltonian**, a corollary of `fsVolume_map_hamiltonianFlow`, proving the same equation as
+`fsVolume_map_smul` by an independent argument. On the sectors (`LF4/SectorManifold.lean`):
+`manyToOneSchrodingerSetup_flow_eq_hamiltonianFlow` (the sector's flow is the Hamiltonian flow on the base, the identity
+on the fibre) and ★★★ `manyToOneSchrodingerSetup_flow_preserves_volume_derived` /
+`unitaryFlowSetup_schrodingerUnitary_flow_preserves_volume_derived`: **the posited field `flow_preserves_volume` is a
+theorem on the Schrödinger sectors by Liouville's theorem for the Hamiltonian flow**, the field not consumed in the proof
+(the `_derived` discipline of `ManyToOneSchrodingerDerived.lean`). W1's "the preservation IS the invariance of that
+volume" now has a second, Hamiltonian, derivation. Posit 3 unchanged, for the same reason as (d′).
 
 ### Q30 (= G17b): chart-independence of the Gram-density Riemannian volume — `S–M`
 
