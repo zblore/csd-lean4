@@ -79,7 +79,9 @@ plan.
 > ruled out Lean-QIT does not apply here**: physlib pins `leanprover/lean4:v4.33.0` and resolves
 > mathlib to `db584cd6d46c92f209a44c0f1c829460d327499d` — **byte-identical to ours** (verified in
 > their `lake-manifest.json`). The SSA import cone is 56 `QuantumInfo` modules and is
-> `sorry`-free (static check; the `#print axioms` gate is still required before relying on it).
+> `sorry`-free (static check). **`#print axioms` run 2026-09-12** at physlib `8b2b237` from `C:\zayn\physlib`:
+> `Sᵥₙ_strong_subadditivity`, `qRelativeEnt_joint_convexity`, `sandwichedRenyiEntropy_DPI_eq_one` are all
+> foundational-triple; the bridge `csd-qit-bridge` reads them in our vocabulary (`lieb-dpi-scoping.md` §6).
 > What they DID add since the baseline, none of it consumable: `FiniteTarget.timeEvolution
 > = NormedSpace.exp(-(it/ℏ)•Ham)` (supersedes the "no generic time-evolution" note below —
 > but a thin wrapper; ours carries the C¹-Stone derivation and Kähler invariance), a

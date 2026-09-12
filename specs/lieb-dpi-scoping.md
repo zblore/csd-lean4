@@ -1,7 +1,7 @@
 # Lieb → DPI — scoping the last rung of the operator-convexity ladder
 
-**Status:** scoping only, written 2026-09-01 on request ("plan this: Lieb → DPI"). No Lean landed
-from this document. Walls checked first, on the Q10 mold, because the Q12 arc cost three
+**Status:** scoping written 2026-09-01 on request ("plan this: Lieb → DPI"); **Gate 0 run and route (b)
+built 2026-09-12** — see the box below §5. No Lean landed *in this corpus* from this document. Walls checked first, on the Q10 mold, because the Q12 arc cost three
 restatements by starting work before checking them.
 
 **What it asks.** Discharge the explicit `hDPI` hypothesis of
@@ -259,6 +259,10 @@ the bridge now.** Do 1 and 2; treat 3 as a genuine decision point that probably 
 expensive half is an order of magnitude over the recorded estimate; and the result already
 exists, sorry-free, on byte-identical pins, in a library this repo had already classified as
 having nothing to offer.
+
+## 6. Executed 2026-09-12
+
+**W9 EXECUTED 2026-09-12 (route (b), P1–P4b, took M).** Gate 0 run from `C:\zayn\physlib` (physlib `8b2b237`, Lean `v4.33.0`, Mathlib `db584cd` — still byte-identical to ours): `#print axioms Sᵥₙ_strong_subadditivity`, `qRelativeEnt_joint_convexity`, `sandwichedRenyiEntropy_DPI_eq_one` all `[propext, Classical.choice, Quot.sound]` (oleans restored from physlib's published artifact cache; the `get_cache` exe needs a C compiler, so the two halves were fetched by hand: `lake exe cache get` then `LAKE_CONFIG=$PWD/lake-cache.toml lake cache get --scope=physlib-master/leanprover-lean4-v4.33.0/physlib`). Gate 1 was answered by the author picking W9 from the QIT-chain queue. The bridge package **`csd-qit-bridge`** (`C:\zayn\csd\qit-bridge`, local git `18220cf`, path dependencies on both libraries, one workspace, no rebuild of either — the shared Mathlib oleans are content-hashed) exports, foundational triple only: `CsdQitBridge.strong_subadditivity` (SSA for **every** density matrix in the corpus's `vonNeumannEntropy`/`rhoAB`/`rhoBC` vocabulary, no support hypothesis — P4a), `CsdQitBridge.relEntropy_traceC_le` (**`hDPI` in exactly the corpus's form**, from physlib's DPI applied to `assoc'` and `traceRight`, with `qRelativeEnt_toEReal_eq` identifying physlib's `ENNReal` `𝐃` with the corpus's real `relEntropy` when `σ` is positive definite — P4b), and `strong_subadditivity_of_posDef` (the corpus's own theorem applied). The P3 unknown (`assoc'` orientation) resolved to `rfl` after `ext`. **The corpus is unchanged**: `hDPI` stays an explicit hypothesis in `StrongSubadditivity.lean`, CL-023 stays qualified-by-design, the Mathlib-only footprint holds. Whether the bridge is published (by-tag requires, its own remote) and whether `NoBroadcasting.lean`'s BCFJS `iff` is built on it are the author's calls; the §3b coupling tax applies from the day it is published.
 
 ## References
 

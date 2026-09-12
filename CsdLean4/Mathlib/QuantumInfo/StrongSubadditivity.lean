@@ -80,8 +80,11 @@ already in Mathlib is the template, but it only handles `p ∈ (0,1)` monotonici
 not the two-variable perspective). The **fork** was "build Lieb vs. axiom-state SSA"; since 2026-09-01
 (`specs/lieb-dpi-scoping.md` W4) it is three-way — build, bridge to physlib's sorry-free
 `Sᵥₙ_strong_subadditivity` on identical pins, or leave `hDPI` honest (the note's recommendation) — and
-its Gate 0 (`#print axioms` on the physlib theorem) is unrun. This file isolates the wall as `hDPI` and
-does not paper it. The QIT-chain plan lists it as W9 (`specs/qit-chain-scoping.md`).
+its Gate 0 (`#print axioms` on the physlib theorem) ran and passed on 2026-09-12: the separate package
+`csd-qit-bridge` (outside this corpus; `specs/lieb-dpi-scoping.md` §6) produces `hDPI` verbatim from
+physlib's data-processing inequality and states SSA for every density matrix in this file's vocabulary.
+This file isolates the wall as `hDPI` and does not paper it: the hypothesis stays explicit here so the
+corpus keeps its Mathlib-only footprint. The QIT-chain plan lists it as W9 (`specs/qit-chain-scoping.md`).
 
 **No `axiom`, no `sorry`. Foundational-triple-only on everything that lands.** See `specs/k1-plan.md`
 §K1-C for the ledger.
