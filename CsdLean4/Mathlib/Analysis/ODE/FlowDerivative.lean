@@ -41,12 +41,15 @@ pulled back to itself by the local flow (the flat Liouville theorem).
   solution, `ω (α t) (Y t ∘ m) = ω (α 0) m` when the flat Lie derivative vanishes
   (`constant_of_has_deriv_right_zero` on the product-rule derivative);
 * ★★ `ContDiffAt.exists_localFlow_form_invariant` — **flat Liouville**: the local flow pulls the
-  form back to itself, `(ω (α x t)).compContinuousLinearMap (D(α · t) x) = ω x`.
+  form back to itself, `(ω (α x t)).compContinuousLinearMap (D(α · t) x) = ω x`, confined to a
+  prescribed neighbourhood.
 
-Everything is for forward time `t ∈ [0, ε]` on a proper space (finite-dimensional in the
-application); negative times follow downstream from the group law of the manifold flow. What
-is not here: the flat Cartan formula identifying `flatLieDeriv` with `d(ι_X ω) + ι_X dω`
-(Q29(c′)), and the manifold assembly (Q29(d′)).
+The local flow solves the equation on `[-ε, ε]` (what the identification with the manifold flow
+by uniqueness on an open interval needs); the derivative and the invariance are for forward time
+`t ∈ [0, ε]` on a proper space (finite-dimensional in the application), and negative times follow
+downstream from the group law of the manifold flow. The flat Cartan formula identifying
+`flatLieDeriv` with `d(ι_X ω) + ι_X dω` is `Geometry/Manifold/HamiltonianLieDerivative.lean`
+(Q29(c′)); the manifold assembly is `Geometry/Manifold/HamiltonianFlowVolume.lean` (Q29(d′)).
 -/
 
 @[expose] public section
@@ -257,13 +260,14 @@ theorem hasFDerivAt_flow_of_variational
 
 
 /-- **A `C¹` field has a local flow that is differentiable in the initial point**, with the
-derivative solving the variational equation along the curve. -/
+derivative solving the variational equation along the curve. The flow satisfies the equation on
+`[-ε, ε]`; the derivative is established for forward times `[0, ε]`. -/
 theorem ContDiffAt.exists_localFlow_hasFDerivAt {f : E → E} {x₀ : E} (hf : ContDiffAt ℝ 1 f x₀)
     {s : Set E} (hs : s ∈ 𝓝 x₀) :
     ∃ U : Set E, IsOpen U ∧ x₀ ∈ U ∧ U ⊆ s ∧ ContDiffOn ℝ 1 f U ∧
     ∃ r > (0 : ℝ), ∃ ε > (0 : ℝ), ∃ α : E → ℝ → E, ∃ Y : E → ℝ → E →L[ℝ] E,
       (∀ x ∈ closedBall x₀ r, α x 0 = x ∧
-        (∀ t ∈ Icc 0 ε, HasDerivWithinAt (α x) (f (α x t)) (Icc 0 ε) t) ∧ ∀ t, α x t ∈ U) ∧
+        (∀ t ∈ Icc (-ε) ε, HasDerivWithinAt (α x) (f (α x t)) (Icc (-ε) ε) t) ∧ ∀ t, α x t ∈ U) ∧
       ∀ x ∈ ball x₀ r, Y x 0 = 1 ∧
         (∀ t ∈ Icc 0 ε, HasDerivWithinAt (Y x) (fderiv ℝ f (α x t) ∘L Y x t) (Icc 0 ε) t) ∧
         ∀ t ∈ Icc 0 ε, HasFDerivAt (α · t) (Y x t) x := by
@@ -290,6 +294,7 @@ theorem ContDiffAt.exists_localFlow_hasFDerivAt {f : E → E} {x₀ : E} (hf : C
   have hε'0 : 0 < ε' := lt_min hε (by positivity)
   have hε'ε : ε' ≤ ε := min_le_left _ _
   have hsub : Icc (0 : ℝ) ε' ⊆ Icc (-ε) ε := Icc_subset_Icc (by linarith) hε'ε
+  have hsub2 : Icc (-ε') ε' ⊆ Icc (-ε) ε := Icc_subset_Icc (by linarith) hε'ε
   have hcontα : ∀ x ∈ closedBall x₀ (r : ℝ), ContinuousOn (α x) (Icc 0 ε) := fun x hx t ht =>
     ((hα x hx).2.1 t ⟨by linarith [ht.1], ht.2⟩).continuousWithinAt.mono
       (Icc_subset_Icc (by linarith) le_rfl)
@@ -329,7 +334,7 @@ theorem ContDiffAt.exists_localFlow_hasFDerivAt {f : E → E} {x₀ : E} (hf : C
   set Y' : E → ℝ → E →L[ℝ] E := fun x =>
     if hx : x ∈ ball x₀ (r : ℝ) then Y x hx else fun _ => 1 with hY'
   refine ⟨U, hUo, hx₀U, hUs, hfU, r, hr, ε', hε'0, α, Y', fun x hx => ?_, fun x hx => ?_⟩
-  · exact ⟨(hα x hx).1, fun t ht => ((hα x hx).2.1 t (hsub ht)).mono hsub,
+  · exact ⟨(hα x hx).1, fun t ht => ((hα x hx).2.1 t (hsub2 ht)).mono hsub2,
       fun t => haU ((hα x hx).2.2 t)⟩
   · have hYx : Y' x = Y x hx := by simp only [Y', dif_pos hx]
     rw [hYx]
@@ -408,22 +413,28 @@ differentiable in the initial point and pulls `Ω` back to itself:
 `(Ω (α x t)).compContinuousLinearMap (D(α · t) x) = Ω x`. -/
 theorem ContDiffAt.exists_localFlow_form_invariant {f : E → E} {x₀ : E}
     (hf : ContDiffAt ℝ 1 f x₀) {Ω : E → E [⋀^Fin 2]→L[ℝ] ℝ} (hΩ : ContDiffAt ℝ 1 Ω x₀)
-    (hL : ∀ᶠ z in 𝓝 x₀, ∀ m, flatLieDeriv f Ω z m = 0) :
+    (hL : ∀ᶠ z in 𝓝 x₀, ∀ m, flatLieDeriv f Ω z m = 0) {s : Set E} (hs : s ∈ 𝓝 x₀) :
     ∃ r > (0 : ℝ), ∃ ε > (0 : ℝ), ∃ α : E → ℝ → E, ∃ Y : E → ℝ → E →L[ℝ] E,
       (∀ x ∈ closedBall x₀ r, α x 0 = x ∧
-        ∀ t ∈ Icc 0 ε, HasDerivWithinAt (α x) (f (α x t)) (Icc 0 ε) t) ∧
+        (∀ t ∈ Icc (-ε) ε, HasDerivWithinAt (α x) (f (α x t)) (Icc (-ε) ε) t) ∧
+        ∀ t, α x t ∈ s) ∧
       ∀ x ∈ ball x₀ r, ∀ t ∈ Icc 0 ε, HasFDerivAt (α · t) (Y x t) x ∧
         (Ω (α x t)).compContinuousLinearMap (Y x t) = Ω x := by
   obtain ⟨V, hVo, hx₀V, hΩV⟩ := hΩ.contDiffOn' le_rfl (by simp)
   simp only [insert_eq_of_mem (mem_univ _), univ_inter] at hΩV
   obtain ⟨W, hW, hLW⟩ := Filter.eventually_iff_exists_mem.mp hL
   obtain ⟨U, hUo, hx₀U, hUs, hfU, r, hr, ε, hε, α, Y, hα, hY⟩ :=
-    hf.exists_localFlow_hasFDerivAt (s := V ∩ W) (inter_mem (hVo.mem_nhds hx₀V) hW)
-  refine ⟨r, hr, ε, hε, α, Y, fun x hx => ⟨(hα x hx).1, (hα x hx).2.1⟩, fun x hx t ht => ?_⟩
+    hf.exists_localFlow_hasFDerivAt (s := V ∩ W ∩ s)
+      (inter_mem (inter_mem (hVo.mem_nhds hx₀V) hW) hs)
+  refine ⟨r, hr, ε, hε, α, Y, fun x hx => ⟨(hα x hx).1, (hα x hx).2.1,
+    fun t => (hUs ((hα x hx).2.2 t)).2⟩, fun x hx t ht => ?_⟩
   refine ⟨(hY x hx).2.2 t ht, ?_⟩
   have hx' : x ∈ closedBall x₀ r := ball_subset_closedBall hx
-  have hinv := form_invariant_of_flatLieDeriv_eq_zero hUo (hΩV.mono fun z hz => (hUs hz).1)
-    (fun z hz m => hLW z (hUs hz).2 m) (hα x hx').1 (hα x hx').2.1 (fun t _ => (hα x hx').2.2 t)
+  have hinv := form_invariant_of_flatLieDeriv_eq_zero hUo (hΩV.mono fun z hz => (hUs hz).1.1)
+    (fun z hz m => hLW z (hUs hz).1.2 m) (hα x hx').1
+    (fun t ht => ((hα x hx').2.1 t (Icc_subset_Icc (by linarith) le_rfl ht)).mono
+      (Icc_subset_Icc (by linarith) le_rfl))
+    (fun t _ => (hα x hx').2.2 t)
     (hY x hx).1 (hY x hx).2.1 t ht
   ext m
   rw [ContinuousAlternatingMap.compContinuousLinearMap_apply]

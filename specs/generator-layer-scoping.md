@@ -127,7 +127,7 @@ section of the endomorphism bundle. The **M** held. One shelf fact: a type ascri
 definitionally equal term is *erased* — `(v : Fin n → ℂ)` for `v : TangentSpace 𝓘 x` leaves `v`
 tangent-typed, so `Complex.I • v` finds no `ℂ`-action; the reducible cast `tangentToModel` (the
 `toFlat` idiom) is what actually changes the elaborated type.
-**The step-(4) ladder is complete except G5, which is queued at XL in §9 with the rest of the residue; G12, G14a, G14b, G15, G16 and G19 were built 2026-09-10; G17 on 2026-09-11.**
+**The step-(4) ladder is complete: G5 was built 2026-09-11/12 as Q29 (a)–(d′) on the chart route (§11); G12, G14a, G14b, G15, G16 and G19 were built 2026-09-10; G17 on 2026-09-11.**
 Every rating for step (4)
 and for `R-016` in [`BACKLOG.md`](BACKLOG.md) was written before `mextDeriv`, `IsSymplectic`,
 `topFormMeasure` and the top-power identity existed; this note re-prices them against what is in the
@@ -185,7 +185,7 @@ consumed in chart form and the general pullback was never built).
 | **G2** ✅ built 2026-09-09 | Existence and uniqueness of `X_H` pointwise: on a finite-dimensional tangent space `ω♭ x : v ↦ ω x (v, ·)` is injective by non-degeneracy, hence bijective, so `X_H x := (ω♭ x)⁻¹ (dH x)` | **M** | High | Medium | G1 | `TangentSpace 𝓘 x = E` by `rfl`; `LinearMap.injective_iff_surjective` on `E` and its dual. Pointwise only |
 | **G3** ✅ built 2026-09-09 | `X_H` is a smooth section of the tangent bundle | **M–L** | Medium–high | Medium (gates G4) | G2 | Inversion of `ω♭` along the bundle: `contDiffAt_ring_inverse` on the units plus the `localRep` chart plumbing that `ExteriorDerivative.lean` already does for forms. This is the `VectorBundle/Hom.lean` pattern again |
 | **G4** ✅ built 2026-09-09 | Integral curves of `X_H` exist and are unique, and `H` is conserved along them (`ι_X ω (X) = 0` by alternation) | **S–M** | High | Medium | G3 | Direct application of Mathlib's `exists_isMIntegralCurveAt_of_contMDiffAt` and `isMIntegralCurve_eq_of_contMDiff`; lifts `conserved_along_translationCurve` from the chart to the manifold |
-| **G5** | Liouville at manifold level: the time-`t` map of `X_H` preserves `topFormMeasure (ω^{∧n})` | **XL** | Low | Medium, and less than it looks | G3, and two absent Mathlib layers | ⛔ Needs global flows (absent) and `L_X ω = 0` by Cartan's formula (absent). It would replace the posit `ConstraintDynamics.flow_preserves` by a theorem — **for Hamiltonian flows only**, and the corpus's measurement pieces are *not* globally Hamiltonian (the flux correction), so it would not touch the dynamics the record layer actually uses. **Queued** — §9, re-priced there (the author's decision, 2026-09-10) |
+| **G5** ✅ built 2026-09-11/12 as Q29 (a)–(d′) | Liouville at manifold level: the time-`t` map of `X_H` preserves `topFormMeasure (ω^{∧n})` — `IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow`, `fsVolume_map_hamiltonianFlow` (§11) | **XL** (took L–XL on the chart route) | Low | Medium, and less than it looks | G3, and two absent Mathlib layers | ⛔ *(original assessment)* Needs global flows (absent) and `L_X ω = 0` by Cartan's formula (absent). It would replace the posit `ConstraintDynamics.flow_preserves` by a theorem — **for Hamiltonian flows only**, and the corpus's measurement pieces are *not* globally Hamiltonian (the flux correction), so it would not touch the dynamics the record layer actually uses. **Queued** — §9, re-priced there (the author's decision, 2026-09-10) |
 | **G6** | The moment map of the torus action on ℂℙⁿ at manifold level: the fundamental vector field `X_A` of `p ↦ exp(tA)·p` (the `t`-derivative of `uTrans`, which `contDiffOn_uTrans` already makes smooth), `μ_A [z] = ⟨z, iA z⟩/‖z‖²`, and ★★★ `IsHamiltonianVectorField fsForm X_A μ_A`; for `A = diag(iθ)` this is `LF4.momentMap` | **L** | Medium | **High** | G1 only (the field is given, G2/G3 are not needed) | Closes the `TERMS.md` moment-map line "NOT established: that it is the moment map of a Hamiltonian torus action on the symplectic *manifold*". It is also exactly the route the 2026-08-02 review recorded for the Hamiltonian-origin row: unitary rotations on a compact Kähler pointer are globally Hamiltonian (`H¹(ℂℙ^K) = 0`). The computation is `fsModelForm_apply` (M7) against the derivative of the action in the chart; half of it exists |
 | **G7** ✅ built 2026-09-09 (as `IsAlmostKahler`) | A manifold-level Kähler predicate `IsKahler ω J g` on ℂℙⁿ: `J = i·` on each tangent space (chart-independent because the transitions are ℂ-analytic, `contDiffOn_uTrans`), `g = ω(·, J·)`, the pointwise triple `IsFubiniStudyKahler` lifted | **M** | High | Low–medium | — | Packages words the corpus already has pointwise; closes the last non-analyticity item of the `TERMS.md` Kähler line. Gates nothing |
 
@@ -374,7 +374,7 @@ recorded have since been filled upstream (`VectorField.mlieBracket`, and uniform
 
 | # | Brick | Cx | P(success) | Value | What it lands, honestly — and the Mathlib gap it fills |
 |---|---|---|---|---|---|
-| **G5** | **Liouville at manifold level**: the time-`t` map of `X_H` preserves `topFormMeasure (ω^{∧n})`. Three milestones. **(a)** the global flow of a `C^1` vector field on a compact manifold — global integral curves exist (`exists_isMIntegralCurve_of_isMIntegralCurveOn` at the pin gives them from a uniform local existence time; compactness supplies the uniform time), are unique (G4), and assemble into a `Flow` (`Mathlib/Dynamics/Flow.lean`); **(b)** the Lie derivative of a manifold form along the flow and Cartan's formula `L_X = d ∘ ι_X + ι_X ∘ d` — the genuine Mathlib gap (no `lieDeriv`, no Cartan at the pin; needs pullback of `DifferentialForm` along a smooth map and `mextDeriv` commuting with it); **(c)** `L_X ω = d(ι_X ω) = d(dH) = 0` (G11's `isLocallyHamiltonian` is exactly `d(ι_X ω) = 0`), so the flow preserves `ω`, hence `ω^{∧n}`, hence `topFormMeasure` (`topFormMeasure_map_eq`). | (a) **M–L**, (b) **L–XL**, (c) **M**; **XL** in all | Low–medium | Medium | Replaces `ConstraintDynamics.flow_preserves` by a theorem for the globally Hamiltonian pieces only; the measurement pieces are locally Hamiltonian (the flux correction), so Posit 3 stands even then. |
+| **G5** ✅ built 2026-09-11/12 (as Q29 (a), (a′), (b′), (c′), (d′) on the chart route, §11) | **Liouville at manifold level**: the time-`t` map of `X_H` preserves `topFormMeasure (ω^{∧n})`. Three milestones. **(a)** the global flow of a `C^1` vector field on a compact manifold — global integral curves exist (`exists_isMIntegralCurve_of_isMIntegralCurveOn` at the pin gives them from a uniform local existence time; compactness supplies the uniform time), are unique (G4), and assemble into a `Flow` (`Mathlib/Dynamics/Flow.lean`); **(b)** the Lie derivative of a manifold form along the flow and Cartan's formula `L_X = d ∘ ι_X + ι_X ∘ d` — the genuine Mathlib gap (no `lieDeriv`, no Cartan at the pin; needs pullback of `DifferentialForm` along a smooth map and `mextDeriv` commuting with it); **(c)** `L_X ω = d(ι_X ω) = d(dH) = 0` (G11's `isLocallyHamiltonian` is exactly `d(ι_X ω) = 0`), so the flow preserves `ω`, hence `ω^{∧n}`, hence `topFormMeasure` (`topFormMeasure_map_eq`). | (a) **M–L**, (b) **L–XL**, (c) **M**; **XL** in all | Low–medium | Medium | Replaces `ConstraintDynamics.flow_preserves` by a theorem for the globally Hamiltonian pieces only; the measurement pieces are locally Hamiltonian (the flux correction), so Posit 3 stands even then. |
 | **G14a** ✅ built 2026-09-10 | The Kähler predicate, atlas sense; `ℂℙⁿ` is Kähler | S–M (took **S**) | — | Medium | See §G14a above. |
 | **G14b** ✅ built 2026-09-10 | **Kähler in the tensor sense**: the Nijenhuis tensor `N_J` of a family `J` via `VectorField.mlieBracket` (at the pin), and `N_J = 0` for `IsKahler` — the easy direction of Newlander–Nirenberg (a holomorphic atlas makes `N_J` vanish, a chart computation: in a chart `J = J₀` is constant, and the bracket of coordinate-constant fields is `0`). The converse (`N_J = 0` ⇒ holomorphic atlas) is the hard PDE theorem and is **not** this row. | **M–L** | Medium | Low | Closes the `TERMS.md` "tensor sense" line; `IsKahler.nijenhuis_eq_zero`. Needs `J` as a section (G15) to state `[JX, JY]`. |
 | **G15** ✅ built 2026-09-10 | **`J` as a smooth section of `End(TM)`**: `fun x => (x, fsJ x)` is `C^∞` into the bundle of continuous linear maps `TangentSpace x →L[ℝ] TangentSpace x` (`Mathlib/Geometry/Manifold/VectorBundle/Hom.lean` at the pin); generically, `IsKahler` implies the section is `C^∞` because `J` is constant in every chart. | **S–M** | High | Low | The `TERMS.md` "smooth section" line; prerequisite of G14b. |
@@ -586,9 +586,9 @@ derive the arena. Three things remain posits, exactly as before:
 * *Posit 2, the sector itself* — that the ontic typicality measure is Fubini–Study. The geometry is
   now proved to *agree* with the symmetry argument that carries the Born derivation; it does not
   replace it, and the sector is still posited and constrained, not derived.
-* *Posit 3, Liouville for the constraint dynamics* — proved for the unitary flows by invariance;
-  the measurement pieces are only locally Hamiltonian, and a manifold-level Liouville theorem for
-  a general Hamiltonian flow is G5 (XL, §9).
+* *Posit 3, Liouville for the constraint dynamics* — proved for the unitary flows by invariance,
+  and (2026-09-12, Q29(d′)) for every smooth Hamiltonian flow on `ℂℙⁿ` by the manifold-level
+  Liouville theorem; the measurement pieces are only locally Hamiltonian, so the posit stands.
 * *Posit 1, the cell law* — that the dynamics generates the torus action. G6/G8 show the map that
   action *has* is the corpus's moment map; they do not show the dynamics produces the action.
 
@@ -607,7 +607,7 @@ Every ingredient below was grep-probed at the Mathlib pin on 2026-09-11; "absent
 found nothing, "present" names the declaration. Prices are honest; the author decides (§9 policy).
 Rows are the `Q`-ids of `BACKLOG.md` ▶ OUTSTANDING with their `G`-ids in brackets.
 
-### Q29 (= G5): Liouville at manifold level — `XL`, but the route has changed
+### Q29 (= G5): Liouville at manifold level — `XL`, but the route has changed — **BUILT 2026-09-11/12, (a)–(d′)**
 
 **What it would prove.** Every time-`t` map of the flow of a Hamiltonian vector field preserves
 the symplectic volume `topFormMeasure (ω^{∧n})`. Today this is proved for the unitary flows on `ℂℙⁿ`
@@ -706,6 +706,31 @@ point of the chart's target, because `ι_X ω_loc = d(H ∘ chart⁻¹)` (the de
 through `inverse_curryLeft_apply` / `apply_flatVec`) so its `extDeriv` is `d∘d = 0`, and `d ω_loc = 0` is closedness
 through `localRep_mextDeriv`. `contDiffAt_localHamiltonianVector` was generalised from the chart image of `x₀` to
 every point of the target (its proof never used the base point). (d′) is now assembly only.
+
+**Q29(d′) BUILT 2026-09-12 (M as priced, took M). Q29 = G5 is CLOSED.** `Geometry/Manifold/HamiltonianFlowVolume.lean`
+and `Instances/ProjectiveSpaceHamiltonianFlow.lean`, 12 pins. ★★★
+`IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow`: on a compact symplectic manifold the Hamiltonian flow
+`IsSymplectic.hamiltonianFlow hβ hH t` (= `integralFlow` of the Hamiltonian vector field) of every `C^∞` energy
+preserves `topFormMeasure μ e (β^{∧k}) c` for every `k`, Haar `μ`, basis and chart cover, at every time; on `ℂℙⁿ`,
+★★★ `Projectivization.fsVolume_map_hamiltonianFlow` and `fsVolumeNormalized_map_hamiltonianFlow`. The assembly, as
+predicted: (i) `topFormMeasure_map_eq`'s `hG` weakened to `DifferentiableAt` (the S edit; `fsVolume_map_smul`
+adjusted), and (b′)'s headline generalised to a two-sided ODE with a prescribed confinement set; (ii) the chart field
+of (a′) is the trivialised section (`chartField_eq_trivializationAt_snd`, `rfl`), hence for the Hamiltonian field
+it is `localHamiltonianVector` on the chart's target, so (c′) gives `hL`; (iii) ★
+`exists_nhds_forall_integralFlow_localRep_eq`: in the chart the manifold flow IS the local flow for `|t| < ε`
+(uniqueness on an open interval, exactly as in (a′)), so its chart expression is differentiable with derivative the
+variational solution (`HasFDerivAt.congr_of_eventuallyEq` on the open ball) and pulls `localRep α` back to itself for
+`t ∈ [0, ε/2]`; (iv) the wedge power is natural under pullback (`localRep_wedgePow`,
+`wedgePow_compContinuousLinearMap`), a finite subcover gives one `ε₀`, and ★ the two-chart lemma
+`forall_chart_of_forall_exists_chart` (the pullback identity in *some* chart around each point implies it for *every*
+pair of charts, by `localRep_transition` across two transitions) produces `hG`/`hinv` in the exact shape
+`topFormMeasure_map_eq` takes, with `integralFlowHomeomorph` (inverse: time `−t`); (v)
+`map_integralFlow_eq_of_forall_Icc`: invariance for `t ∈ [0, ε₀]` gives all `t ≥ 0` by `integralFlow_nsmul` and
+`Measure.map_map`, and `t < 0` by `φ t ∘ φ (−t) = id`. Nothing in the route needed a manifold Lie derivative or
+manifold Cartan; the Mathlib gaps filled along the way are (a) global flows on compact manifolds, (a′) their joint
+continuity, (b′) `C¹` dependence on initial data with the variational equation. `KahlerOnticSetup.flow_preserves_volume`
+is now a theorem for **every** smooth Hamiltonian flow on `ℂℙⁿ`, not only the unitary ones; Posit 3 stands as written
+(the constraint dynamics' measurement pieces are only locally Hamiltonian, `PiecewiseHamiltonian.lean`).
 
 ### Q30 (= G17b): chart-independence of the Gram-density Riemannian volume — `S–M`
 

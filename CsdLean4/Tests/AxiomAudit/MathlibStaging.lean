@@ -3115,6 +3115,64 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField
 
+/-! ### Q29(d'): the Hamiltonian flow preserves the symplectic volume (HamiltonianFlowVolume.lean,
+Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
+
+-- The assembly of Q29(a)-(c'). In a chart the manifold flow is the Picard-Lindelof local flow
+-- (uniqueness of integral curves), whose derivative solves the variational equation; the flat
+-- Liouville theorem with the vanishing Lie derivative of (c') gives the pullback identity for the
+-- 2-form near every point for a short time, the wedge power is natural under pullback, a finite
+-- subcover and the two-chart lemma feed topFormMeasure_map_eq, and the group law extends to all
+-- times. On CP^n: every smooth Hamiltonian flow preserves the Fubini-Study volume.
+
+/-- info: 'chartField_eq_trivializationAt_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms chartField_eq_trivializationAt_snd
+
+/-- info: 'ContinuousAlternatingMap.compContinuousLinearMap_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.compContinuousLinearMap_comp
+
+/-- info: 'DifferentialForm.forall_chart_of_forall_exists_chart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.forall_chart_of_forall_exists_chart
+
+/-- info: 'DifferentialForm.chartField_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.chartField_hamiltonianVectorField
+
+/-- info: 'DifferentialForm.exists_nhds_forall_integralFlow_localRep_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.exists_nhds_forall_integralFlow_localRep_eq
+
+/-- info: 'integralFlowHomeomorph_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms integralFlowHomeomorph_apply
+
+/-- info: 'map_integralFlow_eq_of_forall_Icc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms map_integralFlow_eq_of_forall_Icc
+
+/-- info: 'DifferentialForm.IsSymplectic.contMDiff_hamiltonianVectorField_tangent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.contMDiff_hamiltonianVectorField_tangent
+
+/-- info: 'DifferentialForm.exists_forall_map_integralFlow_topFormMeasure_wedgePow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.exists_forall_map_integralFlow_topFormMeasure_wedgePow_eq
+
+/-- info: 'DifferentialForm.IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow
+
+/-- info: 'Projectivization.fsVolume_map_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolume_map_hamiltonianFlow
+
+/-- info: 'Projectivization.fsVolumeNormalized_map_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsVolumeNormalized_map_hamiltonianFlow
+
 /-! ### The Fubini-Study chart form is chart-invariant (ProjectiveSpaceFubiniStudy.lean, 2026-09-07) -/
 
 -- The mathematical heart of "the Fubini-Study form is a global object on CP^n": under the affine

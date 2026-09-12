@@ -555,6 +555,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.GlobalFlow
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
 public import CsdLean4.Mathlib.Analysis.ODE.FlowDerivative
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianLieDerivative
+public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianFlowVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianVectorField
 public import CsdLean4.Mathlib.Geometry.Manifold.TopFormMeasure
 public import CsdLean4.Mathlib.Geometry.Manifold.RiemannianVolume
@@ -568,6 +569,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceChartCover
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyVolume
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceHamiltonianFlow
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerFlow

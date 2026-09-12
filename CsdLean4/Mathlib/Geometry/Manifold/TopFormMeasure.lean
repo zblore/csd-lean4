@@ -39,9 +39,10 @@ the basis — and those densities glue to a measure on the manifold.
   (not only the cover's) the glued measure is that chart's measure; hence
   ★ `topFormMeasure_congr_cover` — the measure does not depend on the cover;
 * ★ `chartMeasure_preimage_eq` and ★★ `topFormMeasure_map_eq` (milestone **M5**) —
-  **invariance**: a homeomorphism whose chart expressions are smooth and pull the local
+  **invariance**: a homeomorphism whose chart expressions are differentiable and pull the local
   representative at the target chart back to the local representative at the source chart
-  preserves the measure. The proof is chart-independence with the chart transition replaced by
+  preserves the measure (differentiability, not smoothness, is what the change of variables
+  uses; the Hamiltonian flow of `HamiltonianFlowVolume.lean` supplies exactly that). The proof is chart-independence with the chart transition replaced by
   the map's chart expression, summed over the double partition by the cover's pieces and their
   images;
 * ★ `isLocallyFiniteMeasure_topFormMeasure`, ★ `isFiniteMeasure_topFormMeasure` (milestone
@@ -310,14 +311,14 @@ theorem topFormMeasure_congr_cover (c c' : ChartCover E M) :
 
 /-! ### Invariance under a form-preserving homeomorphism -/
 
-/-- ★ **A chart measure under a form-preserving map.** If `g` is injective, smooth in the charts
-at `x₀` and `z`, and its chart expression pulls the local representative at `z` back to the
+/-- ★ **A chart measure under a form-preserving map.** If `g` is injective, differentiable in the
+charts at `x₀` and `z`, and its chart expression pulls the local representative at `z` back to the
 local representative at `x₀`, then the chart measure at `x₀` of `g ⁻¹' A` is the chart measure
 at `z` of `A`. -/
 theorem chartMeasure_preimage_eq (g : M → M) (hg_inj : Function.Injective g)
     (hg_surj : Function.Surjective g) (x₀ z : M)
     (hG : ∀ w ∈ (chartAt E x₀).target, g ((chartAt E x₀).symm w) ∈ (chartAt E z).source →
-      ContDiffAt ℝ ∞ (chartAt E z ∘ g ∘ (chartAt E x₀).symm) w)
+      DifferentiableAt ℝ (chartAt E z ∘ g ∘ (chartAt E x₀).symm) w)
     (hinv : ∀ w ∈ (chartAt E x₀).target, g ((chartAt E x₀).symm w) ∈ (chartAt E z).source →
       (localRep s z ((chartAt E z ∘ g ∘ (chartAt E x₀).symm) w)).compContinuousLinearMap
         (fderiv ℝ (chartAt E z ∘ g ∘ (chartAt E x₀).symm) w) = localRep s x₀ w)
@@ -350,7 +351,7 @@ theorem chartMeasure_preimage_eq (g : M → M) (hg_inj : Function.Injective g)
     rw [← ENNReal.ofReal_mul (abs_nonneg _), ← abs_mul, ← hinv w hw.1 hgw,
       ContinuousAlternatingMap.compContinuousLinearMap_apply_basis]
   · intro w hw
-    exact ((hG w hw.1 (hAz hw.2)).differentiableAt (by simp)).hasFDerivAt.hasFDerivWithinAt
+    exact (hG w hw.1 (hAz hw.2)).hasFDerivAt.hasFDerivWithinAt
   · intro w₁ hw₁ w₂ hw₂ h
     have h1 := (chartAt E z).injOn (hAz hw₁.2) (hAz hw₂.2) h
     have h2 := hg_inj h1
@@ -361,7 +362,7 @@ form in charts. -/
 theorem topFormMeasure_map_eq (c : ChartCover E M) (g : M ≃ₜ M)
     (hG : ∀ x₀ z : M, ∀ w ∈ (chartAt E x₀).target,
       g ((chartAt E x₀).symm w) ∈ (chartAt E z).source →
-      ContDiffAt ℝ ∞ (chartAt E z ∘ g ∘ (chartAt E x₀).symm) w)
+      DifferentiableAt ℝ (chartAt E z ∘ g ∘ (chartAt E x₀).symm) w)
     (hinv : ∀ x₀ z : M, ∀ w ∈ (chartAt E x₀).target,
       g ((chartAt E x₀).symm w) ∈ (chartAt E z).source →
       (localRep s z ((chartAt E z ∘ g ∘ (chartAt E x₀).symm) w)).compContinuousLinearMap

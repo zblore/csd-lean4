@@ -115,10 +115,12 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   are only locally Hamiltonian (the flux correction of `PiecewiseHamiltonian.lean`), so the torus
   instance does not reach it.
 * **What would discharge it.** Constructing the flow from a Hamiltonian and proving preservation,
-  rather than positing it as a field — needs global flows and Cartan's formula on a manifold (G5
-  of `generator-layer-scoping.md`, queued at XL in its §9; Mathlib has uniform-time global integral
-  curves at the pin and no Lie derivative of forms), and even then only for the globally
-  Hamiltonian pieces.
+  rather than positing it as a field. The manifold-level theorem now exists (2026-09-12, Q29 = G5
+  of `generator-layer-scoping.md`): `IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow` and,
+  on `ℂℙⁿ`, `fsVolume_map_hamiltonianFlow` — the Hamiltonian flow of *every* smooth energy preserves
+  the symplectic volume. What it does not reach is the constraint dynamics itself: its measurement
+  pieces are only locally Hamiltonian (the flux correction), so the posit is discharged only for
+  the globally Hamiltonian pieces, and stands as written for the dynamics as a whole.
 
 ## Posit 4 — the typicality reading (probability *is* volume ratio)
 

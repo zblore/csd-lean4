@@ -158,7 +158,8 @@ theorem fsVolume_map_smul (U : Matrix.unitaryGroup (Fin (n + 1)) ℂ) :
     have hne : toEuclideanLinearEquiv U (insertOne (idx x₀) w) (idx z) ≠ 0 :=
       (smul_symm_mem_source_iff U x₀ z w).1 hmem
     exact (((contDiffOn_uTrans U (idx x₀) (idx z)).contDiffAt
-      ((isOpen_uDomain U (idx x₀) (idx z)).mem_nhds hne)).restrict_scalars ℝ).of_le le_top
+      ((isOpen_uDomain U (idx x₀) (idx z)).mem_nhds hne)).restrict_scalars ℝ).differentiableAt
+      (by simp)
   · intro x₀ z w _ hmem
     rw [show (⇑(Homeomorph.smul U) : ℙ ℂ (Ambient n) → ℙ ℂ (Ambient n)) = fun p => U • p from rfl,
       chartAt_smul_comp_symm]

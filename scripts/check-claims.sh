@@ -792,6 +792,23 @@ isSymplectic"
 #     preparation, restated through the concrete kahlerFstSector. Same earned referent as
 #     kahlerFstSector_projectiveLaw above: the word names the arena's base projection, and
 #     the statement is a pushforward identity with no Kähler-structure content.
+#   chartField_hamiltonianVectorField — (2026-09-12, Q29(d'), Mathlib/Geometry/Manifold/
+#     HamiltonianFlowVolume.lean) inherits the word from hamiltonianVectorField: the chart field of
+#     FlowContinuity.lean (the trivialised section) IS localHamiltonianVector on the chart's target.
+#     Same arena and parity as the object.
+#   IsSymplectic (theorem-namespace twin, cont.) — the guard reads dotted names up to the dot; the
+#     Q29(d') theorems IsSymplectic.contMDiff_hamiltonianVectorField_tangent (the C^1 section shape
+#     integralFlow takes) and IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow (★★★
+#     LIOUVILLE: on a compact symplectic manifold the Hamiltonian flow of every C^infinity energy
+#     preserves the topFormMeasure of every wedge power of the form, at every time; proved from
+#     (a)-(c') by uniqueness of integral curves in charts, the flat Liouville theorem, naturality of
+#     the wedge power, a finite subcover and topFormMeasure_map_eq, then the group law) live under
+#     it, as does the def IsSymplectic.hamiltonianFlow (the flow of the Hamiltonian vector field,
+#     declared in the def inventory under IsSymplectic). Generic compact 2n-manifold, EVEN.
+#   fsVolume_map_hamiltonianFlow / fsVolumeNormalized_map_hamiltonianFlow — (2026-09-12, Q29(d'),
+#     Instances/ProjectiveSpaceHamiltonianFlow.lean) the CP^n instance: the Hamiltonian flow of
+#     EVERY smooth H : CP^n -> R preserves fsVolume n and fsVolumeNormalized n (= fubiniStudyMeasure).
+#     Before this only the unitary flows were known to (fsVolume_map_smul, torus G10). CP^n, EVEN.
 #   measurable_hamiltonianShift / hamiltonianShift_eq_zero_of_offCorridor /
 #   hamiltonianShift_eq_strokeCurve_one / isJointLift_hamiltonianShift /
 #   jointLift_hamiltonianShift_measurePreserving — (2026-09-02, RecordLayer/
@@ -868,6 +885,9 @@ torusHamiltonian_eq_of_isMIntegralCurve_torusField
 torusHamiltonian_torusUnitary_smul
 contDiffAt_omega_localHamiltonianVector
 contMDiff_omega_hamiltonianVectorField
+chartField_hamiltonianVectorField
+fsVolume_map_hamiltonianFlow
+fsVolumeNormalized_map_hamiltonianFlow
 contMDiff_omega_schrodingerHamiltonian
 contMDiff_omega_torusHamiltonian
 hamiltonianField_base_eq_zero

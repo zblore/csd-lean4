@@ -251,9 +251,19 @@ alarming and is not.
   Flat Liouville is a theorem (2026-09-12, Q29(b′), `Mathlib/Analysis/ODE/FlowDerivative.lean`):
   the local flow of a `C¹` field is differentiable in the initial point, with the variational
   equation, and pulls back a 2-form with vanishing flat Lie derivative to itself.
-  **NOT established:** that the manifold flow's time-`t` maps preserve the symplectic volume
-  (Q29(c′) the flat Cartan identity and (d′) the chart-by-chart assembly, `BACKLOG.md`
-  ▶ OUTSTANDING), and the arena statement `R-016`.
+  **Also backed (2026-09-12, Q29(c′) and (d′)):** ★★★ **Liouville's theorem** —
+  `DifferentialForm.IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow`
+  (`Mathlib/Geometry/Manifold/HamiltonianFlowVolume.lean`): on a compact symplectic manifold the
+  Hamiltonian flow `IsSymplectic.hamiltonianFlow` of every `C^∞` energy preserves the measure of
+  every power of the symplectic form, at every time. The route: in charts the Lie derivative of the
+  form's local representative along the local Hamiltonian vector vanishes by Cartan's formula
+  (`HamiltonianLieDerivative.lean`, (c′)), the manifold flow is the local flow by uniqueness, the
+  flat Liouville theorem gives the chart pullback identity, and `topFormMeasure_map_eq` with the
+  group law finishes. On `ℂℙⁿ`: `Projectivization.fsVolume_map_hamiltonianFlow` — **every smooth
+  Hamiltonian flow preserves the Fubini–Study volume** (before this only the unitary flows were
+  known to, by group invariance).
+  **NOT established:** the arena statement `R-016′` (the joint-arena propagators of the record
+  layer as Hamiltonian flows on `ℂℙⁿ × T² × …`), and Darboux (`G18`).
   Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,
@@ -269,6 +279,7 @@ alarming and is not.
 * **Established (2026-09-08):** `Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean`) — the **normalised** measure of the top power of the Fubini–Study form IS `fubiniStudyMeasure p₀`, with no premise: the volume is `U(n+1)`-invariant, finite and nonzero (`specs/top-power-scoping.md`, M1–M6; the premise version of the morning survives as `_of_ne_zero`).
 * **Established with its constant (2026-09-08, later the same day):** `Projectivization.fsVolume_eq_smul_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyMass.lean`) — `fsVolume n = (4π)ⁿ • fubiniStudyMeasure p₀`, the mass `(4π)ⁿ` computed (`fsVolume_univ`). So "this measure **is** the Kähler top-power volume" is now a theorem on `ℂℙⁿ` with every factor visible; the textbook `ω^{∧n}/n!` is a renormalisation of it (the chart form carries the potential's `-4`, the wedge its own normalisation), not a further claim.
 * **Established for the torus flow (2026-09-09, G10):** `Projectivization.fsVolume_map_torusUnitary_smul` and `measurePreserving_torusUnitary_smul` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`) — every map `p ↦ diag(e^{iθ}) • p`, hence every time-`t` map of the Hamiltonian flow G6 built (`torusUnitary_add_smul` is the group law), preserves `fsVolume n`. Liouville in the dynamics sense for **one** Hamiltonian flow on `ℂℙⁿ`, obtained from unitary invariance (`fsVolume_map_smul`), not from a manifold-level flow theory (G5, queued at XL in `specs/generator-layer-scoping.md` §9). `ConstraintDynamics.flow_preserves` (Posit 3) is untouched: the constraint dynamics' measurement pieces are not globally Hamiltonian.
+* **Established for every Hamiltonian flow (2026-09-12, Q29(d′)):** ★★★ `Projectivization.fsVolume_map_hamiltonianFlow` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceHamiltonianFlow.lean`) — the Hamiltonian flow of every `C^∞` energy `H : ℂℙⁿ → ℝ` preserves `fsVolume n` (and `fsVolumeNormalized n`), the `ℂℙⁿ` instance of the manifold-level theorem `IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow` (`HamiltonianFlowVolume.lean`: on a compact symplectic manifold the Hamiltonian flow preserves the measure of every power of the form). Liouville in the dynamics sense for **every** smooth Hamiltonian flow on `ℂℙⁿ`, from the manifold-level flow theory (Q29 (a)–(d′), the former G5), not from group invariance. `ConstraintDynamics.flow_preserves` (Posit 3) still stands: the constraint dynamics' measurement pieces are not globally Hamiltonian.
 * **Wired to the sectors (2026-09-10, W1):** on the `ℂℙⁿ` instances of `KahlerOnticSetup` the posited field `flow_preserves_volume` preserves exactly `ω_FS^{∧n}`: `CSD.LF4.unitaryFlowSetup_flow_measurePreserving_fsVolume`, `manyToOneSetup_flow_measurePreserving_fsVolume_prod` (`LF4/SectorManifold.lean`), and the Liouville measure IS the normalised top power (`unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized`).
 * **NOT established:** nothing on the `ℂℙⁿ` side of this entry remains open. The arena-level volume (`ℂℙⁿ × T² × …`) is a product of this with Haar factors and is not restated as a top power; `LF4/KahlerVolumeForced.lean` proves the normalisation core. Marker: `TERM-SCOPE(Liouville)`.
 * ⚠️ **Precedent:** `nullSeamLiouville` was renamed because it named a measure on an
@@ -288,8 +299,11 @@ alarming and is not.
   uniqueness, smoothness and integral curves (`HamiltonianVectorField.lean`, G1–G4), moment maps of
   the torus and `U(n+1)` actions (G6, G13), the Kähler predicate (G7, G14a) — see the Hamiltonian,
   moment map and Kähler entries.
-* **NOT established (queued in `specs/generator-layer-scoping.md` §9):** Darboux (G18) and Liouville
-  for a general Hamiltonian flow (G5). Those keep the marker `TERM-SCOPE(Hamiltonian)`.
+* **Also backed (2026-09-12, Q29 = G5):** Liouville for a general Hamiltonian flow on a compact
+  symplectic manifold (`IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow`; see the
+  Hamiltonian and Liouville entries).
+* **NOT established (queued in `specs/generator-layer-scoping.md` §9):** Darboux (G18). It keeps
+  the marker `TERM-SCOPE(Hamiltonian)`.
 
 ## Fubini–Study
 
