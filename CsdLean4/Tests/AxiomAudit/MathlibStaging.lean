@@ -3033,6 +3033,39 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms continuous_integralFlow
 
+-- Q29(b') (2026-09-12), Analysis/ODE/FlowDerivative.lean: DIFFERENTIABLE dependence of the local
+-- flow on the initial point, with the variational equation (Gronwall for approximate
+-- trajectories + the mean value inequality + uniform continuity of Df on a compact thickening;
+-- the variational solution from Picard-Lindelof on the operator space), and flat Liouville: a C^1
+-- 2-form with vanishing flat Lie derivative is pulled back to itself by the local flow.
+/-- info: 'gronwallBound_zero_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms gronwallBound_zero_le
+
+/-- info: 'exists_linearODE_solution' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_linearODE_solution
+
+/-- info: 'hasFDerivAt_flow_of_variational' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasFDerivAt_flow_of_variational
+
+/-- info: 'ContDiffAt.exists_localFlow_hasFDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContDiffAt.exists_localFlow_hasFDerivAt
+
+/-- info: 'flatLieDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms flatLieDeriv
+
+/-- info: 'form_invariant_of_flatLieDeriv_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms form_invariant_of_flatLieDeriv_eq_zero
+
+/-- info: 'ContDiffAt.exists_localFlow_form_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContDiffAt.exists_localFlow_form_invariant
+
 /-- info: 'DifferentialForm.IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField

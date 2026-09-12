@@ -679,6 +679,24 @@ for continuity in the initial point at every time (`continuous_integralFlow_poin
 Each `integralFlow hv t` is therefore a homeomorphism (inverse `integralFlow hv (−t)`, continuous), which
 is the hypothesis shape `topFormMeasure_map_eq` takes; (b′) is now the only gap before (d′).
 
+**Q29(b′) BUILT 2026-09-12 (L as priced, took L).** `Mathlib/Analysis/ODE/FlowDerivative.lean`, 7 pins, ★★
+`ContDiffAt.exists_localFlow_form_invariant`: near any point, the local flow of a `C¹` field is differentiable in
+the initial point for a uniform short forward time and pulls a `C¹` 2-form with vanishing flat Lie derivative
+back to itself, `(ω (α x t)).compContinuousLinearMap (D(α · t) x) = ω x`. The Mathlib gap named above, smooth
+dependence on initial data, is filled at the `C¹` level, which is all Liouville needs: (i) the variational
+solution `Y' = Df(α x t) ∘ Y`, `Y 0 = 1` exists on a short interval by Picard–Lindelöf on the operator space
+`E →L E` (`exists_linearODE_solution`; the time depends only on a bound for `‖Df‖` on the confinement set, so it is
+uniform over the ball of initial points); (ii) ★★ `hasFDerivAt_flow_of_variational`: `α(x+h) − α(x)` is an
+*approximate* solution of the linearised equation with defect `≤ ε L' ‖h‖` (mean value inequality on a small
+ball, uniform continuity of `Df` on a compact thickening of the confinement set), `Y h` is an exact one, and
+Grönwall (`dist_le_of_approx_trajectories_ODE_of_mem`, `gronwallBound_zero_le`) makes the gap `o(‖h‖)`;
+(iii) `flatLieDeriv X ω z m = Dω(z)(X z)(m) + ∑ᵢ ω(z)(update m i (DX(z)(m i)))`, and along the curve the
+product rule (`HasFDerivWithinAt.continuousAlternatingMap_apply`) gives `d/dt ω(α t)(Y t ∘ m) = (L_X ω)(α t)(Y t ∘ m)
+= 0`, so `constant_of_has_deriv_right_zero` closes it. Forward time only (negative times come from the group law
+downstream); `ProperSpace E` (finite dimensions in the application). One thing found on the way: `topFormMeasure_map_eq`'s
+`hG` asks for `ContDiffAt ℝ ∞` of the chart expression of `g` but its proof uses only differentiability, so (d′)
+needs it weakened to `DifferentiableAt` (an S edit), not `C^∞` dependence of the flow.
+
 ### Q30 (= G17b): chart-independence of the Gram-density Riemannian volume — `S–M`
 
 **What it would prove.** `RiemannianMetric.riemannianVolume` (`RiemannianVolume.lean`) does not

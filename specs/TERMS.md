@@ -248,9 +248,12 @@ alarming and is not.
   (`Mathlib/Geometry/Manifold/IntegralCurve/GlobalFlow.lean`; Mathlib has no flows on manifolds),
   and (2026-09-12, Q29(a′)) it is jointly continuous in `(t, x)` (`continuous_integralFlow`,
   `IntegralCurve/FlowContinuity.lean`), so each time-`t` map is a homeomorphism.
-  **NOT established:** that its time-`t` maps preserve the symplectic volume (Q29(b′)–(d′),
-  `BACKLOG.md` ▶ OUTSTANDING; (b′) needs differentiable dependence of the flow on initial data,
-  absent from Mathlib), and the arena statement `R-016`.
+  Flat Liouville is a theorem (2026-09-12, Q29(b′), `Mathlib/Analysis/ODE/FlowDerivative.lean`):
+  the local flow of a `C¹` field is differentiable in the initial point, with the variational
+  equation, and pulls back a 2-form with vanishing flat Lie derivative to itself.
+  **NOT established:** that the manifold flow's time-`t` maps preserve the symplectic volume
+  (Q29(c′) the flat Cartan identity and (d′) the chart-by-chart assembly, `BACKLOG.md`
+  ▶ OUTSTANDING), and the arena statement `R-016`.
   Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,
