@@ -365,6 +365,7 @@ variable {N : ℕ} [NeZero N] {SigmaSpace G : Type*}
   [MulAction G SigmaSpace] [MulAction G (ℙ ℂ (EuclideanSpace ℂ (Fin N)))]
   [MulAction.IsPretransitive G (ℙ ℂ (EuclideanSpace ℂ (Fin N)))]
 
+omit [NeZero N] in
 /-- **Non-vacuity of the lift hypothesis.** If the flow projects to the projective action of a
 unitary `U` (`π (Φ x) = U • π x`, the `projectable` shape of every `KahlerOnticSetup`) and `rep`
 is a unit section of the projectivisation (`mk (rep p) = p`), then `Φ` lifts `U` at the projector
@@ -397,6 +398,7 @@ theorem isUnitaryLift_of_smul (D : SectorData SigmaSpace (ℙ ℂ (EuclideanSpac
     exact h1
   rw [hconj, hone, one_smul]
 
+omit [NeZero N] in
 /-- ★ **The lift hypothesis is unconditional for the projective action.** With the canonical
 measurable unit section `Projectivization.unitSection` as representative, every ontic flow that
 projects to the action of a unitary lifts it. -/

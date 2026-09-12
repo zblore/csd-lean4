@@ -123,7 +123,7 @@ theorem unitaryFlowSetup_liouville_isForcedKahlerVolume [NeZero N]
 
 /-- The many-to-one Kähler instance's ray-space volume is the FS volume: `π_*(kMuL) = μ_FS`, the
 marginal bridge `Prod.fst_* (μ_FS ⊗ vol) = μ_FS` (`Measure.fst_prod`, the fibre volume normalised). -/
-theorem manyToOneSetup_baseVolume_eq_fubiniStudy [NeZero N]
+theorem manyToOneSetup_baseVolume_eq_fubiniStudy
     (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ) (p₀ : CPN N) :
     Measure.map (manyToOneSetup U p₀).pi (manyToOneSetup U p₀).liouvilleMeasure
       = fubiniStudyMeasure p₀ := by
@@ -146,7 +146,7 @@ many-to-one Kähler instance is `kMuL = μ_FS ⊗ vol_{T²}` — the product of 
 volume on the base (`fubiniStudyMeasure_isForcedKahlerVolume`) and the canonical Haar volume on the
 `T²` fibre. So the whole Kähler `Σ`-volume is assembled from canonically-determined factor volumes,
 not posited. -/
-theorem manyToOneSetup_liouville_eq_product [NeZero N]
+theorem manyToOneSetup_liouville_eq_product
     (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ) (p₀ : CPN N) :
     (manyToOneSetup U p₀).liouvilleMeasure
       = (fubiniStudyMeasure p₀).prod (volume : Measure KTorus) :=

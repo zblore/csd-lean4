@@ -144,6 +144,7 @@ lemma cpBasisRay_ne (j k : Fin N) (hjk : j ≠ k) : cpBasisRay j ≠ cpBasisRay 
 
 /-! ## (B) — the eigenstate ray is a fixed point of `obsFlow` -/
 
+omit [NeZero N] in
 /-- **The diagonal-phase flow fixes every computational-basis ray.**
 `obsFlow λ t [eⱼ] = [eⱼ]`: the diagonal `obsUnitary λ t` scales `eⱼ` by the unit
 phase `obsPhase λ t j`, which is the same projective ray. (This is exactly why the
@@ -161,6 +162,7 @@ theorem obsFlow_fixes_eigenstate (lam : Fin N → ℝ) (t : ℝ) (j : Fin N) :
   · rw [h]
   · ring
 
+omit [NeZero N] in
 /-- **The Dirac measure at an eigenstate ray is `obsFlow`-invariant.**
 Immediate from `Measure.map_dirac` and the fixed-point `obsFlow_fixes_eigenstate`. -/
 theorem dirac_eigenstate_obsFlow_invariant (lam : Fin N → ℝ) (t : ℝ) (j : Fin N) :

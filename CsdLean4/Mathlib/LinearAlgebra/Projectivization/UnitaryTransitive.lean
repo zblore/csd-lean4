@@ -206,7 +206,7 @@ lemma exists_unitary_mapping_nonzero [NeZero N]
 `mk` of the matrix action on `v`. Both sides reduce to the same
 `Quotient.mk''` term by definitional unfolding of `MulAction.compHom`,
 `mapEquiv`, and `Projectivization.map`. -/
-lemma smul_mk_eq_mk [NeZero N]
+lemma smul_mk_eq_mk
     (U : Matrix.unitaryGroup (Fin N) ℂ)
     (v : EuclideanSpace ℂ (Fin N)) (hv : v ≠ 0) :
     U • Projectivization.mk ℂ v hv
