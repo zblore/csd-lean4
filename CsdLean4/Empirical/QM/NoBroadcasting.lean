@@ -16,13 +16,14 @@ public import CsdLean4.LF2.ReducedDensity
 
 No-broadcasting (Barnum-Caves-Fuchs-Jozsa-Schumacher 1996) generalises no-cloning
 to mixed states: a set of states can be *broadcast* (each marginal of a joint
-output equals the corresponding input) iff the states mutually commute. The full
-iff is relative-entropy-monotonicity content and is **out of scope** here: BCFJS run
-the argument through `D(ρ₁‖ρ₂) ≥ 2D(ρ₁‖ρ₂)` against channel monotonicity, so the gate is
-the `hDPI` hypothesis of `QuantumInfo.strong_subadditivity_of_relEntropy_monotone`
-(`specs/operator-convexity-plan.md`). The corpus does carry `relEntropy` with Klein's
-inequality (`Mathlib/QuantumInfo/Subadditivity.lean`) and the Kraus `Channel` layer
-(`Mathlib/QuantumInfo/Channel.lean`); what it does not carry is DPI, nor fidelity.
+output equals the corresponding input) iff the states mutually commute. The channel-level
+statement lives in `Mathlib/QuantumInfo/Broadcasting.lean` (2026-09-12, `BACKLOG.md` row BC):
+`Channel.Broadcasts`, support confinement, the commuting half
+(`exists_channel_broadcasts_of_commute`) and the pure-state hard half
+(`Broadcasts.star_dotProduct_eq_zero_or_norm_eq_one`) are theorems there; the mixed hard half
+is priced there by an elementary route through support confinement. (Until that date this
+header called the `iff` relative-entropy content gated on `hDPI`; it is not — BCFJS's fidelity
+argument and Lindblad's DPI argument are two proofs, not the only two.)
 
 What the partial-trace infrastructure
 (`CsdLean4/Mathlib/LinearAlgebra/Matrix/PartialTrace.lean`) *does* deliver is the

@@ -105,6 +105,30 @@ theorem traceRight_add (A B : Matrix (m × n) (m × n) R) :
     traceRight (A + B) = traceRight A + traceRight B := by
   ext i j; simp [traceRight, Finset.sum_add_distrib]
 
+omit [Fintype n] in
+@[simp]
+theorem traceLeft_zero : traceLeft (0 : Matrix (m × n) (m × n) R) = 0 := by
+  ext i j; simp [traceLeft]
+
+omit [Fintype n] in
+theorem traceLeft_add (A B : Matrix (m × n) (m × n) R) :
+    traceLeft (A + B) = traceLeft A + traceLeft B := by
+  ext i j; simp [traceLeft, Finset.sum_add_distrib]
+
+omit [Fintype m] in
+theorem traceRight_sum {ι : Type*} (s : Finset ι) (f : ι → Matrix (m × n) (m × n) R) :
+    traceRight (∑ i ∈ s, f i) = ∑ i ∈ s, traceRight (f i) := by
+  ext i j
+  simp only [traceRight_apply, Matrix.sum_apply]
+  exact Finset.sum_comm
+
+omit [Fintype n] in
+theorem traceLeft_sum {ι : Type*} (s : Finset ι) (f : ι → Matrix (m × n) (m × n) R) :
+    traceLeft (∑ i ∈ s, f i) = ∑ i ∈ s, traceLeft (f i) := by
+  ext i j
+  simp only [traceLeft_apply, Matrix.sum_apply]
+  exact Finset.sum_comm
+
 end AddCommMonoid
 
 section Smul
@@ -114,7 +138,27 @@ theorem traceRight_smul (c : S) (A : Matrix (m × n) (m × n) R) :
     traceRight (c • A) = c • traceRight A := by
   ext i j; simp [traceRight, Finset.smul_sum]
 
+omit [Fintype n] in
+theorem traceLeft_smul (c : S) (A : Matrix (m × n) (m × n) R) :
+    traceLeft (c • A) = c • traceLeft A := by
+  ext i j; simp [traceLeft, Finset.smul_sum]
+
 end Smul
+
+section AddCommGroup
+variable [AddCommGroup R]
+
+omit [Fintype m] in
+theorem traceRight_sub (A B : Matrix (m × n) (m × n) R) :
+    traceRight (A - B) = traceRight A - traceRight B := by
+  ext i j; simp [traceRight, Finset.sum_sub_distrib]
+
+omit [Fintype n] in
+theorem traceLeft_sub (A B : Matrix (m × n) (m × n) R) :
+    traceLeft (A - B) = traceLeft A - traceLeft B := by
+  ext i j; simp [traceLeft, Finset.sum_sub_distrib]
+
+end AddCommGroup
 
 section CommSemiring
 variable [CommSemiring R]

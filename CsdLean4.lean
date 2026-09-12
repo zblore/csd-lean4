@@ -31,6 +31,7 @@ public import CsdLean4.Mathlib.Probability.CGLMP
 public import CsdLean4.Mathlib.Probability.CompetingExponentials
 public import CsdLean4.Mathlib.Probability.IidClockRace
 public import CsdLean4.Mathlib.QuantumInfo.Channel
+public import CsdLean4.Mathlib.QuantumInfo.Broadcasting
 public import CsdLean4.Mathlib.QuantumInfo.Stinespring
 public import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
 public import CsdLean4.Mathlib.QuantumInfo.ChannelComp

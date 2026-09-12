@@ -288,6 +288,88 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Channel.adjoint_trace_mul
 
+/-! ### Broadcasting: BCFJS BC1-BC2 (Mathlib/QuantumInfo/Broadcasting.lean, 2026-09-12) -/
+
+-- Channel.Broadcasts Phi rho: both marginals of Phi rho are rho. Support confinement
+-- (P (x) P) K_i rho = K_i rho for a projector P with P rho = rho; the classical copier in an
+-- orthonormal basis broadcasts everything diagonal in it; commuting Hermitian matrices have a
+-- joint eigenbasis (Mathlib's joint eigenspaces restricted to the finite eigenvalue pairs), so
+-- they can be broadcast (the easy half of BCFJS); two broadcast pure states are orthogonal or
+-- parallel (the rank-one case of the hard half: no-cloning at channel level). The partial-trace
+-- module laws over I (x) X are the traceLeft twins of the traceRight ones above.
+
+/-- info: 'Matrix.traceLeft_one_kronecker_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.traceLeft_one_kronecker_mul
+
+/-- info: 'Matrix.traceLeft_mul_one_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.traceLeft_mul_one_kronecker
+
+/-- info: 'Matrix.traceRight_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.traceRight_sum
+
+/-- info: 'Matrix.traceLeft_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.traceLeft_sub
+
+/-- info: 'QuantumInfo.Channel.Broadcasts.sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.Broadcasts.sub
+
+/-- info: 'Matrix.PosSemidef.mul_mul_conjTranspose_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.PosSemidef.mul_mul_conjTranspose_eq_zero_iff
+
+/-- info: 'Matrix.PosSemidef.eq_zero_of_sum_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.PosSemidef.eq_zero_of_sum_eq_zero
+
+/-- info: 'QuantumInfo.Channel.Broadcasts.kronecker_one_mul_kraus_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.Broadcasts.kronecker_one_mul_kraus_mul
+
+/-- info: 'QuantumInfo.Channel.Broadcasts.one_kronecker_mul_kraus_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.Broadcasts.one_kronecker_mul_kraus_mul
+
+/-- info: 'QuantumInfo.Channel.Broadcasts.kronecker_mul_kraus_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.Broadcasts.kronecker_mul_kraus_mul
+
+/-- info: 'QuantumInfo.sum_onbProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_onbProj
+
+/-- info: 'QuantumInfo.copierChannel_broadcasts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.copierChannel_broadcasts
+
+/-- info: 'QuantumInfo.exists_orthonormalBasis_mulVec_eq_smul_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_orthonormalBasis_mulVec_eq_smul_of_commute
+
+/-- info: 'QuantumInfo.exists_channel_broadcasts_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_channel_broadcasts_of_commute
+
+/-- info: 'QuantumInfo.Channel.Broadcasts.kraus_mulVec_eq_smul_kronVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.Broadcasts.kraus_mulVec_eq_smul_kronVec
+
+/-- info: 'QuantumInfo.Channel.star_dotProduct_eq_sum_kraus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.star_dotProduct_eq_sum_kraus
+
+/-- info: 'QuantumInfo.norm_star_dotProduct_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.norm_star_dotProduct_sq_le
+
+/-- info: 'QuantumInfo.Channel.Broadcasts.star_dotProduct_eq_zero_or_norm_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.Broadcasts.star_dotProduct_eq_zero_or_norm_eq_one
+
 /-- info: 'QuantumInfo.channel_traceDist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.channel_traceDist_le
