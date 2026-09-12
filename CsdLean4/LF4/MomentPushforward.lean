@@ -43,7 +43,7 @@ no current Mathlib support (no sphere change-of-variables / Dirichlet law); it i
 **not** a one-line Archimedes invocation given how `fubiniStudyMeasure` is built.
 See `specs/carve-out-plan.md` Tranche M slice 2.
 
-**Category:** 1-Mathlib adjacent; kept in `CSD.LF4` for the carve-out programme.
+**Category:** 3-Local (1-Mathlib adjacent; kept in `CSD.LF4` for the carve-out programme).
 -/
 
 @[expose] public section

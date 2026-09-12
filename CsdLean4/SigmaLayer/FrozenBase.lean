@@ -10,7 +10,7 @@ public import CsdLean4.SigmaLayer.ChartIntegralCurve
 /-!
 # SigmaLayer/FrozenBase: a frozen base forbids an outcome-dependent generator
 
-**Category:** dynamical measurement — `specs/frozen-base-obstruction-scoping.md` brick 1.
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/frozen-base-obstruction-scoping.md` brick 1.
 
 ## The statement
 

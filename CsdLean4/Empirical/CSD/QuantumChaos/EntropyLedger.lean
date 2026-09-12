@@ -14,7 +14,7 @@ public import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
 # The entropy ledger: carrier erosion prices coarse entropy production
 (§Q Q4)
 
-**Category:** 6-Empirical-CSD (the CSD reading of stroboscopic dynamics;
+**Category:** 3-Local (the CSD reading of stroboscopic dynamics;
 `specs/BACKLOG.md` §Q Q4, the H7 follow-up).
 
 Fine-grained entropy is constant — measure preservation is the floor

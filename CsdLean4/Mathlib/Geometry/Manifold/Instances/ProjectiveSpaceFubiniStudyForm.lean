@@ -16,7 +16,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.WedgeForm
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler";
 `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`).
+**Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`).
 
 `DifferentialForm.lean` made "a smooth 2-form on `ℂℙⁿ`" a type and exhibited the zero form.
 This module exhibits the one that matters: the Fubini–Study form, assembled from the chart

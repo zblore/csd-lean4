@@ -12,7 +12,7 @@ public import Mathlib.Analysis.CStarAlgebra.Matrix
 /-!
 # CV-11: the non-diagonal light cone — exp-closure of the local algebra
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 CV-8's light cone covered diagonal (density) couplings. This module removes
 that restriction: the local algebra is **topologically closed**, so the

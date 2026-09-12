@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.NullSeamWitness
 /-!
 # SigmaLayer/NullSeamLift: the third horn on an even-dimensional arena
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` **B2**.
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **B2**.
 
 `NullSeamWitness.lean` builds the third measurement horn on `S¹ × ℂℙ²`. That arena has
 real dimension `1 + 4 = 5` — **odd** — so it admits no symplectic structure, which is why

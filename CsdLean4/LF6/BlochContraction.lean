@@ -11,7 +11,7 @@ public import CsdLean4.LF6.AmplitudeDamping
 /-!
 # LF6-3/LF6-4: Bloch-volume contraction — the open-system drift, measured
 
-**Category:** LF6 (open-system / de-isolation dynamics).
+**Category:** 3-Local (open-system / de-isolation dynamics).
 
 The geometric signature that separates open from closed dynamics, on the two
 proved qubit dissipators. Closed (unitary) dynamics preserves state-space

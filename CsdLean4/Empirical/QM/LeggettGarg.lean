@@ -11,6 +11,8 @@ public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 /-!
 # Empirical/QM/LeggettGarg: the Leggett–Garg inequality and its quantum violation
 
+**Category:** 3-Local (QM-validity twin, the Leggett–Garg inequality).
+
 The **Leggett–Garg inequality** (LGI) is the temporal analogue of CHSH: a test of
 *macrorealism* using a single dichotomic observable `Q(t) ∈ {±1}` measured at three times.
 Any macrorealist model (definite values + non-invasive measurability) obeys the `K₃` bound

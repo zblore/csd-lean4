@@ -10,7 +10,7 @@ public import CsdLean4.Empirical.CSD.QuantumChaos.CouplingWitness
 /-!
 # The half-life bound is attained (§H continuation: attainment)
 
-**Category:** 6-Empirical-CSD (the CSD reading of stroboscopic dynamics).
+**Category:** 3-Local (the CSD reading of stroboscopic dynamics).
 
 `RecordDegradation.lean` priced coupled driving by
 `μ (intact n)ᶜ ≤ n • ε` and `CouplingWitness.lean` showed the bound bites

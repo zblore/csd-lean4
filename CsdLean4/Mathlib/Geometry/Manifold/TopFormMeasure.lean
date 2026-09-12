@@ -12,7 +12,7 @@ public import Mathlib.MeasureTheory.Function.Jacobian
 /-!
 # The measure of a top-degree form on a manifold
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where
+**Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where
 no measure or integration on manifolds exists at the pin — `Riemannian/Basic.lean` imports measure
 theory for path lengths only).
 

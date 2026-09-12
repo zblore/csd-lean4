@@ -12,7 +12,7 @@ public import Mathlib.Tactic.Module
 /-!
 # SigmaLayer/PointerRotation: the fixed-outcome pointer rotation (brick 1)
 
-**Category:** dynamical measurement — the smooth-Hamiltonian witness route
+**Category:** 7-SigmaLayer (dynamical measurement) — the smooth-Hamiltonian witness route
 (`specs/pointer-witness-plan.md` brick 1).
 
 The generator for outcome `j` is the Hermitian plane-swap

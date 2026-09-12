@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 /-!
 # LF6-A.3: a manifestly LOCAL product de-isolation flow realising the singlet
 
-**Category:** 6-Local (the entangled de-isolation tier; the D1 entangled frontier).
+**Category:** 3-Local (the entangled de-isolation tier; the D1 entangled frontier).
 
 This is **LF6-A.3** of `specs/lf6-plan.md`. It completes the LF6-A entangled-tier
 stage by exhibiting a **manifestly local product de-isolation**

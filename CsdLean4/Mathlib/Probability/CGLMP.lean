@@ -11,7 +11,7 @@ public import Mathlib.Data.ZMod.Basic
 /-!
 # The CGLMP qudit Bell inequality and its local-hidden-variable bound
 
-**Category:** Cat-1 (CSD-free general qudit Bell theory; a Mathlib-upstream-staging
+**Category:** 1-Mathlib (CSD-free general qudit Bell theory; a Mathlib-upstream-staging
 candidate). Natural namespace `ProbabilityTheory.CGLMP`, no CSD wrapper.
 
 This file formalises the Collins-Gisin-Linden-Massar-Popescu (CGLMP 2002) Bell

@@ -11,7 +11,7 @@ public import CsdLean4.Incubator.QuantumChaos.KickedIsingPilot
 /-!
 # The quantum-chaos pilot capstone (H3)
 
-**Category:** 6-Empirical-CSD (the CSD reading of stroboscopic dynamics).
+**Category:** 3-Local (the CSD reading of stroboscopic dynamics).
 
 The §H3 pilot statement, as one citable closure: *a repeated
 finite-dimensional unitary evolution preserves global information, may change

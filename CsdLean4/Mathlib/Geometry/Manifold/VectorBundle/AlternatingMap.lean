@@ -12,7 +12,7 @@ public import Mathlib.Topology.VectorBundle.ContinuousAlternatingMap
 /-!
 # The bundle of continuous alternating maps is a `C^n` vector bundle
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target
+**Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Geometry.Manifold.VectorBundle`, beside `Hom.lean`).
 
 Step (2a) of the manifold exterior-calculus plan, third and fourth layers

@@ -11,7 +11,7 @@ public import CsdLean4.SigmaLayer.MixedEnsemble
 /-!
 # LF2: Mixed-state Born rule and spectral ensemble on the indexed density type
 
-**Category:** 2-Local (the operational density-operator layer).
+**Category:** 3-Local (the operational density-operator layer).
 
 The mixed-state ensemble content (`SigmaLayer/MixedEnsemble.lean`) was proved for
 `DensityOperator N` (indexed by `Fin N`). This module ports it to the **composite

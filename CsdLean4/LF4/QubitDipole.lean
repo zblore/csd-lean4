@@ -12,7 +12,7 @@ public import CsdLean4.LF2.BornWrapper
 /-!
 # LF4/QubitDipole: the dipole correlation for the context-fixed qubit (A7)
 
-**Category:** 2-LF4 (Kähler / moment-map layer — qubit context-fixed measurement).
+**Category:** 3-Local (Kähler / moment-map layer — qubit context-fixed measurement).
 
 The **reflection `R_n = 2|n⟩⟨n| − I`** as a genuine unitary matrix (Hermitian involution), and the
 resulting **dipole correlation**

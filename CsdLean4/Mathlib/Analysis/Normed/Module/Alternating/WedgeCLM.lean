@@ -11,7 +11,7 @@ public import Mathlib.Analysis.Calculus.ContDiff.Bounds
 /-!
 # The wedge as a bounded bilinear map; reindexing as a continuous linear map
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target
+**Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Analysis.Normed.Module.Alternating`).
 
 Milestone **M2(a)–(b)** of `specs/top-power-scoping.md`, and the norm bound that

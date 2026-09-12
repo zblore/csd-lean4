@@ -10,7 +10,7 @@ public import CsdLean4.Empirical.CSD.Crypto.BB84Sequential
 /-!
 # Empirical/CSD/Crypto: B92 — false conclusive clicks from a dynamical intercept
 
-**Category:** CSD bridge (dynamical). An instantiation of the `BB84Sequential` engine on the
+**Category:** 3-Local (CSD bridge; dynamical). An instantiation of the `BB84Sequential` engine on the
 B92 unambiguous-discrimination round — recorded as such: the dynamical theorem is the same
 calibrated-swap fact, re-read on B92's conclusive-click semantics.
 

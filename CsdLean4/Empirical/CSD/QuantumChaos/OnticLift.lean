@@ -11,7 +11,7 @@ public import CsdLean4.LF4.ManyToOnePillars
 /-!
 # The ontic lift of a Floquet evolution (quantum-chaos workstream, H3)
 
-**Category:** 6-Empirical-CSD (the CSD reading of stroboscopic dynamics).
+**Category:** 3-Local (the CSD reading of stroboscopic dynamics).
 
 The "admits an ontic lift under stated hypotheses" clause of the §H3 pilot:
 every unitary-generated Floquet step (`FloquetEvolution.ofUnitary U` — one of

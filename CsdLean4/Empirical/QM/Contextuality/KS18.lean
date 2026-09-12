@@ -16,7 +16,7 @@ public import Mathlib.Tactic.FinCases
 /-!
 # Empirical: Kochen-Specker theorem (Cabello 1996 18-vector configuration)
 
-**Category:** 2-Framework candidate for the abstract combinatorial
+**Category:** 3-Local (a 2-Framework candidate) for the abstract combinatorial
 impossibility (`no_value_assignment_18_9`); 3-Local for the concrete
 Cabello-Estebaranz-García-Alcaine 1996 18-basis instance
 (`ks_no_value_assignment_cabello18`). The abstract impossibility is

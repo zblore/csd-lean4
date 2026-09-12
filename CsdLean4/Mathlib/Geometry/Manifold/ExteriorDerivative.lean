@@ -15,7 +15,7 @@ public import Mathlib.Analysis.Normed.Module.Alternating.Uncurry.Fin
 **TERM-SCOPE(Kahler)** — this module names the "Kahler / symplectic manifold API" row of
 `MATHLIB-GAPS.md`; `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`, the
+**Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`, the
 `## TODO` of `Mathlib/Analysis/Calculus/DifferentialForm/Basic.lean`).
 
 **Step (2b) of the manifold exterior-calculus plan** (`specs/exterior-derivative-scoping.md`,

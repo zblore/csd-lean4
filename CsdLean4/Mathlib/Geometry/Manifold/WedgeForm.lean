@@ -11,7 +11,7 @@ public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.WedgeCLM
 /-!
 # The wedge of differential forms on a manifold
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`).
+**Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`).
 
 Milestone **M2(c)–(d)** of `specs/top-power-scoping.md`. With the flat wedge bounded and
 bilinear (`Alternating/WedgeCLM.lean`) and the local-representative machinery of

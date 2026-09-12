@@ -11,7 +11,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 /-!
 # SigmaLayer/NoRecordGeometry: the no-record set is inside the closure of its interior
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` **B5-geom**, the single remaining
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **B5-geom**, the single remaining
 hypothesis of B5, the trilemma's third leg.
 
 ## The gap this closes

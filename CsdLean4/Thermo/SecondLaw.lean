@@ -11,7 +11,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Entropy
 /-!
 # TH2: the second law as coarse-grained entropy monotonicity
 
-**Category:** conceptually 1-Mathlib (CSD-free general quantum statistical
+**Category:** 3-Local (conceptually 1-Mathlib; CSD-free general quantum statistical
 mechanics) with a CSD reading; kept in the `CSD.Thermo` tree alongside TH1
 because its physical content is the CSD H-theorem.
 

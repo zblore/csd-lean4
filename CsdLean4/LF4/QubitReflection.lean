@@ -10,7 +10,7 @@ public import Mathlib.Analysis.InnerProductSpace.PiL2
 /-!
 # LF4/QubitReflection: the reflection identity on ℂ² (context-fixed qubit, A7)
 
-**Category:** 2-LF4 (Kähler / moment-map layer — qubit context-fixed measurement).
+**Category:** 3-Local (Kähler / moment-map layer — qubit context-fixed measurement).
 
 The **reflection identity** (piece 1 of the qubit context-fixed proof, `specs/record-layer-plan.md` §2):
 for unit vectors `n, ψ, φ` in `ℂ²`, with the reflection `R_n φ = 2⟨n,φ⟩·n − φ` (`= 2|n⟩⟨n| − I`),

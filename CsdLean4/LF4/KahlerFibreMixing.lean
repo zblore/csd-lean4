@@ -12,7 +12,7 @@ public import Mathlib.Dynamics.Ergodic.AddCircle
 /-!
 # The fibre torus does admit a mixing map — the wall is about the map, not about Σ
 
-**Category:** 3-CSD. `Q12-d` brick (i).
+**Category:** 3-Local (programme-specific content). `Q12-d` brick (i).
 
 ⚠️ **The race route this brick served was RETIRED 2026-08-24, and the brick outlived it.** `Q12-d`
 — derive the race from a deterministic flow — was withdrawn as **mis-specified**, not as blocked,

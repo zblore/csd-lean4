@@ -12,7 +12,7 @@ public import CsdLean4.RecordLayer.DegenerateLuders
 /-!
 # Empirical/CSD: the quantum eraser — the conditioned fringe as an ontic typicality volume
 
-**Category:** CSD bridge (the ontic reading of `Empirical/QM/QuantumEraser.lean`), built on the
+**Category:** 3-Local (CSD bridge; the ontic reading of `Empirical/QM/QuantumEraser.lean`), built on the
 **record layer**, like `HongOuMandelVolume.lean` and unlike every DH-route `…Volume` twin.
 
 ## Why the record layer

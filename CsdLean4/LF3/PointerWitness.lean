@@ -11,7 +11,7 @@ public import Mathlib.Analysis.CStarAlgebra.Matrix
 /-!
 # A witness for the system-apparatus interface
 
-**Category:** 3-CSD. Closes the unpopulated-interface finding recorded against ledger row CL-008
+**Category:** 3-Local (programme-specific content). Closes the unpopulated-interface finding recorded against ledger row CL-008
 (2026-08-24).
 
 `LF3_main_theorem` takes an `S : SystemApparatusSetup K_A K_B H_SA`, and until now **no term of that

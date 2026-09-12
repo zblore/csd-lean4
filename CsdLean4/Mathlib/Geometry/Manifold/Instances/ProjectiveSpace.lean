@@ -16,7 +16,7 @@ public import Mathlib.Geometry.Manifold.IsManifold.Basic
 `specs/TERMS.md` records, and in the negative: the identity is what this module does NOT
 prove. (Repository bookkeeping; it goes with the `References` block if this is sent upstream.)
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target
+**Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Geometry.Manifold.Instances`, beside `Sphere.lean`).
 
 Step (0) of the manifold exterior-calculus plan (`MATHLIB-GAPS.md`, the Kahler / symplectic

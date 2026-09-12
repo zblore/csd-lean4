@@ -12,7 +12,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 /-!
 # LF6-C.2: the GHZ de-isolation flow
 
-**Category:** 6-Local (the dynamical realisation of the multipartite entangled
+**Category:** 3-Local (the dynamical realisation of the multipartite entangled
 de-isolation tier; the D1 entangled frontier at the three-party GHZ).
 
 This is **LF6-C.2** of `specs/lf6-plan.md`: an actual deterministic,

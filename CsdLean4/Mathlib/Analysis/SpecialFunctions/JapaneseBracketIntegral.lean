@@ -12,7 +12,7 @@ public import Mathlib.MeasureTheory.Constructions.Pi
 /-!
 # The integral of the Japanese bracket power `(1 + ‖w‖²)^{-(n+1)}` over `ℂⁿ`
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target
+**Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Analysis.SpecialFunctions.JapaneseBracket`, which at the pin proves only the
 *integrability* of `(1 + ‖x‖²)^{-r/2}` for `r > dim`, never a value).
 

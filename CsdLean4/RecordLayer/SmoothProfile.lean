@@ -11,7 +11,7 @@ public import Mathlib.Analysis.SpecialFunctions.SmoothTransition
 /-!
 # SigmaLayer/SmoothProfile: the `C^∞` transition profile and arc weight
 
-**Category:** dynamical measurement — the low-level `C^∞` primitives of the ε-corridor
+**Category:** 7-SigmaLayer (dynamical measurement) — the low-level `C^∞` primitives of the ε-corridor
 witness.
 
 Extracted 2026-08-04 from `PointerSmoothProfile.lean` so that `PointerWeights.lean` can

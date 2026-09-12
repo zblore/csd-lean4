@@ -15,7 +15,7 @@ public import Mathlib.Analysis.InnerProductSpace.Adjoint
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler";
 `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** 1-Mathlib-staging (CSD-free).
+**Category:** 1-Mathlib (CSD-free).
 
 Milestone **M4** of `specs/top-power-scoping.md`, the chart half. The unitary group
 `U(n+1)` acts on `ℂℙⁿ` (`Projectivization/Unitary.lean`); read from the affine chart `i` to the

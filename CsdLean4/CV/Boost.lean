@@ -10,7 +10,7 @@ public import CsdLean4.CV.Dispersion
 /-!
 # CV-14: boost covariance of the mass shell
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 `CV/Dispersion.lean` proved the mass shell `ω² − p² = m²` and read the
 Lorentz content off its *shape*. This module makes that content a

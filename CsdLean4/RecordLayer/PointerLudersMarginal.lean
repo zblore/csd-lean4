@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
 /-!
 # SigmaLayer/PointerLudersMarginal: the smooth horn's Lüders theorem (B3b, brick 2)
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` **B3b**, second (final) brick.
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **B3b**, second (final) brick.
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/luders-rule/
 Plain-language, CSD-role and formal statements of the Luders rule, with

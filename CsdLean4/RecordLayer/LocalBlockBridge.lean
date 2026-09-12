@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.DegenerateLuders
 /-!
 # SigmaLayer/LocalBlockBridge: a local measurement IS a block measurement (brick 2)
 
-**Category:** dynamical measurement — dynamical no-signalling (A6, dynamical form), brick 2:
+**Category:** 7-SigmaLayer (dynamical measurement) — dynamical no-signalling (A6, dynamical form), brick 2:
 the index bridge that hands brick 1's statics to the dynamical block machinery.
 
 The composite index `Fin nA × Fin nB` and the flat index `Fin (nA·nB)` are identified by

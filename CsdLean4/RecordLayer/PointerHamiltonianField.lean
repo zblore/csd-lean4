@@ -14,7 +14,7 @@ public import Mathlib.Analysis.Matrix.Hermitian
 
 **TERM-SCOPE(Hamiltonian)** — this module uses the *restricted* sense of "Hamiltonian"; `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` **A4**, the formalisable
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **A4**, the formalisable
 fragment instantiated on the smooth pointer witness.
 
 ## What this is

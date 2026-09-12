@@ -12,7 +12,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 /-!
 # LF6-C (GHZ_n): the n-party GHZ de-isolation flow and the general-n Mermin forcing
 
-**Category:** 6-Local (the D1 entangled frontier at general party number; the
+**Category:** 3-Local (the D1 entangled frontier at general party number; the
 n-party generalisation of the three-party GHZ C-tier `GHZDeisolationFlow.lean` /
 `GHZContextuality.lean`).
 

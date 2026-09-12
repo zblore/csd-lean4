@@ -11,6 +11,8 @@ public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 /-!
 # Empirical/QM/KCBS: the Klyachko–Can–Binicioğlu–Shumovsky pentagon (state-dependent contextuality)
 
+**Category:** 3-Local (QM-validity twin, the KCBS pentagon).
+
 The **KCBS inequality** is the simplest *state-dependent* contextuality test — the qutrit analogue of
 Bell/CHSH, on the pentagon graph `C₅`. Five rank-1 projectors `Π₀,…,Π₄` on `ℂ³` are arranged so that
 *consecutive* ones (cyclically) are orthogonal (mutually exclusive outcomes). Any **noncontextual**

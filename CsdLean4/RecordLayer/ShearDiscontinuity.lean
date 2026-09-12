@@ -13,7 +13,7 @@ public import Mathlib.Analysis.Normed.Module.Connected
 /-!
 # SigmaLayer/ShearDiscontinuity: the measurement propagator is provably not continuous
 
-**Category:** dynamical measurement / classification (machine-checking an external review's
+**Category:** 7-SigmaLayer (dynamical measurement / classification; machine-checking an external review's
 claim, 2026-08-02).
 
 ## The claim, and why it matters

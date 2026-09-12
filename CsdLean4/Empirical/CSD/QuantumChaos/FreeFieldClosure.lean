@@ -12,7 +12,7 @@ public import CsdLean4.Empirical.CSD.QuantumChaos.Capstone
 /-!
 # The free field reaches the pilot closure (CV-5, CSD side)
 
-**Category:** 6-Empirical-CSD (the CSD reading of stroboscopic dynamics).
+**Category:** 3-Local (the CSD reading of stroboscopic dynamics).
 
 `CV/FreeFieldFloquet.lean` built the free field's stroboscopic step
 (`freeFieldU`, a diagonal-phase unitary provably equal to

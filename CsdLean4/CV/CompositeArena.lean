@@ -16,7 +16,7 @@ public import Mathlib.RingTheory.TensorProduct.Basic
 /-!
 # P2: the composite arena — two sectors compose by mode concatenation, and the algebra forcing transports
 
-**Category:** CV (continuous variables — composition of sectors at the arena
+**Category:** 3-Local (CV; continuous variables — composition of sectors at the arena
 level; `eft-pillars-plan.md` P2).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/no-signalling/ and

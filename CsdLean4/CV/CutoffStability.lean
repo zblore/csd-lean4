@@ -10,7 +10,7 @@ public import CsdLean4.CV.InteractionPrice
 /-!
 # CV-15: the renormalization-trivial class
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 CV-10 showed the certified price of a grade-`m` interaction grows with the
 cutoff like `N^{m/2}`, so cutoff-stability costs a coupling rescaling

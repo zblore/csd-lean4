@@ -11,7 +11,7 @@ public import CsdLean4.Empirical.CSD.QuantumEraserVolume
 /-!
 # Empirical/CSD/EraserDynamics: the eraser as two local measurements (brick 3b)
 
-**Category:** empirical CSD twin, dynamical tier — the eraser *process*, closing the
+**Category:** 3-Local (empirical CSD twin, dynamical tier — the eraser *process*, closing the
 dynamical no-signalling + eraser row.
 
 `QuantumEraserVolume` certifies the eraser's *statistics* (conditional fringes, the exact

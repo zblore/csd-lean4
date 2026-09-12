@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 /-!
 # LF6-C.3: the GHZ Mermin-context carve (the genuine contextual increment)
 
-**Category:** 6-Local (the dynamical realisation of the multipartite entangled
+**Category:** 3-Local (the dynamical realisation of the multipartite entangled
 de-isolation tier; the D1 entangled frontier at the three-party GHZ Mermin
 contexts).
 

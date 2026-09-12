@@ -40,7 +40,7 @@ sublevel-set form is special to `N = 2` (the 1-dimensional polytope); general `N
 uses the barycentric regions of `BornVolume.lean` with the full
 `Φ∗μ_FS = uniform_Δ` pushforward.
 
-**Category:** 1-Mathlib adjacent; kept in `CSD.LF4` for the carve-out programme.
+**Category:** 3-Local (1-Mathlib adjacent; kept in `CSD.LF4` for the carve-out programme).
 -/
 
 @[expose] public section

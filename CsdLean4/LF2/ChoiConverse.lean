@@ -11,7 +11,7 @@ public import CsdLean4.LF2.MixedEnsembleIx
 /-!
 # LF2/ChoiConverse: Choi's theorem, the converse direction (PSD Choi ⇒ Kraus)
 
-**Category:** 2-LF2 (the operational / Born layer).
+**Category:** 3-Local (the operational / Born layer).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/choi-theorem/
 Plain-language, CSD-role and formal statements of Choi's theorem, with

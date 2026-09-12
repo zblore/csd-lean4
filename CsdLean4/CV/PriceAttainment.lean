@@ -15,7 +15,7 @@ public import Mathlib.Data.Matrix.Basis
 /-!
 # P5-attainment: the linear price is attained — "costs at most" becomes "costs exactly"
 
-**Category:** CV (continuous variables — the attainment half of P5;
+**Category:** 3-Local (CV; continuous variables — the attainment half of P5;
 `eft-pillars-plan.md` P5).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/interaction-price/

@@ -13,7 +13,7 @@ public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 /-!
 # LF6-C.1: Forced contextuality of the GHZ state (the multipartite tier crux)
 
-**Category:** 6-Local (the first general-N-tier instance of CSD's D1 entangled
+**Category:** 3-Local (the first general-N-tier instance of CSD's D1 entangled
 frontier; the multipartite analogue of LF6-A.1's singlet forced-contextuality
 crux).
 

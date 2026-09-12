@@ -17,7 +17,7 @@ sense `specs/TERMS.md` records: the identity is what this file makes **sayable**
 neither stated nor proved here. (The marker is repository bookkeeping; it goes with the
 `References` block if the file is ever sent upstream.)
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target
+**Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Analysis.Normed.Module.Alternating`).
 
 Mathlib has the exterior product of two `AlternatingMap`s (`AlternatingMap.domCoprod`,

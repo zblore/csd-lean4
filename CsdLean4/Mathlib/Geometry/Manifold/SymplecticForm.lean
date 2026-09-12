@@ -10,7 +10,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.ExteriorDerivative
 /-!
 # Symplectic forms on a manifold
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold`).
+**Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`).
 
 With differential forms (`DifferentialForm.lean`, step (2a)) and their exterior derivative
 (`ExteriorDerivative.lean`, step (2b)) in place, the sentence "a symplectic form on `M`" can be

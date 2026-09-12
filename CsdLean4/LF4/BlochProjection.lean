@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbabil
 /-!
 # LF4/BlochProjection: the general-axis Born weight on `ℂℙ^{N-1}` (context-fixed qubit, A7)
 
-**Category:** 2-LF4 (Kähler / moment-map layer — sphere-measure infrastructure).
+**Category:** 3-Local (Kähler / moment-map layer — sphere-measure infrastructure).
 
 The **general-axis Bloch projection** `blochProj a p = |⟨a, rep p⟩|² / ‖rep p‖²`: for a unit axis
 `a` and a projective point `p = [φ]`, this is the Born weight `|⟨a|φ⟩|²` of the state along `a`.

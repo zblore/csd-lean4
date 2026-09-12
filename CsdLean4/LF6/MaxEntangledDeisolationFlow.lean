@@ -13,7 +13,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 /-!
 # LF6-D: the general d x d maximally-entangled de-isolation flow
 
-**Category:** 6-Local (the first genuinely DIMENSION-GENERAL instance of CSD's D1
+**Category:** 3-Local (the first genuinely DIMENSION-GENERAL instance of CSD's D1
 entangled frontier; the general-`d` analogue of the singlet's LF6-A.2 and the
 GHZ's LF6-C.2).
 

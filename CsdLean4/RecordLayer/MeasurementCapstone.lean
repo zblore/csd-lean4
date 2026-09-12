@@ -14,7 +14,7 @@ public import CsdLean4.RecordLayer.PointerGeneration
 /-!
 # SigmaLayer/MeasurementCapstone: one theorem for projective measurement dynamics
 
-**Category:** capstone — the second external review's step 4, and the consolidation the
+**Category:** 7-SigmaLayer (capstone) — the second external review's step 4, and the consolidation the
 closure count was asking for.
 
 ## Why another capstone — and why this is the last one for this layer

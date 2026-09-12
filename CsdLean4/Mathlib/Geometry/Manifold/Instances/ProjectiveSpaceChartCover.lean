@@ -11,7 +11,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 /-!
 # The affine atlas of `ℂℙⁿ` as a finite chart cover
 
-**Category:** 1-Mathlib-staging (CSD-free).
+**Category:** 1-Mathlib (CSD-free).
 
 The non-vacuity witness for `ChartCover` (`TopFormMeasure.lean`, milestone M3 of
 `specs/top-power-scoping.md`) on the corpus's own manifold: the `n + 1` affine charts of `ℂℙⁿ`

@@ -10,7 +10,7 @@ public import CsdLean4.LF4.MomentMap
 /-!
 # Context-fixed A7 at general `N`: the support reduction
 
-**Category:** SigmaLayer (the Paper C A7 architecture).
+**Category:** 7-SigmaLayer (the Paper C A7 architecture).
 
 Paper C **A7** asks for outcome regions `Ωᵢ(M) ⊂ ℂℙⁿ⁻¹` fixed by the **apparatus context `M`
 alone**, together with a preparation law `ρ_ψ^ep`, such that

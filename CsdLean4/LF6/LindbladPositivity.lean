@@ -12,7 +12,7 @@ public import Mathlib.LinearAlgebra.Matrix.Kronecker
 /-!
 # Positivity of the Lindblad semigroup — the exponentiated CP tier (Q16's gate)
 
-**Category:** 4-LF (open-system dynamics — the half `LF6/LindbladSemigroup.lean`
+**Category:** 3-Local (open-system dynamics — the half `LF6/LindbladSemigroup.lean`
 declared out of reach). That module's scope block deferred positivity of
 `e^{tℒ}` as needing "a Lie–Trotter/Euler-approximant limit theorem or resolvent
 positivity, neither of which Mathlib has". The 2026-08-20 gate re-check found

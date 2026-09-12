@@ -11,7 +11,7 @@ public import CsdLean4.LF4.HatBox
 /-!
 # LF4/AxisBridge: general axis ↦ reference axis for Fubini–Study integrals (context-fixed qubit, A7)
 
-**Category:** 2-LF4 (Kähler / moment-map layer — sphere-measure infrastructure).
+**Category:** 3-Local (Kähler / moment-map layer — sphere-measure infrastructure).
 
 The **general-axis bridge**: for a unit axis `n`, any Fubini–Study integral of `f ∘ blochProj n`
 equals the same integral with `blochProj n` replaced by the reference coordinate `momentMap · 0`

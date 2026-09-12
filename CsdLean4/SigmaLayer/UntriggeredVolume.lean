@@ -13,7 +13,7 @@ public import Mathlib.LinearAlgebra.Matrix.SchurComplement
 /-!
 # SigmaLayer/UntriggeredVolume: the untriggered flow preserves chart volume, and is unique
 
-**Category:** dynamical measurement — `specs/frozen-base-obstruction-scoping.md` brick 2, the
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/frozen-base-obstruction-scoping.md` brick 2, the
 two gaps its own honest scope left open: measure preservation and uniqueness.
 
 ## What this closes

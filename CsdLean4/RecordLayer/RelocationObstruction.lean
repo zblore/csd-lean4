@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.Topology.Homotopy.CircleFundamentalGroup
 /-!
 # SigmaLayer/RelocationObstruction: the collapse stroke is not generated
 
-**Category:** dynamical measurement — the negative half of the
+**Category:** 7-SigmaLayer (dynamical measurement) — the negative half of the
 Hamiltonian-origin question.
 
 `PointerGeneration.lean` closed the *record-creating* half: `rampedU_schrodinger`

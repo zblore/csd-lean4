@@ -14,7 +14,7 @@ public import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler";
 `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** 1-Mathlib-staging (CSD-free; flat differential forms on a complex inner product
+**Category:** 1-Mathlib (CSD-free; flat differential forms on a complex inner product
 space, in the `d^c` vocabulary of `KahlerPotential.lean`).
 
 The three facts about `dd^c K = d(d^c K)` that a chart-invariance argument for the

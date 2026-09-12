@@ -12,7 +12,7 @@ public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 /-!
 # SigmaLayer/JoinGeneration: the join relocation *is* generated
 
-**Category:** dynamical measurement — the positive answer the swap
+**Category:** 7-SigmaLayer (dynamical measurement) — the positive answer the swap
 architecture could not give.
 
 `RelocationObstruction.lean` showed the bank-swap collapse stroke cannot be

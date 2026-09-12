@@ -14,7 +14,7 @@ public import Mathlib.LinearAlgebra.Pi
 /-!
 # SigmaLayer/ChartBracket: the Poisson bracket in a Darboux chart, and why the weights commute
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` **A3**, the formalisable fragment
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **A3**, the formalisable fragment
 of the joint-arena Hamiltonian argument.
 
 ## What this is for

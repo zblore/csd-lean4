@@ -13,7 +13,7 @@ public import Mathlib.LinearAlgebra.Projectivization.Basic
 /-!
 # P1: the arena bridge — operator locality carried onto the record arena
 
-**Category:** CV (continuous variables — the bridge from mode-local operators to
+**Category:** 3-Local (CV; continuous variables — the bridge from mode-local operators to
 the projective record arena).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/field-arena/

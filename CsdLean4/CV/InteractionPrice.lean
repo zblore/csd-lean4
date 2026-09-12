@@ -13,7 +13,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
 /-!
 # CV-9: small-coupling pricing — locality violation is linear in the coupling
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 CV-8 bounded WHERE interaction moves support (the light cone); this module
 prices HOW MUCH, in operator norm, via the Duhamel bound

@@ -12,7 +12,7 @@ public import CsdLean4.CV.Interaction
 /-!
 # CV-8 (ii)–(iv): support spreading and the coupling-graph light cone
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 CV-6 proved the free field never spreads support. This module bounds what an
 *interaction* can do:

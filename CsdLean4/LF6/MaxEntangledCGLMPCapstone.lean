@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 /-!
 # LF6-1: the `d`-intrinsic CGLMP capstone
 
-**Category:** 6-Local (the `d`-intrinsic CGLMP capstone).
+**Category:** 3-Local (the `d`-intrinsic CGLMP capstone).
 
 The general `d × d` maximally-entangled de-isolation flow capstone
 (`maxEntangledDeisolation_flow_capstone`, `LF6/MaxEntangledDeisolationFlow.lean`)

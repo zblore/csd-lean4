@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.PointerBorn
 /-!
 # SigmaLayer/PointerGeneration: the Schrödinger generation of the smooth witness (brick 5)
 
-**Category:** dynamical measurement — the smooth-Hamiltonian witness route
+**Category:** 7-SigmaLayer (dynamical measurement) — the smooth-Hamiltonian witness route
 (`specs/pointer-witness-plan.md` brick 5; completes the ladder).
 
 ★ **The generation theorem** (`rampedU_schrodinger`): at **every** time `t : ℝ` the ramped

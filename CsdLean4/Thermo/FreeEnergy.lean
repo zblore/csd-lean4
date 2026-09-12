@@ -11,7 +11,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Entropy
 /-!
 # TH3: temperature, free energy, and the Gibbs variational principle
 
-**Category:** conceptually 1-Mathlib (CSD-free general quantum statistical
+**Category:** 3-Local (conceptually 1-Mathlib; CSD-free general quantum statistical
 mechanics) with a CSD reading; kept in the `CSD.Thermo` tree alongside TH1/TH2.
 
 At fixed inverse temperature `β > 0` (temperature `T = 1/β`), the **Gibbs state**

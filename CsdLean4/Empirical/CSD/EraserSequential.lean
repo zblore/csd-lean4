@@ -10,7 +10,7 @@ public import CsdLean4.Empirical.CSD.EraserDynamics
 /-!
 # Empirical/CSD/EraserSequential: mark, then erase — no revival (the row's residue)
 
-**Category:** empirical CSD twin, dynamical tier — the two-stroke sequential composition,
+**Category:** 3-Local (empirical CSD twin, dynamical tier — the two-stroke sequential composition,
 closing the dynamical no-signalling + eraser row's recorded residue.
 
 `EraserDynamics` proved the two single strokes: erasing the **coherent** Bell state restores

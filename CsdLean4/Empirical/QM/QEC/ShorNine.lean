@@ -11,7 +11,7 @@ public import CsdLean4.Empirical.QM.QEC.PhaseFlip
 /-!
 # The Shor 9-qubit code, by concatenation (§Q Q5, E1)
 
-**Category:** 5-Empirical-QM. The last iconic empirical item
+**Category:** 3-Local (programme-specific content). The last iconic empirical item
 (`specs/BACKLOG.md` E1 / §Q Q5): the 9-qubit code that corrects an
 arbitrary single-qubit Pauli error, built as the **concatenation** of the
 two landed 3-qubit halves — the phase-flip code (`PhaseFlip.lean`) outside,

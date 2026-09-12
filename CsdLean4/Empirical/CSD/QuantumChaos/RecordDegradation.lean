@@ -10,7 +10,7 @@ public import CsdLean4.Empirical.CSD.QuantumChaos.RecordPersistence
 /-!
 # Record degradation under coupled post-record driving (§H continuation)
 
-**Category:** 6-Empirical-CSD (the CSD reading of stroboscopic dynamics).
+**Category:** 3-Local (the CSD reading of stroboscopic dynamics).
 
 The pilot (`RecordPersistence.lean`) covered the UNCOUPLED regime: driving that
 does not touch the record factor preserves every record cylinder surely. This

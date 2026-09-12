@@ -13,6 +13,8 @@ public import CsdLean4.Mathlib.Dynamics.CompactGroupNoMixing
 /-!
 # E4: equilibration of time-averaged reduced states, as a conditional theorem
 
+**Category:** 3-Local (conceptually 1-Mathlib, kept under Thermo — E4 equilibration).
+
 The equilibration arc's fourth item (`specs/equilibration-arc-plan.md` E4). It spends the generic
 engine `CsdLean4/Mathlib/Dynamics/CorrelationDecay.lean` on the observables E1 built.
 

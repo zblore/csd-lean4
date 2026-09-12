@@ -13,7 +13,7 @@ public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 /-!
 # RecordLayer/ArenaTorus: the conserved-quantity torus acting on the pointer arena
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` §A (joint-arena lift), the
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` §A (joint-arena lift), the
 kinematic half of the joint lift `RecordLayer/JointLift.lean` builds.
 
 ## What this is

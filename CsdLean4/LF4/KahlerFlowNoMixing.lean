@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.Dynamics.CorrelationDecayWitness
 /-!
 # The Kähler fibre flow cannot mix either
 
-**Category:** 3-CSD. This closes the second half of `W1`
+**Category:** 3-Local (programme-specific content). This closes the second half of `W1`
 (`specs/q12-fibre-mechanism-scoping.md`), and it is the `Q12-w` brick that scoping doc lists.
 
 `W1` claims that **no flow the corpus defines** can supply the mixing hypothesis E4 needs. It was

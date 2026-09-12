@@ -13,7 +13,7 @@ public import Mathlib.MeasureTheory.Order.Group.Lattice
 /-!
 # LF4/QubitBorn: the context-fixed qubit Born rule (A7)
 
-**Category:** 2-LF4 (Kähler / moment-map layer — qubit context-fixed measurement).
+**Category:** 3-Local (Kähler / moment-map layer — qubit context-fixed measurement).
 
 **The qubit Born rule, derived from the CSD spread density and the context-fixed hemisphere.** For
 unit preparation `ψ` and unit measurement axis `n`, the CSD spread density `ρ_ψ = 4·(2·blochProj ψ − 1)₊`

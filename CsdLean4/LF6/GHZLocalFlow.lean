@@ -12,7 +12,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 /-!
 # LF6-C.4: a manifestly LOCAL product de-isolation flow realising the GHZ measurement
 
-**Category:** 6-Local (the multipartite entangled de-isolation tier; the D1
+**Category:** 3-Local (the multipartite entangled de-isolation tier; the D1
 entangled frontier at the three-party GHZ).
 
 This is **LF6-C.4** of `specs/lf6-plan.md`, the three-party analogue of LF6-A.3

@@ -15,7 +15,7 @@ public import CsdLean4.LF4.ManyToOneSchrodingerDerived
 **TERM-SCOPE(Kahler)** **TERM-SCOPE(Hamiltonian)** **TERM-SCOPE(MomentMap)** — this module uses
 the *restricted* senses of these words; `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** 1-Mathlib-staging in its mathematics; it consumes the corpus's
+**Category:** 1-Mathlib (1-Mathlib-staging in its mathematics; it consumes the corpus's).
 `CSD.LF4.schrodingerUnitary` (the unitary `exp(-itH)`) and its derivative
 `CSD.LF4.schrodingerUnitary_hasDerivAt` as the flow whose generator it identifies.
 

@@ -13,7 +13,7 @@ public import Mathlib.MeasureTheory.Group.AddCircle
 /-!
 # SigmaLayer/NullSeamWitness: the third horn — continuous, exact Born, null seam
 
-**Category:** dynamical measurement — the "Cantor-horn" candidate brick recorded against
+**Category:** 7-SigmaLayer (dynamical measurement) — the "Cantor-horn" candidate brick recorded against
 the fourth external review (2026-08-03), delivered — and *simpler than the
 devil's-staircase sketch that motivated it*.
 

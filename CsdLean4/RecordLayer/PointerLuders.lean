@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.SwapWitness
 /-!
 # SigmaLayer/PointerLuders: the smooth stroke and the relocation on one arena (B3b, brick 1)
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` **B3b**, first brick.
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **B3b**, first brick.
 
 ## Why this module has to exist
 

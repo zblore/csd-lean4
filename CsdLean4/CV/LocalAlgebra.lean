@@ -10,7 +10,7 @@ public import CsdLean4.CV.ModeLocality
 /-!
 # CV-8 (i): the local algebra — `SupportedOn` is a unital *-subalgebra
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 `CV/ModeLocality.lean` defined `SupportedOn S` and proved that disjoint
 supports commute. This module upgrades the support notion to what

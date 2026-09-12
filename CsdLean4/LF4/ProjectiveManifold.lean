@@ -13,7 +13,7 @@ public import CsdLean4.LF4.KahlerInstance
 /-!
 # The projective sector `CPN` is an analytic manifold
 
-**Category:** 2-Interface (a one-line transport of the Category-1 instance built in
+**Category:** 3-Local (a one-line transport of the Category-1 instance built in
 [`Mathlib/Geometry/Manifold/Instances/ProjectiveSpace.lean`](../Mathlib/Geometry/Manifold/Instances/ProjectiveSpace.lean)
 onto the corpus's own name for the space).
 

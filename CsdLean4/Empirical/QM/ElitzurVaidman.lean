@@ -10,6 +10,8 @@ public import CsdLean4.Empirical.Metrology.Ramsey
 /-!
 # Empirical/QM/ElitzurVaidman: the bomb tester (interaction-free measurement)
 
+**Category:** 3-Local (QM-validity twin, the bomb tester).
+
 The **Elitzur–Vaidman bomb tester**: a balanced Mach–Zehnder interferometer (two `50:50` beam
 splitters `= H`) is tuned so a single photon *always* exits the bright port and *never* the dark
 port — perfect destructive interference at the dark port. Placing a **live bomb** (a which-path

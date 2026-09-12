@@ -10,7 +10,7 @@ public import CsdLean4.CV.CutoffStability
 /-!
 # CV-16: decimation between cutoffs — exact matching, and its sharp limit
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 The gated RG row, resolved by running its feasibility pass first (the
 CV-10 discipline). The pass found that the row's *planned* statement —

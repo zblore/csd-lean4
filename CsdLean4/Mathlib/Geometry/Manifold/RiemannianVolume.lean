@@ -11,7 +11,7 @@ public import Mathlib.LinearAlgebra.Matrix.BilinearForm
 /-!
 # The Riemannian volume of a metric on a manifold, from chart Gram densities
 
-**Category:** 1-Mathlib-staging (measure theory on manifolds: the Riemannian volume measure of a
+**Category:** 1-Mathlib (measure theory on manifolds: the Riemannian volume measure of a
 metric family, absent from Mathlib at the pin — `Mathlib/Geometry/Manifold/VectorBundle/Riemannian.lean`
 has Riemannian *bundles*, no volume; G17 of `specs/generator-layer-scoping.md` §9).
 

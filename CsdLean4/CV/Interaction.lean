@@ -10,7 +10,7 @@ public import CsdLean4.CV.FreeFieldFloquet
 /-!
 # CV-7: the interacting drive (EFT Stage 3a)
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 The first interacting object of the EFT chain. A **diagonal** (density–density)
 interaction commutes with the free Hamiltonian, so the interacting stroboscopic

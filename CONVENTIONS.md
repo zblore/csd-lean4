@@ -88,7 +88,18 @@ Where `<N>-<Tag>` is one of:
   (`ConstraintDynamics`, `ProjectiveSector`, `DeisolationModel`, the P1–P9 / B1–B7 / T1–T16 ledger). It is a
   Category-3 tag with its own directory and namespace, not a fourth top-level category; the `7-` prefix
   simply names the SigmaLayer stratum. Allowed imports: as Category 3, plus earlier `CsdLean4/LF<m>/` layers.
-- `Special` — for cross-cutting modules (top-level imports, regression tests, convenience re-exports).
+  The record layer (`CsdLean4/RecordLayer/`, namespace `CSD.RecordLayer`, split out of `SigmaLayer/` on
+  2026-08-13, Q15) is the same stratum and carries the same tag.
+- `Special` — for cross-cutting modules (top-level imports, regression tests, convenience re-exports):
+  `CsdLean4.lean`, `CsdLean4/Basic.lean`, `CsdLean4/Headlines.lean`, `CsdLean4/Tests/`, `CsdLean4/Incubator/`.
+
+The tag is decided **by the module's directory** (§4), and only the tag: `Mathlib/` → `1-Mathlib`,
+`Framework/` → `2-Framework`, `SigmaLayer/` and `RecordLayer/` → `7-SigmaLayer`, the `Special` locations
+above, everything else → `3-Local`. Anything the author wants to say beyond that ("conceptually
+1-Mathlib, kept under `Thermo/`", "CV: continuous variables", "dynamical measurement", "a `2-Framework`
+candidate") goes in the rationale parenthetical. `scripts/check-category-tags.sh` enforces the tag and
+its agreement with the directory (2026-09-12; before the sweep the slot carried 28 spellings and six
+modules had none).
 
 The rationale parenthetical is one short noun phrase: "LF1-specific outcome regions"; "Mathlib-track CLM complement lemmas"; "cross-layer axiom regression".
 
@@ -119,14 +130,10 @@ New work follows the category discipline from the start: when an LF4 development
 
 ## 5. Lint and enforcement
 
-There is currently no automated lint. The `**Category:**` line is enforced by review.
-
-Future enforcement (deferred until `Framework/` exists):
-
-- A CI check that `CsdLean4/Mathlib/**/*.lean` modules import only Mathlib (no `CsdLean4.LF*`, no `CsdLean4.Framework.*`).
-- A CI check that every module has a `**Category:**` declaration.
-
-These are LF4-scope items, not v1.00 of the conventions doc.
+`scripts/check-category-tags.sh` (CI, mutation-tested in `check-guards.sh`) checks that every module has
+exactly one `**Category:**` line, that its tag is one of the five above, and that the tag matches the
+module's directory. The rationale parenthetical is enforced by review. Import hygiene for
+`CsdLean4/Mathlib/**` (Mathlib only, no `CsdLean4.LF*`) is `scripts/check-import-hygiene.sh`.
 
 ## 6. Self-adjointness convention (LF3)
 

@@ -15,7 +15,7 @@ public import Mathlib.Analysis.Calculus.ContDiff.CPolynomial
 /-!
 # The pullback of a continuous alternating map is jointly analytic
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream targets
+**Category:** 1-Mathlib (CSD-free; upstream targets
 `Mathlib.Topology.Algebra.Module.Alternating` for the alternatization and
 `Mathlib.Analysis.Analytic.CPolynomial` for the pullback, beside its multilinear twin).
 

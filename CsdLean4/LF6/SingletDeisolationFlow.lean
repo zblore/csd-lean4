@@ -13,7 +13,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 /-!
 # LF6-A.2: the full singlet de-isolation flow
 
-**Category:** 6-Local (the dynamical realisation of the entangled de-isolation
+**Category:** 3-Local (the dynamical realisation of the entangled de-isolation
 tier; the D1 entangled frontier).
 
 This is **LF6-A.2** of `specs/lf6-plan.md`: an actual deterministic,

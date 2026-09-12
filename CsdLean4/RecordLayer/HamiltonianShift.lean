@@ -13,7 +13,7 @@ public import CsdLean4.SigmaLayer.ChartIntegralCurve
 /-!
 # RecordLayer/HamiltonianShift: the shift the stroke Hamiltonian generates
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` §A; brick 3 of
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` §A; brick 3 of
 `specs/frozen-base-obstruction-scoping.md`, third step (chart-level generation of each
 component of the joint lift).
 

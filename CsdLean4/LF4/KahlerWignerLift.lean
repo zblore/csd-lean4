@@ -11,7 +11,7 @@ public import CsdLean4.LF4.KahlerFlow
 /-!
 # SL-3: the §13.2 ontic lift on the non-trivial-fibre Kähler instance
 
-**Category:** 4-Foundations (the sector-symmetry→Wigner→U_isometry chain, made explicit on `kSectorData`).
+**Category:** 3-Local (the sector-symmetry→Wigner→U_isometry chain, made explicit on `kSectorData`).
 
 The §13.2 ontic lift asks: on a concrete Kähler `SectorData`, thread the deterministic flow `Φ`
 down to a projective ray map `f_Φ`, prove `f_Φ` is transition-probability preserving, and feed

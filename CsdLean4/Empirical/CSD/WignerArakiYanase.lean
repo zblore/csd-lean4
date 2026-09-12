@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.JointLift
 /-!
 # Empirical/CSD/WignerArakiYanase: the record-layer stroke is not a map on the Hilbert data
 
-**Category:** CSD-ontic empirical twin of `Empirical/QM/WignerArakiYanase.lean` (twins board
+**Category:** 3-Local (CSD-ontic empirical twin of `Empirical/QM/WignerArakiYanase.lean`; twins board
 ER1 in `specs/qm-empirical-tests.md`; brick 1 of `specs/way-theorem-scoping.md` §3; pillar row
 MT-1 in `specs/future-work.md`).
 

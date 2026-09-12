@@ -17,7 +17,7 @@ public import Mathlib.MeasureTheory.Order.Group.Lattice
 /-!
 # LF4/QubitCrossTerm: the cross-term vanishes (context-fixed qubit, A7)
 
-**Category:** 2-LF4 (Kähler / moment-map layer — qubit context-fixed measurement).
+**Category:** 3-Local (Kähler / moment-map layer — qubit context-fixed measurement).
 
 The **cross-term** `T = ∫ rsign(2·blochProj n − 1)·|2·blochProj ψ − 1| dμ_FS = 0` — the vanishing of
 the monopole–hemisphere correlation. The **antipode symmetry**: pushing the Haar integral by

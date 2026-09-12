@@ -12,7 +12,7 @@ public import CsdLean4.RecordLayer.JoinLuders
 /-!
 # SigmaLayer/PovmDynamics: POVM and instrument dynamics via Naimark dilation
 
-**Category:** dynamical measurement — the POVM/instrument tier of the record layer.
+**Category:** 7-SigmaLayer (dynamical measurement) — the POVM/instrument tier of the record layer.
 
 A POVM is not a new kind of measurement: it is a projective measurement on a dilated
 space, watched through an isometry. This module makes that dictum **dynamical**. Given a

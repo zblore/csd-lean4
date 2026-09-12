@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.MeasurementConstraints
 /-!
 # SigmaLayer/SharpenedNoGo: a positive-width ready region cannot hide the no-record set
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` **B5**, the trilemma's third leg.
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **B5**, the trilemma's third leg.
 
 ## The question
 

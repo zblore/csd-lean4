@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
 /-!
 # SigmaLayer/PointerCoupling: the weighted coupling and its exponential propagator (brick 2a)
 
-**Category:** dynamical measurement — the smooth-Hamiltonian witness route
+**Category:** 7-SigmaLayer (dynamical measurement) — the smooth-Hamiltonian witness route
 (`specs/pointer-witness-plan.md` brick 2, generator half).
 
 The selector-modulated coupling is a **weighted sum of the plane-swap generators**:

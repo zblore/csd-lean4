@@ -11,7 +11,7 @@ public import Mathlib.Analysis.Normed.Group.AddCircle
 /-!
 # P1, closed: the fibre-active extension — records in the fibre inherit the cone
 
-**Category:** CV (continuous variables — the fibred completion of the arena
+**Category:** 3-Local (CV; continuous variables — the fibred completion of the arena
 bridge; P1's last item).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/record-light-cone/

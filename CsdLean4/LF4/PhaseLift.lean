@@ -13,7 +13,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.ProjectiveLift
 /-!
 # W5-S1: the projective-to-vector phase lift
 
-**Category:** 3-Programme (CSD dynamics spine, W5 residual S1).
+**Category:** 3-Local (CSD dynamics spine, W5 residual S1).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/schrodinger-from-records/
 Plain-language, CSD-role and formal statements of Schrodinger dynamics from record statistics, with

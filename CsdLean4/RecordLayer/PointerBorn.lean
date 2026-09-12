@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.PointerProtocol
 /-!
 # SigmaLayer/PointerBorn: the ε-Born sandwich and the smooth-horn closure (brick 4b)
 
-**Category:** dynamical measurement — the smooth-Hamiltonian witness route
+**Category:** 7-SigmaLayer (dynamical measurement) — the smooth-Hamiltonian witness route
 (`specs/pointer-witness-plan.md` brick 4, Born half; closes brick 4).
 
 The preparation is honest about what the smooth witness offers: the epistemic state at base

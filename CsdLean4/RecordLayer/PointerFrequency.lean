@@ -11,7 +11,7 @@ public import CsdLean4.LF1.GeneralFrequency
 /-!
 # SigmaLayer/PointerFrequency: the `ε`-Born frequency layer
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` **B3a** (the small half of the
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **B3a** (the small half of the
 recorded "smooth-witness Lüders composition + `ε`-Born LLN" row).
 
 The smooth horn proves a **single-shot** sandwich: the outcome sector of the

@@ -336,8 +336,28 @@ else
   echo "  (skipping axiom-sweep / citation-use / std-lint probes: need --with-lean)"
 fi
 
+# --- check-category-tags (2026-09-12): a non-canonical tag, a tag that contradicts the module's
+# directory, and a module with no tag at all must each fail. The probe lives under SigmaLayer/,
+# so its correct tag is 7-SigmaLayer and 3-Local is the wrong-directory case.
+expect_fail "category-tags (non-canonical tag)" check-category-tags \
+'/-!
+# Probe
+
+**Category:** 6-Local (probe).
+-/'
+expect_fail "category-tags (wrong directory)" check-category-tags \
+'/-!
+# Probe
+
+**Category:** 3-Local (probe).
+-/'
+expect_fail "category-tags (no tag)" check-category-tags \
+'/-!
+# Probe
+-/'
+
 # --- Every guard must also PASS on the clean tree; a guard stuck at FAIL is equally bad.
-for g in check-claim-provenance check-import-negative check-import-hygiene check-placeholder-status; do
+for g in check-claim-provenance check-import-negative check-import-hygiene check-placeholder-status check-category-tags; do
   if ! bash "scripts/$g.sh" >/dev/null 2>&1; then
     echo "  BROKEN  $g — fails on the CLEAN tree"
     fail=1

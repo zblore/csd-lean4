@@ -11,7 +11,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 /-!
 # SigmaLayer/RotatedContext: context fields in an arbitrary orthonormal basis
 
-**Category:** record layer / dynamical measurement (the first unitary-covariance step).
+**Category:** 7-SigmaLayer (record layer / dynamical measurement; the first unitary-covariance step).
 
 `momentContext N` is the context field of an apparatus measuring in the *standard* basis. This
 module produces the context field of an apparatus measuring in **any** orthonormal basis `b`:

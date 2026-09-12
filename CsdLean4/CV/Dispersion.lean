@@ -10,7 +10,7 @@ public import CsdLean4.CV.FieldModes
 /-!
 # CV/Dispersion: relativistic dispersion `ω_k = √(k² + m²)` (EFT Stage 2a)
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 Stage 1 (`CV/FieldModes.lean`) built the free field at a cutoff as a product of unit-frequency
 oscillators. Stage 2a gives the modes their **relativistic** frequencies: mode `k` carries

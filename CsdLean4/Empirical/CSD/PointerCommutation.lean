@@ -11,7 +11,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
 /-!
 # Empirical/CSD: the einselection commutation criterion (`[P, H_int] = 0`)
 
-**Category:** 6-Local (the open-system / decoherence stratum of D1 — the
+**Category:** 3-Local (the open-system / decoherence stratum of D1 — the
 Hamiltonian-level einselection criterion on the LF6-B machinery).
 
 Build 15a (`Empirical/CSD/Einselection.lean`) proved decoherence is

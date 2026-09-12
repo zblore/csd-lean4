@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.Probability.ConditionalProbability
 /-!
 # SigmaLayer/MixedLuders: the outcome-conditioned mixed update
 
-**Category:** dynamical measurement — `MixedSwap.lean`'s recorded extension, delivered
+**Category:** 7-SigmaLayer (dynamical measurement) — `MixedSwap.lean`'s recorded extension, delivered
 (the fourth external review's "mixed conditioned update" row).
 
 Two theorems close the row:

@@ -10,7 +10,7 @@ public import CsdLean4.LF3.Singlet.Expectations
 /-!
 # LF6-6: the partial-Schmidt (non-maximally-entangled) two-qubit correlation
 
-**Category:** 6-Local (extends the LF6-D entangled tier beyond the maximally-entangled family).
+**Category:** 3-Local (extends the LF6-D entangled tier beyond the maximally-entangled family).
 
 LF6-D's non-factorisation runs on the maximally-entangled state `Ψ_d` (equal Schmidt coefficients),
 whose two-qubit sector is the Bell `Φ⁺`. This module takes the first step **beyond** maximal

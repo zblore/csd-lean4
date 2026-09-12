@@ -11,7 +11,7 @@ public import Mathlib.NumberTheory.WellApproximable
 /-!
 # The fibre flow has no finite-horizon escape either
 
-**Category:** 3-CSD. This closes `Q12-d`'s **route 2** for the corpus's own fibre flow.
+**Category:** 3-Local (programme-specific content). This closes `Q12-d`'s **route 2** for the corpus's own fibre flow.
 
 `W1` (`KahlerFlowNoMixing.lean`) kills the *asymptotic* mixing hypothesis for every flow the corpus
 defines. The escape the scoping doc recommends is `Q12-d` route 2: weaken mixing to **finite-horizon

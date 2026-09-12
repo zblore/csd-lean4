@@ -10,7 +10,7 @@ public import CsdLean4.SigmaLayer.FrozenBase
 /-!
 # SigmaLayer/UntriggeredFlow: one flow that records and back-reacts, with no trigger
 
-**Category:** dynamical measurement — `specs/frozen-base-obstruction-scoping.md` brick 2.
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/frozen-base-obstruction-scoping.md` brick 2.
 
 ## What this is
 

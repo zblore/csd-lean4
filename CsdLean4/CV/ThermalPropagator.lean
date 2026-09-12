@@ -11,7 +11,7 @@ public import CsdLean4.Thermo.FreeEnergy
 /-!
 # CV-24: the thermal tier at the cutoff — Gibbs field state, thermal propagator, exact KMS
 
-**Category:** CV (continuous variables — the multi-mode field at finite temperature).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field at finite temperature).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/kms-condition/
 Plain-language, CSD-role and formal statements of the KMS condition, with

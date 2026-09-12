@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.RecordPersistence
 /-!
 # SigmaLayer/JoinClosure: the degenerate one-protocol package
 
-**Category:** dynamical measurement — the degenerate counterpart of
+**Category:** 7-SigmaLayer (dynamical measurement) — the degenerate counterpart of
 `SwapMeasurementClosure`/`UnifiedArenaClosure`, requested by the fourth external review
 (2026-08-03): the degenerate pieces existed as theorems on the join protocol but had never
 been packaged as **one closure on one protocol**.

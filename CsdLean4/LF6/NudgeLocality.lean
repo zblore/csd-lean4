@@ -15,7 +15,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 /-!
 # LF6/NudgeLocality: the setting-dependent nudge, done locally
 
-**Category:** 6-Entanglement (the local half of the setting-dependent chain).
+**Category:** 3-Local (the local half of the setting-dependent chain).
 
 ## Why this exists
 

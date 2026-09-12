@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.MeasureTheory.InvariantTwist
 /-!
 # RecordLayer/JointLift: a back-reacting joint lift of the measurement stroke, on the arena
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` §A, the **instance** the
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` §A, the **instance** the
 conditional transfer `JointFlowTransfer.lean` was waiting for.
 
 ## What this is

@@ -11,7 +11,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyLebesgu
 /-!
 # Restricting the Liouville measure to a constraint surface (E3, the spike)
 
-**Category:** 7-SigmaLayer / Thermo (the measure-theoretic foundation of the equilibration arc).
+**Category:** 3-Local (Thermo; the measure-theoretic foundation of the equilibration arc).
 
 The equilibration arc (`specs/equilibration-arc-plan.md`) needs the base pushforward of the
 Liouville measure **restricted to a constraint surface**:

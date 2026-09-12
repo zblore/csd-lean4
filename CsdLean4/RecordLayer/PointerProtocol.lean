@@ -12,7 +12,7 @@ public import CsdLean4.RecordLayer.RecordPersistence
 /-!
 # SigmaLayer/PointerProtocol: the smooth witness as a measurement protocol (brick 4a)
 
-**Category:** dynamical measurement — the smooth-Hamiltonian witness route
+**Category:** 7-SigmaLayer (dynamical measurement) — the smooth-Hamiltonian witness route
 (`specs/pointer-witness-plan.md` brick 4, protocol half).
 
 The pointer witness enters the corpus's standard record architecture: a

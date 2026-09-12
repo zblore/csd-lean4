@@ -11,7 +11,7 @@ public import Mathlib.GroupTheory.Perm.Finite
 /-!
 # The shuffle sum of a wedge with a 2-form, on a pair family
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target
+**Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Analysis.Normed.Module.Alternating`).
 
 Milestone **M6(b)** of `specs/top-power-scoping.md`, the combinatorial half. The wedge

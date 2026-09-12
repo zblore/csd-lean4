@@ -13,7 +13,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Entropy
 /-!
 # LF6-B.1: decoherence as coarse-graining over a conservative de-isolation flow
 
-**Category:** 6-Local (the open-system / partial-trace stratum of D1 — the first
+**Category:** 3-Local (the open-system / partial-trace stratum of D1 — the first
 result beyond the global-beable account).
 
 This is **LF6-B.1** of the open-system tier. In CSD, measurement is *de-isolation*:

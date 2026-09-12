@@ -17,7 +17,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 **TERM-SCOPE(Kahler)** **TERM-SCOPE(Liouville)** — this module uses the *restricted* senses of
 "Kahler" and "Liouville"; `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** 1-Mathlib-staging (CSD-free).
+**Category:** 1-Mathlib (CSD-free).
 
 Milestones **M5** and **M6** of `specs/top-power-scoping.md`, Route U (uniqueness). The
 `2n`-form `fsTopForm n` (the `n`-th exterior power of the Fubini–Study form,

@@ -14,7 +14,7 @@ public import Mathlib.Order.Filter.AtTopBot.Basic
 /-!
 # LF6-2 (bounded core): the qubit T2 dephasing quantum dynamical semigroup
 
-**Category:** 6-Local (the continuous-time open-system de-isolation frontier, the "living-history" tier).
+**Category:** 3-Local (the continuous-time open-system de-isolation frontier, the "living-history" tier).
 
 LF6-D realises measurement as a single deterministic de-isolation flow step. LF6-2 asks for the
 *continuous-time* open-system version: a one-parameter quantum dynamical semigroup (the solution of a

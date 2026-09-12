@@ -10,7 +10,7 @@ public import CsdLean4.LF6.PartialSchmidtCorrelation
 /-!
 # LF6-6: Gisin's theorem — every entangled pure two-qubit state violates CHSH
 
-**Category:** 6-Local (closes the LF6-6 non-factorisation witness beyond maximal entanglement).
+**Category:** 3-Local (closes the LF6-6 non-factorisation witness beyond maximal entanglement).
 
 `LF6/PartialSchmidtCorrelation.lean` computes, from the Hilbert space, the Pauli correlation of the
 general real-Schmidt two-qubit state `Ψ(c,s) = c|00⟩ + s|11⟩`:

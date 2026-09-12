@@ -18,7 +18,7 @@ public import Mathlib.RingTheory.Complex
 **TERM-SCOPE(Kahler)** **TERM-SCOPE(Liouville)** — this module uses the *restricted* senses of
 "Kahler" and "Liouville"; `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** 1-Mathlib-staging (CSD-free).
+**Category:** 1-Mathlib (CSD-free).
 
 Milestone **M7** of `specs/top-power-scoping.md`, the constant. `ProjectiveSpaceFubiniStudyVolume.lean`
 proved that the *normalised* volume of the top power of the Fubini–Study form is

@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.BargmannContinuity
 /-!
 # W3 clopen-datum closure: the Bargmann discriminator
 
-**Category:** 3-Programme (CSD dynamics spine, the W3 staged residual).
+**Category:** 3-Local (CSD dynamics spine, the W3 staged residual).
 
 W3 (`UnitarySelection.lean`) selected the unitary Wigner branch STAGED on a
 clopen datum: `IsClopen {t | ProjUnitary d t}`, the Lean image of

@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.QuantumInfo.UnitaryPerturbation
 /-!
 # CV-26: channel-level RG at the cutoff — coarse-graining with a priced defect
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 The Stage-4 no-go (`exists_unitary_compress_not_unitary`) proved that exact **unitary**
 RG matching is impossible: decimating a support-spreading drive loses norm. Its own

@@ -14,7 +14,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
 /-!
 # CV-13: the finite free propagator — the chain computes a correlation function
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 Every EFT statement so far has been structural (locality, cones) or a
 bound (prices, power counting). This module produces the chain's first

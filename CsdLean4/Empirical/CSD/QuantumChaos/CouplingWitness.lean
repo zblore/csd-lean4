@@ -10,7 +10,7 @@ public import CsdLean4.Empirical.CSD.QuantumChaos.RecordDegradation
 /-!
 # The small-coupling witness: the half-life bound bites (§H continuation)
 
-**Category:** 6-Empirical-CSD (the CSD reading of stroboscopic dynamics).
+**Category:** 3-Local (the CSD reading of stroboscopic dynamics).
 
 `RecordDegradation.lean` priced coupled post-record driving by the record
 half-life bound `μ (intact n)ᶜ ≤ n · ε`. This module shows the bound is not

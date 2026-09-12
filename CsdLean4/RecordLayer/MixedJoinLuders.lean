@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.Probability.ConditionalProbability
 /-!
 # SigmaLayer/MixedJoinLuders: degenerate outcomes on mixed preparations (D3, first half)
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` **D3**'s first half: block Lüders
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **D3**'s first half: block Lüders
 composed with Bayes, the degenerate counterpart of `MixedLuders.lean`, riding
 `JoinClosure` exactly as that module's scope note predicted.
 

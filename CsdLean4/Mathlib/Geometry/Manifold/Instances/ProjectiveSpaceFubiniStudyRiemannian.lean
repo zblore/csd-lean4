@@ -12,7 +12,7 @@ public import Mathlib.LinearAlgebra.Matrix.BilinearForm
 /-!
 # The Riemannian volume of the Fubini–Study metric is the symplectic volume over `n!`
 
-**Category:** 1-Mathlib-staging (the Kähler identity `vol_g = ω^{∧n}/n!` on `ℂℙⁿ`; G17 of
+**Category:** 1-Mathlib (the Kähler identity `vol_g = ω^{∧n}/n!` on `ℂℙⁿ`; G17 of
 `specs/generator-layer-scoping.md` §9).
 
 **TERM-SCOPE(Kahler)** **TERM-SCOPE(Liouville)** — this module identifies the Riemannian and

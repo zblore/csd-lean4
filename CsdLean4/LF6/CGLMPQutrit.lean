@@ -11,7 +11,7 @@ public import CsdLean4.Mathlib.Probability.CGLMP
 /-!
 # LF6-D (QM side): the maximally-entangled qutrit violates the CGLMP inequality
 
-**Category:** 6-Local (the `d = 3`-intrinsic Bell violation for `Ψ_3`, the QM-side
+**Category:** 3-Local (the `d = 3`-intrinsic Bell violation for `Ψ_3`, the QM-side
 payoff of the CGLMP infrastructure `Mathlib/Probability/CGLMP.lean`).
 
 The LF6-D non-factorisation of the general `d × d` maximally-entangled state `Ψ_d`

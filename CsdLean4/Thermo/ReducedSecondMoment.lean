@@ -10,7 +10,7 @@ public import CsdLean4.Thermo.CanonicalTypicality
 /-!
 # E1: the Fubini–Study second moment of the reduced state
 
-**Category:** conceptually 1-Mathlib (CSD-free quantum statistical mechanics), kept under
+**Category:** 3-Local (conceptually 1-Mathlib; CSD-free quantum statistical mechanics), kept under
 `CSD.Thermo` beside TH-1.
 
 The equilibration arc's first item (`specs/equilibration-arc-plan.md` E1) — in the Q24 scoping

@@ -12,7 +12,7 @@ public import CsdLean4.CV.ModeLocality
 /-!
 # CV-10: finite-cutoff power counting — the price scales with operator grade
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 The honest finite content of EFT power counting: grade an interaction by its
 **operator content** (how many quadrature factors), and track how the CV-9

@@ -15,7 +15,7 @@ public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** 1-Mathlib-staging (CSD-free; differential forms on normed spaces).
+**Category:** 1-Mathlib (CSD-free; differential forms on normed spaces).
 
 `KahlerClosed.lean` proved `dω = 0` for the **constant** fundamental form — the flat statement,
 where closedness is immediate because the form does not vary. This module takes the next step of

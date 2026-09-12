@@ -11,7 +11,7 @@ public import CsdLean4.Empirical.CSD.Crypto.B92Sequential
 /-!
 # Empirical/CSD/Crypto: Wiesner money — the measure-resend counterfeit, dynamically
 
-**Category:** CSD bridge (dynamical). An instantiation of the `BB84Sequential` engine on the
+**Category:** 3-Local (CSD bridge; dynamical). An instantiation of the `BB84Sequential` engine on the
 Wiesner mint/verify round — recorded as such: the counterfeit round is a genuine *sequential*
 measurement (the forger's measurement collapses the note, the bank then verifies), and that is
 exactly the calibrated-swap composition.

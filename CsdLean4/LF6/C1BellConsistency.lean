@@ -14,7 +14,7 @@ public import CsdLean4.RecordLayer.CircleFibre
 /-!
 # LF6/C1BellConsistency: no compatible global CHSH assignment
 
-**Category:** 6-Entanglement (the C1 four-answer obstruction).
+**Category:** 3-Local (the C1 four-answer obstruction).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/singlet-contextual-model/
 Plain-language, CSD-role and formal statements of the singlet contextual model, with

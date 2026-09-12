@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.Measurement
 /-!
 # CV/OscillatorBorn: the truncated mode as a record-layer measurement (EFT Stage 0)
 
-**Category:** CV (continuous variables — the single bosonic mode).
+**Category:** 3-Local (CV; continuous variables — the single bosonic mode).
 
 Turns the truncated single mode of `CV/OscillatorSpectrum.lean` from an *operator algebra* into a
 genuine **CSD reconstruction**, by wiring its number/energy measurement into the record layer

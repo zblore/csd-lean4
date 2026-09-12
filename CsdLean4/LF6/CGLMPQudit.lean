@@ -12,7 +12,7 @@ public import Mathlib.Analysis.Real.Pi.Bounds
 /-!
 # LF6-D (QM side, general `d`): `Ψ_d` violates the CGLMP inequality for every `d ≥ 2`
 
-**Category:** 6-Local (the general-`d`-intrinsic Bell violation for `Ψ_d`, the QM-side
+**Category:** 3-Local (the general-`d`-intrinsic Bell violation for `Ψ_d`, the QM-side
 payoff of the CGLMP infrastructure `Mathlib/Probability/CGLMP.lean`, extending the
 `d = 3` qutrit violation `CGLMPQutrit.cglmp_maxEntangled_qutrit_gt_two` to ALL `d ≥ 2`).
 

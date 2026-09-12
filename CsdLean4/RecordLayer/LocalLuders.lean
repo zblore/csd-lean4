@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.OnticMarginals
 /-!
 # SigmaLayer/LocalLuders: the local-measurement Lüders map and marginal invariance (brick 1)
 
-**Category:** dynamical measurement — dynamical no-signalling (A6, dynamical form), brick 1
+**Category:** 7-SigmaLayer (dynamical measurement) — dynamical no-signalling (A6, dynamical form), brick 1
 of the recorded route: *a local measurement on a composite is a block-degenerate measurement*.
 
 A measurement of the `B` factor of `ℂ^{nA} ⊗ ℂ^{nB}` in the computational basis acts by the

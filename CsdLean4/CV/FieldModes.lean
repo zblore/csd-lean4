@@ -10,7 +10,7 @@ public import CsdLean4.CV.OscillatorBorn
 /-!
 # CV/FieldModes: a free scalar field at a cutoff as a product of modes (EFT Stage 1)
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 Stage 1 of the EFT direction: a **free field at a cutoff** = finitely many modes, each a truncated
 oscillator. The field Hilbert space is the (truncated) tensor product of the single-mode spaces,

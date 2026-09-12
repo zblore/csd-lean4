@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.Measurement
 /-!
 # Empirical/CSD: the Hong–Ou–Mandel dip as an ontic typicality measure
 
-**Category:** CSD bridge (the ontic reading of `Empirical/QM/HongOuMandel.lean`).
+**Category:** 3-Local (CSD bridge; the ontic reading of `Empirical/QM/HongOuMandel.lean`).
 
 The QM module proves the coincidence *probability* is zero. This module gives that zero its
 ontic content: the coincidence outcome's **typicality measure on `Σ` is exactly `0`**, so the

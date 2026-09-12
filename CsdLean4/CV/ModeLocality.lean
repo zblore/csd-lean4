@@ -10,7 +10,7 @@ public import CsdLean4.CV.Dispersion
 /-!
 # CV/ModeLocality: commuting algebras of disjoint mode sets (EFT Stage 2b)
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 The **locality** half of EFT Stage 2, stated at the finite cutoff where it is actually true.
 

@@ -11,7 +11,7 @@ public import CsdLean4.SigmaLayer.MixedEnsemble
 /-!
 # SigmaLayer/MixedSwap: mixed preparations in the dynamical model
 
-**Category:** dynamical measurement — the recorded "mixed preparations" extension of the
+**Category:** 7-SigmaLayer (dynamical measurement) — the recorded "mixed preparations" extension of the
 swap closure.
 
 A mixed preparation is, ontically, a **two-stage sampling**: draw a spectral index `j` with

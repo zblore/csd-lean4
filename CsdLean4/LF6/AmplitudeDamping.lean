@@ -14,7 +14,7 @@ public import Mathlib.Order.Filter.AtTopBot.Basic
 /-!
 # LF6-2 (T1 tier): the qubit amplitude-damping (T1 relaxation) semigroup
 
-**Category:** 6-Local (the continuous-time open-system de-isolation frontier, the "living-history" tier).
+**Category:** 3-Local (the continuous-time open-system de-isolation frontier, the "living-history" tier).
 
 The companion of the T2 dephasing semigroup (`LF6/DephasingSemigroup.lean`). Where dephasing removes
 coherence but conserves populations, **amplitude damping** (T1 relaxation) transfers population from the

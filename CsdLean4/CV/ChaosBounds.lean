@@ -16,7 +16,7 @@ public import CsdLean4.Incubator.QuantumChaos.SpectralFormFactor
 /-!
 # Chaos diagnostics meet Stage 3: the light-cone gate and the echo price
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 The §H diagnostics (`Diagnostics`, `EchoBound`, `Otoc`,
 `SpectralFormFactor`) instantiated on the Stage-3 interacting field, where

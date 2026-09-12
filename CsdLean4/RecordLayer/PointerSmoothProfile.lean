@@ -12,7 +12,7 @@ public import Mathlib.Analysis.SpecialFunctions.SmoothTransition
 /-!
 # SigmaLayer/PointerSmoothProfile: `C^∞` ingredients for the ε-corridor witness
 
-**Category:** dynamical measurement — the `C^∞` ingredient upgrade recorded against the
+**Category:** 7-SigmaLayer (dynamical measurement) — the `C^∞` ingredient upgrade recorded against the
 fourth external review's "continuous, not smooth" finding (2026-08-03).
 
 The ε-corridor witness's transition profiles were trapezoids: `clampDiv` (`max`/`min` of a

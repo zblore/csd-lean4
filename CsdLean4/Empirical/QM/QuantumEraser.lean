@@ -10,6 +10,8 @@ public import CsdLean4.Empirical.Metrology.Ramsey
 /-!
 # Empirical/QM/QuantumEraser: the quantum eraser (complementarity + which-path erasure)
 
+**Category:** 3-Local (QM-validity twin, the quantum eraser).
+
 The **quantum eraser** demonstrates complementarity: entangling a system qubit (the two
 interferometer paths) with a **which-path marker** qubit destroys interference — but *erasing* the
 which-path information (measuring the marker in the conjugate basis) restores it, in the

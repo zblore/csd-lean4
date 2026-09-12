@@ -10,7 +10,7 @@ public import CsdLean4.LF4.MomentUniform
 /-!
 # LF4/HatBox: the Archimedes hat-box for the qubit (context-fixed measurement infra, A7)
 
-**Category:** 2-LF4 (Kähler / moment-map layer — sphere-measure infrastructure).
+**Category:** 3-Local (Kähler / moment-map layer — sphere-measure infrastructure).
 
 The single-axis crux integral for the **context-fixed** qubit measurement (Paper C A7,
 `specs/record-layer-plan.md` §2): the Fubini–Study average over `ℂℙ¹` of the Bloch height

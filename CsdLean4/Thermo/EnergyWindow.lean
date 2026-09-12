@@ -11,7 +11,7 @@ public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 /-!
 # E2: the microcanonical energy window
 
-**Category:** conceptually 1-Mathlib (CSD-free quantum statistical mechanics), kept under
+**Category:** 3-Local (conceptually 1-Mathlib; CSD-free quantum statistical mechanics), kept under
 `CSD.Thermo`.
 
 The equilibration arc's second item (`specs/equilibration-arc-plan.md` E2), **re-scoped by E3's

@@ -11,6 +11,8 @@ public import CsdLean4.LF4.BornRegionUncond
 /-!
 # Discharging the abundance hypothesis for Fubini–Study at `N ≥ 3`
 
+**Category:** 7-SigmaLayer (the Paper C A7 architecture, abundance for Fubini–Study).
+
 `SigmaLayer/ContextFixedA7.lean` proved the **cap** — a base-only, `U(N)`-covariant, non-negative
 preparation density `g` vanishes a.e. below `½` — **conditional** on an abundance hypothesis:
 that two overlap coordinates can jointly take values in any positive-measure set below `½`.

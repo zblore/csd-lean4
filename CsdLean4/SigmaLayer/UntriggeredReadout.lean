@@ -11,7 +11,7 @@ public import Mathlib.MeasureTheory.Measure.MeasureSpace
 /-!
 # SigmaLayer/UntriggeredReadout: the record of the untriggered flow is faithful
 
-**Category:** dynamical measurement — the statistics half of
+**Category:** 7-SigmaLayer (dynamical measurement) — the statistics half of
 `specs/frozen-base-obstruction-scoping.md` brick 2.
 
 ## What this closes, and what it does not

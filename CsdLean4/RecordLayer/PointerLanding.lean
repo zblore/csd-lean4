@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.PointerWeights
 /-!
 # SigmaLayer/PointerLanding: the landing theorem (brick 3)
 
-**Category:** dynamical measurement — the smooth-Hamiltonian witness route
+**Category:** 7-SigmaLayer (dynamical measurement) — the smooth-Hamiltonian witness route
 (`specs/pointer-witness-plan.md` brick 3).
 
 The geometry brick: it discharges the two distance hypotheses that `pointerEvolve_pure`

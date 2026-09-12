@@ -11,7 +11,7 @@ public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 /-!
 # Q27: what entanglement does to the weights — local observations are reduced-state expectations
 
-**Category:** CV (the composite arena's local statistics; BACKLOG Q27, queued
+**Category:** 3-Local (CV; the composite arena's local statistics; BACKLOG Q27, queued
 from the 2026-08-20 external physicist review).
 
 The question: for an entangled composite preparation, what are a local

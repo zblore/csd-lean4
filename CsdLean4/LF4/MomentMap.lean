@@ -83,7 +83,7 @@ simplex constraints, and the headline Born-weight identity. The ψ-dependence
 of preparations still enters through the preparation measure `μψ`, whose
 principled construction is the open `G3b` content.
 
-**Category:** conceptually 1-Mathlib (CSD-free projective/Kähler geometry); kept
+**Category:** 3-Local (conceptually 1-Mathlib; CSD-free projective/Kähler geometry); kept
 here in `CSD.LF4` for now as it drives the carve-out programme. Extraction
 candidate (cf. LF4-todo §10).
 -/

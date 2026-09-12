@@ -17,7 +17,7 @@ public import Mathlib.Analysis.Convex.StdSimplex
 — this module uses the *restricted* senses of these words; `specs/TERMS.md` records what is backed
 and what is not.
 
-**Category:** 1-Mathlib-staging in its mathematics; it consumes the corpus's `CSD.LF4.momentMap`
+**Category:** 1-Mathlib (1-Mathlib-staging in its mathematics; it consumes the corpus's `CSD.LF4.momentMap`).
 as the function whose manifold equation it proves.
 
 Bricks **G6**, **G8**, **G9** and **G10** of `specs/generator-layer-scoping.md`. The torus `T^{n+1}`

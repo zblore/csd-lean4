@@ -12,7 +12,7 @@ public import Mathlib.Geometry.Manifold.ContMDiff.Constructions
 /-!
 # `AddCircle T` is an analytic manifold, and so is the torus
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target `Mathlib.Geometry.Manifold.Instances`,
+**Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold.Instances`,
 beside `Sphere.lean`). Mathlib charts `Circle` (the unit complex numbers) and proves it an analytic
 Lie group, but `AddCircle T = ℝ ⧸ ℤ • T` — the type the corpus's torus fibre is built on — has no
 `ChartedSpace` at the pin, and `Mathlib/Geometry/Manifold/Instances/Quotient.lean` lists the

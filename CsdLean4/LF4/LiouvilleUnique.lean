@@ -15,7 +15,7 @@ public import Mathlib.MeasureTheory.Measure.Haar.Unique
 
 **TERM-SCOPE(Liouville)** — this module uses the *restricted* sense of "Liouville"; `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** 3-CSD. The `(b)` half of the A1 ontic-sector row in `specs/BACKLOG.md` — *"exhibit the
+**Category:** 3-Local (programme-specific content). The `(b)` half of the A1 ontic-sector row in `specs/BACKLOG.md` — *"exhibit the
 fibre measure as Liouville rather than merely Haar"*.
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/fibre/

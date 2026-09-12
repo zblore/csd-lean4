@@ -49,7 +49,7 @@ projected volume structure."
    machinery Mathlib lacks (MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm); the corpus
    stages it since 2026-09-08, `Instances/ProjectiveSpaceFubiniStudyVolume.lean`).
 
-**Category:** conceptually 1-Mathlib (affine/measure geometry); kept in `CSD.LF4`
+**Category:** 3-Local (conceptually 1-Mathlib; affine/measure geometry); kept in `CSD.LF4`
 as it drives the carve-out programme. Extraction candidate (LF4-todo §10).
 -/
 

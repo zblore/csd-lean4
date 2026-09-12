@@ -14,7 +14,7 @@ public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.Wedge
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler";
 `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** 1-Mathlib-staging (CSD-free).
+**Category:** 1-Mathlib (CSD-free).
 
 The consumer of
 [`Normed/Module/Alternating/Wedge.lean`](../Normed/Module/Alternating/Wedge.lean), and the

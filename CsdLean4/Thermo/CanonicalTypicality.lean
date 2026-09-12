@@ -14,7 +14,7 @@ public import Mathlib.Probability.Moments.Variance
 /-!
 # TH1: canonical typicality -- thermal equilibrium from Fubini-Study volume
 
-**Category:** conceptually 1-Mathlib (CSD-free general quantum statistical
+**Category:** 3-Local (conceptually 1-Mathlib; CSD-free general quantum statistical
 mechanics on the Fubini-Study Kaehler structure); kept under `CSD.Thermo` as the
 flagship first tranche of the thermodynamics track (`specs/thermo-plan.md`, TH1).
 

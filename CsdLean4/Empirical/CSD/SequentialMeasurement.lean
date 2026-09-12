@@ -12,7 +12,7 @@ public import CsdLean4.RecordLayer.SwapClosure
 /-!
 # Empirical/CSD/SequentialMeasurement: repeatability and sequential Born, from the dynamics
 
-**Category:** CSD-ontic empirical (the first entry consuming the v0.7.0–v1.0.0 dynamical
+**Category:** 3-Local (CSD-ontic empirical; the first entry consuming the v0.7.0–v1.0.0 dynamical
 measurement layer).
 
 ## What this tests

@@ -11,7 +11,7 @@ public import CsdLean4.CV.FreeFieldFloquet
 /-!
 # CV-6: dynamical mode locality — support is invariant under free evolution
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 `CV/ModeLocality.lean` proved the *kinematic* locality axiom: operators
 supported on disjoint mode sets commute (`commute_of_disjointSupport`). This

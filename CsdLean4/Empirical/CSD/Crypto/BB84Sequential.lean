@@ -14,7 +14,7 @@ public import CsdLean4.RecordLayer.RotatedSwap
 /-!
 # Empirical/CSD/Crypto: BB84 intercept-resend with a dynamical collapse step
 
-**Category:** CSD bridge (dynamical). The second empirical entry consuming the measurement
+**Category:** 3-Local (CSD bridge; dynamical). The second empirical entry consuming the measurement
 dynamics, and the first with a **cross-basis** sequential read.
 
 ## The dissolved gate

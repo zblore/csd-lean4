@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
 /-!
 # TH4: Landauer's principle (the thermodynamic cost of erasure)
 
-**Category:** conceptually 1-Mathlib (CSD-free general quantum statistical
+**Category:** 3-Local (conceptually 1-Mathlib; CSD-free general quantum statistical
 mechanics) with a CSD reading; kept in the `CSD.Thermo` tree alongside TH1–TH3.
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/landauer-principle/

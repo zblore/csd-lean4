@@ -10,7 +10,7 @@ public import CsdLean4.CV.ArenaBridge
 /-!
 # P1: the field-structured flow — the definitional layer, stated against the bridge
 
-**Category:** CV (continuous variables — P1's definitional half on top of the
+**Category:** 3-Local (CV; continuous variables — P1's definitional half on top of the
 arena bridge).
 
 `eft-pillars-plan.md` P1 asked for two things: the arena bridge (landed,

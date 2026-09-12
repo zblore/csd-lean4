@@ -12,7 +12,7 @@ public import Mathlib.Topology.Algebra.Module.Determinant
 /-!
 # Top-degree continuous alternating forms
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target
+**Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Analysis.Normed.Module.Alternating`).
 
 Milestone **M1** of `specs/top-power-scoping.md`. A continuous alternating form on `E` whose

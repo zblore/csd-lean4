@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.LocalLuders
 /-!
 # SigmaLayer/LocalLudersBasis: local measurements in every basis (brick 3a)
 
-**Category:** dynamical measurement — dynamical no-signalling (A6, dynamical form), brick 3a:
+**Category:** 7-SigmaLayer (dynamical measurement) — dynamical no-signalling (A6, dynamical form), brick 3a:
 the local Lüders map for an **arbitrary orthonormal basis** on the measured factor.
 
 `LocalLuders` handled the computational-basis marker measurement. The eraser's *erase* arm

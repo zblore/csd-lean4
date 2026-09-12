@@ -17,7 +17,7 @@ public import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 sense `specs/TERMS.md` records, and in the negative: this module makes it sayable and leaves it
 unproved. (Repository bookkeeping; it goes with the `References` block if sent upstream.)
 
-**Category:** 1-Mathlib-staging (CSD-free; upstream target
+**Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Geometry.Manifold`, beside the flat `Analysis/Calculus/DifferentialForm/`).
 
 **Step (2a) of the manifold exterior-calculus plan, completed** (`MATHLIB-GAPS.md`,

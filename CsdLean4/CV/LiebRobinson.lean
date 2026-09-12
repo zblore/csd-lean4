@@ -14,7 +14,7 @@ public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 /-!
 # CV-17/CV-18: the Heisenberg flow and the linear Lieb-Robinson bound
 
-**Category:** CV (continuous variables); the general lemmas are CSD-free
+**Category:** 3-Local (CV; continuous variables); the general lemmas are CSD-free
 (`upstream-candidate(mathlib)`).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/lieb-robinson-bound/

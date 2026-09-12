@@ -11,7 +11,7 @@ public import Mathlib.Analysis.ODE.ExistUnique
 /-!
 # SigmaLayer/ChartIntegralCurve: the integral curve of a chart Hamiltonian field
 
-**Category:** dynamical measurement — `specs/frozen-base-obstruction-scoping.md` brick 0.
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/frozen-base-obstruction-scoping.md` brick 0.
 
 ## What this closes
 

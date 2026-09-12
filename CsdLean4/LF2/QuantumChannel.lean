@@ -12,7 +12,7 @@ public import Mathlib.LinearAlgebra.Matrix.PosDef
 /-!
 # LF2/QuantumChannel: quantum channels (CPTP maps) — Kraus form + CPTP-forward (tranche 1)
 
-**Category:** 2-LF2 (the operational / Born layer).
+**Category:** 3-Local (the operational / Born layer).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/quantum-channel/
 Plain-language, CSD-role and formal statements of quantum channels, with

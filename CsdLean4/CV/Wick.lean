@@ -11,7 +11,7 @@ public import Mathlib.Data.Nat.Factorial.DoubleFactorial
 /-!
 # CV-23b: the time-separated four-point function — Wick's theorem with the phases on
 
-**Category:** CV (continuous variables — the multi-mode field).
+**Category:** 3-Local (CV; continuous variables — the multi-mode field).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/wick-theorem/
 Plain-language, CSD-role and formal statements of Wick's theorem at the cutoff, with

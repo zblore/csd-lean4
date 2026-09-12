@@ -13,7 +13,7 @@ public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
 
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; `specs/TERMS.md` records what is backed and what is not.
 
-**Category:** 1-Mathlib-staging (CSD-free; differential forms on normed spaces).
+**Category:** 1-Mathlib (CSD-free; differential forms on normed spaces).
 
 The A4 residue brick (BACKLOG §A, recorded 2026-08-06 as formalisable): Mathlib's
 pin carries `extDeriv` on normed spaces (`Analysis/Calculus/DifferentialForm/`),

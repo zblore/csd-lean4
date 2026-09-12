@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.NullSeamWitness
 /-!
 # SigmaLayer/NullSeamGeneralN: the third horn at every `N` (D3b)
 
-**Category:** dynamical measurement — the general-`N` null-seam witness
+**Category:** 7-SigmaLayer (dynamical measurement) — the general-`N` null-seam witness
 (`specs/BACKLOG.md` D3b; the two-cell witness is `NullSeamWitness.lean`).
 
 ## The construction

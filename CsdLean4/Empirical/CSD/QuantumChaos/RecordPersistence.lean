@@ -10,7 +10,7 @@ public import CsdLean4.Empirical.CSD.QuantumChaos.OnticLift
 /-!
 # Record persistence under post-record Floquet evolution (H3)
 
-**Category:** 6-Empirical-CSD (the CSD reading of stroboscopic dynamics).
+**Category:** 3-Local (the CSD reading of stroboscopic dynamics).
 
 The "preserves a formed record when the record sector is invariant" clause of
 the §H3 pilot. Setting: after a record has formed, the arena factors as

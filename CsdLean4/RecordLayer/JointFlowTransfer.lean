@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.PointerBorn
 /-!
 # SigmaLayer/JointFlowTransfer: back-reaction is harmless to records and Born
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` **A1**, the formalisable half of
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **A1**, the formalisable half of
 the joint-arena Hamiltonian route.
 
 ## The problem this solves

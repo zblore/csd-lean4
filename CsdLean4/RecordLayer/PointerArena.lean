@@ -11,7 +11,7 @@ public import CsdLean4.LF4.TypicalityForcing
 /-!
 # SigmaLayer/PointerArena: the compact Kähler pointer — arena, regions, ready state (brick 0)
 
-**Category:** dynamical measurement — the smooth-Hamiltonian witness route
+**Category:** 7-SigmaLayer (dynamical measurement) — the smooth-Hamiltonian witness route
 (`specs/pointer-witness-plan.md` brick 0; the ★ L backlog item, route confirmed 2026-08-03).
 
 The torus-flux correction (2026-08-02, `RecordLayer/PiecewiseHamiltonian.lean`) showed the landed

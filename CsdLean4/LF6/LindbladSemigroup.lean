@@ -12,7 +12,7 @@ public import Mathlib.Analysis.SpecialFunctions.Exponential
 /-!
 # The Lindblad semigroup: the exponentiated GKSL tier (§Q Q5, LF6-9)
 
-**Category:** 4-LF (open-system dynamics). The generator tier
+**Category:** 3-Local (open-system dynamics). The generator tier
 (`LF6/LindbladGenerator.lean`) built `ℒ(ρ) = −i[H,ρ] + Σₖ D_{Lₖ}(ρ)` and
 proved trace annihilation, Hermiticity preservation, and complete
 positivity of the jump part. This module exponentiates: `Φₜ = e^{tℒ}`, for

@@ -11,7 +11,7 @@ public import Mathlib.Analysis.SpecialFunctions.Arsinh
 /-!
 # P4: the dispersion earned — covariance selects `ω = √(p² + m²)`
 
-**Category:** CV (continuous variables — relativistic structure forced, not
+**Category:** 3-Local (CV; continuous variables — relativistic structure forced, not
 defined; `eft-pillars-plan.md` P4). ⚠️ **Scope (CR-8):** "relativistic structure" here is boost
 covariance of a *posited* `(E, p)`-plane cone. The plane, the cone and the boost family are set up;
 what is earned is that covariance selects `ω = √(p² + m²)` among dispersions on them. No Lorentz

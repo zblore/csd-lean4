@@ -12,7 +12,7 @@ public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 /-!
 # LF6-9: the general Lindblad (GKSL) generator and its CPTP-generating structure
 
-**Category:** 6-Local (the continuous-time open-system de-isolation frontier — the generator tier).
+**Category:** 3-Local (the continuous-time open-system de-isolation frontier — the generator tier).
 
 `LF6/DephasingSemigroup.lean` and `LF6/AmplitudeDamping.lean` exhibit the two canonical qubit dissipators
 (T2 dephasing, T1 amplitude damping) **directly**, as the exact solutions of their master equations —

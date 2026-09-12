@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.JoinClosure
 /-!
 # SigmaLayer/PovmSectorBorn: the POVM Born rule at the protocol-sector level
 
-**Category:** dynamical measurement — `specs/BACKLOG.md` **B4**, discharging the scope
+**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **B4**, discharging the scope
 note the 2026-08-04 audit added to `PovmDynamics.lean`.
 
 ## What was wrong, and what this fixes

@@ -12,7 +12,7 @@ public import CsdLean4.RecordLayer.SmoothProfile
 /-!
 # SigmaLayer/PointerWeights: the selector-modulated weight field and the arena propagator (brick 2b)
 
-**Category:** dynamical measurement — the smooth-Hamiltonian witness route
+**Category:** 7-SigmaLayer (dynamical measurement) — the smooth-Hamiltonian witness route
 (`specs/pointer-witness-plan.md` brick 2, weight-field half).
 
 The weight of outcome `j` at the ontic point `x = (p, θ, ·)` is a **circle-intrinsic
