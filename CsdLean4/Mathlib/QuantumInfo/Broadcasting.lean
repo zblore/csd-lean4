@@ -11,10 +11,10 @@ public import Mathlib.Analysis.Matrix.Order
 public import Mathlib.Analysis.InnerProductSpace.JointEigenspace
 
 /-!
-# Broadcasting: the commuting half of BCFJS, support confinement, and the cloning core
+# Broadcasting: the commuting half of BCFJS, support confinement, and disjoint supports
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate). Row **BC** of
-`specs/BACKLOG.md` (the BCFJS `iff` of `Empirical/QM/NoBroadcasting.lean`), milestones BC1–BC2.
+`specs/BACKLOG.md` (the BCFJS `iff` of `Empirical/QM/NoBroadcasting.lean`), milestones BC1–BC3.
 
 A channel `Φ : ℂⁿ → ℂⁿ ⊗ ℂⁿ` **broadcasts** `ρ` when both marginals of `Φ ρ` are `ρ`
 (`Channel.Broadcasts`). Barnum–Caves–Fuchs–Jozsa–Schumacher (1996): a pair of states can be
@@ -45,17 +45,31 @@ structural lemma every proof of the other half rests on, and the rank-one case o
   projector), and trace preservation read on the two vectors
   (`Channel.star_dotProduct_eq_sum_kraus`) gives `⟨φ|ψ⟩ = ⟨φ|ψ⟩² ∑ᵢ conj bᵢ aᵢ` with
   `|∑ᵢ conj bᵢ aᵢ| ≤ 1` by Cauchy–Schwarz (`norm_star_dotProduct_sq_le`). This is the
-  no-cloning theorem at channel level, and the rank-one case of the hard half.
+  no-cloning theorem at channel level, and the rank-one case of the hard half;
+* `suppProj A` — **the support projector**, the orthogonal projector onto the range of `A`
+  (`Submodule.starProjection` read as a matrix): Hermitian, idempotent, `suppProj A * A = A`, and
+  `suppProj A x = x ↔ x ∈ range A` (`suppProj_mulVec_eq_self_iff`);
+* `nsq` (the squared norm `Re ⟨v|v⟩`), `IsHermitian.exists_top_eigenvalue` — the top eigenvalue
+  of a Hermitian matrix bounds its Rayleigh quotient and is attained by a unit eigenvector;
+  `nsq_proj_mulVec_le`, `proj_mulVec_eq_self_of_nsq_eq` — a projector contracts, with equality
+  only on its range; `re_star_dotProduct_kronecker_mulVec_le` — **the tensor bound**
+  `⟨x|Q ⊗ Q|x⟩ ≤ μ² ‖x‖²` from `⟨z|Q|z⟩ ≤ μ ‖z‖²`, through the identity
+  `μ² − Q ⊗ Q = μ (μ − Q) ⊗ 1 + Q ⊗ (μ − Q)`;
+* ★★ `Channel.Broadcasts.mul_eq_zero_of_range_disjoint` — **BC3: broadcast states with disjoint
+  supports have orthogonal supports**, `B A = 0`. With `Q = P_A P_B P_A` and its top eigenvalue
+  `μ`, attained at `u ∈ range A`, and `w = P_B u ∈ range B`: `μ = ⟨w|u⟩ = ∑ᵢ ⟨Kᵢ w|Kᵢ u⟩`, each
+  term is `⟨Kᵢ w|(G ⊗ G) Kᵢ u⟩` by confinement, the tensor bound and Cauchy–Schwarz give
+  `μ ≤ μ √μ`, so `μ ∈ {0, 1}`; `μ = 1` would put `u` in both ranges. BC2 is the rank-one case.
 
 ## What is not here
 
 The hard half for mixed states (broadcast ⇒ commute). The literature proves it through fidelity
 monotonicity (BCFJS) or the equality case of the relative-entropy data-processing inequality
 (Lindblad), neither of which is in Mathlib or in this corpus. `specs/BACKLOG.md` row BC records an
-elementary route through the support confinement above (BC3–BC6: disjoint supports are orthogonal
-by the overlap bound; a cloned subspace splits a broadcast state into blocks each broadcast; the
-segment through two states meets the boundary of the cone at rank-deficient states; induction on
-the rank of `ρ + σ`), priced there.
+elementary route through the support confinement above; BC3 (this file) is its first brick, and
+BC4–BC6 remain: a cloned subspace splits a broadcast state into blocks each broadcast; the segment
+through two states meets the boundary of the cone at rank-deficient states; induction on the rank
+of `ρ + σ`.
 
 ## Source
 
@@ -616,5 +630,411 @@ theorem Channel.Broadcasts.star_dotProduct_eq_zero_or_norm_eq_one {ψ φ : n →
     exact le_antisymm hc1 this
 
 end PurePure
+
+
+/-! ### The support projector of a matrix -/
+
+section SupportProjector
+
+/-- The orthogonal projector onto the range of `A`, as a matrix. -/
+noncomputable def suppProj (A : Matrix n n ℂ) : Matrix n n ℂ :=
+  Matrix.toEuclideanLin.symm
+    ((LinearMap.range (Matrix.toEuclideanLin A)).starProjection :
+      EuclideanSpace ℂ n →ₗ[ℂ] EuclideanSpace ℂ n)
+
+theorem toEuclideanLin_suppProj (A : Matrix n n ℂ) :
+    Matrix.toEuclideanLin (suppProj A)
+      = ((LinearMap.range (Matrix.toEuclideanLin A)).starProjection :
+          EuclideanSpace ℂ n →ₗ[ℂ] EuclideanSpace ℂ n) := by
+  rw [suppProj, LinearEquiv.apply_symm_apply]
+
+theorem suppProj_mulVec (A : Matrix n n ℂ) (x : n → ℂ) :
+    suppProj A *ᵥ x
+      = WithLp.ofLp ((LinearMap.range (Matrix.toEuclideanLin A)).starProjection (WithLp.toLp 2 x)) := by
+  have := congrArg (fun L => WithLp.ofLp (L (WithLp.toLp 2 x))) (toEuclideanLin_suppProj A)
+  simpa [Matrix.toLpLin_apply] using this
+
+theorem suppProj_mulVec_eq_self_iff (A : Matrix n n ℂ) (x : n → ℂ) :
+    suppProj A *ᵥ x = x ↔ ∃ y, A *ᵥ y = x := by
+  rw [suppProj_mulVec]
+  constructor
+  · intro h
+    have h' : (LinearMap.range (Matrix.toEuclideanLin A)).starProjection (WithLp.toLp 2 x)
+        = WithLp.toLp 2 x := by
+      apply WithLp.ofLp_injective
+      simpa using h
+    obtain ⟨y, hy⟩ := Submodule.starProjection_eq_self_iff.mp h'
+    refine ⟨WithLp.ofLp y, ?_⟩
+    have := congrArg WithLp.ofLp hy
+    simpa [Matrix.toLpLin_apply] using this
+  · rintro ⟨y, rfl⟩
+    have hmem : WithLp.toLp 2 (A *ᵥ y) ∈ LinearMap.range (Matrix.toEuclideanLin A) :=
+      ⟨WithLp.toLp 2 y, by simp [Matrix.toLpLin_apply]⟩
+    rw [Submodule.starProjection_eq_self_iff.mpr hmem]
+
+theorem suppProj_mul_self (A : Matrix n n ℂ) : suppProj A * suppProj A = suppProj A := by
+  apply Matrix.toEuclideanLin.injective
+  rw [Matrix.toLpLin_mul_same, toEuclideanLin_suppProj]
+  exact congrArg ContinuousLinearMap.toLinearMap
+    (LinearMap.range (Matrix.toEuclideanLin A)).isIdempotentElem_starProjection
+
+theorem suppProj_isHermitian (A : Matrix n n ℂ) : (suppProj A).IsHermitian := by
+  rw [← Matrix.isSymmetric_toEuclideanLin_iff, toEuclideanLin_suppProj]
+  exact (LinearMap.range (Matrix.toEuclideanLin A)).starProjection_isSymmetric
+
+theorem suppProj_mul (A : Matrix n n ℂ) : suppProj A * A = A := by
+  ext i j
+  have h := (suppProj_mulVec_eq_self_iff A (A *ᵥ Pi.single j 1)).mpr ⟨_, rfl⟩
+  have := congrFun h i
+  simpa [Matrix.mul_apply, Matrix.mulVec, dotProduct, Pi.single_apply] using this
+
+theorem mul_suppProj_of_isHermitian {A : Matrix n n ℂ} (hA : A.IsHermitian) :
+    A * suppProj A = A := by
+  have := congrArg conjTranspose (suppProj_mul A)
+  rwa [conjTranspose_mul, (suppProj_isHermitian A).eq, hA.eq] at this
+
+end SupportProjector
+
+/-! ### Squared norms, and the top eigenvalue of a Hermitian matrix -/
+
+section Norm
+
+omit [DecidableEq n] in
+/-- `‖v‖²` as the real part of `⟨v|v⟩`. -/
+def nsq (v : n → ℂ) : ℝ := (star v ⬝ᵥ v).re
+
+omit [DecidableEq n] in
+theorem nsq_eq_sum (v : n → ℂ) : nsq v = ∑ i, ‖v i‖ ^ 2 := by
+  simp only [nsq, dotProduct, Pi.star_apply, Complex.re_sum]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [Complex.star_def, Complex.conj_mul', ← Complex.ofReal_pow, Complex.ofReal_re]
+
+omit [DecidableEq n] in
+theorem nsq_nonneg (v : n → ℂ) : 0 ≤ nsq v := by
+  rw [nsq_eq_sum]; positivity
+
+omit [DecidableEq n] in
+theorem nsq_eq_zero_iff (v : n → ℂ) : nsq v = 0 ↔ v = 0 := by
+  rw [nsq_eq_sum]
+  constructor
+  · intro h
+    have := (Finset.sum_eq_zero_iff_of_nonneg fun i _ => sq_nonneg ‖v i‖).mp h
+    funext i
+    simpa using this i (Finset.mem_univ i)
+  · rintro rfl; simp
+
+omit [DecidableEq n] in
+theorem star_dotProduct_self_eq_nsq (v : n → ℂ) : star v ⬝ᵥ v = (nsq v : ℂ) := by
+  rw [nsq_eq_sum, Complex.ofReal_sum]
+  simp only [dotProduct, Pi.star_apply]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [Complex.star_def, Complex.conj_mul', Complex.ofReal_pow]
+
+omit [DecidableEq n] in
+theorem nsq_mulVec {m : Type*} [Fintype m] (M : Matrix m n ℂ) (x : n → ℂ) :
+    nsq (M *ᵥ x) = (star x ⬝ᵥ ((Mᴴ * M) *ᵥ x)).re := by
+  rw [nsq, star_mulVec, dotProduct_mulVec, dotProduct_mulVec, Matrix.vecMul_vecMul]
+
+omit [DecidableEq n] in
+theorem nsq_smul (c : ℂ) (v : n → ℂ) : nsq (c • v) = ‖c‖ ^ 2 * nsq v := by
+  simp only [nsq_eq_sum, Pi.smul_apply, smul_eq_mul, norm_mul, mul_pow, Finset.mul_sum]
+
+omit [DecidableEq n] in
+/-- `⟨z| P_k |z⟩ = |⟨v_k|z⟩|²` for the rank-one projector of a basis vector. -/
+theorem star_dotProduct_onbProj_mulVec (b : OrthonormalBasis n ℂ (EuclideanSpace ℂ n)) (k : n)
+    (z : n → ℂ) :
+    star z ⬝ᵥ (onbProj b k *ᵥ z) = ((‖star (onbVec b k) ⬝ᵥ z‖ ^ 2 : ℝ) : ℂ) := by
+  rw [onbProj, vecMulVec_mulVec', dotProduct_smul, smul_eq_mul, star_dotProduct z (onbVec b k),
+    Complex.star_def, Complex.mul_conj', Complex.ofReal_pow]
+
+end Norm
+
+section TopEigenvalue
+
+/-- **The top eigenvalue of a Hermitian matrix** bounds its Rayleigh quotient and is attained by
+a unit eigenvector: from `Matrix.IsHermitian.eigenvectorBasis` and completeness. -/
+theorem IsHermitian.exists_top_eigenvalue [Nonempty n] {Q : Matrix n n ℂ} (hQ : Q.IsHermitian) :
+    ∃ (μ : ℝ) (u : n → ℂ), star u ⬝ᵥ u = 1 ∧ Q *ᵥ u = (μ : ℂ) • u ∧
+      ∀ z, (star z ⬝ᵥ (Q *ᵥ z)).re ≤ μ * nsq z := by
+  set b := hQ.eigenvectorBasis with hb
+  set r := hQ.eigenvalues with hr
+  have hdiag : ∀ k, Q *ᵥ onbVec b k = ((r k : ℝ) : ℂ) • onbVec b k := by
+    intro k
+    have := hQ.mulVec_eigenvectorBasis k
+    rw [RCLike.real_smul_eq_coe_smul (K := ℂ)] at this
+    exact this
+  obtain ⟨k₀, -, hk₀⟩ := Finset.exists_max_image Finset.univ r Finset.univ_nonempty
+  refine ⟨r k₀, onbVec b k₀, star_onbVec_dotProduct_self b k₀, hdiag k₀, fun z => ?_⟩
+  have hQz : Q *ᵥ z = ∑ k, ((r k : ℝ) : ℂ) • (onbProj b k *ᵥ z) := by
+    rw [eq_sum_smul_onbProj b hdiag, Matrix.sum_mulVec]
+    refine Finset.sum_congr rfl fun k _ => ?_
+    rw [Matrix.smul_mulVec]
+  have hz : nsq z = ∑ k, ‖star (onbVec b k) ⬝ᵥ z‖ ^ 2 := by
+    have h1 : star z ⬝ᵥ z = star z ⬝ᵥ ((∑ k, onbProj b k) *ᵥ z) := by
+      rw [sum_onbProj, Matrix.one_mulVec]
+    rw [nsq, h1, Matrix.sum_mulVec, dotProduct_sum, Complex.re_sum]
+    refine Finset.sum_congr rfl fun k _ => ?_
+    rw [star_dotProduct_onbProj_mulVec, Complex.ofReal_re]
+  rw [hQz, dotProduct_sum, Complex.re_sum, hz, Finset.mul_sum]
+  refine Finset.sum_le_sum fun k _ => ?_
+  rw [dotProduct_smul, star_dotProduct_onbProj_mulVec, smul_eq_mul, ← Complex.ofReal_mul,
+    Complex.ofReal_re]
+  exact mul_le_mul_of_nonneg_right (hk₀ k (Finset.mem_univ k)) (sq_nonneg _)
+
+end TopEigenvalue
+
+/-! ### Projector inequalities -/
+
+section Projector
+
+omit [DecidableEq n] in
+theorem posSemidef_of_isHermitian_of_re_nonneg {M : Matrix n n ℂ} (hM : M.IsHermitian)
+    (h : ∀ x, 0 ≤ (star x ⬝ᵥ M *ᵥ x).re) : M.PosSemidef := by
+  refine Matrix.PosSemidef.of_dotProduct_mulVec_nonneg hM fun x => ?_
+  rw [Complex.nonneg_iff]
+  exact ⟨h x, (hM.im_star_dotProduct_mulVec_self x).symm⟩
+
+omit [DecidableEq n] in
+theorem nsq_mulVec_of_proj {P : Matrix n n ℂ} (hP : P.IsHermitian) (hP2 : P * P = P) (x : n → ℂ) :
+    nsq (P *ᵥ x) = (star x ⬝ᵥ P *ᵥ x).re := by
+  rw [nsq_mulVec, hP.eq, hP2]
+
+omit [Fintype n] in
+theorem one_sub_proj_isHermitian {P : Matrix n n ℂ} (hP : P.IsHermitian) : (1 - P).IsHermitian :=
+  isHermitian_one.sub hP
+
+theorem one_sub_proj_mul_self {P : Matrix n n ℂ} (hP2 : P * P = P) : (1 - P) * (1 - P) = 1 - P := by
+  rw [sub_mul, mul_sub, mul_sub, Matrix.one_mul, Matrix.mul_one, Matrix.one_mul, hP2]
+  abel
+
+theorem nsq_one_sub_proj_mulVec {P : Matrix n n ℂ} (hP : P.IsHermitian) (hP2 : P * P = P)
+    (x : n → ℂ) : nsq ((1 - P) *ᵥ x) = nsq x - nsq (P *ᵥ x) := by
+  rw [nsq_mulVec_of_proj (one_sub_proj_isHermitian hP) (one_sub_proj_mul_self hP2),
+    Matrix.sub_mulVec, Matrix.one_mulVec, dotProduct_sub, Complex.sub_re,
+    nsq_mulVec_of_proj hP hP2, nsq]
+
+/-- A projector is a contraction: `‖P x‖² ≤ ‖x‖²`. -/
+theorem nsq_proj_mulVec_le {P : Matrix n n ℂ} (hP : P.IsHermitian) (hP2 : P * P = P) (x : n → ℂ) :
+    nsq (P *ᵥ x) ≤ nsq x := by
+  have := nsq_nonneg ((1 - P) *ᵥ x)
+  rw [nsq_one_sub_proj_mulVec hP hP2] at this
+  linarith
+
+/-- Equality in the contraction forces `P x = x`. -/
+theorem proj_mulVec_eq_self_of_nsq_eq {P : Matrix n n ℂ} (hP : P.IsHermitian) (hP2 : P * P = P)
+    (x : n → ℂ) (h : nsq (P *ᵥ x) = nsq x) : P *ᵥ x = x := by
+  have h0 : nsq ((1 - P) *ᵥ x) = 0 := by rw [nsq_one_sub_proj_mulVec hP hP2, h, sub_self]
+  have := (nsq_eq_zero_iff _).mp h0
+  rw [Matrix.sub_mulVec, Matrix.one_mulVec, sub_eq_zero] at this
+  exact this.symm
+
+end Projector
+
+/-! ### The tensor bound `Q ⊗ Q ≤ μ²` -/
+
+section TensorBound
+
+/-- If `⟨z|Q|z⟩ ≤ μ ‖z‖²` for a Hermitian `Q ≥ 0` then `⟨x|Q ⊗ Q|x⟩ ≤ μ² ‖x‖²`: the identity
+`μ² − Q ⊗ Q = μ (μ − Q) ⊗ 1 + Q ⊗ (μ − Q)` with both terms positive semidefinite. -/
+theorem re_star_dotProduct_kronecker_mulVec_le {Q : Matrix n n ℂ} (hQ : Q.PosSemidef) {μ : ℝ}
+    (hμ : 0 ≤ μ) (hbound : ∀ z, (star z ⬝ᵥ (Q *ᵥ z)).re ≤ μ * nsq z) (x : n × n → ℂ) :
+    (star x ⬝ᵥ ((Q ⊗ₖ Q) *ᵥ x)).re ≤ μ ^ 2 * nsq x := by
+  have hμQ : ((μ : ℂ) • (1 : Matrix n n ℂ) - Q).PosSemidef := by
+    refine posSemidef_of_isHermitian_of_re_nonneg
+      ((isHermitian_one.smul (Complex.conj_ofReal μ)).sub hQ.1) fun z => ?_
+    rw [Matrix.sub_mulVec, dotProduct_sub, Complex.sub_re, Matrix.smul_mulVec, Matrix.one_mulVec,
+      dotProduct_smul, smul_eq_mul, Complex.re_ofReal_mul]
+    have := hbound z
+    unfold nsq at this
+    linarith
+  -- the identity `μ² − Q ⊗ Q = μ (μ − Q) ⊗ 1 + Q ⊗ (μ − Q)`
+  have hid : ((μ : ℂ) ^ 2) • (1 : Matrix (n × n) (n × n) ℂ) - Q ⊗ₖ Q
+      = (μ : ℂ) • (((μ : ℂ) • (1 : Matrix n n ℂ) - Q) ⊗ₖ (1 : Matrix n n ℂ))
+        + Q ⊗ₖ ((μ : ℂ) • (1 : Matrix n n ℂ) - Q) := by
+    ext ⟨a, c⟩ ⟨a', c'⟩
+    simp only [Matrix.sub_apply, Matrix.add_apply, Matrix.smul_apply, kronecker_apply,
+      Matrix.one_apply, Prod.mk.injEq, smul_eq_mul]
+    split_ifs <;> simp_all <;> ring
+  have hpsd1 : (((μ : ℂ) • (1 : Matrix n n ℂ) - Q) ⊗ₖ (1 : Matrix n n ℂ)).PosSemidef :=
+    hμQ.kronecker Matrix.PosSemidef.one
+  have hpsd2 : (Q ⊗ₖ ((μ : ℂ) • (1 : Matrix n n ℂ) - Q)).PosSemidef := hQ.kronecker hμQ
+  have h1 := hpsd1.dotProduct_mulVec_nonneg x
+  have h2 := hpsd2.dotProduct_mulVec_nonneg x
+  rw [Complex.nonneg_iff] at h1 h2
+  have hsub : (star x ⬝ᵥ ((((μ : ℂ) ^ 2) • (1 : Matrix (n × n) (n × n) ℂ) - Q ⊗ₖ Q) *ᵥ x)).re
+      = μ ^ 2 * nsq x - (star x ⬝ᵥ ((Q ⊗ₖ Q) *ᵥ x)).re := by
+    rw [Matrix.sub_mulVec, dotProduct_sub, Complex.sub_re, Matrix.smul_mulVec, Matrix.one_mulVec,
+      dotProduct_smul, smul_eq_mul, ← Complex.ofReal_pow, Complex.re_ofReal_mul, nsq]
+  have hre : 0 ≤ (star x ⬝ᵥ ((((μ : ℂ) ^ 2) • (1 : Matrix (n × n) (n × n) ℂ) - Q ⊗ₖ Q) *ᵥ x)).re := by
+    rw [hid, Matrix.add_mulVec, dotProduct_add, Complex.add_re, Matrix.smul_mulVec, dotProduct_smul,
+      smul_eq_mul, Complex.re_ofReal_mul]
+    exact add_nonneg (mul_nonneg hμ h1.1) h2.1
+  linarith
+
+end TensorBound
+
+/-! ### BC3: broadcast states with disjoint supports have orthogonal supports -/
+
+section DisjointSupports
+
+variable {ι : Type*} [Fintype ι] {Φ : Channel n (n × n) ι}
+
+/-- The squared norms of the Kraus images sum to the squared norm: `∑ᵢ ‖Kᵢ x‖² = ‖x‖²`. -/
+theorem Channel.sum_nsq_kraus_mulVec (Φ : Channel n (n × n) ι) (x : n → ℂ) :
+    ∑ i, nsq (Φ.kraus i *ᵥ x) = nsq x := by
+  simp only [nsq]
+  rw [Φ.star_dotProduct_eq_sum_kraus x x, Complex.re_sum]
+
+/-- ★★ **BC3. Broadcast states with disjoint supports have orthogonal supports.** If one channel
+broadcasts the positive semidefinite `A` and `B` and their ranges meet only in `0`, then `B A = 0`.
+With `P_A, P_B` the support projectors and `Q = P_A P_B P_A`, the top eigenvalue `μ` of `Q` with
+unit eigenvector `u ∈ range A` and `w = P_B u ∈ range B` gives `μ = ⟨w|u⟩ = ∑ᵢ ⟨Kᵢ w|Kᵢ u⟩`;
+support confinement puts `Kᵢ u` in `range A ⊗ range A` and `Kᵢ w` in `range B ⊗ range B`, the
+tensor bound `Q ⊗ Q ≤ μ²` and Cauchy–Schwarz give `μ ≤ μ √μ`, so `μ ∈ {0, 1}`; `μ = 1` would put
+`u` in both ranges, hence `μ = 0`, `P_B P_A = 0` and `B A = 0`. -/
+theorem Channel.Broadcasts.mul_eq_zero_of_range_disjoint {A B : Matrix n n ℂ}
+    (hA : A.PosSemidef) (hB : B.PosSemidef) (h1 : Φ.Broadcasts A) (h2 : Φ.Broadcasts B)
+    (hdisj : ∀ x, (∃ y, A *ᵥ y = x) → (∃ z, B *ᵥ z = x) → x = 0) : B * A = 0 := by
+  classical
+  rcases isEmpty_or_nonempty n with hempty | hne
+  · exact Matrix.ext fun i _ => (hempty.false i).elim
+  set PA := suppProj A with hPAdef
+  set PB := suppProj B with hPBdef
+  have hPA : PA.IsHermitian := suppProj_isHermitian A
+  have hPB : PB.IsHermitian := suppProj_isHermitian B
+  have hPA2 : PA * PA = PA := suppProj_mul_self A
+  have hPB2 : PB * PB = PB := suppProj_mul_self B
+  have hPAA : PA * A = A := suppProj_mul A
+  have hPBB : PB * B = B := suppProj_mul B
+  set G := PB * PA with hGdef
+  set Q := Gᴴ * G with hQdef
+  have hQherm : Q.IsHermitian := isHermitian_conjTranspose_mul_self G
+  have hQpsd : Q.PosSemidef := posSemidef_conjTranspose_mul_self G
+  obtain ⟨μ, u, hu1, hQu, hbound⟩ := IsHermitian.exists_top_eigenvalue hQherm
+  have hGz : ∀ z, nsq (G *ᵥ z) ≤ μ * nsq z := fun z => by rw [nsq_mulVec]; exact hbound z
+  have hnu : nsq u = 1 := by rw [nsq, hu1, Complex.one_re]
+  have hμ0 : 0 ≤ μ := by
+    have := nsq_nonneg (G *ᵥ u)
+    rwa [nsq_mulVec, hQu, dotProduct_smul, hu1, smul_eq_mul, mul_one, Complex.ofReal_re] at this
+  -- it suffices to show `G = 0`
+  suffices hG : G = 0 by
+    calc B * A = B * PB * (PA * A) := by rw [hPAA, mul_suppProj_of_isHermitian hB.1]
+      _ = B * G * A := by rw [hGdef, Matrix.mul_assoc, Matrix.mul_assoc, Matrix.mul_assoc]
+      _ = 0 := by rw [hG, Matrix.mul_zero, Matrix.zero_mul]
+  by_cases hμ : μ = 0
+  · rw [Matrix.ext_iff_mulVec]
+    intro z
+    rw [Matrix.zero_mulVec, ← nsq_eq_zero_iff]
+    have := hGz z
+    rw [hμ, zero_mul] at this
+    exact le_antisymm this (nsq_nonneg _)
+  exfalso
+  have hμpos : 0 < μ := lt_of_le_of_ne hμ0 (Ne.symm hμ)
+  -- `u ∈ range A`
+  have hQeq : Q = PA * PB * PA := by
+    rw [hQdef, hGdef, conjTranspose_mul, hPB.eq, hPA.eq, Matrix.mul_assoc PA PB (PB * PA),
+      ← Matrix.mul_assoc PB PB PA, hPB2, Matrix.mul_assoc PA PB PA]
+  have hPAu : PA *ᵥ u = u := by
+    have hu : u = (μ⁻¹ : ℂ) • (Q *ᵥ u) := by
+      rw [hQu, smul_smul, ← Complex.ofReal_inv, ← Complex.ofReal_mul, inv_mul_cancel₀ hμ,
+        Complex.ofReal_one, one_smul]
+    have hPAQ : PA * Q = Q := by
+      rw [hQeq, ← Matrix.mul_assoc, ← Matrix.mul_assoc, hPA2]
+    calc PA *ᵥ u = PA *ᵥ ((μ⁻¹ : ℂ) • (Q *ᵥ u)) := by rw [← hu]
+      _ = (μ⁻¹ : ℂ) • ((PA * Q) *ᵥ u) := by rw [Matrix.mulVec_smul, Matrix.mulVec_mulVec]
+      _ = u := by rw [hPAQ, ← hu]
+  obtain ⟨y, hy⟩ := (suppProj_mulVec_eq_self_iff A u).mp hPAu
+  set w := PB *ᵥ u with hwdef
+  have hPBw : PB *ᵥ w = w := by rw [hwdef, Matrix.mulVec_mulVec, hPB2]
+  obtain ⟨z, hz⟩ := (suppProj_mulVec_eq_self_iff B w).mp hPBw
+  -- the two key scalars: `⟨u|P_B u⟩ = μ`
+  have huPBu : star u ⬝ᵥ (PB *ᵥ u) = (μ : ℂ) := by
+    have h := congrArg (fun v => star u ⬝ᵥ v) hQu
+    simp only [dotProduct_smul, hu1, smul_eq_mul, mul_one] at h
+    rw [hQeq, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, hPAu, dotProduct_mulVec] at h
+    have hPAu' : star u ᵥ* PA = star u := by rw [← hPA.eq, ← star_mulVec, hPAu]
+    rwa [hPAu'] at h
+  have hwu : star w ⬝ᵥ u = (μ : ℂ) := by
+    rw [hwdef, star_mulVec, ← dotProduct_mulVec, hPB.eq, huPBu]
+  have hnw : nsq w = μ := by
+    rw [hwdef, nsq_mulVec_of_proj hPB hPB2, huPBu, Complex.ofReal_re]
+  have hμ1 : μ ≤ 1 := by
+    have := nsq_proj_mulVec_le hPB hPB2 u
+    rwa [← hwdef, hnw, hnu] at this
+  -- trace preservation read on `(w, u)`
+  have hsum : (μ : ℂ) = ∑ i, star (Φ.kraus i *ᵥ w) ⬝ᵥ (Φ.kraus i *ᵥ u) := by
+    rw [← hwu]; exact Φ.star_dotProduct_eq_sum_kraus w u
+  -- support confinement of the Kraus images
+  have hKu : ∀ i, (PA ⊗ₖ PA) *ᵥ (Φ.kraus i *ᵥ u) = Φ.kraus i *ᵥ u := by
+    intro i
+    have := congrArg (fun M => M *ᵥ y) (h1.kronecker_mul_kraus_mul hA hPA hPA2 hPAA i)
+    simpa only [← Matrix.mulVec_mulVec, hy] using this
+  have hKw : ∀ i, (PB ⊗ₖ PB) *ᵥ (Φ.kraus i *ᵥ w) = Φ.kraus i *ᵥ w := by
+    intro i
+    have := congrArg (fun M => M *ᵥ z) (h2.kronecker_mul_kraus_mul hB hPB hPB2 hPBB i)
+    simpa only [← Matrix.mulVec_mulVec, hz] using this
+  -- each term is `⟨Kᵢ w|(G ⊗ G) Kᵢ u⟩`
+  have hPBPB : (PB ⊗ₖ PB).IsHermitian := by
+    rw [IsHermitian, conjTranspose_kronecker, hPB.eq]
+  have hGG : (PB ⊗ₖ PB) * (PA ⊗ₖ PA) = G ⊗ₖ G := by rw [← mul_kronecker_mul]
+  have hterm : ∀ i, star (Φ.kraus i *ᵥ w) ⬝ᵥ (Φ.kraus i *ᵥ u)
+      = star (Φ.kraus i *ᵥ w) ⬝ᵥ ((G ⊗ₖ G) *ᵥ (Φ.kraus i *ᵥ u)) := by
+    intro i
+    conv_lhs => rw [← hKw i, ← hKu i]
+    rw [star_mulVec, hPBPB.eq, ← dotProduct_mulVec,
+      Matrix.mulVec_mulVec (Φ.kraus i *ᵥ u) (PB ⊗ₖ PB) (PA ⊗ₖ PA), hGG]
+  -- the per-term bound `‖tᵢ‖ ≤ μ √pᵢ √qᵢ`
+  set p : ι → ℝ := fun i => nsq (Φ.kraus i *ᵥ w) with hpdef
+  set q : ι → ℝ := fun i => nsq (Φ.kraus i *ᵥ u) with hqdef
+  have hp : ∑ i, p i = μ := by rw [hpdef, Φ.sum_nsq_kraus_mulVec, hnw]
+  have hq : ∑ i, q i = 1 := by rw [hqdef, Φ.sum_nsq_kraus_mulVec, hnu]
+  have hterm_le : ∀ i, ‖star (Φ.kraus i *ᵥ w) ⬝ᵥ (Φ.kraus i *ᵥ u)‖
+      ≤ μ * (Real.sqrt (p i) * Real.sqrt (q i)) := by
+    intro i
+    rw [hterm i]
+    have hcs := norm_star_dotProduct_sq_le (Φ.kraus i *ᵥ w) ((G ⊗ₖ G) *ᵥ (Φ.kraus i *ᵥ u))
+    change ‖_‖ ^ 2 ≤ nsq (Φ.kraus i *ᵥ w) * nsq ((G ⊗ₖ G) *ᵥ (Φ.kraus i *ᵥ u)) at hcs
+    have hGGx : nsq ((G ⊗ₖ G) *ᵥ (Φ.kraus i *ᵥ u)) ≤ μ ^ 2 * q i := by
+      rw [nsq_mulVec, conjTranspose_kronecker, ← mul_kronecker_mul]
+      exact re_star_dotProduct_kronecker_mulVec_le hQpsd hμ0 hbound _
+    have hsq : ‖star (Φ.kraus i *ᵥ w) ⬝ᵥ ((G ⊗ₖ G) *ᵥ (Φ.kraus i *ᵥ u))‖ ^ 2
+        ≤ (μ * (Real.sqrt (p i) * Real.sqrt (q i))) ^ 2 := by
+      calc _ ≤ p i * (μ ^ 2 * q i) :=
+            hcs.trans (mul_le_mul_of_nonneg_left hGGx (nsq_nonneg _))
+        _ = (μ * (Real.sqrt (p i) * Real.sqrt (q i))) ^ 2 := by
+            rw [mul_pow, mul_pow, Real.sq_sqrt (nsq_nonneg _), Real.sq_sqrt (nsq_nonneg _)]
+            ring
+    exact (pow_le_pow_iff_left₀ (norm_nonneg _) (by positivity) two_ne_zero).mp hsq
+  -- summing: `μ ≤ μ √μ`
+  have hμle : μ ≤ μ * Real.sqrt μ := by
+    calc μ = ‖(μ : ℂ)‖ := by rw [Complex.norm_real, Real.norm_of_nonneg hμ0]
+      _ = ‖∑ i, star (Φ.kraus i *ᵥ w) ⬝ᵥ (Φ.kraus i *ᵥ u)‖ := by rw [← hsum]
+      _ ≤ ∑ i, ‖star (Φ.kraus i *ᵥ w) ⬝ᵥ (Φ.kraus i *ᵥ u)‖ := norm_sum_le _ _
+      _ ≤ ∑ i, μ * (Real.sqrt (p i) * Real.sqrt (q i)) := Finset.sum_le_sum fun i _ => hterm_le i
+      _ = μ * ∑ i, Real.sqrt (p i) * Real.sqrt (q i) := by rw [Finset.mul_sum]
+      _ ≤ μ * Real.sqrt μ := by
+          refine mul_le_mul_of_nonneg_left ?_ hμ0
+          have hcs := Finset.sum_mul_sq_le_sq_mul_sq Finset.univ
+            (fun i => Real.sqrt (p i)) (fun i => Real.sqrt (q i))
+          have hpp : ∑ i, Real.sqrt (p i) ^ 2 = μ := by
+            rw [← hp]; exact Finset.sum_congr rfl fun i _ => Real.sq_sqrt (nsq_nonneg _)
+          have hqq : ∑ i, Real.sqrt (q i) ^ 2 = 1 := by
+            rw [← hq]; exact Finset.sum_congr rfl fun i _ => Real.sq_sqrt (nsq_nonneg _)
+          rw [hpp, hqq, mul_one] at hcs
+          exact (Real.le_sqrt (Finset.sum_nonneg fun i _ => by positivity) hμ0).mpr hcs
+  have hμge : 1 ≤ μ := by
+    have h1' : μ * 1 ≤ μ * Real.sqrt μ := by rw [mul_one]; exact hμle
+    exact Real.one_le_sqrt.mp (le_of_mul_le_mul_left h1' hμpos)
+  have hμeq : μ = 1 := le_antisymm hμ1 hμge
+  -- `μ = 1` puts `u` in `range B` as well, so `u = 0`
+  have hPBu : PB *ᵥ u = u :=
+    proj_mulVec_eq_self_of_nsq_eq hPB hPB2 u (by rw [← hwdef, hnw, hnu, hμeq])
+  obtain ⟨z', hz'⟩ := (suppProj_mulVec_eq_self_iff B u).mp hPBu
+  have hu0 : u = 0 := hdisj u ⟨y, hy⟩ ⟨z', hz'⟩
+  have := hnu
+  rw [hu0, (nsq_eq_zero_iff (0 : n → ℂ)).mpr rfl] at this
+  exact zero_ne_one this
+
+end DisjointSupports
 
 end QuantumInfo

@@ -370,6 +370,72 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Channel.Broadcasts.star_dotProduct_eq_zero_or_norm_eq_one
 
+-- BC3 (2026-09-13): broadcast states with disjoint supports have orthogonal supports. The
+-- support projector suppProj A (starProjection onto the range, as a matrix), the top eigenvalue
+-- of a Hermitian matrix with its attaining unit eigenvector, the projector contraction with its
+-- equality case, the tensor bound <x|Q (x) Q|x> <= mu^2 |x|^2, and the mu <= mu sqrt(mu) squeeze
+-- through support confinement and trace preservation. BC2 is the rank-one case.
+
+/-- info: 'QuantumInfo.suppProj_mulVec_eq_self_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.suppProj_mulVec_eq_self_iff
+
+/-- info: 'QuantumInfo.suppProj_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.suppProj_mul_self
+
+/-- info: 'QuantumInfo.suppProj_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.suppProj_isHermitian
+
+/-- info: 'QuantumInfo.suppProj_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.suppProj_mul
+
+/-- info: 'QuantumInfo.mul_suppProj_of_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.mul_suppProj_of_isHermitian
+
+/-- info: 'QuantumInfo.nsq_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.nsq_eq_zero_iff
+
+/-- info: 'QuantumInfo.nsq_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.nsq_mulVec
+
+/-- info: 'QuantumInfo.star_dotProduct_onbProj_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.star_dotProduct_onbProj_mulVec
+
+/-- info: 'QuantumInfo.IsHermitian.exists_top_eigenvalue' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsHermitian.exists_top_eigenvalue
+
+/-- info: 'QuantumInfo.posSemidef_of_isHermitian_of_re_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.posSemidef_of_isHermitian_of_re_nonneg
+
+/-- info: 'QuantumInfo.nsq_proj_mulVec_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.nsq_proj_mulVec_le
+
+/-- info: 'QuantumInfo.proj_mulVec_eq_self_of_nsq_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.proj_mulVec_eq_self_of_nsq_eq
+
+/-- info: 'QuantumInfo.re_star_dotProduct_kronecker_mulVec_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.re_star_dotProduct_kronecker_mulVec_le
+
+/-- info: 'QuantumInfo.Channel.sum_nsq_kraus_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.sum_nsq_kraus_mulVec
+
+/-- info: 'QuantumInfo.Channel.Broadcasts.mul_eq_zero_of_range_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.Broadcasts.mul_eq_zero_of_range_disjoint
+
 /-- info: 'QuantumInfo.channel_traceDist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.channel_traceDist_le
