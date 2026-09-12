@@ -81,7 +81,8 @@ plan.
 > their `lake-manifest.json`). The SSA import cone is 56 `QuantumInfo` modules and is
 > `sorry`-free (static check). **`#print axioms` run 2026-09-12** at physlib `8b2b237` from `C:\zayn\physlib`:
 > `Sᵥₙ_strong_subadditivity`, `qRelativeEnt_joint_convexity`, `sandwichedRenyiEntropy_DPI_eq_one` are all
-> foundational-triple; the bridge `csd-qit-bridge` reads them in our vocabulary (`lieb-dpi-scoping.md` §6).
+> foundational-triple; the bridge `csd-qit-bridge` reads them in our vocabulary (`lieb-dpi-scoping.md` §6;
+> published at https://github.com/zblore/csd-qit-bridge, both dependencies by pinned revision).
 > What they DID add since the baseline, none of it consumable: `FiniteTarget.timeEvolution
 > = NormedSpace.exp(-(it/ℏ)•Ham)` (supersedes the "no generic time-evolution" note below —
 > but a thin wrapper; ours carries the C¹-Stone derivation and Kähler invariance), a

@@ -81,7 +81,7 @@ not the two-variable perspective). The **fork** was "build Lieb vs. axiom-state 
 (`specs/lieb-dpi-scoping.md` W4) it is three-way — build, bridge to physlib's sorry-free
 `Sᵥₙ_strong_subadditivity` on identical pins, or leave `hDPI` honest (the note's recommendation) — and
 its Gate 0 (`#print axioms` on the physlib theorem) ran and passed on 2026-09-12: the separate package
-`csd-qit-bridge` (outside this corpus; `specs/lieb-dpi-scoping.md` §6) produces `hDPI` verbatim from
+`csd-qit-bridge` (outside this corpus, https://github.com/zblore/csd-qit-bridge; `specs/lieb-dpi-scoping.md` §6) produces `hDPI` verbatim from
 physlib's data-processing inequality and states SSA for every density matrix in this file's vocabulary.
 This file isolates the wall as `hDPI` and does not paper it: the hypothesis stays explicit here so the
 corpus keeps its Mathlib-only footprint. The QIT-chain plan lists it as W9 (`specs/qit-chain-scoping.md`).
@@ -343,10 +343,11 @@ toolchains reconcile.
 
 **How it will be discharged, when they do.** `hDPI` is stated entirely in *this corpus's* vocabulary
 (`relEntropy`, `Matrix (a × b × c)`, `partialTraceRight`), so discharging it means producing a term of
-that `Prop` — which can be done **outside this repository**. The plan is a separate `csd-qit-bridge`
-package depending on both projects by tag, holding the adapter and the unconditional SSA. Neither
-project merges into the other, and `CsdLean4` keeps its Mathlib-only dependency footprint. See
-`specs/BACKLOG.md` (the operator-convexity L-row) and `REFERENCES.json`. -/
+that `Prop` — which is done **outside this repository**: the separate `csd-qit-bridge` package
+(https://github.com/zblore/csd-qit-bridge) depends on this corpus and on physlib by pinned revision and holds
+the adapter, the unconditional SSA and `hDPI` itself. Neither project merges into the other, and
+`CsdLean4` keeps its Mathlib-only dependency footprint. See `specs/BACKLOG.md` (the
+operator-convexity L-row), `specs/lieb-dpi-scoping.md` §6 and `REFERENCES.json`. -/
 
 /-- **Strong subadditivity from DPI (the conditional reduction — the K1-C deliverable).**
 

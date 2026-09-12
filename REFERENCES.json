@@ -737,6 +737,42 @@
         "CsdLean4/Empirical/CSD/SIC3Volume.lean"
       ],
       "note": "Harvested 2026-09-04 from the citing modules' `## Source` blocks. `venue` is the corpus's own reference string. `title` not recorded in the corpus; left null rather than supplied from memory."
+    },
+    {
+      "key": "Physlib2026",
+      "title": "physlib: a Lean 4 library for physics (QuantumInfo: strong subadditivity and relative-entropy data processing)",
+      "authors": [
+        "leanprover-community physlib contributors"
+      ],
+      "year": 2026,
+      "kind": "software",
+      "url": "https://github.com/leanprover-community/physlib",
+      "commit": "8b2b23701c07409f882c49e0bd290a214e44450c",
+      "commit_date": "2026-09-12",
+      "license": "Apache-2.0",
+      "toolchain": "leanprover/lean4:v4.33.0",
+      "mathlib_rev": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "cited_by": [
+        "CsdLean4/Mathlib/QuantumInfo/StrongSubadditivity.lean"
+      ],
+      "relevant_declarations": [
+        {
+          "name": "Sᵥₙ_strong_subadditivity",
+          "file": "QuantumInfo/Entropy/SSA.lean",
+          "why": "Unconditional strong subadditivity; #print axioms is the foundational triple (Gate 0 of specs/lieb-dpi-scoping.md, run 2026-09-12)."
+        },
+        {
+          "name": "sandwichedRenyiEntropy_DPI_eq_one",
+          "file": "QuantumInfo/Entropy/DPI.lean",
+          "why": "Data processing of the Umegaki relative entropy under every CPTP map; read back as the corpus's hDPI by the bridge."
+        },
+        {
+          "name": "qRelativeEnt_joint_convexity",
+          "file": "QuantumInfo/Entropy/DPI.lean",
+          "why": "Joint convexity, the deep input hDPI encodes."
+        }
+      ],
+      "note": "Not imported. Bridged from outside the corpus by https://github.com/zblore/csd-qit-bridge, which depends on this corpus and on physlib by pinned revision (route (b) of specs/lieb-dpi-scoping.md)."
     }
   ]
 }
