@@ -11,10 +11,10 @@ public import Mathlib.Analysis.Matrix.Order
 public import Mathlib.Analysis.InnerProductSpace.JointEigenspace
 
 /-!
-# Broadcasting: the commuting half of BCFJS, support confinement, and disjoint supports
+# Broadcasting: the commuting half of BCFJS, support confinement, block splitting, boundary points
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate). Row **BC** of
-`specs/BACKLOG.md` (the BCFJS `iff` of `Empirical/QM/NoBroadcasting.lean`), milestones BC1–BC3.
+`specs/BACKLOG.md` (the BCFJS `iff` of `Empirical/QM/NoBroadcasting.lean`), milestones BC1–BC5.
 
 A channel `Φ : ℂⁿ → ℂⁿ ⊗ ℂⁿ` **broadcasts** `ρ` when both marginals of `Φ ρ` are `ρ`
 (`Channel.Broadcasts`). Barnum–Caves–Fuchs–Jozsa–Schumacher (1996): a pair of states can be
@@ -59,17 +59,41 @@ structural lemma every proof of the other half rests on, and the rank-one case o
   supports have orthogonal supports**, `B A = 0`. With `Q = P_A P_B P_A` and its top eigenvalue
   `μ`, attained at `u ∈ range A`, and `w = P_B u ∈ range B`: `μ = ⟨w|u⟩ = ∑ᵢ ⟨Kᵢ w|Kᵢ u⟩`, each
   term is `⟨Kᵢ w|(G ⊗ G) Kᵢ u⟩` by confinement, the tensor bound and Cauchy–Schwarz give
-  `μ ≤ μ √μ`, so `μ ∈ {0, 1}`; `μ = 1` would put `u` in both ranges. BC2 is the rank-one case.
+  `μ ≤ μ √μ`, so `μ ∈ {0, 1}`; `μ = 1` would put `u` in both ranges. BC2 is the rank-one case;
+* `Matrix.PosSemidef.mul_eq_zero_of_trace_mul_eq_zero` (two positive semidefinite matrices with
+  `Tr (X Y) = 0` have `X Y = 0`), `Channel.star_dotProduct_adjoint_mulVec`
+  (`⟨v|Φ† P|v⟩ = ∑ᵢ ⟨Kᵢ v|P|Kᵢ v⟩`), `Channel.adjoint_kronecker_one_mulVec_eq_self` (the dual of
+  `P ⊗ 1` fixes a vector whose Kraus images lie in `range P ⊗ ℂⁿ`), and the partial-trace
+  identity `traceRight_kronecker_mul_mul_kronecker`,
+  `Tr_B ((A ⊗ B) Y (C ⊗ D)) = A · Tr_B (Y (1 ⊗ D B)) · C` (with its `traceLeft` twin);
+* ★ `Channel.Broadcasts.kronecker_mulVec_kraus_mulVec_sub` — **BC4 (i)**: if `Φ` broadcasts the
+  positive semidefinite `τ` and every Kraus operator maps a subspace `V ⊆ supp τ` into `V ⊗ V`,
+  then it maps `W = supp τ ⊖ V` into `W ⊗ W`: the dual `Φ† (P_V ⊗ 1)` fixes `V`, so its excess
+  over `P_V` is positive semidefinite with zero trace against `τ` and kills the support;
+* ★★ `Channel.Broadcasts.block_split` — **BC4: a cloned subspace splits a broadcast state into
+  blocks, each broadcast**: `P_V τ P_W = 0`, and `Φ` broadcasts `P_V τ P_V` and `P_W τ P_W`. The
+  cross blocks `Φ (P_V τ P_W)` are sandwiched between `P_V ⊗ P_V` and `P_W ⊗ P_W`
+  (`kraus_block_sandwich`), whose partial traces vanish because `P_W P_V = 0`;
+* `onbProjSet` (the projector onto the span of a subfamily of an orthonormal basis, with
+  `onbProjSet_mul_self` and `star_dotProduct_onbProjSet_mulVec`), `nsq_eq_sum_onb` (Parseval),
+  `re_star_dotProduct_mulVec_eq_sum_onb` (the Rayleigh quotient of a diagonalised matrix);
+* ★★ `exists_boundary_point` — **BC5: the segment through two distinct states meets the boundary
+  of the cone**: for positive semidefinite `ρ ≠ σ` of trace one there is `l ≥ 1` with
+  `σ + l (ρ − σ)` positive semidefinite and a kernel vector outside `ker (ρ + σ)`. The admissible
+  `l` form a closed bounded set (the traceless `ρ − σ` has a negative direction); at its
+  supremum, a missing kernel vector would let the eigenvalue-`0` eigenvectors (which lie in
+  `ker (ρ + σ)`, hence in `ker (ρ − σ)`) and the positive eigenvalues absorb a further step
+  `δ = ε / (μ + 1)`, contradicting maximality.
 
 ## What is not here
 
 The hard half for mixed states (broadcast ⇒ commute). The literature proves it through fidelity
 monotonicity (BCFJS) or the equality case of the relative-entropy data-processing inequality
 (Lindblad), neither of which is in Mathlib or in this corpus. `specs/BACKLOG.md` row BC records an
-elementary route through the support confinement above; BC3 (this file) is its first brick, and
-BC4–BC6 remain: a cloned subspace splits a broadcast state into blocks each broadcast; the segment
-through two states meets the boundary of the cone at rank-deficient states; induction on the rank
-of `ρ + σ`.
+elementary route through the support confinement above; BC3–BC5 (this file) are its bricks, and
+BC6 remains: the induction on the rank of `ρ + σ` that assembles them (with `V = S₁ ∩ S₂` for the
+boundary supports, `V = 0` is BC3 and `V ≠ 0` splits both boundary states by BC4 into blocks of
+smaller rank).
 
 ## Source
 
@@ -1036,5 +1060,651 @@ theorem Channel.Broadcasts.mul_eq_zero_of_range_disjoint {A B : Matrix n n ℂ}
   exact zero_ne_one this
 
 end DisjointSupports
+
+section BlockSplit
+
+variable {ι : Type*} [Fintype ι] {Φ : Channel n (n × n) ι}
+
+
+/-- Two positive semidefinite matrices with `Tr (X Y) = 0` satisfy `X Y = 0`. -/
+theorem _root_.Matrix.PosSemidef.mul_eq_zero_of_trace_mul_eq_zero {X Y : Matrix n n ℂ}
+    (hX : X.PosSemidef) (hY : Y.PosSemidef) (h : (X * Y).trace = 0) : X * Y = 0 := by
+  obtain ⟨C, hC⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hX.nonneg
+  obtain ⟨D, hD⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hY.nonneg
+  rw [star_eq_conjTranspose] at hC hD
+  subst hC hD
+  -- Tr (Cᴴ C Dᴴ D) = Tr ((D Cᴴ)ᴴ (D Cᴴ))
+  have h' : ((D * Cᴴ)ᴴ * (D * Cᴴ)).trace = 0 := by
+    rw [conjTranspose_mul, conjTranspose_conjTranspose, ← h]
+    -- Tr (C Dᴴ D Cᴴ) = Tr (Cᴴ C Dᴴ D)
+    rw [show C * Dᴴ * (D * Cᴴ) = (C * Dᴴ * D) * Cᴴ by simp only [Matrix.mul_assoc],
+      Matrix.trace_mul_comm]
+    simp only [Matrix.mul_assoc]
+  have hDC : D * Cᴴ = 0 := Matrix.trace_conjTranspose_mul_self_eq_zero_iff.mp h'
+  calc Cᴴ * C * (Dᴴ * D) = Cᴴ * (D * Cᴴ)ᴴ * D := by
+        rw [conjTranspose_mul, conjTranspose_conjTranspose, Matrix.mul_assoc, Matrix.mul_assoc,
+          Matrix.mul_assoc]
+    _ = 0 := by rw [hDC, conjTranspose_zero, Matrix.mul_zero, Matrix.zero_mul]
+
+/-- The dual of `P ⊗ 1` is contracted by `1` when `P` is a projector. -/
+theorem Channel.one_sub_adjoint_kronecker_one_posSemidef (Φ : Channel n (n × n) ι)
+    {P : Matrix n n ℂ} (hP : P.IsHermitian) (hP2 : P * P = P) :
+    ((1 : Matrix n n ℂ) - Φ.adjoint (P ⊗ₖ (1 : Matrix n n ℂ))).PosSemidef := by
+  have hPpsd : P.PosSemidef := by
+    have := posSemidef_conjTranspose_mul_self P
+    rwa [hP.eq, hP2] at this
+  have hQpsd : ((1 : Matrix n n ℂ) - P).PosSemidef := by
+    have := posSemidef_conjTranspose_mul_self ((1 : Matrix n n ℂ) - P)
+    rwa [(isHermitian_one.sub hP).eq, one_sub_proj_mul_self hP2] at this
+  refine Φ.adjoint_le_one (hPpsd.kronecker Matrix.PosSemidef.one) ?_
+  have : (1 : Matrix (n × n) (n × n) ℂ) - P ⊗ₖ (1 : Matrix n n ℂ)
+      = ((1 : Matrix n n ℂ) - P) ⊗ₖ (1 : Matrix n n ℂ) := by
+    ext ⟨a, c⟩ ⟨a', c'⟩
+    simp only [Matrix.sub_apply, kronecker_apply, Matrix.one_apply, Prod.mk.injEq]
+    split_ifs <;> simp_all
+  rw [this]
+  exact hQpsd.kronecker Matrix.PosSemidef.one
+
+theorem Channel.one_sub_adjoint_one_kronecker_posSemidef (Φ : Channel n (n × n) ι)
+    {P : Matrix n n ℂ} (hP : P.IsHermitian) (hP2 : P * P = P) :
+    ((1 : Matrix n n ℂ) - Φ.adjoint ((1 : Matrix n n ℂ) ⊗ₖ P)).PosSemidef := by
+  have hPpsd : P.PosSemidef := by
+    have := posSemidef_conjTranspose_mul_self P
+    rwa [hP.eq, hP2] at this
+  have hQpsd : ((1 : Matrix n n ℂ) - P).PosSemidef := by
+    have := posSemidef_conjTranspose_mul_self ((1 : Matrix n n ℂ) - P)
+    rwa [(isHermitian_one.sub hP).eq, one_sub_proj_mul_self hP2] at this
+  refine Φ.adjoint_le_one (Matrix.PosSemidef.one.kronecker hPpsd) ?_
+  have : (1 : Matrix (n × n) (n × n) ℂ) - (1 : Matrix n n ℂ) ⊗ₖ P
+      = (1 : Matrix n n ℂ) ⊗ₖ ((1 : Matrix n n ℂ) - P) := by
+    ext ⟨a, c⟩ ⟨a', c'⟩
+    simp only [Matrix.sub_apply, kronecker_apply, Matrix.one_apply, Prod.mk.injEq]
+    split_ifs <;> simp_all
+  rw [this]
+  exact Matrix.PosSemidef.one.kronecker hQpsd
+
+/-- `⟨v| Φ† P |v⟩ = ∑ᵢ ⟨Kᵢ v| P |Kᵢ v⟩`. -/
+theorem Channel.star_dotProduct_adjoint_mulVec (Φ : Channel n (n × n) ι)
+    (P : Matrix (n × n) (n × n) ℂ) (v : n → ℂ) :
+    star v ⬝ᵥ (Φ.adjoint P *ᵥ v)
+      = ∑ i, star (Φ.kraus i *ᵥ v) ⬝ᵥ (P *ᵥ (Φ.kraus i *ᵥ v)) := by
+  rw [Channel.adjoint_def, Matrix.sum_mulVec, dotProduct_sum]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, dotProduct_mulVec, star_mulVec]
+
+/-- The dual of `P ⊗ 1` fixes every vector `v` all of whose Kraus images lie in `range P ⊗ ℂⁿ`. -/
+theorem Channel.adjoint_kronecker_one_mulVec_eq_self (Φ : Channel n (n × n) ι)
+    {P : Matrix n n ℂ} (hP : P.IsHermitian) (hP2 : P * P = P) {v : n → ℂ}
+    (hv : ∀ i, (P ⊗ₖ (1 : Matrix n n ℂ)) *ᵥ (Φ.kraus i *ᵥ v) = Φ.kraus i *ᵥ v) :
+    Φ.adjoint (P ⊗ₖ (1 : Matrix n n ℂ)) *ᵥ v = v := by
+  have hle := Φ.one_sub_adjoint_kronecker_one_posSemidef hP hP2
+  have hzero : star v ⬝ᵥ (((1 : Matrix n n ℂ) - Φ.adjoint (P ⊗ₖ (1 : Matrix n n ℂ))) *ᵥ v) = 0 := by
+    rw [Matrix.sub_mulVec, Matrix.one_mulVec, dotProduct_sub, Φ.star_dotProduct_adjoint_mulVec,
+      Φ.star_dotProduct_eq_sum_kraus v v]
+    simp only [hv, sub_self]
+  have := (hle.dotProduct_mulVec_zero_iff v).mp hzero
+  rw [Matrix.sub_mulVec, Matrix.one_mulVec, sub_eq_zero] at this
+  exact this.symm
+
+theorem Channel.adjoint_one_kronecker_mulVec_eq_self (Φ : Channel n (n × n) ι)
+    {P : Matrix n n ℂ} (hP : P.IsHermitian) (hP2 : P * P = P) {v : n → ℂ}
+    (hv : ∀ i, ((1 : Matrix n n ℂ) ⊗ₖ P) *ᵥ (Φ.kraus i *ᵥ v) = Φ.kraus i *ᵥ v) :
+    Φ.adjoint ((1 : Matrix n n ℂ) ⊗ₖ P) *ᵥ v = v := by
+  have hle := Φ.one_sub_adjoint_one_kronecker_posSemidef hP hP2
+  have hzero : star v ⬝ᵥ (((1 : Matrix n n ℂ) - Φ.adjoint ((1 : Matrix n n ℂ) ⊗ₖ P)) *ᵥ v) = 0 := by
+    rw [Matrix.sub_mulVec, Matrix.one_mulVec, dotProduct_sub, Φ.star_dotProduct_adjoint_mulVec,
+      Φ.star_dotProduct_eq_sum_kraus v v]
+    simp only [hv, sub_self]
+  have := (hle.dotProduct_mulVec_zero_iff v).mp hzero
+  rw [Matrix.sub_mulVec, Matrix.one_mulVec, sub_eq_zero] at this
+  exact this.symm
+
+omit [DecidableEq n] in
+theorem star_dotProduct_proj_mulVec_eq_nsq {P : Matrix n n ℂ} (hP : P.IsHermitian)
+    (hP2 : P * P = P) (y : n → ℂ) : star y ⬝ᵥ (P *ᵥ y) = (nsq (P *ᵥ y) : ℂ) := by
+  apply Complex.ext
+  · rw [nsq_mulVec_of_proj hP hP2, Complex.ofReal_re]
+  · rw [Complex.ofReal_im]
+    simpa using hP.im_star_dotProduct_mulVec_self y
+
+omit [Fintype n] in
+theorem kronecker_one_sub_left (P : Matrix n n ℂ) :
+    ((1 : Matrix n n ℂ) - P) ⊗ₖ (1 : Matrix n n ℂ) = 1 - P ⊗ₖ (1 : Matrix n n ℂ) := by
+  ext ⟨a, c⟩ ⟨a', c'⟩
+  simp only [Matrix.sub_apply, kronecker_apply, Matrix.one_apply, Prod.mk.injEq]
+  split_ifs <;> simp_all
+
+omit [Fintype n] in
+theorem kronecker_one_sub_right (P : Matrix n n ℂ) :
+    (1 : Matrix n n ℂ) ⊗ₖ ((1 : Matrix n n ℂ) - P) = 1 - (1 : Matrix n n ℂ) ⊗ₖ P := by
+  ext ⟨a, c⟩ ⟨a', c'⟩
+  simp only [Matrix.sub_apply, kronecker_apply, Matrix.one_apply, Prod.mk.injEq]
+  split_ifs <;> simp_all
+
+/-- **BC4 (i): the complement of a cloned subspace inside the support is confined too.** If `Φ`
+broadcasts the positive semidefinite `τ`, `P_V` is a projector onto a subspace `V` of the support
+of `τ`, and every Kraus operator maps `V` into `V ⊗ V`, then every Kraus operator maps
+`W = supp τ ⊖ V` into `W ⊗ W`. The dual `Φ† (P_V ⊗ 1)` fixes `V`, so its excess over `P_V` is
+positive semidefinite with zero trace against `τ`, hence kills the support; on `W` this says every
+`Kᵢ w` lies in `V^⊥ ⊗ ℂⁿ`, symmetrically in `ℂⁿ ⊗ V^⊥`, and support confinement finishes. -/
+theorem Channel.Broadcasts.kronecker_mulVec_kraus_mulVec_sub {τ : Matrix n n ℂ}
+    (hτ : τ.PosSemidef) (h : Φ.Broadcasts τ)
+    {PV : Matrix n n ℂ} (hPV : PV.IsHermitian) (hPV2 : PV * PV = PV) (hsub : suppProj τ * PV = PV)
+    (hclone : ∀ i, (PV ⊗ₖ PV) * (Φ.kraus i * PV) = Φ.kraus i * PV) (i : ι) (x : n → ℂ) :
+    ((suppProj τ - PV) ⊗ₖ (suppProj τ - PV)) *ᵥ (Φ.kraus i *ᵥ ((suppProj τ - PV) *ᵥ x))
+      = Φ.kraus i *ᵥ ((suppProj τ - PV) *ᵥ x) := by
+  set PS := suppProj τ with hPSdef
+  have hPS : PS.IsHermitian := suppProj_isHermitian τ
+  have hPS2 : PS * PS = PS := suppProj_mul_self τ
+  have hPSτ : PS * τ = τ := suppProj_mul τ
+  have hPVPS : PV * PS = PV := by
+    have := congrArg conjTranspose hsub
+    rwa [conjTranspose_mul, hPS.eq, hPV.eq] at this
+  set PW := PS - PV with hPWdef
+  have hPSPW : PS * PW = PW := by rw [hPWdef, Matrix.mul_sub, hPS2, hsub]
+  have hPVPW : PV * PW = 0 := by rw [hPWdef, Matrix.mul_sub, hPVPS, hPV2, sub_self]
+  set w := PW *ᵥ x with hwdef
+  have hPSw : PS *ᵥ w = w := by rw [hwdef, Matrix.mulVec_mulVec, hPSPW]
+  obtain ⟨y, hy⟩ := (suppProj_mulVec_eq_self_iff τ w).mp hPSw
+  have hconf : (PS ⊗ₖ PS) *ᵥ (Φ.kraus i *ᵥ w) = Φ.kraus i *ᵥ w := by
+    have := congrArg (fun N => N *ᵥ y) (h.kronecker_mul_kraus_mul hτ hPS hPS2 hPSτ i)
+    simpa only [← Matrix.mulVec_mulVec, hy] using this
+  have hPVw : PV *ᵥ w = 0 := by rw [hwdef, Matrix.mulVec_mulVec, hPVPW, Matrix.zero_mulVec]
+  -- the generic half: a projector `R` on the product with `R (Kⱼ P_V v) = Kⱼ P_V v`,
+  -- `Tr (Φ† R · τ) = Tr (P_V τ)`, gives `R (Kⱼ w) = 0`
+  have key : ∀ R : Matrix (n × n) (n × n) ℂ, R.IsHermitian → R * R = R →
+      (∀ v, Φ.adjoint R *ᵥ (PV *ᵥ v) = PV *ᵥ v) →
+      (Φ.adjoint R * τ).trace = (PV * τ).trace →
+      ∀ j, R *ᵥ (Φ.kraus j *ᵥ w) = 0 := by
+    intro R hR hR2 hMv htrace j
+    set M := Φ.adjoint R with hMdef
+    have hRpsd : R.PosSemidef := by
+      have := posSemidef_conjTranspose_mul_self R
+      rwa [hR.eq, hR2] at this
+    have hMpsd : M.PosSemidef := Φ.adjoint_posSemidef hRpsd
+    have hM : M.IsHermitian := hMpsd.1
+    have hMPV : M * PV = PV := by
+      rw [Matrix.ext_iff_mulVec]; intro v; rw [← Matrix.mulVec_mulVec]; exact hMv v
+    have hPVM : PV * M = PV := by
+      have := congrArg conjTranspose hMPV
+      rwa [conjTranspose_mul, hM.eq, hPV.eq] at this
+    have hM0 : M - PV = (1 - PV)ᴴ * M * (1 - PV) := by
+      rw [(isHermitian_one.sub hPV).eq]
+      simp only [Matrix.sub_mul, Matrix.mul_sub, Matrix.one_mul, Matrix.mul_one, hMPV, hPVM, hPV2]
+      abel
+    have hM0psd : (M - PV).PosSemidef := by
+      rw [hM0]; exact hMpsd.conjTranspose_mul_mul_same _
+    have htr : ((M - PV) * τ).trace = 0 := by
+      rw [Matrix.sub_mul, Matrix.trace_sub, htrace, sub_self]
+    have hM0τ : (M - PV) * τ = 0 := hM0psd.mul_eq_zero_of_trace_mul_eq_zero hτ htr
+    have hwM : star w ⬝ᵥ (M *ᵥ w) = 0 := by
+      have h1 : M *ᵥ w = PV *ᵥ w + (M - PV) *ᵥ w := by rw [Matrix.sub_mulVec]; abel
+      have h3 : (M - PV) *ᵥ w = 0 := by
+        rw [← hy, Matrix.mulVec_mulVec, hM0τ, Matrix.zero_mulVec]
+      rw [h1, dotProduct_add, hPVw, h3]
+      simp
+    rw [hMdef, Φ.star_dotProduct_adjoint_mulVec] at hwM
+    simp only [star_dotProduct_proj_mulVec_eq_nsq hR hR2] at hwM
+    rw [← Complex.ofReal_sum, Complex.ofReal_eq_zero] at hwM
+    have := (Finset.sum_eq_zero_iff_of_nonneg fun k _ => nsq_nonneg _).mp hwM j (Finset.mem_univ j)
+    exact (nsq_eq_zero_iff _).mp this
+  -- first factor
+  have hR1 : (PV ⊗ₖ (1 : Matrix n n ℂ)).IsHermitian := by
+    rw [IsHermitian, conjTranspose_kronecker, conjTranspose_one, hPV.eq]
+  have hR1sq : (PV ⊗ₖ (1 : Matrix n n ℂ)) * (PV ⊗ₖ 1) = PV ⊗ₖ 1 := by
+    rw [← mul_kronecker_mul, hPV2, Matrix.one_mul]
+  have hfix1 : ∀ j v, (PV ⊗ₖ (1 : Matrix n n ℂ)) *ᵥ (Φ.kraus j *ᵥ (PV *ᵥ v))
+      = Φ.kraus j *ᵥ (PV *ᵥ v) := by
+    intro j v
+    have hc := congrArg (fun N => N *ᵥ v) (hclone j)
+    simp only [← Matrix.mulVec_mulVec] at hc
+    conv_lhs => rw [← hc]
+    rw [Matrix.mulVec_mulVec, ← mul_kronecker_mul, hPV2, Matrix.one_mul, hc]
+  have h1 := key (PV ⊗ₖ 1) hR1 hR1sq
+    (fun v => Φ.adjoint_kronecker_one_mulVec_eq_self hPV hPV2 (hfix1 · v))
+    (by rw [← Φ.adjoint_trace_mul, ← trace_traceRight, traceRight_kronecker_one_mul, h.1]) i
+  -- second factor
+  have hR2 : ((1 : Matrix n n ℂ) ⊗ₖ PV).IsHermitian := by
+    rw [IsHermitian, conjTranspose_kronecker, conjTranspose_one, hPV.eq]
+  have hR2sq : ((1 : Matrix n n ℂ) ⊗ₖ PV) * (1 ⊗ₖ PV) = 1 ⊗ₖ PV := by
+    rw [← mul_kronecker_mul, hPV2, Matrix.one_mul]
+  have hfix2 : ∀ j v, ((1 : Matrix n n ℂ) ⊗ₖ PV) *ᵥ (Φ.kraus j *ᵥ (PV *ᵥ v))
+      = Φ.kraus j *ᵥ (PV *ᵥ v) := by
+    intro j v
+    have hc := congrArg (fun N => N *ᵥ v) (hclone j)
+    simp only [← Matrix.mulVec_mulVec] at hc
+    conv_lhs => rw [← hc]
+    rw [Matrix.mulVec_mulVec, ← mul_kronecker_mul, hPV2, Matrix.one_mul, hc]
+  have h2 := key (1 ⊗ₖ PV) hR2 hR2sq
+    (fun v => Φ.adjoint_one_kronecker_mulVec_eq_self hPV hPV2 (hfix2 · v))
+    (by rw [← Φ.adjoint_trace_mul, ← trace_traceLeft, traceLeft_one_kronecker_mul, h.2]) i
+  -- assemble: `P_W ⊗ P_W = (P_S ⊗ P_S) ((1 − P_V) ⊗ 1) (1 ⊗ (1 − P_V))`
+  have hfac : PW ⊗ₖ PW = (PS ⊗ₖ PS) * (((1 : Matrix n n ℂ) - PV) ⊗ₖ (1 : Matrix n n ℂ))
+      * ((1 : Matrix n n ℂ) ⊗ₖ ((1 : Matrix n n ℂ) - PV)) := by
+    rw [← mul_kronecker_mul, ← mul_kronecker_mul, hPWdef]
+    simp only [Matrix.mul_one, Matrix.mul_sub, hsub]
+  rw [hfac, ← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec, kronecker_one_sub_right,
+    Matrix.sub_mulVec, Matrix.one_mulVec, h2, sub_zero, kronecker_one_sub_left, Matrix.sub_mulVec,
+    Matrix.one_mulVec, h1, sub_zero, hconf]
+
+/-- `Tr_B ((A ⊗ B) Y (C ⊗ D)) = A · Tr_B (Y (1 ⊗ D B)) · C`. -/
+theorem traceRight_kronecker_mul_mul_kronecker (A B C D : Matrix n n ℂ)
+    (Y : Matrix (n × n) (n × n) ℂ) :
+    traceRight ((A ⊗ₖ B) * Y * (C ⊗ₖ D))
+      = A * traceRight (Y * ((1 : Matrix n n ℂ) ⊗ₖ (D * B))) * C := by
+  have e1 : A ⊗ₖ B = (A ⊗ₖ (1 : Matrix n n ℂ)) * ((1 : Matrix n n ℂ) ⊗ₖ B) := by
+    rw [← mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul]
+  have e2 : C ⊗ₖ D = ((1 : Matrix n n ℂ) ⊗ₖ D) * (C ⊗ₖ (1 : Matrix n n ℂ)) := by
+    rw [← mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul]
+  rw [e1, e2,
+    show (A ⊗ₖ (1 : Matrix n n ℂ)) * ((1 : Matrix n n ℂ) ⊗ₖ B) * Y
+        * (((1 : Matrix n n ℂ) ⊗ₖ D) * (C ⊗ₖ (1 : Matrix n n ℂ)))
+      = (A ⊗ₖ (1 : Matrix n n ℂ)) * (((1 : Matrix n n ℂ) ⊗ₖ B) * (Y * ((1 : Matrix n n ℂ) ⊗ₖ D)))
+        * (C ⊗ₖ (1 : Matrix n n ℂ)) by simp only [Matrix.mul_assoc],
+    traceRight_mul_kronecker_one, traceRight_kronecker_one_mul, traceRight_one_kronecker_mul_comm,
+    Matrix.mul_assoc Y, ← mul_kronecker_mul, Matrix.one_mul]
+
+/-- `Tr_A ((A ⊗ B) Y (C ⊗ D)) = B · Tr_A (Y (C A ⊗ 1)) · D`. -/
+theorem traceLeft_kronecker_mul_mul_kronecker (A B C D : Matrix n n ℂ)
+    (Y : Matrix (n × n) (n × n) ℂ) :
+    traceLeft ((A ⊗ₖ B) * Y * (C ⊗ₖ D))
+      = B * traceLeft (Y * ((C * A) ⊗ₖ (1 : Matrix n n ℂ))) * D := by
+  have e1 : A ⊗ₖ B = ((1 : Matrix n n ℂ) ⊗ₖ B) * (A ⊗ₖ (1 : Matrix n n ℂ)) := by
+    rw [← mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul]
+  have e2 : C ⊗ₖ D = (C ⊗ₖ (1 : Matrix n n ℂ)) * ((1 : Matrix n n ℂ) ⊗ₖ D) := by
+    rw [← mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul]
+  rw [e1, e2,
+    show ((1 : Matrix n n ℂ) ⊗ₖ B) * (A ⊗ₖ (1 : Matrix n n ℂ)) * Y
+        * ((C ⊗ₖ (1 : Matrix n n ℂ)) * ((1 : Matrix n n ℂ) ⊗ₖ D))
+      = ((1 : Matrix n n ℂ) ⊗ₖ B) * ((A ⊗ₖ (1 : Matrix n n ℂ)) * (Y * (C ⊗ₖ (1 : Matrix n n ℂ))))
+        * ((1 : Matrix n n ℂ) ⊗ₖ D) by simp only [Matrix.mul_assoc],
+    traceLeft_mul_one_kronecker, traceLeft_one_kronecker_mul, traceLeft_kronecker_one_mul_comm,
+    Matrix.mul_assoc Y, ← mul_kronecker_mul, Matrix.one_mul]
+
+omit [DecidableEq n] in
+/-- One Kraus term of a cross block is sandwiched between the two block projectors. -/
+theorem kraus_block_sandwich {K : Matrix (n × n) n ℂ} {P Q : Matrix n n ℂ} (hQ : Q.IsHermitian)
+    {RP RQ : Matrix (n × n) (n × n) ℂ} (hRQ : RQ.IsHermitian)
+    (hKP : RP * (K * P) = K * P) (hKQ : RQ * (K * Q) = K * Q) (τ : Matrix n n ℂ) :
+    K * (P * τ * Q) * Kᴴ = RP * (K * (P * τ * Q) * Kᴴ) * RQ := by
+  have e : K * (P * τ * Q) * Kᴴ = (K * P) * τ * (K * Q)ᴴ := by
+    rw [conjTranspose_mul, hQ.eq]; simp only [Matrix.mul_assoc]
+  rw [e]
+  conv_lhs => rw [← hKP, ← hKQ]
+  rw [conjTranspose_mul, hRQ.eq]
+  simp only [Matrix.mul_assoc]
+
+/-- ★★ **BC4: a cloned subspace splits a broadcast state into blocks, each broadcast.** If `Φ`
+broadcasts the positive semidefinite `τ`, `P_V` is a projector onto a subspace `V` of the support
+`S` of `τ`, and every Kraus operator maps `V` into `V ⊗ V`, then with `P_W = P_S − P_V`:
+`P_V τ P_W = 0` (so `τ = P_V τ P_V + P_W τ P_W`), and `Φ` broadcasts both blocks. The cross
+blocks `Φ(P_V τ P_W)` are sandwiched between `P_V ⊗ P_V` and `P_W ⊗ P_W`, whose partial traces
+vanish because `P_W P_V = 0`; the diagonal blocks are supported where they should be. -/
+theorem Channel.Broadcasts.block_split {τ : Matrix n n ℂ} (hτ : τ.PosSemidef) (h : Φ.Broadcasts τ)
+    {PV : Matrix n n ℂ} (hPV : PV.IsHermitian) (hPV2 : PV * PV = PV) (hsub : suppProj τ * PV = PV)
+    (hclone : ∀ i, (PV ⊗ₖ PV) * (Φ.kraus i * PV) = Φ.kraus i * PV) :
+    PV * τ * (suppProj τ - PV) = 0 ∧ Φ.Broadcasts (PV * τ * PV) ∧
+      Φ.Broadcasts ((suppProj τ - PV) * τ * (suppProj τ - PV)) := by
+  set PS := suppProj τ with hPSdef
+  have hPS : PS.IsHermitian := suppProj_isHermitian τ
+  have hPS2 : PS * PS = PS := suppProj_mul_self τ
+  have hPSτ : PS * τ = τ := suppProj_mul τ
+  have hτPS : τ * PS = τ := mul_suppProj_of_isHermitian hτ.1
+  have hPVPS : PV * PS = PV := by
+    have := congrArg conjTranspose hsub
+    rwa [conjTranspose_mul, hPS.eq, hPV.eq] at this
+  set PW := PS - PV with hPWdef
+  have hPW : PW.IsHermitian := hPS.sub hPV
+  have hPVPW : PV * PW = 0 := by rw [hPWdef, Matrix.mul_sub, hPVPS, hPV2, sub_self]
+  have hPWPV : PW * PV = 0 := by rw [hPWdef, Matrix.sub_mul, hsub, hPV2, sub_self]
+  have hKW : ∀ i, (PW ⊗ₖ PW) * (Φ.kraus i * PW) = Φ.kraus i * PW := by
+    intro i
+    rw [Matrix.ext_iff_mulVec]
+    intro x
+    rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec]
+    exact h.kronecker_mulVec_kraus_mulVec_sub hτ hPV hPV2 hsub hclone i x
+  have hVV : (PV ⊗ₖ PV).IsHermitian := by rw [IsHermitian, conjTranspose_kronecker, hPV.eq]
+  have hWW : (PW ⊗ₖ PW).IsHermitian := by rw [IsHermitian, conjTranspose_kronecker, hPW.eq]
+  -- the four blocks and their images
+  have himage : ∀ (P Q : Matrix n n ℂ) (RP RQ : Matrix (n × n) (n × n) ℂ), Q.IsHermitian →
+      RQ.IsHermitian → (∀ i, RP * (Φ.kraus i * P) = Φ.kraus i * P) →
+      (∀ i, RQ * (Φ.kraus i * Q) = Φ.kraus i * Q) →
+      Φ.apply (P * τ * Q) = RP * Φ.apply (P * τ * Q) * RQ := by
+    intro P Q RP RQ hQ hRQ hKP hKQ
+    rw [Channel.apply_def, Finset.mul_sum, Finset.sum_mul]
+    exact Finset.sum_congr rfl fun i _ => kraus_block_sandwich hQ hRQ (hKP i) (hKQ i) τ
+  have hVW := himage PV PW (PV ⊗ₖ PV) (PW ⊗ₖ PW) hPW hWW hclone hKW
+  have hWV := himage PW PV (PW ⊗ₖ PW) (PV ⊗ₖ PV) hPV hVV hKW hclone
+  have hVVi := himage PV PV (PV ⊗ₖ PV) (PV ⊗ₖ PV) hPV hVV hclone hclone
+  have hWWi := himage PW PW (PW ⊗ₖ PW) (PW ⊗ₖ PW) hPW hWW hKW hKW
+  -- partial traces of the cross blocks vanish
+  have hPW2 : PW * PW = PW := by
+    rw [hPWdef, Matrix.sub_mul, Matrix.mul_sub, Matrix.mul_sub, hPS2, hsub, hPVPS, hPV2]
+    abel
+  have hcrossR : ∀ (P Q : Matrix n n ℂ) (X : Matrix (n × n) (n × n) ℂ), Q * P = 0 →
+      X = (P ⊗ₖ P) * X * (Q ⊗ₖ Q) → traceRight X = 0 := by
+    intro P Q X hQP hX
+    rw [hX, traceRight_kronecker_mul_mul_kronecker, hQP, Matrix.kronecker_zero, Matrix.mul_zero,
+      traceRight_zero, Matrix.mul_zero, Matrix.zero_mul]
+  have hcrossL : ∀ (P Q : Matrix n n ℂ) (X : Matrix (n × n) (n × n) ℂ), Q * P = 0 →
+      X = (P ⊗ₖ P) * X * (Q ⊗ₖ Q) → traceLeft X = 0 := by
+    intro P Q X hQP hX
+    rw [hX, traceLeft_kronecker_mul_mul_kronecker, hQP, Matrix.zero_kronecker, Matrix.mul_zero,
+      traceLeft_zero, Matrix.mul_zero, Matrix.zero_mul]
+  -- the diagonal blocks are supported on their subspace
+  have hdiagR : ∀ (P : Matrix n n ℂ) (X : Matrix (n × n) (n × n) ℂ), P * P = P →
+      X = (P ⊗ₖ P) * X * (P ⊗ₖ P) → P * traceRight X * P = traceRight X := by
+    intro P X hP2 hX
+    have hXt : traceRight X = P * traceRight (X * ((1 : Matrix n n ℂ) ⊗ₖ (P * P))) * P := by
+      conv_lhs => rw [hX]
+      exact traceRight_kronecker_mul_mul_kronecker P P P P X
+    rw [hXt]
+    simp only [Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc P P, hP2]
+  have hdiagL : ∀ (P : Matrix n n ℂ) (X : Matrix (n × n) (n × n) ℂ), P * P = P →
+      X = (P ⊗ₖ P) * X * (P ⊗ₖ P) → P * traceLeft X * P = traceLeft X := by
+    intro P X hP2 hX
+    have hXt : traceLeft X = P * traceLeft (X * ((P * P) ⊗ₖ (1 : Matrix n n ℂ))) * P := by
+      conv_lhs => rw [hX]
+      exact traceLeft_kronecker_mul_mul_kronecker P P P P X
+    rw [hXt]
+    simp only [Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc P P, hP2]
+  -- the decomposition of `τ`
+  have hτdec : τ = PV * τ * PV + PV * τ * PW + PW * τ * PV + PW * τ * PW := by
+    have : PS = PV + PW := by rw [hPWdef]; abel
+    calc τ = PS * τ * PS := by rw [hPSτ, hτPS]
+      _ = _ := by rw [this]; simp only [Matrix.add_mul, Matrix.mul_add]; abel
+  have hτR : τ = traceRight (Φ.apply (PV * τ * PV)) + traceRight (Φ.apply (PW * τ * PW)) := by
+    have := h.1
+    conv_lhs at this => rw [hτdec]
+    rw [Channel.apply_add, Channel.apply_add, Channel.apply_add, traceRight_add, traceRight_add,
+      traceRight_add, hcrossR PV PW _ hPWPV hVW, hcrossR PW PV _ hPVPW hWV, add_zero,
+      add_zero] at this
+    exact this.symm
+  have hτL : τ = traceLeft (Φ.apply (PV * τ * PV)) + traceLeft (Φ.apply (PW * τ * PW)) := by
+    have := h.2
+    conv_lhs at this => rw [hτdec]
+    rw [Channel.apply_add, Channel.apply_add, Channel.apply_add, traceLeft_add, traceLeft_add,
+      traceLeft_add, hcrossL PV PW _ hPWPV hVW, hcrossL PW PV _ hPVPW hWV, add_zero,
+      add_zero] at this
+    exact this.symm
+  have hRV := hdiagR PV _ hPV2 hVVi
+  have hRW := hdiagR PW _ hPW2 hWWi
+  have hLV := hdiagL PV _ hPV2 hVVi
+  have hLW := hdiagL PW _ hPW2 hWWi
+  refine ⟨?_, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩
+  · -- `P_V τ P_W = 0`
+    conv_lhs => rw [hτR]
+    rw [Matrix.mul_add, Matrix.add_mul, ← hRV, ← hRW]
+    simp only [Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc PV PW, hPVPW, Matrix.zero_mul, Matrix.mul_zero]
+    simp
+  · conv_rhs => rw [hτR]
+    rw [Matrix.mul_add, Matrix.add_mul, ← hRV, ← hRW]
+    simp only [Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc PV PV, hPV2, ← Matrix.mul_assoc PV PW, hPVPW, Matrix.zero_mul, add_zero]
+  · conv_rhs => rw [hτL]
+    rw [Matrix.mul_add, Matrix.add_mul, ← hLV, ← hLW]
+    simp only [Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc PV PV, hPV2, ← Matrix.mul_assoc PV PW, hPVPW, Matrix.zero_mul, add_zero]
+  · conv_rhs => rw [hτR]
+    rw [Matrix.mul_add, Matrix.add_mul, ← hRV, ← hRW]
+    simp only [Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc PW PV, hPWPV, Matrix.zero_mul, zero_add, hPW2, ← Matrix.mul_assoc PW PW,
+      hPW2]
+  · conv_rhs => rw [hτL]
+    rw [Matrix.mul_add, Matrix.add_mul, ← hLV, ← hLW]
+    simp only [Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc PW PV, hPWPV, Matrix.zero_mul, zero_add, hPW2, ← Matrix.mul_assoc PW PW,
+      hPW2]
+
+/-! ### Eigen-expansions -/
+
+section EigenExpansion
+
+variable (b : OrthonormalBasis n ℂ (EuclideanSpace ℂ n))
+
+/-- Parseval: `‖z‖² = ∑ₖ |⟨b k|z⟩|²`. -/
+theorem nsq_eq_sum_onb (z : n → ℂ) : nsq z = ∑ k, ‖star (onbVec b k) ⬝ᵥ z‖ ^ 2 := by
+  have h1 : star z ⬝ᵥ z = star z ⬝ᵥ ((∑ k, onbProj b k) *ᵥ z) := by
+    rw [sum_onbProj, Matrix.one_mulVec]
+  rw [nsq, h1, Matrix.sum_mulVec, dotProduct_sum, Complex.re_sum]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [star_dotProduct_onbProj_mulVec, Complex.ofReal_re]
+
+/-- The Rayleigh quotient of a matrix diagonal in `b`: `⟨z|Q|z⟩ = ∑ₖ rₖ |⟨b k|z⟩|²`. -/
+theorem re_star_dotProduct_mulVec_eq_sum_onb {Q : Matrix n n ℂ} {r : n → ℂ}
+    (hdiag : ∀ k, Q *ᵥ onbVec b k = r k • onbVec b k) (z : n → ℂ) :
+    (star z ⬝ᵥ (Q *ᵥ z)).re
+      = ∑ k, (r k * ((‖star (onbVec b k) ⬝ᵥ z‖ ^ 2 : ℝ) : ℂ)).re := by
+  have hQz : Q *ᵥ z = ∑ k, r k • (onbProj b k *ᵥ z) := by
+    rw [eq_sum_smul_onbProj b hdiag, Matrix.sum_mulVec]
+    refine Finset.sum_congr rfl fun k _ => ?_
+    rw [Matrix.smul_mulVec]
+  rw [hQz, dotProduct_sum, Complex.re_sum]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [dotProduct_smul, star_dotProduct_onbProj_mulVec, smul_eq_mul]
+
+theorem onbProj_mul_onbProj (j k : n) :
+    onbProj b j * onbProj b k = if j = k then onbProj b k else 0 := by
+  rw [onbProj, onbProj, vecMulVec_mul_vecMulVec, star_onbVec_dotProduct]
+  split_ifs with h
+  · subst h; rw [one_smul]
+  · rw [zero_smul, Matrix.vecMulVec_zero]
+
+/-- The projector onto the span of a subfamily of the basis. -/
+noncomputable def onbProjSet (K : Finset n) : Matrix n n ℂ := ∑ k ∈ K, onbProj b k
+
+omit [DecidableEq n] in
+theorem onbProjSet_isHermitian (K : Finset n) : (onbProjSet b K).IsHermitian := by
+  rw [onbProjSet, IsHermitian, conjTranspose_sum]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [onbProj, conjTranspose_vecMulVec, star_star]
+
+theorem onbProjSet_mul_self (K : Finset n) : onbProjSet b K * onbProjSet b K = onbProjSet b K := by
+  rw [onbProjSet, Finset.sum_mul_sum]
+  simp only [onbProj_mul_onbProj]
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl fun k hk => ?_
+  rw [Finset.sum_ite_eq' K k, if_pos hk]
+
+omit [DecidableEq n] in
+theorem star_dotProduct_onbProjSet_mulVec (K : Finset n) (z : n → ℂ) :
+    star z ⬝ᵥ (onbProjSet b K *ᵥ z) = ((∑ k ∈ K, ‖star (onbVec b k) ⬝ᵥ z‖ ^ 2 : ℝ) : ℂ) := by
+  rw [onbProjSet, Matrix.sum_mulVec, dotProduct_sum, Complex.ofReal_sum]
+  exact Finset.sum_congr rfl fun k _ => star_dotProduct_onbProj_mulVec b k z
+
+end EigenExpansion
+
+/-! ### BC5: the segment through two distinct states meets the boundary of the cone -/
+
+section Boundary
+
+omit [DecidableEq n] in
+/-- A nonzero traceless Hermitian matrix has a direction of negative expectation. -/
+theorem exists_re_star_dotProduct_neg_of_trace_eq_zero {d : Matrix n n ℂ} (hd : d.IsHermitian)
+    (htr : d.trace = 0) (hne : d ≠ 0) : ∃ v, (star v ⬝ᵥ (d *ᵥ v)).re < 0 := by
+  by_contra hcon
+  push Not at hcon
+  have hpsd : d.PosSemidef := posSemidef_of_isHermitian_of_re_nonneg hd hcon
+  exact hne ((hpsd.trace_eq_zero_iff).mp htr)
+
+/-- ★★ **BC5. The segment through two distinct states meets the boundary of the cone.** For
+positive semidefinite `ρ ≠ σ` of trace one there is `l ≥ 1` such that
+`τ = σ + l (ρ − σ) = l ρ + (1 − l) σ` is positive semidefinite and has a kernel vector outside the
+kernel of `ρ + σ` (so its support is strictly smaller). The set of such `l` is closed and bounded
+(the traceless `ρ − σ` has a negative direction), so its supremum `l₁` belongs to it; if `τ = f l₁`
+had no such kernel vector, `f (l₁ + δ)` would still be positive semidefinite for small `δ`
+(the eigenvectors of `τ` with eigenvalue `0` lie in `ker (ρ + σ)`, hence in `ker (ρ − σ)`, and on
+the rest the positive eigenvalues dominate), contradicting maximality. -/
+theorem exists_boundary_point [Nonempty n] {ρ σ : Matrix n n ℂ} (hρ : ρ.PosSemidef)
+    (hσ : σ.PosSemidef) (hρ1 : ρ.trace = 1) (hσ1 : σ.trace = 1) (hne : ρ ≠ σ) :
+    ∃ l : ℝ, 1 ≤ l ∧ (σ + (l : ℂ) • (ρ - σ)).PosSemidef ∧
+      ∃ x, (σ + (l : ℂ) • (ρ - σ)) *ᵥ x = 0 ∧ (ρ + σ) *ᵥ x ≠ 0 := by
+  classical
+  set d := ρ - σ with hddef
+  have hd : d.IsHermitian := hρ.1.sub hσ.1
+  have hdtr : d.trace = 0 := by rw [hddef, trace_sub, hρ1, hσ1, sub_self]
+  have hdne : d ≠ 0 := by rw [hddef]; exact sub_ne_zero.mpr hne
+  set f : ℝ → Matrix n n ℂ := fun l => σ + (l : ℂ) • d with hfdef
+  have hf_herm : ∀ l, (f l).IsHermitian := fun l =>
+    hσ.1.add (hd.smul (Complex.conj_ofReal l))
+  have hform : ∀ l x, (star x ⬝ᵥ (f l *ᵥ x)).re
+      = (star x ⬝ᵥ (σ *ᵥ x)).re + l * (star x ⬝ᵥ (d *ᵥ x)).re := by
+    intro l x
+    simp only [hfdef, Matrix.add_mulVec, Matrix.smul_mulVec, dotProduct_add, dotProduct_smul,
+      Complex.add_re, smul_eq_mul, Complex.re_ofReal_mul]
+  have hf_psd_iff : ∀ l, (f l).PosSemidef ↔
+      ∀ x, 0 ≤ (star x ⬝ᵥ (σ *ᵥ x)).re + l * (star x ⬝ᵥ (d *ᵥ x)).re := by
+    intro l
+    constructor
+    · intro h x
+      rw [← hform]
+      exact (Complex.nonneg_iff.mp (h.dotProduct_mulVec_nonneg x)).1
+    · intro h
+      refine posSemidef_of_isHermitian_of_re_nonneg (hf_herm l) fun x => ?_
+      rw [hform]; exact h x
+  set L : Set ℝ := {l | 1 ≤ l ∧ (f l).PosSemidef} with hLdef
+  have hf1 : f 1 = ρ := by simp [hfdef, hddef]
+  have h1L : (1 : ℝ) ∈ L := ⟨le_rfl, by rw [hf1]; exact hρ⟩
+  obtain ⟨v, hv⟩ := exists_re_star_dotProduct_neg_of_trace_eq_zero hd hdtr hdne
+  have hbdd : BddAbove L := by
+    refine ⟨(star v ⬝ᵥ (σ *ᵥ v)).re / (-(star v ⬝ᵥ (d *ᵥ v)).re), fun l hl => ?_⟩
+    have := (hf_psd_iff l).mp hl.2 v
+    rw [le_div_iff₀ (by linarith)]
+    linarith
+  have hclosed : IsClosed L := by
+    have : L = Set.Ici (1 : ℝ) ∩ ⋂ x : n → ℂ,
+        {l : ℝ | 0 ≤ (star x ⬝ᵥ (σ *ᵥ x)).re + l * (star x ⬝ᵥ (d *ᵥ x)).re} := by
+      ext l
+      simp only [hLdef, Set.mem_ofPred_eq, Set.mem_inter_iff, Set.mem_Ici, Set.mem_iInter,
+        hf_psd_iff]
+    rw [this]
+    exact isClosed_Ici.inter (isClosed_iInter fun x =>
+      isClosed_le continuous_const (continuous_const.add (continuous_id.mul continuous_const)))
+  have hmem : sSup L ∈ L := hclosed.csSup_mem ⟨1, h1L⟩ hbdd
+  set l₁ := sSup L with hl₁
+  refine ⟨l₁, hmem.1, hmem.2, ?_⟩
+  by_contra hcon
+  push Not at hcon
+  -- the perturbation argument
+  set τ := f l₁ with hτdef
+  have hτ : τ.PosSemidef := hmem.2
+  set b := hτ.1.eigenvectorBasis with hb
+  set e := hτ.1.eigenvalues with he
+  have he0 : ∀ k, 0 ≤ e k := hτ.eigenvalues_nonneg
+  have hdiag : ∀ k, τ *ᵥ onbVec b k = ((e k : ℝ) : ℂ) • onbVec b k := fun k => by
+    have := hτ.1.mulVec_eigenvectorBasis k
+    rw [RCLike.real_smul_eq_coe_smul (K := ℂ)] at this
+    exact this
+  -- eigenvectors of eigenvalue `0` kill `ρ`, `σ` and `d`
+  have hker : ∀ k, e k = 0 → d *ᵥ onbVec b k = 0 := by
+    intro k hk
+    have hτk : τ *ᵥ onbVec b k = 0 := by rw [hdiag, hk]; simp
+    have hsum := hcon _ hτk
+    have h0 : star (onbVec b k) ⬝ᵥ (ρ *ᵥ onbVec b k) + star (onbVec b k) ⬝ᵥ (σ *ᵥ onbVec b k)
+        = 0 := by
+      rw [← dotProduct_add, ← Matrix.add_mulVec, hsum, dotProduct_zero]
+    obtain ⟨hρ0, hσ0⟩ := (add_eq_zero_iff_of_nonneg (hρ.dotProduct_mulVec_nonneg _)
+      (hσ.dotProduct_mulVec_nonneg _)).mp h0
+    rw [hddef, Matrix.sub_mulVec, (hρ.dotProduct_mulVec_zero_iff _).mp hρ0,
+      (hσ.dotProduct_mulVec_zero_iff _).mp hσ0, sub_zero]
+  -- the positive eigenvalues
+  set K' : Finset n := Finset.univ.filter (fun k => e k ≠ 0) with hK'
+  have hK'ne : K'.Nonempty := by
+    by_contra hemp
+    rw [Finset.not_nonempty_iff_eq_empty] at hemp
+    have hall : ∀ k, e k = 0 := fun k => by
+      by_contra h
+      have : k ∈ K' := by rw [hK']; exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, h⟩
+      rw [hemp] at this
+      exact absurd this (Finset.notMem_empty k)
+    have hsum0 : ρ + σ = 0 := by
+      rw [← Matrix.mul_one (ρ + σ), ← sum_onbProj b, Finset.mul_sum]
+      refine Finset.sum_eq_zero fun k _ => ?_
+      rw [onbProj, mul_vecMulVec, hcon _ (by rw [hdiag, hall k]; simp), Matrix.zero_vecMulVec]
+    have := congrArg Matrix.trace hsum0
+    rw [trace_add, hρ1, hσ1, trace_zero] at this
+    norm_num at this
+  set ε := K'.inf' hK'ne e with hε
+  have hεpos : 0 < ε := by
+    rw [hε, Finset.lt_inf'_iff]
+    intro k hk
+    exact lt_of_le_of_ne (he0 k) (Ne.symm (Finset.mem_filter.mp hk).2)
+  have hεle : ∀ k ∈ K', ε ≤ e k := fun k hk => Finset.inf'_le _ hk
+  -- a bound on the negative part of `d`
+  obtain ⟨μ', -, -, -, hbound⟩ := IsHermitian.exists_top_eigenvalue (Q := -d) hd.neg
+  set m := max μ' 0 with hm
+  have hm0 : 0 ≤ m := le_max_right _ _
+  have hbound' : ∀ y, -(star y ⬝ᵥ (d *ᵥ y)).re ≤ m * nsq y := fun y => by
+    have := hbound y
+    rw [Matrix.neg_mulVec, dotProduct_neg, Complex.neg_re] at this
+    calc _ ≤ μ' * nsq y := this
+      _ ≤ m * nsq y := mul_le_mul_of_nonneg_right (le_max_left _ _) (nsq_nonneg _)
+  set δ := ε / (m + 1) with hδ
+  have hδpos : 0 < δ := div_pos hεpos (by linarith)
+  have hδm : δ * m ≤ ε := by
+    rw [hδ, div_mul_eq_mul_div, div_le_iff₀ (by linarith)]
+    nlinarith
+  -- `f (l₁ + δ)` is still positive semidefinite
+  have hpsd : (f (l₁ + δ)).PosSemidef := by
+    rw [hf_psd_iff]
+    intro x
+    have hτx : (star x ⬝ᵥ (τ *ᵥ x)).re
+        = (star x ⬝ᵥ (σ *ᵥ x)).re + l₁ * (star x ⬝ᵥ (d *ᵥ x)).re := hform l₁ x
+    have hexp : (star x ⬝ᵥ (τ *ᵥ x)).re = ∑ k, e k * ‖star (onbVec b k) ⬝ᵥ x‖ ^ 2 := by
+      rw [re_star_dotProduct_mulVec_eq_sum_onb b hdiag]
+      refine Finset.sum_congr rfl fun k _ => ?_
+      rw [← Complex.ofReal_mul, Complex.ofReal_re]
+    set P' := onbProjSet b K' with hP'
+    have hdP'' : d = d * P' := by
+      calc d = d * ∑ k, onbProj b k := by rw [sum_onbProj, Matrix.mul_one]
+        _ = ∑ k, d * onbProj b k := Finset.mul_sum _ _ _
+        _ = ∑ k ∈ K', d * onbProj b k := by
+            symm
+            apply Finset.sum_subset (Finset.subset_univ _)
+            intro k _ hk
+            have hk0 : e k = 0 := by
+              by_contra h
+              exact hk (by rw [hK']; exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, h⟩)
+            rw [onbProj, mul_vecMulVec, hker k hk0, Matrix.zero_vecMulVec]
+        _ = d * P' := by rw [hP', onbProjSet, Finset.mul_sum]
+    have hdP' : d * P' = d := hdP''.symm
+    have hP'd : P' * d = d := by
+      have := congrArg conjTranspose hdP'
+      rwa [conjTranspose_mul, (onbProjSet_isHermitian b K').eq, hd.eq] at this
+    have hdx : (star x ⬝ᵥ (d *ᵥ x)).re = (star (P' *ᵥ x) ⬝ᵥ (d *ᵥ (P' *ᵥ x))).re := by
+      rw [Matrix.mulVec_mulVec, hdP', star_mulVec, ← dotProduct_mulVec, Matrix.mulVec_mulVec,
+        (onbProjSet_isHermitian b K').eq, hP'd]
+    have hnsqP' : nsq (P' *ᵥ x) = ∑ k ∈ K', ‖star (onbVec b k) ⬝ᵥ x‖ ^ 2 := by
+      rw [nsq_mulVec_of_proj (onbProjSet_isHermitian b K') (onbProjSet_mul_self b K'),
+        star_dotProduct_onbProjSet_mulVec, Complex.ofReal_re]
+    set S := ∑ k ∈ K', ‖star (onbVec b k) ⬝ᵥ x‖ ^ 2 with hS
+    have hS0 : 0 ≤ S := Finset.sum_nonneg fun k _ => sq_nonneg _
+    have hd_lb : -(m * S) ≤ (star x ⬝ᵥ (d *ᵥ x)).re := by
+      rw [hdx]
+      have := hbound' (P' *ᵥ x)
+      rw [hnsqP'] at this
+      linarith
+    have hτ_lb : ε * S ≤ (star x ⬝ᵥ (τ *ᵥ x)).re := by
+      rw [hexp, hS, Finset.mul_sum]
+      calc ∑ k ∈ K', ε * ‖star (onbVec b k) ⬝ᵥ x‖ ^ 2
+          ≤ ∑ k ∈ K', e k * ‖star (onbVec b k) ⬝ᵥ x‖ ^ 2 :=
+            Finset.sum_le_sum fun k hk => mul_le_mul_of_nonneg_right (hεle k hk) (sq_nonneg _)
+        _ ≤ ∑ k, e k * ‖star (onbVec b k) ⬝ᵥ x‖ ^ 2 :=
+            Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _)
+              fun k _ _ => mul_nonneg (he0 k) (sq_nonneg _)
+    have h1 : δ * (-(m * S)) ≤ δ * (star x ⬝ᵥ (d *ᵥ x)).re :=
+      mul_le_mul_of_nonneg_left hd_lb hδpos.le
+    have h2 : 0 ≤ (ε - δ * m) * S := mul_nonneg (by linarith) hS0
+    nlinarith [hτx, hτ_lb, h1, h2]
+  have hin : l₁ + δ ∈ L := ⟨by linarith [hmem.1], hpsd⟩
+  have := le_csSup hbdd hin
+  linarith
+
+end Boundary
+
+end BlockSplit
 
 end QuantumInfo

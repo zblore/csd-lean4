@@ -436,6 +436,83 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Channel.Broadcasts.mul_eq_zero_of_range_disjoint
 
+-- BC4-BC5 (2026-09-13): a cloned subspace V of the support of a broadcast state splits it into
+-- V- and (supp - V)-blocks, each broadcast (the dual Phi^dagger(P_V (x) 1) fixes V and its excess
+-- over P_V is PSD with zero trace against tau; the cross blocks are sandwiched between
+-- P_V (x) P_V and P_W (x) P_W, whose partial traces vanish since P_W P_V = 0); and the segment
+-- through two distinct trace-one states meets the boundary of the PSD cone at a state with a
+-- kernel vector outside ker(rho + sigma) (closed bounded set of admissible l, its supremum, and a
+-- perturbation through the eigen-expansion). The partial-trace cyclicity in the traced factor
+-- lives in PartialTrace.lean.
+
+/-- info: 'Matrix.traceRight_one_kronecker_mul_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.traceRight_one_kronecker_mul_comm
+
+/-- info: 'Matrix.traceLeft_kronecker_one_mul_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.traceLeft_kronecker_one_mul_comm
+
+/-- info: 'Matrix.PosSemidef.mul_eq_zero_of_trace_mul_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.PosSemidef.mul_eq_zero_of_trace_mul_eq_zero
+
+/-- info: 'QuantumInfo.Channel.star_dotProduct_adjoint_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.star_dotProduct_adjoint_mulVec
+
+/-- info: 'QuantumInfo.Channel.adjoint_kronecker_one_mulVec_eq_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.adjoint_kronecker_one_mulVec_eq_self
+
+/-- info: 'QuantumInfo.Channel.adjoint_one_kronecker_mulVec_eq_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.adjoint_one_kronecker_mulVec_eq_self
+
+/-- info: 'QuantumInfo.Channel.Broadcasts.kronecker_mulVec_kraus_mulVec_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.Broadcasts.kronecker_mulVec_kraus_mulVec_sub
+
+/-- info: 'QuantumInfo.traceRight_kronecker_mul_mul_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.traceRight_kronecker_mul_mul_kronecker
+
+/-- info: 'QuantumInfo.traceLeft_kronecker_mul_mul_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.traceLeft_kronecker_mul_mul_kronecker
+
+/-- info: 'QuantumInfo.kraus_block_sandwich' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.kraus_block_sandwich
+
+/-- info: 'QuantumInfo.Channel.Broadcasts.block_split' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.Broadcasts.block_split
+
+/-- info: 'QuantumInfo.nsq_eq_sum_onb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.nsq_eq_sum_onb
+
+/-- info: 'QuantumInfo.re_star_dotProduct_mulVec_eq_sum_onb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.re_star_dotProduct_mulVec_eq_sum_onb
+
+/-- info: 'QuantumInfo.onbProjSet_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.onbProjSet_mul_self
+
+/-- info: 'QuantumInfo.star_dotProduct_onbProjSet_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.star_dotProduct_onbProjSet_mulVec
+
+/-- info: 'QuantumInfo.exists_re_star_dotProduct_neg_of_trace_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_re_star_dotProduct_neg_of_trace_eq_zero
+
+/-- info: 'QuantumInfo.exists_boundary_point' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_boundary_point
+
 /-- info: 'QuantumInfo.channel_traceDist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.channel_traceDist_le

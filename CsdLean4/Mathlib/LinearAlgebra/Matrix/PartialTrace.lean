@@ -410,4 +410,55 @@ theorem traceRight_mul_kronecker_one [DecidableEq n]
 
 end Bimodule
 
+section CyclicTraced
+variable [CommSemiring R]
+
+/-- **Cyclicity of the partial trace in the traced factor**: `Tr_B ((I ⊗ A) M) = Tr_B (M (I ⊗ A))`. -/
+theorem traceRight_one_kronecker_mul_comm [DecidableEq m]
+    (A : Matrix n n R) (M : Matrix (m × n) (m × n) R) :
+    traceRight (((1 : Matrix m m R) ⊗ₖ A) * M) = traceRight (M * ((1 : Matrix m m R) ⊗ₖ A)) := by
+  ext i j
+  simp only [traceRight_apply, Matrix.mul_apply, Matrix.kronecker_apply, one_apply,
+    Fintype.sum_prod_type, ite_mul, mul_ite, zero_mul, one_mul, mul_zero]
+  -- LHS: ∑ k, ∑ a, ∑ b, if i = a then A k b * M (a, b) (j, k) else 0
+  -- RHS: ∑ k, ∑ a, ∑ b, if a = j then M (i, k) (a, b) * A b k else 0
+  have hl : ∀ k : n, (∑ a : m, ∑ b : n, if i = a then A k b * M (a, b) (j, k) else 0)
+      = ∑ b : n, A k b * M (i, b) (j, k) := by
+    intro k
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun b _ => ?_
+    rw [Finset.sum_ite_eq]; simp
+  have hr : ∀ k : n, (∑ a : m, ∑ b : n, if a = j then M (i, k) (a, b) * A b k else 0)
+      = ∑ b : n, M (i, k) (j, b) * A b k := by
+    intro k
+    rw [Finset.sum_comm]
+    refine Finset.sum_congr rfl fun b _ => ?_
+    rw [Finset.sum_ite_eq']; simp
+  simp only [hl, hr]
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun k _ => mul_comm _ _
+
+/-- **Cyclicity of the partial trace in the traced factor**: `Tr_A ((A ⊗ I) M) = Tr_A (M (A ⊗ I))`. -/
+theorem traceLeft_kronecker_one_mul_comm [DecidableEq n]
+    (A : Matrix m m R) (M : Matrix (m × n) (m × n) R) :
+    traceLeft ((A ⊗ₖ (1 : Matrix n n R)) * M) = traceLeft (M * (A ⊗ₖ (1 : Matrix n n R))) := by
+  ext i j
+  simp only [traceLeft_apply, Matrix.mul_apply, Matrix.kronecker_apply, one_apply,
+    Fintype.sum_prod_type, ite_mul, mul_ite, zero_mul, mul_zero, mul_one]
+  have hl : ∀ k : m, (∑ a : m, ∑ b : n, if i = b then A k a * M (a, b) (k, j) else 0)
+      = ∑ a : m, A k a * M (a, i) (k, j) := by
+    intro k
+    refine Finset.sum_congr rfl fun a _ => ?_
+    rw [Finset.sum_ite_eq]; simp
+  have hr : ∀ k : m, (∑ a : m, ∑ b : n, if b = j then M (k, i) (a, b) * A a k else 0)
+      = ∑ a : m, M (k, i) (a, j) * A a k := by
+    intro k
+    refine Finset.sum_congr rfl fun a _ => ?_
+    rw [Finset.sum_ite_eq']; simp
+  simp only [hl, hr]
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun k _ => mul_comm _ _
+
+end CyclicTraced
+
 end Matrix
