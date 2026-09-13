@@ -565,6 +565,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.exists_channel_broadcasts_iff_commute
 
+-- BCFJS for finite families (2026-09-13): a joint eigenbasis of a pairwise-commuting family
+-- (iSup_iInf_eq_top_of_commute restricted to the finite joint eigenvalue functions), the copier,
+-- and the pair theorem applied pairwise.
+
+/-- info: 'QuantumInfo.exists_orthonormalBasis_mulVec_eq_smul_of_pairwise_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_orthonormalBasis_mulVec_eq_smul_of_pairwise_commute
+
+/-- info: 'QuantumInfo.exists_channel_broadcasts_of_pairwise_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_channel_broadcasts_of_pairwise_commute
+
+/-- info: 'QuantumInfo.exists_channel_broadcasts_family_iff_pairwise_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_channel_broadcasts_family_iff_pairwise_commute
+
 /-- info: 'QuantumInfo.channel_traceDist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.channel_traceDist_le

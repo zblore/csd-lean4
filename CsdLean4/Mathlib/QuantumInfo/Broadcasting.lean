@@ -104,7 +104,14 @@ support confinement (no fidelity, no relative entropy), assembled by induction o
   (witnessed by the BC5 kernel vector and by a vector of `V`), so they commute by induction, and
   the cross products vanish;
 * ★★★ `exists_channel_broadcasts_iff_commute` — **BCFJS: two positive semidefinite matrices can
-  be broadcast by a single channel iff they commute** (BC1 and BC6).
+  be broadcast by a single channel iff they commute** (BC1 and BC6);
+* `exists_orthonormalBasis_mulVec_eq_smul_of_pairwise_commute` (a pairwise-commuting family of
+  Hermitian matrices has a joint orthonormal eigenbasis), ★★
+  `exists_channel_broadcasts_of_pairwise_commute`, and ★★★
+  `exists_channel_broadcasts_family_iff_pairwise_commute` — **BCFJS for finite families**: a
+  finite family of positive semidefinite matrices can be broadcast by a single channel iff its
+  members pairwise commute (the copier in a joint eigenbasis one way, the pair theorem applied
+  pairwise the other).
 
 ## Provenance
 
@@ -122,7 +129,7 @@ Barnum, Caves, Fuchs, Jozsa, Schumacher, *Phys. Rev. Lett.* **76**, 2818 (1996).
 @[expose] public section
 
 open Matrix
-open scoped Kronecker ComplexOrder MatrixOrder
+open scoped Kronecker ComplexOrder MatrixOrder Function
 
 namespace Matrix
 variable {m n R : Type*} [Fintype m] [Fintype n] [CommSemiring R]
@@ -2186,5 +2193,100 @@ theorem exists_channel_broadcasts_iff_commute {n : Type u} [Fintype n] [Decidabl
     exact ⟨n, inferInstance, Φ, h1, h2⟩
 
 end Main
+
+
+section Family
+
+open Module.End in
+/-- **A pairwise-commuting family of Hermitian matrices has a joint orthonormal eigenbasis**
+(Mathlib's `LinearMap.IsSymmetric.iSup_iInf_eq_top_of_commute`, restricted to the finitely many
+joint eigenvalue functions and collected into a basis). -/
+theorem exists_orthonormalBasis_mulVec_eq_smul_of_pairwise_commute {κ : Type*} [Fintype κ]
+    {ρ : κ → Matrix n n ℂ} (hρ : ∀ k, (ρ k).IsHermitian)
+    (hc : ∀ j k, ρ j * ρ k = ρ k * ρ j) :
+    ∃ (b : OrthonormalBasis n ℂ (EuclideanSpace ℂ n)) (r : κ → n → ℂ),
+      ∀ k i, ρ k *ᵥ onbVec b i = r k i • onbVec b i := by
+  classical
+  set T : κ → (EuclideanSpace ℂ n →ₗ[ℂ] EuclideanSpace ℂ n) :=
+    fun k => Matrix.toEuclideanLin (ρ k) with hTdef
+  have hT : ∀ k, (T k).IsSymmetric := fun k => Matrix.isSymmetric_toEuclideanLin_iff.mpr (hρ k)
+  have hC : Pairwise (Commute on T) := by
+    intro j k _
+    change T j * T k = T k * T j
+    rw [Module.End.mul_eq_comp, Module.End.mul_eq_comp, hTdef]
+    simp only
+    rw [← Matrix.toLpLin_mul_same, ← Matrix.toLpLin_mul_same, hc]
+  have hsupV := LinearMap.IsSymmetric.iSup_iInf_eq_top_of_commute hT hC
+  have horth := LinearMap.IsSymmetric.orthogonalFamily_iInf_eigenspaces hT
+  set V : (κ → ℂ) → Submodule ℂ (EuclideanSpace ℂ n) :=
+    fun α => ⨅ j, eigenspace (T j) (α j) with hV
+  -- restrict to the joint eigenvalue functions
+  set f : (∀ j, Module.End.Eigenvalues (T j)) → (κ → ℂ) := fun p j => (p j).val with hf
+  have hfinj : Function.Injective f := by
+    intro p q h
+    funext j
+    exact Subtype.ext (congrFun h j)
+  have horth' := horth.comp hfinj
+  have hsup : (⨆ p, V (f p)) = iSup V := by
+    apply le_antisymm
+    · exact iSup_comp_le V f
+    · refine iSup_le fun α => ?_
+      by_cases hall : ∀ j, Module.End.HasEigenvalue (T j) (α j)
+      · exact le_iSup (fun p => V (f p)) (fun j => ⟨α j, hall j⟩)
+      · push Not at hall
+        obtain ⟨j, hj⟩ := hall
+        have h0 : eigenspace (T j) (α j) = ⊥ := by
+          by_contra hne; exact hj (Module.End.hasEigenvalue_iff.mpr hne)
+        have : V α ≤ ⊥ := by
+          calc V α ≤ eigenspace (T j) (α j) := iInf_le _ j
+            _ = ⊥ := h0
+        rw [le_bot_iff.mp this]
+        exact bot_le
+  have hint' : DirectSum.IsInternal (fun p => V (f p)) := by
+    refine (horth'.isInternal_iff).mpr ?_
+    rw [hsup, hsupV, Submodule.top_orthogonal_eq_bot]
+  set b1 := hint'.collectedOrthonormalBasis horth' (fun p => stdOrthonormalBasis ℂ (V (f p)))
+    with hb1
+  have hcard : Fintype.card (Σ p : ∀ j, Module.End.Eigenvalues (T j),
+      Fin (Module.finrank ℂ (V (f p)))) = Fintype.card n := by
+    rw [← Module.finrank_eq_card_basis b1.toBasis, finrank_euclideanSpace]
+  set e := Fintype.equivOfCardEq hcard with he
+  refine ⟨b1.reindex e, fun k i => (((e.symm i).1 k : Module.End.Eigenvalues (T k)) : ℂ),
+    fun k i => ?_⟩
+  have hmem := hint'.collectedOrthonormalBasis_mem horth'
+    (fun p => stdOrthonormalBasis ℂ (V (f p))) (e.symm i)
+  have hk : b1 (e.symm i) ∈ eigenspace (T k) (((e.symm i).1 k : Module.End.Eigenvalues (T k)) : ℂ) :=
+    (Submodule.mem_iInf _).mp hmem k
+  have h1 : T k (b1 (e.symm i)) = (((e.symm i).1 k : Module.End.Eigenvalues (T k)) : ℂ) • b1 (e.symm i) :=
+    mem_eigenspace_iff.mp hk
+  simp only [onbVec, OrthonormalBasis.reindex_apply]
+  have h2 : WithLp.ofLp (T k (b1 (e.symm i))) = ρ k *ᵥ WithLp.ofLp (b1 (e.symm i)) := rfl
+  rw [← h2, h1, WithLp.ofLp_smul]
+
+/-- ★★ **A pairwise-commuting family of Hermitian matrices can be broadcast** by one channel:
+the copier in a joint eigenbasis. -/
+theorem exists_channel_broadcasts_of_pairwise_commute {κ : Type*} [Fintype κ]
+    {ρ : κ → Matrix n n ℂ} (hρ : ∀ k, (ρ k).IsHermitian)
+    (hc : ∀ j k, ρ j * ρ k = ρ k * ρ j) :
+    ∃ Φ : Channel n (n × n) n, ∀ k, Φ.Broadcasts (ρ k) := by
+  obtain ⟨b, r, hr⟩ := exists_orthonormalBasis_mulVec_eq_smul_of_pairwise_commute hρ hc
+  exact ⟨copierChannel b, fun k => copierChannel_broadcasts b (hr k)⟩
+
+universe u in
+/-- ★★★ **BCFJS for families.** A finite family of positive semidefinite matrices can be
+broadcast by a single channel iff its members pairwise commute. -/
+theorem exists_channel_broadcasts_family_iff_pairwise_commute {n : Type u} [Fintype n]
+    [DecidableEq n] {κ : Type*} [Fintype κ] {ρ : κ → Matrix n n ℂ}
+    (hρ : ∀ k, (ρ k).PosSemidef) :
+    (∃ (ι : Type u) (_ : Fintype ι) (Φ : Channel n (n × n) ι), ∀ k, Φ.Broadcasts (ρ k))
+      ↔ ∀ j k, ρ j * ρ k = ρ k * ρ j := by
+  constructor
+  · rintro ⟨ι, _, Φ, h⟩ j k
+    exact Channel.Broadcasts.mul_comm_of_posSemidef (hρ j) (hρ k) (h j) (h k)
+  · intro hc
+    obtain ⟨Φ, h⟩ := exists_channel_broadcasts_of_pairwise_commute (fun k => (hρ k).1) hc
+    exact ⟨n, inferInstance, Φ, h⟩
+
+end Family
 
 end QuantumInfo
