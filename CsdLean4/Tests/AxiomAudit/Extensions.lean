@@ -534,6 +534,53 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.landauer_one_bit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.landauer_one_bit
 
+-- TH5a (2026-09-13), Thermo/Jarzynski.lean: the Jarzynski equality in two-point-measurement
+-- form. A closed system starts in the Gibbs state of H_0, the energy is read (Born weight = Gibbs
+-- weight, gibbsWeight_eq_re_born), a unitary U drives it while the Hamiltonian becomes H_1, the
+-- energy is read again; the work is the difference of the two readings. The exponential average
+-- of the work is Z_1/Z_0 = exp(-beta Delta F) (jarzynski, jarzynski_freeEnergy): the Gibbs factor
+-- cancels inside exp(-beta W) and the transition matrix |<e_1 j, U e_0 i>|^2 is doubly stochastic
+-- (unitarity in both orders). Jensen on convexOn_exp gives the second law of the driven process,
+-- Delta F <= <W> (mean_work_ge_freeEnergy_sub). Foundational-triple.
+/-- info: 'CSD.Thermo.sum_norm_sq_col_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.sum_norm_sq_col_eq_one
+
+/-- info: 'CSD.Thermo.sum_norm_sq_row_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.sum_norm_sq_row_eq_one
+
+/-- info: 'CSD.Thermo.tpmUnitary_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.tpmUnitary_apply
+
+/-- info: 'CSD.Thermo.tpmTransition_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.tpmTransition_eq
+
+/-- info: 'CSD.Thermo.sum_tpmTransition_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.sum_tpmTransition_left
+
+/-- info: 'CSD.Thermo.sum_tpmTransition_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.sum_tpmTransition_right
+
+/-- info: 'CSD.Thermo.sum_gibbsWeight_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.sum_gibbsWeight_eigenvalues
+
+/-- info: 'CSD.Thermo.gibbsState_mulVec_eigenvectorBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.gibbsState_mulVec_eigenvectorBasis
+
+/-- info: 'CSD.Thermo.gibbsWeight_eq_re_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.gibbsWeight_eq_re_born
+
+/-- info: 'CSD.Thermo.sum_tpmLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.sum_tpmLaw
+
+/-- info: 'CSD.Thermo.jarzynski' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.jarzynski
+
+/-- info: 'CSD.Thermo.jarzynski_freeEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.jarzynski_freeEnergy
+
+/-- info: 'CSD.Thermo.mean_work_ge_freeEnergy_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.mean_work_ge_freeEnergy_sub
+
 -- W7 (2026-09-11), Thermo/SigmaSecondLaw.lean: TH2, data processing and TH4 instantiated on
 -- preparations under Sigma-flows (W3 barycentre + W6 lifted-flow evolution). The de-isolation
 -- channel IS the pointer-basis pinching (deisolationChannel_apply_eq_pinch); entropy is conserved

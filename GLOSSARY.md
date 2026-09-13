@@ -71,6 +71,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Is the wavefunction real in CSD?](https://glossary.constraintsurfacedynamics.com/is-the-wavefunction-real/) | `` | question |
 | [Isolation](https://glossary.constraintsurfacedynamics.com/isolation/) | `` | definition |
 | [Jacobi identity](https://glossary.constraintsurfacedynamics.com/jacobi-identity/) | `` | standard-mathematics |
+| [Jarzynski equality](https://glossary.constraintsurfacedynamics.com/jarzynski-equality/) | `jarzynski` | proved-in-corpus |
 | [Kahler form](https://glossary.constraintsurfacedynamics.com/kahler-form/) | `fsForm_isKahler` | proved-in-corpus |
 | [Klein's inequality](https://glossary.constraintsurfacedynamics.com/klein-inequality/) | `klein_inequality` | proved-in-corpus |
 | [KMS condition](https://glossary.constraintsurfacedynamics.com/kms-condition/) | `thermal_kms` | proved-in-corpus |

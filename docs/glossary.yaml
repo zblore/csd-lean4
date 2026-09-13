@@ -920,10 +920,122 @@ entries:
     lean:
       module: CsdLean4/Thermo/Landauer.lean
       theorem: landauer_bound
-    related: [von-neumann-entropy, entropy-subadditivity, gibbs-state, klein-inequality, de-isolation]
+    related: [von-neumann-entropy, entropy-subadditivity, gibbs-state, klein-inequality, de-isolation, jarzynski-equality]
+
+  - slug: jarzynski-equality
+    reviewed: 2026-09-13
+    hook: >
+      Rush a system between two equilibrium conditions as violently as you like, and the
+      average of a particular exponential of the work you did still returns the equilibrium
+      free energy difference exactly. Irreversible experiments measure a reversible quantity.
+    layman: >
+      Free energy is the price of moving a system from one equilibrium condition to another
+      at fixed temperature: the least work that has to be paid, and it is paid in full only
+      if the change is made infinitely slowly. Real changes are made in finite time. A
+      stretched molecule, a compressed gas, a switched field: each is driven faster than it
+      can keep up, the work done in a run exceeds the free energy difference, and it exceeds
+      it by a different amount every time, because the microscopic starting configuration
+      differs from run to run. The second law of thermodynamics says only that the average
+      excess is never negative. It does not say what the average is.
+
+      Jarzynski found that a different average is fixed exactly. Instead of averaging the
+      work, average the exponential of minus the work divided by the thermal energy. That
+      quantity, averaged over many repetitions of the same fast protocol, equals the
+      exponential of minus the free energy difference divided by the same thermal energy,
+      whatever the protocol and however fast. The rare runs in which the work came out
+      small, or even negative, dominate this average, which is why it can see past the
+      irreversibility of the typical run.
+
+      The consequence is practical as well as conceptual. Single molecules can be pulled
+      apart with laser tweezers thousands of times, quickly and irreversibly, and the
+      equilibrium free energy of the unfolding transition read off from the record of work
+      values. The result was tested that way on RNA hairpins within five years of its
+      publication. The ordinary second law, that the average work is at least the free
+      energy difference, follows from the equality in one line, because an average of an
+      exponential is at least the exponential of the average.
+    in_csd: >
+      Thermodynamics in this programme is not a separate subject with its own postulates. The
+      state a system settles into at a given temperature, the Gibbs state, is derived from a
+      variational principle, and the weight it gives to each energy level is the Born weight
+      of an energy reading made on the equilibrium preparation. The Jarzynski equality is the
+      first result in the corpus that ties those equilibrium weights to a process: the system
+      is read, driven by a unitary change of its dynamics, and read again, and the work is the
+      difference of the two readings.
+
+      What the equality establishes is that the exponential average of that difference
+      depends only on the two equilibrium conditions, not on the driving. The proof rests on
+      two facts the programme already owns. The equilibrium weight of the first reading
+      contains the exponential of minus the starting energy, which cancels exactly against
+      the matching factor inside the exponential of minus the work. And the table of
+      transition probabilities between the two sets of energy readings, being built from a
+      unitary, has every row and every column summing to one, so the remaining sum over
+      starting readings collapses. What is left is the ratio of the two partition functions,
+      which is the free energy difference in disguise. The second law for the driven process,
+      that the mean work is at least the free energy difference, then follows from the
+      convexity of the exponential function.
+
+      The theorem is stated at the level of matrices, the level at which the corpus states
+      its other thermodynamic results. On the constraint surface the two readings are records
+      of a single trajectory, the equilibrium preparation is a measure on the sector whose
+      density operator is the Gibbs state, and the driving is the Schrodinger flow, which the
+      corpus identifies with a Hamiltonian flow preserving the sector's volume. Stating the
+      equality in those terms, as a property of the two time record law, is the next step in
+      the thermodynamics track.
+    mathematical: >
+      Let H_0 and H_1 be Hermitian matrices on a finite-dimensional space, U a unitary, and
+      beta an inverse temperature. The two point measurement protocol reads the energy in the
+      Gibbs state of H_0 (outcome i, the i-th eigenvalue E_0(i), with probability
+      exp(-beta E_0(i)) / Z_0, which the corpus proves equals the Born weight of the i-th
+      eigenvector in the Gibbs state), applies U, and reads the energy of H_1 (outcome j,
+      eigenvalue E_1(j), with probability the squared modulus of the matrix element of U
+      between the i-th eigenvector of H_0 and the j-th eigenvector of H_1). The work on the
+      pair (i, j) is W = E_1(j) - E_0(i). The theorem is that the sum over all pairs of the
+      joint probability times exp(-beta W) equals Z_1 / Z_0, the ratio of the partition
+      functions, which by the corpus's TH3 free energy F = -log Z / beta is exp(-beta (F_1 -
+      F_0)).
+
+      The proof is the cancellation described above made exact. The factor exp(-beta E_0(i))
+      in the Gibbs weight cancels exp(+beta E_0(i)) in exp(-beta W); the transition matrix
+      is the matrix of squared moduli of V_1^* U V_0, with V_k the eigenvector unitary of
+      H_k, and both its row sums and its column sums are one because V_1^* U V_0 is again
+      unitary (the diagonal entries of M^* M = 1 and of M M^* = 1). Summing over i first
+      leaves the sum over j of exp(-beta E_1(j)) / Z_0. Jensen's inequality for the convex
+      exponential, applied to the joint law as a finite probability measure, gives the mean
+      work bound: F_1 - F_0 is at most the expected work.
+
+      Scope: finite dimension, projective energy readings in the eigenbases chosen by the
+      spectral theorem (degenerate spectra are allowed; the sum runs over eigenvectors, not
+      over distinct eigenvalues), a closed driven system with no bath, so the work is the
+      whole energy change, and the same beta at both ends. The free energy difference is
+      that of the Gibbs states of H_1 and H_0 at that temperature.
+    person: >
+      Christopher Jarzynski is an American physicist. He took his doctorate at the
+      University of California, Berkeley, in 1994, moved to Los Alamos National Laboratory,
+      and has been at the University of Maryland, College Park, since 2006, where he is a
+      Distinguished University Professor.
+
+      The equality appeared in Physical Review Letters in 1997, under the title
+      Nonequilibrium equality for free energy differences, written at Los Alamos. It was
+      received with some disbelief, since it appeared to extract an equilibrium quantity
+      from arbitrarily irreversible processes, and the classical derivation was scrutinised
+      closely before the result was accepted. Gavin Crooks sharpened it in 1998 and 1999 into
+      a relation between the forward and reverse work distributions, of which the equality
+      is a corollary. Jan Liphardt, Carlos Bustamante and their collaborators confirmed it
+      experimentally in 2002 by pulling single RNA molecules with optical tweezers. The
+      quantum version used here, in which the work is defined by two energy readings, was
+      formulated by Jorge Kurchan and by Hal Tasaki in 2000; Peter Talkner, Eric Lutz and
+      Peter Hanggi made the point in 2007 that quantum work is a two time quantity and not
+      an observable.
+    term: Jarzynski equality
+    eponyms: [Jarzynski]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Thermo/Jarzynski.lean
+      theorem: jarzynski
+    related: [gibbs-state, landauer-principle, von-neumann-entropy, canonical-typicality]
 
   - slug: von-neumann-entropy
-    reviewed: 2026-08-25
+    reviewed: 2026-09-13
     hook: >
       A quantum whole can be perfectly known while its parts are as uncertain as they could
       possibly be. Entropy is where that stops being a metaphor and becomes arithmetic.
@@ -2118,7 +2230,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Gibbs_measure
-    related: [canonical-typicality, kms-condition, landauer-principle, klein-inequality, von-neumann-entropy]
+    related: [canonical-typicality, kms-condition, landauer-principle, klein-inequality, von-neumann-entropy, jarzynski-equality]
 
   - slug: gisin-theorem
     hook: >
@@ -6482,7 +6594,7 @@ entries:
     related: [stinespring-dilation, quantum-channel, entropy-subadditivity, kronecker-product, de-isolation]
 
   - slug: entropy-subadditivity
-    reviewed: 2026-08-25
+    reviewed: 2026-09-13
     hook: >
       The information missing from a whole never exceeds the sum of what is
       missing from its parts. That is von Neumann's subadditivity inequality,

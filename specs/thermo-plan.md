@@ -147,8 +147,14 @@ grounded in TH3. Landed:
 Eigenstate thermalisation (a single energy eigenstate looks thermal on small subsystems) or a
 fluctuation theorem (Jarzynski/Crooks). Larger; deferred until TH1-TH3 land.
 
-**Priced 2026-09-13** (`BACKLOG.md` ▶ OPEN QUEUE, rows 1–4 and 21): **TH5a** Jarzynski equality in
-the finite-dimensional two-point-measurement form on `gibbsState` (M); **TH5b** Crooks, the pairwise
+**Priced 2026-09-13** (`BACKLOG.md` ▶ OPEN QUEUE, rows 1–4 and 21): ~~**TH5a** Jarzynski equality in
+the finite-dimensional two-point-measurement form on `gibbsState` (M)~~ **TH5a DONE 2026-09-13**
+(`Thermo/Jarzynski.lean`, 13 pins, M took S–M): ★★ `jarzynski` — `∑ᵢⱼ tpmLaw i j · e^{−βW i j} = Z₁/Z₀`
+and ★★ `jarzynski_freeEnergy` (`= e^{−β(F₁ − F₀)}` in TH3's free energies), with the two-point-measurement
+law `tpmLaw` = Gibbs weight × `‖⟨e₁ j, U e₀ i⟩‖²` shown to be the protocol's Born statistics
+(`gibbsWeight_eq_re_born`, `tpmTransition_eq`), the transition matrix doubly stochastic by unitarity
+(`sum_tpmTransition_left/right`), and Jensen's second law for the driven process
+`mean_work_ge_freeEnergy_sub` (`ΔF ≤ ⟨W⟩`); glossary entry `jarzynski-equality`; **TH5b** Crooks, the pairwise
 ratio `P_F(n,m)/P_R(m,n) = e^{β(W − ΔF)}` (S–M after TH5a); **TH5c** ETH as a hypothesis field with
 its equilibration consequence on `Equilibration.lean`'s time averages (M–L; ETH *for generic
 Hamiltonians* is random-matrix theory, listed as research); **TH5d** Jarzynski at the `Σ` level —
