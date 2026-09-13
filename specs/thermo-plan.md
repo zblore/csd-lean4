@@ -147,6 +147,14 @@ grounded in TH3. Landed:
 Eigenstate thermalisation (a single energy eigenstate looks thermal on small subsystems) or a
 fluctuation theorem (Jarzynski/Crooks). Larger; deferred until TH1-TH3 land.
 
+**Priced 2026-09-13** (`BACKLOG.md` ▶ OPEN QUEUE, rows 1–4 and 21): **TH5a** Jarzynski equality in
+the finite-dimensional two-point-measurement form on `gibbsState` (M); **TH5b** Crooks, the pairwise
+ratio `P_F(n,m)/P_R(m,n) = e^{β(W − ΔF)}` (S–M after TH5a); **TH5c** ETH as a hypothesis field with
+its equilibration consequence on `Equilibration.lean`'s time averages (M–L; ETH *for generic
+Hamiltonians* is random-matrix theory, listed as research); **TH5d** Jarzynski at the `Σ` level —
+Gibbs preparation measure, Schrödinger flow as the Hamiltonian flow of `⟨H⟩` (Q29(e)), two-time
+record law — the first thermodynamic consumer of the manifold Liouville theorem (M–L).
+
 ## Honest residues (carried by the whole track)
 
 - These are QM statistical-mechanics results with a CSD READING; the CSD-distinctive "thermodynamics
