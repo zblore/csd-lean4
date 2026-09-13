@@ -126,9 +126,9 @@ Remaining: E2 no-broadcasting + the general-CPTP E3b (separate tranche).
     sector. PSD block-vanishing (mirrors `LF2.rankOneDensity_unique_of_certainty`).
   Foundational triple, AxiomAudit-pinned.
 
-**Honest scope** *(as written; superseded 2026-09-12 by `BACKLOG.md` row BC — the commuting half
-and the pure-state hard half are theorems in `Mathlib/QuantumInfo/Broadcasting.lean`, and the
-mixed hard half has an elementary route through support confinement, not through DPI)*: this is
+**Honest scope** *(as written; superseded 2026-09-13 by `BACKLOG.md` row BC — the full BCFJS
+`iff` is a theorem in `Mathlib/QuantumInfo/Broadcasting.lean`, proved by an elementary route
+through support confinement, not through DPI)*: this is
 the pure-state structural core, NOT the full BCFJS commuting-states iff. That is relative-entropy-monotonicity content, gated on the
 `hDPI` hypothesis of `strong_subadditivity_of_relEntropy_monotone` (the operator-convexity
 ladder); `relEntropy` + Klein and the Kraus `Channel` layer are in the corpus, fidelity

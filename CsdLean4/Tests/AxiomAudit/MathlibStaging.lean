@@ -513,6 +513,58 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.exists_boundary_point
 
+-- BC6 (2026-09-13): the BCFJS theorem. Broadcast PSD matrices commute, by strong induction on
+-- rank(rho + sigma): normalise, take the two boundary points of the segment (BC5), intersect
+-- their supports with interProj (1 - suppProj((1 - P_1) + (1 - P_2))); V = 0 is BC3, V /= 0 is
+-- cloned by every Kraus operator (intersections of tensor squares), BC4 splits both boundary
+-- states, the block pairs have strictly smaller rank of the sum (rank_lt_rank_of_ker: a strict
+-- kernel inclusion is a strict rank inequality) and commute by induction, the cross products
+-- vanish. With BC1: exists_channel_broadcasts_iff_commute.
+
+/-- info: 'QuantumInfo.suppProj_mulVec_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.suppProj_mulVec_eq_zero_iff
+
+/-- info: 'Matrix.PosSemidef.add_mulVec_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.PosSemidef.add_mulVec_eq_zero_iff
+
+/-- info: 'QuantumInfo.smul_mulVec_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.smul_mulVec_eq_zero_iff
+
+/-- info: 'QuantumInfo.rank_lt_rank_of_ker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.rank_lt_rank_of_ker
+
+/-- info: 'QuantumInfo.one_sub_proj_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.one_sub_proj_posSemidef
+
+/-- info: 'QuantumInfo.interProj_mulVec_eq_self_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.interProj_mulVec_eq_self_iff
+
+/-- info: 'QuantumInfo.mul_interProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.mul_interProj
+
+/-- info: 'QuantumInfo.interProj_kronecker_mulVec_eq_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.interProj_kronecker_mulVec_eq_self
+
+/-- info: 'Matrix.PosSemidef.exists_smul_trace_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.PosSemidef.exists_smul_trace_one
+
+/-- info: 'QuantumInfo.Channel.Broadcasts.mul_comm_of_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Channel.Broadcasts.mul_comm_of_posSemidef
+
+/-- info: 'QuantumInfo.exists_channel_broadcasts_iff_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_channel_broadcasts_iff_commute
+
 /-- info: 'QuantumInfo.channel_traceDist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.channel_traceDist_le

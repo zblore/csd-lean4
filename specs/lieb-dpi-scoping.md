@@ -21,11 +21,11 @@ hDPI premise"). And `Empirical/QM/NoBroadcasting.lean`'s full BCFJS commuting-st
 unlocks — that file's gate was corrected on 2026-08-30 from "fidelity" to `hDPI`. Nothing else
 in the corpus is gated on it.
 
-> **Correction 2026-09-12.** The BCFJS `iff` is not gated on `hDPI` either. `BACKLOG.md` row **BC**:
-> the commuting half and the pure-state hard half landed in `Mathlib/QuantumInfo/Broadcasting.lean`
-> (support confinement `(P ⊗ P) Kᵢ ρ = Kᵢ ρ`, the classical copier, a joint eigenbasis), and the mixed
-> hard half has an elementary route through support confinement alone (BC3–BC6, L–XL) — no relative
-> entropy, no fidelity. So the prize this note weighed is independent of the ladder.
+> **Correction 2026-09-12, closed 2026-09-13.** The BCFJS `iff` is not gated on `hDPI` either. `BACKLOG.md`
+> row **BC**: the whole theorem landed in `Mathlib/QuantumInfo/Broadcasting.lean`
+> (`exists_channel_broadcasts_iff_commute`) by an elementary route through support confinement alone —
+> no relative entropy, no fidelity. So the prize this note weighed was independent of the ladder, and is
+> now delivered without it.
 
 ⚠️ **And the first of those two is weaker than it sounds.** `CL-023`'s ledger finding reads
 *"confirmed qualified-by-design (the qualification is the claim's permanent scope)"* — it is one

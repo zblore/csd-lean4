@@ -16,14 +16,15 @@ public import CsdLean4.LF2.ReducedDensity
 
 No-broadcasting (Barnum-Caves-Fuchs-Jozsa-Schumacher 1996) generalises no-cloning
 to mixed states: a set of states can be *broadcast* (each marginal of a joint
-output equals the corresponding input) iff the states mutually commute. The channel-level
-statement lives in `Mathlib/QuantumInfo/Broadcasting.lean` (2026-09-12, `BACKLOG.md` row BC):
-`Channel.Broadcasts`, support confinement, the commuting half
-(`exists_channel_broadcasts_of_commute`) and the pure-state hard half
-(`Broadcasts.star_dotProduct_eq_zero_or_norm_eq_one`) are theorems there; the mixed hard half
-is priced there by an elementary route through support confinement. (Until that date this
-header called the `iff` relative-entropy content gated on `hDPI`; it is not — BCFJS's fidelity
-argument and Lindblad's DPI argument are two proofs, not the only two.)
+output equals the corresponding input) iff the states mutually commute. **The theorem is in
+the corpus**: `QuantumInfo.exists_channel_broadcasts_iff_commute`
+(`Mathlib/QuantumInfo/Broadcasting.lean`, 2026-09-12/13, `BACKLOG.md` row BC) — two positive
+semidefinite matrices can be broadcast by a single channel iff they commute, with the hard half
+`Channel.Broadcasts.mul_comm_of_posSemidef` proved by an elementary route through support
+confinement (no fidelity, no relative entropy: an induction on the rank of `ρ + σ` through the
+boundary points of the segment and a block splitting along the intersection of supports).
+(Until 2026-09-12 this header called the `iff` relative-entropy content gated on `hDPI`; it is
+not — BCFJS's fidelity argument and Lindblad's DPI argument are two proofs, not the only two.)
 
 What the partial-trace infrastructure
 (`CsdLean4/Mathlib/LinearAlgebra/Matrix/PartialTrace.lean`) *does* deliver is the

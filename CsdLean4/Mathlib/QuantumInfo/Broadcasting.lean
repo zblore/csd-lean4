@@ -9,17 +9,19 @@ public import CsdLean4.Mathlib.QuantumInfo.Channel
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 public import Mathlib.Analysis.Matrix.Order
 public import Mathlib.Analysis.InnerProductSpace.JointEigenspace
+public import Mathlib.LinearAlgebra.Matrix.Rank
 
 /-!
-# Broadcasting: the commuting half of BCFJS, support confinement, block splitting, boundary points
+# Broadcasting: the BCFJS theorem, states can be broadcast iff they commute
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate). Row **BC** of
-`specs/BACKLOG.md` (the BCFJS `iff` of `Empirical/QM/NoBroadcasting.lean`), milestones BC1–BC5.
+`specs/BACKLOG.md` (the BCFJS `iff` of `Empirical/QM/NoBroadcasting.lean`), milestones BC1–BC6: complete.
 
 A channel `Φ : ℂⁿ → ℂⁿ ⊗ ℂⁿ` **broadcasts** `ρ` when both marginals of `Φ ρ` are `ρ`
 (`Channel.Broadcasts`). Barnum–Caves–Fuchs–Jozsa–Schumacher (1996): a pair of states can be
-broadcast by one channel iff they commute. This file proves the constructive half in full, the
-structural lemma every proof of the other half rests on, and the rank-one case of that half.
+broadcast by one channel iff they commute. This file proves both halves: the constructive half by
+the classical copier in a joint eigenbasis, and the hard half by an elementary route through
+support confinement (no fidelity, no relative entropy), assembled by induction on rank.
 
 * `Channel.Broadcasts`, with `Broadcasts.add`, `.smul`, `.sub` — the condition is linear in
   the state, so a broadcaster of two states broadcasts their whole span;
@@ -83,17 +85,34 @@ structural lemma every proof of the other half rests on, and the rank-one case o
   `l` form a closed bounded set (the traceless `ρ − σ` has a negative direction); at its
   supremum, a missing kernel vector would let the eigenvalue-`0` eigenvectors (which lie in
   `ker (ρ + σ)`, hence in `ker (ρ − σ)`) and the positive eigenvalues absorb a further step
-  `δ = ε / (μ + 1)`, contradicting maximality.
+  `δ = ε / (μ + 1)`, contradicting maximality;
+* `suppProj_mulVec_eq_zero_iff` (the support projector of a Hermitian matrix vanishes exactly on
+  its kernel), `Matrix.PosSemidef.add_mulVec_eq_zero_iff` (a positive combination of positive
+  semidefinite matrices vanishes on `x` iff both do), `rank_lt_rank_of_ker` (**a strict kernel
+  inclusion is a strict rank inequality**, by rank–nullity); `interProj P₁ P₂` — **the projector
+  onto the intersection of two ranges**, `1 − suppProj ((1 − P₁) + (1 − P₂))`, with
+  `interProj_mulVec_eq_self_iff` and `mul_interProj`; `interProj_kronecker_mulVec_eq_self` —
+  **intersections of tensor squares**: a vector in `S₁ ⊗ S₁` and in `S₂ ⊗ S₂` lies in
+  `(S₁ ∩ S₂) ⊗ (S₁ ∩ S₂)` (column by column, row by row);
+* ★★★ `Channel.Broadcasts.mul_comm_of_posSemidef` — **BC6, the hard half of BCFJS: broadcast
+  states commute.** Strong induction on `rank (ρ + σ)`: normalise to trace one
+  (`Matrix.PosSemidef.exists_smul_trace_one`); take the two boundary points `τ₁, τ₂` of the
+  segment (BC5), broadcast by linearity, with `[τ₁, τ₂] = (l₁ + l₂ − 1) [ρ, σ]`; with `V` the
+  intersection of their supports, either `V = 0` and BC3 gives `τ₁ τ₂ = 0 = τ₂ τ₁`, or `V ≠ 0` is
+  cloned by every Kraus operator, BC4 splits each `τᵢ` into a `V`-block and a complementary
+  block, the two pairs of blocks are broadcast with strictly smaller rank of their sum
+  (witnessed by the BC5 kernel vector and by a vector of `V`), so they commute by induction, and
+  the cross products vanish;
+* ★★★ `exists_channel_broadcasts_iff_commute` — **BCFJS: two positive semidefinite matrices can
+  be broadcast by a single channel iff they commute** (BC1 and BC6).
 
-## What is not here
+## Provenance
 
-The hard half for mixed states (broadcast ⇒ commute). The literature proves it through fidelity
-monotonicity (BCFJS) or the equality case of the relative-entropy data-processing inequality
-(Lindblad), neither of which is in Mathlib or in this corpus. `specs/BACKLOG.md` row BC records an
-elementary route through the support confinement above; BC3–BC5 (this file) are its bricks, and
-BC6 remains: the induction on the rank of `ρ + σ` that assembles them (with `V = S₁ ∩ S₂` for the
-boundary supports, `V = 0` is BC3 and `V ≠ 0` splits both boundary states by BC4 into blocks of
-smaller rank).
+The literature proves the hard half through fidelity monotonicity (BCFJS 1996) or the equality
+case of the relative-entropy data-processing inequality (Lindblad 1999). Neither is in Mathlib or
+in this corpus, and neither is used here: the route above needs only support confinement, trace
+preservation and elementary matrix analysis. Row **BC** of `specs/BACKLOG.md` records the
+milestones BC1–BC6.
 
 ## Source
 
@@ -1706,5 +1725,466 @@ theorem exists_boundary_point [Nonempty n] {ρ σ : Matrix n n ℂ} (hρ : ρ.Po
 end Boundary
 
 end BlockSplit
+
+
+/-! ### Kernel facts -/
+
+section Kernels
+
+/-- The support projector of a Hermitian matrix vanishes exactly on its kernel. -/
+theorem suppProj_mulVec_eq_zero_iff {A : Matrix n n ℂ} (hA : A.IsHermitian) (x : n → ℂ) :
+    suppProj A *ᵥ x = 0 ↔ A *ᵥ x = 0 := by
+  rw [suppProj_mulVec]
+  constructor
+  · intro h
+    have h' : (LinearMap.range (Matrix.toEuclideanLin A)).starProjection (WithLp.toLp 2 x) = 0 := by
+      apply WithLp.ofLp_injective
+      simpa using h
+    have hmem := (Submodule.starProjection_apply_eq_zero_iff _).mp h'
+    -- `x ⊥ range A`, so `⟨A y, x⟩ = 0` for all `y`; with `A` Hermitian, `A x = 0`
+    have hall : ∀ y : n → ℂ, star (A *ᵥ y) ⬝ᵥ x = 0 := by
+      intro y
+      have := (Submodule.mem_orthogonal _ _).mp hmem (Matrix.toEuclideanLin A (WithLp.toLp 2 y))
+        ⟨WithLp.toLp 2 y, rfl⟩
+      rw [EuclideanSpace.inner_eq_star_dotProduct, Matrix.toLpLin_apply, WithLp.ofLp_toLp,
+        WithLp.ofLp_toLp, dotProduct_comm] at this
+      exact this
+    -- take `y = A x`
+    have h2 := hall (A *ᵥ x)
+    rw [star_mulVec, ← dotProduct_mulVec, hA.eq] at h2
+    exact dotProduct_star_self_eq_zero.mp h2
+  · intro h
+    have hmem : WithLp.toLp 2 x ∈ (LinearMap.range (Matrix.toEuclideanLin A))ᗮ := by
+      rw [Submodule.mem_orthogonal]
+      rintro u ⟨y, rfl⟩
+      rw [EuclideanSpace.inner_eq_star_dotProduct, Matrix.toLpLin_apply, WithLp.ofLp_toLp,
+        WithLp.ofLp_toLp, star_mulVec, dotProduct_comm, ← dotProduct_mulVec, hA.eq, h,
+        dotProduct_zero]
+    rw [(Submodule.starProjection_apply_eq_zero_iff _).mpr hmem]
+    rfl
+
+omit [DecidableEq n] in
+/-- A positive combination of positive semidefinite matrices vanishes on `x` iff both do. -/
+theorem _root_.Matrix.PosSemidef.add_mulVec_eq_zero_iff {A B : Matrix n n ℂ} (hA : A.PosSemidef)
+    (hB : B.PosSemidef) (x : n → ℂ) : (A + B) *ᵥ x = 0 ↔ A *ᵥ x = 0 ∧ B *ᵥ x = 0 := by
+  constructor
+  · intro h
+    have h0 : star x ⬝ᵥ (A *ᵥ x) + star x ⬝ᵥ (B *ᵥ x) = 0 := by
+      rw [← dotProduct_add, ← Matrix.add_mulVec, h, dotProduct_zero]
+    obtain ⟨hA0, hB0⟩ := (add_eq_zero_iff_of_nonneg (hA.dotProduct_mulVec_nonneg _)
+      (hB.dotProduct_mulVec_nonneg _)).mp h0
+    exact ⟨(hA.dotProduct_mulVec_zero_iff _).mp hA0, (hB.dotProduct_mulVec_zero_iff _).mp hB0⟩
+  · rintro ⟨h1, h2⟩
+    rw [Matrix.add_mulVec, h1, h2, add_zero]
+
+omit [DecidableEq n] in
+theorem smul_mulVec_eq_zero_iff {A : Matrix n n ℂ} {c : ℂ} (hc : c ≠ 0) (x : n → ℂ) :
+    (c • A) *ᵥ x = 0 ↔ A *ᵥ x = 0 := by
+  rw [Matrix.smul_mulVec, smul_eq_zero, or_iff_right hc]
+
+omit [DecidableEq n] in
+/-- **Strict rank comparison from a strict kernel inclusion.** -/
+theorem rank_lt_rank_of_ker {A B : Matrix n n ℂ} (hAB : ∀ x, B *ᵥ x = 0 → A *ᵥ x = 0)
+    {x : n → ℂ} (hx : A *ᵥ x = 0) (hBx : B *ᵥ x ≠ 0) : A.rank < B.rank := by
+  have hker : LinearMap.ker B.mulVecLin < LinearMap.ker A.mulVecLin := by
+    refine lt_of_le_of_ne (fun y hy => ?_) fun heq => ?_
+    · rw [LinearMap.mem_ker, Matrix.mulVecLin_apply] at hy ⊢
+      exact hAB y hy
+    · have : x ∈ LinearMap.ker B.mulVecLin := by
+        rw [heq, LinearMap.mem_ker, Matrix.mulVecLin_apply]; exact hx
+      rw [LinearMap.mem_ker, Matrix.mulVecLin_apply] at this
+      exact hBx this
+  have h1 := LinearMap.finrank_range_add_finrank_ker A.mulVecLin
+  have h2 := LinearMap.finrank_range_add_finrank_ker B.mulVecLin
+  have h3 := Submodule.finrank_lt_finrank_of_lt hker
+  unfold Matrix.rank
+  omega
+
+end Kernels
+
+/-! ### The intersection projector, and intersections of tensor squares -/
+
+section Intersection
+
+omit [DecidableEq n] in
+theorem proj_posSemidef {P : Matrix n n ℂ} (hP : P.IsHermitian) (hP2 : P * P = P) :
+    P.PosSemidef := by
+  have := posSemidef_conjTranspose_mul_self P
+  rwa [hP.eq, hP2] at this
+
+theorem one_sub_proj_posSemidef {P : Matrix n n ℂ} (hP : P.IsHermitian) (hP2 : P * P = P) :
+    ((1 : Matrix n n ℂ) - P).PosSemidef :=
+  proj_posSemidef (isHermitian_one.sub hP) (one_sub_proj_mul_self hP2)
+
+/-- The projector onto the intersection of the ranges of two projectors:
+`1 − suppProj ((1 − P₁) + (1 − P₂))`, since the kernel of the positive semidefinite sum is the
+intersection of the kernels. -/
+noncomputable def interProj (P₁ P₂ : Matrix n n ℂ) : Matrix n n ℂ :=
+  1 - suppProj ((1 - P₁) + (1 - P₂))
+
+theorem interProj_isHermitian (P₁ P₂ : Matrix n n ℂ) : (interProj P₁ P₂).IsHermitian :=
+  isHermitian_one.sub (suppProj_isHermitian _)
+
+theorem interProj_mul_self (P₁ P₂ : Matrix n n ℂ) :
+    interProj P₁ P₂ * interProj P₁ P₂ = interProj P₁ P₂ :=
+  one_sub_proj_mul_self (suppProj_mul_self _)
+
+theorem interProj_mulVec_eq_self_iff {P₁ P₂ : Matrix n n ℂ} (hP₁ : P₁.IsHermitian)
+    (hP₁2 : P₁ * P₁ = P₁) (hP₂ : P₂.IsHermitian) (hP₂2 : P₂ * P₂ = P₂) (x : n → ℂ) :
+    interProj P₁ P₂ *ᵥ x = x ↔ P₁ *ᵥ x = x ∧ P₂ *ᵥ x = x := by
+  have hQ : ((1 : Matrix n n ℂ) - P₁ + (1 - P₂)).IsHermitian :=
+    (isHermitian_one.sub hP₁).add (isHermitian_one.sub hP₂)
+  rw [interProj, Matrix.sub_mulVec, Matrix.one_mulVec, sub_eq_self, suppProj_mulVec_eq_zero_iff hQ,
+    (one_sub_proj_posSemidef hP₁ hP₁2).add_mulVec_eq_zero_iff
+      (one_sub_proj_posSemidef hP₂ hP₂2), Matrix.sub_mulVec, Matrix.sub_mulVec, Matrix.one_mulVec]
+  simp only [sub_eq_zero]
+  exact and_congr eq_comm eq_comm
+
+theorem mul_interProj {P₁ P₂ : Matrix n n ℂ} (hP₁ : P₁.IsHermitian)
+    (hP₁2 : P₁ * P₁ = P₁) (hP₂ : P₂.IsHermitian) (hP₂2 : P₂ * P₂ = P₂) :
+    P₁ * interProj P₁ P₂ = interProj P₁ P₂ ∧ P₂ * interProj P₁ P₂ = interProj P₁ P₂ := by
+  constructor <;>
+  · rw [Matrix.ext_iff_mulVec]
+    intro x
+    rw [← Matrix.mulVec_mulVec]
+    have h := (interProj_mulVec_eq_self_iff hP₁ hP₁2 hP₂ hP₂2 (interProj P₁ P₂ *ᵥ x)).mp
+      (by rw [Matrix.mulVec_mulVec, interProj_mul_self])
+    first | exact h.1 | exact h.2
+
+theorem kronecker_one_mulVec_apply (A : Matrix n n ℂ) (z : n × n → ℂ) (a c : n) :
+    ((A ⊗ₖ (1 : Matrix n n ℂ)) *ᵥ z) (a, c) = (A *ᵥ fun a' => z (a', c)) a := by
+  classical
+  simp only [Matrix.mulVec, dotProduct, kronecker_apply, Matrix.one_apply, Fintype.sum_prod_type,
+    mul_ite, mul_one, mul_zero, ite_mul, zero_mul]
+  refine Finset.sum_congr rfl fun a' _ => ?_
+  rw [Finset.sum_ite_eq]
+  simp
+
+theorem one_kronecker_mulVec_apply (B : Matrix n n ℂ) (z : n × n → ℂ) (a c : n) :
+    (((1 : Matrix n n ℂ) ⊗ₖ B) *ᵥ z) (a, c) = (B *ᵥ fun c' => z (a, c')) c := by
+  classical
+  simp only [Matrix.mulVec, dotProduct, kronecker_apply, Matrix.one_apply, Fintype.sum_prod_type,
+    ite_mul, zero_mul, one_mul]
+  rw [Finset.sum_comm]
+  refine Finset.sum_congr rfl fun c' _ => ?_
+  rw [Finset.sum_ite_eq]
+  simp
+
+/-- A vector fixed by `P ⊗ P` is fixed by `P ⊗ 1` and by `1 ⊗ P`. -/
+theorem kronecker_one_mulVec_eq_self_of {P : Matrix n n ℂ} (hP2 : P * P = P) {z : n × n → ℂ}
+    (h : (P ⊗ₖ P) *ᵥ z = z) :
+    (P ⊗ₖ (1 : Matrix n n ℂ)) *ᵥ z = z ∧ ((1 : Matrix n n ℂ) ⊗ₖ P) *ᵥ z = z := by
+  constructor
+  · conv_lhs => rw [← h]
+    rw [Matrix.mulVec_mulVec, ← mul_kronecker_mul, hP2, Matrix.one_mul, h]
+  · conv_lhs => rw [← h]
+    rw [Matrix.mulVec_mulVec, ← mul_kronecker_mul, hP2, Matrix.one_mul, h]
+
+/-- **Intersections of tensor squares**: a vector in `S₁ ⊗ S₁` and in `S₂ ⊗ S₂` lies in
+`(S₁ ∩ S₂) ⊗ (S₁ ∩ S₂)`, column by column and row by row. -/
+theorem interProj_kronecker_mulVec_eq_self {P₁ P₂ : Matrix n n ℂ} (hP₁ : P₁.IsHermitian)
+    (hP₁2 : P₁ * P₁ = P₁) (hP₂ : P₂.IsHermitian) (hP₂2 : P₂ * P₂ = P₂) {z : n × n → ℂ}
+    (h1 : (P₁ ⊗ₖ P₁) *ᵥ z = z) (h2 : (P₂ ⊗ₖ P₂) *ᵥ z = z) :
+    (interProj P₁ P₂ ⊗ₖ interProj P₁ P₂) *ᵥ z = z := by
+  set I := interProj P₁ P₂ with hI
+  have hIleft : (I ⊗ₖ (1 : Matrix n n ℂ)) *ᵥ z = z := by
+    funext ⟨a, c⟩
+    rw [kronecker_one_mulVec_apply]
+    have hc1 : P₁ *ᵥ (fun a' => z (a', c)) = fun a' => z (a', c) := by
+      funext a'
+      have := congrFun (kronecker_one_mulVec_eq_self_of hP₁2 h1).1 (a', c)
+      rwa [kronecker_one_mulVec_apply] at this
+    have hc2 : P₂ *ᵥ (fun a' => z (a', c)) = fun a' => z (a', c) := by
+      funext a'
+      have := congrFun (kronecker_one_mulVec_eq_self_of hP₂2 h2).1 (a', c)
+      rwa [kronecker_one_mulVec_apply] at this
+    exact congrFun ((interProj_mulVec_eq_self_iff hP₁ hP₁2 hP₂ hP₂2 _).mpr ⟨hc1, hc2⟩) a
+  have hIright : ((1 : Matrix n n ℂ) ⊗ₖ I) *ᵥ z = z := by
+    funext ⟨a, c⟩
+    rw [one_kronecker_mulVec_apply]
+    have hc1 : P₁ *ᵥ (fun c' => z (a, c')) = fun c' => z (a, c') := by
+      funext c'
+      have := congrFun (kronecker_one_mulVec_eq_self_of hP₁2 h1).2 (a, c')
+      rwa [one_kronecker_mulVec_apply] at this
+    have hc2 : P₂ *ᵥ (fun c' => z (a, c')) = fun c' => z (a, c') := by
+      funext c'
+      have := congrFun (kronecker_one_mulVec_eq_self_of hP₂2 h2).2 (a, c')
+      rwa [one_kronecker_mulVec_apply] at this
+    exact congrFun ((interProj_mulVec_eq_self_iff hP₁ hP₁2 hP₂ hP₂2 _).mpr ⟨hc1, hc2⟩) c
+  calc (I ⊗ₖ I) *ᵥ z = (I ⊗ₖ (1 : Matrix n n ℂ)) *ᵥ (((1 : Matrix n n ℂ) ⊗ₖ I) *ᵥ z) := by
+        rw [Matrix.mulVec_mulVec, ← mul_kronecker_mul, Matrix.mul_one, Matrix.one_mul]
+    _ = z := by rw [hIright, hIleft]
+
+end Intersection
+
+/-! ### BC6: the rank induction, and the BCFJS theorem -/
+
+section Main
+
+variable {ι : Type*} [Fintype ι] {Φ : Channel n (n × n) ι}
+
+omit [DecidableEq n] in
+/-- Normalisation of a nonzero positive semidefinite matrix to trace one. -/
+theorem _root_.Matrix.PosSemidef.exists_smul_trace_one {ρ : Matrix n n ℂ} (hρ : ρ.PosSemidef) (h0 : ρ ≠ 0) :
+    ∃ t : ℝ, 0 < t ∧ (((t⁻¹ : ℝ) : ℂ) • ρ).PosSemidef ∧ (((t⁻¹ : ℝ) : ℂ) • ρ).trace = 1 ∧
+      ρ = (t : ℂ) • (((t⁻¹ : ℝ) : ℂ) • ρ) := by
+  have htr0 : ρ.trace ≠ 0 := fun h => h0 ((hρ.trace_eq_zero_iff).mp h)
+  obtain ⟨hre, him⟩ := Complex.nonneg_iff.mp hρ.trace_nonneg
+  set t := ρ.trace.re with ht
+  have htr : ρ.trace = (t : ℂ) := Complex.ext rfl (by simp [← him])
+  have htpos : 0 < t := lt_of_le_of_ne hre fun h => htr0 (by rw [htr, ← h]; simp)
+  refine ⟨t, htpos, hρ.smul (Complex.zero_le_real.mpr (inv_nonneg.mpr htpos.le)), ?_, ?_⟩
+  · rw [trace_smul, htr, smul_eq_mul, ← Complex.ofReal_mul, inv_mul_cancel₀ htpos.ne',
+      Complex.ofReal_one]
+  · rw [smul_smul, ← Complex.ofReal_mul, mul_inv_cancel₀ htpos.ne', Complex.ofReal_one, one_smul]
+
+/-- ★★★ **BCFJS, the hard half: broadcast states commute.** If one channel broadcasts two
+positive semidefinite matrices, they commute. Strong induction on `rank (ρ + σ)`: normalise to
+trace one, take the two boundary points `τ₁, τ₂` of the segment (BC5; they are broadcast by
+linearity and `[ρ, σ]` is a positive multiple of `[τ₁, τ₂]`); with `V` the intersection of their
+supports (`interProj`), either `V = 0` and BC3 gives `τ₁ τ₂ = 0 = τ₂ τ₁`, or `V ≠ 0` is cloned by
+every Kraus operator (`interProj_kronecker_mulVec_eq_self`), BC4 splits each `τᵢ` into a `V`-block
+and a complementary block, both pairs of blocks are broadcast with strictly smaller rank of the
+sum (`rank_lt_rank_of_ker`, witnessed by the BC5 kernel vector and by a vector of `V`), so they
+commute by induction, and the cross products vanish. -/
+theorem Channel.Broadcasts.mul_comm_of_posSemidef {ρ σ : Matrix n n ℂ} (hρ : ρ.PosSemidef)
+    (hσ : σ.PosSemidef) (h1 : Φ.Broadcasts ρ) (h2 : Φ.Broadcasts σ) : ρ * σ = σ * ρ := by
+  classical
+  suffices H : ∀ r : ℕ, ∀ ρ σ : Matrix n n ℂ, ρ.PosSemidef → σ.PosSemidef → Φ.Broadcasts ρ →
+      Φ.Broadcasts σ → (ρ + σ).rank ≤ r → ρ * σ = σ * ρ from
+    H _ ρ σ hρ hσ h1 h2 le_rfl
+  intro r
+  induction r using Nat.strong_induction_on with
+  | _ r ih =>
+  intro ρ σ hρ hσ h1 h2 hr
+  by_cases hρ0 : ρ = 0
+  · subst hρ0; simp
+  by_cases hσ0 : σ = 0
+  · subst hσ0; simp
+  -- normalise to trace one
+  obtain ⟨a, ha, hρ', hρ'1, hρeq⟩ := hρ.exists_smul_trace_one hρ0
+  obtain ⟨b, hb, hσ', hσ'1, hσeq⟩ := hσ.exists_smul_trace_one hσ0
+  set ρ' := ((a⁻¹ : ℝ) : ℂ) • ρ with hρ'def
+  set σ' := ((b⁻¹ : ℝ) : ℂ) • σ with hσ'def
+  have h1' : Φ.Broadcasts ρ' := h1.smul _
+  have h2' : Φ.Broadcasts σ' := h2.smul _
+  suffices hcomm : ρ' * σ' = σ' * ρ' by
+    have e1 : ρ * σ = ((a : ℂ) * (b : ℂ)) • (ρ' * σ') := by
+      rw [hρeq, hσeq, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+    have e2 : σ * ρ = ((a : ℂ) * (b : ℂ)) • (σ' * ρ') := by
+      rw [hρeq, hσeq, Matrix.smul_mul, Matrix.mul_smul, smul_smul, mul_comm]
+    rw [e1, e2, hcomm]
+  by_cases heq : ρ' = σ'
+  · rw [heq]
+  -- the kernels of `ρ + σ` and `ρ' + σ'` agree
+  have hker : ∀ x, (ρ + σ) *ᵥ x = 0 ↔ (ρ' + σ') *ᵥ x = 0 := by
+    intro x
+    rw [hρ.add_mulVec_eq_zero_iff hσ, hρ'.add_mulVec_eq_zero_iff hσ',
+      hρ'def, hσ'def, smul_mulVec_eq_zero_iff (by simp [ha.ne']),
+      smul_mulVec_eq_zero_iff (by simp [hb.ne'])]
+  rcases isEmpty_or_nonempty n with hempty | hne
+  · exact Matrix.ext fun i _ => (hempty.false i).elim
+  -- the two boundary points of the segment
+  obtain ⟨l₁, hl₁, hτ₁, x₁, hτ₁x, hx₁⟩ := exists_boundary_point hρ' hσ' hρ'1 hσ'1 heq
+  obtain ⟨l₂, hl₂, hτ₂, x₂, hτ₂x, hx₂⟩ := exists_boundary_point hσ' hρ' hσ'1 hρ'1 (Ne.symm heq)
+  set τ₁ := σ' + (l₁ : ℂ) • (ρ' - σ') with hτ₁def
+  set τ₂ := ρ' + (l₂ : ℂ) • (σ' - ρ') with hτ₂def
+  have hb₁ : Φ.Broadcasts τ₁ := h2'.add ((h1'.sub h2').smul _)
+  have hb₂ : Φ.Broadcasts τ₂ := h1'.add ((h2'.sub h1').smul _)
+  -- `[τ₁, τ₂] = (l₁ + l₂ − 1) [ρ', σ']`
+  have hcommrel : τ₁ * τ₂ - τ₂ * τ₁ = ((l₁ + l₂ - 1 : ℝ) : ℂ) • (ρ' * σ' - σ' * ρ') := by
+    rw [hτ₁def, hτ₂def]
+    simp only [Matrix.add_mul, Matrix.mul_add, Matrix.sub_mul, Matrix.mul_sub, Matrix.smul_mul,
+      Matrix.mul_smul, smul_sub, smul_add, smul_smul]
+    push_cast
+    module
+  have hc : ((l₁ + l₂ - 1 : ℝ) : ℂ) ≠ 0 := by
+    have : (l₁ + l₂ - 1 : ℝ) ≠ 0 := by linarith
+    exact_mod_cast this
+  suffices hτcomm : τ₁ * τ₂ = τ₂ * τ₁ by
+    have h := hcommrel
+    rw [hτcomm, sub_self] at h
+    exact sub_eq_zero.mp ((smul_eq_zero.mp h.symm).resolve_left hc)
+  -- `ker (ρ + σ) ⊆ ker τᵢ`
+  have hkerτ : ∀ x, (ρ + σ) *ᵥ x = 0 → τ₁ *ᵥ x = 0 ∧ τ₂ *ᵥ x = 0 := by
+    intro x hx
+    rw [hker] at hx
+    obtain ⟨hρx, hσx⟩ := (hρ'.add_mulVec_eq_zero_iff hσ' x).mp hx
+    constructor <;> simp [hτ₁def, hτ₂def, Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.sub_mulVec,
+      hρx, hσx]
+  -- support projectors and the intersection
+  set P₁ := suppProj τ₁ with hP₁def
+  set P₂ := suppProj τ₂ with hP₂def
+  have hP₁ : P₁.IsHermitian := suppProj_isHermitian τ₁
+  have hP₁2 : P₁ * P₁ = P₁ := suppProj_mul_self τ₁
+  have hP₂ : P₂.IsHermitian := suppProj_isHermitian τ₂
+  have hP₂2 : P₂ * P₂ = P₂ := suppProj_mul_self τ₂
+  set PV := interProj P₁ P₂ with hPVdef
+  have hPV : PV.IsHermitian := interProj_isHermitian P₁ P₂
+  have hPV2 : PV * PV = PV := interProj_mul_self P₁ P₂
+  obtain ⟨hP₁PV, hP₂PV⟩ := mul_interProj hP₁ hP₁2 hP₂ hP₂2
+  have hPVP₁ : PV * P₁ = PV := by
+    have := congrArg conjTranspose hP₁PV
+    rwa [conjTranspose_mul, hPV.eq, hP₁.eq] at this
+  have hPVP₂ : PV * P₂ = PV := by
+    have := congrArg conjTranspose hP₂PV
+    rwa [conjTranspose_mul, hPV.eq, hP₂.eq] at this
+  -- `V` is cloned by every Kraus operator
+  have hclone : ∀ i, (PV ⊗ₖ PV) * (Φ.kraus i * PV) = Φ.kraus i * PV := by
+    intro i
+    rw [Matrix.ext_iff_mulVec]
+    intro x
+    rw [← Matrix.mulVec_mulVec, ← Matrix.mulVec_mulVec]
+    set v := PV *ᵥ x with hv
+    have hPVv : PV *ᵥ v = v := by rw [hv, Matrix.mulVec_mulVec, hPV2]
+    obtain ⟨hP₁v, hP₂v⟩ := (interProj_mulVec_eq_self_iff hP₁ hP₁2 hP₂ hP₂2 v).mp hPVv
+    obtain ⟨y₁, hy₁⟩ := (suppProj_mulVec_eq_self_iff τ₁ v).mp hP₁v
+    obtain ⟨y₂, hy₂⟩ := (suppProj_mulVec_eq_self_iff τ₂ v).mp hP₂v
+    have hc1 : (P₁ ⊗ₖ P₁) *ᵥ (Φ.kraus i *ᵥ v) = Φ.kraus i *ᵥ v := by
+      have := congrArg (fun N => N *ᵥ y₁)
+        (hb₁.kronecker_mul_kraus_mul hτ₁ hP₁ hP₁2 (suppProj_mul τ₁) i)
+      simpa only [← Matrix.mulVec_mulVec, hy₁] using this
+    have hc2 : (P₂ ⊗ₖ P₂) *ᵥ (Φ.kraus i *ᵥ v) = Φ.kraus i *ᵥ v := by
+      have := congrArg (fun N => N *ᵥ y₂)
+        (hb₂.kronecker_mul_kraus_mul hτ₂ hP₂ hP₂2 (suppProj_mul τ₂) i)
+      simpa only [← Matrix.mulVec_mulVec, hy₂] using this
+    exact interProj_kronecker_mulVec_eq_self hP₁ hP₁2 hP₂ hP₂2 hc1 hc2
+  by_cases hV : PV = 0
+  · -- `V = 0`: the supports are disjoint (BC3)
+    have hdisj : ∀ x, (∃ y, τ₁ *ᵥ y = x) → (∃ z, τ₂ *ᵥ z = x) → x = 0 := by
+      intro x hx1 hx2
+      have h1x := (suppProj_mulVec_eq_self_iff τ₁ x).mpr hx1
+      have h2x := (suppProj_mulVec_eq_self_iff τ₂ x).mpr hx2
+      have := (interProj_mulVec_eq_self_iff hP₁ hP₁2 hP₂ hP₂2 x).mpr ⟨h1x, h2x⟩
+      rw [← hPVdef, hV, Matrix.zero_mulVec] at this
+      exact this.symm
+    have e1 : τ₂ * τ₁ = 0 :=
+      Channel.Broadcasts.mul_eq_zero_of_range_disjoint hτ₁ hτ₂ hb₁ hb₂ hdisj
+    have e2 : τ₁ * τ₂ = 0 :=
+      Channel.Broadcasts.mul_eq_zero_of_range_disjoint hτ₂ hτ₁ hb₂ hb₁ fun x a b => hdisj x b a
+    rw [e1, e2]
+  · -- `V ≠ 0`: split both boundary states along `V` (BC4) and use the induction hypothesis
+    obtain ⟨v, hv0, hPVv⟩ : ∃ v, v ≠ 0 ∧ PV *ᵥ v = v := by
+      by_contra hcon
+      push Not at hcon
+      apply hV
+      rw [Matrix.ext_iff_mulVec]
+      intro x
+      rw [Matrix.zero_mulVec]
+      by_contra h
+      exact hcon (PV *ᵥ x) h (by rw [Matrix.mulVec_mulVec, hPV2])
+    obtain ⟨hcross₁, hbV₁, hbW₁⟩ := hb₁.block_split hτ₁ hPV hPV2 hP₁PV hclone
+    obtain ⟨hcross₂, hbV₂, hbW₂⟩ := hb₂.block_split hτ₂ hPV hPV2 hP₂PV hclone
+    set PW₁ := P₁ - PV with hPW₁def
+    set PW₂ := P₂ - PV with hPW₂def
+    have hPW₁ : PW₁.IsHermitian := hP₁.sub hPV
+    have hPW₂ : PW₂.IsHermitian := hP₂.sub hPV
+    -- the block decompositions of `τᵢ`
+    have hdec : ∀ (τ P : Matrix n n ℂ), τ.PosSemidef → P.IsHermitian → P * τ = τ → τ * P = τ →
+        P * PV = PV → PV * τ * (P - PV) = 0 → τ = PV * τ * PV + (P - PV) * τ * (P - PV) := by
+      intro τ P hτ hP hPτ hτP hPPV hcross
+      have hcross' : (P - PV) * τ * PV = 0 := by
+        have := congrArg conjTranspose hcross
+        rwa [conjTranspose_mul, conjTranspose_mul, hτ.1.eq, hPV.eq, conjTranspose_sub, hPV.eq,
+          hP.eq, conjTranspose_zero, ← Matrix.mul_assoc] at this
+      calc τ = (PV + (P - PV)) * τ * (PV + (P - PV)) := by rw [add_sub_cancel, hPτ, hτP]
+        _ = PV * τ * PV + (P - PV) * τ * (P - PV) := by
+            simp only [Matrix.add_mul, Matrix.mul_add, hcross, hcross', add_zero, zero_add]
+    have hτ₁dec := hdec τ₁ P₁ hτ₁ hP₁ (suppProj_mul τ₁) (mul_suppProj_of_isHermitian hτ₁.1) hP₁PV
+      hcross₁
+    have hτ₂dec := hdec τ₂ P₂ hτ₂ hP₂ (suppProj_mul τ₂) (mul_suppProj_of_isHermitian hτ₂.1) hP₂PV
+      hcross₂
+    -- positivity of the blocks
+    have hV₁ : (PV * τ₁ * PV).PosSemidef := by
+      have := hτ₁.conjTranspose_mul_mul_same PV; rwa [hPV.eq] at this
+    have hV₂ : (PV * τ₂ * PV).PosSemidef := by
+      have := hτ₂.conjTranspose_mul_mul_same PV; rwa [hPV.eq] at this
+    have hW₁ : (PW₁ * τ₁ * PW₁).PosSemidef := by
+      have := hτ₁.conjTranspose_mul_mul_same PW₁; rwa [hPW₁.eq] at this
+    have hW₂ : (PW₂ * τ₂ * PW₂).PosSemidef := by
+      have := hτ₂.conjTranspose_mul_mul_same PW₂; rwa [hPW₂.eq] at this
+    -- orthogonality of `V` and the complements
+    have hPVPW₁ : PV * PW₁ = 0 := by rw [hPW₁def, Matrix.mul_sub, hPVP₁, hPV2, sub_self]
+    have hPVPW₂ : PV * PW₂ = 0 := by rw [hPW₂def, Matrix.mul_sub, hPVP₂, hPV2, sub_self]
+    have hPW₁PV : PW₁ * PV = 0 := by rw [hPW₁def, Matrix.sub_mul, hP₁PV, hPV2, sub_self]
+    have hPW₂PV : PW₂ * PV = 0 := by rw [hPW₂def, Matrix.sub_mul, hP₂PV, hPV2, sub_self]
+    -- kernel vectors of `ρ + σ` are killed by every projector in sight
+    have hkerP : ∀ x, (ρ + σ) *ᵥ x = 0 →
+        P₁ *ᵥ x = 0 ∧ P₂ *ᵥ x = 0 ∧ PV *ᵥ x = 0 ∧ PW₁ *ᵥ x = 0 ∧ PW₂ *ᵥ x = 0 := by
+      intro x hx
+      obtain ⟨h1x, h2x⟩ := hkerτ x hx
+      have hP₁x : P₁ *ᵥ x = 0 := (suppProj_mulVec_eq_zero_iff hτ₁.1 x).mpr h1x
+      have hP₂x : P₂ *ᵥ x = 0 := (suppProj_mulVec_eq_zero_iff hτ₂.1 x).mpr h2x
+      have hPVx : PV *ᵥ x = 0 := by
+        rw [← hPVP₁, ← Matrix.mulVec_mulVec, hP₁x, Matrix.mulVec_zero]
+      refine ⟨hP₁x, hP₂x, hPVx, ?_, ?_⟩
+      · rw [hPW₁def, Matrix.sub_mulVec, hP₁x, hPVx, sub_zero]
+      · rw [hPW₂def, Matrix.sub_mulVec, hP₂x, hPVx, sub_zero]
+    -- the `V`-pair has smaller rank
+    have hrankV : (PV * τ₁ * PV + PV * τ₂ * PV).rank < (ρ + σ).rank := by
+      refine rank_lt_rank_of_ker (fun x hx => ?_) (x := x₁) ?_ ?_
+      · obtain ⟨-, -, hPVx, -, -⟩ := hkerP x hx
+        simp only [Matrix.add_mulVec, ← Matrix.mulVec_mulVec, hPVx, Matrix.mulVec_zero, add_zero]
+      · have hP₁x : P₁ *ᵥ x₁ = 0 := (suppProj_mulVec_eq_zero_iff hτ₁.1 x₁).mpr hτ₁x
+        have hPVx : PV *ᵥ x₁ = 0 := by
+          rw [← hPVP₁, ← Matrix.mulVec_mulVec, hP₁x, Matrix.mulVec_zero]
+        simp only [Matrix.add_mulVec, ← Matrix.mulVec_mulVec, hPVx, Matrix.mulVec_zero, add_zero]
+      · rw [Ne, hker]; exact hx₁
+    have hcommV := ih _ (lt_of_lt_of_le hrankV hr) _ _ hV₁ hV₂ hbV₁ hbV₂ le_rfl
+    -- the `W`-pair has smaller rank
+    have hrankW : (PW₁ * τ₁ * PW₁ + PW₂ * τ₂ * PW₂).rank < (ρ + σ).rank := by
+      refine rank_lt_rank_of_ker (fun x hx => ?_) (x := v) ?_ ?_
+      · obtain ⟨-, -, -, hW₁x, hW₂x⟩ := hkerP x hx
+        simp only [Matrix.add_mulVec, ← Matrix.mulVec_mulVec, hW₁x, hW₂x, Matrix.mulVec_zero,
+          add_zero]
+      · have hP₁v : P₁ *ᵥ v = v := by rw [← hPVv, Matrix.mulVec_mulVec, hP₁PV]
+        have hP₂v : P₂ *ᵥ v = v := by rw [← hPVv, Matrix.mulVec_mulVec, hP₂PV]
+        have hW₁v : PW₁ *ᵥ v = 0 := by rw [hPW₁def, Matrix.sub_mulVec, hP₁v, hPVv, sub_self]
+        have hW₂v : PW₂ *ᵥ v = 0 := by rw [hPW₂def, Matrix.sub_mulVec, hP₂v, hPVv, sub_self]
+        simp only [Matrix.add_mulVec, ← Matrix.mulVec_mulVec, hW₁v, hW₂v, Matrix.mulVec_zero,
+          add_zero]
+      · intro hv
+        obtain ⟨hP₁v, -, -, -, -⟩ := hkerP v hv
+        have hP₁v' : P₁ *ᵥ v = v := by rw [← hPVv, Matrix.mulVec_mulVec, hP₁PV]
+        exact hv0 (by rw [← hP₁v', hP₁v])
+    have hcommW := ih _ (lt_of_lt_of_le hrankW hr) _ _ hW₁ hW₂ hbW₁ hbW₂ le_rfl
+    -- assemble: the cross products vanish
+    have hc1 : PV * τ₁ * PV * (PW₂ * τ₂ * PW₂) = 0 := by
+      simp only [Matrix.mul_assoc]
+      rw [← Matrix.mul_assoc PV PW₂, hPVPW₂]; simp
+    have hc2 : PW₁ * τ₁ * PW₁ * (PV * τ₂ * PV) = 0 := by
+      simp only [Matrix.mul_assoc]
+      rw [← Matrix.mul_assoc PW₁ PV, hPW₁PV]; simp
+    have hc3 : PV * τ₂ * PV * (PW₁ * τ₁ * PW₁) = 0 := by
+      simp only [Matrix.mul_assoc]
+      rw [← Matrix.mul_assoc PV PW₁, hPVPW₁]; simp
+    have hc4 : PW₂ * τ₂ * PW₂ * (PV * τ₁ * PV) = 0 := by
+      simp only [Matrix.mul_assoc]
+      rw [← Matrix.mul_assoc PW₂ PV, hPW₂PV]; simp
+    calc τ₁ * τ₂ = (PV * τ₁ * PV + PW₁ * τ₁ * PW₁) * (PV * τ₂ * PV + PW₂ * τ₂ * PW₂) := by
+          rw [← hτ₁dec, ← hτ₂dec]
+      _ = PV * τ₁ * PV * (PV * τ₂ * PV) + PW₁ * τ₁ * PW₁ * (PW₂ * τ₂ * PW₂) := by
+          simp only [Matrix.add_mul, Matrix.mul_add, hc1, hc2, add_zero, zero_add]
+      _ = PV * τ₂ * PV * (PV * τ₁ * PV) + PW₂ * τ₂ * PW₂ * (PW₁ * τ₁ * PW₁) := by
+          rw [hcommV, hcommW]
+      _ = (PV * τ₂ * PV + PW₂ * τ₂ * PW₂) * (PV * τ₁ * PV + PW₁ * τ₁ * PW₁) := by
+          simp only [Matrix.add_mul, Matrix.mul_add, hc3, hc4, add_zero, zero_add]
+      _ = τ₂ * τ₁ := by rw [← hτ₁dec, ← hτ₂dec]
+
+universe u in
+/-- ★★★ **BCFJS (Barnum–Caves–Fuchs–Jozsa–Schumacher 1996).** Two positive semidefinite matrices
+can be broadcast by a single channel if and only if they commute. -/
+theorem exists_channel_broadcasts_iff_commute {n : Type u} [Fintype n] [DecidableEq n]
+    {ρ σ : Matrix n n ℂ} (hρ : ρ.PosSemidef) (hσ : σ.PosSemidef) :
+    (∃ (κ : Type u) (_ : Fintype κ) (Φ : Channel n (n × n) κ), Φ.Broadcasts ρ ∧ Φ.Broadcasts σ)
+      ↔ ρ * σ = σ * ρ := by
+  constructor
+  · rintro ⟨κ, _, Φ, h1, h2⟩
+    exact Channel.Broadcasts.mul_comm_of_posSemidef hρ hσ h1 h2
+  · intro hc
+    obtain ⟨Φ, h1, h2⟩ := exists_channel_broadcasts_of_commute hρ.1 hσ.1 hc
+    exact ⟨n, inferInstance, Φ, h1, h2⟩
+
+end Main
 
 end QuantumInfo

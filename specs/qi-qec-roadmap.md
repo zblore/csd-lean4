@@ -59,9 +59,8 @@ i.e. the concrete on-ramp to D1.
 
 ### K3 — fidelity / trace distance
 Unblocks: no-bit-commitment, approximate-cloning
-bounds (the *full* no-broadcasting is no longer on this list: `BACKLOG.md` row BC, 2026-09-12 —
-the commuting half and the pure hard half are landed in `Mathlib/QuantumInfo/Broadcasting.lean`
-and the mixed hard half has a fidelity-free route),
+bounds (the *full* no-broadcasting is no longer on this list: `BACKLOG.md` row BC, 2026-09-13 —
+the BCFJS `iff` is a theorem in `Mathlib/QuantumInfo/Broadcasting.lean`, proved without fidelity),
 bounds, channel discrimination, QEC fidelity. *Mathlib:* trace distance `‖ρ−σ‖₁/2` is
 assemblable from the trace norm; Uhlmann fidelity needs operator `√` (matrix CFC `√` is
 available) plus Uhlmann's theorem (not in Mathlib). Medium difficulty, Cat-1.
