@@ -86,8 +86,11 @@ free), **the `t₁` record is still on display at `t₂`**.
   physics; the gluing is presentation, recorded as gated residue in
   `specs/two-time-luders-scoping.md`.
 * The **entangled/composite two-time version** (measure a subsystem of an entangled composite,
-  then follow up) is Q27's mixed-tier territory — the swap witness over the composite arena with
-  `reducedDM` weights — and is not scoped here.
+  then follow up) ~~is Q27's mixed-tier territory — the swap witness over the composite arena with
+  `reducedDM` weights — and is not scoped here~~ **landed 2026-09-14** (RL-1,
+  `RecordLayer/EntangledRecord.lean`): `two_stage_joint` at the mixed preparation
+  `mixedReadyPrep ρ` gives `mixed_two_time_born` for every density operator, and
+  `entangled_two_time_born` is that law at the reduced state of the composite point.
 * Hamiltonian generation of the propagators is stated, not formalised, exactly as for the shear
   and swap witnesses.
 

@@ -506,6 +506,7 @@ public import CsdLean4.Mathlib.Dynamics.CatMapWitness
 public import CsdLean4.RecordLayer.SwapWitness
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.TwoTimeLuders
+public import CsdLean4.RecordLayer.EntangledRecord
 public import CsdLean4.RecordLayer.DegenerateLuders
 public import CsdLean4.RecordLayer.ApproxProjectability
 public import CsdLean4.RecordLayer.HamiltonianSignature

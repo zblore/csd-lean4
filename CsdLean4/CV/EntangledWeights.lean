@@ -44,9 +44,12 @@ weights.
 
 ⚠️ Honest scope: weights are delivered in the `re tr(reducedDM · A)` mixed-
 Born form on the field-configuration index; transporting them through the
-`Fin`-indexed LF2 `DensityOperatorIx` mixed tier is index plumbing without
-new content and is not claimed here. Sequential/record-conditioned versions
-are Q25's territory.
+`Fin`-indexed LF2 `DensityOperatorIx` mixed tier ~~is index plumbing without
+new content and is not claimed here~~ landed 2026-09-14 as RL-1
+(`RecordLayer/EntangledRecord.lean`: `reducedDensityIx`, `reducedDensity`,
+★★ `entangled_local_record_born`, ★★ `entangled_two_time_born`). Sequential/
+record-conditioned versions are Q25's territory (`RecordLayer/TwoTimeLuders.lean`),
+instantiated on the entangled composite by the same RL-1 module.
 
 ## References
 

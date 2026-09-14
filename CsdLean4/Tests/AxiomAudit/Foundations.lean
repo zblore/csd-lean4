@@ -528,6 +528,17 @@ info: 'CSD.LF3.MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct' d
 /-- info: 'CSD.LF2.DensityOperatorIx.mixedEnsemble_capstone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.LF2.DensityOperatorIx.mixedEnsemble_capstone
 
+-- RL-1 (2026-09-14, RecordLayer/EntangledRecord.lean hosts it, rule of two): the bridge from the
+-- index-parametric DensityOperatorIx iota to the Fin-indexed DensityOperator d the record tier
+-- consumes, through a labelling e : iota ≃ Fin d (toFin), with the diagonal Born weights
+-- transported (traceForm_toFin_single: the Fin-tier pairing at basis outcome i is the indexed
+-- pairing at the matrix unit of e⁻¹ i). ReducedDensity.lean's "should a bridge ever be needed".
+/-- info: 'CSD.LF2.DensityOperatorIx.toFin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.DensityOperatorIx.toFin
+
+/-- info: 'CSD.LF2.DensityOperatorIx.traceForm_toFin_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.DensityOperatorIx.traceForm_toFin_single
+
 -- CL-007 (added 2026-08-19): the CPTP capstone was a LEDGER HEADLINE with no axiom pin.
 -- Found by a mechanical sweep of the 43 non-validated claims against the pin set, not by
 -- any guard: `check-validation-ledger` verifies that a claim's module and constant are

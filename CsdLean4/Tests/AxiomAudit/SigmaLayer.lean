@@ -3582,4 +3582,77 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.sqContext_not_torusGenerated
 
+-- RL-1 (2026-09-14), RecordLayer/EntangledRecord.lean: Q27's SECOND HALF -- what entanglement does
+-- to the RECORDS. The arena-level answer (arenaObs_leftOp_eq_reduced, CV/EntangledWeights) is
+-- carried to the Fin-indexed record tier: reducedDensityIx / reducedDensity e x package reducedDM
+-- as a DensityOperatorIx / DensityOperator d through a quantified labelling e of the local
+-- configurations, and traceForm_reducedDensity_single says the record tier's Born pairing at
+-- outcome i IS the composite arena's local observation of the pattern projector |e⁻¹ i><e⁻¹ i|.
+-- ★★ entangled_local_record_born: the mixed swap preparation at the reduced state gives the
+-- outcome-i sector exactly arenaObs (leftOp Π_i) x, for EVERY composite point, entangled
+-- included; ★ entangled_local_followup: after recording i the follow-up in every local context is
+-- c'.rate [e_i] (the record fixes the local post-state, whatever the remote sector holds);
+-- bell_record_weight₀/₁ = 1/2 on the swap arena. NEW GENERIC INTERMEDIATE: the two-time law for
+-- a MIXED preparation (mixedReadyPrep had no two-time consumer) -- ★★ mixed_two_time_born,
+-- P(i at t₁ ∧ j at t₂) = Tr(ρ Π_i) · c₂.rate [e_i] j on the two-stage arena, by two_stage_joint at
+-- μ12 = mixedReadyPrep ρ with mixed_outcome_pos licensing the conditioning; first_record (no
+-- retro-action) and other_fate (conditioned on i, the next partition carries c₂.rate [e_i],
+-- independent of ρ). Then the gated item of two-time-luders-scoping.md: ★★ entangled_two_time_born,
+-- P(local record i at t₁ ∧ record j at t₂) = arenaObs (leftOp Π_i) x · c₂.rate [e_i] j -- measure
+-- a subsystem of an entangled composite, then follow up, as ONE number on one arena; the Bell ray
+-- gives ½ · c₂.rate. ⚠️ Identities of RECORD STATISTICS at the canonical mixed preparation of
+-- the reduced state; the composite-arena sector weight of a local block context is the
+-- LocalBlockBridge line, and its identification with re tr(reduceB · Π_j) is RL-1′ (BACKLOG).
+/-- info: 'CSD.RecordLayer.traceForm_reducedDensityIx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.traceForm_reducedDensityIx
+
+/-- info: 'CSD.RecordLayer.traceForm_reducedDensity_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.traceForm_reducedDensity_single
+
+/-- info: 'CSD.RecordLayer.entangled_local_record_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.entangled_local_record_born
+
+/-- info: 'CSD.RecordLayer.entangled_local_followup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.entangled_local_followup
+
+/-- info: 'CSD.RecordLayer.bell_record_weight₀' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bell_record_weight₀
+
+/-- info: 'CSD.RecordLayer.bell_record_weight₁' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bell_record_weight₁
+
+/-- info: 'CSD.RecordLayer.mixed_two_time_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mixed_two_time_born
+
+/-- info: 'CSD.RecordLayer.mixed_two_time_first_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mixed_two_time_first_record
+
+/-- info: 'CSD.RecordLayer.mixed_two_time_other_fate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mixed_two_time_other_fate
+
+/-- info: 'CSD.RecordLayer.entangled_two_time_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.entangled_two_time_born
+
+/-- info: 'CSD.RecordLayer.entangled_two_time_first_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.entangled_two_time_first_record
+
+/-- info: 'CSD.RecordLayer.entangled_two_time_other_fate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.entangled_two_time_other_fate
+
+/-- info: 'CSD.RecordLayer.bell_two_time_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bell_two_time_born
+
 end CSD.Tests.AxiomAudit

@@ -16,7 +16,8 @@
 > missing probability instances on `postMeasure` (provided via
 > `cond_isProbabilityMeasure` + `Measure.isProbabilityMeasure_map` `have`s).
 > **Gated residue stands as recorded below** (clock-glued two-epoch protocol;
-> entangled/composite two-time = Q27's mixed tier).
+> ~~entangled/composite two-time = Q27's mixed tier~~ the entangled two-time
+> item was **delivered 2026-09-14 by RL-1**, `RecordLayer/EntangledRecord.lean`).
 
 Created 2026-08-21, the Q11 mold: feasibility checked before scoping, gates and
 abort criteria fixed in advance. Companion to `RecordLayer/SwapLuders.lean` /
@@ -99,10 +100,20 @@ with the dynamical Born.
   composition law is a `swapEvolve_comp`-style case analysis SQUARED
   (two crossing times); the composed-map form below carries all the physics,
   the clock gluing is presentation. Fresh-session go decision.
-* The **entangled/composite two-time version** (measure a subsystem of an
+* ~~The **entangled/composite two-time version** (measure a subsystem of an
   entangled composite, then follow up — Q27's mixed-tier territory): needs the
   swap witness rebuilt over the composite arena with `reducedDM` weights. Not
-  scoped here; Q27's residue row records it.
+  scoped here; Q27's residue row records it.~~ **DONE 2026-09-14 (RL-1,
+  `RecordLayer/EntangledRecord.lean`).** The route was not a rebuild: the
+  generic `two_stage_joint` takes an arbitrary `μ12`, so the two-time law for a
+  MIXED preparation (`mixed_two_time_born`, at `mixedReadyPrep ρ`) is one
+  instantiation with `mixed_outcome_pos` licensing the conditioning, and the
+  entangled form (`entangled_two_time_born`) is that law at
+  `reducedDensity e x`, the reduced state of the composite point read on `Fin d`
+  through a labelling `e`. The first factor is `arenaObs (leftOp Πᵢ) x`, the
+  composite arena's own local observation. What is NOT in it: the composite-
+  arena ontic form (an apparatus coupled to one sector of the composite, the
+  `LocalBlockBridge` line) — BACKLOG ▶ OPEN QUEUE #25 (RL-1′).
 
 ## Non-goals (standing scope, unchanged)
 

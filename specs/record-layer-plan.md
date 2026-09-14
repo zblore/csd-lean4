@@ -417,7 +417,10 @@ done, dynamics open.
   with ★ `two_time_repeat` (von Neumann repeatability composed) and ★ `two_time_other_fate` (the
   conditioned re-partition: the repeated context's other regions are null, a fresh context sees
   the collapsed weights). Foundational-triple, pinned. Gated residue: the clock-glued two-epoch
-  protocol and the entangled/composite instantiation (Q27's mixed tier).
+  protocol ~~and the entangled/composite instantiation (Q27's mixed tier)~~ — the entangled
+  instantiation landed 2026-09-14 (RL-1, `RecordLayer/EntangledRecord.lean`: the generic
+  ★★ `mixed_two_time_born` at `mixedReadyPrep ρ`, then ★★ `entangled_two_time_born` at the
+  reduced state of the composite point; the composite-arena seam is BACKLOG #25).
 - **Corpus today:** `bornRegion ψ` (prep-indexed, state-shaped) + `vnPointerOutcome`
   (prep-indexed) — the LF5 readout. `FibreRecord` supplies the record-layer replacement; retiring
   `vnPointerOutcome` at the `FiniteQMClosure` wiring is staging step 5 (open).
