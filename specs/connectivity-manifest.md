@@ -105,7 +105,7 @@ single object yet has BOTH a many-to-one `π` AND a non-trivial projected flow**
 that is the fix **C7** (below), the honest next step to match Paper C's A3. Also
 note: our Schrödinger route is Wigner-rigidity + phase-lift + Stone, NOT Paper
 C's Ashtekar–Schilling (holomorphic-vector-field) derivation — same endpoint,
-different path. Paper C itself (§A/§3.6) states `Σ`, `π`, and the quantum-effective
+different path (⚠️ both paths exist since 2026-09-12, see the note below). Paper C itself (§A/§3.6) states `Σ`, `π`, and the quantum-effective
 sector (selected by A5) are **assumed, not derived** — **Σ is the floor** (deriving it
 is a non-question). So our posited-sector scope matches Paper C's own.
 
@@ -127,7 +127,11 @@ older `SectorData` track), so it composes with the Schrödinger chain.
 **Not addressed by C7 (nor a gap):** "weights-from-flow" (L7) is a non-question — Σ is
 the floor; the Born trials sampling `kMuL` is not a debt (Born arises from the Ω-region
 volume ratios). C7 fixes the *projection shape*; the frontier is now the extensions (the record layer is built). ⚠️ *Frontier vocabulary superseded 2026-09-05:* `specs/POSITS.md` ("What 'frontier' means here") separates **permanent boundary** / **open mathematics** / **open foundations**. The surviving foundational frontier is Posit 1's discharge condition — deriving `IsTorusGenerated` from the de-isolation dynamics. The extensions are breadth, not the frontier. Our
-route is still Wigner, not Ashtekar–Schilling.
+route is still Wigner, not Ashtekar–Schilling. ⚠️ *Superseded 2026-09-12 (Q29(e)), reconciled
+2026-09-14 (KG-3):* the geometric route exists too — the Hamiltonian flow of the projected energy
+`−2⟨H⟩` for the Fubini–Study symplectic form IS `exp(−itH) •` (`hamiltonianFlow_schrodingerHamiltonian`),
+and on the sector `manyToOneSchrodingerSetup_projectedFlow_eq_hamiltonianFlow`; both routes produce
+the same `schrodingerUnitary`.
 
 ## What may be claimed (until a link flips to CONNECTED)
 

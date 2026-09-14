@@ -65,7 +65,7 @@ basins (`DeIsolationInteraction.basin_rate` is a hypothesis field), and whether 
 **base-only** question stays ⏸ parked. ⚠️ **Updated 2026-08-25: item three is now CLOSED** —
 `kMuL_unique` (`LF4/LiouvilleUnique.lean`) exhibits the sector's measure as forced by its own
 symmetry rather than merely Haar, completing the A1 ontic-sector row (all three sub-items done;
-the residual `dω = 0` / top-power half is a Mathlib wall, `Q8`, not a CSD one — ⚠️ and 2026-09-07 the `dω = 0` half of that wall fell: `fsForm_mextDeriv`, closedness of the Fubini–Study form on `ℂℙⁿ` at manifold level; only the top-power identity remains). **Item two stands, and 2026-09-05 it is stated more precisely** —
+the residual `dω = 0` / top-power half is a Mathlib wall, `Q8`, not a CSD one — ⚠️ and 2026-09-07 the `dω = 0` half of that wall fell: `fsForm_mextDeriv`, closedness of the Fubini–Study form on `ℂℙⁿ` at manifold level; ⚠️ 2026-09-10 the top-power identity fell too, `fsVolume_eq_smul_fubiniStudyMeasure` (`ω^{∧n} = (4π)ⁿ μ_FS`), so `Q8` is closed in-corpus). **Item two stands, and 2026-09-05 it is stated more precisely** —
 "no `H_int` generates the basins" ran together three things that `specs/POSITS.md` now separates:
 *which* interaction an apparatus realises is a **permanent boundary** (`R-015`, never closes); the
 chart→arena transport of Hamiltonian generation is **open mathematics** (`R-016`); and deriving the
