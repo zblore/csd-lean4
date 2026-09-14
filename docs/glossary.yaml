@@ -8333,74 +8333,75 @@ entries:
         url: https://en.wikipedia.org/wiki/Hadamard_test
 
   - slug: amplitude-amplification
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
-      Amplitude amplification is the theorem of which Grover's algorithm is a shadow: any
-      quantum procedure with any success probability can have that probability raised by
-      pure interference, quadratically faster than retrying.
+      Amplitude amplification is the theorem of which Grover's algorithm is a shadow, as
+      any quantum procedure with any success probability can have that probability raised
+      by pure interference, quadratically faster than retrying.
     layman: >
       Suppose your quantum procedure succeeds only sometimes, with some fixed probability.
-      Classically the only remedy for a small probability is repetition, about one over the
-      probability runs, and it is natural to assume that this is simply what boosting
-      success must cost.
+      Classically the only remedy for a small probability is repetition, about one over
+      the probability runs, and it's natural to assume that's simply what boosting success
+      must cost.
 
       Brassard, Hoyer, Mosca and Tapp found the general trick hiding inside Grover's
       search. Reflect the state about the failures, then reflect it about where you
-      started. A reflection here is the quantum analogue of a mirror: it flips the sign of
-      one part of the state and leaves the rest alone. Two reflections make a rotation, and
-      each round rotates the state by a fixed angle towards success. After about one over
-      the square root of the probability rounds, not one over the probability, you measure
-      and win, and the exact success curve at every round is known in closed form.
+      started. A reflection here is the quantum analogue of a mirror, as it flips the sign
+      of one part of the state and leaves the rest alone, and two reflections make a
+      rotation, so each round rotates the state by a fixed angle towards success. After
+      about one over the square root of the probability rounds, not one over the
+      probability, you measure and win, and the exact success curve at every round is
+      known in closed form.
 
-      Run past the sweet spot and you rotate beyond the target: the procedure has a timer,
-      just as Grover's does. Grover's search is exactly this machine pointed at a uniform
-      starting state with one marked item.
+      Run past the sweet spot and you rotate beyond the target, so the procedure has a
+      timer, just as Grover's does. Grover's search is exactly this machine pointed at a
+      uniform starting state with one marked item.
     in_csd: >
       Amplitude amplification is a library theorem in the corpus, deliberately free of CSD
-      content and fully general: any finite register, any set of outcomes counted as good,
-      any starting state whose success probability lies strictly between zero and one. The
-      two-reflection rotation and the closed-form success curve are exact statements, not
-      approximations for large registers. The recommended round count succeeds with
-      probability at least one minus the starting probability, and that round count is at
-      most a fixed constant times one over the square root of the starting probability:
-      the quadratic speedup as a named inequality.
+      content and fully general, for any finite register, any set of outcomes counted as
+      good, and any starting state whose success probability lies strictly between zero
+      and one. The two-reflection rotation and the closed-form success curve are exact
+      statements and not approximations for large registers. The recommended round count
+      succeeds with probability at least one minus the starting probability, and that
+      round count is at most a fixed constant times one over the square root of the
+      starting probability, which is the quadratic speedup as a named inequality.
 
-      The corpus's module on Grover's algorithm is rebuilt on this theorem. The search step
-      is proved to be the amplification step, the headline result is re-derived as an
+      The corpus's module on Grover's algorithm is rebuilt on this theorem, so the search
+      step is proved to be the amplification step, the headline result is re-derived as an
       instance, and the distribution for several marked items arrives free. For an unknown
       success probability the module also carries the randomised search engine from the
-      same paper: a round count chosen uniformly at random below a cap succeeds with
+      same paper, as a round count chosen uniformly at random below a cap succeeds with
       average probability at least one quarter once the cap is large enough relative to
       the success probability, and the sum over rounds telescopes to an exact closed form.
       The exact threshold is stated in the mathematical section. The standing disclaimer
-      applies: the algorithm layer consumes the programme's unitary-evolution pillar and
-      does not support the foundations.
+      applies, as the algorithm layer consumes the programme's unitary-evolution pillar
+      and doesn't support the foundations.
     mathematical: >
-      A Cat-1 theorem. On EuclideanSpace C over a finite basis with good set G: the step is
-      reflection about the initial state composed with the sign flip on the good
+      A Cat-1 theorem. On EuclideanSpace C over a finite basis with good set G, the step
+      is reflection about the initial state composed with the sign flip on the good
       coordinates. On the plane spanned by the normalised good and bad components the step
-      is a rotation by 2 theta with sin theta = sqrt(goodProb); j rounds send the plane
-      angle to (2j+1) theta, so the success probability is exactly sin^2((2j+1) theta),
-      that is sin^2((2j+1) arcsin sqrt(a)) (amplitude_amplification).
+      is a rotation by 2 theta with sin theta = sqrt(goodProb), and j rounds send the
+      plane angle to (2j+1) theta, so the success probability is exactly sin^2((2j+1)
+      theta), that is sin^2((2j+1) arcsin sqrt(a)) (amplitude_amplification).
 
       The optimal count m = floor(pi/(4 theta)) lands the angle within theta of pi/2,
-      giving success at least cos^2(theta) = 1 - a; and m <= pi/(4 sqrt a) since
-      sqrt a = sin theta <= theta. For unknown a the QSearch engine (BHMT Lemma 2) is also
-      proved: a uniformly random round count below M succeeds with average probability at
-      least 1/4 once M * 2 sqrt(a(1-a)) >= 1, the odd-angle sum telescoping to an exact
-      closed form. Degenerate boundaries a = 0 (no plane) and a = 1 (nothing to amplify)
-      are excluded by hypothesis. Round counting is abstract; no oracle model or gate
+      giving success at least cos^2(theta) = 1 - a, and m <= pi/(4 sqrt a) since sqrt a =
+      sin theta <= theta. For unknown a the QSearch engine (BHMT Lemma 2) is also proved,
+      as a uniformly random round count below M succeeds with average probability at least
+      1/4 once M * 2 sqrt(a(1-a)) >= 1, the odd-angle sum telescoping to an exact closed
+      form. Degenerate boundaries a = 0 (no plane) and a = 1 (nothing to amplify) are
+      excluded by hypothesis. Round counting is abstract, and no oracle model or gate
       decomposition is claimed.
     person: >
       Gilles Brassard (Montreal) is one half of the BB84 quantum-cryptography protocol.
       Peter Hoyer (Calgary), Michele Mosca (Waterloo, later a founder of the Institute for
-      Quantum Computing) and Alain Tapp (Montreal) were his collaborators in the
-      Quebec-Ontario quantum information school of the late 1990s.
+      Quantum Computing) and Alain Tapp (Montreal) were his collaborators in the Quebec-
+      Ontario quantum information school of the late 1990s.
 
-      Their paper, "Quantum Amplitude Amplification and Estimation" (2000, published 2002),
-      unified a string of post-Grover boosting tricks into one two-reflection geometry and
-      paired it with amplitude estimation, the phase-estimation reading of the same
-      rotation, which is where the two workhorse subroutines of the field meet.
+      Their paper, "Quantum Amplitude Amplification and Estimation" (2000, published
+      2002), unified a string of post-Grover boosting tricks into one two-reflection
+      geometry and paired it with amplitude estimation, the phase-estimation reading of
+      the same rotation, which is where the two workhorse subroutines of the field meet.
     term: amplitude amplification
     eponyms: [Brassard, Hoyer, Mosca, Tapp]
     status: proved-in-corpus
@@ -8413,27 +8414,28 @@ entries:
         url: https://arxiv.org/abs/quant-ph/0005055
 
   - slug: amplitude-estimation
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
       Point phase estimation at the rotation inside amplitude amplification and the
       success probability itself becomes measurable, quadratically faster than sampling
       could ever learn it.
     layman: >
-      Amplitude amplification boosts a success probability; amplitude estimation measures
-      it. Classically, learning a probability to a given precision costs about one over
-      the square of that precision in samples: ten times the precision needs a hundred
-      times the runs. The quantum route starts from a fact about the amplification step. It
-      rotates a two-dimensional stage by an angle whose squared sine is the success
-      probability, so the probability is encoded in an angle. A rotation has two special
-      states that it leaves unchanged apart from a phase factor, and those phase factors,
-      its eigenvalues, carry exactly the angle in question. Eigenvalue angles are precisely
-      what phase estimation reads out.
+      Amplitude amplification boosts a success probability, and amplitude estimation
+      measures it. Classically, learning a probability to a given precision costs about
+      one over the square of that precision in samples, so ten times the precision needs a
+      hundred times the runs. The quantum route starts from a fact about the amplification
+      step, which rotates a two-dimensional stage by an angle whose squared sine is the
+      success probability, so the probability is encoded in an angle. A rotation has two
+      special states it leaves unchanged apart from a phase factor, and those phase
+      factors, its eigenvalues, carry exactly the angle in question, and eigenvalue angles
+      are precisely what phase estimation reads out.
 
       So run the rotation a controlled number of times, read the control register through
-      the quantum Fourier transform, and the measured index lands near the angle with fixed
-      odds. Squaring the sine of that angle gives the estimate of the probability, accurate
-      to about one over the number of rounds after only that many rounds. That quadratic
-      saving is what makes quantum counting and quantum Monte Carlo speedups work.
+      the quantum Fourier transform, and the measured index lands near the angle with
+      fixed odds. Squaring the sine of that angle gives the estimate of the probability,
+      accurate to about one over the number of rounds after only that many rounds, and
+      that quadratic saving is what makes quantum counting and quantum Monte Carlo
+      speedups work.
 
       The state splits into exactly two clean branches, one rotating clockwise and one
       anticlockwise. Because the companion states of the two branches are perpendicular,
@@ -8441,51 +8443,50 @@ entries:
       with no interference between them.
     in_csd: >
       Amplitude estimation is where three prepared layers of the corpus meet in one
-      theorem: the eigenstructure of the amplification step, whose rotation plane carries
-      two special states with opposite rotation angles; the joint-register mixture law,
-      which says that perpendicular second factors kill every cross-term in the readout
-      probabilities; and the phase-estimation success bound. The state of the control
-      register after the controlled rotations is proved equal to a two-branch phase form,
-      so the counting readout is an exact half-and-half mixture: an equality, not an
-      estimate.
+      theorem, the two special states with opposite rotation angles, the joint-register
+      mixture law, which says that perpendicular second factors kill every cross-term in
+      the readout probabilities, and the phase-estimation success bound. The state of the
+      control register after the controlled rotations is proved equal to a two-branch
+      phase form, so the counting readout is an exact half-and-half mixture, an equality
+      and not an estimate.
 
       The stated bounds are these. Any index in the window closest to the true angle
-      carries probability at least two divided by pi squared; its mirror index carries the
+      carries probability at least two divided by pi squared, its mirror index carries the
       other branch's two divided by pi squared and decodes to the same estimate, so the
-      pair jointly carries four divided by pi squared; and the estimate lands within an
+      pair jointly carries four divided by pi squared, and the estimate lands within an
       explicit distance of the truth that shrinks in proportion to one over the number of
-      rounds, with the exact expression in the mathematical section. Honest scope: the
-      paper's literal bound of eight divided by pi squared additionally counts both
-      rounding directions, which needs a two-index Dirichlet-kernel inequality that is
-      recorded in the plan and not attempted. The standing disclaimer applies: the
-      algorithm layer consumes the programme's unitary-evolution pillar and does not
+      rounds, with the exact expression in the mathematical section. The honest scope is
+      that the paper's literal bound of eight divided by pi squared additionally counts
+      both rounding directions, which needs a two-index Dirichlet-kernel inequality that's
+      recorded in the plan and not attempted. The standing disclaimer applies, as the
+      algorithm layer consumes the programme's unitary-evolution pillar and doesn't
       support the foundations.
     mathematical: >
-      The AA-5b assembly. With Q the amplification step at angle theta (sin theta = sqrt a)
-      on the rotation plane, the kickback state (1/sqrt T) sum_x |x> tensor Q^x psi
-      decomposes exactly as c_+ phaseState(theta/pi) tensor v_+ + c_- phaseState(-theta/pi)
-      tensor v_-, where v_+- = g +- i b are the orthogonal eigenvectors,
-      Q^x v_+- = e^(+-2 i x theta) v_+-, and |c_+-| = 1/2.
+      The AA-5b assembly. With Q the amplification step at angle theta (sin theta = sqrt
+      a) on the rotation plane, the kickback state (1/sqrt T) sum_x |x> tensor Q^x psi
+      decomposes exactly as c_+ phaseState(theta/pi) tensor v_+ + c_-
+      phaseState(-theta/pi) tensor v_-, where v_+- = g +- i b are the orthogonal
+      eigenvectors, Q^x v_+- = e^(+-2 i x theta) v_+-, and |c_+-| = 1/2.
 
       Applying the inverse QFT to the counting register and taking the Born marginal gives
       exactly (P_+(c) + P_-(c))/2, the half-half mixture of the two single-phase counting
       distributions. At any c with |theta/pi - c/T| <= 1/(2T), the plus branch contributes
-      at least 4/pi^2, so the marginal carries at least 2/pi^2; the mirror index -c carries
-      the minus branch's 2/pi^2 and decodes to the same estimate, so the pair carries
-      4/pi^2. And sin^2(pi c / T) estimates a = sin^2 theta within
-      2 sqrt(a(1-a)) eps + eps^2 at eps = pi/(2T), that is within
-      pi sqrt(a(1-a))/T + pi^2/(4 T^2), by the product-form sin^2 difference identity plus
-      the Lipschitz bound on sin (amplitude_estimation). The paper's literal 8/pi^2
-      additionally counts both rounding directions, which needs a two-index
-      Dirichlet-kernel inequality recorded in the plan and not attempted.
+      at least 4/pi^2, so the marginal carries at least 2/pi^2, the mirror index -c
+      carries the minus branch's 2/pi^2 and decodes to the same estimate, so the pair
+      carries 4/pi^2. And sin^2(pi c / T) estimates a = sin^2 theta within 2 sqrt(a(1-a))
+      eps + eps^2 at eps = pi/(2T), that is within pi sqrt(a(1-a))/T + pi^2/(4 T^2), by
+      the product-form sin^2 difference identity plus the Lipschitz bound on sin
+      (amplitude_estimation). The paper's literal 8/pi^2 additionally counts both rounding
+      directions, which needs a two-index Dirichlet-kernel inequality recorded in the plan
+      and not attempted.
     person: >
       The same four authors as amplitude amplification, Brassard, Hoyer, Mosca and Tapp,
       in the same 2000 paper, "Quantum Amplitude Amplification and Estimation". The
-      estimation half is the paper's Theorem 12, feeding their quantum counting results:
-      estimating how many marked items a database holds without ever listing them.
+      estimation half is the paper's Theorem 12, feeding their quantum counting results,
+      which estimate how many marked items a database holds without ever listing them.
 
       The technique is the meeting point of the field's two workhorse subroutines,
-      Grover's rotation geometry (1996) and Kitaev-style phase estimation (1995), and
+      Grover's rotation geometry (1996) and Kitaev-style phase estimation (1995), and it
       later became the engine of quantum Monte Carlo speedups through Montanaro's 2015
       work.
     term: amplitude estimation
@@ -8500,69 +8501,71 @@ entries:
         url: https://arxiv.org/abs/quant-ph/0005055
 
   - slug: gottesman-knill
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
-      The Gottesman-Knill theorem marks the boundary of quantum advantage: circuits built
-      from the Clifford gates can be simulated classically, because in the right picture
-      they are nothing more than linear algebra on bits.
+      The Gottesman-Knill theorem marks the boundary of quantum advantage, as circuits
+      built from the Clifford gates can be simulated classically, because in the right
+      picture they're nothing more than linear algebra on bits.
     layman: >
-      Not everything a quantum computer does is hard to imitate. Gottesman and Knill drew a
-      startling line: a large and useful family of quantum circuits, everything built from
-      three gates, the Hadamard gate that creates superpositions, the phase gate that
-      twists the phase of one branch, and the controlled-NOT that flips one qubit depending
-      on another, can be tracked perfectly by an ordinary computer, with no exponential
-      effort.
+      Not everything a quantum computer does is hard to imitate. Gottesman and Knill drew
+      a startling line, as a large and useful family of quantum circuits, everything built
+      from three gates, the Hadamard gate that creates superpositions, the phase gate that
+      twists the phase of one branch, and the controlled-NOT that flips one qubit
+      depending on another, can be tracked perfectly by an ordinary computer, with no
+      exponential effort.
 
       The trick is to stop watching the quantum state. Describing the state of many qubits
-      takes a number of amplitudes that doubles with every qubit added, which is what makes
-      quantum computers hard to simulate in general. Instead, watch a small set of
-      operations that fix the state completely: its stabilisers, the operations that leave
-      the state exactly as it was. Each stabiliser is described by two strings of bits and
-      a sign. The remarkable property of the Clifford gates is that they shuffle these
-      descriptions among themselves. Push a stabiliser through a Clifford gate and out
-      comes another stabiliser, its bit strings updated by a fixed linear rule.
+      takes a number of amplitudes that doubles with every qubit added, which is what
+      makes quantum computers hard to simulate in general, so instead you watch a small
+      set of operations that fix the state completely, its stabilisers, the operations
+      that leave the state exactly as it was. Each stabiliser is described by two strings
+      of bits and a sign, and the remarkable property of the Clifford gates is that they
+      shuffle these descriptions among themselves, so if you push a stabiliser through a
+      Clifford gate out comes another stabiliser, its bit strings updated by a fixed
+      linear rule.
 
       So the whole circuit reduces to bookkeeping on bits, which an ordinary computer does
-      with ease. Quantum advantage, wherever it lives, must come from gates outside this
-      family.
+      with ease, and quantum advantage, wherever it lives, must come from gates outside
+      this family.
     in_csd: >
       Gottesman-Knill is a library layer of the corpus, free of CSD content, in two
       modules. The first proves the algebra of the Pauli operators, the operations built
-      from bit flips and phase flips on each qubit and labelled by two strings of bits:
-      they close under composition, with a sign fixed by a pairing of the labels; two of
-      them commute exactly when a certain binary pairing of their labels vanishes; and
-      every Pauli operator other than the identity has trace zero, the seed of the argument
-      that a full set of stabilisers determines a state uniquely. The second module proves
-      the mechanism itself: pushing any Pauli operator through each generator gate, the
-      controlled-NOT, the phase gate and the Hadamard gate, yields a phase times another
-      Pauli operator, with the rule for updating the labels made explicit and linear over
-      the bits, gate by gate.
+      from bit flips and phase flips on each qubit and labelled by two strings of bits, so
+      they close under composition, with a sign fixed by a pairing of the labels, two of
+      them commute exactly when a certain binary pairing of their labels vanishes, and
+      every Pauli operator other than the identity has trace zero, the seed of the
+      argument that a full set of stabilisers determines a state uniquely. The second
+      module proves the mechanism itself, as pushing any Pauli operator through each
+      generator gate, the controlled-NOT, the phase gate and the Hadamard gate, yields a
+      phase times another Pauli operator, with the rule for updating the labels made
+      explicit and linear over the bits, gate by gate.
 
-      Honest scope: the closure in the Heisenberg picture, tracking the operators rather
-      than the state, is proved in full. The reading "classically simulable in polynomial
-      time" is a claim about the cost of running the update rule, and the corpus has no
-      model of computation, so that reading stays prose. The stabiliser-group layer built
-      on this is proved in full in the same tree: the projector onto the stabilised states,
-      its trace, the dimension of the code space by the rank-equals-trace argument,
-      uniqueness of the state fixed by a full set of stabilisers, and the complete rule for
-      updating the stabilisers under measurement, in both the deterministic and the
-      fair-coin case, with the post-measurement stabiliser. The Steane code is the first
-      CSS instance built on it, and the magic-state layer is the proved boundary of the
-      mechanism. The standing disclaimer applies: the algorithm layer consumes the
-      programme's unitary-evolution pillar and does not support the foundations.
+      The honest scope is that the closure in the Heisenberg picture, tracking the
+      operators rather than the state, is proved in full, while the reading "classically
+      simulable in polynomial time" is a claim about the cost of running the update rule,
+      and the corpus has no model of computation, so that reading stays prose. The
+      stabiliser-group layer built on this is proved in full in the same tree, the
+      projector onto the stabilised states, its trace, the dimension of the code space by
+      the rank-equals-trace argument, uniqueness of the state fixed by a full set of
+      stabilisers, and the complete rule for updating the stabilisers under measurement,
+      in both the deterministic and the fair-coin case, with the post-measurement
+      stabiliser. The Steane code is the first CSS instance built on it, and the magic-
+      state layer is the proved boundary of the mechanism. The standing disclaimer
+      applies, as the algorithm layer consumes the programme's unitary-evolution pillar
+      and doesn't support the foundations.
     mathematical: >
-      On the register over Fin n -> Fin 2: pauliOp a b acts by (X^a Z^b psi)(z) =
+      On the register over Fin n -> Fin 2, pauliOp a b acts by (X^a Z^b psi)(z) =
       (-1)^(b.(z+a)) psi(z+a). The group law X^a Z^b . X^a' Z^b' = (-1)^(b.a') X^(a+a')
       Z^(b+b') makes the family closed with F2-symplectic phase bookkeeping, two Paulis
-      commuting exactly when the symplectic form of their labels vanishes; the character
-      sum over z of (-1)^(b.z) equals 2^n exactly when b = 0, so non-identity Paulis are
-      traceless.
+      commuting exactly when the symplectic form of their labels vanishes, and the
+      character sum over z of (-1)^(b.z) equals 2^n exactly when b = 0, so non-identity
+      Paulis are traceless.
 
-      The conjugation theorems (hGate_conj_pauliOp and its CNOT and S counterparts):
-      CNOT_jk carries (a, b) to (a[k += a_j], b[j += b_k]) with no phase; S_j carries b to
-      b[j += a_j] with phase i^(a_j); H_j swaps a_j and b_j with sign (-1)^(a_j b_j). Every
-      sign in the development is the character of an F2-valued form, so the bookkeeping
-      reduces to finite F2 identities checked by decision procedure.
+      The conjugation theorems (hGate_conj_pauliOp and its CNOT and S counterparts) say
+      CNOT_jk carries (a, b) to (a[k += a_j], b[j += b_k]) with no phase, S_j carries b to
+      b[j += a_j] with phase i^(a_j), and H_j swaps a_j and b_j with sign (-1)^(a_j b_j).
+      Every sign in the development is the character of an F2-valued form, so the
+      bookkeeping reduces to finite F2 identities checked by decision procedure.
     person: >
       Daniel Gottesman introduced the stabiliser formalism in his 1997 Caltech thesis and
       distilled the simulability observation in "The Heisenberg representation of quantum
@@ -8570,11 +8573,11 @@ entries:
       Knill, hence the name. Knill, at Los Alamos, was at the same time laying the
       foundations of fault-tolerant quantum computation.
 
-      The theorem is the reason quantum error correction does not by itself grant quantum
-      advantage: the codes are Clifford objects. Aaronson and Gottesman's 2004 "Improved
-      simulation of stabilizer circuits" made the bookkeeping practical, and stabiliser
-      theory became the common language of the field, including the research programme of
-      David Gross on Clifford orbits and designs.
+      The theorem is the reason quantum error correction doesn't by itself grant quantum
+      advantage, as the codes are Clifford objects. Aaronson and Gottesman's 2004
+      "Improved simulation of stabilizer circuits" made the bookkeeping practical, and
+      stabiliser theory became the common language of the field, including the research
+      programme of David Gross on Clifford orbits and designs.
     term: Gottesman-Knill theorem
     eponyms: [Gottesman, Knill]
     related: [steane-code, shor-code, magic-state, pauli-matrices, grover-algorithm]
@@ -8589,71 +8592,70 @@ entries:
         url: https://arxiv.org/abs/quant-ph/0406196
 
   - slug: steane-code
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
-      Seven qubits protect one: the Steane code was the first to correct any single-qubit
-      error by using the same classical Hamming code twice, once for bit flips and once for
-      phase flips.
+      Seven qubits protect one, as the Steane code was the first to correct any single-
+      qubit error by using the same classical Hamming code twice, once for bit flips and
+      once for phase flips.
     layman: >
-      Classical error correction has a gem called the Hamming code: seven bits carry four
-      bits of information, arranged so that if any single bit flips, a few parity checks
-      (does this group of bits contain an even number of ones?) announce which one. Quantum
-      errors come in two flavours. A bit flip turns a zero into a one; a phase flip changes
-      the sign between the two branches of a superposition, which no classical code can
-      even see. Steane's insight was that one and the same Hamming code can police both
-      flavours at once, provided its parity checks are compatible with each other in a
-      precise sense.
+      Classical error correction has a gem called the Hamming code, in which seven bits
+      carry four bits of information, arranged so that if any single bit flips, a few
+      parity checks (does this group of bits contain an even number of ones?) announce
+      which one. Quantum errors come in two flavours, as a bit flip turns a zero into a
+      one, and a phase flip changes the sign between the two branches of a superposition,
+      which no classical code can even see. Steane's insight was that one and the same
+      Hamming code can police both flavours at once, provided its parity checks are
+      compatible with each other in a precise sense.
 
       They are, and the result is seven physical qubits protecting one logical qubit, the
       encoded qubit whose information is spread across all seven, against any single-qubit
-      error. Measure six stabiliser checks, measurements designed to reveal whether an
-      error has occurred without revealing the protected information itself; the pattern
-      of answers spells out which qubit went wrong and in which way.
+      error. You measure six stabiliser checks, measurements designed to reveal whether an
+      error has occurred without revealing the protected information itself, and the
+      pattern of answers spells out which qubit went wrong and in which way.
 
       The construction, a classical code and its own dual, used once for each flavour of
-      error, is called CSS after Calderbank, Shor and Steane, and it is the template from
+      error, is called CSS after Calderbank, Shor and Steane, and it's the template from
       which most practical quantum codes descend.
     in_csd: >
       The Steane code is the first genuine CSS instance of the corpus's stabiliser layer.
       The rows of the Hamming parity-check matrix give three bit-flip checks and three
-      phase-flip checks; the compatibility condition that CSS codes require is
-      machine-checked; and the general stabiliser machinery then applies wholesale, so
-      that the code space has dimension exactly two by the general trace formula: one
-      logical qubit.
+      phase-flip checks, the compatibility condition CSS codes require is machine-checked,
+      and the general stabiliser machinery then applies wholesale, so the code space has
+      dimension exactly two by the general trace formula, which is one logical qubit.
 
       Both logical states are exhibited concretely, as uniform superpositions over the
-      Hamming code's row space and over its all-ones coset, and are proved to be left
+      Hamming code's row space and over its all-ones coset, and they're proved to be left
       unchanged by all sixty-four elements of the stabiliser group and to be orthonormal.
-      The logical bit-flip and phase-flip operators act on them as a genuine encoded qubit.
-      Single-qubit errors are proved to produce syndromes, patterns of check answers, that
-      are nonzero and pairwise distinct: the distance-three property, which is what makes
-      every single error identifiable. Honest scope: no recovery map, no Knill-Laflamme
-      conditions and no fault-tolerance claims, the same posture as the three-qubit code
-      modules that the Steane code generalises.
+      The logical bit-flip and phase-flip operators act on them as a genuine encoded
+      qubit. Single-qubit errors are proved to produce syndromes, patterns of check
+      answers, that are nonzero and pairwise distinct, the distance-three property, which
+      is what makes every single error identifiable. The honest scope is that there's no
+      recovery map, no Knill-Laflamme conditions and no fault-tolerance claims, the same
+      posture as the three-qubit code modules the Steane code generalises.
     mathematical: >
       Take H the 3-by-7 Hamming parity matrix whose columns are the binary expansions of 1
-      through 7. The rows satisfy H H^T = 0 over F2, so the six Pauli operators X^(h_i) and
-      Z^(h_i) commute and generate a 64-element stabiliser group with trivial signs. The
-      stabiliser trace formula gives code dimension 2^7/2^6 = 2.
+      through 7. The rows satisfy H H^T = 0 over F2, so the six Pauli operators X^(h_i)
+      and Z^(h_i) commute and generate a 64-element stabiliser group with trivial signs,
+      and the stabiliser trace formula gives code dimension 2^7/2^6 = 2.
 
-      The logical zero is the uniform superposition over the row space C2 (eight strings);
-      the logical one over the coset C2 + 1111111, the all-ones string being a Hamming
+      The logical zero is the uniform superposition over the row space C2 (eight strings),
+      and the logical one over the coset C2 + 1111111, the all-ones string being a Hamming
       codeword outside the row space, so the supports are disjoint. Both are proved
       stabilised by the full group (steaneZero_stabilised for the logical zero) and
-      orthonormal. X^(all-ones) swaps the two states; Z^(all-ones) fixes the zero and
+      orthonormal. X^(all-ones) swaps the two states, and Z^(all-ones) fixes the zero and
       negates the one, since the all-ones string has odd weight against itself and even
-      against the rows. Single-error syndromes are the columns of H: nonzero and pairwise
+      against the rows. Single-error syndromes are the columns of H, nonzero and pairwise
       distinct, hence distance 3.
     person: >
       Andrew Steane, an Oxford atomic physicist, found the seven-qubit code in 1996 within
       months of Shor's nine-qubit construction, and independently of the Calderbank-Shor
-      paper whose framework it shares; that is why "CSS codes" carries all three names.
+      paper whose framework it shares, which is why "CSS codes" carries all three names.
       Steane's version is smaller than Shor's and self-dual, which makes its logical gates
-      unusually clean: applying a Clifford gate to each of the seven qubits separately
+      unusually clean, as applying a Clifford gate to each of the seven qubits separately
       implements the same gate on the logical qubit.
 
       Steane went on to become one of the architects of fault-tolerant quantum
-      computation; the seven-qubit code remains the standard teaching example and a
+      computation, and the seven-qubit code remains the standard teaching example and a
       building block of colour codes.
     term: Steane code
     eponyms: [Steane]
@@ -8667,64 +8669,65 @@ entries:
         url: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.77.793
 
   - slug: magic-state
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
-      A magic state is the fuel of quantum advantage: a single special state that, consumed
-      by otherwise classically trackable Clifford circuits, unlocks the one gate the
-      Gottesman-Knill theorem cannot simulate.
+      A magic state is the fuel of quantum advantage, a single special state that,
+      consumed by otherwise classically trackable Clifford circuits, unlocks the one gate
+      the Gottesman-Knill theorem can't simulate.
     layman: >
-      The Gottesman-Knill theorem says that circuits built from the Clifford gates can be
-      simulated classically, so where does quantum advantage hide? In one extra gate, the
-      T gate, which twists the phase of one branch of a qubit's superposition by an eighth
-      of a turn. Add T to the Clifford set and you can approximate any quantum
-      computation; leave it out and a laptop keeps up.
+      The Gottesman-Knill theorem says circuits built from the Clifford gates can be
+      simulated classically, so you can ask where quantum advantage hides. It hides in one
+      extra gate, the T gate, which twists the phase of one branch of a qubit's
+      superposition by an eighth of a turn, so if you add T to the Clifford set you can
+      approximate any quantum computation, and if you leave it out a laptop keeps up.
 
-      What makes T genuinely different can be proved. Push a Pauli operation, a bit flip, a
-      phase flip or both, through any Clifford gate and out comes another Pauli operation;
-      that closure is the whole mechanism of classical simulability. Push a Pauli operation
-      through T and what comes out is not a Pauli operation, and cannot be made one.
+      What makes T genuinely different can be proved. Push a Pauli operation, a bit flip,
+      a phase flip or both, through any Clifford gate and out comes another Pauli
+      operation, and that closure is the whole mechanism of classical simulability. Push a
+      Pauli operation through T and what comes out isn't a Pauli operation, and can't be
+      made one.
 
-      The magic state is T's resource form: the specific single-qubit state that T produces
+      The magic state is T's resource form, the specific single-qubit state T produces
       from a plain equal superposition. Feed copies of it into circuits made only of
       Clifford gates and the effect of the T gate is obtained without ever applying it,
       which is why fault-tolerant architectures spend most of their budget manufacturing,
       or distilling, high-quality magic states.
     in_csd: >
-      The magic layer is the precise complement of the corpus's Gottesman-Knill layer.
-      Three theorems draw the boundary. Applying T twice gives the Clifford phase gate, so
+      The magic layer is the precise complement of the corpus's Gottesman-Knill layer, and
+      three theorems draw the boundary. Applying T twice gives the Clifford phase gate, so
       the hierarchy of gates descends as it should. Pushing the bit-flip Pauli operation
       through T gives an explicit combination of two Pauli operations, out of the Pauli
       family but inside its two-term span, the level-three hierarchy identity as a closed
-      operator equation. And the no-go: no multiple of any Pauli operation equals that
+      operator equation. And the no-go says no multiple of any Pauli operation equals that
       result, proved by comparing two columns of the matrices until the arithmetic demands
       an impossibility.
 
-      The magic state itself is exhibited with explicit coordinates and unit length. Honest
-      scope: distillation protocols (the fifteen-to-one scheme of Bravyi and Kitaev), the
-      universality of Clifford plus T, and the injection circuit that spends a magic state
-      to perform a T gate are named residues with reasons; the module proves what magic
-      is, not how it is farmed. The standing disclaimer applies: the algorithm layer
-      consumes the programme's unitary-evolution pillar and does not support the
-      foundations.
+      The magic state itself is exhibited with explicit coordinates and unit length. The
+      honest scope is that distillation protocols (the fifteen-to-one scheme of Bravyi and
+      Kitaev), the universality of Clifford plus T, and the injection circuit that spends
+      a magic state to perform a T gate are named residues with reasons, so the module
+      proves what magic is and not how it's farmed. The standing disclaimer applies, as
+      the algorithm layer consumes the programme's unitary-evolution pillar and doesn't
+      support the foundations.
     mathematical: >
-      With tPhase = e^(i pi/4): tPhase squared is i, so T^2 = S on the register. The
+      With tPhase = e^(i pi/4), tPhase squared is i, so T^2 = S on the register. The
       conjugation identity T X T-dagger = (X + i XZ)/sqrt 2 holds coordinatewise via
-      e^(+-i pi/4) = (1 +- i)/sqrt 2. The no-go (tGate_conj_X_not_pauli): if
-      T X T-dagger = c X^a Z^b then reading the |0> and |1> columns forces c = e^(i pi/4)
-      and e^(-i pi/4) = c times a sign, hence e^(-i pi/2) in {+1, -1}, but
-      e^(-i pi/2) = -i. The magic state T H |0> has coordinates (1, e^(i pi/4))/sqrt 2.
+      e^(+-i pi/4) = (1 +- i)/sqrt 2. The no-go (tGate_conj_X_not_pauli) says that if T X
+      T-dagger = c X^a Z^b then reading the |0> and |1> columns forces c = e^(i pi/4) and
+      e^(-i pi/4) = c times a sign, hence e^(-i pi/2) in {+1, -1}, but e^(-i pi/2) = -i.
+      The magic state T H |0> has coordinates (1, e^(i pi/4))/sqrt 2.
     person: >
       The term "magic state" belongs to Sergey Bravyi and Alexei Kitaev, from their 2005
       paper showing that noisy copies of certain single-qubit states can be distilled by
       ideal Clifford operations into fuel for universal computation, the fifteen-to-one
       protocol that still anchors fault-tolerant cost estimates. The gate-injection idea
       goes back to Gottesman and Chuang's 1999 teleportation construction, which organised
-      gates into the Clifford hierarchy: Paulis at level one, Clifford gates at level two,
-      T at level three.
+      gates into the Clifford hierarchy, with Paulis at level one, Clifford gates at level
+      two, and T at level three.
 
-      The economics of quantum computing largely reduce to magic-state throughput, which is
-      why "magic", Bravyi and Kitaev's deliberately playful word, became sober technical
-      vocabulary.
+      The economics of quantum computing largely reduce to magic-state throughput, which
+      is why "magic", Bravyi and Kitaev's deliberately playful word, became sober
+      technical vocabulary.
     term: magic state
     eponyms: []
     status: proved-in-corpus
@@ -8737,55 +8740,62 @@ entries:
         url: https://arxiv.org/abs/quant-ph/0403025
 
   - slug: holevo-bound
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      A quantum system can be prepared in infinitely many distinct ways, yet no reader can extract
-      more classical information from it than from a classical system of the same size, and the
-      measurement channel of CSD is proved to pass exactly one bit per qubit.
+      A quantum system can be prepared in infinitely many distinct ways, yet no reader can
+      extract more classical information from it than from a classical system of the same
+      size, and the measurement channel of CSD is proved to pass exactly one bit per
+      qubit.
     layman: >
-      A single qubit, the quantum unit of information, can be prepared in a continuum of different
-      states, and it is natural to hope that this continuum could be used to store more than one
-      bit. Holevo's bound says it cannot. Suppose a sender chooses one of several states with known
-      probabilities and hands the system over. The most a receiver can learn about which state was
-      chosen, whatever measurement is performed, is bounded by the entropy of the average state,
-      and entropy in turn is bounded by the logarithm of the number of perfectly distinguishable
-      states the system has. For a qubit that is one bit. The continuum of preparations is real,
-      but the states in it are not distinguishable from one another, and the bound measures exactly
-      how much distinguishability is available.
+      A single qubit, the quantum unit of information, can be prepared in a continuum of
+      different states, and it's natural to hope this continuum could be used to store
+      more than one bit. Holevo's bound says it can't. Suppose a sender chooses one of
+      several states with known probabilities and hands the system over. The most a
+      receiver can learn about which state was chosen, whatever measurement is performed,
+      is bounded by the entropy of the average state, and entropy in turn is bounded by
+      the logarithm of the number of perfectly distinguishable states the system has, so
+      for a qubit that's one bit. The continuum of preparations is real, but the states in
+      it aren't distinguishable from one another, and the bound measures exactly how much
+      distinguishability is available.
 
-      The quantity in the bound is the difference between the entropy of the average state and the
-      average of the entropies of the individual states. It is zero when the states are identical,
-      it is largest when they are perfectly distinguishable, and it is never negative. The last
-      fact is not a triviality: it is the statement that mixing states never lowers their average
-      entropy, which is a concavity property of the entropy itself.
+      The quantity in the bound is the difference between the entropy of the average state
+      and the average of the entropies of the individual states. It's zero when the states
+      are identical, it's largest when they're perfectly distinguishable, and it's never
+      negative. The last fact isn't a triviality, as it's the statement that mixing states
+      never lowers their average entropy, which is a concavity property of the entropy
+      itself.
     in_csd: >
-      The bound is proved in the corpus with no side conditions, for any finite collection of
-      states and any weights, and it is then applied to a channel the programme produces rather
-      than posits. The de-isolation channel, which is what the measurement flow looks like from the
-      measured system alone, keeps the pointer basis intact and removes everything else. Its
-      single-letter classical capacity, the largest amount of information any collection of input
-      states can carry through it in one use, is proved to be exactly one bit for a qubit: the bound
-      caps every collection, and the two pointer states attain it. That is the information-theoretic
-      reading of a record. A measurement extracts the pointer bit and nothing more, and the flow that
+      The bound is proved in the corpus with no side conditions, for any finite collection
+      of states and any weights, and it's then applied to a channel the programme produces
+      rather than posits. The de-isolation channel, which is what the measurement flow
+      looks like from the measured system alone, keeps the pointer basis intact and
+      removes everything else. Its single-letter classical capacity, the largest amount of
+      information any collection of input states can carry through it in one use, is
+      proved to be exactly one bit for a qubit, as the bound caps every collection and the
+      two pointer states attain it. That's the information-theoretic reading of a record,
+      as a measurement extracts the pointer bit and nothing more, and the flow that
       creates the record is the same flow that limits what it can carry.
     mathematical: >
-      holevoChi p rho is S(sum p_i rho_i) minus sum p_i S(rho_i). holevoChi_nonneg is concavity of
-      the von Neumann entropy without a support hypothesis (Mathlib/QuantumInfo/ConcavityFull.lean).
-      holevoChi_le_vonNeumannEntropy and holevoChi_le_log_card are the bound and its dimension form,
-      using only non-negativity of the components' entropies. holevoRange of a channel is the set of
-      Holevo quantities of its outputs over all finite ensembles of density matrices, bounded by
-      holevoRange_le_log_card, and deisolationChannel_holevoCapacity (LF6/DeisolationCapacity.lean)
-      states that log 2 is the greatest element of the range of the de-isolation channel on a qubit.
-      The regularised capacity over many uses is not defined, and the converse direction, that the
-      bound is asymptotically attainable, is not proved.
+      holevoChi p rho is S(sum p_i rho_i) minus sum p_i S(rho_i). holevoChi_nonneg is
+      concavity of the von Neumann entropy without a support hypothesis
+      (Mathlib/QuantumInfo/ConcavityFull.lean). holevoChi_le_vonNeumannEntropy and
+      holevoChi_le_log_card are the bound and its dimension form, using only non-
+      negativity of the components' entropies. holevoRange of a channel is the set of
+      Holevo quantities of its outputs over all finite ensembles of density matrices,
+      bounded by holevoRange_le_log_card, and deisolationChannel_holevoCapacity
+      (LF6/DeisolationCapacity.lean) states that log 2 is the greatest element of the
+      range of the de-isolation channel on a qubit. The regularised capacity over many
+      uses isn't defined, and the converse direction, that the bound is asymptotically
+      attainable, isn't proved.
     person: >
-      Alexander Holevo, born in 1943, has spent his career at the Steklov Mathematical Institute in
-      Moscow. The bound appears in a 1973 paper in the Soviet journal Problems of Information
-      Transmission, at a time when quantum information was not yet a field, and it stood for a
-      quarter of a century as a limit before the matching achievability result, proved
-      independently by Holevo and by Schumacher and Westmoreland in the late 1990s, turned it into
-      the capacity formula for classical information over quantum channels. He received the
-      Shannon Award of the IEEE Information Theory Society in 2016.
+      Alexander Holevo, born in 1943, has spent his career at the Steklov Mathematical
+      Institute in Moscow. The bound appears in a 1973 paper in the Soviet journal
+      Problems of Information Transmission, at a time when quantum information wasn't yet
+      a field, and it stood for a quarter of a century as a limit before the matching
+      achievability result, proved independently by Holevo and by Schumacher and
+      Westmoreland in the late 1990s, turned it into the capacity formula for classical
+      information over quantum channels. He received the Shannon Award of the IEEE
+      Information Theory Society in 2016.
     term: Holevo bound
     eponyms: [Holevo]
     status: proved-in-corpus
@@ -8795,60 +8805,67 @@ entries:
     related: [von-neumann-entropy, klein-inequality, de-isolation, measurement-flow, quantum-channel]
 
   - slug: stinespring-dilation
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      Every noisy quantum process is a reversible process on a larger system with part of that
-      system ignored, and in CSD the larger system is the constraint surface itself: every channel
-      the programme uses is the environment's marginal of a volume-preserving flow.
+      Every noisy quantum process is a reversible process on a larger system with part of
+      that system ignored, and in CSD the larger system is the constraint surface itself,
+      so every channel the programme uses is the environment's marginal of a volume-
+      preserving flow.
     layman: >
-      The basic evolution of quantum mechanics is reversible: nothing is lost, and running it
-      backwards recovers the starting state exactly. Real processes are not like that. A qubit
-      stored in a device gradually loses its coherence, a photon in a fibre is sometimes absorbed,
-      a measurement leaves the system changed in a way that cannot be undone. The general
-      description of such a process is a channel, a rule that turns states into states while
-      respecting probabilities, and channels can lose information.
+      The basic evolution of quantum mechanics is reversible, so nothing is lost and
+      running it backwards recovers the starting state exactly. Real processes aren't like
+      that, as a qubit stored in a device gradually loses its coherence, a photon in a
+      fibre is sometimes absorbed, and a measurement leaves the system changed in a way
+      that can't be undone. The general description of such a process is a channel, a rule
+      that turns states into states while respecting probabilities, and channels can lose
+      information.
 
       Stinespring's theorem reconciles the two pictures. Any channel, however lossy, is a
-      reversible evolution of the system together with an environment, followed by ignoring the
-      environment. Ignoring means averaging over everything the environment could be doing, an
-      operation called the partial trace. The information is not destroyed; it has moved into
-      correlations with the environment, where a description of the system alone cannot see it. A
-      bit flip that happens with some probability, for instance, is a reversible interaction with a
-      single environment qubit that records whether the flip occurred, seen from the side that does
-      not read that record.
+      reversible evolution of the system together with an environment, followed by
+      ignoring the environment, where ignoring means averaging over everything the
+      environment could be doing, an operation called the partial trace. The information
+      isn't destroyed, as it has moved into correlations with the environment, where a
+      description of the system alone can't see it. A bit flip that happens with some
+      probability, for instance, is a reversible interaction with a single environment
+      qubit that records whether the flip occurred, seen from the side that doesn't read
+      that record.
     in_csd: >
       The theorem is the hinge between the programme's ontic and operational layers. The
       constraint surface carries system and environment together, and its dynamics is a
-      volume-preserving flow that lifts a reversible evolution of the joint state space. The corpus
-      proves that when such a flow acts on a preparation whose environment starts in a ready state,
-      the density operator of the flowed preparation, seen from the system alone, is a channel
-      applied to the density operator of the original preparation, and it identifies which channel:
-      the one Stinespring's construction assigns to the joint evolution and the ready state. So the
-      channels of quantum information are not introduced into the programme; they are what its flows
-      look like from inside. The measurement flow yields the de-isolation channel in this way, and
-      the bit-flip errors of the three-qubit code arise from a flow on the register with a four-level
-      environment. A mixed environment is covered as well, through the spectral decomposition of
-      its density operator.
+      volume-preserving flow that lifts a reversible evolution of the joint state space.
+      The corpus proves that when such a flow acts on a preparation whose environment
+      starts in a ready state, the density operator of the flowed preparation, seen from
+      the system alone, is a channel applied to the density operator of the original
+      preparation, and it identifies which channel, the one Stinespring's construction
+      assigns to the joint evolution and the ready state. So the channels of quantum
+      information aren't introduced into the programme, as they're what its flows look
+      like from inside. The measurement flow yields the de-isolation channel in this way,
+      and the bit-flip errors of the three-qubit code arise from a flow on the register
+      with a four-level environment. A mixed environment is covered as well, through the
+      spectral decomposition of its density operator.
     mathematical: >
-      Channel.ofIsometry builds the channel Tr_env(V rho V^H) from an isometry V into system times
-      environment, and apply_eq_traceRight_stinespring together with stinespringIsom_isom shows
-      every Kraus channel arises this way, with the Kraus operators as the environment blocks of V.
-      stinespringChannel U hU e_0 (LF2/FlowChannel.lean) is the channel of a joint unitary with a
-      ready environment, and traceRight_barycenter_flow states that for a flow lifting U in the
-      projector sense (IsUnitaryLift) and a preparation that is a product with the environment ready,
-      almost everywhere in the representative, the reduced barycentre of the flowed preparation is
-      that channel applied to the system's barycentre. isUnitaryLift_unitSection removes the section
-      hypothesis for projective actions, stinespringChannelMixed handles a mixed environment, and
-      channelEquiv (LF2/ChannelBridge.lean) transports the construction between the corpus's two
+      Channel.ofIsometry builds the channel Tr_env(V rho V^H) from an isometry V into
+      system times environment, and apply_eq_traceRight_stinespring together with
+      stinespringIsom_isom shows every Kraus channel arises this way, with the Kraus
+      operators as the environment blocks of V. stinespringChannel U hU e_0
+      (LF2/FlowChannel.lean) is the channel of a joint unitary with a ready environment,
+      and traceRight_barycenter_flow states that for a flow lifting U in the projector
+      sense (IsUnitaryLift) and a preparation that is a product with the environment
+      ready, almost everywhere in the representative, the reduced barycentre of the flowed
+      preparation is that channel applied to the system's barycentre.
+      isUnitaryLift_unitSection removes the section hypothesis for projective actions,
+      stinespringChannelMixed handles a mixed environment, and channelEquiv
+      (LF2/ChannelBridge.lean) transports the construction between the corpus's two
       channel structures.
     person: >
-      W. Forrest Stinespring (1929-2012) taught at the University of Illinois at Chicago for most of
-      his career. The dilation theorem is in a short 1955 paper in the Proceedings of the American
-      Mathematical Society, written in the language of positive maps on operator algebras and
-      generalising Naimark's dilation of a positive operator measure. Its reading as the statement
-      that every quantum channel is a unitary on a larger space, with the environment traced away,
-      came with Kraus's work on operator-sum representations in the 1970s and 1980s, long after the
-      mathematics was settled.
+      W. Forrest Stinespring (1929-2012) taught at the University of Illinois at Chicago
+      for most of his career. The dilation theorem is in a short 1955 paper in the
+      Proceedings of the American Mathematical Society, written in the language of
+      positive maps on operator algebras and generalising Naimark's dilation of a positive
+      operator measure. Its reading as the statement that every quantum channel is a
+      unitary on a larger space, with the environment traced away, came with Kraus's work
+      on operator-sum representations in the 1970s and 1980s, long after the mathematics
+      was settled.
     term: Stinespring dilation
     eponyms: [Stinespring]
     status: proved-in-corpus
@@ -8858,51 +8875,56 @@ entries:
     related: [quantum-channel, naimark-dilation, partial-trace, de-isolation, measurement-flow]
 
   - slug: klein-inequality
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      One quantum state is never negatively distinguishable from another: the relative entropy of a
-      state with respect to a second is at least zero, and that single inequality drives the second
-      law, subadditivity, concavity and the Holevo bound in the corpus.
+      One quantum state is never negatively distinguishable from another, as the relative
+      entropy of a state with respect to a second is at least zero, and that single
+      inequality drives the second law, subadditivity, concavity and the Holevo bound in
+      the corpus.
     layman: >
-      Relative entropy measures how surprised you should be, on average, if you believe a system is
-      in one state when it is really in another. It compares the true state with the assumed one,
-      and it is the quantum version of a quantity that appears throughout statistics and
-      information theory. Klein's inequality says that this surprise is never negative and is zero
-      only when the two states coincide. Believing something false about a system can never make its
-      behaviour look more predictable than the truth would.
+      Relative entropy measures how surprised you should be, on average, if you believe a
+      system is in one state when it's really in another. It compares the true state with
+      the assumed one, and it's the quantum version of a quantity that appears throughout
+      statistics and information theory. Klein's inequality says this surprise is never
+      negative and is zero only when the two states coincide, so believing something false
+      about a system can never make its behaviour look more predictable than the truth
+      would.
 
-      The statement sounds obvious and is not. Quantum states are matrices, the logarithm of a
-      matrix is defined through its eigenvalues, and two states generally have different
-      eigenvectors, so the two logarithms do not simply line up. The proof expands one state in the
-      eigenbasis of the other and uses the fact that the overlaps between the two sets of
-      eigenvectors form a doubly stochastic pattern, one whose rows and columns each sum to one,
-      which is enough to pull the ordinary convexity of the logarithm through the matrix algebra.
+      The statement sounds obvious and isn't. Quantum states are matrices, the logarithm
+      of a matrix is defined through its eigenvalues, and two states generally have
+      different eigenvectors, so the two logarithms don't simply line up. The proof
+      expands one state in the eigenbasis of the other and uses the fact that the overlaps
+      between the two sets of eigenvectors form a doubly stochastic pattern, one whose
+      rows and columns each sum to one, which is enough to pull the ordinary convexity of
+      the logarithm through the matrix algebra.
     in_csd: >
-      The inequality is proved once in the corpus and spent many times. The thermodynamics track
-      uses it for the H-theorem, the statement that coarse-graining a state onto a fixed basis can
-      only raise its entropy, and that theorem is exactly what the de-isolation channel does to the
-      measured system, so the second law on the constraint surface rests on it. Subadditivity of
-      entropy, the Landauer bound that follows from subadditivity, the concavity of entropy under
-      mixing and the Holevo bound on how much classical information a channel carries are all
-      consequences. In each case the inequality supplies the one step that informal accounts tend to
-      wave through.
+      The inequality is proved once in the corpus and spent many times. The thermodynamics
+      track uses it for the H-theorem, the statement that coarse-graining a state onto a
+      fixed basis can only raise its entropy, and that theorem is exactly what the de-
+      isolation channel does to the measured system, so the second law on the constraint
+      surface rests on it. Subadditivity of entropy, the Landauer bound that follows from
+      subadditivity, the concavity of entropy under mixing and the Holevo bound on how
+      much classical information a channel carries are all consequences, and in each case
+      the inequality supplies the one step informal accounts tend to wave through.
     mathematical: >
-      klein_inequality (Mathlib/QuantumInfo/Subadditivity.lean): for rho positive semidefinite of
-      unit trace and sigma positive definite, relEntropy is non-negative. The proof is the doubly
-      stochastic overlap expansion in the two eigenbases with the convexity of x log x. Consumers:
-      vonNeumannEntropy_subadditive and landauer_bound; vonNeumannEntropy_le_pinching
-      (Thermo/SecondLaw.lean), which is the H-theorem; the concavity theorem
-      vonNeumannEntropy_mixture_ge, obtained from the positive-definite case by mixing with the
-      maximally mixed state and closedness in the mixing parameter; and holevoChi_nonneg. The
-      equality case, that zero forces the two states to coincide, is not formalised.
+      klein_inequality (Mathlib/QuantumInfo/Subadditivity.lean) says that for rho positive
+      semidefinite of unit trace and sigma positive definite, relEntropy is non-negative.
+      The proof is the doubly stochastic overlap expansion in the two eigenbases with the
+      convexity of x log x. The consumers are vonNeumannEntropy_subadditive and
+      landauer_bound, vonNeumannEntropy_le_pinching (Thermo/SecondLaw.lean), which is the
+      H-theorem, the concavity theorem vonNeumannEntropy_mixture_ge, obtained from the
+      positive-definite case by mixing with the maximally mixed state and closedness in
+      the mixing parameter, and holevoChi_nonneg. The equality case, that zero forces the
+      two states to coincide, isn't formalised.
     person: >
-      Oskar Klein (1894-1977) was a Swedish physicist better known for the Kaluza-Klein fifth
-      dimension, the Klein-Gordon equation and the Klein-Nishina formula. The inequality comes from
-      a 1931 paper in the Zeitschrift für Physik on the quantum-mechanical foundation of the second
-      law of thermodynamics, written in Stockholm, where he had just taken the chair of theoretical
-      physics. His aim was the H-theorem: to show that the entropy of a quantum system, once its
-      fine-grained coherences are discarded, can only increase. The inequality was the tool, and it
-      outlived the argument it was built for.
+      Oskar Klein (1894-1977) was a Swedish physicist better known for the Kaluza-Klein
+      fifth dimension, the Klein-Gordon equation and the Klein-Nishina formula. The
+      inequality comes from a 1931 paper in the Zeitschrift fur Physik on the quantum-
+      mechanical foundation of the second law of thermodynamics, written in Stockholm,
+      where he had just taken the chair of theoretical physics. His aim was the H-theorem,
+      to show that the entropy of a quantum system, once its fine-grained coherences are
+      discarded, can only increase, so the inequality was the tool, and it outlived the
+      argument it was built for.
     term: Klein's inequality
     eponyms: [Klein]
     status: proved-in-corpus
