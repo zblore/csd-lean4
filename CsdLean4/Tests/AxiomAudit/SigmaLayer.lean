@@ -3602,7 +3602,8 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- a subsystem of an entangled composite, then follow up, as ONE number on one arena; the Bell ray
 -- gives ½ · c₂.rate. ⚠️ Identities of RECORD STATISTICS at the canonical mixed preparation of
 -- the reduced state; the composite-arena sector weight of a local block context is the
--- LocalBlockBridge line, and its identification with re tr(reduceB · Π_j) is RL-1′ (BACKLOG).
+-- LocalBlockBridge line, and its identification with re tr(reduceB · Π_j) is RL-1′ (landed the
+-- same day, RecordLayer/CompositeRecord.lean, pinned below).
 /-- info: 'CSD.RecordLayer.traceForm_reducedDensityIx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.traceForm_reducedDensityIx
@@ -3759,5 +3760,53 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.sigma_jarzynski_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.sigma_jarzynski_hamiltonianFlow
+
+-- RL-1′ (2026-09-14), RecordLayer/CompositeRecord.lean: the COMPOSITE-ARENA SEAM of Q27, the residue
+-- RL-1's honest-scope note declared. The join protocol at the local block structure localBlock
+-- (LocalBlockBridge: a local measurement IS a block measurement) has coarse Born mass
+-- join_sector_born; localBlock_sum_normSq reindexes that block sum along finProdFinEquiv to
+-- sum_a |u(a,j)|^2, and reduceB_diag_re shows the diagonal of Bob's reduced state reduceB
+-- (OnticMarginals) at the composite vector is the same sum over |v|^2. rayDensity_posSemidef
+-- (the ray density is a nonneg multiple of |v><v|), rayDensityIx, reduceBDensity (Bob's reduced
+-- state as a DensityOperator nB through DensityOperatorIx.reducedLeft and RL-1's toFin at the
+-- identity labelling). ★★ composite_local_record_born: on the composite arena, for EVERY unit
+-- composite vector (entangled included) and every calibration alpha, Bob's outcome-j record
+-- weight is re (reduceB [u]) j j -- the reduced state's Born weight; _trace and _traceForm give
+-- the re tr(rho_B |j><j|) and LF2 Tr(rho_B |j><j|) forms. ★★ composite_record_eq_mixed_record:
+-- the two lines meet at a theorem -- the join-protocol record weight on the PURE composite point
+-- equals the swap-protocol record weight of the MIXED preparation of Bob's reduced state
+-- (mixed_swap_sector_born), outcome by outcome; the ontic and the classical-mixture readings of
+-- "measure Bob's subsystem" are the same records. Foundational-triple.
+/-- info: 'CSD.RecordLayer.localBlock_sum_normSq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.localBlock_sum_normSq
+
+/-- info: 'CSD.RecordLayer.rayDensity_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rayDensity_posSemidef
+
+/-- info: 'CSD.RecordLayer.reduceB_diag_re' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reduceB_diag_re
+
+/-- info: 'CSD.RecordLayer.traceForm_reduceBDensity_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.traceForm_reduceBDensity_single
+
+/-- info: 'CSD.RecordLayer.composite_local_record_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.composite_local_record_born
+
+/-- info: 'CSD.RecordLayer.composite_local_record_born_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.composite_local_record_born_trace
+
+/-- info: 'CSD.RecordLayer.composite_local_record_born_traceForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.composite_local_record_born_traceForm
+
+/-- info: 'CSD.RecordLayer.composite_record_eq_mixed_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.composite_record_eq_mixed_record
 
 end CSD.Tests.AxiomAudit

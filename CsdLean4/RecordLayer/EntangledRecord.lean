@@ -92,10 +92,12 @@ arena level, and here the weights `arenaObs (leftOp ·) x` are the only composit
   corpus's OTHER line — a local measurement IS a block-degenerate measurement
   (`RecordLayer/LocalBlockBridge.lean`, `localBlock`), and the join protocol's coarse Born
   mass (`join_sector_born`) at that block map is `‖localProjB j v‖² / ‖v‖²`
-  (`norm_blockProj_localBlock`). What is NOT stated anywhere is the identification of that
-  composite-arena sector weight with `re tr(reduceB [v] · Πⱼ)`, the reduced-state pairing of
-  `OnticMarginals.lean`; that seam is RL-1′ (priced in `specs/BACKLOG.md`), not this module.
-  The two lines meet at the number, not at a shared construction.
+  (`norm_blockProj_localBlock`). ~~What is NOT stated anywhere is the identification of that
+  composite-arena sector weight with `re tr(reduceB [v] · Πⱼ)`~~ That identification landed the
+  same day as RL-1′ (`RecordLayer/CompositeRecord.lean`): ★★ `composite_local_record_born` reads
+  the join-protocol weight as the reduced state's Born weight, and
+  ★★ `composite_record_eq_mixed_record` equates it, outcome by outcome, with the mixed-
+  preparation record weight of this module's construction. The two lines meet at a theorem.
 * The first measurement is the local computational-basis context (`momentContext d` through
   the labelling `e`), the second is arbitrary — the scope of the two-stage arena
   (`TwoTimeLuders.lean`).
