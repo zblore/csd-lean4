@@ -7658,51 +7658,46 @@ entries:
   - slug: is-csd-superdeterministic
     kind: question
     hook: >
-      No. In CSD's Bell model the distribution of hidden states is provably the
-      same whatever settings the experimenters choose, and the escape from
-      Bell's theorem runs through outcomes that depend on the measurement
-      context, not through settings arranged in advance.
+      No. In CSD's Bell model the distribution of hidden states is provably the same
+      whatever settings the experimenters choose, and the escape from Bell's theorem runs
+      through outcomes that depend on the measurement context and not through settings
+      arranged in advance.
     layman: >
-      Superdeterminism is the escape from Bell's theorem that most physicists
-      find too expensive. It denies that measurement settings can be chosen
-      independently of the hidden state, so that the observed correlations were
-      arranged in the initial conditions of the universe. This saves locality by
-      making experiments unreadable: if the settings and the systems conspire,
-      no measurement tests anything.
+      Superdeterminism is the escape from Bell's theorem that most physicists find too
+      expensive. It denies that measurement settings can be chosen independently of the
+      hidden state, so the observed correlations were arranged in the initial conditions
+      of the universe, and this saves locality by making experiments unreadable, because
+      if the settings and the systems conspire no measurement tests anything.
 
-      CSD does not take that route, and the claim is checkable rather than
-      rhetorical. In the corpus's Bell analysis, measurement independence, the
-      assumption that there is one shared distribution over the hidden states
-      and that it is the same whichever settings are chosen, is stated as an
-      explicit premise and proved for the exhibited model. The model's escape
-      from Bell is contextuality of the outcome maps: what depends on the
-      setting is how outcomes are read off from the hidden state, not which
-      hidden states occur.
+      CSD doesn't take that route, and the claim is checkable rather than rhetorical. In
+      the corpus's Bell analysis, measurement independence, the assumption that there's
+      one shared distribution over the hidden states and that it's the same whichever
+      settings are chosen, is stated as an explicit premise and proved for the exhibited
+      model. The model's escape from Bell is contextuality of the outcome maps, so what
+      depends on the setting is how outcomes are read off from the hidden state and not
+      which hidden states occur.
 
-      Deterministic, yes. Superdeterministic, with settings correlated with the
+      It's deterministic, yes. It's superdeterministic, with settings correlated with the
       hidden state, demonstrably not.
     in_csd: >
-      The question turns on a distinction between two places where dependence
-      on the settings could enter. It could enter the distribution over hidden
-      states; that is superdeterminism. Or it could enter the functions that
-      turn a hidden state into an outcome; that is contextuality. The corpus's
-      model has one fixed measure across every context, so measurement
-      independence holds by construction and is stated explicitly in the formal
-      development, while the per-context outcome maps carry all the dependence
-      on the setting.
+      The question turns on a distinction between two places where dependence on the
+      settings could enter. It could enter the distribution over hidden states, which is
+      superdeterminism, or it could enter the functions that turn a hidden state into an
+      outcome, which is contextuality. The corpus's model has one fixed measure across
+      every context, so measurement independence holds by construction and is stated
+      explicitly in the formal development, while the per-context outcome maps carry all
+      the dependence on the setting.
 
-      The documentation makes an honesty note of its own. Measurement
-      independence is a genuine premise of Bell derivations, and naming it is
-      part of keeping the Bell analysis auditable. Naming a premise is not
-      denying it.
+      The documentation makes an honesty note of its own. Measurement independence is a
+      genuine premise of Bell derivations, and naming it is part of keeping the Bell
+      analysis auditable, and naming a premise isn't denying it.
     mathematical: >
-      The C1 chain's operational no-signalling stack: remote marginal
-      invariance for both wings under a single shared measure, which is
-      measurement independence, stated in-module, proved for the
-      singlet-reproducing contextual model.
+      The C1 chain's operational no-signalling stack proves remote marginal invariance for
+      both wings under a single shared measure, which is measurement independence, stated
+      in-module, for the singlet-reproducing contextual model.
 
       The model's context dependence is isolated in the outcome family, and the
-      obstruction theorems show that the dependence cannot be removed.
+      obstruction theorems show that the dependence can't be removed.
     term: Is CSD superdeterministic?
     status: definition
     source: curated
@@ -7711,52 +7706,47 @@ entries:
   - slug: is-the-wavefunction-real
     kind: question
     hook: >
-      The wavefunction is a genuine but incomplete coordinate of a real
-      underlying world: it can be read off the world's actual configuration,
-      yet it leaves out the part of that configuration which decides what a
-      measurement will show.
+      The wavefunction is a genuine but incomplete coordinate of a real underlying world,
+      so it can be read off the world's actual configuration, yet it leaves out the part
+      of that configuration which decides what a measurement will show.
     layman: >
-      "Is the wavefunction real?" runs two questions together. Does something in
-      the world correspond to it? And is it the complete story of what exists?
-      CSD's answers come apart cleanly: yes, and emphatically no.
+      "Is the wavefunction real?" runs two questions together, whether something in the
+      world corresponds to it, and whether it's the complete story of what exists, and
+      CSD's answers come apart cleanly as yes, and emphatically no.
 
-      Yes, because the quantum state is not a fiction or a mere betting
-      position. Every point of the arena, the underlying state space, projects
-      to a definite quantum state, so the state tracks a genuine feature of the
-      world. If you had access to the world's actual configuration you could
-      read the state off it.
+      Yes, because the quantum state isn't a fiction or a mere betting position. Every
+      point of the arena, the underlying state space, projects to a definite quantum
+      state, so the state tracks a genuine feature of the world, and if you had access to
+      the world's actual configuration you could read the state off it.
 
-      No, because the state is radically incomplete. The projection that
-      produces it is many-to-one: many different underlying configurations give
-      the same quantum state. Everything that decides measurement outcomes, the
-      fibre coordinate that distinguishes those configurations and the outcome
-      basin the trajectory occupies, lives in what the projection forgets.
-      Treating the state as the whole world is exactly the move that generates
-      the measurement problem. Treating it as a lossy coordinate dissolves the
-      problem.
+      No, because the state is radically incomplete. The projection that produces it is
+      many-to-one, so many different underlying configurations give the same quantum
+      state, and everything that decides measurement outcomes, the fibre coordinate that
+      distinguishes those configurations and the outcome basin the trajectory occupies,
+      lives in what the projection forgets. Treating the state as the whole world is
+      exactly the move that generates the measurement problem, and treating it as a lossy
+      coordinate dissolves the problem.
     in_csd: >
-      The state's dual character is structural rather than rhetorical.
-      Functionally the state is epistemic: it summarises what a preparation
-      fixes, and its update on measurement is learning, not a physical jump.
-      Ontologically its supports are disjoint: distinct states describe disjoint
-      sets of arena points. That is why the reality theorems aimed at models
-      with overlapping supports do not bite.
+      The state's dual character is structural rather than rhetorical. Functionally the
+      state is epistemic, as it summarises what a preparation fixes, and its update on
+      measurement is learning and not a physical jump. Ontologically its supports are
+      disjoint, as distinct states describe disjoint sets of arena points, and that's why
+      the reality theorems aimed at models with overlapping supports don't bite.
 
-      The programme's discipline is to refuse the shorter slogans in both
-      directions. "The wavefunction is everything" overclaims what the quantum
-      state carries. The analysis of the fibre places record-forming content,
-      the structure that decides outcomes, above the state at higher dimension,
-      on a chain of constraints that stops short of proving the base cannot
-      carry it. "The wavefunction is nothing" ignores that the state is a
-      faithful coordinate of the real arena.
+      The programme's discipline is to refuse the shorter slogans in both directions. "The
+      wavefunction is everything" overclaims what the quantum state carries, as the
+      analysis of the fibre places record-forming content, the structure that decides
+      outcomes, above the state at higher dimension, on a chain of constraints that stops
+      short of proving the base can't carry it. "The wavefunction is nothing" ignores that
+      the state is a faithful coordinate of the real arena.
     mathematical: >
-      The formal content is the projection structure: a measurable many-to-one
-      pi from the arena to the projective sector, the epistemic measure exact on
-      the base and spread on the fibre, and the record layer's theorems placing
-      outcome-deciding structure in the fibre at N >= 3.
+      The formal content is the projection structure, a measurable many-to-one pi from the
+      arena to the projective sector, the epistemic measure exact on the base and spread
+      on the fibre, and the record layer's theorems placing outcome-deciding structure in
+      the fibre at N >= 3.
 
-      The operational stratum's state notion, density operators and effects, is
-      proved consistent with the volume stratum wherever both speak.
+      The operational stratum's state notion, density operators and effects, is proved
+      consistent with the volume stratum wherever both speak.
     term: Is the wavefunction real in CSD?
     status: definition
     source: curated
@@ -7765,54 +7755,50 @@ entries:
   - slug: what-happens-during-measurement
     kind: question
     hook: >
-      The system stops being isolated, the joint dynamics of system and
-      apparatus carries the underlying state into one outcome region and leaves
-      a record there, and the famous collapse is the updating of a description:
-      one law, no switch.
+      The system stops being isolated, the joint dynamics of system and apparatus carries
+      the underlying state into one outcome region and leaves a record there, and the
+      famous collapse is the updating of a description, so there's one law and no switch.
     layman: >
-      The textbook's answer is famously two answers: smooth evolution until a
-      measurement happens, then a sudden jump, with no rule for when to switch
-      from one to the other. CSD's answer has one law and three stages, each of
-      them ordinary physics.
+      The textbook's answer is famously two answers, smooth evolution until a measurement
+      happens, then a sudden jump, with no rule for when to switch from one to the other.
+      CSD's answer has one law and three stages, each of them ordinary physics.
 
-      The first stage is de-isolation. Measuring something means coupling it to
-      an apparatus, which deliberately ends its isolation. The second is
-      sorting. The joint deterministic dynamics of system and apparatus carries
-      the point of the arena, the underlying state space, into one of the
-      outcome basins, regions fixed by the apparatus alone, before the system
-      ever arrived. The third is the record. Which basin the trajectory occupies
-      is a physical fact about the arena: stable, re-readable, and protected
-      from distant interference by a theorem showing that no influence from far
-      away can reach it faster than a fixed speed allows.
+      The first stage is de-isolation, as measuring something means coupling it to an
+      apparatus, which deliberately ends its isolation. The second is sorting, as the
+      joint deterministic dynamics of system and apparatus carries the point of the arena,
+      the underlying state space, into one of the outcome basins, regions fixed by the
+      apparatus alone, before the system ever arrived. The third is the record, as which
+      basin the trajectory occupies is a physical fact about the arena, stable, re-
+      readable, and protected from distant interference by a theorem showing that no
+      influence from far away can reach it faster than a fixed speed allows.
 
-      The state's jump is then bookkeeping. You learned which basin, so you
-      update the description. Nothing physical collapsed; your summary caught
-      up with the world.
+      The state's jump is then bookkeeping. You learned which basin, so you update the
+      description, and nothing physical collapsed, as your summary caught up with the
+      world.
     in_csd: >
-      Each stage is formalised at its own level of the programme. De-isolation
-      flows exist as constructed objects. They are deterministic, they preserve
-      the arena's volume, and they are provably not the identity, so they do
-      something. They realise dynamically what textbook quantum mechanics calls
-      the measurement dilation, the description of a measurement as ordinary
-      reversible evolution on a larger system that includes the apparatus, and
-      the volumes of their pointer blocks equal the Born weights, the textbook
-      probabilities. The basins are the record layer's context-fixed partition
-      of the arena, and they are Born-weighted by theorem. The Luders update
-      rule, the textbook prescription for how the state should be revised once
-      an outcome is known, is derived as the correct conditional bookkeeping
-      both for sequences of measurements and for mixed states.
+      Each stage is formalised at its own level of the programme. De-isolation flows exist
+      as constructed objects, and they're deterministic, they preserve the arena's volume,
+      and they're provably not the identity, so they do something. They realise
+      dynamically what textbook quantum mechanics calls the measurement dilation, the
+      description of a measurement as ordinary reversible evolution on a larger system
+      that includes the apparatus, and the volumes of their pointer blocks equal the Born
+      weights, the textbook probabilities. The basins are the record layer's context-fixed
+      partition of the arena, and they're Born-weighted by theorem. The Luders update
+      rule, the textbook prescription for how the state should be revised once an outcome
+      is known, is derived as the correct conditional bookkeeping both for sequences of
+      measurements and for mixed states.
 
-      The stated open frontier is the junction between the stages: deriving the
-      record mechanism at the level of the fibre from the de-isolation
-      dynamics, rather than exhibiting each side separately. The programme
-      calls this the record layer's remaining work, and says so in public.
+      The stated open frontier is the junction between the stages, deriving the record
+      mechanism at the level of the fibre from the de-isolation dynamics, rather than
+      exhibiting each side separately. The programme calls this the record layer's
+      remaining work, and it says so in public.
     mathematical: >
-      measurement_flow_born_frequency for the dynamics tier; globalBasin_born
-      and the disjointness and exhaustion theorems for the kinematic tier;
-      record_lightcone for the record's stability.
+      measurement_flow_born_frequency covers the dynamics tier, globalBasin_born and the
+      disjointness and exhaustion theorems cover the kinematic tier, and record_lightcone
+      covers the record's stability.
 
-      The Luders tier covers sequential conditioning, and the einselection
-      theorems explain why pointer readings are the stable alphabet.
+      The Luders tier covers sequential conditioning, and the einselection theorems
+      explain why pointer readings are the stable alphabet.
     term: What happens during a measurement in CSD?
     status: definition
     source: curated
@@ -7822,58 +7808,58 @@ entries:
     kind: question
     hook: >
       Every theorem in the CSD corpus is verified by a proof assistant from zero imported
-      axioms, and the list of what such checking cannot certify is published alongside it.
+      axioms, and the list of what such checking can't certify is published alongside it.
     layman: >
-      "Machine-checked" gets used loosely, so here is the strict sense this programme
+      "Machine-checked" gets used loosely, so here's the strict sense this programme
       means. A proof assistant is a computer program that accepts a proof only when every
-      step follows from earlier steps by fixed logical rules; the one used here is called
-      Lean. Every theorem in the CSD corpus, tens of thousands of lines of it, has passed
-      that check all the way down to Lean's logical core, so no step in any proof is taken
-      on trust.
+      step follows from earlier steps by fixed logical rules, and the one used here is
+      called Lean. Every theorem in the CSD corpus, tens of thousands of lines of it, has
+      passed that check all the way down to Lean's logical core, so no step in any proof
+      is taken on trust.
 
       Two facts sharpen the claim. First, every mathematical proof rests on some basic
-      assumptions, and Lean has a small fixed set of them built in. The corpus adds none of
-      its own: an early dependence on an unproved representation theorem was removed by
-      proving that theorem. Second, the physical postulates of CSD are not assumptions
-      slipped in at the foundations. They appear as explicit hypotheses in the statements
-      of the theorems that use them, so a reader can see exactly what each result costs and
-      where it pays.
+      assumptions, and Lean has a small fixed set of them built in. The corpus adds none
+      of its own, as an early dependence on an unproved representation theorem was removed
+      by proving that theorem. Second, the physical postulates of CSD aren't assumptions
+      slipped in at the foundations, as they appear as explicit hypotheses in the
+      statements of the theorems that use them, so a reader can see exactly what each
+      result costs and where it pays.
 
-      Equally strict is what checking cannot do. A proof assistant cannot certify that a
-      formal statement means what the accompanying prose says it means. The real failure
-      mode is a fluent but false description of a true theorem, so the repository runs
-      automatic checks against prose drifting away from the mathematics, and says plainly
-      that reading the mathematics as physics is a human responsibility.
+      Equally strict is what checking can't do. A proof assistant can't certify that a
+      formal statement means what the accompanying prose says it means, so the real
+      failure mode is a fluent but false description of a true theorem, and the repository
+      runs automatic checks against prose drifting away from the mathematics, and says
+      plainly that reading the mathematics as physics is a human responsibility.
     in_csd: >
       The verification is layered. The library and its regression suite build with every
       warning treated as an error. An audit records, for each headline result, exactly
-      which foundational assumptions it rests on, so that any change in that list is
-      caught. A validation ledger tracks the status of each claim row by row. And a battery
-      of guard scripts checks the things a compiler cannot see: statements that hold for
-      empty reasons, hypotheses that are carried but never used, prose claims that outrun
-      what the proofs actually connect, and glossary anchors such as the ones behind this
-      page.
+      which foundational assumptions it rests on, so any change in that list is caught. A
+      validation ledger tracks the status of each claim row by row. And a battery of guard
+      scripts checks the things a compiler can't see, statements that hold for empty
+      reasons, hypotheses that are carried but never used, prose claims that outrun what
+      the proofs actually connect, and glossary anchors such as the ones behind this page.
 
-      Three commitments make the posture distinctive. Postulates are hypotheses rather than
-      axioms. Honest notes on scope live inside the modules themselves rather than in a
-      separate document. And a stated rule requires that an obstacle be reported as an
+      Three commitments make the posture distinctive. Postulates are hypotheses rather
+      than axioms, honest notes on scope live inside the modules themselves rather than in
+      a separate document, and a stated rule requires that an obstacle be reported as an
       obstacle rather than hidden behind a placeholder.
     mathematical: >
       The kernel-checked corpus spans the frequency layer, the measure and Born tiers,
       measurement dynamics, the entangled tier, the record layer, thermodynamics and the
       finite field track. An axiom-audit suite pins every headline constant's axiom set,
       and every pinned constant reports exactly Lean's three foundational axioms, propext,
-      Classical.choice and Quot.sound; the corpus imports no axiom of its own. The staging
-      tree contributes Mathlib-candidate infrastructure, the partial trace and the general
-      Lie-Trotter formula among it, built CSD-free.
+      Classical.choice and Quot.sound, so the corpus imports no axiom of its own. The
+      staging tree contributes Mathlib-candidate infrastructure, the partial trace and the
+      general Lie-Trotter formula among it, built CSD-free.
 
       The quantum-information layer is reached from the posits by theorems rather than by
-      instantiation: the density operator of a preparation on the surface is the barycentre of
-      its rays, channels are the environment marginals of volume-preserving flows that lift a
-      unitary, and the second law, data processing, Landauer's bound, concavity, the Holevo
-      capacity of the de-isolation channel and error correction on the three-qubit register
-      are all stated for preparations on the surface. Strong subadditivity remains conditional
-      on an explicit data-processing hypothesis, which the audit records.
+      instantiation, as the density operator of a preparation on the surface is the
+      barycentre of its rays, channels are the environment marginals of volume-preserving
+      flows that lift a unitary, and the second law, data processing, Landauer's bound,
+      concavity, the Holevo capacity of the de-isolation channel and error correction on
+      the three-qubit register are all stated for preparations on the surface. Strong
+      subadditivity remains conditional on an explicit data-processing hypothesis, which
+      the audit records.
     term: What exactly is machine-checked in CSD?
     status: definition
     source: curated
@@ -7885,46 +7871,47 @@ entries:
   - slug: does-csd-make-new-predictions
     kind: question
     hook: >
-      Not yet, and the programme does not pretend otherwise: the present claim is that CSD
-      reproduces the predictions of quantum mechanics from fewer postulates, with the
+      Not yet, and the programme doesn't pretend otherwise, as the present claim is that
+      CSD reproduces the predictions of quantum mechanics from fewer postulates, with the
       reproduction machine-checked, while candidate departures are recorded as owed future
       work rather than asserted.
     layman: >
       A blunt question deserves a blunt answer. At present CSD names no experiment whose
       outcome it predicts differently from quantum mechanics. The corpus's empirical suite
-      consists of formal twins of the flagship experiments: interference of single
+      consists of formal twins of the flagship experiments, interference of single
       particles, the Bell tests of correlations between distant particles, the quantum
-      eraser, interaction-free measurement and the rest. Each is reproduced within the
+      eraser, interaction-free measurement and the rest, and each is reproduced within the
       programme's own framework.
 
-      What the programme claims instead is a different kind of gain: the same predictions
-      from less. Fewer postulates go in. The probability rule is computed rather than
-      assumed. Measurement is described by one law of motion instead of two, where standard
-      quantum mechanics uses one rule for evolution between measurements and a separate
-      rule for what happens at a measurement. And the whole reconstruction is
+      What the programme claims instead is a different kind of gain, the same predictions
+      from less. Fewer postulates go in, the probability rule is computed rather than
+      assumed, and measurement is described by one law of motion instead of two, where
+      standard quantum mechanics uses one rule for evolution between measurements and a
+      separate rule for what happens at a measurement. And the whole reconstruction is
       machine-checked, which no rival interpretation currently offers.
 
       Whether genuinely new physics emerges, in the form of departures from quantum
-      mechanics in regimes that the reconstruction constrains, is treated in the papers as
-      owed future work, not as a present claim. A reader should hold the programme to
+      mechanics in regimes the reconstruction constrains, is treated in the papers as owed
+      future work and not as a present claim, and a reader should hold the programme to
       exactly that standard.
     in_csd: >
-      The empirical layer is designed as reproduction with receipts. Every flagship quantum
-      experiment in the suite has a CSD-side twin, and the validation ledger records what
-      each twin actually establishes, so the strength of each reproduction can be read off
-      rather than assumed. The contrast with rival interpretations is stated as
-      interpretive: the corpus's own comparison entries say that no experiment currently
-      distinguishes the positions.
+      The empirical layer is designed as reproduction with receipts. Every flagship
+      quantum experiment in the suite has a CSD-side twin, and the validation ledger
+      records what each twin actually establishes, so the strength of each reproduction
+      can be read off rather than assumed. The contrast with rival interpretations is
+      stated as interpretive, as the corpus's own comparison entries say that no
+      experiment currently distinguishes the positions.
 
       The disciplined phrasing matters because overclaiming is the commonest failure of
-      reconstruction programmes. The repository's claims guard exists to keep the public
-      statements at exactly the strength of the theorems, neither stronger nor weaker.
+      reconstruction programmes, so the repository's claims guard exists to keep the
+      public statements at exactly the strength of the theorems, neither stronger nor
+      weaker.
     mathematical: >
-      The Empirical tree has two branches. The QM branch reproduces the standard results in
-      the operational formalism; the CSD branch re-derives the same experiments through the
-      volume machinery, the double-slit, the singlet and CHSH, GHZ, CGLMP, the eraser and
-      Elitzur-Vaidman among them. The chain capstones connect frequencies to Born weights
-      on the programme's own route.
+      The Empirical tree has two branches. The QM branch reproduces the standard results
+      in the operational formalism, and the CSD branch re-derives the same experiments
+      through the volume machinery, the double-slit, the singlet and CHSH, GHZ, CGLMP, the
+      eraser and Elitzur-Vaidman among them. The chain capstones connect frequencies to
+      Born weights on the programme's own route.
     term: Does CSD make new predictions?
     status: definition
     source: curated
@@ -7936,58 +7923,59 @@ entries:
   - slug: csd-vs-bohmian-mechanics
     kind: question
     hook: >
-      Cousins rather than twins: both theories pay the price that the no-go theorems demand
-      of any deterministic account, but Bohmian mechanics postulates its equilibrium
-      distribution where CSD proves its measure unique, and the arenas underneath the two
-      are different kinds of object.
+      They're cousins rather than twins, as both theories pay the price the no-go theorems
+      demand of any deterministic account, but Bohmian mechanics postulates its
+      equilibrium distribution where CSD proves its measure unique, and the arenas
+      underneath the two are different kinds of object.
     layman: >
-      Bohmian mechanics is the standing proof that deterministic quantum theories exist. In
-      it, particles always have definite positions, the wavefunction acts as a real field
-      that guides their motion, and the resulting statistics reproduce those of quantum
-      mechanics. Any other deterministic programme owes an account of how it differs, and
-      the differences here are structural rather than cosmetic.
+      Bohmian mechanics is the standing proof that deterministic quantum theories exist.
+      In it, particles always have definite positions, the wavefunction acts as a real
+      field that guides their motion, and the resulting statistics reproduce those of
+      quantum mechanics, so any other deterministic programme owes an account of how it
+      differs, and the differences here are structural rather than cosmetic.
 
       The first difference is the arena, the space of possible states of the world. Bohm's
       arena is the space of particle configurations, with the wavefunction as an extra
-      field on top. CSD's arena is not a configuration space at all. It is a compact
-      geometric space (finite in extent, so that nothing can escape to infinity) that
-      projects onto the space of quantum states: every point of the arena maps to a quantum
-      state, with many points mapping to each one. The quantum state is the output of that
-      projection, not an additional field with dynamics of its own.
+      field on top, and CSD's arena isn't a configuration space at all. It's a compact
+      geometric space (finite in extent, so nothing can escape to infinity) that projects
+      onto the space of quantum states, so every point of the arena maps to a quantum
+      state, with many points mapping to each one, and the quantum state is the output of
+      that projection and not an additional field with dynamics of its own.
 
       The second difference is the measure, the rule that assigns sizes, and hence
       probabilities, to regions of the arena. Bohm's statistics require quantum
       equilibrium, the assumption that particle positions are distributed according to the
-      squared amplitude of the wavefunction. CSD's counterpart is a theorem: its measure is
-      the only one that the symmetries of the state space leave unchanged, so a
+      squared amplitude of the wavefunction, and CSD's counterpart is a theorem, as its
+      measure is the only one the symmetries of the state space leave unchanged, so a
       distributional assumption is replaced by a uniqueness proof.
 
       The third difference is the record of an outcome. In Bohmian mechanics an outcome is
-      a particle position. In CSD an outcome is membership of a basin, a region of the arena
-      whose trajectories all flow to the same result, and that membership is written into
-      the fibre, the extra directions of the arena that lie above each quantum state. The
-      records come with their own stability theorem.
+      a particle position, and in CSD an outcome is membership of a basin, a region of the
+      arena whose trajectories all flow to the same result, and that membership is written
+      into the fibre, the extra directions of the arena that lie above each quantum state.
+      The records come with their own stability theorem.
     in_csd: >
-      The programme's respect for Bohm is on record: Bohmian mechanics is the standing
-      counterexample to the claim that hidden variables are dead. So is the divergence. CSD
-      keeps the quantum state epistemic in function, a description of what is known about
-      the underlying arena rather than a physical agent, where Bohm makes it a dynamical
-      agent that guides the particles. Contextuality, the dependence of an outcome on what
-      else is measured alongside it, lives in CSD in outcome maps fixed by the apparatus,
-      where in Bohmian mechanics it lives in the contextual responses of the guidance
-      dynamics. And the equilibrium question, why the right measure is the right one, is
-      answered by symmetry-forced uniqueness rather than by hypothesis or by arguments that
-      the distribution relaxes towards equilibrium over time.
+      The programme's respect for Bohm is on record, as Bohmian mechanics is the standing
+      counterexample to the claim that hidden variables are dead, and so is the
+      divergence. CSD keeps the quantum state epistemic in function, a description of
+      what's known about the underlying arena rather than a physical agent, where Bohm
+      makes it a dynamical agent that guides the particles. Contextuality, the dependence
+      of an outcome on what else is measured alongside it, lives in CSD in outcome maps
+      fixed by the apparatus, where in Bohmian mechanics it lives in the contextual
+      responses of the guidance dynamics. And the equilibrium question, why the right
+      measure is the right one, is answered by symmetry-forced uniqueness rather than by
+      hypothesis or by arguments that the distribution relaxes towards equilibrium over
+      time.
 
       No experiment currently separates the two theories, and neither side claims one. The
       separation lies in what must be assumed, and in what has been machine-checked, where
       the comparison is one-sided.
     mathematical: >
-      The contrast is carried by the corpus's uniqueness and reconstruction theorems rather
-      than by any formalisation of Bohmian mechanics itself: fubiniStudyMeasure_unique
-      versus the quantum equilibrium hypothesis; the projection postulate carried as a
-      hypothesis versus the guidance equation carried as dynamics; and the record layer's
-      basin machinery versus position as the universal pointer.
+      The contrast is carried by the corpus's uniqueness and reconstruction theorems
+      rather than by any formalisation of Bohmian mechanics itself, so it's
+      fubiniStudyMeasure_unique versus the quantum equilibrium hypothesis, the projection
+      postulate carried as a hypothesis versus the guidance equation carried as dynamics,
+      and the record layer's basin machinery versus position as the universal pointer.
     term: How does CSD differ from Bohmian mechanics?
     status: definition
     source: curated
