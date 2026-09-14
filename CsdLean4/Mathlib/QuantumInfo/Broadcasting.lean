@@ -119,7 +119,8 @@ The literature proves the hard half through fidelity monotonicity (BCFJS 1996) o
 case of the relative-entropy data-processing inequality (Lindblad 1999). Neither is in Mathlib or
 in this corpus, and neither is used here: the route above needs only support confinement, trace
 preservation and elementary matrix analysis. Row **BC** of `specs/BACKLOG.md` records the
-milestones BC1–BC6.
+milestones BC1–BC6, and `specs/bcfjs-note.md` states the argument in prose, step by step, with
+the upstream question asked at the pin.
 
 ## Source
 
