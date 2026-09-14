@@ -3500,45 +3500,47 @@ entries:
   - slug: ramsey-interferometry
     hook: >
       Two brief nudges separated by a long stretch of doing nothing measure a frequency
-      more sharply than any amount of continuous pushing. Every atomic clock runs on this
-      trick.
+      more sharply than any amount of continuous pushing, and every atomic clock runs on
+      this trick.
     layman: >
       An atom has natural frequencies, much as a bell has a pitch, and a clock is nothing
       more than a device that counts a frequency precisely. The obvious way to measure an
-      atom's frequency is to drive it with radiation and watch how it responds. But the
-      driving disturbs the thing being measured. The longer and harder you push, the more
-      your push distorts the reading, so precision seems to limit itself.
+      atom's frequency is to drive it with radiation and watch how it responds, but the
+      driving disturbs the thing being measured, so the longer and harder you push the
+      more your push distorts the reading, and precision seems to limit itself.
 
       Ramsey's escape is to barely push at all. One brief pulse sets the atom oscillating
-      between two of its states. Then comes a long interval in which nothing is done and
-      the atom evolves undisturbed. Then a second brief pulse, and a look at which state the
-      atom ends up in. During the silent interval the atom's internal oscillation runs like
-      a clock hand, and the phase is how far round that hand has travelled, which depends on
-      the atom's frequency multiplied by the waiting time. The second pulse converts the
-      phase into a probability of finding the atom in one state or the other. Scanning the
-      driving frequency then produces alternating bands of high and low probability, called
-      interference fringes, and the longer the silence, the finer the fringes and the
-      sharper the frequency reading. The sharpness comes from the interval when nobody is
-      touching anything.
+      between two of its states, then comes a long interval in which nothing is done and
+      the atom evolves undisturbed, and then a second brief pulse and a look at which
+      state the atom ends up in. During the silent interval the atom's internal
+      oscillation runs like a clock hand, and the phase is how far round that hand has
+      travelled, which depends on the atom's frequency multiplied by the waiting time. The
+      second pulse converts the phase into a probability of finding the atom in one state
+      or the other, so scanning the driving frequency produces alternating bands of high
+      and low probability, called interference fringes, and the longer the silence the
+      finer the fringes and the sharper the frequency reading. The sharpness comes from
+      the interval when nobody is touching anything.
 
-      Caesium clocks run on this method. So, therefore, does the definition of the second,
-      and so does satellite positioning, which depends on those clocks.
+      Caesium clocks run on this method, so the definition of the second does too, and so
+      does satellite positioning, which depends on those clocks.
     in_csd: >
       Ramsey interferometry sits in the metrology strand of the corpus, the part concerned
       with the science of precise measurement, and its classification is stated rather
-      than implied. It is an adjacent arm that consumes the reconstruction rather than
-      contributing to it. States, the Born rule and unitary dynamics go in; precision
-      bounds and the protocols that achieve them come out.
+      than implied. It's an adjacent arm that consumes the reconstruction rather than
+      contributing to it, so states, the Born rule and unitary dynamics go in, and
+      precision bounds and the protocols that achieve them come out.
 
       The reason to carry it is that a formalisation with claims to practical reach should
-      be able to state the standard quantum limit, the precision available with independent
-      particles, the better Heisenberg scaling that entanglement buys, and the geometry of
-      the protocol that connects them. The corpus can, and this is the protocol.
+      be able to state the standard quantum limit, the precision available with
+      independent particles, the better Heisenberg scaling that entanglement buys, and the
+      geometry of the protocol that connects them. The corpus can, and this is the
+      protocol.
     mathematical: >
-      Two pulses separated by a free-evolution interval T; the relative phase accumulated
-      during the free interval produces fringes with spacing inversely proportional to T.
+      Two pulses separated by a free-evolution interval T, where the relative phase
+      accumulated during the free interval produces fringes with spacing inversely
+      proportional to T.
 
-      The linewidth is set by the free interval, not by the drive, which is the structural
+      The free interval sets the linewidth and the drive doesn't, which is the structural
       reason the method beats continuous interrogation and anchors frequency standards.
     person: >
       Norman Ramsey (1915-2011) was born in Washington DC to an army family, collected
@@ -3549,8 +3551,8 @@ entries:
 
       The method of separated oscillatory fields dates from 1949, his first year at
       Harvard, where he then stayed for forty years. The Nobel committee reached it in
-      1989, when Ramsey was seventy-four, a forty-year lag that he outlived comfortably,
-      remaining scientifically active into his nineties.
+      1989, when Ramsey was seventy-four, a forty-year lag he outlived comfortably, as he
+      remained scientifically active into his nineties.
     term: Ramsey interferometry
     eponyms: [Ramsey]
     status: standard-mathematics
@@ -3561,69 +3563,72 @@ entries:
 
   - slug: schrodinger-equation
     hook: >
-      In CSD the Schrodinger equation is not postulated. It is what any continuous motion
+      In CSD the Schrodinger equation isn't postulated, as it's what any continuous motion
       that preserves the measurable relations between quantum states is forced to look
       like.
     layman: >
-      The Schrodinger equation is the law of motion for quantum states. Given the state of
-      a system now, it says what the state will be a moment later. The textbook
+      The Schrodinger equation is the law of motion for quantum states, so given the state
+      of a system now it says what the state will be a moment later. The textbook
       justification for it is that it works, which is fair enough as physics but circular
-      as explanation. Why this equation and not another, and what is it about quantum
-      states that makes this the only way they could move?
+      as explanation, and it leaves you asking why this equation and not another, and what
+      it is about quantum states that makes this the only way they could move.
 
-      CSD's answer is that the equation is a theorem rather than a choice. Two ideas are
-      needed to see how. A quantum state is the complete description a physicist uses to
-      predict what measurements will show. Between any two states there is a number, the
-      transition probability, often called the overlap: the chance that a system prepared
-      in the first state passes a test for the second. Now suppose only two things about
-      the underlying motion. It preserves every overlap between every pair of states, and
-      it does not jump, meaning that the state changes continuously in time.
+      CSD's answer is that the equation is a theorem rather than a choice, and two ideas
+      are needed to see how. A quantum state is the complete description a physicist uses
+      to predict what measurements will show, and between any two states there's a number,
+      the transition probability, often called the overlap, which is the chance that a
+      system prepared in the first state passes a test for the second. Now suppose only
+      two things about the underlying motion, that it preserves every overlap between
+      every pair of states, and that it doesn't jump, meaning the state changes
+      continuously in time.
 
       The first assumption is enough to force the motion, at every instant, to be a
-      symmetry of a very restricted kind: a unitary transformation, a rotation-like map of
+      symmetry of a very restricted kind, a unitary transformation, a rotation-like map of
       the state space that keeps all overlaps intact. The second assumption forces the
       family of these transformations to have a generator, a single fixed object that
       determines the whole motion, much as a fixed velocity determines a whole journey.
       Assemble the pieces and the familiar equation appears, with the Hamiltonian, the
-      energy operator, in the role of generator. Nothing about waves went in, and nothing
-      about energy went in. Preserve the overlaps and do not jump: that is the entire input.
+      energy operator, in the role of generator. Nothing about waves went in and nothing
+      about energy went in, so the entire input is that the motion preserves the overlaps
+      and doesn't jump.
     in_csd: >
       The Schrodinger equation is the second of the programme's two pillars, the Born rule
       being the first, and the corpus proves both on a single sector, one arena of states,
-      so that they are one story about one object. A reconstruction that derived
-      probability on one arena and dynamics on another would not have shown that the two
-      belong to the same theory. Here they demonstrably do.
+      so they're one story about one object. A reconstruction that derived probability on
+      one arena and dynamics on another wouldn't have shown that the two belong to the
+      same theory, and here they demonstrably do.
 
-      The route chains two classical necessities. Wigner rigidity says that any map
-      preserving all transition probabilities acts as a unitary symmetry. Stone's theorem,
-      in its finite-dimensional form, says that any continuous family of unitary
-      symmetries indexed by time has a generator. The caveat is stated
-      where it belongs: the sector itself is posited, not derived. What is proved is that
-      any flow on such a sector must take the Schrodinger form. Whether the world contains
-      such a sector is exactly the kind of question a formal corpus cannot settle.
+      The route chains two classical necessities. Wigner rigidity says any map preserving
+      all transition probabilities acts as a unitary symmetry, and Stone's theorem, in its
+      finite-dimensional form, says any continuous family of unitary symmetries indexed by
+      time has a generator. The caveat is stated where it belongs, as the sector itself is
+      posited and not derived. What's proved is that any flow on such a sector must take
+      the Schrodinger form, and whether the world contains such a sector is exactly the
+      kind of question a formal corpus can't settle.
     mathematical: >
       For a strongly continuous projective flow preserving transition probabilities, the
-      induced evolution is a one-parameter unitary group, hence generated by a Hamiltonian:
-      the usual equation of motion, up to phase.
+      induced evolution is a one-parameter unitary group, hence generated by a
+      Hamiltonian, which is the usual equation of motion up to phase.
 
       The phase is where a residue lives. Lifting a projective flow to a genuine unitary
       group requires killing a cocycle, and Bargmann's theorem, which does that from
-      continuity alone, is beyond the proof assistant's current reach. So the lift carries
+      continuity alone, is beyond the proof assistant's current reach, so the lift carries
       a coboundary datum as an explicit hypothesis, recorded rather than hidden.
     person: >
       Erwin Schrodinger (1887-1961) was born in Vienna, held positions at Jena, Stuttgart,
       Breslau and Zurich, and succeeded Planck in Berlin in 1927. He wrote the equation
       over Christmas 1925 and the weeks after, at the Villa Herwig in Arosa in the Swiss
-      Alps. He shared the 1933 Nobel Prize with Dirac, in the same year that he left Germany
-      in disgust at the regime, though he was not himself Jewish.
+      Alps. He shared the 1933 Nobel Prize with Dirac, in the same year that he left
+      Germany in disgust at the regime, though he wasn't himself Jewish.
 
       After an ill-judged return to Austria and a hurried escape from Graz in 1938, he
       settled at the Dublin Institute for Advanced Studies, created for him by de Valera,
       and stayed seventeen years.
 
-      The famous cat, from 1935, was not an illustration. It was an attack, a reductio
-      against the standard reading of his own equation. History's small joke is that it is
-      now the standard classroom illustration of the very thing it was built to refute.
+      The famous cat, from 1935, wasn't an illustration. It was an attack, a reductio
+      against the standard reading of his own equation, and history's small joke is that
+      it's now the standard classroom illustration of the very thing it was built to
+      refute.
     term: Schrodinger equation
     eponyms: [Schrodinger]
     status: standard-mathematics
@@ -3634,62 +3639,62 @@ entries:
 
   - slug: shor-algorithm
     hook: >
-      Shor's algorithm factors large numbers in polynomial time on a quantum computer. It
-      turned quantum computing from a curiosity into a budget line and made every deployed
-      cryptosystem provisional.
+      Shor's algorithm factors large numbers in polynomial time on a quantum computer, and
+      it turned quantum computing from a curiosity into a budget line and made every
+      deployed cryptosystem provisional.
     layman: >
-      Multiply two large prime numbers together and you have the answer at once. Recover
-      the two primes from their product and, with the best classical methods, you wait
-      effectively forever once the numbers are large enough. That one-way street is not a
-      theorem, but it is the working assumption, and most of the public-key cryptography
-      protecting the internet leans on it.
+      Multiply two large prime numbers together and you have the answer at once, but
+      recover the two primes from their product and, with the best classical methods, you
+      wait effectively forever once the numbers are large enough. That one-way street
+      isn't a theorem, but it's the working assumption, and most of the public-key
+      cryptography protecting the internet leans on it.
 
       Shor's 1994 algorithm breaks the street. A quantum computer can factor in polynomial
-      time, meaning that the running time grows only as a modest power of the number of
-      digits rather than exploding with each digit added. The route is indirect and
-      elegant. Classical number theory reduces factoring to finding the period of a
-      repeating sequence: the remainders left when successive powers of a chosen number are
+      time, meaning the running time grows only as a modest power of the number of digits
+      rather than exploding with each digit added. The route is indirect and elegant.
+      Classical number theory reduces factoring to finding the period of a repeating
+      sequence, as the remainders left when successive powers of a chosen number are
       divided by the number to be factored eventually repeat, and the length of the repeat
       reveals a factor. Period-finding is exactly what quantum interference does well. A
-      quantum register can hold every input value at once, in what is called a
+      quantum register can hold every input value at once, in what's called a
       superposition, and the quantum Fourier transform, the quantum version of the
       mathematical tool that picks the frequencies out of a signal, makes the period stand
       out the way a single note stands out from a struck bell.
 
-      Machines large enough to run the algorithm on numbers that matter do not yet exist.
-      The conclusion for current cryptography is nonetheless already settled: it is living
-      on borrowed time.
+      Machines large enough to run the algorithm on numbers that matter don't yet exist,
+      and the conclusion for current cryptography is nonetheless already settled, as it's
+      living on borrowed time.
     in_csd: >
-      Shor's algorithm is the most demanding of the corpus's algorithm witnesses. A witness
-      is a known algorithm carried through the formalised framework to show that the
-      framework can support it; witnesses mark scope, they do not support foundations.
-      What makes this one heavy is the plumbing. The reversible modular arithmetic beneath
-      the algorithm, the adders and multipliers built from steps that can each be run
-      backwards as quantum logic requires, is built and verified in full, because that is
-      where a formalisation either survives or quietly cheats.
+      Shor's algorithm is the most demanding of the corpus's algorithm witnesses. A
+      witness is a known algorithm carried through the formalised framework to show the
+      framework can support it, and witnesses mark scope and don't support foundations.
+      What makes this one heavy is the plumbing, as the reversible modular arithmetic
+      beneath the algorithm, the adders and multipliers built from steps that can each be
+      run backwards as quantum logic requires, is built and verified in full, because
+      that's where a formalisation either survives or quietly cheats.
 
       The corpus makes no cryptographic claims, and the cost-model work bearing on real
       machines was deliberately moved to a separate repository. What remains here is an
-      existence proof: the formalised dynamics carries a complete, real algorithm from end
-      to end.
+      existence proof, as the formalised dynamics carries a complete, real algorithm from
+      end to end.
     mathematical: >
       Quantum order-finding extracts the period of modular exponentiation in polynomial
-      time via the quantum Fourier transform; a classical reduction, essentially
+      time via the quantum Fourier transform, and a classical reduction, essentially
       Legendre-era number theory, converts the period into a factor with high probability.
 
-      The quantum content is entirely the period-finding; the corpus's labour is mostly
-      the verified reversible arithmetic underneath it.
+      The quantum content is entirely the period-finding, and the corpus's labour is
+      mostly the verified reversible arithmetic underneath it.
     person: >
       Peter Shor (b. 1959) was an Olympiad medallist, took degrees at Caltech and MIT, and
       was at Bell Labs when he announced the algorithm in 1994. The community's reaction
-      was unusually theatrical: word spread from a small talk before the paper existed, and
-      within weeks half of physics had opinions about a result almost nobody had read.
+      was unusually theatrical, as word spread from a small talk before the paper existed,
+      and within weeks half of physics had opinions about a result almost nobody had read.
 
-      The objection came instantly, that decoherence, the loss of quantum behaviour through
-      contact with the surroundings, would kill any real machine. Shor answered it himself
-      in 1995 with the first quantum error-correcting code, dispatching the counterargument
-      to his own revolution. He moved to MIT in 2003. Few people have built both a field's
-      central promise and its central defence.
+      The objection came instantly, that decoherence, the loss of quantum behaviour
+      through contact with the surroundings, would kill any real machine. Shor answered it
+      himself in 1995 with the first quantum error-correcting code, dispatching the
+      counterargument to his own revolution. He moved to MIT in 2003, and few people have
+      built both a field's central promise and its central defence.
     term: Shor's algorithm
     eponyms: [Shor]
     status: standard-mathematics
@@ -3701,59 +3706,61 @@ entries:
   - slug: stern-gerlach
     hook: >
       Atoms sent through an uneven magnetic field split into two clean beams instead of a
-      smear, and sorting them twice along different axes undoes the first sorting. The
+      smear, and sorting them twice along different axes undoes the first sorting, so the
       whole strangeness of quantum measurement sits in one 1922 apparatus.
     layman: >
       An atom can behave like a tiny bar magnet, and an uneven magnetic field pushes a
       small magnet up or down by an amount that depends on how its axis is tilted relative
       to the field. Classical physics therefore predicted that a beam of atoms, their axes
-      pointing every which way, would spread into a continuous smear. The old quantum
-      theory predicted discrete lumps instead. Stern built the apparatus to referee.
+      pointing every which way, would spread into a continuous smear, while the old
+      quantum theory predicted discrete lumps instead, so Stern built the apparatus to
+      referee.
 
-      The atoms split into two sharp beams, a point for quantisation. But the deeper shock
+      The atoms split into two sharp beams, a point for quantisation, but the deeper shock
       is the second act. Take the upper beam from one magnet and pass it through a second
-      magnet tilted at an angle. It splits again, and the original sorting is gone: send
-      the result through a third magnet aligned with the first, and the atoms that were all
-      found to be up no longer all come out up.
+      magnet tilted at an angle. It splits again, and the original sorting is gone, so if
+      you send the result through a third magnet aligned with the first, the atoms that
+      were all found to be up no longer all come out up.
 
-      Measurements do not read off labels the atoms already carry. Asking a new question
-      erases the answer to the old one. That is the finding underneath the finding, and it
+      Measurements don't read off labels the atoms already carry, as asking a new question
+      erases the answer to the old one. That's the finding underneath the finding, and it
       has never stopped being strange.
     in_csd: >
       The Stern-Gerlach experiment is the corpus's reference measurement, and the second
-      act is the part that earns it the place. Discreteness is cheap: any theory with the
-      right list of allowed values delivers it. The unsorting is contextuality in its most
-      concrete laboratory form, the dependence of an outcome on which question is asked and
-      in what company. A substrate account, one in which there is an underlying definite
-      state, must produce that behaviour rather than excuse it.
+      act is the part that earns it the place. Discreteness is cheap, as any theory with
+      the right list of allowed values delivers it. The unsorting is contextuality in its
+      most concrete laboratory form, the dependence of an outcome on which question is
+      asked and in what company, and a substrate account, one in which there's an
+      underlying definite state, must produce that behaviour rather than excuse it.
 
       CSD produces it structurally. The measurement context, here the orientation of the
       magnet, fixes which partition of the epistemic space the outcome is read against,
       that is, which way the space of quantum states is divided into outcome regions. The
       tilted magnet is a different context, hence a different partition, and a second
       sorting asks a different question of the same microstate, the underlying definite
-      state, rather than reading out a stored answer to the old one. The forgetting is not
-      the decay of a label. There was never a label, only a state and a context.
+      state, rather than reading out a stored answer to the old one. The forgetting isn't
+      the decay of a label, as there was never a label, only a state and a context.
     mathematical: >
       Spatial separation of beams according to the eigenvalues of the spin component along
-      the field gradient; sequential measurements along non-commuting axes fail to preserve
-      earlier outcomes.
+      the field gradient, where sequential measurements along non-commuting axes fail to
+      preserve earlier outcomes.
 
-      A historical footnote with content: the experiment predates spin. It was designed for
-      orbital angular momentum in the old quantum theory, and the right answer emerged from
-      two errors cancelling, understood only years later.
+      A historical footnote has content, as the experiment predates spin. It was designed
+      for orbital angular momentum in the old quantum theory, and the right answer emerged
+      from two errors cancelling, understood only years later.
     person: >
-      Otto Stern (1888-1969), from a Jewish grain-milling family at Sohrau in Upper Silesia,
-      was Einstein's first pupil in Prague and followed him to Zurich before settling at
-      Frankfurt, where the experiment ran in 1922. Walther Gerlach (1889-1979), from
-      Biebrich, took his doctorate at Tubingen and was the experimental hand.
+      Otto Stern (1888-1969), from a Jewish grain-milling family at Sohrau in Upper
+      Silesia, was Einstein's first pupil in Prague and followed him to Zurich before
+      settling at Frankfurt, where the experiment ran in 1922. Walther Gerlach
+      (1889-1979), from Biebrich, took his doctorate at Tubingen and was the experimental
+      hand.
 
-      The beloved detail is documented: the silver deposit was invisible until Stern's
+      The beloved detail is documented, as the silver deposit was invisible until Stern's
       breath, heavy with sulphur from cheap cigars, developed it like a photograph. The
-      aftermath is the era in miniature. Stern left in 1933 for Carnegie Tech in Pittsburgh
-      and received the 1943 Nobel Prize; Gerlach stayed, headed the Reich's uranium
-      programme by the war's end, and spent 1945 interned at Farm Hall, where the captured
-      transcripts record the German physicists learning of Hiroshima.
+      aftermath is the era in miniature. Stern left in 1933 for Carnegie Tech in
+      Pittsburgh and received the 1943 Nobel Prize, while Gerlach stayed, headed the
+      Reich's uranium programme by the war's end, and spent 1945 interned at Farm Hall,
+      where the captured transcripts record the German physicists learning of Hiroshima.
     term: Stern-Gerlach experiment
     eponyms: [Stern]
     status: standard-mathematics
@@ -3763,58 +3770,59 @@ entries:
     related: [malus-law, bloch-sphere, pointer-basis, measurement-flow, ramsey-interferometry]
 
   - slug: contextuality
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      For some sets of quantum questions, no consistent answer sheet exists at all. CSD's
-      response is to stop demanding one answer per question and to say instead what the
-      answer depends on.
+      For some sets of quantum questions no consistent answer sheet exists at all, and
+      CSD's response is to stop demanding one answer per question and to say instead what
+      the answer depends on.
     layman: >
       It would be natural to believe that a measurement reveals a property the system
-      already had, and that the property does not care what else happened to be measured
-      alongside it. Call this the answer-sheet picture: every question has a pre-written
-      answer, and the companion questions are irrelevant.
+      already had, and that the property doesn't care what else happened to be measured
+      alongside it. Call this the answer-sheet picture, in which every question has a pre-
+      written answer and the companion questions are irrelevant.
 
       Quantum mechanics refutes the picture outright. Two measurements are called
       compatible when they can be made together without either disturbing the other's
-      result. There are collections of questions for which no answer sheet exists, not
+      result, and there are collections of questions for which no answer sheet exists, not
       hidden or hard to find but provably nonexistent, once you demand that each answer
       stay the same across the different sets of compatible companions it could appear
-      with. And this is not a matter of disturbance. The companion measurements are
-      compatible, and need not touch the system at all.
+      with. And this isn't a matter of disturbance, as the companion measurements are
+      compatible and needn't touch the system at all.
 
-      The conclusion has a name: outcomes are contextual. What you get depends on the
-      company the question keeps.
+      The conclusion has a name, which is that outcomes are contextual. What you get
+      depends on the company the question keeps.
     in_csd: >
-      CSD does not grudgingly accommodate contextuality. It is built from it, and the
-      distinction matters, because contextuality is usually presented as a tax that
-      hidden-variable theories reluctantly pay. Here it is the architecture.
+      CSD doesn't grudgingly accommodate contextuality, as it's built from it, and the
+      distinction matters because contextuality is usually presented as a tax that hidden-
+      variable theories reluctantly pay. Here it's the architecture.
 
       The mechanism is this. The substrate, the underlying space of definite states, holds
       a definite microstate, and a measurement context fixes which partition of the
       epistemic space the outcome is read against, that is, which way the space of quantum
       states is divided into outcome regions. Change the context and you change the
-      partition, so the same microstate can honestly answer differently. Nothing is hidden,
-      nothing is disturbed, and no answer sheet is ever demanded.
+      partition, so the same microstate can honestly answer differently, and nothing is
+      hidden, nothing is disturbed, and no answer sheet is ever demanded.
 
-      The corpus proves both halves of the story. The obstruction: no single global
+      The corpus proves both halves of the story. The obstruction is that no single global
       assignment of answers reproduces the correlations of the singlet, the entangled pair
-      of particles used in the standard tests. The existence: an explicit contextual model
-      does reproduce them. Impossibility plus a working alternative is a two-sided claim,
-      and either half alone would be much weaker.
+      of particles used in the standard tests, and the existence is that an explicit
+      contextual model does reproduce them. Impossibility plus a working alternative is a
+      two-sided claim, and either half alone would be much weaker.
     mathematical: >
-      Over one shared measurable state space, no jointly-defined outcome assignment for the
-      four CHSH settings reproduces the singlet correlations. A separate result rules out a
-      different class: no setting-local (product) pair of response functions reproduces the
-      singlet at every setting pair. The corpus keeps these apart deliberately, since
-      neither subsumes the other, and proves the GHZ analogue for three parties.
+      Over one shared measurable state space, no jointly-defined outcome assignment for
+      the four CHSH settings reproduces the singlet correlations. A separate result rules
+      out a different class, as no setting-local (product) pair of response functions
+      reproduces the singlet at every setting pair. The corpus keeps these apart
+      deliberately, since neither subsumes the other, and it proves the GHZ analogue for
+      three parties.
 
-      One conflation to avoid, flagged in the corpus itself: its fibre analysis is not a
-      Kochen-Specker or Gleason consequence. Those constrain non-contextual assignments,
-      which this account never makes. The fibre argument comes from covariance plus
-      non-negativity, a different argument with a different shape, and, unlike the Bell
-      obstructions above, it is a constraint chain rather than a no-go: whether contextual
-      content can stay on the projective base at N of three and above is open in both
-      directions, not settled.
+      One conflation is flagged in the corpus itself, which is that its fibre analysis
+      isn't a Kochen-Specker or Gleason consequence. Those constrain non-contextual
+      assignments, which this account never makes. The fibre argument comes from
+      covariance plus non-negativity, a different argument with a different shape, and,
+      unlike the Bell obstructions above, it's a constraint chain rather than a no-go, so
+      whether contextual content can stay on the projective base at N of three and above
+      is open in both directions and not settled.
     term: Contextuality
     status: proved-in-corpus
     source: curated
@@ -3827,48 +3835,48 @@ entries:
     related: [bell-chsh, kochen-specker, singlet-contextual-model, hidden-variables, measurement-context]
 
   - slug: hidden-variables
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      The no-go theorems do not kill hidden variables; they price them. CSD reads the price
-      tag and pays it.
+      The no-go theorems don't kill hidden variables, as they price them, and CSD reads
+      the price tag and pays it.
     layman: >
       If the quantum state describes knowledge rather than the world, there has to be
-      something the knowledge is about: an underlying state of affairs, definite whether or
-      not anyone looks. Theories that supply one are called hidden-variable theories, and a
-      famous sequence of theorems is widely reported to have ruled them out.
+      something the knowledge is about, an underlying state of affairs that's definite
+      whether or not anyone looks. Theories that supply one are called hidden-variable
+      theories, and a famous sequence of theorems is widely reported to have ruled them
+      out.
 
       The reports are wrong, in an instructive way. What Bell and his successors actually
-      ruled out are the well-behaved hidden-variable theories. These are the local ones, in
-      which what happens here cannot depend on a choice made far away, and the
-      non-contextual ones, in which the value a system gives for one quantity does not
-      depend on which other quantities are measured alongside it. Hidden variables survive,
-      at the stated price of locality and non-contextuality.
+      ruled out are the well-behaved hidden-variable theories, the local ones, in which
+      what happens here can't depend on a choice made far away, and the non-contextual
+      ones, in which the value a system gives for one quantity doesn't depend on which
+      other quantities are measured alongside it. Hidden variables survive, at the stated
+      price of locality and non-contextuality.
 
-      That is not a loophole. It is the actual content of the theorems. Bohmian mechanics
-      has been paying the price since 1952, and remains the standing proof that the reports
-      of death were exaggerated.
+      That isn't a loophole, as it's the actual content of the theorems. Bohmian mechanics
+      has been paying the price since 1952, and it remains the standing proof that the
+      reports of death were exaggerated.
     in_csd: >
       The constraint surface is a hidden-variable theory in the technical sense, and the
-      programme says so plainly rather than hoping nobody asks. It is contextual and
-      non-local, exactly the two properties whose absence the theorems forbid, and it
-      proves the relevant obstructions in-house rather than citing them, since a
-      reconstruction resting on trust in the theorems that constrain it would be oddly
-      built.
+      programme says so plainly rather than hoping nobody asks. It's contextual and non-
+      local, exactly the two properties whose absence the theorems forbid, and it proves
+      the relevant obstructions in-house rather than citing them, since a reconstruction
+      resting on trust in the theorems that constrain it would be oddly built.
 
-      Two standard misreadings are worth heading off. First, CSD is not a repair of quantum
-      mechanics. It reproduces the same predictions at leading order; candidate departures
-      are recorded as owed by the papers, not claimed. Second, the quantum state is not the
-      hidden variable. The state is the summary. The hidden variable is the point of the
-      constraint surface underneath, which is why the state can be epistemic without the
-      theory being about nothing.
+      Two standard misreadings are worth heading off. First, CSD isn't a repair of quantum
+      mechanics, as it reproduces the same predictions at leading order, and candidate
+      departures are recorded as owed by the papers and not claimed. Second, the quantum
+      state isn't the hidden variable. The state is the summary, and the hidden variable
+      is the point of the constraint surface underneath, which is why the state can be
+      epistemic without the theory being about nothing.
     mathematical: >
       No product partition of a shared hidden-state space reproduces the singlet
-      correlations, at any setting pair; likewise GHZ. Proved over arbitrary measurable
-      state spaces, so the constraint hits the class, not one construction.
+      correlations, at any setting pair, and likewise GHZ. This is proved over arbitrary
+      measurable state spaces, so the constraint hits the class and not one construction.
 
-      The positive half is also in the corpus: an explicit contextual, non-local assignment
-      that does reproduce the singlet. Together the pair delimits the viable region from
-      both sides, what cannot work and one thing that does.
+      The positive half is also in the corpus, an explicit contextual, non-local
+      assignment that does reproduce the singlet. Together the pair delimits the viable
+      region from both sides, what can't work and one thing that does.
     term: Hidden variables
     status: proved-in-corpus
     source: curated
@@ -3881,54 +3889,57 @@ entries:
     related: [contextuality, bell-chsh, is-csd-a-hidden-variable-theory, bohmian-mechanics, psi-epistemic]
 
   - slug: measurement-problem
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
       Quantum mechanics contains two incompatible rules of change and no instruction for
-      when to switch between them. CSD replaces the switch with theorems about what no
+      when to switch between them, and CSD replaces the switch with theorems about what no
       dynamics can do.
     layman: >
       Left alone, a quantum system evolves smoothly and reversibly, keeping every
       superposition intact, where a superposition is a state that combines several
       possible outcomes at once with none of them selected. Measured, the system delivers
-      one definite outcome and the alternatives vanish. The theory contains both behaviours
-      and refuses to say where one ends and the other begins. What counts as a measurement:
-      a detector, an eyeball, a graduate student?
+      one definite outcome and the alternatives vanish. The theory contains both
+      behaviours and refuses to say where one ends and the other begins, so you're left
+      asking what counts as a measurement, whether a detector, an eyeball or a graduate
+      student.
 
-      This is not a philosophical itch. The two rules are mathematically incompatible. The
-      first is linear, so combinations of states evolve into the same combinations of their
-      evolved parts, and reversible, so the motion can be run backwards. The second is
-      neither. A theory that holds both without a boundary between them is not a closed
-      description of anything.
+      This isn't a philosophical itch, as the two rules are mathematically incompatible.
+      The first is linear, so combinations of states evolve into the same combinations of
+      their evolved parts, and reversible, so the motion can be run backwards, and the
+      second is neither. A theory that holds both without a boundary between them isn't a
+      closed description of anything.
 
       Every serious interpretation is, at bottom, a proposal for which rule to sacrifice.
-      Many-Worlds keeps the smooth evolution and drops definite outcomes. Collapse theories
-      keep the outcomes and modify the evolution. The question is old, unresolved and
-      entirely legitimate.
+      Many-Worlds keeps the smooth evolution and drops definite outcomes, and collapse
+      theories keep the outcomes and modify the evolution. The question is old, unresolved
+      and entirely legitimate.
     in_csd: >
       CSD's move is that nothing abrupt ever happens on the substrate. The underlying
-      motion is deterministic and volume-preserving throughout, meaning that it carries any
-      region of the underlying state space to a region of the same size. What changes at a
-      measurement is which region of the epistemic space, the space of quantum states, the
-      trajectory gets recorded against. Both textbook rules become views of one process.
+      motion is deterministic and volume-preserving throughout, meaning that it carries
+      any region of the underlying state space to a region of the same size, and what
+      changes at a measurement is which region of the epistemic space, the space of
+      quantum states, the trajectory gets recorded against. Both textbook rules become
+      views of one process.
 
-      What keeps this from being just another story is a trilemma: three theorems that
+      What keeps this from being just another story is a trilemma, three theorems that
       stake out what any account must give up. No volume-preserving map implements exact
       collapse. No continuous dynamics correlates a pointer, the apparatus's readout,
       perfectly everywhere on a connected arena, a state space in one piece. And
-      approximate collapse has a stated price: accuracy costs improbability of the
+      approximate collapse has a stated price, as accuracy costs improbability of the
       apparatus's ready state, and the exchange rate is quantitative.
 
-      So the corpus does not dissolve the measurement problem by narrative. It proves which
-      combination of desiderata is impossible, then says openly which one CSD abandons.
-      That is what separates a result from an interpretation.
+      So the corpus doesn't dissolve the measurement problem by narrative. It proves which
+      combination of desiderata is impossible, then says openly which one CSD abandons,
+      and that's what separates a result from an interpretation.
     mathematical: >
-      Three impossibility results on the pointer arena: no exact collapse by a
-      measure-preserving map; no everywhere-correlating continuous propagator on a
-      connected arena; a quantitative accuracy-versus-improbability bound.
+      Three impossibility results on the pointer arena, so there's no exact collapse by a
+      measure-preserving map, no everywhere-correlating continuous propagator on a
+      connected arena, and a quantitative accuracy-versus-improbability bound.
 
       All three are CSD-free in statement, being measure theory, topology and an estimate
-      respectively. Any rival account with the corresponding structure inherits them. They
-      cannot be cited against this programme without being cited against the citer.
+      respectively, so any rival account with the corresponding structure inherits them,
+      and they can't be cited against this programme without being cited against the
+      citer.
     term: Measurement problem
     status: proved-in-corpus
     source: curated
@@ -3941,44 +3952,45 @@ entries:
     related: [collapse, de-isolation, record-layer, what-happens-during-measurement, copenhagen]
 
   - slug: collapse
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
-      In CSD the quantum state never jumps, and that is a theorem about volume-preserving
+      In CSD the quantum state never jumps, and that's a theorem about volume-preserving
       maps rather than a preference among interpretations.
     layman: >
-      The textbook says that when a measurement happens, the quantum state jumps
-      discontinuously to match the outcome. Is that jump a physical event, or an update to
-      a description? The dispute is as old as the theory, and the stakes are real. A
-      physical jump would be abrupt, irreversible, unexplained by any equation in the
-      theory, and apparently instantaneous across any distance.
+      The textbook says that when a measurement happens the quantum state jumps
+      discontinuously to match the outcome, and you can ask whether that jump is a
+      physical event or an update to a description. The dispute is as old as the theory,
+      and the stakes are real, as a physical jump would be abrupt, irreversible,
+      unexplained by any equation in the theory, and apparently instantaneous across any
+      distance.
 
       An update, on the other hand, needs no physics at all. When you learn which box the
-      ball is in, your probabilities collapse and nobody is alarmed. The whole question is
-      whether quantum collapse is more like the ball.
+      ball is in your probabilities collapse and nobody is alarmed, so the whole question
+      is whether quantum collapse is more like the ball.
 
       CSD's answer is the ball, with a twist that makes the answer checkable rather than
       rhetorical. On a volume-preserving substrate, one whose motion carries every region
-      of the underlying state space to a region of the same size, a physical collapse is
-      not merely unnecessary. It is impossible.
+      of the underlying state space to a region of the same size, a physical collapse
+      isn't merely unnecessary, as it's impossible.
     in_csd: >
       The corpus proves that no measure-preserving map implements exact collapse, where a
       measure-preserving map is one that keeps the size of every region unchanged, which
       is exactly what the motion of a deterministic, volume-conserving substrate does. So
-      such a substrate could not contain a collapse process even if its designer wanted
-      one. The stance becomes a constraint, and CSD is on record as unable to cheat.
+      such a substrate couldn't contain a collapse process even if its designer wanted
+      one, and the stance becomes a constraint, with CSD on record as unable to cheat.
 
       What replaces the jump is a record. System and apparatus evolve together under the
-      one dynamics; the record fixes which region of the space of quantum states the
-      trajectory realises; and the update rule that the textbook postulates separately
-      falls out of the record construction. The thing that changes discontinuously is the
-      summary. The world underneath does what it was always doing.
+      one dynamics, the record fixes which region of the space of quantum states the
+      trajectory realises, and the update rule the textbook postulates separately falls
+      out of the record construction. The thing that changes discontinuously is the
+      summary, and the world underneath does what it was always doing.
     mathematical: >
       No measure-preserving map on the arena implements exact collapse. Approximate
-      collapse exists but is priced: accuracy is bounded against ready-state improbability,
-      with the exchange rate explicit.
+      collapse exists but is priced, as accuracy is bounded against ready-state
+      improbability, with the exchange rate explicit.
 
-      The post-measurement update is then derived rather than postulated. It appears as the
-      block projection realised on the pointer arena, an output of the record
+      The post-measurement update is then derived rather than postulated, and it appears
+      as the block projection realised on the pointer arena, an output of the record
       construction.
     term: Collapse
     status: proved-in-corpus
@@ -3992,55 +4004,56 @@ entries:
     related: [measurement-problem, de-isolation, luders-rule, record-layer, spontaneous-collapse]
 
   - slug: typicality
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      Probability without randomness: the world is deterministic, you do not know which
-      state you have, and the odds are the sizes of the possibilities.
+      Typicality is probability without randomness, as the world is deterministic, you
+      don't know which state you have, and the odds are the sizes of the possibilities.
     layman: >
-      If the universe is deterministic, probabilities cannot come from genuine chance,
-      because there is none. Yet quantum experiments deliver rock-solid statistics. Where
-      do the numbers come from?
+      If the universe is deterministic, probabilities can't come from genuine chance,
+      because there is none, yet quantum experiments deliver rock-solid statistics, so you
+      can ask where the numbers come from.
 
-      From counting. Fix everything your preparation procedure controls, and a vast set of
-      microstates, of complete underlying states, remains compatible with it; you do not
-      know which one you got. Ask what fraction of that set leads to each outcome, and
-      those fractions are the probabilities. Nothing is random. You are ignorant, and the
-      ignorance is quantified by the sizes of sets. This is exactly how Boltzmann explained
-      why gases settle into equilibrium, imported into quantum foundations.
+      They come from counting. Fix everything your preparation procedure controls, and a
+      vast set of microstates, of complete underlying states, remains compatible with it,
+      so you don't know which one you got. Ask what fraction of that set leads to each
+      outcome, and those fractions are the probabilities. Nothing is random, as you're
+      ignorant and the ignorance is quantified by the sizes of sets, which is exactly how
+      Boltzmann explained why gases settle into equilibrium, imported into quantum
+      foundations.
 
       The classic objection is as old as the move. Fractions depend on how you measure the
-      sets, and a measure is simply a rule that assigns a size to each set of microstates.
-      Choose the measure to taste and the argument justifies anything. Any typicality
-      account lives or dies by its answer to that objection.
+      sets, and a measure is simply a rule that assigns a size to each set of microstates,
+      so if you choose the measure to taste the argument justifies anything. Any
+      typicality account lives or dies by its answer to that objection.
     in_csd: >
       Typicality is the engine of the whole programme, and both of its classic failure
       modes are addressed by theorems rather than by assurances.
 
-      The measure objection first. CSD's measure is forced by symmetry, uniquely, with a
-      proof: among all measures that are invariant, meaning unchanged by the symmetries of
-      the state space, there is only one, so there was no other option to have chosen.
-      That is the direct answer to the circularity charge associated with Valentini, that
-      a typicality argument simply picks the measure that yields the result it wants, and
-      it is the single most load-bearing fact in the corpus.
+      The measure objection comes first. CSD's measure is forced by symmetry, uniquely,
+      with a proof, as among all measures that are invariant, meaning unchanged by the
+      symmetries of the state space, there's only one, so there was no other option to
+      have chosen. That's the direct answer to the circularity charge associated with
+      Valentini, that a typicality argument simply picks the measure that yields the
+      result it wants, and it's the single most load-bearing fact in the corpus.
 
       The route matters too. Frequencies come from the law of large numbers over repeated
       preparations, the theorem that the averages of many independent trials settle to the
-      underlying fractions. They do not come from ergodicity, the idea that a single
+      underlying fractions. They don't come from ergodicity, the idea that a single
       trajectory wandering through the space for long enough visits every part of it in
-      proportion to its size, nor from a single trajectory exploring the space in any other
-      way. The corpus records the single-flow route as a proved dead end: one projective
-      flow demonstrably cannot pin down the measure. That negative result is kept visible
-      so that nobody wanders back down the road.
+      proportion to its size, and they don't come from a single trajectory exploring the
+      space in any other way. The corpus records the single-flow route as a proved dead
+      end, as one projective flow demonstrably can't pin down the measure, and that
+      negative result is kept visible so nobody wanders back down the road.
     mathematical: >
       For independent trials, observed relative frequencies converge almost surely to
-      volume fractions; combined with Born-weight-equals-volume-ratio, this yields Born
+      volume fractions, and combined with Born-weight-equals-volume-ratio this yields Born
       frequencies at general dimension.
 
       Two notes on scope. The independence hypothesis is pairwise, weaker than the usual
-      statement. And the corpus flags an open debt: a deterministic substrate owes an
+      statement. And the corpus flags an open debt, as a deterministic substrate owes an
       account of why repeated preparations are independent at all, and a substrate with
-      memory would show departures from i.i.d. shot noise. That is one of the few places
-      CSD could differ observably from quantum mechanics, at laboratory energies.
+      memory would show departures from i.i.d. shot noise, which is one of the few places
+      CSD could differ observably from quantum mechanics at laboratory energies.
     term: Typicality
     status: proved-in-corpus
     source: curated
@@ -4053,83 +4066,83 @@ entries:
     related: [typicality-volume, born-weight, canonical-typicality, where-do-probabilities-come-from, fubini-study-measure]
 
   - slug: psi-epistemic
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      The quantum state is what you know, not what exists. The hard part was always saying
-      what it is knowledge of, and CSD's whole architecture is an answer to that.
+      The quantum state is what you know and not what exists, and the hard part was always
+      saying what it's knowledge of, so CSD's whole architecture is an answer to that.
     layman: >
       Two readings of the quantum state have fought for a century. On the realist reading
       the state is a physical thing, so its jump on measurement is a physical process that
-      needs an explanation the theory does not give. On the epistemic reading the state is
-      a description of what someone knows, so the jump is just an update: learn something,
-      revise. It is no more mysterious than a poker player recalculating after seeing a
-      card.
+      needs an explanation the theory doesn't give. On the epistemic reading the state is
+      a description of what someone knows, so the jump is just an update, as you learn
+      something and revise, and it's no more mysterious than a poker player recalculating
+      after seeing a card.
 
-      The epistemic reading dissolves the measurement problem, which is its great charm.
-      Its great embarrassment is the follow-up question: knowledge of what? If there is
-      nothing underneath, the reading says the theory is about nothing in particular. And a
-      family of more recent theorems makes naive versions of the underneath very hard to
-      hold. The PBR theorem, the most famous of them, shows that if separately prepared
-      systems have independent underlying states, then two different quantum states can
-      never be descriptions of the same underlying state.
+      The epistemic reading dissolves the measurement problem, which is its great charm,
+      and its great embarrassment is the follow-up question of what it's knowledge of. If
+      there's nothing underneath, the reading says the theory is about nothing in
+      particular, and a family of more recent theorems makes naive versions of the
+      underneath very hard to hold. The PBR theorem, the most famous of them, shows that
+      if separately prepared systems have independent underlying states, then two
+      different quantum states can never be descriptions of the same underlying state.
 
       So the position is attractive, constrained, and incomplete without a floor.
     in_csd: >
       CSD is psi-epistemic with a floor. The state is knowledge of which region of the
-      constraint surface the microstate occupies. There is a fact underneath, one point
+      constraint surface the microstate occupies, so there's a fact underneath, one point
       following one trajectory, and the state summarises what a preparation pins down
       about it.
 
       Everything in the programme sorts into two levels, and keeping them apart is the
       discipline the whole account depends on. The epistemic level holds the space of
-      quantum states, the outcome regions and the probabilities. The ontic level holds the
-      substrate and the measure that weights it. The corpus's fibre analysis sharpens the
-      split. It treats the space of quantum states as a lossy projection of the substrate,
-      with many microstates mapping to each state, and it places the record-forming content
-      in the fibre above a state, the set of microstates that project to it, rather than
-      on the space of states itself. That placement is a judgement against a tight
-      constraint chain, not a proved dichotomy: whether the content could stay on the base
-      in three or more dimensions is open in both directions.
+      quantum states, the outcome regions and the probabilities, and the ontic level holds
+      the substrate and the measure that weights it. The corpus's fibre analysis sharpens
+      the split. It treats the space of quantum states as a lossy projection of the
+      substrate, with many microstates mapping to each state, and it places the record-
+      forming content in the fibre above a state, the set of microstates that project to
+      it, rather than on the space of states itself. That placement is a judgement against
+      a tight constraint chain and not a proved dichotomy, as whether the content could
+      stay on the base in three or more dimensions is open in both directions.
 
       Three claims need to be kept apart, because the corpus once ran them together. The
-      first is CSD epistemicity: the quantum state does not completely specify the
-      microstate, because the projection is many-to-one. That is this entry's subject. The
-      second is the technical Harrigan-Spekkens classification, which calls a model
-      psi-ontic when distinct quantum states never share an underlying microstate and
-      psi-epistemic when they can. On the canonical exact sharp interface, where a
-      preparation is an exact pure state, CSD is psi-ontic, because distinct exact pure
-      states have mutually singular ontic measures: the space can be split into two parts
-      with each state's measure living entirely on its own part. The third is
-      finite-resolution overlap: preparations that fix a region of positive volume, rather
-      than an exact state, and whose regions overlap have conditional laws that provably
-      cannot be separated onto disjoint supports.
+      first is CSD epistemicity, that the quantum state doesn't completely specify the
+      microstate, because the projection is many-to-one, and that's this entry's subject.
+      The second is the technical Harrigan-Spekkens classification, which calls a model
+      psi-ontic when distinct quantum states never share an underlying microstate and psi-
+      epistemic when they can. On the canonical exact sharp interface, where a preparation
+      is an exact pure state, CSD is psi-ontic, because distinct exact pure states have
+      mutually singular ontic measures, so the space can be split into two parts with each
+      state's measure living entirely on its own part. The third is finite-resolution
+      overlap, as preparations that fix a region of positive volume, rather than an exact
+      state, and whose regions overlap have conditional laws that provably can't be
+      separated onto disjoint supports.
 
-      The third claim is the theorem this entry is anchored to. It does not establish the
+      The third claim is the theorem this entry is anchored to. It doesn't establish the
       second in the epistemic direction, because region preparations are a different
       preparation class from exact pure states, and describing the overlap theorem as
       technical psi-epistemicity of exact states was an error that has since been
-      corrected. The first and third claims hold; on the second, the exact interface is
+      corrected. The first and third claims hold, and on the second the exact interface is
       psi-ontic.
     mathematical: >
-      The overlap statement is proved as conditional_not_mutuallySingular: overlapping
-      preparation regions give conditional laws that are not mutually singular. The proof
-      is a density argument rather than a shared-support one, because two measures can both
-      charge a common set and still be mutually singular, so overlap alone would not settle
-      it. The concrete witness kahler_preparations_overlap instantiates it on open
+      The overlap statement is proved as conditional_not_mutuallySingular, so overlapping
+      preparation regions give conditional laws that aren't mutually singular. The proof
+      is a density argument rather than a shared-support one, because two measures can
+      both charge a common set and still be mutually singular, so overlap alone wouldn't
+      settle it. The concrete witness kahler_preparations_overlap instantiates it on open
       neighbourhoods of any two rays of the working arena.
 
-      The complementary facts are proved too: conditioning on an exact pure state is an
-      unreachable idealisation (single fibres are Liouville-null); what a physical
-      preparation projects to is a density against the Fubini-Study measure, not a point;
-      and distinct exact pure states have mutually singular ontic measures
+      The complementary facts are proved too. Conditioning on an exact pure state is an
+      unreachable idealisation, as single fibres are Liouville-null, what a physical
+      preparation projects to is a density against the Fubini-Study measure and not a
+      point, and distinct exact pure states have mutually singular ontic measures
       (RecordLayer.sharp_preparations_mutuallySingular), which is the psi-ontic verdict on
       the exact sharp interface under the Harrigan-Spekkens classification. An earlier
       version of this entry described the overlap theorem as technical psi-epistemicity of
-      exact states; that error was corrected on 2026-08-25.
+      exact states, and that error was corrected on 2026-08-25.
 
-      Which literature constraints bite, PBR and its relatives, still depends delicately on
-      what the state is taken to be knowledge of, and on independence assumptions. The full
-      mapping of that boundary is not formalised; treat it as live terrain.
+      Which literature constraints bite, PBR and its relatives, still depends delicately
+      on what the state is taken to be knowledge of, and on independence assumptions. The
+      full mapping of that boundary isn't formalised, so treat it as live terrain.
     term: Psi-epistemic
     status: proved-in-corpus
     source: curated
@@ -4143,25 +4156,25 @@ entries:
 
   - slug: determinism
     hook: >
-      The substrate has no dice. The spread in the data is variation in what your
-      preparation could not pin down.
+      The substrate has no dice, so the spread in the data is variation in what your
+      preparation couldn't pin down.
     layman: >
-      Prepare two systems as identically as any procedure allows, measure them identically,
-      and quantum mechanics happily reports different outcomes, offering no reason why this
-      one rather than that. Either the world contains genuine chance, or the preparations
-      were not actually identical.
+      Prepare two systems as identically as any procedure allows, measure them
+      identically, and quantum mechanics happily reports different outcomes, offering no
+      reason why this one rather than that. Either the world contains genuine chance, or
+      the preparations weren't actually identical.
 
       Determinism takes the second answer. The two systems agreed on everything the
-      procedure fixed and differed in what it could not fix. The observed spread is that
+      procedure fixed and differed in what it couldn't fix, so the observed spread is that
       hidden variation showing through, and probability is bookkeeping for ignorance. This
-      is the same move classical statistical mechanics has always made about gases: the
+      is the same move classical statistical mechanics has always made about gases, as the
       temperature and pressure of a gas fix its state only coarsely, the exact positions
-      and speeds of its molecules vary from one sample to the next, and the statistics come
-      from that variation.
+      and speeds of its molecules vary from one sample to the next, and the statistics
+      come from that variation.
 
-      Whether the answer is still available after the no-go theorems is not a matter of
-      taste. It survives, at a stated price. The theory must be contextual, meaning that
-      the outcome of a measurement can depend on which other measurements are made
+      Whether the answer is still available after the no-go theorems isn't a matter of
+      taste. It survives, at a stated price, as the theory must be contextual, meaning
+      that the outcome of a measurement can depend on which other measurements are made
       alongside it, and non-local, meaning that what happens here can depend on a choice
       made far away. The entries on contextuality and hidden variables carry the receipts.
     in_csd: >
@@ -4169,23 +4182,23 @@ entries:
       of the underlying state space to a region of the same size, and chance appears
       nowhere in the dynamics. Probability enters exactly once, as ignorance of the
       microstate within the region a preparation fixes, and the forced measure, the one
-      rule for sizing regions that the symmetries of the state space allow, turns that
+      rule for sizing regions the symmetries of the state space allow, turns that
       ignorance into unique numbers.
 
-      The debt is recorded rather than buried, and it is the interesting part. The
+      The debt is recorded rather than buried, and it's the interesting part. The
       frequency argument assumes independent trials. A deterministic substrate with memory
       would violate that assumption, and the violation would show up as deviations from
       ordinary shot noise, the statistical scatter expected in counts of independent
       events, in high-statistics data. This is one of the very few places CSD could differ
-      measurably from quantum mechanics, and testing it needs no Planck-scale machine, just
-      patience and statistics.
+      measurably from quantum mechanics, and testing it needs no Planck-scale machine,
+      just patience and statistics.
     mathematical: >
-      Positional. The formal content is the measure-preserving flow and the volume-ratio
-      weights; determinism is the reading of that structure.
+      This entry is positional. The formal content is the measure-preserving flow and the
+      volume-ratio weights, and determinism is the reading of that structure.
 
       The nearest formal object is the preservation field itself, carried as an ontic
-      postulate and listed as such in the axiom ledger: assumed for physical
-      admissibility, not derived.
+      postulate and listed as such in the axiom ledger, so it's assumed for physical
+      admissibility and not derived.
     term: Determinism
     status: definition
     source: curated
@@ -4196,64 +4209,65 @@ entries:
 
   - slug: kochen-specker
     hook: >
-      There is a finite list of directions in space that admits no consistent yes-or-no
-      labelling. Contextuality follows by pure counting, with no experiment, no statistics
-      and no separated particles.
+      There's a finite list of directions in space that admits no consistent yes-or-no
+      labelling, so contextuality follows by pure counting, with no experiment, no
+      statistics and no separated particles.
     layman: >
-      Bell's argument needs two separated particles and statistics gathered over many runs,
-      so a determined sceptic could hope that the trouble was really about distance, or
-      about probability. Is there a conflict that needs neither?
+      Bell's argument needs two separated particles and statistics gathered over many
+      runs, so a determined sceptic could hope the trouble was really about distance, or
+      about probability, and ask whether there's a conflict that needs neither.
 
-      Kochen and Specker built one. For a quantum system with three or more distinguishable
-      outcomes, there is a finite set of measurement directions that cannot be consistently
-      labelled with answers at all. Each direction is a yes-or-no question, and the labels
-      must respect the relations that the corresponding quantities themselves satisfy: for
-      instance, among any complete set of mutually perpendicular directions, exactly one
-      must be labelled yes. No labelling of the whole set obeys the rule. Their original
-      construction used 117 directions; the modern record is 18, and you can check it with
-      a pencil.
+      Kochen and Specker built one. For a quantum system with three or more
+      distinguishable outcomes, there's a finite set of measurement directions that can't
+      be consistently labelled with answers at all. Each direction is a yes-or-no
+      question, and the labels must respect the relations the corresponding quantities
+      themselves satisfy, so for instance among any complete set of mutually perpendicular
+      directions exactly one must be labelled yes. No labelling of the whole set obeys the
+      rule. Their original construction used 117 directions, the modern record is 18, and
+      you can check it with a pencil.
 
-      There is no experiment, no ensemble of runs, and no separation in space. There is
-      just a finite combinatorial fact: the answer sheet does not exist, even for one
-      particle, even in principle.
+      There's no experiment, no ensemble of runs, and no separation in space. There's just
+      a finite combinatorial fact, which is that the answer sheet doesn't exist, even for
+      one particle, even in principle.
     in_csd: >
-      CSD is contextual, so this theorem is a constraint it satisfies by construction, with
-      no accommodation needed. What the corpus is genuinely careful about is a tempting
-      misattribution nearby.
+      CSD is contextual, so this theorem is a constraint it satisfies by construction,
+      with no accommodation needed. What the corpus is genuinely careful about is a
+      tempting misattribution nearby.
 
       The programme's fibre analysis found that in three or more dimensions the natural
       constructions confined to the base, the space of quantum states onto which the
-      substrate projects, stop working. That is why it places contextual content in the
+      substrate projects, stop working, which is why it places contextual content in the
       fibre above the base, the set of substrate points lying over a given state. The
       placement is a judgement against a constraint chain, and the base-only question
-      remains open in both directions. It would be natural, and wrong, to cite
-      Kochen-Specker for that placement. The theorem constrains non-contextual value
-      assignments, and CSD never makes one, so the theorem simply does not engage. The
-      fibre argument comes instead from covariance, the requirement that the construction
+      remains open in both directions. It would be natural, and wrong, to cite Kochen-
+      Specker for that placement, as the theorem constrains non-contextual value
+      assignments and CSD never makes one, so the theorem simply doesn't engage. The fibre
+      argument comes instead from covariance, the requirement that the construction
       respect the symmetries of the state space, together with non-negativity, the
-      requirement that a density never go below zero. That is a different argument with a
-      different shape, and a constraint chain rather than a no-go. The corpus flags the
-      distinction precisely because borrowing this theorem's authority would be such an
-      easy overclaim.
+      requirement that a density never go below zero. That's a different argument with a
+      different shape, and a constraint chain rather than a no-go, and the corpus flags
+      the distinction precisely because borrowing this theorem's authority would be such
+      an easy overclaim.
     mathematical: >
       In dimension three and above, no non-contextual assignment of definite values to all
-      observables respects the functional relations among commuting sets. Witnessed by
-      explicit finite vector sets: 117 originally, 18 in the smallest known.
+      observables respects the functional relations among commuting sets, witnessed by
+      explicit finite vector sets, 117 originally and 18 in the smallest known.
 
-      Dimension two escapes, the same exception that afflicts the original Gleason theorem,
-      and one more instance of the qubit being a misleading guide to the general case.
+      Dimension two escapes, the same exception that afflicts the original Gleason
+      theorem, and one more instance of the qubit being a misleading guide to the general
+      case.
     person: >
-      Simon Kochen, a native of Belgium, has spent his career at Princeton, mostly in model
-      theory and number theory; he later proved the free will theorem with John Conway.
-      Ernst Specker (1920-2011) was Swiss and spent his whole career at the ETH Zurich,
-      working in logic and combinatorics.
+      Simon Kochen, a native of Belgium, has spent his career at Princeton, mostly in
+      model theory and number theory, and he later proved the free will theorem with John
+      Conway. Ernst Specker (1920-2011) was Swiss and spent his whole career at the ETH
+      Zurich, working in logic and combinatorics.
 
       The publication story is unmatched. Specker published the core idea in 1960 in a
       theology journal, Dialectica, framing it through a scholastic debate about whether
-      God could know the answers to unasked questions. The joint theorem followed in 1967
-      in the Journal of Mathematics and Mechanics. From medieval counterfactuals to a
-      pillar of quantum foundations, by way of the strangest venue in the subject's
-      bibliography.
+      God could know the answers to unasked questions, and the joint theorem followed in
+      1967 in the Journal of Mathematics and Mechanics. It went from medieval
+      counterfactuals to a pillar of quantum foundations, by way of the strangest venue in
+      the subject's bibliography.
     term: Kochen-Specker theorem
     status: standard-mathematics
     source: curated
@@ -4265,39 +4279,40 @@ entries:
   - slug: copenhagen
     hook: >
       Copenhagen is the oldest position on quantum measurement and the one that declines
-      the question: measurement is where the theory stops, not something it explains.
+      the question, as measurement is where the theory stops and not something it
+      explains.
     layman: >
       Quantum mechanics needs a boundary between the quantum system and the classical
-      apparatus that reads it. Where is the boundary, and what happens at it? The
-      Copenhagen interpretation answers by refusing the question.
+      apparatus that reads it, and you can ask where the boundary is and what happens at
+      it. The Copenhagen interpretation answers by refusing the question.
 
       The traditional teaching account, associated with Bohr, treats the apparatus as
       classical by fiat and treats the state's jump on measurement as a primitive fact.
       More radically, Bohr held that the whole experimental arrangement determines what
-      can meaningfully be said. Asking what the electron was doing between measurements is
-      not left unanswered; it is rejected as meaningless.
+      can meaningfully be said, so asking what the electron was doing between measurements
+      isn't left unanswered but rejected as meaningless.
 
-      As a strategy this is not foolish. It delivered a century of flawless physics, and
+      As a strategy this isn't foolish. It delivered a century of flawless physics, and
       its refusal to over-describe has aged better than several of its rivals'
-      enthusiasms. But it is a decision not to explain, and everyone who wants an
+      enthusiasms. But it's a decision not to explain, and everyone who wants an
       explanation eventually leaves it.
     in_csd: >
       The disagreement is narrower than the usual caricature. CSD agrees with Copenhagen
-      that the state is not a physical object, and agrees that the boundary between
+      that the state isn't a physical object, and it agrees that the boundary between
       classical and quantum is where the real content lives. The parting of ways comes one
-      step further on: CSD declines to leave the boundary unanalysed.
+      step further on, as CSD declines to leave the boundary unanalysed.
 
-      Here measurement is an ordinary physical interaction on the substrate that produces a
-      record, and the two rules Copenhagen keeps apart, smooth evolution and abrupt update,
-      are one process seen at two levels of description. The contrast is interpretive, not
-      empirical. No experiment distinguishes the two positions, and none is proposed. This
-      entry states a position; there is no theorem behind it, and the absence of a formal
-      reference is deliberate.
+      Here measurement is an ordinary physical interaction on the substrate that produces
+      a record, and the two rules Copenhagen keeps apart, smooth evolution and abrupt
+      update, are one process seen at two levels of description. The contrast is
+      interpretive and not empirical, as no experiment distinguishes the two positions and
+      none is proposed. This entry states a position, there's no theorem behind it, and
+      the absence of a formal reference is deliberate.
     mathematical: >
-      No formal content, and the absence is the information. The corpus contains nothing
-      bearing directly on this position.
+      There's no formal content, and the absence is the information, as the corpus
+      contains nothing bearing directly on this position.
 
-      That is itself telling: the disagreement is about whether the measurement boundary
+      That's itself telling, as the disagreement is about whether the measurement boundary
       requires analysis, and no theorem settles a question of that kind.
     term: Copenhagen interpretation
     status: definition
@@ -4309,54 +4324,58 @@ entries:
 
   - slug: many-worlds
     hook: >
-      Many-Worlds keeps the smooth quantum evolution and gives up the single outcome. CSD
-      makes the opposite choice, one trajectory and one world, as a settled commitment.
+      Many-Worlds keeps the smooth quantum evolution and gives up the single outcome, and
+      CSD makes the opposite choice, one trajectory and one world, as a settled
+      commitment.
     layman: >
-      Quantum mechanics describes a system by a state that changes smoothly and predictably
-      in time. The same rules allow a state to be a superposition: a combination of several
-      possibilities held at once, such as a particle that is partly here and partly there.
-      Yet a measurement only ever shows one result. The textbook handles this by adding a
-      second rule, collapse, under which the state jumps to a single possibility at the
-      moment of measurement. Many-Worlds asks what follows if you refuse to add that rule.
+      Quantum mechanics describes a system by a state that changes smoothly and
+      predictably in time, and the same rules allow a state to be a superposition, a
+      combination of several possibilities held at once, such as a particle that's partly
+      here and partly there. Yet a measurement only ever shows one result. The textbook
+      handles this by adding a second rule, collapse, under which the state jumps to a
+      single possibility at the moment of measurement, and Many-Worlds asks what follows
+      if you refuse to add that rule.
 
       Everett's answer was to take the smooth evolution as the whole story. After a
-      measurement the apparatus and the observer are then themselves in superposition, with
-      one component, called a branch, for each outcome. Everett's move was to say that
-      nothing is wrong with this. Every outcome happens, each in its own branch. The
+      measurement the apparatus and the observer are then themselves in superposition,
+      with one component, called a branch, for each outcome, and Everett's move was to say
+      that nothing is wrong with this. Every outcome happens, each in its own branch. The
       branches decohere, meaning that their interaction with the surroundings stops them
       from ever influencing one another again, so each branch contains an observer certain
-      that their result was the only one. Nothing is added to the formalism, no collapse and
-      no hidden variables, and that austerity is the position's appeal.
+      that their result was the only one. Nothing is added to the formalism, no collapse
+      and no hidden variables, and that austerity is the position's appeal.
 
-      The cost surfaces at probability. If everything happens, what can it mean that one
-      outcome was more probable than another? Counting branches gives the wrong answer: a
-      measurement with a seventy percent outcome and a thirty percent outcome produces two
-      branches, not seven and three. The decision-theoretic repairs, which argue that a
-      rational agent should bet as though the branch weights were probabilities, are
-      ingenious and contested. That is the famous open wound of the interpretation.
+      The cost surfaces at probability. If everything happens, you can ask what it can
+      mean that one outcome was more probable than another. Counting branches gives the
+      wrong answer, as a measurement with a seventy percent outcome and a thirty percent
+      outcome produces two branches and not seven and three. The decision-theoretic
+      repairs, which argue that a rational agent should bet as though the branch weights
+      were probabilities, are ingenious and contested, and that's the famous open wound of
+      the interpretation.
     in_csd: >
-      CSD is single-trajectory, and this is a settled commitment recorded in the programme's
-      non-goals rather than an open question to be revisited. There is one microstate, one
-      complete state of the world, one history and one outcome. The outcomes that did not
-      occur are regions of the space of descriptions that the trajectory did not enter;
-      nowhere is there a branch in which they happened.
+      CSD is single-trajectory, and this is a settled commitment recorded in the
+      programme's non-goals rather than an open question to be revisited. There's one
+      microstate, one complete state of the world, one history and one outcome. The
+      outcomes that didn't occur are regions of the space of descriptions the trajectory
+      didn't enter, and nowhere is there a branch in which they happened.
 
       The contrast over probability is the instructive one. Everett's weight problem, the
       question of why observed frequencies match the branch amplitudes, the numbers the
-      formalism attaches to each branch, does not arise here in that form, because there is
+      formalism attaches to each branch, doesn't arise here in that form, because there's
       always a definite state and probability expresses ignorance about it. The question
       becomes which measure weights the regions, where a measure is a rule that assigns a
-      size to each set of states. That question has a proved answer: the unique measure left
-      unchanged by the symmetry of the state space. Where the Everettian literature argues
-      decision theory, this programme points at a uniqueness theorem. This is a positional
-      entry; no theorem asserts it.
+      size to each set of states, and that question has a proved answer, the unique
+      measure left unchanged by the symmetry of the state space. Where the Everettian
+      literature argues decision theory, this programme points at a uniqueness theorem.
+      This is a positional entry, and no theorem asserts it.
     mathematical: >
-      No formal content: the corpus contains no theorem about the rival itself.
+      There's no formal content, as the corpus contains no theorem about the rival itself.
 
-      The formal contrast: outcome weights in CSD are volume ratios on one constraint
-      surface, so the measure problem is that of identifying a measure on a single space,
-      discharged by uniqueness under symmetry, rather than that of justifying a weighting
-      across many worlds, which is where Everettian effort concentrates.
+      The formal contrast is that outcome weights in CSD are volume ratios on one
+      constraint surface, so the measure problem is that of identifying a measure on a
+      single space, discharged by uniqueness under symmetry, rather than that of
+      justifying a weighting across many worlds, which is where Everettian effort
+      concentrates.
     term: Many-Worlds interpretation
     status: definition
     source: curated
@@ -4367,46 +4386,50 @@ entries:
 
   - slug: bohmian-mechanics
     hook: >
-      Bohmian mechanics is CSD's nearest neighbour: deterministic, with definite states, and
-      openly non-local. The dispute between them is over where the probabilities come from.
+      Bohmian mechanics is CSD's nearest neighbour, deterministic, with definite states,
+      and openly non-local, and the dispute between them is over where the probabilities
+      come from.
     layman: >
       The question Bohm settled in 1952 was whether a deterministic account of quantum
       mechanics is possible at all, one in which the present state of the world fixes the
-      future by law, with no randomness. The folklore of the time, leaning on von Neumann's
-      flawed impossibility proof, said it could not be done. Bohm answered by construction:
-      he wrote one down.
+      future by law, with no randomness. The folklore of the time, leaning on von
+      Neumann's flawed impossibility proof, said it couldn't be done, and Bohm answered by
+      construction, as he wrote one down.
 
-      In his theory particles have definite positions at all times, and a wave, evolving by
-      the ordinary Schrodinger equation, guides them. Every quantum prediction comes out
-      exactly. The price is explicit non-locality: each particle's guidance depends
+      In his theory particles have definite positions at all times, and a wave, evolving
+      by the ordinary Schrodinger equation, guides them, so every quantum prediction comes
+      out exactly. The price is explicit non-locality, as each particle's guidance depends
       instantaneously on where all the others are, across any distance. Bell, who admired
-      the theory, showed that this price is not Bohm's clumsiness but everyone's obligation,
-      since any account that reproduces the quantum predictions must pay it in some form.
+      the theory, showed that this price isn't Bohm's clumsiness but everyone's
+      obligation, since any account that reproduces the quantum predictions must pay it in
+      some form.
 
       Bohmian mechanics remains the standing counterexample to every claim that quantum
-      mechanics rules out determinism. Whatever else is true, that claim is dead.
+      mechanics rules out determinism, so whatever else is true, that claim is dead.
     in_csd: >
-      This is CSD's closest relative, and the family resemblance is real: determinism, a
-      definite underlying state, non-locality accepted with open eyes, and probabilities
-      that express ignorance of the exact state rather than randomness in the world. A
-      reader placing CSD on the map of interpretations should put it nearest here.
+      This is CSD's closest relative, and the family resemblance is real, with
+      determinism, a definite underlying state, non-locality accepted with open eyes, and
+      probabilities that express ignorance of the exact state rather than randomness in
+      the world. A reader placing CSD on the map of interpretations should put it nearest
+      here.
 
-      The differences concern what exists, and on one point they are sharp. Bohm has a dual
-      ontology, a physical guiding wave together with particle positions. CSD has one
-      object, the constraint surface, and demotes the quantum state to epistemic
-      bookkeeping, a summary of what is known rather than a thing in the world; nothing
+      The differences concern what exists, and on one point they're sharp. Bohm has a dual
+      ontology, a physical guiding wave together with particle positions, while CSD has
+      one object, the constraint surface, and demotes the quantum state to epistemic
+      bookkeeping, a summary of what's known rather than a thing in the world, so nothing
       guides anything. The probability postulates also differ in kind. Bohmian statistics
       require the quantum equilibrium hypothesis, an assumed initial distribution of
-      particle positions, possibly one that the dynamics relaxes into, whereas CSD's measure
-      is forced by a symmetry theorem. Where Bohmians must defend an initial condition, CSD
-      points at uniqueness. That is the standing objection to Bohm that this programme
-      claims to escape.
+      particle positions, possibly one the dynamics relaxes into, whereas CSD's measure is
+      forced by a symmetry theorem, so where Bohmians must defend an initial condition CSD
+      points at uniqueness. That's the standing objection to Bohm this programme claims to
+      escape.
     mathematical: >
-      No formal content in the corpus about the rival itself.
+      There's no formal content in the corpus about the rival itself.
 
-      The shared formal shape: both derive probabilities from a measure on an underlying
-      state space rather than postulating the Born rule, so both owe an account of the
-      measure, and the accounts differ (assumed equilibrium there, forced uniqueness here).
+      The shared formal shape is that both derive probabilities from a measure on an
+      underlying state space rather than postulating the Born rule, so both owe an account
+      of the measure, and the accounts differ (assumed equilibrium there, forced
+      uniqueness here).
     term: Bohmian mechanics
     status: definition
     source: curated
