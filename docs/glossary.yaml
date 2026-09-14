@@ -7990,53 +7990,53 @@ entries:
   # -------------------------------------------------------------------------
 
   - slug: quantum-fourier-transform
-    reviewed: 2026-08-29
+    reviewed: 2026-09-14
     hook: >
       The quantum Fourier transform runs Fourier's transform as a single reversible motion
-      of a quantum register: it is the lens that turns hidden periods and phases into
+      of a quantum register, and it's the lens that turns hidden periods and phases into
       outcomes a measurement can land on.
     layman: >
-      Start with the classical tool. A Fourier transform takes a signal and re-expresses it
-      as a mixture of regular oscillations, reporting which frequencies are present and how
-      strongly. The discrete version does the same for a finite list of numbers and is the
-      workhorse of signal processing: feed it a list that repeats with some period, and its
-      output piles up at the frequencies of that period.
+      Start with the classical tool. A Fourier transform takes a signal and re-expresses
+      it as a mixture of regular oscillations, reporting which frequencies are present and
+      how strongly, and the discrete version does the same for a finite list of numbers
+      and is the workhorse of signal processing, so if you feed it a list that repeats
+      with some period its output piles up at the frequencies of that period.
 
       Now the quantum problem. A quantum register holds an amplitude for each of its
-      possible readings: a number whose squared size gives the probability of that reading,
-      and whose angle, called its phase, is invisible to any single measurement. Quantum
-      interference only helps if the structure you care about, a repeating period or a
-      hidden phase, can be steered onto readings a measurement actually produces. You need
-      a lens that focuses spread-out regularity into sharp peaks.
+      possible readings, a number whose squared size gives the probability of that
+      reading, and whose angle, called its phase, is invisible to any single measurement.
+      Quantum interference only helps if the structure you care about, a repeating period
+      or a hidden phase, can be steered onto readings a measurement actually produces, so
+      you need a lens that focuses spread-out regularity into sharp peaks.
 
-      The quantum Fourier transform is that lens. It is the same discrete transform,
+      The quantum Fourier transform is that lens. It's the same discrete transform,
       executed as one physical evolution of the register rather than as arithmetic on a
-      list of numbers. Feed it a state whose amplitudes repeat with some period and the
-      output concentrates on the frequencies of that period, where a measurement finds
-      them. Shor's algorithm is the famous customer: load a sequence from modular
+      list of numbers, so if you feed it a state whose amplitudes repeat with some period
+      the output concentrates on the frequencies of that period, where a measurement finds
+      them. Shor's algorithm is the famous customer, as you load a sequence from modular
       arithmetic, apply the transform, and the period that encodes the factors stands out
       like a struck bell.
     in_csd: >
       The transform is a library primitive in the corpus, kept deliberately free of CSD
-      content so that an outside project can import it. It is stated for a register with
-      any number of levels, not only powers of two, so it is directly the discrete Fourier
+      content so an outside project can import it. It's stated for a register with any
+      number of levels and not only powers of two, so it's directly the discrete Fourier
       transform, and the qubit case is an instance. Its unitarity, the property of being a
       reversible, length-preserving change of the register, which is what any physical
-      evolution must be, is proved from the orthogonality of the roots of unity: a
-      geometric series, nothing deeper.
+      evolution must be, is proved from the orthogonality of the roots of unity, which is
+      a geometric series and nothing deeper.
 
       The algorithm witnesses that need it, Shor's algorithm and phase estimation, consume
-      it. The standing disclaimer for the algorithm layer applies: these results rest on
-      the programme's unitary-evolution pillar and do not support it or the foundations;
-      they mark the scope of what the library can express.
+      it. The standing disclaimer for the algorithm layer applies, as these results rest
+      on the programme's unitary-evolution pillar and don't support it or the foundations,
+      and they mark the scope of what the library can express.
     mathematical: >
-      A Cat-1 (CSD-free) library primitive: F j k = (1/sqrt N) omega^{jk} with
-      omega = exp(2 pi i / N) a primitive N-th root of unity. Unitarity F^H F = 1 is the
+      A Cat-1 (CSD-free) library primitive, F j k = (1/sqrt N) omega^{jk} with omega =
+      exp(2 pi i / N) a primitive N-th root of unity. Unitarity F^H F = 1 is the
       orthogonality sum over k of zeta^k = N [zeta = 1], closed by the geometric series
       (qft_unitary).
 
-      Matrix level only: the corpus states the transform as an N x N unitary and proves its
-      algebra; no gate-level circuit decomposition is claimed.
+      It's matrix level only, as the corpus states the transform as an N x N unitary and
+      proves its algebra, and no gate-level circuit decomposition is claimed.
     person: >
       Joseph Fourier (1768-1830) was an orphan from Auxerre who taught at the Ecole
       Polytechnique, governed Lower Egypt under Napoleon, and administered the Isere
@@ -8044,9 +8044,9 @@ entries:
       theory of heat. His claim that arbitrary functions decompose into sines scandalised
       Lagrange and became the spine of applied mathematics anyway.
 
-      The quantum version arrived with Shor's 1994 paper and its predecessors: the insight
-      that the transform's butterfly structure makes it exponentially cheap as a quantum
-      circuit, which is exactly what period-finding needed.
+      The quantum version arrived with Shor's 1994 paper and its predecessors, with the
+      insight that the transform's butterfly structure makes it exponentially cheap as a
+      quantum circuit, which is exactly what period-finding needed.
     term: quantum Fourier transform
     eponyms: [Fourier]
     status: proved-in-corpus
@@ -8059,56 +8059,57 @@ entries:
         url: https://en.wikipedia.org/wiki/Quantum_Fourier_transform
 
   - slug: phase-estimation
-    reviewed: 2026-08-29
+    reviewed: 2026-09-14
     hook: >
-      Phase estimation, the workhorse subroutine of quantum computing, carries a guarantee:
-      read the dial at the nearest tick and you are right at least four divided by pi
-      squared of the time, a little over forty percent, however fine the dial.
+      Phase estimation, the workhorse subroutine of quantum computing, carries a
+      guarantee, as if you read the dial at the nearest tick you're right at least four
+      divided by pi squared of the time, a little over forty percent, however fine the
+      dial.
     layman: >
-      A quantum computation's answer often arrives as a phase. Every amplitude in a quantum
-      state is a number with a size and an angle; the angle is its phase, and no direct
-      look at the state reveals it, because probabilities depend only on sizes. The task is
-      to read an angle you cannot see, using a register with finitely many dial positions.
+      A quantum computation's answer often arrives as a phase. Every amplitude in a
+      quantum state is a number with a size and an angle, the angle is its phase, and no
+      direct look at the state reveals it, because probabilities depend only on sizes, so
+      the task is to read an angle you can't see, using a register with finitely many dial
+      positions.
 
       Phase estimation is the reading procedure. Apply the operation whose phase you want
       repeatedly, with the number of repetitions controlled by the position of the
-      register, so that the unknown angle winds a different number of times into each
-      position. Then run the quantum Fourier transform backwards. The interference between
-      the windings makes the amplitude concentrate at the dial position closest to the true
-      angle. If the angle sits exactly on a tick, you read it with certainty.
+      register, so the unknown angle winds a different number of times into each position,
+      and then run the quantum Fourier transform backwards. The interference between the
+      windings makes the amplitude concentrate at the dial position closest to the true
+      angle, and if the angle sits exactly on a tick you read it with certainty.
 
       Usually the angle sits between ticks, and the textbook promise is that the nearest
       tick still comes up with probability at least four divided by pi squared, a little
       over forty percent, whatever the size of the register. That constant comes from the
       Dirichlet kernel, the standard formula for how a sum of evenly spaced oscillations
-      concentrates. A fixed floor is what makes the subroutine composable: whatever
+      concentrates, and a fixed floor is what makes the subroutine composable, as whatever
       consumes the reading can budget for a guaranteed rate of success.
     in_csd: >
       Both halves of the textbook result are theorems in the corpus, in the CSD-free
-      library tree where an outside project can import them: the exact case, in which an
+      library tree where an outside project can import them, the exact case, in which an
       angle that sits on a tick is read with certainty by inverting the Fourier transform,
       and the fixed floor of four divided by pi squared for an arbitrary angle.
 
       The result was first proved inside the corpus's development of Shor's algorithm and
       later extracted into a module of its own, once it was noticed that its statements
       never mention orders or modular arithmetic. The module is generic in the register
-      size, and Shor's order-finding consumes it. The standing disclaimer for the algorithm
-      layer applies: these results rest on the programme's unitary-evolution pillar and do
-      not support it or the foundations.
+      size, and Shor's order-finding consumes it. The standing disclaimer for the
+      algorithm layer applies, as these results rest on the programme's unitary-evolution
+      pillar and don't support it or the foundations.
     mathematical: >
-      On the T-level counting register, the phase state (1/sqrt T) sum over x of
-      e^{2 pi i phi x} |x> read by the inverse QFT at index c has amplitude the Dirichlet
-      sum (1/T) sum over x of e^{2 pi i (phi - c/T) x}; the geometric series closes it and
-      the norm reduces to T^{-2} sin^2(pi delta T) / sin^2(pi delta) with
-      delta = phi - c/T. On resonance the probability is one (phase_estimation_exact, an
-      inverse-QFT inversion).
+      On the T-level counting register, the phase state (1/sqrt T) sum over x of e^{2 pi i
+      phi x} |x> read by the inverse QFT at index c has amplitude the Dirichlet sum (1/T)
+      sum over x of e^{2 pi i (phi - c/T) x}, the geometric series closes it, and the norm
+      reduces to T^{-2} sin^2(pi delta T) / sin^2(pi delta) with delta = phi - c/T. On
+      resonance the probability is one (phase_estimation_exact, an inverse-QFT inversion).
 
-      For |delta| <= 1/(2T), Jordan's inequality bounds the numerator below and
-      |sin t| <= |t| the denominator above, giving probability at least 4/pi^2 at the
-      closest index (phase_estimation_lower_bound; Nielsen and Chuang section 5.2). The
-      module lives in the Cat-1 tree, extracted in 2026 from the Shor development, and
-      Shor's order-finding consumes it at phase s/r. Single-phase statement only: a
-      consumer racing several eigenvalue branches must control its own cross-terms.
+      For |delta| <= 1/(2T), Jordan's inequality bounds the numerator below and |sin t| <=
+      |t| the denominator above, giving probability at least 4/pi^2 at the closest index
+      (phase_estimation_lower_bound, Nielsen and Chuang section 5.2). The module lives in
+      the Cat-1 tree, extracted in 2026 from the Shor development, and Shor's order-
+      finding consumes it at phase s/r. It's a single-phase statement only, so a consumer
+      racing several eigenvalue branches must control its own cross-terms.
     term: phase estimation
     status: proved-in-corpus
     lean:
@@ -8121,52 +8122,52 @@ entries:
 
   - slug: simon-algorithm
     hook: >
-      Simon's algorithm was the exponential separation that convinced Shor: a hidden
+      Simon's algorithm was the exponential separation that convinced Shor, as a hidden
       bitwise mask, unfindable classically without exponential work, falls to a handful of
       quantum queries and some linear algebra.
     layman: >
-      Imagine a black box that computes a function of bit strings: you may feed it inputs
-      and read the outputs, but not look inside. The function repeats itself under a hidden
-      mask: two inputs give the same output exactly when they differ by a secret string,
-      meaning that one is obtained from the other by flipping the bits where the secret has
-      ones. The task is to find the secret. Classically all you can do is hunt for a
-      collision, two inputs with the same output, and the same counting that governs shared
-      birthdays in a crowd says that this costs a number of queries growing exponentially
-      with the length of the strings.
+      Imagine a black box that computes a function of bit strings, so you may feed it
+      inputs and read the outputs but not look inside. The function repeats itself under a
+      hidden mask, so two inputs give the same output exactly when they differ by a secret
+      string, meaning one is obtained from the other by flipping the bits where the secret
+      has ones, and the task is to find the secret. Classically all you can do is hunt for
+      a collision, two inputs with the same output, and the same counting that governs
+      shared birthdays in a crowd says this costs a number of queries growing
+      exponentially with the length of the strings.
 
       Simon's procedure queries the box once with the register in superposition, holding
       every input at once, then measures in a way that asks about interference patterns
       across inputs rather than about any single input. Each run hands you one random
-      linear equation that the secret must satisfy. About as many runs as the secret has
-      bits, followed by solving those simultaneous equations, and the secret is yours.
+      linear equation the secret must satisfy, so after about as many runs as the secret
+      has bits, followed by solving those simultaneous equations, the secret is yours.
 
       It was the first exponential separation between quantum and classical computation
       for a promise problem, one whose input is guaranteed in advance to have the required
-      structure. Its direct descendant is famous: Shor read Simon's paper and asked what
-      the same trick does to periods that are arithmetic rather than bitwise.
+      structure. Its direct descendant is famous, as Shor read Simon's paper and asked
+      what the same trick does to periods that are arithmetic rather than bitwise.
     in_csd: >
       Simon's algorithm is one of the corpus's algorithm witnesses, in the family that
-      works by querying an oracle between two layers of Hadamard gates, beside
-      Deutsch-Jozsa and Bernstein-Vazirani. The standing disclaimer applies: witnesses mark
-      the scope of what the library can express; they do not support the foundations.
+      works by querying an oracle between two layers of Hadamard gates, beside Deutsch-
+      Jozsa and Bernstein-Vazirani. The standing disclaimer applies, as witnesses mark the
+      scope of what the library can express and don't support the foundations.
 
-      What is proved is the per-outcome content of one round, starting from the state left
-      after the query and a measurement of the output register: an equal superposition of
-      the two inputs that share the observed output. Outcomes that are not orthogonal to
+      What's proved is the per-outcome content of one round, starting from the state left
+      after the query and a measurement of the output register, an equal superposition of
+      the two inputs that share the observed output. Outcomes that aren't orthogonal to
       the secret, meaning those whose bitwise parity against the secret is odd, have
       probability zero, and every orthogonal outcome carries the same probability. The
       classical post-processing, collecting equations and solving them, is stated as the
-      reading of the result, not re-verified.
+      reading of the result and not re-verified.
     mathematical: >
       After the oracle query and a second-register measurement, the first register is a
-      coset state |x0> + |x0 + s>; the Hadamard transform gives outcome y the amplitude
-      (1/sqrt 2)^{n+1} (-1)^{<x0,y>} (1 + (-1)^{<s,y>}), which vanishes unless <s,y> = 0
-      mod 2 and is otherwise uniform of squared norm 2/2^n. The corpus proves both halves:
-      outcomes with <s,y> = 1 have probability zero (simon_orthogonal), and every outcome
-      with <s,y> = 0 carries the same probability (simon_uniform).
+      coset state |x0> + |x0 + s>, and the Hadamard transform gives outcome y the
+      amplitude (1/sqrt 2)^{n+1} (-1)^{<x0,y>} (1 + (-1)^{<s,y>}), which vanishes unless
+      <s,y> = 0 mod 2 and is otherwise uniform of squared norm 2/2^n. The corpus proves
+      both halves, as outcomes with <s,y> = 1 have probability zero (simon_orthogonal),
+      and every outcome with <s,y> = 0 carries the same probability (simon_uniform).
 
-      So each round samples uniformly from the subspace orthogonal to s; n - 1 independent
-      samples determine s by linear algebra over F_2.
+      So each round samples uniformly from the subspace orthogonal to s, and n - 1
+      independent samples determine s by linear algebra over F_2.
     person: >
       Daniel Simon proved the separation in 1993 while at the Universite de Montreal. The
       paper was initially rejected before appearing at FOCS 1994, in the same conference
@@ -8183,45 +8184,48 @@ entries:
   - slug: bernstein-vazirani
     hook: >
       A hidden string of bits costs one classical question per bit, or exactly one quantum
-      question in total: the Bernstein-Vazirani algorithm is the cleanest single-query win
-      the field has.
+      question in total, so the Bernstein-Vazirani algorithm is the cleanest single-query
+      win the field has.
     layman: >
       An oracle holds a secret string of bits and, for any input string you send, returns
-      a single bit: the parity, meaning whether the number of positions where both your
+      a single bit, the parity, meaning whether the number of positions where both your
       input and the secret have a one is odd or even. Classically each query buys you one
       bit of the secret, so a secret of a given length costs that many queries, and no
       cleverness helps.
 
       Bernstein and Vazirani ask once. Prepare the uniform superposition, the register
-      holding every possible input at once with equal weight. Let the oracle act, so that
-      it writes each parity into the sign of the corresponding amplitude rather than into a
-      separate output. Then undo the superposition. The interference is total: the register
-      reads the secret string itself, with certainty, every time.
+      holding every possible input at once with equal weight, let the oracle act, so it
+      writes each parity into the sign of the corresponding amplitude rather than into a
+      separate output, and then undo the superposition. The interference is total, so the
+      register reads the secret string itself, with certainty, every time.
 
-      No probability, no repetition, no post-processing. One query, one answer.
+      There's no probability, no repetition and no post-processing, so it's one query and
+      one answer.
     in_csd: >
       Bernstein-Vazirani is an algorithm witness in the same family as Deutsch-Jozsa and
       Simon, an oracle between two layers of Hadamard gates, and the corpus proves the
-      strong version: the full circuit's output is concentrated entirely on the secret
-      string, that outcome having probability one and every other outcome probability
-      zero. Unlike the reduced analysis of Simon's algorithm, this is the complete circuit,
-      superposition, oracle and undoing, with no measurement reduction along the way.
+      strong version, that the full circuit's output is concentrated entirely on the
+      secret string, with that outcome having probability one and every other outcome
+      probability zero. Unlike the reduced analysis of Simon's algorithm, this is the
+      complete circuit, superposition, oracle and undoing, with no measurement reduction
+      along the way.
 
-      The standing disclaimer applies as ever: the algorithms consume the programme's
-      unitary-evolution pillar; they do not support the foundations.
+      The standing disclaimer applies as ever, as the algorithms consume the programme's
+      unitary-evolution pillar and don't support the foundations.
     mathematical: >
       The circuit is H^n then the phase oracle |x> to (-1)^{<a,x>} |x> then H^n, on |0^n>.
-      The output amplitude at y is (1/2^n) sum over x of (-1)^{<y+a, x>}, and the character
-      sum reduces to 2^n [y = a], the Kronecker delta. The corpus proves outcome a with
-      probability one (bv_certain) and every other outcome zero (bv_zero).
+      The output amplitude at y is (1/2^n) sum over x of (-1)^{<y+a, x>}, and the
+      character sum reduces to 2^n [y = a], the Kronecker delta. The corpus proves outcome
+      a with probability one (bv_certain) and every other outcome zero (bv_zero).
 
-      The content is one orthogonality of characters over F_2^n; the algorithm is the
-      observation that a single physical query evaluates all the parities in superposition.
+      The content is one orthogonality of characters over F_2^n, and the algorithm is the
+      observation that a single physical query evaluates all the parities in
+      superposition.
     person: >
       Ethan Bernstein and Umesh Vazirani published the algorithm inside their 1993 STOC
       paper on quantum complexity theory, the paper that defined BQP and made quantum
       computation a complexity class rather than a curiosity. Vazirani, at Berkeley, went
-      on to shape much of the field's theory; Bernstein was his doctoral student.
+      on to shape much of the field's theory, and Bernstein was his doctoral student.
     term: Bernstein-Vazirani algorithm
     eponyms: [Bernstein, Vazirani]
     status: standard-mathematics
@@ -8233,24 +8237,25 @@ entries:
   - slug: swap-test
     hook: >
       The swap test measures how alike two quantum states are without learning anything
-      about what either one is: a comparison that keeps both secrets.
+      about what either one is, so it's a comparison that keeps both secrets.
     layman: >
       Two devices each hand you a quantum state, and you want to know whether they agree.
       Measuring either state disturbs it and reveals only a little about it, and comparing
-      the two lists of amplitudes directly is not an operation nature offers.
+      the two lists of amplitudes directly isn't an operation nature offers.
 
       The swap test threads one extra qubit, called an ancilla, through both states. Put
-      the ancilla into a superposition of its two readings. In the branch where it reads
-      one, swap the two states; in the other branch, leave them alone. Then close the
-      superposition so that the two branches interfere, and read the ancilla. If the two
-      states are identical, the swap changed nothing, and the ancilla reads zero every
-      time. If the states are orthogonal, meaning perfectly distinguishable, the ancilla is
-      a fair coin. In between, the bias of the coin measures the overlap of the two states,
-      the standard gauge of their resemblance, which runs from zero for perfectly
-      distinguishable states to one for identical ones.
+      the ancilla into a superposition of its two readings, and in the branch where it
+      reads one swap the two states while in the other branch you leave them alone, then
+      close the superposition so the two branches interfere, and read the ancilla. If the
+      two states are identical, the swap changed nothing, and the ancilla reads zero every
+      time, and if the states are orthogonal, meaning perfectly distinguishable, the
+      ancilla is a fair coin. In between, the bias of the coin measures the overlap of the
+      two states, the standard gauge of their resemblance, which runs from zero for
+      perfectly distinguishable states to one for identical ones.
 
-      Repeat as often as you like: the overlap is estimated to any accuracy, and neither
-      state is ever identified. It is the standard likeness-meter of quantum information.
+      Repeat as often as you like and the overlap is estimated to any accuracy, while
+      neither state is ever identified. It's the standard likeness-meter of quantum
+      information.
     in_csd: >
       The swap test is the witness that opens the corpus's ancilla-interferometry family,
       the algorithms that read a quantity off the interference of a single helper qubit,
@@ -8259,16 +8264,16 @@ entries:
       the squared overlap of the two states, with the identical-state and orthogonal-state
       readings as corollaries.
 
-      The standing disclaimer applies: the algorithms consume the programme's
-      unitary-evolution pillar; they do not support the foundations.
+      The standing disclaimer applies, as the algorithms consume the programme's unitary-
+      evolution pillar and don't support the foundations.
     mathematical: >
-      H on the ancilla, controlled swap, H again, on |0> tensor psi tensor phi; the
+      H on the ancilla, controlled swap, H again, on |0> tensor psi tensor phi, and the
       ancilla-zero marginal is (1/4) times the squared norm of psi tensor phi + phi tensor
-      psi, and the cross term <psi tensor phi, phi tensor psi> = |<psi, phi>|^2 closes it:
-      P(0) = (1 + |<psi, phi>|^2)/2 exactly (swap_test_prob).
+      psi, so the cross term <psi tensor phi, phi tensor psi> = |<psi, phi>|^2 closes it,
+      giving P(0) = (1 + |<psi, phi>|^2)/2 exactly (swap_test_prob).
 
-      P(0) = 1 iff the states coincide up to phase; P(0) = 1/2 iff they are orthogonal; the
-      estimator is quadratic in the overlap, which is why it reveals magnitude and not
+      P(0) = 1 iff the states coincide up to phase, P(0) = 1/2 iff they're orthogonal, and
+      the estimator is quadratic in the overlap, which is why it reveals magnitude and not
       phase.
     term: swap test
     status: standard-mathematics
@@ -8279,46 +8284,47 @@ entries:
 
   - slug: hadamard-test
     hook: >
-      The Hadamard test turns a matrix element, a complex number buried inside an operator,
-      into the bias of a single coin.
+      The Hadamard test turns a matrix element, a complex number buried inside an
+      operator, into the bias of a single coin.
     layman: >
       Quantum algorithms constantly need expectation values. An operator is a
       transformation of a quantum state, a rotation of it, say, and its expectation value
       in a given state is the number you get by comparing the state with its transformed
-      version: how much of the original survives, and with what phase. That number lives
-      in the amplitudes, and amplitudes are not things a measurement returns.
+      version, how much of the original survives and with what phase. That number lives in
+      the amplitudes, and amplitudes aren't things a measurement returns.
 
       The Hadamard test converts the number into a coin. One helper qubit, an ancilla, is
-      put into a superposition of its two readings and controls whether the operator acts:
-      in one branch it does, in the other it does not. Closing the superposition makes the
-      two histories interfere, and the ancilla's bias towards reading zero is exactly the
-      real part of the expectation value. A complex number has a real part and an
-      imaginary part, and a small phase adjustment on the ancilla before the final step
+      put into a superposition of its two readings and controls whether the operator acts,
+      so in one branch it does and in the other it doesn't. Closing the superposition
+      makes the two histories interfere, and the ancilla's bias towards reading zero is
+      exactly the real part of the expectation value. A complex number has a real part and
+      an imaginary part, and a small phase adjustment on the ancilla before the final step
       reads the imaginary part instead.
 
-      Flip the coin enough times and the number emerges. It is the parent trick behind the
+      Flip the coin enough times and the number emerges. It's the parent trick behind the
       swap test and behind half of the variational quantum algorithms.
     in_csd: >
       The Hadamard test is the parent witness of the corpus's ancilla-interferometry
       family, the algorithms that read a quantity off the interference of a single helper
-      qubit. Three facts are proved: the probability that the ancilla reads zero is exactly
-      one half plus half the real part of the expectation value; the probability of reading
-      one is the complement; and the difference between the two is exactly the real part
-      itself. A fourth theorem recovers the swap test as the instance in which the operator
-      is the swap of two registers, tying parent to child.
+      qubit. Three facts are proved, that the probability the ancilla reads zero is
+      exactly one half plus half the real part of the expectation value, that the
+      probability of reading one is the complement, and that the difference between the
+      two is exactly the real part itself. A fourth theorem recovers the swap test as the
+      instance in which the operator is the swap of two registers, tying parent to child.
 
-      The standing disclaimer applies: the algorithms consume the programme's
-      unitary-evolution pillar; they do not support the foundations.
+      The standing disclaimer applies, as the algorithms consume the programme's unitary-
+      evolution pillar and don't support the foundations.
     mathematical: >
-      H on the ancilla, controlled-U, H again, on |0> tensor psi: the ancilla marginals are
-      (1 plus-or-minus Re<psi, U psi>)/2. The corpus proves P(0) = (1 + Re<psi, U psi>)/2
-      (hadamard_test_prob), the complementary outcome, and the sign reading
-      P(0) - P(1) = Re<psi, U psi> (hadamard_test_prob_diff). The estimator is linear in
-      the operator, which is what makes it the general-purpose expectation-value primitive.
+      H on the ancilla, controlled-U, H again, on |0> tensor psi, and the ancilla
+      marginals are (1 plus-or-minus Re<psi, U psi>)/2. The corpus proves P(0) = (1 +
+      Re<psi, U psi>)/2 (hadamard_test_prob), the complementary outcome, and the sign
+      reading P(0) - P(1) = Re<psi, U psi> (hadamard_test_prob_diff). The estimator is
+      linear in the operator, which is what makes it the general-purpose expectation-value
+      primitive.
 
-      The corpus also closes the family loop: at U the swap on a doubled system the test's
-      bias reproduces the swap test's (hadamard_test_swap_closed), tying parent to child in
-      one theorem.
+      The corpus also closes the family loop, as at U the swap on a doubled system the
+      test's bias reproduces the swap test's (hadamard_test_swap_closed), tying parent to
+      child in one theorem.
     term: Hadamard test
     status: standard-mathematics
     related: [swap-test, phase-estimation, deutsch-jozsa, bernstein-vazirani, amplitude-estimation]
