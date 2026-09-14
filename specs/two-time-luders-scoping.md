@@ -115,6 +115,13 @@ with the dynamical Born.
   arena ontic form (an apparatus coupled to one sector of the composite, the
   `LocalBlockBridge` line) — BACKLOG ▶ OPEN QUEUE #25 (RL-1′).
 
+*Addendum 2026-09-14 (TH5d):* a **drive between the readouts** is now in the corpus —
+`RecordLayer/DrivenTwoTime.lean` (`driveStage`, `drivenTwoStage`); at the level of record
+sectors it is the second context pulled back along the flow
+(`drivenJointRecordSector_eq`), so the generic `two_stage_joint` of this note carries it
+with no new engine. The first readout may also be in any orthonormal basis, for a mixed
+preparation (`driven_mixed_two_time_born`). The clock-glued form stays gated as above.
+
 ## Non-goals (standing scope, unchanged)
 
 Degenerate first measurements (`DegenerateLuders.lean`'s recorded open

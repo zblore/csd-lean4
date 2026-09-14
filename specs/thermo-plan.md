@@ -162,9 +162,19 @@ reversibility from unitarity); ★★ `crooks_pairwise` (`P_F(i,j)·Z₀ = P_R(j
 (`P_F(w) = P_R(−w)·e^{β(w − ΔF)}` for every real `w`) and `jarzynski_workDist`; glossary entry
 `crooks-fluctuation-theorem`; **TH5c** ETH as a hypothesis field with
 its equilibration consequence on `Equilibration.lean`'s time averages (M–L; ETH *for generic
-Hamiltonians* is random-matrix theory, listed as research); **TH5d** Jarzynski at the `Σ` level —
+Hamiltonians* is random-matrix theory, listed as research); ~~**TH5d** Jarzynski at the `Σ` level —
 Gibbs preparation measure, Schrödinger flow as the Hamiltonian flow of `⟨H⟩` (Q29(e)), two-time
-record law — the first thermodynamic consumer of the manifold Liouville theorem (M–L).
+record law — the first thermodynamic consumer of the manifold Liouville theorem (M–L)~~ **TH5d DONE
+2026-09-14** (`RecordLayer/JarzynskiRecord.lean` on the new engine `RecordLayer/DrivenTwoTime.lean`, 19 pins,
+M–L took M): ★★ `sigma_tpm_law` — the record probabilities of the driven two-stage protocol on `Σ` (Gibbs
+mixed preparation, `H₀`-energy context, drive by `U` on the sector, `H₁`-energy context) ARE `tpmLaw`, with
+no positivity hypothesis; ★★ `sigma_jarzynski`, `sigma_jarzynski_freeEnergy`, ★ `sigma_mean_work_ge_freeEnergy_sub`
+on the record probabilities; Q29(e) consumed by `sigma_jarzynski_hamiltonianFlow` (the drive as
+`IsSymplectic.hamiltonianFlow` of `−2⟨H_d⟩`). ⚠️ The manifold Liouville theorem is *not* consumed by the
+identity (Dirac preparations, transported pointwise) — the row's "first thermodynamic consumer of Liouville"
+phrasing was wrong; it is the first thermodynamic consumer of Q29(e)'s flow identification. The engine
+(`driven_mixed_two_time_born`: measure in any orthonormal basis, drive, measure in any context, for a mixed
+preparation) is reusable record-layer API — Ramsey sequences and echoes are its other instances.
 
 ## Honest residues (carried by the whole track)
 

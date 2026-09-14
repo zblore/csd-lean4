@@ -923,7 +923,7 @@ entries:
     related: [von-neumann-entropy, entropy-subadditivity, gibbs-state, klein-inequality, de-isolation, jarzynski-equality]
 
   - slug: jarzynski-equality
-    reviewed: 2026-09-13
+    reviewed: 2026-09-14
     hook: >
       Rush a system between two equilibrium conditions as violently as you like, and the
       average of a particular exponential of the work you did still returns the equilibrium
@@ -974,13 +974,19 @@ entries:
       that the mean work is at least the free energy difference, then follows from the
       convexity of the exponential function.
 
-      The theorem is stated at the level of matrices, the level at which the corpus states
-      its other thermodynamic results. On the constraint surface the two readings are records
-      of a single trajectory, the equilibrium preparation is a measure on the sector whose
-      density operator is the Gibbs state, and the driving is the Schrodinger flow, which the
-      corpus identifies with a Hamiltonian flow preserving the sector's volume. Stating the
-      equality in those terms, as a property of the two time record law, is the next step in
-      the thermodynamics track.
+      The theorem is stated twice. Once at the level of matrices, the level at which the
+      corpus states its other thermodynamic results. And once on the constraint surface
+      itself, where the two readings are records of a single trajectory: the equilibrium
+      preparation is the Gibbs state as a mixed preparation on the measurement arena, the
+      first record is made by an apparatus reading the energy levels of the starting
+      Hamiltonian, the system is then driven, its point on the surface carried along by the
+      unitary change of dynamics, which the corpus identifies with the Hamiltonian flow of the
+      energy expectation on the sector, and a second apparatus reads the energy levels of the
+      final Hamiltonian. The corpus proves that the probabilities this record dynamics assigns
+      to the pairs of readings are exactly the joint law of the matrix theorem, so the
+      equality, the free energy form and the second law hold for the record statistics as
+      they stand. Thermodynamics of a driven process is, in this programme, a statement about
+      records.
     mathematical: >
       Let H_0 and H_1 be Hermitian matrices on a finite-dimensional space, U a unitary, and
       beta an inverse temperature. The two point measurement protocol reads the energy in the
@@ -1008,6 +1014,23 @@ entries:
       over distinct eigenvalues), a closed driven system with no bath, so the work is the
       whole energy change, and the same beta at both ends. The free energy difference is
       that of the Gibbs states of H_1 and H_0 at that temperature.
+
+      The record-layer form (RecordLayer/JarzynskiRecord.lean) runs the protocol on the
+      two-stage measurement arena: the Gibbs state enters as the spectral mixture of its
+      eigenrays, the first bank is calibrated to the eigenrays of H_0, the first context reads
+      the eigenbasis of H_0, the base point is moved by U between the readouts (the pointer
+      fibre untouched), and the second context reads the eigenbasis of H_1. The theorem
+      sigma_tpm_law identifies the measure of the joint record sector with the joint law
+      above, with no positivity hypothesis since Gibbs weights are strictly positive, and
+      sigma_jarzynski, sigma_jarzynski_freeEnergy and sigma_mean_work_ge_freeEnergy_sub follow
+      by substitution. The engine is a two-time law with a drive between the readouts
+      (RecordLayer/DrivenTwoTime.lean): at the level of record sectors, driving the system by
+      a flow before the second readout is the same as reading the second context pulled back
+      along the flow, so the composed two-stage law applies unchanged. A corollary states the
+      drive as the manifold Hamiltonian flow of the Schrodinger Hamiltonian on complex
+      projective space, using the corpus's identification of that flow with the unitary
+      exp(-i tau H). The Liouville property of that flow is not used by the identity, only
+      its form.
     person: >
       Christopher Jarzynski is an American physicist. He took his doctorate at the
       University of California, Berkeley, in 1994, moved to Los Alamos National Laboratory,
@@ -1035,7 +1058,7 @@ entries:
     related: [crooks-fluctuation-theorem, gibbs-state, landauer-principle, von-neumann-entropy, canonical-typicality]
 
   - slug: crooks-fluctuation-theorem
-    reviewed: 2026-09-13
+    reviewed: 2026-09-14
     hook: >
       Run a process forwards many times and backwards many times, and the two records of
       work done cross at exactly the free energy difference. Every irreversible run is priced,

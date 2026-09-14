@@ -94,6 +94,7 @@ CsdLean4.LF6.MaxEntangledDeisolationFlow|CsdLean4.LF2.EffectGleason|header asser
 CsdLean4.LF6.SingletDeisolationFlow|CsdLean4.LF2.EffectGleason|header asserts Gleason-free
 CsdLean4.Thermo.CanonicalTypicality|CsdLean4.LF2.EffectGleason|header asserts Gleason-free
 CsdLean4.RecordLayer.GlobalRecordClosure|CsdLean4.LF2.EffectGleason|CL-011 cited as the Gleason-free Sigma-side road
+CsdLean4.RecordLayer.JarzynskiRecord|CsdLean4.LF2.EffectGleason|TH5d header asserts Gleason-free (the Sigma-level Jarzynski never reaches Busch; trace_mul_outerProduct restated for this reason)
 '
 
 fail=0

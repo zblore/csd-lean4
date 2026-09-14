@@ -819,6 +819,13 @@ isSymplectic"
 #   manyToOneSchrodingerSetup_flow_eq_hamiltonianFlow — (2026-09-12, Q29(e), LF4/SectorManifold.lean)
 #     the sector-side restatements: the general-N Schrodinger sector's projected flow / flow is the
 #     Hamiltonian flow of -2<H> (on the base; identity on the fibre). CP^n x T^2, EVEN.
+#   hamiltonianFlow_schrodinger_eq / sigma_tpm_law_hamiltonianFlow / sigma_jarzynski_hamiltonianFlow
+#     — (2026-09-14, TH5d, RecordLayer/JarzynskiRecord.lean) CONSUMERS of Q29(e), no new
+#     Hamiltonian claim: the first is hamiltonianFlow_schrodingerHamiltonian as a function equality
+#     (funext); the other two are the Sigma-level two-point-measurement law and the Jarzynski
+#     equality with the drive WRITTEN AS IsSymplectic.hamiltonianFlow of the (declared)
+#     schrodingerHamiltonian, proved by rewriting with that identification. The word names the
+#     declared object the drive is; the content is thermodynamics on the record layer. CP^n, EVEN.
 #   measurable_hamiltonianShift / hamiltonianShift_eq_zero_of_offCorridor /
 #   hamiltonianShift_eq_strokeCurve_one / isJointLift_hamiltonianShift /
 #   jointLift_hamiltonianShift_measurePreserving — (2026-09-02, RecordLayer/
@@ -902,6 +909,9 @@ hamiltonianFlow_schrodingerHamiltonian
 hamiltonianFlow_torusHamiltonian
 manyToOneSchrodingerSetup_projectedFlow_eq_hamiltonianFlow
 manyToOneSchrodingerSetup_flow_eq_hamiltonianFlow
+hamiltonianFlow_schrodinger_eq
+sigma_tpm_law_hamiltonianFlow
+sigma_jarzynski_hamiltonianFlow
 contMDiff_omega_schrodingerHamiltonian
 contMDiff_omega_torusHamiltonian
 hamiltonianField_base_eq_zero

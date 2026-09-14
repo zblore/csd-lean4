@@ -3655,4 +3655,109 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.bell_two_time_born
 
+-- TH5d (2026-09-14), part 1 -- RecordLayer/DrivenTwoTime.lean: measure, DRIVE, measure. Q25's
+-- two-stage arena had nothing happening between the readouts; driveStage Φ moves the system
+-- coordinate (registers and banks ride), drivenTwoStage = stageTwo ∘ driveStage ∘ stageOne. ★ THE
+-- REINDEXING IDENTITY drivenJointRecordSector_eq: the driven joint sector at (idx₁, Φ, idx₂) IS
+-- the undriven joint sector at (idx₁, idx₂ ∘ Φ) -- the second register's reading depends on the
+-- system only through the index (swapEvolve_register_comp), so the drive is a change of the
+-- second context and two_stage_joint applies verbatim (driven_two_stage_joint). On Σ: baseLift
+-- (a base map lifted, fibre untouched; = the corpus's U(N) action on KSigma for a unitary),
+-- ContextField.pullback with basinIndex_pullback (rfl). The mixed first stage in a ROTATED basis:
+-- mixedReadyPrep_prod_sector (any context, any bank), mixed_outcome_pos_ctx, ★
+-- spectral_born_ctx_eq_traceForm (the eigenvalue mixture of basis-b rates is Tr(ρ|b_i><b_i|)).
+-- ★★ driven_mixed_two_time_born: P(i at t₁ ∧ j at t₂) = Tr(ρ|b_i><b_i|) · c₂.rate (Φ' [b_i]) j;
+-- first_record (no retro-action). ⚠️ The drive acts on the base only; composed-map form.
+/-- info: 'CSD.RecordLayer.drivenJointRecordSector_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.drivenJointRecordSector_eq
+
+/-- info: 'CSD.RecordLayer.driven_two_stage_joint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.driven_two_stage_joint
+
+/-- info: 'CSD.RecordLayer.basinIndex_pullback' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.basinIndex_pullback
+
+/-- info: 'CSD.RecordLayer.mixedReadyPrep_prod_sector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mixedReadyPrep_prod_sector
+
+/-- info: 'CSD.RecordLayer.mixed_outcome_pos_ctx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mixed_outcome_pos_ctx
+
+/-- info: 'CSD.RecordLayer.spectral_born_ctx_eq_traceForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.spectral_born_ctx_eq_traceForm
+
+/-- info: 'CSD.RecordLayer.driven_mixed_two_time_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.driven_mixed_two_time_born
+
+/-- info: 'CSD.RecordLayer.driven_mixed_two_time_first_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.driven_mixed_two_time_first_record
+
+-- TH5d (2026-09-14), part 2 -- RecordLayer/JarzynskiRecord.lean: JARZYNSKI ON Σ. The Gibbs state as
+-- a density operator (gibbsDensity; PSD from gibbsState_posDef), its Born pairing at the energy
+-- outcome is the Gibbs weight (traceForm_gibbsDensity_energy via gibbsWeight_eq_re_born), the
+-- H₁-energy context's rate at the DRIVEN collapsed state U • [e₀ i] is the transition probability
+-- (basisContext_rate_smul via smul_mk_eq_mk + basisContext_rate_mk). ★★ sigma_tpm_law: the driven
+-- two-stage preparation (Gibbs mixed preparation, first bank calibrated to the H₀ eigenrays, first
+-- context = H₀ energy basis, drive by U on the sector, second context = H₁ energy basis) gives
+-- the joint record sector exactly tpmLaw hH₀ hH₁ U β i j -- NO positivity hypothesis (Gibbs
+-- weights are strictly positive). ★★ sigma_jarzynski (Σ P_Σ(i,j) e^{-βW} = Z₁/Z₀), ★★
+-- sigma_jarzynski_freeEnergy, ★ sigma_mean_work_ge_freeEnergy_sub (second law on Σ),
+-- sum_tpmSigmaSector, sigma_first_energy_record. Q29(e) CONSUMED: hamiltonianFlow_schrodinger_eq
+-- (the manifold Hamiltonian flow of -2<H_d> IS exp(-iτH_d) • ·, as a function), ★★
+-- sigma_tpm_law_hamiltonianFlow and ★★ sigma_jarzynski_hamiltonianFlow with the drive written as
+-- IsSymplectic.hamiltonianFlow. ⚠️ Liouville is NOT consumed by the identity (Dirac preparations;
+-- the row's "absolutely continuous density transported" phrasing is corrected in the header).
+-- Gleason-free STRUCTURALLY (check-import-negative inventory). Foundational-triple.
+/-- info: 'CSD.RecordLayer.traceForm_gibbsDensity_energy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.traceForm_gibbsDensity_energy
+
+/-- info: 'CSD.RecordLayer.basisContext_rate_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.basisContext_rate_smul
+
+/-- info: 'CSD.RecordLayer.sigma_tpm_law' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sigma_tpm_law
+
+/-- info: 'CSD.RecordLayer.sum_tpmSigmaSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_tpmSigmaSector
+
+/-- info: 'CSD.RecordLayer.sigma_first_energy_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sigma_first_energy_record
+
+/-- info: 'CSD.RecordLayer.sigma_jarzynski' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sigma_jarzynski
+
+/-- info: 'CSD.RecordLayer.sigma_jarzynski_freeEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sigma_jarzynski_freeEnergy
+
+/-- info: 'CSD.RecordLayer.sigma_mean_work_ge_freeEnergy_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sigma_mean_work_ge_freeEnergy_sub
+
+/-- info: 'CSD.RecordLayer.hamiltonianFlow_schrodinger_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianFlow_schrodinger_eq
+
+/-- info: 'CSD.RecordLayer.sigma_tpm_law_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sigma_tpm_law_hamiltonianFlow
+
+/-- info: 'CSD.RecordLayer.sigma_jarzynski_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sigma_jarzynski_hamiltonianFlow
+
 end CSD.Tests.AxiomAudit
