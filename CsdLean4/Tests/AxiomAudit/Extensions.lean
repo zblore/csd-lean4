@@ -581,6 +581,48 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.mean_work_ge_freeEnergy_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.mean_work_ge_freeEnergy_sub
 
+-- TH5b (2026-09-13), Thermo/Crooks.lean: the Crooks fluctuation theorem. The reverse protocol
+-- (Gibbs state of H_1, drive by U^*, read in the eigenbasis of H_0) has the transposed transition
+-- matrix (tpmTransition_star, microscopic reversibility) and minus the work; on every outcome
+-- pair P_F(i,j) Z_0 = P_R(j,i) Z_1 exp(beta W) (crooks_pairwise), i.e. P_F = P_R exp(beta (W -
+-- Delta F)) in TH3's free energies, with the ratio form on pairs of positive transition
+-- probability. The work distribution workDist (a probability law on the finite set of work
+-- values, sum_workDist) satisfies P_F(w) = P_R(-w) exp(beta (w - Delta F)) for every real w
+-- (crooks, reindexing the pairs along Prod.swap); Jarzynski read on the histogram
+-- (jarzynski_workDist). Foundational-triple.
+/-- info: 'CSD.Thermo.tpmUnitary_star' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.tpmUnitary_star
+
+/-- info: 'CSD.Thermo.tpmTransition_star' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.tpmTransition_star
+
+/-- info: 'CSD.Thermo.tpmWork_symm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.tpmWork_symm
+
+/-- info: 'CSD.Thermo.crooks_pairwise' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.crooks_pairwise
+
+/-- info: 'CSD.Thermo.crooks_pairwise_freeEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.crooks_pairwise_freeEnergy
+
+/-- info: 'CSD.Thermo.crooks_ratio' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.crooks_ratio
+
+/-- info: 'CSD.Thermo.workDist_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.workDist_nonneg
+
+/-- info: 'CSD.Thermo.sum_workValues_workDist_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.sum_workValues_workDist_mul
+
+/-- info: 'CSD.Thermo.sum_workDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.sum_workDist
+
+/-- info: 'CSD.Thermo.crooks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.crooks
+
+/-- info: 'CSD.Thermo.jarzynski_workDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.jarzynski_workDist
+
 -- W7 (2026-09-11), Thermo/SigmaSecondLaw.lean: TH2, data processing and TH4 instantiated on
 -- preparations under Sigma-flows (W3 barycentre + W6 lifted-flow evolution). The de-isolation
 -- channel IS the pointer-basis pinching (deisolationChannel_apply_eq_pinch); entropy is conserved

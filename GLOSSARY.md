@@ -30,6 +30,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Constraint surface](https://glossary.constraintsurfacedynamics.com/constraint-surface/) | `` | physical-postulate |
 | [Contextuality](https://glossary.constraintsurfacedynamics.com/contextuality/) | `no_compatible_global_chsh_assignment_realises_singlet` | proved-in-corpus |
 | [Copenhagen interpretation](https://glossary.constraintsurfacedynamics.com/copenhagen/) | `` | definition |
+| [Crooks fluctuation theorem](https://glossary.constraintsurfacedynamics.com/crooks-fluctuation-theorem/) | `crooks` | proved-in-corpus |
 | [De-isolation](https://glossary.constraintsurfacedynamics.com/de-isolation/) | `` | definition |
 | [Determinism](https://glossary.constraintsurfacedynamics.com/determinism/) | `` | definition |
 | [Deutsch-Jozsa algorithm](https://glossary.constraintsurfacedynamics.com/deutsch-jozsa/) | `` | standard-mathematics |

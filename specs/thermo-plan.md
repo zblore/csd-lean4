@@ -154,8 +154,13 @@ and ★★ `jarzynski_freeEnergy` (`= e^{−β(F₁ − F₀)}` in TH3's free en
 law `tpmLaw` = Gibbs weight × `‖⟨e₁ j, U e₀ i⟩‖²` shown to be the protocol's Born statistics
 (`gibbsWeight_eq_re_born`, `tpmTransition_eq`), the transition matrix doubly stochastic by unitarity
 (`sum_tpmTransition_left/right`), and Jensen's second law for the driven process
-`mean_work_ge_freeEnergy_sub` (`ΔF ≤ ⟨W⟩`); glossary entry `jarzynski-equality`; **TH5b** Crooks, the pairwise
-ratio `P_F(n,m)/P_R(m,n) = e^{β(W − ΔF)}` (S–M after TH5a); **TH5c** ETH as a hypothesis field with
+`mean_work_ge_freeEnergy_sub` (`ΔF ≤ ⟨W⟩`); glossary entry `jarzynski-equality`; ~~**TH5b** Crooks, the pairwise
+ratio `P_F(n,m)/P_R(m,n) = e^{β(W − ΔF)}` (S–M after TH5a)~~ **TH5b DONE 2026-09-13** (`Thermo/Crooks.lean`, 11 pins,
+S–M took S–M): the reverse protocol's transition matrix is the transpose (`tpmTransition_star`, microscopic
+reversibility from unitarity); ★★ `crooks_pairwise` (`P_F(i,j)·Z₀ = P_R(j,i)·Z₁·e^{βW}`), `crooks_pairwise_freeEnergy`,
+`crooks_ratio`; the work distribution `workDist` on the finite `workValues` (`sum_workDist = 1`); ★★ `crooks`
+(`P_F(w) = P_R(−w)·e^{β(w − ΔF)}` for every real `w`) and `jarzynski_workDist`; glossary entry
+`crooks-fluctuation-theorem`; **TH5c** ETH as a hypothesis field with
 its equilibration consequence on `Equilibration.lean`'s time averages (M–L; ETH *for generic
 Hamiltonians* is random-matrix theory, listed as research); **TH5d** Jarzynski at the `Σ` level —
 Gibbs preparation measure, Schrödinger flow as the Hamiltonian flow of `⟨H⟩` (Q29(e)), two-time

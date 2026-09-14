@@ -1032,7 +1032,113 @@ entries:
     lean:
       module: CsdLean4/Thermo/Jarzynski.lean
       theorem: jarzynski
-    related: [gibbs-state, landauer-principle, von-neumann-entropy, canonical-typicality]
+    related: [crooks-fluctuation-theorem, gibbs-state, landauer-principle, von-neumann-entropy, canonical-typicality]
+
+  - slug: crooks-fluctuation-theorem
+    reviewed: 2026-09-13
+    hook: >
+      Run a process forwards many times and backwards many times, and the two records of
+      work done cross at exactly the free energy difference. Every irreversible run is priced,
+      not just the average.
+    layman: >
+      The Jarzynski equality says that a particular average over fast, irreversible runs of a
+      process returns an equilibrium quantity, the free energy difference between the start
+      and the end. Crooks asked a sharper question. Not what the average is, but how likely
+      each individual value of the work is, and how that likelihood compares with the
+      likelihood of the opposite value when the same process is run in reverse.
+
+      Picture the process run forwards, from the first equilibrium condition to the second,
+      and separately run backwards, starting in the second equilibrium condition and undoing
+      the driving. In each direction the work done varies from run to run, and one can draw
+      a histogram of the values. Crooks' theorem says that the forward likelihood of doing a
+      certain amount of work, divided by the backward likelihood of recovering that same
+      amount, is the exponential of the difference between that work and the free energy
+      difference, measured in units of the thermal energy. Doing more work than the free
+      energy difference is exponentially more likely forwards than backwards; doing less is
+      exponentially rarer.
+
+      Two consequences follow at once. The two histograms cross at exactly one point, the
+      work value equal to the free energy difference, which gives experimenters a direct way
+      to read an equilibrium quantity off two sets of irreversible measurements; it was used
+      to measure the folding free energy of RNA molecules pulled apart and let go with optical
+      tweezers. And the Jarzynski equality falls out in a line, by averaging the exponential
+      of minus the work over the forward histogram and using the fact that the backward
+      histogram, like any histogram, sums to one.
+    in_csd: >
+      In this programme the forward and reverse protocols are the same reading, driving and
+      reading again, with the driving undone in between. The reading probabilities are Born
+      weights, the equilibrium weights are those of the Gibbs state derived from the
+      variational principle, and the driving is a unitary change of the dynamics. The
+      reversed driving has one decisive property: the probability of passing from an energy
+      level of the first Hamiltonian to a level of the second, forwards, equals the
+      probability of passing back, in reverse. This is microscopic reversibility, and it is a
+      consequence of the driving being unitary rather than an added assumption.
+
+      With that symmetry in hand, the theorem is a comparison of two equilibrium weights. The
+      forward run weights its starting level by the Gibbs weight of the initial Hamiltonian,
+      the reverse run weights its starting level, which is the forward run's final level, by
+      the Gibbs weight of the final Hamiltonian, and the ratio of the two is the exponential
+      of the work times the ratio of the two partition functions, which is the free energy
+      factor. The corpus states the relation on each pair of readings first, then on the
+      histogram of work values, and derives the Jarzynski equality from the histogram form as
+      a check that the two results are one.
+
+      The result says something the second law does not: the irreversibility of a single run
+      has an exact price, and the price is set by how far that run's work sits above the free
+      energy difference. On the constraint surface the reverse protocol is the time reversed
+      Schrodinger flow, itself a Hamiltonian flow that preserves the sector's volume, so both
+      directions sit inside the same volume preserving dynamics. Stating the theorem there, on
+      the two time record law, is the next step of the thermodynamics track.
+    mathematical: >
+      With the two point measurement setting of the Jarzynski entry (Hermitian H_0 and H_1
+      on a finite-dimensional space, unitary U, inverse temperature beta), the reverse
+      protocol starts in the Gibbs state of H_1, applies U^*, and reads in the eigenbasis of
+      H_0. Its transition matrix is the transpose of the forward one, because the matrix of
+      U^* between the swapped eigenbases is the adjoint of the matrix of U between the
+      original ones, and squared moduli are invariant under conjugation; its work on the pair
+      (j, i) is minus the forward work on (i, j).
+
+      The pairwise theorem is P_F(i, j) Z_0 = P_R(j, i) Z_1 exp(beta W(i, j)), equivalently
+      P_F(i, j) = P_R(j, i) exp(beta (W(i, j) - Delta F)) with Delta F = F_1 - F_0 the
+      difference of the TH3 free energies -log(Z) / beta of the two Gibbs states, and, on
+      pairs of positive transition probability, the ratio form. The proof is the cancellation
+      of the common transition probability and the comparison of the two Gibbs weights
+      exp(-beta E_0(i)) / Z_0 and exp(-beta E_1(j)) / Z_1.
+
+      The histogram form defines the work distribution P(w) as the sum of the joint
+      probabilities of the pairs whose work equals w, and states P_F(w) = P_R(-w) exp(beta
+      (w - Delta F)) for every real w. The proof reindexes the reverse pairs along the swap
+      (i, j) to (j, i), under which the reverse work condition -W = -w becomes W = w, and
+      applies the pairwise relation on each surviving term. The work distribution is a
+      probability law on the finite set of work values, and summing exp(-beta w) against it
+      gives the Jarzynski equality in histogram form.
+
+      Scope as for the Jarzynski entry: finite dimension, projective energy readings in the
+      spectral theorem's eigenbases, a closed driven system, one temperature at both ends.
+      The reverse protocol uses the same eigenbases, so no choice is hidden in the transpose.
+    person: >
+      Gavin E. Crooks took his doctorate at the University of California, Berkeley, in
+      1999, working with David Chandler on nonequilibrium statistical mechanics, and was for
+      many years at the Lawrence Berkeley National Laboratory before moving into quantum
+      computing research in industry.
+
+      The fluctuation theorem appeared in two papers: a 1998 article in the Journal of
+      Statistical Physics on free energy differences for microscopically reversible Markovian
+      systems, and the 1999 Physical Review E paper that named the entropy production
+      fluctuation theorem and showed the Jarzynski equality to be its corollary. It was
+      written while Crooks was a graduate student, in the wake of Jarzynski's 1997 equality,
+      and it sharpened that equality from an average into a statement about every value of
+      the work. Delphine Collin, Felix Ritort, Christopher Jarzynski, Steven Smith, Ignacio
+      Tinoco and Carlos Bustamante verified it in 2005 by unfolding and refolding single RNA
+      molecules and reading the folding free energy off the crossing of the two work
+      histograms.
+    term: Crooks fluctuation theorem
+    eponyms: [Crooks]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Thermo/Crooks.lean
+      theorem: crooks
+    related: [jarzynski-equality, gibbs-state, landauer-principle, von-neumann-entropy]
 
   - slug: von-neumann-entropy
     reviewed: 2026-09-13
