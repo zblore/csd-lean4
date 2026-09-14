@@ -7227,63 +7227,58 @@ entries:
   - slug: does-csd-violate-bell
     kind: question
     hook: >
-      No. Bell's theorem stands, CSD proves its own versions of it, and CSD
-      escapes its conclusion by the one route the theorem itself leaves open:
-      measurement outcomes that depend on the measurement context, paid for
-      openly.
+      No. Bell's theorem stands, CSD proves its own versions of it, and CSD escapes its
+      conclusion by the one route the theorem itself leaves open, measurement outcomes
+      that depend on the measurement context, paid for openly.
     layman: >
-      Bell's theorem is not violated by any theory that matches experiment, and
-      CSD is no exception. What the theorem forbids is a specific package: hidden
-      variables, meaning definite underlying states beneath the quantum
-      description, that are both local and context-independent. Local means
-      that a choice made at one place cannot affect an outcome at a distant
-      place. Context-independent means that a system's answer to a measurement
-      does not depend on which other measurements are performed alongside it.
-      Bell showed that any such package must obey certain numerical limits, his
-      inequalities, and quantum experiments break those limits. The theorem
-      survives that breaking; it is precisely the proof that no local,
-      context-independent package can produce what the experiments show.
+      Bell's theorem isn't violated by any theory that matches experiment, and CSD is no
+      exception. What the theorem forbids is a specific package, hidden variables, meaning
+      definite underlying states beneath the quantum description, that are both local and
+      context-independent. Local means a choice made at one place can't affect an outcome
+      at a distant place, and context-independent means a system's answer to a measurement
+      doesn't depend on which other measurements are performed alongside it. Bell showed
+      that any such package must obey certain numerical limits, his inequalities, and
+      quantum experiments break those limits. The theorem survives that breaking, as it's
+      precisely the proof that no local, context-independent package can produce what the
+      experiments show.
 
-      CSD reproduces the quantum violations, and it respects the theorem by not
-      being in the forbidden class. Its outcome assignments depend on the
-      measurement context. That is not a loophole; it is the price the theorem
-      itself names, and the programme pays it in the open.
+      CSD reproduces the quantum violations, and it respects the theorem by not being in
+      the forbidden class, as its outcome assignments depend on the measurement context.
+      That isn't a loophole, as it's the price the theorem itself names, and the programme
+      pays it in the open.
 
-      The distinctive part is that CSD does not ask you to take any of this on
-      trust. The obstruction theorems, the results that rule out the forbidden
-      package, are proved inside the corpus. So is the half that most
-      discussions skip: an explicit contextual model that actually reproduces
-      the statistics of the singlet, the maximally correlated two-particle state
-      that is the standard test case for Bell's theorem, in full.
+      The distinctive part is that CSD doesn't ask you to take any of this on trust. The
+      obstruction theorems, the results that rule out the forbidden package, are proved
+      inside the corpus, and so is the half most discussions skip, an explicit contextual
+      model that actually reproduces the statistics of the singlet, the maximally
+      correlated two-particle state that's the standard test case for Bell's theorem, in
+      full.
     in_csd: >
-      The corpus carries both directions as a single machine-checked capstone
-      result. The negative direction has two parts. No way of splitting a shared
-      space of hidden states into one part for each particle, with each part
-      deciding its own outcomes, can reproduce the singlet correlations. And no
-      single assignment of outcomes to all measurements at once, independent of
-      context, is compatible with the correlation table the model reproduces.
-      These are Bell-type obstructions proved in-house, for the whole class of
-      such models rather than for a convenient strawman.
+      The corpus carries both directions as a single machine-checked capstone result. The
+      negative direction has two parts. No way of splitting a shared space of hidden
+      states into one part for each particle, with each part deciding its own outcomes,
+      can reproduce the singlet correlations, and no single assignment of outcomes to all
+      measurements at once, independent of context, is compatible with the correlation
+      table the model reproduces. These are Bell-type obstructions proved in-house, for
+      the whole class of such models rather than for a convenient strawman.
 
-      The positive direction exhibits an explicit family of shared-context
-      outcome maps on the corpus's own arena, measurable in the sense needed for
-      probabilities to make sense, that reproduces the complete singlet table:
-      the statistics of each side alone and the correlations between the sides,
-      at every choice of settings. The model is proved to be no-signalling,
-      meaning that neither side can learn anything about the other's choice of
-      setting from its own statistics. Measurement independence, the assumption
-      that the distribution of hidden states does not depend on which settings
-      are chosen, is named as a premise and verified for the model rather than
-      quietly assumed.
+      The positive direction exhibits an explicit family of shared-context outcome maps on
+      the corpus's own arena, measurable in the sense needed for probabilities to make
+      sense, that reproduces the complete singlet table, the statistics of each side alone
+      and the correlations between the sides, at every choice of settings. The model is
+      proved to be no-signalling, meaning neither side can learn anything about the
+      other's choice of setting from its own statistics, and measurement independence, the
+      assumption that the distribution of hidden states doesn't depend on which settings
+      are chosen, is named as a premise and verified for the model rather than quietly
+      assumed.
 
-      Evading Bell is cheap until the model is on the table. The point of the
-      capstone is that the model is on the table.
+      Evading Bell is cheap until the model is on the table, and the point of the capstone
+      is that the model is on the table.
     mathematical: >
-      The capstone c1_singlet_contextual_capstone states existence and
-      obstruction in one statement. Supporting results:
-      no_product_partition_realises_singlet over arbitrary measurable spaces;
-      the GHZ and CGLMP obstructions at general dimension; remote marginal
-      invariance for both wings of the exhibited model; and the CHSH and
+      The capstone c1_singlet_contextual_capstone states existence and obstruction in one
+      statement, and the supporting results are no_product_partition_realises_singlet over
+      arbitrary measurable spaces, the GHZ and CGLMP obstructions at general dimension,
+      remote marginal invariance for both wings of the exhibited model, and the CHSH and
       Tsirelson analysis in which the inequalities sit.
 
       All of these are proved from the foundational axiom triple alone.
@@ -7295,62 +7290,56 @@ entries:
   - slug: excess-baggage
     kind: question
     hook: >
-      No. The excess-baggage theorems say that any model with real underlying
-      states beneath quantum mechanics needs a continuum of them, and CSD's
-      constraint surface is a continuum from the outset, so the requirement is
-      met before it is raised.
+      No. The excess-baggage theorems say any model with real underlying states beneath
+      quantum mechanics needs a continuum of them, and CSD's constraint surface is a
+      continuum from the outset, so the requirement is met before it's raised.
     layman: >
-      There is a family of results, Hardy's and Montina's sharpening of it, with
-      a deliberately deflating name. They say that any model which puts real
-      underlying states beneath quantum mechanics must carry more than looks
-      necessary. For a system with a fixed finite number of distinguishable
-      outcomes, no finite number of underlying states will do. You need
-      a continuum: a smoothly varying range of states, like the points of a
-      line, rather than a set you could count off. The name suggests the extra
-      states are luggage the model would rather not be carrying.
+      There's a family of results, Hardy's and Montina's sharpening of it, with a
+      deliberately deflating name. They say any model which puts real underlying states
+      beneath quantum mechanics must carry more than looks necessary, so for a system with
+      a fixed finite number of distinguishable outcomes no finite number of underlying
+      states will do, and you need a continuum, a smoothly varying range of states like
+      the points of a line, rather than a set you could count off. The name suggests the
+      extra states are luggage the model would rather not be carrying.
 
-      For most hidden-variable programmes this is a real cost, because they set
-      out to recover quantum statistics from something smaller or simpler than
-      the quantum state. For CSD it is not a cost at all, because the continuum
-      is not a concession. The constraint surface, the space of underlying
-      states, is a continuous space from the first line of the construction;
-      that is what it is. The measures that give rise to probabilities are
-      volumes on it. The theorem asks for exactly what the programme already
-      assumes.
+      For most hidden-variable programmes this is a real cost, because they set out to
+      recover quantum statistics from something smaller or simpler than the quantum state.
+      For CSD it isn't a cost at all, because the continuum isn't a concession. The
+      constraint surface, the space of underlying states, is a continuous space from the
+      first line of the construction, as that's what it is, and the measures that give
+      rise to probabilities are volumes on it, so the theorem asks for exactly what the
+      programme already assumes.
 
-      This entry exists so that the question is answered rather than left
-      hanging. A referee meeting a theory shaped like a hidden-variable theory
-      is entitled to raise excess baggage, and the answer is short.
+      This entry exists so the question is answered rather than left hanging. A referee
+      meeting a theory shaped like a hidden-variable theory is entitled to raise excess
+      baggage, and the answer is short.
     in_csd: >
-      The constraint surface is a measurable space, one on which regions can be
-      assigned sizes, carrying a finite Liouville measure, the natural volume
-      preserved by the dynamics. The sector map, which sends each underlying
-      state to the quantum state it presents, is many-to-one onto the space of
-      quantum states. Nothing in the construction attempts a finite or countable
-      space of underlying states, so the excess-baggage lower bound is satisfied
-      trivially rather than evaded.
+      The constraint surface is a measurable space, one on which regions can be assigned
+      sizes, carrying a finite Liouville measure, the natural volume preserved by the
+      dynamics. The sector map, which sends each underlying state to the quantum state it
+      presents, is many-to-one onto the space of quantum states, and nothing in the
+      construction attempts a finite or countable space of underlying states, so the
+      excess-baggage lower bound is satisfied trivially rather than evaded.
 
-      Two things this answer does not claim. It does not claim the theorem
-      supports CSD: satisfying a lower bound is not evidence for a model. And it
-      does not claim that sheer size is what makes the programme work. The
-      load-bearing structure is the fibre, the set of underlying states that
-      share one quantum state, together with its measure and the cells cut out
-      by the moment map, not the mere fact that the constraint surface has
-      uncountably many points. The excess-baggage theorems are silent about all
-      of that.
+      Two things this answer doesn't claim. It doesn't claim the theorem supports CSD, as
+      satisfying a lower bound isn't evidence for a model. And it doesn't claim sheer size
+      is what makes the programme work, as the load-bearing structure is the fibre, the
+      set of underlying states that share one quantum state, together with its measure and
+      the cells cut out by the moment map, and not the mere fact that the constraint
+      surface has uncountably many points. The excess-baggage theorems are silent about
+      all of that.
     mathematical: >
-      Hardy (2004) and Montina (2008) show that an ontic model reproducing the
-      statistics of an N-level quantum system requires an ontic state space of
-      continuum cardinality; a finite set of ontic states cannot reproduce the
-      continuum of pure-state predictions.
+      Hardy (2004) and Montina (2008) show that an ontic model reproducing the statistics
+      of an N-level quantum system requires an ontic state space of continuum cardinality,
+      so a finite set of ontic states can't reproduce the continuum of pure-state
+      predictions.
 
-      CSD's Sigma is a continuum by construction (P1 measurable constraint
-      surface, P2 finite Liouville measure), so no bound is approached from
-      below.
+      CSD's Sigma is a continuum by construction (P1 measurable constraint surface, P2
+      finite Liouville measure), so no bound is approached from below.
     term: Does the excess-baggage theorem count against CSD?
     status: definition
     source: curated
-    reviewed: 2026-09-04
+    reviewed: 2026-09-14
     external:
       - text: "Hardy, Quantum ontological excess baggage, Stud. Hist. Phil. Mod. Phys. 2004"
         url: https://doi.org/10.1016/j.shpsb.2003.12.001
@@ -7361,98 +7350,91 @@ entries:
   - slug: does-csd-conflict-with-pbr
     kind: question
     hook: >
-      No. For exactly prepared pure states, CSD satisfies the very conclusion
-      the PBR theorem argues for: two distinct states correspond to sets of
-      underlying world-states that do not overlap at all, and that is a proved
-      theorem rather than something arranged by hand.
+      No. For exactly prepared pure states, CSD satisfies the very conclusion the PBR
+      theorem argues for, as two distinct states correspond to sets of underlying world-
+      states that don't overlap at all, and that's a proved theorem rather than something
+      arranged by hand.
     layman: >
-      The Pusey-Barrett-Rudolph theorem is often summarised as "the quantum
-      state is real", which makes any programme calling the state epistemic, a
-      summary of knowledge rather than a complete description of the world, sound
-      refuted from the start. The summary is too coarse, and the coarseness is
-      exactly where the quick answer goes wrong.
+      The Pusey-Barrett-Rudolph theorem is often summarised as "the quantum state is
+      real", which makes any programme calling the state epistemic, a summary of knowledge
+      rather than a complete description of the world, sound refuted from the start. The
+      summary is too coarse, and the coarseness is exactly where the quick answer goes
+      wrong.
 
-      What PBR actually rules out is a specific class of models. In these
-      models, two distinct pure quantum states can both be knowledge about the
-      same underlying world-state, so that the sets of world-states compatible
-      with each overlap. Add an independence assumption about preparing systems
-      side by side, and the theorem shows that such overlap contradicts quantum
-      predictions. It says nothing against models in which distinct states
-      describe disjoint sets of world-states.
+      What PBR actually rules out is a specific class of models. In these models two
+      distinct pure quantum states can both be knowledge about the same underlying world-
+      state, so the sets of world-states compatible with each overlap. Add an independence
+      assumption about preparing systems side by side, and the theorem shows that such
+      overlap contradicts quantum predictions, and it says nothing against models in which
+      distinct states describe disjoint sets of world-states.
 
-      CSD is in the second camp, and the corpus proves it rather than arranging
-      it. Two distinct exactly prepared pure states correspond to distributions
-      over the underlying states with no overlap at all. So CSD does not evade
-      PBR, and PBR is not inapplicable to it: CSD lands on the side of the
-      disjointness conclusion that PBR argues for. The state still functions
-      epistemically. It summarises what a preparation fixes, and it does not
-      determine the underlying microstate. But that is a different sense of the
-      word, and the distinction between the two senses is what the whole
-      question turns on.
+      CSD is in the second camp, and the corpus proves it rather than arranging it. Two
+      distinct exactly prepared pure states correspond to distributions over the
+      underlying states with no overlap at all, so CSD doesn't evade PBR and PBR isn't
+      inapplicable to it, as CSD lands on the side of the disjointness conclusion PBR
+      argues for. The state still functions epistemically, as it summarises what a
+      preparation fixes and doesn't determine the underlying microstate, but that's a
+      different sense of the word, and the distinction between the two senses is what the
+      whole question turns on.
     in_csd: >
-      Three claims have to be kept apart, and running them together is what
-      produces the wrong answer to this question.
+      Three claims have to be kept apart, and running them together is what produces the
+      wrong answer to this question.
 
-      The first is CSD's epistemicity: the quantum state is a many-to-one,
-      incomplete coordinate on the arena, the underlying state space. The second
-      is the classification, due to Harrigan and Spekkens, in which PBR is
-      stated. An account is called psi-ontic when distinct exact pure-state
-      preparations have mutually singular ontic measures, meaning that the
-      distributions over underlying states they induce live on disjoint sets.
-      On that classification CSD's exact sharp interface, its account of
-      preparations that fix a pure state exactly, is psi-ontic, and that is a
-      machine-checked theorem. The third is finite-resolution overlap:
-      preparations that fix the state only to within a region of positive
-      volume around it, rather than exactly, provably do overlap for distinct
-      states whose regions overlap. All three are true, and they are about
-      different objects.
+      The first is CSD's epistemicity, that the quantum state is a many-to-one, incomplete
+      coordinate on the arena, the underlying state space. The second is the
+      classification, due to Harrigan and Spekkens, in which PBR is stated, where an
+      account is called psi-ontic when distinct exact pure-state preparations have
+      mutually singular ontic measures, meaning the distributions over underlying states
+      they induce live on disjoint sets. On that classification CSD's exact sharp
+      interface, its account of preparations that fix a pure state exactly, is psi-ontic,
+      and that's a machine-checked theorem. The third is finite-resolution overlap, as
+      preparations that fix the state only to within a region of positive volume around
+      it, rather than exactly, provably do overlap for distinct states whose regions
+      overlap. All three are true, and they're about different objects.
 
-      Two tempting framings are wrong, and earlier versions of this answer used
-      both; both are withdrawn. Disjointness is a theorem, not something that
-      holds by construction, and "the PBR premises are simply not met" is not
-      the right description. And region-preparation overlap is not a second way
-      in which CSD sits outside PBR: it concerns a different class of
-      preparations, so it neither establishes nor softens the classification of
-      exact states.
+      Two tempting framings are wrong, and earlier versions of this answer used both, so
+      both are withdrawn. Disjointness is a theorem and not something that holds by
+      construction, and "the PBR premises are simply not met" isn't the right description.
+      And region-preparation overlap isn't a second way in which CSD sits outside PBR, as
+      it concerns a different class of preparations, so it neither establishes nor softens
+      the classification of exact states.
 
-      There is an honest boundary. PBR also assumes preparation independence, a
-      compositional premise about systems prepared side by side. The corpus
-      neither proves nor refutes it, and the fact that the composite ontology
-      does not factorise globally does not settle it either way. Reading the
-      geometry of composite systems, the Segre layer, as a contradiction with
-      PBR was a superseded interpretation and is recorded as such.
+      There's an honest boundary. PBR also assumes preparation independence, a
+      compositional premise about systems prepared side by side, and the corpus neither
+      proves nor refutes it, and the fact that the composite ontology doesn't factorise
+      globally doesn't settle it either way. Reading the geometry of composite systems,
+      the Segre layer, as a contradiction with PBR was a superseded interpretation and is
+      recorded as such.
     mathematical: >
-      The exact half is proved, not definitional. epistemicMeasure_projectiveLaw:
-      the exact sharp preparation delta_p (x) Haar has projective pushforward
-      exactly delta_p, so the corpus's own witness demonstrably meets the
-      classification's hypothesis. sharp_preparations_mutuallySingular: any two
-      ontic measures whose projective laws are Diracs at distinct points are
-      mutually singular, with no Preparation structure, no region and no
-      finiteness assumed. epistemicMeasure_mutuallySingular is the concrete
-      corollary, routed through the general theorem.
-      pbr_sharp_preparation_capstone bundles both for citation. The theorem
-      landed on 2026-08-25; before that the entry described the disjointness as
-      holding by construction.
+      The exact half is proved and not definitional. epistemicMeasure_projectiveLaw says
+      the exact sharp preparation delta_p (x) Haar has projective pushforward exactly
+      delta_p, so the corpus's own witness demonstrably meets the classification's
+      hypothesis. sharp_preparations_mutuallySingular says any two ontic measures whose
+      projective laws are Diracs at distinct points are mutually singular, with no
+      Preparation structure, no region and no finiteness assumed.
+      epistemicMeasure_mutuallySingular is the concrete corollary, routed through the
+      general theorem, and pbr_sharp_preparation_capstone bundles both for citation. The
+      theorem landed on 2026-08-25, and before that the entry described the disjointness
+      as holding by construction.
 
-      The finite-resolution half is also proved, about different objects. The
-      theorem kMuL_fibre_null shows that a single exact projective fibre is
-      Liouville-null, so an exact sharp preparation is not obtainable by
-      conditioning on a positive-volume region. The class separation is stated at the level of
-      probability laws by exact_sharp_ne_region_conditional (no positive-volume
-      region-conditioned law equals an exact sharp law, however the region is
-      chosen), with no_region_preparation_exact_fibre the weaker set-level
-      companion; conditional_not_mutuallySingular and
-      kahler_preparations_overlap (region preparations on overlapping
-      neighbourhoods have non-separable conditional laws); and the rho_ep
-      density theorems.
+      The finite-resolution half is also proved, about different objects. The theorem
+      kMuL_fibre_null shows that a single exact projective fibre is Liouville-null, so an
+      exact sharp preparation isn't obtainable by conditioning on a positive-volume
+      region. The class separation is stated at the level of probability laws by
+      exact_sharp_ne_region_conditional (no positive-volume region-conditioned law equals
+      an exact sharp law, however the region is chosen), with
+      no_region_preparation_exact_fibre the weaker set-level companion,
+      conditional_not_mutuallySingular and kahler_preparations_overlap (region
+      preparations on overlapping neighbourhoods have non-separable conditional laws), and
+      the rho_ep density theorems.
 
-      The superseded reading of the Segre-layer geometry as a PBR contradiction
-      is recorded in specs/c2-support-plan.md. PBR preparation independence is
-      not proved either way.
+      The superseded reading of the Segre-layer geometry as a PBR contradiction is
+      recorded in specs/c2-support-plan.md, and PBR preparation independence isn't proved
+      either way.
     term: Does the PBR theorem rule out CSD?
     status: definition
     source: curated
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     lean:
       module: CsdLean4/RecordLayer/PBRPreparation.lean
       theorem: pbr_sharp_preparation_capstone
@@ -7464,64 +7446,59 @@ entries:
   - slug: is-the-born-rule-derived
     kind: question
     hook: >
-      Derived, as the volume of a region of the underlying state space measured
-      with the one ruler its symmetry allows; the assumptions that remain are
-      named posits, listed openly rather than hidden in the machinery.
+      It's derived, as the volume of a region of the underlying state space measured with
+      the one ruler its symmetry allows, and the assumptions that remain are named posits,
+      listed openly rather than hidden in the machinery.
     layman: >
-      The Born rule is the textbook's recipe for quantum probabilities. A
-      quantum state assigns each possible outcome a number called an amplitude,
-      and the rule says the probability of that outcome is the square of the
-      amplitude's size. In the textbook this is an axiom: it is postulated, not
-      explained. In CSD it is a computed quantity. The probability of an outcome
-      is the size of a region of the arena, the underlying state space, measured
-      with the unique measure the space's symmetry allows, and a convergence
-      theorem turns those sizes into the frequencies observed over many runs.
+      The Born rule is the textbook's recipe for quantum probabilities. A quantum state
+      assigns each possible outcome a number called an amplitude, and the rule says the
+      probability of that outcome is the square of the amplitude's size. In the textbook
+      this is an axiom, postulated and not explained, and in CSD it's a computed quantity.
+      The probability of an outcome is the size of a region of the arena, the underlying
+      state space, measured with the unique measure the space's symmetry allows, and a
+      convergence theorem turns those sizes into the frequencies observed over many runs.
 
-      Two things make this more than a restatement. The measure is forced. Its
-      uniqueness is a theorem, so nobody tuned the ruler to get the right sizes.
-      And the regions, in the mature form of the results, are not carved to fit
-      either. Their sizes fall out of the geometry through the moment map, the
-      function that reads off from each point of the state space the quantities
-      its symmetry conserves.
+      Two things make this more than a restatement. The measure is forced, as its
+      uniqueness is a theorem, so nobody tuned the ruler to get the right sizes. And the
+      regions, in the mature form of the results, aren't carved to fit either, as their
+      sizes fall out of the geometry through the moment map, the function that reads off
+      from each point of the state space the quantities its symmetry conserves.
 
-      What is not claimed is derivation from nothing. The projection from the
-      arena to the space of quantum states is a postulate. And reading
-      probability as typicality, the fraction of the compatible microstates
-      that lead to an outcome across repeated preparations, is a stance that the
-      theorems make precise rather than prove. The programme's habit is to say
-      exactly this out loud.
+      What isn't claimed is derivation from nothing. The projection from the arena to the
+      space of quantum states is a postulate, and reading probability as typicality, the
+      fraction of the compatible microstates that lead to an outcome across repeated
+      preparations, is a stance the theorems make precise rather than prove. The
+      programme's habit is to say exactly this out loud.
     in_csd: >
-      The chain runs in three steps. The Fubini-Study measure, the natural volume
-      on the space of quantum states, is the unique measure invariant under the
-      symmetries of that space, meaning unchanged by every symmetry
-      transformation; this is the argument of Paper B, proved at general
-      dimension. The Born weight equals a ratio of volumes in that measure,
-      unconditionally and for every coordinate. And empirical frequencies
-      converge to those volumes almost surely under repeated preparation. The
-      historically carved constructions, in which regions were cut to reproduce
-      the right sizes, are retained and labelled as such, using the corpus's own
-      word carving, and the derived route stands independent of them.
+      The chain runs in three steps. The Fubini-Study measure, the natural volume on the
+      space of quantum states, is the unique measure invariant under the symmetries of
+      that space, meaning unchanged by every symmetry transformation, and this is the
+      argument of Paper B, proved at general dimension. The Born weight equals a ratio of
+      volumes in that measure, unconditionally and for every coordinate. And empirical
+      frequencies converge to those volumes almost surely under repeated preparation. The
+      historically carved constructions, in which regions were cut to reproduce the right
+      sizes, are retained and labelled as such, using the corpus's own word carving, and
+      the derived route stands independent of them.
 
-      The remaining posits are structural and named. Projectability, the sector
-      postulate, says that the arena projects onto the space of quantum states.
-      The typicality reading interprets the conditioned measure as probability.
-      The cell law says that a measurement context's outcome rates generate its
-      pointer torus, the family of rotations of the state space associated with
-      the apparatus, and this is what ties the outcome regions to the moment
-      map. A separate route to the Born rule of the Gleason type exists on the
-      operational stratum, the layer that describes measurements in the language
-      of laboratory operations, and it is kept distinct so that nobody can
-      mistake which layer a citation leans on.
+      The remaining posits are structural and named. Projectability, the sector postulate,
+      says the arena projects onto the space of quantum states. The typicality reading
+      interprets the conditioned measure as probability. The cell law says a measurement
+      context's outcome rates generate its pointer torus, the family of rotations of the
+      state space associated with the apparatus, and this is what ties the outcome regions
+      to the moment map. A separate route to the Born rule of the Gleason type exists on
+      the operational stratum, the layer that describes measurements in the language of
+      laboratory operations, and it's kept distinct so nobody can mistake which layer a
+      citation leans on.
     mathematical: >
-      The route is fubiniStudyMeasure_unique; fs_born_volume_ratio_N with the
-      apex variant; born_frequency_convergence_N for the joint almost-sure
-      statement; and the moment-map identity momentMap_mk_eq_inner_sq with the
-      Duistermaat-Heckman pushforward behind it.
+      The route is fubiniStudyMeasure_unique, fs_born_volume_ratio_N with the apex
+      variant, born_frequency_convergence_N for the joint almost-sure statement, and the
+      moment-map identity momentMap_mk_eq_inner_sq with the Duistermaat-Heckman
+      pushforward behind it.
 
-      The volume route is Gleason-free end to end; the effect-Gleason
-      representation is proved separately on the operational stratum. The
-      remaining posits (projectability, the typicality reading, the cell law)
-      are registered in specs/POSITS.md.
+      The volume route is Gleason-free end to end, and the effect-Gleason representation
+      is proved separately on the operational stratum. The remaining posits
+      (projectability, the typicality reading, the cell law) are registered in
+      specs/POSITS.md.
     term: Is the Born rule derived or assumed in CSD?
     status: definition
     source: curated
@@ -7530,53 +7507,48 @@ entries:
   - slug: where-do-probabilities-come-from
     kind: question
     hook: >
-      From ignorance of the exact starting point: the dynamics never rolls dice,
-      and the probabilities are the sizes of the sets of microstates a
-      preparation cannot tell apart, measured with a ruler nobody was free to
-      choose.
+      They come from ignorance of the exact starting point, as the dynamics never rolls
+      dice, and the probabilities are the sizes of the sets of microstates a preparation
+      can't tell apart, measured with a ruler nobody was free to choose.
     layman: >
-      A deterministic world seems to leave no room for quantum probability. The
-      resolution is old and respectable: probability as ignorance of the initial
-      conditions. But that resolution always carried a debt. Who chooses the
-      measure of ignorance, the rule that says how much weight each possible
-      starting point gets? Choose it freely and you can get any answer you like.
+      A deterministic world seems to leave no room for quantum probability. The resolution
+      is old and respectable, probability as ignorance of the initial conditions, but that
+      resolution always carried a debt, as somebody has to choose the measure of
+      ignorance, the rule that says how much weight each possible starting point gets, and
+      if you choose it freely you can get any answer you like.
 
-      CSD's account starts from the fact that every run of an experiment begins
-      from a slightly different microstate, a slightly different point of the
-      underlying state space, because no procedure controls the arena
-      completely. The set of microstates compatible with what the procedure
-      does control is the preparation region. What fraction of that region
-      leads to a given outcome? That fraction, computed in the one measure the
-      symmetry of the space allows rather than one chosen for convenience, is
-      the outcome's probability. The strong law of large numbers, the theorem
-      that averages over many independent repetitions settle down to the
-      underlying fractions, converts those fractions into the frequencies that
-      laboratories actually record.
+      CSD's account starts from the fact that every run of an experiment begins from a
+      slightly different microstate, a slightly different point of the underlying state
+      space, because no procedure controls the arena completely. The set of microstates
+      compatible with what the procedure does control is the preparation region, and the
+      fraction of that region that leads to a given outcome, computed in the one measure
+      the symmetry of the space allows rather than one chosen for convenience, is the
+      outcome's probability. The strong law of large numbers, the theorem that averages
+      over many independent repetitions settle down to the underlying fractions, converts
+      those fractions into the frequencies laboratories actually record.
 
-      So there is one path through the world, dice nowhere, and the randomness
-      lies entirely in which microstate each preparation happened to land on.
+      So there's one path through the world, dice nowhere, and the randomness lies
+      entirely in which microstate each preparation happened to land on.
     in_csd: >
-      This is typicality under repeated preparation, and it is worth stating
-      what it is not. Probabilities do not come from watching one trajectory for
-      ever and hoping it explores the space fairly, visiting each region in
-      proportion to its size. That property, called ergodicity, is one the
-      corpus proves the projected flow does not have, so the time-average route
-      is closed at that level. The programme never needs it. Each trial is a
-      fresh draw from the conditioned measure, and the frequency theorems run
-      on that alone.
+      This is typicality under repeated preparation, and it's worth stating what it isn't.
+      Probabilities don't come from watching one trajectory for ever and hoping it
+      explores the space fairly, visiting each region in proportion to its size. That
+      property, called ergodicity, is one the corpus proves the projected flow doesn't
+      have, so the time-average route is closed at that level, and the programme never
+      needs it, as each trial is a fresh draw from the conditioned measure and the
+      frequency theorems run on that alone.
 
-      The measure-choice debt is paid by a uniqueness theorem. The Fubini-Study
-      measure, the natural volume on the space of quantum states, is the only
-      one invariant under the symmetries of that space, so the ignorance is
-      priced by a ruler nobody selected.
+      The measure-choice debt is paid by a uniqueness theorem. The Fubini-Study measure,
+      the natural volume on the space of quantum states, is the only one invariant under
+      the symmetries of that space, so the ignorance is priced by a ruler nobody selected.
     mathematical: >
-      LF1_main_theorem_ae converts region volumes into almost-sure limiting
-      frequencies under i.i.d. preparation sampling; fubiniStudyMeasure_unique
-      removes the measure freedom; the general-N volume identities make the
-      limiting values the Born weights.
+      LF1_main_theorem_ae converts region volumes into almost-sure limiting frequencies
+      under i.i.d. preparation sampling, fubiniStudyMeasure_unique removes the measure
+      freedom, and the general-N volume identities make the limiting values the Born
+      weights.
 
-      The non-ergodicity of the epistemic unitary flow is proved and kept as a
-      boundary marker between the claimed route and the unclaimed one.
+      The non-ergodicity of the epistemic unitary flow is proved and kept as a boundary
+      marker between the claimed route and the unclaimed one.
     term: If CSD is deterministic, where do probabilities come from?
     status: definition
     source: curated
@@ -7585,56 +7557,51 @@ entries:
   - slug: is-csd-a-hidden-variable-theory
     kind: question
     hook: >
-      Yes, in the technical sense: something definite underlies the quantum
-      state in CSD, and the programme openly pays the two prices the no-go
-      theorems demand, dependence on measurement context and correlations beyond
-      what locality permits.
+      Yes, in the technical sense, as something definite underlies the quantum state in
+      CSD, and the programme openly pays the two prices the no-go theorems demand,
+      dependence on measurement context and correlations beyond what locality permits.
     layman: >
-      "Hidden-variable theory" is a technical classification, not an insult. It
-      means a theory in which something definite underlies the quantum state,
-      so that the state is a summary of a more detailed reality. CSD has
-      exactly that: the arena, its underlying state space, and the one real
-      trajectory through it. So the honest answer is yes, with the
-      classification's fine print read aloud.
+      "Hidden-variable theory" is a technical classification and not an insult. It means a
+      theory in which something definite underlies the quantum state, so the state is a
+      summary of a more detailed reality, and CSD has exactly that, the arena, its
+      underlying state space, and the one real trajectory through it. So the honest answer
+      is yes, with the classification's fine print read aloud.
 
-      The fine print is the no-go theorems, and they do not say what the
-      one-line summaries claim. Bell's theorem rules out local hidden variables,
-      those in which a choice made far away can never affect an outcome here.
-      The Kochen-Specker theorem rules out non-contextual ones, those in which
-      every measurement has a fixed answer regardless of which other
-      measurements are made alongside it. Surviving both means being contextual
-      and letting correlations exceed what locality permits, which is precisely
+      The fine print is the no-go theorems, and they don't say what the one-line summaries
+      claim. Bell's theorem rules out local hidden variables, those in which a choice made
+      far away can never affect an outcome here, and the Kochen-Specker theorem rules out
+      non-contextual ones, those in which every measurement has a fixed answer regardless
+      of which other measurements are made alongside it. Surviving both means being
+      contextual and letting correlations exceed what locality permits, which is precisely
       the shape CSD has, on purpose.
 
-      One error to avoid: the quantum state is not the hidden variable. The
-      state is the visible summary. The hidden variable is the point of the
-      arena beneath it, including the fibre coordinate, the part of the
-      underlying state that no quantum state determines.
+      One error is worth avoiding, as the quantum state isn't the hidden variable. The
+      state is the visible summary, and the hidden variable is the point of the arena
+      beneath it, including the fibre coordinate, the part of the underlying state no
+      quantum state determines.
     in_csd: >
-      The corpus proves the constraining theorems itself rather than citing
-      them. No way of splitting a shared space of hidden states into a part for
-      each particle can reproduce the singlet correlations, the strongest
-      correlations of a paired two-particle state. No single context-independent
-      assignment of outcomes survives contextuality. And the GHZ and CGLMP
-      obstructions, named after Greenberger, Horne and Zeilinger and after
-      Collins, Gisin, Linden, Massar and Popescu, which are further Bell-type
-      results for more than two particles and for measurements with more than
-      two outcomes, hold at general dimension. The corpus also proves that the
-      survival is genuine rather than verbal: the contextual model that
-      reproduces the singlet table exists as a constructed object.
+      The corpus proves the constraining theorems itself rather than citing them. No way
+      of splitting a shared space of hidden states into a part for each particle can
+      reproduce the singlet correlations, the strongest correlations of a paired two-
+      particle state. No single context-independent assignment of outcomes survives
+      contextuality. And the GHZ and CGLMP obstructions, named after Greenberger, Horne
+      and Zeilinger and after Collins, Gisin, Linden, Massar and Popescu, which are
+      further Bell-type results for more than two particles and for measurements with more
+      than two outcomes, hold at general dimension. The corpus also proves that the
+      survival is genuine rather than verbal, as the contextual model that reproduces the
+      singlet table exists as a constructed object.
 
-      Where the correlations exceed locality, signalling still provably does
-      not occur. Locality of operations holds exactly: an intervention far away
-      moves no local statistic. That is the physically load-bearing half of
-      locality, and the one experiments enforce.
+      Where the correlations exceed locality, signalling still provably doesn't occur.
+      Locality of operations holds exactly, as an intervention far away moves no local
+      statistic, and that's the physically load-bearing half of locality, and the one
+      experiments enforce.
     mathematical: >
-      no_product_partition_realises_singlet and its GHZ companion over
-      arbitrary measurable state spaces; the global-assignment obstruction and
-      the contextual witness in the C1 capstone; composite_no_signalling, exact
-      for all states.
+      no_product_partition_realises_singlet and its GHZ companion over arbitrary
+      measurable state spaces, the global-assignment obstruction and the contextual
+      witness in the C1 capstone, and composite_no_signalling, exact for all states.
 
-      The Kochen-Specker-adjacent contextuality machinery of the Mermin-Peres
-      square is also in-corpus.
+      The Kochen-Specker-adjacent contextuality machinery of the Mermin-Peres square is
+      also in-corpus.
     term: Is CSD a hidden-variable theory?
     status: definition
     source: curated
@@ -7643,52 +7610,46 @@ entries:
   - slug: does-kochen-specker-rule-out-csd
     kind: question
     hook: >
-      No. The Kochen-Specker theorem forbids giving every possible measurement a
-      fixed answer independent of which experiment is actually performed, and
-      CSD assigns outcomes through the measurement context by construction.
+      No. The Kochen-Specker theorem forbids giving every possible measurement a fixed
+      answer independent of which experiment is actually performed, and CSD assigns
+      outcomes through the measurement context by construction.
     layman: >
-      The Kochen-Specker theorem is the quieter sibling of Bell's. It shows that
-      you cannot assign definite answers to all possible quantum measurements at
-      once, independent of which experiment is actually performed: any such
-      table of answers contradicts itself. Any theory claiming a definite
-      underlying reality has to reckon with it.
+      The Kochen-Specker theorem is the quieter sibling of Bell's. It shows you can't
+      assign definite answers to all possible quantum measurements at once, independent of
+      which experiment is actually performed, as any such table of answers contradicts
+      itself, and any theory claiming a definite underlying reality has to reckon with it.
 
-      The reckoning is the same as with Bell, and it is not evasion. The
-      theorem's target is non-contextual assignment, meaning answers that do not
-      depend on the measurement context, the actual physical arrangement doing
-      the asking. A theory whose outcomes depend on that context is outside the
-      theorem's scope, at the declared cost of accepting the dependence.
+      The reckoning is the same as with Bell, and it isn't evasion. The theorem's target
+      is non-contextual assignment, meaning answers that don't depend on the measurement
+      context, the actual physical arrangement doing the asking, so a theory whose
+      outcomes depend on that context is outside the theorem's scope, at the declared cost
+      of accepting the dependence.
 
-      CSD accepts the dependence and then does something the usual discussion
-      does not. It makes the context a formal object with its own data, so that
-      "the outcome depends on the context" is a definition you can compute
-      with, not a slogan.
+      CSD accepts the dependence and then does something the usual discussion doesn't. It
+      makes the context a formal object with its own data, so "the outcome depends on the
+      context" is a definition you can compute with and not a slogan.
     in_csd: >
-      In CSD a measurement context is a field of rates on the base of the arena,
-      the space of quantum states, and it is the apparatus's own data. The
-      outcome basins, the regions of the arena whose points lead to each
-      outcome, are built from it. Distinct contexts genuinely induce distinct
-      partitions of the arena, which is exactly the dependence Kochen-Specker
-      demands of a surviving theory. The corpus proves the obstruction side too,
-      in its own frame: no global context-independent assignment is compatible
-      with the exhibited contextual statistics, and the Mermin-Peres
-      construction supplies the finite-dimensional contradiction.
+      In CSD a measurement context is a field of rates on the base of the arena, the space
+      of quantum states, and it's the apparatus's own data. The outcome basins, the
+      regions of the arena whose points lead to each outcome, are built from it, and
+      distinct contexts genuinely induce distinct partitions of the arena, which is
+      exactly the dependence Kochen-Specker demands of a surviving theory. The corpus
+      proves the obstruction side too, in its own frame, as no global context-independent
+      assignment is compatible with the exhibited contextual statistics, and the Mermin-
+      Peres construction supplies the finite-dimensional contradiction.
 
-      One clarification comes from the analysis of where contextual structure
-      lives. For systems of dimension three and above, the base-only
-      construction fails. That base-only failure is not a corollary
-      of Kochen-Specker: CSD's partitions are contextual, so the classical
-      no-go theorems do not apply to them. It is a separate constraint, coming
-      from covariance and positivity, argued on its own.
+      One clarification comes from the analysis of where contextual structure lives. For
+      systems of dimension three and above, the base-only construction fails, and that
+      base-only failure isn't a corollary of Kochen-Specker, as CSD's partitions are
+      contextual, so the classical no-go theorems don't apply to them. It's a separate
+      constraint, coming from covariance and positivity, argued on its own.
     mathematical: >
-      The contextuality tier: the global-assignment obstruction in the C1 chain;
-      the Mermin-Peres square's contextuality witness; and the context-indexed
-      outcome map machinery with its definitional separation, with no
-      Fine-theorem shortcut assumed.
+      The contextuality tier is the global-assignment obstruction in the C1 chain, the
+      Mermin-Peres square's contextuality witness, and the context-indexed outcome map
+      machinery with its definitional separation, with no Fine-theorem shortcut assumed.
 
-      The N >= 3 fibre-placement analysis is explicitly distinguished from
-      Gleason and Kochen-Specker in the source, and it is short of a no-go in
-      its own right.
+      The N >= 3 fibre-placement analysis is explicitly distinguished from Gleason and
+      Kochen-Specker in the source, and it's short of a no-go in its own right.
     term: Does the Kochen-Specker theorem rule out CSD?
     status: definition
     source: curated
