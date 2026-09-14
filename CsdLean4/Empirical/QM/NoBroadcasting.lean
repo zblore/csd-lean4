@@ -132,7 +132,7 @@ theorem pure_marginal_confinement
     rw [Matrix.ext_iff_mulVec]
     intro v
     rw [Matrix.zero_mulVec, ← Matrix.mulVec_mulVec]
-    apply (hρ.dotProduct_mulVec_zero_iff _).mp
+    apply (hρ.dotProduct_mulVec_zero_iff (x := _)).mp
     rw [Matrix.star_mulVec, hKq_herm.eq, ← Matrix.dotProduct_mulVec,
       Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hKqρKq_zero, Matrix.zero_mulVec,
       dotProduct_zero]

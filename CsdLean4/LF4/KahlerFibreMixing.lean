@@ -139,7 +139,7 @@ lemma integral_torusObs_pair (s t : ℕ) :
         * MeasureTheory.circObs (MeasureTheory.doubling^[t] x)| ≤ 1 := by
     intro x
     rw [abs_mul]
-    exact mul_le_one₀ (MeasureTheory.abs_circObs_le_one _) (abs_nonneg _)
+    exact (mul_le_of_le_one_left (abs_nonneg _) (MeasureTheory.abs_circObs_le_one _)).trans
       (MeasureTheory.abs_circObs_le_one _)
   simp only [torusObs_torusDouble_iterate]
   exact integral_torus_fst hm hbd
@@ -185,7 +185,7 @@ theorem torusObs_variance_ne :
       |MeasureTheory.circObs x * MeasureTheory.circObs x| ≤ 1 := by
     intro x
     rw [abs_mul]
-    exact mul_le_one₀ (MeasureTheory.abs_circObs_le_one x) (abs_nonneg _)
+    exact (mul_le_of_le_one_left (abs_nonneg _) (MeasureTheory.abs_circObs_le_one x)).trans
       (MeasureTheory.abs_circObs_le_one x)
   have hsq : ∫ y, torusObs y * torusObs y ∂(volume : Measure KTorus) = 1 / 2 := by
     simp only [torusObs_apply]

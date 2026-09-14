@@ -433,7 +433,7 @@ theorem rankOneDensity_unique_of_certainty
     rw [Matrix.ext_iff_mulVec]
     intro v
     rw [Matrix.zero_mulVec, ← Matrix.mulVec_mulVec]
-    apply (hρ_psd.dotProduct_mulVec_zero_iff _).mp
+    apply (hρ_psd.dotProduct_mulVec_zero_iff (x := _)).mp
     rw [Matrix.star_mulVec, hQ_herm.eq, ← Matrix.dotProduct_mulVec,
         Matrix.mulVec_mulVec, Matrix.mulVec_mulVec, hQρQ_zero,
         Matrix.zero_mulVec, dotProduct_zero]

@@ -430,6 +430,12 @@ theorem toFlat_mextDeriv_zeroFormFamily {f : M → G} {x : M}
   rw [hev.extDeriv_eq, extDeriv_constOfIsEmpty]
   congr 1
   rw [hf.mfderiv]
+  -- `MDifferentiableAt.mfderiv` reads `mfderiv f x` as the chart-space `fderivWithin`; on
+  -- newer Mathlib it wraps that in the definitional `tangentSpaceCastModel` identifications,
+  -- and this `change` strips them (a syntactic no-op where they are absent).
+  change _ = fderivWithin ℝ (writtenInExtChartAt (modelWithCornersSelf ℝ E)
+    (modelWithCornersSelf ℝ G) x f) (Set.range (modelWithCornersSelf ℝ E))
+    ((extChartAt (modelWithCornersSelf ℝ E) x) x)
   simp only [writtenInExtChartAt, Function.comp_def, extChartAt_model_space_eq_id,
     PartialEquiv.refl_coe, id, extChartAt_coe_symm, extChartAt_coe, modelWithCornersSelf_coe,
     modelWithCornersSelf_coe_symm, Set.range_id, fderivWithin_univ]

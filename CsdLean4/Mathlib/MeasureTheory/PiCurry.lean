@@ -113,7 +113,7 @@ theorem map_curryProd_pi :
     Measure.map (fun y : (p : ιp × κp) → α p => fun i j => y (i, j)) (Measure.pi ν)
       = Measure.pi (fun i => Measure.pi (fun j => ν (i, j))) := by
   have hmeas : Measurable (fun y : (p : ιp × κp) → α p => fun i j => y (i, j)) := by
-    apply measurable_pi_lambda; intro i; apply measurable_pi_lambda; intro j
+    apply measurable_pi_iff.mpr; intro i; apply measurable_pi_iff.mpr; intro j
     exact measurable_pi_apply (i, j)
   refine (Measure.pi_eq_generateFrom
       (μ := fun i => Measure.pi (fun j => ν (i, j)))

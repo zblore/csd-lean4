@@ -10,6 +10,7 @@ public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.WedgeShuffle
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceChartCover
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 
 /-!
 # The volume of the top power of the Fubini–Study form
@@ -183,7 +184,8 @@ def fsVolumeNormalized (n : ℕ) : Measure (ℙ ℂ (Ambient n)) :=
 theorem fsVolumeNormalized_map_smul (U : Matrix.unitaryGroup (Fin (n + 1)) ℂ) :
     Measure.map (fun p : ℙ ℂ (Ambient n) => U • p) (fsVolumeNormalized n)
       = fsVolumeNormalized n := by
-  rw [fsVolumeNormalized, Measure.map_smul, fsVolume_map_smul]
+  rw [fsVolumeNormalized, Measure.map_smul' _ _ (f := fun p : ℙ ℂ (Ambient n) => U • p)
+    (Homeomorph.smul U).continuous.measurable, fsVolume_map_smul]
 
 /-- If the volume is nonzero, its normalisation is a probability measure. -/
 theorem isProbabilityMeasure_fsVolumeNormalized_of_ne_zero (hne : fsVolume n ≠ 0) :

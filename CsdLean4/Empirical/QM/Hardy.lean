@@ -6,9 +6,7 @@ Authors: Zayn Blore
 module
 
 public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-public import Mathlib.Data.Real.Basic
 public import Mathlib.Analysis.Real.Sqrt
-public import Mathlib.Data.Complex.Basic
 public import Mathlib.Analysis.Complex.Basic
 public import Mathlib.Data.Fintype.Prod
 public import Mathlib.LinearAlgebra.Matrix.Notation

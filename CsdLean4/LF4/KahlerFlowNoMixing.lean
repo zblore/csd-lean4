@@ -123,7 +123,7 @@ lemma integral_fibreObs_sq (p₀ : CPN N) :
       |MeasureTheory.circObs z * MeasureTheory.circObs z| ≤ 1 := by
     intro z
     rw [abs_mul]
-    exact mul_le_one₀ (MeasureTheory.abs_circObs_le_one z) (abs_nonneg _)
+    exact (mul_le_of_le_one_left (abs_nonneg _) (MeasureTheory.abs_circObs_le_one z)).trans
       (MeasureTheory.abs_circObs_le_one z)
   have hm : Measurable
       (fun z : MeasureTheory.Circ => MeasureTheory.circObs z * MeasureTheory.circObs z) :=
@@ -187,11 +187,11 @@ lemma abs_fibreCorr_sub_le (p₀ : CPN N) (v : KTorus) :
   have hbd1 : ∀ p : KSigma N, ‖fibreObs p * fibreObs (kFlow v p)‖ ≤ 1 := by
     intro p
     rw [Real.norm_eq_abs, abs_mul]
-    exact mul_le_one₀ (abs_fibreObs_le_one p) (abs_nonneg _) (abs_fibreObs_le_one _)
+    exact (mul_le_of_le_one_left (abs_nonneg _) (abs_fibreObs_le_one p)).trans (abs_fibreObs_le_one _)
   have hbd2 : ∀ p : KSigma N, ‖fibreObs p * fibreObs p‖ ≤ 1 := by
     intro p
     rw [Real.norm_eq_abs, abs_mul]
-    exact mul_le_one₀ (abs_fibreObs_le_one p) (abs_nonneg _) (abs_fibreObs_le_one p)
+    exact (mul_le_of_le_one_left (abs_nonneg _) (abs_fibreObs_le_one p)).trans (abs_fibreObs_le_one p)
   rw [← integral_sub
     (Integrable.of_bound hm1.aestronglyMeasurable 1 (ae_of_all _ hbd1))
     (Integrable.of_bound hm2.aestronglyMeasurable 1 (ae_of_all _ hbd2))]

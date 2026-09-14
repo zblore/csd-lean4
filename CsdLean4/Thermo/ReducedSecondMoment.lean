@@ -288,9 +288,9 @@ theorem fs_redOff_normSq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
     have h3 := abs_im_rayDensity_le_one p (e.symm (a, b)) (e.symm (a', b))
     have h4 := abs_im_rayDensity_le_one p (e.symm (a, b')) (e.symm (a', b'))
     have hb1 := abs_le.mp (show |(redTerm e a a' b p).re * (redTerm e a a' b' p).re| ≤ 1 by
-      rw [abs_mul]; exact mul_le_one₀ h1 (abs_nonneg _) h2)
+      rw [abs_mul]; exact (mul_le_of_le_one_left (abs_nonneg _) h1).trans h2)
     have hb2 := abs_le.mp (show |(redTerm e a a' b p).im * (redTerm e a a' b' p).im| ≤ 1 by
-      rw [abs_mul]; exact mul_le_one₀ h3 (abs_nonneg _) h4)
+      rw [abs_mul]; exact (mul_le_of_le_one_left (abs_nonneg _) h3).trans h4)
     rw [Real.norm_eq_abs, abs_le]
     constructor <;> linarith [hb1.1, hb1.2, hb2.1, hb2.2]
   have hdiag : ∀ b : Fin dB, ∫ p,

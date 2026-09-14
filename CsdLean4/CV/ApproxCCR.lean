@@ -7,7 +7,6 @@ module
 
 public import Mathlib.LinearAlgebra.Matrix.Trace
 public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
-public import Mathlib.Data.Complex.Basic
 
 /-!
 # W4: the finite-dimensional obstruction to exact canonical commutation

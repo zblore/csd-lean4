@@ -391,8 +391,8 @@ lemma integrable_survival_pow_mul_pow (μ : Measure ℝ) [IsProbabilityMeasure �
   refine Integrable.of_bound (measurable_survival_pow_mul_pow μ c p k).aestronglyMeasurable 1
     (ae_of_all _ (fun t => ?_))
   rw [Real.norm_eq_abs, abs_of_nonneg (survival_pow_mul_pow_nonneg μ c p k t)]
-  exact mul_le_one₀ (pow_le_one₀ (survival_nonneg _ _) (survival_le_one _ _))
-    (pow_nonneg (survival_nonneg _ _) _)
+  exact (mul_le_of_le_one_left (pow_nonneg (survival_nonneg _ _) _)
+    (pow_le_one₀ (survival_nonneg _ _) (survival_le_one _ _))).trans
     (pow_le_one₀ (survival_nonneg _ _) (survival_le_one _ _))
 
 /-- The mixed moment identity as a **real** integral of `survival`. -/

@@ -67,9 +67,9 @@ variable {M : ℕ}
 theorem measurable_ratio_momentMap :
     Measurable (fun p : CPN (M + 1) => ratioN (fun i => momentMap p i)) := by
   have hmoment : Measurable (fun p : CPN (M + 1) => fun i => momentMap p i) :=
-    measurable_pi_lambda _ (fun i => momentMap_measurable i)
+    measurable_pi_iff.mpr (fun i => momentMap_measurable i)
   have hratio : Measurable (ratioN (M := M)) :=
-    measurable_pi_lambda _ (fun k => (measurable_pi_apply _).div
+    measurable_pi_iff.mpr (fun k => (measurable_pi_apply _).div
       (Finset.measurable_sum Finset.univ (fun i _ => measurable_pi_apply i)))
   exact hratio.comp hmoment
 

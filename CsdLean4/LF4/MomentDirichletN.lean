@@ -70,14 +70,14 @@ theorem fs_moment_joint_dirichlet_N (p₀ : CPN (M + 1)) :
   have : NeZero (M + 1) := ⟨Nat.succ_ne_zero M⟩
   have hratio_meas : Measurable (ratioN (M := M)) := by
     unfold ratioN
-    apply measurable_pi_lambda; intro k
+    apply measurable_pi_iff.mpr; intro k
     exact (measurable_pi_apply _).div
       (Finset.measurable_sum Finset.univ (fun i _ => measurable_pi_apply i))
   have hmoment_meas : Measurable (fun p : CPN (M + 1) => fun i => momentMap p i) := by
-    apply measurable_pi_lambda; intro i; exact momentMap_measurable i
+    apply measurable_pi_iff.mpr; intro i; exact momentMap_measurable i
   have hblock_meas : Measurable (fun y : (Fin (M + 1) × Fin 2) → ℝ =>
       fun i => (y (i, 0)) ^ 2 + (y (i, 1)) ^ 2) := by
-    apply measurable_pi_lambda; intro i; fun_prop
+    apply measurable_pi_iff.mpr; intro i; fun_prop
   rw [← ratioSqNorm_map_expHalf_pi, ← blockSqNormCurry_map_pi,
     Measure.map_map hratio_meas hblock_meas,
     ← gaussianCPN_eq_fubiniStudy p₀, gaussianCPN, gaussianHN,

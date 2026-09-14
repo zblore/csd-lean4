@@ -193,7 +193,8 @@ lemma integrable_circObs_pair (s t : ℕ) :
       (measurable_circObs.comp (measurable_doubling.iterate t))).aestronglyMeasurable 1
     (ae_of_all _ (fun x => by
       rw [Real.norm_eq_abs, abs_mul]
-      exact mul_le_one₀ (abs_circObs_le_one _) (abs_nonneg _) (abs_circObs_le_one _)))
+      exact (mul_le_of_le_one_left (abs_nonneg _) (abs_circObs_le_one _)).trans
+        (abs_circObs_le_one _)))
 
 /-- ★ **The mean is zero at every time**, by the half-turn. -/
 lemma integral_circObs_iterate (t : ℕ) : ∫ x, circObs (doubling^[t] x) ∂volume = 0 := by
@@ -239,7 +240,8 @@ theorem circ_hasCorrelationDecay : HasCorrelationDecay volume doubling circObs c
         ≤ 1 * (volume (Set.univ : Set Circ)).toReal :=
       norm_integral_le_of_norm_le_const (ae_of_all _ (fun x => by
         rw [Real.norm_eq_abs, abs_mul]
-        exact mul_le_one₀ (abs_circObs_le_one _) (abs_nonneg _) (abs_circObs_le_one _)))
+        exact (mul_le_of_le_one_left (abs_nonneg _) (abs_circObs_le_one _)).trans
+          (abs_circObs_le_one _)))
     simpa using hb
   · rw [integral_congr_ae (ae_of_all _ (fun x : Circ =>
       mul_comm (circObs (doubling^[s] x)) (circObs (doubling^[t] x)))),
@@ -263,7 +265,7 @@ lemma integrable_fourierIm_sq :
   exact Integrable.of_bound (hm.mul hm).aestronglyMeasurable 1
     (ae_of_all _ (fun x => by
       rw [Real.norm_eq_abs, abs_mul]
-      exact mul_le_one₀ (hb x) (abs_nonneg _) (hb x)))
+      exact (mul_le_of_le_one_left (abs_nonneg _) (hb x)).trans (hb x)))
 
 /-- ★ **`⟨circObs²⟩ = 1/2`** — by the quarter-turn, which exchanges the real and imaginary parts,
 plus `|e^{2πix}| = 1`. No integral is evaluated. -/

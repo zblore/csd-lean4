@@ -421,7 +421,7 @@ theorem ratioSqNorm_map_expHalf_pi :
   have hsum_meas : Measurable (fun s : Fin (M + 1) → ℝ => ∑ i, s i) :=
     Finset.measurable_sum Finset.univ (fun i _ => measurable_pi_apply i)
   have hratio_meas : Measurable (ratioN (M := M)) :=
-    measurable_pi_lambda _ (fun k => (measurable_pi_apply _).div hsum_meas)
+    measurable_pi_iff.mpr (fun k => (measurable_pi_apply _).div hsum_meas)
   have hprod_meas : Measurable (fun x : Fin (M + 1) → ℝ => ∏ i, dExp (x i)) :=
     Finset.measurable_prod _ fun i _ => measurable_dExp.comp (measurable_pi_apply i)
   -- σ-finite of `expHalf` (probability measure) for the pi-withDensity bridge.

@@ -399,6 +399,13 @@ noncomputable def IsSymplectic.hamiltonianFlow
     (t : ℝ) (x : M) : M :=
   integralFlow (hβ.contMDiff_hamiltonianVectorField_tangent hH) t x
 
+/-- The Hamiltonian flow at any time is continuous (`continuous_integralFlow_point`). -/
+theorem IsSymplectic.continuous_hamiltonianFlow
+    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    {H : M → ℝ} (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H)
+    (t : ℝ) : Continuous (hβ.hamiltonianFlow hH t) :=
+  continuous_integralFlow_point (hβ.contMDiff_hamiltonianVectorField_tangent hH) t
+
 variable [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
   (μ : MeasureTheory.Measure E) [μ.IsAddHaarMeasure]
   (α : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ) (H : M → ℝ)

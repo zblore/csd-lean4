@@ -863,7 +863,7 @@ lemma fs_integrable_mul (p₀ : CPN N) {f g : CPN N → ℝ}
   Integrable.of_bound (hf.mul hg).aestronglyMeasurable 1
     (ae_of_all _ (fun p => by
       rw [Real.norm_eq_abs, abs_mul]
-      exact mul_le_one₀ (hfb p) (abs_nonneg _) (hgb p)))
+      exact (mul_le_of_le_one_left (abs_nonneg _) (hfb p)).trans (hgb p)))
 
 /-! ### The kill lemmas -/
 

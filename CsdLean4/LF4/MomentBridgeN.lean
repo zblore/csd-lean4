@@ -67,11 +67,11 @@ theorem blockSqNormCurry_map_pi {N : ℕ} :
       (Measure.pi (fun _ : Fin N × Fin 2 => gaussianReal 0 1))
       = Measure.pi (fun _ : Fin N => expHalf) := by
   have hcurry : Measurable (fun y : (Fin N × Fin 2) → ℝ => fun i j => y (i, j)) := by
-    apply measurable_pi_lambda; intro i; apply measurable_pi_lambda; intro j
+    apply measurable_pi_iff.mpr; intro i; apply measurable_pi_iff.mpr; intro j
     exact measurable_pi_apply (i, j)
   have hblock : Measurable
       (fun w : Fin N → Fin 2 → ℝ => fun i => gBlock (w i)) := by
-    apply measurable_pi_lambda; intro i
+    apply measurable_pi_iff.mpr; intro i
     exact measurable_gBlock.comp (measurable_pi_apply i)
   have hcomp : (fun y : (Fin N × Fin 2) → ℝ => fun i => (y (i, 0)) ^ 2 + (y (i, 1)) ^ 2)
       = (fun w : Fin N → Fin 2 → ℝ => fun i => gBlock (w i))

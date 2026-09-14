@@ -1168,7 +1168,7 @@ theorem Channel.adjoint_kronecker_one_mulVec_eq_self (Φ : Channel n (n × n) ι
     rw [Matrix.sub_mulVec, Matrix.one_mulVec, dotProduct_sub, Φ.star_dotProduct_adjoint_mulVec,
       Φ.star_dotProduct_eq_sum_kraus v v]
     simp only [hv, sub_self]
-  have := (hle.dotProduct_mulVec_zero_iff v).mp hzero
+  have := (hle.dotProduct_mulVec_zero_iff (x := v)).mp hzero
   rw [Matrix.sub_mulVec, Matrix.one_mulVec, sub_eq_zero] at this
   exact this.symm
 
@@ -1181,7 +1181,7 @@ theorem Channel.adjoint_one_kronecker_mulVec_eq_self (Φ : Channel n (n × n) ι
     rw [Matrix.sub_mulVec, Matrix.one_mulVec, dotProduct_sub, Φ.star_dotProduct_adjoint_mulVec,
       Φ.star_dotProduct_eq_sum_kraus v v]
     simp only [hv, sub_self]
-  have := (hle.dotProduct_mulVec_zero_iff v).mp hzero
+  have := (hle.dotProduct_mulVec_zero_iff (x := v)).mp hzero
   rw [Matrix.sub_mulVec, Matrix.one_mulVec, sub_eq_zero] at this
   exact this.symm
 
@@ -1634,8 +1634,8 @@ theorem exists_boundary_point [Nonempty n] {ρ σ : Matrix n n ℂ} (hρ : ρ.Po
       rw [← dotProduct_add, ← Matrix.add_mulVec, hsum, dotProduct_zero]
     obtain ⟨hρ0, hσ0⟩ := (add_eq_zero_iff_of_nonneg (hρ.dotProduct_mulVec_nonneg _)
       (hσ.dotProduct_mulVec_nonneg _)).mp h0
-    rw [hddef, Matrix.sub_mulVec, (hρ.dotProduct_mulVec_zero_iff _).mp hρ0,
-      (hσ.dotProduct_mulVec_zero_iff _).mp hσ0, sub_zero]
+    rw [hddef, Matrix.sub_mulVec, (hρ.dotProduct_mulVec_zero_iff (x := _)).mp hρ0,
+      (hσ.dotProduct_mulVec_zero_iff (x := _)).mp hσ0, sub_zero]
   -- the positive eigenvalues
   set K' : Finset n := Finset.univ.filter (fun k => e k ≠ 0) with hK'
   have hK'ne : K'.Nonempty := by
@@ -1780,7 +1780,8 @@ theorem _root_.Matrix.PosSemidef.add_mulVec_eq_zero_iff {A B : Matrix n n ℂ} (
       rw [← dotProduct_add, ← Matrix.add_mulVec, h, dotProduct_zero]
     obtain ⟨hA0, hB0⟩ := (add_eq_zero_iff_of_nonneg (hA.dotProduct_mulVec_nonneg _)
       (hB.dotProduct_mulVec_nonneg _)).mp h0
-    exact ⟨(hA.dotProduct_mulVec_zero_iff _).mp hA0, (hB.dotProduct_mulVec_zero_iff _).mp hB0⟩
+    exact ⟨(hA.dotProduct_mulVec_zero_iff (x := _)).mp hA0,
+      (hB.dotProduct_mulVec_zero_iff (x := _)).mp hB0⟩
   · rintro ⟨h1, h2⟩
     rw [Matrix.add_mulVec, h1, h2, add_zero]
 
