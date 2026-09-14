@@ -6650,54 +6650,50 @@ entries:
     related: [stinespring-dilation, choi-theorem, partial-trace, de-isolation, holevo-bound]
 
   - slug: record-light-cone
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      Records are safe from distant meddling by theorem: anything that happens
-      outside the light cone can shift the outcome written into the arena's
-      fibre by no more than a bound that collapses factorially with distance.
+      Records are safe from distant meddling by theorem, as anything that happens outside
+      the light cone can shift the outcome written into the arena's fibre by no more than
+      a bound that collapses factorially with distance.
     layman: >
-      CSD holds that measurement outcomes are written into a hidden part of
-      the arena called the fibre, an extra set of coordinates attached to
-      every point of the visible state space. A sceptic should ask how robust
-      the writing is. Could a distant disturbance, some operation performed far
-      from the apparatus, reach in and rewrite the record? If it could, records
-      would be too fragile to ground anything.
+      CSD holds that measurement outcomes are written into a hidden part of the arena
+      called the fibre, an extra set of coordinates attached to every point of the visible
+      state space. A sceptic should ask how robust the writing is, and whether a distant
+      disturbance, some operation performed far from the apparatus, could reach in and
+      rewrite the record, because if it could, records would be too fragile to ground
+      anything.
 
-      The answer is a locality theorem aimed exactly at that worry. Take a
-      record written into the fibre by a local interaction. Take any
-      disturbance confined to a region far away, with distance measured by the
-      number of interaction links separating it from the apparatus, and let
-      everything evolve. The theorem bounds how far the record cell can move by
-      a quantity that decays factorially in that distance, the same light-cone
-      suppression that the Lieb-Robinson bound provides for ordinary
-      observables.
+      The answer is a locality theorem aimed exactly at that worry. Take a record written
+      into the fibre by a local interaction, take any disturbance confined to a region far
+      away, with distance measured by the number of interaction links separating it from
+      the apparatus, and let everything evolve. The theorem bounds how far the record cell
+      can move by a quantity that decays factorially in that distance, the same light-cone
+      suppression the Lieb-Robinson bound provides for ordinary observables.
 
-      Distant meddling does not slightly corrupt records. It fails to reach
-      them, by a margin that shrinks factorially with the distance.
+      Distant meddling doesn't slightly corrupt records. It fails to reach them, by a
+      margin that shrinks factorially with the distance.
     in_csd: >
-      This is where the record layer and the field track meet. The arena with
-      its fibre attached carries record strokes, shifts of the fibre controlled
-      by observables of the base, the visible part of the arena, and the
-      Lieb-Robinson machinery transports its light cone through a bridge into
-      that setting. Disturbances that do not overlap the recording interaction
-      commute with record writing exactly, meaning that the order in which they
-      happen makes no difference; distant disturbances steer the written cell
-      by at most the cone bound.
+      This is where the record layer and the field track meet. The arena with its fibre
+      attached carries record strokes, shifts of the fibre controlled by observables of
+      the base, the visible part of the arena, and the Lieb-Robinson machinery transports
+      its light cone through a bridge into that setting. Disturbances that don't overlap
+      the recording interaction commute with record writing exactly, meaning the order in
+      which they happen makes no difference, and distant disturbances steer the written
+      cell by at most the cone bound.
 
-      The scope is stated where it is proved. The theorem covers the stroke
-      shape of fibre activity, base-dependent shifts of the fibre, which is
-      the corpus's own record mechanism; it does not cover arbitrary
-      base-coupled fibre velocities, which nothing in the record layer needs.
+      The scope is stated where it's proved. The theorem covers the stroke shape of fibre
+      activity, base-dependent shifts of the fibre, which is the corpus's own record
+      mechanism, and it doesn't cover arbitrary base-coupled fibre velocities, which
+      nothing in the record layer needs.
     mathematical: >
-      The theorem record_lightcone states that for a record stroke driven by
-      an observable A and a disturbance outside distance d, the displacement
-      of the recorded fibre cell after time t is bounded by the Lipschitz data
-      of the stroke times 2 (2 norm(S) t)^d / d! times norm(A), the rigid part
-      of the fibre rotation cancelling between the disturbed and undisturbed
-      histories.
+      The theorem record_lightcone states that for a record stroke driven by an observable
+      A and a disturbance outside distance d, the displacement of the recorded fibre cell
+      after time t is bounded by the Lipschitz data of the stroke times 2 (2 norm(S) t)^d
+      / d! times norm(A), the rigid part of the fibre rotation cancelling between the
+      disturbed and undisturbed histories.
 
-      Companion results give exact commutation of disjoint kicks with record
-      writing, and the arena-level cone that the bridge transports.
+      Companion results give exact commutation of disjoint kicks with record writing, and
+      the arena-level cone the bridge transports.
     term: Record light cone
     status: proved-in-corpus
     source: curated
@@ -6707,64 +6703,61 @@ entries:
     related: [lieb-robinson-bound, record-layer, field-arena, no-signalling, interaction-price]
 
   - slug: partial-trace
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      Mathlib has no partial trace for matrices, so the corpus built one: the
-      staple operation of quantum information, with its working properties
-      proved and staged for contribution upstream.
+      Mathlib has no partial trace for matrices, so the corpus built one, the staple
+      operation of quantum information, with its working properties proved and staged for
+      contribution upstream.
     layman: >
-      This is the formal-methods reader's problem more than the physicist's.
-      Ignoring part of a quantum system, tracing out the environment and
-      keeping a description of the subsystem, is the single most common
-      operation in quantum information, and the operation that does it is
-      called the partial trace. Ask what a library of formalised mathematics
-      offers for it and, in the case of Mathlib, the community library for the
+      This is the formal-methods reader's problem more than the physicist's. Ignoring part
+      of a quantum system, tracing out the environment and keeping a description of the
+      subsystem, is the single most common operation in quantum information, and the
+      operation that does it is called the partial trace. Ask what a library of formalised
+      mathematics offers for it and, in the case of Mathlib, the community library for the
       Lean proof assistant, the answer at the level of matrices is nothing.
 
-      The corpus's staging tree, its collection of general-purpose results
-      written for eventual contribution to Mathlib, fills the gap. It provides
-      the partial trace over either factor of a composite system, together
-      with the lemmas one actually needs: linearity; preservation of the total
-      trace, so that probability is conserved; preservation of positivity; the
-      fact that the reduced state of a density matrix is again a density
-      matrix; and the defining identities that pair a joint operator against
-      observables of one side only.
+      The corpus's staging tree, its collection of general-purpose results written for
+      eventual contribution to Mathlib, fills the gap. It provides the partial trace over
+      either factor of a composite system, together with the lemmas you actually need,
+      which are linearity, preservation of the total trace, so probability is conserved,
+      preservation of positivity, the fact that the reduced state of a density matrix is
+      again a density matrix, and the defining identities that pair a joint operator
+      against observables of one side only.
 
-      Nothing in it is specific to CSD. It is general infrastructure, built to
-      be given away.
+      Nothing in it is specific to CSD. It's general infrastructure, built to be given
+      away.
     in_csd: >
-      The partial trace is load-bearing across the corpus. Reduced states in
-      the decoherence and einselection tiers, the parts of the programme that
-      describe how interaction with an environment singles out certain states
-      as stable, marginals of the composite field arena, where local
-      observations on entangled points are exactly expectations in the reduced
-      state, and the subadditivity arguments of the entropy tier all consume
-      it.
+      The partial trace is load-bearing across the corpus. Reduced states in the
+      decoherence and einselection tiers, the parts of the programme that describe how
+      interaction with an environment singles out certain states as stable, marginals of
+      the composite field arena, where local observations on entangled points are exactly
+      expectations in the reduced state, and the subadditivity arguments of the entropy
+      tier all consume it.
 
-      A small story of library hygiene attaches. The defining reduced-trace
-      identities were originally proved in the entropy module, and when the
-      work on entangled weights needed them without the rest of the entropy
-      machinery they were moved to sit beside the definition. The rule is that
-      the defining property of an operation lives with the operation.
+      A small story of library hygiene attaches. The defining reduced-trace identities
+      were originally proved in the entropy module, and when the work on entangled weights
+      needed them without the rest of the entropy machinery they were moved to sit beside
+      the definition, so the rule is that the defining property of an operation lives with
+      the operation.
 
       On the constraint surface the partial trace is the operation that turns the joint
-      description into the system's own. A preparation of system and environment together is
-      flowed, its density operator on the joint space is formed, and tracing out the
+      description into the system's own. A preparation of system and environment together
+      is flowed, its density operator on the joint space is formed, and tracing out the
       environment gives the system's density operator after the interaction. That reduced
-      operator is what a channel acts on, so the partial trace is the exact point at which the
-      programme's ontic flows become the operational channels of quantum information.
+      operator is what a channel acts on, so the partial trace is the exact point at which
+      the programme's ontic flows become the operational channels of quantum information.
     mathematical: >
-      partialTraceRight and partialTraceLeft on Matrix (n x m) (n x m), with
-      bundled linearity; trace preservation; Kronecker reduction, the trace of
-      the traced-out factor scaling the survivor; Hermiticity and positivity
-      preservation via tensor witness vectors; and density-to-density.
+      partialTraceRight and partialTraceLeft on Matrix (n x m) (n x m), with bundled
+      linearity, trace preservation, Kronecker reduction, the trace of the traced-out
+      factor scaling the survivor, Hermiticity and positivity preservation via tensor
+      witness vectors, and density-to-density.
 
-      The reduced-trace identities Tr(M (X (x) I)) = Tr(Tr_B M X) and its
-      mirror are proved alongside. All foundational-triple-only.
+      The reduced-trace identities Tr(M (X (x) I)) = Tr(Tr_B M X) and its mirror are
+      proved alongside, and all of it is foundational-triple-only.
 
-      Two spellings coexist: Matrix.traceRight and Matrix.traceLeft in
-      Mathlib/LinearAlgebra/Matrix/PartialTrace.lean, and the QuantumInfo pair above; the
-      Stinespring module uses the former. The reduced flowed barycentre is computed by
+      Two spellings coexist, Matrix.traceRight and Matrix.traceLeft in
+      Mathlib/LinearAlgebra/Matrix/PartialTrace.lean and the QuantumInfo pair above, and
+      the Stinespring module uses the former. The reduced flowed barycentre is computed by
       barycenterMatrix_kronecker_of_ae (a product preparation has a Kronecker barycentre,
       almost everywhere in the representative) and traceRight_barycenter_flow
       (LF2/FlowChannel.lean).
@@ -6777,60 +6770,53 @@ entries:
     related: [stinespring-dilation, quantum-channel, entropy-subadditivity, kronecker-product, de-isolation]
 
   - slug: entropy-subadditivity
-    reviewed: 2026-09-13
+    reviewed: 2026-09-14
     hook: >
-      The information missing from a whole never exceeds the sum of what is
-      missing from its parts. That is von Neumann's subadditivity inequality,
-      proved at the matrix level with the operator-logarithm step that informal
-      proofs usually wave through.
+      The information missing from a whole never exceeds the sum of what's missing from
+      its parts, and that's von Neumann's subadditivity inequality, proved at the matrix
+      level with the operator-logarithm step informal proofs usually wave through.
     layman: >
-      Entropy measures missing information: how much you do not know about the
-      state of a system. For quantum systems the relevant quantity is the von
-      Neumann entropy, and the basic sanity check on it is subadditivity: the
-      entropy of a joint system is at most the sum of the entropies of its two
-      parts. Correlations between the parts can only make the whole more
-      predictable than its parts suggest, never less.
+      Entropy measures missing information, meaning how much you don't know about the
+      state of a system. For quantum systems the relevant quantity is the von Neumann
+      entropy, and the basic sanity check on it is subadditivity, which says the entropy
+      of a joint system is at most the sum of the entropies of its two parts, so
+      correlations between the parts can only make the whole more predictable than its
+      parts suggest, never less.
 
-      Every textbook states the inequality, and the proof leans on two steps
-      that are easy to say and laborious to formalise. The first is Klein's
-      inequality, which says that relative entropy, a measure of how
-      distinguishable one state is from another, is never negative; it needs a
-      careful argument in terms of the eigenvalues of the two states and a
-      matrix of overlaps between their eigenvectors, recording how much each
-      eigenvector of one state has in common with each eigenvector of the
-      other, whose rows and columns each add up to one. The second is the
-      splitting of the logarithm of a tensor product, the joint operator
-      formed from independent operators on the two parts, into a sum of the
-      logarithms of its factors, which requires the way functions are applied
-      to operators to respect the product structure, and this is exactly the
-      step informal proofs wave through.
+      Every textbook states the inequality, and the proof leans on two steps that are easy
+      to say and laborious to formalise. The first is Klein's inequality, which says
+      relative entropy, a measure of how distinguishable one state is from another, is
+      never negative, and it needs a careful argument in terms of the eigenvalues of the
+      two states and a matrix of overlaps between their eigenvectors, recording how much
+      each eigenvector of one state has in common with each eigenvector of the other,
+      whose rows and columns each add up to one. The second is the splitting of the
+      logarithm of a tensor product, the joint operator formed from independent operators
+      on the two parts, into a sum of the logarithms of its factors, which requires the
+      way functions are applied to operators to respect the product structure, and this is
+      exactly the step informal proofs wave through.
 
-      Both steps are done, so the inequality stands on checked ground,
-      including for pure entangled states: the case in which the whole has
-      zero entropy while its parts do not, which is the quantum signature that
-      classical entropy forbids.
+      Both steps are done, so the inequality stands on checked ground, including for pure
+      entangled states, the case in which the whole has zero entropy while its parts
+      don't, which is the quantum signature classical entropy forbids.
     in_csd: >
-      The entropy tier serves the programme's thermodynamics track and its
-      accounting of decoherence. Entropy production in measurement, the
-      entropy ledger of the chaos diagnostics, and the touchpoint with
-      Landauer's principle all cite the von Neumann entropy machinery that
-      this inequality anchors.
+      The entropy tier serves the programme's thermodynamics track and its accounting of
+      decoherence. Entropy production in measurement, the entropy ledger of the chaos
+      diagnostics, and the touchpoint with Landauer's principle all cite the von Neumann
+      entropy machinery this inequality anchors.
 
-      Deferred pieces are named rather than hidden. The strong version,
-      subadditivity with three parties, is proved conditionally on the data
-      processing inequality, which is stated as an explicit hypothesis; and the
-      purification construction needed for the triangle inequality is recorded
-      as the missing step.
+      Deferred pieces are named rather than hidden. The strong version, subadditivity with
+      three parties, is proved conditionally on the data processing inequality, which is
+      stated as an explicit hypothesis, and the purification construction needed for the
+      triangle inequality is recorded as the missing step.
     mathematical: >
-      The theorem vonNeumannEntropy_subadditive states that
-      S(rho_AB) <= S(rho_A) + S(rho_B) for a bipartite density with
-      positive-definite marginals, the joint state merely PSD.
+      The theorem vonNeumannEntropy_subadditive states that S(rho_AB) <= S(rho_A) +
+      S(rho_B) for a bipartite density with positive-definite marginals, the joint state
+      merely PSD.
 
-      The route runs through Klein's inequality via the doubly-stochastic
-      overlap expansion; the Kronecker-log split
-      log(A (x) B) = log A (x) I + I (x) log B via a diagonalisation-respecting
-      functional calculus; and the reduced-trace identities collapsing the
-      cross terms. Araki-Lieb's one side is proved under its stated
+      The route runs through Klein's inequality via the doubly-stochastic overlap
+      expansion, the Kronecker-log split log(A (x) B) = log A (x) I + I (x) log B via a
+      diagonalisation-respecting functional calculus, and the reduced-trace identities
+      collapsing the cross terms. Araki-Lieb's one side is proved under its stated
       hypotheses.
     term: Entropy subadditivity
     status: proved-in-corpus
@@ -6841,80 +6827,74 @@ entries:
     related: [von-neumann-entropy, klein-inequality, landauer-principle, partial-trace, holevo-bound]
 
   - slug: schrodinger-from-records
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      CSD does not postulate the Schrodinger equation. Preserving the statistics
-      of records forces the dynamics to be unitary, unitarity together with
-      continuity forces a Hamiltonian, and the exponential form of the equation
-      is a theorem at the end of that chain.
+      CSD doesn't postulate the Schrodinger equation, as preserving the statistics of
+      records forces the dynamics to be unitary, unitarity together with continuity forces
+      a Hamiltonian, and the exponential form of the equation is a theorem at the end of
+      that chain.
     layman: >
-      Reconstructions of quantum mechanics usually spend their effort on
-      probability and quietly assume the dynamics: states evolve by the
-      Schrodinger equation because that is the theory being reconstructed. If
-      the arena picture is doing real work, the dynamics should be earned too.
+      Reconstructions of quantum mechanics usually spend their effort on probability and
+      quietly assume the dynamics, so states evolve by the Schrodinger equation because
+      that's the theory being reconstructed. If the arena picture is doing real work, the
+      dynamics should be earned too.
 
-      The corpus's route earns it from records. Suppose that the arena's
-      dynamics preserves record statistics, the pairwise outcome frequencies
-      that experiments actually accumulate. A rigidity theorem going back to
-      Wigner says that a map preserving those statistics must be either
-      unitary, one of the reversible transformations quantum mechanics
-      ordinarily uses, or antiunitary, a mirror-image variant that also
-      reverses the sign of the imaginary unit. A selection argument rules out
-      the antiunitary branch along a continuous flow. A phase-lifting step then
-      passes from the transformation of states to a transformation of the
-      vectors that represent them, choosing consistently the phase of each,
-      the undetectable angle by which such a vector may be rotated without
-      changing the state; and a continuity theorem of Stone's type delivers a
-      self-adjoint generator, which is the Hamiltonian.
+      The corpus's route earns it from records. Suppose the arena's dynamics preserves
+      record statistics, the pairwise outcome frequencies experiments actually accumulate.
+      A rigidity theorem going back to Wigner says a map preserving those statistics must
+      be either unitary, one of the reversible transformations quantum mechanics
+      ordinarily uses, or antiunitary, a mirror-image variant that also reverses the sign
+      of the imaginary unit. A selection argument rules out the antiunitary branch along a
+      continuous flow. A phase-lifting step then passes from the transformation of states
+      to a transformation of the vectors that represent them, choosing consistently the
+      phase of each, the undetectable angle by which such a vector may be rotated without
+      changing the state, and a continuity theorem of Stone's type delivers a self-adjoint
+      generator, which is the Hamiltonian.
 
-      The endpoint is the exponential form of the Schrodinger equation,
-      derived, with a premise about the statistics of records rather than
-      about the structure of Hilbert space, the abstract vector space in which
-      quantum states live. The chain is assembled from separate theorems rather
-      than proved in one stroke, and the final link carries real hypotheses: a
-      smoothness condition, and a consistency condition on the phase, called a
-      coboundary condition, which the corpus shows is unavoidable rather than
-      convenient.
+      The endpoint is the exponential form of the Schrodinger equation, derived, with a
+      premise about the statistics of records rather than about the structure of Hilbert
+      space, the abstract vector space in which quantum states live. The chain is
+      assembled from separate theorems rather than proved in one stroke, and the final
+      link carries real hypotheses, a smoothness condition, and a consistency condition on
+      the phase, called a coboundary condition, which the corpus shows is unavoidable
+      rather than convenient.
     in_csd: >
-      This series of results is the dynamics spine of the programme. The flow
-      on the projected sector, the visible quantum state space obtained by
-      projecting the arena, is conjugation by a one-parameter group of unitary
-      maps, proved from the descent structure, the way the arena's flow
-      descends to the projected sector, rather than assumed. A record-level
-      premise conversion makes the hypothesis operational: transition
-      probabilities are themselves record observables, so preserving record
-      statistics and preserving transition probabilities are the same
-      condition, by theorem.
+      This series of results is the dynamics spine of the programme. The flow on the
+      projected sector, the visible quantum state space obtained by projecting the arena,
+      is conjugation by a one-parameter group of unitary maps, proved from the descent
+      structure, the way the arena's flow descends to the projected sector, rather than
+      assumed. A record-level premise conversion makes the hypothesis operational, as
+      transition probabilities are themselves record observables, so preserving record
+      statistics and preserving transition probabilities are the same condition, by
+      theorem.
 
-      The scope is tracked mechanically rather than by prose. An automated
-      guard enforces that the descent equation is genuinely consumed by the
-      proof, and a connectivity manifest, not this page, is the single source
-      of truth for which end-to-end connective claims are backed.
+      The scope is tracked mechanically rather than by prose. An automated guard enforces
+      that the descent equation is genuinely consumed by the proof, and a connectivity
+      manifest, not this page, is the single source of truth for which end-to-end
+      connective claims are backed.
     mathematical: >
-      The capstone sigmaFlow_schrodinger_form states that for sector data with
-      a projectable flow, the projected dynamics is exp(-itH)-conjugation on
-      rays. Read the hypotheses, because they are where the content sits. The
-      theorem takes the projected flow as already given by a unitary family,
-      so Wigner rigidity and the Bargmann branch discriminator stand upstream
-      supplying that premise rather than inside this statement; it then takes
-      a cocycle for the family, a unit-modulus phase satisfying a coboundary
-      condition, an anti-Hermitian generator, and a C^1 derivative hypothesis.
-      The coboundary condition is not a convenience: the corpus proves it
+      The capstone sigmaFlow_schrodinger_form states that for sector data with a
+      projectable flow, the projected dynamics is exp(-itH)-conjugation on rays. Read the
+      hypotheses, because they're where the content sits. The theorem takes the projected
+      flow as already given by a unitary family, so Wigner rigidity and the Bargmann
+      branch discriminator stand upstream supplying that premise rather than inside this
+      statement, and it then takes a cocycle for the family, a unit-modulus phase
+      satisfying a coboundary condition, an anti-Hermitian generator, and a C^1 derivative
+      hypothesis. The coboundary condition isn't a convenience, as the corpus proves it
       necessary, so the phase lift exists exactly when it holds.
 
-      The same module carries the form that needs neither datum:
-      projectedFlow_schrodinger_form_of_continuous_flow reaches the same
-      conclusion from continuity of the lifted family alone, with the
-      coboundary supplied by the one-parameter Bargmann lift and the generator
-      by the finite-dimensional continuity-only Stone theorem.
+      The same module carries the form that needs neither datum, as
+      projectedFlow_schrodinger_form_of_continuous_flow reaches the same conclusion from
+      continuity of the lifted family alone, with the coboundary supplied by the one-
+      parameter Bargmann lift and the generator by the finite-dimensional continuity-only
+      Stone theorem.
 
-      What the capstone adds over the ray-level form is that it genuinely
-      consumes the sector fields, the flow, the projection and projectability,
-      rather than restating a result about an already-projected map. The
-      record-level conversion equates the operational premise with the
-      geometric one and re-derives the flow theorem from record statistics,
-      with the invariance of the Fubini-Study measure obtained with U(N) in
-      the proof and never in the statement.
+      What the capstone adds over the ray-level form is that it genuinely consumes the
+      sector fields, the flow, the projection and projectability, rather than restating a
+      result about an already-projected map. The record-level conversion equates the
+      operational premise with the geometric one and re-derives the flow theorem from
+      record statistics, with the invariance of the Fubini-Study measure obtained with
+      U(N) in the proof and never in the statement.
     term: Schrodinger from records
     status: proved-in-corpus
     source: curated
@@ -6924,100 +6904,96 @@ entries:
     related: [schrodinger-equation, wigner-rigidity, stone-theorem, bargmann, projectability]
 
   - slug: shor-code
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      Shor's nine-qubit code was the first proof that quantum information can be
-      protected against any error on any single qubit without ever being read,
-      and the corpus verifies that protection as explicit constructed operations,
-      including the subtle case where two different errors share one repair.
+      Shor's nine-qubit code was the first proof that quantum information can be protected
+      against any error on any single qubit without ever being read, and the corpus
+      verifies that protection as explicit constructed operations, including the subtle
+      case where two different errors share one repair.
     layman: >
-      Classical error correction works by redundancy and inspection: store three
-      copies of a bit, look at them, and take the majority. Quantum information
-      resists both halves of that recipe. A qubit, the quantum unit of
-      information, cannot be copied, and measuring it disturbs the very state you
-      are trying to protect. For a while it looked as if error correction was
-      simply impossible for quantum computers.
+      Classical error correction works by redundancy and inspection, so you store three
+      copies of a bit, look at them, and take the majority. Quantum information resists
+      both halves of that recipe, as a qubit, the quantum unit of information, can't be
+      copied, and measuring it disturbs the very state you're trying to protect, so for a
+      while it looked as if error correction was simply impossible for quantum computers.
 
-      Shor's nine-qubit code, published in 1995, showed that it is not. One qubit
-      is spread across nine physical qubits in such a way that any error on any
-      single one of the nine can be detected and undone without ever learning the
-      protected information. The errors it handles are of two kinds, and their
-      combinations. A flip swaps the two basic values of a qubit, much as a
-      classical bit error turns a zero into a one. A phase error has no
-      classical counterpart: a qubit can be in a blend of its two values, and a
-      phase error changes the sign with which the two are combined, which alters
-      the results of later measurements without touching either value on its
-      own.
+      Shor's nine-qubit code, published in 1995, showed that it isn't. One qubit is spread
+      across nine physical qubits in such a way that any error on any single one of the
+      nine can be detected and undone without ever learning the protected information. The
+      errors it handles are of two kinds, and their combinations. A flip swaps the two
+      basic values of a qubit, much as a classical bit error turns a zero into a one, and
+      a phase error has no classical counterpart, as a qubit can be in a blend of its two
+      values, and a phase error changes the sign with which the two are combined, which
+      alters the results of later measurements without touching either value on its own.
 
-      Detection works through checks that ask joint questions about groups of
-      qubits, such as whether two of them agree, without asking what either
-      value is. The pattern of check results, called the syndrome, points to the
-      error without revealing the stored information, and a correction operation
-      reverses it. The corpus builds all of this explicitly: the checks, the
-      syndrome extraction, the corrections, and the theorems that the encoded
-      state comes back intact for each kind of error.
+      Detection works through checks that ask joint questions about groups of qubits, such
+      as whether two of them agree, without asking what either value is. The pattern of
+      check results, called the syndrome, points to the error without revealing the stored
+      information, and a correction operation reverses it. The corpus builds all of this
+      explicitly, the checks, the syndrome extraction, the corrections, and the theorems
+      that the encoded state comes back intact for each kind of error.
 
-      One subtle feature survives the formalisation intact. Two different phase
-      errors, on different qubits within the same group of three, can produce
-      the same syndrome, and the same correction still works for both. This
-      property, called degeneracy, has no classical analogue and is part of what
-      makes quantum codes stranger than classical ones.
+      One subtle feature survives the formalisation intact. Two different phase errors, on
+      different qubits within the same group of three, can produce the same syndrome, and
+      the same correction still works for both. This property, called degeneracy, has no
+      classical analogue and is part of what makes quantum codes stranger than classical
+      ones.
     in_csd: >
-      CSD reconstructs quantum mechanics from an underlying deterministic
-      description, and its formal corpus also carries a suite of standard
-      quantum results reproduced inside the same formal frame. The
-      error-correction results belong to that suite. They are labelled as
-      empirical breadth: quantum mechanics' own machinery, checked in the corpus
-      so that the programme's operational layer, the part that describes what
-      laboratories actually do, is held to the same standard as the foundational
-      claims. They work as a regression suite, a fixed set of results that must
-      keep holding as the corpus grows.
+      CSD reconstructs quantum mechanics from an underlying deterministic description, and
+      its formal corpus also carries a suite of standard quantum results reproduced inside
+      the same formal frame. The error-correction results belong to that suite, and
+      they're labelled as empirical breadth, quantum mechanics' own machinery, checked in
+      the corpus so the programme's operational layer, the part that describes what
+      laboratories actually do, is held to the same standard as the foundational claims.
+      They work as a regression suite, a fixed set of results that must keep holding as
+      the corpus grows.
 
-      The code is built by concatenation. A three-qubit code that fixes flips is
-      layered inside a three-qubit code that fixes phase errors, and the
-      nine-qubit code is the result. The formal development follows the same
-      layering, so its structure mirrors the way the code is taught.
+      The code is built by concatenation. A three-qubit code that fixes flips is layered
+      inside a three-qubit code that fixes phase errors, and the nine-qubit code is the
+      result, so the formal development follows the same layering and its structure
+      mirrors the way the code is taught.
 
-      For a reader interested in formal methods, the point is the level at which
-      the code exists. Encoders, syndromes and corrections are explicit maps with
-      theorems about them, rather than an abstract framework for such codes cited
-      from outside and assumed to apply.
+      For a reader interested in formal methods, the point is the level at which the code
+      exists. Encoders, syndromes and corrections are explicit maps with theorems about
+      them, rather than an abstract framework for such codes cited from outside and
+      assumed to apply.
 
-      The bit-flip half of the code is also read on the constraint surface, and every step of
-      that reading is proved. The error is not posited as a channel: a volume-preserving flow
-      on the three-qubit register together with a four-level environment, lifting a concrete
-      joint unitary, produces the single-error channel as its environment marginal. The code
-      space is a region of the surface, and the four error images of that region are pairwise
-      disjoint, so the syndrome measurement is a partition of the surface into four regions,
-      and the projective measurement that reads the syndrome is exactly the indicator of those
-      regions. Recovery is one channel: measure the syndrome, apply the correction it names.
-      That single channel returns every code state, mixed or pure, from the mixed post-error
-      state, and applied to the environment marginal of the flowed preparation it returns the
-      register's density operator whenever the preparation lies in the code region. What the
-      code does not do is also stated: two flips at once are miscorrected, so the
-      independent-noise channel is corrected only to first order.
+      The bit-flip half of the code is also read on the constraint surface, and every step
+      of that reading is proved. The error isn't posited as a channel, as a volume-
+      preserving flow on the three-qubit register together with a four-level environment,
+      lifting a concrete joint unitary, produces the single-error channel as its
+      environment marginal. The code space is a region of the surface, and the four error
+      images of that region are pairwise disjoint, so the syndrome measurement is a
+      partition of the surface into four regions, and the projective measurement that
+      reads the syndrome is exactly the indicator of those regions. Recovery is one
+      channel, which measures the syndrome and applies the correction it names. That
+      single channel returns every code state, mixed or pure, from the mixed post-error
+      state, and applied to the environment marginal of the flowed preparation it returns
+      the register's density operator whenever the preparation lies in the code region.
+      What the code doesn't do is also stated, as two flips at once are miscorrected, so
+      the independent-noise channel is corrected only to first order.
     mathematical: >
       The recovery theorems shor_corrects_X, shor_corrects_Z_degenerate and
-      shor_corrects_XZ state that for every block position and every logical
-      state, applying the error followed by syndrome-directed correction returns
-      the encoded state. The Z case is proved through the degeneracy (correction
-      at any position within the affected block restores the state), and the
-      combined XZ case composes both recoveries.
+      shor_corrects_XZ state that for every block position and every logical state,
+      applying the error followed by syndrome-directed correction returns the encoded
+      state. The Z case is proved through the degeneracy (correction at any position
+      within the affected block restores the state), and the combined XZ case composes
+      both recoveries.
 
-      The Pauli errors X, Z and XZ span every single-qubit error, so recovery
-      from these three cases covers the single-qubit error set. Stabiliser
-      fixing lemmas certify the code space: the encoded states are fixed by the
-      stabiliser checks.
+      The Pauli errors X, Z and XZ span every single-qubit error, so recovery from these
+      three cases covers the single-qubit error set, and stabiliser fixing lemmas certify
+      the code space, as the encoded states are fixed by the stabiliser checks.
 
-      Three-qubit half on the surface: bitFlipFlow_traceRight_barycenter and
-      registerFlow_traceRight_barycenter (Empirical/CSD/QEC/) produce the one-qubit bit-flip
-      channel and the register's single-error channel as environment marginals of flows on the
-      complex projective spaces of dimension three and thirty-one; errorRegion_disjoint and
-      syndromeProj_fixes_errorRegion read the syndrome as a partition of the surface;
-      recoveryChannel_apply_singleFlipChannel_apply (Empirical/QM/QEC/SyndromeRecovery.lean)
-      is the Knill-Laflamme collapse for the recovery channel with Kraus operators E_k P_k;
-      and registerFlow_recovery (Empirical/CSD/QEC/RegisterFlow.lean) composes them into error
-      correction on the surface end to end.
+      For the three-qubit half on the surface, bitFlipFlow_traceRight_barycenter and
+      registerFlow_traceRight_barycenter (Empirical/CSD/QEC/) produce the one-qubit bit-
+      flip channel and the register's single-error channel as environment marginals of
+      flows on the complex projective spaces of dimension three and thirty-one,
+      errorRegion_disjoint and syndromeProj_fixes_errorRegion read the syndrome as a
+      partition of the surface, recoveryChannel_apply_singleFlipChannel_apply
+      (Empirical/QM/QEC/SyndromeRecovery.lean) is the Knill-Laflamme collapse for the
+      recovery channel with Kraus operators E_k P_k, and registerFlow_recovery
+      (Empirical/CSD/QEC/RegisterFlow.lean) composes them into error correction on the
+      surface end to end.
     term: Shor code
     status: proved-in-corpus
     source: curated
@@ -7028,88 +7004,81 @@ entries:
 
   - slug: ozawa-error-disturbance
     hook: >
-      The famous error-times-disturbance formula attributed to Heisenberg fails
-      in the laboratory; the relation that actually holds is Ozawa's, with three
-      terms instead of one, and the corpus proves it.
+      The famous error-times-disturbance formula attributed to Heisenberg fails in the
+      laboratory, and the relation that actually holds is Ozawa's, with three terms
+      instead of one, and the corpus proves it.
     layman: >
-      Heisenberg's microscope is the story everyone is told. Look at an electron
-      closely enough to pin down its position and the light you use to see it
-      gives it a kick, spoiling its momentum. Measure precisely, disturb
-      proportionally. The trade-off is usually written as a formula, the error
-      of the measurement times the disturbance it causes is at least a fixed
-      amount, and that formula is quoted constantly.
+      Heisenberg's microscope is the story everyone is told. Look at an electron closely
+      enough to pin down its position and the light you use to see it gives it a kick,
+      spoiling its momentum, so you measure precisely and disturb proportionally. The
+      trade-off is usually written as a formula, that the error of the measurement times
+      the disturbance it causes is at least a fixed amount, and that formula is quoted
+      constantly.
 
-      It is not true as stated. In 2012 two groups measured it failing: Erhart
-      and colleagues with neutron spins in Vienna (Nature Physics 8, 185), and
-      Rozema and colleagues with photon polarisation in Toronto. This was not a
-      subtle correction. The product of error and disturbance came out below the
-      supposed floor.
+      It isn't true as stated. In 2012 two groups measured it failing, Erhart and
+      colleagues with neutron spins in Vienna (Nature Physics 8, 185), and Rozema and
+      colleagues with photon polarisation in Toronto, and this wasn't a subtle correction,
+      as the product of error and disturbance came out below the supposed floor.
 
-      What is true is Ozawa's version, and the difference is instructive. It has
-      three terms rather than one. Besides the error and the disturbance, it
-      involves the spreads of the two quantities in the state you prepared,
-      meaning how widely each would scatter if measured on its own before any
-      disturbance. The extra terms pair something about the measurement with
-      something about the prepared state. You still cannot have an exact
-      measurement that disturbs nothing, but the honest bookkeeping needs the
-      preparation spreads in it, and the naive formula left them out.
+      What's true is Ozawa's version, and the difference is instructive, as it has three
+      terms rather than one. Besides the error and the disturbance, it involves the
+      spreads of the two quantities in the state you prepared, meaning how widely each
+      would scatter if measured on its own before any disturbance, so the extra terms pair
+      something about the measurement with something about the prepared state. You still
+      can't have an exact measurement that disturbs nothing, but the honest bookkeeping
+      needs the preparation spreads in it, and the naive formula left them out.
 
-      Two things are worth keeping apart. The trade-off between error and
-      disturbance is real. The famous formula for it was wrong.
+      Two things are worth keeping apart. The trade-off between error and disturbance is
+      real, and the famous formula for it was wrong.
     in_csd: >
-      This is a coverage result rather than a CSD one: the corpus proves it
-      because a reader expects it, and it records in a theorem, not a footnote,
-      that the relation does not belong to CSD's own measurement account.
+      This is a coverage result rather than a CSD one, as the corpus proves it because a
+      reader expects it, and it records in a theorem, not a footnote, that the relation
+      doesn't belong to CSD's own measurement account.
 
-      The relation is about a measurement model in the textbook sense: a system,
-      a probe, an interaction between them, and a meter read at the end. CSD's
-      record layer, its account of how a measurement leaves a lasting mark in
-      the underlying state space, has no such model. Its measurement step is a
-      deterministic map on the arena, the underlying state space, rather than a
-      linear transformation of a joint quantum state of system and probe. So
-      the error and the disturbance the relation talks about are not defined
-      there at all. This is proved rather than asserted: it follows from the
-      same theorem that shows the record layer has no instance of the
-      Wigner-Araki-Yanase measurement setting.
+      The relation is about a measurement model in the textbook sense, a system, a probe,
+      an interaction between them, and a meter read at the end. CSD's record layer, its
+      account of how a measurement leaves a lasting mark in the underlying state space,
+      has no such model, as its measurement step is a deterministic map on the arena, the
+      underlying state space, rather than a linear transformation of a joint quantum state
+      of system and probe, so the error and the disturbance the relation talks about
+      aren't defined there at all. This is proved rather than asserted, as it follows from
+      the same theorem that shows the record layer has no instance of the Wigner-Araki-
+      Yanase measurement setting.
 
-      CSD therefore neither explains nor predicts the error-disturbance
-      trade-off. What the corpus gains is completeness: it proves Robertson's
-      inequality, the statistical uncertainty relation, and alongside it the
-      measurement-theoretic relation that a reader aware of the 2012 experiments
-      expects to find next to it.
+      CSD therefore neither explains nor predicts the error-disturbance trade-off. What
+      the corpus gains is completeness, as it proves Robertson's inequality, the
+      statistical uncertainty relation, and alongside it the measurement-theoretic
+      relation a reader aware of the 2012 experiments expects to find next to it.
     mathematical: >
-      For a measurement model with A_in and B_in the observables entering, A_out
-      the meter read-back and B_out the disturbed observable, the relation reads
-      eps(A) eta(B) + eps(A) sigma(B) + sigma(A) eta(B) >= 1/2 |<psi, [A,B] psi>|
-      with sigma the standard deviations. The corpus proves this at the level the
-      proof actually uses: four symmetric operators on one inner-product space
-      with A_out and B_out commuting, and no tensor product appears. That
-      commutation is the whole content. Expanding the commutator of the two
-      "out" operators gives four terms whose left side vanishes, and the three
-      survivors are bounded by one Cauchy-Schwarz inequality each.
+      For a measurement model with A_in and B_in the observables entering, A_out the meter
+      read-back and B_out the disturbed observable, the relation reads eps(A) eta(B) +
+      eps(A) sigma(B) + sigma(A) eta(B) >= 1/2 |<psi, [A,B] psi>| with sigma the standard
+      deviations. The corpus proves this at the level the proof actually uses, four
+      symmetric operators on one inner-product space with A_out and B_out commuting, and
+      no tensor product appears. That commutation is the whole content, as expanding the
+      commutator of the two "out" operators gives four terms whose left side vanishes, and
+      the three survivors are bounded by one Cauchy-Schwarz inequality each.
 
-      The naive form eps eta >= 1/2 |<[A,B]>| is not universally valid rather
-      than false: it holds for unbiased measurements. The corpus makes no Lean
-      claim about it. It does refute the two-term variant, which shows that the
-      third term is load-bearing.
+      The naive form eps eta >= 1/2 |<[A,B]>| isn't universally valid rather than false,
+      as it holds for unbiased measurements, and the corpus makes no Lean claim about it.
+      It does refute the two-term variant, which shows that the third term is load-
+      bearing.
 
-      The record layer's exclusion is no_ozawa_model_of_jointLift, a corollary
-      of the theorem that gives Wigner-Araki-Yanase no record-layer instance:
-      the record stroke is a skew product on the arena, not a linear map on a
-      joint Hilbert space, so the model's error and disturbance are undefined
-      there.
+      The record layer's exclusion is no_ozawa_model_of_jointLift, a corollary of the
+      theorem that gives Wigner-Araki-Yanase no record-layer instance, as the record
+      stroke is a skew product on the arena and not a linear map on a joint Hilbert space,
+      so the model's error and disturbance are undefined there.
     person: >
-      Masanao Ozawa, born in 1950, worked at Nagoya and Chubu on the
-      mathematical foundations of quantum measurement: the theory of
-      instruments, measuring processes, and what a measurement can and cannot
-      achieve. The 2003 relation came out of taking the measurement process
-      itself as the object of study rather than assuming the textbook trade-off,
-      and it took nine years for the experiments to catch up with it.
+      Masanao Ozawa, born in 1950, worked at Nagoya and Chubu on the mathematical
+      foundations of quantum measurement, the theory of instruments, measuring processes,
+      and what a measurement can and can't achieve. The 2003 relation came out of taking
+      the measurement process itself as the object of study rather than assuming the
+      textbook trade-off, and it took nine years for the experiments to catch up with it.
     term: Ozawa error-disturbance relation
     eponyms: [Ozawa]
     status: proved-in-corpus
     source: curated
-    reviewed: 2026-09-04
+    reviewed: 2026-09-14
     lean:
       module: CsdLean4/Empirical/QM/Ozawa.lean
       theorem: ozawa_error_disturbance
@@ -7121,72 +7090,66 @@ entries:
     related: [robertson-uncertainty, luders-rule, measurement-flow, fisher-information, collapse]
 
   - slug: robertson-uncertainty
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      Robertson's inequality is the precise form of the uncertainty principle,
-      and in CSD the spreads it bounds are the spreads of quantities genuinely
-      distributed over the underlying state space, not merely abstract
-      expectation values.
+      Robertson's inequality is the precise form of the uncertainty principle, and in CSD
+      the spreads it bounds are the spreads of quantities genuinely distributed over the
+      underlying state space and not merely abstract expectation values.
     layman: >
-      The uncertainty principle is quantum mechanics' most famous export and its
-      most misquoted. The precise statement is Robertson's. Take any two
-      measurable quantities and any quantum state. Each quantity has a spread in
-      that state, the amount by which repeated measurements would scatter around
-      their average. Robertson's inequality says the product of the two spreads
-      can never fall below a certain floor. The floor is set by how much the
-      order of the two quantities matters: applying one and then the other need
-      not give the same result as the reverse order, and half the size of the
-      average of that difference, called the commutator, is the bound. For
-      quantities whose order does not matter the floor is zero, and both can be
-      sharp at once.
+      The uncertainty principle is quantum mechanics' most famous export and its most
+      misquoted, and the precise statement is Robertson's. Take any two measurable
+      quantities and any quantum state. Each quantity has a spread in that state, the
+      amount by which repeated measurements would scatter around their average, and
+      Robertson's inequality says the product of the two spreads can never fall below a
+      certain floor. The floor is set by how much the order of the two quantities matters,
+      as applying one and then the other needn't give the same result as the reverse
+      order, and half the size of the average of that difference, called the commutator,
+      is the bound. For quantities whose order doesn't matter the floor is zero, and both
+      can be sharp at once.
 
-      No story about measurements disturbing each other is needed. The
-      inequality is a fact about statistics: it constrains the spreads that any
-      state can have, before anyone measures anything.
+      No story about measurements disturbing each other is needed, as the inequality is a
+      fact about statistics, and it constrains the spreads any state can have before
+      anyone measures anything.
 
-      The corpus proves Robertson's inequality and then does the part that
-      belongs to the CSD picture. Each spread is identified as an ordinary
-      average over the underlying state space, the arena, of a quantity that
-      genuinely varies from point to point. So the spread the inequality bounds
-      is the spread of something really distributed, not just a number attached
-      abstractly to a state.
+      The corpus proves Robertson's inequality and then does the part that belongs to the
+      CSD picture. Each spread is identified as an ordinary average over the underlying
+      state space, the arena, of a quantity that genuinely varies from point to point, so
+      the spread the inequality bounds is the spread of something really distributed and
+      not just a number attached abstractly to a state.
 
-      Two concrete examples anchor the result, including one where the two
-      sides are exactly equal. The inequality is tight, and the formalisation
-      exhibits the tightness.
+      Two concrete examples anchor the result, including one where the two sides are
+      exactly equal, so the inequality is tight and the formalisation exhibits the
+      tightness.
     in_csd: >
-      This belongs to the observable-correspondence tier of the programme, the
-      part that connects quantum observables to quantities on the arena. A
-      quantum observable, one of the matrices that represents a measurable
-      quantity in textbook quantum mechanics, acquires a representative on
-      the arena: a real-valued function whose ordinary integral against the
-      arena's measure reproduces the textbook expectation value. The correspondence is
-      built from two sides. On the quantum side the observable is broken into its
-      possible values and the states carrying each value; on the arena side the
-      space is partitioned along its fibres, the sets of underlying points that
+      This belongs to the observable-correspondence tier of the programme, the part that
+      connects quantum observables to quantities on the arena. A quantum observable, one
+      of the matrices that represents a measurable quantity in textbook quantum mechanics,
+      acquires a representative on the arena, a real-valued function whose ordinary
+      integral against the arena's measure reproduces the textbook expectation value. The
+      correspondence is built from two sides, as on the quantum side the observable is
+      broken into its possible values and the states carrying each value, and on the arena
+      side the space is partitioned along its fibres, the sets of underlying points that
       share the same quantum state.
 
-      With that correspondence in place, Robertson's inequality holds with its
-      left-hand side read on the arena: the uncertainty bound becomes a statement
-      about the spreads of arena quantities. The examples use pairs of spin
-      observables of a qubit on explicit states. One example saturates the bound,
-      and a parametric version proves the inequality for spin measured along
-      arbitrary directions.
+      With that correspondence in place, Robertson's inequality holds with its left-hand
+      side read on the arena, so the uncertainty bound becomes a statement about the
+      spreads of arena quantities. The examples use pairs of spin observables of a qubit
+      on explicit states, one example saturates the bound, and a parametric version proves
+      the inequality for spin measured along arbitrary directions.
     mathematical: >
-      The main theorem, kahler_robertson_ontic_variance, states that the product
-      of ontic-side variances dominates the commutator bound, with the variance
-      identification running through the spectral-region integral identities,
-      so that the ontic centred second moment equals the Hilbert-space variance.
+      The main theorem, kahler_robertson_ontic_variance, states that the product of ontic-
+      side variances dominates the commutator bound, with the variance identification
+      running through the spectral-region integral identities, so the ontic centred second
+      moment equals the Hilbert-space variance.
 
-      The companions are pauli_xy_robertson_saturation, with both sides equal
-      to one, and the parametric pauliDot version over arbitrary axes.
+      The companions are pauli_xy_robertson_saturation, with both sides equal to one, and
+      the parametric pauliDot version over arbitrary axes.
     person: >
-      Howard Percy Robertson (1903 to 1961) was an American mathematical
-      physicist at Caltech and Princeton, known jointly for the Robertson-Walker
-      metric of cosmology and for the 1929 general uncertainty relation, a
-      one-page Physical Review note that sharpened Heisenberg's heuristic into an
-      inequality for arbitrary pairs of observables. Schrodinger later refined
-      the relation by adding the covariance term.
+      Howard Percy Robertson (1903 to 1961) was an American mathematical physicist at
+      Caltech and Princeton, known jointly for the Robertson-Walker metric of cosmology
+      and for the 1929 general uncertainty relation, a one-page Physical Review note that
+      sharpened Heisenberg's heuristic into an inequality for arbitrary pairs of
+      observables. Schrodinger later refined the relation by adding the covariance term.
     term: Robertson uncertainty relation
     eponyms: [Robertson]
     status: proved-in-corpus
@@ -7197,67 +7160,62 @@ entries:
     related: [ozawa-error-disturbance, hermitian-operator, no-exact-finite-ccr, fisher-information, pauli-matrices]
 
   - slug: interaction-price
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      Switching on an interaction between field modes makes local quantities
-      spread at a rate proportional to the coupling, and the corpus proves the
-      rate is exact: at most twice the coupling times the elapsed time, and at
-      least a fixed fraction of it.
+      Switching on an interaction between field modes makes local quantities spread at a
+      rate proportional to the coupling, and the corpus proves the rate is exact, at most
+      twice the coupling times the elapsed time, and at least a fixed fraction of it.
     layman: >
-      A field can be thought of as a collection of modes, independent patterns
-      of vibration, like the separate notes a string can sound. A quantity is
-      local if it concerns only a particular set of modes. When the modes do not
-      interact, the dynamics keeps every local quantity confined to its own
-      modes for ever. Interactions spread them: a quantity that started out
-      concerning one mode comes to depend on others as time passes.
+      A field can be thought of as a collection of modes, independent patterns of
+      vibration, like the separate notes a string can sound, and a quantity is local if it
+      concerns only a particular set of modes. When the modes don't interact, the dynamics
+      keeps every local quantity confined to its own modes for ever, and interactions
+      spread them, so a quantity that started out concerning one mode comes to depend on
+      others as time passes.
 
-      That qualitative statement is folklore. The quantitative question is the
-      interesting one. At what rate does an interaction buy this spreading, and
-      is the rate you can prove as an upper limit also the rate that actually
-      occurs?
+      That qualitative statement is folklore, and the quantitative question is the
+      interesting one, which is at what rate an interaction buys this spreading, and
+      whether the rate you can prove as an upper limit is also the rate that actually
+      occurs.
 
-      The corpus answers with a sandwich. On one side, an upper bound: after one
-      period of the interacting drive, every local quantity stays within twice
-      coupling-times-time of some exactly local quantity, where the distance
-      between two quantities means the largest difference they could show on any
-      state. Spreading is priced linearly in the coupling strength and the
-      elapsed time. On the other side, a lower bound on an explicit
-      two-mode example: a computable commutator, a quantity measuring how far
-      two operations are from being interchangeable, forces every exactly
-      local quantity to sit at least a comparable linear distance away.
+      The corpus answers with a sandwich. On one side there's an upper bound, as after one
+      period of the interacting drive every local quantity stays within twice coupling-
+      times-time of some exactly local quantity, where the distance between two quantities
+      means the largest difference they could show on any state, so spreading is priced
+      linearly in the coupling strength and the elapsed time. On the other side there's a
+      lower bound on an explicit two-mode example, as a computable commutator, a quantity
+      measuring how far two operations are from being interchangeable, forces every
+      exactly local quantity to sit at least a comparable linear distance away.
 
-      Between the two bounds, "costs at most" becomes "costs exactly", up to a
-      constant factor lying between one over pi and two.
+      Between the two bounds, "costs at most" becomes "costs exactly", up to a constant
+      factor lying between one over pi and two.
     in_csd: >
       CSD's field track, the part of the programme that treats fields, uses the
-      interaction price as its quantitative locality backbone. It feeds the
-      interacting corrections to the propagator, the description of how
-      disturbances travel through the field. It feeds the renormalised
-      couplings, effective interaction strengths that do not depend on the
-      cutoff, the artificial limit on resolution used to keep calculations
-      finite. And it feeds the coarse-graining budget at the level of channels,
-      where the whole error of a renormalisation step, a step that deliberately
-      discards fine detail, is the interaction's price, because the free part
-      of the dynamics is carried across exactly.
+      interaction price as its quantitative locality backbone. It feeds the interacting
+      corrections to the propagator, the description of how disturbances travel through
+      the field. It feeds the renormalised couplings, effective interaction strengths that
+      don't depend on the cutoff, the artificial limit on resolution used to keep
+      calculations finite. And it feeds the coarse-graining budget at the level of
+      channels, where the whole error of a renormalisation step, a step that deliberately
+      discards fine detail, is the interaction's price, because the free part of the
+      dynamics is carried across exactly.
 
-      The lower bound matters because an upper bound on its own leaves open
-      whether the price is ever actually paid. The explicit witness shows that
-      it is, so the sharpness of the bound is a theorem rather than a hope.
+      The lower bound matters because an upper bound on its own leaves open whether the
+      price is ever actually paid. The explicit witness shows that it is, so the sharpness
+      of the bound is a theorem rather than a hope.
     mathematical: >
-      The theorem price_linear_attained states: on the two-mode witness pair,
-      and for tau lambda in the window from zero to pi (both bounds are
-      hypotheses of the theorem, not decoration, since the sine is only monotone
-      there), the distance from the interacting Heisenberg observable to the
-      subalgebra supported on the free modes satisfies
-      tau lambda / pi <= dist <= 2 tau lambda.
+      The theorem price_linear_attained states that on the two-mode witness pair, and for
+      tau lambda in the window from zero to pi (both bounds are hypotheses of the theorem
+      and not decoration, since the sine is only monotone there), the distance from the
+      interacting Heisenberg observable to the subalgebra supported on the free modes
+      satisfies tau lambda / pi <= dist <= 2 tau lambda.
 
-      The lower bound runs through the commutator functional: any operator
-      supported on the free modes commutes with a disjoint probe, so one
-      computed commutator bounds the distance to the whole subalgebra. The
-      commutator entry has modulus 2 sin(tau lambda / 2) exactly, and the Jordan
-      inequality converts the sine to the linear form. Historically the upper
-      bound stood alone with its sharpness explicitly unclaimed; the witness
-      construction retired that caveat.
+      The lower bound runs through the commutator functional, as any operator supported on
+      the free modes commutes with a disjoint probe, so one computed commutator bounds the
+      distance to the whole subalgebra. The commutator entry has modulus 2 sin(tau lambda
+      / 2) exactly, and the Jordan inequality converts the sine to the linear form.
+      Historically the upper bound stood alone with its sharpness explicitly unclaimed,
+      and the witness construction retired that caveat.
     term: Interaction price
     status: proved-in-corpus
     source: curated
