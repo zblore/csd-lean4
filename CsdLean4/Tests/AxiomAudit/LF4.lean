@@ -1523,4 +1523,35 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.not_isHamiltonianVectorField_torusStrokeField
 
+-- #29 (2026-09-14, LF4/ArenaVolume.lean): THE ARENA VOLUME IS THE CORPUS'S μ_FS ⊗ vol_{T²}, up to
+-- its total mass. The top-form measure of arenaForm^(N+1) is invariant under U(N+1) on the sector
+-- (the action preserves ω_FS in charts; the identity preserves the torus form; products inherit)
+-- and under translation of the torus (a chart translation of the translation atlas). Its
+-- normalisation has a U(N+1)-invariant sector marginal, hence μ_FS by fubiniStudyMeasure_unique,
+-- and translation-invariant torus slices, hence multiples of Haar by Mathlib's uniqueness on a
+-- compact group; rectangles then give arenaVolume N = arenaVolume N univ • kMuL p₀. The constant is
+-- the mass, not (N+1)·(4π)^N, and arenaVolume ≠ 0 is not proved (BACKLOG #32).
+/-- info: 'CSD.LF4.arenaVolume_map_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.arenaVolume_map_smul
+
+/-- info: 'CSD.LF4.arenaVolume_map_addLeft' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.arenaVolume_map_addLeft
+
+/-- info: 'CSD.LF4.isFiniteMeasure_arenaVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isFiniteMeasure_arenaVolume
+
+-- ★★★ arenaVolume = c · (μ_FS ⊗ vol), c the arena volume's mass.
+/-- info: 'CSD.LF4.arenaVolume_eq_smul_kMuL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.arenaVolume_eq_smul_kMuL
+
+-- ★★ Liouville for the corpus's kMuL at manifold level: every smooth arena Hamiltonian's flow
+-- preserves c • kMuL.
+/-- info: 'CSD.LF4.kMuL_smul_map_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kMuL_smul_map_hamiltonianFlow
+
 end CSD.Tests.AxiomAudit

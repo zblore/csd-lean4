@@ -858,8 +858,15 @@ isSymplectic"
 #   arenaVolume_map_hamiltonianFlow — (same landing) LIOUVILLE ON THE ARENA: the Hamiltonian flow
 #     of every C^infinity H : KSigma -> R preserves arenaVolume, the top-form measure of
 #     arenaForm^(N+1); an INSTANCE of IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow.
-#     ⚠️ arenaVolume is NOT identified with μ_FS ⊗ vol (the binomial identity for the top power of
-#     a sum is not in the corpus); the theorem is about the form's own measure. CP^N x T^2, EVEN.
+#     arenaVolume IS identified with μ_FS ⊗ vol up to its total mass since #29 (2026-09-14,
+#     LF4/ArenaVolume.lean, arenaVolume_eq_smul_kMuL, by uniqueness of the invariant measures, not
+#     by the binomial identity); the mass itself and arenaVolume ≠ 0 stay open (BACKLOG #32).
+#     CP^N x T^2, EVEN.
+#   kMuL_smul_map_hamiltonianFlow — (2026-09-14, #29, LF4/ArenaVolume.lean) LIOUVILLE FOR THE
+#     CORPUS'S kMuL AT MANIFOLD LEVEL: arenaVolume_map_hamiltonianFlow read through
+#     arenaVolume_eq_smul_kMuL; the flow of every C^infinity H on the arena preserves
+#     arenaVolume univ • kMuL p₀. The scalar is the arena volume's mass (finite; positivity is
+#     #32), so for kMuL itself the statement is conditional on arenaVolume ≠ 0. CP^N x T^2, EVEN.
 #   isHamiltonianVectorField_sectorEnergy / hamiltonianVectorField_sectorEnergy — (same landing)
 #     ι_X ω = dH ON THE ARENA for a sector energy H ∘ π₁: (X_H, 0) satisfies the equation
 #     (mfderiv of H ∘ π₁ is mfderiv H ∘ fst, the torus block of the form kills the zero component),
@@ -964,6 +971,7 @@ hamiltonianCurve_unique
 torusAreaForm_isSymplectic
 arenaForm_isSymplectic
 arenaVolume_map_hamiltonianFlow
+kMuL_smul_map_hamiltonianFlow
 isHamiltonianVectorField_sectorEnergy
 hamiltonianVectorField_sectorEnergy
 hamiltonianFlow_sectorEnergy

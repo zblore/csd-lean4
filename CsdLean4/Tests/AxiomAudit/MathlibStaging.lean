@@ -5994,4 +5994,38 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'AddCircle.hasMFDerivAt_coe_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms AddCircle.hasMFDerivAt_coe_comp
 
+-- Maps that preserve a form in charts (2026-09-14, #29, Geometry/Manifold/FormInvariance.lean):
+-- the chart form of g^* s = s that topFormMeasure_map_eq reads, named, with its closure under
+-- iterated powers and under products of manifolds charted over E × F; chart translations preserve
+-- constant forms on a translation atlas, and translation of AddCircle T is a chart translation.
+/-- info: 'DifferentialForm.preservesLocalRep_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.preservesLocalRep_id
+
+/-- info: 'DifferentialForm.PreservesLocalRep.wedgePow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.PreservesLocalRep.wedgePow
+
+-- ★ A homeomorphism preserving a top form in charts preserves its top-form measure.
+/-- info: 'DifferentialForm.PreservesLocalRep.map_topFormMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.PreservesLocalRep.map_topFormMeasure
+
+-- ★ A product of chart-preserving maps preserves the product family π₁^*α + π₂^*β.
+/-- info: 'DifferentialForm.PreservesLocalRep.prodMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.PreservesLocalRep.prodMap
+
+/-- info: 'DifferentialForm.preservesLocalRep_constFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.preservesLocalRep_constFamily
+
+/-- info: 'DifferentialForm.IsChartTranslation.prodMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.IsChartTranslation.prodMap
+
+-- ★ Translation of the circle is a chart translation of the translation atlas.
+/-- info: 'AddCircle.isChartTranslation_addLeft' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms AddCircle.isChartTranslation_addLeft
+
+-- ★ The unitary action preserves the Fubini–Study 2-form in charts (2026-09-14, #29,
+-- Instances/ProjectiveSpaceFubiniStudyInvariance.lean): fsVolume_map_smul's chart hypothesis,
+-- restated for the form itself so that products with ℂℙⁿ inherit it.
+/-- info: 'Projectivization.preservesLocalRep_fsForm_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.preservesLocalRep_fsForm_smul
+
 end CSD.Tests.AxiomAudit

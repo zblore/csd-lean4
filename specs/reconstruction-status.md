@@ -158,6 +158,10 @@ bullets for the current state.
   paper-side content of `R-016`; the flux obstruction at manifold level landed the same day
   (`LF4/ArenaStrokeFlux.lean`: for `a ≠ 0` no function has the torus stroke as its Hamiltonian
   vector field), so the strokes' classification "symplectic, not Hamiltonian" is a theorem there.
+  The arena's top-form measure is the corpus's `μ_FS ⊗ vol_{T²}` up to its total mass
+  (`arenaVolume_eq_smul_kMuL`, `LF4/ArenaVolume.lean`, same day, by uniqueness of the invariant
+  measures rather than the binomial identity), so arena Liouville is Liouville for `kMuL` at
+  manifold level (`kMuL_smul_map_hamiltonianFlow`); the mass's value is `BACKLOG.md` #32.
 
 **(ii) Scoped by doctrine, not by tooling.**
 

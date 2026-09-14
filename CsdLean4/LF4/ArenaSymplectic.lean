@@ -55,11 +55,14 @@ the generator identity on it.
 
 ## Honest scope
 
-⚠️ **The arena's measure here is the top-form measure of `arenaForm^(N+1)`**, not the corpus's
-`μ_FS ⊗ vol` (`LF4/KahlerInstance.lean`). The two are the same measure up to the constant the
-binomial identity `(π₁^* α + π₂^* β)^{m+n} = C · π₁^* α^m ∧ π₂^* β^n` supplies, and that identity
-is not in the corpus (`ProductForm.lean`, honest scope). So Liouville is stated for `arenaVolume`;
-the record layer's Liouville statements stay on `μ_FS ⊗ vol` where they were.
+⚠️ **The arena's measure here is the top-form measure of `arenaForm^(N+1)`.** It is the corpus's
+`μ_FS ⊗ vol` (`LF4/KahlerInstance.lean`) up to its total mass: `LF4/ArenaVolume.lean` proves
+`arenaVolume N = arenaVolume N univ • kMuL p₀` by uniqueness of the invariant measures
+(`arenaVolume_eq_smul_kMuL`), so Liouville here is Liouville for `kMuL` there
+(`kMuL_smul_map_hamiltonianFlow`). The value of the mass, `(N+1)·(4π)^N`, and with it
+`arenaVolume ≠ 0`, would need the binomial identity
+`(π₁^* α + π₂^* β)^{m+n} = C · π₁^* α^m ∧ π₂^* β^n`, which is not in the corpus
+(`ProductForm.lean`, honest scope; `specs/BACKLOG.md` #32).
 
 ⚠️ **The torus stroke is locally Hamiltonian here; its flux obstruction is the next module.**
 `isLocallyHamiltonian_torusStrokeField` is the positive half of

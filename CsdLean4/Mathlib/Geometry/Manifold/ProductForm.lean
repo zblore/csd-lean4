@@ -43,7 +43,8 @@ products of forms of different degrees across the factors are not built (the cor
 ⚠️ **Nothing about the top power or volumes.** That `(π₁^* α + π₂^* β)^{m+n}` is a multiple of
 `π₁^* α^m ∧ π₂^* β^n` (the binomial identity for commuting even forms) is not stated; the
 Liouville theorem of `HamiltonianFlowVolume.lean` applies to the product form's own top-power
-measure, which is not here identified with a product measure.
+measure, which is not here identified with a product measure. (`FormInvariance.lean` gives the
+product form the invariances a consumer needs to identify that measure by uniqueness instead.)
 
 References: `Geometry/Manifold/ProductSelfModel.lean` (the product charts and their transition
 derivatives); `Geometry/Manifold/ExteriorDerivative.lean` (`localRep`, `trivializationAt_snd`,
