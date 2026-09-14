@@ -623,6 +623,60 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.Thermo.jarzynski_workDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.Thermo.jarzynski_workDist
 
+-- TH5c (2026-09-14), Thermo/ETH.lean: the eigenstate thermalisation hypothesis as a HYPOTHESIS
+-- FIELD (SatisfiesETH: the diagonal elements <e_n, A e_n> are within eps of f(E_n)) and what
+-- follows from it. ETH itself is random-matrix theory and is NOT proved (BACKLOG #21). Dephasing:
+-- the Schrodinger unitary in the eigenbasis is the diagonal of phases (schrodingerUnitary_eq_conj,
+-- via Matrix.exp_conj + exp_diagonal on the spectral theorem), its powers act on the
+-- eigencoordinates by powers of the phases, so the sampled Heisenberg expectation is a
+-- trigonometric polynomial (heisenbergObs_pow); a unit-modulus geometric sequence with ratio != 1
+-- has Cesaro average -> 0 (tendsto_cesaro_geom, geom_sum_eq), a finite sum of them averages to
+-- its ratio-one coefficients (tendsto_cesaro_trigPoly), hence ★★
+-- tendsto_birkhoffAverage_heisenbergObs: under Nonresonant sampling the Birkhoff average
+-- (Mathlib's birkhoffAverage, the same object as Equilibration.lean's) converges to the DIAGONAL
+-- ENSEMBLE sum |c_n|^2 <e_n, A e_n>. No mixing anywhere -- Equilibration.lean proves unitary
+-- dynamics cannot mix; dephasing is the mechanism. nonresonant_of_nondegenerate: a non-degenerate
+-- spectrum with 0 < |tau (E_n - E_m)| < 2 pi is nonresonant (Complex.exp_eq_one_iff). Then ETH:
+-- the diagonal ensemble is within eps of the |c_n|^2-average of f (weighted-average lemma with
+-- the hypothesis only on NONZERO weights -- zero-weight eigencomponents may sit outside the
+-- window), within eps + eta of f(E) on an energy window where f is eta-flat, and the
+-- microcanonical average over the window is within eps + eta of f(E) too; ★★ eth_time_average:
+-- the time average converges to a value within 2(eps + eta) of the microcanonical value.
+-- Foundational-triple.
+/-- info: 'CSD.Thermo.schrodingerUnitary_eq_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.schrodingerUnitary_eq_conj
+
+/-- info: 'CSD.Thermo.schrodingerUnitary_pow_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.schrodingerUnitary_pow_mulVec
+
+/-- info: 'CSD.Thermo.heisenbergObs_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.heisenbergObs_pow
+
+/-- info: 'CSD.Thermo.tendsto_cesaro_geom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.tendsto_cesaro_geom
+
+/-- info: 'CSD.Thermo.tendsto_cesaro_trigPoly' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.tendsto_cesaro_trigPoly
+
+/-- info: 'CSD.Thermo.tendsto_birkhoffAverage_heisenbergObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.tendsto_birkhoffAverage_heisenbergObs
+
+/-- info: 'CSD.Thermo.nonresonant_of_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.nonresonant_of_nondegenerate
+
+/-- info: 'CSD.Thermo.abs_diagonalEnsemble_sub_le_of_eth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.abs_diagonalEnsemble_sub_le_of_eth
+
+/-- info: 'CSD.Thermo.abs_diagonalEnsemble_sub_le_of_window' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.abs_diagonalEnsemble_sub_le_of_window
+
+/-- info: 'CSD.Thermo.abs_microcanonicalDiag_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.abs_microcanonicalDiag_sub_le
+
+/-- info: 'CSD.Thermo.eth_time_average' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms CSD.Thermo.eth_time_average
+
+
 -- W7 (2026-09-11), Thermo/SigmaSecondLaw.lean: TH2, data processing and TH4 instantiated on
 -- preparations under Sigma-flows (W3 barycentre + W6 lifted-flow evolution). The de-isolation
 -- channel IS the pointer-basis pinching (deisolationChannel_apply_eq_pinch); entropy is conserved

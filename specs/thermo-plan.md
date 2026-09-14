@@ -160,9 +160,14 @@ S–M took S–M): the reverse protocol's transition matrix is the transpose (`t
 reversibility from unitarity); ★★ `crooks_pairwise` (`P_F(i,j)·Z₀ = P_R(j,i)·Z₁·e^{βW}`), `crooks_pairwise_freeEnergy`,
 `crooks_ratio`; the work distribution `workDist` on the finite `workValues` (`sum_workDist = 1`); ★★ `crooks`
 (`P_F(w) = P_R(−w)·e^{β(w − ΔF)}` for every real `w`) and `jarzynski_workDist`; glossary entry
-`crooks-fluctuation-theorem`; **TH5c** ETH as a hypothesis field with
+`crooks-fluctuation-theorem`; ~~**TH5c** ETH as a hypothesis field with
 its equilibration consequence on `Equilibration.lean`'s time averages (M–L; ETH *for generic
-Hamiltonians* is random-matrix theory, listed as research); ~~**TH5d** Jarzynski at the `Σ` level —
+Hamiltonians* is random-matrix theory, listed as research)~~ **TH5c DONE 2026-09-14** (`Thermo/ETH.lean`,
+11 pins, M–L took M): `SatisfiesETH` as a hypothesis field, ★★ `tendsto_birkhoffAverage_heisenbergObs`
+(dephasing of the sampled Heisenberg series to the diagonal ensemble, on the same `birkhoffAverage` as E4 and
+with no mixing hypothesis at all — the unitary orbit dephases by itself once the sampling is nonresonant),
+★★ `eth_time_average` (ETH + energy window ⇒ the time average is within `2(ε+η)` of the microcanonical value);
+ETH *for generic Hamiltonians* stays research (BACKLOG #21); ~~**TH5d** Jarzynski at the `Σ` level —
 Gibbs preparation measure, Schrödinger flow as the Hamiltonian flow of `⟨H⟩` (Q29(e)), two-time
 record law — the first thermodynamic consumer of the manifold Liouville theorem (M–L)~~ **TH5d DONE
 2026-09-14** (`RecordLayer/JarzynskiRecord.lean` on the new engine `RecordLayer/DrivenTwoTime.lean`, 19 pins,
