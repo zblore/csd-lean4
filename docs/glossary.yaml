@@ -6198,74 +6198,65 @@ entries:
     related: [no-signalling, field-arena, peres-criterion, kronecker-product, hong-ou-mandel]
 
   - slug: lieb-robinson-bound
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      Even without relativity, influence in a quantum system with local
-      interactions has a speed limit, and on CSD's finite field arena that limit
-      is a theorem with the velocity written out.
+      Even without relativity, influence in a quantum system with local interactions has a
+      speed limit, and on CSD's finite field arena that limit is a theorem with the
+      velocity written out.
     layman: >
-      Nothing in ordinary, non-relativistic quantum mechanics obviously forbids
-      an effect here from showing up arbitrarily fast over there. Yet matter
-      behaves locally. In 1972 Lieb and Robinson proved that systems built from
-      many pieces on a lattice, each interacting only with its neighbours,
-      enforce their own speed limit. There is an effective velocity, and
-      outside the cone it defines, the region that a signal travelling at that
-      velocity could reach, influence is not merely weak but exponentially
-      small in the distance.
+      Nothing in ordinary, non-relativistic quantum mechanics obviously forbids an effect
+      here from showing up arbitrarily fast over there, yet matter behaves locally. In
+      1972 Lieb and Robinson proved that systems built from many pieces on a lattice, each
+      interacting only with its neighbours, enforce their own speed limit. There's an
+      effective velocity, and outside the cone it defines, the region a signal travelling
+      at that velocity could reach, influence isn't merely weak but exponentially small in
+      the distance.
 
-      CSD's field arena is a finite version of such a system: a finite
-      collection of modes, the elementary degrees of freedom, linked by a
-      coupling graph in which an edge joins two modes that interact directly.
-      The corpus proves the finite-arena version of the bound from scratch, in
-      stages that mirror the physics. An operation and a distant observable
-      have no effect on each other at all until enough steps of interaction
-      have passed to bridge the graph distance between them, the smallest
-      number of edges connecting them. Beyond that point the leading term of
-      the influence, measured by what mathematicians call the commutator, the
-      difference made by the order in which two operations are applied, decays
-      like a power. A factorial strengthening then makes the bound decay at
-      every time. Finally the closing form extracts an explicit velocity:
-      outside the cone it sets, the commutator is suppressed by an exponential
-      in the distance.
+      CSD's field arena is a finite version of such a system, a finite collection of
+      modes, the elementary degrees of freedom, linked by a coupling graph in which an
+      edge joins two modes that interact directly. The corpus proves the finite-arena
+      version of the bound from scratch, in stages that mirror the physics. An operation
+      and a distant observable have no effect on each other at all until enough steps of
+      interaction have passed to bridge the graph distance between them, the smallest
+      number of edges connecting them. Beyond that point the leading term of the
+      influence, measured by what mathematicians call the commutator, the difference made
+      by the order in which two operations are applied, decays like a power, and a
+      factorial strengthening then makes the bound decay at every time. Finally the
+      closing form extracts an explicit velocity, so outside the cone it sets the
+      commutator is suppressed by an exponential in the distance.
 
-      The result is a light cone earned from the structure of the couplings
-      alone.
+      The result is a light cone earned from the structure of the couplings alone.
     in_csd: >
-      The bound is load-bearing rather than decorative: it is the mechanism
-      behind the programme's account of locality on the field arena. The
-      record layer, CSD's account of how measurement outcomes are written into
-      the arena, runs the bound through a bridge to the arena with its fibre
-      attached. A record cell in the fibre can be steered from outside the cone
-      by no more than a bound that collapses factorially with distance, which
-      is what makes records stable against distant meddling by theorem rather
-      than by hope.
+      The bound is load-bearing rather than decorative, as it's the mechanism behind the
+      programme's account of locality on the field arena. The record layer, CSD's account
+      of how measurement outcomes are written into the arena, runs the bound through a
+      bridge to the arena with its fibre attached, so a record cell in the fibre can be
+      steered from outside the cone by no more than a bound that collapses factorially
+      with distance, which is what makes records stable against distant meddling by
+      theorem rather than by hope.
 
-      The scope is stated plainly. The velocity obtained is a bound, not the
-      best possible one; the setting is a finite graph of modes, not a
-      continuum; and the corpus explicitly does not identify this dynamical
-      cone with the kinematic light rays of its dispersion analysis.
+      The scope is stated plainly. The velocity obtained is a bound and not the best
+      possible one, the setting is a finite graph of modes and not a continuum, and the
+      corpus explicitly doesn't identify this dynamical cone with the kinematic light rays
+      of its dispersion analysis.
     mathematical: >
-      The proof runs as a chain. Nested commutators of edge-supported
-      generators stay in the coupling graph's k-ball and vanish exactly below
-      the graph distance; the flow remainder obeys a factorial estimate via an
-      integral bound.
+      The proof runs as a chain. Nested commutators of edge-supported generators stay in
+      the coupling graph's k-ball and vanish exactly below the graph distance, and the
+      flow remainder obeys a factorial estimate via an integral bound.
 
-      Hence the commutator of a time-evolved observable A and a static
-      observable B at graph distance d is bounded by
-      2 norm(A) norm(B) (2 norm(S) t)^d / d!, and the closing theorem
-      norm_commutator_velocity_le gives, for v t <= d with v = 2 e^2 norm(S),
-      the bound 2 norm(A) norm(B) e^(-d).
+      Hence the commutator of a time-evolved observable A and a static observable B at
+      graph distance d is bounded by 2 norm(A) norm(B) (2 norm(S) t)^d / d!, and the
+      closing theorem norm_commutator_velocity_le gives, for v t <= d with v = 2 e^2
+      norm(S), the bound 2 norm(A) norm(B) e^(-d).
     person: >
-      Elliott Lieb was born in 1932. An American mathematical physicist at
-      Princeton, he has attached his name to an improbable number of sharp
-      inequalities across analysis and quantum theory. Derek Robinson
-      (1935-2021) was a British-Australian mathematical physicist, long at the
-      Australian National University, and co-author of the standard
-      operator-algebra treatment of quantum statistical mechanics. Their 1972
-      paper in Communications in Mathematical Physics proved the group velocity
-      bound for lattice spin systems; it waited three decades for its
-      renaissance and then became the workhorse of the locality estimates of
-      quantum information theory.
+      Elliott Lieb was born in 1932. An American mathematical physicist at Princeton, he
+      has attached his name to an improbable number of sharp inequalities across analysis
+      and quantum theory. Derek Robinson (1935-2021) was a British-Australian mathematical
+      physicist, long at the Australian National University, and co-author of the standard
+      operator-algebra treatment of quantum statistical mechanics. Their 1972 paper in
+      Communications in Mathematical Physics proved the group velocity bound for lattice
+      spin systems, and it waited three decades for its renaissance and then became the
+      workhorse of the locality estimates of quantum information theory.
     term: Lieb-Robinson bound
     eponyms: [Lieb, Robinson]
     status: proved-in-corpus
@@ -6276,66 +6267,59 @@ entries:
     related: [field-arena, record-light-cone, interaction-price, isolation, wick-theorem]
 
   - slug: wick-theorem
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      The bookkeeping rule at the heart of quantum field theory, which reduces
-      any correlation of field operators to a sum over pairings, survives a
-      finite cutoff exactly, and the threshold at which it fails is part of the
-      theorem.
+      The bookkeeping rule at the heart of quantum field theory, which reduces any
+      correlation of field operators to a sum over pairings, survives a finite cutoff
+      exactly, and the threshold at which it fails is part of the theorem.
     layman: >
-      Quantum field theory computes almost everything from one bookkeeping
-      rule. A correlation function is the average of a product of several
-      field operators, quantities such as the value of the field at chosen
-      places and times. Wick's theorem says that any such average reduces to a
-      sum over the ways of pairing the operators up, with each pair
-      contributing one basic building block, the propagator, which is the
-      correlation between just two of them. The rule is usually proved with an
-      infinite ladder of energy levels available for every mode of the field.
+      Quantum field theory computes almost everything from one bookkeeping rule. A
+      correlation function is the average of a product of several field operators,
+      quantities such as the value of the field at chosen places and times, and Wick's
+      theorem says any such average reduces to a sum over the ways of pairing the
+      operators up, with each pair contributing one basic building block, the propagator,
+      which is the correlation between just two of them. The rule is usually proved with
+      an infinite ladder of energy levels available for every mode of the field.
 
-      A finite arena must cut that ladder off at some number of quanta, the
-      units of excitation, per mode. The question then becomes quantitative:
-      does the pairing formula survive, and where exactly does it break? The
-      corpus's answer is that it survives word for word below an explicit
-      threshold, and that at the threshold it fails by a computed amount. The
-      reason is combinatorial. A correlation of a given order is a sum over
-      walks up and down the ladder that return to where they started, and a
-      walk with a fixed number of steps can climb only so far, so it never
-      reaches the missing rungs until the order is large enough to get there.
+      A finite arena must cut that ladder off at some number of quanta, the units of
+      excitation, per mode, so the question becomes quantitative, whether the pairing
+      formula survives and where exactly it breaks. The corpus's answer is that it
+      survives word for word below an explicit threshold, and that at the threshold it
+      fails by a computed amount. The reason is combinatorial, as a correlation of a given
+      order is a sum over walks up and down the ladder that return to where they started,
+      and a walk with a fixed number of steps can climb only so far, so it never reaches
+      the missing rungs until the order is large enough to get there.
 
-      An approximation with an error bar is replaced by exactness with a
-      boundary.
+      An approximation with an error bar is replaced by exactness with a boundary.
     in_csd: >
-      This is the field track, the part of the programme that treats CSD's
-      arena as a finite quantum field, at its most textbook. Four-point
-      functions at equal and at distinct times close into the pairing sum; the
-      two-time kernel carries the time dependence; and the full moment ladder,
-      the double-factorial law for arbitrary even powers of a field mode (a
-      double factorial is the product of every second whole number), is proved
-      by a recursion in which the defect caused by the cutoff is eliminated by
-      the walk argument rather than ignored.
+      This is the field track, the part of the programme that treats CSD's arena as a
+      finite quantum field, at its most textbook. Four-point functions at equal and at
+      distinct times close into the pairing sum, the two-time kernel carries the time
+      dependence, and the full moment ladder, the double-factorial law for arbitrary even
+      powers of a field mode (a double factorial is the product of every second whole
+      number), is proved by a recursion in which the defect caused by the cutoff is
+      eliminated by the walk argument rather than ignored.
 
-      The boundary is stated plainly. The one-shot sum-over-matchings formula
-      for arbitrary interleaved products of operators is not claimed; the
-      double-factorial law carries that content on the mode diagonal, the case
-      of repeated powers of a single mode.
+      The boundary is stated plainly. The one-shot sum-over-matchings formula for
+      arbitrary interleaved products of operators isn't claimed, and the double-factorial
+      law carries that content on the mode diagonal, the case of repeated powers of a
+      single mode.
     mathematical: >
-      The theorem timeFourPoint_wick states that the distinct-times four-point
-      function equals the pairing sum of two-time kernels over every mode
-      pattern, for cutoffs above two.
+      The theorem timeFourPoint_wick states that the distinct-times four-point function
+      equals the pairing sum of two-time kernels over every mode pattern, for cutoffs
+      above two.
 
-      The moment ladder states that the vacuum expectation of Q to the 2n is
-      (2n-1) double factorial times one-half to the n, exactly, for n below
-      the cutoff, via the recursion against the truncated commutation relation;
-      odd moments vanish by walk parity, and grouped mode patterns factorise
-      by clustering.
+      The moment ladder states that the vacuum expectation of Q to the 2n is (2n-1) double
+      factorial times one-half to the n, exactly, for n below the cutoff, via the
+      recursion against the truncated commutation relation, and odd moments vanish by walk
+      parity while grouped mode patterns factorise by clustering.
     person: >
-      Gian Carlo Wick (1909-1992) was born in Turin, worked alongside Fermi in
-      Rome in the 1930s, and after the war held positions at Berkeley, which he
-      left rather than sign the loyalty oath, then at Carnegie Tech, Brookhaven
-      and Columbia. The 1950 theorem on evaluating products of field operators,
-      published in the Physical Review, systematised the calculations of the
-      newly renormalised quantum electrodynamics and has been the daily tool
-      of the subject ever since.
+      Gian Carlo Wick (1909-1992) was born in Turin, worked alongside Fermi in Rome in the
+      1930s, and after the war held positions at Berkeley, which he left rather than sign
+      the loyalty oath, then at Carnegie Tech, Brookhaven and Columbia. The 1950 theorem
+      on evaluating products of field operators, published in the Physical Review,
+      systematised the calculations of the newly renormalised quantum electrodynamics and
+      has been the daily tool of the subject ever since.
     term: Wick's theorem
     eponyms: [Wick]
     status: proved-in-corpus
@@ -6346,62 +6330,55 @@ entries:
     related: [field-arena, kms-condition, no-exact-finite-ccr, lieb-robinson-bound, gibbs-state]
 
   - slug: kms-condition
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      The algebraic signature of thermal equilibrium holds exactly on CSD's
-      finite field arena, and cooling the thermal state all the way down
-      recovers the vacuum.
+      The algebraic signature of thermal equilibrium holds exactly on CSD's finite field
+      arena, and cooling the thermal state all the way down recovers the vacuum.
     layman: >
-      What makes a state thermal? Everyday talk of temperature leans on
-      infinite systems, heat baths and limits. The Kubo-Martin-Schwinger, or
-      KMS, condition is the sharp answer that mathematical physicists settled
-      on. It concerns correlation functions, the averages obtained by measuring
-      one observable now and another one later. The formula for evolving an
-      observable in time continues to make sense when the elapsed time is
-      replaced by an imaginary number, and the KMS condition uses exactly that:
-      a state is in equilibrium at a given temperature precisely when shifting
-      one of the two observables forward by an imaginary time fixed by the
-      inverse temperature gives the same correlation as swapping the order of
+      You can ask what makes a state thermal, and everyday talk of temperature leans on
+      infinite systems, heat baths and limits. The Kubo-Martin-Schwinger, or KMS,
+      condition is the sharp answer mathematical physicists settled on. It concerns
+      correlation functions, the averages obtained by measuring one observable now and
+      another one later. The formula for evolving an observable in time continues to make
+      sense when the elapsed time is replaced by an imaginary number, and the KMS
+      condition uses exactly that, so a state is in equilibrium at a given temperature
+      precisely when shifting one of the two observables forward by an imaginary time
+      fixed by the inverse temperature gives the same correlation as swapping the order of
       the pair.
 
-      On the finite field arena this is neither an axiom nor a limit. The
-      Boltzmann state, the standard thermal state in which each energy level
-      is weighted by a factor that falls off exponentially with its energy
-      divided by the temperature, satisfies the KMS symmetry exactly at the
-      cutoff, by computation. Cool it all the way down and the thermal
-      two-point function, the correlation between two field operators,
-      converges to the vacuum one, with the zero-point contributions cancelling
-      on the way.
+      On the finite field arena this is neither an axiom nor a limit. The Boltzmann state,
+      the standard thermal state in which each energy level is weighted by a factor that
+      falls off exponentially with its energy divided by the temperature, satisfies the
+      KMS symmetry exactly at the cutoff, by computation. Cool it all the way down and the
+      thermal two-point function, the correlation between two field operators, converges
+      to the vacuum one, with the zero-point contributions cancelling on the way.
 
-      This is thermal physics at finite resolution, with no hand-waving about
-      baths.
+      This is thermal physics at finite resolution, with no hand-waving about baths.
     in_csd: >
-      The thermal tier joins the programme's thermodynamics track to its field
-      track. The thermal state is the Gibbs state of the field Hamiltonian, the
-      energy function of the arena; the partition function, the normalising sum
-      over energy levels, factorises across modes; and the edge at which the
-      propagator is truncated is explicit rather than hidden, the same candour
-      about the cutoff that the Wick tier maintains.
+      The thermal tier joins the programme's thermodynamics track to its field track. The
+      thermal state is the Gibbs state of the field Hamiltonian, the energy function of
+      the arena, the partition function, the normalising sum over energy levels,
+      factorises across modes, and the edge at which the propagator is truncated is
+      explicit rather than hidden, the same candour about the cutoff the Wick tier
+      maintains.
 
-      The scope is labelled as breadth: equilibrium structure on the isolated
-      finite piece, not a claim about continuum thermodynamics.
+      The scope is labelled as breadth, as it's equilibrium structure on the isolated
+      finite piece and not a claim about continuum thermodynamics.
     mathematical: >
-      The theorem thermal_kms states that for the diagonal field Hamiltonian at
-      cutoff, the thermal two-point function satisfies the exact KMS identity,
-      with complex-time evolution entrywise and the identity reducing to
-      Boltzmann-weight transport and an index shuffle.
+      The theorem thermal_kms states that for the diagonal field Hamiltonian at cutoff,
+      the thermal two-point function satisfies the exact KMS identity, with complex-time
+      evolution entrywise and the identity reducing to Boltzmann-weight transport and an
+      index shuffle.
 
-      Companion results give closed-form diagonal Boltzmann weights via the
-      continuous functional calculus, mode marginals, the off-diagonal
-      vanishing, and the beta-to-infinity vacuum limit recovering the free
-      propagator with no residue.
+      Companion results give closed-form diagonal Boltzmann weights via the continuous
+      functional calculus, mode marginals, the off-diagonal vanishing, and the beta-to-
+      infinity vacuum limit recovering the free propagator with no residue.
     person: >
-      Ryogo Kubo (1920-1995), at Tokyo, built the linear-response formalism of
-      statistical mechanics; Paul Martin (1931-2016), at Harvard, and Julian
-      Schwinger (1918-1994) wrote the 1959 paper whose boundary condition
-      carried the same content. It was Haag, Hugenholtz and Winnink who in 1967
-      recognised the shared condition as the definition of equilibrium for
-      infinite systems and attached the three initials to it.
+      Ryogo Kubo (1920-1995), at Tokyo, built the linear-response formalism of statistical
+      mechanics, and Paul Martin (1931-2016), at Harvard, and Julian Schwinger (1918-1994)
+      wrote the 1959 paper whose boundary condition carried the same content. It was Haag,
+      Hugenholtz and Winnink who in 1967 recognised the shared condition as the definition
+      of equilibrium for infinite systems and attached the three initials to it.
     term: KMS condition
     eponyms: [Kubo, Martin, Schwinger]
     status: proved-in-corpus
@@ -6412,69 +6389,62 @@ entries:
     related: [gibbs-state, wick-theorem, canonical-typicality, field-arena, landauer-principle]
 
   - slug: lindblad-equation
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      The master equation of open quantum systems is formalised end to end: the
-      evolution generated by every Lindblad generator is proved to be completely
-      positive, with the bystander-system argument carried out rather than
-      gestured at.
+      The master equation of open quantum systems is formalised end to end, as the
+      evolution generated by every Lindblad generator is proved to be completely positive,
+      with the bystander-system argument carried out rather than gestured at.
     layman: >
-      Real systems leak. They lose the delicate coordination between the
-      components of their state, they decay, and they decohere, because none
-      of them is perfectly isolated. The equation that governs the density
-      matrix of an open quantum system, the description of a system whose
-      state is known only statistically, is the Lindblad equation. Its
-      defining virtue is that it should generate legitimate physics at every
-      time: probabilities stay probabilities, even when the system is
-      entangled with a bystander that the equation never mentions.
+      Real systems leak. They lose the delicate coordination between the components of
+      their state, they decay, and they decohere, because none of them is perfectly
+      isolated. The equation that governs the density matrix of an open quantum system,
+      the description of a system whose state is known only statistically, is the Lindblad
+      equation, and its defining virtue is that it should generate legitimate physics at
+      every time, so probabilities stay probabilities, even when the system is entangled
+      with a bystander the equation never mentions.
 
-      That virtue is called complete positivity, and it is precisely what is
-      delicate to prove, because the evolution is the exponential of a
-      generator with competing parts. The corpus proves it from first
-      principles. Split the generator into a drift part, whose evolution is a
-      change of frame, and a jump part, whose exponential is a series with
-      only positive terms. Reassemble the two with the Lie-Trotter product
-      formula, proved for the purpose. Then show that the evolution of the
-      generator enlarged by a bystander is literally the original evolution
-      acting alongside the bystander left untouched, so that positivity of the
-      enlarged evolution is complete positivity in so many words.
+      That virtue is called complete positivity, and it's precisely what's delicate to
+      prove, because the evolution is the exponential of a generator with competing parts.
+      The corpus proves it from first principles. Split the generator into a drift part,
+      whose evolution is a change of frame, and a jump part, whose exponential is a series
+      with only positive terms, reassemble the two with the Lie-Trotter product formula,
+      proved for the purpose, and then show that the evolution of the generator enlarged
+      by a bystander is literally the original evolution acting alongside the bystander
+      left untouched, so positivity of the enlarged evolution is complete positivity in so
+      many words.
 
-      A staple of every open-systems textbook, with a proof checked by a proof
+      It's a staple of every open-systems textbook, with a proof checked by a proof
       assistant.
     in_csd: >
-      The open-system tier is where the programme prices imperfect isolation.
-      The dephasing and amplitude-damping semigroups it exhibits, families of
-      evolutions indexed by elapsed time that describe loss of coherence and
-      loss of energy, are Lindblad flows, and the general theorem certifies
-      that every such flow, for any Hamiltonian and any set of jump operators,
-      the terms describing the leaks, is a legitimate quantum channel at every
-      nonnegative time.
+      The open-system tier is where the programme prices imperfect isolation. The
+      dephasing and amplitude-damping semigroups it exhibits, families of evolutions
+      indexed by elapsed time that describe loss of coherence and loss of energy, are
+      Lindblad flows, and the general theorem certifies that every such flow, for any
+      Hamiltonian and any set of jump operators, the terms describing the leaks, is a
+      legitimate quantum channel at every nonnegative time.
 
-      The supporting product formula was deliberately proved in a generality
-      suitable for contribution to Mathlib. An earlier label in the corpus
-      classed exponentiated positivity as out of reach; that label was retired
-      when the assessment was re-checked and the route was found to lie
-      entirely within the corpus.
+      The supporting product formula was deliberately proved in a generality suitable for
+      contribution to Mathlib. An earlier label in the corpus classed exponentiated
+      positivity as out of reach, and that label was retired when the assessment was re-
+      checked and the route was found to lie entirely within the corpus.
     mathematical: >
-      The theorem lindbladSemigroup_completelyPositive states that for
-      Hermitian H, jump family L, t >= 0 and every finite ancilla, the
-      identity-tensor amplification of the flow maps positive semidefinite
-      matrices to positive semidefinite matrices.
+      The theorem lindbladSemigroup_completelyPositive states that for Hermitian H, jump
+      family L, t >= 0 and every finite ancilla, the identity-tensor amplification of the
+      flow maps positive semidefinite matrices to positive semidefinite matrices.
 
-      The route is as follows. The drift flow is conjugation by a matrix
-      exponential; the jump exponential is a positive Kraus series with
-      positivity closed under limits; the general Lie-Trotter formula
-      assembles the flow; and the blockwise identification of the amplified
-      generator's flow with id-tensor-Phi makes the amplified statement
+      The route is as follows. The drift flow is conjugation by a matrix exponential, the
+      jump exponential is a positive Kraus series with positivity closed under limits, the
+      general Lie-Trotter formula assembles the flow, and the blockwise identification of
+      the amplified generator's flow with id-tensor-Phi makes the amplified statement
       literally complete positivity.
     person: >
-      Goran Lindblad (1940-2022) was a Swedish mathematical physicist at the
-      Royal Institute of Technology in Stockholm. His 1976 paper on generators
-      of quantum dynamical semigroups gave the general form of the equation;
-      Gorini, Kossakowski and Sudarshan published the finite-dimensional
-      classification in the same year, which is why careful writers say GKSL.
-      By the standards of a result used daily across quantum optics and
-      quantum information, its authors are remarkably rarely read.
+      Goran Lindblad (1940-2022) was a Swedish mathematical physicist at the Royal
+      Institute of Technology in Stockholm. His 1976 paper on generators of quantum
+      dynamical semigroups gave the general form of the equation, and Gorini, Kossakowski
+      and Sudarshan published the finite-dimensional classification in the same year,
+      which is why careful writers say GKSL. By the standards of a result used daily
+      across quantum optics and quantum information, its authors are remarkably rarely
+      read.
     term: Lindblad equation
     eponyms: [Lindblad]
     status: proved-in-corpus
@@ -6485,63 +6455,57 @@ entries:
     related: [quantum-channel, lie-trotter-formula, de-isolation, choi-theorem, schrodinger-equation]
 
   - slug: lie-trotter-formula
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      Alternate many tiny steps of two operations that do not commute and the
-      result converges to the exponential of their sum, with an error that
-      shrinks like one over the number of steps. CSD proves this in textbook
-      generality, in a form ready for the Mathlib library, because its
-      open-systems tier needed it and nothing on the shelf existed.
+      Alternate many tiny steps of two operations that don't commute and the result
+      converges to the exponential of their sum, with an error that shrinks like one over
+      the number of steps, and CSD proves this in textbook generality, in a form ready for
+      the Mathlib library, because its open-systems tier needed it and nothing on the
+      shelf existed.
     layman: >
-      For ordinary numbers, the exponential of a sum is the product of the
-      exponentials. For operations that do not commute, meaning that the
-      result depends on the order in which they are applied, this fails, and
-      in quantum mechanics, where evolution over a stretch of time is the
-      exponential of an energy generator, the interesting pieces of the
-      generator never commute.
+      For ordinary numbers, the exponential of a sum is the product of the exponentials.
+      For operations that don't commute, meaning the result depends on the order in which
+      they're applied, this fails, and in quantum mechanics, where evolution over a
+      stretch of time is the exponential of an energy generator, the interesting pieces of
+      the generator never commute.
 
-      The Lie-Trotter formula is the repair. Alternate many tiny steps of each
-      piece, and in the limit of ever smaller steps you recover the
-      exponential of the sum exactly. Physicists use this daily; it is the
-      licence behind every quantum simulation, in which a complicated
-      evolution is approximated by a sequence of simple ones.
+      The Lie-Trotter formula is the repair. Alternate many tiny steps of each piece, and
+      in the limit of ever smaller steps you recover the exponential of the sum exactly.
+      Physicists use this daily, as it's the licence behind every quantum simulation, in
+      which a complicated evolution is approximated by a sequence of simple ones.
 
-      The corpus needed the formula in a form its libraries did not have: for
-      operators acting on the space of matrices, as the generator of an
-      open-system evolution does, with a quantitative error, and without
-      special structural assumptions on the pieces. So it was proved from
-      scratch at textbook generality: for any complete normed algebra, a
-      setting in which elements can be added, multiplied and measured for size
-      and in which limits exist, with an explicit rate of convergence. The
-      defect of a single step is controlled by an estimate on the tail of a
-      series, and the defects are added up without growth.
+      The corpus needed the formula in a form its libraries didn't have, for operators
+      acting on the space of matrices, as the generator of an open-system evolution does,
+      with a quantitative error, and without special structural assumptions on the pieces.
+      So it was proved from scratch at textbook generality, for any complete normed
+      algebra, a setting in which elements can be added, multiplied and measured for size
+      and in which limits exist, with an explicit rate of convergence. The defect of a
+      single step is controlled by an estimate on the tail of a series, and the defects
+      are added up without growth.
     in_csd: >
-      The formula is the assembly step in the proof that the Lindblad flow is
-      completely positive. The drift part and the jump part of the generator
-      separately generate evolutions that preserve positivity, and the product
-      formula is what lets their alternation converge to the full evolution, so
-      that positivity passes to the limit.
+      The formula is the assembly step in the proof that the Lindblad flow is completely
+      positive. The drift part and the jump part of the generator separately generate
+      evolutions that preserve positivity, and the product formula is what lets their
+      alternation converge to the full evolution, so positivity passes to the limit.
 
-      It is staged as a candidate for contribution to Mathlib, free of
-      anything CSD-specific by construction: the kind of infrastructure that
-      the formalisation deliberately leaves better than it found it.
+      It's staged as a candidate for contribution to Mathlib, free of anything CSD-
+      specific by construction, the kind of infrastructure the formalisation deliberately
+      leaves better than it found it.
     mathematical: >
-      The theorem NormedSpace.trotter_product states that in a complete normed
-      real algebra with unit norm one, the n-fold alternating product of
-      exp(A/n) and exp(B/n) converges to exp(A+B), with a one-step defect of
-      order one over n squared, telescoped to an overall rate with the explicit
-      constant s^2 (3 + s) e^(2s) over n for s the sum of the norms.
+      The theorem NormedSpace.trotter_product states that in a complete normed real
+      algebra with unit norm one, the n-fold alternating product of exp(A/n) and exp(B/n)
+      converges to exp(A+B), with a one-step defect of order one over n squared,
+      telescoped to an overall rate with the explicit constant s^2 (3 + s) e^(2s) over n
+      for s the sum of the norms.
 
-      The earlier staged version required skew-adjointness; the de-skewed form
-      replaces the two places skewness entered by norm bounds that the final
-      constant absorbs.
+      The earlier staged version required skew-adjointness, and the de-skewed form
+      replaces the two places skewness entered by norm bounds the final constant absorbs.
     person: >
-      Hale Trotter (1931-2022) was a Canadian-American mathematician at
-      Princeton; the 1959 product formula came out of his thesis work on
-      semigroups of operators. The finite-dimensional antecedent is Sophus
-      Lie's, from the nineteenth-century theory of continuous groups, which is
-      why the formula carries both names, and Masuo Suzuki's later
-      higher-order refinements are why simulation people say Trotter-Suzuki.
+      Hale Trotter (1931-2022) was a Canadian-American mathematician at Princeton, and the
+      1959 product formula came out of his thesis work on semigroups of operators. The
+      finite-dimensional antecedent is Sophus Lie's, from the nineteenth-century theory of
+      continuous groups, which is why the formula carries both names, and Masuo Suzuki's
+      later higher-order refinements are why simulation people say Trotter-Suzuki.
     term: Lie-Trotter product formula
     eponyms: [Trotter]
     status: proved-in-corpus
@@ -6552,60 +6516,55 @@ entries:
     related: [lindblad-equation, stone-theorem, schrodinger-equation, what-is-machine-checked, quantum-channel]
 
   - slug: choi-theorem
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      A transformation of quantum states is physically allowed exactly when one
-      matrix built from it passes a single positivity test. CSD proves both
-      directions, so whether a map is physical becomes a decidable question of
-      linear algebra.
+      A transformation of quantum states is physically allowed exactly when one matrix
+      built from it passes a single positivity test, and CSD proves both directions, so
+      whether a map is physical becomes a decidable question of linear algebra.
     layman: >
-      Which transformations of a quantum state are physically allowed? The
-      abstract answer is the completely positive, trace-preserving maps.
-      Trace-preserving means that total probability is conserved. Completely
-      positive means that probabilities stay nonnegative not only for the
-      system itself but for the system together with any bystander system it
-      might be entangled with. That last clause quantifies over every possible
-      bystander, which is not something you can check by computation.
+      You can ask which transformations of a quantum state are physically allowed, and the
+      abstract answer is the completely positive, trace-preserving maps. Trace-preserving
+      means total probability is conserved, and completely positive means probabilities
+      stay nonnegative not only for the system itself but for the system together with any
+      bystander system it might be entangled with. That last clause quantifies over every
+      possible bystander, which isn't something you can check by computation.
 
-      Choi's insight of 1975 collapses the quantifier. Encode the whole map into
-      a single matrix by feeding it one half of a maximally entangled pair, a
-      pair of systems whose joint state is as correlated as quantum mechanics
-      allows. The map is legitimate precisely when that one matrix is positive
-      semidefinite, meaning that it has no negative eigenvalues, which is the
-      matrix analogue of a number being nonnegative. An infinite family of
-      conditions becomes one eigenvalue check.
+      Choi's insight of 1975 collapses the quantifier. Encode the whole map into a single
+      matrix by feeding it one half of a maximally entangled pair, a pair of systems whose
+      joint state is as correlated as quantum mechanics allows. The map is legitimate
+      precisely when that one matrix is positive semidefinite, meaning that it has no
+      negative eigenvalues, which is the matrix analogue of a number being nonnegative, so
+      an infinite family of conditions becomes one eigenvalue check.
 
-      The corpus proves both directions. Every channel written in Kraus form,
-      as a family of simpler operators applied and summed, has a positive Choi
-      matrix, and every positive semidefinite matrix on the combined system
-      arises from some Kraus family. The equivalence is the theorem.
+      The corpus proves both directions. Every channel written in Kraus form, as a family
+      of simpler operators applied and summed, has a positive Choi matrix, and every
+      positive semidefinite matrix on the combined system arises from some Kraus family,
+      and the equivalence is the theorem.
     in_csd: >
-      Choi's theorem is the workhorse of the corpus's channel layer. The
-      positivity witnesses at the generator level in the open-system results,
-      the channel constructions of the coarse-graining tier, and the arguments
-      about the jump part in the proof that the Lindblad flow is completely
-      positive all route through Kraus decompositions certified by it.
+      Choi's theorem is the workhorse of the corpus's channel layer. The positivity
+      witnesses at the generator level in the open-system results, the channel
+      constructions of the coarse-graining tier, and the arguments about the jump part in
+      the proof that the Lindblad flow is completely positive all route through Kraus
+      decompositions certified by it.
 
-      It sits on the operational stratum, standard quantum information
-      formalised because the programme's claims lean on it, and the
-      construction is fully explicit: the converse direction actually builds
-      the Kraus family from the spectral decomposition of the Choi matrix.
+      It sits on the operational stratum, standard quantum information formalised because
+      the programme's claims lean on it, and the construction is fully explicit, as the
+      converse direction actually builds the Kraus family from the spectral decomposition
+      of the Choi matrix.
     mathematical: >
-      The theorem choi_iff_posSemidef states that a matrix on the composite
-      index is the Choi matrix of some Kraus family if and only if it is
-      positive semidefinite.
+      The theorem choi_iff_posSemidef states that a matrix on the composite index is the
+      Choi matrix of some Kraus family if and only if it's positive semidefinite.
 
-      The forward direction is the rank-one decomposition of the Choi matrix
-      into outer products of vectorised Kraus operators; the converse
-      reconstructs Kraus operators from a PSD matrix's spectral square roots,
-      de-vectorised along the index pairing.
+      The forward direction is the rank-one decomposition of the Choi matrix into outer
+      products of vectorised Kraus operators, and the converse reconstructs Kraus
+      operators from a PSD matrix's spectral square roots, de-vectorised along the index
+      pairing.
     person: >
-      Man-Duen Choi, born in 1945 in Hong Kong, spent his career at the
-      University of Toronto working in operator algebras. The 1975 paper,
-      Completely positive linear maps on complex matrices, in Linear Algebra
-      and its Applications, is a model of brevity, and its central object was
-      independently studied by Andrzej Jamiolkowski, which is why the encoding
-      is often called the Choi-Jamiolkowski isomorphism.
+      Man-Duen Choi, born in 1945 in Hong Kong, spent his career at the University of
+      Toronto working in operator algebras. The 1975 paper, Completely positive linear
+      maps on complex matrices, in Linear Algebra and its Applications, is a model of
+      brevity, and its central object was independently studied by Andrzej Jamiolkowski,
+      which is why the encoding is often called the Choi-Jamiolkowski isomorphism.
     term: Choi's theorem
     eponyms: [Choi]
     status: proved-in-corpus
@@ -6616,72 +6575,69 @@ entries:
     related: [quantum-channel, stinespring-dilation, lindblad-equation, loewner-order, kronecker-product]
 
   - slug: quantum-channel
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      The most general thing that can happen to a quantum state is captured in
-      CSD as a concrete structure, a family of operators with one completeness
-      law, and every certificate of its physicality is proved rather than
-      assumed.
+      The most general thing that can happen to a quantum state is captured in CSD as a
+      concrete structure, a family of operators with one completeness law, and every
+      certificate of its physicality is proved rather than assumed.
     layman: >
-      Unitary evolution, the reversible evolution of the Schrodinger equation,
-      is what happens to a perfectly isolated system, and nothing is perfectly
-      isolated. Send a photon down a real optical cable and it attenuates,
-      loses the coordination between the components of its state, and mixes
-      with noise. The general description of any such process, any physically
-      realisable transformation of quantum states, is called a channel.
+      Unitary evolution, the reversible evolution of the Schrodinger equation, is what
+      happens to a perfectly isolated system, and nothing is perfectly isolated. Send a
+      photon down a real optical cable and it attenuates, loses the coordination between
+      the components of its state, and mixes with noise, and the general description of
+      any such process, any physically realisable transformation of quantum states, is
+      called a channel.
 
-      The structure theorem for channels says that every one of them can be
-      written as a family of simpler operators, each applied to the state in
-      turn with the results summed. This is the Kraus form, and it comes with
-      one completeness condition on the family that guarantees that
-      probabilities still add up to one afterwards.
+      The structure theorem for channels says every one of them can be written as a family
+      of simpler operators, each applied to the state in turn with the results summed.
+      This is the Kraus form, and it comes with one completeness condition on the family
+      that guarantees probabilities still add up to one afterwards.
 
       The corpus formalises channels in exactly that form and then proves the
-      certificates: the total probability is preserved, positivity is
-      preserved, so that no probability turns negative, and Choi's matrix
-      criterion for complete positivity holds in both directions.
+      certificates, so the total probability is preserved, positivity is preserved and no
+      probability turns negative, and Choi's matrix criterion for complete positivity
+      holds in both directions.
     in_csd: >
-      Channels are the vocabulary of the programme's open-system and
-      coarse-graining tiers. The dephasing and damping semigroups are families
-      of channels indexed by time; the coarse-graining of the field arena that
-      traces out modes is a channel built from an explicit isometry, a map
-      that preserves lengths; and the error budget for a renormalisation step
-      is stated as a distance between the outputs of two channels.
+      Channels are the vocabulary of the programme's open-system and coarse-graining
+      tiers. The dephasing and damping semigroups are families of channels indexed by
+      time, the coarse-graining of the field arena that traces out modes is a channel
+      built from an explicit isometry, a map that preserves lengths, and the error budget
+      for a renormalisation step is stated as a distance between the outputs of two
+      channels.
 
-      The layer is breadth on the operational stratum, formalised to the
-      corpus's usual standard: no property of a channel is used anywhere
-      without a named theorem carrying it.
+      The layer is breadth on the operational stratum, formalised to the corpus's usual
+      standard, so no property of a channel is used anywhere without a named theorem
+      carrying it.
 
-      Since the constraint surface carries both the system and its environment, the channels
-      the programme reasons about are not introduced by hand. A volume-preserving flow on the
-      surface that lifts a unitary on the joint state space acts on a preparation, and the
-      density operator of the flowed preparation, seen from the system alone, is a channel
-      applied to the density operator of the original preparation. The channel is the
-      environment's marginal of the flow. The measurement flow produces the de-isolation
-      channel in this way, and the bit-flip errors of the three-qubit code are produced by a
-      flow on the register together with a four-level environment. The corpus keeps two
-      spellings of the notion, an indexed Kraus family in the operational layer and the staged
-      Mathlib structure, and proves them equivalent, with actions, dilations and compositions
-      agreeing.
+      Since the constraint surface carries both the system and its environment, the
+      channels the programme reasons about aren't introduced by hand. A volume-preserving
+      flow on the surface that lifts a unitary on the joint state space acts on a
+      preparation, and the density operator of the flowed preparation, seen from the
+      system alone, is a channel applied to the density operator of the original
+      preparation, so the channel is the environment's marginal of the flow. The
+      measurement flow produces the de-isolation channel in this way, and the bit-flip
+      errors of the three-qubit code are produced by a flow on the register together with
+      a four-level environment. The corpus keeps two spellings of the notion, an indexed
+      Kraus family in the operational layer and the staged Mathlib structure, and it
+      proves them equivalent, with actions, dilations and compositions agreeing.
     mathematical: >
-      QuantumChannel is an indexed Kraus family with the completeness law
-      summing adjoint-products to the identity; apply is the Kraus sum.
+      QuantumChannel is an indexed Kraus family with the completeness law summing adjoint-
+      products to the identity, and apply is the Kraus sum.
 
-      The proved properties are trace preservation, PSD preservation,
-      unitality criteria, and choiMatrix_posSemidef, the easy direction of
-      Choi, with the converse in the companion module closing the
-      equivalence. Composition and the dilation-side constructions live where
-      their consumers need them.
+      The proved properties are trace preservation, PSD preservation, unitality criteria,
+      and choiMatrix_posSemidef, the easy direction of Choi, with the converse in the
+      companion module closing the equivalence. Composition and the dilation-side
+      constructions live where their consumers need them.
 
       The bridge channelEquiv (LF2/ChannelBridge.lean) is an equivalence between
       QuantumChannel and the staged Channel, with the action, the unitary channels, the
       Stinespring dilations and the composition Channel.comp
-      (Mathlib/QuantumInfo/ChannelComp.lean) transported. Channels from flows:
+      (Mathlib/QuantumInfo/ChannelComp.lean) transported. For channels from flows,
       traceRight_barycenter_flow (LF2/FlowChannel.lean) states that for a flow lifting a
       unitary on system times environment, and a preparation that is a product with the
       environment ready, the reduced barycentre of the flowed preparation equals
-      stinespringChannel applied to the system's barycentre; stinespringChannelMixed covers a
-      mixed environment through its spectral Kraus family. Instances:
+      stinespringChannel applied to the system's barycentre, and stinespringChannelMixed
+      covers a mixed environment through its spectral Kraus family. The instances are
       measurementFlow_traceRight_barycenter_unitSection (LF6/MeasurementFlowChannel.lean),
       bitFlipFlow_traceRight_barycenter and registerFlow_traceRight_barycenter
       (Empirical/CSD/QEC/).
