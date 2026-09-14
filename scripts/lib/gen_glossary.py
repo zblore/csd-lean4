@@ -181,7 +181,19 @@ CSS = (
     "ul.idx .t{font-size:1.2rem;display:block;margin-bottom:.3rem}"
     "ul.idx .h{color:var(--mut);font-size:.95rem;line-height:1.6}"
     "ul.idx a:hover .t{color:var(--acc)}"
+    # The figure: a portrait or diagram floated beside the plain-terms register, credit
+    # in the caption (the Commons licences require it), full width on a phone.
+    ".fig{float:right;width:12.5rem;margin:.2rem 0 1rem 1.4rem}"
+    ".fig img{display:block;width:100%;height:auto;border-radius:4px;"
+    "border:1px solid var(--line);background:var(--card)}"
+    ".fig figcaption{font:400 .74rem/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',"
+    "sans-serif;color:var(--faint);margin-top:.45rem}"
+    ".fig figcaption a{color:var(--faint)}"
+    ".fig figcaption .cap{display:block;color:var(--mut)}"
+    ".fig.wide{float:none;width:100%;max-width:26rem;margin:0 0 1.6rem}"
+    ".r1::after{content:'';display:block;clear:both}"
     "@media(max-width:32rem){h1{font-size:1.72rem}.hook{font-size:1.15rem}"
+    ".fig{float:none;width:100%;max-width:20rem;margin:0 auto 1.6rem}"
     ".foot dl{grid-template-columns:1fr;gap:.15rem}"
     ".foot dt{padding-top:.6rem}}"
 )
@@ -237,13 +249,18 @@ COOKIE_BANNER = (
 )
 
 
-def page(title, desc, body, jsonld, canon):
+def page(title, desc, body, jsonld, canon, og_image=None):
     return (
         '<!doctype html><html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
         + "<title>" + E(title) + "</title>"
         + '<meta name="description" content="' + E(desc) + '">'
         + '<link rel="canonical" href="' + canon + '">'
+        + '<meta property="og:title" content="' + E(title) + '">'
+        + '<meta property="og:description" content="' + E(desc) + '">'
+        + '<meta property="og:url" content="' + canon + '">'
+        + (('<meta property="og:image" content="' + og_image + '">'
+            + '<meta name="twitter:card" content="summary">') if og_image else "")
         + "<style>" + CSS + "</style>"
         + '<script type="application/ld+json">' + jsonld + "</script>"
         + ANALYTICS
@@ -280,6 +297,7 @@ SITE_LINE = ('<p class="note">Part of <a href="' + SITE_MAIN
              + '<a href="' + REPO + '">csd-lean4</a>.</p>')
 
 idx_items, q_items, sitemap, llms, md = [], [], [SITE + "/"], [], []
+credits = []  # (term, url, image) for the image-credits page
 BY_SLUG = {e["slug"]: e for e in entries}
 
 for e in entries:
@@ -353,6 +371,21 @@ for e in entries:
             '<a href="' + u + '">' + E(s) + "</a>"
             for s, u in sorted(sources.items()))))
 
+    # The image, when the entry has one: a Wikimedia Commons file the author looked at,
+    # self-hosted under docs/img/ so the page does not depend on another site being up,
+    # with the credit the licence asks for in the caption. check-glossary.sh verifies the
+    # file exists and the credit, licence and source are present.
+    im = e.get("image")
+    fig, og_image = "", None
+    if im:
+        og_image = SITE + "/" + im["file"]
+        fig = ('<figure class="fig' + (" wide" if im.get("wide") else "") + '"><a href="'
+               + E(im["source"]) + '">'
+               + '<img src="../' + E(im["file"]) + '" alt="' + E(im["alt"]) + '" loading="lazy"></a>'
+               + '<figcaption><span class="cap">' + E(im["caption"]) + "</span>"
+               + E(im["credit"]) + "</figcaption></figure>")
+        credits.append((term, url, im))
+
     body = (
         '<nav class="crumb"><a href="' + SITE_MAIN + '/">Constraint-Surface Dynamics</a>'
         + '<span class="sep">&rsaquo;</span>'
@@ -360,7 +393,8 @@ for e in entries:
         + "<h1>" + E(term) + "</h1>"
         + '<p class="hook">' + E(hook) + "</p>"
         + '<div class="strip">' + "".join(chips) + "</div>"
-        + '<section class="r1"><h2>' + ("The short answer" if is_q else "In plain terms")
+        + '<section class="r1">' + fig + "<h2>"
+        + ("The short answer" if is_q else "In plain terms")
         + "</h2><p>" + s_layman + "</p></section>"
         + '<section class="r2"><h2>' + ("The longer answer" if is_q else "In CSD")
         + "</h2><p>" + s_incsd + "</p></section>"
@@ -409,11 +443,13 @@ for e in entries:
         }
         if e.get("papers"):
             jl["sameAs"] = ["https://doi.org/" + p["doi"] for p in e["papers"]]
+        if og_image:
+            jl["image"] = og_image
 
     os.makedirs(os.path.join(OUT, slug), exist_ok=True)
     open(os.path.join(OUT, slug, "index.html"), "w", encoding="utf-8").write(
         page(term + " - CSD Glossary", hook, body,
-             json.dumps(jl, ensure_ascii=False), url))
+             json.dumps(jl, ensure_ascii=False), url, og_image))
 
     item = ('<li><a href="' + url + '"><span class="t">' + E(term)
             + '</span><span class="h">' + E(hook) + "</span></a></li>")
@@ -460,6 +496,33 @@ open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(page(
     + "tree on each build, and the source links are pinned to a commit.</p>"
     + SITE_LINE + "</div>",
     json.dumps(setld, ensure_ascii=False), SITE + "/"))
+
+# Images are committed under docs/img/ and copied verbatim; one credits page lists every
+# file with its author, licence and Commons source, so the attribution the licences
+# require is also in one place.
+if os.path.isdir("docs/img"):
+    shutil.copytree("docs/img", os.path.join(OUT, "img"), dirs_exist_ok=True)
+if credits:
+    rows = "".join(
+        '<li><a href="' + u + '">' + E(t) + "</a>: " + E(im["caption"]) + " "
+        + E(im["credit"]) + ' (<a href="' + E(im["source"]) + '">source</a>, '
+        + E(im["licence"]) + ")</li>"
+        for t, u, im in sorted(credits, key=lambda x: x[0].lower()))
+    cbody = ('<nav class="crumb"><a href="' + SITE_MAIN + '/">Constraint-Surface Dynamics</a>'
+             + '<span class="sep">&rsaquo;</span><a href="' + SITE + '/">Glossary</a></nav>'
+             + "<h1>Image credits</h1>"
+             + '<p class="orient">Every image on this site comes from Wikimedia Commons under '
+             + "a licence that permits reuse with attribution, or is in the public domain. "
+             + "The author looked at each one before it went in.</p>"
+             + '<ul class="idx">' + rows + "</ul>" + SITE_LINE)
+    os.makedirs(os.path.join(OUT, "credits"), exist_ok=True)
+    open(os.path.join(OUT, "credits", "index.html"), "w", encoding="utf-8").write(
+        page("Image credits - CSD Glossary",
+             "Sources and licences of the images used in the CSD glossary.", cbody,
+             json.dumps({"@context": "https://schema.org", "@type": "WebPage",
+                         "name": "Image credits", "url": SITE + "/credits/"}),
+             SITE + "/credits/"))
+    sitemap.append(SITE + "/credits/")
 
 open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8").write(
     '<?xml version="1.0" encoding="UTF-8"?>\n'

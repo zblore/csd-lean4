@@ -17,6 +17,17 @@
 #   mathematical  what was proved and how it was proved, for a specialist.
 #   person        who the name belongs to: places, universities, and the story of
 #                 how the result was written or published, when there is one.
+#   image         OPTIONAL {file, alt, caption, credit, licence, source, article, wide}:
+#                 a portrait or diagram from Wikimedia Commons, self-hosted under
+#                 docs/img/ (file is the path relative to docs/), shown beside the
+#                 plain-terms register (wide: true for a landscape diagram, which then
+#                 sits full width above the text) and as the social-preview image. Only where a
+#                 relevant free image exists: a portrait for an eponym, the standard
+#                 diagram for an apparatus or a construction, nothing decorative. The
+#                 credit line carries the attribution the licence asks for and the
+#                 caption says what the image is. check-glossary.sh requires the file
+#                 and every attribution field. scripts/lib/glossary_images.py is the
+#                 fetch-and-review tool that produced the first pass (2026-09-14).
 #   site_link     OPTIONAL {url, text}: the ONE onward link into the main site
 #                 (meta.site_main) a reader of this entry would actually want.
 #                 The text is a specific sentence -- "Paper B derives the Born
@@ -170,6 +181,14 @@ refs:
 entries:
   - slug: fubini-study-measure
     reviewed: 2026-09-14
+    image:
+      file: img/fubini-study-measure.jpg
+      alt: "Portrait photograph of Guido Fubini"
+      caption: "Guido Fubini, one of the two names on the measure."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Guido_Fubini.jpg
+      article: https://en.wikipedia.org/wiki/Guido_Fubini
     hook: >
       The space of quantum states allows exactly one way of measuring size that respects
       its symmetry, and that one measure is what turns regions of the space into Born-rule
@@ -272,6 +291,14 @@ entries:
 
   - slug: born-weight
     reviewed: 2026-09-14
+    image:
+      file: img/born-weight.jpg
+      alt: "Portrait photograph of Max Born"
+      caption: "Max Born, whose 1926 footnote became the rule."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Max_Born.jpg
+      article: https://en.wikipedia.org/wiki/Max_Born
     hook: >
       Quantum probabilities aren't a law of nature in CSD, as they're the sizes of regions
       in the space of states, measured with a ruler nobody was free to choose.
@@ -421,6 +448,14 @@ entries:
 
   - slug: gleason-theorem
     reviewed: 2026-09-14
+    image:
+      file: img/gleason-theorem.jpg
+      alt: "Andrew Gleason seated on a lawn, 1959"
+      caption: "Andrew Gleason in Berlin, 1959."
+      credit: "Jean Berko Gleason, CC BY-SA 3.0, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0"
+      source: https://commons.wikimedia.org/wiki/File:GleasonAndrewMattei_Berlin1959.jpg
+      article: https://en.wikipedia.org/wiki/Andrew_M._Gleason
     hook: >
       The corpus proves the standard route to the Born rule rather than borrowing it, and
       CSD's own derivation never uses it, so the two routes to quantum probability are
@@ -510,6 +545,14 @@ entries:
 
   - slug: wigner-rigidity
     reviewed: 2026-09-14
+    image:
+      file: img/wigner-rigidity.jpg
+      alt: "Portrait photograph of Eugene Wigner"
+      caption: "Eugene Wigner."
+      credit: "Nobel foundation, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Wigner.jpg
+      article: https://en.wikipedia.org/wiki/Eugene_Wigner
     hook: >
       Preserve the overlaps between quantum states and you have no freedom left, as the
       rearrangement must be a unitary or an anti-unitary transformation whether or not you
@@ -650,6 +693,14 @@ entries:
 
   - slug: bell-chsh
     reviewed: 2026-09-14
+    image:
+      file: img/bell-chsh.png
+      alt: "John Stewart Bell standing in front of a blackboard"
+      caption: "John Bell at CERN, with 2√2 on the blackboard behind him."
+      credit: "CERN, CC BY 4.0, via Wikimedia Commons"
+      licence: "CC BY 4.0"
+      source: https://commons.wikimedia.org/wiki/File:John_bell_2_(cropped).png
+      article: https://en.wikipedia.org/wiki/John_Stewart_Bell
     hook: >
       No pre-written answer sheet for all four measurement settings can match what a
       singlet pair of particles does, and the corpus proves this as a theorem about every
@@ -731,6 +782,14 @@ entries:
 
   - slug: ghz-state
     reviewed: 2026-09-14
+    image:
+      file: img/ghz-state.jpg
+      alt: "Portrait photograph of Anton Zeilinger"
+      caption: "Anton Zeilinger, the Z of GHZ."
+      credit: "CEU / Daniel Vegel; Central European University from Budapest, Hungary, CC BY 2.0, via Wikimedia Commons"
+      licence: "CC BY 2.0"
+      source: https://commons.wikimedia.org/wiki/File:Anton_Zeilinger,_2019_(49085194786)_(cropped).jpg
+      article: https://en.wikipedia.org/wiki/Anton_Zeilinger
     hook: >
       Three particles can contradict local realism with certainty in a single run, with no
       statistics, no inequality and no margin of error.
@@ -793,6 +852,14 @@ entries:
 
   - slug: tsirelson-bound
     reviewed: 2026-09-14
+    image:
+      file: img/tsirelson-bound.jpg
+      alt: "Portrait photograph of Boris Tsirelson"
+      caption: "Boris Tsirelson."
+      credit: "Renate Schmid, CC BY-SA 2.0 de, via Wikimedia Commons"
+      licence: "CC BY-SA 2.0 de"
+      source: https://commons.wikimedia.org/wiki/File:Tsirelson_boris_(cropped).jpg
+      article: https://en.wikipedia.org/wiki/Boris_Tsirelson
     hook: >
       Quantum mechanics breaks the classical limit on correlations and then stops well
       short of what logic alone would allow, and why it stops exactly there is a genuinely
@@ -860,6 +927,14 @@ entries:
 
   - slug: landauer-principle
     reviewed: 2026-09-14
+    image:
+      file: img/landauer-principle.jpg
+      alt: "Portrait photograph of Rolf Landauer"
+      caption: "Rolf Landauer."
+      credit: "Copyrighted free use, via Wikimedia Commons"
+      licence: "Copyrighted free use"
+      source: https://commons.wikimedia.org/wiki/File:Rolf_Landauer.jpg
+      article: https://en.wikipedia.org/wiki/Rolf_Landauer
     hook: >
       Forgetting costs heat at a rate set by temperature alone, and that's the point at
       which information stops being an abstraction and acquires a physical price.
@@ -1185,6 +1260,14 @@ entries:
 
   - slug: von-neumann-entropy
     reviewed: 2026-09-14
+    image:
+      file: img/von-neumann-entropy.gif
+      alt: "Portrait photograph of John von Neumann"
+      caption: "John von Neumann, in his Los Alamos identification photograph."
+      credit: "LANL, Attribution, via Wikimedia Commons"
+      licence: "Attribution"
+      source: https://commons.wikimedia.org/wiki/File:JohnvonNeumann-LosAlamos.gif
+      article: https://en.wikipedia.org/wiki/John_von_Neumann
     hook: >
       A quantum whole can be perfectly known while its parts are as uncertain as they
       could possibly be, and entropy is where that stops being a metaphor and becomes
@@ -1287,6 +1370,14 @@ entries:
 
   - slug: liouville-measure
     reviewed: 2026-09-14
+    image:
+      file: img/liouville-measure.jpg
+      alt: "Portrait photograph of Joseph Liouville"
+      caption: "Joseph Liouville, photographed in 1868."
+      credit: "Marie Liouville, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Photo_of_Joseph_Liouville_1868.jpg
+      article: https://en.wikipedia.org/wiki/Joseph_Liouville
     hook: >
       A deterministic substrate needs a notion of volume that its own motion can't
       distort, and on CSD's sector that volume is forced and it's the Born measure.
@@ -1377,6 +1468,14 @@ entries:
 
   - slug: kahler-form
     reviewed: 2026-09-14
+    image:
+      file: img/kahler-form.jpg
+      alt: "Portrait photograph of Erich Kähler"
+      caption: "Erich Kähler."
+      credit: "Konrad Jacobs, Erlangen, CC BY-SA 2.0 de, via Wikimedia Commons"
+      licence: "CC BY-SA 2.0 de"
+      source: https://commons.wikimedia.org/wiki/File:Erich_Kähler.jpeg
+      article: https://en.wikipedia.org/wiki/Erich_K%C3%A4hler
     hook: >
       On the space of quantum states, distance, area and a quarter-turn coming from the
       complex numbers lock together, and that lock is what makes the volume of the space
@@ -1674,6 +1773,14 @@ entries:
 
   - slug: canonical-typicality
     reviewed: 2026-09-14
+    image:
+      file: img/canonical-typicality.jpg
+      alt: "Portrait photograph of Ludwig Boltzmann"
+      caption: "Ludwig Boltzmann."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Boltzmann2.jpg
+      article: https://en.wikipedia.org/wiki/Ludwig_Boltzmann
     hook: >
       A small piece of a large quantum system looks thermal not because anything prepared
       it that way, but because almost every state of the whole makes it look that way.
@@ -1846,6 +1953,15 @@ entries:
     related: [wigner-rigidity, schrodinger-from-records, stone-theorem, projective-sector, hilbert-space]
 
   - slug: bloch-sphere
+    image:
+      file: img/bloch-sphere.png
+      wide: true
+      alt: "Diagram of the Bloch sphere with a state vector and its angles"
+      caption: "The Bloch sphere: a pure qubit state as a point, with |0⟩ at the north pole and |1⟩ at the south."
+      credit: "Notezik, CC0, via Wikimedia Commons"
+      licence: "CC0"
+      source: https://commons.wikimedia.org/wiki/File:Bloch_Sphere_representation.svg
+      article: https://en.wikipedia.org/wiki/Bloch_sphere
     hook: >
       The states of the simplest quantum system form an ordinary ball, which is a lovely
       accident of low dimension and the single most misleading picture in quantum
@@ -1910,6 +2026,14 @@ entries:
     related: [pauli-matrices, fubini-study-measure, hilbert-space, stern-gerlach, ramsey-interferometry]
 
   - slug: borel-set
+    image:
+      file: img/borel-set.jpg
+      alt: "Portrait photograph of Émile Borel"
+      caption: "Émile Borel in 1932."
+      credit: "Agence de presse Mondial Photo-Presse, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Emile_Borel-1932.jpg
+      article: https://en.wikipedia.org/wiki/%C3%89mile_Borel
     hook: >
       Before any region can have a probability, someone has to say which regions are
       allowed to have a size at all, and the Borel sets are the answer everyone uses.
@@ -1971,6 +2095,14 @@ entries:
     related: [outcome-region, epistemic-measure, liouville-measure, euclidean-space, typicality-volume]
 
   - slug: cglmp-inequality
+    image:
+      file: img/cglmp-inequality.jpg
+      alt: "Portrait photograph of Nicolas Gisin"
+      caption: "Nicolas Gisin, the G of CGLMP."
+      credit: "Bigi111, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:Nicolas_Gisin_201508.jpg
+      article: https://en.wikipedia.org/wiki/Nicolas_Gisin
     hook: >
       Bell's inequality is built for measurements with two outcomes, so once you go beyond
       two you need a new inequality, and the conflict with local realism grows stronger
@@ -2031,6 +2163,14 @@ entries:
     related: [bell-chsh, tsirelson-bound, mermin-inequality, gisin-theorem, contextuality]
 
   - slug: deutsch-jozsa
+    image:
+      file: img/deutsch-jozsa.jpg
+      alt: "Portrait photograph of David Deutsch"
+      caption: "David Deutsch."
+      credit: "Simon Benjamin, CC BY 3.0, via Wikimedia Commons"
+      licence: "CC BY 3.0"
+      source: https://commons.wikimedia.org/wiki/File:David_Deutsch_(cropped).jpg
+      article: https://en.wikipedia.org/wiki/David_Deutsch
     hook: >
       The Deutsch-Jozsa algorithm settles a question with a single query where any exact
       classical method needs exponentially many, and the problem it solves is useless by
@@ -2094,6 +2234,14 @@ entries:
     related: [bernstein-vazirani, simon-algorithm, grover-algorithm, hadamard-test, quantum-fourier-transform]
 
   - slug: dirichlet-distribution
+    image:
+      file: img/dirichlet-distribution.jpg
+      alt: "Portrait of Peter Gustav Lejeune Dirichlet"
+      caption: "Peter Gustav Lejeune Dirichlet."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Peter_Gustav_Lejeune_Dirichlet.jpg
+      article: https://en.wikipedia.org/wiki/Peter_Gustav_Lejeune_Dirichlet
     hook: >
       Being fairly ignorant about proportions that must add up to one has a precise
       mathematical form, and by a small miracle it's exactly the form that quantum state
@@ -2154,6 +2302,15 @@ entries:
     related: [fubini-study-measure, born-volume-ratio, duistermaat-heckman, typicality-volume, haar-measure]
 
   - slug: elitzur-vaidman
+    image:
+      file: img/elitzur-vaidman.png
+      wide: true
+      alt: "Diagram of the Elitzur-Vaidman bomb-testing interferometer"
+      caption: "The bomb tester: a Mach-Zehnder interferometer with the bomb B in one arm and detectors C and D at the exits."
+      credit: "Gizm0steve, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:E-V_bomb-testing_2.svg
+      article: https://en.wikipedia.org/wiki/Elitzur%E2%80%93Vaidman_bomb_tester
     hook: >
       You can certify that a bomb is live without a single photon touching it, so the
       absence of an interaction becomes the measurement.
@@ -2215,6 +2372,14 @@ entries:
     related: [mach-zehnder, hong-ou-mandel, collapse, what-happens-during-measurement, de-isolation]
 
   - slug: euclidean-space
+    image:
+      file: img/euclidean-space.jpg
+      alt: "Painting of Euclid holding a scroll of geometric figures"
+      caption: "Euclid, as imagined by Jusepe de Ribera around 1630."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Italian_-_Euclid_-_Google_Art_Project.jpg
+      article: https://en.wikipedia.org/wiki/Euclid
     hook: >
       Ordinary geometry, extended to complex numbers, is the stage on which every finite
       quantum system in the corpus stands.
@@ -2276,6 +2441,14 @@ entries:
     related: [hilbert-space, hermitian-operator, kronecker-product, borel-set, fubini-study-measure]
 
   - slug: fisher-information
+    image:
+      file: img/fisher-information.jpg
+      alt: "Portrait photograph of Ronald Fisher"
+      caption: "Ronald Fisher as a young man."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Youngronaldfisher2.JPG
+      article: https://en.wikipedia.org/wiki/Ronald_Fisher
     hook: >
       There's a floor under every error bar, classical or quantum, and Fisher information
       is what sets it.
@@ -2335,6 +2508,14 @@ entries:
     related: [ramsey-interferometry, phase-estimation, born-weight, amplitude-estimation, robertson-uncertainty]
 
   - slug: gibbs-state
+    image:
+      file: img/gibbs-state.jpg
+      alt: "Portrait photograph of Josiah Willard Gibbs"
+      caption: "Josiah Willard Gibbs."
+      credit: "Unknown. Uploaded by Serge Lachinov (обработка для wiki), public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Josiah_Willard_Gibbs_-from_MMS-.jpg
+      article: https://en.wikipedia.org/wiki/Josiah_Willard_Gibbs
     hook: >
       The state a system settles into at a given temperature is the unique solution to a
       trade-off between energy and disorder.
@@ -2401,6 +2582,14 @@ entries:
     related: [canonical-typicality, kms-condition, landauer-principle, klein-inequality, von-neumann-entropy, jarzynski-equality]
 
   - slug: gisin-theorem
+    image:
+      file: img/gisin-theorem.jpg
+      alt: "Portrait photograph of Nicolas Gisin"
+      caption: "Nicolas Gisin."
+      credit: "Bigi111, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:Nicolas_Gisin_201508.jpg
+      article: https://en.wikipedia.org/wiki/Nicolas_Gisin
     hook: >
       Every entangled pure state, however slightly entangled, violates a Bell inequality,
       so there's no quiet zone.
@@ -2461,6 +2650,15 @@ entries:
     related: [bell-chsh, cglmp-inequality, peres-criterion, bell-not-join, hidden-variables]
 
   - slug: grover-algorithm
+    image:
+      file: img/grover-algorithm.png
+      wide: true
+      alt: "Geometric diagram of one Grover iteration as two reflections"
+      caption: "Grover's step as a rotation: reflecting |s⟩ about the marked state and then about |s⟩ itself turns the state by θ towards the target."
+      credit: "Danski14, CC BY-SA 3.0, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0"
+      source: https://commons.wikimedia.org/wiki/File:Grovers_algorithm_geometry.png
+      article: https://en.wikipedia.org/wiki/Grover's_algorithm
     hook: >
       Grover's algorithm finds one marked item in an unsorted list in a number of steps
       proportional to the square root of the list size, and a separate theorem shows that
@@ -2538,6 +2736,14 @@ entries:
         url: https://en.wikipedia.org/wiki/Grover%27s_algorithm
 
   - slug: haar-measure
+    image:
+      file: img/haar-measure.jpg
+      alt: "Portrait photograph of Alfréd Haar"
+      caption: "Alfréd Haar."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Haar_Alfréd.jpg
+      article: https://en.wikipedia.org/wiki/Alfr%C3%A9d_Haar
     hook: >
       A closed and bounded family of symmetries has exactly one even-handed notion of
       volume, and every measure CSD calls forced inherits its uniqueness from that one
@@ -2614,6 +2820,14 @@ entries:
     related: [fubini-study-measure, liouville-measure, dirichlet-distribution, born-weight, typicality]
 
   - slug: hermitian-operator
+    image:
+      file: img/hermitian-operator.jpg
+      alt: "Portrait photograph of Charles Hermite"
+      caption: "Charles Hermite."
+      credit: "Eugène Pirou / Paul Dujardin, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Charles_Hermite.jpg
+      article: https://en.wikipedia.org/wiki/Charles_Hermite
     hook: >
       A single symmetry condition on an operator guarantees that every number it can
       produce in a measurement is real, and it delivers the whole machinery of outcomes
@@ -2686,6 +2900,14 @@ entries:
     related: [hilbert-space, pauli-matrices, loewner-order, stone-theorem, robertson-uncertainty]
 
   - slug: hilbert-space
+    image:
+      file: img/hilbert-space.jpg
+      alt: "Portrait photograph of David Hilbert"
+      caption: "David Hilbert."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Hilbert.jpg
+      article: https://en.wikipedia.org/wiki/David_Hilbert
     hook: >
       Hilbert space is the stage on which quantum mechanics is usually performed, and
       CSD's claim is that it's scenery, the shadow cast by the physical object and not the
@@ -2755,6 +2977,15 @@ entries:
     related: [euclidean-space, hermitian-operator, projective-sector, bloch-sphere, kronecker-product]
 
   - slug: hong-ou-mandel
+    image:
+      file: img/hong-ou-mandel.png
+      wide: true
+      alt: "Diagram of the four output possibilities in the Hong-Ou-Mandel effect"
+      caption: "The four ways two photons can leave a beam splitter; the middle two cancel, so the photons always leave together."
+      credit: "Pieter Kok, CC BY-SA 3.0, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0"
+      source: https://commons.wikimedia.org/wiki/File:Hong_Ou_Mandel_effect.png
+      article: https://en.wikipedia.org/wiki/Hong–Ou–Mandel_effect
     hook: >
       When two identical photons meet at a beam splitter they always leave together and
       never one through each exit, so their indistinguishability shows up as a hole in the
@@ -2823,6 +3054,14 @@ entries:
     related: [mach-zehnder, elitzur-vaidman, bell-not-join, typicality-volume, ramsey-interferometry]
 
   - slug: jacobi-identity
+    image:
+      file: img/jacobi-identity.jpg
+      alt: "Portrait of Carl Gustav Jacob Jacobi"
+      caption: "Carl Gustav Jacob Jacobi."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Carl_Jacobi.jpg
+      article: https://en.wikipedia.org/wiki/Carl_Gustav_Jacob_Jacobi
     hook: >
       The Jacobi identity is the law that turns the mismatch between doing things in
       different orders into a structure of its own, and it's why classical and quantum
@@ -2904,6 +3143,14 @@ entries:
     related: [poisson-bracket, kahler-form, liouville-measure, moment-map, schrodinger-from-records]
 
   - slug: kronecker-product
+    image:
+      file: img/kronecker-product.jpg
+      alt: "Portrait photograph of Leopold Kronecker"
+      caption: "Leopold Kronecker in 1865."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Leopold_Kronecker_1865.jpg
+      article: https://en.wikipedia.org/wiki/Leopold_Kronecker
     hook: >
       Two quantum systems become one by multiplying their descriptions rather than adding
       them, which is why quantum resources multiply where classical ones merely add.
@@ -2973,6 +3220,14 @@ entries:
     related: [partial-trace, hilbert-space, bell-not-join, field-arena, stinespring-dilation]
 
   - slug: leggett-garg
+    image:
+      file: img/leggett-garg.jpg
+      alt: "Portrait photograph of Anthony Leggett"
+      caption: "Anthony Leggett in 2007."
+      credit: "Kenneth C. Zirkel, CC BY-SA 3.0, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0"
+      source: https://commons.wikimedia.org/wiki/File:Nobel_Laureate_Sir_Anthony_James_Leggett_in_2007_(cropped).jpg
+      article: https://en.wikipedia.org/wiki/Anthony_Leggett
     hook: >
       Bell's argument can be rotated from space into time, and what it then tests isn't
       action at a distance but whether the world has a definite history.
@@ -3097,6 +3352,15 @@ entries:
     related: [hermitian-operator, klein-inequality, lindblad-equation, choi-theorem, von-neumann-entropy]
 
   - slug: mach-zehnder
+    image:
+      file: img/mach-zehnder.gif
+      wide: true
+      alt: "Diagram of a Mach-Zehnder interferometer"
+      caption: "A Mach-Zehnder interferometer: two beam splitters, two mirrors, two exits."
+      credit: "L3erdnik, CC0, via Wikimedia Commons"
+      licence: "CC0"
+      source: https://commons.wikimedia.org/wiki/File:Mach–Zehnder_interferometer.gif
+      article: https://en.wikipedia.org/wiki/Mach%E2%80%93Zehnder_interferometer
     hook: >
       Split a single particle down two paths and recombine them, and where it lands
       depends on both paths, including the one you can prove it never took.
@@ -3160,6 +3424,14 @@ entries:
     related: [elitzur-vaidman, hong-ou-mandel, ramsey-interferometry, malus-law, collapse]
 
   - slug: malus-law
+    image:
+      file: img/malus-law.jpg
+      alt: "Portrait of Étienne-Louis Malus"
+      caption: "Étienne-Louis Malus, painted by Boilly in 1810."
+      credit: "Louis-Léopold Boilly, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Malus_by_Boilly_1810.jpg
+      article: https://en.wikipedia.org/wiki/%C3%89tienne-Louis_Malus
     hook: >
       Malus's law is a cosine-squared rule discovered in 1808 with a crystal and a sunset,
       and it turns out to be the oldest data point for the Born rule.
@@ -3224,6 +3496,14 @@ entries:
     related: [born-weight, stern-gerlach, mach-zehnder, bloch-sphere, born-volume-ratio]
 
   - slug: mermin-inequality
+    image:
+      file: img/mermin-inequality.jpg
+      alt: "Photograph of David Mermin speaking"
+      caption: "David Mermin in Stockholm, 2009."
+      credit: "Prolineserver (talk), CC BY-SA 3.0, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0"
+      source: https://commons.wikimedia.org/wiki/File:Mermin_Stockholm_2009.jpg
+      article: https://en.wikipedia.org/wiki/N._David_Mermin
     hook: >
       Add more particles and the conflict between quantum mechanics and common sense grows
       exponentially, so it doesn't average out but compounds.
@@ -3287,6 +3567,14 @@ entries:
     related: [ghz-state, bell-chsh, tsirelson-bound, cglmp-inequality, contextuality]
 
   - slug: pauli-matrices
+    image:
+      file: img/pauli-matrices.jpg
+      alt: "Portrait photograph of Wolfgang Pauli"
+      caption: "Wolfgang Pauli."
+      credit: "Nobel foundation, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Pauli.jpg
+      article: https://en.wikipedia.org/wiki/Wolfgang_Pauli
     hook: >
       Three small matrices carry the entire two-level world, and their refusal to commute
       is the uncertainty principle in its smallest packaging.
@@ -3354,6 +3642,14 @@ entries:
     related: [bloch-sphere, hermitian-operator, gottesman-knill, shor-code, steane-code]
 
   - slug: peres-criterion
+    image:
+      file: img/peres-criterion.jpg
+      alt: "Portrait photograph of Asher Peres"
+      caption: "Asher Peres."
+      credit: "Lev Vaidman, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:Asher_Peres.jpg
+      article: https://en.wikipedia.org/wiki/Asher_Peres
     hook: >
       You can test for entanglement with a pencil, as you transpose half of the joint
       description, and if a negative eigenvalue appears the pair is entangled.
@@ -3419,6 +3715,14 @@ entries:
     related: [gisin-theorem, bell-not-join, partial-trace, kronecker-product, no-signalling]
 
   - slug: poisson-bracket
+    image:
+      file: img/poisson-bracket.jpg
+      alt: "Portrait of Siméon Denis Poisson"
+      caption: "Siméon Denis Poisson."
+      credit: "François-Séraphin Delpech / After Nicolas Eustache Maurin, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:SiméonDenisPoisson.jpg
+      article: https://en.wikipedia.org/wiki/Sim%C3%A9on_Denis_Poisson
     hook: >
       The Poisson bracket is the one rule that tells classical mechanics how fast any
       quantity changes, and the quantum commutator obeys exactly the same algebra, so that
@@ -3498,6 +3802,14 @@ entries:
     related: [jacobi-identity, kahler-form, liouville-measure, moment-map, schrodinger-equation]
 
   - slug: ramsey-interferometry
+    image:
+      file: img/ramsey-interferometry.jpg
+      alt: "Portrait photograph of Norman Ramsey"
+      caption: "Norman Ramsey."
+      credit: "Copyrighted free use, via Wikimedia Commons"
+      licence: "Copyrighted free use"
+      source: https://commons.wikimedia.org/wiki/File:Ramsey_Norman_A3.jpg
+      article: https://en.wikipedia.org/wiki/Norman_Ramsey_Jr.
     hook: >
       Two brief nudges separated by a long stretch of doing nothing measure a frequency
       more sharply than any amount of continuous pushing, and every atomic clock runs on
@@ -3562,6 +3874,14 @@ entries:
     related: [fisher-information, mach-zehnder, phase-estimation, bloch-sphere, stern-gerlach]
 
   - slug: schrodinger-equation
+    image:
+      file: img/schrodinger-equation.jpg
+      alt: "Portrait photograph of Erwin Schrödinger"
+      caption: "Erwin Schrödinger."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Erwin_Schrödinger_-_Narodowe_Archiwum_Cyfrowe_(1-E-939).jpg
+      article: https://en.wikipedia.org/wiki/Erwin_Schr%C3%B6dinger
     hook: >
       In CSD the Schrodinger equation isn't postulated, as it's what any continuous motion
       that preserves the measurable relations between quantum states is forced to look
@@ -3638,6 +3958,14 @@ entries:
     related: [schrodinger-from-records, stone-theorem, hermitian-operator, lindblad-equation, poisson-bracket]
 
   - slug: shor-algorithm
+    image:
+      file: img/shor-algorithm.png
+      alt: "Photograph of Peter Shor lecturing"
+      caption: "Peter Shor receiving the Dirac Medal, 2017."
+      credit: "International Centre for Theoretical Physics, CC BY 3.0, via Wikimedia Commons"
+      licence: "CC BY 3.0"
+      source: https://commons.wikimedia.org/wiki/File:Peter_Shor_2017_Dirac_Medal_Award_Ceremony.png
+      article: https://en.wikipedia.org/wiki/Peter_Shor
     hook: >
       Shor's algorithm factors large numbers in polynomial time on a quantum computer, and
       it turned quantum computing from a curiosity into a budget line and made every
@@ -3704,6 +4032,15 @@ entries:
     related: [quantum-fourier-transform, phase-estimation, grover-algorithm, simon-algorithm, shor-code]
 
   - slug: stern-gerlach
+    image:
+      file: img/stern-gerlach.png
+      wide: true
+      alt: "Diagram of the Stern-Gerlach apparatus"
+      caption: "The Stern-Gerlach experiment: a beam of silver atoms (1) passes through an inhomogeneous magnet (3) and splits into two spots (4, 5) on the screen."
+      credit: "Tatoute, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:Stern-Gerlach_experiment.svg
+      article: https://en.wikipedia.org/wiki/Stern%E2%80%93Gerlach_experiment
     hook: >
       Atoms sent through an uneven magnetic field split into two clean beams instead of a
       smear, and sorting them twice along different axes undoes the first sorting, so the
@@ -3771,6 +4108,14 @@ entries:
 
   - slug: contextuality
     reviewed: 2026-09-14
+    image:
+      file: img/contextuality.jpg
+      alt: "Photograph of Ernst Specker at a lectern"
+      caption: "Ernst Specker, of the Kochen-Specker theorem."
+      credit: "Konrad Jacobs, Erlangen, CC BY-SA 2.0 de, via Wikimedia Commons"
+      licence: "CC BY-SA 2.0 de"
+      source: https://commons.wikimedia.org/wiki/File:Ernst_Specker.jpeg
+      article: https://en.wikipedia.org/wiki/Ernst_Specker
     hook: >
       For some sets of quantum questions no consistent answer sheet exists at all, and
       CSD's response is to stop demanding one answer per question and to say instead what
@@ -3836,6 +4181,14 @@ entries:
 
   - slug: hidden-variables
     reviewed: 2026-09-14
+    image:
+      file: img/hidden-variables.jpg
+      alt: "Portrait photograph of Louis de Broglie"
+      caption: "Louis de Broglie, whose pilot wave was the first hidden-variable theory."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Broglie_Big.jpg
+      article: https://en.wikipedia.org/wiki/Louis_de_Broglie
     hook: >
       The no-go theorems don't kill hidden variables, as they price them, and CSD reads
       the price tag and pays it.
@@ -3890,6 +4243,15 @@ entries:
 
   - slug: measurement-problem
     reviewed: 2026-09-14
+    image:
+      file: img/measurement-problem.png
+      wide: true
+      alt: "Cartoon of the Schrödinger's cat thought experiment"
+      caption: "Schrödinger's cat: the box, the vial, the trigger, and a cat that the formalism describes as both."
+      credit: "Dhatfield, CC BY-SA 3.0, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0"
+      source: https://commons.wikimedia.org/wiki/File:Schrodingers_cat.svg
+      article: https://en.wikipedia.org/wiki/Schr%C3%B6dinger's_cat
     hook: >
       Quantum mechanics contains two incompatible rules of change and no instruction for
       when to switch between them, and CSD replaces the switch with theorems about what no
@@ -3953,6 +4315,14 @@ entries:
 
   - slug: collapse
     reviewed: 2026-09-14
+    image:
+      file: img/collapse.jpg
+      alt: "Portrait photograph of Werner Heisenberg"
+      caption: "Werner Heisenberg."
+      credit: "CC BY-SA 3.0 de, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0 de"
+      source: https://commons.wikimedia.org/wiki/File:Werner_Heisenberg_Portrait_(3x4_cropped).jpg
+      article: https://en.wikipedia.org/wiki/Werner_Heisenberg
     hook: >
       In CSD the quantum state never jumps, and that's a theorem about volume-preserving
       maps rather than a preference among interpretations.
@@ -4005,6 +4375,14 @@ entries:
 
   - slug: typicality
     reviewed: 2026-09-14
+    image:
+      file: img/typicality.jpg
+      alt: "Portrait photograph of Ludwig Boltzmann"
+      caption: "Ludwig Boltzmann, who first argued from typicality."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Boltzmann2.jpg
+      article: https://en.wikipedia.org/wiki/Ludwig_Boltzmann
     hook: >
       Typicality is probability without randomness, as the world is deterministic, you
       don't know which state you have, and the odds are the sizes of the possibilities.
@@ -4155,6 +4533,14 @@ entries:
         url: https://en.wikipedia.org/wiki/Epistemic_view_of_quantum_states
 
   - slug: determinism
+    image:
+      file: img/determinism.jpg
+      alt: "Portrait of Pierre-Simon Laplace"
+      caption: "Pierre-Simon Laplace, whose demon is the classical picture of determinism."
+      credit: "James Posselwhite, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Laplace,_Pierre-Simon,_marquis_de.jpg
+      article: https://en.wikipedia.org/wiki/Pierre-Simon_Laplace
     hook: >
       The substrate has no dice, so the spread in the data is variation in what your
       preparation couldn't pin down.
@@ -4208,6 +4594,14 @@ entries:
     related: [single-trajectory, where-do-probabilities-come-from, is-csd-superdeterministic, typicality, constraint-surface]
 
   - slug: kochen-specker
+    image:
+      file: img/kochen-specker.jpg
+      alt: "Photograph of Ernst Specker at a lectern"
+      caption: "Ernst Specker lecturing."
+      credit: "Konrad Jacobs, Erlangen, CC BY-SA 2.0 de, via Wikimedia Commons"
+      licence: "CC BY-SA 2.0 de"
+      source: https://commons.wikimedia.org/wiki/File:Ernst_Specker.jpeg
+      article: https://en.wikipedia.org/wiki/Ernst_Specker
     hook: >
       There's a finite list of directions in space that admits no consistent yes-or-no
       labelling, so contextuality follows by pure counting, with no experiment, no
@@ -4277,6 +4671,14 @@ entries:
     related: [contextuality, does-kochen-specker-rule-out-csd, hidden-variables, bell-chsh, measurement-context]
 
   - slug: copenhagen
+    image:
+      file: img/copenhagen.jpg
+      alt: "Portrait photograph of Niels Bohr"
+      caption: "Niels Bohr."
+      credit: "public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Niels_Bohr.jpg
+      article: https://en.wikipedia.org/wiki/Niels_Bohr
     hook: >
       Copenhagen is the oldest position on quantum measurement and the one that declines
       the question, as measurement is where the theory stops and not something it
@@ -4323,6 +4725,15 @@ entries:
     related: [many-worlds, bohmian-mechanics, qbism, measurement-problem, collapse]
 
   - slug: many-worlds
+    image:
+      file: img/many-worlds.png
+      wide: true
+      alt: "Cartoon of a film strip splitting into a live-cat branch and a dead-cat branch"
+      caption: "Schrödinger's cat in the many-worlds picture: the film splits and both outcomes run on."
+      credit: "Christian Schirm, CC0, via Wikimedia Commons"
+      licence: "CC0"
+      source: https://commons.wikimedia.org/wiki/File:Schroedingers_cat_film.svg
+      article: https://en.wikipedia.org/wiki/Many-worlds_interpretation
     hook: >
       Many-Worlds keeps the smooth quantum evolution and gives up the single outcome, and
       CSD makes the opposite choice, one trajectory and one world, as a settled
@@ -4385,6 +4796,14 @@ entries:
     related: [copenhagen, bohmian-mechanics, spontaneous-collapse, single-trajectory, measurement-problem]
 
   - slug: bohmian-mechanics
+    image:
+      file: img/bohmian-mechanics.jpg
+      alt: "Portrait photograph of David Bohm"
+      caption: "David Bohm."
+      credit: "Unknown photographer, Attribution, via Wikimedia Commons"
+      licence: "Attribution"
+      source: https://commons.wikimedia.org/wiki/File:David_Bohm.jpg
+      article: https://en.wikipedia.org/wiki/David_Bohm
     hook: >
       Bohmian mechanics is CSD's nearest neighbour, deterministic, with definite states,
       and openly non-local, and the dispute between them is over where the probabilities
@@ -5199,6 +5618,15 @@ entries:
     related: [de-isolation, fibre, record-layer, measurement-flow, single-trajectory]
 
   - slug: fibre
+    image:
+      file: img/fibre.png
+      wide: true
+      alt: "A Möbius strip"
+      caption: "A Möbius strip is a bundle of line segments over a circle; each segment is a fibre."
+      credit: "Inductiveload, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Moebius_Surface_1_Display_Small.png
+      article: https://en.wikipedia.org/wiki/Fiber_bundle
     hook: >
       The arena of CSD is larger than the space of quantum states by exactly one compact
       factor, and from three dimensions upward the natural ways of doing without that
@@ -6084,6 +6512,14 @@ entries:
 
   - slug: no-signalling
     reviewed: 2026-09-14
+    image:
+      file: img/no-signalling.jpg
+      alt: "Portrait photograph of Albert Einstein"
+      caption: "Albert Einstein, whose 1935 paper with Podolsky and Rosen made the question sharp."
+      credit: "Oren Jack Turner, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Albert_Einstein_Head_cleaned.jpg
+      article: https://en.wikipedia.org/wiki/Albert_Einstein
     hook: >
       Nothing done to the far wing of an entangled pair changes the statistics seen at the
       near wing, and CSD proves this exactly, for every state, entangled ones included.
@@ -6199,6 +6635,14 @@ entries:
 
   - slug: lieb-robinson-bound
     reviewed: 2026-09-14
+    image:
+      file: img/lieb-robinson-bound.jpg
+      alt: "Portrait photograph of Elliott Lieb"
+      caption: "Elliott Lieb."
+      credit: "Originally uploaded by Elieb (Transferred by Baroc), CC BY-SA 3.0, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0"
+      source: https://commons.wikimedia.org/wiki/File:Elliott-Lieb-07.jpeg
+      article: https://en.wikipedia.org/wiki/Elliott_H._Lieb
     hook: >
       Even without relativity, influence in a quantum system with local interactions has a
       speed limit, and on CSD's finite field arena that limit is a theorem with the
@@ -6331,6 +6775,14 @@ entries:
 
   - slug: kms-condition
     reviewed: 2026-09-14
+    image:
+      file: img/kms-condition.jpg
+      alt: "Equations engraved on a black stone wall in Warsaw"
+      caption: "The KMS condition, carved on the wall of the Centre of New Technologies in Warsaw."
+      credit: "Halibutt, CC BY-SA 3.0, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0"
+      source: https://commons.wikimedia.org/wiki/File:Warszawa_Centrum_Nowych_Technologii_UW-6.jpg
+      article: https://en.wikipedia.org/wiki/KMS_state
     hook: >
       The algebraic signature of thermal equilibrium holds exactly on CSD's finite field
       arena, and cooling the thermal state all the way down recovers the vacuum.
@@ -6456,6 +6908,14 @@ entries:
 
   - slug: lie-trotter-formula
     reviewed: 2026-09-14
+    image:
+      file: img/lie-trotter-formula.jpg
+      alt: "Portrait photograph of Sophus Lie"
+      caption: "Sophus Lie."
+      credit: "L. Szaciński (Christiania), No restrictions, via Wikimedia Commons"
+      licence: "No restrictions"
+      source: https://commons.wikimedia.org/wiki/File:Portrett_av_Sophus_Lie.jpg
+      article: https://en.wikipedia.org/wiki/Sophus_Lie
     hook: >
       Alternate many tiny steps of two operations that don't commute and the result
       converges to the exponential of their sum, with an error that shrinks like one over
@@ -6576,6 +7036,14 @@ entries:
 
   - slug: quantum-channel
     reviewed: 2026-09-14
+    image:
+      file: img/quantum-channel.jpg
+      alt: "Portrait photograph of Claude Shannon"
+      caption: "Claude Shannon, whose channels these generalise."
+      credit: "CC BY 2.0, via Wikimedia Commons"
+      licence: "CC BY 2.0"
+      source: https://commons.wikimedia.org/wiki/File:C.E._Shannon._Tekniska_museet_43069_(2x3_crop).jpg
+      article: https://en.wikipedia.org/wiki/Claude_Shannon
     hook: >
       The most general thing that can happen to a quantum state is captured in CSD as a
       concrete structure, a family of operators with one completeness law, and every
@@ -6771,6 +7239,14 @@ entries:
 
   - slug: entropy-subadditivity
     reviewed: 2026-09-14
+    image:
+      file: img/entropy-subadditivity.jpg
+      alt: "Portrait photograph of Claude Shannon"
+      caption: "Claude Shannon."
+      credit: "CC BY 2.0, via Wikimedia Commons"
+      licence: "CC BY 2.0"
+      source: https://commons.wikimedia.org/wiki/File:C.E._Shannon._Tekniska_museet_43069_(2x3_crop).jpg
+      article: https://en.wikipedia.org/wiki/Claude_Shannon
     hook: >
       The information missing from a whole never exceeds the sum of what's missing from
       its parts, and that's von Neumann's subadditivity inequality, proved at the matrix
@@ -6905,6 +7381,14 @@ entries:
 
   - slug: shor-code
     reviewed: 2026-09-14
+    image:
+      file: img/shor-code.png
+      alt: "Photograph of Peter Shor lecturing"
+      caption: "Peter Shor, who found the code in 1995."
+      credit: "International Centre for Theoretical Physics, CC BY 3.0, via Wikimedia Commons"
+      licence: "CC BY 3.0"
+      source: https://commons.wikimedia.org/wiki/File:Peter_Shor_2017_Dirac_Medal_Award_Ceremony.png
+      article: https://en.wikipedia.org/wiki/Peter_Shor
     hook: >
       Shor's nine-qubit code was the first proof that quantum information can be protected
       against any error on any single qubit without ever being read, and the corpus
@@ -7003,6 +7487,14 @@ entries:
     related: [steane-code, pauli-matrices, stinespring-dilation, quantum-channel, gottesman-knill]
 
   - slug: ozawa-error-disturbance
+    image:
+      file: img/ozawa-error-disturbance.jpg
+      alt: "Portrait photograph of Werner Heisenberg"
+      caption: "Werner Heisenberg, whose error-disturbance argument Ozawa's relation corrects."
+      credit: "CC BY-SA 3.0 de, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0 de"
+      source: https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild183-R57262,_Werner_Heisenberg.jpg
+      article: https://en.wikipedia.org/wiki/Uncertainty_principle
     hook: >
       The famous error-times-disturbance formula attributed to Heisenberg fails in the
       laboratory, and the relation that actually holds is Ozawa's, with three terms
@@ -7091,6 +7583,14 @@ entries:
 
   - slug: robertson-uncertainty
     reviewed: 2026-09-14
+    image:
+      file: img/robertson-uncertainty.jpg
+      alt: "Portrait photograph of Werner Heisenberg"
+      caption: "Werner Heisenberg, whose 1927 relation Robertson made precise."
+      credit: "CC BY-SA 3.0 de, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0 de"
+      source: https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild183-R57262,_Werner_Heisenberg.jpg
+      article: https://en.wikipedia.org/wiki/Uncertainty_principle
     hook: >
       Robertson's inequality is the precise form of the uncertainty principle, and in CSD
       the spreads it bounds are the spreads of quantities genuinely distributed over the
@@ -7991,6 +8491,14 @@ entries:
 
   - slug: quantum-fourier-transform
     reviewed: 2026-09-14
+    image:
+      file: img/quantum-fourier-transform.jpg
+      alt: "Portrait of Joseph Fourier"
+      caption: "Joseph Fourier."
+      credit: "Julien-Léopold Boilly, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Fourier2_-_restoration1.jpg
+      article: https://en.wikipedia.org/wiki/Joseph_Fourier
     hook: >
       The quantum Fourier transform runs Fourier's transform as a single reversible motion
       of a quantum register, and it's the lens that turns hidden periods and phases into
@@ -8060,6 +8568,15 @@ entries:
 
   - slug: phase-estimation
     reviewed: 2026-09-14
+    image:
+      file: img/phase-estimation.png
+      wide: true
+      alt: "Quantum circuit diagram for phase estimation"
+      caption: "The phase-estimation circuit: controlled powers of U, then an inverse Fourier transform on the control register."
+      credit: "Omrika, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:PhaseCircuit.svg
+      article: https://en.wikipedia.org/wiki/Quantum_phase_estimation_algorithm
     hook: >
       Phase estimation, the workhorse subroutine of quantum computing, carries a
       guarantee, as if you read the dial at the nearest tick you're right at least four
@@ -8182,6 +8699,15 @@ entries:
         url: https://en.wikipedia.org/wiki/Simon%27s_problem
 
   - slug: bernstein-vazirani
+    image:
+      file: img/bernstein-vazirani.png
+      wide: true
+      alt: "Quantum circuit diagram of the Bernstein-Vazirani algorithm"
+      caption: "The Bernstein-Vazirani circuit: Hadamards, one oracle call, Hadamards."
+      credit: "Sjoerd Terlouw, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:Bernstein-Vazirani_algorithm.svg
+      article: https://en.wikipedia.org/wiki/Bernstein%E2%80%93Vazirani_algorithm
     hook: >
       A hidden string of bits costs one classical question per bit, or exactly one quantum
       question in total, so the Bernstein-Vazirani algorithm is the cleanest single-query
@@ -8283,6 +8809,14 @@ entries:
         url: https://en.wikipedia.org/wiki/Swap_test
 
   - slug: hadamard-test
+    image:
+      file: img/hadamard-test.jpg
+      alt: "Portrait photograph of Jacques Hadamard"
+      caption: "Jacques Hadamard."
+      credit: "Cropped by Off-shell, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Hadamard2_cropped.jpg
+      article: https://en.wikipedia.org/wiki/Jacques_Hadamard
     hook: >
       The Hadamard test turns a matrix element, a complex number buried inside an
       operator, into the bias of a single coin.
@@ -8334,6 +8868,14 @@ entries:
 
   - slug: amplitude-amplification
     reviewed: 2026-09-14
+    image:
+      file: img/amplitude-amplification.jpg
+      alt: "Portrait photograph of Gilles Brassard"
+      caption: "Gilles Brassard in 2019."
+      credit: "Lëa-Kim Châteauneuf, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:Gilles_Brassard_(2019).jpg
+      article: https://en.wikipedia.org/wiki/Gilles_Brassard
     hook: >
       Amplitude amplification is the theorem of which Grover's algorithm is a shadow, as
       any quantum procedure with any success probability can have that probability raised
@@ -8741,6 +9283,14 @@ entries:
 
   - slug: holevo-bound
     reviewed: 2026-09-14
+    image:
+      file: img/holevo-bound.jpg
+      alt: "Portrait photograph of Alexander Holevo"
+      caption: "Alexander Holevo."
+      credit: "Renate Schmid, Copyright is with MFO, CC BY-SA 2.0 de, via Wikimedia Commons"
+      licence: "CC BY-SA 2.0 de"
+      source: https://commons.wikimedia.org/wiki/File:Holevo,_Alexander2.jpg
+      article: https://en.wikipedia.org/wiki/Alexander_Holevo
     hook: >
       A quantum system can be prepared in infinitely many distinct ways, yet no reader can
       extract more classical information from it than from a classical system of the same
@@ -8876,6 +9426,14 @@ entries:
 
   - slug: klein-inequality
     reviewed: 2026-09-14
+    image:
+      file: img/klein-inequality.jpg
+      alt: "Portrait photograph of Oskar Klein"
+      caption: "Oskar Klein."
+      credit: "Royal Norwegian Society of Sciences and Letters, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:OskarKlein.jpg
+      article: https://en.wikipedia.org/wiki/Oskar_Klein
     hook: >
       One quantum state is never negatively distinguishable from another, as the relative
       entropy of a state with respect to a second is at least zero, and that single

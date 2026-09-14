@@ -61,6 +61,7 @@ echo "check-glossary: verifying the prose layer against the corpus…"
 echo
 
 python - "$STRICT" <<'PY'
+import os
 import re, subprocess, sys, os, yaml
 
 STRICT = sys.argv[1] == "1"
@@ -293,6 +294,26 @@ for e in entries:
     if out and str(rev) < out:
         F.append(f"{s_}: {mod} changed {out}, entry reviewed {rev}")
 
+# (H) IMAGES — an entry's image must be a committed file under docs/ with the
+# attribution the Commons licences require: alt text, a caption, a credit line, the
+# licence name and the source page. A missing file is a broken page; a missing credit
+# is a licence violation the site would ship.
+H = []
+for e in entries:
+    im, s_ = e.get("image"), e.get("slug")
+    if not im:
+        continue
+    if not isinstance(im, dict):
+        H.append(f"{s_}: image must be a mapping"); continue
+    for k in ("file", "alt", "caption", "credit", "licence", "source"):
+        if not im.get(k):
+            H.append(f"{s_}: image.{k} missing")
+    f = im.get("file") or ""
+    if not f.startswith("img/") or not os.path.isfile(os.path.join("docs", f)):
+        H.append(f"{s_}: image.file not found under docs/ — {f}")
+    if not str(im.get("source", "")).startswith("https://commons.wikimedia.org/wiki/File:"):
+        H.append(f"{s_}: image.source is not a Commons file page — {im.get('source')}")
+
 def show(title, items):
     if not items:
         return
@@ -309,8 +330,9 @@ show("D) dangling related / missing site_link — WARNING only", D)
 show("F) STALE — module moved since the entry was reviewed", F)
 show("F) never reviewed against their module — WARNING only", Fnew)
 show("G) restates a RETRACTED claim as settled — WARNING only", G)
+show("H) images — missing file or attribution", H)
 
-hard = len(A) + len(B) + len(C) + len(Ee)
+hard = len(A) + len(B) + len(C) + len(Ee) + len(H)
 print(f"check-glossary: {len(entries)} entr{'y' if len(entries)==1 else 'ies'}, "
       f"{hard} hard finding{'' if hard==1 else 's'}, {len(D)} warning{'' if len(D)==1 else 's'}.")
 print(f"  staleness: {len(F)} entr{'y' if len(F)==1 else 'ies'} STALE against a moved module, "

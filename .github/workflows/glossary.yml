@@ -20,6 +20,7 @@ on:
     branches: [main]
     paths:
       - 'docs/glossary.yaml'
+      - 'docs/img/**'
       - 'scripts/check-glossary.sh'
       - 'scripts/gen-glossary.sh'
       - 'scripts/lib/gen_glossary.py'
