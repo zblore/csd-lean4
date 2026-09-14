@@ -5317,48 +5317,48 @@ entries:
   - slug: many-to-one-projection
     hook: >
       Behind every quantum state stands a crowd of world-states, and the projection that
-      maps the crowd to one state loses information on purpose: that loss is where quantum
-      probability comes from.
+      maps the crowd to one state loses information on purpose, and that loss is where
+      quantum probability comes from.
     layman: >
-      If the world is deterministic and you know the quantum state exactly, why can you
-      not predict the outcome of a measurement? Something must separate what the state
-      tells you from what the world knows. In CSD that something is a projection, a map
-      from the full arena of world-states down to the space of quantum states, and the
-      important feature of the map is that it forgets.
+      If the world is deterministic and you know the quantum state exactly, you can ask
+      why you can't predict the outcome of a measurement. Something must separate what the
+      state tells you from what the world knows, and in CSD that something is a
+      projection, a map from the full arena of world-states down to the space of quantum
+      states, whose important feature is that it forgets.
 
-      Many distinct points of the arena map to the same quantum state. The map is
-      many-to-one by design. Knowing the quantum state therefore fixes only the visible
-      coordinate of the world's position and says nothing about the rest. Outcomes depend
-      on the rest, so exact knowledge of the state is compatible with genuine ignorance of
-      the outcome, even though nothing in the world is random.
+      Many distinct points of the arena map to the same quantum state, as the map is many-
+      to-one by design. Knowing the quantum state therefore fixes only the visible
+      coordinate of the world's position and says nothing about the rest, and outcomes
+      depend on the rest, so exact knowledge of the state is compatible with genuine
+      ignorance of the outcome, even though nothing in the world is random.
 
       This is the oldest move in statistical physics, relocated. The temperature of a gas
-      is a single number that many different arrangements of molecules share, and knowing
-      the temperature does not tell you where the molecules are. The novelty in CSD is not
-      the move itself but what is proved about the projection.
+      is a single number many different arrangements of molecules share, and knowing the
+      temperature doesn't tell you where the molecules are. The novelty in CSD isn't the
+      move itself but what's proved about the projection.
     in_csd: >
       The projection from the arena to the projective sector, CSD's name for the space of
       quantum states, is postulated to be measurable and many-to-one. Measurable means
       that any region of the state space to which a size can be assigned pulls back to a
-      region of the arena to which a size can be assigned, so that volumes upstairs and
-      downstairs can be compared. The many-to-one character is intended and is stated as
-      such in the source.
+      region of the arena to which a size can be assigned, so volumes upstairs and
+      downstairs can be compared, and the many-to-one character is intended and is stated
+      as such in the source.
 
       Everything epistemic, everything about what an observer can know, happens downstream
-      of the projection; everything ontic, everything about what is actually the case,
+      of the projection, and everything ontic, everything about what's actually the case,
       happens upstream. The Born weight of a region of the state space is the ontic volume
       of the set of arena points that project into it, so the information the projection
-      forgets is exactly the information that typicality averages over.
+      forgets is exactly the information typicality averages over.
 
       What keeps this from being a shell game is an anti-circularity discipline. The
-      projection carries no Born equality, no identity between measures and no unitarity.
-      Those are theorems proved about it downstream, not properties packed into the
+      projection carries no Born equality, no identity between measures and no unitarity,
+      as those are theorems proved about it downstream and not properties packed into the
       definition.
     mathematical: >
       ProjectiveSector carries the measurable map pi from Sigma to the projective space
-      with no further structure; the projective law is the pushforward of an ontic measure
-      along pi. On the Kahler instance pi is the product projection CP^(N-1) x T^2 ->
-      CP^(N-1), with every fibre a full torus.
+      with no further structure, and the projective law is the pushforward of an ontic
+      measure along pi. On the Kahler instance pi is the product projection CP^(N-1) x T^2
+      -> CP^(N-1), with every fibre a full torus.
 
       The pushforward identity, Liouville measure to Fubini-Study measure, is proved, and
       the guard scripts enforce that the projection's descent equation is genuinely
@@ -5369,82 +5369,83 @@ entries:
     related: [fibre, constraint-surface, projectability, ontic-vs-epistemic, projective-sector]
 
   - slug: pointer-basis
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
-      A measuring apparatus does not record what you ask it to; it records what it can
-      keep, and what it can keep is decided by its interaction with the surroundings, not
-      by the experimenter.
+      A measuring apparatus doesn't record what you ask it to, as it records what it can
+      keep, and what it can keep is decided by its interaction with the surroundings and
+      not by the experimenter.
     layman: >
-      A measuring device is supposed to end up in one of several stable readings: the
+      A measuring device is supposed to end up in one of several stable readings, so the
       needle points left or it points right. Yet the equations of quantum mechanics
       happily describe superpositions of pointer readings, states in which the needle is
-      in no definite position at all, and nobody has ever seen one. Why do pointers settle
-      into some states and not others? The pointer basis is the name for the privileged
-      set of readings a device can settle into, and the question is what picks it out.
+      in no definite position at all, and nobody has ever seen one, so you can ask why
+      pointers settle into some states and not others. The pointer basis is the name for
+      the privileged set of readings a device can settle into, and the question is what
+      picks it out.
 
       The standard answer, which CSD adopts, is called einselection, short for
       environment-induced selection. The environment interacts with the apparatus
       continuously, and only certain states of the apparatus survive that interaction
-      unscrambled. Those survivors form the pointer basis. A pointer position is robust
-      because bumping into air molecules does not change it; a superposition of two
+      unscrambled, so those survivors form the pointer basis. A pointer position is robust
+      because bumping into air molecules doesn't change it, and a superposition of two
       positions is fragile because the first bump registers which position the molecule
       met, and the superposition is gone.
 
       What decides which states survive is a property called commutation. Two operations
-      commute when the order in which they are carried out makes no difference. An
+      commute when the order in which they're carried out makes no difference, and an
       observable, a measurable property of the apparatus, survives the interaction exactly
-      when the interaction commutes with it, so that the interaction cannot alter it. In
-      the corpus this is a theorem rather than a slogan: an observable is left unchanged
-      by the interaction at every moment if and only if it commutes with it. What remains
-      owed sits one level up. Which interaction a given apparatus realises is an input to
-      the theorem, and deriving that interaction from the arena's own dynamics is an open
-      problem, which the corpus says wherever the result is stated.
+      when the interaction commutes with it, so the interaction can't alter it. In the
+      corpus this is a theorem rather than a slogan, as an observable is left unchanged by
+      the interaction at every moment if and only if it commutes with it. What remains
+      owed sits one level up, as which interaction a given apparatus realises is an input
+      to the theorem, and deriving that interaction from the arena's own dynamics is an
+      open problem, which the corpus says wherever the result is stated.
     in_csd: >
-      In the record layer the pointer basis is what makes a record a record: a stable,
-      re-readable configuration that the de-isolation dynamics writes and the environment
-      does not erase. It is important to be precise about what is proved. The state of a
-      system is written as a table of numbers called a density matrix, whose diagonal
-      entries are the populations, the probabilities of the individual readings, and whose
-      off-diagonal entries are the coherences, the terms that encode a superposition. For
-      a general number of outcomes the dephasing channel is defined as the map that keeps
-      the diagonal of the density matrix and discards everything else. The statement that
-      it kills the coherences and preserves the populations is therefore a definitional
+      In the record layer the pointer basis is what makes a record a record, a stable, re-
+      readable configuration the de-isolation dynamics writes and the environment doesn't
+      erase. It's important to be precise about what's proved. The state of a system is
+      written as a table of numbers called a density matrix, whose diagonal entries are
+      the populations, the probabilities of the individual readings, and whose off-
+      diagonal entries are the coherences, the terms that encode a superposition. For a
+      general number of outcomes the dephasing channel is defined as the map that keeps
+      the diagonal of the density matrix and discards everything else, so the statement
+      that it kills the coherences and preserves the populations is a definitional
       unfolding, and the pointer basis is, by construction, the basis in which the matrix
       was written down. The corpus flags this in the theorem's own documentation rather
       than leaving it to be discovered.
 
       The content near that statement is real but narrower. The channel genuinely acts on
-      a superposed state rather than leaving it alone; the degenerate case, where all
+      a superposed state rather than leaving it alone, the degenerate case, where all
       readings are equally likely and no basis is preferred, is handled rather than waved
-      at; and for a two-level system the continuous-time law of decay is exact. The
-      commutation criterion is a full characterisation: the pointer observables of a
-      supplied interaction are exactly the commuting ones. They are constants of the
-      interaction's motion, their populations are conserved in every state, and any
-      non-commuting projection is provably disturbed. The ontic origin of the pointer
-      basis, einselection from the arena's own dynamics rather than from a supplied
-      interaction, is explicitly deferred to a later tier of the programme.
+      at, and for a two-level system the continuous-time law of decay is exact. The
+      commutation criterion is a full characterisation, as the pointer observables of a
+      supplied interaction are exactly the commuting ones. They're constants of the
+      interaction's motion, their populations are conserved in every state, and any non-
+      commuting projection is provably disturbed. The ontic origin of the pointer basis,
+      einselection from the arena's own dynamics rather than from a supplied interaction,
+      is explicitly deferred to a later tier of the programme.
 
-      The two-level reading applies here as everywhere in CSD: the pointer basis is a fact
-      about the dynamics, on the ontic side, while which pointer reading obtains in a
+      The two-level reading applies here as everywhere in CSD, as the pointer basis is a
+      fact about the dynamics, on the ontic side, while which pointer reading obtains in a
       given run is the record, selected by the trajectory.
     mathematical: >
       The theorem einselectionN states that the general-N dephasing channel zeroes the
       off-diagonal terms in the pointer basis and preserves the diagonal populations.
       Stated alone this is definitional, since the channel is diagonal(rho i i) and the
       off-diagonal part of a diagonal matrix is zero, and the docstring says so. The
-      content sits in the companions: the channel acts non-trivially on a coherent state,
-      it restricts to the derived qubit reduction, and at equal populations it degenerates
-      to a multiple of the identity, invariant under any unitary conjugation, so no basis
-      is preferred.
+      content sits in the companions, as the channel acts non-trivially on a coherent
+      state, it restricts to the derived qubit reduction, and at equal populations it
+      degenerates to a multiple of the identity, invariant under any unitary conjugation,
+      so no basis is preferred.
 
-      The genuinely dynamical statement is the qubit dephasing semigroup, where the
-      off-diagonal coherence decays exactly as exp(-gamma t) with populations conserved
-      and the limit at large t proved; amplitude damping is its companion. Both are
-      two-level. At general N the criterion is characterised in PointerCommutation.lean:
+      The genuinely dynamical statement is the qubit dephasing semigroup, where the off-
+      diagonal coherence decays exactly as exp(-gamma t) with populations conserved and
+      the limit at large t proved, and amplitude damping is its companion. Both are two-
+      level. At general N the criterion is characterised in PointerCommutation.lean, where
       pointer_invariant_iff_commute proves that an observable is a constant of the
       interaction flow at every time iff it commutes with the Hermitian generator, with
       the disturbance of any non-commuting observable proved alongside. The interaction is
-      the input; einselection from Sigma-dynamics is gated to the entangled tier.
+      the input, and einselection from Sigma-dynamics is gated to the entangled tier.
     term: Pointer basis
     status: proved-in-corpus
     source: curated
@@ -5454,49 +5455,49 @@ entries:
     related: [measurement-flow, de-isolation, luders-rule, record-layer, stern-gerlach]
 
   - slug: preparation-region
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      Repeating the same experiment is a physical claim, and this is what it refers to: a
-      region of the arena, not a single point, that the preparation procedure lands the
+      Repeating the same experiment is a physical claim, and this is what it refers to, a
+      region of the arena and not a single point, that the preparation procedure lands the
       world in.
     layman: >
       No laboratory procedure controls a system completely. Cool an atom, align a
-      polariser, fire the same laser pulse: what you fix is everything your instruments
-      can see, and the world keeps the rest. So preparing the same state a thousand times
-      cannot mean putting the world in the same complete condition a thousand times. The
-      preparation region is the honest version of that phrase, and it is where quantum
-      statistics begin.
+      polariser, fire the same laser pulse, and what you fix is everything your
+      instruments can see, while the world keeps the rest. So preparing the same state a
+      thousand times can't mean putting the world in the same complete condition a
+      thousand times, and the preparation region is the honest version of that phrase, and
+      it's where quantum statistics begin.
 
       The preparation region is the set of all points of the arena, the space of complete
       world-states, that are compatible with what the procedure fixed. Each run of the
-      experiment is one point drawn from that region. The statistics of many runs are the
-      statistics of the region: how often an outcome occurs is how much of the region
-      leads to it.
+      experiment is one point drawn from that region, so the statistics of many runs are
+      the statistics of the region, and how often an outcome occurs is how much of the
+      region leads to it.
 
       Once the matter is put this way, quantum probability stops being mysterious in kind.
-      It is the same ignorance over a region of possibilities that classical statistical
+      It's the same ignorance over a region of possibilities that classical statistical
       mechanics runs on when it describes a gas by its temperature rather than by the
       position of every molecule. The work is in proving that the numbers come out right,
-      and that is where the theorems about measures and volumes earn their keep.
+      and that's where the theorems about measures and volumes earn their keep.
     in_csd: >
-      The preparation region is a primitive of the corpus's first formal layer: a
+      The preparation region is a primitive of the corpus's first formal layer, a
       measurable subset of the arena with positive volume under the arena's natural
       measure, the Liouville measure. Repeated trials draw from it independently, each
-      draw governed by the arena's measure restricted to the region and rescaled so that
-      the region as a whole has total weight one. Every frequency theorem in the corpus is
-      stated relative to it: the weight of an outcome is the volume of the part of the
+      draw governed by the arena's measure restricted to the region and rescaled so the
+      region as a whole has total weight one, and every frequency theorem in the corpus is
+      stated relative to it, so the weight of an outcome is the volume of the part of the
       region that leads to that outcome, divided by the volume of the whole region.
 
       The refinement to pure states carries its own honesty note. When the measure is
       passed to the continuous setting, the set of arena points lying over a single
-      quantum state has zero volume, so restricting the ambient measure to it is not
+      quantum state has zero volume, so restricting the ambient measure to it isn't
       defined. Pure preparations therefore carry a posited law for trials on that set
       rather than one derived from the ambient measure, and the corpus states this
       wherever the posit is used.
     mathematical: >
-      prepMeasure conditions the Liouville measure on the preparation region; repeated
-      trials are i.i.d. draws from it; the LF1 main theorem sends empirical frequencies to
-      volume weights almost surely.
+      prepMeasure conditions the Liouville measure on the preparation region, repeated
+      trials are i.i.d. draws from it, and the LF1 main theorem sends empirical
+      frequencies to volume weights almost surely.
 
       The conditional-measure formula and the weight-as-volume-ratio identity, the weight
       of an outcome region O being the Liouville volume of O intersected with the
@@ -5511,51 +5512,51 @@ entries:
 
   - slug: measurement-context
     hook: >
-      A measurement is not a question put to the quantum state. It is a piece of
+      A measurement isn't a question put to the quantum state, as it's a piece of
       apparatus, and the apparatus brings its own way of dividing the world into outcomes.
     layman: >
-      Quantum mechanics is contextual. You cannot assign answers to every possible
-      measurement at once; you can only assign them to the measurements that one actual
-      arrangement of equipment can perform together. So the measurement is never just a
-      quantity written on paper. It is a physical context, and which context is in place
-      makes a difference to what can happen. The measurement context is the concept that
-      records this.
+      Quantum mechanics is contextual. You can't assign answers to every possible
+      measurement at once, as you can only assign them to the measurements one actual
+      arrangement of equipment can perform together, so the measurement is never just a
+      quantity written on paper. It's a physical context, and which context is in place
+      makes a difference to what can happen, and the measurement context is the concept
+      that records this.
 
       CSD takes the context seriously enough to make it a definite piece of data. A
-      context is the information the apparatus contributes: for every possible state of
-      the world, a set of rates, one per outcome, saying how strongly each outcome is
-      favoured. Fix the context and the regions of the arena that lead to each outcome are
-      fixed; change the context, and a genuinely different division of the arena applies.
+      context is the information the apparatus contributes, so for every possible state of
+      the world it gives a set of rates, one per outcome, saying how strongly each outcome
+      is favoured. Fix the context and the regions of the arena that lead to each outcome
+      are fixed, and if you change the context a genuinely different division of the arena
+      applies.
 
       A useful comparison is a referee's rulebook. The rulebook belongs to the referee,
-      exists before the match starts, and does not consult the players. In the same way
-      the context belongs to the apparatus, is fixed before the run, and does not depend
-      on which state was prepared. The comparison stops there: a rulebook is written by
+      exists before the match starts, and doesn't consult the players, and in the same way
+      the context belongs to the apparatus, is fixed before the run, and doesn't depend on
+      which state was prepared. The comparison stops there, as a rulebook is written by
       people, whereas in CSD the natural context is read off the geometry of the state
       space.
     in_csd: >
-      Formally a context is a rate field on the base of the arena, the space of
-      quantum states: to every point of the base it assigns a list of outcome weights,
-      each non-negative and all summing to one, in a way that lets the resulting
-      regions be measured. The preparation plays no part in this assignment. That
-      independence is one of the programme's stated requirements, and the corpus
-      builds its outcome basins from the context's field alone. The canonical context
-      reads its rates off the moment map, the map that extracts the Born weights from
-      the geometry of the state space, so even the rates are geometry rather than
-      bookkeeping.
+      Formally a context is a rate field on the base of the arena, the space of quantum
+      states, so to every point of the base it assigns a list of outcome weights, each
+      non-negative and all summing to one, in a way that lets the resulting regions be
+      measured. The preparation plays no part in this assignment, and that independence is
+      one of the programme's stated requirements, so the corpus builds its outcome basins
+      from the context's field alone. The canonical context reads its rates off the moment
+      map, the map that extracts the Born weights from the geometry of the state space, so
+      even the rates are geometry rather than bookkeeping.
 
       Contextuality then has a precise home. Distinct contexts induce distinct partitions
       of the arena. The no-go theorems against assigning context-independent answers to
       every measurement at once are proved in the corpus, and alongside them stands a
-      positive witness: a contextual model that reproduces the statistics of the singlet
+      positive witness, a contextual model that reproduces the statistics of the singlet
       state, the standard two-particle entangled state, in full.
     mathematical: >
       A ContextField consists of rate functions p -> Fin N -> R, measurable per outcome,
-      nonnegative, summing to one at every point. The preparation-independence of the
+      nonnegative, summing to one at every point, and the preparation-independence of the
       field is the A7 requirement.
 
       The induced basins are measurable and pairwise disjoint with Born-weight epistemic
-      probabilities; the canonical instance takes rate := momentMap with measurability
+      probabilities, and the canonical instance takes rate := momentMap with measurability
       supplied by the moment-map infrastructure.
     term: Measurement context
     status: definition
@@ -5564,46 +5565,47 @@ entries:
 
   - slug: single-trajectory
     hook: >
-      There is one world and it follows one path. Probability lives in how experiments are
-      repeated, not in how the world evolves, and theorems rather than wording keep the
-      two apart.
+      There's one world and it follows one path, so probability lives in how experiments
+      are repeated and not in how the world evolves, and theorems rather than wording keep
+      the two apart.
     layman: >
-      A deterministic account of quantum mechanics faces a fork. Either the world splits,
-      or there is a vast space of possible world-states and one actual path through it.
-      CSD takes the second branch without hedging: a single trajectory, on a single arena,
-      evolving deterministically. This is what the programme means by a single-trajectory
-      theory.
+      A deterministic account of quantum mechanics faces a fork, as either the world
+      splits, or there's a vast space of possible world-states and one actual path through
+      it. CSD takes the second branch without hedging, with a single trajectory on a
+      single arena evolving deterministically, and this is what the programme means by a
+      single-trajectory theory.
 
-      Then where do statistics come from? From repetition. Each run of an experiment
-      re-prepares the system, which lands the world at a fresh point of the preparation
-      region, the set of world-states compatible with the preparation procedure. A
-      thousand runs sample the region a thousand times. The frequencies those samples
-      produce are what the volume theorems compute: an outcome's share of the runs matches
-      its share of the region's volume.
+      You can then ask where statistics come from, and the answer is repetition. Each run
+      of an experiment re-prepares the system, which lands the world at a fresh point of
+      the preparation region, the set of world-states compatible with the preparation
+      procedure, so a thousand runs sample the region a thousand times. The frequencies
+      those samples produce are what the volume theorems compute, so an outcome's share of
+      the runs matches its share of the region's volume.
 
-      What statistics do not come from is one run watched forever. Whether a single
+      What statistics don't come from is one run watched forever. Whether a single
       evolving path eventually visits every part of its space in fair proportion is a
-      property called ergodicity, and it is a different and much stronger property than
-      repeated preparation. The programme does not rely on it.
+      property called ergodicity, and it's a different and much stronger property than
+      repeated preparation, so the programme doesn't rely on it.
     in_csd: >
-      CSD is a single-trajectory theory: physical reality is one deterministic path on the
-      arena. Its typicality is the typicality of repeated preparation, ignorance spread
-      across runs and priced by the arena's natural measure restricted to the preparation
-      region, not the averaging of one path over time.
+      CSD is a single-trajectory theory, so physical reality is one deterministic path on
+      the arena. Its typicality is the typicality of repeated preparation, ignorance
+      spread across runs and priced by the arena's natural measure restricted to the
+      preparation region, and not the averaging of one path over time.
 
       The corpus even proves the cautionary half. The unitary flow projected onto the
-      space of quantum states is not ergodic, so a time-average route to the Born weights
-      is closed at that level. That is a narrow fact about one flow on the projective
-      space, not an objection to the mechanism, because the frequency theorems never
-      invoke ergodicity. That they do not need it is exactly the point.
+      space of quantum states isn't ergodic, so a time-average route to the Born weights
+      is closed at that level. That's a narrow fact about one flow on the projective space
+      and not an objection to the mechanism, because the frequency theorems never invoke
+      ergodicity, and that they don't need it is exactly the point.
     mathematical: >
-      The LF1 chain formalises the repetition: i.i.d. draws from the conditioned Liouville
-      measure, indicator processes per outcome, and the strong law of large numbers
-      delivering almost-sure convergence of empirical frequencies to volume weights.
+      The LF1 chain formalises the repetition, with i.i.d. draws from the conditioned
+      Liouville measure, indicator processes per outcome, and the strong law of large
+      numbers delivering almost-sure convergence of empirical frequencies to volume
+      weights.
 
       The non-ergodicity of the epistemic unitary flow on the projective sector is a
-      proved theorem kept as a boundary marker: the volume route and the time-average
-      route are not the same route, and only the first is claimed.
+      proved theorem kept as a boundary marker, as the volume route and the time-average
+      route aren't the same route, and only the first is claimed.
     term: Single trajectory
     status: definition
     source: curated
@@ -5611,42 +5613,42 @@ entries:
 
   - slug: witness-and-engine
     hook: >
-      A working model proves that the machinery runs; it does not prove that the machinery
-      is the world. CSD names that distinction and audits itself against it.
+      A working model proves that the machinery runs, and it doesn't prove that the
+      machinery is the world, so CSD names that distinction and audits itself against it.
     layman: >
       Every foundational programme faces the same temptation. Build a concrete model in
       which your mechanism visibly works, and it becomes fatally easy to announce that the
-      mechanism explains everything the model contains. But the model had quantum
+      mechanism explains everything the model contains, but the model had quantum
       mechanics built into its bones, so of course quantum mechanics came out. The
       distinction between witness and engine is CSD's vocabulary for resisting that
       temptation.
 
-      The engine is the general machinery: typicality over a preparation region, outcome
+      The engine is the general machinery, typicality over a preparation region, outcome
       weights given by volumes, and a measure forced by symmetry. A witness is a concrete
       arena on which the engine demonstrably runs, with familiar structures such as the
       space of quantum states and their unitary evolution built in from the start.
 
-      The claim "the engine runs, and here is a witness" is provable, and it is proved.
-      The claim "therefore quantum mechanics is derived" would be an overclaim, and the
+      The claim that the engine runs and here is a witness is provable, and it's proved.
+      The claim that quantum mechanics is therefore derived would be an overclaim, and the
       corpus's own guard documents exist to keep it from being made.
     in_csd: >
-      The finite-dimensional quantum-mechanical closure is the flagship example: a
+      The finite-dimensional quantum-mechanical closure is the flagship example, a
       concrete projective witness carrying the symmetric measure and unitary evolution, on
-      which the full reconstruction pipeline executes. It demonstrates the engine. It is
-      not quantum mechanics derived from CSD, because the witness supplies structures that
-      a derivation would have to earn.
+      which the full reconstruction pipeline executes. It demonstrates the engine, and it
+      isn't quantum mechanics derived from CSD, because the witness supplies structures a
+      derivation would have to earn.
 
-      The distinction is enforced, not just stated. A manifest names exactly which
-      end-to-end claims are backed by theorems, an automated check rejects phrasings that
-      have been retracted as overclaims, and results are labelled by which side of the
-      line between realisation and derivation they sit on.
+      The distinction is enforced and not just stated. A manifest names exactly which end-
+      to-end claims are backed by theorems, an automated check rejects phrasings that have
+      been retracted as overclaims, and results are labelled by which side of the line
+      between realisation and derivation they sit on.
     mathematical: >
-      The witness tier: SectorData instances on CP^(N-1) and on the Kahler arena, with the
-      measure bridge proved instance-by-instance rather than assumed abstractly. The
-      engine tier: the frequency and volume theorems quantified over the structures,
+      The witness tier is SectorData instances on CP^(N-1) and on the Kahler arena, with
+      the measure bridge proved instance-by-instance rather than assumed abstractly, and
+      the engine tier is the frequency and volume theorems quantified over the structures,
       consuming the postulates as hypotheses.
 
-      The audit tier is mechanical: the connectivity manifest and the claims guard are
+      The audit tier is mechanical, as the connectivity manifest and the claims guard are
       scripts that fail the build when prose claims outrun the proved connectivity.
     term: Witness and engine
     status: definition
@@ -5654,7 +5656,7 @@ entries:
     related: [lf1-main-theorem, what-is-machine-checked, measurement-flow, born-volume-ratio, de-isolation]
 
   - slug: field-arena
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
       Take finitely many field modes, cap the number of quanta each can hold, and the
       whole toolbox of quantum field theory, propagators, light cones, Wick's theorem and
@@ -5663,30 +5665,30 @@ entries:
       Everything else in this glossary concerns systems with finitely many outcomes, while
       the working theory of the physical world is quantum field theory, which has
       infinitely many modes and no limit on the number of quanta. A reconstruction that
-      cannot even gesture at fields would be a reconstruction of a toy. The field arena is
-      that gesture made precise, deliberately at finite resolution.
+      can't even gesture at fields would be a reconstruction of a toy, and the field arena
+      is that gesture made precise, deliberately at finite resolution.
 
       A mode is one independent way a field can vibrate, like a single note on a string,
       and a quantum is one unit of excitation of a mode, the field-theoretic version of a
       particle. The field arena keeps finitely many modes and lets each hold at most some
-      fixed number of quanta. On the space of quantum states built from those
-      configurations, the canon of field theory is re-proved as exact finite theorems.
-      Free propagators, which describe how a disturbance travels when nothing interacts,
+      fixed number of quanta, and on the space of quantum states built from those
+      configurations the canon of field theory is re-proved as exact finite theorems. Free
+      propagators, which describe how a disturbance travels when nothing interacts,
       oscillate at the right frequency. The effects of an interaction are priced linearly
-      in the strength of the coupling. There is a genuine light cone, a limit on how fast
+      in the strength of the coupling. There's a genuine light cone, a limit on how fast
       an influence can spread, with an explicit bound on the velocity. Thermal states
       satisfy the KMS condition, the exact condition that characterises equilibrium at a
       given temperature.
 
-      This is breadth, and it is labelled as such: the image of standard physics inside
-      the programme's arena, not the frontier of the reconstruction.
+      This is breadth, and it's labelled as such, as it's the image of standard physics
+      inside the programme's arena and not the frontier of the reconstruction.
     in_csd: >
-      The field arena is the stage for the programme's continuous-variable track. It is
-      the space of quantum states over configurations of finitely many modes with a fixed
-      cap on the quanta per mode. Its role in the programme is honestly bounded. It is the
-      isolated-piece image: it shows that the structure of effective field theory survives
-      at finite cutoff on exactly the kind of arena the reconstruction runs on. No
-      continuum limit and no renormalisation-group flow is claimed.
+      The field arena is the stage for the programme's continuous-variable track. It's the
+      space of quantum states over configurations of finitely many modes with a fixed cap
+      on the quanta per mode, and its role in the programme is honestly bounded. It's the
+      isolated-piece image, as it shows that the structure of effective field theory
+      survives at finite cutoff on exactly the kind of arena the reconstruction runs on,
+      and no continuum limit and no renormalisation-group flow is claimed.
 
       The bridge theorems tie it back to the record layer. Observations on the arena are
       pairings with a density, dynamics act by kicks, observables supported on disjoint
@@ -5694,9 +5696,9 @@ entries:
       record cell in the fibre can be steered from afar.
     mathematical: >
       FieldArena K N is the projective space over configurations of K modes at cutoff N.
-      Mode-local subalgebras are unital star-subalgebras supported on their blocks; free
-      and interacting drives are exact matrix exponentials; the two-point and four-point
-      functions close into Wick's pairing sum at explicit thresholds.
+      Mode-local subalgebras are unital star-subalgebras supported on their blocks, free
+      and interacting drives are exact matrix exponentials, and the two-point and four-
+      point functions close into Wick's pairing sum at explicit thresholds.
 
       The commutator bound decays factorially in graph distance with velocity constant
       2e^2 times the coupling norm, and composite arenas compose by mode concatenation,
@@ -5710,72 +5712,75 @@ entries:
 
   - slug: isolation
     hook: >
-      Being isolated is not scene-setting; it is the variable the whole theory turns on.
-      Quantum mechanics is what isolated pieces of the arena look like from outside.
+      Being isolated isn't scene-setting, as it's the variable the whole theory turns on,
+      and quantum mechanics is what isolated pieces of the arena look like from outside.
     layman: >
       Quantum mechanics works flawlessly for systems carefully shielded from everything
-      else, and its rules seem to bend exactly when the shielding fails: at measurement,
+      else, and its rules seem to bend exactly when the shielding fails, at measurement,
       in decoherence, wherever the outside gets in. Most formulations treat this as a
-      nuisance. CSD treats it as the signal, and isolation is the concept that carries it.
+      nuisance, and CSD treats it as the signal, with isolation as the concept that
+      carries it.
 
       In CSD isolation is the operative condition. An isolated subsystem follows the
-      smooth unitary rule, the reversible evolution that textbook quantum mechanics
-      prescribes. Measurement is de-isolation, the engineered ending of that condition.
-      And the familiar quantum state describes exactly what an isolated piece of the arena
-      presents to the outside world: not the full condition of the piece, but the part of
-      it that the rest of the world can see while the piece is sealed off.
+      smooth unitary rule, the reversible evolution textbook quantum mechanics prescribes,
+      and measurement is de-isolation, the engineered ending of that condition. And the
+      familiar quantum state describes exactly what an isolated piece of the arena
+      presents to the outside world, so not the full condition of the piece but the part
+      of it the rest of the world can see while the piece is sealed off.
 
       In slogan form, quantum mechanics is the physics of isolation, and the measurement
       rule is the physics of ending it.
     in_csd: >
       Isolation enters the formal layer as conditioning. The state of knowledge available
-      at a preparation, given that the system is isolated, is the epistemic measure: it is
-      exact on the visible coordinate, the quantum state, and spread evenly over the
+      at a preparation, given that the system is isolated, is the epistemic measure, which
+      is exact on the visible coordinate, the quantum state, and spread evenly over the
       hidden fibre above it. This reading, that isolation is conditioning, is written into
       the definitions of the record layer.
 
       The complementary dynamical statement is the de-isolation tier. Coupling an isolated
       system to a pointer is what produces records, and the flows that do it are exhibited
-      in the corpus. The same isolated-piece image frames the field track: the
+      in the corpus. The same isolated-piece image frames the field track, as the
       continuous-variable arena shows standard physics reappearing on an isolated finite
       piece, and the corpus labels that as breadth rather than as the frontier.
     mathematical: >
-      The epistemic measure implements conditioning on isolation (the P6 reading:
+      The epistemic measure implements conditioning on isolation (the P6 reading,
       isolation is conditioning), exact on the base coordinate with Haar measure on the
-      fibre; the de-isolation flows implement its termination.
+      fibre, and the de-isolation flows implement its termination.
 
-      The open-system tier prices partial isolation quantitatively: dephasing and damping
-      semigroups with exact decay laws, and the Lindblad flow proved completely positive,
-      so the effective dynamics of an imperfectly isolated system is a legitimate quantum
-      channel at every time.
+      The open-system tier prices partial isolation quantitatively, with dephasing and
+      damping semigroups with exact decay laws, and the Lindblad flow proved completely
+      positive, so the effective dynamics of an imperfectly isolated system is a
+      legitimate quantum channel at every time.
     term: Isolation
     status: definition
     source: curated
     related: [de-isolation, no-signalling, field-arena, lieb-robinson-bound, constraint-surface]
 
   - slug: moment-map
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
-      The Born probabilities are coordinates. The moment map reads them straight off the
-      geometry of the space of quantum states, with no measurement postulate consulted.
+      The Born probabilities are coordinates, and the moment map reads them straight off
+      the geometry of the space of quantum states, with no measurement postulate
+      consulted.
     layman: >
       You can accept that probabilities are volumes and still find the link between a
-      quantum state and its outcome weights opaque: why these particular numbers?
-      Classical mechanics has an answer waiting. The state space of a classical system,
-      its phase space, has a geometry in which every continuous symmetry comes paired with
-      a conserved quantity: turning the system about an axis pairs with angular momentum,
-      shifting it in time pairs with energy. When a system has several such symmetries at
-      once, their conserved quantities can be collected into a single map, the moment map,
-      which sends each state to the list of values those quantities take there.
+      quantum state and its outcome weights opaque, and wonder why these particular
+      numbers. Classical mechanics has an answer waiting. The state space of a classical
+      system, its phase space, has a geometry in which every continuous symmetry comes
+      paired with a conserved quantity, so turning the system about an axis pairs with
+      angular momentum and shifting it in time pairs with energy. When a system has
+      several such symmetries at once, their conserved quantities can be collected into a
+      single map, the moment map, which sends each state to the list of values those
+      quantities take there.
 
       The space of quantum states has exactly the right kind of symmetry. Each possible
-      outcome contributes to the state with a size and an angle; the angle is called the
+      outcome contributes to the state with a size and an angle, the angle is called the
       phase, and turning the phase of one outcome's contribution changes nothing that can
       be measured. Turning each outcome's phase independently gives a family of
       symmetries, one circle of rotations per outcome, and together those circles form a
       torus. The moment map of that torus symmetry sends a state to a list of numbers, one
-      per outcome, that add up to one. Compute the list, and it is the Born weights, the
-      probabilities the textbook obtains by squaring the size of each contribution.
+      per outcome, that add up to one, and if you compute the list it's the Born weights,
+      the probabilities the textbook obtains by squaring the size of each contribution.
 
       So the probabilities were sitting in the geometry all along, as the conserved
       quantities of phase rotation.
@@ -5785,7 +5790,7 @@ entries:
       quantity fixed by the geometry of the state space and forced by the requirement that
       it generate the torus symmetry, with no partition drawn and no operational input
       consulted. It also supplies the canonical measurement context, whose rate field is
-      the moment map itself, so that even the rates of the record layer are geometric.
+      the moment map itself, so even the rates of the record layer are geometric.
 
       Downstream, pushing the symmetric measure on the state space forward through the
       moment map gives the uniform law on the space of probability lists. This is the
@@ -5794,20 +5799,21 @@ entries:
       every finite dimension.
     mathematical: >
       For the torus action on CP^(N-1) the moment map sends a ray to its vector of squared
-      amplitudes; the identity is proved as momentMap_mk_eq_inner_sq, and the moment map
+      amplitudes, the identity is proved as momentMap_mk_eq_inner_sq, and the moment map
       is forced by torus generation (torusGenerated_eq_momentMap). The joint pushforward
       of the Fubini-Study measure is (N-1)-factorial times Lebesgue measure on the open
       simplex, the flat Dirichlet law, proved via the Gaussian representation and a
       product-index bridge, and consumed by the unconditional volume-ratio and frequency
       theorems at every N.
 
-      The defining equation is proved at manifold level: the velocity field of the torus
-      action is the Hamiltonian vector field of 2 sum theta_k mu_k for the Fubini-Study
-      symplectic form (torusField_isHamiltonianVectorField), a moment map is unique up to
-      a constant and the normalisation pins it, its image is exactly the standard simplex
-      (range_momentMap), and the torus orbits are its integral curves. For any Hermitian H
-      the Schrodinger flow is the Hamiltonian flow of minus twice the expectation of H
-      (schrodingerField_isHamiltonianVectorField); the torus is the diagonal case.
+      The defining equation is proved at manifold level, as the velocity field of the
+      torus action is the Hamiltonian vector field of 2 sum theta_k mu_k for the Fubini-
+      Study symplectic form (torusField_isHamiltonianVectorField), a moment map is unique
+      up to a constant and the normalisation pins it, its image is exactly the standard
+      simplex (range_momentMap), and the torus orbits are its integral curves. For any
+      Hermitian H the Schrodinger flow is the Hamiltonian flow of minus twice the
+      expectation of H (schrodingerField_isHamiltonianVectorField), and the torus is the
+      diagonal case.
     term: Moment map
     status: standard-mathematics
     source: curated
