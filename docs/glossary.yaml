@@ -2540,69 +2540,71 @@ entries:
   - slug: haar-measure
     hook: >
       A closed and bounded family of symmetries has exactly one even-handed notion of
-      volume, and every measure that CSD calls forced inherits its uniqueness from that one
+      volume, and every measure CSD calls forced inherits its uniqueness from that one
       fact.
     layman: >
-      Many questions ask for an average over all the symmetries of something: the average
-      effect of a random rotation, say, or whether one family of transformations is larger
-      than another. To answer them you need a notion of volume on the set of transformations
-      itself, not on the objects they act on. That volume had better not depend on the
-      coordinates you happen to use to label the transformations, or your average is an
-      artefact of your labelling rather than a fact about the symmetries.
+      Many questions ask for an average over all the symmetries of something, the average
+      effect of a random rotation say, or whether one family of transformations is larger
+      than another. To answer them you need a notion of volume on the set of
+      transformations itself and not on the objects they act on, and that volume had
+      better not depend on the coordinates you happen to use to label the transformations,
+      or your average is an artefact of your labelling rather than a fact about the
+      symmetries.
 
       Haar's theorem concerns groups, families of transformations that can be combined and
       undone, such as all the rotations of a sphere. The demand he placed on a volume is
-      invariance, meaning that the size of any collection of transformations does not change
-      when every member of the collection is followed by one fixed transformation. For
-      rotations, this says that turning a whole set of rotations by a further fixed rotation
-      leaves its size alone. The demand sounds mild. For compact groups, those that are
-      closed and bounded in the way the rotations of a sphere are and the shifts of an
-      infinite line are not, it is remarkably restrictive: once the total volume is set to
-      one, exactly one invariant volume exists. Not one natural choice among several, but
-      one, full stop.
+      invariance, meaning that the size of any collection of transformations doesn't
+      change when every member of the collection is followed by one fixed transformation,
+      so for rotations this says that turning a whole set of rotations by a further fixed
+      rotation leaves its size alone. The demand sounds mild. For compact groups, those
+      that are closed and bounded in the way the rotations of a sphere are and the shifts
+      of an infinite line aren't, it's remarkably restrictive, as once the total volume is
+      set to one exactly one invariant volume exists, and not one natural choice among
+      several but one, full stop.
 
       So a question such as what a random symmetry does, on average, has a definite answer
-      that does not depend on anyone's choice of coordinates. That is Haar's gift, and a
+      that doesn't depend on anyone's choice of coordinates. That's Haar's gift, and a
       large part of modern mathematics quietly relies on it.
     in_csd: >
-      Trace the programme's central claim back far enough and it rests on this theorem. The
-      transformations that quantum mechanics allows on a system, the unitary transformations
-      that preserve lengths and angles between states, form a compact group, so there is
-      exactly one invariant way to assign volume to them. The space of quantum states can be
-      built from that group: fix any one state, and every other state is what some unitary
-      transformation turns it into. Sending each transformation to the state it produces
-      carries the unique volume on transformations down to a volume on states, and its
-      uniqueness comes with it. That is the whole proof that the Fubini-Study measure, the
-      notion of volume on state space that the programme uses, is forced rather than chosen.
+      Trace the programme's central claim back far enough and it rests on this theorem.
+      The transformations quantum mechanics allows on a system, the unitary
+      transformations that preserve lengths and angles between states, form a compact
+      group, so there's exactly one invariant way to assign volume to them. The space of
+      quantum states can be built from that group, as you fix any one state and every
+      other state is what some unitary transformation turns it into. Sending each
+      transformation to the state it produces carries the unique volume on transformations
+      down to a volume on states, and its uniqueness comes with it, so that's the whole
+      proof that the Fubini-Study measure, the notion of volume on state space the
+      programme uses, is forced rather than chosen.
 
-      Remove this link and everything downstream changes character. The measure would become
-      a preference, the derivation of the Born rule would rest on that preference, and the
-      reply to the objection that the programme smuggles in its measure would evaporate. The
-      same fact is what makes the choice of starting state immaterial: two different
-      starting states give two ways of labelling states by transformations, but the two
-      labellings differ by a fixed transformation, and an invariant volume cannot tell the
-      difference.
+      Remove this link and everything downstream changes character. The measure would
+      become a preference, the derivation of the Born rule would rest on that preference,
+      and the reply to the objection that the programme smuggles in its measure would
+      evaporate. The same fact is what makes the choice of starting state immaterial, as
+      two different starting states give two ways of labelling states by transformations,
+      but the two labellings differ by a fixed transformation and an invariant volume
+      can't tell the difference.
     mathematical: >
       A compact topological group carries a unique translation-invariant Borel probability
       measure. On a homogeneous space of such a group, invariant measures are unique up to
       scale, and normalisation fixes the scale.
 
-      The corpus uses the unitary group's Haar measure directly and pushes it forward along
-      the orbit map; uniqueness downstairs is inherited from uniqueness upstairs. No
-      geometric argument enters the uniqueness proof. It is group theory and measure theory
-      all the way down.
+      The corpus uses the unitary group's Haar measure directly and pushes it forward
+      along the orbit map, so uniqueness downstairs is inherited from uniqueness upstairs.
+      No geometric argument enters the uniqueness proof, as it's group theory and measure
+      theory all the way down.
     person: >
-      Alfred Haar (1885-1933) was born in Budapest and took his doctorate at Gottingen under
-      Hilbert in 1909; the Haar wavelet, now the first example in every wavelet course,
-      comes from that thesis. With Frigyes Riesz he built the mathematics institute at
-      Szeged into a serious research centre, and its journal, Acta Scientiarum
-      Mathematicarum, into a serious journal.
+      Alfred Haar (1885-1933) was born in Budapest and took his doctorate at Gottingen
+      under Hilbert in 1909, and the Haar wavelet, now the first example in every wavelet
+      course, comes from that thesis. With Frigyes Riesz he built the mathematics
+      institute at Szeged into a serious research centre, and its journal, Acta
+      Scientiarum Mathematicarum, into a serious journal.
 
-      The measure theorem dates from 1933, the last year of his life; he died of cancer at
-      forty-seven. Von Neumann, who had been sceptical that such a measure existed in
+      The measure theorem dates from 1933, the last year of his life, as he died of cancer
+      at forty-seven. Von Neumann, who had been sceptical that such a measure existed in
       general, used it almost immediately to solve Hilbert's fifth problem for compact
-      groups, and Weil built the general theory soon after. The result outlived its author
-      before the year was out.
+      groups, and Weil built the general theory soon after, so the result outlived its
+      author before the year was out.
     term: Haar measure
     eponyms: [Haar]
     status: standard-mathematics
@@ -2613,68 +2615,68 @@ entries:
 
   - slug: hermitian-operator
     hook: >
-      A single symmetry condition on an operator guarantees that every number it can produce
-      in a measurement is real, and it delivers the whole machinery of outcomes and
-      eigenstates at no extra cost.
+      A single symmetry condition on an operator guarantees that every number it can
+      produce in a measurement is real, and it delivers the whole machinery of outcomes
+      and eigenstates at no extra cost.
     layman: >
       Quantum mechanics represents each measurable quantity, such as energy or the spin
-      along a chosen axis, by an operator: a matrix that acts on the state of the system.
+      along a chosen axis, by an operator, a matrix that acts on the state of the system.
       But the entries of that matrix are complex numbers, numbers with an imaginary part,
-      while every laboratory dial reads a real number. So which matrices can legitimately
-      stand for something measurable?
+      while every laboratory dial reads a real number, so you can ask which matrices can
+      legitimately stand for something measurable.
 
-      The answer is a symmetry condition. Take the matrix, flip it across its main diagonal,
-      and replace every entry by its complex conjugate, the mirror-image number with the
-      sign of its imaginary part reversed. If the result is the original matrix, the
-      operator is Hermitian. Every square matrix has special vectors that it merely rescales
-      rather than turning in a new direction; the rescaling factors are called its
-      eigenvalues and the vectors its eigenvectors. For a Hermitian matrix the eigenvalues
-      are forced to be real, and they are precisely the possible readings of the
-      measurement. The eigenvectors are the states that give each reading with certainty,
-      and they form a complete set of mutually perpendicular directions, which in quantum
-      mechanics means perfectly distinguishable states. Measurement becomes a sorting of the
-      state into bins that never blur into one another.
+      The answer is a symmetry condition. Take the matrix, flip it across its main
+      diagonal, and replace every entry by its complex conjugate, the mirror-image number
+      with the sign of its imaginary part reversed, and if the result is the original
+      matrix the operator is Hermitian. Every square matrix has special vectors it merely
+      rescales rather than turning in a new direction, and the rescaling factors are
+      called its eigenvalues and the vectors its eigenvectors. For a Hermitian matrix the
+      eigenvalues are forced to be real, and they're precisely the possible readings of
+      the measurement. The eigenvectors are the states that give each reading with
+      certainty, and they form a complete set of mutually perpendicular directions, which
+      in quantum mechanics means perfectly distinguishable states, so measurement becomes
+      a sorting of the state into bins that never blur into one another.
 
-      Drop the condition and all of this falls apart: outcomes could be complex, the states
-      of certainty need no longer be distinguishable, and no consistent sorting exists. The
-      fact that experimental numbers are real, traced back to its source, is this one
-      algebraic symmetry.
+      Drop the condition and all of this falls apart, as outcomes could be complex, the
+      states of certainty need no longer be distinguishable, and no consistent sorting
+      exists. The fact that experimental numbers are real, traced back to its source, is
+      this one algebraic symmetry.
     in_csd: >
-      Everything measurable in CSD's machine-checked corpus is Hermitian: observables, the
-      Hamiltonians that generate motion, and the density operators that describe states
-      which are only partly known. The spectral theorem, the result that a Hermitian
-      operator can be broken into its eigenvalues and mutually perpendicular eigenvectors,
-      is used constantly. Its most load-bearing single use is in the work on channels, the
-      maps that describe how a state changes when it interacts with something else. There a
-      density operator is first decomposed into its eigenvectors and only then integrated
-      against, and the bridge between two ways of measuring the size of an operator, by
-      trace and by norm, stands on that step.
+      Everything measurable in CSD's machine-checked corpus is Hermitian, the observables,
+      the Hamiltonians that generate motion, and the density operators that describe
+      states which are only partly known. The spectral theorem, the result that a
+      Hermitian operator can be broken into its eigenvalues and mutually perpendicular
+      eigenvectors, is used constantly. Its most load-bearing single use is in the work on
+      channels, the maps that describe how a state changes when it interacts with
+      something else, where a density operator is first decomposed into its eigenvectors
+      and only then integrated against, and the bridge between two ways of measuring the
+      size of an operator, by trace and by norm, stands on that step.
 
-      The finite-dimensional spectral facts the corpus consumes are proved within it rather
-      than assumed, so this part of the measurement machinery is not taken on trust from
-      outside the formal development.
+      The finite-dimensional spectral facts the corpus consumes are proved within it
+      rather than assumed, so this part of the measurement machinery isn't taken on trust
+      from outside the formal development.
     mathematical: >
       A Hermitian matrix is one equal to its own conjugate transpose. Its eigenvalues are
-      real; it is unitarily diagonalisable with mutually orthogonal eigenspaces; and hence
-      it admits the functional calculus, applying real functions to operators through their
-      spectra, that the corpus's entropy and channel chains consume throughout.
+      real, it's unitarily diagonalisable with mutually orthogonal eigenspaces, and hence
+      it admits the functional calculus, applying real functions to operators through
+      their spectra, that the corpus's entropy and channel chains consume throughout.
 
-      One workmanlike convention: the corpus states Hermiticity as a predicate on plain
-      matrices rather than bundling it into a subtype. Statements stay close to the
-      mathematics, proofs stay close to the library, and the finite-dimensional spectral
-      facts consumed are proved, not assumed.
+      One workmanlike convention is that the corpus states Hermiticity as a predicate on
+      plain matrices rather than bundling it into a subtype, so statements stay close to
+      the mathematics, proofs stay close to the library, and the finite-dimensional
+      spectral facts consumed are proved and not assumed.
     person: >
       Charles Hermite (1822-1901) was born at Dieuze in Lorraine with a malformed right
       foot. The Ecole Polytechnique admitted him and then forced him out over the
-      disability, ending the engineering career he had trained for, and mathematics got him
-      instead. He eventually taught at the Polytechnique that had rejected him, at the Ecole
-      Normale and at the Sorbonne; Poincare was his student.
+      disability, ending the engineering career he had trained for, so mathematics got him
+      instead. He eventually taught at the Polytechnique that had rejected him, at the
+      Ecole Normale and at the Sorbonne, and Poincare was his student.
 
       His 1873 proof that e is transcendental was the first for any naturally occurring
       number, and his method handed Lindemann the transcendence of pi nine years later,
       closing the problem of squaring the circle after two millennia. He never sought the
-      second result himself, writing that he dared not attempt it: one of history's more
-      consequential displays of mathematical modesty.
+      second result himself, writing that he dared not attempt it, which is one of
+      history's more consequential displays of mathematical modesty.
     term: Hermitian operator
     eponyms: [Hermitian]
     status: standard-mathematics
@@ -2685,65 +2687,65 @@ entries:
 
   - slug: hilbert-space
     hook: >
-      Hilbert space is the stage on which quantum mechanics is usually performed, and CSD's
-      claim is that it is scenery: the shadow cast by the physical object, not the object
-      itself.
+      Hilbert space is the stage on which quantum mechanics is usually performed, and
+      CSD's claim is that it's scenery, the shadow cast by the physical object and not the
+      object itself.
     layman: >
-      Quantum mechanics needs three things from the space its states live in. Superposition,
-      the ability to combine two states into a third, requires that states can be added like
-      arrows, which makes them vectors. Probabilities require lengths and angles, which come
-      from an inner product, a rule that assigns a number to every pair of vectors and
-      thereby measures how long each is and how far apart they point. And calculus, with its
-      limits and convergence, requires that a sequence of states closing in on something
-      actually closes in on a state within the space rather than leaking out of it; this
-      property is called completeness. A Hilbert space is exactly a space with all three:
-      vectors, an inner product and completeness.
+      Quantum mechanics needs three things from the space its states live in.
+      Superposition, the ability to combine two states into a third, requires that states
+      can be added like arrows, which makes them vectors. Probabilities require lengths
+      and angles, which come from an inner product, a rule that assigns a number to every
+      pair of vectors and thereby measures how long each is and how far apart they point.
+      And calculus, with its limits and convergence, requires that a sequence of states
+      closing in on something actually closes in on a state within the space rather than
+      leaking out of it, and this property is called completeness. A Hilbert space is
+      exactly a space with all three, vectors, an inner product and completeness.
 
       In finitely many dimensions completeness comes for free, and a Hilbert space is
       nothing more exotic than ordinary Euclidean space with complex coordinates. In
-      infinitely many dimensions completeness is a genuine constraint and the source of most
-      of the subject's analytical difficulties.
+      infinitely many dimensions completeness is a genuine constraint and the source of
+      most of the subject's analytical difficulties.
 
-      The standard formulation of quantum mechanics identifies the theory with this stage.
-      States are vectors in Hilbert space, and that is where the theory happens. Or so the
-      textbook says.
+      The standard formulation of quantum mechanics identifies the theory with this stage,
+      so states are vectors in Hilbert space and that's where the theory happens, or so
+      the textbook says.
     in_csd: >
-      CSD's sharpest departure from textbook framing is here. On CSD's account the physical
-      world does not live in Hilbert space. Physical states are points of the constraint
-      surface, the programme's underlying state space. The Hilbert space, or more precisely
-      the space of its rays (a vector and all its rescalings count as one physical state, so
-      only the direction matters), is bookkeeping built above that substrate: it records
-      what an observer can know, and it carries the regions of possible outcomes and the
-      probabilities attached to them.
+      CSD's sharpest departure from textbook framing is here. On CSD's account the
+      physical world doesn't live in Hilbert space, as physical states are points of the
+      constraint surface, the programme's underlying state space. The Hilbert space, or
+      more precisely the space of its rays (a vector and all its rescalings count as one
+      physical state, so only the direction matters), is bookkeeping built above that
+      substrate, and it records what an observer can know and carries the regions of
+      possible outcomes and the probabilities attached to them.
 
       To say that quantum mechanics happens in Hilbert space is, on this account, like
-      saying that the weather happens on the weather map: true about the representation,
-      silent about the thing represented. The programme's analysis of the fibre, the
-      structure that sits above each point of the space of rays, pushes further. The space
-      of rays is a lossy projection of the substrate, and the content that forms records
-      lives above it. Whether or not one accepts the programme, this is the single point to
-      grasp about how it reads the formalism.
+      saying that the weather happens on the weather map, which is true about the
+      representation and silent about the thing represented. The programme's analysis of
+      the fibre, the structure that sits above each point of the space of rays, pushes
+      further, as the space of rays is a lossy projection of the substrate and the content
+      that forms records lives above it. Whether or not you accept the programme, this is
+      the single point to grasp about how it reads the formalism.
     mathematical: >
-      A Hilbert space is a complete complex inner product space. The corpus is
-      finite-dimensional throughout, so completeness is free, and the operative object is
+      A Hilbert space is a complete complex inner product space. The corpus is finite-
+      dimensional throughout, so completeness is free, and the operative object is
       CP^(N-1), the space of rays, since vectors differing by a phase are one physical
       state.
 
       Infinite dimension, with its unbounded operators, domains and continuous spectra, is
-      deliberately out of scope; the continuous-variable strand approximates it at an
+      deliberately out of scope, and the continuous-variable strand approximates it at an
       explicit finite cutoff instead.
     person: >
-      David Hilbert (1862-1943) was born in Konigsberg and moved in 1895 to Gottingen, which
-      he made the centre of world mathematics for a generation. His 1900 Paris address, with
-      its twenty-three problems, set the century's agenda; his formalist dream of
-      mathematics proved complete and consistent by finite means was bounded for ever by
-      Godel in 1931.
+      David Hilbert (1862-1943) was born in Konigsberg and moved in 1895 to Gottingen,
+      which he made the centre of world mathematics for a generation. His 1900 Paris
+      address, with its twenty-three problems, set the century's agenda, and his formalist
+      dream of mathematics proved complete and consistent by finite means was bounded for
+      ever by Godel in 1931.
 
-      Two footnotes with teeth. The space is not his coinage: von Neumann named it, while
+      Two footnotes have teeth. The space isn't his coinage, as von Neumann named it while
       building the rigorous foundations of quantum mechanics in Hilbert's own department.
-      And when the Nazi education minister asked him, in 1934, whether Gottingen mathematics
-      had suffered from the removal of the Jews, Hilbert answered that it had not suffered;
-      it no longer existed.
+      And when the Nazi education minister asked him, in 1934, whether Gottingen
+      mathematics had suffered from the removal of the Jews, Hilbert answered that it
+      hadn't suffered, as it no longer existed.
     term: Hilbert space
     eponyms: [Hilbert]
     status: standard-mathematics
@@ -2754,60 +2756,63 @@ entries:
 
   - slug: hong-ou-mandel
     hook: >
-      When two identical photons meet at a beam splitter they always leave together, never
-      one through each exit. Their indistinguishability shows up as a hole in the data.
+      When two identical photons meet at a beam splitter they always leave together and
+      never one through each exit, so their indistinguishability shows up as a hole in the
+      data.
     layman: >
-      A beam splitter is a half-silvered mirror: light that hits it is either transmitted
-      straight through or reflected, and for a single photon, a single particle of light,
-      the choice is random with equal odds. Now send two photons at the splitter from
-      opposite sides so that they arrive at the same instant, with a detector waiting at
-      each exit. Simple counting suggests that half the time the photons should leave
-      through different exits, one detector clicking on each side, an event called a
-      coincidence.
+      A beam splitter is a half-silvered mirror, so light that hits it is either
+      transmitted straight through or reflected, and for a single photon, a single
+      particle of light, the choice is random with equal odds. Now send two photons at the
+      splitter from opposite sides so they arrive at the same instant, with a detector
+      waiting at each exit. Simple counting suggests that half the time the photons should
+      leave through different exits, with one detector clicking on each side, an event
+      called a coincidence.
 
-      The experiment says never. If the photons are truly identical, the two histories that
-      lead to a coincidence, both transmitted and both reflected, cancel each other. In
-      quantum mechanics each possible history carries a number called an amplitude, and when
-      different histories end in the same outcome their amplitudes are added before the
-      probability is worked out. For the coincidence outcome the two amplitudes are equal
-      and opposite, so their sum is zero. Both photons always leave through the same exit,
-      and coincidence counts drop to nothing.
+      The experiment says never. If the photons are truly identical, the two histories
+      that lead to a coincidence, both transmitted and both reflected, cancel each other.
+      In quantum mechanics each possible history carries a number called an amplitude, and
+      when different histories end in the same outcome their amplitudes are added before
+      the probability is worked out, so for the coincidence outcome the two amplitudes are
+      equal and opposite and their sum is zero. Both photons always leave through the same
+      exit, and coincidence counts drop to nothing.
 
       The signature is the Hong-Ou-Mandel dip. Scan the time offset between the photons'
       arrivals and watch the coincidences vanish as the two become simultaneous. The depth
-      of the dip measures how identical the photons are; its width measures their coherence
-      time, the stretch of time over which each photon's wave keeps step with itself. What
-      began as a demonstration is now a workshop tool, the standard ruler for
+      of the dip measures how identical the photons are, and its width measures their
+      coherence time, the stretch of time over which each photon's wave keeps step with
+      itself. What began as a demonstration is now a workshop tool, the standard ruler for
       indistinguishability in photonics.
     in_csd: >
       The Hong-Ou-Mandel effect is one of the programme's empirical twins, the flagship
-      experiments that CSD's machine-checked corpus reproduces as pass-or-fail tests, and it
+      experiments CSD's machine-checked corpus reproduces as pass-or-fail tests, and it
       was chosen because it probes a different organ from the Bell family of experiments.
-      There is no separation here and no question of locality at all, only two alternatives
-      cancelling. The question it puts to any account of quantum mechanics is pure: what, in
-      your description of the world, is the difference between both photons transmitted and
-      both reflected, such that the two can annihilate?
+      There's no separation here and no question of locality at all, only two alternatives
+      cancelling. The question it puts to any account of quantum mechanics is pure, as it
+      asks what, in your description of the world, is the difference between both photons
+      transmitted and both reflected, such that the two can annihilate.
 
       For a theory with an underlying substrate the question has bite, because naively the
       two configurations differ only by a relabelling that nothing could observe.
       Reproducing the dip is therefore a real constraint on how CSD's regions and volumes
-      handle the exchange of identical particles, which is exactly why the case is carried.
+      handle the exchange of identical particles, which is exactly why the case is
+      carried.
     mathematical: >
       For two indistinguishable bosons at the input ports of a balanced beam splitter, the
-      both-transmitted and both-reflected amplitudes cancel; the output is a superposition
-      of both-photons-left and both-photons-right, and the coincidence rate is zero.
+      both-transmitted and both-reflected amplitudes cancel, so the output is a
+      superposition of both-photons-left and both-photons-right and the coincidence rate
+      is zero.
 
       Partial distinguishability revives coincidences in proportion, which makes the
       visibility of the dip a quantitative measure of photon identity.
     person: >
       Chung Ki Hong and Zheyu (Jeff) Ou were graduate students of Leonard Mandel at the
       University of Rochester when the three demonstrated the effect in 1987, in a paper
-      whose stated headline was metrological: measuring sub-picosecond time intervals by
+      whose stated headline was metrological, measuring sub-picosecond time intervals by
       counting coincidences, decades before femtosecond lasers made such numbers routine.
 
       Mandel (1927-2001), born in Berlin and brought to Britain as a refugee in 1938, took
       his degrees at Birkbeck College London and moved to Rochester in 1964, where he
-      effectively founded experimental quantum optics; half the field's senior figures
+      effectively founded experimental quantum optics, and half the field's senior figures
       passed through his group. Ou went on to a professorship at IUPUI in Indianapolis.
     term: Hong-Ou-Mandel effect
     eponyms: [Hong]
@@ -2820,62 +2825,65 @@ entries:
   - slug: jacobi-identity
     hook: >
       The Jacobi identity is the law that turns the mismatch between doing things in
-      different orders into a structure of its own. It is why classical and quantum dynamics
-      read as two dialects of one language.
+      different orders into a structure of its own, and it's why classical and quantum
+      dynamics read as two dialects of one language.
     layman: >
-      Many operations depend on the order in which they are done. Turn a book a quarter turn
-      about a vertical axis and then about a horizontal one, and it ends up in a different
-      position from the one it reaches when the two turns are done the other way round. Take
-      two operations, do them in one order and then in the other, and call the difference
-      their bracket. The bracket measures how badly the two fail to commute, that is, to
-      give the same result in either order. The question is whether this bracket is merely a
-      number you compute case by case, or whether it obeys laws of its own. If it had none,
-      every calculation involving it would be bespoke drudgery.
+      Many operations depend on the order in which they're done. Turn a book a quarter
+      turn about a vertical axis and then about a horizontal one, and it ends up in a
+      different position from the one it reaches when the two turns are done the other way
+      round. Take two operations, do them in one order and then in the other, and call the
+      difference their bracket, which measures how badly the two fail to commute, that is,
+      to give the same result in either order. The question is whether this bracket is
+      merely a number you compute case by case, or whether it obeys laws of its own,
+      because if it had none every calculation involving it would be bespoke drudgery.
 
       It obeys exactly one deep law. Take three ingredients, form the bracket of the first
-      with the bracket of the other two, then cycle the roles so that each ingredient takes
-      the outer position in turn, and add the three results: everything cancels. That is the
-      Jacobi identity. It is what promotes the bracket from an arithmetical accident to an
-      algebraic structure, the multiplication of what mathematicians call a Lie algebra, the
-      algebra of continuous symmetries such as rotations and time evolution.
+      with the bracket of the other two, then cycle the roles so each ingredient takes the
+      outer position in turn, and add the three results, and everything cancels. That's
+      the Jacobi identity, and it's what promotes the bracket from an arithmetical
+      accident to an algebraic structure, the multiplication of what mathematicians call a
+      Lie algebra, the algebra of continuous symmetries such as rotations and time
+      evolution.
 
-      The payoff for physics is that two very different brackets both satisfy it. In quantum
-      mechanics the bracket is the commutator, the difference between applying two operators
-      in one order and in the other. In classical mechanics it is the Poisson bracket, the
-      rule that says how one quantity, such as position, changes along the motion generated
-      by another, such as energy. Same law, two theories. That shared grammar is why quantum
-      and classical dynamics translate into each other as smoothly as they do.
+      The payoff for physics is that two very different brackets both satisfy it. In
+      quantum mechanics the bracket is the commutator, the difference between applying two
+      operators in one order and in the other, and in classical mechanics it's the Poisson
+      bracket, the rule that says how one quantity, such as position, changes along the
+      motion generated by another, such as energy. It's the same law in two theories, and
+      that shared grammar is why quantum and classical dynamics translate into each other
+      as smoothly as they do.
     in_csd: >
       The identity sits underneath the programme's central translation. CSD's ontic side,
       its description of what actually exists, is a deterministic flow with Hamiltonian
-      structure, the same kind of structure that governs classical mechanics. Its epistemic
-      side, its description of what can be known, is operator dynamics with commutators, the
-      familiar quantum formalism. The two levels correspond rather than merely resembling
-      each other, because both brackets obey the same law. Without it, the two levels would
-      be connected only by analogy and hand-waving.
+      structure, the same kind of structure that governs classical mechanics, and its
+      epistemic side, its description of what can be known, is operator dynamics with
+      commutators, the familiar quantum formalism. The two levels correspond rather than
+      merely resembling each other, because both brackets obey the same law, and without
+      it the two levels would be connected only by analogy and hand-waving.
 
-      This is background structure rather than a theorem of the corpus, and the formal work
-      around it has a definite edge. The state space is established as a symplectic manifold,
-      the geometric setting in which Hamiltonian flows are usually studied: its area-like
-      structure is closed and non-degenerate, the space is Kahler, and Hamiltonian vector
-      fields with their flows are constructed on it. The bracket of two functions on that
-      manifold, and the Jacobi identity for it, are not yet stated at the manifold level; the
-      bracket is formal in canonical coordinates, where its vanishing for functions with
-      disjoint supports is proved and used. That remaining step is recorded as a gap.
+      This is background structure rather than a theorem of the corpus, and the formal
+      work around it has a definite edge. The state space is established as a symplectic
+      manifold, the geometric setting in which Hamiltonian flows are usually studied, so
+      its area-like structure is closed and non-degenerate, the space is Kahler, and
+      Hamiltonian vector fields with their flows are constructed on it. The bracket of two
+      functions on that manifold, and the Jacobi identity for it, aren't yet stated at the
+      manifold level, as the bracket is formal in canonical coordinates, where its
+      vanishing for functions with disjoint supports is proved and used, and that
+      remaining step is recorded as a gap.
     mathematical: >
-      For a Lie bracket, the cyclic sum of nested brackets vanishes. Equivalently,
-      bracketing with a fixed element is a derivation, which is the form the identity takes
-      in actual calculations.
+      For a Lie bracket, the cyclic sum of nested brackets vanishes, and equivalently
+      bracketing with a fixed element is a derivation, which is the form the identity
+      takes in actual calculations.
 
       The matrix commutator and the Poisson bracket both satisfy it, making each a Lie
       algebra multiplication and licensing the classical-quantum dictionary.
 
-      Corpus status: the symplectic structure of CP^(N-1) is formal (fsForm_isSymplectic, the
-      atlas-sense IsKahler, hamiltonianVectorField with integral curves,
-      Mathlib/Geometry/Manifold/); the canonical bracket in a Darboux chart and its
-      disjoint-support vanishing are formal (SigmaLayer/ChartBracket.lean, poissonBracket,
-      poissonBracket_eq_zero_of_disjoint). A manifold-level bracket of functions and its Jacobi
-      identity are not stated; that is the recorded gap.
+      The corpus status is that the symplectic structure of CP^(N-1) is formal
+      (fsForm_isSymplectic, the atlas-sense IsKahler, hamiltonianVectorField with integral
+      curves, Mathlib/Geometry/Manifold/), and the canonical bracket in a Darboux chart
+      and its disjoint-support vanishing are formal (SigmaLayer/ChartBracket.lean,
+      poissonBracket, poissonBracket_eq_zero_of_disjoint). A manifold-level bracket of
+      functions and its Jacobi identity aren't stated, and that's the recorded gap.
     person: >
       Carl Gustav Jacob Jacobi (1804-1851) was born in Potsdam to a Jewish banking family
       and converted to Christianity to make an academic career possible, the standard toll
@@ -2883,10 +2891,10 @@ entries:
       mathematical centre, before illness moved him to Berlin.
 
       His work covered elliptic functions, in a legendary race with Abel, determinants,
-      and mechanics: the Hamilton-Jacobi equation still carries his half of the name. He
-      also left the era's best statement of pure-science defiance, answering Fourier's
-      complaint that he wasted his talent on number theory: the sole end of science is the
-      honour of the human spirit.
+      and mechanics, and the Hamilton-Jacobi equation still carries his half of the name.
+      He also left the era's best statement of pure-science defiance, answering Fourier's
+      complaint that he wasted his talent on number theory with the reply that the sole
+      end of science is the honour of the human spirit.
     term: Jacobi identity
     eponyms: [Jacobi]
     status: standard-mathematics
@@ -2900,60 +2908,62 @@ entries:
       Two quantum systems become one by multiplying their descriptions rather than adding
       them, which is why quantum resources multiply where classical ones merely add.
     layman: >
-      Two quantum systems sit side by side. What describes the pair? Classically you would
-      simply list both descriptions, one after the other, and the size of the joint
-      description would be the sum of the two sizes. Quantum mechanics demands more. Every
-      state of the first system can be paired with every state of the second, and every
-      superposition of such pairings, every way of combining them with weights, is also a
-      state of the pair. So the number of independent directions the pair can point in, its
-      dimension, is the product of the two individual dimensions, not their sum.
+      Two quantum systems sit side by side, and you want to know what describes the pair.
+      Classically you'd simply list both descriptions, one after the other, and the size
+      of the joint description would be the sum of the two sizes. Quantum mechanics
+      demands more, as every state of the first system can be paired with every state of
+      the second, and every superposition of such pairings, every way of combining them
+      with weights, is also a state of the pair, so the number of independent directions
+      the pair can point in, its dimension, is the product of the two individual
+      dimensions and not their sum.
 
-      The Kronecker product is this fact written out in matrix form. It is a recipe that
-      takes a square grid of numbers describing one system and a square grid describing the
-      other, and multiplies them into a much larger grid describing both, with one row and
-      one column for every pairing of a row from the first with a row from the second. It is
-      mechanical to compute and explosive in its consequences.
+      The Kronecker product is this fact written out in matrix form. It's a recipe that
+      takes a square grid of numbers describing one system and a square grid describing
+      the other, and multiplies them into a much larger grid describing both, with one row
+      and one column for every pairing of a row from the first with a row from the second.
+      It's mechanical to compute and explosive in its consequences.
 
-      That multiplication instead of addition is the origin of quantum computing's power and
-      of the difficulty of simulating quantum systems alike: thirty qubits, thirty two-level
-      systems, need about a billion dimensions to describe. The exponential lives here.
+      That multiplication instead of addition is the origin of quantum computing's power
+      and of the difficulty of simulating quantum systems alike, as thirty qubits, thirty
+      two-level systems, need about a billion dimensions to describe. The exponential
+      lives here.
     in_csd: >
-      Throughout CSD's machine-checked corpus the Kronecker product is how composition, the
-      joining of systems into a larger one, is realised. In one important place it is also
-      how composition is earned rather than assumed. The results on composite systems do not
-      start from the tensor-product structure of quantum mechanics; they derive it. Starting
-      from two collections of operations, one for each part, such that operations on
-      different parts can be done in either order and the two collections together generate
-      every operation on the whole, the corpus proves that the whole must have the structure
-      of a tensor product, with dimension equal to the product of the parts' dimensions, and
-      it proves this for arbitrary ways of embedding the parts in the whole. The programme's
-      necessity audit, its internal review of its results, rates that among the strongest in
-      the development.
+      Throughout CSD's machine-checked corpus the Kronecker product is how composition,
+      the joining of systems into a larger one, is realised, and in one important place
+      it's also how composition is earned rather than assumed. The results on composite
+      systems don't start from the tensor-product structure of quantum mechanics, as they
+      derive it. Starting from two collections of operations, one for each part, such that
+      operations on different parts can be done in either order and the two collections
+      together generate every operation on the whole, the corpus proves that the whole
+      must have the structure of a tensor product, with dimension equal to the product of
+      the parts' dimensions, and it proves this for arbitrary ways of embedding the parts
+      in the whole. The programme's necessity audit, its internal review of its results,
+      rates that among the strongest in the development.
 
-      Elsewhere it is infrastructure. The partial trace that discards an environment, the
-      reduced states that describe one part of a larger system, and the marginals of thermal
-      states are all Kronecker bookkeeping, consumed daily.
+      Elsewhere it's infrastructure. The partial trace that discards an environment, the
+      reduced states that describe one part of a larger system, and the marginals of
+      thermal states are all Kronecker bookkeeping, consumed daily.
     mathematical: >
       The Kronecker product is the matrix form of the operator tensor product, with the
       mixed-product identity, (A tensor B)(C tensor D) = (AC) tensor (BD), doing the
       functorial work.
 
-      It is consumed by the partial-trace machinery, and it is earned rather than assumed in
-      the composite reconstruction, where commuting generating subalgebras force tensor
-      structure and multiplicative dimension.
+      The partial-trace machinery consumes it, and the composite reconstruction earns it
+      rather than assuming it, as commuting generating subalgebras force tensor structure
+      and multiplicative dimension.
     person: >
-      Leopold Kronecker (1823-1891) was born in Liegnitz, Silesia, and was privately tutored
-      by Kummer, the start of a lifelong alliance. He then did something almost no
-      mathematician has done: he stopped at his doctorate, spent a decade running the
-      family's banking and estate business, grew rich, and returned to mathematics at thirty
-      with no need of a salary. He lectured at Berlin for twenty years before accepting a
-      chair at all.
+      Leopold Kronecker (1823-1891) was born in Liegnitz, Silesia, and was privately
+      tutored by Kummer, the start of a lifelong alliance. He then did something almost no
+      mathematician has done, as he stopped at his doctorate, spent a decade running the
+      family's banking and estate business, grew rich, and returned to mathematics at
+      thirty with no need of a salary. He lectured at Berlin for twenty years before
+      accepting a chair at all.
 
-      He is remembered for his constructivist conviction, summed up in his remark that God
-      made the integers and all else is the work of man, and for prosecuting that conviction
-      against Cantor's infinities with a persistence that shaded into persecution and
-      darkened Cantor's life. The product bearing his name is, ironically, the least
-      controversial thing attached to it.
+      He's remembered for his constructivist conviction, summed up in his remark that God
+      made the integers and all else is the work of man, and for prosecuting that
+      conviction against Cantor's infinities with a persistence that shaded into
+      persecution and darkened Cantor's life. The product bearing his name is, ironically,
+      the least controversial thing attached to it.
     term: Kronecker product
     eponyms: [Kronecker]
     status: standard-mathematics
@@ -2964,43 +2974,44 @@ entries:
 
   - slug: leggett-garg
     hook: >
-      Bell's argument can be rotated from space into time, and what it then tests is not
+      Bell's argument can be rotated from space into time, and what it then tests isn't
       action at a distance but whether the world has a definite history.
     layman: >
       Bell inequalities need two separated particles, so a sceptic can file the whole
-      conflict with common sense under strange facts about distance. Leggett and Garg asked
-      the question with a single particle and no distance at all. Does a system have
-      definite properties in between the moments when you look at it? And can you look
-      without disturbing it?
+      conflict with common sense under strange facts about distance. Leggett and Garg
+      asked the question with a single particle and no distance at all, which is whether a
+      system has definite properties in between the moments when you look at it, and
+      whether you can look without disturbing it.
 
       Grant those two assumptions, a definite history and gentle measurement, and the
       correlations between measurements made at different times, the degree to which one
-      result predicts the next, obey a strict bound. Quantum mechanics breaks the bound.
-      Experiments agree with quantum mechanics.
+      result predicts the next, obey a strict bound. Quantum mechanics breaks the bound,
+      and experiments agree with quantum mechanics.
 
-      So one of the two assumptions has to go. Either properties are not definite between
-      measurements, or measurement is never really gentle. The inequality cannot tell you
-      which, and every account of quantum mechanics has to choose.
+      So one of the two assumptions has to go, as either properties aren't definite
+      between measurements or measurement is never really gentle. The inequality can't
+      tell you which, and every account of quantum mechanics has to choose.
     in_csd: >
       This test aims closer to CSD's heart than Bell does, which is exactly why the
       programme's machine-checked corpus carries it. A theory built on an underlying
-      substrate practically advertises definite properties between measurements; that is
-      what having a substrate means. An inequality that targets precisely this assumption
-      probes the programme where it is most exposed.
+      substrate practically advertises definite properties between measurements, as that's
+      what having a substrate means, so an inequality that targets precisely this
+      assumption probes the programme where it's most exposed.
 
       CSD's escape is through the second assumption, and the escape is principled rather
       than convenient. Measurements in CSD are physical interactions that produce records,
-      and interactions are not gentle. The underlying state is definite at every moment, and
-      the act of reading it participates in the dynamics. A definite history with invasive
-      measurement violates nothing in the argument, and that is exactly the combination CSD
-      is built from.
+      and interactions aren't gentle. The underlying state is definite at every moment,
+      and the act of reading it participates in the dynamics. A definite history with
+      invasive measurement violates nothing in the argument, and that's exactly the
+      combination CSD is built from.
     mathematical: >
-      The inequality bounds combinations of two-time correlation functions; it follows from
-      macrorealism plus non-invasive measurability, and quantum mechanics violates it.
+      The inequality bounds combinations of two-time correlation functions. It follows
+      from macrorealism plus non-invasive measurability, and quantum mechanics violates
+      it.
 
-      Both hypotheses are load-bearing: an account with definite properties but invasive
-      measurements is untouched. That is the compartment this programme occupies, stated
-      rather than implied.
+      Both hypotheses are load-bearing, so an account with definite properties but
+      invasive measurements is untouched, and that's the compartment this programme
+      occupies, stated rather than implied.
     person: >
       Anthony Leggett, born in London in 1938, read Greats, the Oxford classics course,
       before switching to physics, a route that no longer exists. He took his doctorate
@@ -3008,9 +3019,9 @@ entries:
       Illinois at Urbana-Champaign in 1983. His 2003 Nobel Prize was for superfluid
       helium-3.
 
-      The inequality, with his student Anupam Garg in 1985, was not foundations tourism.
-      Leggett has argued seriously for decades that quantum mechanics might actually fail at
-      macroscopic scales, and the inequality was built as the instrument to catch it
+      The inequality, with his student Anupam Garg in 1985, wasn't foundations tourism.
+      Leggett has argued seriously for decades that quantum mechanics might actually fail
+      at macroscopic scales, and the inequality was built as the instrument to catch it
       failing. The experiments keep siding with quantum mechanics, which Leggett, to his
       credit, keeps reporting.
     term: Leggett-Garg inequality
@@ -3023,45 +3034,46 @@ entries:
 
   - slug: loewner-order
     hook: >
-      There is a workable meaning of bigger for operators, and it brings a strange
-      discovery, that taking square roots respects it while taking squares can break it.
+      There's a workable meaning of bigger for operators, and it brings a strange
+      discovery, as taking square roots respects it while taking squares can break it.
     layman: >
-      Quantum information theory runs on inequalities. This entropy is at most that one;
-      this channel loses at least this much information. But the objects being compared are
-      operators, matrices acting on states, rather than plain numbers, and it is not obvious
-      what it means to say that one matrix is at most another.
+      Quantum information theory runs on inequalities, so this entropy is at most that one
+      and this channel loses at least this much information. But the objects being
+      compared are operators, matrices acting on states, rather than plain numbers, and it
+      isn't obvious what it means to say one matrix is at most another.
 
       The Loewner order answers as follows. A matrix is called positive semidefinite if it
-      never produces a negative number: whatever state you evaluate it in, the expected
+      never produces a negative number, so whatever state you evaluate it in the expected
       value is zero or more, which is the same as saying that all its eigenvalues, the
       stretch factors along its special directions, are at least zero. One operator is at
       most another when their difference, the second minus the first, is positive
-      semidefinite. Some pairs of operators cannot be compared either way, so this is a
-      partial order rather than a complete ranking, and that is fine.
+      semidefinite. Some pairs of operators can't be compared either way, so this is a
+      partial order rather than a complete ranking, and that's fine.
 
       The genuine surprise is which functions respect the order. Suppose one operator is
-      below another, and apply the same function to both, by applying it to each eigenvalue.
-      Take square roots and the order is preserved. Take squares and the order can flip.
-      Intuition trained on ordinary numbers, where squaring two positive numbers keeps them
-      in order, fails at the second example, and half the classic blunders in operator
-      inequalities are exactly this failure.
+      below another, and apply the same function to both by applying it to each
+      eigenvalue. Take square roots and the order is preserved, and take squares and the
+      order can flip. Intuition trained on ordinary numbers, where squaring two positive
+      numbers keeps them in order, fails at the second example, and half the classic
+      blunders in operator inequalities are exactly this failure.
     in_csd: >
-      The entropy and channel results in CSD's machine-checked corpus are statements in this
-      order. Data processing, the fact that no channel can increase the information a state
-      carries; subadditivity, the fact that the entropy of a whole is at most the sum of the
-      entropies of its parts; and the contraction of trace distance, the fact that a channel
-      cannot make two states easier to tell apart: all of these compare operators. So do the
-      operator-convexity results that support them.
+      The entropy and channel results in CSD's machine-checked corpus are statements in
+      this order. Data processing, the fact that no channel can increase the information a
+      state carries, subadditivity, the fact that the entropy of a whole is at most the
+      sum of the entropies of its parts, and the contraction of trace distance, the fact
+      that a channel can't make two states easier to tell apart, all compare operators,
+      and so do the operator-convexity results that support them.
 
-      The machinery is imported, not claimed. What the corpus adds is formal verification,
-      which for this topic has unusual value. Because intuition about numbers fails silently
-      here, this is exactly the terrain where an informal proof can be confidently wrong,
-      and where machine-checking pays for itself.
+      The machinery is imported and not claimed. What the corpus adds is formal
+      verification, which for this topic has unusual value, because intuition about
+      numbers fails silently here, so this is exactly the terrain where an informal proof
+      can be confidently wrong and where machine-checking pays for itself.
     mathematical: >
       A is at most B iff B minus A is positive semidefinite. Operator monotone functions,
       those respecting the order under the functional calculus, are characterised by
-      Loewner's theorem: precisely the functions that continue analytically to map the upper
-      half-plane to itself. Square root and logarithm qualify; the square does not.
+      Loewner's theorem as precisely the functions that continue analytically to map the
+      upper half-plane to itself, so square root and logarithm qualify and the square
+      doesn't.
 
       The corpus consumes the order throughout its entropy and channel chains.
     person: >
@@ -3072,10 +3084,10 @@ entries:
       statistical physics.
 
       The operator-monotone characterisation dates from 1934. Five years later the Nazi
-      occupation forced him out of Prague, and he restarted in America almost from zero:
-      Louisville, Syracuse, and finally Stanford from 1951, where he taught to the end. Two
-      results, each half a century ahead of its audience, from a man who had to rebuild his
-      life in the middle.
+      occupation forced him out of Prague, and he restarted in America almost from zero,
+      at Louisville, Syracuse, and finally Stanford from 1951, where he taught to the end.
+      He left two results, each half a century ahead of its audience, and he had to
+      rebuild his life in the middle.
     term: Loewner order
     eponyms: [Loewner]
     status: standard-mathematics
@@ -3086,57 +3098,59 @@ entries:
 
   - slug: mach-zehnder
     hook: >
-      Split a single particle down two paths and recombine them, and where it lands depends
-      on both paths, including the one you can prove it never took.
+      Split a single particle down two paths and recombine them, and where it lands
+      depends on both paths, including the one you can prove it never took.
     layman: >
       The Mach-Zehnder interferometer is the cleanest hardware for the central puzzle of
       quantum mechanics. A beam splitter, a half-silvered mirror, sends light down two
-      separate paths; ordinary mirrors bring the paths back together at a second beam
-      splitter; two detectors wait at the two exits. Which detector fires depends on the
-      difference between the two path lengths. The light travelling each path arrives as a
-      wave, and the two waves either reinforce or cancel at each exit according to how far
-      out of step the two paths have put them. This is interference, and so far it is
-      classical optics.
+      separate paths, ordinary mirrors bring the paths back together at a second beam
+      splitter, and two detectors wait at the two exits. Which detector fires depends on
+      the difference between the two path lengths, as the light travelling each path
+      arrives as a wave, and the two waves either reinforce or cancel at each exit
+      according to how far out of step the two paths have put them. This is interference,
+      and so far it's classical optics.
 
       Now dim the source until only one particle of light, one photon, is in flight at a
-      time. The interference stays. A single photon's arrival statistics depend on both
-      paths at once. Block either path and the interference dies instantly, replaced by a
-      fifty-fifty split between the detectors.
+      time, and the interference stays. A single photon's arrival statistics depend on
+      both paths at once, and if you block either path the interference dies instantly,
+      replaced by a fifty-fifty split between the detectors.
 
-      Every hard question about quantum mechanics can be staged in this box. What happened
-      in between the splitters? Was there a path? When was the outcome decided? That is why
-      the instrument appears in every foundations argument since 1892.
+      Every hard question about quantum mechanics can be staged in this box, such as what
+      happened in between the splitters, whether there was a path, and when the outcome
+      was decided. That's why the instrument appears in every foundations argument since
+      1892.
     in_csd: >
       This is the standard arena for the interference experiments among the programme's
-      empirical twins, the flagship experiments that CSD's machine-checked corpus reproduces
-      as pass-or-fail tests: the bomb tester and the quantum eraser both live inside it. Its
-      value is diagnostic. It forces any account of quantum mechanics to say something
-      definite about the alternative that was not measured, which is precisely where
-      interpretations stop agreeing.
+      empirical twins, the flagship experiments CSD's machine-checked corpus reproduces as
+      pass-or-fail tests, as the bomb tester and the quantum eraser both live inside it.
+      Its value is diagnostic, as it forces any account of quantum mechanics to say
+      something definite about the alternative that wasn't measured, which is precisely
+      where interpretations stop agreeing.
 
       The eraser variant is the sharpest instrument in the set. Recording which path the
       particle took destroys the interference, and discarding that record afterwards
-      restores it. Any story in which the particle simply took one definite path has real
-      explaining to do about the restoration. CSD's account runs through the structure of
-      regions in its state space rather than through stories about paths, and reproducing
-      both twins is treated as a pass-or-fail constraint, not decoration.
+      restores it, so any story in which the particle simply took one definite path has
+      real explaining to do about the restoration. CSD's account runs through the
+      structure of regions in its state space rather than through stories about paths, and
+      reproducing both twins is treated as a pass-or-fail constraint and not decoration.
     mathematical: >
-      Two balanced beam splitters and two paths, with output intensities set by the relative
-      phase between the arms.
+      Two balanced beam splitters and two paths, with output intensities set by the
+      relative phase between the arms.
 
       Unlike the Michelson layout, the paths are spatially separated and traversed once,
-      which is what makes arm-specific interventions (blockers, detectors, erasers) cleanly
-      statable, and hence what makes it the canonical which-path laboratory.
+      which is what makes arm-specific interventions (blockers, detectors, erasers)
+      cleanly statable, and hence what makes it the canonical which-path laboratory.
     person: >
       Ludwig Zehnder (1854-1949), a Swiss physicist with a doctorate under Rontgen at
-      Wurzburg, published the design in 1891; Ludwig Mach (1868-1951) refined it
-      independently in 1892. Neither had quantum mechanics in mind: the instrument was built
-      for measuring refractive indices.
+      Wurzburg, published the design in 1891, and Ludwig Mach (1868-1951) refined it
+      independently in 1892. Neither had quantum mechanics in mind, as the instrument was
+      built for measuring refractive indices.
 
       The younger Mach was the son of Ernst Mach, whose positivism, the doctrine that only
-      what is observable is real, shaped Einstein and the Vienna Circle. There is a neat
+      what's observable is real, shaped Einstein and the Vienna Circle. There's a neat
       irony in the son's instrument becoming, a century later, the standard stage for
-      arguments about whether unobserved paths are real. The father would have had opinions.
+      arguments about whether unobserved paths are real, and the father would have had
+      opinions.
     term: Mach-Zehnder interferometer
     eponyms: [Mach]
     status: standard-mathematics
@@ -3150,52 +3164,55 @@ entries:
       Malus's law is a cosine-squared rule discovered in 1808 with a crystal and a sunset,
       and it turns out to be the oldest data point for the Born rule.
     layman: >
-      Light can be polarised, meaning that its wave oscillates in one fixed direction across
-      its line of travel, and a polariser is a filter that passes only light oscillating
-      along its own axis. Pass polarised light through a second polariser tilted at some
-      angle to the first. How much gets through? Malus measured it in 1808. The transmitted
-      fraction is the square of the cosine of the angle between the two axes: aligned,
-      everything passes; crossed at right angles, nothing; at forty-five degrees, exactly
-      half.
+      Light can be polarised, meaning that its wave oscillates in one fixed direction
+      across its line of travel, and a polariser is a filter that passes only light
+      oscillating along its own axis. Pass polarised light through a second polariser
+      tilted at some angle to the first and ask how much gets through. Malus measured it
+      in 1808, and the transmitted fraction is the square of the cosine of the angle
+      between the two axes, so aligned polarisers pass everything, crossed ones at right
+      angles pass nothing, and at forty-five degrees exactly half gets through.
 
       A century later quantum mechanics asked what happens when a single photon, one
-      particle of light, meets that tilted polariser. A photon cannot be split, so it either
-      passes or it does not, and the answer is the same cosine squared, now as the
+      particle of light, meets that tilted polariser. A photon can't be split, so it
+      either passes or it doesn't, and the answer is the same cosine squared, now as the
       probability of passing. The Born rule is the general law of quantum mechanics that
-      turns a state into probabilities for outcomes, and here it already was: Malus had
-      measured it before anyone knew there was such a rule, before the photon, before
+      turns a state into probabilities for outcomes, and here it already was, as Malus had
+      measured it before anyone knew there was such a rule, before the photon, and before
       probability entered physics at all.
 
-      That makes Malus's law the oldest quantitative fact that any theory of quantum
+      That makes Malus's law the oldest quantitative fact any theory of quantum
       probability must reproduce, and the simplest test any such theory can face.
     in_csd: >
       CSD's machine-checked corpus derives this law rather than assuming it. Among the
-      states of a single photon's polarisation, those that lead to the photon passing form a
-      region, and that region occupies exactly the cosine-squared fraction of the whole
+      states of a single photon's polarisation, those that lead to the photon passing form
+      a region, and that region occupies exactly the cosine-squared fraction of the whole
       state space when the space is measured with the programme's forced measure, the one
-      even-handed notion of volume it admits. It is the smallest complete instance of the
-      entire programme: the one case where the full argument, regions and volumes and all,
+      even-handed notion of volume it admits. It's the smallest complete instance of the
+      entire programme, the one case where the full argument, regions and volumes and all,
       can be followed by hand on the back of an envelope.
 
-      That is also its danger, flagged wherever the corpus uses it. Polarisation is a
-      two-level system, and the two-level case is deceptively special. Its state space is a
-      sphere, which makes the geometry so tractable that it is easy to mistake the special
-      case for the general one. Smallest instance, best pedagogy, worst extrapolation.
+      That's also its danger, flagged wherever the corpus uses it. Polarisation is a two-
+      level system, and the two-level case is deceptively special, as its state space is a
+      sphere, which makes the geometry so tractable that it's easy to mistake the special
+      case for the general one. It's the smallest instance, the best pedagogy, and the
+      worst extrapolation.
     mathematical: >
-      The transmitted fraction equals the cosine squared of the angle between the polariser
-      settings, which is identically the Born weight for the corresponding spin measurement.
+      The transmitted fraction equals the cosine squared of the angle between the
+      polariser settings, which is identically the Born weight for the corresponding spin
+      measurement.
 
-      In the corpus it is a volume ratio: the Fubini-Study measure of the pass region over
+      In the corpus it's a volume ratio, the Fubini-Study measure of the pass region over
       the total, computed exactly on CP^1.
     person: >
-      Etienne-Louis Malus (1775-1812) was a soldier-scientist of the Napoleonic era: a
-      member of the Ecole Polytechnique's first cohort, then an engineer on the Egyptian
-      campaign, where he survived plague at Jaffa and never fully recovered his health.
+      Etienne-Louis Malus (1775-1812) was a soldier-scientist of the Napoleonic era, a
+      member of the Ecole Polytechnique's first cohort and then an engineer on the
+      Egyptian campaign, where he survived plague at Jaffa and never fully recovered his
+      health.
 
-      The discovery is the stuff of legend, and for once the legend is documented. In 1808,
-      in his rooms on the Rue d'Enfer, he idly examined the sunset reflecting off the
-      windows of the Luxembourg Palace through a calcite crystal, and noticed the doubled
-      image dimming and brightening as he rotated the crystal. Reflected light was
+      The discovery is the stuff of legend, and for once the legend is documented. In
+      1808, in his rooms on the Rue d'Enfer, he idly examined the sunset reflecting off
+      the windows of the Luxembourg Palace through a calcite crystal, and he noticed the
+      doubled image dimming and brightening as he rotated the crystal. Reflected light was
       polarised, and nobody had known. He named polarisation, won the Academy prize for
       double refraction, and was dead at thirty-six.
     term: Malus's law
@@ -3209,43 +3226,44 @@ entries:
   - slug: mermin-inequality
     hook: >
       Add more particles and the conflict between quantum mechanics and common sense grows
-      exponentially. It does not average out; it compounds.
+      exponentially, so it doesn't average out but compounds.
     layman: >
-      A natural guess is that quantum strangeness is a small-systems phenomenon, and that as
-      you add particles it washes out into classical behaviour: averages of averages, and
-      the strangeness dilutes.
+      A natural guess is that quantum strangeness is a small-systems phenomenon, and that
+      as you add particles it washes out into classical behaviour as averages of averages
+      dilute the strangeness.
 
       Mermin's inequalities say the opposite happens. Start from the Bell experiment, in
       which two separated particles are measured and their results compared, and add
-      parties, three particles, four, ten. For any number of parties there is a bound that
-      every common-sense account must respect, meaning any account in which each particle
+      parties, three particles, four, ten. For any number of parties there's a bound every
+      common-sense account must respect, meaning any account in which each particle
       carries its own definite answers and nothing influences anything at a distance.
       Quantum mechanics predicts correlations that exceed the bound, and the gap between
-      what it delivers and what the bound allows does not shrink as parties are added. It
-      grows exponentially with the number of particles, doubling roughly every two parties
-      added.
+      what it delivers and what the bound allows doesn't shrink as parties are added, as
+      it grows exponentially with the number of particles, doubling roughly every two
+      parties added.
 
       So the conflict with local realism, the combination of definite local properties and
-      no action at a distance, is not a fragile corner case of tiny systems. It is a
+      no action at a distance, isn't a fragile corner case of tiny systems. It's a
       structural feature that becomes more pronounced with size, which is the reverse of
       what the wash-out intuition predicted.
     in_csd: >
-      CSD's machine-checked corpus carries the multi-party inequalities so that its results
-      on contextuality, the dependence of measurement outcomes on what else is measured
-      alongside them, are not hostage to the smallest case, and the exponential growth is
-      the actual point of doing so. A substrate mechanism that happened to reproduce the
-      two-party violation by some special trick would be exposed here: whatever produces the
-      correlations has to keep producing them, and more strongly, as parties are added.
+      CSD's machine-checked corpus carries the multi-party inequalities so that its
+      results on contextuality, the dependence of measurement outcomes on what else is
+      measured alongside them, aren't hostage to the smallest case, and the exponential
+      growth is the actual point of doing so. A substrate mechanism that happened to
+      reproduce the two-party violation by some special trick would be exposed here, as
+      whatever produces the correlations has to keep producing them, and more strongly, as
+      parties are added.
 
       Together with the GHZ argument, which reaches the same conflict through a single
       outright contradiction rather than through statistics, this establishes the conflict
-      at every size and in both logical shapes, statistical and deterministic. That is the
+      at every size and in both logical shapes, statistical and deterministic. That's the
       standard a substrate account must meet, and the corpus states the standard before
       claiming to meet it.
     mathematical: >
       A family of multipartite Bell inequalities whose classical bound is exceeded by
-      quantum mechanics by a factor growing exponentially in the number of parties: 2 to the
-      power (n-1)/2 for n parties.
+      quantum mechanics by a factor growing exponentially in the number of parties, 2 to
+      the power (n-1)/2 for n parties.
 
       The corpus proves the quantum value and the classical bound separately, which keeps
       the exponential gap a theorem rather than a plot.
@@ -3254,7 +3272,7 @@ entries:
       Cornell, much of it directing the Laboratory of Atomic and Solid State Physics. With
       Ashcroft he wrote the solid-state textbook that trained a generation.
 
-      He is that rare thing, a physicist whose prose is part of his scientific reputation.
+      He's that rare thing, a physicist whose prose is part of his scientific reputation.
       The phrase shut up and calculate is his, coined in 1989 as a description of an
       attitude he was criticising, then promptly attributed to Feynman and quoted with
       approval, a fate he has written about with resignation. The multi-party inequalities
@@ -3270,44 +3288,47 @@ entries:
 
   - slug: pauli-matrices
     hook: >
-      Three small matrices carry the entire two-level world, and their refusal to commute is
-      the uncertainty principle in its smallest packaging.
+      Three small matrices carry the entire two-level world, and their refusal to commute
+      is the uncertainty principle in its smallest packaging.
     layman: >
       The simplest quantum system has just two levels, like the spin of an electron, which
       when measured along any axis comes out either up or down. Yet it has to answer
-      infinitely many possible questions, since spin can be measured along any direction in
-      three-dimensional space. What is the minimal toolkit for describing all of them?
+      infinitely many possible questions, since spin can be measured along any direction
+      in three-dimensional space, so you can ask what the minimal toolkit for describing
+      all of them is.
 
-      Three matrices, one for each of the three perpendicular axes of space. In quantum
-      mechanics a measurable quantity is represented by a matrix, and every measurable
-      quantity of a two-level system is a weighted mix of these three and the identity
-      matrix, the matrix that changes nothing. A spin measurement along any tilted direction
-      is represented by the corresponding mix of the three. Four building blocks, and every
-      question answered.
+      It's three matrices, one for each of the three perpendicular axes of space. In
+      quantum mechanics a measurable quantity is represented by a matrix, and every
+      measurable quantity of a two-level system is a weighted mix of these three and the
+      identity matrix, the matrix that changes nothing, so a spin measurement along any
+      tilted direction is represented by the corresponding mix of the three. Four building
+      blocks answer every question.
 
-      Their crucial property is what they refuse to do: commute, that is, give the same
-      result regardless of order. Applying the matrix for one axis and then the matrix for
-      another gives a different result from applying them the other way round, by a
-      computable amount. That failure to commute is the uncertainty principle for spin, the
-      impossibility of definite values along two axes at once, and not merely an analogy to
-      it. The whole two-level world, strangeness included, fits in these three matrices.
+      Their crucial property is what they refuse to do, which is commute, that is, give
+      the same result regardless of order. Applying the matrix for one axis and then the
+      matrix for another gives a different result from applying them the other way round,
+      by a computable amount. That failure to commute is the uncertainty principle for
+      spin, the impossibility of definite values along two axes at once, and not merely an
+      analogy to it. The whole two-level world, strangeness included, fits in these three
+      matrices.
     in_csd: >
       These are the workhorses wherever CSD's machine-checked corpus touches spin. The
       detector settings in the Bell and GHZ experiments are built from them, the
       correlations of the singlet state (the two-particle state whose spins are perfectly
-      opposed along every axis) are computed through them, the Tsirelson bound, the ceiling
-      on how far quantum mechanics can exceed Bell's limit, is proved in terms of them, and
-      the Bloch geometry, the picture of two-level states as points on a sphere, is theirs.
+      opposed along every axis) are computed through them, the Tsirelson bound, the
+      ceiling on how far quantum mechanics can exceed Bell's limit, is proved in terms of
+      them, and the Bloch geometry, the picture of two-level states as points on a sphere,
+      is theirs.
 
-      The corpus claims nothing about the matrices themselves; they are two centuries of
-      linear algebra. But their concreteness does real work. The programme's empirical
-      twins, its reproductions of flagship experiments, are exact finite computations rather
-      than schematic arguments precisely because the measurement settings are explicit
-      matrices, and several results that would be awkward in the abstract become arithmetic
-      in this basis.
+      The corpus claims nothing about the matrices themselves, as they're two centuries of
+      linear algebra, but their concreteness does real work. The programme's empirical
+      twins, its reproductions of flagship experiments, are exact finite computations
+      rather than schematic arguments precisely because the measurement settings are
+      explicit matrices, and several results that would be awkward in the abstract become
+      arithmetic in this basis.
     mathematical: >
-      Three traceless Hermitian involutions, pairwise anticommuting; together with the
-      identity they form a basis of the two-by-two Hermitian matrices.
+      Three traceless Hermitian involutions, pairwise anticommuting, which together with
+      the identity form a basis of the two-by-two Hermitian matrices.
 
       Exponentials of i times their real linear combinations generate SU(2), the double
       cover of the rotation group, which is why a spin-half state needs two full turns to
@@ -3316,14 +3337,14 @@ entries:
       Wolfgang Pauli (1900-1958) was born in Vienna, with Ernst Mach as his godfather, and
       announced himself at nineteen with a review of general relativity that Einstein
       praised in print. He took his doctorate under Sommerfeld at Munich, found the
-      exclusion principle at twenty-four, held the ETH Zurich chair from 1928, spent the war
-      at Princeton, and received the Nobel Prize in 1945.
+      exclusion principle at twenty-four, held the ETH Zurich chair from 1928, spent the
+      war at Princeton, and received the Nobel Prize in 1945.
 
       He was the century's most feared critic, and his phrase not even wrong remains the
-      epitaph for untestable theorising; he was also its most collegial, since half the
-      era's results were sharpened in savage letters from Zurich. The matrices come from his
-      1927 theory of spin. His decades-long correspondence with Carl Jung about physics and
-      the psyche remains the strangest document left by any major physicist.
+      epitaph for untestable theorising, and he was also its most collegial, since half
+      the era's results were sharpened in savage letters from Zurich. The matrices come
+      from his 1927 theory of spin. His decades-long correspondence with Carl Jung about
+      physics and the psyche remains the strangest document left by any major physicist.
     term: Pauli matrices
     eponyms: [Pauli]
     status: standard-mathematics
@@ -3334,59 +3355,61 @@ entries:
 
   - slug: peres-criterion
     hook: >
-      You can test for entanglement with a pencil: transpose half of the joint description,
-      and if a negative eigenvalue appears, the pair is entangled.
+      You can test for entanglement with a pencil, as you transpose half of the joint
+      description, and if a negative eigenvalue appears the pair is entangled.
     layman: >
-      Correlation is not entanglement. Two systems can be correlated for boring reasons, for
-      instance because they were stamped from the same template, and their results will then
-      agree without anything quantum being involved. Entanglement is the stronger,
-      specifically quantum kind of connection. Telling boring correlation from genuine
-      entanglement is, in general, a provably hard computational problem. Is there at least
-      a quick test that catches some of it?
+      Correlation isn't entanglement. Two systems can be correlated for boring reasons,
+      for instance because they were stamped from the same template, and their results
+      will then agree without anything quantum being involved. Entanglement is the
+      stronger, specifically quantum kind of connection, and telling boring correlation
+      from genuine entanglement is, in general, a provably hard computational problem, so
+      you can ask whether there's at least a quick test that catches some of it.
 
       Peres found one of startling simplicity. Take the joint description of the pair, a
       matrix called the density operator. Transposition, flipping a matrix across its main
-      diagonal, is a harmless bookkeeping reflection when applied to the description of any
-      single system: it turns a legitimate state into a legitimate state. Now apply it to
-      one half of the pair only. A legitimate state has eigenvalues, the characteristic
-      numbers of its matrix, that are all probabilities and so never negative. If the
-      half-transposed result has a negative eigenvalue, it is no longer a legitimate state,
-      and the original was entangled. Guaranteed.
+      diagonal, is a harmless bookkeeping reflection when applied to the description of
+      any single system, as it turns a legitimate state into a legitimate state. Now apply
+      it to one half of the pair only. A legitimate state has eigenvalues, the
+      characteristic numbers of its matrix, that are all probabilities and so never
+      negative, so if the half-transposed result has a negative eigenvalue it's no longer
+      a legitimate state, and the original was entangled, guaranteed.
 
-      For the two smallest kinds of pair, the test is perfect in both directions: it catches
-      every entangled state and never raises a false alarm. Beyond that it can miss. There
-      exist entangled states that pass the test, and the ones it misses turn out to be
-      strange objects in their own right: bound entangled, meaning correlated in the quantum
-      way yet impossible to distil into the clean entanglement that quantum protocols use.
+      For the two smallest kinds of pair the test is perfect in both directions, as it
+      catches every entangled state and never raises a false alarm. Beyond that it can
+      miss, as there exist entangled states that pass the test, and the ones it misses
+      turn out to be strange objects in their own right, bound entangled, meaning
+      correlated in the quantum way yet impossible to distil into the clean entanglement
+      quantum protocols use.
     in_csd: >
-      CSD's machine-checked corpus carries this criterion beside its Bell machinery because
-      the two detect different things, and conflating them is a standing error the programme
-      cannot afford. A Bell violation detects entanglement through statistics that an
-      experiment could show; the Peres test detects it through algebra on the description.
-      They disagree: entangled mixed states exist that violate no Bell inequality.
+      CSD's machine-checked corpus carries this criterion beside its Bell machinery
+      because the two detect different things, and conflating them is a standing error the
+      programme can't afford. A Bell violation detects entanglement through statistics an
+      experiment could show, and the Peres test detects it through algebra on the
+      description. They disagree, as entangled mixed states exist that violate no Bell
+      inequality.
 
       For a reconstruction of quantum mechanics the distinction is load-bearing. Claims
-      about non-locality and claims about entanglement have different scopes, and the corpus
-      keeps separate instruments for them precisely so that its theorems say what they say
-      and no more.
+      about non-locality and claims about entanglement have different scopes, and the
+      corpus keeps separate instruments for them precisely so its theorems say what they
+      say and no more.
     mathematical: >
-      Separable implies positive partial transpose. The converse holds exactly in dimensions
-      two-by-two and two-by-three (Horodecki) and fails above, where PPT-entangled, that is
-      bound entangled, states exist.
+      Separable implies positive partial transpose. The converse holds exactly in
+      dimensions two-by-two and two-by-three (Horodecki) and fails above, where PPT-
+      entangled, that is bound entangled, states exist.
 
       The test itself is one eigenvalue computation, which is its entire charm given that
       separability in general is NP-hard.
     person: >
-      Asher Peres (1934-2005) was born Aristide Pressman in Beaumont-de-Lomagne, France, to
-      Polish-Jewish parents; the family survived the occupation in hiding, and he took a
-      Hebrew name on emigrating to Israel in 1949. He took his doctorate at the Technion
-      under Nathan Rosen, the R of EPR, and spent his career at the Technion thereafter:
-      foundations pursued one degree of separation from the founding paradox.
+      Asher Peres (1934-2005) was born Aristide Pressman in Beaumont-de-Lomagne, France,
+      to Polish-Jewish parents, and the family survived the occupation in hiding, so he
+      took a Hebrew name on emigrating to Israel in 1949. He took his doctorate at the
+      Technion under Nathan Rosen, the R of EPR, and spent his career at the Technion
+      thereafter, pursuing foundations one degree of separation from the founding paradox.
 
-      The criterion dates from 1996; quantum teleportation, which he co-authored, from 1993;
-      and his 1993 textbook remains the field's standard for saying exactly what is meant.
-      His epigram that unperformed experiments have no results is quoted by every camp in
-      the interpretation wars, each certain it supports them.
+      The criterion dates from 1996, quantum teleportation, which he co-authored, from
+      1993, and his 1993 textbook remains the field's standard for saying exactly what is
+      meant. His epigram that unperformed experiments have no results is quoted by every
+      camp in the interpretation wars, each certain it supports them.
     term: Peres criterion
     eponyms: [Peres]
     status: standard-mathematics
@@ -3398,72 +3421,74 @@ entries:
   - slug: poisson-bracket
     hook: >
       The Poisson bracket is the one rule that tells classical mechanics how fast any
-      quantity changes, and the quantum commutator obeys exactly the same algebra. That
+      quantity changes, and the quantum commutator obeys exactly the same algebra, so that
       shared grammar is what lets a deterministic flow present itself in quantum form.
     layman: >
       In classical mechanics the state of a system is a point, specified by positions and
       momenta, and as time passes that point traces a path. A natural question is how fast
-      any given quantity changes along the path: not just a position or a momentum, but the
+      any given quantity changes along the path, not just a position or a momentum but the
       energy, the angular momentum, the distance between two planets, anything you can
-      compute from the state. The Poisson bracket is the single rule that answers it. Feed
-      it the quantity you care about together with the total energy, and out comes the rate
-      of change. The whole of classical dynamics compresses into one line: the rate of
-      change of anything equals its bracket with the energy.
+      compute from the state. The Poisson bracket is the single rule that answers it, as
+      you feed it the quantity you care about together with the total energy and out comes
+      the rate of change, so the whole of classical dynamics compresses into one line,
+      that the rate of change of anything equals its bracket with the energy.
 
       The bracket takes two quantities and produces a third, and it obeys three algebraic
-      laws. It is antisymmetric, meaning that swapping the two inputs flips the sign of the
+      laws. It's antisymmetric, meaning that swapping the two inputs flips the sign of the
       result. It obeys a product rule of the same shape as the rule for differentiating a
       product. And it obeys the Jacobi identity, a consistency condition on what happens
       when three quantities are bracketed together in different orders.
 
       A century later the same three laws turned up somewhere unexpected. In quantum
-      mechanics, physical quantities are represented by operators, and the order in which
-      two operators are applied matters. The commutator measures that mismatch: apply the
-      first then the second, minus the second then the first. Dirac noticed, within months
-      of quantum mechanics existing, that the commutator satisfies exactly the laws the
-      Poisson bracket does, and he turned the observation into the recipe for quantisation:
-      keep the algebra, replace the bracket by the commutator. Two theories, one grammar.
+      mechanics physical quantities are represented by operators, and the order in which
+      two operators are applied matters, so the commutator measures that mismatch, as you
+      apply the first then the second, minus the second then the first. Dirac noticed,
+      within months of quantum mechanics existing, that the commutator satisfies exactly
+      the laws the Poisson bracket does, and he turned the observation into the recipe for
+      quantisation, which is to keep the algebra and replace the bracket by the
+      commutator. It's two theories with one grammar.
     in_csd: >
-      For CSD the shared algebra is not a curiosity but a structural support. The
+      For CSD the shared algebra isn't a curiosity but a structural support. The
       programme's ontic side, the level at which things actually happen, is a
-      deterministic flow of the Hamiltonian kind on the constraint surface. Its epistemic
-      side, the level of what can be predicted, is ordinary operator dynamics with
-      commutators. The claim that these are two descriptions of one process, rather than
-      an analogy between two processes, rests on the two brackets obeying the same laws.
+      deterministic flow of the Hamiltonian kind on the constraint surface, and its
+      epistemic side, the level of what can be predicted, is ordinary operator dynamics
+      with commutators. The claim that these are two descriptions of one process, rather
+      than an analogy between two processes, rests on the two brackets obeying the same
+      laws.
 
       The scope of the formal work is narrower than the idea and is stated as such. The
-      corpus establishes that the state space is a symplectic manifold, the general setting in
-      which the bracket is defined: its oriented-area structure is closed and non-degenerate,
-      it is Kahler, meaning that its notion of distance and its notion of oriented area fit
-      together in the way the bracket requires, Hamiltonian vector fields and their flows are
-      constructed on it, and the flow preserves the volume measure. The bracket itself is
-      formal in canonical coordinates, where the vanishing of the bracket for functions with
-      disjoint supports is proved and used. What is not yet stated is the bracket of two
-      functions on the manifold itself, with its Jacobi identity. That step is recorded as a
-      gap, not presented as done.
+      corpus establishes that the state space is a symplectic manifold, the general
+      setting in which the bracket is defined, so its oriented-area structure is closed
+      and non-degenerate, it's Kahler, meaning that its notion of distance and its notion
+      of oriented area fit together in the way the bracket requires, Hamiltonian vector
+      fields and their flows are constructed on it, and the flow preserves the volume
+      measure. The bracket itself is formal in canonical coordinates, where the vanishing
+      of the bracket for functions with disjoint supports is proved and used. What isn't
+      yet stated is the bracket of two functions on the manifold itself, with its Jacobi
+      identity, and that step is recorded as a gap and not presented as done.
     mathematical: >
-      The bilinear antisymmetric bracket on phase-space functions induced by the symplectic
-      form. It satisfies the Jacobi identity and generates Hamiltonian flow via df/dt =
-      {f, H}. Its algebraic agreement with the commutator underwrites Dirac's quantisation
-      dictionary.
+      The bilinear antisymmetric bracket on phase-space functions induced by the
+      symplectic form. It satisfies the Jacobi identity and generates Hamiltonian flow via
+      df/dt = {f, H}, and its algebraic agreement with the commutator underwrites Dirac's
+      quantisation dictionary.
 
       In the corpus the symplectic manifold structure of CP^(N-1) is formal
       (fsForm_isSymplectic, IsKahler, hamiltonianVectorField and its integral curves,
       Mathlib/Geometry/Manifold/), as is the canonical bracket in a Darboux chart with its
-      disjoint-support vanishing theorem (SigmaLayer/ChartBracket.lean). The manifold-level
-      bracket of functions, omega(X_f, X_g), is not yet named, and its Jacobi identity is not
-      stated; that is the recorded gap.
+      disjoint-support vanishing theorem (SigmaLayer/ChartBracket.lean). The manifold-
+      level bracket of functions, omega(X_f, X_g), isn't yet named, and its Jacobi
+      identity isn't stated, and that's the recorded gap.
     person: >
-      Simeon Denis Poisson (1781-1840), from Pithiviers, entered the Ecole Polytechnique in
-      1798 and was at once marked out by Laplace and Lagrange as the coming man. He stayed
-      within the Paris institutions all his life and put his name on more mathematics than
-      almost anyone: the distribution, the equation, the ratio and the bracket, the last
-      from an 1809 memoir on planetary perturbation.
+      Simeon Denis Poisson (1781-1840), from Pithiviers, entered the Ecole Polytechnique
+      in 1798 and was at once marked out by Laplace and Lagrange as the coming man. He
+      stayed within the Paris institutions all his life and put his name on more
+      mathematics than almost anyone, the distribution, the equation, the ratio and the
+      bracket, the last from an 1809 memoir on planetary perturbation.
 
       The distribution, now everywhere, made its first appearance in a book about the
       probability of criminal verdicts and was ignored for half a century. As an examiner
-      he was also one of the officials who failed to recognise Galois, a reminder that even
-      the great ones grade badly.
+      he was also one of the officials who failed to recognise Galois, which is a reminder
+      that even the great ones grade badly.
     term: Poisson bracket
     eponyms: [Poisson]
     status: standard-mathematics
