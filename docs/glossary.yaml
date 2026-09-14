@@ -5825,31 +5825,31 @@ entries:
     related: [kahler-form, duistermaat-heckman, poisson-bracket, fubini-study-measure, liouville-measure]
 
   - slug: lf1-main-theorem
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
       In a deterministic world with repeated preparations, the frequencies you observe
       converge to volume ratios with probability one, and the theorem is machine-checked
       with no randomness anywhere in the dynamics.
     layman: >
-      Any account that says probability is volume owes one non-negotiable theorem. Run
-      the experiment over and over, and the fraction of runs that give a particular
-      outcome must actually approach the volume assigned to that outcome. Without that
-      bridge, "probability is volume" is a metaphor. This theorem is that bridge,
-      formalised, and it is the foundation stone of the corpus.
+      Any account that says probability is volume owes one non-negotiable theorem. Run the
+      experiment over and over, and the fraction of runs that give a particular outcome
+      must actually approach the volume assigned to that outcome, because without that
+      bridge "probability is volume" is a metaphor. This theorem is that bridge,
+      formalised, and it's the foundation stone of the corpus.
 
-      The setting is simple. The world evolves deterministically. Each run of the
+      The setting is simple. The world evolves deterministically, and each run of the
       experiment draws a fresh complete world-state from the preparation region, the set
       of world-states compatible with the preparation procedure. A given outcome happens
       when the drawn world-state sits in the region of the arena belonging to that
-      outcome. The theorem says that, with probability one over the sequence of draws, the
-      running frequency of the outcome converges to the region's share of the preparation
-      region's volume. Probability one means that the exceptional sequences of draws
-      together have weight zero.
+      outcome, and the theorem says that, with probability one over the sequence of draws,
+      the running frequency of the outcome converges to the region's share of the
+      preparation region's volume. Probability one means the exceptional sequences of
+      draws together have weight zero.
 
       The proof engine is the strong law of large numbers, the same theorem that keeps
-      casinos solvent, applied to indicator variables: quantities that equal one when a
+      casinos solvent, applied to indicator variables, quantities that equal one when a
       run gives the outcome and zero otherwise, and which the deterministic evolution
-      defines. Chance lives entirely in the sampling; the physics never rolls dice.
+      defines. Chance lives entirely in the sampling, and the physics never rolls dice.
     in_csd: >
       Every empirical claim in the corpus stands on this layer. The higher layers change
       what the regions are, from regions of the space of quantum states to regions sized
@@ -5860,13 +5860,13 @@ entries:
       The design is deliberately spare. The theorem handles one outcome region at a time,
       and statements about several outcomes at once are assembled by intersecting the
       corresponding probability-one events. The only hypothesis left to the caller is
-      pairwise independence of the trial indicators. Integrability of the indicators,
+      pairwise independence of the trial indicators, as integrability of the indicators,
       meaning that their averages are well defined, and identical distribution across
       trials are proved internally.
     mathematical: >
-      LF1_main_theorem_ae (CsdLean4/LF1/MainTheorem.lean): for a trial model over an ontic
-      setup and an outcome region O, the empirical frequencies of O converge almost surely
-      to O's volume weight under the conditioned Liouville measure.
+      LF1_main_theorem_ae (CsdLean4/LF1/MainTheorem.lean) says that for a trial model over
+      an ontic setup and an outcome region O, the empirical frequencies of O converge
+      almost surely to O's volume weight under the conditioned Liouville measure.
 
       The chain behind it, the conditional preparation measure, pullback events, indicator
       integrability and identical distribution, is exported as reusable infrastructure,
@@ -5880,53 +5880,54 @@ entries:
     related: [born-weight, typicality, witness-and-engine, born-volume-ratio, what-is-machine-checked]
 
   - slug: born-volume-ratio
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
       In every finite dimension the Born weight of an outcome equals a ratio of volumes in
       the space of quantum states, for every outcome and every state, with no genericity
       condition attached.
     layman: >
-      Showing that probability equals volume for one contrived example proves little. The
-      claim earns its keep only at full strength: every dimension, every state, every
-      outcome, no fine print. The Born volume ratio is the full-strength version, and it
-      is the theorem that turns the volume story from an illustration into a derivation.
+      Showing that probability equals volume for one contrived example proves little, as
+      the claim earns its keep only at full strength, in every dimension, for every state,
+      for every outcome, with no fine print. The Born volume ratio is the full-strength
+      version, and it's the theorem that turns the volume story from an illustration into
+      a derivation.
 
       Take a quantum state in any finite dimension, that is, a system with any finite
       number of possible outcomes. Its Born weight for a given outcome, the number the
       textbook computes by squaring the size of that outcome's contribution to the state,
       equals the volume of an explicitly described region of the space of quantum states
-      divided by the volume of the whole space. The volume is measured with the
-      Fubini-Study measure, the natural notion of size on that space, the one that
-      respects its symmetry. The equality is exact rather than approximate, and it holds
-      for every state, including states in which some outcomes have zero weight.
+      divided by the volume of the whole space. The volume is measured with the Fubini-
+      Study measure, the natural notion of size on that space, the one that respects its
+      symmetry. The equality is exact rather than approximate, and it holds for every
+      state, including states in which some outcomes have zero weight.
 
       The regions are barycentric cells over the probability simplex. The simplex is the
       set of all possible lists of outcome probabilities, a triangle when there are three
-      outcomes, a tetrahedron when there are four, and so on; a state's own list of
-      probabilities is a point of it, and that point cuts the simplex into one cell per
-      outcome. Nobody carved the cells to fit. Their sizes come out of the geometry.
+      outcomes, a tetrahedron when there are four, and so on, and a state's own list of
+      probabilities is a point of it, so that point cuts the simplex into one cell per
+      outcome. Nobody carved the cells to fit, as their sizes come out of the geometry.
     in_csd: >
-      This is the derived side of the carving line in every finite dimension: the theorem
+      This is the derived side of the carving line in every finite dimension, the theorem
       that turned the volume story from realisation into derivation. The route runs
       through the moment map, which reads the Born weights off the geometry, and the
       Duistermaat-Heckman law, which says that pushing the symmetric measure on the state
-      space forward through the moment map gives the flat law on the simplex. The volume
-      of a cell is therefore an honest integral over the simplex, computed once and equal
-      to the Born weight.
+      space forward through the moment map gives the flat law on the simplex, so the
+      volume of a cell is an honest integral over the simplex, computed once and equal to
+      the Born weight.
 
-      Downstream, the frequency companion turns the identity into an empirical statement:
-      independent draws from the Fubini-Study measure give observed frequencies that
+      Downstream, the frequency companion turns the identity into an empirical statement,
+      as independent draws from the Fubini-Study measure give observed frequencies that
       converge jointly to the full vector of Born weights.
     mathematical: >
       fs_born_volume_ratio_N and its apex variant, in the unconditional form
-      fs_born_volume_ratio_N_uncond (CsdLean4/LF4/BornRegionUncond.lean): the Born weight
-      of each of the N coordinates equals the Fubini-Study volume ratio of the
+      fs_born_volume_ratio_N_uncond (CsdLean4/LF4/BornRegionUncond.lean), say the Born
+      weight of each of the N coordinates equals the Fubini-Study volume ratio of the
       corresponding barycentric region, unconditional in the preparation.
 
       The proof composes the Gaussian representation of the Fubini-Study measure, the
-      product-index bridge to exponential laws, and the joint Dirichlet pushforward; the
-      earlier positivity hypothesis was retired by a per-cell dichotomy on closed simplex
-      faces.
+      product-index bridge to exponential laws, and the joint Dirichlet pushforward, and
+      the earlier positivity hypothesis was retired by a per-cell dichotomy on closed
+      simplex faces.
     term: Born volume ratio
     status: proved-in-corpus
     source: curated
@@ -5936,54 +5937,56 @@ entries:
     related: [born-weight, typicality-volume, fubini-study-measure, lf1-main-theorem, naimark-dilation]
 
   - slug: measurement-flow
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
       A deterministic, volume-preserving flow carries out a measurement, and the volumes
       of its pointer blocks are the Born weights, for every preparation.
     layman: >
       Saying that measurement is de-isolation dynamics is a picture, and the picture
-      carries a debt: exhibit actual dynamics, one deterministic map that respects the
-      arena's volume, couples a system to a pointer, and sorts trajectories into outcome
-      blocks of the right sizes. The measurement flow is the theorem that pays that debt.
+      carries a debt, which is to exhibit actual dynamics, one deterministic map that
+      respects the arena's volume, couples a system to a pointer, and sorts trajectories
+      into outcome blocks of the right sizes. The measurement flow is the theorem that
+      pays that debt.
 
-      The flow exists, it preserves volume, and it is provably not the identity, so it
+      The flow exists, it preserves volume, and it's provably not the identity, so it
       genuinely does something. After it runs, the arena decomposes into pointer blocks,
-      one per outcome: regions of starting points that end with the pointer showing that
-      outcome. The volume of each block is exactly the Born weight of its outcome. Repeat
-      the preparation many times and the fraction of runs landing in each block converges
-      to that weight, with probability one.
+      one per outcome, which are regions of starting points that end with the pointer
+      showing that outcome. The volume of each block is exactly the Born weight of its
+      outcome, and if you repeat the preparation many times the fraction of runs landing
+      in each block converges to that weight, with probability one.
 
-      There is no collapse anywhere. There is one deterministic map, run once per trial,
+      There's no collapse anywhere. There's one deterministic map, run once per trial,
       plus ignorance of the starting point.
     in_csd: >
       This is the tier of the corpus that realises von Neumann's measurement scheme
       dynamically. In that scheme a measurement is an ordinary evolution of a larger
       system, obtained by adjoining a pointer to the system measured, an enlargement
-      called a dilation. The dilation that abstract measurement theory cites is here an
-      actual flow on the enlarged arena, and that closes the gap between the volume
-      results, which are purely kinematic, and the de-isolation picture. The outcome map
-      for each individual starting point, saying which block a given microstate lands in,
-      is delivered by the theorems that partition the arena into pointer blocks. That
-      discharges a debt the corpus had carried explicitly: the need for an outcome
+      called a dilation. The dilation abstract measurement theory cites is here an actual
+      flow on the enlarged arena, and that closes the gap between the volume results,
+      which are purely kinematic, and the de-isolation picture. The outcome map for each
+      individual starting point, saying which block a given microstate lands in, is
+      delivered by the theorems that partition the arena into pointer blocks, and that
+      discharges a debt the corpus had carried explicitly, the need for an outcome
       function assigning a result to each microstate.
 
       Its boundary is equally explicit. The flow realises measurement dynamics at the
-      level of the space of quantum states. Whether a physical de-isolation interaction
-      generates a pointer whose readings carry the Born measures on the ontic fibre is the
-      open question that remains; the earlier form of that question, deriving the fibre
-      mechanism from a mixing flow, was retired as mis-specified, as the fibre entry
-      explains.
+      level of the space of quantum states, and whether a physical de-isolation
+      interaction generates a pointer whose readings carry the Born measures on the ontic
+      fibre is the open question that remains. The earlier form of that question, deriving
+      the fibre mechanism from a mixing flow, was retired as mis-specified, as the fibre
+      entry explains.
 
       Seen from the system alone, the measurement flow is a channel. Trace out the pointer
-      after the flow has acted on a preparation that starts with the pointer ready, and the
-      system's density operator is the de-isolation channel applied to its density operator
-      before the measurement: the operator is kept on the pointer basis and its coherences
-      between different pointer readings are removed. No representative of the rays has to be
-      chosen for this to hold, because the corpus supplies a canonical measurable one. The
-      channel keeps entropy from decreasing, and the amount of classical information it
-      transmits is exactly one bit per qubit, the pointer bit and nothing else.
+      after the flow has acted on a preparation that starts with the pointer ready, and
+      the system's density operator is the de-isolation channel applied to its density
+      operator before the measurement, so the operator is kept on the pointer basis and
+      its coherences between different pointer readings are removed. No representative of
+      the rays has to be chosen for this to hold, because the corpus supplies a canonical
+      measurable one. The channel keeps entropy from decreasing, and the amount of
+      classical information it transmits is exactly one bit per qubit, the pointer bit and
+      nothing else.
     mathematical: >
-      measurement_flow_born_frequency (LF5 capstone, CsdLean4/LF5/Capstone.lean): the
+      measurement_flow_born_frequency (LF5 capstone, CsdLean4/LF5/Capstone.lean) says the
       de-isolation flow is Fubini-Study measure-preserving with pointer-block volumes
       equal to the Born weights, and empirical block frequencies converge almost surely,
       for every unit preparation. The earlier genericity hypothesis was retired by the
@@ -5992,13 +5995,14 @@ entries:
       The disjointness of the pointer blocks and the outcome map per microstate are
       separate, reusable theorems.
 
-      measurementFlow_traceRight_barycenter_unitSection (LF6/MeasurementFlowChannel.lean): the
-      environment marginal of the flowed barycentre is deisolationChannel applied to the
-      system's barycentre, with Projectivization.unitSection as the representative, so no
-      section hypothesis remains. deisolationChannel_apply_eq_pinch identifies the channel's
-      action with the pinching of Thermo/SecondLaw.lean, deisolationChannel_holevoCapacity
-      (LF6/DeisolationCapacity.lean) gives log 2 as the greatest element of its single-letter
-      Holevo range, and measurementFlow_vonNeumannEntropy_le is the entropy statement.
+      measurementFlow_traceRight_barycenter_unitSection (LF6/MeasurementFlowChannel.lean)
+      says the environment marginal of the flowed barycentre is deisolationChannel applied
+      to the system's barycentre, with Projectivization.unitSection as the representative,
+      so no section hypothesis remains. deisolationChannel_apply_eq_pinch identifies the
+      channel's action with the pinching of Thermo/SecondLaw.lean,
+      deisolationChannel_holevoCapacity (LF6/DeisolationCapacity.lean) gives log 2 as the
+      greatest element of its single-letter Holevo range, and
+      measurementFlow_vonNeumannEntropy_le is the entropy statement.
     term: Measurement flow
     status: proved-in-corpus
     source: curated
@@ -6007,74 +6011,69 @@ entries:
       theorem: measurement_flow_born_frequency
     related: [de-isolation, stinespring-dilation, pointer-basis, holevo-bound, naimark-dilation]
   - slug: singlet-contextual-model
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      One machine-checked theorem settles both halves of the Bell question: an
-      explicit model in which outcomes depend on the measurement context
-      reproduces the singlet pair's statistics in full, and no assignment that
-      ignores the context can.
+      One machine-checked theorem settles both halves of the Bell question, as an explicit
+      model in which outcomes depend on the measurement context reproduces the singlet
+      pair's statistics in full, and no assignment that ignores the context can.
     layman: >
-      When two particles are prepared together in the state physicists call the
-      singlet and then separated, measurements on them show correlations that
-      no theory can reproduce if it assumes that each particle carries, in
-      advance, a fixed answer to every possible measurement, and that the answer
-      at one particle does not depend on what is measured at the other. That
-      impossibility result is Bell's theorem, and it is the central obstacle for
-      any programme, CSD included, that wants a deterministic account underneath
-      quantum mechanics.
+      When two particles are prepared together in the state physicists call the singlet
+      and then separated, measurements on them show correlations no theory can reproduce
+      if it assumes that each particle carries, in advance, a fixed answer to every
+      possible measurement, and that the answer at one particle doesn't depend on what's
+      measured at the other. That impossibility result is Bell's theorem, and it's the
+      central obstacle for any programme, CSD included, that wants a deterministic account
+      underneath quantum mechanics.
 
-      Such a programme has two questions to answer, not one. The first is
-      whether it can escape Bell's theorem at all. The usual escape is
-      contextuality: the outcome a particle gives depends on the measurement
-      context, the full set of measurements being performed, and not only on the
-      particle's own hidden state. The second question is harder: can a
-      contextual model deliver the exact numbers that quantum mechanics
-      predicts? It is easy to be contextual and hard to be contextual and
-      correct, and most discussions stop at the first question.
+      Such a programme has two questions to answer and not one. The first is whether it
+      can escape Bell's theorem at all, and the usual escape is contextuality, in which
+      the outcome a particle gives depends on the measurement context, the full set of
+      measurements being performed, and not only on the particle's own hidden state. The
+      second question is harder, which is whether a contextual model can deliver the exact
+      numbers quantum mechanics predicts. It's easy to be contextual and hard to be
+      contextual and correct, and most discussions stop at the first question.
 
-      This entry records a single theorem, checked by a proof assistant, that
-      answers both. The existence half exhibits an explicit model, with a shared
-      dependence on context, that reproduces the singlet's complete outcome
-      table at every measurement setting: the marginals, meaning the frequency
-      of each outcome on one side considered alone, and the correlations,
-      meaning how often the two sides agree. The obstruction half shows that no
-      global, context-independent assignment of outcomes is compatible with
-      that same table. Claiming to evade Bell is cheap talk until the model is
-      on the table; here it is on the table, with both directions checked.
+      This entry records a single theorem, checked by a proof assistant, that answers
+      both. The existence half exhibits an explicit model, with a shared dependence on
+      context, that reproduces the singlet's complete outcome table at every measurement
+      setting, the marginals, meaning the frequency of each outcome on one side considered
+      alone, and the correlations, meaning how often the two sides agree. The obstruction
+      half shows that no global, context-independent assignment of outcomes is compatible
+      with that same table. Claiming to evade Bell is cheap talk until the model is on the
+      table, and here it's on the table, with both directions checked.
     in_csd: >
-      The model is built from CSD's own arena, the concrete Kahler instance of
-      the framework together with the weighting it carries on the fibre, the
-      hidden coordinates attached to each visible state. Each measurement
-      context has its own rule for reading an outcome off the arena, obtained
-      by dividing the fibre into arcs, and the outcomes are weighted by the
-      singlet's own kernel, the weighting function that the singlet state
-      supplies. Contextuality here is not a defect being excused; it is the
-      mechanism doing the work.
+      The model is built from CSD's own arena, the concrete Kahler instance of the
+      framework together with the weighting it carries on the fibre, the hidden
+      coordinates attached to each visible state. Each measurement context has its own
+      rule for reading an outcome off the arena, obtained by dividing the fibre into arcs,
+      and the outcomes are weighted by the singlet's own kernel, the weighting function
+      the singlet state supplies. Contextuality here isn't a defect being excused, as it's
+      the mechanism doing the work.
 
-      Companion results locate the contextuality precisely and answer the
-      natural suspicion. The model's two wings provably cannot be made local to
-      their own settings, so the dependence on context is genuine rather than
-      an artefact of presentation, and the operational no-signalling conditions,
-      which require that nothing done on one wing changes the statistics seen
-      on the other, are proved for the model rather than assumed.
+      Companion results locate the contextuality precisely and answer the natural
+      suspicion. The model's two wings provably can't be made local to their own settings,
+      so the dependence on context is genuine rather than an artefact of presentation, and
+      the operational no-signalling conditions, which require that nothing done on one
+      wing changes the statistics seen on the other, are proved for the model rather than
+      assumed.
 
-      The pair of results, existence together with obstruction, is the
-      citation anchor for the programme's Bell analysis.
+      The pair of results, existence together with obstruction, is the citation anchor for
+      the programme's Bell analysis.
     mathematical: >
-      The capstone theorem c1_singlet_contextual_capstone states that a
-      measurable shared-context family reproduces the full singlet table
-      (marginals one-half, correlations minus the dot product) at every
-      context, and that no global assignment is compatible with it.
+      The capstone theorem c1_singlet_contextual_capstone states that a measurable shared-
+      context family reproduces the full singlet table (marginals one-half, correlations
+      minus the dot product) at every context, and that no global assignment is compatible
+      with it.
 
-      Scope, carried over from the obstruction and stated in the theorem's own
-      docstring: the table half holds at every context, but the incompatibility
-      half constrains only the four CHSH settings, and this capstone does not
-      subsume the separate product-partition result.
+      The scope is carried over from the obstruction and stated in the theorem's own
+      docstring, as the table half holds at every context, but the incompatibility half
+      constrains only the four CHSH settings, and this capstone doesn't subsume the
+      separate product-partition result.
 
-      Supporting theorems prove the model's remote marginal invariance, with
-      measurement independence named as a premise rather than smuggled in, and
-      the model's non-product character. The general obstruction is retained
-      as a separate ledger row; the two are designed to be read together.
+      Supporting theorems prove the model's remote marginal invariance, with measurement
+      independence named as a premise rather than smuggled in, and the model's non-product
+      character. The general obstruction is retained as a separate ledger row, and the two
+      are designed to be read together.
     term: Singlet contextual model
     status: proved-in-corpus
     source: curated
@@ -6084,60 +6083,53 @@ entries:
     related: [bell-chsh, contextuality, no-signalling, hidden-variables, does-csd-violate-bell]
 
   - slug: no-signalling
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      Nothing done to the far wing of an entangled pair changes the statistics
-      seen at the near wing, and CSD proves this exactly, for every state,
-      entangled ones included.
+      Nothing done to the far wing of an entangled pair changes the statistics seen at the
+      near wing, and CSD proves this exactly, for every state, entangled ones included.
     layman: >
-      Entangled particles are pairs prepared together so that measurements on
-      them show correlations that no local account explains. The first thing
-      every newcomer asks is whether those correlations let someone send a
-      message faster than light: whether a choice made at one particle can be
-      read off at the other. Quantum mechanics says no, and the principle has a
-      name, no-signalling. A programme that reconstructs quantum mechanics
-      should say no as a theorem rather than as an apology.
+      Entangled particles are pairs prepared together so that measurements on them show
+      correlations no local account explains. The first thing every newcomer asks is
+      whether those correlations let someone send a message faster than light, that is,
+      whether a choice made at one particle can be read off at the other. Quantum
+      mechanics says no, the principle has a name, no-signalling, and a programme that
+      reconstructs quantum mechanics should say no as a theorem rather than as an apology.
 
-      In CSD it is a theorem, twice over. The first version is about composite
-      arenas, the state spaces CSD assigns to two systems considered together.
-      Disturb one part however you like, by any operation confined to that
-      part, and every measurable quantity of the other part keeps exactly the
-      same value. Not approximately: the change cancels identically. The second
-      version is about the Bell model. The explicit contextual model that
-      reproduces the singlet statistics has remote marginals, the outcome
-      frequencies seen on one side alone, that provably do not depend on what is
-      done to the other side.
+      In CSD it's a theorem, twice over. The first version is about composite arenas, the
+      state spaces CSD assigns to two systems considered together. Disturb one part
+      however you like, by any operation confined to that part, and every measurable
+      quantity of the other part keeps exactly the same value, so the change cancels
+      identically and not approximately. The second version is about the Bell model, as
+      the explicit contextual model that reproduces the singlet statistics has remote
+      marginals, the outcome frequencies seen on one side alone, that provably don't
+      depend on what's done to the other side.
 
-      Correlation without signalling is therefore not a tension to be managed.
-      It follows from what an operation confined to one part can and cannot
-      touch.
+      Correlation without signalling is therefore not a tension to be managed. It follows
+      from what an operation confined to one part can and can't touch.
     in_csd: >
-      In CSD, no-signalling is a fact about where operations act, not a
-      constraint placed on probabilities by hand. An operation on the
-      right-hand part of a composite arena is built from the right-hand modes
-      only (a mode is one of the elementary degrees of freedom from which the
-      arena is assembled), and every observable of the left-hand part is built
-      from the left-hand modes only. The two act independently of each other,
-      so applying the operation and then reading the left-hand observable gives
-      the same answer as reading it alone. Because the argument never mentions
-      which state the composite is in, it holds for every state, entangled
-      states included.
+      In CSD, no-signalling is a fact about where operations act and not a constraint
+      placed on probabilities by hand. An operation on the right-hand part of a composite
+      arena is built from the right-hand modes only (a mode is one of the elementary
+      degrees of freedom from which the arena is assembled), and every observable of the
+      left-hand part is built from the left-hand modes only. The two act independently of
+      each other, so applying the operation and then reading the left-hand observable
+      gives the same answer as reading it alone, and because the argument never mentions
+      which state the composite is in, it holds for every state, entangled states
+      included.
 
-      The version for the Bell model matters separately. Contextual models, in
-      which outcomes depend on the measurement context, are exactly the kind of
-      model that critics suspect of hidden signalling, so the corpus proves the
-      operational no-signalling conditions for its exhibited model rather than
-      gesturing at them.
+      The version for the Bell model matters separately. Contextual models, in which
+      outcomes depend on the measurement context, are exactly the kind of model critics
+      suspect of hidden signalling, so the corpus proves the operational no-signalling
+      conditions for its exhibited model rather than gesturing at them.
     mathematical: >
-      The theorem composite_no_signalling states that on the composite field
-      arena, conjugating by any unitary supported on one sector leaves every
-      observable of the other sector's subalgebra exactly invariant, for every
-      composite state: the kick commutes past every observable supported on
-      the other sector.
+      The theorem composite_no_signalling states that on the composite field arena,
+      conjugating by any unitary supported on one sector leaves every observable of the
+      other sector's subalgebra exactly invariant, for every composite state, as the kick
+      commutes past every observable supported on the other sector.
 
-      The contextual-model version proves remote marginal invariance for both
-      wings, with one shared measure across contexts, which is measurement
-      independence stated in-module. Both results are foundational-triple-only.
+      The contextual-model version proves remote marginal invariance for both wings, with
+      one shared measure across contexts, which is measurement independence stated in-
+      module. Both results are foundational-triple-only.
     term: No-signalling
     status: proved-in-corpus
     source: curated
@@ -6147,61 +6139,56 @@ entries:
     related: [singlet-contextual-model, bell-not-join, isolation, field-arena, tsirelson-bound]
 
   - slug: bell-not-join
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      The arena CSD assigns to two systems together is strictly larger than the
-      two arenas simply paired, and the Bell state is a point of the excess:
-      entanglement located exactly.
+      The arena CSD assigns to two systems together is strictly larger than the two arenas
+      simply paired, and the Bell state is a point of the excess, so entanglement is
+      located exactly.
     layman: >
-      The saying that entanglement means the whole is more than its parts is
-      repeated so often that it has stopped meaning anything. It deserves to be
-      made into a theorem with real content, a precise inventory of what the
-      whole contains that the parts do not.
+      The saying that entanglement means the whole is more than its parts is repeated so
+      often that it has stopped meaning anything, and it deserves to be made into a
+      theorem with real content, a precise inventory of what the whole contains that the
+      parts don't.
 
-      In the arena picture, where CSD describes each system by a geometric
-      space of possible configurations called its arena, combining two systems
-      offers two candidate constructions. The first is mere pairing: every
-      joint configuration is a configuration of the left system together with a
-      configuration of the right one, and nothing more. The second is the
-      genuine composite arena that the theory demands. The theorem says that
-      the Bell state, the most famous entangled state in quantum mechanics,
-      lives in the composite arena and is provably not any pairing. No choice
-      of a left configuration and a right configuration jointly produces it.
+      In the arena picture, where CSD describes each system by a geometric space of
+      possible configurations called its arena, combining two systems offers two candidate
+      constructions. The first is mere pairing, in which every joint configuration is a
+      configuration of the left system together with a configuration of the right one and
+      nothing more, and the second is the genuine composite arena the theory demands. The
+      theorem says the Bell state, the most famous entangled state in quantum mechanics,
+      lives in the composite arena and is provably not any pairing, as no choice of a left
+      configuration and a right configuration jointly produces it.
 
-      That is entanglement as an address: a strict gap between the paired
-      construction and the composite one, with the Bell state exhibited inside
-      the gap.
+      That's entanglement as an address, a strict gap between the paired construction and
+      the composite one, with the Bell state exhibited inside the gap.
     in_csd: >
-      The composite arena is built by concatenating the modes, the elementary
-      degrees of freedom, of the two components, and the pairing of two
-      component points is given by a standard construction, the Segre
-      construction, which is the arena-level counterpart of the tensor product
-      by which quantum mechanics combines systems. The theorem is the
-      arena-side signature of the difference between combining by tensor
-      product and combining by simple pairing: the composite strictly exceeds
-      the image of the pairing map, and the Bell state witnesses it.
+      The composite arena is built by concatenating the modes, the elementary degrees of
+      freedom, of the two components, and the pairing of two component points is given by
+      a standard construction, the Segre construction, which is the arena-level
+      counterpart of the tensor product by which quantum mechanics combines systems. The
+      theorem is the arena-side signature of the difference between combining by tensor
+      product and combining by simple pairing, as the composite strictly exceeds the image
+      of the pairing map, and the Bell state witnesses it.
 
-      What the excess does has its own answer. An observer with access to one
-      side of the Bell state alone sees its reduced state, and that reduced
-      state is the maximally mixed ensemble on the correlated patterns: equal
-      weight on each possibility, with no information about which one holds.
-      Entanglement is therefore exactly what turns the weights a local context
-      assigns to a definite state into the weights of a statistical mixture,
-      while the labels of the remote pattern drop out entirely.
+      What the excess does has its own answer. An observer with access to one side of the
+      Bell state alone sees its reduced state, and that reduced state is the maximally
+      mixed ensemble on the correlated patterns, equal weight on each possibility with no
+      information about which one holds. Entanglement is therefore exactly what turns the
+      weights a local context assigns to a definite state into the weights of a
+      statistical mixture, while the labels of the remote pattern drop out entirely.
     mathematical: >
-      The theorem bell_not_join states that the Bell ray over distinct
-      correlated configuration pairs is not in the image of the arena join.
+      The theorem bell_not_join states that the Bell ray over distinct correlated
+      configuration pairs isn't in the image of the arena join.
 
-      Companion results show that the join factorises densities as Kronecker
-      products, with exact marginals and with joint expectations of product
-      observables factoring on joins. That is a property of product states,
-      held by every local composite, and is not local tomography, which is
-      RecordLocallyTomographic in SigmaLayer/TensorTomography.lean. The
-      composite algebras are generated by the mode-local subalgebras, with the
-      reconstruction theorem consumed arena-natively.
+      Companion results show that the join factorises densities as Kronecker products,
+      with exact marginals and with joint expectations of product observables factoring on
+      joins. That's a property of product states, held by every local composite, and it
+      isn't local tomography, which is RecordLocallyTomographic in
+      SigmaLayer/TensorTomography.lean. The composite algebras are generated by the mode-
+      local subalgebras, with the reconstruction theorem consumed arena-natively.
 
-      The reduced density of the Bell ray is the equal mixture with local
-      weights exactly one-half.
+      The reduced density of the Bell ray is the equal mixture with local weights exactly
+      one-half.
     term: Bell state is not a join
     status: proved-in-corpus
     source: curated
