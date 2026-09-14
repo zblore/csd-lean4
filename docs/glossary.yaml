@@ -1673,76 +1673,77 @@ entries:
     related: [field-arena, wick-theorem, hermitian-operator, robertson-uncertainty, lie-trotter-formula]
 
   - slug: canonical-typicality
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
       A small piece of a large quantum system looks thermal not because anything prepared
       it that way, but because almost every state of the whole makes it look that way.
     layman: >
-      Statistical mechanics traditionally starts with an ensemble: an imagined collection
-      of copies of a system, weighted by probability, from which yours is somehow drawn.
-      But your coffee is not an ensemble. It is one cup, in one state. Why should reasoning
-      about imaginary collections say anything true about one actual cup?
+      Statistical mechanics traditionally starts with an ensemble, an imagined collection
+      of copies of a system weighted by probability, from which yours is somehow drawn.
+      But your coffee isn't an ensemble, as it's one cup in one state, so you can ask why
+      reasoning about imaginary collections should say anything true about one actual cup.
 
       Canonical typicality dissolves the embarrassment. Take one large system in a single
-      definite quantum state, with no ensemble and no drawing. Look at a small piece of it,
-      meaning everything you could observe by measuring that piece alone. For the
-      overwhelming majority of possible states of the whole, the piece looks thermal: its
-      statistics are exactly those of a system in equilibrium with a heat bath. Calling a
-      majority overwhelming requires a way of measuring how much of the space of states a
-      set of states occupies, and the natural volume on that space provides it.
+      definite quantum state, with no ensemble and no drawing, and look at a small piece
+      of it, meaning everything you could observe by measuring that piece alone. For the
+      overwhelming majority of possible states of the whole, the piece looks thermal, so
+      its statistics are exactly those of a system in equilibrium with a heat bath.
+      Calling a majority overwhelming requires a way of measuring how much of the space of
+      states a set of states occupies, and the natural volume on that space provides it.
 
-      You do not need to assume equilibrium statistics. You need only fail to be in an
-      astronomically unlikely global state. Equilibrium, on this view, is not a physical
-      process that happened to you. It is a statement about how much room there is in the
+      You don't need to assume equilibrium statistics, as you need only fail to be in an
+      astronomically unlikely global state. Equilibrium, on this view, isn't a physical
+      process that happened to you. It's a statement about how much room there is in the
       space of states, and how little of that room the exceptions occupy.
     in_csd: >
-      This is where the programme touches mainstream statistical mechanics, and the traffic
-      goes both ways. Inbound, thermal behaviour is volume in the space of states, exactly
-      as the Born weights are volume, so thermodynamics is native to the construction: one
-      measure does both jobs.
+      This is where the programme touches mainstream statistical mechanics, and the
+      traffic goes both ways. Inbound, thermal behaviour is volume in the space of states,
+      exactly as the Born weights are volume, so thermodynamics is native to the
+      construction and one measure does both jobs.
 
       Outbound, the literature's standing complaint about canonical typicality is that its
-      measure is an unmotivated prior. What does most look like, and who chose the ruler?
-      CSD has an answer nobody else has: the ruler is the natural volume of the substrate,
-      CSD's own underlying state space, and a uniqueness theorem stands behind it. That
-      turns the programme's central manoeuvre into a contribution to someone else's open
-      problem.
+      measure is an unmotivated prior, as nobody says what most looks like or who chose
+      the ruler. CSD has an answer nobody else has, which is that the ruler is the natural
+      volume of the substrate, CSD's own underlying state space, with a uniqueness theorem
+      behind it. That turns the programme's central manoeuvre into a contribution to
+      someone else's open problem.
 
       The corpus is precise about what it establishes. It has the average statement, that
       the piece is thermal on average over global states, and it has concentration at a
       polynomial rate for diagonal statistics, meaning that a single sample does see the
-      thermal value, up to the guarantee that Chebyshev's inequality gives (a general bound
-      on how far a quantity can stray from its average, given its spread). The exponential
-      rate that the literature headlines is the one piece still owed, and none of this is
-      dynamical thermalisation, which would need mixing assumptions and lies outside the
-      scope.
+      thermal value, up to the guarantee Chebyshev's inequality gives, which is a general
+      bound on how far a quantity can stray from its average given its spread. The
+      exponential rate the literature headlines is the one piece still owed, and none of
+      this is dynamical thermalisation, which would need mixing assumptions and lies
+      outside the scope.
     mathematical: >
       For a global pure state drawn from the Fubini-Study measure, the average reduced
-      state of a tensor subsystem is exactly maximally mixed. That is the first theorem,
+      state of a tensor subsystem is exactly maximally mixed, which is the first theorem,
       the expectation statement (canonical_typicality_expectation).
 
       The second is concentration at polynomial rate. The Fubini-Study second moments turn
-      out to be pure symmetry algebra: a two-coordinate Hadamard rotation, a sign flip and
-      a quarter-phase force E[x_i^2] = 2/(N(N+1)) and E[x_i x_j] = 1/(N(N+1)) with no
-      integral ever computed, so every diagonal statistic has variance O(1/N) and Chebyshev
-      makes a single sample typical (fs_chebyshev_concentration).
+      out to be pure symmetry algebra, as a two-coordinate Hadamard rotation, a sign flip
+      and a quarter-phase force E[x_i^2] = 2/(N(N+1)) and E[x_i x_j] = 1/(N(N+1)) with no
+      integral ever computed, so every diagonal statistic has variance O(1/N) and
+      Chebyshev makes a single sample typical (fs_chebyshev_concentration).
 
       The literature's headline rate, exponentially close to one, needs Levy's lemma,
       concentration of measure on high-dimensional spheres, which the proof assistant's
-      library does not carry. That deviation-rate upgrade is recorded as a named residual
-      rather than papered over. None of this is dynamical thermalisation, which would need
-      mixing assumptions and is out of scope.
+      library doesn't carry, so that deviation-rate upgrade is recorded as a named
+      residual rather than papered over. None of this is dynamical thermalisation, which
+      would need mixing assumptions and is out of scope.
     person: >
       The modern result has two independent birth certificates, both from 2006. Goldstein,
       Lebowitz, Tumulka and Zanghi came from the Rutgers-Bochum-Genoa axis of the Bohmian
-      school, which had kept typicality arguments alive through decades of unfashion.
+      school, which had kept typicality arguments alive through decades of unfashion, and
       Popescu, Short and Winter came from quantum information at Bristol and Cambridge. It
       was the same theorem in two vocabularies, from two communities that barely cited
       each other.
 
-      The idea itself is older. Schrodinger sketched it in the 1920s, and von Neumann proved
-      a version in 1929 that was misunderstood, mistranslated and dismissed for eighty years
-      before being rehabilitated. Few results have been discovered this many times.
+      The idea itself is older. Schrodinger sketched it in the 1920s, and von Neumann
+      proved a version in 1929 that was misunderstood, mistranslated and dismissed for
+      eighty years before being rehabilitated. Few results have been discovered this many
+      times.
     term: Canonical typicality
     status: proved-in-corpus
     lean:
@@ -1751,76 +1752,77 @@ entries:
     related: [gibbs-state, typicality, von-neumann-entropy, fubini-study-measure, kms-condition]
 
   - slug: bargmann
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
-      One phase survives every change of convention: the phase of the product of three
-      overlaps taken around a cycle. It is also the fingerprint that tells a unitary
+      One phase survives every change of convention, the phase of the product of three
+      overlaps taken around a cycle, and it's also the fingerprint that tells a unitary
       symmetry from an anti-unitary one.
     layman: >
       A quantum state is described by a list of complex numbers, its amplitudes. A complex
-      number has a size and a direction, and the direction is called its phase. Multiply
-      every amplitude of a state by the same complex number of size one, which rotates all
-      the phases by the same angle, and no measurement on that state changes. So the
-      overall phase of a state is pure convention, and phases look like bookkeeping to be
-      discarded. Yet geometric phases, the phases a state picks up when it is carried
-      around a loop, are measurable physics. Which phases are real?
+      number has a size and a direction, and the direction is called its phase. If you
+      multiply every amplitude of a state by the same complex number of size one, which
+      rotates all the phases by the same angle, no measurement on that state changes, so
+      the overall phase of a state is pure convention and phases look like bookkeeping to
+      be discarded. Yet geometric phases, the phases a state picks up when it's carried
+      around a loop, are measurable physics, so you can ask which phases are real.
 
       Bargmann's invariant is the minimal answer. Any two states have an overlap, a
-      complex number that records how much they resemble each other; its size fixes how
-      easily the two states can be confused, and its phase depends on the conventions
-      chosen for both. Take three states and multiply their overlaps around the cycle:
+      complex number that records how much they resemble each other, and its size fixes
+      how easily the two states can be confused while its phase depends on the conventions
+      chosen for both. Take three states and multiply their overlaps around the cycle,
       first to second, second to third, third back to first. Each state's arbitrary phase
-      enters that product twice, once as itself and once with its sign reversed, and the
-      two appearances cancel. What remains is independent of every convention. It is the
-      smallest phase that is genuinely there.
+      enters that product twice, once as itself and once with its sign reversed, so the
+      two appearances cancel and what remains is independent of every convention. It's the
+      smallest phase that's genuinely there.
 
-      This is the ancestor of every geometric phase. Carry a state slowly around a loop and
-      the extra phase it acquires is this invariant, applied step by step along the edges
-      of the loop.
+      This is the ancestor of every geometric phase. Carry a state slowly around a loop
+      and the extra phase it acquires is this invariant, applied step by step along the
+      edges of the loop.
     in_csd: >
       The corpus uses the invariant as a fingerprint in its Wigner analysis. A symmetry of
       quantum mechanics is a transformation of states that preserves every measurement
-      probability, and Wigner's theorem says such symmetries come in exactly two families:
-      unitary, which preserve phases, and anti-unitary, which reverse them, as time
-      reversal does. The invariant tells the families apart, because unitaries leave it
-      unchanged while anti-unitaries reverse it. That is what lets the choice between the
-      two branches in the rigidity theorem be decided at each point rather than assumed.
+      probability, and Wigner's theorem says such symmetries come in exactly two families,
+      the unitary ones, which preserve phases, and the anti-unitary ones, which reverse
+      them, as time reversal does. The invariant tells the families apart, because
+      unitaries leave it unchanged while anti-unitaries reverse it, and that's what lets
+      the choice between the two branches in the rigidity theorem be decided at each point
+      rather than assumed.
 
       Bargmann's theorem is a separate result, and the corpus gets what it needs from it
       without proving the general case. Wigner's theorem hands you each symmetry with an
-      undetermined phase. When two symmetries are applied in succession, the phases need
-      not match up, and the mismatch is a leftover factor that can spoil any attempt to
+      undetermined phase, and when two symmetries are applied in succession the phases
+      needn't match up, so the mismatch is a leftover factor that can spoil any attempt to
       assign one consistent phase to every symmetry. Bargmann's theorem says continuity
       removes the leftover, so a family of symmetries defined only up to phase lifts to a
-      genuine family with consistent phases. In general that is hard to prove. The corpus
+      genuine family with consistent phases. In general that's hard to prove. The corpus
       only ever needs it for a one-parameter group, a family of symmetries labelled by a
-      single continuous number such as time, and there the obstruction is not merely
+      single continuous number such as time, and there the obstruction isn't merely
       surmountable but absent.
 
       The reason is that the real line has no loops. Any continuous phase along it can be
       unwound without obstruction, and the only freedom left over is a quantity that can
-      take finitely many values yet must vary continuously, so it cannot vary at all and is
+      take finitely many values yet must vary continuously, so it can't vary at all and is
       absorbed by a rescaling. The consequence for the programme is that a phase
       consistency condition which would otherwise have to be assumed is proved instead.
-      Together with the finite-dimensional Stone theorem, which turns a continuous
-      one-parameter family of unitary symmetries into a Hamiltonian generator, this means
-      that continuity of the flow alone delivers Schrodinger evolution.
+      Together with the finite-dimensional Stone theorem, which turns a continuous one-
+      parameter family of unitary symmetries into a Hamiltonian generator, this means
+      continuity of the flow alone delivers Schrodinger evolution.
     mathematical: >
       For rays u, v, w the invariant is the phase of the product of pairwise overlaps
-      around the cycle. It is invariant under independent rescaling of each representative,
-      since each scale factor appears once plainly and once conjugated. It is preserved by
-      unitaries and conjugated by anti-unitaries, which is exactly the discriminator the
-      rigidity proof needs.
+      around the cycle. It's invariant under independent rescaling of each representative,
+      since each scale factor appears once plainly and once conjugated, and it's preserved
+      by unitaries and conjugated by anti-unitaries, which is exactly the discriminator
+      the rigidity proof needs.
 
       The one-parameter lift is a separate statement, proved in the corpus as
-      `exists_continuous_phase_trivialisation`. Given a continuous U with
-      U(s+t) = c(s,t) U(s) U(t), it produces a continuous unit-modulus b with
-      c(s,t) b(s+t) = b(s) b(t). Determinants give d(s+t) = c(s,t)^N d(s) d(t) on the
-      circle; the covering lift through `Circle.exp` gives a continuous theta with
-      d = exp(i theta); b0 = exp(-i theta / N) then leaves a residual with Nth power one,
-      constant by connectedness, and absorbed by rescaling. The coboundary datum is thereby
-      discharged rather than carried as a hypothesis of the phase lift. The proof depends
-      only on the foundational axiom triple.
+      `exists_continuous_phase_trivialisation`. Given a continuous U with U(s+t) = c(s,t)
+      U(s) U(t), it produces a continuous unit-modulus b with c(s,t) b(s+t) = b(s) b(t).
+      Determinants give d(s+t) = c(s,t)^N d(s) d(t) on the circle, the covering lift
+      through `Circle.exp` gives a continuous theta with d = exp(i theta), and b0 = exp(-i
+      theta / N) then leaves a residual with Nth power one, which is constant by
+      connectedness and absorbed by rescaling. The coboundary datum is thereby discharged
+      rather than carried as a hypothesis of the phase lift, and the proof depends only on
+      the foundational axiom triple.
     person: >
       Valentine Bargmann (1908-1989) was born in Berlin, left in 1933 when the dismissals
       began, and finished his doctorate in Zurich under Wentzel and Pauli. He emigrated in
@@ -1828,9 +1830,9 @@ entries:
       with him daily, before moving to the Princeton faculty for the rest of his career.
 
       His 1954 paper on projective representations answered the question Wigner's theorem
-      leaves open: the theorem hands you a symmetry with an undetermined phase, and
+      leaves open, as the theorem hands you a symmetry with an undetermined phase and
       Bargmann settled when the phases can all be chosen consistently. He also worked out
-      representations of the Lorentz group with Wigner, and was by all accounts a
+      representations of the Lorentz group with Wigner, and he was by all accounts a
       concert-grade pianist who had considered the other career.
     term: Bargmann invariant
     eponyms: [Bargmann]
@@ -1845,33 +1847,33 @@ entries:
 
   - slug: bloch-sphere
     hook: >
-      The states of the simplest quantum system form an ordinary ball. That is a lovely
-      accident of low dimension, and it is the single most misleading picture in quantum
+      The states of the simplest quantum system form an ordinary ball, which is a lovely
+      accident of low dimension and the single most misleading picture in quantum
       mechanics.
     layman: >
       A qubit is the simplest quantum system, one with just two perfectly distinguishable
-      states. Its possible states map exactly onto an ordinary sphere, and the map is
-      useful. Measurement settings are directions in space. Two perfectly distinguishable
-      states sit at opposite poles. The angle between two points sets the statistics of
-      measuring one when the other was prepared. States of incomplete knowledge, called
-      mixed states, fill the interior, with the state of complete ignorance, the coin flip,
-      at dead centre. Every quantum intuition you can have in three dimensions, you can
-      have here.
+      states, and its possible states map exactly onto an ordinary sphere. The map is
+      useful. Measurement settings are directions in space, two perfectly distinguishable
+      states sit at opposite poles, and the angle between two points sets the statistics
+      of measuring one when the other was prepared. States of incomplete knowledge, called
+      mixed states, fill the interior, with the state of complete ignorance, the coin
+      flip, at dead centre, so every quantum intuition you can have in three dimensions
+      you can have here.
 
-      Then comes the trap. All of that is an accident of having two levels. Go to a system
-      with three distinguishable states and its state space is not a sphere, is not any
-      familiar shape, and supports none of the same tricks. The picture that teaches
-      everyone the subject also quietly teaches them falsehoods about the general case.
+      Then comes the trap, as all of that is an accident of having two levels. Go to a
+      system with three distinguishable states and its state space isn't a sphere, isn't
+      any familiar shape, and supports none of the same tricks, so the picture that
+      teaches everyone the subject also quietly teaches them falsehoods about the general
+      case.
 
       Both halves matter. Use the sphere, and know when to put it down.
     in_csd: >
       The corpus computes on the sphere wherever qubits appear, in the Bell settings, the
       singlet correlations and the qubit Born rule, and it flags the accident explicitly
       rather than trading on it. For two levels the projective space, the space of
-      physically distinct pure states, is itself a sphere. As a result, structure that in
-      general has to be placed in a fibre above the state space, extra data attached over
-      each state, can sit on the space itself, and nothing warns you that this is
-      happening.
+      physically distinct pure states, is itself a sphere, so structure that in general
+      has to be placed in a fibre above the state space, extra data attached over each
+      state, can sit on the space itself, and nothing warns you that this is happening.
 
       The programme's fibre analysis makes the warning concrete. Contextual content, the
       part of the theory that makes an outcome depend on which other measurements
@@ -1880,24 +1882,24 @@ entries:
       finding narrowed the programme's own claims. The sphere is where everyone's
       intuition is formed, and the corpus treats it with corresponding care.
     mathematical: >
-      CP^1 is diffeomorphic to the two-sphere; antipodal points are orthogonal states; the
-      Fubini-Study measure is the normalised round area; trace distance is half the
+      CP^1 is diffeomorphic to the two-sphere, antipodal points are orthogonal states, the
+      Fubini-Study measure is the normalised round area, and trace distance is half the
       Euclidean chord. Mixed states fill the closed ball.
 
-      For N above two, CP^(N-1) is not a sphere, has nontrivial topology, and admits no
+      For N above two, CP^(N-1) isn't a sphere, has nontrivial topology, and admits no
       comparable elementary picture, which is precisely why qubit-calibrated intuition
       transfers badly and why the corpus's results for N at least three needed different
       methods.
     person: >
       Felix Bloch (1905-1983) was born in Zurich, studied at the ETH, and took his
       doctorate under Heisenberg at Leipzig with a thesis that founded the band theory of
-      solids. Being Jewish, he left Germany in 1933 and settled at Stanford for the rest of
-      his career, with war work at Los Alamos and on radar at Harvard.
+      solids. Being Jewish, he left Germany in 1933 and settled at Stanford for the rest
+      of his career, with war work at Los Alamos and on radar at Harvard.
 
       The sphere comes from his work on spins precessing in magnetic fields, the basis of
-      nuclear magnetic resonance, for which he shared the 1952 Nobel Prize with Purcell and
-      which became MRI. He also served as CERN's first Director-General in 1954, lasting
-      about a year before deciding that administration was not physics. Quantum
+      nuclear magnetic resonance, for which he shared the 1952 Nobel Prize with Purcell
+      and which became MRI. He also served as CERN's first Director-General in 1954,
+      lasting about a year before deciding that administration wasn't physics. Quantum
       information adopted his sphere decades later.
     term: Bloch sphere
     eponyms: [Bloch]
@@ -1910,29 +1912,30 @@ entries:
   - slug: borel-set
     hook: >
       Before any region can have a probability, someone has to say which regions are
-      allowed to have a size at all. The Borel sets are the answer everyone uses.
+      allowed to have a size at all, and the Borel sets are the answer everyone uses.
     layman: >
       Not every collection of points can be assigned a size, and this genuinely shocked
-      mathematics when it surfaced. Insist that every set has a volume and you get
+      mathematics when it surfaced. If you insist that every set has a volume you get
       contradictions, most famously a solid ball that can be cut into five pieces and
       reassembled into two balls each the same size as the original.
 
       The repair is to be selective. Fix a family of well-behaved sets, starting from
       simple ones like intervals, and allow yourself to combine them in countably many
-      steps: take the union of a sequence of sets, take the complement of a set, and
-      repeat. Only ever measure sets built this way. That family is the Borel sets.
+      steps, so you take the union of a sequence of sets, take the complement of a set,
+      and repeat, and you only ever measure sets built this way. That family is the Borel
+      sets.
 
-      The restriction sounds drastic and costs nothing. Every region you could describe,
-      draw or physically distinguish is a Borel set. The pathological sets need the axiom
-      of choice, a principle allowing selections that no rule could specify, and so they
-      can be proved to exist but never exhibited. Probability theory lives happily inside
-      the fence.
+      The restriction sounds drastic and costs nothing, as every region you could
+      describe, draw or physically distinguish is a Borel set. The pathological sets need
+      the axiom of choice, a principle allowing selections no rule could specify, so they
+      can be proved to exist but never exhibited, and probability theory lives happily
+      inside the fence.
     in_csd: >
       Every measure in the corpus is a Borel measure, whether on the state space or on the
       group of unitary transformations, and every outcome region whose volume becomes a
-      Born weight is a Borel set. This is not decoration. The programme's central claim is
-      a statement about the measures of regions, and it would be meaningless for regions
-      that have no measure.
+      Born weight is a Borel set. This isn't decoration, as the programme's central claim
+      is a statement about the measures of regions, and it would be meaningless for
+      regions that have no measure.
 
       One detail the constructions lean on is that the boundaries between outcome regions
       are null sets, meaning sets of volume zero. A state sitting exactly on a boundary is
@@ -1940,25 +1943,25 @@ entries:
       so no prediction ever depends on resolving it.
     mathematical: >
       The Borel sigma-algebra of a topological space is the sigma-algebra generated by its
-      open sets: the smallest family that contains the open sets and is closed under
+      open sets, the smallest family that contains the open sets and is closed under
       complements and countable unions.
 
       The corpus's measures are Borel probability measures on the projective space
-      CP^(N-1) and on the unitary group U(N); the outcome regions are Borel sets with
-      Fubini-Study-null boundaries, and the null-boundary fact is used in the proofs, not
+      CP^(N-1) and on the unitary group U(N), and the outcome regions are Borel sets with
+      Fubini-Study-null boundaries. The null-boundary fact is used in the proofs and not
       just noted.
     person: >
       Emile Borel (1871-1956) was born at Saint-Affrique in the Aveyron, a pastor's son,
       and topped the entrance examinations for both the Ecole Normale Superieure and the
       Ecole Polytechnique, choosing the Normale to the Polytechnique's lasting chagrin. He
-      taught at Lille and then in Paris, at the Normale and the Sorbonne, founding measure
-      theory around 1898.
+      taught at Lille and then in Paris, at the Normale and the Sorbonne, and founded
+      measure theory around 1898.
 
-      His second life was public: Radical-Socialist deputy in the Chamber, Minister of the
-      Navy in 1925, and at seventy, Resistance activity that earned him a spell in Vichy
-      detention and, after the war, the Resistance Medal. The infinite monkey theorem is
-      his image, from a 1913 paper. Few mathematicians have run a ministry; fewer still
-      after founding a field.
+      His second life was public, as a Radical-Socialist deputy in the Chamber, Minister
+      of the Navy in 1925, and, at seventy, a Resistance activist, which earned him a
+      spell in Vichy detention and, after the war, the Resistance Medal. The infinite
+      monkey theorem is his image, from a 1913 paper. Few mathematicians have run a
+      ministry, and fewer still after founding a field.
     term: Borel set
     eponyms: [Borel]
     status: standard-mathematics
@@ -1969,52 +1972,53 @@ entries:
 
   - slug: cglmp-inequality
     hook: >
-      Bell's inequality is built for measurements with two outcomes. Go beyond two and you
-      need a new inequality, and the conflict with local realism grows stronger, not
-      weaker.
+      Bell's inequality is built for measurements with two outcomes, so once you go beyond
+      two you need a new inequality, and the conflict with local realism grows stronger
+      rather than weaker.
     layman: >
       A Bell inequality is a bound on how strongly the results of measurements on two
       separated systems can be correlated if every result is fixed in advance and no
       influence travels between the systems, a picture called local realism. Quantum
       mechanics breaks the bound, and experiments agree with quantum mechanics. Bell's
-      argument, as usually stated, assumes that each measurement has exactly two possible
-      results. Real systems often have three, or five, or any number. Does the conflict
-      with local realism survive when outcomes multiply, or is it an artefact of the
-      two-outcome case?
+      argument, as usually stated, assumes each measurement has exactly two possible
+      results, while real systems often have three, or five, or any number, so you can ask
+      whether the conflict with local realism survives when outcomes multiply or whether
+      it's an artefact of the two-outcome case.
 
-      It survives, and it takes a new inequality to say so: the CGLMP inequality, one for
-      each number of outcomes. The surprise is the direction of travel. The violation grows
-      with the number of outcomes, so higher-dimensional systems disagree with local
-      realism more strongly, not less.
+      It survives, and it takes a new inequality to say so, the CGLMP inequality, one for
+      each number of outcomes. The surprise is the direction of travel, as the violation
+      grows with the number of outcomes, so higher-dimensional systems disagree with local
+      realism more strongly and not less.
 
-      There was a second surprise in the same paper. The state that violates the inequality
-      most is not the maximally entangled one. The state that is most entangled by the
-      standard bookkeeping is not the state most at odds with common sense, a warning that
-      entanglement is not a single number.
+      There was a second surprise in the same paper. The state that violates the
+      inequality most isn't the maximally entangled one, so the state that's most
+      entangled by the standard bookkeeping isn't the state most at odds with common
+      sense, which is a warning that entanglement isn't a single number.
     in_csd: >
-      The corpus carries the inequality so that its contextuality results do not lean on
-      two-level systems, which are special in ways that keep surprising people. There is
-      also a structural echo worth noticing. Three outcomes is precisely where the corpus's
-      own fibre analysis finds the natural base-only constructions stop working, which is
-      why it places contextual content in the fibre above the base; that placement is a
-      judgement against a tight chain of constraints, not a proved dichotomy.
+      The corpus carries the inequality so that its contextuality results don't lean on
+      two-level systems, which are special in ways that keep surprising people. There's
+      also a structural echo worth noticing. Three outcomes is precisely where the
+      corpus's own fibre analysis finds the natural base-only constructions stop working,
+      which is why it places contextual content in the fibre above the base, and that
+      placement is a judgement against a tight chain of constraints and not a proved
+      dichotomy.
 
       So the dimension where this inequality becomes necessary is the dimension where the
-      programme's geometry changes character. That is either a coincidence or a hint, and
+      programme's geometry changes character. That's either a coincidence or a hint, and
       the honest label for now is coincidence.
     mathematical: >
       A Bell-type inequality for bipartite systems with d outcomes per side, violated by
       quantum mechanics for every d at least two, with the maximal violation increasing in
       d.
 
-      The maximising state is not maximally entangled, which remains one of the sharpest
+      The maximising state isn't maximally entangled, which remains one of the sharpest
       reminders that entanglement measures and non-locality measures order states
       differently.
     person: >
       Daniel Collins, Nicolas Gisin, Noah Linden, Serge Massar and Sandu Popescu published
       the inequality in Physical Review Letters in 2002, with Gisin at Geneva, Popescu and
       Linden at Bristol, Massar in Brussels, and Collins a Bristol student. Five authors
-      across four institutions for four pages of paper: a snapshot of how the European
+      across four institutions for four pages of paper is a snapshot of how the European
       quantum information community actually worked in those years, by email and short
       visits, with the inequality named for the initials of whoever was on the manuscript
       when it converged.
@@ -2029,57 +2033,58 @@ entries:
   - slug: deutsch-jozsa
     hook: >
       The Deutsch-Jozsa algorithm settles a question with a single query where any exact
-      classical method needs exponentially many. The problem it solves is useless by
-      design, and historic for exactly that reason.
+      classical method needs exponentially many, and the problem it solves is useless by
+      design and historic for exactly that reason.
     layman: >
-      The problem is deliberately artificial. A black box computes a function that is
-      promised to be one of two kinds: constant, giving the same answer on every input, or
+      The problem is deliberately artificial. A black box computes a function that's
+      promised to be one of two kinds, constant, giving the same answer on every input, or
       balanced, giving one answer on exactly half the inputs and the other answer on the
-      rest. Your job is to decide which kind it is while asking the box as few questions
-      as possible.
+      rest, and your job is to decide which kind it is while asking the box as few
+      questions as possible.
 
-      Classically, certainty is expensive. In the worst case you must check just over half
-      of all inputs, and the number of inputs grows exponentially with the size of the
-      problem. A quantum procedure asks once. It queries the box on a superposition of all
-      inputs at the same time, a single state in which every input is present with some
-      amplitude, and it arranges the interference between those amplitudes so that a
+      Classically, certainty is expensive, as in the worst case you must check just over
+      half of all inputs, and the number of inputs grows exponentially with the size of
+      the problem. A quantum procedure asks once. It queries the box on a superposition of
+      all inputs at the same time, a single state in which every input is present with
+      some amplitude, and it arranges the interference between those amplitudes so that a
       constant function and a balanced function produce perfectly distinguishable
       outcomes.
 
-      Nobody has ever needed to solve this problem, and that was never the point. The point
-      was existence: here is a task where quantum computation provably beats classical
-      computation. Others walked through the door it opened.
+      Nobody has ever needed to solve this problem, and that was never the point. The
+      point was existence, as here is a task where quantum computation provably beats
+      classical computation, and others walked through the door it opened.
     in_csd: >
-      This is one of the corpus's algorithm witnesses, and the corpus is precise about what
-      such witnesses are for. They are scope evidence, not foundations. The algorithms
-      presuppose the unitary-evolution pillar rather than support it, and their theorems
-      concern circuit semantics and query counts, not where quantum mechanics comes from.
+      This is one of the corpus's algorithm witnesses, and the corpus is precise about
+      what such witnesses are for. They're scope evidence and not foundations, as the
+      algorithms presuppose the unitary-evolution pillar rather than support it, and their
+      theorems concern circuit semantics and query counts and not where quantum mechanics
+      comes from.
 
-      What they demonstrate is that the formalised machinery is the real thing: strong
+      What they demonstrate is that the formalised machinery is the real thing, strong
       enough to express and verify genuine algorithms with their amplitude bookkeeping
-      intact, not a fragment tuned to make the foundational theorems pass. A
-      reconstruction of quantum mechanics that could not run a quantum algorithm would
+      intact, and not a fragment tuned to make the foundational theorems pass. A
+      reconstruction of quantum mechanics that couldn't run a quantum algorithm would
       invite a fair question.
     mathematical: >
       One oracle query decides constant-versus-balanced with certainty, whereas exact
       classical algorithms need 2^(n-1)+1 queries in the worst case for an n-bit input.
 
       The honest footnote is that if the classical side is allowed a tiny error
-      probability, a handful of random queries suffice: the exponential separation is
+      probability, a handful of random queries suffice, so the exponential separation is
       against exact classical computation. The problem was built to exhibit a separation,
-      and does exactly that much.
+      and it does exactly that much.
     person: >
       David Deutsch, born in Haifa in 1953, studied at Cambridge and Oxford and has
       remained at Oxford's Clarendon Laboratory in a famously unusual arrangement, largely
       unsalaried, without teaching duties, working from home. The universal quantum
-      computer is his 1985 construction; this algorithm came in 1992 with Richard Jozsa,
-      later of Bristol and Cambridge.
+      computer is his 1985 construction, and this algorithm came in 1992 with Richard
+      Jozsa, later of Bristol and Cambridge.
 
-      Deutsch is also the most committed Everettian alive, and has argued in print that
-      quantum computation is evidence for many worlds: where else, he asks, would the
-      computation happen? Most of the field declines the inference, and this programme,
-      being single-trajectory, rejects it outright. The algorithm works either way, which
-      is rather the point against the argument.
+      Deutsch is also the most committed Everettian alive, and he has argued in print that
+      quantum computation is evidence for many worlds, asking where else the computation
+      would happen. Most of the field declines the inference, and this programme, being
+      single-trajectory, rejects it outright. The algorithm works either way, which is
+      rather the point against the argument.
     term: Deutsch-Jozsa algorithm
     eponyms: [Deutsch]
     status: standard-mathematics
@@ -2091,42 +2096,42 @@ entries:
   - slug: dirichlet-distribution
     hook: >
       Being fairly ignorant about proportions that must add up to one has a precise
-      mathematical form, and by a small miracle it is exactly the form that quantum state
+      mathematical form, and by a small miracle it's exactly the form that quantum state
       space flattens into.
     layman: >
       Suppose you want to pick a random set of proportions, say the way a unit of
-      probability splits across several possible outcomes. You cannot pick each share
-      independently, because the shares are chained together: they must total one. Pick
-      the first freely and the others feel it.
+      probability splits across several possible outcomes. You can't pick each share
+      independently, because the shares are chained together and must total one, so if you
+      pick the first freely the others feel it.
 
       The Dirichlet family is the standard machinery for randomness under exactly that
-      constraint, and its flat member is the fair one: every legal way of dividing the
-      whole is weighted equally. It is what a statistician writes down to express complete
+      constraint, and its flat member is the fair one, as every legal way of dividing the
+      whole is weighted equally. It's what a statistician writes down to express complete
       ignorance about a set of proportions, a starting assumption declared openly before
       any data arrive.
 
       Usually, then, it enters an analysis as a modelling choice. What earns it a page
-      here is that it enters CSD's story in a completely different way: as a computed
-      consequence, not a choice.
+      here is that it enters CSD's story in a completely different way, as a computed
+      consequence and not a choice.
     in_csd: >
       Take a quantum state and compress it down to its outcome probabilities for a given
-      measurement, forgetting the phases. Then ask what the natural volume on the space of
-      states looks like after the compression. The answer, by the Duistermaat-Heckman
-      theorem, a result about how symmetric curved spaces project onto flat ones, is the
-      flat Dirichlet distribution, exactly. The curved geometry of state space projects to
-      perfect fairness on the set of all possible proportions.
+      measurement, forgetting the phases, and then ask what the natural volume on the
+      space of states looks like after the compression. The answer, by the Duistermaat-
+      Heckman theorem, a result about how symmetric curved spaces project onto flat ones,
+      is the flat Dirichlet distribution exactly, so the curved geometry of state space
+      projects to perfect fairness on the set of all possible proportions.
 
-      This is the workhorse behind the Born result for systems with any number of levels:
-      it converts curved volume ratios into elementary volumes of flat regions. It also
-      carries a small philosophical sting. The distribution that statisticians must
-      assume, the geometry here derives. Nobody chose fairness; it fell out of symmetry.
+      This is the workhorse behind the Born result for systems with any number of levels,
+      as it converts curved volume ratios into elementary volumes of flat regions. It also
+      carries a small philosophical sting. The distribution statisticians must assume, the
+      geometry here derives, and nobody chose fairness as it fell out of symmetry.
     mathematical: >
       The Dirichlet family lives on the probability simplex, indexed by positive
-      concentration parameters; setting all parameters equal to one gives flat Lebesgue
-      measure on the simplex.
+      concentration parameters, and setting all parameters equal to one gives flat
+      Lebesgue measure on the simplex.
 
       The theorem is that the pushforward of the Fubini-Study measure on CP^(N-1) along
-      the (normalised) moment map is this flat member, at general N. It is a computed
+      the (normalised) moment map is this flat member, at general N. It's a computed
       identity, with the M-factorial normalisation explicit.
     person: >
       Peter Gustav Lejeune Dirichlet (1805-1859) was born at Duren, between Aachen and
@@ -2139,7 +2144,7 @@ entries:
       The modern concept of a function, any rule and not necessarily a formula, is
       substantially his, as are the pigeonhole principle and the first rigorous
       convergence proof for Fourier series. The distribution bearing his name arose from
-      an integral he evaluated; the statistics came much later and kept the name.
+      an integral he evaluated, and the statistics came much later and kept the name.
     term: Dirichlet distribution
     eponyms: [Dirichlet]
     status: standard-mathematics
@@ -2150,51 +2155,51 @@ entries:
 
   - slug: elitzur-vaidman
     hook: >
-      You can certify that a bomb is live without a single photon touching it. The absence
-      of an interaction becomes the measurement.
+      You can certify that a bomb is live without a single photon touching it, so the
+      absence of an interaction becomes the measurement.
     layman: >
       The problem, as its inventors stated it, is this. You have a batch of bombs, each
-      with a trigger so sensitive that a single photon sets it off. Some are duds: the
-      trigger is missing and light passes through harmlessly. Find a live bomb. Testing
-      means shining light on it, and shining light on a live one destroys it. Classically
-      the task is hopeless, because any bomb you have verified you have also detonated.
+      with a trigger so sensitive that a single photon sets it off, and some are duds
+      where the trigger is missing and light passes through harmlessly. Your job is to
+      find a live bomb. Testing means shining light on it, and shining light on a live one
+      destroys it, so classically the task is hopeless, because any bomb you've verified
+      you've also detonated.
 
-      Quantum mechanics finds a way through, using an interferometer: a device that splits
-      a single photon so that it travels along two paths at once and then recombines the
-      paths so that they interfere. A dud changes nothing, the paths interfere as usual
-      and a particular dark output port stays dark. A live bomb spoils the interference
-      merely by being capable of absorbing the photon, and it does so even on runs where
-      nothing was absorbed. When the dark port clicks, you hold a certified live bomb that
-      no photon ever touched.
+      Quantum mechanics finds a way through, using an interferometer, a device that splits
+      a single photon so it travels along two paths at once and then recombines the paths
+      so they interfere. A dud changes nothing, so the paths interfere as usual and a
+      particular dark output port stays dark. A live bomb spoils the interference merely
+      by being capable of absorbing the photon, and it does so even on runs where nothing
+      was absorbed, so when the dark port clicks you hold a certified live bomb that no
+      photon ever touched.
 
-      The basic scheme certifies a quarter of the live bombs and sacrifices half. Cleverer
-      versions push the efficiency as close to perfect as you like.
+      The basic scheme certifies a quarter of the live bombs and sacrifices half, and
+      cleverer versions push the efficiency as close to perfect as you like.
     in_csd: >
-      This is one of the corpus's empirical twins, and among the sharpest tests an account
-      of quantum mechanics can face, because it forces a definite statement about the path
-      not taken. A story in which the photon simply went one way must explain how an
-      object sitting in the other, untravelled arm changed the outcome. A story in which
-      nothing was definite must explain what the final record is a record of.
+      This is one of the corpus's empirical twins, and it's among the sharpest tests an
+      account of quantum mechanics can face, because it forces a definite statement about
+      the path not taken. A story in which the photon simply went one way must explain how
+      an object sitting in the other, untravelled arm changed the outcome, and a story in
+      which nothing was definite must explain what the final record is a record of.
 
       CSD routes its answer through the epistemic regions rather than through a story
       about paths. In CSD each measurement outcome corresponds to a region of the space of
-      states, and the record is read against those regions. The presence of the absorber
-      reshapes the region structure that the record is read against, and the volume
+      states, and the record is read against those regions, so the presence of the
+      absorber reshapes the region structure the record is read against and the volume
       bookkeeping does the rest. The point of carrying the case explicitly is that
-      reproducing this experiment is a genuine constraint, not a formality.
+      reproducing this experiment is a genuine constraint and not a formality.
     mathematical: >
       An interferometer in which an absorbing object in one arm destroys the interference,
-      so that a detection at the normally dark port certifies the object's presence
-      without absorption. The base efficiency is one quarter certified and one half
-      destroyed.
+      so a detection at the normally dark port certifies the object's presence without
+      absorption. The base efficiency is one quarter certified and one half destroyed.
 
       Kwiat-style iterated variants exploit the quantum Zeno effect to drive the certified
       fraction arbitrarily close to one.
     person: >
       Avshalom Elitzur and Lev Vaidman published the bomb tester in Foundations of Physics
-      in 1993. Vaidman, of Tel Aviv University, is a career foundations physicist, the
-      co-inventor of weak measurements with Aharonov and Albert, and a cheerful, combative
-      Everettian. Elitzur is the wilder card: he had no doctorate at the time, worked
+      in 1993. Vaidman, of Tel Aviv University, is a career foundations physicist, the co-
+      inventor of weak measurements with Aharonov and Albert, and a cheerful, combative
+      Everettian. Elitzur is the wilder card, as he had no doctorate at the time, worked
       outside the standard track, and was later associated with Bar-Ilan and a private
       institute, with interests running to time and thermodynamics.
 
@@ -2214,53 +2219,54 @@ entries:
       Ordinary geometry, extended to complex numbers, is the stage on which every finite
       quantum system in the corpus stands.
     layman: >
-      Quantum mechanics needs geometry: lengths, angles and the whole toolkit. But its
-      amplitudes, the numbers that describe a state, are complex numbers, and naive
-      geometry over complex numbers gives complex lengths, which mean nothing. The problem
-      is small but real.
+      Quantum mechanics needs geometry, meaning lengths, angles and the whole toolkit. But
+      its amplitudes, the numbers that describe a state, are complex numbers, and naive
+      geometry over complex numbers gives complex lengths, which mean nothing, so the
+      problem is small but real.
 
       The fix is the complex inner product, a rule for pairing two vectors to produce a
-      single number. It is arranged so that any vector paired with itself yields a real,
+      single number. It's arranged so that any vector paired with itself yields a real,
       positive quantity, its squared length, while two different vectors can pair to
-      something complex. That leftover complex phase is not a defect. It is where
+      something complex. That leftover complex phase isn't a defect, as it's where
       interference lives, the single structural feature that separates quantum
       superposition from classical mixing.
 
       Finite-dimensional complex Euclidean space is just this, in any finite number of
-      dimensions. Nothing about it is exotic; the exotic things are built on top of it.
+      dimensions. Nothing about it is exotic, and the exotic things are built on top of
+      it.
     in_csd: >
-      This is the base camp, not a claim. State vectors live in finite-dimensional complex
-      Euclidean space, and operators are matrices on it. The objects that carry content
-      are built overhead: the projective space of rays, in which two vectors differing
-      only by an overall phase count as one state because they are physically identical,
-      and the forced measure on that space.
+      This is the base camp and not a claim. State vectors live in finite-dimensional
+      complex Euclidean space, and operators are matrices on it. The objects that carry
+      content are built overhead, the projective space of rays, in which two vectors
+      differing only by an overall phase count as one state because they're physically
+      identical, and the forced measure on that space.
 
-      The finiteness is a decision, not a convenience. The corpus is finite-dimensional
-      everywhere, on purpose. Completeness comes free, the pathologies of infinite
-      dimension never arise, and the price is paid honestly in one place: the exact
-      canonical commutation relation is impossible, with the failure located and
+      The finiteness is a decision and not a convenience, as the corpus is finite-
+      dimensional everywhere on purpose. Completeness comes free, the pathologies of
+      infinite dimension never arise, and the price is paid honestly in one place, as the
+      exact canonical commutation relation is impossible, with the failure located and
       quantified rather than hidden.
     mathematical: >
       A finite-dimensional complex inner product space, realised as the L2 structure on
       functions from a finite index type, with matrices carrying the induced operator
       norm.
 
-      Completeness is automatic, so Hilbert-space subtleties vanish; the corpus's
+      Completeness is automatic, so Hilbert-space subtleties vanish, and the corpus's
       continuous-variable work approximates infinite dimension at an explicit finite
       cutoff instead of importing it.
     person: >
       Euclid of Alexandria worked around 300 BC under Ptolemy I. Almost nothing personal
-      is known, and the anecdotes, such as the reply that there is no royal road to
-      geometry, are late inventions. The work is another matter. The Elements organised
-      Greek geometry and number theory into definitions, postulates and deductions, and
+      is known, and the anecdotes, such as the reply that there's no royal road to
+      geometry, are late inventions. The work is another matter, as the Elements organised
+      Greek geometry and number theory into definitions, postulates and deductions, and it
       stayed a live textbook for over two thousand years, the longest run any book has had
       in science.
 
       Every formal proof, this corpus's included, is downstream of that template. Its most
       productive failure was the fifth postulate, which resisted derivation for two
-      millennia because it is independent of the others. That discovery gave us
-      non-Euclidean geometry, and eventually the curved spaces on which both relativity
-      and this glossary's state space stand.
+      millennia because it's independent of the others, and that discovery gave us non-
+      Euclidean geometry and eventually the curved spaces on which both relativity and
+      this glossary's state space stand.
     term: Euclidean space
     eponyms: [Euclidean]
     status: standard-mathematics
@@ -2271,53 +2277,54 @@ entries:
 
   - slug: fisher-information
     hook: >
-      There is a floor under every error bar, classical or quantum, and Fisher information
+      There's a floor under every error bar, classical or quantum, and Fisher information
       is what sets it.
     layman: >
-      Suppose you are estimating something, a frequency, a field strength, a phase, from
-      noisy data. Better analysis shrinks your error bar, up to a point. Is there a floor,
-      a best possible precision that no cleverness in processing can beat?
+      Suppose you're estimating something, a frequency, a field strength or a phase, from
+      noisy data. Better analysis shrinks your error bar up to a point, so you can ask
+      whether there's a floor, a best possible precision that no cleverness in processing
+      can beat.
 
       There is, and Fisher information is its name. It measures how sharply the
-      distribution of your data responds when the underlying parameter shifts. Responsive
-      data can pin the parameter down tightly; sluggish data cannot. Turn the information
-      upside down, taking its reciprocal, and you have a hard lower bound on the spread of
-      any unbiased estimate, meaning any estimate that is right on average.
+      distribution of your data responds when the underlying parameter shifts, so
+      responsive data can pin the parameter down tightly and sluggish data can't. Turn the
+      information upside down by taking its reciprocal and you have a hard lower bound on
+      the spread of any unbiased estimate, meaning any estimate that's right on average.
 
       The quantum version adds one more optimisation. Instead of considering only the ways
       of processing the data from a fixed measurement, it ranges over all possible
-      measurements, and so yields the ultimate floor that physics allows for a given probe
+      measurements, so it yields the ultimate floor physics allows for a given probe
       state.
     in_csd: >
       Fisher information lives in the corpus's metrology strand, which the documentation
-      classifies carefully as an adjacent arm, not a step in the reconstruction. It
+      classifies carefully as an adjacent arm and not a step in the reconstruction. It
       consumes the formalised machinery of states, the Born rule and dynamics to state
-      precision bounds and the protocols that meet them. It contributes nothing to
-      deriving quantum mechanics and does not pretend to.
+      precision bounds and the protocols that meet them, and it contributes nothing to
+      deriving quantum mechanics and doesn't pretend to.
 
       The reason to carry it at all is that a formalisation claiming practical reach
       should be able to state the standard quantum limit, the improved Heisenberg scaling
-      that entanglement buys, and the gap between them. The corpus can.
+      that entanglement buys, and the gap between them, and the corpus can.
     mathematical: >
       In the classical setting, Fisher information is the variance of the score of a
       parametrised family, and the Cramer-Rao inequality bounds any unbiased estimator's
       variance below by its inverse.
 
       In the quantum setting, maximising over measurements gives the quantum Fisher
-      information and the Braunstein-Caves bound: the precision floor for a given
-      parametrised family of states, before any choice of apparatus.
+      information and the Braunstein-Caves bound, the precision floor for a given
+      parametrised family of states before any choice of apparatus.
     person: >
       Ronald Fisher (1890-1962) was born in London, read mathematics at Cambridge, and did
       his transformative work not at a university but at Rothamsted Experimental Station
       from 1919, where crop trials posed the problems that produced experimental design,
-      analysis of variance and maximum likelihood. Chairs followed: the Galton Chair at
-      University College London, then Cambridge.
+      analysis of variance and maximum likelihood. Chairs followed, the Galton Chair at
+      University College London and then Cambridge.
 
       The record has a dark seam that the name of his London chair advertises. Fisher was
       a lifelong, institutionally active eugenicist, and his statistics were in
-      significant part built in service of that programme. Late in life he took
-      tobacco-industry consulting money while publicly disputing the link between smoking
-      and cancer. Both facts belong in any honest biography, next to the fact that modern
+      significant part built in service of that programme. Late in life he took tobacco-
+      industry consulting money while publicly disputing the link between smoking and
+      cancer. Both facts belong in any honest biography, next to the fact that modern
       statistics is unimaginable without him.
     term: Fisher information
     eponyms: [Fisher]
@@ -2333,41 +2340,41 @@ entries:
       trade-off between energy and disorder.
     layman: >
       Put a system in contact with a large environment at some temperature and wait. It
-      does not fall into its lowest-energy configuration and stay there, because the
-      environment keeps jostling it, lending energy and taking it back. But it does not
+      doesn't fall into its lowest-energy configuration and stay there, because the
+      environment keeps jostling it, lending energy and taking it back, but it doesn't
       wander uniformly over all configurations either, because low energy is still
-      favoured. What, exactly, is the compromise?
+      favoured, so you can ask what exactly the compromise is.
 
-      Gibbs wrote down the answer: weight each configuration by a decaying exponential of
-      its energy, with the temperature setting how fast the weight decays. Hot systems
-      spread out over many configurations, cold systems concentrate near the bottom, and
-      the crossover between the two is quantitative.
+      Gibbs wrote down the answer, which is to weight each configuration by a decaying
+      exponential of its energy, with the temperature setting how fast the weight decays.
+      Hot systems spread out over many configurations, cold systems concentrate near the
+      bottom, and the crossover between the two is quantitative.
 
       What makes the answer canonical rather than merely plausible is a variational
       principle, meaning that the state is singled out as the best solution to an
-      optimisation problem. Among all states with the same average energy, the Gibbs
-      state is the one with the most entropy, the standard measure of disorder or of
-      missing information. Equivalently, it is the one that minimises free energy, the
-      quantity that balances energy against entropy at the given temperature. It is not a
-      good guess. It is the unique solution to an optimisation problem.
+      optimisation problem. Among all states with the same average energy, the Gibbs state
+      is the one with the most entropy, the standard measure of disorder or of missing
+      information, and equivalently it's the one that minimises free energy, the quantity
+      that balances energy against entropy at the given temperature. It isn't a good
+      guess, as it's the unique solution to an optimisation problem.
     in_csd: >
       The thermodynamics strand of the corpus instantiates the Gibbs state on the field
       Hamiltonian, the energy function of the corpus's model of a field, and derives
       temperature and free energy from the variational principle. Deriving rather than
       assuming is the difference between formalising thermodynamics and decorating it.
 
-      It is also where two independently built strands of the corpus meet. The thermal
-      side covers Gibbs states, entropy and Landauer's principle; the field side covers
+      It's also where two independently built strands of the corpus meet. The thermal side
+      covers Gibbs states, entropy and Landauer's principle, and the field side covers
       modes, propagators and light cones. The two were built separately, and what joins
       them is the exact KMS relation at the cutoff, the identity that characterises
       thermal equilibrium by how correlations behave in time, with the Gibbs state as the
       object on which both sides agree. Because the field Hamiltonian is diagonal, meaning
-      that the energy of each configuration is simply read off, everything has closed
-      form: the thermal results are computations, not existence claims.
+      the energy of each configuration is simply read off, everything has closed form, so
+      the thermal results are computations and not existence claims.
     mathematical: >
       The Gibbs state is the density operator proportional to exp(-beta H), normalised by
-      the partition function. It is the unique minimiser of free energy at inverse
-      temperature beta, equivalently the entropy maximiser at fixed mean energy.
+      the partition function. It's the unique minimiser of free energy at inverse
+      temperature beta, and equivalently the entropy maximiser at fixed mean energy.
 
       In the corpus the Hamiltonian is diagonal in the configuration basis, so the state
       is an explicit diagonal matrix with a finite geometric normalisation, the partition
@@ -2375,15 +2382,15 @@ entries:
       limit are exact finite computations.
     person: >
       Josiah Willard Gibbs (1839-1903) spent essentially his whole life in New Haven,
-      Connecticut. Yale gave him America's first engineering doctorate in 1863. After
-      three years in Paris, Berlin and Heidelberg he came home to a Yale professorship
-      that he held unpaid for nine years, living on an inheritance, because the university
-      had no money for him.
+      Connecticut. Yale gave him America's first engineering doctorate in 1863, and after
+      three years in Paris, Berlin and Heidelberg he came home to a Yale professorship he
+      held unpaid for nine years, living on an inheritance, because the university had no
+      money for him.
 
       He published his great work in the Transactions of the Connecticut Academy of Arts
       and Sciences, a journal with a circulation approaching zero. Europe learned of him
       mainly through Maxwell, who read him, championed him, and made a plaster cast of one
-      of Gibbs's thermodynamic surfaces with his own hands; a copy went to Yale. Gibbs
+      of Gibbs's thermodynamic surfaces with his own hands, and a copy went to Yale. Gibbs
       coined the very phrase statistical mechanics in 1902, a year before he died.
     term: Gibbs state
     eponyms: [Gibbs]
@@ -2395,32 +2402,32 @@ entries:
 
   - slug: gisin-theorem
     hook: >
-      Every entangled pure state, however slightly entangled, violates a Bell inequality.
-      There is no quiet zone.
+      Every entangled pure state, however slightly entangled, violates a Bell inequality,
+      so there's no quiet zone.
     layman: >
       Entanglement is the quantum link between two systems that makes their measurement
       results correlated in ways no separate description of each system can capture, and
-      it comes in degrees. That suggests a comfortable picture: perhaps weak entanglement
+      it comes in degrees. That suggests a comfortable picture in which weak entanglement
       is effectively classical, and the famous Bell conflict, in which quantum
       correlations exceed what any local account allows, only sets in past some threshold
-      of strangeness. Below the threshold, ordinary intuitions would survive.
+      of strangeness, so below the threshold ordinary intuitions would survive.
 
       Gisin's theorem deletes the comfortable picture, at least for pure states, the
       states of complete knowledge. Any entanglement at all, however small, produces
-      correlations that no local account can reproduce, for some choice of measurement
-      settings. The conflict has no threshold and no safe margin. Either a pure state is
-      unentangled and boring, or it is entangled and already in conflict with local
+      correlations no local account can reproduce, for some choice of measurement
+      settings, so the conflict has no threshold and no safe margin. Either a pure state
+      is unentangled and boring, or it's entangled and already in conflict with local
       realism.
 
       For mixed states, the states of incomplete knowledge, the story is genuinely more
-      complicated: there are entangled mixed states that violate nothing. The clean
+      complicated, as there are entangled mixed states that violate nothing. The clean
       dichotomy is a pure-state fact.
     in_csd: >
       This matters to the programme because it forbids an economy measure. A substrate
       account might hope to handle weak entanglement classically and reserve its non-local
-      machinery for the strongly entangled regime. That is not allowed. Whatever mechanism
-      produces the correlations has to operate at every degree of entanglement, all the
-      way down to states that are almost unentangled.
+      machinery for the strongly entangled regime, and that isn't allowed, as whatever
+      mechanism produces the correlations has to operate at every degree of entanglement,
+      all the way down to states that are almost unentangled.
 
       The corpus can express statements of this generality because its Bell-test
       machinery, built around the CHSH inequality, treats the singlet, the standard
@@ -2431,7 +2438,7 @@ entries:
       Every pure entangled bipartite state violates the CHSH inequality for some choice of
       settings.
 
-      The result genuinely fails for mixed states: Werner's examples are entangled yet
+      The result genuinely fails for mixed states, as Werner's examples are entangled yet
       admit a local hidden-variable model. Entanglement and Bell non-locality are
       therefore distinct properties there, and conflating them is an error the corpus is
       built to avoid.
@@ -2443,8 +2450,8 @@ entries:
       quantum communication stopped being a tabletop subject.
 
       The theorem is from 1991, a two-page paper. He co-founded idQuantique, which sells
-      quantum cryptography commercially, and has written a small book arguing that physics
-      has been too quick to give up on genuine chance.
+      quantum cryptography commercially, and he has written a small book arguing that
+      physics has been too quick to give up on genuine chance.
     term: Gisin's theorem
     eponyms: [Gisin]
     status: standard-mathematics
@@ -2456,70 +2463,72 @@ entries:
   - slug: grover-algorithm
     hook: >
       Grover's algorithm finds one marked item in an unsorted list in a number of steps
-      proportional to the square root of the list size, and a separate theorem shows that no
-      quantum algorithm can do better.
+      proportional to the square root of the list size, and a separate theorem shows that
+      no quantum algorithm can do better.
     layman: >
       Suppose one marked item is hidden somewhere in a long list with no structure to
-      exploit, no sorting, no index, no pattern. The only way to find it classically is to
-      check items one by one. On average you look at half the list, and in the worst case
-      all of it. It is natural to assume that this is simply what unstructured search costs.
+      exploit, no sorting, no index and no pattern. The only way to find it classically is
+      to check items one by one, so on average you look at half the list and in the worst
+      case all of it, and it's natural to assume that's simply what unstructured search
+      costs.
 
       Grover showed that a quantum computer can do it in a number of steps proportional to
-      the square root of the list size: for a million items, roughly a thousand steps rather
-      than half a million. The machine keeps one number for every item, called its
-      amplitude, and the chance of reading out a given item at the end is the square of its
-      amplitude. At the start all the amplitudes are equal. Each round of the algorithm does
-      two things. First it flips the sign of the marked item's amplitude, which is the only
-      step that uses any knowledge of which item is marked. Then it reflects every amplitude
-      about the average of all of them, so that the one entry that now stands out is pushed
-      further from the crowd.
+      the square root of the list size, so for a million items it takes roughly a thousand
+      steps rather than half a million. The machine keeps one number for every item,
+      called its amplitude, and the chance of reading out a given item at the end is the
+      square of its amplitude. At the start all the amplitudes are equal, and each round
+      of the algorithm does two things. First it flips the sign of the marked item's
+      amplitude, which is the only step that uses any knowledge of which item is marked,
+      and then it reflects every amplitude about the average of all of them, so the one
+      entry that now stands out is pushed further from the crowd.
 
-      Seen geometrically, each round turns the machine's state through a small, fixed angle
-      towards the marked item. After a number of rounds close to the square root of the list
-      size the state is almost pointing at the answer, and a measurement reveals it with
-      high probability. Stop too early and the answer is still unlikely; carry on too long
-      and the rotation overshoots the target, so the probability falls again. The algorithm
-      comes with a timer as well as a result.
+      Seen geometrically, each round turns the machine's state through a small, fixed
+      angle towards the marked item. After a number of rounds close to the square root of
+      the list size the state is almost pointing at the answer, and a measurement reveals
+      it with high probability. If you stop too early the answer is still unlikely, and if
+      you carry on too long the rotation overshoots the target so the probability falls
+      again, which means the algorithm comes with a timer as well as a result.
 
       The unusual part is that the speedup is final. A separate theorem shows that no
       quantum algorithm, however ingenious, can find the item in fewer steps than this, up
-      to a constant factor. It is not merely the best method known; it is the best method
+      to a constant factor, so it isn't merely the best method known but the best method
       possible.
     in_csd: >
-      Grover's algorithm is one of the algorithm witnesses in CSD's machine-checked corpus:
-      a standard quantum algorithm formalised to show that the programme's account of
-      quantum mechanics supports the working machinery of quantum computation. The
-      relationship runs one way, and the corpus says so rather than leaving it implied. The
-      algorithms depend on the programme's unitary pillar, its result establishing that
-      quantum evolution is unitary, meaning reversible and probability-preserving; they take
-      that result as input and give no evidence for it. Their content is the meaning of
-      circuits, with their amplitudes, iteration counts and success probabilities, not
-      foundations.
+      Grover's algorithm is one of the algorithm witnesses in CSD's machine-checked
+      corpus, a standard quantum algorithm formalised to show that the programme's account
+      of quantum mechanics supports the working machinery of quantum computation. The
+      relationship runs one way, and the corpus says so rather than leaving it implied.
+      The algorithms depend on the programme's unitary pillar, its result establishing
+      that quantum evolution is unitary, meaning reversible and probability-preserving,
+      and they take that result as input and give no evidence for it. Their content is the
+      meaning of circuits, with their amplitudes, iteration counts and success
+      probabilities, and not foundations.
 
       What this particular witness demonstrates, beyond the fact that the algorithm can be
       written down, is that the formalisation copes with genuinely quantitative reasoning.
       The bookkeeping of rotation angles and the schedule of how many rounds to run are
-      exactly the details that a fragile formal treatment would get wrong, and this one
-      carries them through.
+      exactly the details a fragile formal treatment would get wrong, and this one carries
+      them through.
     mathematical: >
-      Amplitude amplification finds a marked element among N in order root-N oracle queries,
-      versus order N classically. Optimality is a theorem: the BBBV hybrid argument shows
-      that no quantum algorithm beats order root-N queries for unstructured search.
+      Amplitude amplification finds a marked element among N in order root-N oracle
+      queries, versus order N classically. Optimality is a theorem, as the BBBV hybrid
+      argument shows that no quantum algorithm beats order root-N queries for unstructured
+      search.
 
       The geometry is two-dimensional. The state stays in the plane spanned by the marked
-      and unmarked components, and each double reflection (about the marked component, then
-      about the mean) rotates it by a fixed angle. The query count is therefore a right
+      and unmarked components, and each double reflection (about the marked component,
+      then about the mean) rotates it by a fixed angle, so the query count is a right
       angle divided by that angle, and running past it degrades the success probability.
     person: >
       Lov Grover, born in 1961 in India, studied at IIT Delhi and Stanford and was at Bell
       Labs in New Jersey when he published the algorithm in 1996, in a paper three pages
       long whose title presented it as a database search result rather than a physics one.
 
-      The optimality half of the story is the strange half. The lower bound, due to Bennett,
-      Bernstein, Brassard and Vazirani, was proved shortly before the algorithm existed. The
-      ceiling was known before anyone had built the thing that touches it, one of the rare
-      cases in algorithms where the achievement and the proof that nothing better is
-      possible arrived in the wrong order.
+      The optimality half of the story is the strange half. The lower bound, due to
+      Bennett, Bernstein, Brassard and Vazirani, was proved shortly before the algorithm
+      existed, so the ceiling was known before anyone had built the thing that touches it,
+      one of the rare cases in algorithms where the achievement and the proof that nothing
+      better is possible arrived in the wrong order.
     term: Grover's algorithm
     eponyms: [Grover]
     status: standard-mathematics
