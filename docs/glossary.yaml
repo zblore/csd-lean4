@@ -169,86 +169,88 @@ refs:
 
 entries:
   - slug: fubini-study-measure
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
-      The space of quantum states allows exactly one way of measuring size that respects its
-      symmetry. That unique measure is what turns regions of the space into Born-rule
+      The space of quantum states allows exactly one way of measuring size that respects
+      its symmetry, and that one measure is what turns regions of the space into Born-rule
       probabilities.
     layman: >
-      In quantum mechanics the complete description of a system at one moment is called its
-      state, and the collection of all possible states forms a curved space, rather as every
-      place on Earth is a point on a globe. CSD says that the probability of an outcome is
-      the fraction of that space occupied by the states that lead to it. To make sense of a
-      fraction you need a way of saying how big a region is: a measure, meaning a rule that
-      assigns a size to every region. Choose the rule carelessly and you could make any
-      region as large or as small as you liked, which would amount to writing the answer
-      into the question.
+      In quantum mechanics the complete description of a system at one moment is called
+      its state, and the collection of all possible states forms a curved space, rather as
+      every place on Earth is a point on a globe. CSD says the probability of an outcome
+      is the fraction of that space occupied by the states that lead to it, so you need a
+      way of saying how big a region is before a fraction means anything. That way is
+      called a measure, a rule that assigns a size to every region. If you chose the rule
+      carelessly you could make any region as large or as small as you liked, which would
+      amount to writing the answer into the question.
 
-      What rescues the idea is symmetry. The space of states has a family of rearrangements,
-      the unitary transformations, which are the quantum counterpart of rigid motions. They
-      carry any state to any other state while preserving the overlap between every pair of
-      states, where the overlap is the number that fixes how likely one state is to be found
-      when the other was prepared. A measure is called invariant when these rearrangements
-      leave the size of every region unchanged, so that no direction in the space is
-      secretly favoured. That is the natural sense in which a measure can be fair.
+      Symmetry is what rescues the idea. The space of states has a family of
+      rearrangements, the unitary transformations, which are the quantum counterpart of
+      rigid motions, and they carry any state to any other state while preserving the
+      overlap between every pair of states. The overlap is the number that fixes how
+      likely one state is to be found when the other was prepared. A measure is called
+      invariant when these rearrangements leave the size of every region unchanged, so no
+      direction in the space is secretly favoured, and that's the natural sense in which a
+      measure can be fair.
 
-      The Fubini-Study measure is the fair one, and it is the only one. Once the whole space
-      is given size one, exactly one invariant measure exists on the space of states, and
-      that uniqueness is a theorem rather than a convention. Whatever sizes it reports,
-      nobody chose them; the geometry of the space fixes them on its own.
+      The Fubini-Study measure is the fair one, and it's the only one. Once you give the
+      whole space size one, exactly one invariant measure exists on the space of states,
+      and that uniqueness is a theorem rather than a convention. Nobody chose the sizes it
+      reports, as the geometry of the space fixes them on its own.
     in_csd: >
-      CSD does not assume the Born rule. It calculates the probability of each outcome as a
-      ratio of volumes: the size of the region of states that leads to the outcome, divided
-      by the size of the whole space. A ratio of volumes means nothing until the measure is
-      fixed, and this is the measure. The whole point of the derivation is that the measure
-      is forced by the geometry rather than picked by the theorist.
+      CSD doesn't assume the Born rule. It calculates the probability of each outcome as a
+      ratio of volumes, the size of the region of states that leads to the outcome divided
+      by the size of the whole space, and a ratio of volumes means nothing until the
+      measure is fixed. This is the measure, and the whole point of the derivation is that
+      the geometry forces it rather than the theorist picking it.
 
-      It is forced because any state can be carried to any other by a unitary
-      transformation, so the space of states is as symmetric as a space can be. A space with
-      that much symmetry admits exactly one invariant probability measure, by the same
-      argument that gives a unique fair measure on the surface of a sphere. The measure
-      therefore falls out of the geometry instead of going in as an assumption.
+      The geometry forces it because any state can be carried to any other by a unitary
+      transformation, so the space of states is as symmetric as a space can be. A space
+      with that much symmetry admits exactly one invariant probability measure, by the
+      same argument that gives a unique fair measure on the surface of a sphere, so the
+      measure falls out of the geometry instead of going in as an assumption.
 
       This answers the oldest objection to arguments from typicality, which is that they
-      presuppose the very measure they claim to justify. Here the measure is derived from
-      symmetry, with a uniqueness proof behind it. Helland reaches the same conclusion from
-      the theory of group representations; CSD reaches it from geometry. Two independent
-      routes to the same answer are worth more than either alone.
+      presuppose the very measure they claim to justify. Here the measure comes from
+      symmetry with a uniqueness proof behind it. Helland reaches the same conclusion from
+      the theory of group representations and CSD reaches it from geometry, and two
+      independent routes to the same answer are worth more than either alone.
     mathematical: >
-      CP^(N-1) is the compact homogeneous space U(N)/(U(1) x U(N-1)). The Fubini-Study
-      measure is the unique U(N)-invariant Borel probability measure on it. Equivalently, as
-      standard mathematics, it is the normalised Riemannian volume of the Fubini-Study
-      metric, or the top power of the Kahler form over n factorial. All three readings are
-      corpus theorems identifying the same measure: the top power of the Fubini-Study form
-      is (4 pi)^n times the measure (fsVolume_eq_smul_fubiniStudyMeasure), and the
+      CP^(N-1) is the compact homogeneous space U(N)/(U(1) x U(N-1)), and the Fubini-Study
+      measure is the unique U(N)-invariant Borel probability measure on it. As standard
+      mathematics it's equivalently the normalised Riemannian volume of the Fubini-Study
+      metric, or the top power of the Kahler form over n factorial, and all three readings
+      are corpus theorems identifying the same measure. The top power of the Fubini-Study
+      form is (4 pi)^n times the measure (fsVolume_eq_smul_fubiniStudyMeasure), the
       Riemannian volume of the Fubini-Study metric is that top power over n factorial
       (riemannianVolume_fsMetric), so the measure is the normalised Riemannian volume
       (riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure). The invariance
-      characterisation is the one that carries the weight in the Born derivation; the other
-      two are corpus results rather than background. See the Kahler form entry.
+      characterisation is the one that carries the weight in the Born derivation, and the
+      other two are corpus results rather than background. See the Kahler form entry.
 
       The proof is Haar uniqueness carried downstairs. The unitary group is compact, so it
-      has a unique invariant probability measure; the state space is a quotient of the
-      group; pushing the measure forward along the orbit map carries the uniqueness with it.
-      Proved at general N with no imported axioms.
+      has a unique invariant probability measure, and the state space is a quotient of the
+      group, so pushing the measure forward along the orbit map carries the uniqueness
+      with it. It's proved at general N with no imported axioms.
 
-      The construction takes a reference point, but that is bookkeeping rather than
-      freedom: fubiniStudyMeasure_basepoint_independent shows that every choice gives the
-      same measure, so defaultFubiniStudyMeasure is the measure, not one member of a family.
+      The construction takes a reference point, but that's bookkeeping rather than
+      freedom, as fubiniStudyMeasure_basepoint_independent shows that every choice gives
+      the same measure. So defaultFubiniStudyMeasure is the measure and not one member of
+      a family.
     person: >
       Guido Fubini (1879-1943) was born in Venice and trained at the Scuola Normale
-      Superiore in Pisa. He held chairs at Catania, Genoa and, from 1908, the Politecnico di
-      Torino. Most people meet him through his theorem on exchanging the order of
-      integration; the metric that bears his name came out of his work on projective
-      differential geometry. Italy's racial laws stripped him of his post in 1938. He
+      Superiore in Pisa. He held chairs at Catania, Genoa and, from 1908, the Politecnico
+      di Torino. Most people meet him through his theorem on exchanging the order of
+      integration, and the metric that bears his name came out of his work on projective
+      differential geometry. Italy's racial laws stripped him of his post in 1938, so he
       emigrated the following year and taught at Princeton and NYU until his death.
 
       Eduard Study (1862-1930) was German. He trained at Jena, Strasbourg, Leipzig and
       Munich, and held the chair at Bonn from 1904. He worked on invariant theory and
-      complex geometry, and had a reputation for abrasive independence that kept him at
+      complex geometry, and he had a reputation for abrasive independence that kept him at
       arm's length from the Gottingen establishment. The two men found the metric
-      independently, within about a year of each other, around 1904 to 1905, and neither
-      knew of the other's work. That is why it carries both names.
+      independently, within about a year of each other around 1904 to 1905, and neither
+      knew of the other's work, which is why it carries both names.
     term: Fubini-Study measure
     eponyms: [Fubini, Study]
     status: proved-in-corpus
@@ -269,75 +271,76 @@ entries:
     related: [born-weight, liouville-measure, kahler-form, haar-measure, typicality-volume]
 
   - slug: born-weight
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      Quantum probabilities are not a law of nature in CSD. They are the sizes of regions in
-      the space of states, measured with a ruler that nobody was free to choose.
+      Quantum probabilities aren't a law of nature in CSD, as they're the sizes of regions
+      in the space of states, measured with a ruler nobody was free to choose.
     layman: >
-      Quantum mechanics predicts probabilities rather than certainties: run the same
-      experiment a thousand times and you get stable statistics. The recipe for those
+      Quantum mechanics predicts probabilities rather than certainties, so if you run the
+      same experiment a thousand times you get stable statistics, and the recipe for those
       statistics is the Born rule. Each possible outcome is assigned a quantity called an
       amplitude, and the probability of the outcome is the square of the amplitude's size.
-      The recipe works perfectly, but the textbook never says where it comes from. It is
-      simply laid down as an axiom. Why the square, rather than the fourth power or the
-      plain size? The textbook is silent.
+      The recipe works perfectly, but the textbook never says where it comes from and
+      simply lays it down as an axiom, so you're left wondering why the square rather than
+      the fourth power or the plain size.
 
-      That silence should be troubling. Everywhere else in physics, probabilities come from
-      somewhere: from counting cases, from ignorance of fine detail, from the relative sizes
-      of possibilities. Only in quantum mechanics is probability written in by hand at the
-      ground floor.
+      That silence should be troubling, because everywhere else in physics probabilities
+      come from somewhere, whether from counting cases, from ignorance of fine detail, or
+      from the relative sizes of possibilities. Quantum mechanics is the only place where
+      probability is written in by hand at the ground floor.
 
       CSD's answer is that the recipe is geometry. The space of all quantum states divides
       into regions, one for each possible outcome of a measurement, and the probability of
       an outcome is the fraction of the space that its region occupies. The square in the
-      textbook rule is simply what those fractions turn out to be when the regions are
-      measured with the one measure that the symmetry of the space allows.
+      textbook rule is simply what those fractions turn out to be when you measure the
+      regions with the one measure the symmetry of the space allows.
     in_csd: >
-      This is the programme's central result, the one that everything else supports. The
+      This is the programme's central result, the one everything else supports. The
       outcome regions divide the space of states, the Fubini-Study measure says how large
       each piece is, and the ratio of a region's size to the whole equals the textbook
-      weight exactly: not approximately, and not only in special cases.
+      weight exactly, so there's no approximation and no restriction to special cases.
 
       Three features carry the weight of the claim. The result is proved at every
-      dimension, so it is not an accident of the simplest system. It never uses Gleason's
+      dimension, so it isn't an accident of the simplest system. It never uses Gleason's
       theorem, the standard route to the Born rule, so the corpus holds two genuinely
-      independent derivations rather than one argument in two costumes. And the measure
-      doing the work is forced by symmetry, which is what keeps the reasoning from being
+      independent derivations rather than one argument in two costumes. And symmetry
+      forces the measure doing the work, which is what keeps the reasoning from being
       circular.
 
       Much turns on this. If the result failed, CSD would be a reinterpretation of quantum
-      mechanics. Because it holds, CSD can claim a reconstruction, and that distinction is
-      the whole stake.
+      mechanics, and because it holds CSD can claim a reconstruction, which is the whole
+      stake.
     mathematical: >
-      For a preparation vector psi on CP^(N-1), the Fubini-Study measure of the barycentric
-      outcome region attached to basis vector e_k equals the squared modulus of the inner
-      product of e_k with psi. This is proved coordinate by coordinate at general N, using
-      neither Gleason nor Busch. It is unconditional in the sense that decides circularity,
-      since nothing about the measure or the weights is assumed, while the headline form
-      carries a genericity hypothesis of no vanishing amplitude. That hypothesis is retired
-      in the companion unconditional forms, where a vanishing amplitude simply gives a cell
-      of measure zero and the identity still holds.
+      For a preparation vector psi on CP^(N-1), the Fubini-Study measure of the
+      barycentric outcome region attached to basis vector e_k equals the squared modulus
+      of the inner product of e_k with psi. The corpus proves this coordinate by
+      coordinate at general N, using neither Gleason nor Busch. It's unconditional in the
+      sense that decides circularity, since nothing about the measure or the weights is
+      assumed, while the headline form carries a genericity hypothesis of no vanishing
+      amplitude. The companion unconditional forms retire that hypothesis, as a vanishing
+      amplitude simply gives a cell of measure zero and the identity still holds.
 
       The route runs through the moment map. Outcome regions pull back to regions of the
-      probability simplex, where the Fubini-Study measure becomes flat by
-      Duistermaat-Heckman, so the curved-space volume ratio collapses to an ordinary
-      Lebesgue computation. A companion apex statement covers the dropped vertex, so all N
-      coordinates of a generic preparation are covered, not just a chart that misses one.
+      probability simplex, where the Fubini-Study measure becomes flat by Duistermaat-
+      Heckman, so the curved-space volume ratio collapses to an ordinary Lebesgue
+      computation. A companion apex statement covers the dropped vertex, so all N
+      coordinates of a generic preparation are covered and not just a chart that misses
+      one.
     person: >
       Max Born (1882-1970) was born in Breslau, now Wroclaw. He studied at Breslau,
-      Heidelberg, Zurich and Gottingen, and returned to the Gottingen chair in 1921. During
-      the 1920s his institute trained or hosted Heisenberg, Pauli, Jordan, Fermi,
+      Heidelberg, Zurich and Gottingen, and returned to the Gottingen chair in 1921.
+      During the 1920s his institute trained or hosted Heisenberg, Pauli, Jordan, Fermi,
       Oppenheimer and Teller, and for a decade it was the centre of the quantum world.
 
       The probability rule has one of the best publication stories in physics. Born's 1926
       paper on collisions stated, in the body of the text, that the probability was the
-      amplitude itself. The correction, that it is the square of the amplitude, went in as a
-      footnote added at proof stage. Few footnotes have carried so much.
+      amplitude itself, and the correction, that it's the square of the amplitude, went in
+      as a footnote added at proof stage. Few footnotes have carried so much.
 
-      Born was dismissed in 1933 under the Nazi civil-service laws. He went to Cambridge and
-      then to the Tait Chair in Edinburgh. The Nobel Prize came in 1954, twenty-eight years
-      after the footnote, and he felt the delay keenly. Olivia Newton-John was his
-      granddaughter.
+      Born was dismissed in 1933 under the Nazi civil-service laws, so he went to
+      Cambridge and then to the Tait Chair in Edinburgh. The Nobel Prize came in 1954,
+      twenty-eight years after the footnote, and he felt the delay keenly. Olivia Newton-
+      John was his granddaughter.
     term: Born rule
     eponyms: [Born]
     status: proved-in-corpus
@@ -347,66 +350,67 @@ entries:
     related: [fubini-study-measure, born-volume-ratio, typicality-volume, outcome-region, is-the-born-rule-derived]
 
   - slug: duistermaat-heckman
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
       Project the curved space of quantum states down to its outcome probabilities and the
-      curvature disappears exactly. That fact is what makes the Born rule computable in
-      every dimension.
+      curvature disappears exactly, which is what makes the Born rule computable in every
+      dimension.
     layman: >
       The space of quantum states is curved, and computing the volume of a region in a
-      curved space is usually hard work, the kind that gets harder quickly as the number of
-      dimensions grows. CSD says that probabilities are volumes of regions in this space, so
+      curved space is usually hard work of the kind that gets harder quickly as the number
+      of dimensions grows. CSD says probabilities are volumes of regions in this space, so
       you might expect every probability calculation to be a small project in differential
       geometry.
 
-      It is not, and the reason is the Duistermaat-Heckman formula. Fix a measurement. Each
-      state then has two kinds of content: a list of probabilities, one for each outcome of
-      the measurement, and a further angle-like piece of information called phase, which
-      affects how states interfere with one another but not the probability of any single
-      outcome. There is a natural way to compress a state down to its list of
-      probabilities, discarding the phases. Under that compression the curved space
-      flattens completely. The volume of a region of states becomes an ordinary flat volume
-      inside a simplex, the shape formed by all lists of probabilities that add up to one.
-      For three outcomes the simplex is a triangle, and the calculation is the kind you
-      could do with school geometry.
+      It isn't, and the reason is the Duistermaat-Heckman formula. Fix a measurement, and
+      each state then has two kinds of content, a list of probabilities with one for each
+      outcome of the measurement, and a further angle-like piece of information called
+      phase, which affects how states interfere with one another but not the probability
+      of any single outcome. There's a natural way to compress a state down to its list of
+      probabilities and discard the phases, and under that compression the curved space
+      flattens completely. The volume of a region of states becomes an ordinary flat
+      volume inside a simplex, the shape formed by all lists of probabilities that add up
+      to one, so for three outcomes the simplex is a triangle and the calculation is the
+      kind you could do with school geometry.
 
       Mathematicians know the general phenomenon as exact stationary phase. The method of
-      stationary phase is normally an approximation, a first guess at an integral; in the
-      presence of enough symmetry it turns out to be exactly right.
+      stationary phase is normally an approximation, a first guess at an integral, and in
+      the presence of enough symmetry it turns out to be exactly right.
     in_csd: >
-      This is the engine that makes the Born result computable rather than merely true. The
-      compression that sends each state to its list of outcome probabilities is called the
-      moment map. Pushing the Fubini-Study measure through the moment map gives a measure
-      on the simplex of probability lists, and that measure is flat: every part of the
+      This is the engine that makes the Born result computable rather than merely true.
+      The compression that sends each state to its list of outcome probabilities is called
+      the moment map, and pushing the Fubini-Study measure through the moment map gives a
+      measure on the simplex of probability lists that is flat, so every part of the
       simplex counts equally. A curved volume ratio in a high-dimensional space becomes a
       flat volume inside a simplex.
 
-      Without this, the Born theorem at general dimension would have been assembled case by
-      painful case, or not at all. With it, the central claim of the programme is a finite
-      computation at every dimension. It is also a pleasing historical accident: a piece of
-      symplectic geometry, the geometry that underlies classical mechanics, developed for
-      entirely unrelated reasons, turned out to be exactly the tool that a question in the
-      foundations of quantum mechanics needed.
+      Without this, the Born theorem at general dimension would have been assembled case
+      by painful case, or not at all, and with it the central claim of the programme is a
+      finite computation at every dimension. It's also a pleasing historical accident, as
+      a piece of symplectic geometry, the geometry that underlies classical mechanics,
+      developed for entirely unrelated reasons, turned out to be exactly the tool a
+      question in the foundations of quantum mechanics needed.
     mathematical: >
-      For a measurable region R of the open free moment simplex, the Fubini-Study measure of
-      its preimage under the normalised moment map equals M factorial times the Lebesgue
-      volume of R. Equivalently, the pushforward of the Fubini-Study measure along the
+      For a measurable region R of the open free moment simplex, the Fubini-Study measure
+      of its preimage under the normalised moment map equals M factorial times the
+      Lebesgue volume of R, so the pushforward of the Fubini-Study measure along the
       moment map is the flat Dirichlet distribution on the simplex.
 
       This is the Duistermaat-Heckman theorem in measure-theoretic clothing. For a
       Hamiltonian torus action the pushforward of Liouville measure is piecewise
-      polynomial; here the polynomial is constant. Proved unconditionally, at general N.
+      polynomial, and here the polynomial is constant. It's proved unconditionally at
+      general N.
     person: >
-      Hans Duistermaat (1942-2010) was born in Den Helder and took his doctorate at Utrecht
-      in 1968. After a chair at Nijmegen he returned to Utrecht in 1975 and became the
-      leading Dutch geometer of his generation. Gerrit Heckman was his student at Leiden
-      and Utrecht, and later a professor at Nijmegen.
+      Hans Duistermaat (1942-2010) was born in Den Helder and took his doctorate at
+      Utrecht in 1968. After a chair at Nijmegen he returned to Utrecht in 1975 and became
+      the leading Dutch geometer of his generation. Gerrit Heckman was his student at
+      Leiden and Utrecht, and later a professor at Nijmegen.
 
-      The formula appeared in Inventiones in 1982, with an addendum the following year that
-      fixed the degenerate cases, a small lesson in how even exact results can be published
-      slightly wrong. Atiyah and Bott recast it almost immediately in the language of
-      equivariant cohomology, which is how most geometers now know it. Duistermaat died
-      suddenly of lymphoma at sixty-seven, still supervising students.
+      The formula appeared in Inventiones in 1982, with an addendum the following year
+      that fixed the degenerate cases, which is a small lesson in how even exact results
+      can be published slightly wrong. Atiyah and Bott recast it almost immediately in the
+      language of equivariant cohomology, which is how most geometers now know it.
+      Duistermaat died suddenly of lymphoma at sixty-seven, still supervising students.
     term: Duistermaat-Heckman formula
     eponyms: [Duistermaat, Heckman]
     status: proved-in-corpus
@@ -416,28 +420,29 @@ entries:
     related: [moment-map, kahler-form, fubini-study-measure, liouville-measure, dirichlet-distribution]
 
   - slug: gleason-theorem
-    reviewed: 2026-09-04
+    reviewed: 2026-09-14
     hook: >
-      The standard route to the Born rule is proved inside the corpus rather than borrowed,
-      and CSD's own derivation never uses it, so the two routes to quantum probability are
+      The corpus proves the standard route to the Born rule rather than borrowing it, and
+      CSD's own derivation never uses it, so the two routes to quantum probability are
       genuinely independent.
     layman: >
-      Gleason's theorem answers a question about where quantum probabilities can come from.
-      Suppose you want to assign probabilities to quantum yes-or-no questions, and you
-      impose one condition only: when several questions are mutually exclusive, so that at
-      most one of them can be answered yes, their probabilities must add up properly. That
-      seems like almost no constraint at all, and you would expect enormous freedom in the
-      assignment.
+      Gleason's theorem answers a question about where quantum probabilities can come
+      from. Suppose you want to assign probabilities to quantum yes-or-no questions and
+      you impose one condition only, that when several questions are mutually exclusive,
+      so at most one of them can be answered yes, their probabilities add up properly.
+      That seems like almost no constraint at all, and you'd expect enormous freedom in
+      the assignment.
 
-      Gleason proved that there is none. Any assignment satisfying that single condition
-      must be the standard quantum recipe. The hypothesis is thin, the conclusion is total,
-      and the proof is famously hard. Busch later strengthened the result to cover unsharp
-      questions, those that can be answered with some fuzziness, and his version holds even
-      for the simplest quantum system, where Gleason's original does not.
+      Gleason proved there is none, as any assignment satisfying that single condition
+      must be the standard quantum recipe. The hypothesis is thin, the conclusion is
+      total, and the proof is famously hard. Busch later strengthened the result to cover
+      unsharp questions, the ones that can be answered with some fuzziness, and his
+      version holds even for the simplest quantum system, where Gleason's original
+      doesn't.
 
-      Because the proof is hard, formalisation projects usually assume the theorem and move
-      on. Assuming it is not free, though. A project that claims to explain where quantum
-      probabilities come from, while quietly assuming the theorem that forces them, has a
+      Formalisation projects usually assume the theorem and move on, because the proof is
+      hard, but assuming it isn't free. A project that claims to explain where quantum
+      probabilities come from while quietly assuming the theorem that forces them has a
       hole in the middle of its explanation. This corpus proves the effect-valued version
       outright, so nothing is borrowed.
     in_csd: >
@@ -445,52 +450,53 @@ entries:
       both matter.
 
       The first is honesty. With the theorem proved, the corpus depends on no imported
-      mathematical result beyond the foundations of the proof assistant itself. When the
-      documentation says axiom-free, it means exactly that, not axiom-free apart from one
-      large borrowed theorem. That is a claim about imported axioms, not about assumptions.
-      CSD's physical postulates, among them the ontic substrate, the sector, the
-      preservation of volume by the flow, and the cell law, are a separate category. They
-      are carried as explicit hypotheses and stated structure rather than as axiom
-      declarations, and they are registered in the programme's list of posits. Axiom-free
-      has never meant assumption-free.
+      mathematical result beyond the foundations of the proof assistant itself, so when
+      the documentation says axiom-free it means exactly that and not axiom-free apart
+      from one large borrowed theorem. That's a claim about imported axioms and not about
+      assumptions. CSD's physical postulates, among them the ontic substrate, the sector,
+      the preservation of volume by the flow and the cell law, are a separate category,
+      carried as explicit hypotheses and stated structure rather than as axiom
+      declarations, and registered in the programme's list of posits. Axiom-free has never
+      meant assumption-free.
 
       The second is independence. CSD's own Born derivation runs through ratios of volumes
-      and never touches this theorem, so the corpus contains two separate roads to the same
-      rule, and they share no machinery. There is a cautionary tale attached. A published
-      abstract once described this theorem as an external input; that was true when it was
-      written and false by the time it was read, because the corpus had proved the theorem
-      in the meantime. That episode is why the glossary's claims are checked automatically
-      against the corpus rather than by good intentions.
+      and never touches this theorem, so the corpus contains two separate roads to the
+      same rule and they share no machinery. There's a cautionary tale attached. A
+      published abstract once described this theorem as an external input, which was true
+      when it was written and false by the time it was read, because the corpus had proved
+      the theorem in the meantime. That episode is why the glossary's claims are checked
+      automatically against the corpus rather than by good intentions.
     mathematical: >
       Every operational package on a finite-dimensional space admits an effect-Gleason
-      representation: the probability assignment on effects is given by a density operator
-      through the trace pairing.
+      representation, so the probability assignment on effects is given by a density
+      operator through the trace pairing.
 
       This is Busch's effect-valued form of the theorem, and the choice matters. The
       original projection-valued Gleason theorem fails in dimension two, where the qubit's
       projections are too sparse to pin down a frame function, while the effect-valued
-      version holds there too. It was proved in-corpus on 2026-07-21, depending only on the
-      foundational triple, and discharged what had been the single imported axiom.
+      version holds there too. The corpus proved it in-corpus on 2026-07-21, depending
+      only on the foundational triple, and that discharged what had been the single
+      imported axiom.
 
       The axiom-free claim concerns imported axioms only. CSD's physical postulates are
-      category 3 in AXIOMS.md section 0; they are carried as hypotheses and structure
-      fields rather than axiom declarations, so they never appear in the output of #print
-      axioms, and they are registered in specs/POSITS.md: the ontic substrate, the sector,
-      Liouville preservation and the cell law.
+      category 3 in AXIOMS.md section 0, carried as hypotheses and structure fields rather
+      than axiom declarations, so they never appear in the output of #print axioms, and
+      they're registered in specs/POSITS.md as the ontic substrate, the sector, Liouville
+      preservation and the cell law.
     person: >
-      Andrew Gleason (1921-2008) was born in Fresno and read mathematics at Yale, then went
-      straight into the Navy as a cryptanalyst working on Japanese ciphers. He never took a
-      PhD. Harvard elected him to its Society of Fellows regardless, and he stayed there for
-      his whole career, a chaired professor without a doctorate, which remained a local
-      curiosity.
+      Andrew Gleason (1921-2008) was born in Fresno and read mathematics at Yale, then
+      went straight into the Navy as a cryptanalyst working on Japanese ciphers. He never
+      took a PhD. Harvard elected him to its Society of Fellows regardless, and he stayed
+      there for his whole career as a chaired professor without a doctorate, which
+      remained a local curiosity.
 
-      The 1957 theorem answered a question posed by George Mackey. Gleason himself rated it
-      a minor piece of work and was prouder of his part in solving Hilbert's fifth problem.
-      Posterity disagrees.
+      The 1957 theorem answered a question posed by George Mackey. Gleason himself rated
+      it a minor piece of work and was prouder of his part in solving Hilbert's fifth
+      problem, and posterity disagrees.
 
-      Paul Busch (1955-2018) was German, took his doctorate at Cologne, and held a chair at
-      York from 2005. His 2003 strengthening of the theorem to effects is the version that
-      survives in dimension two, and the version proved here.
+      Paul Busch (1955-2018) was German, took his doctorate at Cologne, and held a chair
+      at York from 2005. His 2003 strengthening of the theorem to effects is the version
+      that survives in dimension two, and it's the version proved here.
     term: Gleason and Busch theorems
     eponyms: [Gleason, Busch]
     status: proved-in-corpus
@@ -503,43 +509,44 @@ entries:
     related: [born-weight, naimark-dilation, hilbert-space, does-kochen-specker-rule-out-csd, epistemic-measure]
 
   - slug: wigner-rigidity
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      Preserve the overlaps between quantum states and you have no freedom left: the
-      rearrangement must be a unitary or an anti-unitary transformation, whether or not you
+      Preserve the overlaps between quantum states and you have no freedom left, as the
+      rearrangement must be a unitary or an anti-unitary transformation whether or not you
       intended it to be.
     layman: >
-      Any two quantum states have an overlap: a number between zero and one that
-      experiments can measure directly, as the probability of finding one state when the
-      other was prepared. An overlap of one means the two states are the same; an overlap
-      of zero means they can be told apart with certainty. Wigner rigidity is about what
-      happens when you rearrange the space of states while keeping every overlap fixed.
+      Any two quantum states have an overlap, a number between zero and one that
+      experiments can measure directly as the probability of finding one state when the
+      other was prepared. An overlap of one means the two states are the same, and an
+      overlap of zero means they can be told apart with certainty. Wigner rigidity is
+      about what happens when you rearrange the space of states while keeping every
+      overlap fixed.
 
-      Imagine rearranging the entire space of states however you like. No rules about
+      Imagine rearranging the entire space of states however you like, with no rules about
       smoothness, no rules about linearity, and no promise that the rearrangement can be
-      undone. One condition only: every overlap stays the same. You might expect that to
-      leave enormous freedom. It leaves almost none.
+      undone, and one condition only, that every overlap stays the same. You might expect
+      that to leave enormous freedom, and it leaves almost none.
 
       Wigner proved that the only rearrangements passing this test are the rigid motions
-      physics already knew about: the unitary transformations, which are the quantum
+      physics already knew about, the unitary transformations, which are the quantum
       counterpart of rotations, and their mirror images, the anti-unitary transformations,
       which are the mathematics of time reversal. Nothing else exists. The structure of
       quantum state space is so tight that preserving one experimentally meaningful number
       forces everything.
     in_csd: >
       This is the strongest result in the corpus by logical type, rather than by
-      difficulty. Almost everything else described as forced here rests on first assuming a
-      symmetry group and then deriving consequences. This theorem assumes only that
-      overlaps are preserved, and derives the group. That is a different and better kind of
-      claim, and the corpus's own necessity audit singles it out as one of exactly two
-      unconditional necessities in the whole development.
+      difficulty. Almost everything else described as forced here rests on first assuming
+      a symmetry group and then deriving consequences, while this theorem assumes only
+      that overlaps are preserved and derives the group. That's a different and better
+      kind of claim, and the corpus's own necessity audit singles it out as one of exactly
+      two unconditional necessities in the whole development.
 
       What it buys is the licence to treat unitary evolution as compelled rather than
-      chosen. A flow that preserves transition probabilities, which is to say the overlaps,
-      has no option but to act unitarily at each moment. That is half of the Schrodinger
-      pillar, the part of the programme that derives the equation of motion. The other
-      half, that a continuous unitary flow has a generator, is Stone's theorem, and
-      together they make the dynamics an output rather than an input.
+      chosen. A flow that preserves transition probabilities, which is to say the
+      overlaps, has no option but to act unitarily at each moment, and that's half of the
+      Schrodinger pillar, the part of the programme that derives the equation of motion.
+      The other half, that a continuous unitary flow has a generator, is Stone's theorem,
+      and together they make the dynamics an output rather than an input.
 
       It also anchors the record layer, the part of CSD that describes how measurement
       outcomes are recorded. There the preserved quantity is a statistic of records rather
@@ -547,13 +554,13 @@ entries:
       into the same group of transformations.
     mathematical: >
       Every transition-probability-preserving self-map of CP^(N-1) is induced by a unitary
-      or by an antiunitary map. There are no other hypotheses.
+      or by an antiunitary map, and there are no other hypotheses.
 
-      What makes the formalisation honest: linearity is an output of the construction,
-      never an assumption, and bijectivity is likewise derived. The antiunitary branch is
-      genuinely present rather than waved away, which matters because time reversal is
-      antiunitary and a version of the theorem without that branch would exclude a real
-      physical symmetry. Foundational-triple only.
+      What makes the formalisation honest is that linearity is an output of the
+      construction and never an assumption, and bijectivity is likewise derived. The
+      antiunitary branch is genuinely present rather than waved away, which matters
+      because time reversal is antiunitary and a version of the theorem without that
+      branch would exclude a real physical symmetry. Foundational-triple only.
     person: >
       Eugene Wigner (1902-1995) was born in Budapest and trained, of all things, as a
       chemical engineer at the Technische Hochschule in Berlin, a background he credited
@@ -562,11 +569,11 @@ entries:
       from the war years on the Manhattan Project at Chicago and Oak Ridge.
 
       The theorem appeared in his 1931 book on group theory and atomic spectra, with a
-      proof so compressed that filling the gaps became a minor industry for decades;
+      proof so compressed that filling the gaps became a minor industry for decades, and
       genuinely complete proofs are surprisingly recent. The antiunitary branch, which
-      looked like a technical annoyance, turned out to be the mathematics of time reversal,
-      and Wigner himself supplied that application. He shared the 1963 Nobel Prize for his
-      work on symmetry principles in physics.
+      looked like a technical annoyance, turned out to be the mathematics of time
+      reversal, and Wigner himself supplied that application. He shared the 1963 Nobel
+      Prize for his work on symmetry principles in physics.
     term: Wigner rigidity
     eponyms: [Wigner]
     status: proved-in-corpus
@@ -576,64 +583,63 @@ entries:
     related: [stone-theorem, bargmann, schrodinger-from-records, projective-sector, hilbert-space]
 
   - slug: stone-theorem
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     hook: >
       Ask only that time evolution never jumps, and differentiability, a generator and the
       Hamiltonian all follow for free.
     layman: >
       A system evolving in time is described by a family of transformations, one for each
-      duration, which compose the way durations add: evolving for two seconds and then for
-      three is the same as evolving for five. Physics wants to differentiate that family,
-      to speak of the rate at which the state changes, and to call the quantity that
-      generates the change the energy, or Hamiltonian. But differentiating presupposes
-      smoothness, and nobody said the evolution had to be smooth. Assuming it feels
-      harmless. In fact it is most of the conclusion.
+      duration, which compose the way durations add, so evolving for two seconds and then
+      for three is the same as evolving for five. Physics wants to differentiate that
+      family, to speak of the rate at which the state changes, and to call the quantity
+      that generates the change the energy, or Hamiltonian. But differentiating
+      presupposes smoothness, and nobody said the evolution had to be smooth. Assuming it
+      feels harmless, and in fact it's most of the conclusion.
 
-      Stone's theorem says you do not need to assume it. Require only that the evolution be
+      Stone's theorem says you don't need to assume it. Require only that the evolution be
       continuous, meaning that states at nearby times are nearby and nothing jumps, and
-      smoothness follows on its own. So does the generator: a single fixed quantity from
-      which the whole family of transformations can be rebuilt by compounding, much as a
+      smoothness follows on its own. So does the generator, a single fixed quantity from
+      which you can rebuild the whole family of transformations by compounding, much as a
       fixed interest rate generates the growth of a balance over any period. The analogy
-      has one limit: in quantum mechanics the generator turns the state rather than growing
-      it, which is why total probability stays fixed.
+      has one limit, as in quantum mechanics the generator turns the state rather than
+      growing it, which is why total probability stays fixed.
 
-      In other words, the Hamiltonian is not an ingredient added to quantum mechanics by
-      hand. It is extracted from the bare requirement that time evolution does not
-      teleport.
+      So the Hamiltonian isn't an ingredient added to quantum mechanics by hand. It's
+      extracted from the bare requirement that time evolution doesn't teleport.
     in_csd: >
-      The programme needs the generator to be earned, not posited. Posit a Hamiltonian and
-      you have smuggled in the dynamics you claimed to derive, and the reconstruction would
-      be decorative. This theorem is how the smuggling is avoided: from continuity alone
-      comes the generator, and the Schrodinger equation, the equation of motion of quantum
-      mechanics, is a conclusion rather than a starting point.
+      The programme needs the generator to be earned and not posited. If you posit a
+      Hamiltonian you've smuggled in the dynamics you claimed to derive, and the
+      reconstruction would be decorative. This theorem is how the smuggling is avoided, as
+      continuity alone gives the generator, and the Schrodinger equation, the equation of
+      motion of quantum mechanics, is then a conclusion rather than a starting point.
 
-      The full chain has two links. Wigner rigidity says that a flow preserving transition
-      probabilities must act by unitary transformations at each instant. Stone's theorem
-      says that a continuous one-parameter family of unitary transformations is generated
-      by a single fixed operator. Those are the corpus's two unconditional necessities, and
-      the second pillar of the programme, the derivation of the dynamics, stands on exactly
-      them.
+      The full chain has two links. Wigner rigidity says a flow preserving transition
+      probabilities must act by unitary transformations at each instant, and Stone's
+      theorem says a continuous one-parameter family of unitary transformations is
+      generated by a single fixed operator. Those are the corpus's two unconditional
+      necessities, and the second pillar of the programme, the derivation of the dynamics,
+      stands on exactly them.
     mathematical: >
       A strongly continuous one-parameter group of unitary matrices is t maps to exp(tA)
-      for a skew-Hermitian A. The hypothesis is continuity only. The C-one version proved
-      first carried a differentiability assumption; the strengthening that removes it is
-      the part with content, since assuming differentiability is uncomfortably close to
-      assuming the answer.
+      for a skew-Hermitian A, and the hypothesis is continuity only. The C-one version
+      proved first carried a differentiability assumption, so the strengthening that
+      removes it is the part with content, since assuming differentiability is
+      uncomfortably close to assuming the answer.
 
-      One library note worth knowing: Mathlib carries no Stone theorem at this pin. The
-      names beginning with Stone there are Stone-Weierstrass and Stone duality. The
+      One library note is worth knowing. Mathlib carries no Stone theorem at this pin, as
+      the names beginning with Stone there are Stone-Weierstrass and Stone duality, so the
       finite-dimensional case is supplied here.
     person: >
-      Marshall Stone (1903-1989) was born in New York, the son of a future Chief Justice of
-      the United States, and took his doctorate at Harvard under George Birkhoff. The
+      Marshall Stone (1903-1989) was born in New York, the son of a future Chief Justice
+      of the United States, and took his doctorate at Harvard under George Birkhoff. The
       theorem on one-parameter unitary groups dates from 1932, the same era as his duality
       and approximation theorems.
 
       His second act was administrative and just as consequential. He moved to the
       University of Chicago in 1946 and rebuilt a fading department into arguably the
-      world's best in about five years, hiring Weil, Chern, Zygmund and Mac Lane in a spree
-      still called the Stone Age. It is one of the few cases in which a first-rank
-      mathematician was also a first-rank chairman.
+      world's best in about five years, hiring Weil, Chern, Zygmund and Mac Lane in a
+      spree still called the Stone Age. He's one of the few first-rank mathematicians who
+      was also a first-rank chairman.
     term: Stone's theorem
     eponyms: [Stone]
     status: proved-in-corpus
@@ -643,74 +649,75 @@ entries:
     related: [wigner-rigidity, schrodinger-equation, schrodinger-from-records, hermitian-operator, bargmann]
 
   - slug: bell-chsh
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
       No pre-written answer sheet for all four measurement settings can match what a
       singlet pair of particles does, and the corpus proves this as a theorem about every
       possible answer sheet.
     layman: >
-      Prepare two particles together in a particular joint state called a singlet, separate
-      them, and measure each one with a choice of two settings. Common sense says that
+      Prepare two particles together in a particular joint state called a singlet,
+      separate them, and measure each one with a choice of two settings. Common sense says
       every measurement you might make already has an answer waiting, fixed when the pair
       was created and merely revealed by the apparatus. Bell's insight was that this
-      innocent-sounding assumption has teeth: it forces a numerical limit on how strongly
-      the results on the two sides can be correlated.
+      innocent-sounding assumption has teeth, as it forces a numerical limit on how
+      strongly the results on the two sides can be correlated.
 
-      Quantum mechanics predicts correlations above that limit. So common sense and quantum
-      mechanics disagree about an experiment, and the experiment can be run. It has been
-      run for five decades, with every loophole closed in turn. The correlations are there,
-      and the answer sheet is not.
+      Quantum mechanics predicts correlations above that limit, so common sense and
+      quantum mechanics disagree about an experiment, and the experiment can be run. It
+      has been run for five decades with every loophole closed in turn, and the
+      correlations are there while the answer sheet isn't.
 
       What the corpus proves is the sharp version of this. Take one shared space of hidden
-      states, the imagined complete description of the pair. No assignment of answers to
-      all four settings at once, however contrived, reproduces the singlet's statistics.
+      states, the imagined complete description of the pair, and no assignment of answers
+      to all four settings at once, however contrived, reproduces the singlet's
+      statistics.
     in_csd: >
       CSD is contextual and non-local at the level of its substrate, by design. Contextual
-      means that what a measurement reveals can depend on which other measurements are made
-      alongside it; non-local means that the hidden description of the pair does not split
-      into a separate part for each particle. That commitment creates a debt. The programme
-      must show that its own model cannot be secretly rewritten as the common-sense
-      picture, or it would be claiming a virtue it had not earned. This theorem pays the
-      debt.
+      means what a measurement reveals can depend on which other measurements are made
+      alongside it, and non-local means the hidden description of the pair doesn't split
+      into a separate part for each particle. That commitment creates a debt, as the
+      programme must show that its own model can't be secretly rewritten as the common-
+      sense picture, or it would be claiming a virtue it hadn't earned. This theorem pays
+      the debt.
 
       The result comes paired. The corpus also exhibits an explicit contextual model that
-      does reproduce the singlet's correlations, so the claim is two-sided: here is the
-      impossibility, and here is the thing that evades it. Obstruction and existence are
-      cited together as one unit.
+      does reproduce the singlet's correlations, so the claim is two-sided, with the
+      impossibility on one hand and the thing that evades it on the other, and the
+      obstruction and the existence are cited together as one unit.
 
-      There is a lesson in how the theorem came to be stated. For a long time the formal
-      model gave each measurement setting its own separate space of hidden states, and the
-      Bell question could not even be asked: there was nothing against which to compare a
-      single global assignment of answers. A distinction in the bookkeeping stood where a
-      theorem should have been. Rebuilding the model on one shared space made the question
-      expressible, and the answer turned out to be the theorem above.
+      There's a lesson in how the theorem came to be stated. For a long time the formal
+      model gave each measurement setting its own separate space of hidden states, so the
+      Bell question couldn't even be asked, as there was nothing against which to compare
+      a single global assignment of answers. A distinction in the bookkeeping stood where
+      a theorem should have been. Rebuilding the model on one shared space made the
+      question expressible, and the answer turned out to be the theorem above.
     mathematical: >
       Over a single shared measurable state space, no jointly defined assignment of
       outcomes to the four CHSH settings reproduces the singlet correlations. Companion
-      results rule out a different class rather than restating this one: no setting-local
-      (product) pair of response functions reproduces the singlet at every setting pair,
-      over any shared probability space. Neither result subsumes the other, and the corpus
-      says so. The GHZ analogue for three parties is proved separately.
+      results rule out a different class rather than restating this one, as no setting-
+      local (product) pair of response functions reproduces the singlet at every setting
+      pair over any shared probability space. Neither result subsumes the other, and the
+      corpus says so. The GHZ analogue for three parties is proved separately.
 
-      The shared-space form is the load-bearing one, since it is the shape the
+      The shared-space form is the load-bearing one, since it's the shape the
       contextuality claim actually posits. The corpus pairs the obstruction with an
       explicit contextual model reproducing the same correlations, so the negative and
       positive halves are proved together rather than the no-go standing alone.
     person: >
       John Stewart Bell (1928-1990) was born in Belfast to a working-class family and left
       school at sixteen. He got into physics by working as a laboratory technician at
-      Queen's University, where the staff noticed him and pushed him into a degree. He took
-      his doctorate at Birmingham and spent his career at CERN designing accelerators.
-      Foundations, he insisted, was a hobby for sabbaticals.
+      Queen's University, where the staff noticed him and pushed him into a degree. He
+      took his doctorate at Birmingham and spent his career at CERN designing
+      accelerators, and he insisted foundations was a hobby for sabbaticals.
 
-      It was some hobby. The 1964 paper was written while he was visiting Stanford and
-      appeared in Physics 1, a journal so obscure that it paid authors instead of charging
-      them, and which died after a few issues. The paper showed that the hidden-variables
-      question, which physicists had filed under philosophy for thirty years, was
-      experimentally decidable. Clauser, Horne, Shimony and Holt made it testable in 1969.
+      It was some hobby. He wrote the 1964 paper while visiting Stanford, and it appeared
+      in Physics 1, a journal so obscure that it paid authors instead of charging them and
+      which died after a few issues. The paper showed that the hidden-variables question,
+      which physicists had filed under philosophy for thirty years, was experimentally
+      decidable, and Clauser, Horne, Shimony and Holt made it testable in 1969.
 
-      Bell died of a stroke in 1990, the year he was nominated for the Nobel Prize. The
-      2022 prize went to the experimenters who confirmed him.
+      Bell died of a stroke in 1990, the year he was nominated for the Nobel Prize, and
+      the 2022 prize went to the experimenters who confirmed him.
     term: Bell and CHSH
     eponyms: [Bell]
     status: proved-in-corpus
@@ -723,58 +730,59 @@ entries:
     related: [tsirelson-bound, contextuality, singlet-contextual-model, hidden-variables, does-csd-violate-bell]
 
   - slug: ghz-state
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      Three particles can contradict local realism with certainty in a single run: no
+      Three particles can contradict local realism with certainty in a single run, with no
       statistics, no inequality and no margin of error.
     layman: >
-      Bell's argument has one feature that a determined sceptic can pick at: it is
+      Bell's argument has one feature a determined sceptic can pick at, which is that it's
       statistical. No single run of a Bell experiment is impossible on the common-sense
-      picture, in which every measurement has an answer fixed in advance; the runs are only
-      collectively improbable. You need thousands of runs and error bars, and someone can
-      always mutter about statistics.
+      picture, in which every measurement has an answer fixed in advance, as the runs are
+      only collectively improbable. You need thousands of runs and error bars, and someone
+      can always mutter about statistics.
 
       Greenberger, Horne and Zeilinger found a way to remove the error bars. With three
-      particles instead of two, prepared together in what is now called a GHZ state, there
-      is a set of measurements for which the common-sense picture predicts one definite
-      answer and quantum mechanics predicts the opposite definite answer. Not different
-      averages; opposite certainties.
+      particles instead of two, prepared together in what's now called a GHZ state,
+      there's a set of measurements for which the common-sense picture predicts one
+      definite answer and quantum mechanics predicts the opposite definite answer, so the
+      two predictions aren't different averages but opposite certainties.
 
-      One run settles the matter, in principle. The conflict stops being about probability
-      and becomes arithmetic. Each measurement gives plus one or minus one. Multiply out
-      the answers that the common-sense picture demands and the product must be plus one;
-      quantum mechanics says minus one. Something has to give, and experiment says it is
-      the answer sheet.
+      One run settles the matter, in principle, and the conflict stops being about
+      probability and becomes arithmetic. Each measurement gives plus one or minus one,
+      and if you multiply out the answers the common-sense picture demands the product
+      must be plus one, while quantum mechanics says minus one. Something has to give, and
+      experiment says it's the answer sheet.
     in_csd: >
       The corpus carries the three-party obstruction alongside the two-party one for a
-      specific defensive reason: the two have different logical shapes, and an account
-      built on an underlying substrate has to survive both. One could imagine a mechanism
-      that reproduces the statistical Bell violations through some averaging trick but
-      fails on a deterministic contradiction. Carrying the GHZ result closes that escape.
+      specific defensive reason, which is that the two have different logical shapes and
+      an account built on an underlying substrate has to survive both. You could imagine a
+      mechanism that reproduces the statistical Bell violations through some averaging
+      trick but fails on a deterministic contradiction, and carrying the GHZ result closes
+      that escape.
 
-      The proof quantifies over arbitrary spaces of hidden states rather than examining one
-      model. That is what makes it a constraint on the whole class of accounts in which the
-      hidden description splits into a separate part for each particle, including naive
-      rewrites of this programme, which is the point.
+      The proof quantifies over arbitrary spaces of hidden states rather than examining
+      one model, which is what makes it a constraint on the whole class of accounts in
+      which the hidden description splits into a separate part for each particle,
+      including naive rewrites of this programme, and that's the point.
     mathematical: >
-      No product partition of a shared hidden-state space reproduces the GHZ correlations.
-      Proved over an arbitrary measurable state space.
+      No product partition of a shared hidden-state space reproduces the GHZ correlations,
+      proved over an arbitrary measurable state space.
 
-      The contradiction is algebraic. The four predicted outcome-sign products cannot be
-      consistently assigned: multiplying the local predictions forces plus one where the
-      quantum state forces minus one. No inequality is involved and no bound is
-      approached; the two predictions simply differ, which is why a single ideal run
+      The contradiction is algebraic. The four predicted outcome-sign products can't be
+      consistently assigned, as multiplying the local predictions forces plus one where
+      the quantum state forces minus one. No inequality is involved and no bound is
+      approached, so the two predictions simply differ, which is why a single ideal run
       distinguishes them.
     person: >
       Daniel Greenberger of City College New York, Michael Horne (1943-2019) of Stonehill
-      College, and Anton Zeilinger of Vienna and Innsbruck introduced the argument in 1989.
-      Horne, as Shimony's graduate student at Boston University, had already co-authored
-      the CHSH inequality.
+      College, and Anton Zeilinger of Vienna and Innsbruck introduced the argument in
+      1989. Horne, as Shimony's graduate student at Boston University, had already co-
+      authored the CHSH inequality.
 
       The publication story is odd. The result appeared in the proceedings of a conference
-      at Erice rather than in a journal, and spread mostly by word of mouth until Mermin
-      wrote it up and made it famous. Zeilinger shared the 2022 Nobel Prize for
-      entanglement experiments; Horne had died three years earlier.
+      at Erice rather than in a journal, and it spread mostly by word of mouth until
+      Mermin wrote it up and made it famous. Zeilinger shared the 2022 Nobel Prize for
+      entanglement experiments, and Horne had died three years earlier.
     term: GHZ state
     eponyms: [GHZ]
     status: proved-in-corpus
@@ -784,61 +792,62 @@ entries:
     related: [bell-chsh, mermin-inequality, contextuality, hidden-variables, no-signalling]
 
   - slug: tsirelson-bound
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      Quantum mechanics breaks the classical limit on correlations and then stops, well
-      short of what logic alone would allow. Why it stops exactly there is a genuinely open
-      question.
+      Quantum mechanics breaks the classical limit on correlations and then stops well
+      short of what logic alone would allow, and why it stops exactly there is a genuinely
+      open question.
     layman: >
-      Quantum mechanics is not as strange as it could be. In the standard Bell test, the
-      results of two separated measurements are combined into a single correlation score.
-      Any theory in which measurements have answers fixed in advance keeps that score at 2
-      or below. Quantum mechanics reaches about 2.83, the famous violation. But sheer logic
-      permits a score of 4, and theories that reach 4 exist on paper, cause no paradoxes,
-      and allow no faster-than-light messages.
+      Quantum mechanics isn't as strange as it could be. In the standard Bell test, the
+      results of two separated measurements are combined into a single correlation score,
+      and any theory in which measurements have answers fixed in advance keeps that score
+      at 2 or below. Quantum mechanics reaches about 2.83, the famous violation, but sheer
+      logic permits a score of 4, and theories that reach 4 exist on paper, cause no
+      paradoxes, and allow no faster-than-light messages.
 
-      So relativity is not what stops quantum mechanics at 2.83. Something else does, and
+      So relativity isn't what stops quantum mechanics at 2.83. Something else does, and
       nobody fully knows what. The ceiling is called the Tsirelson bound, and explaining
-      why nature's ceiling sits exactly there, rather than at the logical maximum, has
+      why nature's ceiling sits exactly there rather than at the logical maximum has
       become a research programme in its own right.
 
-      The honest position is this. We can prove where the quantum ceiling is. We cannot yet
-      say, from first principles that anyone agrees on, why that is the ceiling the world
+      The honest position is that we can prove where the quantum ceiling is, and we can't
+      yet say, from first principles anyone agrees on, why that's the ceiling the world
       chose.
     in_csd: >
-      A reconstruction has to get the ceiling right, not just the violation. Reproducing
-      the Bell violation with the wrong maximum would mean having built a different theory
-      that agrees with quantum mechanics only qualitatively: interesting, but not quantum
-      mechanics. So the corpus proves the bound over the whole family of two-qubit systems,
-      a qubit being the simplest quantum system: every state of a pair of qubits and every
-      choice of measurement directions, not just the singlet at the textbook angles.
+      A reconstruction has to get the ceiling right and not just the violation.
+      Reproducing the Bell violation with the wrong maximum would mean having built a
+      different theory that agrees with quantum mechanics only qualitatively, which would
+      be interesting but wouldn't be quantum mechanics. So the corpus proves the bound
+      over the whole family of two-qubit systems, a qubit being the simplest quantum
+      system, which means every state of a pair of qubits and every choice of measurement
+      directions and not just the singlet at the textbook angles.
 
-      Saturation is proved separately: there really are settings at which the singlet
+      Saturation is proved separately, so there really are settings at which the singlet
       reaches 2.83 exactly. Ceiling and attainment are two theorems rather than one
       observation, and keeping them apart is what lets each be checked on its own.
     mathematical: >
       For every unit two-qubit state and all detector settings, the CHSH combination of
       Pauli correlations satisfies absolute value at most 2 root 2. The route is algebraic
-      but not operator-algebraic: the load-bearing lemma bounds the expression
+      but not operator-algebraic, as the load-bearing lemma bounds the expression
       Re<alpha,beta> - Re<alpha,beta'> + Re<alpha',beta> + Re<alpha',beta'> for any four
-      unit vectors in a complex inner product space, by the parallelogram law and
-      Cauchy-Schwarz, and the quantum bound follows by the standard Tsirelson substitution
-      alpha = (sigma.a tensor I)psi, beta = (I tensor sigma.b)psi.
+      unit vectors in a complex inner product space, by the parallelogram law and Cauchy-
+      Schwarz, and the quantum bound follows by the standard Tsirelson substitution alpha
+      = (sigma.a tensor I)psi, beta = (I tensor sigma.b)psi.
 
-      Be precise about the form, because it is easy to overstate. The operator-form
+      Be precise about the form, because it's easy to overstate. The operator-form
       Loewner-order statement, the inequality about products of anticommuting involutions
-      with no state mentioned, is not what the corpus has. It was the original target and
+      with no state mentioned, isn't what the corpus has. It was the original target and
       is blocked upstream on a missing ordered-module instance for matrices, as the module
       records. The vector form is general in its own right and yields the same expectation
-      bound. Saturation by the singlet is exhibited explicitly and separately.
+      bound, and saturation by the singlet is exhibited explicitly and separately.
     person: >
       Boris Tsirelson (1950-2020) was born in Leningrad and trained there under Ibragimov,
-      mostly in probability: Brownian motion, exotic noises, and what he called black
+      mostly in probability, on Brownian motion, exotic noises and what he called black
       noise. The quantum bound was almost a side project.
 
       It appeared in 1980 in Letters in Mathematical Physics, written from inside the
-      Soviet Union, and sat largely unread in the West for years, because the field that
-      would need it did not yet exist. He emigrated to Israel in 1991 and spent the rest of
+      Soviet Union, and it sat largely unread in the West for years because the field that
+      would need it didn't yet exist. He emigrated to Israel in 1991 and spent the rest of
       his career at Tel Aviv University. In later life he became one of the most careful
       mathematics editors on Wikipedia, which he treated as seriously as journal work.
     term: Tsirelson bound
@@ -850,80 +859,81 @@ entries:
     related: [bell-chsh, cglmp-inequality, mermin-inequality, no-signalling, does-csd-violate-bell]
 
   - slug: landauer-principle
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      Forgetting costs heat, at a rate set by temperature alone. This is the point at which
-      information stops being an abstraction and acquires a physical price.
+      Forgetting costs heat at a rate set by temperature alone, and that's the point at
+      which information stops being an abstraction and acquires a physical price.
     layman: >
       The story starts with a demon. Maxwell imagined a tiny being that sorts fast
       molecules from slow ones, apparently creating a temperature difference for nothing
       and so breaking the second law of thermodynamics, the law that says the disorder of
-      an isolated system never decreases. For a century the demon dodged every exorcism;
-      each proposed fix turned out to have a loophole.
+      an isolated system never decreases. For a century the demon dodged every exorcism,
+      as each proposed fix turned out to have a loophole.
 
-      Landauer found the real answer, and it is about memory. The demon must record what it
-      learns, its memory is finite, and so eventually it must erase. Erasing is the step
-      that cannot be free. Resetting a memory to a blank state compresses many possible
-      configurations into one, and that compression must be paid for in heat released to
-      the surroundings.
+      Landauer found the real answer, and it's about memory. The demon must record what it
+      learns, its memory is finite, and so eventually it must erase, and erasing is the
+      step that can't be free. Resetting a memory to a blank state compresses many
+      possible configurations into one, and that compression must be paid for in heat
+      released to the surroundings.
 
-      The price is universal. It depends on the temperature and on nothing else: not the
-      technology, not the ingenuity of the engineering. Forgetting one bit of information
-      costs, at minimum, a tiny but fixed quantity of heat, and with that payment the
-      demon's books balance exactly.
+      The price is universal. It depends on the temperature and on nothing else, not the
+      technology and not the ingenuity of the engineering. Forgetting one bit of
+      information costs, at minimum, a tiny but fixed quantity of heat, and with that
+      payment the demon's books balance exactly.
     in_csd: >
-      Thermodynamics is not bolted onto this programme; it grows from the same soil as the
-      Born rule. The motion of the substrate preserves volume, so at the finest grain
+      Thermodynamics isn't bolted onto this programme, as it grows from the same soil as
+      the Born rule. The motion of the substrate preserves volume, so at the finest grain
       nothing is ever lost and entropy, the measure of missing information, is conserved.
-      Irreversibility appears only when a record is coarse-grained, that is, when many
+      Irreversibility appears only when a record is coarse-grained, which means many
       detailed configurations are lumped together under one description. This is
-      Boltzmann's picture: reversible microscopic dynamics, with irreversibility living in
-      the description rather than in the dynamics.
+      Boltzmann's picture, with reversible microscopic dynamics and irreversibility living
+      in the description rather than in the dynamics.
 
-      Given that setup, an erasure bound is not an import from another field. It is what
-      the record layer, the part of CSD that describes how outcomes are recorded, owes and
+      Given that setup, an erasure bound isn't an import from another field. It's what the
+      record layer, the part of CSD that describes how outcomes are recorded, owes and
       pays. The corpus derives temperature and free energy first, from a variational
       principle, a rule that singles out a state by making some quantity as small or as
-      large as it can be, and then proves the Landauer bound in those earned terms. It is
+      large as it can be, and then proves the Landauer bound in those earned terms. It's
       the tightest link the development has between information and physical cost.
 
       The bound is also stated on the constraint surface. Take a preparation of a system
       together with a bath, in product form, whose bath component has a Gibbs state as its
-      density operator, and let a volume-preserving flow lifting a unitary act on the pair.
-      The entropy the system loses is then bounded by the heat the bath receives, with the
-      same constant as the matrix-level theorem. Nothing about the flow is posited beyond its
-      lifting the joint unitary, so the thermodynamic cost of erasure is read off the
-      substrate's own dynamics.
+      density operator, and let a volume-preserving flow lifting a unitary act on the
+      pair. The entropy the system loses is then bounded by the heat the bath receives,
+      with the same constant as the matrix-level theorem. Nothing about the flow is
+      posited beyond its lifting the joint unitary, so the thermodynamic cost of erasure
+      is read off the substrate's own dynamics.
     mathematical: >
       The entropy removed from a system is bounded by beta times the heat delivered to the
-      bath. The proof route is this: unitary evolution on an initially product state
-      conserves total entropy; subadditivity bounds the system's entropy drop by the bath's
-      entropy rise; the bath's Clausius inequality converts entropy rise into heat.
+      bath. The proof runs in three steps, as unitary evolution on an initially product
+      state conserves total entropy, subadditivity bounds the system's entropy drop by the
+      bath's entropy rise, and the bath's Clausius inequality converts entropy rise into
+      heat.
 
-      The statement is in the Reeb-Wolf form, which forces the assumptions into the open:
-      the bath starts in a Gibbs state, everything is finite-dimensional, the initial
+      The statement is in the Reeb-Wolf form, which forces the assumptions into the open.
+      The bath starts in a Gibbs state, everything is finite-dimensional, the initial
       system state is positive-definite, and both final marginals are full-rank. The last
-      two are not decoration. They are what the subadditivity step consumes, and that step
-      is proved only at positive-definite marginal scope. Naming them is the point, because
-      several informal derivations of the principle are known to smuggle assumptions at
-      exactly the step this version makes visible.
+      two aren't decoration, as they're what the subadditivity step consumes, and that
+      step is proved only at positive-definite marginal scope. Naming them is the point,
+      because several informal derivations of the principle are known to smuggle
+      assumptions at exactly the step this version makes visible.
 
-      landauer_flow (Thermo/SigmaSecondLaw.lean) is landauer_bound applied to the barycentres
-      of a product preparation flowed by a lift of the joint unitary, with the bath
-      preparation's barycentre equal to the Gibbs state; the full-rank hypotheses of the
-      matrix theorem are inherited, not removed.
+      landauer_flow (Thermo/SigmaSecondLaw.lean) is landauer_bound applied to the
+      barycentres of a product preparation flowed by a lift of the joint unitary, with the
+      bath preparation's barycentre equal to the Gibbs state, and the full-rank hypotheses
+      of the matrix theorem are inherited and not removed.
     person: >
-      Rolf Landauer (1927-1999) was born in Stuttgart; his family fled to New York in 1938
-      after his father's death. He took his degrees at Harvard and joined IBM in 1952,
-      spending his whole career at the Watson Research Center in Yorktown Heights,
-      corporate research at its mid-century best, where a physicist could spend decades on
-      the question of why computing costs energy.
+      Rolf Landauer (1927-1999) was born in Stuttgart, and his family fled to New York in
+      1938 after his father's death. He took his degrees at Harvard and joined IBM in
+      1952, spending his whole career at the Watson Research Center in Yorktown Heights,
+      which was corporate research at its mid-century best, where a physicist could spend
+      decades on the question of why computing costs energy.
 
       The principle appeared in 1961 in the IBM Journal of Research and Development, a
       house journal, under the resolutely unglamorous title of a paper about heat
       generation. His slogan, that information is physical, was a deliberate provocation.
-      His colleague Charles Bennett drew the astonishing corollary a decade later:
-      computation itself can be free, and only forgetting costs. Experimental confirmation
+      His colleague Charles Bennett drew the astonishing corollary a decade later, that
+      computation itself can be free and only forgetting costs. Experimental confirmation
       came in 2012, thirteen years after Landauer died.
     term: Landauer's principle
     eponyms: [Landauer]
@@ -1174,93 +1184,99 @@ entries:
     related: [jarzynski-equality, gibbs-state, landauer-principle, von-neumann-entropy]
 
   - slug: von-neumann-entropy
-    reviewed: 2026-09-13
+    reviewed: 2026-09-14
     hook: >
-      A quantum whole can be perfectly known while its parts are as uncertain as they could
-      possibly be. Entropy is where that stops being a metaphor and becomes arithmetic.
+      A quantum whole can be perfectly known while its parts are as uncertain as they
+      could possibly be, and entropy is where that stops being a metaphor and becomes
+      arithmetic.
     layman: >
-      Entropy measures missing information: how much you would still need to learn to know
-      the state of something completely. For ordinary things it behaves sensibly. Know
-      everything about a machine and you know everything about its parts. Quantum
-      mechanics breaks this sensible behaviour in a specific, quantifiable way.
+      Entropy measures missing information, meaning how much you'd still need to learn to
+      know the state of something completely. For ordinary things it behaves sensibly, so
+      if you know everything about a machine you know everything about its parts, and
+      quantum mechanics breaks this sensible behaviour in a specific, quantifiable way.
 
       Two entangled particles can be in a jointly definite state, with entropy zero and
       nothing left to learn about the pair, while each particle on its own is in the most
-      uncertain state possible, with maximum entropy. The information is not hiding in one
-      particle or the other. It lives in the relationship between them, and no inspection
-      of the parts separately can find it.
+      uncertain state possible, with maximum entropy. The information isn't hiding in one
+      particle or the other, as it lives in the relationship between them, and no
+      inspection of the parts separately can find it.
 
       Von Neumann's entropy is the quantity that makes this precise. The inequalities it
       obeys, which say how the entropy of a whole constrains the entropies of its parts,
-      are the working arithmetic of quantum information. They also turn out to be most of
-      thermodynamics.
+      are the working arithmetic of quantum information, and they also turn out to be most
+      of thermodynamics.
     in_csd: >
       The corpus uses entropy for two different jobs. The first is to measure the
-      irreversibility created when a pure state, one that is completely known, is
-      coarse-grained into a record, so that many detailed configurations are lumped under
-      one outcome. The substrate conserves entropy exactly; the record does not; and the
-      gap between those two statements is where the second law of thermodynamics, and
-      arguably the arrow of time, enters this programme.
+      irreversibility created when a pure state, one that's completely known, is coarse-
+      grained into a record, so that many detailed configurations are lumped under one
+      outcome. The substrate conserves entropy exactly and the record doesn't, and the gap
+      between those two statements is where the second law of thermodynamics, and arguably
+      the arrow of time, enters this programme.
 
       The second job is as load-bearing machinery. Subadditivity, the inequality that says
       the entropy of a whole is at most the sum of the entropies of its parts, is the
-      specific step that turns an entropy statement into the Landauer heat bound; remove it
-      and that derivation does not close. The corpus proves subadditivity under a stated
-      technical condition on the states of the two parts, that each is of full rank, so
-      that no possibility is assigned probability exactly zero. It carries the much harder
-      three-part inequality, strong subadditivity, separately, derived from an explicitly
-      stated data-processing assumption rather than proved from scratch. Both are scope
-      decisions recorded in the corpus's ledger, not something a reader has to discover.
+      specific step that turns an entropy statement into the Landauer heat bound, and if
+      you remove it that derivation doesn't close. The corpus proves subadditivity under a
+      stated technical condition on the states of the two parts, that each is of full
+      rank, so no possibility is assigned probability exactly zero. It carries the much
+      harder three-part inequality, strong subadditivity, separately, derived from an
+      explicitly stated data-processing assumption rather than proved from scratch, and
+      both are scope decisions recorded in the corpus's ledger rather than something a
+      reader has to discover.
 
-      The corpus also assigns an entropy to a preparation on the constraint surface itself,
-      not only to a matrix handed in from outside. A preparation is a probability measure on
-      the surface; its density operator is the average of the rank-one projectors of the rays
-      it occupies, and the entropy of the preparation is the entropy of that operator. Three
-      things are proved about it. It is zero exactly when the preparation sits on a single
-      ray, so purity and zero entropy are the same condition on the surface. Coarse-graining a
-      preparation, mixing several of them with weights, never lowers it, with no side
-      condition on the states involved. And along a volume-preserving flow it is conserved,
-      while the coarse-graining that a measurement performs on the system alone can only raise
-      it: that is the second law read on the surface, produced by the environment being
-      ignored rather than by any loss in the dynamics.
+      The corpus also assigns an entropy to a preparation on the constraint surface
+      itself, and not only to a matrix handed in from outside. A preparation is a
+      probability measure on the surface, its density operator is the average of the rank-
+      one projectors of the rays it occupies, and the entropy of the preparation is the
+      entropy of that operator. Three things are proved about it. It's zero exactly when
+      the preparation sits on a single ray, so purity and zero entropy are the same
+      condition on the surface. Coarse-graining a preparation, meaning mixing several of
+      them with weights, never lowers it, with no side condition on the states involved.
+      And along a volume-preserving flow it's conserved, while the coarse-graining a
+      measurement performs on the system alone can only raise it, which is the second law
+      read on the surface, produced by the environment being ignored rather than by any
+      loss in the dynamics.
     mathematical: >
       For a bipartite density operator, the entropy of the whole is at most the sum of the
-      entropies of the marginals. Proved here at positive-definite marginal scope, which for
-      pure global states means full Schmidt rank. The standard equality condition, that the
-      bound is attained exactly on product states, is stated in the module as the reason
-      the inequality is not vacuous; it is not itself formalised, so do not cite it as
-      proved.
+      entropies of the marginals, proved here at positive-definite marginal scope, which
+      for pure global states means full Schmidt rank. The standard equality condition,
+      that the bound is attained exactly on product states, is stated in the module as the
+      reason the inequality isn't vacuous, and it isn't itself formalised, so don't cite
+      it as proved.
 
       Strong subadditivity, the three-party inequality of Lieb and Ruskai from which most
-      structural results of quantum information follow, is not re-proved from scratch: it
-      is derived from an explicit data-processing hypothesis, and the ledger says so.
+      structural results of quantum information follow, isn't re-proved from scratch, as
+      it's derived from an explicit data-processing hypothesis, and the ledger says so.
 
-      On the surface: preparationDensity is the Gleason witness of a preparation and
-      preparationDensity_eq_barycenter identifies it with the Bochner integral of the outer
-      products of a unit section along the projective law (LF2/PreparationBarycenter.lean);
-      preparationEntropy_eq_zero_iff (LF2/PreparationPurity.lean) says the entropy vanishes
-      exactly when the projective law is a Dirac mass at one ray, through the matrix-level
+      On the surface, preparationDensity is the Gleason witness of a preparation and
+      preparationDensity_eq_barycenter identifies it with the Bochner integral of the
+      outer products of a unit section along the projective law
+      (LF2/PreparationBarycenter.lean), while preparationEntropy_eq_zero_iff
+      (LF2/PreparationPurity.lean) says the entropy vanishes exactly when the projective
+      law is a Dirac mass at one ray, through the matrix-level
       vonNeumannEntropy_eq_zero_iff. Concavity, vonNeumannEntropy_mixture_ge
-      (Mathlib/QuantumInfo/ConcavityFull.lean), holds for arbitrary density matrices: the
-      positive-definite case is Klein's inequality averaged, and the support hypothesis is
-      removed by mixing with the maximally mixed state, whose entropy is explicit, and passing
-      to the closed set of mixing parameters on which the inequality holds. The second law on
-      the surface is vonNeumannEntropy_le_pinching_flow (Thermo/SigmaSecondLaw.lean): the
-      flowed preparation has the same entropy, and the de-isolation channel, which is the
-      pinching of the second-law module, does not lower it.
+      (Mathlib/QuantumInfo/ConcavityFull.lean), holds for arbitrary density matrices, as
+      the positive-definite case is Klein's inequality averaged and the support hypothesis
+      is removed by mixing with the maximally mixed state, whose entropy is explicit, and
+      passing to the closed set of mixing parameters on which the inequality holds. The
+      second law on the surface is vonNeumannEntropy_le_pinching_flow
+      (Thermo/SigmaSecondLaw.lean), which says the flowed preparation has the same entropy
+      and the de-isolation channel, the pinching of the second-law module, doesn't lower
+      it.
     person: >
       John von Neumann (1903-1957) was born Neumann Janos in Budapest, into an ennobled
       banking family. He took a chemistry degree in Zurich and a mathematics doctorate in
       Budapest more or less simultaneously, then moved through Berlin and Hamburg to
       Princeton in 1930 and to the Institute for Advanced Study at its founding. The
-      entropy appears in his 1932 book, the one that gave quantum mechanics its
-      Hilbert-space form, fifteen years before Shannon.
+      entropy appears in his 1932 book, the one that gave quantum mechanics its Hilbert-
+      space form, fifteen years before Shannon.
 
       The naming story is the good part. When Shannon later needed a name for his own
-      uncertainty quantity, von Neumann reportedly told him to call it entropy, for two
-      reasons: the formula already existed in statistical mechanics under that name, and
-      nobody knew what entropy really was, so in a debate Shannon would always have the
-      advantage. Shannon took the advice. The joke has been paying dividends ever since.
+      uncertainty quantity, von Neumann reportedly told him to call it entropy for two
+      reasons, as the formula already existed in statistical mechanics under that name,
+      and nobody knew what entropy really was, so in a debate Shannon would always have
+      the advantage. Shannon took the advice, and the joke has been paying dividends ever
+      since.
     term: von Neumann entropy
     eponyms: [Neumann]
     status: proved-in-corpus
@@ -1270,84 +1286,87 @@ entries:
     related: [entropy-subadditivity, klein-inequality, holevo-bound, landauer-principle, canonical-typicality]
 
   - slug: liouville-measure
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      A deterministic substrate needs a notion of volume that its own motion cannot
-      distort. On CSD's sector that volume is forced, and it is the Born measure.
+      A deterministic substrate needs a notion of volume that its own motion can't
+      distort, and on CSD's sector that volume is forced and it's the Born measure.
     layman: >
-      Any theory with a deterministic underworld needs to say how much of that world is one
-      way rather than another: how big a set of possible states is. And the notion of size
-      had better be one that the motion respects. If flowing forward in time inflated some
-      regions and shrank others, sizes would depend on when you measured them, and
-      probabilities built from them would be meaningless.
+      Any theory with a deterministic underworld needs to say how much of that world is
+      one way rather than another, meaning how big a set of possible states is, and the
+      notion of size had better be one the motion respects. If flowing forward in time
+      inflated some regions and shrank others, sizes would depend on when you measured
+      them, and probabilities built from them would be meaningless.
 
       Classical mechanics solved this long ago. The complete state of a classical system,
       all of its positions and all of its velocities, is a single point in a space called
       phase space, and the laws of motion move that point along a path. Liouville proved
-      that this motion preserves the volume of phase space exactly: a region can be
-      stretched and folded into filigree, but its total volume never changes. A volume with
-      this property is called a Liouville measure.
+      that this motion preserves the volume of phase space exactly, so a region can be
+      stretched and folded into filigree but its total volume never changes, and a volume
+      with this property is called a Liouville measure.
 
       The residual worry is choice. If several motion-respecting volumes existed, a
       theorist could pick whichever delivered the desired answer, and any derivation of
-      probabilities would be quietly rigged. The theorem here closes that gap. On the
-      sector CSD works with, the one whose motion is unitary, there is exactly one option.
+      probabilities would be quietly rigged. The theorem here closes that gap, as on the
+      sector CSD works with, the one whose motion is unitary, there's exactly one option.
     in_csd: >
       This is the hinge that joins the ontic story, about what exists, to the probability
-      story. The substrate carries a volume that its flow preserves; the epistemic side,
+      story. The substrate carries a volume its flow preserves, and the epistemic side,
       which concerns what an observer can know, needs the Fubini-Study measure to turn
-      regions into Born weights. On the unitary-flow sector these are proved to be the same
-      object. The ruler used for probability is the substrate's own volume, not a second,
-      conveniently chosen assumption.
+      regions into Born weights. On the unitary-flow sector these are proved to be the
+      same object, so the ruler used for probability is the substrate's own volume and not
+      a second, conveniently chosen assumption.
 
       That identification is the programme's reply to the oldest objection against
-      reasoning from typicality, pressed from Boltzmann's day to Valentini's: that the
-      measure is smuggled in. Here it is forced, and the forcing is a theorem with a
+      reasoning from typicality, pressed from Boltzmann's day to Valentini's, that the
+      measure is smuggled in. Here it's forced, and the forcing is a theorem with a
       uniqueness proof behind it.
 
       The scope should be stated plainly. That the flow preserves volume is one of CSD's
       stated postulates about the substrate, carried as an explicit assumption rather than
       derived for constraint dynamics in general. For every flow generated by a smooth
-      energy function on the space of states, Liouville's theorem is proved in the corpus at
-      the level of the manifold itself, so the postulate is a theorem for all such flows;
-      what keeps it a postulate is that the measurement steps of the constraint dynamics are
-      not of that kind globally. What the corpus proves about the measure is conditional: if
-      the sector is this one, then its volume is forced and coincides with the geometric
-      volume of the space of states. The theorem is about the sector, not a derivation of it.
+      energy function on the space of states, Liouville's theorem is proved in the corpus
+      at the level of the manifold itself, so the postulate is a theorem for all such
+      flows, and what keeps it a postulate is that the measurement steps of the constraint
+      dynamics aren't of that kind globally. What the corpus proves about the measure is
+      conditional, so if the sector is this one then its volume is forced and coincides
+      with the geometric volume of the space of states. The theorem is about the sector
+      and not a derivation of it.
     mathematical: >
       For the unitary-flow sector, the Liouville measure equals the Fubini-Study measure,
-      and it is the forced Kahler volume, determined by the state space and its unitary
-      symmetry rather than posited. It is also proved to be the symplectic volume: the
+      and it's the forced Kahler volume, determined by the state space and its unitary
+      symmetry rather than posited. It's also proved to be the symplectic volume, the
       normalised top power of the Fubini-Study form
       (unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized), which the sector's flow
       preserves (unitaryFlowSetup_flow_measurePreserving_fsVolume), and the forced volume
-      and the symplectic volume are the same measure (fsVolumeNormalized_isForcedKahlerVolume).
+      and the symplectic volume are the same measure
+      (fsVolumeNormalized_isForcedKahlerVolume).
 
-      Scope, stated plainly because it is load-bearing: measure-preservation of the flow is
-      carried as a structure field, an ontic postulate listed in the axiom ledger, not
-      derived for the constraint dynamics in general. It is a theorem for the unitary
+      The scope is load-bearing, so it's stated plainly. Measure-preservation of the flow
+      is carried as a structure field, an ontic postulate listed in the axiom ledger, and
+      not derived for the constraint dynamics in general. It's a theorem for the unitary
       flows, by invariance, and for every Hamiltonian flow of a smooth energy on complex
       projective space by the manifold-level Liouville theorem
       (IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow, instantiated as
-      fsVolume_map_hamiltonianFlow): the flow of the Hamiltonian vector field preserves the
-      measure of every power of the symplectic form, proved through the flat Liouville
-      theorem in charts with Cartan's formula and the change of variables for top forms.
-      The measurement pieces of the constraint dynamics are only locally Hamiltonian, which
-      is why the field remains a postulate. What is proved about the measure is the
-      conditional: if the sector is this one, then its volume is forced and is the
-      symplectic volume. The theorem is about the sector, not a derivation of it.
+      fsVolume_map_hamiltonianFlow), which says the flow of the Hamiltonian vector field
+      preserves the measure of every power of the symplectic form, proved through the flat
+      Liouville theorem in charts with Cartan's formula and the change of variables for
+      top forms. The measurement pieces of the constraint dynamics are only locally
+      Hamiltonian, which is why the field remains a postulate. What's proved about the
+      measure is the conditional, so if the sector is this one then its volume is forced
+      and is the symplectic volume, and the theorem is about the sector and not a
+      derivation of it.
     person: >
       Joseph Liouville (1809-1882) was born at Saint-Omer and trained at the Ecole
       Polytechnique. He taught there, at the College de France and at the Sorbonne. The
-      volume-preservation theorem dates from 1838 and was reached through celestial
+      volume-preservation theorem dates from 1838, and he reached it through celestial
       mechanics rather than any inkling of statistical physics.
 
       He left two other legacies. He founded the Journal de Mathematiques Pures et
-      Appliquees, which is still publishing, and used it in 1846 for an act of scientific
-      rescue: printing the papers of Evariste Galois, fourteen years after Galois died in a
-      duel at twenty, and thereby saving the founding documents of group theory from
-      oblivion. He was also the first to exhibit a provably transcendental number, decades
-      before e and pi were settled.
+      Appliquees, which is still publishing, and he used it in 1846 for an act of
+      scientific rescue, printing the papers of Evariste Galois fourteen years after
+      Galois died in a duel at twenty, and thereby saving the founding documents of group
+      theory from oblivion. He was also the first to exhibit a provably transcendental
+      number, decades before e and pi were settled.
     term: Liouville measure
     eponyms: [Liouville]
     status: proved-in-corpus
@@ -1357,81 +1376,82 @@ entries:
     related: [fubini-study-measure, kahler-form, constraint-surface, typicality, poisson-bracket]
 
   - slug: kahler-form
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
       On the space of quantum states, distance, area and a quarter-turn coming from the
-      complex numbers lock together. That lock is what makes the volume of the space
+      complex numbers lock together, and that lock is what makes the volume of the space
       nobody's choice.
     layman: >
       The space of quantum states carries three structures that could, in principle, have
-      nothing to do with one another. There is a way of measuring distances between
-      states, called a metric. There is a way of measuring areas, called a form. And there
-      is a quarter-turn operation, which comes from multiplying by the imaginary unit, the
-      number whose square is minus one; applying it twice reverses a direction, just as two
-      quarter-turns make a half-turn.
+      nothing to do with one another. There's a way of measuring distances between states,
+      called a metric. There's a way of measuring areas, called a form. And there's a
+      quarter-turn operation, which comes from multiplying by the imaginary unit, the
+      number whose square is minus one, so applying it twice reverses a direction, just as
+      two quarter-turns make a half-turn.
 
-      On this space the three are not independent. Each one can be recovered from the other
-      two: turn the metric through a quarter-turn and you get the area form, and so on
-      around the triangle. A space in which the three lock together in this way is called
-      Kahler, and the lock has a payoff. Such a space owns a volume of its own. Take the
-      area form, raise it to the highest power the dimension allows, and the result
-      measures volume. No external ruler is required.
+      On this space the three aren't independent, as each one can be recovered from the
+      other two. Turn the metric through a quarter-turn and you get the area form, and so
+      on around the triangle. A space in which the three lock together in this way is
+      called Kahler, and the lock has a payoff, as such a space owns a volume of its own.
+      Take the area form, raise it to the highest power the dimension allows, and the
+      result measures volume, so no external ruler is required.
 
-      That is why the measure used throughout this programme is not an extra ingredient
-      that someone had to supply. The geometry already contains it.
+      That's why the measure used throughout this programme isn't an extra ingredient
+      someone had to supply. The geometry already contains it.
     in_csd: >
-      This underwrites the claim that CSD's typicality measure, the measure used to say how
-      large a region of states is, is geometric rather than chosen. That is the difference
-      between deriving the Born rule and restating it with more steps.
+      This underwrites the claim that CSD's typicality measure, the measure used to say
+      how large a region of states is, is geometric rather than chosen, which is the
+      difference between deriving the Born rule and restating it with more steps.
 
       The corpus proves the locking of the three structures at two levels. At each point,
       in the space of directions through that point, it establishes the compatibility
-      relations: the quarter-turn squares to minus one, the area form is the metric
+      relations, so the quarter-turn squares to minus one, the area form is the metric
       composed with the turn and vice versa, the form survives turning both of its inputs,
-      and pairing a direction with its own quarter-turn returns its squared length. For the
-      whole space of states, it establishes that the area form has the two properties that
-      make a space symplectic, the setting in which classical mechanics is done; that the
-      quarter-turn is the complex structure the space naturally carries, so that the space
-      is Kahler in both of the standard senses; and that the top power of the form is the
+      and pairing a direction with its own quarter-turn returns its squared length. For
+      the whole space of states, it establishes that the area form has the two properties
+      that make a space symplectic, the setting in which classical mechanics is done, that
+      the quarter-turn is the complex structure the space naturally carries, so the space
+      is Kahler in both of the standard senses, and that the top power of the form is the
       Fubini-Study measure up to a fixed constant.
 
-      What this does not change is what carries the Born derivation, which still runs
-      through the invariance characterisation of the measure: the fact that it is the
+      What this doesn't change is what carries the Born derivation, which still runs
+      through the invariance characterisation of the measure, the fact that it's the
       unique measure left unchanged by the unitary symmetries. The geometry is proved to
-      agree with that measure, not to replace it. The mathematical section gives the exact
-      claims.
+      agree with that measure and not to replace it, and the mathematical section gives
+      the exact claims.
     mathematical: >
       With g the real part of the inner product, omega the imaginary part, and J
-      multiplication by i: J squared is minus one, omega equals g after J, g equals omega
+      multiplication by i, J squared is minus one, omega equals g after J, g equals omega
       after J, omega is of type (1,1), and omega(u, Ju) equals the squared norm of u. All
       of this is proved axiom-free, pointwise, on the tangent model.
 
-      The manifold statements are all proved in the corpus's own manifold layer (Mathlib
-      has no differential forms on manifolds at the pin): fsForm_isSymplectic (the
-      Fubini-Study form is closed and non-degenerate on CP^n), fsForm_isKahler (with J the
-      multiplication by i, read through the holomorphic atlas), IsKahler.nijenhuis_eq_zero
-      (the Nijenhuis tensor vanishes), fsVolume_eq_smul_fubiniStudyMeasure (the top power
-      of the form is (4 pi)^n times the Fubini-Study measure), and riemannianVolume_fsMetric
-      (the Riemannian volume of the compatible metric is that top power over n factorial).
-      The sector's posited Liouville measure is proved to be this volume
-      (LF4/SectorManifold.lean).
+      The manifold statements are all proved in the corpus's own manifold layer, as
+      Mathlib has no differential forms on manifolds at the pin. They are
+      fsForm_isSymplectic (the Fubini-Study form is closed and non-degenerate on CP^n),
+      fsForm_isKahler (with J the multiplication by i, read through the holomorphic
+      atlas), IsKahler.nijenhuis_eq_zero (the Nijenhuis tensor vanishes),
+      fsVolume_eq_smul_fubiniStudyMeasure (the top power of the form is (4 pi)^n times the
+      Fubini-Study measure), and riemannianVolume_fsMetric (the Riemannian volume of the
+      compatible metric is that top power over n factorial). The sector's posited
+      Liouville measure is proved to be this volume (LF4/SectorManifold.lean).
 
-      One restriction remains as stated. The corpus's permitted-claims list forbids calling
-      Kahler geometry load-bearing for the Born rule, because the uniqueness argument that
-      carries the programme runs through Haar measure. The geometry is proved to agree with
-      it, not to replace it.
+      One restriction remains as stated. The corpus's permitted-claims list forbids
+      calling Kahler geometry load-bearing for the Born rule, because the uniqueness
+      argument that carries the programme runs through Haar measure, so the geometry is
+      proved to agree with it and not to replace it.
     person: >
-      Erich Kahler (1906-2000) was born in Leipzig and took his doctorate there at
-      twenty-two. After the war, which included a spell as a French prisoner of war, he
-      held chairs at Berlin and Hamburg.
+      Erich Kahler (1906-2000) was born in Leipzig and took his doctorate there at twenty-
+      two. After the war, which included a spell as a French prisoner of war, he held
+      chairs at Berlin and Hamburg.
 
       The manifolds come from one short 1933 paper. He had noticed that when metric,
       complex structure and form are compatible, a single potential function generates
-      everything, a simplification whose consequences he did not live to see fully spent:
-      Hodge theory, the classification of complex surfaces, Calabi-Yau spaces, string
+      everything, a simplification whose consequences he didn't live to see fully spent in
+      Hodge theory, the classification of complex surfaces, Calabi-Yau spaces and string
       theory. Andre Weil attached the name in the 1950s, two decades late. Kahler's own
       later work drifted into a private philosophical system that attracted essentially no
-      following, a reminder that mathematicians get one name on the map, and rarely two.
+      following, which is a reminder that mathematicians get one name on the map and
+      rarely two.
     term: Kahler form
     eponyms: [Kahler]
     status: proved-in-corpus
@@ -1441,69 +1461,70 @@ entries:
     related: [fubini-study-measure, liouville-measure, moment-map, poisson-bracket, duistermaat-heckman]
 
   - slug: luders-rule
-    reviewed: 2026-09-12
+    reviewed: 2026-09-14
     hook: >
-      The textbook's second rule, which says how a state changes when it is measured, is
-      not a second rule in CSD. It is what the record layer does.
+      The textbook's second rule, which says how a state changes when it's measured, isn't
+      a second rule in CSD, as it's what the record layer does.
     layman: >
-      Measure a quantum system and two things happen: an outcome appears, and the state
+      Measure a quantum system and two things happen, as an outcome appears and the state
       afterwards is different from the state before. Textbooks handle this with a separate
-      postulate, the update rule, bolted on beside the equation of motion. Two rules, and
-      no explanation of why the second exists or when it applies.
+      postulate, the update rule, bolted on beside the equation of motion, so you get two
+      rules and no explanation of why the second exists or when it applies.
 
-      There is also a subtlety inside the update rule itself, and Luders is the one who
-      caught it. Sometimes several distinct states share the same measured value. Such a
-      measurement is called degenerate, and a detector that reports only which region a
+      There's also a subtlety inside the update rule itself, and Luders is the one who
+      caught it. Sometimes several distinct states share the same measured value, and such
+      a measurement is called degenerate, so a detector that reports only which region a
       particle landed in, without resolving anything finer, is an everyday example. For a
       degenerate measurement the naive update, jumping to one particular state with the
       measured value, is wrong. The right update projects onto the whole block of states
-      that share the value, disturbing nothing within the block. Get this wrong and
-      repeated measurements give inconsistent answers.
+      that share the value and disturbs nothing within the block, and if you get this
+      wrong repeated measurements give inconsistent answers.
 
-      Von Neumann's original rule of 1932 got the degenerate case wrong. Luders fixed it in
-      1951, and the fix went largely unremarked for years: a correction to the foundations
-      of measurement theory, published quietly and absorbed silently.
+      Von Neumann's original rule of 1932 got the degenerate case wrong. Luders fixed it
+      in 1951, and the fix went largely unremarked for years, a correction to the
+      foundations of measurement theory published quietly and absorbed silently.
     in_csd: >
-      In CSD the update is not a postulate at all. Records and the state update live on the
+      In CSD the update isn't a postulate at all. Records and the state update live on the
       same pointer arena, the space of states enlarged to include the pointer of the
-      measuring device, and they are produced by the same construction. The record selects
-      which region the trajectory realises, the Born weights come out of the volumes of the
-      regions, and the state after measurement is the block projection. One mechanism, and
-      the two textbook rules recovered as its two faces.
+      measuring device, and the same construction produces them. The record selects which
+      region the trajectory realises, the Born weights come out of the volumes of the
+      regions, and the state after measurement is the block projection, so one mechanism
+      recovers the two textbook rules as its two faces.
 
-      The corpus treats the degenerate case as the general one, not as a footnote. Physics
-      forces that ordering: real detectors are almost always degenerate, reporting which
-      region a particle landed in without resolving the states within the region. A
-      companion result sharpens the point. No fixed calibration at the level of individual
-      states reproduces the update for every preparation, so the block form is not
-      optional.
+      The corpus treats the degenerate case as the general one and not as a footnote.
+      Physics forces that ordering, as real detectors are almost always degenerate and
+      report which region a particle landed in without resolving the states within the
+      region. A companion result sharpens the point, as no fixed calibration at the level
+      of individual states reproduces the update for every preparation, so the block form
+      isn't optional.
 
-      The result carries a condition of its own, which should travel with it: it applies to
-      outcomes whose weight is not too small, and says nothing about outcomes below that
-      threshold.
+      The result carries a condition of its own, which should travel with it. It applies
+      to outcomes whose weight isn't too small, and it says nothing about outcomes below
+      that threshold.
     mathematical: >
       On the pointer arena, the record-conditioned marginal reproduces the Born weights of
       the preparation, and the post-measurement state is the Luders block projection. The
-      conditioning carries a smallness condition that should travel with the statement:
-      the outcome's weight must exceed the width of the corridor that the smooth witness
-      leaves unrecorded, so the result says nothing about outcomes weighted below it.
-      Degenerate block measurements are the case treated; rank-one projective measurements
-      are the specialisation in which every block is a single ray.
+      conditioning carries a smallness condition that should travel with the statement, as
+      the outcome's weight must exceed the width of the corridor the smooth witness leaves
+      unrecorded, so the result says nothing about outcomes weighted below it. Degenerate
+      block measurements are the case treated, and rank-one projective measurements are
+      the specialisation in which every block is a single ray.
 
       Two companion results complete the picture. A swap-based apparatus reproduces the
-      Luders marginal exactly when calibrated, and, as the sharper negative, no fixed
-      ray-level calibration works for every preparation, so calibration must be
-      context-dependent. That negative is what forces the block treatment.
+      Luders marginal exactly when calibrated, and, as the sharper negative, no fixed ray-
+      level calibration works for every preparation, so calibration must be context-
+      dependent, and that negative is what forces the block treatment.
     person: >
       Gerhart Luders (1920-1995) was born in Hamburg, trained in the Gottingen orbit, and
       held a chair at Gottingen from 1960. The update rule comes from a 1951 paper
-      correcting von Neumann: in effect a graduate student's observation that the great
+      correcting von Neumann, in effect a graduate student's observation that the great
       man's measurement postulate mishandled repeated eigenvalues.
 
-      He is at least equally remembered for the CPT theorem, proved independently around
-      1954: the statement that charge conjugation, parity and time reversal, composed, form
-      a symmetry of every local relativistic field theory. Two results, both structural,
-      both about what quantum theories must do rather than what any particular one does.
+      He's at least equally remembered for the CPT theorem, proved independently around
+      1954, which says that charge conjugation, parity and time reversal, composed, form a
+      symmetry of every local relativistic field theory. Both results are structural, as
+      they're about what quantum theories must do rather than what any particular one
+      does.
     term: Luders rule
     eponyms: [Luders]
     status: proved-in-corpus
@@ -1513,75 +1534,76 @@ entries:
     related: [collapse, measurement-flow, pointer-basis, naimark-dilation, measurement-context]
 
   - slug: naimark-dilation
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
       Every noisy, imperfect measurement made in a real laboratory is an ideal textbook
-      measurement carried out on a larger system. That single fact is what lets CSD's
+      measurement carried out on a larger system, and that single fact is what lets CSD's
       derivation of the Born weights cover actual experiments rather than idealised ones.
     layman: >
       A textbook quantum measurement is clean. Its outcomes are mutually exclusive, each
       outcome corresponds to a sharp yes-or-no test on the system, and the boundaries
-      between outcomes are exact. Real detectors are not like that. They are noisy, they
-      blur neighbouring outcomes together, and they sometimes report more outcomes than the
-      system has distinguishable states. The general description of such a detector is a
-      generalised measurement, usually called a POVM: a list of effects, one for each
-      outcome, each of which assigns a probability to its outcome without the outcomes
-      needing to be sharply separated. On its face this is a different and worse-behaved
-      kind of object.
+      between outcomes are exact. Real detectors aren't like that, as they're noisy, they
+      blur neighbouring outcomes together, and they sometimes report more outcomes than
+      the system has distinguishable states. The general description of such a detector is
+      a generalised measurement, usually called a POVM, which is a list of effects, one
+      for each outcome, each of which assigns a probability to its outcome without the
+      outcomes needing to be sharply separated. On its face this is a different and worse-
+      behaved kind of object.
 
       Naimark's theorem says the mess is a matter of perspective. Any generalised
       measurement, however noisy, is an ordinary sharp measurement performed on the system
       together with an extra piece of apparatus. Enlarge the system to include that
       apparatus, a step called dilation, and the complicated measurement becomes a simple
-      one. The blur is what a sharp measurement of the combined system looks like when you
-      keep track of the original system alone. A rough analogy is a shadow: a blurred,
-      complicated shadow on a wall can be cast by a simple solid object, and the blur
-      belongs to the act of projecting down, not to the object. The analogy has one limit
-      worth knowing. The larger system in the theorem is a mathematical construction, and
-      it need not coincide with the physical detector on the bench.
+      one, so the blur is what a sharp measurement of the combined system looks like when
+      you keep track of the original system alone. A rough analogy is a shadow, as a
+      blurred, complicated shadow on a wall can be cast by a simple solid object, and the
+      blur belongs to the act of projecting down and not to the object. The analogy has
+      one limit worth knowing, which is that the larger system in the theorem is a
+      mathematical construction and it needn't coincide with the physical detector on the
+      bench.
 
-      The consequence is that there is no separate theory of realistic measurements. There
-      is one theory, sometimes viewed through a keyhole.
+      The consequence is that there's no separate theory of realistic measurements.
+      There's one theory, sometimes viewed through a keyhole.
     in_csd: >
-      CSD derives the Born weights as volumes: each outcome corresponds to a region of the
-      space of states, and the probability of the outcome is the fraction of the natural
-      volume that the region occupies. On its own, that argument covers only ideal sharp
-      measurements. Since essentially every real experiment is a generalised measurement,
-      this would be a serious gap for a programme that claims to be about physics rather
-      than textbooks.
+      CSD derives the Born weights as volumes, so each outcome corresponds to a region of
+      the space of states, and the probability of the outcome is the fraction of the
+      natural volume the region occupies. On its own that argument covers only ideal sharp
+      measurements, and since essentially every real experiment is a generalised
+      measurement, this would be a serious gap for a programme that claims to be about
+      physics rather than textbooks.
 
       Naimark's theorem closes the gap by transfer rather than by a second derivation.
       Dilate the measurement to the larger system, run the same volume-ratio argument
-      there, and pull the answer back down. The generalised case then holds with no
-      extra assumption: nothing about the measurement needs to be typical or generic for
-      the transfer to work.
+      there, and pull the answer back down. The generalised case then holds with no extra
+      assumption, as nothing about the measurement needs to be typical or generic for the
+      transfer to work.
 
       The corpus builds the dilation explicitly and then uses it repeatedly. Symmetric
       informationally complete measurements, mutually unbiased bases, trine measurements,
       unambiguous state discrimination and weak measurements are each constructed through
       the same canonical dilation, and each inherits the volume statement without further
-      work. The generalised-measurement chapter of the reconstruction is recorded as closed
-      on exactly this mechanism.
+      work, so the generalised-measurement chapter of the reconstruction is recorded as
+      closed on exactly this mechanism.
     mathematical: >
       For a POVM equipped with a Naimark dilation, the Born weight of each effect equals
-      the Fubini-Study volume of the corresponding outcome region in the dilated space, and
-      the frequency statement transfers along with it. The result is unconditional: no
-      genericity hypothesis is needed. The corpus theorem is
+      the Fubini-Study volume of the corresponding outcome region in the dilated space,
+      and the frequency statement transfers along with it. The result is unconditional, as
+      no genericity hypothesis is needed, and the corpus theorem is
       povm_born_eq_dilated_volume_uncond.
 
-      The dilation is constructed rather than assumed. It is built canonically from the
+      The dilation is constructed rather than assumed. It's built canonically from the
       square roots of the effects, so existence comes with an explicit witness, and the
       instances in the corpus inherit the theorem instead of re-proving it.
     person: >
       Mark Naimark (1909-1978) was born in Odessa, the son of an artist, and worked in
-      Moscow at the Steklov Institute while teaching at the Moscow Institute of Physics and
-      Technology. The dilation theorem dates from 1940. Its close cousins, due to
-      Stinespring and Sz.-Nagy, form a small family of extension theorems discovered across
-      a decade divided by war.
+      Moscow at the Steklov Institute while teaching at the Moscow Institute of Physics
+      and Technology. The dilation theorem dates from 1940. Its close cousins, due to
+      Stinespring and Sz.-Nagy, form a small family of extension theorems discovered
+      across a decade divided by war.
 
       His best-known work is the 1943 Gelfand-Naimark theorem characterising C-star
       algebras, written with Israel Gelfand, whose Moscow seminar was one of the most
-      productive mathematical institutions of the century: a weekly event that ran for
+      productive mathematical institutions of the century, a weekly event that ran for
       fifty years and was famous for the vigour of its arguments.
     term: Naimark dilation
     eponyms: [Naimark]
@@ -1592,57 +1614,57 @@ entries:
     related: [stinespring-dilation, born-weight, luders-rule, measurement-flow, gleason-theorem]
 
   - slug: no-exact-finite-ccr
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
       In a world with only finitely many distinguishable states, the founding equation of
-      quantum mechanics cannot hold exactly. One line of arithmetic proves it, and CSD says
-      precisely where the equation gives way.
+      quantum mechanics can't hold exactly, and one line of arithmetic proves it while CSD
+      says precisely where the equation gives way.
     layman: >
       Position and momentum obey the most famous relation in quantum mechanics, the
-      canonical commutation relation: applying the two operations in opposite orders gives
-      results that differ by a fixed universal amount. Everything characteristic of the
-      theory, the uncertainty principle above all, flows from that relation. CSD holds that
-      the world has only finitely many distinguishable states. The question is whether the
-      relation can survive in such a world.
+      canonical commutation relation, which says that applying the two operations in
+      opposite orders gives results that differ by a fixed universal amount. Everything
+      characteristic of the theory, the uncertainty principle above all, flows from that
+      relation. CSD holds that the world has only finitely many distinguishable states, so
+      the question is whether the relation can survive in such a world.
 
-      It cannot, and the proof fits in a few sentences. In quantum mechanics, position and
+      It can't, and the proof fits in a few sentences. In quantum mechanics, position and
       momentum are represented by square tables of numbers called matrices, and a finite
       world means finite tables. Adding up the entries along the main diagonal of a matrix
-      gives a number called its trace, and the trace has a useful property: the trace of a
-      product of two matrices does not depend on the order in which they are multiplied.
-      The left side of the relation is the difference between two products in opposite
-      orders, so its trace is always zero. The right side is a fixed nonzero constant
-      placed on every diagonal entry, so its trace is that constant times the number of
-      states, which is not zero. Zero cannot equal something nonzero, so no finite tables
-      can satisfy the relation.
+      gives a number called its trace, and the trace has a useful property, which is that
+      the trace of a product of two matrices doesn't depend on the order in which they're
+      multiplied. The left side of the relation is the difference between two products in
+      opposite orders, so its trace is always zero. The right side is a fixed nonzero
+      constant placed on every diagonal entry, so its trace is that constant times the
+      number of states, which isn't zero. Zero can't equal something nonzero, so no finite
+      tables can satisfy the relation.
 
-      So any finite theory owes an account of where the relation fails. The question is
-      not whether it fails but where.
+      So any finite theory owes an account of where the relation fails, and the question
+      isn't whether it fails but where.
     in_csd: >
       The corpus pays this debt exactly rather than apologising for it. The model is the
-      truncated oscillator: the harmonic oscillator, the standard quantum model of
-      vibration, whose infinite ladder of energy levels is cut off at a finite top rung.
-      On that ladder the relation holds perfectly on every energy level except the very top
-      one, where it fails by a single localised defect of precisely the size the trace
-      argument demands. The defect is not noise to be minimised. It is the exact
+      truncated oscillator, the harmonic oscillator, the standard quantum model of
+      vibration, with its infinite ladder of energy levels cut off at a finite top rung.
+      On that ladder the relation holds perfectly on every energy level except the very
+      top one, where it fails by a single localised defect of precisely the size the trace
+      argument demands. The defect isn't noise to be minimised, as it's the exact
       compensation the counting requires, pushed into the one place a finite ladder must
       end.
 
       For any state a laboratory can actually prepare, with negligible population at the
       top rung, the departure is invisible. The result is deliberately stated without
-      reference to CSD's own assumptions, because the obligation binds every
-      finite-dimensional reconstruction of quantum mechanics: a rival programme claiming
+      reference to CSD's own assumptions, because the obligation binds every finite-
+      dimensional reconstruction of quantum mechanics, so a rival programme claiming
       finiteness inherits the same debt whether or not it has noticed.
     mathematical: >
-      No finite matrices satisfy [Q,P] = c times identity with c nonzero: the trace of a
-      commutator vanishes, while the trace of c times identity is c times the dimension.
-      As a corollary, the constant cannot be i h-bar in finite dimension. The corpus
+      No finite matrices satisfy [Q,P] = c times identity with c nonzero, as the trace of
+      a commutator vanishes while the trace of c times identity is c times the dimension.
+      As a corollary, the constant can't be i h-bar in finite dimension, and the corpus
       theorem is no_exact_finite_ccr.
 
-      The companion construction gives the sharp positive statement: a conjugate pair on
+      The companion construction gives the sharp positive statement, a conjugate pair on
       the N-level oscillator whose commutator is exactly i everywhere except the top Fock
-      level, where a rank-one defect of magnitude N sits, exactly what makes the trace
-      vanish.
+      level, where a rank-one defect of magnitude N sits, which is exactly what makes the
+      trace vanish.
     term: No exact finite-dimensional CCR
     status: proved-in-corpus
     lean:
