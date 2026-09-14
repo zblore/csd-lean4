@@ -4441,15 +4441,16 @@ entries:
   - slug: spontaneous-collapse
     hook: >
       Spontaneous collapse theories change the equations of quantum mechanics and can be
-      killed by experiment. CSD, so far, cannot be, and its own documentation says so.
+      killed by experiment, and CSD, so far, can't be, and its own documentation says so.
     layman: >
       Quantum mechanics lets a system be in a superposition, a combination of several
       possibilities at once, and yet a measurement always shows one result. The textbook
-      handles the transition with an abrupt jump, collapse, that is not part of the smooth
-      equations. Ghirardi, Rimini and Weber took a direct line: if collapse is real, put it
-      in the equations. Their theory, GRW, modifies quantum mechanics so that each
-      particle's state spontaneously localises at random, snapping to a definite small
-      region, extraordinarily rarely, about once per hundred million years per particle.
+      handles the transition with an abrupt jump, collapse, that isn't part of the smooth
+      equations. Ghirardi, Rimini and Weber took a direct line, which is that if collapse
+      is real you put it in the equations, so their theory, GRW, modifies quantum
+      mechanics so that each particle's state spontaneously localises at random, snapping
+      to a definite small region, extraordinarily rarely, about once per hundred million
+      years per particle.
 
       The trick is amplification. A cat contains a trillion trillion particles, and in a
       superposition their states are correlated, so one localisation anywhere drags the
@@ -4458,29 +4459,30 @@ entries:
 
       Because the modification has parameters, a rate and a length, it makes predictions
       that differ from standard quantum mechanics. Interferometry with large molecules,
-      which tests how big an object can be while still showing wave behaviour, and
-      ultra-quiet mechanical sensors have been squeezing the allowed range of those
-      parameters for decades. GRW might be refuted next year. That is a compliment: it is a
-      theory, not an interpretation.
+      which tests how big an object can be while still showing wave behaviour, and ultra-
+      quiet mechanical sensors have been squeezing the allowed range of those parameters
+      for decades, so GRW might be refuted next year. That's a compliment, as it's a
+      theory and not an interpretation.
     in_csd: >
-      The comparison is uncomfortable in a direction the corpus states plainly: GRW is
-      falsifiable today and CSD is not. CSD reproduces standard quantum mechanics exactly at
-      leading order. Its candidate departures, finite-sample statistics and corrections that
-      the papers have not yet pinned down, are recorded as owed rather than claimed. One
-      theory risks its neck; the other, so far, matches the textbook everywhere.
+      The comparison is uncomfortable in a direction the corpus states plainly, as GRW is
+      falsifiable today and CSD isn't. CSD reproduces standard quantum mechanics exactly
+      at leading order, and its candidate departures, finite-sample statistics and
+      corrections the papers haven't yet pinned down, are recorded as owed rather than
+      claimed. One theory risks its neck, and the other, so far, matches the textbook
+      everywhere.
 
-      Structurally the two could hardly differ more. GRW adds random jumps to the dynamics.
-      CSD's substrate is deterministic and volume-preserving, meaning that its evolution
-      never compresses or expands the size of any set of states, and the corpus proves that
-      no volume-preserving process can implement collapse. The very mechanism GRW adds is
-      therefore one that CSD is formally barred from borrowing. Definite outcomes here come
-      from records instead.
+      Structurally the two could hardly differ more. GRW adds random jumps to the
+      dynamics, while CSD's substrate is deterministic and volume-preserving, meaning that
+      its evolution never compresses or expands the size of any set of states, and the
+      corpus proves that no volume-preserving process can implement collapse. So the very
+      mechanism GRW adds is one CSD is formally barred from borrowing, and definite
+      outcomes here come from records instead.
     mathematical: >
-      No formal content about the rival.
+      There's no formal content about the rival.
 
-      The formal boundary on CSD's side: no measure-preserving map implements exact
+      The formal boundary on CSD's side is that no measure-preserving map implements exact
       collapse, so a GRW-style mechanism is unavailable to this substrate as a matter of
-      theorem, not taste.
+      theorem and not taste.
     term: Spontaneous collapse (GRW)
     status: definition
     source: curated
@@ -4491,46 +4493,47 @@ entries:
 
   - slug: qbism
     hook: >
-      QBism is epistemic all the way down: the quantum state is one agent's betting book,
-      and there is nothing underneath. CSD agrees about the state and insists on the
-      underneath.
+      QBism is epistemic all the way down, as the quantum state is one agent's betting
+      book and there's nothing underneath, and CSD agrees about the state and insists on
+      the underneath.
     layman: >
-      Many physicists hold that the quantum state is not a physical thing but a summary of
-      somebody's information. Say that, and you owe an answer to an obvious question:
-      information about what? QBism pushes the idea to its logical end and gives a
-      bracing answer: about nothing beyond the agent's own future experiences. Quantum
-      states are personal degrees of belief, probabilities are subjective bets, and a
-      measurement outcome is an experience of the agent who makes the measurement.
+      Many physicists hold that the quantum state isn't a physical thing but a summary of
+      somebody's information, and if you say that you owe an answer to the obvious
+      question of what it's information about. QBism pushes the idea to its logical end
+      and gives a bracing answer, which is that it's about nothing beyond the agent's own
+      future experiences. Quantum states are personal degrees of belief, probabilities are
+      subjective bets, and a measurement outcome is an experience of the agent who makes
+      the measurement.
 
       The measurement problem, the puzzle of how a smoothly evolving state can jump to one
       result, evaporates, because there was never a physical state out there to collapse.
       Wigner's friend, the puzzle of one observer describing another observer's
-      measurement, the non-locality puzzles, most of the paradox literature: all dissolved,
-      because nothing observer-independent was ever claimed.
+      measurement, the non-locality puzzles, and most of the paradox literature all
+      dissolve, because nothing observer-independent was ever claimed.
 
       The cost is the point of contention. Physics stops describing a world and starts
-      describing each agent's gambling position. Proponents call that honesty. Critics call
-      it surrender.
+      describing each agent's gambling position, and proponents call that honesty while
+      critics call it surrender.
     in_csd: >
       The agreement runs deep and the split is clean, which makes this the most clarifying
       comparison on the list. Both positions hold that the quantum state is epistemic, a
-      matter of knowledge rather than a thing in the world. Both therefore treat its update
-      after a measurement as learning, not physics. Both walk away from the measurement
+      matter of knowledge rather than a thing in the world, so both treat its update after
+      a measurement as learning and not physics, and both walk away from the measurement
       problem in its standard form.
 
       Then comes the floor. CSD's constraint surface exists whether or not anyone is
-      looking. Probabilities are ratios of volumes on it, not credences, which are degrees
-      of belief, and the measure that defines those volumes is fixed by a uniqueness
-      theorem, so two rational agents cannot disagree about it. In QBism they legitimately
-      can, because probability is personal. The slogan version, fair to both sides, is
-      epistemic states over an ontic substrate versus epistemic states over nothing. This
-      is a positional entry; no theorem states it.
+      looking. Probabilities are ratios of volumes on it and not credences, which are
+      degrees of belief, and the measure that defines those volumes is fixed by a
+      uniqueness theorem, so two rational agents can't disagree about it, while in QBism
+      they legitimately can, because probability is personal. The slogan version, fair to
+      both sides, is epistemic states over an ontic substrate versus epistemic states over
+      nothing. This is a positional entry, and no theorem states it.
     mathematical: >
-      No formal content about the rival.
+      There's no formal content about the rival.
 
-      The formal contrast: CSD's outcome weights are ratios of an invariant measure,
-      agent-independent and uniqueness-backed, where QBist probabilities are Bayesian
-      credences constrained by coherence but owned by an agent.
+      The formal contrast is that CSD's outcome weights are ratios of an invariant
+      measure, agent-independent and uniqueness-backed, where QBist probabilities are
+      Bayesian credences constrained by coherence but owned by an agent.
     term: QBism
     status: definition
     source: curated
@@ -4540,60 +4543,64 @@ entries:
     related: [copenhagen, psi-epistemic, ontic-vs-epistemic, is-the-wavefunction-real, spontaneous-collapse]
 
   - slug: constraint-surface
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      There is one arena, it is deterministic, and it does not grow. Everything else in the
-      programme is bookkeeping about how much of it a measurement context lets you see.
+      There's one arena, it's deterministic, and it doesn't grow, and everything else in
+      the programme is bookkeeping about how much of it a measurement context lets you
+      see.
     layman: >
       Quantum mechanics is spectacularly good at predicting what detectors do and
-      spectacularly silent about what the world is. The textbook hands you a recipe for
+      spectacularly silent about what the world is, as the textbook hands you a recipe for
       outcomes and no picture of what exists between them.
 
-      CSD starts by paying the cost that most approaches defer: it posits the world. There
-      is one total space of everything that exists, called the constraint surface (the
-      programme names it Sigma), and a single deterministic trajectory runs on it, a path in
-      which each state fixes the next by law. No branching, no dice, no observer in the
-      basement. What you cannot do is ask what the surface is made of. It is the floor.
-      Every theory has a floor; this programme says out loud where its floor is.
+      CSD starts by paying the cost most approaches defer, as it posits the world. There's
+      one total space of everything that exists, called the constraint surface (the
+      programme names it Sigma), and a single deterministic trajectory runs on it, a path
+      in which each state fixes the next by law, with no branching, no dice, and no
+      observer in the basement. What you can't do is ask what the surface is made of, as
+      it's the floor, and every theory has a floor, so this programme says out loud where
+      its floor is.
 
       The surprise is how little freedom the floor turns out to have. Ask what the surface
-      must look like for quantum statistics to come out, and symmetry pins down its measure
-      uniquely, where the measure is the rule that assigns a size to each region of the
-      surface and so, eventually, a probability to each outcome. Symmetry also constrains
-      its geometry tightly. The surface is posited, then constrained until almost nothing
-      about it is a choice.
+      must look like for quantum statistics to come out, and symmetry pins down its
+      measure uniquely, where the measure is the rule that assigns a size to each region
+      of the surface and so, eventually, a probability to each outcome, and symmetry also
+      constrains its geometry tightly. The surface is posited, then constrained until
+      almost nothing about it is a choice.
     in_csd: >
-      The constraint surface is the floor and it is everything: the total, fixed, local
-      ontic space, where ontic means existing independently of anyone's knowledge. Deriving
-      it is a non-question, since there is nothing beneath a floor to derive it from. What
-      is legitimate, and actively pursued, is constraining it from above. The measure on the
-      projected state space, the space of quantum states seen as a shadow of the surface, is
-      forced by unitary symmetry, the group of transformations that preserve every quantum
-      probability. The concrete working arena is a compact Kahler space: a space of finite
-      extent whose curved geometry is of the kind that complex projective space carries.
+      The constraint surface is the floor and it's everything, the total, fixed, local
+      ontic space, where ontic means existing independently of anyone's knowledge.
+      Deriving it is a non-question, since there's nothing beneath a floor to derive it
+      from, and what's legitimate, and actively pursued, is constraining it from above.
+      The measure on the projected state space, the space of quantum states seen as a
+      shadow of the surface, is forced by unitary symmetry, the group of transformations
+      that preserve every quantum probability, and the concrete working arena is a compact
+      Kahler space, a space of finite extent whose curved geometry is of the kind complex
+      projective space carries.
 
       Everything quantum then happens at two levels. A measurement context, the choice of
       what to measure, partitions the projected view of the surface into outcome regions,
-      and that partition is epistemic, a matter of description. The weight of each region
-      is an honest volume on the surface, and that measure is ontic. The Born rule, the
-      quantum rule for assigning probabilities to outcomes, is the meeting point of the two.
+      and that partition is epistemic, a matter of description, while the weight of each
+      region is an honest volume on the surface, and that measure is ontic. The Born rule,
+      the quantum rule for assigning probabilities to outcomes, is the meeting point of
+      the two.
     mathematical: >
-      The corpus carries Sigma as the OnticSetup structure: a measurable space with a finite
-      measure (the Liouville measure, finite but not normalised; weights are ratios, and the
-      preparation region is required to have nonzero measure so that the normalisation is
-      well-defined), a deterministic flow with a measure-preservation field, and a
-      preparation region. Outcome frequencies converge almost surely to volume ratios by the
-      strong law, which is the LF1 main theorem, with no probabilistic input beyond
-      repeated-preparation sampling.
+      The corpus carries Sigma as the OnticSetup structure, a measurable space with a
+      finite measure (the Liouville measure, finite but not normalised, as weights are
+      ratios, and the preparation region is required to have nonzero measure so the
+      normalisation is well-defined), a deterministic flow with a measure-preservation
+      field, and a preparation region. Outcome frequencies converge almost surely to
+      volume ratios by the strong law, which is the LF1 main theorem, with no
+      probabilistic input beyond repeated-preparation sampling.
 
-      One disclosure the module makes and this page repeats: through LF1 to LF3 only
-      measurability of the flow is consumed. The measure-preservation content is carried as
-      structural payload for physical admissibility and becomes load-bearing only when LF4
-      derives the measure from a concrete volume form.
+      The module makes one disclosure this page repeats, which is that through LF1 to LF3
+      only measurability of the flow is consumed. The measure-preservation content is
+      carried as structural payload for physical admissibility and becomes load-bearing
+      only when LF4 derives the measure from a concrete volume form.
 
       The concrete instance is Sigma = CP^(N-1) x T^2 with the Fubini-Study measure on the
-      base times normalised Haar on the torus fibre. Compactness does real work: it is what
-      forces the invariant measure to be unique.
+      base times normalised Haar on the torus fibre. Compactness does real work, as it's
+      what forces the invariant measure to be unique.
     term: Constraint surface
     status: physical-postulate
     source: curated
@@ -4606,94 +4613,97 @@ entries:
 
   - slug: ontic-vs-epistemic
     hook: >
-      What exists is one question; what a measurement context lets you say is another. Most
-      quantum paradoxes are category errors between the two.
+      What exists is one question and what a measurement context lets you say is another,
+      and most quantum paradoxes are category errors between the two.
     layman: >
-      Quantum mechanics keeps two kinds of statement in one notation. The sentence "the atom
-      is here" sounds like a fact about the world. The sentence "the atom has a thirty
-      percent chance of being here" sounds like a fact about what you know. The
+      Quantum mechanics keeps two kinds of statement in one notation. The sentence "the
+      atom is here" sounds like a fact about the world, and the sentence "the atom has a
+      thirty percent chance of being here" sounds like a fact about what you know. The
       wavefunction, the mathematical object that encodes everything quantum mechanics says
-      about a system, carries both voices at once, and a century of argument has been about
-      which voice is fundamental.
+      about a system, carries both voices at once, and a century of argument has been
+      about which voice is fundamental.
 
-      The distinction between map and territory is old, and it only starts to bite when you
-      enforce it. A fact is ontic when it belongs to the territory: true whether or not
-      anyone looks. A fact is epistemic when it belongs to the map that some agent or
-      apparatus draws. The trouble starts when a map-fact is mistaken for a territory-fact,
-      that is, when a change in the description is read as a change in the world.
+      The distinction between map and territory is old, and it only starts to bite when
+      you enforce it. A fact is ontic when it belongs to the territory, so it's true
+      whether or not anyone looks, and a fact is epistemic when it belongs to the map some
+      agent or apparatus draws. The trouble starts when a map-fact is mistaken for a
+      territory-fact, that is, when a change in the description is read as a change in the
+      world.
 
       Collapse, the abrupt jump of the quantum state at measurement, is the canonical
-      casualty. If the state is a map, its sudden update on measurement is no stranger than
-      a weather forecast changing when you open the curtains.
+      casualty. If the state is a map, its sudden update on measurement is no stranger
+      than a weather forecast changing when you open the curtains.
     in_csd: >
-      CSD makes the split load-bearing and never lets it blur. The outcome regions that a
+      CSD makes the split load-bearing and never lets it blur. The outcome regions a
       measurement context defines live on the projected state space, the space of quantum
-      states, and they are epistemic: the apparatus fixes the partition, and the partition
-      is a description. The measure that weights those regions is ontic: an invariant
-      volume on the constraint surface itself, one that the symmetry leaves unchanged,
-      fixed by that symmetry and indifferent to anyone's knowledge.
+      states, and they're epistemic, as the apparatus fixes the partition and the
+      partition is a description. The measure that weights those regions is ontic, an
+      invariant volume on the constraint surface itself, one the symmetry leaves
+      unchanged, fixed by that symmetry and indifferent to anyone's knowledge.
 
-      The Born rule, the quantum rule for outcome probabilities, is precisely the handshake:
-      an epistemic region, weighed by an ontic volume. Measurement is the ontic selection,
-      the record written on the surface, of which epistemic region the one real trajectory
-      realises. Keeping the two levels distinct is not philosophical hygiene; it is the
-      structure of the reconstruction.
+      The Born rule, the quantum rule for outcome probabilities, is precisely the
+      handshake, an epistemic region weighed by an ontic volume. Measurement is the ontic
+      selection, the record written on the surface, of which epistemic region the one real
+      trajectory realises. Keeping the two levels distinct isn't philosophical hygiene, as
+      it's the structure of the reconstruction.
     mathematical: >
       The two-strata reading is written into the axiom ledger. The operational stratum
-      speaks the effect-and-density language and carries the Gleason-type representation;
-      the ontic stratum computes weights as ratios of the Liouville measure over the
+      speaks the effect-and-density language and carries the Gleason-type representation,
+      and the ontic stratum computes weights as ratios of the Liouville measure over the
       preparation region.
 
-      The corpus proves that the two strata meet: the same Born vector is reached by the
-      operational route and by the volume route, through structurally distinct machinery.
+      The corpus proves that the two strata meet, as the same Born vector is reached by
+      the operational route and by the volume route, through structurally distinct
+      machinery.
     term: Ontic vs epistemic
     status: definition
     source: curated
     related: [psi-epistemic, epistemic-measure, is-the-wavefunction-real, constraint-surface, many-to-one-projection]
 
   - slug: projectability
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      Projectability is the one genuine postulate at the interface: the ontic arena projects
-      onto the space quantum mechanics is written on. Downstream of that, symmetry does the
-      choosing.
+      Projectability is the one genuine postulate at the interface, that the ontic arena
+      projects onto the space quantum mechanics is written on, and downstream of that
+      symmetry does the choosing.
     layman: >
-      If the world is a large deterministic space and quantum mechanics is written on a much
-      smaller curved one, something must connect them. You cannot get the small picture out
-      of the big one for free. The connection is structure, and structure has to be paid
-      for.
+      If the world is a large deterministic space and quantum mechanics is written on a
+      much smaller curved one, something must connect them, as you can't get the small
+      picture out of the big one for free. The connection is structure, and structure has
+      to be paid for.
 
-      Projectability is the payment, made openly. It says that the arena admits a
-      many-to-one projection onto the quantum state space: a map that sends every point of
-      the large space to a point of the small one, with many points sharing each target,
-      much as a solid object casts a flat shadow. The projection must be compatible with
-      the dynamics, so that motion on the arena maps to the expected motion of quantum
-      states, and with the symmetry. It is one postulate, stated once, and carried as an
-      explicit hypothesis everywhere it is used.
+      Projectability is the payment, made openly. It says the arena admits a many-to-one
+      projection onto the quantum state space, a map that sends every point of the large
+      space to a point of the small one, with many points sharing each target, much as a
+      solid object casts a flat shadow. The projection must be compatible with the
+      dynamics, so motion on the arena maps to the expected motion of quantum states, and
+      with the symmetry. It's one postulate, stated once, and carried as an explicit
+      hypothesis everywhere it's used.
 
-      The discipline lies in what is not postulated. Not the measure, which is forced by
-      symmetry. Not the Born rule, the quantum rule for outcome probabilities, which is
-      computed as a volume. Not the dynamics on the projected space, which are derived from
-      record statistics. The programme keeps its postulate count where you can audit it.
+      The discipline lies in what isn't postulated. The measure isn't, as symmetry forces
+      it. The Born rule, the quantum rule for outcome probabilities, isn't, as it's
+      computed as a volume. The dynamics on the projected space aren't, as they're derived
+      from record statistics. The programme keeps its postulate count where you can audit
+      it.
     in_csd: >
-      This is Paper C's sector postulate: the assumption that the constraint surface
+      This is Paper C's sector postulate, the assumption that the constraint surface
       projects onto a projective sector, the curved space of quantum states regarded as a
-      view of the arena, on which the reconstruction runs. It is projectability, and never
-      "the origin of the constraint surface". The projection points the wrong way for
-      that reading: the surface is the floor, and the sector is a view of it, not its
+      view of the arena, on which the reconstruction runs. It's projectability, and never
+      "the origin of the constraint surface", as the projection points the wrong way for
+      that reading, so the surface is the floor and the sector is a view of it and not its
       source.
 
-      In the formal corpus the postulate is never assumed globally. Every theorem that needs
-      it takes it as an explicit hypothesis, so the corpus's record of assumptions stays
-      clean and the cost is visible at every point of use.
+      In the formal corpus the postulate is never assumed globally. Every theorem that
+      needs it takes it as an explicit hypothesis, so the corpus's record of assumptions
+      stays clean and the cost is visible at every point of use.
     mathematical: >
-      In Lean the postulate is a structure field, not an axiom, so the kernel's axiom report
-      is unaffected by it. SectorData packages the postulate: a measurable projection from
-      the ontic space to an abstract projective target, a group acting on both sides,
-      invariance of the Liouville measure, and equivariance of the projection.
+      In Lean the postulate is a structure field and not an axiom, so the kernel's axiom
+      report is unaffected by it. SectorData packages the postulate as a measurable
+      projection from the ontic space to an abstract projective target, a group acting on
+      both sides, invariance of the Liouville measure, and equivariance of the projection.
 
-      A guard script enforces that the descent equation is genuinely consumed downstream;
-      the corpus was once burned by a substrate that was carried but unused, and the
+      A guard script enforces that the descent equation is genuinely consumed downstream,
+      as the corpus was once burned by a substrate that was carried but unused, and the
       linkage is checked mechanically.
     term: Projectability
     status: physical-postulate
@@ -4703,24 +4713,24 @@ entries:
     related: [constraint-surface, projective-sector, many-to-one-projection, wigner-rigidity, schrodinger-from-records]
 
   - slug: projective-sector
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      Quantum mechanics is written on a curved projective space. In CSD that space is
-      not fundamental: it is the sector the arena projects onto, with its geometry forced
-      by symmetry.
+      Quantum mechanics is written on a curved projective space, and in CSD that space
+      isn't fundamental, as it's the sector the arena projects onto, with its geometry
+      forced by symmetry.
     layman: >
-      The space of quantum states is not a vector space, whatever the opening chapters of
+      The space of quantum states isn't a vector space, whatever the opening chapters of
       the textbooks suggest. A quantum state is written as a vector, but two vectors that
       differ only by an overall phase, a rotation of the vector's mathematical description
       that changes no prediction at all, are the same physical state. Once you treat all
-      such vectors as a single point, quotienting the redundancy away, you are standing on
-      complex projective space: a compact arena, meaning one of finite extent, that is
+      such vectors as a single point, quotienting the redundancy away, you're standing on
+      complex projective space, a compact arena, meaning one of finite extent, that's
       curved and highly symmetric.
 
-      Most formulations treat that space as the fundamental stage. CSD demotes it. The
+      Most formulations treat that space as the fundamental stage, and CSD demotes it. The
       projective space is a sector, the image of the real arena under a many-to-one
-      projection, a map under which many points of the arena share one quantum state.
-      States are shadows, and the surface casting them is bigger.
+      projection, a map under which many points of the arena share one quantum state, so
+      states are shadows and the surface casting them is bigger.
 
       The demotion has a payoff. Questions that are awkward even to pose on the state
       space, such as which outcome actually happened and what carries the record of it,
@@ -4728,24 +4738,25 @@ entries:
     in_csd: >
       The sector is where the epistemic half of the reconstruction lives, the half that
       concerns descriptions rather than what exists. Measurement contexts partition the
-      sector into outcome regions, and the Fubini-Study measure prices them; this is the
-      natural volume on complex projective space, and it is the unique one left unchanged
-      by unitary symmetry, the transformations that preserve every quantum probability. The
-      ontic half stays below: the weight of a sector region is the Liouville volume, the
-      arena's own volume, of its preimage, the set of arena points that project into it.
+      sector into outcome regions, and the Fubini-Study measure prices them, as it's the
+      natural volume on complex projective space and the unique one left unchanged by
+      unitary symmetry, the transformations that preserve every quantum probability. The
+      ontic half stays below, as the weight of a sector region is the Liouville volume,
+      the arena's own volume, of its preimage, the set of arena points that project into
+      it.
 
-      The sector is posited, through projectability, and then heavily constrained: it is
-      compact, it is Kahler, carrying the curved geometry that complex projective space is
-      known for, and it has a unique invariant measure. The corpus's working instance takes
-      the sector to be complex projective space exactly, with the projection's fibre, the
-      set of arena points lying above a single state, carrying what the sector cannot.
+      The sector is posited, through projectability, and then heavily constrained, as it's
+      compact, it's Kahler, carrying the curved geometry complex projective space is known
+      for, and it has a unique invariant measure. The corpus's working instance takes the
+      sector to be complex projective space exactly, with the projection's fibre, the set
+      of arena points lying above a single state, carrying what the sector can't.
     mathematical: >
       ProjectiveSector bundles the measurable projection to CP^(N-1) with the pushforward
       law connecting the ontic measure to the sector measure.
 
       The Kahler instance instantiates it on CP^(N-1) x T^2 with projection onto the first
-      factor; the pushforward of the Liouville measure is the Fubini-Study measure, and
-      that identification is a theorem, not a stipulation.
+      factor, and the pushforward of the Liouville measure is the Fubini-Study measure,
+      which is a theorem and not a stipulation.
     term: Projective sector
     status: physical-postulate
     source: curated
@@ -4755,50 +4766,51 @@ entries:
 
   - slug: record-layer
     hook: >
-      A measurement is over when the world itself carries which outcome happened. The record
-      layer is where that fact lives: on the arena, not in anyone's notebook.
+      A measurement is over when the world itself carries which outcome happened, and the
+      record layer is where that fact lives, on the arena and not in anyone's notebook.
     layman: >
       Suppose outcome probabilities really are the volumes of regions in some space of
-      states. You still owe an account of the outcome itself. After the experiment,
+      states. You still owe an account of the outcome itself, as after the experiment
       something in the world, a pointer, a grain of silver, a memory, holds which result
-      occurred. A theory that prices outcomes but cannot say where the outcome is written
-      has stopped one step short.
+      occurred, and a theory that prices outcomes but can't say where the outcome is
+      written has stopped one step short.
 
-      The record layer is that last step. It asks for two things. First, the outcome
+      The record layer is that last step, and it asks for two things. First, the outcome
       regions must be fixed by the apparatus alone, in the way that a referee's rulebook
-      does not depend on which team is playing. Second, the record must be a physical
-      configuration of the arena, the space of everything that exists in CSD: an ontic
-      fact, one that holds independently of anyone's knowledge, selected by the one real
-      trajectory.
+      doesn't depend on which team is playing. Second, the record must be a physical
+      configuration of the arena, the space of everything that exists in CSD, so it's an
+      ontic fact, one that holds independently of anyone's knowledge, selected by the one
+      real trajectory.
 
       Nothing mystical is on offer. A record is structure the arena already has, singled
       out by where the trajectory went.
     in_csd: >
-      This is the programme's near frontier, and it is partly built. The partition fixed by
-      the context exists: outcome regions, called basins, are defined from the apparatus's
-      rate field, the outcome weights the apparatus assigns at each point of the state
-      space, with no preparation anywhere in the definition, and their weights come out as
-      the Born weights, the probabilities quantum mechanics assigns. For the qubit, the
-      simplest quantum system, with two outcomes, the whole story is proved end to end. At
-      higher dimension the analysis indicates that the contextual structure, the dependence
-      of the outcome regions on the whole measurement context, does not sit on the base
-      alone, the base being the projected state space, and the corpus places it in the
-      fibre, the part of the arena lying above each state. That placement narrows where the
-      mechanism can be, though it rests on refuting one natural class of base candidate
-      rather than on a no-go.
+      This is the programme's near frontier, and it's partly built. The partition fixed by
+      the context exists, as outcome regions, called basins, are defined from the
+      apparatus's rate field, the outcome weights the apparatus assigns at each point of
+      the state space, with no preparation anywhere in the definition, and their weights
+      come out as the Born weights, the probabilities quantum mechanics assigns. For the
+      qubit, the simplest quantum system, with two outcomes, the whole story is proved end
+      to end. At higher dimension the analysis indicates that the contextual structure,
+      the dependence of the outcome regions on the whole measurement context, doesn't sit
+      on the base alone, the base being the projected state space, and the corpus places
+      it in the fibre, the part of the arena lying above each state. That placement
+      narrows where the mechanism can be, though it rests on refuting one natural class of
+      base candidate rather than on a no-go.
 
-      What remains open, and is stated as open, is deriving the fibre mechanism from
-      de-isolation dynamics, the physics of a system losing its isolation during
-      measurement, rather than exhibiting it. The record layer is where the reconstruction
-      is completed or not.
+      What remains open, and is stated as open, is deriving the fibre mechanism from de-
+      isolation dynamics, the physics of a system losing its isolation during measurement,
+      rather than exhibiting it. The record layer is where the reconstruction is completed
+      or not.
     mathematical: >
-      The proved tier: a measurable simplex-valued rate field on the base defines
+      The proved tier is that a measurable simplex-valued rate field on the base defines
       pairwise-disjoint basins whose epistemic probability at preparation psi is the Born
-      weight, from a partition that never mentions psi. Sequential and mixed-state versions
-      run through the Luders tier.
+      weight, from a partition that never mentions psi. Sequential and mixed-state
+      versions run through the Luders tier.
 
-      The open tier is dynamical, not kinematic: no interaction Hamiltonian generating the
-      basins is constructed, and the corpus says so in the module that would need it.
+      The open tier is dynamical and not kinematic, as no interaction Hamiltonian
+      generating the basins is constructed, and the corpus says so in the module that
+      would need it.
     term: Record layer
     status: definition
     source: curated
@@ -4806,37 +4818,37 @@ entries:
 
   - slug: de-isolation
     hook: >
-      Nothing collapses. A measured system stops being isolated, and measurement is what
-      de-isolation dynamics looks like from inside.
+      Nothing collapses, as a measured system stops being isolated, and measurement is
+      what de-isolation dynamics looks like from inside.
     layman: >
-      Textbook quantum mechanics has two rules for change: smooth, deterministic evolution
-      while nobody looks, and an abrupt jump when somebody does. Two rules, one world, and
-      no principled statement of when each applies. That is not a paradox; it is an
-      unfinished theory.
+      Textbook quantum mechanics has two rules for change, smooth, deterministic evolution
+      while nobody looks, and an abrupt jump when somebody does. That's two rules, one
+      world, and no principled statement of when each applies, which isn't a paradox but
+      an unfinished theory.
 
-      CSD's diagnosis is that the second rule describes a change of circumstance, not a
-      change of law. An isolated system follows the smooth rule. Measurement is the
-      deliberate destruction of that isolation, by coupling the system to an apparatus, and
-      the jump is what the resulting joint dynamics looks like when you only keep track of
-      the system.
+      CSD's diagnosis is that the second rule describes a change of circumstance and not a
+      change of law. An isolated system follows the smooth rule, measurement is the
+      deliberate destruction of that isolation, by coupling the system to an apparatus,
+      and the jump is what the resulting joint dynamics looks like when you only keep
+      track of the system.
 
-      One law, applied twice. The dial that turns is isolation, and it is a physical dial,
-      not an interpretive one.
+      It's one law, applied twice. The dial that turns is isolation, and it's a physical
+      dial and not an interpretive one.
     in_csd: >
       De-isolation is the programme's word for the measurement interaction seen on the
-      arena. The corpus realises it concretely. A deterministic, measure-preserving
+      arena, and the corpus realises it concretely. A deterministic, measure-preserving
       de-isolation flow, one that never changes the volume of any set of states and is
       genuinely not the identity, couples the system to a pointer, the part of the
-      apparatus that displays the result. It realises the measurement dilation dynamically,
-      where a dilation is the standard description of a measurement as smooth evolution of
-      system and apparatus together, and the volumes of its pointer blocks, the regions in
-      which the pointer shows a given result, reproduce the Born weights for every
-      preparation. The entangled tier has its own witness: the singlet, the simplest
-      entangled pair of systems, has a state that cannot be split into separate states of
-      the two parts, and that non-factorisation is realised by an explicit de-isolation
-      flow on the enlarged arena.
+      apparatus that displays the result. It realises the measurement dilation
+      dynamically, where a dilation is the standard description of a measurement as smooth
+      evolution of system and apparatus together, and the volumes of its pointer blocks,
+      the regions in which the pointer shows a given result, reproduce the Born weights
+      for every preparation. The entangled tier has its own witness, as the singlet, the
+      simplest entangled pair of systems, has a state that can't be split into separate
+      states of the two parts, and that non-factorisation is realised by an explicit de-
+      isolation flow on the enlarged arena.
 
-      What de-isolation does not do, and what remains open, is generate the record layer's
+      What de-isolation doesn't do, and what remains open, is generate the record layer's
       fibre mechanism from first principles, and the honest boundary between "exhibited"
       and "derived" is maintained wherever the flows appear.
 
@@ -4846,40 +4858,40 @@ entries:
       obtain an exponential law for first passage, the time at which the trajectory first
       enters an outcome region, as a limit theorem. Three things defeat it. The limit
       theorems for hitting times need the target sets to be vanishingly rare, while the
-      cells of a Born partition have sizes that sum to one. An asymptotic law would deliver
-      the Born weights only in a limit, which is weaker than what the corpus proves exactly.
-      And the race between outcomes needs independent clocks, which one deterministic
-      trajectory cannot supply. What survived is the clock law, which is forced rather than
-      chosen, and the rates, which Kac's formula reads off any ergodic flow: for a flow that
-      visits every region in proportion to its volume, the average time between visits to a
-      region is fixed by that volume.
+      cells of a Born partition have sizes that sum to one. An asymptotic law would
+      deliver the Born weights only in a limit, which is weaker than what the corpus
+      proves exactly. And the race between outcomes needs independent clocks, which one
+      deterministic trajectory can't supply. What survived is the clock law, which is
+      forced rather than chosen, and the rates, which Kac's formula reads off any ergodic
+      flow, as for a flow that visits every region in proportion to its volume the average
+      time between visits to a region is fixed by that volume.
 
-      De-isolation also has an operational face, and the corpus proves the two agree. The flow
-      that couples system and pointer, watched from the system alone, is a channel that keeps
-      the pointer-basis diagonal of the density operator and discards the rest. Entropy never
-      decreases under it, the second law of the thermodynamics track is its coarse-graining,
-      and the classical information it lets through is exactly one bit per qubit. So the same
-      de-isolation dynamics that realises the Born weights as volumes also realises
-      decoherence as a channel, with no second mechanism.
+      De-isolation also has an operational face, and the corpus proves the two agree. The
+      flow that couples system and pointer, watched from the system alone, is a channel
+      that keeps the pointer-basis diagonal of the density operator and discards the rest.
+      Entropy never decreases under it, the second law of the thermodynamics track is its
+      coarse-graining, and the classical information it lets through is exactly one bit
+      per qubit, so the same de-isolation dynamics that realises the Born weights as
+      volumes also realises decoherence as a channel, with no second mechanism.
     mathematical: >
-      The measurement-dynamics tier: a von Neumann de-isolation flow on the dilated space,
-      measure-preserving and distinct from the identity, whose pointer-block volumes and
-      almost-sure frequencies are the Born weights. The Naimark dilation is realised
-      dynamically rather than cited abstractly, and the outcome map per microstate is
-      delivered by the pointer-partition theorems.
+      The measurement-dynamics tier is a von Neumann de-isolation flow on the dilated
+      space, measure-preserving and distinct from the identity, whose pointer-block
+      volumes and almost-sure frequencies are the Born weights. The Naimark dilation is
+      realised dynamically rather than cited abstractly, and the pointer-partition
+      theorems deliver the outcome map per microstate.
 
       The mixing-flow route to the fibre mechanism, with an exponential first-passage law
       arriving as a limit theorem, was retired in August 2026 as mis-specified rather than
-      merely hard: hitting-time limit theorems require shrinking target sets, an asymptotic
-      law is weaker than the exact Born identity already proved, and one deterministic
-      trajectory supplies no independent clocks. The clock law and the Kac-formula rates
-      survive.
+      merely hard, as hitting-time limit theorems require shrinking target sets, an
+      asymptotic law is weaker than the exact Born identity already proved, and one
+      deterministic trajectory supplies no independent clocks. The clock law and the Kac-
+      formula rates survive.
 
       deisolationChannel N (LF6/DecoherenceChannel.lean) is stinespringChannel of the von
-      Neumann coupling unitary with the pointer ready; deisolationChannel_apply_outerProduct
-      recovers decohereReduced on rank-one inputs, deisolationChannel_apply_eq_pinch
-      identifies it with the pinching of the second-law module,
-      vonNeumannEntropy_le_deisolation is the entropy non-decrease and
+      Neumann coupling unitary with the pointer ready.
+      deisolationChannel_apply_outerProduct recovers decohereReduced on rank-one inputs,
+      deisolationChannel_apply_eq_pinch identifies it with the pinching of the second-law
+      module, vonNeumannEntropy_le_deisolation is the entropy non-decrease and
       deisolationChannel_holevoCapacity the one-bit capacity.
     term: De-isolation
     status: definition
