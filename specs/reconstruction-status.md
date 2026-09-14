@@ -150,7 +150,12 @@ bullets for the current state.
   form, and the piecewise pieces stated on it — which is a brick, not a wall. ⚠️ *Still true and
   still verified:* the generating Hamiltonians are written down, the claim is standard physics,
   nothing here is odd-dimensional; and a *discharge* (proving the propagators ARE those flows) is the
-  `H_int` frontier, paper-side. The statement-shape is `R-016′`.
+  `H_int` frontier, paper-side. The statement-shape is `R-016′`. ⚠️ **`R-016′` landed 2026-09-14**
+  (`LF4/ArenaSymplectic.lean`): the arena `ℂℙᴺ × T²` is a symplectic manifold, Liouville holds on
+  it, and the *isolated* dynamics is proved to be its Hamiltonian flow
+  (`hamiltonianFlow_sectorEnergy_schrodinger`); the torus strokes are proved locally Hamiltonian
+  there. The measurement propagators (`jointLift`) as time-`1` maps on the arena remain the
+  paper-side content of `R-016`; the flux obstruction at manifold level is `BACKLOG.md` #28.
 
 **(ii) Scoped by doctrine, not by tooling.**
 

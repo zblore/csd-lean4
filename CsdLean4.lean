@@ -583,7 +583,12 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMoment
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerFlow
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCircle
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCircleTranslation
+public import CsdLean4.Mathlib.Geometry.Manifold.ProductSelfModel
+public import CsdLean4.Mathlib.Geometry.Manifold.TranslationAtlasForm
+public import CsdLean4.Mathlib.Geometry.Manifold.ProductForm
 public import CsdLean4.LF4.ProjectiveManifold
+public import CsdLean4.LF4.ArenaSymplectic
 public import CsdLean4.Empirical.QM.Darwinism
 public import CsdLean4.Empirical.CSD.Darwinism
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry

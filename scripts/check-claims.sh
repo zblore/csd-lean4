@@ -844,6 +844,39 @@ isSymplectic"
 #     closed (fsForm_mextDeriv, the staged manifold `d`) and non-degenerate at every point
 #     (fsForm_nondegenerate, taming `fsForm x (v, i v) < 0` via Cauchy-Schwarz in the chart).
 #     Real dimension 2n.                                          EVEN, manifold-level.
+#   torusAreaForm_isSymplectic — (2026-09-14, R-016', Geometry/Manifold/TranslationAtlasForm.lean)
+#     the torus AddCircle T x AddCircle T', charted by TRANSLATION over R x R, with the constant
+#     area form dθ₁ ∧ dθ₂ (constForm areaForm): closed (constForm_mextDeriv, the local
+#     representative is the constant in every chart because every transition is a translation)
+#     and non-degenerate (areaForm_nondegenerate). Real dimension 2.      EVEN, manifold-level.
+#   arenaForm_isSymplectic — (2026-09-14, R-016', LF4/ArenaSymplectic.lean) THE ARENA
+#     KSigma (N+1) = CP^N x T^2, charted on the product normed space (Fin N -> C) x (R x R), with
+#     arenaForm = π₁^* ω_FS + π₂^* (dθ₁ ∧ dθ₂) (DifferentialForm.prodForm): symplectic by
+#     IsSymplectic.prodForm (closed by prodForm_mextDeriv from the factors; non-degenerate because
+#     a nonzero pair has a nonzero component, paired within its factor). Real dimension 2N + 2.
+#                                                                        EVEN, manifold-level.
+#   arenaVolume_map_hamiltonianFlow — (same landing) LIOUVILLE ON THE ARENA: the Hamiltonian flow
+#     of every C^infinity H : KSigma -> R preserves arenaVolume, the top-form measure of
+#     arenaForm^(N+1); an INSTANCE of IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow.
+#     ⚠️ arenaVolume is NOT identified with μ_FS ⊗ vol (the binomial identity for the top power of
+#     a sum is not in the corpus); the theorem is about the form's own measure. CP^N x T^2, EVEN.
+#   isHamiltonianVectorField_sectorEnergy / hamiltonianVectorField_sectorEnergy — (same landing)
+#     ι_X ω = dH ON THE ARENA for a sector energy H ∘ π₁: (X_H, 0) satisfies the equation
+#     (mfderiv of H ∘ π₁ is mfderiv H ∘ fst, the torus block of the form kills the zero component),
+#     and by uniqueness for the symplectic arenaForm it IS the arena's Hamiltonian vector field.
+#     The words name the established equation. CP^N x T^2, EVEN.
+#   hamiltonianFlow_sectorEnergy / hamiltonianFlow_sectorEnergy_schrodinger — (same landing) the
+#     IDENTIFICATIONS of flows: the arena's Hamiltonian flow of H ∘ π₁ is (φ^H_t x, θ) (the curve
+#     t ↦ (φ^H_t x, θ) is an integral curve of (X_H, 0), and integral curves are unique on the
+#     compact Hausdorff arena), and for H = −2<H_mat> it is (exp(−itH) . x, θ) by Q29(e). This is
+#     A2's vector-field equation at the ARENA level for the isolated dynamics: the Schrödinger
+#     unitary with the torus fixed is a Hamiltonian flow of the symplectic arena. CP^N x T^2, EVEN.
+#   isLocallyHamiltonian_torusStrokeField — (same landing) the rigid torus stroke (0, a) is
+#     LOCALLY Hamiltonian on the arena: ι_{(0,a)} arenaForm is the constant form areaForm(a, ·)
+#     on the torus factor (interiorProduct_arenaForm_torusStrokeField), and d of a constant form
+#     on a translation atlas vanishes (mextDeriv_constFamily, through mextDeriv_prodFamily). The
+#     flux obstruction -- no GLOBAL H, the withdrawn reading of shear_piecewise_hamiltonian above --
+#     is NOT restated at manifold level; the theorem claims exactly the closedness. CP^N x T^2, EVEN.
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 kahlerFstSector_projectiveLaw
 kahlerFstSector_epistemicMeasure_projectiveLaw
@@ -918,6 +951,14 @@ hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH
 hamiltonianCurve_unique
+torusAreaForm_isSymplectic
+arenaForm_isSymplectic
+arenaVolume_map_hamiltonianFlow
+isHamiltonianVectorField_sectorEnergy
+hamiltonianVectorField_sectorEnergy
+hamiltonianFlow_sectorEnergy
+hamiltonianFlow_sectorEnergy_schrodinger
+isLocallyHamiltonian_torusStrokeField
 momentumH_hamiltonianField
 translationCurve_isHamiltonianCurve
 fieldHamiltonian_mulVec_single

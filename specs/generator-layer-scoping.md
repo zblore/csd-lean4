@@ -785,7 +785,16 @@ So Q31 strictly contains Q29(b′) and adds the Poincaré lemma (M–L on a ball
 operator). **Cx XL, P low–medium, value low** (nothing consumes it; it is the theorem a symplectic
 library owes).
 
-### R-016′: the arena-level `ι_X ω = dH` — `L`, statement-level
+### R-016′: the arena-level `ι_X ω = dH` — `L`, statement-level — **LANDED 2026-09-14**
+
+*(`LF4/ArenaSymplectic.lean` with `Instances/AddCircleTranslation.lean`, `ProductSelfModel.lean`,
+`TranslationAtlasForm.lean`, `ProductForm.lean`. Items (1) and (2) of §3 are done — the arena is a
+manifold over the product normed space with the product symplectic form, by a direct product-chart
+construction rather than a general pullback — and (3)'s positive half, `IsLocallyHamiltonian` for
+the stroke field, is proved; the non-exactness half is `BACKLOG.md` #28. Beyond the plan: Liouville
+on the arena and the isolated Schrödinger dynamics as the arena's Hamiltonian flow. The paragraph
+below is the pricing as it stood.)*
+
 
 **What it would state.** That the record layer's joint-arena propagators (`RecordLayer/…`,
 `H_int = g(t)(ι+1)δ·p_R`) are the time-`T` flows of Hamiltonian vector fields on the arena

@@ -1450,4 +1450,52 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.cpn_isManifold
 
+-- R-016′ (2026-09-14, LF4/ArenaSymplectic.lean): the arena KSigma (N+1) = ℂℙᴺ × T² as a
+-- SYMPLECTIC MANIFOLD, over the normed model (Fin N → ℂ) × (ℝ × ℝ) (the product charted on the
+-- product normed space, the torus by translation), with the form π₁^* ω_FS + π₂^* (dθ₁ ∧ dθ₂).
+-- ⚠️ The arena's measure here is the top-form measure of arenaForm^(N+1), NOT the corpus's
+-- μ_FS ⊗ vol: the binomial identity relating the two is not in the corpus, so Liouville is stated
+-- for arenaVolume. ⚠️ The torus stroke is proved LOCALLY Hamiltonian; its flux obstruction (no
+-- global H) is not restated at manifold level, and the joint lift is not read on the arena.
+/-- info: 'CSD.LF4.ksigma_isManifold_arenaModel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.ksigma_isManifold_arenaModel
+
+-- ★★★ The arena is a symplectic manifold.
+/-- info: 'CSD.LF4.arenaForm_isSymplectic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.arenaForm_isSymplectic
+
+-- ★★ Liouville on the arena, for the top-form measure of the arena form.
+/-- info: 'CSD.LF4.arenaVolume_map_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.arenaVolume_map_hamiltonianFlow
+
+-- ★★ ι_X ω = dH on the arena for a sector energy H ∘ π₁: the field is (the sector field, 0).
+/-- info: 'CSD.LF4.isHamiltonianVectorField_sectorEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_sectorEnergy
+
+/-- info: 'CSD.LF4.hamiltonianVectorField_sectorEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianVectorField_sectorEnergy
+
+-- ★★★ The flow of a sector energy on the arena is the sector's flow with the torus fixed
+-- (uniqueness of integral curves on the compact Hausdorff arena).
+/-- info: 'CSD.LF4.hamiltonianFlow_sectorEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_sectorEnergy
+
+-- ★★★ The isolated ontic dynamics IS a Hamiltonian flow on the arena: the Schrödinger unitary of
+-- a Hermitian H, with the torus fixed, is the arena's Hamiltonian flow of −2⟨H⟩ ∘ π₁ (A2's
+-- vector-field equation, arena level; Q29(e) lifted).
+/-- info: 'CSD.LF4.hamiltonianFlow_sectorEnergy_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_sectorEnergy_schrodinger
+
+-- ★★ The rigid torus stroke (0, a) is locally Hamiltonian on the arena: d(ι_X ω) = 0.
+/-- info: 'CSD.LF4.isLocallyHamiltonian_torusStrokeField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isLocallyHamiltonian_torusStrokeField
+
 end CSD.Tests.AxiomAudit

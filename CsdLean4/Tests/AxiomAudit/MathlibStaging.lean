@@ -5937,4 +5937,52 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'MeasureTheory.MeasurePreserving.vadd_twist_of_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms MeasureTheory.MeasurePreserving.vadd_twist_of_invariant
 
+-- R-016′ Category-1 pieces (2026-09-14): the arena ℂℙⁿ × T² as a symplectic manifold needs a
+-- product of manifolds charted on the product NORMED SPACE (the corpus's form layer is stated for
+-- self models only; Mathlib charts products on ModelProd), a translation atlas on AddCircle T
+-- (every chart transition is a translation, so a constant alternating map is a global smooth
+-- form), constant forms on such an atlas, and the sum π₁^*α + π₂^*β on a product with its
+-- exterior derivative. ⚠️ Two charted-space structures on AddCircle T (stereographic over
+-- EuclideanSpace ℝ (Fin 1), Q33; translation over ℝ, here) and two on M × N (ModelProd E F; E × F),
+-- keyed on distinct model types, never compared.
+/-- info: 'AddCircle.instIsManifoldReal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms AddCircle.instIsManifoldReal
+
+/-- info: 'AddCircle.fderiv_chart_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms AddCircle.fderiv_chart_transition
+
+/-- info: 'Prod.instIsManifoldSelf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Prod.instIsManifoldSelf
+
+/-- info: 'Prod.fderiv_chart_transition_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Prod.fderiv_chart_transition_prod
+
+/-- info: 'DifferentialForm.localRep_constFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.localRep_constFamily
+
+/-- info: 'DifferentialForm.constForm_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.constForm_mextDeriv
+
+-- ★★ The torus AddCircle T × AddCircle T', charted by translation over ℝ × ℝ, is a symplectic
+-- manifold: the constant area form dθ₁ ∧ dθ₂ is closed (constant in every chart) and non-degenerate.
+/-- info: 'AddCircle.torusAreaForm_isSymplectic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms AddCircle.torusAreaForm_isSymplectic
+
+/-- info: 'DifferentialForm.localRep_prodFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.localRep_prodFamily
+
+-- ★★ d(π₁^*α + π₂^*β) = π₁^* dα + π₂^* dβ on a product, from Mathlib's flat extDeriv_pullback
+-- along the two projections.
+/-- info: 'DifferentialForm.prodForm_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.prodForm_mextDeriv
+
+-- ★★ The product of two symplectic manifolds is symplectic.
+/-- info: 'DifferentialForm.IsSymplectic.prodForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.IsSymplectic.prodForm
+
+-- The Hamiltonian flow at any time is continuous (added for the fsVolumeNormalized invariance
+-- theorems' map_smul' route, 2026-09-14).
+/-- info: 'DifferentialForm.IsSymplectic.continuous_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.IsSymplectic.continuous_hamiltonianFlow
+
 end CSD.Tests.AxiomAudit
