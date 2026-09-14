@@ -826,6 +826,16 @@ isSymplectic"
 #     equality with the drive WRITTEN AS IsSymplectic.hamiltonianFlow of the (declared)
 #     schrodingerHamiltonian, proved by rewriting with that identification. The word names the
 #     declared object the drive is; the content is thermodynamics on the record layer. CP^n, EVEN.
+#   isHolomorphicMap_hamiltonianFlow_schrodinger / fsMetric_hamiltonianFlow_schrodinger /
+#   hamiltonianFlow_schrodingerHamiltonian_eq — (2026-09-15, #30 KG-3',
+#     Instances/ProjectiveSpaceSchrodingerHolomorphic.lean) CONSUMERS of Q29(e): the Hamiltonian
+#     flow of -2<H> on CP^n, WRITTEN AS IsSymplectic.hamiltonianFlow of the declared
+#     schrodingerHamiltonian, is at every time a holomorphic map (its mfderiv commutes with J = i.)
+#     and an isometry of the Fubini-Study metric omega(J., .) (Killing), proved by rewriting the
+#     flow as p |-> exp(-itH) . p (the third name is that funext) and reading the unitary action
+#     in charts as uTrans U (C-differentiable) with fsModelForm_uTrans. The Schrodinger FIELD is
+#     a holomorphic vector field in the atlas sense (isHolomorphicVectorField_schrodingerField, no
+#     vocabulary word). The word names the declared flow; the content is holomorphy. CP^n, EVEN.
 #   measurable_hamiltonianShift / hamiltonianShift_eq_zero_of_offCorridor /
 #   hamiltonianShift_eq_strokeCurve_one / isJointLift_hamiltonianShift /
 #   jointLift_hamiltonianShift_measurePreserving — (2026-09-02, RecordLayer/
@@ -960,6 +970,9 @@ hamiltonianFlow_torusHamiltonian
 manyToOneSchrodingerSetup_projectedFlow_eq_hamiltonianFlow
 manyToOneSchrodingerSetup_flow_eq_hamiltonianFlow
 hamiltonianFlow_schrodinger_eq
+isHolomorphicMap_hamiltonianFlow_schrodinger
+fsMetric_hamiltonianFlow_schrodinger
+hamiltonianFlow_schrodingerHamiltonian_eq
 sigma_tpm_law_hamiltonianFlow
 sigma_jarzynski_hamiltonianFlow
 contMDiff_omega_schrodingerHamiltonian

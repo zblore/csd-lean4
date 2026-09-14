@@ -6028,4 +6028,50 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Projectivization.preservesLocalRep_fsForm_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Projectivization.preservesLocalRep_fsForm_smul
 
+-- Holomorphic vector fields and maps for an atlas complex structure (2026-09-15, #30 KG-3',
+-- Geometry/Manifold/HolomorphicVectorField.lean): IsHolomorphicVectorField J₀ X (the chart field
+-- is differentiable with J₀-linear derivative in every chart), IsHolomorphicMap J g (mfderiv
+-- commutes with J), and the Kähler triangle's "symplectic + holomorphic = Killing" half.
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_mfderiv_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.IsAlmostKahler.metric_mfderiv_eq
+
+-- The Schrödinger field on ℂℙⁿ is holomorphic and its flow is holomorphic and Killing (#30,
+-- Instances/ProjectiveSpaceSchrodingerHolomorphic.lean): the unitary action is a holomorphic map
+-- (its mfderiv is the real restriction of the ℂ-derivative of uTrans U), symplectic at bundle
+-- level (fsModelForm_uTrans through the tangent spaces), hence an isometry of the Fubini–Study
+-- metric; the Hamiltonian flow of −2⟨H⟩ inherits all three at every time; the Schrödinger field
+-- read in ANY affine chart is schrodingerChartField in that chart (uniqueness of the local
+-- Hamiltonian vector), a quadratic polynomial with complex coefficients, so ℂ-differentiable.
+/-- info: 'Projectivization.hasMFDerivAt_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.hasMFDerivAt_smul
+
+-- ★ The unitary action is a holomorphic map of ℂℙⁿ.
+/-- info: 'Projectivization.isHolomorphicMap_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.isHolomorphicMap_smul
+
+-- ★ U^* ω_FS = ω_FS at bundle level.
+/-- info: 'Projectivization.fsForm_smul_mfderiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.fsForm_smul_mfderiv
+
+-- ★ The unitary action is an isometry of the Fubini–Study metric.
+/-- info: 'Projectivization.fsMetric_smul_mfderiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.fsMetric_smul_mfderiv
+
+-- ★★ The Hamiltonian flow of −2⟨H⟩ is holomorphic and Killing at every time.
+/-- info: 'Projectivization.isHolomorphicMap_hamiltonianFlow_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.isHolomorphicMap_hamiltonianFlow_schrodinger
+
+/-- info: 'Projectivization.fsMetric_hamiltonianFlow_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.fsMetric_hamiltonianFlow_schrodinger
+
+/-- info: 'Projectivization.chartField_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.chartField_schrodingerField
+
+/-- info: 'Projectivization.differentiableAt_schrodingerChartField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.differentiableAt_schrodingerChartField
+
+-- ★★ The Schrödinger field is a holomorphic vector field of the Kähler manifold ℂℙⁿ.
+/-- info: 'Projectivization.isHolomorphicVectorField_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.isHolomorphicVectorField_schrodingerField
+
 end CSD.Tests.AxiomAudit
