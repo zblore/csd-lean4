@@ -4899,49 +4899,49 @@ entries:
     related: [measurement-flow, stinespring-dilation, holevo-bound, record-layer, isolation]
 
   - slug: typicality-volume
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
-      Almost every way the experiment could have started gives the quantum statistics. That
-      is not an assumption about probability; it is a measured volume.
+      Almost every way the experiment could have started gives the quantum statistics, and
+      that isn't an assumption about probability, as it's a measured volume.
     layman: >
-      A deterministic world has no dice, so where do quantum probabilities come from? The
-      classical answer, ignorance of initial conditions, always carried a hidden debt. Which
-      initial conditions count as typical depends on how you measure sets of them, that is,
-      on the rule you use to say how large a set of starting points is, and choosing that
-      rule to get the answer you wanted is circular.
+      A deterministic world has no dice, so you can ask where quantum probabilities come
+      from. The classical answer, ignorance of initial conditions, always carried a hidden
+      debt, as which initial conditions count as typical depends on how you measure sets
+      of them, that is, on the rule you use to say how large a set of starting points is,
+      and choosing that rule to get the answer you wanted is circular.
 
-      Typicality volume is the debt paid. Fix the one measure that the symmetry of the state
-      space allows. Then ask: of all the microstates, the complete states of the world,
-      compatible with how the experiment was prepared, what fraction sits in the region
-      belonging to a given outcome? That fraction is the outcome's weight. Run the
-      experiment many times, drawing a fresh microstate each run, and the observed frequency
-      converges to it.
+      Typicality volume is the debt paid. Fix the one measure the symmetry of the state
+      space allows, then ask what fraction of all the microstates, the complete states of
+      the world, compatible with how the experiment was prepared sits in the region
+      belonging to a given outcome. That fraction is the outcome's weight, and if you run
+      the experiment many times, drawing a fresh microstate each run, the observed
+      frequency converges to it.
 
-      No randomness enters the dynamics. The probability lies entirely in the ignorance, and
-      the ignorance is priced by a ruler nobody chose.
+      No randomness enters the dynamics. The probability lies entirely in the ignorance,
+      and the ignorance is priced by a ruler nobody chose.
     in_csd: >
       This is the ontic half of the Born rule, the quantum rule for outcome probabilities.
       The outcome regions are epistemic, partitions of the sector fixed by the measurement
-      context, but the weight of each region is the Liouville volume of its preimage on the
-      constraint surface: the arena's own volume, applied to the set of arena points that
-      project into the region, and conditioned on the preparation region, meaning measured
-      as a fraction of the states compatible with the preparation. Typicality here is
-      repeated-preparation typicality: each trial draws a fresh microstate from the
-      conditional measure, and the strong law of large numbers, the theorem that averages
-      of independent draws settle to their expected value, does the rest.
+      context, but the weight of each region is the Liouville volume of its preimage on
+      the constraint surface, the arena's own volume applied to the set of arena points
+      that project into the region, and conditioned on the preparation region, meaning
+      measured as a fraction of the states compatible with the preparation. Typicality
+      here is repeated-preparation typicality, as each trial draws a fresh microstate from
+      the conditional measure, and the strong law of large numbers, the theorem that
+      averages of independent draws settle to their expected value, does the rest.
 
-      The volume reading is proved at full generality: frequencies converge jointly to the
-      complete Born vector, the full list of outcome probabilities, for every unit
+      The volume reading is proved at full generality, as frequencies converge jointly to
+      the complete Born vector, the full list of outcome probabilities, for every unit
       preparation and without genericity hypotheses. What remains open is concentration,
       which would upgrade "the mean is the Born weight" to "a single long run concentrates
       around it" at an explicit polynomial rate.
     mathematical: >
-      The chain runs LF1 to LF4: i.i.d. preparation sampling, indicator variables per
+      The chain runs LF1 to LF4, with i.i.d. preparation sampling, indicator variables per
       outcome region, the strong law of large numbers, and the identification of the
       limiting weight with a Fubini-Study volume ratio via the moment map and the
       Duistermaat-Heckman law.
 
-      The general-N statement is unconditional and foundational-triple-only: no
+      The general-N statement is unconditional and foundational-triple-only, with no
       Gleason-type input anywhere on the volume route.
     term: Typicality volume
     status: proved-in-corpus
@@ -4955,22 +4955,23 @@ entries:
       text: Paper A is the volume-based account of outcome frequencies
 
   - slug: outcome-region
-    reviewed: 2026-09-04
+    reviewed: 2026-09-14
     hook: >
-      An outcome is a region, and the apparatus alone draws its boundary. The preparation
-      decides where the trajectory lands; it does not get to draw the map.
+      An outcome is a region, and the apparatus alone draws its boundary, so the
+      preparation decides where the trajectory lands and doesn't get to draw the map.
     layman: >
-      If outcome probabilities are the sizes of regions, who draws the regions? There is a
-      wrong answer available, and early versions of any volume picture flirt with it: let
-      the prepared state draw its own regions, sized to the probabilities you already knew.
-      That is bookkeeping wearing the costume of an explanation.
+      If outcome probabilities are the sizes of regions, you can ask who draws the
+      regions. There's a wrong answer available, and early versions of any volume picture
+      flirt with it, which is to let the prepared state draw its own regions, sized to the
+      probabilities you already knew. That's bookkeeping wearing the costume of an
+      explanation.
 
       The honest requirement is that the measuring device fixes the partition before the
-      state shows up, the way a roulette wheel's pockets exist before the ball drops. It is
-      the same wheel for every ball. Then the fact that the frequencies match the pocket
-      sizes is a discovery about the dynamics, not a definition.
+      state shows up, the way a roulette wheel's pockets exist before the ball drops, and
+      it's the same wheel for every ball. Then the fact that the frequencies match the
+      pocket sizes is a discovery about the dynamics and not a definition.
 
-      CSD's outcome regions meet that requirement. They are built from the apparatus's own
+      CSD's outcome regions meet that requirement. They're built from the apparatus's own
       data, and no preparation appears anywhere in their definition.
     in_csd: >
       The outcome regions are the epistemic half of the two-level structure, the half that
@@ -4978,35 +4979,37 @@ entries:
       partition of the sector, the space of quantum states, and Paper C demands that the
       partition depend on the context alone. The corpus discharges this with basins built
       from a context's rate field, the outcome weights the apparatus assigns, read at the
-      ontic point; the preparation plays no part. It then proves that their epistemic
-      weights are exactly the Born weights, the probabilities quantum mechanics assigns.
+      ontic point, so the preparation plays no part, and it then proves that their
+      epistemic weights are exactly the Born weights, the probabilities quantum mechanics
+      assigns.
 
       The dimension story is a genuine discovery. For the qubit, the simplest quantum
       system, the regions can live on the base of the sector, the projected state space
-      itself. At higher dimension the natural way of doing so is squeezed very hard.
+      itself, and at higher dimension the natural way of doing so is squeezed very hard.
       Covariance, the requirement that the construction respect the symmetry, together
       with positivity, forces a chain of machine-checked conditions on any base density
       that depends on the preparation alone and only through distance from it, namely
-      disjoint supports and vanishing below a threshold that rises with dimension, with the
-      qubit exempted for the same structural reason in three independent ways. The scope
-      matters, because it is easy to overstate and an earlier version of this page did
-      overstate it: that is a tight constraint, not a no-go. The closing step needs
-      machinery that does not exist yet, so base-only at higher dimension is open in both
-      directions, neither proved impossible nor exhibited, and is parked as such. The
+      disjoint supports and vanishing below a threshold that rises with dimension, with
+      the qubit exempted for the same structural reason in three independent ways. The
+      scope matters, because it's easy to overstate and an earlier version of this page
+      did overstate it, so that's a tight constraint and not a no-go. The closing step
+      needs machinery that doesn't exist yet, so base-only at higher dimension is open in
+      both directions, neither proved impossible nor exhibited, and is parked as such. The
       fibre, the part of the arena above each state, is where the corpus builds, by a
       judgement that either answer would leave unchanged. The regions stay epistemic
-      throughout; what the trajectory selects among them, the record, is ontic.
+      throughout, and what the trajectory selects among them, the record, is ontic.
     mathematical: >
       Paper C's A7 is the requirement that the partition depend on the context M alone. A
-      ContextField assigns each base point a measurable probability vector over outcomes;
-      the basin for outcome i is the set of arena points whose fibre coordinate falls in
-      the i-th arc of the field's cumulative weights.
+      ContextField assigns each base point a measurable probability vector over outcomes,
+      and the basin for outcome i is the set of arena points whose fibre coordinate falls
+      in the i-th arc of the field's cumulative weights.
 
       Basins are measurable, pairwise disjoint, almost-everywhere exhaustive, and their
       epistemic probability at preparation psi is the Born weight, the headline
       globalBasin_born, from a partition that never mentions psi. The higher-dimensional
-      constraint is on radial, preparation-only base densities: covariance plus positivity
-      force disjoint supports and vanishing below a dimension-dependent threshold.
+      constraint is on radial, preparation-only base densities, where covariance plus
+      positivity force disjoint supports and vanishing below a dimension-dependent
+      threshold.
     term: Outcome region
     status: proved-in-corpus
     source: curated
@@ -5016,55 +5019,55 @@ entries:
     related: [born-weight, typicality-volume, preparation-region, carving, borel-set]
 
   - slug: epistemic-measure
-    reviewed: 2026-08-25
+    reviewed: 2026-09-14
     hook: >
       Condition on what a preparation actually fixes, and the ignorance left over is a
-      measure. That measure is a theorem rather than a stipulation: the arena's own volume
-      disintegrates into exactly it.
+      measure, and that measure is a theorem rather than a stipulation, as the arena's own
+      volume disintegrates into exactly it.
     layman: >
-      You prepared the system carefully, so you know its quantum state exactly. On the
-      arena picture, that knowledge is radically incomplete. One quantum state corresponds
+      You prepared the system carefully, so you know its quantum state exactly, and on the
+      arena picture that knowledge is radically incomplete. One quantum state corresponds
       to a whole crowd of points on the arena, all projecting to the same state, and that
-      crowd is called the fibre over the state. What should you believe about the part you
-      cannot see?
+      crowd is called the fibre over the state, so you can ask what you should believe
+      about the part you can't see.
 
       The natural answer is to condition on what you know. You know the visible coordinate
-      exactly, so put all your credence, your degree of belief, there. You know nothing
-      about the hidden coordinate, so spread your credence evenly over the fibre, using the
-      fibre's own symmetry to say what "evenly" means. That combined object is the
-      epistemic measure.
+      exactly, so you put all your credence, your degree of belief, there, and you know
+      nothing about the hidden coordinate, so you spread your credence evenly over the
+      fibre, using the fibre's own symmetry to say what "evenly" means. That combined
+      object is the epistemic measure.
 
-      The satisfying part is that "evenly" is not a choice. Take the arena's own volume and
+      The satisfying part is that "evenly" isn't a choice. Take the arena's own volume and
       disintegrate it along the projection, which means slicing it into the volumes it
-      induces on each fibre. Those slices are exactly this measure, for almost every state.
-      What the programme first adopted as a stated definition turned out to be the unique
-      answer the geometry had waiting.
+      induces on each fibre, and those slices are exactly this measure, for almost every
+      state. What the programme first adopted as a stated definition turned out to be the
+      unique answer the geometry had waiting.
     in_csd: >
       The epistemic measure is what "isolation is conditioning" means in practice. The
-      isolation-conditioned state of knowledge at a given preparation places all its weight
-      on that one state in the base, the projected state space, and spreads uniformly over
-      the fibre above it, uniformly in the sense fixed by the fibre's symmetry. Every
-      record-layer probability, including the Born weights of the context-fixed basins, is
-      computed against it.
+      isolation-conditioned state of knowledge at a given preparation places all its
+      weight on that one state in the base, the projected state space, and spreads
+      uniformly over the fibre above it, uniformly in the sense fixed by the fibre's
+      symmetry, and every record-layer probability, including the Born weights of the
+      context-fixed basins, is computed against it.
 
       Conditioning on a single state means conditioning on a set the base measure calls
       null, one of size zero, which is why the corpus first took this form as a stated
-      definition. The derivation then followed. The Liouville measure, the arena's own
-      volume, disintegrates along the base projection; its disintegration kernel, the
-      family of fibre volumes it induces, is almost everywhere the uniform one; and the
+      definition, and the derivation then followed. The Liouville measure, the arena's own
+      volume, disintegrates along the base projection, its disintegration kernel, the
+      family of fibre volumes it induces, is almost everywhere the uniform one, and the
       epistemic measure is the fibre of that disintegration planted at its base point. The
       modelling choice turned out to be the theorem.
     mathematical: >
       epistemicMeasure p is the product of the Dirac measure at p with normalised Haar on
       the torus fibre, a probability measure on the arena for every p.
 
-      The derivation: kMuL_condKernel_ae identifies the disintegration kernel of the
-      Liouville measure with the constant Haar kernel, almost everywhere in the
-      Fubini-Study base measure, via the standard-Borel conditional-kernel machinery and
-      almost-everywhere uniqueness of disintegrations; epistemicMeasure_eq_disintegration
-      then equates the epistemic measure with the Dirac-paired disintegration fibre. The
-      almost-everywhere qualifier is intrinsic: disintegration kernels are only determined
-      up to a null set of base points.
+      The derivation runs as follows. kMuL_condKernel_ae identifies the disintegration
+      kernel of the Liouville measure with the constant Haar kernel, almost everywhere in
+      the Fubini-Study base measure, via the standard-Borel conditional-kernel machinery
+      and almost-everywhere uniqueness of disintegrations, and
+      epistemicMeasure_eq_disintegration then equates the epistemic measure with the
+      Dirac-paired disintegration fibre. The almost-everywhere qualifier is intrinsic, as
+      disintegration kernels are only determined up to a null set of base points.
     term: Epistemic measure
     status: proved-in-corpus
     source: curated
@@ -5075,46 +5078,47 @@ entries:
 
   - slug: carving
     hook: >
-      Carving is the programme's own word for the move it refuses to count as a derivation:
-      cutting a region to have exactly the size you wanted to explain.
+      Carving is the programme's own word for the move it refuses to count as a
+      derivation, which is cutting a region to have exactly the size you wanted to
+      explain.
     layman: >
       Stated as bluntly as a critic would, the problem with volume explanations of
-      probability is this. If you are allowed to draw the regions yourself, you can make any
-      probability come out of any measure. Draw a region covering thirty percent of the
-      space, announce that the outcome has a thirty percent probability, and you have
-      explained nothing. The explanation was smuggled in with the scissors.
+      probability is this. If you're allowed to draw the regions yourself, you can make
+      any probability come out of any measure, so if you draw a region covering thirty
+      percent of the space and announce that the outcome has a thirty percent probability,
+      you've explained nothing, as the explanation was smuggled in with the scissors.
 
       CSD calls this move carving, by name, in its own documentation, because early layers
       of the formalisation genuinely did it, and the honest label is what kept the debt
       visible. A carved region realises the Born value, the probability quantum mechanics
-      assigns. It does not derive it.
+      assigns, and it doesn't derive it.
 
       The interesting history is the repayment. For the corpus's central results the
-      carving was eliminated. The sizes come out of the geometry, forced by symmetry and by
-      the moment map, a function that reads the outcome weights directly off the quantum
-      state, with no hand on the scissors.
+      carving was eliminated, so the sizes come out of the geometry, forced by symmetry
+      and by the moment map, a function that reads the outcome weights directly off the
+      quantum state, with no hand on the scissors.
     in_csd: >
-      Carving is the boundary marker between two kinds of result that the programme keeps
-      separate. A realisation is a fibre partition cut by construction so that its volumes
-      match a target: proved, useful, and honestly labelled as putting the value in. A
-      derivation is the Born weight shown equal to a volume the geometry fixes
-      independently, through the moment-map identity and the Duistermaat-Heckman law, which
-      fixes how the state space's volume is distributed over the possible outcome weights,
-      so that nobody chose the sizes.
+      Carving is the boundary marker between two kinds of result the programme keeps
+      separate. A realisation is a fibre partition cut by construction so its volumes
+      match a target, which is proved, useful, and honestly labelled as putting the value
+      in. A derivation is the Born weight shown equal to a volume the geometry fixes
+      independently, through the moment-map identity and the Duistermaat-Heckman law,
+      which fixes how the state space's volume is distributed over the possible outcome
+      weights, so nobody chose the sizes.
 
       The corpus's documentation flags every result with the side of the line it sits on,
       and the volume route to the Born rule runs entirely on the derived side. The word
-      survives as an audit tool. When a new result lands on a specific number, the first
+      survives as an audit tool, so when a new result lands on a specific number the first
       question asked is whether anything was carved.
     mathematical: >
-      The carved tier: fibre arcs of prescribed length realising prescribed weights, with
-      genuine disjointness and correct totals but the target built in.
+      The carved tier is fibre arcs of prescribed length realising prescribed weights,
+      with genuine disjointness and correct totals but the target built in.
 
-      The derived tier: the Born weight as a moment-map coordinate, forced by torus
+      The derived tier is the Born weight as a moment-map coordinate, forced by torus
       generation (CellLawForced.lean, torusGenerated_eq_momentMap) rather than by
-      invariance; the joint pushforward of the Fubini-Study measure under the moment map
-      equal to the uniform simplex law; and the resulting volume-ratio theorems at every N,
-      unconditional.
+      invariance, the joint pushforward of the Fubini-Study measure under the moment map
+      equal to the uniform simplex law, and the resulting volume-ratio theorems at every
+      N, unconditional.
     term: Carving
     status: definition
     source: curated
@@ -5123,50 +5127,50 @@ entries:
   - slug: first-passage-race
     hook: >
       When a measurement has several possible outcomes, the one that happens is the one
-      whose clock fires first, and the law those clocks obey is not a modelling choice: it
-      is the only law that makes the race come out right, and that is proved in both
+      whose clock fires first, and the law those clocks obey isn't a modelling choice, as
+      it's the only law that makes the race come out right, and that's proved in both
       directions.
     layman: >
       Suppose a measurement outcome is decided by something physical rather than declared
       by a rule. That something then has to be specified in detail, and every detail a
-      theory specifies is a detail a critic can call arbitrary. The first-passage race is
-      CSD's way of settling an outcome physically while leaving as little as possible to
-      choice.
+      theory specifies is a detail a critic can call arbitrary, so the first-passage race
+      is CSD's way of settling an outcome physically while leaving as little as possible
+      to choice.
 
-      The picture is a race. Each possible outcome carries its own clock. The clocks run
-      at speeds set by the quantum state, so an outcome the state favours has a fast clock
-      and an outcome it disfavours a slow one, and the outcome that happens is the one
-      whose clock fires first. Set up this way, the race reproduces the quantum
-      probabilities exactly. But it seems to buy that result by choosing how the clocks
-      behave. The clocks have exponential waiting times, which means that the chance of a
-      clock firing in the next instant never depends on how long it has already been
-      running, much as a radioactive atom is no more likely to decay for having survived a
-      long time. Why that law and not some other?
+      The picture is a race. Each possible outcome carries its own clock, and the clocks
+      run at speeds set by the quantum state, so an outcome the state favours has a fast
+      clock and an outcome it disfavours a slow one, and the outcome that happens is the
+      one whose clock fires first. Set up this way, the race reproduces the quantum
+      probabilities exactly, but it seems to buy that result by choosing how the clocks
+      behave. The clocks have exponential waiting times, which means the chance of a clock
+      firing in the next instant never depends on how long it has already been running,
+      much as a radioactive atom is no more likely to decay for having survived a long
+      time, so you can ask why that law and not some other.
 
       The answer is that no other law works. If the rule that the first clock to fire wins
       is to reproduce the right proportions for every possible number of outcomes, the
-      waiting times have to be exponential. That is not a natural choice or a convenient
-      one; it is the only one. The argument runs both ways: the exponential law makes the
+      waiting times have to be exponential, so it isn't a natural choice or a convenient
+      one but the only one. The argument runs both ways, as the exponential law makes the
       race work, and any law that makes the race work is exponential.
     in_csd: >
       The race is the record layer's order-free way of deciding an outcome. An earlier
       construction cut an interval into consecutive pieces stacked in a fixed order, which
-      quietly privileged whichever outcome came first in the list. In the race no outcome
-      is privileged; each simply has a clock. The clock rates are read off the moment map,
-      the map that extracts the Born weights directly from the geometry of the state
-      space, so the squared amplitudes that set the speeds are geometry rather than an
-      extra input. The clock law itself is a theorem in the corpus rather than a citation
-      to the probability literature.
+      quietly privileged whichever outcome came first in the list, and in the race no
+      outcome is privileged, as each simply has a clock. The clock rates are read off the
+      moment map, the map that extracts the Born weights directly from the geometry of the
+      state space, so the squared amplitudes that set the speeds are geometry rather than
+      an extra input, and the clock law itself is a theorem in the corpus rather than a
+      citation to the probability literature.
 
       Two qualifications travel with the result and should never be dropped. First, the
-      characterisation quantifies over every number of outcomes. At any one fixed number
-      of outcomes the race constrains only finitely many summary statistics of the
-      waiting-time law and determines nothing on its own. What is forced is the
-      exponential law given that a single clock law serves every case, and that is a
-      commitment the programme already makes: the behaviour of the clocks does not depend
-      on which measurement is being performed.
+      characterisation quantifies over every number of outcomes, as at any one fixed
+      number of outcomes the race constrains only finitely many summary statistics of the
+      waiting-time law and determines nothing on its own. What's forced is the exponential
+      law given that a single clock law serves every case, and that's a commitment the
+      programme already makes, as the behaviour of the clocks doesn't depend on which
+      measurement is being performed.
 
-      Second, the result removes a posit; it does not supply a mechanism. No dynamics is
+      Second, the result removes a posit and doesn't supply a mechanism. No dynamics is
       shown to carve the cells of the race, and the earlier attempt to derive them from a
       mixing flow was retired as mis-specified rather than merely unfinished.
     mathematical: >
@@ -5176,16 +5180,16 @@ entries:
       of clocks and every such rate vector, the probability that clock i fires first is
       b_i / sum_j b_j. The theorem hasRaceProperty_iff_exists_expMeasure
       (CsdLean4/Mathlib/Probability/IidClockRace.lean) states that a probability law has
-      the race property if and only if it is an exponential law with some positive
+      the race property if and only if it's an exponential law with some positive
       parameter.
 
       The forward direction instantiates the race at k clocks for every k, which turns the
-      race condition into a family of moment identities for the unknown law; atomlessness
-      and support in the positive reals are derived from the race property along the way
-      rather than assumed. The quantification over the number of clocks is load-bearing:
-      at a fixed number of clocks only finitely many moments are constrained, so what is
-      characterised is the law that serves every number of clocks.
-    reviewed: 2026-09-11
+      race condition into a family of moment identities for the unknown law, and
+      atomlessness and support in the positive reals are derived from the race property
+      along the way rather than assumed. The quantification over the number of clocks is
+      load-bearing, as at a fixed number of clocks only finitely many moments are
+      constrained, so what's characterised is the law that serves every number of clocks.
+    reviewed: 2026-09-14
     term: First-passage race
     status: proved-in-corpus
     source: curated
@@ -5200,109 +5204,109 @@ entries:
       factor, and from three dimensions upward the natural ways of doing without that
       factor stop working.
     layman: >
-      If quantum states are shadows cast by a richer arena, something has to be said
-      about the part of the arena that does not show up in the shadow. It had better not
-      be idle decoration: hidden structure that never does anything is the first thing a
+      If quantum states are shadows cast by a richer arena, something has to be said about
+      the part of the arena that doesn't show up in the shadow, and it had better not be
+      idle decoration, as hidden structure that never does anything is the first thing a
       critic should cut away. The fibre is that hidden part, and the point of this entry
-      is why it is there.
+      is why it's there.
 
       A fibre, in the geometer's sense, is a small space attached over every point of a
       larger one, like the bristles of a brush standing over each point of its backing. In
       CSD's working arena the space of quantum states is the base, and over each of its
-      points stands a copy of a torus, the surface of a doughnut, which is compact: finite
-      in extent and closed up on itself, with no edge. A point of the arena is therefore a
-      quantum state together with a position on the torus above it. The fibre is where the
-      arena keeps what the quantum state cannot: which outcome basin, meaning which of the
-      regions of the fibre belonging to the different outcomes, the trajectory of the
-      world actually occupies. That is the raw material from which records are made.
+      points stands a copy of a torus, the surface of a doughnut, which is compact,
+      meaning finite in extent and closed up on itself with no edge. A point of the arena
+      is therefore a quantum state together with a position on the torus above it. The
+      fibre is where the arena keeps what the quantum state can't, which outcome basin,
+      meaning which of the regions of the fibre belonging to the different outcomes, the
+      trajectory of the world actually occupies, and that's the raw material from which
+      records are made.
 
-      The fibre earned its place by argument, not by taste. At the level of a qubit, the
-      simplest quantum system with two possible outcomes, one can just about manage
-      without it: the two-level case has a coincidence that lets the outcome structure sit
-      on the state space itself. One dimension higher that coincidence is gone, and the
-      natural candidates for doing without a fibre fail, so the fibre is where the corpus
-      puts the structure. That the failure extends to every conceivable candidate is
-      expected but not established.
+      The fibre earned its place by argument and not by taste. At the level of a qubit,
+      the simplest quantum system with two possible outcomes, you can just about manage
+      without it, as the two-level case has a coincidence that lets the outcome structure
+      sit on the state space itself. One dimension higher that coincidence is gone, and
+      the natural candidates for doing without a fibre fail, so the fibre is where the
+      corpus puts the structure. That the failure extends to every conceivable candidate
+      is expected but not established.
     in_csd: >
       The fibre is where the record layer lives. The outcome basins fixed by a measurement
       context are arcs of the fibre coordinate, read off above each point of the base, and
       the epistemic measure, which describes what an observer who knows only the quantum
       state can say, spreads evenly over the fibre. The basin the trajectory occupies is
-      the ontic record, the fact about the world that a measurement reveals. How the fibre
-      is weighted is not a modelling choice either: the arena's measure is the only
+      the ontic record, the fact about the world a measurement reveals. How the fibre is
+      weighted isn't a modelling choice either, as the arena's measure is the only
       probability measure invariant under the arena's own symmetry, the unitary
       transformations turning the state space together with the translations turning the
-      fibre. The base half of that uniqueness was already known; the fibre half completes
-      it, so nothing about how the arena is weighted is left to taste.
+      fibre. The base half of that uniqueness was already known, and the fibre half
+      completes it, so nothing about how the arena is weighted is left to taste.
 
       The load-bearing discovery is dimensional. With two-dimensional states, a partition
-      fixed by the context alone can be built on the base, a special accident of the
-      two-dimensional state space. With three or more dimensions the natural base-only
-      construction is constrained to very little. Two requirements do the constraining:
+      fixed by the context alone can be built on the base, a special accident of the two-
+      dimensional state space, and with three or more dimensions the natural base-only
+      construction is constrained to very little. Two requirements do the constraining,
       covariance, meaning that the construction must respect the symmetry of the state
-      space, and positivity, meaning that a density cannot take negative values. Together
+      space, and positivity, meaning that a density can't take negative values. Together
       they force a density on the base that depends on the prepared state alone, and on it
       only through the distance from it, to have disjoint supports for different outcomes
       and to vanish below a threshold that rises with the dimension, and the split between
       two dimensions and three or more shows up in three independent ways. The scope
-      matters, because this page has overstated it twice: the chain of arguments stops
+      matters, because this page has overstated it twice, as the chain of arguments stops
       short of a no-go theorem. Two of its inputs are undischarged and the closing step
-      needs machinery that does not exist, so the base-only route is open in both
+      needs machinery that doesn't exist, so the base-only route is open in both
       directions, neither refuted nor exhibited, and is parked. The fibred reading is
       canonical by the author's decision, taken because either answer leads to the same
-      next move. This narrows where the mechanism can live; it does not refute it, since
+      next move, and this narrows where the mechanism can live without refuting it, since
       existence is proved.
 
-      A second argument for the fibre was offered and later withdrawn. It said that the
-      outcome race needs several independent clocks that one deterministic trajectory
-      cannot supply, so the fibre must supply them. That does not hold. Time in the arena
-      is a single shared parameter, so the clocks are aligned deterministic readings of
-      one microstate, not independent processes, and the corpus's Born construction on the
-      fibre never races anything: it cuts the fibre circle into consecutive arcs and reads
-      each weight off the arc length, one uniformly distributed coordinate with no
-      independence anywhere. The dimensional argument above is unaffected and stands
-      alone.
+      A second argument for the fibre was offered and later withdrawn. It said the outcome
+      race needs several independent clocks one deterministic trajectory can't supply, so
+      the fibre must supply them, and that doesn't hold. Time in the arena is a single
+      shared parameter, so the clocks are aligned deterministic readings of one microstate
+      and not independent processes, and the corpus's Born construction on the fibre never
+      races anything, as it cuts the fibre circle into consecutive arcs and reads each
+      weight off the arc length, one uniformly distributed coordinate with no independence
+      anywhere. The dimensional argument above is unaffected and stands alone.
 
       An older frontier question, deriving the fibre mechanism from a mixing de-isolation
       flow, one that stirs the arena thoroughly enough to spread any region evenly, was
       retired as mis-specified rather than merely hard, and its successor was mis-stated
       too, because the obvious phrasing is also wrong. There are two partitions to keep
-      apart. The outcome regions on the projective base are epistemic: they belong to a
+      apart. The outcome regions on the projective base are epistemic, as they belong to a
       calculation space, nothing sculpts them, and they match the volumes because the
-      measure is forced by symmetry and the weights are the moment map, not because any
-      dynamics carved them. The fibre cells are a different object, placed on the ontic
-      fibre, and the outcome is the ontic selection of which cell the point occupies; the
-      corpus adds that the particular cell family is one concrete realisation of an
-      interface, so the shapes of the cells are bookkeeping while the fibre, the rates and
-      the selection are not. The successor question is therefore about the readout, not
-      the regions: does a physical de-isolation interaction generate a pointer whose level
-      sets, the sets of arena points on which the pointer shows one reading, carry the
-      Born measures? The Born weights themselves do not wait on the answer, because the
-      corpus proves that any measurable pointer with those basin measures gives Born,
-      independently of the flow.
+      measure is forced by symmetry and the weights are the moment map, and not because
+      any dynamics carved them. The fibre cells are a different object, placed on the
+      ontic fibre, and the outcome is the ontic selection of which cell the point
+      occupies, and the corpus adds that the particular cell family is one concrete
+      realisation of an interface, so the shapes of the cells are bookkeeping while the
+      fibre, the rates and the selection aren't. The successor question is therefore about
+      the readout and not the regions, which is whether a physical de-isolation
+      interaction generates a pointer whose level sets, the sets of arena points on which
+      the pointer shows one reading, carry the Born measures. The Born weights themselves
+      don't wait on the answer, because the corpus proves that any measurable pointer with
+      those basin measures gives Born, independently of the flow.
     mathematical: >
       The arena is CP^(N-1) x T^2 with the flat torus fibre carrying normalised Haar
       measure. The base factor of that product measure is proved to be the normalised
       symplectic volume of the Fubini-Study form
       (manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod,
       LF4/SectorManifold.lean), so the arena measure is derived from the volume form on
-      the base and Haar measure on the fibre, not posited as a product; it is the unique
-      probability measure invariant under U(N) acting on the base and translations acting
-      on the fibre. Basins are preimages of arcs under the first fibre coordinate, with
-      the arc endpoints set by the context's rate field.
+      the base and Haar measure on the fibre and not posited as a product, and it's the
+      unique probability measure invariant under U(N) acting on the base and translations
+      acting on the fibre. Basins are preimages of arcs under the first fibre coordinate,
+      with the arc endpoints set by the context's rate field.
 
-      The N >= 3 argument is not a Gleason-type theorem, since CSD's partitions are
-      contextual and Gleason and Kochen-Specker do not apply. It is a chain of
-      machine-checked necessary conditions on a base-only radial density: disjoint
-      supports, and vanishing below a threshold rising with dimension. It leaves very
-      little room and stops short of closing it. Two inputs are undischarged and the
-      terminal step needs machinery Mathlib does not have, so the base-only route is open
-      in both directions and parked as such.
+      The N >= 3 argument isn't a Gleason-type theorem, since CSD's partitions are
+      contextual and Gleason and Kochen-Specker don't apply. It's a chain of machine-
+      checked necessary conditions on a base-only radial density, disjoint supports and
+      vanishing below a threshold rising with dimension, and it leaves very little room
+      and stops short of closing it. Two inputs are undischarged and the terminal step
+      needs machinery Mathlib doesn't have, so the base-only route is open in both
+      directions and parked as such.
 
       For the record, the independent-clocks argument for the fibre was offered in August
       2026 and withdrawn on 2026-08-26, and the mixing-flow frontier was retired in the
       same month.
-    reviewed: 2026-09-11
+    reviewed: 2026-09-14
     term: Fibre
     status: definition
     source: curated
