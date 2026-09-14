@@ -1498,4 +1498,29 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.isLocallyHamiltonian_torusStrokeField
 
+-- R-016'' (2026-09-14, LF4/ArenaStrokeFlux.lean): THE FLUX OBSTRUCTION AT MANIFOLD LEVEL. For
+-- a ≠ 0 no function H on the arena has the torus stroke (0, a) as its generator for arenaForm:
+-- along every torus direction b the derivative of such an H would be the constant area(a, b), so H
+-- is differentiable everywhere, and along the closed curves in the directions (1, 0) and (0, 1)
+-- it would change by -a₂ and by a₁ while returning to its value. With
+-- isLocallyHamiltonian_torusStrokeField this is the classification of the strokes -- symplectic,
+-- locally generated, not globally generated -- that PiecewiseHamiltonian.lean records in the chart,
+-- now as a theorem about the symplectic manifold. H is ANY function (differentiability derived).
+/-- info: 'CSD.LF4.hasMFDerivAt_torusCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hasMFDerivAt_torusCurve
+
+/-- info: 'CSD.LF4.mdifferentiableAt_of_isHamiltonianVectorField_torusStrokeField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.mdifferentiableAt_of_isHamiltonianVectorField_torusStrokeField
+
+/-- info: 'CSD.LF4.energy_torusCurve_one_sub_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.energy_torusCurve_one_sub_zero
+
+-- ★★ The torus stroke is not globally generated on the arena.
+/-- info: 'CSD.LF4.not_isHamiltonianVectorField_torusStrokeField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.not_isHamiltonianVectorField_torusStrokeField
+
 end CSD.Tests.AxiomAudit

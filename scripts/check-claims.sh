@@ -876,7 +876,17 @@ isSymplectic"
 #     on the torus factor (interiorProduct_arenaForm_torusStrokeField), and d of a constant form
 #     on a translation atlas vanishes (mextDeriv_constFamily, through mextDeriv_prodFamily). The
 #     flux obstruction -- no GLOBAL H, the withdrawn reading of shear_piecewise_hamiltonian above --
-#     is NOT restated at manifold level; the theorem claims exactly the closedness. CP^N x T^2, EVEN.
+#     is the next entry; this theorem claims exactly the closedness. CP^N x T^2, EVEN.
+#   not_isHamiltonianVectorField_torusStrokeField /
+#   mdifferentiableAt_of_isHamiltonianVectorField_torusStrokeField /
+#   mfderiv_apply_torus_of_isHamiltonianVectorField — (2026-09-14, R-016'', LF4/ArenaStrokeFlux.lean)
+#     the NEGATIVE classification at manifold level: for a ≠ 0 NO function H has the torus stroke
+#     (0, a) as its Hamiltonian vector field for arenaForm (the flux: along the closed curves in
+#     the directions (1,0), (0,1) such an H would change by -a₂, a₁ and return to its value). The
+#     two helpers are steps of that proof (the derivative of H in a torus direction is area(a, b);
+#     hence H is differentiable everywhere). The words name the predicate the theorems refute /
+#     hypothesise; together with isLocallyHamiltonian_torusStrokeField they are the manifold form
+#     of shear_piecewise_hamiltonian's withdrawn reading. CP^N x T^2, EVEN.
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 kahlerFstSector_projectiveLaw
 kahlerFstSector_epistemicMeasure_projectiveLaw
@@ -959,6 +969,9 @@ hamiltonianVectorField_sectorEnergy
 hamiltonianFlow_sectorEnergy
 hamiltonianFlow_sectorEnergy_schrodinger
 isLocallyHamiltonian_torusStrokeField
+not_isHamiltonianVectorField_torusStrokeField
+mdifferentiableAt_of_isHamiltonianVectorField_torusStrokeField
+mfderiv_apply_torus_of_isHamiltonianVectorField
 momentumH_hamiltonianField
 translationCurve_isHamiltonianCurve
 fieldHamiltonian_mulVec_single

@@ -8,6 +8,7 @@ module
 public import Mathlib.Topology.Instances.AddCircle.Defs
 public import Mathlib.Analysis.Normed.Module.Basic
 public import Mathlib.Geometry.Manifold.IsManifold.Basic
+public import Mathlib.Geometry.Manifold.MFDeriv.FDeriv
 public import Mathlib.Analysis.Calculus.ContDiff.Basic
 
 /-!
@@ -210,6 +211,18 @@ theorem fderiv_chart_transition (x₀ y : AddCircle T) :
   refine (hasFDerivAt_transition (cutPoint y) ?_).fderiv
   rw [coe_translationChart]
   exact ne_coe_cutPoint y
+
+/-! ### The quotient map is a local diffeomorphism with derivative the identity -/
+
+/-- ★ **The quotient map `ℝ → AddCircle T` has manifold derivative the identity** for the
+translation atlas: read through the chart at `↑t` it is a translation near `t`. -/
+theorem hasMFDerivAt_coe (t : ℝ) :
+    HasMFDerivAt 𝓘(ℝ, ℝ) 𝓘(ℝ, ℝ) ((↑) : ℝ → AddCircle T) t (ContinuousLinearMap.id ℝ ℝ) := by
+  refine ⟨(AddCircle.continuous_mk' T).continuousAt, ?_⟩
+  simp only [writtenInExtChartAt, extChartAt_model_space_eq_id, PartialEquiv.refl_coe,
+    PartialEquiv.refl_symm, id, Function.comp_def, extChartAt_coe, modelWithCornersSelf_coe,
+    Set.range_id]
+  exact (hasFDerivAt_transition (cutPoint (t : AddCircle T)) (ne_coe_cutPoint _)).hasFDerivWithinAt
 
 end AddCircle
 

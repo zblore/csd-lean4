@@ -26,7 +26,10 @@ measure-preserving, continuous, volume-exact — but *not* flows of global Hamil
 correct classification of this witness is therefore **"piecewise rigid symplectic torus
 translation with null seam set"**, not "piecewise Hamiltonian flow". Every Lean theorem below
 is unaffected (none mentions a Hamiltonian); the module and theorem *names* are retained for
-pin stability, with this correction as their reading. The Hamiltonian-origin row is
+pin stability, with this correction as their reading. *Both halves of this correction are
+theorems on the symplectic arena since 2026-09-14:* `isLocallyHamiltonian_torusStrokeField`
+(`LF4/ArenaSymplectic.lean`) and `not_isHamiltonianVectorField_torusStrokeField`
+(`LF4/ArenaStrokeFlux.lean`). The Hamiltonian-origin row is
 **reopened** with the review-recommended route — a compact Kähler pointer `ℂℙ^K`, where
 unitary rotations *are* globally Hamiltonian (`H¹(ℂℙ^K) = 0`, moment maps exist) and the flux
 obstruction vanishes. See `specs/BACKLOG.md`.

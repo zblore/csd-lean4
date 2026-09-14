@@ -155,7 +155,9 @@ bullets for the current state.
   it, and the *isolated* dynamics is proved to be its Hamiltonian flow
   (`hamiltonianFlow_sectorEnergy_schrodinger`); the torus strokes are proved locally Hamiltonian
   there. The measurement propagators (`jointLift`) as time-`1` maps on the arena remain the
-  paper-side content of `R-016`; the flux obstruction at manifold level is `BACKLOG.md` #28.
+  paper-side content of `R-016`; the flux obstruction at manifold level landed the same day
+  (`LF4/ArenaStrokeFlux.lean`: for `a ≠ 0` no function has the torus stroke as its Hamiltonian
+  vector field), so the strokes' classification "symplectic, not Hamiltonian" is a theorem there.
 
 **(ii) Scoped by doctrine, not by tooling.**
 

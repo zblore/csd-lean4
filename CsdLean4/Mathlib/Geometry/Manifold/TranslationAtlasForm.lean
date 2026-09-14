@@ -32,7 +32,9 @@ that once, as a predicate on the atlas, and then reads the torus's area form off
   2-form, with `areaForm_nondegenerate`;
 * ★★ `torusAreaForm` — **the area form `dθ₁ ∧ dθ₂` on `AddCircle T × AddCircle T'`**, a term of
   `DifferentialForm 𝓘(ℝ, ℝ × ℝ) (AddCircle T × AddCircle T') ∞ (Fin 2) ℝ`, and
-  ★★ `torusAreaForm_isSymplectic` — **the torus is a symplectic manifold**.
+  ★★ `torusAreaForm_isSymplectic` — **the torus is a symplectic manifold**;
+* `AddCircle.translationChartCover` (two charts cover the circle) and
+  `AddCircle.hasMFDerivAt_coe_comp` (a real curve pushed to the circle has the curve's derivative).
 
 ## Honest scope
 
@@ -285,6 +287,30 @@ def translationChartCover : ChartCover ℝ (AddCircle T) where
       show y ∈ (chartAt ℝ (0 : AddCircle T)).source
       rw [chartAt_eq, translationChart_source, cutPoint_zero]
       exact h
+
+end AddCircle
+
+/-! ### Curves on the circle -/
+
+namespace AddCircle
+
+variable {T : ℝ} [Fact (0 < T)]
+
+/-- A real curve pushed to the circle: the manifold derivative is the curve's derivative
+(`hasMFDerivAt_coe` composed with the curve). -/
+theorem hasMFDerivAt_coe_comp {g : ℝ → ℝ} {g' : ℝ} {s : ℝ} (hg : HasDerivAt g g' s) :
+    HasMFDerivAt 𝓘(ℝ, ℝ) 𝓘(ℝ, ℝ) (fun u : ℝ => ((g u : ℝ) : AddCircle T)) s
+      (ContinuousLinearMap.smulRight (M₂ := TangentSpace 𝓘(ℝ, ℝ) ((g s : ℝ) : AddCircle T))
+        (1 : ℝ →L[ℝ] ℝ) g') := by
+  -- elaborate the flat derivative at its own type first; feeding it straight into the manifold
+  -- iff makes `smulRight` look for `ContinuousSMul` along the `TangentSpace` instance path
+  have hg' : HasFDerivAt g ((1 : ℝ →L[ℝ] ℝ).smulRight g') s := hasDerivAt_iff_hasFDerivAt.1 hg
+  have hg'' : HasMFDerivAt 𝓘(ℝ, ℝ) 𝓘(ℝ, ℝ) g s ((1 : ℝ →L[ℝ] ℝ).smulRight g') :=
+    hasMFDerivAt_iff_hasFDerivAt.2 hg'
+  have h := (hasMFDerivAt_coe (T := T) (g s)).comp s hg''
+  refine h.congr_deriv ?_
+  ext
+  rfl
 
 end AddCircle
 

@@ -61,11 +61,11 @@ binomial identity `(π₁^* α + π₂^* β)^{m+n} = C · π₁^* α^m ∧ π₂
 is not in the corpus (`ProductForm.lean`, honest scope). So Liouville is stated for `arenaVolume`;
 the record layer's Liouville statements stay on `μ_FS ⊗ vol` where they were.
 
-⚠️ **The torus stroke is locally Hamiltonian here, and its flux obstruction is not restated.**
-`isLocallyHamiltonian_torusStrokeField` is the manifold-level half of
-`RecordLayer/PiecewiseHamiltonian.lean`'s "symplectic, not globally Hamiltonian"; that no `H` has
-`(0, a)` as its Hamiltonian vector field for `a ≠ 0` (the flux, `∮ dθ ≠ 0`) needs a transverse
-periodic curve along which `H` would have to grow, and is priced in `BACKLOG.md` (#28).
+⚠️ **The torus stroke is locally Hamiltonian here; its flux obstruction is the next module.**
+`isLocallyHamiltonian_torusStrokeField` is the positive half of
+`RecordLayer/PiecewiseHamiltonian.lean`'s "symplectic, not globally Hamiltonian" at manifold
+level; the negative half, that no `H` has `(0, a)` as its Hamiltonian vector field for `a ≠ 0`, is
+`LF4/ArenaStrokeFlux.lean` (`not_isHamiltonianVectorField_torusStrokeField`).
 
 ⚠️ **The measurement propagators are not read on the arena.** Nothing here identifies `jointLift`
 or `hamiltonianShift` with a time-`1` map of a flow on `arenaForm`'s arena; that identification is

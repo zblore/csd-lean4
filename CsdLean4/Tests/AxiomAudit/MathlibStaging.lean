@@ -5985,4 +5985,13 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'DifferentialForm.IsSymplectic.continuous_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms DifferentialForm.IsSymplectic.continuous_hamiltonianFlow
 
+-- The quotient map R -> AddCircle T is a local diffeomorphism for the translation atlas
+-- (2026-09-14, R-016''): manifold derivative the identity, and a real curve pushed to the circle
+-- has the curve's derivative. Consumer: LF4/ArenaStrokeFlux.lean (the transverse torus curve).
+/-- info: 'AddCircle.hasMFDerivAt_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms AddCircle.hasMFDerivAt_coe
+
+/-- info: 'AddCircle.hasMFDerivAt_coe_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms AddCircle.hasMFDerivAt_coe_comp
+
 end CSD.Tests.AxiomAudit
