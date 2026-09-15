@@ -10,21 +10,25 @@ public import CsdLean4.LF4.BornRegionDisjoint
 public import CsdLean4.Empirical.QM.QEC.ThreeQubit
 
 /-!
-# LF5: syndrome measurement as a coarse-grained de-isolation flow (QEC, projective tier)
+# LF5: syndrome statistics from a coarse-grained de-isolation flow (QEC, projective tier)
 
 **Category:** 3-Local (LF5 measurement-dynamics layer, QEC tranche).
 
-The **projective / coherent-error half** of the CSD ontic reading of quantum error
-correction. The three-qubit bit-flip code's syndrome measurement
-`(Z₁Z₂, Z₂Z₃)` is realised as a *coarse-graining* of the LF5 von Neumann
-computational-basis (Z-basis) de-isolation flow at `N = 8` (the 3-qubit register).
+The three-qubit bit-flip code's syndrome **statistics** for `(Z₁Z₂, Z₂Z₃)` are
+realised as a *coarse-graining* of the LF5 von Neumann computational-basis
+(Z-basis) de-isolation flow at `N = 8` (the 3-qubit register). The apparatus
+retains the full computational-basis label: grouping its outcomes by syndrome
+does not erase the information distinguishing the two basis states in each
+syndrome subspace. This construction establishes the syndrome probabilities;
+it does not implement nondestructive syndrome extraction for an unknown logical
+superposition. The recovery identities below are separate matrix facts.
 
 ## The key structural fact
 
 The stabilisers `Z₁Z₂, Z₂Z₃` (`CSD.Empirical.QM.QEC.Z1Z2 / Z2Z3`) are **diagonal**
 in the computational basis: on `|x₁x₂x₃⟩` they act by `(-1)^{x₁⊕x₂}`, `(-1)^{x₂⊕x₃}`.
 So the syndrome is a *function* of the computational bitstring, and the syndrome
-measurement is a **coarse-graining** of the Z-basis measurement: the 8
+outcome distribution is a **coarse-graining** of the Z-basis distribution: the 8
 computational outcomes `Fin 2 × Fin 2 × Fin 2 ≃ Fin 8` partition into 4 syndrome
 classes of 2 each (`synClass`, matched to `CSD.Empirical.QM.QEC.errorSyndrome`:
 `I → 0 (+,+)`, `X₁ → 1 (−,+)`, `X₂ → 2 (−,−)`, `X₃ → 3 (+,−)`).
@@ -38,7 +42,7 @@ computational-basis machinery (`basisPOVM`, `vnNaimark`, `measurementFlow`,
 ## What is delivered
 
 **Stratum 1 — syndrome statistics as Kähler volumes, read by a deterministic flow.**
-- `synClass : Fin 8 → Fin 4` — the parity classifier; `synClass_surjOn`,
+- `synClass : Fin 8 → Fin 4` — the parity classifier; `synClass_class_nonempty`,
   `synClass_fiber_card` (each class has exactly 2 preimages — the partition is
   genuine and the classes are nonempty).
 - `syndromeWeight ψ s = ∑_{i : synClass i = s} ‖ψᵢ‖²` (`syndromeWeight`), and
@@ -54,18 +58,20 @@ computational-basis machinery (`basisPOVM`, `vnNaimark`, `measurementFlow`,
 - The flow `Φ_syn` is `measurementFlow N=8 e` itself — already `Φ ≠ id` and
   FS-measure-preserving, inherited directly.
 
-**Stratum 2 — codeword specialisation + recovery.**
+**Stratum 2 — codeword specialisation + separate recovery identities.**
 - The Z-basis support of `logical a b` is `{000, 111} ⊆ class 0`, and of `Xⱼ · logical`
   is `⊆ class j`. (Established inline inside the weight computation below; there is no
   standalone support lemma. This bullet previously named `synClass_logicalSupport` /
   `synClass_erroredSupport`, neither of which was ever written — corrected 2026-08-19,
   see `scripts/check-doc-promises.sh`.)
-- `syndromeWeight_logical`: `syndromeWeight (Xⱼ·logical) s =
+- `syndromeWeight_Xⱼ_logical`: `syndromeWeight (Xⱼ·logical) s =
   (if s = j then ‖a‖²+‖b‖² else 0)` — the **deterministic syndrome** (indicator on
   block `j` for a unit codeword).
 - Recovery is the matrix transport of `bitflip_recovers` /
   `three_qubit_corrects_single_bitflip` (`CSD.Empirical.QM.QEC`): re-applying the
-  identified `Xⱼ` restores the logical ray. The codeword's syndrome-block FS volume
+  error operator `Xⱼ` restores the input logical vector, with no intervening
+  measurement or `syndromeFlow` in the theorem. It does not prove recovery after
+  this module's computational-basis coupling. The codeword's syndrome-block FS volume
   reading is NOT bundled into the headline; it follows by instantiating
   `syndromeRegion_fs_volume` at the (unit-normalised) errored codeword. What
   conjunct (4) proves is the codeword's deterministic syndrome *weight* statistic
@@ -76,12 +82,35 @@ computational-basis machinery (`basisPOVM`, `vnNaimark`, `measurementFlow`,
 
 `syndrome_flow_born_volume` bundles: `Φ_syn ≠ id` ∧ FS-measure-preserving ∧
 (∀ unit `ψ`, ∀ `s`, syndrome-block FS volume = `syndromeWeight ψ s` = block sum of
-computational-basis FS volumes) ∧ (codeword corollary: deterministic syndrome +
-recovery restores the logical coordinates).
+computational-basis FS volumes) ∧ (codeword corollary: deterministic syndrome
+weights + the separate identities `Xⱼ (Xⱼ ψ_L) = ψ_L`).
 
 ## Honest scope
 
-Projective / **coherent-error tier only**. The Born = FS-volume identity is
+**Statistics versus the post-measurement state.** The coupling sends
+`|i⟩|0⟩_A` to `|i⟩|i⟩_A` (`vnDilationV_mulVec`). Thus even two basis states in
+the same syndrome class leave distinguishable apparatus records. Discarding the
+apparatus removes their relative coherence in the register; coarse-graining
+the reported label by `synClass` does not undo that effect. The theorem
+`syndrome_recovery` applies a second bit flip directly to the errored input,
+without this coupling, apparatus readout, or partial trace. The headline bundles
+these separate facts and makes no claim that this measurement followed by
+correction restores the logical state.
+
+**Operational recovery elsewhere in the corpus.**
+`CsdLean4/Empirical/QM/QEC/SyndromeRecovery.lean` defines `recoveryChannel` using
+the two-dimensional syndrome projectors and proves
+`CSD.Empirical.QM.QEC.recoveryChannel_apply_singleFlipChannel_apply`: syndrome
+measurement followed by correction restores every code density matrix after a
+mixture of the four correctable errors. In
+`CsdLean4/Empirical/CSD/QEC/RegisterFlow.lean`,
+`CSD.Empirical.CSDBridge.QEC.registerFlow_recovery` applies that recovery channel
+to the reduced register state produced by a concrete register–environment error
+flow, under its code-support and ready-environment preparation hypotheses.
+That result composes an error flow with a recovery channel; it does not identify
+the recovery channel with this module's `syndromeFlow`.
+
+The Born = FS-volume identity is
 **derived** one layer down (the moment-map / Duistermaat–Heckman cluster,
 `fs_born_volume_ratio_N` / `born_frequency_convergence_N`: the FS volume of a
 pure-geometry region equals `‖⟨eᵢ,ψ⟩‖²`, Gleason-free, no Born put in) and
@@ -92,12 +121,11 @@ the **CSD sector (SO-1)** — that the sector's typicality law is the Fubini–S
 is a theorem, FS-as-typicality is the sector posit (reducing to D1). The syndrome partition into blocks is `synClass`, a
 fixed `ψ`-independent function; only the underlying cell *shapes*
 (`bornRegion ψ'`) are `ψ'`-dependent (engine realisation mechanism, measures
-forced by Kähler geometry). The **decoherence / partial-trace** origin (the
-system→environment volume-loss reading of incoherent errors) is **NOT** here — it
-is the gated entangled tier (`specs/lf5-plan.md` §0; Bell forces non-locality).
+forced by Kähler geometry). The **decoherence / partial-trace** origin of the
+error channel is treated in the register–environment construction cited above.
 The recovery-correctness half is a transport of the matrix fact
 (`bitflip_recovers`); the genuinely-new content is the volume / flow realisation
-of the syndrome readout (Stratum 1).
+of the syndrome statistics (Stratum 1).
 
 Mirrors the register-Σ honesty conventions of the other LF5 module docstrings.
 
@@ -440,12 +468,13 @@ theorem syndromeWeight_X3_logical (a b : ℂ) (s : Fin 4) :
 
 /-! ### Recovery (transport of the matrix fact) -/
 
-/-- **Recovery restores the logical state** (transport of
-`CSD.Empirical.QM.QEC.bitflip_recovers`): once the deterministic syndrome
-(`syndromeWeight_Xⱼ_logical`) identifies the error `Xⱼ`, re-applying it returns
-the microstate to the codespace, hence the logical ray and its syndrome-block FS
-volume coordinates are exactly restored. This half is the matrix transport; the
-new content is the volume realisation of the readout (Stratum 1). -/
+/-- **A second application of the same bit flip restores the logical vector**
+(transport of `CSD.Empirical.QM.QEC.bitflip_recovers`). These are the identities
+`Xⱼ (Xⱼ ψ_L) = ψ_L`: no measurement, `syndromeFlow`, or partial trace intervenes.
+They do not establish recovery after this module's computational-basis coupling.
+For syndrome measurement followed by correction on a density matrix, see
+`CSD.Empirical.QM.QEC.recoveryChannel_apply_singleFlipChannel_apply` in
+`CsdLean4/Empirical/QM/QEC/SyndromeRecovery.lean`. -/
 theorem syndrome_recovery (a b : ℂ) :
     Matrix.toEuclideanLin X1 (erroredLogical X1 a b) = logical a b
     ∧ Matrix.toEuclideanLin X2 (erroredLogical X2 a b) = logical a b
@@ -454,10 +483,11 @@ theorem syndrome_recovery (a b : ℂ) :
 
 /-! ## The syndrome de-isolation flow Φ_syn -/
 
-/-- **The syndrome de-isolation flow** `Φ_syn` is the LF5 von Neumann
-computational-basis measurement flow at `N = 8` (the 3-qubit register), with the
-pointer coarse-grained by `synClass`. It inherits `Φ_syn ≠ id` and
-FS-measure-preservation directly. -/
+/-- **The computational-basis flow used for syndrome statistics.** `Φ_syn` is
+the LF5 von Neumann measurement flow at `N = 8`. Only its reported pointer label
+is coarse-grained by `synClass`; the apparatus retains the full basis label.
+This is not a nondestructive syndrome-extraction coupling. It inherits
+`Φ_syn ≠ id` and FS-measure-preservation directly. -/
 noncomputable abbrev syndromeFlow (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) :
     ℙ ℂ (EuclideanSpace ℂ (Fin (M + 1))) → ℙ ℂ (EuclideanSpace ℂ (Fin (M + 1))) :=
   measurementFlow 8 e
@@ -477,7 +507,7 @@ theorem syndromeFlow_measurePreserving (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
 
 /-! ## The module headline -/
 
-/-- **The syndrome-flow Born-volume capstone (projective / coherent-error tier).**
+/-- **Syndrome statistics as Born volumes, with separate bit-flip identities.**
 For the context-fixed von Neumann coupling `e` at `N = 8` and every unit
 preparation `ψ` on the 3-qubit register:
 
@@ -492,15 +522,19 @@ preparation `ψ` on the 3-qubit register:
    `syndromeWeight_eq_fs_volume_sum`);
 4. codeword corollary: the error `X₁` on `logical a b` gives a **deterministic
    syndrome** *weight* concentrated on block `1` (`syndromeWeight_X1_logical`), and
-   recovery (`syndrome_recovery`) restores the logical state. NB conjunct (4)
+   a second bit flip (`syndrome_recovery`) restores the logical vector with no
+   intervening measurement. This does not assert recovery after `syndromeFlow`.
+   NB conjunct (4)
    concerns a state distinct from conjunct (3)'s free `ψ` and is not normalised;
    the codeword's FS-*volume* reading (not bundled here) follows by instantiating
    `syndromeRegion_fs_volume` at the unit-normalised errored codeword.
 
-Pure assembly of the Stratum-1 / Stratum-2 results; the honest-scope ledger
-(coherent-error tier; Born = volume derived one layer down and imported, not
-re-proved nor postulated; the posited primitive is SO-1 / FS-typicality; decoherence/partial-trace
-NOT here) is the module docstring. -/
+Pure assembly of the Stratum-1 / Stratum-2 results. The module docstring explains
+the distinction between syndrome probabilities and preservation of the logical
+state, and points to `recoveryChannel_apply_singleFlipChannel_apply` and
+`registerFlow_recovery` for operational recovery in their respective models.
+Born = volume is derived one layer down and imported; FS-as-typicality is the
+sector posit. -/
 theorem syndrome_flow_born_volume
     (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) (p₀ : CPN (M + 1))
     (ψ : EuclideanSpace ℂ (Fin 8)) (hψ : ‖ψ‖ = 1)
@@ -521,7 +555,7 @@ theorem syndrome_flow_born_volume
             = ∑ i ∈ Finset.univ.filter (fun i => synClass i = s),
                 ∑ n : Fin 8,
                   (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal)
-    -- (4) codeword corollary: deterministic syndrome (X₁ → block 1) + recovery
+    -- (4) deterministic syndrome weight (X₁ → block 1) + separate bit-flip identities
     ∧ (∀ a b : ℂ, ∀ s : Fin 4,
           syndromeWeight (regOfH3 (erroredLogical X1 a b)) s
             = if s = 1 then ‖a‖ ^ 2 + ‖b‖ ^ 2 else 0)
