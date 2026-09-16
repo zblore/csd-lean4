@@ -49,6 +49,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Field arena](https://glossary.constraintsurfacedynamics.com/field-arena/) | `` | definition |
 | [First-passage race](https://glossary.constraintsurfacedynamics.com/first-passage-race/) | `hasRaceProperty_iff_exists_expMeasure` | proved-in-corpus |
 | [Fisher information](https://glossary.constraintsurfacedynamics.com/fisher-information/) | `` | standard-mathematics |
+| [Fisher-Rao metric](https://glossary.constraintsurfacedynamics.com/fisher-rao-metric/) | `fsMetric_eq_fisherRaoInner` | proved-in-corpus |
 | [Fubini-Study measure](https://glossary.constraintsurfacedynamics.com/fubini-study-measure/) | `fubiniStudyMeasure_unique` | proved-in-corpus |
 | [GHZ state](https://glossary.constraintsurfacedynamics.com/ghz-state/) | `no_product_partition_realises_ghz` | proved-in-corpus |
 | [Gibbs state](https://glossary.constraintsurfacedynamics.com/gibbs-state/) | `` | standard-mathematics |
