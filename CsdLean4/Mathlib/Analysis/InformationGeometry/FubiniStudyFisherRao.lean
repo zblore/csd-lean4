@@ -45,6 +45,10 @@ horizontal directions (Braunstein–Caves for the computational-basis measuremen
   `fisherRaoInner (bornSimplex ψ) (bornDeriv ψ u) (bornDeriv ψ v) = 4 * Re ⟪u, v⟫`.
 * ★ `fisherInfo_bornDeriv_le` — `fisherInfo (bornWeight ψ) (bornDeriv ψ u) ≤ 4 * ‖u‖ ^ 2` for every
   `u`, and `fisherInfo_bornDeriv_eq_iff` — with equality iff `u` is horizontal.
+* Homogeneous coordinates, for the affine charts of `ℂℙⁿ`: `normalize ψ`, `horizontalLift ψ u`,
+  `fsInnerHom ψ u v` (the Fubini–Study inner product at a nonzero `ψ`), ★ `inner_horizontalLift`
+  (`fsInnerHom` is `4 Re ⟪·,·⟫` of the horizontal lifts) and ★ `fisherRaoInner_bornDeriv_normalize`,
+  the bridge stated at `normalize ψ`.
 
 ## The constant
 
@@ -239,5 +243,137 @@ theorem fisherInfo_bornDeriv_eq_iff (ψ u : EuclideanSpace ℂ ι) (h0 : ∀ i, 
     rw [this]
     congr 1
     exact inner_self_eq_norm_sq (𝕜 := ℂ) (u i)
+
+/-! ## Homogeneous coordinates
+
+A point of projective space is a ray `[ψ]` with `ψ ≠ 0`, and a direction at it is any vector
+`u`; the pairs `(ψ, u)` and `(ψ, u + c ψ)` describe the same tangent vector. The unit vector on the
+ray is `normalize ψ = ‖ψ‖⁻¹ • ψ`, and the **horizontal lift** of `u` removes the component of `u`
+along `ψ` and rescales: `horizontalLift ψ u = ‖ψ‖⁻¹ • (u − (⟪ψ, u⟫/‖ψ‖²) ψ)`. In these terms the
+Fubini–Study inner product of two directions is
+
+    `fsInnerHom ψ u v = 4 (Re ⟪u, v⟫ / ‖ψ‖² − Re(⟪u, ψ⟫ ⟪ψ, v⟫) / ‖ψ‖⁴)`,
+
+which is `4 Re ⟪horizontalLift ψ u, horizontalLift ψ v⟫` (`inner_horizontalLift`), and the Born
+weights of the ray are `‖ψ k‖² / ‖ψ‖²` with displacement
+`2 (Re(ψ̄ₖ uₖ) / ‖ψ‖² − ‖ψ k‖² Re ⟪ψ, u⟫ / ‖ψ‖⁴)`. The bridge in this form
+(`fisherRaoInner_bornDeriv_normalize`) is what the affine charts of `ℂℙⁿ` meet. -/
+
+/-- The unit vector on the ray of `ψ`. -/
+def normalize (ψ : EuclideanSpace ℂ ι) : EuclideanSpace ℂ ι := (‖ψ‖ : ℂ)⁻¹ • ψ
+
+theorem norm_normalize {ψ : EuclideanSpace ℂ ι} (hψ : ψ ≠ 0) : ‖normalize ψ‖ = 1 :=
+  norm_smul_inv_norm hψ
+
+theorem normalize_apply (ψ : EuclideanSpace ℂ ι) (k : ι) :
+    normalize ψ k = (‖ψ‖ : ℂ)⁻¹ * ψ k :=
+  rfl
+
+theorem normalize_apply_ne_zero {ψ : EuclideanSpace ℂ ι} (hψ : ψ ≠ 0) {k : ι} (hk : ψ k ≠ 0) :
+    normalize ψ k ≠ 0 := by
+  rw [normalize_apply]
+  exact mul_ne_zero (inv_ne_zero (Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.mpr hψ))) hk
+
+/-- The Born weights of the ray of `ψ`: `‖ψ k‖² / ‖ψ‖²`. -/
+theorem bornWeight_normalize (ψ : EuclideanSpace ℂ ι) (k : ι) :
+    bornWeight (normalize ψ) k = ‖ψ k‖ ^ 2 / ‖ψ‖ ^ 2 := by
+  rw [bornWeight, normalize_apply, norm_mul, norm_inv, Complex.norm_real, norm_norm, mul_pow,
+    inv_pow, div_eq_inv_mul]
+
+/-- The horizontal lift of a direction `u` at `ψ`: the component of `u` orthogonal to `ψ`, scaled
+by `‖ψ‖⁻¹`. -/
+def horizontalLift (ψ u : EuclideanSpace ℂ ι) : EuclideanSpace ℂ ι :=
+  (‖ψ‖ : ℂ)⁻¹ • (u - (inner ℂ ψ u / (‖ψ‖ : ℂ) ^ 2) • ψ)
+
+theorem horizontalLift_apply (ψ u : EuclideanSpace ℂ ι) (k : ι) :
+    horizontalLift ψ u k = (‖ψ‖ : ℂ)⁻¹ * (u k - (inner ℂ ψ u / (‖ψ‖ : ℂ) ^ 2) * ψ k) :=
+  rfl
+
+/-- The horizontal lift is orthogonal to `ψ`, so it is tangent to the unit sphere at
+`normalize ψ`. -/
+theorem inner_normalize_horizontalLift {ψ : EuclideanSpace ℂ ι} (hψ : ψ ≠ 0)
+    (u : EuclideanSpace ℂ ι) : inner ℂ (normalize ψ) (horizontalLift ψ u) = 0 := by
+  have hN : (‖ψ‖ : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.mpr hψ)
+  have hself : inner ℂ ψ ψ = (‖ψ‖ : ℂ) ^ 2 := inner_self_eq_norm_sq_to_K ψ
+  simp only [normalize, horizontalLift, inner_smul_left, inner_smul_right, inner_sub_right, hself,
+    map_inv₀, Complex.conj_ofReal]
+  field_simp
+  ring
+
+/-- The Fubini–Study inner product of two directions at `ψ`, in homogeneous coordinates:
+`4 (Re ⟪u, v⟫ / ‖ψ‖² − Re(⟪u, ψ⟫ ⟪ψ, v⟫) / ‖ψ‖⁴)`. -/
+def fsInnerHom (ψ u v : EuclideanSpace ℂ ι) : ℝ :=
+  4 * ((inner ℂ u v : ℂ).re / ‖ψ‖ ^ 2 - (inner ℂ u ψ * inner ℂ ψ v : ℂ).re / ‖ψ‖ ^ 4)
+
+/-- The inner product of two horizontal lifts, as a complex number. -/
+theorem inner_horizontalLift_eq {ψ : EuclideanSpace ℂ ι} (hψ : ψ ≠ 0) (u v : EuclideanSpace ℂ ι) :
+    inner ℂ (horizontalLift ψ u) (horizontalLift ψ v)
+      = (inner ℂ u v - inner ℂ u ψ * inner ℂ ψ v / (‖ψ‖ : ℂ) ^ 2) / (‖ψ‖ : ℂ) ^ 2 := by
+  have hN : (‖ψ‖ : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr (norm_ne_zero_iff.mpr hψ)
+  have hc : conj (inner ℂ ψ u / (‖ψ‖ : ℂ) ^ 2) = inner ℂ u ψ / (‖ψ‖ : ℂ) ^ 2 := by
+    rw [map_div₀, inner_conj_symm, map_pow, Complex.conj_ofReal]
+  have hself : inner ℂ ψ ψ = (‖ψ‖ : ℂ) ^ 2 := inner_self_eq_norm_sq_to_K ψ
+  simp only [horizontalLift, inner_smul_left, inner_smul_right, inner_sub_left, inner_sub_right,
+    hself, map_inv₀, Complex.conj_ofReal, hc]
+  field_simp
+  ring
+
+/-- ★ **The Fubini–Study inner product is the inner product of the horizontal lifts**:
+`4 Re ⟪horizontalLift ψ u, horizontalLift ψ v⟫ = fsInnerHom ψ u v`. -/
+theorem inner_horizontalLift {ψ : EuclideanSpace ℂ ι} (hψ : ψ ≠ 0) (u v : EuclideanSpace ℂ ι) :
+    4 * (inner ℂ (horizontalLift ψ u) (horizontalLift ψ v) : ℂ).re = fsInnerHom ψ u v := by
+  rw [inner_horizontalLift_eq hψ, fsInnerHom, ← Complex.ofReal_pow, Complex.div_ofReal_re,
+    Complex.sub_re, Complex.div_ofReal_re]
+  ring
+
+/-- The product `conj (normalize ψ k) * horizontalLift ψ u k`, as a complex number. -/
+theorem conj_normalize_mul_horizontalLift (ψ u : EuclideanSpace ℂ ι) (k : ι) :
+    conj (normalize ψ k) * horizontalLift ψ u k
+      = (conj (ψ k) * u k - ((‖ψ k‖ ^ 2 : ℝ) : ℂ) * inner ℂ ψ u / ((‖ψ‖ ^ 2 : ℝ) : ℂ))
+          / ((‖ψ‖ ^ 2 : ℝ) : ℂ) := by
+  rw [normalize_apply, horizontalLift_apply, map_mul, map_inv₀, Complex.conj_ofReal]
+  have hk : conj (ψ k) * ψ k = (‖ψ k‖ : ℂ) ^ 2 := RCLike.conj_mul (ψ k)
+  push_cast
+  linear_combination (-((‖ψ‖ : ℂ)⁻¹ ^ 4) * inner ℂ ψ u) * hk
+
+/-- The Born displacement of the ray along `u`, in homogeneous coordinates. -/
+theorem bornDeriv_normalize_horizontalLift (ψ u : EuclideanSpace ℂ ι) (k : ι) :
+    bornDeriv (normalize ψ) (horizontalLift ψ u) k
+      = 2 * ((conj (ψ k) * u k).re / ‖ψ‖ ^ 2
+          - ‖ψ k‖ ^ 2 * (inner ℂ ψ u : ℂ).re / ‖ψ‖ ^ 4) := by
+  rw [bornDeriv, conj_normalize_mul_horizontalLift, Complex.div_ofReal_re, Complex.sub_re,
+    Complex.div_ofReal_re, Complex.re_ofReal_mul]
+  ring
+
+/-- If every `ψ̄ₖ uₖ` is real then the horizontal lift of `u` is a horizontal direction at
+`normalize ψ`: the projection off `ψ` and the rescaling preserve the reality of every coordinate
+product, because `⟪ψ, u⟫ = Σ ψ̄ₖ uₖ` is then real as well. -/
+theorem isHorizontal_normalize_horizontalLift {ψ u : EuclideanSpace ℂ ι}
+    (hu : ∀ k, (conj (ψ k) * u k).im = 0) :
+    IsHorizontal (normalize ψ) (horizontalLift ψ u) := by
+  have hin : (inner ℂ ψ u : ℂ).im = 0 := by
+    rw [PiLp.inner_apply, Complex.im_sum]
+    exact Finset.sum_eq_zero fun k _ => by rw [RCLike.inner_apply, mul_comm]; exact hu k
+  intro k
+  rw [conj_normalize_mul_horizontalLift, Complex.div_ofReal_im, Complex.sub_im,
+    Complex.div_ofReal_im, Complex.im_ofReal_mul, hu k, hin]
+  simp
+
+/-- ★ **The bridge in homogeneous coordinates.** For `ψ ≠ 0` with no vanishing coordinate, a
+direction `u` with every `ψ̄ₖ uₖ` real, and any direction `v`, the Fisher–Rao inner product of
+the Born displacements of the ray equals the Fubini–Study inner product of the directions:
+
+    `g_FR(dΦ u, dΦ v) = fsInnerHom ψ u v = 4 (Re ⟪u, v⟫ / ‖ψ‖² − Re(⟪u, ψ⟫ ⟪ψ, v⟫) / ‖ψ‖⁴)`.
+
+This is `fisherRaoInner_bornDeriv` at `normalize ψ` along the horizontal lifts. -/
+theorem fisherRaoInner_bornDeriv_normalize {ψ : EuclideanSpace ℂ ι} (hψ : ψ ≠ 0)
+    (h0 : ∀ k, ψ k ≠ 0) {u : EuclideanSpace ℂ ι} (hu : ∀ k, (conj (ψ k) * u k).im = 0)
+    (v : EuclideanSpace ℂ ι) :
+    OpenSimplex.fisherRaoInner
+        (bornSimplex (normalize ψ) (norm_normalize hψ) (fun k => normalize_apply_ne_zero hψ (h0 k)))
+        (bornDeriv (normalize ψ) (horizontalLift ψ u)) (bornDeriv (normalize ψ) (horizontalLift ψ v))
+      = fsInnerHom ψ u v := by
+  rw [fisherRaoInner_bornDeriv _ _ _ (isHorizontal_normalize_horizontalLift hu),
+    inner_horizontalLift hψ]
 
 end FisherRao

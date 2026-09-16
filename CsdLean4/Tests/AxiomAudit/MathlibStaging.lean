@@ -1249,6 +1249,41 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'FisherRao.fisherInfo_bornDeriv_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms FisherRao.fisherInfo_bornDeriv_eq_iff
 
+-- Homogeneous coordinates (same file): the bridge at normalize ψ along horizontal lifts, and the
+-- identification 4 Re ⟪hLift u, hLift v⟫ = fsInnerHom ψ u v.
+/-- info: 'FisherRao.inner_horizontalLift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms FisherRao.inner_horizontalLift
+
+/-- info: 'FisherRao.fisherRaoInner_bornDeriv_normalize' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms FisherRao.fisherRaoInner_bornDeriv_normalize
+
+-- Geometry/Manifold/Instances/ProjectiveSpaceFisherRao.lean (2026-09-16): the manifold bridge.
+-- fsMetric at x IS the homogeneous Fubini–Study formula on the lifts to insertOne (idx x) w
+-- (the recognition lemma), the moment map is differentiable with momentDeriv killing the torus
+-- orbits and tangent to the simplex, horizontal = moduli-only in the chart, and ★★ on the regular
+-- stratum fsMetric x u v = fisherRaoInner (toOpenSimplex x) (momentDeriv x u) (momentDeriv x v)
+-- for u horizontal — constant ONE.
+/-- info: 'Projectivization.fsMetric_eq_fsInnerHom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.fsMetric_eq_fsInnerHom
+
+/-- info: 'Projectivization.hasMFDerivAt_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.hasMFDerivAt_momentMap
+
+/-- info: 'Projectivization.mfderiv_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.mfderiv_momentMap
+
+/-- info: 'Projectivization.sum_momentDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.sum_momentDeriv
+
+/-- info: 'Projectivization.momentDeriv_eq_zero_of_mem_verticalSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.momentDeriv_eq_zero_of_mem_verticalSpace
+
+/-- info: 'Projectivization.mem_horizontalSpace_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.mem_horizontalSpace_iff
+
+/-- info: 'Projectivization.fsMetric_eq_fisherRaoInner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.fsMetric_eq_fisherRaoInner
+
 -- MG-1 (2026-08-22, Projectivization/Metric.lean, specs/mathlib-gaps-plan.md): the first
 -- METRIC on Projectivization anywhere — the rank-one projection embedding p -> P_p (scale-
 -- invariant, descends by lift), injective, continuous off the staged quotient topology,
