@@ -136,6 +136,8 @@ bash scripts/check-axiom-imports.sh    # every AxiomAudit pin is import-reachabl
 bash scripts/check-sector-linkage.sh   # the KahlerOnticSetup substrate is not carried-but-unused
 bash scripts/check-connectivity.sh     # docs don't overclaim end-to-end Kähler→Born/Schrödinger connectivity
 bash scripts/check-review-surface.sh   # expert-review triage: thin defs, no-API defs, single-use statements
+bash scripts/check-import-hygiene.sh   # incl. rule (4): CsdLean4/Mathlib/ imports only Mathlib + CsdLean4.Mathlib.*
+bash scripts/export-physlib.sh --table # the Physlib export closure and its slices (not a gate)
 ```
 
 The build configuration lives in `lakefile.toml` (not `lakefile.lean`); Mathlib
@@ -959,7 +961,15 @@ unitarity, CPTP `Channel`s, `TraceDistance`, von Neumann `Entropy`, `QEC/` codes
 consumed by the algorithm and decoherence tiers; the **`QuantumInfo/Reversible/`**
 reversible-circuit DSL + derived cost model (gate-list `Circuit`, `Cost`, the
 ModAdd/ModMul/ModInv + modular field-arithmetic + Cuccaro carry-clean stack) used by the
-Shor algorithm tier; and `MeasureTheory/PiCurry.lean` (the general-`N` DH bridge).
+Shor algorithm tier; `MeasureTheory/PiCurry.lean` (the general-`N` DH bridge); the **manifold layer**
+(`Geometry/Manifold/`: differential forms, the exterior derivative, symplectic and Kähler
+structure, ℂℙⁿ with its affine atlas, the Fubini–Study form, metric and volume, the torus
+moment map and the Schrödinger flow) and **`Analysis/InformationGeometry/`** (the
+Fubini–Study → Fisher–Rao bridge built for Physlib PR #1652, 2026-09-16). **Every file under
+`CsdLean4/Mathlib/` imports only Mathlib and `CsdLean4.Mathlib.*`** — `check-import-hygiene.sh`
+rule (4) enforces it, so the tree is Category 1 by closure. `CsdLean4/Interop/Physlib/` is the
+export root for Physlib and `scripts/export-physlib.sh` (with `MANIFEST.md`) computes, slices,
+renames, hygiene-checks and builds the closure against Physlib's Mathlib pin.
 (The ecdsa.fail / ECDLP quantum-cryptanalysis track that formerly sat on this DSL was
 extracted to its own repository 2026-07-20.)
 These files keep the **natural Mathlib namespace** (`namespace Projectivization`,

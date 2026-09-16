@@ -10,8 +10,9 @@ is self-contained. The reader-type paths (physicist / Lean reader / skeptic) are
    epistemic Ω-partition + the ontic typicality volume. The anti-drift frame.
 2. [`AXIOMS.md`](../AXIOMS.md) §3 — the posits, as posits: substrate, sector, typicality
    reading, apparatus calibration (§3.8).
-3. `CsdLean4/LF4/KahlerInstance.lean`, `LF4/MomentMap.lean` — `Σ = ℂℙ^{N-1} × T²`, `μL`,
-   the torus moment map (where the Born weight lives geometrically).
+3. `CsdLean4/LF4/KahlerInstance.lean`, `Mathlib/LinearAlgebra/Projectivization/MomentMap.lean`
+   (the torus moment map, Category 1 since 2026-09-16; `LF4/MomentMap.lean` re-exports it with the
+   programme reading) — `Σ = ℂℙ^{N-1} × T²`, `μL`, where the Born weight lives geometrically.
 4. `CsdLean4/SigmaLayer/SectorPostulateNoGo.lean` — why "derive Σ from a single flow" is
    provably not available (the SO-1 no-go).
 5. [`specs/sigma-fibre-contextuality.md`](../specs/sigma-fibre-contextuality.md) — the

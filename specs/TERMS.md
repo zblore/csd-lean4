@@ -137,7 +137,9 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   the moment-map defining equation `ι_{X_i}ω = dF` at the LINEAR level**: `IsPhaseHamiltonian` is
   exactly that equation on the ambient `EuclideanSpace`, and `generatedRateField_eq_momentMap`
   proves that a rate field satisfying it *is* `momentMap`.
-* **Backed by:** `LF4/MomentMap.lean`; `RecordLayer/CellLawForced.lean` (`IsPhaseHamiltonian`,
+* **Backed by:** `Mathlib/LinearAlgebra/Projectivization/MomentMap.lean` (the definition and its
+  coordinate lemmas; `LF4/MomentMap.lean` re-exports them with the programme reading);
+  `RecordLayer/CellLawForced.lean` (`IsPhaseHamiltonian`,
   `generatedRateField_eq_momentMap`, `torusGenerated_eq_momentMap`, CR-15). The pushforward facts
   the corpus needs are **theorems, not citations**: `fs_moment_pushforward_uniform` (qubit —
   a *discharged axiom*, 2026-05-31) and `fs_moment_joint_dirichlet_N` (general `N`), both on the

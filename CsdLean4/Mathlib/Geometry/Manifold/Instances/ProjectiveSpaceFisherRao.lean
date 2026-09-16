@@ -16,6 +16,8 @@ public import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
 **Category:** 1-Mathlib (CSD-free; the Kähler manifold `ℂℙⁿ`, its torus moment map and the
 open simplex of `FisherRao.lean`).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/fisher-rao-metric/
+
 The torus moment map `Φ : ℂℙⁿ → Δⁿ`, `Φ([z])ₖ = ‖zₖ‖²/‖z‖²`, sends the **regular stratum**
 (every coordinate positive) into the open simplex. Its differential kills the orbit directions
 of the coordinate-phase torus — the **vertical space** at `x` — and on the Fubini–Study

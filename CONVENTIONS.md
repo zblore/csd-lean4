@@ -16,7 +16,7 @@ Every Lean module in this repository belongs to exactly one of three categories.
 
 **Namespace.** Declarations live in their **natural Mathlib symbol namespace** (e.g. `ContinuousLinearMap` for `ContinuousLinearMap` lemmas), so dot notation is preserved. The file path `CsdLean4/Mathlib/<path>/` is the staging signal; when upstreamed, the file moves to or is appended onto the matching Mathlib path with no symbol rename. This is the Aesop / `Std4` convention. Earlier drafts of this document specified a `CsdLean4.Mathlib.<path>` outer-namespace wrapper to avoid Mathlib homonym collisions; in practice the cost (loss of dot notation, every lemma path is verbose) outweighs the benefit (rare collisions are easier to handle by renaming the specific lemma at upstream time).
 
-**Allowed imports.** Mathlib only. No imports from `CsdLean4/Framework/`, `CsdLean4/LF*/`, `CsdLean4/Tests/`, or other CSD-specific subtrees.
+**Allowed imports.** Mathlib only (and other files under `CsdLean4/Mathlib/`). No imports from `CsdLean4/Framework/`, `CsdLean4/LF*/`, `CsdLean4/Tests/`, or other CSD-specific subtrees. **Enforced since 2026-09-16** by `scripts/check-import-hygiene.sh` rule (4), which greps every Category-1 file's direct imports; direct-import purity gives closure purity by induction. The exemption list in that script is a dated inventory that may only shrink (empty at adoption).
 
 **Quality bar.** Mathlib house style: snake_case lemma names; universe polymorphism where natural; minimal hypotheses (avoid baking in concrete `Fin N` if `Module` suffices); docstrings explaining the statement and provenance; one declaration's content per logical paragraph.
 

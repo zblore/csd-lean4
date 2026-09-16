@@ -380,6 +380,13 @@ Duistermaat–Heckman (carve-out plan, Tranche M).
 
 ## 10. Framework/ extraction candidates (post-CONVENTIONS.md adoption)
 
+**Two Category-1 extractions DONE 2026-09-16** (the Physlib bridge, BACKLOG #33): `momentMap` and its
+coordinate lemmas moved to `Mathlib/LinearAlgebra/Projectivization/MomentMap.lean`, and `exp(−itH)`
+(`schrodingerGen`, `schrodingerUnitary`, `expNegITH_unitary_group`, `schrodingerUnitary_hasDerivAt`) to
+`Mathlib/Analysis/Matrix/SchrodingerUnitary.lean`; `CSD.LF4` re-exports both sets of names, so no consumer
+changed. `scripts/check-import-hygiene.sh` rule (4) now enforces that every `CsdLean4/Mathlib/` file imports
+only Mathlib and `CsdLean4.Mathlib.*`. The rows below are the remaining candidates.
+
 **Status:** All current LF1/LF2/LF3 modules are tagged `Category: 3-Local` per `CONVENTIONS.md`. The initial pass classified by current location, not conceptual category. Several modules are conceptually Cat-2 (framework-level, CSD-adjacent but reusable beyond CSD) and should be extracted to `CsdLean4/Framework/` when LF4 needs them in CSD-free form.
 
 This section is a punch list of the specific modules to consider for extraction, surfaced by the 2026-05-18 OpenAI Codex CLI review. Do not bulk-refactor; reclassify a module only when LF4 has a concrete consumer that needs it CSD-free.

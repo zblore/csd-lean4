@@ -112,7 +112,7 @@ meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: 0adcc9b021ce81a4829627d060e60660d9f6d70c
+  sha: 8e6f3b749b19b21378e6fbff66198e1a89e653eb
 
 # ---------------------------------------------------------------------------
 # refs: the external reference registry.
@@ -180,7 +180,7 @@ refs:
 
 entries:
   - slug: fubini-study-measure
-    reviewed: 2026-09-14
+    reviewed: 2026-09-16
     image:
       file: img/fubini-study-measure.jpg
       alt: "Portrait photograph of Guido Fubini"
@@ -287,7 +287,7 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper B derives the Born rule from this measure
-    related: [born-weight, liouville-measure, kahler-form, haar-measure, typicality-volume]
+    related: [born-weight, liouville-measure, kahler-form, haar-measure, typicality-volume, fisher-rao-metric]
 
   - slug: born-weight
     reviewed: 2026-09-14
@@ -374,7 +374,7 @@ entries:
     lean:
       module: CsdLean4/LF4/MomentBornN.lean
       theorem: fs_born_volume_ratio_N
-    related: [fubini-study-measure, born-volume-ratio, typicality-volume, outcome-region, is-the-born-rule-derived]
+    related: [fubini-study-measure, born-volume-ratio, typicality-volume, outcome-region, is-the-born-rule-derived, fisher-rao-metric]
 
   - slug: duistermaat-heckman
     reviewed: 2026-09-14
@@ -1467,7 +1467,7 @@ entries:
     related: [fubini-study-measure, kahler-form, constraint-surface, typicality, poisson-bracket]
 
   - slug: kahler-form
-    reviewed: 2026-09-14
+    reviewed: 2026-09-16
     image:
       file: img/kahler-form.jpg
       alt: "Portrait photograph of Erich Kähler"
@@ -1557,7 +1557,7 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudySymplectic.lean
       theorem: fsForm_isKahler
-    related: [fubini-study-measure, liouville-measure, moment-map, poisson-bracket, duistermaat-heckman]
+    related: [fubini-study-measure, liouville-measure, moment-map, poisson-bracket, duistermaat-heckman, fisher-rao-metric]
 
   - slug: luders-rule
     reviewed: 2026-09-14
@@ -2478,6 +2478,12 @@ entries:
       The reason to carry it at all is that a formalisation claiming practical reach
       should be able to state the standard quantum limit, the improved Heisenberg scaling
       that entanglement buys, and the gap between them, and the corpus can.
+
+      The strand does touch the geometry at one point. The corpus proves that the natural
+      distance on the space of quantum states agrees with the statistician's distance on
+      the outcome probabilities along every direction a fixed measurement can see, which
+      is the Fisher-Rao metric entry's result, and that agreement is what a Physlib
+      collaboration on Fisher information asked the corpus for.
     mathematical: >
       In the classical setting, Fisher information is the variance of the score of a
       parametrised family, and the Cramer-Rao inequality bounds any unbiased estimator's
@@ -2486,6 +2492,12 @@ entries:
       In the quantum setting, maximising over measurements gives the quantum Fisher
       information and the Braunstein-Caves bound, the precision floor for a given
       parametrised family of states before any choice of apparatus.
+
+      For the coordinate readout of a pure state the corpus proves the bound itself and its
+      equality case: the classical Fisher information of the readout is at most four times
+      the squared length of the direction of change (fisherInfo_bornDeriv_le), with equality
+      exactly when the direction changes the moduli of the coordinates and not their phases
+      (fisherInfo_bornDeriv_eq_iff).
     person: >
       Ronald Fisher (1890-1962) was born in London, read mathematics at Cambridge, and did
       his transformative work not at a university but at Rothamsted Experimental Station
@@ -2505,7 +2517,96 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Fisher_information
-    related: [ramsey-interferometry, phase-estimation, born-weight, amplitude-estimation, robertson-uncertainty]
+    related: [ramsey-interferometry, phase-estimation, born-weight, amplitude-estimation, robertson-uncertainty, fisher-rao-metric]
+
+  - slug: fisher-rao-metric
+    reviewed: 2026-09-16
+    hook: >
+      The natural way to measure distance between quantum states agrees with the
+      statistician's way to measure distance between the probability distributions they
+      produce, exactly and with no constant left to fix.
+    layman: >
+      Two probability distributions can be close together or far apart, and statisticians
+      have a standard way to say how far, which asks how easily a sample could tell them
+      apart. If moving from one distribution to the other barely changes what you'd
+      observe they're close, and if it changes the observations a lot they're far. Fisher
+      information is the local version of that idea, the rate at which observations respond
+      to a small change, and the Fisher-Rao metric turns it into a geometry, a way of
+      measuring lengths and angles on the space of distributions.
+
+      Quantum states have a geometry of their own. The space of states of a finite quantum
+      system carries a distance, the Fubini-Study metric, which is the only one that treats
+      every state the same way and respects the symmetries of the theory. A measurement
+      turns a state into a probability distribution over its outcomes, so you can ask
+      whether the two geometries agree.
+
+      They do, on the directions the measurement can see. Moving a state so that only the
+      sizes of its components change, and not their phases, moves its outcome distribution,
+      and the quantum distance moved equals the statistical distance moved. Moving the
+      phases is invisible to the measurement, so those directions have quantum length and
+      no statistical length. The gap between the two is the information a fixed measurement
+      leaves on the table, which is why the best measurement of a parameter reaches the
+      quantum limit exactly when the state moves in a modulus-only direction.
+    in_csd: >
+      The corpus builds the state space of a finite quantum system as a Kahler manifold,
+      with the Fubini-Study form, metric and volume proved on it rather than assumed, and
+      the Born weights appear on that manifold as the moment map of the torus that rotates
+      the phases of the coordinates. This result reads the moment map as a map between
+      geometries and finds that it's an isometry from the modulus-only directions onto the
+      Fisher-Rao metric of the weights, with constant one in the corpus's normalisation.
+
+      The value for the programme is that the metric side of its geometry is checked
+      against a structure statisticians already own, and the value outside it is direct.
+      The result is written so that the quantum information library Physlib can take it as
+      it stands, and it was built for that library's Fisher information work, with the
+      vector-level statement placed beside Physlib's own Fisher-Rao file and the manifold
+      statement following from it in an affine chart.
+    mathematical: >
+      For a unit vector psi with no vanishing coordinate the Born weights p_i = |psi_i|^2
+      form a point of the open simplex, and a direction u moves them by dp_i = 2 Re(conj(psi_i)
+      u_i). Along a horizontal direction, one for which every conj(psi_i) u_i is real, the
+      Fisher-Rao inner product of the displacements of u and any v equals four times the
+      real inner product of u and v (fisherRaoInner_bornDeriv), and for a general direction
+      the coordinate readout's Fisher information is at most 4|u|^2 with equality exactly
+      when u is horizontal (fisherInfo_bornDeriv_eq_iff), which is the Braunstein-Caves
+      bound for that measurement.
+
+      On the manifold the same statement reads fsMetric x u v = fisherRaoInner
+      (toOpenSimplex x) (momentDeriv x u) (momentDeriv x v) on the regular stratum for u in
+      the horizontal space, the Fubini-Study orthogonal complement of the torus orbit
+      (fsMetric_eq_fisherRaoInner). The constant is one because the corpus normalises the
+      Fubini-Study metric so that the qubit's state space is the unit sphere, where four
+      times the Bengtsson-Zyczkowski metric is the quantum Fisher information, and the
+      identification of the corpus's metric with that formula on lifts is its own theorem
+      (fsMetric_eq_fsInnerHom). Every declaration in the closure of the result depends on
+      the foundational triple of axioms only.
+    person: >
+      Calyampudi Radhakrishna Rao (1920-2023) was born in Hadagali in what's now Karnataka,
+      trained at Andhra University and Calcutta, and joined the Indian Statistical
+      Institute under Mahalanobis in the early 1940s. His 1945 paper in the Bulletin of the
+      Calcutta Mathematical Society, written when he was twenty-five, contains both the
+      Cramer-Rao bound and the observation that Fisher information defines a Riemannian
+      metric on a family of distributions, which is the metric that carries his name with
+      Fisher's. He led the Institute's research and training for decades, moved to the
+      University of Pittsburgh and then Pennsylvania State University, and received the
+      National Medal of Science in 2002.
+
+      Ronald Fisher's part of the name is his information measure of 1922, and his own
+      entry tells his story.
+    term: Fisher-Rao metric
+    eponyms: [Fisher, Rao]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFisherRao.lean
+      theorem: fsMetric_eq_fisherRaoInner
+    external:
+      - text: "Wikipedia: Fisher information metric"
+        url: https://en.wikipedia.org/wiki/Fisher_information_metric
+      - text: "Braunstein and Caves, Statistical distance and the geometry of quantum states, PRL 1994"
+        url: https://doi.org/10.1103/PhysRevLett.72.3439
+      - text: "Rao, Information and the accuracy attainable in the estimation of statistical parameters, 1945"
+        url: https://doi.org/10.1007/978-1-4612-0919-5_16
+    related: [fisher-information, moment-map, fubini-study-measure, born-weight, kahler-form]
 
   - slug: gibbs-state
     image:
@@ -6242,6 +6343,12 @@ entries:
       Hermitian H the Schrodinger flow is the Hamiltonian flow of minus twice the
       expectation of H (schrodingerField_isHamiltonianVectorField), and the torus is the
       diagonal case.
+
+      The moment map is also a map between geometries. Its differential kills the torus
+      directions and, on their Fubini-Study orthogonal complement, carries the Fubini-Study
+      metric to the Fisher-Rao metric of the weights with constant one
+      (fsMetric_eq_fisherRaoInner), so the Born weights of a state sit in the simplex at
+      the statistical distances the quantum distances dictate.
     term: Moment map
     status: standard-mathematics
     source: curated
@@ -6250,7 +6357,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Moment_map
       - text: "Atiyah, Convexity and commuting Hamiltonians, Bull. LMS 1982"
         url: https://doi.org/10.1112/blms/14.1.1
-    related: [kahler-form, duistermaat-heckman, poisson-bracket, fubini-study-measure, liouville-measure]
+    related: [kahler-form, duistermaat-heckman, poisson-bracket, fubini-study-measure, liouville-measure, fisher-rao-metric]
 
   - slug: lf1-main-theorem
     reviewed: 2026-09-14

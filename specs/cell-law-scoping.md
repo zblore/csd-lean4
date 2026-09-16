@@ -121,7 +121,7 @@ to assume. Either outcome closes the question; neither should be started without
 (`quadraticEnergy_hamiltonian_duality`, the linear machinery A instantiates);
 `specs/POSITS.md` (Posit 1, restated);
 `RecordLayer/GlobalBasin.lean` (`ContextField`, `momentContext`, `globalBasin_born`);
-`RecordLayer/MomentMapRace.lean` (`bornRate_eq_momentMap`); `LF4/MomentMap.lean` (the definition and
-its boundary note); `LF4/MomentUniform.lean`, `LF4/MomentDirichletN.lean` (the DH pushforward laws);
+`RecordLayer/MomentMapRace.lean` (`bornRate_eq_momentMap`); `Mathlib/LinearAlgebra/Projectivization/MomentMap.lean`
+(the definition) and `LF4/MomentMap.lean` (its boundary note); `LF4/MomentUniform.lean`, `LF4/MomentDirichletN.lean` (the DH pushforward laws);
 `LF2/EffectGleason.lean` (`effect_gleason_representation`); `specs/future-work.md`;
 `specs/TERMS.md` (Kähler, Liouville, Hamiltonian).
