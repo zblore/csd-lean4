@@ -14,7 +14,7 @@ public import Mathlib.Analysis.Calculus.ContDiff.Bounds
 **Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Analysis.Normed.Module.Alternating`).
 
-Milestone **M2(a)–(b)** of `specs/top-power-scoping.md`, and the norm bound that
+Milestone **M2(a)–(b)** of the top-power plan, and the norm bound that
 `Wedge.lean`'s honest scope listed as "true and a natural follow-up". `Wedge.lean` proved the
 exterior product of two continuous alternating maps continuous *in the vector family*; this
 module proves it bilinear and bounded *in the pair of forms*, which is what makes the wedge of
@@ -40,8 +40,8 @@ two smooth sections smooth:
 of the wedge are still not here (they are algebraic facts about `AlternatingMap.domCoprod`
 first, and Mathlib does not have them either; MATHLIB-ABSENT(ContinuousAlternatingMap.wedgeL)).
 
-References: `specs/top-power-scoping.md` (M2); `Alternating/Wedge.lean` (the wedge);
-`Geometry/Manifold/WedgeForm.lean` (the consumer: the wedge of sections); `specs/future-work.md`.
+**Provenance and references.** The top-power plan (M2); `Alternating/Wedge.lean` (the wedge);
+`Geometry/Manifold/WedgeForm.lean` (the consumer: the wedge of sections); the completed-work ledger.
 -/
 
 @[expose] public section

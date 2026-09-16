@@ -20,7 +20,7 @@ public import Mathlib.Analysis.Calculus.ContDiff.CPolynomial
 `Mathlib.Analysis.Analytic.CPolynomial` for the pullback, beside its multilinear twin).
 
 The lemma that step (2a) of the manifold exterior-calculus plan ran aground on
-(`MATHLIB-GAPS.md`, `specs/BACKLOG.md` XL). Making differential forms on a **manifold** into
+(the Mathlib-gaps register, the backlog XL). Making differential forms on a **manifold** into
 smooth sections needs a `ContMDiffVectorBundle` instance for the alternating-map bundle,
 whose crux is smoothness of the coordinate change — and that reduces to smoothness of the
 **pullback** `(g, ω) ↦ ω ∘ g` in *both* arguments jointly.
@@ -94,8 +94,8 @@ and nothing here says whether the conclusion survives.
 ⚠️ `contDiffAt_…` needs `[CompleteSpace G]`, inherited from `AnalyticAt.contDiffAt`. The
 analyticity statement itself does not.
 
-References: `MATHLIB-GAPS.md` (Kahler / symplectic manifold API, step (2a));
-`specs/BACKLOG.md` (XL, "Manifold exterior calculus");
+**Provenance and references.** The Mathlib-gaps register (Kahler / symplectic manifold API, step (2a));
+the backlog (XL, "Manifold exterior calculus");
 `Mathlib/Analysis/Analytic/CPolynomial.lean` (the multilinear twin this reflects from);
 `Mathlib/Topology/Algebra/Module/Alternating/Basic.lean`
 (`alternatization`, the `AddMonoidHom` this upgrades).

@@ -64,7 +64,7 @@ the `4` is the derivative of `‖·‖²`.
 * S. L. Braunstein, C. M. Caves, *Statistical distance and the geometry of quantum states*,
   Phys. Rev. Lett. 72, 3439 (1994).
 * I. Bengtsson, K. Życzkowski, *Geometry of Quantum States*, 2nd ed., §§4.4, 14.2.
-* Physlib PR #1652 (`FisherRao.lean`, mirrored in this directory); `specs/future-work.md`.
+* Physlib PR #1652 (`FisherRao.lean`, mirrored in this directory); the completed-work ledger.
 -/
 
 @[expose] public section

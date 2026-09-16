@@ -14,7 +14,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.WedgeForm
 # The Fubini–Study form as a global smooth 2-form on `ℂℙⁿ`
 
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler";
-`specs/TERMS.md` records what is backed and what is not.
+the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`).
 
@@ -68,14 +68,14 @@ non-degeneracy at every point and the top-power identity `ωⁿ/n! = μ_FS` are 
 ⚠️ **The chart chosen at `x` is `idx x`, a choice function.** `fsSection` is defined through
 it; `localRep_fsSection` is what shows the value does not depend on the choice.
 
-References: `Geometry/Manifold/DifferentialForm.lean` (the type; step (2a));
-`specs/generator-layer-scoping.md` (G12, the analytic upgrade);
+**Provenance and references.** `Geometry/Manifold/DifferentialForm.lean` (the type; step (2a));
+the generator-layer plan (G12, the analytic upgrade);
 `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `d ∘ d = 0`; step (2b));
 `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudy.lean` (chart invariance);
 `Geometry/Manifold/Instances/ProjectiveSpace.lean` (the atlas);
 `Analysis/InnerProductSpace/KahlerPotential.lean` (`fsChartForm`, `fsChartForm_zero`);
-`MATHLIB-GAPS.md` (Kahler / symplectic manifold API); `specs/BACKLOG.md` (XL, "Manifold
-exterior calculus"); `specs/future-work.md`.
+the Mathlib-gaps register (Kahler / symplectic manifold API); the backlog (XL, "Manifold
+exterior calculus"); the completed-work ledger.
 -/
 
 @[expose] public section

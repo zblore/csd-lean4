@@ -114,7 +114,9 @@ done
 if [ "$MANIFEST" -eq 1 ]; then
   sweep_out="$(mktemp)"
   echo "export-physlib: running scripts/physlib-axiom-sweep.lean …"
-  lake env lean scripts/physlib-axiom-sweep.lean | tee "$sweep_out" | head -1
+  # (no `| head` here: under pipefail a closed pipe would abort the script before the manifest)
+  lake env lean scripts/physlib-axiom-sweep.lean > "$sweep_out"
+  sed -n '1p' "$sweep_out"
   "$PY" scripts/export_physlib.py --manifest --target "$TARGET" --out "$OUT" \
     --build-results "$(cat "$RESULTS")" --sweep-output "$sweep_out"
   rm -f "$sweep_out"

@@ -12,7 +12,7 @@ public import Mathlib.Analysis.Complex.Basic
 /-!
 # The pointwise Fubini–Study / Kähler fundamental form (linear-algebra core)
 
-**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; `specs/TERMS.md` records what is backed and what is not.
+**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free; the form-level analogue of `fubiniStudyMeasure`).
 
@@ -61,7 +61,7 @@ structure, positive" half of "Kähler" as genuine theorems. It does **NOT** deli
 The `X_H = ω⁻¹dH` duality this triple supports is now a theorem at the linear level:
 `HamiltonianVectorField.lean` (same directory), consumed by A4's corpus fragment.
 
-Those remain the Mathlib-blocked residue (KG-1 / the manifold half of the Kähler-sector posit,
+Those remain the Mathlib-blocked residue (KG-1 / the manifold half of the Kähler posit,
 `KahlerOnticSetup.kahler_pointwise`'s open residual). This module works on the
 flat Hermitian model `E`; its restriction to the tangent space `ψ^⊥` is the Fubini–Study form
 pointwise. The physically load-bearing datum — the volume — is already forced independently
@@ -239,8 +239,8 @@ Any `ℂ`-linear isometry preserves the Hermitian inner product, hence both the 
 fundamental form `ω`. So it is a **symplectic isometry** — a "Kähler transformation" of the structure.
 In particular the Schrödinger flow `exp(-itH)` (a one-parameter group of unitaries) preserves `g` and
 `ω`: QM evolution is a symplectomorphism of the Fubini–Study Kähler geometry (the Kibble /
-Ashtekar–Schilling picture, at the pointwise/linear level). See `LF4/SchrodingerKahlerInvariance.lean`
-for the flow corollary. -/
+Ashtekar–Schilling picture, at the pointwise/linear level). The flow corollary is drawn in the
+source repository's Schrödinger–Kähler invariance module. -/
 
 /-- A `ℂ`-linear isometry preserves the metric `g`. -/
 theorem metric_linearIsometryEquiv (f : E ≃ₗᵢ[ℂ] E) (u v : E) :

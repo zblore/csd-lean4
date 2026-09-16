@@ -16,11 +16,11 @@ public import Mathlib.RingTheory.Complex
 # The mass of the Fubini–Study volume: `ω_FS^{∧n} = (4π)ⁿ · μ_FS`
 
 **TERM-SCOPE(Kahler)** **TERM-SCOPE(Liouville)** — this module uses the *restricted* senses of
-"Kahler" and "Liouville"; `specs/TERMS.md` records what is backed and what is not.
+"Kahler" and "Liouville"; the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free).
 
-Milestone **M7** of `specs/top-power-scoping.md`, the constant. `ProjectiveSpaceFubiniStudyVolume.lean`
+Milestone **M7** of the top-power plan, the constant. `ProjectiveSpaceFubiniStudyVolume.lean`
 proved that the *normalised* volume of the top power of the Fubini–Study form is
 `fubiniStudyMeasure p₀`; this module computes the total mass, so the identity holds with its
 constant. Three steps.
@@ -58,13 +58,13 @@ form of that sentence, with every factor visible.
 
 ⚠️ **`n = 0` is included**: the manifold is a point, `fsVolume 0 = δ`, and `(4π)⁰ = 1`.
 
-References: `specs/top-power-scoping.md` (M7); `Instances/ProjectiveSpaceFubiniStudyVolume.lean`
+**Provenance and references.** The top-power plan (M7); `Instances/ProjectiveSpaceFubiniStudyVolume.lean`
 (`fsVolumeNormalized_eq_fubiniStudyMeasure`, `wedgePow_fsModelForm_zero_stdBasis`);
 `Analysis/SpecialFunctions/JapaneseBracketIntegral.lean`; `LinearAlgebra/Projectivization/UnitaryTransitive.lean`
 (`exists_unitary_map_unit`); `LinearAlgebra/Projectivization/TransitionProbability.lean`
 (`inner_toEuclideanLin_unitary`); `Geometry/Manifold/TopFormMeasure.lean` (`chartMeasure_apply`,
 `topFormMeasure_apply_of_subset_source`); `Mathlib/RingTheory/Norm/Transitivity.lean`
-(`LinearMap.det_restrictScalars`); `specs/TERMS.md` (Liouville); `specs/future-work.md`.
+(`LinearMap.det_restrictScalars`); the terms register (Liouville); the completed-work ledger.
 -/
 
 @[expose] public section

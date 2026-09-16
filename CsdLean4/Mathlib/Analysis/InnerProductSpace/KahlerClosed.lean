@@ -11,11 +11,11 @@ public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
 /-!
 # Flat closedness of the Fubini–Study fundamental form: `dω = 0` on the tangent model
 
-**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; `specs/TERMS.md` records what is backed and what is not.
+**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free; differential forms on normed spaces).
 
-The A4 residue brick (BACKLOG §A, recorded 2026-08-06 as formalisable): Mathlib's
+The A4 residue brick (backlog §A, recorded 2026-08-06 as formalisable): Mathlib's
 pin carries `extDeriv` on normed spaces (`Analysis/Calculus/DifferentialForm/`),
 so the closedness `dω = 0` of the **constant** fundamental 2-form on the flat
 tangent model `E` is now a theorem, not prose. This module delivers:
@@ -34,11 +34,11 @@ This is the **flat** statement, on the linear tangent model
 `E = EuclideanSpace ℂ (Fin N)` — the formalisable fragment of the manifold
 residual that `KahlerOnticSetup.kahler_pointwise` names (closedness `dω = 0`
 and the top-power identity on `ℂℙ^{N-1}` itself; connectivity link L1,
-`specs/connectivity-manifest.md`). Forms on the quotient manifold `ℂℙ^{N-1}`
+the connectivity manifest). Forms on the quotient manifold `ℂℙ^{N-1}`
 remain outside Mathlib's API (its own `DifferentialForm/Basic.lean` TODO);
 nothing here claims manifold-level closedness, and the top-power volume
-identity is untouched. Follow-up tracked in `specs/future-work.md` (the W/EC
-ladders) and BACKLOG §A (A4).
+identity is untouched. Follow-up tracked in the completed-work ledger (the W/EC
+ladders) and backlog §A (A4).
 
 Supporting API added en route (right-slot bilinearity of `ω`, the
 Cauchy–Schwarz bound `|ω u v| ≤ ‖u‖‖v‖`, the bundled `fundamentalFormCLM`):

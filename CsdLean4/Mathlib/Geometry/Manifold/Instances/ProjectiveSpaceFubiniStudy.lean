@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPluriharmonic
 # The Fubini–Study chart form is invariant under the chart transitions of `ℂℙⁿ`
 
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler";
-`specs/TERMS.md` records what is backed and what is not.
+the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free).
 
@@ -38,10 +38,10 @@ local-representative identity and the section's smoothness) is `ProjectiveSpaceF
 (`fsForm`). Still no exterior derivative on the manifold (step (2b)): nothing here states
 `dω = 0` on `ℂℙⁿ`.
 
-References: `KahlerPotential.lean`; `KahlerPluriharmonic.lean`;
+**Provenance and references.** `KahlerPotential.lean`; `KahlerPluriharmonic.lean`;
 `Geometry/Manifold/Instances/ProjectiveSpace.lean`;
 `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyForm.lean` (the consumer);
-`specs/future-work.md`.
+the completed-work ledger.
 -/
 
 @[expose] public section

@@ -44,9 +44,9 @@ For `haar : Measure G` to typecheck, Lean needs:
 
 ## What this unlocks
 
-With Mathlib's Haar measure callable, the next steps for LF4 are
-normalisation to a probability measure (deferred to a follow-up
-tranche) and the Fubini-Study pushforward to `ℂℙ^{N-1}`.
+With Mathlib's Haar measure callable, the next steps are normalisation to
+a probability measure and the Fubini-Study pushforward to `ℂℙ^{N-1}`
+(`Projectivization/FubiniStudy.lean`).
 
 ## Tags
 

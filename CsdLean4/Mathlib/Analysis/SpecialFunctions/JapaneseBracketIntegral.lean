@@ -16,7 +16,7 @@ public import Mathlib.MeasureTheory.Constructions.Pi
 `Mathlib.Analysis.SpecialFunctions.JapaneseBracket`, which at the pin proves only the
 *integrability* of `(1 + ‖x‖²)^{-r/2}` for `r > dim`, never a value).
 
-Milestone **M7** of `specs/top-power-scoping.md`, the analytic half: the total mass of the
+Milestone **M7** of the top-power plan, the analytic half: the total mass of the
 Fubini–Study volume is `4ⁿ n!` times this integral, and its value is `πⁿ / n!`.
 
 * `bracketAnti a k` — the antiderivative `-(a + r²)^{-(k+1)} / (2(k+1))` of `r (a + r²)^{-(k+2)}`,
@@ -38,9 +38,9 @@ Fubini–Study volume is `4ⁿ n!` times this integral, and its value is `πⁿ 
 `∑ⱼ ‖wⱼ‖²`, so no `EuclideanSpace` appears. Only the exponent `n + 1` on `ℂⁿ` is computed — the
 one the top power needs — not the general `(1 + ‖x‖²)^{-r/2}`.
 
-References: `specs/top-power-scoping.md` (M7); `Mathlib/Analysis/SpecialFunctions/PolarCoord.lean`;
+**Provenance and references.** The top-power plan (M7); `Mathlib/Analysis/SpecialFunctions/PolarCoord.lean`;
 `Mathlib/MeasureTheory/Integral/IntegralEqImproper.lean`; `Mathlib/MeasureTheory/Constructions/Pi.lean`
-(`measurePreserving_piFinSuccAbove`); `specs/future-work.md`.
+(`measurePreserving_piFinSuccAbove`); the completed-work ledger.
 -/
 
 @[expose] public section

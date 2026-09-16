@@ -33,7 +33,7 @@ its quotient topology (`Topology.lean`). This file installs:
   given `PolishSpace` on the nonzero subtype (via `IsOpen.polishSpace`).
 - `Projectivization.lift_measurable`: a scale-invariant measurable
   function on `{v : V // v ≠ 0}` descends to a measurable function on
-  `ℙ K V`. Load-bearing user-facing lemma for LF4 §3 + §8.
+  `ℙ K V`. The user-facing lemma of this file.
 - `Projectivization.measurable_iff_measurable_comp_mk'`: a function
   out of `ℙ K V` is measurable iff its precomposition with `mk'` is.
 
@@ -173,10 +173,10 @@ is measurable for the Borel σ-algebra on the nonzero subtype (callers
 typically supply `[MeasurableSpace V] [BorelSpace V]` so this is the
 natural σ-algebra).
 
-This is the **load-bearing user-facing lemma for LF4 §3 + §8** — it
-lets callers build measurable functions on `ℙ K V` from measurable
-scale-invariant functions on `V \ {0}`, which is how preparations
-encode rep-maps in the LF2 / LF3 chain. -/
+This is the **user-facing lemma** of the file — it lets callers build
+measurable functions on `ℙ K V` from measurable scale-invariant functions
+on `V \ {0}`, which is how the source repository's preparations encode
+representative maps. -/
 theorem lift_measurable [MeasurableSpace V] [BorelSpace V]
     {α : Type*} [MeasurableSpace α]
     (f : { v : V // v ≠ 0 } → α)

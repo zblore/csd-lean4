@@ -13,12 +13,12 @@ public import Mathlib.Analysis.Normed.Module.Alternating.Uncurry.Fin
 # The exterior derivative on a manifold
 
 **TERM-SCOPE(Kahler)** — this module names the "Kahler / symplectic manifold API" row of
-`MATHLIB-GAPS.md`; `specs/TERMS.md` records what is backed and what is not.
+the Mathlib-gaps register; the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`, the
 `## TODO` of `Mathlib/Analysis/Calculus/DifferentialForm/Basic.lean`).
 
-**Step (2b) of the manifold exterior-calculus plan** (`specs/exterior-derivative-scoping.md`,
+**Step (2b) of the manifold exterior-calculus plan** (the exterior-derivative plan,
 route A). A differential form on a manifold (`DifferentialForm.lean`, step (2a)) is a smooth
 section of the alternating bundle on the tangent bundle. Its exterior derivative is defined
 chart by chart and glued by the flat naturality lemma `extDeriv_pullback`:
@@ -41,7 +41,7 @@ chart by chart and glued by the flat naturality lemma `extDeriv_pullback`:
   `DifferentialForm 𝓘(ℝ, E) M ∞ (Fin k) G → DifferentialForm 𝓘(ℝ, E) M ∞ (Fin (k+1)) G`;
 * ★★ `mextDeriv_mextDeriv`, `DifferentialForm.mextDeriv_mextDeriv` — **`d ∘ d = 0`**,
   transported from `extDeriv_extDeriv_apply`;
-* **`0`-forms (brick G11 of `specs/generator-layer-scoping.md`, 2026-09-09):** `zeroFormFamily f`
+* **`0`-forms (brick G11 of the generator-layer plan, 2026-09-09):** `zeroFormFamily f`
   (a function `f : M → G` as a `0`-form family), `localRep_zeroFormFamily`,
   `contMDiff_zeroFormFamily` (the section is `C^∞` when `f` is), the bundled `zeroForm f hf`, and
   ★ `toFlat_mextDeriv_zeroFormFamily` / `toFlat_mextDeriv_zeroForm` — **the exterior derivative
@@ -68,16 +68,16 @@ smoothness arithmetic that this file deliberately avoids would come with it.
 
 ⚠️ **What is not here:** the Palais formula, naturality `d(f^*ω) = f^*(dω)` for maps of
 manifolds, linearity, and the Leibniz rule (which needs the wedge of *sections*;
-`specs/exterior-derivative-scoping.md` §5).
+the exterior-derivative plan §5).
 
 ⚠️ **The chart at `x` is `chartAt E x`**, the atlas's own choice. `mextDeriv` is defined through
 it; `localRep_mextDeriv` is what shows the value is the same in every chart.
 
-References: `specs/exterior-derivative-scoping.md` (the plan, and its §3a on why the
+**Provenance and references.** The exterior-derivative plan (the plan, and its §3a on why the
 "walls" recorded before this file were not walls); `Geometry/Manifold/DifferentialForm.lean`
 (step (2a)); `Mathlib/Analysis/Calculus/DifferentialForm/Basic.lean` (`extDeriv`,
-`extDeriv_pullback`, `extDeriv_extDeriv_apply`); `MATHLIB-GAPS.md` (Kahler / symplectic
-manifold API); `specs/BACKLOG.md` (XL, "Manifold exterior calculus"); `specs/future-work.md`.
+`extDeriv_pullback`, `extDeriv_extDeriv_apply`); the Mathlib-gaps register (Kahler / symplectic
+manifold API); the backlog (XL, "Manifold exterior calculus"); the completed-work ledger.
 Consumers: `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyForm.lean` (`fsForm_mextDeriv`);
 `Geometry/Manifold/HamiltonianVectorField.lean` (`IsHamiltonianVectorField.isLocallyHamiltonian`, the
 `0`-form API).

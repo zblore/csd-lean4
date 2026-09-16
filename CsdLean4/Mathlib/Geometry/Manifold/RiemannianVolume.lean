@@ -13,7 +13,7 @@ public import Mathlib.LinearAlgebra.Matrix.BilinearForm
 
 **Category:** 1-Mathlib (measure theory on manifolds: the Riemannian volume measure of a
 metric family, absent from Mathlib at the pin — `Mathlib/Geometry/Manifold/VectorBundle/Riemannian.lean`
-has Riemannian *bundles*, no volume; G17 of `specs/generator-layer-scoping.md` §9).
+has Riemannian *bundles*, no volume; G17 of the generator-layer plan §9).
 
 A Riemannian metric `g` on a manifold `M` modelled on `E` has, in the chart at `x₀`, the Gram matrix
 `G_{x₀}(w)ᵢⱼ = g (symmL (eᵢ)) (symmL (eⱼ))` against a basis `e` of `E` (the metric at the point under
@@ -56,7 +56,7 @@ definitions; a non-positive Gram determinant gives density `0` (`Real.sqrt` of a
 The ℂℙⁿ instance supplies a genuine metric (`isBilinear_fsMetric`). Not stated: that an isometry
 preserves `riemannianVolume` (the twin of `topFormMeasure_map_eq`; same route, no consumer).
 
-References: `specs/generator-layer-scoping.md` (G17); `Geometry/Manifold/TopFormMeasure.lean` (the
+**Provenance and references.** The generator-layer plan (G17); `Geometry/Manifold/TopFormMeasure.lean` (the
 construction mirrored); `Instances/ProjectiveSpaceFubiniStudyRiemannian.lean` (the instance).
 -/
 

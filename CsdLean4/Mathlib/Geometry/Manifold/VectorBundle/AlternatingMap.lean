@@ -16,7 +16,7 @@ public import Mathlib.Topology.VectorBundle.ContinuousAlternatingMap
 `Mathlib.Geometry.Manifold.VectorBundle`, beside `Hom.lean`).
 
 Step (2a) of the manifold exterior-calculus plan, third and fourth layers
-(`MATHLIB-GAPS.md`, `specs/BACKLOG.md` XL). Mathlib has the bundle of continuous alternating
+(the Mathlib-gaps register, the backlog XL). Mathlib has the bundle of continuous alternating
 maps as a **topological** vector bundle (`Topology/VectorBundle/ContinuousAlternatingMap.lean`)
 and it has `Hom.lean` doing the smooth case for the bundle of continuous *linear* maps. It has
 nothing alternating anywhere under `Geometry/Manifold/`.
@@ -61,7 +61,7 @@ for the specific (tangent bundle, trivial bundle) pair, which it does not do out
 ⚠️ **Still no exterior derivative.** That is step (2b), upstream's own TODO, and nothing here
 touches it. And as with steps (0) and (1): no physics waits on any of this.
 
-References: `MATHLIB-GAPS.md`; `specs/BACKLOG.md` (XL, "Manifold exterior calculus");
+**Provenance and references.** The Mathlib-gaps register; the backlog (XL, "Manifold exterior calculus");
 `Mathlib/Geometry/Manifold/VectorBundle/Hom.lean` (the template);
 `CsdLean4/Mathlib/Analysis/Normed/Module/Alternating/Pullback.lean` (both factors).
 -/

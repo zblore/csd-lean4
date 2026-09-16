@@ -13,7 +13,7 @@ public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.WedgeCLM
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`).
 
-Milestone **M2(c)–(d)** of `specs/top-power-scoping.md`. With the flat wedge bounded and
+Milestone **M2(c)–(d)** of the top-power plan. With the flat wedge bounded and
 bilinear (`Alternating/WedgeCLM.lean`) and the local-representative machinery of
 `ExteriorDerivative.lean`, the wedge of two smooth sections of alternating bundles is a smooth
 section, and so is a reindexing and the constant `0`-form. Every smoothness proof is the same
@@ -45,10 +45,10 @@ nonzero.
 
 ⚠️ **`∞` and `𝓘(ℝ, E)` only**, inherited from `ExteriorDerivative.lean`.
 
-References: `specs/top-power-scoping.md` (M2); `Alternating/WedgeCLM.lean`;
+**Provenance and references.** The top-power plan (M2); `Alternating/WedgeCLM.lean`;
 `Geometry/Manifold/ExteriorDerivative.lean`; consumer
 `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyForm.lean` (`fsTopForm`);
-`specs/future-work.md`.
+the completed-work ledger.
 -/
 
 @[expose] public section

@@ -13,11 +13,11 @@ public import Mathlib.Analysis.InnerProductSpace.Adjoint
 # The unitary action on `ℂℙⁿ` in charts, and the invariance of the Fubini–Study form
 
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler";
-`specs/TERMS.md` records what is backed and what is not.
+the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free).
 
-Milestone **M4** of `specs/top-power-scoping.md`, the chart half. The unitary group
+Milestone **M4** of the top-power plan, the chart half. The unitary group
 `U(n+1)` acts on `ℂℙⁿ` (`Projectivization/Unitary.lean`); read from the affine chart `i` to the
 affine chart `j`, a unitary `U` is the map `uTrans U i j : w ↦ coordRatio j (U (insertOne i w))`,
 a linear-fractional map, holomorphic wherever the `j`-th coordinate of `U (insertOne i w)` does
@@ -47,10 +47,10 @@ is defined here (that general API is not built).
 ⚠️ The `j = i` case of the chart transition needed a case split in `fsChartForm_transE`; the
 holomorphic-`f` formulation of pluriharmonicity removes it here.
 
-References: `specs/top-power-scoping.md` (M4);
+**Provenance and references.** The top-power plan (M4);
 `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudy.lean` (the chart-transition invariance
 this mirrors); `Analysis/InnerProductSpace/KahlerPluriharmonic.lean`;
-`LinearAlgebra/Projectivization/Unitary.lean` (the action); `specs/future-work.md`.
+`LinearAlgebra/Projectivization/Unitary.lean` (the action); the completed-work ledger.
 -/
 
 @[expose] public section

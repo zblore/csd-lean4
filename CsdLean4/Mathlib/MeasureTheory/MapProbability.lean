@@ -27,7 +27,7 @@ maps, with two knock-on breaks against the pin (both caught by the Compat canary
 
 All corpus call sites route through these spellings. When the pin advances past the
 master change, the shims collapse to `inferInstance` / master's `Measure.map_smul` and
-this file can be deleted — noted in `specs/validation-hardening-plan.md`'s canary log.
+this file can be deleted — noted in the validation-hardening plan's canary log.
 -/
 
 @[expose] public section

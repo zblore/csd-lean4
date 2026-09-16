@@ -37,10 +37,10 @@ the usual condition, and it forces the dimension to be even wherever the form is
 
 ⚠️ **`∞` and `𝓘(ℝ, E)` only**, inherited from `ExteriorDerivative.lean`.
 
-References: `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`);
+**Provenance and references.** `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`);
 `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudySymplectic.lean` (the inhabitant);
-`specs/TERMS.md` ("symplectic / manifold"); `MATHLIB-GAPS.md` (Kahler / symplectic manifold API);
-`specs/BACKLOG.md` (XL, "Manifold exterior calculus", step (4)); `specs/future-work.md`.
+the terms register ("symplectic / manifold"); the Mathlib-gaps register (Kahler / symplectic manifold API);
+the backlog (XL, "Manifold exterior calculus", step (4)); the completed-work ledger.
 -/
 
 @[expose] public section

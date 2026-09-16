@@ -14,7 +14,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 **Category:** 1-Mathlib (CSD-free).
 
 The non-vacuity witness for `ChartCover` (`TopFormMeasure.lean`, milestone M3 of
-`specs/top-power-scoping.md`) on the corpus's own manifold: the `n + 1` affine charts of `ℂℙⁿ`
+the top-power plan) on the corpus's own manifold: the `n + 1` affine charts of `ℂℙⁿ`
 (`ProjectiveSpace.lean`) are the charts at the chart origins `origin i`
 (`ProjectiveSpaceFubiniStudyForm.lean`), and every point has a non-vanishing coordinate, so they
 cover.
@@ -31,11 +31,11 @@ of the Fubini–Study form.
 ⚠️ Only the cover. No top form on `ℂℙⁿ` is built here (the wedge of sections is M2), no measure is
 evaluated, and nothing is said about the Fubini–Study measure.
 
-References: `specs/top-power-scoping.md` (M3, and the ℂℙⁿ instance of the cover);
+**Provenance and references.** The top-power plan (M3, and the ℂℙⁿ instance of the cover);
 `Geometry/Manifold/TopFormMeasure.lean`; `Geometry/Manifold/Instances/ProjectiveSpace.lean`
 (`chartAtIdx`, `idx`, `exists_ne_zero_coord`);
 `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyForm.lean` (`origin`, `idx_origin`);
-`specs/future-work.md`.
+the completed-work ledger.
 -/
 
 @[expose] public section

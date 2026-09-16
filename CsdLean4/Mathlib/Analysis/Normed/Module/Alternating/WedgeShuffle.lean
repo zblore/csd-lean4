@@ -14,7 +14,7 @@ public import Mathlib.GroupTheory.Perm.Finite
 **Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Analysis.Normed.Module.Alternating`).
 
-Milestone **M6(b)** of `specs/top-power-scoping.md`, the combinatorial half. The wedge
+Milestone **M6(b)** of the top-power plan, the combinatorial half. The wedge
 `α ∧ β` of a `2k`-form with a 2-form, evaluated on `2k + 2` vectors, is a signed sum over the
 shuffle classes `Equiv.Perm.ModSumCongr (Fin (2k)) (Fin 2)` (`wedge_apply`). When the vectors
 come in `k + 1` **pairs** on which `β` is `±1` within a pair and `0` across pairs
@@ -44,10 +44,10 @@ no combinatorics left in it.
 ⚠️ Real-valued forms with the codomains paired by multiplication only. ⚠️ Nothing is said about
 `α ∧ β` off pair families.
 
-References: `specs/top-power-scoping.md` (M6(b)); `Alternating/Wedge.lean` (`wedge_apply`),
+**Provenance and references.** The top-power plan (M6(b)); `Alternating/Wedge.lean` (`wedge_apply`),
 `Alternating/WedgeCLM.lean` (`liftTensor_summand_mk''`);
 `Mathlib/LinearAlgebra/Alternating/DomCoprod.lean`; `Mathlib/GroupTheory/Perm/Finite.lean`;
-`specs/future-work.md`.
+the completed-work ledger.
 -/
 
 @[expose] public section

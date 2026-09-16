@@ -16,7 +16,7 @@ public import Mathlib.MeasureTheory.Function.Jacobian
 no measure or integration on manifolds exists at the pin — `Riemannian/Basic.lean` imports measure
 theory for path lengths only).
 
-Milestone **M3** of `specs/top-power-scoping.md`: a form whose degree is a basis index type of
+Milestone **M3** of the top-power plan: a form whose degree is a basis index type of
 the model space has, in every chart, a density — the absolute value of its coefficient against
 the basis — and those densities glue to a measure on the manifold.
 
@@ -74,10 +74,10 @@ coefficient is consumer-side.
 ⚠️ **`∞` and `𝓘(ℝ, E)` only**, inherited from `ExteriorDerivative.lean`; the model `E` is
 finite-dimensional real, Borel, with an additive Haar measure supplied as an argument.
 
-References: `specs/top-power-scoping.md` (M3); `Analysis/Normed/Module/Alternating/TopForm.lean`
+**Provenance and references.** The top-power plan (M3); `Analysis/Normed/Module/Alternating/TopForm.lean`
 (M1, the Jacobian rule); `Geometry/Manifold/ExteriorDerivative.lean` (`localRep`,
 `localRep_transition`, `contDiffAt_chart_transition`);
-`Mathlib/MeasureTheory/Function/Jacobian.lean`; `specs/future-work.md`.
+`Mathlib/MeasureTheory/Function/Jacobian.lean`; the completed-work ledger.
 -/
 
 @[expose] public section

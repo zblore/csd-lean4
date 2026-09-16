@@ -13,14 +13,14 @@ public import Mathlib.Geometry.Manifold.IsManifold.Basic
 # Complex projective space is an analytic manifold
 
 **TERM-SCOPE(Kahler)** — "top-power identity" appears below in the *restricted* sense
-`specs/TERMS.md` records, and in the negative: the identity is what this module does NOT
+the terms register records, and in the negative: the identity is what this module does NOT
 prove. (Repository bookkeeping; it goes with the `References` block if this is sent upstream.)
 
 **Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Geometry.Manifold.Instances`, beside `Sphere.lean`).
 
-Step (0) of the manifold exterior-calculus plan (`MATHLIB-GAPS.md`, the Kahler / symplectic
-manifold API row; `specs/BACKLOG.md` XL). At the pin, `Projectivization` carries a topology
+Step (0) of the manifold exterior-calculus plan (the Mathlib-gaps register, the Kahler / symplectic
+manifold API row; the backlog XL). At the pin, `Projectivization` carries a topology
 (staged in this repository), a measurable space, a metric — and **no charted-space instance
 anywhere**, so `ℂℙⁿ` was not a manifold in Lean and nothing on it could be differentiated.
 MATHLIB-ABSENT(ChartedSpace.projectivization)
@@ -64,8 +64,8 @@ analytic structure, and keeps the charts readable. The ambient space stays
   structure is topological/analytic only; that `μ_FS` is the Liouville volume of the
   induced form remains open (step (3)).
 
-References: `MATHLIB-GAPS.md` (Kahler / symplectic manifold API, step (0));
-`specs/BACKLOG.md` (XL, "Manifold exterior calculus");
+**Provenance and references.** The Mathlib-gaps register (Kahler / symplectic manifold API, step (0));
+the backlog (XL, "Manifold exterior calculus");
 `CsdLean4/Mathlib/LinearAlgebra/Projectivization/Topology.lean` (the quotient topology and
 `isQuotientMap_mk'`); `Mathlib.Geometry.Manifold.Instances.Sphere` (the analogous
 construction upstream, from stereographic projection).

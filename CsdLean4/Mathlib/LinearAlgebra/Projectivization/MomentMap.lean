@@ -47,7 +47,7 @@ programme-level reading; this file is the mathematics.
 
 * Bengtsson, Życzkowski, *Geometry of Quantum States*, 2nd ed., §4.4 (the Fubini–Study geometry
   of `ℂℙⁿ` and the torus action).
-* `specs/future-work.md` (the completed-work ledger).
+* the completed-work ledger (the completed-work ledger).
 -/
 
 @[expose] public section

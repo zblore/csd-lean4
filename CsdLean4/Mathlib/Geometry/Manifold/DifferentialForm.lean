@@ -14,14 +14,14 @@ public import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 # Differential forms on a manifold
 
 **TERM-SCOPE(Kahler)** — the phrase "top-power identity" appears below in the *restricted*
-sense `specs/TERMS.md` records, and in the negative: this module makes it sayable and leaves it
+sense the source repository's terms register records, and in the negative: this module makes it sayable and leaves it
 unproved. (Repository bookkeeping; it goes with the `References` block if sent upstream.)
 
 **Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Geometry.Manifold`, beside the flat `Analysis/Calculus/DifferentialForm/`).
 
-**Step (2a) of the manifold exterior-calculus plan, completed** (`MATHLIB-GAPS.md`,
-`specs/BACKLOG.md` XL). A differential form on a manifold is a smooth section of the bundle
+**Step (2a) of the manifold exterior-calculus plan, completed** (the Mathlib-gaps register,
+the backlog XL). A differential form on a manifold is a smooth section of the bundle
 of alternating maps on the tangent bundle. Every ingredient existed at the pin except the one
 that makes "smooth" mean anything — the `ContMDiffVectorBundle` instance for the
 alternating-map bundle, built in
@@ -54,8 +54,8 @@ is not proved anywhere.
 ⚠️ **No physics.** Nothing in this repository waits on any of it. The corpus's geometry is done
 on the ambient space and in charts, and `R-016` is untouched.
 
-References: `MATHLIB-GAPS.md` (Kahler / symplectic manifold API, step (2a));
-`specs/BACKLOG.md` (XL, "Manifold exterior calculus");
+**Provenance and references.** The Mathlib-gaps register (Kahler / symplectic manifold API, step (2a));
+the backlog (XL, "Manifold exterior calculus");
 `CsdLean4/Mathlib/Geometry/Manifold/VectorBundle/AlternatingMap.lean` (the instance that makes
 this well-formed); `Mathlib/Analysis/Calculus/DifferentialForm/Basic.lean` (the flat case).
 -/

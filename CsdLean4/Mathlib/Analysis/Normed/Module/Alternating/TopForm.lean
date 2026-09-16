@@ -15,7 +15,7 @@ public import Mathlib.Topology.Algebra.Module.Determinant
 **Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Analysis.Normed.Module.Alternating`).
 
-Milestone **M1** of `specs/top-power-scoping.md`. A continuous alternating form on `E` whose
+Milestone **M1** of the top-power plan. A continuous alternating form on `E` whose
 degree is a basis index type of `E` is a scalar multiple of that basis's determinant, and
 pulling it back along an endomorphism scales the scalar by the endomorphism's determinant. Both
 are upstream facts about `AlternatingMap` (`AlternatingMap.eq_smul_basis_det`,
@@ -34,9 +34,9 @@ type differential forms are made of, in the form the measure of a top form consu
 ⚠️ Real scalars only, and the degree is an arbitrary finite type `ι` with a basis indexed by it;
 no `finrank` bookkeeping is done here. Nothing about manifolds.
 
-References: `specs/top-power-scoping.md` (M1); `Mathlib/LinearAlgebra/Determinant.lean`
+**Provenance and references.** The top-power plan (M1); `Mathlib/LinearAlgebra/Determinant.lean`
 (`AlternatingMap.eq_smul_basis_det`, `Module.Basis.det_comp`, `Module.Basis.det_self`);
-`specs/future-work.md`.
+the completed-work ledger.
 -/
 
 @[expose] public section

@@ -13,10 +13,10 @@ public import Mathlib.LinearAlgebra.Matrix.BilinearForm
 # The Riemannian volume of the Fubini–Study metric is the symplectic volume over `n!`
 
 **Category:** 1-Mathlib (the Kähler identity `vol_g = ω^{∧n}/n!` on `ℂℙⁿ`; G17 of
-`specs/generator-layer-scoping.md` §9).
+the generator-layer plan §9).
 
 **TERM-SCOPE(Kahler)** **TERM-SCOPE(Liouville)** — this module identifies the Riemannian and
-symplectic readings of the Fubini–Study volume; `specs/TERMS.md` records what is backed.
+symplectic readings of the Fubini–Study volume; the source repository's terms register records what is backed.
 
 The compatible metric of the almost Kähler structure of `ℂℙⁿ` (G7) is the Fubini–Study metric
 `g = ω(J·,·)`. Its Riemannian volume (`RiemannianVolume.lean`: the chart densities `√det G` glued
@@ -60,7 +60,7 @@ chosen).
 ⚠️ **Conventions.** The `(4π)ⁿ` and the `n!` are `fsChartForm = dd^c log(1 + ‖z‖²)`'s `-4` and the
 top power's `n!` (`fsVolume_eq_smul_fubiniStudyMeasure`); the textbook `ω^{∧n}/n!` is a renormalisation.
 
-References: `specs/generator-layer-scoping.md` (G17); `specs/TERMS.md` (Fubini–Study, Kähler,
+**Provenance and references.** The generator-layer plan (G17); the terms register (Fubini–Study, Kähler,
 Liouville); `Geometry/Manifold/RiemannianVolume.lean`; `Instances/ProjectiveSpaceFubiniStudyMass.lean`
 (the rotation route, `det_mulVecCLM`, `fsScale`); `Instances/ProjectiveSpaceFubiniStudySymplectic.lean`
 (`fsJ`, `fsJ_symmL`, `fsForm_isAlmostKahler`).

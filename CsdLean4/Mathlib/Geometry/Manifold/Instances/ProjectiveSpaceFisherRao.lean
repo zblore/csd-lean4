@@ -69,7 +69,7 @@ tangent vector `u : TangentSpace 𝓘(ℝ, Fin n → ℂ) x` is used in them dir
 * `Analysis/InformationGeometry/FubiniStudyFisherRao.lean` (the vector-level bridge);
   `Instances/ProjectiveSpaceMomentMap.lean` (`torusField`, the chart derivatives);
   `Instances/ProjectiveSpaceFubiniStudyRiemannian.lean` (`fsMetric`, `fsModelMetric`);
-  Physlib PR #1652; `specs/future-work.md`.
+  Physlib PR #1652; the completed-work ledger.
 -/
 
 @[expose] public section

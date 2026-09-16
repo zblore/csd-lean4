@@ -14,7 +14,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 # `ℂℙⁿ` with the Fubini–Study form is a symplectic manifold
 
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler";
-`specs/TERMS.md` records what is backed and what is not.
+the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`).
 
@@ -74,14 +74,14 @@ negative (`-4` at the origin); the almost Kähler predicate absorbs it by the me
 `g = ω (J ·, ·)`, so `ω (J v, v) > 0`. Nothing downstream depends on the sign, only on
 non-vanishing.
 
-References: `Geometry/Manifold/SymplecticForm.lean` (the predicate);
+**Provenance and references.** `Geometry/Manifold/SymplecticForm.lean` (the predicate);
 `Geometry/Manifold/HamiltonianVectorField.lean` (`IsAlmostKahler`, `apply_swap`);
 `Instances/ProjectiveSpaceUnitaryAction.lean` (`contDiffOn_uTrans`, `chartFun_smul_chartInv`);
 `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyForm.lean` (`fsForm`, `fsForm_mextDeriv`);
 `Analysis/InnerProductSpace/KahlerPotential.lean` (`fsChartForm_apply`);
 `Analysis/InnerProductSpace/KahlerForm.lean` (the taming identity, `complexStructure`);
-`MATHLIB-GAPS.md` (Kahler / symplectic manifold API); `specs/BACKLOG.md` (XL, "Manifold
-exterior calculus"); `specs/TERMS.md` ("symplectic / manifold"); `specs/future-work.md`.
+the Mathlib-gaps register (Kahler / symplectic manifold API); the backlog (XL, "Manifold
+exterior calculus"); the terms register ("symplectic / manifold"); the completed-work ledger.
 -/
 
 @[expose] public section

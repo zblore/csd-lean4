@@ -18,13 +18,13 @@ public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.GlobalFlow
 # Hamiltonian vector fields on a manifold
 
 **TERM-SCOPE(Hamiltonian)** **TERM-SCOPE(Kahler)** — this module uses the *restricted* senses of
-"Hamiltonian" and "Kahler"; `specs/TERMS.md` records what is backed and what is not.
+"Hamiltonian" and "Kahler"; the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 
 Bricks **G1**, **G2**, **G3**, **G4**, **G7**, **G8** (in part), **G11**, **G14a**, **G14b**, **G15** and **G19** of
-`specs/generator-layer-scoping.md`: the defining equation of a Hamiltonian vector field,
+the generator-layer plan: the defining equation of a Hamiltonian vector field,
 `ι_X ω = dH`, at manifold level, the pointwise facts that follow from it by alternation and
 linearity alone, its existence and uniqueness from non-degeneracy, its smoothness, its integral
 curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähler and Kähler predicates.
@@ -121,7 +121,7 @@ predicate's `J` is a family of functions), and `nijenhuis` takes the family.
 `IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField` and `integralFlow` with `integralFlow_add`
 (`IntegralCurve/GlobalFlow.lean`; Mathlib has no flows of vector fields on manifolds,
 MATHLIB-ABSENT(IsMIntegralCurve.flow)). Not stated: joint continuity of the flow in `(t, x)` (Q29(a′)),
-and that the time-`t` maps preserve the symplectic volume (Q29(b′)–(d′), `BACKLOG.md` ▶ OUTSTANDING).
+and that the time-`t` maps preserve the symplectic volume (Q29(b′)–(d′), the backlog's outstanding table).
 
 ⚠️ **The converse of G11 is false and not stated.** A locally Hamiltonian field need not be
 Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
@@ -129,7 +129,7 @@ Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
-References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G7, G8, G11, G14a, G14b, G15, G19);
+**Provenance and references.** The generator-layer plan (G1, G2, G3, G4, G7, G8, G11, G14a, G14b, G15, G19);
 `Mathlib/Geometry/Manifold/VectorField/LieBracket.lean` (`mlieBracket`, `mlieBracketWithin_apply`); `Geometry/Manifold/SymplecticForm.lean`
 (`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `zeroFormFamily`,
 `toFlat_mextDeriv_zeroFormFamily`, `mextDeriv_mextDeriv`);
@@ -137,8 +137,8 @@ References: `specs/generator-layer-scoping.md` (G1, G2, G3, G4, G7, G8, G11, G14
 `RecordLayer/CellLawForced.lean` (`IsPhaseHamiltonian`, the linear moment-map equation);
 `Mathlib/Analysis/Normed/Module/Alternating/Curry.lean`;
 `Mathlib/Geometry/Manifold/IntegralCurve/ExistUnique.lean` (`exists_isMIntegralCurveAt_of_contMDiffAt`,
-`isMIntegralCurve_eq_of_contMDiff`); `specs/TERMS.md` (Hamiltonian);
-`specs/future-work.md`.
+`isMIntegralCurve_eq_of_contMDiff`); the terms register (Hamiltonian);
+the completed-work ledger.
 -/
 
 @[expose] public section

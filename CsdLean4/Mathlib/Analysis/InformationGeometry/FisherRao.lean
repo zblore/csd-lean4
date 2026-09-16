@@ -42,7 +42,7 @@ depend on Physlib, and must not depend on an unmerged branch.
 * C. R. Rao, *Information and the accuracy attainable in the estimation
   of statistical parameters*, Bull. Calcutta Math. Soc. 37, 81–91 (1945)
 * H. Cramér, *Mathematical Methods of Statistics*, Princeton (1946)
-* `specs/future-work.md` (the completed-work ledger; the bridge this file serves).
+* the completed-work ledger (the completed-work ledger; the bridge this file serves).
 -/
 
 @[expose] public section

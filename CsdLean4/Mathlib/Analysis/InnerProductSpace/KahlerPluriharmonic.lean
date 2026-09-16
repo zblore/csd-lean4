@@ -12,7 +12,7 @@ public import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
 # `dd^c` calculus: pluriharmonicity, naturality, linearity
 
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler";
-`specs/TERMS.md` records what is backed and what is not.
+the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free; flat differential forms on a complex inner product
 space, in the `d^c` vocabulary of `KahlerPotential.lean`).
@@ -40,7 +40,7 @@ Everything here is on a **flat** complex inner product space, in the `E → E [�
 representation. The manifold-level `d` does not exist (step (2b)); these are the flat lemmas a
 chart-by-chart argument composes. No CSD content.
 
-References: `KahlerPotential.lean` (`dcForm`, `ddcForm`, `fsChartForm`);
+**Provenance and references.** `KahlerPotential.lean` (`dcForm`, `ddcForm`, `fsChartForm`);
 `Mathlib/Analysis/Calculus/DifferentialForm/Basic.lean` (`extDeriv_pullback`,
 `extDeriv_extDeriv_apply`); `Mathlib/Analysis/SpecialFunctions/Complex/LogDeriv.lean`
 (`contDiffAt_log`).

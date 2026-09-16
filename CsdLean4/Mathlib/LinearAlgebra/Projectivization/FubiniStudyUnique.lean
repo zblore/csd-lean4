@@ -283,16 +283,16 @@ theorem fubiniStudyMeasure_unique
 the unitary action to `fubiniStudyMeasure p₀`. The two corollaries below
 extend that to arbitrary **finite** invariant measures (normalising by the
 total mass) and re-express the result in the `∃ c, μ = c • μFS` shape that the
-LF4 concrete measure bridges consume.
+source repository's concrete measure bridges consume.
 
 This is the invariant-measure-uniqueness fact for the `ℂℙ^{N-1}` / `U(N)`
-instantiation: when LF4 instantiates `SectorData` with
+instantiation: when the source repository instantiates its abstract measure-space data with
 `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := Matrix.unitaryGroup (Fin N) ℂ`,
 and `μFS := fubiniStudyMeasure p₀`, the concrete bridges
 (`cp_measure_bridge` / `k_measure_bridge`) route through
 `invariant_measure_uniqueness_cpn` and cite no axiom. (Historically this was
-the concrete realisation of an abstract `CSD.LF2.invariant_measure_uniqueness`
-axiom — stated over an arbitrary pretransitive `(P, G)` with no topology; that
+the concrete realisation of an abstract invariant-measure-uniqueness
+axiom of that repository — stated over an arbitrary pretransitive `(P, G)` with no topology; that
 axiom and the abstract `measure_bridge` lemma it served were **removed
 2026-06-04**, since nothing downstream used the abstract statement. The
 concrete fact proved here is all that was ever load-bearing.) -/
@@ -331,10 +331,11 @@ theorem invariant_finiteMeasure_eq_smul_fubiniStudy
     refine ⟨μ Set.univ, ?_⟩
     rw [← heq, smul_smul, ENNReal.mul_inv_cancel h0 htop, one_smul]
 
-/-- **Phase G5 — concrete realisation of `CSD.LF2.invariant_measure_uniqueness`.**
+/-- **Invariant finite measures are multiples of `μ_FS`** (the source repository's phase G5,
+the concrete realisation of its former invariant-measure-uniqueness axiom).
 For the `ℂℙ^{N-1}` / `U(N)` instantiation, any unitary-invariant probability
 measure `μFS` and any unitary-invariant finite measure `μ` satisfy
-`∃ c, μ = c • μFS`. This matches the LF2 spec axiom's conclusion shape (with
+`∃ c, μ = c • μFS`. This matches that axiom's conclusion shape (with
 the reference point `p₀` made explicit), and is proved — no axiom — from
 `fubiniStudyMeasure_unique` plus `invariant_finiteMeasure_eq_smul_fubiniStudy`.
 
@@ -397,8 +398,8 @@ Every singleton is `μ_FS`-null for `2 ≤ N`, by pigeonhole: transitivity and
 invariance make all singletons equal in measure, the projective space is
 infinite, and a probability measure cannot give arbitrarily many disjoint
 points a common positive mass. No stabiliser subgroup is consulted — the
-"Haar-of-subgroup" route the corpus once assumed necessary
-(`LF4/KahlerInstance.lean`) is bypassed entirely. -/
+"Haar-of-subgroup" route the source repository once assumed necessary is bypassed
+entirely. -/
 
 /-- All singletons carry the same Fubini–Study mass: move one point onto the
 other by transitivity, and use invariance. -/

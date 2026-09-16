@@ -329,7 +329,7 @@ the projectivization `ℙ K V` is a compact Hausdorff space.
 The hypothesis pattern can be relaxed to `[NontriviallyNormedField K]`
 + `[LocallyCompactSpace K]` + `[NormedAlgebra ℝ K]` (sufficient for the
 unit-sphere normalisation argument), but the `RCLike` form covers the
-case-of-interest (`K = ℂ` for LF4) with strictly less typeclass friction. -/
+case of interest (`K = ℂ`) with strictly less typeclass friction. -/
 
 section NormedFiniteDim
 

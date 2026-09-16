@@ -13,13 +13,13 @@ public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 /-!
 # Kähler potentials: `dd^c` forms are closed, and the Fubini–Study chart form
 
-**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; `specs/TERMS.md` records what is backed and what is not.
+**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free; differential forms on normed spaces).
 
 `KahlerClosed.lean` proved `dω = 0` for the **constant** fundamental form — the flat statement,
 where closedness is immediate because the form does not vary. This module takes the next step of
-the A4/KG-1 narrowing (`specs/mathlib-gaps-plan.md` MG-4): the **non-constant** form built from a
+the A4/KG-1 narrowing (the Mathlib-gaps plan MG-4): the **non-constant** form built from a
 Kähler *potential*, and in particular the genuine Fubini–Study form of an affine chart, whose
 potential is `log (1 + ‖z‖²)`.
 
@@ -37,7 +37,7 @@ construction does exactly that:
 * `fsPotential z = log (1 + ‖z‖²)`, `contDiff_fsPotential` — the Fubini–Study chart potential is
   smooth (`1 + ‖z‖² ≥ 1 > 0`, so the logarithm never meets its singularity); ★
   `contDiff_omega_fsPotential` / `analyticAt_fsPotential` — **it is real-analytic** (the same
-  argument at `ω`; G12 of `specs/generator-layer-scoping.md`), and `contDiff_omega_dcForm` carries
+  argument at `ω`; G12 of the generator-layer plan), and `contDiff_omega_dcForm` carries
   analyticity through `d^c`.
 * ★★ `extDeriv_fsChartForm` — **the Fubini–Study chart form is closed.**
 
@@ -61,8 +61,8 @@ construction does exactly that:
 ## References
 
 `KahlerClosed.lean` (the constant/flat case this extends), `KahlerForm.lean`
-(`complexStructure`, `fundamentalForm`), `MATHLIB-GAPS.md` (the Kähler-manifold row this
-narrows), `specs/mathlib-gaps-plan.md` (MG-4).
+(`complexStructure`, `fundamentalForm`), the Mathlib-gaps register (the Kähler-manifold row this
+narrows), the Mathlib-gaps plan (MG-4).
 -/
 
 @[expose] public section

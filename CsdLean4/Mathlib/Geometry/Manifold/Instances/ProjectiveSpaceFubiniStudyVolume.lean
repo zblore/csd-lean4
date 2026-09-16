@@ -16,11 +16,11 @@ public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 # The volume of the top power of the Fubini–Study form
 
 **TERM-SCOPE(Kahler)** **TERM-SCOPE(Liouville)** — this module uses the *restricted* senses of
-"Kahler" and "Liouville"; `specs/TERMS.md` records what is backed and what is not.
+"Kahler" and "Liouville"; the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free).
 
-Milestones **M5** and **M6** of `specs/top-power-scoping.md`, Route U (uniqueness). The
+Milestones **M5** and **M6** of the top-power plan, Route U (uniqueness). The
 `2n`-form `fsTopForm n` (the `n`-th exterior power of the Fubini–Study form,
 `ProjectiveSpaceFubiniStudyForm.lean`) has a measure on `ℂℙⁿ` (`TopFormMeasure.lean`, against
 Lebesgue measure on the model `Fin n → ℂ` and the affine chart cover). This module shows it is
@@ -72,14 +72,14 @@ is the constant `0`-form `1` (`wedgePow_stdForm_pairFamily` at `k = 0`), and eve
 top power of `stdForm` on other families, nor about `fsModelForm w` away from `w = 0` (the
 measure argument needs one point).
 
-References: `specs/top-power-scoping.md` (M5, M6); `Geometry/Manifold/TopFormMeasure.lean`
+**Provenance and references.** The top-power plan (M5, M6); `Geometry/Manifold/TopFormMeasure.lean`
 (`topFormMeasure_map_eq`, `isFiniteMeasure_topFormMeasure`,
 `topFormMeasure_ne_zero_of_localRep_ne_zero`);
 `Analysis/Normed/Module/Alternating/WedgeShuffle.lean` (`wedge_mul_apply_pairs`);
 `Geometry/Manifold/Instances/ProjectiveSpaceUnitaryAction.lean` (`fsModelForm_uTrans`);
 `Geometry/Manifold/WedgeForm.lean` (`localRep_wedgePow`, `wedgePow_compContinuousLinearMap`);
 `LinearAlgebra/Projectivization/FubiniStudyUnique.lean` (★★ `fubiniStudyMeasure_unique`);
-`specs/TERMS.md` (Liouville); `specs/future-work.md`.
+the terms register (Liouville); the completed-work ledger.
 -/
 
 @[expose] public section
