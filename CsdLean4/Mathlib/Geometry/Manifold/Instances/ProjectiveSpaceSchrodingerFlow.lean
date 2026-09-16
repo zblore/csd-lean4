@@ -8,7 +8,8 @@ module
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceHamiltonianFlow
-public import CsdLean4.LF4.ManyToOneSchrodingerDerived
+public import CsdLean4.Mathlib.Analysis.Matrix.SchrodingerUnitary
+public import Mathlib.Analysis.Matrix.Hermitian
 
 /-!
 # The Schrödinger flow on `ℂℙⁿ` is Hamiltonian, with Hamiltonian `-2 ⟨H⟩`
@@ -17,8 +18,8 @@ public import CsdLean4.LF4.ManyToOneSchrodingerDerived
 the *restricted* senses of these words; `specs/TERMS.md` records what is backed and what is not.
 
 **Category:** 1-Mathlib (1-Mathlib-staging in its mathematics; it consumes the corpus's).
-`CSD.LF4.schrodingerUnitary` (the unitary `exp(-itH)`) and its derivative
-`CSD.LF4.schrodingerUnitary_hasDerivAt` as the flow whose generator it identifies.
+`Matrix.schrodingerUnitary` (the unitary `exp(-itH)`) and its derivative
+`Matrix.schrodingerUnitary_hasDerivAt` as the flow whose generator it identifies.
 
 Brick **G13** of `specs/generator-layer-scoping.md` (with the G2, G3, G4, G16 and G19 corollaries): the `U(n+1)` moment map. For a Hermitian
 `H`, the unitary flow `p ↦ exp(-itH) • p` on `ℂℙⁿ` — the corpus's projected Schrödinger flow — is
@@ -85,8 +86,8 @@ which makes the generator of the torus `2 · momentMap` (G6); the corpus's Schr�
 `exp(-itH)`, so its Hamiltonian is `-2 ⟨H⟩`. Nothing here rescales either; the statement shows
 both.
 
-⚠️ **The flow is consumed, not built.** `schrodingerUnitary` and its derivative come from
-`LF4/ManyToOneSchrodingerDerived.lean`, under the `L2Operator` matrix norm (the one under which
+⚠️ **The flow is consumed, not built.** `Matrix.schrodingerUnitary` and its derivative come from
+`Analysis/Matrix/SchrodingerUnitary.lean`, under the `L2Operator` matrix norm (the one under which
 `hasDerivAt_exp_smul_const` synthesises); this module opens that scope and adds nothing to it.
 
 ⚠️ **Two routes to Liouville, both in the corpus.** `fsVolume_map_torusUnitary_smul` (G10) and
@@ -103,8 +104,8 @@ References: `specs/generator-layer-scoping.md` (G13, G6); `Instances/ProjectiveS
 (`torusChartField`, `torusHamiltonian`, `torusField_isHamiltonianVectorField`);
 `Geometry/Manifold/HamiltonianVectorField.lean` (G1); `Instances/ProjectiveSpaceFubiniStudyMass.lean`
 (`fsModelForm_apply`, `toLpCLM_apply`); `Instances/ProjectiveSpaceUnitaryAction.lean`
-(`chartFun_smul_chartInv`); `LF4/ProjectedDynamics.lean` (`schrodingerUnitary`,
-`expNegITH_unitary_group`); `LF4/ManyToOneSchrodingerDerived.lean` (`schrodingerUnitary_hasDerivAt`);
+(`chartFun_smul_chartInv`); `Analysis/Matrix/SchrodingerUnitary.lean` (`schrodingerUnitary`,
+`expNegITH_unitary_group`, `schrodingerUnitary_hasDerivAt`);
 `specs/TERMS.md` (Hamiltonian, moment map); `specs/POSITS.md` (Posit 1); `specs/future-work.md`.
 -/
 
@@ -406,45 +407,45 @@ theorem mulVecEntryCLM_apply (v : Fin (n + 1) → ℂ) (k : Fin (n + 1))
 
 theorem schrodingerUnitary_zero_val {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) :
-    (CSD.LF4.schrodingerUnitary hH 0 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) = 1 :=
-  congrArg Subtype.val (CSD.LF4.expNegITH_unitary_group hH).2
+    (Matrix.schrodingerUnitary hH 0 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) = 1 :=
+  congrArg Subtype.val (Matrix.expNegITH_unitary_group hH).2
 
 theorem schrodingerUnitary_zero_val' {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
-    (hH : H.IsHermitian) : CSD.LF4.schrodingerUnitary hH 0 = 1 :=
-  (CSD.LF4.expNegITH_unitary_group hH).2
+    (hH : H.IsHermitian) : Matrix.schrodingerUnitary hH 0 = 1 :=
+  (Matrix.expNegITH_unitary_group hH).2
 
 /-- ★ **The field is the velocity of the flow**: at every chart point, `schrodingerChartField` is
 the `t`-derivative at `0` of `t ↦ exp(-itH) • p`, read in the chart. -/
 theorem hasDerivAt_chartFun_schrodingerUnitary {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) (i : Fin (n + 1)) (w : Fin n → ℂ) :
-    HasDerivAt (fun t : ℝ => chartFun i (CSD.LF4.schrodingerUnitary hH t • chartInv i w))
+    HasDerivAt (fun t : ℝ => chartFun i (Matrix.schrodingerUnitary hH t • chartInv i w))
       (schrodingerChartField H i w) 0 := by
   simp_rw [chartFun_smul_chartInv]
   refine hasDerivAt_pi.2 fun j => ?_
   have hentry : ∀ k, HasDerivAt
-      (fun t : ℝ => ((CSD.LF4.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+      (fun t : ℝ => ((Matrix.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
         *ᵥ (insertOne i w).ofLp) k)
       (-Complex.I * (H *ᵥ (insertOne i w).ofLp) k) 0 := by
     intro k
     have h := (mulVecEntryCLM (insertOne i w).ofLp k).hasFDerivAt.comp_hasDerivAt (0 : ℝ)
-      (CSD.LF4.schrodingerUnitary_hasDerivAt H hH 0)
+      (Matrix.schrodingerUnitary_hasDerivAt H hH 0)
     refine h.congr_deriv ?_
     rw [mulVecEntryCLM_apply, schrodingerUnitary_zero_val hH, one_mul, Matrix.smul_mulVec]
     simp
   have hnum := hentry (i.succAbove j)
   have hden := hentry i
-  have hden0 : ((CSD.LF4.schrodingerUnitary hH 0 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+  have hden0 : ((Matrix.schrodingerUnitary hH 0 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
       *ᵥ (insertOne i w).ofLp) i = 1 := by
     rw [schrodingerUnitary_zero_val hH, Matrix.one_mulVec]
     exact insertOne_apply_same i w
-  have hnum0 : ((CSD.LF4.schrodingerUnitary hH 0 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+  have hnum0 : ((Matrix.schrodingerUnitary hH 0 : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
       *ᵥ (insertOne i w).ofLp) (i.succAbove j) = w j := by
     rw [schrodingerUnitary_zero_val hH, Matrix.one_mulVec]
     exact insertOne_apply_succAbove i w j
   show HasDerivAt (fun t : ℝ =>
-    ((CSD.LF4.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+    ((Matrix.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
         *ᵥ (insertOne i w).ofLp) (i.succAbove j)
-      / ((CSD.LF4.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
+      / ((Matrix.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
         *ᵥ (insertOne i w).ofLp) i) (schrodingerChartField H i w j) 0
   refine (hnum.div hden (by rw [hden0]; exact one_ne_zero)).congr_deriv ?_
   rw [hden0, hnum0]
@@ -465,7 +466,7 @@ theorem schrodingerHamiltonian_neg_diagonal (θ : Fin (n + 1) → ℝ) :
     schrodingerHamiltonian (-(Matrix.diagonal fun k => (θ k : ℂ)))
       = torusHamiltonian (n := n) θ := by
   funext p
-  unfold schrodingerHamiltonian expectation torusHamiltonian CSD.LF4.momentMap
+  unfold schrodingerHamiltonian expectation torusHamiltonian momentMap
   have hrep : ∀ k, (Matrix.toEuclideanLin (-(Matrix.diagonal fun k => (θ k : ℂ))) p.rep) k
       = -((θ k : ℂ) * p.rep k) := fun k => by
     show ((-(Matrix.diagonal fun k => (θ k : ℂ))) *ᵥ p.rep.ofLp) k = _
@@ -600,51 +601,51 @@ curve is `s ↦ chartFun (exp(-i(s-t)H) • q)`, whose derivative at `s = t` is 
 (`hasDerivAt_chartFun_schrodingerUnitary`, shifted by the group law `expNegITH_unitary_group`). -/
 theorem isMIntegralCurve_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) (p : ℙ ℂ (Ambient n)) :
-    IsMIntegralCurve (fun t : ℝ => CSD.LF4.schrodingerUnitary hH t • p) (schrodingerField H) := by
+    IsMIntegralCurve (fun t : ℝ => Matrix.schrodingerUnitary hH t • p) (schrodingerField H) := by
   have hUmat : Continuous
-      fun t : ℝ => (CSD.LF4.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :=
-    continuous_iff_continuousAt.2 fun t => (CSD.LF4.schrodingerUnitary_hasDerivAt H hH t).continuousAt
-  have hU : Continuous fun t : ℝ => CSD.LF4.schrodingerUnitary hH t := hUmat.subtype_mk _
-  have hcont : Continuous fun t : ℝ => CSD.LF4.schrodingerUnitary hH t • p := hU.smul continuous_const
+      fun t : ℝ => (Matrix.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :=
+    continuous_iff_continuousAt.2 fun t => (Matrix.schrodingerUnitary_hasDerivAt H hH t).continuousAt
+  have hU : Continuous fun t : ℝ => Matrix.schrodingerUnitary hH t := hUmat.subtype_mk _
+  have hcont : Continuous fun t : ℝ => Matrix.schrodingerUnitary hH t • p := hU.smul continuous_const
   intro t
   refine ⟨hcont.continuousAt, ?_⟩
   -- the curve in the chart at `q := exp(-itH) • p`
-  have hq : chartInv (idx (CSD.LF4.schrodingerUnitary hH t • p))
-      (chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p)) (CSD.LF4.schrodingerUnitary hH t • p))
-      = CSD.LF4.schrodingerUnitary hH t • p :=
+  have hq : chartInv (idx (Matrix.schrodingerUnitary hH t • p))
+      (chartFun (idx (Matrix.schrodingerUnitary hH t • p)) (Matrix.schrodingerUnitary hH t • p))
+      = Matrix.schrodingerUnitary hH t • p :=
     chartInv_chartFun _ _ (idx_spec _)
-  have hfun : (fun s : ℝ => chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
-        (CSD.LF4.schrodingerUnitary hH s • p))
-      = fun s : ℝ => chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
-        (CSD.LF4.schrodingerUnitary hH (s - t) • chartInv (idx (CSD.LF4.schrodingerUnitary hH t • p))
-          (chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
-            (CSD.LF4.schrodingerUnitary hH t • p))) := by
+  have hfun : (fun s : ℝ => chartFun (idx (Matrix.schrodingerUnitary hH t • p))
+        (Matrix.schrodingerUnitary hH s • p))
+      = fun s : ℝ => chartFun (idx (Matrix.schrodingerUnitary hH t • p))
+        (Matrix.schrodingerUnitary hH (s - t) • chartInv (idx (Matrix.schrodingerUnitary hH t • p))
+          (chartFun (idx (Matrix.schrodingerUnitary hH t • p))
+            (Matrix.schrodingerUnitary hH t • p))) := by
     funext s
-    rw [hq, ← mul_smul, ← (CSD.LF4.expNegITH_unitary_group hH).1, sub_add_cancel]
-  have hd : HasDerivAt (fun s : ℝ => chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
-      (CSD.LF4.schrodingerUnitary hH s • p))
-      (schrodingerField H (CSD.LF4.schrodingerUnitary hH t • p)) t := by
+    rw [hq, ← mul_smul, ← (Matrix.expNegITH_unitary_group hH).1, sub_add_cancel]
+  have hd : HasDerivAt (fun s : ℝ => chartFun (idx (Matrix.schrodingerUnitary hH t • p))
+      (Matrix.schrodingerUnitary hH s • p))
+      (schrodingerField H (Matrix.schrodingerUnitary hH t • p)) t := by
     rw [hfun]
     have h0 := hasDerivAt_chartFun_schrodingerUnitary hH
-      (idx (CSD.LF4.schrodingerUnitary hH t • p))
-      (chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p)) (CSD.LF4.schrodingerUnitary hH t • p))
+      (idx (Matrix.schrodingerUnitary hH t • p))
+      (chartFun (idx (Matrix.schrodingerUnitary hH t • p)) (Matrix.schrodingerUnitary hH t • p))
     have h1 : HasDerivAt (fun s : ℝ => s - t) 1 t :=
       (hasDerivAt_sub_const_iff t).2 (hasDerivAt_id' t)
-    have h0' : HasDerivAt (fun τ : ℝ => chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
-        (CSD.LF4.schrodingerUnitary hH τ • chartInv (idx (CSD.LF4.schrodingerUnitary hH t • p))
-          (chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
-            (CSD.LF4.schrodingerUnitary hH t • p))))
-        (schrodingerChartField H (idx (CSD.LF4.schrodingerUnitary hH t • p))
-          (chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
-            (CSD.LF4.schrodingerUnitary hH t • p))) (t - t) := by
+    have h0' : HasDerivAt (fun τ : ℝ => chartFun (idx (Matrix.schrodingerUnitary hH t • p))
+        (Matrix.schrodingerUnitary hH τ • chartInv (idx (Matrix.schrodingerUnitary hH t • p))
+          (chartFun (idx (Matrix.schrodingerUnitary hH t • p))
+            (Matrix.schrodingerUnitary hH t • p))))
+        (schrodingerChartField H (idx (Matrix.schrodingerUnitary hH t • p))
+          (chartFun (idx (Matrix.schrodingerUnitary hH t • p))
+            (Matrix.schrodingerUnitary hH t • p))) (t - t) := by
       rw [sub_self]
       exact h0
     have h2 := HasDerivAt.scomp (h := fun s : ℝ => s - t) (x := t) h0' h1
     exact h2.congr_deriv (one_smul ℝ _)
   have hw : writtenInExtChartAt (modelWithCornersSelf ℝ ℝ) (modelWithCornersSelf ℝ (Fin n → ℂ)) t
-      (fun s : ℝ => CSD.LF4.schrodingerUnitary hH s • p)
-      = fun s : ℝ => chartFun (idx (CSD.LF4.schrodingerUnitary hH t • p))
-          (CSD.LF4.schrodingerUnitary hH s • p) := by
+      (fun s : ℝ => Matrix.schrodingerUnitary hH s • p)
+      = fun s : ℝ => chartFun (idx (Matrix.schrodingerUnitary hH t • p))
+          (Matrix.schrodingerUnitary hH s • p) := by
     funext s
     simp only [writtenInExtChartAt, Function.comp, extChartAt_model_space_eq_id,
       PartialEquiv.refl_symm, PartialEquiv.refl_coe, id, extChartAt_coe, modelWithCornersSelf_coe]
@@ -655,7 +656,7 @@ theorem isMIntegralCurve_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin 
 /-- ★★ **`⟨H⟩` is conserved by the Schrödinger flow**: `⟨H⟩_{exp(-itH) • p} = ⟨H⟩_p`. -/
 theorem expectation_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) (p : ℙ ℂ (Ambient n)) (t : ℝ) :
-    expectation H (CSD.LF4.schrodingerUnitary hH t • p) = expectation H p := by
+    expectation H (Matrix.schrodingerUnitary hH t • p) = expectation H p := by
   have h := expectation_eq_of_isMIntegralCurve_schrodingerField hH
     (isMIntegralCurve_schrodingerUnitary_smul hH p) t 0
   rwa [schrodingerUnitary_zero_val' hH, one_smul] at h
@@ -841,13 +842,13 @@ uniqueness of integral curves. -/
 theorem hamiltonianFlow_schrodingerHamiltonian {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) (t : ℝ) (p : ℙ ℂ (Ambient n)) :
     (fsForm_isSymplectic n).hamiltonianFlow (contMDiff_schrodingerHamiltonian H) t p
-      = CSD.LF4.schrodingerUnitary hH t • p := by
-  have hγ : IsMIntegralCurve (fun t : ℝ => CSD.LF4.schrodingerUnitary hH t • p)
+      = Matrix.schrodingerUnitary hH t • p := by
+  have hγ : IsMIntegralCurve (fun t : ℝ => Matrix.schrodingerUnitary hH t • p)
       ((fsForm_isSymplectic n).hamiltonianVectorField (schrodingerHamiltonian H)) := by
     rw [← schrodingerField_eq_hamiltonianVectorField hH]
     exact isMIntegralCurve_schrodingerUnitary_smul hH p
-  have h0 : (fun t : ℝ => CSD.LF4.schrodingerUnitary hH t • p) 0 = p := by
-    simp only [(CSD.LF4.expNegITH_unitary_group hH).2, one_smul]
+  have h0 : (fun t : ℝ => Matrix.schrodingerUnitary hH t • p) 0 = p := by
+    simp only [(Matrix.expNegITH_unitary_group hH).2, one_smul]
   have h := integralFlow_eq_of_isMIntegralCurve
     ((fsForm_isSymplectic n).contMDiff_hamiltonianVectorField_tangent
       (contMDiff_schrodingerHamiltonian H)) hγ h0
@@ -874,9 +875,9 @@ the Fubini–Study volume because it is the Hamiltonian flow of `-2⟨H⟩`
 (`fsVolume_map_hamiltonianFlow`), not because it is unitary (`fsVolume_map_smul`). -/
 theorem fsVolume_map_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) (t : ℝ) :
-    Measure.map (fun p : ℙ ℂ (Ambient n) => CSD.LF4.schrodingerUnitary hH t • p) (fsVolume n)
+    Measure.map (fun p : ℙ ℂ (Ambient n) => Matrix.schrodingerUnitary hH t • p) (fsVolume n)
       = fsVolume n := by
-  rw [show (fun p : ℙ ℂ (Ambient n) => CSD.LF4.schrodingerUnitary hH t • p)
+  rw [show (fun p : ℙ ℂ (Ambient n) => Matrix.schrodingerUnitary hH t • p)
       = (fsForm_isSymplectic n).hamiltonianFlow (contMDiff_schrodingerHamiltonian H) t from
     funext fun p => (hamiltonianFlow_schrodingerHamiltonian hH t p).symm]
   exact fsVolume_map_hamiltonianFlow _ t
@@ -884,11 +885,11 @@ theorem fsVolume_map_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n +
 /-- The same for the normalised volume, `fubiniStudyMeasure p₀`. -/
 theorem fsVolumeNormalized_map_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) (t : ℝ) :
-    Measure.map (fun p : ℙ ℂ (Ambient n) => CSD.LF4.schrodingerUnitary hH t • p)
+    Measure.map (fun p : ℙ ℂ (Ambient n) => Matrix.schrodingerUnitary hH t • p)
       (fsVolumeNormalized n) = fsVolumeNormalized n := by
   rw [fsVolumeNormalized,
-    Measure.map_smul' _ _ (f := fun p : ℙ ℂ (Ambient n) => CSD.LF4.schrodingerUnitary hH t • p)
-      (Homeomorph.smul (CSD.LF4.schrodingerUnitary hH t)).continuous.measurable,
+    Measure.map_smul' _ _ (f := fun p : ℙ ℂ (Ambient n) => Matrix.schrodingerUnitary hH t • p)
+      (Homeomorph.smul (Matrix.schrodingerUnitary hH t)).continuous.measurable,
     fsVolume_map_schrodingerUnitary_smul]
 
 end HamiltonianFlows

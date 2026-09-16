@@ -102,9 +102,9 @@ fi
 # induction, so a grep over direct imports is the whole check. The exemption list
 # is the inventory of files that still reach outside; each entry carries its
 # reason and date, and the list may shrink, never grow.
-CAT1_EXEMPT="CsdLean4/Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceSchrodingerFlow.lean"
-# ProjectiveSpaceSchrodingerFlow.lean: imports LF4.ManyToOneSchrodingerDerived for
-# schrodingerUnitary (79 uses); repair pending (2026-09-16).
+CAT1_EXEMPT=""
+# (empty since 2026-09-16: ProjectiveSpaceSchrodingerFlow.lean was the last entry, repaired the
+# same day by moving schrodingerUnitary to Analysis/Matrix/SchrodingerUnitary.lean.)
 
 cat1_impure="$(git ls-files 'CsdLean4/Mathlib/**/*.lean' \
   | xargs grep -ln '^[ \t]*\(public \|private \|meta \)*import[ \t]\+CsdLean4\.\(LF[1-6]\|SigmaLayer\|RecordLayer\|Empirical\|CV\|Thermo\|Incubator\|Tests\|Basic\|Headlines\|Interop\)' 2>/dev/null \

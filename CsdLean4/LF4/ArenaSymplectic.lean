@@ -276,7 +276,7 @@ theorem hamiltonianFlow_sectorEnergy_schrodinger {N : ℕ}
     (x : CPN (N + 1)) (θ : KTorus) :
     (arenaForm_isSymplectic N).hamiltonianFlow
         (contMDiff_sectorEnergy (contMDiff_schrodingerHamiltonian H)) t (x, θ)
-      = (schrodingerUnitary hH t • x, θ) := by
+      = (Matrix.schrodingerUnitary hH t • x, θ) := by
   rw [hamiltonianFlow_sectorEnergy (contMDiff_schrodingerHamiltonian H),
     hamiltonianFlow_schrodingerHamiltonian hH]
 

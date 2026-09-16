@@ -380,9 +380,8 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- DISCHARGES the smoothness datum U' t = U t·(-iH); manyToOneSchrodingerSetup_schrodinger_derived
 -- exhibits the skew generator A = -iH, that discharged datum, the Stone conclusion U t = exp(t•A)
 -- (Matrix.StoneC1.eq_exp_of_hasDeriv), and the pillar — no longer only the A = 0 witness.
-/-- info: 'CSD.LF4.schrodingerUnitary_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.schrodingerUnitary_hasDerivAt
+-- 2026-09-16: schrodingerUnitary_hasDerivAt moved with schrodingerUnitary to the Category-1 module
+-- Analysis/Matrix/SchrodingerUnitary.lean (namespace Matrix); its pin is in MathlibStaging.lean.
 
 /-- info: 'CSD.LF4.manyToOneSchrodingerSetup_schrodinger_derived' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -437,14 +436,6 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.projectedFlow_projective_one_parameter_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.projectedFlow_projective_one_parameter_representation
-
-/-- info: 'CSD.LF4.schrodingerGen_exp_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.schrodingerGen_exp_mem_unitaryGroup
-
-/-- info: 'CSD.LF4.expNegITH_unitary_group' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.expNegITH_unitary_group
 
 /-- info: 'CSD.LF4.trivialKahlerOnticSetup_eq_unitary_family' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

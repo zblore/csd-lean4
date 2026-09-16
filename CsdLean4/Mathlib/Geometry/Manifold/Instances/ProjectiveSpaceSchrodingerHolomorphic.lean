@@ -164,7 +164,7 @@ theorem fsMetric_smul_mfderiv (U : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (x : �
 theorem hamiltonianFlow_schrodingerHamiltonian_eq {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) (t : ℝ) :
     (fsForm_isSymplectic n).hamiltonianFlow (contMDiff_schrodingerHamiltonian H) t
-      = fun p : ℙ ℂ (Ambient n) => CSD.LF4.schrodingerUnitary hH t • p :=
+      = fun p : ℙ ℂ (Ambient n) => Matrix.schrodingerUnitary hH t • p :=
   funext (hamiltonianFlow_schrodingerHamiltonian hH t)
 
 /-- ★★ **The Hamiltonian flow of `−2⟨H⟩` on `ℂℙⁿ` is holomorphic at every time**: its derivative

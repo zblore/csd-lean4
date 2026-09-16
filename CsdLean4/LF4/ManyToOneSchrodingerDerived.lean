@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF4.ManyToOnePillars
 public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
+public import CsdLean4.Mathlib.Analysis.Matrix.SchrodingerUnitary
 
 /-!
 # General-`N` Schrödinger pillar, DERIVED (not by `rfl`)
@@ -61,47 +62,15 @@ noncomputable section
 
 variable {N : ℕ}
 
-/-- The skew-Hermitian Schrödinger generator `A = -i H` for Hermitian `H`:
-`star (-i H) = -(-i H)`. -/
-theorem CSD.LF4.schrodingerGen_neg_i_smul_skew
-    (H : Matrix (Fin N) (Fin N) ℂ) (hH : H.IsHermitian) :
-    star ((-Complex.I) • H) = -((-Complex.I) • H) := by
-  rw [star_smul, show star (-Complex.I) = Complex.I by simp,
-    show star H = H from by rw [Matrix.star_eq_conjTranspose]; exact hH]
-  module
+/-! The three lemmas that discharge the C¹ datum — `schrodingerGen_neg_i_smul_skew`,
+`schrodingerGen_eq_real_smul` and `schrodingerUnitary_hasDerivAt` — moved to the Category-1
+module `Mathlib/Analysis/Matrix/SchrodingerUnitary.lean` on 2026-09-16 (namespace `Matrix`), so
+that the manifold-level Schrödinger flow on `ℂℙⁿ` is Category 1 by closure. Re-exported here. -/
 
-/-- `schrodingerGen H τ = τ • (-i H)` as a real scalar action (tower `ℝ → ℂ → Matrix`).
-Rewrites the time-`τ` generator into the `t • A` form `hasDerivAt_exp_smul_const`
-expects. -/
-theorem CSD.LF4.schrodingerGen_eq_real_smul
-    (H : Matrix (Fin N) (Fin N) ℂ) (τ : ℝ) :
-    CSD.LF4.schrodingerGen H τ = τ • ((-Complex.I) • H) := by
-  unfold CSD.LF4.schrodingerGen
-  rw [← smul_assoc]
-  congr 1
-  rw [Complex.real_smul]
-  ring
-
-/-- **The C¹ smoothness datum, DISCHARGED (general `N`, arbitrary Hermitian `H`).**
-The real Schrödinger family `U t = exp(-itH)` has derivative `U t * (-iH)` at every
-`t`. This is the S2 hypothesis of `sigmaFlow_schrodinger_form` / the input of
-`Matrix.StoneC1.eq_exp_of_hasDeriv`, here PROVED for the genuine nonzero generator
-rather than assumed or restricted to the `A = 0` witness. -/
-theorem CSD.LF4.schrodingerUnitary_hasDerivAt
-    (H : Matrix (Fin N) (Fin N) ℂ) (hH : H.IsHermitian) (t : ℝ) :
-    HasDerivAt (fun τ : ℝ => (CSD.LF4.schrodingerUnitary hH τ : Matrix (Fin N) (Fin N) ℂ))
-      ((CSD.LF4.schrodingerUnitary hH t : Matrix (Fin N) (Fin N) ℂ) * ((-Complex.I) • H)) t := by
-  have hfun : (fun τ : ℝ => (CSD.LF4.schrodingerUnitary hH τ : Matrix (Fin N) (Fin N) ℂ))
-      = (fun τ : ℝ => NormedSpace.exp (τ • ((-Complex.I) • H))) := by
-    funext τ
-    show NormedSpace.exp (CSD.LF4.schrodingerGen H τ) = _
-    rw [CSD.LF4.schrodingerGen_eq_real_smul]
-  have hval : (CSD.LF4.schrodingerUnitary hH t : Matrix (Fin N) (Fin N) ℂ)
-      = NormedSpace.exp (t • ((-Complex.I) • H)) := by
-    show NormedSpace.exp (CSD.LF4.schrodingerGen H t) = _
-    rw [CSD.LF4.schrodingerGen_eq_real_smul]
-  rw [hfun, hval]
-  exact hasDerivAt_exp_smul_const ((-Complex.I) • H) t
+namespace CSD.LF4
+export Matrix (schrodingerGen_neg_i_smul_skew schrodingerGen_eq_real_smul
+  schrodingerUnitary_hasDerivAt)
+end CSD.LF4
 
 /-- **General-`N` Schrödinger pillar, DERIVED.** For the real Kähler ontic instance
 `manyToOneSchrodingerSetup H hH p₀` (arbitrary Hermitian `H`, general `N`), there is

@@ -10,6 +10,7 @@ public import CsdLean4.Mathlib.Analysis.CStarAlgebra.OperatorConvexCFC
 public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
 public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvexBridge
 public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
+public import CsdLean4.Mathlib.Analysis.Matrix.SchrodingerUnitary
 public import CsdLean4.Mathlib.Analysis.Matrix.ProjectiveLift
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology

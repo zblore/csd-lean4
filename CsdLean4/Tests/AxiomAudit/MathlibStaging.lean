@@ -1219,6 +1219,19 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Projectivization.measurable_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.measurable_momentMap
 
+-- Analysis/Matrix/SchrodingerUnitary.lean (2026-09-16, moved from LF4/ProjectedDynamics.lean and
+-- LF4/ManyToOneSchrodingerDerived.lean so that the manifold Schrödinger flow is Category 1 by
+-- closure): exp(-itH) is unitary for Hermitian H, a one-parameter group, and C¹ with derivative
+-- U t · (-iH). CSD.LF4 re-exports the names.
+/-- info: 'Matrix.schrodingerGen_exp_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.schrodingerGen_exp_mem_unitaryGroup
+
+/-- info: 'Matrix.expNegITH_unitary_group' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.expNegITH_unitary_group
+
+/-- info: 'Matrix.schrodingerUnitary_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.schrodingerUnitary_hasDerivAt
+
 -- Analysis/InformationGeometry (2026-09-16, the Fubini–Study → Fisher–Rao bridge for Physlib
 -- PR #1652). FisherRao.lean mirrors Nava-Hernandez's OpenSimplex / fisherRaoInner verbatim
 -- (deleted when the PR merges); FubiniStudyFisherRao.lean is the vector-level bridge: along a
@@ -4765,7 +4778,7 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- Brick G13 of specs/generator-layer-scoping.md §8, the U(n+1) moment map. For a Hermitian H,
 -- ★★★ schrodingerField_isHamiltonianVectorField: the velocity field of p ↦ exp(-itH) • p — the
 -- corpus's projected Schrödinger flow, and proved to be that velocity
--- (hasDerivAt_chartFun_schrodingerUnitary, through CSD.LF4.schrodingerUnitary_hasDerivAt under the
+-- (hasDerivAt_chartFun_schrodingerUnitary, through Matrix.schrodingerUnitary_hasDerivAt under the
 -- L2Operator norm and a matrix-entry functional) — satisfies ι_X ω_FS = dH on the MANIFOLD with
 -- H = schrodingerHamiltonian = -2 ⟨H⟩ = -2 ⟪z, Hz⟫.re/‖z‖². The chart identity
 -- (★★ fsModelForm_schrodingerChartField) is proved in the AMBIENT inner product, not by coordinate

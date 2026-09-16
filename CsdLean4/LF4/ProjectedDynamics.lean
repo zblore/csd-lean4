@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF4.UnitarySelection
+public import CsdLean4.Mathlib.Analysis.Matrix.SchrodingerUnitary
 public import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 
 /-!
@@ -202,78 +203,14 @@ open scoped Matrix.Norms.Operator
 open scoped Matrix
 open NormedSpace
 
-/-- The candidate Schrödinger generator matrix `-(i t) H` for a time `t` and a
-matrix `H`. When `H` is Hermitian and `t` real this is skew-Hermitian, so its
-matrix exponential is unitary. -/
-noncomputable def schrodingerGen (H : Matrix (Fin N) (Fin N) ℂ) (t : ℝ) :
-    Matrix (Fin N) (Fin N) ℂ :=
-  (-(t : ℂ) * Complex.I) • H
+/-! The generator `-(it)H`, the bundled unitary `exp(-itH)` and its one-parameter group law moved
+to the Category-1 module `Mathlib/Analysis/Matrix/SchrodingerUnitary.lean` on 2026-09-16
+(`Matrix.schrodingerGen`, `Matrix.schrodingerUnitary`, `Matrix.expNegITH_unitary_group`), so that
+the manifold-level Schrödinger flow on `ℂℙⁿ` is Category 1 by closure. The names are re-exported
+here; every consumer reads as before. -/
 
-/-- For Hermitian `H`, the generator `-(i t) H` is skew-Hermitian:
-`(schrodingerGen H t)ᴴ = - schrodingerGen H t`. -/
-theorem schrodingerGen_star {H : Matrix (Fin N) (Fin N) ℂ}
-    (hH : H.IsHermitian) (t : ℝ) :
-    (schrodingerGen H t)ᴴ = -schrodingerGen H t := by
-  unfold schrodingerGen
-  rw [Matrix.conjTranspose_smul, hH, ← neg_smul]
-  congr 1
-  simp only [star_mul', star_neg, RCLike.star_def, Complex.conj_ofReal,
-    Complex.conj_I]
-  ring
-
-/-- **`exp(-itH)` is unitary (PROVED).** For Hermitian `H` and real `t`, the
-matrix exponential `exp(schrodingerGen H t) = exp(-i t H)` lies in
-`unitaryGroup (Fin N) ℂ`: the generator is skew-Hermitian, so
-`(exp A)ᴴ = exp (Aᴴ) = exp (-A)` and `exp A * exp (-A) = exp 0 = 1`. -/
-theorem schrodingerGen_exp_mem_unitaryGroup {H : Matrix (Fin N) (Fin N) ℂ}
-    (hH : H.IsHermitian) (t : ℝ) :
-    NormedSpace.exp (schrodingerGen H t) ∈ Matrix.unitaryGroup (Fin N) ℂ := by
-  rw [Matrix.mem_unitaryGroup_iff, Matrix.star_eq_conjTranspose,
-    ← Matrix.exp_conjTranspose, schrodingerGen_star hH t,
-    ← Matrix.exp_add_of_commute (schrodingerGen H t) (-schrodingerGen H t)
-      (Commute.neg_right (Commute.refl (schrodingerGen H t))),
-    add_neg_cancel, NormedSpace.exp_zero]
-
-/-- The unitary `exp(-i t H) ∈ unitaryGroup` as a bundled group element. -/
-noncomputable def schrodingerUnitary {H : Matrix (Fin N) (Fin N) ℂ}
-    (hH : H.IsHermitian) (t : ℝ) : Matrix.unitaryGroup (Fin N) ℂ :=
-  ⟨NormedSpace.exp (schrodingerGen H t), schrodingerGen_exp_mem_unitaryGroup hH t⟩
-
-/-- **The `exp(-itH)` family is a vector-level one-parameter unitary GROUP
-(PROVED, the converse realizability witness).** For Hermitian `H`, the family
-`U t = exp(-i t H)` satisfies `U (s + t) = U s * U t` and `U 0 = 1` as genuine
-matrix / unitary-group identities (NOT merely up to phase). This certifies the
-Schrödinger target form `exp(-itH)` is inhabited.
-
-Honest scope: this is the CONVERSE of Stone (it constructs `U_t` FROM `H`); it
-does NOT recover `H` from an abstract projected flow. The projected-flow →
-generator direction remains staged on the phase lift (S1) and finite-dim Stone
-(S2); see the module docstring. -/
-theorem expNegITH_unitary_group {H : Matrix (Fin N) (Fin N) ℂ}
-    (hH : H.IsHermitian) :
-    (∀ s t, schrodingerUnitary hH (s + t)
-        = schrodingerUnitary hH s * schrodingerUnitary hH t)
-      ∧ schrodingerUnitary hH 0 = 1 := by
-  constructor
-  · intro s t
-    apply Subtype.ext
-    show NormedSpace.exp (schrodingerGen H (s + t))
-      = NormedSpace.exp (schrodingerGen H s) * NormedSpace.exp (schrodingerGen H t)
-    have hcomm : Commute (schrodingerGen H s) (schrodingerGen H t) :=
-      ((Commute.refl H).smul_left _).smul_right _
-    have hadd : schrodingerGen H (s + t)
-        = schrodingerGen H s + schrodingerGen H t := by
-      unfold schrodingerGen
-      rw [← add_smul]
-      congr 1
-      push_cast
-      ring
-    rw [hadd, Matrix.exp_add_of_commute _ _ hcomm]
-  · apply Subtype.ext
-    show NormedSpace.exp (schrodingerGen H 0) = 1
-    unfold schrodingerGen
-    simp only [Complex.ofReal_zero, neg_zero, zero_mul, zero_smul]
-    exact NormedSpace.exp_zero
+export Matrix (schrodingerGen schrodingerGen_star schrodingerGen_exp_mem_unitaryGroup
+  schrodingerUnitary expNegITH_unitary_group)
 
 end Exp
 
