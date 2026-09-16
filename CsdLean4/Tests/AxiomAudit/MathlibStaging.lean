@@ -1219,6 +1219,36 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Projectivization.measurable_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.measurable_momentMap
 
+-- Analysis/InformationGeometry (2026-09-16, the Fubini–Study → Fisher–Rao bridge for Physlib
+-- PR #1652). FisherRao.lean mirrors Nava-Hernandez's OpenSimplex / fisherRaoInner verbatim
+-- (deleted when the PR merges); FubiniStudyFisherRao.lean is the vector-level bridge: along a
+-- horizontal direction u (every conj(ψ i) * u i real) the Fisher–Rao inner product of the Born
+-- displacements is 4 Re ⟪u, v⟫ — constant ONE against the repo's fsMetric normalisation — and
+-- Braunstein–Caves: fisherInfo ≤ 4 ‖u‖² for every direction, with equality iff horizontal.
+/-- info: 'FisherRao.OpenSimplex.fisherRao_cauchy_schwarz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms FisherRao.OpenSimplex.fisherRao_cauchy_schwarz
+
+/-- info: 'FisherRao.fisherInfo_eq_fisherRaoSq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms FisherRao.fisherInfo_eq_fisherRaoSq
+
+/-- info: 'FisherRao.hasFDerivAt_bornWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms FisherRao.hasFDerivAt_bornWeight
+
+/-- info: 'FisherRao.sum_bornDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms FisherRao.sum_bornDeriv
+
+/-- info: 'FisherRao.fisherRaoInner_bornDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms FisherRao.fisherRaoInner_bornDeriv
+
+/-- info: 'FisherRao.fisherRaoSq_bornDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms FisherRao.fisherRaoSq_bornDeriv
+
+/-- info: 'FisherRao.fisherInfo_bornDeriv_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms FisherRao.fisherInfo_bornDeriv_le
+
+/-- info: 'FisherRao.fisherInfo_bornDeriv_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms FisherRao.fisherInfo_bornDeriv_eq_iff
+
 -- MG-1 (2026-08-22, Projectivization/Metric.lean, specs/mathlib-gaps-plan.md): the first
 -- METRIC on Projectivization anywhere — the rank-one projection embedding p -> P_p (scale-
 -- invariant, descends by lift), injective, continuous off the staged quotient topology,
