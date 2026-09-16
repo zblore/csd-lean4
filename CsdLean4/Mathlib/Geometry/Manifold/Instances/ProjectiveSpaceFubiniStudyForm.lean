@@ -61,9 +61,11 @@ same section as a term of the `ω` type (`fsFormAnalytic_apply`); nothing downst
 form is real-valued and `ℝ`-alternating, as a Kähler form is. No `(1,1)`-type statement is made
 on the manifold.
 
-⚠️ **Closed, but not non-degenerate and not a volume.** `d fsForm = 0` is `fsForm_mextDeriv`;
-non-degeneracy at every point and the top-power identity `ωⁿ/n! = μ_FS` are not attempted.
-`fsForm_ne_zero` is a non-vacuity certificate at one point, nothing more.
+**Closed here; the rest downstream.** `d fsForm = 0` is `fsForm_mextDeriv`; non-degeneracy at every
+point is `fsForm_nondegenerate` (`ProjectiveSpaceFubiniStudySymplectic.lean`) and the top-power
+identity `ωⁿ = (4π)ⁿ μ_FS` is `fsVolume_eq_smul_fubiniStudyMeasure`
+(`ProjectiveSpaceFubiniStudyMass.lean`). `fsForm_ne_zero` is a non-vacuity certificate at one
+point, nothing more.
 
 ⚠️ **The chart chosen at `x` is `idx x`, a choice function.** `fsSection` is defined through
 it; `localRep_fsSection` is what shows the value does not depend on the choice.

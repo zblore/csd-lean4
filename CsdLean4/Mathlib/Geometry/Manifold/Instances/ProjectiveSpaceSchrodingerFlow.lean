@@ -58,9 +58,10 @@ Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, th
   integral curve of the field), ★★★ `isMIntegralCurve_schrodingerUnitary_smul` — **the
   Schrödinger flow `t ↦ exp(-itH) • p` is the integral curve of its field**, for every `p` — and
   ★★ `expectation_schrodingerUnitary_smul` (`⟨H⟩` is conserved by the flow), all G4;
-* **G16 (2026-09-10).** `continuous_torusUnitary_smul`, ★★★ `isMIntegralCurve_torusUnitary_smul` —
-  **the torus orbit `t ↦ diag(e^{itθ}) • p` is the integral curve of `torusField θ`** (the G4 route
-  with `hasDerivAt_chartFun_torusUnitary` and the group law `torusUnitary_add_smul`);
+* **G16 (2026-09-10).** Given ★★★ `isMIntegralCurve_torusUnitary_smul` — **the torus orbit
+  `t ↦ diag(e^{itθ}) • p` is the integral curve of `torusField θ`** — which lives with the field in
+  `ProjectiveSpaceMomentMap.lean` since 2026-09-16 (it uses only the moment-map module's own
+  `hasDerivAt_chartFun_torusUnitary` and group law `torusUnitary_add_smul`):
   `isMIntegralCurve_torusField_eq`, ★★ `eq_torusUnitary_smul_of_isMIntegralCurve` (every integral
   curve through `p` at `0` IS the orbit); ★★ `torusHamiltonian_eq_of_isMIntegralCurve_torusField`
   and ★★ `torusHamiltonian_torusUnitary_smul` (**`2 ∑ θₖ μₖ` is conserved** along the curves and by
@@ -661,71 +662,11 @@ theorem expectation_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 
     (isMIntegralCurve_schrodingerUnitary_smul hH p) t 0
   rwa [schrodingerUnitary_zero_val' hH, one_smul] at h
 
-/-! ### The torus orbits are integral curves of the torus field (G16) -/
+/-! ### The torus orbits are integral curves of the torus field (G16)
 
-/-- The torus flow `t ↦ diag(e^{itθ})` is continuous in time. -/
-theorem continuous_torusUnitary_smul (θ : Fin (n + 1) → ℝ) :
-    Continuous fun t : ℝ => torusUnitary (t • θ) := by
-  have h : (fun t : ℝ => (torusUnitary (t • θ) : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ))
-      = fun t : ℝ => Matrix.diagonal fun k => Complex.exp ((((t • θ) k : ℝ) : ℂ) * Complex.I) :=
-    funext fun t => torusUnitary_val _
-  have hmat : Continuous
-      fun t : ℝ => (torusUnitary (t • θ) : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) := by
-    rw [h]
-    exact (continuous_pi fun k => Complex.continuous_exp.comp
-      ((Complex.continuous_ofReal.comp ((continuous_apply k).comp
-        (continuous_id.smul continuous_const))).mul continuous_const)).matrix_diagonal
-  exact hmat.subtype_mk _
-
-/-- ★★★ **The torus orbit is the integral curve of the torus field**: `t ↦ diag(e^{itθ}) • p` is a
-global integral curve of `torusField θ`, for every `p`. The route of
-`isMIntegralCurve_schrodingerUnitary_smul`: in the chart at `diag(e^{itθ}) • p` the curve is
-`s ↦ chartFun (diag(e^{i(s-t)θ}) • q)`, whose derivative at `s = t` is the chart velocity
-(`hasDerivAt_chartFun_torusUnitary`, shifted by the group law `torusUnitary_add_smul`). -/
-theorem isMIntegralCurve_torusUnitary_smul (θ : Fin (n + 1) → ℝ) (p : ℙ ℂ (Ambient n)) :
-    IsMIntegralCurve (fun t : ℝ => torusUnitary (t • θ) • p) (torusField θ) := by
-  have hcont : Continuous fun t : ℝ => torusUnitary (t • θ) • p :=
-    (continuous_torusUnitary_smul θ).smul continuous_const
-  intro t
-  refine ⟨hcont.continuousAt, ?_⟩
-  have hq : chartInv (idx (torusUnitary (t • θ) • p))
-      (chartFun (idx (torusUnitary (t • θ) • p)) (torusUnitary (t • θ) • p))
-      = torusUnitary (t • θ) • p :=
-    chartInv_chartFun _ _ (idx_spec _)
-  have hfun : (fun s : ℝ => chartFun (idx (torusUnitary (t • θ) • p)) (torusUnitary (s • θ) • p))
-      = fun s : ℝ => chartFun (idx (torusUnitary (t • θ) • p))
-        (torusUnitary ((s - t) • θ) • chartInv (idx (torusUnitary (t • θ) • p))
-          (chartFun (idx (torusUnitary (t • θ) • p)) (torusUnitary (t • θ) • p))) := by
-    funext s
-    rw [hq, ← mul_smul, ← torusUnitary_add_smul, sub_add_cancel]
-  have hd : HasDerivAt
-      (fun s : ℝ => chartFun (idx (torusUnitary (t • θ) • p)) (torusUnitary (s • θ) • p))
-      (torusField θ (torusUnitary (t • θ) • p)) t := by
-    rw [hfun]
-    show HasDerivAt _ (torusChartField (idx (torusUnitary (t • θ) • p)) θ
-      (chartFun (idx (torusUnitary (t • θ) • p)) (torusUnitary (t • θ) • p))) t
-    have h0 := hasDerivAt_chartFun_torusUnitary θ (idx (torusUnitary (t • θ) • p))
-      (chartFun (idx (torusUnitary (t • θ) • p)) (torusUnitary (t • θ) • p))
-    have h1 : HasDerivAt (fun s : ℝ => s - t) 1 t :=
-      (hasDerivAt_sub_const_iff t).2 (hasDerivAt_id' t)
-    have h0' : HasDerivAt (fun τ : ℝ => chartFun (idx (torusUnitary (t • θ) • p))
-        (torusUnitary (τ • θ) • chartInv (idx (torusUnitary (t • θ) • p))
-          (chartFun (idx (torusUnitary (t • θ) • p)) (torusUnitary (t • θ) • p))))
-        (torusChartField (idx (torusUnitary (t • θ) • p)) θ
-          (chartFun (idx (torusUnitary (t • θ) • p)) (torusUnitary (t • θ) • p))) (t - t) := by
-      rw [sub_self]
-      exact h0
-    have h2 := HasDerivAt.scomp (h := fun s : ℝ => s - t) (x := t) h0' h1
-    exact h2.congr_deriv (one_smul ℝ _)
-  have hw : writtenInExtChartAt (modelWithCornersSelf ℝ ℝ) (modelWithCornersSelf ℝ (Fin n → ℂ)) t
-      (fun s : ℝ => torusUnitary (s • θ) • p)
-      = fun s : ℝ => chartFun (idx (torusUnitary (t • θ) • p)) (torusUnitary (s • θ) • p) := by
-    funext s
-    simp only [writtenInExtChartAt, Function.comp, extChartAt_model_space_eq_id,
-      PartialEquiv.refl_symm, PartialEquiv.refl_coe, id, extChartAt_coe, modelWithCornersSelf_coe]
-    rfl
-  rw [hw]
-  exact hd.hasFDerivAt.hasFDerivWithinAt
+`continuous_torusUnitary_smul` and `isMIntegralCurve_torusUnitary_smul` moved to
+`ProjectiveSpaceMomentMap.lean` on 2026-09-16 (they use nothing from this file, and the
+moment-map module's docstring cites them); the uniqueness corollaries stay here. -/
 
 /-- Uniqueness of global integral curves of the torus field. -/
 theorem isMIntegralCurve_torusField_eq (θ : Fin (n + 1) → ℝ) {γ γ' : ℝ → ℙ ℂ (Ambient n)}

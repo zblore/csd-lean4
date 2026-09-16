@@ -23,7 +23,7 @@ chart `j` to the form in chart `i`:
 
 * `fsPotential_transE` — under the transition `i → j` the potential changes by `-2 log ‖zⱼ‖`,
   a pluriharmonic correction (the classical `1 + ‖τ z‖² = (1 + ‖z‖²)/‖zⱼ‖²`);
-* ★★ `fsChartForm_transE` — hence the **form** is invariant, `τ^* ω_j = ω_i` on the overlap:
+* ★ `fsChartForm_transE` — hence the **form** is invariant, `τ^* ω_j = ω_i` on the overlap:
   `dd^c` naturality (`ddcForm_comp`), linearity in the potential, and pluriharmonicity of
   `log ‖L ·‖` for the coordinate functional `L` (`ddcForm_log_norm_eq_zero`); the `j = i`
   case is the identity transition;

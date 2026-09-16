@@ -82,12 +82,31 @@ theorem fundamentalForm_hamiltonianVectorFieldOf (w v : E) :
 /-- ★ **`X_H = ω⁻¹ dH`, linear level, arbitrary observable.** If the differential of
 `H : E → ℝ` at `x` is `g`-represented by `w` (i.e. `dH x v = re ⟪w, v⟫` — `w` is the
 gradient), then the fundamental form pairs the Hamiltonian vector field against any
-direction to give exactly the differential: `ι_{X_H} ω = dH`. -/
+direction to give exactly the differential: `ι_{X_H} ω = dH`. By non-degeneracy
+`hamiltonianVectorFieldOf w` is the only vector with this property
+(`eq_hamiltonianVectorFieldOf_of_forall`), so this is the identification `X_H = ω⁻¹ dH`, not
+merely a verification for one candidate. -/
 theorem hamiltonian_duality (H : E → ℝ) {x w : E}
     (hw : HasFDerivAt H (Complex.reCLM.comp ((innerSL ℂ w).restrictScalars ℝ)) x) (v : E) :
     fundamentalForm (hamiltonianVectorFieldOf w) v = fderiv ℝ H x v := by
   rw [hw.fderiv, fundamentalForm_hamiltonianVectorFieldOf]
   simp [metric]
+
+/-- `ω` is additive in the left argument, subtraction form. -/
+theorem fundamentalForm_sub_left (u u' v : E) :
+    fundamentalForm (u - u') v = fundamentalForm u v - fundamentalForm u' v := by
+  simp only [fundamentalForm, inner_sub_left, Complex.sub_im]
+
+/-- **Uniqueness of the `ω`-dual.** `ω` is non-degenerate (`ω u (J u) = ‖u‖²`,
+`fundamentalForm_complexStructure_self`), so a vector `X` with `ω X · = g w ·` is
+`hamiltonianVectorFieldOf w` and nothing else: `X_H = ω⁻¹ dH` is an identification. -/
+theorem eq_hamiltonianVectorFieldOf_of_forall {w X : E}
+    (h : ∀ v, fundamentalForm X v = metric w v) : X = hamiltonianVectorFieldOf w := by
+  have hd : ∀ v, fundamentalForm (X - hamiltonianVectorFieldOf w) v = 0 := fun v => by
+    rw [fundamentalForm_sub_left, h v, fundamentalForm_hamiltonianVectorFieldOf, sub_self]
+  have h0 := hd (complexStructure (X - hamiltonianVectorFieldOf w))
+  rw [fundamentalForm_complexStructure_self] at h0
+  exact sub_eq_zero.mp (norm_eq_zero.mp ((pow_eq_zero_iff two_ne_zero).mp h0))
 
 /-! ### The quantum energy observable and its differential -/
 

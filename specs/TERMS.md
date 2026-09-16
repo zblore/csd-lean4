@@ -320,7 +320,7 @@ alarming and is not.
   `CSD.LF4.unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized` /
   `fsVolumeNormalized_isForcedKahlerVolume` (`LF4/SectorManifold.lean`, W1).
 * **Also backed (2026-09-11, G17):** it IS the normalised Riemannian volume of the Fubini–Study
-  *metric* — `RiemannianMetric.riemannianVolume` (`Mathlib/Geometry/Manifold/RiemannianVolume.lean`,
+  *metric* — `MetricFamily.riemannianVolume` (`Mathlib/Geometry/Manifold/RiemannianVolume.lean`,
   chart Gram densities `√det G` glued along a cover) and ★★★
   `Projectivization.riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure`
   (`Instances/ProjectiveSpaceFubiniStudyRiemannian.lean`): `vol_g = ((4π)ⁿ/n!) · μ_FS`, via ★★★
@@ -328,7 +328,7 @@ alarming and is not.
   All three textbook readings of `μ_FS` — unique invariant measure, normalised top power of the Kähler
   form, normalised Riemannian volume of the metric — are now theorems identifying the same measure.
 * **Also backed (2026-09-11, Q30 / G17b):** the Riemannian volume is canonical —
-  `RiemannianMetric.riemannianVolume_congr_cover` (cover-independence for any bilinear metric family,
+  `MetricFamily.riemannianVolume_congr_cover` (cover-independence for any bilinear metric family,
   by the Jacobian rule for Gram densities `chartDensity_transition`) and
   `Projectivization.riemannianVolume_fsMetric_congr_cover` (`vol_g = fsVolume n / n!` for every
   cover). Not stated: basis-independence of the Gram construction, and that isometries preserve

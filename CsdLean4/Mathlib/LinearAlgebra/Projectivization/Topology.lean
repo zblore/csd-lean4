@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Mathlib.LinearAlgebra.Projectivization.Action
 public import Mathlib.Topology.Algebra.ConstMulAction
 public import Mathlib.Topology.Maps.OpenQuotient
 public import Mathlib.Analysis.Normed.Module.FiniteDimension
@@ -295,17 +296,11 @@ lemma mapEquiv_mul (e₁ e₂ : V ≃ₗ[K] V) :
   Projectivization.map_comp e₂.toLinearMap e₂.injective
     e₁.toLinearMap e₁.injective
 
-/-- `V ≃ₗ[K] V` acts on `Projectivization K V` via `mapEquiv`.
-
-The group structure on `V ≃ₗ[K] V` (`LinearEquiv.automorphismGroup`,
-with `1 = refl` and `e₁ * e₂ = e₂.trans e₁`) transports to a
-`MulAction` on `ℙ K V` because `Projectivization.map_id` discharges
-`one_smul` and `Projectivization.map_comp` discharges `mul_smul`. -/
-instance instMulAction : MulAction (V ≃ₗ[K] V) (ℙ K V) where
-  smul := mapEquiv
-  one_smul p := congrFun mapEquiv_one p
-  mul_smul e₁ e₂ p := congrFun (mapEquiv_mul e₁ e₂) p
-
+/-- The action of `V ≃ₗ[K] V` on `ℙ K V` is Mathlib's `Projectivization.instMulAction`
+(`Mathlib/LinearAlgebra/Projectivization/Action.lean`: any group acting `K`-linearly on `V` acts on
+`ℙ K V`), specialised to `G := V ≃ₗ[K] V` through `LinearEquiv.applyDistribMulAction`; on
+representatives it is `mapEquiv`. Until 2026-09-16 this file declared its own instance under the
+same auto-generated name, which made the two files impossible to import together. -/
 @[simp]
 lemma mapEquiv_smul_eq (e : V ≃ₗ[K] V) (p : ℙ K V) : e • p = mapEquiv e p := rfl
 

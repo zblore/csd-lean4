@@ -1443,8 +1443,8 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Projectivization.mapEquiv_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.mapEquiv_mul
 
-/-- info: 'Projectivization.instMulAction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Projectivization.instMulAction
+/-- info: 'Projectivization.mapEquiv_smul_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.mapEquiv_smul_eq
 
 /-- info: 'Projectivization.instContinuousConstSMul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.instContinuousConstSMul
@@ -3088,6 +3088,12 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'Kahler.hamiltonian_duality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Kahler.hamiltonian_duality
 
+/-- info: 'Kahler.fundamentalForm_sub_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.fundamentalForm_sub_left
+
+/-- info: 'Kahler.eq_hamiltonianVectorFieldOf_of_forall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.eq_hamiltonianVectorFieldOf_of_forall
+
 /-- info: 'Kahler.hasFDerivAt_quadraticEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Kahler.hasFDerivAt_quadraticEnergy
 
@@ -3275,9 +3281,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- step (2b), upstream's own TODO, so the top-power identity is SAYABLE and no more provable
 -- than it was this morning.
 
-/-- info: 'projectiveDifferentialForm_nonempty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms projectiveDifferentialForm_nonempty
+-- projectiveDifferentialForm_nonempty (the zero-form witness) removed 2026-09-16; the genuine
+-- non-vacuity certificate is Projectivization.fsForm_ne_zero, pinned below.
 
 /-! ### Complex projective space as an analytic manifold (ProjectiveSpace.lean, 2026-09-07) -/
 
@@ -4266,9 +4271,8 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms ContinuousAlternatingMap.wedge_mul_apply_pairs
 
-/-- info: 'ContinuousAlternatingMap.continuous_eval_const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms ContinuousAlternatingMap.continuous_eval_const
+-- ContinuousAlternatingMap.continuous_eval_const (a local duplicate of Mathlib's `continuous_eval_const`
+-- via the `ContinuousEvalConst` instance) removed 2026-09-16; nothing to pin.
 
 /-- info: 'DifferentialForm.topFormMeasure_ne_zero_of_localRep_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -5463,33 +5467,33 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- measures) and riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure (vol_g = ((4 pi)^n/n!) mu_FS:
 -- the Fubini-Study measure IS the normalised Riemannian volume of the Fubini-Study metric).
 -- No chart-independence theorem for the Gram construction itself (G17b, queued).
-/-- info: 'RiemannianMetric.localRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.localRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.localRep
+#print axioms MetricFamily.localRep
 
-/-- info: 'RiemannianMetric.gram' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.gram' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.gram
+#print axioms MetricFamily.gram
 
-/-- info: 'RiemannianMetric.chartDensity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.chartDensity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.chartDensity
+#print axioms MetricFamily.chartDensity
 
-/-- info: 'RiemannianMetric.chartMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.chartMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.chartMeasure
+#print axioms MetricFamily.chartMeasure
 
-/-- info: 'RiemannianMetric.chartMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.chartMeasure_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.chartMeasure_apply
+#print axioms MetricFamily.chartMeasure_apply
 
-/-- info: 'RiemannianMetric.riemannianVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.riemannianVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.riemannianVolume
+#print axioms MetricFamily.riemannianVolume
 
-/-- info: 'RiemannianMetric.riemannianVolume_eq_smul_topFormMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.riemannianVolume_eq_smul_topFormMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.riemannianVolume_eq_smul_topFormMeasure
+#print axioms MetricFamily.riemannianVolume_eq_smul_topFormMeasure
 
 /-- info: 'Projectivization.fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -5579,53 +5583,53 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- cover-independence (riemannianVolume_congr_cover), by the TopFormMeasure proofs with the Gram
 -- rule in place of the top-form rule. The Fubini-Study metric is bilinear (isBilinear_fsMetric),
 -- so vol_g = fsVolume n / n! for EVERY cover (riemannianVolume_fsMetric_congr_cover).
-/-- info: 'RiemannianMetric.IsBilinear' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.IsBilinear' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.IsBilinear
+#print axioms MetricFamily.IsBilinear
 
-/-- info: 'RiemannianMetric.localRep_add_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.localRep_add_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.localRep_add_left
+#print axioms MetricFamily.localRep_add_left
 
-/-- info: 'RiemannianMetric.localRep_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.localRep_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.localRep_smul_left
+#print axioms MetricFamily.localRep_smul_left
 
-/-- info: 'RiemannianMetric.localRep_add_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.localRep_add_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.localRep_add_right
+#print axioms MetricFamily.localRep_add_right
 
-/-- info: 'RiemannianMetric.localRep_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.localRep_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.localRep_smul_right
+#print axioms MetricFamily.localRep_smul_right
 
-/-- info: 'RiemannianMetric.localRepBilin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.localRepBilin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.localRepBilin
+#print axioms MetricFamily.localRepBilin
 
-/-- info: 'RiemannianMetric.gram_eq_toMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.gram_eq_toMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.gram_eq_toMatrix
+#print axioms MetricFamily.gram_eq_toMatrix
 
-/-- info: 'RiemannianMetric.localRep_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.localRep_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.localRep_transition
+#print axioms MetricFamily.localRep_transition
 
-/-- info: 'RiemannianMetric.chartDensity_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.chartDensity_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.chartDensity_transition
+#print axioms MetricFamily.chartDensity_transition
 
-/-- info: 'RiemannianMetric.chartMeasure_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.chartMeasure_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.chartMeasure_congr
+#print axioms MetricFamily.chartMeasure_congr
 
-/-- info: 'RiemannianMetric.riemannianVolume_apply_of_subset_source' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.riemannianVolume_apply_of_subset_source' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.riemannianVolume_apply_of_subset_source
+#print axioms MetricFamily.riemannianVolume_apply_of_subset_source
 
-/-- info: 'RiemannianMetric.riemannianVolume_congr_cover' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'MetricFamily.riemannianVolume_congr_cover' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms RiemannianMetric.riemannianVolume_congr_cover
+#print axioms MetricFamily.riemannianVolume_congr_cover
 
 /-- info: 'Projectivization.isBilinear_fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

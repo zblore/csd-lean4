@@ -35,6 +35,18 @@ Q7 Physlib reception. What would a Physlib maintainer push back on before mergin
 
 OUTPUT. A numbered list of findings, most severe first, each with: severity (BLOCKER / SHOULD-FIX / NIT), file:line, the defect in one sentence, and the concrete fix. Then a one-paragraph verdict: is this ready to share with Nava-Hernandez for review, and if not, what must change first. Do not pad; if something is fine, say so in one line.
 
+## Records
+
+* **Brief A** ran on Codex (`67c608a`); its nine findings and the verdict "hold the hand-off" were
+  verified both ways and addressed in `a69b632` / `d202da6` (BACKLOG #33 residue (d)).
+* **Brief B** was started on Codex (died on the account's usage limit mid-review) and completed by
+  three scoped read-only reviewers (slices 1/3/4, 5–6, 7–9) on 2026-09-16; every concrete claim was
+  re-verified against the tree before acting. One BLOCKER (the `Projectivization.instMulAction`
+  name clash with Mathlib's `Projectivization/Action.lean`, reproduced in both import orders) and
+  the cheap confirmed findings were fixed the same day; two findings were rejected on verification
+  (the forward-compat measure shim; `[NeZero N]` in `FubiniStudyLebesgue.lean`); the rest are the
+  priced residues **B1–B13** in BACKLOG #33 residue (e).
+
 ## Brief B — the Fubini–Study machinery the bridge stands on
 
 You are reviewing Lean 4 / Mathlib library code as a Mathlib reviewer and as a Physlib (leanprover-community/physlib) maintainer would. Be adversarial and concrete. Read the files; do not take the docstrings' word for anything. You are in a read-only sandbox: do not edit files and do not run `lake build`. You may run `lake env lean <file>` on a single file to check something, and `grep`/`rg` freely. Mathlib is pinned at db584cd6d (Lean v4.33.0) under .lake/packages/mathlib.

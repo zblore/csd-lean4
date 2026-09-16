@@ -65,7 +65,8 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
 * **Q29(a), global flows.** ★★ `IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField` — on a
   compact manifold the Hamiltonian vector field of a `C^∞` energy has a global integral curve through
   every point, so its flow `integralFlow` (`IntegralCurve/GlobalFlow.lean`) exists with the group law
-  and is jointly continuous (`continuous_integralFlow`, `IntegralCurve/FlowContinuity.lean`, Q29(a′));
+  (joint continuity in `(t, x)` is proved separately, in `IntegralCurve/FlowContinuity.lean`, which
+  this module does not import);
 * **G4, integral curves.** ★ `h.hasDerivAt_comp_of_isMIntegralCurve` and ★★
   `h.comp_eq_of_isMIntegralCurve` — **energy conservation**: `H` is constant along every integral
   curve of a Hamiltonian vector field of `H`, by `dH (X) = 0` and the mean value theorem; ★★
@@ -180,45 +181,15 @@ theorem curryLeft_apply_vecCons (x : M) (u v : TangentSpace (modelWithCornersSel
 
 theorem apply_sub_left (x : M) (a b v : TangentSpace (modelWithCornersSelf ℝ E) x) :
     α x ![a - b, v] = α x ![a, v] - α x ![b, v] :=
-  calc α x ![a - b, v]
-      = (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) (a - b)) ![v] :=
-        (curryLeft_apply_vecCons α x (a - b) v).symm
-    _ = (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) a
-          - ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) b) ![v] :=
-        congrArg (fun L : E [⋀^Fin 1]→L[ℝ] ℝ => L ![v])
-          ((ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x)).map_sub a b)
-    _ = (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) a) ![v]
-          - (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) b) ![v] :=
-        ContinuousAlternatingMap.sub_apply _ _ _
-    _ = α x ![a, v] - α x ![b, v] :=
-        congrArg₂ (· - ·) (curryLeft_apply_vecCons α x a v) (curryLeft_apply_vecCons α x b v)
+  (α x).map_vecCons_sub a b ![v]
 
 theorem apply_add_left (x : M) (a b v : TangentSpace (modelWithCornersSelf ℝ E) x) :
     α x ![a + b, v] = α x ![a, v] + α x ![b, v] :=
-  calc α x ![a + b, v]
-      = (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) (a + b)) ![v] :=
-        (curryLeft_apply_vecCons α x (a + b) v).symm
-    _ = (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) a
-          + ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) b) ![v] :=
-        congrArg (fun L : E [⋀^Fin 1]→L[ℝ] ℝ => L ![v])
-          ((ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x)).map_add a b)
-    _ = (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) a) ![v]
-          + (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) b) ![v] :=
-        ContinuousAlternatingMap.add_apply _ _ _
-    _ = α x ![a, v] + α x ![b, v] :=
-        congrArg₂ (· + ·) (curryLeft_apply_vecCons α x a v) (curryLeft_apply_vecCons α x b v)
+  (α x).vecCons_add ![v] a b
 
 theorem apply_smul_left (x : M) (c : ℝ) (a v : TangentSpace (modelWithCornersSelf ℝ E) x) :
     α x ![c • a, v] = c • α x ![a, v] :=
-  calc α x ![c • a, v]
-      = (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) (c • a)) ![v] :=
-        (curryLeft_apply_vecCons α x (c • a) v).symm
-    _ = (c • ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) a) ![v] :=
-        congrArg (fun L : E [⋀^Fin 1]→L[ℝ] ℝ => L ![v])
-          ((ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x)).map_smul c a)
-    _ = c • (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) a) ![v] :=
-        ContinuousAlternatingMap.smul_apply _ _ _
-    _ = c • α x ![a, v] := congrArg (c • ·) (curryLeft_apply_vecCons α x a v)
+  (α x).vecCons_smul ![v] c a
 
 theorem apply_zero_left (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x) :
     α x ![0, v] = 0 :=
@@ -234,7 +205,9 @@ theorem apply_zero_left (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x
 
 /-- **`X` is the Hamiltonian vector field of `H` for `α`**: `α x (X x, v) = dH_x v` at every point
 and for every tangent vector `v`, with `dH_x = mfderiv 𝓘(ℝ, E) 𝓘(ℝ, ℝ) H x`. A Prop demanding the
-equation; nothing about smoothness or existence is asserted by the name. -/
+equation; nothing about smoothness or existence is asserted by the name. Since `mfderiv` is `0`
+where `H` is not differentiable, a nowhere-differentiable `H` has the zero field as a
+"Hamiltonian vector field"; every consumer that needs more adds `MDifferentiable H`. -/
 def IsHamiltonianVectorField
     (X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x) (H : M → ℝ) : Prop :=
   ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x),
@@ -1087,7 +1060,8 @@ sense* — `J` is the complex structure `J₀` of the model `E`, read through th
 trivialisation of every chart. The trivialisations of two charts differ by the derivative of the
 chart transition, so this says every chart transition has `J₀`-linear derivative, i.e. is
 holomorphic (`IsKahler.fderiv_chart_transition_comm`, the Cauchy–Riemann equations of the atlas):
-the atlas is a holomorphic atlas and `J` is its complex structure. That is the textbook definition
+the charts `chartAt E x₀` form a holomorphic atlas and `J` is its complex structure (atlas members
+that are not some `chartAt E x₀` are not constrained by this definition). That is the textbook definition
 of a Kähler manifold — a complex manifold with a Hermitian metric (`IsAlmostKahler.metric_J_J`)
 whose fundamental form is closed (`isSymplectic`). The equivalent tensor formulation, a vanishing
 Nijenhuis tensor (Newlander–Nirenberg), is not what is stated. -/

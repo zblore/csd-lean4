@@ -39,10 +39,10 @@ Lebesgue measure on the model `Fin n → ℂ` and the affine chart cover). This 
   on a compact manifold);
 * `fsVolumeNormalized n` — the normalised volume, with `fsVolumeNormalized_map_smul`;
   `isProbabilityMeasure_fsVolumeNormalized_of_ne_zero` and
-  `fsVolumeNormalized_eq_fubiniStudyMeasure_of_ne_zero` are the M6(c) conclusions **under the
+  `fsVolumeNormalized_eq_fubiniStudyMeasure_of_ne_zero` are the conclusions **under the
   premise `fsVolume n ≠ 0`** (`fubiniStudyMeasure_unique` applied to a `U(n+1)`-invariant
   probability measure);
-* **M6(b), the flat count** — `stdForm n` (the standard symplectic form on the model,
+* **The flat count** — `stdForm n` (the standard symplectic form on the model,
   `fundamentalFormAlt` through `toLpCLM`; `fsModelForm_zero`: the model form at the origin is
   `-4 • stdForm n`), `pairFamily a` (the `k` standard pairs `(e_{a i}, i e_{a i})`),
   `isPairFamily_pairFamily` (they are a pair family for `stdForm`, `WedgeShuffle.lean`), and
@@ -63,7 +63,7 @@ Lebesgue measure on the model `Fin n → ℂ` and the affine chart cover). This 
 
 ⚠️ **No constant here.** The identity of this module is for the normalised measure; `(-4)ⁿ n!` is
 the coefficient at one point, not the total mass. The mass, `(4π)ⁿ`, and the identity with its
-constant are `ProjectiveSpaceFubiniStudyMass.lean` (M7).
+constant are `ProjectiveSpaceFubiniStudyMass.lean`.
 
 ⚠️ **`n ≥ 1` is not assumed and not needed**: for `n = 0` the manifold is a point, the top power
 is the constant `0`-form `1` (`wedgePow_stdForm_pairFamily` at `k = 0`), and every statement holds.

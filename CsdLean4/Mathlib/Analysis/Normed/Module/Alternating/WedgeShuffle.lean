@@ -269,7 +269,7 @@ theorem classTerm_pairRep {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ} {β : E [⋀^F
     if_pos (by rw [slotPair_slotOf, slotPair_slotOf]), slotMem_slotOf, slotMem_slotOf]
   simp [pairSign]
 
-/-- ★ **The shuffle sum on a pair family.** The wedge of a `2k`-form with a 2-form, on a pair
+/-- ★★ **The shuffle sum on a pair family.** The wedge of a `2k`-form with a 2-form, on a pair
 family, is the sum over the pairs of the `2k`-form on the family with that pair moved into the
 2-form's slots. -/
 theorem wedge_mul_apply_pairs {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ} {β : E [⋀^Fin 2]→L[ℝ] ℝ}

@@ -11,6 +11,10 @@ public import Mathlib.LinearAlgebra.Matrix.BilinearForm
 /-!
 # The Riemannian volume of a metric on a manifold, from chart Gram densities
 
+The namespace is `MetricFamily`, not `RiemannianMetric`: Mathlib has a structure of that name
+(`Mathlib/Topology/VectorBundle/Riemannian.lean`, with `ContMDiffRiemannianMetric` beside it), and
+this file works with a bare family `g : ∀ x, T_x → T_x → ℝ` plus `IsBilinear`. Restating the
+volume for Mathlib's bundled metric is the natural upstream step and is not done here.
 **Category:** 1-Mathlib (measure theory on manifolds: the Riemannian volume measure of a
 metric family, absent from Mathlib at the pin — `Mathlib/Geometry/Manifold/VectorBundle/Riemannian.lean`
 has Riemannian *bundles*, no volume; G17 of the generator-layer plan §9).
@@ -22,15 +26,15 @@ A Riemannian metric `g` on a manifold `M` modelled on `E` has, in the chart at `
 of a top form — chart densities glued along the measurable partition of a `ChartCover` — with the
 Gram density in place of the top-form coefficient.
 
-* `RiemannianMetric.localRep g x₀ w u v` — the local representative of the metric family in the
+* `MetricFamily.localRep g x₀ w u v` — the local representative of the metric family in the
   chart at `x₀`;
-* `RiemannianMetric.gram e g x₀ w` — its Gram matrix against `e`;
-* `RiemannianMetric.chartDensity e g x₀ w = ENNReal.ofReal √det` — the Riemannian chart density;
-* `RiemannianMetric.chartMeasure μ e g x₀` — the density measure on the chart's target, pushed to
+* `MetricFamily.gram e g x₀ w` — its Gram matrix against `e`;
+* `MetricFamily.chartDensity e g x₀ w = ENNReal.ofReal √det` — the Riemannian chart density;
+* `MetricFamily.chartMeasure μ e g x₀` — the density measure on the chart's target, pushed to
   `M` by the chart (`chartMeasure_apply`);
-* ★★ `RiemannianMetric.riemannianVolume μ e g c` — **the Riemannian volume of `g`**, glued along
+* ★★ `MetricFamily.riemannianVolume μ e g c` — **the Riemannian volume of `g`**, glued along
   the cover `c`;
-* ★★ `RiemannianMetric.riemannianVolume_eq_smul_topFormMeasure` — **if in every chart of the cover
+* ★★ `MetricFamily.riemannianVolume_eq_smul_topFormMeasure` — **if in every chart of the cover
   the Gram density is `k` times the coefficient density of a top form, the Riemannian volume is `k`
   times the top-form measure.** This is the bridge the Kähler identity `vol_g = ω^{∧n}/n!` uses on
   `ℂℙⁿ` (`Instances/ProjectiveSpaceFubiniStudyRiemannian.lean`);
@@ -76,7 +80,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimension
   {ι : Type*} [Fintype ι] [DecidableEq ι]
   (μ : Measure E) [μ.IsAddHaarMeasure] (e : Module.Basis ι ℝ E)
 
-namespace RiemannianMetric
+namespace MetricFamily
 
 variable (g : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →
   TangentSpace (modelWithCornersSelf ℝ E) x → ℝ)
@@ -146,7 +150,7 @@ theorem riemannianVolume_eq_smul_topFormMeasure (c : ChartCover E M)
 /-! ### Chart-independence (Q30 / G17b) -/
 
 /-- **Bilinearity of a metric family**, pointwise: the four equations the Gram congruence needs.
-`RiemannianMetric.localRep` takes a bare family so that the definitions ask nothing; the
+`MetricFamily.localRep` takes a bare family so that the definitions ask nothing; the
 chart-independence theorems ask for this. -/
 structure IsBilinear : Prop where
   add_left : ∀ (x : M) (a b v : TangentSpace (modelWithCornersSelf ℝ E) x), g x (a + b) v = g x a v + g x b v
@@ -307,7 +311,7 @@ theorem riemannianVolume_apply_of_subset_source (hg : IsBilinear g) (c : ChartCo
     (fun j => hA.inter (c.measurableSet_piece j)), c.iUnion_inter_piece]
 
 /-- ★★ **The Riemannian volume does not depend on the cover** (for a bilinear family):
-`RiemannianMetric.riemannianVolume` is canonical. -/
+`MetricFamily.riemannianVolume` is canonical. -/
 theorem riemannianVolume_congr_cover (hg : IsBilinear g) (c c' : ChartCover E M) :
     riemannianVolume μ e g c = riemannianVolume μ e g c' := by
   ext A hA
@@ -324,7 +328,7 @@ theorem riemannianVolume_congr_cover (hg : IsBilinear g) (c c' : ChartCover E M)
     riemannianVolume_apply_of_subset_source μ e g hg c' (c'.pt i)
       (hA.inter (c'.measurableSet_piece i)) (fun x hx => c'.piece_subset i hx.2)]
 
-end RiemannianMetric
+end MetricFamily
 
 end RiemannianVolume
 

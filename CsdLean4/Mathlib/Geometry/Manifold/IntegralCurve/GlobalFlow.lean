@@ -30,7 +30,8 @@ and the same `Ioo (-ε) ε`, every point has a *global* one. What it does not ha
 * ★★ `exists_isMIntegralCurve_of_compactSpace` — **on a compact manifold every `C^1` vector field
   has a global integral curve through every point** (finite subcover, minimum `ε`, Mathlib's
   uniform-time principle).
-* ★★ `integralFlow` — **the flow** `ℝ → M → M`, well-defined by uniqueness, with `integralFlow v 0 = id`,
+* ★★ `integralFlow hv` — **the flow** `ℝ → M → M` (indexed by the existence proof `hv`, well-defined
+  by uniqueness), with `integralFlow hv 0 = id`,
   `integralFlow_add` (the group law, from uniqueness applied to `t ↦ φ (s + t) x`), and
   `isMIntegralCurve_integralFlow` (each orbit is an integral curve); `integralFlow_continuous_time`
   (continuity in `t`) is what uniqueness plus the curves' continuity gives; **joint continuity in

@@ -19,8 +19,8 @@ public import Mathlib.Analysis.Complex.Basic
 Mathlib has no Kähler-geometry API (no manifold differential forms, no exterior derivative, no
 almost-complex structure; MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)). When this
 module was written that meant the full closed 2-form `ω` on `ℂℙ^{N-1}` with `dω = 0` and
-`ω^{∧(N-1)}/(N-1)! = μ_FS` could not be built; since 2026-09-07/11 the corpus has built the
-differential geometry itself (`Mathlib/Geometry/Manifold/`, the G series) and both statements are
+`ω^{∧(N-1)}/(N-1)! = μ_FS` could not be built; since 2026-09-07/11 the modules under
+`Geometry/Manifold/` build that differential geometry themselves and both statements are
 theorems (`Projectivization.fsForm_isKahler`, `fsVolume_eq_smul_fubiniStudyMeasure`). What **is**
 bounded — and is built here — is the
 **pointwise** (linear-algebra) core of that form: on any complex inner-product space `E` (the tangent
@@ -45,27 +45,23 @@ We prove the defining **almost-Kähler / Hermitian compatibility** relations, po
 
 The capstone `fubiniStudy_pointwise_kahler_compatibility` bundles the Kähler triple.
 
-## Honest scope — what this is and is NOT
+## Scope
 
-This is the **pointwise (algebraic) core** of the Kähler form, the exact analogue at the form level of
-what `fubiniStudyMeasure` is at the measure level: it delivers the "compatible with the complex
-structure, positive" half of "Kähler" as genuine theorems. It does **NOT** deliver:
+This is the **pointwise (algebraic) core** of the Kähler form on the flat Hermitian model `E`: the
+"compatible with the complex structure, positive" half of "Kähler", as theorems. The other half is
+proved downstream, on the manifold:
 
-* **closedness** `dω = 0` — the defining *Kähler* (vs merely almost-Hermitian) condition, which needs
-  the exterior derivative on a *manifold* (⚠️ scope narrowed 2026-08-06: Mathlib now has `extDeriv`
-  on **normed spaces** — `Analysis/Calculus/DifferentialForm/` — so the *flat* closedness of the
-  constant fundamental form is formalisable today; the manifold form is that file's own TODO);
-* the **global** identity `ω^{∧(N-1)}/(N-1)! = μ_FS` — which needs differential forms on the
-  projective *manifold* and the form→measure integration (absent from Mathlib).
+* **closedness** `dω = 0` — flat, as a constant 2-form on `E`: `KahlerClosed.lean`
+  (`extDeriv_fundamentalFormAlt_eq_zero`); on `ℂℙⁿ`: `Projectivization.fsForm_mextDeriv`
+  (`Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyForm.lean`);
+* the **global** identity between the top power of `ω` and the Fubini–Study measure:
+  `Projectivization.fsVolume_eq_smul_fubiniStudyMeasure`
+  (`Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyMass.lean`).
 
-The `X_H = ω⁻¹dH` duality this triple supports is now a theorem at the linear level:
-`HamiltonianVectorField.lean` (same directory), consumed by A4's corpus fragment.
-
-Those remain the Mathlib-blocked residue (KG-1 / the manifold half of the Kähler posit,
-`KahlerOnticSetup.kahler_pointwise`'s open residual). This module works on the
-flat Hermitian model `E`; its restriction to the tangent space `ψ^⊥` is the Fubini–Study form
-pointwise. The physically load-bearing datum — the volume — is already forced independently
-(`KahlerVolumeForced.lean`).
+The `X_H = ω⁻¹dH` duality this triple supports is a theorem at the linear level in
+`HamiltonianVectorField.lean` (same directory), together with the uniqueness non-degeneracy gives
+(`eq_hamiltonianVectorFieldOf_of_forall`). The restriction of the triple to the tangent space
+`ψ^⊥` of a ray is the Fubini–Study form pointwise (`tangent_complexStructure_invariant`).
 -/
 
 @[expose] public section
@@ -194,8 +190,9 @@ inner-product space `E` (the tangent model of `ℂℙ^{N-1}`), the triple `g = r
 * `ω u (J u) = ‖u‖²` (positivity / taming).
 
 This is the linear-algebra core of the Kähler form — the "compatible with the complex structure and
-positive" content, proved pointwise and axiom-free. Closedness `dω = 0` and the global identity
-`ω^{∧(N-1)}/(N-1)! = μ_FS` need manifold exterior calculus (absent from Mathlib) and stay blocked. -/
+positive" content, proved pointwise. Closedness `dω = 0` and the top-power identity are the
+manifold theorems `Projectivization.fsForm_mextDeriv` and
+`Projectivization.fsVolume_eq_smul_fubiniStudyMeasure` downstream. -/
 theorem fubiniStudy_pointwise_kahler_compatibility (u v : E) :
     complexStructure (complexStructure u) = -u
     ∧ fundamentalForm u v = metric (complexStructure u) v

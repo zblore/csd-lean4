@@ -66,8 +66,9 @@ tensor) is `nijenhuis_fsJ_eq_zero` (G14b). `J` as a smooth section of the endomo
 `contMDiff_fsJL` (G15), for the linear-map version `fsJL` of `fsJ`. The pointwise triple
 `IsFubiniStudyKahler` on the flat model is the origin's case.
 
-⚠️ **No volume.** Non-degeneracy plus closedness does not produce the top-power identity
-`ωⁿ/n! = μ_FS`; that is step (3), top forms → measures, and is not attempted.
+**The volume is elsewhere.** Non-degeneracy plus closedness does not by itself produce the top-power
+identity; that is `fsVolume_eq_smul_fubiniStudyMeasure` in `ProjectiveSpaceFubiniStudyMass.lean`,
+which this file imports.
 
 ⚠️ **Sign convention.** With `fsChartForm = dd^c log(1+‖z‖²)` the taming value `ω (v, J v)` is
 negative (`-4` at the origin); the almost Kähler predicate absorbs it by the metric convention

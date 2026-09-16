@@ -641,6 +641,10 @@ isSymplectic"
 #     each PROVES an ι_Xω = dH statement — the word names the established duality, with
 #     the Schrödinger field -(i•Ax) exhibited explicitly in the quadratic/coupling cases.
 #     Flat model, fixed weights; the joint-arena manifold form stays §2a.
+#   eq_hamiltonianVectorFieldOf_of_forall — (2026-09-16, HamiltonianVectorField.lean, Brief B)
+#     PROVES that the vector hamiltonian_duality exhibits is the ONLY one with ι_Xω = g w ·, from
+#     non-degeneracy ω u (J u) = ‖u‖²; the word names the same established duality, now as an
+#     identification. Flat model, same §2a boundary.
 #   IsPhaseHamiltonian / isPhaseHamiltonian_coordEnergy — (2026-09-04, CellLawForced.lean,
 #     CR-15) the predicate IS the ι_Xω = dF equation for the explicit phase generator, and
 #     the theorem PROVES an inhabitant: the coordinate energy ‖xᵢ‖²/2 generates the i-th
@@ -914,6 +918,7 @@ kahler_preparations_overlap
 kSectorData_fromPreparation_liouville_apply
 arenaLiouville_sys_marginal
 coupling_hamiltonian_duality
+eq_hamiltonianVectorFieldOf_of_forall
 IsPhaseHamiltonian
 isPhaseHamiltonian_coordEnergy
 IsHamiltonianVectorField

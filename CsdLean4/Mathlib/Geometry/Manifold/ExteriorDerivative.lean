@@ -49,7 +49,7 @@ chart by chart and glued by the flat naturality lemma `extDeriv_pullback`:
 
 The design decisions the scoping note's §4 asked for, all taken the cheap way:
 
-* **real, boundaryless model** `𝓘(ℝ, E)` — every finite-dimensional real manifold the corpus
+* **real, boundaryless model** `𝓘(ℝ, E)` — every finite-dimensional real manifold this tree
   uses, `ℂℙⁿ` included; `range 𝓘 = univ`, so `fderivWithin` is `fderiv` and no `UniqueDiffOn`
   is ever supplied; `minSmoothness ℝ 2 = 2`;
 * **smoothness `∞` only** — `d` of `C^∞` is `C^∞`, and no `n - 1` arithmetic leaks anywhere;

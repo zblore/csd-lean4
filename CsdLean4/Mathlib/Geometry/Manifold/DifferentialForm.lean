@@ -6,7 +6,6 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.VectorBundle.AlternatingMap
-public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace
 public import Mathlib.Geometry.Manifold.VectorBundle.ContMDiffSection
 public import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 
@@ -28,18 +27,20 @@ alternating-map bundle, built in
 analyticity in
 [`Analysis/Normed/Module/Alternating/Pullback.lean`](../../Analysis/Normed/Module/Alternating/Pullback.lean).
 
-* `DifferentialForm` — the type: a `C^n` section of `x ↦ TₓM [⋀^ι]→L[𝕜] G`;
-* ★ `projectiveDifferentialForm_nonempty` — **`ℂℙⁿ` carries analytic differential forms of
-  every degree**, which is the whole chain from step (0) to here in one statement: the
-  charted-space and analytic-manifold instances of `ProjectiveSpace.lean` feed the tangent
-  bundle, the tangent bundle feeds the alternating bundle, and the alternating bundle's
-  smooth structure is what makes the section type well-formed.
+* `DifferentialForm` — the type: a `C^n` section of `x ↦ TₓM [⋀^ι]→L[𝕜] G`.
+
+On `ℂℙⁿ` the type is well-formed because the charted-space and analytic-manifold instances of
+`Instances/ProjectiveSpace.lean` feed the tangent bundle, the tangent bundle feeds the alternating
+bundle, and the alternating bundle's smooth structure is what makes the section type well-formed;
+that chain is exercised where a form is actually built, not here. (Until 2026-09-16 this module
+imported the projective instances to state `projectiveDifferentialForm_nonempty`, whose witness
+was the zero form; the theorem and the import are gone, and the genuine non-vacuity certificate is
+`Projectivization.fsForm_ne_zero` downstream.)
 
 ## Honest scope
 
-⚠️ **Existence of the type is not existence of a form anyone wants.** The witness *in this
-module* is the zero section. The **Fubini–Study** form as a `C^∞` section of this bundle is
-built downstream, in
+⚠️ **Existence of the type is not existence of a form anyone wants.** This module builds no
+form. The **Fubini–Study** form as a `C^∞` section of this bundle is built downstream, in
 [`Instances/ProjectiveSpaceFubiniStudyForm.lean`](Instances/ProjectiveSpaceFubiniStudyForm.lean)
 (`Projectivization.fsForm`, with `fsForm_ne_zero`), from the chart-overlap agreement proved in
 `Instances/ProjectiveSpaceFubiniStudy.lean`.
@@ -50,8 +51,8 @@ stated TODO — and is built downstream in
 boundaryless model at `∞`). The top-power identity is statable after steps (0), (1) and (2a) and
 is not proved anywhere.
 
-⚠️ **No physics.** Nothing in this repository waits on any of it. The corpus's geometry is done
-on the ambient space and in charts, and `R-016` is untouched.
+⚠️ **No physics.** Nothing downstream waits on any of it: the geometry the projective-space
+modules need is done on the ambient space and in charts.
 
 **Provenance and references.** The Mathlib-gaps register (Kahler / symplectic manifold API, step (2a));
 the backlog (XL, "Manifold exterior calculus");
@@ -62,7 +63,7 @@ this well-formed); `Mathlib/Analysis/Calculus/DifferentialForm/Basic.lean` (the 
 @[expose] public section
 
 open Bundle
-open scoped Manifold Bundle Topology ContDiff LinearAlgebra.Projectivization
+open scoped Manifold Bundle Topology ContDiff
 
 section
 
@@ -82,26 +83,3 @@ abbrev DifferentialForm (IM : ModelWithCorners 𝕜 EM HM) (M : Type*) [Topologi
 end
 
 /-! ### The payoff: `ℂℙⁿ` carries analytic differential forms -/
-
-section Projective
-
-open Projectivization
-
-variable {ι : Type*} [Fintype ι]
-
-/-- ★ **Complex projective space carries analytic differential forms of every degree.**
-
-This is the whole chain in one statement. `ℂℙⁿ` is a charted space and an analytic manifold
-(step (0)); that makes its tangent bundle an analytic vector bundle; the alternating-map
-bundle over it is then an analytic vector bundle (step (2a)'s instance); and only then is the
-type of analytic `ι`-forms on `ℂℙⁿ` well-formed at all.
-
-⚠️ The witness here is the **zero** form; the Fubini–Study form as a section is
-`Projectivization.fsForm` in `Instances/ProjectiveSpaceFubiniStudyForm.lean`, and its analytic
-reading over the real model is `Projectivization.fsFormAnalytic` there (G12). -/
-theorem projectiveDifferentialForm_nonempty (m : ℕ) :
-    Nonempty (DifferentialForm (IM := modelWithCornersSelf ℂ (Fin m → ℂ))
-      (M := ℙ ℂ (Ambient m)) (n := ω) (ι := ι) (G := ℂ)) :=
-  ⟨0⟩
-
-end Projective

@@ -74,6 +74,9 @@ HYGIENE = [
                                  r"validation-hardening plan|reconstruction-status ledger|"
                                  r"programme's posits")),
     ("repo marker", re.compile(r"TERM-SCOPE|\*\*Category:\*\*|\*\*Glossary:\*\*|constraintsurfacedynamics")),
+    # Planning vocabulary of this repository (added 2026-09-16 after external review): a Physlib
+    # reader has no corpus, no milestones and no posits to refer to.
+    ("planning vocabulary", re.compile(r"\bcorpus\b|\b[Mm]ilestones?\b|\b[Pp]osits?\b")),
 ]
 PROVENANCE_RE = re.compile(r"\*\*Provenance( and references)?\.?\*\*|Provenance:")
 # This repository's convention paragraphs: a line opening with one of these markers, together

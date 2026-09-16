@@ -44,7 +44,7 @@ along the affine cover) is identified with the measure of the top power of the F
   the reading `TERMS.md` had listed as not established;
 * **Q30 / G17b (2026-09-11).** `isBilinear_fsMetric` and ★ `riemannianVolume_fsMetric_congr_cover` —
   the identification holds for **every** chart cover, not only the affine one: the Riemannian volume
-  of the Fubini–Study metric is canonical (`RiemannianMetric.riemannianVolume_congr_cover`).
+  of the Fubini–Study metric is canonical (`MetricFamily.riemannianVolume_congr_cover`).
 
 ## Honest scope
 
@@ -132,7 +132,7 @@ theorem fsForm_symmL_symmL (x₀ y : ℙ ℂ (Ambient n)) (hy : y ∈ (chartAt (
 chart (`fsJ_symmL`) and the form reads as the model form. -/
 theorem localRep_fsMetric (x₀ : ℙ ℂ (Ambient n)) {w : Fin n → ℂ}
     (hw : w ∈ (chartAt (Fin n → ℂ) x₀).target) (u v : Fin n → ℂ) :
-    RiemannianMetric.localRep fsMetric x₀ w u v = fsModelMetric w u v := by
+    MetricFamily.localRep fsMetric x₀ w u v = fsModelMetric w u v := by
   have hy : (chartAt (Fin n → ℂ) x₀).symm w ∈ (chartAt (Fin n → ℂ) x₀).source :=
     (chartAt (Fin n → ℂ) x₀).map_target hw
   have hwy : chartAt (Fin n → ℂ) x₀ ((chartAt (Fin n → ℂ) x₀).symm w) = w :=
@@ -142,10 +142,10 @@ theorem localRep_fsMetric (x₀ : ℙ ℂ (Ambient n)) {w : Fin n → ℂ}
 
 theorem gram_fsMetric (x₀ : ℙ ℂ (Ambient n)) {w : Fin n → ℂ}
     (hw : w ∈ (chartAt (Fin n → ℂ) x₀).target) :
-    RiemannianMetric.gram (stdBasis n) fsMetric x₀ w
+    MetricFamily.gram (stdBasis n) fsMetric x₀ w
       = LinearMap.BilinForm.toMatrix (stdBasis n) (fsModelMetric w) := by
   ext i j
-  rw [RiemannianMetric.gram, Matrix.of_apply, LinearMap.BilinForm.toMatrix_apply,
+  rw [MetricFamily.gram, Matrix.of_apply, LinearMap.BilinForm.toMatrix_apply,
     localRep_fsMetric x₀ hw]
 
 /-! ### The Gram determinant, by rotation to the first axis -/
@@ -316,11 +316,11 @@ theorem det_toMatrix_fsModelMetric (w : Fin n → ℂ) :
 `ω_FS^{∧n}`**, in every affine chart. -/
 theorem chartDensity_fsMetric (x₀ : ℙ ℂ (Ambient n)) {w : Fin n → ℂ}
     (hw : w ∈ (chartAt (Fin n → ℂ) x₀).target) :
-    RiemannianMetric.chartDensity (stdBasis n) fsMetric x₀ w
+    MetricFamily.chartDensity (stdBasis n) fsMetric x₀ w
       = ((n.factorial : ℝ≥0∞))⁻¹ * chartDensity (stdBasis n) (fun x => fsTopForm n x) x₀ w := by
   have hfac : (0 : ℝ) < n.factorial := Nat.cast_pos.2 n.factorial_pos
   have hpos : (0 : ℝ) ≤ 4 ^ n * ((1 + ‖toLpCLM w‖ ^ 2)⁻¹) ^ (n + 1) := by positivity
-  rw [RiemannianMetric.chartDensity, gram_fsMetric x₀ hw, det_toMatrix_fsModelMetric,
+  rw [MetricFamily.chartDensity, gram_fsMetric x₀ hw, det_toMatrix_fsModelMetric,
     Real.sqrt_sq hpos, chartDensity, localRep_fsTopForm, wedgePow_fsModelForm_stdBasis,
     show (-4 : ℝ) ^ n * n.factorial * ((1 + ‖toLpCLM w‖ ^ 2)⁻¹) ^ (n + 1)
       = n.factorial * ((-4 : ℝ) ^ n * ((1 + ‖toLpCLM w‖ ^ 2)⁻¹) ^ (n + 1)) by ring,
@@ -332,9 +332,9 @@ theorem chartDensity_fsMetric (x₀ : ℙ ℂ (Ambient n)) {w : Fin n → ℂ}
 /-- ★★★ **The Riemannian volume of the Fubini–Study metric IS the symplectic volume over `n!`**:
 `vol_g = fsVolume n / n!` — the Kähler identity `vol_g = ω^{∧n}/n!` at the level of measures. -/
 theorem riemannianVolume_fsMetric :
-    RiemannianMetric.riemannianVolume volume (stdBasis n) fsMetric (affineChartCover n)
+    MetricFamily.riemannianVolume volume (stdBasis n) fsMetric (affineChartCover n)
       = ((n.factorial : ℝ≥0∞))⁻¹ • fsVolume n :=
-  RiemannianMetric.riemannianVolume_eq_smul_topFormMeasure volume (stdBasis n) fsMetric
+  MetricFamily.riemannianVolume_eq_smul_topFormMeasure volume (stdBasis n) fsMetric
     (affineChartCover n) (fun x => fsTopForm n x) _
     (ENNReal.inv_ne_top.2 (by exact_mod_cast n.factorial_ne_zero))
     (fun _ w hw => chartDensity_fsMetric _ hw)
@@ -343,7 +343,7 @@ theorem riemannianVolume_fsMetric :
 metric**: `vol_g = ((4π)ⁿ/n!) · μ_FS`. -/
 theorem riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (n + 1)))) :
-    RiemannianMetric.riemannianVolume volume (stdBasis n) fsMetric (affineChartCover n)
+    MetricFamily.riemannianVolume volume (stdBasis n) fsMetric (affineChartCover n)
       = ENNReal.ofReal ((4 * π) ^ n / n.factorial) • fubiniStudyMeasure p₀ := by
   rw [riemannianVolume_fsMetric, fsVolume_eq_smul_fubiniStudyMeasure p₀, smul_smul]
   congr 1
@@ -354,7 +354,7 @@ theorem riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure
 
 /-- The Fubini–Study metric is bilinear at every point: `fsJ` is `ℝ`-linear (it is `i·`) and
 `fsForm x` is bilinear (`apply_add_left` and friends). -/
-theorem isBilinear_fsMetric : RiemannianMetric.IsBilinear (fsMetric (n := n)) where
+theorem isBilinear_fsMetric : MetricFamily.IsBilinear (fsMetric (n := n)) where
   add_left := fun x a b v => by
     show fsForm x ![fsJ x (a + b), v] = fsForm x ![fsJ x a, v] + fsForm x ![fsJ x b, v]
     have h : fsJ x (a + b) = fsJ x a + fsJ x b := by
@@ -379,9 +379,9 @@ theorem isBilinear_fsMetric : RiemannianMetric.IsBilinear (fsMetric (n := n)) wh
 chart cover (`riemannianVolume_congr_cover`, from bilinearity) — so `riemannianVolume_fsMetric` is
 a statement about *the* Riemannian volume, not about the affine cover's. -/
 theorem riemannianVolume_fsMetric_congr_cover (c : ChartCover (Fin n → ℂ) (ℙ ℂ (Ambient n))) :
-    RiemannianMetric.riemannianVolume volume (stdBasis n) fsMetric c
+    MetricFamily.riemannianVolume volume (stdBasis n) fsMetric c
       = ((n.factorial : ℝ≥0∞))⁻¹ • fsVolume n := by
-  rw [RiemannianMetric.riemannianVolume_congr_cover volume (stdBasis n) fsMetric isBilinear_fsMetric
+  rw [MetricFamily.riemannianVolume_congr_cover volume (stdBasis n) fsMetric isBilinear_fsMetric
     c (affineChartCover n)]
   exact riemannianVolume_fsMetric
 

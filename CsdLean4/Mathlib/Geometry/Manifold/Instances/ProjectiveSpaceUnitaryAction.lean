@@ -33,9 +33,9 @@ affine, hence pluriharmonic, correction — so the chart form is invariant:
   `chartFun_smul_chartInv` — it is what the action does to a chart inverse;
   `contDiffOn_uTrans`, `contDiffAt_uTransE` — holomorphy on its domain;
 * `fsPotential_uTransE` — the potential's pluriharmonic shift;
-* ★★ `fsChartForm_uTransE` — **the Fubini–Study chart form is invariant under the unitary
+* ★ `fsChartForm_uTransE` — **the Fubini–Study chart form is invariant under the unitary
   action**, read from chart `i` to chart `j`: `(U^* ω_j) = ω_i` on the overlap;
-* ★★ `fsModelForm_uTrans` — the same on the `Fin n → ℂ` model the manifold is charted on.
+* ★ `fsModelForm_uTrans` — the same on the `Fin n → ℂ` model the manifold is charted on.
 
 ## Honest scope
 

@@ -38,20 +38,19 @@ the basis — and those densities glue to a measure on the manifold.
 * ★★ `topFormMeasure_apply_of_subset_source` — on a measurable set inside **any** chart domain
   (not only the cover's) the glued measure is that chart's measure; hence
   ★ `topFormMeasure_congr_cover` — the measure does not depend on the cover;
-* ★ `chartMeasure_preimage_eq` and ★★ `topFormMeasure_map_eq` (milestone **M5**) —
+* ★ `chartMeasure_preimage_eq` and ★★ `topFormMeasure_map_eq` —
   **invariance**: a homeomorphism whose chart expressions are differentiable and pull the local
   representative at the target chart back to the local representative at the source chart
   preserves the measure (differentiability, not smoothness, is what the change of variables
   uses; the Hamiltonian flow of `HamiltonianFlowVolume.lean` supplies exactly that). The proof is chart-independence with the chart transition replaced by
   the map's chart expression, summed over the double partition by the cover's pieces and their
   images;
-* ★ `isLocallyFiniteMeasure_topFormMeasure`, ★ `isFiniteMeasure_topFormMeasure` (milestone
-  **M6(a)**) — the measure of a smooth top form is locally finite (a compact ball inside a chart
+* ★ `isLocallyFiniteMeasure_topFormMeasure`, ★ `isFiniteMeasure_topFormMeasure` — the measure of a smooth top form is locally finite (a compact ball inside a chart
   has finite measure, the density being continuous there), hence finite on a compact manifold;
-* ★ `topFormMeasure_ne_zero_of_localRep_ne_zero` (milestone **M6(b)**, the generic half) — a
+* ★ `topFormMeasure_ne_zero_of_localRep_ne_zero` (the generic half) — a
   smooth top form whose coefficient against the basis does not vanish at one chart point has
   **nonzero** measure: the density is continuous, so bounded below on a ball, and Haar measure
-  gives balls positive measure (`ContinuousAlternatingMap.continuous_eval_const`: evaluation on
+  gives balls positive measure (`continuous_eval_const`: evaluation on
   a fixed family is Lipschitz).
 
 ## Honest scope
@@ -175,16 +174,6 @@ end ChartCover
 section Eval
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] {ι : Type*} [Fintype ι]
-
-/-- Evaluating a continuous alternating map on a fixed family is Lipschitz (constant
-`∏ i, ‖v i‖`, by `le_opNorm`), hence continuous. -/
-theorem ContinuousAlternatingMap.continuous_eval_const (v : ι → E) :
-    Continuous fun α : E [⋀^ι]→L[ℝ] ℝ => α v := by
-  refine (LipschitzWith.of_dist_le_mul
-    (K := ⟨∏ i, ‖v i‖, Finset.prod_nonneg fun _ _ => norm_nonneg _⟩) fun α β => ?_).continuous
-  simp only [dist_eq_norm]
-  rw [← ContinuousAlternatingMap.sub_apply, mul_comm]
-  exact ContinuousAlternatingMap.le_opNorm _ _
 
 end Eval
 
@@ -311,7 +300,7 @@ theorem topFormMeasure_congr_cover (c c' : ChartCover E M) :
 
 /-! ### Invariance under a form-preserving homeomorphism -/
 
-/-- ★ **A chart measure under a form-preserving map.** If `g` is injective, differentiable in the
+/-- ★ **A chart measure under a form-preserving map.** If `g` is bijective, differentiable in the
 charts at `x₀` and `z`, and its chart expression pulls the local representative at `z` back to the
 local representative at `x₀`, then the chart measure at `x₀` of `g ⁻¹' A` is the chart measure
 at `z` of `A`. -/
@@ -461,7 +450,7 @@ theorem isLocallyFiniteMeasure_topFormMeasure
       have := hwV.2
       rwa [Set.mem_preimage, (chartAt E x).right_inv hw] at this
     have hcont : ContinuousOn (fun w => localRep s x w e) K :=
-      (ContinuousAlternatingMap.continuous_eval_const e).comp_continuousOn
+      (continuous_eval_const (⇑e)).comp_continuousOn
         ((continuousOn_localRep s hs x).mono hK)
     obtain ⟨C, hC⟩ := hKc.exists_bound_of_continuousOn hcont
     calc ∫⁻ w in (chartAt E x).target ∩ (chartAt E x).symm ⁻¹' V, chartDensity e s x w ∂μ
@@ -496,7 +485,7 @@ theorem topFormMeasure_ne_zero_of_localRep_ne_zero
   rw [topFormMeasure_apply_of_subset_source μ e s c x₀ (chartAt E x₀).open_source.measurableSet
     subset_rfl, chartMeasure_apply μ e s x₀ (chartAt E x₀).open_source.measurableSet] at hsrc
   have hcont : ContinuousAt (fun w => |localRep s x₀ w e|) w₀ :=
-    ((ContinuousAlternatingMap.continuous_eval_const e).continuousAt.comp
+    ((continuous_eval_const (⇑e)).continuousAt.comp
       (contDiffAt_localRep s hs x₀ hw₀).continuousAt).abs
   set c₀ : ℝ := |localRep s x₀ w₀ e| / 2 with hc₀
   have habs : 0 < |localRep s x₀ w₀ e| := abs_pos.2 hne

@@ -13,7 +13,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 
 **Category:** 1-Mathlib (CSD-free).
 
-The non-vacuity witness for `ChartCover` (`TopFormMeasure.lean`) on the corpus's own manifold: the `n + 1` affine charts of `ℂℙⁿ`
+The non-vacuity witness for `ChartCover` (`TopFormMeasure.lean`) on `ℂℙⁿ`: the `n + 1` affine charts of `ℂℙⁿ`
 (`ProjectiveSpace.lean`) are the charts at the chart origins `origin i`
 (`ProjectiveSpaceFubiniStudyForm.lean`), and every point has a non-vanishing coordinate, so they
 cover.
@@ -22,7 +22,7 @@ cover.
 * `affineChartCover_m` — it has `n + 1` charts.
 
 With it, `DifferentialForm.topFormMeasure volume e s (affineChartCover n)` is a measure on
-`ℂℙⁿ` for every top-form family `s` — the object milestones M5–M7 evaluate on the wedge power
+`ℂℙⁿ` for every top-form family `s` — the object the volume modules evaluate on the wedge power
 of the Fubini–Study form.
 
 ## Honest scope

@@ -20,7 +20,7 @@ written down:
   **symplectic** when it is **closed** (`α.mextDeriv = 0`) and **non-degenerate at every point**
   (for every nonzero tangent vector `v` some `w` has `α x (v, w) ≠ 0`).
 
-This is a predicate, not a theory. Its purpose is to let the corpus *state* that `ℂℙⁿ` with the
+This is a predicate, not a theory. Its purpose is to let a user *state* that `ℂℙⁿ` with the
 Fubini–Study form is a symplectic manifold, and to hold that statement to the two obligations the
 word carries. The one inhabitant is `Projectivization.fsForm_isSymplectic`
 (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`).
@@ -29,10 +29,10 @@ word carries. The one inhabitant is `Projectivization.fsForm_isSymplectic`
 
 ⚠️ **Nothing is derived from the predicate.** No Darboux theorem, no symplectic volume, no
 generators of flows, no moment maps — none of the symplectic-geometry API is here, only the
-condition. The corpus's `R-016` (the arena-level generator identity) is untouched.
+condition.
 
 ⚠️ **Non-degeneracy is the finite-dimensional reading** — "`v ≠ 0 → ∃ w, α x (v, w) ≠ 0`" is
-weak non-degeneracy in general; for the finite-dimensional real manifolds the corpus uses it is
+weak non-degeneracy in general; for finite-dimensional real manifolds it is
 the usual condition, and it forces the dimension to be even wherever the form is inhabited.
 
 ⚠️ **`∞` and `𝓘(ℝ, E)` only**, inherited from `ExteriorDerivative.lean`.

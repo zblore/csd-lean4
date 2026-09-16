@@ -369,7 +369,7 @@ Recorded because it was a real defect rather than a missing convenience: the
 `defaultFubiniStudyMeasure` as the "canonical choice" while neither existed, and nothing
 anywhere proved the base point could be dropped. Both are now supplied (2026-08-19).
 
-⚠️ Deliberately **not** `@[simp]`. Rewriting every `fubiniStudyMeasure p₀` in the corpus
+⚠️ Deliberately **not** `@[simp]`. Rewriting every `fubiniStudyMeasure p₀` downstream
 to the default form would touch several hundred sites for no proof-level gain, and simp
 lemmas that rename a widely-used term are how a build becomes unpredictable. Consumers
 that want the canonical form should rewrite with it explicitly. -/

@@ -14,9 +14,9 @@ public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 **Category:** 1-Mathlib (CSD-free Mathlib upstream candidate).
 
-Builds on `Mathlib/LinearAlgebra/Projectivization/Topology.lean`'s
-`instMulAction : MulAction (V ≃ₗ[K] V) (ℙ K V)` and Mathlib's
-`Matrix.UnitaryGroup` to produce the natural action of the matrix
+Builds on Mathlib's `Projectivization.instMulAction` (`Mathlib/LinearAlgebra/Projectivization/Action.lean`,
+here with `G := V ≃ₗ[K] V`; `mapEquiv_smul_eq` in `Projectivization/Topology.lean` reads it on
+representatives) and Mathlib's `Matrix.UnitaryGroup` to produce the natural action of the matrix
 unitary group on the projective space of Euclidean space.
 
 ## Main definitions
@@ -139,7 +139,7 @@ noncomputable def toEuclideanLinearEquivHom :
 
 /-- `Matrix.unitaryGroup (Fin N) ℂ` acts on `ℙ ℂ (EuclideanSpace ℂ (Fin N))`
 via the unitary action on the underlying Hilbert space, transported
-through `Projectivization.instMulAction` via `MulAction.compHom`. -/
+through Mathlib's `Projectivization.instMulAction` (with `G := V ≃ₗ[ℂ] V`) via `MulAction.compHom`. -/
 noncomputable instance instProjectivizationMulAction :
     MulAction (Matrix.unitaryGroup (Fin N) ℂ)
       (ℙ ℂ (EuclideanSpace ℂ (Fin N))) :=
