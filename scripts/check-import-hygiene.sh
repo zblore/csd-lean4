@@ -107,7 +107,7 @@ CAT1_EXEMPT=""
 # same day by moving schrodingerUnitary to Analysis/Matrix/SchrodingerUnitary.lean.)
 
 cat1_impure="$(git ls-files 'CsdLean4/Mathlib/**/*.lean' \
-  | xargs grep -ln '^[ \t]*\(public \|private \|meta \)*import[ \t]\+CsdLean4\.\(LF[1-6]\|SigmaLayer\|RecordLayer\|Empirical\|CV\|Thermo\|Incubator\|Tests\|Basic\|Headlines\|Interop\)' 2>/dev/null \
+  | xargs grep -ln '^[ \t]*\(public \|private \|meta \)*import[ \t]\+\(all[ \t]\+\)\?CsdLean4\.\(LF[1-6]\|SigmaLayer\|RecordLayer\|Empirical\|CV\|Thermo\|Incubator\|Tests\|Basic\|Headlines\|Interop\)' 2>/dev/null \
   | sort || true)"
 exempt_sorted="$(printf '%s\n' "$CAT1_EXEMPT" | sort)"
 cat1_undeclared="$(comm -13 <(printf '%s\n' "$exempt_sorted") <(printf '%s\n' "$cat1_impure") || true)"
