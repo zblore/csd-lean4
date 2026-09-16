@@ -29,7 +29,6 @@ namespace CSD.Tests.AxiomAudit
 
 open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
-
 -- MOMENT-MAP REGULARITY (2026-07-30, LF4/MomentMap.lean) -- the prerequisite for the basin.
 -- momentMap is DEFINED through p.rep, a Classical.choice representative, so it cannot be attacked
 -- directly: Projectivization.rep is not continuous out of P, and no unfolding makes it so. The route
@@ -40,13 +39,8 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- ⚠️ ESTIMATE CORRECTION: this was logged as effort M on the assumption the infrastructure was
 -- missing. It is S -- Projectivization/Topology.lean and Projectivization/MeasureSpace.lean already
 -- staged continuous_iff_continuous_comp_mk' and the Borel instance. The row was wrong, not the work.
-/-- info: 'CSD.LF4.continuous_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.continuous_momentMap
-
-/-- info: 'CSD.LF4.measurable_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.measurable_momentMap
+-- 2026-09-16: continuous_momentMap / measurable_momentMap moved with the definition to the
+-- Category-1 module Projectivization/MomentMap.lean; their pins are in MathlibStaging.lean.
 
 /-- info: 'CSD.LF4.schrodinger_flow_kahler_symplectomorphism' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.LF4.schrodinger_flow_kahler_symplectomorphism
@@ -558,17 +552,8 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- (RecordLayer/CellLawForced.lean, torusGenerated_eq_momentMap), not by invariance
 -- (CellLawFreedom.lean). Not a carving. Headline:
 -- momentMap_mk_eq_inner_sq — Φ([ψ])ᵢ = ‖⟨eᵢ,ψ⟩‖² at a unit preparation.
-/-- info: 'CSD.LF4.momentMap_sum_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.momentMap_sum_eq_one
-
-/-- info: 'CSD.LF4.momentMap_mk_eq_inner_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.momentMap_mk_eq_inner_sq
-
-/-- info: 'CSD.LF4.momentMap_mk_of_norm_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.momentMap_mk_of_norm_eq
+-- 2026-09-16: momentMap and its coordinate lemmas moved to the Category-1 module
+-- Projectivization/MomentMap.lean (CSD.LF4 re-exports the names); pins in MathlibStaging.lean.
 
 -- The measured observable's Hamiltonian flow (the first physically-meaningful Φ≠id):
 -- measure-preserving (obsFlow_measurePreserving), and the Born weights are its conserved

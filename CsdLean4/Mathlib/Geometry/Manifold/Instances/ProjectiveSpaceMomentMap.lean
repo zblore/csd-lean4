@@ -7,7 +7,7 @@ module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianVectorField
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
-public import CsdLean4.LF4.MomentMap
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MomentMap
 public import Mathlib.Analysis.Convex.StdSimplex
 
 /-!
@@ -17,7 +17,7 @@ public import Mathlib.Analysis.Convex.StdSimplex
 — this module uses the *restricted* senses of these words; `specs/TERMS.md` records what is backed
 and what is not.
 
-**Category:** 1-Mathlib (1-Mathlib-staging in its mathematics; it consumes the corpus's `CSD.LF4.momentMap`).
+**Category:** 1-Mathlib (1-Mathlib-staging in its mathematics; it consumes the corpus's `momentMap`).
 as the function whose manifold equation it proves.
 
 Bricks **G6**, **G8**, **G9** and **G10** of `specs/generator-layer-scoping.md`. The torus `T^{n+1}`
@@ -92,7 +92,7 @@ general Hermitian `H` the flow `exp(-itH) • p` is Hamiltonian with Hamiltonian
 
 References: `specs/generator-layer-scoping.md` (G6, G8–G10);
 `Geometry/Manifold/HamiltonianVectorField.lean`
-(G1); `LF4/MomentMap.lean` (`momentMap`, `momentMap_mk`, `continuous_momentMap`);
+(G1); `LinearAlgebra/Projectivization/MomentMap.lean` (`momentMap`, `momentMap_mk`, `continuous_momentMap`);
 `RecordLayer/CellLawForced.lean` (`IsPhaseHamiltonian`, the linear-level equation);
 `Instances/ProjectiveSpaceFubiniStudyMass.lean` (`fsModelForm_apply`, `toLpCLM_apply`);
 `Instances/ProjectiveSpaceUnitaryAction.lean` (`chartFun_smul_chartInv`);
@@ -303,20 +303,20 @@ def torusField (θ : Fin (n + 1) → ℝ) (x : ℙ ℂ (Ambient n)) :
 
 /-- The Hamiltonian of the torus action: `2 ∑ₖ θₖ · momentMap p k`. -/
 def torusHamiltonian (θ : Fin (n + 1) → ℝ) (p : ℙ ℂ (Ambient n)) : ℝ :=
-  2 * ∑ k, θ k * CSD.LF4.momentMap p k
+  2 * ∑ k, θ k * momentMap p k
 
 theorem continuous_torusHamiltonian (θ : Fin (n + 1) → ℝ) :
     Continuous (torusHamiltonian (n := n) θ) :=
   continuous_const.mul (continuous_finsetSum _ fun k _ =>
-    continuous_const.mul (CSD.LF4.continuous_momentMap k))
+    continuous_const.mul (continuous_momentMap k))
 
 theorem torusHamiltonian_chartInv (θ : Fin (n + 1) → ℝ) (i : Fin (n + 1)) (w : Fin n → ℂ) :
     torusHamiltonian θ (chartInv i w) = torusChartHam i θ w := by
   unfold torusHamiltonian torusChartHam torusChartNum chartDen
-  have hmk : ∀ k, CSD.LF4.momentMap (chartInv i w) k = ‖insertOne i w k‖ ^ 2 / ‖insertOne i w‖ ^ 2 :=
-    fun k => CSD.LF4.momentMap_mk (insertOne i w) (insertOne_ne_zero i w) k
+  have hmk : ∀ k, momentMap (chartInv i w) k = ‖insertOne i w k‖ ^ 2 / ‖insertOne i w‖ ^ 2 :=
+    fun k => momentMap_mk (insertOne i w) (insertOne_ne_zero i w) k
   have hden : ‖insertOne i w‖ ^ 2 = 1 + ∑ j, ‖w j‖ ^ 2 := by
-    rw [CSD.LF4.euclidean_norm_sq_eq_sum, Fin.sum_univ_succAbove _ i]
+    rw [EuclideanSpace.norm_sq_eq, Fin.sum_univ_succAbove _ i]
     simp [insertOne_apply_same, insertOne_apply_succAbove]
   simp_rw [hmk, hden]
   rw [Fin.sum_univ_succAbove _ i]
@@ -422,15 +422,15 @@ theorem mk_allOnes_mem_chartSource (i : Fin (n + 1)) :
 
 /-- The `k`-th moment-map coordinate vanishes at the `j`-th chart origin, `k ≠ j`. -/
 theorem momentMap_origin_of_ne (j k : Fin (n + 1)) (h : k ≠ j) :
-    CSD.LF4.momentMap (origin j) k = 0 := by
+    momentMap (origin j) k = 0 := by
   obtain ⟨a, -, hk⟩ := rep_origin j
   obtain ⟨m, hm⟩ := Fin.exists_succAbove_eq h
-  unfold CSD.LF4.momentMap
+  unfold momentMap
   rw [hk k, ← hm, insertOne_apply_succAbove]
   simp
 
 theorem torusHamiltonian_single (k : Fin (n + 1)) (p : ℙ ℂ (Ambient n)) :
-    torusHamiltonian (Pi.single k (1 : ℝ)) p = 2 * CSD.LF4.momentMap p k := by
+    torusHamiltonian (Pi.single k (1 : ℝ)) p = 2 * momentMap p k := by
   unfold torusHamiltonian
   simp only [Pi.single_apply, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ,
     if_true]
@@ -502,7 +502,7 @@ theorem eq_torusHamiltonian_of_nonneg_of_sum (H : Fin (n + 1) → ℙ ℂ (Ambie
   have hsum0 : ∑ k, c k = 0 := by
     have hs := hsum (origin 0)
     simp_rw [hc, torusHamiltonian_single] at hs
-    rw [Finset.sum_add_distrib, ← Finset.mul_sum, CSD.LF4.momentMap_sum_eq_one] at hs
+    rw [Finset.sum_add_distrib, ← Finset.mul_sum, momentMap_sum_eq_one] at hs
     linarith
   have hcnn : ∀ k, 0 ≤ c k := by
     intro k
@@ -527,8 +527,8 @@ theorem eq_torusHamiltonian_of_nonneg_of_sum (H : Fin (n + 1) → ℙ ℂ (Ambie
 /-- Every value of the moment map lies in the standard simplex: `momentMap_nonneg` and
 `momentMap_sum_eq_one`. -/
 theorem momentMap_mem_stdSimplex (p : ℙ ℂ (Ambient n)) :
-    CSD.LF4.momentMap p ∈ stdSimplex ℝ (Fin (n + 1)) :=
-  ⟨CSD.LF4.momentMap_nonneg p, CSD.LF4.momentMap_sum_eq_one p⟩
+    momentMap p ∈ stdSimplex ℝ (Fin (n + 1)) :=
+  ⟨momentMap_nonneg p, momentMap_sum_eq_one p⟩
 
 /-- The vector `(√t₀, …, √tₙ)`: the representative whose ray realises the simplex point `t`. -/
 def sqrtVec (t : Fin (n + 1) → ℝ) : Ambient n :=
@@ -541,7 +541,7 @@ theorem norm_sqrtVec_apply_sq (t : Fin (n + 1) → ℝ) (k : Fin (n + 1)) (ht : 
 
 theorem norm_sqrtVec_sq (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fin (n + 1))) :
     ‖sqrtVec t‖ ^ 2 = 1 := by
-  rw [CSD.LF4.euclidean_norm_sq_eq_sum,
+  rw [EuclideanSpace.norm_sq_eq,
     Finset.sum_congr rfl fun k _ => norm_sqrtVec_apply_sq t k (ht.1 k)]
   exact ht.2
 
@@ -554,15 +554,15 @@ theorem sqrtVec_ne_zero (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fi
 
 /-- The ray of `(√t₀, …, √tₙ)` maps to `t`. -/
 theorem momentMap_mk_sqrtVec (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fin (n + 1))) :
-    CSD.LF4.momentMap (Projectivization.mk ℂ (sqrtVec t) (sqrtVec_ne_zero t ht)) = t := by
+    momentMap (Projectivization.mk ℂ (sqrtVec t) (sqrtVec_ne_zero t ht)) = t := by
   funext k
-  rw [CSD.LF4.momentMap_mk, norm_sqrtVec_sq t ht, norm_sqrtVec_apply_sq t k (ht.1 k), div_one]
+  rw [momentMap_mk, norm_sqrtVec_sq t ht, norm_sqrtVec_apply_sq t k (ht.1 k), div_one]
 
 /-- ★★ **The image of the moment map is exactly the standard simplex** — the moment polytope of
 the torus action on `ℂℙⁿ`, by direct computation: `⊆` is the normalisation, `⊇` is the ray of
 `(√t₀, …, √tₙ)`. The Atiyah–Guillemin–Sternberg convexity theorem is neither used nor proved. -/
 theorem range_momentMap :
-    Set.range (CSD.LF4.momentMap (N := n + 1)) = stdSimplex ℝ (Fin (n + 1)) :=
+    Set.range (momentMap (N := n + 1)) = stdSimplex ℝ (Fin (n + 1)) :=
   Set.Subset.antisymm (Set.range_subset_iff.2 momentMap_mem_stdSimplex)
     fun t ht => ⟨_, momentMap_mk_sqrtVec t ht⟩
 

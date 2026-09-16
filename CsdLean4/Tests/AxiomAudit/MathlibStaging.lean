@@ -1200,6 +1200,25 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Projectivization.instCompactSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.instCompactSpace
 
+-- Projectivization/MomentMap.lean (2026-09-16, moved from LF4/MomentMap.lean so that the manifold
+-- tree's closure is Category 1): the coordinate moment map [z] ↦ ‖zᵢ‖²/‖z‖² on ℙ ℂ (ℂᴺ), its
+-- simplex constraints, the squared-overlap identity at a unit vector, and regularity by descent
+-- through mk'. CSD.LF4 re-exports the names; these are the constants the aliases resolve to.
+/-- info: 'Projectivization.momentMap_sum_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.momentMap_sum_eq_one
+
+/-- info: 'Projectivization.momentMap_mk_eq_inner_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.momentMap_mk_eq_inner_sq
+
+/-- info: 'Projectivization.momentMap_mk_of_norm_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.momentMap_mk_of_norm_eq
+
+/-- info: 'Projectivization.continuous_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.continuous_momentMap
+
+/-- info: 'Projectivization.measurable_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.measurable_momentMap
+
 -- MG-1 (2026-08-22, Projectivization/Metric.lean, specs/mathlib-gaps-plan.md): the first
 -- METRIC on Projectivization anywhere — the rank-one projection embedding p -> P_p (scale-
 -- invariant, descends by lift), injective, continuous off the staged quotient topology,
