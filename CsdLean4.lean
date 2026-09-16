@@ -652,6 +652,7 @@ public import CsdLean4.Headlines
 -- H2 (2026-08-07): the quantum-chaos incubator (CSD-free, upstream-candidate(physlib)).
 public import CsdLean4.Incubator.QuantumChaos.FloquetInterface
 public import CsdLean4.Incubator.QuantumChaos.KickedIsingPilot
+public import CsdLean4.Interop.Physlib.FubiniStudyGeometry
 public import CsdLean4.Incubator.QuantumChaos.Diagnostics
 public import CsdLean4.Incubator.QuantumChaos.SpectralFormFactor
 public import CsdLean4.Incubator.QuantumChaos.Otoc

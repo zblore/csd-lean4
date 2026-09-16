@@ -10,3 +10,6 @@ specs/*.pdf
 specs/*.txt
 specs/*.docx
 docs/_site/
+
+# Physlib export (scripts/export-physlib.sh output); the PR is regenerated, never tracked.
+export/

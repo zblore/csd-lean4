@@ -10,7 +10,8 @@
 #   CsdLean4/Framework/**                      2-Framework
 #   CsdLean4/SigmaLayer/**, CsdLean4/RecordLayer/**   7-SigmaLayer  (one stratum, two namespaces
 #                                                      since the 2026-08-13 Q15 split)
-#   CsdLean4/Tests/**, CsdLean4/Incubator/**, CsdLean4.lean, CsdLean4/Basic.lean,
+#   CsdLean4/Tests/**, CsdLean4/Incubator/**, CsdLean4/Interop/** (2026-09-16, the Physlib
+#   export root), CsdLean4.lean, CsdLean4/Basic.lean,
 #   CsdLean4/Headlines.lean                    Special
 #   everything else (LF*/, Empirical/, CV/, Thermo/, LF6/, …)   3-Local
 #
@@ -32,7 +33,7 @@ cd "$(git rev-parse --show-toplevel)"
 git ls-files 'CsdLean4/**/*.lean' 'CsdLean4.lean' | awk '
 function expected(f) {
   if (f == "CsdLean4.lean" || f == "CsdLean4/Basic.lean" || f == "CsdLean4/Headlines.lean") return "Special"
-  if (f ~ /^CsdLean4\/(Tests|Incubator)\//) return "Special"
+  if (f ~ /^CsdLean4\/(Tests|Incubator|Interop)\//) return "Special"
   if (f ~ /^CsdLean4\/Mathlib\//) return "1-Mathlib"
   if (f ~ /^CsdLean4\/Framework\//) return "2-Framework"
   if (f ~ /^CsdLean4\/(SigmaLayer|RecordLayer)\//) return "7-SigmaLayer"

@@ -2,7 +2,7 @@
 # check-import-hygiene.sh
 #
 # Import-hygiene rules for the production tree (validation-hardening WS-L,
-# specs/validation-hardening-plan.md, 2026-08-12). Three rules, all cheap greps over
+# specs/validation-hardening-plan.md, 2026-08-12). Four rules, all cheap greps over
 # tracked files:
 #
 #   (1) NO BARE `import Mathlib`. A whole-Mathlib import in a production module hides
@@ -20,7 +20,14 @@
 #       here rather than a silent architecture change. Same declared-inventory
 #       discipline as check-claims (7a/7c/7d).
 #
-# Guard-of-guards: mutation probes for all three rules live in check-guards.sh.
+#   (4) CATEGORY 1 IS CATEGORY 1 BY CLOSURE (2026-09-16). A file under CsdLean4/Mathlib/
+#       imports only Mathlib and CsdLean4.Mathlib.*, so its transitive closure is free
+#       of the CSD layers and it can be read, reviewed and upstreamed on its own.
+#       Exemptions are an explicit dated inventory that may only shrink.
+#
+# Guard-of-guards: mutation probes for rules (1)-(3) live in check-guards.sh; rule (4)
+# was mutation-tested by hand on landing (exemption dropped -> FAIL; LF import added to
+# a Category-1 file -> FAIL).
 
 set -uo pipefail
 cd "$(git rev-parse --show-toplevel)"
@@ -81,6 +88,35 @@ if [ -n "$undeclared" ]; then
   fail=1
 else
   echo "  ok    stable->Incubator imports all match the declared seam inventory"
+fi
+
+# ---------------------------------------------------------------------------
+# (4) Category 1 is Category 1 by closure: a file under CsdLean4/Mathlib/ imports
+#     only Mathlib and other files under CsdLean4/Mathlib/.
+# ---------------------------------------------------------------------------
+# CONVENTIONS.md §1 has always said this ("Allowed imports. Mathlib only"), and
+# nothing checked it. On 2026-09-16 two Category-1 manifold modules reached the
+# ontic shell (LF1.Setup) through LF4.MomentMap / LF4.ManyToOneSchrodingerDerived,
+# so every theorem in their closure carried the ontology although its content was
+# pure. Direct-import purity of every Category-1 file gives closure purity by
+# induction, so a grep over direct imports is the whole check. The exemption list
+# is the inventory of files that still reach outside; each entry carries its
+# reason and date, and the list may shrink, never grow.
+CAT1_EXEMPT="CsdLean4/Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceSchrodingerFlow.lean"
+# ProjectiveSpaceSchrodingerFlow.lean: imports LF4.ManyToOneSchrodingerDerived for
+# schrodingerUnitary (79 uses); repair pending (2026-09-16).
+
+cat1_impure="$(git ls-files 'CsdLean4/Mathlib/**/*.lean' \
+  | xargs grep -ln '^[ \t]*\(public \|private \|meta \)*import[ \t]\+CsdLean4\.\(LF[1-6]\|SigmaLayer\|RecordLayer\|Empirical\|CV\|Thermo\|Incubator\|Tests\|Basic\|Headlines\|Interop\)' 2>/dev/null \
+  | sort || true)"
+exempt_sorted="$(printf '%s\n' "$CAT1_EXEMPT" | sort)"
+cat1_undeclared="$(comm -13 <(printf '%s\n' "$exempt_sorted") <(printf '%s\n' "$cat1_impure") || true)"
+if [ -n "$cat1_undeclared" ]; then
+  echo "  FAIL  Category-1 files (CsdLean4/Mathlib/) importing outside Mathlib and CsdLean4.Mathlib:"
+  printf '%s\n' "$cat1_undeclared" | sed 's/^/          /'
+  fail=1
+else
+  echo "  ok    every CsdLean4/Mathlib/ file imports only Mathlib and CsdLean4.Mathlib (exemptions: $(printf '%s\n' "$CAT1_EXEMPT" | grep -c .))"
 fi
 
 if [ "$fail" -ne 0 ]; then
