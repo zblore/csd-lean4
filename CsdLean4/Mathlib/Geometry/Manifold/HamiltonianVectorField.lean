@@ -23,8 +23,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.GlobalFlow
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 
-Bricks **G1**, **G2**, **G3**, **G4**, **G7**, **G8** (in part), **G11**, **G14a**, **G14b**, **G15** and **G19** of
-the generator-layer plan: the defining equation of a Hamiltonian vector field,
+The defining equation of a Hamiltonian vector field,
 `ι_X ω = dH`, at manifold level, the pointwise facts that follow from it by alternation and
 linearity alone, its existence and uniqueness from non-degeneracy, its smoothness, its integral
 curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähler and Kähler predicates.
@@ -34,7 +33,7 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
 * `DifferentialForm.IsHamiltonianVectorField ω X H` — **`ω x (X x, v) = dH_x v` at every point**,
   with `dH_x = mfderiv 𝓘(ℝ, E) 𝓘(ℝ, ℝ) H x`; a Prop demanding the equation, nothing else;
 * `DifferentialForm.IsLocallyHamiltonian ω X` — `d (ι_X ω) = 0`, the closedness of the 1-form
-  family (the notion the flux correction of `RecordLayer/PiecewiseHamiltonian.lean` needs);
+  family;
 * for `h : IsHamiltonianVectorField ω X H`: `h.interiorProduct_eq` (`ι_X ω = dH` as families),
   ★ `h.mfderiv_apply_self` (**`dH (X) = 0`**: the energy is infinitesimally conserved along its own
   field, by alternation), `h.eq_of_nondegenerate` and ★ `h.unique_of_isSymplectic` (**the
@@ -121,11 +120,11 @@ predicate's `J` is a family of functions), and `nijenhuis` takes the family.
 `IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField` and `integralFlow` with `integralFlow_add`
 (`IntegralCurve/GlobalFlow.lean`; Mathlib has no flows of vector fields on manifolds,
 MATHLIB-ABSENT(IsMIntegralCurve.flow)). Not stated: joint continuity of the flow in `(t, x)` (Q29(a′)),
-and that the time-`t` maps preserve the symplectic volume (Q29(b′)–(d′), the backlog's outstanding table).
+and that the time-`t` maps preserve the symplectic volume .
 
 ⚠️ **The converse of G11 is false and not stated.** A locally Hamiltonian field need not be
-Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction of
-`RecordLayer/PiecewiseHamiltonian.lean`, and `H¹` decides it. Nothing here touches that.
+Hamiltonian: `ι_X ω` closed but not exact is exactly the flux obstruction, and `H¹`
+decides it. Nothing here touches that.
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
@@ -423,7 +422,7 @@ variable [IsManifold (modelWithCornersSelf ℝ E) ∞ M]
 
 /-- **`X` is locally Hamiltonian for `α`**: the 1-form family `ι_X α` is closed. Meaningful when
 the family is smooth (brick G3); the distinction from `IsHamiltonianVectorField` is exactly the
-flux obstruction of `RecordLayer/PiecewiseHamiltonian.lean`. -/
+flux obstruction. -/
 def IsLocallyHamiltonian (X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x) : Prop :=
   ∀ x : M, _root_.mextDeriv (interiorProduct α X) x = 0
 

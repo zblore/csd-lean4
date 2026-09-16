@@ -20,7 +20,7 @@ public import Mathlib.RingTheory.Complex
 
 **Category:** 1-Mathlib (CSD-free).
 
-Milestone **M7** of the top-power plan, the constant. `ProjectiveSpaceFubiniStudyVolume.lean`
+The constant. `ProjectiveSpaceFubiniStudyVolume.lean`
 proved that the *normalised* volume of the top power of the Fubini–Study form is
 `fubiniStudyMeasure p₀`; this module computes the total mass, so the identity holds with its
 constant. Three steps.

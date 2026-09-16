@@ -15,8 +15,7 @@ public import Mathlib.Topology.VectorBundle.ContinuousAlternatingMap
 **Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Geometry.Manifold.VectorBundle`, beside `Hom.lean`).
 
-Step (2a) of the manifold exterior-calculus plan, third and fourth layers
-(the Mathlib-gaps register, the backlog XL). Mathlib has the bundle of continuous alternating
+Mathlib has the bundle of continuous alternating
 maps as a **topological** vector bundle (`Topology/VectorBundle/ContinuousAlternatingMap.lean`)
 and it has `Hom.lean` doing the smooth case for the bundle of continuous *linear* maps. It has
 nothing alternating anywhere under `Geometry/Manifold/`.

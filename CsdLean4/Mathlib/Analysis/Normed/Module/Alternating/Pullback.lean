@@ -19,8 +19,7 @@ public import Mathlib.Analysis.Calculus.ContDiff.CPolynomial
 `Mathlib.Topology.Algebra.Module.Alternating` for the alternatization and
 `Mathlib.Analysis.Analytic.CPolynomial` for the pullback, beside its multilinear twin).
 
-The lemma that step (2a) of the manifold exterior-calculus plan ran aground on
-(the Mathlib-gaps register, the backlog XL). Making differential forms on a **manifold** into
+The lemma differential forms on a manifold need first. Making them into
 smooth sections needs a `ContMDiffVectorBundle` instance for the alternating-map bundle,
 whose crux is smoothness of the coordinate change — and that reduces to smoothness of the
 **pullback** `(g, ω) ↦ ω ∘ g` in *both* arguments jointly.

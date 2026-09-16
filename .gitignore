@@ -13,3 +13,4 @@ docs/_site/
 
 # Physlib export (scripts/export-physlib.sh output); the PR is regenerated, never tracked.
 export/
+__pycache__/

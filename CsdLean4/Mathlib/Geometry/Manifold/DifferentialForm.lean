@@ -20,8 +20,7 @@ unproved. (Repository bookkeeping; it goes with the `References` block if sent u
 **Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Geometry.Manifold`, beside the flat `Analysis/Calculus/DifferentialForm/`).
 
-**Step (2a) of the manifold exterior-calculus plan, completed** (the Mathlib-gaps register,
-the backlog XL). A differential form on a manifold is a smooth section of the bundle
+A differential form on a manifold is a smooth section of the bundle
 of alternating maps on the tangent bundle. Every ingredient existed at the pin except the one
 that makes "smooth" mean anything — the `ContMDiffVectorBundle` instance for the
 alternating-map bundle, built in

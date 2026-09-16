@@ -20,7 +20,14 @@ defining module lies in the import closure of the export root (exactly the expor
 fails if any of them reaches `sorryAx` or an axiom outside
 `[propext, Classical.choice, Quot.sound]`. Same traversal as `axiom-sweep.lean` (`.thmInfo`
 values, recursion restricted to the closure's own modules), same module-system precondition
-(every exported module has an `@[expose] public section`).
+(every exported module has an `@[expose] public section`; `scripts/export-physlib.sh` checks it).
+
+**Trusted boundary, stated plainly.** The walk recurses through constants declared in the closure
+and inspects every axiom any of them references directly; it does not re-walk the interior of
+Mathlib constants (an axiom used *inside* a Mathlib theorem this closure cites is Mathlib's, and
+the corpus-wide sweep and the AxiomAudit pins make the same choice). Every constant declared by
+a closure module is a root, private and auxiliary ones included, so nothing declared in the
+closure escapes the check.
 -/
 
 namespace PhyslibAxiomSweep
@@ -88,8 +95,12 @@ end PhyslibAxiomSweep
 open PhyslibAxiomSweep in
 run_cmd Elab.Command.liftCoreM do
   let env ← getEnv
+  -- EVERY constant the closure's modules declare is a root: private declarations, auxiliary
+  -- `match_`/`proof_` constants and instances included (a review on 2026-09-16 found the earlier
+  -- `!n.isInternal` filter left unused private proofs unchecked). The per-module counts below
+  -- are of these roots.
   let roots := env.constants.fold (fun (acc : Array Name) n _ =>
-    if inClosure env n && !n.isInternal then acc.push n else acc) #[]
+    if inClosure env n then acc.push n else acc) #[]
   -- per-module counts, for the manifest
   let mut perModule : Std.HashMap Name Nat := {}
   for r in roots do

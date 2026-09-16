@@ -49,9 +49,9 @@ total and explicit, with the transport to the arena manifold carried as prose. N
 here claims `dω = 0` (on flat space it is the closedness of a *constant* form and is now
 formalisable via `extDeriv` — recorded, not landed) or the global quotient statement.
 
-## References
+## Provenance and references
 
-the backlog A4, A3 (`ChartBracket.lean` — the Darboux-chart Poisson fragment this
+This repository's backlog rows A4, A3 (`ChartBracket.lean` — the Darboux-chart Poisson fragment this
 complements); `KahlerForm.lean` (`fundamentalForm`, `metric`, `complexStructure` — the
 pointwise Kähler triple this consumes); the source repository's Schrödinger–Kähler invariance
 module (KG-2's invariance half: the flow *preserves* `ω`; this module is the generation half's

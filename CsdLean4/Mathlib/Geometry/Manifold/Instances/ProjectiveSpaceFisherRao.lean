@@ -18,15 +18,24 @@ open simplex of `FisherRao.lean`).
 
 **Glossary:** https://glossary.constraintsurfacedynamics.com/fisher-rao-metric/
 
-The torus moment map `Φ : ℂℙⁿ → Δⁿ`, `Φ([z])ₖ = ‖zₖ‖²/‖z‖²`, sends the **regular stratum**
-(every coordinate positive) into the open simplex. Its differential kills the orbit directions
-of the coordinate-phase torus — the **vertical space** at `x` — and on the Fubini–Study
-orthogonal complement, the **horizontal space**, it is an isometry onto Fisher–Rao:
+The Born-weight map `Φ : ℂℙⁿ → Δⁿ`, `Φ([z])ₖ = ‖zₖ‖²/‖z‖²` (`Projectivization.momentMap`), sends
+the **regular stratum** (every coordinate positive) into the open simplex. Its differential kills
+the orbit directions of the coordinate-phase torus — the **vertical space** at `x` — and on the
+Fubini–Study orthogonal complement, the **horizontal space**, it is an isometric embedding into
+the tangent space of the simplex:
 
     `g_FS(u, v) = g_FR(dΦₓ u, dΦₓ v)`   for `u` horizontal at `x` and any `v`,
 
-with constant one in the normalisation of `Projectivization.fsMetric` (the round unit sphere
-for `ℂℙ¹`, Gram matrix `4 • 1` at a chart origin). The manifold statement is the vector-level
+injective on the horizontal space (`momentDeriv_injOn_horizontalSpace`), with constant one in
+the normalisation of `Projectivization.fsMetric` (the round unit sphere for `ℂℙ¹`, Gram matrix
+`4 • 1` at a chart origin). That `dΦₓ` is then a linear isomorphism of the horizontal space
+onto the zero-sum hyperplane follows by dimension but is not packaged here.
+
+A word on the name. `Φ` is the moment map of the torus action for `fsForm` up to the factor
+the form's normalisation fixes: the Hamiltonian of the action is `2 Σ θₖ Φₖ`
+(`torusHamiltonian`, `torusField_isHamiltonianVectorField`), so the moment map in the
+Hamiltonian sense is `2Φ`. The bridge is stated for `Φ` itself, the Born weights, and its
+constant one is for that map. The manifold statement is the vector-level
 identity of `Analysis/InformationGeometry/FubiniStudyFisherRao.lean` read in an affine chart:
 the point is the ray of `ψ = insertOne i w`, a chart direction `u` lifts to `insertZero i u`,
 and `fsMetric` at the point is `fsInnerHom ψ` on the lifts (★ `fsMetric_eq_fsInnerHom`, the
@@ -44,7 +53,9 @@ standard formula `4 (Re ⟪δψ, δψ'⟫/‖ψ‖² − Re(⟪δψ, ψ⟫⟪ψ,
   `momentDeriv_eq_zero_of_mem_verticalSpace` — it kills the vertical space.
 * `verticalSpace x`, `horizontalSpace x` — the torus-orbit directions and their `fsMetric`-orthogonal
   complement; ★ `mem_horizontalSpace_iff` — horizontal means every `conj (wⱼ) uⱼ` is real in the
-  chart, i.e. the direction moves moduli and not phases.
+  chart, i.e. the direction moves moduli and not phases; `momentDeriv_eq_zero_iff_of_mem_horizontalSpace`
+  and `momentDeriv_injOn_horizontalSpace` — on the regular stratum the differential is injective
+  on the horizontal space.
 * `regularStratum`, `toOpenSimplex` — the moment map into `OpenSimplex (Fin (n + 1))`.
 * ★★ `fsMetric_eq_fisherRaoInner` — **the bridge**: on the regular stratum, for `u` horizontal,
   `fsMetric x u v = fisherRaoInner (toOpenSimplex x) (momentDeriv x u) (momentDeriv x v)`.
@@ -53,8 +64,11 @@ standard formula `4 (Re ⟪δψ, δψ'⟫/‖ψ‖² − Re(⟪δψ, ψ⟫⟪ψ,
 
 None is assumed: `fsMetric` is `ω_FS(J·, ·)` for the repository's Fubini–Study form, whose Gram
 matrix at a chart origin is `4 • 1` (`toMatrix_fsModelMetric_zero`), and the `4` on the Fisher–Rao
-side is the derivative of `‖·‖²`. They agree, so the constant is `1`. In the normalisation
-`‖δψ‖² − ‖⟪ψ, δψ⟫‖²` of Bengtsson–Życzkowski the same statement reads `4 g_FS = g_FR ∘ dΦ`.
+side is the derivative of `‖·‖²`. They agree, so the constant is `1`. In this normalisation
+`fsMetric` is the quantum Fisher information of a pure-state family
+(`FisherRao.fsInnerHom_self_of_norm_eq_one`); in the normalisation `‖δψ‖² − ‖⟪ψ, δψ⟫‖²` of
+Bengtsson–Życzkowski, which the vector-level `fsMetric` of `Empirical/Metrology/QuantumFisher.lean`
+uses, the same statement reads `4 g_FS = g_FR ∘ dΦ` and the quantum Fisher information is `4 g_FS`.
 
 ## Implementation notes
 
@@ -71,7 +85,12 @@ tangent vector `u : TangentSpace 𝓘(ℝ, Fin n → ℂ) x` is used in them dir
 * `Analysis/InformationGeometry/FubiniStudyFisherRao.lean` (the vector-level bridge);
   `Instances/ProjectiveSpaceMomentMap.lean` (`torusField`, the chart derivatives);
   `Instances/ProjectiveSpaceFubiniStudyRiemannian.lean` (`fsMetric`, `fsModelMetric`);
-  Physlib PR #1652; the completed-work ledger.
+  Physlib PR #1652.
+
+## Provenance
+
+Built 2026-09-16 for Physlib PR #1652; recorded in this repository's completed-work ledger
+(`specs/future-work.md`, KG-4) and claims ledger (CL-075).
 -/
 
 @[expose] public section
@@ -485,8 +504,9 @@ differential of the moment map:
     `fsMetric x u v = fisherRaoInner (toOpenSimplex x) (momentDeriv x u) (momentDeriv x v)`.
 
 The constant is one: `fsMetric` is normalised so that `ℂℙ¹` is the unit round sphere, and in
-that normalisation `4 g_FS` is the quantum Fisher information, which the coordinate readout
-attains exactly on the horizontal directions. -/
+that normalisation `g_FS` itself is the quantum Fisher information of the family, which the
+coordinate readout attains exactly on the horizontal directions
+(`FisherRao.fisherInfo_bornDeriv_horizontalLift_eq_iff`). -/
 theorem fsMetric_eq_fisherRaoInner {x : ℙ ℂ (Ambient n)} (hx : x ∈ regularStratum)
     {u : Fin n → ℂ} (hu : u ∈ horizontalSpace x) (v : Fin n → ℂ) :
     fsMetric x u v
@@ -516,5 +536,63 @@ theorem fsMetric_eq_fisherRaoInner {x : ℙ ℂ (Ambient n)} (hx : x ∈ regular
   rw [fsMetric_eq_fsInnerHom, hderiv, hderiv,
     ← fisherRaoInner_bornDeriv_normalize hψ0 hk hu' (insertZero (idx x) v)]
   simp only [OpenSimplex.fisherRaoInner, hval, bornSimplex_val]
+
+/-! ### Injectivity on the horizontal space -/
+
+/-- On the regular stratum, a horizontal direction with zero Born displacement is zero: in the
+chart the displacement of coordinate `k` is `2 (aₖ/D − pₖ S/D²)` with `aₖ = Re(ψ̄ₖ δuₖ)` real by
+horizontality and `S = Σ aₖ`; the chart coordinate `k = idx x` has `aₖ = 0` and `pₖ = 1`, which
+forces `S = 0`, hence every `aₖ = 0`, hence every `uⱼ = 0` since no `wⱼ` vanishes. -/
+theorem momentDeriv_eq_zero_iff_of_mem_horizontalSpace {x : ℙ ℂ (Ambient n)}
+    (hx : x ∈ regularStratum) {u : Fin n → ℂ} (hu : u ∈ horizontalSpace x) :
+    momentDeriv x u = 0 ↔ u = 0 := by
+  refine ⟨fun h => ?_, fun h => by rw [h, map_zero]⟩
+  have hk := insertOne_chartFun_ne_zero hx
+  have hn : 0 < ‖insertOne (idx x) (chartFun (idx x) x)‖ :=
+    norm_pos_iff.mpr (insertOne_ne_zero _ _)
+  have hD : 0 < ‖insertOne (idx x) (chartFun (idx x) x)‖ ^ 2 := pow_pos hn 2
+  have him := (mem_horizontalSpace_iff x u).mp hu
+  -- the displacement of every coordinate vanishes
+  have hcoord : ∀ k, (conj (insertOne (idx x) (chartFun (idx x) x) k) * insertZero (idx x) u k).re
+      / ‖insertOne (idx x) (chartFun (idx x) x)‖ ^ 2
+      - ‖insertOne (idx x) (chartFun (idx x) x) k‖ ^ 2
+        * (inner ℂ (insertOne (idx x) (chartFun (idx x) x)) (insertZero (idx x) u) : ℂ).re
+        / ‖insertOne (idx x) (chartFun (idx x) x)‖ ^ 4 = 0 := by
+    intro k
+    have := congrFun h k
+    rw [momentDeriv_apply, bornDeriv_normalize_horizontalLift, Pi.zero_apply] at this
+    linarith
+  -- the chart coordinate forces the total displacement to vanish
+  have hS : (inner ℂ (insertOne (idx x) (chartFun (idx x) x)) (insertZero (idx x) u) : ℂ).re
+      = 0 := by
+    have h0 := hcoord (idx x)
+    simp only [insertOne_apply_same, insertZero_apply_same, mul_zero, Complex.zero_re, zero_div,
+      norm_one, one_pow, one_mul, zero_sub, neg_eq_zero, div_eq_zero_iff] at h0
+    rcases h0 with h0 | h0
+    · exact h0
+    · exact absurd h0 (pow_ne_zero 4 hn.ne')
+  -- hence every coordinate product vanishes, and with horizontality so does every `uⱼ`
+  funext j
+  have hj := hcoord ((idx x).succAbove j)
+  rw [hS, mul_zero, zero_div, sub_zero, div_eq_zero_iff] at hj
+  rcases hj with hj | hj
+  · rw [insertOne_apply_succAbove, insertZero_apply_succAbove] at hj
+    have hprod : conj (chartFun (idx x) x j) * u j = 0 := Complex.ext hj (him j)
+    rcases mul_eq_zero.mp hprod with hc | hc
+    · have := hk ((idx x).succAbove j)
+      rw [insertOne_apply_succAbove] at this
+      exact absurd ((map_eq_zero (starRingEnd ℂ)).mp hc) this
+    · exact hc
+  · exact absurd hj hD.ne'
+
+/-- ★ **The differential of the moment map is injective on the horizontal space** of every point
+of the regular stratum: together with `fsMetric_eq_fisherRaoInner` and `sum_momentDeriv`, an
+isometric embedding of the horizontal space into the zero-sum tangent space of the simplex. -/
+theorem momentDeriv_injOn_horizontalSpace {x : ℙ ℂ (Ambient n)} (hx : x ∈ regularStratum) :
+    Set.InjOn (momentDeriv x) (horizontalSpace x) := by
+  intro u hu v hv huv
+  have hsub : momentDeriv x (u - v) = 0 := by rw [map_sub, huv, sub_self]
+  exact sub_eq_zero.mp
+    ((momentDeriv_eq_zero_iff_of_mem_horizontalSpace hx (Submodule.sub_mem _ hu hv)).mp hsub)
 
 end Projectivization

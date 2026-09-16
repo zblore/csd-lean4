@@ -1,0 +1,74 @@
+# scripts/physlib-slices.txt — the concept slices of the Physlib export.
+#
+# One line per module of the export closure: `<slice-name><TAB><module path under CsdLean4.Mathlib.>`.
+# Slices appear in the order their first line appears; scripts/export_physlib.py checks that
+# every module of the closure is listed and that every import lies in the same or an earlier
+# slice, so each slice is a self-contained Physlib PR on top of the ones before it. A slice is a
+# concept, not a size: Physlib's review guidelines prefer PRs of roughly 200 lines, so several
+# slices will be split further at PR time (the table `export-physlib.sh --table` flags them).
+# The mirror of PR #1652's FisherRao.lean is listed so the build projects compile while that PR
+# is open; the exporter never puts it in a PR slice.
+
+# 1 — projective space as a topological / measurable space with its unitary action, and the
+#     invariant (Fubini–Study) measure; the Born-weight map in coordinates.
+projectivization	LinearAlgebra.Projectivization.Topology
+projectivization	LinearAlgebra.Projectivization.MeasureSpace
+projectivization	LinearAlgebra.Projectivization.Unitary
+projectivization	LinearAlgebra.Projectivization.UnitaryTransitive
+projectivization	LinearAlgebra.Matrix.UnitaryCompact
+projectivization	LinearAlgebra.Matrix.UnitaryHaar
+projectivization	MeasureTheory.MapProbability
+projectivization	LinearAlgebra.Projectivization.FubiniStudy
+projectivization	LinearAlgebra.Projectivization.FubiniStudyUnique
+projectivization	LinearAlgebra.Projectivization.TransitionProbability
+projectivization	LinearAlgebra.Projectivization.MomentMap
+
+# 2 — the vector-level Fisher–Rao bridge (QuantumInfo/ForMathlib, beside PR #1652's file).
+fisher-rao-vector	Analysis.InformationGeometry.FisherRao
+fisher-rao-vector	Analysis.InformationGeometry.FubiniStudyFisherRao
+
+# 3 — continuous alternating maps: wedge, its norm bound, the shuffle formula, top forms, pullback.
+alternating	Analysis.Normed.Module.Alternating.Wedge
+alternating	Analysis.Normed.Module.Alternating.WedgeCLM
+alternating	Analysis.Normed.Module.Alternating.WedgeShuffle
+alternating	Analysis.Normed.Module.Alternating.TopForm
+alternating	Analysis.Normed.Module.Alternating.Pullback
+
+# 4 — the pointwise (linear) Kähler structure of a complex inner-product space.
+kahler-linear	Analysis.InnerProductSpace.KahlerForm
+kahler-linear	Analysis.InnerProductSpace.KahlerClosed
+kahler-linear	Analysis.InnerProductSpace.HamiltonianVectorField
+kahler-linear	Analysis.InnerProductSpace.KahlerPotential
+kahler-linear	Analysis.InnerProductSpace.KahlerPluriharmonic
+
+# 5 — ℂℙⁿ as a manifold with its affine atlas, and the Fubini–Study potential in the charts.
+projective-manifold	Geometry.Manifold.Instances.ProjectiveSpace
+projective-manifold	Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudy
+
+# 6 — differential forms on manifolds: the bundle, sections, wedge, exterior derivative,
+#     symplectic forms, Hamiltonian vector fields, integral curves / global flows.
+manifold-forms	Geometry.Manifold.VectorBundle.AlternatingMap
+manifold-forms	Geometry.Manifold.DifferentialForm
+manifold-forms	Geometry.Manifold.WedgeForm
+manifold-forms	Geometry.Manifold.ExteriorDerivative
+manifold-forms	Geometry.Manifold.SymplecticForm
+manifold-forms	Geometry.Manifold.IntegralCurve.GlobalFlow
+manifold-forms	Geometry.Manifold.HamiltonianVectorField
+
+# 7 — measures from top forms and the Riemannian volume.
+top-form-measure	Geometry.Manifold.TopFormMeasure
+top-form-measure	Geometry.Manifold.RiemannianVolume
+top-form-measure	Analysis.SpecialFunctions.JapaneseBracketIntegral
+
+# 8 — the Fubini–Study form, symplectic structure, unitary action and volume of ℂℙⁿ.
+fubini-study	Geometry.Manifold.Instances.ProjectiveSpaceChartCover
+fubini-study	Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
+fubini-study	Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyForm
+fubini-study	Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyVolume
+fubini-study	Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
+fubini-study	Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
+fubini-study	Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyRiemannian
+
+# 9 — the torus moment map on ℂℙⁿ and the manifold Fisher–Rao bridge.
+moment-map-bridge	Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
+moment-map-bridge	Geometry.Manifold.Instances.ProjectiveSpaceFisherRao

@@ -17,10 +17,9 @@ public import Mathlib.Analysis.Convex.StdSimplex
 — this module uses the *restricted* senses of these words; the source repository's terms register records what is backed
 and what is not.
 
-**Category:** 1-Mathlib (1-Mathlib-staging in its mathematics; it consumes the corpus's `momentMap`).
-as the function whose manifold equation it proves.
+**Category:** 1-Mathlib (CSD-free; the torus moment map of `ℂℙⁿ`).
 
-Bricks **G6**, **G8**, **G9** and **G10** of the generator-layer plan. The torus `T^{n+1}`
+The torus `T^{n+1}`
 acts on `ℂℙⁿ` by `p ↦ diag(e^{iθ}) • p`. This module proves the moment-map equation for that
 action on the *manifold*: the velocity field of the action is the Hamiltonian vector field, for
 the Fubini–Study form `fsForm`, of `2 ∑ₖ θₖ · momentMap p k` — then its uniqueness, its image, and
@@ -49,7 +48,7 @@ the invariance of the Fubini–Study volume under the flow it generates.
   (`is_const_of_fderiv_eq_zero`), and `[1 : ⋯ : 1]` (`allOnes`) lies in every chart; and
   ★★★ `eq_torusHamiltonian_of_nonneg_of_sum` — **the normalisation pins the constant**: a
   non-negative family of Hamiltonians for the phase fields summing to `2` is `2 · momentMap`. This
-  is the "standard symplectic argument" of the programme's posits bullet 1, formalised;
+  is the standard symplectic argument, formalised;
 * **G9, the image.** `momentMap_mem_stdSimplex`, `sqrtVec` (the vector `(√t₀, …, √tₙ)`),
   `momentMap_mk_sqrtVec`, and ★★ `range_momentMap` — **the image of the moment map is exactly the
   standard simplex** `stdSimplex ℝ (Fin (n + 1))`: `⊆` is the normalisation, `⊇` the ray of
@@ -80,10 +79,8 @@ nor proved.
 
 ⚠️ **Liouville for one flow only.** `fsVolume_map_torusUnitary_smul` (G10) is unitary invariance
 specialised to `diag(e^{iθ})`. It is not a manifold-level Liouville theorem for Hamiltonian flows
-(Q29 / G5, the backlog's outstanding table, priced L–XL on the chart route: Mathlib has no global
-flows and no Cartan formula, MATHLIB-ABSENT(IsMIntegralCurve.flow)), and it does not touch
-`ConstraintDynamics.flow_preserves` (Posit 3), whose measurement pieces are not globally
-Hamiltonian.
+(that is `HamiltonianFlowVolume.lean`'s job), and it does not touch the flows of this
+repository's measurement model, which are not globally Hamiltonian.
 
 ⚠️ **The torus here; the general generator in `ProjectiveSpaceSchrodingerFlow.lean` (G13).** For a
 general Hermitian `H` the flow `exp(-itH) • p` is Hamiltonian with Hamiltonian `-2 ⟨H⟩`

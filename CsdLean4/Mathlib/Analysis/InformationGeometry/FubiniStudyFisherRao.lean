@@ -22,16 +22,22 @@ when no coordinate vanishes. Moving `ψ` in a direction `u` moves the weights by
     `Σᵢ dpᵢ dp'ᵢ / pᵢ`.
 
 Write `u` as `uᵢ = aᵢ ψᵢ` coordinate by coordinate. When every `aᵢ` is real (the direction is
-**horizontal**: it changes moduli, not phases), `dpᵢ = 2 aᵢ pᵢ` and the sum collapses to
-`4 Σᵢ ūᵢ vᵢ = 4 ⟪u, v⟫`. This is the Fubini–Study inner product of the two directions, in the
-normalisation where the metric of `ℂℙ¹` is the unit round sphere and `4·g_FS` is the quantum
-Fisher information. So along horizontal directions the Born map is an isometry from Fubini–Study
-to Fisher–Rao, with constant one.
+**torus-horizontal**: it changes moduli, not phases), `dpᵢ = 2 aᵢ pᵢ` and the sum collapses to
+`4 Σᵢ ūᵢ vᵢ = 4 ⟪u, v⟫`. That is an identity between vectors, and it reads as a statement about
+the state space once `u` is also tangent to the unit sphere at `ψ` (`⟪ψ, u⟫ = 0`): then
+`4 Re ⟪u, v⟫` is the Fubini–Study inner product of the two directions, in the normalisation
+where the state space of a qubit is the unit round sphere and the Fubini–Study metric *is* the
+quantum Fisher information of a pure-state family (the Bengtsson–Życzkowski normalisation is a
+quarter of it). The radial direction `u = ψ` is torus-horizontal but not tangent, and moves no
+state; the projective form of everything below, `horizontalLift`, projects that component off
+before anything is said.
 
-Along a general direction the phases also move, Fisher–Rao only sees the moduli, and the
-inequality `Σᵢ dpᵢ²/pᵢ ≤ 4 ‖u‖²` records what is lost: the classical Fisher information of the
-coordinate readout is at most the quantum Fisher information, with equality exactly on the
-horizontal directions (Braunstein–Caves for the computational-basis measurement).
+Along a general direction the phases also move and Fisher–Rao only sees the moduli. The
+inequality `Σᵢ dpᵢ²/pᵢ ≤ 4 ‖u‖²` holds for every `u` with equality exactly on the
+torus-horizontal directions; read on the projective horizontal lift it is Braunstein–Caves for
+the computational-basis measurement: the classical Fisher information of the coordinate readout
+is at most the quantum Fisher information `4 (‖u‖² − ‖⟪ψ, u⟫‖²)`, with equality exactly when
+the projected direction is torus-horizontal.
 
 ## Main declarations
 
@@ -40,31 +46,45 @@ horizontal directions (Braunstein–Caves for the computational-basis measuremen
 * `FisherRao.bornDeriv ψ u i = 2 Re(ψ̄ᵢ uᵢ)` and `hasFDerivAt_bornWeight` — it is the differential of
   `ψ ↦ ‖ψ i‖ ^ 2`; `sum_bornDeriv` — the displacement sums to `2 Re ⟪ψ, u⟫`, so it is tangent to the
   simplex whenever `u` is tangent to the unit sphere.
-* `FisherRao.IsHorizontal ψ u` — every `ψ̄ᵢ uᵢ` is real.
-* ★ `fisherRaoInner_bornDeriv` — for horizontal `u` and any `v`,
+* `FisherRao.IsTorusHorizontal ψ u` — every `ψ̄ᵢ uᵢ` is real (orthogonal to the torus orbit;
+  not the same as the projective horizontal lift below, which also projects off `ψ`).
+* ★ `fisherRaoInner_bornDeriv` — for torus-horizontal `u` and any `v`,
   `fisherRaoInner (bornSimplex ψ) (bornDeriv ψ u) (bornDeriv ψ v) = 4 * Re ⟪u, v⟫`.
-* ★ `fisherInfo_bornDeriv_le` — `fisherInfo (bornWeight ψ) (bornDeriv ψ u) ≤ 4 * ‖u‖ ^ 2` for every
-  `u`, and `fisherInfo_bornDeriv_eq_iff` — with equality iff `u` is horizontal.
+* `fisherInfo_bornDeriv_le` — `fisherInfo (bornWeight ψ) (bornDeriv ψ u) ≤ 4 * ‖u‖ ^ 2` for every
+  `u`, and `fisherInfo_bornDeriv_eq_iff` — with equality iff `u` is torus-horizontal. These are
+  the algebraic form; `4 ‖u‖²` is the quantum Fisher information only for `u` tangent to the sphere.
 * Homogeneous coordinates, for the affine charts of `ℂℙⁿ`: `normalize ψ`, `horizontalLift ψ u`,
   `fsInnerHom ψ u v` (the Fubini–Study inner product at a nonzero `ψ`), ★ `inner_horizontalLift`
-  (`fsInnerHom` is `4 Re ⟪·,·⟫` of the horizontal lifts) and ★ `fisherRaoInner_bornDeriv_normalize`,
-  the bridge stated at `normalize ψ`.
+  (`fsInnerHom` is `4 Re ⟪·,·⟫` of the horizontal lifts), `fsInnerHom_self_of_norm_eq_one`
+  (`fsInnerHom ψ u u = 4 (‖u‖² − ‖⟪ψ, u⟫‖²)`, the quantum Fisher information, for unit `ψ`) and
+  ★ `fisherRaoInner_bornDeriv_normalize`, the bridge stated at `normalize ψ`.
+* ★ `fisherInfo_bornDeriv_horizontalLift_le` and `fisherInfo_bornDeriv_horizontalLift_eq_iff` —
+  **Braunstein–Caves, projectively**: the coordinate readout's Fisher information along the
+  horizontal lift of `u` is at most `fsInnerHom ψ u u`, the quantum Fisher information, with
+  equality iff the lift is torus-horizontal.
 
 ## The constant
 
 The right-hand side `4 * Re ⟪u, v⟫` is the Fubini–Study metric of the projective space in the
 normalisation of `Projectivization.fsMetric` (`Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyRiemannian.lean`,
-where the Gram matrix at a chart origin is `4 • 1`), evaluated on horizontal lifts. In the
-normalisation `‖u‖² − ‖⟪ψ, u⟫‖²` of Bengtsson–Życzkowski the constant is `4`, and that quantity
-times `4` is the quantum Fisher information of a pure-state family. No constant is assumed here;
-the `4` is the derivative of `‖·‖²`.
+where the Gram matrix at a chart origin is `4 • 1`), evaluated on horizontal lifts. In that
+normalisation the Fubini–Study metric of a pure-state family is its quantum Fisher information,
+`4 (‖u‖² − ‖⟪ψ, u⟫‖²)` for unit `ψ` (`fsInnerHom_self_of_norm_eq_one`). In the normalisation
+`‖u‖² − ‖⟪ψ, u⟫‖²` of Bengtsson–Życzkowski, which `Empirical/Metrology/QuantumFisher.lean`'s
+vector-level `fsMetric` uses, the bridge constant is `4` and the quantum Fisher information is
+`4 g_FS`. No constant is assumed here; the `4` is the derivative of `‖·‖²`.
 
 ## References
 
 * S. L. Braunstein, C. M. Caves, *Statistical distance and the geometry of quantum states*,
   Phys. Rev. Lett. 72, 3439 (1994).
 * I. Bengtsson, K. Życzkowski, *Geometry of Quantum States*, 2nd ed., §§4.4, 14.2.
-* Physlib PR #1652 (`FisherRao.lean`, mirrored in this directory); the completed-work ledger.
+* Physlib PR #1652 (`FisherRao.lean`, mirrored in this directory).
+
+## Provenance
+
+Built 2026-09-16 for Physlib PR #1652; recorded in this repository's completed-work ledger
+(`specs/future-work.md`, KG-4) and claims ledger (CL-076).
 -/
 
 @[expose] public section
@@ -95,14 +115,15 @@ def bornDeriv (ψ u : EuclideanSpace ℂ ι) (i : ι) : ℝ := 2 * (conj (ψ i) 
 
 /-! ## Horizontal directions -/
 
-/-- A direction `u` at `ψ` is **horizontal** when every `ψ̄ᵢ uᵢ` is real: it changes the moduli of
-the coordinates and none of their phases. This is the Fubini–Study-orthogonal complement of the
-orbit of the coordinate-phase torus. -/
-def IsHorizontal (ψ u : EuclideanSpace ℂ ι) : Prop := ∀ i, (conj (ψ i) * u i).im = 0
+/-- A direction `u` at `ψ` is **torus-horizontal** when every `ψ̄ᵢ uᵢ` is real: it changes the
+moduli of the coordinates and none of their phases, so it is orthogonal to the orbit of the
+coordinate-phase torus. It need not be tangent to the unit sphere (the radial direction `ψ`
+qualifies); the projective horizontal lift `horizontalLift` below removes the radial component. -/
+def IsTorusHorizontal (ψ u : EuclideanSpace ℂ ι) : Prop := ∀ i, (conj (ψ i) * u i).im = 0
 
 /-- A direction whose coordinates are real multiples of those of `ψ` is horizontal. -/
-theorem isHorizontal_of_forall_eq (ψ u : EuclideanSpace ℂ ι) (a : ι → ℝ)
-    (hu : ∀ i, u i = (a i : ℂ) * ψ i) : IsHorizontal ψ u := by
+theorem isTorusHorizontal_of_forall_eq (ψ u : EuclideanSpace ℂ ι) (a : ι → ℝ)
+    (hu : ∀ i, u i = (a i : ℂ) * ψ i) : IsTorusHorizontal ψ u := by
   intro i
   rw [hu i]
   simp only [Complex.mul_im, Complex.mul_re, Complex.conj_re, Complex.conj_im, Complex.ofReal_re,
@@ -190,25 +211,27 @@ theorem sum_bornDeriv (ψ u : EuclideanSpace ℂ ι) :
   simp only [bornDeriv, ← Finset.mul_sum, PiLp.inner_apply, RCLike.inner_apply, Complex.re_sum,
     mul_comm]
 
-/-- ★ **The bridge, at the vector level.** For a horizontal direction `u` and any direction `v`,
-the Fisher–Rao inner product of the Born displacements is four times the real inner product of
-the directions:
+/-- ★ **The bridge, at the vector level.** For a torus-horizontal direction `u` and any direction
+`v`, the Fisher–Rao inner product of the Born displacements is four times the real inner product
+of the directions:
 
     `g_FR(dΦ u, dΦ v) = 4 Re ⟪u, v⟫`.
 
-Only `u` needs to be horizontal; `v` is arbitrary. The `4` is the derivative of `‖·‖²`, and
-`4 Re ⟪u, v⟫` is the Fubini–Study metric in the round-sphere normalisation. -/
+Only `u` needs to be torus-horizontal; `v` is arbitrary. The `4` is the derivative of `‖·‖²`.
+When `u` and `v` are also tangent to the unit sphere at `ψ`, `4 Re ⟪u, v⟫` is the Fubini–Study
+inner product in the round-sphere normalisation; the projective statement that builds the
+tangency in is `fisherRaoInner_bornDeriv_normalize`. -/
 theorem fisherRaoInner_bornDeriv (ψ : EuclideanSpace ℂ ι) (hψ : ‖ψ‖ = 1) (h0 : ∀ i, ψ i ≠ 0)
-    {u : EuclideanSpace ℂ ι} (hu : IsHorizontal ψ u) (v : EuclideanSpace ℂ ι) :
+    {u : EuclideanSpace ℂ ι} (hu : IsTorusHorizontal ψ u) (v : EuclideanSpace ℂ ι) :
     (bornSimplex ψ hψ h0).fisherRaoInner (bornDeriv ψ u) (bornDeriv ψ v)
       = 4 * (inner ℂ u v : ℂ).re := by
   simp only [OpenSimplex.fisherRaoInner, bornSimplex_val, PiLp.inner_apply, Complex.re_sum,
     Finset.mul_sum]
   exact Finset.sum_congr rfl fun i _ => bornDeriv_mul_div_bornWeight ψ u v (h0 i) (hu i)
 
-/-- The Fisher–Rao quadratic form of a horizontal Born displacement is `4 ‖u‖ ^ 2`. -/
+/-- The Fisher–Rao quadratic form of a torus-horizontal Born displacement is `4 ‖u‖ ^ 2`. -/
 theorem fisherRaoSq_bornDeriv (ψ : EuclideanSpace ℂ ι) (hψ : ‖ψ‖ = 1) (h0 : ∀ i, ψ i ≠ 0)
-    {u : EuclideanSpace ℂ ι} (hu : IsHorizontal ψ u) :
+    {u : EuclideanSpace ℂ ι} (hu : IsTorusHorizontal ψ u) :
     (bornSimplex ψ hψ h0).fisherRaoSq (bornDeriv ψ u) = 4 * ‖u‖ ^ 2 := by
   rw [OpenSimplex.fisherRaoSq, fisherRaoInner_bornDeriv ψ hψ h0 hu u]
   congr 1
@@ -216,18 +239,21 @@ theorem fisherRaoSq_bornDeriv (ψ : EuclideanSpace ℂ ι) (hψ : ‖ψ‖ = 1) 
 
 /-! ## Braunstein–Caves for the coordinate readout -/
 
-/-- ★ **The classical Fisher information of the coordinate readout is at most the quantum Fisher
-information** `4 ‖u‖ ^ 2`, for every direction `u` (Braunstein–Caves, computational basis). -/
+/-- **The algebraic Braunstein–Caves bound**: the classical Fisher information of the coordinate
+readout along `u` is at most `4 ‖u‖ ^ 2`, for every direction `u`. For `u` tangent to the unit
+sphere at `ψ` that bound is the quantum Fisher information; for a general `u` it is not (the
+radial direction has `4 ‖ψ‖² = 4` and quantum Fisher information `0`), and the projective form
+is `fisherInfo_bornDeriv_horizontalLift_le`. -/
 theorem fisherInfo_bornDeriv_le (ψ u : EuclideanSpace ℂ ι) (h0 : ∀ i, ψ i ≠ 0) :
     fisherInfo (bornWeight ψ) (bornDeriv ψ u) ≤ 4 * ‖u‖ ^ 2 := by
   rw [fisherInfo, EuclideanSpace.norm_sq_eq, Finset.mul_sum]
   exact Finset.sum_le_sum fun i _ => bornDeriv_sq_div_bornWeight_le ψ u (h0 i)
 
-/-- ★ **Equality in Braunstein–Caves holds exactly on the horizontal directions**: the coordinate
-readout extracts the full quantum Fisher information of the direction `u` iff `u` changes only
-the moduli of the coordinates. -/
+/-- Equality in the algebraic bound holds exactly on the torus-horizontal directions. The
+projective form, where the right-hand side is the quantum Fisher information, is
+`fisherInfo_bornDeriv_horizontalLift_eq_iff`. -/
 theorem fisherInfo_bornDeriv_eq_iff (ψ u : EuclideanSpace ℂ ι) (h0 : ∀ i, ψ i ≠ 0) :
-    fisherInfo (bornWeight ψ) (bornDeriv ψ u) = 4 * ‖u‖ ^ 2 ↔ IsHorizontal ψ u := by
+    fisherInfo (bornWeight ψ) (bornDeriv ψ u) = 4 * ‖u‖ ^ 2 ↔ IsTorusHorizontal ψ u := by
   constructor
   · intro h
     rw [fisherInfo, EuclideanSpace.norm_sq_eq, Finset.mul_sum] at h
@@ -348,9 +374,9 @@ theorem bornDeriv_normalize_horizontalLift (ψ u : EuclideanSpace ℂ ι) (k : �
 /-- If every `ψ̄ₖ uₖ` is real then the horizontal lift of `u` is a horizontal direction at
 `normalize ψ`: the projection off `ψ` and the rescaling preserve the reality of every coordinate
 product, because `⟪ψ, u⟫ = Σ ψ̄ₖ uₖ` is then real as well. -/
-theorem isHorizontal_normalize_horizontalLift {ψ u : EuclideanSpace ℂ ι}
+theorem isTorusHorizontal_normalize_horizontalLift {ψ u : EuclideanSpace ℂ ι}
     (hu : ∀ k, (conj (ψ k) * u k).im = 0) :
-    IsHorizontal (normalize ψ) (horizontalLift ψ u) := by
+    IsTorusHorizontal (normalize ψ) (horizontalLift ψ u) := by
   have hin : (inner ℂ ψ u : ℂ).im = 0 := by
     rw [PiLp.inner_apply, Complex.im_sum]
     exact Finset.sum_eq_zero fun k _ => by rw [RCLike.inner_apply, mul_comm]; exact hu k
@@ -373,7 +399,60 @@ theorem fisherRaoInner_bornDeriv_normalize {ψ : EuclideanSpace ℂ ι} (hψ : �
         (bornSimplex (normalize ψ) (norm_normalize hψ) (fun k => normalize_apply_ne_zero hψ (h0 k)))
         (bornDeriv (normalize ψ) (horizontalLift ψ u)) (bornDeriv (normalize ψ) (horizontalLift ψ v))
       = fsInnerHom ψ u v := by
-  rw [fisherRaoInner_bornDeriv _ _ _ (isHorizontal_normalize_horizontalLift hu),
+  rw [fisherRaoInner_bornDeriv _ _ _ (isTorusHorizontal_normalize_horizontalLift hu),
     inner_horizontalLift hψ]
+
+/-! ## Braunstein–Caves, projectively
+
+`fisherInfo_bornDeriv_le` bounds the readout's Fisher information by `4 ‖u‖²`, which is the quantum
+Fisher information only when `u` is tangent to the unit sphere. The projective statement takes an
+arbitrary direction `u` at `ψ ≠ 0`, replaces it by its horizontal lift (the component orthogonal
+to `ψ`, rescaled), and compares with `fsInnerHom ψ u u` — which for unit `ψ` is
+`4 (‖u‖² − ‖⟪ψ, u⟫‖²)`, the quantum Fisher information of the family. -/
+
+/-- For a unit vector, the Fubini–Study quadratic form is the quantum Fisher information of a
+pure-state family: `fsInnerHom ψ u u = 4 (‖u‖² − ‖⟪ψ, u⟫‖²)`. -/
+theorem fsInnerHom_self_of_norm_eq_one {ψ : EuclideanSpace ℂ ι} (hψ : ‖ψ‖ = 1)
+    (u : EuclideanSpace ℂ ι) :
+    fsInnerHom ψ u u = 4 * (‖u‖ ^ 2 - ‖(inner ℂ ψ u : ℂ)‖ ^ 2) := by
+  have h1 : (inner ℂ u u : ℂ).re = ‖u‖ ^ 2 := inner_self_eq_norm_sq (𝕜 := ℂ) u
+  have h2 : (inner ℂ u ψ * inner ℂ ψ u : ℂ).re = ‖(inner ℂ ψ u : ℂ)‖ ^ 2 := by
+    have hc : conj (inner ℂ ψ u : ℂ) * inner ℂ ψ u = (‖(inner ℂ ψ u : ℂ)‖ : ℂ) ^ 2 :=
+      RCLike.conj_mul _
+    rw [← inner_conj_symm u ψ, hc, ← Complex.ofReal_pow, Complex.ofReal_re]
+  rw [fsInnerHom, hψ, h1, h2]
+  ring
+
+/-- The Fisher–Rao quadratic form of the lift's displacement, as `4 ‖horizontalLift ψ u‖²`. -/
+theorem fsInnerHom_self_eq_norm_horizontalLift {ψ : EuclideanSpace ℂ ι} (hψ : ψ ≠ 0)
+    (u : EuclideanSpace ℂ ι) : fsInnerHom ψ u u = 4 * ‖horizontalLift ψ u‖ ^ 2 := by
+  rw [← inner_horizontalLift hψ u u]
+  congr 1
+  exact inner_self_eq_norm_sq (𝕜 := ℂ) (horizontalLift ψ u)
+
+/-- ★ **Braunstein–Caves for the coordinate readout, projectively.** For `ψ ≠ 0` with no vanishing
+coordinate and any direction `u`, the classical Fisher information of the coordinate readout
+along the horizontal lift of `u` is at most the Fubini–Study quadratic form `fsInnerHom ψ u u`,
+i.e. the quantum Fisher information of the family (`fsInnerHom_self_of_norm_eq_one`). -/
+theorem fisherInfo_bornDeriv_horizontalLift_le {ψ : EuclideanSpace ℂ ι} (hψ : ψ ≠ 0)
+    (h0 : ∀ k, ψ k ≠ 0) (u : EuclideanSpace ℂ ι) :
+    fisherInfo (bornWeight (normalize ψ)) (bornDeriv (normalize ψ) (horizontalLift ψ u))
+      ≤ fsInnerHom ψ u u := by
+  rw [fsInnerHom_self_eq_norm_horizontalLift hψ]
+  exact fisherInfo_bornDeriv_le (normalize ψ) (horizontalLift ψ u)
+    fun k => normalize_apply_ne_zero hψ (h0 k)
+
+/-- ★ **Equality in projective Braunstein–Caves holds exactly when the horizontal lift is
+torus-horizontal**: the coordinate readout extracts the full quantum Fisher information of a
+direction iff, after the radial component is removed, the direction changes only the moduli of
+the coordinates. -/
+theorem fisherInfo_bornDeriv_horizontalLift_eq_iff {ψ : EuclideanSpace ℂ ι} (hψ : ψ ≠ 0)
+    (h0 : ∀ k, ψ k ≠ 0) (u : EuclideanSpace ℂ ι) :
+    fisherInfo (bornWeight (normalize ψ)) (bornDeriv (normalize ψ) (horizontalLift ψ u))
+        = fsInnerHom ψ u u
+      ↔ IsTorusHorizontal (normalize ψ) (horizontalLift ψ u) := by
+  rw [fsInnerHom_self_eq_norm_horizontalLift hψ]
+  exact fisherInfo_bornDeriv_eq_iff (normalize ψ) (horizontalLift ψ u)
+    fun k => normalize_apply_ne_zero hψ (h0 k)
 
 end FisherRao

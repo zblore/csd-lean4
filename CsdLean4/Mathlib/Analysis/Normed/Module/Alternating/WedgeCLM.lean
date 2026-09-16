@@ -14,7 +14,7 @@ public import Mathlib.Analysis.Calculus.ContDiff.Bounds
 **Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Analysis.Normed.Module.Alternating`).
 
-Milestone **M2(a)–(b)** of the top-power plan, and the norm bound that
+The norm bound that
 `Wedge.lean`'s honest scope listed as "true and a natural follow-up". `Wedge.lean` proved the
 exterior product of two continuous alternating maps continuous *in the vector family*; this
 module proves it bilinear and bounded *in the pair of forms*, which is what makes the wedge of

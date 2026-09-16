@@ -18,8 +18,7 @@ the Mathlib-gaps register; the source repository's terms register records what i
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`, the
 `## TODO` of `Mathlib/Analysis/Calculus/DifferentialForm/Basic.lean`).
 
-**Step (2b) of the manifold exterior-calculus plan** (the exterior-derivative plan,
-route A). A differential form on a manifold (`DifferentialForm.lean`, step (2a)) is a smooth
+A differential form on a manifold (`DifferentialForm.lean`) is a smooth
 section of the alternating bundle on the tangent bundle. Its exterior derivative is defined
 chart by chart and glued by the flat naturality lemma `extDeriv_pullback`:
 
@@ -41,7 +40,7 @@ chart by chart and glued by the flat naturality lemma `extDeriv_pullback`:
   `DifferentialForm 𝓘(ℝ, E) M ∞ (Fin k) G → DifferentialForm 𝓘(ℝ, E) M ∞ (Fin (k+1)) G`;
 * ★★ `mextDeriv_mextDeriv`, `DifferentialForm.mextDeriv_mextDeriv` — **`d ∘ d = 0`**,
   transported from `extDeriv_extDeriv_apply`;
-* **`0`-forms (brick G11 of the generator-layer plan, 2026-09-09):** `zeroFormFamily f`
+* **`0`-forms:** `zeroFormFamily f`
   (a function `f : M → G` as a `0`-form family), `localRep_zeroFormFamily`,
   `contMDiff_zeroFormFamily` (the section is `C^∞` when `f` is), the bundled `zeroForm f hf`, and
   ★ `toFlat_mextDeriv_zeroFormFamily` / `toFlat_mextDeriv_zeroForm` — **the exterior derivative
@@ -67,8 +66,7 @@ needing `d` on a `C^n` manifold or on a manifold with corners needs a generalisa
 smoothness arithmetic that this file deliberately avoids would come with it.
 
 ⚠️ **What is not here:** the Palais formula, naturality `d(f^*ω) = f^*(dω)` for maps of
-manifolds, linearity, and the Leibniz rule (which needs the wedge of *sections*;
-the exterior-derivative plan §5).
+manifolds, linearity, and the Leibniz rule (which needs the wedge of *sections*).
 
 ⚠️ **The chart at `x` is `chartAt E x`**, the atlas's own choice. `mextDeriv` is defined through
 it; `localRep_mextDeriv` is what shows the value is the same in every chart.

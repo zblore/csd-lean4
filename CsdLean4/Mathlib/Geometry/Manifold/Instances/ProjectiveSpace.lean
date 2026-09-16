@@ -19,8 +19,7 @@ prove. (Repository bookkeeping; it goes with the `References` block if this is s
 **Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Geometry.Manifold.Instances`, beside `Sphere.lean`).
 
-Step (0) of the manifold exterior-calculus plan (the Mathlib-gaps register, the Kahler / symplectic
-manifold API row; the backlog XL). At the pin, `Projectivization` carries a topology
+At the pin, `Projectivization` carries a topology
 (staged in this repository), a measurable space, a metric — and **no charted-space instance
 anywhere**, so `ℂℙⁿ` was not a manifold in Lean and nothing on it could be differentiated.
 MATHLIB-ABSENT(ChartedSpace.projectivization)

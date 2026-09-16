@@ -16,7 +16,7 @@ public import Mathlib.MeasureTheory.Function.Jacobian
 no measure or integration on manifolds exists at the pin — `Riemannian/Basic.lean` imports measure
 theory for path lengths only).
 
-Milestone **M3** of the top-power plan: a form whose degree is a basis index type of
+A form whose degree is a basis index type of
 the model space has, in every chart, a density — the absolute value of its coefficient against
 the basis — and those densities glue to a measure on the manifold.
 

@@ -2494,10 +2494,12 @@ entries:
       parametrised family of states before any choice of apparatus.
 
       For the coordinate readout of a pure state the corpus proves the bound itself and its
-      equality case: the classical Fisher information of the readout is at most four times
-      the squared length of the direction of change (fisherInfo_bornDeriv_le), with equality
-      exactly when the direction changes the moduli of the coordinates and not their phases
-      (fisherInfo_bornDeriv_eq_iff).
+      equality case: along the projective direction of change (the component of the change
+      orthogonal to the state, so that moving along the state itself counts for nothing) the
+      classical Fisher information of the readout is at most the quantum Fisher information
+      (fisherInfo_bornDeriv_horizontalLift_le), with equality exactly when that direction
+      changes the moduli of the coordinates and not their phases
+      (fisherInfo_bornDeriv_horizontalLift_eq_iff).
     person: >
       Ronald Fisher (1890-1962) was born in London, read mathematics at Cambridge, and did
       his transformative work not at a university but at Rothamsted Experimental Station
@@ -2552,8 +2554,10 @@ entries:
       with the Fubini-Study form, metric and volume proved on it rather than assumed, and
       the Born weights appear on that manifold as the moment map of the torus that rotates
       the phases of the coordinates. This result reads the moment map as a map between
-      geometries and finds that it's an isometry from the modulus-only directions onto the
-      Fisher-Rao metric of the weights, with constant one in the corpus's normalisation.
+      geometries and finds that it carries the Fubini-Study inner product of two
+      modulus-only directions to the Fisher-Rao inner product of their images, with constant
+      one in the corpus's normalisation, and that it sends no such direction to zero, so it's
+      an isometric embedding of the modulus-only directions into the simplex's tangent space.
 
       The value for the programme is that the metric side of its geometry is checked
       against a structure statisticians already own, and the value outside it is direct.
@@ -2564,22 +2568,32 @@ entries:
     mathematical: >
       For a unit vector psi with no vanishing coordinate the Born weights p_i = |psi_i|^2
       form a point of the open simplex, and a direction u moves them by dp_i = 2 Re(conj(psi_i)
-      u_i). Along a horizontal direction, one for which every conj(psi_i) u_i is real, the
-      Fisher-Rao inner product of the displacements of u and any v equals four times the
-      real inner product of u and v (fisherRaoInner_bornDeriv), and for a general direction
-      the coordinate readout's Fisher information is at most 4|u|^2 with equality exactly
-      when u is horizontal (fisherInfo_bornDeriv_eq_iff), which is the Braunstein-Caves
-      bound for that measurement.
+      u_i). Along a torus-horizontal direction, one for which every conj(psi_i) u_i is
+      real, the Fisher-Rao inner product of the displacements of u and any v equals four
+      times the real inner product of u and v (fisherRaoInner_bornDeriv); that is the
+      Fubini-Study inner product once u and v are also tangent to the unit sphere, and the
+      projective statement builds the tangency in by projecting the direction off psi first
+      (horizontalLift, fisherRaoInner_bornDeriv_normalize). Along that projected direction
+      the coordinate readout's Fisher information is at most fsInnerHom psi u u, which for
+      unit psi is the quantum Fisher information 4(|u|^2 - |<psi, u>|^2)
+      (fsInnerHom_self_of_norm_eq_one), with equality exactly when the projected direction is
+      torus-horizontal (fisherInfo_bornDeriv_horizontalLift_le, _eq_iff), which is the
+      Braunstein-Caves bound for that measurement.
 
       On the manifold the same statement reads fsMetric x u v = fisherRaoInner
       (toOpenSimplex x) (momentDeriv x u) (momentDeriv x v) on the regular stratum for u in
       the horizontal space, the Fubini-Study orthogonal complement of the torus orbit
-      (fsMetric_eq_fisherRaoInner). The constant is one because the corpus normalises the
-      Fubini-Study metric so that the qubit's state space is the unit sphere, where four
-      times the Bengtsson-Zyczkowski metric is the quantum Fisher information, and the
-      identification of the corpus's metric with that formula on lifts is its own theorem
-      (fsMetric_eq_fsInnerHom). Every declaration in the closure of the result depends on
-      the foundational triple of axioms only.
+      (fsMetric_eq_fisherRaoInner), and the differential is injective on that space at every
+      point of the regular stratum (momentDeriv_injOn_horizontalSpace). The constant is one
+      because the corpus normalises the Fubini-Study metric so that the qubit's state space
+      is the unit sphere, where the metric is itself the quantum Fisher information (four
+      times the Bengtsson-Zyczkowski metric), and the identification of the corpus's metric
+      with that formula on lifts is its own theorem (fsMetric_eq_fsInnerHom). The map called
+      the moment map here is the Born-weight map; the Hamiltonian of the torus action for the
+      corpus's form is twice its pairing with the angles, so the moment map in the Hamiltonian
+      sense is twice this map, and the constant one is for the weights. Every constant
+      declared in the closure of the result depends on the foundational triple of axioms
+      only.
     person: >
       Calyampudi Radhakrishna Rao (1920-2023) was born in Hadagali in what's now Karnataka,
       trained at Andhra University and Calcutta, and joined the Indian Statistical

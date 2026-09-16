@@ -26,7 +26,8 @@ line changed. The only edits are the module-system header (`module`, `public imp
 `@[expose] public section`) and docstrings on the three fields of `OpenSimplex`, both of which
 this repository's lints require. The Cramér–Rao half of the
 source file (`expect`, `variance`, `cramerRao`) is not needed by the bridge and is not
-mirrored.
+mirrored. The bridge this file serves is recorded in this repository's completed-work ledger
+(`specs/future-work.md`, KG-4).
 
 **Delete this file and import Physlib when the PR merges.** Until then csd-lean4 does not
 depend on Physlib, and must not depend on an unmerged branch.
@@ -42,7 +43,6 @@ depend on Physlib, and must not depend on an unmerged branch.
 * C. R. Rao, *Information and the accuracy attainable in the estimation
   of statistical parameters*, Bull. Calcutta Math. Soc. 37, 81–91 (1945)
 * H. Cramér, *Mathematical Methods of Statistics*, Princeton (1946)
-* the completed-work ledger (the completed-work ledger; the bridge this file serves).
 -/
 
 @[expose] public section

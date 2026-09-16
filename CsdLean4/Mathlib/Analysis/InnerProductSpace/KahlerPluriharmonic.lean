@@ -38,7 +38,7 @@ Fubini–Study form needs, none of which existed:
 
 Everything here is on a **flat** complex inner product space, in the `E → E [⋀^Fin k]→L[ℝ] ℝ`
 representation. The manifold-level `d` does not exist (step (2b)); these are the flat lemmas a
-chart-by-chart argument composes. No CSD content.
+chart-by-chart argument composes.
 
 **Provenance and references.** `KahlerPotential.lean` (`dcForm`, `ddcForm`, `fsChartForm`);
 `Mathlib/Analysis/Calculus/DifferentialForm/Basic.lean` (`extDeriv_pullback`,

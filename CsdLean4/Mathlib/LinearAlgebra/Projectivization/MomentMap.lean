@@ -19,7 +19,9 @@ coordinates, normalised by `‖z‖²`, do not depend on the representative. The
     `momentMap [z] i = ‖z i‖² / ‖z‖²`
 
 takes values in the standard simplex: every coordinate is nonnegative and the coordinates sum
-to one. It is the moment map of the coordinate-phase torus action for the Fubini–Study form;
+to one. It is the moment map of the coordinate-phase torus action for the Fubini–Study form,
+up to the factor that form's normalisation fixes (the Hamiltonian of the action is
+`2 Σ θₖ momentMap · k`, so the moment map in the Hamiltonian sense is twice this function);
 this file proves only the coordinate facts, and the manifold-level statement that earns the
 name lives downstream (`Projectivization.torusField_isHamiltonianVectorField` and
 `range_momentMap` in `Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`).
@@ -41,13 +43,13 @@ name lives downstream (`Projectivization.torusField_isHamiltonianVectorField` an
 Moved verbatim from `CsdLean4/LF4/MomentMap.lean` (2026-09-16), where it was introduced as the
 torus moment map whose coordinates are the Born weights of a preparation in the measurement
 eigenbasis. `CSD.LF4` re-exports these names, so that file remains the entry point for the
-programme-level reading; this file is the mathematics.
+programme-level reading; this file is the mathematics. Recorded in the completed-work ledger
+(`specs/future-work.md`, KG-4).
 
 ## References
 
 * Bengtsson, Życzkowski, *Geometry of Quantum States*, 2nd ed., §4.4 (the Fubini–Study geometry
   of `ℂℙⁿ` and the torus action).
-* the completed-work ledger (the completed-work ledger).
 -/
 
 @[expose] public section

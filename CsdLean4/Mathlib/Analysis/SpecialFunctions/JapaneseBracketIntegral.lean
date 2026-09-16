@@ -16,7 +16,7 @@ public import Mathlib.MeasureTheory.Constructions.Pi
 `Mathlib.Analysis.SpecialFunctions.JapaneseBracket`, which at the pin proves only the
 *integrability* of `(1 + ‖x‖²)^{-r/2}` for `r > dim`, never a value).
 
-Milestone **M7** of the top-power plan, the analytic half: the total mass of the
+The analytic half of the Fubini–Study mass computation: the total mass of the
 Fubini–Study volume is `4ⁿ n!` times this integral, and its value is `πⁿ / n!`.
 
 * `bracketAnti a k` — the antiderivative `-(a + r²)^{-(k+1)} / (2(k+1))` of `r (a + r²)^{-(k+2)}`,

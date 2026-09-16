@@ -1235,9 +1235,12 @@ regression and a blocker for the eventual Mathlib PR. -/
 -- Analysis/InformationGeometry (2026-09-16, the Fubini–Study → Fisher–Rao bridge for Physlib
 -- PR #1652). FisherRao.lean mirrors Nava-Hernandez's OpenSimplex / fisherRaoInner verbatim
 -- (deleted when the PR merges); FubiniStudyFisherRao.lean is the vector-level bridge: along a
--- horizontal direction u (every conj(ψ i) * u i real) the Fisher–Rao inner product of the Born
--- displacements is 4 Re ⟪u, v⟫ — constant ONE against the repo's fsMetric normalisation — and
--- Braunstein–Caves: fisherInfo ≤ 4 ‖u‖² for every direction, with equality iff horizontal.
+-- torus-horizontal direction u (every conj(ψ i) * u i real) the Fisher–Rao inner product of the
+-- Born displacements is 4 Re ⟪u, v⟫ — constant ONE against the repo's fsMetric normalisation —
+-- and the algebraic bound fisherInfo ≤ 4 ‖u‖² with equality iff torus-horizontal. Braunstein–Caves
+-- proper (2026-09-16, after external review): along the projective horizontal lift the readout's
+-- Fisher information is ≤ fsInnerHom ψ u u, the quantum Fisher information 4(‖u‖² − ‖⟪ψ,u⟫‖²)
+-- for unit ψ, with equality iff the lift is torus-horizontal.
 /-- info: 'FisherRao.OpenSimplex.fisherRao_cauchy_schwarz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms FisherRao.OpenSimplex.fisherRao_cauchy_schwarz
 
@@ -1270,6 +1273,15 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'FisherRao.fisherRaoInner_bornDeriv_normalize' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms FisherRao.fisherRaoInner_bornDeriv_normalize
 
+/-- info: 'FisherRao.fsInnerHom_self_of_norm_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms FisherRao.fsInnerHom_self_of_norm_eq_one
+
+/-- info: 'FisherRao.fisherInfo_bornDeriv_horizontalLift_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FisherRao.fisherInfo_bornDeriv_horizontalLift_le
+
+/-- info: 'FisherRao.fisherInfo_bornDeriv_horizontalLift_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FisherRao.fisherInfo_bornDeriv_horizontalLift_eq_iff
+
 -- Geometry/Manifold/Instances/ProjectiveSpaceFisherRao.lean (2026-09-16): the manifold bridge.
 -- fsMetric at x IS the homogeneous Fubini–Study formula on the lifts to insertOne (idx x) w
 -- (the recognition lemma), the moment map is differentiable with momentDeriv killing the torus
@@ -1296,6 +1308,14 @@ regression and a blocker for the eventual Mathlib PR. -/
 
 /-- info: 'Projectivization.fsMetric_eq_fisherRaoInner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.fsMetric_eq_fisherRaoInner
+
+-- Injectivity on the horizontal space (2026-09-16, after external review): the bridge is an
+-- isometric embedding into the zero-sum tangent space, not only a pairing identity.
+/-- info: 'Projectivization.momentDeriv_eq_zero_iff_of_mem_horizontalSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.momentDeriv_eq_zero_iff_of_mem_horizontalSpace
+
+/-- info: 'Projectivization.momentDeriv_injOn_horizontalSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Projectivization.momentDeriv_injOn_horizontalSpace
 
 -- MG-1 (2026-08-22, Projectivization/Metric.lean, specs/mathlib-gaps-plan.md): the first
 -- METRIC on Projectivization anywhere — the rank-one projection embedding p -> P_p (scale-

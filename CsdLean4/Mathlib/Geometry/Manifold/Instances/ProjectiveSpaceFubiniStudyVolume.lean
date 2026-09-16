@@ -20,7 +20,7 @@ public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 
 **Category:** 1-Mathlib (CSD-free).
 
-Milestones **M5** and **M6** of the top-power plan, Route U (uniqueness). The
+The uniqueness route to the Fubini–Study volume. The
 `2n`-form `fsTopForm n` (the `n`-th exterior power of the Fubini–Study form,
 `ProjectiveSpaceFubiniStudyForm.lean`) has a measure on `ℂℙⁿ` (`TopFormMeasure.lean`, against
 Lebesgue measure on the model `Fin n → ℂ` and the affine chart cover). This module shows it is

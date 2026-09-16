@@ -67,9 +67,7 @@ not claimed:
 
 The point of the file is narrow and worth stating plainly: with it, a top-power identity
 of the shape `ω^(N-1)/(N-1)! = μ_FS` becomes **sayable in Lean**. It does not make any
-such statement true, and nothing in this repository's physics waits on it
-(the Mathlib-gaps register, the Kahler / symplectic manifold API row; step (1) of the staged plan
-in the XL section of the backlog).
+such statement true, and nothing here depends on it.
 
 **Provenance and references.** The Mathlib-gaps register; the backlog (XL, "Manifold exterior calculus");
 the terms register (`moment map`);

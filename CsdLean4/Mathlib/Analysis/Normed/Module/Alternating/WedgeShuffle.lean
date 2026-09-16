@@ -14,7 +14,7 @@ public import Mathlib.GroupTheory.Perm.Finite
 **Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Analysis.Normed.Module.Alternating`).
 
-Milestone **M6(b)** of the top-power plan, the combinatorial half. The wedge
+The wedge
 `α ∧ β` of a `2k`-form with a 2-form, evaluated on `2k + 2` vectors, is a signed sum over the
 shuffle classes `Equiv.Perm.ModSumCongr (Fin (2k)) (Fin 2)` (`wedge_apply`). When the vectors
 come in `k + 1` **pairs** on which `β` is `±1` within a pair and `0` across pairs

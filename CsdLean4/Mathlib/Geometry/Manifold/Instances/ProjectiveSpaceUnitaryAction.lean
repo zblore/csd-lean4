@@ -17,7 +17,7 @@ the source repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free).
 
-Milestone **M4** of the top-power plan, the chart half. The unitary group
+The unitary group
 `U(n+1)` acts on `ℂℙⁿ` (`Projectivization/Unitary.lean`); read from the affine chart `i` to the
 affine chart `j`, a unitary `U` is the map `uTrans U i j : w ↦ coordRatio j (U (insertOne i w))`,
 a linear-fractional map, holomorphic wherever the `j`-th coordinate of `U (insertOne i w)` does

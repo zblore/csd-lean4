@@ -14,7 +14,6 @@ public import Mathlib.Analysis.ODE.PicardLindelof
 # Global integral curves and the flow of a `C^1` vector field on a compact manifold
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold.IntegralCurve`).
-Q29 milestone (a) of the generator-layer plan §11.
 
 Mathlib has local existence (`exists_isMIntegralCurveAt_of_contMDiffAt`), uniqueness
 (`isMIntegralCurve_eq_of_contMDiff`), and the uniform-time principle

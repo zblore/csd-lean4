@@ -15,7 +15,7 @@ public import Mathlib.Topology.Algebra.Module.Determinant
 **Category:** 1-Mathlib (CSD-free; upstream target
 `Mathlib.Analysis.Normed.Module.Alternating`).
 
-Milestone **M1** of the top-power plan. A continuous alternating form on `E` whose
+A continuous alternating form on `E` whose
 degree is a basis index type of `E` is a scalar multiple of that basis's determinant, and
 pulling it back along an endomorphism scales the scalar by the endomorphism's determinant. Both
 are upstream facts about `AlternatingMap` (`AlternatingMap.eq_smul_basis_det`,

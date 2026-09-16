@@ -32,13 +32,12 @@ tangent model `E` is now a theorem, not prose. This module delivers:
 
 This is the **flat** statement, on the linear tangent model
 `E = EuclideanSpace ℂ (Fin N)` — the formalisable fragment of the manifold
-residual that `KahlerOnticSetup.kahler_pointwise` names (closedness `dω = 0`
-and the top-power identity on `ℂℙ^{N-1}` itself; connectivity link L1,
-the connectivity manifest). Forms on the quotient manifold `ℂℙ^{N-1}`
-remain outside Mathlib's API (its own `DifferentialForm/Basic.lean` TODO);
-nothing here claims manifold-level closedness, and the top-power volume
-identity is untouched. Follow-up tracked in the completed-work ledger (the W/EC
-ladders) and backlog §A (A4).
+residual (closedness `dω = 0` and the top-power identity on `ℂℙ^{N-1}` itself).
+Forms on the quotient manifold `ℂℙ^{N-1}` remain outside Mathlib's API (its own
+`DifferentialForm/Basic.lean` TODO); nothing here claims manifold-level closedness, and
+the top-power volume identity is untouched. Both are proved in this repository's manifold
+layer (`Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudySymplectic.lean`,
+`ProjectiveSpaceFubiniStudyVolume.lean`).
 
 Supporting API added en route (right-slot bilinearity of `ω`, the
 Cauchy–Schwarz bound `|ω u v| ≤ ‖u‖‖v‖`, the bundled `fundamentalFormCLM`):
