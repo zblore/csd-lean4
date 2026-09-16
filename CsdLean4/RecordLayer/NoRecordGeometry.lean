@@ -9,18 +9,18 @@ public import CsdLean4.RecordLayer.SharpenedNoGo
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 
 /-!
-# SigmaLayer/NoRecordGeometry: the no-record set is inside the closure of its interior
+# RecordLayer/NoRecordGeometry: the no-record set is inside the closure of its interior
 
-**Category:** 7-SigmaLayer (dynamical measurement) — `specs/BACKLOG.md` **B5-geom**, the single remaining
-hypothesis of B5, the trilemma's third leg.
+**Category:** 7-SigmaLayer (regularity of pointer record-region complements).
 
 ## The gap this closes
 
-`posMeasure_noRecord_of_correlates` (`SharpenedNoGo.lean`) proved the third leg with every
-*dynamical* hypothesis discharged and exactly one *geometric* assumption left: `hreg`, that
-the no-record set is contained in the closure of its interior. This module constructs the
-perturbation that proves it, and instantiates the leg for the pointer's own record regions —
-so **B5 closes outright**.
+`posMeasure_noRecord_of_correlates` (`SharpenedNoGo.lean`) assumes that the complement of
+two disjoint open sets is contained in the closure of its interior (`hreg`). This module
+proves regularity of the full no-record set, then groups one record region against all
+the others to obtain a positive-measure set of inputs whose outputs avoid every record.
+Continuity, openness, an open preconnected ready set and attainment of two distinct
+outcomes remain hypotheses of the resulting theorem.
 
 ## The construction: feed weight into the ready component
 
@@ -29,8 +29,8 @@ its ready component `v 0` with a slightly larger one (`feedReady`):
 
 * every **record numerator** `‖v (j+1)‖²` is untouched (`feedReady_succ`),
 * the **norm strictly grows** (`norm_sq_feedReady_gt`),
-* hence every relevant record moment **strictly drops** below `1/2` — the perturbed ray has
-  all of them `< 1/2` (a moment with zero numerator stays `0 < 1/2`).
+* hence every positive relevant record moment **strictly decreases**, and all relevant
+  moments are `< 1/2` (a moment with zero numerator stays `0 < 1/2`).
 
 The replacement family is phase-preserving where it matters: if `v 0 ≠ 0` we scale it by
 `1 + 1/(n+1)` (same phase, so convergence to `v` is immediate — no chart argument); if
@@ -43,25 +43,29 @@ quotient map `Projectivization.mk'`, and `q` lies in the closure of the strict s
   arbitrary index set `S` (so one proof serves both consumers below).
 ★ `noRecord_subset_closure_interior` — the B5-geom statement: the full no-record set
   `(⋃ j, recordRegion j)ᶜ` is contained in the closure of its interior.
-★★ `posMeasure_noRecord_pointer` — **B5 closed**: on the pointer manifold, a continuous
-  open-map propagator that correlates two outcomes on an open preconnected ready set gives
-  the no-record set positive Fubini–Study measure. Every hypothesis is now either the
-  witness's own dynamics or a theorem; nothing geometric is assumed.
+★★ `posMeasure_noRecord_pointer` — ready inputs whose outputs lie in the interior of the
+  complement of **all record regions** have positive Fubini–Study measure, under
+  the stated dynamical and ready-set hypotheses. The geometric regularity input is proved.
+* `not_ae_record_pointer` — exact records cannot hold almost everywhere for Fubini–Study
+  measure restricted to that ready set, under the same hypotheses.
 
 ## Honest scope
 
-This is the *local* trilemma leg (the pointer's moment-region geometry), exactly as scoped
-when the row was parked: general exhaustiveness — no witness on *any* arena combines
-continuity, positive-width ready, a.e.-exact records and exact Born — quantifies over all
-arenas and stays research (`specs/BACKLOG.md` §E, the two research frontiers).
+The closure lemmas cover both the full no-record set and a selected pair's complement.
+The final positive-measure theorem uses the **full complement** for arbitrary `K`;
+the two selected indices witness attainment of distinct outcomes, not exhaustion of them.
+
+The obstruction is conditional on the propagator and ready-set
+hypotheses. It does not classify alternative calibrations or prove that Dirac calibration
+is necessary. General trilemma exhaustiveness over other arenas is not proved here.
 
 ## References
 
-`specs/BACKLOG.md` B5, B5-geom (and §E for general trilemma exhaustiveness, which stays
-research); `specs/future-work.md` (the completed-work ledger this lands in);
+`specs/BACKLOG.md` B5, B5-geom (historical motivation) and Q13 (general trilemma exhaustiveness);
+`specs/future-work.md`;
 `RecordLayer/SharpenedNoGo.lean` (`posMeasure_noRecord_of_correlates`, whose `hreg` this
 discharges); `RecordLayer/PointerArena.lean` (`recordRegion`, the moment-region geometry);
-`RecordLayer/NullSeamWitness.lean` (the third horn whose Dirac price this makes a theorem);
+`RecordLayer/NullSeamWitness.lean` (the Dirac-calibrated witness);
 `docs/TOUR.md` §"Which horn is the right one?".
 -/
 
@@ -76,8 +80,8 @@ variable {K : ℕ}
 /-! ### The perturbation: feed weight into the ready component -/
 
 /-- Replace the ready component of `v` by `c`, leaving every record component untouched.
-The module is the observation that this map carries a boundary no-record state into the
-strict no-record set while converging back to `v`. -/
+The later lemmas choose replacements of strictly larger norm converging to `v 0`, so
+boundary no-record rays are approximated by rays in the strict no-record set. -/
 noncomputable def feedReady (v : EuclideanSpace ℂ (Fin (K + 1))) (c : ℂ) :
     EuclideanSpace ℂ (Fin (K + 1)) :=
   WithLp.toLp 2 (Function.update (WithLp.ofLp v) 0 c)
@@ -148,8 +152,9 @@ lemma tendsto_feedReady (v : EuclideanSpace ℂ (Fin (K + 1))) {c : ℕ → ℂ}
 /-- ★ **The core**: a ray whose `S`-indexed record moments are all `≤ 1/2` lies in the
 closure of the set where they are all `< 1/2`, along any feeding family that strictly
 enlarges the ready component while converging to it. The record numerators are fixed
-(`feedReady_succ`) while the norm strictly grows (`norm_sq_feedReady_gt`), so every
-relevant moment strictly drops; convergence passes through `Projectivization.mk'`. -/
+(`feedReady_succ`) while the norm strictly grows (`norm_sq_feedReady_gt`), so positive
+relevant moments decrease and zero moments remain below `1/2`; convergence passes through
+`Projectivization.mk'`. -/
 theorem mk_mem_closure_strictNoRecord (S : Set (Fin K))
     (v : EuclideanSpace ℂ (Fin (K + 1))) (hv : v ≠ 0)
     (hle : ∀ j ∈ S, LF4.momentMap (Projectivization.mk ℂ v hv) j.succ ≤ 1 / 2)
@@ -281,25 +286,65 @@ theorem recordRegion_pair_compl_regular (j l : Fin K) :
   · exact (isOpen_lt (LF4.continuous_momentMap j.succ) continuous_const).inter
       (isOpen_lt (LF4.continuous_momentMap l.succ) continuous_const)
 
-/-- ★★ **The trilemma's third leg, closed** (BACKLOG B5). On the pointer manifold, a
-continuous **open-map** propagator that correlates two outcomes on an **open preconnected**
-ready set gives the no-record set **positive Fubini–Study measure**. Compared with
-`posMeasure_noRecord_of_correlates`, no geometric hypothesis remains: regularity of the
-no-record set is `recordRegion_pair_compl_regular`, disjointness and openness of the record
-regions are the arena's own theorems, and FS positivity on opens is
-`fubiniStudyMeasure_pos_of_isOpen`. Exact-a.e. records therefore force Dirac calibration —
-the third horn's price is now a theorem, not a classification. -/
+/-- **Positive measure of ready inputs whose outputs avoid every record region.**
+Assume a continuous open map reaches two distinct outcomes from an open preconnected
+ready set `A`. Group one record region against the union of all the others, then apply
+`posMeasure_noRecord_of_correlates` using `noRecord_subset_closure_interior`.
+The resulting exceptional set avoids all `K` records, including when `K > 2`. -/
 theorem posMeasure_noRecord_pointer (q₀ : Pointer K)
     {Φ : Pointer K → Pointer K} (hopen : IsOpenMap Φ) (hcont : Continuous Φ)
     {A : Set (Pointer K)} (hA : IsOpen A) (hconn : IsPreconnected A)
     {j l : Fin K} (hjl : j ≠ l)
     (hmeetj : ∃ x ∈ A, Φ x ∈ recordRegion j) (hmeetl : ∃ x ∈ A, Φ x ∈ recordRegion l) :
     fubiniStudyMeasure q₀
-      (A ∩ Φ ⁻¹' interior ((recordRegion (K := K) j ∪ recordRegion l)ᶜ)) ≠ 0 :=
-  posMeasure_noRecord_of_correlates
+      (A ∩ Φ ⁻¹' interior ((⋃ i, recordRegion (K := K) i)ᶜ)) ≠ 0 := by
+  let rest : Set (Pointer K) := ⋃ i : {i : Fin K // i ≠ j}, recordRegion i.val
+  have hrest : IsOpen rest := isOpen_iUnion fun i => isOpen_recordRegion i.val
+  have hdisj : Disjoint (recordRegion j) rest := by
+    apply Set.disjoint_iUnion_right.mpr
+    intro i
+    exact recordRegion_pairwiseDisjoint i.property.symm
+  have hunion : recordRegion j ∪ rest = ⋃ i, recordRegion (K := K) i := by
+    ext q
+    constructor
+    · rintro (hq | hq)
+      · exact Set.mem_iUnion.mpr ⟨j, hq⟩
+      · obtain ⟨i, hi⟩ := Set.mem_iUnion.mp hq
+        exact Set.mem_iUnion.mpr ⟨i.val, hi⟩
+    · intro hq
+      obtain ⟨i, hi⟩ := Set.mem_iUnion.mp hq
+      by_cases hij : i = j
+      · exact Or.inl (hij ▸ hi)
+      · exact Or.inr (Set.mem_iUnion.mpr ⟨⟨i, hij⟩, hi⟩)
+  have hreg : (recordRegion j ∪ rest)ᶜ ⊆ closure (interior ((recordRegion j ∪ rest)ᶜ)) := by
+    rw [hunion]
+    exact noRecord_subset_closure_interior
+  have hmeetrest : ∃ x ∈ A, Φ x ∈ rest := by
+    obtain ⟨x, hx, hxl⟩ := hmeetl
+    exact ⟨x, hx, Set.mem_iUnion.mpr ⟨⟨l, hjl.symm⟩, hxl⟩⟩
+  have h := posMeasure_noRecord_of_correlates
     (fun _ hW hWne => LF4.fubiniStudyMeasure_pos_of_isOpen q₀ hW hWne)
-    hopen hcont hA hconn (isOpen_recordRegion j) (isOpen_recordRegion l)
-    (recordRegion_pairwiseDisjoint hjl)
-    (recordRegion_pair_compl_regular j l) hmeetj hmeetl
+    hopen hcont hA hconn (isOpen_recordRegion j) hrest hdisj hreg hmeetj hmeetrest
+  simpa only [hunion] using h
+
+/-- Under the same hypotheses, exact records cannot hold almost everywhere on the ready
+set with respect to restricted Fubini–Study measure. This applies to all `K` outcomes;
+it does not classify alternative ready sets, measures or propagators. -/
+theorem not_ae_record_pointer (q₀ : Pointer K)
+    {Φ : Pointer K → Pointer K} (hopen : IsOpenMap Φ) (hcont : Continuous Φ)
+    {A : Set (Pointer K)} (hA : IsOpen A) (hconn : IsPreconnected A)
+    {j l : Fin K} (hjl : j ≠ l)
+    (hmeetj : ∃ x ∈ A, Φ x ∈ recordRegion j) (hmeetl : ∃ x ∈ A, Φ x ∈ recordRegion l) :
+    ¬ ∀ᵐ q ∂(fubiniStudyMeasure q₀).restrict A, Φ q ∈ ⋃ i, recordRegion (K := K) i := by
+  rw [ae_restrict_iff' hA.measurableSet]
+  intro h
+  have hnull : fubiniStudyMeasure q₀
+      {q | q ∈ A ∧ Φ q ∉ ⋃ i, recordRegion (K := K) i} = 0 := by
+    simpa only [ae_iff, Classical.not_imp] using h
+  apply posMeasure_noRecord_pointer q₀ hopen hcont hA hconn hjl hmeetj hmeetl
+  refine measure_mono_null ?_ hnull
+  intro q hq
+  have hout : Φ q ∈ interior ((⋃ i, recordRegion (K := K) i)ᶜ) := hq.2
+  exact ⟨hq.1, interior_subset hout⟩
 
 end CSD.RecordLayer

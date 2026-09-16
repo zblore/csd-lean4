@@ -3068,7 +3068,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- The single remaining hypothesis of the trilemma's third leg was GEOMETRIC: that the
 -- no-record set is contained in the closure of its interior. The construction: feed weight
 -- into the ready component (feedReady) -- every record numerator is fixed, the norm
--- strictly grows, so every record moment strictly drops below 1/2; the family is
+-- strictly grows, so positive record moments decrease and zero ones stay below 1/2; the family is
 -- phase-preserving on the nonzero branch, so convergence back to the ray is immediate and
 -- needs no chart argument.
 -- ★ noRecord_subset_closure_strict — the core, for an arbitrary index set of record
@@ -3078,9 +3078,10 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- hreg consumes.
 -- ★★ posMeasure_noRecord_pointer — B5: on the pointer manifold, a continuous open-map
 -- propagator correlating two outcomes on an open preconnected ready set gives the
--- no-record set positive FS measure. NO geometric hypothesis remains -- exact-a.e. records
--- force Dirac calibration as a THEOREM. Honest scope unchanged: this is the LOCAL leg
--- (the pointer's moment regions); general exhaustiveness over all arenas stays research.
+-- FULL no-record preimage positive FS measure, for arbitrary K: group one record region
+-- against all others and use noRecord_subset_closure_interior. not_ae_record_pointer
+-- derives the failure of a.e.-exact records for FS restricted to the ready set.
+-- Dynamics and ready-set hypotheses remain; this does not prove Dirac calibration necessary.
 /-- info: 'CSD.RecordLayer.noRecord_subset_closure_strict' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.noRecord_subset_closure_strict
 
@@ -3092,6 +3093,9 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 /-- info: 'CSD.RecordLayer.posMeasure_noRecord_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.posMeasure_noRecord_pointer
+
+/-- info: 'CSD.RecordLayer.not_ae_record_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.RecordLayer.not_ae_record_pointer
 
 -- PointerLudersMarginal (2026-08-05, RecordLayer/PointerLudersMarginal.lean; BACKLOG B3b
 -- brick 2 -- and with it B3b CLOSED).

@@ -11,6 +11,8 @@ public import CsdLean4.LF2.Interface
 public import CsdLean4.LF3.Interface
 public import CsdLean4.LF3.PurePreparation
 public import CsdLean4.Tests.EntropyWitness
+public import CsdLean4.RecordLayer.NoRecordGeometry
+public import CsdLean4.RecordLayer.ShearDiscontinuity
 
 /-!
 # Examples and API smoke tests
@@ -455,5 +457,38 @@ example
   LF3_singlet_frequency_convergence_born D ctx prep hX hlaw hindep
 
 end LF3Chain
+
+/-! ## Full no-record set: three-outcome regression
+
+Use the identity on the whole connected pointer space to discharge every dynamical
+and ready-set hypothesis. Three outcomes distinguish the full-complement theorem
+from the old two-region statement; the third record is explicitly inhabited. -/
+
+section NoRecord
+
+open CSD.RecordLayer Matrix.UnitaryGroup
+
+example : recordState (2 : Fin 3) ∈ recordRegion (2 : Fin 3) :=
+  recordState_mem_recordRegion 2
+
+example (q₀ : Pointer 3) :
+    fubiniStudyMeasure q₀ (interior ((⋃ i, recordRegion (K := 3) i)ᶜ)) ≠ 0 := by
+  have h := posMeasure_noRecord_pointer q₀ (Φ := id) (A := Set.univ)
+    IsOpenMap.id continuous_id isOpen_univ isPreconnected_univ
+    (j := 0) (l := 1) (by decide)
+    ⟨recordState 0, Set.mem_univ _, recordState_mem_recordRegion 0⟩
+    ⟨recordState 1, Set.mem_univ _, recordState_mem_recordRegion 1⟩
+  simpa using h
+
+example (q₀ : Pointer 3) :
+    ¬ ∀ᵐ q ∂fubiniStudyMeasure q₀, q ∈ ⋃ i, recordRegion (K := 3) i := by
+  have h := not_ae_record_pointer q₀ (Φ := id) (A := Set.univ)
+    IsOpenMap.id continuous_id isOpen_univ isPreconnected_univ
+    (j := 0) (l := 1) (by decide)
+    ⟨recordState 0, Set.mem_univ _, recordState_mem_recordRegion 0⟩
+    ⟨recordState 1, Set.mem_univ _, recordState_mem_recordRegion 1⟩
+  simpa using h
+
+end NoRecord
 
 end CSD.Tests.Examples
