@@ -21,10 +21,17 @@ Spec §4:
   of a preparation measure (spec §4.2).
 - `weights_sum_eq_one` — normalisation (spec §4.3).
 
-The partition is stated relative to the pushforward measure `π*μprep`, not
-`μFS` directly. This is cleaner than the spec's `μFS`-relative formulation:
-via the measure bridge, the two agree, but this form lets `weights_sum_eq_one`
-be proved without dragging `μFS` through.
+The partition is stated relative to the preparation's pushforward measure
+`π*μprep`. The measure bridges concern the sector's reference measure `μL`;
+they do not identify `π*μprep` with `μFS` for an arbitrary preparation measure.
+A `μFS`-relative partition would also suffice if `π*μprep ≪ μFS`, since absolute
+continuity transfers its null overlaps and null uncovered set to `π*μprep`.
+No such relationship is assumed here. See `specs/LF2-plan.md` §2.3 for the
+partition interface.
+
+`weights_sum_eq_one` uses measurability of `π`, the probability preparation
+measure and the partition hypotheses. It does not use a Fubini–Study measure
+or the sector's symmetry and measure-bridge properties.
 -/
 
 @[expose] public section
@@ -56,7 +63,8 @@ variable {SigmaSpace P G : Type*}
   [MulAction.IsPretransitive G P]
 
 /-- Projective weight of an outcome region `O ⊆ P` under the pushforward of
-    a preparation measure. -/
+    a preparation measure. This definition allows arbitrary measures and sets;
+    probability normalisation and measurable parts are assumed in `weights_sum_eq_one`. -/
 noncomputable def projectiveWeight
     (D : SectorData SigmaSpace P G)
     (μprep : Measure SigmaSpace)

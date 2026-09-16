@@ -17,7 +17,7 @@ public import Mathlib.Data.Fintype.Pi
 The addition layer of the reversible-circuit substrate
 (`Circuit.lean` / `Cost.lean`; the application that motivated this substrate lives in the `Ecdsafail` repository, `specs/ecdsa/ecdlp-resource-plan.md` there). Pass 1 delivers a **sorry-free
 semantic + derived-cost scaffold**: the register readout `regVal`, the **fully verified** four-gate
-full-adder gadget, its derived cost, and the **linear** Toffoli / CNOT count of an `k`-slice ripple
+full-adder gadget, its derived cost, and the **linear** Toffoli / CNOT count of a `k`-slice ripple
 adder (composed through the Tranche-1 `cost_comp_*` lemmas, not re-derived).
 
 The locked design decision is respected throughout: every cost claim is about an *exhibited*
@@ -27,12 +27,12 @@ all-inputs coverage (`decide` over `Fintype (Fin 4 → Bool)`), not a single exa
 ## What is proved here
 
 **Pass 1 (cost + gadget):**
-* `regVal` little-endian readout, `regVal_lt_two_pow`, and an `X`-flip round-trip lemma.
+* `regVal` little-endian readout, `regVal_lt_two_pow`, and the bit-update law `regVal_update_eq`.
 * `fullAdder` (four gates) with **full all-inputs correctness** on the concrete `State 4` layout:
   sum bit `b ← a ⊕ b ⊕ cin`, carry-out `cout ← majority(a, b, cin)` (with `cout` init `false`),
   `a` and `cin` preserved.
 * `fullAdder_cost`: derived `toffoli = 2`, `cnot = 2` (and the full `Cost` record).
-* `rippleAdder` (an `k`-slice concatenation of `fullAdder` gadgets) with **linear cost**:
+* `rippleAdder` (a `k`-slice concatenation of `fullAdder` gadgets) with **linear cost**:
   `(circuitCost (rippleAdder ...)).toffoli = 2 * k` and `.cnot = 2 * k`, composed through the
   Tranche-1 composition lemmas.
 
@@ -41,11 +41,17 @@ off the concrete `State 4` to arbitrary distinct `Fin n` wires, via the Circuit-
 `denote_apply_of_forall_not_mem` / `fullAdder_apply_of_ne`.
 
 **Pass 2 Stage B (carry-chain arithmetic — the modular-addition correctness):** `rippleCirc`, the
-in-place ripple adder over a disjoint-wire `RippleLayout`, computes `(A + B) mod 2 ^ n` into register
-`B`: `rippleCirc_correct`. Proved by induction on the slices (`rippleCirc_invariant`, the 4-clause
+in-place ripple adder over a disjoint-wire `RippleLayout` with all carry wires initially `false`,
+computes `(A + B) mod 2 ^ n` into register `B`: `rippleCirc_correct`. Proved by induction on the
+slices (`rippleCirc_invariant`, the 4-clause
 carry invariant) lifting `fullAdder_correct_general` through the frame lemma and the per-slice
 arithmetic `fulladder_nat`. Non-vacuity witnessed by `rippleLayout2` (a concrete 2-bit layout on
 `Fin 7`). This is the genuine *computational* correctness, not just the cost.
+
+The addition modulus is `2 ^ n`. The carry wires are part of the supplied layout and are not
+uncomputed by this circuit. `circuitCost` fixes `ancilla = 0` and counts Toffoli as a primitive
+with `tCount = 0`; these conventions do not assert zero carry workspace or a zero-T implementation
+over a decomposed gate set. Its `toffoliDepth` is the sequential gate count.
 -/
 
 @[expose] public section
@@ -110,7 +116,8 @@ theorem regVal_update_eq (s : State n) (i : Fin n) (b : Bool) :
 /-- Boolean majority of three bits: at least two are set. -/
 def majority (a b c : Bool) : Bool := (a && b) || (a && c) || (b && c)
 
-/-- The four-gate full adder on wires `a b cin cout` (with `cout` initialised `false`):
+/-- The four-gate full adder on pairwise-distinct wires `a b cin cout`
+(with `cout` initialised `false`):
 `b ← a ⊕ b ⊕ cin` (sum bit), `cout ← majority(a, b, cin)` (carry-out), `a`/`cin` unchanged.
 
 The gate order realises the standard in-place adder: write the partial carry into `cout` from
@@ -122,7 +129,8 @@ def fullAdder (a b cin cout : Fin n) : Circuit n :=
 /-- **Full-adder correctness — genuine all-inputs coverage.** On the concrete `State 4` layout
 (wires `0,1,2,3 = a,b,cin,cout`), with `cout` initialised `false`, the gadget computes the sum bit
 on wire `1`, the carry-out on wire `3`, and preserves `a` (wire `0`) and `cin` (wire `2`). Proved by
-`decide` over the finite `State 4 = Fin 4 → Bool` (16 inputs, each input fixed `s 3 = false`). -/
+`decide` over the finite `State 4 = Fin 4 → Bool`: 16 states, of which eight satisfy
+the initialisation hypothesis `s 3 = false`. -/
 theorem fullAdder_correct :
     ∀ s : State 4, s 3 = false →
       (denote (fullAdder 0 1 2 3) s 1 = (s 0 ^^ s 1 ^^ s 2))
@@ -167,8 +175,10 @@ theorem fullAdder_correct_general {a b cin cout : Fin n}
 
 /-! ### Derived cost of the gadget -/
 
-/-- **Derived cost of the full adder** (from the gate list, via `circuitCost`): two Toffolis, two
-CNOTs, Toffoli depth two, everything else zero. Not asserted — read off `[CCX, CX, CCX, CX]`. -/
+/-- **Derived cost of the full adder** (from the gate list, via `circuitCost`): `qubits = n`,
+two Toffolis, two CNOTs and sequential Toffoli depth two. The remaining fields are zero by
+the abstract cost model; in particular, it does not separately count the supplied carry
+wire as ancilla or decompose Toffoli gates into T gates. -/
 theorem fullAdder_cost (a b cin cout : Fin n) :
     circuitCost (fullAdder a b cin cout)
       = { qubits := n, ancilla := 0, toffoli := 2, toffoliDepth := 2,
@@ -185,9 +195,10 @@ theorem fullAdder_cost (a b cin cout : Fin n) :
 
 /-! ### Ripple adder (general `n`): linear cost -/
 
-/-- An `k`-slice ripple adder: the concatenation of `fullAdder` gadgets, one per quadruple of wires
-in `slices`. A quadruple is `(a, b, cin, cout)`. The wire layout (which carries feed which sums) is a
-Pass-2 concern; Pass 1 fixes only the *gate list* (hence the cost). -/
+/-- A `k`-slice concatenation of `fullAdder` gadgets, one per quadruple `(a, b, cin, cout)`
+in `slices`. This definition imposes no wire-layout or initialisation conditions; the cost
+lemmas hold for any slice list. Arithmetic correctness is proved below for `rippleCirc`
+with a `RippleLayout` and zero-initialised carries. -/
 def rippleAdder (slices : List (Fin n × Fin n × Fin n × Fin n)) : Circuit n :=
   slices.flatMap (fun q => fullAdder q.1 q.2.1 q.2.2.1 q.2.2.2)
 
@@ -257,8 +268,9 @@ theorem fulladder_nat (a b c : Bool) :
 
 /-- A ripple-carry adder layout on `m` wires for `n`-bit registers: input registers `A`, `B` and a
 carry chain `C` (with `C 0` the input carry and `C n` the output carry), as `ℕ`-indexed wire families.
-The three images are pairwise disjoint and each is injective on its used index range — exactly the
-geometry hypotheses any real layout satisfies (they are about *wires*, not about the computation). -/
+The three families have disjoint images over all natural indices, including unused indices.
+Injectivity is required only on the used ranges: `0 .. n-1` for `A`, `B` and `0 .. n` for `C`.
+These are wire-layout hypotheses; carry initialisation is assumed separately by correctness. -/
 structure RippleLayout (m n : ℕ) where
   /-- Wires of register `A` (the first addend). -/
   A : ℕ → Fin m
@@ -291,8 +303,9 @@ theorem denote_ripplePrefix_succ (L : RippleLayout m n) (k : ℕ) (s : State m) 
   simp only [ripplePrefix, List.range_succ, List.flatMap_append, List.flatMap_cons,
     List.flatMap_nil, List.append_nil, denote_append]
 
-/-- **The carry-chain invariant.** After the first `k` slices: register `B`'s low `k` bits plus the
-carry into bit `k` equal the low-`k` sum of `A` and `B` (P1); register `A` is untouched (P2); the
+/-- **The carry-chain invariant.** With all carry wires initially `false`, after the first `k`
+slices: the value of register `B`'s low `k` bits plus `2 ^ k` times the carry into bit `k`
+equals the sum of the original low-`k` values of `A` and `B` (P1); register `A` is untouched (P2); the
 unprocessed high bits of `B` (P4) and the unset high carries (P5) are preserved. By induction on `k`,
 each step lifting `fullAdder_correct_general` through the frame lemma `fullAdder_apply_of_ne`. -/
 theorem rippleCirc_invariant (L : RippleLayout m n) (s : State m) (hC0 : ∀ j, s (L.C j) = false) :

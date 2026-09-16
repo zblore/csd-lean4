@@ -18,7 +18,7 @@ public import CsdLean4.LF4.DuistermaatHeckman
 Composes the three closed slices into the moment-marginal headline and discharges
 the Duistermaat–Heckman axiom for the qubit:
 
-`fs_moment_pushforward_uniform_thm : (momentMap · 0)∗ fubiniStudyMeasure p₀
+`fs_moment_pushforward_uniform : (momentMap · 0)∗ fubiniStudyMeasure p₀
   = volume.restrict (Icc 0 1)`.
 
 Chain:
@@ -43,7 +43,9 @@ See `specs/plan-b-detail.md` Part 2, Slice 4.
 means "the `h_uniform` DH hypothesis is discharged". It is distinct from the
 `_uncond` of `LF4/BornRegionUncond.lean`, which means "the genericity hypothesis
 `hpos` is removed". The qubit moment-sublevel route here never carried an
-hpos-style hypothesis (only `ψ ≠ 0` and `‖ψ‖ = 1`), so no hpos migration applies.
+hpos-style hypothesis (only `ψ ≠ 0` and `‖ψ‖ = 1` for the preparation), so no hpos
+migration applies. The frequency theorem still assumes measurable trials with
+Fubini–Study marginal laws and pairwise-independent outcome indicators.
 -/
 
 @[expose] public section
@@ -212,12 +214,13 @@ theorem fs_born_volume_ratio_qubit_uncond
       = ENNReal.ofReal (‖inner ℂ (EuclideanSpace.single 0 (1 : ℂ)) ψ‖ ^ 2) :=
   fs_born_volume_ratio_qubit p₀ ψ hψ0 hψ (fs_moment_pushforward_uniform p₀)
 
-/-- **Unconditional Busch-free qubit Born frequency convergence.** For i.i.d.
-trials from the Fubini–Study measure on `ℂℙ¹`, the empirical frequency of the
-moment sublevel outcome converges almost surely to the Born weight `‖⟨e₀, ψ⟩‖²`.
-Foundational-triple-only; **no** `busch_effect_gleason`. The CSD thesis realised
-unconditionally for the qubit: deterministic typicality + Born = Kähler volume ⟹
-frequencies → Born. -/
+/-- **Busch-free qubit Born frequency convergence with the DH input discharged.**
+For measurable trials with Fubini–Study marginal laws on `ℂℙ¹` and pairwise-independent
+moment-sublevel outcome indicators, the empirical frequency converges almost surely
+to the Born weight `‖⟨e₀, ψ⟩‖²`. The sampling laws and independence are hypotheses;
+this theorem does not derive them from deterministic dynamics. The `_uncond` suffix
+refers to the proved geometric input `fs_moment_pushforward_uniform`.
+Foundational-triple-only; **no** `busch_effect_gleason`. -/
 theorem qubit_born_frequency_convergence_uncond
     (p₀ : CPN 2) (ψ : EuclideanSpace ℂ (Fin 2)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]

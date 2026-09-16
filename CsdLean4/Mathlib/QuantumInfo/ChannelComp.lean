@@ -15,7 +15,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Channel
 `Channel.comp Ψ Φ` is the composite channel with Kraus family `{Ψₐ Φₖ}` indexed by `κ × ι`; the
 trace-preserving constraint follows by inserting `∑ₐ Ψₐᴴ Ψₐ = 1` into `∑ₖ Φₖᴴ (·) Φₖ`, and
 `comp_apply` says the action composes. Index-generic; the `Fin`-indexed `CSD.LF2.QuantumChannel.comp`
-is its image under `CSD.LF2.QuantumChannel.toChannel` (`LF2/ChannelBridge.lean`).
+maps to this composition under `CSD.LF2.QuantumChannel.toChannel` (`LF2/ChannelBridge.lean`).
 -/
 
 @[expose] public section

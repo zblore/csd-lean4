@@ -9,19 +9,20 @@ public import CsdLean4.Empirical.QM.Ozawa
 public import CsdLean4.Empirical.CSD.WignerArakiYanase
 
 /-!
-# Empirical/CSD: the record layer carries no Ozawa measurement model
+# Empirical/CSD: Ozawa readout cannot reproduce the stroke from base ray and pointer alone
 
 **Category:** 3-Local (CSD-side companion to `Empirical/QM/Ozawa.lean`).
 
 `Empirical/QM/Ozawa.lean` proves Ozawa's error–disturbance relation for any `OzawaData` — four
 symmetric operators on one inner-product space with the two "out" operators commuting. The
-question this file answers is the one a reader asks next: **does the record layer supply such
-data?**
+question here is whether such data, encoded from the **base ray and pointer alone**, can
+reproduce the record-layer stroke's pointer output at every arena state.
 
-It does not, and that is a theorem rather than a caveat: ★ `no_ozawa_model_of_jointLift`. The
-stroke's pointer image is not `r ∘ d.aOut ∘ e` for *any* Hilbert encoding `e` of the arena, any
-`OzawaData`'s read-back operator `d.aOut`, and any readout `r`. So `ε` and `η` — which are
-defined *through* such a model — are not defined on the record layer at all.
+★ `no_ozawa_model_of_jointLift` rules out this factorisation for a joint lift when `ε > 0`
+and two distinct outcomes at the same base ray have rates at least `2ε`. The encoding
+`e : LF4.CPN N × Pointer N → T` omits the register coordinate. States with the same base ray
+and pointer can therefore have different stroke outputs. The theorem does not address
+encodings that include the register or models that reproduce only outcome statistics.
 
 ## Why this is the honest twin, and not a transport bundle
 
@@ -31,8 +32,8 @@ The obvious move would be a "volume-ratio reading" of `ε` and `η` on the patte
 
 * LF4-todo §14's discharged correspondence matches the Hilbert expectation of a **system**
   observable against a Σ-side integral. Ozawa's `ε` and `η` are expectations of **joint**
-  operators in `ψ ⊗ σ_probe`. There is no Σ-side fibre law for the probe factor and no ontic
-  function for `A_out`, so there is nothing to state.
+  operators in `ψ ⊗ σ_probe`. This module constructs neither a Σ-side probe law nor an
+  ontic counterpart of `A_out`; it proves only the factorisation obstruction below.
 * `Empirical/CSD/Uncertainty.lean` carries its own **SCHEMA-MISMATCH** marker ("docstring claims
   CSD-side content the type does not carry") and a TRANSPORT-ONLY section. Copying it would add a
   second such bundle. (Its header cites `PLACEHOLDERS.md` §7 for the *category*; §7's table lists
@@ -45,17 +46,18 @@ work, and this instantiation says what it means for this brick.
 
 ## ⚠️ Honest scope
 
-* This says the record layer supplies no such model. It does **not** say the error–disturbance
-  trade-off fails there, nor that CSD explains or predicts it. The relation is a theorem about a
-  Hilbert-space measurement model; the record-layer stroke is a skew product on the arena
-  `ℂℙ^{N−1} × T² × ℂℙ^N`, so the question does not arise in those terms.
+* The obstruction concerns exact pointer outputs from encodings of `(base ray, pointer)`
+  under the stated joint-lift and rate hypotheses. It does not rule out every Hilbert model
+  of the full arena `ℂℙ^{N−1} × T² × ℂℙ^N`, or establish that Ozawa's error and disturbance
+  cannot be defined with additional modelling data. It neither derives nor refutes the
+  error–disturbance trade-off for the record layer.
 * The probe of a measurement model is an engineered witness, here as in the QM file. Which
   physical `H_int` an apparatus realises is the boundary residue `R-015` (`specs/residues.tsv`) —
   referenced, not carried: this module's negative result does not depend on that modelling input,
   so it is not tagged as a carrier.
-* The same reasoning is why WAY has no record-layer instance. That is not a coincidence: both
-  are statements about maps on a joint Hilbert space, and `no_joint_hilbert_map` is the single
-  theorem underneath.
+* The WAY companion's `no_joint_hilbert_map` supplies the same obstruction for any intermediate
+  type and map. Its encoding likewise omits the register; this result specialises that map
+  to `d.aOut` without using the other Ozawa operators or their symmetry and commutation laws.
 
 ## References
 
@@ -79,17 +81,17 @@ variable {N : ℕ} [NeZero N] {c : ContextField N} {ε : ℝ}
   {Φ : PointerArena N N → PointerArena N N}
 
 omit [NeZero N] in
-/-- ★ **The record layer carries no Ozawa measurement model.**
+/-- ★ **No exact Ozawa readout from base ray and pointer alone.**
 
-For a joint lift with two outcomes of rate `≥ 2ε`, the stroke's pointer image is not
-`r (d.aOut (e ·))` for any encoding `e` of the Hilbert data into an inner-product space `T`, any
-`OzawaData` on `T`, or any readout `r`. The register coordinate selects the outcome, and no
-function of the `(base ray, pointer)` data can do that.
+For a joint lift with `ε > 0` and two distinct outcomes of rate `≥ 2ε` at the same base ray,
+the stroke's pointer image cannot agree at every arena state with `r (d.aOut (e ·))`, where
+`e` encodes only `(base ray, pointer)` into an inner-product space `T`. This holds for every
+`OzawaData` on `T` and every readout `r`: the omitted register coordinate selects between
+different outputs from identical `(base ray, pointer)` data.
 
-Consequence, and the reason this file exists: Ozawa's `ε` and `η` are defined **through** a
-measurement model. No such model computes the record-layer stroke, so those quantities are not
-defined there — the error–disturbance relation is a QM-side theorem with no record-layer
-instance, exactly as WAY has none.
+This rules out the stated factorisation, not all measurement models or definitions of Ozawa
+error and disturbance on an extended model. Encodings that retain the register and agreement
+only at the level of outcome statistics are outside this theorem's scope.
 
 A corollary of `no_joint_hilbert_map` with `U := d.aOut`, not an independent result. -/
 theorem no_ozawa_model_of_jointLift (h : IsJointLift c ε Φ) (hε : 0 < ε) {p : LF4.CPN N}

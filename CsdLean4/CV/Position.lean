@@ -16,44 +16,51 @@ public import Mathlib.Data.Complex.BigOperators
 **Category:** 3-Local (a finite position observable on a lattice).
 
 The first constructive step of the continuous-variable track. `W4`
-(`CV/ApproxCCR.lean`) proved the *no-go*: no pair of finite matrices satisfies
-the exact canonical commutation relation `[Q, P] = iℏ·1`. This module builds the
+(`CV/ApproxCCR.lean`) proved the *no-go*: in positive finite dimension and for
+`ℏ ≠ 0`, no pair of matrices satisfies the exact canonical commutation relation
+`[Q, P] = iℏ·1`. This module builds the
 first *positive* object it motivates — a genuine finite **position observable**.
 
-On an `N`-point symmetric grid of spacing `a`, centered at the origin, the
+On an `N`-point symmetric grid of signed step `a`, centered at the origin, the
 position observable is the diagonal Hermitian matrix
 
     `Q_N = diag(x₀, …, x_{N-1})`,   `x_j = a · (j − (N−1)/2)`,
 
 whose eigenvalues are exactly the `N` lattice positions (the standard basis
 vector `e_j` is an eigenvector with eigenvalue `x_j`), distinct when `a ≠ 0`, and
-bounded by `|a|·(N−1)/2`. This is a bounded, discrete-spectrum finite observable —
-precisely the "continuous but limited" observable-value structure the CSD
-finite-`N` reading predicts (`specs/csd-departures-eft.md` §3.1): finitely many
-levels, evenly spaced, looking continuous for astronomically large `N`.
+bounded by `|a|·(N−1)/2`. For `N > 0` the grid has extrema; for `N = 0` it is
+empty and the indexed statements are vacuous. This is a bounded, discrete-spectrum
+finite observable. Equal spacing is a choice of this construction, not a consequence
+of finite dimension. Approximating a continuous range also requires control of the
+spacing and span; large `N` alone does not make the spacing small.
 
 ## CSD reading
 
-`Q_N` is an operational position observable in a finite sector. Its spectrum is
-bounded and discrete — there is a maximum and minimum representable position and
-finitely many resolvable values — the finite-information-capacity picture, not a
-spacetime lattice. The continuum position operator is the ideal `N → ∞` (with
-`a → 0`) limit; at finite `N` position is this approximate, coarse-grained
-observable. Conjugate momentum (via the finite Fourier transform) and the
-approximate CCR `‖[Q_N, P_N] − iℏ·1‖ ≤ ε` are the follow-ons CV-2 / CV-3.
+`Q_N` supplies a finite-sector position model for the interpretation discussed in
+`specs/csd-departures-eft.md` §3.1. Its finite spectrum is an observable-value grid;
+the construction makes no claim about a spacetime lattice. A continuum limit would
+require embeddings into a common space, a specified notion of convergence, and
+scaling of both the spacing and span. No such limit is proved here.
+
+CV-2 / CV-3 are implemented separately in `CV/Oscillator.lean`: its truncated
+oscillator operators `Q` and `P` satisfy `QP_commutator` and `ccr_exact_on_bulk`.
+Those are different operators from this module's `positionOp`; this file does not
+construct a Fourier-conjugate momentum or prove a small full-space CCR norm defect.
 
 ## Honest scope (load-bearing)
 
 CV-1 constructs the finite position observable and proves its spectral data
-(Hermitian, eigenvalues = lattice points, distinct, bounded). It does **not**
+(Hermitian, standard-basis eigenvectors, distinct lattice values when `a ≠ 0`,
+and bounded lattice values). It does **not**
 construct momentum, does **not** establish any commutation relation, and does
 **not** derive continuous-variable QM. It is the position half of the finite CV
-sector; momentum and the approximate CCR are CV-2 / CV-3.
+sector. The separate oscillator construction cited above supplies the CV-2 / CV-3 results.
 
-## Category
+## Mathematical content
 
-Cat-1: `positionOp` and its spectral lemmas are CSD-free general facts about a
-finite diagonal matrix. The CSD interpretation lives only in this docstring.
+`positionOp` and its spectral lemmas are CSD-free facts about a finite diagonal
+matrix. The file is classified as Category 3 by its location in `CsdLean4/CV/`;
+the CSD interpretation lives only in this docstring.
 
 ## Main results
 
@@ -63,7 +70,9 @@ finite diagonal matrix. The CSD interpretation lives only in this docstring.
 - `latticePoint_injective` : the eigenvalues are distinct for `a ≠ 0` (`N` distinct
   outcomes, a non-degenerate observable).
 - `abs_latticePoint_le` : the spectrum is bounded, `|x_j| ≤ |a|·(N−1)/2`.
-- `positionOp_trace_eq_zero` : the mean position is `0` (the grid is centered).
+- `positionOp_trace_eq_zero` : the sum of the lattice eigenvalues is `0`.
+  For `N > 0`, their uniform average is therefore zero; a general state's
+  position expectation need not vanish.
 -/
 
 @[expose] public section
@@ -74,7 +83,7 @@ open Matrix
 
 variable (N : ℕ) (a : ℝ)
 
-/-- The `j`-th lattice position on the symmetric `N`-point grid of spacing `a`,
+/-- The `j`-th lattice position on the symmetric `N`-point grid of signed step `a`,
 centered at the origin: `x_j = a · (j − (N−1)/2)`. Real subtraction throughout
 (no `ℕ` truncation), so the grid is `{−(N−1)/2, …, (N−1)/2}` scaled by `a`. -/
 noncomputable def latticePoint (j : Fin N) : ℝ :=
@@ -126,8 +135,8 @@ theorem latticePoint_injective (ha : a ≠ 0) : Function.Injective (latticePoint
   exact Fin.ext (by exact_mod_cast hjk)
 
 /-- **The spectrum is bounded**: every lattice position satisfies
-`|x_j| ≤ |a|·(N−1)/2`. So `Q_N` is a bounded observable with a maximum and minimum
-representable position — the finite-information-capacity picture. -/
+`|x_j| ≤ |a|·(N−1)/2`. The index `j : Fin N` ensures `N > 0`; in this case the
+finite grid has maximum and minimum representable positions. -/
 theorem abs_latticePoint_le (j : Fin N) :
     |latticePoint N a j| ≤ |a| * ((N : ℝ) - 1) / 2 := by
   unfold latticePoint
@@ -148,9 +157,11 @@ theorem abs_latticePoint_le (j : Fin N) :
         exact mul_le_mul_of_nonneg_left hbound (abs_nonneg a)
     _ = |a| * ((N : ℝ) - 1) / 2 := by ring
 
-/-- **The mean position is zero**: `trace Q_N = 0`, since the grid is symmetric
-about the origin. Proved by the reflection `j ↦ Fin.rev j`, under which
-`x_{rev j} = −x_j`, so the sum equals its own negation. -/
+/-- **The sum of the position eigenvalues is zero**: `trace Q_N = 0`, since the
+grid is symmetric about the origin. For `N > 0`, this also gives zero uniform
+average over the lattice levels, not zero expectation in every state. Proved by
+the reflection `j ↦ Fin.rev j`, under which `x_{rev j} = −x_j`, so the sum equals
+its own negation. -/
 theorem positionOp_trace_eq_zero : (positionOp N a).trace = 0 := by
   rw [positionOp, Matrix.trace_diagonal]
   -- Reduce to the real sum, which is `0` by the reflection `j ↦ Fin.rev j`.
