@@ -5338,6 +5338,18 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.IsKahler.J_symmL
 
+/-- info: 'DifferentialForm.contMDiff_hom_section_of_localTriv_symmL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contMDiff_hom_section_of_localTriv_symmL
+
+/-- info: 'DifferentialForm.IsKahler.fderiv_atlas_transition_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsKahler.fderiv_atlas_transition_eq
+
+/-- info: 'DifferentialForm.IsKahler.fderiv_atlas_transition_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsKahler.fderiv_atlas_transition_comm
+
 /-- info: 'Projectivization.chartAtIdx_transition_eq_uTrans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.chartAtIdx_transition_eq_uTrans
@@ -5471,9 +5483,9 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Complex.addHaar_pi_basisOneI_reindex
 
-/-- info: 'Complex.orthonormal_euclideanBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Complex.euclideanOrthonormalBasis_toBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Complex.orthonormal_euclideanBasis
+#print axioms Complex.euclideanOrthonormalBasis_toBasis
 
 /-- info: 'Complex.measurePreserving_ofLp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -5728,6 +5740,32 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Bundle.ContMDiffRiemannianMetric.riemannianVolume_congr_cover' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Bundle.ContMDiffRiemannianMetric.riemannianVolume_congr_cover
+
+-- Brief C (2026-09-17): the canonical Riemannian volume (basis' own Haar measure).
+
+/-- info: 'MetricFamily.det_gram_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MetricFamily.det_gram_basis
+
+/-- info: 'MetricFamily.chartDensity_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MetricFamily.chartDensity_basis
+
+/-- info: 'MetricFamily.riemannianVolume_addHaar_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MetricFamily.riemannianVolume_addHaar_basis
+
+/-- info: 'Bundle.RiemannianMetric.canonicalVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Bundle.RiemannianMetric.canonicalVolume
+
+/-- info: 'Bundle.RiemannianMetric.canonicalVolume_congr_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Bundle.RiemannianMetric.canonicalVolume_congr_basis
+
+/-- info: 'Bundle.RiemannianMetric.canonicalVolume_congr_cover' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Bundle.RiemannianMetric.canonicalVolume_congr_cover
 
 /-- info: 'Projectivization.isBilinear_fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

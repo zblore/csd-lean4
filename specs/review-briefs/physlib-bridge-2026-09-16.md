@@ -58,6 +58,9 @@ OUTPUT. A numbered list of findings, most severe first, each with: severity (BLO
 * **Brief C** (2026-09-17, `brief-c-2026-09-17.md` in this directory) is the third, independent
   review of the closure at `2a71b34`, run on Codex; it re-audits the B fixes and looks for what the
   first two reviews missed.
+  Its eight findings (one smoothness gap in `IsAlmostKahler`, one missing canonical API, a sign
+  convention, a formula, one Mathlib duplicate, one derivable instance, one theorem narrower than its
+  docstring, two stale comments) were all confirmed and fixed the same day (BACKLOG #33 residue (f)).
 
 ## Brief B — the Fubini–Study machinery the bridge stands on
 

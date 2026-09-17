@@ -15,8 +15,8 @@ public import Mathlib.Geometry.Manifold.VectorBundle.Riemannian
 
 The namespace is `MetricFamily`, not `RiemannianMetric`: Mathlib has a structure of that name
 (`Mathlib/Topology/VectorBundle/Riemannian.lean`, with `ContMDiffRiemannianMetric` beside it), and
-this file works with a bare family `g : ∀ x, T_x → T_x → ℝ` plus `IsBilinear`. Restating the
-volume for Mathlib's bundled metric is the natural upstream step and is not done here.
+this file works with a bare family `g : ∀ x, T_x → T_x → ℝ` plus `IsBilinear`; the volume of
+Mathlib's bundled metrics is the section "Mathlib's Riemannian metrics" at the end.
 **Category:** 1-Mathlib (measure theory on manifolds: the Riemannian volume measure of a
 metric family, absent from Mathlib at the pin —
 `Mathlib/Geometry/Manifold/VectorBundle/Riemannian.lean`
@@ -343,6 +343,74 @@ theorem riemannianVolume_congr_cover (hg : IsBilinear g) (c c' : ChartCover E M)
     riemannianVolume_apply_of_subset_source μ e g hg c' (c'.pt i)
       (hA.inter (c'.measurableSet_piece i)) (fun x hx => c'.piece_subset i hx.2)]
 
+/-! ### The basis' own Haar measure: the Riemannian volume is canonical
+
+`riemannianVolume μ e g c` takes a Haar measure `μ` on the model and a basis `e`. Against the
+basis' own Haar measure `e.addHaar` the result does not depend on `e`: a change of basis
+multiplies the Gram determinant by `(det P)²` (`det_gram_basis`), hence the density by `|det P|`,
+and divides the Haar measure by `|det P|` (`DifferentialForm.addHaar_basis_eq_smul`); the two
+cancel (`riemannianVolume_addHaar_basis`). This is the intrinsic Riemannian volume, exposed for
+Mathlib's bundled metrics as `Bundle.RiemannianMetric.canonicalVolume` below. -/
+
+section Canonical
+
+variable [SecondCountableTopology E]
+
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [SecondCountableTopology E]
+  [MeasurableSpace M] [BorelSpace M] in
+/-- The Gram matrix against `b'` is the congruence of the Gram matrix against `b` by the
+change-of-basis matrix (`LinearMap.BilinForm.toMatrix_mul_basis_toMatrix`). -/
+theorem gram_basis (hg : IsBilinear g) (b b' : Module.Basis ι ℝ E) (x₀ : M) (w : E) :
+    gram b' g x₀ w = (b.toMatrix b').transpose * gram b g x₀ w * b.toMatrix b' := by
+  rw [gram_eq_toMatrix (e := b') g hg, gram_eq_toMatrix (e := b) g hg,
+    LinearMap.BilinForm.toMatrix_mul_basis_toMatrix]
+
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [SecondCountableTopology E]
+  [MeasurableSpace M] [BorelSpace M] in
+/-- The Gram determinant against `b'` is `(b.det b')²` times the Gram determinant against `b`. -/
+theorem det_gram_basis (hg : IsBilinear g) (b b' : Module.Basis ι ℝ E) (x₀ : M) (w : E) :
+    (gram b' g x₀ w).det = (b.det b') ^ 2 * (gram b g x₀ w).det := by
+  rw [gram_basis g hg b b', Matrix.det_mul, Matrix.det_mul, Matrix.det_transpose,
+    Module.Basis.det_apply]
+  ring
+
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [SecondCountableTopology E]
+  [MeasurableSpace M] [BorelSpace M] in
+/-- The Riemannian chart density against `b'` is `|b.det b'|` times the density against `b`. -/
+theorem chartDensity_basis (hg : IsBilinear g) (b b' : Module.Basis ι ℝ E) (x₀ : M) (w : E) :
+    chartDensity b' g x₀ w = ENNReal.ofReal |b.det b'| * chartDensity b g x₀ w := by
+  unfold chartDensity
+  rw [det_gram_basis g hg b b', Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq_eq_abs,
+    ENNReal.ofReal_mul (abs_nonneg _)]
+
+omit [BorelSpace M] in
+/-- The Riemannian chart measure against the basis' own Haar measure does not depend on the
+basis. -/
+theorem chartMeasure_addHaar_basis (hg : IsBilinear g) (b b' : Module.Basis ι ℝ E) (x₀ : M) :
+    chartMeasure b'.addHaar b' g x₀ = chartMeasure b.addHaar b g x₀ := by
+  have hc : ENNReal.ofReal |b.det b'| ≠ 0 := by
+    rw [ne_eq, ENNReal.ofReal_eq_zero, not_le]
+    exact abs_pos.mpr (b.isUnit_det b').ne_zero
+  have hd : chartDensity b' g x₀ = ENNReal.ofReal |b.det b'| • chartDensity b g x₀ :=
+    funext fun w => by rw [Pi.smul_apply, smul_eq_mul, chartDensity_basis g hg b b' x₀ w]
+  unfold chartMeasure
+  rw [DifferentialForm.addHaar_basis_eq_smul b b', Measure.restrict_smul, withDensity_smul_measure,
+    hd, withDensity_smul' _ _ ENNReal.ofReal_ne_top, smul_smul,
+    ENNReal.inv_mul_cancel hc ENNReal.ofReal_ne_top, one_smul]
+
+omit [BorelSpace M] in
+/-- ★ **The Riemannian volume is canonical**: against the basis' own Haar measure the glued
+measure does not depend on the basis. -/
+theorem riemannianVolume_addHaar_basis (hg : IsBilinear g) (b b' : Module.Basis ι ℝ E)
+    (c : ChartCover E M) :
+    riemannianVolume b'.addHaar b' g c = riemannianVolume b.addHaar b g c := by
+  unfold riemannianVolume
+  congr 1
+  funext i
+  rw [chartMeasure_addHaar_basis g hg b b']
+
+end Canonical
+
 /-! ### Mathlib's Riemannian metrics
 
 Mathlib's `Bundle.RiemannianMetric (TangentSpace 𝓘(ℝ, E) : M → Type _)`
@@ -350,7 +418,8 @@ Mathlib's `Bundle.RiemannianMetric (TangentSpace 𝓘(ℝ, E) : M → Type _)`
 `g.inner x : T_x M →L[ℝ] T_x M →L[ℝ] ℝ`, and its `C^n` version `ContMDiffRiemannianMetric`
 (`Mathlib/Geometry/Manifold/VectorBundle/Riemannian.lean`) adds the smoothness of the family. The
 family `fun x u v => g.inner x u v` is bilinear, so everything above applies to it: the Riemannian
-volume of a Mathlib metric, its independence of the cover, and its comparison with a top form. -/
+volume of a Mathlib metric, its independence of the cover, its comparison with a top form, and the
+canonical (basis-free up to `canonicalVolume_congr_basis`) volume `canonicalVolume`. -/
 
 section MathlibMetric
 
@@ -405,6 +474,25 @@ theorem _root_.Bundle.RiemannianMetric.riemannianVolume_eq_smul_topFormMeasure (
           :
     g.riemannianVolume μ e c = k • DifferentialForm.topFormMeasure μ e s c :=
   MetricFamily.riemannianVolume_eq_smul_topFormMeasure μ e g.toMetricFamily c s k hk h
+
+
+/-- ★ **The canonical Riemannian volume of a Mathlib metric**: against the basis' own Haar measure
+`b.addHaar`, which makes it independent of the basis (`canonicalVolume_congr_basis`) and of the
+cover (`canonicalVolume_congr_cover`). -/
+def _root_.Bundle.RiemannianMetric.canonicalVolume (b : Module.Basis ι ℝ E) (c : ChartCover E M) :
+    Measure M :=
+  g.riemannianVolume b.addHaar b c
+
+omit [BorelSpace M] in
+theorem _root_.Bundle.RiemannianMetric.canonicalVolume_congr_basis [SecondCountableTopology E]
+    (b b' : Module.Basis ι ℝ E) (c : ChartCover E M) :
+    g.canonicalVolume b c = g.canonicalVolume b' c :=
+  (riemannianVolume_addHaar_basis g.toMetricFamily g.isBilinear_toMetricFamily b b' c).symm
+
+theorem _root_.Bundle.RiemannianMetric.canonicalVolume_congr_cover (b : Module.Basis ι ℝ E)
+    (c c' : ChartCover E M) :
+    g.canonicalVolume b c = g.canonicalVolume b c' :=
+  g.riemannianVolume_congr_cover b.addHaar b c c'
 
 /-- ★ **The Riemannian volume of a `C^n` Riemannian metric** (`ContMDiffRiemannianMetric`): that of
 its underlying `RiemannianMetric`. -/

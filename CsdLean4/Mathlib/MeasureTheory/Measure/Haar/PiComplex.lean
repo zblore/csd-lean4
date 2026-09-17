@@ -29,9 +29,9 @@ volume of its real inner-product structure. Both are the Haar measure of the sta
   `basisOneI` mass `1` (`basisOneI` is the orthonormal basis `orthonormalBasisOneI`);
 * ★ `Complex.addHaar_pi_basisOneI_reindex` — **the Haar measure of the standard real basis of
   `Fin n → ℂ`** (any reindexing of `Pi.basis fun _ => basisOneI`) **is Lebesgue measure**;
-* `Complex.euclideanBasis n`, `Complex.orthonormal_euclideanBasis`,
-  `Complex.euclideanOrthonormalBasis n` — the same family in `EuclideanSpace ℂ (Fin n)`, indexed by
-  `Fin (2 * n)`, is a real orthonormal basis;
+* `Complex.euclideanBasis n`, `Complex.euclideanOrthonormalBasis n` — the same family in
+  `EuclideanSpace ℂ (Fin n)`, indexed by `Fin (2 * n)`, as a basis and as Mathlib's product
+  orthonormal basis `Pi.orthonormalBasis` of `orthonormalBasisOneI`;
 * ★ `Complex.measurePreserving_ofLp` — **`ofLp : EuclideanSpace ℂ (Fin n) → (Fin n → ℂ)` is volume
   preserving**, the inner-product volume on the left and the product Lebesgue measure on the right.
 -/
@@ -113,47 +113,25 @@ theorem euclideanBasis_apply (n : ℕ) (c : Fin (2 * n)) :
           (basisOneI ((sigmaFinTwoEquiv n).symm c).2)) := by
   simp [euclideanBasis, Module.Basis.map_apply, Module.Basis.coe_reindex, Pi.basis_apply]
 
-/-- The standard real basis of `EuclideanSpace ℂ (Fin n)` is orthonormal for the real inner
-product `re ⟪·,·⟫`: distinct coordinates are orthogonal, and `1, i` are orthonormal in `ℂ`. -/
-theorem orthonormal_euclideanBasis (n : ℕ) : Orthonormal ℝ (euclideanBasis n) := by
-  rw [orthonormal_iff_ite]
-  intro a b
-  have hone : ∀ k l : Fin 2, ⟪basisOneI k, basisOneI l⟫_ℝ = if k = l then 1 else 0 := by
-    intro k l
-    have h := (orthonormal_iff_ite.mp orthonormalBasisOneI.orthonormal) k l
-    rwa [← OrthonormalBasis.coe_toBasis, toBasis_orthonormalBasisOneI] at h
-  rw [euclideanBasis_apply, euclideanBasis_apply, PiLp.inner_apply]
-  rcases ha : (sigmaFinTwoEquiv n).symm a with ⟨j, k⟩
-  rcases hb : (sigmaFinTwoEquiv n).symm b with ⟨j', k'⟩
-  have hab : a = b ↔ j = j' ∧ k = k' := by
-    rw [← (sigmaFinTwoEquiv n).symm.injective.eq_iff, ha, hb, Sigma.mk.inj_iff, heq_iff_eq]
-  rw [Finset.sum_eq_single j]
-  · by_cases hj : j = j'
-    · subst hj
-      change ⟪(Pi.single j (basisOneI k) : Fin n → ℂ) j,
-        (Pi.single j (basisOneI k') : Fin n → ℂ) j⟫_ℝ = _
-      rw [Pi.single_eq_same, Pi.single_eq_same, hone]
-      by_cases hk : k = k'
-      · subst hk
-        rw [if_pos rfl, if_pos (hab.mpr ⟨rfl, rfl⟩)]
-      · rw [if_neg hk, if_neg (fun h => hk (hab.mp h).2)]
-    · change ⟪(Pi.single j (basisOneI k) : Fin n → ℂ) j,
-        (Pi.single j' (basisOneI k') : Fin n → ℂ) j⟫_ℝ = _
-      rw [Pi.single_eq_of_ne hj, inner_zero_right, if_neg (fun h => hj (hab.mp h).1)]
-  · intro i _ hi
-    change ⟪(Pi.single j (basisOneI k) : Fin n → ℂ) i,
-      (Pi.single j' (basisOneI k') : Fin n → ℂ) i⟫_ℝ = 0
-    rw [Pi.single_eq_of_ne hi, inner_zero_left]
-  · simp
-
-/-- The standard real basis of `EuclideanSpace ℂ (Fin n)`, as an orthonormal basis. -/
+/-- The standard real basis of `EuclideanSpace ℂ (Fin n)` as an orthonormal basis: Mathlib's
+product `Pi.orthonormalBasis` of `orthonormalBasisOneI`, reindexed by `Fin (2 * n)`. -/
 def euclideanOrthonormalBasis (n : ℕ) :
     OrthonormalBasis (Fin (2 * n)) ℝ (EuclideanSpace ℂ (Fin n)) :=
-  (euclideanBasis n).toOrthonormalBasis (orthonormal_euclideanBasis n)
+  (Pi.orthonormalBasis fun _ : Fin n => orthonormalBasisOneI).reindex (sigmaFinTwoEquiv n)
 
+/-- Its underlying basis is `euclideanBasis n`. -/
 theorem euclideanOrthonormalBasis_toBasis (n : ℕ) :
     (euclideanOrthonormalBasis n).toBasis = euclideanBasis n :=
-  Module.Basis.toBasis_toOrthonormalBasis _ _
+  Module.Basis.eq_of_apply_eq fun c => by
+    simp only [euclideanOrthonormalBasis, OrthonormalBasis.coe_toBasis,
+      OrthonormalBasis.reindex_apply, Pi.orthonormalBasis_apply, euclideanBasis_apply,
+      PiLp.toLp_single]
+    rw [← toBasis_orthonormalBasisOneI, OrthonormalBasis.coe_toBasis]
+
+/-- The standard real basis of `EuclideanSpace ℂ (Fin n)` is orthonormal. -/
+theorem orthonormal_euclideanBasis (n : ℕ) : Orthonormal ℝ (euclideanBasis n) := by
+  rw [← euclideanOrthonormalBasis_toBasis, OrthonormalBasis.coe_toBasis]
+  exact (euclideanOrthonormalBasis n).orthonormal
 
 /-- ★ **`ofLp : EuclideanSpace ℂ (Fin n) → (Fin n → ℂ)` is volume preserving**: the volume of the
 real inner-product structure on the left is the Haar measure of the orthonormal basis

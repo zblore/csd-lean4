@@ -213,30 +213,6 @@ theorem fsForm_smul_I_smul_I (x : ℙ ℂ (Ambient n))
     = fsSection x ![tangentToModel u, tangentToModel v]
   exact fsModelForm_smul_I_smul_I _ _ _
 
-/-- ★★ **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is almost Kähler**: symplectic
-(`fsForm_isSymplectic`), `J² = -1`, `ω` is `J`-invariant, and `ω (J v, v) > 0` — the taming
-`fsSection_smul_I_neg`, its sign (the `-4` of the potential) absorbed by the metric convention
-`g = ω (J ·, ·)`. -/
-theorem fsForm_isAlmostKahler (n : ℕ) : IsAlmostKahler (fsForm (n := n)) fsJ where
-  isSymplectic := fsForm_isSymplectic n
-  J_J := fsJ_fsJ
-  invariant := fsForm_smul_I_smul_I
-  pos := fun x v hv => by
-    have h : fsSection x ![tangentToModel v, Complex.I • tangentToModel v] < 0 :=
-      fsSection_smul_I_neg x hv
-    have hs : fsSection x ![tangentToModel v, Complex.I • tangentToModel v]
-        = -fsSection x ![Complex.I • tangentToModel v, tangentToModel v] :=
-      apply_swap (fun x => fsForm x) x v (fsJ x v)
-    show 0 < fsSection x ![Complex.I • tangentToModel v, tangentToModel v]
-    linarith
-
-/-- The compatible metric of `ℂℙⁿ` is positive definite: the Fubini–Study metric, up to the
-convention. -/
-theorem fsForm_metric_self_pos (x : ℙ ℂ (Ambient n))
-    {v : TangentSpace (𝓘(ℝ, Fin n → ℂ)) x} (hv : v ≠ 0) :
-    0 < (fsForm_isAlmostKahler n).metric x v v :=
-  (fsForm_isAlmostKahler n).metric_self_pos x hv
-
 /-! ### `J` is the complex structure of the atlas -/
 
 /-- The transition from the `i`-th affine chart to the chart at `y` is the unitary-action chart
@@ -316,24 +292,11 @@ theorem fsJ_localTriv_symmL (e : atlas (Fin n → ℂ) (ℙ ℂ (Ambient n))) (y
   rw [← hi] at hy' ⊢
   exact (fderiv_chartAtIdx_transition_smul_I i y hy' v).symm
 
-/-! ### ★★★ `ℂℙⁿ` is a Kähler manifold (G14a) -/
-
 /-- The complex structure of the model `Fin n → ℂ`: multiplication by `i`, as a real-linear map. -/
 noncomputable def modelJ : (Fin n → ℂ) →L[ℝ] (Fin n → ℂ) :=
   (Complex.I • ContinuousLinearMap.id ℂ (Fin n → ℂ)).restrictScalars ℝ
 
 @[simp] theorem modelJ_apply (v : Fin n → ℂ) : modelJ v = Complex.I • v := rfl
-
-/-- ★★★ **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is a Kähler manifold**: almost Kähler
-(`fsForm_isAlmostKahler`), and `J` is the complex structure of the holomorphic atlas — `i·` in
-every chart of the atlas (`fsJ_localTriv_symmL`, from the holomorphy of the transitions
-`contDiffOn_uTrans`). Kähler in the atlas sense of `DifferentialForm.IsKahler`; the tensor sense is
-G14b. -/
-theorem fsForm_isKahler (n : ℕ) : IsKahler (fsForm (n := n)) fsJ modelJ where
-  toIsAlmostKahler := fsForm_isAlmostKahler n
-  J_localTriv_symmL := fun e y hy v => by
-    rw [modelJ_apply]
-    exact fsJ_localTriv_symmL e y hy v
 
 /-! ### `J` as a smooth section of the endomorphism bundle (G15) -/
 
@@ -347,13 +310,52 @@ noncomputable def fsJL (x : ℙ ℂ (Ambient n)) :
     (v : TangentSpace (𝓘(ℝ, Fin n → ℂ)) x) : fsJL x v = fsJ x v := rfl
 
 /-- ★★ **`J` is a smooth section of `Hom(TM, TM)` on `ℂℙⁿ`**: in every chart it is the constant
-`i·` (`IsKahler.contMDiff_hom_section` on `fsForm_isKahler`). -/
+`i·` (`contMDiff_hom_section_of_localTriv_symmL` on `fsJ_localTriv_symmL`). -/
 theorem contMDiff_fsJL :
     ContMDiff (𝓘(ℝ, Fin n → ℂ))
       ((𝓘(ℝ, Fin n → ℂ)).prod
         (𝓘(ℝ, (Fin n → ℂ) →L[ℝ] (Fin n → ℂ)))) ∞
       (fun x : ℙ ℂ (Ambient n) => TotalSpace.mk' ((Fin n → ℂ) →L[ℝ] (Fin n → ℂ)) x (fsJL x)) :=
-  (fsForm_isKahler n).contMDiff_hom_section fsJL fun _ _ => rfl
+  contMDiff_hom_section_of_localTriv_symmL fsJ modelJ
+    (fun e y hy v => by rw [modelJ_apply]; exact fsJ_localTriv_symmL e y hy v) fsJL fun _ _ => rfl
+
+/-! ### ★★★ `ℂℙⁿ` is almost Kähler, and Kähler (G14a) -/
+
+/-- ★★ **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is almost Kähler**: symplectic
+(`fsForm_isSymplectic`), `J² = -1`, `ω` is `J`-invariant, and `ω (J v, v) > 0` — the taming
+`fsSection_smul_I_neg`, its sign (the `-4` of the potential) absorbed by the metric convention
+`g = ω (J ·, ·)`. -/
+theorem fsForm_isAlmostKahler (n : ℕ) : IsAlmostKahler (fsForm (n := n)) fsJ where
+  isSymplectic := fsForm_isSymplectic n
+  J_J := fsJ_fsJ
+  invariant := fsForm_smul_I_smul_I
+  contMDiff := ⟨fsJL, fun _ _ => rfl, contMDiff_fsJL⟩
+  pos := fun x v hv => by
+    have h : fsSection x ![tangentToModel v, Complex.I • tangentToModel v] < 0 :=
+      fsSection_smul_I_neg x hv
+    have hs : fsSection x ![tangentToModel v, Complex.I • tangentToModel v]
+        = -fsSection x ![Complex.I • tangentToModel v, tangentToModel v] :=
+      apply_swap (fun x => fsForm x) x v (fsJ x v)
+    show 0 < fsSection x ![Complex.I • tangentToModel v, tangentToModel v]
+    linarith
+
+/-- The compatible metric of `ℂℙⁿ` is positive definite: the Fubini–Study metric, up to the
+convention. -/
+theorem fsForm_metric_self_pos (x : ℙ ℂ (Ambient n))
+    {v : TangentSpace (𝓘(ℝ, Fin n → ℂ)) x} (hv : v ≠ 0) :
+    0 < (fsForm_isAlmostKahler n).metric x v v :=
+  (fsForm_isAlmostKahler n).metric_self_pos x hv
+
+/-- ★★★ **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is a Kähler manifold**: almost Kähler
+(`fsForm_isAlmostKahler`), and `J` is the complex structure of the holomorphic atlas — `i·` in
+every chart of the atlas (`fsJ_localTriv_symmL`, from the holomorphy of the transitions
+`contDiffOn_uTrans`). Kähler in the atlas sense of `DifferentialForm.IsKahler`; the tensor sense is
+G14b. -/
+theorem fsForm_isKahler (n : ℕ) : IsKahler (fsForm (n := n)) fsJ modelJ where
+  toIsAlmostKahler := fsForm_isAlmostKahler n
+  J_localTriv_symmL := fun e y hy v => by
+    rw [modelJ_apply]
+    exact fsJ_localTriv_symmL e y hy v
 
 /-! ### The Nijenhuis tensor of `J = i·` vanishes (G14b) -/
 

@@ -21,9 +21,11 @@ Mathlib has no Kähler-geometry API (no manifold differential forms, no exterior
 almost-complex structure; MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)). When
 this
 module was written that meant the full closed 2-form `ω` on `ℂℙ^{N-1}` with `dω = 0` and
-`ω^{∧(N-1)}/(N-1)! = μ_FS` could not be built; since 2026-09-07/11 the modules under
-`Geometry/Manifold/` build that differential geometry themselves and both statements are
-theorems (`Projectivization.fsForm_isKahler`, `fsVolume_eq_smul_fsMeasure`). What **is**
+the top-power identity could not be built; since 2026-09-07/11 the modules under
+`Geometry/Manifold/` build that differential geometry themselves and both are theorems
+(`Projectivization.fsForm_isKahler`; `ω^{∧n} = (4π)ⁿ μ_FS` as `fsVolume_eq_smul_fsMeasure` and
+`vol_g = ((4π)ⁿ/n!) μ_FS` as `riemannianVolume_fsMetric_eq_smul_fsMeasure`, with `μ_FS` the
+probability measure). What **is**
 bounded — and is built here — is the
 **pointwise** (linear-algebra) core of that form: on any complex inner-product space `E` (the
 tangent

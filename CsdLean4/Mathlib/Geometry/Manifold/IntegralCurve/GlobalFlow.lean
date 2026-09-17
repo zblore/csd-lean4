@@ -63,7 +63,7 @@ until Q29(d′), which needs the time-`t` maps as homeomorphisms — that is whe
 hypothesis Mathlib's local theorem takes; `C^∞` fields qualify by `ContMDiff.of_le`. The
 transport in `exists_nhds_forall_exists_isMIntegralCurveOn_Ioo` works in the chart at `x₀` and
 produces curves for initial points in a chart-neighbourhood of `x₀`; the neighbourhood is the
-preimage of a closed ball, open in `M` by `continuousAt_extChartAt`.
+preimage of a closed ball, a neighbourhood of `x₀` in `M` by `continuousAt_extChartAt`.
 
 **Provenance and references.** The generator-layer plan §11 (Q29);
 `Mathlib/Geometry/Manifold/IntegralCurve/`

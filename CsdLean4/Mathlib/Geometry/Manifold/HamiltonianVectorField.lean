@@ -714,7 +714,6 @@ is smooth (`contDiffAt_localRep`), and the chart derivative of a `C^n` energy is
 is infinite. One proof for `∞` and `ω` (until 2026-09-17 there were two). -/
 theorem contDiffAt_localHamiltonianVector_of_contMDiff {n : WithTop ℕ∞}
     [IsManifold (𝓘(ℝ, E)) n M]
-    [ContMDiffVectorBundle n E (TangentSpace (𝓘(ℝ, E)) : M → Type _) (𝓘(ℝ, E))]
     (hn : n + 1 ≤ n)
     (hα : ContMDiff (𝓘(ℝ, E)) ((𝓘(ℝ, E)).prod (𝓘(ℝ, E [⋀^Fin 2]→L[ℝ] ℝ))) n
       (fun x : M => TotalSpace.mk' (E [⋀^Fin 2]→L[ℝ] ℝ) x (α x)))
@@ -723,6 +722,9 @@ theorem contDiffAt_localHamiltonianVector_of_contMDiff {n : WithTop ℕ∞}
     (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) n H) (x₀ : M) {w : E}
     (hw : w ∈ (chartAt E x₀).target) :
     ContDiffAt ℝ n (localHamiltonianVector α H x₀) w := by
+  have : IsManifold (𝓘(ℝ, E)) (n + 1) M := .of_le hn
+  have : ContMDiffVectorBundle n E (TangentSpace (𝓘(ℝ, E)) : M → Type _) (𝓘(ℝ, E)) :=
+    TangentBundle.contMDiffVectorBundle
   have hω := localRep_nondegenerate α hnd x₀ hw
   have hΦ : ContDiffAt ℝ n
       (fun w => ContinuousAlternatingMap.curryLeft (localRep (fun x => α x) x₀ w)) w :=
@@ -770,7 +772,6 @@ infinite order `n` (`∞` or `ω`), for a `C^n` 2-form family non-degenerate at 
 `C^n` energy on a `C^n` manifold. One proof for the smooth and the analytic case. -/
 theorem contMDiff_hamiltonianVectorField_of_contMDiff {n : WithTop ℕ∞}
     [IsManifold (𝓘(ℝ, E)) n M]
-    [ContMDiffVectorBundle n E (TangentSpace (𝓘(ℝ, E)) : M → Type _) (𝓘(ℝ, E))]
     (hn : n + 1 ≤ n)
     (hα : ContMDiff (𝓘(ℝ, E)) ((𝓘(ℝ, E)).prod (𝓘(ℝ, E [⋀^Fin 2]→L[ℝ] ℝ))) n
       (fun x : M => TotalSpace.mk' (E [⋀^Fin 2]→L[ℝ] ℝ) x (α x)))
@@ -780,6 +781,9 @@ theorem contMDiff_hamiltonianVectorField_of_contMDiff {n : WithTop ℕ∞}
     ContMDiff (𝓘(ℝ, E))
       ((𝓘(ℝ, E)).prod (𝓘(ℝ, E))) n
       (fun x : M => TotalSpace.mk' E x (hamiltonianVectorField (fun x => α x) hnd H x)) := by
+  have : IsManifold (𝓘(ℝ, E)) (n + 1) M := .of_le hn
+  have : ContMDiffVectorBundle n E (TangentSpace (𝓘(ℝ, E)) : M → Type _) (𝓘(ℝ, E)) :=
+    TangentBundle.contMDiffVectorBundle
   intro x₀
   rw [contMDiffAt_section]
   have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) n
@@ -998,9 +1002,11 @@ theorem apply_swap (x : M) (a b : TangentSpace (𝓘(ℝ, E)) x) :
   exact eq_neg_of_add_eq_zero_left h0
 
 /-- **An almost Kähler structure**: a symplectic form `β` with a compatible almost complex
-structure `J` — a family of maps on the tangent spaces with `J² = -1` — such that `β` is
-`J`-invariant and `J`-tamed, `β (J v, v) > 0` for `v ≠ 0`. The compatible metric is
-`g (u, v) = β (J u, v)` (`IsAlmostKahler.metric`), the convention `ω = g (J ·, ·)`. Integrability
+structure `J` — a family of maps on the tangent spaces with `J² = -1`, smooth as a section of
+`Hom(TM, TM)` — such that `β` is `J`-invariant and `J`-tamed, `β (J v, v) > 0` for `v ≠ 0`. The
+compatible metric is `g (u, v) = β (J u, v)` (`IsAlmostKahler.metric`), so that
+`β (u, v) = g (u, J v)` (`apply_eq_metric`) — the convention `ω = g (·, J ·)`, which differs by a
+sign from the flat `ω = g (J ·, ·)` of `Analysis/InnerProductSpace/KahlerForm.lean`. Integrability
 of `J` — the Kähler condition proper — is not part of the predicate. -/
 structure IsAlmostKahler (β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ)
     (J : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →
@@ -1015,6 +1021,13 @@ structure IsAlmostKahler (β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ
   /-- `β` tames `J`: `β (J v, v) > 0` for `v ≠ 0`. -/
   pos : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
     0 < (β x ![J x v, v] : ℝ)
+  /-- `J` is a `C^∞` section of the endomorphism bundle: some family of continuous linear maps
+  agreeing with `J` is a `C^∞` section of `Hom(TM, TM)` (without this the pointwise conditions
+  admit families that jump from point to point). -/
+  contMDiff : ∃ JL : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →L[ℝ] TangentSpace (𝓘(ℝ, E)) x,
+    (∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), JL x v = J x v) ∧
+      ContMDiff (𝓘(ℝ, E)) ((𝓘(ℝ, E)).prod (𝓘(ℝ, E →L[ℝ] E))) ∞
+        (fun x : M => TotalSpace.mk' (E →L[ℝ] E) x (JL x))
 
 namespace IsAlmostKahler
 
@@ -1080,6 +1093,36 @@ structure IsKahler (β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ)
     J y (((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e).symmL ℝ y v)
       = ((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e).symmL ℝ y (J₀ v)
 
+/-- ★★ A family of continuous linear maps `JL` that is a fixed `J₀` through the tangent
+trivialisation of every atlas chart is a `C^∞` section of `Hom(TM, TM)`: in the trivialisation over
+the chart at `x₀` it is the constant `J₀` (`continuousLinearMapAt_symmL`). This is the smoothness
+that the atlas condition of a Kähler structure carries; it is stated on the condition alone so that
+the almost-Kähler predicate can ask for it without circularity. -/
+theorem contMDiff_hom_section_of_localTriv_symmL
+    (J : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x → TangentSpace (𝓘(ℝ, E)) x) (J₀ : E →L[ℝ] E)
+    (hJ : ∀ (e : atlas E M) (y : M), y ∈ e.1.source → ∀ v : E,
+      J y (((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e).symmL ℝ y v)
+        = ((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e).symmL ℝ y (J₀ v))
+    (JL : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →L[ℝ] TangentSpace (𝓘(ℝ, E)) x)
+    (hJL : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), JL x v = J x v) :
+    ContMDiff (𝓘(ℝ, E))
+      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E →L[ℝ] E))) ∞
+      (fun x : M => TotalSpace.mk' (E →L[ℝ] E) x (JL x)) := by
+  intro x₀
+  rw [contMDiffAt_section]
+  refine (contMDiffAt_const (c := J₀)).congr_of_eventuallyEq ?_
+  filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
+  have hb : y ∈ (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).baseSet := hy
+  show ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt
+      ℝ y).comp ((JL y).comp
+        ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y)) = J₀
+  ext v
+  have h2 : J y ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y v)
+      = (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y (J₀ v) :=
+    hJ (achart E x₀) y hy v
+  rw [ContinuousLinearMap.comp_apply, ContinuousLinearMap.comp_apply, hJL, h2,
+    (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt_symmL hb]
+
 namespace IsKahler
 
 variable {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ}
@@ -1111,8 +1154,9 @@ theorem apply_eq (h : IsKahler β J J₀) (y : M) (v : E) : J y v = J₀ v := by
   rw [tangent_symmL_eq_fderiv y y (mem_chart_source E y), fderiv_chart_transition_self] at h1
   exact h1
 
-/-- ★ **Every chart transition is holomorphic**: its derivative commutes with `J₀` — the
-Cauchy–Riemann equations of the atlas, at the point of the chart at `x₀` corresponding to `y`. -/
+/-- ★ The transition from the chart at `x₀` to the chart at `y` is holomorphic at `y`: its
+derivative commutes with `J₀` (the case `e = achart E x₀`, `e' = achart E y` of
+`fderiv_atlas_transition_comm`). -/
 theorem fderiv_chart_transition_comm (h : IsKahler β J J₀) (x₀ y : M)
     (hy : y ∈ (chartAt E x₀).source) (v : E) :
     fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) (J₀ v)
@@ -1122,6 +1166,57 @@ theorem fderiv_chart_transition_comm (h : IsKahler β J J₀) (x₀ y : M)
   exact h1.symm.trans
     (h.apply_eq y (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) v))
 
+/-- The derivative of the transition between two atlas charts at a point of both sources is the
+tangent coordinate change between their trivialisations (`VectorBundleCore.coordChange_comp`). -/
+theorem fderiv_atlas_transition_eq (e e' : atlas E M) (y : M) (hy : y ∈ e.1.source)
+    (hy' : y ∈ e'.1.source) :
+    fderiv ℝ (e'.1 ∘ e.1.symm) (e.1 y)
+      = (((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e').continuousLinearMapAt ℝ y).comp
+          (((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e).symmL ℝ y) := by
+  have hy₁ : y ∈ ((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e).baseSet := hy
+  have hy₂ : y ∈ ((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e').baseSet := hy'
+  rw [VectorBundleCore.localTriv_continuousLinearMapAt _ hy₂, VectorBundleCore.localTriv_symmL _
+      hy₁]
+  ext v
+  change _ = (tangentBundleCore (𝓘(ℝ, E)) M).coordChange ((tangentBundleCore (𝓘(ℝ, E)) M).indexAt y)
+    e' y ((tangentBundleCore (𝓘(ℝ, E)) M).coordChange e ((tangentBundleCore (𝓘(ℝ, E)) M).indexAt y)
+      y v)
+  have hmem : y ∈ (tangentBundleCore (𝓘(ℝ, E)) M).baseSet e
+      ∩ (tangentBundleCore (𝓘(ℝ, E)) M).baseSet ((tangentBundleCore (𝓘(ℝ, E)) M).indexAt y)
+      ∩ (tangentBundleCore (𝓘(ℝ, E)) M).baseSet e' :=
+    ⟨⟨hy, mem_chart_source E y⟩, hy'⟩
+  rw [(tangentBundleCore (𝓘(ℝ, E)) M).coordChange_comp e
+    ((tangentBundleCore (𝓘(ℝ, E)) M).indexAt y) e' y hmem v]
+  show _ = fderivWithin ℝ (e'.1.extend (𝓘(ℝ, E)) ∘ (e.1.extend (𝓘(ℝ, E))).symm)
+    (Set.range (𝓘(ℝ, E))) (e.1.extend (𝓘(ℝ, E)) y) v
+  have hfun : (e'.1.extend (𝓘(ℝ, E)) ∘ (e.1.extend (𝓘(ℝ, E))).symm) = (e'.1 ∘ e.1.symm) := by
+    funext w
+    simp
+  rw [hfun, modelWithCornersSelf_coe, Set.range_id, fderivWithin_univ]
+  rfl
+
+/-- ★ **Every chart transition of the atlas is holomorphic**: for atlas charts `e`, `e'` and a
+point `y` of both sources, the derivative of `e' ∘ e.symm` at `e y` commutes with `J₀` — the
+Cauchy–Riemann equations of the whole atlas, from the atlas field `J_localTriv_symmL`. -/
+theorem fderiv_atlas_transition_comm (h : IsKahler β J J₀) (e e' : atlas E M) (y : M)
+    (hy : y ∈ e.1.source) (hy' : y ∈ e'.1.source) (v : E) :
+    fderiv ℝ (e'.1 ∘ e.1.symm) (e.1 y) (J₀ v) = J₀ (fderiv ℝ (e'.1 ∘ e.1.symm) (e.1 y) v) := by
+  have hy₂ : y ∈ ((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e').baseSet := hy'
+  have h1 := h.J_localTriv_symmL e y hy v
+  have h2 : ∀ u : TangentSpace (𝓘(ℝ, E)) y,
+      J y u = ((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e').symmL ℝ y
+        (J₀ (((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e').continuousLinearMapAt ℝ y u)) := by
+    intro u
+    have := h.J_localTriv_symmL e' y hy'
+      (((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e').continuousLinearMapAt ℝ y u)
+    rwa [Trivialization.symmL_continuousLinearMapAt (R := ℝ)
+      ((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e') hy₂ u] at this
+  rw [fderiv_atlas_transition_eq e e' y hy hy', ContinuousLinearMap.comp_apply,
+    ContinuousLinearMap.comp_apply, ← h1,
+    h2 (((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e).symmL ℝ y v),
+    Trivialization.continuousLinearMapAt_symmL (R := ℝ)
+      ((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e') hy₂]
+
 /-- `J₀² = -1` on the model, transported from `J² = -1` at any point of `M`. -/
 theorem J₀_J₀ (h : IsKahler β J J₀) (y : M) (v : E) : J₀ (J₀ v) = -v := by
   rw [← h.apply_eq y (J₀ v), ← h.apply_eq y v]
@@ -1129,26 +1224,15 @@ theorem J₀_J₀ (h : IsKahler β J J₀) (y : M) (v : E) : J₀ (J₀ v) = -v 
 
 /-- ★★ **The complex structure is a smooth section of the endomorphism bundle** (G15): if the `J`
 of a Kähler structure is given by continuous linear maps `JL`, the section `x ↦ JL x` of
-`Hom(TM, TM)` is `C^∞` — in the tangent trivialisation over the chart at `x₀` it is the constant
-`J₀` (`J_symmL`, then `continuousLinearMapAt_symmL`). -/
+`Hom(TM, TM)` is `C^∞` (`contMDiff_hom_section_of_localTriv_symmL` on the atlas field). -/
 theorem contMDiff_hom_section (h : IsKahler β J J₀)
     (JL : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →L[ℝ]
       TangentSpace (𝓘(ℝ, E)) x)
     (hJL : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), JL x v = J x v) :
     ContMDiff (𝓘(ℝ, E))
       ((𝓘(ℝ, E)).prod (𝓘(ℝ, E →L[ℝ] E))) ∞
-      (fun x : M => TotalSpace.mk' (E →L[ℝ] E) x (JL x)) := by
-  intro x₀
-  rw [contMDiffAt_section]
-  refine (contMDiffAt_const (c := J₀)).congr_of_eventuallyEq ?_
-  filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
-  have hb : y ∈ (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).baseSet := hy
-  show ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt
-      ℝ y).comp ((JL y).comp
-        ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y)) = J₀
-  ext v
-  rw [ContinuousLinearMap.comp_apply, ContinuousLinearMap.comp_apply, hJL, h.J_symmL x₀ y hy v,
-    (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt_symmL hb]
+      (fun x : M => TotalSpace.mk' (E →L[ℝ] E) x (JL x)) :=
+  contMDiff_hom_section_of_localTriv_symmL J J₀ h.J_localTriv_symmL JL hJL
 
 end IsKahler
 

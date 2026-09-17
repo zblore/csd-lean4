@@ -558,10 +558,7 @@ theorem contMDiff_torusHamiltonian {m : WithTop ℕ∞} (θ : Fin (n + 1) → �
 `m`** (`∞` and `ω`): it is the Hamiltonian vector field of a `C^m` energy for the `C^ω` form
     `fsForm`
 (G2), and those are `C^m` (G3, `contMDiff_hamiltonianVectorField_of_contMDiff`). -/
-theorem contMDiff_schrodingerField_of_le {m : WithTop ℕ∞}
-    [ContMDiffVectorBundle m (Fin n → ℂ) (TangentSpace (𝓘(ℝ, Fin n → ℂ)) : ℙ ℂ (Ambient n) → Type _)
-      (𝓘(ℝ, Fin n → ℂ))]
-    (hm : m + 1 ≤ m)
+theorem contMDiff_schrodingerField_of_le {m : WithTop ℕ∞} (hm : m + 1 ≤ m)
     {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ} (hH : H.IsHermitian) :
     ContMDiff (𝓘(ℝ, Fin n → ℂ))
       ((𝓘(ℝ, Fin n → ℂ)).prod (𝓘(ℝ, Fin n → ℂ))) m
@@ -581,10 +578,7 @@ theorem contMDiff_schrodingerField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
   contMDiff_schrodingerField_of_le (by simp) hH
 
 /-- ★★ **The torus vector field on `ℂℙⁿ` is a `C^m` vector field for every infinite order `m`.** -/
-theorem contMDiff_torusField_of_le {m : WithTop ℕ∞}
-    [ContMDiffVectorBundle m (Fin n → ℂ) (TangentSpace (𝓘(ℝ, Fin n → ℂ)) : ℙ ℂ (Ambient n) → Type _)
-      (𝓘(ℝ, Fin n → ℂ))]
-    (hm : m + 1 ≤ m) (θ : Fin (n + 1) → ℝ) :
+theorem contMDiff_torusField_of_le {m : WithTop ℕ∞} (hm : m + 1 ≤ m) (θ : Fin (n + 1) → ℝ) :
     ContMDiff (𝓘(ℝ, Fin n → ℂ))
       ((𝓘(ℝ, Fin n → ℂ)).prod (𝓘(ℝ, Fin n → ℂ))) m
       (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (torusField θ x)) := by
