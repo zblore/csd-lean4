@@ -11,6 +11,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceChartC
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 public import CsdLean4.Mathlib.MeasureTheory.MapProbability
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
 
 /-!
 # The volume of the top power of the Fubini–Study form
@@ -89,6 +90,47 @@ open scoped Manifold Bundle Topology ContDiff LinearAlgebra.Projectivization ENN
 
 noncomputable section
 
+/-! ### The parallelepiped of a product basis, and Lebesgue measure on `ℂ`
+
+Two facts `stdBasis_addHaar` below needs: a product basis has the product parallelepiped, and
+Lebesgue measure on `ℂ` gives the unit square of `basisOneI` mass `1` (it is the orthonormal basis
+`orthonormalBasisOneI`). -/
+
+/-- The parallelepiped of a product basis is the product of the parallelepipeds. -/
+theorem parallelepiped_pi_basis {ι : Type*} [Fintype ι] [DecidableEq ι] {η : ι → Type*}
+    [∀ i, Fintype (η i)] {M : ι → Type*} [∀ i, AddCommGroup (M i)] [∀ i, Module ℝ (M i)]
+    (b : ∀ i, Module.Basis (η i) ℝ (M i)) :
+    parallelepiped (Pi.basis b) = Set.pi Set.univ fun i => parallelepiped (b i) := by
+  ext x
+  simp only [mem_parallelepiped_iff, Set.mem_pi, Set.mem_univ, true_implies]
+  have key : ∀ (t : (Σ i, η i) → ℝ) (i : ι),
+      (∑ jk, t jk • Pi.basis b jk) i = ∑ k, t ⟨i, k⟩ • b i k := by
+    intro t i
+    rw [Finset.sum_apply, ← Finset.univ_sigma_univ, Finset.sum_sigma]
+    simp only [Pi.smul_apply, Pi.basis_apply]
+    rw [Finset.sum_eq_single i]
+    · simp
+    · intro j _ hj
+      simp [Pi.single_eq_of_ne hj.symm]
+    · simp
+  constructor
+  · rintro ⟨t, ht, rfl⟩ i
+    exact ⟨fun k => t ⟨i, k⟩, ⟨fun k => ht.1 ⟨i, k⟩, fun k => ht.2 ⟨i, k⟩⟩, key t i⟩
+  · intro h
+    choose t ht using h
+    refine ⟨fun jk => t jk.1 jk.2, ⟨fun jk => (ht jk.1).1.1 jk.2, fun jk => (ht jk.1).1.2 jk.2⟩, ?_⟩
+    funext i
+    rw [key]
+    exact (ht i).2
+
+/-- Lebesgue measure on `ℂ` gives the unit square `parallelepiped basisOneI` mass `1`: `basisOneI`
+is the orthonormal basis `orthonormalBasisOneI`. -/
+theorem volume_parallelepiped_basisOneI : volume (parallelepiped Complex.basisOneI) = 1 := by
+  have h : (⇑Complex.basisOneI : Fin 2 → ℂ) = ⇑Complex.orthonormalBasisOneI := by
+    rw [← Complex.toBasis_orthonormalBasisOneI, OrthonormalBasis.coe_toBasis]
+  rw [h]
+  exact Complex.orthonormalBasisOneI.volume_parallelepiped
+
 namespace Projectivization
 
 open Kahler Matrix.UnitaryGroup DifferentialForm
@@ -104,6 +146,29 @@ def stdBasis (n : ℕ) : Module.Basis (Fin (2 * n)) ℝ (Fin n → ℂ) :=
 `fsTopForm n` on `ℂℙⁿ`, against Lebesgue measure on the model and the affine chart cover. -/
 def fsVolume (n : ℕ) : Measure (ℙ ℂ (Ambient n)) :=
   topFormMeasure volume (stdBasis n) (fun x => fsTopForm n x) (affineChartCover n)
+
+/-! ### `fsVolume` is the canonical measure of its top form
+
+`topFormMeasure` takes a Haar measure and a basis; `fsVolume` uses Lebesgue measure and the
+standard basis. Lebesgue measure IS the standard basis' own Haar measure (`stdBasis_addHaar`), so by
+`topFormMeasure_addHaar_basis` the choice of basis is immaterial: `fsVolume` is the intrinsic
+measure
+of `fsTopForm` (`fsVolume_eq_topFormMeasure_addHaar`). -/
+
+/-- ★ **The standard basis' Haar measure is Lebesgue measure** on `Fin n → ℂ`: the reindexing does
+not change the Haar measure, the product basis has the product unit cube, and each factor's unit
+square has Lebesgue mass `1`. -/
+theorem stdBasis_addHaar (n : ℕ) : (stdBasis n).addHaar = volume := by
+  rw [stdBasis, Module.Basis.addHaar_reindex, Module.Basis.addHaar_eq_iff,
+    Module.Basis.coe_parallelepiped, parallelepiped_pi_basis, volume_pi, Measure.pi_pi,
+    Finset.prod_const, volume_parallelepiped_basisOneI, one_pow]
+
+/-- ★ **`fsVolume` is the canonical measure of `fsTopForm`**: against any basis of the model and
+that basis' own Haar measure, the glued measure is `fsVolume`. -/
+theorem fsVolume_eq_topFormMeasure_addHaar (b : Module.Basis (Fin (2 * n)) ℝ (Fin n → ℂ)) :
+    fsVolume n = topFormMeasure b.addHaar b (fun x => fsTopForm n x) (affineChartCover n) := by
+  rw [fsVolume, ← stdBasis_addHaar n]
+  exact topFormMeasure_addHaar_basis (fun x => fsTopForm n x) b (stdBasis n) (affineChartCover n)
 
 /-! ### The action in charts -/
 

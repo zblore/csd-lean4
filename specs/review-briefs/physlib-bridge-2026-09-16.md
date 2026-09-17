@@ -50,6 +50,7 @@ OUTPUT. A numbered list of findings, most severe first, each with: severity (BLO
   the user's request; two re-pricings came out of doing them — B3 (Mathlib's `complexToReal` is a
   `def`, so the suggested `inner ℝ` is not available as an instance) and B13 (no `volume` on a
   complex `EuclideanSpace` at the pin; the real-`2n` transfer is M) — recorded in the same row.
+  B12′ (`stdBasis_addHaar`, `fsVolume_eq_topFormMeasure_addHaar`) followed the same day.
 
 ## Brief B — the Fubini–Study machinery the bridge stands on
 
