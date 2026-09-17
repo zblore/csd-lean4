@@ -570,13 +570,13 @@ LF4 module chain (under `CsdLean4/LF4/`, namespace `CSD.LF4`):
 
 ```
 Instance.lean          — cpSectorData: first concrete SectorData (Σ = P =
-                         ℂℙ^{N-1}, G = U(N), π = id, μL = fubiniStudyMeasure);
+                         ℂℙ^{N-1}, G = U(N), π = id, μL = fsMeasure);
                          cp_measure_bridge (axiom-free for the instance).
                          Honest scope: π = id ⇒ point fibres, c = 1, no Born
                          prediction reproduced (base case proving the framework
                          is inhabited)
 KahlerInstance.lean    — kSectorData on KSigma M = ℂℙ^{M-1} × T² with
-                         kMuL = fubiniStudyMeasure ⊗ vol_T²; k_measure_bridge
+                         kMuL = fsMeasure ⊗ vol_T²; k_measure_bridge
                          (c = 1, axiom-free marginal bridge). First
                          non-trivial-fibre, genuinely compact-Kähler SectorData
 SingletKahler.lean     — ofKählerPreparation: concrete LF3 PureSingletPreparation
@@ -695,7 +695,7 @@ genuine Fubini–Study Kähler structure, **not** by carving and **not** via
   restated posit (`specs/POSITS.md` Posit 1).
 - Born weight = barycentric Lebesgue-volume ratio (`born_eq_volume_ratio`),
   general `N`, unconditional.
-- For the qubit, Born weight = genuine `fubiniStudyMeasure` volume ratio on
+- For the qubit, Born weight = genuine `fsMeasure` volume ratio on
   `Σ = ℂℙ¹` (`fs_born_volume_ratio_qubit`) and the **Busch-free empirical chain**
   `qubit_born_frequency_convergence` (LF1 typicality + Born = FS volume ⟹
   frequencies → Born), each carried in two forms: conditional on `h_uniform` (the

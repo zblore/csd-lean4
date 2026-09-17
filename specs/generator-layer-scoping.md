@@ -446,11 +446,11 @@ consumer). G16 conserves the torus Hamiltonian, not each `μₖ` separately alon
 
 ### G19, built (2026-09-10)
 
-**What.** G3's chain at `ω`. `ExteriorDerivative.lean`: ★ `contDiffAt_omega_localRep` (a `C^ω` section has
+**What.** G3's chain at `ω`. `ExteriorDerivative.lean`: ★ `contDiffAt_omega_localRep` (since 2026-09-17 the `ω` case of the order-generic `contDiffAt_localRep`; a `C^ω` section has
 `C^ω` local representatives; the `∞` proof with `contMDiffOn_chart_symm (n := ω)`, on an analytic
 manifold). `HamiltonianVectorField.lean`, new section `SmoothAnalytic` with `[IsManifold 𝓘(ℝ, E) ω M]`:
 `ofOmega` (a `C^ω` 2-form read as the `C^∞` form G2/G3's constructions are typed on — `⟨α, α.contMDiff_toFun.of_le
-le_top⟩`, so `ofOmega α x = α x` is `rfl`), ★★ `contDiffAt_omega_localHamiltonianVector` (the `∞` proof at `ω`:
+le_top⟩`, so `ofOmega α x = α x` is `rfl`), ★★ `contDiffAt_omega_localHamiltonianVector` (since 2026-09-17 the `ω` case of the order-generic `contDiffAt_localHamiltonianVector_of_contMDiff`; the `∞` proof at `ω`:
 `IsBoundedLinearMap.contDiff`, `contDiffAt_map_inverse`, `ContDiffAt.clm_apply` and `fderiv_right` are all
 generic in the order; `ω + 1 ≤ ω` is `le_top`), ★★★ `contMDiff_omega_hamiltonianVectorField` (**the
 Hamiltonian vector field of a `C^ω` energy for a `C^ω` non-degenerate 2-form is a `C^ω` section**), reusing

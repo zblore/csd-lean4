@@ -52,11 +52,11 @@ entry has been retired.
 
 **Mathlib status.** Not currently in Mathlib at the abstract-measurable-space level required. The concrete `SU(N)`-on-`CP^{N-1}` instance is Haar-measure-on-compact-homogeneous-space material; Mathlib has Haar measure on topological groups but the quotient construction is not yet packaged at the required level.
 
-**Concrete realisation PROVED (2026-05-24).** The axiom's *content* for the `CP^{N-1}` / `U(N)` instantiation is now a proved, axiom-free theorem in the Mathlib-side projectivization tree: `Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn` (`CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean`) reproduces the axiom's `∃ c, μ = c • μFS` conclusion for `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := Matrix.unitaryGroup (Fin N) ℂ` (with the reference point made explicit), built from `fubiniStudyMeasure_unique` plus `invariant_finiteMeasure_eq_smul_fubiniStudy` (the finite-measure normalisation step). Both cite only the foundational triple; AxiomAudit-pinned.
+**Concrete realisation PROVED (2026-05-24).** The axiom's *content* for the `CP^{N-1}` / `U(N)` instantiation is now a proved, axiom-free theorem in the Mathlib-side projectivization tree: `Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn` (`CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean`) reproduces the axiom's `∃ c, μ = c • μFS` conclusion for `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := Matrix.unitaryGroup (Fin N) ℂ` (with the reference point made explicit), built from `fsMeasure_unique` plus `invariant_finiteMeasure_eq_smul_fubiniStudy` (the finite-measure normalisation step). Both cite only the foundational triple; AxiomAudit-pinned.
 
 This does **not** discharge the abstract axiom: as stated over an arbitrary pretransitive `(P, G)` with no topology, the axiom is deliberately stronger than any provable theorem (it omits the compactness/regularity hypotheses the classical result needs — see the declaration docstring), so the concrete theorem cannot prove it. What changed is that the mathematical core is no longer an open problem; only the wiring remains.
 
-**Discharge target.** When LF4 instantiates `SectorData` with `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := U(N)`, `μFS := fubiniStudyMeasure p₀`, the concrete `measure_bridge` routes through `invariant_measure_uniqueness_cpn` instead of the axiom, and the LF2 axiom count drops from two to one at that instantiation site. The current abstract signature carries transitivity explicitly so the concrete instantiation supplies `epAction_transitive` from the `SU(N)`-on-`CP^{N-1}` model with matching hypotheses.
+**Discharge target.** When LF4 instantiates `SectorData` with `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := U(N)`, `μFS := fsMeasure p₀`, the concrete `measure_bridge` routes through `invariant_measure_uniqueness_cpn` instead of the axiom, and the LF2 axiom count drops from two to one at that instantiation site. The current abstract signature carries transitivity explicitly so the concrete instantiation supplies `epAction_transitive` from the `SU(N)`-on-`CP^{N-1}` model with matching hypotheses.
 
 ### 2.2 `busch_effect_gleason` — DISCHARGED 2026-07-21
 
@@ -94,9 +94,9 @@ self-contained in the CSD tree and does not need it.
 `CSD.LF4.fs_moment_pushforward_uniform` in `CsdLean4/LF4/MomentUniform.lean`.
 `DuistermaatHeckman.lean` no longer introduces any axiom; **LF4 introduces no axioms.**
 
-**Statement.** `(fun p => momentMap p 0)∗ fubiniStudyMeasure p₀ = volume.restrict (Set.Icc 0 1)` on `CPN 2 = ℂℙ¹` — the moment-map coordinate pushes the Fubini–Study measure to the uniform measure on the moment polytope `[0,1]`. The `N = 2` Duistermaat–Heckman / Archimedes hat-box fact.
+**Statement.** `(fun p => momentMap p 0)∗ fsMeasure p₀ = volume.restrict (Set.Icc 0 1)` on `CPN 2 = ℂℙ¹` — the moment-map coordinate pushes the Fubini–Study measure to the uniform measure on the moment polytope `[0,1]`. The `N = 2` Duistermaat–Heckman / Archimedes hat-box fact.
 
-**How it was discharged (plan B; `specs/plan-b-detail.md`).** Identify `fubiniStudyMeasure` with the Gaussian-induced measure on `ℂℙ¹` (`gaussianCP_eq_fubiniStudy`, Part 1: `μ_FS` is the unique `U(2)`-invariant probability measure, and the projectivised standard Gaussian is `U(2)`-invariant), then compute the moment marginal by a change of variables: `‖·‖²∗ N(0,I₂) = Exp(1/2)` (Slice 1, polarCoord), the block-product/independence step (Slice 2), the ratio→uniform crux through the diffeo `Ψ(T,S) = (T·S,(1−T)·S)` (Slice 3, Jacobian determinant `S` + radial `Gamma 2 = 1`), and the `Fin 4 → ℝ ≃ (ℝ²)²` reindex bridge (Slice 4, `finSumFinEquiv`). Foundational-triple-only throughout.
+**How it was discharged (plan B; `specs/plan-b-detail.md`).** Identify `fsMeasure` with the Gaussian-induced measure on `ℂℙ¹` (`gaussianCP_eq_fubiniStudy`, Part 1: `μ_FS` is the unique `U(2)`-invariant probability measure, and the projectivised standard Gaussian is `U(2)`-invariant), then compute the moment marginal by a change of variables: `‖·‖²∗ N(0,I₂) = Exp(1/2)` (Slice 1, polarCoord), the block-product/independence step (Slice 2), the ratio→uniform crux through the diffeo `Ψ(T,S) = (T·S,(1−T)·S)` (Slice 3, Jacobian determinant `S` + radial `Gamma 2 = 1`), and the `Fin 4 → ℝ ≃ (ℝ²)²` reindex bridge (Slice 4, `finSumFinEquiv`). Foundational-triple-only throughout.
 
 **Consequence.** `fs_born_volume_ratio_qubit_uncond` and `qubit_born_frequency_convergence_uncond` (moved to `MomentUniform.lean`) are now foundational-triple-only — Born derived from the Kähler volume for the qubit with **no** named geometry axiom and **no** `busch_effect_gleason`. The conditional forms (`fs_born_volume_ratio_qubit`, `qubit_born_frequency_convergence`, with `h_uniform` as an explicit hypothesis) remain available.
 
@@ -456,10 +456,10 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Matrix.UnitaryGroup.orbitMap` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.orbit_map_continuous` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.orbit_map_measurable` | `propext, Classical.choice, Quot.sound` |
-| `Matrix.UnitaryGroup.fubiniStudyMeasure` | `propext, Classical.choice, Quot.sound` |
-| `Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.fsMeasure` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.instIsProbabilityMeasureFsMeasure` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.smul_comp_orbitMap` | `propext, Classical.choice, Quot.sound` |
-| `Matrix.UnitaryGroup.fubiniStudyMeasure_smul_invariant` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.fsMeasure_smul_invariant` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.exists_unitary_e_zero_eq` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.exists_unitary_map_unit` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.exists_unitary_mapping_nonzero` | `propext, Classical.choice, Quot.sound` |
@@ -468,7 +468,7 @@ would be an upstream regression and a blocker for the eventual Mathlib PR.
 | `Matrix.UnitaryGroup.instContinuousSMul_projectivization` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.instIsMulRightInvariantUnitaryHaarProb` | `propext, Classical.choice, Quot.sound` |
 | `Matrix.UnitaryGroup.haar_orbit_indicator_eq` | `propext, Classical.choice, Quot.sound` |
-| `Matrix.UnitaryGroup.fubiniStudyMeasure_unique` | `propext, Classical.choice, Quot.sound` |
+| `Matrix.UnitaryGroup.fsMeasure_unique` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.MerminPeres.no_lhv_mermin_peres` | `propext, Quot.sound` |
 | `Empirical.MerminPeres.sigmaX_sq` | `propext, Classical.choice, Quot.sound` |
 | `Empirical.MerminPeres.sigmaY_sq` | `propext, Classical.choice, Quot.sound` |

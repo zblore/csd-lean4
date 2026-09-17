@@ -185,7 +185,7 @@ Since 2026-06-15, **every** volume-frequency headline in this table has a
 `povm_born_frequency_volume_canonical` in `LF4/TrialWitness.lean` for the POVM
 engine) that discharges the abstract i.i.d. trial bundle
 `(Ω, Pr, X, hX, hlaw, hindep)` at the in-tree Fubini-Study coordinate process
-(`fsTrialMeasure p₀ = Measure.infinitePi (fun _ => fubiniStudyMeasure p₀)`,
+(`fsTrialMeasure p₀ = Measure.infinitePi (fun _ => fsMeasure p₀)`,
 `fsTrial N n = (· n)`). The hypothesis sets are therefore **Lean-inhabited**, not
 merely classically satisfiable; each `_canonical` conclusion is its parent's
 verbatim under `Pr := fsTrialMeasure p₀`, `X := fsTrial _`. This is
