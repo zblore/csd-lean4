@@ -278,26 +278,28 @@ theorem localRep_transition (s : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x [⋀^�
   exact congrArg (fun g => (toFlat (s ((chartAt E x₀).symm w))) g)
     (funext fun i => congrArg (fun L => L (v i)) hc)
 
-/-- ★ A `C^∞` section has `C^∞` local representatives (on the chart's target). -/
-theorem contDiffAt_localRep
+/-- ★ A `C^n` section has `C^n` local representatives (on the chart's target), for every order `n`
+the manifold has — `∞` and `ω` included (until 2026-09-17 the `ω` case was a second proof). -/
+theorem contDiffAt_localRep {n : WithTop ℕ∞} [IsManifold (𝓘(ℝ, E)) n M]
+    [ContMDiffVectorBundle n E (TangentSpace (𝓘(ℝ, E)) : M → Type _) (𝓘(ℝ, E))]
     (s : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
     (hs : ContMDiff (𝓘(ℝ, E))
-      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E [⋀^ι]→L[ℝ] G))) ∞
+      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E [⋀^ι]→L[ℝ] G))) n
       (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] G) x (s x)))
     (x₀ : M) {w : E} (hw : w ∈ (chartAt E x₀).target) :
-    ContDiffAt ℝ ∞ (localRep s x₀) w := by
+    ContDiffAt ℝ n (localRep s x₀) w := by
   rw [← contMDiffAt_iff_contDiffAt]
   have hy : (chartAt E x₀).symm w ∈ (chartAt E x₀).source := (chartAt E x₀).map_target hw
-  have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E [⋀^ι]→L[ℝ] G)) ∞
+  have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E [⋀^ι]→L[ℝ] G)) n
       (fun x => (trivializationAt (E [⋀^ι]→L[ℝ] G)
         (fun x : M => TangentSpace (𝓘(ℝ, E)) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
         x₀ ⟨x, s x⟩).2) ((chartAt E x₀).symm w) :=
     ((trivializationAt (E [⋀^ι]→L[ℝ] G)
       (fun x : M => TangentSpace (𝓘(ℝ, E)) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
       x₀).contMDiffAt_section_iff ⟨hy, Set.mem_univ _⟩).mp (hs _)
-  have h2 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) ∞
+  have h2 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) n
       (chartAt E x₀).symm w :=
-    (contMDiffOn_chart_symm (n := ∞) (x := x₀)).contMDiffAt
+    (contMDiffOn_chart_symm (n := n) (x := x₀)).contMDiffAt
       ((chartAt E x₀).open_target.mem_nhds hw)
   exact h1.comp w h2
 
@@ -486,32 +488,3 @@ theorem toFlat_mextDeriv_zeroForm {f : M → G}
 
 end DifferentialForm
 
-/-! ### Analytic sections have analytic local representatives (G19) -/
-
-namespace DifferentialForm
-
-/-- ★ A `C^ω` section has `C^ω` local representatives (on the chart's target): the proof of
-`contDiffAt_localRep` at `ω`, on an analytic manifold. -/
-theorem contDiffAt_omega_localRep [IsManifold (𝓘(ℝ, E)) ω M]
-    (s : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
-    (hs : ContMDiff (𝓘(ℝ, E))
-      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E [⋀^ι]→L[ℝ] G))) ω
-      (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] G) x (s x)))
-    (x₀ : M) {w : E} (hw : w ∈ (chartAt E x₀).target) :
-    ContDiffAt ℝ ω (localRep s x₀) w := by
-  rw [← contMDiffAt_iff_contDiffAt]
-  have hy : (chartAt E x₀).symm w ∈ (chartAt E x₀).source := (chartAt E x₀).map_target hw
-  have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E [⋀^ι]→L[ℝ] G)) ω
-      (fun x => (trivializationAt (E [⋀^ι]→L[ℝ] G)
-        (fun x : M => TangentSpace (𝓘(ℝ, E)) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
-        x₀ ⟨x, s x⟩).2) ((chartAt E x₀).symm w) :=
-    ((trivializationAt (E [⋀^ι]→L[ℝ] G)
-      (fun x : M => TangentSpace (𝓘(ℝ, E)) x [⋀^ι]→L[ℝ] Bundle.Trivial M G x)
-      x₀).contMDiffAt_section_iff ⟨hy, Set.mem_univ _⟩).mp (hs _)
-  have h2 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) ω
-      (chartAt E x₀).symm w :=
-    (contMDiffOn_chart_symm (n := ω) (x := x₀)).contMDiffAt
-      ((chartAt E x₀).open_target.mem_nhds hw)
-  exact h1.comp w h2
-
-end DifferentialForm

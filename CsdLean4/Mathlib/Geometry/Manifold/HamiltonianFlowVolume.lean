@@ -188,7 +188,8 @@ theorem chartField_hamiltonianVectorField
     chartField (hamiltonianVectorField (fun x => α x) hnd H) x₀ w
       = localHamiltonianVector α H x₀ w := by
   rw [chartField_eq_trivializationAt_snd,
-    trivializationAt_hamiltonianVectorField_snd α H hnd hH x₀ ((chartAt E x₀).map_target hw),
+    trivializationAt_hamiltonianVectorField_snd α H hnd (hH.mdifferentiable (by simp)) x₀ ((chartAt
+        E x₀).map_target hw),
     (chartAt E x₀).right_inv hw]
 
 variable [CompactSpace M] [T2Space M]

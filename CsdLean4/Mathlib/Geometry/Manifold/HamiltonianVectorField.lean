@@ -87,7 +87,7 @@ predicates.
 * **G19, analytic.** `ofOmega` (a `C^ω` 2-form read as `C^∞`), ★★
   `contDiffAt_omega_localHamiltonianVector` and ★★★ `contMDiff_omega_hamiltonianVectorField` — **the
   Hamiltonian vector field of a `C^ω` energy for a `C^ω` non-degenerate 2-form is a `C^ω` section**:
-  G3 at `ω`, on an analytic manifold (`contDiffAt_omega_localRep` for the local representative);
+  G3 at `ω`, on an analytic manifold (`contDiffAt_localRep` at `ω` for the local representative);
 * **G14a, Kähler.** `IsKahler β J J₀` — almost Kähler, and `J` is the model's complex structure
   `J₀` through the tangent trivialisation of every chart (`J_symmL`), i.e. integrable in the atlas
   sense; ★ `IsKahler.apply_eq` (`J y = J₀` in `y`'s chart), ★
@@ -623,7 +623,7 @@ representative (`trivializationAt_snd`) and `dH` with the chart derivative (`mfd
 theorem trivializationAt_hamiltonianVectorField_snd
     (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H)
+    (hH : MDifferentiable (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H)
     (x₀ : M) {y : M} (hy : y ∈ (chartAt E x₀).source) :
     (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀
         ⟨y, hamiltonianVectorField (fun x => α x) hnd H y⟩).2
@@ -669,7 +669,7 @@ theorem trivializationAt_hamiltonianVectorField_snd
       = mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H y
           (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u) := by
     have hHy : MDifferentiableAt (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H
-        ((chartAt E x₀).symm (chartAt E x₀ y)) := (hH _).mdifferentiableAt (by simp)
+        ((chartAt E x₀).symm (chartAt E x₀ y)) := hH _
     have hcomp := mfderiv_comp (chartAt E x₀ y) hHy hsymm
     have hsd : mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, E)) (chartAt E x₀).symm
         (chartAt E x₀ y)
@@ -707,64 +707,103 @@ theorem trivializationAt_hamiltonianVectorField_snd
   rw [hcomp]
   exact hamiltonianVectorField_isHamiltonianVectorField (fun x => α x) hnd H y _
 
-/-- ★★ The local Hamiltonian vector is `C^∞` at every point of the chart's target: inversion of
-`curryLeft` is smooth at an invertible point (`contDiffAt_map_inverse`), the local representative
-is smooth (`contDiffAt_localRep`), and the chart derivative of a `C^∞` energy is `C^∞`. -/
-theorem contDiffAt_localHamiltonianVector
+/-- ★★ The local Hamiltonian vector is `C^n` at every point of the chart's target, for every
+infinite order `n` (`n + 1 ≤ n`, i.e. `∞` or `ω`, on a `C^n` manifold with a `C^n` form): inversion
+of `curryLeft` is smooth at an invertible point (`contDiffAt_map_inverse`), the local representative
+is smooth (`contDiffAt_localRep`), and the chart derivative of a `C^n` energy is `C^n` because `n`
+is infinite. One proof for `∞` and `ω` (until 2026-09-17 there were two). -/
+theorem contDiffAt_localHamiltonianVector_of_contMDiff {n : WithTop ℕ∞}
+    [IsManifold (𝓘(ℝ, E)) n M]
+    [ContMDiffVectorBundle n E (TangentSpace (𝓘(ℝ, E)) : M → Type _) (𝓘(ℝ, E))]
+    (hn : n + 1 ≤ n)
+    (hα : ContMDiff (𝓘(ℝ, E)) ((𝓘(ℝ, E)).prod (𝓘(ℝ, E [⋀^Fin 2]→L[ℝ] ℝ))) n
+      (fun x : M => TotalSpace.mk' (E [⋀^Fin 2]→L[ℝ] ℝ) x (α x)))
     (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H) (x₀ : M) {w : E}
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) n H) (x₀ : M) {w : E}
     (hw : w ∈ (chartAt E x₀).target) :
-    ContDiffAt ℝ ∞ (localHamiltonianVector α H x₀) w := by
+    ContDiffAt ℝ n (localHamiltonianVector α H x₀) w := by
   have hω := localRep_nondegenerate α hnd x₀ hw
-  have hΦ : ContDiffAt ℝ ∞
+  have hΦ : ContDiffAt ℝ n
       (fun w => ContinuousAlternatingMap.curryLeft (localRep (fun x => α x) x₀ w)) w :=
-    (IsBoundedLinearMap.contDiff (𝕜 := ℝ) (n := ∞)
+    (IsBoundedLinearMap.contDiff (𝕜 := ℝ) (n := n)
       (f := fun ξ : E [⋀^Fin 2]→L[ℝ] ℝ => ContinuousAlternatingMap.curryLeft ξ)
       ⟨⟨fun ξ ξ' => ContinuousAlternatingMap.curryLeft_add ξ ξ',
         fun c ξ => ContinuousAlternatingMap.curryLeft_smul c ξ⟩,
         1, one_pos, fun ξ => le_of_eq
           ((ContinuousAlternatingMap.norm_curryLeft ξ).trans (one_mul _).symm)⟩).contDiffAt.comp _
-      (contDiffAt_localRep (fun x => α x) α.contMDiff_toFun x₀ hw)
-  have hinv : ContDiffAt ℝ ∞
+      (contDiffAt_localRep (fun x => α x) hα x₀ hw)
+  have hinv : ContDiffAt ℝ n
       (fun w => ContinuousLinearMap.inverse
         (ContinuousAlternatingMap.curryLeft (localRep (fun x => α x) x₀ w))) w := by
     have : CompleteSpace E := FiniteDimensional.complete ℝ E
-    have h := contDiffAt_map_inverse (𝕜 := ℝ) (n := ∞) (flatCLE _ hω)
+    have h := contDiffAt_map_inverse (𝕜 := ℝ) (n := n) (flatCLE _ hω)
     rw [coe_flatCLE] at h
     exact h.comp w hΦ
-  have hHloc : ContDiffAt ℝ ∞ (H ∘ (chartAt E x₀).symm) w := by
+  have hHloc : ContDiffAt ℝ n (H ∘ (chartAt E x₀).symm) w := by
     rw [← contMDiffAt_iff_contDiffAt]
-    have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) ∞
+    have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) n
         (chartAt E x₀).symm w :=
-      (contMDiffOn_chart_symm (n := ∞) (x := x₀)).contMDiffAt
+      (contMDiffOn_chart_symm (n := n) (x := x₀)).contMDiffAt
         ((chartAt E x₀).open_target.mem_nhds hw)
     exact (hH _).comp _ h1
-  have hL : ContDiffAt ℝ ∞
+  have hL : ContDiffAt ℝ n
       (fun w => ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ) (0 : Fin 1)
         (fderiv ℝ (H ∘ (chartAt E x₀).symm) w)) w :=
     (ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ)
-      (0 : Fin 1)).contDiff.contDiffAt.comp _ (hHloc.fderiv_right (by simp))
+      (0 : Fin 1)).contDiff.contDiffAt.comp _ (hHloc.fderiv_right hn)
   exact hinv.clm_apply hL
 
+/-- ★★ The local Hamiltonian vector is `C^∞` at every point of the chart's target
+(`contDiffAt_localHamiltonianVector_of_contMDiff` at `∞`). -/
+theorem contDiffAt_localHamiltonianVector
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H) (x₀ : M) {w : E}
+    (hw : w ∈ (chartAt E x₀).target) :
+    ContDiffAt ℝ ∞ (localHamiltonianVector α H x₀) w :=
+  contDiffAt_localHamiltonianVector_of_contMDiff α H (by simp) α.contMDiff_toFun hnd hH x₀ hw
+
+
+/-- ★★★ **The Hamiltonian vector field is a `C^n` section of the tangent bundle** for every
+infinite order `n` (`∞` or `ω`), for a `C^n` 2-form family non-degenerate at every point and a
+`C^n` energy on a `C^n` manifold. One proof for the smooth and the analytic case. -/
+theorem contMDiff_hamiltonianVectorField_of_contMDiff {n : WithTop ℕ∞}
+    [IsManifold (𝓘(ℝ, E)) n M]
+    [ContMDiffVectorBundle n E (TangentSpace (𝓘(ℝ, E)) : M → Type _) (𝓘(ℝ, E))]
+    (hn : n + 1 ≤ n)
+    (hα : ContMDiff (𝓘(ℝ, E)) ((𝓘(ℝ, E)).prod (𝓘(ℝ, E [⋀^Fin 2]→L[ℝ] ℝ))) n
+      (fun x : M => TotalSpace.mk' (E [⋀^Fin 2]→L[ℝ] ℝ) x (α x)))
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
+      ∃ w, α x ![v, w] ≠ 0)
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) n H) :
+    ContMDiff (𝓘(ℝ, E))
+      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E))) n
+      (fun x : M => TotalSpace.mk' E x (hamiltonianVectorField (fun x => α x) hnd H x)) := by
+  intro x₀
+  rw [contMDiffAt_section]
+  have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) n
+      (fun y => localHamiltonianVector α H x₀ (chartAt E x₀ y)) x₀ :=
+    (contDiffAt_localHamiltonianVector_of_contMDiff α H hn hα hnd hH x₀
+      (mem_chart_target E x₀)).contMDiffAt.comp x₀
+      (contMDiffAt_extChartAt (n := n) (I := 𝓘(ℝ, E)) (x := x₀))
+  refine h1.congr_of_eventuallyEq ?_
+  filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
+  exact trivializationAt_hamiltonianVectorField_snd α H hnd
+    (hH.mdifferentiable (by rintro rfl; simp at hn)) x₀ hy
+
 /-- ★★★ **The Hamiltonian vector field is a `C^∞` section of the tangent bundle**, for a `C^∞`
-2-form family non-degenerate at every point and a `C^∞` energy. -/
+2-form family non-degenerate at every point and a `C^∞` energy
+(`contMDiff_hamiltonianVectorField_of_contMDiff` at `∞`). -/
 theorem contMDiff_hamiltonianVectorField
     (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
     (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H) :
     ContMDiff (𝓘(ℝ, E))
       ((𝓘(ℝ, E)).prod (𝓘(ℝ, E))) ∞
-      (fun x : M => TotalSpace.mk' E x (hamiltonianVectorField (fun x => α x) hnd H x)) := by
-  intro x₀
-  rw [contMDiffAt_section]
-  have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) ∞
-      (fun y => localHamiltonianVector α H x₀ (chartAt E x₀ y)) x₀ :=
-    (contDiffAt_localHamiltonianVector α H hnd hH x₀ (mem_chart_target E x₀)).contMDiffAt.comp x₀
-      (contMDiffAt_extChartAt (n := ∞) (I := 𝓘(ℝ, E)) (x := x₀))
-  refine h1.congr_of_eventuallyEq ?_
-  filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
-  exact trivializationAt_hamiltonianVectorField_snd α H hnd hH x₀ hy
+      (fun x : M => TotalSpace.mk' E x (hamiltonianVectorField (fun x => α x) hnd H x)) :=
+  contMDiff_hamiltonianVectorField_of_contMDiff α H (by simp) α.contMDiff_toFun hnd hH
+
 
 /-- The Hamiltonian vector field of `H`, as a `C^∞` vector field (a `C^∞` section of the tangent
 bundle). -/
@@ -803,68 +842,17 @@ variable (α : DifferentialForm (𝓘(ℝ, E)) M ω (Fin 2) ℝ) (H : M → ℝ)
 omit [IsManifold (𝓘(ℝ, E)) ∞ M] [FiniteDimensional ℝ E] in
 @[simp] theorem ofOmega_apply (x : M) : ofOmega α x = α x := rfl
 
-/-- ★★ The local Hamiltonian vector of a `C^ω` form and a `C^ω` energy is `C^ω`: the proof of
-`contDiffAt_localHamiltonianVector` at `ω` — `contDiffAt_map_inverse`, `IsBoundedLinearMap.contDiff`
-and `ContDiffAt.fderiv_right` are generic in the order, and the local representative is `C^ω` by
-`contDiffAt_omega_localRep`. -/
-theorem contDiffAt_omega_localHamiltonianVector
-    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
-      ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ω H) (x₀ : M) :
-    ContDiffAt ℝ ω (localHamiltonianVector (ofOmega α) H x₀) (chartAt E x₀ x₀) := by
-  have hw₀ : chartAt E x₀ x₀ ∈ (chartAt E x₀).target := mem_chart_target E x₀
-  have hω := localRep_nondegenerate (ofOmega α) hnd x₀ hw₀
-  have hΦ : ContDiffAt ℝ ω
-      (fun w => ContinuousAlternatingMap.curryLeft (localRep (fun x => ofOmega α x) x₀ w))
-      (chartAt E x₀ x₀) :=
-    (IsBoundedLinearMap.contDiff (𝕜 := ℝ) (n := ω)
-      (f := fun ξ : E [⋀^Fin 2]→L[ℝ] ℝ => ContinuousAlternatingMap.curryLeft ξ)
-      ⟨⟨fun ξ ξ' => ContinuousAlternatingMap.curryLeft_add ξ ξ',
-        fun c ξ => ContinuousAlternatingMap.curryLeft_smul c ξ⟩,
-        1, one_pos, fun ξ => le_of_eq
-          ((ContinuousAlternatingMap.norm_curryLeft ξ).trans (one_mul _).symm)⟩).contDiffAt.comp _
-      (contDiffAt_omega_localRep (fun x => α x) α.contMDiff_toFun x₀ hw₀)
-  have hinv : ContDiffAt ℝ ω
-      (fun w => ContinuousLinearMap.inverse
-        (ContinuousAlternatingMap.curryLeft (localRep (fun x => ofOmega α x) x₀ w)))
-      (chartAt E x₀ x₀) := by
-    have : CompleteSpace E := FiniteDimensional.complete ℝ E
-    have h := contDiffAt_map_inverse (𝕜 := ℝ) (n := ω) (flatCLE _ hω)
-    rw [coe_flatCLE] at h
-    exact h.comp (chartAt E x₀ x₀) hΦ
-  have hHloc : ContDiffAt ℝ ω (H ∘ (chartAt E x₀).symm) (chartAt E x₀ x₀) := by
-    rw [← contMDiffAt_iff_contDiffAt]
-    have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) ω
-        (chartAt E x₀).symm (chartAt E x₀ x₀) :=
-      (contMDiffOn_chart_symm (n := ω) (x := x₀)).contMDiffAt
-        ((chartAt E x₀).open_target.mem_nhds hw₀)
-    exact (hH _).comp _ h1
-  have hL : ContDiffAt ℝ ω
-      (fun w => ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ) (0 : Fin 1)
-        (fderiv ℝ (H ∘ (chartAt E x₀).symm) w)) (chartAt E x₀ x₀) :=
-    (ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ)
-      (0 : Fin 1)).contDiff.contDiffAt.comp _ (hHloc.fderiv_right le_top)
-  exact hinv.clm_apply hL
-
 /-- ★★★ **The Hamiltonian vector field of a `C^ω` energy for a `C^ω` non-degenerate 2-form is a
-`C^ω` section of the tangent bundle** (G19): `contMDiff_hamiltonianVectorField` at `ω`, on an
-analytic manifold. -/
+`C^ω` section of the tangent bundle** (G19): `contMDiff_hamiltonianVectorField_of_contMDiff` at
+`ω`, on an analytic manifold. -/
 theorem contMDiff_omega_hamiltonianVectorField
     (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
     (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ω H) :
     ContMDiff (𝓘(ℝ, E))
       ((𝓘(ℝ, E)).prod (𝓘(ℝ, E))) ω
-      (fun x : M => TotalSpace.mk' E x (hamiltonianVectorField (fun x => α x) hnd H x)) := by
-  intro x₀
-  rw [contMDiffAt_section]
-  have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) ω
-      (fun y => localHamiltonianVector (ofOmega α) H x₀ (chartAt E x₀ y)) x₀ :=
-    (contDiffAt_omega_localHamiltonianVector α H hnd hH x₀).contMDiffAt.comp x₀
-      (contMDiffAt_extChartAt (n := ω) (I := 𝓘(ℝ, E)) (x := x₀))
-  refine h1.congr_of_eventuallyEq ?_
-  filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
-  exact trivializationAt_hamiltonianVectorField_snd (ofOmega α) H hnd (hH.of_le le_top) x₀ hy
+      (fun x : M => TotalSpace.mk' E x (hamiltonianVectorField (fun x => α x) hnd H x)) :=
+  contMDiff_hamiltonianVectorField_of_contMDiff (ofOmega α) H le_top α.contMDiff_toFun hnd hH
 
 end SmoothAnalytic
 

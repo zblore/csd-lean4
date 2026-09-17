@@ -554,25 +554,51 @@ theorem contMDiff_torusHamiltonian {m : WithTop ℕ∞} (θ : Fin (n + 1) → �
   rw [← schrodingerHamiltonian_neg_diagonal]
   exact contMDiff_schrodingerHamiltonian _
 
-/-- ★★ **The Schrödinger vector field on `ℂℙⁿ` is a `C^∞` vector field** (a `C^∞` section of the
-tangent bundle): it is the Hamiltonian vector field of a `C^∞` energy for the symplectic form
-`fsForm` (G2), and those are smooth (G3). -/
-theorem contMDiff_schrodingerField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
-    (hH : H.IsHermitian) :
-    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
-      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod (modelWithCornersSelf ℝ (Fin n → ℂ))) ∞
+/-- ★★ **The Schrödinger vector field on `ℂℙⁿ` is a `C^m` vector field for every infinite order
+`m`** (`∞` and `ω`): it is the Hamiltonian vector field of a `C^m` energy for the `C^ω` form
+    `fsForm`
+(G2), and those are `C^m` (G3, `contMDiff_hamiltonianVectorField_of_contMDiff`). -/
+theorem contMDiff_schrodingerField_of_le {m : WithTop ℕ∞}
+    [ContMDiffVectorBundle m (Fin n → ℂ) (TangentSpace (𝓘(ℝ, Fin n → ℂ)) : ℙ ℂ (Ambient n) → Type _)
+      (𝓘(ℝ, Fin n → ℂ))]
+    (hm : m + 1 ≤ m)
+    {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ} (hH : H.IsHermitian) :
+    ContMDiff (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod (𝓘(ℝ, Fin n → ℂ))) m
       (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (schrodingerField H x)) := by
   rw [schrodingerField_eq_hamiltonianVectorField hH]
-  exact (fsForm_isSymplectic n).contMDiff_hamiltonianVectorField _
+  exact contMDiff_hamiltonianVectorField_of_contMDiff fsForm _ hm
+    (contMDiff_omega_fsSection.of_le le_top) (fsForm_isSymplectic n).nondegenerate
     (contMDiff_schrodingerHamiltonian H)
+
+/-- ★★ **The Schrödinger vector field on `ℂℙⁿ` is a `C^∞` vector field** (a `C^∞` section of the
+tangent bundle). -/
+theorem contMDiff_schrodingerField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hH : H.IsHermitian) :
+    ContMDiff (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod (𝓘(ℝ, Fin n → ℂ))) ∞
+      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (schrodingerField H x)) :=
+  contMDiff_schrodingerField_of_le (by simp) hH
+
+/-- ★★ **The torus vector field on `ℂℙⁿ` is a `C^m` vector field for every infinite order `m`.** -/
+theorem contMDiff_torusField_of_le {m : WithTop ℕ∞}
+    [ContMDiffVectorBundle m (Fin n → ℂ) (TangentSpace (𝓘(ℝ, Fin n → ℂ)) : ℙ ℂ (Ambient n) → Type _)
+      (𝓘(ℝ, Fin n → ℂ))]
+    (hm : m + 1 ≤ m) (θ : Fin (n + 1) → ℝ) :
+    ContMDiff (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod (𝓘(ℝ, Fin n → ℂ))) m
+      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (torusField θ x)) := by
+  rw [torusField_eq_hamiltonianVectorField]
+  exact contMDiff_hamiltonianVectorField_of_contMDiff fsForm _ hm
+    (contMDiff_omega_fsSection.of_le le_top) (fsForm_isSymplectic n).nondegenerate
+    (contMDiff_torusHamiltonian θ)
 
 /-- ★★ **The torus vector field on `ℂℙⁿ` is a `C^∞` vector field.** -/
 theorem contMDiff_torusField (θ : Fin (n + 1) → ℝ) :
-    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
-      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod (modelWithCornersSelf ℝ (Fin n → ℂ))) ∞
-      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (torusField θ x)) := by
-  rw [torusField_eq_hamiltonianVectorField]
-  exact (fsForm_isSymplectic n).contMDiff_hamiltonianVectorField _ (contMDiff_torusHamiltonian θ)
+    ContMDiff (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod (𝓘(ℝ, Fin n → ℂ))) ∞
+      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (torusField θ x)) :=
+  contMDiff_torusField_of_le (by simp) θ
 
 /-! ### Integral curves on `ℂℙⁿ`: the Schrödinger flow is one, and `⟨H⟩` is conserved (G4) -/
 
@@ -610,9 +636,11 @@ theorem isMIntegralCurve_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin 
     IsMIntegralCurve (fun t : ℝ => Matrix.schrodingerUnitary hH t • p) (schrodingerField H) := by
   have hUmat : Continuous
       fun t : ℝ => (Matrix.schrodingerUnitary hH t : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :=
-    continuous_iff_continuousAt.2 fun t => (Matrix.schrodingerUnitary_hasDerivAt H hH t).continuousAt
+    continuous_iff_continuousAt.2 fun t => (Matrix.schrodingerUnitary_hasDerivAt H hH
+        t).continuousAt
   have hU : Continuous fun t : ℝ => Matrix.schrodingerUnitary hH t := hUmat.subtype_mk _
-  have hcont : Continuous fun t : ℝ => Matrix.schrodingerUnitary hH t • p := hU.smul continuous_const
+  have hcont : Continuous fun t : ℝ => Matrix.schrodingerUnitary hH t • p := hU.smul
+      continuous_const
   intro t
   refine ⟨hcont.continuousAt, ?_⟩
   -- the curve in the chart at `q := exp(-itH) • p`
@@ -708,32 +736,23 @@ theorem torusHamiltonian_torusUnitary_smul (θ : Fin (n + 1) → ℝ) (p : ℙ �
 
 /-! ### Both fields are analytic (G19)
 
-The Hamiltonians are `C^ω` by `contMDiff_schrodingerHamiltonian` / `contMDiff_torusHamiltonian` at
-`m := ω`; the fields need the analytic form `fsFormAnalytic` and
-`contMDiff_omega_hamiltonianVectorField`,
-which is why they are stated separately from their `C^∞` versions (`contMDiff_schrodingerField`
-rests on `IsSymplectic`, a `C^∞` form). -/
+The `ω` case of `contMDiff_schrodingerField_of_le` / `contMDiff_torusField_of_le`: one proof with
+the `C^∞` case since 2026-09-17. -/
 
-/-- ★★ **The Schrödinger vector field on `ℂℙⁿ` is an analytic vector field**: the Hamiltonian
-vector field of a `C^ω` energy for the `C^ω` form `fsFormAnalytic` (G12), by
-`contMDiff_omega_hamiltonianVectorField` (G19). -/
+/-- ★★ **The Schrödinger vector field on `ℂℙⁿ` is an analytic vector field.** -/
 theorem contMDiff_omega_schrodingerField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) :
-    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
-      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod (modelWithCornersSelf ℝ (Fin n → ℂ))) ω
-      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (schrodingerField H x)) := by
-  rw [schrodingerField_eq_hamiltonianVectorField hH]
-  exact contMDiff_omega_hamiltonianVectorField fsFormAnalytic _ (fsForm_isSymplectic n).nondegenerate
-    (contMDiff_schrodingerHamiltonian H)
+    ContMDiff (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod (𝓘(ℝ, Fin n → ℂ))) ω
+      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (schrodingerField H x)) :=
+  contMDiff_schrodingerField_of_le le_top hH
 
 /-- ★★ **The torus vector field on `ℂℙⁿ` is an analytic vector field.** -/
 theorem contMDiff_omega_torusField (θ : Fin (n + 1) → ℝ) :
-    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
-      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod (modelWithCornersSelf ℝ (Fin n → ℂ))) ω
-      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (torusField θ x)) := by
-  rw [torusField_eq_hamiltonianVectorField]
-  exact contMDiff_omega_hamiltonianVectorField fsFormAnalytic _ (fsForm_isSymplectic n).nondegenerate
-    (contMDiff_torusHamiltonian θ)
+    ContMDiff (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod (𝓘(ℝ, Fin n → ℂ))) ω
+      (fun x : ℙ ℂ (Ambient n) => Bundle.TotalSpace.mk' (Fin n → ℂ) x (torusField θ x)) :=
+  contMDiff_torusField_of_le le_top θ
 
 /-! ### The flows are the Hamiltonian flows, and Liouville from the Hamiltonian (Q29(e)) -/
 

@@ -5052,6 +5052,24 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.contMDiff_hamiltonianVectorField
 
+-- B11′ (2026-09-17): one smoothness proof at every infinite order; ∞ and ω are corollaries.
+
+/-- info: 'DifferentialForm.contDiffAt_localHamiltonianVector_of_contMDiff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contDiffAt_localHamiltonianVector_of_contMDiff
+
+/-- info: 'DifferentialForm.contMDiff_hamiltonianVectorField_of_contMDiff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.contMDiff_hamiltonianVectorField_of_contMDiff
+
+/-- info: 'Projectivization.contMDiff_schrodingerField_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_schrodingerField_of_le
+
+/-- info: 'Projectivization.contMDiff_torusField_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_torusField_of_le
+
 /-- info: 'DifferentialForm.IsSymplectic.contMDiff_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.IsSymplectic.contMDiff_hamiltonianVectorField
@@ -5390,10 +5408,6 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- ofOmega reads the omega form as the infinity form G3's constructions are typed on). On CP^n both
 -- Hamiltonians are C^omega (the inner-product calculus is order-generic), so the Schrodinger and
 -- torus fields are analytic vector fields, for the analytic form fsFormAnalytic of G12.
-/-- info: 'DifferentialForm.contDiffAt_omega_localRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms DifferentialForm.contDiffAt_omega_localRep
-
 /-- info: 'DifferentialForm.ofOmega' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.ofOmega
@@ -5401,10 +5415,6 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'DifferentialForm.ofOmega_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.ofOmega_apply
-
-/-- info: 'DifferentialForm.contDiffAt_omega_localHamiltonianVector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms DifferentialForm.contDiffAt_omega_localHamiltonianVector
 
 /-- info: 'DifferentialForm.contMDiff_omega_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

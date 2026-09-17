@@ -366,7 +366,8 @@ omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [IsManifold (�
 @[simp] theorem _root_.Bundle.RiemannianMetric.toMetricFamily_apply (x : M)
     (u v : TangentSpace (𝓘(ℝ, E)) x) : g.toMetricFamily x u v = g.inner x u v := rfl
 
-omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M] in
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
+    in
 omit [IsManifold (𝓘(ℝ, E)) ∞ M] in
 /-- A Mathlib metric is a bilinear family: `inner x` is a continuous linear map in each slot. -/
 theorem _root_.Bundle.RiemannianMetric.isBilinear_toMetricFamily : IsBilinear g.toMetricFamily where
@@ -400,7 +401,8 @@ coefficient density of a top form, its Riemannian volume is `k` times the top-fo
 theorem _root_.Bundle.RiemannianMetric.riemannianVolume_eq_smul_topFormMeasure (c : ChartCover E M)
     (s : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x [⋀^ι]→L[ℝ] Bundle.Trivial M ℝ x) (k : ℝ≥0∞)
     (hk : k ≠ ⊤) (h : ∀ i, ∀ w ∈ (chartAt E (c.pt i)).target,
-      chartDensity e g.toMetricFamily (c.pt i) w = k * DifferentialForm.chartDensity e s (c.pt i) w) :
+      chartDensity e g.toMetricFamily (c.pt i) w = k * DifferentialForm.chartDensity e s (c.pt i) w)
+          :
     g.riemannianVolume μ e c = k • DifferentialForm.topFormMeasure μ e s c :=
   MetricFamily.riemannianVolume_eq_smul_topFormMeasure μ e g.toMetricFamily c s k hk h
 
