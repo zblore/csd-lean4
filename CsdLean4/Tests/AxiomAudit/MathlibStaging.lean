@@ -5421,9 +5421,9 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms parallelepiped_pi_basis
 
-/-- info: 'volume_parallelepiped_basisOneI' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Complex.volume_parallelepiped_basisOneI' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms volume_parallelepiped_basisOneI
+#print axioms Complex.volume_parallelepiped_basisOneI
 
 /-- info: 'Projectivization.stdBasis_addHaar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -5432,6 +5432,28 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Projectivization.fsVolume_eq_topFormMeasure_addHaar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsVolume_eq_topFormMeasure_addHaar
+
+-- B13 (2026-09-17): the Japanese bracket integral on any real inner-product space of dimension 2n.
+
+/-- info: 'Complex.addHaar_pi_basisOneI_reindex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Complex.addHaar_pi_basisOneI_reindex
+
+/-- info: 'Complex.orthonormal_euclideanBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Complex.orthonormal_euclideanBasis
+
+/-- info: 'Complex.measurePreserving_ofLp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Complex.measurePreserving_ofLp
+
+/-- info: 'Complex.lintegral_euclideanSpace_pow_inv_one_add_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Complex.lintegral_euclideanSpace_pow_inv_one_add_norm_sq
+
+/-- info: 'lintegral_pow_inv_one_add_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms lintegral_pow_inv_one_add_norm_sq
 
 -- G14b (2026-09-10): Kahler in the tensor sense. nijenhuis J V W is the Nijenhuis tensor
 -- [JV, JW] - J[JV, W] - J[V, JW] - [V, W] with Mathlib's manifold Lie bracket mlieBracket; on

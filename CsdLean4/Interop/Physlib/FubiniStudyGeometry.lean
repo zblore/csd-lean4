@@ -8,6 +8,7 @@ module
 public import CsdLean4.Mathlib.Analysis.InformationGeometry.FubiniStudyFisherRao
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyRiemannian
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFisherRao
+public import CsdLean4.Mathlib.Analysis.SpecialFunctions.JapaneseBracketEuclidean
 
 /-!
 # Physlib export root: the Fubini–Study geometry of `ℂℙⁿ` and its Fisher–Rao bridge

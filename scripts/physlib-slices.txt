@@ -59,6 +59,8 @@ manifold-forms	Geometry.Manifold.HamiltonianVectorField
 top-form-measure	Geometry.Manifold.TopFormMeasure
 top-form-measure	Geometry.Manifold.RiemannianVolume
 top-form-measure	Analysis.SpecialFunctions.JapaneseBracketIntegral
+top-form-measure	MeasureTheory.Measure.Haar.PiComplex
+top-form-measure	Analysis.SpecialFunctions.JapaneseBracketEuclidean
 
 # 8 — the Fubini–Study form, symplectic structure, unitary action and volume of ℂℙⁿ.
 fubini-study	Geometry.Manifold.Instances.ProjectiveSpaceChartCover
