@@ -14,18 +14,18 @@ public import Mathlib.LinearAlgebra.Matrix.Basis
 
 **Category:** 1-Mathlib (CSD-free Mathlib upstream candidate).
 
-Proves that `Matrix.unitaryGroup (Fin N) ℂ` acts transitively on
-`ℙ ℂ (EuclideanSpace ℂ (Fin N))` for `[NeZero N]`, via the standard
+Proves that `Matrix.unitaryGroup ι ℂ` acts transitively on
+`ℙ ℂ (EuclideanSpace ℂ ι)` for `[Nonempty ι]`, via the standard
 orthonormal-basis-extension construction.
 
 ## Argument
 
 1. For any unit vector `v`, extend `{v}` to an orthonormal basis `b_v`
-   indexed by `Fin N` with `b_v 0 = v` (via
+   indexed by `ι` with `b_v 0 = v` (via
    `Orthonormal.exists_orthonormalBasis_extension_of_card_eq`).
 
 2. The change-of-basis matrix `M_v := b_std.toBasis.toMatrix b_v.toBasis`
-   (where `b_std = EuclideanSpace.basisFun (Fin N) ℂ`) is unitary
+   (where `b_std = EuclideanSpace.basisFun ι ℂ`) is unitary
    (via `OrthonormalBasis.toMatrix_orthonormalBasis_mem_unitary`) and
    has first column equal to `v`.
 
@@ -58,21 +58,21 @@ open scoped LinearAlgebra.Projectivization
 
 namespace Matrix.UnitaryGroup
 
-variable {N : ℕ}
+variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 /-! ## Step 1 — unitary with prescribed first column -/
 
 /-- Build a unitary matrix from an orthonormal basis: the matrix whose
 columns are the coordinates of the basis vectors in the standard basis. -/
-noncomputable def unitaryOfONB (b : OrthonormalBasis (Fin N) ℂ
-      (EuclideanSpace ℂ (Fin N))) : Matrix.unitaryGroup (Fin N) ℂ :=
-  ⟨(EuclideanSpace.basisFun (Fin N) ℂ).toBasis.toMatrix b.toBasis,
-   (EuclideanSpace.basisFun (Fin N) ℂ).toMatrix_orthonormalBasis_mem_unitary b⟩
+noncomputable def unitaryOfONB (b : OrthonormalBasis ι ℂ
+      (EuclideanSpace ℂ ι)) : Matrix.unitaryGroup ι ℂ :=
+  ⟨(EuclideanSpace.basisFun ι ℂ).toBasis.toMatrix b.toBasis,
+   (EuclideanSpace.basisFun ι ℂ).toMatrix_orthonormalBasis_mem_unitary b⟩
 
 /-- The matrix `unitaryOfONB b`, applied to the standard basis vector
 `e_j`, recovers `b j`. -/
-lemma unitaryOfONB_apply_single (b : OrthonormalBasis (Fin N) ℂ
-      (EuclideanSpace ℂ (Fin N))) (j : Fin N) :
+lemma unitaryOfONB_apply_single (b : OrthonormalBasis ι ℂ
+      (EuclideanSpace ℂ ι)) (j : ι) :
     (Matrix.toEuclideanLin (unitaryOfONB b).val) (EuclideanSpace.single j (1 : ℂ))
       = b j := by
   ext i
@@ -82,51 +82,56 @@ lemma unitaryOfONB_apply_single (b : OrthonormalBasis (Fin N) ℂ
   show (((unitaryOfONB b).val) *ᵥ (EuclideanSpace.single j (1 : ℂ)).ofLp) i
         = (b j).ofLp i
   -- (single j 1).ofLp = Pi.single j 1
-  have h_sng : ((EuclideanSpace.single j (1 : ℂ)).ofLp : Fin N → ℂ)
+  have h_sng : ((EuclideanSpace.single j (1 : ℂ)).ofLp : ι → ℂ)
                 = Pi.single j (1 : ℂ) :=
     WithLp.ofLp_toLp _ _
   rw [h_sng, Matrix.mulVec_single]
   simp only [MulOpposite.op_one, one_smul, Matrix.col_apply]
   -- Goal: ((unitaryOfONB b).val) i j = (b j).ofLp i
-  show (EuclideanSpace.basisFun (Fin N) ℂ).toBasis.toMatrix b.toBasis i j
+  show (EuclideanSpace.basisFun ι ℂ).toBasis.toMatrix b.toBasis i j
        = (b j).ofLp i
   rw [Module.Basis.toMatrix_apply,
-      (EuclideanSpace.basisFun (Fin N) ℂ).coe_toBasis_repr_apply,
+      (EuclideanSpace.basisFun ι ℂ).coe_toBasis_repr_apply,
       EuclideanSpace.basisFun_repr]
   rfl
 
-/-- For any unit vector `v`, there exists a unitary matrix whose action
-on the standard basis vector `e_0` is `v`. -/
-lemma exists_unitary_e_zero_eq [NeZero N]
-    (v : EuclideanSpace ℂ (Fin N)) (hv : ‖v‖ = 1) :
-    ∃ M : Matrix.unitaryGroup (Fin N) ℂ,
-      (Matrix.toEuclideanLin M.val) (EuclideanSpace.single 0 (1 : ℂ)) = v := by
-  -- Build a single-element "orthonormal subset" {v} indexed via s = {0} ⊂ Fin N.
-  let s : Set (Fin N) := {0}
-  let f : Fin N → EuclideanSpace ℂ (Fin N) := fun i => if i = 0 then v else 0
+/-- For any unit vector `v` and any index `i₀`, there exists a unitary matrix whose action on
+the standard basis vector `e_{i₀}` is `v`. -/
+lemma exists_unitary_single_eq (i₀ : ι) (v : EuclideanSpace ℂ ι) (hv : ‖v‖ = 1) :
+    ∃ M : Matrix.unitaryGroup ι ℂ,
+      (Matrix.toEuclideanLin M.val) (EuclideanSpace.single i₀ (1 : ℂ)) = v := by
+  -- Build a single-element "orthonormal subset" {v} indexed via s = {i₀} ⊂ ι.
+  let s : Set ι := {i₀}
+  let f : ι → EuclideanSpace ℂ ι := fun i => if i = i₀ then v else 0
   have hf_orth : Orthonormal ℂ (s.domRestrict f) := by
     rw [orthonormal_iff_ite]
-    rintro ⟨i, (hi : i = 0)⟩ ⟨j, (hj : j = 0)⟩
+    rintro ⟨i, (hi : i = i₀)⟩ ⟨j, (hj : j = i₀)⟩
     subst hi; subst hj
     simp only [Set.domRestrict_apply, if_true, f]
     rw [inner_self_eq_norm_sq_to_K, hv]
     simp
-  have card_eq : Module.finrank ℂ (EuclideanSpace ℂ (Fin N))
-                  = Fintype.card (Fin N) :=
+  have card_eq : Module.finrank ℂ (EuclideanSpace ℂ ι) = Fintype.card ι :=
     finrank_euclideanSpace
   obtain ⟨b_v, hb_v⟩ :=
     hf_orth.exists_orthonormalBasis_extension_of_card_eq card_eq
-  have hb_v_zero : b_v 0 = v := by
-    have := hb_v 0 (by simp [s])
+  have hb_v_i₀ : b_v i₀ = v := by
+    have := hb_v i₀ (by simp [s])
     simpa [f] using this
   refine ⟨unitaryOfONB b_v, ?_⟩
-  rw [unitaryOfONB_apply_single, hb_v_zero]
+  rw [unitaryOfONB_apply_single, hb_v_i₀]
+
+/-- For any unit vector `v`, there exists a unitary matrix whose action on the standard basis
+vector at the (arbitrary) reference index is `v`. -/
+lemma exists_unitary_e_zero_eq [Nonempty ι] (v : EuclideanSpace ℂ ι) (hv : ‖v‖ = 1) :
+    ∃ M : Matrix.unitaryGroup ι ℂ,
+      (Matrix.toEuclideanLin M.val) (EuclideanSpace.single (Classical.arbitrary ι) (1 : ℂ)) = v :=
+  exists_unitary_single_eq (Classical.arbitrary ι) v hv
 
 /-- For any two unit vectors `v, w`, there exists a unitary matrix
-`U ∈ Matrix.unitaryGroup (Fin N) ℂ` whose action on `v` is `w`. -/
-lemma exists_unitary_map_unit [NeZero N]
-    (v w : EuclideanSpace ℂ (Fin N)) (hv : ‖v‖ = 1) (hw : ‖w‖ = 1) :
-    ∃ U : Matrix.unitaryGroup (Fin N) ℂ,
+`U ∈ Matrix.unitaryGroup ι ℂ` whose action on `v` is `w`. -/
+lemma exists_unitary_map_unit [Nonempty ι]
+    (v w : EuclideanSpace ℂ ι) (hv : ‖v‖ = 1) (hw : ‖w‖ = 1) :
+    ∃ U : Matrix.unitaryGroup ι ℂ,
       (Matrix.toEuclideanLin U.val) v = w := by
   obtain ⟨M_v, hM_v⟩ := exists_unitary_e_zero_eq v hv
   obtain ⟨M_w, hM_w⟩ := exists_unitary_e_zero_eq w hw
@@ -140,9 +145,9 @@ lemma exists_unitary_map_unit [NeZero N]
   --             = toEuclideanLin ((M_w * M_v⁻¹).val * M_v.val) e_0
   have h_collapse :
       Matrix.toEuclideanLin (M_w * M_v⁻¹).val
-          ((Matrix.toEuclideanLin M_v.val) (EuclideanSpace.single 0 (1 : ℂ)))
+          ((Matrix.toEuclideanLin M_v.val) (EuclideanSpace.single (Classical.arbitrary ι) (1 : ℂ)))
         = Matrix.toEuclideanLin ((M_w * M_v⁻¹).val * M_v.val)
-            (EuclideanSpace.single 0 (1 : ℂ)) := by
+            (EuclideanSpace.single (Classical.arbitrary ι) (1 : ℂ)) := by
     rw [Matrix.toLpLin_mul_same]; rfl
   rw [h_collapse]
   -- (M_w * M_v⁻¹).val * M_v.val = (M_w * M_v⁻¹ * M_v).val = M_w.val
@@ -155,8 +160,8 @@ lemma exists_unitary_map_unit [NeZero N]
 
 /-- A unitary matrix's `toEuclideanLin` action preserves non-zero. -/
 lemma toEuclideanLin_unitary_ne_zero
-    (U : Matrix.unitaryGroup (Fin N) ℂ)
-    {v : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) :
+    (U : Matrix.unitaryGroup ι ℂ)
+    {v : EuclideanSpace ℂ ι} (hv : v ≠ 0) :
     (Matrix.toEuclideanLin U.val) v ≠ 0 := by
   intro h
   apply hv
@@ -164,9 +169,9 @@ lemma toEuclideanLin_unitary_ne_zero
 
 /-- For any two nonzero vectors `v, w`, there exists a unitary matrix
 `U` and a nonzero complex scalar `c` with `(toEuclideanLin U.val) v = c • w`. -/
-lemma exists_unitary_mapping_nonzero [NeZero N]
-    {v w : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) (hw : w ≠ 0) :
-    ∃ (U : Matrix.unitaryGroup (Fin N) ℂ) (c : ℂ), c ≠ 0 ∧
+lemma exists_unitary_mapping_nonzero [Nonempty ι]
+    {v w : EuclideanSpace ℂ ι} (hv : v ≠ 0) (hw : w ≠ 0) :
+    ∃ (U : Matrix.unitaryGroup ι ℂ) (c : ℂ), c ≠ 0 ∧
       (Matrix.toEuclideanLin U.val) v = c • w := by
   -- Normalise both vectors.
   have hv_norm : ‖v‖ ≠ 0 := norm_ne_zero_iff.mpr hv
@@ -176,8 +181,8 @@ lemma exists_unitary_mapping_nonzero [NeZero N]
   have hw_norm_inv_cx : ((‖w‖⁻¹ : ℝ) : ℂ) ≠ 0 := by
     rw [Complex.ofReal_inv]
     exact inv_ne_zero hw_norm_cx
-  set v' : EuclideanSpace ℂ (Fin N) := ((‖v‖⁻¹ : ℝ) : ℂ) • v with v'_def
-  set w' : EuclideanSpace ℂ (Fin N) := ((‖w‖⁻¹ : ℝ) : ℂ) • w with w'_def
+  set v' : EuclideanSpace ℂ ι := ((‖v‖⁻¹ : ℝ) : ℂ) • v with v'_def
+  set w' : EuclideanSpace ℂ ι := ((‖w‖⁻¹ : ℝ) : ℂ) • w with w'_def
   have hv' : ‖v'‖ = 1 := by
     rw [v'_def, norm_smul, Complex.norm_real, Real.norm_eq_abs,
         abs_of_pos (inv_pos.mpr (norm_pos_iff.mpr hv)), inv_mul_cancel₀ hv_norm]
@@ -207,8 +212,8 @@ lemma exists_unitary_mapping_nonzero [NeZero N]
 `Quotient.mk''` term by definitional unfolding of `MulAction.compHom`,
 `mapEquiv`, and `Projectivization.map`. -/
 lemma smul_mk_eq_mk
-    (U : Matrix.unitaryGroup (Fin N) ℂ)
-    (v : EuclideanSpace ℂ (Fin N)) (hv : v ≠ 0) :
+    (U : Matrix.unitaryGroup ι ℂ)
+    (v : EuclideanSpace ℂ ι) (hv : v ≠ 0) :
     U • Projectivization.mk ℂ v hv
       = Projectivization.mk ℂ ((Matrix.toEuclideanLin U.val) v)
           (toEuclideanLin_unitary_ne_zero U hv) :=
@@ -216,9 +221,9 @@ lemma smul_mk_eq_mk
 
 /-- **Transitivity of the matrix unitary group action on `ℂℙ^(N-1)`.**
 For any two projective points, there is a unitary mapping one to the other. -/
-instance instIsPretransitive_projectivization [NeZero N] :
-    MulAction.IsPretransitive (Matrix.unitaryGroup (Fin N) ℂ)
-      (ℙ ℂ (EuclideanSpace ℂ (Fin N))) where
+instance instIsPretransitive_projectivization [Nonempty ι] :
+    MulAction.IsPretransitive (Matrix.unitaryGroup ι ℂ)
+      (ℙ ℂ (EuclideanSpace ℂ ι)) where
   exists_smul_eq p q := by
     obtain ⟨U, c, hc, hUv⟩ :=
       exists_unitary_mapping_nonzero p.rep_nonzero q.rep_nonzero

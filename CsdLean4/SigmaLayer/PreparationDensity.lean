@@ -187,7 +187,7 @@ theorem kMuL_fibre_null (hN : 2 ≤ N) (p₀ q : CSD.LF4.CPN N) :
   show ((fsMeasure p₀).prod (volume : Measure CSD.LF4.KTorus))
     (Prod.fst ⁻¹' {q}) = 0
   rw [← Set.prod_univ, Measure.prod_prod,
-    fsMeasure_singleton hN p₀ q, zero_mul]
+    fsMeasure_singleton (by simpa using hN) p₀ q, zero_mul]
 
 /-! ### Item 4b — overlapping preparations on the Kähler arena -/
 

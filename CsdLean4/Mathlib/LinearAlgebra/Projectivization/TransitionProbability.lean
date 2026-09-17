@@ -35,7 +35,7 @@ correspondence:
   well-definedness rewriter `transProb_mk` valid for *arbitrary* nonzero
   representatives.
 * `transProb_smul_unitary` — **the forward direction**: every unitary in
-  `Matrix.unitaryGroup (Fin N) ℂ`, acting on `ℂℙ^{N-1}`, preserves the
+  `Matrix.unitaryGroup ι ℂ`, acting on `ℂℙ^{N-1}`, preserves the
   transition probability. This is the `U(N) ⊆ transition-preservers` half
   of the rigidity correspondence.
 * `transProb_eq_one_iff` / `transProb_eq_zero_iff` — the equality and
@@ -176,10 +176,10 @@ lemma transProb_mk {v w : E} (hv : v ≠ 0) (hw : w ≠ 0) :
 
 /-! ## Forward (realisability) direction: `U(N) ⊆` transition-preservers -/
 
-variable {N : ℕ}
+variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 /-- Unitary inner-product preservation on `EuclideanSpace ℂ n` for ANY finite index
-type (`Fin N` for one register, `Fin 2 × Fin 2` for two qubits):
+type (`ι` for one register, `Fin 2 × Fin 2` for two qubits):
 `⟪U v, U w⟫ = ⟪v, w⟫` for `U` a matrix-unitary, where the action is the
 `toEuclideanLin` of the matrix. Routes through
 `EuclideanSpace.inner_eq_star_dotProduct`, `star_mulVec`, and the unitary
@@ -198,8 +198,8 @@ lemma inner_toEuclideanLin_unitary {n : Type*} [Fintype n] [DecidableEq n]
 
 /-- The unitary action sends `mk v` to `mk (toEuclideanLin U v)`. -/
 lemma smul_mk_eq_mk_toEuclideanLin
-    (U : Matrix.unitaryGroup (Fin N) ℂ)
-    {v : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) :
+    (U : Matrix.unitaryGroup ι ℂ)
+    {v : EuclideanSpace ℂ ι} (hv : v ≠ 0) :
     U • (Projectivization.mk ℂ v hv)
       = Projectivization.mk ℂ (Matrix.toEuclideanLin U.val v)
           (Matrix.UnitaryGroup.toEuclideanLin_unitary_apply_ne_zero U hv) := by
@@ -210,7 +210,7 @@ lemma smul_mk_eq_mk_toEuclideanLin
   rfl
 
 /-- **Forward (realisability) direction.** Every unitary in
-`Matrix.unitaryGroup (Fin N) ℂ`, acting on `ℂℙ^{N-1}`, preserves the
+`Matrix.unitaryGroup ι ℂ`, acting on `ℂℙ^{N-1}`, preserves the
 transition probability:
 
   `transProb (U • p) (U • q) = transProb p q`.
@@ -220,8 +220,8 @@ Fubini–Study rigidity correspondence. The converse (a
 transition-preserving self-map is induced by a unitary) is the open target
 documented in the module header. -/
 theorem transProb_smul_unitary
-    (U : Matrix.unitaryGroup (Fin N) ℂ)
-    (p q : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    (U : Matrix.unitaryGroup ι ℂ)
+    (p q : ℙ ℂ (EuclideanSpace ℂ ι)) :
     transProb (U • p) (U • q) = transProb p q := by
   -- Reduce both points to `mk` of their canonical reps.
   conv_lhs => rw [← p.mk_rep, ← q.mk_rep]
@@ -234,7 +234,7 @@ theorem transProb_smul_unitary
   rw [inner_toEuclideanLin_unitary U p.rep q.rep]
   congr 1
   -- denominator: ‖U v‖ = ‖v‖ via ‖x‖² = re ⟪x,x⟫ and inner preservation.
-  have hnorm : ∀ x : EuclideanSpace ℂ (Fin N),
+  have hnorm : ∀ x : EuclideanSpace ℂ ι,
       ‖(Matrix.toEuclideanLin U.val) x‖ ^ 2 = ‖x‖ ^ 2 := by
     intro x
     rw [← @inner_self_eq_norm_sq ℂ, ← @inner_self_eq_norm_sq ℂ,
@@ -243,11 +243,12 @@ theorem transProb_smul_unitary
 
 /-! ## Equality and orthogonality characterisations (converse hooks) -/
 
+omit [DecidableEq ι] in
 /-- **Coincidence characterisation.** The transition probability is `1` iff
 the two projective points are equal. The forward implication is the
 Cauchy–Schwarz equality case (`norm_inner_eq_norm_iff`): saturation forces
 the representatives to be parallel, hence the same projective point. -/
-theorem transProb_eq_one_iff (p q : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+theorem transProb_eq_one_iff (p q : ℙ ℂ (EuclideanSpace ℂ ι)) :
     transProb p q = 1 ↔ p = q := by
   unfold transProb transProbVec
   have hp : p.rep ≠ 0 := p.rep_nonzero
@@ -276,11 +277,12 @@ theorem transProb_eq_one_iff (p q : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
       rw [@inner_self_eq_norm_sq_to_K ℂ, norm_pow]; simp
     rw [hnorm]; ring
 
+omit [DecidableEq ι] in
 /-- **Orthogonality characterisation.** The transition probability is `0`
 iff the representatives are orthogonal. Since both representatives are
 nonzero, the denominator is nonzero, so the quotient vanishes iff the
 numerator does, i.e. iff `‖⟪p.rep, q.rep⟫‖ = 0`. -/
-theorem transProb_eq_zero_iff (p q : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+theorem transProb_eq_zero_iff (p q : ℙ ℂ (EuclideanSpace ℂ ι)) :
     transProb p q = 0 ↔ (inner ℂ p.rep q.rep : ℂ) = 0 := by
   unfold transProb transProbVec
   have hp : p.rep ≠ 0 := p.rep_nonzero

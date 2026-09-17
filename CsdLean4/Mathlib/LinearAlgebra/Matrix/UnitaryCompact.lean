@@ -17,20 +17,20 @@ public import Mathlib.Algebra.Star.Unitary
 
 **Category:** 1-Mathlib (CSD-free Mathlib upstream candidate).
 
-For `N : ℕ`, the matrix unitary group `Matrix.unitaryGroup (Fin N) ℂ`
+For `N : ℕ`, the matrix unitary group `Matrix.unitaryGroup ι ℂ`
 is a compact Hausdorff topological group:
 
 - topological group: from Mathlib's `Topology/Algebra/Star/Unitary.lean`
   (`unitary R` is a topological group whenever R is a topological star
   monoid with continuous multiplication and continuous star);
-- compact: closed in `Matrix (Fin N) (Fin N) ℂ` (from
+- compact: closed in `Matrix ι ι ℂ` (from
   `isClosed_unitary`) plus bounded (each entry's modulus ≤ 1 because
-  columns are ℓ²-unit), and `Matrix (Fin N) (Fin N) ℂ` is a finite-dim
+  columns are ℓ²-unit), and `Matrix ι ι ℂ` is a finite-dim
   normed space over `ℂ` (proper, by Heine-Borel via
   `FiniteDimensional.proper_rclike`).
 
 This is the substrate Mathlib's `MeasureTheory.Measure.haar` needs to
-produce a Haar measure on `Matrix.unitaryGroup (Fin N) ℂ`. The remaining
+produce a Haar measure on `Matrix.unitaryGroup ι ℂ`. The remaining
 ingredients (`MeasurableSpace`, `BorelSpace`) are also installed here.
 
 ## Main results
@@ -43,7 +43,7 @@ ingredients (`MeasurableSpace`, `BorelSpace`) are also installed here.
 
 ## Hypothesis pattern
 
-Specialised to `Matrix.unitaryGroup (Fin N) ℂ`. The argument works for
+Specialised to `Matrix.unitaryGroup ι ℂ`. The argument works for
 any `Matrix.unitaryGroup n α` where `n` is finite and `α` is an `RCLike`
 field, but we install the concrete case the U(N) Haar construction uses.
 
@@ -64,18 +64,18 @@ open scoped Matrix.Norms.Elementwise
 
 namespace Matrix.UnitaryGroup
 
-variable {N : ℕ}
+variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 /-- For a unitary matrix `A`, the sum of squared moduli of any column
 equals 1. This is the j-th diagonal entry of `star A * A = 1`. -/
-lemma sum_norm_sq_col (A : Matrix.unitaryGroup (Fin N) ℂ) (j : Fin N) :
-    ∑ k : Fin N, ‖A.val k j‖ ^ 2 = 1 := by
+lemma sum_norm_sq_col (A : Matrix.unitaryGroup ι ℂ) (j : ι) :
+    ∑ k : ι, ‖A.val k j‖ ^ 2 = 1 := by
   -- Start from the unitarity identity `star A.val * A.val = 1`.
-  have h_unit : (star A.val : Matrix (Fin N) (Fin N) ℂ) * A.val
-                  = (1 : Matrix (Fin N) (Fin N) ℂ) :=
+  have h_unit : (star A.val : Matrix ι ι ℂ) * A.val
+                  = (1 : Matrix ι ι ℂ) :=
     Unitary.coe_star_mul_self A
   -- Evaluate at (j, j): the (j,j) entry equals 1.
-  have h_jj : ((star A.val : Matrix (Fin N) (Fin N) ℂ) * A.val) j j = 1 := by
+  have h_jj : ((star A.val : Matrix ι ι ℂ) * A.val) j j = 1 := by
     rw [h_unit, Matrix.one_apply_eq]
   -- Expand the matrix product:
   --   ∑ k, (star A.val) j k * A.val k j = 1.
@@ -83,8 +83,8 @@ lemma sum_norm_sq_col (A : Matrix.unitaryGroup (Fin N) ℂ) (j : Fin N) :
   -- Use Matrix.star_apply : (star M) j k = star (M k j), so the LHS
   -- becomes ∑ k, star (A.val k j) * A.val k j.
   -- For complex numbers, star z * z = ↑(‖z‖²) (as a complex coercion of a real).
-  have h_eq : ∀ k : Fin N,
-      (star A.val : Matrix (Fin N) (Fin N) ℂ) j k * A.val k j
+  have h_eq : ∀ k : ι,
+      (star A.val : Matrix ι ι ℂ) j k * A.val k j
         = ((‖A.val k j‖ ^ 2 : ℝ) : ℂ) := by
     intro k
     rw [Matrix.star_apply]
@@ -97,9 +97,9 @@ lemma sum_norm_sq_col (A : Matrix.unitaryGroup (Fin N) ℂ) (j : Fin N) :
 
 /-- Each entry of a unitary matrix has modulus ≤ 1. Follows from
 `sum_norm_sq_col`: `‖A_ij‖² ≤ ∑_k ‖A_kj‖² = 1`. -/
-lemma val_norm_apply_le_one (A : Matrix.unitaryGroup (Fin N) ℂ) (i j : Fin N) :
+lemma val_norm_apply_le_one (A : Matrix.unitaryGroup ι ℂ) (i j : ι) :
     ‖A.val i j‖ ≤ 1 := by
-  have h_sum : ∑ k : Fin N, ‖A.val k j‖ ^ 2 = 1 := sum_norm_sq_col A j
+  have h_sum : ∑ k : ι, ‖A.val k j‖ ^ 2 = 1 := sum_norm_sq_col A j
   have h_i_le : ‖A.val i j‖ ^ 2 ≤ ∑ k, ‖A.val k j‖ ^ 2 :=
     Finset.single_le_sum (f := fun k => ‖A.val k j‖ ^ 2)
       (fun k _ => sq_nonneg _) (Finset.mem_univ i)
@@ -109,15 +109,15 @@ lemma val_norm_apply_le_one (A : Matrix.unitaryGroup (Fin N) ℂ) (i j : Fin N) 
   nlinarith
 
 /-- The L∞-elementwise matrix norm of a unitary matrix is ≤ 1. -/
-lemma val_norm_le_one (A : Matrix.unitaryGroup (Fin N) ℂ) :
+lemma val_norm_le_one (A : Matrix.unitaryGroup ι ℂ) :
     ‖A.val‖ ≤ 1 := by
   rw [Matrix.norm_le_iff zero_le_one]
   exact fun i j => val_norm_apply_le_one A i j
 
-/-- The unitary group is bounded as a subset of `Matrix (Fin N) (Fin N) ℂ`. -/
+/-- The unitary group is bounded as a subset of `Matrix ι ι ℂ`. -/
 lemma isBounded_underlyingSet :
     Bornology.IsBounded
-      (Matrix.unitaryGroup (Fin N) ℂ : Set (Matrix (Fin N) (Fin N) ℂ)) := by
+      (Matrix.unitaryGroup ι ℂ : Set (Matrix ι ι ℂ)) := by
   refine Metric.isBounded_iff.mpr ⟨2, ?_⟩
   rintro A hA B hB
   rw [dist_eq_norm]
@@ -125,25 +125,25 @@ lemma isBounded_underlyingSet :
     _ ≤ 1 + 1 := add_le_add (val_norm_le_one ⟨A, hA⟩) (val_norm_le_one ⟨B, hB⟩)
     _ = 2 := by norm_num
 
-/-- The unitary group is closed in `Matrix (Fin N) (Fin N) ℂ`.
+/-- The unitary group is closed in `Matrix ι ι ℂ`.
 Mathlib generic via `isClosed_unitary` (requires T1 ambient, ContinuousStar,
 ContinuousMul — all satisfied for `Matrix _ _ ℂ`). -/
 lemma isClosed_underlyingSet :
-    IsClosed (Matrix.unitaryGroup (Fin N) ℂ : Set (Matrix (Fin N) (Fin N) ℂ)) :=
+    IsClosed (Matrix.unitaryGroup ι ℂ : Set (Matrix ι ι ℂ)) :=
   isClosed_unitary
 
 /-- The matrix unitary group is compact.
 
 Routes through `Metric.isCompact_iff_isClosed_isBounded` on the
-finite-dim normed `Matrix (Fin N) (Fin N) ℂ` (proper via
+finite-dim normed `Matrix ι ι ℂ` (proper via
 `FiniteDimensional.proper_rclike`), discharging `IsClosed` via
 `isClosed_underlyingSet` and `IsBounded` via `isBounded_underlyingSet`. -/
-instance instCompactSpace : CompactSpace (Matrix.unitaryGroup (Fin N) ℂ) := by
-  have : ProperSpace (Matrix (Fin N) (Fin N) ℂ) :=
+instance instCompactSpace : CompactSpace (Matrix.unitaryGroup ι ℂ) := by
+  have : ProperSpace (Matrix ι ι ℂ) :=
     FiniteDimensional.proper_rclike ℂ _
   have h_compact :
-      IsCompact ((Matrix.unitaryGroup (Fin N) ℂ : Submonoid _) :
-        Set (Matrix (Fin N) (Fin N) ℂ)) :=
+      IsCompact ((Matrix.unitaryGroup ι ℂ : Submonoid _) :
+        Set (Matrix ι ι ℂ)) :=
     Metric.isCompact_of_isClosed_isBounded
       isClosed_underlyingSet isBounded_underlyingSet
   exact isCompact_iff_compactSpace.mp h_compact
@@ -151,9 +151,9 @@ instance instCompactSpace : CompactSpace (Matrix.unitaryGroup (Fin N) ℂ) := by
 /-- The matrix unitary group carries the Borel σ-algebra induced from
 its subspace topology. -/
 noncomputable instance instMeasurableSpace :
-    MeasurableSpace (Matrix.unitaryGroup (Fin N) ℂ) :=
+    MeasurableSpace (Matrix.unitaryGroup ι ℂ) :=
   borel _
 
-instance instBorelSpace : BorelSpace (Matrix.unitaryGroup (Fin N) ℂ) := ⟨rfl⟩
+instance instBorelSpace : BorelSpace (Matrix.unitaryGroup ι ℂ) := ⟨rfl⟩
 
 end Matrix.UnitaryGroup

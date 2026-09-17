@@ -22,7 +22,7 @@ four-level "which-error" register, and
 
 * `errorVec q = ∑ₖ √qₖ eₖ` is the unit environment vector carrying the error weights;
 * `errorRotation q` is a unitary on the environment with `R e₀ = errorVec q`, obtained from
-  `Matrix.UnitaryGroup.exists_unitary_e_zero_eq` (a unitary with a prescribed first column);
+  `Matrix.UnitaryGroup.exists_unitary_single_eq` (a unitary with a prescribed first column);
 * `controlledError = blockDiagonal errorOp` applies `Eₖ` to the register when the environment is
   `eₖ` — the controlled error, unitary because each `Eₖ` is;
 * `registerUnitary q = controlledError · (1 ⊗ R_q)`, so
@@ -67,17 +67,17 @@ lemma norm_errorVec (q : Fin 4 → ℝ) (hq0 : ∀ k, 0 ≤ q k) (hq1 : ∑ k, q
 /-- A unitary on the environment taking the ready vector `e₀` to `errorVec q`. -/
 noncomputable def errorRotation (q : Fin 4 → ℝ) (hq0 : ∀ k, 0 ≤ q k) (hq1 : ∑ k, q k = 1) :
     Matrix (Fin 4) (Fin 4) ℂ :=
-  (Classical.choose (Matrix.UnitaryGroup.exists_unitary_e_zero_eq (errorVec q) (norm_errorVec q hq0 hq1))).val
+  (Classical.choose (Matrix.UnitaryGroup.exists_unitary_single_eq 0 (errorVec q) (norm_errorVec q hq0 hq1))).val
 
 lemma errorRotation_apply_single (q : Fin 4 → ℝ) (hq0 : ∀ k, 0 ≤ q k) (hq1 : ∑ k, q k = 1) :
     Matrix.toEuclideanLin (errorRotation q hq0 hq1) (EuclideanSpace.single (0 : Fin 4) (1 : ℂ))
       = errorVec q :=
-  Classical.choose_spec (Matrix.UnitaryGroup.exists_unitary_e_zero_eq (errorVec q) (norm_errorVec q hq0 hq1))
+  Classical.choose_spec (Matrix.UnitaryGroup.exists_unitary_single_eq 0 (errorVec q) (norm_errorVec q hq0 hq1))
 
 lemma errorRotation_conjTranspose_mul (q : Fin 4 → ℝ) (hq0 : ∀ k, 0 ≤ q k) (hq1 : ∑ k, q k = 1) :
     (errorRotation q hq0 hq1)ᴴ * errorRotation q hq0 hq1 = 1 := by
   have h := Matrix.mem_unitaryGroup_iff'.mp
-    (Classical.choose (Matrix.UnitaryGroup.exists_unitary_e_zero_eq (errorVec q) (norm_errorVec q hq0 hq1))).property
+    (Classical.choose (Matrix.UnitaryGroup.exists_unitary_single_eq 0 (errorVec q) (norm_errorVec q hq0 hq1))).property
   rwa [Matrix.star_eq_conjTranspose] at h
 
 /-- The first column of the rotation is the weight vector: `R l 0 = √qₗ`. -/

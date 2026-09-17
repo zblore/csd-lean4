@@ -47,7 +47,7 @@ whole chain from joint continuity to base-point independence. (The title said on
 Phase G1 until 2026-08-19, which understated it by two phases.)
 
 * **G1** `Matrix.UnitaryGroup.instContinuousSMul_projectivization` —
-  `ContinuousSMul (Matrix.unitaryGroup (Fin N) ℂ) (ℙ ℂ (EuclideanSpace ℂ (Fin N)))`.
+  `ContinuousSMul (Matrix.unitaryGroup ι ℂ) (ℙ ℂ (EuclideanSpace ℂ ι))`.
   Joint continuity, hence joint measurability, which the Fubini swap in G4 needs.
 * ★★ **G4** `fsMeasure_unique` — any `U(N)`-invariant probability measure on
   `ℂℙ^(N-1)` IS `fsMeasure p₀`. The uniqueness the whole programme leans on.
@@ -78,15 +78,15 @@ open scoped LinearAlgebra.Projectivization
 
 namespace Matrix.UnitaryGroup
 
-variable {N : ℕ} [NeZero N]
+variable {ι : Type*} [Fintype ι] [DecidableEq ι] [Nonempty ι]
 
 /-- Joint continuity of the unitary action on `ℂℙ^(N-1)`.
 
 The action `(U, p) ↦ U • p` is jointly continuous on
-`Matrix.unitaryGroup (Fin N) ℂ × ℙ ℂ (EuclideanSpace ℂ (Fin N))`. -/
+`Matrix.unitaryGroup ι ℂ × ℙ ℂ (EuclideanSpace ℂ ι)`. -/
 instance instContinuousSMul_projectivization :
-    ContinuousSMul (Matrix.unitaryGroup (Fin N) ℂ)
-      (ℙ ℂ (EuclideanSpace ℂ (Fin N))) where
+    ContinuousSMul (Matrix.unitaryGroup ι ℂ)
+      (ℙ ℂ (EuclideanSpace ℂ ι)) where
   continuous_smul := by
     -- Open-quotient structure: id × mk' is an open quotient on G × V₀.
     rw [← (IsOpenQuotientMap.id.prodMap
@@ -104,10 +104,10 @@ instance instContinuousSMul_projectivization :
     -- Goal: Continuous (fun (Uv : G × {v // v ≠ 0}) =>
     --   (toEuclideanLin Uv.1.val) Uv.2.1)
     -- This is the WithLp.toLp ∘ (M *ᵥ ofLp) composition.
-    show Continuous (fun (Uv : Matrix.unitaryGroup (Fin N) ℂ
-                          × {v : EuclideanSpace ℂ (Fin N) // v ≠ 0}) =>
-        WithLp.toLp 2 ((Uv.1.val : Matrix (Fin N) (Fin N) ℂ)
-            *ᵥ (Uv.2.val.ofLp : Fin N → ℂ)))
+    show Continuous (fun (Uv : Matrix.unitaryGroup ι ℂ
+                          × {v : EuclideanSpace ℂ ι // v ≠ 0}) =>
+        WithLp.toLp 2 ((Uv.1.val : Matrix ι ι ℂ)
+            *ᵥ (Uv.2.val.ofLp : ι → ℂ)))
     refine (PiLp.continuous_toLp _ _).comp ?_
     refine Continuous.matrix_mulVec ?_ ?_
     · -- Continuous (fun Uv => Uv.1.val) — subtype_val ∘ fst
@@ -132,14 +132,14 @@ Proof: `Measure.map (· * g) unitaryHaarProb` is `IsHaarMeasure` (via
 (via `Measure.isProbabilityMeasure_map'`, since `(· * g)` is measurable).
 `unitaryHaarProb` itself is both. By Haar uniqueness on compact groups
 (`isHaarMeasure_eq_of_isProbabilityMeasure`), the two measures coincide. -/
-instance instIsMulRightInvariantUnitaryHaarProb (N : ℕ) :
+instance instIsMulRightInvariantUnitaryHaarProb (ι : Type*) [Fintype ι] [DecidableEq ι] :
     MeasureTheory.Measure.IsMulRightInvariant
-      (unitaryHaarProb : MeasureTheory.Measure (Matrix.unitaryGroup (Fin N) ℂ)) where
+      (unitaryHaarProb : MeasureTheory.Measure (Matrix.unitaryGroup ι ℂ)) where
   map_mul_right_eq_self g := by
     have : MeasureTheory.IsProbabilityMeasure
         (MeasureTheory.Measure.map (· * g)
           (unitaryHaarProb : MeasureTheory.Measure
-            (Matrix.unitaryGroup (Fin N) ℂ))) :=
+            (Matrix.unitaryGroup ι ℂ))) :=
       MeasureTheory.Measure.isProbabilityMeasure_map'
         (continuous_mul_const g).measurable.aemeasurable
     exact MeasureTheory.Measure.isHaarMeasure_eq_of_isProbabilityMeasure _ _
@@ -157,27 +157,27 @@ preserves the measure. -/
 `{U | U • p₀ ∈ B}`.
 
 Proof: take `V_p` with `V_p • p₀ = p` (from `IsPretransitive`, which
-auto-includes `[NeZero N]` from the section variable). Then
+auto-includes `[Nonempty ι]` from the section variable). Then
 `{U | U • p ∈ B} = (· * V_p) ⁻¹' {U | U • p₀ ∈ B}` by `smul_smul`.
 Right-invariance of Haar (Phase G2) discharges the measure equality. -/
 lemma haar_orbit_indicator_eq
-    {B : Set (ℙ ℂ (EuclideanSpace ℂ (Fin N)))} (hB : MeasurableSet B)
-    (p₀ p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-    unitaryHaarProb {U : Matrix.unitaryGroup (Fin N) ℂ | U • p ∈ B}
-      = unitaryHaarProb {U : Matrix.unitaryGroup (Fin N) ℂ | U • p₀ ∈ B} := by
+    {B : Set (ℙ ℂ (EuclideanSpace ℂ ι))} (hB : MeasurableSet B)
+    (p₀ p : ℙ ℂ (EuclideanSpace ℂ ι)) :
+    unitaryHaarProb {U : Matrix.unitaryGroup ι ℂ | U • p ∈ B}
+      = unitaryHaarProb {U : Matrix.unitaryGroup ι ℂ | U • p₀ ∈ B} := by
   -- Get a unitary V_p with V_p • p₀ = p via transitivity.
   obtain ⟨V_p, hV_p⟩ :=
-    MulAction.exists_smul_eq (Matrix.unitaryGroup (Fin N) ℂ) p₀ p
+    MulAction.exists_smul_eq (Matrix.unitaryGroup ι ℂ) p₀ p
   -- Set equality: {U | U • p ∈ B} = (· * V_p) ⁻¹' {U | U • p₀ ∈ B}.
   have h_set_eq :
-      {U : Matrix.unitaryGroup (Fin N) ℂ | U • p ∈ B}
+      {U : Matrix.unitaryGroup ι ℂ | U • p ∈ B}
         = (· * V_p) ⁻¹' {U | U • p₀ ∈ B} := by
     ext U
     simp only [Set.mem_ofPred_eq, Set.mem_preimage]
     rw [← hV_p, smul_smul]
   -- Measurability of the inner set (orbit map preimage of Borel).
   have h_S_meas :
-      MeasurableSet {U : Matrix.unitaryGroup (Fin N) ℂ | U • p₀ ∈ B} :=
+      MeasurableSet {U : Matrix.unitaryGroup ι ℂ | U • p₀ ∈ B} :=
     orbit_map_measurable p₀ hB
   rw [h_set_eq, ← MeasureTheory.Measure.map_apply
         (continuous_mul_const V_p).measurable h_S_meas,
@@ -201,53 +201,53 @@ where λ = `unitaryHaarProb`, ν = `fsMeasure p₀`.
 
 /-- **Phase G4.** Uniqueness of the U(N)-invariant probability measure
 on `ℂℙ^(N-1)`: any invariant probability measure `μ` equals
-`fsMeasure p₀`. (`[NeZero N]` is required by the implicit
+`fsMeasure p₀`. (`[Nonempty ι]` is required by the implicit
 transitivity-instance synthesis through `haar_orbit_indicator_eq`,
 auto-included from the section variable.) -/
 theorem fsMeasure_unique
-    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
-    (μ : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))))
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ ι))
+    (μ : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ ι)))
     [MeasureTheory.IsProbabilityMeasure μ]
-    (hμ_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
+    (hμ_inv : ∀ U : Matrix.unitaryGroup ι ℂ,
        MeasureTheory.Measure.map (fun p => U • p) μ = μ) :
     μ = fsMeasure p₀ := by
   apply MeasureTheory.Measure.ext
   intro B hB
   -- Joint measurability of (U, p) ↦ U • p, derived from G1's ContinuousSMul.
   have h_smul_meas : Measurable
-      (fun Up : Matrix.unitaryGroup (Fin N) ℂ
-            × ℙ ℂ (EuclideanSpace ℂ (Fin N)) => Up.1 • Up.2) :=
+      (fun Up : Matrix.unitaryGroup ι ℂ
+            × ℙ ℂ (EuclideanSpace ℂ ι) => Up.1 • Up.2) :=
     continuous_smul.measurable
   -- Measurability of the indicator function `B.indicator (fun _ => 1)`.
   have h_ind_meas :
-      Measurable (B.indicator (fun _ : ℙ ℂ (EuclideanSpace ℂ (Fin N)) =>
+      Measurable (B.indicator (fun _ : ℙ ℂ (EuclideanSpace ℂ ι) =>
                                   (1 : ENNReal))) :=
     measurable_const.indicator hB
   -- The integrand f(U, p) := B.indicator 1 (U • p) is measurable (joint).
   have h_indicator_meas : Measurable
-      (fun Up : Matrix.unitaryGroup (Fin N) ℂ
-            × ℙ ℂ (EuclideanSpace ℂ (Fin N)) =>
+      (fun Up : Matrix.unitaryGroup ι ℂ
+            × ℙ ℂ (EuclideanSpace ℂ ι) =>
         B.indicator (fun _ => (1 : ENNReal)) (Up.1 • Up.2)) :=
     h_ind_meas.comp h_smul_meas
   -- Inner integral over μ, with U fixed: equals μ B by invariance.
-  have h_inner_mu (U : Matrix.unitaryGroup (Fin N) ℂ) :
+  have h_inner_mu (U : Matrix.unitaryGroup ι ℂ) :
       ∫⁻ p, B.indicator (fun _ => (1 : ENNReal)) (U • p) ∂μ = μ B := by
-    have hcont : Measurable (fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p) :=
+    have hcont : Measurable (fun p : ℙ ℂ (EuclideanSpace ℂ ι) => U • p) :=
       (continuous_const_smul U).measurable
     rw [← MeasureTheory.lintegral_map h_ind_meas hcont, hμ_inv U,
         MeasureTheory.lintegral_indicator_const hB 1, one_mul]
   -- fsMeasure p₀ in terms of unitaryHaarProb (unfold the def).
   have h_fubini_def : fsMeasure p₀ B
-      = unitaryHaarProb {U : Matrix.unitaryGroup (Fin N) ℂ | U • p₀ ∈ B} := by
+      = unitaryHaarProb {U : Matrix.unitaryGroup ι ℂ | U • p₀ ∈ B} := by
     show (MeasureTheory.Measure.map (orbitMap p₀) unitaryHaarProb) B = _
     rw [MeasureTheory.Measure.map_apply (orbit_map_measurable p₀) hB]
     rfl
   -- Inner integral over λ, with p fixed: equals fsMeasure p₀ B by G3.
-  have h_inner_haar (p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-      ∫⁻ U : Matrix.unitaryGroup (Fin N) ℂ,
+  have h_inner_haar (p : ℙ ℂ (EuclideanSpace ℂ ι)) :
+      ∫⁻ U : Matrix.unitaryGroup ι ℂ,
           B.indicator (fun _ => (1 : ENNReal)) (U • p) ∂unitaryHaarProb
         = fsMeasure p₀ B := by
-    have hcont : Measurable (fun U : Matrix.unitaryGroup (Fin N) ℂ => U • p) :=
+    have hcont : Measurable (fun U : Matrix.unitaryGroup ι ℂ => U • p) :=
       (orbit_map_continuous p).measurable
     rw [← MeasureTheory.lintegral_map h_ind_meas hcont,
         MeasureTheory.lintegral_indicator_const hB 1, one_mul,
@@ -256,14 +256,14 @@ theorem fsMeasure_unique
     rw [haar_orbit_indicator_eq hB p₀ p, h_fubini_def]
   -- λ univ = 1 (probability measure).
   have h_lam_univ : unitaryHaarProb
-      (Set.univ : Set (Matrix.unitaryGroup (Fin N) ℂ)) = 1 :=
+      (Set.univ : Set (Matrix.unitaryGroup ι ℂ)) = 1 :=
     MeasureTheory.measure_univ
   -- μ univ = 1 (probability measure).
-  have h_mu_univ : μ (Set.univ : Set (ℙ ℂ (EuclideanSpace ℂ (Fin N)))) = 1 :=
+  have h_mu_univ : μ (Set.univ : Set (ℙ ℂ (EuclideanSpace ℂ ι))) = 1 :=
     MeasureTheory.measure_univ
   -- Compose the chain via Fubini.
   calc μ B
-      = ∫⁻ _ : Matrix.unitaryGroup (Fin N) ℂ, μ B ∂unitaryHaarProb := by
+      = ∫⁻ _ : Matrix.unitaryGroup ι ℂ, μ B ∂unitaryHaarProb := by
             rw [MeasureTheory.lintegral_const, h_lam_univ, mul_one]
     _ = ∫⁻ U, ∫⁻ p, B.indicator (fun _ => (1 : ENNReal)) (U • p) ∂μ
             ∂unitaryHaarProb := by
@@ -271,7 +271,7 @@ theorem fsMeasure_unique
             exact (h_inner_mu U).symm
     _ = ∫⁻ p, ∫⁻ U, B.indicator (fun _ => (1 : ENNReal)) (U • p) ∂unitaryHaarProb ∂μ :=
             MeasureTheory.lintegral_lintegral_swap h_indicator_meas.aemeasurable
-    _ = ∫⁻ _ : ℙ ℂ (EuclideanSpace ℂ (Fin N)), fsMeasure p₀ B ∂μ := by
+    _ = ∫⁻ _ : ℙ ℂ (EuclideanSpace ℂ ι), fsMeasure p₀ B ∂μ := by
             congr 1 with p
             exact h_inner_haar p
     _ = fsMeasure p₀ B := by
@@ -287,7 +287,7 @@ source repository's concrete measure bridges consume.
 
 This is the invariant-measure-uniqueness fact for the `ℂℙ^{N-1}` / `U(N)`
 instantiation: when the source repository instantiates its abstract measure-space data with
-`P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := Matrix.unitaryGroup (Fin N) ℂ`,
+`P := ℙ ℂ (EuclideanSpace ℂ ι)`, `G := Matrix.unitaryGroup ι ℂ`,
 and `μFS := fsMeasure p₀`, the concrete bridges
 (`cp_measure_bridge` / `k_measure_bridge`) route through
 `invariant_measure_uniqueness_cpn` and cite no axiom. (Historically this was
@@ -305,10 +305,10 @@ Proof: if the total mass is zero the measure is zero; otherwise normalise by
 the total mass to obtain an invariant *probability* measure, pin it to
 `fsMeasure p₀` via `fsMeasure_unique`, and scale back. -/
 theorem invariant_finiteMeasure_eq_smul_fubiniStudy
-    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
-    (μ : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))))
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ ι))
+    (μ : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ ι)))
     [MeasureTheory.IsFiniteMeasure μ]
-    (hμ_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
+    (hμ_inv : ∀ U : Matrix.unitaryGroup ι ℂ,
         MeasureTheory.MeasurePreserving (fun p => U • p) μ μ) :
     ∃ c : ENNReal, μ = c • fsMeasure p₀ := by
   rcases eq_or_ne (μ Set.univ) 0 with h0 | h0
@@ -320,7 +320,7 @@ theorem invariant_finiteMeasure_eq_smul_fubiniStudy
       rw [MeasureTheory.Measure.smul_apply, smul_eq_mul]
       exact ENNReal.inv_mul_cancel h0 htop
     -- Scaling preserves invariance, so the normalised measure is invariant.
-    have hinv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
+    have hinv : ∀ U : Matrix.unitaryGroup ι ℂ,
         MeasureTheory.Measure.map (fun p => U • p) ((μ Set.univ)⁻¹ • μ)
           = (μ Set.univ)⁻¹ • μ := by
       intro U
@@ -342,14 +342,14 @@ the reference point `p₀` made explicit), and is proved — no axiom — from
 `μFS` is pinned to `fsMeasure p₀` by uniqueness; `μ` is a scalar
 multiple of the same; composing gives `μ = c • μFS`. -/
 theorem invariant_measure_uniqueness_cpn
-    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
-    (μFS : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))))
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ ι))
+    (μFS : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ ι)))
     [MeasureTheory.IsProbabilityMeasure μFS]
-    (hμFS_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
+    (hμFS_inv : ∀ U : Matrix.unitaryGroup ι ℂ,
         MeasureTheory.MeasurePreserving (fun p => U • p) μFS μFS)
-    (μ : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))))
+    (μ : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ ι)))
     [MeasureTheory.IsFiniteMeasure μ]
-    (hμ_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
+    (hμ_inv : ∀ U : Matrix.unitaryGroup ι ℂ,
         MeasureTheory.MeasurePreserving (fun p => U • p) μ μ) :
     ∃ c : ENNReal, μ = c • μFS := by
   have hFS : μFS = fsMeasure p₀ :=
@@ -379,16 +379,16 @@ Phase G4: `fsMeasure p₀` is a `U(N)`-invariant probability measure
 (`fsMeasure_smul_invariant`), and G4 says every such measure is
 `fsMeasure p₁`. -/
 theorem fsMeasure_basepoint_independent
-    (p₀ p₁ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    (p₀ p₁ : ℙ ℂ (EuclideanSpace ℂ ι)) :
     fsMeasure p₀ = fsMeasure p₁ :=
   fsMeasure_unique p₁ (fsMeasure p₀)
     (fun U => fsMeasure_smul_invariant U p₀)
 
 /-- The Fubini–Study measure at any base point IS the canonical one. This is what makes
 `defaultFsMeasure` an honest name rather than one choice among many. -/
-theorem fsMeasure_eq_default (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-    fsMeasure p₀ = defaultFsMeasure N :=
-  fsMeasure_basepoint_independent p₀ (defaultPoint N)
+theorem fsMeasure_eq_default (p₀ : ℙ ℂ (EuclideanSpace ℂ ι)) :
+    fsMeasure p₀ = defaultFsMeasure ι :=
+  fsMeasure_basepoint_independent p₀ (defaultPoint ι)
 
 open MeasureTheory
 
@@ -404,10 +404,10 @@ entirely. -/
 /-- All singletons carry the same Fubini–Study mass: move one point onto the
 other by transitivity, and use invariance. -/
 lemma fsMeasure_singleton_eq
-    (p₀ q q' : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    (p₀ q q' : ℙ ℂ (EuclideanSpace ℂ ι)) :
     fsMeasure p₀ {q} = fsMeasure p₀ {q'} := by
-  obtain ⟨U, hU⟩ := MulAction.exists_smul_eq (Matrix.unitaryGroup (Fin N) ℂ) q q'
-  have hpre : (fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p) ⁻¹' {q'} = {q} := by
+  obtain ⟨U, hU⟩ := MulAction.exists_smul_eq (Matrix.unitaryGroup ι ℂ) q q'
+  have hpre : (fun p : ℙ ℂ (EuclideanSpace ℂ ι) => U • p) ⁻¹' {q'} = {q} := by
     ext p
     simp only [Set.mem_preimage, Set.mem_singleton_iff]
     constructor
@@ -417,26 +417,22 @@ lemma fsMeasure_singleton_eq
       exact hU
   calc fsMeasure p₀ {q}
       = fsMeasure p₀
-          ((fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p) ⁻¹' {q'}) := by
+          ((fun p : ℙ ℂ (EuclideanSpace ℂ ι) => U • p) ⁻¹' {q'}) := by
         rw [hpre]
-    _ = (Measure.map (fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p)
+    _ = (Measure.map (fun p : ℙ ℂ (EuclideanSpace ℂ ι) => U • p)
           (fsMeasure p₀)) {q'} := by
         rw [Measure.map_apply (continuous_const_smul U).measurable
           isClosed_singleton.measurableSet]
     _ = fsMeasure p₀ {q'} := by
         rw [fsMeasure_smul_invariant U p₀]
 
-/-- For `2 ≤ N` the projective space is infinite: the rays `[e₀ + t • e₁]` for
-`t : ℕ` are pairwise distinct. -/
-theorem projectivization_infinite (hN : 2 ≤ N) :
-    Infinite (ℙ ℂ (EuclideanSpace ℂ (Fin N))) := by
-  set i0 : Fin N := ⟨0, by omega⟩ with hi0_def
-  set i1 : Fin N := ⟨1, by omega⟩ with hi1_def
-  have hne : i0 ≠ i1 := by
-    intro h
-    have := congrArg Fin.val h
-    simp [hi0_def, hi1_def] at this
-  set v : ℕ → EuclideanSpace ℂ (Fin N) := fun t =>
+omit [Nonempty ι] in
+/-- For `2 ≤ card ι` the projective space is infinite: for two distinct indices `i0 ≠ i1` the
+rays `[e_{i0} + t • e_{i1}]`, `t : ℕ`, are pairwise distinct. -/
+theorem projectivization_infinite (hN : 2 ≤ Fintype.card ι) :
+    Infinite (ℙ ℂ (EuclideanSpace ℂ ι)) := by
+  obtain ⟨i0, i1, hne⟩ : ∃ i0 i1 : ι, i0 ≠ i1 := Fintype.exists_pair_of_one_lt_card (by omega)
+  set v : ℕ → EuclideanSpace ℂ ι := fun t =>
     EuclideanSpace.single i0 1 + (t : ℂ) • EuclideanSpace.single i1 1 with hv_def
   have hv0 : ∀ t, v t i0 = 1 := by
     intro t
@@ -446,7 +442,7 @@ theorem projectivization_infinite (hN : 2 ≤ N) :
     simp [hv_def, PiLp.add_apply, PiLp.smul_apply, Ne.symm hne]
   have hvne : ∀ t, v t ≠ 0 := by
     intro t h0
-    have := congrArg (fun z : EuclideanSpace ℂ (Fin N) => z i0) h0
+    have := congrArg (fun z : EuclideanSpace ℂ ι => z i0) h0
     rw [hv0 t] at this
     simp at this
   refine Infinite.of_injective
@@ -454,8 +450,8 @@ theorem projectivization_infinite (hN : 2 ≤ N) :
   intro s t hst
   rw [Projectivization.mk_eq_mk_iff] at hst
   obtain ⟨c, hc⟩ := hst
-  have h0 := congrArg (fun z : EuclideanSpace ℂ (Fin N) => z i0) hc
-  have h1 := congrArg (fun z : EuclideanSpace ℂ (Fin N) => z i1) hc
+  have h0 := congrArg (fun z : EuclideanSpace ℂ ι => z i0) hc
+  have h1 := congrArg (fun z : EuclideanSpace ℂ ι => z i1) hc
   simp only [Units.smul_def, PiLp.smul_apply, smul_eq_mul, hv0, hv1,
     mul_one] at h0 h1
   rw [h0] at h1
@@ -467,8 +463,8 @@ singleton is null. Pigeonhole, with no stabiliser Haar measure anywhere: all
 singletons share one mass `a` by transitivity + invariance; were `a ≠ 0`, a
 finite set of more than `1/a` distinct points — available since the space is
 infinite — would carry measure exceeding `1`. -/
-theorem fsMeasure_singleton (hN : 2 ≤ N)
-    (p₀ q : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+theorem fsMeasure_singleton (hN : 2 ≤ Fintype.card ι)
+    (p₀ q : ℙ ℂ (EuclideanSpace ℂ ι)) :
     fsMeasure p₀ {q} = 0 := by
   by_contra ha
   have := projectivization_infinite hN
@@ -479,7 +475,7 @@ theorem fsMeasure_singleton (hN : 2 ≤ N)
   obtain ⟨n, hn⟩ := ENNReal.exists_nat_gt
     (ENNReal.div_lt_top ENNReal.one_ne_top ha).ne
   obtain ⟨S, hScard⟩ :=
-    Infinite.exists_subset_card_eq (ℙ ℂ (EuclideanSpace ℂ (Fin N))) n
+    Infinite.exists_subset_card_eq (ℙ ℂ (EuclideanSpace ℂ ι)) n
   have hSmeas : fsMeasure p₀ ↑S = n * a := by
     calc fsMeasure p₀ ↑S
         = ∑ x ∈ S, fsMeasure p₀ {x} := sum_measure_singleton.symm

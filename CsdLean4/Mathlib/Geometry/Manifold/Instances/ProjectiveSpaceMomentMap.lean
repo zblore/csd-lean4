@@ -579,7 +579,7 @@ theorem momentMap_mk_sqrtVec (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex �
 the torus action on `ℂℙⁿ`, by direct computation: `⊆` is the normalisation, `⊇` is the ray of
 `(√t₀, …, √tₙ)`. The Atiyah–Guillemin–Sternberg convexity theorem is neither used nor proved. -/
 theorem range_momentMap :
-    Set.range (momentMap (N := n + 1)) = stdSimplex ℝ (Fin (n + 1)) :=
+    Set.range (momentMap (ι := Fin (n + 1))) = stdSimplex ℝ (Fin (n + 1)) :=
   Set.Subset.antisymm (Set.range_subset_iff.2 momentMap_mem_stdSimplex)
     fun t ht => ⟨_, momentMap_mk_sqrtVec t ht⟩
 

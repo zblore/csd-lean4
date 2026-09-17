@@ -14,7 +14,7 @@ public import Mathlib.MeasureTheory.Measure.Haar.Unique
 
 **Category:** 1-Mathlib (CSD-free).
 
-`Matrix.unitaryGroup (Fin N) ℂ` is a compact Hausdorff topological group with a Borel structure
+`Matrix.unitaryGroup ι ℂ` is a compact Hausdorff topological group with a Borel structure
 (`UnitaryCompact.lean`), so Mathlib's Haar measure is available on it, and `haarMeasure ⊤` — the
 Haar measure normalised to give the whole group mass `1` — is its Haar probability measure.
 
@@ -35,23 +35,23 @@ open MeasureTheory
 
 namespace Matrix.UnitaryGroup
 
-variable {N : ℕ}
+variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 /-- **The Haar probability measure on `U(N)`**: Mathlib's `haarMeasure ⊤`, the Haar measure
 normalised so that the whole (compact) group has mass `1`. -/
-noncomputable def unitaryHaarProb : Measure (Matrix.unitaryGroup (Fin N) ℂ) :=
+noncomputable def unitaryHaarProb : Measure (Matrix.unitaryGroup ι ℂ) :=
   Measure.haarMeasure ⊤
 
 /-- `unitaryHaarProb` is a probability measure: `haarMeasure K₀ K₀ = 1` at `K₀ = ⊤`. -/
 instance instIsProbabilityMeasureUnitaryHaarProb :
-    IsProbabilityMeasure (unitaryHaarProb : Measure (Matrix.unitaryGroup (Fin N) ℂ)) where
+    IsProbabilityMeasure (unitaryHaarProb : Measure (Matrix.unitaryGroup ι ℂ)) where
   measure_univ := by
     rw [unitaryHaarProb, ← TopologicalSpace.PositiveCompacts.coe_top]
     exact Measure.haarMeasure_self
 
 /-- `unitaryHaarProb` is a Haar measure (Mathlib's `isHaarMeasure_haarMeasure`). -/
 instance unitaryHaarProb_isHaarMeasure :
-    Measure.IsHaarMeasure (unitaryHaarProb : Measure (Matrix.unitaryGroup (Fin N) ℂ)) :=
+    Measure.IsHaarMeasure (unitaryHaarProb : Measure (Matrix.unitaryGroup ι ℂ)) :=
   inferInstanceAs (Measure.IsHaarMeasure (Measure.haarMeasure ⊤))
 
 end Matrix.UnitaryGroup

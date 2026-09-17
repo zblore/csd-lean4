@@ -269,7 +269,7 @@ space `Fin n → ℂ` to `Fin (n + 1) → ℝ`: coordinatewise the chart derivat
 def momentDeriv (x : ℙ ℂ (Ambient n)) : (Fin n → ℂ) →L[ℝ] (Fin (n + 1) → ℝ) :=
   ContinuousLinearMap.pi fun k => momentChartCoordDeriv (idx x) (chartFun (idx x) x) k
 
-theorem continuous_momentMap_pi : Continuous (momentMap (N := n + 1)) :=
+theorem continuous_momentMap_pi : Continuous (momentMap (ι := Fin (n + 1))) :=
   continuous_pi fun k => continuous_momentMap k
 
 /-- **The moment map is differentiable, with differential `momentDeriv`.** -/

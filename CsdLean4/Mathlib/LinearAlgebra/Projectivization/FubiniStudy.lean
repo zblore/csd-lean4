@@ -17,13 +17,13 @@ public import Mathlib.Topology.Instances.Matrix
 **Category:** 1-Mathlib (CSD-free Mathlib upstream candidate).
 
 Constructs the U(N)-invariant Borel probability measure on
-`Projectivization ℂ (EuclideanSpace ℂ (Fin N))` by pushing the
+`Projectivization ℂ (EuclideanSpace ℂ ι)` by pushing the
 probability-normalised Haar measure `unitaryHaarProb` (from
 `UnitaryHaar.lean`) forward through the orbit map `U ↦ U • p₀`
 for a fixed reference point `p₀`.
 
 Invariance is stated over the full unitary group
-`Matrix.unitaryGroup (Fin N) ℂ = U(N)` — the group every definition and
+`Matrix.unitaryGroup ι ℂ = U(N)` — the group every definition and
 theorem here actually quantifies over. On projective space the central
 `U(1)` acts trivially, so `U(N)`- and `SU(N)`-invariance are the same
 condition on measures over `ℂℙ^{N-1}`; the literature's "SU(N)-invariant
@@ -32,11 +32,12 @@ Fubini–Study measure" is this measure.
 ## Main definitions
 
 - `Matrix.UnitaryGroup.orbitMap p₀` — the orbit map at `p₀`,
-  `U ↦ U • p₀ : Matrix.unitaryGroup (Fin N) ℂ → ℙ ℂ (EuclideanSpace ℂ (Fin N))`.
+  `U ↦ U • p₀ : Matrix.unitaryGroup ι ℂ → ℙ ℂ (EuclideanSpace ℂ ι)`.
 - `fsMeasure p₀` — `Measure.map (orbitMap p₀) unitaryHaarProb`.
   The U(N)-invariant Borel probability measure on `ℂℙ^{N-1}`.
 - `defaultPoint`, `defaultFsMeasure` — canonical choice
-  using `EuclideanSpace.single 0 1` as the reference (requires `[NeZero N]`).
+  using `EuclideanSpace.single (Classical.arbitrary ι) 1` as the reference (requires `[Nonempty
+  ι]`).
 
 ## Main results
 
@@ -62,34 +63,34 @@ open scoped LinearAlgebra.Projectivization
 
 namespace Matrix.UnitaryGroup
 
-variable {N : ℕ}
+variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 
 /-! ## Phase A — orbit map continuity -/
 
 /-- For any fixed vector `v`, the map `M ↦ Matrix.toEuclideanLin M v` is
 continuous in `M`. Routes through `Continuous.matrix_mulVec` and
 `PiLp.continuous_toLp`. -/
-lemma toEuclideanLin_apply_continuous (v : EuclideanSpace ℂ (Fin N)) :
-    Continuous (fun M : Matrix (Fin N) (Fin N) ℂ => (Matrix.toEuclideanLin M) v) := by
-  show Continuous (fun M : Matrix (Fin N) (Fin N) ℂ =>
+lemma toEuclideanLin_apply_continuous (v : EuclideanSpace ℂ ι) :
+    Continuous (fun M : Matrix ι ι ℂ => (Matrix.toEuclideanLin M) v) := by
+  show Continuous (fun M : Matrix ι ι ℂ =>
       (WithLp.toLp 2 (M *ᵥ (WithLp.ofLp v))
-        : EuclideanSpace ℂ (Fin N)))
+        : EuclideanSpace ℂ ι))
   refine (PiLp.continuous_toLp _ _).comp ?_
   exact Continuous.matrix_mulVec continuous_id continuous_const
 
 /-- A unitary matrix's `toEuclideanLin` action preserves non-zero.
 Routes through `toEuclideanLinearEquiv`'s injectivity. -/
 lemma toEuclideanLin_unitary_apply_ne_zero
-    (U : Matrix.unitaryGroup (Fin N) ℂ)
-    {v : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) :
+    (U : Matrix.unitaryGroup ι ℂ)
+    {v : EuclideanSpace ℂ ι} (hv : v ≠ 0) :
     (Matrix.toEuclideanLin U.val) v ≠ 0 := by
   intro h
   apply hv
   exact (toEuclideanLinearEquiv U).injective (h.trans (LinearEquiv.map_zero _).symm)
 
 /-- The orbit map at `p₀`, `U ↦ U • p₀`. -/
-noncomputable def orbitMap (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-    Matrix.unitaryGroup (Fin N) ℂ → ℙ ℂ (EuclideanSpace ℂ (Fin N)) :=
+noncomputable def orbitMap (p₀ : ℙ ℂ (EuclideanSpace ℂ ι)) :
+    Matrix.unitaryGroup ι ℂ → ℙ ℂ (EuclideanSpace ℂ ι) :=
   fun U => U • p₀
 
 /-- **Phase A2.** The orbit map is continuous.
@@ -97,10 +98,10 @@ noncomputable def orbitMap (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
 Decomposition: `U • p = mk' ⟨(toEuclideanLin U.val) p.rep, nonzero⟩`
 via the compHom action on the Projectivization MulAction. The
 non-zero proof routes through `toEuclideanLin_unitary_apply_ne_zero`. -/
-lemma orbit_map_continuous (p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+lemma orbit_map_continuous (p : ℙ ℂ (EuclideanSpace ℂ ι)) :
     Continuous (orbitMap p) := by
   -- Rewrite the orbit map as Projectivization.mk' of the matrix action on p.rep.
-  have h_eq : orbitMap p = fun U : Matrix.unitaryGroup (Fin N) ℂ =>
+  have h_eq : orbitMap p = fun U : Matrix.unitaryGroup ι ℂ =>
       Projectivization.mk' ℂ
         ⟨(Matrix.toEuclideanLin U.val) p.rep,
          toEuclideanLin_unitary_apply_ne_zero U p.rep_nonzero⟩ := by
@@ -114,7 +115,7 @@ lemma orbit_map_continuous (p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
   exact (toEuclideanLin_apply_continuous p.rep).comp continuous_subtype_val
 
 /-- **Phase A3.** The orbit map is measurable. -/
-lemma orbit_map_measurable (p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+lemma orbit_map_measurable (p : ℙ ℂ (EuclideanSpace ℂ ι)) :
     Measurable (orbitMap p) :=
   (orbit_map_continuous p).measurable
 
@@ -123,8 +124,8 @@ lemma orbit_map_measurable (p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
 /-- **Fubini–Study measure** at reference point `p₀`. Defined as the
 pushforward of the probability-normalised Haar measure on the unitary
 group under the orbit map `U ↦ U • p₀`. -/
-noncomputable def fsMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-    Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))) :=
+noncomputable def fsMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ ι)) :
+    Measure (ℙ ℂ (EuclideanSpace ℂ ι)) :=
   Measure.map (orbitMap p₀) unitaryHaarProb
 
 /-! ## Phase C — probability measure -/
@@ -132,7 +133,7 @@ noncomputable def fsMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
 /-- Pushforward of a probability measure by a measurable map is a
 probability measure. -/
 instance instIsProbabilityMeasureFsMeasure
-    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ ι)) :
     IsProbabilityMeasure (fsMeasure p₀) := by
   unfold fsMeasure
   exact Measure.isProbabilityMeasure_map' (orbit_map_measurable p₀).aemeasurable
@@ -142,8 +143,8 @@ instance instIsProbabilityMeasureFsMeasure
 /-- Compatibility lemma: `(U' • ·) ∘ orbitMap p₀ = orbitMap p₀ ∘ (U' * ·)`.
 The MulAction axiom `(U' * U) • p₀ = U' • (U • p₀)` makes the two
 forms equal as functions. -/
-lemma smul_comp_orbitMap (U' : Matrix.unitaryGroup (Fin N) ℂ)
-    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+lemma smul_comp_orbitMap (U' : Matrix.unitaryGroup ι ℂ)
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ ι)) :
     (fun p => U' • p) ∘ orbitMap p₀ = orbitMap p₀ ∘ (fun U => U' * U) := by
   funext U
   show U' • (U • p₀) = (U' * U) • p₀
@@ -163,8 +164,8 @@ Proof via the chain:
    inherited from `unitaryHaarProb_isHaarMeasure`) to kill the
    inner pushforward. -/
 theorem fsMeasure_smul_invariant
-    (U' : Matrix.unitaryGroup (Fin N) ℂ)
-    (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    (U' : Matrix.unitaryGroup ι ℂ)
+    (p₀ : ℙ ℂ (EuclideanSpace ℂ ι)) :
     Measure.map (fun p => U' • p) (fsMeasure p₀)
       = fsMeasure p₀ := by
   unfold fsMeasure
@@ -187,11 +188,11 @@ without either existing. -/
 
 /-- The **canonical reference point** `[e₀]` of `ℂℙ^{N-1}`: the ray through the first
 standard basis vector. -/
-noncomputable def defaultPoint (N : ℕ) [NeZero N] :
-    ℙ ℂ (EuclideanSpace ℂ (Fin N)) :=
-  Projectivization.mk ℂ (EuclideanSpace.single (0 : Fin N) (1 : ℂ)) (by
+noncomputable def defaultPoint (ι : Type*) [Fintype ι] [DecidableEq ι] [Nonempty ι] :
+    ℙ ℂ (EuclideanSpace ℂ ι) :=
+  Projectivization.mk ℂ (EuclideanSpace.single (Classical.arbitrary ι) (1 : ℂ)) (by
     intro h
-    have hz : ‖(EuclideanSpace.single (0 : Fin N) (1 : ℂ))‖ = 0 := by
+    have hz : ‖(EuclideanSpace.single (Classical.arbitrary ι) (1 : ℂ))‖ = 0 := by
       rw [h, norm_zero]
     rw [PiLp.norm_single, norm_one] at hz
     exact one_ne_zero hz)
@@ -199,12 +200,13 @@ noncomputable def defaultPoint (N : ℕ) [NeZero N] :
 /-- The **Fubini–Study measure at the canonical point**. By
 `fsMeasure_basepoint_independent` this is *the* Fubini–Study measure: the base
 point is not a degree of freedom. -/
-noncomputable def defaultFsMeasure (N : ℕ) [NeZero N] :
-    Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))) :=
-  fsMeasure (defaultPoint N)
+noncomputable def defaultFsMeasure (ι : Type*) [Fintype ι] [DecidableEq ι] [Nonempty ι] :
+    Measure (ℙ ℂ (EuclideanSpace ℂ ι)) :=
+  fsMeasure (defaultPoint ι)
 
-instance instIsProbabilityMeasureDefaultFsMeasure (N : ℕ) [NeZero N] :
-    IsProbabilityMeasure (defaultFsMeasure N) := by
+instance instIsProbabilityMeasureDefaultFsMeasure (ι : Type*) [Fintype ι] [DecidableEq ι] [Nonempty
+    ι] :
+    IsProbabilityMeasure (defaultFsMeasure ι) := by
   unfold defaultFsMeasure
   infer_instance
 
