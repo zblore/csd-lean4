@@ -22,8 +22,9 @@ its quotient topology (`Topology.lean`). This file installs:
   quotient topology.
 - `Projectivization.instBorelSpace`: witness that the installed
   measurable space coincides with `borel _` (definitionally `rfl`).
-- `Projectivization.instMeasurableSingletonClass`: every singleton is
-  measurable, from `T2Space` (closed singletons) + `BorelSpace`.
+- (`MeasurableSingletonClass (ℙ K V)` is Mathlib's
+  `OpensMeasurableSpace.toMeasurableSingletonClass`, from `T2Space` + `BorelSpace`; until
+  2026-09-16 this file re-proved it under its own name.)
 - `Projectivization.measurable_mk'`: the canonical surjection is
   measurable, from its continuity (`Topology.lean`'s `continuous_mk'`)
   via `Continuous.measurable`.
@@ -99,13 +100,6 @@ instance instMeasurableSpace : MeasurableSpace (ℙ K V) := borel _
 /-- `Projectivization K V` is a `BorelSpace`: the installed measurable
 space agrees with `borel _` by definition. -/
 instance instBorelSpace : BorelSpace (ℙ K V) := ⟨rfl⟩
-
-/-- Singletons in `ℙ K V` are measurable. Follows from T2 (closed
-singletons; established in `Topology.lean`'s
-`Projectivization.instT2Space`) plus the Borel structure (closed sets
-are measurable). -/
-instance instMeasurableSingletonClass : MeasurableSingletonClass (ℙ K V) :=
-  ⟨fun _ => (isClosed_singleton).measurableSet⟩
 
 omit [FiniteDimensional K V] in
 /-- The canonical surjection `{v : V // v ≠ 0} → ℙ K V` is measurable.

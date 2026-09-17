@@ -245,12 +245,22 @@ theorem im_conj_mul_pairs (a b : Fin 2) :
 /-- The pair a slot of `Fin (2k)` belongs to. -/
 def pairIdx {k : ℕ} (p : Fin (2 * k)) : Fin k := ⟨p / 2, by omega⟩
 
+/-- `pairIdx`, unfolded: the definitional equation. -/
+theorem pairIdx_def {k : ℕ} (p : Fin (2 * k)) : pairIdx p = ⟨p / 2, by omega⟩ := rfl
+
 /-- Which member of its pair a slot of `Fin (2k)` is. -/
 def memIdx {k : ℕ} (p : Fin (2 * k)) : Fin 2 := ⟨p % 2, by omega⟩
+
+/-- `memIdx`, unfolded: the definitional equation. -/
+theorem memIdx_def {k : ℕ} (p : Fin (2 * k)) : memIdx p = ⟨p % 2, by omega⟩ := rfl
 
 /-- The family of `k` standard pairs `(e_{a i}, i • e_{a i})`, in order. -/
 def pairFamily {k : ℕ} (a : Fin k → Fin n) : Fin (2 * k) → (Fin n → ℂ) :=
   fun p => Pi.single (a (pairIdx p)) (![1, Complex.I] (memIdx p))
+
+/-- `pairFamily`, unfolded: the definitional equation. -/
+theorem pairFamily_def {k : ℕ} (a : Fin k → Fin n) :
+    pairFamily a = fun p => Pi.single (a (pairIdx p)) (![1, Complex.I] (memIdx p)) := rfl
 
 theorem coe_powEquiv_inl {k : ℕ} (p : Fin (2 * k)) :
     ((DifferentialForm.powEquiv k (Sum.inl p) : Fin (2 * (k + 1))) : ℕ) = p := rfl

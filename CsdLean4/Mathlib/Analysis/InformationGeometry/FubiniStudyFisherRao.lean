@@ -102,6 +102,9 @@ variable {ι : Type*}
 /-- The Born weight of the `i`-th coordinate: `‖ψ i‖ ^ 2`. -/
 def bornWeight (ψ : EuclideanSpace ℂ ι) (i : ι) : ℝ := ‖ψ i‖ ^ 2
 
+/-- `bornWeight`, unfolded: the definitional equation. -/
+theorem bornWeight_def (ψ : EuclideanSpace ℂ ι) (i : ι) : bornWeight ψ i = ‖ψ i‖ ^ 2 := rfl
+
 theorem bornWeight_nonneg (ψ : EuclideanSpace ℂ ι) (i : ι) : 0 ≤ bornWeight ψ i :=
   sq_nonneg _
 
@@ -112,6 +115,10 @@ theorem bornWeight_pos (ψ : EuclideanSpace ℂ ι) {i : ι} (h : ψ i ≠ 0) : 
 
 /-- The displacement of the `i`-th Born weight along `u`: `2 Re(ψ̄ᵢ uᵢ)`. -/
 def bornDeriv (ψ u : EuclideanSpace ℂ ι) (i : ι) : ℝ := 2 * (conj (ψ i) * u i).re
+
+/-- `bornDeriv`, unfolded: the definitional equation. -/
+theorem bornDeriv_def (ψ u : EuclideanSpace ℂ ι) (i : ι) :
+    bornDeriv ψ u i = 2 * (conj (ψ i) * u i).re := rfl
 
 /-! ## Horizontal directions -/
 

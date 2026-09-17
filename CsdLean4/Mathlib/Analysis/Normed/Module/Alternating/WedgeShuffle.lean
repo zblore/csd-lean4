@@ -71,9 +71,25 @@ def slotMem : Fin (2 * k) ⊕ Fin 2 → Fin 2
   | .inl p => ⟨p % 2, by omega⟩
   | .inr b => b
 
+/-- `slotPair` on an `inl` slot: pair `p / 2`. -/
+theorem slotPair_inl (p : Fin (2 * k)) : slotPair (.inl p) = ⟨p / 2, by omega⟩ := rfl
+
+/-- `slotPair` on an `inr` slot: the last pair. -/
+theorem slotPair_inr (b : Fin 2) : slotPair (.inr b : Fin (2 * k) ⊕ Fin 2) = Fin.last k := rfl
+
+/-- `slotMem` on an `inl` slot: member `p % 2`. -/
+theorem slotMem_inl (p : Fin (2 * k)) : slotMem (.inl p) = ⟨p % 2, by omega⟩ := rfl
+
+/-- `slotMem` on an `inr` slot: the slot's own index. -/
+theorem slotMem_inr (b : Fin 2) : slotMem (.inr b : Fin (2 * k) ⊕ Fin 2) = b := rfl
+
 /-- The slot of member `m` of pair `j`. -/
 def slotOf (j : Fin (k + 1)) (m : Fin 2) : Fin (2 * k) ⊕ Fin 2 :=
   if h : (j : ℕ) < k then .inl ⟨2 * j + m, by omega⟩ else .inr m
+
+/-- `slotOf`, unfolded: the definitional equation. -/
+theorem slotOf_def (j : Fin (k + 1)) (m : Fin 2) :
+    slotOf j m = if h : (j : ℕ) < k then .inl ⟨2 * j + m, by omega⟩ else .inr m := rfl
 
 theorem slotPair_slotOf (j : Fin (k + 1)) (m : Fin 2) : slotPair (slotOf j m) = j := by
   unfold slotOf

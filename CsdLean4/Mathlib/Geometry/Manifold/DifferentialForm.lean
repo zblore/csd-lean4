@@ -47,7 +47,8 @@ form. The **Fubini–Study** form as a `C^∞` section of this bundle is built d
 
 ⚠️ **No exterior derivative in this module.** `d` on manifolds is step (2b) — upstream's own
 stated TODO — and is built downstream in
-[`ExteriorDerivative.lean`](ExteriorDerivative.lean) (`mextDeriv`, `d ∘ d = 0`, for the real
+[`ExteriorDerivative.lean`](ExteriorDerivative.lean) (`mextDerivFamily` on families,
+`DifferentialForm.mextDeriv` on forms, `d ∘ d = 0`, for the real
 boundaryless model at `∞`). The top-power identity is statable after steps (0), (1) and (2a) and
 is not proved anywhere.
 

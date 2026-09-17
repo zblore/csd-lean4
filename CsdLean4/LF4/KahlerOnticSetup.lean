@@ -53,7 +53,7 @@ Every field is now real Mathlib content, forced on any inhabitant:
   Kähler-compatibility triple on the tangent model (`g = re⟪·,·⟫`,
   `ω = im⟪·,·⟫`, `J = i•·` with `J² = -1`, `ω = g∘J`, `g = ω∘J`, `ω` a
   `(1,1)`-form, `ω u (Ju) = ‖u‖²`), proved axiom-free via
-  `Kahler.fubiniStudy_pointwise_kahler_compatibility`; the FLAT closedness
+  `isFubiniStudyKahler`; the FLAT closedness
   `dω = 0` is also proved (`Kahler.extDeriv_fundamentalFormAlt`,
   `KahlerClosed.lean`, 2026-08-06), leaving only the `ℂℙ^{N-1}` manifold
   spelling open;
@@ -116,7 +116,7 @@ structure) satisfies the defining almost-Kähler relations:
 
 This is the linear-algebra core of "`Σ` is a Kähler sector" — the *compatible with
 the complex structure and positive* content — proved axiom-free
-(`Kahler.fubiniStudy_pointwise_kahler_compatibility`). It is the type of the
+(`KahlerForm.lean`'s five triple identities, bundled by `isFubiniStudyKahler`). It is the type of the
 structure's `kahler_pointwise` field (2026-08-06 tightening; formerly an
 instance-supplied abstract `Prop`, historically `True` before 2026-07-19).
 The manifold-level closedness `dω = 0` and the top-power identity
@@ -135,10 +135,15 @@ def IsFubiniStudyKahler (N : ℕ) : Prop :=
     ∧ Kahler.fundamentalForm u (Kahler.complexStructure u) = ‖u‖ ^ 2
 
 /-- The Fubini–Study Kähler compatibility holds on the tangent model of `ℂℙ^{N-1}`
-(axiom-free; `Kahler.fubiniStudy_pointwise_kahler_compatibility`). This discharges the
+(axiom-free; the five conjuncts are `Kahler.complexStructure_involutive`,
+`fundamentalForm_eq_metric_complexStructure`, `metric_eq_fundamentalForm_complexStructure`,
+`fundamentalForm_complexStructure`, `fundamentalForm_complexStructure_self`, bundled here — the
+Category-1 file exports them one by one since 2026-09-16). This discharges the
 `kahler_pointwise` field genuinely on every `ℂℙ`-based instance. -/
-theorem isFubiniStudyKahler (N : ℕ) : IsFubiniStudyKahler N :=
-  fun u v => Kahler.fubiniStudy_pointwise_kahler_compatibility u v
+theorem isFubiniStudyKahler (N : ℕ) : IsFubiniStudyKahler N := fun u v =>
+  ⟨Kahler.complexStructure_involutive u, Kahler.fundamentalForm_eq_metric_complexStructure u v,
+    Kahler.metric_eq_fundamentalForm_complexStructure u v,
+    Kahler.fundamentalForm_complexStructure u v, Kahler.fundamentalForm_complexStructure_self u⟩
 
 /-- **The Kähler ontic-sector interface (W2).** Sector-level hypotheses bundled
 as structure fields (no global axioms). `N` is the operational Hilbert

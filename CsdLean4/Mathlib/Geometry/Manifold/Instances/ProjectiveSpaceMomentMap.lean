@@ -116,12 +116,23 @@ variable {n : ℕ}
 def torusChartField (i : Fin (n + 1)) (θ : Fin (n + 1) → ℝ) (w : Fin n → ℂ) : Fin n → ℂ :=
   fun j => (Complex.I * ((θ (i.succAbove j) - θ i : ℝ) : ℂ)) * w j
 
+/-- `torusChartField`, unfolded: the definitional equation. -/
+theorem torusChartField_def (i : Fin (n + 1)) (θ : Fin (n + 1) → ℝ) (w : Fin n → ℂ) :
+    torusChartField i θ w = fun j => (Complex.I * ((θ (i.succAbove j) - θ i : ℝ) : ℂ)) * w j := rfl
+
 /-- `N w = θ_i + ∑ⱼ θ_{s j} ‖wⱼ‖²`. -/
 def torusChartNum (i : Fin (n + 1)) (θ : Fin (n + 1) → ℝ) (w : Fin n → ℂ) : ℝ :=
   θ i + ∑ j, θ (i.succAbove j) * ‖w j‖ ^ 2
 
+/-- `torusChartNum`, unfolded: the definitional equation. -/
+theorem torusChartNum_def (i : Fin (n + 1)) (θ : Fin (n + 1) → ℝ) (w : Fin n → ℂ) :
+    torusChartNum i θ w = θ i + ∑ j, θ (i.succAbove j) * ‖w j‖ ^ 2 := rfl
+
 /-- `D w = 1 + ∑ⱼ ‖wⱼ‖²`. -/
 def chartDen (w : Fin n → ℂ) : ℝ := 1 + ∑ j, ‖w j‖ ^ 2
+
+/-- `chartDen`, unfolded: the definitional equation. -/
+theorem chartDen_def (w : Fin n → ℂ) : chartDen w = 1 + ∑ j, ‖w j‖ ^ 2 := rfl
 
 theorem chartDen_pos (w : Fin n → ℂ) : 0 < chartDen w := by
   unfold chartDen
@@ -130,6 +141,10 @@ theorem chartDen_pos (w : Fin n → ℂ) : 0 < chartDen w := by
 /-- The chart Hamiltonian `2 N / D`. -/
 def torusChartHam (i : Fin (n + 1)) (θ : Fin (n + 1) → ℝ) (w : Fin n → ℂ) : ℝ :=
   2 * (torusChartNum i θ w * (chartDen w)⁻¹)
+
+/-- `torusChartHam`, unfolded: the definitional equation. -/
+theorem torusChartHam_def (i : Fin (n + 1)) (θ : Fin (n + 1) → ℝ) (w : Fin n → ℂ) :
+    torusChartHam i θ w = 2 * (torusChartNum i θ w * (chartDen w)⁻¹) := rfl
 
 /-! ### Derivatives in the chart -/
 

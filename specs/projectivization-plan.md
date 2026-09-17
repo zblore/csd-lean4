@@ -225,7 +225,7 @@ structure onto the coinduced one. ~3-4 h.
 ### 4.3 Measurable singleton class
 
 ```lean
-instance Projectivization.instMeasurableSingletonClass :
+instance Projectivization.instMeasurableSingletonClass :  -- removed 2026-09-16; Mathlib's instance covers it
     MeasurableSingletonClass (Projectivization K V)
 ```
 

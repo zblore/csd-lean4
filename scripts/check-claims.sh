@@ -908,6 +908,10 @@ isSymplectic"
 #     hence H is differentiable everywhere). The words name the predicate the theorems refute /
 #     hypothesise; together with isLocallyHamiltonian_torusStrokeField they are the manifold form
 #     of shear_piecewise_hamiltonian's withdrawn reading. CP^N x T^2, EVEN.
+#   (2026-09-17, Brief B S-rows: fubiniStudy_pointwise_kahler_compatibility and
+#   kahler_structure_isometry_invariant were deleted — conjunction capstones, the conjuncts stay
+#   declared; contMDiff_omega_schrodingerHamiltonian / contMDiff_omega_torusHamiltonian merged into
+#   the order-generic contMDiff_schrodingerHamiltonian / contMDiff_torusHamiltonian, declared below.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 kahlerFstSector_projectiveLaw
 kahlerFstSector_epistemicMeasure_projectiveLaw
@@ -980,8 +984,6 @@ fsMetric_hamiltonianFlow_schrodinger
 hamiltonianFlow_schrodingerHamiltonian_eq
 sigma_tpm_law_hamiltonianFlow
 sigma_jarzynski_hamiltonianFlow
-contMDiff_omega_schrodingerHamiltonian
-contMDiff_omega_torusHamiltonian
 hamiltonianField_base_eq_zero
 untriggeredCurve_isHamiltonianCurve
 hamiltonianField_interactionH
@@ -1001,7 +1003,6 @@ mfderiv_apply_torus_of_isHamiltonianVectorField
 momentumH_hamiltonianField
 translationCurve_isHamiltonianCurve
 fieldHamiltonian_mulVec_single
-fubiniStudy_pointwise_kahler_compatibility
 fundamentalForm_hamiltonianVectorFieldOf
 hamiltonian_duality
 fubiniStudyMeasure_isForcedKahlerVolume
@@ -1013,7 +1014,6 @@ interactionHamiltonian_isHermitian
 hamiltonian_mulVec_single
 isFubiniStudyKahler
 kahler_robertson_ontic_variance
-kahler_structure_isometry_invariant
 kahlerConstraintDynamics_flow
 kahlerProjectiveSector_pi
 manyToOneSetup_baseVolume_isForcedKahlerVolume

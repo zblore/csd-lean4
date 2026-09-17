@@ -29,7 +29,7 @@ one case the corpus needs.
   differential of `H`; hence `d(ι_X ω_loc) = d(d(H ∘ chart⁻¹)) = 0`
   (`extDeriv_flatInteriorProduct_localHamiltonianVector`, by `extDeriv_extDeriv_apply`);
 * `DifferentialForm.extDeriv_localRep_eq_zero` — the local representative of a closed form is
-  closed on the chart's target (`localRep_mextDeriv`);
+  closed on the chart's target (`localRep_mextDerivFamily`);
 * ★★ `DifferentialForm.flatLieDeriv_localHamiltonianVector_localRep_eq_zero` — **the flat Lie
   derivative of a symplectic form's local representative along its Hamiltonian field vanishes**
   at every point of the chart's target. Together with
@@ -224,8 +224,8 @@ chart's target. -/
 theorem extDeriv_localRep_eq_zero (hα : IsSymplectic α) (x₀ : M) {w : E}
     (hw : w ∈ (chartAt E x₀).target) :
     extDeriv (localRep (fun x => α x) x₀) w = 0 := by
-  rw [← localRep_mextDeriv (fun x => α x) α.contMDiff_toFun x₀ hw]
-  have h0 : _root_.mextDeriv (fun x => α x) = fun _ => 0 := by
+  rw [← localRep_mextDerivFamily (fun x => α x) α.contMDiff_toFun x₀ hw]
+  have h0 : mextDerivFamily (fun x => α x) = fun _ => 0 := by
     funext x
     have h := congrArg (fun β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 3) ℝ => β x)
       hα.closed

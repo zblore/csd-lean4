@@ -89,9 +89,17 @@ abbrev Ambient (n : ℕ) := EuclideanSpace ℂ (Fin (n + 1))
 noncomputable def coordRatio (i : Fin (n + 1)) (v : Ambient n) : Fin n → ℂ :=
   fun j => v (i.succAbove j) / v i
 
+/-- `coordRatio`, unfolded: the definitional equation. -/
+theorem coordRatio_def (i : Fin (n + 1)) (v : Ambient n) :
+    coordRatio i v = fun j => v (i.succAbove j) / v i := rfl
+
 /-- Insert `1` in slot `i`: the affine section of the `i`-th chart. -/
 noncomputable def insertOne (i : Fin (n + 1)) (w : Fin n → ℂ) : Ambient n :=
   WithLp.toLp 2 (i.insertNth 1 w)
+
+/-- `insertOne`, unfolded: the definitional equation. -/
+theorem insertOne_def (i : Fin (n + 1)) (w : Fin n → ℂ) :
+    insertOne i w = WithLp.toLp 2 (i.insertNth 1 w) := rfl
 
 @[simp]
 lemma insertOne_apply_same (i : Fin (n + 1)) (w : Fin n → ℂ) : insertOne i w i = 1 := by
@@ -128,6 +136,10 @@ noncomputable def chartFun (i : Fin (n + 1)) (p : ℙ ℂ (Ambient n)) : Fin n �
 /-- The inverse of the `i`-th affine chart. -/
 noncomputable def chartInv (i : Fin (n + 1)) (w : Fin n → ℂ) : ℙ ℂ (Ambient n) :=
   mk ℂ (insertOne i w) (insertOne_ne_zero i w)
+
+/-- `chartInv`, unfolded: the definitional equation. -/
+theorem chartInv_def (i : Fin (n + 1)) (w : Fin n → ℂ) :
+    chartInv i w = mk ℂ (insertOne i w) (insertOne_ne_zero i w) := rfl
 
 /-- The domain of the `i`-th chart: the points whose `i`-th coordinate does not vanish. -/
 def chartSource (i : Fin (n + 1)) : Set (ℙ ℂ (Ambient n)) := {p | p.rep i ≠ 0}

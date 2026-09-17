@@ -37,7 +37,7 @@ pins)**: the `0`-form API `ExteriorDerivative.lean`'s header listed as absent �
 and `constOfIsEmptyLIE ∘ f`), the bundled `zeroForm`, ★ `toFlat_mextDeriv_zeroFormFamily` (**`d` of a
 `0`-form is its differential**, from `extDeriv_constOfIsEmpty` and the `MDifferentiableAt.mfderiv`
 chart bridge) — and ★ `IsHamiltonianVectorField.isLocallyHamiltonian` (`HamiltonianVectorField.lean`):
-`ι_X ω = dH` as families, so `d(ι_X ω) = d(dH) = 0` by `mextDeriv_mextDeriv`, for a `C^∞` energy.
+`ι_X ω = dH` as families, so `d(ι_X ω) = d(dH) = 0` by `mextDerivFamily_mextDerivFamily`, for a `C^∞` energy.
 The **M** came in under: the one non-mechanical point was the module-system instance path
 (`Trivial M ℝ x` vs `TangentSpace 𝓘(ℝ, ℝ) (H x)`), finished pointwise through `toFlat` and `trans`,
 never by `rw`. The converse (locally Hamiltonian ⇒ Hamiltonian) is false and not stated. **G13 BUILT
@@ -455,9 +455,10 @@ le_top⟩`, so `ofOmega α x = α x` is `rfl`), ★★ `contDiffAt_omega_localHa
 generic in the order; `ω + 1 ≤ ω` is `le_top`), ★★★ `contMDiff_omega_hamiltonianVectorField` (**the
 Hamiltonian vector field of a `C^ω` energy for a `C^ω` non-degenerate 2-form is a `C^ω` section**), reusing
 G3's pointwise identity `trivializationAt_hamiltonianVectorField_snd` on `ofOmega α` with `hH.of_le le_top`.
-On `ℂℙⁿ` (`ProjectiveSpaceSchrodingerFlow.lean`): `contDiff_omega_schrodingerChartHam` (the inner-product
-calculus is order-generic), ★ `contMDiff_omega_schrodingerHamiltonian`, ★ `contMDiff_omega_torusHamiltonian`,
-★★ `contMDiff_omega_schrodingerField`, ★★ `contMDiff_omega_torusField` — for the analytic form
+On `ℂℙⁿ` (`ProjectiveSpaceSchrodingerFlow.lean`): `contDiff_schrodingerChartHam` at `m := ω` (the
+inner-product calculus is order-generic — since 2026-09-16 the three Hamiltonian statements are one
+theorem each over `m : WithTop ℕ∞`, the `ω` twins deleted), ★ `contMDiff_schrodingerHamiltonian`,
+★ `contMDiff_torusHamiltonian` at `ω`, ★★ `contMDiff_omega_schrodingerField`, ★★ `contMDiff_omega_torusField` — for the analytic form
 `fsFormAnalytic` of G12, whose family is `fsForm`'s definitionally. **S–M** as priced; took S. 10 pins.
 
 **Two shelf facts.** `omit [IsManifold 𝓘(ℝ, E) ∞ M] in` is refused ("cannot omit referenced section
@@ -636,7 +637,7 @@ present). Milestones on this route:
 |---|---|---|---|
 | (a) | **Global flow of a `C^1` field on a compact manifold**: from `exists_isMIntegralCurve_of_isMIntegralCurveOn` (present, `IntegralCurve/UniformTime.lean`; needs a uniform `ε` — on a compact manifold the local existence time of `exists_isMIntegralCurveAt_of_contMDiffAt` is bounded below by compactness, a Lebesgue-number argument) and G4's uniqueness, assemble `φ : ℝ → M → M` with `φ (s+t) = φ s ∘ φ t` (`Mathlib/Dynamics/Flow.lean`, `structure Flow`, present) and each `φ t` a homeomorphism (`Flow.toHomeomorph`, present). | **M–L** | Both Mathlib halves present; the compactness step is the work. |
 | (b′) | **Flat Liouville**: on an open `U ⊆ E`, for `X` `C^1` and `ω_loc` a `C^1` 2-form with the flat `L_X ω_loc = 0`, the flow `Φ_t` of `X` satisfies `(Φ_t)^* ω_loc = ω_loc` on its domain. Proof: fix `u, v`; `f(t) := ω_loc (Φ_t x) (DΦ_t u, DΦ_t v)` has `f' = 0` by the product rule and the variational equation `d/dt DΦ_t = DX ∘ DΦ_t`; `is_const_of_deriv_eq_zero`. The variational equation needs smooth dependence of the flow on initial data, which is **absent** at the pin (`Mathlib/Analysis/ODE/PicardLindelof.lean` gives existence and uniqueness only) — this is the genuine gap on this route, smaller than Cartan but real. | **L** | `is_const_of_deriv_eq_zero` present; smooth dependence on initial data absent. |
-| (c′) | **`L_X ω = 0` for a Hamiltonian field, flat**: `L_X ω = d(ι_X ω) + ι_X dω` is the flat Cartan identity (a `Fin 2`-alternating-map computation from `extDeriv_apply`, present) and both terms vanish: `d(ι_X ω) = d(dH) = 0` (`extDeriv_extDeriv`, present; G11 gives the manifold form) and `dω = 0` (`fsForm_mextDeriv` read in the chart, `toFlat_mextDeriv`). | **M** | All present. |
+| (c′) | **`L_X ω = 0` for a Hamiltonian field, flat**: `L_X ω = d(ι_X ω) + ι_X dω` is the flat Cartan identity (a `Fin 2`-alternating-map computation from `extDeriv_apply`, present) and both terms vanish: `d(ι_X ω) = d(dH) = 0` (`extDeriv_extDeriv`, present; G11 gives the manifold form) and `dω = 0` (`fsForm_mextDeriv` read in the chart, `toFlat_mextDerivFamily`). | **M** | All present. |
 | (d′) | **Assembly on `ℂℙⁿ`**: (a) gives `φ_t` as homeomorphisms; (b′)+(c′) in each chart give `hinv` for `topFormMeasure_map_eq`; conclude `Measure.map (φ_t) (fsVolume n) = fsVolume n` for every `C^∞` Hamiltonian `H`. Then `flow_preserves_volume` of `KahlerOnticSetup` is a theorem for every Hamiltonian flow, not only the unitary ones. | **M** | `topFormMeasure_map_eq` present in-corpus. |
 
 **Re-price:** **L–XL** on the chart route (was XL on the Cartan route), with the smooth dependence
@@ -706,7 +707,7 @@ antisymmetry of the form; ★★ `flatLieDeriv_localHamiltonianVector_localRep_e
 `C^∞` energy, the flat Lie derivative of `localRep α x₀` along `localHamiltonianVector α H x₀` vanishes at every
 point of the chart's target, because `ι_X ω_loc = d(H ∘ chart⁻¹)` (the defining identity of the local vector, read
 through `inverse_curryLeft_apply` / `apply_flatVec`) so its `extDeriv` is `d∘d = 0`, and `d ω_loc = 0` is closedness
-through `localRep_mextDeriv`. `contDiffAt_localHamiltonianVector` was generalised from the chart image of `x₀` to
+through `localRep_mextDerivFamily`. `contDiffAt_localHamiltonianVector` was generalised from the chart image of `x₀` to
 every point of the target (its proof never used the base point). (d′) is now assembly only.
 
 **Q29(d′) BUILT 2026-09-12 (M as priced, took M). Q29 = G5 is CLOSED.** `Geometry/Manifold/HamiltonianFlowVolume.lean`

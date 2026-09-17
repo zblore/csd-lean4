@@ -326,8 +326,8 @@ theorem isLocallyHamiltonian_torusStrokeField (N : ℕ) (a : ℝ × ℝ) :
     IsLocallyHamiltonian (fun p => arenaForm N p) (torusStrokeField N a) := by
   intro p
   rw [interiorProduct_arenaForm_torusStrokeField,
-    mextDeriv_prodFamily contMDiff_zeroFamily (contMDiff_constFamily _) p,
-    mextDeriv_zeroFamily, mextDeriv_constFamily]
+    mextDerivFamily_prodFamily contMDiff_zeroFamily (contMDiff_constFamily _) p,
+    mextDerivFamily_zeroFamily, mextDerivFamily_constFamily]
   exact ContinuousAlternatingMap.prodSum_zero_zero
 
 end LF4

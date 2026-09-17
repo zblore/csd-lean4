@@ -186,7 +186,7 @@ assemble. If only one thing lands, let it be **M3**: it is the upstream-shaped p
   from other definitions by a factor"; the corpus's `wedge` has its own. M6 needs only `≠ 0`; keep
   every constant out of M6's statement and let M7 own them.
 * **`TangentSpace`-vs-model instance path.** Every identity in M2–M4 is stated on the model via a
-  `toFlat`-style cast and finished pointwise, exactly as `localRep_mextDeriv` was. Do not `rw` a
+  `toFlat`-style cast and finished pointwise, exactly as `localRep_mextDerivFamily` was. Do not `rw` a
   CLM equality across the path; it will not work and it is not a wall.
 
 ## 6. Deliverables and stop condition

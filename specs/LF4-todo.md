@@ -478,7 +478,7 @@ Hypothesis pattern at Group 1: `[DivisionRing K] [AddCommGroup V] [Module K V] [
 
 - `Projectivization.instMeasurableSpace`: Borel σ-algebra from the quotient topology, gated on `[RCLike K]` + finite-dim normed `V`.
 - `Projectivization.instBorelSpace`: witness that the installed measurable space coincides with `borel _` (`rfl`).
-- `Projectivization.instMeasurableSingletonClass`: singletons are measurable; T2 (Group 2) + Borel ⟹ closed singletons measurable.
+- ~~`Projectivization.instMeasurableSingletonClass`~~: singletons are measurable; T2 (Group 2) + Borel ⟹ closed singletons measurable (removed 2026-09-16: Mathlib's `OpensMeasurableSpace.toMeasurableSingletonClass` is that instance).
 - `Projectivization.measurable_mk'`: the canonical surjection is measurable, via `continuous_mk'.measurable`. Caller supplies `[MeasurableSpace V] [BorelSpace V]` so the source subtype inherits a Borel structure.
 - `Projectivization.instSecondCountableTopology`: free consequence of `isQuotientMap_mk'` + `isOpenMap_mk'` + `secondCountable_of_proper`.
 

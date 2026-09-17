@@ -2,7 +2,9 @@
 
 **Status:** SCOPED 2026-09-07; §3.1 attempted the same day and recorded as a wall; **BUILT the same
 evening** — `Mathlib/Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, chart-independence as
-`DifferentialForm.localRep_mextDeriv`, `contMDiff_mextDeriv`, `mextDeriv_mextDeriv`; 15 pins), with
+`DifferentialForm.localRep_mextDerivFamily`, `contMDiff_mextDerivFamily`, `mextDerivFamily_mextDerivFamily`; 15 pins;
+the family operator was renamed from `mextDeriv` to `mextDerivFamily` on 2026-09-16, the bundled
+`DifferentialForm.mextDeriv` keeping its name), with
 the payoff `Projectivization.fsForm_mextDeriv`, **`d ω_FS = 0` on `ℂℙⁿ`**. ⚠️ §3a records two
 retracted findings from the first attempt and the procedural lesson behind them — that lesson is
 what the build confirmed: the wall was §3.1's plumbing, and once that plumbing had been written
@@ -96,7 +98,7 @@ Route A and it buys nothing Route A does not give.
    well this should be short; if it is fighting, step 1 is wrong, not this.
 4. **Smoothness**: `mextDeriv ω` is a `C^(n-1)` section — i.e. the result really is a
    `DifferentialForm`, which is what makes `d` iterable.
-5. **`mextDeriv_mextDeriv`** — `d² = 0`, transported from `extDeriv_extDeriv`.
+5. **`mextDerivFamily_mextDerivFamily`** — `d² = 0`, transported from `extDeriv_extDeriv`.
 
 ## 3a. ⚠️ §3.1 attempted 2026-09-07 — the first write-up was WRONG, twice
 
@@ -170,7 +172,7 @@ one dissolved on the next probe. The corrective is procedural and cheap:
 
 In rough order of value:
 
-* `mextDeriv_mextDeriv` (`d² = 0`) — the reason the object is worth having;
+* `mextDerivFamily_mextDerivFamily` (`d² = 0`) — the reason the object is worth having;
 * linearity, and `d` of a `0`-form is the differential;
 * ★ the **Palais formula** as a theorem (Route B's content, now a consequence rather than a
   definition), mirroring `extDeriv_apply_vectorField`;

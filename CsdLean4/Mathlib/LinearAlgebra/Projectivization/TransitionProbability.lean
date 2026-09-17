@@ -88,6 +88,10 @@ in `ψ` and linear in `φ`; the form is insensitive to this choice. -/
 noncomputable def transProbVec (ψ φ : E) : ℝ :=
   ‖(inner ℂ ψ φ : ℂ)‖ ^ 2 / (‖ψ‖ ^ 2 * ‖φ‖ ^ 2)
 
+/-- `transProbVec`, unfolded: the definitional equation. -/
+theorem transProbVec_def (ψ φ : E) :
+    transProbVec ψ φ = ‖(inner ℂ ψ φ : ℂ)‖ ^ 2 / (‖ψ‖ ^ 2 * ‖φ‖ ^ 2) := rfl
+
 /-- Scaling the first argument by a nonzero scalar leaves `transProbVec`
 unchanged: the `‖c‖²` introduced in the numerator (via `inner_smul_left`,
 the conjugate factor having equal norm) cancels the one in the
@@ -143,6 +147,9 @@ on their canonical (nonzero) representatives `Projectivization.rep`. The
 well-definedness across the choice of representative is `transProb_mk`. -/
 noncomputable def transProb (p q : ℙ ℂ E) : ℝ :=
   transProbVec p.rep q.rep
+
+/-- `transProb`, unfolded: the definitional equation. -/
+theorem transProb_def (p q : ℙ ℂ E) : transProb p q = transProbVec p.rep q.rep := rfl
 
 /-- A canonical representative of `mk v hv` is a nonzero scalar multiple of
 `v`. -/

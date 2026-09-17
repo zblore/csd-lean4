@@ -43,7 +43,8 @@ We prove the defining **almost-Kähler / Hermitian compatibility** relations, po
   positive off `0` (`fundamentalForm_complexStructure_self_pos`) — so `(u,v) ↦ ω u (J v) = g u v` is
   positive-definite.
 
-The capstone `fubiniStudy_pointwise_kahler_compatibility` bundles the Kähler triple.
+The five statements are exported one by one; the bundle a consumer wants is built where it is
+wanted (until 2026-09-16 three conjunction capstones lived here — Mathlib takes the conjuncts).
 
 ## Scope
 
@@ -61,7 +62,7 @@ proved downstream, on the manifold:
 The `X_H = ω⁻¹dH` duality this triple supports is a theorem at the linear level in
 `HamiltonianVectorField.lean` (same directory), together with the uniqueness non-degeneracy gives
 (`eq_hamiltonianVectorFieldOf_of_forall`). The restriction of the triple to the tangent space
-`ψ^⊥` of a ray is the Fubini–Study form pointwise (`tangent_complexStructure_invariant`).
+`ψ^⊥` of a ray is the Fubini–Study form pointwise (`complexStructure_mem_orthogonal`).
 -/
 
 @[expose] public section
@@ -75,12 +76,27 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
 def complexStructure (u : E) : E := Complex.I • u
 
 /-- **The Riemannian metric `g`**: the real part of the Hermitian inner product, `g u v = re ⟪u, v⟫`.
+This is the real inner product Mathlib's `InnerProductSpace.complexToReal` would install on `E`,
+definitionally (`metric_eq_real_inner`); that structure is a `def`, not an instance (installing
+`Inner ℝ E` on every complex space would create diamonds), so `re ⟪u, v⟫_ℂ` is Mathlib's own
+spelling of the real inner product here and the name `g` is what the Kähler triple `g, ω, J` needs.
 Symmetric (`metric_comm`) and positive-definite (`metric_self`, `= ‖u‖²`). -/
 def metric (u v : E) : ℝ := (inner ℂ u v).re
+
+/-- `metric`, unfolded: the definitional equation. -/
+theorem metric_def (u v : E) : metric u v = (inner ℂ u v).re := rfl
+
+/-- `g` is the real inner product of `InnerProductSpace.complexToReal`, `⟪u, v⟫_ℝ = re ⟪u, v⟫_ℂ`,
+definitionally (the structure is installed locally; Mathlib provides it as a `def`). -/
+theorem metric_eq_real_inner (u v : E) :
+    letI := InnerProductSpace.complexToReal (G := E); metric u v = inner ℝ u v := rfl
 
 /-- **The fundamental 2-form `ω`**: the imaginary part of the Hermitian inner product,
 `ω u v = im ⟪u, v⟫`. Alternating `ℝ`-bilinear (the pointwise Kähler form). -/
 def fundamentalForm (u v : E) : ℝ := (inner ℂ u v).im
+
+/-- `fundamentalForm`, unfolded: the definitional equation. -/
+theorem fundamentalForm_def (u v : E) : fundamentalForm u v = (inner ℂ u v).im := rfl
 
 /-- `J u = i • u`, unfolded. **Not `@[simp]`**: as a head unfolder it rewrites `J` away before the
 structural lemmas (`complexStructure_involutive`, `fundamentalForm_complexStructure_self`) can fire,
@@ -177,32 +193,6 @@ theorem fundamentalForm_complexStructure_self_pos {u : E} (hu : u ≠ 0) :
   rw [fundamentalForm_complexStructure_self]
   exact pow_pos (norm_pos_iff.mpr hu) 2
 
-/-! ### The capstone -/
-
-/-- **The pointwise Kähler compatibility of the Fubini–Study fundamental form.** On any complex
-inner-product space `E` (the tangent model of `ℂℙ^{N-1}`), the triple `g = re ⟪·,·⟫`,
-`ω = im ⟪·,·⟫`, `J = i • ·` satisfies the defining almost-Kähler relations:
-
-* `J² = -1` (complex structure);
-* `ω u v = g (J u) v` (the fundamental form is the metric twisted by `J`);
-* `g u v = ω u (J v)` (the metric is recovered from `ω` and `J`);
-* `ω (J u) (J v) = ω u v` (`ω` is a `(1,1)`-form);
-* `ω u (J u) = ‖u‖²` (positivity / taming).
-
-This is the linear-algebra core of the Kähler form — the "compatible with the complex structure and
-positive" content, proved pointwise. Closedness `dω = 0` and the top-power identity are the
-manifold theorems `Projectivization.fsForm_mextDeriv` and
-`Projectivization.fsVolume_eq_smul_fubiniStudyMeasure` downstream. -/
-theorem fubiniStudy_pointwise_kahler_compatibility (u v : E) :
-    complexStructure (complexStructure u) = -u
-    ∧ fundamentalForm u v = metric (complexStructure u) v
-    ∧ metric u v = fundamentalForm u (complexStructure v)
-    ∧ fundamentalForm (complexStructure u) (complexStructure v) = fundamentalForm u v
-    ∧ fundamentalForm u (complexStructure u) = ‖u‖ ^ 2 :=
-  ⟨complexStructure_involutive u, fundamentalForm_eq_metric_complexStructure u v,
-    metric_eq_fundamentalForm_complexStructure u v,
-    fundamentalForm_complexStructure u v, fundamentalForm_complexStructure_self u⟩
-
 /-! ### The projective tangent space `ψ^⊥` is `J`-invariant
 
 At a ray `[ψ] ∈ ℂℙ^{N-1}` the (holomorphic) tangent space is modelled by the orthogonal complement
@@ -223,13 +213,6 @@ theorem complexStructure_mem_orthogonal {ψ v : E}
   intro u hu
   simp only [complexStructure, inner_smul_right, hv u hu, mul_zero]
 
-/-- **The tangent space at a ray is a complex (`J`-invariant) subspace.** `J` maps `ψ^⊥` into itself,
-so the pointwise Kähler triple (`fubiniStudy_pointwise_kahler_compatibility`) restricts to the tangent
-space of `ℂℙ^{N-1}` at `[ψ]` — the induced Fubini–Study Kähler structure on the tangent. -/
-theorem tangent_complexStructure_invariant (ψ : E) :
-    ∀ v ∈ (Submodule.span ℂ {ψ})ᗮ, complexStructure v ∈ (Submodule.span ℂ {ψ})ᗮ :=
-  fun _ hv => complexStructure_mem_orthogonal hv
-
 /-! ### The Kähler structure is preserved by unitary symmetries
 
 Any `ℂ`-linear isometry preserves the Hermitian inner product, hence both the metric `g` and the
@@ -248,14 +231,6 @@ theorem metric_linearIsometryEquiv (f : E ≃ₗᵢ[ℂ] E) (u v : E) :
 theorem fundamentalForm_linearIsometryEquiv (f : E ≃ₗᵢ[ℂ] E) (u v : E) :
     fundamentalForm (f u) (f v) = fundamentalForm u v := by
   simp only [fundamentalForm, f.inner_map_map]
-
-/-- **The Kähler structure is preserved by any unitary symmetry.** A `ℂ`-linear isometry preserves
-both the metric `g` and the fundamental form `ω`, so it is a symplectic isometry (a Kähler
-transformation) of the Hermitian structure. This is the invariance that makes the Schrödinger flow a
-symplectomorphism of the Fubini–Study geometry. -/
-theorem kahler_structure_isometry_invariant (f : E ≃ₗᵢ[ℂ] E) (u v : E) :
-    metric (f u) (f v) = metric u v ∧ fundamentalForm (f u) (f v) = fundamentalForm u v :=
-  ⟨metric_linearIsometryEquiv f u v, fundamentalForm_linearIsometryEquiv f u v⟩
 
 end Kahler
 

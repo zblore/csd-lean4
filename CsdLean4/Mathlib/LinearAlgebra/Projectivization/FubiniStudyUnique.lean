@@ -480,8 +480,6 @@ theorem fubiniStudyMeasure_singleton (hN : 2 ≤ N)
     (ENNReal.div_lt_top ENNReal.one_ne_top ha).ne
   obtain ⟨S, hScard⟩ :=
     Infinite.exists_subset_card_eq (ℙ ℂ (EuclideanSpace ℂ (Fin N))) n
-  have : MeasurableSingletonClass (ℙ ℂ (EuclideanSpace ℂ (Fin N))) :=
-    ⟨fun _ => isClosed_singleton.measurableSet⟩
   have hSmeas : fubiniStudyMeasure p₀ ↑S = n * a := by
     calc fubiniStudyMeasure p₀ ↑S
         = ∑ x ∈ S, fubiniStudyMeasure p₀ {x} := sum_measure_singleton.symm

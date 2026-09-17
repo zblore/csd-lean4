@@ -46,6 +46,10 @@ OUTPUT. A numbered list of findings, most severe first, each with: severity (BLO
   the cheap confirmed findings were fixed the same day; two findings were rejected on verification
   (the forward-compat measure shim; `[NeZero N]` in `FubiniStudyLebesgue.lean`); the rest are the
   priced residues **B1–B13** in BACKLOG #33 residue (e).
+* **The S rows** (B1, B3, B4 ×3, B7, B10, B11's Hamiltonian half, B12) were done on 2026-09-17 at
+  the user's request; two re-pricings came out of doing them — B3 (Mathlib's `complexToReal` is a
+  `def`, so the suggested `inner ℝ` is not available as an instance) and B13 (no `volume` on a
+  complex `EuclideanSpace` at the pin; the real-`2n` transfer is M) — recorded in the same row.
 
 ## Brief B — the Fubini–Study machinery the bridge stands on
 

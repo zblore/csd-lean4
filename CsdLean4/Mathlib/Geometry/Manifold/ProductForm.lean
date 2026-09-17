@@ -27,10 +27,10 @@ Given a form `α` on `M` and a form `β` on `N` of the same degree, the product 
   factors' local representatives**, by `fderiv_chart_transition_prod`), and
   `contMDiff_prodFamily` (smooth when the factors are);
 * ★ `DifferentialForm.prodForm α β` — the bundled `C^∞` form on `M × N`;
-* ★★ `mextDeriv_prodFamily` — **`d (π₁^* α + π₂^* β) = π₁^* dα + π₂^* dβ`**, from the flat
+* ★★ `mextDerivFamily_prodFamily` — **`d (π₁^* α + π₂^* β) = π₁^* dα + π₂^* dβ`**, from the flat
   naturality `extDeriv_pullback` along the two projections;
 * ★★ `IsSymplectic.prodForm` — **the product of two symplectic manifolds is symplectic**;
-* `contMDiff_zeroFamily`, `mextDeriv_zeroFamily` — the zero family on any manifold over a self
+* `contMDiff_zeroFamily`, `mextDerivFamily_zeroFamily` — the zero family on any manifold over a self
   model is a smooth section with zero exterior derivative (used with the product to read constant
   interior products on a product).
 
@@ -270,7 +270,7 @@ theorem extDeriv_prodSum_comp {a : E → E [⋀^Fin k]→L[ℝ] G} {b : F → F 
         rw [prodSum, fderiv_fst, fderiv_snd]
 
 /-- ★★ **`d (π₁^* α + π₂^* β) = π₁^* dα + π₂^* dβ`**, pointwise, for `C^∞` factors. -/
-theorem mextDeriv_prodFamily
+theorem mextDerivFamily_prodFamily
     {α : ∀ x : M, TangentSpace 𝓘(ℝ, E) x [⋀^Fin k]→L[ℝ] Bundle.Trivial M G x}
     {β : ∀ y : N, TangentSpace 𝓘(ℝ, F) y [⋀^Fin k]→L[ℝ] Bundle.Trivial N G y}
     (hα : ContMDiff 𝓘(ℝ, E) (𝓘(ℝ, E).prod 𝓘(ℝ, E [⋀^Fin k]→L[ℝ] G)) ∞
@@ -278,8 +278,8 @@ theorem mextDeriv_prodFamily
     (hβ : ContMDiff 𝓘(ℝ, F) (𝓘(ℝ, F).prod 𝓘(ℝ, F [⋀^Fin k]→L[ℝ] G)) ∞
       (fun y : N => TotalSpace.mk' (F [⋀^Fin k]→L[ℝ] G) y (β y)))
     (p : M × N) :
-    _root_.mextDeriv (prodFamily α β) p
-      = prodSum (toFlat (_root_.mextDeriv α p.1)) (toFlat (_root_.mextDeriv β p.2)) := by
+    mextDerivFamily (prodFamily α β) p
+      = prodSum (toFlat (mextDerivFamily α p.1)) (toFlat (mextDerivFamily β p.2)) := by
   obtain ⟨x, y⟩ := p
   show extDeriv (localRep (prodFamily α β) (x, y)) (chartAt (E × F) (x, y) (x, y)) = _
   have hev : localRep (prodFamily α β) (x, y) =ᶠ[𝓝 (chartAt (E × F) (x, y) (x, y))]
@@ -302,7 +302,7 @@ theorem prodForm_mextDeriv (α : DifferentialForm 𝓘(ℝ, E) M ∞ (Fin k) G)
     (prodForm α β).mextDeriv = prodForm α.mextDeriv β.mextDeriv := by
   apply ContMDiffSection.ext
   intro p
-  exact mextDeriv_prodFamily α.contMDiff_toFun β.contMDiff_toFun p
+  exact mextDerivFamily_prodFamily α.contMDiff_toFun β.contMDiff_toFun p
 
 end ExtDeriv
 
@@ -336,8 +336,8 @@ theorem contMDiff_zeroFamily :
   exact trivializationAt_zero_snd x₀ y hy
 
 /-- The exterior derivative of the zero family is zero. -/
-theorem mextDeriv_zeroFamily {k : ℕ} (x : M) :
-    _root_.mextDeriv (fun x : M => (0 : TangentSpace 𝓘(ℝ, E) x [⋀^Fin k]→L[ℝ]
+theorem mextDerivFamily_zeroFamily {k : ℕ} (x : M) :
+    mextDerivFamily (fun x : M => (0 : TangentSpace 𝓘(ℝ, E) x [⋀^Fin k]→L[ℝ]
       Bundle.Trivial M G x)) x = 0 := by
   show extDeriv (localRep _ x) (chartAt E x x) = 0
   have hev : localRep (fun x : M => (0 : TangentSpace 𝓘(ℝ, E) x [⋀^Fin k]→L[ℝ]

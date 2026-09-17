@@ -24,7 +24,7 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   `ℂℙ^{N−1}` — `J² = −1`, `ω = g∘J`, `g = ω∘J`, `ω` a `(1,1)`-form, and the taming identity
   `ω u (J u) = ‖u‖²`.
 * **Backed by:** `IsFubiniStudyKahler` (`LF4/KahlerOnticSetup.lean`), proved axiom-free by
-  `Kahler.fubiniStudy_pointwise_kahler_compatibility`; the objects themselves are
+  `isFubiniStudyKahler`; the objects themselves are
   `Kahler.complexStructure`, `Kahler.metric`, `Kahler.fundamentalForm`
   (`Mathlib/Analysis/InnerProductSpace/KahlerForm.lean`).
 * **Also backed (2026-09-07):** the manifold-level **closedness** `dω = 0` on `ℂℙⁿ` —

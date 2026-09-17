@@ -38,6 +38,9 @@ the basis — and those densities glue to a measure on the manifold.
 * ★★ `topFormMeasure_apply_of_subset_source` — on a measurable set inside **any** chart domain
   (not only the cover's) the glued measure is that chart's measure; hence
   ★ `topFormMeasure_congr_cover` — the measure does not depend on the cover;
+* ★ `topFormMeasure_addHaar_basis` — against the basis' own Haar measure `e.addHaar` it does not
+  depend on the basis either (`apply_basis_eq_mul_det`, `addHaar_basis_eq_smul`): the measure of a
+  top form is canonical;
 * ★ `chartMeasure_preimage_eq` and ★★ `topFormMeasure_map_eq` —
   **invariance**: a homeomorphism whose chart expressions are differentiable and pull the local
   representative at the target chart back to the local representative at the source chart
@@ -299,6 +302,78 @@ theorem topFormMeasure_congr_cover (c c' : ChartCover E M) :
       (fun x hx => c'.piece_subset i hx.2)]
 
 /-! ### Invariance under a form-preserving homeomorphism -/
+
+/-! ### The basis' own Haar measure: the measure of a top form is canonical
+
+`topFormMeasure μ e s c` takes a Haar measure `μ` on the model and a basis `e`, and the chart
+density is `|s(e)| dμ`. Against the basis' own Haar measure `e.addHaar` (the one giving `e`'s
+parallelepiped mass `1`) the result does not depend on `e`: a change of basis multiplies the
+coefficient by the determinant (`apply_basis_eq_mul_det`) and divides the Haar measure by its
+absolute value (`addHaar_basis_eq_smul`), and the two cancel (`topFormMeasure_addHaar_basis`).
+That is the intrinsic measure of a top form, with no choice left in it. -/
+
+section Canonical
+
+variable [SecondCountableTopology E]
+
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [SecondCountableTopology E] in
+/-- The coefficient of an alternating form against a second basis: `f b' = f b * b.det b'`
+(`AlternatingMap.eq_smul_basis_det`). -/
+theorem apply_basis_eq_mul_det (f : E [⋀^ι]→L[ℝ] ℝ) (b b' : Module.Basis ι ℝ E) :
+    f b' = f b * b.det b' := by
+  have h := congrArg (fun g : E [⋀^ι]→ₗ[ℝ] ℝ => g b')
+    (AlternatingMap.eq_smul_basis_det (e := b) f.toAlternatingMap)
+  simpa only [ContinuousAlternatingMap.coe_toAlternatingMap, AlternatingMap.smul_apply,
+    smul_eq_mul] using h
+
+/-- The Haar measure of `b'` in terms of that of `b`: `b'.addHaar = |b.det b'|⁻¹ • b.addHaar`
+(both give their own parallelepiped mass `1`, and `b.addHaar` gives `b'`'s mass `|b.det b'|`). -/
+theorem addHaar_basis_eq_smul (b b' : Module.Basis ι ℝ E) :
+    b'.addHaar = (ENNReal.ofReal |b.det b'|)⁻¹ • b.addHaar := by
+  have hc : ENNReal.ofReal |b.det b'| ≠ 0 := by
+    rw [ne_eq, ENNReal.ofReal_eq_zero, not_le]
+    exact abs_pos.mpr (b.isUnit_det b').ne_zero
+  have : Measure.IsAddHaarMeasure ((ENNReal.ofReal |b.det b'|)⁻¹ • b.addHaar) :=
+    Measure.IsAddHaarMeasure.smul b.addHaar (ENNReal.inv_ne_zero.mpr ENNReal.ofReal_ne_top)
+      (ENNReal.inv_ne_top.mpr hc)
+  rw [Module.Basis.addHaar_eq_iff, Measure.smul_apply, smul_eq_mul,
+    Module.Basis.coe_parallelepiped, Measure.addHaar_parallelepiped,
+    ENNReal.inv_mul_cancel hc ENNReal.ofReal_ne_top]
+
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [SecondCountableTopology E]
+  [MeasurableSpace M] [BorelSpace M] in
+/-- The chart density against `b'` is `|b.det b'|` times the chart density against `b`. -/
+theorem chartDensity_basis (b b' : Module.Basis ι ℝ E) (x₀ : M) (w : E) :
+    chartDensity b' s x₀ w = ENNReal.ofReal |b.det b'| * chartDensity b s x₀ w := by
+  unfold chartDensity
+  rw [apply_basis_eq_mul_det (localRep s x₀ w) b b', abs_mul, ENNReal.ofReal_mul (abs_nonneg _),
+    mul_comm]
+
+omit [BorelSpace M] in
+/-- The chart measure against the basis' own Haar measure does not depend on the basis. -/
+theorem chartMeasure_addHaar_basis (b b' : Module.Basis ι ℝ E) (x₀ : M) :
+    chartMeasure b'.addHaar b' s x₀ = chartMeasure b.addHaar b s x₀ := by
+  have hc : ENNReal.ofReal |b.det b'| ≠ 0 := by
+    rw [ne_eq, ENNReal.ofReal_eq_zero, not_le]
+    exact abs_pos.mpr (b.isUnit_det b').ne_zero
+  have hd : chartDensity b' s x₀ = ENNReal.ofReal |b.det b'| • chartDensity b s x₀ :=
+    funext fun w => by rw [Pi.smul_apply, smul_eq_mul, chartDensity_basis s b b' x₀ w]
+  unfold chartMeasure
+  rw [addHaar_basis_eq_smul b b', Measure.restrict_smul, withDensity_smul_measure, hd,
+    withDensity_smul' _ _ ENNReal.ofReal_ne_top, smul_smul,
+    ENNReal.inv_mul_cancel hc ENNReal.ofReal_ne_top, one_smul]
+
+omit [BorelSpace M] in
+/-- ★ **The measure of a top form is canonical**: against the basis' own Haar measure the glued
+measure does not depend on the basis. -/
+theorem topFormMeasure_addHaar_basis (b b' : Module.Basis ι ℝ E) (c : ChartCover E M) :
+    topFormMeasure b'.addHaar b' s c = topFormMeasure b.addHaar b s c := by
+  unfold topFormMeasure
+  congr 1
+  funext i
+  rw [chartMeasure_addHaar_basis s b b']
+
+end Canonical
 
 /-- ★ **A chart measure under a form-preserving map.** If `g` is bijective, differentiable in the
 charts at `x₀` and `z`, and its chart expression pulls the local representative at `z` back to the

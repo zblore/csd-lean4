@@ -411,7 +411,7 @@ theorem extDeriv_fsModelForm (w : Fin n → ℂ) : extDeriv (fsModelForm (n := n
 
 /-- ★★★ **The Fubini–Study form is closed on `ℂℙⁿ`**, pointwise: in the chart at `x` its local
 representative is the flat chart form, whose flat `d` is zero. -/
-theorem mextDeriv_fsSection (x : ℙ ℂ (Ambient n)) : mextDeriv fsSection x = 0 := by
+theorem mextDerivFamily_fsSection (x : ℙ ℂ (Ambient n)) : mextDerivFamily fsSection x = 0 := by
   show extDeriv (localRep fsSection x) (chartAt (Fin n → ℂ) x x) = 0
   have hev : localRep fsSection x =ᶠ[𝓝 (chartAt (Fin n → ℂ) x x)] fsModelForm := by
     filter_upwards [(chartAt (Fin n → ℂ) x).open_target.mem_nhds (mem_chart_target _ x)] with w hw
@@ -427,7 +427,7 @@ theorem mextDeriv_fsSection (x : ℙ ℂ (Ambient n)) : mextDeriv fsSection x = 
 theorem fsForm_mextDeriv : (fsForm (n := n)).mextDeriv = 0 := by
   apply ContMDiffSection.ext
   intro x
-  exact mextDeriv_fsSection x
+  exact mextDerivFamily_fsSection x
 
 end Closed
 

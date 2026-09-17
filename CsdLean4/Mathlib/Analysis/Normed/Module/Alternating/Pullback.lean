@@ -76,9 +76,11 @@ instance? — was one `rfl` away and was not run.*
 
 ⚠️ **The original, incorrect note.**
 The coordinate change of the alternating bundle decomposes as
-`compContinuousAlternatingMapL (e₂.coordChangeL b) ∘L compContinuousLinearMapCLM (e₁'.coordChangeL b)`
+`compContinuousAlternatingMapCLM 𝕜 _ _ _ ι (e₂.coordChangeL b) ∘L
+  compContinuousLinearMapCLM (e₁'.coordChangeL b)`
 — and that decomposition is **`rfl`**, checked. With `contDiff_compContinuousLinearMapCLM` and
-`compContinuousAlternatingMapL` (both here) the `ContMDiffOn` proof is then the same three
+Mathlib's `ContinuousLinearMap.compContinuousAlternatingMapCLM` (until 2026-09-16 this file
+re-built it as `compContinuousAlternatingMapL`) the `ContMDiffOn` proof is then the same three
 lines as `Hom.lean`'s. What blocks it is an **instance-path mismatch**: feeding those bundled
 maps to `ContinuousLinearMap.contDiff` elaborates the operator and alternating spaces on the
 *topological-module* instances (`ContinuousLinearMap.topologicalSpace`,
@@ -277,23 +279,3 @@ theorem contDiff_compContinuousLinearMapCLM {n : WithTop ℕ∞} :
   exact contDiff_const.clm_comp (hM.clm_comp contDiff_const)
 
 end ContinuousAlternatingMap
-
-namespace ContinuousLinearMap
-variable {𝕜 ι E F G : Type*} [NontriviallyNormedField 𝕜] [Fintype ι]
-  [NormedAddCommGroup E] [NormedSpace 𝕜 E] [NormedAddCommGroup F] [NormedSpace 𝕜 F]
-  [NormedAddCommGroup G] [NormedSpace 𝕜 G]
-
-/-- Postcomposition of continuous alternating maps, as a continuous linear map in the
-normed setting. -/
-noncomputable def compContinuousAlternatingMapL :
-    (F →L[𝕜] G) →L[𝕜] ((E [⋀^ι]→L[𝕜] F) →L[𝕜] (E [⋀^ι]→L[𝕜] G)) :=
-  LinearMap.mkContinuous₂
-    (LinearMap.mk₂ 𝕜
-      (fun (g : F →L[𝕜] G) (f : E [⋀^ι]→L[𝕜] F) => g.compContinuousAlternatingMap f)
-      (fun g₁ g₂ f => by ext v; simp)
-      (fun c g f => by ext v; simp)
-      (fun g f₁ f₂ => by ext v; simp)
-      (fun c g f => by ext v; simp))
-    1 (fun g f => by simpa using norm_compContinuousAlternatingMap_le g f)
-
-end ContinuousLinearMap

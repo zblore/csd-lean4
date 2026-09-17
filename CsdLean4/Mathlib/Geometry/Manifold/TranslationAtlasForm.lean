@@ -150,8 +150,8 @@ def constForm (ξ : E [⋀^ι]→L[ℝ] G) : DifferentialForm 𝓘(ℝ, E) M ∞
 
 /-- The constant form is closed, pointwise: its local representative near the chart image of
 `x` is the constant, whose flat `d` is zero. -/
-theorem mextDeriv_constFamily {k : ℕ} (ξ : E [⋀^Fin k]→L[ℝ] G) (x : M) :
-    _root_.mextDeriv (constFamily ξ : ∀ x : M, TangentSpace 𝓘(ℝ, E) x [⋀^Fin k]→L[ℝ]
+theorem mextDerivFamily_constFamily {k : ℕ} (ξ : E [⋀^Fin k]→L[ℝ] G) (x : M) :
+    mextDerivFamily (constFamily ξ : ∀ x : M, TangentSpace 𝓘(ℝ, E) x [⋀^Fin k]→L[ℝ]
       Bundle.Trivial M G x) x = 0 := by
   show extDeriv (localRep (constFamily ξ) x) (chartAt E x x) = 0
   have hev : localRep (constFamily ξ) x =ᶠ[𝓝 (chartAt E x x)] fun _ => ξ := by
@@ -165,7 +165,7 @@ theorem constForm_mextDeriv {k : ℕ} (ξ : E [⋀^Fin k]→L[ℝ] G) :
     (constForm (M := M) ξ).mextDeriv = 0 := by
   apply ContMDiffSection.ext
   intro x
-  exact mextDeriv_constFamily ξ x
+  exact mextDerivFamily_constFamily ξ x
 
 end DifferentialForm
 

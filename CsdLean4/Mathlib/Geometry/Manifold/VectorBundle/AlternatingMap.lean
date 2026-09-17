@@ -28,7 +28,8 @@ MATHLIB-ABSENT(ContMDiffVectorBundle.continuousAlternatingMap)
 The proof mirrors `Hom.lean` exactly once the coordinate change is available, and the
 coordinate change decomposes — **by `rfl`** — as postcomposition after pullback:
 
-    compContinuousAlternatingMapL (e₂.coordChangeL b) ∘L compContinuousLinearMapCLM (e₁'.coordChangeL b)
+    compContinuousAlternatingMapCLM (e₂.coordChangeL b)
+      ∘L compContinuousLinearMapCLM (e₁'.coordChangeL b)
 
 with both factors smooth by
 [`Analysis/Normed/Module/Alternating/Pullback.lean`](../../../Analysis/Normed/Module/Alternating/Pullback.lean).
@@ -40,12 +41,12 @@ The first attempt at the coordinate-change lemma failed and was recorded — wro
 continuous-linear-map space **are the same instance** (`inferInstance = ContinuousLinearMap.topologicalSpace`
 by `rfl`, checked). What fails is **elaboration order**: writing
 
-    have h : ContDiff 𝕜 n (fun L : F₂ →L[𝕜] F₂ => (compContinuousAlternatingMapL L : … →L[𝕜] …))
+    have h : ContDiff 𝕜 n (fun L : F₂ →L[𝕜] F₂ => (compContinuousAlternatingMapCLM L : … →L[𝕜] …))
 
 re-synthesises the instances from the *ascription* and lands on the normed path, while the
 term carries the topological-module path; the application check then runs at reducible
 transparency and does not unfold them. Stating the same fact **through the term** —
-`ContDiff 𝕜 n ⇑(compContinuousAlternatingMapL …)` — typechecks immediately. That is the whole
+`ContDiff 𝕜 n ⇑(compContinuousAlternatingMapCLM …)` — typechecks immediately. That is the whole
 fix, and it is why this module states its two `ContDiff` hypotheses in that shape.
 
 ## Honest scope
@@ -95,15 +96,14 @@ theorem contMDiffOn_continuousAlternatingMapCoordChange
   have h₁ := contMDiffOn_coordChangeL (IB := IB) e₁' e₁ (n := n)
   have h₂ := contMDiffOn_coordChangeL (IB := IB) e₂ e₂' (n := n)
   have hpost : ContDiff 𝕜 n
-      ⇑(ContinuousLinearMap.compContinuousAlternatingMapL
-          (𝕜 := 𝕜) (E := F₁) (F := F₂) (G := F₂) (ι := ι)) :=
+      ⇑(ContinuousLinearMap.compContinuousAlternatingMapCLM 𝕜 F₁ F₂ F₂ ι) :=
     ContinuousLinearMap.contDiff _
   have hpre : ContDiff 𝕜 n (fun g : F₁ →L[𝕜] F₁ =>
       (ContinuousAlternatingMap.compContinuousLinearMapCLM g :
         (F₁ [⋀^ι]→L[𝕜] F₂) →L[𝕜] (F₁ [⋀^ι]→L[𝕜] F₂))) :=
     ContinuousAlternatingMap.contDiff_compContinuousLinearMapCLM
   have key : ∀ b, continuousAlternatingMapCoordChange 𝕜 ι e₁ e₁' e₂ e₂' b
-      = (ContinuousLinearMap.compContinuousAlternatingMapL (E := F₁) (ι := ι)
+      = (ContinuousLinearMap.compContinuousAlternatingMapCLM 𝕜 F₁ F₂ F₂ ι
             (e₂.coordChangeL 𝕜 e₂' b : F₂ →L[𝕜] F₂)).comp
           (ContinuousAlternatingMap.compContinuousLinearMapCLM
             (e₁'.coordChangeL 𝕜 e₁ b : F₁ →L[𝕜] F₁)) := fun b => rfl

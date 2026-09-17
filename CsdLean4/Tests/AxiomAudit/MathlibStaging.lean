@@ -1363,8 +1363,8 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_subspaceRays' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_subspaceRays
 
-/-- info: 'Projectivization.instMeasurableSingletonClass' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Projectivization.instMeasurableSingletonClass
+-- Projectivization.instMeasurableSingletonClass removed 2026-09-16 (Mathlib's
+-- OpensMeasurableSpace.toMeasurableSingletonClass covers it).
 
 /-- info: 'Projectivization.borel_eq_map_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.borel_eq_map_mk'
@@ -1479,21 +1479,7 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Matrix.UnitaryGroup.instBorelSpace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.instBorelSpace
 
-/-- info: 'Matrix.UnitaryGroup.unitaryHaar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Matrix.UnitaryGroup.unitaryHaar
-
-/-- info: 'Matrix.UnitaryGroup.unitaryHaar_isHaarMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Matrix.UnitaryGroup.unitaryHaar_isHaarMeasure
-
-/-- info: 'Matrix.UnitaryGroup.instIsFiniteMeasureUnitaryHaar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Matrix.UnitaryGroup.instIsFiniteMeasureUnitaryHaar
-
-/-- info: 'Matrix.UnitaryGroup.unitaryHaar_univ_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Matrix.UnitaryGroup.unitaryHaar_univ_ne_zero
-
-/-- info: 'Matrix.UnitaryGroup.unitaryHaar_univ_ne_top' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Matrix.UnitaryGroup.unitaryHaar_univ_ne_top
-
+-- unitaryHaar and its four lemmas removed 2026-09-16: unitaryHaarProb is Mathlib's haarMeasure ⊤ directly.
 /-- info: 'Matrix.UnitaryGroup.unitaryHaarProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.unitaryHaarProb
 
@@ -1583,8 +1569,10 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 -- ℝ-bilinear, J-compatibility ω u v = g(Ju) v, dual g u v = ω u (Jv), ω J-invariant (a (1,1)-form),
 -- positivity ω u (Ju) = ‖u‖². This is the "compatible with J + positive" half of Kähler. Closedness dω=0
 -- and the global ω^∧n/n! = μ_FS need manifold exterior calculus (absent from Mathlib) and stay blocked.
-/-- info: 'Kahler.fubiniStudy_pointwise_kahler_compatibility' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms Kahler.fubiniStudy_pointwise_kahler_compatibility
+-- Kahler.fubiniStudy_pointwise_kahler_compatibility removed 2026-09-16 (conjunction capstone; the conjuncts are pinned).
+
+/-- info: 'Kahler.metric_eq_real_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Kahler.metric_eq_real_inner
 
 /-- info: 'Kahler.fundamentalForm_eq_metric_complexStructure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Kahler.fundamentalForm_eq_metric_complexStructure
@@ -1601,8 +1589,7 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 -- Tangent-space tie (2026-07-11): the projective tangent model ψ^⊥ = (span ℂ {ψ})ᗮ is J-invariant, so
 -- it is a complex subspace on which the pointwise Kähler triple restricts — the flat form INDUCES the
 -- Fubini–Study structure on each tangent space of ℂℙ^{N-1} (still pointwise; no manifold needed).
-/-- info: 'Kahler.tangent_complexStructure_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms Kahler.tangent_complexStructure_invariant
+-- Kahler.tangent_complexStructure_invariant removed 2026-09-16 (conjunction capstone; the conjuncts are pinned).
 
 -- Schrödinger flow = Kähler symplectomorphism (2026-07-11): ties the pointwise Kähler form to the
 -- Schrödinger pillar. Any ℂ-linear isometry preserves g = re⟪·,·⟫ and ω = im⟪·,·⟫
@@ -1610,8 +1597,7 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 -- metric AND symplectic form — QM evolution is a symplectic isometry of the CP^{N-1} Kähler geometry
 -- (Kibble/Ashtekar–Schilling picture, pointwise/linear level). The converse X_H = ω⁻¹dH (KG-2) stays
 -- Mathlib-blocked (manifold symplectic-gradient API).
-/-- info: 'Kahler.kahler_structure_isometry_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms Kahler.kahler_structure_isometry_invariant
+-- Kahler.kahler_structure_isometry_invariant removed 2026-09-16 (conjunction capstone; the conjuncts are pinned).
 
 -- `whitespace := lax` because the long theorem names push the axiom list
 -- past the pretty-printer width, wrapping it across lines; lax collapses
@@ -3249,9 +3235,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ContinuousAlternatingMap.contDiff_compContinuousLinearMapCLM
 
-/-- info: 'ContinuousLinearMap.compContinuousAlternatingMapL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms ContinuousLinearMap.compContinuousAlternatingMapL
+-- ContinuousLinearMap.compContinuousAlternatingMapL removed 2026-09-16 (Mathlib's
+-- compContinuousAlternatingMapCLM is the same map).
 
 /-! ### The alternating-map bundle is a `C^n` vector bundle (VectorBundle/AlternatingMap.lean) -/
 
@@ -3485,7 +3470,7 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- normed space (L_X omega = d(iota_X omega) + iota_X d omega, from extDeriv_apply), and for the
 -- local representative of a symplectic form along its local Hamiltonian vector both terms
 -- vanish (iota_X omega_loc = d(H o chart^-1) so d of it is d d = 0; d omega_loc = 0 from closedness
--- through localRep_mextDeriv): the flat Lie derivative is zero on the chart's target.
+-- through localRep_mextDerivFamily): the flat Lie derivative is zero on the chart's target.
 /-- info: 'flatInteriorProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms flatInteriorProduct
@@ -3711,10 +3696,10 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- ★★ STEP (2b) -- upstream's own TODO -- route A of specs/exterior-derivative-scoping.md, built
 -- the same evening the Fubini-Study section landed, because the section's local-representative
 -- identity IS route A's step 3.1 for one form. `mextDeriv s x` is the flat `extDeriv` of the local
--- representative of `s` in the chart at `x`; `localRep_mextDeriv` says the local representative
+-- representative of `s` in the chart at `x`; `localRep_mextDerivFamily` says the local representative
 -- of `d s` in EVERY chart is the flat `d` of the local representative of `s` (extDeriv_pullback on
 -- the chart transition + the tangent-bundle cocycle), which is chart-independence in the only
--- form a consumer needs; `contMDiff_mextDeriv` makes `d` iterate; `mextDeriv_mextDeriv` is
+-- form a consumer needs; `contMDiff_mextDerivFamily` makes `d` iterate; `mextDeriv_mextDeriv` is
 -- `d ∘ d = 0`. Scope: real boundaryless model 𝓘(ℝ, E), smoothness ∞, degrees Fin k -- the
 -- finite-dimensional real manifolds the corpus uses, and none of the C^n / corners bookkeeping.
 -- ⚠️ No Palais formula, no naturality under maps of manifolds, no Leibniz rule (needs the wedge
@@ -3744,9 +3729,9 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms fderiv_chart_transition_comp
 
-/-- info: 'DifferentialForm.toFlat_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'DifferentialForm.toFlat_mextDerivFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms DifferentialForm.toFlat_mextDeriv
+#print axioms DifferentialForm.toFlat_mextDerivFamily
 
 /-- info: 'DifferentialForm.trivializationAt_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -3760,17 +3745,17 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.contDiffAt_localRep
 
-/-- info: 'DifferentialForm.localRep_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'DifferentialForm.localRep_mextDerivFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms DifferentialForm.localRep_mextDeriv
+#print axioms DifferentialForm.localRep_mextDerivFamily
 
-/-- info: 'contMDiff_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'contMDiff_mextDerivFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms contMDiff_mextDeriv
+#print axioms contMDiff_mextDerivFamily
 
-/-- info: 'mextDeriv_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'mextDerivFamily_mextDerivFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms mextDeriv_mextDeriv
+#print axioms mextDerivFamily_mextDerivFamily
 
 /-- info: 'DifferentialForm.mextDeriv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -3790,9 +3775,9 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.extDeriv_fsModelForm
 
-/-- info: 'Projectivization.mextDeriv_fsSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Projectivization.mextDerivFamily_fsSection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.mextDeriv_fsSection
+#print axioms Projectivization.mextDerivFamily_fsSection
 
 /-- info: 'Projectivization.fsForm_mextDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -3908,6 +3893,27 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'DifferentialForm.topFormMeasure_congr_cover' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.topFormMeasure_congr_cover
+
+-- B12 (2026-09-16): the measure of a top form against the basis' own Haar measure is canonical.
+/-- info: 'DifferentialForm.apply_basis_eq_mul_det' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.apply_basis_eq_mul_det
+
+/-- info: 'DifferentialForm.addHaar_basis_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.addHaar_basis_eq_smul
+
+/-- info: 'DifferentialForm.chartDensity_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.chartDensity_basis
+
+/-- info: 'DifferentialForm.chartMeasure_addHaar_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.chartMeasure_addHaar_basis
+
+/-- info: 'DifferentialForm.topFormMeasure_addHaar_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.topFormMeasure_addHaar_basis
 
 /-- info: 'Projectivization.affineChartCover_m' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4761,7 +4767,7 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- header listed as "not here": zeroFormFamily f (a function as a 0-form family, x ↦ constOfIsEmpty
 -- (f x)), its local representative (the function read in the chart, via trivializationAt_snd —
 -- compContinuousLinearMap is invisible on an empty index), its smoothness as a section
--- (contMDiffAt_section + constOfIsEmptyLIE ∘ f), and ★ toFlat_mextDeriv_zeroFormFamily: d of a
+-- (contMDiffAt_section + constOfIsEmptyLIE ∘ f), and ★ toFlat_mextDerivFamily_zeroFormFamily: d of a
 -- 0-form IS its differential, (df)_x = ofSubsingleton 0 (mfderiv f x), transported from Mathlib's
 -- extDeriv_constOfIsEmpty with the chart bridge MDifferentiableAt.mfderiv + writtenInExtChartAt on
 -- the boundaryless model. Then ★ IsHamiltonianVectorField.isLocallyHamiltonian: ι_X α = dH as
@@ -4781,9 +4787,9 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.contMDiff_zeroFormFamily
 
-/-- info: 'DifferentialForm.toFlat_mextDeriv_zeroFormFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'DifferentialForm.toFlat_mextDerivFamily_zeroFormFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms DifferentialForm.toFlat_mextDeriv_zeroFormFamily
+#print axioms DifferentialForm.toFlat_mextDerivFamily_zeroFormFamily
 
 /-- info: 'DifferentialForm.toFlat_mextDeriv_zeroForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -5378,18 +5384,8 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.contMDiff_omega_hamiltonianVectorField
 
-/-- info: 'Projectivization.contDiff_omega_schrodingerChartHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms Projectivization.contDiff_omega_schrodingerChartHam
-
-/-- info: 'Projectivization.contMDiff_omega_schrodingerHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms Projectivization.contMDiff_omega_schrodingerHamiltonian
-
-/-- info: 'Projectivization.contMDiff_omega_torusHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms Projectivization.contMDiff_omega_torusHamiltonian
-
+-- The three ω Hamiltonian twins were merged into the order-generic contDiff_schrodingerChartHam /
+-- contMDiff_schrodingerHamiltonian / contMDiff_torusHamiltonian on 2026-09-16 (pinned above).
 /-- info: 'Projectivization.contMDiff_omega_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.contMDiff_omega_schrodingerField

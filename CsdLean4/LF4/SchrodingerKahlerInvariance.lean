@@ -39,7 +39,7 @@ It does **NOT** derive the flow FROM the form (the Hamiltonian-vector-field stat
 (MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)) and stays
 blocked. This module proves the invariance (a symmetry of `ω`), not the generation. It is at the
 Hilbert-vector level; the descent to the ray-level FS form rides on the tangent-space `J`-invariance
-(`Kahler.tangent_complexStructure_invariant`).
+(`Kahler.complexStructure_mem_orthogonal`).
 -/
 
 @[expose] public section

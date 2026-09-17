@@ -104,7 +104,8 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
 `ω` any family; the predicates neither assert nor need smoothness. Smoothness is a separate
 theorem (G3) about the constructed field, under `C^∞` hypotheses on `ω` and `H`.
 
-⚠️ **`IsLocallyHamiltonian` is stated on families.** It applies `mextDeriv` to `ι_X α`, which is
+⚠️ **`IsLocallyHamiltonian` is stated on families.** It applies `mextDerivFamily` to `ι_X α`,
+which is
 meaningful when that family is smooth — and for `hamiltonianVectorField` of a `C^∞` energy it now
 is (G3) — and junk otherwise, exactly as `fderiv` of a non-differentiable function is junk.
 
@@ -131,8 +132,8 @@ decides it. Nothing here touches that.
 
 **Provenance and references.** The generator-layer plan (G1, G2, G3, G4, G7, G8, G11, G14a, G14b, G15, G19);
 `Mathlib/Geometry/Manifold/VectorField/LieBracket.lean` (`mlieBracket`, `mlieBracketWithin_apply`); `Geometry/Manifold/SymplecticForm.lean`
-(`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`, `zeroFormFamily`,
-`toFlat_mextDeriv_zeroFormFamily`, `mextDeriv_mextDeriv`);
+(`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDerivFamily`, `zeroFormFamily`,
+`toFlat_mextDerivFamily_zeroFormFamily`, `mextDeriv_mextDeriv`);
 `Analysis/InnerProductSpace/HamiltonianVectorField.lean` (the linear duality this lifts);
 `RecordLayer/CellLawForced.lean` (`IsPhaseHamiltonian`, the linear moment-map equation);
 `Mathlib/Analysis/Normed/Module/Alternating/Curry.lean`;
@@ -397,7 +398,7 @@ variable [IsManifold (modelWithCornersSelf ℝ E) ∞ M]
 the family is smooth (brick G3); the distinction from `IsHamiltonianVectorField` is exactly the
 flux obstruction. -/
 def IsLocallyHamiltonian (X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x) : Prop :=
-  ∀ x : M, _root_.mextDeriv (interiorProduct α X) x = 0
+  ∀ x : M, mextDerivFamily (interiorProduct α X) x = 0
 
 /-- ★ **The Hamiltonian vector field of `H` for a symplectic form is unique.** -/
 theorem IsHamiltonianVectorField.unique_of_isSymplectic
@@ -416,15 +417,15 @@ variable {α} {X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : 
 /-- `ι_X α = dH` as `1`-form families, with `dH` the exterior derivative of the `0`-form `H`. -/
 theorem interiorProduct_eq_mextDeriv_zeroFormFamily (h : IsHamiltonianVectorField α X H)
     (hH : ∀ x, MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x) :
-    interiorProduct α X = _root_.mextDeriv (zeroFormFamily (E := E) H) := by
+    interiorProduct α X = mextDerivFamily (zeroFormFamily (E := E) H) := by
   funext x
   refine ContinuousAlternatingMap.ext fun v => ?_
   have h1 : (interiorProduct α X x v : ℝ)
       = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x (v 0) :=
     h.interiorProduct_eq x v
-  have h2 : toFlat (_root_.mextDeriv (zeroFormFamily (E := E) H) x) v
+  have h2 : toFlat (mextDerivFamily (zeroFormFamily (E := E) H) x) v
       = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x (v 0) := by
-    rw [toFlat_mextDeriv_zeroFormFamily (E := E) (hH x)]
+    rw [toFlat_mextDerivFamily_zeroFormFamily (E := E) (hH x)]
     exact ContinuousAlternatingMap.ofSubsingleton_apply_apply ℝ E ℝ (0 : Fin 1) _ v
   exact h1.trans h2.symm
 
@@ -434,7 +435,7 @@ theorem isLocallyHamiltonian (h : IsHamiltonianVectorField α X H)
     IsLocallyHamiltonian α X := by
   intro x
   rw [h.interiorProduct_eq_mextDeriv_zeroFormFamily fun x => (hH x).mdifferentiableAt (by simp)]
-  exact _root_.mextDeriv_mextDeriv _ (contMDiff_zeroFormFamily hH) x
+  exact mextDerivFamily_mextDerivFamily _ (contMDiff_zeroFormFamily hH) x
 
 end IsHamiltonianVectorField
 

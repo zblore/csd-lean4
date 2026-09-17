@@ -197,7 +197,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- Kähler pointwise core (de-vacuumed 2026-07-19; field made CONCRETE 2026-08-06, F-04: the structure
 -- field is now kahler_pointwise : IsFubiniStudyKahler N) -- the pointwise Fubini-Study Kähler-compatibility
 -- triple (J²=-1, ω=g∘J, g=ω∘J, ω a (1,1)-form, ω u (Ju)=‖u‖²), PROVED axiom-free
--- (fubiniStudy_pointwise_kahler_compatibility). Only the manifold residual (dω=0, top-power volume
+-- (isFubiniStudyKahler). Only the manifold residual (dω=0, top-power volume
 -- identity) stays unformalizable. isFubiniStudyKahler is the discharge.
 /-- info: 'CSD.LF4.isFubiniStudyKahler' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
