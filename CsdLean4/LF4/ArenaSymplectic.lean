@@ -10,6 +10,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.ProductForm
 public import CsdLean4.Mathlib.Geometry.Manifold.TranslationAtlasForm
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyVolume
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianFlowVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerFlow
 
@@ -59,10 +60,9 @@ the generator identity on it.
 `μ_FS ⊗ vol` (`LF4/KahlerInstance.lean`) up to its total mass: `LF4/ArenaVolume.lean` proves
 `arenaVolume N = arenaVolume N univ • kMuL p₀` by uniqueness of the invariant measures
 (`arenaVolume_eq_smul_kMuL`), so Liouville here is Liouville for `kMuL` there
-(`kMuL_smul_map_hamiltonianFlow`). The value of the mass, `(N+1)·(4π)^N`, and with it
-`arenaVolume ≠ 0`, would need the binomial identity
-`(π₁^* α + π₂^* β)^{m+n} = C · π₁^* α^m ∧ π₂^* β^n`, which is not in the corpus
-(`ProductForm.lean`, honest scope; `specs/BACKLOG.md` #32).
+(`kMuL_smul_map_hamiltonianFlow`); the mass is `(N+1)·(4π)^N` (`arenaVolume_univ`), so the
+identification holds with its constant visible (`arenaVolume_eq_ofReal_smul_kMuL`) and Liouville
+holds for `kMuL` itself (`kMuL_map_hamiltonianFlow`).
 
 ⚠️ **The torus stroke is locally Hamiltonian here; its flux obstruction is the next module.**
 `isLocallyHamiltonian_torusStrokeField` is the positive half of
@@ -131,10 +131,11 @@ def arenaChartCover (N : ℕ) : ChartCover (ArenaModel N) (KSigma (N + 1)) :=
   (affineChartCover N).prod
     (AddCircle.translationChartCover.prod AddCircle.translationChartCover)
 
-/-- A real basis of the arena's model, indexed by `Fin (2 * (N + 1))`. -/
+/-- A real basis of the arena's model, indexed by `Fin (2 * (N + 1))`: the standard basis of the
+sector factor followed by the two coordinate vectors of the torus factor (`prodTorusBasis`,
+`Instances/ProjectiveSpaceTorusVolume.lean`). -/
 def arenaBasis (N : ℕ) : Module.Basis (Fin (2 * (N + 1))) ℝ (ArenaModel N) :=
-  ((stdBasis N).prod (Module.Basis.finTwoProd ℝ)).reindex
-    (finSumFinEquiv.trans (finCongr (by ring)))
+  prodTorusBasis N
 
 /-- The Haar measure on the arena's model, as the explicit product of the factors' Lebesgue
 measures (instance search does not see `volume` on a product as `Measure.prod`). -/

@@ -18,11 +18,12 @@ public import Mathlib.MeasureTheory.Measure.Haar.Unique
 
 **Category:** 3-Local (the corpus's arena, assembled from Category-1 pieces).
 
-`specs/BACKLOG.md` ▶ OPEN QUEUE #29. `ArenaSymplectic.lean` gave the arena `ℂℙᴺ × T²` its
-symplectic form and the top-form measure `arenaVolume` of `arenaForm^(N+1)`, and proved Liouville
-for that measure; the record layer's Liouville statements live on the corpus's `kMuL = μ_FS ⊗ vol`
-(`KahlerInstance.lean`). This module identifies the two, up to the constant that is the arena
-volume's total mass, by uniqueness rather than by the binomial expansion of the top power:
+`specs/BACKLOG.md` ▶ OPEN QUEUE #29 and #32. `ArenaSymplectic.lean` gave the arena `ℂℙᴺ × T²`
+its symplectic form and the top-form measure `arenaVolume` of `arenaForm^(N+1)`, and proved
+Liouville for that measure; the record layer's Liouville statements live on the corpus's
+`kMuL = μ_FS ⊗ vol` (`KahlerInstance.lean`). This module identifies the two — first up to the
+constant that is the arena volume's total mass, by uniqueness rather than by the binomial expansion
+of the top power (#29), then with the constant computed on one product chart (#32):
 
 * ★ `arenaVolume_map_smul` — **the arena volume is invariant under `U(N+1)` acting on the
   sector**: the action preserves `ω_FS` in charts (`preservesLocalRep_fsForm_smul`), the identity
@@ -36,7 +37,18 @@ volume's total mass, by uniqueness rather than by the binomial expansion of the 
   probability measure, hence `μ_FS` (`fsMeasure_unique`); each torus slice is a
   translation-invariant finite measure on the compact group `T²`, hence a multiple of Haar
   (`isAddInvariant_eq_smul_of_compactSpace`); rectangles then determine the product
-  (`Measure.prod_eq`).
+  (`Measure.prod_eq`);
+* ★ `arenaVolume_chartAt_source` — **the arena volume of the product chart domain at
+  `(origin 0, y₀)` is `(N+1)·(4π)^N`** (`topFormMeasure_prodTorus_chartAt_source`: the flat
+  top power on the product basis is `(N+1)` times the Fubini–Study coefficient, by the weighted
+  pair-tuple count, and the chart integral factorises through Tonelli); `kMuL_chartAt_source` —
+  that domain has full `kMuL` measure (the hyperplane `z₀ = 0` and the two cut points are null);
+* ★★ `arenaVolume_univ` — **the mass of the arena volume is `(N+1)·(4π)^N`**: the identification
+  reads the total mass off the full-measure chart domain; ★ `arenaVolume_ne_zero`;
+* ★★★ `arenaVolume_eq_ofReal_smul_kMuL` — **`arenaVolume = (N+1)·(4π)^N · (μ_FS ⊗ vol_{T²})`**,
+  with the constant visible, and ★★ `kMuL_map_hamiltonianFlow` — **Liouville for `kMuL` itself**:
+  the Hamiltonian flow of every smooth `H` on the arena preserves `μ_FS ⊗ vol_{T²}`,
+  unconditionally.
 
 So Liouville on the arena (`arenaVolume_map_hamiltonianFlow`) is Liouville for the corpus's
 `kMuL`, and the flow of every sector energy, in particular the Schrödinger flow
@@ -44,13 +56,16 @@ So Liouville on the arena (`arenaVolume_map_hamiltonianFlow`) is Liouville for t
 
 ## Honest scope
 
-⚠️ **The constant is the total mass, not `(N+1)·(4π)^N`.** `arenaVolume_eq_smul_kMuL` reads
-`arenaVolume N = arenaVolume N univ • kMuL p₀`; the constant is finite
-(`isFiniteMeasure_arenaVolume`) but its value, and with it the non-vanishing of `arenaVolume`,
-is not computed here. Both follow from the binomial identity
-`(π₁^* α + π₂^* β)^{N+1} = (N+1) · π₁^* α^N ∧ π₂^* β` for the flat top power, which is not in the
-corpus (`ProductForm.lean`, honest scope). If `arenaVolume N = 0` the identity holds with `c = 0`;
-that case is not excluded here.
+⚠️ **The constant is convention-bound**, exactly as `fsVolume_univ`'s `(4π)^N` is
+(`ProjectiveSpaceFubiniStudyMass.lean`, honest scope): it is the mass of the top power of
+`arenaForm` against Lebesgue measure on the model, with `fsChartForm`'s factor `-4` and the wedge's
+own normalisation; the orientation convention is the `|·|` of `topFormMeasure`'s density.
+
+⚠️ **The mass is read off one chart through the identification**, not by a null-set argument on
+the product: `topFormMeasure_prodTorus_chartAt_source` gives the chart domain, and
+`arenaVolume_eq_smul_kMuL` (uniqueness) transports it to the whole arena because the domain has
+full `kMuL` measure. The general product identity for top-power measures is still not proved
+(`ProductForm.lean`, honest scope).
 
 ⚠️ **Invariance is proved for the two group actions the identification needs**, `U(N+1) × id`
 and `id × T²`; no other symplectomorphism of the arena is read in charts.
@@ -58,8 +73,11 @@ and `id × T²`; no other symplectomorphism of the arena is read in charts.
 References: `LF4/ArenaSymplectic.lean` (`arenaVolume`, Liouville on the arena);
 `LF4/KahlerInstance.lean` (`kMuL`); `LF4/KahlerVolumeForced.lean`
 (`manyToOneSetup_liouville_eq_product`); `Geometry/Manifold/FormInvariance.lean`;
+`Geometry/Manifold/Instances/ProjectiveSpaceTorusVolume.lean`
+(`topFormMeasure_prodTorus_chartAt_source`); `Geometry/Manifold/WedgePowPairs.lean`;
+`Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyMass.lean` (`fsMeasure_chartSource_zero`);
 `LinearAlgebra/Projectivization/FubiniStudyUnique.lean` (`fsMeasure_unique`);
-`Mathlib/MeasureTheory/Measure/Haar/Unique.lean`; `specs/BACKLOG.md` (#29);
+`Mathlib/MeasureTheory/Measure/Haar/Unique.lean`; `specs/BACKLOG.md` (#29, #32);
 `specs/future-work.md`.
 -/
 
@@ -203,6 +221,72 @@ theorem kMuL_smul_map_hamiltonianFlow (N : ℕ) (p₀ : CPN (N + 1)) {H : KSigma
       = arenaVolume N Set.univ • kMuL p₀ := by
   rw [← arenaVolume_eq_smul_kMuL N p₀]
   exact arenaVolume_map_hamiltonianFlow hH t
+
+/-! ### The mass -/
+
+/-- ★ **The arena volume of the product chart domain at `(origin 0, y₀)` is `(N + 1) (4π)^N`**
+(`topFormMeasure_prodTorus_chartAt_source` at `T = T' = 1`). -/
+theorem arenaVolume_chartAt_source (N : ℕ) (y₀ : KTorus) :
+    arenaVolume N (chartAt (ArenaModel N) (origin 0, y₀)).source
+      = ENNReal.ofReal ((N + 1) * (4 * Real.pi) ^ N) := by
+  have h := topFormMeasure_prodTorus_chartAt_source (n := N) (T := 1) (T' := 1)
+    (arenaChartCover N) y₀
+  rw [mul_one, mul_one] at h
+  exact h
+
+/-- The product chart domain at `(origin 0, y₀)` has full `kMuL` measure: the hyperplane
+`z₀ = 0` is `μ_FS`-null (`fsMeasure_chartSource_zero`) and the two cut points are `vol`-null
+(`AddCircle.volume_compl_singleton`). -/
+theorem kMuL_chartAt_source (N : ℕ) (p₀ : CPN (N + 1)) (y₀ : KTorus) :
+    kMuL p₀ (chartAt (ArenaModel N) (origin 0, y₀)).source = 1 := by
+  obtain ⟨y₁, y₂⟩ := y₀
+  rw [kMuL, Prod.chartAt_prod_source, Measure.prod_prod, chartAt_origin_source,
+    fsMeasure_chartSource_zero, one_mul, Prod.chartAt_prod_source, Measure.volume_eq_prod,
+    Measure.prod_prod,
+    AddCircle.chartAt_eq, AddCircle.chartAt_eq, AddCircle.translationChart_source,
+    AddCircle.translationChart_source, AddCircle.volume_compl_singleton,
+    AddCircle.volume_compl_singleton, ENNReal.ofReal_one, mul_one]
+
+/-- ★★ **The mass of the arena volume is `(N + 1) (4π)^N`.** By the identification
+`arenaVolume_eq_smul_kMuL`, the arena volume of a chart domain of full `kMuL` measure is the
+total mass. -/
+theorem arenaVolume_univ (N : ℕ) :
+    arenaVolume N Set.univ = ENNReal.ofReal ((N + 1) * (4 * Real.pi) ^ N) := by
+  have hS := arenaVolume_chartAt_source N 0
+  rw [arenaVolume_eq_smul_kMuL N (origin 0), Measure.smul_apply, smul_eq_mul,
+    kMuL_chartAt_source, mul_one] at hS
+  exact hS
+
+/-- ★ **The arena volume is nonzero.** -/
+theorem arenaVolume_ne_zero (N : ℕ) : arenaVolume N ≠ 0 := by
+  intro h
+  have h0 := arenaVolume_univ N
+  rw [h, Measure.coe_zero, Pi.zero_apply] at h0
+  exact absurd h0.symm (ENNReal.ofReal_pos.2 (by positivity)).ne'
+
+/-- ★★★ **`arenaVolume = (N + 1) (4π)^N · (μ_FS ⊗ vol_{T²})`**, with the constant visible, for
+every base point `p₀`. -/
+theorem arenaVolume_eq_ofReal_smul_kMuL (N : ℕ) (p₀ : CPN (N + 1)) :
+    arenaVolume N = ENNReal.ofReal ((N + 1) * (4 * Real.pi) ^ N) • kMuL p₀ := by
+  rw [← arenaVolume_univ]
+  exact arenaVolume_eq_smul_kMuL N p₀
+
+/-- ★★ **Liouville for the corpus's `kMuL` itself, unconditionally**: the Hamiltonian flow of
+every smooth `H` on the arena preserves `μ_FS ⊗ vol_{T²}` (the constant of
+`kMuL_smul_map_hamiltonianFlow` is nonzero and finite, so it cancels). -/
+theorem kMuL_map_hamiltonianFlow (N : ℕ) (p₀ : CPN (N + 1)) {H : KSigma (N + 1) → ℝ}
+    (hH : ContMDiff 𝓘(ℝ, ArenaModel N) 𝓘(ℝ, ℝ) ∞ H) (t : ℝ) :
+    Measure.map ((arenaForm_isSymplectic N).hamiltonianFlow hH t) (kMuL p₀) = kMuL p₀ := by
+  have h := kMuL_smul_map_hamiltonianFlow N p₀ hH t
+  rw [Measure.map_smul] at h
+  have hc0 : arenaVolume N Set.univ ≠ 0 := by
+    rw [arenaVolume_univ]
+    exact (ENNReal.ofReal_pos.2 (by positivity)).ne'
+  have hct : arenaVolume N Set.univ ≠ ⊤ := measure_ne_top _ _
+  ext s hs
+  have hs' := congrArg (fun μ : Measure (KSigma (N + 1)) => μ s) h
+  simp only [Measure.smul_apply, smul_eq_mul] at hs'
+  exact (ENNReal.mul_right_inj hc0 hct).1 hs'
 
 end LF4
 end CSD

@@ -50,6 +50,7 @@ projective-manifold	Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudy
 manifold-forms	Geometry.Manifold.VectorBundle.AlternatingMap
 manifold-forms	Geometry.Manifold.DifferentialForm
 manifold-forms	Geometry.Manifold.WedgeForm
+manifold-forms	Geometry.Manifold.WedgePowPairs
 manifold-forms	Geometry.Manifold.ExteriorDerivative
 manifold-forms	Geometry.Manifold.SymplecticForm
 manifold-forms	Geometry.Manifold.IntegralCurve.GlobalFlow

@@ -4273,6 +4273,15 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms ContinuousAlternatingMap.wedge_mul_apply_pairs
 
+-- The weighted shuffle sum (2026-09-17, #32): pair j contributes its weight c j.
+/-- info: 'ContinuousAlternatingMap.classTerm_pairRep_weighted' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.classTerm_pairRep_weighted
+
+/-- info: 'ContinuousAlternatingMap.wedge_mul_apply_weightedPairs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedge_mul_apply_weightedPairs
+
 -- ContinuousAlternatingMap.continuous_eval_const (a local duplicate of Mathlib's `continuous_eval_const`
 -- via the `ContinuousEvalConst` instance) removed 2026-09-16; nothing to pin.
 
@@ -4296,45 +4305,56 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.im_conj_mul_pairs
 
-/-- info: 'Projectivization.coe_powEquiv_inl' depends on axioms: [propext, Quot.sound] -/
+/-- info: 'ContinuousAlternatingMap.coe_powEquiv_inl' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.coe_powEquiv_inl
+#print axioms ContinuousAlternatingMap.coe_powEquiv_inl
 
-/-- info: 'Projectivization.coe_powEquiv_inr' depends on axioms: [propext, Quot.sound] -/
+/-- info: 'ContinuousAlternatingMap.coe_powEquiv_inr' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.coe_powEquiv_inr
+#print axioms ContinuousAlternatingMap.coe_powEquiv_inr
 
-/-- info: 'Projectivization.pairIdx_powEquiv_inl' depends on axioms: [propext, Quot.sound] -/
+/-- info: 'ContinuousAlternatingMap.pairIdx_powEquiv_inl' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.pairIdx_powEquiv_inl
+#print axioms ContinuousAlternatingMap.pairIdx_powEquiv_inl
 
-/-- info: 'Projectivization.memIdx_powEquiv_inl' depends on axioms: [propext, Quot.sound] -/
+/-- info: 'ContinuousAlternatingMap.memIdx_powEquiv_inl' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.memIdx_powEquiv_inl
+#print axioms ContinuousAlternatingMap.memIdx_powEquiv_inl
 
-/-- info: 'Projectivization.pairIdx_powEquiv_inr' depends on axioms: [propext, Quot.sound] -/
+/-- info: 'ContinuousAlternatingMap.pairIdx_powEquiv_inr' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.pairIdx_powEquiv_inr
+#print axioms ContinuousAlternatingMap.pairIdx_powEquiv_inr
 
-/-- info: 'Projectivization.memIdx_powEquiv_inr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'ContinuousAlternatingMap.memIdx_powEquiv_inr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.memIdx_powEquiv_inr
+#print axioms ContinuousAlternatingMap.memIdx_powEquiv_inr
 
-/-- info: 'Projectivization.pairFamily_powEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+-- WedgePowPairs (2026-09-17, #32): the top power of a real 2-form on a WEIGHTED pair tuple
+-- (β = ± c j within pair j, 0 across pairs) is k! · ∏ c j — the shuffle sum on a weighted pair
+-- family, each pair moved into the last two slots in turn. Foundational triple.
+/-- info: 'ContinuousAlternatingMap.pairIdx_powEquiv' depends on axioms: [propext, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.pairFamily_powEquiv
+#print axioms ContinuousAlternatingMap.pairIdx_powEquiv
 
-/-- info: 'Projectivization.isPairFamily_pairFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'ContinuousAlternatingMap.memIdx_powEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.isPairFamily_pairFamily
+#print axioms ContinuousAlternatingMap.memIdx_powEquiv
 
-/-- info: 'Projectivization.removePair_injective' depends on axioms: [propext] -/
+/-- info: 'ContinuousAlternatingMap.IsWeightedPairTuple.pairRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.removePair_injective
+#print axioms ContinuousAlternatingMap.IsWeightedPairTuple.pairRep
 
-/-- info: 'Projectivization.pairFamily_pairRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'ContinuousAlternatingMap.wedgePow_apply_of_isWeightedPairTuple' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.pairFamily_pairRep
+#print axioms ContinuousAlternatingMap.wedgePow_apply_of_isWeightedPairTuple
+
+/-- info: 'ContinuousAlternatingMap.wedgePow_apply_of_isPairTuple' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.wedgePow_apply_of_isPairTuple
+
+/-- info: 'Projectivization.isWeightedPairTuple_pairFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isWeightedPairTuple_pairFamily
 
 /-- info: 'Projectivization.wedgePow_stdForm_pairFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4464,9 +4484,11 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.normSq_det_fsScale
 
-/-- info: 'Projectivization.wedgePow_fsModelForm_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+-- ★ fsModelForm_eq_comp (2026-09-17, #32): the model form at every w is the pullback of the model
+-- form at the origin along a real linear map of determinant (1 + ‖w‖²)^{-(n+1)}.
+/-- info: 'Projectivization.fsModelForm_eq_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.wedgePow_fsModelForm_single
+#print axioms Projectivization.fsModelForm_eq_comp
 
 /-- info: 'Projectivization.wedgePow_fsModelForm_stdBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4503,6 +4525,53 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Projectivization.fsVolume_eq_smul_fsMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsVolume_eq_smul_fsMeasure
+
+/-- info: 'Projectivization.measurable_chartDensity_fsTopForm_origin_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.measurable_chartDensity_fsTopForm_origin_zero
+
+-- ★ The hyperplane z₀ = 0 is null for fsMeasure too (2026-09-17, #32).
+/-- info: 'Projectivization.fsMeasure_compl_chartSource_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMeasure_compl_chartSource_zero
+
+/-- info: 'Projectivization.fsMeasure_chartSource_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMeasure_chartSource_zero
+
+-- ProjectiveSpaceTorusVolume (2026-09-17, #32): THE VOLUME OF ℂℙⁿ × T². The product basis is a
+-- weighted pair tuple for π₁^*(-4 ω_std) + π₂^*(dθ₁ ∧ dθ₂) (weights -4 on the n sector pairs,
+-- 1 on the torus pair), so the top power of π₁^* ω_FS + π₂^*(dθ₁ ∧ dθ₂) has coefficient
+-- (-4)ⁿ (n+1)! (1 + ‖w‖²)^{-(n+1)} on the product chart — (n+1) times the Fubini–Study density —
+-- and its measure on a product chart domain is (n+1)(4π)ⁿ · T T' (Tonelli, fsVolume_univ, the
+-- torus chart area). Foundational triple.
+/-- info: 'Projectivization.isWeightedPairTuple_prodTorusBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isWeightedPairTuple_prodTorusBasis
+
+/-- info: 'Projectivization.wedgePow_prodSum_stdForm_areaForm_prodTorusBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.wedgePow_prodSum_stdForm_areaForm_prodTorusBasis
+
+/-- info: 'Projectivization.wedgePow_prodSum_fsModelForm_areaForm_prodTorusBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.wedgePow_prodSum_fsModelForm_areaForm_prodTorusBasis
+
+/-- info: 'Projectivization.chartDensity_prodTorus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartDensity_prodTorus
+
+/-- info: 'AddCircle.volume_compl_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms AddCircle.volume_compl_singleton
+
+/-- info: 'Projectivization.topFormMeasure_prodTorus_chartAt_source' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.topFormMeasure_prodTorus_chartAt_source
+
+/-- info: 'Projectivization.topFormMeasure_prodTorus_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.topFormMeasure_prodTorus_ne_zero
 
 /-! ### G1: Hamiltonian vector fields on a manifold -- the defining equation (HamiltonianVectorField.lean, 2026-09-08) -/
 

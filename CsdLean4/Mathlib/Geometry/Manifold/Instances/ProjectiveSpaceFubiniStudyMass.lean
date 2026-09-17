@@ -32,11 +32,13 @@ constant. Three steps.
   form written out from `fsChartForm_apply`); ★ `fsModelForm_mulVec` — a unitary matrix acting
   linearly on the chart pulls the model form at `U w` back to the model form at `w`; `fsScale r`,
   the diagonal scaling `diag(t⁻¹, t^{-1/2}, …)` with `t = 1 + r²`, and ★ `fsModelForm_single` —
-  at `r e₀` the model form is the pullback of the model form at the origin along it; hence, with
-  the Jacobian rule `compContinuousLinearMap_apply_basis` and the count at the origin,
+  at `r e₀` the model form is the pullback of the model form at the origin along it; hence
+  ★ `fsModelForm_eq_comp` — **the model form at every `w` is the pullback of the model form at
+  the origin along a real linear map of determinant `(1 + ‖w‖²)^{-(n+1)}`** (rotate `w` to the
+  first axis by `exists_unitary_map_unit`, where the form is diagonal), and with the Jacobian rule
+  `compContinuousLinearMap_apply_basis` and the count at the origin,
   ★★ `wedgePow_fsModelForm_stdBasis`: **the coefficient of the top power at every `w` is
-  `(-4)ⁿ n! (1 + ‖w‖²)^{-(n+1)}`** (rotate `w` to the first axis by `exists_unitary_map_unit`,
-  where the form is diagonal).
+  `(-4)ⁿ n! (1 + ‖w‖²)^{-(n+1)}`**; `measurable_chartDensity_fsTopForm_origin_zero`.
 * **The mass is one chart integral.** `chartAt_origin_source`, `chartAt_origin_symm`;
   `fsVolume_chartSource_zero` (on the domain of the chart at `origin 0` the volume is the chart
   integral over all of `ℂⁿ`) and ★ `fsVolume_compl_chartSource_zero` (the hyperplane `z₀ = 0` is
@@ -46,7 +48,9 @@ constant. Three steps.
   `lintegral_pi_pow_inv_one_add_sum_norm_sq` (`∫_{ℂⁿ} (1 + ‖w‖²)^{-(n+1)} = πⁿ/n!`); and
   ★★★ `fsVolume_eq_smul_fsMeasure` — **`fsVolume n = (4π)ⁿ • fsMeasure p₀`**:
   the measure of the top power of the Fubini–Study form *is* the Fubini–Study measure, up to the
-  explicit constant `(4π)ⁿ`.
+  explicit constant `(4π)ⁿ`; ★ `fsMeasure_compl_chartSource_zero`, ★ `fsMeasure_chartSource_zero`
+  — the hyperplane `z₀ = 0` is null for `fsMeasure` too, so the chart domain at `origin 0` has
+  full measure.
 
 ## Honest scope
 
@@ -100,6 +104,11 @@ theorem det_mulVecCLM (A : Matrix (Fin n) (Fin n) ℂ) :
     (mulVecCLM A).det = Complex.normSq A.det := by
   rw [ContinuousLinearMap.det, mulVecCLM, LinearMap.coe_toContinuousLinearMap,
     LinearMap.det_restrictScalars, LinearMap.det_toLin', Algebra.norm_complex_apply]
+
+/-- Matrices compose under `mulVecCLM`. -/
+theorem mulVecCLM_mul (A B : Matrix (Fin n) (Fin n) ℂ) :
+    mulVecCLM (A * B) = (mulVecCLM A).comp (mulVecCLM B) :=
+  ContinuousLinearMap.ext fun v => by simp [mulVecCLM_apply, Matrix.mulVec_mulVec]
 
 theorem normSq_det_unitary (U : Matrix.unitaryGroup (Fin n) ℂ) :
     Complex.normSq U.val.det = 1 := by
@@ -239,30 +248,23 @@ theorem normSq_det_fsScale (r : ℝ) :
   rw [Real.mul_self_sqrt (inv_nonneg.2 (by positivity)), Nat.succ_eq_add_one, pow_succ]
   ring
 
-/-- ★ The coefficient of the top power at `r e₀` is `(-4)ⁿ n! (1 + r²)^{-(n+1)}`. -/
-theorem wedgePow_fsModelForm_single (r : ℝ) :
-    ContinuousAlternatingMap.wedgePow (fsModelForm (Pi.single (0 : Fin n) (r : ℂ))) n (stdBasis n)
-      = (-4 : ℝ) ^ n * n.factorial * ((1 + r ^ 2)⁻¹) ^ (n + 1) := by
-  rw [fsModelForm_single, ← ContinuousAlternatingMap.wedgePow_compContinuousLinearMap,
-    ContinuousAlternatingMap.compContinuousLinearMap_apply_basis, det_mulVecCLM,
-    normSq_det_fsScale, wedgePow_fsModelForm_zero_stdBasis]
-  ring
-
 end Scale
 
-/-! ### The density everywhere -/
+/-! ### The model form everywhere is a pullback of the model form at the origin -/
 
-/-- ★★ **The density of the top power, everywhere on the chart**: the coefficient of
-`fsModelForm w ^ ∧n` against the standard basis is `(-4)ⁿ n! (1 + ‖w‖²)^{-(n+1)}`. Rotate `w`
-to the first axis by a unitary matrix, where the form is a diagonal pullback of the form at the
-origin, and apply the Jacobian rule twice. -/
-theorem wedgePow_fsModelForm_stdBasis (w : Fin n → ℂ) :
-    ContinuousAlternatingMap.wedgePow (fsModelForm w) n (stdBasis n)
-      = (-4 : ℝ) ^ n * n.factorial * ((1 + ‖toLpCLM w‖ ^ 2)⁻¹) ^ (n + 1) := by
+/-- ★ **The model form at `w` is the pullback of the model form at the origin** along a real
+linear map of determinant `(1 + ‖w‖²)^{-(n+1)}`: rotate `w` to the first axis by a unitary matrix
+(`fsModelForm_mulVec`, `exists_unitary_map_unit`), where the form is the diagonal pullback
+`fsModelForm_single`; the map is `mulVecCLM (fsScale ‖w‖ * U)`. -/
+theorem fsModelForm_eq_comp (w : Fin n → ℂ) :
+    ∃ L : (Fin n → ℂ) →L[ℝ] (Fin n → ℂ),
+      fsModelForm w = (fsModelForm 0).compContinuousLinearMap L
+        ∧ L.det = ((1 + ‖toLpCLM w‖ ^ 2)⁻¹) ^ (n + 1) := by
   by_cases hw : w = 0
   · subst hw
-    rw [wedgePow_fsModelForm_zero_stdBasis, map_zero, norm_zero]
-    simp
+    refine ⟨ContinuousLinearMap.id ℝ _, ContinuousAlternatingMap.ext fun _ => rfl, ?_⟩
+    rw [map_zero, norm_zero]
+    simp [ContinuousLinearMap.det]
   · have : NeZero n := ⟨fun h => hw (by subst h; exact Subsingleton.elim _ _)⟩
     have hx : toLpCLM w ≠ 0 := fun h => hw (by
       have := congrArg WithLp.ofLp h
@@ -281,9 +283,25 @@ theorem wedgePow_fsModelForm_stdBasis (w : Fin n → ℂ) :
       funext j
       have hj := congrArg (fun z => z j) h2
       simpa [toLpCLM_apply, PiLp.single_apply, Pi.single_apply] using hj
-    rw [← fsModelForm_mulVec U w, ← ContinuousAlternatingMap.wedgePow_compContinuousLinearMap,
-      ContinuousAlternatingMap.compContinuousLinearMap_apply_basis, det_mulVecCLM,
-      normSq_det_unitary, one_mul, hUw, wedgePow_fsModelForm_single]
+    refine ⟨mulVecCLM (fsScale ‖toLpCLM w‖ * U.val), ?_, ?_⟩
+    · rw [← fsModelForm_mulVec U w, hUw, fsModelForm_single, mulVecCLM_mul]
+      exact ContinuousAlternatingMap.ext fun _ => rfl
+    · rw [det_mulVecCLM, Matrix.det_mul, map_mul, normSq_det_fsScale, normSq_det_unitary,
+        mul_one]
+
+/-! ### The density everywhere -/
+
+/-- ★★ **The density of the top power, everywhere on the chart**: the coefficient of
+`fsModelForm w ^ ∧n` against the standard basis is `(-4)ⁿ n! (1 + ‖w‖²)^{-(n+1)}`
+(`fsModelForm_eq_comp` and the Jacobian rule `compContinuousLinearMap_apply_basis`). -/
+theorem wedgePow_fsModelForm_stdBasis (w : Fin n → ℂ) :
+    ContinuousAlternatingMap.wedgePow (fsModelForm w) n (stdBasis n)
+      = (-4 : ℝ) ^ n * n.factorial * ((1 + ‖toLpCLM w‖ ^ 2)⁻¹) ^ (n + 1) := by
+  obtain ⟨L, hL, hdet⟩ := fsModelForm_eq_comp w
+  rw [hL, ← ContinuousAlternatingMap.wedgePow_compContinuousLinearMap,
+    ContinuousAlternatingMap.compContinuousLinearMap_apply_basis, hdet,
+    wedgePow_fsModelForm_zero_stdBasis]
+  ring
 
 /-- The chart density of the Fubini–Study volume, at `origin 0`, as a function of the coordinate
 sum `∑ⱼ ‖wⱼ‖²`. -/
@@ -294,6 +312,13 @@ theorem chartDensity_fsTopForm_origin_zero (w : Fin n → ℂ) :
     abs_neg, abs_of_pos (by norm_num : (0 : ℝ) < 4), abs_of_pos (Nat.cast_pos.2 n.factorial_pos),
     abs_of_pos (by positivity), EuclideanSpace.norm_sq_eq]
   simp only [toLpCLM_apply]
+
+/-- The chart density at `origin 0` is measurable. -/
+theorem measurable_chartDensity_fsTopForm_origin_zero :
+    Measurable (chartDensity (stdBasis n) (fun x => fsTopForm n x) (origin 0)) := by
+  rw [funext (chartDensity_fsTopForm_origin_zero (n := n))]
+  exact ((((Finset.measurable_sum _ fun j _ =>
+    (measurable_pi_apply j).norm.pow_const 2).const_add 1).inv.pow_const _).const_mul _).ennreal_ofReal
 
 /-! ### The mass is one chart integral -/
 
@@ -407,5 +432,18 @@ theorem fsVolume_eq_smul_fsMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (n +
   rw [fsVolumeNormalized, fsVolume_univ] at h
   rw [← h, smul_smul, ENNReal.mul_inv_cancel (ENNReal.ofReal_pos.2 (by positivity)).ne'
     ENNReal.ofReal_ne_top, one_smul]
+
+/-- ★ The hyperplane `z₀ = 0` is null for the Fubini–Study measure too. -/
+theorem fsMeasure_compl_chartSource_zero (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (n + 1)))) :
+    fsMeasure p₀ (chartSource 0)ᶜ = 0 := by
+  have h := fsVolume_compl_chartSource_zero (n := n)
+  rw [fsVolume_eq_smul_fsMeasure p₀, Measure.smul_apply, smul_eq_mul, mul_eq_zero] at h
+  exact h.resolve_left (ENNReal.ofReal_pos.2 (by positivity)).ne'
+
+/-- ★ The domain of the affine chart at `origin 0` has full Fubini–Study measure. -/
+theorem fsMeasure_chartSource_zero (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (n + 1)))) :
+    fsMeasure p₀ (chartSource 0) = 1 :=
+  (prob_compl_eq_zero_iff (isOpen_chartSource 0).measurableSet).1
+    (fsMeasure_compl_chartSource_zero p₀)
 
 end Projectivization

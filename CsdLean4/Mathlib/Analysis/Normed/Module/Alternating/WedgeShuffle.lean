@@ -30,9 +30,11 @@ moves that pair into the `β`-slots and leaves a family of `k` pairs behind:
   class iff they send the `inr` slots to the same places (Mathlib's
   `mem_sumCongrHom_range_of_perm_mapsTo_inl`);
 * `classTerm`, `classTerm_mk''`, `slotPair_eq_of_classTerm_ne_zero`,
-  `mk_eq_pairRep_of_classTerm_ne_zero`, `classTerm_pairRep`;
-* ★★ `wedge_mul_apply_pairs` — **the shuffle sum on a pair family**:
-  `(α ∧ β) u = ∑ⱼ α (u ∘ pairRep j ∘ inl)`.
+  `mk_eq_pairRep_of_classTerm_ne_zero`, `classTerm_pairRep_weighted`, `classTerm_pairRep`;
+* ★★ `wedge_mul_apply_weightedPairs` — **the shuffle sum on a weighted pair family**
+  (`IsWeightedPairFamily`: `β` is `± c j` on pair `j` and `0` across pairs):
+  `(α ∧ β) u = ∑ⱼ c j · α (u ∘ pairRep j ∘ inl)`; ★★ `wedge_mul_apply_pairs` is the case of
+  all weights `1` (`IsPairFamily`).
 
 No sign is ever computed beyond `sign (swap · ·) = -1` twice: that is the whole point of the
 two-transposition representative, and it is what makes the count of the top power of the
@@ -229,6 +231,20 @@ members of each pair to `±1` and kills everything else. -/
 def IsPairFamily (β : E [⋀^Fin 2]→L[ℝ] ℝ) (u : Fin (2 * k) ⊕ Fin 2 → E) : Prop :=
   ∀ x y, β ![u x, u y] = if slotPair x = slotPair y then pairSign (slotMem x) (slotMem y) else 0
 
+/-- A family of `2k + 2` vectors is a **weighted pair family** for the 2-form `β`, with weights
+`c`, when `β` pairs the two members of pair `j` to `± c j` and kills everything else. -/
+def IsWeightedPairFamily (β : E [⋀^Fin 2]→L[ℝ] ℝ) (c : Fin (k + 1) → ℝ)
+    (u : Fin (2 * k) ⊕ Fin 2 → E) : Prop :=
+  ∀ x y, β ![u x, u y]
+    = if slotPair x = slotPair y then c (slotPair x) * pairSign (slotMem x) (slotMem y) else 0
+
+/-- A pair family is a weighted pair family with all weights `1`. -/
+theorem IsPairFamily.isWeightedPairFamily {β : E [⋀^Fin 2]→L[ℝ] ℝ} {u : Fin (2 * k) ⊕ Fin 2 → E}
+    (hu : IsPairFamily β u) : IsWeightedPairFamily β (fun _ => 1) u := by
+  intro x y
+  rw [hu x y]
+  simp
+
 /-- One shuffle-class term of the real-valued wedge. -/
 noncomputable def classTerm (α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ) (β : E [⋀^Fin 2]→L[ℝ] ℝ)
     (u : Fin (2 * k) ⊕ Fin 2 → E) (q : Perm.ModSumCongr (Fin (2 * k)) (Fin 2)) : ℝ :=
@@ -256,7 +272,8 @@ theorem beta_inr_eq (β : E [⋀^Fin 2]→L[ℝ] ℝ) (u : Fin (2 * k) ⊕ Fin 2
 
 /-- A class term vanishes unless the two `inr` slots land in one pair. -/
 theorem slotPair_eq_of_classTerm_ne_zero {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ}
-    {β : E [⋀^Fin 2]→L[ℝ] ℝ} {u : Fin (2 * k) ⊕ Fin 2 → E} (hu : IsPairFamily β u)
+    {β : E [⋀^Fin 2]→L[ℝ] ℝ} {c : Fin (k + 1) → ℝ} {u : Fin (2 * k) ⊕ Fin 2 → E}
+    (hu : IsWeightedPairFamily β c u)
     (σ : Perm (Fin (2 * k) ⊕ Fin 2)) (h : classTerm α β u (Quotient.mk'' σ) ≠ 0) :
     slotPair (σ (Sum.inr 0)) = slotPair (σ (Sum.inr 1)) := by
   by_contra hne
@@ -265,7 +282,8 @@ theorem slotPair_eq_of_classTerm_ne_zero {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ}
 
 /-- A non-vanishing class is the class of the two-transposition representative of its pair. -/
 theorem mk_eq_pairRep_of_classTerm_ne_zero {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ}
-    {β : E [⋀^Fin 2]→L[ℝ] ℝ} {u : Fin (2 * k) ⊕ Fin 2 → E} (hu : IsPairFamily β u)
+    {β : E [⋀^Fin 2]→L[ℝ] ℝ} {c : Fin (k + 1) → ℝ} {u : Fin (2 * k) ⊕ Fin 2 → E}
+    (hu : IsWeightedPairFamily β c u)
     (σ : Perm (Fin (2 * k) ⊕ Fin 2)) (h : classTerm α β u (Quotient.mk'' σ) ≠ 0) :
     (Quotient.mk'' σ : Perm.ModSumCongr (Fin (2 * k)) (Fin 2))
       = Quotient.mk'' (pairRep (slotPair (σ (Sum.inr 0)))) := by
@@ -277,20 +295,31 @@ theorem mk_eq_pairRep_of_classTerm_ne_zero {α : E [⋀^Fin (2 * k)]→L[ℝ] �
   · rw [hp]
     exact (slotOf_slotPair_slotMem _).symm
 
+/-- The class term of the representative of pair `j`, on a weighted pair family: the weight of
+pair `j` times the `2k`-form on the family with pair `j` moved into the `β`-slots. -/
+theorem classTerm_pairRep_weighted {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ} {β : E [⋀^Fin 2]→L[ℝ] ℝ}
+    {c : Fin (k + 1) → ℝ} {u : Fin (2 * k) ⊕ Fin 2 → E} (hu : IsWeightedPairFamily β c u)
+    (j : Fin (k + 1)) :
+    classTerm α β u (Quotient.mk'' (pairRep j))
+      = c j * α (fun i => u (pairRep j (Sum.inl i))) := by
+  rw [classTerm_mk'', sign_pairRep, beta_inr_eq, pairRep_inr, pairRep_inr, hu,
+    if_pos (by rw [slotPair_slotOf, slotPair_slotOf]), slotPair_slotOf, slotMem_slotOf,
+    slotMem_slotOf]
+  simp [pairSign, mul_comm]
+
 /-- The class term of the representative of pair `j`. -/
 theorem classTerm_pairRep {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ} {β : E [⋀^Fin 2]→L[ℝ] ℝ}
     {u : Fin (2 * k) ⊕ Fin 2 → E} (hu : IsPairFamily β u) (j : Fin (k + 1)) :
     classTerm α β u (Quotient.mk'' (pairRep j)) = α (fun i => u (pairRep j (Sum.inl i))) := by
-  rw [classTerm_mk'', sign_pairRep, beta_inr_eq, pairRep_inr, pairRep_inr, hu,
-    if_pos (by rw [slotPair_slotOf, slotPair_slotOf]), slotMem_slotOf, slotMem_slotOf]
-  simp [pairSign]
+  rw [classTerm_pairRep_weighted hu.isWeightedPairFamily, one_mul]
 
-/-- ★★ **The shuffle sum on a pair family.** The wedge of a `2k`-form with a 2-form, on a pair
-family, is the sum over the pairs of the `2k`-form on the family with that pair moved into the
-2-form's slots. -/
-theorem wedge_mul_apply_pairs {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ} {β : E [⋀^Fin 2]→L[ℝ] ℝ}
-    {u : Fin (2 * k) ⊕ Fin 2 → E} (hu : IsPairFamily β u) :
-    wedge (mul ℝ ℝ) α β u = ∑ j : Fin (k + 1), α (fun i => u (pairRep j (Sum.inl i))) := by
+/-- ★★ **The shuffle sum on a weighted pair family.** The wedge of a `2k`-form with a 2-form,
+on a weighted pair family, is the sum over the pairs of that pair's weight times the `2k`-form
+on the family with the pair moved into the 2-form's slots. -/
+theorem wedge_mul_apply_weightedPairs {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ} {β : E [⋀^Fin 2]→L[ℝ] ℝ}
+    {c : Fin (k + 1) → ℝ} {u : Fin (2 * k) ⊕ Fin 2 → E} (hu : IsWeightedPairFamily β c u) :
+    wedge (mul ℝ ℝ) α β u
+      = ∑ j : Fin (k + 1), c j * α (fun i => u (pairRep j (Sum.inl i))) := by
   rw [wedge_mul_apply_eq_sum_classTerm]
   refine Finset.sum_bij_ne_zero (fun q _ _ => slotPair (Quotient.out q (Sum.inr 0)))
     (fun _ _ _ => Finset.mem_univ _) ?_ ?_ ?_
@@ -306,7 +335,7 @@ theorem wedge_mul_apply_pairs {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ} {β : E [�
     rw [e₁, e₂, hj]
   · intro j _ hj
     refine ⟨Quotient.mk'' (pairRep j), Finset.mem_univ _, ?_, ?_⟩
-    · rwa [classTerm_pairRep hu]
+    · rwa [classTerm_pairRep_weighted hu]
     · have hq : (Quotient.mk'' (Quotient.out (Quotient.mk'' (pairRep j) :
           Perm.ModSumCongr (Fin (2 * k)) (Fin 2))) : Perm.ModSumCongr (Fin (2 * k)) (Fin 2))
           = Quotient.mk'' (pairRep j) := Quotient.out_eq _
@@ -317,7 +346,16 @@ theorem wedge_mul_apply_pairs {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ} {β : E [�
       Quotient.out_eq q
     have e := mk_eq_pairRep_of_classTerm_ne_zero hu (Quotient.out q) (by rwa [hq'])
     rw [hq'] at e
-    exact (congrArg (classTerm α β u) e).trans (classTerm_pairRep hu _)
+    exact (congrArg (classTerm α β u) e).trans (classTerm_pairRep_weighted hu _)
+
+/-- ★★ **The shuffle sum on a pair family.** The wedge of a `2k`-form with a 2-form, on a pair
+family, is the sum over the pairs of the `2k`-form on the family with that pair moved into the
+2-form's slots. -/
+theorem wedge_mul_apply_pairs {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ} {β : E [⋀^Fin 2]→L[ℝ] ℝ}
+    {u : Fin (2 * k) ⊕ Fin 2 → E} (hu : IsPairFamily β u) :
+    wedge (mul ℝ ℝ) α β u = ∑ j : Fin (k + 1), α (fun i => u (pairRep j (Sum.inl i))) := by
+  rw [wedge_mul_apply_weightedPairs hu.isWeightedPairFamily]
+  simp
 
 end Shuffle
 

@@ -6,7 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
-public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.WedgeShuffle
+public import CsdLean4.Mathlib.Geometry.Manifold.WedgePowPairs
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceChartCover
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
@@ -47,11 +47,12 @@ Lebesgue measure on the model `Fin n → ℂ` and the affine chart cover). This 
 * **The flat count** — `stdForm n` (the standard symplectic form on the model,
   `fundamentalFormAlt` through `toLpCLM`; `fsModelForm_zero`: the model form at the origin is
   `-4 • stdForm n`), `pairFamily a` (the `k` standard pairs `(e_{a i}, i e_{a i})`),
-  `isPairFamily_pairFamily` (they are a pair family for `stdForm`, `WedgeShuffle.lean`), and
+  `isWeightedPairTuple_pairFamily` (they are a pair tuple for `stdForm`, `WedgePowPairs.lean`), and
   ★★ `wedgePow_stdForm_pairFamily` — **the `k`-th power of the standard symplectic form on `k`
-  distinct standard pairs is `k!`**, by induction on `k` through the shuffle sum
-  `wedge_mul_apply_pairs`: each of the `k + 1` surviving classes removes one pair
-  (`removePair`) and contributes `k!`. On the standard basis (`stdBasis_eq_pairFamily`),
+  distinct standard pairs is `k!`**, the general count `wedgePow_apply_of_isPairTuple` (by
+  induction on `k` through the shuffle sum `wedge_mul_apply_weightedPairs`: each of the `k + 1`
+  surviving classes removes one pair and contributes `k!`). On the standard basis
+  (`stdBasis_eq_pairFamily`),
   ★★ `wedgePow_fsModelForm_zero_stdBasis`: the coefficient of the top power at the origin is
   `(-4)ⁿ · n!`, in particular nonzero;
 * ★★ `fsVolume_ne_zero` — **the volume is nonzero** (`topFormMeasure_ne_zero_of_localRep_ne_zero`
@@ -70,14 +71,14 @@ constant are `ProjectiveSpaceFubiniStudyMass.lean`.
 ⚠️ **`n ≥ 1` is not assumed and not needed**: for `n = 0` the manifold is a point, the top power
 is the constant `0`-form `1` (`wedgePow_stdForm_pairFamily` at `k = 0`), and every statement holds.
 
-⚠️ **The count is for the standard form on the standard pairs only**; nothing is said about the
-top power of `stdForm` on other families, nor about `fsModelForm w` away from `w = 0` (the
-measure argument needs one point).
+⚠️ **The count here is for the standard form on the standard pairs**; the general count on a
+weighted pair tuple is `WedgePowPairs.lean`, and `fsModelForm w` away from `w = 0` is
+`ProjectiveSpaceFubiniStudyMass.lean` (the measure argument here needs one point).
 
 **Provenance and references.** The top-power plan (M5, M6); `Geometry/Manifold/TopFormMeasure.lean`
 (`topFormMeasure_map_eq`, `isFiniteMeasure_topFormMeasure`,
 `topFormMeasure_ne_zero_of_localRep_ne_zero`);
-`Analysis/Normed/Module/Alternating/WedgeShuffle.lean` (`wedge_mul_apply_pairs`);
+`Geometry/Manifold/WedgePowPairs.lean` (`wedgePow_apply_of_isPairTuple`);
 `Geometry/Manifold/Instances/ProjectiveSpaceUnitaryAction.lean` (`fsModelForm_uTrans`);
 `Geometry/Manifold/WedgeForm.lean` (`localRep_wedgePow`, `wedgePow_compContinuousLinearMap`);
 `LinearAlgebra/Projectivization/FubiniStudyUnique.lean` (★★ `fsMeasure_unique`);
@@ -229,8 +230,7 @@ theorem fsVolumeNormalized_eq_fsMeasure_of_ne_zero (hne : fsVolume n ≠ 0)
 
 section FlatCount
 
-open ContinuousAlternatingMap (slotPair slotMem pairRep pairSign IsPairFamily pairRep_inl
-  wedge_mul_apply_pairs)
+open ContinuousAlternatingMap (pairIdx memIdx pairSign)
 
 /-- The standard symplectic form on the model `Fin n → ℂ`: the flat fundamental form
 `Kahler.fundamentalFormAlt` read through `toLpCLM`. -/
@@ -263,18 +263,6 @@ theorem im_conj_mul_pairs (a b : Fin 2) :
     ((starRingEnd ℂ) (![1, Complex.I] a) * ![1, Complex.I] b).im = pairSign a b := by
   fin_cases a <;> fin_cases b <;> simp [pairSign, Complex.conj_I]
 
-/-- The pair a slot of `Fin (2k)` belongs to. -/
-def pairIdx {k : ℕ} (p : Fin (2 * k)) : Fin k := ⟨p / 2, by omega⟩
-
-/-- `pairIdx`, unfolded: the definitional equation. -/
-theorem pairIdx_def {k : ℕ} (p : Fin (2 * k)) : pairIdx p = ⟨p / 2, by omega⟩ := rfl
-
-/-- Which member of its pair a slot of `Fin (2k)` is. -/
-def memIdx {k : ℕ} (p : Fin (2 * k)) : Fin 2 := ⟨p % 2, by omega⟩
-
-/-- `memIdx`, unfolded: the definitional equation. -/
-theorem memIdx_def {k : ℕ} (p : Fin (2 * k)) : memIdx p = ⟨p % 2, by omega⟩ := rfl
-
 /-- The family of `k` standard pairs `(e_{a i}, i • e_{a i})`, in order. -/
 def pairFamily {k : ℕ} (a : Fin k → Fin n) : Fin (2 * k) → (Fin n → ℂ) :=
   fun p => Pi.single (a (pairIdx p)) (![1, Complex.I] (memIdx p))
@@ -283,95 +271,17 @@ def pairFamily {k : ℕ} (a : Fin k → Fin n) : Fin (2 * k) → (Fin n → ℂ)
 theorem pairFamily_def {k : ℕ} (a : Fin k → Fin n) :
     pairFamily a = fun p => Pi.single (a (pairIdx p)) (![1, Complex.I] (memIdx p)) := rfl
 
-theorem coe_powEquiv_inl {k : ℕ} (p : Fin (2 * k)) :
-    ((DifferentialForm.powEquiv k (Sum.inl p) : Fin (2 * (k + 1))) : ℕ) = p := rfl
-
-theorem coe_powEquiv_inr {k : ℕ} (b : Fin 2) :
-    ((DifferentialForm.powEquiv k (Sum.inr b) : Fin (2 * (k + 1))) : ℕ) = 2 * k + b := rfl
-
-theorem pairIdx_powEquiv_inl {k : ℕ} (p : Fin (2 * k)) :
-    pairIdx (DifferentialForm.powEquiv k (Sum.inl p)) = slotPair (Sum.inl p) :=
-  Fin.ext (by simp [pairIdx, slotPair, coe_powEquiv_inl])
-
-theorem memIdx_powEquiv_inl {k : ℕ} (p : Fin (2 * k)) :
-    memIdx (DifferentialForm.powEquiv k (Sum.inl p)) = slotMem (Sum.inl p) :=
-  Fin.ext (by simp [memIdx, slotMem, coe_powEquiv_inl])
-
-theorem pairIdx_powEquiv_inr {k : ℕ} (b : Fin 2) :
-    pairIdx (DifferentialForm.powEquiv k (Sum.inr b)) = slotPair (Sum.inr b) :=
-  Fin.ext (by simp [pairIdx, slotPair, coe_powEquiv_inr]; omega)
-
-theorem memIdx_powEquiv_inr {k : ℕ} (b : Fin 2) :
-    memIdx (DifferentialForm.powEquiv k (Sum.inr b)) = slotMem (k := k) (Sum.inr b) :=
-  Fin.ext (by simp [memIdx, slotMem, coe_powEquiv_inr]; omega)
-
-/-- Through `powEquiv`, the pair family reads off `slotPair` and `slotMem`. -/
-theorem pairFamily_powEquiv {k : ℕ} (a : Fin (k + 1) → Fin n) (x : Fin (2 * k) ⊕ Fin 2) :
-    pairFamily a (DifferentialForm.powEquiv k x)
-      = Pi.single (a (slotPair x)) (![1, Complex.I] (slotMem x)) := by
-  rcases x with p | b
-  · rw [pairFamily, pairIdx_powEquiv_inl, memIdx_powEquiv_inl]
-  · rw [pairFamily, pairIdx_powEquiv_inr, memIdx_powEquiv_inr]
-
-/-- The family the recursion evaluates on is a pair family for the standard form. -/
-theorem isPairFamily_pairFamily {k : ℕ} (a : Fin (k + 1) → Fin n) (ha : Function.Injective a) :
-    IsPairFamily (stdForm n) (fun x => pairFamily a (DifferentialForm.powEquiv k x)) := by
-  intro x y
-  simp only [pairFamily_powEquiv, stdForm_single, ha.eq_iff, im_conj_mul_pairs]
-
-/-- The index map with pair `j` replaced by the last pair. -/
-def removePair {k : ℕ} (a : Fin (k + 1) → Fin n) (j : Fin (k + 1)) : Fin k → Fin n :=
-  fun i => if Fin.castSucc i = j then a (Fin.last k) else a (Fin.castSucc i)
-
-theorem removePair_injective {k : ℕ} {a : Fin (k + 1) → Fin n} (ha : Function.Injective a)
-    (j : Fin (k + 1)) : Function.Injective (removePair a j) := by
-  intro i i' h
-  simp only [removePair] at h
-  split_ifs at h with h1 h2 h2
-  · exact Fin.castSucc_injective k (h1.trans h2.symm)
-  · exact absurd (ha h) (Fin.castSucc_lt_last i').ne'
-  · exact absurd (ha h) (Fin.castSucc_lt_last i).ne
-  · exact Fin.castSucc_injective k (ha h)
-
-/-- The two-transposition representative `pairRep j` moves pair `j` into the `β`-slots and
-leaves the pair family with pair `j` replaced by the last one. -/
-theorem pairFamily_pairRep {k : ℕ} (a : Fin (k + 1) → Fin n) (j : Fin (k + 1))
-    (i : Fin (2 * k)) :
-    pairFamily a (DifferentialForm.powEquiv k (pairRep j (Sum.inl i)))
-      = pairFamily (removePair a j) i := by
-  have hc : Fin.castSucc (pairIdx i) = slotPair (Sum.inl i) := Fin.ext rfl
-  have hm : memIdx i = slotMem (Sum.inl i) := Fin.ext rfl
-  rw [pairRep_inl]
-  split_ifs with h
-  · rw [pairFamily_powEquiv]
-    simp only [pairFamily, removePair, hc, h, if_true, hm]
-    rfl
-  · rw [pairFamily_powEquiv]
-    simp only [pairFamily, removePair, hc, h, if_false, hm]
+/-- The standard pairs are a pair tuple for the standard form (all weights `1`). -/
+theorem isWeightedPairTuple_pairFamily {k : ℕ} (a : Fin k → Fin n) (ha : Function.Injective a) :
+    ContinuousAlternatingMap.IsWeightedPairTuple (stdForm n) (fun _ => 1) (pairFamily a) := by
+  intro p q
+  simp only [pairFamily, stdForm_single, ha.eq_iff, im_conj_mul_pairs, one_mul]
 
 /-- ★★ **The count.** The `k`-th power of the standard symplectic form on `k` distinct standard
-pairs is `k!`: through the shuffle sum, each of the `k + 1` surviving classes removes one pair
-and contributes `k!` by induction. -/
-theorem wedgePow_stdForm_pairFamily :
-    ∀ (k : ℕ) (a : Fin k → Fin n), Function.Injective a →
-      ContinuousAlternatingMap.wedgePow (stdForm n) k (pairFamily a) = (k.factorial : ℝ)
-  | 0, _, _ => by simp [ContinuousAlternatingMap.wedgePow]
-  | k + 1, a, ha => by
-    simp only [ContinuousAlternatingMap.wedgePow]
-    rw [ContinuousAlternatingMap.domDomCongr_apply,
-      wedge_mul_apply_pairs (isPairFamily_pairFamily a ha)]
-    have hterm : ∀ j : Fin (k + 1),
-        ContinuousAlternatingMap.wedgePow (stdForm n) k
-          (fun i => pairFamily a (DifferentialForm.powEquiv k (pairRep j (Sum.inl i))))
-          = (k.factorial : ℝ) := fun j => by
-      rw [← wedgePow_stdForm_pairFamily k (removePair a j) (removePair_injective ha j)]
-      congr 1
-      funext i
-      exact pairFamily_pairRep a j i
-    simp only [hterm, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
-      Nat.factorial_succ]
-    push_cast
-    ring
+pairs is `k!` (`wedgePow_apply_of_isPairTuple`). -/
+theorem wedgePow_stdForm_pairFamily (k : ℕ) (a : Fin k → Fin n) (ha : Function.Injective a) :
+    ContinuousAlternatingMap.wedgePow (stdForm n) k (pairFamily a) = (k.factorial : ℝ) :=
+  ContinuousAlternatingMap.wedgePow_apply_of_isPairTuple _ (isWeightedPairTuple_pairFamily a ha)
 
 /-- The standard basis is the pair family of the identity. -/
 theorem stdBasis_eq_pairFamily (p : Fin (2 * n)) :

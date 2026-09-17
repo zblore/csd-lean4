@@ -161,7 +161,8 @@ bullets for the current state.
   The arena's top-form measure is the corpus's `μ_FS ⊗ vol_{T²}` up to its total mass
   (`arenaVolume_eq_smul_kMuL`, `LF4/ArenaVolume.lean`, same day, by uniqueness of the invariant
   measures rather than the binomial identity), so arena Liouville is Liouville for `kMuL` at
-  manifold level (`kMuL_smul_map_hamiltonianFlow`); the mass's value is `BACKLOG.md` #32.
+  manifold level (`kMuL_smul_map_hamiltonianFlow`); the mass is `(N+1)·(4π)^N` (`arenaVolume_univ`,
+  2026-09-17), so Liouville holds for `kMuL` itself (`kMuL_map_hamiltonianFlow`).
 
 **(ii) Scoped by doctrine, not by tooling.**
 

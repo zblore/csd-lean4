@@ -1505,8 +1505,8 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- and under translation of the torus (a chart translation of the translation atlas). Its
 -- normalisation has a U(N+1)-invariant sector marginal, hence μ_FS by fsMeasure_unique,
 -- and translation-invariant torus slices, hence multiples of Haar by Mathlib's uniqueness on a
--- compact group; rectangles then give arenaVolume N = arenaVolume N univ • kMuL p₀. The constant is
--- the mass, not (N+1)·(4π)^N, and arenaVolume ≠ 0 is not proved (BACKLOG #32).
+-- compact group; rectangles then give arenaVolume N = arenaVolume N univ • kMuL p₀. The mass
+-- itself is #32 below.
 /-- info: 'CSD.LF4.arenaVolume_map_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.arenaVolume_map_smul
@@ -1529,5 +1529,39 @@ bridge in the corpus — the abstract `measure_bridge` and the
 /-- info: 'CSD.LF4.kMuL_smul_map_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.kMuL_smul_map_hamiltonianFlow
+
+-- #32 (2026-09-17, LF4/ArenaVolume.lean): THE MASS OF THE ARENA VOLUME IS (N+1)·(4π)^N. On the
+-- product chart at (origin 0, y₀) the top power of arenaForm has density (N+1) times the
+-- Fubini–Study density (the weighted pair-tuple count, Instances/ProjectiveSpaceTorusVolume.lean),
+-- so the chart domain has arena volume (N+1)(4π)^N; that domain has full kMuL measure (the
+-- hyperplane z₀ = 0 and the two cut points are null), so by the #29 identification the chart value
+-- is the total mass. Hence arenaVolume ≠ 0, the identification holds with its constant visible, and
+-- Liouville holds for kMuL itself, unconditionally.
+/-- info: 'CSD.LF4.arenaVolume_chartAt_source' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.arenaVolume_chartAt_source
+
+/-- info: 'CSD.LF4.kMuL_chartAt_source' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kMuL_chartAt_source
+
+-- ★★ arenaVolume N univ = (N+1)·(4π)^N.
+/-- info: 'CSD.LF4.arenaVolume_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.arenaVolume_univ
+
+/-- info: 'CSD.LF4.arenaVolume_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.arenaVolume_ne_zero
+
+-- ★★★ arenaVolume = (N+1)·(4π)^N · (μ_FS ⊗ vol).
+/-- info: 'CSD.LF4.arenaVolume_eq_ofReal_smul_kMuL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.arenaVolume_eq_ofReal_smul_kMuL
+
+-- ★★ Liouville for kMuL itself: every smooth arena Hamiltonian's flow preserves μ_FS ⊗ vol.
+/-- info: 'CSD.LF4.kMuL_map_hamiltonianFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.kMuL_map_hamiltonianFlow
 
 end CSD.Tests.AxiomAudit

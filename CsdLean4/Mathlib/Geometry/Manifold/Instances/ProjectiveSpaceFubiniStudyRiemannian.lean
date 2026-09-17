@@ -81,6 +81,7 @@ noncomputable section
 open MeasureTheory Set
 open scoped Manifold ContDiff LinearAlgebra.Projectivization Matrix ENNReal Real
 open Kahler Matrix.UnitaryGroup DifferentialForm
+open ContinuousAlternatingMap (pairIdx memIdx)
 
 namespace Projectivization
 

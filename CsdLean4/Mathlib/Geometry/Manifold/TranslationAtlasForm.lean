@@ -42,7 +42,9 @@ that once, as a predicate on the atlas, and then reads the torus's area form off
 the symplectic torus here is the one charted by translation, over the model `ℝ × ℝ`.
 
 ⚠️ **No volume identity.** That `torusAreaForm` integrates to the Haar measure of the torus is
-not stated; the corpus's torus measure stays the product Haar measure it always was.
+not stated; the corpus's torus measure stays the product Haar measure it always was. (The area
+`T · T'` of a translation chart target, and the top power of `torusAreaForm` summed with the
+Fubini–Study form on a product chart, are `Instances/ProjectiveSpaceTorusVolume.lean`.)
 
 References: `Geometry/Manifold/ExteriorDerivative.lean` (`localRep`, `trivializationAt_snd`,
 `mextDeriv`); `Geometry/Manifold/SymplecticForm.lean` (`IsSymplectic`);
