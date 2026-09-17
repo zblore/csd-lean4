@@ -165,7 +165,7 @@ theorem fsSection_smul_I_neg (x : ℙ ℂ (Ambient n)) {v : Fin n → ℂ} (hv :
 
 /-- ★★ **Non-degeneracy of the Fubini–Study form at every point of `ℂℙⁿ`.** -/
 theorem fsForm_nondegenerate (x : ℙ ℂ (Ambient n))
-    (v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) (hv : v ≠ 0) :
+    (v : TangentSpace (𝓘(ℝ, Fin n → ℂ)) x) (hv : v ≠ 0) :
     ∃ w, fsForm x ![v, w] ≠ 0 :=
   ⟨Complex.I • (show Fin n → ℂ from v), (fsSection_smul_I_neg x hv).ne⟩
 
@@ -179,15 +179,15 @@ theorem fsForm_isSymplectic (n : ℕ) : (fsForm (n := n)).IsSymplectic :=
 /-- Definitional identification of a tangent vector of `ℂℙⁿ` with a model vector (the model
 carries the `ℂ`-action the tangent space does not expose). -/
 abbrev tangentToModel {x : ℙ ℂ (Ambient n)}
-    (v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) : Fin n → ℂ := v
+    (v : TangentSpace (𝓘(ℝ, Fin n → ℂ)) x) : Fin n → ℂ := v
 
 /-- The complex structure of `ℂℙⁿ`: multiplication by `i` on each tangent space, read in the
 chart at the point. -/
-def fsJ (x : ℙ ℂ (Ambient n)) (v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) :
-    TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x :=
+def fsJ (x : ℙ ℂ (Ambient n)) (v : TangentSpace (𝓘(ℝ, Fin n → ℂ)) x) :
+    TangentSpace (𝓘(ℝ, Fin n → ℂ)) x :=
   Complex.I • tangentToModel v
 
-theorem fsJ_fsJ (x : ℙ ℂ (Ambient n)) (v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) :
+theorem fsJ_fsJ (x : ℙ ℂ (Ambient n)) (v : TangentSpace (𝓘(ℝ, Fin n → ℂ)) x) :
     fsJ x (fsJ x v) = -v := by
   show Complex.I • (Complex.I • tangentToModel v) = -tangentToModel v
   rw [smul_smul, Complex.I_mul_I, neg_one_smul]
@@ -207,7 +207,7 @@ theorem fsModelForm_smul_I_smul_I (w u v : Fin n → ℂ) :
 
 /-- ★ `J`-invariance of the Fubini–Study form: it is a `(1,1)`-form. -/
 theorem fsForm_smul_I_smul_I (x : ℙ ℂ (Ambient n))
-    (u v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) :
+    (u v : TangentSpace (𝓘(ℝ, Fin n → ℂ)) x) :
     fsForm x ![fsJ x u, fsJ x v] = fsForm x ![u, v] := by
   show fsSection x ![Complex.I • tangentToModel u, Complex.I • tangentToModel v]
     = fsSection x ![tangentToModel u, tangentToModel v]
@@ -233,7 +233,7 @@ theorem fsForm_isAlmostKahler (n : ℕ) : IsAlmostKahler (fsForm (n := n)) fsJ w
 /-- The compatible metric of `ℂℙⁿ` is positive definite: the Fubini–Study metric, up to the
 convention. -/
 theorem fsForm_metric_self_pos (x : ℙ ℂ (Ambient n))
-    {v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x} (hv : v ≠ 0) :
+    {v : TangentSpace (𝓘(ℝ, Fin n → ℂ)) x} (hv : v ≠ 0) :
     0 < (fsForm_isAlmostKahler n).metric x v v :=
   (fsForm_isAlmostKahler n).metric_self_pos x hv
 
@@ -274,9 +274,9 @@ theorem fderiv_chart_transition_smul_I (x₀ y : ℙ ℂ (Ambient n)) {w : Fin n
 for every `y` in the chart source. -/
 theorem fsJ_symmL (x₀ y : ℙ ℂ (Ambient n)) (hy : y ∈ (chartAt (Fin n → ℂ) x₀).source)
     (v : Fin n → ℂ) :
-    fsJ y ((trivializationAt (Fin n → ℂ) (TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ))) x₀).symmL
+    fsJ y ((trivializationAt (Fin n → ℂ) (TangentSpace (𝓘(ℝ, Fin n → ℂ))) x₀).symmL
         ℝ y v)
-      = (trivializationAt (Fin n → ℂ) (TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ))) x₀).symmL
+      = (trivializationAt (Fin n → ℂ) (TangentSpace (𝓘(ℝ, Fin n → ℂ))) x₀).symmL
           ℝ y (Complex.I • v) := by
   rw [tangent_symmL_eq_fderiv x₀ y hy]
   have hy' : (chartAt (Fin n → ℂ) x₀).symm (chartAt (Fin n → ℂ) x₀ y)
@@ -308,19 +308,19 @@ theorem fsForm_isKahler (n : ℕ) : IsKahler (fsForm (n := n)) fsJ modelJ where
 
 /-- `J = i·` on each tangent space, as a continuous linear map: the section of `Hom(TM, TM)`. -/
 noncomputable def fsJL (x : ℙ ℂ (Ambient n)) :
-    TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x →L[ℝ]
-      TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x :=
+    TangentSpace (𝓘(ℝ, Fin n → ℂ)) x →L[ℝ]
+      TangentSpace (𝓘(ℝ, Fin n → ℂ)) x :=
   modelJ
 
 @[simp] theorem fsJL_apply (x : ℙ ℂ (Ambient n))
-    (v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) : fsJL x v = fsJ x v := rfl
+    (v : TangentSpace (𝓘(ℝ, Fin n → ℂ)) x) : fsJL x v = fsJ x v := rfl
 
 /-- ★★ **`J` is a smooth section of `Hom(TM, TM)` on `ℂℙⁿ`**: in every chart it is the constant
 `i·` (`IsKahler.contMDiff_hom_section` on `fsForm_isKahler`). -/
 theorem contMDiff_fsJL :
-    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
-      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod
-        (modelWithCornersSelf ℝ ((Fin n → ℂ) →L[ℝ] (Fin n → ℂ)))) ∞
+    ContMDiff (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod
+        (𝓘(ℝ, (Fin n → ℂ) →L[ℝ] (Fin n → ℂ)))) ∞
       (fun x : ℙ ℂ (Ambient n) => TotalSpace.mk' ((Fin n → ℂ) →L[ℝ] (Fin n → ℂ)) x (fsJL x)) :=
   (fsForm_isKahler n).contMDiff_hom_section fsJL fun _ _ => rfl
 
@@ -329,13 +329,13 @@ theorem contMDiff_fsJL :
 /-- ★★ **`J = i·` is integrable in the tensor sense on `ℂℙⁿ`**: its Nijenhuis tensor vanishes on
 vector fields differentiable at the point (`IsKahler.nijenhuis_eq_zero` on `fsForm_isKahler`). -/
 theorem nijenhuis_fsJ_eq_zero
-    {V W : ∀ x : ℙ ℂ (Ambient n), TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x}
+    {V W : ∀ x : ℙ ℂ (Ambient n), TangentSpace (𝓘(ℝ, Fin n → ℂ)) x}
     (x₀ : ℙ ℂ (Ambient n))
-    (hV : MDifferentiableAt (modelWithCornersSelf ℝ (Fin n → ℂ))
-      (modelWithCornersSelf ℝ (Fin n → ℂ)).tangent
+    (hV : MDifferentiableAt (𝓘(ℝ, Fin n → ℂ))
+      (𝓘(ℝ, Fin n → ℂ)).tangent
       (fun x => TotalSpace.mk' (Fin n → ℂ) x (V x)) x₀)
-    (hW : MDifferentiableAt (modelWithCornersSelf ℝ (Fin n → ℂ))
-      (modelWithCornersSelf ℝ (Fin n → ℂ)).tangent
+    (hW : MDifferentiableAt (𝓘(ℝ, Fin n → ℂ))
+      (𝓘(ℝ, Fin n → ℂ)).tangent
       (fun x => TotalSpace.mk' (Fin n → ℂ) x (W x)) x₀) :
     nijenhuis fsJ V W x₀ = 0 :=
   (fsForm_isKahler n).nijenhuis_eq_zero x₀ hV hW

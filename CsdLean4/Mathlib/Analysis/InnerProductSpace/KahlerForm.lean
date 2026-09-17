@@ -12,30 +12,35 @@ public import Mathlib.Analysis.Complex.Basic
 /-!
 # The pointwise Fubini–Study / Kähler fundamental form (linear-algebra core)
 
-**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; the source repository's terms register records what is backed and what is not.
+**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; the source
+repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free; the form-level analogue of `fubiniStudyMeasure`).
 
 Mathlib has no Kähler-geometry API (no manifold differential forms, no exterior derivative, no
-almost-complex structure; MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)). When this
+almost-complex structure; MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)). When
+this
 module was written that meant the full closed 2-form `ω` on `ℂℙ^{N-1}` with `dω = 0` and
 `ω^{∧(N-1)}/(N-1)! = μ_FS` could not be built; since 2026-09-07/11 the modules under
 `Geometry/Manifold/` build that differential geometry themselves and both statements are
 theorems (`Projectivization.fsForm_isKahler`, `fsVolume_eq_smul_fubiniStudyMeasure`). What **is**
 bounded — and is built here — is the
-**pointwise** (linear-algebra) core of that form: on any complex inner-product space `E` (the tangent
+**pointwise** (linear-algebra) core of that form: on any complex inner-product space `E` (the
+tangent
 model of `ℂℙ^{N-1}` at a ray is `ψ^⊥ ⊆ E`), the flat Hermitian structure gives the Kähler triple
 
 * the **complex structure** `J u = i • u` (with `J² = -1`);
 * the **Riemannian metric** `g u v = re ⟪u, v⟫` (the real part of the Hermitian inner product);
 * the **fundamental 2-form** `ω u v = im ⟪u, v⟫` (its imaginary part).
 
-We prove the defining **almost-Kähler / Hermitian compatibility** relations, pointwise and axiom-free:
+We prove the defining **almost-Kähler / Hermitian compatibility** relations, pointwise and
+axiom-free:
 
 * `J² = -1` (`complexStructure_involutive`);
 * `ω` is an alternating `ℝ`-bilinear form (`fundamentalForm_self`, `fundamentalForm_antisymm`,
   `fundamentalForm_add_left`, `fundamentalForm_real_smul_left`);
-* **J-compatibility** `ω u v = g (J u) v` (`fundamentalForm_eq_metric_complexStructure`) and the dual
+* **J-compatibility** `ω u v = g (J u) v` (`fundamentalForm_eq_metric_complexStructure`) and the
+  dual
   `g u v = ω u (J v)` (`metric_eq_fundamentalForm_complexStructure`) — the Kähler triple `g, ω, J`;
 * `J` is a `g`-isometry and `ω` is `J`-invariant, i.e. `ω` is a **(1,1)-form**
   (`metric_complexStructure`, `fundamentalForm_complexStructure`, from `inner_complexStructure`);
@@ -75,7 +80,8 @@ variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
 (`complexStructure_involutive`). -/
 def complexStructure (u : E) : E := Complex.I • u
 
-/-- **The Riemannian metric `g`**: the real part of the Hermitian inner product, `g u v = re ⟪u, v⟫`.
+/-- **The Riemannian metric `g`**: the real part of the Hermitian inner product,
+`g u v = re ⟪u, v⟫`.
 This is the real inner product Mathlib's `InnerProductSpace.complexToReal` would install on `E`,
 definitionally (`metric_eq_real_inner`); that structure is a `def`, not an instance (installing
 `Inner ℝ E` on every complex space would create diamonds), so `re ⟪u, v⟫_ℂ` is Mathlib's own
@@ -135,7 +141,8 @@ theorem fundamentalForm_real_smul_left (r : ℝ) (u v : E) :
 /-! ### The Kähler triple: `g`, `ω`, `J` compatibility -/
 
 /-- **J-compatibility `ω u v = g (J u) v`.** The fundamental form is the metric precomposed with the
-complex structure: `im ⟪u, v⟫ = re ⟪i • u, v⟫`. This is the defining relation tying `ω`, `g`, `J`. -/
+complex structure: `im ⟪u, v⟫ = re ⟪i • u, v⟫`. This is the defining relation tying `ω`, `g`, `J`.
+-/
 theorem fundamentalForm_eq_metric_complexStructure (u v : E) :
     fundamentalForm u v = metric (complexStructure u) v := by
   simp only [fundamentalForm, metric, complexStructure, inner_smul_left, Complex.conj_I,
@@ -178,8 +185,10 @@ theorem metric_comm (u v : E) : metric u v = metric v u := by
   simp only [metric, ← RCLike.re_to_complex]
   exact inner_re_symm u v
 
-/-- **Positivity / taming `ω u (J u) = ‖u‖²`.** The fundamental form paired with the complex structure
-recovers the squared norm — so `(u, v) ↦ ω u (J v) = g u v` is positive-definite, the taming condition
+/-- **Positivity / taming `ω u (J u) = ‖u‖²`.** The fundamental form paired with the complex
+structure
+recovers the squared norm — so `(u, v) ↦ ω u (J v) = g u v` is positive-definite, the taming
+condition
 that makes `ω` a *positive* `(1,1)`-form (the compatible almost-Kähler structure). -/
 @[simp] theorem fundamentalForm_complexStructure_self (u : E) :
     fundamentalForm u (complexStructure u) = ‖u‖ ^ 2 := by
@@ -200,7 +209,8 @@ At a ray `[ψ] ∈ ℂℙ^{N-1}` the (holomorphic) tangent space is modelled by 
 (`J`-invariant) subspace (`complexStructure_mem_orthogonal`, proved immediately below) — and since
 the Kähler-triple identities above are universally quantified over `E`
 (`fundamentalForm_eq_metric_complexStructure`, `fundamentalForm_complexStructure`), they
-restrict to `ψ^⊥` with nothing to prove: the flat Hermitian structure on `E` **induces** the Fubini–Study Kähler structure on
+restrict to `ψ^⊥` with nothing to prove: the flat Hermitian structure on `E` **induces** the
+Fubini–Study Kähler structure on
 each tangent space. This ties the ambient pointwise form to the actual tangent model of `ℂℙ^{N-1}`
 (still pointwise — no manifold structure needed). -/
 
@@ -216,8 +226,10 @@ theorem complexStructure_mem_orthogonal {ψ v : E}
 /-! ### The Kähler structure is preserved by unitary symmetries
 
 Any `ℂ`-linear isometry preserves the Hermitian inner product, hence both the metric `g` and the
-fundamental form `ω`. So it is a **symplectic isometry** — a "Kähler transformation" of the structure.
-In particular the Schrödinger flow `exp(-itH)` (a one-parameter group of unitaries) preserves `g` and
+fundamental form `ω`. So it is a **symplectic isometry** — a "Kähler transformation" of the
+structure.
+In particular the Schrödinger flow `exp(-itH)` (a one-parameter group of unitaries) preserves `g`
+and
 `ω`: QM evolution is a symplectomorphism of the Fubini–Study Kähler geometry (the Kibble /
 Ashtekar–Schilling picture, at the pointwise/linear level). The flow corollary is drawn in the
 source repository's Schrödinger–Kähler invariance module. -/

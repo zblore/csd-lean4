@@ -94,15 +94,15 @@ variable {n : ℕ}
 /-- The Fubini–Study form as a family over `ℂℙⁿ`: at `x`, the model form at `x`'s own chart
 coordinate (`TangentSpace 𝓘(ℝ, Fin n → ℂ) x` is definitionally `Fin n → ℂ`). -/
 noncomputable def fsSection (x : ℙ ℂ (Ambient n)) :
-    TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x [⋀^Fin 2]→L[ℝ]
+    TangentSpace (𝓘(ℝ, Fin n → ℂ)) x [⋀^Fin 2]→L[ℝ]
       Bundle.Trivial (ℙ ℂ (Ambient n)) ℝ x :=
   fsModelForm (chartFun (idx x) x)
 
 /-- The chart transition between the charts at `x₀` and `y`, as `extChartAt` sees it, IS the
 model transition `transP`. -/
 lemma extChartAt_trans_eq (x₀ y : ℙ ℂ (Ambient n)) :
-    (extChartAt (modelWithCornersSelf ℝ (Fin n → ℂ)) y ∘
-        (extChartAt (modelWithCornersSelf ℝ (Fin n → ℂ)) x₀).symm)
+    (extChartAt (𝓘(ℝ, Fin n → ℂ)) y ∘
+        (extChartAt (𝓘(ℝ, Fin n → ℂ)) x₀).symm)
       = transP (idx x₀) (idx y) := by
   funext w
   simp only [Function.comp_apply, extChartAt_coe, extChartAt_coe_symm, modelWithCornersSelf_coe,
@@ -119,7 +119,7 @@ theorem localRep_fsSection (x₀ y : ℙ ℂ (Ambient n))
     (hy : y ∈ (chartAt (Fin n → ℂ) x₀).source) :
     (trivializationAt ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ)
         (fun p : ℙ ℂ (Ambient n) =>
-          TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) p [⋀^Fin 2]→L[ℝ]
+          TangentSpace (𝓘(ℝ, Fin n → ℂ)) p [⋀^Fin 2]→L[ℝ]
             Bundle.Trivial (ℙ ℂ (Ambient n)) ℝ p) x₀
       ⟨y, fsSection y⟩).2
       = fsModelForm (chartFun (idx x₀) y) := by
@@ -137,19 +137,19 @@ theorem localRep_fsSection (x₀ y : ℙ ℂ (Ambient n))
     exact congrArg (chartFun (idx y)) hinv.symm
   -- the tangent coordinate change is the derivative of that transition
   have hsym : (trivializationAt (Fin n → ℂ)
-        (TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ))) x₀).symmL ℝ y
+        (TangentSpace (𝓘(ℝ, Fin n → ℂ))) x₀).symmL ℝ y
       = fderiv ℝ (transP (idx x₀) (idx y)) (chartFun (idx x₀) y) := by
     have hy' : y ∈ (trivializationAt (Fin n → ℂ)
-        (tangentBundleCore (modelWithCornersSelf ℝ (Fin n → ℂ)) (ℙ ℂ (Ambient n))).Fiber x₀).baseSet :=
+        (tangentBundleCore (𝓘(ℝ, Fin n → ℂ)) (ℙ ℂ (Ambient n))).Fiber x₀).baseSet :=
       hy
     show (trivializationAt (Fin n → ℂ)
-        (tangentBundleCore (modelWithCornersSelf ℝ (Fin n → ℂ)) (ℙ ℂ (Ambient n))).Fiber x₀).symmL ℝ y
+        (tangentBundleCore (𝓘(ℝ, Fin n → ℂ)) (ℙ ℂ (Ambient n))).Fiber x₀).symmL ℝ y
       = _
     rw [VectorBundleCore.trivializationAt_symmL _ hy']
-    show fderivWithin ℝ (extChartAt (modelWithCornersSelf ℝ (Fin n → ℂ)) y ∘
-        (extChartAt (modelWithCornersSelf ℝ (Fin n → ℂ)) x₀).symm)
-        (Set.range (modelWithCornersSelf ℝ (Fin n → ℂ)))
-        (extChartAt (modelWithCornersSelf ℝ (Fin n → ℂ)) x₀ y) = _
+    show fderivWithin ℝ (extChartAt (𝓘(ℝ, Fin n → ℂ)) y ∘
+        (extChartAt (𝓘(ℝ, Fin n → ℂ)) x₀).symm)
+        (Set.range (𝓘(ℝ, Fin n → ℂ)))
+        (extChartAt (𝓘(ℝ, Fin n → ℂ)) x₀ y) = _
     rw [extChartAt_trans_eq, modelWithCornersSelf_coe, Set.range_id, fderivWithin_univ]
     rfl
   rw [FiberBundle.trivializationAt_continuousAlternatingMap_apply]
@@ -163,7 +163,7 @@ theorem localRep_fsSection (x₀ y : ℙ ℂ (Ambient n))
   -- is applied to vectors, so the instance paths never need to be reconciled at the CLM level
   ext v
   have hS : ∀ u : Fin n → ℂ,
-      (trivializationAt (Fin n → ℂ) (TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ))) x₀).symmL ℝ y u
+      (trivializationAt (Fin n → ℂ) (TangentSpace (𝓘(ℝ, Fin n → ℂ))) x₀).symmL ℝ y u
         = fderiv ℝ (transP (idx x₀) (idx y)) (chartFun (idx x₀) y) u :=
     fun u => congrArg (fun L => L u) hsym
   have hpt := congrArg (fun α : (Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ => α v)
@@ -173,7 +173,7 @@ theorem localRep_fsSection (x₀ y : ℙ ℂ (Ambient n))
     ContinuousLinearMap.id_apply]
   rw [fsSection, hyw]
   have hfun : (⇑((trivializationAt (Fin n → ℂ)
-        (TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ))) x₀).symmL ℝ y) ∘ v)
+        (TangentSpace (𝓘(ℝ, Fin n → ℂ))) x₀).symmL ℝ y) ∘ v)
       = (⇑(fderiv ℝ (transP (idx x₀) (idx y)) (chartFun (idx x₀) y)) ∘ v) :=
     funext fun k => hS (v k)
   exact (congrArg (fun g => (fsModelForm (transP (idx x₀) (idx y) (chartFun (idx x₀) y))) g)
@@ -195,9 +195,11 @@ derivative of `d^c fsPotential`. -/
 theorem contDiff_fsChartForm :
     ContDiff ℝ (⊤ : ℕ∞) (fsChartForm (E := EuclideanSpace ℂ (Fin n))) := by
   rw [fsChartForm_eq_alternatizeUncurryFinCLM_fderiv]
-  have hfd : ContDiff ℝ (⊤ : ℕ∞) (fderiv ℝ (dcForm (fsPotential (E := EuclideanSpace ℂ (Fin n))))) :=
+  have hfd : ContDiff ℝ (⊤ : ℕ∞) (fderiv ℝ (dcForm (fsPotential (E := EuclideanSpace ℂ (Fin n)))))
+      :=
     (contDiff_dcForm contDiff_fsPotential).fderiv_right (by simp)
-  exact (ContinuousAlternatingMap.alternatizeUncurryFinCLM ℝ (EuclideanSpace ℂ (Fin n)) ℝ).contDiff.comp
+  exact (ContinuousAlternatingMap.alternatizeUncurryFinCLM ℝ (EuclideanSpace ℂ (Fin n))
+      ℝ).contDiff.comp
     hfd
 
 /-- The model form is `C^∞`: the chart form pulled back along the linear identification
@@ -217,16 +219,16 @@ theorem contDiff_fsModelForm : ContDiff ℝ (⊤ : ℕ∞) (fsModelForm (n := n)
 /-- ★ `fsSection` is a `C^∞` section at every point: in the chart at `x₀` it is the model form
 composed with the chart (`localRep_fsSection`), and both are smooth. -/
 theorem contMDiffAt_fsSection (x₀ : ℙ ℂ (Ambient n)) :
-    ContMDiffAt (modelWithCornersSelf ℝ (Fin n → ℂ))
-      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod
-        (modelWithCornersSelf ℝ ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ∞
+    ContMDiffAt (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod
+        (𝓘(ℝ, (Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ∞
       (fun x => TotalSpace.mk' ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ) x (fsSection x)) x₀ := by
   rw [contMDiffAt_section]
-  have hchart : ContMDiffAt (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ (Fin n → ℂ)) ∞
+  have hchart : ContMDiffAt (𝓘(ℝ, Fin n → ℂ)) (𝓘(ℝ, Fin n → ℂ)) ∞
       (chartFun (idx x₀)) x₀ :=
-    contMDiffAt_extChartAt (n := ∞) (I := modelWithCornersSelf ℝ (Fin n → ℂ)) (x := x₀)
-  have h1 : ContMDiffAt (modelWithCornersSelf ℝ (Fin n → ℂ))
-      (modelWithCornersSelf ℝ ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ)) ∞
+    contMDiffAt_extChartAt (n := ∞) (I := 𝓘(ℝ, Fin n → ℂ)) (x := x₀)
+  have h1 : ContMDiffAt (𝓘(ℝ, Fin n → ℂ))
+      (𝓘(ℝ, (Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ)) ∞
       (fun y => fsModelForm (chartFun (idx x₀) y)) x₀ :=
     (contDiff_fsModelForm.contMDiff.contMDiffAt (x := chartFun (idx x₀) x₀)).comp x₀ hchart
   refine h1.congr_of_eventuallyEq ?_
@@ -235,16 +237,16 @@ theorem contMDiffAt_fsSection (x₀ : ℙ ℂ (Ambient n)) :
 
 /-- ★ `fsSection` is a `C^∞` section. -/
 theorem contMDiff_fsSection :
-    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
-      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod
-        (modelWithCornersSelf ℝ ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ∞
+    ContMDiff (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod
+        (𝓘(ℝ, (Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ∞
       (fun x : ℙ ℂ (Ambient n) =>
         TotalSpace.mk' ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ) x (fsSection x)) :=
   fun x₀ => contMDiffAt_fsSection x₀
 
 /-- ★★ **The Fubini–Study form as a `C^∞` global 2-form on `ℂℙⁿ`.** -/
 noncomputable def fsForm :
-    DifferentialForm (modelWithCornersSelf ℝ (Fin n → ℂ)) (ℙ ℂ (Ambient n)) ∞ (Fin 2) ℝ :=
+    DifferentialForm (𝓘(ℝ, Fin n → ℂ)) (ℙ ℂ (Ambient n)) ∞ (Fin 2) ℝ :=
   ⟨fsSection, contMDiff_fsSection⟩
 
 @[simp] theorem fsForm_apply (x : ℙ ℂ (Ambient n)) : fsForm x = fsSection x := rfl
@@ -256,11 +258,13 @@ The manifold is analytic (`instIsManifoldReal`) and so is the potential
 same chain at `ω` makes `fsForm` an analytic form. -/
 
 /-- ★ The chart form is analytic: `dd^c` of the analytic potential. -/
-theorem contDiff_omega_fsChartForm : ContDiff ℝ ω (fsChartForm (E := EuclideanSpace ℂ (Fin n))) := by
+theorem contDiff_omega_fsChartForm : ContDiff ℝ ω (fsChartForm (E := EuclideanSpace ℂ (Fin n)))
+    := by
   rw [fsChartForm_eq_alternatizeUncurryFinCLM_fderiv]
   have hfd : ContDiff ℝ ω (fderiv ℝ (dcForm (fsPotential (E := EuclideanSpace ℂ (Fin n))))) :=
     (contDiff_omega_dcForm contDiff_omega_fsPotential).fderiv_right le_top
-  exact (ContinuousAlternatingMap.alternatizeUncurryFinCLM ℝ (EuclideanSpace ℂ (Fin n)) ℝ).contDiff.comp
+  exact (ContinuousAlternatingMap.alternatizeUncurryFinCLM ℝ (EuclideanSpace ℂ (Fin n))
+      ℝ).contDiff.comp
     hfd
 
 /-- ★ The model form is analytic: the chart form pulled back along the linear identification. -/
@@ -278,16 +282,16 @@ theorem contDiff_omega_fsModelForm : ContDiff ℝ ω (fsModelForm (n := n)) := b
 /-- ★ `fsSection` is an analytic section at every point: the proof of `contMDiffAt_fsSection`,
 at `ω` (the chart is analytic because the manifold is). -/
 theorem contMDiffAt_omega_fsSection (x₀ : ℙ ℂ (Ambient n)) :
-    ContMDiffAt (modelWithCornersSelf ℝ (Fin n → ℂ))
-      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod
-        (modelWithCornersSelf ℝ ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ω
+    ContMDiffAt (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod
+        (𝓘(ℝ, (Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ω
       (fun x => TotalSpace.mk' ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ) x (fsSection x)) x₀ := by
   rw [contMDiffAt_section]
-  have hchart : ContMDiffAt (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ (Fin n → ℂ)) ω
+  have hchart : ContMDiffAt (𝓘(ℝ, Fin n → ℂ)) (𝓘(ℝ, Fin n → ℂ)) ω
       (chartFun (idx x₀)) x₀ :=
-    contMDiffAt_extChartAt (n := ω) (I := modelWithCornersSelf ℝ (Fin n → ℂ)) (x := x₀)
-  have h1 : ContMDiffAt (modelWithCornersSelf ℝ (Fin n → ℂ))
-      (modelWithCornersSelf ℝ ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ)) ω
+    contMDiffAt_extChartAt (n := ω) (I := 𝓘(ℝ, Fin n → ℂ)) (x := x₀)
+  have h1 : ContMDiffAt (𝓘(ℝ, Fin n → ℂ))
+      (𝓘(ℝ, (Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ)) ω
       (fun y => fsModelForm (chartFun (idx x₀) y)) x₀ :=
     (contDiff_omega_fsModelForm.contMDiff.contMDiffAt (x := chartFun (idx x₀) x₀)).comp x₀ hchart
   refine h1.congr_of_eventuallyEq ?_
@@ -296,9 +300,9 @@ theorem contMDiffAt_omega_fsSection (x₀ : ℙ ℂ (Ambient n)) :
 
 /-- ★ `fsSection` is an analytic section. -/
 theorem contMDiff_omega_fsSection :
-    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
-      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod
-        (modelWithCornersSelf ℝ ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ω
+    ContMDiff (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod
+        (𝓘(ℝ, (Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ω
       (fun x : ℙ ℂ (Ambient n) =>
         TotalSpace.mk' ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ) x (fsSection x)) :=
   fun x₀ => contMDiffAt_omega_fsSection x₀
@@ -306,9 +310,9 @@ theorem contMDiff_omega_fsSection :
 /-- ★★ **The Fubini–Study form is analytic**: the section of `fsForm` is `C^ω`, not merely `C^∞` —
 the manifold is analytic and so is the potential. -/
 theorem contMDiff_omega_fsForm :
-    ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ))
-      ((modelWithCornersSelf ℝ (Fin n → ℂ)).prod
-        (modelWithCornersSelf ℝ ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ω
+    ContMDiff (𝓘(ℝ, Fin n → ℂ))
+      ((𝓘(ℝ, Fin n → ℂ)).prod
+        (𝓘(ℝ, (Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ))) ω
       (fun x : ℙ ℂ (Ambient n) =>
         TotalSpace.mk' ((Fin n → ℂ) [⋀^Fin 2]→L[ℝ] ℝ) x (fsForm x)) :=
   contMDiff_omega_fsSection
@@ -316,7 +320,7 @@ theorem contMDiff_omega_fsForm :
 /-- ★★ **The Fubini–Study form as an analytic global 2-form on `ℂℙⁿ`**: the section of `fsForm`,
 as a term of the `ω` type. -/
 noncomputable def fsFormAnalytic :
-    DifferentialForm (modelWithCornersSelf ℝ (Fin n → ℂ)) (ℙ ℂ (Ambient n)) ω (Fin 2) ℝ :=
+    DifferentialForm (𝓘(ℝ, Fin n → ℂ)) (ℙ ℂ (Ambient n)) ω (Fin 2) ℝ :=
   ⟨fsSection, contMDiff_omega_fsSection⟩
 
 @[simp] theorem fsFormAnalytic_apply (x : ℙ ℂ (Ambient n)) : fsFormAnalytic x = fsForm x := rfl
@@ -372,7 +376,7 @@ theorem fsForm_ne_zero (hn : 0 < n) : (fsForm (n := n)) ≠ 0 := by
     have := congrArg (fun v : EuclideanSpace ℂ (Fin n) => v ⟨0, hn⟩) h0
     simp [he_def] at this
   -- evaluate both sides at the chart origin on the pair (e, i·e), read in the `Pi` model
-  have h1 := congrArg (fun s : DifferentialForm (modelWithCornersSelf ℝ (Fin n → ℂ))
+  have h1 := congrArg (fun s : DifferentialForm (𝓘(ℝ, Fin n → ℂ))
       (ℙ ℂ (Ambient n)) ∞ (Fin 2) ℝ =>
     s (origin 0) ![WithLp.ofLp e, WithLp.ofLp (Complex.I • e)]) h
   simp only [ContMDiffSection.coe_zero, Pi.zero_apply] at h1
@@ -435,7 +439,7 @@ end Closed
 
 /-- **The top power of the Fubini–Study form**, a `2n`-form on `ℂℙⁿ`. -/
 noncomputable def fsTopForm (n : ℕ) :
-    DifferentialForm (modelWithCornersSelf ℝ (Fin n → ℂ)) (ℙ ℂ (Ambient n)) ∞ (Fin (2 * n)) ℝ :=
+    DifferentialForm (𝓘(ℝ, Fin n → ℂ)) (ℙ ℂ (Ambient n)) ∞ (Fin (2 * n)) ℝ :=
   DifferentialForm.wedgePow (fsForm (n := n)) n
 
 

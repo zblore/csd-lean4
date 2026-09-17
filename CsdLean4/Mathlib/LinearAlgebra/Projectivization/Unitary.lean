@@ -14,7 +14,8 @@ public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 **Category:** 1-Mathlib (CSD-free Mathlib upstream candidate).
 
-Builds on Mathlib's `Projectivization.instMulAction` (`Mathlib/LinearAlgebra/Projectivization/Action.lean`,
+Builds on Mathlib's `Projectivization.instMulAction`
+(`Mathlib/LinearAlgebra/Projectivization/Action.lean`,
 here with `G := V ≃ₗ[K] V`; `mapEquiv_smul_eq` in `Projectivization/Topology.lean` reads it on
 representatives) and Mathlib's `Matrix.UnitaryGroup` to produce the natural action of the matrix
 unitary group on the projective space of Euclidean space.
@@ -45,7 +46,8 @@ finite-measure normalisation `invariant_measure_uniqueness_cpn`
 for the `ℂℙ^{N-1}` / `U(N)` instantiation, consumed directly by the source
 repository's concrete measure bridges, which therefore cite no axiom at that
 site. (Historically this was the proved concrete realisation of an abstract
-invariant-measure-uniqueness axiom of that repository; that axiom — together with the abstract `measure_bridge` lemma it
+invariant-measure-uniqueness axiom of that repository; that axiom — together with the abstract
+`measure_bridge` lemma it
 served — was **removed 2026-06-04**, since nothing downstream used the abstract
 statement. The concrete fact here is all that was ever load-bearing.)
 
@@ -119,7 +121,8 @@ lemma toEuclideanLinearEquiv_mul (A B : Matrix.unitaryGroup (Fin N) ℂ) :
     toEuclideanLinearEquiv (A * B)
       = toEuclideanLinearEquiv A * toEuclideanLinearEquiv B := by
   apply LinearEquiv.toLinearMap_injective
-  -- LinearMap-level goal: toEuclideanLin (A*B).val = (toEuclideanLin A.val) ∘ₗ (toEuclideanLin B.val)
+  -- LinearMap-level goal: toEuclideanLin (A*B).val = (toEuclideanLin A.val) ∘ₗ (toEuclideanLin
+  -- B.val)
   -- The LinearEquiv * coerces to the LinearMap * = LinearMap.comp (= ∘ₗ).
   show Matrix.toEuclideanLin ((A * B).val : Matrix (Fin N) (Fin N) ℂ)
       = (Matrix.toEuclideanLin (A.val : Matrix (Fin N) (Fin N) ℂ)) ∘ₗ
@@ -139,7 +142,8 @@ noncomputable def toEuclideanLinearEquivHom :
 
 /-- `Matrix.unitaryGroup (Fin N) ℂ` acts on `ℙ ℂ (EuclideanSpace ℂ (Fin N))`
 via the unitary action on the underlying Hilbert space, transported
-through Mathlib's `Projectivization.instMulAction` (with `G := V ≃ₗ[ℂ] V`) via `MulAction.compHom`. -/
+through Mathlib's `Projectivization.instMulAction` (with `G := V ≃ₗ[ℂ] V`) via `MulAction.compHom`.
+-/
 noncomputable instance instProjectivizationMulAction :
     MulAction (Matrix.unitaryGroup (Fin N) ℂ)
       (ℙ ℂ (EuclideanSpace ℂ (Fin N))) :=

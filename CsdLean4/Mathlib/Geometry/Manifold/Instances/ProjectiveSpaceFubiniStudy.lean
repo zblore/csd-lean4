@@ -65,7 +65,8 @@ open Kahler
 variable {n : ℕ}
 
 /-- The chart transition `i → j`, read on the Euclidean model. -/
-noncomputable def transE (i j : Fin (n + 1)) : EuclideanSpace ℂ (Fin n) → EuclideanSpace ℂ (Fin n) :=
+noncomputable def transE (i j : Fin (n + 1)) : EuclideanSpace ℂ (Fin n) → EuclideanSpace ℂ (Fin n)
+    :=
   fun z => WithLp.toLp 2 (coordRatio j (insertOne i (WithLp.ofLp z)))
 
 lemma norm_sq_insertOne (i : Fin (n + 1)) (w : Fin n → ℂ) :
@@ -74,7 +75,8 @@ lemma norm_sq_insertOne (i : Fin (n + 1)) (w : Fin n → ℂ) :
   simp [insertOne_apply_same, insertOne_apply_succAbove]
 
 lemma norm_sq_toLp_coordRatio (j : Fin (n + 1)) (v : Ambient n) :
-    ‖(WithLp.toLp 2 (coordRatio j v) : EuclideanSpace ℂ (Fin n))‖ ^ 2 = (‖v‖ ^ 2 - ‖v j‖ ^ 2) / ‖v j‖ ^ 2 := by
+    ‖(WithLp.toLp 2 (coordRatio j v) : EuclideanSpace ℂ (Fin n))‖ ^ 2 = (‖v‖ ^ 2 - ‖v j‖ ^ 2) / ‖v
+        j‖ ^ 2 := by
   rw [EuclideanSpace.norm_sq_eq, EuclideanSpace.norm_sq_eq (x := v), Fin.sum_univ_succAbove _ j]
   simp only [coordRatio, norm_div, div_pow]
   rw [← Finset.sum_div]
@@ -95,7 +97,8 @@ lemma fsPotential_toLp_coordRatio (j : Fin (n + 1)) (v : Ambient n) (hv : v j �
   rw [this, Real.log_div hv0.ne' (by positivity), Real.log_pow ‖v j‖ 2]
   push_cast; ring
 
-lemma contDiffAt_transE (i j : Fin (n + 1)) {z : EuclideanSpace ℂ (Fin n)} (hz : insertOne i (WithLp.ofLp z) j ≠ 0) :
+lemma contDiffAt_transE (i j : Fin (n + 1)) {z : EuclideanSpace ℂ (Fin n)} (hz : insertOne i
+    (WithLp.ofLp z) j ≠ 0) :
     ContDiffAt ℂ ⊤ (transE i j) z := by
   have hopen : IsOpen {w : Fin n → ℂ | insertOne i w j ≠ 0} :=
     isOpen_ne_fun (by fun_prop : Continuous fun w : Fin n → ℂ => insertOne i w j) continuous_const
@@ -131,7 +134,8 @@ theorem fsChartForm_transE (i j : Fin (n + 1)) {z : EuclideanSpace ℂ (Fin n)}
     (hz : insertOne i (WithLp.ofLp z) j ≠ 0) :
     (fsChartForm (transE i j z)).compContinuousLinearMap (fderiv ℝ (transE i j) z)
       = fsChartForm z := by
-  have hcomp := ddcForm_comp (K := fsPotential (E := EuclideanSpace ℂ (Fin n))) (τ := transE i j) contDiff_fsPotential
+  have hcomp := ddcForm_comp (K := fsPotential (E := EuclideanSpace ℂ (Fin n))) (τ := transE i j)
+      contDiff_fsPotential
     (contDiffAt_transE i j hz)
   rw [show fsChartForm (transE i j z) = ddcForm fsPotential (transE i j z) from rfl, ← hcomp]
   by_cases hij : j = i
@@ -143,7 +147,8 @@ theorem fsChartForm_transE (i j : Fin (n + 1)) {z : EuclideanSpace ℂ (Fin n)}
     have hL : ∀ y : EuclideanSpace ℂ (Fin n), L y = insertOne i (WithLp.ofLp y) j := by
       intro y; rw [← hk]; simp [hLdef, insertOne_apply_succAbove]
     have hz' : L z ≠ 0 := by rw [hL]; exact hz
-    have hopen : IsOpen {y : EuclideanSpace ℂ (Fin n) | L y ≠ 0} := isOpen_ne_fun L.continuous continuous_const
+    have hopen : IsOpen {y : EuclideanSpace ℂ (Fin n) | L y ≠ 0} := isOpen_ne_fun L.continuous
+        continuous_const
     have hev : (fsPotential ∘ transE i j) =ᶠ[𝓝 z]
         (fsPotential - (2 : ℝ) • fun y : EuclideanSpace ℂ (Fin n) => Real.log ‖L y‖) := by
       filter_upwards [hopen.mem_nhds hz'] with y hy
@@ -180,7 +185,8 @@ noncomputable def transP (i j : Fin (n + 1)) : (Fin n → ℂ) → (Fin n → �
   fun w => coordRatio j (insertOne i w)
 
 lemma transE_eq (i j : Fin (n + 1)) :
-    transE (n := n) i j = toLpCLM ∘ transP i j ∘ (PiLp.continuousLinearEquiv 2 ℝ (fun _ : Fin n => ℂ)) := by
+    transE (n := n) i j = toLpCLM ∘ transP i j ∘ (PiLp.continuousLinearEquiv 2 ℝ (fun _ : Fin n
+        => ℂ)) := by
   funext z; rfl
 
 /-- ★ B3c-1: **chart invariance on the `Pi` model.** -/
@@ -195,12 +201,14 @@ theorem fsModelForm_transP (i j : Fin (n + 1)) {w : Fin n → ℂ} (hw : insertO
   have hP : DifferentiableAt ℝ (transP i j) w := by
     have := ((contDiffOn_transition i j).contDiffAt (hopen.mem_nhds hw)).restrict_scalars ℝ
     exact this.differentiableAt (by simp)
-  -- fderiv of transE = toLpCLM ∘L fderiv transP ∘L e, at the point toLpCLM w (where e ∘ toLpCLM = id)
+  -- fderiv of transE = toLpCLM ∘L fderiv transP ∘L e, at the point toLpCLM w (where e ∘ toLpCLM =
+  -- id)
   have hew : e (toLpCLM w) = w := e.apply_symm_apply w
   have hd : fderiv ℝ (transE i j) (toLpCLM w)
       = (toLpCLM : (Fin n → ℂ) →L[ℝ] _).comp ((fderiv ℝ (transP i j) w).comp (e : _ →L[ℝ] _)) := by
     rw [transE_eq]
-    have h1 : HasFDerivAt (e : EuclideanSpace ℂ (Fin n) → (Fin n → ℂ)) (e : _ →L[ℝ] _) (toLpCLM w) :=
+    have h1 : HasFDerivAt (e : EuclideanSpace ℂ (Fin n) → (Fin n → ℂ)) (e : _ →L[ℝ] _) (toLpCLM w)
+        :=
       e.hasFDerivAt
     have h2 : HasFDerivAt (transP i j) (fderiv ℝ (transP i j) w) (e (toLpCLM w)) := by
       rw [hew]; exact hP.hasFDerivAt

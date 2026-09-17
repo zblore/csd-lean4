@@ -11,7 +11,8 @@ public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
 /-!
 # Flat closedness of the Fubini–Study fundamental form: `dω = 0` on the tangent model
 
-**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; the source repository's terms register records what is backed and what is not.
+**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; the source
+repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free; differential forms on normed spaces).
 

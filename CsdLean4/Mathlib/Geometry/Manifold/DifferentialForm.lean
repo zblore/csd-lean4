@@ -13,7 +13,8 @@ public import Mathlib.Geometry.Manifold.VectorBundle.Tangent
 # Differential forms on a manifold
 
 **TERM-SCOPE(Kahler)** — the phrase "top-power identity" appears below in the *restricted*
-sense the source repository's terms register records, and in the negative: this module makes it sayable and leaves it
+sense the source repository's terms register records, and in the negative: this module makes it
+sayable and leaves it
 unproved. (Repository bookkeeping; it goes with the `References` block if sent upstream.)
 
 **Category:** 1-Mathlib (CSD-free; upstream target
@@ -25,7 +26,7 @@ that makes "smooth" mean anything — the `ContMDiffVectorBundle` instance for t
 alternating-map bundle, built in
 [`VectorBundle/AlternatingMap.lean`](VectorBundle/AlternatingMap.lean) on top of the pullback
 analyticity in
-[`Analysis/Normed/Module/Alternating/Pullback.lean`](../../Analysis/Normed/Module/Alternating/Pullback.lean).
+`Analysis/Normed/Module/Alternating/Pullback.lean`.
 
 * `DifferentialForm` — the type: a `C^n` section of `x ↦ TₓM [⋀^ι]→L[𝕜] G`.
 
@@ -55,7 +56,8 @@ is not proved anywhere.
 ⚠️ **No physics.** Nothing downstream waits on any of it: the geometry the projective-space
 modules need is done on the ambient space and in charts.
 
-**Provenance and references.** The Mathlib-gaps register (Kahler / symplectic manifold API, step (2a));
+**Provenance and references.** The Mathlib-gaps register (Kahler / symplectic manifold API, step
+(2a));
 the backlog (XL, "Manifold exterior calculus");
 `CsdLean4/Mathlib/Geometry/Manifold/VectorBundle/AlternatingMap.lean` (the instance that makes
 this well-formed); `Mathlib/Analysis/Calculus/DifferentialForm/Basic.lean` (the flat case).

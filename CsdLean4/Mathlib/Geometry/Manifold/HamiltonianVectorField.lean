@@ -18,7 +18,8 @@ public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.GlobalFlow
 # Hamiltonian vector fields on a manifold
 
 **TERM-SCOPE(Hamiltonian)** **TERM-SCOPE(Kahler)** — this module uses the *restricted* senses of
-"Hamiltonian" and "Kahler"; the source repository's terms register records what is backed and what is not.
+"Hamiltonian" and "Kahler"; the source repository's terms register records what is backed and what
+is not.
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`, where at
 the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
@@ -26,9 +27,11 @@ the pin the words "Hamiltonian", "moment map" and "Poisson" do not occur).
 The defining equation of a Hamiltonian vector field,
 `ι_X ω = dH`, at manifold level, the pointwise facts that follow from it by alternation and
 linearity alone, its existence and uniqueness from non-degeneracy, its smoothness, its integral
-curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähler and Kähler predicates.
+curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähler and Kähler
+predicates.
 
-* `DifferentialForm.interiorProduct ω X` — the interior product `ι_X ω`, `x ↦ (ω x).curryLeft (X x)`,
+* `DifferentialForm.interiorProduct ω X` — the interior product `ι_X ω`,
+  `x ↦ (ω x).curryLeft (X x)`,
   a 1-form *family* (`interiorProduct_apply`);
 * `DifferentialForm.IsHamiltonianVectorField ω X H` — **`ω x (X x, v) = dH_x v` at every point**,
   with `dH_x = mfderiv 𝓘(ℝ, E) 𝓘(ℝ, ℝ) H x`; a Prop demanding the equation, nothing else;
@@ -63,8 +66,10 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
   of the tangent bundle**; bundled as `hamiltonianVectorFieldSection`, and
   `IsSymplectic.contMDiff_hamiltonianVectorField`;
 * **Q29(a), global flows.** ★★ `IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField` — on a
-  compact manifold the Hamiltonian vector field of a `C^∞` energy has a global integral curve through
-  every point, so its flow `integralFlow` (`IntegralCurve/GlobalFlow.lean`) exists with the group law
+  compact manifold the Hamiltonian vector field of a `C^∞` energy has a global integral curve
+  through
+  every point, so its flow `integralFlow` (`IntegralCurve/GlobalFlow.lean`) exists with the group
+  law
   (joint continuity in `(t, x)` is proved separately, in `IntegralCurve/FlowContinuity.lean`, which
   this module does not import);
 * **G4, integral curves.** ★ `h.hasDerivAt_comp_of_isMIntegralCurve` and ★★
@@ -85,7 +90,8 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
   G3 at `ω`, on an analytic manifold (`contDiffAt_omega_localRep` for the local representative);
 * **G14a, Kähler.** `IsKahler β J J₀` — almost Kähler, and `J` is the model's complex structure
   `J₀` through the tangent trivialisation of every chart (`J_symmL`), i.e. integrable in the atlas
-  sense; ★ `IsKahler.apply_eq` (`J y = J₀` in `y`'s chart), ★ `IsKahler.fderiv_chart_transition_comm`
+  sense; ★ `IsKahler.apply_eq` (`J y = J₀` in `y`'s chart), ★
+  `IsKahler.fderiv_chart_transition_comm`
   (**every chart transition is holomorphic**: its derivative commutes with `J₀`), `IsKahler.J₀_J₀`.
   Its inhabitant on `ℂℙⁿ` is ★★★ `fsForm_isKahler` (same module as G7's);
 * **G15, `J` as a section.** ★★ `IsKahler.contMDiff_hom_section` — **the complex structure of a
@@ -95,7 +101,8 @@ curves, the passage to the closed 1-form `d(ι_X ω) = 0`, and the almost Kähle
   `[JV, JW] − J[JV, W] − J[V, JW] − [V, W]` with Mathlib's `VectorField.mlieBracket` — and ★★★
   `IsKahler.nijenhuis_eq_zero`: **on a Kähler manifold it vanishes** on vector fields differentiable
   at the point (every bracket is the flat bracket of the chart pullbacks, `J` reads as the constant
-  `J₀` there, and the flat expression for a constant `J₀` with `J₀² = -1` is zero). The easy direction
+  `J₀` there, and the flat expression for a constant `J₀` with `J₀² = -1` is zero). The easy
+  direction
   of Newlander–Nirenberg; the converse is not stated. On `ℂℙⁿ`: ★★ `nijenhuis_fsJ_eq_zero`.
 
 ## Honest scope
@@ -109,9 +116,12 @@ which is
 meaningful when that family is smooth — and for `hamiltonianVectorField` of a `C^∞` energy it now
 is (G3) — and junk otherwise, exactly as `fderiv` of a non-differentiable function is junk.
 
-⚠️ **Kähler in the atlas sense, with the tensor sense derived.** `IsKahler β J J₀` is `IsAlmostKahler`
-plus integrability *by the atlas*: `J` is the model's `J₀` through every chart's tangent trivialisation,
-which makes every chart transition holomorphic (`IsKahler.fderiv_chart_transition_comm`). That is the
+⚠️ **Kähler in the atlas sense, with the tensor sense derived.** `IsKahler β J J₀` is
+`IsAlmostKahler`
+plus integrability *by the atlas*: `J` is the model's `J₀` through every chart's tangent
+trivialisation,
+which makes every chart transition holomorphic (`IsKahler.fderiv_chart_transition_comm`). That is
+the
 textbook definition. The tensor formulation follows: the Nijenhuis tensor vanishes
 (`IsKahler.nijenhuis_eq_zero`, G14b). The converse — `N_J = 0` implies a holomorphic atlas, the
 Newlander–Nirenberg theorem — is not stated. `J` as a smooth section of the endomorphism bundle is
@@ -119,9 +129,11 @@ G15, `IsKahler.contMDiff_hom_section`, stated for a `J` supplied as continuous l
 predicate's `J` is a family of functions), and `nijenhuis` takes the family.
 
 ⚠️ **The global flow exists on a compact manifold (Q29(a), 2026-09-11)** —
-`IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField` and `integralFlow` with `integralFlow_add`
+`IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField` and `integralFlow` with
+`integralFlow_add`
 (`IntegralCurve/GlobalFlow.lean`; Mathlib has no flows of vector fields on manifolds,
-MATHLIB-ABSENT(IsMIntegralCurve.flow)). Not stated: joint continuity of the flow in `(t, x)` (Q29(a′)),
+MATHLIB-ABSENT(IsMIntegralCurve.flow)). Not stated: joint continuity of the flow in `(t, x)`
+(Q29(a′)),
 and that the time-`t` maps preserve the symplectic volume .
 
 ⚠️ **The converse of G11 is false and not stated.** A locally Hamiltonian field need not be
@@ -130,14 +142,17 @@ decides it. Nothing here touches that.
 
 ⚠️ **No inhabitant on `ℂℙⁿ` here.** The moment-map equation for the torus action is brick G6.
 
-**Provenance and references.** The generator-layer plan (G1, G2, G3, G4, G7, G8, G11, G14a, G14b, G15, G19);
-`Mathlib/Geometry/Manifold/VectorField/LieBracket.lean` (`mlieBracket`, `mlieBracketWithin_apply`); `Geometry/Manifold/SymplecticForm.lean`
+**Provenance and references.** The generator-layer plan (G1, G2, G3, G4, G7, G8, G11, G14a, G14b,
+G15, G19);
+`Mathlib/Geometry/Manifold/VectorField/LieBracket.lean` (`mlieBracket`, `mlieBracketWithin_apply`);
+`Geometry/Manifold/SymplecticForm.lean`
 (`IsSymplectic`); `Geometry/Manifold/ExteriorDerivative.lean` (`mextDerivFamily`, `zeroFormFamily`,
 `toFlat_mextDerivFamily_zeroFormFamily`, `mextDeriv_mextDeriv`);
 `Analysis/InnerProductSpace/HamiltonianVectorField.lean` (the linear duality this lifts);
 `RecordLayer/CellLawForced.lean` (`IsPhaseHamiltonian`, the linear moment-map equation);
 `Mathlib/Analysis/Normed/Module/Alternating/Curry.lean`;
-`Mathlib/Geometry/Manifold/IntegralCurve/ExistUnique.lean` (`exists_isMIntegralCurveAt_of_contMDiffAt`,
+`Mathlib/Geometry/Manifold/IntegralCurve/ExistUnique.lean`
+(`exists_isMIntegralCurveAt_of_contMDiffAt`,
 `isMIntegralCurve_eq_of_contMDiff`); the terms register (Hamiltonian);
 the completed-work ledger.
 -/
@@ -156,43 +171,44 @@ namespace DifferentialForm
 
 /-! ### The interior product -/
 
-/-- The interior product `ι_X α` of a 2-form family with a vector field: `(ι_X α) x v = α x (X x, v)`,
+/-- The interior product `ι_X α` of a 2-form family with a vector field:
+`(ι_X α) x v = α x (X x, v)`,
 a 1-form family. Smoothness is not part of the definition. -/
 def interiorProduct
-    (α : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial M ℝ x)
-    (X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x) :
-    ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin 1]→L[ℝ] Bundle.Trivial M ℝ x :=
+    (α : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial M ℝ x)
+    (X : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x) :
+    ∀ x : M, TangentSpace (𝓘(ℝ, E)) x [⋀^Fin 1]→L[ℝ] Bundle.Trivial M ℝ x :=
   fun x => (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) (X x) : E [⋀^Fin 1]→L[ℝ] ℝ)
 
 theorem interiorProduct_apply
-    (α : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial M ℝ x)
-    (X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x) (x : M)
-    (v : Fin 1 → TangentSpace (modelWithCornersSelf ℝ E) x) :
+    (α : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial M ℝ x)
+    (X : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x) (x : M)
+    (v : Fin 1 → TangentSpace (𝓘(ℝ, E)) x) :
     interiorProduct α X x v = α x (Matrix.vecCons (X x) v) :=
   ContinuousAlternatingMap.curryLeft_apply_apply (E := E) (F := ℝ) (α x) (X x) v
 
 /-! ### Linearity of a 2-form family in its first slot, through `curryLeft` -/
 
-variable (α : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial M ℝ x)
+variable (α : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial M ℝ x)
 
 /-- `curryLeft` evaluated on a single vector is the 2-form on the pair. -/
-theorem curryLeft_apply_vecCons (x : M) (u v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+theorem curryLeft_apply_vecCons (x : M) (u v : TangentSpace (𝓘(ℝ, E)) x) :
     (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) u) ![v] = α x ![u, v] :=
   ContinuousAlternatingMap.curryLeft_apply_apply (E := E) (F := ℝ) (α x) u ![v]
 
-theorem apply_sub_left (x : M) (a b v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+theorem apply_sub_left (x : M) (a b v : TangentSpace (𝓘(ℝ, E)) x) :
     α x ![a - b, v] = α x ![a, v] - α x ![b, v] :=
   (α x).map_vecCons_sub a b ![v]
 
-theorem apply_add_left (x : M) (a b v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+theorem apply_add_left (x : M) (a b v : TangentSpace (𝓘(ℝ, E)) x) :
     α x ![a + b, v] = α x ![a, v] + α x ![b, v] :=
   (α x).vecCons_add ![v] a b
 
-theorem apply_smul_left (x : M) (c : ℝ) (a v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+theorem apply_smul_left (x : M) (c : ℝ) (a v : TangentSpace (𝓘(ℝ, E)) x) :
     α x ![c • a, v] = c • α x ![a, v] :=
   (α x).vecCons_smul ![v] c a
 
-theorem apply_zero_left (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+theorem apply_zero_left (x : M) (v : TangentSpace (𝓘(ℝ, E)) x) :
     α x ![0, v] = 0 :=
   calc α x ![0, v]
       = (ContinuousAlternatingMap.curryLeft (E := E) (F := ℝ) (α x) 0) ![v] :=
@@ -210,19 +226,19 @@ equation; nothing about smoothness or existence is asserted by the name. Since `
 where `H` is not differentiable, a nowhere-differentiable `H` has the zero field as a
 "Hamiltonian vector field"; every consumer that needs more adds `MDifferentiable H`. -/
 def IsHamiltonianVectorField
-    (X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x) (H : M → ℝ) : Prop :=
-  ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x),
-    (α x ![X x, v] : ℝ) = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x v
+    (X : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x) (H : M → ℝ) : Prop :=
+  ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x),
+    (α x ![X x, v] : ℝ) = mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H x v
 
 namespace IsHamiltonianVectorField
 
-variable {α} {X Y : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H K : M → ℝ}
+variable {α} {X Y : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x} {H K : M → ℝ}
 
 /-- `ι_X α = dH` as 1-form families. -/
 theorem interiorProduct_eq (h : IsHamiltonianVectorField α X H) (x : M)
-    (v : Fin 1 → TangentSpace (modelWithCornersSelf ℝ E) x) :
+    (v : Fin 1 → TangentSpace (𝓘(ℝ, E)) x) :
     (interiorProduct α X x v : ℝ)
-      = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x (v 0) := by
+      = mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H x (v 0) := by
   rw [interiorProduct_apply, ← h x (v 0)]
   congr 1
   funext i
@@ -230,7 +246,7 @@ theorem interiorProduct_eq (h : IsHamiltonianVectorField α X H) (x : M)
 
 /-- ★ **Infinitesimal energy conservation**: `dH (X) = α (X, X) = 0`. -/
 theorem mfderiv_apply_self (h : IsHamiltonianVectorField α X H) (x : M) :
-    mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x (X x) = 0 := by
+    mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H x (X x) = 0 := by
   rw [← h x (X x)]
   exact (α x).map_eq_zero_of_eq ![X x, X x] (i := 0) (j := 1) rfl (by decide)
 
@@ -238,7 +254,7 @@ theorem mfderiv_apply_self (h : IsHamiltonianVectorField α X H) (x : M) :
 same `H` agree there. -/
 theorem eq_of_nondegenerate (h : IsHamiltonianVectorField α X H)
     (h' : IsHamiltonianVectorField α Y H) (x : M)
-    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0) :
+    (hnd : ∀ v : TangentSpace (𝓘(ℝ, E)) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0) :
     X x = Y x := by
   by_contra hne
   obtain ⟨w, hw⟩ := hnd (X x - Y x) (sub_ne_zero.2 hne)
@@ -249,8 +265,8 @@ theorem eq_of_nondegenerate (h : IsHamiltonianVectorField α X H)
 
 /-- Linearity in `H`: the sum of the fields is Hamiltonian for the sum of the energies. -/
 theorem add (hX : IsHamiltonianVectorField α X H) (hY : IsHamiltonianVectorField α Y K)
-    (hH : ∀ x, MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x)
-    (hK : ∀ x, MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) K x) :
+    (hH : ∀ x, MDifferentiableAt (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H x)
+    (hK : ∀ x, MDifferentiableAt (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) K x) :
     IsHamiltonianVectorField α (fun x => X x + Y x) (H + K) := by
   intro x v
   rw [mfderiv_add (hH x) (hK x), apply_add_left]
@@ -258,7 +274,7 @@ theorem add (hX : IsHamiltonianVectorField α X H) (hY : IsHamiltonianVectorFiel
 
 /-- Linearity in `H`: scaling. -/
 theorem smul (hX : IsHamiltonianVectorField α X H) (c : ℝ)
-    (hH : ∀ x, MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x) :
+    (hH : ∀ x, MDifferentiableAt (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H x) :
     IsHamiltonianVectorField α (fun x => c • X x) (c • H) := by
   intro x v
   rw [const_smul_mfderiv (hH x) c, apply_smul_left]
@@ -273,8 +289,8 @@ theorem const (c : ℝ) : IsHamiltonianVectorField α (fun _ => 0) (fun _ => c) 
 /-- Two Hamiltonians of the same field for the same form have the same derivative everywhere. -/
 theorem mfderiv_eq (h : IsHamiltonianVectorField α X H) (h' : IsHamiltonianVectorField α X K)
     (x : M) :
-    mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x
-      = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) K x :=
+    mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H x
+      = mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) K x :=
   ContinuousLinearMap.ext fun v => (h x v).symm.trans (h' x v)
 
 end IsHamiltonianVectorField
@@ -287,12 +303,12 @@ theorem update_vecCons_one {β : Type*} (v w z : β) :
   funext i
   fin_cases i <;> simp
 
-theorem apply_add_right (x : M) (v a b : TangentSpace (modelWithCornersSelf ℝ E) x) :
+theorem apply_add_right (x : M) (v a b : TangentSpace (𝓘(ℝ, E)) x) :
     α x ![v, a + b] = α x ![v, a] + α x ![v, b] := by
   have h := (α x).map_update_add ![v, a] 1 a b
   simpa only [update_vecCons_one] using h
 
-theorem apply_smul_right (x : M) (c : ℝ) (v a : TangentSpace (modelWithCornersSelf ℝ E) x) :
+theorem apply_smul_right (x : M) (c : ℝ) (v a : TangentSpace (𝓘(ℝ, E)) x) :
     α x ![v, c • a] = c • α x ![v, a] := by
   have h := (α x).map_update_smul ![v, a] 1 c a
   simpa only [update_vecCons_one] using h
@@ -306,12 +322,12 @@ def flatAt (x : M) : E →ₗ[ℝ] Module.Dual ℝ E :=
     (fun v a b => apply_add_right α x v a b)
     (fun c v a => apply_smul_right α x c v a)
 
-theorem flatAt_apply (x : M) (v w : TangentSpace (modelWithCornersSelf ℝ E) x) :
+theorem flatAt_apply (x : M) (v w : TangentSpace (𝓘(ℝ, E)) x) :
     flatAt α x v w = α x ![v, w] := rfl
 
 /-- Non-degeneracy at `x` is injectivity of the flat map. -/
 theorem flatAt_injective (x : M)
-    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0) :
+    (hnd : ∀ v : TangentSpace (𝓘(ℝ, E)) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0) :
     Function.Injective (flatAt α x) := by
   refine (injective_iff_map_eq_zero _).2 fun v hv => ?_
   by_contra hne
@@ -326,27 +342,27 @@ variable [FiniteDimensional ℝ E]
 (`flatAt_injective`), hence bijective since `E` and its dual have the same finite dimension
 (`Subspace.dual_finrank_eq`, `LinearMap.linearEquivOfInjective`). -/
 def flatEquiv (x : M)
-    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0) :
+    (hnd : ∀ v : TangentSpace (𝓘(ℝ, E)) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0) :
     E ≃ₗ[ℝ] Module.Dual ℝ E :=
   LinearMap.linearEquivOfInjective (flatAt α x) (flatAt_injective α x hnd)
     Subspace.dual_finrank_eq.symm
 
 theorem flatEquiv_apply (x : M)
-    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
+    (hnd : ∀ v : TangentSpace (𝓘(ℝ, E)) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
     (v : E) : flatEquiv α x hnd v = flatAt α x v :=
   LinearMap.linearEquivOfInjective_apply _ _ _
 
 /-- **The Hamiltonian vector of a covector**: the unique tangent vector `v` at `x` with
 `α x (v, ·) = L`, where `α` is non-degenerate at `x`. -/
 def hamiltonianVectorAt (x : M)
-    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
-    (L : E →L[ℝ] ℝ) : TangentSpace (modelWithCornersSelf ℝ E) x :=
+    (hnd : ∀ v : TangentSpace (𝓘(ℝ, E)) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
+    (L : E →L[ℝ] ℝ) : TangentSpace (𝓘(ℝ, E)) x :=
   (flatEquiv α x hnd).symm (L : E →ₗ[ℝ] ℝ)
 
 /-- ★ The defining property: `α x (X_L, w) = L w`. -/
 theorem apply_hamiltonianVectorAt (x : M)
-    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
-    (L : E →L[ℝ] ℝ) (w : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    (hnd : ∀ v : TangentSpace (𝓘(ℝ, E)) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
+    (L : E →L[ℝ] ℝ) (w : TangentSpace (𝓘(ℝ, E)) x) :
     (α x ![hamiltonianVectorAt α x hnd L, w] : ℝ) = L w := by
   have h := LinearMap.congr_fun ((flatEquiv α x hnd).apply_symm_apply (L : E →ₗ[ℝ] ℝ)) w
   rw [flatEquiv_apply] at h
@@ -354,8 +370,8 @@ theorem apply_hamiltonianVectorAt (x : M)
 
 /-- Uniqueness: any tangent vector with `α x (v, ·) = L` is the Hamiltonian vector of `L`. -/
 theorem eq_hamiltonianVectorAt (x : M)
-    (hnd : ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
-    (L : E →L[ℝ] ℝ) {v : TangentSpace (modelWithCornersSelf ℝ E) x}
+    (hnd : ∀ v : TangentSpace (𝓘(ℝ, E)) x, v ≠ 0 → ∃ w, α x ![v, w] ≠ 0)
+    (L : E →L[ℝ] ℝ) {v : TangentSpace (𝓘(ℝ, E)) x}
     (hv : ∀ w, (α x ![v, w] : ℝ) = L w) : v = hamiltonianVectorAt α x hnd L := by
   apply (flatEquiv α x hnd).injective
   rw [hamiltonianVectorAt, LinearEquiv.apply_symm_apply]
@@ -364,15 +380,15 @@ theorem eq_hamiltonianVectorAt (x : M)
 /-- ★★ **The Hamiltonian vector field of `H`**, for a 2-form family non-degenerate at every point:
 `x ↦ (ω♭ₓ)⁻¹ (dH_x)`. -/
 def hamiltonianVectorField
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (H : M → ℝ) (x : M) : TangentSpace (modelWithCornersSelf ℝ E) x :=
+    (H : M → ℝ) (x : M) : TangentSpace (𝓘(ℝ, E)) x :=
   hamiltonianVectorAt α x (hnd x)
-    (mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x)
+    (mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H x)
 
 /-- ★★ **Existence**: the constructed field is a Hamiltonian vector field of `H`. -/
 theorem hamiltonianVectorField_isHamiltonianVectorField
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
     (H : M → ℝ) : IsHamiltonianVectorField α (hamiltonianVectorField α hnd H) H :=
   fun x v => apply_hamiltonianVectorAt α x (hnd x) _ v
@@ -380,9 +396,9 @@ theorem hamiltonianVectorField_isHamiltonianVectorField
 variable {α} in
 /-- **Uniqueness**: every Hamiltonian vector field of `H` is the constructed one. -/
 theorem IsHamiltonianVectorField.eq_hamiltonianVectorField
-    {X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : M → ℝ}
+    {X : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x} {H : M → ℝ}
     (h : IsHamiltonianVectorField α X H)
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0) :
     X = hamiltonianVectorField α hnd H :=
   funext fun x => eq_hamiltonianVectorAt α x (hnd x) _ (h x)
@@ -392,18 +408,18 @@ end FiniteDimensional
 
 /-! ### Locally Hamiltonian fields, and uniqueness for a symplectic form -/
 
-variable [IsManifold (modelWithCornersSelf ℝ E) ∞ M]
+variable [IsManifold (𝓘(ℝ, E)) ∞ M]
 
 /-- **`X` is locally Hamiltonian for `α`**: the 1-form family `ι_X α` is closed. Meaningful when
 the family is smooth (brick G3); the distinction from `IsHamiltonianVectorField` is exactly the
 flux obstruction. -/
-def IsLocallyHamiltonian (X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x) : Prop :=
+def IsLocallyHamiltonian (X : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x) : Prop :=
   ∀ x : M, mextDerivFamily (interiorProduct α X) x = 0
 
 /-- ★ **The Hamiltonian vector field of `H` for a symplectic form is unique.** -/
 theorem IsHamiltonianVectorField.unique_of_isSymplectic
-    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
-    {X Y : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : M → ℝ}
+    {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    {X Y : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x} {H : M → ℝ}
     (h : IsHamiltonianVectorField (fun x => β x) X H)
     (h' : IsHamiltonianVectorField (fun x => β x) Y H) : X = Y :=
   funext fun x => h.eq_of_nondegenerate h' x (hβ.nondegenerate x)
@@ -412,26 +428,26 @@ theorem IsHamiltonianVectorField.unique_of_isSymplectic
 
 namespace IsHamiltonianVectorField
 
-variable {α} {X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : M → ℝ}
+variable {α} {X : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x} {H : M → ℝ}
 
 /-- `ι_X α = dH` as `1`-form families, with `dH` the exterior derivative of the `0`-form `H`. -/
 theorem interiorProduct_eq_mextDeriv_zeroFormFamily (h : IsHamiltonianVectorField α X H)
-    (hH : ∀ x, MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x) :
+    (hH : ∀ x, MDifferentiableAt (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H x) :
     interiorProduct α X = mextDerivFamily (zeroFormFamily (E := E) H) := by
   funext x
   refine ContinuousAlternatingMap.ext fun v => ?_
   have h1 : (interiorProduct α X x v : ℝ)
-      = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x (v 0) :=
+      = mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H x (v 0) :=
     h.interiorProduct_eq x v
   have h2 : toFlat (mextDerivFamily (zeroFormFamily (E := E) H) x) v
-      = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H x (v 0) := by
+      = mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H x (v 0) := by
     rw [toFlat_mextDerivFamily_zeroFormFamily (E := E) (hH x)]
     exact ContinuousAlternatingMap.ofSubsingleton_apply_apply ℝ E ℝ (0 : Fin 1) _ v
   exact h1.trans h2.symm
 
 /-- ★ **Hamiltonian implies locally Hamiltonian**: `d(ι_X α) = d(dH) = 0` for a `C^∞` energy. -/
 theorem isLocallyHamiltonian (h : IsHamiltonianVectorField α X H)
-    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) :
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H) :
     IsLocallyHamiltonian α X := by
   intro x
   rw [h.interiorProduct_eq_mextDeriv_zeroFormFamily fun x => (hH x).mdifferentiableAt (by simp)]
@@ -447,21 +463,22 @@ variable [FiniteDimensional ℝ E]
 
 /-- The Hamiltonian vector field of `H` for a symplectic form. -/
 def IsSymplectic.hamiltonianVectorField
-    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
-    (H : M → ℝ) : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x :=
+    {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x :=
   DifferentialForm.hamiltonianVectorField (fun x => β x) hβ.nondegenerate H
 
 /-- ★★ For a symplectic form, `H` has a Hamiltonian vector field. -/
 theorem IsSymplectic.hamiltonianVectorField_isHamiltonianVectorField
-    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
     (H : M → ℝ) :
     IsHamiltonianVectorField (fun x => β x) (hβ.hamiltonianVectorField H) H :=
   DifferentialForm.hamiltonianVectorField_isHamiltonianVectorField (fun x => β x) hβ.nondegenerate H
 
-/-- For a symplectic form, every Hamiltonian vector field of `H` is `hβ.hamiltonianVectorField H`. -/
+/-- For a symplectic form, every Hamiltonian vector field of `H` is `hβ.hamiltonianVectorField H`.
+-/
 theorem IsHamiltonianVectorField.eq_isSymplectic_hamiltonianVectorField
-    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
-    {X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : M → ℝ}
+    {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    {X : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x} {H : M → ℝ}
     (h : IsHamiltonianVectorField (fun x => β x) X H) : X = hβ.hamiltonianVectorField H :=
   h.eq_hamiltonianVectorField hβ.nondegenerate
 
@@ -476,12 +493,12 @@ variable [FiniteDimensional ℝ E]
 /-- A 2-form on the model, as a constant 2-form family on the manifold `E` — the shape G2's
 constructions take, so that the model-level statements below are their instances. -/
 def flatFamily (ξ : E [⋀^Fin 2]→L[ℝ] ℝ) (x : E) :
-    TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial E ℝ x := ξ
+    TangentSpace (𝓘(ℝ, E)) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial E ℝ x := ξ
 
 omit [FiniteDimensional ℝ E] in
 theorem flatFamily_nondegenerate (ξ : E [⋀^Fin 2]→L[ℝ] ℝ)
     (hξ : ∀ v : E, v ≠ 0 → ∃ u, ξ ![v, u] ≠ 0) (x : E) :
-    ∀ v : TangentSpace (modelWithCornersSelf ℝ E) x, v ≠ 0 → ∃ w, flatFamily ξ x ![v, w] ≠ 0 :=
+    ∀ v : TangentSpace (𝓘(ℝ, E)) x, v ≠ 0 → ∃ w, flatFamily ξ x ![v, w] ≠ 0 :=
   fun v hv => hξ v hv
 
 /-- The Hamiltonian vector of a covector `L` for a non-degenerate 2-form `ξ` on the model: G2's
@@ -533,7 +550,7 @@ theorem inverse_curryLeft_apply (ξ : E [⋀^Fin 2]→L[ℝ] ℝ)
   rw [flatCLE_apply, apply_flatVec]
   rfl
 
-variable (α : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ) (H : M → ℝ)
+variable (α : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ) (H : M → ℝ)
 
 /-- The Hamiltonian vector field read in the chart at `x₀`: the flat-level Hamiltonian vector of
 the local representative of `α` for the chart derivative of `H`. -/
@@ -547,7 +564,7 @@ omit [FiniteDimensional ℝ E] in
 tangent trivialisation carries non-degeneracy across (`trivializationAt_snd`,
 `tangent_symmL_eq_fderiv`, `Trivialization.symmL_continuousLinearMapAt`). -/
 theorem localRep_nondegenerate
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
     (x₀ : M) {w : E} (hw : w ∈ (chartAt E x₀).target) :
     ∀ v : E, v ≠ 0 → ∃ u, localRep (fun x => α x) x₀ w ![v, u] ≠ 0 := by
@@ -560,35 +577,35 @@ theorem localRep_nondegenerate
     have h := trivializationAt_snd (fun x => α x) x₀ ((chartAt E x₀).symm w) hys
     rw [hwy] at h
     exact h
-  have hDsymm : (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ
+  have hDsymm : (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ
       ((chartAt E x₀).symm w)
       = fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w := by
     rw [tangent_symmL_eq_fderiv x₀ _ hys, hwy]
   have hyb : (chartAt E x₀).symm w
-      ∈ (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).baseSet := hys
+      ∈ (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).baseSet := hys
   have hDv : fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w v ≠ 0 := by
     intro h0
     have h := Trivialization.continuousLinearMapAt_symmL (R := ℝ)
-      (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀) hyb v
+      (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀) hyb v
     rw [hDsymm] at h
-    have h2 : (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt
+    have h2 : (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt
         ℝ ((chartAt E x₀).symm w)
         (fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w v) = 0 := by
       rw [h0]
       exact map_zero _
     exact hv (h.symm.trans h2)
   obtain ⟨u, hu⟩ := hnd _ _ hDv
-  refine ⟨(trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt
+  refine ⟨(trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt
     ℝ ((chartAt E x₀).symm w) u, ?_⟩
   have hDu : fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w
-      ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt
+      ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt
         ℝ ((chartAt E x₀).symm w) u) = u := by
     rw [← hDsymm]
     exact Trivialization.symmL_continuousLinearMapAt (R := ℝ)
-      (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀) hyb u
+      (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀) hyb u
   rw [hloc, ContinuousAlternatingMap.compContinuousLinearMap_apply]
   have hcomp : (⇑(fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w)
-      ∘ ![v, (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt
+      ∘ ![v, (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt
         ℝ ((chartAt E x₀).symm w) u])
       = ![fderiv ℝ (chartAt E ((chartAt E x₀).symm w) ∘ (chartAt E x₀).symm) w v, u] := by
     funext i
@@ -604,11 +621,11 @@ chart coordinate of `y`. Proved by uniqueness at the flat level (`eq_flatVec`): 
 vector satisfies the local equation, because the trivialisation intertwines `α` with its local
 representative (`trivializationAt_snd`) and `dH` with the chart derivative (`mfderiv_comp`). -/
 theorem trivializationAt_hamiltonianVectorField_snd
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H)
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H)
     (x₀ : M) {y : M} (hy : y ∈ (chartAt E x₀).source) :
-    (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀
+    (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀
         ⟨y, hamiltonianVectorField (fun x => α x) hnd H y⟩).2
       = localHamiltonianVector α H x₀ (chartAt E x₀ y) := by
   have hwt : chartAt E x₀ y ∈ (chartAt E x₀).target := (chartAt E x₀).map_source hy
@@ -622,39 +639,39 @@ theorem trivializationAt_hamiltonianVectorField_snd
           (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y)) := by
     have h := trivializationAt_snd (fun x => α x) x₀ y hy
     show (trivializationAt (E [⋀^Fin 2]→L[ℝ] ℝ)
-      (fun x : M => TangentSpace (modelWithCornersSelf ℝ E) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial M ℝ x)
+      (fun x : M => TangentSpace (𝓘(ℝ, E)) x [⋀^Fin 2]→L[ℝ] Bundle.Trivial M ℝ x)
       x₀ ⟨(chartAt E x₀).symm (chartAt E x₀ y), α ((chartAt E x₀).symm (chartAt E x₀ y))⟩).2 = _
     rw [hyw]
     exact h
-  have hyb : y ∈ (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).baseSet := hy
-  have hDsymm : (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ y
+  have hyb : y ∈ (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).baseSet := hy
+  have hDsymm : (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y
       = fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) :=
     tangent_symmL_eq_fderiv x₀ y hy
   -- the trivialised vector, and its image under the transition derivative
-  have hv : (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀
+  have hv : (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀
         ⟨y, hamiltonianVectorField (fun x => α x) hnd H y⟩).2
-      = (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt ℝ y
+      = (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt ℝ y
           (hamiltonianVectorField (fun x => α x) hnd H y) :=
     (Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ)
-      (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀) hyb _).symm
+      (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀) hyb _).symm
   have hDv : fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y)
-      ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt ℝ y
+      ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt ℝ y
         (hamiltonianVectorField (fun x => α x) hnd H y))
       = hamiltonianVectorField (fun x => α x) hnd H y := by
     rw [← hDsymm]
     exact Trivialization.symmL_continuousLinearMapAt (R := ℝ)
-      (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀) hyb _
+      (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀) hyb _
   -- the chart derivative of `H` is `dH_y` composed with the transition derivative
-  have hsymm : MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E)
+  have hsymm : MDifferentiableAt (𝓘(ℝ, E)) (𝓘(ℝ, E))
       (chartAt E x₀).symm (chartAt E x₀ y) :=
     mdifferentiableAt_atlas_symm (chart_mem_atlas E x₀) hwt
   have hchain : fderiv ℝ (H ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u
-      = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H y
+      = mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H y
           (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u) := by
-    have hHy : MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H
+    have hHy : MDifferentiableAt (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H
         ((chartAt E x₀).symm (chartAt E x₀ y)) := (hH _).mdifferentiableAt (by simp)
     have hcomp := mfderiv_comp (chartAt E x₀ y) hHy hsymm
-    have hsd : mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (chartAt E x₀).symm
+    have hsd : mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, E)) (chartAt E x₀).symm
         (chartAt E x₀ y)
         = fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) := by
       rw [hsymm.mfderiv]
@@ -662,22 +679,22 @@ theorem trivializationAt_hamiltonianVectorField_snd
         PartialEquiv.refl_symm, PartialEquiv.refl_coe, id, extChartAt_coe, modelWithCornersSelf_coe,
         Set.range_id, fderivWithin_univ, hyw]
       rfl
-    have hpt : (mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H
+    have hpt : (mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H
         ((chartAt E x₀).symm (chartAt E x₀ y)) : E →L[ℝ] ℝ)
-        = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H y := by
+        = mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H y := by
       rw [hyw]
-    have e2 : (mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (chartAt E x₀).symm
+    have e2 : (mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, E)) (chartAt E x₀).symm
         (chartAt E x₀ y) u : E)
         = fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u :=
       congrArg (fun L : E →L[ℝ] E => L u) hsd
     rw [← mfderiv_eq_fderiv, hcomp]
-    exact (congrArg (fun v : E => mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H
+    exact (congrArg (fun v : E => mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H
       ((chartAt E x₀).symm (chartAt E x₀ y)) v) e2).trans
       (congrArg (fun L : E →L[ℝ] ℝ =>
         L (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u)) hpt)
   rw [hloc, ContinuousAlternatingMap.compContinuousLinearMap_apply, hchain]
   have hcomp : (⇑(fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y))
-      ∘ ![(trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀
+      ∘ ![(trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀
             ⟨y, hamiltonianVectorField (fun x => α x) hnd H y⟩).2, u])
       = ![hamiltonianVectorField (fun x => α x) hnd H y,
           fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u] := by
@@ -694,9 +711,9 @@ theorem trivializationAt_hamiltonianVectorField_snd
 `curryLeft` is smooth at an invertible point (`contDiffAt_map_inverse`), the local representative
 is smooth (`contDiffAt_localRep`), and the chart derivative of a `C^∞` energy is `C^∞`. -/
 theorem contDiffAt_localHamiltonianVector
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) (x₀ : M) {w : E}
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H) (x₀ : M) {w : E}
     (hw : w ∈ (chartAt E x₀).target) :
     ContDiffAt ℝ ∞ (localHamiltonianVector α H x₀) w := by
   have hω := localRep_nondegenerate α hnd x₀ hw
@@ -718,7 +735,7 @@ theorem contDiffAt_localHamiltonianVector
     exact h.comp w hΦ
   have hHloc : ContDiffAt ℝ ∞ (H ∘ (chartAt E x₀).symm) w := by
     rw [← contMDiffAt_iff_contDiffAt]
-    have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ∞
+    have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) ∞
         (chartAt E x₀).symm w :=
       (contMDiffOn_chart_symm (n := ∞) (x := x₀)).contMDiffAt
         ((chartAt E x₀).open_target.mem_nhds hw)
@@ -733,18 +750,18 @@ theorem contDiffAt_localHamiltonianVector
 /-- ★★★ **The Hamiltonian vector field is a `C^∞` section of the tangent bundle**, for a `C^∞`
 2-form family non-degenerate at every point and a `C^∞` energy. -/
 theorem contMDiff_hamiltonianVectorField
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) :
-    ContMDiff (modelWithCornersSelf ℝ E)
-      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ E)) ∞
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H) :
+    ContMDiff (𝓘(ℝ, E))
+      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E))) ∞
       (fun x : M => TotalSpace.mk' E x (hamiltonianVectorField (fun x => α x) hnd H x)) := by
   intro x₀
   rw [contMDiffAt_section]
-  have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ∞
+  have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) ∞
       (fun y => localHamiltonianVector α H x₀ (chartAt E x₀ y)) x₀ :=
     (contDiffAt_localHamiltonianVector α H hnd hH x₀ (mem_chart_target E x₀)).contMDiffAt.comp x₀
-      (contMDiffAt_extChartAt (n := ∞) (I := modelWithCornersSelf ℝ E) (x := x₀))
+      (contMDiffAt_extChartAt (n := ∞) (I := 𝓘(ℝ, E)) (x := x₀))
   refine h1.congr_of_eventuallyEq ?_
   filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
   exact trivializationAt_hamiltonianVectorField_snd α H hnd hH x₀ hy
@@ -752,20 +769,20 @@ theorem contMDiff_hamiltonianVectorField
 /-- The Hamiltonian vector field of `H`, as a `C^∞` vector field (a `C^∞` section of the tangent
 bundle). -/
 def hamiltonianVectorFieldSection
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) :
-    ContMDiffSection (modelWithCornersSelf ℝ E) E ∞
-      (TangentSpace (modelWithCornersSelf ℝ E) : M → Type _) :=
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H) :
+    ContMDiffSection (𝓘(ℝ, E)) E ∞
+      (TangentSpace (𝓘(ℝ, E)) : M → Type _) :=
   ⟨hamiltonianVectorField (fun x => α x) hnd H, contMDiff_hamiltonianVectorField α H hnd hH⟩
 
 /-- ★★★ For a symplectic form, the Hamiltonian vector field of a `C^∞` energy is a `C^∞` vector
 field. -/
 theorem IsSymplectic.contMDiff_hamiltonianVectorField
-    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
-    (H : M → ℝ) (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) :
-    ContMDiff (modelWithCornersSelf ℝ E)
-      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ E)) ∞
+    {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H) :
+    ContMDiff (𝓘(ℝ, E))
+      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E))) ∞
       (fun x : M => TotalSpace.mk' E x (hβ.hamiltonianVectorField H x)) :=
   DifferentialForm.contMDiff_hamiltonianVectorField β H hβ.nondegenerate hH
 
@@ -773,17 +790,17 @@ end Smooth
 
 section SmoothAnalytic
 
-variable [FiniteDimensional ℝ E] [IsManifold (modelWithCornersSelf ℝ E) ω M]
+variable [FiniteDimensional ℝ E] [IsManifold (𝓘(ℝ, E)) ω M]
 
 /-- A `C^ω` 2-form read as a `C^∞` one — the same section — so that the `∞`-typed constructions of
 G2/G3 (`localHamiltonianVector`, `trivializationAt_hamiltonianVectorField_snd`) apply to it. -/
-def ofOmega (α : DifferentialForm (modelWithCornersSelf ℝ E) M ω (Fin 2) ℝ) :
-    DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ :=
+def ofOmega (α : DifferentialForm (𝓘(ℝ, E)) M ω (Fin 2) ℝ) :
+    DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ :=
   ⟨α, α.contMDiff_toFun.of_le le_top⟩
 
-variable (α : DifferentialForm (modelWithCornersSelf ℝ E) M ω (Fin 2) ℝ) (H : M → ℝ)
+variable (α : DifferentialForm (𝓘(ℝ, E)) M ω (Fin 2) ℝ) (H : M → ℝ)
 
-omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] [FiniteDimensional ℝ E] in
+omit [IsManifold (𝓘(ℝ, E)) ∞ M] [FiniteDimensional ℝ E] in
 @[simp] theorem ofOmega_apply (x : M) : ofOmega α x = α x := rfl
 
 /-- ★★ The local Hamiltonian vector of a `C^ω` form and a `C^ω` energy is `C^ω`: the proof of
@@ -791,9 +808,9 @@ omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] [FiniteDimensional ℝ E] i
 and `ContDiffAt.fderiv_right` are generic in the order, and the local representative is `C^ω` by
 `contDiffAt_omega_localRep`. -/
 theorem contDiffAt_omega_localHamiltonianVector
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ω H) (x₀ : M) :
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ω H) (x₀ : M) :
     ContDiffAt ℝ ω (localHamiltonianVector (ofOmega α) H x₀) (chartAt E x₀ x₀) := by
   have hw₀ : chartAt E x₀ x₀ ∈ (chartAt E x₀).target := mem_chart_target E x₀
   have hω := localRep_nondegenerate (ofOmega α) hnd x₀ hw₀
@@ -817,7 +834,7 @@ theorem contDiffAt_omega_localHamiltonianVector
     exact h.comp (chartAt E x₀ x₀) hΦ
   have hHloc : ContDiffAt ℝ ω (H ∘ (chartAt E x₀).symm) (chartAt E x₀ x₀) := by
     rw [← contMDiffAt_iff_contDiffAt]
-    have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ω
+    have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) ω
         (chartAt E x₀).symm (chartAt E x₀ x₀) :=
       (contMDiffOn_chart_symm (n := ω) (x := x₀)).contMDiffAt
         ((chartAt E x₀).open_target.mem_nhds hw₀)
@@ -833,18 +850,18 @@ theorem contDiffAt_omega_localHamiltonianVector
 `C^ω` section of the tangent bundle** (G19): `contMDiff_hamiltonianVectorField` at `ω`, on an
 analytic manifold. -/
 theorem contMDiff_omega_hamiltonianVectorField
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ω H) :
-    ContMDiff (modelWithCornersSelf ℝ E)
-      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ E)) ω
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ω H) :
+    ContMDiff (𝓘(ℝ, E))
+      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E))) ω
       (fun x : M => TotalSpace.mk' E x (hamiltonianVectorField (fun x => α x) hnd H x)) := by
   intro x₀
   rw [contMDiffAt_section]
-  have h1 : ContMDiffAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) ω
+  have h1 : ContMDiffAt (𝓘(ℝ, E)) (𝓘(ℝ, E)) ω
       (fun y => localHamiltonianVector (ofOmega α) H x₀ (chartAt E x₀ y)) x₀ :=
     (contDiffAt_omega_localHamiltonianVector α H hnd hH x₀).contMDiffAt.comp x₀
-      (contMDiffAt_extChartAt (n := ω) (I := modelWithCornersSelf ℝ E) (x := x₀))
+      (contMDiffAt_extChartAt (n := ω) (I := 𝓘(ℝ, E)) (x := x₀))
   refine h1.congr_of_eventuallyEq ?_
   filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
   exact trivializationAt_hamiltonianVectorField_snd (ofOmega α) H hnd (hH.of_le le_top) x₀ hy
@@ -855,22 +872,22 @@ end SmoothAnalytic
 
 section IntegralCurve
 
-omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] in
+omit [IsManifold (𝓘(ℝ, E)) ∞ M] in
 variable {α} in
 /-- ★ **Infinitesimal energy conservation along an integral curve**: if `X` is a Hamiltonian
 vector field of `H` and `γ` is an integral curve of `X`, then `H ∘ γ` has zero derivative
 (`mfderiv_apply_self`: `dH (X) = α (X, X) = 0`). -/
 theorem IsHamiltonianVectorField.hasDerivAt_comp_of_isMIntegralCurve
-    {X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : M → ℝ}
+    {X : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x} {H : M → ℝ}
     (h : IsHamiltonianVectorField α X H) {γ : ℝ → M} (hγ : IsMIntegralCurve γ X) {t : ℝ}
-    (hH : MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H (γ t)) :
+    (hH : MDifferentiableAt (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H (γ t)) :
     HasDerivAt (H ∘ γ) 0 t := by
-  have h1 : HasMFDerivAt (modelWithCornersSelf ℝ ℝ) (modelWithCornersSelf ℝ ℝ) (H ∘ γ) t
-      ((mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H (γ t)).comp
+  have h1 : HasMFDerivAt (𝓘(ℝ, ℝ)) (𝓘(ℝ, ℝ)) (H ∘ γ) t
+      ((mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H (γ t)).comp
         ((1 : ℝ →L[ℝ] ℝ).smulRight (X (γ t)))) :=
     hH.hasMFDerivAt.comp t (hγ t)
   have h2 : HasFDerivAt (H ∘ γ)
-      (((mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H (γ t)).comp
+      (((mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H (γ t)).comp
         ((1 : ℝ →L[ℝ] ℝ).smulRight (X (γ t))) : ℝ →L[ℝ] ℝ)) t :=
     hasMFDerivAt_iff_hasFDerivAt.mp h1
   show HasFDerivAt (H ∘ γ) ((1 : ℝ →L[ℝ] ℝ).smulRight (0 : ℝ)) t
@@ -878,14 +895,14 @@ theorem IsHamiltonianVectorField.hasDerivAt_comp_of_isMIntegralCurve
   simp [h.mfderiv_apply_self (γ t)]
   rfl
 
-omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] in
+omit [IsManifold (𝓘(ℝ, E)) ∞ M] in
 variable {α} in
 /-- ★★ **Energy conservation**: `H` is constant along every integral curve of a Hamiltonian
 vector field of `H` (a differentiable energy). -/
 theorem IsHamiltonianVectorField.comp_eq_of_isMIntegralCurve
-    {X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} {H : M → ℝ}
+    {X : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x} {H : M → ℝ}
     (h : IsHamiltonianVectorField α X H) {γ : ℝ → M} (hγ : IsMIntegralCurve γ X)
-    (hH : MDifferentiable (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H) (t s : ℝ) :
+    (hH : MDifferentiable (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H) (t s : ℝ) :
     H (γ t) = H (γ s) :=
   is_const_of_deriv_eq_zero
     (fun u => (h.hasDerivAt_comp_of_isMIntegralCurve hγ (hH (γ u))).differentiableAt)
@@ -896,15 +913,15 @@ end IntegralCurve
 section IntegralCurveSmooth
 
 variable [FiniteDimensional ℝ E]
-variable (α : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ) (H : M → ℝ)
+variable (α : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ) (H : M → ℝ)
 
 /-- ★★ **Local existence**: through every point, at every time, passes an integral curve of the
 Hamiltonian vector field of a `C^∞` energy (Picard–Lindelöf in the chart,
 `exists_isMIntegralCurveAt_of_contMDiffAt`, on the `C^1` section G3 provides). -/
 theorem exists_isMIntegralCurveAt_hamiltonianVectorField
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) (x₀ : M) (t₀ : ℝ) :
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H) (x₀ : M) (t₀ : ℝ) :
     ∃ γ : ℝ → M, γ t₀ = x₀ ∧
       IsMIntegralCurveAt γ (hamiltonianVectorField (fun x => α x) hnd H) t₀ := by
   have : CompleteSpace E := FiniteDimensional.complete ℝ E
@@ -917,9 +934,9 @@ theorem exists_isMIntegralCurveAt_hamiltonianVectorField
 energy that agree at one time agree everywhere (`isMIntegralCurve_eq_of_contMDiff`, on a Hausdorff
 manifold). -/
 theorem isMIntegralCurve_hamiltonianVectorField_eq [T2Space M]
-    (hnd : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+    (hnd : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
       ∃ w, α x ![v, w] ≠ 0)
-    (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H) {γ γ' : ℝ → M}
+    (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H) {γ γ' : ℝ → M}
     (hγ : IsMIntegralCurve γ (hamiltonianVectorField (fun x => α x) hnd H))
     (hγ' : IsMIntegralCurve γ' (hamiltonianVectorField (fun x => α x) hnd H)) {t₀ : ℝ}
     (h : γ t₀ = γ' t₀) : γ = γ' :=
@@ -931,8 +948,8 @@ theorem isMIntegralCurve_hamiltonianVectorField_eq [T2Space M]
 /-- ★★ For a symplectic form: local existence of integral curves of the Hamiltonian vector field
 of a `C^∞` energy. -/
 theorem IsSymplectic.exists_isMIntegralCurveAt_hamiltonianVectorField
-    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
-    (H : M → ℝ) (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H)
+    {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H)
     (x₀ : M) (t₀ : ℝ) :
     ∃ γ : ℝ → M, γ t₀ = x₀ ∧ IsMIntegralCurveAt γ (hβ.hamiltonianVectorField H) t₀ :=
   DifferentialForm.exists_isMIntegralCurveAt_hamiltonianVectorField β H hβ.nondegenerate hH x₀ t₀
@@ -940,8 +957,8 @@ theorem IsSymplectic.exists_isMIntegralCurveAt_hamiltonianVectorField
 /-- ★★ For a symplectic form: uniqueness of global integral curves of the Hamiltonian vector
 field of a `C^∞` energy. -/
 theorem IsSymplectic.isMIntegralCurve_hamiltonianVectorField_eq [T2Space M]
-    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
-    (H : M → ℝ) (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H)
+    {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H)
     {γ γ' : ℝ → M} (hγ : IsMIntegralCurve γ (hβ.hamiltonianVectorField H))
     (hγ' : IsMIntegralCurve γ' (hβ.hamiltonianVectorField H)) {t₀ : ℝ} (h : γ t₀ = γ' t₀) :
     γ = γ' :=
@@ -950,8 +967,8 @@ theorem IsSymplectic.isMIntegralCurve_hamiltonianVectorField_eq [T2Space M]
 /-- ★★ For a symplectic form: the energy is conserved along every integral curve of its
 Hamiltonian vector field. -/
 theorem IsSymplectic.comp_eq_of_isMIntegralCurve_hamiltonianVectorField
-    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
-    (H : M → ℝ) (hH : MDifferentiable (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) H)
+    {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) (hH : MDifferentiable (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H)
     {γ : ℝ → M} (hγ : IsMIntegralCurve γ (hβ.hamiltonianVectorField H)) (t s : ℝ) :
     H (γ t) = H (γ s) :=
   (hβ.hamiltonianVectorField_isHamiltonianVectorField H).comp_eq_of_isMIntegralCurve hγ hH t s
@@ -961,8 +978,8 @@ form and a `C^∞` energy, every point lies on a global integral curve of the Ha
 field (`exists_isMIntegralCurve_of_compactSpace` on G3's `C^1` section). The flow itself is
 `integralFlow` of `IntegralCurve/GlobalFlow.lean`, with its group law. -/
 theorem IsSymplectic.exists_isMIntegralCurve_hamiltonianVectorField [CompactSpace M] [T2Space M]
-    {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
-    (H : M → ℝ) (hH : ContMDiff (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ ℝ) ∞ H)
+    {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hβ : β.IsSymplectic)
+    (H : M → ℝ) (hH : ContMDiff (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) ∞ H)
     (x : M) : ∃ γ : ℝ → M, γ 0 = x ∧ IsMIntegralCurve γ (hβ.hamiltonianVectorField H) := by
   have : CompleteSpace E := FiniteDimensional.complete ℝ E
   exact exists_isMIntegralCurve_of_compactSpace
@@ -974,16 +991,16 @@ end IntegralCurveSmooth
 
 section AlmostKahler
 
-omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] in
-theorem apply_neg_left (x : M) (a v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+omit [IsManifold (𝓘(ℝ, E)) ∞ M] in
+theorem apply_neg_left (x : M) (a v : TangentSpace (𝓘(ℝ, E)) x) :
     α x ![-a, v] = -α x ![a, v] := by
   have h := apply_smul_left α x (-1 : ℝ) a v
   simp only [neg_one_smul] at h
   exact h
 
-omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] in
+omit [IsManifold (𝓘(ℝ, E)) ∞ M] in
 /-- Antisymmetry of a 2-form family, from alternation and bilinearity. -/
-theorem apply_swap (x : M) (a b : TangentSpace (modelWithCornersSelf ℝ E) x) :
+theorem apply_swap (x : M) (a b : TangentSpace (𝓘(ℝ, E)) x) :
     α x ![a, b] = -α x ![b, a] := by
   have h0 : α x ![a + b, a + b] = 0 :=
     (α x).map_eq_zero_of_eq ![a + b, a + b] (i := 0) (j := 1) rfl (by decide)
@@ -997,34 +1014,34 @@ structure `J` — a family of maps on the tangent spaces with `J² = -1` — suc
 `J`-invariant and `J`-tamed, `β (J v, v) > 0` for `v ≠ 0`. The compatible metric is
 `g (u, v) = β (J u, v)` (`IsAlmostKahler.metric`), the convention `ω = g (J ·, ·)`. Integrability
 of `J` — the Kähler condition proper — is not part of the predicate. -/
-structure IsAlmostKahler (β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ)
-    (J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →
-      TangentSpace (modelWithCornersSelf ℝ E) x) : Prop where
+structure IsAlmostKahler (β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ)
+    (J : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →
+      TangentSpace (𝓘(ℝ, E)) x) : Prop where
   /-- `β` is closed and non-degenerate. -/
   isSymplectic : β.IsSymplectic
   /-- `J² = -1`. -/
-  J_J : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), J x (J x v) = -v
+  J_J : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), J x (J x v) = -v
   /-- `β` is `J`-invariant, a `(1,1)`-form. -/
-  invariant : ∀ (x : M) (u v : TangentSpace (modelWithCornersSelf ℝ E) x),
+  invariant : ∀ (x : M) (u v : TangentSpace (𝓘(ℝ, E)) x),
     β x ![J x u, J x v] = β x ![u, v]
   /-- `β` tames `J`: `β (J v, v) > 0` for `v ≠ 0`. -/
-  pos : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+  pos : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
     0 < (β x ![J x v, v] : ℝ)
 
 namespace IsAlmostKahler
 
-variable {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ}
-  {J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →
-    TangentSpace (modelWithCornersSelf ℝ E) x}
+variable {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ}
+  {J : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →
+    TangentSpace (𝓘(ℝ, E)) x}
 
 /-- The compatible metric, `g (u, v) = β (J u, v)`. -/
-def metric (_h : IsAlmostKahler β J) (x : M) (u v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+def metric (_h : IsAlmostKahler β J) (x : M) (u v : TangentSpace (𝓘(ℝ, E)) x) :
     ℝ :=
   β x ![J x u, v]
 
 /-- ★ The compatible metric is symmetric: `J`-invariance, `J² = -1` and antisymmetry of `β`. -/
 theorem metric_comm (h : IsAlmostKahler β J) (x : M)
-    (u v : TangentSpace (modelWithCornersSelf ℝ E) x) : h.metric x u v = h.metric x v u := by
+    (u v : TangentSpace (𝓘(ℝ, E)) x) : h.metric x u v = h.metric x v u := by
   unfold metric
   calc (β x ![J x u, v] : ℝ)
       = β x ![J x (J x u), J x v] := (h.invariant x (J x u) v).symm
@@ -1034,19 +1051,19 @@ theorem metric_comm (h : IsAlmostKahler β J) (x : M)
 
 /-- ★ The compatible metric is positive definite. -/
 theorem metric_self_pos (h : IsAlmostKahler β J) (x : M)
-    {v : TangentSpace (modelWithCornersSelf ℝ E) x} (hv : v ≠ 0) : 0 < h.metric x v v :=
+    {v : TangentSpace (𝓘(ℝ, E)) x} (hv : v ≠ 0) : 0 < h.metric x v v :=
   h.pos x v hv
 
 /-- The form is recovered from the metric: `β (u, v) = g (u, J v)`. -/
 theorem apply_eq_metric (h : IsAlmostKahler β J) (x : M)
-    (u v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    (u v : TangentSpace (𝓘(ℝ, E)) x) :
     (β x ![u, v] : ℝ) = h.metric x u (J x v) := by
   unfold metric
   exact (h.invariant x u v).symm
 
 /-- The compatible metric is Hermitian: `J` is an isometry of `g`. -/
 theorem metric_J_J (h : IsAlmostKahler β J) (x : M)
-    (u v : TangentSpace (modelWithCornersSelf ℝ E) x) :
+    (u v : TangentSpace (𝓘(ℝ, E)) x) :
     h.metric x (J x u) (J x v) = h.metric x u v := by
   unfold metric
   rw [h.J_J, apply_neg_left (fun x => β x) x u (J x v), ← h.invariant x (J x u) v, h.J_J,
@@ -1062,26 +1079,27 @@ trivialisation of every chart. The trivialisations of two charts differ by the d
 chart transition, so this says every chart transition has `J₀`-linear derivative, i.e. is
 holomorphic (`IsKahler.fderiv_chart_transition_comm`, the Cauchy–Riemann equations of the atlas):
 the charts `chartAt E x₀` form a holomorphic atlas and `J` is its complex structure (atlas members
-that are not some `chartAt E x₀` are not constrained by this definition). That is the textbook definition
+that are not some `chartAt E x₀` are not constrained by this definition). That is the textbook
+definition
 of a Kähler manifold — a complex manifold with a Hermitian metric (`IsAlmostKahler.metric_J_J`)
 whose fundamental form is closed (`isSymplectic`). The equivalent tensor formulation, a vanishing
 Nijenhuis tensor (Newlander–Nirenberg), is not what is stated. -/
-structure IsKahler (β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ)
-    (J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →
-      TangentSpace (modelWithCornersSelf ℝ E) x) (J₀ : E →L[ℝ] E) : Prop
+structure IsKahler (β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ)
+    (J : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →
+      TangentSpace (𝓘(ℝ, E)) x) (J₀ : E →L[ℝ] E) : Prop
     extends IsAlmostKahler β J where
   /-- `J` is `J₀` through the tangent trivialisation of every chart. -/
   J_symmL : ∀ (x₀ y : M), y ∈ (chartAt E x₀).source → ∀ v : E,
-    J y ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ y v)
-      = (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ y (J₀ v)
+    J y ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y v)
+      = (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y (J₀ v)
 
 namespace IsKahler
 
-variable {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ}
-  {J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →
-    TangentSpace (modelWithCornersSelf ℝ E) x} {J₀ : E →L[ℝ] E}
+variable {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ}
+  {J : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →
+    TangentSpace (𝓘(ℝ, E)) x} {J₀ : E →L[ℝ] E}
 
-omit [IsManifold (modelWithCornersSelf ℝ E) ∞ M] in
+omit [IsManifold (𝓘(ℝ, E)) ∞ M] in
 /-- The chart transition from the chart at `y` to itself is the identity near `y`'s point, so its
 derivative there is the identity. -/
 theorem fderiv_chart_transition_self (y : M) :
@@ -1119,23 +1137,23 @@ of a Kähler structure is given by continuous linear maps `JL`, the section `x �
 `Hom(TM, TM)` is `C^∞` — in the tangent trivialisation over the chart at `x₀` it is the constant
 `J₀` (`J_symmL`, then `continuousLinearMapAt_symmL`). -/
 theorem contMDiff_hom_section (h : IsKahler β J J₀)
-    (JL : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →L[ℝ]
-      TangentSpace (modelWithCornersSelf ℝ E) x)
-    (hJL : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), JL x v = J x v) :
-    ContMDiff (modelWithCornersSelf ℝ E)
-      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E →L[ℝ] E))) ∞
+    (JL : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →L[ℝ]
+      TangentSpace (𝓘(ℝ, E)) x)
+    (hJL : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), JL x v = J x v) :
+    ContMDiff (𝓘(ℝ, E))
+      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E →L[ℝ] E))) ∞
       (fun x : M => TotalSpace.mk' (E →L[ℝ] E) x (JL x)) := by
   intro x₀
   rw [contMDiffAt_section]
   refine (contMDiffAt_const (c := J₀)).congr_of_eventuallyEq ?_
   filter_upwards [(chartAt E x₀).open_source.mem_nhds (mem_chart_source E x₀)] with y hy
-  have hb : y ∈ (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).baseSet := hy
-  show ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt
+  have hb : y ∈ (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).baseSet := hy
+  show ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt
       ℝ y).comp ((JL y).comp
-        ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ y)) = J₀
+        ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y)) = J₀
   ext v
   rw [ContinuousLinearMap.comp_apply, ContinuousLinearMap.comp_apply, hJL, h.J_symmL x₀ y hy v,
-    (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt_symmL hb]
+    (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt_symmL hb]
 
 end IsKahler
 
@@ -1151,22 +1169,23 @@ open VectorField
 two vector fields with Mathlib's manifold Lie bracket `mlieBracket`:
 `N_J(V, W) = [JV, JW] − J[JV, W] − J[V, JW] − [V, W]`. Its vanishing is the tensor formulation of
 the integrability of `J`. -/
-def nijenhuis (J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x → TangentSpace (modelWithCornersSelf ℝ E) x)
-    (V W : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x) (x : M) : TangentSpace (modelWithCornersSelf ℝ E) x :=
-  mlieBracket (modelWithCornersSelf ℝ E) (fun y => J y (V y)) (fun y => J y (W y)) x
-    - J x (mlieBracket (modelWithCornersSelf ℝ E) (fun y => J y (V y)) W x)
-    - J x (mlieBracket (modelWithCornersSelf ℝ E) V (fun y => J y (W y)) x)
-    - mlieBracket (modelWithCornersSelf ℝ E) V W x
+def nijenhuis (J : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x → TangentSpace (𝓘(ℝ, E)) x)
+    (V W : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x) (x : M) : TangentSpace (𝓘(ℝ, E)) x :=
+  mlieBracket (𝓘(ℝ, E)) (fun y => J y (V y)) (fun y => J y (W y)) x
+    - J x (mlieBracket (𝓘(ℝ, E)) (fun y => J y (V y)) W x)
+    - J x (mlieBracket (𝓘(ℝ, E)) V (fun y => J y (W y)) x)
+    - mlieBracket (𝓘(ℝ, E)) V W x
 
 /-- The inverse of the derivative of the inverse chart, at a point of the chart's target, is the
 derivative of the chart at the corresponding point of the source (Mathlib's two composition
 identities, read through `ContinuousLinearMap.inverse_eq`). -/
 theorem inverse_mfderiv_extChartAt_symm (x₀ : M) {w : E}
-    (hw : w ∈ (extChartAt (modelWithCornersSelf ℝ E) x₀).target) :
-    (mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm w).inverse
-      = mfderiv (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀) ((extChartAt (modelWithCornersSelf ℝ E) x₀).symm w) := by
-  have h1 := mfderivWithin_extChartAt_symm_comp_mfderiv_extChartAt (I := (modelWithCornersSelf ℝ E)) hw
-  have h2 := mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm (I := (modelWithCornersSelf ℝ E)) hw
+    (hw : w ∈ (extChartAt (𝓘(ℝ, E)) x₀).target) :
+    (mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm w).inverse
+      = mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀) ((extChartAt (𝓘(ℝ, E)) x₀).symm w)
+          := by
+  have h1 := mfderivWithin_extChartAt_symm_comp_mfderiv_extChartAt (I := (𝓘(ℝ, E))) hw
+  have h2 := mfderiv_extChartAt_comp_mfderivWithin_extChartAt_symm (I := (𝓘(ℝ, E))) hw
   simp only [modelWithCornersSelf_coe, Set.range_id, mfderivWithin_univ] at h1 h2
   exact ContinuousLinearMap.inverse_eq h1 h2
 
@@ -1181,108 +1200,130 @@ theorem flat_nijenhuis_eq_zero (J₀ : E →L[ℝ] E) (hJ : ∀ v, J₀ (J₀ v)
 
 /-- A vector field on the model space `E`, read as a plain function `E → E` — a reducible cast
 (`TangentSpace 𝓘(ℝ, E) w` is `E`), so that the flat `lieBracket` API matches it syntactically. -/
-abbrev flatField (X : ∀ w : E, TangentSpace (modelWithCornersSelf ℝ E) w) : E → E := fun w => X w
+abbrev flatField (X : ∀ w : E, TangentSpace (𝓘(ℝ, E)) w) : E → E := fun w => X w
 
 namespace IsKahler
 
-variable {β : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ}
-  {J : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x → TangentSpace (modelWithCornersSelf ℝ E) x} {J₀ : E →L[ℝ] E}
+variable {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ}
+  {J : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x → TangentSpace (𝓘(ℝ, E)) x} {J₀ : E →L[ℝ] E}
 
 /-- In the chart at `x₀`, the pullback of `J X` along the inverse chart is `J₀` applied to the
 pullback of `X`, at every point of the chart's target: `J` reads as the constant `J₀`. -/
 theorem mpullback_extChartAt_symm_apply_J (h : IsKahler β J J₀) (x₀ : M)
-    (X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x) {w : E} (hw : w ∈ (extChartAt (modelWithCornersSelf ℝ E) x₀).target) :
-    mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (X y)) w
-      = J₀ (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm X w) := by
-  have hy : (extChartAt (modelWithCornersSelf ℝ E) x₀).symm w ∈ (chartAt E x₀).source := by
-    have := (extChartAt (modelWithCornersSelf ℝ E) x₀).map_target hw
+    (X : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x) {w : E} (hw : w ∈ (extChartAt (𝓘(ℝ, E)) x₀).target) :
+    mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm (fun y => J y (X y)) w
+      = J₀ (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm X w) := by
+  have hy : (extChartAt (𝓘(ℝ, E)) x₀).symm w ∈ (chartAt E x₀).source := by
+    have := (extChartAt (𝓘(ℝ, E)) x₀).map_target hw
     rwa [extChartAt_source] at this
-  have hb : (extChartAt (modelWithCornersSelf ℝ E) x₀).symm w
-      ∈ (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).baseSet := hy
+  have hb : (extChartAt (𝓘(ℝ, E)) x₀).symm w
+      ∈ (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).baseSet := hy
   rw [mpullback_apply, mpullback_apply, inverse_mfderiv_extChartAt_symm x₀ hw,
     ← TangentBundle.continuousLinearMapAt_trivializationAt hy]
-  have hX : X ((extChartAt (modelWithCornersSelf ℝ E) x₀).symm w)
-      = (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ ((extChartAt (modelWithCornersSelf ℝ E) x₀).symm w)
-        ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt ℝ
-          ((extChartAt (modelWithCornersSelf ℝ E) x₀).symm w) (X ((extChartAt (modelWithCornersSelf ℝ E) x₀).symm w))) :=
-    ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL_continuousLinearMapAt hb _).symm
+  have hX : X ((extChartAt (𝓘(ℝ, E)) x₀).symm w)
+      = (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ ((extChartAt (𝓘(ℝ, E)) x₀).symm w)
+        ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt ℝ
+          ((extChartAt (𝓘(ℝ, E)) x₀).symm w) (X ((extChartAt (𝓘(ℝ, E)) x₀).symm w))) :=
+    ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL_continuousLinearMapAt hb _).symm
   rw [hX, h.J_symmL x₀ _ hy]
-  exact ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt_symmL
+  exact ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt_symmL
       hb _).trans
-    (congrArg J₀ ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).continuousLinearMapAt_symmL
+    (congrArg J₀ ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).continuousLinearMapAt_symmL
       hb _).symm)
 
 variable [FiniteDimensional ℝ E]
 
 /-- ★★★ **The complex structure of a Kähler manifold is integrable in the tensor sense** (G14b):
 the Nijenhuis tensor of `J` vanishes on vector fields differentiable at the point. In the chart at
-`x₀` every bracket is the flat bracket of the pulled-back fields (`mlieBracketWithin_apply`, with the
+`x₀` every bracket is the flat bracket of the pulled-back fields (`mlieBracketWithin_apply`, with
+the
 chart's derivative the identity at its base point), `J` reads as the constant `J₀`
 (`mpullback_extChartAt_symm_apply_J`), and the flat Nijenhuis expression of a constant linear `J₀`
 with `J₀² = -1` is identically zero. This is the easy direction of Newlander–Nirenberg; the converse
 is not stated. -/
-theorem nijenhuis_eq_zero (h : IsKahler β J J₀) {V W : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x} (x₀ : M)
-    (hV : MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E).tangent (fun x => TotalSpace.mk' E x (V x)) x₀)
-    (hW : MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E).tangent (fun x => TotalSpace.mk' E x (W x)) x₀) :
+theorem nijenhuis_eq_zero (h : IsKahler β J J₀) {V W : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x} (x₀ : M)
+    (hV : MDifferentiableAt (𝓘(ℝ, E)) (𝓘(ℝ, E)).tangent (fun x => TotalSpace.mk' E x (V x)) x₀)
+    (hW : MDifferentiableAt (𝓘(ℝ, E)) (𝓘(ℝ, E)).tangent (fun x => TotalSpace.mk' E x (W x)) x₀) :
     nijenhuis J V W x₀ = 0 := by
   have : CompleteSpace E := FiniteDimensional.complete ℝ E
-  have hrange : Set.range (modelWithCornersSelf ℝ E) = Set.univ := by simp
+  have hrange : Set.range (𝓘(ℝ, E)) = Set.univ := by simp
   -- every bracket at `x₀` is the flat bracket of the pullbacks along the inverse chart
-  have key : ∀ A B : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x,
-      mlieBracket (modelWithCornersSelf ℝ E) A B x₀
-        = lieBracket ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm A)) (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm B)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) := by
+  have key : ∀ A B : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x,
+      mlieBracket (𝓘(ℝ, E)) A B x₀
+        = lieBracket ℝ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm A))
+            (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm B)) (extChartAt
+            (𝓘(ℝ, E)) x₀ x₀) := by
     intro A B
     have hid : ∀ v : E,
-        (ContinuousLinearMap.id ℝ (TangentSpace (modelWithCornersSelf ℝ E) x₀)).inverse v = v := by
+        (ContinuousLinearMap.id ℝ (TangentSpace (𝓘(ℝ, E)) x₀)).inverse v = v := by
       intro v
       rw [ContinuousLinearMap.inverse_id]
       rfl
     rw [← mlieBracketWithin_univ, mlieBracketWithin_apply, mfderiv_extChartAt_self]
     refine (hid _).trans ?_
     simp only [hrange, mpullbackWithin_univ, Set.preimage_univ, Set.univ_inter]
-    exact congrFun (lieBracketWithin_univ (𝕜 := ℝ) (V := flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm A)) (W := flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm B))) _
+    exact congrFun (lieBracketWithin_univ (𝕜 := ℝ) (V := flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E))
+        (extChartAt (𝓘(ℝ, E)) x₀).symm A)) (W := flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E))
+        (extChartAt (𝓘(ℝ, E)) x₀).symm B))) _
   -- the pullbacks of `JV`, `JW` are `J₀ ∘` the pullbacks of `V`, `W`, near the base point
-  have hJV : flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (V y)))
-      =ᶠ[nhds (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)] fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm V) w) := by
+  have hJV : flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm (fun y => J y
+      (V y)))
+      =ᶠ[nhds (extChartAt (𝓘(ℝ, E)) x₀ x₀)] fun w => J₀ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E))
+          (extChartAt (𝓘(ℝ, E)) x₀).symm V) w) := by
     filter_upwards [extChartAt_target_mem_nhds x₀] with w hw
     exact h.mpullback_extChartAt_symm_apply_J x₀ V hw
-  have hJW : flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (W y)))
-      =ᶠ[nhds (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)] fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm W) w) := by
+  have hJW : flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm (fun y => J y
+      (W y)))
+      =ᶠ[nhds (extChartAt (𝓘(ℝ, E)) x₀ x₀)] fun w => J₀ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E))
+          (extChartAt (𝓘(ℝ, E)) x₀).symm W) w) := by
     filter_upwards [extChartAt_target_mem_nhds x₀] with w hw
     exact h.mpullback_extChartAt_symm_apply_J x₀ W hw
   -- the pullbacks are differentiable at the base point
-  have hpb : ∀ X : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x,
-      MDifferentiableAt (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E).tangent (fun x => TotalSpace.mk' E x (X x)) x₀ →
-      DifferentiableAt ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm X)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) := by
+  have hpb : ∀ X : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x,
+      MDifferentiableAt (𝓘(ℝ, E)) (𝓘(ℝ, E)).tangent (fun x => TotalSpace.mk' E x (X x)) x₀ →
+      DifferentiableAt ℝ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm
+          X)) (extChartAt (𝓘(ℝ, E)) x₀ x₀) := by
     intro X hX
     have h1 := MDifferentiableWithinAt.differentiableWithinAt_mpullbackWithin_vectorField
-      (I := (modelWithCornersSelf ℝ E)) (s := Set.univ) (x := x₀) hX.mdifferentiableWithinAt
+      (I := (𝓘(ℝ, E))) (s := Set.univ) (x := x₀) hX.mdifferentiableWithinAt
     simp only [hrange, mpullbackWithin_univ, Set.preimage_univ, Set.univ_inter] at h1
     exact differentiableWithinAt_univ.1 h1
   have hV' := hpb V hV
   have hW' := hpb W hW
   -- the derivative of `J₀ ∘ X'` is `J₀ ∘ DX'`
-  have hDJ : ∀ X' : E → E, DifferentiableAt ℝ X' (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) →
-      fderiv ℝ (fun w => J₀ (X' w)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)
-        = J₀.comp (fderiv ℝ X' (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)) := by
+  have hDJ : ∀ X' : E → E, DifferentiableAt ℝ X' (extChartAt (𝓘(ℝ, E)) x₀ x₀) →
+      fderiv ℝ (fun w => J₀ (X' w)) (extChartAt (𝓘(ℝ, E)) x₀ x₀)
+        = J₀.comp (fderiv ℝ X' (extChartAt (𝓘(ℝ, E)) x₀ x₀)) := by
     intro X' hX'
     rw [show (fun w => J₀ (X' w)) = J₀ ∘ X' from rfl,
       fderiv_comp _ J₀.differentiableAt hX', J₀.fderiv]
   -- assemble
   unfold nijenhuis
   rw [key, key, key, key, h.apply_eq x₀, h.apply_eq x₀]
-  have e1 : lieBracket ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (V y)))) (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (W y))))
-        (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)
-      = lieBracket ℝ (fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm V) w)) (fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm W) w))
-        (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) := by
+  have e1 : lieBracket ℝ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm
+      (fun y => J y (V y)))) (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E))
+      x₀).symm (fun y => J y (W y))))
+        (extChartAt (𝓘(ℝ, E)) x₀ x₀)
+      = lieBracket ℝ (fun w => J₀ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E))
+          x₀).symm V) w)) (fun w => J₀ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ,
+          E)) x₀).symm W) w))
+        (extChartAt (𝓘(ℝ, E)) x₀ x₀) := by
     rw [← lieBracketWithin_univ, ← lieBracketWithin_univ]
     exact hJV.lieBracketWithin_vectorField_eq_nhds hJW
-  have e2 : lieBracket ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (V y)))) (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm W)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)
-      = lieBracket ℝ (fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm V) w)) (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm W)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) := by
+  have e2 : lieBracket ℝ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm
+      (fun y => J y (V y)))) (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E))
+      x₀).symm W)) (extChartAt (𝓘(ℝ, E)) x₀ x₀)
+      = lieBracket ℝ (fun w => J₀ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E))
+          x₀).symm V) w)) (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm
+          W)) (extChartAt (𝓘(ℝ, E)) x₀ x₀) := by
     rw [← lieBracketWithin_univ, ← lieBracketWithin_univ]
     exact hJV.lieBracketWithin_vectorField_eq_nhds (Filter.EventuallyEq.refl _ _)
-  have e3 : lieBracket ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm V)) (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm (fun y => J y (W y)))) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀)
-      = lieBracket ℝ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm V)) (fun w => J₀ (flatField (mpullback (modelWithCornersSelf ℝ E) (modelWithCornersSelf ℝ E) (extChartAt (modelWithCornersSelf ℝ E) x₀).symm W) w)) (extChartAt (modelWithCornersSelf ℝ E) x₀ x₀) := by
+  have e3 : lieBracket ℝ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm
+      V)) (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm (fun y => J y (W
+      y)))) (extChartAt (𝓘(ℝ, E)) x₀ x₀)
+      = lieBracket ℝ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm V))
+          (fun w => J₀ (flatField (mpullback (𝓘(ℝ, E)) (𝓘(ℝ, E)) (extChartAt (𝓘(ℝ, E)) x₀).symm W)
+          w)) (extChartAt (𝓘(ℝ, E)) x₀ x₀) := by
     rw [← lieBracketWithin_univ, ← lieBracketWithin_univ]
     exact (Filter.EventuallyEq.refl _ _).lieBracketWithin_vectorField_eq_nhds hJW
   rw [e1, e2, e3]

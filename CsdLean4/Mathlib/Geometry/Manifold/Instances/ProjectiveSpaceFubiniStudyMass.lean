@@ -16,7 +16,8 @@ public import Mathlib.RingTheory.Complex
 # The mass of the Fubini–Study volume: `ω_FS^{∧n} = (4π)ⁿ · μ_FS`
 
 **TERM-SCOPE(Kahler)** **TERM-SCOPE(Liouville)** — this module uses the *restricted* senses of
-"Kahler" and "Liouville"; the source repository's terms register records what is backed and what is not.
+"Kahler" and "Liouville"; the source repository's terms register records what is backed and what is
+not.
 
 **Category:** 1-Mathlib (CSD-free).
 
@@ -58,9 +59,11 @@ form of that sentence, with every factor visible.
 
 ⚠️ **`n = 0` is included**: the manifold is a point, `fsVolume 0 = δ`, and `(4π)⁰ = 1`.
 
-**Provenance and references.** The top-power plan (M7); `Instances/ProjectiveSpaceFubiniStudyVolume.lean`
+**Provenance and references.** The top-power plan (M7);
+`Instances/ProjectiveSpaceFubiniStudyVolume.lean`
 (`fsVolumeNormalized_eq_fubiniStudyMeasure`, `wedgePow_fsModelForm_zero_stdBasis`);
-`Analysis/SpecialFunctions/JapaneseBracketIntegral.lean`; `LinearAlgebra/Projectivization/UnitaryTransitive.lean`
+`Analysis/SpecialFunctions/JapaneseBracketIntegral.lean`;
+`LinearAlgebra/Projectivization/UnitaryTransitive.lean`
 (`exists_unitary_map_unit`); `LinearAlgebra/Projectivization/TransitionProbability.lean`
 (`inner_toEuclideanLin_unitary`); `Geometry/Manifold/TopFormMeasure.lean` (`chartMeasure_apply`,
 `topFormMeasure_apply_of_subset_source`); `Mathlib/RingTheory/Norm/Transitivity.lean`
@@ -334,7 +337,8 @@ theorem fsVolume_compl_chartSource_zero : fsVolume n (chartSource 0)ᶜ = 0 := b
   have hmeas : MeasurableSet (chartSource (n := n) i ∩ (chartSource 0)ᶜ) :=
     (isOpen_chartSource i).measurableSet.inter (isOpen_chartSource 0).measurableSet.compl
   rw [fsVolume, topFormMeasure_apply_of_subset_source volume (stdBasis n) (fun x => fsTopForm n x)
-    (affineChartCover n) (origin i) hmeas (by rw [chartAt_origin_source]; exact Set.inter_subset_left),
+    (affineChartCover n) (origin i) hmeas (by rw [chartAt_origin_source]; exact
+        Set.inter_subset_left),
     chartMeasure_apply volume (stdBasis n) (fun x => fsTopForm n x) (origin i) hmeas]
   by_cases hi : i = 0
   · subst hi

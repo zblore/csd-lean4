@@ -13,7 +13,8 @@ public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 /-!
 # Kähler potentials: `dd^c` forms are closed, and the Fubini–Study chart form
 
-**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; the source repository's terms register records what is backed and what is not.
+**TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; the source
+repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free; differential forms on normed spaces).
 

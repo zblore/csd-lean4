@@ -13,7 +13,8 @@ public import Mathlib.LinearAlgebra.Alternating.DomCoprod
 # The exterior product of *continuous* alternating maps
 
 **TERM-SCOPE(Kahler)** — the phrase "top-power identity" appears below in the *restricted*
-sense the source repository's terms register records: the identity is what this file makes **sayable**, and it is
+sense the source repository's terms register records: the identity is what this file makes
+**sayable**, and it is
 neither stated nor proved here. (The marker is repository bookkeeping; it goes with the
 `References` block if the file is ever sent upstream.)
 
@@ -69,7 +70,8 @@ The point of the file is narrow and worth stating plainly: with it, a top-power 
 of the shape `ω^(N-1)/(N-1)! = μ_FS` becomes **sayable in Lean**. It does not make any
 such statement true, and nothing here depends on it.
 
-**Provenance and references.** The Mathlib-gaps register; the backlog (XL, "Manifold exterior calculus");
+**Provenance and references.** The Mathlib-gaps register; the backlog (XL, "Manifold exterior
+calculus");
 the terms register (`moment map`);
 `CsdLean4/Mathlib/Analysis/InnerProductSpace/KahlerWedge.lean` (the consumer).
 -/

@@ -24,7 +24,8 @@ and the same `Ioo (-ε) ε`, every point has a *global* one. What it does not ha
 * ★ `exists_nhds_forall_exists_isMIntegralCurveOn_Ioo` — **uniform local existence time on a
   neighbourhood**: around every point there is a neighbourhood `U` and an `ε > 0` such that every
   `x ∈ U` has an integral curve on `Ioo (-ε) ε` with `γ 0 = x`. This is Mathlib's local proof with
-  the *ball* of Picard–Lindelöf kept (`ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt`
+  the *ball* of Picard–Lindelöf kept
+  (`ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt`
   gives one `ε` for a whole closed ball of chart initial points), and the confinement of the chart
   solutions to the chart's target made uniform by shrinking the ball.
 * ★★ `exists_isMIntegralCurve_of_compactSpace` — **on a compact manifold every `C^1` vector field
@@ -52,7 +53,8 @@ transport in `exists_nhds_forall_exists_isMIntegralCurveOn_Ioo` works in the cha
 produces curves for initial points in a chart-neighbourhood of `x₀`; the neighbourhood is the
 preimage of a closed ball, open in `M` by `continuousAt_extChartAt`.
 
-**Provenance and references.** The generator-layer plan §11 (Q29); `Mathlib/Geometry/Manifold/IntegralCurve/`
+**Provenance and references.** The generator-layer plan §11 (Q29);
+`Mathlib/Geometry/Manifold/IntegralCurve/`
 (`ExistUnique.lean`, `UniformTime.lean`); `Mathlib/Analysis/ODE/ExistUnique.lean`
 (`ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt`).
 -/
@@ -156,7 +158,8 @@ point of an integral curve defined on `Ioo (-ε) ε`.
 Mathlib's local theorem (`exists_isMIntegralCurveAt_of_contMDiffAt`) transported with the ball kept:
 the flat Picard–Lindelöf statement gives one `ε` for every chart initial point in a closed ball
 around `φ x₀`, and the chart solutions are confined, uniformly, to a ball inside
-`interior φ.target` (`ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt_mem`),
+`interior φ.target`
+(`ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt_mem`),
 so `φ.symm ∘ f` is an integral curve on the whole interval. -/
 theorem exists_nhds_forall_exists_isMIntegralCurveOn_Ioo
     (hv : ContMDiff I I.tangent 1 (fun x ↦ (⟨x, v x⟩ : TangentBundle I M))) (x₀ : M) :
@@ -172,11 +175,14 @@ theorem exists_nhds_forall_exists_isMIntegralCurveOn_Ioo
         (fun x ↦ (⟨x, v x⟩ : TangentBundle I M)) ∘ (extChartAt I x₀).symm) w)
       (extChartAt I x₀ x₀) :=
     hv'.contDiffAt (range_mem_nhds_isInteriorPoint hx)
-  -- the chart field `F w := snd (chart of the section at w)`, C^1; confine to the interior of the target
+  -- the chart field `F w := snd (chart of the section at w)`, C^1; confine to the interior of the
+  -- target
   have hint : interior (extChartAt I x₀).target ∈ 𝓝 (extChartAt I x₀ x₀) :=
     isOpen_interior.mem_nhds ((I.isInteriorPoint_iff).mp hx)
-  obtain ⟨r, hr, ε, hε, H⟩ := hf.snd.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt_mem hint
-  -- the neighbourhood on `M`: the preimage of the closed ball under the chart, intersected with the source
+  obtain ⟨r, hr, ε, hε, H⟩
+      := hf.snd.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt_mem hint
+  -- the neighbourhood on `M`: the preimage of the closed ball under the chart, intersected with the
+  -- source
   refine ⟨(extChartAt I x₀).source ∩ (extChartAt I x₀) ⁻¹' closedBall (extChartAt I x₀ x₀) r,
     inter_mem (extChartAt_source_mem_nhds x₀)
       ((continuousAt_extChartAt x₀).preimage_mem_nhds (closedBall_mem_nhds _ hr)),
@@ -269,7 +275,8 @@ theorem integralFlow_eq_of_isMIntegralCurve {γ : ℝ → M} (hγ : IsMIntegralC
 `φ t x` at `0` (`IsMIntegralCurve.comp_add`), so by uniqueness it is `u ↦ φ u (φ t x)`. -/
 theorem integralFlow_add (s t : ℝ) (x : M) :
     integralFlow hv (s + t) x = integralFlow hv s (integralFlow hv t x) := by
-  have h : (fun u : ℝ => integralFlow hv (u + t) x) = fun u => integralFlow hv u (integralFlow hv t x) :=
+  have h : (fun u : ℝ => integralFlow hv (u + t) x) = fun u => integralFlow hv u (integralFlow hv t
+      x) :=
     integralFlow_eq_of_isMIntegralCurve hv ((isMIntegralCurve_integralFlow hv x).comp_add t)
       (by simp)
   exact congrFun h s

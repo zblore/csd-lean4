@@ -45,10 +45,12 @@ the basis — and those densities glue to a measure on the manifold.
   **invariance**: a homeomorphism whose chart expressions are differentiable and pull the local
   representative at the target chart back to the local representative at the source chart
   preserves the measure (differentiability, not smoothness, is what the change of variables
-  uses; the Hamiltonian flow of `HamiltonianFlowVolume.lean` supplies exactly that). The proof is chart-independence with the chart transition replaced by
+  uses; the Hamiltonian flow of `HamiltonianFlowVolume.lean` supplies exactly that). The proof is
+  chart-independence with the chart transition replaced by
   the map's chart expression, summed over the double partition by the cover's pieces and their
   images;
-* ★ `isLocallyFiniteMeasure_topFormMeasure`, ★ `isFiniteMeasure_topFormMeasure` — the measure of a smooth top form is locally finite (a compact ball inside a chart
+* ★ `isLocallyFiniteMeasure_topFormMeasure`, ★ `isFiniteMeasure_topFormMeasure` — the measure of a
+  smooth top form is locally finite (a compact ball inside a chart
   has finite measure, the density being continuous there), hence finite on a compact manifold;
 * ★ `topFormMeasure_ne_zero_of_localRep_ne_zero` (the generic half) — a
   smooth top form whose coefficient against the basis does not vanish at one chart point has
@@ -76,7 +78,8 @@ coefficient is consumer-side.
 ⚠️ **`∞` and `𝓘(ℝ, E)` only**, inherited from `ExteriorDerivative.lean`; the model `E` is
 finite-dimensional real, Borel, with an additive Haar measure supplied as an argument.
 
-**Provenance and references.** The top-power plan (M3); `Analysis/Normed/Module/Alternating/TopForm.lean`
+**Provenance and references.** The top-power plan (M3);
+`Analysis/Normed/Module/Alternating/TopForm.lean`
 (M1, the Jacobian rule); `Geometry/Manifold/ExteriorDerivative.lean` (`localRep`,
 `localRep_transition`, `contDiffAt_chart_transition`);
 `Mathlib/MeasureTheory/Function/Jacobian.lean`; the completed-work ledger.
@@ -187,13 +190,13 @@ section TopFormMeasure
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
   [MeasurableSpace E] [BorelSpace E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace E M]
-  [IsManifold (modelWithCornersSelf ℝ E) ∞ M] [MeasurableSpace M] [BorelSpace M]
+  [IsManifold (𝓘(ℝ, E)) ∞ M] [MeasurableSpace M] [BorelSpace M]
   {ι : Type*} [Fintype ι] [DecidableEq ι]
   (μ : Measure E) [μ.IsAddHaarMeasure] (e : Module.Basis ι ℝ E)
 
 namespace DifferentialForm
 
-variable (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ] Bundle.Trivial M ℝ x)
+variable (s : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x [⋀^ι]→L[ℝ] Bundle.Trivial M ℝ x)
 
 /-- The density of a top-form family in the chart at `x₀`: the absolute value of the
 coefficient of its local representative against the basis `e`. -/
@@ -204,7 +207,7 @@ def chartMeasure (x₀ : M) : Measure M :=
   Measure.map (chartAt E x₀).symm
     ((μ.restrict (chartAt E x₀).target).withDensity (chartDensity e s x₀))
 
-omit [NormedSpace ℝ E] [FiniteDimensional ℝ E] [IsManifold (modelWithCornersSelf ℝ E) ∞ M] in
+omit [NormedSpace ℝ E] [FiniteDimensional ℝ E] [IsManifold (𝓘(ℝ, E)) ∞ M] in
 theorem measurableSet_target_inter_preimage (x₀ : M) {A : Set M} (hA : MeasurableSet A) :
     MeasurableSet ((chartAt E x₀).target ∩ (chartAt E x₀).symm ⁻¹' A) :=
   MeasurableSet.inter_preimage_of_continuousOn (chartAt E x₀).continuousOn_symm
@@ -454,7 +457,8 @@ theorem topFormMeasure_map_eq (c : ChartCover E M) (g : M ≃ₜ M)
     · rintro ⟨_, ⟨p, rfl⟩, hx⟩
       exact hx.1
     · intro hx
-      have hj : ∃ j, x ∈ c.piece j := Set.mem_iUnion.1 (by rw [c.iUnion_piece]; exact Set.mem_univ x)
+      have hj : ∃ j, x ∈ c.piece j :=
+        Set.mem_iUnion.1 (by rw [c.iUnion_piece]; exact Set.mem_univ x)
       have hi : ∃ i, g.symm x ∈ c.piece i :=
         Set.mem_iUnion.1 (by rw [c.iUnion_piece]; exact Set.mem_univ _)
       obtain ⟨j, hj⟩ := hj
@@ -488,8 +492,8 @@ theorem topFormMeasure_map_eq (c : ChartCover E M) (g : M ≃ₜ M)
 omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
   in
 theorem continuousOn_localRep
-    (hs : ContMDiff (modelWithCornersSelf ℝ E)
-      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] ℝ))) ∞
+    (hs : ContMDiff (𝓘(ℝ, E))
+      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E [⋀^ι]→L[ℝ] ℝ))) ∞
       (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] ℝ) x (s x)))
     (x₀ : M) : ContinuousOn (localRep s x₀) (chartAt E x₀).target :=
   fun _ hw => (contDiffAt_localRep s hs x₀ hw).continuousAt.continuousWithinAt
@@ -497,8 +501,8 @@ theorem continuousOn_localRep
 /-- ★ **The measure of a smooth top form is locally finite**: a compact ball inside a chart has
 finite measure because the density is continuous there. -/
 theorem isLocallyFiniteMeasure_topFormMeasure
-    (hs : ContMDiff (modelWithCornersSelf ℝ E)
-      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] ℝ))) ∞
+    (hs : ContMDiff (𝓘(ℝ, E))
+      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E [⋀^ι]→L[ℝ] ℝ))) ∞
       (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] ℝ) x (s x)))
     (c : ChartCover E M) : IsLocallyFiniteMeasure (topFormMeasure μ e s c) := by
   refine ⟨fun x => ?_⟩
@@ -510,7 +514,8 @@ theorem isLocallyFiniteMeasure_topFormMeasure
   have hKc : IsCompact K := isCompact_closedBall _ _
   set V := (chartAt E x).source ∩ chartAt E x ⁻¹' K with hVdef
   refine ⟨V, ?_, ?_⟩
-  · have hopen : IsOpen ((chartAt E x).source ∩ chartAt E x ⁻¹' Metric.ball (chartAt E x x) (r / 2)) :=
+  · have hopen : IsOpen ((chartAt E x).source ∩ chartAt E x ⁻¹' Metric.ball (chartAt E x x) (r / 2))
+        :=
       (chartAt E x).continuousOn.isOpen_inter_preimage (chartAt E x).open_source Metric.isOpen_ball
     exact Filter.mem_of_superset
       (hopen.mem_nhds ⟨mem_chart_source E x, Metric.mem_ball_self (by linarith)⟩)
@@ -539,8 +544,8 @@ theorem isLocallyFiniteMeasure_topFormMeasure
 
 /-- ★ On a compact manifold, the measure of a smooth top form is finite. -/
 theorem isFiniteMeasure_topFormMeasure [CompactSpace M]
-    (hs : ContMDiff (modelWithCornersSelf ℝ E)
-      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] ℝ))) ∞
+    (hs : ContMDiff (𝓘(ℝ, E))
+      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E [⋀^ι]→L[ℝ] ℝ))) ∞
       (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] ℝ) x (s x)))
     (c : ChartCover E M) : IsFiniteMeasure (topFormMeasure μ e s c) := by
   have := isLocallyFiniteMeasure_topFormMeasure μ e s hs c
@@ -550,8 +555,8 @@ theorem isFiniteMeasure_topFormMeasure [CompactSpace M]
 measure.** The density is continuous, so it is bounded below by a positive constant on a ball
 around that point, and Haar measure gives balls positive measure. -/
 theorem topFormMeasure_ne_zero_of_localRep_ne_zero
-    (hs : ContMDiff (modelWithCornersSelf ℝ E)
-      ((modelWithCornersSelf ℝ E).prod (modelWithCornersSelf ℝ (E [⋀^ι]→L[ℝ] ℝ))) ∞
+    (hs : ContMDiff (𝓘(ℝ, E))
+      ((𝓘(ℝ, E)).prod (𝓘(ℝ, E [⋀^ι]→L[ℝ] ℝ))) ∞
       (fun x : M => TotalSpace.mk' (E [⋀^ι]→L[ℝ] ℝ) x (s x)))
     (c : ChartCover E M) (x₀ : M) {w₀ : E} (hw₀ : w₀ ∈ (chartAt E x₀).target)
     (hne : localRep s x₀ w₀ e ≠ 0) : topFormMeasure μ e s c ≠ 0 := by

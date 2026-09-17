@@ -39,7 +39,8 @@ the usual condition, and it forces the dimension to be even wherever the form is
 
 **Provenance and references.** `Geometry/Manifold/ExteriorDerivative.lean` (`mextDeriv`);
 `Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudySymplectic.lean` (the inhabitant);
-the terms register ("symplectic / manifold"); the Mathlib-gaps register (Kahler / symplectic manifold API);
+the terms register ("symplectic / manifold"); the Mathlib-gaps register (Kahler / symplectic
+manifold API);
 the backlog (XL, "Manifold exterior calculus", step (4)); the completed-work ledger.
 -/
 
@@ -51,16 +52,16 @@ namespace DifferentialForm
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace E M]
-  [IsManifold (modelWithCornersSelf ℝ E) ∞ M]
+  [IsManifold (𝓘(ℝ, E)) ∞ M]
 
 /-- **A symplectic form**: a `C^∞` 2-form that is closed and non-degenerate at every point. -/
-structure IsSymplectic (α : DifferentialForm (modelWithCornersSelf ℝ E) M ∞ (Fin 2) ℝ) :
+structure IsSymplectic (α : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ) :
     Prop where
   /-- Closedness: `d α = 0`. -/
   closed : α.mextDeriv = 0
   /-- Non-degeneracy at every point: every nonzero tangent vector pairs non-trivially with some
   other. -/
-  nondegenerate : ∀ (x : M) (v : TangentSpace (modelWithCornersSelf ℝ E) x), v ≠ 0 →
+  nondegenerate : ∀ (x : M) (v : TangentSpace (𝓘(ℝ, E)) x), v ≠ 0 →
     ∃ w, α x ![v, w] ≠ 0
 
 end DifferentialForm

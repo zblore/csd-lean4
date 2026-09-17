@@ -17,7 +17,8 @@ public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
 # The volume of the top power of the Fubini–Study form
 
 **TERM-SCOPE(Kahler)** **TERM-SCOPE(Liouville)** — this module uses the *restricted* senses of
-"Kahler" and "Liouville"; the source repository's terms register records what is backed and what is not.
+"Kahler" and "Liouville"; the source repository's terms register records what is backed and what is
+not.
 
 **Category:** 1-Mathlib (CSD-free).
 

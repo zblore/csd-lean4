@@ -16,20 +16,23 @@ public import Mathlib.LinearAlgebra.Matrix.BilinearForm
 the generator-layer plan §9).
 
 **TERM-SCOPE(Kahler)** **TERM-SCOPE(Liouville)** — this module identifies the Riemannian and
-symplectic readings of the Fubini–Study volume; the source repository's terms register records what is backed.
+symplectic readings of the Fubini–Study volume; the source repository's terms register records what
+is backed.
 
 The compatible metric of the almost Kähler structure of `ℂℙⁿ` (G7) is the Fubini–Study metric
 `g = ω(J·,·)`. Its Riemannian volume (`RiemannianVolume.lean`: the chart densities `√det G` glued
 along the affine cover) is identified with the measure of the top power of the Fubini–Study form:
 
-* `fsMetric` — **the Fubini–Study metric** `g x u v = fsForm x (J u, v)`, definitionally the metric of
+* `fsMetric` — **the Fubini–Study metric** `g x u v = fsForm x (J u, v)`, definitionally the metric
+  of
   `fsForm_isAlmostKahler`;
 * `fsModelMetric w` — the model metric `g_w(u, v) = ω_w(i·u, v)` on `Fin n → ℂ`, as a real bilinear
   form; ★ `localRep_fsMetric` — **in every affine chart the Fubini–Study metric reads as the model
   metric** (`J = i·` in every chart, `fsJ_symmL`, and the form reads as the model form,
   `localRep_fsSection`);
 * ★★ `det_toMatrix_fsModelMetric` — **the Gram determinant of the model metric against the standard
-  basis is `(4ⁿ (1 + ‖w‖²)^{-(n+1)})²`**, by the route of `wedgePow_fsModelForm_stdBasis`: rotate `w`
+  basis is `(4ⁿ (1 + ‖w‖²)^{-(n+1)})²`**, by the route of `wedgePow_fsModelForm_stdBasis`: rotate
+  `w`
   to the first axis by a unitary (`fsModelMetric_mulVec`; the real determinant of a unitary is `1`),
   where the metric is the pullback of the metric at the origin along the diagonal scaling
   (`fsModelMetric_single`, `normSq_det_fsScale`), and at the origin the Gram matrix is `4·1`
@@ -40,7 +43,8 @@ along the affine cover) is identified with the measure of the top power of the F
 * ★★★ `riemannianVolume_fsMetric` — **the Riemannian volume of the Fubini–Study metric IS
   `fsVolume n / n!`**, the Kähler identity `vol_g = ω^{∧n}/n!` at the level of measures; and ★★★
   `riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure` — with the constant, `vol_g = ((4π)ⁿ/n!) ·
-  μ_FS`: **the Fubini–Study measure is the normalised Riemannian volume of the Fubini–Study metric**,
+  μ_FS`: **the Fubini–Study measure is the normalised Riemannian volume of the Fubini–Study
+  metric**,
   the reading `TERMS.md` had listed as not established;
 * **Q30 / G17b (2026-09-11).** `isBilinear_fsMetric` and ★ `riemannianVolume_fsMetric_congr_cover` —
   the identification holds for **every** chart cover, not only the affine one: the Riemannian volume
@@ -58,11 +62,15 @@ is proved at the level of chart densities, not as an identity of volume *forms* 
 chosen).
 
 ⚠️ **Conventions.** The `(4π)ⁿ` and the `n!` are `fsChartForm = dd^c log(1 + ‖z‖²)`'s `-4` and the
-top power's `n!` (`fsVolume_eq_smul_fubiniStudyMeasure`); the textbook `ω^{∧n}/n!` is a renormalisation.
+top power's `n!` (`fsVolume_eq_smul_fubiniStudyMeasure`); the textbook `ω^{∧n}/n!` is a
+renormalisation.
 
-**Provenance and references.** The generator-layer plan (G17); the terms register (Fubini–Study, Kähler,
-Liouville); `Geometry/Manifold/RiemannianVolume.lean`; `Instances/ProjectiveSpaceFubiniStudyMass.lean`
-(the rotation route, `det_mulVecCLM`, `fsScale`); `Instances/ProjectiveSpaceFubiniStudySymplectic.lean`
+**Provenance and references.** The generator-layer plan (G17); the terms register (Fubini–Study,
+Kähler,
+Liouville); `Geometry/Manifold/RiemannianVolume.lean`;
+`Instances/ProjectiveSpaceFubiniStudyMass.lean`
+(the rotation route, `det_mulVecCLM`, `fsScale`);
+`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`
 (`fsJ`, `fsJ_symmL`, `fsForm_isAlmostKahler`).
 -/
 
@@ -80,9 +88,10 @@ variable {n : ℕ}
 
 /-! ### The Fubini–Study metric and its model -/
 
-/-- **The Fubini–Study metric** `g x u v = ω_FS (J u, v)`: the compatible metric of the almost Kähler
+/-- **The Fubini–Study metric** `g x u v = ω_FS (J u, v)`: the compatible metric of the almost
+Kähler
 structure of `ℂℙⁿ`. -/
-def fsMetric (x : ℙ ℂ (Ambient n)) (u v : TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ)) x) :
+def fsMetric (x : ℙ ℂ (Ambient n)) (u v : TangentSpace (𝓘(ℝ, Fin n → ℂ)) x) :
     ℝ :=
   fsForm x ![fsJ x u, v]
 
@@ -107,9 +116,9 @@ noncomputable def fsModelMetric (w : Fin n → ℂ) : LinearMap.BilinForm ℝ (F
 pointwise content of `localRep_fsSection`. -/
 theorem fsForm_symmL_symmL (x₀ y : ℙ ℂ (Ambient n)) (hy : y ∈ (chartAt (Fin n → ℂ) x₀).source)
     (a b : Fin n → ℂ) :
-    fsForm y ![(trivializationAt (Fin n → ℂ) (TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ))) x₀).symmL
+    fsForm y ![(trivializationAt (Fin n → ℂ) (TangentSpace (𝓘(ℝ, Fin n → ℂ))) x₀).symmL
         ℝ y a,
-      (trivializationAt (Fin n → ℂ) (TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ))) x₀).symmL ℝ y b]
+      (trivializationAt (Fin n → ℂ) (TangentSpace (𝓘(ℝ, Fin n → ℂ))) x₀).symmL ℝ y b]
       = fsModelForm (chartAt (Fin n → ℂ) x₀ y) ![a, b] := by
   have h2 := trivializationAt_snd fsSection x₀ y hy
   rw [localRep_fsSection x₀ y hy] at h2
@@ -119,13 +128,15 @@ theorem fsForm_symmL_symmL (x₀ y : ℙ ℂ (Ambient n)) (hy : y ∈ (chartAt (
   refine congrArg (toFlat (fsSection y)) ?_
   funext i
   fin_cases i
-  · show (trivializationAt (Fin n → ℂ) (TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ))) x₀).symmL
+  · show (trivializationAt (Fin n → ℂ) (TangentSpace (𝓘(ℝ, Fin n → ℂ))) x₀).symmL
         ℝ y a
-      = fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) (chartAt (Fin n → ℂ) x₀ y) a
+      = fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) (chartAt (Fin n → ℂ) x₀ y)
+          a
     exact congrArg (fun L => L a) (tangent_symmL_eq_fderiv x₀ y hy)
-  · show (trivializationAt (Fin n → ℂ) (TangentSpace (modelWithCornersSelf ℝ (Fin n → ℂ))) x₀).symmL
+  · show (trivializationAt (Fin n → ℂ) (TangentSpace (𝓘(ℝ, Fin n → ℂ))) x₀).symmL
         ℝ y b
-      = fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) (chartAt (Fin n → ℂ) x₀ y) b
+      = fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) (chartAt (Fin n → ℂ) x₀ y)
+          b
     exact congrArg (fun L => L b) (tangent_symmL_eq_fderiv x₀ y hy)
 
 /-- ★ **In every affine chart the Fubini–Study metric reads as the model metric**: `J = i·` in the
@@ -201,7 +212,8 @@ theorem fsModelMetric_single (r : ℝ) :
   apply LinearMap.ext
   intro v
   simp only [LinearMap.BilinForm.comp_apply, fsModelMetric_apply, mulVecL_apply]
-  rw [fsModelForm_single, ContinuousAlternatingMap.compContinuousLinearMap_apply, ← Matrix.mulVec_smul]
+  rw [fsModelForm_single, ContinuousAlternatingMap.compContinuousLinearMap_apply,
+      ← Matrix.mulVec_smul]
   congr 1
   funext i
   fin_cases i <;> simp [mulVecCLM_apply]
@@ -232,7 +244,8 @@ theorem fsModelMetric_zero_apply (u v : Fin n → ℂ) :
     Complex.zero_re, Complex.mul_im, Complex.neg_re, Complex.neg_im, Complex.I_re, Complex.I_im]
   ring
 
-/-- The standard basis is orthonormal for the real part of the inner product: `p = 2·(p/2) + p%2`. -/
+/-- The standard basis is orthonormal for the real part of the inner product: `p = 2·(p/2) + p%2`.
+-/
 theorem stdBasis_inner_re (p q : Fin (2 * n)) :
     (inner ℂ (toLpCLM (stdBasis n p)) (toLpCLM (stdBasis n q))).re = if p = q then 1 else 0 := by
   rw [stdBasis_eq_pairFamily, stdBasis_eq_pairFamily]
@@ -358,7 +371,8 @@ theorem isBilinear_fsMetric : MetricFamily.IsBilinear (fsMetric (n := n)) where
   add_left := fun x a b v => by
     show fsForm x ![fsJ x (a + b), v] = fsForm x ![fsJ x a, v] + fsForm x ![fsJ x b, v]
     have h : fsJ x (a + b) = fsJ x a + fsJ x b := by
-      show Complex.I • tangentToModel (a + b) = Complex.I • tangentToModel a + Complex.I • tangentToModel b
+      show Complex.I • tangentToModel (a + b) = Complex.I • tangentToModel a + Complex.I •
+          tangentToModel b
       exact smul_add _ _ _
     rw [h]
     exact apply_add_left (fun x => fsForm x) x _ _ _

@@ -16,11 +16,13 @@ The namespace is `MetricFamily`, not `RiemannianMetric`: Mathlib has a structure
 this file works with a bare family `g : ∀ x, T_x → T_x → ℝ` plus `IsBilinear`. Restating the
 volume for Mathlib's bundled metric is the natural upstream step and is not done here.
 **Category:** 1-Mathlib (measure theory on manifolds: the Riemannian volume measure of a
-metric family, absent from Mathlib at the pin — `Mathlib/Geometry/Manifold/VectorBundle/Riemannian.lean`
+metric family, absent from Mathlib at the pin —
+`Mathlib/Geometry/Manifold/VectorBundle/Riemannian.lean`
 has Riemannian *bundles*, no volume; G17 of the generator-layer plan §9).
 
 A Riemannian metric `g` on a manifold `M` modelled on `E` has, in the chart at `x₀`, the Gram matrix
-`G_{x₀}(w)ᵢⱼ = g (symmL (eᵢ)) (symmL (eⱼ))` against a basis `e` of `E` (the metric at the point under
+`G_{x₀}(w)ᵢⱼ = g (symmL (eᵢ)) (symmL (eⱼ))` against a basis `e` of `E` (the metric at the point
+under
 `w`, read through the tangent trivialisation), and its Riemannian volume has the chart density
 `√det G_{x₀}(w)`. This module builds the measure exactly as `TopFormMeasure.lean` builds the measure
 of a top form — chart densities glued along the measurable partition of a `ChartCover` — with the
@@ -60,7 +62,8 @@ definitions; a non-positive Gram determinant gives density `0` (`Real.sqrt` of a
 The ℂℙⁿ instance supplies a genuine metric (`isBilinear_fsMetric`). Not stated: that an isometry
 preserves `riemannianVolume` (the twin of `topFormMeasure_map_eq`; same route, no consumer).
 
-**Provenance and references.** The generator-layer plan (G17); `Geometry/Manifold/TopFormMeasure.lean` (the
+**Provenance and references.** The generator-layer plan (G17);
+`Geometry/Manifold/TopFormMeasure.lean` (the
 construction mirrored); `Instances/ProjectiveSpaceFubiniStudyRiemannian.lean` (the instance).
 -/
 
@@ -76,23 +79,23 @@ section RiemannianVolume
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
   [MeasurableSpace E] [BorelSpace E]
   {M : Type*} [TopologicalSpace M] [ChartedSpace E M]
-  [IsManifold (modelWithCornersSelf ℝ E) ∞ M] [MeasurableSpace M] [BorelSpace M]
+  [IsManifold (𝓘(ℝ, E)) ∞ M] [MeasurableSpace M] [BorelSpace M]
   {ι : Type*} [Fintype ι] [DecidableEq ι]
   (μ : Measure E) [μ.IsAddHaarMeasure] (e : Module.Basis ι ℝ E)
 
 namespace MetricFamily
 
-variable (g : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x →
-  TangentSpace (modelWithCornersSelf ℝ E) x → ℝ)
+variable (g : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →
+  TangentSpace (𝓘(ℝ, E)) x → ℝ)
 
 /-- The local representative of a metric family in the chart at `x₀`: the metric at the point
 under `w`, on tangent vectors read through the tangent trivialisation. Outside the chart's target it
 is junk; every use is at a point of the target. -/
 def localRep (x₀ : M) (w : E) (u v : E) : ℝ :=
   g ((chartAt E x₀).symm w)
-    ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ
+    ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ
       ((chartAt E x₀).symm w) u)
-    ((trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ
+    ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ
       ((chartAt E x₀).symm w) v)
 
 /-- The Gram matrix of the local representative against the basis `e`. -/
@@ -128,7 +131,7 @@ def riemannianVolume (c : ChartCover E M) : Measure M :=
 Gram density is `k` times the coefficient density of a top form `s` (on the chart's target), then
 the Riemannian volume is `k` times the measure of `s`. -/
 theorem riemannianVolume_eq_smul_topFormMeasure (c : ChartCover E M)
-    (s : ∀ x : M, TangentSpace (modelWithCornersSelf ℝ E) x [⋀^ι]→L[ℝ] Bundle.Trivial M ℝ x)
+    (s : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x [⋀^ι]→L[ℝ] Bundle.Trivial M ℝ x)
     (k : ℝ≥0∞) (hk : k ≠ ⊤)
     (h : ∀ (i : Fin c.m), ∀ w ∈ (chartAt E (c.pt i)).target,
       chartDensity e g (c.pt i) w = k * DifferentialForm.chartDensity e s (c.pt i) w) :
@@ -153,53 +156,62 @@ theorem riemannianVolume_eq_smul_topFormMeasure (c : ChartCover E M)
 `MetricFamily.localRep` takes a bare family so that the definitions ask nothing; the
 chart-independence theorems ask for this. -/
 structure IsBilinear : Prop where
-  add_left : ∀ (x : M) (a b v : TangentSpace (modelWithCornersSelf ℝ E) x), g x (a + b) v = g x a v + g x b v
-  smul_left : ∀ (x : M) (c : ℝ) (a v : TangentSpace (modelWithCornersSelf ℝ E) x), g x (c • a) v = c * g x a v
-  add_right : ∀ (x : M) (v a b : TangentSpace (modelWithCornersSelf ℝ E) x), g x v (a + b) = g x v a + g x v b
-  smul_right : ∀ (x : M) (c : ℝ) (v a : TangentSpace (modelWithCornersSelf ℝ E) x), g x v (c • a) = c * g x v a
+  add_left : ∀ (x : M) (a b v : TangentSpace (𝓘(ℝ, E)) x), g x (a + b) v = g x a v + g x b v
+  smul_left : ∀ (x : M) (c : ℝ) (a v : TangentSpace (𝓘(ℝ, E)) x), g x (c • a) v = c * g x a v
+  add_right : ∀ (x : M) (v a b : TangentSpace (𝓘(ℝ, E)) x), g x v (a + b) = g x v a + g x v b
+  smul_right : ∀ (x : M) (c : ℝ) (v a : TangentSpace (𝓘(ℝ, E)) x), g x v (c • a) = c * g x v a
 
-omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M] in
-/-- The local representative of a bilinear family is bilinear in its two slots (`symmL` is linear). -/
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
+    in
+/-- The local representative of a bilinear family is bilinear in its two slots (`symmL` is linear).
+-/
 theorem localRep_add_left (hg : IsBilinear g) (x₀ : M) (w : E) (a b v : E) :
     localRep g x₀ w (a + b) v = localRep g x₀ w a v + localRep g x₀ w b v := by
   simp only [localRep, map_add]
   exact hg.add_left _ _ _ _
 
-omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M] in
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
+    in
 theorem localRep_smul_left (hg : IsBilinear g) (x₀ : M) (w : E) (c : ℝ) (a v : E) :
     localRep g x₀ w (c • a) v = c * localRep g x₀ w a v := by
   simp only [localRep, map_smul]
   exact hg.smul_left _ _ _ _
 
-omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M] in
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
+    in
 theorem localRep_add_right (hg : IsBilinear g) (x₀ : M) (w : E) (v a b : E) :
     localRep g x₀ w v (a + b) = localRep g x₀ w v a + localRep g x₀ w v b := by
   simp only [localRep, map_add]
   exact hg.add_right _ _ _ _
 
-omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M] in
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
+    in
 theorem localRep_smul_right (hg : IsBilinear g) (x₀ : M) (w : E) (c : ℝ) (v a : E) :
     localRep g x₀ w v (c • a) = c * localRep g x₀ w v a := by
   simp only [localRep, map_smul]
   exact hg.smul_right _ _ _ _
 
-omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M] in
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
+    in
 /-- The local representative, as a real bilinear form on `E` (for a bilinear family). -/
 def localRepBilin (hg : IsBilinear g) (x₀ : M) (w : E) : LinearMap.BilinForm ℝ E :=
   LinearMap.mk₂ ℝ (localRep g x₀ w) (localRep_add_left g hg x₀ w) (localRep_smul_left g hg x₀ w)
     (localRep_add_right g hg x₀ w) (localRep_smul_right g hg x₀ w)
 
-omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M] in
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
+    in
 @[simp] theorem localRepBilin_apply (hg : IsBilinear g) (x₀ : M) (w : E) (u v : E) :
     localRepBilin g hg x₀ w u v = localRep g x₀ w u v := rfl
 
-omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M] in
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
+    in
 theorem gram_eq_toMatrix (hg : IsBilinear g) (x₀ : M) (w : E) :
     gram e g x₀ w = LinearMap.BilinForm.toMatrix e (localRepBilin g hg x₀ w) := by
   ext i j
   rw [gram, Matrix.of_apply, LinearMap.BilinForm.toMatrix_apply, localRepBilin_apply]
 
-omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M] in
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
+    in
 /-- The local representative of a metric family transforms under a chart transition by pulling
 back both slots along the transition's derivative: the metric analogue of
 `DifferentialForm.localRep_transition`, from `tangent_symmL_eq_fderiv` at both charts and the chain
@@ -222,15 +234,16 @@ theorem localRep_transition (x₀ y : M) {w : E} (hw : w ∈ (chartAt E x₀).ta
   have hy' := tangent_symmL_eq_fderiv y ((chartAt E x₀).symm w) hy
   rw [hwz] at h0
   have e0 : ∀ a : E,
-      (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) x₀).symmL ℝ ((chartAt E x₀).symm w) a
-        = (trivializationAt E (TangentSpace (modelWithCornersSelf ℝ E)) y).symmL ℝ ((chartAt E x₀).symm w)
+      (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ ((chartAt E x₀).symm w) a
+        = (trivializationAt E (TangentSpace (𝓘(ℝ, E))) y).symmL ℝ ((chartAt E x₀).symm w)
             (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) w a) := fun a =>
     (congrArg (fun L => L a) h0).trans
       ((congrArg (fun L => L a) hc).trans
         (congrArg (fun L => L (fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) w a)) hy').symm)
   exact congrArg₂ (g _) (e0 u) (e0 v)
 
-omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M] in
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M]
+    in
 /-- ★ **The Jacobian rule for Gram densities**: under a chart transition `φ` the Gram matrix of a
 bilinear family transforms by congruence, `G_{x₀}(w) = Aᵀ G_y(φ w) A` with `A` the matrix of
 `Dφ_w`, so `√det G_{x₀}(w) = |det Dφ_w| · √det G_y(φ w)` — the exact analogue of

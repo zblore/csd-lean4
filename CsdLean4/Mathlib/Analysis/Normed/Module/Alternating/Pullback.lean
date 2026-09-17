@@ -95,7 +95,8 @@ and nothing here says whether the conclusion survives.
 ⚠️ `contDiffAt_…` needs `[CompleteSpace G]`, inherited from `AnalyticAt.contDiffAt`. The
 analyticity statement itself does not.
 
-**Provenance and references.** The Mathlib-gaps register (Kahler / symplectic manifold API, step (2a));
+**Provenance and references.** The Mathlib-gaps register (Kahler / symplectic manifold API, step
+(2a));
 the backlog (XL, "Manifold exterior calculus");
 `Mathlib/Analysis/Analytic/CPolynomial.lean` (the multilinear twin this reflects from);
 `Mathlib/Topology/Algebra/Module/Alternating/Basic.lean`

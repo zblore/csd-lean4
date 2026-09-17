@@ -134,7 +134,8 @@ theorem norm_wedge_le (B : F →L[𝕜] G →L[𝕜] H) (a : E [⋀^ιa]→L[�
     induction σ using Quotient.inductionOn' with
     | h σ =>
       rw [liftTensor_summand_mk'']
-      have hsign : ‖(Perm.sign σ : ℤ) • B (a fun i => v (σ (Sum.inl i))) (b fun i => v (σ (Sum.inr i)))‖
+      have hsign : ‖(Perm.sign σ : ℤ) • B (a fun i => v (σ (Sum.inl i))) (b fun i => v (σ (Sum.inr
+          i)))‖
           = ‖B (a fun i => v (σ (Sum.inl i))) (b fun i => v (σ (Sum.inr i)))‖ := by
         rcases Int.units_eq_one_or (Perm.sign σ) with h | h <;> simp [h]
       have hp : ∏ k, ‖v k‖ = (∏ i, ‖v (σ (Sum.inl i))‖) * ∏ j, ‖v (σ (Sum.inr j))‖ := by

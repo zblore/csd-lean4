@@ -32,13 +32,14 @@ coordinate change decomposes — **by `rfl`** — as postcomposition after pullb
       ∘L compContinuousLinearMapCLM (e₁'.coordChangeL b)
 
 with both factors smooth by
-[`Analysis/Normed/Module/Alternating/Pullback.lean`](../../../Analysis/Normed/Module/Alternating/Pullback.lean).
+`Analysis/Normed/Module/Alternating/Pullback.lean`.
 
 ## ⚠️ The elaboration trap, recorded because it cost a full attempt
 
 The first attempt at the coordinate-change lemma failed and was recorded — wrongly — as an
 "instance-path mismatch" needing plumbing. It is not that. The two topologies on a
-continuous-linear-map space **are the same instance** (`inferInstance = ContinuousLinearMap.topologicalSpace`
+continuous-linear-map space **are the same instance**
+(`inferInstance = ContinuousLinearMap.topologicalSpace`
 by `rfl`, checked). What fails is **elaboration order**: writing
 
     have h : ContDiff 𝕜 n (fun L : F₂ →L[𝕜] F₂ => (compContinuousAlternatingMapCLM L : … →L[𝕜] …))
@@ -61,7 +62,8 @@ for the specific (tangent bundle, trivial bundle) pair, which it does not do out
 ⚠️ **Still no exterior derivative.** That is step (2b), upstream's own TODO, and nothing here
 touches it. And as with steps (0) and (1): no physics waits on any of this.
 
-**Provenance and references.** The Mathlib-gaps register; the backlog (XL, "Manifold exterior calculus");
+**Provenance and references.** The Mathlib-gaps register; the backlog (XL, "Manifold exterior
+calculus");
 `Mathlib/Geometry/Manifold/VectorBundle/Hom.lean` (the template);
 `CsdLean4/Mathlib/Analysis/Normed/Module/Alternating/Pullback.lean` (both factors).
 -/

@@ -90,7 +90,8 @@ variable {n : ℕ}
 /-- A unitary matrix preserves the Euclidean norm. -/
 theorem norm_toEuclideanLinearEquiv (U : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (v : Ambient n) :
     ‖toEuclideanLinearEquiv U v‖ = ‖v‖ := by
-  have hinner : inner ℂ (toEuclideanLinearEquiv U v) (toEuclideanLinearEquiv U v) = inner ℂ v v := by
+  have hinner : inner ℂ (toEuclideanLinearEquiv U v) (toEuclideanLinearEquiv U v) = inner ℂ v v
+      := by
     rw [toEuclideanLinearEquiv_apply, ← LinearMap.adjoint_inner_right,
       ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint, ← LinearMap.comp_apply,
       ← Matrix.toLpLin_mul_same, ← Matrix.star_eq_conjTranspose,
@@ -153,7 +154,8 @@ theorem isOpen_uDomain (U : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (i j : Fin (n
   isOpen_ne_fun ((contDiff_uAct_coord U i j).continuous) continuous_const
 
 theorem contDiffAt_uTransE (U : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (i j : Fin (n + 1))
-    {z : EuclideanSpace ℂ (Fin n)} (hz : toEuclideanLinearEquiv U (insertOne i (WithLp.ofLp z)) j ≠ 0) :
+    {z : EuclideanSpace ℂ (Fin n)} (hz : toEuclideanLinearEquiv U (insertOne i (WithLp.ofLp z)) j ≠
+        0) :
     ContDiffAt ℂ ⊤ (uTransE U i j) z := by
   have h1 : ContDiffAt ℂ ⊤ (uTrans U i j) (WithLp.ofLp z) :=
     ((contDiffOn_uTrans U i j).contDiffAt ((isOpen_uDomain U i j).mem_nhds hz)).of_le le_top
@@ -162,22 +164,26 @@ theorem contDiffAt_uTransE (U : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (i j : Fi
 
 /-- The potential transforms by a pluriharmonic correction under the unitary action. -/
 theorem fsPotential_uTransE (U : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (i j : Fin (n + 1))
-    {z : EuclideanSpace ℂ (Fin n)} (hz : toEuclideanLinearEquiv U (insertOne i (WithLp.ofLp z)) j ≠ 0) :
+    {z : EuclideanSpace ℂ (Fin n)} (hz : toEuclideanLinearEquiv U (insertOne i (WithLp.ofLp z)) j ≠
+        0) :
     fsPotential (uTransE U i j z)
-      = fsPotential z - 2 * Real.log ‖toEuclideanLinearEquiv U (insertOne i (WithLp.ofLp z)) j‖ := by
+      = fsPotential z - 2 * Real.log ‖toEuclideanLinearEquiv U (insertOne i (WithLp.ofLp z)) j‖
+          := by
   rw [uTransE, uTrans, fsPotential_toLp_coordRatio j _ hz, norm_toEuclideanLinearEquiv,
     norm_sq_insertOne, ← EuclideanSpace.norm_sq_eq]
   rfl
 
 /-- ★ **Invariance of the Fubini–Study chart form under the unitary action**, in charts. -/
 theorem fsChartForm_uTransE (U : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (i j : Fin (n + 1))
-    {z : EuclideanSpace ℂ (Fin n)} (hz : toEuclideanLinearEquiv U (insertOne i (WithLp.ofLp z)) j ≠ 0) :
+    {z : EuclideanSpace ℂ (Fin n)} (hz : toEuclideanLinearEquiv U (insertOne i (WithLp.ofLp z)) j ≠
+        0) :
     (fsChartForm (uTransE U i j z)).compContinuousLinearMap (fderiv ℝ (uTransE U i j) z)
       = fsChartForm z := by
   have hcomp := ddcForm_comp (K := fsPotential (E := EuclideanSpace ℂ (Fin n))) (τ := uTransE U i j)
     contDiff_fsPotential (contDiffAt_uTransE U i j hz)
   rw [show fsChartForm (uTransE U i j z) = ddcForm fsPotential (uTransE U i j z) from rfl, ← hcomp]
-  set f : EuclideanSpace ℂ (Fin n) → ℂ := fun y => toEuclideanLinearEquiv U (insertOne i (WithLp.ofLp y)) j
+  set f : EuclideanSpace ℂ (Fin n) → ℂ := fun y => toEuclideanLinearEquiv U (insertOne i
+      (WithLp.ofLp y)) j
     with hfdef
   have hfC : ContDiffAt ℂ ⊤ f z :=
     ((contDiff_uAct_coord U i j).of_le le_top).contDiffAt.comp z
@@ -213,16 +219,20 @@ theorem fsModelForm_uTrans (U : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (i j : Fi
     (fsModelForm (uTrans U i j w)).compContinuousLinearMap (fderiv ℝ (uTrans U i j) w)
       = fsModelForm w := by
   set e := PiLp.continuousLinearEquiv 2 ℝ (fun _ : Fin n => ℂ) with he
-  have hz : toEuclideanLinearEquiv U (insertOne i (WithLp.ofLp (toLpCLM w))) j ≠ 0 := by simpa using hw
+  have hz : toEuclideanLinearEquiv U (insertOne i (WithLp.ofLp (toLpCLM w))) j ≠ 0 := by simpa using
+      hw
   have hinv := fsChartForm_uTransE U i j hz
   have hP : DifferentiableAt ℝ (uTrans U i j) w := by
-    have := ((contDiffOn_uTrans U i j).contDiffAt ((isOpen_uDomain U i j).mem_nhds hw)).restrict_scalars ℝ
+    have := ((contDiffOn_uTrans U i j).contDiffAt ((isOpen_uDomain U i j).mem_nhds
+        hw)).restrict_scalars ℝ
     exact this.differentiableAt (by simp)
   have hew : e (toLpCLM w) = w := e.apply_symm_apply w
   have hd : fderiv ℝ (uTransE U i j) (toLpCLM w)
-      = (toLpCLM : (Fin n → ℂ) →L[ℝ] _).comp ((fderiv ℝ (uTrans U i j) w).comp (e : _ →L[ℝ] _)) := by
+      = (toLpCLM : (Fin n → ℂ) →L[ℝ] _).comp ((fderiv ℝ (uTrans U i j) w).comp (e : _ →L[ℝ] _))
+          := by
     rw [uTransE_eq]
-    have h1 : HasFDerivAt (e : EuclideanSpace ℂ (Fin n) → (Fin n → ℂ)) (e : _ →L[ℝ] _) (toLpCLM w) :=
+    have h1 : HasFDerivAt (e : EuclideanSpace ℂ (Fin n) → (Fin n → ℂ)) (e : _ →L[ℝ] _) (toLpCLM w)
+        :=
       e.hasFDerivAt
     have h2 : HasFDerivAt (uTrans U i j) (fderiv ℝ (uTrans U i j) w) (e (toLpCLM w)) := by
       rw [hew]; exact hP.hasFDerivAt

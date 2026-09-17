@@ -43,7 +43,8 @@ the projected direction is torus-horizontal.
 
 * `FisherRao.bornWeight ψ i = ‖ψ i‖ ^ 2`, `FisherRao.bornSimplex` — the Born weights as a point of
   `OpenSimplex ι` for a unit vector with no vanishing coordinate.
-* `FisherRao.bornDeriv ψ u i = 2 Re(ψ̄ᵢ uᵢ)` and `hasFDerivAt_bornWeight` — it is the differential of
+* `FisherRao.bornDeriv ψ u i = 2 Re(ψ̄ᵢ uᵢ)` and `hasFDerivAt_bornWeight` — it is the differential
+  of
   `ψ ↦ ‖ψ i‖ ^ 2`; `sum_bornDeriv` — the displacement sums to `2 Re ⟪ψ, u⟫`, so it is tangent to the
   simplex whenever `u` is tangent to the unit sphere.
 * `FisherRao.IsTorusHorizontal ψ u` — every `ψ̄ᵢ uᵢ` is real (orthogonal to the torus orbit;
@@ -66,7 +67,8 @@ the projected direction is torus-horizontal.
 ## The constant
 
 The right-hand side `4 * Re ⟪u, v⟫` is the Fubini–Study metric of the projective space in the
-normalisation of `Projectivization.fsMetric` (`Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyRiemannian.lean`,
+normalisation of `Projectivization.fsMetric`
+(`Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyRiemannian.lean`,
 where the Gram matrix at a chart origin is `4 • 1`), evaluated on horizontal lifts. In that
 normalisation the Fubini–Study metric of a pure-state family is its quantum Fisher information,
 `4 (‖u‖² − ‖⟪ψ, u⟫‖²)` for unit `ψ` (`fsInnerHom_self_of_norm_eq_one`). In the normalisation
@@ -404,7 +406,8 @@ theorem fisherRaoInner_bornDeriv_normalize {ψ : EuclideanSpace ℂ ι} (hψ : �
     (v : EuclideanSpace ℂ ι) :
     OpenSimplex.fisherRaoInner
         (bornSimplex (normalize ψ) (norm_normalize hψ) (fun k => normalize_apply_ne_zero hψ (h0 k)))
-        (bornDeriv (normalize ψ) (horizontalLift ψ u)) (bornDeriv (normalize ψ) (horizontalLift ψ v))
+        (bornDeriv (normalize ψ) (horizontalLift ψ u)) (bornDeriv (normalize ψ) (horizontalLift ψ
+            v))
       = fsInnerHom ψ u v := by
   rw [fisherRaoInner_bornDeriv _ _ _ (isTorusHorizontal_normalize_horizontalLift hu),
     inner_horizontalLift hψ]

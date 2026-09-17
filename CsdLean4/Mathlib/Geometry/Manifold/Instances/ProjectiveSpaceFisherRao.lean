@@ -51,9 +51,11 @@ standard formula `4 (Re ⟪δψ, δψ'⟫/‖ψ‖² − Re(⟪δψ, ψ⟫⟪ψ,
   `mfderiv_momentMap`; `momentDeriv_apply` — it is the Born displacement of the horizontal lift;
   `sum_momentDeriv` — it is tangent to the simplex; `momentDeriv_torusField` and
   `momentDeriv_eq_zero_of_mem_verticalSpace` — it kills the vertical space.
-* `verticalSpace x`, `horizontalSpace x` — the torus-orbit directions and their `fsMetric`-orthogonal
+* `verticalSpace x`, `horizontalSpace x` — the torus-orbit directions and their
+  `fsMetric`-orthogonal
   complement; ★ `mem_horizontalSpace_iff` — horizontal means every `conj (wⱼ) uⱼ` is real in the
-  chart, i.e. the direction moves moduli and not phases; `momentDeriv_eq_zero_iff_of_mem_horizontalSpace`
+  chart, i.e. the direction moves moduli and not phases;
+  `momentDeriv_eq_zero_iff_of_mem_horizontalSpace`
   and `momentDeriv_injOn_horizontalSpace` — on the regular stratum the differential is injective
   on the horizontal space.
 * `regularStratum`, `toOpenSimplex` — the moment map into `OpenSimplex (Fin (n + 1))`.
@@ -272,11 +274,11 @@ theorem continuous_momentMap_pi : Continuous (momentMap (N := n + 1)) :=
 
 /-- **The moment map is differentiable, with differential `momentDeriv`.** -/
 theorem hasMFDerivAt_momentMap (x : ℙ ℂ (Ambient n)) :
-    HasMFDerivAt (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ (Fin (n + 1) → ℝ))
+    HasMFDerivAt (𝓘(ℝ, Fin n → ℂ)) (𝓘(ℝ, Fin (n + 1) → ℝ))
       momentMap x (momentDeriv x) := by
   refine ⟨continuous_momentMap_pi.continuousAt, ?_⟩
-  have hw : writtenInExtChartAt (modelWithCornersSelf ℝ (Fin n → ℂ))
-      (modelWithCornersSelf ℝ (Fin (n + 1) → ℝ)) x momentMap
+  have hw : writtenInExtChartAt (𝓘(ℝ, Fin n → ℂ))
+      (𝓘(ℝ, Fin (n + 1) → ℝ)) x momentMap
       = fun w => fun k => momentMap (chartInv (idx x) w) k := by
     funext w
     simp only [writtenInExtChartAt, Function.comp, extChartAt_model_space_eq_id,
@@ -287,7 +289,7 @@ theorem hasMFDerivAt_momentMap (x : ℙ ℂ (Ambient n)) :
     hasFDerivAt_momentMap_chartInv (idx x) (chartFun (idx x) x) k).hasFDerivWithinAt
 
 theorem mfderiv_momentMap (x : ℙ ℂ (Ambient n)) :
-    mfderiv (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ (Fin (n + 1) → ℝ))
+    mfderiv (𝓘(ℝ, Fin n → ℂ)) (𝓘(ℝ, Fin (n + 1) → ℝ))
       momentMap x = momentDeriv x :=
   (hasMFDerivAt_momentMap x).mfderiv
 

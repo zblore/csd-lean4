@@ -11,7 +11,8 @@ public import Mathlib.Analysis.InnerProductSpace.Calculus
 /-!
 # The Hamiltonian vector field on a Hermitian space: `X_H = ω⁻¹ dH`, linear level
 
-**TERM-SCOPE(Hamiltonian)** — this module uses the *restricted* sense of "Hamiltonian"; the source repository's terms register records what is backed and what is not.
+**TERM-SCOPE(Hamiltonian)** — this module uses the *restricted* sense of "Hamiltonian"; the source
+repository's terms register records what is backed and what is not.
 
 **Category:** 1-Mathlib (CSD-free upstream candidate).
 

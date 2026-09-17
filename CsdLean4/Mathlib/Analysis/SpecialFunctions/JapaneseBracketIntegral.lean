@@ -38,8 +38,10 @@ Fubini–Study volume is `4ⁿ n!` times this integral, and its value is `πⁿ 
 `∑ⱼ ‖wⱼ‖²`, so no `EuclideanSpace` appears. Only the exponent `n + 1` on `ℂⁿ` is computed — the
 one the top power needs — not the general `(1 + ‖x‖²)^{-r/2}`.
 
-**Provenance and references.** The top-power plan (M7); `Mathlib/Analysis/SpecialFunctions/PolarCoord.lean`;
-`Mathlib/MeasureTheory/Integral/IntegralEqImproper.lean`; `Mathlib/MeasureTheory/Constructions/Pi.lean`
+**Provenance and references.** The top-power plan (M7);
+`Mathlib/Analysis/SpecialFunctions/PolarCoord.lean`;
+`Mathlib/MeasureTheory/Integral/IntegralEqImproper.lean`;
+`Mathlib/MeasureTheory/Constructions/Pi.lean`
 (`measurePreserving_piFinSuccAbove`); the completed-work ledger.
 -/
 

@@ -63,7 +63,8 @@ analytic structure, and keeps the charts readable. The ambient space stays
   structure is topological/analytic only; that `μ_FS` is the Liouville volume of the
   induced form remains open (step (3)).
 
-**Provenance and references.** The Mathlib-gaps register (Kahler / symplectic manifold API, step (0));
+**Provenance and references.** The Mathlib-gaps register (Kahler / symplectic manifold API, step
+(0));
 the backlog (XL, "Manifold exterior calculus");
 `CsdLean4/Mathlib/LinearAlgebra/Projectivization/Topology.lean` (the quotient topology and
 `isQuotientMap_mk'`); `Mathlib.Geometry.Manifold.Instances.Sphere` (the analogous
@@ -299,7 +300,7 @@ lemma contDiffOn_transition (i j : Fin (n + 1)) :
 Not merely `C^∞`: the transition maps are quotients of coordinates of `Fin.insertNth i 1 w`
 with nonvanishing denominators, so `ω` comes out of the same argument. -/
 noncomputable instance instIsManifold :
-    IsManifold (modelWithCornersSelf ℂ (Fin n → ℂ)) ω (ℙ ℂ (Ambient n)) := by
+    IsManifold (𝓘(ℂ, Fin n → ℂ)) ω (ℙ ℂ (Ambient n)) := by
   refine isManifold_of_contDiffOn _ _ _ ?_
   rintro e e' ⟨i, rfl⟩ ⟨j, rfl⟩
   have hset : ((chartAtIdx (n := n) i).symm ≫ₕ chartAtIdx j).source
@@ -319,7 +320,7 @@ noncomputable instance instIsManifold :
 (`ContDiffOn.restrict_scalars`), and the real structure is the one a *real* differential
 form — the Fubini–Study form is `ℝ`-bilinear, not `ℂ`-bilinear — has to live on. -/
 noncomputable instance instIsManifoldReal :
-    IsManifold (modelWithCornersSelf ℝ (Fin n → ℂ)) ω (ℙ ℂ (Ambient n)) := by
+    IsManifold (𝓘(ℝ, Fin n → ℂ)) ω (ℙ ℂ (Ambient n)) := by
   refine isManifold_of_contDiffOn _ _ _ ?_
   rintro e e' ⟨i, rfl⟩ ⟨j, rfl⟩
   have hset : ((chartAtIdx (n := n) i).symm ≫ₕ chartAtIdx j).source
