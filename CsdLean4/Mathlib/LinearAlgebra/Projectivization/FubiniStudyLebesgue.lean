@@ -22,10 +22,10 @@ The Fubini–Study measure was built (`FubiniStudy.lean`) as a Haar pushforward 
 group, and characterised (`FubiniStudyUnique.lean`) as THE `U(N)`-invariant probability measure
 on `ℂℙ^{N−1}`. This file gives it a **Lebesgue-absolutely-continuous source**: the normalized
 Lebesgue measure on the punctured unit ball of `ℂᴺ` pushes forward through `Projectivization.mk`
-to a `U(N)`-invariant probability measure — hence, by uniqueness, to `fubiniStudyMeasure p₀`.
+to a `U(N)`-invariant probability measure — hence, by uniqueness, to `fsMeasure p₀`.
 
 The payoff is a **null-set transport principle**: any ray set whose vector cone is
-Lebesgue-null is Fubini–Study-null (`fubiniStudyMeasure_null_of_cone`). Combined with the
+Lebesgue-null is Fubini–Study-null (`fsMeasure_null_of_cone`). Combined with the
 elementary slicing lemmas proved here (the zero set of the coordinate quadratic
 `v a · v b = v c · v d` is null — Fubini slicing, no polynomial theory), this is what turns
 "the entangled rays have positive measure" into "**almost every** ray is entangled" downstream
@@ -46,7 +46,7 @@ elementary slicing lemmas proved here (the zero set of the coordinate quadratic
 * `ballMeasure` — the normalized Lebesgue measure on the punctured unit ball; `projOfVec` — the
   junk-totalised `mk`.
 * `map_ballMeasure_eq_fubiniStudy` — ★ the pushforward identity, by uniqueness.
-* `fubiniStudyMeasure_null_of_cone` — ★★ the null-transport principle.
+* `fsMeasure_null_of_cone` — ★★ the null-transport principle.
 -/
 
 @[expose] public section
@@ -453,10 +453,10 @@ variable {N : ℕ} [NeZero N]
 the punctured unit ball** — by invariance and the uniqueness theorem. This gives Fubini–Study
 an absolutely-continuous source. -/
 theorem map_ballMeasure_eq_fubiniStudy (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-    Measure.map (projOfVec N) (ballMeasure N) = fubiniStudyMeasure p₀ := by
+    Measure.map (projOfVec N) (ballMeasure N) = fsMeasure p₀ := by
   have hprob : IsProbabilityMeasure (Measure.map (projOfVec N) (ballMeasure N)) :=
     Measure.isProbabilityMeasure_map' measurable_projOfVec.aemeasurable
-  refine fubiniStudyMeasure_unique p₀ _ ?_
+  refine fsMeasure_unique p₀ _ ?_
   intro U
   have hsmul_meas : Measurable (fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p) :=
     (continuous_smul.comp (Continuous.prodMk continuous_const continuous_id)).measurable
@@ -484,11 +484,11 @@ theorem map_ballMeasure_eq_fubiniStudy (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin 
 
 /-- ★★ **The null-transport principle**: a ray set whose vector cone is Lebesgue-null is
 Fubini–Study-null. The cone is taken over the nonzero vectors. -/
-theorem fubiniStudyMeasure_null_of_cone (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
+theorem fsMeasure_null_of_cone (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
     {S : Set (ℙ ℂ (EuclideanSpace ℂ (Fin N)))} (hS : MeasurableSet S)
     (hcone : (volume : Measure (EuclideanSpace ℂ (Fin N)))
       {v : EuclideanSpace ℂ (Fin N) | ∃ h : v ≠ 0, Projectivization.mk ℂ v h ∈ S} = 0) :
-    fubiniStudyMeasure p₀ S = 0 := by
+    fsMeasure p₀ S = 0 := by
   rw [← map_ballMeasure_eq_fubiniStudy p₀,
     Measure.map_apply measurable_projOfVec hS]
   have hsub : (projOfVec N) ⁻¹' S
@@ -506,7 +506,7 @@ end Pushforward
 
 /-! ### ★★ Rays inside a proper subspace are null
 
-A companion to `fubiniStudyMeasure_null_of_cone`, and the reason a "microcanonical restriction
+A companion to `fsMeasure_null_of_cone`, and the reason a "microcanonical restriction
 to a spectral sector" cannot be defined by restricting `μ_FS`: the rays lying inside a **proper**
 subspace form a Fubini–Study-null set, because their cone is that subspace, and a proper subspace
 is Lebesgue-null (`Measure.addHaar_submodule`). -/
@@ -565,10 +565,10 @@ lemma measurableSet_subspaceRays (R : Submodule ℂ (EuclideanSpace ℂ (Fin N))
 itself, and a proper subspace is Lebesgue-null. Consequence for statistical mechanics: a
 "microcanonical restriction to a spectral sector" is **not** definable by restricting `μ_FS` —
 the restriction is the zero measure. -/
-theorem fubiniStudyMeasure_subspaceRays (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
+theorem fsMeasure_subspaceRays (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
     {R : Submodule ℂ (EuclideanSpace ℂ (Fin N))} (hR : R ≠ ⊤) :
-    fubiniStudyMeasure p₀ (subspaceRays R) = 0 := by
-  refine fubiniStudyMeasure_null_of_cone p₀ (measurableSet_subspaceRays R) ?_
+    fsMeasure p₀ (subspaceRays R) = 0 := by
+  refine fsMeasure_null_of_cone p₀ (measurableSet_subspaceRays R) ?_
   have hne : (R.restrictScalars ℝ : Submodule ℝ (EuclideanSpace ℂ (Fin N))) ≠ ⊤ := by
     intro h
     refine hR (SetLike.ext' ?_)

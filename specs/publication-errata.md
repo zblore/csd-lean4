@@ -183,7 +183,7 @@ flow, and invariance of `μ_FS` under the projective unitary flow.
 
 **Why it is wrong.** The two halves have different status.
 
-* `μ_FS` invariance IS a theorem: `fubiniStudyMeasure_smul_invariant`
+* `μ_FS` invariance IS a theorem: `fsMeasure_smul_invariant`
   (`Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:165`), with
   `kFlow_measurePreserving` (`LF4/KahlerFlow.lean:86`) the constructed instance.
 * `μL` preservation is **not a theorem**. It is a **field of the structure** —
@@ -205,7 +205,7 @@ existing result. `isolated_flow_measure_preserving`, cited in the review draft,
 does not exist.
 
 **What the paper must do.** Say "posited once, proved once", naming
-`ConstraintDynamics.flow_preserves` (P4) and `fubiniStudyMeasure_smul_invariant`;
+`ConstraintDynamics.flow_preserves` (P4) and `fsMeasure_smul_invariant`;
 or, if a single citation is wanted, cite `kFlow_measurePreserving` as the
 constructed instance and say that the general preservation is structural.
 

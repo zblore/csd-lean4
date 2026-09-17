@@ -51,7 +51,7 @@ re-prove it, and it does not take Born as a primitive. The increment here is the
 *dynamically realised* dilation (`vnNaimark`, LF5-C) wired into that engine
 without genericity — the measurement **dynamics** (`Φ ≠ id`), not the number.
 What **is** posited is not Born but the **CSD sector (SO-1)**: that the sector's typicality law is
-the Fubini–Study measure (i.i.d. trials with law `fubiniStudyMeasure`). Born =
+the Fubini–Study measure (i.i.d. trials with law `fsMeasure`). Born =
 volume is a theorem; FS-as-the-typicality-measure is the sector posit, still
 undischarged — it reduces to D1, the dynamical sector origin (⚠️ RESIDUE(R-012)).
 LF5-E wires the context-fixed pointer reading +
@@ -107,7 +107,7 @@ theorem vnDilation_pointer_volume {M : ℕ}
     (hψ'0 : ψ' ≠ 0) (i : Fin N) :
     ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2
       = ∑ n : Fin N,
-          (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal := by
+          (fsMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal := by
   subst hψ'eq
   have hnorm := piLpCongrLeft_vnDilationV_norm e ψ hψ
   have h := povm_born_eq_dilated_volume_uncond (basisPOVM N) (vnNaimark N) ψ i e p₀ hnorm
@@ -117,7 +117,7 @@ theorem vnDilation_pointer_volume {M : ℕ}
 /-- ★★ **Pointer volumes on the fibred arena** — the fibred twin of `vnDilation_pointer_volume`,
 for the base-to-fibre migration (CR-4).
 
-Same statement with `epistemicMeasure [ψ']` in place of `fubiniStudyMeasure p₀` and global basins
+Same statement with `epistemicMeasure [ψ']` in place of `fsMeasure p₀` and global basins
 in place of Born regions, so the base measure leaves the statement. The proof rewrites cell by cell
 through `globalBasin_toReal_eq_bornRegion_toReal` and then applies the base-side theorem at the
 prepared ray itself — the bridge holds at *every* basepoint, so the choice is free and the
@@ -144,7 +144,7 @@ theorem vnDilation_pointer_volume_basin {M : ℕ}
 /-- ★★ **Pointer frequencies on the fibred arena** — the fibred twin of
 `vnDilation_pointer_frequency`, for the base-to-fibre migration (CR-4).
 
-Same statement with `epistemicMeasure [ψ']` in place of `fubiniStudyMeasure p₀` and global basins
+Same statement with `epistemicMeasure [ψ']` in place of `fsMeasure p₀` and global basins
 in place of Born regions, so the base measure leaves the statement. Proof is the base-side proof
 with the fibred POVM engine substituted; the dilation bookkeeping after it is unchanged, because
 that part concerns the dilated vector rather than the trial law. -/
@@ -201,7 +201,7 @@ theorem vnDilation_pointer_frequency {M : ℕ}
     (p₀ : CPN (M + 1))
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep : ∀ j : Fin (M + 1),
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
         (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :

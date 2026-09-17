@@ -3,7 +3,7 @@
 
 **Goal.** Discharge the axiom `CSD.LF4.fs_moment_pushforward_uniform`:
 ```
-(fun p => momentMap p 0)∗ fubiniStudyMeasure p₀ = (volume : Measure ℝ).restrict (Set.Icc 0 1).
+(fun p => momentMap p 0)∗ fsMeasure p₀ = (volume : Measure ℝ).restrict (Set.Icc 0 1).
 ```
 Once proved, the unconditional qubit results (`fs_born_volume_ratio_qubit_uncond`,
 `qubit_born_frequency_convergence_uncond`) become foundational-triple-only, and
@@ -15,22 +15,22 @@ Everything is finite-dimensional (`ℂℙ¹`, `U(2)`). Multi-session build.
 
 Two key Mathlib/project tools make this the cleanest route:
 
-- **`Matrix.UnitaryGroup.fubiniStudyMeasure_unique`** (project,
+- **`Matrix.UnitaryGroup.fsMeasure_unique`** (project,
   `Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean:181`, **proved,
   axiom-free**): any `U(N)`-invariant *probability* measure on `ℂℙ^{N-1}` equals
-  `fubiniStudyMeasure p₀`.
+  `fsMeasure p₀`.
 - **`MeasureTheory.stdGaussian_map`** (Mathlib
   `Probability/Distributions/Gaussian/Multivariate.lean:129`): for a linear
   isometry equiv `f`, `(stdGaussian E).map f = stdGaussian F`. ⟹ `stdGaussian` is
   invariant under every linear isometry, in particular the `U(2)` action on `ℂ²`
   (unitaries are ℝ-linear isometries).
 
-So we identify `fubiniStudyMeasure` with the Gaussian-induced measure on `ℂℙ¹`,
+So we identify `fsMeasure` with the Gaussian-induced measure on `ℂℙ¹`,
 where the moment marginal is the classical `Beta(1,1)` computation.
 
 ## Progress (2026-05-30) — Part 1 CLOSED
 
-**`gaussianCP p₀ = fubiniStudyMeasure p₀` is proved, foundational-triple-only.**
+**`gaussianCP p₀ = fsMeasure p₀` is proved, foundational-triple-only.**
 All of C1–C5 in `CsdLean4/LF4/GaussianCP.lean` compile clean (no `sorry`, no
 warnings); `lake build CsdLean4.LF4.GaussianCP` and `lake build CsdLeanTests`
 are green. AxiomAudit pins added for `coords` (C1), `conjR`, `gaussianH_map_unitary`,
@@ -75,7 +75,7 @@ are green. AxiomAudit pins added for `coords` (C1), `conjR`, `gaussianH_map_unit
   `NoAtoms (stdGaussian ℝ⁴)` instance from `ProbabilityTheory.IsGaussian.noAtoms`
   with the non-Dirac witness `Var[innerSL ℝ (single 0 1)] = ‖single 0 1‖² = 1 ≠ 0`
   (`variance_dual_stdGaussian` vs `variance_dirac`).
-- **C5.** `gaussianCP_eq_fubiniStudy := fubiniStudyMeasure_unique p₀ (gaussianCP p₀)
+- **C5.** `gaussianCP_eq_fubiniStudy := fsMeasure_unique p₀ (gaussianCP p₀)
   gaussianCP_smul_invariant` (the `IsProbabilityMeasure` instance and `[NeZero 2]`
   are inferred; `CPN 2 = ℙ ℂ (EuclideanSpace ℂ (Fin 2))` lines up definitionally).
 
@@ -117,11 +117,11 @@ list (`CsdLean4/LF4/GaussianCP.lean`):
   unitary-as-`ℝ⁴`-isometry conjugate avoids `ℂ²`'s real-module diamond because the
   composite is built/typed on `ℝ⁴`; norm transfer uses `unitary_norm_preserving`
   + `coords.norm_map`.
-- **C5 `gaussianCP = fubiniStudyMeasure p₀`** by `fubiniStudyMeasure_unique`.
+- **C5 `gaussianCP = fsMeasure p₀`** by `fsMeasure_unique`.
 
 Then Part 3 (L6) composes with B.1 + the (Part 2) Beta marginal.
 
-## Part 1 — `gaussianCP = fubiniStudyMeasure` (B.2; original sketch)
+## Part 1 — `gaussianCP = fsMeasure` (B.2; original sketch)
 
 Let `H := EuclideanSpace ℂ (Fin 2)`, viewed as a real inner-product space.
 
@@ -134,7 +134,7 @@ Let `H := EuclideanSpace ℂ (Fin 2)`, viewed as a real inner-product space.
   `(U • ·) ∘ gaussianProj = gaussianProj ∘ (U-as-ℝ-isometry)` (mk' equivariance,
   `U • mk v = mk (U v)`); push through `Measure.map_map`; kill the inner map by
   `stdGaussian_map` (the `U` action is a linear isometry equiv of `H`).
-- **L4** — `gaussianCP = fubiniStudyMeasure p₀`, by `fubiniStudyMeasure_unique`
+- **L4** — `gaussianCP = fsMeasure p₀`, by `fsMeasure_unique`
   (L2 gives the probability instance, L3 the invariance hypothesis).
 
 **ℝ/ℂ friction — findings from probing (2026-05-29):**
@@ -151,7 +151,7 @@ Let `H := EuclideanSpace ℂ (Fin 2)`, viewed as a real inner-product space.
   safer route if the instance route diamonds.
 
 Part 1 is a committable, foundational-triple increment on its own (identifies
-`fubiniStudyMeasure` as the Gaussian-induced measure — reusable).
+`fsMeasure` as the Gaussian-induced measure — reusable).
 
 ## Part 2 — the moment marginal is uniform (B.3) — DETAILED PLAN (2026-05-30)
 
@@ -240,8 +240,8 @@ it. If a cleaner path emerges via `iIndepFun` from `Measure.pi`
 ## Part 3 — assemble (B.4)
 
 - **L6** — `fs_moment_pushforward_uniform`:
-  `(momentMap · 0)∗ fubiniStudyMeasure p₀ = (volume).restrict [0,1]`. Proof:
-  rewrite `fubiniStudyMeasure` by L4 (`= gaussianCP`); `(momentMap·0)∗ gaussianCP
+  `(momentMap · 0)∗ fsMeasure p₀ = (volume).restrict [0,1]`. Proof:
+  rewrite `fsMeasure` by L4 (`= gaussianCP`); `(momentMap·0)∗ gaussianCP
   = ((momentMap·0) ∘ gaussianProj)∗ stdGaussian` (`Measure.map_map`);
   `(momentMap·0)(gaussianProj v) = ‖v 0‖²/‖v‖²` (by `momentMap_mk`, a.e. on `v≠0`);
   conclude by L5.
@@ -350,7 +350,7 @@ sub-tasks, the first of which is genuine custom plumbing:
    is folded to `d`-form by a defeq `show`; pair projections `(T,y).1/.2` reduced
    by a defeq `show`.
 4. **Slice 4 — L5 + L6 assembly.** Compose, discharge the `{0}` null set, rewrite
-   `fubiniStudyMeasure` by `gaussianCP_eq_fubiniStudy`, retire
+   `fsMeasure` by `gaussianCP_eq_fubiniStudy`, retire
    `fs_moment_pushforward_uniform` from `AXIOMS.md §2.3`; flip
    `fs_born_volume_ratio_qubit_uncond` / `qubit_born_frequency_convergence_uncond`
    to foundational-triple-only in AxiomAudit.

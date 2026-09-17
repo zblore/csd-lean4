@@ -40,7 +40,7 @@ freedom whose volume fractions realise the Born weights downstream
 of prescribed volume needs the atomless intermediate-value theorem, which is
 not in Mathlib. (This note used to add "and FS-atomlessness is itself a
 Haar-of-subgroup argument" — superseded 2026-08-21, Q28 item 1:
-`fubiniStudyMeasure_singleton` proves atomlessness by pigeonhole, with no
+`fsMeasure_singleton` proves atomlessness by pigeonhole, with no
 stabiliser Haar measure; the fibres of `π` are `kMuL`-null,
 `SigmaLayer/PreparationDensity.lean`. The atomless IVT remains the genuinely
 missing carving ingredient.) The flat torus is equally compact Kähler but its
@@ -60,7 +60,7 @@ own manifold layer supplies exactly that on the base factor, and `LF4/SectorMani
 Fubini–Study form (`manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod`), so `kMuL` IS
 derived from the volume form on the base; the fibre factor stays Haar on `T²`, which is its own
 Liouville measure. What this module itself machine-verifies is the measure-theoretic content:
-`fubiniStudyMeasure` (the Haar-on-`U(N)` pushforward, which mathematically *is*
+`fsMeasure` (the Haar-on-`U(N)` pushforward, which mathematically *is*
 the FS Kähler volume), its `U(N)`-invariance and uniqueness, the product
 marginal bridge, and everything downstream. The identification of these
 measures with Kähler/Liouville volume forms is interpretive prose backed by
@@ -95,7 +95,7 @@ abbrev KSigma (N : ℕ) : Type := CPN N × KTorus
 
 /-- The product (Kähler/Liouville) volume `μL = μFS ⊗ vol_{T²}`. -/
 noncomputable def kMuL (p₀ : CPN N) : Measure (KSigma N) :=
-  (fubiniStudyMeasure p₀).prod (volume : Measure KTorus)
+  (fsMeasure p₀).prod (volume : Measure KTorus)
 
 instance instProbKTorusVolume : IsProbabilityMeasure (volume : Measure KTorus) := by
   unfold KTorus
@@ -146,9 +146,9 @@ noncomputable def kSectorData (p₀ : CPN N) :
   measurable_smul_P := fun U => (continuous_const_smul U).measurable
   hμL_inv := fun U => by
     show MeasurePreserving (fun p : KSigma N => U • p) (kMuL p₀) (kMuL p₀)
-    have hbase : MeasurePreserving (fun q : CPN N => U • q) (fubiniStudyMeasure p₀)
-        (fubiniStudyMeasure p₀) :=
-      ⟨(continuous_const_smul U).measurable, fubiniStudyMeasure_smul_invariant U p₀⟩
+    have hbase : MeasurePreserving (fun q : CPN N => U • q) (fsMeasure p₀)
+        (fsMeasure p₀) :=
+      ⟨(continuous_const_smul U).measurable, fsMeasure_smul_invariant U p₀⟩
     have heq : (fun p : KSigma N => U • p)
         = Prod.map (fun q : CPN N => U • q) (id : KTorus → KTorus) := by
       funext p; rw [kSigma_smul_def]; rfl
@@ -161,10 +161,10 @@ noncomputable def kSectorData (p₀ : CPN N) :
 theorem k_measure_bridge (p₀ : CPN N) :
     ∃ c : ENNReal,
       Measure.map (kSectorData p₀).π ((kSectorData p₀).μL : Measure (KSigma N))
-        = c • fubiniStudyMeasure p₀ := by
+        = c • fsMeasure p₀ := by
   refine ⟨1, ?_⟩
   rw [one_smul]
-  show Measure.map Prod.fst (kMuL p₀) = fubiniStudyMeasure p₀
+  show Measure.map Prod.fst (kMuL p₀) = fsMeasure p₀
   rw [kMuL, ← Measure.fst, Measure.fst_prod]
 
 end LF4

@@ -45,7 +45,7 @@ structural obstruction — it is what the `N = 2` solution `4(2s−1)₊`, suppo
 
 Nothing here needs projective geometry: it is the measure-theoretic core, so it is proved once,
 for a probability space with `n` overlap functions and `n` disjoint regions. The intended
-instantiation is `X := CPN n`, `μ := fubiniStudyMeasure p₀` (a probability measure), `s j :=`
+instantiation is `X := CPN n`, `μ := fsMeasure p₀` (a probability measure), `s j :=`
 `momentMap · j` (`momentMap_mk_eq_inner_sq` identifies it with `|⟨eⱼ|φ⟩|²`, and
 `momentMap_sum_eq_one` gives `∑ⱼ sⱼ = 1`), `Ω j := Ωⱼ(M)`. Keeping it abstract also means the
 result survives a move to a fibred `Σ`, where the same reduction applies verbatim.

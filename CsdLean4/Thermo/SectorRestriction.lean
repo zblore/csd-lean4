@@ -43,7 +43,7 @@ constraint surface "the state lies in `R`" pushes forward to the **zero measure*
 The reason is not that a constant fails to compute. It is that the constraint set is
 **Fubini–Study-null**: the rays of a proper subspace form a proper projective subvariety, whose
 cone is the subspace itself, which is Lebesgue-null
-(`Matrix.UnitaryGroup.fubiniStudyMeasure_subspaceRays`). So *conditioning* on it is undefined
+(`Matrix.UnitaryGroup.fsMeasure_subspaceRays`). So *conditioning* on it is undefined
 and *restricting* to it is the zero measure. No choice of normalisation repairs this.
 
 ## Consequences for the arc (the decision E3 was run to force)
@@ -85,7 +85,7 @@ omit [NeZero N] in
 /-- The Liouville measure of a base cylinder is the Fubini–Study measure of its base — the
 product computation behind every statement in this file. -/
 lemma kMuL_preimage_fst (p₀ : LF4.CPN N) {B : Set (LF4.CPN N)} (_hB : MeasurableSet B) :
-    LF4.kMuL p₀ (Prod.fst ⁻¹' B) = fubiniStudyMeasure p₀ B := by
+    LF4.kMuL p₀ (Prod.fst ⁻¹' B) = fsMeasure p₀ B := by
   have hset : (Prod.fst ⁻¹' B : Set (LF4.KSigma N)) = B ×ˢ (Set.univ : Set LF4.KTorus) := by
     ext x
     simp
@@ -98,7 +98,7 @@ The honest generalisation of the unrestricted `c = 1`. -/
 theorem projectiveLaw_restrict_saturated (p₀ : LF4.CPN N)
     {B : Set (LF4.CPN N)} (hB : MeasurableSet B) :
     Measure.map Prod.fst ((LF4.kMuL p₀).restrict (Prod.fst ⁻¹' B))
-      = (fubiniStudyMeasure p₀).restrict B := by
+      = (fsMeasure p₀).restrict B := by
   refine Measure.ext fun A hA => ?_
   rw [Measure.map_apply measurable_fst hA,
     Measure.restrict_apply (measurable_fst hA),
@@ -116,7 +116,7 @@ theorem projectiveLaw_restrict_sector_eq_zero (p₀ : LF4.CPN N)
         ((LF4.kMuL p₀).restrict (Prod.fst ⁻¹' subspaceRays R)) = 0 := by
   rw [projectiveLaw_restrict_saturated p₀ (measurableSet_subspaceRays R),
     Measure.restrict_eq_zero]
-  exact fubiniStudyMeasure_subspaceRays p₀ hR
+  exact fsMeasure_subspaceRays p₀ hR
 
 /-- The same statement at the level of the constraint surface itself: it is `μ_L`-null, so it
 carries no Liouville weight to condition on. -/
@@ -124,6 +124,6 @@ theorem kMuL_sector_eq_zero (p₀ : LF4.CPN N)
     {R : Submodule ℂ (EuclideanSpace ℂ (Fin N))} (hR : R ≠ ⊤) :
     LF4.kMuL p₀ (Prod.fst ⁻¹' subspaceRays R) = 0 := by
   rw [kMuL_preimage_fst p₀ (measurableSet_subspaceRays R)]
-  exact fubiniStudyMeasure_subspaceRays p₀ hR
+  exact fsMeasure_subspaceRays p₀ hR
 
 end CSD.Thermo

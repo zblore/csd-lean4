@@ -19,8 +19,8 @@ the uniform measure on `[0,1]`.
 
 ```
 fs_born_volume_ratio_qubit :
-  (Φ₀∗ fubiniStudyMeasure = uniform[0,1]) →
-    fubiniStudyMeasure {p | momentMap p 0 ≤ momentMap [ψ] 0} = ‖⟨e₀, ψ⟩‖².
+  (Φ₀∗ fsMeasure = uniform[0,1]) →
+    fsMeasure {p | momentMap p 0 ≤ momentMap [ψ] 0} = ‖⟨e₀, ψ⟩‖².
 ```
 
 The outcome region is the **sublevel set** `{p | momentMap p 0 ≤ momentMap [ψ] 0}`
@@ -28,7 +28,7 @@ The outcome region is the **sublevel set** `{p | momentMap p 0 ≤ momentMap [ψ
 `N = 2` the moment polytope is the segment `[0,1]`, so this sublevel set is the
 pullback of `[0, b₀(ψ)]` and its FS measure is its length `b₀(ψ) = ‖⟨e₀,ψ⟩‖²`.
 The region is geometric (a moment sublevel set), the measure is the genuine
-`fubiniStudyMeasure` on the ontic Kähler `Σ = ℂℙ¹`, and the equality to the Born
+`fsMeasure` on the ontic Kähler `Σ = ℂℙ¹`, and the equality to the Born
 weight is a theorem — no carving, no `busch_effect_gleason`.
 
 **Honest scope.** The hypothesis `h_uniform` is the `N = 2` Duistermaat–Heckman /
@@ -77,13 +77,13 @@ theorem momentMap_measurable (i : Fin N) :
 
 /-- **Headline (option C): the Born weight is a Fubini–Study volume ratio on `ℂℙ¹`.**
 For a unit qubit preparation `ψ`, modulo the `N = 2` Duistermaat–Heckman
-hypothesis (`Φ₀∗ fubiniStudyMeasure = uniform[0,1]`), the FS measure of the
+hypothesis (`Φ₀∗ fsMeasure = uniform[0,1]`), the FS measure of the
 moment sublevel set at `[ψ]` equals the Born weight `‖⟨e₀, ψ⟩‖²`. -/
 theorem fs_born_volume_ratio_qubit
     (p₀ : CPN 2) (ψ : EuclideanSpace ℂ (Fin 2)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
-    (h_uniform : Measure.map (fun p => momentMap p 0) (fubiniStudyMeasure p₀)
+    (h_uniform : Measure.map (fun p => momentMap p 0) (fsMeasure p₀)
         = (volume : Measure ℝ).restrict (Set.Icc 0 1)) :
-    fubiniStudyMeasure p₀
+    fsMeasure p₀
         {p : CPN 2 | momentMap p 0 ≤ momentMap (Projectivization.mk ℂ ψ hψ0) 0}
       = ENNReal.ofReal (‖inner ℂ (EuclideanSpace.single 0 (1 : ℂ)) ψ‖ ^ 2) := by
   set s := momentMap (Projectivization.mk ℂ ψ hψ0) 0 with hs

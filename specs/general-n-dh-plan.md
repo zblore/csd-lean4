@@ -62,7 +62,7 @@ volume on Σ (both live on Lebesgue coordinates).
 ## DAG (generalises the qubit slices)
 
 - **Part 1 (Gaussian = FS), general N.** `coords_N : ℝ^{2N} ≃ₗᵢ[ℝ] ℂ^N` (generalise
-  `coords`); `gaussianCP_N = μ_FS,N` by `fubiniStudyMeasure_unique`. **Risk: LOW-MED**
+  `coords`); `gaussianCP_N = μ_FS,N` by `fsMeasure_unique`. **Risk: LOW-MED**
   — Part 1 was never deeply N-specific; the `coords` isometry + invariance argument
   generalise, mostly index bookkeeping (`Fin 4`→`Fin 2N`, `Fin 2`→`Fin N`).
 - **Part 2a (block law), general N.** `stdGaussian(ℝ^{2N})` ≅ `expHalf^{⊗N}` on `ℝ^N`
@@ -125,7 +125,7 @@ once B+C land.
 ## Progress (2026-06-01) — Slice B DONE
 
 `CsdLean4/LF4/GaussianCPN.lean`, `gaussianCPN_eq_fubiniStudy [NeZero N] (p₀ : CPN N)
-: gaussianCPN p₀ = fubiniStudyMeasure p₀`. Foundational triple, AxiomAudit-pinned.
+: gaussianCPN p₀ = fsMeasure p₀`. Foundational triple, AxiomAudit-pinned.
 The general-N analogue of `gaussianCP_eq_fubiniStudy`, generalising every C1–C5
 piece of `GaussianCP.lean`:
 - `coordsN : ℝ^{N×2} ≃ₗᵢ[ℝ] ℂ^N` (real space indexed by `Fin N × Fin 2`, so coord
@@ -136,10 +136,10 @@ piece of `GaussianCP.lean`:
 - `stdGaussianN_ne_dirac` + `instNoAtomsStdGaussianN` (needs `[NeZero N]` for a
   nonempty index) ⟹ origin is `gaussianHN`-null.
 - `gaussianCPN_smul_invariant` ⟹ `gaussianCPN_eq_fubiniStudy` via
-  `fubiniStudyMeasure_unique`.
+  `fsMeasure_unique`.
 The discharged qubit `GaussianCP.lean` is left untouched (parallel development, not
 a refactor — its `Fin 4` machinery is load-bearing for the retired axiom).
-Dependencies (`unitary_norm_preserving`, `fubiniStudyMeasure_unique`,
+Dependencies (`unitary_norm_preserving`, `fsMeasure_unique`,
 `smul_mk_eq_mk`) were already general-N.
 
 ## Progress (2026-06-01) — Slice C DONE

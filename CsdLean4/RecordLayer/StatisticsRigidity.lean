@@ -49,7 +49,7 @@ apparatus). Consequently
 * ★★ `measure_eq_fubiniStudy_of_record_statistics_invariant` — any probability measure on
   the sector invariant under EVERY record-statistics-preserving symmetry is the
   Fubini–Study measure. `U(N)` appears in the proof (via `transProbPreserving_unitary` +
-  `fubiniStudyMeasure_unique`), **never in the statement** — the conversion the necessity
+  `fsMeasure_unique`), **never in the statement** — the conversion the necessity
   audit asked for, in the `fubiniStudy_forced_by_symmetry` template: the group is no
   longer named in the premise.
 
@@ -110,7 +110,7 @@ antiunitary class, so the realisation disjunction is non-vacuous on both branche
 
 Foundational-triple only (`propext, Classical.choice, Quot.sound`); no `sorry`, no new
 axioms. Wigner (`wigner_rigidity_unitaryGroup`) and the measure uniqueness
-(`fubiniStudyMeasure_unique`) are consumed as-is, not rebuilt here.
+(`fsMeasure_unique`) are consumed as-is, not rebuilt here.
 
 ## References
 
@@ -120,7 +120,7 @@ Q18; `specs/necessity-audit.md` (the two conditioners); `specs/future-work.md` (
 `bornRateBasis_eq_inner_sq`); `Mathlib/LinearAlgebra/Projectivization/
 TransitionProbability.lean` (`transProb`, `transProb_mk`); `WignerRigidity.lean`
 (`TransProbPreserving`, `wigner_rigidity_unitaryGroup`, `conjProj`);
-`FubiniStudyUnique.lean` (`fubiniStudyMeasure_unique`); `LF4/BargmannSelection.lean`
+`FubiniStudyUnique.lean` (`fsMeasure_unique`); `LF4/BargmannSelection.lean`
 (`projectedFlow_unitary_of_bargmann_continuous`); `SigmaLayer/TensorTomography.lean`
 (`productRecordRate`, `aliceHom`, `bobHom`, `outerProduct_tensorState`);
 `Mathlib/QuantumInfo/JointRegister.lean` (`tensorState`); `LF2/MixedEnsembleIx.lean`
@@ -340,7 +340,7 @@ theorem unitary_invariant_of_recordStatistics_invariant
 /-- ★★ **The `U(N)`-free measure statement.** Any probability measure on the sector
 invariant under EVERY record-statistics-preserving symmetry is the Fubini–Study measure.
 `U(N)` appears in the proof (`transProbPreserving_unitary` feeds
-`fubiniStudyMeasure_unique`), **never in the statement**: the premise names no group —
+`fsMeasure_unique`), **never in the statement**: the premise names no group —
 it is the epistemic indifference "the sampling law cannot weight sector configurations
 that no record statistics distinguish", and the group over which it quantifies is itself
 pinned by `recordStatisticsPreserving_realisation`. This is the conversion the necessity
@@ -357,8 +357,8 @@ theorem measure_eq_fubiniStudy_of_record_statistics_invariant [NeZero N]
     (μ : Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N)))) [IsProbabilityMeasure μ]
     (hinv : ∀ f : ℙ ℂ (EuclideanSpace ℂ (Fin N)) → ℙ ℂ (EuclideanSpace ℂ (Fin N)),
       RecordStatisticsPreserving f → μ.map f = μ) :
-    μ = Matrix.UnitaryGroup.fubiniStudyMeasure p₀ :=
-  Matrix.UnitaryGroup.fubiniStudyMeasure_unique p₀ μ
+    μ = Matrix.UnitaryGroup.fsMeasure p₀ :=
+  Matrix.UnitaryGroup.fsMeasure_unique p₀ μ
     (fun U => hinv _ (recordStatisticsPreserving_unitary U))
 
 /-! ## The composite record rates are basis-measurement Born rates -/

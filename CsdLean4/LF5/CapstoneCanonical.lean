@@ -17,7 +17,7 @@ public import CsdLean4.LF4.TrialWitness
 trial bundle `(Ω, Pr, X, hX, hlaw, hindep)` on the dilated sector
 `ℂℙ^{N·N−1}`. This module discharges that bundle with the canonical
 coordinate process of `CsdLean4/LF4/TrialWitness.lean`
-(`fsTrialMeasure p₀ = Measure.infinitePi (fun _ => fubiniStudyMeasure p₀)`,
+(`fsTrialMeasure p₀ = Measure.infinitePi (fun _ => fsMeasure p₀)`,
 `fsTrial (M + 1) n = (· n)`): the canonical capstone quantifies only over the
 measurement context `(hN, e)`, the preparation `(ψ, hψ)`, the dilated state
 `(ψ', hψ'eq, hψ'0)`, and the reference point `p₀`. The five-conjunct
@@ -63,7 +63,7 @@ theorem measurement_flow_born_frequency_canonical
     -- (2) and physically admissible: FS measure-preserving (the Liouville /
     -- hΦ_pres content)
     ∧ MeasurePreserving (measurementFlow N e)
-        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
+        (fsMeasure p₀) (fsMeasure p₀)
     -- (3) and context-fixed: the SAME flow realises the dilation for EVERY
     -- preparation
     ∧ (∀ (φ : EuclideanSpace ℂ (Fin N)) (hφ : φ ≠ 0),
@@ -80,7 +80,7 @@ theorem measurement_flow_born_frequency_canonical
     ∧ (∀ i : Fin N,
         ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2
           = ∑ n : Fin N,
-              (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal)
+              (fsMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal)
     -- (5) the empirical capstone: a.s. pointer-block frequencies → Born, on
     -- the canonical i.i.d. FS trial process
     ∧ ∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : Fin N,

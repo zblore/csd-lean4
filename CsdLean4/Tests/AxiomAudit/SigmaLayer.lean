@@ -47,7 +47,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- (1/2, 1], is doing.
 -- Stated over an ABSTRACT probability space on purpose: no projective geometry is needed, so the
 -- reduction also survives a move to a fibred Sigma. Intended instantiation X := CPN n,
--- mu := fubiniStudyMeasure, s j := momentMap . j (momentMap_mk_eq_inner_sq).
+-- mu := fsMeasure, s j := momentMap . j (momentMap_mk_eq_inner_sq).
 -- NOT THE NO-GO. It constrains g; it does not refute it. Untouched: the generic-psi requirement
 -- (everything here comes from the n basis-vector preps), and the harmonic argument (g(|<psi|phi>|^2)
 -- integrated over a fixed region has components of every degree (k,k) while the target is pure
@@ -1336,7 +1336,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- demanded) lives in the point itself. There the component swap is a PERMUTATION UNITARY
 -- (joinMat_mem_unitaryGroup), and:
 -- ★★ joinSwap_measurePreserving -- Liouville preservation = Fubini-Study unitary invariance,
--- discharged by fubiniStudyMeasure_smul_invariant. The obligation recorded as the route's hard
+-- discharged by fsMeasure_smul_invariant. The obligation recorded as the route's hard
 -- half is a ONE-LINE consequence of the dynamics being unitary.
 -- ★★ join_block_luders -- the Lüders update POINTWISE: every join microstate [ψ ⊕ α] with
 -- nonvanishing block component and block-supported slot reads out post-swap to EXACTLY [Πᵢψ].
@@ -2249,7 +2249,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 -- ProjectiveRecord (record layer migration onto the actual Σ, 2026-07-25): the record layer instantiated
 -- on the corpus's REAL model — Σ = CPN(M+1), events = the corpus's own bornRegion, outcome map =
--- bornOutcome, measure = fubiniStudyMeasure. projRecordSemantics (P5 RecordSemantics on CPN, measurable
+-- bornOutcome, measure = fsMeasure. projRecordSemantics (P5 RecordSemantics on CPN, measurable
 -- + exclusive from bornRegion_measurable_uncond/bornRegion_pairwiseDisjoint); bornOutcome_eq_record (the
 -- corpus outcome map IS the record); fubiniStudy_projRecord (FS typicality of the record event = ‖⟨eᵢ,ψ⟩‖²);
 -- projRecord_frequency (Born = LLN over the unknown microstate on the real Σ = FiniteQMClosure.born_frequency
@@ -3300,7 +3300,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- conversions: projectedFlow_unitary_of_record_statistics (W3+Bargmann with the record-level
 -- premise in place of the hTPP FS-isometry posit -- a premise CONVERSION, honestly a thin
 -- wrapper) and measure_eq_fubiniStudy_of_record_statistics_invariant (any probability measure
--- invariant under every statistics-preserving symmetry IS fubiniStudyMeasure -- U(N) in the
+-- invariant under every statistics-preserving symmetry IS fsMeasure -- U(N) in the
 -- proof, never the statement). recordStatisticsPreserving_realisation pins the operational
 -- symmetry group semi-unitary via Wigner. NOT claimed: elimination of the posits (the
 -- operational premises survive, papers owe motivation); TPP from measure preservation (the
@@ -3501,7 +3501,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- epistemicMeasure_equivariant takes measurability and NOTHING ELSE -- no preservation hypothesis,
 -- because a Dirac base needs none. csd_equivariance is UNCONDITIONAL on the concrete arena: the
 -- review recorded muL-preservation as the posited ConstraintDynamics field, but manyToOneSetup
--- DISCHARGES flow_preserves_volume with a proof (fubiniStudyMeasure_smul_invariant x id on fibre).
+-- DISCHARGES flow_preserves_volume with a proof (fsMeasure_smul_invariant x id on fibre).
 -- Read with flow_admits_invariant_ne_fubiniStudy: preservation does not select mu_FS; symmetry does.
 /-- info: 'CSD.SigmaLayer.epistemicMeasure_equivariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -3568,7 +3568,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.relaxation_requires_hyperbolic_fibre
 
 -- CR-4 PREREQUISITE (2026-09-05): the fibred frequency theorem. Every frequency theorem in the
--- corpus lived on the BASE (fubiniStudyMeasure + bornRegion, 32 call sites); the canonical A7
+-- corpus lived on the BASE (fsMeasure + bornRegion, 32 call sites); the canonical A7
 -- reading is fibred and had no frequency theorem at all, only the single-draw weight
 -- globalBasin_born. That absence is why the base->fibre migration is NOT mechanical: the weights
 -- agree, but a frequency statement is an a.s. limit over draws from a different measure on a

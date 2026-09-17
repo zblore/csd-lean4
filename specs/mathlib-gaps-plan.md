@@ -109,7 +109,7 @@ Converts the research-gated Q28 item 5 into a bounded three-brick chain with no 
    restrict to `≠ 0`, push through `Projectivization.mk`. It is `U(N)`-invariant (unitaries
    preserve Lebesgue — linear isometries, real Jacobian 1 — and the density is norm-radial),
    so by the STAGED uniqueness theorem (`FubiniStudyUnique`) the pushforward **is**
-   `fubiniStudyMeasure`. This gives FS a Lebesgue-a.c. source — the transport the c2 plan
+   `fsMeasure`. This gives FS a Lebesgue-a.c. source — the transport the c2 plan
    said was missing (no `U(N)`-chart work anywhere).
 3. **`segre_range_null`** (M): the Segre minor is a polynomial on `ℂ^{nm}`, not identically
    zero (Q28's witness), its zero set is null (brick 1), the source measure is a.c. (brick 2),
@@ -147,7 +147,7 @@ Converts the research-gated Q28 item 5 into a bounded three-brick chain with no 
 >    corpus or upstream by that name — build it via the matrix-adjoint relation
 >    (`U†U = 1` + the `toEuclideanLin`/adjoint bridge; spelling at build time).
 > 5. **The action side is free**: `smul_mk_eq_mk` is `rfl` (UnitaryTransitive), the
->    uniqueness theorem `fubiniStudyMeasure_unique` takes exactly `[IsProbabilityMeasure] +
+>    uniqueness theorem `fsMeasure_unique` takes exactly `[IsProbabilityMeasure] +
 >    ∀ U, map (U • ·) μ = μ`, and `measurableSet_range_segre` is landed (Q28).
 >
 > **MG-2 EXECUTED 2026-08-22, same day as scoped.** All three bricks landed:
@@ -155,7 +155,7 @@ Converts the research-gated Q28 item 5 into a bounded three-brick chain with no 
 > Fubini slicing vehicle, `pi_coord_zero_null`, ★ `pi_quadratic_null`(`'`),
 > `volume_ofLp_preimage_null` (Haar↔Haar null transport), `toEuclideanIsometry` (unitary as a
 > `ℂ`-isometry via `toEuclideanCLM`), `ballMeasure`, `projOfVec`, ★
-> `map_ballMeasure_eq_fubiniStudy`, ★★ `fubiniStudyMeasure_null_of_cone`) and the assembly in
+> `map_ballMeasure_eq_fubiniStudy`, ★★ `fsMeasure_null_of_cone`) and the assembly in
 > `RecordLayer/EntangledMeasure.lean` (extended in place): ★★
 > `compositeFubiniStudy_range_segre_null` + ★★ `ae_not_mem_range_segre` — **almost every
 > composite state is entangled**. The general polynomial lemma was never needed (route
@@ -169,9 +169,9 @@ Converts the research-gated Q28 item 5 into a bounded three-brick chain with no 
 > deprecation replacements live in a different namespace).
 >
 > **Bricks**: **B-a** (S–M) the quadratic zero-set null lemma on the pi space + transport to
-> `volume_E`; **B-b** (S–M) `fubiniStudyMeasure` as the `mk`-pushforward of the normalized
+> `volume_E`; **B-b** (S–M) `fsMeasure` as the `mk`-pushforward of the normalized
 > ball measure (a.c. source; junk-totalised `mk`, invariance by isometry + ball, uniqueness)
-> — the reusable API is `fubiniStudyMeasure_null_of_cone` (cone volume-null ⇒ FS-null);
+> — the reusable API is `fsMeasure_null_of_cone` (cone volume-null ⇒ FS-null);
 > **B-c** (S) the assembly in `EntangledMeasure.lean` (extend in place): ★★
 > `compositeFubiniStudy_range_segre_null` + the a.e.-entangled form. Home for B-a/B-b: new
 > staged `Mathlib/LinearAlgebra/Projectivization/FubiniStudyLebesgue.lean` (upstream can

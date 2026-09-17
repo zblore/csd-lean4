@@ -39,8 +39,8 @@ unitary group on the projective space of Euclidean space.
 ## What this unlocks
 
 These instances are the substrate for the U(N)-invariant Borel
-probability measure on `ℂℙ^{N-1}` (`fubiniStudyMeasure`) and the associated
-uniqueness theorem (`fubiniStudyMeasure_unique`). Together with the
+probability measure on `ℂℙ^{N-1}` (`fsMeasure`) and the associated
+uniqueness theorem (`fsMeasure_unique`). Together with the
 finite-measure normalisation `invariant_measure_uniqueness_cpn`
 (`FubiniStudyUnique.lean`), they provide the invariant-measure-uniqueness fact
 for the `ℂℙ^{N-1}` / `U(N)` instantiation, consumed directly by the source

@@ -36,7 +36,7 @@ factual premises have moved, and the corrections change cost and ordering:
      `Measure.prod_prod` + `measure_univ`. It transfers to a constraint surface **only if the
      surface is a `π`-cylinder** (`S = π⁻¹(base) `, i.e. fibre-saturated). A generic
      energy-shell constraint is *not* fibre-saturated, and then neither the product
-     computation nor `fubiniStudyMeasure_unique` applies — the latter needs `U(N)`-invariance
+     computation nor `fsMeasure_unique` applies — the latter needs `U(N)`-invariance
      of a probability measure on **all** of `ℂℙ^{N−1}`, whereas the restricted object lives on
      `ℙ(H_R)` with only `U(d_R)`-invariance available.
    * So the real question is not "is `c` computed" but **"is the constraint surface
@@ -77,11 +77,11 @@ theorem restricted_projectiveLaw
     (R : Submodule ℂ (EuclideanSpace ℂ (Fin N)))      -- the spectral sector H_R
     (S : Set (KSigma N)) (hS : IsFibreSaturated S)     -- ← the load-bearing hypothesis
     (hbase : S = Prod.fst ⁻¹' (raysIn R)) :
-    π_* ((μ_L).restrict S) = (μ_L S) • fubiniStudyMeasure_on (raysIn R)
+    π_* ((μ_L).restrict S) = (μ_L S) • fsMeasure_on (raysIn R)
 ```
 **Route.** (i) Define `raysIn R : Set (CPN N)` and the sector's own FS measure — the cleanest
 construction is the MG-1/MG-2 machinery: `ℙ(H_R)` is itself a projectivization, so
-`fubiniStudyMeasure` applies to it directly, and `fubiniStudyMeasure_null_of_cone` + the
+`fsMeasure` applies to it directly, and `fsMeasure_null_of_cone` + the
 `ballMeasure` presentation (`FubiniStudyLebesgue.lean`, landed 2026-08-22) give the
 Lebesgue-side handle on the restriction. (ii) Prove the fibre-saturated case by the same
 product computation as `kahlerFstSector_projectiveLaw`. (iii) **Then attack the non-saturated
@@ -106,7 +106,7 @@ implicit.
 
 > ### ★★ E3 EXECUTED 2026-08-22 — verdict: **FAIL on the naive statement**, with diagnosis
 >
-> `Thermo/SectorRestriction.lean` (new) + `fubiniStudyMeasure_subspaceRays` in the staged
+> `Thermo/SectorRestriction.lean` (new) + `fsMeasure_subspaceRays` in the staged
 > `FubiniStudyLebesgue.lean`; 4 pins. The spike did its job on the first attempt: **the naive
 > E3 statement is false, and the reason is sharper than "the constant does not compute".**
 >
@@ -117,7 +117,7 @@ implicit.
 >
 > **What is false** — ★★ `projectiveLaw_restrict_sector_eq_zero`: for a **proper** spectral
 > sector `R ⊊ H`, `π_*(μ_L|_{π⁻¹(rays in R)}) = 0`. **The constraint set is Fubini–Study-null**
-> (`fubiniStudyMeasure_subspaceRays`: the rays of a proper subspace have the subspace as their
+> (`fsMeasure_subspaceRays`: the rays of a proper subspace have the subspace as their
 > cone, and a proper subspace is Lebesgue-null by `Measure.addHaar_submodule`). So there is
 > nothing to condition on and no normalisation repairs it. `kMuL_sector_eq_zero` says the same
 > at the surface level: the constraint surface carries **zero Liouville weight**.
@@ -356,7 +356,7 @@ that any particular Σ mixes. Prose must carry the hypothesis every time (see E5
 > `And.<name>` — and `Integrable.sub` yields the Pi-level `f - g`, which `integral_sub`/`add`
 > cannot match under `rw`; state each combination as an explicit-lambda `have`.
 > `Integrable.of_bound` lives in `Mathlib.MeasureTheory.Integral.IntegrableOn`, which is *not* in
-> `Bochner.Basic`'s closure. `fubiniStudyMeasure` is in the `Matrix.UnitaryGroup` namespace.
+> `Bochner.Basic`'s closure. `fsMeasure` is in the `Matrix.UnitaryGroup` namespace.
 > `field_simp` again closed what a trailing `ring` would have re-visited.
 
 ---
@@ -432,7 +432,7 @@ prose), plus the glossary `status:` field if a page is created.
 > crude norm is often the cheap one.
 >
 > **What unblocked it.** The corpus already had `(continuous_const_smul U).measurable` and
-> `fubiniStudyMeasure_smul_invariant` — the projective action is *continuous*, so none of the
+> `fsMeasure_smul_invariant` — the projective action is *continuous*, so none of the
 > quotient-topology work I had been avoiding was needed. Supporting lemmas landed alongside:
 > `norm_toEuclideanLin_unitary` (the general isometry statement behind `CanonicalTypicality`'s
 > per-gate `signFlip_normSq` / `perm_normSq` / `hadamard_normSq` — an extraction candidate),

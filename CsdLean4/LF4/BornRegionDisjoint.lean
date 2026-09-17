@@ -213,11 +213,11 @@ theorem sum_inner_single_sq (ψ : EuclideanSpace ℂ (Fin (M + 1))) :
 `∑ ‖⟨eᵢ,ψ⟩‖² = ‖ψ‖² = 1`. ENNReal-level form. -/
 theorem bornRegion_iUnion_fs_measure (p₀ : CPN (M + 1))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) :
-    fubiniStudyMeasure p₀ (⋃ i, bornRegion ψ hψ0 i) = 1 := by
+    fsMeasure p₀ (⋃ i, bornRegion ψ hψ0 i) = 1 := by
   rw [measure_iUnion (fun i j hij => bornRegion_pairwiseDisjoint ψ hψ0 hij)
       (bornRegion_measurable_uncond ψ hψ0)]
   -- each summand's ENNReal value is `ofReal` of the Born weight (nonneg)
-  have hval : ∀ i, fubiniStudyMeasure p₀ (bornRegion ψ hψ0 i)
+  have hval : ∀ i, fsMeasure p₀ (bornRegion ψ hψ0 i)
       = ENNReal.ofReal (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2) := by
     intro i
     have h := bornRegion_fs_measure_uncond p₀ ψ hψ0 hψ i
@@ -233,7 +233,7 @@ theorem bornRegion_iUnion_fs_measure (p₀ : CPN (M + 1))
 FS-null (unit `ψ`). The cells partition `ℂℙ^M` up to a null set. -/
 theorem bornRegion_ae_cover (p₀ : CPN (M + 1))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) :
-    fubiniStudyMeasure p₀ (⋃ i, bornRegion ψ hψ0 i)ᶜ = 0 := by
+    fsMeasure p₀ (⋃ i, bornRegion ψ hψ0 i)ᶜ = 0 := by
   rw [measure_compl (MeasurableSet.iUnion (bornRegion_measurable_uncond ψ hψ0))
       (measure_ne_top _ _), bornRegion_iUnion_fs_measure p₀ ψ hψ0 hψ, measure_univ,
     tsub_self]
@@ -331,7 +331,7 @@ theorem bornOutcome_measurable (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : �
 (unit `ψ`). The microstate determines an outcome almost surely. -/
 theorem bornOutcome_ae_isSome (p₀ : CPN (M + 1))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) :
-    ∀ᵐ p ∂ fubiniStudyMeasure p₀, (bornOutcome ψ hψ0 p).isSome := by
+    ∀ᵐ p ∂ fsMeasure p₀, (bornOutcome ψ hψ0 p).isSome := by
   rw [Filter.eventually_iff, mem_ae_iff]
   refine measure_mono_null (t := (⋃ i, bornRegion ψ hψ0 i)ᶜ) ?_
     (bornRegion_ae_cover p₀ ψ hψ0 hψ)

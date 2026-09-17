@@ -16,7 +16,7 @@ public import CsdLean4.LF6.AmplitudeDamping
 The geometric signature that separates open from closed dynamics, on the two
 proved qubit dissipators. Closed (unitary) dynamics preserves state-space
 volume — the corpus carries that side as `schrodinger_flow_kahler_symplectomorphism`
-and `fubiniStudyMeasure_smul_invariant`. This module proves the open side:
+and `fsMeasure_smul_invariant`. This module proves the open side:
 **both canonical dissipators contract Bloch volume, at exactly the same
 rate `e^{-2γt}`, and the drift rate is the measurable decoherence rate.**
 

@@ -27,7 +27,7 @@ This module supplies a genuine one whose **projected flow moves the rays**.
   `U : ℝ → unitaryGroup (Fin N) ℂ`, the `KahlerOnticSetup N` with
   `Σ = ℂℙ^{N-1}`, `π = id`, `flow t = projectedFlow t = (U t • ·)`, and Liouville
   measure the Fubini–Study measure. Measure-preservation is exactly the
-  `U(N)`-invariance of `μ_FS` (`fubiniStudyMeasure_smul_invariant`); the descent
+  `U(N)`-invariance of `μ_FS` (`fsMeasure_smul_invariant`); the descent
   equation `projectable` holds by `rfl` (`π = id`, `flow = projectedFlow`).
   Unlike `kFlow` (which translates a `T²` fibre and so acts trivially on rays),
   the projected flow here IS the unitary action on `ℂℙ^{N-1}`.
@@ -49,7 +49,7 @@ The Kähler-geometry fields remain honest `True` placeholders (link L1).
 ## Provenance
 
 Foundational-triple only. Reuses `KahlerOnticSetup`, the projectivization unitary
-action, and `fubiniStudyMeasure_smul_invariant`; nothing is re-proved.
+action, and `fsMeasure_smul_invariant`; nothing is re-proved.
 -/
 
 @[expose] public section
@@ -85,13 +85,13 @@ noncomputable def unitaryFlowSetup (N : ℕ)
   Sigma := ℙ ℂ (EuclideanSpace ℂ (Fin N))
   compact_sigma := inferInstance
   kahler_pointwise := isFubiniStudyKahler N
-  liouvilleMeasure := fubiniStudyMeasure p₀
+  liouvilleMeasure := fsMeasure p₀
   liouville_isProbability := inferInstance
   pi := id
   pi_measurable := measurable_id
   flow := fun t p => U t • p
   flow_preserves_volume := fun t =>
-    ⟨(continuous_const_smul (U t)).measurable, fubiniStudyMeasure_smul_invariant (U t) p₀⟩
+    ⟨(continuous_const_smul (U t)).measurable, fsMeasure_smul_invariant (U t) p₀⟩
   projectedFlow := fun t p => U t • p
   projectable := fun _ _ => rfl
 

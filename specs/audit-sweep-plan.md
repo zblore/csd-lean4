@@ -174,7 +174,7 @@ commit; verification details in the session record):
    §13/§14). Sweep 4 of this plan remains the systematic follow-up.
 2. **"Derived from Kähler geometry" stronger than the formalized contract
    (High).** *Classification: agreed as a documentation-precision gap; the
-   theorems themselves are unaffected (they are about `fubiniStudyMeasure` /
+   theorems themselves are unaffected (they are about `fsMeasure` /
    Haar measures and are machine-verified as stated).* Fixed: formalisation-
    boundary notes added to `LF4/KahlerInstance.lean` and `LF4/MomentMap.lean`
    module docstrings (the latter's stale "DH pushforward not yet proved" scope
@@ -200,7 +200,7 @@ commit; verification details in the session record):
    `LF4/MomentUniform.lean`'s module docstring).
    *Follow-up DONE 2026-06-11 (auditor recommendation of the same day):* the
    formal i.i.d. trial witness landed — the canonical coordinate process
-   (`Measure.infinitePi` of `fubiniStudyMeasure p₀`; `LF4/TrialWitness.lean` +
+   (`Measure.infinitePi` of `fsMeasure p₀`; `LF4/TrialWitness.lean` +
    Cat-1 `Mathlib/Probability/IIDCoordinateProcess.lean`) inhabits the trial
    bundle `(Ω, Pr, X, hX, hlaw, hindep)` corpus-wide;
    `born_frequency_convergence_N_canonical` and

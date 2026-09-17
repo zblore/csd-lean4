@@ -40,7 +40,7 @@ research gate dissolved because the general polynomial-zero-set lemma was never
 needed: the Segre cone lies in the zero set of ONE coordinate quadratic (the
 `segre_minor_eq` corner minor through the index bijection), which is null by
 Fubini slicing, and Fubini–Study is a Lebesgue-absolutely-continuous
-pushforward (`fubiniStudyMeasure_null_of_cone`). One route improvement over the plan below: item 2b's
+pushforward (`fsMeasure_null_of_cone`). One route improvement over the plan below: item 2b's
 perturbation is a single standard-basis vector `e_{(j₁,k₁)}`, not `a' ⊗ b'` —
 no orthogonal complements anywhere — and the reusable minor criterion
 `not_mem_range_segre` replaces the bespoke rank argument.
@@ -58,10 +58,10 @@ Checked and CONFIRMED, against the tree at `1c5ea8b`:
 
 * `LF4/KahlerInstance.lean:36`-region does say FS-atomlessness "is itself a
   Haar-of-subgroup argument" — the caveat Item 1's pigeonhole route retires.
-* `fubiniStudyMeasure_pos_of_isOpen` (`LF4/TypicalityForcing.lean:425`) and the
+* `fsMeasure_pos_of_isOpen` (`LF4/TypicalityForcing.lean:425`) and the
   `MulAction.exists_smul_eq (Matrix.unitaryGroup (Fin N) ℂ)` transitivity idiom
   (`:429`) exist exactly as the brief cites them.
-* `fubiniStudyMeasure_smul_invariant` and `orbit_map_continuous` exist
+* `fsMeasure_smul_invariant` and `orbit_map_continuous` exist
   (`Mathlib/LinearAlgebra/Projectivization/FubiniStudy*.lean`); the FS measure
   carries an `IsProbabilityMeasure` instance.
 * `RecordLayer/OnticComposite.lean` carries `prodVec`, `segre`, `segre_mk`,
@@ -131,12 +131,12 @@ place per §8.3b (the scope caveat is superseded at source when 2c lands).**
 * **2c′ `fubiniStudy_entangled_pos`** (metric-corrected form) — for every open
   `U` with `U ∩ Set.range segre ≠ ∅` (in particular every open neighbourhood
   of a product ray) and every basepoint:
-  `fubiniStudyMeasure p₀ (U \ Set.range segre) ≠ 0`.
+  `fsMeasure p₀ (U \ Set.range segre) ≠ 0`.
   Route: `U \ range segre = U ∩ (range segre)ᶜ` is open by 2a, nonempty by
-  2b′, positive by `fubiniStudyMeasure_pos_of_isOpen`. Size S given 2a+2b′.
+  2b′, positive by `fsMeasure_pos_of_isOpen`. Size S given 2a+2b′.
 * **2c₀ (freebie, land with 2a)** — the GLOBAL weakest form needs no 2b′ at
   all: `(range segre)ᶜ` is open (2a) and nonempty (`segre_not_surjective`,
-  already proved), hence `fubiniStudyMeasure p₀ (Set.range segre)ᶜ ≠ 0`.
+  already proved), hence `fsMeasure p₀ (Set.range segre)ᶜ ≠ 0`.
   Worth landing immediately: it is already the sentence "entangled rays carry
   positive preparation weight", and C2 can cite it while 2b′ is in flight.
 
@@ -161,7 +161,7 @@ place per §8.3b (the scope caveat is superseded at source when 2c lands).**
   `P.region = Q.pi ⁻¹' Uψ`, `Q.region = Q.pi ⁻¹' Uφ`, `Uψ ∋ [ψ]`, `Uφ ∋ [φ]`
   open, and `μL(P.region ∩ Q.region) ≠ 0` — via `Uψ ∩ Uφ ⊇ W` for a chosen
   nonempty open `W` (e.g. `Uψ := U₀ ∪ W`), positivity by the bridge +
-  `fubiniStudyMeasure_pos_of_isOpen`. Honest scope note to carry: the
+  `fsMeasure_pos_of_isOpen`. Honest scope note to carry: the
   quantified "any two states closer than 2ε with ε-balls" form NEEDS the
   Fubini–Study metric (Mathlib gap, recorded below); the existence form is
   the ψ-epistemic content and is metric-free. Size S–M.
@@ -202,10 +202,10 @@ hypothesis `hbridge : Q.projectiveLaw (D.muL) = c • μFS`, `c ≠ 0`:
 **Home: `Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean`, beside the
 invariance lemmas. Genuine Mathlib-upstream candidate.**
 
-`fubiniStudyMeasure_singleton` : for `2 ≤ N`, `fubiniStudyMeasure p₀ {q} = 0`.
+`fsMeasure_singleton` : for `2 ≤ N`, `fsMeasure p₀ {q} = 0`.
 The brief's pigeonhole route is verified ingredient-by-ingredient: transitivity
 (`MulAction.exists_smul_eq`, the `TypicalityForcing:429` idiom) + invariance
-(`fubiniStudyMeasure_smul_invariant`) give all singletons equal measure `a`;
+(`fsMeasure_smul_invariant`) give all singletons equal measure `a`;
 the probability instance bounds `k·a ≤ 1` for `k` distinct points; only the
 supply of arbitrarily many distinct points is new — `t ↦ [e₀ + t • e₁]`
 injective (via `Projectivization.mk_eq_mk_iff` + coordinate comparison; mind

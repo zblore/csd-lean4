@@ -32,7 +32,7 @@ symmetries that **fix every quantity the measurement stroke reads**:
 on the arena. It is jointly continuous, hence jointly measurable (`continuous_torusAct`,
 `measurable_torusAct`), it composes (`torusAct_add`), and every `torusAct g` preserves the
 arena Liouville measure `pointerLiouville p₀ q₀` (`torusAct_measurePreserving`) — the
-Fubini–Study factor by `fubiniStudyMeasure_smul_invariant`, the torus factors by translation
+Fubini–Study factor by `fsMeasure_smul_invariant`, the torus factors by translation
 invariance of Haar measure.
 
 ## Why it exists
@@ -53,7 +53,7 @@ construction needs — rates constant along base phase rotations — and `moment
 `specs/frozen-base-obstruction-scoping.md` (brick 3, joint lift); `specs/future-work.md`;
 `RecordLayer/JointLift.lean` (the consumer); `RecordLayer/JointFlowTransfer.lean`
 (`IsJointLift`); `Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean`
-(`fubiniStudyMeasure_smul_invariant`); `Mathlib/LinearAlgebra/Projectivization/
+(`fsMeasure_smul_invariant`); `Mathlib/LinearAlgebra/Projectivization/
 FubiniStudyUnique.lean` (`instContinuousSMul_projectivization`);
 `Mathlib/LinearAlgebra/Projectivization/TransitionProbability.lean`
 (`smul_mk_eq_mk_toEuclideanLin`).
@@ -231,8 +231,8 @@ is untouched. -/
 theorem torusAct_measurePreserving (g : ArenaTorus N) (p₀ : LF4.CPN N) (q₀ : Pointer K) :
     MeasurePreserving (torusAct g) (pointerLiouville p₀ q₀) (pointerLiouville p₀ q₀) := by
   have hbase : MeasurePreserving (fun p : LF4.CPN N => phaseUnitary g.1 • p)
-      (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
-    ⟨(continuous_const_smul _).measurable, fubiniStudyMeasure_smul_invariant _ _⟩
+      (fsMeasure p₀) (fsMeasure p₀) :=
+    ⟨(continuous_const_smul _).measurable, fsMeasure_smul_invariant _ _⟩
   have htor : MeasurePreserving (Prod.map (id : AddCircle (1 : ℝ) → AddCircle (1 : ℝ))
       (fun θ : AddCircle (1 : ℝ) => θ + g.2)) (volume : Measure LF4.KTorus) volume := by
     rw [Measure.volume_eq_prod]

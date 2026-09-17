@@ -44,7 +44,7 @@ Dirichlet law.** Re-derives `fs_moment_pushforward_uniform` from
 `fs_moment_joint_dirichlet_N (M := 1)`. Foundational-triple-only (inherits the
 general-N theorem's axiom posture). -/
 theorem fs_moment_pushforward_uniform_of_joint_dirichlet (p₀ : CPN 2) :
-    Measure.map (fun p : CPN 2 => momentMap p 0) (fubiniStudyMeasure p₀)
+    Measure.map (fun p : CPN 2 => momentMap p 0) (fsMeasure p₀)
       = volume.restrict (Set.Icc 0 1) := by
   set e := MeasurableEquiv.funUnique (Fin 1) ℝ with he
   -- The qubit coordinate map is the general free-coordinate map, read through `e`.

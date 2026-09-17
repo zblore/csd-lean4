@@ -23,7 +23,7 @@ This file establishes that `obsFlow` is a genuine **measure-preserving** determi
 whose **conserved quantities are exactly the Born weights**:
 
 * `obsFlow_measurePreserving` — `Φ` preserves the Fubini–Study (typicality) measure, via the
-  corpus's U(N)-invariance `fubiniStudyMeasure_smul_invariant`. So it is an admissible ontic
+  corpus's U(N)-invariance `fsMeasure_smul_invariant`. So it is an admissible ontic
   flow (Liouville), unlike a generic relabeling.
 * `momentMap_obsFlow` (**headline**) — the moment-map coordinates are invariant along the
   flow: `momentMap (obsFlow λ t p) i = momentMap p i`. Combined with
@@ -132,9 +132,9 @@ noncomputable def obsFlow (lam : Fin N → ℝ) (t : ℝ) : CPN N → CPN N :=
 /-- **The flow preserves the Fubini–Study (typicality) measure** — an admissible ontic flow
 (Liouville). Direct from the corpus's U(N)-invariance. -/
 theorem obsFlow_measurePreserving (lam : Fin N → ℝ) (t : ℝ) (p₀ : CPN N) :
-    MeasurePreserving (obsFlow lam t) (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) where
+    MeasurePreserving (obsFlow lam t) (fsMeasure p₀) (fsMeasure p₀) where
   measurable := (continuous_const_smul (obsUnitary lam t)).measurable
-  map_eq := fubiniStudyMeasure_smul_invariant (obsUnitary lam t) p₀
+  map_eq := fsMeasure_smul_invariant (obsUnitary lam t) p₀
 
 /-! ## Non-triviality witness (`Φ ≠ id`) -/
 
@@ -254,7 +254,7 @@ concrete Kähler instance" debt with a *free* `T²`-fibre translation `kFlow`: a
 genuine measure-preserving `Φ ≠ id`, but dynamically trivial — a fibre shift that
 acts as the identity on the actual projective state space. This block is the
 **physically-meaningful** strengthening: it rebuilds the base instance
-`cpSectorData` (`Σ = P = ℂℙ^{N-1}`, `μL = fubiniStudyMeasure`, `π = id`) with
+`cpSectorData` (`Σ = P = ℂℙ^{N-1}`, `μL = fsMeasure`, `π = id`) with
 `Φ := obsFlow lam t`, the **Hamiltonian flow `t ↦ exp(i t Â)` of a diagonal
 observable `Â = diag(λ)` acting on the Fubini–Study Kähler base** by
 `obsFlow lam t [ψ] = [exp(i t Â) ψ]`. This is dynamics on the real projective
@@ -265,7 +265,7 @@ derived `measurable_Φ`); `μL`, `Ω0`, and their hypotheses are reused verbatim
 `cpOnticSetup`. The `SectorData` `G = U(N)`-action fields (`measurable_smul_σ`,
 `measurable_smul_P`, `hμL_inv`, `hπ_equiv`) are about the `U(N)`-action and
 `π = id`, never about `Φ`, so they are reused verbatim from `cpSectorData`
-(`hμL_inv` reads `toOntic.μL`, which is unchanged `= fubiniStudyMeasure p₀`).
+(`hμL_inv` reads `toOntic.μL`, which is unchanged `= fsMeasure p₀`).
 
 **Strictly stronger than D1c-1.** `kFlow` is a free `T²`-fibre translation
 (`kFlow_preserves_rays`: it fixes every projective ray `[ψ]`); `obsFlow` is a
@@ -292,13 +292,13 @@ observable's Hamiltonian flow on `ℂℙ^{N-1}`, `hΦ_pres` is
 `MeasurePreserving.id`). `μL`, `Ω0`, and their hypotheses are reused. -/
 noncomputable def cpOnticSetupFlow (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
     CSD.LF1.OnticSetup (CPN N) where
-  μL := ⟨fubiniStudyMeasure p₀, inferInstance⟩
+  μL := ⟨fsMeasure p₀, inferInstance⟩
   Φ := obsFlow lam t
   hΦ_pres := obsFlow_measurePreserving lam t p₀
   Ω0 := Set.univ
   hΩ0_meas := MeasurableSet.univ
   hΩ0_nonzero := by
-    show (fubiniStudyMeasure p₀) Set.univ ≠ 0
+    show (fsMeasure p₀) Set.univ ≠ 0
     rw [measure_univ]; exact one_ne_zero
 
 /-- **The concrete base `SectorData` carrying a physically-meaningful
@@ -330,27 +330,27 @@ theorem cpSectorDataFlow_phi_ne_id (p₀ : CPN N) (hN : 1 < N) :
   obsFlow_ne_id hN
 
 /-- The instance's flow is measure-preserving for the Fubini–Study / Liouville
-volume `fubiniStudyMeasure p₀` (the genuine `hΦ_pres` content surfaced on the
+volume `fsMeasure p₀` (the genuine `hΦ_pres` content surfaced on the
 `SectorData`). -/
 theorem cpSectorDataFlow_phi_measurePreserving (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
     MeasureTheory.MeasurePreserving (cpSectorDataFlow p₀ lam t).toOntic.Φ
-      (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+      (fsMeasure p₀) (fsMeasure p₀) :=
   obsFlow_measurePreserving lam t p₀
 
 /-- **Non-vacuity link to LF1.** The LF1 deterministic-typicality theorem is
 non-vacuous on `cpSectorDataFlow`: for i.i.d. preparation draws, the empirical
 frequency of a measurable outcome region `O` evaluated on the states evolved by
 the **instance's own flow** `(cpSectorDataFlow p₀ lam t).toOntic.Φ` converges
-almost surely to the ontic volume ratio `(fubiniStudyMeasure p₀ O).toReal`. The
+almost surely to the ontic volume ratio `(fsMeasure p₀ O).toReal`. The
 moving flow that pins the limit is the `SectorData`'s own physically-meaningful
 `Φ = obsFlow lam t ≠ id`, and `obsFlow_measurePreserving` is what makes
-`law(obsFlow ∘ sampleₙ) = fubiniStudyMeasure p₀`. LF1's `freq_tendsto_of_iid`
+`law(obsFlow ∘ sampleₙ) = fsMeasure p₀`. LF1's `freq_tendsto_of_iid`
 is cited, not re-proved (the same route as `kSectorDataFlow_frequency_convergence`). -/
 theorem cpSectorDataFlow_frequency_convergence
     (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (sample : ℕ → Ω → CPN N) (hsample : ∀ n, Measurable (sample n))
-    (hlaw : ∀ n, Measure.map (sample n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (sample n) Pr = fsMeasure p₀)
     {O : Set (CPN N)} (hO : MeasurableSet O)
     (hindep :
       Pairwise
@@ -366,12 +366,12 @@ theorem cpSectorDataFlow_frequency_convergence
                 (((cpSectorDataFlow p₀ lam t).toOntic.Φ ∘ sample i) ⁻¹' O)
                 (fun _ => (1 : ℝ)) ω) / (M : ℝ))
         atTop
-        (nhds (fubiniStudyMeasure p₀ O).toReal) := by
+        (nhds (fsMeasure p₀ O).toReal) := by
   have hmp := cpSectorDataFlow_phi_measurePreserving p₀ lam t
   -- Measure preservation is load-bearing: it pins the law of the evolved trials.
   have hlaw' : ∀ n,
       Measure.map ((cpSectorDataFlow p₀ lam t).toOntic.Φ ∘ sample n) Pr
-        = fubiniStudyMeasure p₀ := fun n => by
+        = fsMeasure p₀ := fun n => by
     rw [← Measure.map_map hmp.measurable (hsample n), hlaw n, hmp.map_eq]
   exact LF1.freq_tendsto_of_iid (fun n => hmp.measurable.comp (hsample n)) hlaw' hO hindep
 

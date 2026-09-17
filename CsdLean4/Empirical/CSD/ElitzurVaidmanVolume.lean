@@ -69,7 +69,7 @@ splitter's Born weight `1/2` (the survival / conditioned-dark-port weight) equal
 the moment-sublevel region cut by `[|+⟩]` on the ontic `ℂℙ¹` — Born as Kähler volume, via
 Duistermaat–Heckman. -/
 theorem ev_split_as_volume (p₀ : CPN 2) :
-    fubiniStudyMeasure p₀
+    fsMeasure p₀
         {p : CPN 2 | momentMap p 0 ≤ momentMap (Projectivization.mk ℂ bsState bsState_ne) 0}
       = ENNReal.ofReal (1 / 2) := by
   rw [fs_born_volume_ratio_qubit_uncond p₀ bsState bsState_ne bsState_norm, bsState_born0]

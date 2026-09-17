@@ -16,11 +16,11 @@ public import CsdLean4.LF4.BornFrequencyN
 Connectivity fix C4 (`specs/connectivity-manifest.md`, links L5/L6): the audit
 found the Born capstone and the Schrödinger capstone were proved about
 *different, unlinked* objects — Schrödinger about a `KahlerOnticSetup`, Born
-about a bare `CPN + fubiniStudyMeasure` i.i.d. engine. This module routes the
+about a bare `CPN + fsMeasure` i.i.d. engine. This module routes the
 Born frequency law through the **same sector object** the Schrödinger side uses.
 
 The hinge is definitional: `(unitaryFlowSetup N U p₀).liouvilleMeasure` IS
-`fubiniStudyMeasure p₀` (the sector's posited Liouville / typicality measure), so
+`fsMeasure p₀` (the sector's posited Liouville / typicality measure), so
 `born_frequency_convergence_N` applies verbatim with the sampling law stated as
 the sector field `d.liouvilleMeasure`. The result:
 
@@ -63,7 +63,7 @@ variable {M : ℕ}
 
 /-- **Born frequencies from the sector's own Liouville measure.** For any
 `unitaryFlowSetup (M+1) U p₀`, i.i.d. trials sampled from its `liouvilleMeasure`
-(which is `fubiniStudyMeasure p₀` by construction) have empirical frequencies of
+(which is `fsMeasure p₀` by construction) have empirical frequencies of
 the Born region converging a.s. to the Born weight `‖⟨eᵢ, ψ⟩‖²`. The sampling
 law is stated as the SECTOR FIELD `d.liouvilleMeasure`, so the Born theorem now
 references the same object the Schrödinger chain consumes. -/
@@ -85,8 +85,8 @@ theorem unitaryFlowSetup_born_frequency
               Set.indicator ((X k) ⁻¹' bornRegion ψ hψ0 i) (fun _ => (1 : ℝ)) ω) / (m : ℝ))
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2)) :=
-  -- `(unitaryFlowSetup …).liouvilleMeasure = fubiniStudyMeasure p₀` definitionally,
-  -- so `hlaw` is accepted verbatim as the `fubiniStudyMeasure` hypothesis.
+  -- `(unitaryFlowSetup …).liouvilleMeasure = fsMeasure p₀` definitionally,
+  -- so `hlaw` is accepted verbatim as the `fsMeasure` hypothesis.
   born_frequency_convergence_N p₀ ψ hψ0 hψ hpos X hX hlaw hindep
 
 /-- **C4 / connectivity links L5–L6: both pillars on ONE object.** For the single

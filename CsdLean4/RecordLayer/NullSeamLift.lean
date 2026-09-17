@@ -46,7 +46,7 @@ space cannot carry.
 ⚠️ **NOT earned, and deliberately not claimed:** the symplectic form on THIS arena is not
 constructed. When this was written Mathlib had no symplectic-manifold API (verified 2026-08-04);
 since 2026-09-07/11 the corpus stages one and proves the `ℂℙⁿ` base's form and volume
-(`fsForm_isSymplectic`, `fsVolume_eq_smul_fubiniStudyMeasure`), but the product form on the
+(`fsForm_isSymplectic`, `fsVolume_eq_smul_fsMeasure`), but the product form on the
 seam arena and "this measure *is* the Liouville volume of `ω^3/3!`" are `R-016′`'s product
 construction, not yet built (`BACKLOG.md` ▶ OUTSTANDING, L). Even dimension is *necessary*,
 not sufficient, and the guard's parity ledger records this arena as even without asserting the
@@ -102,7 +102,7 @@ Unlike the `S¹ × ℂℙ²` version this arena *is* even-dimensional, so the na
 parity defect — though the symplectic form itself is still not constructed (§2a). -/
 noncomputable def nullSeamLiftMeasure (q₀ : Pointer 2) : Measure SeamArenaLift :=
   ((volume : Measure CircleFibre).prod (volume : Measure CircleFibre)).prod
-    (fubiniStudyMeasure q₀)
+    (fsMeasure q₀)
 
 instance (q₀ : Pointer 2) : IsProbabilityMeasure (nullSeamLiftMeasure q₀) := by
   unfold nullSeamLiftMeasure
@@ -121,7 +121,7 @@ theorem nullSeamEvolveLift_measurePreserving (r : ℝ) (q₀ : Pointer 2) :
   exact MeasurePreserving.skew_product
     (MeasurePreserving.id ((volume : Measure CircleFibre).prod volume)) hm
     (Filter.Eventually.of_forall fun θ =>
-      fubiniStudyMeasure_smul_invariant (nullSeamUU r θ.1) q₀)
+      fsMeasure_smul_invariant (nullSeamUU r θ.1) q₀)
 
 /-! ### Records, seam, and exact Born -/
 

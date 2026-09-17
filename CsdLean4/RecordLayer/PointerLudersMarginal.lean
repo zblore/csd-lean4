@@ -240,7 +240,7 @@ theorem pointerEvolve_measurePreserving_prod (c : ContextField N)
     (hc : ∀ j, Continuous fun p => c.rate p j) (ε : ℝ)
     (μs : Measure (LF4.KSigma N)) [SFinite μs] (q₀ : Pointer N) :
     MeasurePreserving (pointerEvolve c ε)
-      (μs.prod (fubiniStudyMeasure q₀)) (μs.prod (fubiniStudyMeasure q₀)) := by
+      (μs.prod (fsMeasure q₀)) (μs.prod (fsMeasure q₀)) := by
   unfold pointerEvolve
   exact (MeasurePreserving.id μs).skew_product
     (continuous_pointerEvolve_snd c hc ε).measurable

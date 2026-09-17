@@ -71,7 +71,7 @@ Kraus types** — `CSD.LF2.QuantumChannel ι N M` and `QuantumInfo.Channel n m �
 
 | Link | Status |
 |---|---|
-| posit → sector | (iii) posited as structure fields; (ii) inhabited by a witness (`kMuL`, `fubiniStudyMeasure`); the sector's *geometry* proved by the G series (`generator-layer-scoping.md` §10) |
+| posit → sector | (iii) posited as structure fields; (ii) inhabited by a witness (`kMuL`, `fsMeasure`); the sector's *geometry* proved by the G series (`generator-layer-scoping.md` §10) |
 | sector → preparation | (i) proved for pure and region preparations; mixed preparations (ii) defined only from a given `ρ` (`mixedSwapPrep`) |
 | preparation → density operator | (i) proved as two theorems, **never composed, never consumed by QIT**; barycentre identification (iv) absent |
 | density operator → channel | (ii) one witness (`decohereReduced`); Σ-flow ⇒ `Channel` (iii) prose; `LF2.QuantumChannel` ↔ `QuantumInfo.Channel` bridge (iv) absent |

@@ -1173,7 +1173,7 @@ theorem continuous_nullSeamGenEvolve (hr : ∀ i, 0 < r i)
 pointer (the same product as the two-cell witness's `nullSeamMeasure`). -/
 noncomputable def nullSeamGenMeasure (q₀ : Pointer N) :
     Measure (CircleFibre × Pointer N) :=
-  (volume : Measure CircleFibre).prod (fubiniStudyMeasure q₀)
+  (volume : Measure CircleFibre).prod (fsMeasure q₀)
 
 instance (q₀ : Pointer N) : IsProbabilityMeasure (nullSeamGenMeasure q₀) := by
   unfold nullSeamGenMeasure
@@ -1189,7 +1189,7 @@ theorem nullSeamGenEvolve_measurePreserving (hr : ∀ i, 0 < r i)
   exact (MeasurePreserving.id (volume : Measure CircleFibre)).skew_product
     (continuous_nullSeamGenEvolve_snd hr hsum).measurable
     (Filter.Eventually.of_forall fun θ =>
-      fubiniStudyMeasure_smul_invariant (nullSeamGenUU hr hsum θ) q₀)
+      fsMeasure_smul_invariant (nullSeamGenUU hr hsum θ) q₀)
 
 /-! ### ★★ The third horn at every `N`, bundled -/
 

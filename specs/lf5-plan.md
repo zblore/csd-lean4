@@ -84,7 +84,7 @@ Delivered: `vnUnitaryReindexed N (e : Fin N × Fin N ≃ Fin m) : Matrix.unitary
 `e : Fin N × ι ≃ Fin (M+1)` signature so LF5-C/D share one equiv; helper
 `reindex_mem_unitaryGroup`, Mathlib upstream candidate), `measurementFlow := (vnUnitaryReindexed N e • ·)`
 on `ℙ ℂ (EuclideanSpace ℂ (Fin m))`, **`measurementFlow_measurePreserving`** (FS-invariance via
-`fubiniStudyMeasure_smul_invariant` — the smul-action route, not `projMap`; agreement with the
+`fsMeasure_smul_invariant` — the smul-action route, not `projMap`; agreement with the
 projMap framing documented, not formalised), **`measurementFlow_ne_id`** (`1 < N`; the basis ray
 at `e (1,0)` moves to `e (1,1)`), and `measurementFlow_mk_single` (the flow permutes basis rays by
 the adder; at ground apparatus the projective copy `[eⱼ⊗a₀] ↦ [eⱼ⊗aⱼ]`, the LF5-C input).
@@ -93,7 +93,7 @@ direction convention killed with a positive/negative entry pair at N=3). Origina
 
 `measurementFlow := projMap (vnUnitary)` on `ℂℙ^{N·N−1}` (reuse `projMap` from
 `WignerRigidity.lean` / the U(N)-action). Deliver `measurementFlow_measurePreserving`
-(FS-invariance, reuse `fubiniStudyMeasure_smul_invariant` / `transProb_smul_unitary`) and
+(FS-invariance, reuse `fsMeasure_smul_invariant` / `transProb_smul_unitary`) and
 `measurementFlow_ne_id` (Φ≠id: it correlates — exhibit a point it moves). *Risk:* low.
 
 ### LF5-C — de-isolation realises the dilation  [NEW; the crux assembly] — **DONE 2026-06-11** (`CsdLean4/LF5/DilationFromFlow.lean`)
@@ -193,7 +193,7 @@ state-sensitive conclusion — block volumes 1 vs 0 at `ψ = e₀`). **The LF5 p
 the single-system projective tier of D1 is closed.** *Addendum 2026-06-11:* the audit-probe
 i.i.d. witness is now an in-tree theorem — `measurement_flow_born_frequency_canonical`
 (`CsdLean4/LF5/CapstoneCanonical.lean`) discharges the whole trial bundle with the canonical
-coordinate process `fsTrialMeasure p₀ = Measure.infinitePi (fun _ => fubiniStudyMeasure p₀)`
+coordinate process `fsTrialMeasure p₀ = Measure.infinitePi (fun _ => fsMeasure p₀)`
 (`CsdLean4/LF4/TrialWitness.lean`), conclusion verbatim, all `N`. Original spec below.
 
 Named headline `measurement_flow_born_frequency`: for the von Neumann measurement flow `Φ_vN`

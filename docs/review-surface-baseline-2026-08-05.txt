@@ -732,7 +732,7 @@ check-review-surface: triaging the expert-review surface…
         CsdLean4/Empirical/CSD/MUB3Volume.lean:62                      cc                                 through=2   api=109
         CsdLean4/LF4/KahlerInstance.lean:80                            KTorus                             through=1   api=65
         CsdLean4/LF4/BornFrequencyN.lean:95                            bornRegion                         through=2   api=131
-        CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:118 fubiniStudyMeasure                 through=2   api=163
+        CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:118 fsMeasure                 through=2   api=163
         CsdLean4/SigmaLayer/CircleFibre.lean:110                       rep                                through=1   api=110
         CsdLean4/Mathlib/QuantumInfo/Reversible/Circuit.lean:98        denote                             through=2   api=272
         CsdLean4/Empirical/CSD/MUB3Volume.lean:64                      om                                 through=2   api=372

@@ -21,8 +21,8 @@ Neumann coupling unitary `vnUnitary N` (the adder-permutation coupling
 
 ## Design choice: reindex onto the `Fin m` FS infrastructure (option (a))
 
-The Fubini–Study infrastructure (`fubiniStudyMeasure`,
-`fubiniStudyMeasure_smul_invariant`, the projective `MulAction` of
+The Fubini–Study infrastructure (`fsMeasure`,
+`fsMeasure_smul_invariant`, the projective `MulAction` of
 `Matrix.unitaryGroup (Fin n) ℂ`) is `Fin n`-indexed. The dilated index here is
 `Fin N × Fin N`. Rather than generalising the audited Cat-1 FS files to an
 arbitrary fintype index (option (b), wide blast radius), this module
@@ -45,7 +45,7 @@ arithmetic casts. The plan's `ℂℙ^{N·N−1}` reading is the instantiation
 `specs/lf5-plan.md` phrases the flow as `projMap (vnUnitary)` (the projective
 image of a `LinearIsometryEquiv`, `WignerRigidity.lean`). We use the
 `Matrix.unitaryGroup` smul action instead, because the FS-invariance theorem
-`fubiniStudyMeasure_smul_invariant` is stated for it. The two framings agree
+`fsMeasure_smul_invariant` is stated for it. The two framings agree
 mathematically — both send `mk v` to `mk (U v)` (`smul_mk_eq_mk` resp.
 `projMap_mk`) — but the agreement is **not formalised here** (no
 `LinearIsometryEquiv` packaging of `vnUnitaryReindexed` is constructed; the
@@ -209,14 +209,14 @@ lemma measurementFlow_measurable (e : Fin N × Fin N ≃ Fin m) :
 content).** The von Neumann measurement flow preserves the Fubini–Study
 typicality measure on the dilated projective ontic space, so it is a
 physically admissible deterministic ontic dynamics in the LF1 sense.
-Composes `fubiniStudyMeasure_smul_invariant` with measurability of the
+Composes `fsMeasure_smul_invariant` with measurability of the
 constant smul. -/
 theorem measurementFlow_measurePreserving (e : Fin N × Fin N ≃ Fin m)
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin m))) :
     MeasurePreserving (measurementFlow N e)
-      (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+      (fsMeasure p₀) (fsMeasure p₀) :=
   ⟨measurementFlow_measurable e,
-   fubiniStudyMeasure_smul_invariant (vnUnitaryReindexed N e) p₀⟩
+   fsMeasure_smul_invariant (vnUnitaryReindexed N e) p₀⟩
 
 /-- **The measurement flow is genuinely not the identity** (for `1 < N`; at
 `N = 1` the adder is trivially the identity). Witness: the basis ray at

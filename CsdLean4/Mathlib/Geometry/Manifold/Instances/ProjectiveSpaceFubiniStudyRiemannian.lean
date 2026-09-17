@@ -42,7 +42,7 @@ along the affine cover) is identified with the measure of the top power of the F
   (1 + ‖w‖²)^{-(n+1)}`);
 * ★★★ `riemannianVolume_fsMetric` — **the Riemannian volume of the Fubini–Study metric IS
   `fsVolume n / n!`**, the Kähler identity `vol_g = ω^{∧n}/n!` at the level of measures; and ★★★
-  `riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure` — with the constant, `vol_g = ((4π)ⁿ/n!) ·
+  `riemannianVolume_fsMetric_eq_smul_fsMeasure` — with the constant, `vol_g = ((4π)ⁿ/n!) ·
   μ_FS`: **the Fubini–Study measure is the normalised Riemannian volume of the Fubini–Study
   metric**,
   the reading `TERMS.md` had listed as not established;
@@ -62,7 +62,7 @@ is proved at the level of chart densities, not as an identity of volume *forms* 
 chosen).
 
 ⚠️ **Conventions.** The `(4π)ⁿ` and the `n!` are `fsChartForm = dd^c log(1 + ‖z‖²)`'s `-4` and the
-top power's `n!` (`fsVolume_eq_smul_fubiniStudyMeasure`); the textbook `ω^{∧n}/n!` is a
+top power's `n!` (`fsVolume_eq_smul_fsMeasure`); the textbook `ω^{∧n}/n!` is a
 renormalisation.
 
 **Provenance and references.** The generator-layer plan (G17); the terms register (Fubini–Study,
@@ -354,11 +354,11 @@ theorem riemannianVolume_fsMetric :
 
 /-- ★★★ **The Fubini–Study measure is the normalised Riemannian volume of the Fubini–Study
 metric**: `vol_g = ((4π)ⁿ/n!) · μ_FS`. -/
-theorem riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure
+theorem riemannianVolume_fsMetric_eq_smul_fsMeasure
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (n + 1)))) :
     MetricFamily.riemannianVolume volume (stdBasis n) fsMetric (affineChartCover n)
-      = ENNReal.ofReal ((4 * π) ^ n / n.factorial) • fubiniStudyMeasure p₀ := by
-  rw [riemannianVolume_fsMetric, fsVolume_eq_smul_fubiniStudyMeasure p₀, smul_smul]
+      = ENNReal.ofReal ((4 * π) ^ n / n.factorial) • fsMeasure p₀ := by
+  rw [riemannianVolume_fsMetric, fsVolume_eq_smul_fsMeasure p₀, smul_smul]
   congr 1
   rw [div_eq_mul_inv, ENNReal.ofReal_mul (by positivity), ENNReal.ofReal_inv_of_pos
     (Nat.cast_pos.2 n.factorial_pos), ENNReal.ofReal_natCast, mul_comm]

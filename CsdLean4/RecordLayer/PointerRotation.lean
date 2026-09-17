@@ -51,7 +51,7 @@ all planes share `f₀`) is brick 2 and will need the exponential route, not thi
 `specs/future-work.md`. Reused corpus API: `Matrix.single` algebra (Mathlib),
 `smul_mk_eq_mk_toEuclideanLin` + `orbit_map_continuous`
 (`Mathlib/LinearAlgebra/Projectivization/{TransitionProbability,FubiniStudy}.lean` staging),
-`fubiniStudyMeasure_smul_invariant` (ibid.), `readyState`/`recordState`
+`fsMeasure_smul_invariant` (ibid.), `readyState`/`recordState`
 (`RecordLayer/PointerArena.lean`).
 -/
 
@@ -239,8 +239,8 @@ theorem continuous_pointerRotU_smul (j : Fin K) (q : Pointer K) :
 preservation is FS unitary invariance, exactly as on the join arena. -/
 theorem pointerRotU_measurePreserving (θ : ℝ) (j : Fin K) (q₀ : Pointer K) :
     MeasurePreserving (fun q : Pointer K => pointerRotU θ j • q)
-      (fubiniStudyMeasure q₀) (fubiniStudyMeasure q₀) :=
-  ⟨(continuous_const_smul _).measurable, fubiniStudyMeasure_smul_invariant _ q₀⟩
+      (fsMeasure q₀) (fsMeasure q₀) :=
+  ⟨(continuous_const_smul _).measurable, fsMeasure_smul_invariant _ q₀⟩
 
 /-- **The quarter turn transports ready to record**: `Uⱼ(π/2) • [f₀] = [f_{j+1}]`
 (projectively; the representative picks up the phase `−i`). -/

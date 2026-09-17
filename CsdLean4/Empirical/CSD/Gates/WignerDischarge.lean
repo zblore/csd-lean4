@@ -323,23 +323,23 @@ open Projectivization CSD.Empirical.CSDBridge Matrix.UnitaryGroup
 variable {N : ℕ} [NeZero N]
 
 /-- Measure-bridge data for `cpSectorData` (`c = 1`, `π = id`), built axiom-free
-from `fubiniStudyMeasure_smul_invariant` and `Measure.map_id`. -/
+from `fsMeasure_smul_invariant` and `Measure.map_id`. -/
 noncomputable def cpBridgeData (p₀ : CPN N) :
-    CSD.LF2.MeasureBridgeData (cpSectorData p₀) (fubiniStudyMeasure p₀) where
+    CSD.LF2.MeasureBridgeData (cpSectorData p₀) (fsMeasure p₀) where
   is_inv := fun U =>
-    ⟨(continuous_const_smul U).measurable, fubiniStudyMeasure_smul_invariant U p₀⟩
+    ⟨(continuous_const_smul U).measurable, fsMeasure_smul_invariant U p₀⟩
   c := 1
   bridge_eq := by
     show Measure.map (cpSectorData p₀).π ((cpSectorData p₀).μL : Measure (CPN N))
-        = (1 : ENNReal) • fubiniStudyMeasure p₀
+        = (1 : ENNReal) • fsMeasure p₀
     rw [one_smul]
-    show Measure.map id (fubiniStudyMeasure p₀) = fubiniStudyMeasure p₀
+    show Measure.map id (fsMeasure p₀) = fsMeasure p₀
     rw [Measure.map_id]
 
 /-- The bridge context for the concrete `ℂℙ^{N-1}` / `U(N)` instance. -/
 noncomputable def cpContext (p₀ : CPN N) :
     CSD.Empirical.CSDBridge.Context (cpSectorData p₀) where
-  μFS := fubiniStudyMeasure p₀
+  μFS := fsMeasure p₀
   hμFS_prob := inferInstance
   bridge := cpBridgeData p₀
 

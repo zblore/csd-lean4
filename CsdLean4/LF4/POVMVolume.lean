@@ -123,7 +123,7 @@ theorem povm_born_eq_dilated_volume {M : ℕ} (P : POVM N ι) (D : NaimarkDilati
           (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (Matrix.toEuclideanLin D.V ψ))‖ ^ 2) :
     P.weight ψ i
       = ∑ n : Fin N,
-          (fubiniStudyMeasure p₀
+          (fsMeasure p₀
             (bornRegion (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (Matrix.toEuclideanLin D.V ψ))
               (by intro h; rw [h, norm_zero] at hnorm; exact one_ne_zero hnorm.symm)
               (e (n, i)))).toReal := by
@@ -169,7 +169,7 @@ theorem povm_born_frequency_volume {M : ℕ} (P : POVM N ι) (D : NaimarkDilatio
     (p₀ : CPN (M + 1))
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep : ∀ j : Fin (M + 1),
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
         (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :

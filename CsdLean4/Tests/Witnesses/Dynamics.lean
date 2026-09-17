@@ -59,7 +59,7 @@ non-triviality parameters (`obsLamWitness`, `obsTWitness`); clauses:
 theorem exists_cpSectorData_nontrivial_flow [NeZero N] (hN : 1 < N) (p₀ : CPN N) :
     ∃ d : CSD.LF2.SectorData (CPN N) (CPN N) (Matrix.unitaryGroup (Fin N) ℂ),
       d.toOntic.Φ ≠ id
-        ∧ MeasurePreserving d.toOntic.Φ (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+        ∧ MeasurePreserving d.toOntic.Φ (fsMeasure p₀) (fsMeasure p₀) :=
   ⟨cpSectorDataFlow p₀ (obsLamWitness hN) obsTWitness,
     cpSectorDataFlow_phi_ne_id p₀ hN,
     cpSectorDataFlow_phi_measurePreserving p₀ (obsLamWitness hN) obsTWitness⟩
@@ -95,7 +95,7 @@ Liouville-preserving flow, at every base point. -/
 theorem qubit_dynamics_witness (p₀ : CPN 2) :
     ∃ d : CSD.LF2.SectorData (CPN 2) (CPN 2) (Matrix.unitaryGroup (Fin 2) ℂ),
       d.toOntic.Φ ≠ id
-        ∧ MeasurePreserving d.toOntic.Φ (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+        ∧ MeasurePreserving d.toOntic.Φ (fsMeasure p₀) (fsMeasure p₀) :=
   exists_cpSectorData_nontrivial_flow one_lt_two p₀
 
 /-! ## Theorem-chain execution: the frequency capstone on honest trials -/
@@ -151,7 +151,7 @@ converge a.s. to the ontic volume ratio. -/
 theorem cpSectorDataFlow_frequency_convergence_concrete [NeZero N]
     (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ)
     {O : Set (CPN N)} (hO : MeasurableSet O) :
-    ∀ᵐ ω ∂ (Measure.infinitePi fun _ : ℕ => fubiniStudyMeasure p₀),
+    ∀ᵐ ω ∂ (Measure.infinitePi fun _ : ℕ => fsMeasure p₀),
       Tendsto
         (fun M : ℕ =>
           (∑ i ∈ Finset.range M,
@@ -159,14 +159,14 @@ theorem cpSectorDataFlow_frequency_convergence_concrete [NeZero N]
                 (((cpSectorDataFlow p₀ lam t).toOntic.Φ ∘ fun ω : ℕ → CPN N => ω i) ⁻¹' O)
                 (fun _ => (1 : ℝ)) ω) / (M : ℝ))
         atTop
-        (nhds (fubiniStudyMeasure p₀ O).toReal) := by
+        (nhds (fsMeasure p₀ O).toReal) := by
   refine cpSectorDataFlow_frequency_convergence (Ω := ℕ → CPN N)
-    (Pr := Measure.infinitePi fun _ : ℕ => fubiniStudyMeasure p₀)
+    (Pr := Measure.infinitePi fun _ : ℕ => fsMeasure p₀)
     p₀ lam t (fun n (ω : ℕ → CPN N) => ω n)
     (fun n => measurable_pi_apply n) (fun n => ?_) hO ?_
   · exact (measurePreserving_eval_infinitePi
-      (fun _ : ℕ => fubiniStudyMeasure p₀) n).map_eq
-  · exact pairwise_flow_indicator_indep (fubiniStudyMeasure p₀)
+      (fun _ : ℕ => fsMeasure p₀) n).map_eq
+  · exact pairwise_flow_indicator_indep (fsMeasure p₀)
       (cpSectorDataFlow_phi_measurePreserving p₀ lam t).measurable hO
 
 end Witnesses

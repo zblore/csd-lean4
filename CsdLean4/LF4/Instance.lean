@@ -33,7 +33,7 @@ realised, and the abstract `measure_bridge` lemma it served, were **removed
 - `Σ = P = ℂℙ^{N-1} = ℙ ℂ (EuclideanSpace ℂ (Fin N))`;
 - `G = U(N) = Matrix.unitaryGroup (Fin N) ℂ`, acting on `ℂℙ^{N-1}` as usual;
 - `π = id`;
-- `μL = fubiniStudyMeasure p₀` (the U(N)-invariant Borel probability
+- `μL = fsMeasure p₀` (the U(N)-invariant Borel probability
   measure), `Φ = id`, `Ω₀ = univ`.
 
 **Honest scope.** This is the *base case*. With `π = id` the projection has
@@ -71,13 +71,13 @@ instance instNonemptyCPN : Nonempty (CPN N) := by
 /-- The minimal ontic-shell `OnticSetup`: `μL` is Fubini–Study, the flow is
 the identity, and the preparation region is everything. -/
 noncomputable def cpOnticSetup (p₀ : CPN N) : CSD.LF1.OnticSetup (CPN N) where
-  μL := ⟨fubiniStudyMeasure p₀, inferInstance⟩
+  μL := ⟨fsMeasure p₀, inferInstance⟩
   Φ := id
   hΦ_pres := MeasurePreserving.id _
   Ω0 := Set.univ
   hΩ0_meas := MeasurableSet.univ
   hΩ0_nonzero := by
-    show (fubiniStudyMeasure p₀) Set.univ ≠ 0
+    show (fsMeasure p₀) Set.univ ≠ 0
     rw [measure_univ]; exact one_ne_zero
 
 /-- **First concrete `SectorData`.** `Σ = P = ℂℙ^{N-1}`, `G = U(N)`,
@@ -90,7 +90,7 @@ noncomputable def cpSectorData (p₀ : CPN N) :
   measurable_smul_σ := fun U => (continuous_const_smul U).measurable
   measurable_smul_P := fun U => (continuous_const_smul U).measurable
   hμL_inv := fun U =>
-    ⟨(continuous_const_smul U).measurable, fubiniStudyMeasure_smul_invariant U p₀⟩
+    ⟨(continuous_const_smul U).measurable, fsMeasure_smul_invariant U p₀⟩
   hπ_equiv := fun _ _ => rfl
 
 /-- **Axiom-free measure bridge for the instance.** `π∗μL = c · μFS` with
@@ -99,10 +99,10 @@ cites only the foundational triple — no LF2 axiom. -/
 theorem cp_measure_bridge (p₀ : CPN N) :
     ∃ c : ENNReal,
       Measure.map (cpSectorData p₀).π ((cpSectorData p₀).μL : Measure (CPN N))
-        = c • fubiniStudyMeasure p₀ := by
+        = c • fsMeasure p₀ := by
   have hμ : Measure.map (cpSectorData p₀).π ((cpSectorData p₀).μL : Measure (CPN N))
-      = fubiniStudyMeasure p₀ := by
-    show Measure.map id (fubiniStudyMeasure p₀) = fubiniStudyMeasure p₀
+      = fsMeasure p₀ := by
+    show Measure.map id (fsMeasure p₀) = fsMeasure p₀
     rw [Measure.map_id]
   exact ⟨1, by rw [hμ, one_smul]⟩
 

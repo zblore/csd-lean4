@@ -159,7 +159,7 @@ theorem arenaIso_schrodinger (t : ℝ) (x : UnifiedArena M) :
 /-- **The Fubini–Study bridge, on the unified arena**: the ray-projected law of the arena
 Liouville measure is the Fubini–Study measure. -/
 theorem arenaRay_pushforward :
-    Measure.map (arenaRay H hH p₀) (arenaLiouville M p₀) = fubiniStudyMeasure p₀ := by
+    Measure.map (arenaRay H hH p₀) (arenaLiouville M p₀) = fsMeasure p₀ := by
   have hm : Measurable fun x : UnifiedArena M => x.1.1 :=
     measurable_fst.comp measurable_fst
   rw [show arenaRay H hH p₀
@@ -192,7 +192,7 @@ structure UnifiedArenaClosure : Prop where
       = productProjectedFlow H hH t (arenaRay H hH p₀ x)
   /-- The ray-projected law of the arena Liouville measure is Fubini–Study (B1). -/
   fubini_study_bridge :
-    Measure.map (arenaRay H hH p₀) (arenaLiouville M p₀) = fubiniStudyMeasure p₀
+    Measure.map (arenaRay H hH p₀) (arenaLiouville M p₀) = fsMeasure p₀
   /-- The record-creating measurement propagator preserves the SAME Liouville measure. -/
   measurement_preserving :
     ∀ s t : CSD.SigmaLayer.OnticTime,

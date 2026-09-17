@@ -176,7 +176,7 @@ available. -/
 theorem fs_joint_abundance {M : ℕ} (p₀ : CPN (M + 1)) {j k : Fin M} (hjk : j ≠ k)
     {T : Set ℝ} (hTm : MeasurableSet T) (hT : T ⊆ Set.Ioo 0 (1 / 2 : ℝ))
     (hpos : 0 < volume T) :
-    0 < fubiniStudyMeasure p₀
+    0 < fsMeasure p₀
       {p : CPN (M + 1) | momentMap p (Fin.castSucc j) ∈ T ∧ momentMap p (Fin.castSucc k) ∈ T} := by
   classical
   have hR : MeasurableSet {t : Fin M → ℝ | t j ∈ T ∧ t k ∈ T} :=
@@ -205,11 +205,11 @@ For *why* the qubit escapes the cap — the mathematical content, which is not u
 `CSD.SigmaLayer.joint_degenerate_of_sum_eq_one` (`SigmaLayer/ContextFixedA7.lean`). -/
 theorem fs_cap_unconditional {M : ℕ} (p₀ : CPN (M + 1)) {j k : Fin M} (hjk : j ≠ k)
     {g : ℝ → ℝ} (hgm : Measurable g)
-    (hdisj : fubiniStudyMeasure p₀
+    (hdisj : fsMeasure p₀
         (overlapSupport g (fun p => momentMap p (Fin.castSucc j)) ∩
          overlapSupport g (fun p => momentMap p (Fin.castSucc k))) = 0) :
     volume ({t | g t ≠ 0} ∩ Set.Ioo 0 (1 / 2 : ℝ)) = 0 :=
-  cap_of_joint_nondegenerate (μ := fubiniStudyMeasure p₀)
+  cap_of_joint_nondegenerate (μ := fsMeasure p₀)
     (s := fun (i : Fin (M + 1)) (p : CPN (M + 1)) => momentMap p i)
     (j := Fin.castSucc j) (k := Fin.castSucc k) hgm hdisj
     fun _T hTm hT hpos => fs_joint_abundance p₀ hjk hTm hT hpos
@@ -299,7 +299,7 @@ theorem volume_balanced_inter_openSimplexFree_pos {M : ℕ} (hM : 0 < M) {c : �
 `vanishes_below_of_balanced`, discharged for `μ_FS`. -/
 theorem fs_balanced_abundance {M : ℕ} (hM : 0 < M) (p₀ : CPN (M + 1)) {c : ℝ}
     (hc : 1 / ((M : ℝ) + 1) < c) :
-    0 < fubiniStudyMeasure p₀ {p : CPN (M + 1) | ∀ i, momentMap p i ≤ c} := by
+    0 < fsMeasure p₀ {p : CPN (M + 1) | ∀ i, momentMap p i ≤ c} := by
   classical
   have hRfor : MeasurableSet {t : Fin M → ℝ | ∀ i, t i ≤ c} := by
     rw [Set.ofPred_forall]

@@ -588,7 +588,7 @@ theorem ghzMermin_carve_capstone {M : ℕ}
     measurementFlow 8 e ≠ id
     -- (2) FS measure-preserving
     ∧ MeasurePreserving (measurementFlow 8 e)
-        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
+        (fsMeasure p₀) (fsMeasure p₀)
     -- (3) the XXX carve correlation is the QM Mermin expectation ⟨XXX⟩ = +1
     ∧ merminCarveCorrelation e ψ' hψ'0
         = Complex.re (inner ℂ ghzState

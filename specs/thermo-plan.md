@@ -34,7 +34,7 @@ bolt-on.
 - LF6-B decoherence tier: the pure→mixed entropy-increase witness.
 - K2 channels (Kraus/Stinespring/CPTP), K3 trace distance.
 - `maxEntangled_marginal_uniform` (LF6-D): the maximally-mixed reduced-state special case.
-- The FS measure + typicality machinery (`fubiniStudyMeasure`, LLN via `freq_tendsto_of_iid`,
+- The FS measure + typicality machinery (`fsMeasure`, LLN via `freq_tendsto_of_iid`,
   `TypicalityForcing`).
 
 ## Tranches

@@ -247,7 +247,7 @@ noncomputable def ghzNDeisolationFlow (n : ℕ) :
 `hΦ_pres` content), inherited from `measurementFlow_measurePreserving`. -/
 theorem ghzNDeisolation_measurePreserving (n : ℕ) (p₀ : CPN ((2 ^ n) * (2 ^ n))) :
     MeasurePreserving (ghzNDeisolationFlow n)
-      (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+      (fsMeasure p₀) (fsMeasure p₀) :=
   measurementFlow_measurePreserving finProdFinEquiv p₀
 
 /-- The GHZ_n de-isolation flow is genuinely not the identity for `n ≥ 1`
@@ -587,7 +587,7 @@ theorem ghzNDeisolation_flow_capstone (n : ℕ) (hn : 3 ≤ n) {M : ℕ}
     measurementFlow (2 ^ n) e ≠ id
     -- (2) FS measure-preserving
     ∧ MeasurePreserving (measurementFlow (2 ^ n) e)
-        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
+        (fsMeasure p₀) (fsMeasure p₀)
     -- (3) pointer-block basin measure = the GHZ_n Born weight
     ∧ (∀ i : Fin (2 ^ n),
         ∑ nn : Fin (2 ^ n),

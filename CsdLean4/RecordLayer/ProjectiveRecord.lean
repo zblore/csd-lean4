@@ -19,7 +19,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 The record-layer framing of `RecordLayer/FibreRecord.lean` was built on an abstract fibre `Σ = ℝ`. This
 file **migrates it onto the corpus's actual measurement model**: the projective space
 `Σ = CPN (M+1) = ℂℙ^M`, with the corpus's own outcome regions `bornRegion` (`LF4/BornRegionDisjoint`),
-its per-microstate outcome map `bornOutcome`, and the Fubini–Study measure `fubiniStudyMeasure` — the
+its per-microstate outcome map `bornOutcome`, and the Fubini–Study measure `fsMeasure` — the
 exact objects `FiniteQMClosure.born_frequency` is stated with. So the record layer is no longer a
 parallel construction; it is instantiated on the real Σ with the real Born machinery.
 
@@ -105,13 +105,13 @@ record event of outcome `i` is exactly `‖⟨eᵢ, ψ⟩‖²` (`bornRegion_fs_
 theorem fubiniStudy_projRecord (p₀ : CPN (M + 1))
     (c : {ψ : EuclideanSpace ℂ (Fin (M + 1)) // ψ ≠ 0}) (hψ : ‖c.1‖ = 1) (i : Fin (M + 1))
     (t : OnticTime) :
-    (fubiniStudyMeasure p₀ ((projRecordSemantics M).event ⟨c, i, t⟩)).toReal
+    (fsMeasure p₀ ((projRecordSemantics M).event ⟨c, i, t⟩)).toReal
       = ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) c.1‖ ^ 2 := by
   rw [projRecordSemantics_event]
   exact bornRegion_fs_measure_uncond p₀ c.1 c.2 hψ i
 
 /-- **Born as the law of large numbers over the unknown microstate, on the actual projective Σ.** For
-i.i.d. FS-typical microstates `X k` (law `fubiniStudyMeasure p₀`), the frequency of trials whose
+i.i.d. FS-typical microstates `X k` (law `fsMeasure p₀`), the frequency of trials whose
 microstate lands in the record event of outcome `i` converges almost surely to `‖⟨eᵢ, ψ⟩‖²` — the exact
 `FiniteQMClosure.born_frequency` conclusion, carried by the record-layer `RecordSemantics`. The whole
 probabilistic content is the strong law over the unknown initial condition. -/
@@ -119,7 +119,7 @@ theorem projRecord_frequency (p₀ : CPN (M + 1))
     (c : {ψ : EuclideanSpace ℂ (Fin (M + 1)) // ψ ≠ 0}) (hψ : ‖c.1‖ = 1) (i : Fin (M + 1))
     (t : OnticTime) {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
     (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ k, Measurable (X k))
-    (hlaw : ∀ k, Measure.map (X k) P = fubiniStudyMeasure p₀)
+    (hlaw : ∀ k, Measure.map (X k) P = fsMeasure p₀)
     (hindep : Pairwise (Function.onFun (fun f g : Ω → ℝ => ProbabilityTheory.IndepFun f g P)
       (fun k => Set.indicator (X k ⁻¹' (projRecordSemantics M).event ⟨c, i, t⟩)
         (fun _ => (1 : ℝ))))) :

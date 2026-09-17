@@ -170,7 +170,7 @@ lemma repr_hpos (B : OrthonormalBasis (Fin (M + 1)) ℂ (EuclideanSpace ℂ (Fin
 /-- ★★ **Rotated-basis context frequencies on the fibred arena** — the fibred twin of
 `context_born_frequency_volume` (CR-4).
 
-Same statement with the epistemic measure at `[B.repr ψ]` in place of `fubiniStudyMeasure p₀` and
+Same statement with the epistemic measure at `[B.repr ψ]` in place of `fsMeasure p₀` and
 global basins in place of rotated Born regions, so the base measure leaves the statement. Proof is
 the base-side proof with `globalBasin_born_frequency` substituted; the rotation identity
 `context_born_eq_rotated` after it is unchanged, being about the basis rather than the trial law.
@@ -235,7 +235,7 @@ theorem context_born_frequency_volume
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep : ∀ i : Fin (M + 1),
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
@@ -359,7 +359,7 @@ theorem block_born_frequency_volume
     (blk : Fin (M + 1) → ι) (a : ι)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep : ∀ i : Fin (M + 1),
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)

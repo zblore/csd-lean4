@@ -65,7 +65,7 @@ free-coordinate moment map `ratioN ∘ momentMap` pushes the Fubini–Study meas
 The qubit `fs_moment_pushforward_uniform` is the `M = 1` shadow (its scalar marginal).
 Foundational-triple-only; **no** `busch_effect_gleason`. -/
 theorem fs_moment_joint_dirichlet_N (p₀ : CPN (M + 1)) :
-    Measure.map (fun p : CPN (M + 1) => ratioN (fun i => momentMap p i)) (fubiniStudyMeasure p₀)
+    Measure.map (fun p : CPN (M + 1) => ratioN (fun i => momentMap p i)) (fsMeasure p₀)
       = (Nat.factorial M : ℝ≥0∞) • volume.restrict openSimplexFree := by
   have : NeZero (M + 1) := ⟨Nat.succ_ne_zero M⟩
   have hratio_meas : Measurable (ratioN (M := M)) := by

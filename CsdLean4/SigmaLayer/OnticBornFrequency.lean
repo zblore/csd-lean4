@@ -16,7 +16,7 @@ public import CsdLean4.LF1.GeneralFrequency
 **Category:** 7-SigmaLayer (grounding the Born frequency in the ontic typicality).
 
 The general-`N` Born-frequency capstone `LF4/BornFrequencyN.lean` samples the **projective** measure
-`μ_FS` on `ℂℙⁿ⁻¹` directly (`hlaw : map Xₙ = fubiniStudyMeasure`). That is the *epistemic* law, and
+`μ_FS` on `ℂℙⁿ⁻¹` directly (`hlaw : map Xₙ = fsMeasure`). That is the *epistemic* law, and
 stating it as the trial hypothesis leaves the trials floating free of the ontic substrate. This file
 puts the sampling where it belongs — on the **ontic** floor — and derives the epistemic content:
 

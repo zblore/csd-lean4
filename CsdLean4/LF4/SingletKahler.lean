@@ -277,15 +277,15 @@ via `Measure.fst_prod`. Builds the bridge fields directly, so it stays
 foundational-triple-only (this is now the only route — the abstract
 `measure_bridge` / `invariant_measure_uniqueness` axiom were removed 2026-06-04). -/
 noncomputable def kBridge (p₀ : CPN 4) :
-    LF2.MeasureBridgeData (kSectorData p₀) (fubiniStudyMeasure p₀) where
+    LF2.MeasureBridgeData (kSectorData p₀) (fsMeasure p₀) where
   is_inv := fun U =>
-    ⟨(continuous_const_smul U).measurable, fubiniStudyMeasure_smul_invariant U p₀⟩
+    ⟨(continuous_const_smul U).measurable, fsMeasure_smul_invariant U p₀⟩
   c := 1
   bridge_eq := by
     show Measure.map (kSectorData p₀).π ((kSectorData p₀).μL : Measure (KSigma 4))
-        = 1 • fubiniStudyMeasure p₀
+        = 1 • fsMeasure p₀
     rw [one_smul]
-    show Measure.map Prod.fst (kMuL p₀) = fubiniStudyMeasure p₀
+    show Measure.map Prod.fst (kMuL p₀) = fsMeasure p₀
     rw [kMuL, ← Measure.fst, Measure.fst_prod]
 
 /-! ### The `ofKählerPreparation` constructor -/
@@ -297,7 +297,7 @@ with `bridge_op_p` discharged as a theorem (via the carving identity
 
 The bundle composes:
 - `μψ = kMuPsi = (Measure.dirac singletRay).prod vol_{T²}` (posited fibre law);
-- `μFS = fubiniStudyMeasure p₀`, with axiom-free `kBridge` (`c = 1` marginal);
+- `μFS = fsMeasure p₀`, with axiom-free `kBridge` (`c = 1` marginal);
 - `PP = kPurePrep p₀` (constant `rep := singletPsi`, ray = `singletRay`);
 - `jed = kJED ctx hgen` (genuine joint spin eigenstates, `born_eq_P_st` proved);
 - `O_region = kOutcomeRegion ctx p₀` (outcome = `univ_{ℂℙ³} × arc(P_st) × univ`).
@@ -310,7 +310,7 @@ noncomputable def ofKählerPreparation
     LF3.PureSingletPreparation (kSectorData p₀) ctx 4 :=
   LF3.PureSingletPreparation.ofHypothesis
     kMuPsi inferInstance
-    (fubiniStudyMeasure p₀) inferInstance
+    (fsMeasure p₀) inferInstance
     (kBridge p₀)
     (kPurePrep p₀)
     (by decide)
@@ -323,7 +323,7 @@ noncomputable def ofKählerPreparation
       congr 1
       symm
       rw [LF2.PurePreparation.born_rank_one_direct
-            (kSectorData p₀) (fubiniStudyMeasure p₀) (kBridge p₀) kMuPsi
+            (kSectorData p₀) (fsMeasure p₀) (kBridge p₀) kMuPsi
             (kPurePrep p₀) ((kJED ctx hgen).eig s t) ((kJED ctx hgen).eig_unit s t)]
       exact kEig_born ctx hgen s t)
 

@@ -30,7 +30,7 @@ flow (the phase-flip `diag(1,-1)` on `ℂℙ¹`).
 
 ## What this establishes
 
-`μ_FS` is invariant under the flow (`fubiniStudyMeasure_smul_invariant`), but it is NOT distinguished
+`μ_FS` is invariant under the flow (`fsMeasure_smul_invariant`), but it is NOT distinguished
 among the flow's invariant measures — the flow admits others. So "the CSD sector is posited (SO-1)" is not a temporary
 formalisation gap but a proved statement about the limit: the deterministic flow underdetermines the
 sector's typicality measure. Pinning `μ_FS` needs the full `U(N)` symmetry (`IsForcedKahlerVolume`'s
@@ -60,13 +60,13 @@ theorem flow_admits_invariant_ne_fubiniStudy (p₀ : CPN N)
     (V : Matrix.unitaryGroup (Fin N) ℂ) {p q : CPN N} (hpq : p ≠ q)
     (hp : V • p = p) (hq : V • q = q) :
     ∃ μ : Measure (CPN N), IsProbabilityMeasure μ
-      ∧ MeasurePreserving (fun x => V • x) μ μ ∧ μ ≠ fubiniStudyMeasure p₀ := by
+      ∧ MeasurePreserving (fun x => V • x) μ μ ∧ μ ≠ fsMeasure p₀ := by
   have hmeas : Measurable (fun x : CPN N => V • x) := (continuous_const_smul V).measurable
   have hinv : ∀ {r : CPN N}, V • r = r →
       MeasurePreserving (fun x => V • x) (Measure.dirac r) (Measure.dirac r) :=
     fun {r} hr => ⟨hmeas, (Measure.map_dirac' hmeas r).trans (congrArg Measure.dirac hr)⟩
   have hdne : Measure.dirac p ≠ Measure.dirac q := fun h => hpq (dirac_eq_dirac_iff.mp h)
-  by_cases hfs : Measure.dirac p = fubiniStudyMeasure p₀
+  by_cases hfs : Measure.dirac p = fsMeasure p₀
   · exact ⟨Measure.dirac q, inferInstance, hinv hq, fun h => hdne (hfs.trans h.symm)⟩
   · exact ⟨Measure.dirac p, inferInstance, hinv hp, hfs⟩
 
@@ -100,7 +100,7 @@ whose Diracs are invariant and distinct. So even a genuine `Φ ≠ id` determini
 Born measure. -/
 theorem phaseFlip_admits_invariant_ne_fubiniStudy (p₀ : CPN 2) :
     ∃ μ : Measure (CPN 2), IsProbabilityMeasure μ
-      ∧ MeasurePreserving (fun x => phaseFlip • x) μ μ ∧ μ ≠ fubiniStudyMeasure p₀ := by
+      ∧ MeasurePreserving (fun x => phaseFlip • x) μ μ ∧ μ ≠ fsMeasure p₀ := by
   have he0 : (EuclideanSpace.single 0 (1 : ℂ) : EuclideanSpace ℂ (Fin 2)) ≠ 0 := by
     simp [PiLp.single_eq_zero_iff]
   have he1 : (EuclideanSpace.single 1 (1 : ℂ) : EuclideanSpace ℂ (Fin 2)) ≠ 0 := by

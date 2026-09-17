@@ -99,7 +99,7 @@ admissible deterministic ontic dynamics in the LF1 sense. Direct from the corpus
 U(2)-invariance via the diagonal-phase observable flow. -/
 theorem ramseyPhaseFlow_measurePreserving (φ : ℝ) (p₀ : CPN 2) :
     MeasurePreserving (ramseyPhaseFlow φ)
-      (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+      (fsMeasure p₀) (fsMeasure p₀) :=
   CSD.LF4.obsFlow_measurePreserving ramseyLam φ p₀
 
 /-- `ramseyLam = ![0,1]` is exactly the `N = 2` non-triviality eigenvalue witness
@@ -267,7 +267,7 @@ theorem ramsey_fringe_volume
     (φ : ℝ) (p₀ : CPN 2)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 2) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep :
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)

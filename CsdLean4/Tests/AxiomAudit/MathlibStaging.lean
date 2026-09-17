@@ -1339,7 +1339,7 @@ regression and a blocker for the eventual Mathlib PR. -/
 -- MG-2 bricks a/b (2026-08-22, Projectivization/FubiniStudyLebesgue.lean): Fubini-Study as a
 -- LEBESGUE-ABSOLUTELY-CONTINUOUS pushforward. The normalized Lebesgue measure on the punctured
 -- unit ball of C^N is U(N)-invariant (unitaries act by isometries, which preserve the canonical
--- volume and the ball), so its projectivization IS fubiniStudyMeasure by the staged uniqueness
+-- volume and the ball), so its projectivization IS fsMeasure by the staged uniqueness
 -- theorem. Payoff: the null-transport principle -- a ray set whose vector cone is Lebesgue-null
 -- is Fubini-Study-null -- plus the elementary Fubini-slicing lemmas (coordinate hyperplanes and
 -- the coordinate quadratic's zero set are null; NO polynomial-zero-set theory needed).
@@ -1352,16 +1352,16 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Matrix.UnitaryGroup.map_ballMeasure_eq_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.map_ballMeasure_eq_fubiniStudy
 
-/-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_null_of_cone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_null_of_cone
+/-- info: 'Matrix.UnitaryGroup.fsMeasure_null_of_cone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.fsMeasure_null_of_cone
 
 -- E3 spike (2026-08-22, equilibration-arc-plan.md): the rays of a PROPER subspace are
 -- Fubini-Study-null. Their cone is the subspace, and a proper subspace is Lebesgue-null
 -- (Measure.addHaar_submodule). Reusable, and the reason a microcanonical restriction to an
 -- exact spectral sector cannot be defined by restricting mu_FS -- see
 -- Thermo/SectorRestriction.lean for the arena-level consequence.
-/-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_subspaceRays' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_subspaceRays
+/-- info: 'Matrix.UnitaryGroup.fsMeasure_subspaceRays' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.fsMeasure_subspaceRays
 
 -- Projectivization.instMeasurableSingletonClass removed 2026-09-16 (Mathlib's
 -- OpensMeasurableSpace.toMeasurableSingletonClass covers it).
@@ -1504,21 +1504,17 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Matrix.UnitaryGroup.orbit_map_measurable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.orbit_map_measurable
 
-/-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure
+/-- info: 'Matrix.UnitaryGroup.fsMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.fsMeasure
 
-/--
-info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends on axioms: [propext,
- Classical.choice,
- Quot.sound]
--/
-#guard_msgs in #print axioms Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure
+/-- info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFsMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.instIsProbabilityMeasureFsMeasure
 
 /-- info: 'Matrix.UnitaryGroup.smul_comp_orbitMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.smul_comp_orbitMap
 
-/-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_smul_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_smul_invariant
+/-- info: 'Matrix.UnitaryGroup.fsMeasure_smul_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.fsMeasure_smul_invariant
 
 /-- info: 'Matrix.UnitaryGroup.exists_unitary_e_zero_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.exists_unitary_e_zero_eq
@@ -1544,12 +1540,12 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 /-- info: 'Matrix.UnitaryGroup.haar_orbit_indicator_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Matrix.UnitaryGroup.haar_orbit_indicator_eq
 
-/-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_unique
+/-- info: 'Matrix.UnitaryGroup.fsMeasure_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms Matrix.UnitaryGroup.fsMeasure_unique
 
 -- Q28 item 1 (2026-08-21, FubiniStudyUnique.lean): FUBINI-STUDY ATOMLESSNESS by pigeonhole,
 -- no stabiliser Haar measure. Transitivity + invariance make all singletons equal in mass
--- (fubiniStudyMeasure_singleton_eq); the projective space is infinite for 2 <= N
+-- (fsMeasure_singleton_eq); the projective space is infinite for 2 <= N
 -- (projectivization_infinite -- the rays [e0 + t*e1], t : NAT, pairwise distinct); a
 -- probability measure cannot give arbitrarily many disjoint points a common positive mass.
 -- Retires KahlerInstance.lean's "Haar-of-subgroup" caveat; feeds the null-fibre corollary
@@ -1559,11 +1555,11 @@ info: 'Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure' depends o
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.UnitaryGroup.projectivization_infinite
 
-/-- info: 'Matrix.UnitaryGroup.fubiniStudyMeasure_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Matrix.UnitaryGroup.fsMeasure_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Matrix.UnitaryGroup.fubiniStudyMeasure_singleton
+#print axioms Matrix.UnitaryGroup.fsMeasure_singleton
 
--- Pointwise Kähler fundamental form (2026-07-10): the form-level analogue of fubiniStudyMeasure. On a
+-- Pointwise Kähler fundamental form (2026-07-10): the form-level analogue of fsMeasure. On a
 -- complex inner-product space (the tangent model ψ^⊥ of ℂℙ^{N-1}) the flat Hermitian structure gives the
 -- Kähler triple g = re⟪·,·⟫, ω = im⟪·,·⟫, J = i•·. Proved pointwise & axiom-free: J²=-1, ω alternating
 -- ℝ-bilinear, J-compatibility ω u v = g(Ju) v, dual g u v = ω u (Jv), ω J-invariant (a (1,1)-form),
@@ -4068,9 +4064,9 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- representative (localRep_wedgePow) and pullback commutes with powers, which lifts the 2-form
 -- invariance to the top power. M6(a): the measure of a smooth top form is locally finite (a
 -- compact ball in a chart, continuous density), hence finite on a compact manifold -- no decay
--- estimate. M6(c): ★★★ fsVolumeNormalized_eq_fubiniStudyMeasure -- the NORMALISED volume of
--- the top power of the Fubini-Study form IS fubiniStudyMeasure p₀ for every p₀, by
--- fubiniStudyMeasure_unique applied to a U(n+1)-invariant probability measure -- ⚠️ UNDER THE
+-- estimate. M6(c): ★★★ fsVolumeNormalized_eq_fsMeasure -- the NORMALISED volume of
+-- the top power of the Fubini-Study form IS fsMeasure p₀ for every p₀, by
+-- fsMeasure_unique applied to a U(n+1)-invariant probability measure -- ⚠️ UNDER THE
 -- PREMISE fsVolume n ≠ 0 (M6(b), the flat non-vanishing of the n-th power of the standard
 -- symplectic form on the standard basis; the premise is in the statement). ⚠️ The premise was
 -- discharged later the same day (M6(b) block below); the two premise theorems were renamed
@@ -4189,9 +4185,9 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.isProbabilityMeasure_fsVolumeNormalized_of_ne_zero
 
-/-- info: 'Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure_of_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Projectivization.fsVolumeNormalized_eq_fsMeasure_of_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure_of_ne_zero
+#print axioms Projectivization.fsVolumeNormalized_eq_fsMeasure_of_ne_zero
 
 /-! ### M6(b): the flat count, and the top-power identity WITHOUT premise (WedgeShuffle.lean, TopFormMeasure.lean, WedgeForm.lean, ProjectiveSpaceFubiniStudyVolume.lean, 2026-09-08) -/
 
@@ -4208,8 +4204,8 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- k-th power of the standard symplectic form on k distinct standard pairs (e_a, i e_a) is k!,
 -- and on the standard basis of Fin n → ℂ the top power of the model form at the origin is
 -- (-4)^n n! (fsModelForm_zero: the model form at 0 is -4 • stdForm). Hence ★★ fsVolume_ne_zero,
--- and ★★★ fsVolumeNormalized_eq_fubiniStudyMeasure UNCONDITIONALLY: the normalised volume of
--- the top power of the Fubini-Study form IS fubiniStudyMeasure p₀, for every p₀.
+-- and ★★★ fsVolumeNormalized_eq_fsMeasure UNCONDITIONALLY: the normalised volume of
+-- the top power of the Fubini-Study form IS fsMeasure p₀, for every p₀.
 -- ⚠️ Still no constant at this block: the identity is for the normalised measure; (-4)^n n! is
 -- one chart coefficient, not the total mass. The constant is the M7 block below (same day).
 
@@ -4364,9 +4360,9 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.isProbabilityMeasure_fsVolumeNormalized
 
-/-- info: 'Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Projectivization.fsVolumeNormalized_eq_fsMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure
+#print axioms Projectivization.fsVolumeNormalized_eq_fsMeasure
 
 /-! ### M7: the constant -- the mass of the Fubini-Study volume is (4π)^n (JapaneseBracketIntegral.lean, ProjectiveSpaceFubiniStudyMass.lean, 2026-09-08; 30 pins) -/
 
@@ -4382,8 +4378,8 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- diag(t⁻¹, t^{-1/2}, …) of the form at the origin, hence by the Jacobian rule and the M6(b) count
 -- ★★ wedgePow_fsModelForm_stdBasis = (-4)ⁿ n! (1+‖w‖²)^{-(n+1)}; the hyperplane z₀ = 0 is null (a
 -- coordinate hyperplane in every other chart, addHaar_submodule), so the mass is one chart integral;
--- ★★ fsVolume_univ = (4π)ⁿ; and ★★★ fsVolume_eq_smul_fubiniStudyMeasure:
--- fsVolume n = (4π)ⁿ • fubiniStudyMeasure p₀ -- THE TOP POWER OF THE FUBINI-STUDY FORM IS THE
+-- ★★ fsVolume_univ = (4π)ⁿ; and ★★★ fsVolume_eq_smul_fsMeasure:
+-- fsVolume n = (4π)ⁿ • fsMeasure p₀ -- THE TOP POWER OF THE FUBINI-STUDY FORM IS THE
 -- FUBINI-STUDY MEASURE, with its constant. The (4π)ⁿ is convention-bound (the chart form carries
 -- the potential's -4, the wedge its own normalisation); every factor is visible in the statement.
 -- Every milestone of the scoping note is now built.
@@ -4504,9 +4500,9 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsVolume_univ
 
-/-- info: 'Projectivization.fsVolume_eq_smul_fubiniStudyMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Projectivization.fsVolume_eq_smul_fsMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.fsVolume_eq_smul_fubiniStudyMeasure
+#print axioms Projectivization.fsVolume_eq_smul_fsMeasure
 
 /-! ### G1: Hamiltonian vector fields on a manifold -- the defining equation (HamiltonianVectorField.lean, 2026-09-08) -/
 
@@ -5536,7 +5532,7 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- (rotate to the first axis by a unitary, scale to the origin where the Gram matrix is 4.1), so
 -- its Riemannian chart density is 1/n! times the density of omega^{wedge n}:
 -- riemannianVolume_fsMetric (vol_g = fsVolume n / n!, the Kahler identity at the level of
--- measures) and riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure (vol_g = ((4 pi)^n/n!) mu_FS:
+-- measures) and riemannianVolume_fsMetric_eq_smul_fsMeasure (vol_g = ((4 pi)^n/n!) mu_FS:
 -- the Fubini-Study measure IS the normalised Riemannian volume of the Fubini-Study metric).
 -- No chart-independence theorem for the Gram construction itself (G17b, queued).
 /-- info: 'MetricFamily.localRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -5643,9 +5639,9 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.riemannianVolume_fsMetric
 
-/-- info: 'Projectivization.riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Projectivization.riemannianVolume_fsMetric_eq_smul_fsMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure
+#print axioms Projectivization.riemannianVolume_fsMetric_eq_smul_fsMeasure
 
 -- Q30 / G17b (2026-09-11): the Riemannian volume is canonical. For a bilinear metric family
 -- (IsBilinear, four pointwise equations) the local representative pulls back along a chart

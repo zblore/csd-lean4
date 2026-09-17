@@ -82,7 +82,7 @@ scheduled, and not to be re-raised as pending work.
 CR-4 says "Numbers are identical by `globalBasin_born`, so no new theorem." The **weights** are
 identical — that half is right. But the 28 files do not prove weights, they prove **frequency**
 statements, calling `born_frequency_convergence_N` / `_uncond` at 32 sites, and those are almost-sure
-limits over i.i.d. draws from `fubiniStudyMeasure` on `ℂℙ^{N−1}`. The fibred side had **no frequency
+limits over i.i.d. draws from `fsMeasure` on `ℂℙ^{N−1}`. The fibred side had **no frequency
 theorem at all**. So the migration needed a new theorem, and it was the prerequisite rather than a
 corollary.
 
@@ -115,7 +115,7 @@ lost its `hpos` earlier in the campaign, and `mixed_state_born_eq_ensemble_volum
 `∀ i j, 0 < ‖⟨e_j, Wᴴ eᵢ⟩‖²` bundle entirely (CL-074) — every density operator and every pure
 outcome is now covered, where before the outcome had to overlap every eigenvector of `ρ`.
 
-⚠️ **What still names `fubiniStudyMeasure`, and why none of it is unfinished migration.** The
+⚠️ **What still names `fsMeasure`, and why none of it is unfinished migration.** The
 scope of this item was the `bornRegion` / `bornRegionN` consumers; three other families legitimately
 keep the base measure, and they are not leftovers.
 

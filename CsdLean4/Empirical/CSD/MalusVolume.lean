@@ -112,7 +112,7 @@ theorem csd_malus_law
     (θ : ℝ) (p₀ : CPN 2)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 2) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep :
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)

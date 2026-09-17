@@ -11,9 +11,9 @@ public import Mathlib.Probability.Distributions.Gaussian.Multivariate
 public import Mathlib.Probability.Distributions.Gaussian.Fernique
 
 /-!
-# LF4 plan B, Part 1 (Option 2): `gaussianCP = fubiniStudyMeasure` via `ℝ⁴`
+# LF4 plan B, Part 1 (Option 2): `gaussianCP = fsMeasure` via `ℝ⁴`
 
-**Category:** 3-Local (`gaussianCP = fubiniStudyMeasure` via `ℝ⁴`).
+**Category:** 3-Local (`gaussianCP = fsMeasure` via `ℝ⁴`).
 
 Identifies the Fubini–Study measure on `ℂℙ¹` with the projectivized standard
 Gaussian, working through a hand-built real coordinate isometry
@@ -257,8 +257,8 @@ lemma gaussianCP_smul_invariant (p₀ : CPN 2) (U : Matrix.unitaryGroup (Fin 2) 
 
 /-- **C5.** The projectivized Gaussian equals the Fubini–Study measure. -/
 lemma gaussianCP_eq_fubiniStudy (p₀ : CPN 2) :
-    gaussianCP p₀ = fubiniStudyMeasure p₀ :=
-  fubiniStudyMeasure_unique p₀ (gaussianCP p₀) (gaussianCP_smul_invariant p₀)
+    gaussianCP p₀ = fsMeasure p₀ :=
+  fsMeasure_unique p₀ (gaussianCP p₀) (gaussianCP_smul_invariant p₀)
 
 end LF4
 end CSD

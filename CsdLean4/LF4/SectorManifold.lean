@@ -34,9 +34,9 @@ witness (`trivialKahlerOnticSetup`):
 * ★★★ `unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized` / `trivialKahlerOnticSetup_…` — **the
   Liouville measure IS the normalised symplectic volume of the Kähler form**: `liouvilleMeasure =
   fsVolumeNormalized n`, the normalised measure of the top power `ω_FS^{∧n}` of `fsForm`
-  (`fsVolumeNormalized_eq_fubiniStudyMeasure`, step (3) of the manifold programme);
+  (`fsVolumeNormalized_eq_fsMeasure`, step (3) of the manifold programme);
 * ★★ `fsVolume_eq_smul_unitaryFlowSetup_liouvilleMeasure` — with the constant: `ω_FS^{∧n} = (4π)ⁿ ·
-  liouvilleMeasure` (`fsVolume_eq_smul_fubiniStudyMeasure`);
+  liouvilleMeasure` (`fsVolume_eq_smul_fsMeasure`);
 * ★★ `unitaryFlowSetup_flow_measurePreserving_fsVolume` — **the sector's flow preserves the symplectic
   volume itself**, not only its normalisation: every time-`t` map `U t • ·` preserves `fsVolume n`
   (`fsVolume_map_smul`). The posited field `flow_preserves_volume` is, on this sector, a theorem about
@@ -110,19 +110,19 @@ normalised measure of the top power `ω_FS^{∧n}` of `fsForm`. -/
 theorem unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized
     (U : ℝ → Matrix.unitaryGroup (Fin (n + 1)) ℂ) (p₀ : CPN (n + 1)) :
     (unitaryFlowSetup (n + 1) U p₀).liouvilleMeasure = fsVolumeNormalized n :=
-  (fsVolumeNormalized_eq_fubiniStudyMeasure p₀).symm
+  (fsVolumeNormalized_eq_fsMeasure p₀).symm
 
 /-- The inhabitation witness's Liouville measure is the normalised symplectic volume too. -/
 theorem trivialKahlerOnticSetup_liouvilleMeasure_eq_fsVolumeNormalized (p₀ : CPN (n + 1)) :
     (trivialKahlerOnticSetup (n + 1) p₀).liouvilleMeasure = fsVolumeNormalized n :=
-  (fsVolumeNormalized_eq_fubiniStudyMeasure p₀).symm
+  (fsVolumeNormalized_eq_fsMeasure p₀).symm
 
 /-- ★★ **With the constant**: the top power of the Kähler form is `(4π)ⁿ` times the sector's Liouville
 measure. -/
 theorem fsVolume_eq_smul_unitaryFlowSetup_liouvilleMeasure
     (U : ℝ → Matrix.unitaryGroup (Fin (n + 1)) ℂ) (p₀ : CPN (n + 1)) :
     fsVolume n = ENNReal.ofReal ((4 * π) ^ n) • (unitaryFlowSetup (n + 1) U p₀).liouvilleMeasure :=
-  fsVolume_eq_smul_fubiniStudyMeasure p₀
+  fsVolume_eq_smul_fsMeasure p₀
 
 /-- ★★ **The sector's flow preserves the symplectic volume itself**: every time-`t` map of
 `unitaryFlowSetup` preserves `fsVolume n`, the un-normalised measure of `ω_FS^{∧n}`
@@ -139,8 +139,8 @@ probability measure. The symmetry characterisation of the sector's volume (`LF4`
 characterisation (the manifold layer) pin the same measure. -/
 theorem fsVolumeNormalized_isForcedKahlerVolume (n : ℕ) :
     IsForcedKahlerVolume (fsVolumeNormalized n) := by
-  rw [fsVolumeNormalized_eq_fubiniStudyMeasure (origin 0)]
-  exact fubiniStudyMeasure_isForcedKahlerVolume (origin 0)
+  rw [fsVolumeNormalized_eq_fsMeasure (origin 0)]
+  exact fsMeasure_isForcedKahlerVolume (origin 0)
 
 /-- ★★★ **The `π = id` sector is the standard object**: its target is a Kähler manifold
 (`fsForm_isKahler`), its Liouville measure is the normalised top power of that Kähler form, and its
@@ -161,8 +161,8 @@ theorem manyToOneSetup_liouvilleMeasure_eq_fsVolumeNormalized_prod
     (U : ℝ → Matrix.unitaryGroup (Fin (n + 1)) ℂ) (p₀ : CPN (n + 1)) :
     (manyToOneSetup U p₀).liouvilleMeasure
       = (fsVolumeNormalized n).prod (volume : Measure KTorus) := by
-  show (fubiniStudyMeasure p₀).prod (volume : Measure KTorus) = _
-  rw [fsVolumeNormalized_eq_fubiniStudyMeasure p₀]
+  show (fsMeasure p₀).prod (volume : Measure KTorus) = _
+  rw [fsVolumeNormalized_eq_fsMeasure p₀]
 
 /-- ★★ **The base marginal of the many-to-one sector's Liouville measure is the symplectic volume**:
 `π_* kMuL = fsVolumeNormalized n`. -/
@@ -170,7 +170,7 @@ theorem manyToOneSetup_map_pi_liouvilleMeasure_eq_fsVolumeNormalized
     (U : ℝ → Matrix.unitaryGroup (Fin (n + 1)) ℂ) (p₀ : CPN (n + 1)) :
     Measure.map (manyToOneSetup U p₀).pi (manyToOneSetup U p₀).liouvilleMeasure
       = fsVolumeNormalized n := by
-  rw [manyToOneSetup_baseVolume_eq_fubiniStudy U p₀, fsVolumeNormalized_eq_fubiniStudyMeasure p₀]
+  rw [manyToOneSetup_baseVolume_eq_fubiniStudy U p₀, fsVolumeNormalized_eq_fsMeasure p₀]
 
 /-- ★★ **The many-to-one sector's flow preserves the symplectic volume tensored with Haar**. -/
 theorem manyToOneSetup_flow_measurePreserving_fsVolume_prod

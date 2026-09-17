@@ -806,7 +806,7 @@ theorem fsVolume_map_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n +
     funext fun p => (hamiltonianFlow_schrodingerHamiltonian hH t p).symm]
   exact fsVolume_map_hamiltonianFlow _ t
 
-/-- The same for the normalised volume, `fubiniStudyMeasure p₀`. -/
+/-- The same for the normalised volume, `fsMeasure p₀`. -/
 theorem fsVolumeNormalized_map_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) (t : ℝ) :
     Measure.map (fun p : ℙ ℂ (Ambient n) => Matrix.schrodingerUnitary hH t • p)

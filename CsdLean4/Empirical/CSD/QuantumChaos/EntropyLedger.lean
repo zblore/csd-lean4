@@ -300,7 +300,7 @@ fails on measure at most `n · (1 − δ/2)` — no free parameter. -/
 theorem deficitKick_phaseFlip_reliability (V : Matrix.unitaryGroup (Fin 2) ℂ)
     (p₀ : CPN 2) {δ : ℝ} (hδ0 : 0 < δ)
     {kick : RecordCircle} (hkick : kick ≠ 0) (n : ℕ) :
-    ((fubiniStudyMeasure p₀).prod volume)
+    ((fsMeasure p₀).prod volume)
         (retrodictionSuccess (deficitTriggeredKick V phaseFlipW δ kick)
           Prod.snd n)ᶜ
       ≤ n • ENNReal.ofReal (1 - δ / 2) := by
@@ -321,14 +321,14 @@ theorem deficitKick_phaseFlip_ledger (V : Matrix.unitaryGroup (Fin 2) ℂ)
     (p₀ : CPN 2) {δ : ℝ} (hδ0 : 0 < δ) (hδ2 : δ ≤ 2)
     {kick : RecordCircle} (hkick : kick ≠ 0) {n : ℕ}
     (hn : (n : ℝ) * (1 - δ / 2) ≤ 2⁻¹) :
-    ledgerEntropy ((fubiniStudyMeasure p₀).prod volume)
+    ledgerEntropy ((fsMeasure p₀).prod volume)
         (deficitTriggeredKick V phaseFlipW δ kick) Prod.snd n
       ≤ Real.binEntropy ((n : ℝ) * (1 - δ / 2)) := by
   have hflip_meas : MeasurableSet
       (recordFlip (deficitTriggeredKick V phaseFlipW δ kick) Prod.snd) := by
     rw [deficitTriggeredKick, recordFlip_triggeredRecordKick _ _ hkick]
     exact (measurableSet_deficitTrigger phaseFlipW δ).prod MeasurableSet.univ
-  have htoReal : (((fubiniStudyMeasure p₀).prod volume)
+  have htoReal : (((fsMeasure p₀).prod volume)
       (recordFlip (deficitTriggeredKick V phaseFlipW δ kick)
         Prod.snd)).toReal = 1 - δ / 2 := by
     rw [deficitKick_phaseFlip_coupling V p₀ hδ0 hkick,

@@ -89,7 +89,7 @@ theorem unitaryFlowSetup_born_frequency_evolved {M : ℕ}
   -- The sector's flow preserves its Liouville measure, so it pins the evolved law.
   have hmp := (unitaryFlowSetup (M + 1) U p₀).flow_preserves_volume t
   have hlaw' : ∀ n, Measure.map ((unitaryFlowSetup (M + 1) U p₀).flow t ∘ X n) Pr
-      = fubiniStudyMeasure p₀ := fun n =>
+      = fsMeasure p₀ := fun n =>
     (((Measure.map_map hmp.measurable (hX n)).symm.trans
         (congrArg (Measure.map ((unitaryFlowSetup (M + 1) U p₀).flow t)) (hlaw n))).trans
       hmp.map_eq)

@@ -69,7 +69,7 @@ lemma lgState_born0 (Δ : ℝ) :
 moment-sublevel region cut by the precessed state `[|Δ⟩]` on the ontic `ℂℙ¹` — Born as Kähler
 volume, via Duistermaat–Heckman. -/
 theorem lg_survival_as_volume (Δ : ℝ) (p₀ : CPN 2) :
-    fubiniStudyMeasure p₀
+    fsMeasure p₀
         {p : CPN 2 | momentMap p 0 ≤ momentMap (Projectivization.mk ℂ (lgState Δ) (lgState_ne Δ)) 0}
       = ENNReal.ofReal (Real.cos Δ ^ 2) := by
   rw [fs_born_volume_ratio_qubit_uncond p₀ (lgState Δ) (lgState_ne Δ) (lgState_norm Δ),

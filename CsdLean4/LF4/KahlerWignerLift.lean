@@ -112,25 +112,25 @@ theorem kProjectedFlow_unitary_or_antiunitary (sh : KTorus) :
 /-! ### Part 2 — the genuine content: the sector `U(N)`-action carries the FS-isometry (caveat C-1) -/
 
 /-- **Measure-bridge data for `kSectorData`** (`π = pr₁`, `c = 1`), built axiom-free: the
-`U(N)`-invariance of `μ_FS` (`fubiniStudyMeasure_smul_invariant`) and the `pr₁`-pushforward
+`U(N)`-invariance of `μ_FS` (`fsMeasure_smul_invariant`) and the `pr₁`-pushforward
 `π_*(μ_FS ⊗ vol_{T²}) = μ_FS` (the torus volume being a probability measure, `Measure.fst_prod`).
 The `kSectorData` analogue of `cpBridgeData`. -/
 noncomputable def kBridgeData (p₀ : CPN N) :
-    CSD.LF2.MeasureBridgeData (kSectorData p₀) (fubiniStudyMeasure p₀) where
+    CSD.LF2.MeasureBridgeData (kSectorData p₀) (fsMeasure p₀) where
   is_inv := fun U =>
-    ⟨(continuous_const_smul U).measurable, fubiniStudyMeasure_smul_invariant U p₀⟩
+    ⟨(continuous_const_smul U).measurable, fsMeasure_smul_invariant U p₀⟩
   c := 1
   bridge_eq := by
     show Measure.map (kSectorData p₀).π ((kSectorData p₀).μL : Measure (KSigma N))
-        = (1 : ENNReal) • fubiniStudyMeasure p₀
+        = (1 : ENNReal) • fsMeasure p₀
     rw [one_smul]
-    show Measure.map Prod.fst (kMuL p₀) = fubiniStudyMeasure p₀
+    show Measure.map Prod.fst (kMuL p₀) = fsMeasure p₀
     rw [kMuL, ← Measure.fst, Measure.fst_prod]
 
 /-- The bridge context for the non-trivial-fibre Kähler instance `kSectorData`. -/
 noncomputable def kContext (p₀ : CPN N) :
     CSD.Empirical.CSDBridge.Context (kSectorData p₀) where
-  μFS := fubiniStudyMeasure p₀
+  μFS := fsMeasure p₀
   hμFS_prob := inferInstance
   bridge := kBridgeData p₀
 

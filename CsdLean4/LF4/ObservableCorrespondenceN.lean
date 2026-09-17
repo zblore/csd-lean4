@@ -124,16 +124,16 @@ Born region for basis index `k` is exactly the Born weight `‖⟨e_k, ψ⟩‖�
 theorem fsMeasure_bornRegionN (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2) (k : Fin (M + 1)) :
-    fubiniStudyMeasure p₀ (bornRegionN ψ hψ0 k)
+    fsMeasure p₀ (bornRegionN ψ hψ0 k)
       = ENNReal.ofReal (‖inner ℂ (EuclideanSpace.single k (1 : ℂ)) ψ‖ ^ 2) := by
   refine Fin.lastCases ?_ ?_ k
-  · show fubiniStudyMeasure p₀
+  · show fsMeasure p₀
         ((fun p => ratioN (fun j => momentMap p j)) ⁻¹'
           bornSimplexRegion (bornVecN ψ hψ0) (Fin.last M)) = _
     rw [bornSimplexRegion, Fin.lastCases_last, bornVecN]
     exact fs_born_volume_ratio_N_apex p₀ ψ hψ0 hψ hpos
   · intro i
-    show fubiniStudyMeasure p₀
+    show fsMeasure p₀
         ((fun p => ratioN (fun j => momentMap p j)) ⁻¹'
           bornSimplexRegion (bornVecN ψ hψ0) (Fin.castSucc i)) = _
     rw [bornSimplexRegion, Fin.lastCases_castSucc, bornVecN]
@@ -152,7 +152,7 @@ theorem observable_correspondence_diagonal (p₀ : CPN (M + 1))
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
     (lam : Fin (M + 1) → ℝ) :
     inner ℂ ψ ((Matrix.toEuclideanLin (Matrix.diagonal (fun k => (lam k : ℂ)))) ψ)
-      = ((∑ k, lam k * (fubiniStudyMeasure p₀ (bornRegionN ψ hψ0 k)).toReal : ℝ) : ℂ) := by
+      = ((∑ k, lam k * (fsMeasure p₀ (bornRegionN ψ hψ0 k)).toReal : ℝ) : ℂ) := by
   rw [diag_expectation, Complex.ofReal_sum]
   refine Finset.sum_congr rfl fun k _ => ?_
   rw [Complex.ofReal_mul, fsMeasure_bornRegionN p₀ ψ hψ0 hψ hpos k,
@@ -225,8 +225,8 @@ measure and each region is measurable). -/
 theorem integral_aOntic (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0)
     (hψ : ‖ψ‖ = 1) (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
     (lam : Fin (M + 1) → ℝ) :
-    ∫ p, aOntic ψ hψ0 lam p ∂(fubiniStudyMeasure p₀)
-      = ∑ k, lam k * (fubiniStudyMeasure p₀ (bornRegionN ψ hψ0 k)).toReal := by
+    ∫ p, aOntic ψ hψ0 lam p ∂(fsMeasure p₀)
+      = ∑ k, lam k * (fsMeasure p₀ (bornRegionN ψ hψ0 k)).toReal := by
   unfold aOntic
   rw [integral_finsetSum]
   · refine Finset.sum_congr rfl fun k _ => ?_
@@ -246,7 +246,7 @@ theorem observable_correspondence_diagonal_integral (p₀ : CPN (M + 1))
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
     (lam : Fin (M + 1) → ℝ) :
     inner ℂ ψ ((Matrix.toEuclideanLin (Matrix.diagonal (fun k => (lam k : ℂ)))) ψ)
-      = ((∫ p, aOntic ψ hψ0 lam p ∂(fubiniStudyMeasure p₀) : ℝ) : ℂ) := by
+      = ((∫ p, aOntic ψ hψ0 lam p ∂(fsMeasure p₀) : ℝ) : ℂ) := by
   rw [observable_correspondence_diagonal p₀ ψ hψ0 hψ hpos lam,
       integral_aOntic p₀ ψ hψ0 hψ hpos lam]
 
@@ -316,7 +316,7 @@ theorem hermitian_observable_correspondence (p₀ : CPN (M + 1))
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) φ‖ ^ 2) :
     inner ℂ ψ (Matrix.toEuclideanLin A ψ)
       = ((∑ k, hA.eigenvalues k
-          * (fubiniStudyMeasure p₀ (bornRegionN φ hφ0 k)).toReal : ℝ) : ℂ) := by
+          * (fsMeasure p₀ (bornRegionN φ hφ0 k)).toReal : ℝ) : ℂ) := by
   have hφnorm : ‖φ‖ = 1 := by rw [hφ]; exact transport_norm A hA ψ hψ
   rw [hermitian_expectation_transport A hA ψ, ← hφ,
       observable_correspondence_diagonal p₀ φ hφ0 hφnorm hpos hA.eigenvalues]
@@ -331,7 +331,7 @@ theorem hermitian_observable_correspondence_integral (p₀ : CPN (M + 1))
     (hφ0 : φ ≠ 0)
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) φ‖ ^ 2) :
     inner ℂ ψ (Matrix.toEuclideanLin A ψ)
-      = ((∫ p, aOntic φ hφ0 hA.eigenvalues p ∂(fubiniStudyMeasure p₀) : ℝ) : ℂ) := by
+      = ((∫ p, aOntic φ hφ0 hA.eigenvalues p ∂(fsMeasure p₀) : ℝ) : ℂ) := by
   have hφnorm : ‖φ‖ = 1 := by rw [hφ]; exact transport_norm A hA ψ hψ
   rw [hermitian_observable_correspondence p₀ A hA ψ hψ φ hφ hφ0 hpos,
       ← integral_aOntic p₀ φ hφ0 hφnorm hpos hA.eigenvalues]
@@ -372,7 +372,7 @@ theorem pure_state_born_prob_eq_volume (p₀ : CPN (M + 1))
     (φ : EuclideanSpace ℂ (Fin (M + 1)))
     (hφ : φ = Matrix.toEuclideanLin (star W.val) ψ) (hφ0 : φ ≠ 0)
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) φ‖ ^ 2) :
-    ‖inner ℂ Φ ψ‖ ^ 2 = (fubiniStudyMeasure p₀ (bornRegionN φ hφ0 0)).toReal := by
+    ‖inner ℂ Φ ψ‖ ^ 2 = (fsMeasure p₀ (bornRegionN φ hφ0 0)).toReal := by
   have hφnorm : ‖φ‖ = 1 := by rw [hφ]; exact unitary_transport_norm W ψ hψ
   rw [fsMeasure_bornRegionN p₀ φ hφ0 hφnorm hpos 0, ENNReal.toReal_ofReal (by positivity)]
   congr 1

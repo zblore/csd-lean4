@@ -17,7 +17,7 @@ Mathlib-external `axiom fs_moment_pushforward_uniform`, the qubit
 Duistermaat–Heckman / Archimedes hat-box fact
 
 ```
-(fun p => momentMap p 0)∗ fubiniStudyMeasure p₀ = volume.restrict [0,1]
+(fun p => momentMap p 0)∗ fsMeasure p₀ = volume.restrict [0,1]
 ```
 
 (the `N = 2` instance: the moment map pushes the Fubini–Study measure on `ℂℙ¹`
@@ -49,7 +49,7 @@ namespace LF4
 /-! ## Discharged (2026-05-31): no longer an axiom.
 
 The Duistermaat–Heckman / Archimedes fact for the qubit —
-`(momentMap · 0)∗ fubiniStudyMeasure p₀ = volume.restrict (Icc 0 1)` — was carried
+`(momentMap · 0)∗ fsMeasure p₀ = volume.restrict (Icc 0 1)` — was carried
 here as `axiom fs_moment_pushforward_uniform`. It is now a *theorem* of the same
 name, proved in `CsdLean4/LF4/MomentUniform.lean` (plan B: Gaussian-induced `μ_FS`
 + moment-marginal change of variables), alongside the foundational-triple-only

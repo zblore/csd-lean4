@@ -41,7 +41,7 @@ ergodicity route which CSD does not use (B/B′).
 **(A) The FS typicality MEASURE is singled out by the sector symmetry `G = U(N)` (a
 measure-characterisation, NOT the typicality-forcing).**
 `fubiniStudy_forced_by_symmetry` restates the corpus's axiom-free uniqueness
-theorem `fubiniStudyMeasure_unique` (Phase G4,
+theorem `fsMeasure_unique` (Phase G4,
 `Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean`): **any**
 `U(N)`-invariant probability measure on the sector **is** the Fubini–Study measure.
 So FS is the *symmetry-canonical* sampling measure — the Born = FS-volume measure
@@ -99,7 +99,7 @@ in D1c). We claim **nothing** about deriving `G`, and nothing about typicality-f
 beyond the LLN.
 
 `so1_onramp` conjoins (A) and (B). Foundational-triple-only (no `busch_effect_gleason`);
-`invariant_measure_uniqueness_cpn` / `fubiniStudyMeasure_unique` are axiom-free.
+`invariant_measure_uniqueness_cpn` / `fsMeasure_unique` are axiom-free.
 -/
 
 @[expose] public section
@@ -192,7 +192,7 @@ lemma dirac_ne_of_ne {p q : CPN N} (h : p ≠ q) :
 measure-characterisation, NOT the typicality-forcing — typicality is forced by the
 LLN, LF1 / papers A & B; see the file header). Any `U(N)`-invariant probability
 measure on the sector `Σ = ℂℙ^{N-1}` **is** the Fubini–Study measure. A restatement
-of the axiom-free `fubiniStudyMeasure_unique` (Phase G4): FS is the *symmetry-canonical*
+of the axiom-free `fsMeasure_unique` (Phase G4): FS is the *symmetry-canonical*
 sampling measure — the Born = FS-volume measure consumed downstream is *singled out*
 by the `(π, G)` sector datum (SO-1) rather than posited as an arbitrary law; the LLN then
 forces frequencies to its volume ratios. The characterisation is via the symmetry
@@ -201,8 +201,8 @@ theorem fubiniStudy_forced_by_symmetry (p₀ : CPN N)
     (μ : Measure (CPN N)) [IsProbabilityMeasure μ]
     (hμ_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
         MeasurePreserving (fun p => U • p) μ μ) :
-    μ = fubiniStudyMeasure p₀ :=
-  fubiniStudyMeasure_unique p₀ μ (fun U => (hμ_inv U).map_eq)
+    μ = fsMeasure p₀ :=
+  fsMeasure_unique p₀ μ (fun U => (hμ_inv U).map_eq)
 
 /-! ## (B) — a single ontic flow does not force FS -/
 
@@ -223,7 +223,7 @@ theorem obsFlow_not_uniquely_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N �
       IsProbabilityMeasure μ ∧ IsProbabilityMeasure ν ∧
       Measure.map (obsFlow lam t) μ = μ ∧
       Measure.map (obsFlow lam t) ν = ν ∧ μ ≠ ν := by
-  refine ⟨fubiniStudyMeasure p₀, Measure.dirac (cpBasisRay (obsIdx0 hN)),
+  refine ⟨fsMeasure p₀, Measure.dirac (cpBasisRay (obsIdx0 hN)),
     inferInstance, inferInstance, ?_, ?_, ?_⟩
   · -- μFS is obsFlow-invariant (the Liouville / FS-invariance content).
     exact (obsFlow_measurePreserving lam t p₀).map_eq
@@ -235,7 +235,7 @@ theorem obsFlow_not_uniquely_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N �
       cpBasisRay_ne _ _ (obsIdx0_ne_obsIdx1 hN)
     obtain ⟨U, hU⟩ := MulAction.exists_smul_eq (Matrix.unitaryGroup (Fin N) ℂ)
       (cpBasisRay (obsIdx0 hN)) (cpBasisRay (obsIdx1 hN))
-    have hFSinv := fubiniStudyMeasure_smul_invariant U p₀
+    have hFSinv := fsMeasure_smul_invariant U p₀
     rw [hμν, Measure.map_dirac' (continuous_const_smul U).measurable] at hFSinv
     -- hFSinv : δ_{U•[e₀]} = δ_{[e₀]}, and U•[e₀] = [e₁].
     have hru : (Measure.dirac (cpBasisRay (obsIdx1 hN)) : Measure (CPN N))
@@ -289,8 +289,8 @@ theorem withDensity_momentMap_obsFlow_invariant
     (lam : Fin N → ℝ) (t : ℝ) (p₀ : CPN N) (i : Fin N)
     (g : ℝ → ENNReal) (hg : Measurable g) :
     Measure.map (obsFlow lam t)
-        ((fubiniStudyMeasure p₀).withDensity (fun p => g (momentMap p i)))
-      = (fubiniStudyMeasure p₀).withDensity (fun p => g (momentMap p i)) :=
+        ((fsMeasure p₀).withDensity (fun p => g (momentMap p i)))
+      = (fsMeasure p₀).withDensity (fun p => g (momentMap p i)) :=
   map_withDensity_of_conserved (obsFlow_measurePreserving lam t p₀)
     (hg.comp (momentMap_measurable i)) (fun p => by rw [momentMap_obsFlow])
 
@@ -330,7 +330,7 @@ theorem obsFlow_continuum_invariant (hN : 1 < N) (p₀ : CPN N) (lam : Fin N →
   have hdinv : Measure.map (obsFlow lam t) (Measure.dirac r0) = Measure.dirac r0 := by
     rw [hr0def]; exact dirac_eigenstate_obsFlow_invariant lam t (obsIdx0 hN)
   -- μFS{[e₀]} = μFS{[e₁]} by U(N)-invariance and the swap unitary.
-  have hswap : fubiniStudyMeasure p₀ {r1} = fubiniStudyMeasure p₀ {r0} := by
+  have hswap : fsMeasure p₀ {r1} = fsMeasure p₀ {r0} := by
     obtain ⟨U, hU⟩ := MulAction.exists_smul_eq (Matrix.unitaryGroup (Fin N) ℂ) r0 r1
     have hpre : (fun p => U • p) ⁻¹' {r1} = {r0} := by
       ext x
@@ -340,42 +340,42 @@ theorem obsFlow_continuum_invariant (hN : 1 < N) (p₀ : CPN N) (lam : Fin N →
         have h2 : U • x = U • r0 := h.trans hU.symm
         simpa only [inv_smul_smul] using congrArg (fun y => U⁻¹ • y) h2
       · intro h; rw [h]; exact hU
-    have hinv := fubiniStudyMeasure_smul_invariant U p₀
-    calc fubiniStudyMeasure p₀ {r1}
-        = (Measure.map (fun p => U • p) (fubiniStudyMeasure p₀)) {r1} := by rw [hinv]
-      _ = fubiniStudyMeasure p₀ ((fun p => U • p) ⁻¹' {r1}) :=
+    have hinv := fsMeasure_smul_invariant U p₀
+    calc fsMeasure p₀ {r1}
+        = (Measure.map (fun p => U • p) (fsMeasure p₀)) {r1} := by rw [hinv]
+      _ = fsMeasure p₀ ((fun p => U • p) ⁻¹' {r1}) :=
           Measure.map_apply (continuous_const_smul U).measurable (measurableSet_singleton r1)
-      _ = fubiniStudyMeasure p₀ {r0} := by rw [hpre]
+      _ = fsMeasure p₀ {r0} := by rw [hpre]
   -- μFS{[e₀]} < 1.
-  have hc1 : fubiniStudyMeasure p₀ {r0} < 1 := by
-    have hcc : fubiniStudyMeasure p₀ {r0} + fubiniStudyMeasure p₀ {r0} ≤ 1 := by
-      calc fubiniStudyMeasure p₀ {r0} + fubiniStudyMeasure p₀ {r0}
-          = fubiniStudyMeasure p₀ {r0} + fubiniStudyMeasure p₀ {r1} := by rw [hswap]
-        _ = fubiniStudyMeasure p₀ ({r0} ∪ {r1}) :=
+  have hc1 : fsMeasure p₀ {r0} < 1 := by
+    have hcc : fsMeasure p₀ {r0} + fsMeasure p₀ {r0} ≤ 1 := by
+      calc fsMeasure p₀ {r0} + fsMeasure p₀ {r0}
+          = fsMeasure p₀ {r0} + fsMeasure p₀ {r1} := by rw [hswap]
+        _ = fsMeasure p₀ ({r0} ∪ {r1}) :=
             (measure_union (by simpa using hr01) (measurableSet_singleton r1)).symm
-        _ ≤ fubiniStudyMeasure p₀ Set.univ := measure_mono (Set.subset_univ _)
+        _ ≤ fsMeasure p₀ Set.univ := measure_mono (Set.subset_univ _)
         _ = 1 := measure_univ
-    have hreal : (fubiniStudyMeasure p₀ {r0}).toReal + (fubiniStudyMeasure p₀ {r0}).toReal ≤ 1 := by
-      calc (fubiniStudyMeasure p₀ {r0}).toReal + (fubiniStudyMeasure p₀ {r0}).toReal
-          = (fubiniStudyMeasure p₀ {r0} + fubiniStudyMeasure p₀ {r0}).toReal :=
+    have hreal : (fsMeasure p₀ {r0}).toReal + (fsMeasure p₀ {r0}).toReal ≤ 1 := by
+      calc (fsMeasure p₀ {r0}).toReal + (fsMeasure p₀ {r0}).toReal
+          = (fsMeasure p₀ {r0} + fsMeasure p₀ {r0}).toReal :=
             (ENNReal.toReal_add (measure_ne_top _ _) (measure_ne_top _ _)).symm
         _ ≤ (1 : ENNReal).toReal := ENNReal.toReal_mono ENNReal.one_ne_top hcc
         _ = 1 := ENNReal.toReal_one
-    have hcr : (fubiniStudyMeasure p₀ {r0}).toReal < 1 := by linarith
-    calc fubiniStudyMeasure p₀ {r0}
-        = ENNReal.ofReal (fubiniStudyMeasure p₀ {r0}).toReal :=
+    have hcr : (fsMeasure p₀ {r0}).toReal < 1 := by linarith
+    calc fsMeasure p₀ {r0}
+        = ENNReal.ofReal (fsMeasure p₀ {r0}).toReal :=
           (ENNReal.ofReal_toReal (measure_ne_top _ _)).symm
       _ < ENNReal.ofReal 1 := (ENNReal.ofReal_lt_ofReal_iff (by norm_num)).mpr hcr
       _ = 1 := ENNReal.ofReal_one
   -- {[e₀]}ᶜ has positive finite μFS-mass and is δ_{[e₀]}-null.
-  have hAfin : fubiniStudyMeasure p₀ ({r0}ᶜ) ≠ ⊤ := measure_ne_top _ _
-  have hAval : fubiniStudyMeasure p₀ ({r0}ᶜ) = 1 - fubiniStudyMeasure p₀ {r0} := by
+  have hAfin : fsMeasure p₀ ({r0}ᶜ) ≠ ⊤ := measure_ne_top _ _
+  have hAval : fsMeasure p₀ ({r0}ᶜ) = 1 - fsMeasure p₀ {r0} := by
     rw [measure_compl (measurableSet_singleton r0) (measure_ne_top _ _), measure_univ]
-  have hApos : fubiniStudyMeasure p₀ ({r0}ᶜ) ≠ 0 := by
+  have hApos : fsMeasure p₀ ({r0}ᶜ) ≠ 0 := by
     rw [hAval, ne_eq, tsub_eq_zero_iff_le, not_le]; exact hc1
   have hdir0 : Measure.dirac r0 ({r0}ᶜ) = 0 := by
     simp [Measure.dirac_apply' r0 (measurableSet_singleton r0).compl]
-  refine ⟨fun s => ENNReal.ofReal s • fubiniStudyMeasure p₀
+  refine ⟨fun s => ENNReal.ofReal s • fsMeasure p₀
             + ENNReal.ofReal (1 - s) • Measure.dirac r0, ?_, ?_⟩
   · -- Each `f s` (s ∈ [0,1]) is an invariant probability measure.
     intro s hs
@@ -390,9 +390,9 @@ theorem obsFlow_continuum_invariant (hN : 1 < N) (p₀ : CPN N) (lam : Fin N →
   · -- Pairwise distinct: `s ↦ f s ({[e₀]}ᶜ) = ofReal s · μFS({[e₀]}ᶜ)` is injective.
     intro s hs s' hs' hss
     have hfsA : ∀ x : ℝ,
-        (ENNReal.ofReal x • fubiniStudyMeasure p₀
+        (ENNReal.ofReal x • fsMeasure p₀
             + ENNReal.ofReal (1 - x) • Measure.dirac r0) ({r0}ᶜ)
-          = ENNReal.ofReal x * fubiniStudyMeasure p₀ ({r0}ᶜ) := fun x => by
+          = ENNReal.ofReal x * fsMeasure p₀ ({r0}ᶜ) := fun x => by
       rw [Measure.add_apply, Measure.smul_apply, Measure.smul_apply, smul_eq_mul, smul_eq_mul,
           hdir0, mul_zero, add_zero]
     have key := congrArg (fun μ : Measure (CPN N) => μ ({r0}ᶜ)) hss
@@ -425,15 +425,15 @@ positive `μFS` mass. `μFS = (orbitMap p₀)∗ unitaryHaarProb`; the orbit-map
 nonempty open `O` is open (continuity) and nonempty (U(N)-transitivity), and Haar measure is
 `IsOpenPosMeasure`. (General Mathlib-style projective-geometry fact; the witness sets below use
 it to bound the invariant set away from `0` and `1`.) -/
-theorem fubiniStudyMeasure_pos_of_isOpen (p₀ : CPN N) {O : Set (CPN N)}
+theorem fsMeasure_pos_of_isOpen (p₀ : CPN N) {O : Set (CPN N)}
     (hO : IsOpen O) (hne : O.Nonempty) :
-    fubiniStudyMeasure p₀ O ≠ 0 := by
+    fsMeasure p₀ O ≠ 0 := by
   obtain ⟨q, hq⟩ := hne
   obtain ⟨U, hU⟩ := MulAction.exists_smul_eq (Matrix.unitaryGroup (Fin N) ℂ) p₀ q
   have hopen : IsOpen (orbitMap p₀ ⁻¹' O) := hO.preimage (orbit_map_continuous p₀)
   have hnem : (orbitMap p₀ ⁻¹' O).Nonempty :=
     ⟨U, by rw [Set.mem_preimage, orbitMap, hU]; exact hq⟩
-  rw [fubiniStudyMeasure, Measure.map_apply (orbit_map_measurable p₀) hO.measurableSet]
+  rw [fsMeasure, Measure.map_apply (orbit_map_measurable p₀) hO.measurableSet]
   exact hopen.measure_ne_zero unitaryHaarProb hnem
 
 omit [NeZero N] in
@@ -507,7 +507,7 @@ momentMap p 0}` (`{m₀ ≥ m₁}`) is an `obsFlow`-invariant measurable set wit
 * **Invariant** (`obsFlow ⁻¹' S = S`): both coordinates are conserved (`momentMap_obsFlow`).
 * **Measurable**: `measurableSet_le` of two `momentMap_measurable` coordinates.
 * **`μFS S ≠ 0`**: `S ⊇ {m₁ < m₀}`, open (`isOpen_momentMap_lt`) and nonempty (`[e₀]` has
-  `m₁ = 0 < 1 = m₀`), so positive by full support (`fubiniStudyMeasure_pos_of_isOpen`).
+  `m₁ = 0 < 1 = m₀`), so positive by full support (`fsMeasure_pos_of_isOpen`).
 * **`μFS S ≠ 1`**: `Sᶜ = {m₀ < m₁}`, open and nonempty (`[e₁]` has `m₀ = 0 < 1 = m₁`), so
   positive; hence `μFS S = 1 − μFS Sᶜ < 1`.
 
@@ -516,7 +516,7 @@ but "`μFS` itself is not an ergodic measure for `obsFlow`". The two are indepen
 non-uniquely-ergodic map can still be ergodic for a particular invariant measure. The
 obstruction is the non-constant conserved Born coordinate of (1). -/
 theorem obsFlow_not_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
-    ¬ Ergodic (obsFlow lam t) (fubiniStudyMeasure p₀) := by
+    ¬ Ergodic (obsFlow lam t) (fsMeasure p₀) := by
   intro herg
   set i := obsIdx0 hN with hi
   set j := obsIdx1 hN with hj
@@ -537,9 +537,9 @@ theorem obsFlow_not_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t
   have hgtne : {p : CPN N | momentMap p j < momentMap p i}.Nonempty :=
     ⟨cpBasisRay i, by
       simp only [Set.mem_ofPred_eq, momentMap_cpBasisRay, if_neg hji]; norm_num⟩
-  have hSne : fubiniStudyMeasure p₀ S ≠ 0 := by
+  have hSne : fsMeasure p₀ S ≠ 0 := by
     intro h0
-    exact (fubiniStudyMeasure_pos_of_isOpen p₀ (isOpen_momentMap_lt j i) hgtne)
+    exact (fsMeasure_pos_of_isOpen p₀ (isOpen_momentMap_lt j i) hgtne)
       (le_antisymm (h0 ▸ measure_mono hsub) zero_le)
   -- μFS S ≠ 1: Sᶜ = {m_i < m_j} is open nonempty, hence positive.
   have hScompl : Sᶜ = {p : CPN N | momentMap p i < momentMap p j} := by
@@ -547,8 +547,8 @@ theorem obsFlow_not_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t
   have hltne : {p : CPN N | momentMap p i < momentMap p j}.Nonempty :=
     ⟨cpBasisRay j, by
       simp only [Set.mem_ofPred_eq, momentMap_cpBasisRay, if_neg hji.symm]; norm_num⟩
-  have hScpos : fubiniStudyMeasure p₀ Sᶜ ≠ 0 := by
-    rw [hScompl]; exact fubiniStudyMeasure_pos_of_isOpen p₀ (isOpen_momentMap_lt i j) hltne
+  have hScpos : fsMeasure p₀ Sᶜ ≠ 0 := by
+    rw [hScompl]; exact fsMeasure_pos_of_isOpen p₀ (isOpen_momentMap_lt i j) hltne
   -- Combine: neither 0 nor 1 is possible.
   rcases h01 with h0 | h1
   · exact hSne h0
@@ -580,7 +580,7 @@ theorem so1_obstruction_capstone (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → �
     ((∀ p, momentMap (obsFlow lam t p) (obsIdx0 hN) = momentMap p (obsIdx0 hN))
       ∧ Measurable (fun p : CPN N => momentMap p (obsIdx0 hN))
       ∧ ∃ p q : CPN N, momentMap p (obsIdx0 hN) ≠ momentMap q (obsIdx0 hN))
-    ∧ ¬ Ergodic (obsFlow lam t) (fubiniStudyMeasure p₀) :=
+    ∧ ¬ Ergodic (obsFlow lam t) (fsMeasure p₀) :=
   ⟨momentMap_obsFlow_nonconstant_conserved hN lam t, obsFlow_not_ergodic hN p₀ lam t⟩
 
 /-- **SO-1 onramp.** Conjunction of the two honest results:
@@ -602,7 +602,7 @@ open CSD content). It locates the measure-characterisation in the symmetry and p
 theorem so1_onramp (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t : ℝ) :
     (∀ (μ : Measure (CPN N)), IsProbabilityMeasure μ →
         (∀ U : Matrix.unitaryGroup (Fin N) ℂ, MeasurePreserving (fun p => U • p) μ μ) →
-        μ = fubiniStudyMeasure p₀)
+        μ = fsMeasure p₀)
     ∧
     (∃ μ ν : Measure (CPN N),
         IsProbabilityMeasure μ ∧ IsProbabilityMeasure ν ∧

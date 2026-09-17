@@ -55,7 +55,7 @@ target for concrete models, not a global instance. -/
 def HasFubiniStudyPushforward {N : ℕ} {Sigma : Type u} [MeasurableSpace Sigma]
     {D : ConstraintDynamics Sigma} (Q : ProjectiveSector N D)
     (p₀ : ProjectiveState N) : Prop :=
-  Measure.map Q.pi (D.muL : Measure Sigma) = fubiniStudyMeasure p₀
+  Measure.map Q.pi (D.muL : Measure Sigma) = fsMeasure p₀
 
 /-! ### The concrete many-to-one product instance (B1 proved) -/
 
@@ -91,7 +91,7 @@ theorem productSector_hasFubiniStudyPushforward :
 
 /-- The product measure bridge as a bundled `ProjectiveMeasureBridge` with target `muFS`. -/
 noncomputable def productMeasureBridge : ProjectiveMeasureBridge (productSector H hH p₀) where
-  targetMeasure := fubiniStudyMeasure p₀
+  targetMeasure := fsMeasure p₀
   map_muL := productSector_hasFubiniStudyPushforward H hH p₀
 
 end CSD.SigmaLayer

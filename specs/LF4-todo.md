@@ -199,7 +199,7 @@ under our context. The PSD inner-product route above bypasses the issue.
 
 **Why deferred:** Each is a Mathlib-scale contribution.
 
-- `invariant_measure_uniqueness` — Haar measure on compact homogeneous spaces (`SU(N)/U(N-1) ≅ CP^{N-1}`). Mathlib has Haar on topological groups; the quotient/homogeneous-space case requires more work. **Concrete realisation PROVED 2026-05-24**: the `CP^{N-1}` / `U(N)` content of this axiom is now an axiom-free theorem, `Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn` (`CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean`), built on the §12 projectivization API + `fubiniStudyMeasure_unique` (Phase G4) + `invariant_finiteMeasure_eq_smul_fubiniStudy` (Phase G5, finite-measure normalisation). The abstract axiom is **not** discharged (it is stated over an arbitrary pretransitive `(P, G)` with no topology, so is strictly stronger than provable); the remaining work is the §8 instantiation that lets LF2's `measure_bridge` route through the concrete theorem. See `AXIOMS.md §2.1`.
+- `invariant_measure_uniqueness` — Haar measure on compact homogeneous spaces (`SU(N)/U(N-1) ≅ CP^{N-1}`). Mathlib has Haar on topological groups; the quotient/homogeneous-space case requires more work. **Concrete realisation PROVED 2026-05-24**: the `CP^{N-1}` / `U(N)` content of this axiom is now an axiom-free theorem, `Matrix.UnitaryGroup.invariant_measure_uniqueness_cpn` (`CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean`), built on the §12 projectivization API + `fsMeasure_unique` (Phase G4) + `invariant_finiteMeasure_eq_smul_fubiniStudy` (Phase G5, finite-measure normalisation). The abstract axiom is **not** discharged (it is stated over an arbitrary pretransitive `(P, G)` with no topology, so is strictly stronger than provable); the remaining work is the §8 instantiation that lets LF2's `measure_bridge` route through the concrete theorem. See `AXIOMS.md §2.1`.
 
 - `busch_effect_gleason` — effect-algebra infrastructure (not currently in Mathlib), plus Busch 2003's proof. Larger task; full effect-algebra / POVM machinery is an open Mathlib gap. No concrete-realisation thread yet (cf. the projectivization thread for the other axiom; the analogous target here is a finite-dimensional Gleason/Busch formalisation).
 
@@ -239,7 +239,7 @@ All three exports are foundational-axiom-only; `#guard_msgs` regressions in Axio
 
 **Status:** **Structural part DONE 2026-05-24** (`CsdLean4/LF4/Instance.lean`).
 `CSD.LF4.cpSectorData` is the first concrete `SectorData` (`Σ = P = ℂℙ^{N-1}`,
-`G = U(N)`, `π = id`, `μL = fubiniStudyMeasure`), proving LF2's abstract
+`G = U(N)`, `π = id`, `μL = fsMeasure`), proving LF2's abstract
 framework is **inhabited** (it never had been). `cp_measure_bridge` holds
 **axiom-free** for the instance (foundational triple only; the abstract
 `measure_bridge` lemma and the `invariant_measure_uniqueness` axiom it carried were

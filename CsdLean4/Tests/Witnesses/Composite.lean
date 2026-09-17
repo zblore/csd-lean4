@@ -85,9 +85,9 @@ Instantiates `no_product_partition_realises_ghz` (which routes through
 statistical inequality). -/
 theorem fs_no_product_partition_ghz (p₀ : CPN 8) :
     ∀ R : Fin 3 → Empirical.GHZ.PauliAxis → CPN 8 → ℝ,
-      IsProductPartitionGHZ R → ReproducesGHZ (fubiniStudyMeasure p₀) R → False :=
+      IsProductPartitionGHZ R → ReproducesGHZ (fsMeasure p₀) R → False :=
   fun R hPP hRep =>
-    no_product_partition_realises_ghz (fubiniStudyMeasure p₀) R hPP hRep
+    no_product_partition_realises_ghz (fsMeasure p₀) R hPP hRep
 
 end Witnesses
 end Tests

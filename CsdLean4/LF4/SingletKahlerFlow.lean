@@ -97,15 +97,15 @@ bridge / preparation / outcome-region proofs port verbatim. -/
 /-- The axiom-free measure bridge for the `Φ ≠ id` sector (`c = 1`, `π∗μL = μFS`
 via `Measure.fst_prod`), identical to `kBridge` — the bridge does not see `Φ`. -/
 noncomputable def kBridgeFlow (p₀ : CPN 4) (sh : KTorus) :
-    LF2.MeasureBridgeData (kSectorDataFlow p₀ sh) (fubiniStudyMeasure p₀) where
+    LF2.MeasureBridgeData (kSectorDataFlow p₀ sh) (fsMeasure p₀) where
   is_inv := fun U =>
-    ⟨(continuous_const_smul U).measurable, fubiniStudyMeasure_smul_invariant U p₀⟩
+    ⟨(continuous_const_smul U).measurable, fsMeasure_smul_invariant U p₀⟩
   c := 1
   bridge_eq := by
     show Measure.map (kSectorDataFlow p₀ sh).π
-        ((kSectorDataFlow p₀ sh).μL : Measure (KSigma 4)) = 1 • fubiniStudyMeasure p₀
+        ((kSectorDataFlow p₀ sh).μL : Measure (KSigma 4)) = 1 • fsMeasure p₀
     rw [one_smul]
-    show Measure.map Prod.fst (kMuL p₀) = fubiniStudyMeasure p₀
+    show Measure.map Prod.fst (kMuL p₀) = fsMeasure p₀
     rw [kMuL, ← Measure.fst, Measure.fst_prod]
 
 /-- The singlet `PurePreparation` over the `Φ ≠ id` sector (constant `rep`, Dirac
@@ -144,7 +144,7 @@ noncomputable def ofKählerPreparationFlow
     LF3.PureSingletPreparation (kSectorDataFlow p₀ sh) ctx 4 :=
   LF3.PureSingletPreparation.ofHypothesis
     kMuPsi inferInstance
-    (fubiniStudyMeasure p₀) inferInstance
+    (fsMeasure p₀) inferInstance
     (kBridgeFlow p₀ sh)
     (kPurePrepFlow p₀ sh)
     (by decide)
@@ -159,7 +159,7 @@ noncomputable def ofKählerPreparationFlow
       congr 1
       symm
       rw [LF2.PurePreparation.born_rank_one_direct
-            (kSectorDataFlow p₀ sh) (fubiniStudyMeasure p₀) (kBridgeFlow p₀ sh) kMuPsi
+            (kSectorDataFlow p₀ sh) (fsMeasure p₀) (kBridgeFlow p₀ sh) kMuPsi
             (kPurePrepFlow p₀ sh) ((kJED ctx hgen).eig s t) ((kJED ctx hgen).eig_unit s t)]
       exact kEig_born ctx hgen s t)
 

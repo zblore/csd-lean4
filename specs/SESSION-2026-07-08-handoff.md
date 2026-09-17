@@ -48,7 +48,7 @@ A single genuine `Φ ≠ id` object (`rotationSetup`) supports both pillars.
 - **L1 (Kähler geometry)** — the differential-geometric content (2-form ω,
   complex structure J) is unformalizable today (no Mathlib API). Only its
   normalized-volume core is formalized. *Formalization-depth, not correctness*:
-  μ_FS is provably the unique invariant measure (`fubiniStudyMeasure_unique`),
+  μ_FS is provably the unique invariant measure (`fsMeasure_unique`),
   so the object is already the right one.
 - **L7 / SL-1 (Born from the flow)** ★ — the deep frontier. Born trials still
   *sample* μ_FS i.i.d.; they are not *evolved by* the deterministic flow, and

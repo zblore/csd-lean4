@@ -16,12 +16,12 @@ a genuine **Fubini–Study volume ratio on the ontic Kähler `Σ = ℂℙ^{N-1}`
 one missing analytic input is the Duistermaat–Heckman pushforward
 
 ```
-Φ∗ fubiniStudyMeasure = uniform on the simplex Δ_{N-1}.
+Φ∗ fsMeasure = uniform on the simplex Δ_{N-1}.
 ```
 
-The project's `fubiniStudyMeasure p₀` is the pushforward of the Haar probability
+The project's `fsMeasure p₀` is the pushforward of the Haar probability
 measure `unitaryHaarProb` under the orbit map `U ↦ U • p₀`
-(`FubiniStudy.lean`). So `Φ∗ fubiniStudyMeasure` is the law, under Haar, of
+(`FubiniStudy.lean`). So `Φ∗ fsMeasure` is the law, under Haar, of
 `U ↦ momentMap (U • p₀)`. This file records the pointwise bridge that makes that
 reduction precise: along the orbit, the moment map is the squared-modulus profile
 of the acted representative.
@@ -32,7 +32,7 @@ unit representative, `momentMap (U • p₀) i = ‖(U · rep) i‖²` (since un
 preserve the norm), so
 
 ```
-Φ∗ fubiniStudyMeasure = uniform_Δ   ⟺   (U ↦ (‖(U·rep)ᵢ‖²)ᵢ)∗ unitaryHaarProb = uniform_Δ,
+Φ∗ fsMeasure = uniform_Δ   ⟺   (U ↦ (‖(U·rep)ᵢ‖²)ᵢ)∗ unitaryHaarProb = uniform_Δ,
 ```
 
 i.e. **the squared-moduli of a Haar-random unit column are uniform on the
@@ -40,7 +40,7 @@ simplex** — the Dirichlet`(1,…,1)` law. For `N = 2` this is the single fact
 "`|U₀₀|²` is `Uniform[0,1]` for Haar `U(2)`" (equivalently Archimedes' hat-box
 theorem on the Bloch sphere). This is a genuine measure-theoretic computation with
 no current Mathlib support (no sphere change-of-variables / Dirichlet law); it is
-**not** a one-line Archimedes invocation given how `fubiniStudyMeasure` is built.
+**not** a one-line Archimedes invocation given how `fsMeasure` is built.
 See `specs/carve-out-plan.md` Tranche M slice 2.
 
 **Category:** 3-Local (1-Mathlib adjacent; kept in `CSD.LF4` for the carve-out programme).
@@ -59,7 +59,7 @@ variable {N : ℕ}
 /-- **The moment map along the unitary orbit.** For `U : U(N)` and a projective
 point `p₀`, the moment coordinate at `U • p₀` is the squared-modulus profile of
 `U` acting on a representative of `p₀`. This is the bridge reducing the
-Fubini–Study pushforward `Φ∗ fubiniStudyMeasure` to the Haar law of the
+Fubini–Study pushforward `Φ∗ fsMeasure` to the Haar law of the
 squared-moduli of `U · rep` (the Dirichlet keystone). -/
 theorem momentMap_orbit (U : Matrix.unitaryGroup (Fin N) ℂ) (p₀ : CPN N) (i : Fin N) :
     momentMap (U • p₀) i

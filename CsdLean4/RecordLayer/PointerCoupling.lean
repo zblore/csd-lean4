@@ -63,7 +63,7 @@ Hamiltonian flow of `-2⟨H⟩` for the Fubini–Study form). The *arena* readin
 `Matrix.norm_exp_smul_neg_I_sub_le` (`DuhamelBound.lean` staging),
 `Matrix.norm_entry_le_l2_opNorm` (`L2OpNormEntry.lean` staging, new),
 `pointerH`/`pointerRot` algebra (`RecordLayer/PointerRotation.lean`),
-`fubiniStudyMeasure_smul_invariant`.
+`fsMeasure_smul_invariant`.
 -/
 
 @[expose] public section
@@ -152,8 +152,8 @@ noncomputable def couplingUU (w : Fin K → ℝ) : Matrix.unitaryGroup (Fin (K +
 /-- Liouville preservation on the pointer: FS unitary invariance. -/
 theorem couplingUU_measurePreserving (w : Fin K → ℝ) (q₀ : Pointer K) :
     MeasurePreserving (fun q : Pointer K => couplingUU w • q)
-      (fubiniStudyMeasure q₀) (fubiniStudyMeasure q₀) :=
-  ⟨(continuous_const_smul _).measurable, fubiniStudyMeasure_smul_invariant _ q₀⟩
+      (fsMeasure q₀) (fsMeasure q₀) :=
+  ⟨(continuous_const_smul _).measurable, fsMeasure_smul_invariant _ q₀⟩
 
 /-! ### The generation identification (brick 5's statement, pulled forward) -/
 

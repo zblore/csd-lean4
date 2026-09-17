@@ -29,7 +29,7 @@ public import CsdLean4.RecordLayer.BasinFrequency
 Each headline of the `Empirical/CSD/*Volume` series quantifies over an abstract
 i.i.d. trial bundle `(Ω, Pr, X, hX, hlaw, hindep)`. The canonical FS coordinate
 process of `CsdLean4/LF4/TrialWitness.lean`
-(`fsTrialMeasure p₀ = Measure.infinitePi (fun _ => fubiniStudyMeasure p₀)`,
+(`fsTrialMeasure p₀ = Measure.infinitePi (fun _ => fsMeasure p₀)`,
 `fsTrial N n = (· n)`) inhabits that bundle for **any** measurable region family
 (`fsTrial_pairwise_indepFun_indicator`). This file wires the witness into every
 remaining volume headline, so each acquires a `_canonical` corollary whose

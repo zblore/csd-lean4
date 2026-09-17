@@ -66,8 +66,8 @@ theorem integral_abs_two_mul_sub_one :
 (`fs_moment_pushforward_uniform`) plus the 1-D integral (`integral_abs_two_mul_sub_one`). The
 single-axis crux for the context-fixed qubit measurement. -/
 theorem hatBox_moment (p₀ : CPN 2) :
-    ∫ p, |2 * momentMap p 0 - 1| ∂(fubiniStudyMeasure p₀) = 1 / 2 := by
-  have hmap := MeasureTheory.integral_map (μ := fubiniStudyMeasure p₀)
+    ∫ p, |2 * momentMap p 0 - 1| ∂(fsMeasure p₀) = 1 / 2 := by
+  have hmap := MeasureTheory.integral_map (μ := fsMeasure p₀)
     (φ := fun p => momentMap p 0) (f := fun t => |2 * t - 1|)
     (momentMap_measurable 0).aemeasurable (by fun_prop)
   rw [← hmap, fs_moment_pushforward_uniform]
@@ -102,9 +102,9 @@ density `ρ = 4·max(2·momentMap − 1, 0)` (Bloch form `4(m·λ)₊`) integrat
 Fubini–Study measure — the normalisation `∫ ρ dμ_FS = 1` of `record-layer-plan.md` §2. Via the moment
 coordinate being `Uniform[0,1]` (`fs_moment_pushforward_uniform`) + `integral_max_two_mul_sub_one_zero`. -/
 theorem spreadDensity_normalized (p₀ : CPN 2) :
-    ∫ p, 4 * max (2 * momentMap p 0 - 1) 0 ∂(fubiniStudyMeasure p₀) = 1 := by
+    ∫ p, 4 * max (2 * momentMap p 0 - 1) 0 ∂(fsMeasure p₀) = 1 := by
   rw [MeasureTheory.integral_const_mul]
-  have hmap := MeasureTheory.integral_map (μ := fubiniStudyMeasure p₀)
+  have hmap := MeasureTheory.integral_map (μ := fsMeasure p₀)
     (φ := fun p => momentMap p 0) (f := fun t => max (2 * t - 1) 0)
     (momentMap_measurable 0).aemeasurable (by fun_prop)
   rw [← hmap, fs_moment_pushforward_uniform, integral_max_two_mul_sub_one_zero]

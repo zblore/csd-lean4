@@ -20,7 +20,7 @@ equals the same integral with `blochProj n` replaced by the reference coordinate
   `∫ f(blochProj n p) dμ_FS = ∫ f(momentMap p 0) dμ_FS`.
 
 The mechanism is the existing `U(2)`-invariance of the Fubini–Study measure
-(`fubiniStudyMeasure_smul_invariant`): a unitary `U` with `U • [e₀] = [n]` moves the axis, and the
+(`fsMeasure_smul_invariant`): a unitary `U` with `U • [e₀] = [n]` moves the axis, and the
 measure is unchanged. This is the workhorse that lifts the reference-axis results
 (`hatBox_moment`, `spreadDensity_normalized`) to an **arbitrary** measurement axis — in particular
 the general-axis hat-box `∫ |2·blochProj n − 1| dμ_FS = ½` and normalisation
@@ -29,7 +29,7 @@ the general-axis hat-box `∫ |2·blochProj n − 1| dμ_FS = ½` and normalisat
 ## References
 `LF4/BlochProjection.lean` (`blochProj`, `blochProj_smul`, `blochProj_measurable`);
 `LF4/HatBox.lean` (`hatBox_moment`, `spreadDensity_normalized` — the reference-axis integrals);
-`Mathlib/.../FubiniStudy.lean` (`fubiniStudyMeasure_smul_invariant`); `specs/record-layer-plan.md` §2.
+`Mathlib/.../FubiniStudy.lean` (`fsMeasure_smul_invariant`); `specs/record-layer-plan.md` §2.
 -/
 
 @[expose] public section
@@ -85,26 +85,26 @@ of `blochProj n` equals the same integral with `blochProj n` replaced by the ref
 `momentMap · 0`. The axis is moved to `e₀` by unitary invariance of `μ_FS`. -/
 theorem blochProj_integral_bridge (n : EuclideanSpace ℂ (Fin 2)) (hn0 : n ≠ 0) (hn : ‖n‖ = 1)
     (p₀ : CPN 2) {f : ℝ → ℝ} (hf : Measurable f) :
-    ∫ p, f (blochProj n p) ∂(fubiniStudyMeasure p₀)
-      = ∫ p, f (momentMap p 0) ∂(fubiniStudyMeasure p₀) := by
+    ∫ p, f (blochProj n p) ∂(fsMeasure p₀)
+      = ∫ p, f (momentMap p 0) ∂(fsMeasure p₀) := by
   obtain ⟨U, hU⟩ := exists_unitary_moment_axis n hn0 hn
-  have hinv := fubiniStudyMeasure_smul_invariant U p₀
+  have hinv := fsMeasure_smul_invariant U p₀
   have hmap : ∫ p, f (blochProj n p)
-        ∂(Measure.map (fun q : CPN 2 => U • q) (fubiniStudyMeasure p₀))
-      = ∫ p, f (blochProj n (U • p)) ∂(fubiniStudyMeasure p₀) :=
+        ∂(Measure.map (fun q : CPN 2 => U • q) (fsMeasure p₀))
+      = ∫ p, f (blochProj n (U • p)) ∂(fsMeasure p₀) :=
     MeasureTheory.integral_map (continuous_const_smul U).measurable.aemeasurable
       (hf.comp (blochProj_measurable n)).aestronglyMeasurable
-  calc ∫ p, f (blochProj n p) ∂(fubiniStudyMeasure p₀)
+  calc ∫ p, f (blochProj n p) ∂(fsMeasure p₀)
       = ∫ p, f (blochProj n p)
-          ∂(Measure.map (fun q => U • q) (fubiniStudyMeasure p₀)) := by rw [hinv]
-    _ = ∫ p, f (blochProj n (U • p)) ∂(fubiniStudyMeasure p₀) := hmap
-    _ = ∫ p, f (momentMap p 0) ∂(fubiniStudyMeasure p₀) := by simp_rw [hU]
+          ∂(Measure.map (fun q => U • q) (fsMeasure p₀)) := by rw [hinv]
+    _ = ∫ p, f (blochProj n (U • p)) ∂(fsMeasure p₀) := hmap
+    _ = ∫ p, f (momentMap p 0) ∂(fsMeasure p₀) := by simp_rw [hU]
 
 /-- **General-axis hat-box.** The Fubini–Study average of the Bloch height `|2·blochProj n − 1|`
 along an arbitrary unit axis `n` is `½` — Archimedes' hat-box for any axis (via the bridge to the
 reference-axis `hatBox_moment`). -/
 theorem hatBox_axis (n : EuclideanSpace ℂ (Fin 2)) (hn0 : n ≠ 0) (hn : ‖n‖ = 1) (p₀ : CPN 2) :
-    ∫ p, |2 * blochProj n p - 1| ∂(fubiniStudyMeasure p₀) = 1 / 2 := by
+    ∫ p, |2 * blochProj n p - 1| ∂(fsMeasure p₀) = 1 / 2 := by
   rw [blochProj_integral_bridge n hn0 hn p₀ (f := fun t => |2 * t - 1|) (by fun_prop),
     hatBox_moment]
 
@@ -112,7 +112,7 @@ theorem hatBox_axis (n : EuclideanSpace ℂ (Fin 2)) (hn0 : n ≠ 0) (hn : ‖n�
 along an arbitrary unit axis `n` integrates to `1` against the Fubini–Study measure. -/
 theorem spreadDensity_normalized_axis (n : EuclideanSpace ℂ (Fin 2)) (hn0 : n ≠ 0) (hn : ‖n‖ = 1)
     (p₀ : CPN 2) :
-    ∫ p, 4 * max (2 * blochProj n p - 1) 0 ∂(fubiniStudyMeasure p₀) = 1 := by
+    ∫ p, 4 * max (2 * blochProj n p - 1) 0 ∂(fsMeasure p₀) = 1 := by
   rw [blochProj_integral_bridge n hn0 hn p₀ (f := fun t => 4 * max (2 * t - 1) 0) (by fun_prop),
     spreadDensity_normalized]
 

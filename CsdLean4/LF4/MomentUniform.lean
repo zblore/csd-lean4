@@ -18,7 +18,7 @@ public import CsdLean4.LF4.DuistermaatHeckman
 Composes the three closed slices into the moment-marginal headline and discharges
 the Duistermaat–Heckman axiom for the qubit:
 
-`fs_moment_pushforward_uniform : (momentMap · 0)∗ fubiniStudyMeasure p₀
+`fs_moment_pushforward_uniform : (momentMap · 0)∗ fsMeasure p₀
   = volume.restrict (Icc 0 1)`.
 
 Chain:
@@ -29,7 +29,7 @@ Chain:
 - **L5** `moment_marginal_uniform_pi`: `Tpi∗ (pi gaussianReal) = volume.restrict (Ioo 0 1)`,
   composing the bridge with `blockSqNorm_map_gaussian2_prod` (L5.2b) and
   `ratioSqNorm_map_expHalf_prod` (L5.3).
-- **L6** rewrites `fubiniStudyMeasure = gaussianCP` (Part 1), pushes through
+- **L6** rewrites `fsMeasure = gaussianCP` (Part 1), pushes through
   `gaussianProj`/`coords` to `stdGaussian(ℝ⁴) = (pi gaussianReal).map (toLp 2)`,
   identifies the moment composition with `Tpi` a.e. (off the null `{0}`), and
   applies L5; `Ioo 0 1 → Icc 0 1` since the endpoints are `volume`-null.
@@ -161,7 +161,7 @@ discharged via the Gaussian-induced realisation of `μ_FS` (Part 1) and the
 moment-marginal computation (Slices 1–3). Formerly the axiom
 `fs_moment_pushforward_uniform` (DuistermaatHeckman.lean). -/
 theorem fs_moment_pushforward_uniform (p₀ : CPN 2) :
-    Measure.map (fun p => momentMap p 0) (fubiniStudyMeasure p₀)
+    Measure.map (fun p => momentMap p 0) (fsMeasure p₀)
       = (volume : Measure ℝ).restrict (Set.Icc 0 1) := by
   rw [show (volume : Measure ℝ).restrict (Set.Icc 0 1)
         = (volume : Measure ℝ).restrict (Ioo 0 1) from (Measure.restrict_congr_set Ioo_ae_eq_Icc).symm,
@@ -204,12 +204,12 @@ theorem fs_moment_pushforward_uniform (p₀ : CPN 2) :
   ring
 
 /-- **Unconditional qubit Born = Fubini–Study volume ratio on `ℂℙ¹`.** The genuine
-`fubiniStudyMeasure` of the moment sublevel set at `[ψ]` equals the Born weight
+`fsMeasure` of the moment sublevel set at `[ψ]` equals the Born weight
 `‖⟨e₀, ψ⟩‖²`. Foundational-triple-only (the DH/Archimedes input
 `fs_moment_pushforward_uniform` is now a theorem); **no** `busch_effect_gleason`. -/
 theorem fs_born_volume_ratio_qubit_uncond
     (p₀ : CPN 2) (ψ : EuclideanSpace ℂ (Fin 2)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) :
-    fubiniStudyMeasure p₀
+    fsMeasure p₀
         {p : CPN 2 | momentMap p 0 ≤ momentMap (Projectivization.mk ℂ ψ hψ0) 0}
       = ENNReal.ofReal (‖inner ℂ (EuclideanSpace.single 0 (1 : ℂ)) ψ‖ ^ 2) :=
   fs_born_volume_ratio_qubit p₀ ψ hψ0 hψ (fs_moment_pushforward_uniform p₀)
@@ -225,7 +225,7 @@ theorem qubit_born_frequency_convergence_uncond
     (p₀ : CPN 2) (ψ : EuclideanSpace ℂ (Fin 2)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 2) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep :
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)

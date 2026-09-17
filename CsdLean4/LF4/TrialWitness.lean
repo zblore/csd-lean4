@@ -24,8 +24,8 @@ witnesses) quantifies over an abstract i.i.d. trial bundle
 that vacuity-shaped residue:
 
 * `fsTrialSpace` / `fsTrialMeasure` / `fsTrial` — the canonical process
-  `Ω = ℕ → ℂℙ^{N-1}`, `Pr = Measure.infinitePi (fun _ => fubiniStudyMeasure p₀)`,
-  `X n = (· n)`, with marginal law `fubiniStudyMeasure p₀`
+  `Ω = ℕ → ℂℙ^{N-1}`, `Pr = Measure.infinitePi (fun _ => fsMeasure p₀)`,
+  `X n = (· n)`, with marginal law `fsMeasure p₀`
   (`fsTrial_law`, via `Measure.infinitePi_map_eval`), joint independence
   (`fsTrial_iIndepFun`, via `iIndepFun_eval_infinitePi`), and the pairwise
   indicator independence in exactly the capstone shape
@@ -65,10 +65,10 @@ variable {N : ℕ}
 sequences of projective points, one per trial. -/
 abbrev fsTrialSpace (N : ℕ) : Type := ℕ → CPN N
 
-/-- The canonical trial measure: the infinite product of `fubiniStudyMeasure p₀`
+/-- The canonical trial measure: the infinite product of `fsMeasure p₀`
 over the trial index. The i.i.d. sampling law itself. -/
 noncomputable def fsTrialMeasure (p₀ : CPN N) : Measure (fsTrialSpace N) :=
-  Measure.infinitePi (fun _ : ℕ => fubiniStudyMeasure p₀)
+  Measure.infinitePi (fun _ : ℕ => fsMeasure p₀)
 
 instance instIsProbabilityMeasureFsTrialMeasure (p₀ : CPN N) :
     IsProbabilityMeasure (fsTrialMeasure p₀) := by
@@ -81,15 +81,15 @@ def fsTrial (N : ℕ) (n : ℕ) : fsTrialSpace N → CPN N := fun ω => ω n
 theorem fsTrial_measurable (n : ℕ) : Measurable (fsTrial N n) :=
   measurable_pi_apply n
 
-/-- Each canonical trial has law `fubiniStudyMeasure p₀` (`hlaw`). -/
+/-- Each canonical trial has law `fsMeasure p₀` (`hlaw`). -/
 theorem fsTrial_law (p₀ : CPN N) (n : ℕ) :
-    Measure.map (fsTrial N n) (fsTrialMeasure p₀) = fubiniStudyMeasure p₀ :=
-  Measure.infinitePi_map_eval (fun _ : ℕ => fubiniStudyMeasure p₀) n
+    Measure.map (fsTrial N n) (fsTrialMeasure p₀) = fsMeasure p₀ :=
+  Measure.infinitePi_map_eval (fun _ : ℕ => fsMeasure p₀) n
 
 /-- The canonical trials are jointly independent. -/
 theorem fsTrial_iIndepFun (p₀ : CPN N) :
     iIndepFun (fsTrial N) (fsTrialMeasure p₀) :=
-  iIndepFun_eval_infinitePi (fubiniStudyMeasure p₀)
+  iIndepFun_eval_infinitePi (fsMeasure p₀)
 
 /-- Pairwise independence of the per-trial outcome-region indicators, for any
 family of measurable regions — the exact `hindep` shape every

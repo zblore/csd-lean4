@@ -68,7 +68,7 @@ is what the witnesses actually have.
 
 And the escape is already built and already true: `kMuL_fst`
 (`RecordLayer/EpistemicDisintegration.lean`) makes the base marginal of the Liouville
-measure exactly `fubiniStudyMeasure`, and `measurePreserving_fst_of_baseRotate`
+measure exactly `fsMeasure`, and `measurePreserving_fst_of_baseRotate`
 (`LF4/LiouvilleUnique.lean`) makes it unitary-invariant. **So the Schrödinger flow itself
 moves every base point while leaving the base marginal exactly invariant.**
 

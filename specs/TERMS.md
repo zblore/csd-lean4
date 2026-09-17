@@ -34,7 +34,7 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   smoothness `∞`).
 * **Also backed (2026-09-07/08):** non-degeneracy at every point and the symplectic predicate —
   `fsForm_nondegenerate`, ★★★ `fsForm_isSymplectic` (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`);
-  and the top-power identity with its constant — ★★★ `fsVolume_eq_smul_fubiniStudyMeasure`,
+  and the top-power identity with its constant — ★★★ `fsVolume_eq_smul_fsMeasure`,
   `ω_FS^{∧n} = (4π)ⁿ · μ_FS` (`Instances/ProjectiveSpaceFubiniStudyMass.lean`; see the Liouville
   entry for the convention behind `(4π)ⁿ`).
 * **Also backed (2026-09-09, G7):** the manifold-level predicate — `DifferentialForm.IsAlmostKahler β J`
@@ -278,8 +278,8 @@ alarming and is not.
   is what `ConstraintDynamics.flow_preserves` (P4) licenses: each time-`t` map preserves `muL`.
 * **Backed by:** `ConstraintDynamics.flow_preserves` (a structure field — *posited* of every
   model, not derived), and `liouville_isProbability` for the Kähler instance.
-* **Established (2026-09-08):** `Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean`) — the **normalised** measure of the top power of the Fubini–Study form IS `fubiniStudyMeasure p₀`, with no premise: the volume is `U(n+1)`-invariant, finite and nonzero (`specs/top-power-scoping.md`, M1–M6; the premise version of the morning survives as `_of_ne_zero`).
-* **Established with its constant (2026-09-08, later the same day):** `Projectivization.fsVolume_eq_smul_fubiniStudyMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyMass.lean`) — `fsVolume n = (4π)ⁿ • fubiniStudyMeasure p₀`, the mass `(4π)ⁿ` computed (`fsVolume_univ`). So "this measure **is** the Kähler top-power volume" is now a theorem on `ℂℙⁿ` with every factor visible; the textbook `ω^{∧n}/n!` is a renormalisation of it (the chart form carries the potential's `-4`, the wedge its own normalisation), not a further claim.
+* **Established (2026-09-08):** `Projectivization.fsVolumeNormalized_eq_fsMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyVolume.lean`) — the **normalised** measure of the top power of the Fubini–Study form IS `fsMeasure p₀`, with no premise: the volume is `U(n+1)`-invariant, finite and nonzero (`specs/top-power-scoping.md`, M1–M6; the premise version of the morning survives as `_of_ne_zero`).
+* **Established with its constant (2026-09-08, later the same day):** `Projectivization.fsVolume_eq_smul_fsMeasure` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyMass.lean`) — `fsVolume n = (4π)ⁿ • fsMeasure p₀`, the mass `(4π)ⁿ` computed (`fsVolume_univ`). So "this measure **is** the Kähler top-power volume" is now a theorem on `ℂℙⁿ` with every factor visible; the textbook `ω^{∧n}/n!` is a renormalisation of it (the chart form carries the potential's `-4`, the wedge its own normalisation), not a further claim.
 * **Established for the torus flow (2026-09-09, G10):** `Projectivization.fsVolume_map_torusUnitary_smul` and `measurePreserving_torusUnitary_smul` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceMomentMap.lean`) — every map `p ↦ diag(e^{iθ}) • p`, hence every time-`t` map of the Hamiltonian flow G6 built (`torusUnitary_add_smul` is the group law), preserves `fsVolume n`. Liouville in the dynamics sense for **one** Hamiltonian flow on `ℂℙⁿ`, obtained from unitary invariance (`fsVolume_map_smul`), not from a manifold-level flow theory (G5, queued at XL in `specs/generator-layer-scoping.md` §9). `ConstraintDynamics.flow_preserves` (Posit 3) is untouched: the constraint dynamics' measurement pieces are not globally Hamiltonian.
 * **Established for every Hamiltonian flow (2026-09-12, Q29(d′)):** ★★★ `Projectivization.fsVolume_map_hamiltonianFlow` (`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceHamiltonianFlow.lean`) — the Hamiltonian flow of every `C^∞` energy `H : ℂℙⁿ → ℝ` preserves `fsVolume n` (and `fsVolumeNormalized n`), the `ℂℙⁿ` instance of the manifold-level theorem `IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow` (`HamiltonianFlowVolume.lean`: on a compact symplectic manifold the Hamiltonian flow preserves the measure of every power of the form). Liouville in the dynamics sense for **every** smooth Hamiltonian flow on `ℂℙⁿ`, from the manifold-level flow theory (Q29 (a)–(d′), the former G5), not from group invariance. `ConstraintDynamics.flow_preserves` (Posit 3) still stands: the constraint dynamics' measurement pieces are not globally Hamiltonian.
 * **The Schrödinger flow is the Hamiltonian flow, and the sector field is derived (2026-09-12, Q29(e)):** ★★ `Projectivization.hamiltonianFlow_schrodingerHamiltonian` / `hamiltonianFlow_torusHamiltonian` (`Instances/ProjectiveSpaceSchrodingerFlow.lean`) — `p ↦ exp(−itH) • p` IS `IsSymplectic.hamiltonianFlow` of `−2⟨H⟩` and the torus orbit IS that of `2 ∑ θₖ μₖ` (uniqueness of integral curves), so `fsVolume_map_schrodingerUnitary_smul` is Liouville for the Schrödinger flow from the Hamiltonian; on the sectors, ★★★ `CSD.LF4.manyToOneSchrodingerSetup_flow_preserves_volume_derived` / `unitaryFlowSetup_schrodingerUnitary_flow_preserves_volume_derived` (`LF4/SectorManifold.lean`): the posited field `flow_preserves_volume` is a theorem on the Schrödinger sectors by Liouville's theorem, the field not consumed.
@@ -298,7 +298,7 @@ alarming and is not.
   manifold** (`Instances/ProjectiveSpaceFubiniStudySymplectic.lean`; real dimension `2n`).
   Before that date zero declarations carried either word at manifold level.
 * **Also backed (2026-09-08/09):** derived from the structure — the symplectic volume
-  (`fsVolume`, `fsVolume_eq_smul_fubiniStudyMeasure`), Hamiltonian vector fields with existence,
+  (`fsVolume`, `fsVolume_eq_smul_fsMeasure`), Hamiltonian vector fields with existence,
   uniqueness, smoothness and integral curves (`HamiltonianVectorField.lean`, G1–G4), moment maps of
   the torus and `U(n+1)` actions (G6, G13), the Kähler predicate (G7, G14a) — see the Hamiltonian,
   moment map and Kähler entries.
@@ -310,19 +310,19 @@ alarming and is not.
 
 ## Fubini–Study
 
-* **Means here (backed):** the measure `fubiniStudyMeasure p₀` on `ℂℙ^{N−1}`, defined as the
+* **Means here (backed):** the measure `fsMeasure p₀` on `ℂℙ^{N−1}`, defined as the
   Haar-on-`U(N)` pushforward.
-* **Backed by:** `fubiniStudyMeasure_unique` — it is the *unique* `U(N)`-invariant probability
-  measure, proved; plus `fubiniStudyMeasure_smul_invariant`.
+* **Backed by:** `fsMeasure_unique` — it is the *unique* `U(N)`-invariant probability
+  measure, proved; plus `fsMeasure_smul_invariant`.
 * **Also backed (2026-09-08/10):** it IS the normalised top power of the Kähler form —
-  `Projectivization.fsVolumeNormalized_eq_fubiniStudyMeasure` and, with the constant,
-  `fsVolume_eq_smul_fubiniStudyMeasure` (`ω_FS^{∧n} = (4π)ⁿ · μ_FS`); and on the sectors,
+  `Projectivization.fsVolumeNormalized_eq_fsMeasure` and, with the constant,
+  `fsVolume_eq_smul_fsMeasure` (`ω_FS^{∧n} = (4π)ⁿ · μ_FS`); and on the sectors,
   `CSD.LF4.unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized` /
   `fsVolumeNormalized_isForcedKahlerVolume` (`LF4/SectorManifold.lean`, W1).
 * **Also backed (2026-09-11, G17):** it IS the normalised Riemannian volume of the Fubini–Study
   *metric* — `MetricFamily.riemannianVolume` (`Mathlib/Geometry/Manifold/RiemannianVolume.lean`,
   chart Gram densities `√det G` glued along a cover) and ★★★
-  `Projectivization.riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure`
+  `Projectivization.riemannianVolume_fsMetric_eq_smul_fsMeasure`
   (`Instances/ProjectiveSpaceFubiniStudyRiemannian.lean`): `vol_g = ((4π)ⁿ/n!) · μ_FS`, via ★★★
   `riemannianVolume_fsMetric` (`vol_g = fsVolume n / n!`, the Kähler identity `vol_g = ω^{∧n}/n!`).
   All three textbook readings of `μ_FS` — unique invariant measure, normalised top power of the Kähler
@@ -335,7 +335,7 @@ alarming and is not.
   `riemannianVolume`; nothing consumes either. Marker: `TERM-SCOPE(Kahler)` where that reading is
   used.
 * ⚠️ **Since CR-4 (2026-09-06) the Born headlines no longer route through it.** The dependency cone
-  of `globalBasin_born` contains **no** `fubiniStudyMeasure`: the fibred route is
+  of `globalBasin_born` contains **no** `fsMeasure`: the fibred route is
   `epistemicMeasure = Dirac ⊗ Haar`, the basin measure is a torus-cell width, and the value is the
   moment map. `μ_FS` stays load-bearing for the **ontic** law (`kMuL = μ_FS ⊗ vol`, and
   `kMuL_unique`), for the retained base-side engines, and for the bridge
@@ -359,7 +359,7 @@ alarming and is not.
 ## unique / the only
 
 * **Means here:** a genuine uniqueness claim requires `∃!` or an equality derived from an
-  arbitrary object satisfying the hypotheses — e.g. `fubiniStudyMeasure_unique`,
+  arbitrary object satisfying the hypotheses — e.g. `fsMeasure_unique`,
   `rankOneDensity_unique_of_certainty`.
 * ⚠️ **Not guarded, deliberately.** A scan for docstrings claiming uniqueness without `∃!` in the
   statement returns 34 hits that are almost all ordinary English ("the only nonalgebraic fact used

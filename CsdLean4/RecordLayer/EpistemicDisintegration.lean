@@ -71,9 +71,9 @@ variable {N : ℕ}
 /-- **The base marginal of the Liouville measure is the Fubini–Study measure**
 — the `c = 1` bridge read as a marginal. -/
 theorem kMuL_fst (p₀ : CSD.LF4.CPN N) :
-    (CSD.LF4.kMuL p₀).fst = fubiniStudyMeasure p₀ := by
-  show ((fubiniStudyMeasure p₀).prod (volume : Measure CSD.LF4.KTorus)).fst
-    = fubiniStudyMeasure p₀
+    (CSD.LF4.kMuL p₀).fst = fsMeasure p₀ := by
+  show ((fsMeasure p₀).prod (volume : Measure CSD.LF4.KTorus)).fst
+    = fsMeasure p₀
   exact Measure.fst_prod
 
 /-- The Liouville measure is the composition product of its base marginal with
@@ -90,7 +90,7 @@ fibre**, `μ_FS`-almost everywhere: the identification that turns
 `GlobalBasin`'s `δ_p ⊗ Haar` from a modelling choice into the fibre of the
 arena's own disintegration. -/
 theorem kMuL_condKernel_ae (p₀ : CSD.LF4.CPN N) :
-    ∀ᵐ p ∂(fubiniStudyMeasure p₀),
+    ∀ᵐ p ∂(fsMeasure p₀),
       (CSD.LF4.kMuL p₀).condKernel p = (volume : Measure CSD.LF4.KTorus) := by
   have h := eq_condKernel_of_measure_eq_compProd
     (Kernel.const (CSD.LF4.CPN N) (volume : Measure CSD.LF4.KTorus))
@@ -105,7 +105,7 @@ theorem kMuL_condKernel_ae (p₀ : CSD.LF4.CPN N) :
 `δ_p ⊗ Haar` equals the Dirac mass at `p` paired with the Liouville measure's
 own disintegration kernel at `p`. -/
 theorem epistemicMeasure_eq_disintegration (p₀ : CSD.LF4.CPN N) :
-    ∀ᵐ p ∂(fubiniStudyMeasure p₀),
+    ∀ᵐ p ∂(fsMeasure p₀),
       epistemicMeasure (N := N) p
         = (Measure.dirac p).prod ((CSD.LF4.kMuL p₀).condKernel p) := by
   filter_upwards [kMuL_condKernel_ae p₀] with p hp
@@ -116,7 +116,7 @@ theorem epistemicMeasure_eq_disintegration (p₀ : CSD.LF4.CPN N) :
 Fubini–Study base with its own conditional kernel. -/
 theorem kMuL_disintegration (p₀ : CSD.LF4.CPN N) :
     CSD.LF4.kMuL p₀
-      = fubiniStudyMeasure p₀ ⊗ₘ (CSD.LF4.kMuL p₀).condKernel := by
+      = fsMeasure p₀ ⊗ₘ (CSD.LF4.kMuL p₀).condKernel := by
   conv_lhs => rw [← (CSD.LF4.kMuL p₀).disintegrate (CSD.LF4.kMuL p₀).condKernel]
   rw [kMuL_fst]
 

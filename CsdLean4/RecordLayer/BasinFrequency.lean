@@ -15,7 +15,7 @@ public import CsdLean4.LF4.POVMVolume
 
 **Category:** 7-SigmaLayer (the record layer).
 
-The corpus's frequency theorems all live on the **base**: i.i.d. draws from `fubiniStudyMeasure` on
+The corpus's frequency theorems all live on the **base**: i.i.d. draws from `fsMeasure` on
 `ℂℙ^{N−1}`, with events `bornRegion ψ _ i` (`born_frequency_convergence_N` and its `_uncond`
 variants, 32 call sites across `Empirical/` and `LF6/`). The canonical A7 reading is **fibred**
 (`globalBasin`, author decision 2026-08-02), and on that side there was no frequency theorem at all —
@@ -192,7 +192,7 @@ theorem globalBasin_toReal_eq_bornRegion_toReal {M : ℕ} (p₀ : CPN (M + 1))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) (i : Fin (M + 1)) :
     (epistemicMeasure (Projectivization.mk ℂ ψ hψ0)
         (globalBasin (momentContext (M + 1)) i)).toReal
-      = (fubiniStudyMeasure p₀ (bornRegion ψ hψ0 i)).toReal := by
+      = (fsMeasure p₀ (bornRegion ψ hψ0 i)).toReal := by
   rw [globalBasin_born ψ hψ0 hψ i,
     ENNReal.toReal_ofReal (by positivity),
     LF4.bornRegion_fs_measure_uncond p₀ ψ hψ0 hψ i]

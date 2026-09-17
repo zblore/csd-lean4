@@ -70,7 +70,7 @@ unitary); readout = the LF5 pointer outcome; outcome regions = the pointer fibre
 discharged by an LF5 lemma. Preparation type is `Unit` (the reference state `ψ'` is fixed). -/
 noncomputable def vnDeisolationModel (p₀ : CPN (M + 1)) (e : Fin N × Fin N ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1))) (hψ'0 : ψ' ≠ 0) :
-    DeisolationModel (trivialDynamics ⟨fubiniStudyMeasure p₀, inferInstance⟩)
+    DeisolationModel (trivialDynamics ⟨fsMeasure p₀, inferInstance⟩)
       (vnRecordSignature N) (vnRecordSemantics e ψ' hψ'0) Unit where
   interaction := fun _ _ => measurementFlow N e
   measurable_interaction := fun _ _ => measurementFlow_measurable e
@@ -98,7 +98,7 @@ is established a.e. Uniqueness is automatic (the readout is a function; its fibr
 disjoint). Transfers `bornOutcome_ae_isSome` through the measure-preserving interaction. -/
 theorem vnDeisolationModel_ae_total (p₀ : CPN (M + 1)) (e : Fin N × Fin N ≃ Fin (M + 1))
     (ψ' : EuclideanSpace ℂ (Fin (M + 1))) (hψ'0 : ψ' ≠ 0) (hψ' : ‖ψ'‖ = 1) :
-    (vnDeisolationModel p₀ e ψ' hψ'0).AETotalReadout () () 0 (fubiniStudyMeasure p₀) := by
+    (vnDeisolationModel p₀ e ψ' hψ'0).AETotalReadout () () 0 (fsMeasure p₀) := by
   have hmp := measurementFlow_measurePreserving (N := N) e p₀
   have hQ : MeasurableSet {p : CPN (M + 1) | (bornOutcome ψ' hψ'0 p).isSome} := by
     have : {p : CPN (M + 1) | (bornOutcome ψ' hψ'0 p).isSome}
@@ -109,9 +109,9 @@ theorem vnDeisolationModel_ae_total (p₀ : CPN (M + 1)) (e : Fin N × Fin N ≃
       · rintro ⟨i, hi⟩; exact ⟨i, (bornOutcome_eq_some_iff ψ' hψ'0 p i).mp hi⟩
       · rintro ⟨i, hi⟩; exact ⟨i, (bornOutcome_eq_some_iff ψ' hψ'0 p i).mpr hi⟩
     rw [this]; exact MeasurableSet.iUnion (bornRegion_measurable_uncond ψ' hψ'0)
-  have hbase : ∀ᵐ p ∂ fubiniStudyMeasure p₀, (bornOutcome ψ' hψ'0 p).isSome :=
+  have hbase : ∀ᵐ p ∂ fsMeasure p₀, (bornOutcome ψ' hψ'0 p).isSome :=
     bornOutcome_ae_isSome p₀ ψ' hψ'0 hψ'
-  have htrans : ∀ᵐ x ∂ fubiniStudyMeasure p₀,
+  have htrans : ∀ᵐ x ∂ fsMeasure p₀,
       (bornOutcome ψ' hψ'0 (measurementFlow N e x)).isSome := by
     rw [← hmp.map_eq] at hbase
     exact (ae_map_iff hmp.measurable.aemeasurable hQ).mp hbase
@@ -137,10 +137,10 @@ theorem lifted_projectiveSector_measurement_capstone (p₀ : CPN (M + 1))
     (e : Fin N × Fin N ≃ Fin (M + 1)) (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ'0 : ψ' ≠ 0) (hψ' : ‖ψ'‖ = 1) :
     (∀ t, MeasurePreserving ((vnDeisolationModel p₀ e ψ' hψ'0).interaction t ())
-        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀))
+        (fsMeasure p₀) (fsMeasure p₀))
     ∧ Set.PairwiseDisjoint Set.univ ((vnDeisolationModel p₀ e ψ' hψ'0).outcomeRegion () ())
     ∧ DeisolationModel.RecordsEstablishedOutcome (vnDeisolationModel p₀ e ψ' hψ'0)
-    ∧ (vnDeisolationModel p₀ e ψ' hψ'0).AETotalReadout () () 0 (fubiniStudyMeasure p₀) :=
+    ∧ (vnDeisolationModel p₀ e ψ' hψ'0).AETotalReadout () () 0 (fsMeasure p₀) :=
   ⟨fun t => (vnDeisolationModel p₀ e ψ' hψ'0).interaction_preserves t (),
     (vnDeisolationModel p₀ e ψ' hψ'0).pairwise_disjoint () (),
     vnDeisolationModel_records p₀ e ψ' hψ'0,
@@ -174,7 +174,7 @@ theorem vnDeisolationModel_born_frequency (hN : 1 < N) (e : Fin N × Fin N ≃ F
         atTop
         (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2)) := by
   have hlaw : ∀ k, Measure.map (measurementFlow N e ∘ fsTrial (M + 1) k) (fsTrialMeasure p₀)
-      = fubiniStudyMeasure p₀ := fun k => by
+      = fsMeasure p₀ := fun k => by
     rw [← Measure.map_map (measurementFlow_measurable e) (fsTrial_measurable k),
       fsTrial_law p₀ k, (measurementFlow_measurePreserving e p₀).map_eq]
   exact measurement_flow_outcome_frequency hN e ψ hψ ψ' hψ'eq hψ'0 p₀
@@ -203,10 +203,10 @@ theorem lifted_projectiveSector_measurement_born_capstone (hN : 1 < N)
         (Matrix.toEuclideanLin (vnDilationV N) ψ))
     (hψ'0 : ψ' ≠ 0) (hψ' : ‖ψ'‖ = 1) (p₀ : CPN (M + 1)) :
     (∀ t, MeasurePreserving ((vnDeisolationModel p₀ e ψ' hψ'0).interaction t ())
-        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀))
+        (fsMeasure p₀) (fsMeasure p₀))
     ∧ Set.PairwiseDisjoint Set.univ ((vnDeisolationModel p₀ e ψ' hψ'0).outcomeRegion () ())
     ∧ DeisolationModel.RecordsEstablishedOutcome (vnDeisolationModel p₀ e ψ' hψ'0)
-    ∧ (vnDeisolationModel p₀ e ψ' hψ'0).AETotalReadout () () 0 (fubiniStudyMeasure p₀)
+    ∧ (vnDeisolationModel p₀ e ψ' hψ'0).AETotalReadout () () 0 (fsMeasure p₀)
     ∧ (∀ᵐ ω ∂ fsTrialMeasure p₀, ∀ i : Fin N,
         Tendsto
           (fun m : ℕ =>

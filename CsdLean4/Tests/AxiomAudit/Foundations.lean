@@ -505,7 +505,7 @@ info: 'CSD.LF3.MeasurementJointEig.singletProjectiveOutcome_disjoint_distinct' d
 -- Until this tranche every volume-frequency capstone quantified over an
 -- abstract trial bundle (Ω, Pr, X, hX, hlaw, hindep) that no corpus theorem
 -- constructed. The canonical coordinate process (Ω = ℕ → ℂℙ^{N−1},
--- Pr = Measure.infinitePi (fun _ => fubiniStudyMeasure p₀), X n = (· n))
+-- Pr = Measure.infinitePi (fun _ => fsMeasure p₀), X n = (· n))
 -- inhabits the bundle: marginal law via Measure.infinitePi_map_eval, joint
 -- independence via iIndepFun_infinitePi, indicator pairwise independence via
 -- IndepFun.comp (the Cat-1 glue iIndepFun.pairwise_indepFun_indicator_preimage).

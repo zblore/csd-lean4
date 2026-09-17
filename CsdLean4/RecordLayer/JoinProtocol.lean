@@ -155,7 +155,7 @@ variable (p₀ : LF4.CPN (N + N))
 /-- The join-selector Liouville measure: Fubini–Study on the join point, Haar on both
 fibres. -/
 noncomputable def joinSelMeasure (p₀ : LF4.CPN (N + N)) : Measure (JoinSel N) :=
-  ((Matrix.UnitaryGroup.fubiniStudyMeasure p₀).prod (volume : Measure LF4.KTorus)).prod
+  ((Matrix.UnitaryGroup.fsMeasure p₀).prod (volume : Measure LF4.KTorus)).prod
     (volume : Measure LF4.KTorus)
 
 instance : IsProbabilityMeasure (joinSelMeasure (N := N) p₀) := by
@@ -199,13 +199,13 @@ lemma measurePreserving_joinGm (b : Fin N → Fin K) (i : Fin K) :
       (joinSelMeasure p₀) (joinSelMeasure p₀) := by
     unfold joinSelMeasure
     have hR := measurePreserving_prodAssoc
-      (Matrix.UnitaryGroup.fubiniStudyMeasure p₀) (volume : Measure LF4.KTorus)
+      (Matrix.UnitaryGroup.fsMeasure p₀) (volume : Measure LF4.KTorus)
       (volume : Measure LF4.KTorus)
-    have hmid := (MeasurePreserving.id (Matrix.UnitaryGroup.fubiniStudyMeasure p₀)).prod
+    have hmid := (MeasurePreserving.id (Matrix.UnitaryGroup.fsMeasure p₀)).prod
       (Measure.measurePreserving_swap (μ := (volume : Measure LF4.KTorus))
         (ν := (volume : Measure LF4.KTorus)))
     have hRinv := (measurePreserving_prodAssoc
-      (Matrix.UnitaryGroup.fubiniStudyMeasure p₀) (volume : Measure LF4.KTorus)
+      (Matrix.UnitaryGroup.fsMeasure p₀) (volume : Measure LF4.KTorus)
       (volume : Measure LF4.KTorus)).symm
       (MeasurableEquiv.prodAssoc (α := LF4.CPN (N + N)) (β := LF4.KTorus) (γ := LF4.KTorus))
     have htot := hRinv.comp (hmid.comp hR)

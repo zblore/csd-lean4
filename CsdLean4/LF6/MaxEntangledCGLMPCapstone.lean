@@ -89,7 +89,7 @@ theorem maxEntangledDeisolation_flow_capstone_cglmp (d : ℕ) [NeZero d] (hd : 2
     measurementFlow (d * d) e ≠ id
     -- (2) FS measure-preserving
     ∧ MeasurePreserving (measurementFlow (d * d) e)
-        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
+        (fsMeasure p₀) (fsMeasure p₀)
     -- (3) pointer-block basin measure = the Born weight
     ∧ (∀ w : Fin d × Fin d,
         ∑ n : Fin (d * d),

@@ -49,7 +49,7 @@ ontic flip probability: one knob, both levels.
 ## Scope
 
 Stated on the corpus's Fin-indexed projective sector (`CPN M`,
-`fubiniStudyMeasure`), where the typicality measure lives; the CV chain's
+`fsMeasure`), where the typicality measure lives; the CV chain's
 `FieldConfig`-indexed drives connect by re-indexing (bookkeeping, not
 mathematics — recorded, not done here). The trigger thresholds at a free
 `δ`; the threshold-free sharp version (flip measure = the deficit
@@ -238,10 +238,10 @@ the operator norm — `δ · μ_FS(trigger) ≤ ‖W − 1‖`. An operator quan
 become a measure bound. -/
 theorem measure_deficitTrigger_le (W : Matrix.unitaryGroup (Fin M) ℂ)
     {δ : ℝ} (p₀ : CPN M) :
-    ENNReal.ofReal δ * fubiniStudyMeasure p₀ (deficitTrigger W δ)
+    ENNReal.ofReal δ * fsMeasure p₀ (deficitTrigger W δ)
       ≤ ENNReal.ofReal ‖W.val - 1‖ := by
   have hmeas : AEMeasurable
-      (fun p => ENNReal.ofReal (overlapDeficit W p)) (fubiniStudyMeasure p₀) :=
+      (fun p => ENNReal.ofReal (overlapDeficit W p)) (fsMeasure p₀) :=
     (ENNReal.measurable_ofReal.comp
       (continuous_overlapDeficit W).measurable).aemeasurable
   have hset : deficitTrigger W δ
@@ -249,13 +249,13 @@ theorem measure_deficitTrigger_le (W : Matrix.unitaryGroup (Fin M) ℂ)
     ext p
     rw [deficitTrigger, Set.mem_ofPred_eq, Set.mem_ofPred_eq,
       ENNReal.ofReal_le_ofReal_iff (overlapDeficit_nonneg W p)]
-  calc ENNReal.ofReal δ * fubiniStudyMeasure p₀ (deficitTrigger W δ)
-      = ENNReal.ofReal δ * fubiniStudyMeasure p₀
+  calc ENNReal.ofReal δ * fsMeasure p₀ (deficitTrigger W δ)
+      = ENNReal.ofReal δ * fsMeasure p₀
           {p | ENNReal.ofReal δ ≤ ENNReal.ofReal (overlapDeficit W p)} := by
         rw [hset]
-    _ ≤ ∫⁻ p, ENNReal.ofReal (overlapDeficit W p) ∂(fubiniStudyMeasure p₀) :=
+    _ ≤ ∫⁻ p, ENNReal.ofReal (overlapDeficit W p) ∂(fsMeasure p₀) :=
         mul_meas_ge_le_lintegral₀ hmeas (ENNReal.ofReal δ)
-    _ ≤ ∫⁻ _, ENNReal.ofReal ‖W.val - 1‖ ∂(fubiniStudyMeasure p₀) :=
+    _ ≤ ∫⁻ _, ENNReal.ofReal ‖W.val - 1‖ ∂(fsMeasure p₀) :=
         lintegral_mono fun p =>
           ENNReal.ofReal_le_ofReal (overlapDeficit_le W p)
     _ = ENNReal.ofReal ‖W.val - 1‖ := by
@@ -274,11 +274,11 @@ theorem deficitTriggeredKick_measurePreserving
     (V W : Matrix.unitaryGroup (Fin M) ℂ) (δ : ℝ) (kick : RecordCircle)
     (p₀ : CPN M) :
     MeasurePreserving (deficitTriggeredKick V W δ kick)
-      ((fubiniStudyMeasure p₀).prod volume)
-      ((fubiniStudyMeasure p₀).prod volume) :=
+      ((fsMeasure p₀).prod volume)
+      ((fsMeasure p₀).prod volume) :=
   triggeredRecordKick_measurePreserving
     ⟨(continuous_const_smul V).measurable,
-      fubiniStudyMeasure_smul_invariant V p₀⟩
+      fsMeasure_smul_invariant V p₀⟩
     (measurableSet_deficitTrigger W δ) kick
 
 /-- ★★ **The derived half-life bound — the H7 residue, discharged.** A
@@ -291,12 +291,12 @@ theorem deficitKick_record_halfLife
     (V W : Matrix.unitaryGroup (Fin M) ℂ) (δ : ℝ)
     {kick : RecordCircle} (hkick : kick ≠ 0) (p₀ : CPN M) (n : ℕ) :
     ENNReal.ofReal δ
-        * ((fubiniStudyMeasure p₀).prod volume)
+        * ((fsMeasure p₀).prod volume)
             (recordIntact (deficitTriggeredKick V W δ kick) Prod.snd n)ᶜ
       ≤ n * ENNReal.ofReal ‖W.val - 1‖ := by
-  have hflip : ((fubiniStudyMeasure p₀).prod volume)
+  have hflip : ((fsMeasure p₀).prod volume)
       (recordFlip (deficitTriggeredKick V W δ kick) Prod.snd)
-      = fubiniStudyMeasure p₀ (deficitTrigger W δ) := by
+      = fsMeasure p₀ (deficitTrigger W δ) := by
     rw [deficitTriggeredKick]
     exact measure_recordFlip_triggeredRecordKick _ _ hkick
   have hflip_meas : MeasurableSet
@@ -306,14 +306,14 @@ theorem deficitKick_record_halfLife
   have hhalf := recordIntact_compl_measure_le
     (deficitTriggeredKick_measurePreserving V W δ kick p₀) hflip_meas n
   calc ENNReal.ofReal δ
-        * ((fubiniStudyMeasure p₀).prod volume)
+        * ((fsMeasure p₀).prod volume)
             (recordIntact (deficitTriggeredKick V W δ kick) Prod.snd n)ᶜ
       ≤ ENNReal.ofReal δ
-          * (n • ((fubiniStudyMeasure p₀).prod volume)
+          * (n • ((fsMeasure p₀).prod volume)
               (recordFlip (deficitTriggeredKick V W δ kick) Prod.snd)) := by
         gcongr
     _ = n * (ENNReal.ofReal δ
-          * fubiniStudyMeasure p₀ (deficitTrigger W δ)) := by
+          * fsMeasure p₀ (deficitTrigger W δ)) := by
         rw [hflip, nsmul_eq_mul]
         ring
     _ ≤ n * ENNReal.ofReal ‖W.val - 1‖ := by
@@ -344,7 +344,7 @@ every period count. -/
 theorem deficitKick_persists_of_id
     (V : Matrix.unitaryGroup (Fin M) ℂ) {δ : ℝ} (hδ : 0 < δ)
     {kick : RecordCircle} (hkick : kick ≠ 0) (p₀ : CPN M) (n : ℕ) :
-    ((fubiniStudyMeasure p₀).prod volume)
+    ((fsMeasure p₀).prod volume)
         (recordIntact (deficitTriggeredKick V 1 δ kick) Prod.snd n)ᶜ = 0 := by
   have hempty : deficitTrigger (1 : Matrix.unitaryGroup (Fin M) ℂ) δ = ∅ := by
     ext p
@@ -434,7 +434,7 @@ typicality measure is `1 − δ/2` — the Duistermaat–Heckman law evaluates
 what Markov could only bound. -/
 theorem measure_deficitTrigger_phaseFlipW (p₀ : CPN 2) {δ : ℝ}
     (hδ0 : 0 < δ) :
-    fubiniStudyMeasure p₀ (deficitTrigger phaseFlipW δ)
+    fsMeasure p₀ (deficitTrigger phaseFlipW δ)
       = ENNReal.ofReal (1 - δ / 2) := by
   have hset : deficitTrigger phaseFlipW δ
       = (fun p => LF4.momentMap p 0) ⁻¹' Set.Ici (δ / 2) := by
@@ -459,7 +459,7 @@ theorem measure_deficitTrigger_phaseFlipW (p₀ : CPN 2) {δ : ℝ}
 theorem deficitKick_phaseFlip_coupling (V : Matrix.unitaryGroup (Fin 2) ℂ)
     (p₀ : CPN 2) {δ : ℝ} (hδ0 : 0 < δ)
     {kick : RecordCircle} (hkick : kick ≠ 0) :
-    ((fubiniStudyMeasure p₀).prod volume)
+    ((fsMeasure p₀).prod volume)
         (recordFlip (deficitTriggeredKick V phaseFlipW δ kick) Prod.snd)
       = ENNReal.ofReal (1 - δ / 2) := by
   rw [deficitTriggeredKick, measure_recordFlip_triggeredRecordKick _ _ hkick]
@@ -472,9 +472,9 @@ channel, not a vacuous one. -/
 theorem deficitKick_phaseFlip_bites (V : Matrix.unitaryGroup (Fin 2) ℂ)
     (p₀ : CPN 2) {δ : ℝ} (hδ0 : 0 < δ) (hδ2 : δ < 2)
     {kick : RecordCircle} (hkick : kick ≠ 0) :
-    0 < ((fubiniStudyMeasure p₀).prod volume)
+    0 < ((fsMeasure p₀).prod volume)
         (recordFlip (deficitTriggeredKick V phaseFlipW δ kick) Prod.snd)
-      ∧ ((fubiniStudyMeasure p₀).prod volume)
+      ∧ ((fsMeasure p₀).prod volume)
           (recordFlip (deficitTriggeredKick V phaseFlipW δ kick) Prod.snd)
         < 1 := by
   rw [deficitKick_phaseFlip_coupling V p₀ hδ0 hkick]
@@ -491,7 +491,7 @@ Markov estimate. -/
 theorem deficitKick_phaseFlip_halfLife (V : Matrix.unitaryGroup (Fin 2) ℂ)
     (p₀ : CPN 2) {δ : ℝ} (hδ0 : 0 < δ)
     {kick : RecordCircle} (hkick : kick ≠ 0) (n : ℕ) :
-    ((fubiniStudyMeasure p₀).prod volume)
+    ((fsMeasure p₀).prod volume)
         (recordIntact (deficitTriggeredKick V phaseFlipW δ kick) Prod.snd n)ᶜ
       ≤ n • ENNReal.ofReal (1 - δ / 2) := by
   have hflip_meas : MeasurableSet

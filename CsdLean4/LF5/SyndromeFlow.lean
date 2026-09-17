@@ -273,7 +273,7 @@ theorem syndromeRegion_fs_volume
     (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
         (Matrix.toEuclideanLin (vnDilationV 8) ψ))
     (hψ'0 : ψ' ≠ 0) (s : Fin 4) :
-    (fubiniStudyMeasure p₀ (syndromeRegion ψ' hψ'0 e s)).toReal
+    (fsMeasure p₀ (syndromeRegion ψ' hψ'0 e s)).toReal
       = syndromeWeight ψ s := by
   -- additivity over the disjoint cells
   have hmeas : ∀ p : Fin 8 × Fin 8, MeasurableSet (bornRegion ψ' hψ'0 (e p)) :=
@@ -282,7 +282,7 @@ theorem syndromeRegion_fs_volume
     measure_biUnion_finset (bornRegion_e_pairwiseDisjoint ψ' hψ'0 e _) (fun p _ => hmeas p)]
   -- toReal of a finite sum of finite FS measures
   rw [ENNReal.toReal_sum (fun p _ => by
-    exact (measure_ne_top (fubiniStudyMeasure p₀) _))]
+    exact (measure_ne_top (fsMeasure p₀) _))]
   -- reindex the cell sum (n, i) ↦ over class i, over n
   rw [syndromeWeight_eq_pointer_sum]
   -- group the (n, i) double sum: cells (n, i) with pointer i = p.2 in class s
@@ -312,7 +312,7 @@ theorem syndromeWeight_eq_fs_volume_sum
     (hψ'0 : ψ' ≠ 0) (s : Fin 4) :
     syndromeWeight ψ s
       = ∑ i ∈ Finset.univ.filter (fun i => synClass i = s),
-          ∑ n : Fin 8, (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal := by
+          ∑ n : Fin 8, (fsMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal := by
   rw [syndromeWeight_eq_pointer_sum]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   exact vnDilation_pointer_volume (N := 8) ψ hψ e p₀ ψ' hψ'eq hψ'0 i
@@ -502,7 +502,7 @@ theorem syndromeFlow_ne_id (e : Fin 8 × Fin 8 ≃ Fin (M + 1)) :
 inherited from `measurementFlow_measurePreserving`). -/
 theorem syndromeFlow_measurePreserving (e : Fin 8 × Fin 8 ≃ Fin (M + 1))
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (M + 1)))) :
-    MeasurePreserving (syndromeFlow e) (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+    MeasurePreserving (syndromeFlow e) (fsMeasure p₀) (fsMeasure p₀) :=
   measurementFlow_measurePreserving e p₀
 
 /-! ## The module headline -/
@@ -546,15 +546,15 @@ theorem syndrome_flow_born_volume
     syndromeFlow e ≠ id
     -- (2) FS-measure-preserving
     ∧ MeasurePreserving (syndromeFlow e)
-        (fubiniStudyMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (M + 1)))))
-        (fubiniStudyMeasure p₀)
+        (fsMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (M + 1)))))
+        (fsMeasure p₀)
     -- (3) syndrome-block FS volume = syndrome weight = sum of computational-basis FS volumes
     ∧ (∀ s : Fin 4,
-        (fubiniStudyMeasure p₀ (syndromeRegion ψ' hψ'0 e s)).toReal = syndromeWeight ψ s
+        (fsMeasure p₀ (syndromeRegion ψ' hψ'0 e s)).toReal = syndromeWeight ψ s
         ∧ syndromeWeight ψ s
             = ∑ i ∈ Finset.univ.filter (fun i => synClass i = s),
                 ∑ n : Fin 8,
-                  (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal)
+                  (fsMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal)
     -- (4) deterministic syndrome weight (X₁ → block 1) + separate bit-flip identities
     ∧ (∀ a b : ℂ, ∀ s : Fin 4,
           syndromeWeight (regOfH3 (erroredLogical X1 a b)) s

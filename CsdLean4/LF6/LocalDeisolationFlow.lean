@@ -400,12 +400,12 @@ noncomputable def localDeisolationFlow :
   fun p => localFlowUnitary • p
 
 /-- **The local product flow is Fubini–Study measure-preserving** (the Liouville
-/ `hΦ_pres` content) — directly from `fubiniStudyMeasure_smul_invariant` for the
+/ `hΦ_pres` content) — directly from `fsMeasure_smul_invariant` for the
 product unitary `U_loc`. -/
 theorem localDeisolationFlow_measurePreserving (p₀ : CPN (4 * 4)) :
-    MeasurePreserving localDeisolationFlow (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+    MeasurePreserving localDeisolationFlow (fsMeasure p₀) (fsMeasure p₀) :=
   ⟨(continuous_const_smul localFlowUnitary).measurable,
-   fubiniStudyMeasure_smul_invariant localFlowUnitary p₀⟩
+   fsMeasure_smul_invariant localFlowUnitary p₀⟩
 
 /-- Basis-ray action of the local product flow: it moves the ray at
 `jointFlowEquiv (z1, z2)` to the one at `jointFlowEquiv (vnPerm 2 z1, vnPerm 2 z2)`. -/
@@ -652,7 +652,7 @@ theorem localDeisolation_capstone {M : ℕ}
             (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (n, stIdx (s, t))))).toReal
           = P_st a b s t)
     -- (4) the projectivised product flow is FS measure-preserving
-    ∧ MeasurePreserving localDeisolationFlow (fubiniStudyMeasure q₀) (fubiniStudyMeasure q₀)
+    ∧ MeasurePreserving localDeisolationFlow (fsMeasure q₀) (fsMeasure q₀)
     -- (5) the flow is genuinely not the identity
     ∧ localDeisolationFlow ≠ id
     -- (6) the LOCAL flow realises the local Naimark dilation: Φ_loc [ψ⊗ground] = [V_loc ψ]

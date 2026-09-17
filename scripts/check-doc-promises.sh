@@ -6,7 +6,7 @@
 # Motivating case (2026-08-19): `Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean`
 # listed under "Main definitions"
 #
-#     - `defaultPoint`, `defaultFubiniStudyMeasure` — canonical choice
+#     - `defaultPoint`, `defaultFsMeasure` — canonical choice
 #
 # and neither existed. Not a stale name, not a rename: they had never been written. The
 # header promised an API the code did not have, in a Category 1 file staged for

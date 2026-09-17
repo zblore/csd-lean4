@@ -74,7 +74,7 @@ continuous propagator and an *open* ready set, if some ready state is carried in
 closure of the no-record interior then the no-record preimage carries positive measure.
 
 The hypothesis `hpos` — that the measure is positive on nonempty opens — is exactly what
-Fubini–Study satisfies (`LF4.fubiniStudyMeasure_pos_of_isOpen`), and is what makes "open"
+Fubini–Study satisfies (`LF4.fsMeasure_pos_of_isOpen`), and is what makes "open"
 the operative word: a **Dirac** calibration has no open neighbourhood, which is precisely
 how the null-seam witness threads the boundary point exactly and keeps its seam null. -/
 theorem posMeasure_noRecord_of_isOpenMap
@@ -101,9 +101,9 @@ theorem posMeasure_noRecord_unitary {K : ℕ} (q₀ : Pointer K)
     (U : Matrix.unitaryGroup (Fin (K + 1)) ℂ)
     {A R : Set (Pointer K)} (hA : IsOpen A) {a : Pointer K} (ha : a ∈ A)
     (hUa : U • a ∈ closure (interior R)) :
-    fubiniStudyMeasure q₀ (A ∩ (fun q : Pointer K => U • q) ⁻¹' interior R) ≠ 0 := by
+    fsMeasure q₀ (A ∩ (fun q : Pointer K => U • q) ⁻¹' interior R) ≠ 0 := by
   refine posMeasure_noRecord_of_isOpenMap
-    (fun V hV hVne => LF4.fubiniStudyMeasure_pos_of_isOpen q₀ hV hVne)
+    (fun V hV hVne => LF4.fsMeasure_pos_of_isOpen q₀ hV hVne)
     (IsOpenMap.of_inverse (continuous_const_smul U⁻¹) (fun q => by simp)
       (fun q => by simp)) (continuous_const_smul U) hA ha hUa
 

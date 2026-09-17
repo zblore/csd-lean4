@@ -34,7 +34,7 @@ formalised subset of the Paper C assumptions** (`specs/reconstruction-status.md`
 NOT claim the witness derives that architecture. ⚠️ **Frontier statement corrected 2026-09-05 — both
 labels below are retired or closed.** `SO-1` was **retired as a non-question** (2026-07-24: Σ is the floor,
 there is nothing beneath it to derive it from; what survives is *constraint* work such as
-`fubiniStudyMeasure_unique`). `MD-1` was **closed** (2026-08-31), its residuals being the permanent boundary
+`fsMeasure_unique`). `MD-1` was **closed** (2026-08-31), its residuals being the permanent boundary
 `R-015` and the open-mathematics item `R-016`. The A7 mismatch recorded below is real but is a property of
 *this witness*: the cells here are preparation-indexed `bornRegion ψ'`, whereas `RecordLayer/GlobalBasin.lean`
 gives a context-fixed partition at every `N`. What sits outside this closure and is genuinely open is

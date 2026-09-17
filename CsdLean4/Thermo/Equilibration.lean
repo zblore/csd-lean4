@@ -91,19 +91,19 @@ produces; `HasCorrelationDecay.of_measurePreserving` turns it into the two-index
 consumes. -/
 theorem blockPop_timeAverage_tendsto (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA)
     {Φ : CPN N → CPN N} {ε : ℕ → ℝ}
-    (hΦ : MeasurePreserving Φ (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀))
+    (hΦ : MeasurePreserving Φ (fsMeasure p₀) (fsMeasure p₀))
     (hlag : ∀ u : ℕ,
-      |(∫ p, blockPop e p a * blockPop e (Φ^[u] p) a ∂(fubiniStudyMeasure p₀))
-        - (∫ q, blockPop e q a ∂(fubiniStudyMeasure p₀)) ^ 2| ≤ ε u)
+      |(∫ p, blockPop e p a * blockPop e (Φ^[u] p) a ∂(fsMeasure p₀))
+        - (∫ q, blockPop e q a ∂(fsMeasure p₀)) ^ 2| ≤ ε u)
     (hsum : Summable ε) :
     Filter.Tendsto
       (fun T : ℕ => ∫ p, (birkhoffAverage ℝ Φ (fun q => blockPop e q a) T p - (dB : ℝ) / N) ^ 2
-        ∂(fubiniStudyMeasure p₀))
+        ∂(fsMeasure p₀))
       Filter.atTop (nhds 0) := by
   have hf : Measurable (fun q : CPN N => blockPop e q a) := blockPop_measurable e a
   have hdec := MeasureTheory.HasCorrelationDecay.of_measurePreserving hΦ hf hlag
-  have hmean : ∀ t : ℕ, ∫ p, blockPop e (Φ^[t] p) a ∂(fubiniStudyMeasure p₀)
-      = ∫ q, blockPop e q a ∂(fubiniStudyMeasure p₀) := fun t =>
+  have hmean : ∀ t : ℕ, ∫ p, blockPop e (Φ^[t] p) a ∂(fsMeasure p₀)
+      = ∫ q, blockPop e q a ∂(fsMeasure p₀) := fun t =>
     MeasureTheory.integral_iterate_of_measurePreserving hΦ hf.aestronglyMeasurable t
   have h := MeasureTheory.tendsto_integral_birkhoffAverage_sub_sq hΦ.measurable hf
     zero_le_one (fun p => abs_blockPop_le_one e p a) hmean hdec hsum
@@ -118,15 +118,15 @@ For a large environment that value is `O(1/d_A · d_A/d_B)`-small, so the condit
 subsystem near maximally mixed. Again — *conditional*; see the header. -/
 theorem hsDeviationNormSq_timeAverage_tendsto (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
     {Φ : CPN N → CPN N} {ε : ℕ → ℝ}
-    (hΦ : MeasurePreserving Φ (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀))
+    (hΦ : MeasurePreserving Φ (fsMeasure p₀) (fsMeasure p₀))
     (hlag : ∀ u : ℕ,
-      |(∫ p, hsDeviationNormSq e p * hsDeviationNormSq e (Φ^[u] p) ∂(fubiniStudyMeasure p₀))
-        - (∫ q, hsDeviationNormSq e q ∂(fubiniStudyMeasure p₀)) ^ 2| ≤ ε u)
+      |(∫ p, hsDeviationNormSq e p * hsDeviationNormSq e (Φ^[u] p) ∂(fsMeasure p₀))
+        - (∫ q, hsDeviationNormSq e q ∂(fsMeasure p₀)) ^ 2| ≤ ε u)
     (hsum : Summable ε) :
     Filter.Tendsto
       (fun T : ℕ => ∫ p, (birkhoffAverage ℝ Φ (fun q => hsDeviationNormSq e q) T p
           - (((dA : ℝ) + (dB : ℝ)) / ((N : ℝ) + 1) - ((dA : ℝ))⁻¹)) ^ 2
-        ∂(fubiniStudyMeasure p₀))
+        ∂(fsMeasure p₀))
       Filter.atTop (nhds 0) := by
   have hf : Measurable (fun q : CPN N => hsDeviationNormSq e q) := hsDeviationNormSq_measurable e
   have hC : (0 : ℝ) ≤ (dA : ℝ) ^ 2 * (1 + (dB : ℝ) ^ 2) := by positivity
@@ -135,8 +135,8 @@ theorem hsDeviationNormSq_timeAverage_tendsto (p₀ : CPN N) (e : Fin N ≃ Fin 
     rw [abs_of_nonneg (hsDeviationNormSq_nonneg e p)]
     exact hsDeviationNormSq_le e p
   have hdec := MeasureTheory.HasCorrelationDecay.of_measurePreserving hΦ hf hlag
-  have hmean : ∀ t : ℕ, ∫ p, hsDeviationNormSq e (Φ^[t] p) ∂(fubiniStudyMeasure p₀)
-      = ∫ q, hsDeviationNormSq e q ∂(fubiniStudyMeasure p₀) := fun t =>
+  have hmean : ∀ t : ℕ, ∫ p, hsDeviationNormSq e (Φ^[t] p) ∂(fsMeasure p₀)
+      = ∫ q, hsDeviationNormSq e q ∂(fsMeasure p₀) := fun t =>
     MeasureTheory.integral_iterate_of_measurePreserving hΦ hf.aestronglyMeasurable t
   have h := MeasureTheory.tendsto_integral_birkhoffAverage_sub_sq hΦ.measurable hf hC hbd
     hmean hdec hsum
@@ -149,10 +149,10 @@ second moment does not equal the square of its mean. `fs_blockPop_sq` and `fs_bl
 `(d_B²+d_B)/(N(N+1))` and `d_B/N`, and those agree exactly when `N = d_B`, i.e. `d_A = 1`. -/
 lemma blockPop_variance_ne (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA)
     (hdA : 2 ≤ dA) :
-    ∫ p, blockPop e p a * blockPop e p a ∂(fubiniStudyMeasure p₀)
-      ≠ (∫ q, blockPop e q a ∂(fubiniStudyMeasure p₀)) ^ 2 := by
+    ∫ p, blockPop e p a * blockPop e p a ∂(fsMeasure p₀)
+      ≠ (∫ q, blockPop e q a ∂(fsMeasure p₀)) ^ 2 := by
   intro hvar
-  have hsq : ∫ p, blockPop e p a * blockPop e p a ∂(fubiniStudyMeasure p₀)
+  have hsq : ∫ p, blockPop e p a * blockPop e p a ∂(fsMeasure p₀)
       = ((dB : ℝ) ^ 2 + (dB : ℝ)) / ((N : ℝ) * ((N : ℝ) + 1)) := by
     rw [integral_congr_ae (ae_of_all _ (fun p => (pow_two (blockPop e p a)).symm))]
     exact fs_blockPop_sq p₀ e a
@@ -203,7 +203,7 @@ theorem not_hasCorrelationDecay_blockPop_of_periodic
     (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA) (hdA : 2 ≤ dA)
     {Φ : CPN N → CPN N} {ε : ℕ → ℝ} {k : ℕ} (hk : 0 < k) (hper : Φ^[k] = id)
     (hsum : Summable ε) :
-    ¬ MeasureTheory.HasCorrelationDecay (fubiniStudyMeasure p₀) Φ
+    ¬ MeasureTheory.HasCorrelationDecay (fsMeasure p₀) Φ
         (fun q => blockPop e q a) ε := fun hdec =>
   blockPop_variance_ne p₀ e a hdA (hdec.integral_mul_self_eq_of_periodic hk hper hsum)
 
@@ -230,16 +230,16 @@ dynamics, and it remains open. What has changed is that the hypothesis is no lon
 unsatisfiable* — which is what E6 established for the asymptotic version. -/
 theorem blockPop_timeAverage_le_of_finiteHorizon (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
     (a : Fin dA) {Φ : CPN N → CPN N} {ε : ℕ → ℝ} {T : ℕ}
-    (hΦ : MeasurePreserving Φ (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀))
-    (hdec : MeasureTheory.HasCorrelationDecayUpTo (fubiniStudyMeasure p₀) Φ
+    (hΦ : MeasurePreserving Φ (fsMeasure p₀) (fsMeasure p₀))
+    (hdec : MeasureTheory.HasCorrelationDecayUpTo (fsMeasure p₀) Φ
       (fun q => blockPop e q a) ε T)
     (hT : 0 < T) :
     ∫ p, (birkhoffAverage ℝ Φ (fun q => blockPop e q a) T p - (dB : ℝ) / N) ^ 2
-        ∂(fubiniStudyMeasure p₀)
+        ∂(fsMeasure p₀)
       ≤ 2 * (T : ℝ)⁻¹ * ∑ u ∈ Finset.range T, ε u := by
   have hf : Measurable (fun q : CPN N => blockPop e q a) := blockPop_measurable e a
-  have hmean : ∀ t : ℕ, ∫ p, blockPop e (Φ^[t] p) a ∂(fubiniStudyMeasure p₀)
-      = ∫ q, blockPop e q a ∂(fubiniStudyMeasure p₀) := fun t =>
+  have hmean : ∀ t : ℕ, ∫ p, blockPop e (Φ^[t] p) a ∂(fsMeasure p₀)
+      = ∫ q, blockPop e q a ∂(fsMeasure p₀) := fun t =>
     MeasureTheory.integral_iterate_of_measurePreserving hΦ hf.aestronglyMeasurable t
   have h := MeasureTheory.integral_birkhoffAverage_sub_sq_le_cesaro hΦ.measurable hf
     zero_le_one (fun p => abs_blockPop_le_one e p a) hmean hdec hT
@@ -401,17 +401,17 @@ lemma abs_blockPop_smul_sub_le (e : Fin N ≃ Fin dA × Fin dB)
 directly — no dominated convergence, which is what `FirstCountableTopology`'s absence rules out. -/
 lemma abs_corr_smul_sub_le (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA)
     (V : Matrix.unitaryGroup (Fin N) ℂ) :
-    |(∫ p, blockPop e p a * blockPop e (V • p) a ∂(fubiniStudyMeasure p₀))
-        - (∫ p, blockPop e p a * blockPop e p a ∂(fubiniStudyMeasure p₀))|
+    |(∫ p, blockPop e p a * blockPop e (V • p) a ∂(fsMeasure p₀))
+        - (∫ p, blockPop e p a * blockPop e p a ∂(fsMeasure p₀))|
       ≤ 2 * matDev V := by
   have hmV : Measurable (fun p : CPN N => V • p) := (continuous_const_smul V).measurable
   have hf : Measurable (fun q : CPN N => blockPop e q a) := blockPop_measurable e a
   have hi1 : Integrable (fun p : CPN N => blockPop e p a * blockPop e (V • p) a)
-      (fubiniStudyMeasure p₀) :=
+      (fsMeasure p₀) :=
     fs_integrable_mul p₀ hf (hf.comp hmV) (fun p => abs_blockPop_le_one e p a)
       (fun p => abs_blockPop_le_one e (V • p) a)
   have hi2 : Integrable (fun p : CPN N => blockPop e p a * blockPop e p a)
-      (fubiniStudyMeasure p₀) :=
+      (fsMeasure p₀) :=
     fs_integrable_mul p₀ hf hf (fun p => abs_blockPop_le_one e p a)
       (fun p => abs_blockPop_le_one e p a)
   rw [← integral_sub hi1 hi2]
@@ -425,7 +425,7 @@ lemma abs_corr_smul_sub_le (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : 
           mul_le_mul (abs_blockPop_le_one e p a) (abs_blockPop_smul_sub_le e V p a)
             (abs_nonneg _) zero_le_one
       _ = 2 * matDev V := one_mul _
-  simpa using norm_integral_le_of_norm_le_const (μ := fubiniStudyMeasure p₀) (ae_of_all _ hpt)
+  simpa using norm_integral_le_of_norm_le_const (μ := fsMeasure p₀) (ae_of_all _ hpt)
 
 omit [NeZero N] in
 lemma smul_iterate (U : Matrix.unitaryGroup (Fin N) ℂ) (u : ℕ) (p : CPN N) :
@@ -455,9 +455,9 @@ setting must rest on the typicality results (E1/E2) rather than on mixing. -/
 theorem not_hasCorrelationDecay_blockPop_of_unitary
     (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA) (hdA : 2 ≤ dA)
     (U : Matrix.unitaryGroup (Fin N) ℂ) {ε : ℕ → ℝ} (hsum : Summable ε) :
-    ¬ MeasureTheory.HasCorrelationDecay (fubiniStudyMeasure p₀) (fun q : CPN N => U • q)
+    ¬ MeasureTheory.HasCorrelationDecay (fsMeasure p₀) (fun q : CPN N => U • q)
         (fun q => blockPop e q a) ε :=
-  MeasureTheory.not_hasCorrelationDecay_of_compactGroup (fubiniStudyMeasure p₀)
+  MeasureTheory.not_hasCorrelationDecay_of_compactGroup (fsMeasure p₀)
     (fun V => fun q : CPN N => V • q) (fun q => blockPop e q a) U
     (fun n x => smul_iterate U n x)
     (MeasureTheory.continuousAt_correlation_of_abs_sub_le _ _ _

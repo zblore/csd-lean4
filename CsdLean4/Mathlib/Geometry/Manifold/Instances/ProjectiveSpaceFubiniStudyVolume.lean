@@ -41,8 +41,8 @@ Lebesgue measure on the model `Fin n → ℂ` and the affine chart cover). This 
   on a compact manifold);
 * `fsVolumeNormalized n` — the normalised volume, with `fsVolumeNormalized_map_smul`;
   `isProbabilityMeasure_fsVolumeNormalized_of_ne_zero` and
-  `fsVolumeNormalized_eq_fubiniStudyMeasure_of_ne_zero` are the conclusions **under the
-  premise `fsVolume n ≠ 0`** (`fubiniStudyMeasure_unique` applied to a `U(n+1)`-invariant
+  `fsVolumeNormalized_eq_fsMeasure_of_ne_zero` are the conclusions **under the
+  premise `fsVolume n ≠ 0`** (`fsMeasure_unique` applied to a `U(n+1)`-invariant
   probability measure);
 * **The flat count** — `stdForm n` (the standard symplectic form on the model,
   `fundamentalFormAlt` through `toLpCLM`; `fsModelForm_zero`: the model form at the origin is
@@ -57,8 +57,8 @@ Lebesgue measure on the model `Fin n → ℂ` and the affine chart cover). This 
 * ★★ `fsVolume_ne_zero` — **the volume is nonzero** (`topFormMeasure_ne_zero_of_localRep_ne_zero`
   at the origin of the chart at `origin 0`), so `isProbabilityMeasure_fsVolumeNormalized` holds
   unconditionally;
-* ★★★ `fsVolumeNormalized_eq_fubiniStudyMeasure` — **the normalised volume of the top power of
-  the Fubini–Study form IS the Fubini–Study measure**, `fubiniStudyMeasure p₀`, for every base
+* ★★★ `fsVolumeNormalized_eq_fsMeasure` — **the normalised volume of the top power of
+  the Fubini–Study form IS the Fubini–Study measure**, `fsMeasure p₀`, for every base
   point `p₀`. No premise.
 
 ## Honest scope
@@ -80,7 +80,7 @@ measure argument needs one point).
 `Analysis/Normed/Module/Alternating/WedgeShuffle.lean` (`wedge_mul_apply_pairs`);
 `Geometry/Manifold/Instances/ProjectiveSpaceUnitaryAction.lean` (`fsModelForm_uTrans`);
 `Geometry/Manifold/WedgeForm.lean` (`localRep_wedgePow`, `wedgePow_compContinuousLinearMap`);
-`LinearAlgebra/Projectivization/FubiniStudyUnique.lean` (★★ `fubiniStudyMeasure_unique`);
+`LinearAlgebra/Projectivization/FubiniStudyUnique.lean` (★★ `fsMeasure_unique`);
 the terms register (Liouville); the completed-work ledger.
 -/
 
@@ -216,14 +216,14 @@ theorem isProbabilityMeasure_fsVolumeNormalized_of_ne_zero (hne : fsVolume n ≠
   rw [fsVolumeNormalized, Measure.smul_apply, smul_eq_mul]
   exact ENNReal.inv_mul_cancel (Measure.measure_univ_ne_zero.2 hne) (measure_ne_top _ _)
 
-/-- ★★ The identity under the premise that the volume is nonzero: `fubiniStudyMeasure_unique`
+/-- ★★ The identity under the premise that the volume is nonzero: `fsMeasure_unique`
 applied to a `U(n+1)`-invariant probability measure. The premise is discharged below
 (`fsVolume_ne_zero`). -/
-theorem fsVolumeNormalized_eq_fubiniStudyMeasure_of_ne_zero (hne : fsVolume n ≠ 0)
+theorem fsVolumeNormalized_eq_fsMeasure_of_ne_zero (hne : fsVolume n ≠ 0)
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (n + 1)))) :
-    fsVolumeNormalized n = fubiniStudyMeasure p₀ := by
+    fsVolumeNormalized n = fsMeasure p₀ := by
   have := isProbabilityMeasure_fsVolumeNormalized_of_ne_zero hne
-  exact fubiniStudyMeasure_unique p₀ _ fun U => fsVolumeNormalized_map_smul U
+  exact fsMeasure_unique p₀ _ fun U => fsVolumeNormalized_map_smul U
 
 /-! ### The flat count: the top power of the model form at the origin (M6(b)) -/
 
@@ -413,8 +413,8 @@ instance isProbabilityMeasure_fsVolumeNormalized (n : ℕ) :
 
 /-- ★★★ **The normalised volume of the top power of the Fubini–Study form is the Fubini–Study
 measure**, for every base point `p₀`. -/
-theorem fsVolumeNormalized_eq_fubiniStudyMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (n + 1)))) :
-    fsVolumeNormalized n = fubiniStudyMeasure p₀ :=
-  fsVolumeNormalized_eq_fubiniStudyMeasure_of_ne_zero (fsVolume_ne_zero n) p₀
+theorem fsVolumeNormalized_eq_fsMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (n + 1)))) :
+    fsVolumeNormalized n = fsMeasure p₀ :=
+  fsVolumeNormalized_eq_fsMeasure_of_ne_zero (fsVolume_ne_zero n) p₀
 
 end Projectivization

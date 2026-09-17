@@ -43,7 +43,7 @@ typicality measure and the Born weights are forced, not independently posited. T
 posited (SO-1); this localises where the forcing bites.
 
 References: `specs/connectivity-manifest.md` (L7 / SO-1), `specs/future-work.md` (SO-1);
-`LF4/KahlerVolumeForced.lean` (`IsForcedKahlerVolume`, `fubiniStudyMeasure_unique`),
+`LF4/KahlerVolumeForced.lean` (`IsForcedKahlerVolume`, `fsMeasure_unique`),
 `LF4/ManyToOnePillars.lean` (`manyToOneSetup`).
 -/
 

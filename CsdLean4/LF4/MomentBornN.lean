@@ -79,7 +79,7 @@ pullback equals `M!` times the Lebesgue volume of `R`. Unconditional; the genuin
 general-N DH content on `Σ`. -/
 theorem fs_volume_eq_dirichlet (p₀ : CPN (M + 1)) {R : Set (Fin M → ℝ)}
     (hR : MeasurableSet R) (hRsub : R ⊆ openSimplexFree) :
-    fubiniStudyMeasure p₀ ((fun p => ratioN (fun i => momentMap p i)) ⁻¹' R)
+    fsMeasure p₀ ((fun p => ratioN (fun i => momentMap p i)) ⁻¹' R)
       = (Nat.factorial M : ℝ≥0∞) * volume R := by
   rw [← Measure.map_apply measurable_ratio_momentMap hR, fs_moment_joint_dirichlet_N,
     Measure.smul_apply, Measure.restrict_apply hR, smul_eq_mul,
@@ -169,7 +169,7 @@ An hpos-free form is available: `fs_born_volume_ratio_N_uncond` (`BornRegionUnco
 theorem fs_born_volume_ratio_N (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2) (i : Fin M) :
-    fubiniStudyMeasure p₀
+    fsMeasure p₀
         ((fun p => ratioN (fun j => momentMap p j))
           ⁻¹' (replaceMap (ratioN (fun j => momentMap (Projectivization.mk ℂ ψ hψ0) j)) i
             '' openSimplexFree))
@@ -274,7 +274,7 @@ An hpos-free form is available: `fs_born_volume_ratio_N_apex_uncond`
 theorem fs_born_volume_ratio_N_apex (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2) :
-    fubiniStudyMeasure p₀
+    fsMeasure p₀
         ((fun p => ratioN (fun j => momentMap p j))
           ⁻¹' ((fun x => apexLin (ratioN (fun j => momentMap (Projectivization.mk ℂ ψ hψ0) j)) x
               + ratioN (fun j => momentMap (Projectivization.mk ℂ ψ hψ0) j)) '' openSimplexFree))

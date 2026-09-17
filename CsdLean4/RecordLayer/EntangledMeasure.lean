@@ -21,7 +21,7 @@ is closed, and entangled rays exist in every open neighbourhood of every
 product ray. This module adds the measure conclusions the C2 argument runs on:
 
 * `compositeFubiniStudy` — the Fubini–Study measure read on the composite
-  index `Fin nA × Fin nB`: the pushforward of `fubiniStudyMeasure` along the
+  index `Fin nA × Fin nB`: the pushforward of `fsMeasure` along the
   canonical index reindexing (`finProdFinEquiv`, as a linear isometry of
   Euclidean spaces descended to rays). A probability measure; positive on
   nonempty opens (`compositeFubiniStudy_pos_of_isOpen`).
@@ -47,9 +47,9 @@ carries the C2 argument.
 `specs/c2-support-plan.md` (Q28 scoping, item 2);
 `RecordLayer/OnticComposite.lean` (`segre`, `segre_range_isClosed`,
 `exists_entangled_mem_nhds`, `not_mem_range_segre`);
-`LF4/TypicalityForcing.lean` (`fubiniStudyMeasure_pos_of_isOpen`);
+`LF4/TypicalityForcing.lean` (`fsMeasure_pos_of_isOpen`);
 `Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean`
-(`fubiniStudyMeasure`); `specs/BACKLOG.md` (Q28); `specs/future-work.md`.
+(`fsMeasure`); `specs/BACKLOG.md` (Q28); `specs/future-work.md`.
 -/
 
 @[expose] public section
@@ -114,13 +114,13 @@ lemma rayReindexInv_surjective :
 /-! ### The composite Fubini–Study measure -/
 
 /-- **The Fubini–Study measure on the composite index**: the pushforward of
-`fubiniStudyMeasure` at `p₀` along the flat-to-composite ray reading. The
+`fsMeasure` at `p₀` along the flat-to-composite ray reading. The
 composite ray space is the flat `ℂℙ^{nA·nB−1}` up to the canonical index
 bijection, and this is THE Fubini–Study measure carried across it. -/
 noncomputable def compositeFubiniStudy
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (nA * nB)))) :
     Measure (ℙ ℂ (EuclideanSpace ℂ (Fin nA × Fin nB))) :=
-  Measure.map (rayReindexInv nA nB) (fubiniStudyMeasure p₀)
+  Measure.map (rayReindexInv nA nB) (fsMeasure p₀)
 
 instance instIsProbabilityMeasureCompositeFubiniStudy
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (nA * nB)))) :
@@ -131,7 +131,7 @@ instance instIsProbabilityMeasureCompositeFubiniStudy
 
 /-- **The composite Fubini–Study measure has full support**: every nonempty
 open set has positive measure. Transports
-`fubiniStudyMeasure_pos_of_isOpen` along the reindexing (preimages of opens
+`fsMeasure_pos_of_isOpen` along the reindexing (preimages of opens
 are open by continuity, and nonempty by surjectivity). -/
 theorem compositeFubiniStudy_pos_of_isOpen [NeZero nA] [NeZero nB]
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (nA * nB))))
@@ -141,7 +141,7 @@ theorem compositeFubiniStudy_pos_of_isOpen [NeZero nA] [NeZero nB]
   have : NeZero (nA * nB) := ⟨Nat.mul_ne_zero (NeZero.ne nA) (NeZero.ne nB)⟩
   rw [compositeFubiniStudy,
     Measure.map_apply rayReindexInv_continuous.measurable hU.measurableSet]
-  exact CSD.LF4.fubiniStudyMeasure_pos_of_isOpen p₀
+  exact CSD.LF4.fsMeasure_pos_of_isOpen p₀
     (hU.preimage rayReindexInv_continuous)
     (hne.preimage rayReindexInv_surjective)
 
@@ -189,7 +189,7 @@ theorem compositeFubiniStudy_entangled_pos
 
 The positive-measure statements above say the entangled rays are not negligible. This upgrades
 them to the sharp form: the PRODUCT rays are null, so a Fubini–Study-typical composite state is
-entangled. The route is `Matrix.UnitaryGroup.fubiniStudyMeasure_null_of_cone`
+entangled. The route is `Matrix.UnitaryGroup.fsMeasure_null_of_cone`
 (`Mathlib/LinearAlgebra/Projectivization/FubiniStudyLebesgue.lean`): Fubini–Study is the
 projectivization of a Lebesgue-absolutely-continuous measure, so a ray set whose vector cone is
 Lebesgue-null is Fubini–Study-null. The Segre cone sits inside the zero set of ONE coordinate
@@ -229,7 +229,7 @@ theorem compositeFubiniStudy_range_segre_null (hA : 2 ≤ nA) (hB : 2 ≤ nB)
       (Matrix.UnitaryGroup.pi_quadratic_null' hba hca hda)
   rw [compositeFubiniStudy,
     Measure.map_apply rayReindexInv_continuous.measurable measurableSet_range_segre]
-  refine Matrix.UnitaryGroup.fubiniStudyMeasure_null_of_cone p₀
+  refine Matrix.UnitaryGroup.fsMeasure_null_of_cone p₀
     (rayReindexInv_continuous.measurable measurableSet_range_segre) ?_
   refine measure_mono_null ?_ hquad
   rintro v ⟨hv, hmem⟩

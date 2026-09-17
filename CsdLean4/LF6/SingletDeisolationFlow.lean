@@ -253,7 +253,7 @@ noncomputable def singletDeisolationFlow :
 /-- The singlet de-isolation flow is Fubini–Study measure-preserving (the
 Liouville / `hΦ_pres` content), inherited from `measurementFlow_measurePreserving`. -/
 theorem singletDeisolation_measurePreserving (p₀ : CPN (4 * 4)) :
-    MeasurePreserving singletDeisolationFlow (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+    MeasurePreserving singletDeisolationFlow (fsMeasure p₀) (fsMeasure p₀) :=
   measurementFlow_measurePreserving finProdFinEquiv p₀
 
 /-- The singlet de-isolation flow is genuinely not the identity (`N = 4 > 1`),
@@ -496,7 +496,7 @@ theorem singletDeisolation_flow_capstone {M : ℕ}
     measurementFlow 4 e ≠ id
     -- (2) FS measure-preserving
     ∧ MeasurePreserving (measurementFlow 4 e)
-        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
+        (fsMeasure p₀) (fsMeasure p₀)
     -- (3) pointer-block basin measure = the singlet kernel
     ∧ (∀ s t : Sign,
         ∑ n : Fin 4,

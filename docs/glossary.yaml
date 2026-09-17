@@ -240,10 +240,10 @@ entries:
       mathematics it's equivalently the normalised Riemannian volume of the Fubini-Study
       metric, or the top power of the Kahler form over n factorial, and all three readings
       are corpus theorems identifying the same measure. The top power of the Fubini-Study
-      form is (4 pi)^n times the measure (fsVolume_eq_smul_fubiniStudyMeasure), the
+      form is (4 pi)^n times the measure (fsVolume_eq_smul_fsMeasure), the
       Riemannian volume of the Fubini-Study metric is that top power over n factorial
       (riemannianVolume_fsMetric), so the measure is the normalised Riemannian volume
-      (riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure). The invariance
+      (riemannianVolume_fsMetric_eq_smul_fsMeasure). The invariance
       characterisation is the one that carries the weight in the Born derivation, and the
       other two are corpus results rather than background. See the Kahler form entry.
 
@@ -253,8 +253,8 @@ entries:
       with it. It's proved at general N with no imported axioms.
 
       The construction takes a reference point, but that's bookkeeping rather than
-      freedom, as fubiniStudyMeasure_basepoint_independent shows that every choice gives
-      the same measure. So defaultFubiniStudyMeasure is the measure and not one member of
+      freedom, as fsMeasure_basepoint_independent shows that every choice gives
+      the same measure. So defaultFsMeasure is the measure and not one member of
       a family.
     person: >
       Guido Fubini (1879-1943) was born in Venice and trained at the Scuola Normale
@@ -275,7 +275,7 @@ entries:
     status: proved-in-corpus
     lean:
       module: CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudyUnique.lean
-      theorem: fubiniStudyMeasure_unique
+      theorem: fsMeasure_unique
     papers:
       - doi: 10.5281/zenodo.19557174
         note: TN1, the Fubini-Study measure as a U(N)-equivariant pushforward
@@ -1529,7 +1529,7 @@ entries:
       fsForm_isSymplectic (the Fubini-Study form is closed and non-degenerate on CP^n),
       fsForm_isKahler (with J the multiplication by i, read through the holomorphic
       atlas), IsKahler.nijenhuis_eq_zero (the Nijenhuis tensor vanishes),
-      fsVolume_eq_smul_fubiniStudyMeasure (the top power of the form is (4 pi)^n times the
+      fsVolume_eq_smul_fsMeasure (the top power of the form is (4 pi)^n times the
       Fubini-Study measure), and riemannianVolume_fsMetric (the Riemannian volume of the
       compatible metric is that top power over n factorial). The sector's posited
       Liouville measure is proved to be this volume (LF4/SectorManifold.lean).
@@ -8111,7 +8111,7 @@ entries:
       laboratory operations, and it's kept distinct so nobody can mistake which layer a
       citation leans on.
     mathematical: >
-      The route is fubiniStudyMeasure_unique, fs_born_volume_ratio_N with the apex
+      The route is fsMeasure_unique, fs_born_volume_ratio_N with the apex
       variant, born_frequency_convergence_N for the joint almost-sure statement, and the
       moment-map identity momentMap_mk_eq_inner_sq with the Duistermaat-Heckman
       pushforward behind it.
@@ -8164,7 +8164,7 @@ entries:
       the symmetries of that space, so the ignorance is priced by a ruler nobody selected.
     mathematical: >
       LF1_main_theorem_ae converts region volumes into almost-sure limiting frequencies
-      under i.i.d. preparation sampling, fubiniStudyMeasure_unique removes the measure
+      under i.i.d. preparation sampling, fsMeasure_unique removes the measure
       freedom, and the general-N volume identities make the limiting values the Born
       weights.
 
@@ -8594,7 +8594,7 @@ entries:
     mathematical: >
       The contrast is carried by the corpus's uniqueness and reconstruction theorems
       rather than by any formalisation of Bohmian mechanics itself, so it's
-      fubiniStudyMeasure_unique versus the quantum equilibrium hypothesis, the projection
+      fsMeasure_unique versus the quantum equilibrium hypothesis, the projection
       postulate carried as a hypothesis versus the guidance equation carried as dynamics,
       and the record layer's basin machinery versus position as the universal pointer.
     term: How does CSD differ from Bohmian mechanics?

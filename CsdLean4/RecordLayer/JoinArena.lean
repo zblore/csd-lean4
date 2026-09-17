@@ -28,7 +28,7 @@ itself. On this arena:
   unitary action;
 * ★★ **Liouville preservation is Fubini–Study unitary invariance**
   (`joinSwap_measurePreserving`): the measure-preservation obligation recorded as brick 3's
-  hard half is discharged by `fubiniStudyMeasure_smul_invariant`, because the dynamics *is* a
+  hard half is discharged by `fsMeasure_smul_invariant`, because the dynamics *is* a
   unitary;
 * ★★ the Lüders update is **pointwise deterministic** (`join_block_luders`): for every join
   microstate `[ψ ⊕ α]` with nonvanishing block component and block-calibrated slot, the
@@ -58,7 +58,7 @@ the ray-pair `SwapArena`* — the join arena is where degenerate measurements li
 `RecordLayer/PhaseSlot.lean` (brick 2 — the measure form);
 `RecordLayer/DegenerateLuders.lean` (`swap_not_blockLuders`, `blockProj`);
 `Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean`
-(`fubiniStudyMeasure_smul_invariant` — the Liouville driver); `specs/BACKLOG.md`.
+(`fsMeasure_smul_invariant` — the Liouville driver); `specs/BACKLOG.md`.
 -/
 
 @[expose] public section
@@ -212,12 +212,12 @@ noncomputable def joinSwap (b : Fin N → Fin K) (i : Fin K) :
 
 /-- **★★ Liouville preservation, discharged.** The join swap is a unitary, so it preserves the
 Fubini–Study measure — the obligation recorded as brick 3's hard half, closed by
-`fubiniStudyMeasure_smul_invariant`. -/
+`fsMeasure_smul_invariant`. -/
 theorem joinSwap_measurePreserving (b : Fin N → Fin K) (i : Fin K)
     (p₀ : LF4.CPN (N + N)) :
-    MeasurePreserving (joinSwap b i) (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+    MeasurePreserving (joinSwap b i) (fsMeasure p₀) (fsMeasure p₀) :=
   ⟨(continuous_const_smul (joinU b i)).measurable,
-    fubiniStudyMeasure_smul_invariant (joinU b i) p₀⟩
+    fsMeasure_smul_invariant (joinU b i) p₀⟩
 
 /-! ### The system readout -/
 

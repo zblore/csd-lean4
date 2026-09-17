@@ -122,7 +122,7 @@ instance-supplied abstract `Prop`, historically `True` before 2026-07-19).
 The manifold-level closedness `dω = 0` and the top-power identity
 `ω^{∧(N-1)}/(N-1)! = μ_FS` were the honestly-named residual (connectivity link L1) until the
 corpus built the manifold layer (2026-09-07/08: `Projectivization.fsForm_mextDeriv`,
-`fsVolume_eq_smul_fubiniStudyMeasure`) and `LF4/SectorManifold.lean` wired it to the `ℂℙⁿ`
+`fsVolume_eq_smul_fsMeasure`) and `LF4/SectorManifold.lean` wired it to the `ℂℙⁿ`
 sectors (2026-09-10, W1). This flat triple remains the field's type; the manifold predicate on the
 sector's target itself is `fsForm_isKahler`. -/
 def IsFubiniStudyKahler (N : ℕ) : Prop :=
@@ -172,7 +172,7 @@ structure KahlerOnticSetup (N : ℕ) where
   `ω = g∘J`, `g = ω∘J`, `ω` a `(1,1)`-form, `ω u (Ju) = ‖u‖²`. The
   **manifold** residual (closedness `dω = 0` and the top-power identity
   `ω^{∧(N-1)}/(N-1)! = μ_FS`) is PROVED on the sector's target
-  (`fsForm_mextDeriv`, `fsVolume_eq_smul_fubiniStudyMeasure`, `fsForm_isKahler`)
+  (`fsForm_mextDeriv`, `fsVolume_eq_smul_fsMeasure`, `fsForm_isKahler`)
   and wired to the `ℂℙⁿ` instances in `LF4/SectorManifold.lean` (W1,
   2026-09-10; connectivity link L1 discharged). -/
   kahler_pointwise : IsFubiniStudyKahler N
@@ -208,7 +208,7 @@ attribute [instance] KahlerOnticSetup.liouville_isProbability
 
 /-- **Inhabitation witness (non-vacuity).** The degenerate base case
 `Σ = ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `π = id`, the trivial flow-family
-`flow t = id`, and `liouvilleMeasure = fubiniStudyMeasure p₀`. This confirms the
+`flow t = id`, and `liouvilleMeasure = fsMeasure p₀`. This confirms the
 `KahlerOnticSetup N` fields are mutually satisfiable (the interface is
 non-empty), exactly the `π = id` base-case role `LF4.cpSectorData` plays for
 `SectorData`. The two Kähler-geometry fields are the concrete
@@ -225,7 +225,7 @@ noncomputable def trivialKahlerOnticSetup
   Sigma := ℙ ℂ (EuclideanSpace ℂ (Fin N))
   compact_sigma := inferInstance
   kahler_pointwise := isFubiniStudyKahler N
-  liouvilleMeasure := Matrix.UnitaryGroup.fubiniStudyMeasure p₀
+  liouvilleMeasure := Matrix.UnitaryGroup.fsMeasure p₀
   liouville_isProbability := inferInstance
   pi := id
   pi_measurable := measurable_id
@@ -239,7 +239,7 @@ normalised). Records that the base case is a genuine typicality law. -/
 instance instIsProbabilityMeasureTrivialLiouville
     (N : ℕ) (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
     IsProbabilityMeasure (trivialKahlerOnticSetup N p₀).liouvilleMeasure :=
-  Matrix.UnitaryGroup.instIsProbabilityMeasureFubiniStudyMeasure p₀
+  Matrix.UnitaryGroup.instIsProbabilityMeasureFsMeasure p₀
 
 end LF4
 end CSD

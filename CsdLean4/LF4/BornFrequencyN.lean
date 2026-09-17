@@ -132,7 +132,7 @@ An hpos-free form is available: `bornRegion_fs_measure_uncond` (`BornRegionUncon
 theorem bornRegion_fs_measure (p₀ : CPN (M + 1)) (ψ : EuclideanSpace ℂ (Fin (M + 1)))
     (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2) :
-    ∀ i, (fubiniStudyMeasure p₀ (bornRegion ψ hψ0 i)).toReal
+    ∀ i, (fsMeasure p₀ (bornRegion ψ hψ0 i)).toReal
       = ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2 := by
   refine Fin.lastCases ?_ ?_
   · rw [bornRegion, Fin.lastCases_last, fs_born_volume_ratio_N_apex p₀ ψ hψ0 hψ hpos,
@@ -154,7 +154,7 @@ theorem born_frequency_convergence_N (p₀ : CPN (M + 1)) (ψ : EuclideanSpace �
     (hpos : ∀ j, 0 < ‖inner ℂ (EuclideanSpace.single j (1 : ℂ)) ψ‖ ^ 2)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep : ∀ i : Fin (M + 1),
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)

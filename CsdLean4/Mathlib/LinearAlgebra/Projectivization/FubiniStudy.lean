@@ -33,17 +33,17 @@ Fubini–Study measure" is this measure.
 
 - `Matrix.UnitaryGroup.orbitMap p₀` — the orbit map at `p₀`,
   `U ↦ U • p₀ : Matrix.unitaryGroup (Fin N) ℂ → ℙ ℂ (EuclideanSpace ℂ (Fin N))`.
-- `fubiniStudyMeasure p₀` — `Measure.map (orbitMap p₀) unitaryHaarProb`.
+- `fsMeasure p₀` — `Measure.map (orbitMap p₀) unitaryHaarProb`.
   The U(N)-invariant Borel probability measure on `ℂℙ^{N-1}`.
-- `defaultPoint`, `defaultFubiniStudyMeasure` — canonical choice
+- `defaultPoint`, `defaultFsMeasure` — canonical choice
   using `EuclideanSpace.single 0 1` as the reference (requires `[NeZero N]`).
 
 ## Main results
 
 - `orbit_map_continuous` — continuity of the orbit map (Phase A).
 - `orbit_map_measurable` — measurability corollary.
-- `instIsProbabilityMeasureFubiniStudyMeasure` — pushforward is a probability measure.
-- `fubiniStudyMeasure_smul_invariant` — U(N)-invariance.
+- `instIsProbabilityMeasureFsMeasure` — pushforward is a probability measure.
+- `fsMeasure_smul_invariant` — U(N)-invariance.
 
 ## Provenance
 
@@ -123,7 +123,7 @@ lemma orbit_map_measurable (p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
 /-- **Fubini–Study measure** at reference point `p₀`. Defined as the
 pushforward of the probability-normalised Haar measure on the unitary
 group under the orbit map `U ↦ U • p₀`. -/
-noncomputable def fubiniStudyMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+noncomputable def fsMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
     Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))) :=
   Measure.map (orbitMap p₀) unitaryHaarProb
 
@@ -131,10 +131,10 @@ noncomputable def fubiniStudyMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)
 
 /-- Pushforward of a probability measure by a measurable map is a
 probability measure. -/
-instance instIsProbabilityMeasureFubiniStudyMeasure
+instance instIsProbabilityMeasureFsMeasure
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-    IsProbabilityMeasure (fubiniStudyMeasure p₀) := by
-  unfold fubiniStudyMeasure
+    IsProbabilityMeasure (fsMeasure p₀) := by
+  unfold fsMeasure
   exact Measure.isProbabilityMeasure_map' (orbit_map_measurable p₀).aemeasurable
 
 /-! ## Phase D — U(N)-invariance -/
@@ -150,11 +150,11 @@ lemma smul_comp_orbitMap (U' : Matrix.unitaryGroup (Fin N) ℂ)
   exact smul_smul U' U p₀
 
 /-- **U(N)-invariance of the Fubini–Study measure.** For any unitary
-`U'`, pushing forward `fubiniStudyMeasure p₀` by the action of `U'`
+`U'`, pushing forward `fsMeasure p₀` by the action of `U'`
 yields the same measure.
 
 Proof via the chain:
-1. unfold `fubiniStudyMeasure` to expose `(orbitMap p₀).map unitaryHaarProb`;
+1. unfold `fsMeasure` to expose `(orbitMap p₀).map unitaryHaarProb`;
 2. compose maps via `Measure.map_map` to push `U' • ·` through the orbit map;
 3. use `smul_comp_orbitMap` to re-express the composition as
    `orbitMap p₀ ∘ (U' * ·)`;
@@ -162,12 +162,12 @@ Proof via the chain:
 5. invoke `unitaryHaarProb`'s left-invariance (`IsMulLeftInvariant`,
    inherited from `unitaryHaarProb_isHaarMeasure`) to kill the
    inner pushforward. -/
-theorem fubiniStudyMeasure_smul_invariant
+theorem fsMeasure_smul_invariant
     (U' : Matrix.unitaryGroup (Fin N) ℂ)
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-    Measure.map (fun p => U' • p) (fubiniStudyMeasure p₀)
-      = fubiniStudyMeasure p₀ := by
-  unfold fubiniStudyMeasure
+    Measure.map (fun p => U' • p) (fsMeasure p₀)
+      = fsMeasure p₀ := by
+  unfold fsMeasure
   rw [Measure.map_map (continuous_const_smul U').measurable
         (orbit_map_measurable p₀)]
   rw [smul_comp_orbitMap]
@@ -178,8 +178,8 @@ theorem fubiniStudyMeasure_smul_invariant
 
 /-! ## Phase E — the canonical reference point
 
-`fubiniStudyMeasure` takes a base point, and every consumer has had to supply one.
-The measure does not in fact depend on it (`fubiniStudyMeasure_basepoint_independent`,
+`fsMeasure` takes a base point, and every consumer has had to supply one.
+The measure does not in fact depend on it (`fsMeasure_basepoint_independent`,
 proved in `FubiniStudyUnique.lean` where uniqueness is available), so a canonical
 choice can be named here and the dependence discharged there. Landed 2026-08-19; the
 module docstring had advertised these two definitions since the file was written
@@ -197,15 +197,15 @@ noncomputable def defaultPoint (N : ℕ) [NeZero N] :
     exact one_ne_zero hz)
 
 /-- The **Fubini–Study measure at the canonical point**. By
-`fubiniStudyMeasure_basepoint_independent` this is *the* Fubini–Study measure: the base
+`fsMeasure_basepoint_independent` this is *the* Fubini–Study measure: the base
 point is not a degree of freedom. -/
-noncomputable def defaultFubiniStudyMeasure (N : ℕ) [NeZero N] :
+noncomputable def defaultFsMeasure (N : ℕ) [NeZero N] :
     Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))) :=
-  fubiniStudyMeasure (defaultPoint N)
+  fsMeasure (defaultPoint N)
 
-instance instIsProbabilityMeasureDefaultFubiniStudyMeasure (N : ℕ) [NeZero N] :
-    IsProbabilityMeasure (defaultFubiniStudyMeasure N) := by
-  unfold defaultFubiniStudyMeasure
+instance instIsProbabilityMeasureDefaultFsMeasure (N : ℕ) [NeZero N] :
+    IsProbabilityMeasure (defaultFsMeasure N) := by
+  unfold defaultFsMeasure
   infer_instance
 
 end Matrix.UnitaryGroup

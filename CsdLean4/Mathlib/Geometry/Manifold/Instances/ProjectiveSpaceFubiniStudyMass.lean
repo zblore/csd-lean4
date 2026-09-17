@@ -23,7 +23,7 @@ not.
 
 The constant. `ProjectiveSpaceFubiniStudyVolume.lean`
 proved that the *normalised* volume of the top power of the Fubini–Study form is
-`fubiniStudyMeasure p₀`; this module computes the total mass, so the identity holds with its
+`fsMeasure p₀`; this module computes the total mass, so the identity holds with its
 constant. Three steps.
 
 * **The density everywhere on the chart.** `mulVecCLM A` (a complex matrix acting on `ℂⁿ` as a
@@ -44,7 +44,7 @@ constant. Three steps.
   ★ `fsVolume_univ_eq_lintegral`.
 * **The constant.** ★★ `fsVolume_univ` — **`fsVolume n univ = (4π)ⁿ`**, by
   `lintegral_pi_pow_inv_one_add_sum_norm_sq` (`∫_{ℂⁿ} (1 + ‖w‖²)^{-(n+1)} = πⁿ/n!`); and
-  ★★★ `fsVolume_eq_smul_fubiniStudyMeasure` — **`fsVolume n = (4π)ⁿ • fubiniStudyMeasure p₀`**:
+  ★★★ `fsVolume_eq_smul_fsMeasure` — **`fsVolume n = (4π)ⁿ • fsMeasure p₀`**:
   the measure of the top power of the Fubini–Study form *is* the Fubini–Study measure, up to the
   explicit constant `(4π)ⁿ`.
 
@@ -61,7 +61,7 @@ form of that sentence, with every factor visible.
 
 **Provenance and references.** The top-power plan (M7);
 `Instances/ProjectiveSpaceFubiniStudyVolume.lean`
-(`fsVolumeNormalized_eq_fubiniStudyMeasure`, `wedgePow_fsModelForm_zero_stdBasis`);
+(`fsVolumeNormalized_eq_fsMeasure`, `wedgePow_fsModelForm_zero_stdBasis`);
 `Analysis/SpecialFunctions/JapaneseBracketIntegral.lean`;
 `LinearAlgebra/Projectivization/UnitaryTransitive.lean`
 (`exists_unitary_map_unit`); `LinearAlgebra/Projectivization/TransitionProbability.lean`
@@ -401,9 +401,9 @@ theorem fsVolume_univ : fsVolume n univ = ENNReal.ofReal ((4 * π) ^ n) := by
 /-- ★★★ **The measure of the top power of the Fubini–Study form is `(4π)ⁿ` times the
 Fubini–Study measure**, for every base point `p₀`: `ω_FS^{∧n} = (4π)ⁿ · μ_FS`, with every factor
 visible. -/
-theorem fsVolume_eq_smul_fubiniStudyMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (n + 1)))) :
-    fsVolume n = ENNReal.ofReal ((4 * π) ^ n) • fubiniStudyMeasure p₀ := by
-  have h := fsVolumeNormalized_eq_fubiniStudyMeasure (n := n) p₀
+theorem fsVolume_eq_smul_fsMeasure (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin (n + 1)))) :
+    fsVolume n = ENNReal.ofReal ((4 * π) ^ n) • fsMeasure p₀ := by
+  have h := fsVolumeNormalized_eq_fsMeasure (n := n) p₀
   rw [fsVolumeNormalized, fsVolume_univ] at h
   rw [← h, smul_smul, ENNReal.mul_inv_cancel (ENNReal.ofReal_pos.2 (by positivity)).ne'
     ENNReal.ofReal_ne_top, one_smul]

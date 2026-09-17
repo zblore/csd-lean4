@@ -30,7 +30,7 @@ Foundational-triple, no `sorry`.
 ## References
 `LF4/QubitDipole.lean` (`rsign`, `blochProj_le_one`); `Empirical/CSD/UncertaintyVolume.lean`
 (`context_vol_sum_two`); `Mathlib/.../FubiniStudyUnique.lean` (Haar right-invariance,
-`fubiniStudyMeasure_unique`); `specs/record-layer-plan.md` §2 (the qubit context-fixed crux).
+`fsMeasure_unique`); `specs/record-layer-plan.md` §2 (the qubit context-fixed crux).
 -/
 
 @[expose] public section
@@ -84,9 +84,9 @@ lemma rsign_neg (x : ℝ) : rsign (-x) = - rsign x := by
   · rw [if_neg (by linarith : ¬ (0:ℝ) < -x), if_pos (by linarith : -x < 0), if_pos h]
 
 /-- The Fubini–Study measure is independent of the base point (uniqueness of the invariant law). -/
-lemma fubiniStudy_eq (p₀ p₁ : CPN 2) : fubiniStudyMeasure p₀ = fubiniStudyMeasure p₁ :=
-  fubiniStudyMeasure_unique p₁ (fubiniStudyMeasure p₀)
-    (fun U => fubiniStudyMeasure_smul_invariant U p₀)
+lemma fubiniStudy_eq (p₀ p₁ : CPN 2) : fsMeasure p₀ = fsMeasure p₁ :=
+  fsMeasure_unique p₁ (fsMeasure p₀)
+    (fun U => fsMeasure_smul_invariant U p₀)
 
 /-- The `e₀ ↔ e₁` swap matrix (Pauli-X). -/
 noncomputable def swapMat : Matrix (Fin 2) (Fin 2) ℂ := !![0, 1; 1, 0]
@@ -148,7 +148,7 @@ lemma haar_integral_mul_right (h : Matrix.unitaryGroup (Fin 2) ℂ → ℝ) (hh 
 for unit `n, ψ`. The antipode symmetry: Haar right-multiplication by the swap flips both Born
 coordinates (`inner_unitary_flip`), negating the integrand, so `T = −T`. -/
 theorem crossTerm (n ψ : EuclideanSpace ℂ (Fin 2)) (hn : ‖n‖ = 1) (hψ : ‖ψ‖ = 1) (p₀ : CPN 2) :
-    ∫ p, rsign (2 * blochProj n p - 1) * |2 * blochProj ψ p - 1| ∂(fubiniStudyMeasure p₀) = 0 := by
+    ∫ p, rsign (2 * blochProj n p - 1) * |2 * blochProj ψ p - 1| ∂(fsMeasure p₀) = 0 := by
   set e0pt := Projectivization.mk ℂ (EuclideanSpace.single (0 : Fin 2) (1 : ℂ)) single_zero_ne
     with he0pt
   rw [fubiniStudy_eq p₀ e0pt]
@@ -157,9 +157,9 @@ theorem crossTerm (n ψ : EuclideanSpace ℂ (Fin 2)) (hn : ‖n‖ = 1) (hψ : 
   have hGmeas : Measurable G :=
     (measurable_rsign.comp (((blochProj_measurable n).const_mul 2).sub_const 1)).mul
       ((((blochProj_measurable ψ).const_mul 2).sub_const 1).abs)
-  have hmap : ∫ p, G p ∂(fubiniStudyMeasure e0pt)
+  have hmap : ∫ p, G p ∂(fsMeasure e0pt)
       = ∫ U : Matrix.unitaryGroup (Fin 2) ℂ, G (U • e0pt) ∂unitaryHaarProb := by
-    rw [fubiniStudyMeasure]
+    rw [fsMeasure]
     exact MeasureTheory.integral_map (orbit_map_measurable e0pt).aemeasurable
       hGmeas.aestronglyMeasurable
   rw [hmap]

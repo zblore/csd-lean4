@@ -108,7 +108,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.LF5.vnDilation_pointer_frequency
 
 -- The two fibred twins (CR-4, 2026-09-06). Same statements with epistemicMeasure [ψ'] and
--- global basins in place of fubiniStudyMeasure p₀ and Born regions, so the basepoint leaves
+-- global basins in place of fsMeasure p₀ and Born regions, so the basepoint leaves
 -- the statement; the LF6 flow files (SingletDeisolationFlow, GHZMerminCarve, NudgeLocality)
 -- delegate to these. Foundational triple.
 /-- info: 'CSD.LF5.vnDilation_pointer_volume_basin' depends on axioms: [propext, Classical.choice, Quot.sound] -/

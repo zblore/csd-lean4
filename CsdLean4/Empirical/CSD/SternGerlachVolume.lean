@@ -124,7 +124,7 @@ theorem csd_sg_volume_certain
     (p₀ : CPN 2)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 2) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep :
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
@@ -162,7 +162,7 @@ theorem csd_sg_volume_half
     (p₀ : CPN 2)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 2) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep :
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)

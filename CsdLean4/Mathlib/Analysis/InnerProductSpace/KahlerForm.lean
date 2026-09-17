@@ -15,7 +15,7 @@ public import Mathlib.Analysis.Complex.Basic
 **TERM-SCOPE(Kahler)** — this module uses the *restricted* sense of "Kahler"; the source
 repository's terms register records what is backed and what is not.
 
-**Category:** 1-Mathlib (CSD-free; the form-level analogue of `fubiniStudyMeasure`).
+**Category:** 1-Mathlib (CSD-free; the form-level analogue of `fsMeasure`).
 
 Mathlib has no Kähler-geometry API (no manifold differential forms, no exterior derivative, no
 almost-complex structure; MATHLIB-ABSENT(file:Mathlib/Geometry/Manifold/DifferentialForm)). When
@@ -23,7 +23,7 @@ this
 module was written that meant the full closed 2-form `ω` on `ℂℙ^{N-1}` with `dω = 0` and
 `ω^{∧(N-1)}/(N-1)! = μ_FS` could not be built; since 2026-09-07/11 the modules under
 `Geometry/Manifold/` build that differential geometry themselves and both statements are
-theorems (`Projectivization.fsForm_isKahler`, `fsVolume_eq_smul_fubiniStudyMeasure`). What **is**
+theorems (`Projectivization.fsForm_isKahler`, `fsVolume_eq_smul_fsMeasure`). What **is**
 bounded — and is built here — is the
 **pointwise** (linear-algebra) core of that form: on any complex inner-product space `E` (the
 tangent
@@ -61,7 +61,7 @@ proved downstream, on the manifold:
   (`extDeriv_fundamentalFormAlt_eq_zero`); on `ℂℙⁿ`: `Projectivization.fsForm_mextDeriv`
   (`Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyForm.lean`);
 * the **global** identity between the top power of `ω` and the Fubini–Study measure:
-  `Projectivization.fsVolume_eq_smul_fubiniStudyMeasure`
+  `Projectivization.fsVolume_eq_smul_fsMeasure`
   (`Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudyMass.lean`).
 
 The `X_H = ω⁻¹dH` duality this triple supports is a theorem at the linear level in

@@ -392,12 +392,12 @@ noncomputable def ghzLocalFlow :
   fun p => ghzLocalFlowUnitary • p
 
 /-- **The local product flow is Fubini-Study measure-preserving** (the Liouville /
-`hΦ_pres` content) — directly from `fubiniStudyMeasure_smul_invariant` for the
+`hΦ_pres` content) — directly from `fsMeasure_smul_invariant` for the
 product unitary `U_loc`. -/
 theorem ghzLocalFlow_measurePreserving (p₀ : CPN (8 * 8)) :
-    MeasurePreserving ghzLocalFlow (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+    MeasurePreserving ghzLocalFlow (fsMeasure p₀) (fsMeasure p₀) :=
   ⟨(continuous_const_smul ghzLocalFlowUnitary).measurable,
-   fubiniStudyMeasure_smul_invariant ghzLocalFlowUnitary p₀⟩
+   fsMeasure_smul_invariant ghzLocalFlowUnitary p₀⟩
 
 /-- Basis-ray action of the local product flow: it moves the ray at
 `ghzFlowEquiv (z0, z1, z2)` to the one at
@@ -630,7 +630,7 @@ theorem ghzLocal_capstone {M : ℕ}
             (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) (e (n, ghzIdx w)))).toReal
           = ghzWeight w)
     -- (4) the projectivised product flow is FS measure-preserving
-    ∧ MeasurePreserving ghzLocalFlow (fubiniStudyMeasure q₀) (fubiniStudyMeasure q₀)
+    ∧ MeasurePreserving ghzLocalFlow (fsMeasure q₀) (fsMeasure q₀)
     -- (5) the flow is genuinely not the identity
     ∧ ghzLocalFlow ≠ id
     -- (6) the LOCAL flow realises the local Naimark dilation

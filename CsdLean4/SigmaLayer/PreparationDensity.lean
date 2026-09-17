@@ -57,7 +57,7 @@ metric row).
 (`Preparation`, `conditional_not_mutuallySingular`);
 `SigmaLayer/ProjectiveSector.lean` (`projectivePreparationLaw`);
 `LF4/KahlerInstance.lean` (`kMuL`); `LF4/TypicalityForcing.lean`
-(`fubiniStudyMeasure_pos_of_isOpen`); `specs/BACKLOG.md` (Q28);
+(`fsMeasure_pos_of_isOpen`); `specs/BACKLOG.md` (Q28);
 `specs/future-work.md`.
 -/
 
@@ -139,16 +139,16 @@ theorem kahlerFstSector_projectiveLaw (p₀ : CSD.LF4.CPN N)
     (D : ConstraintDynamics (CSD.LF4.KSigma N))
     (hmuL : (D.muL : Measure (CSD.LF4.KSigma N)) = CSD.LF4.kMuL p₀) :
     (kahlerFstSector D).projectiveLaw (D.muL : Measure (CSD.LF4.KSigma N))
-      = (1 : ENNReal) • fubiniStudyMeasure p₀ := by
+      = (1 : ENNReal) • fsMeasure p₀ := by
   rw [one_smul]
   refine Measure.ext fun s hs => ?_
   rw [ProjectiveSector.projectiveLaw_apply _ _ hs]
   show (D.muL : Measure (CSD.LF4.KSigma N)) (Prod.fst ⁻¹' s)
-    = fubiniStudyMeasure p₀ s
+    = fsMeasure p₀ s
   rw [hmuL]
-  show ((fubiniStudyMeasure p₀).prod (volume : Measure CSD.LF4.KTorus))
+  show ((fsMeasure p₀).prod (volume : Measure CSD.LF4.KTorus))
       (Prod.fst ⁻¹' s)
-    = fubiniStudyMeasure p₀ s
+    = fsMeasure p₀ s
   rw [← Set.prod_univ, Measure.prod_prod, measure_univ, mul_one]
 
 /-- ★★ **ρ_ep on the Kähler arena** (the seam corollary, Q28 item 3): for any
@@ -160,9 +160,9 @@ theorem kahler_preparation_density (p₀ : CSD.LF4.CPN N) [NeZero N]
     (D : ConstraintDynamics (CSD.LF4.KSigma N))
     (hmuL : (D.muL : Measure (CSD.LF4.KSigma N)) = CSD.LF4.kMuL p₀)
     (P : Preparation D) :
-    ((kahlerFstSector D).projectivePreparationLaw P ≪ fubiniStudyMeasure p₀)
-      ∧ (fubiniStudyMeasure p₀).withDensity
-          ((kahlerFstSector D).preparationDensity P (fubiniStudyMeasure p₀))
+    ((kahlerFstSector D).projectivePreparationLaw P ≪ fsMeasure p₀)
+      ∧ (fsMeasure p₀).withDensity
+          ((kahlerFstSector D).preparationDensity P (fsMeasure p₀))
         = (kahlerFstSector D).projectivePreparationLaw P :=
   ⟨(kahlerFstSector D).projectivePreparationLaw_absolutelyContinuous P
       (kahlerFstSector_projectiveLaw p₀ D hmuL),
@@ -184,10 +184,10 @@ singular rather than absolutely continuous, which is a different thing. -/
 theorem kMuL_fibre_null (hN : 2 ≤ N) (p₀ q : CSD.LF4.CPN N) :
     CSD.LF4.kMuL p₀ (Prod.fst ⁻¹' {q}) = 0 := by
   have : NeZero N := ⟨by omega⟩
-  show ((fubiniStudyMeasure p₀).prod (volume : Measure CSD.LF4.KTorus))
+  show ((fsMeasure p₀).prod (volume : Measure CSD.LF4.KTorus))
     (Prod.fst ⁻¹' {q}) = 0
   rw [← Set.prod_univ, Measure.prod_prod,
-    fubiniStudyMeasure_singleton hN p₀ q, zero_mul]
+    fsMeasure_singleton hN p₀ q, zero_mul]
 
 /-! ### Item 4b — overlapping preparations on the Kähler arena -/
 
@@ -201,10 +201,10 @@ noncomputable def openBasePreparation (p₀ : CSD.LF4.CPN N) [NeZero N]
   region := Prod.fst ⁻¹' V
   measurable_region := measurable_fst hV.measurableSet
   nonzero_region := by
-    show ((fubiniStudyMeasure p₀).prod (volume : Measure CSD.LF4.KTorus))
+    show ((fsMeasure p₀).prod (volume : Measure CSD.LF4.KTorus))
       (Prod.fst ⁻¹' V) ≠ 0
     rw [← Set.prod_univ, Measure.prod_prod, measure_univ, mul_one]
-    exact CSD.LF4.fubiniStudyMeasure_pos_of_isOpen p₀ hV hne
+    exact CSD.LF4.fsMeasure_pos_of_isOpen p₀ hV hne
 
 /-- ★★ **The finite-resolution preparation-overlap witness** (Q28 item 4b): two
 preparations, each localised on an open neighbourhood of its own ray, with overlapping
@@ -227,10 +227,10 @@ theorem kahler_preparations_overlap (p₀ : CSD.LF4.CPN N) [NeZero N]
         (((openBasePreparation p₀ hUy ⟨y, hy⟩).conditionalMeasure
           : ProbabilityMeasure (CSD.LF4.KSigma N)) : Measure (CSD.LF4.KSigma N)) := by
   apply Preparation.conditional_not_mutuallySingular
-  show ((fubiniStudyMeasure p₀).prod (volume : Measure CSD.LF4.KTorus))
+  show ((fsMeasure p₀).prod (volume : Measure CSD.LF4.KTorus))
     (Prod.fst ⁻¹' Ux ∩ Prod.fst ⁻¹' Uy) ≠ 0
   rw [← Set.preimage_inter, ← Set.prod_univ, Measure.prod_prod,
     measure_univ, mul_one]
-  exact CSD.LF4.fubiniStudyMeasure_pos_of_isOpen p₀ (hUx.inter hUy) hover
+  exact CSD.LF4.fsMeasure_pos_of_isOpen p₀ (hUx.inter hUy) hover
 
 end CSD.SigmaLayer

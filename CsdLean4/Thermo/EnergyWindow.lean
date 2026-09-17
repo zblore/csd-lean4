@@ -97,7 +97,7 @@ noncomputable def energyVar (lam : Fin N → ℝ) : ℝ :=
 
 /-- The mean energy is `fs_linear_expectation`, restated. -/
 theorem fs_energy_mean (p₀ : CPN N) (lam : Fin N → ℝ) :
-    ∫ p, rayEnergy lam p ∂(fubiniStudyMeasure p₀) = energyMean lam :=
+    ∫ p, rayEnergy lam p ∂(fsMeasure p₀) = energyMean lam :=
   fs_linear_expectation p₀ lam
 
 /-! ### The window -/
@@ -138,13 +138,13 @@ The condition is quantitative: the Chebyshev tail `Var/ε²` must be `< 1`, i.e.
 be wider than the standard deviation. -/
 theorem energyWindow_ne_zero (p₀ : CPN N) (lam : Fin N → ℝ) {ε : ℝ} (hε : 0 < ε)
     (hwidth : ENNReal.ofReal (energyVar lam / ε ^ 2) < 1) :
-    fubiniStudyMeasure p₀ (energyWindow lam ε) ≠ 0 := by
+    fsMeasure p₀ (energyWindow lam ε) ≠ 0 := by
   intro h0
-  have htail : fubiniStudyMeasure p₀ {p : CPN N | ε ≤ |rayEnergy lam p - energyMean lam|}
+  have htail : fsMeasure p₀ {p : CPN N | ε ≤ |rayEnergy lam p - energyMean lam|}
       ≤ ENNReal.ofReal (energyVar lam / ε ^ 2) := by
     have h := fs_chebyshev_concentration p₀ lam hε
     exact h
-  have hone : fubiniStudyMeasure p₀ {p : CPN N | ε ≤ |rayEnergy lam p - energyMean lam|} = 1 := by
+  have hone : fsMeasure p₀ {p : CPN N | ε ≤ |rayEnergy lam p - energyMean lam|} = 1 := by
     rw [← compl_energyWindow lam ε,
       prob_compl_eq_one_sub (measurableSet_energyWindow lam ε), h0, tsub_zero]
   rw [hone] at htail
@@ -153,13 +153,13 @@ theorem energyWindow_ne_zero (p₀ : CPN N) (lam : Fin N → ℝ) {ε : ℝ} (h�
 /-- **The microcanonical law**: Fubini–Study conditioned on the energy window. -/
 noncomputable def microMeasure (p₀ : CPN N) (lam : Fin N → ℝ) (ε : ℝ) :
     Measure (CPN N) :=
-  ProbabilityTheory.cond (fubiniStudyMeasure p₀) (energyWindow lam ε)
+  ProbabilityTheory.cond (fsMeasure p₀) (energyWindow lam ε)
 
 omit [NeZero N] in
 /-- The microcanonical law is a probability measure exactly when the window carries weight —
 which `energyWindow_ne_zero` supplies. -/
 lemma microMeasure_isProbability (p₀ : CPN N) (lam : Fin N → ℝ) {ε : ℝ}
-    (hne : fubiniStudyMeasure p₀ (energyWindow lam ε) ≠ 0) :
+    (hne : fsMeasure p₀ (energyWindow lam ε) ≠ 0) :
     IsProbabilityMeasure (microMeasure p₀ lam ε) :=
   ProbabilityTheory.cond_isProbabilityMeasure hne
 
@@ -192,26 +192,26 @@ lemma map_signFlip_microMeasure (p₀ : CPN N) (lam : Fin N → ℝ) (ε : ℝ) 
       = microMeasure p₀ lam ε := by
   have hT : Measurable (fun p : CPN N => (signFlip k) • p) :=
     (continuous_const_smul _).measurable
-  have hinv : Measure.map (fun p : CPN N => (signFlip k) • p) (fubiniStudyMeasure p₀)
-      = fubiniStudyMeasure p₀ := fubiniStudyMeasure_smul_invariant _ p₀
+  have hinv : Measure.map (fun p : CPN N => (signFlip k) • p) (fsMeasure p₀)
+      = fsMeasure p₀ := fsMeasure_smul_invariant _ p₀
   have key : Measure.map (fun p : CPN N => (signFlip k) • p)
-        ((fubiniStudyMeasure p₀).restrict (energyWindow lam ε))
-      = (fubiniStudyMeasure p₀).restrict (energyWindow lam ε) := by
+        ((fsMeasure p₀).restrict (energyWindow lam ε))
+      = (fsMeasure p₀).restrict (energyWindow lam ε) := by
     calc Measure.map (fun p : CPN N => (signFlip k) • p)
-          ((fubiniStudyMeasure p₀).restrict (energyWindow lam ε))
+          ((fsMeasure p₀).restrict (energyWindow lam ε))
         = Measure.map (fun p : CPN N => (signFlip k) • p)
-            ((fubiniStudyMeasure p₀).restrict
+            ((fsMeasure p₀).restrict
               ((fun p : CPN N => (signFlip k) • p) ⁻¹' (energyWindow lam ε))) := by
           rw [energyWindow_signFlip_preimage]
       _ = (Measure.map (fun p : CPN N => (signFlip k) • p)
-            (fubiniStudyMeasure p₀)).restrict (energyWindow lam ε) :=
+            (fsMeasure p₀)).restrict (energyWindow lam ε) :=
           (Measure.restrict_map hT (measurableSet_energyWindow lam ε)).symm
-      _ = (fubiniStudyMeasure p₀).restrict (energyWindow lam ε) := by rw [hinv]
+      _ = (fsMeasure p₀).restrict (energyWindow lam ε) := by rw [hinv]
   show Measure.map (fun p : CPN N => (signFlip k) • p)
-      ((fubiniStudyMeasure p₀ (energyWindow lam ε))⁻¹
-        • (fubiniStudyMeasure p₀).restrict (energyWindow lam ε))
-    = (fubiniStudyMeasure p₀ (energyWindow lam ε))⁻¹
-        • (fubiniStudyMeasure p₀).restrict (energyWindow lam ε)
+      ((fsMeasure p₀ (energyWindow lam ε))⁻¹
+        • (fsMeasure p₀).restrict (energyWindow lam ε))
+    = (fsMeasure p₀ (energyWindow lam ε))⁻¹
+        • (fsMeasure p₀).restrict (energyWindow lam ε)
   rw [Measure.map_smul' _ _ (continuous_const_smul (signFlip k)).measurable, key]
 
 /-- The change-of-variables engine, conditioned: integrals against the microcanonical law are

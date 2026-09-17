@@ -17,20 +17,20 @@ Plan B is to discharge the hypothesis `h_uniform` of `fs_born_volume_ratio_qubit
 and `qubit_born_frequency_convergence`, i.e. to *prove*
 
 ```
-(fun p => momentMap p 0)∗ fubiniStudyMeasure p₀ = uniform on [0,1].
+(fun p => momentMap p 0)∗ fsMeasure p₀ = uniform on [0,1].
 ```
 
 Everything is finite-dimensional (`CPN N = ℂℙ^{N-1}`, `U(N)`); plan B is purely a
 finite-dimensional measure computation — it does not touch CSD's finiteness.
 
 This file lands the first, committable half: the **measure-level reduction**.
-Since `fubiniStudyMeasure p₀ = (orbitMap p₀)∗ unitaryHaarProb` and
+Since `fsMeasure p₀ = (orbitMap p₀)∗ unitaryHaarProb` and
 `momentMap (U • p₀) i = ‖(U·rep)ᵢ‖²/‖U·rep‖²` (`momentMap_orbit`), the moment
 marginal *is* the Haar law of the squared-modulus ratio of `U` acting on a
 representative:
 
 ```
-(momentMap · i)∗ fubiniStudyMeasure p₀
+(momentMap · i)∗ fsMeasure p₀
   = (fun U => ‖(U·rep)ᵢ‖²/‖U·rep‖²)∗ unitaryHaarProb.
 ```
 
@@ -63,13 +63,13 @@ Fubini–Study measure equals the Haar law of the squared-modulus ratio of `U`
 acting on a representative of `p₀`. Reduces `h_uniform` to a concrete
 distributional statement about Haar unitaries. -/
 theorem momentMap_pushforward_eq_haar_marginal (p₀ : CPN N) (i : Fin N) :
-    Measure.map (fun p => momentMap p i) (fubiniStudyMeasure p₀)
+    Measure.map (fun p => momentMap p i) (fsMeasure p₀)
       = Measure.map
           (fun U : Matrix.unitaryGroup (Fin N) ℂ =>
             ‖(Matrix.toEuclideanLin U.val p₀.rep) i‖ ^ 2
               / ‖Matrix.toEuclideanLin U.val p₀.rep‖ ^ 2)
           unitaryHaarProb := by
-  rw [show fubiniStudyMeasure p₀ = Measure.map (orbitMap p₀) unitaryHaarProb from rfl,
+  rw [show fsMeasure p₀ = Measure.map (orbitMap p₀) unitaryHaarProb from rfl,
       Measure.map_map (momentMap_measurable i) (orbit_map_measurable p₀)]
   congr 1
   funext U

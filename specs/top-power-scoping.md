@@ -19,8 +19,8 @@ via `ddcForm_log_norm_eq_zero_of_holomorphic`; `TopFormMeasure.lean`: ★★ `to
 form-preserving homeomorphism preserves the measure, and `isFiniteMeasure_topFormMeasure`, finite on a
 compact manifold by local finiteness — **no decay estimate was needed, compactness replaced the
 Japanese bracket**; `Instances/ProjectiveSpaceFubiniStudyVolume.lean`: `fsVolume n`, ★★
-`fsVolume_map_smul`, ★ `isFiniteMeasure_fsVolume`, and ★★★ `fsVolumeNormalized_eq_fubiniStudyMeasure`
-— **the normalised volume of the top power of the Fubini–Study form is `fubiniStudyMeasure p₀`, under the
+`fsVolume_map_smul`, ★ `isFiniteMeasure_fsVolume`, and ★★★ `fsVolumeNormalized_eq_fsMeasure`
+— **the normalised volume of the top power of the Fubini–Study form is `fsMeasure p₀`, under the
 premise `fsVolume n ≠ 0`**). **M6(b) BUILT 2026-09-08, later the same day** — the §6 fallback (the
 premise in the statement) lived for one commit and was then retired. Generic half,
 `TopFormMeasure.lean`: ★ `topFormMeasure_ne_zero_of_localRep_ne_zero` — one nonzero chart coefficient
@@ -31,7 +31,7 @@ of **two disjoint transpositions**, sign `+1`, so no sign is ever computed — �
 `(α ∧ β) u = ∑ⱼ α (u ∘ pairRep j ∘ inl)`; then in the Volume module ★★ `wedgePow_stdForm_pairFamily`
 by induction — **the `k`-th power of the standard symplectic form on `k` distinct standard pairs is
 `k!`** — hence ★★ `wedgePow_fsModelForm_zero_stdBasis` `= (-4)ⁿ n!` (`fsModelForm_zero`), ★★
-`fsVolume_ne_zero`, and **★★★ `fsVolumeNormalized_eq_fubiniStudyMeasure` with NO premise** (the
+`fsVolume_ne_zero`, and **★★★ `fsVolumeNormalized_eq_fsMeasure` with NO premise** (the
 premise forms survive as `_of_ne_zero`). Neither of the two tools named in §2 for M6(b) was used: the
 quotient `Perm.ModSumCongr` was handled class by class (`Quotient.out`, and Mathlib's
 `mem_sumCongrHom_range_of_perm_mapsTo_inl` to identify a class by where it sends the `inr` slots), and
@@ -46,7 +46,7 @@ was on the shelf as `LinearMap.det_restrictScalars`, so a unitary has Jacobian `
 is the diagonal pullback of the form at the origin (`fsModelForm_single`), hence ★★
 `wedgePow_fsModelForm_stdBasis` `= (-4)ⁿ n! (1 + ‖w‖²)^{-(n+1)}`; the hyperplane `z₀ = 0` is null
 (`addHaar_submodule` in every other chart), so the mass is one chart integral; ★★ `fsVolume_univ = (4π)ⁿ`;
-and **★★★ `fsVolume_eq_smul_fubiniStudyMeasure : fsVolume n = (4π)ⁿ • fubiniStudyMeasure p₀`** — the
+and **★★★ `fsVolume_eq_smul_fsMeasure : fsVolume n = (4π)ⁿ • fsMeasure p₀`** — the
 top power of the Fubini–Study form IS the Fubini–Study measure, with its constant (the `(4π)ⁿ` is
 convention-bound: the chart form carries the potential's `-4`, the wedge its own normalisation; every
 factor is in the statement). Deviation from §4 worth
@@ -69,11 +69,11 @@ is *missing*, and confirm each "missing" by grep. Two things are missing, and th
 The identity the corpus has priced as its last exterior-calculus item since `MATHLIB-GAPS.md` was
 written: **the Liouville measure of the Fubini–Study form is the Fubini–Study measure**,
 
-    |fsForm^{∧n}| (normalised) = fubiniStudyMeasure p₀   on ℂℙⁿ,
+    |fsForm^{∧n}| (normalised) = fsMeasure p₀   on ℂℙⁿ,
 
 where the left side is the measure a top-degree form induces (its chart density is the absolute
 value of its coefficient against the standard volume form) and the right side is the corpus's
-`fubiniStudyMeasure`, the pushforward of Haar on `U(n+1)` under an orbit map
+`fsMeasure`, the pushforward of Haar on `U(n+1)` under an orbit map
 (`Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean`).
 
 Why it matters, and what it does *not* touch:
@@ -82,7 +82,7 @@ Why it matters, and what it does *not* touch:
   Kähler top-power volume `ω^{∧n}/n!`") — the corpus's flow-invariant measure is pinned by
   symmetry, and this identity is what lets it be *called* a symplectic volume;
 * it closes residue (iii) of the `MATHLIB-GAPS.md` row (the row's (i) fell with `fsForm_mextDeriv`);
-* ⚠️ **nothing downstream waits on it.** `μ_FS` is forced by `fubiniStudyMeasure_unique`, every
+* ⚠️ **nothing downstream waits on it.** `μ_FS` is forced by `fsMeasure_unique`, every
   consumer uses the measure, and `R-016` is a generator statement, not a volume statement.
 
 ## 2. Shelf and gaps, as probed
@@ -106,9 +106,9 @@ Why it matters, and what it does *not* touch:
 
 **On the shelf (this repository):**
 
-* `fubiniStudyMeasure p₀ := Measure.map (orbitMap p₀) unitaryHaarProb`, a probability measure,
-  and ★★ `fubiniStudyMeasure_unique (μ) [IsProbabilityMeasure μ] (hμ : ∀ U, map (U • ·) μ = μ) :
-  μ = fubiniStudyMeasure p₀` (`FubiniStudyUnique.lean`). **This is the endgame:** the identity is
+* `fsMeasure p₀ := Measure.map (orbitMap p₀) unitaryHaarProb`, a probability measure,
+  and ★★ `fsMeasure_unique (μ) [IsProbabilityMeasure μ] (hμ : ∀ U, map (U • ·) μ = μ) :
+  μ = fsMeasure p₀` (`FubiniStudyUnique.lean`). **This is the endgame:** the identity is
   proved by exhibiting the top-form measure as a `U(N)`-invariant probability measure, never by
   computing either side;
 * `ContinuousAlternatingMap.wedge` (`Alternating/Wedge.lean`) with `wedge_apply` (the shuffle sum)
@@ -131,12 +131,12 @@ Why it matters, and what it does *not* touch:
 Three routes exist. **Take the first.**
 
 * **Route U (uniqueness).** Build `|fsForm^{∧n}|` as a measure; prove it is finite, nonzero and
-  `U(N)`-invariant; normalise; conclude by `fubiniStudyMeasure_unique`. Every ingredient is a
+  `U(N)`-invariant; normalise; conclude by `fsMeasure_unique`. Every ingredient is a
   general lemma or a computation at *one* point (the chart origin), because transitivity moves
   the origin everywhere. ✅
 * **Route D (direct density).** Show the chart density of `fsForm^{∧n}` is `c · (1+‖z‖²)^{-(n+1)}`
-  and that `fubiniStudyMeasure` has the same chart density. ⛔ The second half is not available:
-  `fubiniStudyMeasure` is *defined* as a pushforward of Haar and its chart density has never been
+  and that `fsMeasure` has the same chart density. ⛔ The second half is not available:
+  `fsMeasure` is *defined* as a pushforward of Haar and its chart density has never been
   computed; that computation is harder than the whole of Route U.
 * **Route O (orientation + integration of forms).** Define `∫_M τ` for top forms on an oriented
   manifold. ⛔ Needs orientations on manifolds, absent upstream, and buys nothing here: a measure
@@ -153,7 +153,7 @@ Each milestone is landable on its own, with pins, and is worth landing even if t
 | **M3** | ★★ **The measure of a top form** on a manifold with a **finite atlas given as data** (a `Fintype ι`-indexed family of charts covering `M`; for `ℂℙⁿ` the `n+1` affine charts `chartAtIdx`). Definition: on the measurable partition `Sᵢ := sourceᵢ \ ⋃_{j<i} sourceⱼ`, the measure `Measure.sum i, map (chartᵢ.symm) ((Lebesgue.restrict (chartᵢ '' Sᵢ)).withDensity (ofReal |coefficient of localRep τ in chart i|))`. Theorems: (a) **chart-independence** — on an overlap the two chart expressions agree, by M1's `det` scaling of the coefficient plus `lintegral_image_eq_lintegral_abs_det_fderiv_mul` on the transition (injective, differentiable on the open overlap); (b) hence the value is independent of the ordering of the atlas and equals, on any single chart source, the pushforward of the chart density; (c) **naturality**: for a diffeomorphism `g` of `M` (smooth, smooth inverse) `measureOf (pullback g τ) = map g⁻¹ (measureOf τ)` — the same change-of-variables lemma, applied to the chart expression of `g`. | **M–L** (the gap) | M1 | `Mathlib/Geometry/Manifold/TopFormMeasure.lean` |
 | **M4** | **`U(N)` acts smoothly; `fsForm` is invariant.** (a) `pullback f α` for a `C^∞` map `f : M → M'` (fibre: `(α (f x)).compCLM (mfderiv f x)`), smooth by `contMDiff_tangentMap` and the local-representative plumbing; (b) `U • ·` is `C^∞` on `ℂℙⁿ` — in the affine atlas it is a linear-fractional map, `ContDiffOn.div` as in step (0); (c) `pullback (U • ·) fsForm = fsForm`: in charts the potential shifts by `-2 log ‖L z‖` with `L` **affine** (the `0`-th coordinate of `U (1, z)`), so `ddcForm_log_norm_eq_zero` must be generalised from linear `L` to affine / non-vanishing holomorphic `f` (its proof already goes through a local holomorphic logarithm, so this is a restatement), then the argument of `fsChartForm_transE` verbatim. | M | — | `Mathlib/Geometry/Manifold/Pullback.lean`; `Instances/ProjectiveSpaceUnitaryAction.lean` |
 | **M5** | **Invariance of the volume.** `measureOf fsTopForm` is `U(N)`-invariant: M3(c) with M4(c), plus "pullback commutes with the wedge power" (M2(b) at section level). | S–M | M2, M3, M4 | in `Instances/ProjectiveSpaceFubiniStudyVolume.lean` |
-| **M6** | ★★★ **The identity.** (a) **finite**: in the chart at the origin the coefficient is continuous and bounded by `C (1+‖z‖²)^{-(n+1)}`, integrable by the Japanese bracket with `2n+2 > 2n`; ⚠️ finiteness needs the bound in *every* chart of the partition — the same bound holds in each affine chart by symmetry, or use M5 to move a neighbourhood of the origin around (compactness: finitely many translates cover); (b) **nonzero**: the coefficient at the origin is nonzero — `fsChartForm 0 = -4 • fundamentalFormAlt` (`fsChartForm_zero`), so this is the **flat** statement `fundamentalFormAlt^{∧n} ≠ 0`, which is the evaluation of the `n`-fold wedge of the standard symplectic form on the standard basis `(e₁, i e₁, …, eₙ, i eₙ)` through `wedge_apply` — by induction on `n` splitting `ℂⁿ = ℂ ⊕ ℂⁿ⁻¹`, or directly as a shuffle count; ⚠️ **this is the one computation with no shelf besides M3**, and it is where the wedge's normalisation convention enters (only `≠ 0` is needed here; the constant is M7); (c) normalise `μ := (μ univ)⁻¹ • μ`, invariance survives scaling, apply `fubiniStudyMeasure_unique`. | M | M2–M5 | `Instances/ProjectiveSpaceFubiniStudyVolume.lean`: ★★★ `fsTopForm_measure_eq_fubiniStudy` |
+| **M6** | ★★★ **The identity.** (a) **finite**: in the chart at the origin the coefficient is continuous and bounded by `C (1+‖z‖²)^{-(n+1)}`, integrable by the Japanese bracket with `2n+2 > 2n`; ⚠️ finiteness needs the bound in *every* chart of the partition — the same bound holds in each affine chart by symmetry, or use M5 to move a neighbourhood of the origin around (compactness: finitely many translates cover); (b) **nonzero**: the coefficient at the origin is nonzero — `fsChartForm 0 = -4 • fundamentalFormAlt` (`fsChartForm_zero`), so this is the **flat** statement `fundamentalFormAlt^{∧n} ≠ 0`, which is the evaluation of the `n`-fold wedge of the standard symplectic form on the standard basis `(e₁, i e₁, …, eₙ, i eₙ)` through `wedge_apply` — by induction on `n` splitting `ℂⁿ = ℂ ⊕ ℂⁿ⁻¹`, or directly as a shuffle count; ⚠️ **this is the one computation with no shelf besides M3**, and it is where the wedge's normalisation convention enters (only `≠ 0` is needed here; the constant is M7); (c) normalise `μ := (μ univ)⁻¹ • μ`, invariance survives scaling, apply `fsMeasure_unique`. | M | M2–M5 | `Instances/ProjectiveSpaceFubiniStudyVolume.lean`: ★★★ `fsTopForm_measure_eq_fubiniStudy` |
 | M7 | *(optional)* **The constant.** `measureOf fsTopForm univ = (4π)ⁿ · (normalisation of the wedge)` via `∫_{ℂⁿ} (1+‖z‖²)^{-(n+1)} = πⁿ/n!` — needs the Gaussian-type integral, which is not on the shelf in that form. State the identity as "`= c • μ_FS` with `0 < c < ∞`" in M6 and land the value separately. | M | M6 | same file |
 
 **Build order:** M1 → M3 in one sitting (M3 is the gap and should be attempted first, while the
@@ -170,7 +170,7 @@ assemble. If only one thing lands, let it be **M3**: it is the upstream-shaped p
   (or the theorem-level list) with a parity justification. **Name the top form `fsTopForm` and the
   measure `fsTopForm.measure` until M6 is proved; then, and only then, add a `liouville`-named
   alias with its ledger line (`ℂℙⁿ`, real dimension `2n`, even).**
-* **Two spellings of the same type.** `fubiniStudyMeasure` lives on `ℙ ℂ (EuclideanSpace ℂ (Fin N))`;
+* **Two spellings of the same type.** `fsMeasure` lives on `ℙ ℂ (EuclideanSpace ℂ (Fin N))`;
   the manifold structure is on `ℙ ℂ (Ambient n)` with `Ambient n = EuclideanSpace ℂ (Fin (n+1))`.
   Same type when `N = n + 1`; state M5–M6 with `N := n + 1` and never with a subtraction.
 * **Real determinants of complex-linear maps.** The change-of-variables factor is the *real*
@@ -224,7 +224,7 @@ evidence about the tactic, and every claimed absence above was a grep.
 * `Mathlib/Analysis/SpecialFunctions/JapaneseBracket.lean` — `integrable_rpow_neg_one_add_norm_sq`.
 * `Mathlib/Geometry/Manifold/ContMDiffMFDeriv.lean` — `ContMDiff.contMDiff_tangentMap`.
 * `CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean`, `FubiniStudyUnique.lean` —
-  `fubiniStudyMeasure`, ★★ `fubiniStudyMeasure_unique`, `fubiniStudyMeasure_smul_invariant`.
+  `fsMeasure`, ★★ `fsMeasure_unique`, `fsMeasure_smul_invariant`.
 * `CsdLean4/Mathlib/Analysis/Normed/Module/Alternating/Wedge.lean` — `wedge`, `wedge_apply`, `domDomCongr`.
 * `CsdLean4/Mathlib/Geometry/Manifold/{DifferentialForm,ExteriorDerivative,SymplecticForm}.lean`,
   `Instances/ProjectiveSpaceFubiniStudy{,Form,Symplectic}.lean` — what step (3) stands on.

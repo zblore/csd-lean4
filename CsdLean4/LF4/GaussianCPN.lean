@@ -12,9 +12,9 @@ public import Mathlib.Probability.Distributions.Gaussian.Multivariate
 public import Mathlib.Probability.Distributions.Gaussian.Fernique
 
 /-!
-# LF4 general-N Part 1: `gaussianCPN = fubiniStudyMeasure` on `ℂℙ^{N-1}`
+# LF4 general-N Part 1: `gaussianCPN = fsMeasure` on `ℂℙ^{N-1}`
 
-**Category:** 3-Local (`gaussianCPN = fubiniStudyMeasure` on `ℂℙ^{N-1}`).
+**Category:** 3-Local (`gaussianCPN = fsMeasure` on `ℂℙ^{N-1}`).
 
 The general-`N` analogue of `GaussianCP.lean` (which handled the qubit `N = 2`):
 the Fubini–Study measure on `ℂℙ^{N-1}` is the projectivised standard Gaussian on
@@ -270,8 +270,8 @@ lemma gaussianCPN_smul_invariant [NeZero N] (p₀ : CPN N) (U : Matrix.unitaryGr
 /-- **C5 (general N): the projectivised Gaussian equals the Fubini–Study measure
 on `ℂℙ^{N-1}`.** The general-N analogue of `gaussianCP_eq_fubiniStudy`. -/
 lemma gaussianCPN_eq_fubiniStudy [NeZero N] (p₀ : CPN N) :
-    gaussianCPN p₀ = fubiniStudyMeasure p₀ :=
-  fubiniStudyMeasure_unique p₀ (gaussianCPN p₀) (gaussianCPN_smul_invariant p₀)
+    gaussianCPN p₀ = fsMeasure p₀ :=
+  fsMeasure_unique p₀ (gaussianCPN p₀) (gaussianCPN_smul_invariant p₀)
 
 end LF4
 end CSD

@@ -76,7 +76,7 @@ theorem onticRegion_measure_eq_born (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ
     CSD.LF4.bornRegion_measurable_uncond ψ hψ0 i
   have hb1 : Measure.map (productSector H hH p₀).pi
       ((productDynamics H hH p₀).muL : Measure (CSD.LF4.KSigma (M + 1)))
-      = fubiniStudyMeasure p₀ :=
+      = fsMeasure p₀ :=
     productSector_hasFubiniStudyPushforward H hH p₀
   rw [← Measure.map_apply (productSector H hH p₀).measurable_pi hmeas, hb1]
   exact CSD.LF4.bornRegion_fs_measure_uncond p₀ ψ hψ0 hψ i

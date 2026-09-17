@@ -38,13 +38,13 @@ this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
 On the ray space `ℂℙ^{N-1}` the top-power Kähler volume is not a free choice: `ℂℙ^{N-1}` is the
 compact homogeneous space `U(N)/(U(1)×U(N-1))`, and its Riemannian/symplectic (Fubini–Study) volume is
 **the unique `U(N)`-invariant probability measure**. That uniqueness is already proved axiom-free
-(`fubiniStudyMeasure_unique`). So we bundle the intrinsic characterisation
+(`fsMeasure_unique`). So we bundle the intrinsic characterisation
 
     IsForcedKahlerVolume μ  :=  (μ a probability measure)
                              ∧ (μ is U(N)-invariant)
                              ∧ (μ is the UNIQUE such measure),
 
-and prove `fubiniStudyMeasure` satisfies it (`fubiniStudyMeasure_isForcedKahlerVolume`). This is the
+and prove `fsMeasure` satisfies it (`fsMeasure_isForcedKahlerVolume`). This is the
 measure-theoretic content of "`μ = ω^{∧n}/n!`": the Kähler volume is **determined by `Σ` and its
 `U(N)`-symmetry**, an *outcome* of the space, not posited data. It is exactly the physically
 load-bearing half of the Kähler posit — the volume is what the Born reading (typicality = volume
@@ -69,7 +69,7 @@ This discharges the **formalisable core** of the Liouville-volume posit (volume 
 The full differential-geometric 2-form content — once Mathlib-blocked — is built in the corpus's own
 manifold layer and wired to this module's sectors in `LF4/SectorManifold.lean` (2026-09-10:
 `fsVolumeNormalized_isForcedKahlerVolume`, the forced volume IS the normalised top power of `ω_FS`;
-and 2026-09-11, `riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure`, it is the normalised
+and 2026-09-11, `riemannianVolume_fsMetric_eq_smul_fsMeasure`, it is the normalised
 Riemannian volume of the Fubini–Study metric too). And
 it is FORWARD: it characterises the *posited* sector volume intrinsically; it does NOT derive the
 `U(N)`-symmetry itself from the deterministic dynamics (that reverse — deriving `G` — is SO-1,
@@ -100,18 +100,18 @@ structure IsForcedKahlerVolume (μ : Measure (CPN N)) : Prop where
     (∀ U : Matrix.unitaryGroup (Fin N) ℂ, MeasurePreserving (fun p => U • p) ν ν) → ν = μ
 
 /-- **The Fubini–Study measure IS the forced Kähler volume.** `μ_FS` is a `U(N)`-invariant
-probability measure (`fubiniStudyMeasure_smul_invariant`) and the UNIQUE such
-(`fubiniStudyMeasure_unique`). So the Kähler volume of the ray space is completely determined by the
+probability measure (`fsMeasure_smul_invariant`) and the UNIQUE such
+(`fsMeasure_unique`). So the Kähler volume of the ray space is completely determined by the
 space `ℂℙ^{N-1}` and its `U(N)`-symmetry — the intrinsic discharge of the Liouville-volume
 posit's formalisable content. -/
-theorem fubiniStudyMeasure_isForcedKahlerVolume [NeZero N] (p₀ : CPN N) :
-    IsForcedKahlerVolume (fubiniStudyMeasure p₀) where
+theorem fsMeasure_isForcedKahlerVolume [NeZero N] (p₀ : CPN N) :
+    IsForcedKahlerVolume (fsMeasure p₀) where
   isProb := inferInstance
   invariant := fun U =>
-    ⟨(continuous_const_smul U).measurable, fubiniStudyMeasure_smul_invariant U p₀⟩
+    ⟨(continuous_const_smul U).measurable, fsMeasure_smul_invariant U p₀⟩
   unique := fun ν hν hν_inv => by
     have := hν
-    exact fubiniStudyMeasure_unique p₀ ν (fun U => (hν_inv U).map_eq)
+    exact fsMeasure_unique p₀ ν (fun U => (hν_inv U).map_eq)
 
 /-- **The `π = id` sector's Liouville volume is forced.** For `unitaryFlowSetup N U p₀` the Liouville
 measure is `μ_FS`, which is the forced Kähler volume — the sector's typicality measure is fully
@@ -119,15 +119,15 @@ determined by `Σ = ℂℙ^{N-1}` and its `U(N)`-symmetry, not a posited probabi
 theorem unitaryFlowSetup_liouville_isForcedKahlerVolume [NeZero N]
     (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ) (p₀ : CPN N) :
     IsForcedKahlerVolume (unitaryFlowSetup N U p₀).liouvilleMeasure :=
-  fubiniStudyMeasure_isForcedKahlerVolume p₀
+  fsMeasure_isForcedKahlerVolume p₀
 
 /-- The many-to-one Kähler instance's ray-space volume is the FS volume: `π_*(kMuL) = μ_FS`, the
 marginal bridge `Prod.fst_* (μ_FS ⊗ vol) = μ_FS` (`Measure.fst_prod`, the fibre volume normalised). -/
 theorem manyToOneSetup_baseVolume_eq_fubiniStudy
     (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ) (p₀ : CPN N) :
     Measure.map (manyToOneSetup U p₀).pi (manyToOneSetup U p₀).liouvilleMeasure
-      = fubiniStudyMeasure p₀ := by
-  show Measure.map Prod.fst (kMuL p₀) = fubiniStudyMeasure p₀
+      = fsMeasure p₀ := by
+  show Measure.map Prod.fst (kMuL p₀) = fsMeasure p₀
   rw [kMuL, ← Measure.fst, Measure.fst_prod]
 
 /-- **The many-to-one Kähler instance's ray-space volume is forced.** On `Σ = ℂℙ^{N-1} × T²` with the
@@ -139,17 +139,17 @@ theorem manyToOneSetup_baseVolume_isForcedKahlerVolume [NeZero N]
     IsForcedKahlerVolume
       (Measure.map (manyToOneSetup U p₀).pi (manyToOneSetup U p₀).liouvilleMeasure) := by
   rw [manyToOneSetup_baseVolume_eq_fubiniStudy]
-  exact fubiniStudyMeasure_isForcedKahlerVolume p₀
+  exact fsMeasure_isForcedKahlerVolume p₀
 
 /-- **The full `Σ`-volume is a product of forced factor volumes.** The Liouville measure of the
 many-to-one Kähler instance is `kMuL = μ_FS ⊗ vol_{T²}` — the product of the forced Fubini–Study
-volume on the base (`fubiniStudyMeasure_isForcedKahlerVolume`) and the canonical Haar volume on the
+volume on the base (`fsMeasure_isForcedKahlerVolume`) and the canonical Haar volume on the
 `T²` fibre. So the whole Kähler `Σ`-volume is assembled from canonically-determined factor volumes,
 not posited. -/
 theorem manyToOneSetup_liouville_eq_product
     (U : ℝ → Matrix.unitaryGroup (Fin N) ℂ) (p₀ : CPN N) :
     (manyToOneSetup U p₀).liouvilleMeasure
-      = (fubiniStudyMeasure p₀).prod (volume : Measure KTorus) :=
+      = (fsMeasure p₀).prod (volume : Measure KTorus) :=
   rfl
 
 end LF4

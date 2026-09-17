@@ -52,7 +52,7 @@ infrastructure, deferred.
 Formalize `F_Q(θ) = g_θθ` (the FS metric tensor along the trajectory `γ(θ)`), turning the
 Quantum Cramér-Rao bound `Var(θ̂) ≥ 1/F_Q` into a statement about the differential geometry
 of `Σ = ℂℙ^{N-1}`.
-- **Infrastructure: GAP.** The corpus has `fubiniStudyMeasure` (a measure) and the moment
+- **Infrastructure: GAP.** The corpus has `fsMeasure` (a measure) and the moment
   map, but **no FS metric tensor** as a Riemannian/Kähler metric object, and Mathlib's
   manifold/metric API on `ℂℙ^{N-1}` is thin. This is a real new-infrastructure tranche:
   define the FS metric (e.g. via `g = ⟨∂ψ|∂ψ⟩ − |⟨ψ|∂ψ⟩|²` on the normalized vector, the

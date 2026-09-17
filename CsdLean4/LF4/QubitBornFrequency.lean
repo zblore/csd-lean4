@@ -52,11 +52,11 @@ hypothesis `h_uniform`. Cites only the foundational triple + `h_uniform`; no
 `busch_effect_gleason`. -/
 theorem qubit_born_frequency_convergence
     (p₀ : CPN 2) (ψ : EuclideanSpace ℂ (Fin 2)) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
-    (h_uniform : Measure.map (fun p => momentMap p 0) (fubiniStudyMeasure p₀)
+    (h_uniform : Measure.map (fun p => momentMap p 0) (fsMeasure p₀)
         = (volume : Measure ℝ).restrict (Set.Icc 0 1))
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN 2) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep :
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
@@ -75,7 +75,7 @@ theorem qubit_born_frequency_convergence
   have hO : MeasurableSet
       {p : CPN 2 | momentMap p 0 ≤ momentMap (Projectivization.mk ℂ ψ hψ0) 0} :=
     (momentMap_measurable 0) measurableSet_Iic
-  have hlim : (fubiniStudyMeasure p₀
+  have hlim : (fsMeasure p₀
         {p : CPN 2 | momentMap p 0 ≤ momentMap (Projectivization.mk ℂ ψ hψ0) 0}).toReal
       = ‖inner ℂ (EuclideanSpace.single 0 (1 : ℂ)) ψ‖ ^ 2 := by
     rw [fs_born_volume_ratio_qubit p₀ ψ hψ0 hψ h_uniform, ENNReal.toReal_ofReal (sq_nonneg _)]

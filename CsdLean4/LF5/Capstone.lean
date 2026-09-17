@@ -90,7 +90,7 @@ conjunct-(5) theorem in `PointerOutcome.lean`.
   increment is the measurement **dynamics** (`Φ_vN ≠ id`).
 - What **is** posited is not Born but the **CSD sector (SO-1)**: that the (apparatus-enlarged)
   sector's typicality law is the Fubini–Study measure (i.i.d. trials with law
-  `fubiniStudyMeasure`). Born = volume is a theorem; FS-as-the-typicality-measure
+  `fsMeasure`). Born = volume is a theorem; FS-as-the-typicality-measure
   is the sector posit, not derived from the flow (it reduces to D1).
 - Entangled / non-local de-isolation is deferred: Bell forces a non-local
   de-isolation map, given the corpus CHSH `= 2√2`. Single-system projective
@@ -141,7 +141,7 @@ theorem measurement_flow_born_frequency
     (p₀ : CPN (M + 1))
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep : ∀ j : Fin (M + 1),
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
         (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :
@@ -150,7 +150,7 @@ theorem measurement_flow_born_frequency
     -- (2) and physically admissible: FS measure-preserving (the Liouville /
     -- hΦ_pres content)
     ∧ MeasurePreserving (measurementFlow N e)
-        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
+        (fsMeasure p₀) (fsMeasure p₀)
     -- (3) and context-fixed: the SAME flow realises the dilation for EVERY
     -- preparation
     ∧ (∀ (φ : EuclideanSpace ℂ (Fin N)) (hφ : φ ≠ 0),
@@ -167,7 +167,7 @@ theorem measurement_flow_born_frequency
     ∧ (∀ i : Fin N,
         ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2
           = ∑ n : Fin N,
-              (fubiniStudyMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal)
+              (fsMeasure p₀ (bornRegion ψ' hψ'0 (e (n, i)))).toReal)
     -- (5) the empirical capstone: a.s. pointer-block frequencies → Born
     ∧ ∀ᵐ ω ∂ Pr, ∀ i : Fin N,
         Tendsto

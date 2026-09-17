@@ -771,7 +771,7 @@ theorem continuous_nullSeamEvolve (r : ℝ) : Continuous (nullSeamEvolve r) :=
 pointer. **Not** called Liouville: `S¹ × ℂℙ²` is odd-dimensional, hence not symplectic
 (naming corrected 2026-08-03, fifth review). -/
 noncomputable def nullSeamMeasure (q₀ : Pointer 2) : Measure (CircleFibre × Pointer 2) :=
-  (volume : Measure CircleFibre).prod (fubiniStudyMeasure q₀)
+  (volume : Measure CircleFibre).prod (fsMeasure q₀)
 
 instance (q₀ : Pointer 2) : IsProbabilityMeasure (nullSeamMeasure q₀) := by
   unfold nullSeamMeasure
@@ -785,7 +785,7 @@ theorem nullSeamEvolve_measurePreserving (r : ℝ) (q₀ : Pointer 2) :
   exact (MeasurePreserving.id (volume : Measure CircleFibre)).skew_product
     (continuous_nullSeamEvolve_snd r).measurable
     (Filter.Eventually.of_forall fun θ =>
-      fubiniStudyMeasure_smul_invariant (nullSeamUU r θ) q₀)
+      fsMeasure_smul_invariant (nullSeamUU r θ) q₀)
 
 /-! ### ★★ The third horn, bundled -/
 

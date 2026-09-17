@@ -144,7 +144,7 @@ theorem pointerLudersStroke_pointer (c : ContextField N) (ε : ℝ)
 /-- The composed arena measure: system ⊗ pointer ⊗ calibrated bank. -/
 noncomputable def pointerLudersMeasure (μs : Measure (LF4.KSigma N)) (q₀ : Pointer N) :
     Measure (PointerLudersArena N) :=
-  (μs.prod (fubiniStudyMeasure q₀)).prod (Measure.pi fun _ : Fin N => μs)
+  (μs.prod (fsMeasure q₀)).prod (Measure.pi fun _ : Fin N => μs)
 
 instance (μs : Measure (LF4.KSigma N)) [IsProbabilityMeasure μs] (q₀ : Pointer N) :
     IsProbabilityMeasure (pointerLudersMeasure μs q₀) := by
@@ -160,15 +160,15 @@ theorem pointerBankSwap_measurePreserving (μs : Measure (LF4.KSigma N))
     MeasurePreserving (pointerBankSwap (N := N) j)
       (pointerLudersMeasure μs q₀) (pointerLudersMeasure μs q₀) := by
   unfold pointerLudersMeasure
-  have hR := (measurePreserving_prodAssoc (fubiniStudyMeasure q₀) μs
+  have hR := (measurePreserving_prodAssoc (fsMeasure q₀) μs
       (Measure.pi fun _ : Fin N => μs)).comp
-    ((Measure.measurePreserving_swap (μ := μs) (ν := fubiniStudyMeasure q₀)).prod
+    ((Measure.measurePreserving_swap (μ := μs) (ν := fsMeasure q₀)).prod
       (MeasurePreserving.id (Measure.pi fun _ : Fin N => μs)))
-  have hmid := (MeasurePreserving.id (fubiniStudyMeasure q₀)).prod
+  have hmid := (MeasurePreserving.id (fsMeasure q₀)).prod
     (measurePreserving_swapSlot μs j)
-  have hL := ((measurePreserving_prodAssoc (fubiniStudyMeasure q₀) μs
+  have hL := ((measurePreserving_prodAssoc (fsMeasure q₀) μs
       (Measure.pi fun _ : Fin N => μs)).symm).comp hmid
-  have := (((Measure.measurePreserving_swap (μ := fubiniStudyMeasure q₀) (ν := μs)).prod
+  have := (((Measure.measurePreserving_swap (μ := fsMeasure q₀) (ν := μs)).prod
       (MeasurePreserving.id (Measure.pi fun _ : Fin N => μs))).comp hL).comp hR
   exact this
 

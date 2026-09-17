@@ -52,8 +52,8 @@ theorem integral_id_Icc : ∫ t in Set.Icc (0 : ℝ) 1, t = 1 / 2 := by
 
 /-- The Fubini–Study average of the reference moment coordinate is `½`. -/
 theorem momentMap_integral_half (p₀ : CPN 2) :
-    ∫ p, momentMap p 0 ∂(fubiniStudyMeasure p₀) = 1 / 2 := by
-  have hmap := MeasureTheory.integral_map (μ := fubiniStudyMeasure p₀)
+    ∫ p, momentMap p 0 ∂(fsMeasure p₀) = 1 / 2 := by
+  have hmap := MeasureTheory.integral_map (μ := fsMeasure p₀)
     (φ := fun p => momentMap p 0) (f := fun t => t)
     (momentMap_measurable 0).aemeasurable (by fun_prop)
   rw [← hmap, fs_moment_pushforward_uniform]
@@ -62,7 +62,7 @@ theorem momentMap_integral_half (p₀ : CPN 2) :
 /-- **The Fubini–Study average of any Bloch projection is `½`** (general-axis, via the bridge). -/
 theorem blochProj_integral_half (a : EuclideanSpace ℂ (Fin 2)) (ha0 : a ≠ 0) (ha : ‖a‖ = 1)
     (p₀ : CPN 2) :
-    ∫ p, blochProj a p ∂(fubiniStudyMeasure p₀) = 1 / 2 := by
+    ∫ p, blochProj a p ∂(fsMeasure p₀) = 1 / 2 := by
   rw [blochProj_integral_bridge a ha0 ha p₀ (f := fun t => t) measurable_id,
     momentMap_integral_half]
 
@@ -79,9 +79,9 @@ Fubini–Study typicality measure to the Born weight `|⟨n|ψ⟩|²`. -/
 theorem qubitBorn (n ψ : EuclideanSpace ℂ (Fin 2)) (_hn0 : n ≠ 0) (hn : ‖n‖ = 1)
     (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) (p₀ : CPN 2) :
     ∫ p, (1 / 2 : ℝ) * (1 + rsign (2 * blochProj n p - 1))
-        * (4 * max (2 * blochProj ψ p - 1) 0) ∂(fubiniStudyMeasure p₀)
+        * (4 * max (2 * blochProj ψ p - 1) 0) ∂(fsMeasure p₀)
       = ‖inner ℂ n ψ‖ ^ 2 := by
-  set μ := fubiniStudyMeasure p₀ with hμ
+  set μ := fsMeasure p₀ with hμ
   have hbnd : ∀ p : CPN 2, |2 * blochProj ψ p - 1| ≤ 1 := fun p => by
     have h0 := blochProj_nonneg ψ p
     have h1 := blochProj_le_one ψ hψ p

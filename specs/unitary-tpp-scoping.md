@@ -15,7 +15,7 @@ corpus says "forced". Both have exact Lean locations:
 | Conditioner | Where it enters | Guarded scope note already in file |
 |---|---|---|
 | **`hTPP`** — `∀ t, TransProbPreserving (d.projectedFlow t)` | `LF4/UnitarySelection.lean` (W3), consumed by `LF4/BargmannSelection.lean`; hypothesis of every Wigner-selection result on a `KahlerOnticSetup` | "It is NOT derived from `flow_preserves_volume`; deriving it would be the exact §13.2 trap" (measure ≠ metric) |
-| **`G = U(N)`** — invariance under the unitary group | `fubiniStudy_forced_by_symmetry` (`LF4/TypicalityForcing.lean`), restating `fubiniStudyMeasure_unique`; taken as given in every measure-forcing result (`IsForcedKahlerVolume`, KG-1) | "the residual SO-1 primitive [is pinned] to `G` itself … `G`-from-dynamics is exactly D1, the deepest open CSD content" |
+| **`G = U(N)`** — invariance under the unitary group | `fubiniStudy_forced_by_symmetry` (`LF4/TypicalityForcing.lean`), restating `fsMeasure_unique`; taken as given in every measure-forcing result (`IsForcedKahlerVolume`, KG-1) | "the residual SO-1 primitive [is pinned] to `G` itself … `G`-from-dynamics is exactly D1, the deepest open CSD content" |
 
 **What "discharge" means here, and what it must not mean.** The template is the
 measure-uniqueness theorem itself, which the audit names as what progress looks
@@ -48,7 +48,7 @@ What a re-grounding is allowed to consume. All of these exist and are pinned:
 | Transition-probability preservation ⇒ semi-unitary, **and nothing else assumed** | `Projectivization.wigner_rigidity_unitaryGroup` (CL-024, the ledger's one unconditional necessity) |
 | Branch selection from a continuity datum | `projectedFlow_unitary_of_bargmann_continuous` (`LF4/BargmannSelection.lean`) |
 | Continuity + group law ⇒ `exp(t·A)` | `Matrix.StoneC1.stone_continuous` |
-| The unique `U(N)`-invariant law is FS | `fubiniStudyMeasure_unique` (Phase G4) |
+| The unique `U(N)`-invariant law is FS | `fsMeasure_unique` (Phase G4) |
 | Commuting + generating local algebras ⇒ tensor, dimension forced | `compositeAlgReconstruction`, `composite_dim_eq` (`SigmaLayer/TensorReconstruction.lean`) |
 | Effect algebra + operational axioms ⇒ trace form, unique ρ | `OperationalPackage.effect_gleason_representation` (`LF2/EffectGleason.lean`) |
 
@@ -178,7 +178,7 @@ The re-grounding move, in one sentence:
    record-statistics-preserving symmetry"* — epistemic indifference: the
    preparation machinery cannot weight sector configurations that **no record
    statistics distinguish**. Unitaries are statistics-preserving
-   (`transProbPreserving_unitary` + the iff), so `fubiniStudyMeasure_unique`
+   (`transProbPreserving_unitary` + the iff), so `fsMeasure_unique`
    fires with `U(N)` never named in the premise; and Wigner closes the loop in
    the other direction — the operationally-defined symmetry group *is* the
    semi-unitary group, as a theorem rather than a choice of `G`.
@@ -236,8 +236,8 @@ order:
    premise conversion in its docstring).
 6. ★★ `measure_eq_fubiniStudy_of_record_statistics_invariant` — any probability
    measure invariant under every `RecordStatisticsPreserving` map is
-   `fubiniStudyMeasure`. Route: `transProbPreserving_unitary` + the iff +
-   `fubiniStudyMeasure_unique`. `U(N)` appears in the proof, never in the
+   `fsMeasure`. Route: `transProbPreserving_unitary` + the iff +
+   `fsMeasure_unique`. `U(N)` appears in the proof, never in the
    statement — the conversion the audit asked for.
 7. (If cheap) the converse inclusion making the symmetry group an exact
    theorem: every `RecordStatisticsPreserving` map is realised by a unitary or

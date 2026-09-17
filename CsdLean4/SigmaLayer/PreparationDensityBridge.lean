@@ -153,17 +153,17 @@ theorem kahler_preparationDensity_apply (p₀ : CSD.LF4.CPN N) [NeZero N]
     (P : Preparation D)
     (rep : CSD.LF4.CPN N → EuclideanSpace ℂ (Fin N)) (hrep_unit : ∀ p, ‖rep p‖ = 1)
     (hrep_meas : Measurable rep) (j k : Fin N) :
-    (CSD.LF2.preparationDensity (CSD.LF4.kSectorData p₀) (fubiniStudyMeasure p₀)
+    (CSD.LF2.preparationDensity (CSD.LF4.kSectorData p₀) (fsMeasure p₀)
         (CSD.LF4.kBridgeData p₀)
         ((P.conditionalMeasure : ProbabilityMeasure (CSD.LF4.KSigma N)) : Measure (CSD.LF4.KSigma N))
         rep hrep_unit hrep_meas).M j k
-      = ∫ ψ, ((kahlerFstSector D).preparationDensity P (fubiniStudyMeasure p₀) ψ).toReal
-          • ((rep ψ) j * star ((rep ψ) k)) ∂(fubiniStudyMeasure p₀) := by
+      = ∫ ψ, ((kahlerFstSector D).preparationDensity P (fsMeasure p₀) ψ).toReal
+          • ((rep ψ) j * star ((rep ψ) k)) ∂(fsMeasure p₀) := by
   have habs : Measure.map (CSD.LF4.kSectorData p₀).π
       ((P.conditionalMeasure : ProbabilityMeasure (CSD.LF4.KSigma N)) : Measure (CSD.LF4.KSigma N))
-        ≪ fubiniStudyMeasure p₀ :=
+        ≪ fsMeasure p₀ :=
     (kahler_preparation_density p₀ D hmuL P).1
-  exact CSD.LF2.preparationDensity_apply_rnDeriv (CSD.LF4.kSectorData p₀) (fubiniStudyMeasure p₀)
+  exact CSD.LF2.preparationDensity_apply_rnDeriv (CSD.LF4.kSectorData p₀) (fsMeasure p₀)
     (CSD.LF4.kBridgeData p₀) _ rep hrep_unit hrep_meas habs j k
 
 /-- The Kähler seam with the canonical measurable unit section as representative: no
@@ -172,14 +172,14 @@ theorem kahler_preparationDensity_apply_unitSection (p₀ : CSD.LF4.CPN N) [NeZe
     (D : ConstraintDynamics (CSD.LF4.KSigma N))
     (hmuL : (D.muL : Measure (CSD.LF4.KSigma N)) = CSD.LF4.kMuL p₀)
     (P : Preparation D) (j k : Fin N) :
-    (CSD.LF2.preparationDensity (CSD.LF4.kSectorData p₀) (fubiniStudyMeasure p₀)
+    (CSD.LF2.preparationDensity (CSD.LF4.kSectorData p₀) (fsMeasure p₀)
         (CSD.LF4.kBridgeData p₀)
         ((P.conditionalMeasure : ProbabilityMeasure (CSD.LF4.KSigma N)) : Measure (CSD.LF4.KSigma N))
         Projectivization.unitSection Projectivization.norm_unitSection
         Projectivization.measurable_unitSection).M j k
-      = ∫ ψ, ((kahlerFstSector D).preparationDensity P (fubiniStudyMeasure p₀) ψ).toReal
+      = ∫ ψ, ((kahlerFstSector D).preparationDensity P (fsMeasure p₀) ψ).toReal
           • ((Projectivization.unitSection ψ) j * star ((Projectivization.unitSection ψ) k))
-          ∂(fubiniStudyMeasure p₀) :=
+          ∂(fsMeasure p₀) :=
   kahler_preparationDensity_apply p₀ D hmuL P Projectivization.unitSection
     Projectivization.norm_unitSection Projectivization.measurable_unitSection j k
 

@@ -188,13 +188,13 @@ lemma rayDensity_norm_le_one (p : CPN N) (i j : Fin N) : ‖rayDensity p i j‖ 
 /-- The density entries are integrable against Fubini-Study (bounded + measurable
 on a probability measure). -/
 lemma rayDensity_integrable (p₀ : CPN N) (i j : Fin N) :
-    Integrable (fun p => rayDensity p i j) (fubiniStudyMeasure p₀) :=
+    Integrable (fun p => rayDensity p i j) (fsMeasure p₀) :=
   Integrable.of_bound (rayDensity_measurable i j).aestronglyMeasurable 1
     (ae_of_all _ (fun p => rayDensity_norm_le_one p i j))
 
 /-- The moment coordinate is integrable against Fubini-Study. -/
 lemma momentMap_integrable (p₀ : CPN N) (i : Fin N) :
-    Integrable (fun p => momentMap p i) (fubiniStudyMeasure p₀) :=
+    Integrable (fun p => momentMap p i) (fsMeasure p₀) :=
   Integrable.of_bound (momentMap_measurable i).aestronglyMeasurable 1
     (ae_of_all _ (fun p => by
       rw [Real.norm_eq_abs, abs_of_nonneg (momentMap_nonneg p i)]
@@ -310,11 +310,11 @@ For `i ≠ j`, `E_{mu_FS}[ rayDensity . i j ] = 0`. Genuine change-of-variables
 against the sign-flip unitary (Fubini-Study invariance) plus the pointwise
 sign flip: `M = -M`. -/
 theorem fsFirstMoment_offdiag [NeZero N] (p₀ : CPN N) (i j : Fin N) (hij : i ≠ j) :
-    ∫ p, rayDensity p i j ∂(fubiniStudyMeasure p₀) = 0 := by
-  set μ := fubiniStudyMeasure p₀ with hμ
+    ∫ p, rayDensity p i j ∂(fsMeasure p₀) = 0 := by
+  set μ := fsMeasure p₀ with hμ
   set g : CPN N → CPN N := fun p => (signFlip i) • p with hg_def
   have hg : Measurable g := (continuous_const_smul (signFlip i)).measurable
-  have hinv : Measure.map g μ = μ := fubiniStudyMeasure_smul_invariant (signFlip i) p₀
+  have hinv : Measure.map g μ = μ := fsMeasure_smul_invariant (signFlip i) p₀
   have hf : AEStronglyMeasurable (fun p => rayDensity p i j) μ :=
     (rayDensity_measurable i j).aestronglyMeasurable
   have hchange : ∫ p, rayDensity p i j ∂μ = ∫ p, rayDensity (g p) i j ∂μ := by
@@ -339,13 +339,13 @@ theorem fsFirstMoment_offdiag [NeZero N] (p₀ : CPN N) (i j : Fin N) (hij : i �
 /-- **Diagonal first-moment entries are equal across coordinates** (permutation
 symmetry): `E[momentMap . i] = E[momentMap . k]`. -/
 theorem fsFirstMoment_diag_swap [NeZero N] (p₀ : CPN N) (i k : Fin N) :
-    ∫ p, momentMap p i ∂(fubiniStudyMeasure p₀)
-      = ∫ p, momentMap p k ∂(fubiniStudyMeasure p₀) := by
-  set μ := fubiniStudyMeasure p₀ with hμ
+    ∫ p, momentMap p i ∂(fsMeasure p₀)
+      = ∫ p, momentMap p k ∂(fsMeasure p₀) := by
+  set μ := fsMeasure p₀ with hμ
   set σ := Equiv.swap i k with hσ
   set g : CPN N → CPN N := fun p => (permU σ) • p with hg_def
   have hg : Measurable g := (continuous_const_smul (permU σ)).measurable
-  have hinv : Measure.map g μ = μ := fubiniStudyMeasure_smul_invariant (permU σ) p₀
+  have hinv : Measure.map g μ = μ := fsMeasure_smul_invariant (permU σ) p₀
   have hf : AEStronglyMeasurable (fun p => momentMap p i) μ :=
     (momentMap_measurable i).aestronglyMeasurable
   calc ∫ p, momentMap p i ∂μ
@@ -358,8 +358,8 @@ theorem fsFirstMoment_diag_swap [NeZero N] (p₀ : CPN N) (i k : Fin N) :
 equal (permutation symmetry) and sum to `1` (`momentMap_sum_eq_one` +
 `measure_univ`), so each is `1/N`. -/
 theorem fsFirstMoment_diag [NeZero N] (p₀ : CPN N) (i : Fin N) :
-    ∫ p, momentMap p i ∂(fubiniStudyMeasure p₀) = (N : ℝ)⁻¹ := by
-  set μ := fubiniStudyMeasure p₀ with hμ
+    ∫ p, momentMap p i ∂(fsMeasure p₀) = (N : ℝ)⁻¹ := by
+  set μ := fsMeasure p₀ with hμ
   have hall : ∀ k : Fin N, ∫ p, momentMap p k ∂μ = ∫ p, momentMap p i ∂μ :=
     fun k => (fsFirstMoment_diag_swap p₀ i k).symm
   have hsum : ∑ k : Fin N, ∫ p, momentMap p k ∂μ = 1 := by
@@ -378,7 +378,7 @@ theorem fsFirstMoment_diag [NeZero N] (p₀ : CPN N) (i : Fin N) :
 
 /-- **The Fubini-Study first-moment matrix** `E_{mu_FS}[ |psi><psi| ]`, entrywise. -/
 noncomputable def fsFirstMoment (p₀ : CPN N) : Matrix (Fin N) (Fin N) ℂ :=
-  Matrix.of fun i j => ∫ p, rayDensity p i j ∂(fubiniStudyMeasure p₀)
+  Matrix.of fun i j => ∫ p, rayDensity p i j ∂(fsMeasure p₀)
 
 /-- **Deliverable 1 (the key lemma): the Fubini-Study first moment is maximally
 mixed.** `E_{mu_FS}[ |psi><psi| ] = (1/N) I` on `CP^{N-1}`. The average pure-state
@@ -395,8 +395,8 @@ theorem fs_first_moment [NeZero N] (p₀ : CPN N) :
     rw [if_pos rfl, mul_one]
     have hfun : (fun p => rayDensity p i i) = fun p => ((momentMap p i : ℝ) : ℂ) := by
       funext p; exact rayDensity_diag p i
-    have hof : ∫ p, ((momentMap p i : ℝ) : ℂ) ∂(fubiniStudyMeasure p₀)
-        = ((∫ p, momentMap p i ∂(fubiniStudyMeasure p₀) : ℝ) : ℂ) := integral_ofReal
+    have hof : ∫ p, ((momentMap p i : ℝ) : ℂ) ∂(fsMeasure p₀)
+        = ((∫ p, momentMap p i ∂(fsMeasure p₀) : ℝ) : ℂ) := integral_ofReal
     rw [hfun, hof, fsFirstMoment_diag p₀ i, Complex.ofReal_inv, Complex.ofReal_natCast]
   · rw [if_neg h, mul_zero]
     exact fsFirstMoment_offdiag p₀ i j h
@@ -427,7 +427,7 @@ lemma reducedRayDensity_apply (e : Fin dS × Fin dE ≃ Fin N) (p : CPN N) (i i'
 /-- **The average reduced state**, entrywise: `E_{mu_FS}[ Tr_E |psi><psi| ]`. -/
 noncomputable def fsReducedFirstMoment (e : Fin dS × Fin dE ≃ Fin N) (p₀ : CPN N) :
     Matrix (Fin dS) (Fin dS) ℂ :=
-  Matrix.of fun i i' => ∫ p, reducedRayDensity e p i i' ∂(fubiniStudyMeasure p₀)
+  Matrix.of fun i i' => ∫ p, reducedRayDensity e p i i' ∂(fsMeasure p₀)
 
 /-- **Deliverable 2 (the headline): canonical typicality in expectation.** For a
 tensor split `H = H_S (x) H_E` with `N = d_S * d_E` (encoded by the reindex equiv
@@ -461,7 +461,7 @@ theorem canonical_typicality_expectation [NeZero N] [NeZero dS] [NeZero dE]
   rw [hfun, integral_finsetSum Finset.univ
         (fun k _ => rayDensity_integrable p₀ (e (i, k)) (e (i', k)))]
   -- each summand is the first-moment entry = (N)⁻¹ * delta_{i i'}
-  have hentry : ∀ k : Fin dE, ∫ p, rayDensity p (e (i, k)) (e (i', k)) ∂(fubiniStudyMeasure p₀)
+  have hentry : ∀ k : Fin dE, ∫ p, rayDensity p (e (i, k)) (e (i', k)) ∂(fsMeasure p₀)
       = (N : ℂ)⁻¹ * (if i = i' then 1 else 0) := by
     intro k
     have hfm := congrFun (congrFun (fs_first_moment p₀) (e (i, k))) (e (i', k))
@@ -826,11 +826,11 @@ real statistic equals its integral against any unitary pushforward. The
 `fsFirstMoment_offdiag` calc, packaged for reuse. -/
 lemma fs_integral_unitary (p₀ : CPN N) (U : Matrix.unitaryGroup (Fin N) ℂ)
     {f : CPN N → ℝ} (hf : Measurable f) :
-    ∫ p, f p ∂(fubiniStudyMeasure p₀) = ∫ p, f (U • p) ∂(fubiniStudyMeasure p₀) := by
-  set μ := fubiniStudyMeasure p₀ with hμ
+    ∫ p, f p ∂(fsMeasure p₀) = ∫ p, f (U • p) ∂(fsMeasure p₀) := by
+  set μ := fsMeasure p₀ with hμ
   have hg : Measurable fun p : CPN N => U • p := (continuous_const_smul U).measurable
   have hinv : Measure.map (fun p : CPN N => U • p) μ = μ :=
-    fubiniStudyMeasure_smul_invariant U p₀
+    fsMeasure_smul_invariant U p₀
   calc ∫ p, f p ∂μ
       = ∫ p, f p ∂(Measure.map (fun p : CPN N => U • p) μ) := by rw [hinv]
     _ = ∫ p, f (U • p) ∂μ :=
@@ -859,7 +859,7 @@ lemma abs_momentMap_le_one (p : CPN N) (i : Fin N) : |momentMap p i| ≤ 1 := by
 lemma fs_integrable_mul (p₀ : CPN N) {f g : CPN N → ℝ}
     (hf : Measurable f) (hg : Measurable g)
     (hfb : ∀ p, |f p| ≤ 1) (hgb : ∀ p, |g p| ≤ 1) :
-    Integrable (fun p => f p * g p) (fubiniStudyMeasure p₀) :=
+    Integrable (fun p => f p * g p) (fsMeasure p₀) :=
   Integrable.of_bound (hf.mul hg).aestronglyMeasurable 1
     (ae_of_all _ (fun p => by
       rw [Real.norm_eq_abs, abs_mul]
@@ -870,8 +870,8 @@ lemma fs_integrable_mul (p₀ : CPN N) {f g : CPN N → ℝ}
 /-- **The linear cross terms die**: `E[xₐ · Re r] = 0` for the `(i,j)` density
 entry `r` (`j ≠ i`), by the sign flip at `i`. -/
 lemma fs_cross_linear_zero (p₀ : CPN N) [NeZero N] (a i j : Fin N) (hji : j ≠ i) :
-    ∫ p, momentMap p a * (rayDensity p i j).re ∂(fubiniStudyMeasure p₀) = 0 := by
-  set μ := fubiniStudyMeasure p₀ with hμ
+    ∫ p, momentMap p a * (rayDensity p i j).re ∂(fsMeasure p₀) = 0 := by
+  set μ := fsMeasure p₀ with hμ
   have hmeas : Measurable fun p : CPN N => momentMap p a * (rayDensity p i j).re :=
     (momentMap_measurable a).mul (re_rayDensity_measurable i j)
   have hM : ∫ p, momentMap p a * (rayDensity p i j).re ∂μ
@@ -905,14 +905,14 @@ lemma rayDensity_re_sq_add_im_sq (p : CPN N) (i j : Fin N) :
 
 /-- `E[(Re r)²] = E[(Im r)²]`, by the quarter-phase flip at `i`. -/
 lemma fs_re_sq_eq_im_sq (p₀ : CPN N) [NeZero N] (i j : Fin N) (hji : j ≠ i) :
-    ∫ p, (rayDensity p i j).re ^ 2 ∂(fubiniStudyMeasure p₀)
-      = ∫ p, (rayDensity p i j).im ^ 2 ∂(fubiniStudyMeasure p₀) := by
+    ∫ p, (rayDensity p i j).re ^ 2 ∂(fsMeasure p₀)
+      = ∫ p, (rayDensity p i j).im ^ 2 ∂(fsMeasure p₀) := by
   have hmeas : Measurable fun p : CPN N => (rayDensity p i j).re ^ 2 :=
     (re_rayDensity_measurable i j).pow_const 2
-  calc ∫ p, (rayDensity p i j).re ^ 2 ∂(fubiniStudyMeasure p₀)
-      = ∫ p, (rayDensity ((phaseFlip i) • p) i j).re ^ 2 ∂(fubiniStudyMeasure p₀) :=
+  calc ∫ p, (rayDensity p i j).re ^ 2 ∂(fsMeasure p₀)
+      = ∫ p, (rayDensity ((phaseFlip i) • p) i j).re ^ 2 ∂(fsMeasure p₀) :=
         fs_integral_unitary p₀ (phaseFlip i) hmeas
-    _ = ∫ p, (rayDensity p i j).im ^ 2 ∂(fubiniStudyMeasure p₀) :=
+    _ = ∫ p, (rayDensity p i j).im ^ 2 ∂(fsMeasure p₀) :=
         integral_congr_ae (ae_of_all _ (fun p => by
           dsimp only
           rw [phaseFlip_smul_cross i j hji]
@@ -922,23 +922,23 @@ lemma fs_re_sq_eq_im_sq (p₀ : CPN N) [NeZero N] (i j : Fin N) (hji : j ≠ i) 
 
 /-- **The squared real part carries half the product**: `E[(Re r)²] = E[xᵢxⱼ]/2`. -/
 lemma fs_re_sq_moment (p₀ : CPN N) [NeZero N] (i j : Fin N) (hij : i ≠ j) :
-    ∫ p, (rayDensity p i j).re ^ 2 ∂(fubiniStudyMeasure p₀)
-      = (∫ p, momentMap p i * momentMap p j ∂(fubiniStudyMeasure p₀)) / 2 := by
+    ∫ p, (rayDensity p i j).re ^ 2 ∂(fsMeasure p₀)
+      = (∫ p, momentMap p i * momentMap p j ∂(fsMeasure p₀)) / 2 := by
   have int_re2 : Integrable (fun p : CPN N => (rayDensity p i j).re ^ 2)
-      (fubiniStudyMeasure p₀) := by
+      (fsMeasure p₀) := by
     refine fs_integrable_mul p₀ (re_rayDensity_measurable i j)
       (re_rayDensity_measurable i j) (abs_re_rayDensity_le_one · i j)
       (abs_re_rayDensity_le_one · i j) |>.congr ?_
     exact ae_of_all _ (fun p => by simp only [pow_two])
   have int_im2 : Integrable (fun p : CPN N => (rayDensity p i j).im ^ 2)
-      (fubiniStudyMeasure p₀) := by
+      (fsMeasure p₀) := by
     refine fs_integrable_mul p₀ (Complex.measurable_im.comp (rayDensity_measurable i j))
       (Complex.measurable_im.comp (rayDensity_measurable i j))
       (abs_im_rayDensity_le_one · i j) (abs_im_rayDensity_le_one · i j) |>.congr ?_
     exact ae_of_all _ (fun p => by simp only [Function.comp_apply, pow_two])
   have hsum : ∫ p, ((rayDensity p i j).re ^ 2 + (rayDensity p i j).im ^ 2)
-        ∂(fubiniStudyMeasure p₀)
-      = ∫ p, momentMap p i * momentMap p j ∂(fubiniStudyMeasure p₀) :=
+        ∂(fsMeasure p₀)
+      = ∫ p, momentMap p i * momentMap p j ∂(fsMeasure p₀) :=
     integral_congr_ae (ae_of_all _ (fun p => rayDensity_re_sq_add_im_sq p i j))
   rw [integral_add int_re2 int_im2] at hsum
   rw [← fs_re_sq_eq_im_sq p₀ i j (Ne.symm hij)] at hsum
@@ -946,15 +946,15 @@ lemma fs_re_sq_moment (p₀ : CPN N) [NeZero N] (i j : Fin N) (hij : i ≠ j) :
 
 /-- Second moments of the coordinates are index-independent (permutation swap). -/
 lemma fs_x_sq_swap (p₀ : CPN N) [NeZero N] (i k : Fin N) :
-    ∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀)
-      = ∫ p, momentMap p k ^ 2 ∂(fubiniStudyMeasure p₀) := by
-  calc ∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀)
-      = ∫ p, momentMap ((permU (Equiv.swap i k)) • p) i ^ 2 ∂(fubiniStudyMeasure p₀) :=
+    ∫ p, momentMap p i ^ 2 ∂(fsMeasure p₀)
+      = ∫ p, momentMap p k ^ 2 ∂(fsMeasure p₀) := by
+  calc ∫ p, momentMap p i ^ 2 ∂(fsMeasure p₀)
+      = ∫ p, momentMap ((permU (Equiv.swap i k)) • p) i ^ 2 ∂(fsMeasure p₀) :=
         fs_integral_unitary p₀ (permU (Equiv.swap i k))
           ((momentMap_measurable i).pow_const 2)
-    _ = ∫ p, momentMap p ((Equiv.swap i k) i) ^ 2 ∂(fubiniStudyMeasure p₀) :=
+    _ = ∫ p, momentMap p ((Equiv.swap i k) i) ^ 2 ∂(fsMeasure p₀) :=
         integral_congr_ae (ae_of_all _ (fun p => by dsimp only; rw [momentMap_permU]))
-    _ = ∫ p, momentMap p k ^ 2 ∂(fubiniStudyMeasure p₀) := by
+    _ = ∫ p, momentMap p k ^ 2 ∂(fsMeasure p₀) := by
         rw [Equiv.swap_apply_left]
 
 /-! ### The engine: `a = 2b`, per pair -/
@@ -965,9 +965,9 @@ killing the linear cross terms and the quarter-phase halving the squared real
 part, forces `E[xᵢ²] = 2·E[xᵢxⱼ]` — for each pair separately, with no integral
 ever computed. -/
 theorem fs_x_sq_eq_two_cross (p₀ : CPN N) [NeZero N] {i j : Fin N} (hij : i ≠ j) :
-    ∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀)
-      = 2 * ∫ p, momentMap p i * momentMap p j ∂(fubiniStudyMeasure p₀) := by
-  set μ := fubiniStudyMeasure p₀ with hμ
+    ∫ p, momentMap p i ^ 2 ∂(fsMeasure p₀)
+      = 2 * ∫ p, momentMap p i * momentMap p j ∂(fsMeasure p₀) := by
+  set μ := fsMeasure p₀ with hμ
   -- integrability of the six expansion pieces
   have hx : ∀ a : Fin N, Measurable fun p : CPN N => momentMap p a := momentMap_measurable
   have hr : Measurable fun p : CPN N => (rayDensity p i j).re :=
@@ -1060,38 +1060,38 @@ With `a = 2b` (per pair) and the integrated normalisation
 
 /-- ★ **The diagonal second moment**: `E[xᵢ²] = 2/(N(N+1))`. -/
 theorem fs_x_sq_moment [NeZero N] (p₀ : CPN N) (i : Fin N) :
-    ∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀)
+    ∫ p, momentMap p i ^ 2 ∂(fsMeasure p₀)
       = 2 / ((N : ℝ) * ((N : ℝ) + 1)) := by
   have hx : ∀ a : Fin N, Measurable fun p : CPN N => momentMap p a := momentMap_measurable
   have int_pair : ∀ k : Fin N, Integrable
-      (fun p : CPN N => momentMap p i * momentMap p k) (fubiniStudyMeasure p₀) :=
+      (fun p : CPN N => momentMap p i * momentMap p k) (fsMeasure p₀) :=
     fun k => fs_integrable_mul p₀ (hx i) (hx k) (abs_momentMap_le_one · i)
       (abs_momentMap_le_one · k)
   have hNpos : (0 : ℝ) < N := by
     exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne N)
   -- the integrated normalisation: `Σ_k E[xᵢxₖ] = E[xᵢ] = 1/N`
-  have hsum : ∑ k : Fin N, ∫ p, momentMap p i * momentMap p k ∂(fubiniStudyMeasure p₀)
+  have hsum : ∑ k : Fin N, ∫ p, momentMap p i * momentMap p k ∂(fsMeasure p₀)
       = (N : ℝ)⁻¹ := by
     rw [← integral_finsetSum Finset.univ (fun k _ => int_pair k)]
-    calc ∫ p, ∑ k : Fin N, momentMap p i * momentMap p k ∂(fubiniStudyMeasure p₀)
-        = ∫ p, momentMap p i ∂(fubiniStudyMeasure p₀) :=
+    calc ∫ p, ∑ k : Fin N, momentMap p i * momentMap p k ∂(fsMeasure p₀)
+        = ∫ p, momentMap p i ∂(fsMeasure p₀) :=
           integral_congr_ae (ae_of_all _ (fun p => by
             dsimp only
             rw [← Finset.mul_sum, momentMap_sum_eq_one, mul_one]))
       _ = (N : ℝ)⁻¹ := fsFirstMoment_diag p₀ i
   -- split off the diagonal term
   rw [← Finset.add_sum_erase Finset.univ
-    (fun k => ∫ p, momentMap p i * momentMap p k ∂(fubiniStudyMeasure p₀))
+    (fun k => ∫ p, momentMap p i * momentMap p k ∂(fsMeasure p₀))
     (Finset.mem_univ i)] at hsum
-  have hdiag : ∫ p, momentMap p i * momentMap p i ∂(fubiniStudyMeasure p₀)
-      = ∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀) :=
+  have hdiag : ∫ p, momentMap p i * momentMap p i ∂(fsMeasure p₀)
+      = ∫ p, momentMap p i ^ 2 ∂(fsMeasure p₀) :=
     integral_congr_ae (ae_of_all _ (fun p => by dsimp only; rw [← pow_two]))
   rw [hdiag] at hsum
   -- every off-diagonal term is half the diagonal one (`a = 2b`)
   rw [show ∑ k ∈ Finset.univ.erase i,
-        ∫ p, momentMap p i * momentMap p k ∂(fubiniStudyMeasure p₀)
+        ∫ p, momentMap p i * momentMap p k ∂(fsMeasure p₀)
       = ∑ _k ∈ Finset.univ.erase i,
-        (∫ p, momentMap p i ^ 2 ∂(fubiniStudyMeasure p₀)) / 2 from
+        (∫ p, momentMap p i ^ 2 ∂(fsMeasure p₀)) / 2 from
     Finset.sum_congr rfl (fun k hk => by
       rw [fs_x_sq_eq_two_cross p₀ ((Finset.ne_of_mem_erase hk).symm)]
       ring)] at hsum
@@ -1106,7 +1106,7 @@ theorem fs_x_sq_moment [NeZero N] (p₀ : CPN N) (i : Fin N) :
 
 /-- ★ **The cross second moment**: `E[xᵢxⱼ] = 1/(N(N+1))` for `i ≠ j`. -/
 theorem fs_x_cross_moment [NeZero N] (p₀ : CPN N) {i j : Fin N} (hij : i ≠ j) :
-    ∫ p, momentMap p i * momentMap p j ∂(fubiniStudyMeasure p₀)
+    ∫ p, momentMap p i * momentMap p j ∂(fsMeasure p₀)
       = 1 / ((N : ℝ) * ((N : ℝ) + 1)) := by
   have h := fs_x_sq_eq_two_cross p₀ hij
   rw [fs_x_sq_moment p₀ i] at h
@@ -1117,11 +1117,11 @@ theorem fs_x_cross_moment [NeZero N] (p₀ : CPN N) {i j : Fin N} (hij : i ≠ j
 /-- The expectation of a diagonal statistic `Σ λₖ·xₖ` is `(Σλ)/N` — the
 maximally-mixed value. -/
 theorem fs_linear_expectation [NeZero N] (p₀ : CPN N) (lam : Fin N → ℝ) :
-    ∫ p, ∑ k, lam k * momentMap p k ∂(fubiniStudyMeasure p₀)
+    ∫ p, ∑ k, lam k * momentMap p k ∂(fsMeasure p₀)
       = (∑ k, lam k) / N := by
   rw [integral_finsetSum Finset.univ (fun k _ =>
     (momentMap_integrable p₀ k).const_mul (lam k))]
-  calc ∑ k : Fin N, ∫ p, lam k * momentMap p k ∂(fubiniStudyMeasure p₀)
+  calc ∑ k : Fin N, ∫ p, lam k * momentMap p k ∂(fsMeasure p₀)
       = ∑ k : Fin N, lam k * (N : ℝ)⁻¹ :=
         Finset.sum_congr rfl (fun k _ => by
           rw [integral_const_mul, fsFirstMoment_diag p₀ k])
@@ -1130,24 +1130,24 @@ theorem fs_linear_expectation [NeZero N] (p₀ : CPN N) (lam : Fin N → ℝ) :
 /-- ★ **The second moment of a diagonal statistic**:
 `E[(Σ λₖxₖ)²] = ((Σλ)² + Σλ²)/(N(N+1))`. -/
 theorem fs_linear_sq_moment [NeZero N] (p₀ : CPN N) (lam : Fin N → ℝ) :
-    ∫ p, (∑ k, lam k * momentMap p k) ^ 2 ∂(fubiniStudyMeasure p₀)
+    ∫ p, (∑ k, lam k * momentMap p k) ^ 2 ∂(fsMeasure p₀)
       = ((∑ k, lam k) ^ 2 + ∑ k, lam k ^ 2) / ((N : ℝ) * ((N : ℝ) + 1)) := by
   have hx : ∀ a : Fin N, Measurable fun p : CPN N => momentMap p a := momentMap_measurable
   have int_pair : ∀ a b : Fin N, Integrable
       (fun p : CPN N => lam a * lam b * (momentMap p a * momentMap p b))
-      (fubiniStudyMeasure p₀) := fun a b =>
+      (fsMeasure p₀) := fun a b =>
     (fs_integrable_mul p₀ (hx a) (hx b) (abs_momentMap_le_one · a)
       (abs_momentMap_le_one · b)).const_mul (lam a * lam b)
-  calc ∫ p, (∑ k, lam k * momentMap p k) ^ 2 ∂(fubiniStudyMeasure p₀)
+  calc ∫ p, (∑ k, lam k * momentMap p k) ^ 2 ∂(fsMeasure p₀)
       = ∫ p, ∑ a, ∑ b, lam a * lam b * (momentMap p a * momentMap p b)
-          ∂(fubiniStudyMeasure p₀) :=
+          ∂(fsMeasure p₀) :=
         integral_congr_ae (ae_of_all _ (fun p => by
           dsimp only
           rw [pow_two, Finset.sum_mul_sum]
           exact Finset.sum_congr rfl (fun a _ =>
             Finset.sum_congr rfl (fun b _ => by ring))))
     _ = ∑ a, ∑ b, ∫ p, lam a * lam b * (momentMap p a * momentMap p b)
-          ∂(fubiniStudyMeasure p₀) := by
+          ∂(fsMeasure p₀) := by
         rw [integral_finsetSum Finset.univ (fun a _ =>
           integrable_finsetSum Finset.univ (fun b _ => int_pair a b))]
         exact Finset.sum_congr rfl (fun a _ =>
@@ -1159,8 +1159,8 @@ theorem fs_linear_sq_moment [NeZero N] (p₀ : CPN N) (lam : Fin N → ℝ) :
           by_cases hba : b = a
           · rw [if_pos hba, hba]
             congr 1
-            calc ∫ p, momentMap p a * momentMap p a ∂(fubiniStudyMeasure p₀)
-                = ∫ p, momentMap p a ^ 2 ∂(fubiniStudyMeasure p₀) :=
+            calc ∫ p, momentMap p a * momentMap p a ∂(fsMeasure p₀)
+                = ∫ p, momentMap p a ^ 2 ∂(fsMeasure p₀) :=
                   integral_congr_ae (ae_of_all _ (fun p => by
                     dsimp only; rw [← pow_two]))
               _ = 2 / ((N:ℝ) * ((N:ℝ)+1)) := fs_x_sq_moment p₀ a
@@ -1190,7 +1190,7 @@ maximally-mixed value, at rate `Var = (N·Σλ² − (Σλ)²)/(N²(N+1)) = O(1/
 polynomial concentration with no isoperimetry, from the twirl algebra alone. -/
 theorem fs_chebyshev_concentration [NeZero N] (p₀ : CPN N) (lam : Fin N → ℝ)
     {ε : ℝ} (hε : 0 < ε) :
-    (fubiniStudyMeasure p₀)
+    (fsMeasure p₀)
         {p | ε ≤ |(∑ k, lam k * momentMap p k) - (∑ k, lam k) / N|}
       ≤ ENNReal.ofReal ((((N:ℝ) * ∑ k, lam k ^ 2 - (∑ k, lam k) ^ 2)
           / ((N:ℝ) ^ 2 * ((N:ℝ) + 1))) / ε ^ 2) := by
@@ -1200,7 +1200,7 @@ theorem fs_chebyshev_concentration [NeZero N] (p₀ : CPN N) (lam : Fin N → �
     Finset.measurable_sum Finset.univ (fun k _ =>
       (momentMap_measurable k).const_mul (lam k))
   have hX2 : MemLp (fun p : CPN N => ∑ k, lam k * momentMap p k) 2
-      (fubiniStudyMeasure p₀) :=
+      (fsMeasure p₀) :=
     MemLp.of_bound hXmeas.aestronglyMeasurable (∑ k, |lam k|)
       (ae_of_all _ (fun p => by
         rw [Real.norm_eq_abs]
@@ -1210,33 +1210,33 @@ theorem fs_chebyshev_concentration [NeZero N] (p₀ : CPN N) (lam : Fin N → �
         calc |lam k| * |momentMap p k| ≤ |lam k| * 1 :=
               mul_le_mul_of_nonneg_left (abs_momentMap_le_one p k) (abs_nonneg _)
           _ = |lam k| := mul_one _))
-  have hEX : ∫ p, ∑ k, lam k * momentMap p k ∂(fubiniStudyMeasure p₀)
+  have hEX : ∫ p, ∑ k, lam k * momentMap p k ∂(fsMeasure p₀)
       = (∑ k, lam k) / N := fs_linear_expectation p₀ lam
   have hvar : ProbabilityTheory.variance
-        (fun p : CPN N => ∑ k, lam k * momentMap p k) (fubiniStudyMeasure p₀)
+        (fun p : CPN N => ∑ k, lam k * momentMap p k) (fsMeasure p₀)
       = ((N:ℝ) * ∑ k, lam k ^ 2 - (∑ k, lam k) ^ 2)
           / ((N:ℝ) ^ 2 * ((N:ℝ) + 1)) := by
     rw [ProbabilityTheory.variance_eq_sub hX2]
     rw [show ((fun p : CPN N => ∑ k, lam k * momentMap p k) ^ 2)
         = fun p : CPN N => (∑ k, lam k * momentMap p k) ^ 2 from
       funext (fun p => Pi.pow_apply _ _ _)]
-    rw [show (∫ p, (∑ k, lam k * momentMap p k) ^ 2 ∂(fubiniStudyMeasure p₀))
+    rw [show (∫ p, (∑ k, lam k * momentMap p k) ^ 2 ∂(fsMeasure p₀))
         = ((∑ k, lam k) ^ 2 + ∑ k, lam k ^ 2) / ((N : ℝ) * ((N : ℝ) + 1)) from
       fs_linear_sq_moment p₀ lam]
-    rw [show (∫ p, ∑ k, lam k * momentMap p k ∂(fubiniStudyMeasure p₀))
+    rw [show (∫ p, ∑ k, lam k * momentMap p k ∂(fsMeasure p₀))
         = (∑ k, lam k) / N from hEX]
     have hN1 : ((N:ℝ) + 1) ≠ 0 := by positivity
     field_simp
     ring
-  calc (fubiniStudyMeasure p₀)
+  calc (fsMeasure p₀)
         {p | ε ≤ |(∑ k, lam k * momentMap p k) - (∑ k, lam k) / N|}
-      = (fubiniStudyMeasure p₀)
+      = (fsMeasure p₀)
           {p | ε ≤ |(∑ k, lam k * momentMap p k)
-            - ∫ q, ∑ k, lam k * momentMap q k ∂(fubiniStudyMeasure p₀)|} := by
+            - ∫ q, ∑ k, lam k * momentMap q k ∂(fsMeasure p₀)|} := by
         rw [hEX]
     _ ≤ ENNReal.ofReal (ProbabilityTheory.variance
           (fun p : CPN N => ∑ k, lam k * momentMap p k)
-          (fubiniStudyMeasure p₀) / ε ^ 2) :=
+          (fsMeasure p₀) / ε ^ 2) :=
         ProbabilityTheory.meas_ge_le_variance_div_sq hX2 hε
     _ = ENNReal.ofReal ((((N:ℝ) * ∑ k, lam k ^ 2 - (∑ k, lam k) ^ 2)
           / ((N:ℝ) ^ 2 * ((N:ℝ) + 1))) / ε ^ 2) := by rw [hvar]

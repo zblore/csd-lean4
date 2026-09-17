@@ -34,7 +34,7 @@ Those five are exactly the inputs `born_frequency_convergence_partition` asks fo
 theorem stated over an arbitrary law can be instantiated on the canonical process by supplying them.
 
 ⚠️ **`LF4/TrialWitness.lean`'s `fsTrial*` block is now a fold candidate**: it is this construction at
-`μ := fubiniStudyMeasure p₀`. It is left in place because it has live consumers whose statements name
+`μ := fsMeasure p₀`. It is left in place because it has live consumers whose statements name
 it, and re-pointing them is churn without benefit; the duplication is recorded here rather than left
 for someone to rediscover.
 

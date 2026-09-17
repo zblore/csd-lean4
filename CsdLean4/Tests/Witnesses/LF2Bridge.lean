@@ -56,8 +56,8 @@ namespace Witnesses
 integral. Instantiates `MeasureBridgeData.integral_comp_pi` at `kBridge p₀`
 (where `c = 1`): `bridge_eq` is doing the work on an actual instance. -/
 theorem kBridge_integral_comp_pi (p₀ : CPN 4) {f : CPN 4 → ℝ}
-    (hf : AEStronglyMeasurable f (fubiniStudyMeasure p₀)) :
-    ∫ σ : KSigma 4, f σ.1 ∂(kMuL p₀) = ∫ p, f p ∂(fubiniStudyMeasure p₀) := by
+    (hf : AEStronglyMeasurable f (fsMeasure p₀)) :
+    ∫ σ : KSigma 4, f σ.1 ∂(kMuL p₀) = ∫ p, f p ∂(fsMeasure p₀) := by
   have h := LF2.MeasureBridgeData.integral_comp_pi (kBridge p₀) hf
   simp only [show (kBridge p₀).c = 1 from rfl, ENNReal.toReal_one, one_smul] at h
   exact h
@@ -83,11 +83,11 @@ assigns to every effect exactly its `μFS`-integral. Instantiates
 `OperationalPackage.fromPreparation_liouville_apply` at `kBridge p₀` with
 `hc : c = 1` discharged by `rfl`. -/
 theorem kSectorData_fromPreparation_liouville_apply (p₀ : CPN 4) (E : LF2.Effect 4) :
-    (LF2.OperationalPackage.fromPreparation (kSectorData p₀) (fubiniStudyMeasure p₀)
+    (LF2.OperationalPackage.fromPreparation (kSectorData p₀) (fsMeasure p₀)
         (kBridge p₀) ((kSectorData p₀).μL) kRep kRep_unit kRep_meas).p E
-      = ∫ p, LF2.effectProjFn kRep E p ∂(fubiniStudyMeasure p₀) :=
+      = ∫ p, LF2.effectProjFn kRep E p ∂(fsMeasure p₀) :=
   LF2.OperationalPackage.fromPreparation_liouville_apply
-    (kSectorData p₀) (fubiniStudyMeasure p₀) (kBridge p₀) rfl
+    (kSectorData p₀) (fsMeasure p₀) (kBridge p₀) rfl
     kRep kRep_unit kRep_meas E
 
 /-- **The Born-form consequence on the concrete instance.** The operational
@@ -97,10 +97,10 @@ Instantiates the production `born_rank_one_direct` (Busch-free) at
 `kPurePrep p₀`. -/
 theorem kPurePrep_born_rank_one (p₀ : CPN 4)
     (φ : EuclideanSpace ℂ (Fin 4)) (hφ : ‖φ‖ = 1) :
-    (LF2.OperationalPackage.fromPreparation (kSectorData p₀) (fubiniStudyMeasure p₀)
+    (LF2.OperationalPackage.fromPreparation (kSectorData p₀) (fsMeasure p₀)
         (kBridge p₀) kMuPsi kRep kRep_unit kRep_meas).p (LF2.rankOneEffect φ hφ)
       = ‖inner ℂ singletPsi φ‖ ^ 2 :=
-  LF2.PurePreparation.born_rank_one_direct (kSectorData p₀) (fubiniStudyMeasure p₀)
+  LF2.PurePreparation.born_rank_one_direct (kSectorData p₀) (fsMeasure p₀)
     (kBridge p₀) kMuPsi (kPurePrep p₀) φ hφ
 
 end Witnesses

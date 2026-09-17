@@ -20,7 +20,7 @@ resulting **dipole correlation**
   `D = ∫ sign(2·blochProj n − 1)·(2·blochProj ψ − 1) dμ_FS = (2c − 1)/2`,   `c = |⟨n|ψ⟩|²`.
 
 Mechanism: `R_n` is a Hermitian unitary (`R_n² = I`, `outerProduct_mul_self_of_unit_norm`), so its
-`ℂℙ¹`-action preserves `μ_FS` (`fubiniStudyMeasure_smul_invariant`) and fixes the `n`-coordinate.
+`ℂℙ¹`-action preserves `μ_FS` (`fsMeasure_smul_invariant`) and fixes the `n`-coordinate.
 Reflecting the density and averaging, `reflect_sq_add` (the `ℂ²` reflection identity) linearises
 `2(s + s′) − 2 = 2(2c − 1)(2u − 1)`, and the general-axis hat-box `hatBox_axis` (`∫|2u − 1| = ½`)
 closes it. Foundational-triple, no `sorry`.
@@ -198,9 +198,9 @@ lemma measurable_rsign : Measurable rsign := by
 reflection (`μ_FS`-preserving, fixes the `n`-coordinate) plus `reflect_sq_add` linearises the paired
 density, and the general-axis hat-box (`hatBox_axis`) closes it. -/
 theorem dipole (n ψ : EuclideanSpace ℂ (Fin 2)) (hn : ‖n‖ = 1) (hψ : ‖ψ‖ = 1) (p₀ : CPN 2) :
-    ∫ p, rsign (2 * blochProj n p - 1) * (2 * blochProj ψ p - 1) ∂(fubiniStudyMeasure p₀)
+    ∫ p, rsign (2 * blochProj n p - 1) * (2 * blochProj ψ p - 1) ∂(fsMeasure p₀)
       = (2 * ‖inner ℂ n ψ‖ ^ 2 - 1) / 2 := by
-  set μ := fubiniStudyMeasure p₀ with hμ
+  set μ := fsMeasure p₀ with hμ
   set f : CPN 2 → ℝ :=
     fun p => rsign (2 * blochProj n p - 1) * (2 * blochProj ψ p - 1) with hf
   have hn0 : n ≠ 0 := by rw [← norm_pos_iff, hn]; norm_num
@@ -226,7 +226,7 @@ theorem dipole (n ψ : EuclideanSpace ℂ (Fin 2)) (hn : ‖n‖ = 1) (hψ : ‖
     MeasureTheory.Integrable.of_bound hrefl_meas.aestronglyMeasurable 1
       (ae_of_all _ (fun p => hbound (reflU n hn • p)))
   have hcov : ∫ p, f p ∂μ = ∫ p, f (reflU n hn • p) ∂μ := by
-    have hinv := fubiniStudyMeasure_smul_invariant (reflU n hn) p₀
+    have hinv := fsMeasure_smul_invariant (reflU n hn) p₀
     calc ∫ p, f p ∂μ
         = ∫ p, f p ∂(Measure.map (fun q => reflU n hn • q) μ) := by rw [hinv]
       _ = ∫ p, f (reflU n hn • p) ∂μ :=

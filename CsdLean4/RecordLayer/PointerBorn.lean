@@ -78,13 +78,13 @@ conditioned on the ready region on the pointer. Conditioning is legitimate — t
 region has positive measure (`readyRegion_pos`) — so no Dirac calibration posit enters. -/
 noncomputable def pointerPrep (p : LF4.CPN N) (q₀ : Pointer N) (δ : ℝ) :
     Measure (PointerArena N N) :=
-  (epistemicMeasure p).prod ((fubiniStudyMeasure q₀)[|readyRegion (K := N) δ])
+  (epistemicMeasure p).prod ((fsMeasure q₀)[|readyRegion (K := N) δ])
 
 omit [NeZero N] in
 theorem isProbabilityMeasure_pointerPrep (p : LF4.CPN N) (q₀ : Pointer N) {δ : ℝ}
     (hδpos : 0 < δ) : IsProbabilityMeasure (pointerPrep p q₀ δ) := by
   have := ProbabilityTheory.cond_isProbabilityMeasure
-    (μ := fubiniStudyMeasure q₀) (readyRegion_pos q₀ hδpos)
+    (μ := fsMeasure q₀) (readyRegion_pos q₀ hδpos)
   unfold pointerPrep
   infer_instance
 
@@ -97,7 +97,7 @@ theorem pointerPrep_sector_measure (c : ContextField N) {ε δ : ℝ} (hε : 0 �
     pointerPrep p q₀ δ (pointerSector c ε δ j)
       = ENNReal.ofReal (c.rate p j - 2 * ε) := by
   have := ProbabilityTheory.cond_isProbabilityMeasure
-    (μ := fubiniStudyMeasure q₀) (readyRegion_pos q₀ hδpos)
+    (μ := fsMeasure q₀) (readyRegion_pos q₀ hδpos)
   rw [pointerPrep, pointerSector, Measure.prod_prod,
     ProbabilityTheory.cond_apply_self (readyRegion_pos q₀ hδpos) (measure_ne_top _ _),
     mul_one, epistemicMeasure, Measure.prod_apply (measurableSet_shrunkCell c ε j),

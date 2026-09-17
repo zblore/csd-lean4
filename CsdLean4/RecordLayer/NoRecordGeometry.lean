@@ -296,7 +296,7 @@ theorem posMeasure_noRecord_pointer (q₀ : Pointer K)
     {A : Set (Pointer K)} (hA : IsOpen A) (hconn : IsPreconnected A)
     {j l : Fin K} (hjl : j ≠ l)
     (hmeetj : ∃ x ∈ A, Φ x ∈ recordRegion j) (hmeetl : ∃ x ∈ A, Φ x ∈ recordRegion l) :
-    fubiniStudyMeasure q₀
+    fsMeasure q₀
       (A ∩ Φ ⁻¹' interior ((⋃ i, recordRegion (K := K) i)ᶜ)) ≠ 0 := by
   let rest : Set (Pointer K) := ⋃ i : {i : Fin K // i ≠ j}, recordRegion i.val
   have hrest : IsOpen rest := isOpen_iUnion fun i => isOpen_recordRegion i.val
@@ -323,7 +323,7 @@ theorem posMeasure_noRecord_pointer (q₀ : Pointer K)
     obtain ⟨x, hx, hxl⟩ := hmeetl
     exact ⟨x, hx, Set.mem_iUnion.mpr ⟨⟨l, hjl.symm⟩, hxl⟩⟩
   have h := posMeasure_noRecord_of_correlates
-    (fun _ hW hWne => LF4.fubiniStudyMeasure_pos_of_isOpen q₀ hW hWne)
+    (fun _ hW hWne => LF4.fsMeasure_pos_of_isOpen q₀ hW hWne)
     hopen hcont hA hconn (isOpen_recordRegion j) hrest hdisj hreg hmeetj hmeetrest
   simpa only [hunion] using h
 
@@ -335,10 +335,10 @@ theorem not_ae_record_pointer (q₀ : Pointer K)
     {A : Set (Pointer K)} (hA : IsOpen A) (hconn : IsPreconnected A)
     {j l : Fin K} (hjl : j ≠ l)
     (hmeetj : ∃ x ∈ A, Φ x ∈ recordRegion j) (hmeetl : ∃ x ∈ A, Φ x ∈ recordRegion l) :
-    ¬ ∀ᵐ q ∂(fubiniStudyMeasure q₀).restrict A, Φ q ∈ ⋃ i, recordRegion (K := K) i := by
+    ¬ ∀ᵐ q ∂(fsMeasure q₀).restrict A, Φ q ∈ ⋃ i, recordRegion (K := K) i := by
   rw [ae_restrict_iff' hA.measurableSet]
   intro h
-  have hnull : fubiniStudyMeasure q₀
+  have hnull : fsMeasure q₀
       {q | q ∈ A ∧ Φ q ∉ ⋃ i, recordRegion (K := K) i} = 0 := by
     simpa only [ae_iff, Classical.not_imp] using h
   apply posMeasure_noRecord_pointer q₀ hopen hcont hA hconn hjl hmeetj hmeetl

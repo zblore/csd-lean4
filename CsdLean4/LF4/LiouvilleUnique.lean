@@ -37,7 +37,7 @@ measure is **forced by the symmetry**, not selected.
 
 The textbook definition is the top exterior power of the Kähler form. It was **not available** when
 this module was written (`specs/connectivity-manifest.md` L1, `Q8` rated the fix XL); since 2026-09-08
-it is (`Projectivization.fsVolume_eq_smul_fubiniStudyMeasure`), and `LF4/SectorManifold.lean` shows the
+it is (`Projectivization.fsVolume_eq_smul_fsMeasure`), and `LF4/SectorManifold.lean` shows the
 two readings agree (`fsVolumeNormalized_isForcedKahlerVolume`, 2026-09-10). Symmetry-uniqueness stays
 the reading this module proves — now a theorem about the same measure, not a substitute for it.
 
@@ -200,8 +200,8 @@ theorem kMuL_unique [NeZero N] (p₀ : CPN N) (μ : Measure (KSigma N)) [IsProba
   have : IsProbabilityMeasure μ.fst := by
     rw [Measure.fst]
     exact Measure.isProbabilityMeasure_map' measurable_fst.aemeasurable
-  obtain ⟨c, hc⟩ := invariant_measure_uniqueness_cpn p₀ (fubiniStudyMeasure p₀)
-    (fun U => ⟨measurable_const_smul U, fubiniStudyMeasure_smul_invariant U p₀⟩) μ.fst
+  obtain ⟨c, hc⟩ := invariant_measure_uniqueness_cpn p₀ (fsMeasure p₀)
+    (fun U => ⟨measurable_const_smul U, fsMeasure_smul_invariant U p₀⟩) μ.fst
     (measurePreserving_fst_of_baseRotate μ hU)
   have hcone : c = 1 := by
     have h := congrArg (fun ν : Measure (CPN N) => ν univ) hc

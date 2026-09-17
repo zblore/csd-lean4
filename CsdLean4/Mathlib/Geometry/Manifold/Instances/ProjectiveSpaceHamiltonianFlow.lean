@@ -26,7 +26,7 @@ is the measure of the `n`-th power (`fsTopForm n = wedgePow fsForm n`), so:
 * ★★★ `Projectivization.fsVolume_map_hamiltonianFlow` — **the Hamiltonian flow of every smooth
   `H : ℂℙⁿ → ℝ` preserves the Fubini–Study volume**, at every time;
 * `Projectivization.fsVolumeNormalized_map_hamiltonianFlow` — and the normalised volume, which
-  is `fubiniStudyMeasure p₀` (`fsVolumeNormalized_eq_fubiniStudyMeasure`).
+  is `fsMeasure p₀` (`fsVolumeNormalized_eq_fsMeasure`).
 
 Before this file the only Hamiltonian flows on `ℂℙⁿ` known to preserve the volume were the
 unitary ones (`fsVolume_map_smul`, `fsVolume_map_torusUnitary_smul`), by group invariance; this

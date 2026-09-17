@@ -438,7 +438,7 @@ noncomputable def maxEntangledDeisolationFlow (d : ℕ) [NeZero d] :
 theorem maxEntangledDeisolation_measurePreserving (d : ℕ) [NeZero d]
     (p₀ : CPN ((d * d) * (d * d))) :
     MeasurePreserving (maxEntangledDeisolationFlow d)
-      (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+      (fsMeasure p₀) (fsMeasure p₀) :=
   measurementFlow_measurePreserving finProdFinEquiv p₀
 
 /-- The maximally-entangled de-isolation flow is genuinely not the identity for
@@ -717,7 +717,7 @@ theorem maxEntangledDeisolation_flow_capstone (d : ℕ) [NeZero d] (hd : 2 ≤ d
     measurementFlow (d * d) e ≠ id
     -- (2) FS measure-preserving
     ∧ MeasurePreserving (measurementFlow (d * d) e)
-        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
+        (fsMeasure p₀) (fsMeasure p₀)
     -- (3) pointer-block basin measure = the Born weight
     ∧ (∀ w : Fin d × Fin d,
         ∑ n : Fin (d * d),

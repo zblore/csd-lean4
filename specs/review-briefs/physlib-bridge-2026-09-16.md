@@ -52,6 +52,9 @@ OUTPUT. A numbered list of findings, most severe first, each with: severity (BLO
   complex `EuclideanSpace` at the pin; the real-`2n` transfer is M) — recorded in the same row.
   B12′ (`stdBasis_addHaar`, `fsVolume_eq_topFormMeasure_addHaar`) followed the same day, and so did
   B2 (the closure now has no line over 100 columns; `𝓘(𝕜, X)` notation throughout).
+  The M rows B5, B6 (resolved by verification), B9, B11′, B13 and B8's naming half followed on
+  2026-09-17, on the user's "finish the remaining B rows"; only B8′ (slice-1 index generality)
+  stays priced.
 
 ## Brief B — the Fubini–Study machinery the bridge stands on
 

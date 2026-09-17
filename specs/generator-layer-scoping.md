@@ -146,7 +146,7 @@ Items carry reference numbers (`G1`–`G7`, `R-016′`) so they can be named wit
 `d ∘ d = 0` (`Geometry/Manifold/ExteriorDerivative.lean`); the Fubini–Study form as a global `C^∞`
 2-form with `fsForm_mextDeriv : d ω_FS = 0`; `DifferentialForm.IsSymplectic` and ★★★
 `fsForm_isSymplectic`; the measure of a top form (`topFormMeasure`) and ★★★
-`fsVolume_eq_smul_fubiniStudyMeasure : ω_FS^{∧n} = (4π)ⁿ · μ_FS`; the `U(n+1)` action in charts
+`fsVolume_eq_smul_fsMeasure : ω_FS^{∧n} = (4π)ⁿ · μ_FS`; the `U(n+1)` action in charts
 (`uTrans`, `fsModelForm_uTrans`) and its linear rotation form (`fsModelForm_mulVec`).
 
 **Corpus, below manifold level — what step (4) has to lift:** the linear Hamiltonian duality
@@ -382,7 +382,7 @@ recorded have since been filled upstream (`VectorField.mlieBracket`, and uniform
 | **G17** ✅ built 2026-09-11 | **The Riemannian volume of the Fubini–Study metric is `fsVolume` up to the constant** (the `TERMS.md` Fubini–Study line "normalised Riemannian volume"). Needs the Riemannian volume measure of a metric on a manifold — absent at the pin (`VectorBundle/Riemannian.lean` has Riemannian *bundles*, no volume) — built as `topFormMeasure` of the volume form `√det g`; then `vol_g = ω^{∧n}/n!` is the algebraic Kähler identity from `g = ω (J ·, ·)` (G14a). | **L** | Low–medium | Low | Fills a Mathlib gap (Riemannian volume); nothing in the corpus consumes it. |
 | **G17b** ✅ built 2026-09-11 (Q30) | **Chart-independence of the Riemannian volume**: `√det (DφᵀGDφ) = \|det Dφ\| √det G` along a chart transition, then `MetricFamily.chartMeasure_congr` by the proof of `DifferentialForm.chartMeasure_congr` with the Jacobian rule for Gram matrices in place of the one for top-form coefficients; then `riemannianVolume_congr_cover`. | **S–M** | High | Low | Makes `riemannianVolume` canonical for a metric not identified chart by chart with a top form; nothing in the corpus needs it (on `ℂℙⁿ` independence is inherited from `topFormMeasure_congr_cover`). |
 | **G18** | **Darboux's theorem** (the `TERMS.md` symplectic line): every symplectic form is locally the standard one. Moser's trick: needs G5(a) flows, G5(b) Cartan, and a Poincaré lemma on a ball. | **XL** | Low | Low | Nothing in the corpus consumes it; it is the classical theorem a symplectic library owes. |
-| **W1** ✅ built 2026-09-10 | **Wire the physics to the manifold layer**: the `ℂℙⁿ` instances of `KahlerOnticSetup` (`trivialKahlerOnticSetup`, `unitaryFlowSetup`, `manyToOneSetup`) get theorems that their `liouvilleMeasure` is `(4π)⁻ⁿ • fsVolume n` (the symplectic volume of `fsForm`, `fsVolume_eq_smul_fubiniStudyMeasure`), that `flow_preserves_volume` is `fsVolume_map_smul`, and that the sector carries `fsForm_isKahler`; and the four stale ledgers are corrected — link L1 of `specs/connectivity-manifest.md`, the `kahler_pointwise` docstring, and the `TERMS.md` Fubini–Study and symplectic entries, all of which still call the manifold residual open. The two projective-space types are definitionally equal (`ℙ ℂ (Ambient n)` is `CPN (n + 1)`). | **M** | High | **High** | This is what turns "we start from an FS, Kähler, Liouville space" into "the sector is the standard object, proved". Posit 3 is untouched by it. |
+| **W1** ✅ built 2026-09-10 | **Wire the physics to the manifold layer**: the `ℂℙⁿ` instances of `KahlerOnticSetup` (`trivialKahlerOnticSetup`, `unitaryFlowSetup`, `manyToOneSetup`) get theorems that their `liouvilleMeasure` is `(4π)⁻ⁿ • fsVolume n` (the symplectic volume of `fsForm`, `fsVolume_eq_smul_fsMeasure`), that `flow_preserves_volume` is `fsVolume_map_smul`, and that the sector carries `fsForm_isKahler`; and the four stale ledgers are corrected — link L1 of `specs/connectivity-manifest.md`, the `kahler_pointwise` docstring, and the `TERMS.md` Fubini–Study and symplectic entries, all of which still call the manifold residual open. The two projective-space types are definitionally equal (`ℙ ℂ (Ambient n)` is `CPN (n + 1)`). | **M** | High | **High** | This is what turns "we start from an FS, Kähler, Liouville space" into "the sector is the standard object, proved". Posit 3 is untouched by it. |
 | **G19** ✅ built 2026-09-10 | Analyticity of the Hamiltonian fields: `torusField`, `schrodingerField` are `ω` sections (the G3 route at `ω`; `hamiltonianVectorFieldSection` is `C^ω` for a `C^ω` form and energy). | **S–M** | High | Low | The G12 write-up left it unwritten. |
 
 ### W1, built (2026-09-10)
@@ -391,7 +391,7 @@ recorded have since been filled upstream (`VectorField.mlieBracket`, and uniform
 Symplectic instance modules; the manifold tree imports nothing from `LF4` except the two moment-map
 modules, so no cycle). For the `ℂℙⁿ` instances of `KahlerOnticSetup` at `N = n + 1`: ★★★
 `unitaryFlowSetup_liouvilleMeasure_eq_fsVolumeNormalized` and the `trivialKahlerOnticSetup` twin
-(`liouvilleMeasure = fsVolumeNormalized n`, by `fsVolumeNormalized_eq_fubiniStudyMeasure`), ★★
+(`liouvilleMeasure = fsVolumeNormalized n`, by `fsVolumeNormalized_eq_fsMeasure`), ★★
 `fsVolume_eq_smul_unitaryFlowSetup_liouvilleMeasure` (the `(4π)ⁿ`), ★★
 `unitaryFlowSetup_flow_measurePreserving_fsVolume` (every time-`t` map preserves `fsVolume n` itself:
 `fsVolume_map_smul`), ★★★ `fsVolumeNormalized_isForcedKahlerVolume` (the normalised top power satisfies
@@ -518,7 +518,7 @@ the first axis by a unitary, whose real determinant is `1`; scale to the origin 
 `BilinForm.toMatrix_comp` and `LinearMap.det_toMatrix` giving `det² · det G₀`; at the origin the Gram
 matrix is `4·1` because the standard basis is orthonormal for `Re⟪·,·⟫`, `stdBasis_inner_re`),
 ★★ `chartDensity_fsMetric` (`√det G = (1/n!) · |coeff of ω^{∧n}|`), ★★★ `riemannianVolume_fsMetric`
-(**`vol_g = fsVolume n / n!`**) and ★★★ `riemannianVolume_fsMetric_eq_smul_fubiniStudyMeasure`
+(**`vol_g = fsVolume n / n!`**) and ★★★ `riemannianVolume_fsMetric_eq_smul_fsMeasure`
 (**`vol_g = ((4π)ⁿ/n!) · μ_FS`**). **L** as priced; took M–L. 27 pins.
 
 **Three shelf facts.** (a) `LinearMap.BilinForm.toMatrix_comp` must be given both bases and both maps
@@ -600,7 +600,7 @@ the generic Riemannian-volume construction (G17b), neither consumed by the physi
 
 **How to cite this.** The one-line version for a referee: *the sector's Kähler geometry, its
 symplectic volume, and the Hamiltonian character of its unitary flows are theorems on `ℂℙⁿ`
-(`fsForm_isKahler`, `fsVolume_eq_smul_fubiniStudyMeasure`, `riemannianVolume_fsMetric`,
+(`fsForm_isKahler`, `fsVolume_eq_smul_fsMeasure`, `riemannianVolume_fsMetric`,
 `schrodingerField_isHamiltonianVectorField`), and the corpus's sector instances are proved to carry
 them (`unitaryFlowSetup_isKahler_liouville`); the sector's *selection* remains a posit.*
 

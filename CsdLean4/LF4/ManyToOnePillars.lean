@@ -110,8 +110,8 @@ noncomputable def manyToOneSetup
   flow := fun t p => (U t • p.1, p.2)
   flow_preserves_volume := fun t => by
     have hbase : MeasurePreserving (fun q : CPN N => U t • q)
-        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
-      ⟨(continuous_const_smul (U t)).measurable, fubiniStudyMeasure_smul_invariant (U t) p₀⟩
+        (fsMeasure p₀) (fsMeasure p₀) :=
+      ⟨(continuous_const_smul (U t)).measurable, fsMeasure_smul_invariant (U t) p₀⟩
     exact hbase.prod (MeasurePreserving.id (volume : Measure KTorus))
   projectedFlow := fun t p => U t • p
   projectable := fun _ _ => rfl
@@ -215,8 +215,8 @@ theorem manyToOneSetup_born_frequency {M : ℕ}
         (Measure.map_map (manyToOneSetup U p₀).pi_measurable (hX n)).symm
     _ = Measure.map (manyToOneSetup U p₀).pi ((manyToOneSetup U p₀).liouvilleMeasure) :=
         congrArg (Measure.map (manyToOneSetup U p₀).pi) (hlaw n)
-    _ = fubiniStudyMeasure p₀ := by
-        show Measure.map Prod.fst (kMuL p₀) = fubiniStudyMeasure p₀
+    _ = fsMeasure p₀ := by
+        show Measure.map Prod.fst (kMuL p₀) = fsMeasure p₀
         rw [kMuL, ← Measure.fst, Measure.fst_prod]
 
 /-! ## The C7 headline: both pillars on one many-to-one object -/

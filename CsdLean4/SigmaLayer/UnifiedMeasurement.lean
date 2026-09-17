@@ -133,7 +133,7 @@ interaction is defined. The predicate depends only on the base `p`, so it lifts 
 `vnDeisolationModel_ae_total` through `Prod.fst` (whose pushforward of `kMuL` is `μFS`). -/
 theorem unifiedDeisolationModel_ae_total (hψ' : ‖ψ'‖ = 1) :
     (unifiedDeisolationModel H hH p₀ e ψ' hψ'0).AETotalReadout () () 0 (kMuL p₀) := by
-  have hbase : ∀ᵐ p ∂ fubiniStudyMeasure p₀,
+  have hbase : ∀ᵐ p ∂ fsMeasure p₀,
       (vnPointerOutcome ψ' hψ'0 e (measurementFlow N e p)).isSome :=
     vnDeisolationModel_ae_total p₀ e ψ' hψ'0 hψ'
   have hQ : MeasurableSet
@@ -150,7 +150,7 @@ theorem unifiedDeisolationModel_ae_total (hψ' : ‖ψ'‖ = 1) :
     rw [hpre]
     exact measurementFlow_measurable e ((vnPointerOutcome_preimage_some ψ' hψ'0 e i).symm ▸
       MeasurableSet.iUnion (fun n => bornRegion_measurable_uncond ψ' hψ'0 (e (n, i))))
-  have hmap : Measure.map Prod.fst (kMuL p₀) = fubiniStudyMeasure p₀ := by
+  have hmap : Measure.map Prod.fst (kMuL p₀) = fsMeasure p₀ := by
     rw [kMuL]; exact Measure.fst_prod
   rw [← hmap] at hbase
   exact (ae_map_iff measurable_fst.aemeasurable hQ).mp hbase

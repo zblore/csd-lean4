@@ -33,7 +33,7 @@ volume's total mass, by uniqueness rather than by the binomial expansion of the 
   (`AddCircle.isChartTranslation_addLeft`), so it preserves the constant area form;
 * ★★★ `arenaVolume_eq_smul_kMuL` — **`arenaVolume = c · (μ_FS ⊗ vol_{T²})`** with
   `c = arenaVolume univ`: the sector marginal of the normalised arena volume is a `U(N+1)`-invariant
-  probability measure, hence `μ_FS` (`fubiniStudyMeasure_unique`); each torus slice is a
+  probability measure, hence `μ_FS` (`fsMeasure_unique`); each torus slice is a
   translation-invariant finite measure on the compact group `T²`, hence a multiple of Haar
   (`isAddInvariant_eq_smul_of_compactSpace`); rectangles then determine the product
   (`Measure.prod_eq`).
@@ -58,7 +58,7 @@ and `id × T²`; no other symplectomorphism of the arena is read in charts.
 References: `LF4/ArenaSymplectic.lean` (`arenaVolume`, Liouville on the arena);
 `LF4/KahlerInstance.lean` (`kMuL`); `LF4/KahlerVolumeForced.lean`
 (`manyToOneSetup_liouville_eq_product`); `Geometry/Manifold/FormInvariance.lean`;
-`LinearAlgebra/Projectivization/FubiniStudyUnique.lean` (`fubiniStudyMeasure_unique`);
+`LinearAlgebra/Projectivization/FubiniStudyUnique.lean` (`fsMeasure_unique`);
 `Mathlib/MeasureTheory/Measure/Haar/Unique.lean`; `specs/BACKLOG.md` (#29);
 `specs/future-work.md`.
 -/
@@ -153,13 +153,13 @@ theorem arenaVolume_eq_smul_kMuL (N : ℕ) (p₀ : CPN (N + 1)) :
     have h : ((fun x : CPN (N + 1) => U • x) ∘ Prod.fst)
         = Prod.fst ∘ (fun p : KSigma (N + 1) => U • p) := rfl
     rw [h, ← Measure.map_map measurable_fst (measurable_kSigma_smul N U), hνU U]
-  have hFS : μ₁ = fubiniStudyMeasure p₀ := fubiniStudyMeasure_unique p₀ μ₁ hμ₁U
+  have hFS : μ₁ = fsMeasure p₀ := fsMeasure_unique p₀ μ₁ hμ₁U
   -- each torus slice is translation-invariant, hence a multiple of Haar
   have : Measure.IsAddHaarMeasure (volume : Measure KTorus) :=
     Measure.prod.instIsAddHaarMeasure (volume : Measure (AddCircle (1 : ℝ)))
       (volume : Measure (AddCircle (1 : ℝ)))
   have hrect : ∀ A : Set (CPN (N + 1)), MeasurableSet A → ∀ B : Set KTorus, MeasurableSet B →
-      ν (A ×ˢ B) = fubiniStudyMeasure p₀ A * volume B := by
+      ν (A ×ˢ B) = fsMeasure p₀ A * volume B := by
     intro A hA B hB
     set σ : Measure KTorus := (ν.restrict (A ×ˢ Set.univ)).map Prod.snd with hσ
     have hσB : ∀ B : Set KTorus, MeasurableSet B → σ B = ν (A ×ˢ B) := fun B hB => by
@@ -182,13 +182,13 @@ theorem arenaVolume_eq_smul_kMuL (N : ℕ) (p₀ : CPN (N + 1)) :
       rw [hσ, Measure.map_map (measurable_const_add θ) measurable_snd, h1,
         ← Measure.map_map measurable_snd (measurable_kSigma_addLeft N θ), h2]⟩
     have hσ_eq := Measure.isAddInvariant_eq_smul_of_compactSpace σ volume
-    have hσuniv : σ Set.univ = fubiniStudyMeasure p₀ A := by
+    have hσuniv : σ Set.univ = fsMeasure p₀ A := by
       rw [hσB _ MeasurableSet.univ, ← hFS, hμ₁, Measure.map_apply measurable_fst hA,
         Set.prod_univ]
     rw [← hσB B hB, ← hσuniv, hσ_eq, Measure.smul_apply, Measure.smul_apply, measure_univ,
       ENNReal.smul_def, ENNReal.smul_def, smul_eq_mul, smul_eq_mul, mul_one]
   -- rectangles determine the product
-  have hprod : (fubiniStudyMeasure p₀).prod (volume : Measure KTorus) = ν :=
+  have hprod : (fsMeasure p₀).prod (volume : Measure KTorus) = ν :=
     Measure.prod_eq fun A B hA hB => hrect A hA B hB
   calc arenaVolume N = arenaVolume N Set.univ • ν := by
         rw [hν, smul_smul, ENNReal.mul_inv_cancel h0 hct, one_smul]

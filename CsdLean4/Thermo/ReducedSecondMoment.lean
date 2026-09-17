@@ -150,7 +150,7 @@ lemma sum_blockIndicator_sq (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA) :
 
 /-- ★ **The mean subsystem population is `d_B/N`** (that is, `1/d_A`) — the first moment. -/
 theorem fs_blockPop_mean (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA) :
-    ∫ p, blockPop e p a ∂(fubiniStudyMeasure p₀) = (dB : ℝ) / N := by
+    ∫ p, blockPop e p a ∂(fsMeasure p₀) = (dB : ℝ) / N := by
   have h : (fun p : CPN N => blockPop e p a)
       = fun p => ∑ k : Fin N, blockIndicator e a k * momentMap p k :=
     funext (fun p => blockPop_eq_linear e p a)
@@ -158,7 +158,7 @@ theorem fs_blockPop_mean (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fi
 
 /-- ★ **The population's second moment**: `(d_B² + d_B)/(N(N+1))`. -/
 theorem fs_blockPop_sq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA) :
-    ∫ p, (blockPop e p a) ^ 2 ∂(fubiniStudyMeasure p₀)
+    ∫ p, (blockPop e p a) ^ 2 ∂(fsMeasure p₀)
       = ((dB : ℝ) ^ 2 + (dB : ℝ)) / ((N : ℝ) * ((N : ℝ) + 1)) := by
   have h : (fun p : CPN N => (blockPop e p a) ^ 2)
       = fun p => (∑ k : Fin N, blockIndicator e a k * momentMap p k) ^ 2 :=
@@ -192,7 +192,7 @@ theorem fs_redOff_cross_vanish (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
             * (rayDensity p (e.symm (a, b')) (e.symm (a', b'))).re
           + (rayDensity p (e.symm (a, b)) (e.symm (a', b))).im
             * (rayDensity p (e.symm (a, b')) (e.symm (a', b'))).im)
-      ∂(fubiniStudyMeasure p₀) = 0 := by
+      ∂(fsMeasure p₀) = 0 := by
   have hjk : e.symm (a', b) ≠ e.symm (a, b) :=
     fun h => haa (congrArg Prod.fst (e.symm.injective h)).symm
   have hi'k : e.symm (a, b') ≠ e.symm (a, b) :=
@@ -257,7 +257,7 @@ lemma redTerm_measurable (e : Fin N ≃ Fin dA × Fin dB) (a a' : Fin dA) (b : F
 terms vanish by `fs_redOff_cross_vanish`. -/
 theorem fs_redOff_normSq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
     {a a' : Fin dA} (haa : a ≠ a') :
-    ∫ p, Complex.normSq (redOff e p a a') ∂(fubiniStudyMeasure p₀)
+    ∫ p, Complex.normSq (redOff e p a a') ∂(fsMeasure p₀)
       = (dB : ℝ) / ((N : ℝ) * ((N : ℝ) + 1)) := by
   classical
   have hexp : ∀ p : CPN N, Complex.normSq (redOff e p a a')
@@ -279,7 +279,7 @@ theorem fs_redOff_normSq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
   have hint : ∀ b b' : Fin dB, Integrable (fun p : CPN N =>
       (redTerm e a a' b p).re * (redTerm e a a' b' p).re
         + (redTerm e a a' b p).im * (redTerm e a a' b' p).im)
-      (fubiniStudyMeasure p₀) := by
+      (fsMeasure p₀) := by
     intro b b'
     refine Integrable.of_bound (hmeas b b').aestronglyMeasurable 2
       (ae_of_all _ (fun p => ?_))
@@ -296,7 +296,7 @@ theorem fs_redOff_normSq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
   have hdiag : ∀ b : Fin dB, ∫ p,
       ((redTerm e a a' b p).re * (redTerm e a a' b p).re
         + (redTerm e a a' b p).im * (redTerm e a a' b p).im)
-      ∂(fubiniStudyMeasure p₀) = 1 / ((N : ℝ) * ((N : ℝ) + 1)) := by
+      ∂(fsMeasure p₀) = 1 / ((N : ℝ) * ((N : ℝ) + 1)) := by
     intro b
     have hne : e.symm (a, b) ≠ e.symm (a', b) :=
       fun h => haa (congrArg Prod.fst (e.symm.injective h))
@@ -305,7 +305,7 @@ theorem fs_redOff_normSq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
   have hoff : ∀ b b' : Fin dB, b ≠ b' → ∫ p,
       ((redTerm e a a' b p).re * (redTerm e a a' b' p).re
         + (redTerm e a a' b p).im * (redTerm e a a' b' p).im)
-      ∂(fubiniStudyMeasure p₀) = 0 :=
+      ∂(fsMeasure p₀) = 0 :=
     fun b b' hbb => fs_redOff_cross_vanish p₀ e haa hbb
   rw [integral_congr_ae (ae_of_all _ hexp),
     integral_finsetSum Finset.univ
@@ -313,7 +313,7 @@ theorem fs_redOff_normSq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
   have hrow : ∀ b : Fin dB, ∫ p, (∑ b' : Fin dB,
       ((redTerm e a a' b p).re * (redTerm e a a' b' p).re
         + (redTerm e a a' b p).im * (redTerm e a a' b' p).im))
-      ∂(fubiniStudyMeasure p₀) = 1 / ((N : ℝ) * ((N : ℝ) + 1)) := by
+      ∂(fsMeasure p₀) = 1 / ((N : ℝ) * ((N : ℝ) + 1)) := by
     intro b
     rw [integral_finsetSum Finset.univ (fun b' _ => hint b b'),
       Finset.sum_eq_single b
@@ -404,7 +404,7 @@ lemma abs_blockPop_le_one (e : Fin N ≃ Fin dA × Fin dB) (p : CPN N) (a : Fin 
 
 omit [NeZero N] in
 lemma blockPop_integrable (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA) :
-    Integrable (fun p : CPN N => blockPop e p a) (fubiniStudyMeasure p₀) :=
+    Integrable (fun p : CPN N => blockPop e p a) (fsMeasure p₀) :=
   Integrable.of_bound (blockPop_measurable e a).aestronglyMeasurable 1
     (ae_of_all _ (fun p => by
       rw [Real.norm_eq_abs]
@@ -412,7 +412,7 @@ lemma blockPop_integrable (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : F
 
 omit [NeZero N] in
 lemma blockPop_sq_integrable (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA) :
-    Integrable (fun p : CPN N => (blockPop e p a) ^ 2) (fubiniStudyMeasure p₀) :=
+    Integrable (fun p : CPN N => (blockPop e p a) ^ 2) (fsMeasure p₀) :=
   (fs_integrable_mul p₀ (blockPop_measurable e a) (blockPop_measurable e a)
       (fun p => abs_blockPop_le_one e p a) (fun p => abs_blockPop_le_one e p a)).congr
     (Filter.Eventually.of_forall (fun _p => (pow_two _).symm))
@@ -432,7 +432,7 @@ The mean population is *exactly* `1/d_A` (that is what `d_B/N = 1/d_A` says once
 is read off the bipartition), so the cross term collapses against the constant and only one
 subtraction survives. -/
 theorem fs_hsDeviation_diag_sq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA) :
-    ∫ p, Complex.normSq (hsDeviation e p a a) ∂(fubiniStudyMeasure p₀)
+    ∫ p, Complex.normSq (hsDeviation e p a a) ∂(fsMeasure p₀)
       = ((dB : ℝ) ^ 2 + (dB : ℝ)) / ((N : ℝ) * ((N : ℝ) + 1)) - ((dA : ℝ))⁻¹ ^ 2 := by
   have hNmul := card_eq_mul_of_tensorEquiv e
   have hN0 : N ≠ 0 := NeZero.ne N
@@ -445,25 +445,25 @@ theorem fs_hsDeviation_diag_sq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) (
   have hNR : (N : ℝ) = (dA : ℝ) * (dB : ℝ) := by exact_mod_cast hNmul
   have hmean : (dB : ℝ) / (N : ℝ) = ((dA : ℝ))⁻¹ := by
     rw [hNR]; field_simp
-  have hconst : ∫ _p : CPN N, (((dA : ℝ))⁻¹ ^ 2) ∂(fubiniStudyMeasure p₀)
+  have hconst : ∫ _p : CPN N, (((dA : ℝ))⁻¹ ^ 2) ∂(fsMeasure p₀)
       = ((dA : ℝ))⁻¹ ^ 2 := by simp
-  have hI1 : Integrable (fun p : CPN N => (blockPop e p a) ^ 2) (fubiniStudyMeasure p₀) :=
+  have hI1 : Integrable (fun p : CPN N => (blockPop e p a) ^ 2) (fsMeasure p₀) :=
     blockPop_sq_integrable p₀ e a
   have hI2 : Integrable (fun p : CPN N => (-(2 * ((dA : ℝ))⁻¹)) * blockPop e p a)
-      (fubiniStudyMeasure p₀) := (blockPop_integrable p₀ e a).const_mul _
+      (fsMeasure p₀) := (blockPop_integrable p₀ e a).const_mul _
   have hI3 : Integrable (fun p : CPN N =>
         (-(2 * ((dA : ℝ))⁻¹)) * blockPop e p a + ((dA : ℝ))⁻¹ ^ 2)
-      (fubiniStudyMeasure p₀) := integrable_add_const_iff.mpr hI2
-  calc ∫ p, Complex.normSq (hsDeviation e p a a) ∂(fubiniStudyMeasure p₀)
+      (fsMeasure p₀) := integrable_add_const_iff.mpr hI2
+  calc ∫ p, Complex.normSq (hsDeviation e p a a) ∂(fsMeasure p₀)
       = ∫ p, ((blockPop e p a) ^ 2
             + ((-(2 * ((dA : ℝ))⁻¹)) * blockPop e p a + ((dA : ℝ))⁻¹ ^ 2))
-          ∂(fubiniStudyMeasure p₀) :=
+          ∂(fsMeasure p₀) :=
         integral_congr_ae (ae_of_all _ (fun p => by
           dsimp only
           rw [hsDeviation_diag, Complex.normSq_ofReal]
           ring))
-    _ = (∫ p, (blockPop e p a) ^ 2 ∂(fubiniStudyMeasure p₀))
-          + ((-(2 * ((dA : ℝ))⁻¹)) * ∫ p, blockPop e p a ∂(fubiniStudyMeasure p₀)
+    _ = (∫ p, (blockPop e p a) ^ 2 ∂(fsMeasure p₀))
+          + ((-(2 * ((dA : ℝ))⁻¹)) * ∫ p, blockPop e p a ∂(fsMeasure p₀)
               + ((dA : ℝ))⁻¹ ^ 2) := by
         rw [integral_add hI1 hI3, integral_add hI2 (integrable_const _),
           integral_const_mul, hconst]
@@ -507,19 +507,19 @@ entries each of modulus at most one. -/
 lemma normSq_hsDeviation_integrable (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
     (a a' : Fin dA) :
     Integrable (fun p : CPN N => Complex.normSq (hsDeviation e p a a'))
-      (fubiniStudyMeasure p₀) := by
+      (fsMeasure p₀) := by
   by_cases haa : a = a'
   · subst haa
-    have hI1 : Integrable (fun p : CPN N => (blockPop e p a) ^ 2) (fubiniStudyMeasure p₀) :=
+    have hI1 : Integrable (fun p : CPN N => (blockPop e p a) ^ 2) (fsMeasure p₀) :=
       blockPop_sq_integrable p₀ e a
     have hI2 : Integrable (fun p : CPN N => (-(2 * ((dA : ℝ))⁻¹)) * blockPop e p a)
-        (fubiniStudyMeasure p₀) := (blockPop_integrable p₀ e a).const_mul _
+        (fsMeasure p₀) := (blockPop_integrable p₀ e a).const_mul _
     have hI3 : Integrable (fun p : CPN N =>
           (-(2 * ((dA : ℝ))⁻¹)) * blockPop e p a + ((dA : ℝ))⁻¹ ^ 2)
-        (fubiniStudyMeasure p₀) := integrable_add_const_iff.mpr hI2
+        (fsMeasure p₀) := integrable_add_const_iff.mpr hI2
     have hI4 : Integrable (fun p : CPN N => (blockPop e p a) ^ 2
           + ((-(2 * ((dA : ℝ))⁻¹)) * blockPop e p a + ((dA : ℝ))⁻¹ ^ 2))
-        (fubiniStudyMeasure p₀) := hI1.add hI3
+        (fsMeasure p₀) := hI1.add hI3
     refine hI4.congr (Filter.Eventually.of_forall (fun p => ?_))
     dsimp only
     rw [hsDeviation_diag, Complex.normSq_ofReal]
@@ -539,7 +539,7 @@ lemma normSq_hsDeviation_integrable (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin 
 subtracting `I_A/d_A` leaves these entries untouched, so this is `fs_redOff_normSq`. -/
 theorem fs_hsDeviation_off_sq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
     {a a' : Fin dA} (haa : a ≠ a') :
-    ∫ p, Complex.normSq (hsDeviation e p a a') ∂(fubiniStudyMeasure p₀)
+    ∫ p, Complex.normSq (hsDeviation e p a a') ∂(fsMeasure p₀)
       = (dB : ℝ) / ((N : ℝ) * ((N : ℝ) + 1)) := by
   have hpt : ∀ p : CPN N, Complex.normSq (hsDeviation e p a a')
       = Complex.normSq (redOff e p a a') := fun p => by rw [hsDeviation_off e p haa]
@@ -565,7 +565,7 @@ deviation's mean square is second order: a Fubini–Study-typical global ray has
 state close to maximally mixed. Combined with `fs_chebyshev_concentration` this is
 canonical typicality at Chebyshev grade. -/
 theorem fs_hsDeviationNormSq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) :
-    ∫ p, hsDeviationNormSq e p ∂(fubiniStudyMeasure p₀)
+    ∫ p, hsDeviationNormSq e p ∂(fsMeasure p₀)
       = ((dA : ℝ) + (dB : ℝ)) / ((N : ℝ) + 1) - ((dA : ℝ))⁻¹ := by
   classical
   have hNmul := card_eq_mul_of_tensorEquiv e
@@ -577,12 +577,12 @@ theorem fs_hsDeviationNormSq (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) :
   have hNR : (N : ℝ) = (dA : ℝ) * (dB : ℝ) := by exact_mod_cast hNmul
   have hden : (dA : ℝ) * (dB : ℝ) + 1 ≠ 0 := by positivity
   have hrow : ∀ a : Fin dA,
-      ∫ p, (∑ a' : Fin dA, Complex.normSq (hsDeviation e p a a')) ∂(fubiniStudyMeasure p₀)
+      ∫ p, (∑ a' : Fin dA, Complex.normSq (hsDeviation e p a a')) ∂(fsMeasure p₀)
         = (((dB : ℝ) ^ 2 + (dB : ℝ)) / ((N : ℝ) * ((N : ℝ) + 1)) - ((dA : ℝ))⁻¹ ^ 2)
           + ((dA : ℝ) - 1) * ((dB : ℝ) / ((N : ℝ) * ((N : ℝ) + 1))) := by
     intro a
     have herase : ∑ a' ∈ Finset.univ.erase a,
-        (∫ p, Complex.normSq (hsDeviation e p a a') ∂(fubiniStudyMeasure p₀))
+        (∫ p, Complex.normSq (hsDeviation e p a a') ∂(fsMeasure p₀))
         = ((dA : ℝ) - 1) * ((dB : ℝ) / ((N : ℝ) * ((N : ℝ) + 1))) := by
       rw [Finset.sum_congr rfl (fun a' ha' =>
           fs_hsDeviation_off_sq p₀ e (Ne.symm (Finset.mem_erase.mp ha').1)),
@@ -612,7 +612,7 @@ lemma hsDeviationNormSq_nonneg (e : Fin N ≃ Fin dA × Fin dB) (p : CPN N) :
 
 omit [NeZero N] in
 lemma hsDeviationNormSq_integrable (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB) :
-    Integrable (fun p : CPN N => hsDeviationNormSq e p) (fubiniStudyMeasure p₀) :=
+    Integrable (fun p : CPN N => hsDeviationNormSq e p) (fsMeasure p₀) :=
   integrable_finsetSum Finset.univ (fun a _ =>
     integrable_finsetSum Finset.univ (fun a' _ => normSq_hsDeviation_integrable p₀ e a a'))
 
@@ -678,7 +678,7 @@ applies to the linear moment-map statistics (each individual population `blockPo
 those, and does get the Chebyshev rate). -/
 theorem fs_hsDeviation_typicality (p₀ : CPN N) (e : Fin N ≃ Fin dA × Fin dB)
     {ε : ℝ} (hε : 0 < ε) :
-    (fubiniStudyMeasure p₀).real {p | ε ≤ hsDeviationNormSq e p}
+    (fsMeasure p₀).real {p | ε ≤ hsDeviationNormSq e p}
       ≤ (((dA : ℝ) + (dB : ℝ)) / ((N : ℝ) + 1) - ((dA : ℝ))⁻¹) / ε := by
   have h := mul_meas_ge_le_integral_of_nonneg
     (ae_of_all _ (fun p => hsDeviationNormSq_nonneg e p))

@@ -472,7 +472,7 @@ example : recordState (2 : Fin 3) ∈ recordRegion (2 : Fin 3) :=
   recordState_mem_recordRegion 2
 
 example (q₀ : Pointer 3) :
-    fubiniStudyMeasure q₀ (interior ((⋃ i, recordRegion (K := 3) i)ᶜ)) ≠ 0 := by
+    fsMeasure q₀ (interior ((⋃ i, recordRegion (K := 3) i)ᶜ)) ≠ 0 := by
   have h := posMeasure_noRecord_pointer q₀ (Φ := id) (A := Set.univ)
     IsOpenMap.id continuous_id isOpen_univ isPreconnected_univ
     (j := 0) (l := 1) (by decide)
@@ -481,7 +481,7 @@ example (q₀ : Pointer 3) :
   simpa using h
 
 example (q₀ : Pointer 3) :
-    ¬ ∀ᵐ q ∂fubiniStudyMeasure q₀, q ∈ ⋃ i, recordRegion (K := 3) i := by
+    ¬ ∀ᵐ q ∂fsMeasure q₀, q ∈ ⋃ i, recordRegion (K := 3) i := by
   have h := not_ae_record_pointer q₀ (Φ := id) (A := Set.univ)
     IsOpenMap.id continuous_id isOpen_univ isPreconnected_univ
     (j := 0) (l := 1) (by decide)

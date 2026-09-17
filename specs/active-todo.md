@@ -211,6 +211,6 @@ The ergodicity framing was wrong, but the WORK yielded three durable things:
    user; do not touch preprints.)
 3. **Reusable framing-independent lemmas** (in `LF4/TypicalityForcing.lean`): `map_withDensity_of_conserved`
    (reweighting an invariant measure by a conserved quantity preserves invariance — general Mathlib-grade)
-   and `fubiniStudyMeasure_pos_of_isOpen` (FS has FULL SUPPORT: every nonempty open set has positive
+   and `fsMeasure_pos_of_isOpen` (FS has FULL SUPPORT: every nonempty open set has positive
    measure — directly useful for any "generic ψ" / open-dense genericity argument across the corpus).
 

@@ -172,7 +172,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 
 -- Connectivity fix C1 (manifest link L4): a GENUINE Φ≠id KahlerOnticSetup
 -- inhabitant. unitaryFlowSetup builds one from any unitary family
--- (measure-preserving via fubiniStudyMeasure_smul_invariant); the concrete
+-- (measure-preserving via fsMeasure_smul_invariant); the concrete
 -- rotationSetup at N=2 (the ℂℙ¹ rotation flow) has projectedFlow ≠ id
 -- (rotationSetup_projectedFlow_ne_id, [e₀]↦[e₁] at t=π/2). This flips the
 -- Schrödinger pillar off the trivial Φ=id, H=0 witness. See
@@ -205,14 +205,14 @@ bridge in the corpus — the abstract `measure_bridge` and the
 
 -- Move up the chain (2026-07-10): UPGRADE the Liouville-volume content from "μ is a
 -- probability measure" (C5 core) to "μ is THE volume forced by the space + U(N)-symmetry"
--- (IsForcedKahlerVolume: prob + invariant + UNIQUE, via fubiniStudyMeasure_unique). So the Kähler
--- volume is an OUTCOME of Σ = ℂℙ^{N-1} and its symmetry, not posited: fubiniStudyMeasure IS the forced
+-- (IsForcedKahlerVolume: prob + invariant + UNIQUE, via fsMeasure_unique). So the Kähler
+-- volume is an OUTCOME of Σ = ℂℙ^{N-1} and its symmetry, not posited: fsMeasure IS the forced
 -- volume, the unitaryFlowSetup sector volume IS it, and the many-to-one instance's ray-space volume
 -- π_*(kMuL) IS it (kMuL = forced-FS ⊗ Haar). The 2-form manifold residual stays Mathlib-blocked (KG-1);
 -- FORWARD (takes G=U(N) as given, does not derive it — SO-1 untouched).
-/-- info: 'CSD.LF4.fubiniStudyMeasure_isForcedKahlerVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'CSD.LF4.fsMeasure_isForcedKahlerVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.LF4.fubiniStudyMeasure_isForcedKahlerVolume
+#print axioms CSD.LF4.fsMeasure_isForcedKahlerVolume
 
 /-- info: 'CSD.LF4.unitaryFlowSetup_liouville_isForcedKahlerVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -228,7 +228,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 
 -- W1 (2026-09-10, LF4/SectorManifold.lean): the CP^n sectors ARE the standard objects. The
 -- Liouville measure of unitaryFlowSetup / trivialKahlerOnticSetup is fsVolumeNormalized n, the
--- normalised top power of the Kahler form (fsVolume_eq_smul_fubiniStudyMeasure with the constant);
+-- normalised top power of the Kahler form (fsVolume_eq_smul_fsMeasure with the constant);
 -- the sector's flow preserves fsVolume n itself; the forced Kahler volume of KahlerVolumeForced IS
 -- that normalised top power; on the many-to-one sector kMuL = fsVolumeNormalized n x Haar with the
 -- same flow statement; and the two *_isKahler_liouville conjunctions state the sector as Kahler
@@ -330,7 +330,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 
 -- Connectivity fix C4 (manifest links L5/L6): BOTH pillars on ONE object. The
 -- Born capstone now references the SECTOR'S OWN liouvilleMeasure (defeq
--- fubiniStudyMeasure), so a single rotationSetup instance supports both
+-- fsMeasure), so a single rotationSetup instance supports both
 -- Schrödinger dynamics (A) and Born frequencies (B).
 -- rotationSetup_both_pillars is the structural "one posited object underlies
 -- both pillars" theorem. Honest gap: the Born trials still SAMPLE the measure
@@ -568,7 +568,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 
 -- SO-1 onramp (TypicalityForcing.lean): WHERE the Fubini–Study typicality measure comes from.
 -- (A) fubiniStudy_forced_by_symmetry — any U(N)-invariant probability measure on the sector
--- ℂℙ^{N-1} IS the Fubini–Study measure (restates the axiom-free fubiniStudyMeasure_unique as
+-- ℂℙ^{N-1} IS the Fubini–Study measure (restates the axiom-free fsMeasure_unique as
 -- the typicality-derivation: Born = FS-volume is DERIVED from the sector symmetry G = U(N),
 -- not posited). (B) obsFlow_not_uniquely_ergodic — a single ontic flow does NOT force FS: it
 -- has ≥2 distinct invariant probability measures (μFS and δ_{[e₀]} at a fixed basis ray).
@@ -685,7 +685,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.fs_born_volume_ratio_qubit
 
--- Busch-free empirical capstone: i.i.d. sampling from fubiniStudyMeasure on ℂℙ¹,
+-- Busch-free empirical capstone: i.i.d. sampling from fsMeasure on ℂℙ¹,
 -- frequencies of the moment-sublevel outcome → the Born weight ‖⟨e₀,ψ⟩‖² via the
 -- volume route (foundational triple + h_uniform hypothesis; NO busch_effect_gleason).
 /-- info: 'CSD.LF4.qubit_born_frequency_convergence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -721,7 +721,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.coords
 
--- Plan B Part 1 (Option 2) C4-C5: gaussianCP = fubiniStudyMeasure on ℂℙ¹, via the
+-- Plan B Part 1 (Option 2) C4-C5: gaussianCP = fsMeasure on ℂℙ¹, via the
 -- by-hand real conjugate isometry conjR (restrictScalars ℝ diamonds in the full LF4
 -- import context), unitary-invariance of the Gaussian-induced measure, and the
 -- axiom-free Fubini-Study uniqueness theorem. All foundational-triple-only.
@@ -743,7 +743,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 
 -- General-N Part 1 (Slice B): the projectivised standard Gaussian on ℂ^N is the
 -- Fubini-Study measure on ℂℙ^{N-1}, via the real coordinate isometry
--- coordsN : ℝ^{N×2} ≃ₗᵢ ℂ^N + stdGaussian U(N)-invariance + fubiniStudyMeasure_unique.
+-- coordsN : ℝ^{N×2} ≃ₗᵢ ℂ^N + stdGaussian U(N)-invariance + fsMeasure_unique.
 -- The N-general analogue of gaussianCP_eq_fubiniStudy. Foundational triple.
 /-- info: 'CSD.LF4.gaussianCPN_eq_fubiniStudy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -1321,7 +1321,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 
 -- AxisBridge (context-fixed qubit, 2026-07-26): general axis ↦ reference axis for μ_FS integrals.
 -- blochProj_integral_bridge: ∫ f(blochProj n p) dμ_FS = ∫ f(momentMap p 0) dμ_FS (unit n), via
--- fubiniStudyMeasure_smul_invariant. Lifts hatBox_moment/spreadDensity_normalized to any axis:
+-- fsMeasure_smul_invariant. Lifts hatBox_moment/spreadDensity_normalized to any axis:
 -- hatBox_axis (∫|2·blochProj n−1|=½), spreadDensity_normalized_axis (∫4(2·blochProj n−1)₊=1).
 /-- info: 'CSD.LF4.blochProj_integral_bridge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.LF4.blochProj_integral_bridge
@@ -1503,7 +1503,7 @@ bridge in the corpus — the abstract `measure_bridge` and the
 -- its total mass. The top-form measure of arenaForm^(N+1) is invariant under U(N+1) on the sector
 -- (the action preserves ω_FS in charts; the identity preserves the torus form; products inherit)
 -- and under translation of the torus (a chart translation of the translation atlas). Its
--- normalisation has a U(N+1)-invariant sector marginal, hence μ_FS by fubiniStudyMeasure_unique,
+-- normalisation has a U(N+1)-invariant sector marginal, hence μ_FS by fsMeasure_unique,
 -- and translation-invariant torus slices, hence multiples of Haar by Mathlib's uniqueness on a
 -- compact group; rectangles then give arenaVolume N = arenaVolume N univ • kMuL p₀. The constant is
 -- the mass, not (N+1)·(4π)^N, and arenaVolume ≠ 0 is not proved (BACKLOG #32).

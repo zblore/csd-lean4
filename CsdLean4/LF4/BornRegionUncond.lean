@@ -119,7 +119,7 @@ Lebesgue volume of `R ∩ openSimplexFree`. The zero-branch workhorse — the pr
 is `fs_volume_eq_dirichlet`'s minus its final subset rewrite. -/
 theorem fs_volume_eq_dirichlet_inter (p₀ : CPN (M + 1)) {R : Set (Fin M → ℝ)}
     (hR : MeasurableSet R) :
-    fubiniStudyMeasure p₀ ((fun p => ratioN (fun i => momentMap p i)) ⁻¹' R)
+    fsMeasure p₀ ((fun p => ratioN (fun i => momentMap p i)) ⁻¹' R)
       = (Nat.factorial M : ℝ≥0∞) * volume (R ∩ openSimplexFree) := by
   rw [← Measure.map_apply measurable_ratio_momentMap hR, fs_moment_joint_dirichlet_N,
     Measure.smul_apply, Measure.restrict_apply hR, smul_eq_mul]
@@ -207,7 +207,7 @@ subset argument; zero cells by the det-0 null image + the joint Dirichlet law
 (the cell's FS volume genuinely vanishes — no carving). -/
 theorem fs_born_volume_ratio_N_uncond (p₀ : CPN (M + 1))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) (i : Fin M) :
-    fubiniStudyMeasure p₀
+    fsMeasure p₀
         ((fun p => ratioN (fun j => momentMap p j))
           ⁻¹' (replaceMap (ratioN (fun j => momentMap (Projectivization.mk ℂ ψ hψ0) j)) i
             '' openSimplexFree))
@@ -246,7 +246,7 @@ theorem fs_born_volume_ratio_N_uncond (p₀ : CPN (M + 1))
 weight `1 − ∑ b`. -/
 theorem fs_born_volume_ratio_N_apex_uncond (p₀ : CPN (M + 1))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) :
-    fubiniStudyMeasure p₀
+    fsMeasure p₀
         ((fun p => ratioN (fun j => momentMap p j))
           ⁻¹' ((fun x => apexLin (ratioN (fun j => momentMap (Projectivization.mk ℂ ψ hψ0) j)) x
               + ratioN (fun j => momentMap (Projectivization.mk ℂ ψ hψ0) j)) '' openSimplexFree))
@@ -299,7 +299,7 @@ theorem bornRegion_measurable_uncond (ψ : EuclideanSpace ℂ (Fin (M + 1))) (h�
 `bornRegion_fs_measure` minus `hpos`. -/
 theorem bornRegion_fs_measure_uncond (p₀ : CPN (M + 1))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1) :
-    ∀ i, (fubiniStudyMeasure p₀ (bornRegion ψ hψ0 i)).toReal
+    ∀ i, (fsMeasure p₀ (bornRegion ψ hψ0 i)).toReal
       = ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2 := by
   refine Fin.lastCases ?_ ?_
   · rw [bornRegion, Fin.lastCases_last, fs_born_volume_ratio_N_apex_uncond p₀ ψ hψ0 hψ,
@@ -316,7 +316,7 @@ theorem born_frequency_convergence_N_uncond (p₀ : CPN (M + 1))
     (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : ψ ≠ 0) (hψ : ‖ψ‖ = 1)
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep : ∀ i : Fin (M + 1),
       Pairwise
         (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
@@ -347,7 +347,7 @@ theorem povm_born_eq_dilated_volume_uncond {M : ℕ} (P : POVM N ι) (D : Naimar
     (hnorm : ‖LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (Matrix.toEuclideanLin D.V ψ)‖ = 1) :
     P.weight ψ i
       = ∑ n : Fin N,
-          (fubiniStudyMeasure p₀
+          (fsMeasure p₀
             (bornRegion (LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e (Matrix.toEuclideanLin D.V ψ))
               (by intro h; rw [h, norm_zero] at hnorm; exact one_ne_zero hnorm.symm)
               (e (n, i)))).toReal := by
@@ -376,7 +376,7 @@ theorem povm_born_frequency_volume_uncond {M : ℕ} (P : POVM N ι) (D : Naimark
     (p₀ : CPN (M + 1))
     {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
     (X : ℕ → Ω → CPN (M + 1)) (hX : ∀ n, Measurable (X n))
-    (hlaw : ∀ n, Measure.map (X n) Pr = fubiniStudyMeasure p₀)
+    (hlaw : ∀ n, Measure.map (X n) Pr = fsMeasure p₀)
     (hindep : ∀ j : Fin (M + 1),
       Pairwise (Function.onFun (fun f g : Ω → ℝ => IndepFun f g Pr)
         (fun n => Set.indicator ((X n) ⁻¹' bornRegion ψ' hψ'0 j) (fun _ => (1 : ℝ))))) :

@@ -63,7 +63,7 @@ on the manifold.
 
 **Closed here; the rest downstream.** `d fsForm = 0` is `fsForm_mextDeriv`; non-degeneracy at every
 point is `fsForm_nondegenerate` (`ProjectiveSpaceFubiniStudySymplectic.lean`) and the top-power
-identity `ωⁿ = (4π)ⁿ μ_FS` is `fsVolume_eq_smul_fubiniStudyMeasure`
+identity `ωⁿ = (4π)ⁿ μ_FS` is `fsVolume_eq_smul_fsMeasure`
 (`ProjectiveSpaceFubiniStudyMass.lean`). `fsForm_ne_zero` is a non-vacuity certificate at one
 point, nothing more.
 

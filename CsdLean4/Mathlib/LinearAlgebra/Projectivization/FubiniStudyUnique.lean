@@ -42,24 +42,24 @@ Use the open-quotient-map structure of
 
 ## Main results
 
-The file is named for its headline, `fubiniStudyMeasure_unique`, but it carries the
+The file is named for its headline, `fsMeasure_unique`, but it carries the
 whole chain from joint continuity to base-point independence. (The title said only
 Phase G1 until 2026-08-19, which understated it by two phases.)
 
 * **G1** `Matrix.UnitaryGroup.instContinuousSMul_projectivization` —
   `ContinuousSMul (Matrix.unitaryGroup (Fin N) ℂ) (ℙ ℂ (EuclideanSpace ℂ (Fin N)))`.
   Joint continuity, hence joint measurability, which the Fubini swap in G4 needs.
-* ★★ **G4** `fubiniStudyMeasure_unique` — any `U(N)`-invariant probability measure on
-  `ℂℙ^(N-1)` IS `fubiniStudyMeasure p₀`. The uniqueness the whole programme leans on.
-* ★ **G5** `fubiniStudyMeasure_basepoint_independent` / `fubiniStudyMeasure_eq_default`
-  — the reference point is immaterial, so `defaultFubiniStudyMeasure` names *the*
+* ★★ **G4** `fsMeasure_unique` — any `U(N)`-invariant probability measure on
+  `ℂℙ^(N-1)` IS `fsMeasure p₀`. The uniqueness the whole programme leans on.
+* ★ **G5** `fsMeasure_basepoint_independent` / `fsMeasure_eq_default`
+  — the reference point is immaterial, so `defaultFsMeasure` names *the*
   measure rather than one of a family. A corollary of G4.
 
 ## What this unlocks
 
 Joint continuity gives joint measurability (`Continuous.measurable`),
 which is the prerequisite for the Fubini swap in Phase G4
-(`fubiniStudyMeasure_unique`).
+(`fsMeasure_unique`).
 
 ## Provenance
 
@@ -186,7 +186,7 @@ lemma haar_orbit_indicator_eq
 /-! ## Phase G4 — uniqueness of the U(N)-invariant probability measure
 
 Headline theorem: any U(N)-invariant probability measure on
-`ℂℙ^(N-1)` equals `fubiniStudyMeasure p₀` for any reference point `p₀`.
+`ℂℙ^(N-1)` equals `fsMeasure p₀` for any reference point `p₀`.
 
 Proof via Fubini chain:
 
@@ -196,21 +196,21 @@ Proof via Fubini chain:
       = ∫⁻ p, ν B ∂μ                          -- Phase G3
       = ν B                                    -- μ is prob
 
-where λ = `unitaryHaarProb`, ν = `fubiniStudyMeasure p₀`.
+where λ = `unitaryHaarProb`, ν = `fsMeasure p₀`.
 -/
 
 /-- **Phase G4.** Uniqueness of the U(N)-invariant probability measure
 on `ℂℙ^(N-1)`: any invariant probability measure `μ` equals
-`fubiniStudyMeasure p₀`. (`[NeZero N]` is required by the implicit
+`fsMeasure p₀`. (`[NeZero N]` is required by the implicit
 transitivity-instance synthesis through `haar_orbit_indicator_eq`,
 auto-included from the section variable.) -/
-theorem fubiniStudyMeasure_unique
+theorem fsMeasure_unique
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
     (μ : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))))
     [MeasureTheory.IsProbabilityMeasure μ]
     (hμ_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
        MeasureTheory.Measure.map (fun p => U • p) μ = μ) :
-    μ = fubiniStudyMeasure p₀ := by
+    μ = fsMeasure p₀ := by
   apply MeasureTheory.Measure.ext
   intro B hB
   -- Joint measurability of (U, p) ↦ U • p, derived from G1's ContinuousSMul.
@@ -236,23 +236,23 @@ theorem fubiniStudyMeasure_unique
       (continuous_const_smul U).measurable
     rw [← MeasureTheory.lintegral_map h_ind_meas hcont, hμ_inv U,
         MeasureTheory.lintegral_indicator_const hB 1, one_mul]
-  -- fubiniStudyMeasure p₀ in terms of unitaryHaarProb (unfold the def).
-  have h_fubini_def : fubiniStudyMeasure p₀ B
+  -- fsMeasure p₀ in terms of unitaryHaarProb (unfold the def).
+  have h_fubini_def : fsMeasure p₀ B
       = unitaryHaarProb {U : Matrix.unitaryGroup (Fin N) ℂ | U • p₀ ∈ B} := by
     show (MeasureTheory.Measure.map (orbitMap p₀) unitaryHaarProb) B = _
     rw [MeasureTheory.Measure.map_apply (orbit_map_measurable p₀) hB]
     rfl
-  -- Inner integral over λ, with p fixed: equals fubiniStudyMeasure p₀ B by G3.
+  -- Inner integral over λ, with p fixed: equals fsMeasure p₀ B by G3.
   have h_inner_haar (p : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
       ∫⁻ U : Matrix.unitaryGroup (Fin N) ℂ,
           B.indicator (fun _ => (1 : ENNReal)) (U • p) ∂unitaryHaarProb
-        = fubiniStudyMeasure p₀ B := by
+        = fsMeasure p₀ B := by
     have hcont : Measurable (fun U : Matrix.unitaryGroup (Fin N) ℂ => U • p) :=
       (orbit_map_continuous p).measurable
     rw [← MeasureTheory.lintegral_map h_ind_meas hcont,
         MeasureTheory.lintegral_indicator_const hB 1, one_mul,
         MeasureTheory.Measure.map_apply hcont hB]
-    show unitaryHaarProb {U | U • p ∈ B} = fubiniStudyMeasure p₀ B
+    show unitaryHaarProb {U | U • p ∈ B} = fsMeasure p₀ B
     rw [haar_orbit_indicator_eq hB p₀ p, h_fubini_def]
   -- λ univ = 1 (probability measure).
   have h_lam_univ : unitaryHaarProb
@@ -271,16 +271,16 @@ theorem fubiniStudyMeasure_unique
             exact (h_inner_mu U).symm
     _ = ∫⁻ p, ∫⁻ U, B.indicator (fun _ => (1 : ENNReal)) (U • p) ∂unitaryHaarProb ∂μ :=
             MeasureTheory.lintegral_lintegral_swap h_indicator_meas.aemeasurable
-    _ = ∫⁻ _ : ℙ ℂ (EuclideanSpace ℂ (Fin N)), fubiniStudyMeasure p₀ B ∂μ := by
+    _ = ∫⁻ _ : ℙ ℂ (EuclideanSpace ℂ (Fin N)), fsMeasure p₀ B ∂μ := by
             congr 1 with p
             exact h_inner_haar p
-    _ = fubiniStudyMeasure p₀ B := by
+    _ = fsMeasure p₀ B := by
             rw [MeasureTheory.lintegral_const, h_mu_univ, mul_one]
 
 /-! ## Phase G5 — invariant finite measures are scalar multiples of Fubini–Study
 
-`fubiniStudyMeasure_unique` pins every *probability* measure invariant under
-the unitary action to `fubiniStudyMeasure p₀`. The two corollaries below
+`fsMeasure_unique` pins every *probability* measure invariant under
+the unitary action to `fsMeasure p₀`. The two corollaries below
 extend that to arbitrary **finite** invariant measures (normalising by the
 total mass) and re-express the result in the `∃ c, μ = c • μFS` shape that the
 source repository's concrete measure bridges consume.
@@ -288,7 +288,7 @@ source repository's concrete measure bridges consume.
 This is the invariant-measure-uniqueness fact for the `ℂℙ^{N-1}` / `U(N)`
 instantiation: when the source repository instantiates its abstract measure-space data with
 `P := ℙ ℂ (EuclideanSpace ℂ (Fin N))`, `G := Matrix.unitaryGroup (Fin N) ℂ`,
-and `μFS := fubiniStudyMeasure p₀`, the concrete bridges
+and `μFS := fsMeasure p₀`, the concrete bridges
 (`cp_measure_bridge` / `k_measure_bridge`) route through
 `invariant_measure_uniqueness_cpn` and cite no axiom. (Historically this was
 the concrete realisation of an abstract invariant-measure-uniqueness
@@ -303,14 +303,14 @@ point. The scalar is the total mass `μ Set.univ`.
 
 Proof: if the total mass is zero the measure is zero; otherwise normalise by
 the total mass to obtain an invariant *probability* measure, pin it to
-`fubiniStudyMeasure p₀` via `fubiniStudyMeasure_unique`, and scale back. -/
+`fsMeasure p₀` via `fsMeasure_unique`, and scale back. -/
 theorem invariant_finiteMeasure_eq_smul_fubiniStudy
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
     (μ : MeasureTheory.Measure (ℙ ℂ (EuclideanSpace ℂ (Fin N))))
     [MeasureTheory.IsFiniteMeasure μ]
     (hμ_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
         MeasureTheory.MeasurePreserving (fun p => U • p) μ μ) :
-    ∃ c : ENNReal, μ = c • fubiniStudyMeasure p₀ := by
+    ∃ c : ENNReal, μ = c • fsMeasure p₀ := by
   rcases eq_or_ne (μ Set.univ) 0 with h0 | h0
   · exact ⟨0, by rw [zero_smul]; exact MeasureTheory.Measure.measure_univ_eq_zero.mp h0⟩
   · have htop : μ Set.univ ≠ ⊤ := MeasureTheory.measure_ne_top μ Set.univ
@@ -326,8 +326,8 @@ theorem invariant_finiteMeasure_eq_smul_fubiniStudy
       intro U
       rw [MeasureTheory.Measure.map_smul' _ _ (hμ_inv U).measurable, (hμ_inv U).map_eq]
     -- Uniqueness pins the normalised measure to Fubini–Study.
-    have heq : ((μ Set.univ)⁻¹ • μ) = fubiniStudyMeasure p₀ :=
-      fubiniStudyMeasure_unique p₀ ((μ Set.univ)⁻¹ • μ) hinv
+    have heq : ((μ Set.univ)⁻¹ • μ) = fsMeasure p₀ :=
+      fsMeasure_unique p₀ ((μ Set.univ)⁻¹ • μ) hinv
     refine ⟨μ Set.univ, ?_⟩
     rw [← heq, smul_smul, ENNReal.mul_inv_cancel h0 htop, one_smul]
 
@@ -337,9 +337,9 @@ For the `ℂℙ^{N-1}` / `U(N)` instantiation, any unitary-invariant probability
 measure `μFS` and any unitary-invariant finite measure `μ` satisfy
 `∃ c, μ = c • μFS`. This matches that axiom's conclusion shape (with
 the reference point `p₀` made explicit), and is proved — no axiom — from
-`fubiniStudyMeasure_unique` plus `invariant_finiteMeasure_eq_smul_fubiniStudy`.
+`fsMeasure_unique` plus `invariant_finiteMeasure_eq_smul_fubiniStudy`.
 
-`μFS` is pinned to `fubiniStudyMeasure p₀` by uniqueness; `μ` is a scalar
+`μFS` is pinned to `fsMeasure p₀` by uniqueness; `μ` is a scalar
 multiple of the same; composing gives `μ = c • μFS`. -/
 theorem invariant_measure_uniqueness_cpn
     (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N)))
@@ -352,43 +352,43 @@ theorem invariant_measure_uniqueness_cpn
     (hμ_inv : ∀ U : Matrix.unitaryGroup (Fin N) ℂ,
         MeasureTheory.MeasurePreserving (fun p => U • p) μ μ) :
     ∃ c : ENNReal, μ = c • μFS := by
-  have hFS : μFS = fubiniStudyMeasure p₀ :=
-    fubiniStudyMeasure_unique p₀ μFS (fun U => (hμFS_inv U).map_eq)
+  have hFS : μFS = fsMeasure p₀ :=
+    fsMeasure_unique p₀ μFS (fun U => (hμFS_inv U).map_eq)
   obtain ⟨c, hc⟩ := invariant_finiteMeasure_eq_smul_fubiniStudy p₀ μ hμ_inv
   exact ⟨c, by rw [hc, hFS]⟩
 
 /-! ## Phase G5 — the base point is not a degree of freedom
 
-`fubiniStudyMeasure` is defined as a pushforward along the orbit map at a chosen `p₀`,
+`fsMeasure` is defined as a pushforward along the orbit map at a chosen `p₀`,
 so on its face it is a family of measures. It is not: the choice is immaterial, and G4
 says why in one step. Any `U(N)`-invariant probability measure equals
-`fubiniStudyMeasure p₀`, and `fubiniStudyMeasure p₁` is such a measure, so the two agree.
+`fsMeasure p₀`, and `fsMeasure p₁` is such a measure, so the two agree.
 
 Recorded because it was a real defect rather than a missing convenience: the
 `FubiniStudy.lean` module docstring advertised `defaultPoint` and
-`defaultFubiniStudyMeasure` as the "canonical choice" while neither existed, and nothing
+`defaultFsMeasure` as the "canonical choice" while neither existed, and nothing
 anywhere proved the base point could be dropped. Both are now supplied (2026-08-19).
 
-⚠️ Deliberately **not** `@[simp]`. Rewriting every `fubiniStudyMeasure p₀` downstream
+⚠️ Deliberately **not** `@[simp]`. Rewriting every `fsMeasure p₀` downstream
 to the default form would touch several hundred sites for no proof-level gain, and simp
 lemmas that rename a widely-used term are how a build becomes unpredictable. Consumers
 that want the canonical form should rewrite with it explicitly. -/
 
 /-- ★ **The Fubini–Study measure does not depend on its base point.** Immediate from
-Phase G4: `fubiniStudyMeasure p₀` is a `U(N)`-invariant probability measure
-(`fubiniStudyMeasure_smul_invariant`), and G4 says every such measure is
-`fubiniStudyMeasure p₁`. -/
-theorem fubiniStudyMeasure_basepoint_independent
+Phase G4: `fsMeasure p₀` is a `U(N)`-invariant probability measure
+(`fsMeasure_smul_invariant`), and G4 says every such measure is
+`fsMeasure p₁`. -/
+theorem fsMeasure_basepoint_independent
     (p₀ p₁ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-    fubiniStudyMeasure p₀ = fubiniStudyMeasure p₁ :=
-  fubiniStudyMeasure_unique p₁ (fubiniStudyMeasure p₀)
-    (fun U => fubiniStudyMeasure_smul_invariant U p₀)
+    fsMeasure p₀ = fsMeasure p₁ :=
+  fsMeasure_unique p₁ (fsMeasure p₀)
+    (fun U => fsMeasure_smul_invariant U p₀)
 
 /-- The Fubini–Study measure at any base point IS the canonical one. This is what makes
-`defaultFubiniStudyMeasure` an honest name rather than one choice among many. -/
-theorem fubiniStudyMeasure_eq_default (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-    fubiniStudyMeasure p₀ = defaultFubiniStudyMeasure N :=
-  fubiniStudyMeasure_basepoint_independent p₀ (defaultPoint N)
+`defaultFsMeasure` an honest name rather than one choice among many. -/
+theorem fsMeasure_eq_default (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
+    fsMeasure p₀ = defaultFsMeasure N :=
+  fsMeasure_basepoint_independent p₀ (defaultPoint N)
 
 open MeasureTheory
 
@@ -403,9 +403,9 @@ entirely. -/
 
 /-- All singletons carry the same Fubini–Study mass: move one point onto the
 other by transitivity, and use invariance. -/
-lemma fubiniStudyMeasure_singleton_eq
+lemma fsMeasure_singleton_eq
     (p₀ q q' : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-    fubiniStudyMeasure p₀ {q} = fubiniStudyMeasure p₀ {q'} := by
+    fsMeasure p₀ {q} = fsMeasure p₀ {q'} := by
   obtain ⟨U, hU⟩ := MulAction.exists_smul_eq (Matrix.unitaryGroup (Fin N) ℂ) q q'
   have hpre : (fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p) ⁻¹' {q'} = {q} := by
     ext p
@@ -415,16 +415,16 @@ lemma fubiniStudyMeasure_singleton_eq
       exact smul_left_cancel U (h.trans hU.symm)
     · rintro rfl
       exact hU
-  calc fubiniStudyMeasure p₀ {q}
-      = fubiniStudyMeasure p₀
+  calc fsMeasure p₀ {q}
+      = fsMeasure p₀
           ((fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p) ⁻¹' {q'}) := by
         rw [hpre]
     _ = (Measure.map (fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p)
-          (fubiniStudyMeasure p₀)) {q'} := by
+          (fsMeasure p₀)) {q'} := by
         rw [Measure.map_apply (continuous_const_smul U).measurable
           isClosed_singleton.measurableSet]
-    _ = fubiniStudyMeasure p₀ {q'} := by
-        rw [fubiniStudyMeasure_smul_invariant U p₀]
+    _ = fsMeasure p₀ {q'} := by
+        rw [fsMeasure_smul_invariant U p₀]
 
 /-- For `2 ≤ N` the projective space is infinite: the rays `[e₀ + t • e₁]` for
 `t : ℕ` are pairwise distinct. -/
@@ -467,12 +467,12 @@ singleton is null. Pigeonhole, with no stabiliser Haar measure anywhere: all
 singletons share one mass `a` by transitivity + invariance; were `a ≠ 0`, a
 finite set of more than `1/a` distinct points — available since the space is
 infinite — would carry measure exceeding `1`. -/
-theorem fubiniStudyMeasure_singleton (hN : 2 ≤ N)
+theorem fsMeasure_singleton (hN : 2 ≤ N)
     (p₀ q : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
-    fubiniStudyMeasure p₀ {q} = 0 := by
+    fsMeasure p₀ {q} = 0 := by
   by_contra ha
   have := projectivization_infinite hN
-  set a := fubiniStudyMeasure p₀ {q} with ha_def
+  set a := fsMeasure p₀ {q} with ha_def
   have ha_le : a ≤ 1 :=
     (measure_mono (Set.subset_univ _)).trans_eq measure_univ
   have ha_ne_top : a ≠ ⊤ := (ha_le.trans_lt ENNReal.one_lt_top).ne
@@ -480,16 +480,16 @@ theorem fubiniStudyMeasure_singleton (hN : 2 ≤ N)
     (ENNReal.div_lt_top ENNReal.one_ne_top ha).ne
   obtain ⟨S, hScard⟩ :=
     Infinite.exists_subset_card_eq (ℙ ℂ (EuclideanSpace ℂ (Fin N))) n
-  have hSmeas : fubiniStudyMeasure p₀ ↑S = n * a := by
-    calc fubiniStudyMeasure p₀ ↑S
-        = ∑ x ∈ S, fubiniStudyMeasure p₀ {x} := sum_measure_singleton.symm
+  have hSmeas : fsMeasure p₀ ↑S = n * a := by
+    calc fsMeasure p₀ ↑S
+        = ∑ x ∈ S, fsMeasure p₀ {x} := sum_measure_singleton.symm
       _ = ∑ _x ∈ S, a :=
           Finset.sum_congr rfl fun x _ =>
-            fubiniStudyMeasure_singleton_eq p₀ x q
+            fsMeasure_singleton_eq p₀ x q
       _ = n * a := by rw [Finset.sum_const, hScard, nsmul_eq_mul]
   have hcontr : (1 : ENNReal) < n * a :=
     (ENNReal.div_lt_iff (Or.inl ha) (Or.inl ha_ne_top)).mp hn
-  have hle : fubiniStudyMeasure p₀ ↑S ≤ 1 := prob_le_one
+  have hle : fsMeasure p₀ ↑S ≤ 1 := prob_le_one
   rw [hSmeas] at hle
   exact absurd (hcontr.trans_le hle) (lt_irrefl _)
 

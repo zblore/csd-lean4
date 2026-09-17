@@ -84,17 +84,17 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
 * **Statement.** The ontic typicality measure on the projective base is Fubini–Study.
 * **Where it enters.** The sector structure's measure field; Paper C **A5** (*projectability* —
   never "the origin of Σ").
-* **What backs it short of derivation.** `fubiniStudyMeasure_unique`: `μ_FS` is the unique
+* **What backs it short of derivation.** `fsMeasure_unique`: `μ_FS` is the unique
   `U(N)`-invariant probability measure. This is a genuine forcing result **given the symmetry**, so
   the posit is narrow — it is the symmetry requirement, not the measure, that is assumed.
 * **⚠️ Not derivable from the dynamics.** `SigmaLayer/SectorPostulateNoGo.lean`
   (`flow_admits_invariant_ne_fubiniStudy`) proves a deterministic flow does not pin the sector, and
   `LF4/TypicalityForcing.lean` records the same wall. Attempts to "derive Σ" are a non-question
-  (`specs/CSD-CHARTER.md`); *constraining* it, as `fubiniStudyMeasure_unique` does, is the live form.
+  (`specs/CSD-CHARTER.md`); *constraining* it, as `fsMeasure_unique` does, is the live form.
 * **⚠️ This entry covers the MEASURE half only.** `AXIOMS.md` §3.3 posits more: nothing forces `π`
   to project onto the quantum-effective sector specifically, and nothing forces `G = SU(N)`. That
   `(π, G)` half is posited structural data with only two coherence conditions constraining it, and
-  it is **not** discharged by `fubiniStudyMeasure_unique`, which presupposes the symmetry.
+  it is **not** discharged by `fsMeasure_unique`, which presupposes the symmetry.
 * **What would discharge it.** Nothing is expected to: this is close to the floor. The honest
   statement is that the sector is posited and tightly constrained, not derived.
 
@@ -107,7 +107,7 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   arguments actually use (`LF4/BornFlowLinkage.lean`), and it is standard for a Hamiltonian flow.
 * **⚠️ Scope** *(corrected 2026-09-09; the previous wording predated step (3))*. That this measure
   **is** the Kähler top-power volume is now a theorem on `ℂℙⁿ`:
-  `Projectivization.fsVolume_eq_smul_fubiniStudyMeasure` (`ω_FS^{∧n} = (4π)ⁿ · μ_FS`, 2026-09-08;
+  `Projectivization.fsVolume_eq_smul_fsMeasure` (`ω_FS^{∧n} = (4π)ⁿ · μ_FS`, 2026-09-08;
   the textbook `ω^{∧n}/n!` is a renormalisation of it). `LF4/KahlerVolumeForced.lean` proves the
   normalisation core. And preservation **is** a theorem for one Hamiltonian flow — the torus flow
   of G6: `fsVolume_map_torusUnitary_smul` (G10, 2026-09-09), a corollary of unitary invariance.
@@ -245,7 +245,7 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
 ## Posit 9 — the product form of the preparation measure
 
 * **Statement.** `μL` is a product: the base factor is `μ_FS`, the fibre factor uniform.
-* **What backs it short of derivation.** The **base half is proved** — `fubiniStudyMeasure_unique`
+* **What backs it short of derivation.** The **base half is proved** — `fsMeasure_unique`
   (Posit 2). The fibre half is the product form itself
   (`epistemicMeasure_eq_disintegration`, `RecordLayer/EpistemicDisintegration.lean`).
 * **⚠️ Preservation is not the same as selection, and the pair is now named.**

@@ -26,7 +26,7 @@ witness:
 * `recordRegion j = {q | 1/2 < m_{j+1}(q)}` and `readyRegion δ = {q | 1 − δ < m₀(q)}` via the
   pointer moment map — **open** (so a continuous propagator can land in them stably),
   measurable, pairwise disjoint, each containing its vertex, each of **positive Fubini–Study
-  measure** (`fubiniStudyMeasure_pos_of_isOpen`, full support);
+  measure** (`fsMeasure_pos_of_isOpen`, full support);
 * `PointerArena N K = KSigma N × Pointer K` with `pointerLiouville = kMuL ⊗ μ_FS^{ptr}`, a
   probability measure; the arena-level ready/record cylinders and their measures.
 
@@ -47,7 +47,7 @@ analogue (discrete register arcs) fed `shearEvolve_not_continuous`
 `specs/BACKLOG.md` (the ★ L row); `specs/future-work.md`; second external review 2026-08-02
 (steps 1–3). Reused corpus API: `vertexPoint` (`RecordLayer/SwapLuders.lean`),
 `momentMap_vertex` (`RecordLayer/DegenerateLuders.lean`), the `momentMap` simplex facts
-(`LF4/MomentMap.lean`), `fubiniStudyMeasure_pos_of_isOpen` (`LF4/TypicalityForcing.lean`),
+(`LF4/MomentMap.lean`), `fsMeasure_pos_of_isOpen` (`LF4/TypicalityForcing.lean`),
 `kMuL` (`LF4/KahlerInstance.lean`).
 -/
 
@@ -119,8 +119,8 @@ theorem recordState_mem_recordRegion (j : Fin K) :
 
 /-- Every record region has positive Fubini–Study measure (openness + full support). -/
 theorem recordRegion_pos (q₀ : Pointer K) (j : Fin K) :
-    fubiniStudyMeasure q₀ (recordRegion (K := K) j) ≠ 0 :=
-  LF4.fubiniStudyMeasure_pos_of_isOpen q₀ (isOpen_recordRegion j)
+    fsMeasure q₀ (recordRegion (K := K) j) ≠ 0 :=
+  LF4.fsMeasure_pos_of_isOpen q₀ (isOpen_recordRegion j)
     ⟨recordState j, recordState_mem_recordRegion j⟩
 
 /-! ### The ready region -/
@@ -146,8 +146,8 @@ theorem readyState_mem_readyRegion {δ : ℝ} (hδ : 0 < δ) :
 
 /-- The ready region has positive Fubini–Study measure for every positive margin. -/
 theorem readyRegion_pos (q₀ : Pointer K) {δ : ℝ} (hδ : 0 < δ) :
-    fubiniStudyMeasure q₀ (readyRegion (K := K) δ) ≠ 0 :=
-  LF4.fubiniStudyMeasure_pos_of_isOpen q₀ (isOpen_readyRegion δ)
+    fsMeasure q₀ (readyRegion (K := K) δ) ≠ 0 :=
+  LF4.fsMeasure_pos_of_isOpen q₀ (isOpen_readyRegion δ)
     ⟨readyState, readyState_mem_readyRegion hδ⟩
 
 /-- With margin `δ ≤ 1/2`, the ready region is disjoint from every record region: being ready
@@ -174,7 +174,7 @@ abbrev PointerArena (N K : ℕ) := LF4.KSigma N × Pointer K
 /-- The arena Liouville measure `μL = (μ_FS ⊗ vol_{T²}) ⊗ μ_FS^{ptr}`. -/
 noncomputable def pointerLiouville (p₀ : LF4.CPN N) (q₀ : Pointer K) :
     Measure (PointerArena N K) :=
-  (LF4.kMuL p₀).prod (fubiniStudyMeasure q₀)
+  (LF4.kMuL p₀).prod (fsMeasure q₀)
 
 instance (p₀ : LF4.CPN N) (q₀ : Pointer K) :
     IsProbabilityMeasure (pointerLiouville p₀ q₀) := by
@@ -204,7 +204,7 @@ omit [NeZero N] in
 region (the sector factor integrates to `1`). -/
 theorem pointerLiouville_arenaReady (p₀ : LF4.CPN N) (q₀ : Pointer K) (δ : ℝ) :
     pointerLiouville p₀ q₀ (arenaReady N δ)
-      = fubiniStudyMeasure q₀ (readyRegion (K := K) δ) := by
+      = fsMeasure q₀ (readyRegion (K := K) δ) := by
   rw [pointerLiouville, arenaReady, Measure.prod_prod, measure_univ, one_mul]
 
 omit [NeZero N] in

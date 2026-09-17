@@ -42,7 +42,7 @@ The typicality half is where preservation lives, and here the corpus is in a **b
 the review that prompted this module assumed**. The review recorded `μL`-preservation as "the
 structure field `ConstraintDynamics.flow_preserves` (posited)". That is true of the *abstract*
 interface and false of the *concrete* arena: `manyToOneSetup` discharges `flow_preserves_volume`
-with a proof (`LF4/ManyToOnePillars.lean`), namely `fubiniStudyMeasure_smul_invariant` on the base
+with a proof (`LF4/ManyToOnePillars.lean`), namely `fsMeasure_smul_invariant` on the base
 times the identity on the fibre. So on the arena `csd_equivariance` is unconditional, and no posit
 is hiding in it.
 
@@ -51,15 +51,15 @@ is hiding in it.
 measure. The two are the honest pair: *given* the sector, evolution preserves it and carries the
 epistemic measure correctly; but preservation alone does not select `μ_FS`, which is why the
 measure is Posit 9 (`specs/POSITS.md`) and is forced instead by symmetry
-(`fubiniStudyMeasure_unique`). Uniqueness and preservation are different claims and the no-go reads
+(`fsMeasure_unique`). Uniqueness and preservation are different claims and the no-go reads
 more negatively than the position warrants when it stands alone.
 
 ## References
 
 `RecordLayer/GlobalBasin.lean` (`epistemicMeasure`); `LF4/ManyToOnePillars.lean`
 (`manyToOneSetup`, and the proof of `flow_preserves_volume`); `LF4/KahlerInstance.lean` (`kMuL`);
-`Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean` (`fubiniStudyMeasure_smul_invariant`,
-`fubiniStudyMeasure_unique`); `SigmaLayer/SectorPostulateNoGo.lean`
+`Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean` (`fsMeasure_smul_invariant`,
+`fsMeasure_unique`); `SigmaLayer/SectorPostulateNoGo.lean`
 (`flow_admits_invariant_ne_fubiniStudy`); `specs/POSITS.md` (Posits 2 and 9);
 `specs/future-work.md`.
 -/
@@ -95,12 +95,12 @@ invariant.
 The two conjuncts are the whole point: the **epistemic** measure moves with the state (the analogue
 of Bohmian equivariance) while the **typicality** measure stays put. Neither conjunct carries a
 hypothesis — the first needs none, and the second is discharged by `manyToOneSetup`'s proof of
-`flow_preserves_volume`, which is `fubiniStudyMeasure_smul_invariant` on the base and the identity
+`flow_preserves_volume`, which is `fsMeasure_smul_invariant` on the base and the identity
 on the fibre. ⚠️ Preservation is *posited* only in the abstract `ConstraintDynamics` interface; on
 this arena it is proved, and this theorem is unconditional.
 
 Read with `flow_admits_invariant_ne_fubiniStudy`: preservation does not select `μ_FS`. Symmetry
-does (`fubiniStudyMeasure_unique`). -/
+does (`fsMeasure_unique`). -/
 theorem csd_equivariance {M : ℕ} (H : Matrix (Fin (M + 1)) (Fin (M + 1)) ℂ) (hH : H.IsHermitian)
     (p₀ : CPN (M + 1)) (t : ℝ) (p : CPN (M + 1)) :
     Measure.map ((manyToOneSchrodingerSetup H hH p₀).flow t) (epistemicMeasure p)

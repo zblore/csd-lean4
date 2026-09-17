@@ -93,7 +93,7 @@ theorem kFlow_measurePreserving (p₀ : CPN N) (sh : KTorus) :
     measurePreserving_add_left _ sh.2
   have htransl : MeasurePreserving (fun t : KTorus => sh + t)
       (volume : Measure KTorus) (volume : Measure KTorus) := h1.prod h2
-  exact (MeasurePreserving.id (fubiniStudyMeasure p₀)).prod htransl
+  exact (MeasurePreserving.id (fsMeasure p₀)).prod htransl
 
 /-- **Tranche A frequency capstone.** For i.i.d. preparation draws `sampleₙ` with
 common law `kMuL p₀`, the empirical frequency of a measurable outcome region `O`

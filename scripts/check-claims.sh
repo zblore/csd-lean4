@@ -641,6 +641,11 @@ isSymplectic"
 #     each PROVES an ι_Xω = dH statement — the word names the established duality, with
 #     the Schrödinger field -(i•Ax) exhibited explicitly in the quadratic/coupling cases.
 #     Flat model, fixed weights; the joint-arena manifold form stays §2a.
+#   contDiffAt_localHamiltonianVector_of_contMDiff / contMDiff_hamiltonianVectorField_of_contMDiff —
+#     (2026-09-17, B11′) the ONE order-generic proof (n + 1 ≤ n, i.e. ∞ and ω) that the local
+#     Hamiltonian vector and the Hamiltonian vector field are C^n; the ∞ theorems above are its
+#     corollaries and contDiffAt_omega_localHamiltonianVector (deleted) was its ω twin. Same
+#     established ι_Xω = dH content, stated once.
 #   eq_hamiltonianVectorFieldOf_of_forall — (2026-09-16, HamiltonianVectorField.lean, Brief B)
 #     PROVES that the vector hamiltonian_duality exhibits is the ONLY one with ι_Xω = g w ·, from
 #     non-degeneracy ω u (J u) = ‖u‖²; the word names the same established duality, now as an
@@ -811,7 +816,7 @@ isSymplectic"
 #     declared in the def inventory under IsSymplectic). Generic compact 2n-manifold, EVEN.
 #   fsVolume_map_hamiltonianFlow / fsVolumeNormalized_map_hamiltonianFlow — (2026-09-12, Q29(d'),
 #     Instances/ProjectiveSpaceHamiltonianFlow.lean) the CP^n instance: the Hamiltonian flow of
-#     EVERY smooth H : CP^n -> R preserves fsVolume n and fsVolumeNormalized n (= fubiniStudyMeasure).
+#     EVERY smooth H : CP^n -> R preserves fsVolume n and fsVolumeNormalized n (= fsMeasure).
 #     Before this only the unitary flows were known to (fsVolume_map_smul, torus G10). CP^n, EVEN.
 #   hamiltonianFlow_schrodingerHamiltonian / hamiltonianFlow_torusHamiltonian — (2026-09-12,
 #     Q29(e), Instances/ProjectiveSpaceSchrodingerFlow.lean) the IDENTIFICATIONS: the Hamiltonian
@@ -969,7 +974,8 @@ manyToOneSetup_map_pi_liouvilleMeasure_eq_fsVolumeNormalized
 manyToOneSetup_isKahler_liouville
 torusHamiltonian_eq_of_isMIntegralCurve_torusField
 torusHamiltonian_torusUnitary_smul
-contDiffAt_omega_localHamiltonianVector
+contDiffAt_localHamiltonianVector_of_contMDiff
+contMDiff_hamiltonianVectorField_of_contMDiff
 contMDiff_omega_hamiltonianVectorField
 chartField_hamiltonianVectorField
 fsVolume_map_hamiltonianFlow
@@ -1005,7 +1011,7 @@ translationCurve_isHamiltonianCurve
 fieldHamiltonian_mulVec_single
 fundamentalForm_hamiltonianVectorFieldOf
 hamiltonian_duality
-fubiniStudyMeasure_isForcedKahlerVolume
+fsMeasure_isForcedKahlerVolume
 hamiltonian_eq_diagonal
 hamiltonian_groundEnergy
 fieldHamiltonian_isHermitian

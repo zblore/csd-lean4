@@ -207,7 +207,7 @@ noncomputable def ghzDeisolationFlow :
 /-- The GHZ de-isolation flow is Fubini-Study measure-preserving (the Liouville /
 `hΦ_pres` content), inherited from `measurementFlow_measurePreserving`. -/
 theorem ghzDeisolation_measurePreserving (p₀ : CPN (8 * 8)) :
-    MeasurePreserving ghzDeisolationFlow (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀) :=
+    MeasurePreserving ghzDeisolationFlow (fsMeasure p₀) (fsMeasure p₀) :=
   measurementFlow_measurePreserving finProdFinEquiv p₀
 
 /-- The GHZ de-isolation flow is genuinely not the identity (`N = 8 > 1`),
@@ -336,7 +336,7 @@ theorem ghzDeisolation_flow_capstone {M : ℕ}
     measurementFlow 8 e ≠ id
     -- (2) FS measure-preserving
     ∧ MeasurePreserving (measurementFlow 8 e)
-        (fubiniStudyMeasure p₀) (fubiniStudyMeasure p₀)
+        (fsMeasure p₀) (fsMeasure p₀)
     -- (3) pointer-block basin measure = the GHZ Born weight
     ∧ (∀ w : Fin 2 × Fin 2 × Fin 2,
         ∑ n : Fin 8,
