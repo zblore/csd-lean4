@@ -55,6 +55,9 @@ OUTPUT. A numbered list of findings, most severe first, each with: severity (BLO
   The M rows B5, B6 (resolved by verification), B9, B11′, B13 and B8's naming half followed on
   2026-09-17, on the user's "finish the remaining B rows"; only B8′ (slice-1 index generality)
   stays priced.
+* **Brief C** (2026-09-17, `brief-c-2026-09-17.md` in this directory) is the third, independent
+  review of the closure at `2a71b34`, run on Codex; it re-audits the B fixes and looks for what the
+  first two reviews missed.
 
 ## Brief B — the Fubini–Study machinery the bridge stands on
 
