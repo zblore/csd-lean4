@@ -239,36 +239,50 @@ theorem fsForm_metric_self_pos (x : ℙ ℂ (Ambient n))
 
 /-! ### `J` is the complex structure of the atlas -/
 
-/-- The chart transition of `ℂℙⁿ` is the unitary-action chart map for `U = 1`. -/
-theorem chart_transition_eq_uTrans (x₀ y : ℙ ℂ (Ambient n)) :
-    (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) = uTrans 1 (idx x₀) (idx y) := by
+/-- The transition from the `i`-th affine chart to the chart at `y` is the unitary-action chart
+map for `U = 1`. -/
+theorem chartAtIdx_transition_eq_uTrans (i : Fin (n + 1)) (y : ℙ ℂ (Ambient n)) :
+    (chartAt (Fin n → ℂ) y ∘ (chartAtIdx i).symm) = uTrans 1 i (idx y) := by
   funext w
-  show chartFun (idx y) (chartInv (idx x₀) w) = _
+  show chartFun (idx y) (chartInv i w) = _
   rw [← chartFun_smul_chartInv (1 : Matrix.unitaryGroup (Fin (n + 1)) ℂ), one_smul]
 
-/-- ★ **`J` is the complex structure of the atlas**: the derivative of every chart transition is
-`ℂ`-linear, because the transitions are holomorphic (`contDiffOn_uTrans`). So `J = i·` in one
-chart is `J = i·` in every chart. -/
-theorem fderiv_chart_transition_smul_I (x₀ y : ℙ ℂ (Ambient n)) {w : Fin n → ℂ}
-    (hy : (chartAt (Fin n → ℂ) x₀).symm w ∈ (chartAt (Fin n → ℂ) y).source) (v : Fin n → ℂ) :
-    fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) w (Complex.I • v)
-      = Complex.I • fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) w v := by
-  rw [chart_transition_eq_uTrans]
+/-- The chart transition of `ℂℙⁿ` is the unitary-action chart map for `U = 1`. -/
+theorem chart_transition_eq_uTrans (x₀ y : ℙ ℂ (Ambient n)) :
+    (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) = uTrans 1 (idx x₀) (idx y) :=
+  chartAtIdx_transition_eq_uTrans (idx x₀) y
+
+/-- ★ **`J` is the complex structure of the atlas**: the derivative of the transition from any
+affine chart `chartAtIdx i` to the chart at `y` is `ℂ`-linear, because the transitions are
+holomorphic (`contDiffOn_uTrans`). So `J = i·` in one chart is `J = i·` in every chart. -/
+theorem fderiv_chartAtIdx_transition_smul_I (i : Fin (n + 1)) (y : ℙ ℂ (Ambient n))
+    {w : Fin n → ℂ} (hy : (chartAtIdx i).symm w ∈ (chartAt (Fin n → ℂ) y).source)
+    (v : Fin n → ℂ) :
+    fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAtIdx i).symm) w (Complex.I • v)
+      = Complex.I • fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAtIdx i).symm) w v := by
+  rw [chartAtIdx_transition_eq_uTrans]
   have hmem : w ∈ {w : Fin n → ℂ |
-      toEuclideanLinearEquiv (1 : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (insertOne (idx x₀) w)
+      toEuclideanLinearEquiv (1 : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (insertOne i w)
         (idx y) ≠ 0} := by
-    show toEuclideanLinearEquiv (1 : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (insertOne (idx x₀) w)
+    show toEuclideanLinearEquiv (1 : Matrix.unitaryGroup (Fin (n + 1)) ℂ) (insertOne i w)
       (idx y) ≠ 0
     rw [toEuclideanLinearEquiv_one, LinearEquiv.refl_apply]
     exact (mem_chartSource_mk (idx y) _ (insertOne_ne_zero _ _)).1 hy
-  have hd : DifferentiableAt ℂ (uTrans 1 (idx x₀) (idx y)) w :=
-    ((contDiffOn_uTrans 1 (idx x₀) (idx y)).contDiffAt
-      ((isOpen_uDomain 1 (idx x₀) (idx y)).mem_nhds hmem)).differentiableAt (by simp)
-  have hR : HasFDerivAt (uTrans 1 (idx x₀) (idx y))
-      ((fderiv ℂ (uTrans 1 (idx x₀) (idx y)) w).restrictScalars ℝ) w :=
+  have hd : DifferentiableAt ℂ (uTrans 1 i (idx y)) w :=
+    ((contDiffOn_uTrans 1 i (idx y)).contDiffAt
+      ((isOpen_uDomain 1 i (idx y)).mem_nhds hmem)).differentiableAt (by simp)
+  have hR : HasFDerivAt (uTrans 1 i (idx y))
+      ((fderiv ℂ (uTrans 1 i (idx y)) w).restrictScalars ℝ) w :=
     hd.hasFDerivAt.restrictScalars ℝ
   rw [hR.fderiv]
   simp only [ContinuousLinearMap.coe_restrictScalars', map_smul]
+
+/-- The same for the chart at `x₀` (`chartAt E x₀ = chartAtIdx (idx x₀)`). -/
+theorem fderiv_chart_transition_smul_I (x₀ y : ℙ ℂ (Ambient n)) {w : Fin n → ℂ}
+    (hy : (chartAt (Fin n → ℂ) x₀).symm w ∈ (chartAt (Fin n → ℂ) y).source) (v : Fin n → ℂ) :
+    fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) w (Complex.I • v)
+      = Complex.I • fderiv ℝ (chartAt (Fin n → ℂ) y ∘ (chartAt (Fin n → ℂ) x₀).symm) w v :=
+  fderiv_chartAtIdx_transition_smul_I (idx x₀) y hy v
 
 /-- ★ `J` commutes with the tangent trivialisation: in the chart at `x₀`, `J y` is still `i·`
 for every `y` in the chart source. -/
@@ -286,6 +300,22 @@ theorem fsJ_symmL (x₀ y : ℙ ℂ (Ambient n)) (hy : y ∈ (chartAt (Fin n →
   unfold fsJ
   exact (fderiv_chart_transition_smul_I x₀ y hy' v).symm
 
+/-- ★ `J` commutes with the tangent trivialisation of every chart of the atlas: `J = i·` in every
+affine chart, not only in the charts `chartAt` picks. -/
+theorem fsJ_localTriv_symmL (e : atlas (Fin n → ℂ) (ℙ ℂ (Ambient n))) (y : ℙ ℂ (Ambient n))
+    (hy : y ∈ e.1.source) (v : Fin n → ℂ) :
+    fsJ y (((tangentBundleCore (𝓘(ℝ, Fin n → ℂ)) (ℙ ℂ (Ambient n))).localTriv e).symmL ℝ y v)
+      = ((tangentBundleCore (𝓘(ℝ, Fin n → ℂ)) (ℙ ℂ (Ambient n))).localTriv e).symmL ℝ y
+          (Complex.I • v) := by
+  rw [tangent_localTriv_symmL_eq_fderiv e y hy]
+  obtain ⟨i, hi⟩ := e.2
+  have hy' : (e.1).symm (e.1 y) ∈ (chartAt (Fin n → ℂ) y).source := by
+    rw [e.1.left_inv hy]
+    exact mem_chart_source _ y
+  unfold fsJ
+  rw [← hi] at hy' ⊢
+  exact (fderiv_chartAtIdx_transition_smul_I i y hy' v).symm
+
 /-! ### ★★★ `ℂℙⁿ` is a Kähler manifold (G14a) -/
 
 /-- The complex structure of the model `Fin n → ℂ`: multiplication by `i`, as a real-linear map. -/
@@ -296,13 +326,14 @@ noncomputable def modelJ : (Fin n → ℂ) →L[ℝ] (Fin n → ℂ) :=
 
 /-- ★★★ **`ℂℙⁿ` with the Fubini–Study form and `J = i·` is a Kähler manifold**: almost Kähler
 (`fsForm_isAlmostKahler`), and `J` is the complex structure of the holomorphic atlas — `i·` in
-every chart (`fsJ_symmL`, from the holomorphy of the transitions `contDiffOn_uTrans`). Kähler in
-the atlas sense of `DifferentialForm.IsKahler`; the tensor sense is G14b. -/
+every chart of the atlas (`fsJ_localTriv_symmL`, from the holomorphy of the transitions
+`contDiffOn_uTrans`). Kähler in the atlas sense of `DifferentialForm.IsKahler`; the tensor sense is
+G14b. -/
 theorem fsForm_isKahler (n : ℕ) : IsKahler (fsForm (n := n)) fsJ modelJ where
   toIsAlmostKahler := fsForm_isAlmostKahler n
-  J_symmL := fun x₀ y hy v => by
+  J_localTriv_symmL := fun e y hy v => by
     rw [modelJ_apply]
-    exact fsJ_symmL x₀ y hy v
+    exact fsJ_localTriv_symmL e y hy v
 
 /-! ### `J` as a smooth section of the endomorphism bundle (G15) -/
 

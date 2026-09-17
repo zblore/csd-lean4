@@ -127,6 +127,27 @@ theorem extChartAt_comp_symm_eq (x₀ y : M) :
   funext w
   simp
 
+omit [IsManifold (𝓘(ℝ, E)) ∞ M] in
+/-- The transition from any atlas chart `e` to the chart at `y`, as `extChartAt` and `extend` see
+it, is the chart transition. -/
+theorem extChartAt_comp_extend_symm_eq (e : atlas E M) (y : M) :
+    (extChartAt (𝓘(ℝ, E)) y ∘ (e.1.extend (𝓘(ℝ, E))).symm) = (chartAt E y ∘ e.1.symm) := by
+  funext w
+  simp
+
+/-- The tangent trivialisation of any atlas chart `e`, read at `y ∈ e.source`, is the derivative
+of the transition from `e` to the chart at `y` (`VectorBundleCore.localTriv_symmL`);
+`tangent_symmL_eq_fderiv` is the case `e = achart E x₀`. -/
+theorem tangent_localTriv_symmL_eq_fderiv (e : atlas E M) (y : M) (hy : y ∈ e.1.source) :
+    ((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e).symmL ℝ y
+      = fderiv ℝ (chartAt E y ∘ e.1.symm) (e.1 y) := by
+  have hy' : y ∈ ((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e).baseSet := hy
+  rw [VectorBundleCore.localTriv_symmL _ hy']
+  show fderivWithin ℝ (extChartAt (𝓘(ℝ, E)) y ∘ (e.1.extend (𝓘(ℝ, E))).symm)
+      (Set.range (𝓘(ℝ, E))) (e.1.extend (𝓘(ℝ, E)) y) = _
+  rw [extChartAt_comp_extend_symm_eq, modelWithCornersSelf_coe, Set.range_id, fderivWithin_univ]
+  rfl
+
 /-- The tangent coordinate change from the chart at `x₀` to the chart at `y` is the derivative
 of the chart transition. -/
 theorem tangent_symmL_eq_fderiv (x₀ y : M) (hy : y ∈ (chartAt E x₀).source) :

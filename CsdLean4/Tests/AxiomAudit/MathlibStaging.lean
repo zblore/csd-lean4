@@ -5310,6 +5310,32 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsForm_isKahler
 
+-- B5 (2026-09-17): IsKahler constrains every chart of the atlas; the chartAt form is derived.
+
+/-- info: 'extChartAt_comp_extend_symm_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms extChartAt_comp_extend_symm_eq
+
+/-- info: 'tangent_localTriv_symmL_eq_fderiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms tangent_localTriv_symmL_eq_fderiv
+
+/-- info: 'DifferentialForm.IsKahler.J_symmL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsKahler.J_symmL
+
+/-- info: 'Projectivization.chartAtIdx_transition_eq_uTrans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartAtIdx_transition_eq_uTrans
+
+/-- info: 'Projectivization.fderiv_chartAtIdx_transition_smul_I' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fderiv_chartAtIdx_transition_smul_I
+
+/-- info: 'Projectivization.fsJ_localTriv_symmL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsJ_localTriv_symmL
+
 -- G15 + G16 (2026-09-10). G15: the complex structure of a Kahler structure, given as continuous
 -- linear maps, is a C^infinity section of Hom(TM, TM) -- constant J0 in every chart
 -- (IsKahler.contMDiff_hom_section); on CP^n, fsJL and contMDiff_fsJL. G16: the torus orbit
@@ -5666,6 +5692,36 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'MetricFamily.riemannianVolume_congr_cover' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms MetricFamily.riemannianVolume_congr_cover
+
+-- B9 (2026-09-17): the Riemannian volume of Mathlib's `Bundle.RiemannianMetric` / `ContMDiffRiemannianMetric`.
+
+/-- info: 'Bundle.RiemannianMetric.toMetricFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Bundle.RiemannianMetric.toMetricFamily
+
+/-- info: 'Bundle.RiemannianMetric.isBilinear_toMetricFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Bundle.RiemannianMetric.isBilinear_toMetricFamily
+
+/-- info: 'Bundle.RiemannianMetric.riemannianVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Bundle.RiemannianMetric.riemannianVolume
+
+/-- info: 'Bundle.RiemannianMetric.riemannianVolume_congr_cover' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Bundle.RiemannianMetric.riemannianVolume_congr_cover
+
+/-- info: 'Bundle.RiemannianMetric.riemannianVolume_eq_smul_topFormMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Bundle.RiemannianMetric.riemannianVolume_eq_smul_topFormMeasure
+
+/-- info: 'Bundle.ContMDiffRiemannianMetric.riemannianVolume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Bundle.ContMDiffRiemannianMetric.riemannianVolume
+
+/-- info: 'Bundle.ContMDiffRiemannianMetric.riemannianVolume_congr_cover' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Bundle.ContMDiffRiemannianMetric.riemannianVolume_congr_cover
 
 /-- info: 'Projectivization.isBilinear_fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

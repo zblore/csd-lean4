@@ -1078,9 +1078,8 @@ sense* — `J` is the complex structure `J₀` of the model `E`, read through th
 trivialisation of every chart. The trivialisations of two charts differ by the derivative of the
 chart transition, so this says every chart transition has `J₀`-linear derivative, i.e. is
 holomorphic (`IsKahler.fderiv_chart_transition_comm`, the Cauchy–Riemann equations of the atlas):
-the charts `chartAt E x₀` form a holomorphic atlas and `J` is its complex structure (atlas members
-that are not some `chartAt E x₀` are not constrained by this definition). That is the textbook
-definition
+the atlas is a holomorphic atlas and `J` is its complex structure (every chart of the atlas is
+constrained, through its tangent trivialisation `localTriv`). That is the textbook definition
 of a Kähler manifold — a complex manifold with a Hermitian metric (`IsAlmostKahler.metric_J_J`)
 whose fundamental form is closed (`isSymplectic`). The equivalent tensor formulation, a vanishing
 Nijenhuis tensor (Newlander–Nirenberg), is not what is stated. -/
@@ -1088,16 +1087,24 @@ structure IsKahler (β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ)
     (J : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →
       TangentSpace (𝓘(ℝ, E)) x) (J₀ : E →L[ℝ] E) : Prop
     extends IsAlmostKahler β J where
-  /-- `J` is `J₀` through the tangent trivialisation of every chart. -/
-  J_symmL : ∀ (x₀ y : M), y ∈ (chartAt E x₀).source → ∀ v : E,
-    J y ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y v)
-      = (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y (J₀ v)
+  /-- `J` is `J₀` through the tangent trivialisation of every chart of the atlas. -/
+  J_localTriv_symmL : ∀ (e : atlas E M) (y : M), y ∈ e.1.source → ∀ v : E,
+    J y (((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e).symmL ℝ y v)
+      = ((tangentBundleCore (𝓘(ℝ, E)) M).localTriv e).symmL ℝ y (J₀ v)
 
 namespace IsKahler
 
 variable {β : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ}
   {J : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x →
     TangentSpace (𝓘(ℝ, E)) x} {J₀ : E →L[ℝ] E}
+
+/-- `J` is `J₀` through the tangent trivialisation `trivializationAt` of the chart at `x₀`: the
+atlas condition at `e = achart E x₀` (until 2026-09-17 this was the defining field, so the
+definition constrained only the charts `chartAt E x₀`; now every atlas chart is constrained). -/
+theorem J_symmL (h : IsKahler β J J₀) (x₀ y : M) (hy : y ∈ (chartAt E x₀).source) (v : E) :
+    J y ((trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y v)
+      = (trivializationAt E (TangentSpace (𝓘(ℝ, E))) x₀).symmL ℝ y (J₀ v) :=
+  h.J_localTriv_symmL (achart E x₀) y hy v
 
 omit [IsManifold (𝓘(ℝ, E)) ∞ M] in
 /-- The chart transition from the chart at `y` to itself is the identity near `y`'s point, so its

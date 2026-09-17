@@ -7,6 +7,8 @@ module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.TopFormMeasure
 public import Mathlib.LinearAlgebra.Matrix.BilinearForm
+public import Mathlib.Topology.VectorBundle.Riemannian
+public import Mathlib.Geometry.Manifold.VectorBundle.Riemannian
 
 /-!
 # The Riemannian volume of a metric on a manifold, from chart Gram densities
@@ -340,6 +342,81 @@ theorem riemannianVolume_congr_cover (hg : IsBilinear g) (c c' : ChartCover E M)
       (hA.inter (c'.measurableSet_piece i)) (fun x hx => c'.piece_subset i hx.2),
     riemannianVolume_apply_of_subset_source μ e g hg c' (c'.pt i)
       (hA.inter (c'.measurableSet_piece i)) (fun x hx => c'.piece_subset i hx.2)]
+
+/-! ### Mathlib's Riemannian metrics
+
+Mathlib's `Bundle.RiemannianMetric (TangentSpace 𝓘(ℝ, E) : M → Type _)`
+(`Mathlib/Topology/VectorBundle/Riemannian.lean`) is a family of inner products
+`g.inner x : T_x M →L[ℝ] T_x M →L[ℝ] ℝ`, and its `C^n` version `ContMDiffRiemannianMetric`
+(`Mathlib/Geometry/Manifold/VectorBundle/Riemannian.lean`) adds the smoothness of the family. The
+family `fun x u v => g.inner x u v` is bilinear, so everything above applies to it: the Riemannian
+volume of a Mathlib metric, its independence of the cover, and its comparison with a top form. -/
+
+section MathlibMetric
+
+variable (g : Bundle.RiemannianMetric (TangentSpace (𝓘(ℝ, E)) : M → Type _))
+
+/-- The metric family of a Mathlib `RiemannianMetric` on the tangent bundle. -/
+def _root_.Bundle.RiemannianMetric.toMetricFamily :
+    ∀ x : M, TangentSpace (𝓘(ℝ, E)) x → TangentSpace (𝓘(ℝ, E)) x → ℝ :=
+  fun x u v => g.inner x u v
+
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [IsManifold (𝓘(ℝ, E)) ∞ M]
+  [MeasurableSpace M] [BorelSpace M] in
+@[simp] theorem _root_.Bundle.RiemannianMetric.toMetricFamily_apply (x : M)
+    (u v : TangentSpace (𝓘(ℝ, E)) x) : g.toMetricFamily x u v = g.inner x u v := rfl
+
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] [MeasurableSpace M] [BorelSpace M] in
+omit [IsManifold (𝓘(ℝ, E)) ∞ M] in
+/-- A Mathlib metric is a bilinear family: `inner x` is a continuous linear map in each slot. -/
+theorem _root_.Bundle.RiemannianMetric.isBilinear_toMetricFamily : IsBilinear g.toMetricFamily where
+  add_left x a b v := by
+    show g.inner x (a + b) v = g.inner x a v + g.inner x b v
+    rw [map_add]
+    rfl
+  smul_left x c a v := by
+    show g.inner x (c • a) v = c * g.inner x a v
+    rw [map_smul]
+    rfl
+  add_right x v a b := by
+    show g.inner x v (a + b) = g.inner x v a + g.inner x v b
+    rw [map_add]
+  smul_right x c v a := by
+    show g.inner x v (c • a) = c * g.inner x v a
+    rw [map_smul, smul_eq_mul]
+
+/-- ★ **The Riemannian volume of a Mathlib `RiemannianMetric`** on the tangent bundle, against
+the Haar measure `μ` and the basis `e` of the model, glued along the cover `c`. -/
+def _root_.Bundle.RiemannianMetric.riemannianVolume (c : ChartCover E M) : Measure M :=
+  MetricFamily.riemannianVolume μ e g.toMetricFamily c
+
+/-- ★ The Riemannian volume of a Mathlib metric does not depend on the cover. -/
+theorem _root_.Bundle.RiemannianMetric.riemannianVolume_congr_cover (c c' : ChartCover E M) :
+    g.riemannianVolume μ e c = g.riemannianVolume μ e c' :=
+  MetricFamily.riemannianVolume_congr_cover μ e g.toMetricFamily g.isBilinear_toMetricFamily c c'
+
+/-- ★ If in every chart of the cover the Gram density of a Mathlib metric is `k` times the
+coefficient density of a top form, its Riemannian volume is `k` times the top-form measure. -/
+theorem _root_.Bundle.RiemannianMetric.riemannianVolume_eq_smul_topFormMeasure (c : ChartCover E M)
+    (s : ∀ x : M, TangentSpace (𝓘(ℝ, E)) x [⋀^ι]→L[ℝ] Bundle.Trivial M ℝ x) (k : ℝ≥0∞)
+    (hk : k ≠ ⊤) (h : ∀ i, ∀ w ∈ (chartAt E (c.pt i)).target,
+      chartDensity e g.toMetricFamily (c.pt i) w = k * DifferentialForm.chartDensity e s (c.pt i) w) :
+    g.riemannianVolume μ e c = k • DifferentialForm.topFormMeasure μ e s c :=
+  MetricFamily.riemannianVolume_eq_smul_topFormMeasure μ e g.toMetricFamily c s k hk h
+
+/-- ★ **The Riemannian volume of a `C^n` Riemannian metric** (`ContMDiffRiemannianMetric`): that of
+its underlying `RiemannianMetric`. -/
+def _root_.Bundle.ContMDiffRiemannianMetric.riemannianVolume {n : WithTop ℕ∞}
+    (g : Bundle.ContMDiffRiemannianMetric (𝓘(ℝ, E)) n E (TangentSpace (𝓘(ℝ, E)) : M → Type _))
+    (c : ChartCover E M) : Measure M :=
+  g.toRiemannianMetric.riemannianVolume μ e c
+
+theorem _root_.Bundle.ContMDiffRiemannianMetric.riemannianVolume_congr_cover {n : WithTop ℕ∞}
+    (g : Bundle.ContMDiffRiemannianMetric (𝓘(ℝ, E)) n E (TangentSpace (𝓘(ℝ, E)) : M → Type _))
+    (c c' : ChartCover E M) : g.riemannianVolume μ e c = g.riemannianVolume μ e c' :=
+  g.toRiemannianMetric.riemannianVolume_congr_cover μ e c c'
+
+end MathlibMetric
 
 end MetricFamily
 

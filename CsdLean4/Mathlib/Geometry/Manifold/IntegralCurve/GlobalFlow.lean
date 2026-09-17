@@ -40,6 +40,18 @@ and the same `Ioo (-ε) ε`, every point has a *global* one. What it does not ha
 
 ## Honest scope
 
+**Against Mathlib's ODE API (checked 2026-09-17).** The three flat lemmas are not duplicates of
+Mathlib's `IsPicardLindelof.of_contDiffAt_one`,
+`IsPicardLindelof.exists_forall_mem_closedBall_eq_forall_mem_Icc_hasDerivWithinAt` and
+`ContDiffAt.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt`: each adds the
+*confinement* of the solutions to a prescribed neighbourhood (the closed Lipschitz ball inside a
+given `s ∈ 𝓝 x₀`, `∀ t, α t ∈ s`), which Mathlib's statements do not provide and the manifold
+transport needs (the chart solutions must stay in the chart's target). They are the natural
+upstream strengthening of Mathlib's lemmas, not restatements of them; uniqueness and the
+uniform-time principle are Mathlib's own (`isMIntegralCurve_eq_of_contMDiff`,
+`exists_isMIntegralCurve_of_isMIntegralCurveOn`).
+
+
 ⚠️ **The flow is not yet a `Flow`.** Mathlib's `Flow τ α` needs joint continuity `ℝ × M → M`.
 Continuity in `t` for fixed `x` is here. Continuity in `x` needs continuous dependence of the
 integral curve on its initial point at manifold level; the flat Lipschitz dependence exists
