@@ -23,9 +23,12 @@ projectivization	LinearAlgebra.Projectivization.FubiniStudyUnique
 projectivization	LinearAlgebra.Projectivization.TransitionProbability
 projectivization	LinearAlgebra.Projectivization.MomentMap
 
-# 2 — the vector-level Fisher–Rao bridge (QuantumInfo/ForMathlib, beside PR #1652's file).
+# 2 — the vector-level Fisher–Rao bridge and Braunstein–Caves: THE SLICE OFFERED TO PHYSLIB
+#     (2026-09-18 scope), emitted Physlib-ready from scripts/physlib-sidecars/ — see
+#     scripts/export_physlib.py; every other slice stays in csd-lean4 (the Mathlib track).
 fisher-rao-vector	Analysis.InformationGeometry.FisherRao
 fisher-rao-vector	Analysis.InformationGeometry.FubiniStudyFisherRao
+fisher-rao-vector	Analysis.InformationGeometry.BraunsteinCaves
 
 # 3 — continuous alternating maps: wedge, its norm bound, the shuffle formula, top forms, pullback.
 alternating	Analysis.Normed.Module.Alternating.Wedge

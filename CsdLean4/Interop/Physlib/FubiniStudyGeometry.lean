@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.Analysis.InformationGeometry.FubiniStudyFisherRao
+public import CsdLean4.Mathlib.Analysis.InformationGeometry.BraunsteinCaves
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyRiemannian
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFisherRao
 public import CsdLean4.Mathlib.Analysis.SpecialFunctions.JapaneseBracketEuclidean
@@ -15,9 +16,13 @@ public import CsdLean4.Mathlib.Analysis.SpecialFunctions.JapaneseBracketEuclidea
 
 **Category:** Special (a convenience re-export; the review scope of the Physlib export).
 
-This module contains no mathematics. Its import closure within `CsdLean4/Mathlib/` is exactly
-the material offered to Physlib (`leanprover-community/physlib`) for the Fisher information
-work of PR #1652: the manifold structure of `ℂℙⁿ` with its affine atlas, differential forms and
+This module contains no mathematics. Its import closure within `CsdLean4/Mathlib/` is the
+review scope of the Physlib (`leanprover-community/physlib`) work around PR #1652. Of it,
+**what is offered to Physlib is slice 2 alone** (2026-09-18): the vector-level files
+`Analysis/InformationGeometry/FubiniStudyFisherRao.lean` (the Born map and the Fisher–Rao
+identity) and `Analysis/InformationGeometry/BraunsteinCaves.lean` (homogeneous coordinates and
+the Braunstein–Caves inequality), which the exporter emits Physlib-ready from
+`scripts/physlib-sidecars/`. The rest stays here, on the Mathlib track: the manifold structure of `ℂℙⁿ` with its affine atlas, differential forms and
 the exterior derivative, the symplectic and Kähler structure, the Fubini–Study form, metric and
 volume, the torus moment map, and the bridge
 
@@ -27,9 +32,10 @@ for `u` horizontal at a point of the regular stratum
 (`Projectivization.fsMetric_eq_fisherRaoInner`), with its vector-level form
 `FisherRao.fisherRaoInner_bornDeriv` on the open simplex of `FisherRao.lean`.
 
-`scripts/export-physlib.sh` computes that closure, slices it in dependency order, renames the
-modules to the Physlib layout, checks the result mentions nothing CSD-specific outside
-provenance notes, builds it against Physlib's Mathlib pin, and writes
+`scripts/export-physlib.sh` computes that closure, slices it in dependency order, emits slice 2
+in Physlib's form (module-doc template, columns, `[ref:]` tags, terse docstrings, checked by
+replicas of Physlib's linters), checks that nothing mentions this repository outside
+provenance notes, builds everything against Physlib's Mathlib pin, and writes
 `CsdLean4/Interop/Physlib/MANIFEST.md`, the page a reviewer reads first. Nothing in the closure
 imports a CSD layer (`scripts/check-import-hygiene.sh`, rule 4).
 

@@ -43,7 +43,13 @@ cd "$(git rev-parse --show-toplevel)"
 # python3 on a Windows box may be the Store alias stub; prefer whichever interpreter runs.
 if python3 -c 'import sys' >/dev/null 2>&1; then PY=python3; else PY=python; fi
 
-SLICE=""; ALL=0; TARGET="alpha"; BUILD=1; STRICT=""; MANIFEST=0; TABLE=0
+SLICE=""; ALL=0; TARGET="alpha"; BUILD=1; STRICT=""; MANIFEST=0; TABLE=0; CHECK=0
+# The offer's placement and the import of Nava-Hernandez's file are settings (gap items 6 and 8,
+# 2026-09-18); the Python reads them from the environment so the inline snippets below agree.
+export PHYSLIB_DIR="${PHYSLIB_DIR:-QuantumInfo.States.Pure}"
+export PHYSLIB_FISHER_RAO_MODULE="${PHYSLIB_FISHER_RAO_MODULE:-QuantumInfo.ForMathlib.FisherRao}"
+export PHYSLIB_ROOT="${PHYSLIB_ROOT:-}"          # a local Physlib checkout: bib keys, lint-style.py
+export PYTHONIOENCODING=utf-8
 while [ $# -gt 0 ]; do
   case "$1" in
     --slice) SLICE="$2"; shift 2 ;;
@@ -53,6 +59,10 @@ while [ $# -gt 0 ]; do
     --strict) STRICT="--strict"; shift ;;
     --manifest) MANIFEST=1; shift ;;
     --table) TABLE=1; shift ;;
+    --check) CHECK=1; shift ;;
+    --physlib-dir) export PHYSLIB_DIR="$2"; shift 2 ;;
+    --fisher-rao-module) export PHYSLIB_FISHER_RAO_MODULE="$2"; shift 2 ;;
+    --physlib-root) export PHYSLIB_ROOT="$2"; shift 2 ;;
     *) echo "export-physlib: unknown argument $1" >&2; exit 2 ;;
   esac
 done
@@ -63,12 +73,30 @@ if [ "$TABLE" -eq 1 ]; then
   "$PY" scripts/export_physlib.py --table --target "$TARGET"
   exit 0
 fi
+if [ "$CHECK" -eq 1 ]; then
+  "$PY" scripts/export_physlib.py --check --target "$TARGET"
+  exit 0
+fi
 
 OUT="export/physlib"
 args=(--target "$TARGET" --out "$OUT" --local-packages)
 if [ "$ALL" -eq 1 ]; then args+=(--all); elif [ -n "$SLICE" ]; then args+=(--slice "$SLICE"); fi
 [ -n "$STRICT" ] && args+=("$STRICT")
 "$PY" scripts/export_physlib.py "${args[@]}"
+
+# Physlib's own style linter on the offered files, when a checkout is at hand (the module-doc and
+# reference linters are replicated inside export_physlib.py; this is the third, run for real).
+if [ -n "$PHYSLIB_ROOT" ] && [ -f "$PHYSLIB_ROOT/scripts/lint-style.py" ]; then
+  offered=$(find "$(pwd)/$OUT"/slice-*/"$(echo "$PHYSLIB_DIR" | tr . /)" -name "*.lean" 2>/dev/null || true)
+  if [ -n "$offered" ]; then
+    # shellcheck disable=SC2086
+    if (cd "$PHYSLIB_ROOT" && "$PY" scripts/lint-style.py $offered); then
+      echo "export-physlib: Physlib lint-style.py: OK on the offered files"
+    else
+      echo "export-physlib: FAIL Physlib lint-style.py reported problems on the offered files"; exit 1
+    fi
+  fi
+fi
 
 # (4) exposure precondition of the sweep: every closure module has `@[expose] public section`.
 unexposed="$("$PY" - <<'EOF'

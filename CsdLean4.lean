@@ -92,6 +92,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
 public import CsdLean4.Mathlib.Analysis.InformationGeometry.FisherRao
 public import CsdLean4.Mathlib.Analysis.InformationGeometry.FubiniStudyFisherRao
+public import CsdLean4.Mathlib.Analysis.InformationGeometry.BraunsteinCaves
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique

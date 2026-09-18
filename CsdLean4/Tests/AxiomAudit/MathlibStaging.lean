@@ -1234,7 +1234,9 @@ regression and a blocker for the eventual Mathlib PR. -/
 
 -- Analysis/InformationGeometry (2026-09-16, the Fubini–Study → Fisher–Rao bridge for Physlib
 -- PR #1652). FisherRao.lean mirrors Nava-Hernandez's OpenSimplex / fisherRaoInner verbatim
--- (deleted when the PR merges); FubiniStudyFisherRao.lean is the vector-level bridge: along a
+-- (deleted when the PR merges); FubiniStudyFisherRao.lean is the vector-level bridge (and,
+-- since the 2026-09-18 split, BraunsteinCaves.lean the inequality and the homogeneous
+-- coordinates): along a
 -- torus-horizontal direction u (every conj(ψ i) * u i real) the Fisher–Rao inner product of the
 -- Born displacements is 4 Re ⟪u, v⟫ — constant ONE against the repo's fsMetric normalisation —
 -- and the algebraic bound fisherInfo ≤ 4 ‖u‖² with equality iff torus-horizontal. Braunstein–Caves

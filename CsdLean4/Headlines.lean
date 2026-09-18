@@ -66,6 +66,7 @@ public import CsdLean4.RecordLayer.ShearDeIsolation
 public import CsdLean4.Empirical.CSD.PointerCommutation
 public import CsdLean4.Mathlib.QuantumInfo.PhaseEstimation
 public import CsdLean4.Mathlib.Analysis.InformationGeometry.FubiniStudyFisherRao
+public import CsdLean4.Mathlib.Analysis.InformationGeometry.BraunsteinCaves
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFisherRao
 public import CsdLean4.SigmaLayer.Equivariance
 public import CsdLean4.RecordLayer.NStepChain

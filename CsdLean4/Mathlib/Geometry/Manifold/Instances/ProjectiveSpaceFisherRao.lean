@@ -7,7 +7,7 @@ module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyRiemannian
-public import CsdLean4.Mathlib.Analysis.InformationGeometry.FubiniStudyFisherRao
+public import CsdLean4.Mathlib.Analysis.InformationGeometry.BraunsteinCaves
 public import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
 
 /-!
