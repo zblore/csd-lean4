@@ -779,7 +779,7 @@ scalar commutation `I • (c • a) = c • (I • a)` for `a` on the tangent-sp
 ### Q31 (= G18): Darboux — `XL`
 
 **What it would prove.** Every symplectic form is locally the standard one. **Route** (Moser): a
-local flow (Q29(a), locally — easier), the Poincaré lemma on a star-shaped set (**absent** at the pin:
+local flow (Q29(a), locally — easier), the Poincaré lemma on a star-shaped set (**absent** at the pin, **landed in the corpus 2026-09-18** for `C¹` 2-forms on a ball, `extDeriv_radialPrimitiveForm`, together with time-dependent flows and the transport identity, `FlowDerivative.lean`; the remaining assembly is `BACKLOG.md` #8:
 `Mathlib/Geometry/Manifold/PoincareConjecture.lean` is the conjecture, not the lemma; nothing under
 `DifferentialForm/`), and Moser's trick, which needs the flat Lie derivative and the ODE of Q29(b′).
 So Q31 strictly contains Q29(b′) and adds the Poincaré lemma (M–L on a ball, by the explicit homotopy

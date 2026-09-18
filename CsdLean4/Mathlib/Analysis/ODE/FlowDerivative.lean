@@ -25,21 +25,31 @@ pulled back to itself by the local flow (the flat Liouville theorem).
 * `gronwallBound_zero_le` — the Grönwall bound with zero initial gap is at most `ε x e^{K x}`;
 * `exists_linearODE_solution` — the linear ODE `Y' = A(t) Y` on a Banach space has a solution on
   a short interval whose length depends only on a bound for `‖A‖` and on `‖Y₀‖` (Picard–Lindelöf
-  on the operator space);
-* ★★ `hasFDerivAt_flow_of_variational` — **differentiable dependence**: for `f` `C¹` on an open
-  set, a flow `α` confined to a compact and Lipschitz in the initial point, and a solution `Y` of
-  the variational equation `Y' = Df(α x t) ∘ Y`, `Y 0 = 1`, the time-`t` map is differentiable
-  at `x` with derivative `Y t`. The proof is Grönwall's inequality for approximate trajectories
-  (`dist_le_of_approx_trajectories_ODE_of_mem`): the difference of two trajectories is an
-  approximate solution of the linearised equation, with defect controlled by the mean value
-  inequality and the uniform continuity of `Df` on a compact thickening;
+  on the operator space); `exists_linearODE_solution_of_le` — on all of `[0, T]` when
+  `T · M · (‖Y₀‖ + 1) ≤ 1`;
+* ★★ `hasFDerivAt_flow_of_variational_timeDependent` — **differentiable dependence**, for a
+  time-dependent field: for `f t` differentiable on an open set with `(t, z) ↦ D(f t)(z)`
+  continuous, a flow `α` confined to a compact and Lipschitz in the initial point, and a solution
+  `Y` of the variational equation `Y' = D(f t)(α x t) ∘ Y`, `Y 0 = 1`, the time-`t` map is
+  differentiable at `x` with derivative `Y t`. The proof is Grönwall's inequality for approximate
+  trajectories (`dist_le_of_approx_trajectories_ODE_of_mem`): the difference of two trajectories
+  is an approximate solution of the linearised equation, with defect controlled by the mean value
+  inequality and the uniform continuity of `(t, z) ↦ D(f t)(z)` on a compact thickening;
+  ★★ `hasFDerivAt_flow_of_variational` is the autonomous case;
 * ★ `ContDiffAt.exists_localFlow_hasFDerivAt` — a `C¹` field has a local flow, confined to a
   prescribed neighbourhood, differentiable in the initial point for a uniform short time;
+* ★ `exists_flow_hasFDerivAt_of_norm_fderiv_le` — **the flow of a small time-dependent field
+  up to a prescribed time `T`** (`‖D(f t)‖ ≤ M` on a ball, `M T ≤ 1/2`, `f t x₀ = 0`): trajectories
+  on `[0, T]` confined to the ball, the Grönwall separation `e^{M t}`, and the variational
+  derivative at every point of the half-ball — what Moser's trick needs (Darboux, time `1`);
 * `flatLieDeriv` — the flat Lie derivative of a 2-form along a field,
   `(L_X ω)(m) = Dω(X)(m) + ω(DX m₀, m₁) + ω(m₀, DX m₁)`;
-* ★ `form_invariant_of_flatLieDeriv_eq_zero` — along an integral curve with its variational
-  solution, `ω (α t) (Y t ∘ m) = ω (α 0) m` when the flat Lie derivative vanishes
+* ★ `form_invariant_of_flatLieDeriv_eq_zero_timeDependent` — **flat transport for a
+  time-dependent form and field**: along an integral curve with its variational solution,
+  `Ω t (α t) (Y t ∘ m) = Ω 0 (α 0) m` when `∂ₜΩ + L_{f t} Ω t = 0`
   (`constant_of_has_deriv_right_zero` on the product-rule derivative);
+  ★ `form_invariant_of_flatLieDeriv_eq_zero` is the autonomous case, `ω (α t) (Y t ∘ m) = ω (α 0) m`
+  when the flat Lie derivative vanishes;
 * ★★ `ContDiffAt.exists_localFlow_form_invariant` — **flat Liouville**: the local flow pulls the
   form back to itself, `(ω (α x t)).compContinuousLinearMap (D(α · t) x) = ω x`, confined to a
   prescribed neighbourhood.
@@ -120,6 +130,40 @@ theorem exists_linearODE_solution (A : ℝ → F →L[ℝ] F) {T M τ : ℝ} (hT
   obtain ⟨Y, hY0, hY⟩ := hpl.exists_eq_forall_mem_Icc_hasDerivWithinAt₀
   exact ⟨Y, hY0, hY⟩
 
+/-- **The linear ODE `Y' = A(t) Y` has a solution on the whole of `[0, T]`** when
+`T · M · (‖Y₀‖ + 1) ≤ 1`, `M` a bound for `‖A‖` (Picard–Lindelöf on the Banach space `F`, on the
+ball of radius `1` about `Y₀`). -/
+theorem exists_linearODE_solution_of_le (A : ℝ → F →L[ℝ] F) {T M : ℝ} (hT : 0 < T)
+    (hA : ∀ Y, ContinuousOn (fun t => A t Y) (Icc 0 T)) (hM : ∀ t ∈ Icc 0 T, ‖A t‖ ≤ M)
+    (Y₀ : F) (hTL : T * (M * (‖Y₀‖ + 1)) ≤ 1) :
+    ∃ Y : ℝ → F, Y 0 = Y₀ ∧ ∀ t ∈ Icc 0 T, HasDerivWithinAt Y (A t (Y t)) (Icc 0 T) t := by
+  have hM0 : 0 ≤ M := (norm_nonneg _).trans (hM 0 ⟨le_rfl, hT.le⟩)
+  set L : ℝ := M * (‖Y₀‖ + 1) with hL
+  have hL0 : 0 ≤ L := by positivity
+  have hpl : IsPicardLindelof (fun t (Y : F) => A t Y) (tmin := 0) (tmax := T)
+      ⟨0, ⟨le_rfl, hT.le⟩⟩ Y₀ ⟨1, zero_le_one⟩ 0 ⟨L, hL0⟩ ⟨M, hM0⟩ := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · intro t ht
+      refine ((A t).lipschitz.weaken ?_).lipschitzOnWith
+      exact_mod_cast hM t ht
+    · intro Y _
+      exact hA Y
+    · intro t ht Y hY
+      have h1 : ‖Y‖ ≤ ‖Y₀‖ + 1 := by
+        have h1' : ‖Y - Y₀‖ ≤ 1 :=
+          calc ‖Y - Y₀‖ ≤ ((⟨1, zero_le_one⟩ : ℝ≥0) : ℝ) := mem_closedBall_iff_norm.mp hY
+            _ = 1 := rfl
+        calc ‖Y‖ = ‖Y₀ + (Y - Y₀)‖ := by rw [add_sub_cancel]
+          _ ≤ ‖Y₀‖ + ‖Y - Y₀‖ := norm_add_le _ _
+          _ ≤ ‖Y₀‖ + 1 := by gcongr
+      calc ‖A t Y‖ ≤ ‖A t‖ * ‖Y‖ := (A t).le_opNorm Y
+        _ ≤ M * (‖Y₀‖ + 1) := by gcongr; exact hM t ht
+    · show L * max (T - 0) (0 - 0) ≤ (1 : ℝ) - 0
+      rw [sub_zero, sub_zero, sub_zero, max_eq_left hT.le, mul_comm]
+      exact hTL
+  obtain ⟨Y, hY0, hY⟩ := hpl.exists_eq_forall_mem_Icc_hasDerivWithinAt₀
+  exact ⟨Y, hY0, hY⟩
+
 end LinearODE
 
 section Flat
@@ -127,36 +171,39 @@ section Flat
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E] [ProperSpace E]
 
 omit [CompleteSpace E] in
-/-- **Differentiable dependence of a flow on the initial point, with the variational equation.**
-Let `f` be `C¹` on an open `U`, `α` a flow of `f` on a closed ball around `x` for times in
+/-- **Differentiable dependence of a flow on the initial point, with the variational equation**,
+for a time-dependent field. Let `f t` be differentiable on an open `U` for `t ∈ [0, T]` with
+`(t, z) ↦ D(f t)(z)` continuous, `α` a flow of `f` on a closed ball around `x` for times in
 `[0, T]`, confined to a compact `K ⊆ U` and Lipschitz in the initial point uniformly in time, and
-let `Y` solve the linear variational equation `Y' = Df(α x t) ∘ Y`, `Y 0 = 1`, along the curve of
-`x`. Then `α · t` is differentiable at `x` with derivative `Y t`. -/
-theorem hasFDerivAt_flow_of_variational
-    {f : E → E} {U : Set E} (hU : IsOpen U) (hf : ContDiffOn ℝ 1 f U)
+let `Y` solve the linear variational equation `Y' = D(f t)(α x t) ∘ Y`, `Y 0 = 1`, along the curve
+of `x`. Then `α · t` is differentiable at `x` with derivative `Y t`. -/
+theorem hasFDerivAt_flow_of_variational_timeDependent
+    {f : ℝ → E → E} {U : Set E} (hU : IsOpen U) {T : ℝ} (hT : 0 < T)
+    (hfd : ∀ t ∈ Icc 0 T, ∀ z ∈ U, HasFDerivAt (f t) (fderiv ℝ (f t) z) z)
+    (hDc : ContinuousOn (fun p : ℝ × E => fderiv ℝ (f p.1) p.2) (Icc 0 T ×ˢ U))
     {K : Set E} (hK : IsCompact K) (hKU : K ⊆ U)
-    {α : E → ℝ → E} {x : E} {ρ T : ℝ} (hρ : 0 < ρ) (hT : 0 < T)
+    {α : E → ℝ → E} {x : E} {ρ : ℝ} (hρ : 0 < ρ)
     (hα0 : ∀ y ∈ closedBall x ρ, α y 0 = y)
-    (hαd : ∀ y ∈ closedBall x ρ, ∀ t ∈ Icc 0 T, HasDerivWithinAt (α y) (f (α y t)) (Icc 0 T) t)
+    (hαd : ∀ y ∈ closedBall x ρ, ∀ t ∈ Icc 0 T, HasDerivWithinAt (α y) (f t (α y t)) (Icc 0 T) t)
     (hαK : ∀ y ∈ closedBall x ρ, ∀ t ∈ Icc 0 T, α y t ∈ K)
     {L' : ℝ≥0} (hlip : ∀ t ∈ Icc 0 T, LipschitzOnWith L' (α · t) (closedBall x ρ))
     {Y : ℝ → E →L[ℝ] E} (hY0 : Y 0 = 1)
-    (hYd : ∀ t ∈ Icc 0 T, HasDerivWithinAt Y (fderiv ℝ f (α x t) ∘L Y t) (Icc 0 T) t) :
+    (hYd : ∀ t ∈ Icc 0 T, HasDerivWithinAt Y (fderiv ℝ (f t) (α x t) ∘L Y t) (Icc 0 T) t) :
     ∀ t ∈ Icc 0 T, HasFDerivAt (α · t) (Y t) x := by
   have hxρ : x ∈ closedBall x ρ := mem_closedBall_self hρ.le
-  have hfd : ∀ z ∈ U, HasFDerivAt f (fderiv ℝ f z) z := fun z hz =>
-    ((hf.differentiableOn one_ne_zero).differentiableAt (hU.mem_nhds hz)).hasFDerivAt
-  have hDc : ContinuousOn (fderiv ℝ f) U := hf.continuousOn_fderiv_of_isOpen hU le_rfl
   -- a compact thickening of `K` inside `U`
   obtain ⟨δ₀, hδ₀, hK'U⟩ := hK.exists_cthickening_subset_open hU hKU
   have hK' : IsCompact (cthickening δ₀ K) := hK.cthickening
-  obtain ⟨M₀, hM₀⟩ := hK'.exists_bound_of_continuousOn (hDc.mono hK'U)
+  have hKK' : IsCompact (Icc (0 : ℝ) T ×ˢ cthickening δ₀ K) := isCompact_Icc.prod hK'
+  have hsub : Icc (0 : ℝ) T ×ˢ cthickening δ₀ K ⊆ Icc 0 T ×ˢ U := prod_mono subset_rfl hK'U
+  obtain ⟨M₀, hM₀⟩ := hKK'.exists_bound_of_continuousOn (hDc.mono hsub)
   set M : ℝ := max M₀ 0 with hMdef
   have hM0 : 0 ≤ M := le_max_right _ _
-  have hM : ∀ z ∈ cthickening δ₀ K, ‖fderiv ℝ f z‖ ≤ M := fun z hz =>
-    (hM₀ z hz).trans (le_max_left _ _)
-  have hunif : UniformContinuousOn (fderiv ℝ f) (cthickening δ₀ K) :=
-    hK'.uniformContinuousOn_of_continuous (hDc.mono hK'U)
+  have hM : ∀ s ∈ Icc (0 : ℝ) T, ∀ z ∈ cthickening δ₀ K, ‖fderiv ℝ (f s) z‖ ≤ M :=
+    fun s hs z hz => (hM₀ (s, z) ⟨hs, hz⟩).trans (le_max_left _ _)
+  have hunif : UniformContinuousOn (fun p : ℝ × E => fderiv ℝ (f p.1) p.2)
+      (Icc (0 : ℝ) T ×ˢ cthickening δ₀ K) :=
+    hKK'.uniformContinuousOn_of_continuous (hDc.mono hsub)
   intro t ht
   rw [hasFDerivAt_iff_isLittleO_nhds_zero, Asymptotics.isLittleO_iff]
   intro c hc
@@ -189,7 +236,7 @@ theorem hasFDerivAt_flow_of_variational
     rwa [dist_eq_norm, dist_eq_norm, add_sub_cancel_left] at this
   -- the approximate-solution estimate, from the mean value inequality on a small ball
   have happrox : ∀ s ∈ Icc 0 T,
-      ‖f (α (x + h) s) - f (α x s) - fderiv ℝ f (α x s) (α (x + h) s - α x s)‖
+      ‖f s (α (x + h) s) - f s (α x s) - fderiv ℝ (f s) (α x s) (α (x + h) s - α x s)‖
         ≤ ε * ((L' : ℝ) * ‖h‖) := by
     intro s hs
     have hz : α x s ∈ K := hαK x hxρ s hs
@@ -199,11 +246,12 @@ theorem hasFDerivAt_flow_of_variational
     have hy : α (x + h) s ∈ closedBall (α x s) δ₂ := by
       rw [mem_closedBall, dist_eq_norm]; exact (hdist s hs).trans hhδ
     have hmv := (convex_closedBall (α x s) δ₂).norm_image_sub_le_of_norm_hasFDerivWithin_le'
-      (f := f) (f' := fderiv ℝ f) (φ := fderiv ℝ f (α x s)) (C := ε)
-      (fun w hw => (hfd w (hK'U (hball hw))).hasFDerivWithinAt)
+      (f := f s) (f' := fderiv ℝ (f s)) (φ := fderiv ℝ (f s) (α x s)) (C := ε)
+      (fun w hw => (hfd s hs w (hK'U (hball hw))).hasFDerivWithinAt)
       (fun w hw => by
-        have := hδ₁c w (hball hw) (α x s) hzK'
-          ((mem_closedBall.mp hw).trans_lt hδ₂₁)
+        have := hδ₁c (s, w) ⟨hs, hball hw⟩ (s, α x s) ⟨hs, hzK'⟩ (by
+          rw [Prod.dist_eq, dist_self, max_eq_right dist_nonneg]
+          exact (mem_closedBall.mp hw).trans_lt hδ₂₁)
         rw [dist_eq_norm] at this
         exact this.le)
       (mem_closedBall_self hδ₂0.le) hy
@@ -216,13 +264,14 @@ theorem hasFDerivAt_flow_of_variational
   have hIci : ∀ s ∈ Ico 0 T, Icc (0 : ℝ) T ∈ 𝓝[≥] s := fun s hs =>
     Filter.mem_of_superset (Icc_mem_nhdsGE hs.2) (Icc_subset_Icc_left hs.1)
   have hgron := dist_le_of_approx_trajectories_ODE_of_mem
-    (v := fun s y => fderiv ℝ f (α x s) y) (s := fun _ => univ) (K := ⟨M, hM0⟩)
-    (f := Fn) (f' := fun s => f (α (x + h) s) - f (α x s)) (g := G)
-    (g' := fun s => (fderiv ℝ f (α x s) ∘L Y s) h) (a := 0) (b := T)
+    (v := fun s y => fderiv ℝ (f s) (α x s) y) (s := fun _ => univ) (K := ⟨M, hM0⟩)
+    (f := Fn) (f' := fun s => f s (α (x + h) s) - f s (α x s)) (g := G)
+    (g' := fun s => (fderiv ℝ (f s) (α x s) ∘L Y s) h) (a := 0) (b := T)
     (εf := ε * ((L' : ℝ) * ‖h‖)) (εg := 0) (δ := 0)
     (fun s hs => by
-      refine lipschitzOnWith_univ.mpr ((fderiv ℝ f (α x s)).lipschitz.weaken ?_)
-      exact_mod_cast hM _ (self_subset_cthickening _ (hαK x hxρ s (Ico_subset_Icc_self hs))))
+      refine lipschitzOnWith_univ.mpr ((fderiv ℝ (f s) (α x s)).lipschitz.weaken ?_)
+      exact_mod_cast hM s (Ico_subset_Icc_self hs) _
+        (self_subset_cthickening _ (hαK x hxρ s (Ico_subset_Icc_self hs))))
     ((hcontα _ hxh).sub (hcontα _ hxρ))
     (fun s hs => ((hαd _ hxh s (Ico_subset_Icc_self hs)).sub
       (hαd _ hxρ s (Ico_subset_Icc_self hs))).mono_of_mem_nhdsWithin (hIci s hs))
@@ -258,6 +307,29 @@ theorem hasFDerivAt_flow_of_variational
         rw [hε, div_mul_eq_mul_div, div_le_iff₀ (by positivity)]
         nlinarith
 
+omit [CompleteSpace E] in
+/-- **Differentiable dependence of a flow on the initial point, with the variational equation.**
+Let `f` be `C¹` on an open `U`, `α` a flow of `f` on a closed ball around `x` for times in
+`[0, T]`, confined to a compact `K ⊆ U` and Lipschitz in the initial point uniformly in time, and
+let `Y` solve the linear variational equation `Y' = Df(α x t) ∘ Y`, `Y 0 = 1`, along the curve of
+`x`. Then `α · t` is differentiable at `x` with derivative `Y t`
+(`hasFDerivAt_flow_of_variational_timeDependent` for the constant family). -/
+theorem hasFDerivAt_flow_of_variational
+    {f : E → E} {U : Set E} (hU : IsOpen U) (hf : ContDiffOn ℝ 1 f U)
+    {K : Set E} (hK : IsCompact K) (hKU : K ⊆ U)
+    {α : E → ℝ → E} {x : E} {ρ T : ℝ} (hρ : 0 < ρ) (hT : 0 < T)
+    (hα0 : ∀ y ∈ closedBall x ρ, α y 0 = y)
+    (hαd : ∀ y ∈ closedBall x ρ, ∀ t ∈ Icc 0 T, HasDerivWithinAt (α y) (f (α y t)) (Icc 0 T) t)
+    (hαK : ∀ y ∈ closedBall x ρ, ∀ t ∈ Icc 0 T, α y t ∈ K)
+    {L' : ℝ≥0} (hlip : ∀ t ∈ Icc 0 T, LipschitzOnWith L' (α · t) (closedBall x ρ))
+    {Y : ℝ → E →L[ℝ] E} (hY0 : Y 0 = 1)
+    (hYd : ∀ t ∈ Icc 0 T, HasDerivWithinAt Y (fderiv ℝ f (α x t) ∘L Y t) (Icc 0 T) t) :
+    ∀ t ∈ Icc 0 T, HasFDerivAt (α · t) (Y t) x := by
+  have hDc : ContinuousOn (fun p : ℝ × E => fderiv ℝ f p.2) (Icc 0 T ×ˢ U) :=
+    (hf.continuousOn_fderiv_of_isOpen hU le_rfl).comp continuousOn_snd fun p hp => hp.2
+  exact hasFDerivAt_flow_of_variational_timeDependent (f := fun _ => f) hU hT
+    (fun _ _ z hz => ((hf.differentiableOn one_ne_zero).differentiableAt (hU.mem_nhds hz)).hasFDerivAt)
+    hDc hK hKU hρ hα0 hαd hαK hlip hY0 hYd
 
 /-- **A `C¹` field has a local flow that is differentiable in the initial point**, with the
 derivative solving the variational equation along the curve. The flow satisfies the equation on
@@ -353,6 +425,127 @@ theorem ContDiffAt.exists_localFlow_hasFDerivAt {f : E → E} {x₀ : E} (hf : C
       (L' := L') (fun t ht => (hL' t (hsub ht)).mono hball)
       (hY x hx).1 (hY x hx).2
 
+/-- ★ **The flow of a small time-dependent field, up to time `T`, with its variational solution
+and its Grönwall estimate.** Let `f t` be differentiable on an open `U ⊇ closedBall x₀ a` for
+`t ∈ [0, T]`, with `f` and `(t, z) ↦ D(f t)(z)` continuous on `[0, T] × U`,
+`‖D(f t)(z)‖ ≤ M` on `[0, T] × closedBall x₀ a` with `M T ≤ 1/2`, and `f t x₀ = 0`. Then every
+`x ∈ closedBall x₀ (a/2)` has a trajectory on `[0, T]` confined to `closedBall x₀ a`, two
+trajectories separate by at most `e^{M t}` times their initial distance, and for
+`x ∈ ball x₀ (a/2)` the time-`t` map is differentiable at `x` with derivative the variational
+solution. (Picard–Lindelöf on `[0, T]` directly: the field is `M a`-bounded and `M`-Lipschitz on
+the ball, and `M a T ≤ a/2`.) -/
+theorem exists_flow_hasFDerivAt_of_norm_fderiv_le
+    {f : ℝ → E → E} {x₀ : E} {a T M : ℝ} (ha : 0 < a) (hT : 0 < T)
+    {U : Set E} (hU : IsOpen U) (haU : closedBall x₀ a ⊆ U)
+    (hfc : ContinuousOn (Function.uncurry f) (Icc 0 T ×ˢ U))
+    (hfd : ∀ t ∈ Icc 0 T, ∀ z ∈ U, HasFDerivAt (f t) (fderiv ℝ (f t) z) z)
+    (hDc : ContinuousOn (fun p : ℝ × E => fderiv ℝ (f p.1) p.2) (Icc 0 T ×ˢ U))
+    (hM0 : 0 ≤ M) (hM : ∀ t ∈ Icc 0 T, ∀ z ∈ closedBall x₀ a, ‖fderiv ℝ (f t) z‖ ≤ M)
+    (hMT : M * T ≤ 1 / 2) (hf0 : ∀ t ∈ Icc 0 T, f t x₀ = 0) :
+    ∃ α : E → ℝ → E, ∃ Y : E → ℝ → E →L[ℝ] E,
+      (∀ x ∈ closedBall x₀ (a / 2), α x 0 = x ∧
+        (∀ t ∈ Icc 0 T, HasDerivWithinAt (α x) (f t (α x t)) (Icc 0 T) t) ∧
+        ∀ t, α x t ∈ closedBall x₀ a) ∧
+      (∀ x ∈ closedBall x₀ (a / 2), ∀ y ∈ closedBall x₀ (a / 2), ∀ t ∈ Icc 0 T,
+        dist (α x t) (α y t) ≤ dist x y * Real.exp (M * t)) ∧
+      ∀ x ∈ ball x₀ (a / 2), Y x 0 = 1 ∧
+        (∀ t ∈ Icc 0 T, HasDerivWithinAt (Y x) (fderiv ℝ (f t) (α x t) ∘L Y x t) (Icc 0 T) t) ∧
+        ∀ t ∈ Icc 0 T, HasFDerivAt (α · t) (Y x t) x := by
+  classical
+  -- Lipschitz and norm bounds on the ball
+  have hlipf : ∀ t ∈ Icc (0 : ℝ) T, LipschitzOnWith ⟨M, hM0⟩ (f t) (closedBall x₀ a) := by
+    intro t ht
+    refine (convex_closedBall x₀ a).lipschitzOnWith_of_nnnorm_fderiv_le
+      (fun z hz => (hfd t ht z (haU hz)).differentiableAt) (fun z hz => ?_)
+    exact NNReal.coe_le_coe.mp (hM t ht z hz)
+  have hnormf : ∀ t ∈ Icc (0 : ℝ) T, ∀ z ∈ closedBall x₀ a, ‖f t z‖ ≤ M * a := by
+    intro t ht z hz
+    have := (hlipf t ht).dist_le_mul z hz x₀ (mem_closedBall_self ha.le)
+    rw [hf0 t ht, dist_zero_right, dist_eq_norm] at this
+    calc ‖f t z‖ ≤ M * ‖z - x₀‖ := this
+      _ ≤ M * a := by gcongr; exact mem_closedBall_iff_norm.mp hz
+  -- Picard–Lindelöf on `[0, T]`
+  have hpl : IsPicardLindelof f (tmin := 0) (tmax := T) ⟨0, ⟨le_rfl, hT.le⟩⟩ x₀ ⟨a, ha.le⟩
+      ⟨a / 2, by positivity⟩ ⟨M * a, by positivity⟩ ⟨M, hM0⟩ := by
+    refine ⟨hlipf, ?_, ?_, ?_⟩
+    · intro z hz
+      exact hfc.comp (continuousOn_id.prodMk continuousOn_const) fun t ht => ⟨ht, haU hz⟩
+    · intro t ht z hz
+      exact hnormf t ht z hz
+    · show M * a * max (T - 0) (0 - 0) ≤ a - a / 2
+      rw [sub_zero, sub_zero, max_eq_left hT.le]
+      nlinarith
+  obtain ⟨α, hα, L', hL'⟩ :=
+    hpl.exists_forall_mem_closedBall_eq_hasDerivWithinAt_lipschitzOnWith_mem
+  -- the trajectories are continuous
+  have hcontα : ∀ x ∈ closedBall x₀ (a / 2), ContinuousOn (α x) (Icc 0 T) := fun x hx t ht =>
+    ((hα x hx).2.1 t ht).continuousWithinAt
+  have hIci : ∀ s ∈ Ico (0 : ℝ) T, Icc (0 : ℝ) T ∈ 𝓝[≥] s := fun s hs =>
+    Filter.mem_of_superset (Icc_mem_nhdsGE hs.2) (Icc_subset_Icc_left hs.1)
+  -- Grönwall
+  have hgron : ∀ x ∈ closedBall x₀ (a / 2), ∀ y ∈ closedBall x₀ (a / 2), ∀ t ∈ Icc 0 T,
+      dist (α x t) (α y t) ≤ dist x y * Real.exp (M * t) := by
+    intro x hx y hy t ht
+    have := dist_le_of_trajectories_ODE_of_mem (v := f) (s := fun _ => closedBall x₀ a)
+      (K := ⟨M, hM0⟩) (f := α x) (g := α y) (a := 0) (b := T) (δ := dist x y)
+      (fun s hs => hlipf s (Ico_subset_Icc_self hs)) (hcontα x hx)
+      (fun s hs => ((hα x hx).2.1 s (Ico_subset_Icc_self hs)).mono_of_mem_nhdsWithin (hIci s hs))
+      (fun s _ => (hα x hx).2.2 s) (hcontα y hy)
+      (fun s hs => ((hα y hy).2.1 s (Ico_subset_Icc_self hs)).mono_of_mem_nhdsWithin (hIci s hs))
+      (fun s _ => (hα y hy).2.2 s) (by rw [(hα x hx).1, (hα y hy).1]) t ht
+    rw [sub_zero] at this
+    exact this
+  -- the variational equation along each curve
+  have hlin : ∀ x ∈ ball x₀ (a / 2), ∃ Y : ℝ → E →L[ℝ] E, Y 0 = 1 ∧
+      ∀ t ∈ Icc 0 T, HasDerivWithinAt Y (fderiv ℝ (f t) (α x t) ∘L Y t) (Icc 0 T) t := by
+    intro x hx
+    have hx' : x ∈ closedBall x₀ (a / 2) := ball_subset_closedBall hx
+    have hA : ∀ Z : E →L[ℝ] E, ContinuousOn
+        (fun t => ContinuousLinearMap.compL ℝ E E E (fderiv ℝ (f t) (α x t)) Z) (Icc 0 T) := by
+      intro Z
+      simp only [ContinuousLinearMap.compL_apply]
+      have hD : ContinuousOn (fun t => fderiv ℝ (f t) (α x t)) (Icc 0 T) :=
+        hDc.comp (continuousOn_id.prodMk (hcontα x hx'))
+          fun t ht => ⟨ht, haU ((hα x hx').2.2 t)⟩
+      exact hD.clm_comp continuousOn_const
+    have hAM : ∀ t ∈ Icc (0 : ℝ) T,
+        ‖ContinuousLinearMap.compL ℝ E E E (fderiv ℝ (f t) (α x t))‖ ≤ M := by
+      intro t ht
+      calc ‖ContinuousLinearMap.compL ℝ E E E (fderiv ℝ (f t) (α x t))‖
+          ≤ ‖ContinuousLinearMap.compL ℝ E E E‖ * ‖fderiv ℝ (f t) (α x t)‖ :=
+            ContinuousLinearMap.le_opNorm _ _
+        _ ≤ 1 * M := by
+            gcongr
+            · exact ContinuousLinearMap.norm_compL_le ℝ E E E
+            · exact hM t ht _ ((hα x hx').2.2 t)
+        _ = M := one_mul M
+    have hτ : T * (M * (‖(1 : E →L[ℝ] E)‖ + 1)) ≤ 1 := by
+      have h1 : ‖(1 : E →L[ℝ] E)‖ ≤ 1 := ContinuousLinearMap.norm_id_le
+      nlinarith [norm_nonneg (1 : E →L[ℝ] E)]
+    obtain ⟨Y, hY0, hY⟩ := exists_linearODE_solution_of_le
+      (fun t => ContinuousLinearMap.compL ℝ E E E (fderiv ℝ (f t) (α x t))) hT hA hAM
+      (1 : E →L[ℝ] E) hτ
+    exact ⟨Y, hY0, fun t ht => by simpa [ContinuousLinearMap.compL_apply] using hY t ht⟩
+  choose Y hY using hlin
+  set Y' : E → ℝ → E →L[ℝ] E := fun x =>
+    if hx : x ∈ ball x₀ (a / 2) then Y x hx else fun _ => 1 with hY'
+  refine ⟨α, Y', fun x hx => ⟨(hα x hx).1, (hα x hx).2.1, (hα x hx).2.2⟩, hgron, fun x hx => ?_⟩
+  have hYx : Y' x = Y x hx := by simp only [Y', dif_pos hx]
+  rw [hYx]
+  refine ⟨(hY x hx).1, (hY x hx).2, ?_⟩
+  set ρ : ℝ := a / 2 - dist x x₀ with hρ
+  have hρ0 : 0 < ρ := by
+    have := mem_ball.mp hx
+    linarith
+  have hball : closedBall x ρ ⊆ closedBall x₀ (a / 2) :=
+    closedBall_subset_closedBall' (by rw [hρ]; linarith)
+  exact hasFDerivAt_flow_of_variational_timeDependent hU hT hfd hDc (isCompact_closedBall x₀ a)
+    haU hρ0 (fun y hy => (hα y (hball hy)).1)
+    (fun y hy t ht => (hα y (hball hy)).2.1 t ht)
+    (fun y hy t _ => (hα y (hball hy)).2.2 t)
+    (L' := L') (fun t ht => (hL' t ht).mono hball)
+    (hY x hx).1 (hY x hx).2
+
 /-! ### The flat Lie derivative and Liouville -/
 
 /-- The flat Lie derivative of a 2-form `Ω` along a vector field `X`, as a bilinear expression:
@@ -362,9 +555,61 @@ noncomputable def flatLieDeriv (X : E → E) (Ω : E → E [⋀^Fin 2]→L[ℝ] 
   fderiv ℝ Ω z (X z) m + ∑ i, Ω z (Function.update m i (fderiv ℝ X z (m i)))
 
 omit [CompleteSpace E] [ProperSpace E] in
+/-- **Flat transport for a time-dependent form and field.** If `Ω t` is a family of 2-forms, jointly
+differentiable in `(t, z)` on `[0, T] × U`, and `∂ₜΩ + L_{f t} Ω t = 0` there — as the combined
+condition `DΩ(t, z)(1, f t z) m + ∑ᵢ Ω t z (update m i (D(f t)(z) (m i))) = 0` — then along any
+integral curve `α` of `f` with its variational solution `Y`, `Ω t (α t) (Y t ∘ m) = Ω 0 (α 0) m`
+(`constant_of_has_deriv_right_zero` on the product-rule derivative). -/
+theorem form_invariant_of_flatLieDeriv_eq_zero_timeDependent
+    {f : ℝ → E → E} {U : Set E} {T : ℝ}
+    {Ω : ℝ → E → E [⋀^Fin 2]→L[ℝ] ℝ}
+    (hΩ : ∀ t ∈ Icc 0 T, ∀ z ∈ U, DifferentiableAt ℝ (Function.uncurry Ω) (t, z))
+    (hL : ∀ t ∈ Icc 0 T, ∀ z ∈ U, ∀ m : Fin 2 → E,
+      fderiv ℝ (Function.uncurry Ω) (t, z) (1, f t z) m
+        + ∑ i, Ω t z (Function.update m i (fderiv ℝ (f t) z (m i))) = 0)
+    {α : ℝ → E} {x : E} (hα0 : α 0 = x)
+    (hαd : ∀ t ∈ Icc 0 T, HasDerivWithinAt α (f t (α t)) (Icc 0 T) t)
+    (hαU : ∀ t ∈ Icc 0 T, α t ∈ U)
+    {Y : ℝ → E →L[ℝ] E} (hY0 : Y 0 = 1)
+    (hYd : ∀ t ∈ Icc 0 T, HasDerivWithinAt Y (fderiv ℝ (f t) (α t) ∘L Y t) (Icc 0 T) t) :
+    ∀ t ∈ Icc 0 T, ∀ m : Fin 2 → E, Ω t (α t) (fun i => Y t (m i)) = Ω 0 x m := by
+  intro t ht m
+  have hderiv : ∀ s ∈ Icc 0 T,
+      HasDerivWithinAt (fun s => Ω s (α s) (fun i => Y s (m i))) 0 (Icc 0 T) s := by
+    intro s hs
+    have hcurve : HasDerivWithinAt (fun s => (s, α s)) ((1 : ℝ), f s (α s)) (Icc 0 T) s :=
+      (hasDerivWithinAt_id s _).prodMk (hαd s hs)
+    have h1' := (hΩ s hs _ (hαU s hs)).hasFDerivAt.comp_hasDerivWithinAt s hcurve
+    have h1 : HasDerivWithinAt (fun s => Ω s (α s))
+        (fderiv ℝ (Function.uncurry Ω) (s, α s) (1, f s (α s))) (Icc 0 T) s := h1'
+    have h2 : ∀ i, HasDerivWithinAt (fun s => Y s (m i))
+        ((fderiv ℝ (f s) (α s) ∘L Y s) (m i)) (Icc 0 T) s := fun i => by
+      simpa using (hYd s hs).clm_apply (hasDerivWithinAt_const s (Icc (0 : ℝ) T) (m i))
+    have h3 := (hasDerivWithinAt_iff_hasFDerivWithinAt.mp h1).continuousAlternatingMap_apply
+      (g := fun i s => Y s (m i))
+      (g' := fun i => (1 : ℝ →L[ℝ] ℝ).smulRight ((fderiv ℝ (f s) (α s) ∘L Y s) (m i)))
+      (fun i => hasDerivWithinAt_iff_hasFDerivWithinAt.mp (h2 i))
+    have h4 := h3.hasDerivWithinAt
+    have := hL s hs _ (hαU s hs) (fun i => Y s (m i))
+    convert h4 using 1
+    all_goals try rfl
+    simp only [add_apply, ContinuousLinearMap.comp_apply, sum_apply,
+      ContinuousLinearMap.toSpanSingleton_apply, ContinuousLinearMap.smulRight_apply, one_smul,
+      one_apply_eq_self, ContinuousAlternatingMap.apply_apply,
+      ContinuousAlternatingMap.toContinuousLinearMap_apply]
+    linarith [this]
+  have hcont : ContinuousOn (fun s => Ω s (α s) (fun i => Y s (m i))) (Icc 0 T) :=
+    fun s hs => (hderiv s hs).continuousWithinAt
+  have hconst := constant_of_has_deriv_right_zero hcont (fun s hs =>
+    (hderiv s (Ico_subset_Icc_self hs)).mono_of_mem_nhdsWithin
+      (Filter.mem_of_superset (Icc_mem_nhdsGE hs.2) (Icc_subset_Icc_left hs.1))) t ht
+  simpa [hα0, hY0] using hconst
+
+omit [CompleteSpace E] [ProperSpace E] in
 /-- **Flat Liouville.** If the flat Lie derivative of a `C¹` 2-form along a `C¹` field vanishes on
 an open set, then along any integral curve `α` with the variational solution `Y`, the pullback of
-the form is constant: `Ω (α t) (Y t ∘ m) = Ω (α 0) m`. -/
+the form is constant: `Ω (α t) (Y t ∘ m) = Ω (α 0) m`
+(`form_invariant_of_flatLieDeriv_eq_zero_timeDependent` for constant families). -/
 theorem form_invariant_of_flatLieDeriv_eq_zero
     {f : E → E} {U : Set E} (hU : IsOpen U)
     {Ω : E → E [⋀^Fin 2]→L[ℝ] ℝ} (hΩ : ContDiffOn ℝ 1 Ω U)
@@ -375,37 +620,18 @@ theorem form_invariant_of_flatLieDeriv_eq_zero
     {Y : ℝ → E →L[ℝ] E} (hY0 : Y 0 = 1)
     (hYd : ∀ t ∈ Icc 0 T, HasDerivWithinAt Y (fderiv ℝ f (α t) ∘L Y t) (Icc 0 T) t) :
     ∀ t ∈ Icc 0 T, ∀ m : Fin 2 → E, Ω (α t) (fun i => Y t (m i)) = Ω x m := by
-  intro t ht m
   have hΩd : ∀ z ∈ U, HasFDerivAt Ω (fderiv ℝ Ω z) z := fun z hz =>
     ((hΩ.differentiableOn one_ne_zero).differentiableAt (hU.mem_nhds hz)).hasFDerivAt
-  have hderiv : ∀ s ∈ Icc 0 T,
-      HasDerivWithinAt (fun s => Ω (α s) (fun i => Y s (m i))) 0 (Icc 0 T) s := by
-    intro s hs
-    have h1 : HasDerivWithinAt (fun s => Ω (α s)) (fderiv ℝ Ω (α s) (f (α s))) (Icc 0 T) s :=
-      (hΩd _ (hαU s hs)).comp_hasDerivWithinAt s (hαd s hs)
-    have h2 : ∀ i, HasDerivWithinAt (fun s => Y s (m i))
-        ((fderiv ℝ f (α s) ∘L Y s) (m i)) (Icc 0 T) s := fun i => by
-      simpa using (hYd s hs).clm_apply (hasDerivWithinAt_const s (Icc (0 : ℝ) T) (m i))
-    have h3 := (hasDerivWithinAt_iff_hasFDerivWithinAt.mp h1).continuousAlternatingMap_apply
-      (g := fun i s => Y s (m i))
-      (g' := fun i => (1 : ℝ →L[ℝ] ℝ).smulRight ((fderiv ℝ f (α s) ∘L Y s) (m i)))
-      (fun i => hasDerivWithinAt_iff_hasFDerivWithinAt.mp (h2 i))
-    have h4 := h3.hasDerivWithinAt
-    have := hL _ (hαU s hs) (fun i => Y s (m i))
-    simp only [flatLieDeriv] at this
-    convert h4 using 1
-    all_goals try rfl
-    simp only [add_apply, ContinuousLinearMap.comp_apply, sum_apply,
-      ContinuousLinearMap.toSpanSingleton_apply, ContinuousLinearMap.smulRight_apply, one_smul,
-      one_apply_eq_self, ContinuousAlternatingMap.apply_apply,
-      ContinuousAlternatingMap.toContinuousLinearMap_apply]
-    linarith [this]
-  have hcont : ContinuousOn (fun s => Ω (α s) (fun i => Y s (m i))) (Icc 0 T) :=
-    fun s hs => (hderiv s hs).continuousWithinAt
-  have hconst := constant_of_has_deriv_right_zero hcont (fun s hs =>
-    (hderiv s (Ico_subset_Icc_self hs)).mono_of_mem_nhdsWithin
-      (Filter.mem_of_superset (Icc_mem_nhdsGE hs.2) (Icc_subset_Icc_left hs.1))) t ht
-  simpa [hα0, hY0] using hconst
+  have hunc : ∀ t z, z ∈ U → HasFDerivAt (Function.uncurry fun _ : ℝ => Ω)
+      (fderiv ℝ Ω z ∘L ContinuousLinearMap.snd ℝ ℝ E) (t, z) :=
+    fun t z hz => (hΩd z hz).comp (t, z) hasFDerivAt_snd
+  refine form_invariant_of_flatLieDeriv_eq_zero_timeDependent (f := fun _ => f) (U := U) (T := T)
+    (Ω := fun _ => Ω) (fun t _ z hz => (hunc t z hz).differentiableAt)
+    (fun t _ z hz m => ?_) hα0 hαd hαU hY0 hYd
+  have h := hL z hz m
+  simp only [flatLieDeriv] at h
+  rw [(hunc t z hz).fderiv]
+  simpa using h
 
 /-- ★★ **Flat Liouville for the local flow of a `C¹` field.** If the flat Lie derivative of a `C¹`
 2-form `Ω` along a `C¹` field `f` vanishes near `x₀`, the local flow `α` of `f` near `x₀` is

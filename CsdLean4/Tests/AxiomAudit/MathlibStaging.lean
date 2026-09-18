@@ -3462,6 +3462,73 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms ContDiffAt.exists_localFlow_form_invariant
 
+-- BACKLOG #8 landing (2026-09-18), Analysis/ODE/FlowDerivative.lean, time-dependent fields: the
+-- variational equation for a non-autonomous C^1 field (the autonomous statement is now its
+-- corollary), transport of a time-dependent 2-form along the flow of X_t when
+-- d/dt Omega_t + L_{X_t} Omega_t = 0, the flow up to a prescribed time T of a field with
+-- |Df| <= M, M T <= 1/2, vanishing at the centre (confinement, Gronwall separation, variational
+-- derivative), and the linear ODE solved under a product bound.
+/-- info: 'exists_linearODE_solution_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_linearODE_solution_of_le
+
+/-- info: 'hasFDerivAt_flow_of_variational_timeDependent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasFDerivAt_flow_of_variational_timeDependent
+
+/-- info: 'form_invariant_of_flatLieDeriv_eq_zero_timeDependent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms form_invariant_of_flatLieDeriv_eq_zero_timeDependent
+
+/-- info: 'exists_flow_hasFDerivAt_of_norm_fderiv_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_flow_hasFDerivAt_of_norm_fderiv_le
+
+-- BACKLOG #8 landing (2026-09-18), Analysis/Calculus/DifferentialForm/Poincare.lean: the Poincare
+-- lemma for closed C^1 2-forms on a ball by the radial homotopy operator, built from scalar
+-- parametric integrals (hasFDerivAt_integral_of_dominated_of_fderiv_le,
+-- continuousAt_of_dominated_interval) and packaged as a C^1 1-form through a basis; the
+-- primitive of a form vanishing at the centre has zero derivative there.
+/-- info: 'isBoundedBilinearMap_apply_vecCons' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms isBoundedBilinearMap_apply_vecCons
+
+/-- info: 'hasFDerivAt_evalPair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasFDerivAt_evalPair
+
+/-- info: 'hasFDerivAt_radialPrimitiveVal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasFDerivAt_radialPrimitiveVal
+
+/-- info: 'contDiffOn_radialPrimitiveVal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_radialPrimitiveVal
+
+/-- info: 'contDiffOn_radialPrimitive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_radialPrimitive
+
+/-- info: 'contDiffOn_radialPrimitiveForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_radialPrimitiveForm
+
+/-- info: 'hasFDerivAt_radialPrimitiveForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasFDerivAt_radialPrimitiveForm
+
+/-- info: 'fderiv_radialPrimitive_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms fderiv_radialPrimitive_self
+
+/-- info: 'hasFDerivAt_radialPrimitiveForm_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasFDerivAt_radialPrimitiveForm_self
+
+/-- info: 'extDeriv_radialPrimitiveForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms extDeriv_radialPrimitiveForm
+
 -- Q29(c') (2026-09-12), Geometry/Manifold/HamiltonianLieDerivative.lean: Cartan's formula on a
 -- normed space (L_X omega = d(iota_X omega) + iota_X d omega, from extDeriv_apply), and for the
 -- local representative of a symplectic form along its local Hamiltonian vector both terms
