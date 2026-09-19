@@ -2,7 +2,10 @@
 
 *(Each path is an ordered list of stops — file, then why it's next. Start anywhere; each sector
 is self-contained. The reader-type paths (physicist / Lean reader / skeptic) are in
-[`TOUR.md`](TOUR.md). Every stop's module header carries its own ⚠️ honest-scope block.)*
+[`TOUR.md`](TOUR.md); the single path from the postulates to a working quantum computer, one page
+per link with its theorems and its seam, is
+[`FROM-POSTULATES-TO-QUANTUM-COMPUTERS.md`](FROM-POSTULATES-TO-QUANTUM-COMPUTERS.md). Every stop's
+module header carries its own ⚠️ honest-scope block.)*
 
 ## 1 · Foundations & ontology — what is Σ, and what is assumed?
 
