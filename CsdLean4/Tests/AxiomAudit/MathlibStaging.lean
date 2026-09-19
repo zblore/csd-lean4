@@ -6011,6 +6011,42 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Matrix.exp_neg_I_mul_smul_add_apply_tendsto_sum_pathWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Matrix.exp_neg_I_mul_smul_add_apply_tendsto_sum_pathWeight
 
+-- BACKLOG #36(b)(ii) (2026-09-19), Analysis/Matrix/DysonSeries.lean: the Dyson series of a
+-- perturbed unitary group at finite dimension. Terms by the interaction-picture Volterra
+-- recursion D_{n+1}(t) = exp(tA) * int_0^t exp(-sA) B D_n(s) ds (matrix-valued Bochner integrals
+-- under the L2 operator norm), the Duhamel identity by the fundamental theorem of calculus on
+-- the interpolant exp(-sA) exp(s(A+B)), term and remainder bounds (|B| t)^n / n! from the
+-- unitarity of the exponential factors, and convergence of the series to exp(t(A+B)).
+/-- info: 'Matrix.dysonTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.dysonTerm
+
+/-- info: 'Matrix.continuous_dysonTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.continuous_dysonTerm
+
+/-- info: 'Matrix.norm_dysonTerm_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.norm_dysonTerm_le
+
+/-- info: 'Matrix.hasDerivAt_exp_neg_smul_mul_exp_smul_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.hasDerivAt_exp_neg_smul_mul_exp_smul_add
+
+/-- info: 'Matrix.exp_add_sub_exp_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.exp_add_sub_exp_eq
+
+/-- info: 'Matrix.dysonRemainder_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.dysonRemainder_succ
+
+/-- info: 'Matrix.norm_dysonRemainder_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.norm_dysonRemainder_le
+
+/-- info: 'Matrix.summable_dysonTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.summable_dysonTerm
+
+/-- info: 'Matrix.hasSum_dysonTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.hasSum_dysonTerm
+
+/-- info: 'Matrix.hasSum_dysonTerm_of_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.hasSum_dysonTerm_of_isHermitian
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient
