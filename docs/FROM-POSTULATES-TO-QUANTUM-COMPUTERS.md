@@ -171,8 +171,12 @@ ledger names the two failure faces. Posit 8, measurement independence, is shared
 theory and backed by nothing short of assuming it. The corpus is contextual and non-local by construction,
 so the no-go theorems constrain the ontology rather than threaten it.
 
-**What is not claimed.** A locality mechanism. Row 39 of the backlog states the conjecture that the
-correlations are local in `Σ` and nonlocal only in an emergent spacetime; nothing here establishes it.
+**What is not claimed.** A locality mechanism. The programme's conjecture `C-1`
+([`specs/POSITS.md`](../specs/POSITS.md)) is that the correlations are local in `Σ` and nonlocal only in an
+emergent spacetime. In the corpus's own terms: bounded influence and non-signalling correlations across an
+assumed tensor cut are theorems, and the conjecture is that the cut is itself emergent
+([`specs/records-to-spacetime-scoping.md`](../specs/records-to-spacetime-scoping.md)). Nothing here
+establishes it.
 
 ## 7. Density operators, channels, entropy
 

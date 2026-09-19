@@ -338,6 +338,42 @@ overclaim; splitting it is the accurate move.
 
 ---
 
+## Conjectures — not posits
+
+A conjecture is the opposite of a posit: **no Lean object depends on it**, no theorem takes it as a
+hypothesis, and nothing downstream is correct *because* of it. It is recorded here so that the programme's
+stated direction is visible at the same honesty level as its assumptions, and so that it is not mistaken
+for one. Conjectures carry a `C-` prefix and are never counted among the posits.
+
+### C-1 — spacetime from records; Σ-local, spacetime-nonlocal
+
+*(Added 2026-09-19, out of the private notes at the author's instruction; BACKLOG #38 and #39;
+scoped in `specs/records-to-spacetime-scoping.md`.)*
+
+* **Statement.** Spacetime relations arise from the record layer, by coarse-graining over the definite
+  outcomes de-isolation events leave in `Σ`, and entangled correlations are local in `Σ` and appear
+  nonlocal only in that emergent description. Paper D §5.2 and §7.12 state the reading; the programme's
+  own stack places the emergence downstream of measurement.
+* **What is a theorem today, relative to an assumed tensor cut.** Influence along a coupling graph is
+  bounded (`heisenberg_graphInteractingU_pow_supportedOn`, `commute_heisenberg_graphInteractingU_pow`,
+  `norm_commutator_heisenbergFlow_le`); records across the cut are non-signalling
+  (`tensorSector_no_signalling`) and Bell-violating (`bell_general_separation`, `bell_record_weight₀`); no
+  local or non-contextual account of them exists (`general_ks_noNonContextualValuation`); and a joint ontic
+  point is not a pair of local points (`segre_not_surjective`), so "local in `Σ`" means the manifold
+  locality of the flow and nothing stronger. In one sentence: the corpus proves bounded influence and
+  non-signalling correlations across an assumed cut, and conjectures that the cut is itself emergent.
+* **What would establish it.** A relation between records, defined from the records rather than from the
+  interaction, under which the joint flow is local; Paper D names the shape (a coarse-graining projection
+  to macroscopic coordinates) and not the instance. Naming the instance is the author's decision. The
+  bricks that can be built before it are priced in the scoping note (`ST-1`–`ST-3`).
+* **What would refute it.** Influence outrunning every graph bound, a local record whose statistics
+  depended on the remote context, or `Σ`-locality turning out to need a product decomposition of points.
+  The corpus rules out the first two and shows the third is not required (the scoping note, §6).
+* **Status.** Not refuted; not established; a conjecture about whether the cut is emergent, consistent
+  with everything proved. Not a goal of the current reconstruction (`CSD-CHARTER.md`).
+
+---
+
 ## Numbering
 
 ⚠️ **These numbers are the repository's.** They are cited from `AXIOMS.md` §3.10,

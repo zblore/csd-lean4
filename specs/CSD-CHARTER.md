@@ -94,8 +94,13 @@ resolved in Lean, the second the standing posit):
 - **Adding QM breadth** — more gates, algorithms, empirical tests on the epistemic side —
   is *not* completing the reconstruction. It is legitimate only when labelled as breadth.
 - **"Deriving Σ."** A non-question; Σ is the floor.
-- **The deeper research direction beyond the QM reconstruction is intentionally kept out
-  of the public docs for now.** First complete QM from Σ + Ω.
+- **The deeper research direction beyond the QM reconstruction — spacetime from the records,
+  and entangled correlations local in Σ but nonlocal in that emergent description — is on the
+  board since 2026-09-19 as a conjecture, not a goal.** It is `C-1` in `specs/POSITS.md`, rows
+  38 and 39 of the BACKLOG, and `specs/records-to-spacetime-scoping.md`, which says what is a
+  theorem today relative to an assumed tensor cut and what is not. It was kept out of the
+  documents before that date at the author's decision, and put on them at the author's
+  instruction. First complete QM from Σ + Ω.
 
 ## Corrections (do not re-inject these errors)
 

@@ -110,10 +110,12 @@ like which interaction an apparatus realises, a modelling input. It is the autho
 ## 4. What the finite arena can and cannot support
 
 * **Compactness and finiteness.** `Σ = ℂℙⁿ⁻¹ × T²` is compact and finite-dimensional, with a finite total
-  measure (`arenaVolume_univ`) and finitely many outcomes per context. Anything defined from it is bounded or
-  finite: no unbounded cones, no infinite volumes, no continuum of positions. The EFT departures note already
-  draws this line: finite `N` gives bounded discrete *spectra*, not a spacetime lattice, and "lattice" is the
-  wrong word because a literal one breaks Lorentz invariance.
+  measure (`arenaVolume_univ`) and finitely many outcomes per context. Anything defined **directly** from it is
+  bounded or finite: no unbounded cones, no infinite volumes, no continuum of positions. That is a statement
+  about direct definitions, not about effective descriptions: a coarse-grained spacetime built over many
+  records is not bounded by the size of one arena, and Paper D's route is exactly that one. The EFT departures
+  note already draws the finer line: finite `N` gives bounded discrete *spectra*, not a spacetime lattice, and
+  "lattice" is the wrong word because a literal one breaks Lorentz invariance.
 * **No Lorentz structure.** The CV rung's light cone moves one graph edge per period, a preferred frame by
   construction. Anything emergent from it is discrete and Galilean at best. Relativistic structure is
   exactly what Paper D defers and this note does not touch.
@@ -211,8 +213,13 @@ it is consistent with everything proved. The one brick worth building now is `ST
 half a statement about records rather than about operators; the one document worth writing now is `ST-4`.
 
 The rest of the programme's spacetime vision, Lorentzian structure, causal cones as geometry rather than
-graph balls, curvature, emergent time, is not in reach of a finite compact arena and is deferred exactly as
-Paper D defers it. This note is the first place that is written in the repository.
+graph balls, curvature, emergent time, is deferred exactly as Paper D defers it: as work not begun, not as
+something the arena forbids. ⚠️ *Corrected 2026-09-19 (author): an earlier version of this sentence said these
+were "not in reach of a finite compact arena". That overstated §4. Finiteness and compactness bound what is
+defined **directly** from `Σ` (spectra, volumes, the number of outcomes); they say nothing against an* effective
+*spacetime arising after coarse-graining over many records, which is exactly the route Paper D names. The arena
+is not the obstacle; the unnamed projection is.* This note is the first place that is written in the
+repository.
 
 ## References
 
