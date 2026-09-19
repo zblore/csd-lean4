@@ -1333,6 +1333,36 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.modeOpQ_pow_mul_pow_vac
 
+-- CV-23d / BACKLOG #36(b)(i) (2026-09-19, CV/WickGeneral.lean): Wick at equal time for an
+-- ARBITRARY word of quadratures. wordOp l is the product of the mode quadratures in the written
+-- order; any word is one mode's block times the word with the mode removed (the interleaving
+-- commutes out), a word is supported on its modes, clustering across disjoint supports gives the
+-- product of single-mode moments, and below threshold each is the Gaussian moment
+-- (count-1)!!/2^(count/2) -- the sum over pairings in multiplicity form. Odd counts vanish.
+/-- info: 'CSD.CV.wordOp_eq_modeOp_pow_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wordOp_eq_modeOp_pow_mul
+
+/-- info: 'CSD.CV.wordOp_supportedOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wordOp_supportedOn
+
+/-- info: 'CSD.CV.wordOp_vac_eq_prod_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wordOp_vac_eq_prod_pow
+
+/-- info: 'CSD.CV.wordOp_vac_eq_prod_wickMoment' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wordOp_vac_eq_prod_wickMoment
+
+/-- info: 'CSD.CV.wordOp_vac_eq_zero_of_odd_count' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wordOp_vac_eq_zero_of_odd_count
+
+/-- info: 'CSD.CV.wordOp_replicate_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wordOp_replicate_vac
+
 -- CV-26 (2026-08-18, CV\ChannelRG.lean): channel-level RG at the cutoff -- the statement the
 -- Stage-4 no-go said had to replace unitary RG matching. The coarse-graining is MODE TRACING
 -- (keep the spectators, discard mode k), built as the Stinespring channel of the mode-split

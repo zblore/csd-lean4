@@ -534,6 +534,7 @@ public import CsdLean4.RecordLayer.BasisMeasurement
 public import CsdLean4.RecordLayer.StatisticsRigidity
 public import CsdLean4.CV.ThermalPropagator
 public import CsdLean4.CV.Wick
+public import CsdLean4.CV.WickGeneral
 public import CsdLean4.CV.ChannelRG
 public import CsdLean4.CV.ArenaBridge
 public import CsdLean4.CV.FieldStructuredFlow
