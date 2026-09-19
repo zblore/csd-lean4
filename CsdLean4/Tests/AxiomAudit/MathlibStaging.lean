@@ -1194,6 +1194,25 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Projectivization.isOpenQuotientMap_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.isOpenQuotientMap_mk'
 
+-- Mathlib pull request 1 (2026-09-19): the quotient topology on projective space, the
+-- pull-request text verbatim. The unit-multiple criterion and the saturation lemma replace
+-- this repository's own scaleNonzero reimplementation; the Kˣ-action on the nonzero vectors
+-- is Mathlib's, and its continuity instance is staged in Topology/Algebra/MulAction.lean.
+/-- info: 'Projectivization.mk'_eq_mk'_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.mk'_eq_mk'_iff
+
+/-- info: 'Projectivization.preimage_image_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.preimage_image_mk'
+
+/-- info: 'Projectivization.isQuotientMap_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.isQuotientMap_mk'
+
+/-- info: 'SubMulAction.continuousConstSMul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SubMulAction.continuousConstSMul
+
+/-- info: 'Units.continuousConstSMul_nonZero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Units.continuousConstSMul_nonZero
+
 /-- info: 'Projectivization.instT2Space' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.instT2Space
 
@@ -1421,8 +1440,8 @@ regression and a blocker for the eventual Mathlib PR. -/
 /-- info: 'Projectivization.measurable_iff_measurable_comp_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.measurable_iff_measurable_comp_mk'
 
-/-- info: 'Projectivization.continuous_iff_continuous_comp_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs in #print axioms Projectivization.continuous_iff_continuous_comp_mk'
+/-- info: 'Projectivization.continuous_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.continuous_iff
 
 /-- info: 'Projectivization.continuous_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.continuous_lift

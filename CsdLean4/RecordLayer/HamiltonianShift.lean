@@ -206,7 +206,7 @@ theorem hasFDerivAt_pointerEnergy (q : Pointer K) (w : Fin K → ℝ) :
 
 /-- The projective coupling energy is continuous on the pointer (descent through `mk'`). -/
 theorem continuous_pointerEnergy (w : Fin K → ℝ) : Continuous (pointerEnergy w) := by
-  rw [Projectivization.continuous_iff_continuous_comp_mk']
+  rw [Projectivization.continuous_iff]
   have hcomp : (pointerEnergy w ∘ Projectivization.mk' ℂ)
       = fun v : { v : EuclideanSpace ℂ (Fin (K + 1)) // v ≠ 0 } =>
           couplingEnergy w (v : EuclideanSpace ℂ (Fin (K + 1)))

@@ -13,6 +13,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
 public import CsdLean4.Mathlib.Analysis.Matrix.SchrodingerUnitary
 public import CsdLean4.Mathlib.Analysis.Matrix.ProjectiveLift
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
+public import CsdLean4.Mathlib.Topology.Algebra.MulAction
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Metric
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyLebesgue

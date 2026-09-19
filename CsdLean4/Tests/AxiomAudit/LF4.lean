@@ -38,7 +38,8 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- sigma-algebra of that same topology (Projectivization.instBorelSpace).
 -- ⚠️ ESTIMATE CORRECTION: this was logged as effort M on the assumption the infrastructure was
 -- missing. It is S -- Projectivization/Topology.lean and Projectivization/MeasureSpace.lean already
--- staged continuous_iff_continuous_comp_mk' and the Borel instance. The row was wrong, not the work.
+-- staged the continuity-descent lemma (continuous_iff since 2026-09-19) and the Borel instance.
+-- The row was wrong, not the work.
 -- 2026-09-16: continuous_momentMap / measurable_momentMap moved with the definition to the
 -- Category-1 module Projectivization/MomentMap.lean; their pins are in MathlibStaging.lean.
 

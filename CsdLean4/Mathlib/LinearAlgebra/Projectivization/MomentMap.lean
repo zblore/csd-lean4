@@ -145,7 +145,7 @@ omit [DecidableEq ι] in
 /-- **The moment coordinate is continuous**, by descent through the quotient map `mk'`. -/
 theorem continuous_momentMap (i : ι) :
     Continuous (fun p : ℙ ℂ (EuclideanSpace ℂ ι) => momentMap p i) := by
-  rw [continuous_iff_continuous_comp_mk']
+  rw [continuous_iff]
   have hcomp : ((fun p : ℙ ℂ (EuclideanSpace ℂ ι) => momentMap p i) ∘ (mk' ℂ))
       = fun v : { v : EuclideanSpace ℂ ι // v ≠ 0 } =>
           ‖(v : EuclideanSpace ℂ ι) i‖ ^ 2 / ‖(v : EuclideanSpace ℂ ι)‖ ^ 2 := by

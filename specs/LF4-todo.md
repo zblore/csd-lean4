@@ -461,12 +461,12 @@ The inner-product-equation spelling avoids the cascade and is mathematically equ
 
 - `Projectivization.instTopologicalSpace`: explicit forwarding of the quotient topology instance (required because `Projectivization` is a `def`, not `@[reducible]`).
 - `Projectivization.continuous_mk'`: continuity of the canonical surjection `{v : V // v ≠ 0} → ℙ K V`.
-- `Projectivization.scaleNonzero` + `scaleNonzeroHomeo`: the `Kˣ`-scaling action on the nonzero subtype as a self-homeomorphism (gated on `[TopologicalSpace V] [ContinuousConstSMul K V]`).
-- `Projectivization.mk'_preimage_mk'_image`: saturation lemma `mk' ⁻¹' (mk' '' U) = ⋃ a : Kˣ, scaleNonzero a '' U` (the projectivization analogue of `MulAction.quotient_preimage_image_eq_union_mul`).
+- ~~`Projectivization.scaleNonzero` + `scaleNonzeroHomeo`: the `Kˣ`-scaling action on the nonzero subtype as a self-homeomorphism (gated on `[TopologicalSpace V] [ContinuousConstSMul K V]`).~~ **Deleted 2026-09-19:** the action is Mathlib's own, through `Units.nonZeroSubMul`, and its continuity is the staged instance `Units.continuousConstSMul_nonZero`.
+- `Projectivization.preimage_image_mk'`: saturation lemma `mk' ⁻¹' (mk' '' U) = ⋃ a : Kˣ, (a • ·) '' U` (renamed 2026-09-19 from `mk'_preimage_mk'_image`, and stated for Mathlib's unit action).
 - `Projectivization.isOpenMap_mk'`: openness of the canonical surjection.
 - `Projectivization.isQuotientMap_mk'` + `isOpenQuotientMap_mk'`: quotient-map and open-quotient-map characterisations.
 
-Hypothesis pattern at Group 1: `[DivisionRing K] [AddCommGroup V] [Module K V] [TopologicalSpace V] [ContinuousConstSMul K V]` for the topological-action lemmas (continuity / openness); algebraic infrastructure (`scaleNonzero_mul`, `scaleNonzero_one`, `mk'_preimage_mk'_image`) does not require any topology. No topology on K is needed — `ContinuousConstSMul K V` is purely a property of the `V`-side action.
+⚠️ **Rewritten 2026-09-19** to the Mathlib pull-request text (461 lines to 82): the hypothesis for openness is now the weaker `[ContinuousConstSMul Kˣ V]`, the continuity descent is `continuous_iff`, and the scaling machinery above is gone. Hypothesis pattern as delivered in 2026-05: `[DivisionRing K] [AddCommGroup V] [Module K V] [TopologicalSpace V] [ContinuousConstSMul K V]` for the topological-action lemmas (continuity / openness); algebraic infrastructure (`scaleNonzero_mul`, `scaleNonzero_one`, `mk'_preimage_mk'_image`) does not require any topology. No topology on K is needed — `ContinuousConstSMul K V` is purely a property of the `V`-side action.
 
 **Group 2 delivered 2026-05-20** in the same `CsdLean4/Mathlib/LinearAlgebra/Projectivization/Topology.lean` file, under a new `section NormedFiniteDim`. Adopted the `[RCLike K]` scalar-hypothesis option (per plan §7.2): simpler proofs and sufficient for the LF4 critical path. The earlier sections were enclosed in a new `section AlgebraicTopology` so the `[AddCommGroup V]` from the outer variable block does not create an instance diamond with `[NormedAddCommGroup V]` in the new section. Covers items 3.5–3.6:
 

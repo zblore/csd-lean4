@@ -164,6 +164,15 @@ upstreaming promise — and the option this section keeps open stays open for an
 (including a future decision) to exercise. Nothing is deleted; the readiness record
 (zero corpus imports, `Matrix.StoneC1` namespace, interface pass) lives in the struck row.
 
+**Decision 2026-09-19 (author): the 2026-08-06 retirement is lifted, narrowly.**
+Upstreaming is back on the work queue as a numbered row, one pull request at a time,
+starting with the quotient topology on `Projectivization`. The rule that comes with it:
+a pull request is written in this repository first, in Mathlib's idiom, and lives here
+until it builds green; only then does it reach a fork. Nothing is pushed to a fork, opened
+as a pull request, or posted to Zulip without the author's approval for that step. The
+staging discipline and the readiness record are unchanged; what changes is that the option
+is now being exercised rather than merely kept open.
+
 ## 8. Conventions adopted from the Lean-QIT / Physlib comparison (2026-07-20)
 
 Drawn from an inspection of the QuAIR/Lean-QIT source and Physlib's contribution rules. Most of these also move the corpus toward Physlib's requirements, so adopting them serves both hardening and the upstreaming route. Each item below is marked with its **status**: *already-satisfied* (we do this or better), *policy* (adopted as a rule for new work), or *to-implement* (a concrete follow-up task, tracked in [`specs/BACKLOG.md`](specs/BACKLOG.md)).

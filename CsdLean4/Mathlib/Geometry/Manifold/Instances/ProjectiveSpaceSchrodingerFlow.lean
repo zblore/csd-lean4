@@ -146,7 +146,7 @@ theorem expectation_mk (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (ψ : Ambien
 
 theorem continuous_expectation (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) :
     Continuous (expectation (n := n) H) := by
-  rw [continuous_iff_continuous_comp_mk']
+  rw [continuous_iff]
   have hcomp : (expectation H ∘ (mk' ℂ : _ → ℙ ℂ (Ambient n)))
       = fun v : {v : Ambient n // v ≠ 0} =>
           (inner ℂ (v : Ambient n) (Matrix.toEuclideanLin H v)).re / ‖(v : Ambient n)‖ ^ 2 := by

@@ -7,6 +7,7 @@ module
 
 public import Mathlib.LinearAlgebra.Projectivization.Basic
 public import Mathlib.LinearAlgebra.Projectivization.Action
+public import CsdLean4.Mathlib.Topology.Algebra.MulAction
 public import Mathlib.Topology.Algebra.ConstMulAction
 public import Mathlib.Topology.Maps.OpenQuotient
 public import Mathlib.Analysis.Normed.Module.FiniteDimension
@@ -16,43 +17,51 @@ public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
 public import Mathlib.Topology.Separation.Hausdorff
 
 /-!
-# Topology on projectivization
+# The quotient topology on projective space
 
 **Category:** 1-Mathlib (CSD-free Mathlib upstream candidates).
 
-The quotient topology on `Projectivization K V` is inherited from
-`instTopologicalSpaceQuotient`. Because `Projectivization K V` is a `def`
-(not `@[reducible]`) over `Quotient (projectivizationSetoid K V)`,
-typeclass synthesis does not unfold it; this file installs the explicit
-`TopologicalSpace (ℙ K V)` instance and develops its consequences:
+`ℙ K V` is the quotient of the nonzero vectors `{v : V // v ≠ 0}` by the action of `Kˣ`.
+When `V` carries a topology we give `ℙ K V` the quotient topology, and we show that the
+quotient map `Projectivization.mk'` is an open quotient map as soon as scalar multiplication
+by units of `K` is continuous on `V`.
 
-- `Projectivization.continuous_mk'`: the canonical surjection
-  `{v : V // v ≠ 0} → ℙ K V` is continuous.
-- `Projectivization.isOpenMap_mk'`: the canonical surjection is an open
-  map. Proved directly using
-  `mk' ⁻¹' (mk' '' U) = ⋃ a : Kˣ, scaleNonzero a '' U`.
-- `Projectivization.isQuotientMap_mk'` and
-  `Projectivization.isOpenQuotientMap_mk'`: combine openness + continuity
-  + surjectivity.
+## Main results
 
-For `[RCLike K]` and finite-dimensional normed `V`:
+* `Projectivization.instTopologicalSpace`: the quotient topology on `ℙ K V`.
+* `Projectivization.isQuotientMap_mk'`, `Projectivization.continuous_mk'`:
+  `mk' K : {v : V // v ≠ 0} → ℙ K V` is a quotient map, in particular continuous.
+* `Projectivization.isOpenQuotientMap_mk'`: `mk' K` is an open quotient map when `Kˣ` acts
+  continuously on `V`.
+* `Projectivization.continuous_iff`: a map out of `ℙ K V` is continuous iff its composite with
+  `mk' K` is.
 
-- `Projectivization.instT2Space`: Hausdorffness, via the open-quotient-map
-  criterion `t2Space_iff_of_isOpenQuotientMap` reduced to closedness of
-  the K-collinearity relation, which in turn follows from
-  `isOpen_setOfPred_linearIndependent` and `LinearIndependent.pair_iff'`.
-- `Projectivization.instCompactSpace`: compactness, via continuous
-  surjection from `Metric.sphere (0 : V) 1` (compact by Heine-Borel in
-  finite-dim normed).
+Beyond the upstream text, and staying here:
+
+* `Projectivization.continuous_lift`: a scale-invariant continuous function on the nonzero
+  subtype descends continuously, the topological companion of `lift_measurable`.
+* `Projectivization.mapOfInjective_continuous`, `Projectivization.mapEquiv` and its lemmas:
+  continuity of the map induced by an injective linear map, and the `LinearEquiv` action.
+* `Projectivization.instT2Space`, `Projectivization.instCompactSpace`: `ℙ K V` is compact
+  Hausdorff for `[RCLike K]` and finite-dimensional normed `V`.
+* `Projectivization.connectedSpace_of_isConnected_nonzero`: connectedness from connectedness of
+  the nonzero vectors.
 
 ## Provenance
 
-Staged as upstream Mathlib material. All declarations live under
-`namespace Projectivization` with no `CsdLean4`-namespace prefix; the file
-is intended to land in
-`Mathlib/LinearAlgebra/Projectivization/Topology.lean` once usage
-stabilises. Naming, docstring format, and import discipline track Mathlib
-idiom.
+Staged as upstream Mathlib material. **The first section below is the Mathlib pull-request text
+verbatim** (`Mathlib/LinearAlgebra/Projectivization/Topology.lean`, six declarations), so that
+this repository and the pull request are the same code and any drift between them is visible.
+Two divergences, both forced by this repository's Mathlib pin and neither touching a statement:
+the module-system header and this docstring, which the lints here require; and `isOpenMap_mk'`
+spelling the coinducing step `isQuotientMap_mk'.isCoinducing.isOpen_preimage`, since
+`IsQuotientMap.isOpen_preimage` postdates the pin. The remaining sections are this repository's
+own and are the second pull request's material (Hausdorffness, compactness) or stay here.
+
+The `Kˣ`-action on `{v : V // v ≠ 0}` is Mathlib's, through `Units.nonZeroSubMul`; the
+continuity instance it needs is staged in `CsdLean4/Mathlib/Topology/Algebra/MulAction.lean`.
+Until 2026-09-19 this file carried its own `scaleNonzero` / `scaleNonzeroHomeo` reimplementation
+of that action and its own saturation lemma, 461 lines against the 82 of the pull request.
 
 ## Tags
 
@@ -72,175 +81,90 @@ section AlgebraicTopology
 
 variable [DivisionRing K] [AddCommGroup V] [Module K V]
 
-/-- The quotient topology on `Projectivization K V`.
+/-! ### The upstream text
 
-`Projectivization` is a `def` over `Quotient (projectivizationSetoid K V)`,
-so the generic `instTopologicalSpaceQuotient` does not fire by typeclass
-synthesis alone. We provide the explicit forwarding instance. -/
-instance instTopologicalSpace [TopologicalSpace V] :
-    TopologicalSpace (ℙ K V) :=
-  inferInstanceAs (TopologicalSpace (Quotient (projectivizationSetoid K V)))
+Everything between here and the end of this section is the Mathlib pull request verbatim.
+It is wrapped in a section of its own so that its `variable` lines stop where the pull
+request file stops, and do not reach the material this repository keeps below. -/
 
-section TopologicalDivisionRing
+section
+
+/-- Two nonzero vectors have the same image in `ℙ K V` iff one is a unit multiple of the other,
+for the action of `Kˣ` on `{v : V // v ≠ 0}`. -/
+theorem mk'_eq_mk'_iff (v w : {v : V // v ≠ 0}) :
+    mk' K v = mk' K w ↔ ∃ a : Kˣ, a • w = v := by
+  rw [mk'_eq_mk, mk'_eq_mk, mk_eq_mk_iff]
+  simp only [Subtype.ext_iff, Units.smul_coe]
+
+/-- The saturation of a set of nonzero vectors under `mk'` is the union of its translates by the
+units of `K`. -/
+theorem preimage_image_mk' (U : Set {v : V // v ≠ 0}) :
+    mk' K ⁻¹' (mk' K '' U) = ⋃ a : Kˣ, (a • ·) '' U := by
+  ext v
+  simp only [mem_preimage, mem_image, mk'_eq_mk'_iff, mem_iUnion]
+  exact ⟨fun ⟨w, hw, a, h⟩ ↦ ⟨a⁻¹, w, hw, by rw [← h, inv_smul_smul]⟩,
+    fun ⟨a, w, hw, h⟩ ↦ ⟨w, hw, a⁻¹, by rw [← h, inv_smul_smul]⟩⟩
 
 variable [TopologicalSpace V]
 
-/-- The canonical surjection `{v : V // v ≠ 0} → ℙ K V` is continuous. -/
-@[continuity]
-theorem continuous_mk' : Continuous (mk' K : { v : V // v ≠ 0 } → ℙ K V) :=
+/-- The quotient topology on `ℙ K V`, coinduced by `Projectivization.mk'`. -/
+instance instTopologicalSpace : TopologicalSpace (ℙ K V) :=
+  inferInstanceAs (TopologicalSpace (Quotient (projectivizationSetoid K V)))
+
+theorem isQuotientMap_mk' : IsQuotientMap (mk' K : {v : V // v ≠ 0} → ℙ K V) :=
+  isQuotientMap_quotient_mk'
+
+@[continuity, fun_prop]
+theorem continuous_mk' : Continuous (mk' K : {v : V // v ≠ 0} → ℙ K V) :=
   continuous_quotient_mk'
 
-end TopologicalDivisionRing
+variable {α : Type*} [TopologicalSpace α]
 
-/-- Scaling by a unit `a : Kˣ` corestricts to a self-map of the nonzero
-subtype `{v : V // v ≠ 0}`. -/
-def scaleNonzero (a : Kˣ) (v : { v : V // v ≠ 0 }) : { v : V // v ≠ 0 } :=
-  ⟨(a : K) • (v : V), smul_ne_zero a.ne_zero v.2⟩
+theorem continuous_iff {f : ℙ K V → α} : Continuous f ↔ Continuous (f ∘ mk' K) :=
+  isQuotientMap_mk'.continuous_iff
 
-@[simp]
-lemma scaleNonzero_coe (a : Kˣ) (v : { v : V // v ≠ 0 }) :
-    (scaleNonzero a v : V) = (a : K) • (v : V) := rfl
+variable [ContinuousConstSMul Kˣ V]
 
-lemma scaleNonzero_mul (a b : Kˣ) (v : { v : V // v ≠ 0 }) :
-    scaleNonzero a (scaleNonzero b v) = scaleNonzero (a * b) v := by
-  apply Subtype.ext
-  simp [scaleNonzero, mul_smul, Units.val_mul]
+theorem isOpenMap_mk' : IsOpenMap (mk' K : {v : V // v ≠ 0} → ℙ K V) := fun U hU ↦ by
+  rw [← isQuotientMap_mk'.isCoinducing.isOpen_preimage, preimage_image_mk']
+  exact isOpen_iUnion fun a ↦ isOpenMap_smul a U hU
 
-@[simp]
-lemma scaleNonzero_one (v : { v : V // v ≠ 0 }) :
-    scaleNonzero (1 : Kˣ) v = v := by
-  apply Subtype.ext
-  simp [scaleNonzero]
+theorem isOpenQuotientMap_mk' : IsOpenQuotientMap (mk' K : {v : V // v ≠ 0} → ℙ K V) :=
+  ⟨Quotient.mk''_surjective, continuous_mk', isOpenMap_mk'⟩
 
-section TopologicalAction
-
-variable [TopologicalSpace V] [ContinuousConstSMul K V]
-
-/-- Scaling by a unit, viewed as a self-map of `{v : V // v ≠ 0}`, is
-continuous: it is the corestriction of the continuous map
-`(a : K) • · : V → V` along the subtype inclusion. -/
-lemma continuous_scaleNonzero (a : Kˣ) :
-    Continuous (scaleNonzero a : { v : V // v ≠ 0 } → { v : V // v ≠ 0 }) :=
-  continuous_induced_rng.mpr <|
-    (continuous_const_smul (a : K)).comp continuous_subtype_val
-
-/-- Scaling by a unit is a homeomorphism of the nonzero subtype, with
-inverse given by scaling by the inverse unit. -/
-def scaleNonzeroHomeo (a : Kˣ) : { v : V // v ≠ 0 } ≃ₜ { v : V // v ≠ 0 } where
-  toFun := scaleNonzero a
-  invFun := scaleNonzero a⁻¹
-  left_inv v := by
-    rw [scaleNonzero_mul, inv_mul_cancel, scaleNonzero_one]
-  right_inv v := by
-    rw [scaleNonzero_mul, mul_inv_cancel, scaleNonzero_one]
-  continuous_toFun := continuous_scaleNonzero a
-  continuous_invFun := continuous_scaleNonzero a⁻¹
-
-end TopologicalAction
-
-/-- **Saturation lemma**: pulling the image of a set `U ⊆ {v : V // v ≠ 0}`
-back through `mk' K` recovers the orbit of `U` under the `Kˣ` scaling
-action on the nonzero subtype.
-
-This is the projectivization analogue of
-`MulAction.quotient_preimage_image_eq_union_mul`. The projectivization
-setoid (defined as `(MulAction.orbitRel Kˣ V).comap (↑)`) gives the same
-orbit relation on the nonzero subtype as the unit-action; this lemma
-makes that explicit at the set level. -/
-lemma mk'_preimage_mk'_image (U : Set { v : V // v ≠ 0 }) :
-    (mk' K) ⁻¹' ((mk' K) '' U) = ⋃ a : Kˣ, scaleNonzero a '' U := by
-  ext w
-  constructor
-  · rintro ⟨v, hv, hvw⟩
-    rw [mem_iUnion]
-    rw [mk'_eq_mk, mk'_eq_mk] at hvw
-    obtain ⟨a, ha⟩ := (mk_eq_mk_iff K _ _ v.2 w.2).mp hvw
-    -- `ha : (a : K) • (w : V) = (v : V)` via Units.smul_def
-    refine ⟨a⁻¹, v, hv, ?_⟩
-    apply Subtype.ext
-    simp only [scaleNonzero_coe, Units.val_inv_eq_inv_val]
-    -- Goal: ((a : Kˣ) : K)⁻¹ • (v : V) = (w : V)
-    have hsmul : ((a : Kˣ) : K) • (w : V) = (v : V) := ha
-    rw [← hsmul, ← mul_smul, inv_mul_cancel₀ a.ne_zero, one_smul]
-  · intro hw
-    rw [mem_iUnion] at hw
-    obtain ⟨a, v, hv, hvw⟩ := hw
-    refine ⟨v, hv, ?_⟩
-    rw [mk'_eq_mk, mk'_eq_mk, mk_eq_mk_iff]
-    refine ⟨a⁻¹, ?_⟩
-    -- Goal: ((a⁻¹ : Kˣ) : K) • (w : V) = (v : V)
-    -- have `hvw : scaleNonzero a v = w` ⟹ `(w : V) = (a : K) • (v : V)`
-    have hcoe : (w : V) = ((a : Kˣ) : K) • (v : V) := by
-      rw [← hvw, scaleNonzero_coe]
-    show ((a⁻¹ : Kˣ) : K) • (w : V) = (v : V)
-    rw [hcoe, ← mul_smul, Units.val_inv_eq_inv_val,
-      inv_mul_cancel₀ a.ne_zero, one_smul]
-
-section TopologicalAction
-
-variable [TopologicalSpace V] [ContinuousConstSMul K V]
-
-/-- The canonical surjection `{v : V // v ≠ 0} → ℙ K V` is an open map. -/
-theorem isOpenMap_mk' : IsOpenMap (mk' K : { v : V // v ≠ 0 } → ℙ K V) := by
-  intro U hU
-  -- `mk'(U)` is open in `ℙ K V` iff `mk' ⁻¹' (mk' '' U)` is open in
-  -- `{v : V // v ≠ 0}`, because the quotient topology is coinduced by `mk'`.
-  change IsOpen (mk' K ⁻¹' (mk' K '' U))
-  rw [mk'_preimage_mk'_image]
-  exact isOpen_iUnion fun a => (scaleNonzeroHomeo a).isOpenMap _ hU
-
-/-- The canonical surjection `{v : V // v ≠ 0} → ℙ K V` is a quotient map.
-
-Combines openness, continuity, and surjectivity via `IsOpenMap.isQuotientMap`. -/
-theorem isQuotientMap_mk' :
-    IsQuotientMap (mk' K : { v : V // v ≠ 0 } → ℙ K V) :=
-  isOpenMap_mk'.isQuotientMap continuous_quotient_mk' Quot.mk_surjective
-
-/-- The canonical surjection `{v : V // v ≠ 0} → ℙ K V` is an open
-quotient map. -/
-theorem isOpenQuotientMap_mk' :
-    IsOpenQuotientMap (mk' K : { v : V // v ≠ 0 } → ℙ K V) :=
-  ⟨Quot.mk_surjective, continuous_quotient_mk', isOpenMap_mk'⟩
+end
 
 /-! ### Continuity descent
 
-Companions to the `lift_measurable` / `measurable_iff_measurable_comp_mk'`
-pair in `MeasureSpace.lean`: a function out of `ℙ K V` is continuous iff
-its precomposition with `mk'` is, and a scale-invariant continuous
-function on the nonzero subtype descends to a continuous function on
-`ℙ K V`. -/
+Companion to the `lift_measurable` / `measurable_iff_measurable_comp_mk'` pair in
+`MeasureSpace.lean`: a scale-invariant continuous function on the nonzero subtype descends to a
+continuous function on `ℙ K V`. -/
 
-/-- A function out of `ℙ K V` is continuous iff its precomposition with
-`mk'` is continuous. Topological companion to
-`measurable_iff_measurable_comp_mk'` in `MeasureSpace.lean`. -/
-theorem continuous_iff_continuous_comp_mk' {α : Type*} [TopologicalSpace α]
-    (g : ℙ K V → α) :
-    Continuous g ↔ Continuous (g ∘ (mk' K : _ → ℙ K V)) :=
-  isQuotientMap_mk'.continuous_iff
+section Descent
 
-/-- A scale-invariant continuous function on the nonzero subtype
-descends to a continuous function on `ℙ K V`. Topological companion to
-`lift_measurable` in `MeasureSpace.lean`. -/
-theorem continuous_lift {α : Type*} [TopologicalSpace α]
-    (f : { v : V // v ≠ 0 } → α)
-    (hf : ∀ (a b : { v : V // v ≠ 0 }) (t : K), a = t • (b : V) → f a = f b)
+variable [TopologicalSpace V] {α : Type*} [TopologicalSpace α]
+
+/-- A scale-invariant continuous function on the nonzero subtype descends to a continuous
+function on `ℙ K V`. Topological companion to `lift_measurable` in `MeasureSpace.lean`. -/
+theorem continuous_lift (f : {v : V // v ≠ 0} → α)
+    (hf : ∀ (a b : {v : V // v ≠ 0}) (t : K), a = t • (b : V) → f a = f b)
     (hf_cont : Continuous f) :
     Continuous (Projectivization.lift f hf) := by
-  rw [continuous_iff_continuous_comp_mk']
+  rw [continuous_iff]
   exact hf_cont
 
-end TopologicalAction
+end Descent
 
 /-! ### Continuity of `Projectivization.map`
 
 A continuous injective linear map between modules descends to a
-continuous map between projectivizations. Builds on `continuous_lift`
+continuous map between projectivizations. Builds on `continuous_iff`
 above via the standard `mk'` quotient-map characterisation of
 continuity. -/
 
 section MapContinuity
 
-variable [TopologicalSpace V] [ContinuousConstSMul K V]
+variable [TopologicalSpace V]
 variable {W : Type*} [AddCommGroup W] [Module K W] [TopologicalSpace W]
 
 /-- A continuous injective linear map descends to a continuous map on
@@ -248,7 +172,7 @@ projectivizations. -/
 theorem mapOfInjective_continuous
     (f : V →ₗ[K] W) (hf : Function.Injective f) (hf_cont : Continuous f) :
     Continuous (Projectivization.map f hf) := by
-  rw [continuous_iff_continuous_comp_mk']
+  rw [continuous_iff]
   -- The composition `(map f hf) ∘ mk' K` equals `mk' K ∘ f_sub` where
   -- `f_sub` is the corestriction of `f` to the nonzero subtype (with
   -- output non-zero via `hf`). Both factors are continuous: `mk'` by
@@ -304,7 +228,7 @@ same auto-generated name, which made the two files impossible to import together
 @[simp]
 lemma mapEquiv_smul_eq (e : V ≃ₗ[K] V) (p : ℙ K V) : e • p = mapEquiv e p := rfl
 
-variable [TopologicalSpace V] [ContinuousConstSMul K V]
+variable [TopologicalSpace V]
 
 /-- The `mapEquiv` of a continuous linear equivalence is continuous. -/
 theorem mapEquiv_continuous (e : V ≃ₗ[K] V) (he : Continuous (e : V → V)) :

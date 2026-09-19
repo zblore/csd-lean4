@@ -114,7 +114,7 @@ lemma overlapDeficit_mk (W : Matrix.unitaryGroup (Fin M) ℂ)
 /-- The deficit descends continuously (the `continuous_momentMap` route). -/
 theorem continuous_overlapDeficit (W : Matrix.unitaryGroup (Fin M) ℂ) :
     Continuous (overlapDeficit W) := by
-  rw [Projectivization.continuous_iff_continuous_comp_mk']
+  rw [Projectivization.continuous_iff]
   have hcomp : (overlapDeficit W ∘ (Projectivization.mk' ℂ))
       = fun v : { v : EuclideanSpace ℂ (Fin M) // v ≠ 0 } =>
           1 - RCLike.re (inner ℂ (v : EuclideanSpace ℂ (Fin M))
