@@ -293,6 +293,22 @@ theorem isUnitaryLift_of_vector [DecidableEq ι] (Φ : SigmaSpace → SigmaSpace
     IsUnitaryLift D Φ rep U := fun x => by
   rw [h x, outerProduct_toEuclideanLin]
 
+/-- **The lift of an iterate is the power.** If the ontic flow `Φ` lifts `U` then `k` applications
+of `Φ` lift `U ^ k`: a circuit of `k` identical gates is the flow iterated `k` times. -/
+theorem IsUnitaryLift.iterate [DecidableEq ι] {D : SectorData SigmaSpace P G}
+    {Φ : SigmaSpace → SigmaSpace} {rep : P → EuclideanSpace ℂ ι} {U : Matrix ι ι ℂ}
+    (h : IsUnitaryLift D Φ rep U) (k : ℕ) :
+    IsUnitaryLift D Φ^[k] rep (U ^ k) := by
+  induction k with
+  | zero =>
+    intro x
+    simp only [Function.iterate_zero, id_eq, pow_zero, Matrix.conjTranspose_one, Matrix.one_mul,
+      Matrix.mul_one]
+  | succ k ih =>
+    intro x
+    rw [Function.iterate_succ_apply', h (Φ^[k] x), ih x, pow_succ', Matrix.conjTranspose_mul]
+    simp only [Matrix.mul_assoc]
+
 variable (μprep : Measure SigmaSpace) [IsProbabilityMeasure μprep]
 
 /-- ★★ **Closed system: the density operator of the flowed preparation is `U ρ Uᴴ`.** If the

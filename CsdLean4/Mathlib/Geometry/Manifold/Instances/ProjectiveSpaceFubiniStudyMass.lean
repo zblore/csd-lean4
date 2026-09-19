@@ -117,13 +117,6 @@ theorem normSq_det_unitary (U : Matrix.unitaryGroup (Fin n) ℂ) :
     rw [Complex.normSq_eq_conj_mul_self]; exact h
   exact_mod_cast this
 
-theorem norm_toEuclideanLin_unitary (U : Matrix.unitaryGroup (Fin n) ℂ)
-    (x : EuclideanSpace ℂ (Fin n)) : ‖Matrix.toEuclideanLin U.val x‖ = ‖x‖ := by
-  have h1 := norm_sq_eq_re_inner (𝕜 := ℂ) (Matrix.toEuclideanLin U.val x)
-  have h2 := norm_sq_eq_re_inner (𝕜 := ℂ) x
-  rw [inner_toEuclideanLin_unitary] at h1
-  exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).1 (h1.trans h2.symm)
-
 theorem toLpCLM_mulVec (A : Matrix (Fin n) (Fin n) ℂ) (w : Fin n → ℂ) :
     toLpCLM (A *ᵥ w) = Matrix.toEuclideanLin A (toLpCLM w) := rfl
 

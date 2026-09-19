@@ -367,6 +367,9 @@ public import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 public import CsdLean4.Empirical.CSD.Crypto.E91
 public import CsdLean4.Empirical.CSD.QEC.ThreeQubit
 public import CsdLean4.Empirical.CSD.QEC.RegisterFlow
+public import CsdLean4.Empirical.CSD.Algorithms.CircuitFlow
+public import CsdLean4.Empirical.CSD.Algorithms.GroverFlow
+public import CsdLean4.Empirical.CSD.Algorithms.ShorFlow
 public import CsdLean4.Empirical.CSD.Contextuality.KS18
 public import CsdLean4.Empirical.CSD.Contextuality.KS18Volume
 public import CsdLean4.Empirical.CSD.Contextuality.MerminPeres

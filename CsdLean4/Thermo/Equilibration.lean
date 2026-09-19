@@ -9,6 +9,7 @@ public import CsdLean4.Thermo.ReducedSecondMoment
 public import CsdLean4.Mathlib.Dynamics.CorrelationDecay
 public import CsdLean4.Mathlib.Topology.Algebra.CompactRecurrence
 public import CsdLean4.Mathlib.Dynamics.CompactGroupNoMixing
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
 
 /-!
 # E4: equilibration of time-averaged reduced states, as a conditional theorem
@@ -259,30 +260,6 @@ lemma toEuclideanLin_comp (A B : Matrix (Fin N) (Fin N) ℂ) (v : EuclideanSpace
   rw [Matrix.mulVec_mulVec]
 
 omit [NeZero N] in
-/-- **A unitary matrix acts as an isometry.** The general statement behind the per-gate
-`signFlip_normSq` / `perm_normSq` / `hadamard_normSq` of `CanonicalTypicality`. -/
-lemma norm_toEuclideanLin_unitary (U : Matrix.unitaryGroup (Fin N) ℂ)
-    (v : EuclideanSpace ℂ (Fin N)) :
-    ‖Matrix.toEuclideanLin U.val v‖ = ‖v‖ := by
-  have hUU : U.valᴴ * U.val = 1 := by
-    have h := U.2
-    rw [Matrix.mem_unitaryGroup_iff'] at h
-    rwa [Matrix.star_eq_conjTranspose] at h
-  have hinner : (inner ℂ (Matrix.toEuclideanLin U.val v) (Matrix.toEuclideanLin U.val v) : ℂ)
-      = inner ℂ v v := by
-    rw [← LinearMap.adjoint_inner_right, ← Matrix.toEuclideanLin_conjTranspose_eq_adjoint,
-      toEuclideanLin_comp, hUU]
-    congr 1
-    ext k
-    show ((1 : Matrix (Fin N) (Fin N) ℂ) *ᵥ WithLp.ofLp v) k = _
-    rw [Matrix.one_mulVec]
-  have hsq : ‖Matrix.toEuclideanLin U.val v‖ ^ 2 = ‖v‖ ^ 2 := by
-    rw [norm_sq_eq_re_inner (𝕜 := ℂ), norm_sq_eq_re_inner (𝕜 := ℂ), hinner]
-  have h1 : (0 : ℝ) ≤ ‖Matrix.toEuclideanLin U.val v‖ := norm_nonneg _
-  have h2 : (0 : ℝ) ≤ ‖v‖ := norm_nonneg _
-  nlinarith [hsq, h1, h2]
-
-omit [NeZero N] in
 lemma continuous_unitaryEntry (k j : Fin N) :
     Continuous (fun V : Matrix.unitaryGroup (Fin N) ℂ => V.val k j) :=
   continuous_subtype_val.matrix_elem k j
@@ -344,11 +321,11 @@ lemma abs_momentMap_smul_sub_le (V : Matrix.unitaryGroup (Fin N) ℂ) (p : CPN N
     Finset.sum_nonneg (fun _ _ => norm_nonneg _)
   have hw : momentMap (V • p) k
       = ‖(Matrix.toEuclideanLin V.val p.rep) k‖ ^ 2 / ‖p.rep‖ ^ 2 := by
-    rw [smul_eq_mk, momentMap_mk, norm_toEuclideanLin_unitary]
+    rw [smul_eq_mk, momentMap_mk, Projectivization.norm_toEuclideanLin_unitary]
   have hp : momentMap p k = ‖p.rep k‖ ^ 2 / ‖p.rep‖ ^ 2 := rfl
   have ha : ‖(Matrix.toEuclideanLin V.val p.rep) k‖ ≤ ‖p.rep‖ := by
     have h := coord_norm_le (Matrix.toEuclideanLin V.val p.rep) k
-    rwa [norm_toEuclideanLin_unitary] at h
+    rwa [Projectivization.norm_toEuclideanLin_unitary] at h
   have hb : ‖p.rep k‖ ≤ ‖p.rep‖ := coord_norm_le p.rep k
   have hd : |‖(Matrix.toEuclideanLin V.val p.rep) k‖ - ‖p.rep k‖|
       ≤ (∑ j : Fin N, ‖V.val k j - (1 : Matrix (Fin N) (Fin N) ℂ) k j‖) * ‖p.rep‖ :=

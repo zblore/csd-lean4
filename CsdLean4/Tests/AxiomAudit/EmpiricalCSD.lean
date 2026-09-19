@@ -773,6 +773,68 @@ info: 'CSD.Empirical.CSDBridge.QEC.csd_three_qubit_corrects_single_bitflip' depe
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.QEC.registerFlow_recovery
 
+-- BACKLOG #34 (2026-09-19), Empirical/CSD/Algorithms/: a quantum circuit is a flow on Sigma.
+-- CircuitFlow.lean: a unitary on the register acts projectively on the sector
+-- CP^{card-1}, the flow lifts the unitary with no hypothesis, k runs are the flow iterated
+-- (barycentre U^k rho U^k^H), and the readout is the record basin of the outcome, with Born
+-- weight |(U^k psi) i|^2 at the flowed ready point. GroverFlow.lean: the Grover step as a
+-- product of reflections, unitary; on Sigma the marked basin has weight sin^2((2k+1)theta).
+-- ShorFlow.lean: the oracle as a permutation matrix and the inverse QFT as a Kronecker
+-- factor, unitary; on Sigma the counting-register readout s.(T/r) has weight 1/r, others 0.
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.toEuclideanLin_reindex_piLpCongrLeft' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.toEuclideanLin_reindex_piLpCongrLeft
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.Circuit.isUnitaryLift_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.Circuit.isUnitaryLift_flow
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.Circuit.barycenter_flow_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.Circuit.barycenter_flow_iterate
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.Circuit.epistemicMeasure_globalBasin_flow_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.Circuit.epistemicMeasure_globalBasin_flow_iterate
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.readout_outerProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.readout_outerProduct
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.barycenterMatrix_dirac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.barycenterMatrix_dirac
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.reflectionMatrix_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.reflectionMatrix_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.toEuclideanLin_groverMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.toEuclideanLin_groverMatrix
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.groverMatrix_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.groverMatrix_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.grover_flow_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.grover_flow_born
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.grover_flow_certain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.grover_flow_certain
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.permMatrix_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.permMatrix_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.toEuclideanLin_shorMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.toEuclideanLin_shorMatrix
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.shorMatrix_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.shorMatrix_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.initialState_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.initialState_norm
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.shor_flow_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.shor_flow_born
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.shor_flow_born_count' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.shor_flow_born_count
+
+/-- info: 'CSD.Empirical.CSDBridge.Algorithms.shor_flow_born_count_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.CSDBridge.Algorithms.shor_flow_born_count_zero
+
 -- Stern-Gerlach: representative pin (the iconic 1/2 split) + completeness.
 -- All six transport theorems share the same foundational-triple axiom set.
 /--

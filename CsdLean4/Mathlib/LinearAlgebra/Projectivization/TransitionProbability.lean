@@ -196,6 +196,18 @@ lemma inner_toEuclideanLin_unitary {n : Type*} [Fintype n] [DecidableEq n]
       mulVec_mulVec, show (U.val)ᴴ * U.val = 1 from Unitary.coe_star_mul_self U,
       one_mulVec, dotProduct_comm]
 
+/-- **A unitary matrix acts as an isometry** on `EuclideanSpace`: the norm form of
+`inner_toEuclideanLin_unitary`. Index-generic; folded here 2026-09-19 (rule of two) from
+`Instances/ProjectiveSpaceFubiniStudyMass.lean` and `Thermo/Equilibration.lean`, which each
+carried a copy at `Fin n`. -/
+theorem norm_toEuclideanLin_unitary {n : Type*} [Fintype n] [DecidableEq n]
+    (U : Matrix.unitaryGroup n ℂ) (x : EuclideanSpace ℂ n) :
+    ‖Matrix.toEuclideanLin U.val x‖ = ‖x‖ := by
+  have h1 := norm_sq_eq_re_inner (𝕜 := ℂ) (Matrix.toEuclideanLin U.val x)
+  have h2 := norm_sq_eq_re_inner (𝕜 := ℂ) x
+  rw [inner_toEuclideanLin_unitary] at h1
+  exact (sq_eq_sq₀ (norm_nonneg _) (norm_nonneg _)).1 (h1.trans h2.symm)
+
 /-- The unitary action sends `mk v` to `mk (toEuclideanLin U v)`. -/
 lemma smul_mk_eq_mk_toEuclideanLin
     (U : Matrix.unitaryGroup ι ℂ)

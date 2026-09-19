@@ -281,6 +281,11 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.barycenter_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.barycenter_flow
 
+-- BACKLOG #34 (2026-09-19): the lift of an iterate is the power, so a circuit run k times is
+-- the flow iterated k times lifting U^k.
+/-- info: 'CSD.LF2.IsUnitaryLift.iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.LF2.IsUnitaryLift.iterate
+
 /-- info: 'CSD.LF2.unitaryChannel_apply_barycenter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms CSD.LF2.unitaryChannel_apply_barycenter
 

@@ -19,7 +19,7 @@ reader-type paths and the measurement story are [`TOUR.md`](TOUR.md).)*
 | 6 | Composites | non-factorisation, Bell, Tsirelson, no-signalling, contextuality, reduced-state records | Posit 7 local tomography (`R-017`, boundary); Posit 8 measurement independence |
 | 7 | States and channels | a preparation is a density operator; a flow is a channel; de-isolation is the measurement channel; second law, Landauer, Holevo | none new; strong subadditivity comes through an external bridge |
 | 8 | Gates | each standard gate is the isometry of a `Σ`-sector; a projective unitary action lifts to a `Σ`-flow | none new |
-| 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension | QM-side only, no `Σ`-twin yet; `R-001`, `R-002` |
+| 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension; Grover and Shor as `Σ`-flows | the other algorithms QM-side only; `R-001`, `R-002` |
 | 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism | `R-003` to `R-006`: active Steane recovery, magic states, Clifford+T density, fault tolerance |
 | 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders | `R-013` |
 
@@ -231,8 +231,13 @@ a factor with the stated probability (`shor_order_distribution`, `shor_phase_est
 (`teleportation_branch_recovers_input`). The amplitude-amplification core is Category 1
 (`qsearch_average`, [`Mathlib/QuantumInfo/AmplitudeAmplification.lean`](../CsdLean4/Mathlib/QuantumInfo/AmplitudeAmplification.lean)).
 
-**The seam.** This is the one link stated on the QM side only. No algorithm has a `Σ`-flow twin; the lift
-theorems of link 8 make one possible and backlog row 34 prices it. Two residues are open mathematics:
+**The seam.** Grover and Shor now have `Σ`-flow twins: a circuit is the projective action of its unitary on
+the register's sector, the flow lifts the unitary with no hypothesis, `k` runs are the flow iterated, and the
+readout is the record basin of the outcome (`Circuit.epistemicMeasure_globalBasin_flow_iterate`,
+[`Empirical/CSD/Algorithms/CircuitFlow.lean`](../CsdLean4/Empirical/CSD/Algorithms/CircuitFlow.lean)); Grover's
+success probability and Shor's order distribution are read off the basins at the flowed ready point
+(`grover_flow_born`, `shor_flow_born_count`). The twins add the ontic reading, not new analysis: the QM-side
+theorems carry the mathematics, and the other algorithms are still QM-side only. Two residues are open mathematics:
 `R-001`, the straddling-kernel bound behind the literal amplitude-estimation constant, and `R-002`, the
 exponential-doubling schedule for unknown amplitude. The interference picture most readers bring, Feynman's
 sum over paths, is a theorem at finite dimension: the matrix element of a propagator is the limit of sums
@@ -306,5 +311,5 @@ metric is executed Toffolis times peak qubits, and the two are not the same numb
   the reconstruction frontier, and the ledgers say it is not a brick.
 
 So the chain from the postulates to a working machine's parts is continuous, with a theorem behind every
-link, and the only research seam in it is the cell law. What the chain does not yet contain is an algorithm
-as a flow on `Σ`, and a fault-tolerant machine.
+link, and the only research seam in it is the cell law. What the chain does not yet contain is a
+fault-tolerant machine.
