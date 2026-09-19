@@ -608,6 +608,8 @@ public import CsdLean4.Empirical.CSD.Darwinism
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
 public import CsdLean4.Mathlib.Analysis.Matrix.TrotterProduct
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PathSum
+public import CsdLean4.Mathlib.Analysis.Matrix.SumOverPaths
 public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.SigmaLayer.ChartIntegralCurve
 public import CsdLean4.SigmaLayer.FrozenBase

@@ -5978,6 +5978,39 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Matrix.trotter_skew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Matrix.trotter_skew
 
+-- BACKLOG #36(a) (2026-09-19): the sum over paths at finite dimension. LinearAlgebra/Matrix/PathSum.lean
+-- gives the entries of a matrix power as sums over index paths weighted by the product of the
+-- entries traversed (Mathlib has only the adjacency-matrix walk count); Analysis/Matrix/SumOverPaths.lean
+-- reads trotter_skew entry by entry through it: the matrix element of exp(A+B), and of the
+-- propagator exp(-it(H1+H2)) of a split Hamiltonian, is the limit of sums over discrete paths of
+-- products of one-step amplitudes -- Feynman's formulation as a theorem.
+/-- info: 'Matrix.pathWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.pathWeight
+
+/-- info: 'Matrix.pathWeight_cons' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.pathWeight_cons
+
+/-- info: 'Matrix.pow_succ_apply_eq_sum_pathWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.pow_succ_apply_eq_sum_pathWeight
+
+/-- info: 'Matrix.trotterStep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.trotterStep
+
+/-- info: 'Matrix.tendsto_apply_of_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.tendsto_apply_of_tendsto
+
+/-- info: 'Matrix.trotterStep_pow_apply_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.trotterStep_pow_apply_tendsto
+
+/-- info: 'Matrix.exp_add_apply_tendsto_sum_pathWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.exp_add_apply_tendsto_sum_pathWeight
+
+/-- info: 'Matrix.conjTranspose_neg_I_mul_smul_of_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.conjTranspose_neg_I_mul_smul_of_isHermitian
+
+/-- info: 'Matrix.exp_neg_I_mul_smul_add_apply_tendsto_sum_pathWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.exp_neg_I_mul_smul_add_apply_tendsto_sum_pathWeight
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient

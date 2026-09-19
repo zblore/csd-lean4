@@ -19,7 +19,7 @@ reader-type paths and the measurement story are [`TOUR.md`](TOUR.md).)*
 | 6 | Composites | non-factorisation, Bell, Tsirelson, no-signalling, contextuality, reduced-state records | Posit 7 local tomography (`R-017`, boundary); Posit 8 measurement independence |
 | 7 | States and channels | a preparation is a density operator; a flow is a channel; de-isolation is the measurement channel; second law, Landauer, Holevo | none new; strong subadditivity comes through an external bridge |
 | 8 | Gates | each standard gate is the isometry of a `Σ`-sector; a projective unitary action lifts to a `Σ`-flow | none new |
-| 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation | QM-side only, no `Σ`-twin yet; `R-001`, `R-002` |
+| 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension | QM-side only, no `Σ`-twin yet; `R-001`, `R-002` |
 | 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism | `R-003` to `R-006`: active Steane recovery, magic states, Clifford+T density, fault tolerance |
 | 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders | `R-013` |
 
@@ -235,8 +235,11 @@ a factor with the stated probability (`shor_order_distribution`, `shor_phase_est
 theorems of link 8 make one possible and backlog row 34 prices it. Two residues are open mathematics:
 `R-001`, the straddling-kernel bound behind the literal amplitude-estimation constant, and `R-002`, the
 exponential-doubling schedule for unknown amplitude. The interference picture most readers bring, Feynman's
-sum over paths, is not in the corpus; backlog row 36 prices it, and its finite-dimensional form is nearly a
-corollary of the Lie–Trotter formula the corpus already has.
+sum over paths, is a theorem at finite dimension: the matrix element of a propagator is the limit of sums
+over discrete paths of products of one-step amplitudes (`exp_add_apply_tendsto_sum_pathWeight`,
+[`Mathlib/Analysis/Matrix/SumOverPaths.lean`](../CsdLean4/Mathlib/Analysis/Matrix/SumOverPaths.lean)), read
+off the Lie–Trotter formula through the path expansion of a matrix power. The continuum path integral is
+not in the corpus; backlog row 36 prices its remaining rungs.
 
 **What is not claimed.** Any complexity-theoretic statement. The theorems are about amplitudes and
 probabilities of specific circuits.
