@@ -6090,6 +6090,44 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Matrix.dysonTermI_two_apply_diagonal_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Matrix.dysonTermI_two_apply_diagonal_self
 
+-- BACKLOG #36(b)(iv') (2026-09-20), Combinatorics/PairingSum.lean: the pairing sum over perfect
+-- matchings of Fin m (fixed-point-free involutions), its first-contraction recursion (a matching
+-- of Fin (n+2) is the pair {0, j.succ} plus a matching of the complement, via the gluing
+-- bijection built from Fin.cons and Fin.insertNth), transport along m = m', and the count
+-- (2n-1)!! of perfect matchings of Fin (2n) (none for odd m).
+/-- info: 'Fin.IsPerfectMatching' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in #print axioms Fin.IsPerfectMatching
+
+/-- info: 'Fin.pairingSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Fin.pairingSum
+
+/-- info: 'Fin.pairingSum_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Fin.pairingSum_zero
+
+/-- info: 'Fin.pairingSum_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Fin.pairingSum_one
+
+/-- info: 'Fin.glue_isPerfectMatching' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Fin.glue_isPerfectMatching
+
+/-- info: 'Fin.glueSigma_bijective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Fin.glueSigma_bijective
+
+/-- info: 'Fin.prod_glue' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Fin.prod_glue
+
+/-- info: 'Fin.pairingSum_succ_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Fin.pairingSum_succ_succ
+
+/-- info: 'Fin.pairingSum_cast' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Fin.pairingSum_cast
+
+/-- info: 'Fin.card_isPerfectMatching_even' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Fin.card_isPerfectMatching_even
+
+/-- info: 'Fin.card_isPerfectMatching_odd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Fin.card_isPerfectMatching_odd
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient

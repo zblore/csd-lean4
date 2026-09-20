@@ -1481,6 +1481,17 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.dysonTerm_two_vac_wordOp
 
+-- BACKLOG #36(b)(iv') (2026-09-20, CV/WickTime.lean): the matching-indexed form. wickSum IS
+-- Fin.pairingSum of the contraction on the positions, so the vacuum expectation of a word is
+-- the sum over perfect matchings of its insertions of the product of propagator lines.
+/-- info: 'CSD.CV.wickSum_eq_pairingSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wickSum_eq_pairingSum
+
+/-- info: 'CSD.CV.timeWord_vac_eq_pairingSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeWord_vac_eq_pairingSum
+
 -- CV-26 (2026-08-18, CV\ChannelRG.lean): channel-level RG at the cutoff -- the statement the
 -- Stage-4 no-go said had to replace unitary RG matching. The coarse-graining is MODE TRACING
 -- (keep the spectators, discard mode k), built as the Stinespring channel of the mode-split

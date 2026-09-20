@@ -618,6 +618,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PathSum
 public import CsdLean4.Mathlib.Analysis.Matrix.SumOverPaths
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonSeries
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonVertex
+public import CsdLean4.Mathlib.Combinatorics.PairingSum
 public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.SigmaLayer.ChartIntegralCurve
 public import CsdLean4.SigmaLayer.FrozenBase

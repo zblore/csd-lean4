@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.CV.FeynmanVertex
+public import CsdLean4.Mathlib.Combinatorics.PairingSum
 
 /-!
 # CV-28: Wick's theorem at the cutoff — every word, every time
@@ -46,7 +47,12 @@ and the rest is the pairing sum of the word with the two removed.
   ★★ `dysonTerm_two_vac_wordOp` — **the second-order vacuum diagrams of every monomial vertex**:
   for `V = Q_{k₁} ⋯ Q_{kₘ}` the two-vertex amplitude of CV-27 is the ordered double integral of the
   pairing sum of the word with itself at the time difference — the `Q⁴` sunset and its
-  disconnected partners, at the cutoff, as a theorem.
+  disconnected partners, at the cutoff, as a theorem;
+* ★★ `wickSum_eq_pairingSum` / ★★ `timeWord_vac_eq_pairingSum` — **the matching-indexed form**:
+  `wickSum l` is `Fin.pairingSum` of the contraction on the positions of `l`, the sum over
+  perfect matchings `σ` of `Fin m` of `∏_{i < σ i} contraction lᵢ l_{σ i}`; so the vacuum
+  expectation of a word is the sum over the perfect matchings of its insertions of the product of
+  the propagator lines, Wick's theorem as the textbook states it.
 
 **Why the threshold.** Contracting the leftmost insertion of mode `k` with a later one leaves the
 CCR defect `N · |N−1⟩⟨N−1|` sandwiched between the two halves of the word; a half with fewer than
@@ -55,9 +61,11 @@ one half always has fewer. Exactly CV-23c's `n < N`, one insertion at a time.
 
 ## Honest scope
 
-⚠️ **Recursive form.** `wickSum` is the pairing sum computed by first contraction; the
-matching-indexed restatement (a sum over fixed-point-free involutions of `Fin m`) is a
-combinatorial identity about `wickSum` alone, not stated here (BACKLOG #36(b)(iv′)).
+⚠️ **Two forms of the pairing sum.** `wickSum` is the pairing sum computed by first contraction;
+★★ `wickSum_eq_pairingSum` identifies it with the matching-indexed form of
+`Mathlib/Combinatorics/PairingSum.lean` — the sum over fixed-point-free involutions `σ` of the
+positions of the product over the pairs `i < σ i` of `contraction lᵢ l_{σ i}` — and
+★★ `timeWord_vac_eq_pairingSum` states Wick's theorem in that textbook form.
 
 ⚠️ **Finite cutoff, free dynamics.** The thresholds are where Wick survives truncation; the
 times are Heisenberg times under the free field only. Nothing continuum is claimed.
@@ -65,8 +73,9 @@ times are Heisenberg times under the free field only. Nothing continuum is claim
 References: `CV/Wick.lean` (CV-23b/c: `timeFourPoint_wick`, `twoPointKernel`, the walk band and
 the moment recursion this module generalises); `CV/WickGeneral.lean` (CV-23d);
 `CV/FeynmanVertex.lean` (CV-27, `dysonTerm_two_vac`); `CV/Oscillator.lean` (`truncated_ccr`,
-`topProj`); `CV/ModeLocality.lean` (`modeOp`, `commute_modeOp`); `specs/BACKLOG.md` #36(b)(iv);
-`specs/future-work.md` (row CV-28).
+`topProj`); `CV/ModeLocality.lean` (`modeOp`, `commute_modeOp`);
+`Mathlib/Combinatorics/PairingSum.lean` (`Fin.pairingSum`, `Fin.pairingSum_succ_succ`);
+`specs/BACKLOG.md` #36(b)(iv), (iv′); `specs/future-work.md` (row CV-28).
 -/
 
 @[expose] public section
@@ -635,5 +644,57 @@ theorem dysonTerm_two_vac_wordOp [NeZero N] (lam : ℝ) (w : List (Fin K))
     show Prod.fst ∘ (fun k : Fin K => (k, s₁ - s₂)) = id from rfl, List.map_id]
   have := hw k
   omega
+
+/-! ### The matching-indexed form -/
+
+/-- ★★ **The pairing sum is the sum over perfect matchings.** `wickSum l` is `Fin.pairingSum`
+of the contraction on the positions of `l`: the sum over fixed-point-free involutions `σ` of
+`Fin l.length` of the product over the pairs `i < σ i` of `contraction lᵢ l_{σ i}`. -/
+theorem wickSum_eq_pairingSum :
+    ∀ l : List (Fin K × ℝ),
+      wickSum l = Fin.pairingSum fun i i' : Fin l.length => contraction l[i] l[i']
+  | [] => by rw [wickSum_nil, Fin.pairingSum_zero]
+  | [x] => by
+    rw [wickSum_cons]
+    show ∑ j : Fin 0, _ = _
+    rw [Finset.univ_eq_empty, Finset.sum_empty]
+    exact (Fin.pairingSum_one _).symm
+  | x :: y :: l => by
+    rw [wickSum_cons]
+    show _ = Fin.pairingSum (m := l.length + 2) _
+    rw [Fin.pairingSum_succ_succ]
+    refine Finset.sum_congr rfl fun j _ => ?_
+    have hlen : ((y :: l).eraseIdx j).length = l.length := by
+      rw [List.length_eraseIdx, if_pos j.isLt]
+      rfl
+    have hget : ∀ i : Fin ((y :: l).eraseIdx j).length,
+        ((y :: l).eraseIdx j)[(i : ℕ)] = (x :: y :: l)[(Fin.emb j (Fin.cast hlen i) : ℕ)] := by
+      intro i
+      rw [List.getElem_eraseIdx]
+      split_ifs with hij
+      · have h := Fin.succAbove_of_castSucc_lt j (Fin.cast hlen i)
+          (by rw [Fin.lt_def]; simpa using hij)
+        simp [Fin.emb, h]
+      · have h := Fin.succAbove_of_le_castSucc j (Fin.cast hlen i)
+          (by rw [Fin.le_def]; simpa using hij)
+        simp [Fin.emb, h]
+    rw [wickSum_eq_pairingSum ((y :: l).eraseIdx j),
+      ← Fin.pairingSum_cast hlen fun a b =>
+        contraction (x :: y :: l)[Fin.emb j a] (x :: y :: l)[Fin.emb j b]]
+    simp only [Fin.getElem_fin, hget, Fin.val_zero, Fin.val_succ, List.getElem_cons_zero,
+      List.getElem_cons_succ]
+termination_by l => l.length
+decreasing_by
+  simp only [List.length_eraseIdx, List.length_cons]
+  split <;> omega
+
+/-- ★★ **Wick's theorem at the cutoff, matching-indexed.** Below threshold, the vacuum expectation
+of `Q_{k₁}(t₁) ⋯ Q_{kₘ}(tₘ)` is the sum over the perfect matchings `σ` of its `m` insertions of
+the product over the pairs `i < σ i` of the propagator lines `contraction (kᵢ, tᵢ) (k_{σ i}, t_{σ i})`. -/
+theorem timeWord_vac_eq_pairingSum [NeZero N] (l : List (Fin K × ℝ))
+    (hN : ∀ k, (l.map Prod.fst).count k / 2 < N) :
+    timeWord (N := N) l (vacCfg K N) (vacCfg K N)
+      = Fin.pairingSum fun i i' : Fin l.length => contraction l[i] l[i'] := by
+  rw [timeWord_vac_eq_wickSum' l hN, wickSum_eq_pairingSum]
 
 end CSD.CV
