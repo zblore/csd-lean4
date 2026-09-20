@@ -6182,6 +6182,64 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'ContractionSemigroup.tendsto_trotterStep_pow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.tendsto_trotterStep_pow_apply
 
+-- BACKLOG #36(c) FC-2 (2026-09-20), Analysis/Semigroup/HeatSemigroup.lean: the heat semigroup on
+-- L^2(R) as the Bochner integral of translates against the Gaussian of variance t. Contraction,
+-- semigroup law by Gaussian convolution of measures, strong continuity by continuity of
+-- translation in L^2 and concentration of the Gaussians; an IsContractionSemigroup, so FC-1
+-- applies: the perturbed heat semigroup e^{-t(H_0+V)} for a bounded potential, its Duhamel
+-- equation and the Trotter product formula. The pointwise formula (P_t f)(x) = int f(x+y) dgamma
+-- a.e. by pairing with indicators and Fubini, and its Wiener form E[f(x + B_t)].
+/-- info: 'HeatSemigroup.gaussian_conv_gaussian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.gaussian_conv_gaussian
+
+/-- info: 'HeatSemigroup.translate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.translate
+
+/-- info: 'HeatSemigroup.continuous_translate_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.continuous_translate_apply
+
+/-- info: 'HeatSemigroup.translate_translate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.translate_translate
+
+/-- info: 'HeatSemigroup.heatSemigroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.heatSemigroup
+
+/-- info: 'HeatSemigroup.norm_heatSemigroup_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.norm_heatSemigroup_le
+
+/-- info: 'HeatSemigroup.heatSemigroup_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.heatSemigroup_add
+
+/-- info: 'HeatSemigroup.tendsto_integral_norm_translate_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.tendsto_integral_norm_translate_sub
+
+/-- info: 'HeatSemigroup.continuous_heatSemigroup_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.continuous_heatSemigroup_apply
+
+/-- info: 'HeatSemigroup.isContractionSemigroup_heatSemigroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.isContractionSemigroup_heatSemigroup
+
+/-- info: 'HeatSemigroup.integrable_shift_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.integrable_shift_prod
+
+/-- info: 'HeatSemigroup.heatSemigroup_apply_ae_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.heatSemigroup_apply_ae_eq
+
+/-- info: 'HeatSemigroup.heatConv_eq_integral_brownian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.heatConv_eq_integral_brownian
+
+/-- info: 'HeatSemigroup.potential' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.potential
+
+/-- info: 'HeatSemigroup.perturbedHeat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.perturbedHeat
+
+/-- info: 'HeatSemigroup.perturbedHeat_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.perturbedHeat_eq
+
+/-- info: 'HeatSemigroup.tendsto_trotter_perturbedHeat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.tendsto_trotter_perturbedHeat
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient
