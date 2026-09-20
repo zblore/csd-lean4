@@ -9,7 +9,7 @@ public import CsdLean4.Mathlib.Probability.FeynmanKac
 public import Mathlib.Analysis.Fourier.LpSpace
 
 /-!
-# The Schrödinger group on `L²(ℝ)` and Nelson's product formula
+# The Schrödinger group on `L²(E)` and Nelson's product formula
 
 **Category:** 1-Mathlib (CSD-free; staged for upstream).
 
@@ -68,7 +68,9 @@ Feynman picture (the time-sliced product) are each theorems about one object.
 
 ## Honest scope
 
-⚠️ **One dimension, bounded potentials, `t ≥ 0`.** Dimension `d` is FC-2′. Nelson's original
+⚠️ **Bounded potentials, `t ≥ 0`.** The space is any finite-dimensional real inner product space
+`E` — `ℝᵈ` in particular (BACKLOG #41, the real-time half of FC-2′, 2026-09-20); the Euclidean
+modules stay one-dimensional. Nelson's original
 theorem also covers a class of unbounded potentials through Trotter's formula for self-adjoint
 generators; only the bounded case is stated. The kernel (Fresnel-integral) form of the finite-slice
 formula is FC-5′ (XL). The explicit action of `freeSchrodinger` on Schwartz functions — the free
@@ -89,15 +91,46 @@ open MeasureTheory Filter HeatSemigroup NormedSpace
 
 namespace SchrodingerGroup
 
-/-- `L²(ℝ, ℂ)` with Lebesgue measure. -/
-local notation "L2" => Lp ℂ 2 (volume : Measure ℝ)
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+  [MeasurableSpace E] [BorelSpace E]
+
+/-- `L²(E, ℂ)` with Lebesgue measure, `E` a finite-dimensional inner product space. -/
+local notation "L2" => Lp ℂ 2 (volume : Measure E)
 
 /-! ### Multiplication operators -/
 
+/-- **Multiplication by a bounded function** `m ∈ L^∞` as an operator on `L²(E)`, Mathlib's Hölder
+pairing `L^∞ × L² → L²`; on `ℝ` this is `HeatSemigroup.potential`. -/
+noncomputable def mult (m : Lp ℂ ∞ (volume : Measure E)) : L2 →L[ℂ] L2 :=
+  (ContinuousLinearMap.mul ℂ ℂ).holderL volume ∞ 2 2 m
+
+theorem coeFn_mult (m : Lp ℂ ∞ (volume : Measure E)) (f : L2) :
+    mult m f =ᵐ[volume] fun x => m x * f x := by
+  filter_upwards [(ContinuousLinearMap.mul ℂ ℂ).coeFn_holder (r := 2) m f] with x hx
+  rw [mult, ContinuousLinearMap.holderL_apply_apply]
+  exact hx
+
+theorem mult_eq_potential (m : Lp ℂ ∞ (volume : Measure ℝ)) : mult m = HeatSemigroup.potential m :=
+  rfl
+
+/-- `L²(E)` is nontrivial: the indicator of the unit ball. -/
+instance instNontrivialL2 : Nontrivial L2 := by
+  refine ⟨⟨indicatorConstLp 2 (Metric.isOpen_ball (x := (0 : E)) (ε := 1)).measurableSet
+    measure_ball_lt_top.ne (1 : ℂ), 0, fun h => ?_⟩⟩
+  have hn := congrArg norm h
+  rw [norm_indicatorConstLp (by norm_num) (by norm_num), norm_zero, norm_one, one_mul] at hn
+  have hpos : 0 < (volume : Measure E).real (Metric.ball (0 : E) 1) := by
+    rw [measureReal_def]
+    exact ENNReal.toReal_pos (Metric.isOpen_ball.measure_pos volume ⟨0, Metric.mem_ball_self one_pos⟩).ne'
+      measure_ball_lt_top.ne
+  have := Real.rpow_pos_of_pos hpos (1 / (2 : ℝ≥0∞).toReal)
+  rw [hn] at this
+  exact lt_irrefl _ this
+
 /-- The powers of a multiplication operator, pointwise. -/
-theorem pow_apply_ae_eq {m : ℝ → ℂ} {A : L2 →L[ℂ] L2}
-    (hA : ∀ f : L2, (A f : ℝ → ℂ) =ᵐ[volume] fun x => m x * f x) (f : L2) :
-    ∀ n : ℕ, ((A ^ n) f : ℝ → ℂ) =ᵐ[volume] fun x => m x ^ n * f x := by
+theorem pow_apply_ae_eq {m : E → ℂ} {A : L2 →L[ℂ] L2}
+    (hA : ∀ f : L2, (A f : E → ℂ) =ᵐ[volume] fun x => m x * f x) (f : L2) :
+    ∀ n : ℕ, ((A ^ n) f : E → ℂ) =ᵐ[volume] fun x => m x ^ n * f x := by
   intro n
   induction n with
   | zero =>
@@ -115,10 +148,10 @@ complex form: if `A` acts on `L²` as multiplication by a bounded measurable `m`
 as multiplication by `e^{m}`. The operator series applied to `f` has partial sums equal almost
 everywhere to the pointwise partial sums; the `L²` limit and the pointwise (dominated) limit are
 identified on every finite-measure set. -/
-theorem exp_eq_potential {m : ℝ → ℂ} (hm : Measurable m) {C : ℝ} (hC : ∀ x, ‖m x‖ ≤ C)
-    {A : L2 →L[ℂ] L2} (hA : ∀ f : L2, (A f : ℝ → ℂ) =ᵐ[volume] fun x => m x * f x)
-    {E : Lp ℂ ∞ (volume : Measure ℝ)} (hE : (E : ℝ → ℂ) =ᵐ[volume] fun x => Complex.exp (m x)) :
-    exp A = potential E := by
+theorem exp_eq_potential {m : E → ℂ} (hm : Measurable m) {C : ℝ} (hC : ∀ x, ‖m x‖ ≤ C)
+    {A : L2 →L[ℂ] L2} (hA : ∀ f : L2, (A f : E → ℂ) =ᵐ[volume] fun x => m x * f x)
+    {M : Lp ℂ ∞ (volume : Measure E)} (hM : (M : E → ℂ) =ᵐ[volume] fun x => Complex.exp (m x)) :
+    exp A = mult M := by
   refine ContinuousLinearMap.ext fun f => ?_
   refine Lp.ext ?_
   -- the series in the operator algebra, applied to `f`
@@ -127,10 +160,10 @@ theorem exp_eq_potential {m : ℝ → ℂ} (hm : Measurable m) {C : ℝ} (hC : �
   simp only [ContinuousLinearMap.apply_apply] at hlim
   -- the partial sums, pointwise
   have hpartial : ∀ N : ℕ,
-      ((∑ n ∈ Finset.range N, ((n ! : ℝ)⁻¹ • A ^ n) f : L2) : ℝ → ℂ)
+      ((∑ n ∈ Finset.range N, ((n ! : ℝ)⁻¹ • A ^ n) f : L2) : E → ℂ)
         =ᵐ[volume] fun x => (∑ n ∈ Finset.range N, m x ^ n / n !) * f x := by
     intro N
-    have hterm : ∀ n : ℕ, ((((n ! : ℝ)⁻¹ • A ^ n) f : L2) : ℝ → ℂ)
+    have hterm : ∀ n : ℕ, ((((n ! : ℝ)⁻¹ • A ^ n) f : L2) : E → ℂ)
         =ᵐ[volume] fun x => m x ^ n / n ! * f x := by
       intro n
       rw [smul_apply]
@@ -151,15 +184,15 @@ theorem exp_eq_potential {m : ℝ → ℂ} (hm : Measurable m) {C : ℝ} (hC : �
     exact le_trans (FeynmanKac.norm_sum_pow_div_factorial_le _ N) (Real.exp_le_exp.mpr (hC x))
   refine ae_eq_of_forall_setIntegral_eq_of_sigmaFinite (fun s _ hμs => ?_) (fun s _ hμs => ?_)
     (fun s hs hμs => ?_)
-  · have : IsFiniteMeasure ((volume : Measure ℝ).restrict s) :=
+  · have : IsFiniteMeasure ((volume : Measure E).restrict s) :=
       ⟨by simpa [Measure.restrict_apply_univ] using hμs⟩
     exact ((Lp.memLp (exp A f)).restrict s).integrable one_le_two
-  · have : IsFiniteMeasure ((volume : Measure ℝ).restrict s) :=
+  · have : IsFiniteMeasure ((volume : Measure E).restrict s) :=
       ⟨by simpa [Measure.restrict_apply_univ] using hμs⟩
-    exact ((Lp.memLp (potential E f)).restrict s).integrable one_le_two
-  · have : IsFiniteMeasure ((volume : Measure ℝ).restrict s) :=
+    exact ((Lp.memLp (mult M f)).restrict s).integrable one_le_two
+  · have : IsFiniteMeasure ((volume : Measure E).restrict s) :=
       ⟨by simpa [Measure.restrict_apply_univ] using hμs⟩
-    have hfint : Integrable (fun x => Real.exp C * ‖f x‖) ((volume : Measure ℝ).restrict s) :=
+    have hfint : Integrable (fun x => Real.exp C * ‖f x‖) ((volume : Measure E).restrict s) :=
       (((Lp.memLp f).restrict s).integrable one_le_two).norm.const_mul _
     -- the set integrals of the partial sums converge to both sides
     have h1 : Tendsto (fun N => ∫ x in s, ((∑ n ∈ Finset.range N, ((n ! : ℝ)⁻¹ • A ^ n) f : L2) x))
@@ -182,7 +215,7 @@ theorem exp_eq_potential {m : ℝ → ℂ} (hm : Measurable m) {C : ℝ} (hC : �
         (Eventually.of_forall fun N => ?_)
         (Eventually.of_forall fun N => Eventually.of_forall fun x => hbound N x)
         hfint (Eventually.of_forall fun x => ?_)
-      · have hsm : Measurable fun x : ℝ => ∑ n ∈ Finset.range N, m x ^ n / (n ! : ℂ) :=
+      · have hsm : Measurable fun x : E => ∑ n ∈ Finset.range N, m x ^ n / (n ! : ℂ) :=
           Finset.measurable_sum _ fun n _ => (hm.pow_const n).div_const _
         exact hsm.aestronglyMeasurable.mul (Lp.aestronglyMeasurable f).restrict
       · refine Tendsto.mul_const _ ?_
@@ -190,25 +223,25 @@ theorem exp_eq_potential {m : ℝ → ℂ} (hm : Measurable m) {C : ℝ} (hC : �
         exact (expSeries_div_hasSum_exp (m x)).tendsto_sum_nat
     rw [tendsto_nhds_unique h1 h2]
     refine integral_congr_ae (ae_restrict_of_ae ?_)
-    filter_upwards [coeFn_potential E f, hE] with x hx hx'
+    filter_upwards [coeFn_mult M f, hM] with x hx hx'
     rw [hx, hx']
 
 /-- A multiplier bounded by one is a contraction of `L²`. -/
-theorem norm_potential_apply_le {V : Lp ℂ ∞ (volume : Measure ℝ)}
-    (hV : ∀ᵐ x ∂(volume : Measure ℝ), ‖V x‖ ≤ 1) (f : L2) : ‖potential V f‖ ≤ ‖f‖ := by
+theorem norm_mult_apply_le {V : Lp ℂ ∞ (volume : Measure E)}
+    (hV : ∀ᵐ x ∂(volume : Measure E), ‖V x‖ ≤ 1) (f : L2) : ‖mult V f‖ ≤ ‖f‖ := by
   rw [Lp.norm_def, Lp.norm_def]
   refine ENNReal.toReal_mono (Lp.eLpNorm_ne_top f) (eLpNorm_mono_ae ?_)
-  filter_upwards [coeFn_potential V f, hV] with x h1 h2
+  filter_upwards [coeFn_mult V f, hV] with x h1 h2
   rw [h1, norm_mul]
   exact mul_le_of_le_one_left (norm_nonneg _) h2
 
 /-- A unimodular multiplier is an isometry of `L²`. -/
-theorem norm_potential_apply_eq {V : Lp ℂ ∞ (volume : Measure ℝ)}
-    (hV : ∀ᵐ x ∂(volume : Measure ℝ), ‖V x‖ = 1) (f : L2) : ‖potential V f‖ = ‖f‖ := by
+theorem norm_mult_apply_eq {V : Lp ℂ ∞ (volume : Measure E)}
+    (hV : ∀ᵐ x ∂(volume : Measure E), ‖V x‖ = 1) (f : L2) : ‖mult V f‖ = ‖f‖ := by
   rw [Lp.norm_def, Lp.norm_def]
   congr 1
   refine eLpNorm_congr_norm_ae ?_
-  filter_upwards [coeFn_potential V f, hV] with x h1 h2
+  filter_upwards [coeFn_mult V f, hV] with x h1 h2
   rw [h1, norm_mul, h2, one_mul]
 
 /-- A power of an isometry is an isometry. -/
@@ -221,32 +254,41 @@ theorem norm_pow_apply_eq {T : L2 →L[ℂ] L2} (hT : ∀ ψ, ‖T ψ‖ = ‖ψ
 /-! ### The phase group `e^{−itκ}` of a real symbol -/
 
 /-- The phase `e^{−itκ(ξ)}`. -/
-noncomputable def phaseFun (κ : ℝ → ℝ) (t ξ : ℝ) : ℂ :=
+noncomputable def phaseFun (κ : E → ℝ) (t : ℝ) (ξ : E) : ℂ :=
   Complex.exp ((-(t * κ ξ) : ℝ) * Complex.I)
 
-theorem norm_phaseFun (κ : ℝ → ℝ) (t ξ : ℝ) : ‖phaseFun κ t ξ‖ = 1 :=
+omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [MeasurableSpace E]
+  [BorelSpace E] in
+theorem norm_phaseFun (κ : E → ℝ) (t : ℝ) (ξ : E) : ‖phaseFun κ t ξ‖ = 1 :=
   Complex.norm_exp_ofReal_mul_I _
 
-theorem phaseFun_zero (κ : ℝ → ℝ) (ξ : ℝ) : phaseFun κ 0 ξ = 1 := by
+omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [MeasurableSpace E]
+  [BorelSpace E] in
+theorem phaseFun_zero (κ : E → ℝ) (ξ : E) : phaseFun κ 0 ξ = 1 := by
   simp [phaseFun]
 
-theorem phaseFun_add (κ : ℝ → ℝ) (s t ξ : ℝ) :
+omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [MeasurableSpace E]
+  [BorelSpace E] in
+theorem phaseFun_add (κ : E → ℝ) (s t : ℝ) (ξ : E) :
     phaseFun κ (s + t) ξ = phaseFun κ s ξ * phaseFun κ t ξ := by
   rw [phaseFun, phaseFun, phaseFun, ← Complex.exp_add]
   congr 1
   push_cast
   ring
 
-theorem continuous_phaseFun (κ : ℝ → ℝ) (ξ : ℝ) : Continuous fun t => phaseFun κ t ξ := by
+omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [MeasurableSpace E]
+  [BorelSpace E] in
+theorem continuous_phaseFun (κ : E → ℝ) (ξ : E) : Continuous fun t => phaseFun κ t ξ := by
   unfold phaseFun
   fun_prop
 
 /-- Mathlib's `L²` Fourier transform on `ℝ`, as a linear isometry equivalence of `L2`. -/
-noncomputable def fourierL2 : L2 ≃ₗᵢ[ℂ] L2 := Lp.fourierTransformₗᵢ ℝ ℂ
+noncomputable def fourierL2 : L2 ≃ₗᵢ[ℂ] L2 := Lp.fourierTransformₗᵢ E ℂ
 
-variable {κ : ℝ → ℝ} (hκ : Measurable κ)
+variable {κ : E → ℝ} (hκ : Measurable κ)
 include hκ
 
+omit [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [BorelSpace E] in
 theorem measurable_phaseFun (t : ℝ) : Measurable (phaseFun κ t) := by
   unfold phaseFun
   exact Complex.measurable_exp.comp
@@ -257,17 +299,17 @@ theorem memLp_phaseFun (t : ℝ) : MemLp (phaseFun κ t) ∞ volume :=
     (Eventually.of_forall fun ξ => (norm_phaseFun κ t ξ).le)
 
 /-- The `L^∞` class of the phase `e^{−itκ}`. -/
-noncomputable def phase (t : ℝ) : Lp ℂ ∞ (volume : Measure ℝ) := (memLp_phaseFun hκ t).toLp _
+noncomputable def phase (t : ℝ) : Lp ℂ ∞ (volume : Measure E) := (memLp_phaseFun hκ t).toLp _
 
-theorem coeFn_phase (t : ℝ) : (phase hκ t : ℝ → ℂ) =ᵐ[volume] phaseFun κ t :=
+theorem coeFn_phase (t : ℝ) : (phase hκ t : E → ℂ) =ᵐ[volume] phaseFun κ t :=
   MemLp.coeFn_toLp _
 
 /-- **The phase group** `M_t = M_{e^{−itκ}}` on `L²`, multiplication by the unimodular phase. -/
-noncomputable def phaseGroup (t : ℝ) : L2 →L[ℂ] L2 := potential (phase hκ t)
+noncomputable def phaseGroup (t : ℝ) : L2 →L[ℂ] L2 := mult (phase hκ t)
 
 theorem coeFn_phaseGroup (t : ℝ) (f : L2) :
-    (phaseGroup hκ t f : ℝ → ℂ) =ᵐ[volume] fun x => phaseFun κ t x * f x := by
-  filter_upwards [coeFn_potential (phase hκ t) f, coeFn_phase hκ t] with x h1 h2
+    (phaseGroup hκ t f : E → ℂ) =ᵐ[volume] fun x => phaseFun κ t x * f x := by
+  filter_upwards [coeFn_mult (phase hκ t) f, coeFn_phase hκ t] with x h1 h2
   rw [phaseGroup, h1, h2]
 
 theorem phaseGroup_zero : phaseGroup hκ 0 = 1 :=
@@ -292,7 +334,7 @@ theorem phaseGroup_neg_mul (s : ℝ) : phaseGroup hκ (-s) * phaseGroup hκ s = 
 
 /-- The phase group is unitary: an isometry of `L²`. -/
 theorem norm_phaseGroup_apply (t : ℝ) (f : L2) : ‖phaseGroup hκ t f‖ = ‖f‖ :=
-  norm_potential_apply_eq
+  norm_mult_apply_eq
     (by filter_upwards [coeFn_phase hκ t] with x hx; rw [hx, norm_phaseFun]) f
 
 theorem norm_phaseGroup_le (t : ℝ) : ‖phaseGroup hκ t‖ ≤ 1 :=
@@ -368,8 +410,8 @@ theorem continuous_phaseGroup_apply (f : L2) : Continuous fun t => phaseGroup h�
 /-- **The unitary group with dispersion relation `κ`**, `U_κ(t) = 𝓕⁻¹ M_{e^{−itκ}} 𝓕 = e^{−itκ(D)}`:
 the phase group conjugated by the `L²` Fourier isometry. -/
 noncomputable def fourierGroup (t : ℝ) : L2 →L[ℂ] L2 :=
-  (fourierL2.symm.toContinuousLinearEquiv : L2 →L[ℂ] L2) ∘L phaseGroup hκ t
-    ∘L (fourierL2.toContinuousLinearEquiv : L2 →L[ℂ] L2)
+  ((fourierL2 (E := E)).symm.toContinuousLinearEquiv : L2 →L[ℂ] L2) ∘L phaseGroup hκ t
+    ∘L ((fourierL2 (E := E)).toContinuousLinearEquiv : L2 →L[ℂ] L2)
 
 theorem fourierGroup_apply (t : ℝ) (f : L2) :
     fourierGroup hκ t f = fourierL2.symm (phaseGroup hκ t (fourierL2 f)) := rfl
@@ -419,35 +461,35 @@ theorem isContractionSemigroup_fourierGroup :
 /-- **The interacting propagator** `U(t) = e^{−it(κ(D) + V)}` for a bounded potential `V ∈ L^∞`:
 the Dyson series of `BoundedPerturbation.lean` around the free group `U_κ` with interaction
 `−i M_V`, for `t ≥ 0` (the identity for `t < 0`). -/
-noncomputable def schrodinger (VL : Lp ℂ ∞ (volume : Measure ℝ)) (t : ℝ) : L2 →L[ℂ] L2 :=
-  (isContractionSemigroup_fourierGroup hκ).perturbed (-(Complex.I • potential VL)) t
+noncomputable def schrodinger (VL : Lp ℂ ∞ (volume : Measure E)) (t : ℝ) : L2 →L[ℂ] L2 :=
+  (isContractionSemigroup_fourierGroup hκ).perturbed (-(Complex.I • mult VL)) t
 
-theorem schrodinger_apply (VL : Lp ℂ ∞ (volume : Measure ℝ)) (t : ℝ) (ψ : L2) :
+theorem schrodinger_apply (VL : Lp ℂ ∞ (volume : Measure E)) (t : ℝ) (ψ : L2) :
     schrodinger hκ VL t ψ = ContractionSemigroup.dysonSum
-      (fun t => if 0 ≤ t then fourierGroup hκ t else 1) (-(Complex.I • potential VL)) t ψ :=
+      (fun t => if 0 ≤ t then fourierGroup hκ t else 1) (-(Complex.I • mult VL)) t ψ :=
   rfl
 
-theorem schrodinger_zero (VL : Lp ℂ ∞ (volume : Measure ℝ)) : schrodinger hκ VL 0 = 1 :=
+theorem schrodinger_zero (VL : Lp ℂ ∞ (volume : Measure E)) : schrodinger hκ VL 0 = 1 :=
   ContractionSemigroup.perturbed_zero _ _
 
 /-- The propagator is a semigroup: `U(t + s) = U(t) U(s)` for `s, t ≥ 0`. -/
-theorem schrodinger_add (VL : Lp ℂ ∞ (volume : Measure ℝ)) {s t : ℝ} (hs : 0 ≤ s) (ht : 0 ≤ t) :
+theorem schrodinger_add (VL : Lp ℂ ∞ (volume : Measure E)) {s t : ℝ} (hs : 0 ≤ s) (ht : 0 ≤ t) :
     schrodinger hκ VL (t + s) = schrodinger hκ VL t * schrodinger hκ VL s :=
   ContractionSemigroup.perturbed_add _ _ hs ht
 
-theorem continuous_schrodinger_apply (VL : Lp ℂ ∞ (volume : Measure ℝ)) (ψ : L2) :
+theorem continuous_schrodinger_apply (VL : Lp ℂ ∞ (volume : Measure E)) (ψ : L2) :
     Continuous fun t => schrodinger hκ VL t ψ :=
   ContractionSemigroup.continuous_perturbed_apply _ _ ψ
 
-variable {V : ℝ → ℝ} (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV)
-  {VL : Lp ℂ ∞ (volume : Measure ℝ)}
+variable {V : E → ℝ} (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV)
+  {VL : Lp ℂ ∞ (volume : Measure E)}
 include hVm hCV
 
-/-- ★ **The potential kick**: the Trotter step of the propagator is a free flight followed by the
+/-- ★ **The mult kick**: the Trotter step of the propagator is a free flight followed by the
 phase `e^{−ihV}`, `U_κ(h) · exp (h · (−i M_V)) = U_κ(h) · M_{e^{−ihV}}` for `h ≥ 0`. -/
-theorem trotterStep_eq (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {h : ℝ} (hh : 0 ≤ h) :
+theorem trotterStep_eq (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {h : ℝ} (hh : 0 ≤ h) :
     ContractionSemigroup.trotterStep (fun t => if 0 ≤ t then fourierGroup hκ t else 1)
-        (-(Complex.I • potential VL)) h
+        (-(Complex.I • mult VL)) h
       = fourierGroup hκ h * phaseGroup hVm h := by
   rw [ContractionSemigroup.trotterStep, if_pos hh]
   congr 1
@@ -461,10 +503,10 @@ theorem trotterStep_eq (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : �
   · intro f
     rw [smul_apply, neg_apply, smul_apply]
     -- the real action on `L²` is the restriction of the complex one
-    show (((h : ℂ) • -(Complex.I • potential VL f) : L2) : ℝ → ℂ) =ᵐ[volume] _
-    filter_upwards [Lp.coeFn_smul (h : ℂ) (-(Complex.I • potential VL f)),
-      Lp.coeFn_neg (Complex.I • potential VL f), Lp.coeFn_smul Complex.I (potential VL f),
-      coeFn_potential VL f, hVL] with x h1 h2 h3 h4 h5
+    show (((h : ℂ) • -(Complex.I • mult VL f) : L2) : E → ℂ) =ᵐ[volume] _
+    filter_upwards [Lp.coeFn_smul (h : ℂ) (-(Complex.I • mult VL f)),
+      Lp.coeFn_neg (Complex.I • mult VL f), Lp.coeFn_smul Complex.I (mult VL f),
+      coeFn_mult VL f, hVL] with x h1 h2 h3 h4 h5
     rw [h1, Pi.smul_apply, h2, Pi.neg_apply, h3, Pi.smul_apply, h4, h5]
     simp only [smul_eq_mul]
     push_cast
@@ -472,25 +514,25 @@ theorem trotterStep_eq (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : �
 
 /-- ★★ **Nelson's theorem** — Trotter's product formula for the Schrödinger propagator. For a
 bounded real potential `V`, the interacting propagator is the limit of alternating free flights and
-potential kicks,
+mult kicks,
 
   `(U_κ(t/n) · M_{e^{−i(t/n)V}})ⁿ ψ → e^{−it(κ(D) + V)} ψ`  in `L²`, `t ≥ 0`.
 
 With `U_κ(t/n) = 𝓕⁻¹ e^{−i(t/n)κ} 𝓕`, the left side is Feynman's finite-slice formula in operator
 form: the momentum-space phase of the kinetic term alternating with the position-space phase of the
 potential. -/
-theorem nelson (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ} (ht : 0 ≤ t) (ψ : L2) :
+theorem nelson (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ} (ht : 0 ≤ t) (ψ : L2) :
     Tendsto (fun n : ℕ => ((fourierGroup hκ (t / n) * phaseGroup hVm (t / n)) ^ n) ψ) atTop
       (𝓝 (schrodinger hκ VL t ψ)) := by
-  have h := ContractionSemigroup.tendsto_trotterStep_pow_apply (-(Complex.I • potential VL))
+  have h := ContractionSemigroup.tendsto_trotterStep_pow_apply (-(Complex.I • mult VL))
     (isContractionSemigroup_fourierGroup hκ) ht ψ
   rw [schrodinger_apply]
   refine h.congr' (Eventually.of_forall fun n => ?_)
   rw [trotterStep_eq hκ hVm hCV hVL (div_nonneg ht n.cast_nonneg)]
 
-/-- ★ **Probability is conserved**: the propagator of a real bounded potential is an isometry of
+/-- ★ **Probability is conserved**: the propagator of a real bounded mult is an isometry of
 `L²`, `‖U(t) ψ‖ = ‖ψ‖`, inherited from its unitary Trotter approximants through Nelson's limit. -/
-theorem norm_schrodinger_apply (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ}
+theorem norm_schrodinger_apply (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ}
     (ht : 0 ≤ t) (ψ : L2) : ‖schrodinger hκ VL t ψ‖ = ‖ψ‖ := by
   refine tendsto_nhds_unique (nelson hκ hVm hCV hVL ht ψ).norm
     (tendsto_const_nhds.congr fun n => ?_)
@@ -501,29 +543,34 @@ end SchrodingerGroup
 
 namespace SchrodingerGroup
 
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+  [MeasurableSpace E] [BorelSpace E]
+
 /-! ### The free Schrödinger group -/
 
-/-- `L²(ℝ, ℂ)` with Lebesgue measure. -/
-local notation "L2" => Lp ℂ 2 (volume : Measure ℝ)
+/-- `L²(E, ℂ)` with Lebesgue measure. -/
+local notation "L2" => Lp ℂ 2 (volume : Measure E)
 
-/-- The free symbol `2π²ξ²`: the Fourier symbol of `H₀ = −½ d²/dx²` in Mathlib's convention
-`𝓕 f (ξ) = ∫ e^{−2πiξx} f(x) dx` (units `ℏ = m = 1`). -/
-noncomputable def freeSymbol (ξ : ℝ) : ℝ := 2 * Real.pi ^ 2 * ξ ^ 2
+/-- The free symbol `2π²‖ξ‖²`: the Fourier symbol of `H₀ = −½ Δ` in Mathlib's convention
+`𝓕 f (ξ) = ∫ e^{−2πi⟪ξ,x⟫} f(x) dx` (units `ℏ = m = 1`). -/
+noncomputable def freeSymbol (ξ : E) : ℝ := 2 * Real.pi ^ 2 * ‖ξ‖ ^ 2
 
-theorem measurable_freeSymbol : Measurable freeSymbol := by
+omit [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] in
+theorem measurable_freeSymbol : Measurable (freeSymbol (E := E)) := by
   unfold freeSymbol
   fun_prop
 
 /-- **The free Schrödinger group** `e^{−itH₀}`, `H₀ = −½ d²/dx²`, defined through its Fourier
 multiplier `e^{−2π²itξ²}`: `fourierGroup` with the free symbol. -/
-noncomputable def freeSchrodinger (t : ℝ) : L2 →L[ℂ] L2 := fourierGroup measurable_freeSymbol t
+noncomputable def freeSchrodinger (t : ℝ) : L2 →L[ℂ] L2 :=
+  fourierGroup (measurable_freeSymbol (E := E)) t
 
 /-- ★★ **Nelson's theorem for the Schrödinger equation**: for a bounded real potential `V`,
-`(e^{−i(t/n)H₀} · e^{−i(t/n)V})ⁿ ψ → e^{−it(H₀ + V)} ψ` in `L²(ℝ)`. -/
-theorem nelson_freeSchrodinger {V : ℝ → ℝ} (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV)
-    {VL : Lp ℂ ∞ (volume : Measure ℝ)} (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ}
+`(e^{−i(t/n)H₀} · e^{−i(t/n)V})ⁿ ψ → e^{−it(H₀ + V)} ψ` in `L²(E)`, `H₀ = −½ Δ`. -/
+theorem nelson_freeSchrodinger {V : E → ℝ} (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV)
+    {VL : Lp ℂ ∞ (volume : Measure E)} (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ}
     (ht : 0 ≤ t) (ψ : L2) :
-    Tendsto (fun n : ℕ => ((freeSchrodinger (t / n) * phaseGroup hVm (t / n)) ^ n) ψ) atTop
+    Tendsto (fun n : ℕ => ((freeSchrodinger (E := E) (t / n) * phaseGroup hVm (t / n)) ^ n) ψ) atTop
       (𝓝 (schrodinger measurable_freeSymbol VL t ψ)) :=
   nelson measurable_freeSymbol hVm hCV hVL ht ψ
 
@@ -541,7 +588,7 @@ theorem mul_pow_conj {M : Type*} [Monoid M] {a c d : M} (hcd : c * d = 1) (hdc :
     rw [← mul_assoc d c a, hdc, one_mul, hcd, mul_one]
 
 /-- Negating the symbol reverses the phase group: `M^{−κ}_s = M^{κ}_{−s}`. -/
-theorem phaseGroup_of_neg {κ₁ κ₂ : ℝ → ℝ} (hκ₁ : Measurable κ₁) (hκ₂ : Measurable κ₂)
+theorem phaseGroup_of_neg {κ₁ κ₂ : E → ℝ} (hκ₁ : Measurable κ₁) (hκ₂ : Measurable κ₂)
     (hκ : ∀ ξ, κ₂ ξ = -κ₁ ξ) (s : ℝ) : phaseGroup hκ₂ s = phaseGroup hκ₁ (-s) :=
   ContinuousLinearMap.ext fun f => Lp.ext <| by
     filter_upwards [coeFn_phaseGroup hκ₂ s f, coeFn_phaseGroup hκ₁ (-s) f] with x h1 h2
@@ -550,7 +597,7 @@ theorem phaseGroup_of_neg {κ₁ κ₂ : ℝ → ℝ} (hκ₁ : Measurable κ₁
     rw [this]
 
 /-- Negating the symbol reverses the group: `U_{−κ}(s) = U_κ(−s)`. -/
-theorem fourierGroup_of_neg {κ₁ κ₂ : ℝ → ℝ} (hκ₁ : Measurable κ₁) (hκ₂ : Measurable κ₂)
+theorem fourierGroup_of_neg {κ₁ κ₂ : E → ℝ} (hκ₁ : Measurable κ₁) (hκ₂ : Measurable κ₂)
     (hκ : ∀ ξ, κ₂ ξ = -κ₁ ξ) (s : ℝ) : fourierGroup hκ₂ s = fourierGroup hκ₁ (-s) :=
   ContinuousLinearMap.ext fun f => by
     rw [fourierGroup_apply, fourierGroup_apply, phaseGroup_of_neg hκ₁ hκ₂ hκ]
@@ -559,12 +606,12 @@ theorem fourierGroup_of_neg {κ₁ κ₂ : ℝ → ℝ} (hκ₁ : Measurable κ�
 then `e^{−it(κ₁(D)+V₁)} · e^{−it(κ₂(D)+V₂)} = 1` for `t ≥ 0`. The forward Trotter approximants
 `Xₙ = (U₁ M₁)ⁿ` are invertible with `Xₙ⁻¹ = M₂ (U₂ M₂)ⁿ M₁`, a conjugate of the reversed
 approximants; both converge strongly (Nelson), and `χ = Xₙ Xₙ⁻¹ χ` passes to the limit. -/
-theorem schrodinger_mul_schrodinger_of_neg {κ₁ κ₂ : ℝ → ℝ} (hκ₁ : Measurable κ₁)
-    (hκ₂ : Measurable κ₂) (hκ : ∀ ξ, κ₂ ξ = -κ₁ ξ) {V₁ V₂ : ℝ → ℝ} (hV₁ : Measurable V₁)
+theorem schrodinger_mul_schrodinger_of_neg {κ₁ κ₂ : E → ℝ} (hκ₁ : Measurable κ₁)
+    (hκ₂ : Measurable κ₂) (hκ : ∀ ξ, κ₂ ξ = -κ₁ ξ) {V₁ V₂ : E → ℝ} (hV₁ : Measurable V₁)
     (hV₂ : Measurable V₂) (hV : ∀ x, V₂ x = -V₁ x) {CV : ℝ} (hCV₁ : ∀ x, |V₁ x| ≤ CV)
-    (hCV₂ : ∀ x, |V₂ x| ≤ CV) {VL₁ VL₂ : Lp ℂ ∞ (volume : Measure ℝ)}
-    (hVL₁ : (VL₁ : ℝ → ℂ) =ᵐ[volume] fun x => (V₁ x : ℂ))
-    (hVL₂ : (VL₂ : ℝ → ℂ) =ᵐ[volume] fun x => (V₂ x : ℂ)) {t : ℝ} (ht : 0 ≤ t) :
+    (hCV₂ : ∀ x, |V₂ x| ≤ CV) {VL₁ VL₂ : Lp ℂ ∞ (volume : Measure E)}
+    (hVL₁ : (VL₁ : E → ℂ) =ᵐ[volume] fun x => (V₁ x : ℂ))
+    (hVL₂ : (VL₂ : E → ℂ) =ᵐ[volume] fun x => (V₂ x : ℂ)) {t : ℝ} (ht : 0 ≤ t) :
     schrodinger hκ₁ VL₁ t * schrodinger hκ₂ VL₂ t = 1 := by
   refine ContinuousLinearMap.ext fun χ => ?_
   rw [mul_apply_eq_comp, one_apply_eq_self]
@@ -641,25 +688,25 @@ theorem schrodinger_mul_schrodinger_of_neg {κ₁ κ₂ : ℝ → ℝ} (hκ₁ :
           rw [norm_pow_apply_eq (hXiso n)]
   exact (tendsto_nhds_unique (tendsto_const_nhds.congr fun n => (hconst n).symm) hlim).symm
 
-theorem coeFn_neg_ae_eq {V : ℝ → ℝ} {VL : Lp ℂ ∞ (volume : Measure ℝ)}
-    (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) :
-    ((-VL : Lp ℂ ∞ (volume : Measure ℝ)) : ℝ → ℂ) =ᵐ[volume] fun x => ((-V x : ℝ) : ℂ) := by
+theorem coeFn_neg_ae_eq {V : E → ℝ} {VL : Lp ℂ ∞ (volume : Measure E)}
+    (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) :
+    ((-VL : Lp ℂ ∞ (volume : Measure E)) : E → ℂ) =ᵐ[volume] fun x => ((-V x : ℝ) : ℂ) := by
   filter_upwards [Lp.coeFn_neg VL, hVL] with x h1 h2
   rw [h1, Pi.neg_apply, h2, Complex.ofReal_neg]
 
 /-- ★ `U(t) · U⁻(t) = 1`: the propagator of the reversed dynamics `e^{−it(−κ(D) − V)}` is a right
 inverse of `e^{−it(κ(D) + V)}`, `t ≥ 0`. -/
-theorem schrodinger_mul_schrodinger_neg {κ : ℝ → ℝ} (hκ : Measurable κ) {V : ℝ → ℝ}
-    (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV) {VL : Lp ℂ ∞ (volume : Measure ℝ)}
-    (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ} (ht : 0 ≤ t) :
+theorem schrodinger_mul_schrodinger_neg {κ : E → ℝ} (hκ : Measurable κ) {V : E → ℝ}
+    (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV) {VL : Lp ℂ ∞ (volume : Measure E)}
+    (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ} (ht : 0 ≤ t) :
     schrodinger hκ VL t * schrodinger hκ.neg (-VL) t = 1 :=
   schrodinger_mul_schrodinger_of_neg hκ hκ.neg (fun _ => rfl) hVm hVm.neg (fun _ => rfl) hCV
     (fun x => by rw [Pi.neg_apply, abs_neg]; exact hCV x) hVL (coeFn_neg_ae_eq hVL) ht
 
 /-- ★ `U⁻(t) · U(t) = 1`: the propagator of the reversed dynamics is a left inverse. -/
-theorem schrodinger_neg_mul_schrodinger {κ : ℝ → ℝ} (hκ : Measurable κ) {V : ℝ → ℝ}
-    (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV) {VL : Lp ℂ ∞ (volume : Measure ℝ)}
-    (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ} (ht : 0 ≤ t) :
+theorem schrodinger_neg_mul_schrodinger {κ : E → ℝ} (hκ : Measurable κ) {V : E → ℝ}
+    (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV) {VL : Lp ℂ ∞ (volume : Measure E)}
+    (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ} (ht : 0 ≤ t) :
     schrodinger hκ.neg (-VL) t * schrodinger hκ VL t = 1 :=
   schrodinger_mul_schrodinger_of_neg hκ.neg hκ (fun ξ => (neg_neg (κ ξ)).symm) hVm.neg hVm
     (fun x => (neg_neg (V x)).symm) (fun x => by rw [Pi.neg_apply, abs_neg]; exact hCV x) hCV
@@ -669,9 +716,9 @@ theorem schrodinger_neg_mul_schrodinger {κ : ℝ → ℝ} (hκ : Measurable κ)
 `e^{−it(κ(D) + V)}` is a linear isometric bijection of `L²`: an isometry by
 `norm_schrodinger_apply`, invertible with inverse the propagator of the reversed dynamics
 (`schrodinger_mul_schrodinger_neg`, `schrodinger_neg_mul_schrodinger`). -/
-theorem exists_linearIsometryEquiv_schrodinger {κ : ℝ → ℝ} (hκ : Measurable κ) {V : ℝ → ℝ}
-    (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV) {VL : Lp ℂ ∞ (volume : Measure ℝ)}
-    (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ} (ht : 0 ≤ t) :
+theorem exists_linearIsometryEquiv_schrodinger {κ : E → ℝ} (hκ : Measurable κ) {V : E → ℝ}
+    (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV) {VL : Lp ℂ ∞ (volume : Measure E)}
+    (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {t : ℝ} (ht : 0 ≤ t) :
     ∃ e : L2 ≃ₗᵢ[ℂ] L2, ⇑e = schrodinger hκ VL t :=
   ⟨{ toLinearEquiv := (ContinuousLinearEquiv.equivOfInverse (schrodinger hκ VL t)
         (schrodinger hκ.neg (-VL) t)

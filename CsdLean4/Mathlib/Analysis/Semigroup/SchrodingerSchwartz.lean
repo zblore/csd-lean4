@@ -17,7 +17,7 @@ public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 **Category:** 1-Mathlib (CSD-free; staged for upstream).
 
 `Analysis/Semigroup/SchrodingerGroup.lean` defines the unitary group `U_κ(t) = 𝓕⁻¹ e^{−itκ} 𝓕` on
-`L²(ℝ)` and never writes a generator. This module (BACKLOG #43, FC-5″) writes it, on Schwartz
+`L²(E)` and never writes a generator. This module (BACKLOG #43, FC-5″) writes it, on Schwartz
 functions, where Mathlib's Fourier calculus is available:
 
 * **the phase `e^{−itκ}` of a symbol of temperate growth has temperate growth**
@@ -39,7 +39,8 @@ functions, where Mathlib's Fourier calculus is available:
 ⚠️ The derivative is taken in `L²` (the strong derivative of the orbit), for Schwartz initial data;
 the statement in the Schwartz topology is not made. The action on a Gaussian packet — the packet
 spreading into a Gaussian of complex variance — needs a Gaussian bundled as a `SchwartzMap`, which
-the pin does not have (BACKLOG #48). One dimension.
+the pin does not have (BACKLOG #48). The space `E` is any finite-dimensional real inner product
+space (`H₀ = −½ Δ` on `ℝᵈ`).
 
 References: M. Reed, B. Simon, *Methods of Modern Mathematical Physics* II §IX.7;
 `Analysis/Semigroup/SchrodingerGroup.lean` (FC-5); `specs/feynman-continuum-scoping.md` §5;
@@ -53,8 +54,11 @@ open MeasureTheory Filter SchrodingerGroup
 
 namespace SchrodingerGroup
 
-/-- `L²(ℝ, ℂ)` with Lebesgue measure. -/
-local notation "L2" => Lp ℂ 2 (volume : Measure ℝ)
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+  [MeasurableSpace E] [BorelSpace E]
+
+/-- `L²(E, ℂ)` with Lebesgue measure. -/
+local notation "L2" => Lp ℂ 2 (volume : Measure E)
 
 /-! ### Temperate growth of a real phase -/
 
@@ -84,8 +88,9 @@ theorem hasTemperateGrowth_exp_mul_I :
   · rw [norm_iteratedFDeriv_eq_norm_iteratedDeriv, iteratedDeriv_exp_mul_I]
     simp [Complex.norm_exp_ofReal_mul_I]
 
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] in
 /-- ★ **The phase `e^{−itκ}` of a symbol of temperate growth has temperate growth.** -/
-theorem hasTemperateGrowth_phaseFun {κ : ℝ → ℝ} (hκ : Function.HasTemperateGrowth κ) (t : ℝ) :
+theorem hasTemperateGrowth_phaseFun {κ : E → ℝ} (hκ : Function.HasTemperateGrowth κ) (t : ℝ) :
     Function.HasTemperateGrowth (phaseFun κ t) := by
   have h : phaseFun κ t = (fun s : ℝ => Complex.exp (↑s * Complex.I)) ∘ fun ξ => -(t * κ ξ) := by
     funext ξ
@@ -94,25 +99,26 @@ theorem hasTemperateGrowth_phaseFun {κ : ℝ → ℝ} (hκ : Function.HasTemper
   refine hasTemperateGrowth_exp_mul_I.comp ?_
   fun_prop
 
-theorem hasTemperateGrowth_freeSymbol : Function.HasTemperateGrowth freeSymbol := by
-  unfold freeSymbol
-  fun_prop
+omit [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] in
+theorem hasTemperateGrowth_freeSymbol : Function.HasTemperateGrowth (freeSymbol (E := E)) :=
+  (Function.HasTemperateGrowth.const _).mul (Function.hasTemperateGrowth_norm_sq E)
 
 /-! ### The group on Schwartz space -/
 
 /-- The unitary group `U_κ` on Schwartz space: Mathlib's Fourier multiplier with symbol
 `e^{−itκ}`. -/
-noncomputable def fourierGroupS (κ : ℝ → ℝ) (t : ℝ) : 𝓢(ℝ, ℂ) →L[ℂ] 𝓢(ℝ, ℂ) :=
+noncomputable def fourierGroupS (κ : E → ℝ) (t : ℝ) : 𝓢(E, ℂ) →L[ℂ] 𝓢(E, ℂ) :=
   SchwartzMap.fourierMultiplierCLM ℂ (phaseFun κ t)
 
 /-- The free Schrödinger group on Schwartz space. -/
-noncomputable def freeSchrodingerS (t : ℝ) : 𝓢(ℝ, ℂ) →L[ℂ] 𝓢(ℝ, ℂ) := fourierGroupS freeSymbol t
+noncomputable def freeSchrodingerS (t : ℝ) : 𝓢(E, ℂ) →L[ℂ] 𝓢(E, ℂ) :=
+  fourierGroupS (freeSymbol (E := E)) t
 
-variable {κ : ℝ → ℝ} (hκm : Measurable κ) (hκ : Function.HasTemperateGrowth κ)
+variable {κ : E → ℝ} (hκm : Measurable κ) (hκ : Function.HasTemperateGrowth κ)
 include hκm hκ
 
 /-- On Schwartz functions the `L²` phase group is multiplication by the phase. -/
-theorem phaseGroup_toLp (t : ℝ) (ψ : 𝓢(ℝ, ℂ)) :
+theorem phaseGroup_toLp (t : ℝ) (ψ : 𝓢(E, ℂ)) :
     phaseGroup hκm t (ψ.toLp 2) = (SchwartzMap.smulLeftCLM ℂ (phaseFun κ t) ψ).toLp 2 := by
   refine Lp.ext ?_
   filter_upwards [coeFn_phaseGroup hκm t (ψ.toLp 2), ψ.coeFn_toLp 2,
@@ -122,43 +128,44 @@ theorem phaseGroup_toLp (t : ℝ) (ψ : 𝓢(ℝ, ℂ)) :
 
 /-- ★ **The unitary group preserves Schwartz space**:
 `U_κ(t) (f.toLp 2) = (𝓕⁻¹ (e^{−itκ} · 𝓕 f)).toLp 2`. -/
-theorem fourierGroup_toLp (t : ℝ) (f : 𝓢(ℝ, ℂ)) :
+theorem fourierGroup_toLp (t : ℝ) (f : 𝓢(E, ℂ)) :
     fourierGroup hκm t (f.toLp 2) = (fourierGroupS κ t f).toLp 2 := by
   rw [fourierGroup_apply, fourierGroupS, SchwartzMap.fourierMultiplierCLM_apply]
   have h1 : fourierL2 (f.toLp 2) = (𝓕 f).toLp 2 := SchwartzMap.toLp_fourier_eq f
-  have h2 : ∀ ψ : 𝓢(ℝ, ℂ), fourierL2.symm (ψ.toLp 2) = (𝓕⁻ ψ).toLp 2 := fun ψ =>
+  have h2 : ∀ ψ : 𝓢(E, ℂ), fourierL2.symm (ψ.toLp 2) = (𝓕⁻ ψ).toLp 2 := fun ψ =>
     SchwartzMap.toLp_fourierInv_eq ψ
   rw [h1, phaseGroup_toLp hκm hκ t, h2]
 
 omit hκm hκ in
-theorem freeSchrodinger_toLp (t : ℝ) (f : 𝓢(ℝ, ℂ)) :
+theorem freeSchrodinger_toLp (t : ℝ) (f : 𝓢(E, ℂ)) :
     freeSchrodinger t (f.toLp 2) = (freeSchrodingerS t f).toLp 2 :=
-  fourierGroup_toLp measurable_freeSymbol hasTemperateGrowth_freeSymbol t f
+  fourierGroup_toLp (measurable_freeSymbol (E := E)) hasTemperateGrowth_freeSymbol t f
 
 /-! ### The generator -/
 
 omit hκm hκ in
 /-- The kinetic energy operator `H₀ = −½ d²/dx²` on Schwartz functions, as the Fourier multiplier
 of the free symbol `2π²ξ²`. -/
-noncomputable def kineticOp : 𝓢(ℝ, ℂ) →L[ℝ] 𝓢(ℝ, ℂ) :=
-  SchwartzMap.fourierMultiplierCLM (𝕜 := ℝ) ℂ freeSymbol
+noncomputable def kineticOp : 𝓢(E, ℂ) →L[ℝ] 𝓢(E, ℂ) :=
+  SchwartzMap.fourierMultiplierCLM (𝕜 := ℝ) ℂ (freeSymbol (E := E))
 
 omit hκm hκ in
 /-- ★ **`H₀ = −½ Δ`** on Schwartz functions, from Mathlib's `laplacian_eq_fourierMultiplierCLM`. -/
-theorem kineticOp_eq_laplacian (f : 𝓢(ℝ, ℂ)) : kineticOp f = (-(1 / 2 : ℝ)) • Δ f := by
-  have hsym : freeSymbol = (2 * Real.pi ^ 2) • fun ξ : ℝ => ‖ξ‖ ^ 2 := by
+theorem kineticOp_eq_laplacian (f : 𝓢(E, ℂ)) : kineticOp f = (-(1 / 2 : ℝ)) • Δ f := by
+  have hsym : freeSymbol (E := E) = (2 * Real.pi ^ 2) • fun ξ : E => ‖ξ‖ ^ 2 := by
     funext ξ
-    simp [freeSymbol, Real.norm_eq_abs, sq_abs]
+    simp [freeSymbol]
   rw [SchwartzMap.laplacian_eq_fourierMultiplierCLM, smul_smul, kineticOp, hsym,
-    SchwartzMap.fourierMultiplierCLM_smul (Function.hasTemperateGrowth_norm_sq ℝ), smul_apply]
+    SchwartzMap.fourierMultiplierCLM_smul (Function.hasTemperateGrowth_norm_sq E), smul_apply]
   congr 1
   ring
 
 /-! ### The Schrödinger equation -/
 
-omit hκm hκ in
+omit hκm hκ [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [MeasurableSpace E]
+  [BorelSpace E] in
 /-- The difference quotient of the phase is bounded by `2|κ|`. -/
-theorem norm_phaseQuot_le (t x : ℝ) :
+theorem norm_phaseQuot_le (t : ℝ) (x : E) :
     ‖((t⁻¹ : ℝ) : ℂ) * (phaseFun κ t x - 1) + Complex.I * (κ x : ℂ)‖ ≤ 2 * |κ x| := by
   refine le_trans (norm_add_le _ _) ?_
   have h2 : ‖Complex.I * (κ x : ℂ)‖ = |κ x| := by
@@ -177,9 +184,10 @@ theorem norm_phaseQuot_le (t x : ℝ) :
             rw [abs_mul, ← mul_assoc, inv_mul_cancel₀ (abs_ne_zero.mpr ht), one_mul]
     linarith
 
-omit hκm hκ in
+omit hκm hκ [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] [MeasurableSpace E]
+  [BorelSpace E] in
 /-- The difference quotient of the phase tends to `−iκ`. -/
-theorem tendsto_phaseQuot (x : ℝ) :
+theorem tendsto_phaseQuot (x : E) :
     Tendsto (fun t : ℝ => ((t⁻¹ : ℝ) : ℂ) * (phaseFun κ t x - 1) + Complex.I * (κ x : ℂ))
       (𝓝[≠] 0) (𝓝 0) := by
   have hd : HasDerivAt (fun t : ℝ => phaseFun κ t x) (-(Complex.I * (κ x : ℂ))) 0 := by
@@ -204,13 +212,13 @@ theorem tendsto_phaseQuot (x : ℝ) :
 
 /-- ★ **The strong derivative of the phase group at `t = 0`**, on Schwartz functions:
 `∂_t (e^{−itκ} ψ)|₀ = −iκψ` in `L²`, by dominated convergence with dominator `4κ²|ψ|²`. -/
-theorem hasDerivAt_phaseGroup_toLp (ψ : 𝓢(ℝ, ℂ)) :
+theorem hasDerivAt_phaseGroup_toLp (ψ : 𝓢(E, ℂ)) :
     HasDerivAt (fun t => phaseGroup hκm t (ψ.toLp 2))
       ((-Complex.I) • (SchwartzMap.smulLeftCLM (𝕜 := ℝ) ℂ κ ψ).toLp 2) 0 := by
-  set D : 𝓢(ℝ, ℂ) := SchwartzMap.smulLeftCLM (𝕜 := ℝ) ℂ κ ψ with hD
+  set D : 𝓢(E, ℂ) := SchwartzMap.smulLeftCLM (𝕜 := ℝ) ℂ κ ψ with hD
   have hDx : ∀ x, D x = (κ x : ℂ) * ψ x := fun x => by
     rw [hD, SchwartzMap.smulLeftCLM_apply_apply hκ, Complex.real_smul]
-  set F : ℝ → ℝ → ℂ := fun t x =>
+  set F : ℝ → E → ℂ := fun t x =>
     (((t⁻¹ : ℝ) : ℂ) * (phaseFun κ t x - 1) + Complex.I * (κ x : ℂ)) * ψ x with hF
   set X : ℝ → L2 := fun t =>
     t⁻¹ • (phaseGroup hκm t (ψ.toLp 2 volume) - ψ.toLp 2 volume) - (-Complex.I) • D.toLp 2 volume
@@ -218,7 +226,7 @@ theorem hasDerivAt_phaseGroup_toLp (ψ : 𝓢(ℝ, ℂ)) :
   -- the norm of the remainder, as an integral
   have hXF : ∀ t, ‖X t‖ ^ 2 = ∫ x, ‖F t x‖ ^ 2 := by
     intro t
-    have hae : (X t : ℝ → ℂ) =ᵐ[volume] F t := by
+    have hae : (X t : E → ℂ) =ᵐ[volume] F t := by
       filter_upwards [Lp.coeFn_sub (t⁻¹ • (phaseGroup hκm t (ψ.toLp 2 volume) - ψ.toLp 2 volume))
           ((-Complex.I) • D.toLp 2 volume),
         Lp.coeFn_smul (t⁻¹ : ℝ) (phaseGroup hκm t (ψ.toLp 2 volume) - ψ.toLp 2 volume),
@@ -242,11 +250,11 @@ theorem hasDerivAt_phaseGroup_toLp (ψ : 𝓢(ℝ, ℂ)) :
       rw [hx])
   -- dominated convergence for the integrals
   have hκc : Continuous κ := hκ.1.continuous
-  have hbound : Integrable (fun x => 4 * ‖D x‖ ^ 2) (volume : Measure ℝ) :=
+  have hbound : Integrable (fun x => 4 * ‖D x‖ ^ 2) (volume : Measure E) :=
     ((D.memLp 2).integrable_norm_pow (p := 2) two_ne_zero).const_mul 4
   have hlim : Tendsto (fun t => ∫ x, ‖F t x‖ ^ 2) (𝓝[≠] 0) (𝓝 0) := by
-    have h0 : (0 : ℝ) = ∫ x : ℝ, ‖(0 : ℂ)‖ ^ 2 := by simp
-    rw [h0]
+    have h0 : (∫ x : E, ‖(0 : ℂ)‖ ^ 2) = 0 := by simp
+    rw [← h0]
     refine tendsto_integral_filter_of_dominated_convergence (fun x => 4 * ‖D x‖ ^ 2)
       (Eventually.of_forall fun t => ?_) (Eventually.of_forall fun t => Eventually.of_forall fun x => ?_)
       hbound (Eventually.of_forall fun x => ?_)
@@ -275,29 +283,29 @@ theorem hasDerivAt_phaseGroup_toLp (ψ : 𝓢(ℝ, ℂ)) :
 
 /-- ★ **The strong derivative of `U_κ` at `t = 0`** on Schwartz functions:
 `∂_t (U_κ(t) f)|₀ = −i κ(D) f` in `L²`. -/
-theorem hasDerivAt_fourierGroup_toLp_zero (f : 𝓢(ℝ, ℂ)) :
+theorem hasDerivAt_fourierGroup_toLp_zero (f : 𝓢(E, ℂ)) :
     HasDerivAt (fun t => fourierGroup hκm t (f.toLp 2))
       ((-Complex.I) • (SchwartzMap.fourierMultiplierCLM (𝕜 := ℝ) ℂ κ f).toLp 2) 0 := by
   have hfun : (fun t => fourierGroup hκm t (f.toLp 2))
-      = fun t => ((fourierL2.symm.toContinuousLinearEquiv : L2 →L[ℂ] L2).restrictScalars ℝ)
+      = fun t => (((fourierL2 (E := E)).symm.toContinuousLinearEquiv : L2 →L[ℂ] L2).restrictScalars ℝ)
           (phaseGroup hκm t ((𝓕 f).toLp 2)) := by
     funext t
     rw [fourierGroup_apply, ← SchwartzMap.toLp_fourier_eq]
     rfl
   rw [hfun]
-  have h := ((fourierL2.symm.toContinuousLinearEquiv : L2 →L[ℂ] L2).restrictScalars ℝ).hasFDerivAt
+  have h := (((fourierL2 (E := E)).symm.toContinuousLinearEquiv : L2 →L[ℂ] L2).restrictScalars ℝ).hasFDerivAt
     |>.comp_hasDerivAt (0 : ℝ) (hasDerivAt_phaseGroup_toLp hκm hκ (𝓕 f))
   refine HasDerivAt.congr_deriv h ?_
   simp only [ContinuousLinearMap.coe_restrictScalars', ContinuousLinearEquiv.coe_coe,
     LinearIsometryEquiv.coe_toContinuousLinearEquiv, map_smul]
-  have h2 : ∀ ψ : 𝓢(ℝ, ℂ), fourierL2.symm (ψ.toLp 2 volume) = (𝓕⁻ ψ).toLp 2 volume := fun ψ =>
+  have h2 : ∀ ψ : 𝓢(E, ℂ), fourierL2.symm (ψ.toLp 2 volume) = (𝓕⁻ ψ).toLp 2 volume := fun ψ =>
     SchwartzMap.toLp_fourierInv_eq ψ
   rw [h2]
   rfl
 
 /-- ★★ **The Schrödinger equation for `U_κ`**, in `L²`, for Schwartz initial data: at every `t`,
 `∂_t (U_κ(t) f) = −i κ(D) (U_κ(t) f)`. -/
-theorem hasDerivAt_fourierGroup_toLp (f : 𝓢(ℝ, ℂ)) (t₀ : ℝ) :
+theorem hasDerivAt_fourierGroup_toLp (f : 𝓢(E, ℂ)) (t₀ : ℝ) :
     HasDerivAt (fun t => fourierGroup hκm t (f.toLp 2))
       ((-Complex.I) • (SchwartzMap.fourierMultiplierCLM (𝕜 := ℝ) ℂ κ
         (fourierGroupS κ t₀ f)).toLp 2) t₀ := by
@@ -313,9 +321,9 @@ theorem hasDerivAt_fourierGroup_toLp (f : 𝓢(ℝ, ℂ)) (t₀ : ℝ) :
 omit hκm hκ in
 /-- ★★ **The free Schrödinger equation** `i ∂_t ψ = H₀ ψ`, `H₀ = −½ d²/dx²`, in `L²` for Schwartz
 initial data: `ψ(t) = e^{−itH₀} f` satisfies `∂_t ψ(t) = −i H₀ ψ(t)` at every `t`. -/
-theorem hasDerivAt_freeSchrodinger (f : 𝓢(ℝ, ℂ)) (t₀ : ℝ) :
+theorem hasDerivAt_freeSchrodinger (f : 𝓢(E, ℂ)) (t₀ : ℝ) :
     HasDerivAt (fun t => freeSchrodinger t (f.toLp 2))
       ((-Complex.I) • (kineticOp (freeSchrodingerS t₀ f)).toLp 2) t₀ :=
-  hasDerivAt_fourierGroup_toLp measurable_freeSymbol hasTemperateGrowth_freeSymbol f t₀
+  hasDerivAt_fourierGroup_toLp (measurable_freeSymbol (E := E)) hasTemperateGrowth_freeSymbol f t₀
 
 end SchrodingerGroup

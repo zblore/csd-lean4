@@ -60,8 +60,9 @@ local notation "L2" => Lp ℂ 2 (volume : Measure ℝ)
 /-! ### The exponential of a multiplication operator -/
 
 /-- The coercion of a finite sum of `Lp` elements is the sum of the coercions, almost everywhere. -/
-theorem coeFn_sum_range (u : ℕ → L2) (N : ℕ) :
-    ((∑ n ∈ Finset.range N, u n : L2) : ℝ → ℂ) =ᵐ[volume] fun x => ∑ n ∈ Finset.range N, u n x := by
+theorem coeFn_sum_range {α F : Type*} [MeasurableSpace α] {μ : Measure α} [NormedAddCommGroup F]
+    {p : ℝ≥0∞} (u : ℕ → Lp F p μ) (N : ℕ) :
+    ((∑ n ∈ Finset.range N, u n : Lp F p μ) : α → F) =ᵐ[μ] fun x => ∑ n ∈ Finset.range N, u n x := by
   induction N with
   | zero => simp only [Finset.range_zero, Finset.sum_empty]; exact Lp.coeFn_zero _ _ _
   | succ N ih =>
