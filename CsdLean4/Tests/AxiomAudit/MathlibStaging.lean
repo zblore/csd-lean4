@@ -6424,6 +6424,45 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'SchrodingerGroup.hasDerivAt_freeSchrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.hasDerivAt_freeSchrodinger
 
+-- BACKLOG #48 FC-5''' (2026-09-20), Analysis/Semigroup/GaussianPacket.lean: the free Gaussian packet.
+-- The Gaussian e^{-pi a x^2} (Re a > 0) as a Schwartz function on R (its n-th derivative is a
+-- polynomial times the Gaussian; |x|^m e^{-c x^2} <= 1 + m!/c^m), its Fourier transform as a Schwartz
+-- identity from Mathlib's fourier_gaussian_pi, and the spreading packet: U_0(t) g_a is the Gaussian of
+-- parameter a/(1 + 2 pi i a t) with amplitude (1 + 2 pi i a t)^{-1/2} (the principal square root is
+-- multiplicative on the right half-plane); for real a the density widens as sqrt(1 + (2 pi a t)^2).
+/-- info: 'SchrodingerGroup.iteratedDeriv_gaussFun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.iteratedDeriv_gaussFun
+
+/-- info: 'SchrodingerGroup.pow_mul_exp_neg_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.pow_mul_exp_neg_le
+
+/-- info: 'SchrodingerGroup.decay_gaussFun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.decay_gaussFun
+
+/-- info: 'SchrodingerGroup.fourier_gaussianS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.fourier_gaussianS
+
+/-- info: 'SchrodingerGroup.fourierInv_gaussianS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.fourierInv_gaussianS
+
+/-- info: 'SchrodingerGroup.smulLeft_phase_fourier_gaussianS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.smulLeft_phase_fourier_gaussianS
+
+/-- info: 'SchrodingerGroup.mul_cpow_of_re_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.mul_cpow_of_re_pos
+
+/-- info: 'SchrodingerGroup.packetAmp_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.packetAmp_eq
+
+/-- info: 'SchrodingerGroup.freeSchrodingerS_gaussianS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.freeSchrodingerS_gaussianS
+
+/-- info: 'SchrodingerGroup.freeSchrodinger_gaussianS_toLp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.freeSchrodinger_gaussianS_toLp
+
+/-- info: 'SchrodingerGroup.re_packetParam_ofReal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.re_packetParam_ofReal
+
 -- BACKLOG #41(b) FC-2' (2026-09-20), Probability/BrownianVec.lean: Brownian motion in R^d as d jointly
 -- independent real coordinates; independent vectors of independent pairs; the product Gaussian, its
 -- characteristic function and its absolute continuity (a product of absolutely continuous measures

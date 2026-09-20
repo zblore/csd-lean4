@@ -38,9 +38,9 @@ functions, where Mathlib's Fourier calculus is available:
 
 ⚠️ The derivative is taken in `L²` (the strong derivative of the orbit), for Schwartz initial data;
 the statement in the Schwartz topology is not made. The action on a Gaussian packet — the packet
-spreading into a Gaussian of complex variance — needs a Gaussian bundled as a `SchwartzMap`, which
-the pin does not have (BACKLOG #48). The space `E` is any finite-dimensional real inner product
-space (`H₀ = −½ Δ` on `ℝᵈ`).
+spreading into a Gaussian of complex variance — is `Analysis/Semigroup/GaussianPacket.lean` (FC-5‴,
+BACKLOG #48). The space `E` is any finite-dimensional real inner product space (`H₀ = −½ Δ` on
+`ℝᵈ`).
 
 References: M. Reed, B. Simon, *Methods of Modern Mathematical Physics* II §IX.7;
 `Analysis/Semigroup/SchrodingerGroup.lean` (FC-5); `specs/feynman-continuum-scoping.md` §5;

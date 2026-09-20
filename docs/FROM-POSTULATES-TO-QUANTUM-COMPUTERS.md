@@ -259,7 +259,9 @@ with `e^{−itH₀}` the Fourier multiplier `e^{−2π²it‖ξ‖²}` and the p
 [`Mathlib/Analysis/Semigroup/SchrodingerGroup.lean`](../CsdLean4/Mathlib/Analysis/Semigroup/SchrodingerGroup.lean)):
 the real-time path integral is the strong limit of time-sliced products, which is what `∫𝒟x e^{iS}` means; on
 Schwartz data the orbit solves the free Schrödinger equation `i ∂_t ψ = −½ Δ ψ` in `L²`
-(`hasDerivAt_freeSchrodinger`, `kineticOp_eq_laplacian`).
+(`hasDerivAt_freeSchrodinger`, `kineticOp_eq_laplacian`), and the free Gaussian packet spreads as the
+textbook says, `U₀(t) g_a = (1 + 2πiat)^{−1/2} g_{a/(1 + 2πiat)}` (`freeSchrodingerS_gaussianS`,
+[`Mathlib/Analysis/Semigroup/GaussianPacket.lean`](../CsdLean4/Mathlib/Analysis/Semigroup/GaussianPacket.lean)).
 
 **What is not claimed.** Any complexity-theoretic statement. The theorems are about amplitudes and
 probabilities of specific circuits.

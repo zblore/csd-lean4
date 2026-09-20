@@ -73,10 +73,11 @@ Feynman picture (the time-sliced product) are each theorems about one object.
 `EuclideanSpace ℝ ι`, so Feynman–Kac and Nelson meet on the same `L²(ℝᵈ)`. Nelson's original
 theorem also covers a class of unbounded potentials through Trotter's formula for self-adjoint
 generators; only the bounded case is stated. The kernel (Fresnel-integral) form of the finite-slice
-formula is FC-5′ (XL). The explicit action of `freeSchrodinger` on Schwartz functions — the free
-Gaussian packet spreading into a Gaussian of complex variance, through
-`SchwartzMap.toLp_fourierInv_eq` — and its identification with the differential operator
-`−½ d²/dx²` on Schwartz functions are not stated (FC-5″, S–M).
+formula is FC-5′ (XL). The explicit action of `freeSchrodinger` on Schwartz functions and its
+identification with the differential operator `−½ Δ` are
+`Analysis/Semigroup/SchrodingerSchwartz.lean` (FC-5″, BACKLOG #43); the free Gaussian packet
+spreading into a Gaussian of complex variance is `Analysis/Semigroup/GaussianPacket.lean` (FC-5‴,
+BACKLOG #48).
 
 References: E. Nelson, J. Math. Phys. 5 (1964) 332; M. Reed, B. Simon, *Methods of Modern
 Mathematical Physics* I §VIII.8 and II §X.11; `Analysis/Semigroup/BoundedPerturbation.lean` (FC-1);
