@@ -6394,6 +6394,36 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'FeynmanKac.feynmanKac_Lp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms FeynmanKac.feynmanKac_Lp
 
+-- BACKLOG #43 FC-5'' (2026-09-20), Analysis/Semigroup/SchrodingerSchwartz.lean: the free Schrodinger
+-- group on Schwartz functions and the Schrodinger equation. The phase e^{-it kappa} of a symbol of
+-- temperate growth has temperate growth, so U_kappa(t) preserves Schwartz space (Mathlib's
+-- fourierMultiplierCLM); the kinetic operator is -1/2 Laplacian; d/dt U(t) f = -i H_0 U(t) f in L^2
+-- at every t (dominated convergence for the difference quotient of the phase, lifted through the
+-- Fourier isometry, moved by the group law).
+/-- info: 'SchrodingerGroup.hasTemperateGrowth_exp_mul_I' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.hasTemperateGrowth_exp_mul_I
+
+/-- info: 'SchrodingerGroup.hasTemperateGrowth_phaseFun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.hasTemperateGrowth_phaseFun
+
+/-- info: 'SchrodingerGroup.fourierGroup_toLp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.fourierGroup_toLp
+
+/-- info: 'SchrodingerGroup.freeSchrodinger_toLp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.freeSchrodinger_toLp
+
+/-- info: 'SchrodingerGroup.kineticOp_eq_laplacian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.kineticOp_eq_laplacian
+
+/-- info: 'SchrodingerGroup.hasDerivAt_phaseGroup_toLp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.hasDerivAt_phaseGroup_toLp
+
+/-- info: 'SchrodingerGroup.hasDerivAt_fourierGroup_toLp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.hasDerivAt_fourierGroup_toLp
+
+/-- info: 'SchrodingerGroup.hasDerivAt_freeSchrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.hasDerivAt_freeSchrodinger
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient

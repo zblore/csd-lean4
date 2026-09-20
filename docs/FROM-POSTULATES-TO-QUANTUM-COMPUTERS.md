@@ -256,7 +256,9 @@ time the same construction gives Nelson's limit, `(e^{−i(t/n)H₀} e^{−i(t/n
 with `e^{−itH₀}` the Fourier multiplier `e^{−2π²itξ²}` and the propagator unitary (`nelson_freeSchrodinger`,
 `exists_linearIsometryEquiv_schrodinger`,
 [`Mathlib/Analysis/Semigroup/SchrodingerGroup.lean`](../CsdLean4/Mathlib/Analysis/Semigroup/SchrodingerGroup.lean)):
-the real-time path integral is the strong limit of time-sliced products, which is what `∫𝒟x e^{iS}` means.
+the real-time path integral is the strong limit of time-sliced products, which is what `∫𝒟x e^{iS}` means; on
+Schwartz data the orbit solves the free Schrödinger equation `i ∂_t ψ = −½ Δ ψ` in `L²`
+(`hasDerivAt_freeSchrodinger`, `kineticOp_eq_laplacian`).
 
 **What is not claimed.** Any complexity-theoretic statement. The theorems are about amplitudes and
 probabilities of specific circuits.
