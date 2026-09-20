@@ -6128,6 +6128,60 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Fin.card_isPerfectMatching_odd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Fin.card_isPerfectMatching_odd
 
+-- BACKLOG #36(c) FC-1 (2026-09-20), Analysis/Semigroup/BoundedPerturbation.lean: a bounded
+-- perturbation of a strongly continuous contraction semigroup, with no generator named. The
+-- vector-valued Dyson series and its bounds, the Duhamel equation and its uniqueness, the
+-- semigroup law of the sum, the bundled perturbed semigroup, and the Trotter product formula
+-- (S(t/n) exp((t/n)B))^n psi -> S_pert(t) psi by telescoping against the semigroup law along
+-- the compact orbit. Three constructions of one operator, proved to agree.
+/-- info: 'IsContractionSemigroup.continuous_uncurry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms IsContractionSemigroup.continuous_uncurry
+
+/-- info: 'IsContractionSemigroup.of_group' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms IsContractionSemigroup.of_group
+
+/-- info: 'ContractionSemigroup.dysonTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.dysonTerm
+
+/-- info: 'ContractionSemigroup.norm_dysonTerm_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.norm_dysonTerm_le
+
+/-- info: 'ContractionSemigroup.dysonSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.dysonSum
+
+/-- info: 'ContractionSemigroup.hasSum_dysonTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.hasSum_dysonTerm
+
+/-- info: 'ContractionSemigroup.norm_dysonSum_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.norm_dysonSum_le
+
+/-- info: 'ContractionSemigroup.continuous_dysonSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.continuous_dysonSum
+
+/-- info: 'ContractionSemigroup.dysonSum_eq_add_integral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.dysonSum_eq_add_integral
+
+/-- info: 'ContractionSemigroup.eq_dysonSum_of_duhamel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.eq_dysonSum_of_duhamel
+
+/-- info: 'ContractionSemigroup.dysonSum_add_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.dysonSum_add_time
+
+/-- info: 'IsContractionSemigroup.perturbed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms IsContractionSemigroup.perturbed
+
+/-- info: 'ContractionSemigroup.perturbed_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.perturbed_add
+
+/-- info: 'ContractionSemigroup.norm_trotterStep_apply_sub_dysonSum_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.norm_trotterStep_apply_sub_dysonSum_le
+
+/-- info: 'ContractionSemigroup.exists_delta_of_isCompact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.exists_delta_of_isCompact
+
+/-- info: 'ContractionSemigroup.tendsto_trotterStep_pow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ContractionSemigroup.tendsto_trotterStep_pow_apply
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient
