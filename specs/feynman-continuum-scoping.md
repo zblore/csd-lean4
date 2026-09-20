@@ -1,6 +1,6 @@
 # Feynman's formulation, the continuum rung: scoping note (BACKLOG #36(c))
 
-**Status:** SCOPED 2026-09-20; **FC-0 probes pass, FC-1 to FC-4 LANDED the same day — the Euclidean deliverable, Feynman–Kac, is a theorem** (`Mathlib/Analysis/Semigroup/{BoundedPerturbation,HeatSemigroup}.lean`, `Mathlib/Probability/{TimeSlicedWiener,FeynmanKac}.lean`, §7), after rungs (a) and (b) of row 36 landed (2026-09-19/20) and a survey of the
+**Status:** SCOPED 2026-09-20; **FC-0 probes pass, FC-1 to FC-5 LANDED the same day — both deliverables are theorems: Feynman–Kac (Euclidean) and Nelson's limit with a unitary propagator (real time)** (`Mathlib/Analysis/Semigroup/{BoundedPerturbation,HeatSemigroup,SchrodingerGroup}.lean`, `Mathlib/Probability/{TimeSlicedWiener,FeynmanKac}.lean`, §7), after rungs (a) and (b) of row 36 landed (2026-09-19/20) and a survey of the
 Mathlib pin `db584cd6d` for path-space measures, semigroups and the Fourier transform. Every claim below
 about the corpus or the pin was read from theorem *types*. Nothing here is built; §4 and §5 price what could
 be, §8 says what needs the author's decision, and §9 says what is not claimed.
@@ -94,7 +94,7 @@ is Mathlib-future and is **not claimed** here.
 
 | # | Brick | Cx | P | V | What it lands |
 |---|---|---|---|---|---|
-| **FC-5** | ★★ **Nelson's theorem in operator form** (Category 1). The free Schrödinger group `U₀(t) := 𝓕⁻¹ ∘ M_{e^{−itξ²/2}} ∘ 𝓕` on `L²(ℝ)` (P1 for the multiplier): unitary, a group, strongly continuous (dominated convergence on the Fourier side). FC-1 for the unitary case gives the interacting group `U(t)` (Dyson) and `(U₀(t/n) e^{−itV/n})ⁿ ψ → U(t) ψ` — **the real-time path integral as the strong limit of time-sliced products**, which is what the symbol `∫𝒟x e^{iS}` means in Nelson's definition. Also its action on Gaussians/Schwartz functions explicitly, so the free propagator's kernel is visible where it is absolutely convergent. | **L** | medium–high: the Fourier side is at the pin; the delicate part is only P1 and the group's strong continuity | high: (R) as a theorem; the `𝒟x` heuristic replaced by its definition |
+| ~~**FC-5**~~ **DONE 2026-09-20** | ★★ **Nelson's theorem in operator form** (Category 1). The free Schrödinger group `U₀(t) := 𝓕⁻¹ ∘ M_{e^{−itξ²/2}} ∘ 𝓕` on `L²(ℝ)` (P1 for the multiplier): unitary, a group, strongly continuous (dominated convergence on the Fourier side). FC-1 for the unitary case gives the interacting group `U(t)` (Dyson) and `(U₀(t/n) e^{−itV/n})ⁿ ψ → U(t) ψ` — **the real-time path integral as the strong limit of time-sliced products**, which is what the symbol `∫𝒟x e^{iS}` means in Nelson's definition. Also its action on Gaussians/Schwartz functions explicitly, so the free propagator's kernel is visible where it is absolutely convergent. | **L** | medium–high: the Fourier side is at the pin; the delicate part is only P1 and the group's strong continuity | high: (R) as a theorem; the `𝒟x` heuristic replaced by its definition |
 | **FC-5′** | **The kernel form.** `(U₀(t)ψ)(x) = (2πit)^{−1/2} ∫ e^{i(x−y)²/2t} ψ(y) dy` for `ψ ∈ L¹ ∩ L²` (as an improper Fresnel integral) and hence the `n`-slice iterated kernel integral with `e^{i S_n(x₀, …, xₙ)}` in the integrand — Feynman's formula with the action visible. | **XL** | low at the pin: the kernel is not absolutely integrable, so it is outside Mathlib's L¹-based Fourier theory; needs oscillatory-integral technology (Fresnel, or the `ε ↓ 0` limit of `e^{−(ε+it)H₀}` through FC-2's Gaussian kernel with complex variance) | medium: the same theorem as FC-5 in different clothes; the physics reader wants to see `e^{iS}`, the mathematics does not need it |
 
 FC-5′ is the only piece of rung (c) that is XL, and it is XL for a reason that is not Lean's: real-time
@@ -114,7 +114,7 @@ answer to "have we got Feynman integrals?"; and every brick is staged-for-Mathli
 have (a bounded-perturbation Trotter formula for semigroups, the heat semigroup as an operator, the
 time-sliced Wiener functional, Feynman–Kac).
 
-FC-6 landed with FC-4 (2026-09-20): the narrative document now cites Feynman–Kac for the continuum, and FP-1 records the Euclidean rung as done; Nelson's form (FC-5) is still open.
+FC-6 landed with FC-4 (2026-09-20): the narrative document now cites Feynman–Kac for the continuum, and FP-1 records the Euclidean rung as done; with FC-5 the same day, both cite Nelson's limit and the unitary propagator (`nelson_freeSchrodinger`, `exists_linearIsometryEquiv_schrodinger`).
 
 ## 7. Order, sizes, gates
 
@@ -134,11 +134,15 @@ FC-6 landed with FC-4 (2026-09-20): the narrative document now cites Feynman–K
 3. **FC-3** (M).
    **FC-4 outcome (2026-09-20): landed as `Mathlib/Probability/FeynmanKac.lean`, 6 pins, M–L took L.** Exactly the route of §4: the multiplier exponential `exp(−h M_V) = M_{e^{−hV}}` by the operator series applied to `f` (partial sums pointwise, `L²` limit and pointwise limit identified on finite-measure sets), the Wiener-side limit by dominated convergence with the Riemann sums of probe P3 along the continuous path, the operator side by FC-2's Trotter formula, and the two limits identified on every finite-measure set. Bounded `f`; the `L²` extension by continuity is FC-4′ (S). Conditional on `hB : IsBrownianReal B P`. Snag: `rw` could not match `exp (h • −M_V)` across the two modules' instance paths for the ℝ-action on operators; `congr 1; exact` did.
 4. **FC-4** (M–L): Feynman–Kac. The Euclidean deliverable.
+   **FC-5 outcome (2026-09-20): landed as `Mathlib/Analysis/Semigroup/SchrodingerGroup.lean`, 12 pins, L took M–L.** The multiplier P1 was already the pin's `holderL`. The one delicate item, the strong continuity of the phase group `M_{e^{−itκ}}`, needed no `L²` dominated convergence: weak continuity `⟪M_t f, f⟫ → ⟪f, f⟫` is a scalar dominated convergence with dominator `|f|²`, and the isometry plus polarisation, `‖M_t f − f‖² = 2‖f‖² − 2 Re ⟪M_t f, f⟫`, give the strong limit. The Fourier side is conjugation by `Lp.fourierTransformₗᵢ`, nothing else. `of_group`, `perturbed` and `tendsto_trotterStep_pow_apply` then give Nelson with the kick identified by the complex multiplier exponential `exp_eq_potential` (FC-4's proof for a bounded complex `m`). Beyond the row's cell: the propagator is an isometry (a strong limit of isometries) and **unitary** — the reversed dynamics `(−κ, −V)` is a two-sided inverse, because the inverse of the forward Trotter approximant `(U M)ⁿ` is the conjugate `M⁻¹ (U⁻¹ M⁻¹)ⁿ M` of the reversed approximant and both converge strongly. Stated for any real measurable dispersion relation `κ` (`freeSchrodinger` is `κ = 2π²ξ²` in Mathlib's Fourier convention). The item of the cell not done is the explicit action on Gaussians/Schwartz functions — FC-5″ (S–M), through `SchwartzMap.toLp_fourierInv_eq`. Snag: `Lp.coeFn_smul` for the real action would not `rw` against the CLM-level `h • B` of `BoundedPerturbation.lean` (whose ℝ-action is `NormedSpace.complexToReal`); a `show` with the complex scalar `(h : ℂ) •` resolved it, the two actions being definitionally equal.
 5. **FC-5** (L): Nelson. The real-time deliverable.
 6. **FC-2′** (S–M) and **FC-6** (S) as the author wants.
 
 Total for the arc through FC-5: **L**, in six bricks none larger than M–L. FC-5′ stays XL and is not in the
 plan unless the author asks for the action in the integrand.
+
+**Outcome (2026-09-20): the whole arc FC-0 to FC-6 landed in one day, five Category 1 modules, 59 pins; the priced
+residues are FC-1′ (S–M), FC-2′ (S–M), FC-4′ (S) and FC-5″ (S–M), all in BACKLOG #36.**
 
 ## 8. Decisions for the author
 

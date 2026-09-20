@@ -6293,6 +6293,48 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'FeynmanKac.feynmanKac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms FeynmanKac.feynmanKac
 
+-- BACKLOG #36(c) FC-5 (2026-09-20), Analysis/Semigroup/SchrodingerGroup.lean: Nelson's product
+-- formula and the unitary Schrodinger propagator on L^2(R). The phase group M_{e^{-it kappa}} of a
+-- real measurable symbol is strongly continuous (weak continuity + polarisation); the unitary group
+-- F^{-1} M F of a dispersion relation is a contraction semigroup for t >= 0; the complex multiplier
+-- exponential; Nelson: (U(t/n) e^{-i(t/n)V})^n psi -> e^{-it(kappa(D)+V)} psi; the propagator is an
+-- isometry and, with the reversed dynamics as two-sided inverse, unitary.
+/-- info: 'SchrodingerGroup.exp_eq_potential' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.exp_eq_potential
+
+/-- info: 'SchrodingerGroup.tendsto_phaseGroup_apply_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.tendsto_phaseGroup_apply_zero
+
+/-- info: 'SchrodingerGroup.continuous_phaseGroup_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.continuous_phaseGroup_apply
+
+/-- info: 'SchrodingerGroup.fourierGroup_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.fourierGroup_add
+
+/-- info: 'SchrodingerGroup.norm_fourierGroup_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.norm_fourierGroup_apply
+
+/-- info: 'SchrodingerGroup.isContractionSemigroup_fourierGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.isContractionSemigroup_fourierGroup
+
+/-- info: 'SchrodingerGroup.trotterStep_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.trotterStep_eq
+
+/-- info: 'SchrodingerGroup.nelson' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.nelson
+
+/-- info: 'SchrodingerGroup.nelson_freeSchrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.nelson_freeSchrodinger
+
+/-- info: 'SchrodingerGroup.norm_schrodinger_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.norm_schrodinger_apply
+
+/-- info: 'SchrodingerGroup.schrodinger_mul_schrodinger_of_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.schrodinger_mul_schrodinger_of_neg
+
+/-- info: 'SchrodingerGroup.exists_linearIsometryEquiv_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.exists_linearIsometryEquiv_schrodinger
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient

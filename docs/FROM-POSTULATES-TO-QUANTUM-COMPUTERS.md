@@ -251,8 +251,12 @@ off the Lie–Trotter formula through the path expansion of a matrix power. In t
 integral is a Wiener integral, as a theorem: for a Brownian motion with continuous paths and a bounded potential,
 `(e^{−t(H₀+V)} f)(x) = E[exp(−∫₀ᵗ V(x+B_s) ds) f(x+B_t)]` almost everywhere (`feynmanKac`,
 [`Mathlib/Probability/FeynmanKac.lean`](../CsdLean4/Mathlib/Probability/FeynmanKac.lean)), with the propagator
-defined by the Dyson series around the heat semigroup and reached equally by the Trotter product formula; the
-real-time form (Nelson's limit) is the one rung of backlog row 36 still priced.
+defined by the Dyson series around the heat semigroup and reached equally by the Trotter product formula. In real
+time the same construction gives Nelson's limit, `(e^{−i(t/n)H₀} e^{−i(t/n)V})ⁿ ψ → e^{−it(H₀+V)} ψ` in `L²(ℝ)`,
+with `e^{−itH₀}` the Fourier multiplier `e^{−2π²itξ²}` and the propagator unitary (`nelson_freeSchrodinger`,
+`exists_linearIsometryEquiv_schrodinger`,
+[`Mathlib/Analysis/Semigroup/SchrodingerGroup.lean`](../CsdLean4/Mathlib/Analysis/Semigroup/SchrodingerGroup.lean)):
+the real-time path integral is the strong limit of time-sliced products, which is what `∫𝒟x e^{iS}` means.
 
 **What is not claimed.** Any complexity-theoretic statement. The theorems are about amplitudes and
 probabilities of specific circuits.
