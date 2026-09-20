@@ -20,7 +20,7 @@ stroboscopic step preserves mode support, so the commutation of disjoint
 regions persists at every period.
 
 * `heisenberg U A` — Heisenberg conjugation `U† A U`, with the algebra
-  lemmas `heisenberg_one` / `heisenberg_mul`.
+  lemmas `heisenberg_one` / `heisenberg_mul` / `heisenberg_mul_op`.
 * `heisenberg_phaseDiagU_supportedOn` — the mechanism, for ANY mode-additive
   diagonal phase `f c = ∑ₖ g k (c k)`: conjugation multiplies the entry
   `A c d` by the phase `e^{-i (f d − f c)}`, and when `c, d` agree off `S`
@@ -81,6 +81,14 @@ lemma heisenberg_mul (U V : Matrix.unitaryGroup (FieldConfig K N) ℂ)
   rw [heisenberg, heisenberg, heisenberg,
     show (U * V).val = U.val * V.val from rfl, star_mul]
   simp only [mul_assoc]
+
+/-- Conjugation is multiplicative in the observable: `U† (A B) U = (U† A U) (U† B U)`. -/
+lemma heisenberg_mul_op (U : Matrix.unitaryGroup (FieldConfig K N) ℂ)
+    (A B : Matrix (FieldConfig K N) (FieldConfig K N) ℂ) :
+    heisenberg U (A * B) = heisenberg U A * heisenberg U B := by
+  have hU : U.val * star U.val = 1 := Matrix.mem_unitaryGroup_iff.mp U.property
+  simp only [heisenberg, Matrix.mul_assoc]
+  rw [← Matrix.mul_assoc U.val (star U.val), hU, one_mul]
 
 /-- Conjugation by a diagonal-phase unitary multiplies each entry by the
 phase difference: `(U† A U) c d = e^{+i f(c)} · A c d · e^{-i f(d)}`. -/

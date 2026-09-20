@@ -6047,6 +6047,49 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Matrix.hasSum_dysonTerm_of_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Matrix.hasSum_dysonTerm_of_isHermitian
 
+-- BACKLOG #36(b)(iii) (2026-09-20), Analysis/Matrix/DysonVertex.lean: the vertex bookkeeping of
+-- the Dyson series. The interaction picture and the time-ordered recursion (the n vertices at
+-- ordered times), the sum over vertex labellings for an interaction that is a sum of vertex
+-- types, entries of matrix-valued interval integrals, and in the eigenbasis of a diagonal free
+-- generator the old-fashioned perturbation theory recursion (a free propagation between
+-- consecutive vertices, a sum over the intermediate state) with its first-order transition
+-- amplitude and two-vertex amplitude.
+/-- info: 'Matrix.intervalIntegral_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.intervalIntegral_apply
+
+/-- info: 'Matrix.interactionPicture' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.interactionPicture
+
+/-- info: 'Matrix.dysonTermI' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.dysonTermI
+
+/-- info: 'Matrix.dysonTermI_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.dysonTermI_succ
+
+/-- info: 'Matrix.dysonTermLabelled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.dysonTermLabelled
+
+/-- info: 'Matrix.dysonTerm_sum_eq_sum_dysonTermLabelled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.dysonTerm_sum_eq_sum_dysonTermLabelled
+
+/-- info: 'Matrix.interactionPicture_diagonal_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.interactionPicture_diagonal_apply
+
+/-- info: 'Matrix.dysonTermI_succ_apply_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.dysonTermI_succ_apply_diagonal
+
+/-- info: 'Matrix.dysonTerm_one_apply_diagonal_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.dysonTerm_one_apply_diagonal_self
+
+/-- info: 'Matrix.dysonTerm_one_apply_diagonal_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.dysonTerm_one_apply_diagonal_of_ne
+
+/-- info: 'Matrix.dysonTermI_two_apply_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.dysonTermI_two_apply_diagonal
+
+/-- info: 'Matrix.dysonTermI_two_apply_diagonal_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.dysonTermI_two_apply_diagonal_self
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient

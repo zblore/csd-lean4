@@ -535,6 +535,7 @@ public import CsdLean4.RecordLayer.StatisticsRigidity
 public import CsdLean4.CV.ThermalPropagator
 public import CsdLean4.CV.Wick
 public import CsdLean4.CV.WickGeneral
+public import CsdLean4.CV.FeynmanVertex
 public import CsdLean4.CV.ChannelRG
 public import CsdLean4.CV.ArenaBridge
 public import CsdLean4.CV.FieldStructuredFlow
@@ -615,6 +616,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.TrotterProduct
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PathSum
 public import CsdLean4.Mathlib.Analysis.Matrix.SumOverPaths
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonSeries
+public import CsdLean4.Mathlib.Analysis.Matrix.DysonVertex
 public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.SigmaLayer.ChartIntegralCurve
 public import CsdLean4.SigmaLayer.FrozenBase

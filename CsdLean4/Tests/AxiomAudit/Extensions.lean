@@ -1363,6 +1363,49 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.wordOp_replicate_vac
 
+-- CV-27 / BACKLOG #36(b)(iii) (2026-09-20, CV/FeynmanVertex.lean): Feynman diagrams at the
+-- cutoff. The interaction-picture vertex is the free Heisenberg vertex; the perturbed lattice
+-- propagator is the sum of its Dyson series; the one-vertex vacuum amplitude of any monomial
+-- vertex is the pairing sum of its legs (equal-time Wick), and the two-vertex vacuum amplitude
+-- of a quadratic vertex is the three-pairing kernel sum under the ordered double integral
+-- (four-point time-separated Wick): the connected bubble for distinct modes, the disconnected
+-- double tadpole plus two bubbles for one mode.
+/-- info: 'CSD.CV.interactionPicture_neg_I_smul_fieldHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.interactionPicture_neg_I_smul_fieldHamiltonian
+
+/-- info: 'CSD.CV.hasSum_dysonTerm_fieldHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasSum_dysonTerm_fieldHamiltonian
+
+/-- info: 'CSD.CV.dysonTerm_one_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dysonTerm_one_vac
+
+/-- info: 'CSD.CV.dysonTerm_one_vac_wordOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dysonTerm_one_vac_wordOp
+
+/-- info: 'CSD.CV.dysonTerm_two_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dysonTerm_two_vac
+
+/-- info: 'CSD.CV.vertexPair_eq_timeFourPoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.vertexPair_eq_timeFourPoint
+
+/-- info: 'CSD.CV.dysonTerm_two_vac_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dysonTerm_two_vac_quadratic
+
+/-- info: 'CSD.CV.dysonTerm_two_vac_quadratic_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dysonTerm_two_vac_quadratic_of_ne
+
+/-- info: 'CSD.CV.dysonTerm_two_vac_quadratic_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dysonTerm_two_vac_quadratic_self
+
 -- CV-26 (2026-08-18, CV\ChannelRG.lean): channel-level RG at the cutoff -- the statement the
 -- Stage-4 no-go said had to replace unitary RG matching. The coarse-graining is MODE TRACING
 -- (keep the spectators, discard mode k), built as the Stinespring channel of the mode-split

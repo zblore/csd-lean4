@@ -918,6 +918,15 @@ isSymplectic"
 #     hence H is differentiable everywhere). The words name the predicate the theorems refute /
 #     hypothesise; together with isLocallyHamiltonian_torusStrokeField they are the manifold form
 #     of shear_piecewise_hamiltonian's withdrawn reading. CP^N x T^2, EVEN.
+#   neg_I_smul_fieldHamiltonian / interactionPicture_neg_I_smul_fieldHamiltonian /
+#   hasSum_dysonTerm_fieldHamiltonian --
+#     (2026-09-20, #36(b)(iii), CV/FeynmanVertex.lean, CV-27) inherit the word from
+#     fieldHamiltonian (the CV energy matrix, EARNED above): -i H_field is the diagonal of
+#     its eigenvalues -i E_c, the interaction-picture vertex
+#     exp(-s(-iH)) V exp(s(-iH)) IS the free Heisenberg vertex U(s)^dagger V U(s), and the
+#     Dyson series in the coupling sums to exp(-i t (H_field + lam V)) for Hermitian V (the
+#     Category-1 hasSum_dysonTerm_of_isHermitian instantiated). The word names the OPERATOR
+#     the theorems are about; no flow, form or generator claim beyond the object's.
 #   (2026-09-17, Brief B S-rows: fubiniStudy_pointwise_kahler_compatibility and
 #   kahler_structure_isometry_invariant were deleted — conjunction capstones, the conjuncts stay
 #   declared; contMDiff_omega_schrodingerHamiltonian / contMDiff_omega_torusHamiltonian merged into
@@ -1023,6 +1032,9 @@ hamiltonian_groundEnergy
 fieldHamiltonian_isHermitian
 hamiltonian_isHermitian
 interactionHamiltonian_isHermitian
+neg_I_smul_fieldHamiltonian
+interactionPicture_neg_I_smul_fieldHamiltonian
+hasSum_dysonTerm_fieldHamiltonian
 hamiltonian_mulVec_single
 isFubiniStudyKahler
 kahler_robertson_ontic_variance
