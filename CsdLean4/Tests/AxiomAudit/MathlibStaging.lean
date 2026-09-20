@@ -6240,6 +6240,35 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'HeatSemigroup.tendsto_trotter_perturbedHeat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.tendsto_trotter_perturbedHeat
 
+-- BACKLOG #36(c) FC-3 (2026-09-20), Probability/TimeSlicedWiener.lean: the time-sliced Wiener
+-- functional E[g(x+B_h) ... g(x+B_{nh}) f(x+B_{nh})] equals the n-fold operator product
+-- ((P_h M_g)^n f)(x) a.e. -- Feynman's finite-slice formula in the Euclidean continuum. The
+-- freezing lemma for independent variables, the Markov step through the shifted process
+-- (indepFun_shift), and the induction through the pointwise formula of the heat semigroup.
+/-- info: 'TimeSlicedWiener.integral_prod_of_indepFun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms TimeSlicedWiener.integral_prod_of_indepFun
+
+/-- info: 'TimeSlicedWiener.slicedWiener' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms TimeSlicedWiener.slicedWiener
+
+/-- info: 'TimeSlicedWiener.slicedWiener_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms TimeSlicedWiener.slicedWiener_zero
+
+/-- info: 'TimeSlicedWiener.measurable_slicedWiener' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms TimeSlicedWiener.measurable_slicedWiener
+
+/-- info: 'TimeSlicedWiener.slicedWiener_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms TimeSlicedWiener.slicedWiener_succ
+
+/-- info: 'TimeSlicedWiener.stepOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms TimeSlicedWiener.stepOp
+
+/-- info: 'TimeSlicedWiener.ae_gaussian_of_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms TimeSlicedWiener.ae_gaussian_of_ae
+
+/-- info: 'TimeSlicedWiener.pow_stepOp_apply_ae_eq_slicedWiener' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms TimeSlicedWiener.pow_stepOp_apply_ae_eq_slicedWiener
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient
