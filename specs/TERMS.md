@@ -264,8 +264,15 @@ alarming and is not.
   group law finishes. On `ℂℙⁿ`: `Projectivization.fsVolume_map_hamiltonianFlow` — **every smooth
   Hamiltonian flow preserves the Fubini–Study volume** (before this only the unitary flows were
   known to, by group invariance).
+  **Also backed (2026-09-21, Q31 = G18):** Darboux's theorem in Moser's form —
+  `exists_openPartialHomeomorph_pullback_eq` and
+  `DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq`
+  (`Mathlib/Geometry/Manifold/Darboux.lean`): near every point a closed non-degenerate `C¹` 2-form
+  is the pullback of the constant form `ω(x₀)` by an open partial homeomorphism differentiable at
+  every point with invertible derivative.
   **NOT established:** the arena statement `R-016′` (the joint-arena propagators of the record
-  layer as Hamiltonian flows on `ℂℙⁿ × T² × …`), and Darboux (`G18`).
+  layer as Hamiltonian flows on `ℂℙⁿ × T² × …`); of Darboux, the `C¹` regularity of the chart and
+  the standard form `∑ dpᵢ∧dqᵢ` (`BACKLOG.md` #49, #50).
   Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,
@@ -305,8 +312,13 @@ alarming and is not.
 * **Also backed (2026-09-12, Q29 = G5):** Liouville for a general Hamiltonian flow on a compact
   symplectic manifold (`IsSymplectic.map_hamiltonianFlow_topFormMeasure_wedgePow`; see the
   Hamiltonian and Liouville entries).
-* **NOT established (queued in `specs/generator-layer-scoping.md` §9):** Darboux (G18). It keeps
-  the marker `TERM-SCOPE(Hamiltonian)`.
+* **Also backed (2026-09-21, Q31 = G18):** Darboux's theorem in Moser's form — every symplectic form
+  is, near every point, the pullback of the constant form `ω(x₀)` by an open partial homeomorphism of
+  the model space (`IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq`,
+  `Mathlib/Geometry/Manifold/Darboux.lean`; the Darboux chart is `Φ⁻¹ ∘ chartAt E x₀`).
+* **NOT established:** of Darboux, the standard form `∑ dpᵢ∧dqᵢ` (a symplectic basis; `BACKLOG.md`
+  #50) and the `C¹` regularity of the chart (`BACKLOG.md` #49). It keeps the marker
+  `TERM-SCOPE(Hamiltonian)`.
 
 ## Fubini–Study
 

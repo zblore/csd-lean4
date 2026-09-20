@@ -381,7 +381,7 @@ recorded have since been filled upstream (`VectorField.mlieBracket`, and uniform
 | **G16** ✅ built 2026-09-10 | **The torus orbits are integral curves**: `t ↦ torusUnitary (t • θ) • p` is `IsMIntegralCurve` for `torusField θ`, and `momentMap` is conserved along it. | **S** | High | Low | The route of `isMIntegralCurve_schrodingerUnitary_smul` with `hasDerivAt_chartFun_torusUnitary` and `torusUnitary_add_smul`; the G4 write-up left it unwritten. |
 | **G17** ✅ built 2026-09-11 | **The Riemannian volume of the Fubini–Study metric is `fsVolume` up to the constant** (the `TERMS.md` Fubini–Study line "normalised Riemannian volume"). Needs the Riemannian volume measure of a metric on a manifold — absent at the pin (`VectorBundle/Riemannian.lean` has Riemannian *bundles*, no volume) — built as `topFormMeasure` of the volume form `√det g`; then `vol_g = ω^{∧n}/n!` is the algebraic Kähler identity from `g = ω (J ·, ·)` (G14a). | **L** | Low–medium | Low | Fills a Mathlib gap (Riemannian volume); nothing in the corpus consumes it. |
 | **G17b** ✅ built 2026-09-11 (Q30) | **Chart-independence of the Riemannian volume**: `√det (DφᵀGDφ) = \|det Dφ\| √det G` along a chart transition, then `MetricFamily.chartMeasure_congr` by the proof of `DifferentialForm.chartMeasure_congr` with the Jacobian rule for Gram matrices in place of the one for top-form coefficients; then `riemannianVolume_congr_cover`. | **S–M** | High | Low | Makes `riemannianVolume` canonical for a metric not identified chart by chart with a top form; nothing in the corpus needs it (on `ℂℙⁿ` independence is inherited from `topFormMeasure_congr_cover`). |
-| **G18** | **Darboux's theorem** (the `TERMS.md` symplectic line): every symplectic form is locally the standard one. Moser's trick: needs G5(a) flows, G5(b) Cartan, and a Poincaré lemma on a ball. | **XL** | Low | Low | Nothing in the corpus consumes it; it is the classical theorem a symplectic library owes. |
+| **G18** ✅ built 2026-09-21 (Q31, in Moser's form) | **Darboux's theorem** (the `TERMS.md` symplectic line): every symplectic form is locally the standard one. Moser's trick: needs G5(a) flows, G5(b) Cartan, and a Poincaré lemma on a ball. **Built as the constant form `ω(x₀)` in a differentiable chart with continuous inverse** (`Mathlib/Geometry/Manifold/Darboux.lean`); the standard form (symplectic basis) and the `C¹` chart are `BACKLOG.md` #50 and #49. | ~~**XL**~~ **M** took M | Low | Low | Nothing in the corpus consumes it; it is the classical theorem a symplectic library owes. |
 | **W1** ✅ built 2026-09-10 | **Wire the physics to the manifold layer**: the `ℂℙⁿ` instances of `KahlerOnticSetup` (`trivialKahlerOnticSetup`, `unitaryFlowSetup`, `manyToOneSetup`) get theorems that their `liouvilleMeasure` is `(4π)⁻ⁿ • fsVolume n` (the symplectic volume of `fsForm`, `fsVolume_eq_smul_fsMeasure`), that `flow_preserves_volume` is `fsVolume_map_smul`, and that the sector carries `fsForm_isKahler`; and the four stale ledgers are corrected — link L1 of `specs/connectivity-manifest.md`, the `kahler_pointwise` docstring, and the `TERMS.md` Fubini–Study and symplectic entries, all of which still call the manifold residual open. The two projective-space types are definitionally equal (`ℙ ℂ (Ambient n)` is `CPN (n + 1)`). | **M** | High | **High** | This is what turns "we start from an FS, Kähler, Liouville space" into "the sector is the standard object, proved". Posit 3 is untouched by it. |
 | **G19** ✅ built 2026-09-10 | Analyticity of the Hamiltonian fields: `torusField`, `schrodingerField` are `ω` sections (the G3 route at `ω`; `hamiltonianVectorFieldSection` is `C^ω` for a `C^ω` form and energy). | **S–M** | High | Low | The G12 write-up left it unwritten. |
 
@@ -596,7 +596,9 @@ derive the arena. Three things remain posits, exactly as before:
   action *has* is the corpus's moment map; they do not show the dynamics produces the action.
 
 And two theorem-shaped residues on the ladder itself: Darboux (G18) and the chart-independence of
-the generic Riemannian-volume construction (G17b), neither consumed by the physics.
+the generic Riemannian-volume construction (G17b), neither consumed by the physics. *(2026-09-21: G18
+built in Moser's form, `Mathlib/Geometry/Manifold/Darboux.lean`, `BACKLOG.md` #8; its two residues —
+the `C¹` chart and the standard form — are `BACKLOG.md` #49 and #50.)*
 
 **How to cite this.** The one-line version for a referee: *the sector's Kähler geometry, its
 symplectic volume, and the Hamiltonian character of its unitary flows are theorems on `ℂℙⁿ`
@@ -776,7 +778,27 @@ chain through `symmL` and `fderiv` will not close). On `ℂℙⁿ`, `isBilinear_
 scalar commutation `I • (c • a) = c • (I • a)` for `a` on the tangent-space instance path, which
 `smul_smul` cannot see — prove it componentwise with `funext`. 14 pins.
 
-### Q31 (= G18): Darboux — `XL`
+### Q31 (= G18): Darboux — `XL` — **LANDED 2026-09-21 in Moser's form**
+
+*(`Mathlib/Geometry/Manifold/Darboux.lean`, `BACKLOG.md` #8, 12 pins; the assembly took M after the
+2026-09-18 pieces. What it proves: for `ω` `C¹` and closed on a ball with `ω(x₀)` non-degenerate there is
+an `OpenPartialHomeomorph` `Φ` fixing `x₀`, differentiable at every point of its source with invertible
+derivative, with `Φ^*ω = ω(x₀)` — `exists_openPartialHomeomorph_pullback_eq`; read on `Φ⁻¹`,
+`ω y (u, v) = ω(x₀)(D(Φ⁻¹)(y)u, D(Φ⁻¹)(y)v)`; and on a symplectic manifold through `localRep`,
+`IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq`. The route is Moser's: non-degeneracy
+is open (invertibility of `curryLeft`, `ContinuousLinearEquiv.isOpen`), Moser's field
+`X_t = −(ω_t)^♭⁻¹ β` is jointly `C¹` by `contDiffAt_map_inverse` and vanishes to second order at `x₀`,
+its flow to time `1` exists on a small ball (`exists_flow_hasFDerivAt_of_norm_fderiv_le`, `‖DX_t‖ ≤ ¼`
+by the tube lemma), the transport `∂ₜω_t + L_{X_t}ω_t = 0` is the flat Cartan formula with the Poincaré
+lemma, and the time-`1` map approximates the identity with constant `¼e^{¼} < 1`, so Mathlib's
+`ApproximatesLinearOn.toOpenPartialHomeomorph` makes it a chart. Snags: `Function.uncurry` of a field
+defined through `ContinuousLinearMap.inverse` must not be unfolded by the unifier (it unfolds `inverse`
+and times out) — define the joint field on `ℝ × E` first and the curried one from it; `ω` is the
+analytic-order notation under `open scoped ContDiff`, so a form named `ω` cannot share a scope with it;
+Pi-`smul` forms of `HasFDerivAt.smul`/`ContDiffAt.smul` do not unify with `fun p => p.1 • f p.2` under
+metavariables — state the Pi form and convert. Residues: the chart is differentiable with continuous
+inverse, not `C¹` (continuous dependence of the variational solution, #49), and the form is constant,
+not standard (symplectic basis, #50). The paragraph below is the pricing as it stood.)*
 
 **What it would prove.** Every symplectic form is locally the standard one. **Route** (Moser): a
 local flow (Q29(a), locally — easier), the Poincaré lemma on a star-shaped set (**absent** at the pin, **landed in the corpus 2026-09-18** for `C¹` 2-forms on a ball, `extDeriv_radialPrimitiveForm`, together with time-dependent flows and the transport identity, `FlowDerivative.lean`; the remaining assembly is `BACKLOG.md` #8:

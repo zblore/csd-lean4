@@ -3550,6 +3550,49 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms extDeriv_radialPrimitiveForm
 
+-- BACKLOG #8 assembly (2026-09-21), Geometry/Manifold/Darboux.lean: Darboux's theorem by Moser's
+-- trick. Non-degeneracy is open (invertibility of curryLeft), Moser's field X_t = -(omega_t)^flat^-1
+-- beta is jointly C^1 and vanishes to second order at the centre, its flow to time 1 transports the
+-- interpolation (flat Cartan + Poincare), and the time-1 map approximates the identity with
+-- constant e^{1/4}/4 < 1, so it is an OpenPartialHomeomorph (Mathlib's inverse function theorem)
+-- pulling omega back to the constant form omega(x_0); the same on a symplectic manifold through
+-- localRep. C^1 only; the constant form, not the standard form (BACKLOG #49, #50).
+/-- info: 'isOpen_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms isOpen_nondegenerate
+
+/-- info: 'exists_nondegenerate_of_norm_sub_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms exists_nondegenerate_of_norm_sub_lt
+
+/-- info: 'extDeriv_moserPrimitive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms extDeriv_moserPrimitive
+
+/-- info: 'curryLeft_moserForm_moserField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms curryLeft_moserForm_moserField
+
+/-- info: 'contDiffOn_moserFieldJoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms contDiffOn_moserFieldJoint
+
+/-- info: 'hasFDerivAt_moserField_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms hasFDerivAt_moserField_self
+
+/-- info: 'exists_moser_small_ball' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms exists_moser_small_ball
+
+/-- info: 'approximatesLinearOn_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms approximatesLinearOn_flow
+
+/-- info: 'injective_of_compContinuousLinearMap_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms injective_of_compContinuousLinearMap_eq
+
+/-- info: 'exists_openPartialHomeomorph_pullback_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms exists_openPartialHomeomorph_pullback_eq
+
+/-- info: 'exists_openPartialHomeomorph_symm_pullback_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms exists_openPartialHomeomorph_symm_pullback_eq
+
+/-- info: 'DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq
+
 -- Q29(c') (2026-09-12), Geometry/Manifold/HamiltonianLieDerivative.lean: Cartan's formula on a
 -- normed space (L_X omega = d(iota_X omega) + iota_X d omega, from extDeriv_apply), and for the
 -- local representative of a symplectic form along its local Hamiltonian vector both terms
