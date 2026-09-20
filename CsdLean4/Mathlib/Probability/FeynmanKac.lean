@@ -352,17 +352,34 @@ theorem toNNReal_slice (t : ℝ≥0) {n : ℕ} (hn : 0 < n) (k : ℕ) :
   push_cast
   ring
 
+omit hVm hCV [MeasurableSpace Ω] in
+/-- Along a continuous path, the Riemann sums of the potential converge to its time integral. -/
+theorem tendsto_riemann_path (hVc : Continuous V) {B : ℝ≥0 → Ω → ℝ} {t : ℝ≥0} (ht : 0 < t) (x : ℝ)
+    {ω : Ω} (hω : Continuous fun s => B s ω) :
+    Tendsto (fun n : ℕ =>
+        ((t : ℝ) / n) * ∑ k ∈ Finset.range n, V (x + B (((k + 1 : ℕ) : ℝ≥0) * (t / n)) ω)) atTop
+      (𝓝 (∫ s in (0 : ℝ)..(t : ℝ), V (x + B (Real.toNNReal s) ω))) := by
+  have hG : Continuous fun s : ℝ => V (x + B (Real.toNNReal s) ω) :=
+    hVc.comp (continuous_const.add (hω.comp continuous_real_toNNReal))
+  have := tendsto_riemannSum _ hG (by exact_mod_cast ht : (0 : ℝ) < t)
+  refine this.congr' (Eventually.of_forall fun n => ?_)
+  rcases Nat.eq_zero_or_pos n with hn | hn
+  · simp [hn]
+  · congr 1
+    refine Finset.sum_congr rfl fun k _ => ?_
+    rw [toNNReal_slice t hn k]
+
 omit hVm in
 /-- **The Wiener-side limit**: along a Brownian motion with continuous paths, the time-sliced
-functional with weight `e^{−(t/n) V}` converges to the Feynman–Kac functional. -/
-theorem tendsto_slicedWiener [IsProbabilityMeasure P] {B : ℝ≥0 → Ω → ℝ} (hB : IsBrownianReal B P)
-    (hBm : ∀ t, Measurable (B t)) (hVc : Continuous V) {f : ℝ → ℂ} (hf : Measurable f) {Cf : ℝ}
-    (hCf : ∀ x, ‖f x‖ ≤ Cf) {t : ℝ≥0} (ht : 0 < t) (x : ℝ) :
+functional with weight `e^{−(t/n) V}` converges to the Feynman–Kac functional, for any measurable
+`f` integrable along the endpoint `x + B_t` (bounded `f` in particular). -/
+theorem tendsto_slicedWiener {B : ℝ≥0 → Ω → ℝ} (hB : IsBrownianReal B P)
+    (hBm : ∀ t, Measurable (B t)) (hVc : Continuous V) {f : ℝ → ℂ} (hf : Measurable f) {t : ℝ≥0}
+    (ht : 0 < t) (x : ℝ) (hfi : Integrable (fun ω => f (x + B t ω)) P) :
     Tendsto (fun n : ℕ => slicedWiener P B (t / n)
         (fun z => Complex.exp (-((((t : ℝ) / n : ℝ) : ℂ) * (V z : ℂ)))) f n x) atTop
       (𝓝 (∫ ω, Complex.exp (-(((∫ s in (0 : ℝ)..(t : ℝ), V (x + B (Real.toNNReal s) ω)) : ℝ) : ℂ))
         * f (x + B t ω) ∂P)) := by
-  have hCV0 : 0 ≤ CV := le_trans (abs_nonneg _) (hCV 0)
   set R : ℕ → Ω → ℝ := fun n ω =>
     ((t : ℝ) / n) * ∑ k ∈ Finset.range n, V (x + B (((k + 1 : ℕ) : ℝ≥0) * (t / n)) ω) with hR
   set I : Ω → ℝ := fun ω => ∫ s in (0 : ℝ)..(t : ℝ), V (x + B (Real.toNNReal s) ω) with hI
@@ -380,8 +397,9 @@ theorem tendsto_slicedWiener [IsProbabilityMeasure P] {B : ℝ≥0 → Ω → �
     have := prod_exp_eq (V := V) B (t / n) f n x ω
     rw [NNReal.coe_div, NNReal.coe_natCast] at this
     rw [this, hnt]
-  refine tendsto_integral_filter_of_dominated_convergence (fun _ => Real.exp ((t : ℝ) * CV) * Cf)
-    (Eventually.of_forall fun n => ?_) ?_ (integrable_const _) ?_
+  refine tendsto_integral_filter_of_dominated_convergence
+    (fun ω => Real.exp ((t : ℝ) * CV) * ‖f (x + B t ω)‖)
+    (Eventually.of_forall fun n => ?_) ?_ (hfi.norm.const_mul _) ?_
   · -- measurability of the sliced integrand
     refine Measurable.aestronglyMeasurable (Measurable.mul (Finset.measurable_prod _ fun k _ => ?_) ?_)
     · exact (measurable_expFun hVc.measurable _).comp (measurable_const.add (hBm _))
@@ -390,23 +408,13 @@ theorem tendsto_slicedWiener [IsProbabilityMeasure P] {B : ℝ≥0 → Ω → �
     filter_upwards [eventually_ge_atTop 1] with n hn
     refine Eventually.of_forall fun ω => ?_
     rw [hrw n hn ω, norm_mul, Complex.norm_exp]
-    refine mul_le_mul ?_ (hCf _) (norm_nonneg _) (Real.exp_pos _).le
+    refine mul_le_mul_of_nonneg_right ?_ (norm_nonneg _)
     refine Real.exp_le_exp.mpr ?_
     simp only [Complex.neg_re, Complex.ofReal_re]
     exact le_trans (neg_le_abs _) (abs_riemann_le hCV B hn x ω)
   · -- the pointwise limit, along continuous paths
     filter_upwards [hB.cont] with ω hω
-    have hG : Continuous fun s : ℝ => V (x + B (Real.toNNReal s) ω) :=
-      hVc.comp (continuous_const.add (hω.comp continuous_real_toNNReal))
-    have hRlim : Tendsto (fun n => R n ω) atTop (𝓝 (I ω)) := by
-      have := tendsto_riemannSum _ hG (by exact_mod_cast ht : (0 : ℝ) < t)
-      refine this.congr' (Eventually.of_forall fun n => ?_)
-      rcases Nat.eq_zero_or_pos n with hn | hn
-      · simp [hR, hn]
-      · simp only [hR]
-        congr 1
-        refine Finset.sum_congr rfl fun k _ => ?_
-        rw [toNNReal_slice t hn k]
+    have hRlim : Tendsto (fun n => R n ω) atTop (𝓝 (I ω)) := tendsto_riemann_path hVc ht x hω
     have hexp : Tendsto (fun n => Complex.exp (-((R n ω : ℝ) : ℂ)) * f (x + B t ω)) atTop
         (𝓝 (Complex.exp (-((I ω : ℝ) : ℂ)) * f (x + B t ω))) := by
       refine Tendsto.mul_const _ ?_
@@ -460,7 +468,9 @@ theorem feynmanKac [IsProbabilityMeasure P] {B : ℝ≥0 → Ω → ℝ} (hB : I
       hCf hf2 (coeFn_expPot hVm hCV _) n B hB.toIsPreBrownianReal hBm
   -- the Wiener side
   have hlim : ∀ x, Tendsto (fun n => Wn n x) atTop (𝓝 (FK x)) := fun x =>
-    tendsto_slicedWiener hCV hB hBm hVc hf hCf ht x
+    tendsto_slicedWiener hCV hB hBm hVc hf ht x
+      (Integrable.of_bound (hf.comp (measurable_const.add (hBm t))).aestronglyMeasurable Cf
+        (Eventually.of_forall fun ω => hCf _))
   have hWb : ∀ n : ℕ, 0 < n → ∀ x, ‖Wn n x‖ ≤ Real.exp ((t : ℝ) * CV) * Cf := by
     intro n hn x
     refine le_trans (norm_slicedWiener_le B (t / n) (norm_expFun_le hCV _) hCf n x) ?_

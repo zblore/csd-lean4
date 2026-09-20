@@ -6368,6 +6368,32 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Matrix.trotter_skew_of_engine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Matrix.trotter_skew_of_engine
 
+-- BACKLOG #42 FC-4' (2026-09-20), Probability/FeynmanKacL2.lean: Feynman-Kac for every g in L^2.
+-- Both sides are continuous in g on finite-measure sets and agree on the dense simple functions;
+-- the Wiener side is bounded through E|g(x+B_t)| = (P_t |g|)(x) a.e. (the pointwise formula of
+-- HeatSemigroup.lean and the law of B_t). tendsto_riemann_path is the Riemann-sum lemma extracted
+-- from FeynmanKac.lean when tendsto_slicedWiener was generalised to f integrable along the endpoint.
+/-- info: 'FeynmanKac.tendsto_riemann_path' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.tendsto_riemann_path
+
+/-- info: 'FeynmanKac.fkFunctional_congr_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.fkFunctional_congr_ae
+
+/-- info: 'FeynmanKac.ae_integrable_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.ae_integrable_shift
+
+/-- info: 'FeynmanKac.absConv_ae_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.absConv_ae_eq
+
+/-- info: 'FeynmanKac.norm_setIntegral_fkFunctional_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.norm_setIntegral_fkFunctional_le
+
+/-- info: 'FeynmanKac.aestronglyMeasurable_fkFunctional' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.aestronglyMeasurable_fkFunctional
+
+/-- info: 'FeynmanKac.feynmanKac_Lp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.feynmanKac_Lp
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient

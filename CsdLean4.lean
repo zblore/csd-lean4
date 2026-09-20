@@ -623,6 +623,7 @@ public import CsdLean4.Mathlib.Analysis.Semigroup.BoundedPerturbation
 public import CsdLean4.Mathlib.Analysis.Semigroup.HeatSemigroup
 public import CsdLean4.Mathlib.Probability.TimeSlicedWiener
 public import CsdLean4.Mathlib.Probability.FeynmanKac
+public import CsdLean4.Mathlib.Probability.FeynmanKacL2
 public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerGroup
 public import CsdLean4.Mathlib.Analysis.Semigroup.MatrixInstance
 public import CsdLean4.SigmaLayer.ChartBracket
