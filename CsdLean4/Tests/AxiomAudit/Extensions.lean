@@ -1406,6 +1406,81 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.dysonTerm_two_vac_quadratic_self
 
+-- CV-28 / BACKLOG #36(b)(iv) (2026-09-20, CV/WickTime.lean): Wick at the cutoff for EVERY word
+-- at EVERY real time. The vacuum expectation of Q_{k1}(t1) ... Q_{km}(tm) below the threshold
+-- count k / 2 < N is the pairing sum in first-contraction form, the contraction being the
+-- propagator line delta_{kl} (1/2) e^{-it} e^{+is}. Proof: the annihilator row of the leftmost
+-- quadrature commuted through the word, the truncated CCR at each later insertion of its mode,
+-- the rank-one defect killed by the walk band. Recovers CV-23b at stroboscopic times and
+-- CV-23d at equal time; the second-order vacuum diagrams of every monomial vertex.
+/-- info: 'CSD.CV.mul_map_prod_sub_map_prod_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mul_map_prod_sub_map_prod_mul
+
+/-- info: 'CSD.CV.quadratureAt_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.quadratureAt_apply
+
+/-- info: 'CSD.CV.annihilation_quadratureAt_commutator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.annihilation_quadratureAt_commutator
+
+/-- info: 'CSD.CV.timeQ_eq_modeOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeQ_eq_modeOp
+
+/-- info: 'CSD.CV.timeQ_support' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeQ_support
+
+/-- info: 'CSD.CV.modeOp_annihilation_timeQ_commutator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeOp_annihilation_timeQ_commutator
+
+/-- info: 'CSD.CV.wickSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wickSum
+
+/-- info: 'CSD.CV.timeWord_apply_eq_zero_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeWord_apply_eq_zero_of_lt
+
+/-- info: 'CSD.CV.timeWord_mul_topProj_mul_timeWord_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeWord_mul_topProj_mul_timeWord_vac
+
+/-- info: 'CSD.CV.timeWord_cons_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeWord_cons_vac
+
+/-- info: 'CSD.CV.timeWord_vac_eq_wickSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeWord_vac_eq_wickSum
+
+/-- info: 'CSD.CV.timeWord_vac_eq_wickSum'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeWord_vac_eq_wickSum'
+
+/-- info: 'CSD.CV.wickSum_eq_zero_of_odd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wickSum_eq_zero_of_odd
+
+/-- info: 'CSD.CV.wickSum_four' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wickSum_four
+
+/-- info: 'CSD.CV.timeFourPoint_eq_wickSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.timeFourPoint_eq_wickSum
+
+/-- info: 'CSD.CV.wickSum_map_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wickSum_map_zero
+
+/-- info: 'CSD.CV.dysonTerm_two_vac_wordOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dysonTerm_two_vac_wordOp
+
 -- CV-26 (2026-08-18, CV\ChannelRG.lean): channel-level RG at the cutoff -- the statement the
 -- Stage-4 no-go said had to replace unitary RG matching. The coarse-graining is MODE TRACING
 -- (keep the spectators, discard mode k), built as the Stinespring channel of the mode-split

@@ -536,6 +536,7 @@ public import CsdLean4.CV.ThermalPropagator
 public import CsdLean4.CV.Wick
 public import CsdLean4.CV.WickGeneral
 public import CsdLean4.CV.FeynmanVertex
+public import CsdLean4.CV.WickTime
 public import CsdLean4.CV.ChannelRG
 public import CsdLean4.CV.ArenaBridge
 public import CsdLean4.CV.FieldStructuredFlow
