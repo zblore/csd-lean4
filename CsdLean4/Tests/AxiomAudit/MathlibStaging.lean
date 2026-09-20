@@ -6335,6 +6335,39 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'SchrodingerGroup.exists_linearIsometryEquiv_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.exists_linearIsometryEquiv_schrodinger
 
+-- BACKLOG #40 FC-1' (2026-09-20), Analysis/Semigroup/MatrixInstance.lean: the rule-of-two test of the
+-- bounded-perturbation engine. On C^m with S(t) = exp(tA), A skew-Hermitian, and any B, the engine's
+-- Dyson terms are the matrix Dyson terms applied to psi, its perturbed semigroup is exp(t(A+B))
+-- (matrix Duhamel identity + engine uniqueness), and the matrix Dyson series and Trotter formula
+-- come back as corollaries with the skewness of B dropped; strong convergence is norm convergence
+-- in finite dimension.
+/-- info: 'Matrix.toEuclideanCLM_exp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.toEuclideanCLM_exp
+
+/-- info: 'Matrix.tendsto_of_forall_tendsto_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.tendsto_of_forall_tendsto_apply
+
+/-- info: 'Matrix.isContractionSemigroup_freeSemigroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.isContractionSemigroup_freeSemigroup
+
+/-- info: 'Matrix.engine_dysonTerm_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.engine_dysonTerm_eq
+
+/-- info: 'Matrix.perturbed_eq_exp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.perturbed_eq_exp
+
+/-- info: 'Matrix.hasSum_dysonTerm_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.hasSum_dysonTerm_apply
+
+/-- info: 'Matrix.hasSum_dysonTerm_of_engine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.hasSum_dysonTerm_of_engine
+
+/-- info: 'Matrix.tendsto_trotter_of_engine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.tendsto_trotter_of_engine
+
+/-- info: 'Matrix.trotter_skew_of_engine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.trotter_skew_of_engine
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient

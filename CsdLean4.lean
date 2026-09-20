@@ -624,6 +624,7 @@ public import CsdLean4.Mathlib.Analysis.Semigroup.HeatSemigroup
 public import CsdLean4.Mathlib.Probability.TimeSlicedWiener
 public import CsdLean4.Mathlib.Probability.FeynmanKac
 public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerGroup
+public import CsdLean4.Mathlib.Analysis.Semigroup.MatrixInstance
 public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.SigmaLayer.ChartIntegralCurve
 public import CsdLean4.SigmaLayer.FrozenBase
