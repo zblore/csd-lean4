@@ -6424,6 +6424,38 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'SchrodingerGroup.hasDerivAt_freeSchrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms SchrodingerGroup.hasDerivAt_freeSchrodinger
 
+-- BACKLOG #41(b) FC-2' (2026-09-20), Probability/BrownianVec.lean: Brownian motion in R^d as d jointly
+-- independent real coordinates; independent vectors of independent pairs; the product Gaussian, its
+-- characteristic function and its absolute continuity (a product of absolutely continuous measures
+-- is absolutely continuous); the weak Markov property in R^d. With it the Euclidean chain
+-- (HeatSemigroup, TimeSlicedWiener, FeynmanKac, FeynmanKacL2) lives on L^2(R^d), same names.
+/-- info: 'ProbabilityTheory.indepFun_pi_of_iIndepFun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.indepFun_pi_of_iIndepFun
+
+/-- info: 'MeasureTheory.Measure.pi_absolutelyContinuous_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms MeasureTheory.Measure.pi_absolutelyContinuous_pi
+
+/-- info: 'ProbabilityTheory.charFun_gaussianVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.charFun_gaussianVec
+
+/-- info: 'ProbabilityTheory.gaussianVec_absolutelyContinuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.gaussianVec_absolutelyContinuous
+
+/-- info: 'ProbabilityTheory.IsPreBrownianVec.hasLaw_eval' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.IsPreBrownianVec.hasLaw_eval
+
+/-- info: 'ProbabilityTheory.IsPreBrownianVec.indepFun_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.IsPreBrownianVec.indepFun_shift
+
+/-- info: 'ProbabilityTheory.IsBrownianVec.of_coord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms ProbabilityTheory.IsBrownianVec.of_coord
+
+/-- info: 'HeatSemigroup.charFun_gaussian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.charFun_gaussian
+
+/-- info: 'HeatSemigroup.gaussian_absolutelyContinuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms HeatSemigroup.gaussian_absolutelyContinuous
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient

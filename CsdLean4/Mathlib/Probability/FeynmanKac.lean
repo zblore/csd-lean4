@@ -13,7 +13,7 @@ public import CsdLean4.Mathlib.Probability.TimeSlicedWiener
 **Category:** 1-Mathlib (CSD-free; staged for upstream).
 
 For a Brownian motion `B` with almost surely continuous paths, a bounded continuous potential `V`
-and a bounded `f ∈ L²(ℝ)`,
+and a bounded `f ∈ L²(ℝᵈ)`,
 
   `(e^{−t(H₀ + V)} f)(x) = E[ f (x + B_t) · exp (−∫₀ᵗ V (x + B_s) ds) ]`  for a.e. `x`,
 
@@ -36,10 +36,10 @@ The proof joins the two limits of the same time-sliced expression:
 
 ## Honest scope
 
-⚠️ **Conditional on a Brownian motion.** `hB : IsBrownianReal B P` (almost surely continuous
-paths) is a hypothesis; the Mathlib pin does not yet construct one. Bounded continuous `V`, bounded
-measurable `f ∈ L²`; one dimension. The extension to `f ∈ L²` alone is by continuity of both sides
-and is not stated here.
+⚠️ **Conditional on a Brownian motion.** `hB : IsBrownianVec B P` (a Brownian motion in `ℝᵈ` with
+almost surely continuous paths, `Probability/BrownianVec.lean`) is a hypothesis; the Mathlib pin
+does not yet construct one. Bounded continuous `V`, bounded measurable `f ∈ L²`. The extension to
+`f ∈ L²` alone is `FeynmanKacL2.lean`.
 
 References: M. Kac, *On distributions of certain Wiener functionals*, Trans. AMS 65, 1 (1949);
 B. Simon, *Functional Integration and Quantum Physics*, Thm 6.2; `Probability/TimeSlicedWiener.lean`
@@ -54,11 +54,17 @@ open MeasureTheory ProbabilityTheory Filter HeatSemigroup TimeSlicedWiener Norme
 
 namespace FeynmanKac
 
-/-- `L²(ℝ, ℂ)` with Lebesgue measure. -/
-local notation "L2" => Lp ℂ 2 (volume : Measure ℝ)
+variable {ι : Type*} [Fintype ι]
+
+/-- Euclidean space `ℝᵈ`. -/
+local notation "E" => EuclideanSpace ℝ ι
+
+/-- `L²(ℝᵈ, ℂ)` with Lebesgue measure. -/
+local notation "L2" => Lp ℂ 2 (volume : Measure E)
 
 /-! ### The exponential of a multiplication operator -/
 
+omit [Fintype ι] in
 /-- The coercion of a finite sum of `Lp` elements is the sum of the coercions, almost everywhere. -/
 theorem coeFn_sum_range {α F : Type*} [MeasurableSpace α] {μ : Measure α} [NormedAddCommGroup F]
     {p : ℝ≥0∞} (u : ℕ → Lp F p μ) (N : ℕ) :
@@ -70,16 +76,16 @@ theorem coeFn_sum_range {α F : Type*} [MeasurableSpace α] {μ : Measure α} [N
     filter_upwards [Lp.coeFn_add (∑ n ∈ Finset.range N, u n) (u N), ih] with x h1 h2
     rw [h1, Pi.add_apply, h2, Finset.sum_range_succ]
 
-variable {V : ℝ → ℝ} (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV)
+variable {V : EuclideanSpace ℝ ι → ℝ} (hVm : Measurable V) {CV : ℝ} (hCV : ∀ x, |V x| ≤ CV)
 include hVm hCV
 
-omit hCV in
+omit hCV [Fintype ι] in
 theorem measurable_expFun (h : ℝ) :
-    Measurable fun x : ℝ => Complex.exp (-((h : ℂ) * (V x : ℂ))) :=
+    Measurable fun x : E => Complex.exp (-((h : ℂ) * (V x : ℂ))) :=
   Complex.measurable_exp.comp (measurable_const.mul (Complex.measurable_ofReal.comp hVm)).neg
 
-omit hVm in
-theorem norm_expFun_le (h : ℝ) (x : ℝ) :
+omit hVm [Fintype ι] in
+theorem norm_expFun_le (h : ℝ) (x : E) :
     ‖Complex.exp (-((h : ℂ) * (V x : ℂ)))‖ ≤ Real.exp (|h| * CV) := by
   rw [Complex.norm_exp]
   simp only [Complex.neg_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, mul_zero,
@@ -90,23 +96,23 @@ theorem norm_expFun_le (h : ℝ) (x : ℝ) :
     _ ≤ |h| * CV := by gcongr; exact hCV x
 
 theorem memLp_expFun (h : ℝ) :
-    MemLp (fun x : ℝ => Complex.exp (-((h : ℂ) * (V x : ℂ)))) ∞ volume :=
+    MemLp (fun x : E => Complex.exp (-((h : ℂ) * (V x : ℂ)))) ∞ volume :=
   memLp_top_of_bound (measurable_expFun hVm h).aestronglyMeasurable (Real.exp (|h| * CV))
     (Eventually.of_forall (norm_expFun_le hCV h))
 
 /-- The `L^∞` class of `e^{−h V}`. -/
-noncomputable def expPot (h : ℝ) : Lp ℂ ∞ (volume : Measure ℝ) :=
+noncomputable def expPot (h : ℝ) : Lp ℂ ∞ (volume : Measure E) :=
   (memLp_expFun hVm hCV h).toLp _
 
 theorem coeFn_expPot (h : ℝ) :
-    (expPot hVm hCV h : ℝ → ℂ) =ᵐ[volume] fun x => Complex.exp (-((h : ℂ) * (V x : ℂ))) :=
+    (expPot hVm hCV h : E → ℂ) =ᵐ[volume] fun x => Complex.exp (-((h : ℂ) * (V x : ℂ))) :=
   MemLp.coeFn_toLp _
 
 omit hVm hCV in
 /-- The powers of the multiplication operator by `−V`, pointwise. -/
-theorem neg_potential_pow_apply_ae_eq {VL : Lp ℂ ∞ (volume : Measure ℝ)}
-    (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) (f : L2) :
-    ∀ n : ℕ, (((-potential VL) ^ n) f : ℝ → ℂ) =ᵐ[volume] fun x => (-(V x : ℂ)) ^ n * f x := by
+theorem neg_potential_pow_apply_ae_eq {VL : Lp ℂ ∞ (volume : Measure E)}
+    (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) (f : L2) :
+    ∀ n : ℕ, (((-potential VL) ^ n) f : E → ℂ) =ᵐ[volume] fun x => (-(V x : ℂ)) ^ n * f x := by
   intro n
   induction n with
   | zero =>
@@ -133,8 +139,8 @@ theorem norm_sum_pow_div_factorial_le (c : ℂ) (N : ℕ) :
 set_option maxHeartbeats 800000 in
 /-- ★ **The exponential of a multiplication operator is multiplication by the exponential**:
 `exp (h • (−M_V)) = M_{e^{−hV}}` on `L²`. -/
-theorem exp_smul_neg_potential {VL : Lp ℂ ∞ (volume : Measure ℝ)}
-    (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) (h : ℝ) :
+theorem exp_smul_neg_potential {VL : Lp ℂ ∞ (volume : Measure E)}
+    (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) (h : ℝ) :
     exp (h • (-potential VL)) = potential (expPot hVm hCV h) := by
   refine ContinuousLinearMap.ext fun f => ?_
   refine Lp.ext ?_
@@ -145,10 +151,10 @@ theorem exp_smul_neg_potential {VL : Lp ℂ ∞ (volume : Measure ℝ)}
   simp only [ContinuousLinearMap.apply_apply] at hlim
   -- the partial sums, pointwise
   have hpartial : ∀ N : ℕ,
-      ((∑ n ∈ Finset.range N, ((n ! : ℝ)⁻¹ • (h • A) ^ n) f : L2) : ℝ → ℂ)
+      ((∑ n ∈ Finset.range N, ((n ! : ℝ)⁻¹ • (h • A) ^ n) f : L2) : E → ℂ)
         =ᵐ[volume] fun x => (∑ n ∈ Finset.range N, (-((h : ℂ) * V x)) ^ n / n !) * f x := by
     intro N
-    have hterm : ∀ n : ℕ, ((((n ! : ℝ)⁻¹ • (h • A) ^ n) f : L2) : ℝ → ℂ)
+    have hterm : ∀ n : ℕ, ((((n ! : ℝ)⁻¹ • (h • A) ^ n) f : L2) : E → ℂ)
         =ᵐ[volume] fun x => (-((h : ℂ) * V x)) ^ n / n ! * f x := by
       intro n
       rw [smul_apply, smul_pow, smul_apply]
@@ -175,15 +181,15 @@ theorem exp_smul_neg_potential {VL : Lp ℂ ∞ (volume : Measure ℝ)}
     exact hCV x
   refine ae_eq_of_forall_setIntegral_eq_of_sigmaFinite (fun s _ hμs => ?_) (fun s _ hμs => ?_)
     (fun s hs hμs => ?_)
-  · have : IsFiniteMeasure ((volume : Measure ℝ).restrict s) :=
+  · have : IsFiniteMeasure ((volume : Measure E).restrict s) :=
       ⟨by simpa [Measure.restrict_apply_univ] using hμs⟩
     exact ((Lp.memLp (exp (h • A) f)).restrict s).integrable one_le_two
-  · have : IsFiniteMeasure ((volume : Measure ℝ).restrict s) :=
+  · have : IsFiniteMeasure ((volume : Measure E).restrict s) :=
       ⟨by simpa [Measure.restrict_apply_univ] using hμs⟩
     exact ((Lp.memLp (potential (expPot hVm hCV h) f)).restrict s).integrable one_le_two
-  · have : IsFiniteMeasure ((volume : Measure ℝ).restrict s) :=
+  · have : IsFiniteMeasure ((volume : Measure E).restrict s) :=
       ⟨by simpa [Measure.restrict_apply_univ] using hμs⟩
-    have hfint : Integrable (fun x => Real.exp (|h| * CV) * ‖f x‖) ((volume : Measure ℝ).restrict s) :=
+    have hfint : Integrable (fun x => Real.exp (|h| * CV) * ‖f x‖) ((volume : Measure E).restrict s) :=
       (((Lp.memLp f).restrict s).integrable one_le_two).norm.const_mul _
     -- the set integrals of the partial sums converge to both sides
     have h1 : Tendsto (fun N => ∫ x in s, ((∑ n ∈ Finset.range N, ((n ! : ℝ)⁻¹ • (h • A) ^ n) f : L2) x))
@@ -205,8 +211,8 @@ theorem exp_smul_neg_potential {VL : Lp ℂ ∞ (volume : Measure ℝ)}
       refine tendsto_integral_filter_of_dominated_convergence (fun x => Real.exp (|h| * CV) * ‖f x‖)
         (Eventually.of_forall fun N => ?_) (Eventually.of_forall fun N => Eventually.of_forall fun x => hbound N x)
         hfint (Eventually.of_forall fun x => ?_)
-      · have hVc : Measurable fun x : ℝ => (V x : ℂ) := Complex.measurable_ofReal.comp hVm
-        have hsm : Measurable fun x : ℝ => ∑ n ∈ Finset.range N, (-((h : ℂ) * V x)) ^ n / (n ! : ℂ) :=
+      · have hVc : Measurable fun x : E => (V x : ℂ) := Complex.measurable_ofReal.comp hVm
+        have hsm : Measurable fun x : E => ∑ n ∈ Finset.range N, (-((h : ℂ) * V x)) ^ n / (n ! : ℂ) :=
           Finset.measurable_sum _ fun n _ => ((measurable_const.mul hVc).neg.pow_const n).div_const _
         exact hsm.aestronglyMeasurable.mul (Lp.aestronglyMeasurable f).restrict
       · refine Tendsto.mul_const _ ?_
@@ -219,7 +225,7 @@ theorem exp_smul_neg_potential {VL : Lp ℂ ∞ (volume : Measure ℝ)}
 
 /-! ### Riemann sums along a continuous path -/
 
-omit hVm hCV in
+omit hVm hCV [Fintype ι] in
 /-- Riemann sums of a continuous function on `[0, t]` converge to its integral. -/
 theorem tendsto_riemannSum (g : ℝ → ℝ) (hg : Continuous g) {t : ℝ} (ht : 0 < t) :
     Tendsto (fun n : ℕ => (t / n) * ∑ k ∈ Finset.range n, g (((k : ℝ) + 1) * t / n)) atTop
@@ -301,9 +307,9 @@ theorem tendsto_riemannSum (g : ℝ → ℝ) (hg : Continuous g) {t : ℝ} (ht :
 
 variable {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω}
 
-omit hVm hCV [MeasurableSpace Ω] in
+omit hVm hCV [MeasurableSpace Ω] [Fintype ι] in
 /-- The sliced weight is the exponential of a Riemann sum. -/
-theorem prod_exp_eq (B : ℝ≥0 → Ω → ℝ) (h : ℝ≥0) (f : ℝ → ℂ) (n : ℕ) (x : ℝ) (ω : Ω) :
+theorem prod_exp_eq (B : ℝ≥0 → Ω → E) (h : ℝ≥0) (f : E → ℂ) (n : ℕ) (x : E) (ω : Ω) :
     (∏ k ∈ Finset.range n, Complex.exp (-(((h : ℝ) : ℂ) * (V (x + B (((k + 1 : ℕ) : ℝ≥0) * h) ω) : ℂ))))
         * f (x + B ((n : ℝ≥0) * h) ω)
       = Complex.exp (-(((h : ℝ) * ∑ k ∈ Finset.range n, V (x + B (((k + 1 : ℕ) : ℝ≥0) * h) ω) : ℝ) : ℂ))
@@ -314,9 +320,9 @@ theorem prod_exp_eq (B : ℝ≥0 → Ω → ℝ) (h : ℝ≥0) (f : ℝ → ℂ)
   push_cast
   rw [Finset.mul_sum, ← Finset.sum_neg_distrib]
 
-omit hVm [MeasurableSpace Ω] in
+omit hVm [MeasurableSpace Ω] [Fintype ι] in
 /-- The Riemann sums of the potential along the path are bounded by `t · CV`. -/
-theorem abs_riemann_le (B : ℝ≥0 → Ω → ℝ) {t : ℝ≥0} {n : ℕ} (hn : 0 < n) (x : ℝ) (ω : Ω) :
+theorem abs_riemann_le (B : ℝ≥0 → Ω → E) {t : ℝ≥0} {n : ℕ} (hn : 0 < n) (x : E) (ω : Ω) :
     |((t : ℝ) / n) * ∑ k ∈ Finset.range n, V (x + B (((k + 1 : ℕ) : ℝ≥0) * (t / n)) ω)|
       ≤ (t : ℝ) * CV := by
   have hnR : (0 : ℝ) < n := by exact_mod_cast hn
@@ -333,10 +339,10 @@ theorem abs_riemann_le (B : ℝ≥0 → Ω → ℝ) {t : ℝ≥0} {n : ℕ} (hn 
         rw [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
         field_simp
 
-omit hVm hCV in
+omit hVm hCV [Fintype ι] in
 /-- The time-sliced functional is bounded by `Cg ^ n · Cf`. -/
-theorem norm_slicedWiener_le [IsProbabilityMeasure P] (B : ℝ≥0 → Ω → ℝ) (h : ℝ≥0) {g f : ℝ → ℂ}
-    {Cg Cf : ℝ} (hCg : ∀ x, ‖g x‖ ≤ Cg) (hCf : ∀ x, ‖f x‖ ≤ Cf) (n : ℕ) (x : ℝ) :
+theorem norm_slicedWiener_le [IsProbabilityMeasure P] (B : ℝ≥0 → Ω → E) (h : ℝ≥0) {g f : E → ℂ}
+    {Cg Cf : ℝ} (hCg : ∀ x, ‖g x‖ ≤ Cg) (hCf : ∀ x, ‖f x‖ ≤ Cf) (n : ℕ) (x : E) :
     ‖slicedWiener P B h g f n x‖ ≤ Cg ^ n * Cf := by
   rw [slicedWiener]
   refine le_trans (norm_integral_le_of_norm_le (integrable_const _)
@@ -355,7 +361,7 @@ theorem toNNReal_slice (t : ℝ≥0) {n : ℕ} (hn : 0 < n) (k : ℕ) :
 
 omit hVm hCV [MeasurableSpace Ω] in
 /-- Along a continuous path, the Riemann sums of the potential converge to its time integral. -/
-theorem tendsto_riemann_path (hVc : Continuous V) {B : ℝ≥0 → Ω → ℝ} {t : ℝ≥0} (ht : 0 < t) (x : ℝ)
+theorem tendsto_riemann_path (hVc : Continuous V) {B : ℝ≥0 → Ω → E} {t : ℝ≥0} (ht : 0 < t) (x : E)
     {ω : Ω} (hω : Continuous fun s => B s ω) :
     Tendsto (fun n : ℕ =>
         ((t : ℝ) / n) * ∑ k ∈ Finset.range n, V (x + B (((k + 1 : ℕ) : ℝ≥0) * (t / n)) ω)) atTop
@@ -374,9 +380,9 @@ omit hVm in
 /-- **The Wiener-side limit**: along a Brownian motion with continuous paths, the time-sliced
 functional with weight `e^{−(t/n) V}` converges to the Feynman–Kac functional, for any measurable
 `f` integrable along the endpoint `x + B_t` (bounded `f` in particular). -/
-theorem tendsto_slicedWiener {B : ℝ≥0 → Ω → ℝ} (hB : IsBrownianReal B P)
-    (hBm : ∀ t, Measurable (B t)) (hVc : Continuous V) {f : ℝ → ℂ} (hf : Measurable f) {t : ℝ≥0}
-    (ht : 0 < t) (x : ℝ) (hfi : Integrable (fun ω => f (x + B t ω)) P) :
+theorem tendsto_slicedWiener {B : ℝ≥0 → Ω → E} (hB : IsBrownianVec B P)
+    (hBm : ∀ t, Measurable (B t)) (hVc : Continuous V) {f : E → ℂ} (hf : Measurable f) {t : ℝ≥0}
+    (ht : 0 < t) (x : E) (hfi : Integrable (fun ω => f (x + B t ω)) P) :
     Tendsto (fun n : ℕ => slicedWiener P B (t / n)
         (fun z => Complex.exp (-((((t : ℝ) / n : ℝ) : ℂ) * (V z : ℂ)))) f n x) atTop
       (𝓝 (∫ ω, Complex.exp (-(((∫ s in (0 : ℝ)..(t : ℝ), V (x + B (Real.toNNReal s) ω)) : ℝ) : ℂ))
@@ -438,21 +444,21 @@ where `e^{−t(H₀+V)}` is the perturbed heat semigroup (the Dyson series aroun
 path integral is a Wiener integral: the operator side is the Trotter limit of the time-sliced
 products, the Wiener side the limit of the time-sliced functionals, and the two agree on every
 finite-measure set. -/
-theorem feynmanKac [IsProbabilityMeasure P] {B : ℝ≥0 → Ω → ℝ} (hB : IsBrownianReal B P)
-    (hBm : ∀ t, Measurable (B t)) (hVc : Continuous V) {VL : Lp ℂ ∞ (volume : Measure ℝ)}
-    (hVL : (VL : ℝ → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {f : ℝ → ℂ} (hf : Measurable f) {Cf : ℝ}
+theorem feynmanKac [IsProbabilityMeasure P] {B : ℝ≥0 → Ω → E} (hB : IsBrownianVec B P)
+    (hBm : ∀ t, Measurable (B t)) (hVc : Continuous V) {VL : Lp ℂ ∞ (volume : Measure E)}
+    (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)) {f : E → ℂ} (hf : Measurable f) {Cf : ℝ}
     (hCf : ∀ x, ‖f x‖ ≤ Cf) (hf2 : MemLp f 2 volume) {t : ℝ≥0} (ht : 0 < t) :
-    (perturbedHeat VL (t : ℝ) (hf2.toLp f) : ℝ → ℂ) =ᵐ[volume] fun x =>
+    (perturbedHeat VL (t : ℝ) (hf2.toLp f) : E → ℂ) =ᵐ[volume] fun x =>
       ∫ ω, Complex.exp (-(((∫ s in (0 : ℝ)..(t : ℝ), V (x + B (Real.toNNReal s) ω)) : ℝ) : ℂ))
         * f (x + B t ω) ∂P := by
   have hVm := hVc.measurable
   have hCV0 : 0 ≤ CV := le_trans (abs_nonneg _) (hCV 0)
   set fL : L2 := hf2.toLp f with hfL
-  set FK : ℝ → ℂ := fun x =>
+  set FK : E → ℂ := fun x =>
     ∫ ω, Complex.exp (-(((∫ s in (0 : ℝ)..(t : ℝ), V (x + B (Real.toNNReal s) ω)) : ℝ) : ℂ))
       * f (x + B t ω) ∂P with hFK
-  set gn : ℕ → ℝ → ℂ := fun n z => Complex.exp (-((((t : ℝ) / n : ℝ) : ℂ) * (V z : ℂ))) with hgn
-  set Wn : ℕ → ℝ → ℂ := fun n => slicedWiener P B (t / n) (gn n) f n with hWn
+  set gn : ℕ → E → ℂ := fun n z => Complex.exp (-((((t : ℝ) / n : ℝ) : ℂ) * (V z : ℂ))) with hgn
+  set Wn : ℕ → E → ℂ := fun n => slicedWiener P B (t / n) (gn n) f n with hWn
   -- the operator side, for `n ≥ 1`: the Trotter step is the heat–potential step
   have hop : ∀ n : ℕ, 0 < n →
       ContractionSemigroup.trotterStep heatSemigroup (-potential VL) ((t : ℝ) / n)
@@ -462,11 +468,11 @@ theorem feynmanKac [IsProbabilityMeasure P] {B : ℝ≥0 → Ω → ℝ} (hB : I
     congr 1
     exact exp_smul_neg_potential hVm hCV hVL _
   have hslice : ∀ n : ℕ, 0 < n →
-      ((stepOp (t / n) (expPot hVm hCV ((t : ℝ) / n)) ^ n) fL : ℝ → ℂ) =ᵐ[volume] Wn n := by
+      ((stepOp (t / n) (expPot hVm hCV ((t : ℝ) / n)) ^ n) fL : E → ℂ) =ᵐ[volume] Wn n := by
     intro n hn
     have hh : (0 : ℝ≥0) < t / n := div_pos ht (by exact_mod_cast hn)
     exact pow_stepOp_apply_ae_eq_slicedWiener hh (measurable_expFun hVm _) hf (norm_expFun_le hCV _)
-      hCf hf2 (coeFn_expPot hVm hCV _) n B hB.toIsPreBrownianReal hBm
+      hCf hf2 (coeFn_expPot hVm hCV _) n B hB.toIsPreBrownianVec hBm
   -- the Wiener side
   have hlim : ∀ x, Tendsto (fun n => Wn n x) atTop (𝓝 (FK x)) := fun x =>
     tendsto_slicedWiener hCV hB hBm hVc hf ht x
@@ -491,13 +497,13 @@ theorem feynmanKac [IsProbabilityMeasure P] {B : ℝ≥0 → Ω → ℝ} (hB : I
   have htrot := tendsto_trotter_perturbedHeat VL (t := (t : ℝ)) (by positivity) fL
   refine ae_eq_of_forall_setIntegral_eq_of_sigmaFinite (fun s _ hμs => ?_) (fun s _ hμs => ?_)
     (fun s hs hμs => ?_)
-  · have : IsFiniteMeasure ((volume : Measure ℝ).restrict s) :=
+  · have : IsFiniteMeasure ((volume : Measure E).restrict s) :=
       ⟨by simpa [Measure.restrict_apply_univ] using hμs⟩
     exact ((Lp.memLp (perturbedHeat VL (t : ℝ) fL)).restrict s).integrable one_le_two
-  · have : IsFiniteMeasure ((volume : Measure ℝ).restrict s) :=
+  · have : IsFiniteMeasure ((volume : Measure E).restrict s) :=
       ⟨by simpa [Measure.restrict_apply_univ] using hμs⟩
     exact Integrable.of_bound hFKm.aestronglyMeasurable _ (Eventually.of_forall hFKb)
-  · have : IsFiniteMeasure ((volume : Measure ℝ).restrict s) :=
+  · have : IsFiniteMeasure ((volume : Measure E).restrict s) :=
       ⟨by simpa [Measure.restrict_apply_univ] using hμs⟩
     have hcont : Continuous fun g : L2 => ∫ x in s, g x := by
       have : (fun g : L2 => ∫ x in s, g x)

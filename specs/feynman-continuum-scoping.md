@@ -142,7 +142,7 @@ Total for the arc through FC-5: **L**, in six bricks none larger than M–L. FC-
 plan unless the author asks for the action in the integrand.
 
 **Outcome (2026-09-20): the whole arc FC-0 to FC-6 landed in one day, five Category 1 modules, 59 pins; the priced
-residue is the Euclidean half of FC-2′ (re-priced L: the pin's Brownian motion is real-valued), BACKLOG #41(b), plus the Gaussian packet #48 (M); FC-1′ (#40), FC-4′ (#42), FC-5″ (#43) and the real-time half of FC-2′ (#41(a): the Schrödinger modules generalised in place to any finite-dimensional inner product space) landed the same day.**
+residue is the Gaussian packet #48 (M); FC-1′ (#40), FC-4′ (#42), FC-5″ (#43) and FC-2′ (#41: the Schrödinger modules generalised to any finite-dimensional inner product space, and the Euclidean chain to `EuclideanSpace ℝ ι` through `Probability/BrownianVec.lean`, a Brownian motion in `ℝᵈ` as `d` jointly independent real ones) landed the same day. FC-2′ took L, not the S–M priced: the vector Markov property needed "independent vectors of independent pairs" (`indepFun_pi_of_iIndepFun`), and the product Gaussian's convolution, scaling and absolute continuity had to be built (characteristic functions; a product of absolutely continuous measures is absolutely continuous, by induction on `Fin n` through `measurePreserving_piFinSuccAbove`).**
 
 ## 8. Decisions for the author
 
