@@ -247,8 +247,12 @@ exponential-doubling schedule for unknown amplitude. The interference picture mo
 sum over paths, is a theorem at finite dimension: the matrix element of a propagator is the limit of sums
 over discrete paths of products of one-step amplitudes (`exp_add_apply_tendsto_sum_pathWeight`,
 [`Mathlib/Analysis/Matrix/SumOverPaths.lean`](../CsdLean4/Mathlib/Analysis/Matrix/SumOverPaths.lean)), read
-off the Lie–Trotter formula through the path expansion of a matrix power. The continuum path integral is
-not in the corpus; backlog row 36 prices its remaining rungs.
+off the Lie–Trotter formula through the path expansion of a matrix power. In the continuum the Euclidean path
+integral is a Wiener integral, as a theorem: for a Brownian motion with continuous paths and a bounded potential,
+`(e^{−t(H₀+V)} f)(x) = E[exp(−∫₀ᵗ V(x+B_s) ds) f(x+B_t)]` almost everywhere (`feynmanKac`,
+[`Mathlib/Probability/FeynmanKac.lean`](../CsdLean4/Mathlib/Probability/FeynmanKac.lean)), with the propagator
+defined by the Dyson series around the heat semigroup and reached equally by the Trotter product formula; the
+real-time form (Nelson's limit) is the one rung of backlog row 36 still priced.
 
 **What is not claimed.** Any complexity-theoretic statement. The theorems are about amplitudes and
 probabilities of specific circuits.

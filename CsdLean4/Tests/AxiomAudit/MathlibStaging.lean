@@ -6269,6 +6269,30 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'TimeSlicedWiener.pow_stepOp_apply_ae_eq_slicedWiener' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms TimeSlicedWiener.pow_stepOp_apply_ae_eq_slicedWiener
 
+-- BACKLOG #36(c) FC-4 (2026-09-20), Probability/FeynmanKac.lean: the Feynman-Kac formula. For a
+-- Brownian motion with a.s. continuous paths, a bounded continuous potential V and a bounded
+-- f in L^2, (e^{-t(H_0+V)} f)(x) = E[exp(-int_0^t V(x+B_s) ds) f(x+B_t)] a.e., the perturbed heat
+-- semigroup being the Dyson series around P_t. The exponential of a multiplication operator is
+-- multiplication by the exponential; Riemann sums along the continuous path; the Trotter limit
+-- and the Wiener limit agree on every finite-measure set. Conditional on hB : IsBrownianReal.
+/-- info: 'FeynmanKac.exp_smul_neg_potential' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.exp_smul_neg_potential
+
+/-- info: 'FeynmanKac.tendsto_riemannSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.tendsto_riemannSum
+
+/-- info: 'FeynmanKac.prod_exp_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.prod_exp_eq
+
+/-- info: 'FeynmanKac.norm_slicedWiener_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.norm_slicedWiener_le
+
+/-- info: 'FeynmanKac.tendsto_slicedWiener' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.tendsto_slicedWiener
+
+/-- info: 'FeynmanKac.feynmanKac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms FeynmanKac.feynmanKac
+
 -- The fundamental group of the circle (2026-08-10, CircleFundamentalGroup.lean).
 -- Mathlib has the covering-space apparatus (path lifting, monodromy,
 -- IsAddQuotientCoveringMap.fundamentalGroupEquiv) and exhibits Circle.exp as a quotient
