@@ -7293,4 +7293,93 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Gleason.ProjectionPackage.gleason_representation_of_core' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.gleason_representation_of_core
 
+-- 2026-09-21, stage 57(a) of the core lemma (specs/gleason-feasibility.md): Cooke-Keane-Moran
+-- section 2 on S^2 (Sphere.lean) and section 3 (Warmup.lean). Still nothing claims Gleason's
+-- theorem; the core lemma itself (57(b)-(e)) is open.
+-- Sphere.lean: the cross product as a vector of EuclideanSpace R (Fin 3) (an orthonormal pair
+-- extends to a frame), a unit vector orthogonal to any two vectors (the orthogonal complement of
+-- a plane is nontrivial), an orthonormal triple IS an orthonormal basis (so the frame identity
+-- holds for every orthonormal triple, sum_triple); P1 (vector space), P2 f(-s) = f(s), P3 the
+-- four-point identity on a great circle, P4 (f s > M - xi gives t orthogonal to s with
+-- f t < m + xi), boundedness 0 <= f <= W for nonnegative frame functions, sphereSup/sphereInf,
+-- and the regular examples: <p0, s>^2 (weight 1, Parseval) and every quadratic form (weight tr A).
+/-- info: 'Gleason.cross' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.cross
+
+/-- info: 'Gleason.norm_cross_of_orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.norm_cross_of_orthonormal
+
+/-- info: 'Gleason.orthonormal_triple_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.orthonormal_triple_iff
+
+/-- info: 'Gleason.orthonormal_cross' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.orthonormal_cross
+
+/-- info: 'Gleason.exists_unit_orthogonal_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.exists_unit_orthogonal_pair
+
+/-- info: 'Gleason.orthonormalBasisOfTriple' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.orthonormalBasisOfTriple
+
+-- the frame identity for any orthonormal triple.
+/-- info: 'Gleason.IsFrameFunction.sum_triple' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.sum_triple
+
+/-- info: 'Gleason.IsFrameFunction.const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.const
+
+/-- info: 'Gleason.IsFrameFunction.add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.add
+
+-- P2.
+/-- info: 'Gleason.IsFrameFunction.neg_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.neg_apply
+
+-- P3.
+/-- info: 'Gleason.IsFrameFunction.four_point' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.four_point
+
+-- P4.
+/-- info: 'Gleason.IsFrameFunction.exists_orthogonal_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.exists_orthogonal_lt
+
+/-- info: 'Gleason.IsFrameFunction.le_weight_of_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.le_weight_of_nonneg
+
+/-- info: 'Gleason.sphereSup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.sphereSup
+
+/-- info: 'Gleason.sphereInf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.sphereInf
+
+/-- info: 'Gleason.exists_sphereSup_sub_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.exists_sphereSup_sub_lt
+
+/-- info: 'Gleason.IsFrameFunction.exists_orthogonal_lt_sphereInf_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.exists_orthogonal_lt_sphereInf_add
+
+/-- info: 'Gleason.isFrameFunction_inner_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.isFrameFunction_inner_sq
+
+-- every quadratic form is a frame function of weight tr A.
+/-- info: 'Gleason.isFrameFunction_quadForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.isFrameFunction_quadForm
+
+-- Warmup.lean: Warmup Theorem I (a bounded f on [0,1] with f a + f b + f c constant on
+-- a + b + c = 1 is affine; the additivity on [0,1] is extended to R by x |-> g(fract x) + floor(x) g 1
+-- and Gleason.additive_bounded_linear finishes) and Warmup Theorem II (C countable in (0,1),
+-- f 0 = 0, f monotone off C, f a + f b + f c = 1 on a + b + c = 1 off C, then f a = a off C:
+-- pick a_0 outside the rational quotients of C and 1 - C, rational homogeneity on multiples of
+-- a_0, monotone squeeze, slope pinned by one triple).
+/-- info: 'Gleason.linear_of_add_on_Icc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.linear_of_add_on_Icc
+
+-- Warmup Theorem I.
+/-- info: 'Gleason.affine_of_sum_eq_const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.affine_of_sum_eq_const
+
+-- Warmup Theorem II.
+/-- info: 'Gleason.eq_self_of_monotone_sum_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.eq_self_of_monotone_sum_eq_one
+
 end CSD.Tests.AxiomAudit
