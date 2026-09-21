@@ -79,9 +79,10 @@ partial trace. **Since 2026-09-11 (W6, W11) that is what this module has**, in t
 The joint flow on the three-qubit register ⊗ environment, and QEC on `Σ` end to end, are
 `Empirical/CSD/QEC/RegisterFlow.lean` (2026-09-12): `registerFlow` on `ℂℙ³¹` produces the
 register's single-error channel as its environment marginal, and the syndrome-conditioned recovery
-returns every code-region preparation's density operator from it (`registerFlow_recovery`). What is
-*not* here: the independent-noise channel `(bit-flip_p)^{⊗3}` itself (uncorrectable double flips).
-The `LF5/SyndromeFlow.lean` tranche carries the coherent-error syndrome flow.
+returns every code-region preparation's density operator from it (`registerFlow_recovery`). The
+independent-noise channel `(bit-flip_p)^{⊗3}` itself, with its `3p² − 2p³` residual failure, is
+`Empirical/CSD/QEC/IndependentNoiseFlow.lean` (`indepFlow_recovery`, 2026-09-21). The
+`LF5/SyndromeFlow.lean` tranche carries the coherent-error syndrome flow.
 
 ## Source
 

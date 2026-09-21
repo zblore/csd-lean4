@@ -301,8 +301,11 @@ the code space, the distance mechanism, the Knill–Laflamme theorem and the Ste
 Clifford+T in the unitary group, and `T`-gate injection; what exists is the `T` gate itself and the fact
 that it is not Clifford (`tGate_conj_X_not_pauli`,
 [`Mathlib/QuantumInfo/Magic.lean`](../CsdLean4/Mathlib/QuantumInfo/Magic.lean)). The three-qubit `Σ` model
-corrects the single-flip channel; the module says in its own words that the independent-noise channel's
-double and triple flips are not correctable and are not modelled.
+corrects the single-flip channel exactly and, under independent bit-flip noise, returns
+`(1 − p_fail) σ + p_fail X̄ σ X̄` with `p_fail = 3p² − 2p³` (`indepFlow_recovery`,
+[`Empirical/CSD/QEC/IndependentNoiseFlow.lean`](../CsdLean4/Empirical/CSD/QEC/IndependentNoiseFlow.lean)):
+the double and triple flips are modelled, and mis-corrected into the logical flip — the residual a
+threshold argument (#51) would have to drive down.
 
 **What is not claimed.** A threshold theorem, or that a fault-tolerant machine follows from the chain.
 

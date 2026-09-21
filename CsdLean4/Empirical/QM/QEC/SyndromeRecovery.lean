@@ -44,9 +44,10 @@ error `Eₖ` carries the code onto the `k`-th syndrome subspace and nowhere else
 Kraus sum collapses to its diagonal, and on the diagonal `Eₖ Pₖ Eₖ = P₀`.
 
 What is not here: errors outside the single-flip set (two flips are miscorrected — the code's
-distance is 3), and the independent-noise channel `(bit-flip_p)^{⊗3}`, whose double- and
-triple-flip branches the code does not correct; `singleFlipChannel` is its correctable part with
-free weights.
+distance is 3). The independent-noise channel `(bit-flip_p)^{⊗3}`, whose double- and triple-flip
+branches the code mis-corrects into the logical flip, is `IndependentNoise.lean`
+(`recoveryChannel_apply_indepFlipChannel_apply`: the `3p² − 2p³` residual);
+`singleFlipChannel` is its correctable part with free weights.
 
 ## Source
 

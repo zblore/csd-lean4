@@ -745,6 +745,126 @@ info: 'CSD.Empirical.QM.QEC.three_qubit_corrects_single_bitflip' depends on axio
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.stinespringChannel_registerUnitary
 
+-- 2026-09-21 (#52, QM/QEC/ControlledDilation.lean): the GENERIC controlled-error dilation the
+-- register module hard-coded for Fin 4 -- for any finite unitary error family E : e -> U(n) and
+-- weights q (nonneg, sum 1): weightVec q = sum sqrt(q_k) e_k (unit), weightRotation a unitary with
+-- that column, controlledUnitary E q e0 = blockDiagonal E * (1 kron R); its environment blocks
+-- with the environment ready in e0 are sqrt(q_k) E_k, so Channel.mixedUnitaryChannel E q IS the
+-- Stinespring channel of the controlled unitary (stinespringChannel_controlledUnitary).
+-- RegisterDilation.lean is now the instance e = Fin 4, E = errorOp, every statement kept
+-- (singleFlipChannel_eq_mixedUnitaryChannel is rfl); the Steane instance is BACKLOG #53.
+/-- info: 'CSD.Empirical.QM.QEC.weightVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.weightVec
+
+/-- info: 'CSD.Empirical.QM.QEC.norm_weightVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.norm_weightVec
+
+/-- info: 'CSD.Empirical.QM.QEC.weightRotation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.weightRotation
+
+/-- info: 'CSD.Empirical.QM.QEC.weightRotation_apply_ready' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.weightRotation_apply_ready
+
+/-- info: 'CSD.Empirical.QM.QEC.blockDiagonal_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.blockDiagonal_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.controlledUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.controlledUnitary
+
+/-- info: 'CSD.Empirical.QM.QEC.controlledUnitary_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.controlledUnitary_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.krausBlock_controlledUnitary_embedEnv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.krausBlock_controlledUnitary_embedEnv
+
+/-- info: 'CSD.Empirical.QM.QEC.stinespringChannel_controlledUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.stinespringChannel_controlledUnitary
+
+/-- info: 'CSD.Empirical.QM.QEC.errorOp_conjTranspose_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.errorOp_conjTranspose_mul_self
+
+/-- info: 'CSD.Empirical.QM.QEC.registerUnitary_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.registerUnitary_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.singleFlipChannel_eq_mixedUnitaryChannel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.singleFlipChannel_eq_mixedUnitaryChannel
+
+-- 2026-09-21 (#52, QM/QEC/IndependentNoise.lean): INDEPENDENT bit-flip noise on the three-qubit
+-- code -- each qubit flips on its own with probability p, all eight patterns flipOp x with the
+-- product weights indepWeight p x (sum 1), as the mixed-unitary channel indepFlipChannel p. Every
+-- pattern reads to the syndrome as a single error times 1 (weight <= 1) or times the logical flip
+-- logicalX = X kron X kron X (weight >= 2): flipOp_eq. Recovery returns rho on the first and
+-- X rho X on the second (recoveryChannel_apply_flipOp), so on the code
+-- R (N_p rho) = (1 - p_fail) rho + p_fail X rho X with p_fail = failProb p = 3p^2 - 2p^3
+-- (recoveryChannel_apply_indepFlipChannel_apply, Nielsen-Chuang 10.1.1); p_fail < p below 1/2.
+/-- info: 'CSD.Empirical.QM.QEC.flipOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.flipOp
+
+/-- info: 'CSD.Empirical.QM.QEC.flipOp_conjTranspose_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.flipOp_conjTranspose_mul_self
+
+/-- info: 'CSD.Empirical.QM.QEC.indepWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.indepWeight
+
+/-- info: 'CSD.Empirical.QM.QEC.sum_indepWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.sum_indepWeight
+
+/-- info: 'CSD.Empirical.QM.QEC.indepFlipChannel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.indepFlipChannel
+
+/-- info: 'CSD.Empirical.QM.QEC.indepFlipChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.indepFlipChannel_apply
+
+/-- info: 'CSD.Empirical.QM.QEC.logicalX' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.logicalX
+
+/-- info: 'CSD.Empirical.QM.QEC.logicalX_mul_codeProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.logicalX_mul_codeProj
+
+/-- info: 'CSD.Empirical.QM.QEC.flipOp_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.flipOp_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.recoveryChannel_apply_errorOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.recoveryChannel_apply_errorOp
+
+/-- info: 'CSD.Empirical.QM.QEC.recoveryChannel_apply_flipOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.recoveryChannel_apply_flipOp
+
+/-- info: 'CSD.Empirical.QM.QEC.failProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.failProb
+
+/-- info: 'CSD.Empirical.QM.QEC.failProb_lt_of_lt_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.failProb_lt_of_lt_half
+
+/-- info: 'CSD.Empirical.QM.QEC.recoveryChannel_apply_indepFlipChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.recoveryChannel_apply_indepFlipChannel_apply
+
 /-- info: 'CSD.Empirical.QM.QEC.syndrome_X1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.syndrome_X1

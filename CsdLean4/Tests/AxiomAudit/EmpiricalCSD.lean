@@ -773,6 +773,59 @@ info: 'CSD.Empirical.CSDBridge.QEC.csd_three_qubit_corrects_single_bitflip' depe
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.QEC.registerFlow_recovery
 
+-- 2026-09-21 (#52, CSD/QEC/IndependentNoiseFlow.lean): the register (x) eight-level PATTERN
+-- environment as ONE Sigma-flow on CP^63 (the projective action of indepUnitary p, the generic
+-- controlled-error dilation of ControlledDilation.lean with the independent weights, lifted with
+-- no hypothesis); the independent bit-flip channel is its environment marginal
+-- (indepFlow_traceRight_barycenter); and QEC on Sigma under independent noise with its residual
+-- failure (indepFlow_recovery): for a preparation living in the code region, the recovery applied
+-- to the environment marginal of the flowed preparation returns
+-- (1 - p_fail) sigma + p_fail X sigma X, p_fail = 3p^2 - 2p^3 -- the leak into the one-flip
+-- regions undone, the leak into the two- and three-flip regions corrected into the logical flip.
+/-- info: 'CSD.Empirical.CSDBridge.QEC.indepEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.indepEquiv
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.indepUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.indepUnitary
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.indepUnitary_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.indepUnitary_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.stinespringChannel_indepUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.stinespringChannel_indepUnitary
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.indepU64' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.indepU64
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.indepFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.indepFlow
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.measurable_indepFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.measurable_indepFlow
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.indepRep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.indepRep
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.isUnitaryLift_indepFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.isUnitaryLift_indepFlow
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.indepFlow_traceRight_barycenter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.indepFlow_traceRight_barycenter
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.indepFlow_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.indepFlow_recovery
+
 -- BACKLOG #34 (2026-09-19), Empirical/CSD/Algorithms/: a quantum circuit is a flow on Sigma.
 -- CircuitFlow.lean: a unitary on the register acts projectively on the sector
 -- CP^{card-1}, the flow lifts the unitary with no hypothesis, k runs are the flow iterated

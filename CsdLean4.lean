@@ -310,7 +310,9 @@ public import CsdLean4.Empirical.QM.QEC.SyndromeCollapse
 public import CsdLean4.Empirical.QM.QEC.BitFlipChannel
 public import CsdLean4.Empirical.QM.QEC.BitFlipDilation
 public import CsdLean4.Empirical.QM.QEC.SyndromeRecovery
+public import CsdLean4.Empirical.QM.QEC.ControlledDilation
 public import CsdLean4.Empirical.QM.QEC.RegisterDilation
+public import CsdLean4.Empirical.QM.QEC.IndependentNoise
 public import CsdLean4.Empirical.QM.QEC.Steane
 public import CsdLean4.Empirical.QM.QEC.SteaneRecovery
 public import CsdLean4.Empirical.QM.Uncertainty
@@ -370,6 +372,7 @@ public import CsdLean4.Empirical.CSD.Crypto.QuantumMoney
 public import CsdLean4.Empirical.CSD.Crypto.E91
 public import CsdLean4.Empirical.CSD.QEC.ThreeQubit
 public import CsdLean4.Empirical.CSD.QEC.RegisterFlow
+public import CsdLean4.Empirical.CSD.QEC.IndependentNoiseFlow
 public import CsdLean4.Empirical.CSD.Algorithms.CircuitFlow
 public import CsdLean4.Empirical.CSD.Algorithms.GroverFlow
 public import CsdLean4.Empirical.CSD.Algorithms.ShorFlow

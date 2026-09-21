@@ -328,9 +328,11 @@ headline).** For the three-qubit bit-flip code on `ψ_L = a|000⟩ + b|111⟩`, 
 
 **Honest scope.** Items 3–4 are the correction of the discretised `X` Kraus branch, one branch at
 a time; item 5 is the end-to-end statement for the whole single-error CPTP map, with the recovery
-as a sum of syndrome-projector-conditioned corrections. Not formalised: the independent-noise
-channel `(bit-flip_p)^{⊗3}` itself (its double- and triple-flip branches are not correctable, so
-the code corrects it only to first order). QM-operational; the ontic Σ-volume-loss origin of the
+as a sum of syndrome-projector-conditioned corrections. The independent-noise channel
+`(bit-flip_p)^{⊗3}` itself (its double- and triple-flip branches are mis-corrected, so the code
+corrects it only to first order: `3p² − 2p³` residual) is
+`QM/QEC/IndependentNoise.lean` (`recoveryChannel_apply_indepFlipChannel_apply`) and its `Σ`-flow
+`CSD/QEC/IndependentNoiseFlow.lean`. QM-operational; the ontic Σ-volume-loss origin of the
 partial trace is gated to LF6 (see the module docstring and `csd_qec_decoherence_corrected`). -/
 theorem qec_corrects_decoherence (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (a b : ℂ)
     (ρ : Matrix (Fin 2) (Fin 2) ℂ) :

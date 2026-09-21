@@ -35,10 +35,11 @@ mixed state. This file puts the pieces on the **whole register**:
   the projective measurement whose outcomes are the four disjoint error regions of `Σ`
   (`syndromeProj_fixes_errorRegion`); the recovery undoes the leak exactly.
 
-What is not here: the independent-noise channel `(bit-flip_p)^{⊗3}` (its double- and triple-flip
-branches are not correctable; `singleFlipChannel` is the correctable part with free weights), and
-a Hamiltonian generating `U_q` (the flow is the time-one map of the projective action, as for
-`bitFlipFlow`).
+The independent-noise channel `(bit-flip_p)^{⊗3}` — whose double- and triple-flip branches the
+code mis-corrects into the logical flip — is `Empirical/CSD/QEC/IndependentNoiseFlow.lean`
+(`indepFlow_recovery`: the `3p² − 2p³` residual); `singleFlipChannel` is its correctable part
+with free weights. What is not here: a Hamiltonian generating `U_q` (the flow is the time-one map
+of the projective action, as for `bitFlipFlow`).
 
 ## Source
 
