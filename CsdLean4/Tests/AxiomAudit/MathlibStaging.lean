@@ -7293,4 +7293,13 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Gleason.ProjectionPackage.gleason_representation_of_core' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.gleason_representation_of_core
 
+-- BRANCH gleason-feasibility ONLY: Core.lean carries the ONE sorry of the feasibility pass
+-- (frameFunction_regular_sphere, Gleason's core lemma on S^2). These pins record sorryAx on
+-- purpose; the file never merges to main with them.
+/-- info: 'Gleason.frameFunction_regular_sphere' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.frameFunction_regular_sphere
+
+/-- info: 'Gleason.ProjectionPackage.gleason_representation' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.gleason_representation
+
 end CSD.Tests.AxiomAudit
