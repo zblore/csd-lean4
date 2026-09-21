@@ -3659,6 +3659,33 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'QuantumInfo.exists_recovery_stabMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms QuantumInfo.exists_recovery_stabMat
 
+-- BACKLOG #10 BP-1 (2026-09-21), Analysis/InnerProductSpace/GeometricPhase.lean: the Aharonov-Anandan
+-- geometric phase of a cyclic evolution, on the sphere (no bundles at the pin). The connection form
+-- Im<psi, psi'> shifts by theta' under a rephasing e^{i theta}, so the geometric phase
+-- phi - int A is gauge invariant (a function of the closed curve of rays); the horizontal lift
+-- e^{-i int A} psi has A = 0 and returns as e^{i beta}: the geometric phase is the holonomy; for a
+-- Schrodinger evolution the energy is conserved and beta = phi + T <H>.
+/-- info: 'GeometricPhase.connectionForm_rephase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms GeometricPhase.connectionForm_rephase
+
+/-- info: 'GeometricPhase.geometricPhase_rephase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms GeometricPhase.geometricPhase_rephase
+
+/-- info: 'GeometricPhase.connectionForm_horizontalLift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms GeometricPhase.connectionForm_horizontalLift
+
+/-- info: 'GeometricPhase.horizontalLift_cyclic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms GeometricPhase.horizontalLift_cyclic
+
+/-- info: 'GeometricPhase.connectionForm_of_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms GeometricPhase.connectionForm_of_schrodinger
+
+/-- info: 'GeometricPhase.inner_self_const_of_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms GeometricPhase.inner_self_const_of_schrodinger
+
+/-- info: 'GeometricPhase.geometricPhase_of_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms GeometricPhase.geometricPhase_of_schrodinger
+
 -- Q29(c') (2026-09-12), Geometry/Manifold/HamiltonianLieDerivative.lean: Cartan's formula on a
 -- normed space (L_X omega = d(iota_X omega) + iota_X d omega, from extDeriv_apply), and for the
 -- local representative of a symplectic form along its local Hamiltonian vector both terms

@@ -587,6 +587,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.RiemannianVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.WedgeForm
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerWedge
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPluriharmonic
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhase
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudy
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyForm
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
@@ -614,6 +615,7 @@ public import CsdLean4.LF4.ArenaSymplectic
 public import CsdLean4.LF4.ArenaStrokeFlux
 public import CsdLean4.LF4.ArenaVolume
 public import CsdLean4.Empirical.QM.Darwinism
+public import CsdLean4.Empirical.QM.BerryPhase
 public import CsdLean4.Empirical.CSD.Darwinism
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal

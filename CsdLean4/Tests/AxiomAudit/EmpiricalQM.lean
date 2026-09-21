@@ -1182,6 +1182,23 @@ The unitarity proofs cite only the foundational triple; the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_recovery_logical
 
+/-! ### Berry's phase for the spin-1/2 cone (BerryPhase.lean, 2026-09-21, BACKLOG #10 BP-2) -/
+
+-- The state (cos theta/2, e^{it} sin theta/2) around a cone over [0, 2 pi]: connection form
+-- sin^2(theta/2), total phase 0, geometric phase -2 pi sin^2(theta/2) = -pi (1 - cos theta) =
+-- minus half the solid angle of the cone (Berry 1984, section 5).
+/-- info: 'CSD.Empirical.QM.BerryPhase.hasDerivAt_coneCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.BerryPhase.hasDerivAt_coneCurve
+
+/-- info: 'CSD.Empirical.QM.BerryPhase.connectionForm_coneCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.BerryPhase.connectionForm_coneCurve
+
+/-- info: 'CSD.Empirical.QM.BerryPhase.geometricPhase_coneCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.BerryPhase.geometricPhase_coneCurve
+
+/-- info: 'CSD.Empirical.QM.BerryPhase.geometricPhase_coneCurve_solidAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.BerryPhase.geometricPhase_coneCurve_solidAngle
+
 -- ccxAtMat_lifts_denote (the arbitrary-wire lift): EXTRACTED 2026-08-21 to
 -- Mathlib/QuantumInfo/Reversible/Lift.lean; pinned in the MathlibStaging part as
 -- Reversible.ccxAtMat_lifts_denote.
