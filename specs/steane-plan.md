@@ -63,6 +63,14 @@ is equivalent to `P Eᵢᴴ Eⱼ P = cᵢⱼ P`, with the recovery channel const
 is now exactly the Steane instance: the syndrome table as the condition for the single-qubit
 Paulis, and the recovery it yields (BACKLOG #14(b)).
 
+**2026-09-21, later (BACKLOG #14(b)):** the Steane instance landed —
+`Mathlib/QuantumInfo/StabilizerRecovery.lean` (a detected Pauli error family on any stabiliser
+code satisfies Knill–Laflamme with `c = 1`, so the recovery channel exists) and
+`Empirical/QM/QEC/SteaneRecovery.lean` (the twenty-two single-qubit Paulis are told apart by the
+syndromes, a `22 × 22` `𝔽₂` computation by `decide`; `exists_steane_recovery`,
+`steane_recovery_logical`). Residue (iii) is closed; what remains of `R-003` is fault tolerance
+(BACKLOG #51). The `Σ`-twin of the recovery is BACKLOG #53.
+
 ## References
 
 Steane, "Error correcting codes in quantum theory" (PRL 77, 793 (1996));

@@ -286,11 +286,18 @@ criterion for active correction is a theorem (2026-09-21): a family of errors on
 some channel undoes every error on every code state — if and only if it satisfies the Knill–Laflamme
 condition `P Eᵢᴴ Eⱼ P = cᵢⱼ P`, with the recovery channel constructed from the condition
 (`exists_recovery_of_knillLaflamme`, `knillLaflamme_of_recovery`, `knillLaflamme_iff`,
-[`Mathlib/QuantumInfo/KnillLaflamme.lean`](../CsdLean4/Mathlib/QuantumInfo/KnillLaflamme.lean)).
+[`Mathlib/QuantumInfo/KnillLaflamme.lean`](../CsdLean4/Mathlib/QuantumInfo/KnillLaflamme.lean)). On a
+stabiliser code a Pauli error family whose pairwise products are detected satisfies the condition with
+`c = 1` (`stabMat_knillLaflamme`,
+[`Mathlib/QuantumInfo/StabilizerRecovery.lean`](../CsdLean4/Mathlib/QuantumInfo/StabilizerRecovery.lean)),
+and **the Steane code corrects every single-qubit Pauli error**: one recovery channel undoes each of the
+twenty-two errors on every code state, and on the density operator of an encoded qubit
+(`exists_steane_recovery`, `steane_recovery_logical`,
+[`Empirical/QM/QEC/SteaneRecovery.lean`](../CsdLean4/Empirical/QM/QEC/SteaneRecovery.lean)).
 
-**The seam.** Four residues, all open mathematics with a Lean shape. `R-003`: the Steane recovery map and
-any fault-tolerance claim; the code space, the distance mechanism and the general Knill–Laflamme theorem
-are landed, the Steane instance of the recovery is not (BACKLOG #14(b); the code-capacity threshold is #51). `R-004`, `R-005`, `R-006`: magic-state distillation, the density of
+**The seam.** Four residues, all open mathematics with a Lean shape. `R-003`: any fault-tolerance claim;
+the code space, the distance mechanism, the Knill–Laflamme theorem and the Steane recovery are landed
+(the code-capacity threshold is BACKLOG #51; the `Σ`-twin of the Steane recovery is #53). `R-004`, `R-005`, `R-006`: magic-state distillation, the density of
 Clifford+T in the unitary group, and `T`-gate injection; what exists is the `T` gate itself and the fact
 that it is not Clifford (`tGate_conj_X_not_pauli`,
 [`Mathlib/QuantumInfo/Magic.lean`](../CsdLean4/Mathlib/QuantumInfo/Magic.lean)). The three-qubit `Σ` model

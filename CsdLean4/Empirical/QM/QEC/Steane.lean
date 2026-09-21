@@ -41,8 +41,9 @@ instantiates:
   matrix: the code is CSS-self-dual.
 
 **Honest scope.** The code space is exhibited (two orthonormal stabilised states) and the
-error-detection mechanism is stated in syndrome form; the full recovery map, the
-Knill–Laflamme conditions, and fault-tolerance claims are not attempted
+error-detection mechanism is stated in syndrome form; the recovery map is
+`SteaneRecovery.lean` (through `Mathlib/QuantumInfo/StabilizerRecovery.lean` and the
+Knill–Laflamme theorem); fault-tolerance claims are not attempted
 (⚠️ RESIDUE(R-003)) — the same posture
 as the three-qubit modules. The `𝔽₂` facts about the concrete Hamming rows (orthogonality,
 independence, column distinctness) are closed by `decide` — kernel-checked finite

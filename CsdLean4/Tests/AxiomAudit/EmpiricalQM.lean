@@ -1153,6 +1153,35 @@ The unitarity proofs cite only the foundational triple; the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_syndrome_single_injective
 
+-- BACKLOG #14(b) (2026-09-21), Empirical/QM/QEC/SteaneRecovery.lean: the Steane code corrects every
+-- single-qubit Pauli error. Two distinct single-qubit Paulis are told apart by the syndromes (a
+-- 22 x 22 F_2 computation by decide), read as anticommutation with a generator; Knill-Laflamme with
+-- c = 1; the recovery channel; and every single-qubit Pauli error on an encoded qubit a|0> + b|1> is
+-- undone on its density operator.
+/-- info: 'CSD.Empirical.QM.QEC.Steane.syndrome_pair_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.syndrome_pair_ne_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_detects_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_detects_pair
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_knillLaflamme' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_knillLaflamme
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_steane_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_steane_recovery
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneProj_mulVec_logicalVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneProj_mulVec_logicalVec
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_recovery_logical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_recovery_logical
+
 -- ccxAtMat_lifts_denote (the arbitrary-wire lift): EXTRACTED 2026-08-21 to
 -- Mathlib/QuantumInfo/Reversible/Lift.lean; pinned in the MathlibStaging part as
 -- Reversible.ccxAtMat_lifts_denote.

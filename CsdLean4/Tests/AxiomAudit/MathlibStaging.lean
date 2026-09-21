@@ -3629,6 +3629,36 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'QuantumInfo.knillLaflamme_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms QuantumInfo.knillLaflamme_iff
 
+-- BACKLOG #14(b) general half (2026-09-21), QuantumInfo/StabilizerRecovery.lean: stabiliser codes meet
+-- Knill-Laflamme. Pauli matrices on the register (group law, commutation, adjoint transported from
+-- pauliOp through Matrix.ext_of_mulVec), the group average as a code projector (every signed element
+-- is Hermitian because coherence forces B_x . A_x = 0), a Pauli anticommuting with a generator is
+-- killed by the code, and a detected Pauli error family satisfies Knill-Laflamme with c = 1 -- so the
+-- recovery channel exists.
+/-- info: 'QuantumInfo.pauliMat_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.pauliMat_mul
+
+/-- info: 'QuantumInfo.pauliMat_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.pauliMat_conjTranspose
+
+/-- info: 'QuantumInfo.isCodeProjector_stabMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.isCodeProjector_stabMat
+
+/-- info: 'QuantumInfo.stabMat_mul_genMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.stabMat_mul_genMat
+
+/-- info: 'QuantumInfo.stabMat_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.stabMat_ne_zero
+
+/-- info: 'QuantumInfo.stabMat_mul_pauliMat_mul_stabMat_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.stabMat_mul_pauliMat_mul_stabMat_eq_zero
+
+/-- info: 'QuantumInfo.stabMat_knillLaflamme' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.stabMat_knillLaflamme
+
+/-- info: 'QuantumInfo.exists_recovery_stabMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.exists_recovery_stabMat
+
 -- Q29(c') (2026-09-12), Geometry/Manifold/HamiltonianLieDerivative.lean: Cartan's formula on a
 -- normed space (L_X omega = d(iota_X omega) + iota_X d omega, from extDeriv_apply), and for the
 -- local representative of a symplectic form along its local Hamiltonian vector both terms

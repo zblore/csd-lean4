@@ -62,6 +62,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Pauli
 public import CsdLean4.Mathlib.QuantumInfo.Clifford
 public import CsdLean4.Mathlib.QuantumInfo.Stabilizer
 public import CsdLean4.Mathlib.QuantumInfo.KnillLaflamme
+public import CsdLean4.Mathlib.QuantumInfo.StabilizerRecovery
 public import CsdLean4.Mathlib.QuantumInfo.Magic
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
@@ -311,6 +312,7 @@ public import CsdLean4.Empirical.QM.QEC.BitFlipDilation
 public import CsdLean4.Empirical.QM.QEC.SyndromeRecovery
 public import CsdLean4.Empirical.QM.QEC.RegisterDilation
 public import CsdLean4.Empirical.QM.QEC.Steane
+public import CsdLean4.Empirical.QM.QEC.SteaneRecovery
 public import CsdLean4.Empirical.QM.Uncertainty
 public import CsdLean4.Empirical.QM.Ozawa
 public import CsdLean4.Empirical.QM.QuantitativeWAY
