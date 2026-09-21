@@ -12,12 +12,13 @@ public import Mathlib.Probability.ProductMeasure
 /-!
 # LF1 Trials
 
-**Category:** 3-Local (LF1 repeated-trial probability space and i.i.d. preparation sampling).
+**Category:** 3-Local (LF1 repeated-trial probability space and equal-law preparation sampling).
 
 This file introduces the repeated-preparation model used in LF1.
-Each trial begins from a fresh initial microstate sampled from the conditional
-preparation measure on the preparation region. The resulting product measure
-models repetition of preparation, not stochastic dynamics of a single trial.
+Each trial has the conditional preparation measure as its marginal law. The joint
+law is arbitrary here: equal marginals do not imply independent trials or a product
+measure. The independent product construction is supplied separately in
+`Tests/Witnesses/IIDSampling.lean`.
 
 Single-trial evolution remains deterministic at the ontic level.
 -/
@@ -41,8 +42,9 @@ A repeated-trial model for LF1.
 `X n` is the ontic initial microstate used on the `n`-th trial.
 
 Each `X n` is measurable and has law equal to the preparation probability measure
-`S.prepMeasure`. Independence and identical distribution are declared as explicit
-hypotheses in `Convergence.lean`, where the law of large numbers is applied.
+`S.prepMeasure`, so any two trials are identically distributed (`identDistrib_X`).
+`Convergence.lean` separately requires pairwise independence of the chosen outcome's
+indicator variables when applying the law of large numbers.
 -/
 structure TrialModel (Ω : Type*) [MeasurableSpace Ω] where
   /-- The probability law on the external sample space indexing repeated runs. -/
@@ -63,6 +65,15 @@ variable (T : S.TrialModel Ω)
 @[fun_prop]
 lemma measurable_X (n : ℕ) : Measurable (T.X n) :=
   T.hX_measurable n
+
+/-- Any two sampled initial conditions have the same distribution: both have law
+`S.prepMeasure`. This statement does not assert independence. -/
+lemma identDistrib_X (n m : ℕ) :
+    IdentDistrib (T.X n) (T.X m)
+      ((T.P : ProbabilityMeasure Ω) : Measure Ω)
+      ((T.P : ProbabilityMeasure Ω) : Measure Ω) :=
+  ⟨(T.measurable_X n).aemeasurable, (T.measurable_X m).aemeasurable,
+    by rw [T.hLaw n, T.hLaw m]⟩
 
 /--
 The event on the external sample space that the `n`-th trial lands in the

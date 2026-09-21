@@ -53,13 +53,28 @@ variable {N : ℕ} {P : Type*}
     representative map `rep : P → EuclideanSpace ℂ (Fin N)` and a
     finite-dimensional `Effect E`, returns the real number
     `RCLike.re (star v ⬝ᵥ E.M *ᵥ v)` where `v = (rep p).ofLp` is the
-    underlying function. The probability assignment from a preparation
-    measure `μprep` is then `∫ p, effectProjFn rep E p ∂(π_*μprep)`. -/
+    underlying function. The definition accepts arbitrary `rep`; unit norm
+    is assumed by the probability bounds below. With a measurable unit-norm
+    `rep`, the probability assignment from a preparation measure `μprep` is
+    `∫ p, effectProjFn rep E p ∂(π_*μprep)`. -/
 noncomputable def effectProjFn
     (rep : P → EuclideanSpace ℂ (Fin N)) (E : Effect N) : P → ℝ :=
   fun p =>
     RCLike.re (star (WithLp.ofLp (rep p) : Fin N → ℂ) ⬝ᵥ
                 E.M *ᵥ WithLp.ofLp (rep p))
+
+/-- Pointwise unit-modulus changes of representatives leave the effect
+    function unchanged. No measurability or unit norm of `rep` is needed
+    for this algebraic identity. -/
+lemma effectProjFn_phase_invariant
+    (rep : P → EuclideanSpace ℂ (Fin N)) (c : P → ℂ)
+    (hc : ∀ p, ‖c p‖ = 1) (E : Effect N) :
+    effectProjFn (fun p => c p • rep p) E = effectProjFn rep E := by
+  funext p
+  have h := congrArg (fun M : Matrix (Fin N) (Fin N) ℂ => RCLike.re (E.M * M).trace)
+    (outerProduct_phase_invariant (rep p) (c p) (hc p))
+  simpa only [effectProjFn, outerProduct, Matrix.mul_vecMulVec,
+    Matrix.trace_vecMulVec, Matrix.mulVec, dotProduct, Pi.star_apply, mul_comm] using h
 
 /-- For the rank-1 effect `|φ⟩⟨φ|`, the projective effect function
     evaluates pointwise to `‖⟨rep p, φ⟩‖²`. This is the standard Born

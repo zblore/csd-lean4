@@ -79,6 +79,8 @@ LIVE doc for the tranche you are on.
 |---|---|
 | [`expert-system-prompt.md`](expert-system-prompt.md) | The project's expert-posture / system-prompt reference. |
 | [`spec-to-lean.md`](spec-to-lean.md) | Spec-to-Lean mapping notes. |
+| [`corpus-review-plan.md`](corpus-review-plan.md) | File-by-file Lean and comment review method: strengthen results, track coverage, calibrate effort and validate fixes. Work items remain in BACKLOG. |
+| [`corpus-review-tracking.md`](corpus-review-tracking.md) | Live coverage register, freshness checks, historical evidence and per-batch review reports. |
 | [`review-surface-findings.md`](review-surface-findings.md) | First-run findings of `scripts/check-review-surface.sh` (2026-08-05): the expert-review triage — thin defs, no-API defs, single-use statements, proof-style and name-shape outliers — as questions for a human review pass, with honest coverage of Ilin & Nugent's five categories. Baseline: `docs/review-surface-baseline-2026-08-05.txt`. |
 | [`../README.md`](../README.md) | **Introductory** front page (rewritten 2026-08-02): plain-language claim, honesty frame, doc map. Detail lives in `docs/`. |
 | [`../docs/TOUR.md`](../docs/TOUR.md) | The detailed tour: precise claims with theorem names, the results-by-pillar table, the measurement story, reader-type pathways. |

@@ -62,14 +62,12 @@ rather than postulated separately.
 
 **Honest disclosure.** The LF1 proof is therefore strictly more general than the
 physical reading suggests: it works for any measurable Φ, not only µ_L-preserving
-ones. The preservation content becomes load-bearing only when a future LF4
-instantiation derives µ_L from a symplectic / Kähler volume form on a concrete
-Σ, at which point `hΦ_pres` ceases to be a stipulation and becomes a theorem.
-Until then `hΦ_pres` is structural payload that buys nothing the current proofs
-use, and the corpus carries it for physical admissibility rather than for
-mathematical content. This connects to D1 (the preparation-measure origin
-problem in Paper A's framing): µ_L is asserted, the flow is asserted to
-preserve it, and neither is derived in v1.00.
+ones. This is a statement about the abstract LF1 route, not every later use of
+measure preservation. `LF4/KahlerFlow.lean` constructs a concrete non-identity
+measure-preserving map, and `kFlow_frequency_convergence` uses its full
+preservation property to identify the law of the evolved trials. The abstract
+`OnticSetup` here still takes both the measure and its preservation as inputs;
+it does not derive them from a symplectic structure.
 -/
 structure OnticSetup (SigmaSpace : Type*) [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace] where
   /-- The Liouville measure on the ontic phase space.
@@ -84,8 +82,8 @@ structure OnticSetup (SigmaSpace : Type*) [MeasurableSpace SigmaSpace] [Nonempty
       a concrete LF4 instantiation. Within LF1, LF2, and LF3 only measurability
       of `Φ` (extracted via `measurable_Φ`) is consumed in proofs; the full
       measure-preservation content is currently structural payload, carried for
-      physical admissibility of the ontic model. It becomes load-bearing only
-      when LF4 derives `μL` from a concrete volume form. -/
+      physical admissibility of the ontic model. The separate concrete flow
+      argument in `LF4/KahlerFlow.lean` does use full measure preservation. -/
   hΦ_pres : MeasureTheory.MeasurePreserving Φ (μL : Measure SigmaSpace) (μL : Measure SigmaSpace)
   /-- The preparation region: the measurable subset of phase space consistent with the
       experimental preparation procedure. -/
@@ -104,9 +102,9 @@ variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
 This is the **only** property of `Φ` consumed by LF1, LF2, and LF3 proofs. It
 is derived from `hΦ_pres` (Liouville preservation implies measurability) so
 that `OnticSetup` need not carry measurability as a separate field. The full
-content of `hΦ_pres`, that `Φ` actually preserves `μL`, is not invoked
-anywhere in the current corpus. See the `OnticSetup` docstring for the honest
-disclosure on this. -/
+content of `hΦ_pres`, that `Φ` actually preserves `μL`, is not used in this
+abstract frequency argument. Concrete flow arguments elsewhere, including
+`LF4/KahlerFlow.lean`, use full measure preservation. -/
 @[fun_prop]
 lemma measurable_Φ : Measurable S.Φ := S.hΦ_pres.measurable
 

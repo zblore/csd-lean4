@@ -43,24 +43,15 @@ namespace LF2
     projection `π` and a `G`-action satisfying `μL`-invariance and
     `π`-equivariance.
 
-    **sector-posit (SO-1) structural data, not a derivation.** Both `π : SigmaSpace → P` and the
-    group `G` are taken as structural inputs. Nothing in `SectorData` constrains
-    `π` to project onto the quantum-effective sector specifically: any
-    measurable map with the two coherence conditions
-    (`μL`-invariance of the ontic action, `π`-equivariance) qualifies.
-    Similarly, `G` is any group acting measurably on both spaces with the two
-    coherence conditions. The natural reading is `G = U(N)` acting on `Σ` via
-    the lift of its action on `CP^{N-1}` — the group the corpus's witness
-    (`LF4/Instance.lean`) instantiates; on `CP^{N-1}` the central phase acts
-    trivially, so the literature's `SU(N)` reading is the same action — with
-    `π` the standard projection, but no field forces this.
-
-    This labelling carries the sector posit (SO-1) in Paper B's framing: the physical motivation
-    for the quantum-effective sector assumption is a load-bearing external
-    input to the corpus, not derived in v1.00. Concrete instantiation
-    (`P := Projectivization ℂ (EuclideanSpace ℂ (Fin N))`,
-    `G := Matrix.specialUnitaryGroup (Fin N) ℂ`, plus the explicit `π`) is
-    deferred to LF4-todo §8.
+    **Structural inputs.** The projection `π : SigmaSpace → P` and group
+    `G` are supplied with measurable actions, invariance of `μL`, equivariance
+    of `π`, and transitivity on `P`. These conditions imply that `π` is
+    surjective (`SectorData.surjective_π`); they do not identify the abstract
+    target with complex projective space. The concrete `LF4/Instance.lean`
+    construction `cpSectorData` uses `P := Projectivization ℂ
+    (EuclideanSpace ℂ (Fin N))` and `G := Matrix.unitaryGroup (Fin N) ℂ`.
+    This bundle neither derives the ontic surface nor chooses a quantum
+    sector inside a larger ontic space.
 
     **MulAction-based encoding.** The `G`-action is encoded via Mathlib's
     `MulAction G _` typeclasses on both `SigmaSpace` and `P`, with transitivity
@@ -109,6 +100,14 @@ variable {SigmaSpace P G : Type*}
 
 /-- Convenience re-export of the ontic Liouville measure as a `Measure`. -/
 abbrev μL : Measure SigmaSpace := (D.toOntic.μL : Measure SigmaSpace)
+
+/-- Equivariance into a transitive target makes the projection surjective.
+    Only nonemptiness of the ontic space is needed; no measure argument is used. -/
+lemma surjective_π : Function.Surjective D.π := by
+  obtain ⟨x⟩ := ‹Nonempty SigmaSpace›
+  intro p
+  obtain ⟨g, hg⟩ := MulAction.exists_smul_eq G (D.π x) p
+  exact ⟨g • x, (D.hπ_equiv g x).trans hg⟩
 
 end SectorData
 

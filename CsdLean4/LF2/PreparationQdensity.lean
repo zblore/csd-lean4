@@ -36,8 +36,8 @@ and applies the layer.
 * ★ `channel_traceDist_preparation_le` — **the data-processing inequality for two preparations**: no
   channel increases their trace distance.
 
-Every theorem below is `effect_gleason_representation` plus one `exact`; that is the point. The
-spine was two proved theorems apart, and the QIT layer's hypotheses are `DensityOperator`'s fields.
+The proofs compose the existing representation and QIT results; the QIT layer's
+hypotheses are supplied by `DensityOperator`'s fields.
 
 ## Honest scope
 
@@ -52,8 +52,9 @@ its trace form (uniquely); that it *is* the barycentre `∫ |ψ⟩⟨ψ| d(π_* 
 `ρ_ep dμ_FS` form under absolute continuity — is `LF2/PreparationBarycenter.lean` (W3,
 `preparationDensity_eq_barycenter`, `preparationDensity_apply`). Nothing below depends on it.
 
-⚠️ **Channels are still bare.** `channel_traceDist_preparation_le` takes any `QuantumInfo.Channel`;
-that the channel *comes from* a `Σ`-flow is W5/W6.
+⚠️ **Channel generality.** `channel_traceDist_preparation_le` accepts any `QuantumInfo.Channel`.
+The separate `LF2/FlowChannel.lean` development connects unitary and Stinespring channels
+to preparations evolved by suitable ontic flows; this theorem needs no such origin hypothesis.
 
 References: `specs/qit-chain-scoping.md` (W2–W4); `LF2/Preparation.lean`, `LF2/EffectGleason.lean`;
 `Mathlib/QuantumInfo/{Entropy,DataProcessing,TraceDistance}.lean`.

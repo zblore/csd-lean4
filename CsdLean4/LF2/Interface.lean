@@ -21,8 +21,9 @@ Spec §6. The measure-theoretic identity linking the LF1 ontic weight
 This is the cleanest theorem in the LF2 stack: a single application of
 `Measure.map_apply`. Its role is structural — it is the formal connection
 point for `LF1_main_theorem_ae` to speak about projective outcome weights,
-and the hinge by which LF2's measure bridge feeds back into the LF1 frequency
-theorem.
+using the pushforward preparation measure. Identification with a reference
+measure or a Born weight requires additional results; it is not part of this
+pushforward identity.
 -/
 
 @[expose] public section
@@ -71,22 +72,15 @@ from a measurable projective region `Oep ⊆ P` by taking the `π`-preimage:
 `Ω := D.π ⁻¹' Oep`. The constructor itself requires only measurability
 of `Oep`.
 
-The **flow-projection compatibility** hypothesis
-`∀ x, D.π (D.toOntic.Φ x) = D.π x` (CSD's constraint-surface
-preservation reading — the ontic flow preserves projective rays) is
-**not** consumed by the constructor itself. It is consumed by the
-companion lemma `outcomeOfProjective_preEvent` to identify
-`preEvent = Ω` (i.e. to fold the LF1 one-step-ahead pullback into the
-plain preimage), which is what `LF1_main_theorem_projective` and the
-LF3 chain capstones need.
+For a projected map `φ : P → P`, the projectability hypothesis
+`∀ x, D.π (D.toOntic.Φ x) = φ (D.π x)` identifies the pre-event with
+`D.π ⁻¹' (φ ⁻¹' Oep)`. The companion lemmas ending in `_of_projectable`
+provide this identity and its weight form. Projectability is supplied by the
+caller, not derived from the group-equivariance fields of `SectorData`.
 
-Architectural rationale: the Φ-π compatibility hypothesis is supplied
-as a *lemma* argument rather than as a field on `SectorData` —
-adding a field would commit all `SectorData` instances to the
-constraint-surface reading, which is LF4 instantiation work. Keeping
-it on the per-lemma side lets the projective-first outcome family be
-built at the LF3 chain capstone with a single CSD-foundational
-hypothesis. -/
+The original companion lemmas specialize to `φ = id`: every projected ray
+is fixed. This is stronger than projectability for a nontrivial projected
+flow. Both forms leave the constructor and `SectorData` fields unchanged. -/
 
 /-- **Projective-first outcome constructor.** Given a measurable
     projective region `Oep ⊆ P`, returns the ontic `OutcomeRegion`
@@ -109,8 +103,31 @@ noncomputable def SectorData.outcomeOfProjective
     {Oep : Set P} (hOep : MeasurableSet Oep) :
     (D.outcomeOfProjective hOep).Ω = D.π ⁻¹' Oep := rfl
 
+/-- A projectable ontic flow pulls the projective outcome back along its
+    projected map. No measurability of `φ` is needed for this set identity. -/
+lemma SectorData.outcomeOfProjective_preEvent_of_projectable
+    (D : SectorData SigmaSpace P G) (φ : P → P)
+    (h_flow_π : ∀ x, D.π (D.toOntic.Φ x) = φ (D.π x))
+    {Oep : Set P} (hOep : MeasurableSet Oep) :
+    (D.outcomeOfProjective hOep).preEvent = D.π ⁻¹' (φ ⁻¹' Oep) := by
+  ext x
+  show D.π (D.toOntic.Φ x) ∈ Oep ↔ φ (D.π x) ∈ Oep
+  rw [h_flow_π]
+
+/-- The outcome weight under a projectable flow is the pushforward preparation
+    weight of the region pulled back along the measurable projected map. -/
+lemma SectorData.outcomeOfProjective_weight_eq_projectiveWeight_of_projectable
+    (D : SectorData SigmaSpace P G) (φ : P → P) (hφ : Measurable φ)
+    (h_flow_π : ∀ x, D.π (D.toOntic.Φ x) = φ (D.π x))
+    (μprep : Measure SigmaSpace)
+    {Oep : Set P} (hOep : MeasurableSet Oep) :
+    μprep ((D.outcomeOfProjective hOep).preEvent)
+      = projectiveWeight D μprep (φ ⁻¹' Oep) := by
+  rw [D.outcomeOfProjective_preEvent_of_projectable φ h_flow_π hOep]
+  exact lf1_weight_eq_projective_weight D μprep (hφ hOep)
+
 /-- **Pre-event of `outcomeOfProjective` equals `π⁻¹(Oep)`** under the
-    flow-projection compatibility hypothesis. This is the lemma that
+    ray-fixed hypothesis (`φ = id`). This is the lemma that
     discharges the `hCorresp` argument of `LF1_main_theorem_projective`
     for the constructor-built outcome region. -/
 lemma SectorData.outcomeOfProjective_preEvent
@@ -118,12 +135,10 @@ lemma SectorData.outcomeOfProjective_preEvent
     (h_flow_π : ∀ x, D.π (D.toOntic.Φ x) = D.π x)
     {Oep : Set P} (hOep : MeasurableSet Oep) :
     (D.outcomeOfProjective hOep).preEvent = D.π ⁻¹' Oep := by
-  ext x
-  show D.toOntic.Φ x ∈ D.π ⁻¹' Oep ↔ x ∈ D.π ⁻¹' Oep
-  rw [Set.mem_preimage, Set.mem_preimage, h_flow_π]
+  exact D.outcomeOfProjective_preEvent_of_projectable id h_flow_π hOep
 
 /-- **Weight of `outcomeOfProjective` equals the projective weight of
-    `Oep`** under the flow-projection compatibility hypothesis. Direct
+    `Oep`** under the ray-fixed hypothesis. Direct
     consequence of `outcomeOfProjective_preEvent` and
     `lf1_weight_eq_projective_weight`. -/
 lemma SectorData.outcomeOfProjective_weight_eq_projectiveWeight
@@ -133,8 +148,8 @@ lemma SectorData.outcomeOfProjective_weight_eq_projectiveWeight
     {Oep : Set P} (hOep : MeasurableSet Oep) :
     μprep ((D.outcomeOfProjective hOep).preEvent)
       = projectiveWeight D μprep Oep := by
-  rw [D.outcomeOfProjective_preEvent h_flow_π hOep]
-  exact lf1_weight_eq_projective_weight D μprep hOep
+  exact D.outcomeOfProjective_weight_eq_projectiveWeight_of_projectable
+    id measurable_id h_flow_π μprep hOep
 
 /-- **Combined LF1 + LF2 main theorem.**  Under the LF1 repeated-trial model
     and an LF2 sector structure with projection `π`, if an LF1 outcome
@@ -149,10 +164,11 @@ lemma SectorData.outcomeOfProjective_weight_eq_projectiveWeight
     mathematical content beyond LF1 + the LF2 interface identity — the point
     is the combined statement.
 
-    A full Born-form conclusion (`‖⟨ψ, φ⟩‖²`) would require an additional
-    spec-layer correspondence between measure-theoretic projective
-    preparations and Hilbert-space unit vectors, which LF2 does not
-    formalise.  See spec §6.4 and §8.5. -/
+    A Born-form conclusion (`‖⟨ψ, φ⟩‖²`) additionally requires identifying
+    this region's projective weight with that value. `LF2/Preparation.lean`
+    already links pure preparations to unit vectors, but its quadratic-effect
+    integrals do not by themselves identify the measure of a selected region
+    `Oep`. Region-volume results are a separate part of the LF4 development. -/
 theorem LF1_main_theorem_projective
     (D : SectorData SigmaSpace P G)
     {Ω : Type*} [MeasurableSpace Ω]

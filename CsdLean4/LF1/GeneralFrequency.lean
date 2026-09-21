@@ -18,10 +18,12 @@ public import Mathlib.MeasureTheory.Integral.Bochner.Set
 Plain-language, CSD-role and formal statements of typicality, with
 this module as its Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
 
-The law-agnostic core of `LF1_main_theorem_ae`. For i.i.d. `Σ`-valued trials
-`X : ℕ → Ω → Σ` with a *common law* `μp` (any probability measure), the empirical
-frequency of a measurable outcome region `O ⊆ Σ` converges almost surely to the
-ontic weight `(μp O).toReal`.
+The law-agnostic core of `LF1_main_theorem_ae`. For measurable `Σ`-valued trials
+`X : ℕ → Ω → Σ` with a common law `μp` and pairwise-independent indicators of the
+chosen outcome region `O`, its empirical frequency converges almost surely to
+`(μp O).toReal`. Independence of the full `Σ`-valued trials is sufficient but not
+required. The common law is a probability measure because it is the measurable
+pushforward of the sample probability measure.
 
 The preparation enters **only** as the probability measure `μp`. The
 `Ω₀`-conditional preparation (`OnticSetup.prepMeasure`) is one instance; a
@@ -42,9 +44,10 @@ open MeasureTheory ProbabilityTheory Set Filter
 namespace CSD
 namespace LF1
 
-/-- **General repeated-trial frequency theorem.** I.i.d. trials with common law
-`μp` make the empirical frequency of a measurable outcome region `O` converge
-almost surely to `(μp O).toReal`. -/
+/-- **General repeated-trial frequency theorem.** Measurable trials with common law
+`μp` and pairwise-independent indicators of `O` have empirical frequencies converging
+almost surely to `(μp O).toReal`. The historical `_of_iid` name describes a sufficient
+special case; independence is required only for the selected indicator process. -/
 theorem freq_tendsto_of_iid
     {SigmaSpace Ω : Type*} [MeasurableSpace SigmaSpace] [MeasurableSpace Ω]
     {P : Measure Ω} [IsProbabilityMeasure P]

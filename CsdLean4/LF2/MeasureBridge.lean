@@ -60,8 +60,8 @@ lemma SectorData.pushforward_apply
     (Measure.map D.π D.μL) A = D.μL (D.π ⁻¹' A) :=
   Measure.map_apply D.measurable_π hA
 
-/-- **Lemma 1 of the spec.** Preimage/action identity: pulling back an
-    epistemic orbit along `π` equals pushing the preimage through the ontic
+/-- **Lemma 1 of the spec.** Preimage/action identity: pulling back a
+    translate of a set along `π` equals pushing the preimage through the ontic
     action. Consequence of `π`-equivariance + bijectivity of the action. -/
 lemma SectorData.preimage_action_eq
     (D : SectorData SigmaSpace P G) (g : G) (A : Set P) :

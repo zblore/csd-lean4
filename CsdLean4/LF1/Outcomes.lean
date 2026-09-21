@@ -24,11 +24,11 @@ No stochastic outcome law is postulated at this stage.
 The manuscript describes a measurable outcome partition {Ω_i^Σ} of the ontic state space.
 This file formalises one element of that partition at a time via `OutcomeRegion`.
 
-This is deliberate and mathematically sufficient for LF1: the frequency theorem is proved
-for an arbitrary fixed `O : OutcomeRegion`. To obtain the joint almost-sure statement for
-a finite partition {O_1, ..., O_k}, apply the theorem once per element and intersect the
-resulting full-measure sets — a finite intersection of full-measure sets is still
-full-measure, so no new structure is needed.
+The frequency API covers both a single region and any countable family of regions.
+`TrialModel.main_theorem_ae_all` in `MainTheorem.lean` intersects the corresponding
+full-measure sets and proves simultaneous convergence, in particular for every finite
+partition. Each region's indicators need pairwise independence across trials; no
+partition structure is needed for this simultaneous statement.
 
 A formalised `OutcomePartition` type (carrying disjointness, exhaustion, and a measurable
 family) would be the right object if a future layer (LF2/LF4) needs to reason about

@@ -25,8 +25,9 @@ The partition is stated relative to the preparation's pushforward measure
 `π*μprep`. The measure bridges concern the sector's reference measure `μL`;
 they do not identify `π*μprep` with `μFS` for an arbitrary preparation measure.
 A `μFS`-relative partition would also suffice if `π*μprep ≪ μFS`, since absolute
-continuity transfers its null overlaps and null uncovered set to `π*μprep`.
-No such relationship is assumed here. See `specs/LF2-plan.md` §2.3 for the
+continuity transfers its null overlaps and null uncovered set to `π*μprep`
+(`MeasurablePartition.of_absolutelyContinuous`). No such relationship is
+assumed in `weights_sum_eq_one`. See `specs/LF2-plan.md` §2.3 for the
 partition interface.
 
 `weights_sum_eq_one` uses measurability of `π`, the probability preparation
@@ -54,6 +55,17 @@ structure MeasurablePartition (P : Type*) [MeasurableSpace P]
   pairwise_null : ∀ i j, i ≠ j → μ (parts i ∩ parts j) = 0
   /-- The complement of the union is null. -/
   cover_null    : μ ((⋃ i, parts i)ᶜ) = 0
+
+/-- A partition up to `ν`-null sets is also a partition up to `μ`-null sets
+    whenever `μ ≪ ν`. The parts are unchanged; only the null-set proofs transfer. -/
+def MeasurablePartition.of_absolutelyContinuous
+    {P : Type*} [MeasurableSpace P] {μ ν : Measure P} {n : ℕ}
+    (partition : MeasurablePartition P ν n) (hμν : μ ≪ ν) :
+    MeasurablePartition P μ n where
+  parts := partition.parts
+  measurable := partition.measurable
+  pairwise_null := fun i j hij => hμν (partition.pairwise_null i j hij)
+  cover_null := hμν partition.cover_null
 
 variable {SigmaSpace P G : Type*}
   [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]

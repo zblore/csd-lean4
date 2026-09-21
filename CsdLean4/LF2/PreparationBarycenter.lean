@@ -46,7 +46,8 @@ distribution — the object Papers C and TN2 write as `∫ |ψ⟩⟨ψ| ρ_ep(ψ
 interface. For region preparations of the `SigmaLayer` interface it is a theorem
 (`projectivePreparationLaw_absolutelyContinuous`), and `SigmaLayer/PreparationDensityBridge.lean`
 composes the two: `preparationDensity_apply_rhoEp` is this formula with Q28's Radon–Nikodym density
-and no hypothesis, and `kahler_preparationDensity_apply` is its instance on the Kähler arena with
+without a separate absolute-continuity premise (the bridge assumptions remain),
+and `kahler_preparationDensity_apply` is its instance on the Kähler arena with
 `c = 1`. The barycentre identification itself (`preparationDensity_eq_barycenter`) needs no such
 hypothesis.
 
@@ -77,6 +78,19 @@ noncomputable def entryFn (rep : Q → EuclideanSpace ℂ ι) (j k : ι) (p : Q)
 noncomputable def barycenterMatrix (rep : Q → EuclideanSpace ℂ ι) (μ : Measure Q) :
     Matrix ι ι ℂ :=
   Matrix.of fun j k => ∫ p, entryFn rep j k p ∂μ
+
+/-- The barycentre matrix is unchanged by pointwise unit-modulus changes
+    of representatives. No measurability or finiteness of the measure is
+    needed for this equality of identical integral expressions. -/
+theorem barycenterMatrix_phase_invariant
+    (rep : Q → EuclideanSpace ℂ ι) (c : Q → ℂ) (hc : ∀ p, ‖c p‖ = 1)
+    (μ : Measure Q) :
+    barycenterMatrix (fun p => c p • rep p) μ = barycenterMatrix rep μ := by
+  ext j k
+  apply integral_congr_ae
+  exact ae_of_all _ fun p =>
+    congrArg (fun M : Matrix ι ι ℂ => M j k)
+      (outerProduct_phase_invariant (rep p) (c p) (hc p))
 
 /-- Each coordinate of a unit vector has modulus at most `1`. -/
 theorem norm_coord_le_one (v : EuclideanSpace ℂ ι) (hv : ‖v‖ = 1) (j : ι) :
@@ -276,6 +290,20 @@ theorem preparationDensity_eq_barycenter :
   refine (preparation_qdensity_unique D μFS bridge μprep rep hrep_unit hrep_meas).unique
     (preparation_traceForm D μFS bridge μprep rep hrep_unit hrep_meas) fun E => ?_
   exact (barycenterDensity_traceForm rep hrep_unit hrep_meas (Measure.map D.π μprep) E).symm
+
+/-- A measurable phase change of representatives leaves the preparation's
+    density operator unchanged. This follows from the barycentre identification,
+    so it does not depend on how the Gleason witness was chosen. -/
+theorem preparationDensity_phase_invariant
+    (c : P → ℂ) (hc : ∀ p, ‖c p‖ = 1) (hc_meas : Measurable c) :
+    preparationDensity D μFS bridge μprep (fun p => c p • rep p)
+      (fun p => by rw [norm_smul, hc p, hrep_unit p, mul_one]) (hc_meas.smul hrep_meas)
+      = preparationDensity D μFS bridge μprep rep hrep_unit hrep_meas := by
+  rw [preparationDensity_eq_barycenter, preparationDensity_eq_barycenter]
+  have h := barycenterMatrix_phase_invariant rep c hc (Measure.map D.π μprep)
+  change (⟨_, _, _, _⟩ : DensityOperator N) = ⟨_, _, _, _⟩
+  rw [DensityOperator.mk.injEq]
+  exact h
 
 /-- ★★ **Entrywise**: `ρ_{jk} = ∫ ψⱼ conj ψₖ d(π_* μprep)(ψ)`. -/
 theorem preparationDensity_apply (j k : Fin N) :

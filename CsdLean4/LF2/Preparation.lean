@@ -28,8 +28,8 @@ This module defines:
 - `OperationalPackage.fromPreparation` — the projective Born wrapper
   (representation layer), which takes a `MeasureBridgeData D μFS` argument
   but does **not** extensionally invoke its `bridge_eq` content in the
-  operational-axiom field proofs, so `#print axioms` on it reads only the
-  foundational triple.
+  operational-axiom field proofs. Axiom checks alone do not determine
+  whether an ordinary structure argument is used.
 - `MeasureBridgeData.integral_comp_pi` +
   `OperationalPackage.fromPreparation_liouville_apply` — the theorems in
   which `bridge_eq` **is** extensionally consumed (F-01 discharge,
@@ -81,8 +81,8 @@ variable {SigmaSpace P G : Type*}
     fields from the abstract `measure_bridge` / `invariant_measure_uniqueness`,
     was removed 2026-06-04 — see `LF2/MeasureBridge.lean`. Nothing used it.)
 
-    `μFS` is taken as an explicit (Type-level) field rather than carried
-    in the structure because callers may want to instantiate the same
+    `μFS` is an explicit parameter rather than a field of the structure,
+    because callers may want to instantiate the same
     `SectorData` with different reference measures; the
     `MeasureBridgeData` ties a specific `μFS` to its bridge facts. -/
 structure MeasureBridgeData (D : SectorData SigmaSpace P G) (μFS : Measure P) where
@@ -94,6 +94,23 @@ structure MeasureBridgeData (D : SectorData SigmaSpace P G) (μFS : Measure P) w
   bridge_eq : Measure.map D.π D.μL = c • μFS
 
 namespace MeasureBridgeData
+
+/-- For a probability reference measure, the bridge constant is exactly the
+    total ontic mass. It is determined by `bridge_eq`, not a free normalization. -/
+lemma c_eq_measure_univ
+    {D : SectorData SigmaSpace P G} {μFS : Measure P} [IsProbabilityMeasure μFS]
+    (bridge : MeasureBridgeData D μFS) :
+    bridge.c = D.μL Set.univ := by
+  have h := congrArg (fun μ : Measure P => μ Set.univ) bridge.bridge_eq
+  simpa [Measure.map_apply D.measurable_π MeasurableSet.univ,
+    Measure.smul_apply] using h.symm
+
+/-- A bridge between probability measures necessarily has constant one. -/
+lemma c_eq_one
+    {D : SectorData SigmaSpace P G} {μFS : Measure P} [IsProbabilityMeasure μFS]
+    (bridge : MeasureBridgeData D μFS) [IsProbabilityMeasure D.μL] :
+    bridge.c = 1 := by
+  simpa using bridge.c_eq_measure_univ
 
 /-- **The bridge transports ontic integrals to projective integrals (F-01
     discharge, 2026-08-06).** For any `μFS`-a.e.-strongly-measurable
@@ -135,8 +152,8 @@ standard Bochner integration facts.
 The `MeasureBridgeData` argument is **type-level only**: the
 `fromPreparation` proof body does not extensionally invoke
 `bridge.bridge_eq` or any other field for the operational-axiom checks.
-Hence `#print axioms OperationalPackage.fromPreparation` itself reports
-only the foundational triple.
+This is a statement about the definition's field proofs. Reporting only the
+foundational axioms does not by itself establish whether `bridge` is used.
 
 `MeasureBridgeData` is supplied directly by the concrete instances, whose bridge
 proofs are axiom-free; nothing here forces the (now-removed) abstract bridge or
@@ -160,9 +177,8 @@ noncomputable def OperationalPackage.fromPreparation
     (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep) :
     OperationalPackage N :=
   -- `bridge` is type-level only: `bridge_eq` is not extensionally consumed by
-  -- the operational-axiom field proofs, so `#print axioms` on this definition
-  -- reads only the foundational triple. (Concrete instances supply `bridge`
-  -- axiom-free.)
+  -- the operational-axiom field proofs. The transport theorems below and
+  -- `MeasureBridgeData.integral_comp_pi` use the bridge equality explicitly.
   let _ : MeasureBridgeData D μFS := bridge
   let μP : Measure P := Measure.map D.π μprep
   haveI : IsProbabilityMeasure μP :=
@@ -204,6 +220,24 @@ noncomputable def OperationalPackage.fromPreparation
         (effectProjFn_integrable rep hrep_unit hrep_meas F μP)
   }
 
+/-- The operational probabilities are unchanged by a measurable pointwise
+    phase change of the representative map. Measurability is needed to build
+    the transformed package; the effect-function identity is purely algebraic. -/
+theorem OperationalPackage.fromPreparation_phase_invariant
+    (D : SectorData SigmaSpace P G) (μFS : Measure P) [IsProbabilityMeasure μFS]
+    (bridge : MeasureBridgeData D μFS)
+    (μprep : Measure SigmaSpace) [IsProbabilityMeasure μprep]
+    (rep : P → EuclideanSpace ℂ (Fin N))
+    (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep)
+    (c : P → ℂ) (hc : ∀ p, ‖c p‖ = 1) (hc_meas : Measurable c) (E : Effect N) :
+    (OperationalPackage.fromPreparation D μFS bridge μprep (fun p => c p • rep p)
+      (fun p => by rw [norm_smul, hc p, hrep_unit p, mul_one])
+      (hc_meas.smul hrep_meas)).p E
+      = (OperationalPackage.fromPreparation D μFS bridge μprep rep hrep_unit hrep_meas).p E := by
+  change (∫ p, effectProjFn (fun q => c q • rep q) E p ∂(Measure.map D.π μprep))
+    = ∫ p, effectProjFn rep E p ∂(Measure.map D.π μprep)
+  rw [effectProjFn_phase_invariant rep c hc E]
+
 /-! ### Pure preparation and the Born rank-1 theorem
 
 A `PurePreparation` packages a Hilbert-space unit vector `ψ`, the
@@ -214,18 +248,12 @@ that the preparation concentrates on the projective ray through `ψ`.
 
 Two Born theorems are proved:
 
-- `PurePreparation.born_rank_one` (chain critical path) — derives
-  `OP.p (rankOneEffect φ hφ) = ‖⟨ψ, φ⟩‖²` by composing the volume-content
-  step (`OP_certain_at_ψ`) with the Busch packaging step
-  (`pure_state_born_weights_of_certainty`). Matches spec §5.4 four-
-  ingredient combinatorial framing.
-- `PurePreparation.born_rank_one_direct` (direct auxiliary, representation layer) —
-  derives the same conclusion by direct Dirac integration of
-  `effectProjFn rep (rankOneEffect φ hφ)` against `Measure.dirac ray_point`,
-  without invoking `busch_effect_gleason`. Tagged as the **eventual
-  migration target** for the chain capstones once downstream consumers
-  accommodate the leaner cite set; v1.00 chain stays Busch-mediated per
-  spec §5.4.
+- `PurePreparation.born_rank_one` derives the equation through certainty
+  and the proved effect-Gleason trace-form characterization. It remains a
+  parallel representation theorem.
+- `PurePreparation.born_rank_one_direct` derives the same equation by direct
+  Dirac integration of the quadratic effect function. This is the route used
+  by the LF3 chain capstones; it needs no dimension lower bound.
 -/
 
 /-- **Pure preparation.** A bundle expressing that the projective
@@ -290,52 +318,17 @@ theorem OP_certain_at_ψ
   rw [h_inner]
   simp
 
-/-- **Born quadratic form for pure preparations (Busch-mediated form,
-    chain critical path).** For a pure preparation and a rank-1 effect
-    through `φ`, the operational package assigns `‖⟨ψ, φ⟩‖²`. Proof
-    composes the volume-content step (`OP_certain_at_ψ`) with the Busch
-    packaging step (`pure_state_born_weights_of_certainty`, which uses the
-    proved `effect_gleason_representation` — formerly the
-    `busch_effect_gleason` axiom, discharged 2026-07-21 — plus
-    `rankOneDensity_unique_of_certainty` + `born_quadratic`).
+/-- **Born quadratic form for pure preparations (trace-form route).**
+    For `2 ≤ N`, certainty at `ψ` and the proved effect-Gleason
+    characterization yield the rank-1 weight `‖⟨ψ, φ⟩‖²`. This composes
+    `OP_certain_at_ψ` with `pure_state_born_weights_of_certainty`.
 
-    ## Busch is a spec-faithfulness choice, not a mathematical necessity
-
-    The Born quadratic form on `fromPreparation` is **also derivable
-    without `busch_effect_gleason`**: the Busch-free route is
-    `born_rank_one_direct` below (direct Dirac integration of the
-    projective effect function). So in the LF2-only Hilbert-space
-    view, the chain capstone is *not* mathematically dependent on the
-    Busch axiom.
-
-    The Busch route is retained as the chain's headline form for two
-    spec-faithfulness reasons:
-
-    1. **Spec §5.4 four-ingredient framing.** The paper presents the
-       Born derivation as the combinatorial composition: measure
-       bridge + ρ_ep + operational consistency + Busch effect-Gleason.
-       The Lean chain's headline cites those four ingredients literally.
-       Removing Busch (and switching the chain capstones to the direct
-       form) would deviate from this presentation.
-
-    2. **Trace-form characterisation.** Busch effect-Gleason is the
-       canonical operational-to-trace-form bridge. Citing it makes
-       explicit that the LF2 wrapper *agrees* with the standard
-       quantum-mechanical density-operator interpretation, beyond the
-       weaker statement that the projective integral equals
-       `‖⟨ψ, φ⟩‖²` for rank-1 effects. The direct form proves the
-       same equation but does not export the trace-form view.
-
-    The four-ingredient framing of spec §5.4: measure bridge (via the
-    `bridge` argument's type), preparation-dependent density ρ_ep (via
-    the volume content of `OP_certain_at_ψ`), operational consistency
-    package (via the `OperationalPackage.fromPreparation` construction),
-    Busch effect-Gleason (via `pure_state_born_weights_of_certainty`).
-
-    `#print axioms PurePreparation.born_rank_one` reads only the
-    foundational triple (AxiomAudit-pinned) — the Busch step is the proved
-    `effect_gleason_representation` since 2026-07-21. The `bridge` argument
-    carries no axiom — the concrete instances supply it axiom-free. -/
+    The statement is the same quadratic-form identity as `born_rank_one_direct`;
+    it does not itself export a density operator or compute a region's volume.
+    The direct theorem is used by the LF3 chain capstones. This parallel route
+    uses `effect_gleason_representation` (proved since 2026-07-21), not the
+    historical `busch_effect_gleason` axiom. Here the bridge remains a structure
+    argument; its equality is used in the separate transport theorems. -/
 theorem born_rank_one
     (D : SectorData SigmaSpace P G) (μFS : Measure P) [IsProbabilityMeasure μFS]
     (bridge : MeasureBridgeData D μFS)
@@ -352,7 +345,7 @@ theorem born_rank_one
     (PP.OP_certain_at_ψ D μFS bridge μprep)
     φ hφ
 
-/-- **Born quadratic form for pure preparations (direct auxiliary, the
+/-- **Born quadratic form for pure preparations (direct integration, the
     representation layer).** Same conclusion as `born_rank_one`, but proved by
     direct Dirac integration of `effectProjFn rep (rankOneEffect φ hφ)` against
     `Measure.dirac ray_point`, without invoking `busch_effect_gleason`.
@@ -415,8 +408,8 @@ end PurePreparation
 
 /-- **The operational probability from the ontic (Liouville) preparation IS the
     projective reference integral (F-01 discharge, 2026-08-06).** For a
-    normalized Liouville measure and a `c = 1` bridge (the shape every concrete
-    instance supplies — `cp_measure_bridge`, `k_measure_bridge`), the
+    normalized Liouville measure, `MeasureBridgeData.c_eq_one` proves the
+    `c = 1` premise retained in this API for existing callers. The
     operational package built from the *ontic* preparation `D.μL` assigns to
     every effect exactly the `μFS`-integral of the effect function:
 
@@ -427,8 +420,7 @@ end PurePreparation
     rewritten to `μFS` inside the volume integral. Together with
     `MeasureBridgeData.integral_comp_pi` this is the extensional consumption of
     the bridge the 2026-08-06 review (F-01) asked for; `fromPreparation` itself
-    still carries the bridge type-level only, so its own `#print axioms`
-    hygiene note is unchanged. -/
+    still carries the bridge type-level only. -/
 theorem OperationalPackage.fromPreparation_liouville_apply
     (D : SectorData SigmaSpace P G) (μFS : Measure P) [IsProbabilityMeasure μFS]
     (bridge : MeasureBridgeData D μFS) [IsProbabilityMeasure D.μL]

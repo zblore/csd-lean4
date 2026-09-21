@@ -1069,11 +1069,11 @@ OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 # fixed, because audit findings have no expiry hook. This check is the mechanical
 # residue: any "SU(" in Lean source outside the declared explanatory sites fails
 # loudly, forcing the U(N)-vs-SU(N) question to be answered consciously at the site.
-# The two declared sites are the equivalence remarks kept ON PURPOSE (the centre
-# acts trivially on projective space, so the literature's SU(N) reading is the same
-# condition; FubiniStudy.lean header) and LF2/Setup.lean's abstract-G note.
-DECLARED_SU_MENTIONS="CsdLean4/LF2/Setup.lean:1
-CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:2"
+# The remaining declared site is FubiniStudy.lean's explanatory equivalence
+# remarks (the centre acts trivially on projective space, so the literature's
+# SU(N) reading gives the same condition). LF2/Setup now names its concrete U(N)
+# instance directly and no longer needs an exception.
+DECLARED_SU_MENTIONS="CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:2"
 
 echo "check-claims: verifying code against the canonical claims block…"
 

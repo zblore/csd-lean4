@@ -34,10 +34,10 @@ The manuscript states the frequency theorem for a full measurable outcome partit
 {Ω_i^Σ}. The theorem here is stated for a single `O : OutcomeRegion` — one element of
 that partition — rather than for a formalised partition family object.
 
-This is sufficient: the joint almost-sure statement for a finite partition follows by
-applying `LF1_main_theorem_ae` once per partition element and intersecting the resulting
-full-measure sets. A finite intersection of full-measure sets remains full-measure, so no
-additional structure is required at this layer.
+`TrialModel.main_theorem_ae_all` proves simultaneous convergence for any countable
+family of outcome regions, including every finite partition, on one common full-measure
+set. Each outcome's indicators need pairwise independence across trials; disjointness
+between outcomes is unnecessary. The single-region theorem is its singleton case.
 
 See `Outcomes.lean` for further discussion of when a formalised partition type would
 become necessary (LF2/LF4 and POVM completeness).
@@ -58,6 +58,20 @@ namespace TrialModel
 
 variable {Ω : Type*} [MeasurableSpace Ω]
 variable (T : S.TrialModel Ω)
+
+/-- The LF1 frequency theorem simultaneously for any countable family of outcome regions.
+Each outcome's indicators must be pairwise independent across trials; independence between
+different outcomes and a partition hypothesis are not required. -/
+theorem main_theorem_ae_all {ι : Type*} [Countable ι]
+    (O : ι → S.OutcomeRegion)
+    (hindep : ∀ i, Pairwise
+      (Function.onFun
+        (fun f g : Ω → ℝ => IndepFun f g T.trialMeasure)
+        (fun n => T.indicatorRV (S := S) (O i) n))) :
+    ∀ᵐ ω ∂ T.trialMeasure, ∀ i,
+      Tendsto (fun n : ℕ => T.empiricalFreq (S := S) (O i) n ω)
+        atTop (nhds (O i).weightReal) :=
+  ae_all_iff.mpr fun i => T.strongLaw_empiricalFreq_to_weight_ae (S := S) (O i) (hindep i)
 
 /--
 LF1 main theorem, real-valued version.
@@ -80,8 +94,9 @@ theorem main_theorem_ae
       Tendsto
         (fun n : ℕ => T.empiricalFreq (S := S) O n ω)
         atTop
-        (nhds (O.weightReal)) :=
-  T.strongLaw_empiricalFreq_to_weight_ae (S := S) O hindep
+        (nhds (O.weightReal)) := by
+  filter_upwards [T.main_theorem_ae_all (S := S) (fun _ : Unit => O) (fun _ => hindep)] with ω hω
+  exact hω ()
 
 /--
 Equivalent statement written with the expectation of the indicator random variable as

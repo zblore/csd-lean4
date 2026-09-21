@@ -19,9 +19,11 @@ equals `|φ⟩⟨φ|`. The rank-1 projector through a unit vector depends
 only on the projective ray of the vector, not on its specific
 unit-vector representative.
 
-Used downstream by the volume-ratio effect function `effectProjFn`
-(pre-LF4 plan Phase 2) to justify well-definedness under a caller-
-supplied phase-arbitrary `rep : P → EuclideanSpace ℂ (Fin N)` map.
+`effectProjFn_phase_invariant` in `LF2/EffectFn.lean` uses the outer-product
+identity to prove that pointwise unit-modulus changes of the representative
+map leave the quadratic effect function unchanged. The corresponding
+preparation probabilities and barycentre inherit this independence; this
+is invariance under phase choices, not under arbitrary changes of rays.
 -/
 
 @[expose] public section
@@ -38,8 +40,8 @@ variable {N : ℕ}
     `c` and any vector `φ`, the outer product of `c • φ` equals the
     outer product of `φ`. Algebraic content: `(c • φ) ⊗ (c • φ)* =
     c · c̄ · (φ ⊗ φ*) = ‖c‖² · (φ ⊗ φ*) = φ ⊗ φ*`. -/
-lemma outerProduct_phase_invariant
-    (φ : EuclideanSpace ℂ (Fin N)) (c : ℂ) (hc : ‖c‖ = 1) :
+lemma outerProduct_phase_invariant {ι : Type*} [Fintype ι]
+    (φ : EuclideanSpace ℂ ι) (c : ℂ) (hc : ‖c‖ = 1) :
     outerProduct (c • φ) = outerProduct φ := by
   have hc_norm_sq : c * star c = 1 := by
     have h : c * (starRingEnd ℂ) c = ((‖c‖ : ℂ)) ^ 2 := RCLike.mul_conj c

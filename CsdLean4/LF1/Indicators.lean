@@ -130,7 +130,8 @@ lemma indicatorRV_identDistrib (O : S.OutcomeRegion) (n : ℕ) :
       (T.indicatorRV (S := S) O 0)
       ((T.P : ProbabilityMeasure Ω) : Measure Ω)
       ((T.P : ProbabilityMeasure Ω) : Measure Ω) := by
-  -- Strategy: factor indicatorRV O m = f ∘ X m, where f is the fixed SigmaSpace-valued indicator.
+  -- Factor indicatorRV O m = f ∘ X m, where f is the fixed real-valued indicator
+  -- on SigmaSpace.
   -- Then identical distribution of X n and X 0 (both have law prepMeasure, by T.hLaw)
   -- lifts to identical distribution of f ∘ X n and f ∘ X 0 via IdentDistrib.comp.
   let f := Set.indicator (O.preEvent (S := S)) (fun _ => (1 : ℝ))
@@ -141,15 +142,10 @@ lemma indicatorRV_identDistrib (O : S.OutcomeRegion) (n : ℕ) :
     · rw [Set.indicator_of_mem (Set.mem_preimage.mpr hω), Set.indicator_of_mem hω]
     · rw [Set.indicator_of_notMem (fun h => hω (Set.mem_preimage.mp h)),
           Set.indicator_of_notMem hω]
-  -- X n and X 0 are identically distributed: both have law prepMeasure
-  have hXident : IdentDistrib (T.X n) (T.X 0)
-        ((T.P : ProbabilityMeasure Ω) : Measure Ω)
-        ((T.P : ProbabilityMeasure Ω) : Measure Ω) :=
-    ⟨(T.measurable_X n).aemeasurable, (T.measurable_X 0).aemeasurable,
-     by rw [T.hLaw n, T.hLaw 0]⟩
-  -- Apply f to both sides
+  -- Apply the fixed measurable observable to the equal-law trials.
   rw [hfact n, hfact 0]
-  exact hXident.comp (measurable_const.indicator (O.measurable_preEvent (S := S)))
+  exact (T.identDistrib_X n 0).comp
+    (measurable_const.indicator (O.measurable_preEvent (S := S)))
 
 end TrialModel
 

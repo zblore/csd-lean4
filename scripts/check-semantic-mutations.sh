@@ -16,8 +16,8 @@ require_between CsdLean4/Mathlib/QuantumInfo/StrongSubadditivity.lean \
   'SSA mutation guard: explicit hDPI premise missing'
 
 # F-01 state as of 2026-08-06 (G1 discharge): fromPreparation still carries the bridge
-# type-level only (its #print-axioms hygiene note depends on that), while the transport
-# theorems MeasureBridgeData.integral_comp_pi and fromPreparation_liouville_apply are
+# type-level only, while the transport theorems MeasureBridgeData.integral_comp_pi
+# and fromPreparation_liouville_apply are
 # where bridge_eq is extensionally consumed. Guard all three facts: if any changes,
 # CL-003's disposition must be re-reviewed, not silently drifted.
 block="$(awk '/noncomputable def OperationalPackage.fromPreparation/{on=1} on{print} on && /^end /{exit}' CsdLean4/LF2/Preparation.lean)"
