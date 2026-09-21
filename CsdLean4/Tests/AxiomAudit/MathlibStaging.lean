@@ -3593,6 +3593,42 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 /-- info: 'DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq
 
+-- BACKLOG #14(a) (2026-09-21), QuantumInfo/KnillLaflamme.lean: the Knill-Laflamme theorem. A family
+-- of errors is correctable on a code projector P (some channel inverts every error on the code up
+-- to a scalar) iff P E_i^H E_j P = c_ij P. Recovery: diagonalise the Hermitian c, the canonical
+-- errors F_k = sum_i U_ik E_i have orthogonal images of the code, R_k = d_k^{-1/2} P F_k^H completed
+-- by 1 - sum R_k^H R_k. Converse: each R_k E_i P is a scalar on the code (sandwiched rank-one
+-- identity), and trace preservation assembles the condition.
+/-- info: 'QuantumInfo.IsCodeProjector.nonneg_of_smul_posSemidef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.IsCodeProjector.nonneg_of_smul_posSemidef
+
+/-- info: 'QuantumInfo.KnillLaflamme.isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.KnillLaflamme.isHermitian
+
+/-- info: 'QuantumInfo.recoveryKraus_tp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.recoveryKraus_tp
+
+/-- info: 'QuantumInfo.recoveryChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.recoveryChannel_apply
+
+/-- info: 'QuantumInfo.knillLaflamme_canonicalError' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.knillLaflamme_canonicalError
+
+/-- info: 'QuantumInfo.exists_recovery_of_knillLaflamme' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.exists_recovery_of_knillLaflamme
+
+/-- info: 'QuantumInfo.exists_recovery_channel_of_knillLaflamme' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.exists_recovery_channel_of_knillLaflamme
+
+/-- info: 'QuantumInfo.exists_smul_of_sum_conj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.exists_smul_of_sum_conj_eq
+
+/-- info: 'QuantumInfo.knillLaflamme_of_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.knillLaflamme_of_recovery
+
+/-- info: 'QuantumInfo.knillLaflamme_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms QuantumInfo.knillLaflamme_iff
+
 -- Q29(c') (2026-09-12), Geometry/Manifold/HamiltonianLieDerivative.lean: Cartan's formula on a
 -- normed space (L_X omega = d(iota_X omega) + iota_X d omega, from extDeriv_apply), and for the
 -- local representative of a symplectic form along its local Hamiltonian vector both terms

@@ -61,6 +61,7 @@ public import CsdLean4.Mathlib.QuantumInfo.AmplitudeEstimation
 public import CsdLean4.Mathlib.QuantumInfo.Pauli
 public import CsdLean4.Mathlib.QuantumInfo.Clifford
 public import CsdLean4.Mathlib.QuantumInfo.Stabilizer
+public import CsdLean4.Mathlib.QuantumInfo.KnillLaflamme
 public import CsdLean4.Mathlib.QuantumInfo.Magic
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit

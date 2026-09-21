@@ -281,11 +281,16 @@ Shor's nine-qubit code corrects single `X`, `Z` and `XZ` errors (`shor_corrects_
 separates single errors (`steane_syndrome_single_injective`,
 [`Empirical/QM/QEC/Steane.lean`](../CsdLean4/Empirical/QM/QEC/Steane.lean)), and the stabiliser formalism
 gives the code-space dimension and uniqueness (`stabState_unique`,
-[`Mathlib/QuantumInfo/Stabilizer.lean`](../CsdLean4/Mathlib/QuantumInfo/Stabilizer.lean)).
+[`Mathlib/QuantumInfo/Stabilizer.lean`](../CsdLean4/Mathlib/QuantumInfo/Stabilizer.lean)). The general
+criterion for active correction is a theorem (2026-09-21): a family of errors on a code is correctable —
+some channel undoes every error on every code state — if and only if it satisfies the Knill–Laflamme
+condition `P Eᵢᴴ Eⱼ P = cᵢⱼ P`, with the recovery channel constructed from the condition
+(`exists_recovery_of_knillLaflamme`, `knillLaflamme_of_recovery`, `knillLaflamme_iff`,
+[`Mathlib/QuantumInfo/KnillLaflamme.lean`](../CsdLean4/Mathlib/QuantumInfo/KnillLaflamme.lean)).
 
-**The seam.** Four residues, all open mathematics with a Lean shape. `R-003`: the Steane recovery map, the
-Knill–Laflamme conditions and any fault-tolerance claim; the code space and the distance mechanism are
-landed, active correction is not. `R-004`, `R-005`, `R-006`: magic-state distillation, the density of
+**The seam.** Four residues, all open mathematics with a Lean shape. `R-003`: the Steane recovery map and
+any fault-tolerance claim; the code space, the distance mechanism and the general Knill–Laflamme theorem
+are landed, the Steane instance of the recovery is not (BACKLOG #14(b); the code-capacity threshold is #51). `R-004`, `R-005`, `R-006`: magic-state distillation, the density of
 Clifford+T in the unitary group, and `T`-gate injection; what exists is the `T` gate itself and the fact
 that it is not Clifford (`tGate_conj_X_not_pauli`,
 [`Mathlib/QuantumInfo/Magic.lean`](../CsdLean4/Mathlib/QuantumInfo/Magic.lean)). The three-qubit `Σ` model

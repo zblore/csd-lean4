@@ -56,6 +56,13 @@ Mathlib's `LinearMap.IsProj.trace`); (ii) the stabiliser measurement-update rule
 DISCHARGED same day (the `measProj` section of `Stabilizer.lean`); (iii) Knill–Laflamme /
 recovery for Steane — still open, still named. None was ever silently claimed.
 
+**2026-09-21 (BACKLOG #14(a)):** the Knill–Laflamme conditions are now a general theorem,
+`Mathlib/QuantumInfo/KnillLaflamme.lean` — correctability of an error family on a code projector
+is equivalent to `P Eᵢᴴ Eⱼ P = cᵢⱼ P`, with the recovery channel constructed
+(`exists_recovery_of_knillLaflamme`) and the converse (`knillLaflamme_of_recovery`). Residue (iii)
+is now exactly the Steane instance: the syndrome table as the condition for the single-qubit
+Paulis, and the recovery it yields (BACKLOG #14(b)).
+
 ## References
 
 Steane, "Error correcting codes in quantum theory" (PRL 77, 793 (1996));
