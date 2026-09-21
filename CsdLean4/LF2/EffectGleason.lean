@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF2.BornWrapper
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Descent
 
 /-!
 # LF2/EffectGleason: the Busch effect-Gleason theorem, PROVED (discharges the former axiom)
@@ -57,18 +58,21 @@ gives linearity directly, bypassing the frame-function analysis of projective Gl
    `‖u‖²+‖v‖²≤½`, from the matrix identity + additivity + the `√2`-doubling `p_outerEffect_sqrt2`)
    are done. The **ρ-build** (step 3b-final) is now done as well: `qform` (the degree-2
    homogeneous extension of `v ↦ p(|v⟩⟨v|)` off the unit ball) satisfies the *unrestricted*
-   parallelogram law (`qform_parallelogram`); the Jordan–von Neumann argument makes its
-   polarisation `qpolar` bi-additive (`qpolar_add_left`) and — via `additive_bounded_linear`,
-   which replaces the classical continuity step by the bound `0 ≤ q ≤ ‖·‖²` —
-   `ℝ`-bihomogeneous (`qpolar_smul_real`); the complex polarisation `qsesq` is then sesquilinear
-   (`qsesq_add_right`, `qsesq_smul_right`, `qsesq_conj_symm`) with `qsesq_self : S(v,v) = q v`,
-   and its matrix on the standard basis `qmatrix` is Hermitian (`qmatrix_isHermitian`) with
+   parallelogram law (`qform_parallelogram`), so it is quadratic-like
+   (`qform_isQuadraticLike`) and the Jordan–von Neumann engine of
+   `Mathlib/Analysis/InnerProductSpace/Gleason/Polarization.lean` (written here first, extracted
+   2026-09-21 for the projection form of Gleason's theorem) makes its polarisation
+   `Gleason.polar` bi-additive and — via `Gleason.additive_bounded_linear`, which replaces the
+   classical continuity step by the bound `0 ≤ q ≤ ‖·‖²` — `ℝ`-bihomogeneous; the complex
+   polarisation `Gleason.sesq` is then sesquilinear with `sesq q v v = q v`, and its matrix on
+   the standard basis `qmatrix` is Hermitian (`qmatrix_isHermitian`) with
    `p_outerEffect_eq_trace : p(|v⟩⟨v|) = Tr(R · |v⟩⟨v|)` and — through the spectral reduction —
    `p_eq_trace : p E = Tr(R · E)` for **every** effect.
 4. **Positivity / normalisation + uniqueness (step 4 — done).** `p ≥ 0 ⟹ R` PSD
-   (`qmatrix_posSemidef`); `p I = 1 ⟹ Tr R = 1` (`qmatrix_trace_one`); uniqueness because a
-   complex matrix is determined by its quadratic form (`matrix_eq_zero_of_quadForm_zero`, a
-   polarisation) via `qdensity_unique`. This packages `R = qmatrix` as the `DensityOperator`
+   (`qmatrix_posSemidef`, through `Gleason.posSemidef_of_sphere_nonneg`); `p I = 1 ⟹ Tr R = 1`
+   (`qmatrix_trace_one`); uniqueness because a Hermitian matrix is determined by its quadratic
+   form on the unit sphere (`Gleason.eq_of_sphere_quadForm_eq`, a polarisation) via
+   `qdensity_unique`. This packages `R = qmatrix` as the `DensityOperator`
    `qdensity` and yields `effect_gleason_representation` (`∃!`), the statement the axiom asserted.
 
 ## Honest scope
@@ -85,7 +89,7 @@ proof.
 References: `LF2/BornWrapper.lean` (`Effect`, `DensityOperator`, `OperationalPackage`,
 `traceForm`, `rankOneDensity_unique_of_certainty`, `born_quadratic`); Busch 2003
 (`quant-ph/9909073`); Jordan–von Neumann 1935
-(the parallelogram characterisation polarised in §J–§K); `AXIOMS.md §2.2`;
+(the parallelogram characterisation, polarised in `Gleason/Polarization.lean`); `AXIOMS.md §2.2`;
 `CONVENTIONS.md §8.1`; `specs/BACKLOG.md`; `specs/future-work.md`.
 -/
 
@@ -738,7 +742,7 @@ theorem qform_nonneg (v : EuclideanSpace ℂ (Fin N)) : 0 ≤ OP.qform v :=
   mul_nonneg (by positivity) (OP.nonneg _)
 
 /-- `q v ≤ ‖v‖²` (from `OP.le_one`). With `qform_nonneg` this is the local bound feeding the
-Cauchy-equation argument in `qpolar_smul_real`. -/
+Cauchy-equation argument in `Gleason.IsQuadraticLike.polar_smul_real`. -/
 theorem qform_le_normSq (v : EuclideanSpace ℂ (Fin N)) : OP.qform v ≤ ‖v‖ ^ 2 := by
   have h1 := OP.le_one (outerEffect (((‖v‖⁻¹ : ℝ) : ℂ) • v) (norm_inv_norm_smul_le_one v))
   have h2 : (0:ℝ) ≤ ‖v‖ ^ 2 := by positivity
@@ -839,399 +843,58 @@ theorem qform_parallelogram (u v : EuclideanSpace ℂ (Fin N)) :
 
 end OperationalPackage
 
-/-! ### I — Cauchy's functional equation with a local bound (Route B step 3b-final)
+/-! ### I–L — the Jordan–von Neumann reconstruction (`Gleason/Polarization.lean`)
 
-The Jordan–von Neumann polarisation gives additivity of `f u v = q(u+v) − q(u−v)` in each slot,
-hence `ℚ`-homogeneity. Upgrading to `ℝ`-homogeneity is where the classical proof invokes
-continuity — unavailable here, since `p` is an arbitrary probability assignment. Boundedness is
-the substitute: `0 ≤ q ≤ ‖·‖²` bounds `f` on the unit ball, and a bounded additive function on
-`ℝ` is linear. -/
-
-/-- **Cauchy's functional equation with a local bound.** An additive `g : ℝ → ℝ` that is bounded
-on `[-1,1]` is linear: `g t = t · g 1`.
-
-No continuity is assumed (and none is available: `p` is an arbitrary probability assignment).
-The proof is the classical squeeze on `h y = g y − y · g 1`: `h` is additive, kills every
-integer (`h m = m · h 1 = 0`), and is bounded on `[-1,1]`; for any `x` and any `n ≥ 1`,
-`n · h x = h (n x − ⌊n x⌋)` lands in that bounded window, so `|h x| ≤ (M + |g 1|)/n → 0`.
-
-Used by `OperationalPackage.qpolar_smul_real`, where the local bound comes from `qform_nonneg`
-and `qform_le_normSq`. -/
-theorem additive_bounded_linear (g : ℝ → ℝ) (hadd : ∀ s t : ℝ, g (s + t) = g s + g t)
-    {M : ℝ} (hM : ∀ t : ℝ, |t| ≤ 1 → |g t| ≤ M) (x : ℝ) : g x = x * g 1 := by
-  obtain ⟨h, hh⟩ : ∃ h : ℝ → ℝ, ∀ y, h y = g y - y * g 1 := ⟨_, fun _ => rfl⟩
-  have hadd' : ∀ s t : ℝ, h (s + t) = h s + h t := by
-    intro s t; rw [hh, hh, hh, hadd s t]; ring
-  have hzero : h 0 = 0 := by
-    have h0 := hadd' 0 0; rw [add_zero] at h0; linarith
-  have hone : h 1 = 0 := by rw [hh]; ring
-  have hnat : ∀ (n : ℕ) (y : ℝ), h ((n : ℝ) * y) = (n : ℝ) * h y := by
-    intro n
-    induction n with
-    | zero => intro y; simp [hzero]
-    | succ k ih =>
-      intro y
-      have hstep : ((k + 1 : ℕ) : ℝ) * y = (k : ℝ) * y + y := by push_cast; ring
-      rw [hstep, hadd', ih]; push_cast; ring
-  have hneg : ∀ y : ℝ, h (-y) = - h y := by
-    intro y
-    have hy := hadd' y (-y)
-    rw [add_neg_cancel, hzero] at hy
-    linarith
-  have hnatz : ∀ n : ℕ, h ((n : ℝ)) = 0 := by
-    intro n
-    have hn := hnat n 1
-    rw [mul_one, hone, mul_zero] at hn
-    exact hn
-  have hint : ∀ m : ℤ, h ((m : ℝ)) = 0 := by
-    intro m
-    obtain ⟨n, hn⟩ : ∃ n : ℕ, m = n ∨ m = -(n : ℤ) := ⟨m.natAbs, by omega⟩
-    rcases hn with hn | hn
-    · subst hn; exact_mod_cast hnatz n
-    · subst hn
-      have hcast : (((-(n : ℤ)) : ℤ) : ℝ) = -((n : ℕ) : ℝ) := by push_cast; ring
-      rw [hcast, hneg, hnatz n, neg_zero]
-  have hM' : ∀ y : ℝ, |y| ≤ 1 → |h y| ≤ M + |g 1| := by
-    intro y hy
-    have h1 : |h y| ≤ |g y| + |y * g 1| := by
-      rw [hh]
-      have hg1 := le_abs_self (g y)
-      have hg2 := neg_abs_le (g y)
-      have hy1 := le_abs_self (y * g 1)
-      have hy2 := neg_abs_le (y * g 1)
-      rw [abs_le]
-      constructor <;> linarith
-    have h2 : |y * g 1| ≤ |g 1| := by
-      rw [abs_mul]
-      nlinarith [abs_nonneg (g 1), abs_nonneg y]
-    linarith [hM y hy]
-  have hsq : ∀ n : ℕ, 0 < n → |h x| ≤ (M + |g 1|) / n := by
-    intro n hn
-    have hn0 : (0:ℝ) < n := by exact_mod_cast hn
-    have hr0 : 0 ≤ (n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ) := sub_nonneg.mpr (Int.floor_le _)
-    have hr1 : (n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ) < 1 := by
-      have hlt := Int.lt_floor_add_one ((n : ℝ) * x)
-      linarith
-    have hsplit : h ((n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ)) = (n : ℝ) * h x := by
-      have hs := hadd' ((n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ)) (((⌊(n : ℝ) * x⌋ : ℤ) : ℝ))
-      have heq : (n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ) + ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ)
-          = (n : ℝ) * x := by ring
-      rw [heq, hint, add_zero] at hs
-      rw [← hs, hnat n x]
-    have habs : |h ((n : ℝ) * x - ((⌊(n : ℝ) * x⌋ : ℤ) : ℝ))| ≤ M + |g 1| :=
-      hM' _ (by rw [abs_of_nonneg hr0]; linarith)
-    rw [hsplit, abs_mul, abs_of_pos hn0] at habs
-    rw [le_div_iff₀ hn0]
-    linarith
-  have hMnn : (0:ℝ) ≤ M := le_trans (abs_nonneg (g 0)) (hM 0 (by norm_num))
-  have hx0 : h x = 0 := by
-    by_contra hne
-    have hpos : 0 < |h x| := abs_pos.mpr hne
-    obtain ⟨n, hn⟩ := exists_nat_gt ((M + |g 1|) / |h x|)
-    have hq : (0:ℝ) ≤ (M + |g 1|) / |h x| := by positivity
-    have hnpos : 0 < n := by
-      rcases Nat.eq_zero_or_pos n with rfl | hp
-      · exfalso; rw [Nat.cast_zero] at hn; linarith
-      · exact hp
-    have hn0 : (0:ℝ) < n := by exact_mod_cast hnpos
-    have hb := hsq n hnpos
-    rw [div_lt_iff₀ hpos] at hn
-    rw [le_div_iff₀ hn0] at hb
-    nlinarith
-  rw [hh] at hx0
-  linarith
-
-/-! ### J — the polarisation difference `f u v = q(u+v) − q(u−v)` (Route B step 3b-final) -/
+`qform` is quadratic-like in the sense of `Gleason.IsQuadraticLike` (`qform_isQuadraticLike`), so
+the polarisation engine of `Mathlib/Analysis/InnerProductSpace/Gleason/Polarization.lean` — the
+bi-additive difference `Gleason.polar`, the sesquilinear form `Gleason.sesq` and its matrix
+`Gleason.polarMatrix` — applies verbatim: `qmatrix := Gleason.polarMatrix qform` is Hermitian with
+`q v = ⟨v, R v⟩`. The engine was written here first (2026-07-21) and extracted unchanged on
+2026-09-21 so that the projection form of Gleason's theorem shares it
+(`specs/gleason-feasibility.md`). -/
 
 namespace OperationalPackage
 
 variable (OP : OperationalPackage N)
 
-/-- **The polarisation difference** `f u v = q(u+v) − q(u−v)` — four times the real part of the
-sesquilinear form being reconstructed. Symmetric (`qpolar_symm`), additive (`qpolar_add_left`)
-and `ℝ`-homogeneous (`qpolar_smul_real`) in each slot. -/
-noncomputable def qpolar (u v : EuclideanSpace ℂ (Fin N)) : ℝ :=
-  OP.qform (u + v) - OP.qform (u - v)
+/-- **`qform` is quadratic-like:** degree-2 homogeneous, parallelogram, `0 ≤ q ≤ ‖·‖²` — the
+four hypotheses of the Jordan–von Neumann engine. -/
+theorem qform_isQuadraticLike : Gleason.IsQuadraticLike OP.qform :=
+  ⟨OP.qform_smul, OP.qform_parallelogram, OP.qform_nonneg, OP.qform_le_normSq⟩
 
-/-- `f` is symmetric: `q(v−u) = q(−(u−v)) = q(u−v)`. -/
-theorem qpolar_symm (u v : EuclideanSpace ℂ (Fin N)) : OP.qpolar u v = OP.qpolar v u := by
-  have h : v - u = -(u - v) := by abel
-  rw [qpolar, qpolar, h, OP.qform_neg, add_comm]
+/-- **The reconstructed matrix** `R = polarMatrix qform` (`R j k = S(eⱼ, eₖ)` on the standard
+basis) — the candidate density operator of Busch's theorem (its positivity and unit trace are
+step 4). -/
+noncomputable def qmatrix : Matrix (Fin N) (Fin N) ℂ :=
+  Gleason.polarMatrix OP.qform
 
-/-- `f 0 v = q v − q(−v) = 0` (evenness of `q`). -/
-theorem qpolar_zero_left (v : EuclideanSpace ℂ (Fin N)) : OP.qpolar 0 v = 0 := by
-  rw [qpolar, zero_add, zero_sub, OP.qform_neg, sub_self]
+/-- **`R` is Hermitian** (`Gleason.IsQuadraticLike.polarMatrix_isHermitian`). -/
+theorem qmatrix_isHermitian : OP.qmatrix.IsHermitian :=
+  OP.qform_isQuadraticLike.polarMatrix_isHermitian
 
-/-- `f u (−v) = − f u v` (the two `q`-terms swap). -/
-theorem qpolar_neg_right (u v : EuclideanSpace ℂ (Fin N)) :
-    OP.qpolar u (-v) = - OP.qpolar u v := by
-  rw [qpolar, qpolar, ← sub_eq_add_neg, sub_neg_eq_add]; ring
+/-- **`q` is the quadratic form of `R`:** `q v = ⟨v, R v⟩`
+(`Gleason.IsQuadraticLike.eq_dotProduct`). -/
+theorem qform_eq_dotProduct (v : EuclideanSpace ℂ (Fin N)) :
+    ((OP.qform v : ℝ) : ℂ) = star (⇑v) ⬝ᵥ (OP.qmatrix *ᵥ (⇑v)) :=
+  OP.qform_isQuadraticLike.eq_dotProduct v
 
-/-- **The halving identity (Jordan–von Neumann core).** `f u v + f w v = 2 · f ((u+w)/2) v`:
-apply the parallelogram law at `(a ± v, b)` with `a = (u+w)/2`, `b = (u−w)/2` (so `a + b = u`
-and `a − b = w`) and subtract the two instances — the `q b` terms cancel. -/
-theorem qpolar_add_half (u w v : EuclideanSpace ℂ (Fin N)) :
-    OP.qpolar u v + OP.qpolar w v = 2 * OP.qpolar (((2:ℂ)⁻¹) • (u + w)) v := by
-  have h2 : (2:ℂ) ≠ 0 := by norm_num
-  set a : EuclideanSpace ℂ (Fin N) := ((2:ℂ)⁻¹) • (u + w) with ha
-  set b : EuclideanSpace ℂ (Fin N) := ((2:ℂ)⁻¹) • (u - w) with hb
-  have hab1 : a + b = u := by
-    rw [ha, hb, ← smul_add, show (u + w) + (u - w) = (2:ℂ) • u from by rw [two_smul]; abel,
-      smul_smul, inv_mul_cancel₀ h2, one_smul]
-  have hab2 : a - b = w := by
-    rw [ha, hb, ← smul_sub, show (u + w) - (u - w) = (2:ℂ) • w from by rw [two_smul]; abel,
-      smul_smul, inv_mul_cancel₀ h2, one_smul]
-  have par1 := OP.qform_parallelogram (a + v) b
-  have par2 := OP.qform_parallelogram (a - v) b
-  rw [show a + v + b = u + v from by rw [← hab1]; abel,
-    show a + v - b = w + v from by rw [← hab2]; abel] at par1
-  rw [show a - v + b = u - v from by rw [← hab1]; abel,
-    show a - v - b = w - v from by rw [← hab2]; abel] at par2
-  simp only [qpolar]
-  linarith
-
-/-- **Additivity of the polarisation difference in the first slot.** `f (u+w) v = f u v + f w v`:
-the halving identity at `(u, w)` and at `(u+w, 0)` (where `f 0 v = 0`) share a right-hand
-side. -/
-theorem qpolar_add_left (u w v : EuclideanSpace ℂ (Fin N)) :
-    OP.qpolar (u + w) v = OP.qpolar u v + OP.qpolar w v := by
-  have h1 := OP.qpolar_add_half u w v
-  have h2 := OP.qpolar_add_half (u + w) 0 v
-  simp only [OP.qpolar_zero_left, add_zero] at h2
-  linarith
-
-/-- **Real homogeneity of the polarisation difference in the first slot.** `f (t • u) v =
-t · f u v` for every *real* `t`. Additivity alone gives only `ℚ`-homogeneity; the upgrade to `ℝ`
-is `additive_bounded_linear`, whose local bound is `0 ≤ q ≤ ‖·‖²` (`qform_nonneg`,
-`qform_le_normSq`) — no continuity of `p` is needed or available. -/
-theorem qpolar_smul_real (t : ℝ) (u v : EuclideanSpace ℂ (Fin N)) :
-    OP.qpolar (((t : ℝ) : ℂ) • u) v = t * OP.qpolar u v := by
-  have hadd : ∀ s r : ℝ, OP.qpolar ((((s + r : ℝ)) : ℂ) • u) v
-      = OP.qpolar (((s : ℝ) : ℂ) • u) v + OP.qpolar (((r : ℝ) : ℂ) • u) v := by
-    intro s r
-    rw [show (((s + r : ℝ)) : ℂ) • u = ((s : ℝ) : ℂ) • u + ((r : ℝ) : ℂ) • u from by
-      push_cast; rw [add_smul], OP.qpolar_add_left]
-  have hbound : ∀ s : ℝ, |s| ≤ 1 → |OP.qpolar (((s : ℝ) : ℂ) • u) v| ≤ (‖u‖ + ‖v‖) ^ 2 := by
-    intro s hs
-    have hsn : ‖((s : ℝ) : ℂ) • u‖ ≤ ‖u‖ := by
-      rw [norm_smul, Complex.norm_real, Real.norm_eq_abs]
-      nlinarith [norm_nonneg u, abs_nonneg s]
-    have hp : ‖((s:ℝ):ℂ) • u + v‖ ≤ ‖u‖ + ‖v‖ := le_trans (norm_add_le _ _) (by linarith)
-    have hm : ‖((s:ℝ):ℂ) • u - v‖ ≤ ‖u‖ + ‖v‖ := le_trans (norm_sub_le _ _) (by linarith)
-    have h1 := OP.qform_nonneg (((s:ℝ):ℂ) • u + v)
-    have h2 := OP.qform_nonneg (((s:ℝ):ℂ) • u - v)
-    have h3 := OP.qform_le_normSq (((s:ℝ):ℂ) • u + v)
-    have h4 := OP.qform_le_normSq (((s:ℝ):ℂ) • u - v)
-    rw [abs_le, qpolar]
-    constructor
-    · nlinarith [norm_nonneg (((s:ℝ):ℂ) • u - v), norm_nonneg u, norm_nonneg v]
-    · nlinarith [norm_nonneg (((s:ℝ):ℂ) • u + v), norm_nonneg u, norm_nonneg v]
-  have hlin := additive_bounded_linear (fun s : ℝ => OP.qpolar (((s : ℝ) : ℂ) • u) v) hadd
-    hbound t
-  simpa using hlin
+/-- `q v = Re ⟨v, R v⟩`, the form the sphere lemmas of `Gleason/Descent.lean` take. -/
+theorem qform_eq_re_dotProduct (v : EuclideanSpace ℂ (Fin N)) :
+    OP.qform v = (star (⇑v) ⬝ᵥ (OP.qmatrix *ᵥ (⇑v))).re := by
+  rw [← OP.qform_eq_dotProduct, Complex.ofReal_re]
 
 end OperationalPackage
-
-/-! ### K — the polarised sesquilinear form `S` (Route B step 3b-final)
-
-With `f` bi-additive and `ℝ`-bihomogeneous, the complex polarisation
-`S(u,v) = ¼ f(u,v) − (i/4) f(u, i·v)` is sesquilinear: linear in `v` (the `i`-homogeneity
-`S(u, i·v) = i·S(u,v)` is pure algebra of the formula), conjugate-linear in `u` by conjugate
-symmetry, and `S(v,v) = q v`. -/
-
-namespace OperationalPackage
-
-variable (OP : OperationalPackage N)
-
-/-- **The polarised sesquilinear form.**
-`S(u,v) = ¼ f(u,v) − (i/4) f(u, i·v)`, the complex polarisation of `q`. It is additive
-(`qsesq_add_right`) and `ℂ`-homogeneous (`qsesq_smul_right`) in `v`, conjugate-symmetric
-(`qsesq_conj_symm`), and restricts to `q` on the diagonal (`qsesq_self`) — exactly the
-sesquilinear form whose matrix is the density operator Busch's theorem asserts. -/
-noncomputable def qsesq (u v : EuclideanSpace ℂ (Fin N)) : ℂ :=
-  ((OP.qpolar u v : ℝ) : ℂ) / 4 - Complex.I * ((OP.qpolar u (Complex.I • v) : ℝ) : ℂ) / 4
-
-/-- `S(u, 0) = 0`. -/
-theorem qsesq_zero_right (u : EuclideanSpace ℂ (Fin N)) : OP.qsesq u 0 = 0 := by
-  simp [qsesq, qpolar]
-
-/-- Additivity of `f` in the second slot (by symmetry from `qpolar_add_left`). -/
-theorem qpolar_add_right (u v w : EuclideanSpace ℂ (Fin N)) :
-    OP.qpolar u (v + w) = OP.qpolar u v + OP.qpolar u w := by
-  rw [OP.qpolar_symm u (v + w), OP.qpolar_add_left, OP.qpolar_symm v u, OP.qpolar_symm w u]
-
-/-- Real homogeneity of `f` in the second slot (by symmetry from `qpolar_smul_real`). -/
-theorem qpolar_smul_real_right (t : ℝ) (u v : EuclideanSpace ℂ (Fin N)) :
-    OP.qpolar u (((t : ℝ) : ℂ) • v) = t * OP.qpolar u v := by
-  rw [OP.qpolar_symm u (((t : ℝ) : ℂ) • v), OP.qpolar_smul_real, OP.qpolar_symm v u]
-
-/-- **Additivity of `S` in the second slot.** -/
-theorem qsesq_add_right (u v w : EuclideanSpace ℂ (Fin N)) :
-    OP.qsesq u (v + w) = OP.qsesq u v + OP.qsesq u w := by
-  simp only [qsesq, smul_add, OP.qpolar_add_right]
-  push_cast
-  ring
-
-/-- **Real homogeneity of `S` in the second slot.** -/
-theorem qsesq_smul_real_right (t : ℝ) (u v : EuclideanSpace ℂ (Fin N)) :
-    OP.qsesq u (((t : ℝ) : ℂ) • v) = (t : ℂ) * OP.qsesq u v := by
-  have hcomm : Complex.I • (((t : ℝ) : ℂ) • v) = ((t : ℝ) : ℂ) • (Complex.I • v) :=
-    smul_comm _ _ _
-  simp only [qsesq, hcomm, OP.qpolar_smul_real_right]
-  push_cast
-  ring
-
-/-- **`S(u, i·v) = i · S(u,v)`** — pure algebra of the polarisation formula (`i·(i·v) = −v`),
-no additivity needed. -/
-theorem qsesq_smul_I_right (u v : EuclideanSpace ℂ (Fin N)) :
-    OP.qsesq u (Complex.I • v) = Complex.I * OP.qsesq u v := by
-  have hII : Complex.I • (Complex.I • v) = -v := by
-    rw [smul_smul, Complex.I_mul_I, neg_smul, one_smul]
-  simp only [qsesq, hII, OP.qpolar_neg_right]
-  push_cast
-  ring_nf
-  rw [Complex.I_sq]
-  ring
-
-/-- **Complex homogeneity in the second slot:** `S(u, c•v) = c · S(u,v)`. Split
-`c = Re c + i · Im c` and combine `qsesq_smul_real_right` with `qsesq_smul_I_right`. -/
-theorem qsesq_smul_right (c : ℂ) (u v : EuclideanSpace ℂ (Fin N)) :
-    OP.qsesq u (c • v) = c * OP.qsesq u v := by
-  have hdecomp : c • v = ((c.re : ℝ) : ℂ) • v + ((c.im : ℝ) : ℂ) • (Complex.I • v) := by
-    rw [smul_smul, ← add_smul]
-    congr 1
-    exact (Complex.re_add_im c).symm
-  rw [hdecomp, OP.qsesq_add_right, OP.qsesq_smul_real_right, OP.qsesq_smul_real_right,
-    OP.qsesq_smul_I_right]
-  have hc : ((c.re : ℝ) : ℂ) + ((c.im : ℝ) : ℂ) * Complex.I = c := Complex.re_add_im c
-  linear_combination OP.qsesq u v * hc
-
-/-- **Conjugate symmetry:** `S(v,u) = conj (S(u,v))`. The real part is symmetric
-(`qpolar_symm`); the imaginary part flips because `q(v ± i·u) = q(u ∓ i·v)` (multiply by the
-unit phase `∓i` and use `qform_smul`). With `qsesq_smul_right` this makes `S` conjugate-linear
-in its *first* slot. -/
-theorem qsesq_conj_symm (u v : EuclideanSpace ℂ (Fin N)) :
-    OP.qsesq v u = (starRingEnd ℂ) (OP.qsesq u v) := by
-  have h1 : OP.qform (v + Complex.I • u) = OP.qform (u - Complex.I • v) := by
-    have hI : Complex.I • (u - Complex.I • v) = v + Complex.I • u := by
-      rw [smul_sub, smul_smul, Complex.I_mul_I, neg_smul, one_smul, sub_neg_eq_add, add_comm]
-    rw [← hI, OP.qform_smul]
-    simp
-  have h2 : OP.qform (v - Complex.I • u) = OP.qform (u + Complex.I • v) := by
-    have hI : (-Complex.I) • (u + Complex.I • v) = v - Complex.I • u := by
-      rw [smul_add, smul_smul, neg_mul, Complex.I_mul_I, neg_neg, one_smul, neg_smul,
-        add_comm, ← sub_eq_add_neg]
-    rw [← hI, OP.qform_smul]
-    simp
-  have hpol : OP.qpolar v (Complex.I • u) = - OP.qpolar u (Complex.I • v) := by
-    simp only [qpolar, h1, h2]
-    ring
-  simp only [qsesq, OP.qpolar_symm v u, hpol]
-  simp only [map_sub, map_div₀, map_mul, Complex.conj_I, Complex.conj_ofReal, map_ofNat]
-  push_cast
-  ring
-
-/-- **`S` restricts to `q` on the diagonal:** `S(v,v) = q v`. The diagonal value is
-`f v v = 4 q v` (degree-2 homogeneity at `2`), and the imaginary term vanishes because
-`q(v − i·v) = q(v + i·v)` (unit phase `−i`). Both steps are the same witness,
-`OperationalPackage.qform_smul` (`q(c • v) = ‖c‖² q v`): at `c = 2` it gives the diagonal value,
-and at `c = −i` it gives `‖−i‖² = 1`, collapsing the imaginary term. -/
-theorem qsesq_self (v : EuclideanSpace ℂ (Fin N)) :
-    OP.qsesq v v = ((OP.qform v : ℝ) : ℂ) := by
-  have hdiag : OP.qpolar v v = 4 * OP.qform v := by
-    have h2 : v + v = ((2 : ℝ) : ℂ) • v := by push_cast; rw [two_smul]
-    have hn2 : ‖((2 : ℝ) : ℂ)‖ ^ 2 = 4 := by
-      rw [Complex.norm_real, Real.norm_eq_abs]; norm_num
-    rw [qpolar, h2, OP.qform_smul, hn2, sub_self, OP.qform_zero, sub_zero]
-  have hIv : OP.qpolar v (Complex.I • v) = 0 := by
-    have hneg : (-Complex.I) • (v + Complex.I • v) = v - Complex.I • v := by
-      rw [smul_add, smul_smul, neg_mul, Complex.I_mul_I, neg_neg, one_smul, neg_smul,
-        add_comm, ← sub_eq_add_neg]
-    rw [qpolar, ← hneg, OP.qform_smul]
-    simp
-  rw [qsesq, hdiag, hIv]
-  push_cast
-  ring
-
-end OperationalPackage
-
-/-! ### L — the reconstructed matrix `R` and the representation theorem (Route B step 3b-final)
-
-`R j k := S(eⱼ, eₖ)` on the standard basis. Sesquilinearity turns the basis expansion of `v`
-into `q v = ⟨v, R v⟩ = Tr(R · |v⟩⟨v|)`, i.e. `p(|v⟩⟨v|) = Tr(R · |v⟩⟨v|)`; the spectral
-reduction lifts this to `p E = Tr(R · E)` for every effect. -/
-
-/-- **Standard-basis expansion in `EuclideanSpace`:** `v = ∑ᵢ vᵢ • eᵢ`. -/
-theorem euclidean_sum_single (v : EuclideanSpace ℂ (Fin N)) :
-    ∑ i, (v i) • (EuclideanSpace.single i (1:ℂ)) = v := by
-  ext j
-  simp
-  refine (Finset.sum_eq_single_of_mem j (Finset.mem_univ j) ?_).trans ?_
-  · intro b _ hb
-    simp [Ne.symm hb]
-  · simp
 
 /-- **`Tr(R · |v⟩⟨v|) = ⟨v, R v⟩`.** The trace pairing against a rank-one projector is the
-quadratic form of `R` — the identity turning the sesquilinear reconstruction into the
-Born-style trace formula. -/
+quadratic form of `R` (`Gleason.trace_mul_vecMulVec` on the `outerProduct`). -/
 theorem trace_mul_outerProduct (R : Matrix (Fin N) (Fin N) ℂ)
     (v : EuclideanSpace ℂ (Fin N)) :
-    (R * outerProduct v).trace = star (⇑v) ⬝ᵥ (R *ᵥ (⇑v)) := by
-  simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, outerProduct,
-    Matrix.vecMulVec_apply, dotProduct, Pi.star_apply, Matrix.mulVec, Finset.mul_sum]
-  exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
+    (R * outerProduct v).trace = star (⇑v) ⬝ᵥ (R *ᵥ (⇑v)) :=
+  Gleason.trace_mul_vecMulVec R v
 
 namespace OperationalPackage
 
 variable (OP : OperationalPackage N)
-
-/-- **`S` is linear over finite sums in the second slot.** -/
-theorem qsesq_sum_right {ι : Type*} (u : EuclideanSpace ℂ (Fin N)) (s : Finset ι) (c : ι → ℂ)
-    (e : ι → EuclideanSpace ℂ (Fin N)) :
-    OP.qsesq u (∑ i ∈ s, c i • e i) = ∑ i ∈ s, c i * OP.qsesq u (e i) := by
-  classical
-  induction s using Finset.induction with
-  | empty => simp [OP.qsesq_zero_right]
-  | @insert i s hi ih =>
-    rw [Finset.sum_insert hi, Finset.sum_insert hi, OP.qsesq_add_right, OP.qsesq_smul_right, ih]
-
-/-- **`S` is conjugate-linear over finite sums in the first slot** (via `qsesq_conj_symm`). -/
-theorem qsesq_sum_left {ι : Type*} (s : Finset ι) (c : ι → ℂ)
-    (e : ι → EuclideanSpace ℂ (Fin N)) (w : EuclideanSpace ℂ (Fin N)) :
-    OP.qsesq (∑ i ∈ s, c i • e i) w = ∑ i ∈ s, (starRingEnd ℂ) (c i) * OP.qsesq (e i) w := by
-  rw [OP.qsesq_conj_symm w (∑ i ∈ s, c i • e i), OP.qsesq_sum_right, map_sum]
-  refine Finset.sum_congr rfl fun i _ => ?_
-  rw [map_mul]
-  congr 1
-  exact (OP.qsesq_conj_symm w (e i)).symm
-
-/-- **The reconstructed matrix** `R j k = S(eⱼ, eₖ)` on the standard basis — the candidate
-density operator of Busch's theorem (its positivity and unit trace are step 4). -/
-noncomputable def qmatrix : Matrix (Fin N) (Fin N) ℂ :=
-  Matrix.of fun j k =>
-    OP.qsesq (EuclideanSpace.single j (1:ℂ)) (EuclideanSpace.single k (1:ℂ))
-
-/-- **`R` is Hermitian**, directly from `qsesq_conj_symm`. -/
-theorem qmatrix_isHermitian : OP.qmatrix.IsHermitian := by
-  ext j k
-  simp only [Matrix.conjTranspose_apply, qmatrix, Matrix.of_apply, Complex.star_def]
-  exact (OP.qsesq_conj_symm (EuclideanSpace.single k (1:ℂ))
-    (EuclideanSpace.single j (1:ℂ))).symm
-
-/-- **`S` is the sesquilinear form of `R`:** `S(u,v) = ⟨u, R v⟩`. Expand both slots in the
-standard basis (`qsesq_sum_left`, `qsesq_sum_right`). -/
-theorem qsesq_eq_dotProduct (u v : EuclideanSpace ℂ (Fin N)) :
-    OP.qsesq u v = star (⇑u) ⬝ᵥ (OP.qmatrix *ᵥ (⇑v)) := by
-  conv_lhs => rw [← euclidean_sum_single u, ← euclidean_sum_single v]
-  rw [OP.qsesq_sum_left]
-  simp only [OP.qsesq_sum_right, dotProduct, Pi.star_apply, Matrix.mulVec, qmatrix,
-    Matrix.of_apply, Finset.mul_sum, Complex.star_def]
-  exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun k _ => by ring
-
-/-- **`q` is the quadratic form of `R`:** `q v = ⟨v, R v⟩`. -/
-theorem qform_eq_dotProduct (v : EuclideanSpace ℂ (Fin N)) :
-    ((OP.qform v : ℝ) : ℂ) = star (⇑v) ⬝ᵥ (OP.qmatrix *ᵥ (⇑v)) := by
-  rw [← OP.qsesq_self v, OP.qsesq_eq_dotProduct]
 
 /-- **The rank-one representation (Route B step 3b-final).** `p(|v⟩⟨v|) = Tr(R · |v⟩⟨v|)` for
 every sub-unit `v`: the operational probability of every rank-one effect is a trace against one
@@ -1270,54 +933,20 @@ end OperationalPackage
 (Route B step 4, capstone)
 
 The three state conditions on the reconstructed `R = OP.qmatrix`: `R.PosSemidef` (from
-`OP.nonneg`), `R.trace = 1` (from `OP.total_one`), and — the only genuinely new argument —
-*uniqueness*, from the fact that a complex matrix is determined by its quadratic form
-(`matrix_eq_zero_of_quadForm_zero`, a polarisation). Together they package `R` as a
-`DensityOperator` and prove `effect_gleason_representation`, the statement the
-`busch_effect_gleason` axiom used to assert. -/
-
-/-- **A complex matrix is determined by its quadratic form.** If `star x ⬝ᵥ (D *ᵥ x) = 0` for
-every `x`, then `D = 0`. Over `ℂ` the diagonal of a sesquilinear form recovers the whole form by
-polarisation, so a vanishing quadratic form forces every entry to vanish. -/
-theorem matrix_eq_zero_of_quadForm_zero {D : Matrix (Fin N) (Fin N) ℂ}
-    (hQ : ∀ x : Fin N → ℂ, star x ⬝ᵥ (D *ᵥ x) = 0) : D = 0 := by
-  have hI : star (Complex.I) = -Complex.I := by rw [Complex.star_def, Complex.conj_I]
-  have hII : Complex.I * Complex.I = -1 := Complex.I_mul_I
-  have hB : ∀ u v : Fin N → ℂ, star u ⬝ᵥ (D *ᵥ v) = 0 := by
-    intro u v
-    have h1 := hQ (u + v)
-    have h2 := hQ (u - v)
-    have h3 := hQ (u + Complex.I • v)
-    have h4 := hQ (u - Complex.I • v)
-    simp only [star_add, star_sub, star_smul, hI, mulVec_add, mulVec_sub, Matrix.mulVec_smul,
-      add_dotProduct, sub_dotProduct, dotProduct_add, dotProduct_sub, smul_dotProduct,
-      dotProduct_smul, smul_eq_mul, neg_mul] at h1 h2 h3 h4
-    have key : (4 : ℂ) * (star u ⬝ᵥ (D *ᵥ v)) = 0 := by
-      linear_combination h1 - h2 - Complex.I * h3 + Complex.I * h4
-        + (2 * (star u ⬝ᵥ (D *ᵥ v)) - 2 * (star v ⬝ᵥ (D *ᵥ u))) * hII
-    have h4ne : (4 : ℂ) ≠ 0 := by norm_num
-    exact (mul_eq_zero.mp key).resolve_left h4ne
-  ext j k
-  have hjk := hB (Pi.single j 1) (Pi.single k 1)
-  rw [Matrix.mulVec_single_one] at hjk
-  simpa [dotProduct, Matrix.col_apply, Pi.single_apply, Finset.sum_ite_eq', eq_comm] using hjk
-
-/-- **The trace of a product of two Hermitian matrices is real.** `Tr(A·B)^conj = Tr(B·A) =
-Tr(A·B)`. -/
-theorem trace_mul_isHermitian_real {ι : Type*} [Fintype ι] {A B : Matrix ι ι ℂ}
-    (hA : A.IsHermitian) (hB : B.IsHermitian) :
-    (starRingEnd ℂ) ((A * B).trace) = (A * B).trace := by
-  calc (starRingEnd ℂ) ((A * B).trace)
-      = ((A * B)ᴴ).trace := by rw [starRingEnd_apply, ← Matrix.trace_conjTranspose]
-    _ = (B * A).trace := by rw [Matrix.conjTranspose_mul, hA.eq, hB.eq]
-    _ = (A * B).trace := Matrix.trace_mul_comm _ _
+`OP.nonneg`, through `Gleason.posSemidef_of_sphere_nonneg`), `R.trace = 1` (from
+`OP.total_one`), and *uniqueness*, from the fact that a Hermitian matrix is determined by its
+quadratic form on the unit sphere (`Gleason.eq_of_sphere_quadForm_eq`, a polarisation). Together
+they package `R` as a `DensityOperator` and prove `effect_gleason_representation`, the statement
+the `busch_effect_gleason` axiom used to assert. The sphere lemmas live in
+`Mathlib/Analysis/InnerProductSpace/Gleason/Descent.lean`, shared with the projection form of
+Gleason's theorem. -/
 
 /-- **The trace form lifts to the complex trace.** For a density operator `ρ` and effect `E`
 (both Hermitian), `Tr(ρ·E)` is real, so `↑(traceForm ρ E) = Tr(ρ.M·E.M)`. -/
 theorem traceForm_ofReal (ρ : DensityOperator N) (E : Effect N) :
     ((traceForm ρ E : ℝ) : ℂ) = (ρ.M * E.M).trace := by
   have him : ((ρ.M * E.M).trace).im = 0 :=
-    Complex.conj_eq_iff_im.mp (trace_mul_isHermitian_real ρ.isHermitian E.isHermitian)
+    Complex.conj_eq_iff_im.mp (Gleason.trace_mul_isHermitian_real ρ.isHermitian E.isHermitian)
   apply Complex.ext
   · simp [traceForm]
   · simp [traceForm, him]
@@ -1327,14 +956,12 @@ namespace OperationalPackage
 variable (OP : OperationalPackage N)
 
 /-- **Step 4a — the reconstructed matrix is positive semidefinite.** `R.PosSemidef` from
-`qform_nonneg` and `qform_eq_dotProduct` (`⟨x, R x⟩ = q x ≥ 0`), with `R` Hermitian. -/
-theorem qmatrix_posSemidef : OP.qmatrix.PosSemidef := by
-  refine Matrix.PosSemidef.of_dotProduct_mulVec_nonneg OP.qmatrix_isHermitian fun x => ?_
-  have hx := OP.qform_eq_dotProduct (WithLp.toLp 2 x)
-  have hcoe : ⇑(WithLp.toLp 2 x) = x := rfl
-  rw [hcoe] at hx
-  rw [← hx]
-  exact Complex.zero_le_real.mpr (OP.qform_nonneg _)
+`qform_nonneg` on the unit sphere and `qform_eq_re_dotProduct`, through
+`Gleason.posSemidef_of_sphere_nonneg`. -/
+theorem qmatrix_posSemidef : OP.qmatrix.PosSemidef :=
+  Gleason.posSemidef_of_sphere_nonneg OP.qmatrix_isHermitian fun v _ => by
+    rw [← OP.qform_eq_re_dotProduct]
+    exact OP.qform_nonneg v
 
 /-- **Step 4b — the reconstructed matrix has unit trace.** `R.trace = 1` from `OP.total_one`
 (`p I = 1`) and `p_eq_trace` at `E = Effect.one` (`Tr(R · I) = Tr R`). -/
@@ -1363,44 +990,19 @@ theorem p_eq_traceForm_qdensity (E : Effect N) :
   exact Complex.ofReal_injective (h1.trans h2.symm)
 
 /-- **Step 4c — uniqueness.** Any density operator whose trace form reproduces `p` on every
-effect equals `qdensity`. Their difference `D` is Hermitian with `Tr(D · E) = 0` for every
-effect; taking `E = |v⟩⟨v|` (sub-unit) gives `⟨v, D v⟩ = 0` on the whole unit ball, and scaling
-+ polarisation (`matrix_eq_zero_of_quadForm_zero`) forces `D = 0`. -/
+effect equals `qdensity`: on the rank-one effects `|v⟩⟨v|` of the unit sphere both `ρ.M` and `R`
+have quadratic form `q v`, and a Hermitian matrix is determined by its quadratic form on the
+sphere (`Gleason.eq_of_sphere_quadForm_eq`). -/
 theorem qdensity_unique (ρ : DensityOperator N)
     (hρ : ∀ E : Effect N, OP.p E = traceForm ρ E) :
     ρ = OP.qdensity := by
   suffices hM : ρ.M = OP.qmatrix by
     obtain ⟨M, _, _, _⟩ := ρ; cases hM; rfl
-  set D : Matrix (Fin N) (Fin N) ℂ := ρ.M - OP.qmatrix with hD
-  -- `Tr(D · E.M) = 0` for every effect E
-  have htr : ∀ E : Effect N, (D * E.M).trace = 0 := by
-    intro E
-    have e1 : ((OP.p E : ℝ) : ℂ) = (ρ.M * E.M).trace := by
-      rw [hρ E]; exact traceForm_ofReal ρ E
-    have e2 : ((OP.p E : ℝ) : ℂ) = (OP.qmatrix * E.M).trace := OP.p_eq_trace E
-    rw [hD, Matrix.sub_mul, Matrix.trace_sub, ← e1, ← e2, sub_self]
-  -- quadratic form of D vanishes on the whole space
-  have hquad : ∀ x : Fin N → ℂ, star x ⬝ᵥ (D *ᵥ x) = 0 := by
-    intro x
-    set X : EuclideanSpace ℂ (Fin N) := WithLp.toLp 2 x with hX
-    set t : ℝ := (1 + ‖X‖)⁻¹ with ht
-    have htpos : 0 < t := by positivity
-    have hle : ‖((t : ℝ) : ℂ) • X‖ ≤ 1 := by
-      rw [norm_smul, Complex.norm_real, Real.norm_eq_abs, abs_of_pos htpos, ht,
-        inv_mul_eq_div, div_le_one (by positivity)]
-      linarith [norm_nonneg X]
-    have hE := htr (outerEffect (((t : ℝ) : ℂ) • X) hle)
-    rw [outerEffect_M, trace_mul_outerProduct] at hE
-    have hcoe : ⇑(((t : ℝ) : ℂ) • X) = ((t : ℝ) : ℂ) • x := rfl
-    rw [hcoe, star_smul, Matrix.mulVec_smul, dotProduct_smul, smul_dotProduct, smul_smul,
-      Complex.star_def, Complex.conj_ofReal, smul_eq_mul] at hE
-    have htne : ((t : ℝ) : ℂ) * ((t : ℝ) : ℂ) ≠ 0 := by
-      simp only [ne_eq, mul_eq_zero, Complex.ofReal_eq_zero, or_self]
-      exact ne_of_gt htpos
-    exact (mul_eq_zero.mp hE).resolve_left htne
-  have hDzero : D = 0 := matrix_eq_zero_of_quadForm_zero hquad
-  rw [hD] at hDzero
-  exact sub_eq_zero.mp hDzero
+  refine Gleason.eq_of_sphere_quadForm_eq ρ.isHermitian OP.qmatrix_isHermitian fun v hv => ?_
+  have h1 := hρ (outerEffect v (le_of_eq hv))
+  rw [← OP.qform_eq_p (le_of_eq hv), OP.qform_eq_re_dotProduct, traceForm, outerEffect_M,
+    trace_mul_outerProduct] at h1
+  exact h1.symm
 
 /-- **Busch effect-Gleason (finite dim), proved.** For every operational package there is a
 **unique** density operator `ρ` with `p E = Tr(ρ · E)` for every effect. This discharges the

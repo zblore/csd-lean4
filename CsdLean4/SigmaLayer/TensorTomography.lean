@@ -56,7 +56,7 @@ Generation ⟹ records: `ρ = σ` is detected by trace pairings against a spanni
 (`eq_of_trace_mul_eqOn_span`); the local products span, and each local factor is spanned by rank-one
 projectors onto orthonormal-basis vectors (`span_onbProjectors_eq_top`, from the Hermitian spectral
 theorem `IsHermitian.eq_eigen_outer` and `ℜ + i ℑ`); the pairings against product projectors are
-the record rates, real because both factors are Hermitian (`trace_mul_isHermitian_real`).
+the record rates, real because both factors are Hermitian (`Gleason.trace_mul_isHermitian_real`).
 
 Records ⟹ generation: if the local products do NOT span, a nonzero functional kills them
 (`Submodule.exists_le_ker_of_lt_top`), realised as a trace pairing `X ↦ Tr(Y X)`
@@ -94,7 +94,7 @@ because the product projectors are Hermitian).
 (`joint_mem_span_local`, `single_eq_smul`); `LF2/BornWrapper.lean` (`outerProduct`,
 `IsHermitian.eq_eigen_outer`, `outerProduct_mul_outerProduct_trace`); `LF2/MixedEnsembleIx.lean`
 (`DensityOperatorIx.rankOne`, `ensemble`, `traceForm_rankOne_outerProduct`); `LF2/EffectGleason.lean`
-(`trace_mul_isHermitian_real`, and `matrix_eq_zero_of_quadForm_zero` — the quadratic-form
+(`Gleason.trace_mul_isHermitian_real`, and `Gleason.matrix_eq_zero_of_quadForm_zero` — the quadratic-form
 separation, a polarisation, which this module's functional-form separation
 `exists_forall_eq_trace_mul` sits beside; both are distinct from the trace-pairing separation
 `Matrix.ext_iff_trace_mul_left`/`_right`, whose existence form is
@@ -362,8 +362,8 @@ theorem isHermitian_apply_mul_apply (hc : ∀ A B, Commute (ιA A) (ιB B))
 theorem traceForm_eq_iff_of_isHermitian (ρ σ : DensityOperatorIx κ) {P : Matrix κ κ ℂ}
     (hP : P.IsHermitian) :
     ρ.traceForm P = σ.traceForm P ↔ (ρ.M * P).trace = (σ.M * P).trace := by
-  have hρ := Complex.conj_eq_iff_re.mp (trace_mul_isHermitian_real ρ.isHermitian hP)
-  have hσ := Complex.conj_eq_iff_re.mp (trace_mul_isHermitian_real σ.isHermitian hP)
+  have hρ := Complex.conj_eq_iff_re.mp (Gleason.trace_mul_isHermitian_real ρ.isHermitian hP)
+  have hσ := Complex.conj_eq_iff_re.mp (Gleason.trace_mul_isHermitian_real σ.isHermitian hP)
   simp only [DensityOperatorIx.traceForm, RCLike.re_to_complex]
   constructor
   · intro h

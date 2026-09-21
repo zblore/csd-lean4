@@ -7141,4 +7141,156 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Projectivization.isHolomorphicVectorField_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Projectivization.isHolomorphicVectorField_schrodingerField
 
+-- ====================================================================================
+-- Gleason's theorem, finite-dimensional (2026-09-21, specs/gleason-feasibility.md): the
+-- Mathlib-only tree Analysis/InnerProductSpace/Gleason/. Layers A (reductions) and C (descent)
+-- are PROVED; the core lemma on S^2 (Layer B) is NOT -- it enters only as the explicit
+-- hypothesis `Gleason.CoreLemma` of `gleason_representation_of_core`. Nothing here claims
+-- Gleason's theorem.
+-- ====================================================================================
+
+-- Polarization.lean: the Jordan-von Neumann engine, extracted from LF2/EffectGleason.lean
+-- (which now consumes it): a quadratic-like q (degree-2 homogeneous, parallelogram,
+-- 0 <= q <= |.|^2) is the quadratic form of a Hermitian matrix, with the bounded-additive
+-- Cauchy equation replacing continuity.
+/-- info: 'Gleason.additive_bounded_linear' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.additive_bounded_linear
+
+/-- info: 'Gleason.IsQuadraticLike.polar_add_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsQuadraticLike.polar_add_left
+
+/-- info: 'Gleason.IsQuadraticLike.polar_smul_real' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsQuadraticLike.polar_smul_real
+
+/-- info: 'Gleason.IsQuadraticLike.sesq_conj_symm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsQuadraticLike.sesq_conj_symm
+
+/-- info: 'Gleason.IsQuadraticLike.sesq_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsQuadraticLike.sesq_self
+
+/-- info: 'Gleason.IsQuadraticLike.polarMatrix_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsQuadraticLike.polarMatrix_isHermitian
+
+-- ★ q v = <v, R v> for R = polarMatrix q.
+/-- info: 'Gleason.IsQuadraticLike.eq_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsQuadraticLike.eq_dotProduct
+
+/-- info: 'Gleason.matrix_eq_zero_of_quadForm_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.matrix_eq_zero_of_quadForm_zero
+
+/-- info: 'Gleason.trace_mul_isHermitian_real' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.trace_mul_isHermitian_real
+
+/-- info: 'Gleason.trace_mul_vecMulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.trace_mul_vecMulVec
+
+-- ProjectionPackage.lean: the statement side. Projections are IsStarProjection matrices; a
+-- package is nonnegative, normalised and additive on orthogonal projections. rankOne v = |v><v|,
+-- the resolution of the identity over an orthonormal basis, additivity over any finite
+-- pairwise-orthogonal family (p_sum), the frame function frame v = p |v><v| (A1: nonneg,
+-- phase invariant, sums to 1 over every ONB), and A2: its restriction to a completely real
+-- subspace is a real frame function with weight p(sum |e_i><e_i|).
+/-- info: 'Gleason.ProjectionPackage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage
+
+/-- info: 'Gleason.IsFrameFunction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction
+
+/-- info: 'Gleason.rankOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.rankOne
+
+/-- info: 'Gleason.isStarProjection_rankOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.isStarProjection_rankOne
+
+/-- info: 'Gleason.sum_rankOne_orthonormalBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.sum_rankOne_orthonormalBasis
+
+/-- info: 'Gleason.ProjectionPackage.p_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.p_sum
+
+/-- info: 'Gleason.ProjectionPackage.frame_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.frame_smul
+
+-- A1.
+/-- info: 'Gleason.ProjectionPackage.sum_frame_orthonormalBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.sum_frame_orthonormalBasis
+
+/-- info: 'Gleason.ProjectionPackage.isFrameFunction_frame' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.isFrameFunction_frame
+
+-- A2.
+/-- info: 'Gleason.ProjectionPackage.isFrameFunction_realRestrict' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.isFrameFunction_realRestrict
+
+-- Descent.lean (Layer C): a Hermitian matrix with nonnegative quadratic form on the sphere is
+-- PSD, its trace is the sum over the standard basis, two Hermitian matrices agreeing on the
+-- sphere are equal; packaged as quadraticForm_on_sphere_to_density (shared with Busch). The
+-- projection descent: spectral resolution P = sum lambda_i |b_i><b_i| with lambda_i in {0,1},
+-- so p P = Re Tr(A P) for every projection once the frame function is the form of A.
+/-- info: 'Gleason.posSemidef_of_sphere_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.posSemidef_of_sphere_nonneg
+
+/-- info: 'Gleason.eq_of_sphere_quadForm_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.eq_of_sphere_quadForm_eq
+
+-- ★ the shared sphere-to-density lemma.
+/-- info: 'Gleason.quadraticForm_on_sphere_to_density' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.quadraticForm_on_sphere_to_density
+
+/-- info: 'Matrix.IsHermitian.eq_sum_eigenvalues_smul_rankOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Matrix.IsHermitian.eq_sum_eigenvalues_smul_rankOne
+
+/-- info: 'Gleason.eigenvalues_eq_zero_or_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.eigenvalues_eq_zero_or_one
+
+/-- info: 'Gleason.ProjectionPackage.p_eq_re_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.p_eq_re_trace
+
+-- ★★ Gleason's conclusion from the quadratic-form hypothesis.
+/-- info: 'Gleason.ProjectionPackage.existsUnique_density_of_frame_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.existsUnique_density_of_frame_quadratic
+
+-- FrameFunction.lean (Layer A3, the complex reduction): regularity on completely real planes
+-- (IsRealPlaneRegular) makes the frame function a Hermitian form on every complex plane -- the
+-- cross term's phase dependence is first-degree trigonometric (crossTerm_phase, via the
+-- equator pair (x+y)/sqrt2, i(x-y)/sqrt2) -- so the degree-2 extension satisfies the
+-- parallelogram law on C^N and the Jordan-von Neumann engine yields the Hermitian matrix.
+-- isRealPlaneRegular_of_triples bridges from what the core lemma gives on 3-spaces (N >= 3).
+/-- info: 'Gleason.IsRealPlaneRegular' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsRealPlaneRegular
+
+/-- info: 'Gleason.ProjectionPackage.frame_add_frame_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.frame_add_frame_eq
+
+/-- info: 'Gleason.ProjectionPackage.crossTerm_phase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.crossTerm_phase
+
+/-- info: 'Gleason.ProjectionPackage.frame_plane_unit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.frame_plane_unit
+
+/-- info: 'Gleason.ProjectionPackage.ext_plane' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.ext_plane
+
+/-- info: 'Gleason.ProjectionPackage.ext_parallelogram' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.ext_parallelogram
+
+/-- info: 'Gleason.ProjectionPackage.isQuadraticLike_ext' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.isQuadraticLike_ext
+
+-- ★ A3.
+/-- info: 'Gleason.ProjectionPackage.exists_isHermitian_of_isRealPlaneRegular' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.exists_isHermitian_of_isRealPlaneRegular
+
+/-- info: 'Gleason.ProjectionPackage.isRealPlaneRegular_of_triples' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.isRealPlaneRegular_of_triples
+
+-- Reduction.lean: the core lemma as a proposition, and Gleason's theorem for C^N (N >= 3)
+-- from it. The ONLY hypothesis beyond N >= 3 is CoreLemma; no sorry anywhere on main.
+/-- info: 'Gleason.CoreLemma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.CoreLemma
+
+-- ★★ Gleason from the core lemma (Layers A + C).
+/-- info: 'Gleason.ProjectionPackage.gleason_representation_of_core' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.gleason_representation_of_core
+
 end CSD.Tests.AxiomAudit

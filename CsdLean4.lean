@@ -591,6 +591,11 @@ public import CsdLean4.Mathlib.Geometry.Manifold.WedgeForm
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerWedge
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPluriharmonic
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhase
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Polarization
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.ProjectionPackage
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Descent
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.FrameFunction
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Reduction
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudy
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyForm
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic

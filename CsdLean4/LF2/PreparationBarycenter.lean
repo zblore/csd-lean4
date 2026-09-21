@@ -199,7 +199,8 @@ theorem effectProjFn_eq_sum (rep : Q → EuclideanSpace ℂ (Fin N)) (E : Effect
   have htr : star (⇑(rep p) : Fin N → ℂ) ⬝ᵥ E.M *ᵥ ⇑(rep p)
       = (E.M * outerProduct (rep p)).trace := (trace_mul_outerProduct E.M (rep p)).symm
   have hreal : (E.M * outerProduct (rep p)).trace.im = 0 :=
-    Complex.conj_eq_iff_im.mp (trace_mul_isHermitian_real E.isHermitian (outerProduct_isHermitian _))
+    Complex.conj_eq_iff_im.mp
+      (Gleason.trace_mul_isHermitian_real E.isHermitian (outerProduct_isHermitian _))
   have h1 : ((effectProjFn rep E p : ℝ) : ℂ) = (E.M * outerProduct (rep p)).trace := by
     unfold effectProjFn
     rw [htr]
