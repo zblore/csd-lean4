@@ -117,7 +117,10 @@ Axiom sweep on the branch (`lake env lean`, `#print axioms`):
 | `Gleason.ProjectionPackage.gleason_representation_of_core` | foundational triple |
 | `…exists_isHermitian_of_isRealPlaneRegular`, `…isRealPlaneRegular_of_triples`, `…existsUnique_density_of_frame_quadratic`, `…isFrameFunction_realRestrict`, `Gleason.quadraticForm_on_sphere_to_density`, `Gleason.IsQuadraticLike.eq_dotProduct` | foundational triple |
 
-**Exactly one `sorry`**, the core lemma; the theorem depends on nothing else.
+**Exactly one `sorry`**, the core lemma; the theorem depends on nothing else. (The corpus sweep
+`scripts/check-axiom-sweep.sh` walks `CSD.*` declarations only, so it does not see the `Gleason`
+namespace; on the branch the two `sorryAx` results are pinned explicitly in
+`Tests/AxiomAudit/MathlibStaging.lean`, and on `main` all 38 Gleason pins are foundational-triple.)
 
 ## 5. Layer B, sized against Cooke–Keane–Moran (spec task 4)
 
