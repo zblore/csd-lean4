@@ -7382,4 +7382,77 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Gleason.eq_self_of_monotone_sum_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.eq_self_of_monotone_sum_eq_one
 
+-- 2026-09-21, stage 57(b) of the core lemma (specs/gleason-feasibility.md): Piron.lean --
+-- CKM section 4's vocabulary (latitude, northern hemisphere, equator, the coldest vector
+-- orthogonal to s, the descent D_s) and the GEOMETRIC LEMMA of section 5 (Piron): any point
+-- strictly lower than s is reached from s by a finite chain of descents. The gnomonic lift
+-- (p + v)/|p + v| makes a descent the tangent line to a latitude circle
+-- (lift_mem_descent_iff: lift w in D_{lift v} iff <w, v> = |v|^2); the tangent plane is read as
+-- C through an orthonormal pair (tangent e1 e2 z); the explicit spiral z_k = z_0 (cos t)^{-k}
+-- e^{ikt} descends step by step (spiral_step), turns by the angle of the target, and grows by
+-- (cos t)^{-n} >= 1 - pi^2/(2n) (one_sub_le_cos_arg_div_pow: cos x >= 1 - x^2/2 + Bernoulli),
+-- so it stops short of the target on its ray; two more steps along the ray finish
+-- (descent_step_ray); an equator target is reached from any point orthogonal to it
+-- (mem_descent_of_equator). Still nothing claims Gleason's theorem.
+/-- info: 'Gleason.latitude' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.latitude
+
+/-- info: 'Gleason.coldest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.coldest
+
+/-- info: 'Gleason.descent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.descent
+
+/-- info: 'Gleason.mem_descent_of_equator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.mem_descent_of_equator
+
+/-- info: 'Gleason.lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.lift
+
+/-- info: 'Gleason.latitude_lift_lt_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.latitude_lift_lt_iff
+
+/-- info: 'Gleason.eq_lift_of_northern' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.eq_lift_of_northern
+
+-- the gnomonic dictionary.
+/-- info: 'Gleason.lift_mem_descent_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.lift_mem_descent_iff
+
+/-- info: 'Gleason.tangent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.tangent
+
+/-- info: 'Gleason.inner_tangent_tangent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.inner_tangent_tangent
+
+/-- info: 'Gleason.exists_tangent_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.exists_tangent_eq
+
+/-- info: 'Gleason.lift_tangent_mem_descent_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.lift_tangent_mem_descent_iff
+
+/-- info: 'Gleason.descent_step_ray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.descent_step_ray
+
+/-- info: 'Gleason.spiral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.spiral
+
+-- each spiral point is on the descent through the previous one.
+/-- info: 'Gleason.spiral_step' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.spiral_step
+
+/-- info: 'Gleason.spiral_end' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.spiral_end
+
+-- the growth factor tends to one.
+/-- info: 'Gleason.one_sub_le_cos_arg_div_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.one_sub_le_cos_arg_div_pow
+
+/-- info: 'Gleason.IsDescentChain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsDescentChain
+
+-- ★ Piron's geometric lemma (CKM section 5).
+/-- info: 'Gleason.exists_descent_chain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.exists_descent_chain
+
 end CSD.Tests.AxiomAudit
