@@ -7455,4 +7455,79 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Gleason.exists_descent_chain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.exists_descent_chain
 
+-- 2026-09-22, stage 57(c) of the core lemma (specs/gleason-feasibility.md): SimpleFrame.lean --
+-- CKM section 4's basic lemma and the theorem of section 5 (the simple frame functions: those
+-- attaining sup at p and constant on the equator of p -- Bell's and Piron's extreme case).
+-- equator_le: the equator value is the minimum (P4 at the pole); descent_le: f s' <= f s on the
+-- descent through s (four-point identity on D_s, whose point orthogonal to s is on the
+-- equator, inner_pole_cross_coldest); the approximate versions equator_lt_add/descent_lt_add
+-- for section 6; le_of_latitude_lt: monotone in latitude via exists_descent_chain + descent_le
+-- along the chain; exists_frame_of_latitudes: a frame in the northern hemisphere with latitudes
+-- a, b, c for a + b + c = 1 (transport (sqrt a, sqrt b, sqrt c), completed to an ONB, through an
+-- ONB (p, e1, e2)); parallelSup/parallelInf over the parallels, interlaced by monotonicity
+-- (parallelSup_le_parallelInf), so the exceptional latitudes are disjoint open gaps, countable
+-- (Set.PairwiseDisjoint.countable_of_isOpen); Warmup II on the common value; the squeeze
+-- through nearby unexceptional latitudes empties the exceptional set. STAR eq_add_mul_latitude:
+-- f s = m + (f p - m) <p,s>^2. Still nothing claims Gleason's theorem.
+/-- info: 'Gleason.latitude_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.latitude_le_one
+
+/-- info: 'Gleason.eq_pole_of_latitude_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.eq_pole_of_latitude_eq_one
+
+/-- info: 'Gleason.norm_coldest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.norm_coldest
+
+/-- info: 'Gleason.inner_pole_cross_coldest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.inner_pole_cross_coldest
+
+-- the equator value is the minimum.
+/-- info: 'Gleason.IsFrameFunction.equator_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.equator_le
+
+/-- info: 'Gleason.IsFrameFunction.equator_lt_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.equator_lt_add
+
+-- the basic lemma (CKM section 4).
+/-- info: 'Gleason.IsFrameFunction.descent_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.descent_le
+
+-- its approximate version.
+/-- info: 'Gleason.IsFrameFunction.descent_lt_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.descent_lt_add
+
+-- monotone in latitude.
+/-- info: 'Gleason.IsFrameFunction.le_of_latitude_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.le_of_latitude_lt
+
+-- a frame with prescribed latitudes.
+/-- info: 'Gleason.exists_frame_of_latitudes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.exists_frame_of_latitudes
+
+/-- info: 'Gleason.parallelValues' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.parallelValues
+
+/-- info: 'Gleason.parallelSup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.parallelSup
+
+/-- info: 'Gleason.parallelInf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.parallelInf
+
+/-- info: 'Gleason.parallelValues_nonempty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.parallelValues_nonempty
+
+-- the parallels are interlaced.
+/-- info: 'Gleason.parallelSup_le_parallelInf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.parallelSup_le_parallelInf
+
+/-- info: 'Gleason.parallelValues_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.parallelValues_one
+
+/-- info: 'Gleason.IsFrameFunction.eq_latitude_of_normalised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.eq_latitude_of_normalised
+
+-- STAR the simple-frame-function theorem (CKM section 5).
+/-- info: 'Gleason.IsFrameFunction.eq_add_mul_latitude' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.eq_add_mul_latitude
+
 end CSD.Tests.AxiomAudit
