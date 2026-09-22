@@ -7530,4 +7530,79 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Gleason.IsFrameFunction.eq_add_mul_latitude' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.eq_add_mul_latitude
 
+-- 2026-09-22, stage 57(d) of the core lemma (specs/gleason-feasibility.md): Extremal.lean --
+-- CKM section 6, bounded frame functions attain their extremal values; the second risk point.
+-- The 90-degree rotation rot p s = <p,s> p + p x s preserves inner products (Lagrange);
+-- a frame function composed with an inner-preserving map is a frame function (comp_inner);
+-- symmetrise p g s = g s + g (rot p s) is a frame function of weight 2W, bounded, with
+-- symmetrise p g p = 2 g p and CONSTANT ON THE EQUATOR (four-point identity for the pairs
+-- (e, p x e)). exists_motion: for a unit q != p in the open northern hemisphere, an
+-- inner-preserving T with T p = q and T c_q = p, c_q on the meridian of e0 at parameter
+-- meridianParam p q = sqrt(1 - <p,q>^2)/<p,q> (OrthonormalBasis.equiv on (c, d, e1) -> (p, d', p x d')).
+-- exists_forall_le: a maximising sequence, a convergent subsequence (IsCompact.tendsto_subseq
+-- on the sphere), the moved symmetrised functions in the box [2m, 2M]^{S^2}, a cluster point
+-- (Tychonoff: isCompact_univ_pi + IsCompact.exists_clusterPt) which is a frame function,
+-- constant on the equator, with value 2 sup f at p (closed conditions, mem_of_clusterPt;
+-- eq_of_clusterPt_of_tendsto), hence m' + (2 sup f - m') <p,.>^2 by eq_add_mul_latitude; a
+-- fixed meridian point c near p has h c > 2 sup f - eps, frequently the moved function is
+-- close to h at c (clusterPt_iff_frequently), and the two-step ray descent
+-- (descent_step_ray) with the approximate basic lemma twice gives f p > sup f - 8 eps.
+-- Still nothing claims Gleason's theorem.
+/-- info: 'Gleason.rot' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.rot
+
+/-- info: 'Gleason.inner_rot_rot' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.inner_rot_rot
+
+/-- info: 'Gleason.IsFrameFunction.comp_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.comp_inner
+
+/-- info: 'Gleason.symmetrise' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.symmetrise
+
+/-- info: 'Gleason.IsFrameFunction.symmetrise' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.symmetrise
+
+-- the symmetrisation is constant on the equator.
+/-- info: 'Gleason.symmetrise_equator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.symmetrise_equator
+
+/-- info: 'Gleason.meridianParam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.meridianParam
+
+/-- info: 'Gleason.inner_lt_one_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.inner_lt_one_of_ne
+
+-- the rigid motion (CKM section 6, Step 1).
+/-- info: 'Gleason.exists_motion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.exists_motion
+
+/-- info: 'Gleason.motion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.motion
+
+/-- info: 'Gleason.motion_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.motion_inner
+
+/-- info: 'Gleason.motion_pole' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.motion_pole
+
+/-- info: 'Gleason.motion_meridian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.motion_meridian
+
+/-- info: 'Gleason.mem_of_clusterPt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.mem_of_clusterPt
+
+/-- info: 'Gleason.eq_of_clusterPt_of_tendsto' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.eq_of_clusterPt_of_tendsto
+
+-- STAR bounded frame functions attain their supremum.
+/-- info: 'Gleason.IsFrameFunction.exists_forall_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.exists_forall_le
+
+/-- info: 'Gleason.IsFrameFunction.exists_forall_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.exists_forall_ge
+
+/-- info: 'Gleason.IsFrameFunction.exists_eq_sphereSup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.exists_eq_sphereSup
+
 end CSD.Tests.AxiomAudit
