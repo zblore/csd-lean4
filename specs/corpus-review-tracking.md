@@ -76,15 +76,15 @@ The first recorded batch is [LF1 foundations](reviews/2026-09-17-lf1-foundations
 The second batch covers the [frequency chain and product witness](reviews/2026-09-17-lf1-frequency.md).
 The third batch covers [LF2 sector, bridge, preparations and interface](reviews/2026-09-21-lf2-bridge.md).
 The fourth batch covers [phase independence, partitions and preparation densities](reviews/2026-09-21-lf2-phase-density.md).
-At its completion on 2026-09-21, current verified coverage is **20 of 691 files (2.89%)**.
-CR-LF2-005 (representative independence) is fixed and validated locally;
-CR-LF2-006 (downstream projected dynamics) remains open. Reviewed status does not
-imply that every improvement is finished.
+The fifth batch covers [LF3 calibration and concrete singlet flow](reviews/2026-09-22-lf3-singlet-flow.md).
+At its completion on 2026-09-22, current verified coverage is **25 of 691 files (3.62%)**.
+FlowChannel has an explicit partial review, excluded from that count. CR-LF2-006's LF3
+caller audit is complete; its broader flow/measurement integration remains open.
 
-Next dependency-ordered work: `LF3/Interface.lean` and `LF3/PurePreparation.lean`
-alongside the relevant `LF2/FlowChannel.lean` sections, to trace fixed-ray assumptions
-against the intended projected dynamics. Split deeper files into explicit partial slices
-as needed. Import/build coverage alone does not mark them reviewed.
+Next dependency-ordered work: review the existing disjoint contextual outcomes and
+connect them to the LF3 frequency interface (CR-LF3-003), then finish FlowChannel.
+CR-LF3-004 tracks the distinct phase-sensitive vector-outcome API question.
+Import/build coverage alone does not mark supporting modules reviewed.
 
 The 30-file stratified pilot is still pending. Before drawing it, freeze the eligibility rule
 for historical versus never-reviewed files, strata, population sizes, seed and inclusion

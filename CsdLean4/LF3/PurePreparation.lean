@@ -40,26 +40,20 @@ form was *uninhabitable* alongside the measure bridge: a continuous
 ontic structure on the fibre (no disintegration needed); it is the trial
 law consumed directly by `LF1.freq_tendsto_of_iid`. See `LF4-todo §8`.
 
-LF4 will eventually supply a concrete constructor
-`PureSingletPreparation.ofKählerPreparation` from a concrete Kähler
-`SectorData` instantiation (per LF4-todo §8) plus the preparation-to-
-Hilbert correspondence (LF4-todo §2). At v1.x the bundle is the carrier
-for the structural hypotheses.
+Concrete constructors now exist in `LF4/SingletKahler.lean`
+(`LF4.ofKählerPreparation`) and `LF4/SingletKahlerFlow.lean`
+(`LF4.ofKählerPreparationFlow`). They prove the calibration by carving
+fibre regions with the prescribed weights. The latter also proves that
+its fibre translation preserves the preparation law. The abstract bundle
+still requires calibration from each caller.
 
-## Three-category posture
+## Proof boundary
 
-- **Proved internally.** The structure definition and a transitional
-  constructor `ofHypothesis`. No theorems proved here; the module
-  bundles hypotheses.
-- **Imported from upstream.** `MeasurementContext`, `MeasurementJointEig`,
-  `LF2.PurePreparation`, `LF2.MeasureBridgeData`,
-  `LF2.OperationalPackage.fromPreparation`.
-- **Axiomatised at an explicit boundary.** Indirectly via the bridge:
-  the LF3 chain capstones, after Phase 7, cite both
-  `busch_effect_gleason` (via `pure_state_born_weights_of_certainty`
-  inside the chain proof's OP.p ↔ Born identity step) and the foundational
-  triple. The `MeasureBridgeData` argument carries no axiom — the concrete
-  instances supply it axiom-free.
+`weight_eq_P_st` composes the supplied calibration with the direct
+pure-state Born identity. `ofWeights` performs the reverse conversion
+for constructors that already prove the pre-event masses. Both use
+`OP_p_at_jointEig_eq_P_st_direct`; neither needs the effect-Gleason
+representation theorem. The bridge structure introduces no axiom.
 
 ## API shape
 
@@ -67,12 +61,12 @@ Posited fibre law plus the auxiliary OP-construction data:
 - `μψ : Measure SigmaSpace` + `hμψ_prob` — the **posited fibre trial
   law** over `[ψ]` (the preparation primitive; pushes to a Dirac on the
   ray, not a `μL`-conditional).
-- `μFS : Measure P` — projective reference measure for the OP integral.
+- `μFS : Measure P` — ambient projective reference measure; the OP integrates against `π_*μψ`.
 - `hμFS_prob : IsProbabilityMeasure μFS` — μFS is a probability measure.
 - `bridge : LF2.MeasureBridgeData D μFS` — the measure bridge.
 - `PP : LF2.PurePreparation D μψ N` — the static pure preparation
   (ψ = singlet after re-indexing) over the posited fibre law.
-- `hN : 2 ≤ N` — dimension bound (needed for `busch_effect_gleason`).
+- `hN : 2 ≤ N` — dimension bound retained for the trace-form API; unused by the direct chain.
 - `jed : MeasurementJointEig ctx PP.ψ` — joint spin eigenstate data
   for the measurement context, with the Born identity
   `‖⟨PP.ψ, eig s t⟩‖² = P_st ctx.a ctx.b s t`.
@@ -80,10 +74,10 @@ Posited fibre law plus the auxiliary OP-construction data:
   regions for the (s, t) sectors.
 - `bridge_op_p : ∀ s t, μψ((O_region s t).preEvent)
                       = ENNReal.ofReal (OP.p (rankOneEffect (jed.eig s t)))`
-  — the ontic weight ↔ OP.p bridge. **LF4 discharge target.**
+  — the ontic weight ↔ OP.p calibration, proved by the concrete LF4 constructors.
 
-The transitional constructor `ofHypothesis` accepts the raw field set
-for migrating existing callsites.
+`ofHypothesis` accepts the raw field set. `ofWeights` instead accepts
+pre-event masses and derives the OP calibration once for both LF4 constructors.
 -/
 
 @[expose] public section
@@ -126,9 +120,10 @@ variable {SigmaSpace P G : Type*}
     disintegration machinery is required; `μψ` is the trial law directly,
     consumed by `LF1.freq_tendsto_of_iid` in the chain capstones.
 
-    A v1.x carrier of the LF4 discharge target. LF4 will supply a
-    concrete constructor; the transitional `ofHypothesis` constructor
-    below lets callers migrate without yet having the LF4 content. -/
+    The concrete LF4 constructors inhabit this bundle for generic singlet
+    contexts. No disjointness or coverage of `O_region` is required, and
+    no fixed-ray condition on the flow is assumed: calibration concerns
+    the actual pre-events `Φ⁻¹' Ω`. -/
 structure PureSingletPreparation
     (D : CSD.LF2.SectorData SigmaSpace P G)
     (ctx : MeasurementContext) (N : ℕ) where
@@ -141,43 +136,30 @@ structure PureSingletPreparation
   μψ               : Measure SigmaSpace
   /-- `μψ` is a probability measure. -/
   hμψ_prob         : IsProbabilityMeasure μψ
-  /-- Projective reference measure for the OP construction. -/
+  /-- Ambient projective reference measure; the OP integral uses `π_*μψ`. -/
   μFS              : Measure P
   /-- `μFS` is a probability measure. -/
   hμFS_prob        : IsProbabilityMeasure μFS
-  /-- Measure bridge data (ambient `μL` ↔ `μFS`). Type-level in the OP;
-      carries the symmetry axiom by the canonical-constructor discipline. -/
+  /-- Measure bridge data (ambient `μL` ↔ `μFS`), supplied as proved
+      structure fields. This is separate from the preparation pushforward. -/
   bridge           : CSD.LF2.MeasureBridgeData D μFS
   /-- LF2 pure preparation over the posited fibre law `μψ`: ψ = singlet
       (after re-indexing into `Fin N`), with rep and Dirac-concentration
       content `Measure.map D.π μψ = Measure.dirac ray_point`. -/
   PP               : CSD.LF2.PurePreparation D μψ N
-  /-- Dimension bound, required for `busch_effect_gleason`. -/
+  /-- Dimension bound retained for the trace-form API; the direct chain does not use it. -/
   hN               : 2 ≤ N
   /-- Measurement-context joint eigenstate data: the four (s, t) joint
       spin eigenstates with unit-norm, distinctness, and Born identity
       `‖⟨PP.ψ, eig s t⟩‖² = P_st ctx.a ctx.b s t`. -/
   jed              : MeasurementJointEig ctx PP.ψ
-  /-- Per-sector ontic outcome regions. -/
+  /-- Per-sector measurable ontic regions; disjointness and coverage are not fields. -/
   O_region         : Sign → Sign → D.toOntic.OutcomeRegion
-  /-- **Major empirical hypothesis (LF4 discharge target): ontic-weight
-      ↔ OP.p bridge.** The posited-fibre-law `μψ` of the pulled-back
-      outcome event equals the operational-package probability of the
-      rank-1 sector effect through `jed.eig s t`. Combined with
-      `LF3.OP_p_at_jointEig_eq_P_st`, this gives convergence of trial
-      frequencies to `P_st ctx.a ctx.b s t`.
-
-      **Status: load-bearing, externally supplied, undischarged.**
-      This field is the *single largest external hypothesis* in the
-      LF1↔LF2↔LF3 empirical chain pre-LF4. It encodes the
-      preparation-to-projective bridge plus the
-      preparation-to-Hilbert correspondence (LF4-todo §2) plus the
-      projective-first outcome construction (LF4-todo §7); the
-      LF3 chain capstones are conditional on this hypothesis until
-      LF4 supplies a concrete `SectorData` instantiation from which
-      `bridge_op_p` follows. Callers should treat this field with
-      the same scrutiny they would apply to an `axiom` — the bundle
-      defers the question rather than answering it. -/
+  /-- Calibration of each pulled-back outcome event against its rank-one
+      OP probability. `weight_eq_P_st` combines this field with the direct
+      Born identity. Abstract callers must supply it; the LF4 stationary
+      and fibre-flow constructors prove it from their carved-region masses.
+      It does not assert that the regions form an outcome partition. -/
   bridge_op_p      : ∀ s t,
     μψ (O_region s t).preEvent
     = ENNReal.ofReal
@@ -189,12 +171,8 @@ structure PureSingletPreparation
 
 namespace PureSingletPreparation
 
-/-- Transitional constructor: build a `PureSingletPreparation` from the
-    raw field set. Existing callsites migrate by supplying their bridge
-    + PP + jed + outcome regions + bridge_op_p hypothesis explicitly.
-    LF4 will replace its use with `PureSingletPreparation.ofKählerPreparation`
-    or similar, derived from a concrete `SectorData` instantiation plus
-    the preparation-to-Hilbert correspondence. -/
+/-- Build the bundle from its raw fields, including the OP calibration.
+    Use `ofWeights` when pre-event masses have already been calculated. -/
 def ofHypothesis
     {D : CSD.LF2.SectorData SigmaSpace P G}
     {ctx : MeasurementContext} {N : ℕ}
@@ -225,18 +203,34 @@ def ofHypothesis
     O_region := O_region
     bridge_op_p := bridge_op_p }
 
-/-- **Ontic weight ↔ `P_st` identity (composed).** Combines
-    `bridge_op_p` (the LF4 discharge target tying ontic outcome weight to
-    the OP-derived integral) with the **Busch-free** Born step
-    `LF3.OP_p_at_jointEig_eq_P_st_direct` (direct Dirac integration of the
-    volume-ratio effect function, no `busch_effect_gleason`). Result: the
-    ontic `prepMeasure` of the pulled-back outcome event equals
-    `ENNReal.ofReal (P_st ctx.a ctx.b s t)`. **Foundational-triple-only.**
+/-- Build the bundle from calibrated pre-event masses. The direct pure-state
+    Born identity derives the OP bridge, so callers need only prove their
+    measure calculation. This accepts arbitrary sector flow; the supplied
+    weights must concern its actual pre-events. No partition is inferred. -/
+def ofWeights
+    {D : CSD.LF2.SectorData SigmaSpace P G}
+    {ctx : MeasurementContext} {N : ℕ}
+    (μψ : Measure SigmaSpace) (hμψ_prob : IsProbabilityMeasure μψ)
+    (μFS : Measure P) (hμFS_prob : IsProbabilityMeasure μFS)
+    (bridge : CSD.LF2.MeasureBridgeData D μFS)
+    (PP : CSD.LF2.PurePreparation D μψ N)
+    (hN : 2 ≤ N)
+    (jed : MeasurementJointEig ctx PP.ψ)
+    (O_region : Sign → Sign → D.toOntic.OutcomeRegion)
+    (hweight : ∀ s t, μψ (O_region s t).preEvent
+      = ENNReal.ofReal (P_st ctx.a ctx.b s t)) :
+    PureSingletPreparation D ctx N := by
+  haveI := hμψ_prob
+  haveI := hμFS_prob
+  refine ofHypothesis μψ hμψ_prob μFS hμFS_prob bridge PP hN jed O_region ?_
+  intro s t
+  rw [OP_p_at_jointEig_eq_P_st_direct D μFS bridge μψ PP jed s t]
+  exact hweight s t
 
-    This is the ontic-stratum routing (Born = volume ratio). The
-    Busch-mediated twin `OP_p_at_jointEig_eq_P_st` remains in the corpus as
-    the operational-stratum statement; see its docstring and `AXIOMS.md` §2.4
-    for the two-strata posture. -/
+/-- Compose the supplied OP calibration with the direct pure-state Born
+    identity to compute each pre-event's mass under `μψ`. The proof uses
+    Dirac integration against `π_*μψ` and the bundle's Born-overlap identity;
+    it does not derive the calibration from independent geometry. -/
 theorem weight_eq_P_st
     {D : CSD.LF2.SectorData SigmaSpace P G}
     {ctx : MeasurementContext} {N : ℕ}

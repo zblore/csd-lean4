@@ -4,7 +4,7 @@
 
 **Baseline (2026-09-16, `f24ad46`):** 680 tracked Lean files; 74 rows in [validation-claims.tsv](validation-claims.tsv). Seven files received earlier full reviews (1.03%); carry their evidence forward and reconcile it with this commit. That small sample cannot forecast corpus-wide impact. Comment-only changes can materially alter a scientific claim.
 
-**Operational status (2026-09-21, `330e824` plus recorded local edits):** 691 tracked Lean files; 20 currently reviewed (2.89%). The [coverage register and commands](corpus-review-tracking.md) are implemented. [Historical evidence](reviews/history.md) includes 443 older source-review rows and the 46-module targeted bridge scope; neither is counted as current full completion without matching evidence and validation. Batch reports and BACKLOG hold findings; the 30-file pilot and effort forecast remain pending.
+**Operational status (2026-09-22, `0ccd3b7` plus recorded local edits):** 691 tracked Lean files; 25 currently reviewed (3.62%). The [coverage register and commands](corpus-review-tracking.md) are implemented. [Historical evidence](reviews/history.md) includes 443 older source-review rows and the 46-module targeted bridge scope; neither is counted as current full completion without matching evidence and validation. Batch reports and BACKLOG hold findings; the 30-file pilot and effort forecast remain pending.
 
 ## 1. Establish coverage and a reproducible starting point
 

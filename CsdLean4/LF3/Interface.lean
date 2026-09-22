@@ -30,7 +30,7 @@ public import CsdLean4.LF2.Preparation
 
 Paper §9.13 / spec §10.5.
 
-Five exported theorems, in descending order of programme-level importance:
+Five principal exports (plus three simultaneous-convergence variants), in descending order of programme-level importance:
 
 1. `LF3_singlet_frequency_convergence_born`: repeated singlet trials produce
    frequencies that converge a.s. to `‖cAmp s t (a, b)‖²`. The Born-rule
@@ -64,8 +64,9 @@ theorem** separation:
 
 - **The chain capstone theorems** (`LF3_singlet_frequency_convergence`,
   `_born`, `_born_inner`, plus the `_joint` variants) are *theorem
-  compositions* on top of the bundle. They take i.i.d. trials
-  `X : ℕ → Ω → Σ` with common law `μψ` (the posited fibre law) and
+  compositions* on top of the bundle. They take measurable trials
+  `X : ℕ → Ω → Σ` with common law `μψ` and pairwise independent
+  indicators for each fixed sector, and
   compose the bundle's hypotheses with three external pieces:
   + `LF1.GeneralFrequency.freq_tendsto_of_iid` — the law-agnostic SLLN
     frequency limit (axiom-free; the posited-fibre replacement for
@@ -79,27 +80,18 @@ theorem** separation:
     statement but is **not** on the capstone path (AXIOMS.md §2.4);
   + `LF3.Singlet.Kernel.cst_squared_eq` — algebraic
     `P_st = ‖cAmp‖²` (axiom-free).
-  The two further conceptual pieces named below
-  (`sectorVolume_eq_LF2_Born`, `LF1_main_theorem_projective`) are
-  what `prep.weight_eq_P_st` (and thereby `bridge_op_p`) packages
-  for the theorem composition.
 
-A fully discharged chain at LF4 would unfold the bundle into the
-following composition:
+`weight_eq_P_st` composes `bridge_op_p` with the direct OP identity.
+The stationary and moving-fibre LF4 constructors already prove the
+calibration from carved-region masses; the moving-fibre constructor
+also proves preservation of the preparation law. Neither
+`sectorVolume_eq_LF2_Born` nor `LF1_main_theorem_projective` is used on
+this proof path. The abstract theorem remains conditional on the bundle.
 
-- `Projectors.LF2Interface.sectorVolume_eq_LF2_Born` (LF3 → LF2 Born form)
-- `LF2.Interface.LF1_main_theorem_projective` (LF2 → LF1 frequency limit)
-- `LF1.GeneralFrequency.freq_tendsto_of_iid` (fibre-law a.s. convergence)
-- `Singlet.Kernel.cst_squared_eq` (algebraic core, axiom-free)
-
-Pre-LF4, the proof bodies below consume the bundle's
-`weight_eq_P_st` theorem (which itself composes `bridge_op_p` with
-`OP_p_at_jointEig_eq_P_st`); `sectorVolume_eq_LF2_Born` enters
-through `weight_eq_P_st` once LF4 supplies the structural
-constructor. The reader should track:
-
-- *What's proven*: the theorem composition machinery, sorry-free.
-- *What's assumed*: everything packed into `prep : PureSingletPreparation`.
+The flow enters through `preEvent = Φ⁻¹' Ω`. No fixed-ray hypothesis is
+required. The bundle does not require an outcome partition: the `_joint`
+variants give simultaneous convergence of four event frequencies, without
+asserting that exactly one event occurs on each trial.
 -/
 
 @[expose] public section
@@ -230,13 +222,12 @@ is foundational-triple-only. The Busch-mediated twin
 `OP_p_at_jointEig_eq_P_st` (via `LF2.pure_state_born_weights_of_certainty`)
 is retained as the operational-stratum statement but is not on the capstone
 path (the 2026-06-02 re-route, AXIOMS.md §2.4). The frequency limit is
-`LF1.freq_tendsto_of_iid` applied to i.i.d. trials `X : ℕ → Ω → Σ` with
-common law `μψ` — **not** `LF1_main_theorem_ae`, whose `μL`-conditional
+`LF1.freq_tendsto_of_iid` applied to measurable trials `X : ℕ → Ω → Σ` with
+common law `μψ` and pairwise independent indicators for each sector — **not** `LF1_main_theorem_ae`, whose `μL`-conditional
 `prepMeasure` is incompatible with a fibre-concentrated pure preparation
 under the continuous measure bridge (see `PurePreparation.lean` and
-`LF4-todo §8`). LF4-todo §2 (preparation ↔ Hilbert correspondence) and §7
-(projective-first outcomes) are the two LF4 work items behind the
-`bridge_op_p` hypothesis. -/
+`LF4-todo §8`). Concrete LF4 constructors prove `bridge_op_p` by
+calibrating their carved regions; general callers must supply their own proof. -/
 
 variable {SigmaSpace P G : Type*}
   [MeasurableSpace SigmaSpace] [Nonempty SigmaSpace]
@@ -258,10 +249,10 @@ variable {SigmaSpace P G : Type*}
       `‖⟨PP.ψ, eig s t⟩‖² = P_st`), the ontic outcome regions, and the
       bridge `μψ((O_region s t).preEvent) = OP.p ↔ rank-1 sector
       effect` (LF4 discharge target),
-    - i.i.d. trials `X : ℕ → Ω → Σ` over a probability space `Pr` whose
+    - measurable trials `X : ℕ → Ω → Σ` over a probability space `Pr` whose
       common law is the fibre law `μψ` (`hlaw`),
     - pairwise independence of the trial indicators on the
-      `(prep.O_region s t).preEvent` family. -/
+      `(prep.O_region s t).preEvent` family, separately for each sector. -/
 theorem LF3_singlet_frequency_convergence
     (D : CSD.LF2.SectorData SigmaSpace P G)
     (ctx : MeasurementContext) {N : ℕ}
@@ -334,12 +325,11 @@ The Born identity is the entire content of the rewrite. See
     `prep.jed`, and `ψ = prep.PP.ψ` is the pure-preparation Hilbert vector.
     The Born identity `‖⟨PP.ψ, eig s t⟩‖² = P_st ctx.a ctx.b s t` is the
     bundled field `prep.jed.born_eq_P_st` (the LF4-todo §2 + §7 discharge
-    target carried as a structural hypothesis pre-LF4).
+    supplied by general callers and proved by the concrete `LF4.kJED`).
 
-    This is the **physically faithful** form of the LF1↔LF2↔LF3 chain: the
-    RHS is a genuine Hilbert-space inner product between the bundle's
-    pure-preparation vector and the bundle's joint spin eigenstate, not a
-    closed-form repackaging and not an unbound caller-supplied vector. -/
+    The RHS is the Hilbert-space inner product of the bundle's two vectors.
+    The abstract `MeasurementJointEig` interface records their overlaps,
+    unit norms and distinctness; actual eigen-equations are not fields. -/
 theorem LF3_singlet_frequency_convergence_born_inner
     (D : CSD.LF2.SectorData SigmaSpace P G)
     (ctx : MeasurementContext) {N : ℕ}
@@ -366,7 +356,7 @@ theorem LF3_singlet_frequency_convergence_born_inner
   rw [← prep.jed.born_eq_P_st s t] at h_pre
   exact h_pre
 
-/-! ### Joint partition convergence (Phase 8)
+/-! ### Simultaneous sector convergence (Phase 8)
 
 The per-sector capstones above give `∀ s t, ∀ᵐ ω, Tendsto ...` — the
 order is "for each sector, a.s. convergence to that sector's P_st".
@@ -377,9 +367,10 @@ the corresponding P_st" — the order swaps to `∀ᵐ ω, ∀ s t, Tendsto ...`
 The swap is a finite-intersection-of-full-measure-sets argument:
 `Sign × Sign` is finite (hence countable), and Mathlib's
 `MeasureTheory.ae_all_iff` provides the swap for countable index types.
-This is the standard "joint vs per-element" upgrade pattern. -/
+This swaps quantifiers only; it does not establish disjointness or coverage
+of the outcome regions. -/
 
-/-- **Joint partition convergence (pre-Born form).** Almost surely on
+/-- **Simultaneous sector convergence (pre-Born form).** Almost surely on
     the trial-sequence probability space, for *every* pointer sector
     `(s, t)` simultaneously the empirical frequency of
     `prep.O_region s t` converges to `P_st ctx.a ctx.b s t`. Cf.
@@ -413,7 +404,7 @@ theorem LF3_singlet_frequency_convergence_joint
   intro t
   exact LF3_singlet_frequency_convergence D ctx prep hX hlaw hindep s t
 
-/-- **Joint partition convergence (Born form, closed-form amplitude).**
+/-- **Simultaneous sector convergence (Born form, closed-form amplitude).**
     Almost surely, for every `(s, t)` the empirical frequency converges
     to `‖cAmp ctx.a ctx.b s t‖²`. Joint version of
     `LF3_singlet_frequency_convergence_born`. -/
@@ -445,7 +436,7 @@ theorem LF3_singlet_frequency_convergence_born_joint
   intro t
   exact LF3_singlet_frequency_convergence_born D ctx prep hX hlaw hindep s t
 
-/-- **Joint partition convergence (Born form, bra-ket amplitude).**
+/-- **Simultaneous sector convergence (Born form, bra-ket amplitude).**
     Almost surely, for every `(s, t)` the empirical frequency converges
     to `‖⟨prep.PP.ψ, prep.jed.eig s t⟩‖²`. Joint version of
     `LF3_singlet_frequency_convergence_born_inner`. -/

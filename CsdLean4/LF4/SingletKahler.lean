@@ -53,6 +53,12 @@ the LF3 chain's `weight_eq_P_st` routes through the Busch-free
 `OP_p_at_jointEig_eq_P_st_direct` (the 2026-06-02 re-route; AXIOMS.md §2.4), not
 through the Busch-mediated twin.
 
+The anchored arcs all start at zero, so these four calibrated events
+are nested rather than an outcome partition. The capstone gives their
+individual frequency limits. `LF4/SpectralCarving.lean` provides disjoint
+shifted arcs, and `LF6/C1BellConsistency.lean` constructs contextual
+single-outcome maps with the singlet law.
+
 **Honesty note (Tier-2 framing).** `bridge_op_p` holds because the outcome
 regions are *carved* to fibre-volume `P_st`. This realises eq-12 (the
 volume-ratio thesis) concretely on a compact-Kähler `Σ`, but it does not
@@ -308,7 +314,7 @@ The bundle composes:
 noncomputable def ofKählerPreparation
     (p₀ : CPN 4) (hgen : ∀ s t : Sign, 0 < P_st ctx.a ctx.b s t) :
     LF3.PureSingletPreparation (kSectorData p₀) ctx 4 :=
-  LF3.PureSingletPreparation.ofHypothesis
+  LF3.PureSingletPreparation.ofWeights
     kMuPsi inferInstance
     (fsMeasure p₀) inferInstance
     (kBridge p₀)
@@ -319,26 +325,21 @@ noncomputable def ofKählerPreparation
     (by
       intro s t
       change kMuPsi (kRegion ctx s t) = _
-      rw [kMuPsi_kRegion]
-      congr 1
-      symm
-      rw [LF2.PurePreparation.born_rank_one_direct
-            (kSectorData p₀) (fsMeasure p₀) (kBridge p₀) kMuPsi
-            (kPurePrep p₀) ((kJED ctx hgen).eig s t) ((kJED ctx hgen).eig_unit s t)]
-      exact kEig_born ctx hgen s t)
+      exact kMuPsi_kRegion ctx s t)
 
 /-! ### Concrete capstone: non-vacuous instance of the LF1↔LF2↔LF3 chain
 
 Applying `LF3_singlet_frequency_convergence` to the concrete `ofKählerPreparation`
-yields a fully non-parametric empirical statement: for i.i.d. trials with law
+specializes the empirical statement: for measurable trials with common law
 `(ofKählerPreparation …).μψ`, the per-sector empirical frequencies converge
-almost surely to `P_st`. This is the witness that the LF3 chain capstones are
+almost surely to `P_st`, assuming pairwise independence of each sector's
+indicators. This is the witness that the LF3 chain capstones are
 **non-vacuous**: there exists a `PureSingletPreparation` they can be applied to.
 -/
 
 open Filter Topology in
-/-- **The chain is non-vacuous on this instance.** For i.i.d. trials with the
-posited fibre law, the per-sector empirical frequencies converge a.s. to
+/-- **The chain is non-vacuous on this instance.** For measurable trials with the
+posited fibre law and pairwise independent indicators for each sector, the per-sector empirical frequencies converge a.s. to
 `P_st ctx.a ctx.b s t`. Foundational-triple-only / Gleason-free (the LF3 chain
 routes through the Busch-free `weight_eq_P_st` / `OP_p_at_jointEig_eq_P_st_direct`,
 2026-06-02 re-route). -/
