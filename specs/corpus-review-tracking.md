@@ -78,13 +78,15 @@ The third batch covers [LF2 sector, bridge, preparations and interface](reviews/
 The fourth batch covers [phase independence, partitions and preparation densities](reviews/2026-09-21-lf2-phase-density.md).
 The fifth batch covers [LF3 calibration and concrete singlet flow](reviews/2026-09-22-lf3-singlet-flow.md).
 The sixth batch covers [exclusive singlet outcomes and the frequency witness](reviews/2026-09-22-exclusive-singlet-outcomes.md).
-At its completion on 2026-09-22, current verified coverage is **30 of 691 files (4.34%)**.
-FlowChannel and CircleRecord have explicit partial reviews, excluded from that count.
-CR-LF3-003 is fixed for the stationary witness: the LF3 frequency theorem now consumes
-an adapter for the same exclusive recorded outcomes used by the Bell witness.
+The seventh batch completes [exact circle readout and flowed effect probabilities](reviews/2026-09-22-circle-totality-flow-effects.md).
+At its completion on 2026-09-22, current verified coverage is **32 of 691 files (4.63%)**.
+FlowChannel and CircleRecord's earlier partial reviews are now complete. CircleFibre
+and its two previously reviewed singlet consumers were refreshed, without double counting.
+CR-RECORD-002 is closed with a pointwise totality proof, and CR-LF2-010 records the new
+operational probability consequence of flow covariance.
 
-Next: finish the FlowChannel review and the evolved-state measurement connection
-(CR-LF2-006); review CircleRecord's exact-versus-almost-everywhere totality (CR-RECORD-002).
+Next: review LF5/FlowBornFrequency and LF6/MeasurementFlowChannel, tracing their actual
+preparation laws and recorded-event calibration (the remaining CR-LF2-006 scope).
 CR-LF3-004 retains the separate phase-sensitive vector-outcome API question.
 Import/build coverage alone does not mark supporting modules reviewed.
 

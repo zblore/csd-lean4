@@ -8,6 +8,7 @@ module
 public import CsdLean4.RecordLayer.BornFibrePartition
 public import CsdLean4.LF4.KahlerInstance
 public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
+public import Mathlib.Order.Interval.Set.Union
 
 /-!
 # RecordLayer/CircleFibre: the Born partition on a COMPACT fibre
@@ -41,6 +42,7 @@ This file supplies the fibre half: **the Born partition, on the circle.**
   `volume (circleCell r i) = ENNReal.ofReal (r i)`: the same Born weights as the `ℝ` construction,
   now on a compact fibre carrying a probability measure.
 * `circleCell_pairwiseDisjoint` — distinct outcomes remain mutually exclusive.
+* `iUnion_circleCell` — rates summing to one cover every point, including endpoints.
 * `volume_circleBornCell` — fed the Born rates, the cell measure is `‖ψ i‖²`.
 * `circleFibre_isProbabilityMeasure`, `circleFibre_compactSpace` — the fibre is compact and its
   Haar measure is a probability measure, which is what `ℝ` could not give.
@@ -146,6 +148,44 @@ theorem circleCell_pairwiseDisjoint (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) 
   rcases lt_or_gt_of_ne (fun h : (i : ℕ) = (j : ℕ) => hij (Fin.ext h)) with h | h
   · exact key i j h
   · exact (key j i h).symm
+
+/-- Normalized cumulative arcs cover every circle point, including endpoints.
+    Nonnegativity is needed for disjointness, but not for this coverage statement. -/
+theorem iUnion_circleCell (r : Fin n → ℝ) (hsum : ∑ i, r i = 1) :
+    (⋃ i, circleCell r i) = univ := by
+  classical
+  let a : ℕ → ℝ := fun k => ∑ j ∈ Finset.univ.filter (fun j : Fin n => j.val < k), r j
+  have ha0 : a 0 = 0 := by simp [a]
+  have han : a n = 1 := by simpa [a] using hsum
+  have hasucc (i : Fin n) : a (i.val + 1) = loSum r i + r i := by
+    have hf : Finset.univ.filter (fun j : Fin n => j.val < i.val + 1)
+        = insert i (Finset.univ.filter (fun j : Fin n => j.val < i.val)) := by
+      ext j
+      simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_insert]
+      constructor
+      · intro h
+        rcases Nat.lt_or_eq_of_le (Nat.lt_succ_iff.mp h) with h | h
+        · exact Or.inr h
+        · exact Or.inl (Fin.ext h)
+      · rintro (rfl | h)
+        · omega
+        · omega
+    dsimp only [a]
+    rw [hf, Finset.sum_insert (by simp)]
+    exact add_comm _ _
+  apply Set.eq_univ_of_forall
+  intro x
+  have hx : rep x ∈ Ioc (a 0) (a n) := by
+    rw [ha0, han]
+    simpa only [rep, zero_add] using (AddCircle.equivIoc (1 : ℝ) 0 x).property
+  have hcover := Ioc_subset_biUnion_Ioc n a hx
+  rcases Set.mem_iUnion.mp hcover with ⟨i, hi⟩
+  rcases Set.mem_iUnion.mp hi with ⟨hi, hx⟩
+  have hin : i < n := Finset.mem_range.mp hi
+  refine Set.mem_iUnion.mpr ⟨⟨i, hin⟩, ?_⟩
+  change rep x ∈ Ioc (loSum r ⟨i, hin⟩) (loSum r ⟨i, hin⟩ + r ⟨i, hin⟩)
+  rw [hasucc ⟨i, hin⟩] at hx
+  exact hx
 
 /-! ### The Born weights survive the transport -/
 

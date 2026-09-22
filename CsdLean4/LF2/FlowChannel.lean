@@ -49,6 +49,10 @@ corpus's actual shape — from `π (Φ x) = U • π x` for the projective actio
 `KahlerOnticSetup` (`LF4/NonTrivialSetup.lean`, `unitaryFlowSetup`) and the form of LF5's
 `measurementFlow`.
 
+`fromPreparation_flow_apply` exposes the corresponding effect probabilities:
+they are the trace pairing of the evolved barycentre with the effect. They
+need not equal the old preparation's probabilities for the same effect.
+
 ## Honest scope
 
 ⚠️ **The survey row misdescribed the corpus.** `specs/qit-chain-scoping.md` W6 called
@@ -172,7 +176,7 @@ theorem barycenterMatrix_congr_ae (rep rep' : Q → EuclideanSpace ℂ ι) (μ :
   exact integral_congr_ae (h.mono fun p hp => by simp only [entryFn, hp])
 
 /-- **A preparation living in a subspace has its barycentre there.** If the representative is a.e.
-fixed by a Hermitian projector-like matrix `P` (`P (rep p) = rep p`), the barycentre satisfies
+fixed by a matrix `P` (`P (rep p) = rep p`; no Hermitian or idempotence premise), the barycentre satisfies
 `P B Pᴴ = B`. -/
 theorem barycenterMatrix_conj_self_of_ae [DecidableEq ι] (rep : Q → EuclideanSpace ℂ ι)
     (hrep_unit : ∀ p, ‖rep p‖ = 1) (hrep_meas : Measurable rep) (μ : Measure Q)
@@ -282,6 +286,8 @@ ontic flow `Φ`, the projector `|rep (π x)⟩⟨rep (π x)|` of the projected p
 `U`. Phase-free by construction (projectors do not see the phase of `rep`), and implied by the
 vector-level lift `rep (π (Φ x)) = U (rep (π x))` (`isUnitaryLift_of_vector`) and by the
 projective form `π (Φ x) = U • π x` for a section `rep` (`isUnitaryLift_of_smul`). -/
+-- This predicate is a projector identity for a supplied matrix. It does not
+-- itself assert Uᴴ * U = 1; channel constructors require that separately.
 def IsUnitaryLift (Φ : SigmaSpace → SigmaSpace) (rep : P → EuclideanSpace ℂ ι)
     (U : Matrix ι ι ℂ) : Prop :=
   ∀ x, outerProduct (rep (D.π (Φ x))) = U * outerProduct (rep (D.π x)) * Uᴴ
@@ -310,6 +316,27 @@ theorem barycenter_flow (Φ : SigmaSpace → SigmaSpace) (hΦ : Measurable Φ)
   exact barycenterMatrix_conj (rep ∘ D.π) (rep ∘ D.π ∘ Φ) (fun x => hrep_unit _)
     (hrep_meas.comp D.measurable_π) μprep U hlift
 
+/-- Effect probabilities after a lifted flow are evaluated against the evolved
+    density matrix. This is covariance, not invariance of the old probabilities
+    against a fixed effect. The matrix identity needs the projector lift; an
+    explicit unitary condition is only required by the channel packaging below. -/
+theorem fromPreparation_flow_apply {N : ℕ}
+    (μFS : Measure P) [IsProbabilityMeasure μFS] (bridge : MeasureBridgeData D μFS)
+    (Φ : SigmaSpace → SigmaSpace) (hΦ : Measurable Φ)
+    (rep : P → EuclideanSpace ℂ (Fin N)) (hrep_unit : ∀ p, ‖rep p‖ = 1)
+    (hrep_meas : Measurable rep) (U : Matrix (Fin N) (Fin N) ℂ)
+    (hlift : IsUnitaryLift D Φ rep U) (E : Effect N) :
+    haveI : IsProbabilityMeasure (Measure.map Φ μprep) :=
+      Measure.isProbabilityMeasure_map' hΦ.aemeasurable
+    (OperationalPackage.fromPreparation D μFS bridge (Measure.map Φ μprep)
+      rep hrep_unit hrep_meas).p E
+      = ((U * barycenterMatrix rep (Measure.map D.π μprep) * Uᴴ) * E.M).trace.re := by
+  have : IsProbabilityMeasure (Measure.map Φ μprep) :=
+    Measure.isProbabilityMeasure_map' hΦ.aemeasurable
+  rw [preparation_traceForm, preparationDensity_eq_barycenter]
+  change (barycenterMatrix rep (Measure.map D.π (Measure.map Φ μprep)) * E.M).trace.re = _
+  rw [barycenter_flow D μprep Φ hΦ rep hrep_unit hrep_meas U hlift]
+
 /-- The closed-system statement as a channel: the unitary channel of `U` maps the density
 operator of the preparation to the density operator of the flowed preparation. -/
 theorem unitaryChannel_apply_barycenter [DecidableEq ι] (Φ : SigmaSpace → SigmaSpace)
@@ -325,8 +352,8 @@ theorem unitaryChannel_apply_barycenter [DecidableEq ι] (Φ : SigmaSpace → Si
 `e₀` (a.e., at the projector level, with system representative `repS`), and let the ontic flow `Φ`
 lift the unitary `U`. Then the **reduced** density operator of the flowed preparation is the
 Stinespring channel of `U` with ready environment `e₀` applied to the density operator of the
-system preparation: `Tr_env ρ(Φ_* μprep) = Φ_U(ρ_S(μprep))`. The channel is produced by the
-`Σ`-flow; nothing about it is posited. -/
+system preparation: `Tr_env ρ(Φ_* μprep) = Φ_U(ρ_S(μprep))`. The channel is constructed from the supplied `U` and `e₀`; the lift and product
+hypotheses identify it with the reduced evolution of this preparation. -/
 theorem traceRight_barycenter_flow {n e : Type*} [Fintype n] [Fintype e] [DecidableEq n]
     [DecidableEq e] (Φ : SigmaSpace → SigmaSpace) (hΦ : Measurable Φ)
     (rep : P → EuclideanSpace ℂ (n × e)) (hrep_unit : ∀ p, ‖rep p‖ = 1)

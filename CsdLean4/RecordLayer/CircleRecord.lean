@@ -9,14 +9,14 @@ public import CsdLean4.RecordLayer.CircleFibre
 public import CsdLean4.RecordLayer.Measurement
 
 /-!
-# SigmaLayer/CircleRecord: the record layer, re-plumbed onto the compact fibre
+# RecordLayer/CircleRecord: the record layer, re-plumbed onto the compact fibre
 
 **Category:** 7-SigmaLayer (the record layer — A1 compactness).
 
 `CircleFibre.lean` moved the Born *partition* onto a compact fibre. This moves the rest of the
 record layer with it: the postulate-P5 record semantics, the isolation-is-conditioning reading,
 measurement-as-`context + unknown microstate → record`, the Born probabilities, and the
-almost-everywhere totality of the readout — all on `CircleFibre = AddCircle 1` instead of `ℝ`.
+pointwise totality of the normalized readout — all on `CircleFibre = AddCircle 1` instead of `ℝ`.
 
 The point is that **nothing physical changes**. The record signature is reused *verbatim*
 (`fibreSignature`: contexts are non-negative rate vectors, outcomes are `Fin n`) — it never
@@ -33,10 +33,10 @@ Born weight comes out identical (`volume_circleCell`), which is the content of t
   occupies agrees with testing membership of the record event.
 * `CircleMeasurement` / `prob` / `circleBornMeasurement` — measurement as context-plus-microstate,
   with `circleBornMeasurement_prob : prob i = ‖ψ i‖²`.
-* `circleBornMeasurement_ae_total` — the arcs cover the circle up to a null set, so a.e. microstate
-  yields a record. On `ℝ` this was stated on `[0,1)`; on the circle it is about the whole space.
-  ⚠️ The `ℝ` restriction was **not forced** — see `fibreTypicality_uncovered_univ`. What compactness
-  buys is stated precisely at `circleBornMeasurement_ae_total`.
+* `circleOutcome_total` — normalized nonnegative rates give a unique outcome at
+  every circle point, using exact consecutive-arc coverage.
+* `circleBornMeasurement_cover` — unit-state basins cover the whole circle.
+  The existing `circleBornMeasurement_ae_total` follows as a measure corollary.
 
 ## What is still not claimed
 
@@ -49,16 +49,12 @@ Kähler — structure. More tooling would not fix it. The successor construction
 see `CircleFibre.lean`'s scope note and the ★★ `BACKLOG.md` row. The fibre measure is also exhibited
 as Haar, not shown to be a Liouville measure.
 
-⚠️ **AND THIS IS A PARALLEL CONSTRUCTION, NOT A MIGRATION (corrected 2026-07-30).** The commit that
-landed this file was headlined "the record layer now runs on the compact fibre", and the ★★ BACKLOG
-row recorded the re-plumbing as DONE. **Both overstated it.** What exists is a *compact counterpart*
-of the record semantics, proved in full. The corpus's actual capstones — `Measurement.lean`,
-`RecordLayerClosure.lean`, `FiniteQMClosure.lean`, `KSigmaRecord.lean` — still run on the `ℝ` fibre
-with `fibreTypicality`, and nothing outside `AxiomAudit.lean` imports this module. Retiring the `ℝ`
-closure is future work.
-
-And this is the *fibre* half: the general-`N` A7 question of whether context-fixed regions exist at
-all is ⏸ parked, not settled (`specs/sigma-fibre-contextuality.md`).
+This file provides the circle counterpart of the real-line semantics. The corpus
+also has `TorusRecord.lean` on the even-dimensional fibre and
+`GlobalRecordClosure.lean` on the compact sector; the latter imports this module
+and reuses `circleOutcome`. The older real-line closure remains available.
+The general measurement-dynamics and closure-migration obligations belong to
+those modules and the current BACKLOG; this circle result is a readout theorem.
 
 ## References
 
@@ -130,6 +126,18 @@ theorem circleOutcome_eq_some_iff (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) (x
     · rw [hij]
     · exact absurd hx (Set.disjoint_left.mp (circleCell_pairwiseDisjoint r hr hij) hex.choose_spec)
 
+/-- Normalized nonnegative rates give exactly one recorded outcome at every
+    circle point. This uses interval coverage, not an inference from full support. -/
+theorem circleOutcome_total (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i)
+    (hsum : ∑ i, r i = 1) (x : CircleFibre) :
+    ∃! i, circleOutcome r x = some i := by
+  have hx : x ∈ ⋃ i, circleCell r i := by rw [iUnion_circleCell r hsum]; trivial
+  obtain ⟨i, hi⟩ := Set.mem_iUnion.mp hx
+  have hout := (circleOutcome_eq_some_iff r hr x i).mpr hi
+  refine ⟨i, hout, ?_⟩
+  intro j hj
+  exact Option.some.inj (hj.symm.trans hout)
+
 /-- **The ontic selection is the record**, at the record-layer level. -/
 theorem circleOutcome_eq_record (c : FibreContext n) (i : Fin n) (t : OnticTime)
     (x : CircleFibre) :
@@ -175,45 +183,19 @@ theorem circleBornMeasurement_prob (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖�
   rw [CircleMeasurement.prob, CircleMeasurement.basin_eq, hrate]
   exact volume_circleBornCell ψ hψ i
 
-/-- **A.e. every microstate yields a record.** The arcs cover the circle up to a null set, so there
-is no positive-measure "no outcome" set.
+/-- Unit-state Born basins cover every circle point, including the seam and
+    cell boundaries. Zero-weight cells may be empty; they do not create gaps. -/
+theorem circleBornMeasurement_cover (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1)
+    (t : OnticTime) : (⋃ i, (circleBornMeasurement ψ t).basin i) = univ :=
+  iUnion_circleCell (bornRate ψ) (sum_bornRate_unit ψ hψ)
 
-**On the comparison with `ℝ` — CORRECTED 2026-08-11.** This module previously said the `ℝ`
-statement "had to be restricted to `[0,1)` by hand, because Lebesgue measure on the line is
-infinite". **Both halves were wrong.** `fibreTypicality` is not Lebesgue measure on the line but
-`volume.restrict (Ico 0 1)`, a *probability* measure; and the restriction was not forced —
-`fibreTypicality_uncovered_univ` proves the identical `univ`-form statement on `ℝ`.
-
-The real difference is not which sets the statement ranges over but **where the mass one comes
-from**. On `ℝ` it is imposed by fiat: `fibreTypicality_Ici_one` shows the fibre's complement, of
-infinite Lebesgue measure, is assigned typicality zero, so an uncovered point off `[0,1)` is
-*excused by the measure* rather than covered by a cell. Here mass one is Haar mass on a compact
-group (`circleFibre_volume_univ`), every nonempty open set has positive measure, and there is
-nowhere for an uncovered point to hide. That is the improvement — genuine, but a different one. -/
+/-- The uncovered set has measure zero because it is empty. Exact coverage
+    follows from normalized cumulative arcs, not merely from Haar full support.
+    The real-line probability construction instead uses restricted Lebesgue
+    measure; its totality statement is relative to that preparation law. -/
 theorem circleBornMeasurement_ae_total (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1)
     (t : OnticTime) :
     volume (univ \ ⋃ i, (circleBornMeasurement ψ t).basin i) = 0 := by
-  classical
-  have hrate : (circleBornMeasurement ψ t).context.rate = bornRate ψ := rfl
-  have hdisj : Pairwise (Function.onFun Disjoint fun i => (circleBornMeasurement ψ t).basin i) := by
-    intro i j hij
-    simp only [CircleMeasurement.basin_eq, hrate]
-    exact circleCell_pairwiseDisjoint (bornRate ψ) (bornRate_nonneg ψ) hij
-  have hmeas : ∀ i, MeasurableSet ((circleBornMeasurement ψ t).basin i) := by
-    intro i
-    rw [CircleMeasurement.basin_eq]
-    exact measurableSet_circleCell _ i
-  have hb : ∀ i, volume ((circleBornMeasurement ψ t).basin i) = ENNReal.ofReal (‖ψ i‖ ^ 2) :=
-    fun i => circleBornMeasurement_prob ψ hψ i t
-  have hsum : ∑ i, ‖ψ i‖ ^ 2 = 1 := by
-    have := sum_bornRate_unit ψ hψ
-    simpa [bornRate] using this
-  have hcover : volume (⋃ i, (circleBornMeasurement ψ t).basin i) = 1 := by
-    rw [measure_iUnion hdisj hmeas, tsum_fintype,
-      Finset.sum_congr rfl fun i (_ : i ∈ Finset.univ) => hb i,
-      ← ENNReal.ofReal_sum_of_nonneg (fun i _ => by positivity), hsum, ENNReal.ofReal_one]
-  rw [measure_sdiff (subset_univ _) (MeasurableSet.iUnion hmeas).nullMeasurableSet
-      (by rw [hcover]; exact ENNReal.one_ne_top),
-    circleFibre_volume_univ, hcover, tsub_self]
+  rw [circleBornMeasurement_cover ψ hψ t, Set.sdiff_self, measure_empty]
 
 end CSD.RecordLayer
