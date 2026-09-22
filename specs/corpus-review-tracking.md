@@ -77,13 +77,15 @@ The second batch covers the [frequency chain and product witness](reviews/2026-0
 The third batch covers [LF2 sector, bridge, preparations and interface](reviews/2026-09-21-lf2-bridge.md).
 The fourth batch covers [phase independence, partitions and preparation densities](reviews/2026-09-21-lf2-phase-density.md).
 The fifth batch covers [LF3 calibration and concrete singlet flow](reviews/2026-09-22-lf3-singlet-flow.md).
-At its completion on 2026-09-22, current verified coverage is **25 of 691 files (3.62%)**.
-FlowChannel has an explicit partial review, excluded from that count. CR-LF2-006's LF3
-caller audit is complete; its broader flow/measurement integration remains open.
+The sixth batch covers [exclusive singlet outcomes and the frequency witness](reviews/2026-09-22-exclusive-singlet-outcomes.md).
+At its completion on 2026-09-22, current verified coverage is **30 of 691 files (4.34%)**.
+FlowChannel and CircleRecord have explicit partial reviews, excluded from that count.
+CR-LF3-003 is fixed for the stationary witness: the LF3 frequency theorem now consumes
+an adapter for the same exclusive recorded outcomes used by the Bell witness.
 
-Next dependency-ordered work: review the existing disjoint contextual outcomes and
-connect them to the LF3 frequency interface (CR-LF3-003), then finish FlowChannel.
-CR-LF3-004 tracks the distinct phase-sensitive vector-outcome API question.
+Next: finish the FlowChannel review and the evolved-state measurement connection
+(CR-LF2-006); review CircleRecord's exact-versus-almost-everywhere totality (CR-RECORD-002).
+CR-LF3-004 retains the separate phase-sensitive vector-outcome API question.
 Import/build coverage alone does not mark supporting modules reviewed.
 
 The 30-file stratified pilot is still pending. Before drawing it, freeze the eligibility rule

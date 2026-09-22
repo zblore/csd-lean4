@@ -48,9 +48,10 @@ space `SigmaSpace` that C1 posits.
 The obstruction above was, until Q19, conditional in its reproduction slot:
 nothing inhabited `ReproducesSingletAtCHSH`. This module now also builds the
 **explicit contextual model** on the concrete singlet arena `(KSigma 4, kMuPsi)`
-— for each context, the first torus coordinate is read through the four
-cumulative arcs (`RecordLayer.circleCell`) whose lengths are the context's own
-singlet weights `P_st` — and proves:
+— for each context, the first torus coordinate is tested against the first
+three cumulative arcs (`RecordLayer.circleCell`), with the remaining states
+assigned the fourth sign pair. The arc lengths are the context's own singlet
+weights `P_st`. The module proves:
 
 * `ReproducesSingletTableAt` — the **full-table** reproduction predicate: every
   joint outcome's probability is `P_st`. Strictly stronger than the
@@ -66,6 +67,14 @@ singlet weights `P_st` — and proves:
   with it. Contextual models can do what non-contextual ones provably cannot —
   the C1 separation with both halves witnessed.
 
+`singletContextualPreparation` connects these exclusive recorded outcomes to
+LF3's frequency interface for generic contexts. It reuses the existing table
+proof and the static LF4 preparation; the events differ from the overlapping
+anchored arcs of `ofKählerPreparation`. The SingletBell witness consumes this
+constructor with independent samples of the same preparation law. The construction
+uses the prescribed singlet weights as arc lengths; it does not derive those weights
+from a measurement interaction or independent dynamics.
+
 ## What is and is not assumed
 
 Measurability is assumed **only** of the object C1 posits, the shared-context
@@ -74,7 +83,7 @@ are *derived* measurable from that plus compatibility, via
 `SharedContextOutcomeMaps.measurable_wingA/B`. Nothing here assumes the global
 assignment is measurable.
 
-Only the **four CHSH settings** are constrained. The theorem does not require
+In the obstruction, only the **four CHSH settings** are constrained. The theorem does not require
 the singlet to be reproduced at every detector setting, so it is strictly weaker
 in hypothesis than `no_product_partition_realises_singlet` and does not subsume
 it.
@@ -151,15 +160,8 @@ theorem integral_wing_mul_of_table (μ : Measure SigmaSpace) [IsProbabilityMeasu
     (htab : ReproducesSingletTableAt μ S C) :
     ∫ l, ((S.wingA C l).val : ℝ) * ((S.wingB C l).val : ℝ) ∂μ
       = correlation C.a C.b := by
-  have hmeas : ∀ p : Sign × Sign, MeasurableSet {l | S.F C l = p} := by
-    intro p
-    have hset : {l | S.F C l = p} = S.F C ⁻¹' ({p.1} ×ˢ {p.2}) := by
-      ext l
-      simp [Prod.ext_iff]
-    have h1 : MeasurableSet ({p.1} : Set Sign) := trivial
-    have h2 : MeasurableSet ({p.2} : Set Sign) := trivial
-    rw [hset]
-    exact hS (h1.prod h2)
+  have hmeas : ∀ p : Sign × Sign, MeasurableSet {l | S.F C l = p} :=
+    S.measurableSet_outcome C hS
   have hint : ∀ p ∈ (Finset.univ : Finset (Sign × Sign)),
       Integrable (fun l =>
         (p.1.val * p.2.val) * Set.indicator {l' | S.F C l' = p} (fun _ => (1 : ℝ)) l) μ := by
@@ -385,8 +387,9 @@ lemma kMuPsi_singletCell (C : MeasurementContext) (k : Fin 4) :
 
 open scoped Classical in
 /-- **The explicit contextual singlet model.** For each context, the shared ontic state's
-first torus coordinate is read through the four cumulative arcs of the context's own
-singlet weights; the outcome is the arc's joint sign pair. Contextual by construction —
+first torus coordinate is tested against the first three cumulative arcs of the
+context's singlet weights; their complement is assigned the fourth sign pair.
+The function is total even at zero-weight contexts. Contextual by construction —
 different contexts carve different arcs — which is exactly what the capstone shows a
 globally CHSH-compatible family cannot be. -/
 noncomputable def singletContextualF (C : MeasurementContext) (l : KSigma 4) : Sign × Sign :=
@@ -510,6 +513,35 @@ theorem singletContextualModel_table (C : MeasurementContext) :
       level_three, kMuPsi_singletCell_compl]
     rfl
 
+/-- The recorded joint-outcome fibre as an LF1 region on the stationary
+    Kähler sector. These fibres form an exact partition because they are
+    fibres of the single-valued `singletContextualModel.F`. -/
+noncomputable def singletContextualOutcomeRegion (C : MeasurementContext)
+    (p₀ : CPN 4) (s t : Sign) : (kSectorData p₀).toOntic.OutcomeRegion where
+  Ω := {l | singletContextualModel.F C l = (s, t)}
+  hΩ_meas := singletContextualModel.measurableSet_outcome C
+    (singletContextualModel_measurable C) (s, t)
+
+/-- Connect the existing exclusive-outcome model to the LF3 frequency API.
+    The preparation law and spin vectors are those of `ofKählerPreparation`;
+    its anchored events are replaced by the contextual model's recorded
+    outcome fibres. Calibration follows from `singletContextualModel_table`.
+    The genericity premise is required by `kJED`, not by the outcome model,
+    whose table theorem also covers zero-weight contexts. -/
+noncomputable def singletContextualPreparation (C : MeasurementContext)
+    (p₀ : CPN 4) (hgen : ∀ s t : Sign, 0 < P_st C.a C.b s t) :
+    PureSingletPreparation (kSectorData p₀) C 4 :=
+  PureSingletPreparation.ofWeights kMuPsi inferInstance (Matrix.UnitaryGroup.fsMeasure p₀) inferInstance
+    (kBridge p₀) (kPurePrep p₀) (by decide) (kJED C hgen)
+    (singletContextualOutcomeRegion C p₀) (singletContextualModel_table C)
+
+/-- Scoring the contextual preparation tests its recorded joint outcome.
+    The underlying stationary sector has identity flow. -/
+lemma singletContextualPreparation_preEvent (C : MeasurementContext)
+    (p₀ : CPN 4) (hgen : ∀ s t : Sign, 0 < P_st C.a C.b s t) (s t : Sign) :
+    ((singletContextualPreparation C p₀ hgen).O_region s t).preEvent
+      = {l | singletContextualModel.F C l = (s, t)} := rfl
+
 /-- ★ **The model reproduces the singlet correlations at the four CHSH contexts.** The
 inhabitant `ReproducesSingletAtCHSH` was missing until Q19 — the obstruction's
 reproduction slot is now witnessed, not merely hypothesised. -/
@@ -578,10 +610,8 @@ omit [MeasurableSpace SigmaSpace] in
 /-- The two joint fibres above a wing value are disjoint. -/
 lemma joint_fibre_disjoint (S : SharedContextOutcomeMaps SigmaSpace) (C : MeasurementContext)
     {p q : Sign × Sign} (h : p ≠ q) :
-    Disjoint {l | S.F C l = p} {l | S.F C l = q} := by
-  rw [Set.disjoint_left]
-  intro l hp hq
-  exact h (hp ▸ hq ▸ rfl)
+    Disjoint {l | S.F C l = p} {l | S.F C l = q} :=
+  S.outcome_fibres_disjoint C h
 
 /-- **A-wing marginal of any table-reproducing family is `1/2`.** The wing fibre is
 the disjoint union of its two joint fibres, whose masses are `P_st`, and those sum
@@ -590,10 +620,8 @@ lemma wingA_marginal_of_table {μ : Measure SigmaSpace} (S : SharedContextOutcom
     (C : MeasurementContext) (hS : Measurable (S.F C))
     (htab : ReproducesSingletTableAt μ S C) (s : Sign) :
     μ {l | S.wingA C l = s} = ENNReal.ofReal (1 / 2) := by
-  have hm : ∀ p : Sign × Sign, MeasurableSet {l | S.F C l = p} := fun p => by
-    have : {l | S.F C l = p} = S.F C ⁻¹' {p} := rfl
-    rw [this]
-    exact hS (measurableSet_singleton p)
+  have hm : ∀ p : Sign × Sign, MeasurableSet {l | S.F C l = p} :=
+    S.measurableSet_outcome C hS
   rw [wingA_fibre_eq, measure_union (joint_fibre_disjoint S C (by simp)) (hm _),
     htab s Sign.plus, htab s Sign.minus,
     ← ENNReal.ofReal_add (P_st_nonneg C.a C.b s Sign.plus) (P_st_nonneg C.a C.b s Sign.minus)]
@@ -606,10 +634,8 @@ lemma wingB_marginal_of_table {μ : Measure SigmaSpace} (S : SharedContextOutcom
     (C : MeasurementContext) (hS : Measurable (S.F C))
     (htab : ReproducesSingletTableAt μ S C) (t : Sign) :
     μ {l | S.wingB C l = t} = ENNReal.ofReal (1 / 2) := by
-  have hm : ∀ p : Sign × Sign, MeasurableSet {l | S.F C l = p} := fun p => by
-    have : {l | S.F C l = p} = S.F C ⁻¹' {p} := rfl
-    rw [this]
-    exact hS (measurableSet_singleton p)
+  have hm : ∀ p : Sign × Sign, MeasurableSet {l | S.F C l = p} :=
+    S.measurableSet_outcome C hS
   rw [wingB_fibre_eq, measure_union (joint_fibre_disjoint S C (by simp)) (hm _),
     htab Sign.plus t, htab Sign.minus t,
     ← ENNReal.ofReal_add (P_st_nonneg C.a C.b Sign.plus t) (P_st_nonneg C.a C.b Sign.minus t)]

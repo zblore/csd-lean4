@@ -25,6 +25,8 @@ maps on it can do. This module supplies that shape.
   chain: the four setting-local responses of a `GlobalCHSHAssignment` are
   *derived* measurable from it and compatibility, never assumed. See
   `LF6/C1BellConsistency.lean`.
+* The outcome fibres are measurable, disjoint and cover the state space.
+  `sum_indicator_outcome_eq_one` states that exactly one indicator fires.
 
 `Sign` carries the discrete (`⊤`) σ-algebra, the canonical choice for a finite
 type and the one that makes "measurable outcome map" mean what it should.
@@ -73,6 +75,33 @@ def MeasurableSharedContextOutcomeMaps {SigmaSpace : Type*} [MeasurableSpace Sig
 namespace SharedContextOutcomeMaps
 
 variable {SigmaSpace : Type*} [MeasurableSpace SigmaSpace] (S : SharedContextOutcomeMaps SigmaSpace)
+
+/-- Each joint outcome fibre is measurable when the context's map is. -/
+lemma measurableSet_outcome (C : MeasurementContext) (hS : Measurable (S.F C))
+    (p : Sign × Sign) : MeasurableSet {l | S.F C l = p} :=
+  hS (measurableSet_singleton p)
+
+omit [MeasurableSpace SigmaSpace] in
+/-- Distinct recorded outcomes have disjoint fibres, pointwise. -/
+lemma outcome_fibres_disjoint (C : MeasurementContext) {p q : Sign × Sign}
+    (hpq : p ≠ q) : Disjoint {l | S.F C l = p} {l | S.F C l = q} := by
+  rw [Set.disjoint_left]
+  intro l hp hq
+  exact hpq (hp.symm.trans hq)
+
+omit [MeasurableSpace SigmaSpace] in
+/-- Every state belongs to a recorded-outcome fibre; coverage is exact. -/
+lemma iUnion_outcome_fibres (C : MeasurementContext) :
+    (⋃ p : Sign × Sign, {l | S.F C l = p}) = Set.univ := by
+  ext l
+  simp
+
+omit [MeasurableSpace SigmaSpace] in
+/-- Exactly one joint-outcome indicator is one at each state. -/
+lemma sum_indicator_outcome_eq_one (C : MeasurementContext) (l : SigmaSpace) :
+    ∑ p : Sign × Sign, Set.indicator {x | S.F C x = p} (fun _ => (1 : ℝ)) l = 1 := by
+  classical
+  simp [Set.indicator]
 
 /-- The A-wing component of the joint outcome. -/
 def wingA (C : MeasurementContext) (l : SigmaSpace) : Sign := (S.F C l).1

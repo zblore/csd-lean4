@@ -10,7 +10,7 @@ public import CsdLean4.LF4.KahlerInstance
 public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
 
 /-!
-# SigmaLayer/CircleFibre: the Born partition on a COMPACT fibre
+# RecordLayer/CircleFibre: the Born partition on a COMPACT fibre
 
 **Category:** 7-SigmaLayer (the record layer — A1 compactness).
 
@@ -50,8 +50,10 @@ This file supplies the fibre half: **the Born partition, on the circle.**
 It gives a **compact fibre carrying the active Born partition**, which is the piece A1 was missing.
 It does **not** by itself make the fibred `Σ` a Paper C A1 ontic surface, and the fibre measure is
 not *shown* to be a Liouville measure, only exhibited as Haar. The remaining record-layer modules
-(`FibreRecord`, `Measurement`, `RecordLayerClosure`) still run on the `ℝ` fibre and would need
-re-plumbing onto this one; that is mechanical but not done here.
+(`FibreRecord`, `Measurement`, `RecordLayerClosure`) use the `ℝ` fibre.
+`CircleRecord.lean` separately supplies record semantics and readout on this
+compact circle; `LF6/C1BellConsistency.lean` uses its cells on the first torus
+coordinate of the compact singlet arena.
 
 ⚠️ **A SINGLE CIRCLE CANNOT COMPLETE A1 — a dimension-parity fact, corrected 2026-07-30.** An earlier
 version of this docstring said the missing Kähler structure was blocked on Mathlib's absent manifold
@@ -61,12 +63,13 @@ form, so no odd-dimensional manifold carries one, hence none carries a Kähler s
 obstruction here is therefore **not** missing tooling: it would survive any amount of Mathlib API.
 (The same parity objection applies retroactively to `FibredSigma`'s `ℂℙⁿ⁻¹ × ℝ`, also `2n-1`.)
 
-**The fix is already in the corpus and is cheap.** `LF4/KahlerInstance.lean` has
+**The even-dimensional arena is already in the corpus.** `LF4/KahlerInstance.lean` has
 `KTorus = AddCircle 1 × AddCircle 1` and `KSigma N = CPN N × KTorus`, of real dimension `2n` —
-**even**, and a product of Kähler manifolds. The intended successor construction puts *this* file's
-`circleCell` on the **first** torus coordinate, leaving the second as its symplectic partner. Every
-theorem below is stated about one `AddCircle 1` and transports to that factor; what is missing is
-the product-measure step, not new fibre mathematics. See `specs/BACKLOG.md` (the ★★ row).
+**even**. This file proves only the circle measure statements. The existing
+`LF6.kMuPsi_singletCell` carries out the product-measure step for the singlet
+arena, using the first torus coordinate and leaving the second free. This
+measure calculation alone does not derive a Hamiltonian measurement interaction.
+See `specs/BACKLOG.md` for the wider dynamics obligations.
 
 ## References
 
@@ -95,8 +98,8 @@ instance circleFibre_factPos : Fact ((0:ℝ) < 1) := ⟨zero_lt_one⟩
 instance circleFibre_compactSpace : CompactSpace CircleFibre :=
   AddCircle.compactSpace (p := (1:ℝ))
 
-/-- The fibre's Haar measure is a **probability** measure — the property the restricted Lebesgue
-measure on `ℝ` only had by fiat. -/
+/-- The unit circle's Haar volume has total mass one. The interval model
+instead obtains a probability law by restricting Lebesgue measure to a unit interval. -/
 theorem circleFibre_volume_univ : (volume : Measure CircleFibre) univ = 1 :=
   UnitAddCircle.measure_univ
 
@@ -117,7 +120,9 @@ lemma coe_rep (θ : CircleFibre) : ((rep θ : ℝ) : CircleFibre) = θ :=
   AddCircle.coe_equivIoc
 
 /-- The **Born cell on the circle**: the points whose canonical representative lies in the CDF
-interval. A *preimage*, so measurability is immediate — unlike the image of `cdfCell`. -/
+interval `(loSum r i, loSum r i + r i]`. The right-closed convention matches
+the circle representative in `(0,1]`; `cdfCell` on `ℝ` uses the opposite
+half-open convention. The preimage definition makes measurability immediate. -/
 noncomputable def circleCell (r : Fin n → ℝ) (i : Fin n) : Set CircleFibre :=
   rep ⁻¹' Ioc (loSum r i) (loSum r i + r i)
 

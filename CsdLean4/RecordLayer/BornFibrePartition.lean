@@ -9,7 +9,7 @@ public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!
-# SigmaLayer/BornFibrePartition: the record-layer fibre partition (MD-1)
+# RecordLayer/BornFibrePartition: the record-layer fibre partition (MD-1)
 
 **Category:** 7-SigmaLayer (the record layer — measurement as a Born partition of the fibre).
 
@@ -63,7 +63,8 @@ theorem measurableSet_cdfCell (r : Fin n → ℝ) (i : Fin n) :
     MeasurableSet (cdfCell r i) := measurableSet_Ico
 
 /-- **The fibre-partition measure identity: the fibre measure of outcome `i` equals the rate `rᵢ`.**
-The CDF cell has Lebesgue measure exactly `rᵢ`. This is the record-layer obligation for the
+The CDF cell has Lebesgue measure `ENNReal.ofReal rᵢ`; a negative rate gives
+an empty interval and zero measure. This is the record-layer obligation for the
 fibre-partition factor; feeding the Born rates gives the Born weight (`volume_bornCell`). -/
 theorem volume_cdfCell (r : Fin n → ℝ) (i : Fin n) :
     volume (cdfCell r i) = ENNReal.ofReal (r i) := by
@@ -99,9 +100,8 @@ theorem cdfCell_disjoint_of_lt (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) {i j 
     _ ≤ loSum r j := loSum_add_le_loSum r hr hij
     _ ≤ max (loSum r i) (loSum r j) := le_max_right _ _
 
-/-- **The CDF cells are pairwise disjoint** (given `r ≥ 0`): the fibre is genuinely *partitioned* into
-outcome cells, so the outcome map is a well-defined ontic selection and the Born weights are
-additive. -/
+/-- **The CDF cells are pairwise disjoint** (given `r ≥ 0`). This ensures unique
+selection on their union and additive weights; it does not assert coverage of `ℝ`. -/
 theorem cdfCell_pairwiseDisjoint (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) :
     Pairwise (Function.onFun Disjoint (cdfCell r)) := by
   intro i j hij
@@ -112,7 +112,8 @@ theorem cdfCell_pairwiseDisjoint (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) :
 
 open Classical in
 /-- **The outcome map (the ontic record):** the fibre point `ξ` selects outcome `i` when it lies in
-`cdfCell r i`; `none` off the cells. For a probability vector this is total off a null set. -/
+`cdfCell r i`; `none` off the cells. Totality is relative to their union,
+not to ambient Lebesgue measure on all of `ℝ`. -/
 noncomputable def fibreOutcome (r : Fin n → ℝ) (ξ : ℝ) : Option (Fin n) :=
   if h : ∃ i, ξ ∈ cdfCell r i then some h.choose else none
 
@@ -153,9 +154,9 @@ theorem sum_bornRate_unit (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1)
     ∑ i, bornRate ψ i = 1 := by rw [sum_bornRate, hψ, one_pow]
 
 /-- **Record-layer Born identity.** The fibre measure of the outcome-`i` cell, at the Born rates,
-equals the Born weight `‖ψ i‖² = |⟨eᵢ, ψ⟩|²`. So measurement outcome frequencies are the fibre
-volumes of the CDF cells fed by the moment-map rates — the record layer's measure content,
-foundational-triple, no `sorry`. -/
+equals `‖ψ i‖² = |⟨eᵢ, ψ⟩|²`. No normalization of `ψ` is required for this
+measure identity. A probability law and independent sampling are separate inputs
+for a frequency theorem. -/
 theorem volume_bornCell (ψ : EuclideanSpace ℂ (Fin n)) (i : Fin n) :
     volume (cdfCell (bornRate ψ) i) = ENNReal.ofReal (‖ψ i‖ ^ 2) :=
   volume_cdfCell _ i
@@ -169,7 +170,9 @@ theorem volume_iUnion_cdfCell (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) :
   rw [← ENNReal.ofReal_sum_of_nonneg (fun i _ => hr i)]
 
 /-- **The record-layer Born normalisation.** For a *unit* state the Born cells partition a fibre set
-of measure exactly `1`: the total ontic typicality of all outcomes is certainty. The fibre measure of
+of Lebesgue measure exactly `1`. This does not make Lebesgue measure on all of
+`ℝ` a probability measure; a probability interpretation restricts to the covered
+set. The fibre measure of
 each cell is the Born weight (`volume_bornCell`), the cells are disjoint (`cdfCell_pairwiseDisjoint`),
 and together they carry unit measure — the complete measure content of the record layer's
 fibre-partition factor, foundational-triple, no `sorry`. -/

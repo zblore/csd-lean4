@@ -19,7 +19,7 @@ public import CsdLean4.Tests.Witnesses.IIDSampling
 `Tests/Examples.lean`'s LF3 section is an API-shape smoke test: the chain
 capstones applied to an **abstract** `PureSingletPreparation` with **abstract**
 trials. The production corpus has since supplied the concrete bundle
-(`LF4.ofKählerPreparation`, on `KSigma 4` — every field proved, Gleason-free),
+(`LF6.singletContextualPreparation`, on `KSigma 4` — every field proved),
 still consumed with abstract trials. This module closes both gaps at a fully
 concrete measurement context:
 
@@ -31,10 +31,11 @@ concrete measurement context:
   below is not a constant of the kernel;
 * `perpContext_singlet_frequency_convergence` — **the LF3 chain capstone
   on a fully concrete model**: concrete sector (`kSectorData p₀`), concrete
-  preparation (`ofKählerPreparation`), concrete context (`perpContext`), and
+  preparation (`singletContextualPreparation`), concrete context (`perpContext`), and
   **honest trials** (`Measure.infinitePi` coordinate sampling from the
   preparation's own fibre law `μψ`, independence a theorem) — empirical
-  per-sector frequencies converge a.s. to the singlet value `1/4`;
+  frequencies of exclusive recorded outcomes converge simultaneously a.s. to `1/4`;
+  their indicators sum to one at every state;
 * `kMuPsi_no_global_chsh_assignment` / `kMuPsi_chsh_obstruction_nonvacuous` —
   **the C1 Bell obstruction instantiated on the same concrete arena**
   `(KSigma 4, kMuPsi)`: no measurable shared-context family compatible with a
@@ -52,11 +53,12 @@ concrete measurement context:
   inhabitant, not an empty hypothesis class.
 
 **Anti-duplication scope.** Everything is cited: the chain capstone
-(`ofKählerPreparation_singlet_frequency_convergence`), the obstruction
+(`LF3_singlet_frequency_convergence_joint`), the obstruction
 (`no_compatible_global_chsh_assignment_realises_singlet`, which reduces to
 E91's `lhvCHSH_abs_le_two`), and its non-vacuity
 (`compatibleGlobalCHSH_nonvacuous`). The new content is the concrete context
-with `hgen` discharged, the honest trials, and the composition.
+with `hgen` discharged, the honest trials, and the composition. The frequency
+and Bell witnesses now read the same `singletContextualModel` outcome map.
 -/
 
 @[expose] public section
@@ -113,42 +115,38 @@ theorem P_st_setting_dependent :
 
 /-! ## WS-E: the chain capstone on the fully concrete model, honest trials -/
 
-/-- **WS-E headline: the LF3 singlet chain on a fully concrete model.**
-Concrete sector (`kSectorData p₀` on `KSigma 4`), concrete preparation
-(`ofKählerPreparation` — every bundle field proved), concrete context
-(`perpContext`, `hgen` discharged), honest trials (`Measure.infinitePi`
-coordinate sampling from the preparation's own fibre law, independence a
-Mathlib theorem): the per-sector empirical frequencies converge almost surely
-to the singlet value `1/4`, for all four outcome sectors. -/
+/-- **WS-E headline: exclusive recorded singlet outcomes on a concrete model.**
+    Each sample yields exactly one joint outcome. With independent coordinate
+    samples of `kMuPsi`, almost surely all four outcome frequencies converge
+    simultaneously to `1/4`. Applies the existing LF3 joint frequency theorem
+    to `singletContextualPreparation`; calibration comes from the same model
+    used by the Bell-consistency witness below. -/
 theorem perpContext_singlet_frequency_convergence (p₀ : CPN 4) :
-    ∀ s t : Sign,
-      ∀ᵐ ω ∂ (Measure.infinitePi fun _ : ℕ =>
-          (ofKählerPreparation perpContext p₀ perpContext_hgen).μψ),
+    (∀ l : KSigma 4,
+      ∑ st : Sign × Sign,
+        Set.indicator {x | singletContextualModel.F perpContext x = st}
+          (fun _ => (1 : ℝ)) l = 1) ∧
+    ∀ᵐ ω ∂ (Measure.infinitePi fun _ : ℕ => kMuPsi),
+      ∀ s t : Sign,
         Tendsto
           (fun M : ℕ =>
             (∑ i ∈ Finset.range M,
-                Set.indicator
-                  ((fun ω : ℕ → KSigma 4 => ω i) ⁻¹'
-                    ((ofKählerPreparation perpContext p₀ perpContext_hgen).O_region s t).preEvent)
+              Set.indicator {ω : ℕ → KSigma 4 |
+                singletContextualModel.F perpContext (ω i) = (s, t)}
                   (fun _ => (1 : ℝ)) ω) / (M : ℝ))
-          atTop
-          (nhds (1 / 4 : ℝ)) := by
-  have := (ofKählerPreparation perpContext p₀ perpContext_hgen).hμψ_prob
-  have h := ofKählerPreparation_singlet_frequency_convergence perpContext p₀ perpContext_hgen
+          atTop (nhds (1 / 4 : ℝ)) := by
+  refine ⟨singletContextualModel.sum_indicator_outcome_eq_one perpContext, ?_⟩
+  have h := LF3_singlet_frequency_convergence_joint (kSectorData p₀) perpContext
+    (singletContextualPreparation perpContext p₀ perpContext_hgen)
     (Ω := ℕ → KSigma 4)
-    (Pr := Measure.infinitePi fun _ : ℕ =>
-      (ofKählerPreparation perpContext p₀ perpContext_hgen).μψ)
+    (Pr := Measure.infinitePi fun _ : ℕ => kMuPsi)
     (X := fun n (ω : ℕ → KSigma 4) => ω n)
     (fun n => measurable_pi_apply n)
-    (fun n => (measurePreserving_eval_infinitePi
-      (fun _ : ℕ => (ofKählerPreparation perpContext p₀ perpContext_hgen).μψ) n).map_eq)
-    (fun s t => pairwise_indicator_eval_indep
-      (ofKählerPreparation perpContext p₀ perpContext_hgen).μψ
-      (((ofKählerPreparation perpContext p₀ perpContext_hgen).O_region s t).measurable_preEvent))
-  intro s t
-  have hst := h s t
-  rw [perpContext_P_st s t] at hst
-  exact hst
+    (fun n => (measurePreserving_eval_infinitePi (fun _ : ℕ => kMuPsi) n).map_eq)
+    (fun s t => pairwise_indicator_eval_indep kMuPsi
+      ((singletContextualPreparation perpContext p₀ perpContext_hgen).O_region s t).measurable_preEvent)
+  simpa only [singletContextualPreparation_preEvent, Set.preimage_ofPred_eq,
+    perpContext_P_st] using h
 
 /-! ## WS-H: the Bell obstruction on the same concrete arena -/
 
