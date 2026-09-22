@@ -12,13 +12,15 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.FrameFunction
 
 **Category:** 1-Mathlib (CSD-free; staged for upstream). The assembly of
 `specs/gleason-feasibility.md`: Layers A and C proved in this tree reduce Gleason's theorem for
-`ℂᴺ`, `N ≥ 3`, to one statement about the real sphere `S² ⊂ ℝ³`.
+`ℂᴺ`, `N ≥ 3`, to one statement about the real sphere `S² ⊂ ℝ³`. That statement is proved in
+`Gleason/General.lean` (stage 57(e)); `Gleason/Core.lean` joins the two into the theorem.
 
 * `CoreLemma` — **Gleason's core lemma, as a proposition:** every nonnegative frame function on
   `S²` is the restriction of a symmetric quadratic form. Gleason proved it with spherical
   harmonics (1957, §2); Cooke–Keane–Moran (1985) and Richman–Bridges (1999) proved it with
-  elementary geometry of great circles. It is **not proved here** — `specs/gleason-feasibility.md`
-  sizes the elementary proof.
+  elementary geometry of great circles. It is not proved in this file: the elementary proof is
+  `Gleason/Sphere.lean` through `Gleason/General.lean` (`frameFunction_regular_sphere`), and
+  `Gleason/Core.lean` supplies it here as `coreLemma`.
 * ★★ `ProjectionPackage.gleason_representation_of_core` — **Gleason's theorem from the core
   lemma:** for `N ≥ 3`, every projection package on `ℂᴺ` is `P ↦ Re Tr(ρ P)` for a unique density
   matrix `ρ`. The chain: A2 restricts the frame function to every completely real `3`-space
@@ -27,8 +29,9 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.FrameFunction
   (`exists_isHermitian_of_isRealPlaneRegular`) produces the Hermitian matrix; Layer C
   (`existsUnique_density_of_frame_quadratic`) makes it the unique density matrix.
 
-Nothing in this file claims Gleason's theorem: the theorem's only hypothesis beyond `N ≥ 3` is
-`CoreLemma`, stated as a proposition so that the dependency is visible in the statement itself.
+This file on its own claims nothing: the theorem's only hypothesis beyond `N ≥ 3` is `CoreLemma`,
+stated as a proposition so that the dependency is visible in the statement itself. The
+unconditional theorem is `ProjectionPackage.gleason_representation` in `Gleason/Core.lean`.
 
 ## Source
 

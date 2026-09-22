@@ -7144,9 +7144,11 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- ====================================================================================
 -- Gleason's theorem, finite-dimensional (2026-09-21, specs/gleason-feasibility.md): the
 -- Mathlib-only tree Analysis/InnerProductSpace/Gleason/. Layers A (reductions) and C (descent)
--- are PROVED; the core lemma on S^2 (Layer B) is NOT -- it enters only as the explicit
--- hypothesis `Gleason.CoreLemma` of `gleason_representation_of_core`. Nothing here claims
--- Gleason's theorem.
+-- were proved first, the core lemma on S^2 (Layer B) entering only as the explicit hypothesis
+-- `Gleason.CoreLemma` of `gleason_representation_of_core`; the core lemma was then proved in
+-- five stages 57(a)-(e), 2026-09-21/22 (the blocks below), and Core.lean joins the two:
+-- `Gleason.ProjectionPackage.gleason_representation`, Gleason's theorem for C^N, N >= 3, on
+-- the foundational triple (the last block of this file).
 -- ====================================================================================
 
 -- Polarization.lean: the Jordan-von Neumann engine, extracted from LF2/EffectGleason.lean
@@ -7294,8 +7296,8 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.gleason_representation_of_core
 
 -- 2026-09-21, stage 57(a) of the core lemma (specs/gleason-feasibility.md): Cooke-Keane-Moran
--- section 2 on S^2 (Sphere.lean) and section 3 (Warmup.lean). Still nothing claims Gleason's
--- theorem; the core lemma itself (57(b)-(e)) is open.
+-- section 2 on S^2 (Sphere.lean) and section 3 (Warmup.lean). At this stage nothing claimed
+-- Gleason's theorem; the core lemma itself (57(b)-(e)) was open (closed 2026-09-22, below).
 -- Sphere.lean: the cross product as a vector of EuclideanSpace R (Fin 3) (an orthonormal pair
 -- extends to a frame), a unit vector orthogonal to any two vectors (the orthogonal complement of
 -- a plane is nontrivial), an orthonormal triple IS an orthonormal basis (so the frame identity
@@ -7604,5 +7606,90 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 
 /-- info: 'Gleason.IsFrameFunction.exists_eq_sphereSup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.exists_eq_sphereSup
+
+-- 2026-09-22, stage 57(e) of the core lemma (specs/gleason-feasibility.md): General.lean --
+-- CKM section 7, the general case, and the core lemma itself. The frame (p, q, r) with
+-- q = r x p and its multiplication table; the two rotations rot p, rot r as signed
+-- permutations of the frame coordinates; the pole identities at a maximum and a minimum
+-- (add_rot_of_forall_le / _ge, from the simple-frame-function theorem applied to the
+-- symmetrisation); the target quadratic form quadFrame M alpha m p q r and its own pole
+-- identities, so h = g - f is negated by both rotations; the reflections in the coordinate
+-- planes preserve h and h vanishes on the four great circles x = +-y, y = +-z. The endgame
+-- differs from the paper's zero count: a great circle of zeros of h sits at latitude 1/2 from
+-- the pole of h's own identity (inner_sq_eq_half_of_vanish), so p' = +-q where h = 0,
+-- contradicting sup h > 0 unless h = 0. Then Core.lean: coreLemma and the theorem.
+/-- info: 'Gleason.inner_cross_perm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.inner_cross_perm
+
+/-- info: 'Gleason.cross_cross_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.cross_cross_left
+
+/-- info: 'Gleason.Frame' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.Frame
+
+/-- info: 'Gleason.Frame.expand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.Frame.expand
+
+/-- info: 'Gleason.Frame.sum_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.Frame.sum_sq
+
+/-- info: 'Gleason.Frame.inner_q_rot_p' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.Frame.inner_q_rot_p
+
+/-- info: 'Gleason.rotInv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.rotInv
+
+/-- info: 'Gleason.inner_rot_eq_inner_rotInv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.inner_rot_eq_inner_rotInv
+
+-- the pole identity at a maximum.
+/-- info: 'Gleason.IsFrameFunction.add_rot_of_forall_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.add_rot_of_forall_le
+
+/-- info: 'Gleason.IsFrameFunction.add_rot_of_forall_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.add_rot_of_forall_ge
+
+/-- info: 'Gleason.quadFrame' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.quadFrame
+
+/-- info: 'Gleason.isFrameFunction_quadFrame' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.isFrameFunction_quadFrame
+
+/-- info: 'Gleason.quadFrame_add_rot_p' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.quadFrame_add_rot_p
+
+/-- info: 'Gleason.quadFrame_add_rot_r' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.quadFrame_add_rot_r
+
+/-- info: 'Gleason.quadFrame_eq_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.quadFrame_eq_dotProduct
+
+-- the circle lemma: a great circle of zeros is at latitude 1/2.
+/-- info: 'Gleason.inner_sq_eq_half_of_vanish' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.inner_sq_eq_half_of_vanish
+
+/-- info: 'Gleason.reflect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.reflect
+
+/-- info: 'Gleason.flip_q' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.flip_q
+
+/-- info: 'Gleason.vanish_p_eq_q' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.vanish_p_eq_q
+
+/-- info: 'Gleason.vanish_q_eq_neg_r' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.vanish_q_eq_neg_r
+
+-- STAR STAR Gleason's core lemma: nonnegative frame functions on S^2 are quadratic forms.
+/-- info: 'Gleason.frameFunction_regular_sphere' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.frameFunction_regular_sphere
+
+-- Core.lean: the core lemma in the form Reduction.lean consumes, and the theorem.
+/-- info: 'Gleason.coreLemma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.coreLemma
+
+-- STAR STAR Gleason's theorem for C^N, N >= 3: every projection package is P |-> Re Tr(rho P) for a unique density matrix rho. Foundational triple; no hypothesis beyond N >= 3.
+/-- info: 'Gleason.ProjectionPackage.gleason_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.gleason_representation
 
 end CSD.Tests.AxiomAudit

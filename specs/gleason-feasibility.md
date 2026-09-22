@@ -5,15 +5,17 @@ projection form of Gleason's theorem in the Mathlib-only tree, prove the cheap l
 reductions, C: descent), refactor Busch's proof through the shared lemma, size the core lemma on
 `S²` against Cooke–Keane–Moran, and return a go/no-go with a sized plan.
 
-**Status wording (binding until the last `sorry` is gone):** *finite-dimensional Gleason,
-reductions and descent proved, core lemma open.* Nothing in code, docs or ledger claims the
-theorem.
+**Status (2026-09-22): finite-dimensional Gleason's theorem proved.**
+`Gleason.ProjectionPackage.gleason_representation` (`Gleason/Core.lean`): for `N ≥ 3` every
+projection package on `ℂᴺ` is `P ↦ Re Tr(ρ P)` for a unique density matrix; foundational triple,
+no `sorry`, on `main`. The binding status wording until then was *finite-dimensional Gleason,
+reductions and descent proved, core lemma open*; it was retired the moment the last stage
+(57(e)) landed green and the pins reported the foundational triple.
 
-**Where things are.** The proved layers are on `main`, sorry-free and gated
-(`CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/`, 38 AxiomAudit pins, foundational triple
-only). The one `sorry` lives on the branch `gleason-feasibility`
-(`Gleason/Core.lean`), so that `main` keeps its no-`sorry` invariant and the guards; the
-axiom sweep on that branch is in §5.
+**Where things are.** Everything is on `main`, sorry-free and gated
+(`CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/`, twelve modules, 137 AxiomAudit pins,
+foundational triple only). The branch `gleason-feasibility` (its `Core.lean` carried the one
+`sorry`) is superseded by the `Core.lean` on `main` and can be deleted.
 
 ---
 
@@ -30,8 +32,8 @@ structure Gleason.ProjectionPackage (N : ℕ) where
   additive : ∀ P Q, IsStarProjection P → IsStarProjection Q → P * Q = 0 → p (P + Q) = p P + p Q
 ```
 
-Target (`Reduction.lean`, proved from the core lemma; `Core.lean` on the branch, with the
-`sorry`):
+Target (`Reduction.lean`, proved from the core lemma; `Core.lean` supplies the core lemma and
+states the unconditional theorem `gleason_representation`):
 
 ```lean
 theorem Gleason.ProjectionPackage.gleason_representation_of_core (hcore : CoreLemma) (hN : 3 ≤ N)
@@ -94,9 +96,9 @@ the trace-one half keeps its one-line proof from `p_eq_trace Effect.one`). Consu
 `effect_gleason_representation` is unchanged in statement and still foundational-triple
 (AxiomAudit, `check-gleason-free`, `check-import-negative` all green).
 
-## 4. What is `sorry` (branch `gleason-feasibility` only)
+## 4. What was `sorry` (branch `gleason-feasibility` only; closed 2026-09-22)
 
-`Gleason/Core.lean`:
+`Gleason/Core.lean` on the branch, at the end of the feasibility week:
 
 ```lean
 theorem Gleason.frameFunction_regular_sphere (f : EuclideanSpace ℝ (Fin 3) → ℝ) {W : ℝ}
@@ -107,7 +109,7 @@ theorem Gleason.coreLemma : CoreLemma := ...                      -- from the so
 theorem Gleason.ProjectionPackage.gleason_representation ...      -- from coreLemma
 ```
 
-Axiom sweep on the branch (`lake env lean`, `#print axioms`):
+Axiom sweep on the branch at that time (`lake env lean`, `#print axioms`):
 
 | Declaration | Axioms |
 |---|---|
@@ -117,10 +119,18 @@ Axiom sweep on the branch (`lake env lean`, `#print axioms`):
 | `Gleason.ProjectionPackage.gleason_representation_of_core` | foundational triple |
 | `…exists_isHermitian_of_isRealPlaneRegular`, `…isRealPlaneRegular_of_triples`, `…existsUnique_density_of_frame_quadratic`, `…isFrameFunction_realRestrict`, `Gleason.quadraticForm_on_sphere_to_density`, `Gleason.IsQuadraticLike.eq_dotProduct` | foundational triple |
 
-**Exactly one `sorry`**, the core lemma; the theorem depends on nothing else. (The corpus sweep
+**Exactly one `sorry`**, the core lemma; the theorem depended on nothing else. (The corpus sweep
 `scripts/check-axiom-sweep.sh` walks `CSD.*` declarations only, so it does not see the `Gleason`
-namespace; on the branch the two `sorryAx` results are pinned explicitly in
-`Tests/AxiomAudit/MathlibStaging.lean`, and on `main` all 38 Gleason pins are foundational-triple.)
+namespace; the Gleason pins in `Tests/AxiomAudit/MathlibStaging.lean` are the sweep for it.)
+
+**Closed 2026-09-22 (57(e)).** `frameFunction_regular_sphere` is proved in `Gleason/General.lean`;
+`Gleason/Core.lean` on `main` is the branch file without its `sorry`. The pins now read:
+
+| Declaration | Axioms |
+|---|---|
+| `Gleason.frameFunction_regular_sphere` | foundational triple |
+| `Gleason.coreLemma` | foundational triple |
+| `Gleason.ProjectionPackage.gleason_representation` | foundational triple |
 
 ## 5. Layer B, sized against Cooke–Keane–Moran (spec task 4)
 
@@ -144,7 +154,7 @@ with `s` as its northernmost point).
 | ~~B3~~ done 57(b) | §5 Geometric lemma (Piron): `l s > l t` (both in `N \ {p}`) ⇒ finite chain `s = s₀, …, sₙ = t` with `sᵢ ∈ D_{sᵢ₋₁}`. Proof by gnomonic projection: descents become tangent lines to latitude circles; same ray: two steps; general: a spiral of `n` steps of angle `π/n` with radius ratio `(cos π/n)⁻ⁿ → 1` | `exists_descent_chain (hl : l t < l s) : ∃ n (c : Fin (n+1) → S), c 0 = s ∧ c n = t ∧ ∀ i, c (i+1) ∈ D_{c i}`; formalise the tangent plane as `ℂ` (`π s = (s − ⟪p,s⟫p)/⟪p,s⟫` read in an orthonormal basis of `p^⊥`), descent = `{z : Re (z · conj (π s)) = ‖π s‖²}`, the spiral explicitly `zₖ = π s · (cos φ/n)⁻ᵏ e^{ikφ/n}` | `Complex.exp`, `Complex.abs_exp_ofReal_mul_I`, `Real.one_sub_sq_div_two_le_cos`, `one_add_mul_le_pow` (Bernoulli), `Real.cos_pos_of_mem_Ioo`, `OrthonormalBasis` of `p^⊥` (`Submodule.orthogonal` + `stdOrthonormalBasis`) | the gnomonic dictionary (`t ∈ D_s ↔ Re (π t · conj (π s)) = ‖π s‖²`), the two-step same-ray construction, the limit `(cos φ/n)⁻ⁿ → 1` (from `cos x ≥ 1 − x²/2` and Bernoulli) | 600 | **medium-high** — the one step with no Mathlib support; the explicit spiral removes the geometry, leaving analysis of `cos` |
 | ~~B4~~ done 57(c) | §5 Theorem (simple frame functions): `f p = sup f`, `f = m` on `E` ⇒ `f s = m + (M−m) l(s)`. Proof: monotone in latitude (B2+B3); `f̄(l), f̲(l)` sup/inf on parallels; the exceptional set `C = {l : f̄ l > f̲ l}` is countable; frames with prescribed latitudes `l+l'+l'' = 1`; Warmup II; `C = ∅` | `eq_latitude_of_isMaxOn`; `exists_frame_of_latitudes (h : l + l' + l'' = 1) : ∃ frame, …`; `monotone_parallel_sup` | `Monotone.countable_not_continuousAt` (the countability of the jump set of a monotone function — exactly the "`∑ (f̄ − f̲) ≤ 1`" step), `sSup`/`sInf` on parallels (`Real.sSup_le`, `le_csSup`) | the frame-with-prescribed-latitudes construction (explicit: `q = (√l, √(1−l), 0)`-type vectors in a frame through `p`, then a rotation about `p`) | 500 | medium |
 | ~~B5~~ done 57(d) | §6 Extremal values: a bounded frame function attains `sup` and `inf`. Proof: `pₙ → p` with `f pₙ → M`; rigid motions `ρₙ` taking `p ↦ pₙ`; symmetrise `hₙ s = gₙ s + gₙ (p̂ s)` (`p̂` = 90° rotation about `p`) so each `hₙ` is constant on `E`; **Tychonoff**: `[2m, 2M]^S` compact in the product topology, an accumulation point `h` is a frame function with `h p = 2M = sup h`, constant on `E`, hence (B4) of the special form; the approximate basic lemma + the two-step geometric lemma give `f p > M − ε` | `exists_isMaxOn_sphere (hf) (hb : bounded)`; the symmetrisation `frame_add_rot`; `frameFunctions_isClosed`; a cluster point via `IsCompact.exists_clusterPt` (not sequences: the product is not sequentially compact) | `Pi.compactSpace`/`isCompact_univ_pi` (Tychonoff), `IsCompact.exists_clusterPt`, `isClosed_iInter`, `continuous_apply`, `Metric.sphere` compact (`isCompact_sphere`), `Matrix.specialOrthogonalGroup`/`Orientation.rotation` for `ρₙ` and `p̂` | rigid motions `ρₙ` with `ρₙ p = pₙ` and `ρₙ cₙ = p` (a rotation in the plane of `p, pₙ`: build it in `ℂ`-coordinates of that plane), the cluster-point extraction of the four properties | 550 | **medium-high** — filters and rotations; every ingredient exists but none is assembled |
-| B6 | §7 General case: `f p = M`, `f r = m` (`r ⟂ p`), `q ⟂ p, r`, `f q = α`, `m < α < M`; `f + f∘p̂` is constant on `E` and attains `2M` at `p`, so B4 gives `f s + f (p̂ s) = g s + g (p̂ s)` for the target form `g = M x² + α y² + m z²`; likewise with `r̂`; the Claim `f = g` on the six great circles `x = ±y, x = ±z, y = ±z` (compose the 90° rotations); `h = g − f` is a frame function of weight `0` vanishing on those circles; if `h ≠ 0` apply B5/B4 to `h` at its own extremes `p', r'`, steps (i)–(iv): `M' = −m'`, `α' = 0`, `h(x',x',z') = M'(x'² − z'²)`, and a great circle through four of the zero points must be `y = z`, contradiction | `frameFunction_regular_sphere` itself; `rot_p, rot_q, rot_r` as explicit signed permutations in frame coordinates; `eq_on_six_circles`; `great_circle_through_four_points` | `EuclideanGeometry`/`Orientation` for the three 90° rotations (or explicit `!![…]` matrices), `Matrix.IsSymm`, `Finset` counting of intersection points | the intersection-counting of great circles ("a great circle meets another in exactly two points", "only one great circle through these four points") — elementary but nothing in Mathlib is phrased this way | 800 | medium |
+| ~~B6~~ done 57(e) | §7 General case: `f p = M`, `f r = m` (`r ⟂ p`), `q ⟂ p, r`, `f q = α`, `m < α < M`; `f + f∘p̂` is constant on `E` and attains `2M` at `p`, so B4 gives `f s + f (p̂ s) = g s + g (p̂ s)` for the target form `g = M x² + α y² + m z²`; likewise with `r̂`; the Claim `f = g` on the six great circles `x = ±y, x = ±z, y = ±z` (compose the 90° rotations); `h = g − f` is a frame function of weight `0` vanishing on those circles; if `h ≠ 0` apply B5/B4 to `h` at its own extremes `p', r'`, steps (i)–(iv): `M' = −m'`, `α' = 0`, `h(x',x',z') = M'(x'² − z'²)`, and a great circle through four of the zero points must be `y = z`, contradiction | `frameFunction_regular_sphere` itself; `rot_p, rot_q, rot_r` as explicit signed permutations in frame coordinates; `eq_on_six_circles`; `great_circle_through_four_points` | `EuclideanGeometry`/`Orientation` for the three 90° rotations (or explicit `!![…]` matrices), `Matrix.IsSymm`, `Finset` counting of intersection points | the intersection-counting of great circles ("a great circle meets another in exactly two points", "only one great circle through these four points") — elementary but nothing in Mathlib is phrased this way | 800 | medium |
 
 **Total: ≈ 3,000 lines** (spec's estimate 3,000–6,000), of which the risk sits in B3 and B5.
 The two places where Mathlib has nothing: (i) any spherical-geometry vocabulary — great
@@ -177,12 +187,14 @@ queue row that lands green on `main` on its own:
 | ~~57(b)~~ **DONE 2026-09-21** | B3 | Piron's geometric lemma with the explicit spiral — **the probe**: landed in `Gleason/Piron.lean`, 618 lines (definitions, the gnomonic dictionary `lift_mem_descent_iff`, `tangent`/`ℂ`, `spiral_step`, `one_sub_le_cos_arg_div_pow`, `descent_step_ray`, ★ `exists_descent_chain` including the equator target), 19 pins; M took M. **The decision point is passed: go.** | landed on `main` | ~~M~~ done |
 | ~~57(c)~~ **DONE 2026-09-22** | B2 + B4 | basic lemma, the simple-frame-function theorem (Bell/Piron's extreme case, a result in its own right: "a frame function attaining its supremum and constant on the equator is `m + (M−m) cos²θ`") — `Gleason/SimpleFrame.lean`, 560 lines, 18 pins: `equator_le`, `descent_le` + approximate forms, `le_of_latitude_lt`, `exists_frame_of_latitudes` (transport of `(√a, √b, √c)` through an ONB), `parallelSup`/`parallelInf` with the interlacing and the disjoint-gaps countability, Warmup II, the squeeze, ★ `eq_add_mul_latitude`; M took M | landed on `main` | ~~M~~ done |
 | ~~57(d)~~ **DONE 2026-09-22** | B5 | extremal values attained (Tychonoff) — `Gleason/Extremal.lean`, 615 lines, 18 pins: `rot`, `comp_inner`, `symmetrise` + `symmetrise_equator`, `exists_motion`/`motion` (the rotation taking `p ↦ q` and the meridian point `c_q ↦ p`, by `OrthonormalBasis.equiv` — the "rotation taking `u` to `v`" gap of §5 filled by hand), `mem_of_clusterPt`/`eq_of_clusterPt_of_tendsto`, ★ `exists_forall_le` (+ `exists_forall_ge`, `exists_eq_sphereSup`); M–L took M. The second risk point is passed. | landed on `main` | ~~M–L~~ done |
-| 57(e) | B6 | the general case; `frameFunction_regular_sphere` proved; `Core.lean` merges to `main` without its `sorry`; `gleason_representation` becomes a theorem | `Gleason/Core.lean` | **L** |
+| ~~57(e)~~ **DONE 2026-09-22** | B6 | the general case — `Gleason/General.lean`, 696 lines, and `Gleason/Core.lean`, 23 pins: the frame `(p, q, r)` and its table, the two rotations as signed permutations of frame coordinates, the pole identities (`add_rot_of_forall_le`/`_ge`), the target form `quadFrame` with the same identities, the reflections and the four circles of zeros, the circle lemma `inner_sq_eq_half_of_vanish` (the endgame: a great circle of zeros of `h` sits at latitude `1/2` from the pole of `h`'s own identity, so `p' = ±q` and `h = 0` — this replaces the paper's count of zeros on great circles), ★★ `frameFunction_regular_sphere`; `Core.lean` on `main` without its `sorry`, ★★ `gleason_representation` a theorem on the foundational triple. L took M–L. | landed on `main`; **the theorem is claimed** | ~~L~~ done |
 
 At the corpus's rate (the reductions: ≈1,800 lines in a day, but those were algebra) stage 1 is a
 day, stage 2 two to three days, stages 3–5 a week to ten days together: **two and a half to
-three weeks** for the whole of Layer B, with the decision point after 57(b) — **passed 2026-09-21, the lemma landed at the estimate**. Real-space
-corollary (A4) is a separate S–M row (#58) after stage 57(e).
+three weeks** for the whole of Layer B, with the decision point after 57(b) — **passed 2026-09-21, the lemma landed at the estimate**. **Layer B
+closed 2026-09-22: two days, not three weeks** (the cost was in the five modules' ≈2,500 lines of
+sphere geometry; the general case reused all of it). Real-space corollary (A4) is a separate S–M
+row (#58).
 
 ## 7. Deviations from the brief, stated
 

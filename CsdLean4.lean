@@ -601,6 +601,8 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Warmup
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Piron
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.SimpleFrame
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Extremal
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.General
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Core
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudy
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyForm
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
