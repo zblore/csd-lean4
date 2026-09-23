@@ -263,6 +263,18 @@ Schwartz data the orbit solves the free Schrödinger equation `i ∂_t ψ = −�
 (`hasDerivAt_freeSchrodinger`, `kineticOp_eq_laplacian`), and the free Gaussian packet spreads as the
 textbook says, `U₀(t) g_a = (1 + 2πiat)^{−1/2} g_{a/(1 + 2πiat)}` (`freeSchrodingerS_gaussianS`,
 [`Mathlib/Analysis/Semigroup/GaussianPacket.lean`](../CsdLean4/Mathlib/Analysis/Semigroup/GaussianPacket.lean)).
+The same state seen in phase space: the Wigner function
+`W_ψ(x, ξ) = ∫ e^{−2πiyξ} ψ(x + y/2) conj ψ(x − y/2) dy` is real, its marginals are the position density `|ψ|²`
+and the momentum density `|𝓕ψ|²` (`integral_wigner_right`, `integral_wigner_left`, the latter through the momentum
+representation `W_{𝓕ψ}(ξ, −x) = W_ψ(x, ξ)`, `wigner_fourier`), the Gaussian's is positive and an odd state's is
+negative at the origin (`wigner_gaussianS_pos`, `re_wigner_zero_zero_neg`), and the free Schrödinger flow moves it
+exactly as the classical free flow moves a phase-space density, `W_{U₀(t)ψ}(x, ξ) = W_ψ(x − 2πtξ, ξ)`
+(`wigner_freeSchrodingerS`, [`Mathlib/Analysis/Fourier/Wigner.lean`](../CsdLean4/Mathlib/Analysis/Fourier/Wigner.lean)).
+For CSD this is the formulation in which the classical limit is a statement about a density on phase space: the
+isolated particle's Wigner function is carried by the Liouville flow of the free Hamiltonian with no correction, and
+negativity, which no classical density has, is the precise witness that the state is not a classical ensemble on the
+arena; the general Weyl-quantised expectation formula and the `ℏ²` Moyal correction for non-quadratic
+Hamiltonians are BACKLOG rows 63 and 64.
 
 **What is not claimed.** Any complexity-theoretic statement. The theorems are about amplitudes and
 probabilities of specific circuits.

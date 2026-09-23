@@ -8151,4 +8151,40 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms concatMeasure_concatBad_le
 
+/-- info: 'WignerFunction.fourier_comp_affine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.fourier_comp_affine
+
+/-- info: 'WignerFunction.conj_wigner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.conj_wigner
+
+/-- info: 'WignerFunction.integral_wigner_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_wigner_right
+
+/-- info: 'WignerFunction.wigner_fourier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wigner_fourier
+
+/-- info: 'WignerFunction.integral_wigner_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_wigner_left
+
+/-- info: 'WignerFunction.wigner_gaussianS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wigner_gaussianS
+
+/-- info: 'WignerFunction.wigner_gaussianS_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wigner_gaussianS_pos
+
+/-- info: 'WignerFunction.re_wigner_zero_zero_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.re_wigner_zero_zero_neg
+
+/-- info: 'WignerFunction.wigner_freeSchrodingerS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wigner_freeSchrodingerS
+
 end CSD.Tests.AxiomAudit
