@@ -5,7 +5,8 @@ assembly (amplitude estimation, BHMT Thm 12), then AA-6 in engine form plus the 
 refinement** — see the execution record before the references. Nothing on this plan remains
 open; of the two residues recorded below with reasons, the straddling-kernel inequality for
 literal `8/π²` (R-001) was discharged 2026-09-23 (`amplitude_estimation_bhmt`, the record after
-the correction record) and the Thm 3 doubling-schedule bookkeeping (R-002) remains. Gates and abort criteria on the
+the correction record) and the Thm 3 doubling-schedule bookkeeping (R-002) the same day
+(`qsearch_expected_cost`, `QSearch.lean`; the record after AA-6's). Gates and abort criteria on the
 Q11 mold; walls were pre-checked (the Q12 lesson: probe before rating), and none fired.
 
 **Provenance.** Candidate 2 of the five from the 2026-08-28 algorithms discussion (candidate 1,
@@ -302,6 +303,28 @@ with average probability `≥ 1/4`, no knowledge of `a`. **Residue (named):** th
 exponential-doubling schedule and its expected-`O(1/√a)` total (the paper's Thm 3 wrapper) is
 a probabilistic-process argument — algorithmic bookkeeping over runs, not amplitude algebra —
 and is not formalised.
+
+**R-002 discharged 2026-09-23 (BACKLOG #13), `Mathlib/QuantumInfo/QSearch.lean`.** The
+schedule `qsearchGuess l = ⌈(6/5)^l⌉`; the stage law `stageProbAt` (measure `ψ` directly, else a
+fresh copy amplified `j` rounds: `a + (1−a) sin²((2j+1)θ)`) averaged over uniform `j < M`
+(`stageProb`), `≥ 1/4` once `M sin 2θ ≥ 1` (`quarter_le_stageProb`, from `qsearch_average`) and
+`≥ a` always. The run as a random process: `QSearchRun` bundles, on a probability space, the
+round counts `J l` and successes `W l` with `iIndepFun` across stages, `J l` uniform below `M l`
+and the Born law given `J l = j`. The bookkeeping is three lemmas — reaching stage `l` has
+probability `∏_{k<l}(1 − p_k)` (`meas_reach`, `iIndepFun.meas_biInter`), a reached stage costs
+`M_l + 1` in expectation (`lintegral_stageCost`, the fresh draw independent of the past), the
+expected cost is the series (`lintegral_cost`) — then the reach probabilities decay like
+`(3/4)^{l−l₀}` past the critical stage (`meas_reach_le`) and the series is bounded by explicit
+geometric weights, `(5/6)^{l₀−l}` before and `(9/10)^{l−l₀}` after (`qsearch_partial_sum_le`,
+`45 (6/5)^{l₀}`). ★★ `qsearch_expected_cost`: for `0 < a < 1` the expected number of
+applications is `≤ 54/√a` (`a ≤ 3/4`: the first stage with `(6/5)^{l₀} > 1/sin 2θ`, so
+`(6/5)^{l₀} ≤ (6/5)/sin 2θ ≤ (6/5)/√a`; `a > 3/4`: every stage succeeds with probability
+`> 3/4`). `exists_qsearchRun`: the model is consistent, `Measure.infinitePi` of the stage laws
+carries a run. Honest scope: the upper bound (the `Ω(1/√a)` is BBBV optimality); the stage cost
+`2 + 2j` over-charges a stage whose direct measurement succeeds; the constant `54` is not
+optimised. The snag worth keeping: `add_le_add_left` and `mul_le_mul_left'` have changed
+conventions at this pin — use `add_le_add_right` and `mul_le_mul' le_rfl`; `Finset.range_succ`
+is `Finset.range_add_one`; `sum_le_tsum` is `Summable.sum_le_tsum`.
 
 *The mirror refinement (both branches counted):* `AmplitudeEstimation.lean` mirror section.
 Negating phase and index conjugates every processed amplitude

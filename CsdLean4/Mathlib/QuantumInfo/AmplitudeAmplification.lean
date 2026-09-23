@@ -49,9 +49,9 @@ boundaries are real and excluded by hypothesis: `goodProb = 0` leaves no plane t
 `AmplitudeEstimation.lean` from this module's eigenstructure section. For unknown `a`, the
 **QSearch engine** (BHMT Lemma 2) is the final section here: a uniformly random round count
 below `M` succeeds with average probability `≥ 1/4` once `M·sin 2θ ≥ 1`
-(`qsearch_average`) — the paper's Thm 3 wraps this in an exponential-doubling schedule whose
-expected-runtime bookkeeping is a probabilistic-process argument, not formalised
-(⚠️ RESIDUE(R-002), `specs/amplitude-amplification-plan.md` AA-6).
+(`qsearch_average`); the paper's Thm 3 — the exponential-doubling schedule and its expected
+cost `O(1/√a)` — is `QSearch.lean` (`qsearch_expected_cost`), the run modelled as independent
+stages on a probability space.
 -/
 
 @[expose] public section
@@ -832,7 +832,7 @@ When `a` is unknown the optimal count `⌊π/(4θ)⌋` cannot be computed. BHMT'
 round count uniformly at random below a guess `M`. The average success probability has an
 exact closed form — the odd-angle `sin²` sum telescopes — and once `M·sin 2θ ≥ 1` it is at
 least `1/4`, independent of `a`. The exponential-doubling schedule built on this
-(BHMT Thm 3) is algorithmic bookkeeping and not formalised. -/
+(BHMT Thm 3) is `QSearch.lean`. -/
 
 omit [Fintype ι] [DecidableEq ι] in
 /-- The double angle of the odd angle: `cos(2·(2m+1)θ) = 1 − 2 sin²((2m+1)θ)`. -/
@@ -878,7 +878,7 @@ success probability `0 < a < 1`, as soon as the guess `M` satisfies `M · 2√(a
 amplification rounds `0, …, M−1` have **total** success probability at least `M/4` — i.e., a
 uniformly random round count below `M` succeeds with average probability `≥ 1/4`, with no
 knowledge of `a`. This is the engine of BHMT's unknown-`a` search; the exponential-doubling
-schedule wrapping it (their Thm 3) is not formalised. -/
+schedule wrapping it (their Thm 3) is `qsearch_expected_cost` in `QSearch.lean`. -/
 theorem qsearch_average (G : Finset ι) (ψ : EuclideanSpace ℂ ι) (hψ : ‖ψ‖ = 1)
     (ha0 : 0 < goodProb G ψ) (ha1 : goodProb G ψ < 1) (M : ℕ)
     (hM : 1 ≤ M * (2 * Real.sqrt (goodProb G ψ * (1 - goodProb G ψ)))) :

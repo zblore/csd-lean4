@@ -9036,7 +9036,10 @@ entries:
       same paper, as a round count chosen uniformly at random below a cap succeeds with
       average probability at least one quarter once the cap is large enough relative to
       the success probability, and the sum over rounds telescopes to an exact closed form.
-      The exact threshold is stated in the mathematical section. The standing disclaimer
+      The whole search with its exponentially growing caps is proved as well, so a run
+      finishes in an expected number of steps at most a fixed constant times one over the
+      square root of the success probability, with the run modelled as independent stages
+      on a probability space. The exact threshold is stated in the mathematical section. The standing disclaimer
       applies, as the algorithm layer consumes the programme's unitary-evolution pillar
       and doesn't support the foundations.
     mathematical: >
@@ -9052,7 +9055,11 @@ entries:
       sin theta <= theta. For unknown a the QSearch engine (BHMT Lemma 2) is also proved,
       as a uniformly random round count below M succeeds with average probability at least
       1/4 once M * 2 sqrt(a(1-a)) >= 1, the odd-angle sum telescoping to an exact closed
-      form. Degenerate boundaries a = 0 (no plane) and a = 1 (nothing to amplify) are
+      form. The full QSearch (BHMT Theorem 3) is proved in QSearch.lean: with caps M_l =
+      ceil((6/5)^l), the stages modelled as independent random variables (QSearchRun) and
+      the cost 2 + 2j charged to a reached stage with round count j, the expected number
+      of applications is at most 54/sqrt(a) for 0 < a < 1 (qsearch_expected_cost), and the
+      model is consistent (exists_qsearchRun). Degenerate boundaries a = 0 (no plane) and a = 1 (nothing to amplify) are
       excluded by hypothesis. Round counting is abstract, and no oracle model or gate
       decomposition is claimed.
     person: >

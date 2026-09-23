@@ -65,6 +65,7 @@ public import CsdLean4.Mathlib.QuantumInfo.KnillLaflamme
 public import CsdLean4.Mathlib.QuantumInfo.StabilizerRecovery
 public import CsdLean4.Mathlib.QuantumInfo.Magic
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
+public import CsdLean4.Mathlib.QuantumInfo.QSearch
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.ConstProp

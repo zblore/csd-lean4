@@ -1088,11 +1088,105 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- (sum_sin_sq_odd_ge); on the register: qsearch_average -- for any unit state with unknown
 -- 0 < a < 1 and M with M * 2 sqrt(a(1-a)) >= 1, the rounds 0..M-1 have total success
 -- probability >= M/4. The exponential-doubling schedule wrapping this (BHMT Thm 3, expected
--- O(1/sqrt a) total) is a probabilistic-process argument, recorded and not formalised.
--- Foundational triple.
+-- O(1/sqrt a) total) was recorded as R-002 and is QSearch.lean, pinned right below
+-- (discharged 2026-09-23). Foundational triple.
 /-- info: 'QuantumInfo.qsearch_average' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.qsearch_average
+
+-- 2026-09-23, R-002 DISCHARGED (BACKLOG #13): Mathlib/QuantumInfo/QSearch.lean, BHMT Thm 3
+-- (the upper bound). The schedule qsearchGuess l = ceil((6/5)^l); the stage law stageProbAt
+-- (direct measurement of psi, else a fresh copy amplified j rounds: a + (1-a) sin^2((2j+1)
+-- theta)) and its average stageProb over uniform j < M, >= 1/4 once M sin(2 theta) >= 1
+-- (quarter_le_stageProb, from qsearch_average) and >= a always (le_stageProb). The run as a
+-- random process: QSearchRun bundles, on a probability space, the round counts J l and the
+-- successes W l with iIndepFun across stages, J l uniform below M l, and the Born law given
+-- J l = j. The bookkeeping: reach l = every earlier stage failed, of probability
+-- prod_{k<l} (1 - p_k) (meas_reach, iIndepFun.meas_biInter); the fresh draw is independent of
+-- the past (meas_J_inter_reach), so a reached stage costs M_l + 1 in expectation
+-- (lintegral_stageCost: 2 + 2j charged, j uniform has mean (M-1)/2); the expected cost is the
+-- series (lintegral_cost, lintegral_tsum); past a critical stage the reach probabilities decay
+-- like (3/4)^(l - l0) (meas_reach_le); the series is bounded by explicit geometric weights
+-- (5/6)^(l0-l) before and (9/10)^(l-l0) after the critical stage (qsearch_partial_sum_le:
+-- 45 (6/5)^l0). Headline QSearchRun.qsearch_expected_cost: for 0 < a < 1 the expected number
+-- of applications is <= 54/sqrt(a) (a <= 3/4: the first stage with (6/5)^l0 > 1/sin(2 theta),
+-- so (6/5)^l0 <= (6/5)/sin(2 theta) <= (6/5)/sqrt(a); a > 3/4: every stage succeeds with
+-- probability > 3/4). exists_qsearchRun: the model is consistent -- Measure.infinitePi of the
+-- stage laws stageMeasure carries a run (iIndepFun_infinitePi, infinitePi_map_eval).
+-- HONEST SCOPE: the upper bound only (the Omega(1/sqrt a) is BBBV optimality, not here); the
+-- stage cost 2 + 2j is an upper bound when the direct measurement already succeeds; the
+-- constant 54 is not optimised. Foundational triple.
+/-- info: 'QuantumInfo.qsearchGuess' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.qsearchGuess
+
+/-- info: 'QuantumInfo.stageProbAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.stageProbAt
+
+/-- info: 'QuantumInfo.stageProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.stageProb
+
+/-- info: 'QuantumInfo.quarter_le_stageProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.quarter_le_stageProb
+
+/-- info: 'QuantumInfo.le_stageProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.le_stageProb
+
+/-- info: 'QuantumInfo.QSearchRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.QSearchRun
+
+/-- info: 'QuantumInfo.QSearchRun.meas_reach' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.QSearchRun.meas_reach
+
+/-- info: 'QuantumInfo.QSearchRun.meas_J_inter_reach' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.QSearchRun.meas_J_inter_reach
+
+/-- info: 'QuantumInfo.QSearchRun.meas_W_true' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.QSearchRun.meas_W_true
+
+/-- info: 'QuantumInfo.QSearchRun.cost' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.QSearchRun.cost
+
+/-- info: 'QuantumInfo.QSearchRun.lintegral_stageCost' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.QSearchRun.lintegral_stageCost
+
+/-- info: 'QuantumInfo.QSearchRun.lintegral_cost' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.QSearchRun.lintegral_cost
+
+/-- info: 'QuantumInfo.QSearchRun.meas_reach_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.QSearchRun.meas_reach_le
+
+/-- info: 'QuantumInfo.qsearch_partial_sum_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.qsearch_partial_sum_le
+
+/-- info: 'QuantumInfo.QSearchRun.lintegral_cost_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.QSearchRun.lintegral_cost_le
+
+/-- info: 'QuantumInfo.QSearchRun.qsearch_expected_cost' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.QSearchRun.qsearch_expected_cost
+
+/-- info: 'QuantumInfo.stageMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.stageMeasure
+
+/-- info: 'QuantumInfo.exists_qsearchRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_qsearchRun
 
 -- The Pauli/Clifford layer -- the Gottesman-Knill mechanism (Mathlib/QuantumInfo/Pauli.lean
 -- + Clifford.lean, 2026-08-29; plan specs/gottesman-knill-plan.md, GK-1/GK-2; candidate 3 of
