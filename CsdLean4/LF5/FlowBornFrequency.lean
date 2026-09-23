@@ -24,7 +24,9 @@ preparation `ψ`, the pointer-`i` committed Fubini–Study volume on the dilated
 `ℂℙ^{N²−1}` equals the Born weight `‖⟨eᵢ, ψ⟩‖²`
 (`vnDilation_pointer_volume`), and i.i.d. FS-typical trials on the dilated
 sector have pointer-`i` block frequencies converging almost surely to that Born
-weight (`vnDilation_pointer_frequency`).
+weight (`vnDilation_pointer_frequency`). The fibred variant
+`vnDilation_pointer_frequency_basin_after_flow` explicitly evolves trials from the embedded
+input preparation and derives their post-flow law before applying the frequency engine.
 
 ## How the LF5-C obstruction was resolved
 
@@ -49,14 +51,13 @@ and out comes `‖⟨eᵢ,ψ⟩‖²`, with no Born put in, Gleason-free. This m
 **imports** that identity (via `bornRegion_fs_measure_uncond`); it does not
 re-prove it, and it does not take Born as a primitive. The increment here is the
 *dynamically realised* dilation (`vnNaimark`, LF5-C) wired into that engine
-without genericity — the measurement **dynamics** (`Φ ≠ id`), not the number.
+without genericity — the measurement **dynamics** (`Φ ≠ id` when `1 < N`), not the number.
 What **is** posited is not Born but the **CSD sector (SO-1)**: that the sector's typicality law is
 the Fubini–Study measure (i.i.d. trials with law `fsMeasure`). Born =
 volume is a theorem; FS-as-the-typicality-measure is the sector posit, still
 undischarged — it reduces to D1, the dynamical sector origin (⚠️ RESIDUE(R-012)).
-LF5-E wires the context-fixed pointer reading +
-capstone; entangled / non-local de-isolation is deferred
-(`specs/lf5-plan.md` §0).
+LF5-E assembles the base-side capstone; `LF6/SingletDeisolationFlow.lean` is an
+entangled consumer of the fibred frequency interface.
 
 Reference: `specs/lf5-plan.md` (LF5-D).
 -/
@@ -147,7 +148,10 @@ theorem vnDilation_pointer_volume_basin {M : ℕ}
 Same statement with `epistemicMeasure [ψ']` in place of `fsMeasure p₀` and global basins
 in place of Born regions, so the base measure leaves the statement. Proof is the base-side proof
 with the fibred POVM engine substituted; the dilation bookkeeping after it is unchanged, because
-that part concerns the dilated vector rather than the trial law. -/
+that part concerns the dilated vector rather than the trial law. Here `X` already has the
+post-flow prepared law; `vnDilation_pointer_frequency_basin_after_flow` derives it by evolving
+trials with the embedded input law. Only common laws and pairwise independence of each cell's
+indicators are required here, rather than independence of the full trials. -/
 theorem vnDilation_pointer_frequency_basin {M : ℕ}
     (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1)
     (e : (Fin N × Fin N) ≃ Fin (M + 1))
@@ -220,6 +224,69 @@ theorem vnDilation_pointer_frequency {M : ℕ}
       hψ'eq hψ'0 hnorm p₀ X hX hlaw hindep] with ω hω i
   have h := hω i
   rwa [basisPOVM_weight ψ i] at h
+
+/-- Evolving the base ray and retaining the fibre coordinate transports the prepared
+Dirac-times-Haar law to the law at the evolved ray. This is a pushforward identity for
+prepared laws; it does not assume that the initial prepared law is invariant. -/
+theorem epistemicMeasure_map_measurementFlow {M : ℕ}
+    (e : Fin N × Fin N ≃ Fin (M + 1)) (p : CPN (M + 1)) :
+    Measure.map (Prod.map (measurementFlow N e) id) (CSD.RecordLayer.epistemicMeasure p)
+      = CSD.RecordLayer.epistemicMeasure (measurementFlow N e p) := by
+  rw [CSD.RecordLayer.epistemicMeasure, ← Measure.map_prod_map _ _
+    (measurementFlow_measurable e) measurable_id, Measure.map_dirac'
+    (measurementFlow_measurable e), Measure.map_id]
+  rfl
+
+/-- Pointer-block frequencies after evolving trials drawn from the embedded input
+preparation. The base ray follows `measurementFlow`; the Haar fibre coordinate is retained.
+The post-flow trial law and independence of its basin indicators are proved from the
+initial law and pairwise independence of the initial trials, then supplied to
+`vnDilation_pointer_frequency_basin`. The readout uses the fixed global basins of
+`momentContext`. This does not construct a record-register interaction or derive the
+initial Dirac-times-Haar preparation law. -/
+theorem vnDilation_pointer_frequency_basin_after_flow {M : ℕ}
+    (ψ : EuclideanSpace ℂ (Fin N)) (hψ : ‖ψ‖ = 1) (hψ0 : ψ ≠ 0)
+    (e : (Fin N × Fin N) ≃ Fin (M + 1))
+    (ψ' : EuclideanSpace ℂ (Fin (M + 1)))
+    (hψ'eq : ψ' = LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e
+        (Matrix.toEuclideanLin (vnDilationV N) ψ))
+    (hψ'0 : ψ' ≠ 0)
+    {Ω : Type*} [MeasurableSpace Ω] {Pr : Measure Ω} [IsProbabilityMeasure Pr]
+    (X : ℕ → Ω → CSD.LF4.KSigma (M + 1)) (hX : ∀ n, Measurable (X n))
+    (hlaw : ∀ n, Measure.map (X n) Pr =
+      CSD.RecordLayer.epistemicMeasure (Projectivization.mk ℂ
+        ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e)
+          (Matrix.toEuclideanLin (embedGround N) ψ))
+        (piLpCongrLeft_embedGround_ne_zero e ψ hψ0)))
+    (hindep : Pairwise (Function.onFun (fun f g => IndepFun f g Pr) X)) :
+    ∀ᵐ ω ∂ Pr, ∀ i : Fin N,
+      Tendsto
+        (fun m : ℕ =>
+          ∑ n : Fin N,
+            (∑ k ∈ Finset.range m,
+                Set.indicator
+                  ((Prod.map (measurementFlow N e) id ∘ X k) ⁻¹' CSD.RecordLayer.globalBasin
+                    (CSD.RecordLayer.momentContext (M + 1)) (e (n, i)))
+                  (fun _ => (1 : ℝ)) ω)
+              / (m : ℝ))
+        atTop
+        (nhds (‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2)) := by
+  have hF : Measurable (Prod.map (measurementFlow N e) (id : KTorus → KTorus)) :=
+    (measurementFlow_measurable e).prodMap measurable_id
+  apply vnDilation_pointer_frequency_basin ψ hψ e ψ' hψ'eq hψ'0
+    (fun k => Prod.map (measurementFlow N e) id ∘ X k) (fun k => hF.comp (hX k))
+  · intro k
+    rw [← Measure.map_map hF (hX k), hlaw k, epistemicMeasure_map_measurementFlow,
+      measurementFlow_realises_dilation e ψ hψ0]
+    subst ψ'
+    rfl
+  · intro j a b hab
+    have hI : Measurable (Set.indicator
+        (CSD.RecordLayer.globalBasin (CSD.RecordLayer.momentContext (M + 1)) j)
+        (fun _ => (1 : ℝ)) ∘ Prod.map (measurementFlow N e) id) :=
+      (measurable_const.indicator (CSD.RecordLayer.measurableSet_globalBasin _ j)).comp hF
+    convert (hindep hab).comp hI hI using 1 <;>
+      exact funext fun _ => Set.indicator_comp_right (g := fun _ => (1 : ℝ)) _
 
 end LF5
 end CSD

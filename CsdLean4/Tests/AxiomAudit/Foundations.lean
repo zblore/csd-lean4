@@ -149,6 +149,12 @@ info: 'CSD.LF2.SectorData.outcomeOfProjective_weight_eq_projectiveWeight' depend
 /-- info: 'CSD.LF2.OperationalPackage.effect_gleason_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms OperationalPackage.effect_gleason_representation
 
+-- The upper probability bound is derived from the other effect-probability conditions.
+/-- info: 'CSD.LF2.OperationalPackage.ofNonnegAdditive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs in #print axioms OperationalPackage.ofNonnegAdditive
+/-- info: 'CSD.LF2.OperationalPackage.effect_gleason_representation_of_nonneg_additive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms OperationalPackage.effect_gleason_representation_of_nonneg_additive
+
 -- W2 (2026-09-11), LF2/PreparationQdensity.lean: the spine from a preparation on Sigma to the
 -- QIT layer. fromPreparation composed with effect_gleason_representation, named
 -- (preparationDensity, preparation_traceForm, preparation_qdensity_unique), its PosSemidef and

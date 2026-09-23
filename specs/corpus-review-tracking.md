@@ -79,14 +79,26 @@ The fourth batch covers [phase independence, partitions and preparation densitie
 The fifth batch covers [LF3 calibration and concrete singlet flow](reviews/2026-09-22-lf3-singlet-flow.md).
 The sixth batch covers [exclusive singlet outcomes and the frequency witness](reviews/2026-09-22-exclusive-singlet-outcomes.md).
 The seventh batch completes [exact circle readout and flowed effect probabilities](reviews/2026-09-22-circle-totality-flow-effects.md).
-At its completion on 2026-09-22, current verified coverage is **32 of 691 files (4.63%)**.
-FlowChannel and CircleRecord's earlier partial reviews are now complete. CircleFibre
-and its two previously reviewed singlet consumers were refreshed, without double counting.
-CR-RECORD-002 is closed with a pointwise totality proof, and CR-LF2-010 records the new
-operational probability consequence of flow covariance.
+The eighth batch covers [measurement dynamics, evolved prepared trials and the channel](reviews/2026-09-22-evolved-preparation-trials.md).
+Batch 008 completed with **35 of 691 files (5.07%)** reviewed.
+MeasurementFlow, FlowBornFrequency and MeasurementFlowChannel received full reviews.
+SigmaSecondLaw and the Dynamics axiom-audit file have partial entries only. The new frequency
+adapter derives the output law from explicitly evolved input samples; the underlying
+frequency engine and its existing signatures remain intact. CR-LF5-001, CR-LF5-002 and
+CR-LF6-001 record the validated repairs.
 
-Next: review LF5/FlowBornFrequency and LF6/MeasurementFlowChannel, tracing their actual
-preparation laws and recorded-event calibration (the remaining CR-LF2-006 scope).
+The ninth batch covers [Busch reconstruction and its dependency guard](reviews/2026-09-23-gleason-busch.md).
+Current full coverage is **37 of 691 Lean files (5.35%)**, with three partial entries.
+EffectGleason and scripts/gleason-free received full reviews; Foundations gained a partial
+axiom-pin review. Twelve full and two partial consumer entries were refreshed for the
+additive dependency change, retaining prior evidence. The reconstruction was sound;
+the API now derives a redundant bound, and the guard catches direct/aliased reconstruction.
+The full library/test build passed (4330 jobs), as did the strengthened 260-declaration
+scan and eight further guards. CR-GLEASON-001 through CR-GLEASON-003 record the repairs.
+
+Next: review the RecordLayer/Measurement and DrivenTwoTime interfaces, using the existing
+baseLift/basinIndex_pullback and register-event identities for CR-LF2-006. CR-RECORD-003
+records a missing-normalization docstring finding in the real-fibre measurement API.
 CR-LF3-004 retains the separate phase-sensitive vector-outcome API question.
 Import/build coverage alone does not mark supporting modules reviewed.
 

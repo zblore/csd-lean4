@@ -19,8 +19,9 @@ the loop from LF5's ontic flow to the channel of `LF6/DecoherenceChannel.lean`).
 `LF2/FlowChannel.lean` proves that a flow lifting a unitary produces the Stinespring channel of
 that unitary, with the lift hypothesis a theorem for the projective unitary action at index
 `Fin N` (`isUnitaryLift_of_smul`). LF5's measurement flow (`LF5/MeasurementFlow.lean`) is such an
-action, but on the dilated space reindexed along `e : Fin N × Fin N ≃ Fin m`, because the
-Fubini-Study infrastructure is `Fin m`-indexed. This module carries the lift back across the
+action, on the dilated space reindexed along `e : Fin N × Fin N ≃ Fin m`. This follows
+LF5's choice of index for its volume engine; the Fubini–Study measure itself supports
+arbitrary finite index types. This module carries the lift back across the
 reindexing and instantiates the W6/W7 theorems on LF5's flow:
 
 * `isUnitaryLift_measurementFlow` — an ontic sector over the dilated projective space whose flow
@@ -32,12 +33,14 @@ reindexing and instantiates the W6/W7 theorems on LF5's flow:
   `deisolationChannel N` applied to the system's density operator: **the de-isolation channel is
   the environment marginal of LF5's flow**;
 * ★ `measurementFlow_vonNeumannEntropy_le` — the second law under LF5's flow: the system's
-  reduced entropy after the flow is at least its entropy before (TH2's full-support hypothesis).
+  reduced entropy after the flow is at least its entropy before (TH2's positive-diagonal
+  hypothesis in the measurement basis).
 
 ## Honest scope
 
 **The unit section.** The general theorems take a unit-norm measurable section `rep'` of the ray
-map (`mk (rep' p) = p`), as `fromPreparation` does; `Projectivization.unitSection`
+map (`mk (rep' p) = p`). The abstract `fromPreparation` API requires unit norm and
+measurability but does not itself require this section equation. `Projectivization.unitSection`
 (`Mathlib/LinearAlgebra/Projectivization/UnitSection.lean`, W6″) is one, canonical and Borel
 measurable, and `measurementFlow_traceRight_barycenter_unitSection` is the theorem with it
 supplied, so no section hypothesis remains.
@@ -123,8 +126,9 @@ theorem measurementFlow_traceRight_barycenter (e : Fin N × Fin N ≃ Fin m)
     (isUnitaryLift_measurementFlow e D Φ hproj rep' hrep_unit hrep_ne hsec) hprod
 
 /-- ★ **The second law under LF5's measurement flow**: the entropy of the system's reduced
-density operator after the flow is at least its entropy before (full support of the system
-state assumed, TH2's hypothesis). -/
+density operator after the flow is at least its entropy before. TH2's hypothesis is strict
+positivity of the initial system density matrix's diagonal entries in the measurement basis;
+it does not require that matrix to have full rank. -/
 theorem measurementFlow_vonNeumannEntropy_le (e : Fin N × Fin N ≃ Fin m)
     (D : SectorData SigmaSpace (ℙ ℂ (EuclideanSpace ℂ (Fin m))) G)
     (μprep : Measure SigmaSpace) [IsProbabilityMeasure μprep]
@@ -149,7 +153,7 @@ theorem measurementFlow_vonNeumannEntropy_le (e : Fin N × Fin N ≃ Fin m)
     repS hrepS_unit hrepS_meas
     (isUnitaryLift_measurementFlow e D Φ hproj rep' hrep_unit hrep_ne hsec) hprod hpos
 
-/-- ★★ **Unconditional form**: with the canonical measurable unit section as representative, the
+/-- ★★ **Canonical-section form**: with the canonical measurable unit section as representative, the
 section hypotheses disappear. The reduced density operator of the flowed preparation is the
 de-isolation channel applied to the system's density operator, for every preparation on a sector
 whose flow projects to LF5's measurement flow and is a product with the apparatus ready. -/

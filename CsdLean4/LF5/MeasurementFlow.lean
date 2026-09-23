@@ -15,21 +15,17 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 **Category:** 3-Local (LF5 measurement-dynamics layer).
 
 This is **LF5-B** of `specs/lf5-plan.md`: the deterministic measurement flow
-`Φ_vN ≠ id` on the dilated projective ontic space, induced by the LF5-A von
+`Φ_vN` on the dilated projective ontic space, nonidentity for `1 < N`, induced by the LF5-A von
 Neumann coupling unitary `vnUnitary N` (the adder-permutation coupling
 `eⱼ ⊗ a₀ ↦ eⱼ ⊗ aⱼ` on the system × apparatus index `Fin N × Fin N`).
 
-## Design choice: reindex onto the `Fin m` FS infrastructure (option (a))
+## Design choice: use the volume engine's `Fin m` indexing
 
-The Fubini–Study infrastructure (`fsMeasure`,
-`fsMeasure_smul_invariant`, the projective `MulAction` of
-`Matrix.unitaryGroup (Fin n) ℂ`) is `Fin n`-indexed. The dilated index here is
-`Fin N × Fin N`. Rather than generalising the audited Cat-1 FS files to an
-arbitrary fintype index (option (b), wide blast radius), this module
-**reindexes** `vnUnitary N` along an equiv `e : Fin N × Fin N ≃ Fin m`
-(`Matrix.reindex` preserves unitary-group membership,
-`reindex_mem_unitaryGroup`) and defines the flow as the smul action of the
-reindexed unitary `vnUnitaryReindexed N e` on `ℙ ℂ (EuclideanSpace ℂ (Fin m))`.
+The Fubini–Study measure and projective unitary action support arbitrary finite index
+types. This module uses `Fin m` to share an index with the downstream POVM volume engine.
+It reindexes `vnUnitary N` along an equiv `e : Fin N × Fin N ≃ Fin m`
+(`Matrix.reindex` preserves unitary-group membership, `reindex_mem_unitaryGroup`) and
+uses the action of `vnUnitaryReindexed N e` on `ℙ ℂ (EuclideanSpace ℂ (Fin m))`.
 
 The equiv is a *parameter*, not fixed to `finProdFinEquiv : Fin N × Fin N ≃
 Fin (N * N)`. **LF5-C/LF5-D consequence:** LF4's POVM volume engine
@@ -65,14 +61,14 @@ by the adder `vnPerm N`).
 
 ## Honest scope (D1 increment)
 
-This module exercises a **genuine `Φ ≠ id` measurement dynamics** on the
+For `1 < N`, this module exercises **nonidentity measurement dynamics** on the
 dilated ontic space — the D1 increment, under the de-isolation reading of
 `specs/carve-out-plan.md` §6 (the apparatus de-isolates; the pointer-outcome
 regions are the context-fixed apparatus basis blocks, not carved). It does
 **not** re-derive the Born number: downstream (LF5-D) the Born weight still
 comes from the existing FS-volume = Born engine. Single-system projective
-tier; entangled measurements and the posited CSD sector (SO-1) are deferred
-(`specs/lf5-plan.md` §0).
+tier; the entangled consumer `LF6/SingletDeisolationFlow.lean` uses this flow
+downstream. The CSD sector (SO-1) is assumed rather than derived here.
 
 Reference: `specs/lf5-plan.md` (LF5-B).
 -/
@@ -92,8 +88,7 @@ variable {N : ℕ} [NeZero N] {m : ℕ}
 /-- Reindexing a square matrix along an `Equiv` preserves unitary-group
 membership: `(reindex e e A)ᴴ (reindex e e A) = reindex e e (Aᴴ A) = 1` via
 `Matrix.conjTranspose_submatrix`, `Matrix.submatrix_mul_equiv`, and
-`Matrix.submatrix_one_equiv`. Generic helper (Mathlib upstream candidate —
-`Matrix.UnitaryGroup` currently has no reindex API). -/
+`Matrix.submatrix_one_equiv`. Finite-index helper used to construct `vnUnitaryReindexed`. -/
 lemma reindex_mem_unitaryGroup {ι κ : Type*} [Fintype ι] [DecidableEq ι]
     [Fintype κ] [DecidableEq κ] (e : ι ≃ κ)
     {A : Matrix ι ι ℂ} (hA : A ∈ Matrix.unitaryGroup ι ℂ) :
@@ -104,8 +99,8 @@ lemma reindex_mem_unitaryGroup {ι κ : Type*} [Fintype ι] [DecidableEq ι]
     show Aᴴ * A = 1 from hA, Matrix.submatrix_one_equiv]
 
 /-- The **reindexed von Neumann coupling unitary**: `vnUnitary N` transported
-along `e : Fin N × Fin N ≃ Fin m` onto the `Fin m`-indexed space where the
-Fubini–Study infrastructure lives, packaged as a `Matrix.unitaryGroup` element
+along `e : Fin N × Fin N ≃ Fin m` onto the index used by the downstream volume
+engine, packaged as a `Matrix.unitaryGroup` element
 (this is what the projective smul action consumes). -/
 noncomputable def vnUnitaryReindexed (N : ℕ) [NeZero N] {m : ℕ}
     (e : Fin N × Fin N ≃ Fin m) : Matrix.unitaryGroup (Fin m) ℂ :=

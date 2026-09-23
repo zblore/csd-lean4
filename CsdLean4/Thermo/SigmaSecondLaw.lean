@@ -44,9 +44,9 @@ theorem. This module instantiates the three on that evolution, so each becomes a
 
 ## Honest scope
 
-⚠️ **The hypotheses are TH2's and TH4's.** The pinching inequality needs full support (strictly
-positive pointer weights), Landauer needs full-rank final marginals and a full-rank initial system
-state. These are inherited, not added. The lift hypothesis `IsUnitaryLift` is W6's (a theorem for
+⚠️ **The hypotheses are TH2's and TH4's.** The pinching inequality here assumes strictly
+positive diagonal entries in the pointer basis, which does not require a full-rank input. Landauer
+needs full-rank final marginals and a full-rank initial system state. These are inherited, not added. The lift hypothesis `IsUnitaryLift` is W6's (a theorem for
 the projective unitary actions, `isUnitaryLift_of_smul`; for LF5's reindexed measurement flow the
 joint-index instance is W6′). The Gibbs hypothesis of `landauer_flow` says the bath *preparation*
 is thermal; that a bath preparation on `Σ` has a Gibbs barycentre is not derived here (the
@@ -166,8 +166,8 @@ theorem vonNeumannEntropy_flow_eq (hΦ : Measurable Φ) (hrep_unit : ∀ p, ‖r
 
 /-- ★★ **The second law on `Σ`.** Along an ontic flow lifting a unitary, the entropy of a
 preparation is conserved, and pinching the flowed density operator to the pointer basis does not
-decrease it: `S(ρ(μprep)) = S(ρ(Φ_* μprep)) ≤ S(pinch ρ(Φ_* μprep))`, under the full-support
-hypothesis TH2 needs (strictly positive pointer weights after the flow). Reversible
+decrease it: `S(ρ(μprep)) = S(ρ(Φ_* μprep)) ≤ S(pinch ρ(Φ_* μprep))`, under TH2's strict-positivity
+hypothesis on the pointer-basis diagonal after the flow. Reversible
 microdynamics on `Σ`, entropy production from coarse-graining. -/
 theorem vonNeumannEntropy_le_pinching_flow (hΦ : Measurable Φ) (hrep_unit : ∀ p, ‖rep p‖ = 1)
     (hrep_meas : Measurable rep) (U : Matrix ι ι ℂ) (hU : Uᴴ * U = 1)
@@ -240,8 +240,8 @@ sector, product with the apparatus ready in `a₀`, and an ontic flow lifting th
 coupling `vnUnitary N`, the entropy of the system's reduced density operator after the flow is at
 least the entropy of the system's density operator before it. The reduced flowed state is the
 de-isolation channel's output, which is the pointer-basis pinching
-(`deisolationChannel_apply_eq_pinch`), and pinching does not decrease entropy (TH2). Full support
-of the system state is TH2's hypothesis. -/
+(`deisolationChannel_apply_eq_pinch`), and pinching does not decrease entropy (TH2). The
+strict-positivity hypothesis concerns the system state's diagonal entries in the pointer basis. -/
 theorem vonNeumannEntropy_le_deisolation
     (μprep : Measure SigmaSpace) [IsProbabilityMeasure μprep]
     (Φ : SigmaSpace → SigmaSpace) (hΦ : Measurable Φ)

@@ -119,6 +119,16 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF5.vnDilation_pointer_frequency_basin
 
+-- Evolve trials from the embedded input law, retaining the Haar fibre. The output law
+-- and basin-indicator independence are derived before invoking the existing frequency engine.
+/-- info: 'CSD.LF5.epistemicMeasure_map_measurementFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.epistemicMeasure_map_measurementFlow
+
+/-- info: 'CSD.LF5.vnDilation_pointer_frequency_basin_after_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF5.vnDilation_pointer_frequency_basin_after_flow
+
 -- LF5-E (capstone): the LF5 layer headline measurement_flow_born_frequency —
 -- the single named chain theorem: Φ_vN ≠ id (genuine measurement dynamics),
 -- FS measure-preserving (Liouville admissibility), context-fixed (the same

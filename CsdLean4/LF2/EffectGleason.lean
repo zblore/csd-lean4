@@ -28,6 +28,20 @@ depend on the proof, which imports `BornWrapper`. Busch's proof (Busch 2003, "A 
 Gleason's Theorem") is short in finite dimensions because additivity over the *effect* algebra
 gives linearity directly, bypassing the frame-function analysis of projective Gleason.
 
+## Assumptions and dimensions
+
+The assignment is a single function on **all effects**, with additivity for every pair whose
+sum is at most `I`, including noncommuting pairs. This is the finite-dimensional complex
+Busch theorem, not projective Gleason from orthogonal-projector additivity alone. It includes
+`N = 1` and qubits (`N = 2`). At `N = 0` no normalized operational package exists because
+`I = 0`; the universally quantified theorem is vacuous there.
+
+`ofNonnegAdditive` derives the package's upper bound from its other three conditions;
+`effect_gleason_representation_of_nonneg_additive` exposes that interface. Continuity is not
+an extra premise. The finite-dimensional argument uses finite additivity; it makes no
+infinite-dimensional or countable-additivity claim. The complex effect algebra is supplied:
+this theorem does not construct CSD's ontic regions or identify their weights with `OP.p`.
+
 ## Proof arc (bottom-up)
 
 1. **This module — the foundational layer (`p` is a monotone, additive functional).**
@@ -48,7 +62,7 @@ gives linearity directly, bypassing the frame-function analysis of projective Gl
    representation problem to determining `p` on rank-one projectors. The **polarisation
    identities** are done: `outerProduct_parallelogram` (`|u+v⟩⟨u+v| + |u−v⟩⟨u−v| = 2|u⟩⟨u| +
    2|v⟩⟨v|`, cross terms cancel) and `outerProduct_polarization_real` — the algebraic core that
-   lets `p`, being additive, inherit the parallelogram law. The **sub-unit rank-one effect**
+   lets `p`, being additive, inherit the parallelogram law. The **sub-unit outer-product effect**
    `outerEffect v` (`|v⟩⟨v|` for any `‖v‖ ≤ 1`, needed for the combinations `u ± v`, `u ± iv`),
    the **degree-2 homogeneity** `p_outerEffect_smul` (`p(|c·v⟩⟨c·v|) = c²·p(|v⟩⟨v|)`), and the
    **Cauchy–Schwarz sum bound** `one_sub_two_outerProduct_posSemidef` (`I − |a⟩⟨a| − |b⟩⟨b|` PSD
@@ -145,6 +159,41 @@ end Effect
 
 namespace OperationalPackage
 
+/-- Build an operational package from nonnegativity, normalization and effect additivity.
+The upper bound is derived using the complementary effect: `p E + p (I - E) = 1`.
+This supplies the existing representation theorem without a separate boundedness proof. -/
+noncomputable def ofNonnegAdditive (p : Effect N → ℝ)
+    (hnonneg : ∀ E, 0 ≤ p E) (htotal : p Effect.one = 1)
+    (hadd : ∀ E F : Effect N, ∀ hLe : (1 - (E.M + F.M)).PosSemidef,
+      p (Effect.add E F hLe) = p E + p F) : OperationalPackage N where
+  p := p
+  nonneg := hnonneg
+  total_one := htotal
+  additivity := hadd
+  le_one E := by
+    let F : Effect N :=
+      { M := 1 - E.M
+        isHermitian := Matrix.isHermitian_one.sub E.isHermitian
+        nonneg := E.le_one
+        le_one := by simpa only [sub_sub_cancel] using E.nonneg }
+    have hsum : E.M + F.M = 1 := by
+      change E.M + (1 - E.M) = 1
+      abel
+    have hLe : (1 - (E.M + F.M)).PosSemidef := by
+      rw [hsum, sub_self]
+      exact Matrix.PosSemidef.zero
+    have heq : Effect.add E F hLe = Effect.one := Effect.ext_M hsum
+    have h := hadd E F hLe
+    rw [heq, htotal] at h
+    linarith [hnonneg F]
+
+/-- The minimal-input constructor retains the supplied effect assignment. -/
+@[simp] theorem ofNonnegAdditive_p (p : Effect N → ℝ)
+    (hnonneg : ∀ E, 0 ≤ p E) (htotal : p Effect.one = 1)
+    (hadd : ∀ E F : Effect N, ∀ hLe : (1 - (E.M + F.M)).PosSemidef,
+      p (Effect.add E F hLe) = p E + p F) :
+    (ofNonnegAdditive p hnonneg htotal hadd).p = p := rfl
+
 variable (OP : OperationalPackage N)
 
 /-- **`p 0 = 0`.** From additivity `p 0 = p(0 ⊕ 0) = 2 · p 0`. -/
@@ -180,7 +229,7 @@ theorem p_mono {E F : Effect N} (h : (F.M - E.M).PosSemidef) : OP.p E ≤ OP.p F
 
 /-- **Scalar additivity of `t ↦ p(t • E)` on `[0,1]`.** For `a, b ≥ 0` with `a + b ≤ 1`,
 `p((a+b) • E) = p(a • E) + p(b • E)` — the Cauchy relation whose monotone solution is
-`p(t • E) = t · p E` (the deferred homogeneity step). -/
+`p(t • E) = t · p E` (`p_smul_homog`). -/
 theorem p_smul_add {E : Effect N} {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (hab : a + b ≤ 1) :
     OP.p (Effect.smul (a + b) (by linarith) hab E)
       = OP.p (Effect.smul a ha (by linarith) E) + OP.p (Effect.smul b hb (by linarith) E) := by
@@ -461,7 +510,7 @@ theorem outerProduct_smul (c : ℂ) (v : EuclideanSpace ℂ (Fin N)) :
     smul_eq_mul, star_mul']
   ring
 
-/-- **The sub-unit rank-one effect** `|v⟩⟨v|` for `‖v‖ ≤ 1`. PSD is automatic; `le_one` holds
+/-- **The sub-unit outer-product effect** `|v⟩⟨v|` for `‖v‖ ≤ 1`, including zero. PSD is automatic; `le_one` holds
 because `1 - |v⟩⟨v| = (1 - |v̂⟩⟨v̂|) + (1-‖v‖²)|v̂⟩⟨v̂|`, both PSD. -/
 noncomputable def outerEffect (v : EuclideanSpace ℂ (Fin N)) (hv : ‖v‖ ≤ 1) : Effect N where
   M := outerProduct v
@@ -505,10 +554,10 @@ lemma outerEffect_eq_rankOneEffect (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖�
 
 The reconstruction of `ρ` from the rank-one values `φ ↦ p(|φ⟩⟨φ|)` rests on polarisation: the
 diagonal quadratic form must come from a sesquilinear form. Its algebraic core is that the
-rank-one projectors satisfy the parallelogram law at the matrix level — the cross terms of
+outer products satisfy the parallelogram law at the matrix level — the cross terms of
 `|u±v⟩⟨u±v|` cancel — so `p`, being additive, inherits the parallelogram law. -/
 
-/-- **Matrix parallelogram identity for rank-one projectors.**
+/-- **Matrix parallelogram identity for outer products.**
 `|u+v⟩⟨u+v| + |u−v⟩⟨u−v| = 2|u⟩⟨u| + 2|v⟩⟨v|`: the off-diagonal cross terms
 `|u⟩⟨v| + |v⟩⟨u|` appear with opposite signs in the two sums and cancel. Pure matrix algebra. -/
 theorem outerProduct_parallelogram (u v : EuclideanSpace ℂ (Fin N)) :
@@ -843,14 +892,13 @@ end OperationalPackage
 
 The Jordan–von Neumann polarisation gives additivity of `f u v = q(u+v) − q(u−v)` in each slot,
 hence `ℚ`-homogeneity. Upgrading to `ℝ`-homogeneity is where the classical proof invokes
-continuity — unavailable here, since `p` is an arbitrary probability assignment. Boundedness is
-the substitute: `0 ≤ q ≤ ‖·‖²` bounds `f` on the unit ball, and a bounded additive function on
+continuity. No continuity premise is assumed here; boundedness provides the needed regularity: `0 ≤ q ≤ ‖·‖²` bounds `f` on the unit ball, and a bounded additive function on
 `ℝ` is linear. -/
 
 /-- **Cauchy's functional equation with a local bound.** An additive `g : ℝ → ℝ` that is bounded
 on `[-1,1]` is linear: `g t = t · g 1`.
 
-No continuity is assumed (and none is available: `p` is an arbitrary probability assignment).
+No continuity premise is assumed; additivity and the local bound suffice.
 The proof is the classical squeeze on `h y = g y − y · g 1`: `h` is additive, kills every
 integer (`h m = m · h 1 = 0`), and is bounded on `[-1,1]`; for any `x` and any `n ≥ 1`,
 `n · h x = h (n x − ⌊n x⌋)` lands in that bounded window, so `|h x| ≤ (M + |g 1|)/n → 0`.
@@ -1003,7 +1051,7 @@ theorem qpolar_add_left (u w v : EuclideanSpace ℂ (Fin N)) :
 /-- **Real homogeneity of the polarisation difference in the first slot.** `f (t • u) v =
 t · f u v` for every *real* `t`. Additivity alone gives only `ℚ`-homogeneity; the upgrade to `ℝ`
 is `additive_bounded_linear`, whose local bound is `0 ≤ q ≤ ‖·‖²` (`qform_nonneg`,
-`qform_le_normSq`) — no continuity of `p` is needed or available. -/
+`qform_le_normSq`) — no continuity premise for `p` is needed. -/
 theorem qpolar_smul_real (t : ℝ) (u v : EuclideanSpace ℂ (Fin N)) :
     OP.qpolar (((t : ℝ) : ℂ) • u) v = t * OP.qpolar u v := by
   have hadd : ∀ s r : ℝ, OP.qpolar ((((s + r : ℝ)) : ℂ) • u) v
@@ -1171,7 +1219,7 @@ theorem euclidean_sum_single (v : EuclideanSpace ℂ (Fin N)) :
     simp [Ne.symm hb]
   · simp
 
-/-- **`Tr(R · |v⟩⟨v|) = ⟨v, R v⟩`.** The trace pairing against a rank-one projector is the
+/-- **`Tr(R · |v⟩⟨v|) = ⟨v, R v⟩`.** The trace pairing against an outer product is the
 quadratic form of `R` — the identity turning the sesquilinear reconstruction into the
 Born-style trace formula. -/
 theorem trace_mul_outerProduct (R : Matrix (Fin N) (Fin N) ℂ)
@@ -1244,10 +1292,9 @@ theorem p_outerEffect_eq_trace {v : EuclideanSpace ℂ (Fin N)} (hv : ‖v‖ �
 `p E = Tr(R · E)` for *every* effect `E` — the rank-one representation lifted through the
 spectral reduction (`p_eq_eigen_sum`, `Effect.sum_eigenEffect_M`).
 
-This is the content of Busch's theorem except the *state* conditions on `R`. What remains
-(step 4) is `R.PosSemidef` (from `OP.nonneg`), `R.trace = 1` (from `OP.total_one`), and
+This gives the representation formula. Section M supplies the *state* conditions on `R`: `R.PosSemidef` (from `OP.nonneg`), `R.trace = 1` (from `OP.total_one`), and
 uniqueness (non-degeneracy of the trace pairing) — which together make `R` a `DensityOperator`
-and replace the `busch_effect_gleason` axiom in `LF2/BornWrapper.lean`. -/
+and yield `effect_gleason_representation`. -/
 theorem p_eq_trace (E : Effect N) :
     ((OP.p E : ℝ) : ℂ) = (OP.qmatrix * E.M).trace := by
   have hE : E.M = ∑ i, (E.isHermitian.eigenvalues i : ℂ)
@@ -1409,6 +1456,16 @@ theorem qdensity_unique (ρ : DensityOperator N)
 theorem effect_gleason_representation (OP : OperationalPackage N) :
     ∃! ρ : DensityOperator N, ∀ E : Effect N, OP.p E = traceForm ρ E :=
   ⟨OP.qdensity, OP.p_eq_traceForm_qdensity, fun ρ hρ => OP.qdensity_unique ρ hρ⟩
+
+/-- Busch's finite-dimensional representation with boundedness derived from the other
+probability conditions. Nonnegativity and additivity on admissible effect sums, together
+with `p I = 1`, suffice. Reuses `effect_gleason_representation` through `ofNonnegAdditive`. -/
+theorem effect_gleason_representation_of_nonneg_additive (p : Effect N → ℝ)
+    (hnonneg : ∀ E, 0 ≤ p E) (htotal : p Effect.one = 1)
+    (hadd : ∀ E F : Effect N, ∀ hLe : (1 - (E.M + F.M)).PosSemidef,
+      p (Effect.add E F hLe) = p E + p F) :
+    ∃! ρ : DensityOperator N, ∀ E : Effect N, p E = traceForm ρ E :=
+  (ofNonnegAdditive p hnonneg htotal hadd).effect_gleason_representation
 
 end OperationalPackage
 

@@ -2,8 +2,9 @@
 # check-gleason-free.sh
 #
 # Runs scripts/gleason-free.lean: for every module whose header claims its PROOFS avoid
-# Busch's effect-Gleason theorem, no declaration in it may transitively reference
-# `effect_gleason_representation`.
+# Busch's effect-Gleason theorem, no public declaration in it may transitively reference
+# the representation theorem or its qdensity/qmatrix reconstruction roots. The Lean guard
+# follows local declarations across namespaces and tests direct/aliased reconstruction routes.
 #
 # WHY THIS EXISTS. 56 module headers in this corpus assert Gleason-freeness. For 44 of them
 # the claim is structural — `LF2/EffectGleason.lean` is not in the transitive import closure —
