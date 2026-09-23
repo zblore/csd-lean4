@@ -43,9 +43,10 @@ instantiates:
 **Honest scope.** The code space is exhibited (two orthonormal stabilised states) and the
 error-detection mechanism is stated in syndrome form; the recovery map is
 `SteaneRecovery.lean` (through `Mathlib/QuantumInfo/StabilizerRecovery.lean` and the
-Knill–Laflamme theorem); fault-tolerance claims are not attempted
-(⚠️ RESIDUE(R-003)) — the same posture
-as the three-qubit modules. The `𝔽₂` facts about the concrete Hamming rows (orthogonality,
+Knill–Laflamme theorem); the code-capacity failure bound and threshold are `SteaneThreshold.lean`
+(`steane_codeCapacity_failure_le`, `steane_threshold`, 2026-09-23); the concatenated quantum
+recovery is BACKLOG #61 and the circuit-level threshold theorem #62, both priced and not claimed
+— the same posture as the three-qubit modules. The `𝔽₂` facts about the concrete Hamming rows (orthogonality,
 independence, column distinctness) are closed by `decide` — kernel-checked finite
 computation, the right tool for a fixed `7 × 3` matrix.
 -/
@@ -354,6 +355,8 @@ def syndrome (e : Fin 7 → Fin 2) : Fin 3 → Fin 2 :=
 /-- The single-bit error at position `j`. -/
 def unitErr (j : Fin 7) : Fin 7 → Fin 2 :=
   fun i => if i = j then 1 else 0
+
+theorem unitErr_apply (j i : Fin 7) : unitErr j i = if i = j then 1 else 0 := rfl
 
 /-- ★ **Every single-qubit error is detected:** its syndrome is nonzero (every Hamming
 column is nonzero). By CSS symmetry the same statement covers both `X`- and `Z`-type

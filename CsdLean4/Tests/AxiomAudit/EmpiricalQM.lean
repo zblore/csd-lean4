@@ -1490,4 +1490,35 @@ pointer fails Yanase) and SWAP sharpness (both disjuncts fail, conclusion fails)
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.gidneyHybridAdd_shadow_A
 
+-- BACKLOG #14(c) = #51 (2026-09-23), Empirical/QM/QEC/SteaneThreshold.lean: the code-capacity
+-- threshold of the Steane code. Each qubit independently suffers an error with probability at
+-- most p (any per-qubit alphabet, read through a map to the single-qubit Paulis);
+-- exists_singleErr_of_card_le_one: a pattern with at most one error is a single-qubit Pauli;
+-- steane_codeCapacity_failure_le (STAR STAR): for every code state the recovery fails to return
+-- it with probability at most C(7,2) p^2 = 21 p^2 (the union bound over pairs,
+-- measure_pi_two_or_more_le); steane_concatBad_le: k levels of concatenation give bad-pattern
+-- probability at most (21 p)^(2^k)/21; steane_threshold: below p < 1/21 that bound tends to 0.
+-- Level-1 quantum, higher levels the pattern recursion (the concatenated quantum recovery is
+-- BACKLOG #61, the circuit-level theorem #62). unitErr_apply (Steane.lean) is the evaluation
+-- lemma the module system needs to read unitErr from outside.
+/-- info: 'CSD.Empirical.QM.QEC.Steane.unitErr_apply' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.unitErr_apply
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_singleErr_of_card_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_singleErr_of_card_le_one
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_codeCapacity_failure_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_codeCapacity_failure_le
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_concatBad_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_concatBad_le
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_threshold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_threshold
+
 end CSD.Tests.AxiomAudit

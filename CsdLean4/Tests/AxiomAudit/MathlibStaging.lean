@@ -8121,4 +8121,34 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms contDiffOn_moserFieldJoint'
 
+-- BACKLOG #51 (2026-09-23), Probability/CodeCapacityThreshold.lean: the probabilistic core of
+-- the code-capacity threshold. measure_pi_two_or_more_le (STAR): under the product of n copies of
+-- a probability measure, the patterns with two or more coordinates in a set of measure <= q
+-- have measure <= C(n,2) q^2 (union bound over pairs, each pair cylinder through
+-- Measure.pi_pi). codeCapacityBound: the recursion p -> c p^2, closed form (c p)^(2^k)/c
+-- (codeCapacityBound_eq), below p when c p <= 1 (codeCapacityBound_le), tending to 0 when
+-- c p < 1 (tendsto_codeCapacityBound, STAR - the threshold). ConcatPat/concatMeasure/concatBad:
+-- the error patterns of a k-fold concatenated n-block code under independent noise with the
+-- bad patterns (an error at level 0, two or more bad sub-blocks at level k+1);
+-- concatMeasure_concatBad_le (STAR STAR): they obey the recursion.
+/-- info: 'measure_pi_two_or_more_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms measure_pi_two_or_more_le
+
+/-- info: 'codeCapacityBound_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms codeCapacityBound_eq
+
+/-- info: 'codeCapacityBound_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms codeCapacityBound_le
+
+/-- info: 'tendsto_codeCapacityBound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms tendsto_codeCapacityBound
+
+/-- info: 'concatMeasure_concatBad_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms concatMeasure_concatBad_le
+
 end CSD.Tests.AxiomAudit

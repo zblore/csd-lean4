@@ -34,9 +34,12 @@ Hamming `[7,4]` parity-check rows (`hammingRow`, columns = binary 1..7) drive ev
 
 ## Honest scope
 
-The code space and the syndrome mechanism are exhibited; the full recovery map, the
-Knill–Laflamme conditions, and any fault-tolerance claim are **not attempted** — the same
-posture as the three-qubit modules. The `decide`-closed facts are finite computations on a
+The code space and the syndrome mechanism are exhibited; the full recovery map and the
+Knill–Laflamme conditions landed 2026-09-21 (#14(a)(b)), and the code-capacity failure bound
+and threshold 2026-09-23 (#14(c) = #51, `SteaneThreshold.lean`: `≤ 21 p²` per block, `(21 p)^{2^k}/21`
+after `k` levels, `→ 0` for `p < 1/21`); the concatenated quantum recovery (#61) and the
+circuit-level threshold theorem (#62) are priced and **not attempted** — the same posture as the
+three-qubit modules. The `decide`-closed facts are finite computations on a
 fixed `3 × 7` matrix — the right tool, not a shortcut.
 
 ## Execution record — 2026-08-29

@@ -20,7 +20,7 @@ reader-type paths and the measurement story are [`TOUR.md`](TOUR.md).)*
 | 7 | States and channels | a preparation is a density operator; a flow is a channel; de-isolation is the measurement channel; second law, Landauer, Holevo | none new; strong subadditivity comes through an external bridge |
 | 8 | Gates | each standard gate is the isometry of a `Σ`-sector; a projective unitary action lifts to a `Σ`-flow | none new |
 | 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension; Grover and Shor as `Σ`-flows | the other algorithms QM-side only |
-| 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism | `R-003` to `R-006`: active Steane recovery, magic states, Clifford+T density, fault tolerance |
+| 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism; the Steane recovery and its code-capacity threshold | `R-004` to `R-006`: magic states, Clifford+T density, `T`-injection; the concatenated quantum recovery (row 61) and the circuit-level threshold (row 62) |
 | 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders, amplitude-exact on the full register | — |
 
 Four kinds of seam appear, and only one is a research problem. They are defined in
@@ -294,21 +294,33 @@ stabiliser code a Pauli error family whose pairwise products are detected satisf
 and **the Steane code corrects every single-qubit Pauli error**: one recovery channel undoes each of the
 twenty-two errors on every code state, and on the density operator of an encoded qubit
 (`exists_steane_recovery`, `steane_recovery_logical`,
-[`Empirical/QM/QEC/SteaneRecovery.lean`](../CsdLean4/Empirical/QM/QEC/SteaneRecovery.lean)).
+[`Empirical/QM/QEC/SteaneRecovery.lean`](../CsdLean4/Empirical/QM/QEC/SteaneRecovery.lean)). Under
+independent per-qubit noise of rate `p` that recovery fails to return the code state with probability at
+most `21 p²` — two or more of the seven qubits must be hit, the union bound over pairs
+(`steane_codeCapacity_failure_le`,
+[`Empirical/QM/QEC/SteaneThreshold.lean`](../CsdLean4/Empirical/QM/QEC/SteaneThreshold.lean);
+`measure_pi_two_or_more_le`,
+[`Mathlib/Probability/CodeCapacityThreshold.lean`](../CsdLean4/Mathlib/Probability/CodeCapacityThreshold.lean)) —
+and `k` levels of concatenation leave bad error patterns with probability at most `(21 p)^{2^k}/21`, which
+tends to `0` below `p < 1/21` (`steane_concatBad_le`, `steane_threshold`): **the code-capacity threshold**
+(2026-09-23).
 
-**The seam.** Four residues, all open mathematics with a Lean shape. `R-003`: any fault-tolerance claim;
-the code space, the distance mechanism, the Knill–Laflamme theorem and the Steane recovery are landed
-(the code-capacity threshold is BACKLOG #51; the `Σ`-twin of the Steane recovery is #53). `R-004`, `R-005`, `R-006`: magic-state distillation, the density of
+**The seam.** Three residues, all open mathematics with a Lean shape (`R-003`, active error correction,
+closed 2026-09-23 with the code-capacity threshold; the concatenated *quantum* recovery at level `k` is
+BACKLOG #61, the circuit-level threshold theorem #62, the `Σ`-twin of the Steane recovery #53). `R-004`,
+`R-005`, `R-006`: magic-state distillation, the density of
 Clifford+T in the unitary group, and `T`-gate injection; what exists is the `T` gate itself and the fact
 that it is not Clifford (`tGate_conj_X_not_pauli`,
 [`Mathlib/QuantumInfo/Magic.lean`](../CsdLean4/Mathlib/QuantumInfo/Magic.lean)). The three-qubit `Σ` model
 corrects the single-flip channel exactly and, under independent bit-flip noise, returns
 `(1 − p_fail) σ + p_fail X̄ σ X̄` with `p_fail = 3p² − 2p³` (`indepFlow_recovery`,
 [`Empirical/CSD/QEC/IndependentNoiseFlow.lean`](../CsdLean4/Empirical/CSD/QEC/IndependentNoiseFlow.lean)):
-the double and triple flips are modelled, and mis-corrected into the logical flip — the residual a
-threshold argument (#51) would have to drive down.
+the double and triple flips are modelled, and mis-corrected into the logical flip — the residual the
+code-capacity recursion drives down (`concatMeasure_concatBad_le`).
 
-**What is not claimed.** A threshold theorem, or that a fault-tolerant machine follows from the chain.
+**What is not claimed.** The circuit-level threshold theorem (faulty gates, error propagation through the
+recovery gadgets; row 62), the concatenated quantum recovery (row 61), or that a fault-tolerant machine
+follows from the chain.
 
 ## 11. Arithmetic and resource counts
 
@@ -343,7 +355,7 @@ metric is executed Toffolis times peak qubits, and the two are not the same numb
 * **Design posits** are choices the reconstruction makes and defends: Posits 2, 3, 4, 6, 8 and 9. The work
   is to keep them visible, which [`specs/POSITS.md`](../specs/POSITS.md) does, and to constrain them from
   above where a theorem can (Posit 2 and the base half of Posit 9 are now forced by symmetry).
-* **Open mathematics** has a Lean shape and no proof yet: `R-016`, `R-003` to `R-006`, and the
+* **Open mathematics** has a Lean shape and no proof yet: `R-016`, `R-004` to `R-006`, and the
   `Σ`-twins of the algorithms. Each is a numbered row of [`specs/BACKLOG.md`](../specs/BACKLOG.md).
 * **Open foundations** is one item: Posit 1's discharge, the cell law from the de-isolation dynamics. It is
   the reconstruction frontier, and the ledgers say it is not a brick.
