@@ -57,10 +57,11 @@ cf. `cuccaroModMul_clean` (the all-scratch-restored property that enables the re
 gives the first generic-multiplier instance that moves the cost (`20n² + 14n` < the fresh-ancilla
 `30n²` for `n ≥ 2`; equal-order, the genuine prize is the `Θ(n)`-vs-`Θ(n²)` qubit collapse below),
 FULLY Boolean-verified (the whole stack is `CCX`-circuit `denote`, no amplitude wall, unlike a
-measurement adder). This is the MULTIPLY cost; the score-dominant term is the INVERTER (36c, safegcd
-parametric, the ~67%). **No ECDSA score change is claimed yet** (still needs 36c + harness #7). The
-`Θ(n)`-qubit win is real: the restored-clean invariant (this module's `cleanRestored`, realised by
-`cuccaroModMul_clean`) is exactly what lets the single scratch bank be reused across all `n` steps.
+measurement adder). This is the multiplier's cost only; a modular inverter is not built here, and
+**no resource figure for any downstream application is claimed** (that accounting lives in the
+`Ecdsafail` repository). The `Θ(n)`-qubit win is real: the restored-clean invariant (this module's
+`cleanRestored`, realised by `cuccaroModMul_clean`) is exactly what lets the single scratch bank be
+reused across all `n` steps.
 **Load-bearing hypothesis: `N` odd** (inherited from the doubler's parity flag-uncompute), which holds
 for any odd modulus, a prime field in particular.
 -/

@@ -65,8 +65,9 @@ of; it is what makes the adder ancilla-restoring.
 ## Scope (honest)
 
 This is the carry-clean **modular adder** (Stage 2): it makes the modular ADD reusable in Θ(n)
-qubits. The carry-clean modular MULTIPLY (folding this over the multiplicand bits) and the secp256k1
-figure re-cost are Stage 2b / Stage 3, not built here.
+qubits. The carry-clean modular MULTIPLY (folding this over the multiplicand bits) is
+`CuccaroModMul.lean`; any resource figure for a particular modulus width is the downstream
+application's, not this module's.
 -/
 
 @[expose] public section

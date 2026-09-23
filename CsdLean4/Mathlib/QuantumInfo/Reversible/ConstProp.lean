@@ -11,20 +11,22 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
 # A VALUE-EXACT constant-propagation pass on reversible circuits
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
-The ecdsa.fail frontier's dominant Toffoli lever is `constprop` (`ecdsafail-toffoli-reduction`): a forward
-abstract interpretation over the op-stream that tracks each wire as `Zero / One / Unknown` (seeded from
-the classical init — ancillas are `|0⟩`) and FOLDS provably-determined Toffolis:
+**Constant propagation** on a reversible circuit: a forward abstract interpretation over the gate
+list that tracks each wire as `Zero / One / Unknown` (seeded from the classical initial state —
+ancillas are `|0⟩`) and folds the Toffolis it can decide:
 
 * a `CCX` with a control known `0` never fires → **drop** it;
 * a `CCX` with a control known `1` acts as a `CX` on the other control → **fold to `CX`**.
 
-Both are VALUE-EXACT — they change the gate list but not the function computed — so they cost NO hard
-inputs (`no new λ`), the property the harness names as required and hard to certify. This module builds
-that pass and MACHINE-CHECKS its value-exactness (`cprop_denote`): the frontier optimises informally; here
-it is a proved circuit-to-circuit transform. The abstract state is deliberately conservative (any written
-wire becomes `Unknown`; only `swap` moves knowledge), which is sound and already captures the main
-benefit — a fresh `|0⟩` ancilla stays known-`0` until it is written, so every Toffoli reading it as a
-control while it is still `0` is dropped.
+Both folds are **value-exact** — they change the gate list but not the function computed — so the
+pass is a proved circuit-to-circuit transform, `cprop_denote`, and every Toffoli it removes is a
+Toffoli the resource count (`Cost.lean`) no longer sees. The abstract state is deliberately
+conservative (any written wire becomes `Unknown`; only `swap` moves knowledge), which is sound and
+already captures the main benefit — a fresh `|0⟩` ancilla stays known-`0` until it is written, so
+every Toffoli reading it as a control while it is still `0` is dropped. (The transform was first
+needed as the dominant Toffoli lever of the reversible-arithmetic application that lives in the
+`Ecdsafail` repository, `specs/ecdsa/ecdlp-resource-plan.md` there, where it is applied
+informally; here it is the theorem.)
 -/
 
 @[expose] public section

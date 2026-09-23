@@ -159,8 +159,8 @@ layers, each layer a set of wire-disjoint gates. Below is the concrete `4`-wire 
 log₂ 4`), fully verified: every layer is well-formed (parallel), it computes the XOR (parity) of all
 four inputs into wire `0`, and it does so in depth `2` against `3` gates — log depth, not linear. This
 is the primitive a carry-lookahead adder is built from (the carry prefix is a reduction tree); the
-general `2^k`-wire tree, the full `O(log n)` carry-lookahead adder, and the secp256k1
-`(Toffoli, depth, qubits)` triple are the further S1/Phase-2 steps. -/
+general `2^k`-wire tree and the full `O(log n)` carry-lookahead adder are not built here, and a
+`(Toffoli, depth, qubits)` triple for a particular width is the downstream application's. -/
 
 /-- A balanced XOR reduction tree on `4` wires: two layers of wire-disjoint CNOTs accumulating the
 parity of all four bits into wire `0`. Depth `2 = log₂ 4`, `3` gates. -/
