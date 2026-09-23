@@ -39,10 +39,10 @@ The saving is not a count over an unverified swap. `gidneyMeasAdd_saving_aggrega
 is `gidneyNumUncomputeBlocks L` (`= n`) times the per-block `#31` saving `perBlock_saving`
 (`1 → 0` Toffoli on a block proven to have the same data effect,
 `andUncompute_measureUncompute_same_data`). The count provably aggregates `n` proven-equivalent block
-replacements. The full `n`-fold amplitude state-equality of a measurement-hybrid adder is proved for
-the `#21` AND-adder in `Empirical/QM/MeasurementAdderHybrid.lean` (`hybridAdd_amplitude`, one gadget
-per carry cell); the same argument for this adder's `n` AND-shaped uncomputes is BACKLOG #59; the
-Boolean adder correctness (`gidneyAdd_correct`) is FULL and general-`n`.
+replacements. The full `n`-fold amplitude state-equality of this measurement-hybrid adder is
+`gidneyHybridAdd_amplitude` (`Empirical/QM/MeasurementGidneyAdderHybrid.lean`): one gadget per cell on
+the fresh AND, the un-shifting CNOTs kept unitary, the sum and the restored addends read off every
+branch; the Boolean adder correctness (`gidneyAdd_correct`) is FULL and general-`n`.
 
 ## Honest scope
 
@@ -55,9 +55,8 @@ inside the `O(n²)` multiplier / inverter (where the dominant cost lives), and (
 bought with `O(n)` extra space — a separate sum register `S` + an `(n+1)`-wire fresh carry runway `G`,
 versus Cuccaro's single in-place ancilla — and is a Toffoli-only count (the gadget trades each reverse
 Toffoli for H + measurement + conditional CZ, which the count excludes; Toffoli is the dominant FT cost).
-The legitimacy of each per-block swap rests on `#31`'s `andInput`-shaped block equivalence; the full
-`n`-fold amplitude state-equality of the hybrid stays walled at the `#21` `QReg 3 ⊗ QReg (m−3)` tensor
-factor.
+The legitimacy of each per-block swap rests on `#31`'s `andInput`-shaped block equivalence, and the
+full `n`-fold amplitude state-equality of the hybrid is `MeasurementGidneyAdderHybrid.lean`.
 -/
 
 @[expose] public section

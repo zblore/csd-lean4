@@ -1430,4 +1430,64 @@ pointer fails Yanase) and SWAP sharpness (both disjuncts fail, conclusion fails)
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.hybridAdd_sum
 
+-- 2026-09-23, BACKLOG #59: Empirical/QM/MeasurementGidneyAdderHybrid.lean, the Gidney instance
+-- of the hybrid amplitude equality (link 11's measurement strand closed). Here the per-Toffoli
+-- picture is right: the reverse block of a Gidney cell is [CX cin cout, CCX a b cout, CX cin b,
+-- CX cin a] and when its Toffoli fires the ancilla holds exactly (a xor cin) and (b xor cin) of
+-- the still-shifted addend wires, so the single-CZ gadget is exact there (gidneyHybridCell: the
+-- Toffoli replaced, the un-shifting CNOTs kept as unitaries). gidneyHybrid_invariant compares
+-- the hybrid pass with the unitary one cell by cell: off the outcome ancillas the two agree
+-- (denoteGate_agree gate by gate), the ancillas hold the outcomes, and every gadget meets its
+-- AND (MAJ(a,b,c) xor c = (a xor c) and (b xor c), on the forward carry invariant carried
+-- through the sum pass, gidneyPrefix_cell). gidneyHybridAdd_amplitude (STAR STAR): on every
+-- clean-ancilla basis input the hybrid adder gives (sqrt 2)^-n * |shadow>;
+-- gidneyHybridAdd_shadow_data: the shadow is the unitary adder's output off the n carry
+-- ancillas; _shadow_outcome; gidneyHybridAdd_sum: (A + B) mod 2^n on every branch;
+-- _shadow_A / _shadow_B: the addends restored on every branch. n Toffoli, n measurements, as
+-- gidneyMeasAddToffoli_eq states. gidneyHybridAdd is a pure list (no axioms);
+-- gidneyUnitaryUncompute_eq is list algebra (propext only).
+/-- info: 'CSD.Empirical.QM.gidneyHybridCell' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyHybridCell
+
+/-- info: 'CSD.Empirical.QM.gidneyHybridAdd' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyHybridAdd
+
+/-- info: 'CSD.Empirical.QM.gidneyUnitaryUncompute_eq' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyUnitaryUncompute_eq
+
+/-- info: 'CSD.Empirical.QM.gidneyPrefix_cell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyPrefix_cell
+
+/-- info: 'CSD.Empirical.QM.gidneyHybrid_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyHybrid_invariant
+
+/-- info: 'CSD.Empirical.QM.gidneyHybridAdd_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyHybridAdd_invariant
+
+/-- info: 'CSD.Empirical.QM.gidneyHybridAdd_amplitude' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyHybridAdd_amplitude
+
+/-- info: 'CSD.Empirical.QM.gidneyHybridAdd_shadow_data' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyHybridAdd_shadow_data
+
+/-- info: 'CSD.Empirical.QM.gidneyHybridAdd_shadow_outcome' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyHybridAdd_shadow_outcome
+
+/-- info: 'CSD.Empirical.QM.gidneyHybridAdd_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyHybridAdd_sum
+
+/-- info: 'CSD.Empirical.QM.gidneyHybridAdd_shadow_A' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.gidneyHybridAdd_shadow_A
+
 end CSD.Tests.AxiomAudit

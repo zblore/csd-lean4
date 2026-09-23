@@ -392,6 +392,7 @@ public import CsdLean4.Empirical.QM.MeasurementUncompute
 public import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 public import CsdLean4.Empirical.QM.MeasurementAdder
 public import CsdLean4.Empirical.QM.MeasurementAdderHybrid
+public import CsdLean4.Empirical.QM.MeasurementGidneyAdderHybrid
 public import CsdLean4.Empirical.QM.MeasurementGidneyAdder
 public import CsdLean4.Empirical.QM.MeasurementAdderHierarchy
 public import CsdLean4.Empirical.CSD.Gates.Framework

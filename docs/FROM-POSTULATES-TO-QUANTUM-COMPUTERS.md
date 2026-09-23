@@ -21,7 +21,7 @@ reader-type paths and the measurement story are [`TOUR.md`](TOUR.md).)*
 | 8 | Gates | each standard gate is the isometry of a `Σ`-sector; a projective unitary action lifts to a `Σ`-flow | none new |
 | 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension; Grover and Shor as `Σ`-flows | the other algorithms QM-side only |
 | 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism | `R-003` to `R-006`: active Steane recovery, magic states, Clifford+T density, fault tolerance |
-| 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders | the Gidney-adder hybrid instance (row 59) |
+| 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders, amplitude-exact on the full register | — |
 
 Four kinds of seam appear, and only one is a research problem. They are defined in
 [`specs/POSITS.md`](../specs/POSITS.md) ("What frontier means here") and summarised at the end of this page.
@@ -329,8 +329,9 @@ gadget through every block of the adder; it is proved (`hybridAdd_amplitude`,
 general hybrid semantics of
 [`Mathlib/QuantumInfo/Reversible/HybridLift.lean`](../CsdLean4/Mathlib/QuantumInfo/Reversible/HybridLift.lean)),
 with a correction: the carry ancillas of the AND-adder hold majorities, so the exact hybrid uses one gadget
-per carry cell rather than one per Toffoli. Backlog row 17 holds the documentation de-application that came
-with the harness split; row 59 the same instance for the Gidney adder.
+per carry cell rather than one per Toffoli. The Gidney adder's instance, where the per-Toffoli picture is
+right, is `gidneyHybridAdd_amplitude`
+([`Empirical/QM/MeasurementGidneyAdderHybrid.lean`](../CsdLean4/Empirical/QM/MeasurementGidneyAdderHybrid.lean)).
 
 **What is not claimed.** Average-case costs. The corpus's counts are worst-case gate counts; the harness's
 metric is executed Toffolis times peak qubits, and the two are not the same number.

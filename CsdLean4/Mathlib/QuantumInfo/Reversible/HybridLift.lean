@@ -227,6 +227,33 @@ lemma hybridLin_append (l₁ l₂ : List (HybridGate m)) (ψ : QReg m) :
   | nil => rfl
   | cons h rest ih => rw [List.cons_append, hybridLin_cons, hybridLin_cons, ih]
 
+/-- The Boolean reading of a reversible gate's shadow is its `denoteGate`. -/
+lemma stateOfReg_shadow_gate (g : Gate m) (w : Fin m → Fin 2) :
+    stateOfReg ((HybridGate.gate g).shadow w) = denoteGate g (stateOfReg w) := by
+  rw [HybridGate.shadow, stateOfReg_regOfState]
+
+/-- The Boolean reading of a gadget's shadow is the ancilla reset to the outcome. -/
+lemma stateOfReg_update (w : Fin m → Fin 2) (g : Fin m) (mo : Fin 2) :
+    stateOfReg (Function.update w g mo) = Function.update (stateOfReg w) g (decide (mo = 1)) := by
+  funext i
+  by_cases h : i = g
+  · subst h; simp [stateOfReg]
+  · simp [stateOfReg, Function.update_of_ne h]
+
+/-- A reversible gate's shadow preserves every wire it does not target. -/
+lemma shadow_gate_apply_of_not_mem_target (g : Gate m) (w : Fin m → Fin 2) {i : Fin m}
+    (hi : i ∉ gateTarget g) : (HybridGate.gate g).shadow w i = w i := by
+  show regOfState (denoteGate g (stateOfReg w)) i = w i
+  show (if denoteGate g (stateOfReg w) i then (1 : Fin 2) else 0) = w i
+  rw [denoteGate_apply_of_not_mem_target hi]
+  exact congrFun (regOfState_stateOfReg w) i
+
+/-- A register value from its Boolean reading. -/
+lemma val_eq_of_stateOfReg_eq {u : Fin m → Fin 2} {T : State m} {i : Fin m}
+    (h : stateOfReg u i = T i) : u i = if T i then 1 else 0 := by
+  rw [← h]
+  exact (congrFun (regOfState_stateOfReg u) i).symm
+
 /-- The Boolean shadow of a hybrid gate list. -/
 def shadow (l : List (HybridGate m)) (w : Fin m → Fin 2) : Fin m → Fin 2 :=
   l.foldl (fun w h => h.shadow w) w

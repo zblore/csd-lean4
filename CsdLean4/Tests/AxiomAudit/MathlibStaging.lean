@@ -7916,4 +7916,15 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.shadow_gate_list
 
+-- 2026-09-23 (with BACKLOG #59): the Boolean-reading helpers of HybridLift.lean the Gidney
+-- instance consumes -- a reversible gate's shadow reads as its denoteGate, and preserves every
+-- wire it does not target.
+/-- info: 'Reversible.stateOfReg_shadow_gate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.stateOfReg_shadow_gate
+
+/-- info: 'Reversible.shadow_gate_apply_of_not_mem_target' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.shadow_gate_apply_of_not_mem_target
+
 end CSD.Tests.AxiomAudit
