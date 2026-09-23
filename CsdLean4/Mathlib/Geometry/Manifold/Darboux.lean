@@ -43,26 +43,34 @@ A closed 2-form that is non-degenerate at a point is, near that point, the pullb
 
 * ★★ `exists_openPartialHomeomorph_pullback_eq` — **Darboux on a ball**: for `ω` `C¹` and closed on
   `ball x₀ R` with `ω(x₀)` non-degenerate, there is an open partial homeomorphism `Φ` of `E`
-  with `x₀ ∈ Φ.source ⊆ ball x₀ R`, `Φ x₀ = x₀`, differentiable at every point of its source
-  with invertible derivative `D`, and `ω(Φ x)(D u, D v) = ω(x₀)(u, v)`: `Φ^* ω = ω(x₀)`;
+  with `x₀ ∈ Φ.source ⊆ ball x₀ R`, `Φ x₀ = x₀`, **`C¹` on its source with `C¹` inverse on its
+  target**, differentiable at every point of its source with invertible derivative `D`, and
+  `ω(Φ x)(D u, D v) = ω(x₀)(u, v)`: `Φ^* ω = ω(x₀)`. The `C¹` regularity is the continuity of
+  `x ↦ Dφ_1(x)` (`exists_flow_hasFDerivAt_of_norm_fderiv_le`: continuous dependence of the
+  variational solution on the initial point) through `contDiffAt_one_iff`, and Mathlib's
+  `OpenPartialHomeomorph.contDiffAt_symm` for the inverse;
 * ★ `exists_openPartialHomeomorph_symm_pullback_eq` — the same read on the chart `Φ.symm`:
   `ω y (u, v) = ω(x₀)(D(Φ⁻¹)(y) u, D(Φ⁻¹)(y) v)` on `Φ.target` — **in the chart `Φ⁻¹`, `ω` is the
   constant form `ω(x₀)`**;
+* `mem_contDiffGroupoid_of_contDiffOn` — an open partial homeomorphism of the model space that is
+  `C^n` with `C^n` inverse belongs to the `C^n` groupoid; `StructureGroupoid.trans_mem_maximalAtlas`
+  — a chart of the maximal atlas composed with a member of the groupoid stays in the maximal atlas;
 * ★★ `DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq` — **Darboux
   on a symplectic manifold**: at every point the local representative of the form in the chart
   is, after a further open partial homeomorphism `Φ` of the model space fixing the point,
-  the constant form `ω_loc(chart x₀)`; the Darboux chart is `Φ⁻¹ ∘ chartAt E x₀`.
+  the constant form `ω_loc(chart x₀)`; **the Darboux chart `Φ⁻¹ ∘ chartAt E x₀` contains `x₀` and
+  belongs to the `C¹` maximal atlas of `M`**.
 
 ## Honest scope
 
-⚠️ **`C¹` only.** The form is `C¹` (a symplectic form is `C^∞`, but only its `C¹` part is used),
-Moser's field is `C¹`, and the chart `Φ` is differentiable at every point of its source with a
-continuous inverse — it is not shown `C¹` (continuous dependence of the variational solution
-`Y` on the initial point is not in the corpus or in Mathlib at this pin), so `Φ⁻¹ ∘ chartAt` is not
-shown to belong to the `C¹` maximal atlas. BACKLOG #8 prices this residue.
+⚠️ **`C¹`, not `C^k`.** The form is `C¹` (a symplectic form is `C^∞`, but only its `C¹` part is
+used), Moser's field is `C¹`, and the chart `Φ` is `C¹` with `C¹` inverse — the Darboux chart is a
+member of the `C¹` maximal atlas. A `C^k` form has a `C^k` Darboux chart, which needs `C^k`
+dependence of flows on the initial point (in neither Mathlib nor the corpus at the pin);
+BACKLOG #60 prices this residue.
 
 ⚠️ **The constant form, not the standard form.** Moser's trick produces the constant form `ω(x₀)`;
-writing it as `∑ dpᵢ ∧ dqᵢ` needs a symplectic basis (Mathlib has none at the pin). BACKLOG #8
+writing it as `∑ dpᵢ ∧ dqᵢ` needs a symplectic basis (Mathlib has none at the pin). BACKLOG #50
 prices this residue.
 
 References: J. Moser, *On the volume elements on a manifold*, Trans. AMS 120 (1965);
@@ -512,13 +520,14 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimension
 
 /-- ★★ **Darboux's theorem on a ball, by Moser's trick.** If `ω` is `C¹` and closed on
 `ball x₀ R` and `ω(x₀)` is non-degenerate, there is an open partial homeomorphism `Φ` of `E`
-with `x₀ ∈ Φ.source ⊆ ball x₀ R` and `Φ x₀ = x₀`, differentiable at every point `x` of its
-source with an invertible derivative `D`, such that `ω(Φ x)(D u, D v) = ω(x₀)(u, v)`:
-`Φ^* ω` is the constant form `ω(x₀)`. -/
+with `x₀ ∈ Φ.source ⊆ ball x₀ R` and `Φ x₀ = x₀`, `C¹` on its source with `C¹` inverse on its
+target, differentiable at every point `x` of its source with an invertible derivative `D`, such
+that `ω(Φ x)(D u, D v) = ω(x₀)(u, v)`: `Φ^* ω` is the constant form `ω(x₀)`. -/
 theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (ball x₀ R))
     (hR : 0 < R) (hclosed : ∀ y ∈ ball x₀ R, extDeriv ω y = 0)
     (hnd : ∀ v : E, v ≠ 0 → ∃ u, ω x₀ ![v, u] ≠ 0) :
     ∃ Φ : OpenPartialHomeomorph E E, Φ.source ⊆ ball x₀ R ∧ x₀ ∈ Φ.source ∧ Φ x₀ = x₀ ∧
+      ContDiffOn ℝ 1 Φ Φ.source ∧ ContDiffOn ℝ 1 Φ.symm Φ.target ∧
       ∀ x ∈ Φ.source, ∃ D : E ≃L[ℝ] E, HasFDerivAt Φ (D : E →L[ℝ] E) x ∧
         (ω (Φ x)).compContinuousLinearMap (D : E →L[ℝ] E) = ω x₀ := by
   have : CompleteSpace E := FiniteDimensional.complete ℝ E
@@ -538,7 +547,7 @@ theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (bal
   have htI : ∀ t ∈ Icc (0 : ℝ) 1, t ∈ Ioo (-2 : ℝ) 2 :=
     fun t ht => ⟨by linarith [ht.1], by linarith [ht.2]⟩
   -- the flow of Moser's field up to time `1`
-  obtain ⟨α, Y, hα, hsep, hY⟩ := exists_flow_hasFDerivAt_of_norm_fderiv_le
+  obtain ⟨α, Y, hα, hsep, hY, hYc⟩ := exists_flow_hasFDerivAt_of_norm_fderiv_le
     (f := moserField ω x₀ R) (x₀ := x₀) (a := a) (T := 1) (M := 1 / 4) ha one_pos isOpen_ball har
     (hmfu.continuousOn.mono hsub)
     (fun t ht z hz => (((contDiffAt_moserField_of_joint hmf (htI t ht) hz).differentiableAt
@@ -578,30 +587,10 @@ theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (bal
   set Φ := happ.toOpenPartialHomeomorph (fun x => α x 1) (ball x₀ (a / 2)) hc isOpen_ball with hΦ
   have hΦs : Φ.source = ball x₀ (a / 2) := rfl
   have hΦc : ∀ x, Φ x = α x 1 := fun x => rfl
-  refine ⟨Φ, ?_, ?_, ?_, ?_⟩
-  · rw [hΦs]
-    exact ball_subset_ball (by linarith)
-  · rw [hΦs]
-    exact mem_ball_self (by positivity)
-  · -- `Φ x₀ = x₀`: uniqueness of the constant trajectory
-    rw [hΦc]
-    obtain ⟨h0, hd, hb⟩ := hα x₀ (mem_closedBall_self (by positivity))
-    have huniq := ODE_solution_unique_of_mem_Icc_right (v := moserField ω x₀ R)
-      (s := fun _ => closedBall x₀ a) (K := (1 / 4 : ℝ≥0)) (a := 0) (b := 1)
-      (f := α x₀) (g := fun _ => x₀)
-      (fun t ht => hlip t (Ico_subset_Icc_self ht))
-      (fun t ht => (hd t ht).continuousWithinAt)
-      (fun t ht => (hd t (Ico_subset_Icc_self ht)).mono_of_mem_nhdsWithin
-        (Filter.mem_of_superset (Icc_mem_nhdsGE ht.2) (Icc_subset_Icc_left ht.1)))
-      (fun t _ => hb t)
-      continuousOn_const
-      (fun t ht => by
-        rw [moserField_self hω hR]
-        exact hasDerivWithinAt_const _ _ _)
-      (fun _ _ => mem_closedBall_self ha.le)
-      (by simp [h0])
-    exact huniq (right_mem_Icc.mpr zero_le_one)
-  · intro x hx
+  -- the derivative at every point of the source, and the pullback identity
+  have hDpt : ∀ x ∈ Φ.source, ∃ D : E ≃L[ℝ] E, HasFDerivAt Φ (D : E →L[ℝ] E) x ∧
+      (ω (Φ x)).compContinuousLinearMap (D : E →L[ℝ] E) = ω x₀ := by
+    intro x hx
     rw [hΦs] at hx
     obtain ⟨hY0, hYd, hYf⟩ := hY x hx
     have hxc : x ∈ closedBall x₀ (a / 2) := ball_subset_closedBall hx
@@ -680,17 +669,55 @@ theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (bal
       exact hYf 1 (right_mem_Icc.mpr zero_le_one)
     · rw [hD, hΦc]
       exact hpull
+  -- the chart is `C¹`: its derivative `x ↦ Y x 1` is continuous on the source
+  have hΦ1 : ∀ x ∈ Φ.source, ContDiffAt ℝ 1 Φ x := by
+    intro x hx
+    rw [hΦs] at hx
+    exact contDiffAt_one_iff.mpr ⟨fun y => Y y 1, ball x₀ (a / 2), isOpen_ball.mem_nhds hx,
+      hYc 1 (right_mem_Icc.mpr zero_le_one),
+      fun y hy => (hY y hy).2.2 1 (right_mem_Icc.mpr zero_le_one)⟩
+  -- and so is its inverse (the easy half of the inverse function theorem)
+  have hΦs1 : ∀ y ∈ Φ.target, ContDiffAt ℝ 1 Φ.symm y := by
+    intro y hy
+    obtain ⟨D, hDf, -⟩ := hDpt (Φ.symm y) (Φ.map_target hy)
+    exact Φ.contDiffAt_symm hy hDf (hΦ1 _ (Φ.map_target hy))
+  refine ⟨Φ, ?_, ?_, ?_, fun x hx => (hΦ1 x hx).contDiffWithinAt,
+    fun y hy => (hΦs1 y hy).contDiffWithinAt, hDpt⟩
+  · rw [hΦs]
+    exact ball_subset_ball (by linarith)
+  · rw [hΦs]
+    exact mem_ball_self (by positivity)
+  · -- `Φ x₀ = x₀`: uniqueness of the constant trajectory
+    rw [hΦc]
+    obtain ⟨h0, hd, hb⟩ := hα x₀ (mem_closedBall_self (by positivity))
+    have huniq := ODE_solution_unique_of_mem_Icc_right (v := moserField ω x₀ R)
+      (s := fun _ => closedBall x₀ a) (K := (1 / 4 : ℝ≥0)) (a := 0) (b := 1)
+      (f := α x₀) (g := fun _ => x₀)
+      (fun t ht => hlip t (Ico_subset_Icc_self ht))
+      (fun t ht => (hd t ht).continuousWithinAt)
+      (fun t ht => (hd t (Ico_subset_Icc_self ht)).mono_of_mem_nhdsWithin
+        (Filter.mem_of_superset (Icc_mem_nhdsGE ht.2) (Icc_subset_Icc_left ht.1)))
+      (fun t _ => hb t)
+      continuousOn_const
+      (fun t ht => by
+        rw [moserField_self hω hR]
+        exact hasDerivWithinAt_const _ _ _)
+      (fun _ _ => mem_closedBall_self ha.le)
+      (by simp [h0])
+    exact huniq (right_mem_Icc.mpr zero_le_one)
 
-/-- ★ **Darboux's theorem, read on the chart**: in the chart `Φ⁻¹` the form is constant —
+/-- ★ **Darboux's theorem, read on the chart**: in the `C¹` chart `Φ⁻¹` the form is constant —
 `ω y (u, v) = ω(x₀)(D(Φ⁻¹)(y) u, D(Φ⁻¹)(y) v)` at every `y ∈ Φ.target`. -/
 theorem exists_openPartialHomeomorph_symm_pullback_eq (hω : ContDiffOn ℝ 1 ω (ball x₀ R))
     (hR : 0 < R) (hclosed : ∀ y ∈ ball x₀ R, extDeriv ω y = 0)
     (hnd : ∀ v : E, v ≠ 0 → ∃ u, ω x₀ ![v, u] ≠ 0) :
     ∃ Φ : OpenPartialHomeomorph E E, Φ.source ⊆ ball x₀ R ∧ x₀ ∈ Φ.source ∧ Φ x₀ = x₀ ∧
+      ContDiffOn ℝ 1 Φ Φ.source ∧ ContDiffOn ℝ 1 Φ.symm Φ.target ∧
       ∀ y ∈ Φ.target, ∃ D : E ≃L[ℝ] E, HasFDerivAt Φ.symm (D : E →L[ℝ] E) y ∧
         ω y = (ω x₀).compContinuousLinearMap (D : E →L[ℝ] E) := by
-  obtain ⟨Φ, hsub, hx₀, hfix, hD⟩ := exists_openPartialHomeomorph_pullback_eq hω hR hclosed hnd
-  refine ⟨Φ, hsub, hx₀, hfix, fun y hy => ?_⟩
+  obtain ⟨Φ, hsub, hx₀, hfix, hΦ1, hΦs1, hD⟩ :=
+    exists_openPartialHomeomorph_pullback_eq hω hR hclosed hnd
+  refine ⟨Φ, hsub, hx₀, hfix, hΦ1, hΦs1, fun y hy => ?_⟩
   obtain ⟨D, hDf, hDp⟩ := hD (Φ.symm y) (Φ.map_target hy)
   refine ⟨D.symm, Φ.hasFDerivAt_symm hy hDf, ?_⟩
   rw [← hDp, Φ.right_inv hy]
@@ -701,6 +728,37 @@ theorem exists_openPartialHomeomorph_symm_pullback_eq (hω : ContDiffOn ℝ 1 ω
   simp
 
 end Darboux
+
+/-! ### Charts of the `C^n` maximal atlas -/
+
+section Atlas
+
+/-- An open partial homeomorphism of the model space `E` that is `C^n` on its source with a `C^n`
+inverse on its target belongs to the `C^n` groupoid of `𝓘(ℝ, E)`. -/
+theorem mem_contDiffGroupoid_of_contDiffOn {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {n : WithTop ℕ∞} {Φ : OpenPartialHomeomorph E E}
+    (h : ContDiffOn ℝ n Φ Φ.source) (h' : ContDiffOn ℝ n Φ.symm Φ.target) :
+    Φ ∈ contDiffGroupoid n 𝓘(ℝ, E) := by
+  rw [contDiffGroupoid, mem_groupoid_of_pregroupoid]
+  simp only [contDiffPregroupoid, modelWithCornersSelf_coe, modelWithCornersSelf_coe_symm,
+    Function.comp_id, Function.id_comp, Set.preimage_id, Set.range_id, Set.inter_univ]
+  exact ⟨h, h'⟩
+
+/-- A chart of the maximal atlas composed with a member of the groupoid on the model side stays
+in the maximal atlas. -/
+theorem StructureGroupoid.trans_mem_maximalAtlas {H M : Type*} [TopologicalSpace H]
+    [TopologicalSpace M] [ChartedSpace H M] {G : StructureGroupoid H}
+    {e : OpenPartialHomeomorph M H} (he : e ∈ G.maximalAtlas M)
+    {f : OpenPartialHomeomorph H H} (hf : f ∈ G) : e.trans f ∈ G.maximalAtlas M := by
+  intro e' he'
+  obtain ⟨h₁, h₂⟩ := he e' he'
+  refine ⟨?_, ?_⟩
+  · rw [OpenPartialHomeomorph.trans_symm_eq_symm_trans_symm, OpenPartialHomeomorph.trans_assoc]
+    exact G.trans (G.symm hf) h₁
+  · rw [← OpenPartialHomeomorph.trans_assoc]
+    exact G.trans h₂ hf
+
+end Atlas
 
 /-! ### Darboux on a symplectic manifold -/
 
@@ -715,12 +773,16 @@ namespace DifferentialForm
 
 /-- ★★ **Darboux's theorem on a symplectic manifold.** At every point `x₀` there is an open partial
 homeomorphism `Φ` of the model space, fixing `chartAt E x₀ x₀` and contained in the chart's
-target, along which the local representative of the form pulls back to the constant form
-`ω_loc(chartAt E x₀ x₀)`: `Φ⁻¹ ∘ chartAt E x₀` is the Darboux chart. -/
+target, `C¹` with `C¹` inverse, along which the local representative of the form pulls back to
+the constant form `ω_loc(chartAt E x₀ x₀)`: the Darboux chart `Φ⁻¹ ∘ chartAt E x₀` contains `x₀`
+and belongs to the `C¹` maximal atlas of `M`. -/
 theorem IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq
     {α : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hα : IsSymplectic α) (x₀ : M) :
     ∃ Φ : OpenPartialHomeomorph E E, Φ.source ⊆ (chartAt E x₀).target ∧
       chartAt E x₀ x₀ ∈ Φ.source ∧ Φ (chartAt E x₀ x₀) = chartAt E x₀ x₀ ∧
+      ContDiffOn ℝ 1 Φ Φ.source ∧ ContDiffOn ℝ 1 Φ.symm Φ.target ∧
+      x₀ ∈ ((chartAt E x₀).trans Φ.symm).source ∧
+      (chartAt E x₀).trans Φ.symm ∈ IsManifold.maximalAtlas 𝓘(ℝ, E) 1 M ∧
       ∀ w ∈ Φ.source, ∃ D : E ≃L[ℝ] E, HasFDerivAt Φ (D : E →L[ℝ] E) w ∧
         (localRep (fun x => α x) x₀ (Φ w)).compContinuousLinearMap (D : E →L[ℝ] E)
           = localRep (fun x => α x) x₀ (chartAt E x₀ x₀) := by
@@ -736,9 +798,17 @@ theorem IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq
   have hclosed : ∀ y ∈ ball w₀ R, extDeriv (localRep (fun x => α x) x₀) y = 0 :=
     fun y hy => extDeriv_localRep_eq_zero α hα x₀ (hRt hy)
   have hnd := localRep_nondegenerate α hα.nondegenerate x₀ hw₀t
-  obtain ⟨Φ, hsub, hmem, hfix, hD⟩ :=
+  obtain ⟨Φ, hsub, hmem, hfix, hΦ1, hΦs1, hD⟩ :=
     exists_openPartialHomeomorph_pullback_eq hω hR hclosed hnd
-  exact ⟨Φ, hsub.trans hRt, hmem, hfix, hD⟩
+  have hw₀Φ : w₀ ∈ Φ.target := by
+    have := Φ.map_source hmem
+    rwa [hfix] at this
+  refine ⟨Φ, hsub.trans hRt, hmem, hfix, hΦ1, hΦs1, ?_, ?_, hD⟩
+  · rw [OpenPartialHomeomorph.trans_source, OpenPartialHomeomorph.symm_source]
+    exact ⟨mem_chart_source E x₀, hw₀Φ⟩
+  · exact IsManifold.mem_maximalAtlas_iff.mpr (StructureGroupoid.trans_mem_maximalAtlas
+      (StructureGroupoid.chart_mem_maximalAtlas (contDiffGroupoid 1 𝓘(ℝ, E)) x₀)
+      ((contDiffGroupoid 1 𝓘(ℝ, E)).symm (mem_contDiffGroupoid_of_contDiffOn hΦ1 hΦs1)))
 
 end DifferentialForm
 

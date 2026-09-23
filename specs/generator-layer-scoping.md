@@ -796,9 +796,11 @@ defined through `ContinuousLinearMap.inverse` must not be unfolded by the unifie
 and times out) — define the joint field on `ℝ × E` first and the curried one from it; `ω` is the
 analytic-order notation under `open scoped ContDiff`, so a form named `ω` cannot share a scope with it;
 Pi-`smul` forms of `HasFDerivAt.smul`/`ContDiffAt.smul` do not unify with `fun p => p.1 • f p.2` under
-metavariables — state the Pi form and convert. Residues: the chart is differentiable with continuous
-inverse, not `C¹` (continuous dependence of the variational solution, #49), and the form is constant,
-not standard (symplectic basis, #50). The paragraph below is the pricing as it stood.)*
+metavariables — state the Pi form and convert. The chart is `C¹` with `C¹` inverse and the Darboux
+chart is a member of the `C¹` maximal atlas (#49, landed 2026-09-23: continuous dependence of the
+variational solution on the initial point, `dist_le_of_linearODE_coeff_close`). Residues: the form is
+constant, not standard (symplectic basis, #50), and a `C^k` form gets only a `C¹` chart (`C^k`
+dependence of flows, #60). The paragraph below is the pricing as it stood.)*
 
 **What it would prove.** Every symplectic form is locally the standard one. **Route** (Moser): a
 local flow (Q29(a), locally — easier), the Poincaré lemma on a star-shaped set (**absent** at the pin, **landed in the corpus 2026-09-18** for `C¹` 2-forms on a ball, `extDeriv_radialPrimitiveForm`, together with time-dependent flows and the transport identity, `FlowDerivative.lean`; the remaining assembly is `BACKLOG.md` #8:

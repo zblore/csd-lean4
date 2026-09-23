@@ -3649,6 +3649,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 #guard_msgs (whitespace := lax) in
 #print axioms exists_flow_hasFDerivAt_of_norm_fderiv_le
 
+-- BACKLOG #49 (2026-09-23), Analysis/ODE/FlowDerivative.lean: continuous dependence of the
+-- variational solution on the initial point. norm_le_exp_of_linearODE: a solution of the
+-- operator-valued Y' = A(t) Y, Y 0 = 1, |A| <= M has |Y t| <= exp(M t) (Gronwall against the zero
+-- solution); dist_le_of_linearODE_coeff_close: two such solutions with coefficients eps-close on
+-- [0, T] are within eps exp(MT) T exp(MT) (Gronwall for approximate trajectories on the operator
+-- space). exists_flow_hasFDerivAt_of_norm_fderiv_le now also states that x -> Y x t is continuous
+-- on the half-ball, i.e. the time-t map is C^1 there (uniform continuity of (t, z) -> D(f t)(z) on
+-- the compact [0, T] x closedBall, plus the Gronwall separation of trajectories).
+/-- info: 'norm_le_exp_of_linearODE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_le_exp_of_linearODE
+
+/-- info: 'dist_le_of_linearODE_coeff_close' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms dist_le_of_linearODE_coeff_close
+
 -- BACKLOG #8 landing (2026-09-18), Analysis/Calculus/DifferentialForm/Poincare.lean: the Poincare
 -- lemma for closed C^1 2-forms on a ball by the radial homotopy operator, built from scalar
 -- parametric integrals (hasFDerivAt_integral_of_dominated_of_fderiv_le,
@@ -3736,6 +3752,22 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 
 /-- info: 'DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq
+
+-- BACKLOG #49 (2026-09-23), Geometry/Manifold/Darboux.lean: the Darboux chart is C^1. The three
+-- Darboux theorems above now carry ContDiffOn 1 of Phi on its source and of Phi.symm on its target
+-- (contDiffAt_one_iff on the continuous derivative x -> Y x 1, Mathlib's
+-- OpenPartialHomeomorph.contDiffAt_symm for the inverse), and on a symplectic manifold the Darboux
+-- chart Phi^-1 o chartAt contains x0 and is a member of the C^1 maximal atlas.
+-- mem_contDiffGroupoid_of_contDiffOn: a C^n open partial homeomorphism of the model space with
+-- C^n inverse is in the C^n groupoid; StructureGroupoid.trans_mem_maximalAtlas: a maximal-atlas
+-- chart composed with a groupoid member stays in the maximal atlas.
+/-- info: 'mem_contDiffGroupoid_of_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms mem_contDiffGroupoid_of_contDiffOn
+
+/-- info: 'StructureGroupoid.trans_mem_maximalAtlas' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms StructureGroupoid.trans_mem_maximalAtlas
 
 -- BACKLOG #14(a) (2026-09-21), QuantumInfo/KnillLaflamme.lean: the Knill-Laflamme theorem. A family
 -- of errors is correctable on a code projector P (some channel inverts every error on the code up
