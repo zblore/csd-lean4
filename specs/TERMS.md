@@ -268,11 +268,14 @@ alarming and is not.
   `exists_openPartialHomeomorph_pullback_eq` and
   `DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq`
   (`Mathlib/Geometry/Manifold/Darboux.lean`): near every point a closed non-degenerate `C¹` 2-form
-  is the pullback of the constant form `ω(x₀)` by an open partial homeomorphism differentiable at
-  every point with invertible derivative.
+  is the pullback of the constant form `ω(x₀)` by a `C¹` chart with `C¹` inverse (the `C¹`
+  regularity 2026-09-23, `BACKLOG.md` #49), and in the standard form
+  (`exists_openPartialHomeomorph_pullback_standard`,
+  `Mathlib/Geometry/Manifold/DarbouxStandardForm.lean`, 2026-09-23, `BACKLOG.md` #50): a `C¹` chart
+  into `ℝ^{2n}` in which the form is `∑ dpᵢ∧dqᵢ`.
   **NOT established:** the arena statement `R-016′` (the joint-arena propagators of the record
-  layer as Hamiltonian flows on `ℂℙⁿ × T² × …`); of Darboux, the `C¹` regularity of the chart and
-  the standard form `∑ dpᵢ∧dqᵢ` (`BACKLOG.md` #49, #50).
+  layer as Hamiltonian flows on `ℂℙⁿ × T² × …`); of Darboux, the `C^k` chart of a `C^k` form
+  (`BACKLOG.md` #60).
   Marker: `TERM-SCOPE(Hamiltonian)`.
 * ⚠️ **Known retained name.** `RecordLayer/PiecewiseHamiltonian.lean` keeps its name after the
   2026-08-02 flux correction withdrew the reading (`ι_Xω = a·dp` is closed but not exact on `T²`,
@@ -315,10 +318,14 @@ alarming and is not.
 * **Also backed (2026-09-21, Q31 = G18):** Darboux's theorem in Moser's form — every symplectic form
   is, near every point, the pullback of the constant form `ω(x₀)` by an open partial homeomorphism of
   the model space (`IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq`,
-  `Mathlib/Geometry/Manifold/Darboux.lean`; the Darboux chart is `Φ⁻¹ ∘ chartAt E x₀`).
-* **NOT established:** of Darboux, the standard form `∑ dpᵢ∧dqᵢ` (a symplectic basis; `BACKLOG.md`
-  #50) and the `C¹` regularity of the chart (`BACKLOG.md` #49). It keeps the marker
-  `TERM-SCOPE(Hamiltonian)`.
+  `Mathlib/Geometry/Manifold/Darboux.lean`; the Darboux chart `Φ⁻¹ ∘ chartAt E x₀` is `C¹` with `C¹`
+  inverse and belongs to the `C¹` maximal atlas, 2026-09-23), and in the standard form
+  (`IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_standard`,
+  `Mathlib/Geometry/Manifold/DarbouxStandardForm.lean`, 2026-09-23): a `C¹` chart into `ℝ^{2n}` in
+  which the form is `∑ dpᵢ∧dqᵢ`, so a symplectic manifold has even dimension
+  (`IsSymplectic.even_finrank`).
+* **NOT established:** of Darboux, the `C^k` chart of a `C^k` form (`BACKLOG.md` #60). It keeps the
+  marker `TERM-SCOPE(Hamiltonian)`.
 
 ## Fubini–Study
 

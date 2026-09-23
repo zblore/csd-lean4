@@ -3716,7 +3716,9 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- interpolation (flat Cartan + Poincare), and the time-1 map approximates the identity with
 -- constant e^{1/4}/4 < 1, so it is an OpenPartialHomeomorph (Mathlib's inverse function theorem)
 -- pulling omega back to the constant form omega(x_0); the same on a symplectic manifold through
--- localRep. C^1 only; the constant form, not the standard form (BACKLOG #49, #50).
+-- localRep. The chart is C^1 with C^1 inverse (BACKLOG #49, 2026-09-23) and the standard form
+-- sum dp_i wedge dq_i is Geometry/Manifold/DarbouxStandardForm.lean (BACKLOG #50, 2026-09-23);
+-- the C^k chart of a C^k form is BACKLOG #60.
 /-- info: 'isOpen_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms isOpen_nondegenerate
 
@@ -7958,5 +7960,73 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Reversible.shadow_gate_apply_of_not_mem_target' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Reversible.shadow_gate_apply_of_not_mem_target
+
+-- BACKLOG #50 (2026-09-23), LinearAlgebra/BilinearForm/SymplecticBasis.lean: symplectic bases of
+-- alternating forms, over any field. IsSymplecticBasis: a basis indexed by iota + iota with
+-- B p_i p_j = 0, B q_i q_j = 0, B p_i q_j = delta_ij. IsAlt.exists_isSymplecticBasis (STAR STAR):
+-- every non-degenerate alternating form on a finite-dimensional space has one, by induction on
+-- the dimension (Gram-Schmidt for alternating forms): a plane span {p, q} with B p q = 1 is split
+-- off against its B-orthogonal complement (isCompl_orthogonal_of_restrict_nondegenerate), on
+-- which the form stays non-degenerate. IsAlt.even_finrank: the dimension is even.
+-- IsSymplecticBasis.apply_eq_sum: the standard form in symplectic coordinates. Mathlib at the pin
+-- has orthogonal bases for symmetric forms only (iIsOrtho) and the symplectic group of matrices.
+/-- info: 'LinearMap.BilinForm.IsAlt.exists_isSymplecticBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearMap.BilinForm.IsAlt.exists_isSymplecticBasis
+
+/-- info: 'LinearMap.BilinForm.IsAlt.even_finrank' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearMap.BilinForm.IsAlt.even_finrank
+
+/-- info: 'LinearMap.BilinForm.IsSymplecticBasis.apply_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearMap.BilinForm.IsSymplecticBasis.apply_eq_sum
+
+/-- info: 'LinearMap.BilinForm.IsSymplecticBasis.reindex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearMap.BilinForm.IsSymplecticBasis.reindex
+
+/-- info: 'LinearMap.BilinForm.IsSymplecticBasis.inr_inl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearMap.BilinForm.IsSymplecticBasis.inr_inl
+
+-- BACKLOG #50 (2026-09-23), Geometry/Manifold/DarbouxStandardForm.lean: Darboux's theorem in the
+-- standard form. ContinuousAlternatingMap.toBilinForm: the bilinear form of a 2-form, alternating
+-- and non-degenerate when the form is; standardSymplecticForm: sum dp_i wedge dq_i on
+-- iota + iota -> R as a continuous alternating 2-form;
+-- exists_continuousLinearEquiv_eq_standardSymplecticForm_comp (linear Darboux): a non-degenerate
+-- 2-form is the pullback of the standard form by a linear isomorphism with R^{2n}, finrank = 2n;
+-- exists_openPartialHomeomorph_pullback_standard (STAR STAR): the Moser chart composed with the
+-- symplectic coordinates is a C^1 chart into R^{2n} with C^1 inverse in which omega is the
+-- pullback of the standard form; IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_standard
+-- (STAR STAR): the same on a symplectic manifold through localRep, the Darboux chart being
+-- Psi o chartAt; IsSymplectic.even_finrank: a symplectic manifold has even dimension.
+/-- info: 'ContinuousAlternatingMap.toBilinForm_isAlt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.toBilinForm_isAlt
+
+/-- info: 'ContinuousAlternatingMap.toBilinForm_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.toBilinForm_nondegenerate
+
+/-- info: 'standardSymplecticForm_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms standardSymplecticForm_apply
+
+/-- info: 'exists_continuousLinearEquiv_eq_standardSymplecticForm_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_continuousLinearEquiv_eq_standardSymplecticForm_comp
+
+/-- info: 'exists_openPartialHomeomorph_pullback_standard' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_openPartialHomeomorph_pullback_standard
+
+/-- info: 'DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_standard' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_standard
+
+/-- info: 'DifferentialForm.IsSymplectic.even_finrank' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.even_finrank
 
 end CSD.Tests.AxiomAudit

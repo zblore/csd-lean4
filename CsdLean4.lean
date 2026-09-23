@@ -587,6 +587,8 @@ public import CsdLean4.Mathlib.Analysis.ODE.FlowDerivative
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianLieDerivative
 public import CsdLean4.Mathlib.Analysis.Calculus.DifferentialForm.Poincare
 public import CsdLean4.Mathlib.Geometry.Manifold.Darboux
+public import CsdLean4.Mathlib.Geometry.Manifold.DarbouxStandardForm
+public import CsdLean4.Mathlib.LinearAlgebra.BilinearForm.SymplecticBasis
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianFlowVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianVectorField
 public import CsdLean4.Mathlib.Geometry.Manifold.TopFormMeasure

@@ -270,7 +270,11 @@ hamiltonianVectorField
 localHamiltonianVector
 hamiltonianVectorFieldSection
 IsAlmostKahler
-IsKahler"
+IsKahler
+IsSymplecticBasis
+standardSymplecticBilin
+standardSymplecticMulti
+standardSymplecticForm"
 #
 # PARITY LEDGER (why each name is earned).
 # ⚠️ Corrected 2026-08-04, same day it was written: the first draft asserted "all on
@@ -928,6 +932,24 @@ isSymplectic"
 #     Dyson series in the coupling sums to exp(-i t (H_field + lam V)) for Hermitian V (the
 #     Category-1 hasSum_dysonTerm_of_isHermitian instantiated). The word names the OPERATOR
 #     the theorems are about; no flow, form or generator claim beyond the object's.
+#   IsSymplecticBasis — (2026-09-23, BACKLOG #50, Mathlib/LinearAlgebra/BilinearForm/
+#     SymplecticBasis.lean, Category 1) a PREDICATE on a basis indexed by iota + iota of an
+#     abstract finite-dimensional space over any field: B p_i p_j = 0, B q_i q_j = 0,
+#     B p_i q_j = delta_ij. It fixes no arena; a space carrying such a basis has dimension
+#     2 * |iota|, EVEN by the index type, and IsAlt.exists_isSymplecticBasis proves every
+#     non-degenerate alternating form has one (hence IsAlt.even_finrank). EARNED.
+#   standardSymplecticBilin / standardSymplecticMulti / standardSymplecticForm — (same landing,
+#     Mathlib/Geometry/Manifold/DarbouxStandardForm.lean) the standard form sum dp_i wedge dq_i on
+#     iota + iota -> R as a bilinear, a multilinear and a continuous alternating map: alternating
+#     by standardSymplecticBilin_self, and the coordinate vectors are a symplectic basis for it.
+#     Arena iota + iota -> R, real dimension 2 * |iota|, EVEN by construction. EARNED.
+#   standardSymplecticBilin_apply / standardSymplecticBilin_self /
+#   exists_continuousLinearEquiv_eq_standardSymplecticForm_comp — (2026-09-23, BACKLOG #50,
+#     DarbouxStandardForm.lean) inherit the word from standardSymplecticForm (EVEN by
+#     construction, above): the evaluation formula, the alternating property, and linear Darboux:
+#     a non-degenerate 2-form on E is the pullback of the standard form by a linear isomorphism
+#     E ~ R^{2n} with finrank E = 2n (the symplectic basis of IsAlt.exists_isSymplecticBasis).
+#     The words name the OBJECT the theorems evaluate or reach; the parity is the object's.
 #   (2026-09-17, Brief B S-rows: fubiniStudy_pointwise_kahler_compatibility and
 #   kahler_structure_isometry_invariant were deleted — conjunction capstones, the conjuncts stay
 #   declared; contMDiff_omega_schrodingerHamiltonian / contMDiff_omega_torusHamiltonian merged into
@@ -1073,7 +1095,10 @@ hamiltonianShift_eq_strokeCurve_one
 strokeCurve_hasDerivAt_hamiltonianField
 isJointLift_hamiltonianShift
 jointLift_hamiltonianShift_measurePreserving
-fsForm_isSymplectic"
+fsForm_isSymplectic
+standardSymplecticBilin_apply
+standardSymplecticBilin_self
+exists_continuousLinearEquiv_eq_standardSymplecticForm_comp"
 
 OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 
