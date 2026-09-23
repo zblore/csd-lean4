@@ -1379,4 +1379,55 @@ pointer fails Yanase) and SWAP sharpness (both disjuncts fail, conclusion fails)
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.Darwinism.copyBroadcast_perfect
 
+-- 2026-09-23, R-013 DISCHARGED (BACKLOG #16): Empirical/QM/MeasurementAdderHybrid.lean, the
+-- adder instance. measureUncompute_eq_measureCorrect: the general-wire gadget of HybridLift at
+-- wires (0,1,2) with the single correction (0,1) IS #31's measureUncompute, entry for entry.
+-- THE CORRECTION: the three reverse Toffolis of a carry cell share their target, whose value
+-- is the MAJORITY of the cell's inputs, not an AND, so the single-CZ gadget replacing them one
+-- by one is not amplitude-exact (naive_cell_gadget_sign_flip: on a = b = 1, c = 0, g = 1 the
+-- m = 1 branch flips sign). The amplitude-exact hybrid replaces each cell's reverse block by ONE
+-- gadget with a CZ per input pair (cellGadget; hybridUncompute over cells n-1..0; hybridAdd).
+-- wellFormed_hybridUncompute: when cell i's gadget fires its ancilla G(i+1) holds the majority
+-- of A i, B i, G i (the forward carry invariant, untouched by the sum pass and the later
+-- cells). hybridAdd_amplitude (STAR STAR): on every clean-ancilla basis input the hybrid adder
+-- gives (sqrt 2)^-n * |shadow>; hybridAdd_shadow_data: the shadow agrees with the unitary
+-- adder's output on every wire except the n carry ancillas; hybridAdd_shadow_outcome: those
+-- hold the outcomes; hybridAdd_sum: the sum register holds (A + B) mod 2^n on every branch.
+-- Same 3n Toffolis saved, n measurements instead of 3n. hybridAdd is a pure list (no axioms).
+/-- info: 'CSD.Empirical.QM.measureUncompute_eq_measureCorrect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.measureUncompute_eq_measureCorrect
+
+/-- info: 'CSD.Empirical.QM.naive_cell_gadget_sign_flip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.naive_cell_gadget_sign_flip
+
+/-- info: 'CSD.Empirical.QM.hybridAdd' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.hybridAdd
+
+/-- info: 'CSD.Empirical.QM.wellFormed_hybridUncompute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.wellFormed_hybridUncompute
+
+/-- info: 'CSD.Empirical.QM.wellFormed_hybridAdd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.wellFormed_hybridAdd
+
+/-- info: 'CSD.Empirical.QM.hybridAdd_amplitude' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.hybridAdd_amplitude
+
+/-- info: 'CSD.Empirical.QM.hybridAdd_shadow_data' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.hybridAdd_shadow_data
+
+/-- info: 'CSD.Empirical.QM.hybridAdd_shadow_outcome' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.hybridAdd_shadow_outcome
+
+/-- info: 'CSD.Empirical.QM.hybridAdd_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.hybridAdd_sum
+
 end CSD.Tests.AxiomAudit

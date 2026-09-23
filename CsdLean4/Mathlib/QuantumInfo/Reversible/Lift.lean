@@ -40,20 +40,16 @@ over a gate list lifts a whole permutation circuit basis-state by basis-state.
 
 ## What is deliberately NOT here
 
-* **The general lift** — per-constructor lemmas for `X`, `CX` and `swap` (each easier than the
-  CCX case done here) plus the gate-list fold (a nontrivial induction) — is a recorded
-  **pure-optionality** item (decision 2026-08-21): nothing in flight needs it. The Boolean
-  frontier (`denote = divstepRev`-style results) never touches amplitudes; the measurement-gadget
-  strand needs amplitudes but is blocked on a *different* thing (the gadget is not a permutation,
-  so it needs the tensor factorisation `QReg m ≅ QReg 3 ⊗ QReg (m − 3)` — supplied since
-  2026-08-22 by `QuantumInfo.regTensorEquiv`, leaving the n-fold hybrid argument itself as the
-  open work (⚠️ RESIDUE(R-013)); the permutation lift would not unblock that either); and the
-  documented-count QFT gap needs the *converse* direction on a non-permutation. Build it only
-  when a consumer appears or as a Mathlib submission in its own right; if picked up, scope it
-  fresh (prior sizing estimates oscillated and are not to be trusted).
+* **The general lift** — the permutation matrix of an arbitrary reversible gate and the
+  gate-list fold — is `HybridLift.lean` (`gateMat`, defined as the permutation of `denoteGate`
+  and checked against this file's `ccxAtMat` by `gateMat_CCX`; `shadow_gate_list` is the fold).
+  The documented-count QFT gap needs the *converse* direction on a non-permutation and is not
+  touched by it.
 * Nothing about non-permutation operations: a mid-circuit measurement gadget is not a basis
-  permutation, and lifting one as a local tensor factor of `QReg m` needs the factorisation
-  named above, out of scope for this file (see the consumers' scope notes).
+  permutation. `HybridLift.lean` handles it without the tensor factorisation once anticipated
+  here: the gadget is monomial, so the basis-state induction carries a scalar
+  (`hybridLin_basisState`), and `Empirical/QM/MeasurementAdderHybrid.lean` threads it through
+  the AND-adder.
 
 ## References
 

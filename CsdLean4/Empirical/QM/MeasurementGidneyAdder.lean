@@ -39,9 +39,10 @@ The saving is not a count over an unverified swap. `gidneyMeasAdd_saving_aggrega
 is `gidneyNumUncomputeBlocks L` (`= n`) times the per-block `#31` saving `perBlock_saving`
 (`1 → 0` Toffoli on a block proven to have the same data effect,
 `andUncompute_measureUncompute_same_data`). The count provably aggregates `n` proven-equivalent block
-replacements. The full `n`-fold amplitude state-equality of the measurement-hybrid adder is the WALLED
-part inherited from `#21` (the `QReg 3 ⊗ QReg (m−3)` tensor factor); the Boolean adder correctness
-(`gidneyAdd_correct`) is FULL and general-`n`.
+replacements. The full `n`-fold amplitude state-equality of a measurement-hybrid adder is proved for
+the `#21` AND-adder in `Empirical/QM/MeasurementAdderHybrid.lean` (`hybridAdd_amplitude`, one gadget
+per carry cell); the same argument for this adder's `n` AND-shaped uncomputes is BACKLOG #59; the
+Boolean adder correctness (`gidneyAdd_correct`) is FULL and general-`n`.
 
 ## Honest scope
 

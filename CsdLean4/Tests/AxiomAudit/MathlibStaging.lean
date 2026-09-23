@@ -6848,8 +6848,9 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- regTensorEquiv : QReg (a+b) = QReg a (x) QReg b, with the basis-state computation rule.
 -- tensorFirst is the consumer-facing payoff: an operator on the first block extended by the
 -- identity, with its action on basis states. NOTE the honest boundary: this supplies the
--- INFRASTRUCTURE the measurement-gadget wall named; the n-fold hybrid amplitude equality is
--- separate work and is NOT claimed here.
+-- INFRASTRUCTURE the measurement-gadget wall named; the n-fold hybrid amplitude equality was
+-- separate work, done 2026-09-23 (Reversible/HybridLift.lean, pinned at the end of this file:
+-- the gadget is monomial, so no tensor factor was needed after all).
 /-- info: 'QuantumInfo.prodTensorEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms QuantumInfo.prodTensorEquiv
 
@@ -7835,5 +7836,84 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- STAR STAR Gleason's theorem for C^N, N >= 3: every projection package is P |-> Re Tr(rho P) for a unique density matrix rho. Foundational triple; no hypothesis beyond N >= 3.
 /-- info: 'Gleason.ProjectionPackage.gleason_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.gleason_representation
+
+-- 2026-09-23, R-013 DISCHARGED (BACKLOG #16): Reversible/HybridLift.lean, the generic half.
+-- gateMat g is the permutation matrix of a reversible gate's Boolean action (gateMat_CCX checks
+-- it against Lift.lean's hand-built ccxAtMat). measureCorrectMat pairs g mo is the
+-- measure-and-correct gadget on ancilla g at outcome mo: Hadamard, projection onto mo, a CZ per
+-- pair when mo = 1. It is MONOMIAL (measureCorrectMat_basisState): a basis state goes to
+-- (phase * <mo|H|w g>) |update w g mo>; when the ancilla holds the parity of ANDs the
+-- corrections cancel, w g = andParity pairs w, the scalar is (sqrt 2)^-1 for both outcomes
+-- (measureCorrect_scalar, the phase cancellation); when it does not, the mo = 1 branch carries
+-- -(sqrt 2)^-1 (measureCorrect_scalar_of_ne). HybridGate / hybridLin / shadow / WellFormed /
+-- gadgetCount: a hybrid gate list, its register semantics (a linear map), its Boolean shadow
+-- (a gadget writes its outcome into the ancilla) and well-formedness. hybridLin_basisState:
+-- on a well-formed basis input the hybrid circuit gives (sqrt 2)^-#gadgets * |shadow>;
+-- hybridLin_sum extends it by linearity. The tensor factor the wall anticipated was not
+-- needed: the induction carries a scalar. Foundational triple (andParity: propext,
+-- Quot.sound; HybridGate: none).
+/-- info: 'Reversible.gateMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.gateMat
+
+/-- info: 'Reversible.gateMat_basisState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.gateMat_basisState
+
+/-- info: 'Reversible.gateMat_CCX' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.gateMat_CCX
+
+/-- info: 'Reversible.andParity' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.andParity
+
+/-- info: 'Reversible.correctionPhase_one_eq_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.correctionPhase_one_eq_prod
+
+/-- info: 'Reversible.measureCorrectMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.measureCorrectMat
+
+/-- info: 'Reversible.measureCorrectMat_basisState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.measureCorrectMat_basisState
+
+/-- info: 'Reversible.measureCorrect_scalar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.measureCorrect_scalar
+
+/-- info: 'Reversible.measureCorrect_scalar_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.measureCorrect_scalar_of_ne
+
+/-- info: 'Reversible.HybridGate' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.HybridGate
+
+/-- info: 'Reversible.hybridLin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.hybridLin
+
+/-- info: 'Reversible.shadow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.shadow
+
+/-- info: 'Reversible.WellFormed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.WellFormed
+
+/-- info: 'Reversible.hybridLin_basisState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.hybridLin_basisState
+
+/-- info: 'Reversible.hybridLin_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.hybridLin_sum
+
+/-- info: 'Reversible.shadow_gate_list' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Reversible.shadow_gate_list
 
 end CSD.Tests.AxiomAudit

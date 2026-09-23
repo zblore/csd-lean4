@@ -21,7 +21,7 @@ reader-type paths and the measurement story are [`TOUR.md`](TOUR.md).)*
 | 8 | Gates | each standard gate is the isometry of a `Σ`-sector; a projective unitary action lifts to a `Σ`-flow | none new |
 | 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension; Grover and Shor as `Σ`-flows | the other algorithms QM-side only |
 | 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism | `R-003` to `R-006`: active Steane recovery, magic states, Clifford+T density, fault tolerance |
-| 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders | `R-013` |
+| 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders | the Gidney-adder hybrid instance (row 59) |
 
 Four kinds of seam appear, and only one is a research problem. They are defined in
 [`specs/POSITS.md`](../specs/POSITS.md) ("What frontier means here") and summarised at the end of this page.
@@ -323,10 +323,14 @@ measurement-gadget adders in [`Empirical/QM/`](../CsdLean4/Empirical/QM/) re-cos
 mid-circuit measurement. The elliptic-curve harness that turned these into machine sizes lives in a separate
 repository by design, with a one-way dependency on this one.
 
-**The seam.** `R-013`, open mathematics: the `n`-fold hybrid amplitude equality that threads the
-non-permutation gadget through every block of the adder; the single-block embedding is proved and the tensor
-interface exists. Backlog row 17 holds the general lift and the documentation de-application that came with
-the harness split.
+**The seam, closed.** `R-013` was the `n`-fold hybrid amplitude equality that threads the non-permutation
+gadget through every block of the adder; it is proved (`hybridAdd_amplitude`,
+[`Empirical/QM/MeasurementAdderHybrid.lean`](../CsdLean4/Empirical/QM/MeasurementAdderHybrid.lean), on the
+general hybrid semantics of
+[`Mathlib/QuantumInfo/Reversible/HybridLift.lean`](../CsdLean4/Mathlib/QuantumInfo/Reversible/HybridLift.lean)),
+with a correction: the carry ancillas of the AND-adder hold majorities, so the exact hybrid uses one gadget
+per carry cell rather than one per Toffoli. Backlog row 17 holds the documentation de-application that came
+with the harness split; row 59 the same instance for the Gidney adder.
 
 **What is not claimed.** Average-case costs. The corpus's counts are worst-case gate counts; the harness's
 metric is executed Toffolis times peak qubits, and the two are not the same number.
@@ -338,7 +342,7 @@ metric is executed Toffolis times peak qubits, and the two are not the same numb
 * **Design posits** are choices the reconstruction makes and defends: Posits 2, 3, 4, 6, 8 and 9. The work
   is to keep them visible, which [`specs/POSITS.md`](../specs/POSITS.md) does, and to constrain them from
   above where a theorem can (Posit 2 and the base half of Posit 9 are now forced by symmetry).
-* **Open mathematics** has a Lean shape and no proof yet: `R-016`, `R-003` to `R-006`, `R-013`, and the
+* **Open mathematics** has a Lean shape and no proof yet: `R-016`, `R-003` to `R-006`, and the
   `Σ`-twins of the algorithms. Each is a numbered row of [`specs/BACKLOG.md`](../specs/BACKLOG.md).
 * **Open foundations** is one item: Posit 1's discharge, the cell law from the de-isolation dynamics. It is
   the reconstruction frontier, and the ledgers say it is not a brick.

@@ -49,7 +49,7 @@ AND-uncompute blocks per carry bit (`andAdd_uncompute_toffoli : … = 3 * n`). E
   per-block `#31` saving `(circuitCost (andUncompute a b g)).toffoli - gadgetBlockToffoli = 1`
   (`perBlock_saving`, from `andUncompute_measurement_saving`). The count provably aggregates `3n`
   proven-equivalent block replacements.
-* STRETCH (single carry, unitary side done; gadget n-fold amplitude WALLED):
+* STRETCH (single carry, unitary side done; the gadget n-fold amplitude equality landed 2026-09-23):
   `Reversible.ccxAtMat_lifts_denote` lifts a **single** AND-uncompute CCX block into the full
   register `QReg m` as the permutation matrix `ccxAtMat`, generalizing `#31`'s fixed-wire
   (`0,1,2`) lift to arbitrary wires of any width. This shows the per-block **unitary** embedding
@@ -69,11 +69,18 @@ AND-uncompute blocks per carry bit (`andAdd_uncompute_toffoli : … = 3 * n`). E
   ⚠️ **Wall note updated 2026-08-22 (MG-5):** that factorization is no longer missing — it is
   `QuantumInfo.regTensorEquiv` (`Mathlib/QuantumInfo/RegisterTensor.lean`), together with
   `tensorFirst`, the "operator on a wire block, identity elsewhere" construction and its
-  basis-state computation rule. So the obstruction is **not** the absence of API. What remains
-  undone is the argument itself: threading the non-permutation gadget through the adder's `3n`
-  blocks and proving the full-register data output on `S` unchanged. The single-block unitary
-  embedding is sound; the n-fold hybrid amplitude equality is open work (⚠️ RESIDUE(R-013)),
-not a missing library.
+  basis-state computation rule. So the obstruction is **not** the absence of API.
+  **Resolved 2026-09-23** (`Mathlib/QuantumInfo/Reversible/HybridLift.lean`,
+  `Empirical/QM/MeasurementAdderHybrid.lean`): the gadget is not a permutation but it is
+  **monomial** — every basis state goes to a scalar times a basis state — so the basis-state
+  induction goes through with the scalar carried along, and no tensor factor was needed.
+  **With one correction to the picture above:** the three reverse Toffolis of a carry cell
+  share their target, whose value is the *majority* of the cell's inputs, not an AND; the
+  single-CZ gadget is exact only on an AND-shaped ancilla, so replacing the Toffolis one by one
+  leaves data-dependent phases (`naive_cell_gadget_sign_flip`). The amplitude-exact hybrid
+  replaces each cell's reverse block by **one** gadget with a CZ per input pair
+  (`cellGadget`), saving the same `3n` Toffolis with `n` measurements
+  (`hybridAdd_amplitude`, `hybridAdd_sum`).
 
 ## Honest scope (Part 3)
 
@@ -81,8 +88,9 @@ This is an **adder-level** re-cost on proven-equivalent blocks. **No ECDSA score
 The ECDSA score requires (i) swapping the corpus point-addition's adders (Cuccaro, in-place) for
 AND-based adders throughout the curve arithmetic, AND (ii) the harness step `#7` — **neither is done
 here**. The Part-1 count is exact and the Part-2 anchor proves it aggregates `3n` `#31`-equivalent
-blocks (so the count is *not* hollow); the full n-fold amplitude state-equality of the hybrid adder is
-**WALLED** at the `QReg 3 ⊗ QReg (m−3)` tensor factor, as stated above and reported.
+blocks (so the count is *not* hollow); the full n-fold amplitude state-equality of the hybrid adder
+is `hybridAdd_amplitude` in `MeasurementAdderHybrid.lean`, for the cell-wise gadget that the
+correction above requires — the per-Toffoli picture of Part 1 counts right but does not run right.
 -/
 
 @[expose] public section

@@ -92,6 +92,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdderCarryClean
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Lift
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.HybridLift
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
 public import CsdLean4.Mathlib.Analysis.InformationGeometry.FisherRao
@@ -390,6 +391,7 @@ public import CsdLean4.Empirical.QM.Gates.MultiQubit
 public import CsdLean4.Empirical.QM.MeasurementUncompute
 public import CsdLean4.Empirical.QM.MeasurementUncomputeLift
 public import CsdLean4.Empirical.QM.MeasurementAdder
+public import CsdLean4.Empirical.QM.MeasurementAdderHybrid
 public import CsdLean4.Empirical.QM.MeasurementGidneyAdder
 public import CsdLean4.Empirical.QM.MeasurementAdderHierarchy
 public import CsdLean4.Empirical.CSD.Gates.Framework
