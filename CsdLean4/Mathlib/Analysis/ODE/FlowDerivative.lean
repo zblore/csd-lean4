@@ -26,7 +26,9 @@ pulled back to itself by the local flow (the flat Liouville theorem).
 * `exists_linearODE_solution` — the linear ODE `Y' = A(t) Y` on a Banach space has a solution on
   a short interval whose length depends only on a bound for `‖A‖` and on `‖Y₀‖` (Picard–Lindelöf
   on the operator space); `exists_linearODE_solution_of_le` — on all of `[0, T]` when
-  `T · M · (‖Y₀‖ + 1) ≤ 1`;
+  `T · M · (‖Y₀‖ + 1) ≤ 1`; ★ `exists_linearODE_solution_Icc` — **on all of `[0, T]` with no
+  smallness condition**, by concatenating short-time solutions (`hasDerivWithinAt_Icc_glue`), the
+  step length fixed by the Grönwall bound `‖Y t‖ ≤ ‖Y 0‖ e^{M t}` (`norm_le_mul_exp_of_linearODE`);
 * `norm_le_exp_of_linearODE` — a solution of the operator-valued `Y' = A(t) ∘ Y`, `Y 0 = 1`,
   `‖A‖ ≤ M` has `‖Y t‖ ≤ e^{M t}`; ★ `dist_le_of_linearODE_coeff_close` — **continuous
   dependence of a linear ODE's solution on its coefficient**: two such solutions whose
@@ -60,6 +62,9 @@ pulled back to itself by the local flow (the flat Liouville theorem).
 * ★★ `ContDiffAt.exists_localFlow_form_invariant` — **flat Liouville**: the local flow pulls the
   form back to itself, `(ω (α x t)).compContinuousLinearMap (D(α · t) x) = ω x`, confined to a
   prescribed neighbourhood.
+
+`C^n` dependence of a flow on its initial point, for every `n ≤ ∞`, is `Analysis/ODE/FlowSmooth.lean`,
+on top of `exists_linearODE_solution_Icc` and the `C¹` case here.
 
 The local flow solves the equation on `[-ε, ε]` (what the identification with the manifold flow
 by uniqueness on an open interval needs); the derivative and the invariance are for forward time
@@ -170,6 +175,166 @@ theorem exists_linearODE_solution_of_le (A : ℝ → F →L[ℝ] F) {T M : ℝ} 
       exact hTL
   obtain ⟨Y, hY0, hY⟩ := hpl.exists_eq_forall_mem_Icc_hasDerivWithinAt₀
   exact ⟨Y, hY0, hY⟩
+
+omit [CompleteSpace F] in
+/-- A solution of the linear ODE `Y' = A(t) Y` with `‖A t‖ ≤ M` on `[0, T]` has
+`‖Y t‖ ≤ ‖Y 0‖ e^{M t}` there (Grönwall against the zero solution). -/
+theorem norm_le_mul_exp_of_linearODE (A : ℝ → F →L[ℝ] F) {T M : ℝ} (hM0 : 0 ≤ M)
+    (hM : ∀ t ∈ Icc 0 T, ‖A t‖ ≤ M) {Y : ℝ → F}
+    (hY : ∀ t ∈ Icc 0 T, HasDerivWithinAt Y (A t (Y t)) (Icc 0 T) t) :
+    ∀ t ∈ Icc 0 T, ‖Y t‖ ≤ ‖Y 0‖ * Real.exp (M * t) := by
+  have hIci : ∀ s ∈ Ico (0 : ℝ) T, Icc (0 : ℝ) T ∈ 𝓝[≥] s := fun s hs =>
+    Filter.mem_of_superset (Icc_mem_nhdsGE hs.2) (Icc_subset_Icc_left hs.1)
+  intro t ht
+  have h := dist_le_of_trajectories_ODE_of_mem
+    (v := fun s Z => A s Z) (s := fun _ => univ) (K := ⟨M, hM0⟩)
+    (f := Y) (g := fun _ => 0) (a := 0) (b := T) (δ := ‖Y 0‖)
+    (fun s hs => ((A s).lipschitz.weaken (by
+      exact_mod_cast hM s (Ico_subset_Icc_self hs))).lipschitzOnWith)
+    (fun s hs => (hY s hs).continuousWithinAt)
+    (fun s hs => (hY s (Ico_subset_Icc_self hs)).mono_of_mem_nhdsWithin (hIci s hs))
+    (fun _ _ => mem_univ _)
+    continuousOn_const
+    (fun s _ => by
+      show HasDerivWithinAt (fun _ : ℝ => (0 : F)) (A s 0) (Ici s) s
+      rw [map_zero]
+      exact hasDerivWithinAt_const _ _ _)
+    (fun _ _ => mem_univ _)
+    (dist_zero_right (Y 0)).le
+    t ht
+  simp only [dist_zero_right, sub_zero] at h
+  exact h
+
+omit [CompleteSpace F] in
+/-- Two solutions of `Y' = v(t, Y)` on adjacent intervals `[a, b]` and `[b, c]` that agree at `b`
+glue to a solution on `[a, c]`. -/
+theorem hasDerivWithinAt_Icc_glue {v : ℝ → F → F} {Y₁ Y₂ : ℝ → F} {a b c : ℝ} (hab : a ≤ b)
+    (hbc : b ≤ c) (h₁ : ∀ t ∈ Icc a b, HasDerivWithinAt Y₁ (v t (Y₁ t)) (Icc a b) t)
+    (h₂ : ∀ t ∈ Icc b c, HasDerivWithinAt Y₂ (v t (Y₂ t)) (Icc b c) t) (hj : Y₁ b = Y₂ b) :
+    ∀ t ∈ Icc a c, HasDerivWithinAt (fun s => if s ≤ b then Y₁ s else Y₂ s)
+      (v t (if t ≤ b then Y₁ t else Y₂ t)) (Icc a c) t := by
+  intro t ht
+  rw [← Icc_union_Icc_eq_Icc hab hbc]
+  have hY₂ : ∀ s ∈ Icc b c, (if s ≤ b then Y₁ s else Y₂ s) = Y₂ s := by
+    intro s hs
+    split_ifs with hsb
+    · rw [le_antisymm hsb hs.1]
+      exact hj
+    · rfl
+  have hY₁ : ∀ s ∈ Icc a b, (if s ≤ b then Y₁ s else Y₂ s) = Y₁ s := fun s hs => if_pos hs.2
+  by_cases htb : t ≤ b
+  · rw [if_pos htb]
+    refine HasDerivWithinAt.union ((h₁ t ⟨ht.1, htb⟩).congr hY₁ (if_pos htb)) ?_
+    rcases htb.lt_or_eq with hlt | rfl
+    · refine hasDerivWithinAt_iff_hasFDerivWithinAt.mpr (HasFDerivWithinAt.of_notMem_closure ?_)
+      rw [closure_Icc]
+      exact fun h => absurd h.1 (not_le.mpr hlt)
+    · rw [hj]
+      exact (h₂ t ⟨le_rfl, hbc⟩).congr hY₂ (hY₂ t ⟨le_rfl, hbc⟩)
+  · rw [if_neg htb]
+    have hbt : b < t := not_le.mp htb
+    refine HasDerivWithinAt.union ?_ ((h₂ t ⟨hbt.le, ht.2⟩).congr hY₂ (if_neg htb))
+    refine hasDerivWithinAt_iff_hasFDerivWithinAt.mpr (HasFDerivWithinAt.of_notMem_closure ?_)
+    rw [closure_Icc]
+    exact fun h => absurd h.2 htb
+
+/-- ★ **The linear ODE `Y' = A(t) Y` has a solution on all of `[0, T]`** — no smallness
+condition. The short-time solutions of `exists_linearODE_solution` are concatenated
+(`hasDerivWithinAt_Icc_glue`), the step length `τ` being fixed by the Grönwall bound
+`‖Y t‖ ≤ ‖Y₀‖ e^{M T}` that every partial solution obeys. -/
+theorem exists_linearODE_solution_Icc (A : ℝ → F →L[ℝ] F) {T M : ℝ} (hT : 0 < T) (hM0 : 0 ≤ M)
+    (hA : ∀ Y, ContinuousOn (fun t => A t Y) (Icc 0 T)) (hM : ∀ t ∈ Icc 0 T, ‖A t‖ ≤ M)
+    (Y₀ : F) :
+    ∃ Y : ℝ → F, Y 0 = Y₀ ∧ ∀ t ∈ Icc 0 T, HasDerivWithinAt Y (A t (Y t)) (Icc 0 T) t := by
+  set R : ℝ := ‖Y₀‖ * Real.exp (M * T) with hR
+  have hR0 : 0 ≤ R := by positivity
+  have hY₀R : ‖Y₀‖ ≤ R := by
+    rw [hR]
+    exact le_mul_of_one_le_right (norm_nonneg _) (Real.one_le_exp (by positivity))
+  set τ : ℝ := 1 / (M * (R + 1) + 1) with hτ
+  have hτ0 : 0 < τ := by positivity
+  have hX : M * (R + 1) + 1 ≠ 0 := by positivity
+  have hτL : ∀ Z : F, ‖Z‖ ≤ R → ∀ τ' ≤ τ, τ' * (M * (‖Z‖ + 1) + 1) ≤ 1 := by
+    intro Z hZ τ' hτ'
+    calc τ' * (M * (‖Z‖ + 1) + 1) ≤ τ * (M * (R + 1) + 1) := by gcongr
+      _ = 1 := by rw [hτ]; exact one_div_mul_cancel hX
+  -- the Grönwall bound on any partial solution
+  have hbound : ∀ s : ℝ, s ≤ T → ∀ Y : ℝ → F, Y 0 = Y₀ →
+      (∀ t ∈ Icc 0 s, HasDerivWithinAt Y (A t (Y t)) (Icc 0 s) t) →
+      ∀ t ∈ Icc 0 s, ‖Y t‖ ≤ R := by
+    intro s hsT Y hY0 hYd t ht
+    have h := norm_le_mul_exp_of_linearODE A hM0
+      (fun u hu => hM u (Icc_subset_Icc_right hsT hu)) hYd t ht
+    rw [hY0] at h
+    refine h.trans ?_
+    rw [hR]
+    gcongr
+    exact ht.2.trans hsT
+  -- solutions on `[0, min ((m + 1) τ) T]`, by induction on `m`
+  have key : ∀ m : ℕ, ∃ Y : ℝ → F, Y 0 = Y₀ ∧ ∀ t ∈ Icc 0 (min (((m : ℝ) + 1) * τ) T),
+      HasDerivWithinAt Y (A t (Y t)) (Icc 0 (min (((m : ℝ) + 1) * τ) T)) t := by
+    intro m
+    induction m with
+    | zero =>
+      have hτ' : 0 < min ((((0 : ℕ) : ℝ) + 1) * τ) T := lt_min (by positivity) hT
+      refine exists_linearODE_solution A hT hA hM Y₀ hτ' (min_le_right _ _) (hτL Y₀ hY₀R _ ?_)
+      calc min ((((0 : ℕ) : ℝ) + 1) * τ) T ≤ (((0 : ℕ) : ℝ) + 1) * τ := min_le_left _ _
+        _ = τ := by simp
+    | succ m ih =>
+      obtain ⟨Y, hY0, hYd⟩ := ih
+      push_cast
+      set s : ℝ := min (((m : ℝ) + 1) * τ) T with hs
+      set s' : ℝ := min (((m : ℝ) + 1 + 1) * τ) T with hs'
+      have hs0 : 0 < s := lt_min (by positivity) hT
+      have hsT : s ≤ T := min_le_right _ _
+      have hs'T : s' ≤ T := min_le_right _ _
+      have hss' : s ≤ s' := min_le_min (by nlinarith [hτ0.le]) le_rfl
+      by_cases hsTeq : s = T
+      · have hs'eq : s' = T := le_antisymm hs'T (hsTeq ▸ hss')
+        refine ⟨Y, hY0, ?_⟩
+        rw [hs'eq, ← hsTeq]
+        exact hYd
+      · have hsτ : s = ((m : ℝ) + 1) * τ := by
+          rcases min_choice (((m : ℝ) + 1) * τ) T with h | h
+          · exact h
+          · exact absurd h hsTeq
+        have hsltT : s < T := lt_of_le_of_ne hsT hsTeq
+        have hs's : 0 < s' - s := by
+          have h1 : s < ((m : ℝ) + 1 + 1) * τ := by rw [hsτ]; nlinarith [hτ0]
+          have : s < s' := lt_min h1 hsltT
+          linarith
+        have hs'sub : s' - s ≤ τ := by
+          calc s' - s ≤ ((m : ℝ) + 1 + 1) * τ - s := by gcongr; exact min_le_left _ _
+            _ = τ := by rw [hsτ]; ring
+        -- the short-time solution from `s`
+        have hYsR : ‖Y s‖ ≤ R := hbound s hsT Y hY0 hYd s ⟨hs0.le, le_rfl⟩
+        have hmaps : ∀ u ∈ Icc (0 : ℝ) (s' - s), s + u ∈ Icc (0 : ℝ) T := fun u hu =>
+          ⟨by linarith [hu.1, hs0.le], by linarith [hu.2, hs'T]⟩
+        obtain ⟨Z, hZ0, hZd⟩ := exists_linearODE_solution (fun u => A (s + u)) (T := s' - s)
+          (M := M) hs's
+          (fun W => (hA W).comp (continuous_const.add continuous_id).continuousOn hmaps)
+          (fun u hu => hM (s + u) (hmaps u hu)) (Y s) hs's le_rfl (hτL (Y s) hYsR _ hs'sub)
+        have hZ'd : ∀ t ∈ Icc s s', HasDerivWithinAt (fun t => Z (t - s)) (A t (Z (t - s)))
+            (Icc s s') t := by
+          intro t ht
+          have h1 : HasDerivWithinAt (fun t : ℝ => t - s) 1 (Icc s s') t :=
+            (hasDerivWithinAt_id t _).sub_const s
+          have h2 := (hZd (t - s) ⟨by linarith [ht.1], by linarith [ht.2]⟩).scomp t h1
+            (show MapsTo (fun t : ℝ => t - s) (Icc s s') (Icc 0 (s' - s)) from
+              fun u hu => ⟨by linarith [hu.1], by linarith [hu.2]⟩)
+          simpa [Function.comp_def, add_sub_cancel] using h2
+        refine ⟨fun t => if t ≤ s then Y t else Z (t - s), by simp [hY0, hs0.le], ?_⟩
+        have hj : Y s = Z (s - s) := by rw [sub_self, hZ0]
+        exact hasDerivWithinAt_Icc_glue (v := fun t W => A t W) hs0.le hss' hYd hZ'd hj
+  obtain ⟨m, hm⟩ := exists_nat_ge (T / τ)
+  obtain ⟨Y, hY0, hYd⟩ := key m
+  have hmin : min (((m : ℝ) + 1) * τ) T = T := by
+    apply min_eq_right
+    calc T = T / τ * τ := by rw [div_mul_cancel₀ _ hτ0.ne']
+      _ ≤ (m : ℝ) * τ := by gcongr
+      _ ≤ ((m : ℝ) + 1) * τ := by nlinarith [hτ0.le]
+  rw [hmin] at hYd
+  exact ⟨Y, hY0, hYd⟩
 
 end LinearODE
 

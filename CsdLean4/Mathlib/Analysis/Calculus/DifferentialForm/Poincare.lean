@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianLieDerivative
 public import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
+public import CsdLean4.Mathlib.Analysis.Calculus.ContDiffParametricIntervalIntegral
 public import Mathlib.MeasureTheory.Integral.DominatedConvergence
 
 /-!
@@ -132,6 +133,14 @@ theorem contDiffOn_evalPair {ω : E → E [⋀^Fin 2]→L[ℝ] ℝ} {x₀ : E} {
     (hω : ContDiffOn ℝ 1 ω (ball x₀ R)) (v : E) :
     ContDiffOn ℝ 1 (evalPair ω v) (ball x₀ R ×ˢ univ) := by
   have h1 : ContDiffOn ℝ 1 (fun p : E × E => (ω p.1, p.2)) (ball x₀ R ×ˢ univ) :=
+    (hω.comp contDiffOn_fst fun p hp => hp.1).prodMk contDiffOn_snd
+  exact (isBoundedBilinearMap_apply_vecCons v).contDiff.comp_contDiffOn h1
+
+/-- `evalPair ω v` is `C^n` where `ω` is. -/
+theorem contDiffOn_evalPair' {ω : E → E [⋀^Fin 2]→L[ℝ] ℝ} {x₀ : E} {R : ℝ} {n : ℕ∞}
+    (hω : ContDiffOn ℝ n ω (ball x₀ R)) (v : E) :
+    ContDiffOn ℝ n (evalPair ω v) (ball x₀ R ×ˢ univ) := by
+  have h1 : ContDiffOn ℝ n (fun p : E × E => (ω p.1, p.2)) (ball x₀ R ×ˢ univ) :=
     (hω.comp contDiffOn_fst fun p hp => hp.1).prodMk contDiffOn_snd
   exact (isBoundedBilinearMap_apply_vecCons v).contDiff.comp_contDiffOn h1
 
@@ -417,6 +426,30 @@ theorem contDiffOn_radialPrimitiveVal (hω : ContDiffOn ℝ 1 ω (ball x₀ R)) 
   rw [contDiffOn_zero]
   exact (continuousOn_radialPrimitiveDerivVal hω v).congr fun x hx => (hd x hx).fderiv
 
+omit [FiniteDimensional ℝ E] in
+/-- The integrand of the radial primitive is jointly `C^n` in `(x, t)` where the segment point
+lies in the ball, for `ω` of class `C^n`. -/
+theorem contDiffOn_radialPrimitiveIntegrand_uncurry {n : ℕ∞} (hω : ContDiffOn ℝ n ω (ball x₀ R))
+    (v : E) :
+    ContDiffOn ℝ n (Function.uncurry fun x t => radialPrimitiveIntegrand ω x₀ v x t)
+      {p : E × ℝ | segPt x₀ p.1 p.2 ∈ ball x₀ R} := by
+  have hseg : ContDiff ℝ n (fun p : E × ℝ => (segPt x₀ p.1 p.2, p.1 - x₀)) :=
+    (contDiff_const.add (contDiff_snd.smul (contDiff_fst.sub contDiff_const))).prodMk
+      (contDiff_fst.sub contDiff_const)
+  have h1 : ContDiffOn ℝ n (fun p : E × ℝ => evalPair ω v (segPt x₀ p.1 p.2, p.1 - x₀))
+      {p : E × ℝ | segPt x₀ p.1 p.2 ∈ ball x₀ R} :=
+    (contDiffOn_evalPair' hω v).comp hseg.contDiffOn fun p hp => ⟨hp, mem_univ _⟩
+  exact contDiff_snd.contDiffOn.mul h1
+
+/-- ★ **`β · v` is `C^n` on the ball** for `ω` of class `C^n` (`n ≤ ∞`): the parametric interval
+integral of a jointly `C^n` integrand (`contDiffOn_intervalIntegral_of_contDiffOn`). -/
+theorem contDiffOn_radialPrimitiveVal' {n : ℕ∞} (hω : ContDiffOn ℝ n ω (ball x₀ R)) (v : E) :
+    ContDiffOn ℝ n (fun x => radialPrimitiveVal ω x₀ x v) (ball x₀ R) :=
+  contDiffOn_intervalIntegral_of_contDiffOn isOpen_ball
+    (isOpen_ball.preimage
+      (continuous_const.add (continuous_snd.smul (continuous_fst.sub continuous_const))))
+    (fun _ hx _ ht => segPt_mem_ball hx ht) (contDiffOn_radialPrimitiveIntegrand_uncurry hω v)
+
 end Dominated
 
 /-! ### The primitive as a covector and as a 1-form -/
@@ -547,6 +580,26 @@ theorem contDiffOn_radialPrimitiveForm (hω : ContDiffOn ℝ 1 ω (ball x₀ R))
   ContDiff.comp_contDiffOn
     (ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ) (0 : Fin 1)).contDiff
     (contDiffOn_radialPrimitive hω)
+
+/-- ★ **The radial primitive is `C^n` on the ball** (as a covector field), for `ω` of class
+`C^n`, `1 ≤ n ≤ ∞`. -/
+theorem contDiffOn_radialPrimitive' {n : ℕ∞} (hn : 1 ≤ n) (hω : ContDiffOn ℝ n ω (ball x₀ R)) :
+    ContDiffOn ℝ n (radialPrimitive ω x₀ R) (ball x₀ R) := by
+  have hω1 : ContDiffOn ℝ 1 ω (ball x₀ R) := hω.of_le (by exact_mod_cast hn)
+  let b := Module.finBasis ℝ E
+  have h : ContDiffOn ℝ n (fun x => ∑ i, radialPrimitiveVal ω x₀ x (b i) •
+      LinearMap.toContinuousLinearMap (b.coord i)) (ball x₀ R) :=
+    ContDiffOn.sum fun i _ => (contDiffOn_radialPrimitiveVal' hω (b i)).smul contDiffOn_const
+  exact h.congr fun x hx => radialPrimitive_eq_sum hω1 hx b
+
+/-- ★ **The radial primitive is `C^n` on the ball** (as a 1-form), for `ω` of class `C^n`,
+`1 ≤ n ≤ ∞`. -/
+theorem contDiffOn_radialPrimitiveForm' {n : ℕ∞} (hn : 1 ≤ n)
+    (hω : ContDiffOn ℝ n ω (ball x₀ R)) :
+    ContDiffOn ℝ n (radialPrimitiveForm ω x₀ R) (ball x₀ R) :=
+  ContDiff.comp_contDiffOn
+    (ContinuousAlternatingMap.ofSubsingletonLIE (𝕜 := ℝ) (E := E) (F := ℝ) (0 : Fin 1)).contDiff
+    (contDiffOn_radialPrimitive' hn hω)
 
 /-- The derivative of the 1-form `β`, through a basis. -/
 theorem hasFDerivAt_radialPrimitiveForm (hω : ContDiffOn ℝ 1 ω (ball x₀ R)) {x : E}

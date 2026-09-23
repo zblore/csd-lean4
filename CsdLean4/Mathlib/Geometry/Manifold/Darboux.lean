@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Mathlib.Analysis.Calculus.DifferentialForm.Poincare
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerClosed
+public import CsdLean4.Mathlib.Analysis.ODE.FlowSmooth
 public import Mathlib.Analysis.Calculus.InverseFunctionTheorem.ApproximatesLinearOn
 public import Mathlib.Analysis.Calculus.FDeriv.OfCompLeft
 public import Mathlib.Analysis.Complex.ExponentialBounds
@@ -41,13 +42,13 @@ A closed 2-form that is non-degenerate at a point is, near that point, the pullb
   (`ApproximatesLinearOn.toOpenPartialHomeomorph`); its derivative is invertible because the
   pullback of a non-degenerate form is non-degenerate.
 
-* ★★ `exists_openPartialHomeomorph_pullback_eq` — **Darboux on a ball**: for `ω` `C¹` and closed on
-  `ball x₀ R` with `ω(x₀)` non-degenerate, there is an open partial homeomorphism `Φ` of `E`
-  with `x₀ ∈ Φ.source ⊆ ball x₀ R`, `Φ x₀ = x₀`, **`C¹` on its source with `C¹` inverse on its
-  target**, differentiable at every point of its source with invertible derivative `D`, and
-  `ω(Φ x)(D u, D v) = ω(x₀)(u, v)`: `Φ^* ω = ω(x₀)`. The `C¹` regularity is the continuity of
-  `x ↦ Dφ_1(x)` (`exists_flow_hasFDerivAt_of_norm_fderiv_le`: continuous dependence of the
-  variational solution on the initial point) through `contDiffAt_one_iff`, and Mathlib's
+* ★★ `exists_openPartialHomeomorph_pullback_eq` — **Darboux on a ball**: for `ω` of class `C^n`
+  (`1 ≤ n ≤ ∞`) and closed on `ball x₀ R` with `ω(x₀)` non-degenerate, there is an open partial
+  homeomorphism `Φ` of `E` with `x₀ ∈ Φ.source ⊆ ball x₀ R`, `Φ x₀ = x₀`, **`C^n` on its source
+  with `C^n` inverse on its target**, differentiable at every point of its source with invertible
+  derivative `D`, and `ω(Φ x)(D u, D v) = ω(x₀)(u, v)`: `Φ^* ω = ω(x₀)`. The `C^n` regularity is
+  `contDiffOn_flow_of_contDiffOn` (`Analysis/ODE/FlowSmooth.lean`: `C^n` dependence of the flow of
+  the jointly `C^n` Moser field on the initial point, `contDiffOn_moserFieldJoint'`) and Mathlib's
   `OpenPartialHomeomorph.contDiffAt_symm` for the inverse;
 * ★ `exists_openPartialHomeomorph_symm_pullback_eq` — the same read on the chart `Φ.symm`:
   `ω y (u, v) = ω(x₀)(D(Φ⁻¹)(y) u, D(Φ⁻¹)(y) v)` on `Φ.target` — **in the chart `Φ⁻¹`, `ω` is the
@@ -58,17 +59,17 @@ A closed 2-form that is non-degenerate at a point is, near that point, the pullb
 * ★★ `DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq` — **Darboux
   on a symplectic manifold**: at every point the local representative of the form in the chart
   is, after a further open partial homeomorphism `Φ` of the model space fixing the point,
-  the constant form `ω_loc(chart x₀)`; **the Darboux chart `Φ⁻¹ ∘ chartAt E x₀` contains `x₀` and
-  belongs to the `C¹` maximal atlas of `M`**. The standard form `∑ dpᵢ ∧ dqᵢ` is
-  `Geometry/Manifold/DarbouxStandardForm.lean`.
+  the constant form `ω_loc(chart x₀)`; **the Darboux chart `Φ⁻¹ ∘ chartAt E x₀` contains `x₀`,
+  is `C^∞` with `C^∞` inverse and belongs to the `C^∞` maximal atlas of `M`**. The standard form
+  `∑ dpᵢ ∧ dqᵢ` is `Geometry/Manifold/DarbouxStandardForm.lean`.
 
 ## Honest scope
 
-⚠️ **`C¹`, not `C^k`.** The form is `C¹` (a symplectic form is `C^∞`, but only its `C¹` part is
-used), Moser's field is `C¹`, and the chart `Φ` is `C¹` with `C¹` inverse — the Darboux chart is a
-member of the `C¹` maximal atlas. A `C^k` form has a `C^k` Darboux chart, which needs `C^k`
-dependence of flows on the initial point (in neither Mathlib nor the corpus at the pin);
-BACKLOG #60 prices this residue.
+**Order `n`.** For `ω` of class `C^n` (`1 ≤ n ≤ ∞`) the Poincaré primitive is `C^n`
+(`Analysis/Calculus/ContDiffParametricIntervalIntegral.lean`), Moser's field is jointly `C^n`
+(`contDiffOn_moserFieldJoint'`), its flow is `C^n` in the initial point (`contDiffOn_flow_of_contDiffOn`,
+`Analysis/ODE/FlowSmooth.lean`), and so the chart `Φ` is `C^n` with `C^n` inverse; on a symplectic
+manifold the Darboux chart is `C^∞` and a member of the `C^∞` maximal atlas.
 
 **The constant form here; the standard form downstream.** Moser's trick produces the constant
 form `ω(x₀)`; `Geometry/Manifold/DarbouxStandardForm.lean` composes the chart with the coordinates
@@ -241,6 +242,11 @@ theorem contDiffOn_moserPrimitive (hω : ContDiffOn ℝ 1 ω (ball x₀ R)) :
     ContDiffOn ℝ 1 (moserPrimitive ω x₀ R) (ball x₀ R) :=
   contDiffOn_radialPrimitiveForm (contDiffOn_moserDeviation hω)
 
+/-- `β` is `C^n` on the ball for `ω` of class `C^n`, `1 ≤ n ≤ ∞`. -/
+theorem contDiffOn_moserPrimitive' {n : ℕ∞} (hn : 1 ≤ n) (hω : ContDiffOn ℝ n ω (ball x₀ R)) :
+    ContDiffOn ℝ n (moserPrimitive ω x₀ R) (ball x₀ R) :=
+  contDiffOn_radialPrimitiveForm' hn (hω.sub contDiffOn_const)
+
 theorem moserPrimitive_self (hω : ContDiffOn ℝ 1 ω (ball x₀ R)) (hR : 0 < R) :
     moserPrimitive ω x₀ R x₀ = 0 :=
   radialPrimitiveForm_self (contDiffOn_moserDeviation hω) hR
@@ -262,6 +268,14 @@ omit [FiniteDimensional ℝ E] in
 theorem contDiffOn_moserForm_uncurry (hω : ContDiffOn ℝ 1 ω (ball x₀ R)) :
     ContDiffOn ℝ 1 (Function.uncurry (moserForm ω x₀)) (univ ×ˢ ball x₀ R) := by
   have h1 : ContDiffOn ℝ 1 (fun p : ℝ × E => ω p.2 - ω x₀) (univ ×ˢ ball x₀ R) :=
+    (hω.sub contDiffOn_const).comp contDiff_snd.contDiffOn fun p hp => hp.2
+  exact contDiffOn_const.add (contDiff_fst.contDiffOn.smul h1)
+
+omit [FiniteDimensional ℝ E] in
+/-- The interpolation is jointly `C^n` in `(t, z)` for `ω` of class `C^n`. -/
+theorem contDiffOn_moserForm_uncurry' {n : ℕ∞} (hω : ContDiffOn ℝ n ω (ball x₀ R)) :
+    ContDiffOn ℝ n (Function.uncurry (moserForm ω x₀)) (univ ×ˢ ball x₀ R) := by
+  have h1 : ContDiffOn ℝ n (fun p : ℝ × E => ω p.2 - ω x₀) (univ ×ˢ ball x₀ R) :=
     (hω.sub contDiffOn_const).comp contDiff_snd.contDiffOn fun p hp => hp.2
   exact contDiffOn_const.add (contDiff_fst.contDiffOn.smul h1)
 
@@ -348,6 +362,38 @@ theorem contDiffOn_moserFieldJoint (hω : ContDiffOn ℝ 1 ω (ball x₀ R)) {r 
     (((contDiffOn_moserPrimitive hω).contDiffAt (isOpen_ball.mem_nhds hpR)).comp p
       contDiffAt_snd).neg
   have hfin : ContDiffAt ℝ 1 (fun q : ℝ × E =>
+      ContinuousLinearMap.inverse (ContinuousAlternatingMap.curryLeft (moserForm ω x₀ q.1 q.2))
+        (-(moserPrimitive ω x₀ R q.2))) p :=
+    ContDiffAt.clm_apply (f := fun q : ℝ × E => ContinuousLinearMap.inverse
+      (ContinuousAlternatingMap.curryLeft (moserForm ω x₀ q.1 q.2)))
+      (g := fun q : ℝ × E => -(moserPrimitive ω x₀ R q.2)) hinv hβ
+  exact hfin.contDiffWithinAt
+
+/-- **Moser's field is jointly `C^n`** on `(-2, 2) × ball x₀ r` for `ω` of class `C^n`,
+`1 ≤ n ≤ ∞`, where the interpolation is non-degenerate. -/
+theorem contDiffOn_moserFieldJoint' {n : ℕ∞} (hn : 1 ≤ n) (hω : ContDiffOn ℝ n ω (ball x₀ R))
+    {r : ℝ} (hr : r ≤ R)
+    (hnd : ∀ t ∈ Ioo (-2 : ℝ) 2, ∀ z ∈ ball x₀ r,
+      ∀ v : E, v ≠ 0 → ∃ u, moserForm ω x₀ t z ![v, u] ≠ 0) :
+    ContDiffOn ℝ n (moserFieldJoint ω x₀ R) (Ioo (-2 : ℝ) 2 ×ˢ ball x₀ r) := by
+  have : CompleteSpace E := FiniteDimensional.complete ℝ E
+  intro p hp
+  have hpR : p.2 ∈ ball x₀ R := ball_subset_ball hr hp.2
+  have hΩ : ContDiffAt ℝ n
+      (fun q : ℝ × E => ContinuousAlternatingMap.curryLeft (moserForm ω x₀ q.1 q.2)) p :=
+    (contDiff_curryLeft E).contDiffAt.comp p
+      ((contDiffOn_moserForm_uncurry' hω).contDiffAt
+        ((isOpen_univ.prod isOpen_ball).mem_nhds ⟨mem_univ _, hpR⟩))
+  have hinv : ContDiffAt ℝ n (fun q : ℝ × E => ContinuousLinearMap.inverse
+      (ContinuousAlternatingMap.curryLeft (moserForm ω x₀ q.1 q.2))) p := by
+    have h := contDiffAt_map_inverse (𝕜 := ℝ) (n := n)
+      (DifferentialForm.flatCLE _ (hnd p.1 hp.1 p.2 hp.2))
+    rw [DifferentialForm.coe_flatCLE] at h
+    exact h.comp p hΩ
+  have hβ : ContDiffAt ℝ n (fun q : ℝ × E => -(moserPrimitive ω x₀ R q.2)) p :=
+    (((contDiffOn_moserPrimitive' hn hω).contDiffAt (isOpen_ball.mem_nhds hpR)).comp p
+      contDiffAt_snd).neg
+  have hfin : ContDiffAt ℝ n (fun q : ℝ × E =>
       ContinuousLinearMap.inverse (ContinuousAlternatingMap.curryLeft (moserForm ω x₀ q.1 q.2))
         (-(moserPrimitive ω x₀ R q.2))) p :=
     ContDiffAt.clm_apply (f := fun q : ℝ × E => ContinuousLinearMap.inverse
@@ -520,30 +566,34 @@ section Darboux
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
   {ω : E → E [⋀^Fin 2]→L[ℝ] ℝ} {x₀ : E} {R : ℝ}
 
-/-- ★★ **Darboux's theorem on a ball, by Moser's trick.** If `ω` is `C¹` and closed on
-`ball x₀ R` and `ω(x₀)` is non-degenerate, there is an open partial homeomorphism `Φ` of `E`
-with `x₀ ∈ Φ.source ⊆ ball x₀ R`, `Φ.target ⊆ ball x₀ R` and `Φ x₀ = x₀`, `C¹` on its source
-with `C¹` inverse on its target, differentiable at every point `x` of its source with an
+/-- ★★ **Darboux's theorem on a ball, by Moser's trick.** If `ω` is `C^n` (`1 ≤ n ≤ ∞`) and
+closed on `ball x₀ R` and `ω(x₀)` is non-degenerate, there is an open partial homeomorphism `Φ`
+of `E` with `x₀ ∈ Φ.source ⊆ ball x₀ R`, `Φ.target ⊆ ball x₀ R` and `Φ x₀ = x₀`, `C^n` on its
+source with `C^n` inverse on its target, differentiable at every point `x` of its source with an
 invertible derivative `D`, such that `ω(Φ x)(D u, D v) = ω(x₀)(u, v)`: `Φ^* ω` is the constant
-form `ω(x₀)`. -/
-theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (ball x₀ R))
+form `ω(x₀)`. (The `C^n` regularity is `contDiffOn_flow_of_contDiffOn`: the time-`1` map of the
+jointly `C^n` Moser field, on the half-ball where the flow is Lipschitz in the initial point.) -/
+theorem exists_openPartialHomeomorph_pullback_eq {n : ℕ∞} (hn : 1 ≤ n)
+    (hω : ContDiffOn ℝ n ω (ball x₀ R))
     (hR : 0 < R) (hclosed : ∀ y ∈ ball x₀ R, extDeriv ω y = 0)
     (hnd : ∀ v : E, v ≠ 0 → ∃ u, ω x₀ ![v, u] ≠ 0) :
     ∃ Φ : OpenPartialHomeomorph E E, Φ.source ⊆ ball x₀ R ∧ Φ.target ⊆ ball x₀ R ∧
       x₀ ∈ Φ.source ∧ Φ x₀ = x₀ ∧
-      ContDiffOn ℝ 1 Φ Φ.source ∧ ContDiffOn ℝ 1 Φ.symm Φ.target ∧
+      ContDiffOn ℝ n Φ Φ.source ∧ ContDiffOn ℝ n Φ.symm Φ.target ∧
       ∀ x ∈ Φ.source, ∃ D : E ≃L[ℝ] E, HasFDerivAt Φ (D : E →L[ℝ] E) x ∧
         (ω (Φ x)).compContinuousLinearMap (D : E →L[ℝ] E) = ω x₀ := by
   have : CompleteSpace E := FiniteDimensional.complete ℝ E
   have : ProperSpace E := FiniteDimensional.proper ℝ E
+  have hω1 : ContDiffOn ℝ 1 ω (ball x₀ R) := hω.of_le (by exact_mod_cast hn)
   -- the ball where the interpolation is non-degenerate, and the small ball where `‖DX_t‖ ≤ ¼`
-  obtain ⟨r, hr0, hrR, hndr⟩ := exists_moser_radius hω hR hnd
-  have hmf := contDiffOn_moserFieldJoint hω hrR hndr
+  obtain ⟨r, hr0, hrR, hndr⟩ := exists_moser_radius hω1 hR hnd
+  have hmf := contDiffOn_moserFieldJoint hω1 hrR hndr
+  have hmfn := contDiffOn_moserFieldJoint' hn hω hrR hndr
   have hmfu : ContDiffOn ℝ 1 (Function.uncurry (moserField ω x₀ R))
       (Ioo (-2 : ℝ) 2 ×ˢ ball x₀ r) := by
     rw [uncurry_moserField]
     exact hmf
-  obtain ⟨a, ha, har', hDle⟩ := exists_moser_small_ball hω hR hnd hr0 hmf
+  obtain ⟨a, ha, har', hDle⟩ := exists_moser_small_ball hω1 hR hnd hr0 hmf
   have har : closedBall x₀ a ⊆ ball x₀ r := closedBall_subset_ball har'
   have hV : IsOpen (Ioo (-2 : ℝ) 2 ×ˢ ball x₀ r) := isOpen_Ioo.prod isOpen_ball
   have hsub : Icc (0 : ℝ) 1 ×ˢ ball x₀ r ⊆ Ioo (-2 : ℝ) 2 ×ˢ ball x₀ r :=
@@ -551,7 +601,7 @@ theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (bal
   have htI : ∀ t ∈ Icc (0 : ℝ) 1, t ∈ Ioo (-2 : ℝ) 2 :=
     fun t ht => ⟨by linarith [ht.1], by linarith [ht.2]⟩
   -- the flow of Moser's field up to time `1`
-  obtain ⟨α, Y, hα, hsep, hY, hYc⟩ := exists_flow_hasFDerivAt_of_norm_fderiv_le
+  obtain ⟨α, Y, hα, hsep, hY, -⟩ := exists_flow_hasFDerivAt_of_norm_fderiv_le
     (f := moserField ω x₀ R) (x₀ := x₀) (a := a) (T := 1) (M := 1 / 4) ha one_pos isOpen_ball har
     (hmfu.continuousOn.mono hsub)
     (fun t ht z hz => (((contDiffAt_moserField_of_joint hmf (htI t ht) hz).differentiableAt
@@ -561,7 +611,7 @@ theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (bal
         (continuousOn_const (c := ContinuousLinearMap.inr ℝ ℝ E))).mono hsub
       refine h.congr fun p hp => ?_
       exact fderiv_moserField_eq hmf (htI p.1 hp.1) hp.2)
-    (by norm_num) hDle (by norm_num) (fun t _ => moserField_self hω hR t)
+    (by norm_num) hDle (by norm_num) (fun t _ => moserField_self hω1 hR t)
   -- Lipschitz control of the field on the trajectories' ball
   have hlip : ∀ t ∈ Icc (0 : ℝ) 1,
       LipschitzOnWith (1 / 4 : ℝ≥0) (moserField ω x₀ R t) (closedBall x₀ a) := by
@@ -602,7 +652,7 @@ theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (bal
     -- transport of the interpolation along the flow
     have htrans := form_invariant_of_flatLieDeriv_eq_zero_timeDependent
       (f := moserField ω x₀ R) (U := ball x₀ r) (T := 1) (Ω := moserForm ω x₀)
-      (fun t ht z hz => ((contDiffOn_moserForm_uncurry hω).contDiffAt
+      (fun t ht z hz => ((contDiffOn_moserForm_uncurry hω1).contDiffAt
         ((isOpen_univ.prod isOpen_ball).mem_nhds
           ⟨mem_univ _, ball_subset_ball hrR hz⟩)).differentiableAt one_ne_zero)
       (fun t ht z hz m => by
@@ -610,10 +660,10 @@ theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (bal
         have hXd : ContDiffAt ℝ 1 (moserField ω x₀ R t) z :=
           contDiffAt_moserField_of_joint hmf (htI t ht) hz
         have hηd : DifferentiableAt ℝ (moserDeviation ω x₀) z :=
-          ((contDiffOn_moserDeviation hω).differentiableOn one_ne_zero).differentiableAt
+          ((contDiffOn_moserDeviation hω1).differentiableOn one_ne_zero).differentiableAt
             (isOpen_ball.mem_nhds hzR)
         have hΩd : ContDiffAt ℝ 1 (moserForm ω x₀ t) z :=
-          ((contDiffOn_moserForm_uncurry hω).contDiffAt
+          ((contDiffOn_moserForm_uncurry hω1).contDiffAt
             ((isOpen_univ.prod isOpen_ball).mem_nhds ⟨mem_univ _, hzR⟩)).comp z
             (contDiffAt_const.prodMk contDiffAt_id)
         -- Cartan
@@ -627,8 +677,8 @@ theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (bal
           have h : (fun y => -(moserPrimitive ω x₀ R y))
               = (-1 : ℝ) • moserPrimitive ω x₀ R :=
             (neg_one_smul ℝ (moserPrimitive ω x₀ R)).symm
-          rw [h, extDeriv_smul, extDeriv_moserPrimitive hω hclosed hzR, neg_one_smul]
-        rw [hint.extDeriv_eq, hneg, extDeriv_moserForm hω hclosed t hzR] at hLie
+          rw [h, extDeriv_smul, extDeriv_moserPrimitive hω1 hclosed hzR, neg_one_smul]
+        rw [hint.extDeriv_eq, hneg, extDeriv_moserForm hω1 hclosed t hzR] at hLie
         simp only [ContinuousAlternatingMap.coe_zero, Pi.zero_apply, add_zero,
           ContinuousAlternatingMap.neg_apply] at hLie
         -- the time derivative of the interpolation
@@ -673,20 +723,32 @@ theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (bal
       exact hYf 1 (right_mem_Icc.mpr zero_le_one)
     · rw [hD, hΦc]
       exact hpull
-  -- the chart is `C¹`: its derivative `x ↦ Y x 1` is continuous on the source
-  have hΦ1 : ∀ x ∈ Φ.source, ContDiffAt ℝ 1 Φ x := by
-    intro x hx
-    rw [hΦs] at hx
-    exact contDiffAt_one_iff.mpr ⟨fun y => Y y 1, ball x₀ (a / 2), isOpen_ball.mem_nhds hx,
-      hYc 1 (right_mem_Icc.mpr zero_le_one),
-      fun y hy => (hY y hy).2.2 1 (right_mem_Icc.mpr zero_le_one)⟩
+  -- the chart is `C^n`: the time-`1` map of the jointly `C^n` Moser field, on the half-ball
+  -- where the flow is Lipschitz in the initial point (`contDiffOn_flow_of_contDiffOn`)
+  have hΦn : ContDiffOn ℝ n Φ Φ.source := by
+    rw [hΦs]
+    have hlipS : ∀ t ∈ Icc (0 : ℝ) 1, LipschitzOnWith ⟨Real.exp (1 / 4), (Real.exp_pos _).le⟩
+        (α · t) (ball x₀ (a / 2)) := by
+      intro t ht
+      refine LipschitzOnWith.of_dist_le_mul fun x hx y hy => ?_
+      calc dist (α x t) (α y t) ≤ dist x y * Real.exp (1 / 4 * t) :=
+            hsep x (ball_subset_closedBall hx) y (ball_subset_closedBall hy) t ht
+        _ ≤ dist x y * Real.exp (1 / 4) := by gcongr; linarith [ht.2]
+        _ = Real.exp (1 / 4) * dist x y := mul_comm _ _
+    have hflow := contDiffOn_flow_of_contDiffOn (f := moserField ω x₀ R) hV one_pos hn
+      (by rw [uncurry_moserField]; exact hmfn) isOpen_ball (isCompact_closedBall x₀ a)
+      (convex_closedBall x₀ a) (prod_mono (Icc_subset_Ioo (by norm_num) (by norm_num)) har)
+      (fun x hx => (hα x (ball_subset_closedBall hx)).1)
+      (fun x hx t ht => (hα x (ball_subset_closedBall hx)).2.1 t ht)
+      (fun x hx t _ => (hα x (ball_subset_closedBall hx)).2.2 t) hlipS 1
+      (right_mem_Icc.mpr zero_le_one)
+    exact hflow.congr fun x _ => hΦc x
   -- and so is its inverse (the easy half of the inverse function theorem)
-  have hΦs1 : ∀ y ∈ Φ.target, ContDiffAt ℝ 1 Φ.symm y := by
+  have hΦsn : ∀ y ∈ Φ.target, ContDiffAt ℝ n Φ.symm y := by
     intro y hy
     obtain ⟨D, hDf, -⟩ := hDpt (Φ.symm y) (Φ.map_target hy)
-    exact Φ.contDiffAt_symm hy hDf (hΦ1 _ (Φ.map_target hy))
-  refine ⟨Φ, ?_, ?_, ?_, ?_, fun x hx => (hΦ1 x hx).contDiffWithinAt,
-    fun y hy => (hΦs1 y hy).contDiffWithinAt, hDpt⟩
+    exact Φ.contDiffAt_symm hy hDf (hΦn.contDiffAt (Φ.open_source.mem_nhds (Φ.map_target hy)))
+  refine ⟨Φ, ?_, ?_, ?_, ?_, hΦn, fun y hy => (hΦsn y hy).contDiffWithinAt, hDpt⟩
   · rw [hΦs]
     exact ball_subset_ball (by linarith)
   · -- the target: the time-`1` flow stays in the closed ball
@@ -709,24 +771,25 @@ theorem exists_openPartialHomeomorph_pullback_eq (hω : ContDiffOn ℝ 1 ω (bal
       (fun t _ => hb t)
       continuousOn_const
       (fun t ht => by
-        rw [moserField_self hω hR]
+        rw [moserField_self hω1 hR]
         exact hasDerivWithinAt_const _ _ _)
       (fun _ _ => mem_closedBall_self ha.le)
       (by simp [h0])
     exact huniq (right_mem_Icc.mpr zero_le_one)
 
-/-- ★ **Darboux's theorem, read on the chart**: in the `C¹` chart `Φ⁻¹` the form is constant —
+/-- ★ **Darboux's theorem, read on the chart**: in the `C^n` chart `Φ⁻¹` the form is constant —
 `ω y (u, v) = ω(x₀)(D(Φ⁻¹)(y) u, D(Φ⁻¹)(y) v)` at every `y ∈ Φ.target`. -/
-theorem exists_openPartialHomeomorph_symm_pullback_eq (hω : ContDiffOn ℝ 1 ω (ball x₀ R))
+theorem exists_openPartialHomeomorph_symm_pullback_eq {n : ℕ∞} (hn : 1 ≤ n)
+    (hω : ContDiffOn ℝ n ω (ball x₀ R))
     (hR : 0 < R) (hclosed : ∀ y ∈ ball x₀ R, extDeriv ω y = 0)
     (hnd : ∀ v : E, v ≠ 0 → ∃ u, ω x₀ ![v, u] ≠ 0) :
     ∃ Φ : OpenPartialHomeomorph E E, Φ.source ⊆ ball x₀ R ∧ Φ.target ⊆ ball x₀ R ∧
       x₀ ∈ Φ.source ∧ Φ x₀ = x₀ ∧
-      ContDiffOn ℝ 1 Φ Φ.source ∧ ContDiffOn ℝ 1 Φ.symm Φ.target ∧
+      ContDiffOn ℝ n Φ Φ.source ∧ ContDiffOn ℝ n Φ.symm Φ.target ∧
       ∀ y ∈ Φ.target, ∃ D : E ≃L[ℝ] E, HasFDerivAt Φ.symm (D : E →L[ℝ] E) y ∧
         ω y = (ω x₀).compContinuousLinearMap (D : E →L[ℝ] E) := by
   obtain ⟨Φ, hsub, htsub, hx₀, hfix, hΦ1, hΦs1, hD⟩ :=
-    exists_openPartialHomeomorph_pullback_eq hω hR hclosed hnd
+    exists_openPartialHomeomorph_pullback_eq hn hω hR hclosed hnd
   refine ⟨Φ, hsub, htsub, hx₀, hfix, hΦ1, hΦs1, fun y hy => ?_⟩
   obtain ⟨D, hDf, hDp⟩ := hD (Φ.symm y) (Φ.map_target hy)
   refine ⟨D.symm, Φ.hasFDerivAt_symm hy hDf, ?_⟩
@@ -783,17 +846,17 @@ namespace DifferentialForm
 
 /-- ★★ **Darboux's theorem on a symplectic manifold.** At every point `x₀` there is an open partial
 homeomorphism `Φ` of the model space, fixing `chartAt E x₀ x₀` and contained in the chart's
-target, `C¹` with `C¹` inverse, along which the local representative of the form pulls back to
+target, `C^∞` with `C^∞` inverse, along which the local representative of the form pulls back to
 the constant form `ω_loc(chartAt E x₀ x₀)`: the Darboux chart `Φ⁻¹ ∘ chartAt E x₀` contains `x₀`
-and belongs to the `C¹` maximal atlas of `M`. -/
+and belongs to the `C^∞` maximal atlas of `M`. -/
 theorem IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq
     {α : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hα : IsSymplectic α) (x₀ : M) :
     ∃ Φ : OpenPartialHomeomorph E E, Φ.source ⊆ (chartAt E x₀).target ∧
       Φ.target ⊆ (chartAt E x₀).target ∧
       chartAt E x₀ x₀ ∈ Φ.source ∧ Φ (chartAt E x₀ x₀) = chartAt E x₀ x₀ ∧
-      ContDiffOn ℝ 1 Φ Φ.source ∧ ContDiffOn ℝ 1 Φ.symm Φ.target ∧
+      ContDiffOn ℝ ∞ Φ Φ.source ∧ ContDiffOn ℝ ∞ Φ.symm Φ.target ∧
       x₀ ∈ ((chartAt E x₀).trans Φ.symm).source ∧
-      (chartAt E x₀).trans Φ.symm ∈ IsManifold.maximalAtlas 𝓘(ℝ, E) 1 M ∧
+      (chartAt E x₀).trans Φ.symm ∈ IsManifold.maximalAtlas 𝓘(ℝ, E) ∞ M ∧
       ∀ w ∈ Φ.source, ∃ D : E ≃L[ℝ] E, HasFDerivAt Φ (D : E →L[ℝ] E) w ∧
         (localRep (fun x => α x) x₀ (Φ w)).compContinuousLinearMap (D : E →L[ℝ] E)
           = localRep (fun x => α x) x₀ (chartAt E x₀ x₀) := by
@@ -803,14 +866,13 @@ theorem IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq
   set w₀ := chartAt E x₀ x₀ with hw₀
   have hw₀t : w₀ ∈ (chartAt E x₀).target := (chartAt E x₀).map_source (mem_chart_source E x₀)
   obtain ⟨R, hR, hRt⟩ := Metric.isOpen_iff.mp (chartAt E x₀).open_target w₀ hw₀t
-  have hω : ContDiffOn ℝ 1 (localRep (fun x => α x) x₀) (ball w₀ R) := fun w hw =>
-    ((contDiffAt_localRep (fun x => α x) α.contMDiff_toFun x₀ (hRt hw)).of_le
-      (by simp)).contDiffWithinAt
+  have hω : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (localRep (fun x => α x) x₀) (ball w₀ R) :=
+    fun w hw => (contDiffAt_localRep (fun x => α x) α.contMDiff_toFun x₀ (hRt hw)).contDiffWithinAt
   have hclosed : ∀ y ∈ ball w₀ R, extDeriv (localRep (fun x => α x) x₀) y = 0 :=
     fun y hy => extDeriv_localRep_eq_zero α hα x₀ (hRt hy)
   have hnd := localRep_nondegenerate α hα.nondegenerate x₀ hw₀t
   obtain ⟨Φ, hsub, htsub, hmem, hfix, hΦ1, hΦs1, hD⟩ :=
-    exists_openPartialHomeomorph_pullback_eq hω hR hclosed hnd
+    exists_openPartialHomeomorph_pullback_eq (n := ⊤) le_top hω hR hclosed hnd
   have hw₀Φ : w₀ ∈ Φ.target := by
     have := Φ.map_source hmem
     rwa [hfix] at this
@@ -818,8 +880,8 @@ theorem IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_eq
   · rw [OpenPartialHomeomorph.trans_source, OpenPartialHomeomorph.symm_source]
     exact ⟨mem_chart_source E x₀, hw₀Φ⟩
   · exact IsManifold.mem_maximalAtlas_iff.mpr (StructureGroupoid.trans_mem_maximalAtlas
-      (StructureGroupoid.chart_mem_maximalAtlas (contDiffGroupoid 1 𝓘(ℝ, E)) x₀)
-      ((contDiffGroupoid 1 𝓘(ℝ, E)).symm (mem_contDiffGroupoid_of_contDiffOn hΦ1 hΦs1)))
+      (StructureGroupoid.chart_mem_maximalAtlas (contDiffGroupoid ∞ 𝓘(ℝ, E)) x₀)
+      ((contDiffGroupoid ∞ 𝓘(ℝ, E)).symm (mem_contDiffGroupoid_of_contDiffOn hΦ1 hΦs1)))
 
 end DifferentialForm
 

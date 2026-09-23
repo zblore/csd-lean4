@@ -3718,7 +3718,8 @@ saving target for L5-d. No amplitude bridge / no measurement (those are #31 / L5
 -- pulling omega back to the constant form omega(x_0); the same on a symplectic manifold through
 -- localRep. The chart is C^1 with C^1 inverse (BACKLOG #49, 2026-09-23) and the standard form
 -- sum dp_i wedge dq_i is Geometry/Manifold/DarbouxStandardForm.lean (BACKLOG #50, 2026-09-23);
--- the C^k chart of a C^k form is BACKLOG #60.
+-- the chart is C^n for a C^n form and C^infty on a symplectic manifold (BACKLOG #60,
+-- 2026-09-23, Analysis/ODE/FlowSmooth.lean).
 /-- info: 'isOpen_nondegenerate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms isOpen_nondegenerate
 
@@ -8028,5 +8029,96 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'DifferentialForm.IsSymplectic.even_finrank' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.IsSymplectic.even_finrank
+
+-- BACKLOG #60 (2026-09-23), Analysis/ODE/FlowDerivative.lean: linear ODEs on the whole interval.
+-- norm_le_mul_exp_of_linearODE (Gronwall bound |Y t| <= |Y 0| exp(M t)),
+-- hasDerivWithinAt_Icc_glue (two solutions on adjacent intervals agreeing at the junction glue
+-- to one), exists_linearODE_solution_Icc (STAR): Y' = A(t) Y has a solution on all of [0, T] for
+-- a continuous coefficient bounded by M, with no smallness condition, by concatenating the
+-- short-time Picard-Lindelof solutions with a step length fixed by the Gronwall bound.
+/-- info: 'norm_le_mul_exp_of_linearODE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_le_mul_exp_of_linearODE
+
+/-- info: 'hasDerivWithinAt_Icc_glue' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasDerivWithinAt_Icc_glue
+
+/-- info: 'exists_linearODE_solution_Icc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_linearODE_solution_Icc
+
+-- BACKLOG #60 (2026-09-23), Analysis/ODE/FlowSmooth.lean: C^n dependence of a flow on its
+-- initial point. hasFDerivAt_of_contDiffOn_uncurry (the partial derivative of a jointly C^1
+-- field), exists_isOpen_hasFDerivAt_of_contDiffOn_uncurry (the tube on which
+-- hasFDerivAt_flow_of_variational_timeDependent applies), exists_variational_of_lipschitz (STAR:
+-- C^1 dependence in Lipschitz form - the variational solution exists on [0, T], is the derivative
+-- in the initial point, and is continuous in it), contDiffOn_flow_of_contDiffOn (STAR STAR): for
+-- a jointly C^n field, 1 <= n <= infty, a flow confined to a compact convex set and Lipschitz in
+-- the initial point is C^n in the initial point, by induction on n through the pair flow
+-- (x, Z) -> (alpha x t, Y x t o Z) of the field (z, Z) -> (f t z, D(f t)(z) o Z) on E x (E ->L E),
+-- which is one order less smooth. Mathlib at the pin has Picard-Lindelof and Lipschitz
+-- dependence only.
+/-- info: 'hasFDerivAt_of_contDiffOn_uncurry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasFDerivAt_of_contDiffOn_uncurry
+
+/-- info: 'exists_isOpen_hasFDerivAt_of_contDiffOn_uncurry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_isOpen_hasFDerivAt_of_contDiffOn_uncurry
+
+/-- info: 'exists_variational_of_lipschitz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_variational_of_lipschitz
+
+/-- info: 'contDiffOn_flow_of_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_flow_of_contDiffOn
+
+-- BACKLOG #60 (2026-09-23), Analysis/Calculus/ContDiffParametricIntervalIntegral.lean: a
+-- parametric interval integral of a jointly C^n scalar integrand is C^n in the parameter
+-- (finite-dimensional parameter space, n <= infty), by induction: the derivative of the integral
+-- is the integral of the partial derivative (dominated), and applied to a fixed vector it is
+-- again a parametric integral of a jointly C^(n-1) integrand (contDiffOn_clm_apply). With it the
+-- Poincare primitive (Poincare.lean: contDiffOn_radialPrimitiveVal', contDiffOn_radialPrimitive',
+-- contDiffOn_radialPrimitiveForm'), Moser's field (Darboux.lean: contDiffOn_moserPrimitive',
+-- contDiffOn_moserForm_uncurry', contDiffOn_moserFieldJoint') and hence the Darboux chart are
+-- C^n for a C^n form; exists_openPartialHomeomorph_pullback_eq now takes the order n and its
+-- manifold form concludes C^infty and membership in the C^infty maximal atlas.
+/-- info: 'exists_closedBall_prod_Icc_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_closedBall_prod_Icc_subset
+
+/-- info: 'contDiffOn_intervalIntegral_of_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_intervalIntegral_of_contDiffOn
+
+/-- info: 'contDiffOn_evalPair'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_evalPair'
+
+/-- info: 'contDiffOn_radialPrimitiveVal'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_radialPrimitiveVal'
+
+/-- info: 'contDiffOn_radialPrimitive'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_radialPrimitive'
+
+/-- info: 'contDiffOn_radialPrimitiveForm'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_radialPrimitiveForm'
+
+/-- info: 'contDiffOn_moserPrimitive'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_moserPrimitive'
+
+/-- info: 'contDiffOn_moserForm_uncurry'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_moserForm_uncurry'
+
+/-- info: 'contDiffOn_moserFieldJoint'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_moserFieldJoint'
 
 end CSD.Tests.AxiomAudit

@@ -16,7 +16,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.BilinearForm.SymplecticBasis
 `Geometry/Manifold/Darboux.lean` produces, by Moser's trick, a `C¹` chart in which a closed
 non-degenerate 2-form is the **constant** form `ω(x₀)`. This file composes that chart with the
 linear change of coordinates given by a **symplectic basis** of `ω(x₀)`
-(`LinearAlgebra/BilinearForm/SymplecticBasis.lean`) and obtains the textbook statement: a `C¹`
+(`LinearAlgebra/BilinearForm/SymplecticBasis.lean`) and obtains the textbook statement: a `C^n`
 chart into `ℝ^{2n}` in which the form is the **standard symplectic form**
 `ω_std = ∑ᵢ dpᵢ ∧ dqᵢ`, i.e. `ω = Ψ^* ω_std`; in particular the dimension is `2n`.
 
@@ -30,20 +30,21 @@ chart into `ℝ^{2n}` in which the form is the **standard symplectic form**
   non-degenerate 2-form on a finite-dimensional real space is the pullback of `ω_std` on
   `ℝ^{2n}` by a linear isomorphism, and `finrank E = 2n` (the symplectic basis);
 * ★★ `exists_openPartialHomeomorph_pullback_standard` — **Darboux on a ball, standard form**:
-  for `ω` `C¹` and closed on `ball x₀ R` with `ω(x₀)` non-degenerate, there is `n` with
-  `finrank E = 2n` and a `C¹` chart `Ψ : E → ℝ^{2n}` with `C¹` inverse, `x₀ ∈ Ψ.source ⊆ ball x₀ R`,
+  for `ω` of class `C^k` (`1 ≤ k ≤ ∞`) and closed on `ball x₀ R` with `ω(x₀)` non-degenerate, there
+  is `n` with `finrank E = 2n` and a `C^k` chart `Ψ : E → ℝ^{2n}` with `C^k` inverse,
+  `x₀ ∈ Ψ.source ⊆ ball x₀ R`,
   differentiable at every point `y` of its source with invertible derivative `D`, and
   `ω(y)(u, v) = ω_std(D u, D v)`: `ω = Ψ^* ω_std`;
 * ★★ `DifferentialForm.IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_standard` —
   **Darboux on a symplectic manifold, standard form**: at every point the local representative
-  of the form is, in a further `C¹` chart `Ψ` of the model space into `ℝ^{2n}`, the pullback of
+  of the form is, in a further `C^∞` chart `Ψ` of the model space into `ℝ^{2n}`, the pullback of
   `ω_std`; the Darboux chart is `Ψ ∘ chartAt E x₀`;
 * ★ `DifferentialForm.IsSymplectic.even_finrank` — **a symplectic manifold has even dimension**.
 
 ## Honest scope
 
-⚠️ **`C¹`, not `C^k`.** The chart inherits the regularity of `Darboux.lean` (BACKLOG #60 prices the
-`C^k` chart of a `C^k` form). The linear change of coordinates is `C^∞`.
+**Order `k`.** The chart inherits the regularity of `Darboux.lean`: `C^k` for `ω` of class `C^k`
+(`1 ≤ k ≤ ∞`), `C^∞` on a symplectic manifold. The linear change of coordinates is `C^∞`.
 
 References: J. Moser, *On the volume elements on a manifold*, Trans. AMS 120 (1965);
 D. McDuff, D. Salamon, *Introduction to Symplectic Topology*, Thm 3.2.2 and Lemma 2.1.2 (the
@@ -198,23 +199,24 @@ section Darboux
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimensional ℝ E]
   {ω : E → E [⋀^Fin 2]→L[ℝ] ℝ} {x₀ : E} {R : ℝ}
 
-/-- ★★ **Darboux's theorem on a ball, standard form.** If `ω` is `C¹` and closed on `ball x₀ R`
-and `ω(x₀)` is non-degenerate, then `finrank E = 2n` for some `n` and there is a `C¹` chart
-`Ψ : E → ℝ^{2n}` with `C¹` inverse, `x₀ ∈ Ψ.source ⊆ ball x₀ R`, differentiable at every point
-`y` of its source with an invertible derivative `D`, such that
+/-- ★★ **Darboux's theorem on a ball, standard form.** If `ω` is `C^k` (`1 ≤ k ≤ ∞`) and closed
+on `ball x₀ R` and `ω(x₀)` is non-degenerate, then `finrank E = 2n` for some `n` and there is a
+`C^k` chart `Ψ : E → ℝ^{2n}` with `C^k` inverse, `x₀ ∈ Ψ.source ⊆ ball x₀ R`, differentiable at
+every point `y` of its source with an invertible derivative `D`, such that
 `ω(y)(u, v) = ω_std(D u, D v)`: `ω = Ψ^* ω_std` with `ω_std = ∑ᵢ dpᵢ ∧ dqᵢ`. -/
-theorem exists_openPartialHomeomorph_pullback_standard (hω : ContDiffOn ℝ 1 ω (ball x₀ R))
+theorem exists_openPartialHomeomorph_pullback_standard {k : ℕ∞} (hk : 1 ≤ k)
+    (hω : ContDiffOn ℝ k ω (ball x₀ R))
     (hR : 0 < R) (hclosed : ∀ y ∈ ball x₀ R, extDeriv ω y = 0)
     (hnd : ∀ v : E, v ≠ 0 → ∃ u, ω x₀ ![v, u] ≠ 0) :
     ∃ (n : ℕ) (Ψ : OpenPartialHomeomorph E (Fin n ⊕ Fin n → ℝ)), finrank ℝ E = 2 * n ∧
       Ψ.source ⊆ ball x₀ R ∧ x₀ ∈ Ψ.source ∧
-      ContDiffOn ℝ 1 Ψ Ψ.source ∧ ContDiffOn ℝ 1 Ψ.symm Ψ.target ∧
+      ContDiffOn ℝ k Ψ Ψ.source ∧ ContDiffOn ℝ k Ψ.symm Ψ.target ∧
       ∀ y ∈ Ψ.source, ∃ D : E ≃L[ℝ] (Fin n ⊕ Fin n → ℝ),
         HasFDerivAt Ψ (D : E →L[ℝ] (Fin n ⊕ Fin n → ℝ)) y ∧
         ω y = (standardSymplecticForm (Fin n)).compContinuousLinearMap
           (D : E →L[ℝ] (Fin n ⊕ Fin n → ℝ)) := by
   obtain ⟨Φ, hsub, htsub, hx₀, hfix, hΦ1, hΦs1, hD⟩ :=
-    exists_openPartialHomeomorph_symm_pullback_eq hω hR hclosed hnd
+    exists_openPartialHomeomorph_symm_pullback_eq hk hω hR hclosed hnd
   obtain ⟨n, L, hn, hL⟩ := exists_continuousLinearEquiv_eq_standardSymplecticForm_comp (ω x₀) hnd
   -- the chart `Ψ = L ∘ Φ⁻¹`
   set Ψ : OpenPartialHomeomorph E (Fin n ⊕ Fin n → ℝ) :=
@@ -271,7 +273,7 @@ variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDimension
 namespace DifferentialForm
 
 /-- ★★ **Darboux's theorem on a symplectic manifold, standard form.** At every point `x₀`,
-`finrank E = 2n` and there is a `C¹` chart `Ψ` of the model space into `ℝ^{2n}` with `C¹`
+`finrank E = 2n` and there is a `C^∞` chart `Ψ` of the model space into `ℝ^{2n}` with `C^∞`
 inverse, containing `chartAt E x₀ x₀` and contained in the chart's target, along which the local
 representative of the form is the pullback of the standard symplectic form
 `ω_std = ∑ᵢ dpᵢ ∧ dqᵢ`: the Darboux chart is `Ψ ∘ chartAt E x₀`. -/
@@ -279,7 +281,7 @@ theorem IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_standard
     {α : DifferentialForm (𝓘(ℝ, E)) M ∞ (Fin 2) ℝ} (hα : IsSymplectic α) (x₀ : M) :
     ∃ (n : ℕ) (Ψ : OpenPartialHomeomorph E (Fin n ⊕ Fin n → ℝ)), finrank ℝ E = 2 * n ∧
       Ψ.source ⊆ (chartAt E x₀).target ∧ chartAt E x₀ x₀ ∈ Ψ.source ∧
-      ContDiffOn ℝ 1 Ψ Ψ.source ∧ ContDiffOn ℝ 1 Ψ.symm Ψ.target ∧
+      ContDiffOn ℝ ∞ Ψ Ψ.source ∧ ContDiffOn ℝ ∞ Ψ.symm Ψ.target ∧
       ∀ w ∈ Ψ.source, ∃ D : E ≃L[ℝ] (Fin n ⊕ Fin n → ℝ),
         HasFDerivAt Ψ (D : E →L[ℝ] (Fin n ⊕ Fin n → ℝ)) w ∧
         localRep (fun x => α x) x₀ w
@@ -291,14 +293,13 @@ theorem IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_standard
   set w₀ := chartAt E x₀ x₀ with hw₀
   have hw₀t : w₀ ∈ (chartAt E x₀).target := (chartAt E x₀).map_source (mem_chart_source E x₀)
   obtain ⟨R, hR, hRt⟩ := Metric.isOpen_iff.mp (chartAt E x₀).open_target w₀ hw₀t
-  have hω : ContDiffOn ℝ 1 (localRep (fun x => α x) x₀) (ball w₀ R) := fun w hw =>
-    ((contDiffAt_localRep (fun x => α x) α.contMDiff_toFun x₀ (hRt hw)).of_le
-      (by simp)).contDiffWithinAt
+  have hω : ContDiffOn ℝ ((⊤ : ℕ∞) : WithTop ℕ∞) (localRep (fun x => α x) x₀) (ball w₀ R) :=
+    fun w hw => (contDiffAt_localRep (fun x => α x) α.contMDiff_toFun x₀ (hRt hw)).contDiffWithinAt
   have hclosed : ∀ y ∈ ball w₀ R, extDeriv (localRep (fun x => α x) x₀) y = 0 :=
     fun y hy => extDeriv_localRep_eq_zero α hα x₀ (hRt hy)
   have hnd := localRep_nondegenerate α hα.nondegenerate x₀ hw₀t
   obtain ⟨n, Ψ, hn, hsub, hmem, hΨ1, hΨs1, hD⟩ :=
-    exists_openPartialHomeomorph_pullback_standard hω hR hclosed hnd
+    exists_openPartialHomeomorph_pullback_standard (k := ⊤) le_top hω hR hclosed hnd
   exact ⟨n, Ψ, hn, hsub.trans hRt, hmem, hΨ1, hΨs1, hD⟩
 
 /-- ★ **A symplectic manifold has even dimension.** -/
