@@ -10,7 +10,7 @@ public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
 public import Mathlib.Analysis.Real.Pi.Bounds
 
 /-!
-# Quantum phase estimation: exact readout and the `4/π²` lower bound
+# Quantum phase estimation: exact readout, the `4/π²` bound and the two-index `8/π²` bound
 
 **Category:** 1-Mathlib (CSD-free).
 
@@ -33,6 +33,13 @@ in `T` — the standard textbook results (Nielsen–Chuang §5.2), machine-check
   and reduced to a ratio of sines via `Complex.norm_exp_I_mul_ofReal_sub_one`
   (`prob_phaseStateR_eq`); the bound is the Jordan inequality (`Real.mul_abs_le_abs_sin`) on
   the numerator against `|sin t| ≤ |t|` (`Real.abs_sin_le_abs`) on the denominator.
+
+* **The two-index `8/π²` bound.** Both grid points straddling `φ·T` — `c` at phase distance
+  `0 ≤ φ − c/T ≤ 1/T` and `c + 1` (read modulo `T`) — jointly carry at least `8/π²`
+  (`phase_estimation_two_index`, BHMT Theorem 11 at `k = 1`), from the two-index Dirichlet
+  bound `dirichlet_two_index` and the elementary inequality `sin²(πx)(1/x² + 1/(1−x)²) ≥ 8`
+  (`eight_mul_sq_le_sin_sq_pi_mul`); a lower straddling index exists for every phase in
+  `[0, 1)` (`exists_straddle_index`).
 
 Support: `applyQFT`/`applyQFTinv` (the QFT action on the register, with the coordinate lemmas
 `applyQFT_apply`/`applyQFTinv_apply`), on the `Register.lean` primitives `basisState`/`prob`.
@@ -323,5 +330,319 @@ theorem phase_estimation_lower_bound (φ : ℝ) (c : Fin T)
         _ ≤ ((T : ℝ)⁻¹ * a / b) ^ 2 := pow_le_pow_left₀ (le_of_lt h2π) hlb 2
     calc 4 / Real.pi ^ 2 ≤ ((T : ℝ)⁻¹ * a / b) ^ 2 := hfinal
       _ = (T : ℝ)⁻¹ ^ 2 * (a ^ 2 / b ^ 2) := by rw [div_pow, mul_pow]; ring
+
+/-! ## Both grid points: the two-index `8/π²` bound (BHMT Theorem 11, `k = 1`)
+
+`phase_estimation_lower_bound` is the single-index `4/π²`. Counting **both** counting indices
+straddling `φ·T` — the lower one at phase distance `δ ∈ [0, 1/T]` and the upper one at
+`1/T − δ` — the pair carries `8/π²`. This is a genuinely two-index inequality on the Dirichlet
+kernel: a single index at distance up to `1/T` can carry probability `0`. The analytic core is
+`eight_mul_sq_le_sin_sq_pi_mul`, the elementary inequality
+`sin²(πx) (1/x² + 1/(1−x)²) ≥ 8` on `(0, 1)` (equality at `x = 1/2`). -/
+
+/-- The cubic range `0 < x ≤ 1/4`: `sin t ≥ t − t³/6` at `t = πx`, then a polynomial estimate
+with `3.1415 < π < 3.1416`. -/
+lemma eight_mul_sq_le_sin_sq_pi_mul_of_le_quarter {x : ℝ} (hx0 : 0 < x) (hx : x ≤ 1 / 4) :
+    8 * (x * (1 - x)) ^ 2 ≤ Real.sin (Real.pi * x) ^ 2 * (x ^ 2 + (1 - x) ^ 2) := by
+  have hπ1 := Real.pi_gt_d4
+  have hπ2 := Real.pi_lt_d4
+  have hπ0 : 0 < Real.pi := Real.pi_pos
+  have hP1 : (9.869 : ℝ) < Real.pi ^ 2 := by nlinarith
+  have hP2 : Real.pi ^ 2 < (9.8697 : ℝ) := by nlinarith
+  have hw : x ^ 2 ≤ 1 / 16 := by nlinarith
+  have hw0 : 0 ≤ x ^ 2 := sq_nonneg x
+  -- the cubic lower bound `L = πx − (πx)³/6 = πx (1 − π²x²/6)`, nonnegative here
+  have hL := Real.sin_ge_sub_cube (x := Real.pi * x) (by positivity)
+  have hPw : Real.pi ^ 2 * x ^ 2 ≤ 1 := by nlinarith
+  have hL0 : 0 ≤ Real.pi * x - (Real.pi * x) ^ 3 / 6 := by
+    have h1 : 0 ≤ Real.pi * x * (1 - Real.pi ^ 2 * x ^ 2 / 6) :=
+      mul_nonneg (by positivity) (by linarith)
+    calc (0 : ℝ) ≤ Real.pi * x * (1 - Real.pi ^ 2 * x ^ 2 / 6) := h1
+      _ = Real.pi * x - (Real.pi * x) ^ 3 / 6 := by ring
+  have hs2 : (Real.pi * x - (Real.pi * x) ^ 3 / 6) ^ 2 ≤ Real.sin (Real.pi * x) ^ 2 :=
+    pow_le_pow_left₀ hL0 hL 2
+  have hL2 : (Real.pi * x - (Real.pi * x) ^ 3 / 6) ^ 2
+      = Real.pi ^ 2 * x ^ 2 * (1 - Real.pi ^ 2 * x ^ 2 / 6) ^ 2 := by ring
+  -- the polynomial core `8 ≤ π² (1 − π²x²/3)(1 + x²)` on `x² ≤ 1/16`
+  have hcore : 8 ≤ Real.pi ^ 2 * (1 - Real.pi ^ 2 * x ^ 2 / 3) * (1 + x ^ 2) := by
+    have h1 : 0 ≤ (1 / 16 - x ^ 2) * (Real.pi ^ 2 * Real.pi ^ 2 / 3 - Real.pi ^ 2) :=
+      mul_nonneg (by linarith) (by nlinarith)
+    have h2 : Real.pi ^ 2 * Real.pi ^ 2 * (x ^ 2 * x ^ 2)
+        ≤ Real.pi ^ 2 * Real.pi ^ 2 * (1 / 256) :=
+      mul_le_mul_of_nonneg_left (by nlinarith) (by positivity)
+    have h3 : Real.pi ^ 2 * Real.pi ^ 2 < 97.42 := by nlinarith
+    nlinarith
+  -- `(1 − a)² ≥ 1 − 2a` and `x² + (1−x)² ≥ (1−x)²(1 + x²)`
+  have hk2 : 1 - Real.pi ^ 2 * x ^ 2 / 3 ≤ (1 - Real.pi ^ 2 * x ^ 2 / 6) ^ 2 := by
+    nlinarith [sq_nonneg (Real.pi ^ 2 * x ^ 2 / 6)]
+  have hk3 : (1 - x) ^ 2 * (1 + x ^ 2) ≤ x ^ 2 + (1 - x) ^ 2 := by
+    have h1 : 0 ≤ x ^ 2 * (1 - (1 - x) ^ 2) := mul_nonneg hw0 (by nlinarith)
+    nlinarith
+  have hA : 0 ≤ Real.pi ^ 2 * x ^ 2 := by positivity
+  have hB : 0 ≤ (1 - x) ^ 2 * (1 + x ^ 2) := by positivity
+  calc 8 * (x * (1 - x)) ^ 2 = 8 * (x ^ 2 * (1 - x) ^ 2) := by ring
+    _ ≤ Real.pi ^ 2 * (1 - Real.pi ^ 2 * x ^ 2 / 3) * (1 + x ^ 2) * (x ^ 2 * (1 - x) ^ 2) :=
+        mul_le_mul_of_nonneg_right hcore (by positivity)
+    _ = Real.pi ^ 2 * x ^ 2 * (1 - Real.pi ^ 2 * x ^ 2 / 3) * ((1 - x) ^ 2 * (1 + x ^ 2)) := by
+        ring
+    _ ≤ Real.pi ^ 2 * x ^ 2 * (1 - Real.pi ^ 2 * x ^ 2 / 6) ^ 2
+          * ((1 - x) ^ 2 * (1 + x ^ 2)) :=
+        mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left hk2 hA) hB
+    _ ≤ Real.pi ^ 2 * x ^ 2 * (1 - Real.pi ^ 2 * x ^ 2 / 6) ^ 2 * (x ^ 2 + (1 - x) ^ 2) :=
+        mul_le_mul_of_nonneg_left hk3 (by positivity)
+    _ = (Real.pi * x - (Real.pi * x) ^ 3 / 6) ^ 2 * (x ^ 2 + (1 - x) ^ 2) := by rw [hL2]
+    _ ≤ Real.sin (Real.pi * x) ^ 2 * (x ^ 2 + (1 - x) ^ 2) :=
+        mul_le_mul_of_nonneg_right hs2 (by positivity)
+
+/-- The cosine range `1/4 ≤ x ≤ 1/2`: `sin(πx) = cos(πy)` with `y = 1/2 − x`, `cos t ≥ 1 − t²/2`,
+then a polynomial estimate in `v = y² ≤ 1/16`. -/
+lemma eight_mul_sq_le_sin_sq_pi_mul_of_quarter_le {x : ℝ} (hx : 1 / 4 ≤ x) (hx' : x ≤ 1 / 2) :
+    8 * (x * (1 - x)) ^ 2 ≤ Real.sin (Real.pi * x) ^ 2 * (x ^ 2 + (1 - x) ^ 2) := by
+  have hπ1 := Real.pi_gt_d4
+  have hπ2 := Real.pi_lt_d4
+  have hπ0 : 0 < Real.pi := Real.pi_pos
+  have hP1 : (9.869 : ℝ) < Real.pi ^ 2 := by nlinarith
+  have hP2 : Real.pi ^ 2 < (9.8697 : ℝ) := by nlinarith
+  obtain ⟨y, hy⟩ : ∃ y : ℝ, y = 1 / 2 - x := ⟨_, rfl⟩
+  have hy0 : 0 ≤ y := by linarith
+  have hy4 : y ≤ 1 / 4 := by linarith
+  have hv : y ^ 2 ≤ 1 / 16 := by nlinarith
+  have hv0 : 0 ≤ y ^ 2 := sq_nonneg y
+  -- `sin(πx) = cos(πy)` and the quadratic lower bound, nonnegative here
+  have hsin : Real.sin (Real.pi * x) = Real.cos (Real.pi * y) := by
+    rw [← Real.sin_pi_div_two_sub]
+    congr 1
+    rw [hy]; ring
+  have hc := Real.one_sub_sq_div_two_le_cos (x := Real.pi * y)
+  have hc0 : 0 ≤ 1 - (Real.pi * y) ^ 2 / 2 := by
+    have : (Real.pi * y) ^ 2 ≤ 1 := by nlinarith
+    linarith
+  have hs2 : (1 - (Real.pi * y) ^ 2 / 2) ^ 2 ≤ Real.sin (Real.pi * x) ^ 2 := by
+    rw [hsin]; exact pow_le_pow_left₀ hc0 hc 2
+  have hxy1 : x * (1 - x) = 1 / 4 - y ^ 2 := by rw [hy]; ring
+  have hxy2 : x ^ 2 + (1 - x) ^ 2 = 1 / 2 + 2 * y ^ 2 := by rw [hy]; ring
+  -- the polynomial core: `(1 − Pv/2)²(1/2 + 2v) − 8(1/4 − v)² = v·Q(v)` with `Q ≥ 0`
+  have hP4 : (97.39 : ℝ) < Real.pi ^ 2 * Real.pi ^ 2 := by nlinarith
+  have hP4' : Real.pi ^ 2 * Real.pi ^ 2 < (97.42 : ℝ) := by nlinarith
+  have hQ : 0 ≤ (6 - Real.pi ^ 2 / 2)
+      + y ^ 2 * (Real.pi ^ 2 * Real.pi ^ 2 / 8 - 2 * Real.pi ^ 2 - 8)
+      + Real.pi ^ 2 * Real.pi ^ 2 * (y ^ 2 * y ^ 2) / 2 := by
+    have h1 : 0 ≤ (1 / 16 - y ^ 2) * (2 * Real.pi ^ 2 + 8 - Real.pi ^ 2 * Real.pi ^ 2 / 8) :=
+      mul_nonneg (by linarith) (by nlinarith)
+    have h2 : 0 ≤ Real.pi ^ 2 * Real.pi ^ 2 * (y ^ 2 * y ^ 2) / 2 := by positivity
+    nlinarith
+  have hcore : 8 * (1 / 4 - y ^ 2) ^ 2
+      ≤ (1 - Real.pi ^ 2 * y ^ 2 / 2) ^ 2 * (1 / 2 + 2 * y ^ 2) := by
+    have hid : (1 - Real.pi ^ 2 * y ^ 2 / 2) ^ 2 * (1 / 2 + 2 * y ^ 2) - 8 * (1 / 4 - y ^ 2) ^ 2
+        = y ^ 2 * ((6 - Real.pi ^ 2 / 2)
+            + y ^ 2 * (Real.pi ^ 2 * Real.pi ^ 2 / 8 - 2 * Real.pi ^ 2 - 8)
+            + Real.pi ^ 2 * Real.pi ^ 2 * (y ^ 2 * y ^ 2) / 2) := by ring
+    have := mul_nonneg hv0 hQ
+    linarith
+  calc 8 * (x * (1 - x)) ^ 2 = 8 * (1 / 4 - y ^ 2) ^ 2 := by rw [hxy1]
+    _ ≤ (1 - Real.pi ^ 2 * y ^ 2 / 2) ^ 2 * (1 / 2 + 2 * y ^ 2) := hcore
+    _ = (1 - (Real.pi * y) ^ 2 / 2) ^ 2 * (x ^ 2 + (1 - x) ^ 2) := by rw [hxy2]; ring
+    _ ≤ Real.sin (Real.pi * x) ^ 2 * (x ^ 2 + (1 - x) ^ 2) :=
+        mul_le_mul_of_nonneg_right hs2 (by positivity)
+
+/-- The half range `0 < x ≤ 1/2`, the two ranges joined at `1/4`. -/
+lemma eight_mul_sq_le_sin_sq_pi_mul_of_le_half {x : ℝ} (hx0 : 0 < x) (hx : x ≤ 1 / 2) :
+    8 * (x * (1 - x)) ^ 2 ≤ Real.sin (Real.pi * x) ^ 2 * (x ^ 2 + (1 - x) ^ 2) := by
+  rcases le_or_gt x (1 / 4) with h | h
+  · exact eight_mul_sq_le_sin_sq_pi_mul_of_le_quarter hx0 h
+  · exact eight_mul_sq_le_sin_sq_pi_mul_of_quarter_le h.le hx
+
+/-- ★ **The two-point kernel inequality.** For `0 < x < 1`,
+`sin²(πx) · (x² + (1−x)²) ≥ 8 · (x(1−x))²`, i.e. `sin²(πx)(1/x² + 1/(1−x)²) ≥ 8`, with equality
+at `x = 1/2`. The bound BHMT assert by calculus in the proof of their Theorem 11. -/
+theorem eight_mul_sq_le_sin_sq_pi_mul {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
+    8 * (x * (1 - x)) ^ 2 ≤ Real.sin (Real.pi * x) ^ 2 * (x ^ 2 + (1 - x) ^ 2) := by
+  rcases le_or_gt x (1 / 2) with h | h
+  · exact eight_mul_sq_le_sin_sq_pi_mul_of_le_half hx0 h
+  · -- reflect `x ↦ 1 − x`
+    have h1 := eight_mul_sq_le_sin_sq_pi_mul_of_le_half (x := 1 - x) (by linarith) (by linarith)
+    have hs : Real.sin (Real.pi * (1 - x)) = Real.sin (Real.pi * x) := by
+      rw [show Real.pi * (1 - x) = Real.pi - Real.pi * x by ring, Real.sin_pi_sub]
+    rw [hs, sub_sub_cancel] at h1
+    calc 8 * (x * (1 - x)) ^ 2 = 8 * ((1 - x) * x) ^ 2 := by ring
+      _ ≤ Real.sin (Real.pi * x) ^ 2 * ((1 - x) ^ 2 + x ^ 2) := h1
+      _ = Real.sin (Real.pi * x) ^ 2 * (x ^ 2 + (1 - x) ^ 2) := by ring
+
+omit [NeZero T] in
+/-- The phase state is `1`-periodic in the phase: `e^{2πi(φ+1)x} = e^{2πiφx}`. -/
+lemma phaseStateR_add_one (φ : ℝ) : phaseStateR T (φ + 1) = phaseStateR T φ := by
+  unfold phaseStateR
+  congr 1
+  refine Finset.sum_congr rfl fun x _ => ?_
+  congr 1
+  rw [show 2 * ↑Real.pi * Complex.I * ↑(φ + 1) * ↑(x : ℕ)
+      = 2 * ↑Real.pi * Complex.I * ↑φ * ↑(x : ℕ)
+        + (((x : ℕ) : ℤ) : ℂ) * (2 * ↑Real.pi * Complex.I) from by
+      push_cast; ring,
+    Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
+
+/-- Reading index `c` at phase `φ` is reading index `0` at phase `φ − c/T`: the Dirichlet
+amplitude depends only on the difference. -/
+lemma prob_applyQFTinv_phaseStateR_sub (φ : ℝ) (c : Fin T) :
+    prob (applyQFTinv T (phaseStateR T φ)) c
+      = prob (applyQFTinv T (phaseStateR T (φ - (c : ℕ) / (T : ℝ)))) 0 := by
+  rw [prob, prob, applyQFTinv_phaseStateR_apply, applyQFTinv_phaseStateR_apply]
+  simp only [Fin.val_zero, Nat.cast_zero, zero_div, sub_zero]
+
+/-- On resonance the readout is certain: `prob (phaseStateR T 0) 0 = 1`. -/
+lemma prob_applyQFTinv_phaseStateR_zero : prob (applyQFTinv T (phaseStateR T 0)) 0 = 1 := by
+  rw [prob, applyQFTinv_phaseStateR_apply]
+  simp only [Fin.val_zero, Nat.cast_zero, zero_div, sub_zero, Complex.ofReal_zero, mul_zero,
+    zero_mul, Complex.exp_zero, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
+    nsmul_eq_mul, mul_one]
+  rw [inv_mul_cancel₀ (by exact_mod_cast (NeZero.ne T)), norm_one, one_pow]
+
+/-- ★ **The two-index Dirichlet bound.** For `0 ≤ δ ≤ 1/T` the two readouts at phase distance
+`δ` and `δ − 1/T` — the two grid points straddling the phase — jointly carry at least `8/π²`.
+On the boundary one of them is on resonance; inside, both closed forms
+(`prob_phaseStateR_eq`) share the numerator `sin²(πδT)`, the denominators are bounded by
+`|sin t| ≤ |t|`, and `eight_mul_sq_le_sin_sq_pi_mul` at `x = δT` finishes. -/
+theorem dirichlet_two_index (δ : ℝ) (hlo : 0 ≤ δ) (hhi : δ ≤ 1 / T) :
+    8 / Real.pi ^ 2 ≤ prob (applyQFTinv T (phaseStateR T δ)) 0
+      + prob (applyQFTinv T (phaseStateR T (δ - 1 / T))) 0 := by
+  have hπ : 0 < Real.pi := Real.pi_pos
+  have hTne : T ≠ 0 := NeZero.ne T
+  have hTR : (T : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hTne
+  have hTpos : (0 : ℝ) < T := by positivity
+  have h8 : 8 / Real.pi ^ 2 ≤ 1 := by
+    rw [div_le_one (by positivity)]; nlinarith [Real.pi_gt_three]
+  rcases hlo.eq_or_lt with h0 | h0
+  · rw [← h0, prob_applyQFTinv_phaseStateR_zero]
+    linarith [prob_nonneg (applyQFTinv T (phaseStateR T (0 - 1 / T))) (0 : Fin T)]
+  rcases hhi.eq_or_lt with h1 | h1
+  · rw [h1, sub_self, prob_applyQFTinv_phaseStateR_zero]
+    linarith [prob_nonneg (applyQFTinv T (phaseStateR T (1 / T))) (0 : Fin T)]
+  -- `0 < δ < 1/T`: `x = δT ∈ (0, 1)`
+  have hx0 : 0 < δ * T := mul_pos h0 hTpos
+  have hx1 : δ * T < 1 := (lt_div_iff₀ hTpos).mp h1
+  have h1x : 0 < 1 - δ * T := by linarith
+  have hT1 : (1 : ℝ) ≤ T := by exact_mod_cast (NeZero.ne T).bot_lt
+  have hδ1 : δ < 1 := by nlinarith
+  have hs1 : Real.sin (Real.pi * δ) ≠ 0 :=
+    (Real.sin_pos_of_pos_of_lt_pi (by positivity) (mul_lt_of_lt_one_right hπ hδ1)).ne'
+  have hs2 : Real.sin (Real.pi * (δ - 1 / T)) ≠ 0 := by
+    have e : Real.pi * (δ - 1 / T) = -(Real.pi * (1 / T - δ)) := by ring
+    rw [e, Real.sin_neg, neg_ne_zero]
+    apply ne_of_gt
+    have hpos : 0 < 1 / (T : ℝ) - δ := by linarith
+    have h1T : 1 / (T : ℝ) ≤ 1 := by rw [div_le_one hTpos]; exact hT1
+    exact Real.sin_pos_of_pos_of_lt_pi (mul_pos hπ hpos) (mul_lt_of_lt_one_right hπ (by linarith))
+  rw [prob_phaseStateR_eq T δ 0 (by simpa using hs1),
+    prob_phaseStateR_eq T (δ - 1 / T) 0 (by simpa using hs2)]
+  simp only [Fin.val_zero, Nat.cast_zero, zero_div, sub_zero]
+  have e1 : Real.pi * δ * T = Real.pi * (δ * T) := by ring
+  have e2 : Real.pi * (δ - 1 / T) * T = Real.pi * (δ * T) - Real.pi := by
+    rw [show Real.pi * (δ - 1 / T) * T = Real.pi * (δ * T) - Real.pi * (1 / T * T) by ring,
+      one_div_mul_cancel hTR, mul_one]
+  rw [e1, e2, Real.sin_sub_pi, neg_sq]
+  -- the denominators
+  have ha : 0 < Real.sin (Real.pi * δ) ^ 2 := by positivity
+  have hb : 0 < Real.sin (Real.pi * (δ - 1 / T)) ^ 2 := by positivity
+  have hd1 : Real.sin (Real.pi * δ) ^ 2 ≤ (Real.pi * δ) ^ 2 := Real.sin_sq_le_sq
+  have hd2 : Real.sin (Real.pi * (δ - 1 / T)) ^ 2 ≤ (Real.pi * (δ - 1 / T)) ^ 2 :=
+    Real.sin_sq_le_sq
+  have hA : Real.sin (Real.pi * (δ * T)) ^ 2 / (Real.pi ^ 2 * (δ * T) ^ 2)
+      ≤ (T : ℝ)⁻¹ ^ 2 * (Real.sin (Real.pi * (δ * T)) ^ 2 / Real.sin (Real.pi * δ) ^ 2) := by
+    have e3 : (T : ℝ)⁻¹ ^ 2 * (Real.sin (Real.pi * (δ * T)) ^ 2 / (Real.pi * δ) ^ 2)
+        = Real.sin (Real.pi * (δ * T)) ^ 2 / (Real.pi ^ 2 * (δ * T) ^ 2) := by
+      rw [inv_pow, ← div_eq_inv_mul, div_div]
+      congr 1
+      ring
+    rw [← e3]
+    exact mul_le_mul_of_nonneg_left (div_le_div_of_nonneg_left (sq_nonneg _) ha hd1)
+      (by positivity)
+  have hB : Real.sin (Real.pi * (δ * T)) ^ 2 / (Real.pi ^ 2 * (1 - δ * T) ^ 2)
+      ≤ (T : ℝ)⁻¹ ^ 2
+        * (Real.sin (Real.pi * (δ * T)) ^ 2 / Real.sin (Real.pi * (δ - 1 / T)) ^ 2) := by
+    have e3 : (T : ℝ)⁻¹ ^ 2 * (Real.sin (Real.pi * (δ * T)) ^ 2 / (Real.pi * (δ - 1 / T)) ^ 2)
+        = Real.sin (Real.pi * (δ * T)) ^ 2 / (Real.pi ^ 2 * (1 - δ * T) ^ 2) := by
+      rw [inv_pow, ← div_eq_inv_mul, div_div]
+      congr 1
+      rw [show (Real.pi * (δ - 1 / T)) ^ 2 * (T : ℝ) ^ 2
+          = Real.pi ^ 2 * ((δ - 1 / T) * T) ^ 2 by ring,
+        show (δ - 1 / T) * T = δ * T - 1 / T * T by ring, one_div_mul_cancel hTR]
+      ring
+    rw [← e3]
+    exact mul_le_mul_of_nonneg_left (div_le_div_of_nonneg_left (sq_nonneg _) hb hd2)
+      (by positivity)
+  -- the core inequality at `x = δT`
+  have hcore := eight_mul_sq_le_sin_sq_pi_mul hx0 hx1
+  have hD1 : 0 < Real.pi ^ 2 * (δ * T) ^ 2 := by positivity
+  have hD2 : 0 < Real.pi ^ 2 * (1 - δ * T) ^ 2 := mul_pos (by positivity) (pow_pos h1x 2)
+  have hfin : 8 / Real.pi ^ 2 ≤ Real.sin (Real.pi * (δ * T)) ^ 2 / (Real.pi ^ 2 * (δ * T) ^ 2)
+      + Real.sin (Real.pi * (δ * T)) ^ 2 / (Real.pi ^ 2 * (1 - δ * T) ^ 2) := by
+    rw [div_add_div _ _ hD1.ne' hD2.ne', le_div_iff₀ (mul_pos hD1 hD2)]
+    have e : 8 / Real.pi ^ 2 * (Real.pi ^ 2 * (δ * T) ^ 2 * (Real.pi ^ 2 * (1 - δ * T) ^ 2))
+        = Real.pi ^ 2 * (8 * (δ * T * (1 - δ * T)) ^ 2) := by
+      rw [div_mul_eq_mul_div, div_eq_iff (by positivity)]
+      ring
+    rw [e]
+    calc Real.pi ^ 2 * (8 * (δ * T * (1 - δ * T)) ^ 2)
+        ≤ Real.pi ^ 2 * (Real.sin (Real.pi * (δ * T)) ^ 2 * ((δ * T) ^ 2 + (1 - δ * T) ^ 2)) :=
+          mul_le_mul_of_nonneg_left hcore (by positivity)
+      _ = Real.sin (Real.pi * (δ * T)) ^ 2 * (Real.pi ^ 2 * (1 - δ * T) ^ 2)
+          + Real.pi ^ 2 * (δ * T) ^ 2 * Real.sin (Real.pi * (δ * T)) ^ 2 := by ring
+  linarith
+
+/-- `(c + 1 : Fin T)` below the wrap: its value is `c + 1`. -/
+lemma val_add_one_fin_of_lt {c : Fin T} (h : (c : ℕ) + 1 < T) :
+    ((c + 1 : Fin T) : ℕ) = (c : ℕ) + 1 := by
+  rw [Fin.val_add, Fin.val_one', Nat.mod_eq_of_lt (by omega : 1 < T), Nat.mod_eq_of_lt h]
+
+/-- `(c + 1 : Fin T)` at the wrap `c = T − 1`: its value is `0`. -/
+lemma val_add_one_fin_of_eq {c : Fin T} (h : (c : ℕ) + 1 = T) : ((c + 1 : Fin T) : ℕ) = 0 := by
+  rw [Fin.val_add, Fin.val_one', Nat.add_mod, Nat.mod_mod, ← Nat.add_mod, h, Nat.mod_self]
+
+/-- The lower straddling index exists: for `0 ≤ φ < 1` the index `c = ⌊φT⌋` has
+`0 ≤ φ − c/T ≤ 1/T`. -/
+lemma exists_straddle_index (φ : ℝ) (h0 : 0 ≤ φ) (h1 : φ < 1) :
+    ∃ c : Fin T, 0 ≤ φ - (c : ℕ) / (T : ℝ) ∧ φ - (c : ℕ) / (T : ℝ) ≤ 1 / T := by
+  have hTpos : (0 : ℝ) < T := by have := NeZero.ne T; positivity
+  have hφT : 0 ≤ φ * T := by positivity
+  have hlt : ⌊φ * T⌋₊ < T := by
+    rw [Nat.floor_lt hφT]
+    calc φ * T < 1 * T := mul_lt_mul_of_pos_right h1 hTpos
+      _ = T := one_mul _
+  refine ⟨⟨⌊φ * T⌋₊, hlt⟩, ?_, ?_⟩
+  · show 0 ≤ φ - (⌊φ * T⌋₊ : ℝ) / T
+    rw [sub_nonneg, div_le_iff₀ hTpos]
+    exact Nat.floor_le hφT
+  · show φ - (⌊φ * T⌋₊ : ℝ) / T ≤ 1 / T
+    have := Nat.lt_floor_add_one (φ * T)
+    rw [sub_le_iff_le_add, ← add_div, le_div_iff₀ hTpos]
+    linarith
+
+/-- ★★ **The two-index phase-estimation bound (BHMT Theorem 11, `k = 1`, one phase).** If the
+counting index `c` sits at phase distance `0 ≤ φ − c/T ≤ 1/T` below the phase, then `c` and
+`c + 1` — the two grid points straddling `φ·T`, the second read modulo `T` — jointly carry at
+least `8/π²`. -/
+theorem phase_estimation_two_index (φ : ℝ) (c : Fin T) (hlo : 0 ≤ φ - (c : ℝ) / T)
+    (hhi : φ - (c : ℝ) / T ≤ 1 / T) :
+    8 / Real.pi ^ 2 ≤ prob (applyQFTinv T (phaseStateR T φ)) c
+      + prob (applyQFTinv T (phaseStateR T φ)) (c + 1) := by
+  have hTpos : (0 : ℝ) < T := by have := NeZero.ne T; positivity
+  have hTR : (T : ℝ) ≠ 0 := hTpos.ne'
+  rw [prob_applyQFTinv_phaseStateR_sub T φ c, prob_applyQFTinv_phaseStateR_sub T φ (c + 1)]
+  have key := dirichlet_two_index T (φ - (c : ℝ) / T) hlo hhi
+  rcases Nat.lt_or_ge ((c : ℕ) + 1) T with hlt | hge
+  · rw [val_add_one_fin_of_lt T hlt]
+    push_cast
+    rw [show φ - ((c : ℝ) + 1) / T = φ - (c : ℝ) / T - 1 / T by ring]
+    exact key
+  · have hc : (c : ℕ) + 1 = T := by have := c.isLt; omega
+    have hcR : ((c : ℕ) : ℝ) + 1 = T := by exact_mod_cast hc
+    have hφ : φ - (c : ℝ) / T - 1 / T + 1 = φ := by
+      field_simp
+      linarith
+    have h2 : prob (applyQFTinv T (phaseStateR T φ)) 0
+        = prob (applyQFTinv T (phaseStateR T (φ - (c : ℝ) / T - 1 / T))) 0 := by
+      rw [← phaseStateR_add_one T (φ - (c : ℝ) / T - 1 / T), hφ]
+    rw [val_add_one_fin_of_eq T hc, Nat.cast_zero, zero_div, sub_zero, h2]
+    exact key
 
 end QuantumInfo

@@ -10,7 +10,7 @@ public import CsdLean4.Mathlib.QuantumInfo.JointRegister
 public import CsdLean4.Mathlib.QuantumInfo.PhaseEstimation
 
 /-!
-# Amplitude estimation: the kickback marginal and the per-index success bound (BHMT Thm 12)
+# Amplitude estimation: the kickback marginal, the success bounds and BHMT's `8/π²`
 
 **Category:** 1-Mathlib (CSD-free).
 
@@ -41,24 +41,28 @@ hence the amplitude `a = sin²θ`.
   algebra at `ε = π/(2T)`. (BHMT state `2π√(a(1−a))/T + π²/T²` from `ε = π/T`; the
   closest-index window gives the sharper constant.)
 
+* ★★ **BHMT's literal `8/π²` (their Theorem 11, `k = 1`)** (`amplitude_estimation_bhmt`): with
+  `c` the lower of the two grid points straddling `Tθ/π`, the accepted set
+  `straddleIndices T c = {c, c + 1, −c, −(c + 1)}` carries at least `8/π²`
+  (`amplitude_estimation_straddle`) and every index in it decodes within
+  `2π√(a(1−a))/T + π²/T²` (`amplitude_estimation_straddle_close`) — the paper's constants.
+
 ## Honest scope
 
 `amplitude_estimation` is the single-branch, single-index `2/π²`. The **mirror section**
 doubles it: the `−` branch's distribution is the exact mirror image of the `+` branch's
 (`prob_applyQFTinv_phaseStateR_neg`, a conjugation symmetry), so the mirror index `−c` also
 carries `2/π²` (`amplitude_estimation_mirror`), both indices yield the **same** estimate
-`sin²(πc/T)` (`sin_sq_mirror`), and the pair carries `4/π²` (★ `amplitude_estimation_pair`).
-Two honest residues: (i) when `c = −c` (only `c = 0`, or `c = T/2` for even `T`) the pair sum
-double-counts one index — the bound still holds literally, but the "measure c or −c" reading
-collapses to a single index there; (ii) BHMT's literal `8/π²` (their Thm 11) additionally
-counts **both rounding directions** — the two grid points straddling `Tθ/π` — which needs a
-two-index lower bound on the Dirichlet kernel (`f(δ) + f(1/T − δ) ≥ 8/π²`, a genuine new
-kernel inequality, NOT downstream arithmetic; a single index at distance up to `1/T` can carry
-probability `0`). That inequality is not attempted — ⚠️ RESIDUE(R-001); the corpus's
-bound on the estimate tops out at `4/π²`. Query counting is by rounds of the abstract step; no
-controlled-gate decomposition is claimed. The construction takes the rotation-plane data
-(`g`, `b`, `θ`) as input — the plane exists for any state with `0 < goodProb < 1`
-(`ampState_decomposition` in `AmplitudeAmplification.lean`).
+`sin²(πc/T)` (`sin_sq_mirror`), and the pair carries `4/π²` (★ `amplitude_estimation_pair`);
+when `c = −c` (only `c = 0`, or `c = T/2` for even `T`) that pair sum double-counts one index —
+the bound still holds literally, but the "measure c or −c" reading collapses to a single index
+there. The **straddle section** reaches the paper's `8/π²` by counting **both rounding
+directions**: the two-index Dirichlet bound `phase_estimation_two_index` (the kernel
+inequality `f(δ) + f(δ − 1/T) ≥ 8/π²`, `PhaseEstimation.lean`) on each branch, the accepted set
+a `Finset` so that coincidences merge rather than double-count. Query counting is by rounds of
+the abstract step; no controlled-gate decomposition is claimed. The construction takes the
+rotation-plane data (`g`, `b`, `θ`) as input — the plane exists for any state with
+`0 < goodProb < 1` (`ampState_decomposition` in `AmplitudeAmplification.lean`).
 -/
 
 @[expose] public section
@@ -331,8 +335,8 @@ theorem amplitude_estimation_mirror (hgg : inner ℂ g g = 1) (hbb : inner ℂ b
 /-- ★ **The both-branch success bound (the mirror refinement):** the pair `{c, −c}` — two
 indices decoding to the **same** estimate (`sin_sq_mirror`) — jointly carries at least
 `4/π²`. When `c = −c` (only `c = 0`, or `c = T/2` for even `T`) the sum double-counts a
-single index; the inequality still holds literally. BHMT's `8/π²` additionally needs the
-both-rounding-directions kernel inequality — see the module header. -/
+single index; the inequality still holds literally. BHMT's `8/π²` counts both rounding
+directions: `amplitude_estimation_straddle` below. -/
 theorem amplitude_estimation_pair (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b = 1)
     (hgb : inner ℂ g b = 0) (hgsupp : ∀ i ∉ G, g i = 0) (hbsupp : ∀ i ∈ G, b i = 0)
     (θ : ℝ) (c : Fin T)
@@ -346,5 +350,163 @@ theorem amplitude_estimation_pair (hgg : inner ℂ g g = 1) (hbb : inner ℂ b b
   have h4 : (4 : ℝ) / Real.pi ^ 2 = 2 / Real.pi ^ 2 + 2 / Real.pi ^ 2 := by ring
   rw [h4]
   exact add_le_add h1 h2
+
+/-! ## Both rounding directions: BHMT's literal `8/π²` (Theorem 11, `k = 1`)
+
+`amplitude_estimation_pair` counts one grid point per branch. Counting **both** grid points
+straddling `Tθ/π` — `c` at phase distance `δ ∈ [0, 1/T]` below and `c + 1` at `1/T − δ` above
+— and their mirrors for the `−` branch gives the paper's constant: the two-index Dirichlet
+bound `phase_estimation_two_index` on each branch, halved by the branch weight and summed.
+The accepted set is a `Finset`, so coincidences among the four indices are merged, never
+double-counted; every accepted index decodes within the paper's error
+`2π√(a(1−a))/T + π²/T²`. -/
+
+/-- The accepted counting indices: both grid points straddling `Tθ/π` and their mirrors. -/
+def straddleIndices (c : Fin T) : Finset (Fin T) := {c, c + 1, -c, -(c + 1)}
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- For `T ≥ 2` the two straddling indices are distinct. -/
+lemma ne_add_one_fin (hT : 2 ≤ T) (c : Fin T) : c ≠ c + 1 := by
+  intro h
+  have hv := congrArg Fin.val h
+  rcases Nat.lt_or_ge ((c : ℕ) + 1) T with hlt | hge
+  · rw [val_add_one_fin_of_lt T hlt] at hv
+    omega
+  · have hc : (c : ℕ) + 1 = T := by have := c.isLt; omega
+    rw [val_add_one_fin_of_eq T hc] at hv
+    omega
+
+/-- ★★ **The both-rounding success bound (BHMT Theorem 11, `k = 1`, the probability half).**
+If `c` sits at phase distance `0 ≤ θ/π − c/T ≤ 1/T` below `θ/π`, the four accepted indices
+`{c, c + 1, −c, −(c + 1)}` jointly carry at least `8/π²` of the measured marginal: each branch
+puts `8/π²` on its own straddling pair (`phase_estimation_two_index`, the `−` branch through
+the mirror `prob_applyQFTinv_phaseStateR_neg`), and the branch weights are `1/2` each. -/
+theorem amplitude_estimation_straddle (hT : 2 ≤ T) (hgg : inner ℂ g g = 1)
+    (hbb : inner ℂ b b = 1) (hgb : inner ℂ g b = 0) (hgsupp : ∀ i ∉ G, g i = 0)
+    (hbsupp : ∀ i ∈ G, b i = 0) (θ : ℝ) (c : Fin T)
+    (hlo : 0 ≤ θ / Real.pi - (c : ℝ) / T) (hhi : θ / Real.pi - (c : ℝ) / T ≤ 1 / T) :
+    8 / Real.pi ^ 2 ≤ ∑ i ∈ straddleIndices T c, probLeft (matrixLeft (qftMatrix T)ᴴ
+        (kickbackState T (ampState g b θ) G (ampState g b θ))) i := by
+  obtain ⟨Pp, hPp⟩ : ∃ Pp : Fin T → ℝ,
+      Pp = fun i => prob (applyQFTinv T (phaseStateR T (θ / Real.pi))) i := ⟨_, rfl⟩
+  obtain ⟨Pm, hPm⟩ : ∃ Pm : Fin T → ℝ,
+      Pm = fun i => prob (applyQFTinv T (phaseStateR T (-(θ / Real.pi)))) i := ⟨_, rfl⟩
+  have hM : ∀ i, probLeft (matrixLeft (qftMatrix T)ᴴ
+      (kickbackState T (ampState g b θ) G (ampState g b θ))) i = (Pp i + Pm i) / 2 := by
+    intro i
+    rw [hPp, hPm]
+    exact amplitude_estimation_marginal T hgg hbb hgb hgsupp hbsupp θ i
+  have hPp0 : ∀ i, 0 ≤ Pp i := fun i => by rw [hPp]; exact prob_nonneg _ _
+  have hPm0 : ∀ i, 0 ≤ Pm i := fun i => by rw [hPm]; exact prob_nonneg _ _
+  have hne : c ≠ c + 1 := ne_add_one_fin T hT c
+  have hne' : -c ≠ -(c + 1) := fun h => hne (neg_injective h)
+  -- the `+` branch on its straddling pair, and the `−` branch on the mirrored pair
+  have hplus : 8 / Real.pi ^ 2 ≤ Pp c + Pp (c + 1) := by
+    rw [hPp]
+    exact phase_estimation_two_index T (θ / Real.pi) c hlo hhi
+  have hminus : Pm (-c) + Pm (-(c + 1)) = Pp c + Pp (c + 1) := by
+    rw [hPp, hPm]
+    beta_reduce
+    rw [prob_applyQFTinv_phaseStateR_neg, prob_applyQFTinv_phaseStateR_neg]
+  -- the pairs sit inside the accepted set
+  have hsub1 : ({c, c + 1} : Finset (Fin T)) ⊆ straddleIndices T c := by
+    intro i hi
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hi
+    simp only [straddleIndices, Finset.mem_insert, Finset.mem_singleton]
+    tauto
+  have hsub2 : ({-c, -(c + 1)} : Finset (Fin T)) ⊆ straddleIndices T c := by
+    intro i hi
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hi
+    simp only [straddleIndices, Finset.mem_insert, Finset.mem_singleton]
+    tauto
+  have hS1 : Pp c + Pp (c + 1) ≤ ∑ i ∈ straddleIndices T c, Pp i := by
+    rw [← Finset.sum_pair hne]
+    exact Finset.sum_le_sum_of_subset_of_nonneg hsub1 fun i _ _ => hPp0 i
+  have hS2 : Pm (-c) + Pm (-(c + 1)) ≤ ∑ i ∈ straddleIndices T c, Pm i := by
+    rw [← Finset.sum_pair hne']
+    exact Finset.sum_le_sum_of_subset_of_nonneg hsub2 fun i _ _ => hPm0 i
+  calc 8 / Real.pi ^ 2 = (8 / Real.pi ^ 2 + 8 / Real.pi ^ 2) / 2 := by ring
+    _ ≤ (∑ i ∈ straddleIndices T c, Pp i + ∑ i ∈ straddleIndices T c, Pm i) / 2 := by
+        linarith
+    _ = ∑ i ∈ straddleIndices T c, (Pp i + Pm i) / 2 := by
+        rw [← Finset.sum_add_distrib, Finset.sum_div]
+    _ = ∑ i ∈ straddleIndices T c, probLeft (matrixLeft (qftMatrix T)ᴴ
+        (kickbackState T (ampState g b θ) G (ampState g b θ))) i :=
+        Finset.sum_congr rfl fun i _ => (hM i).symm
+
+omit [Fintype ι] [DecidableEq ι] in
+/-- ★ **The accuracy of every accepted index (BHMT Lemma 7 at `ε = π/T`).** Each index in
+`straddleIndices T c` decodes to `ã = sin²(πi/T)` with `|ã − a| ≤ 2π√(a(1−a))/T + π²/T²` —
+the paper's literal constants. The upper index `c + 1` is read modulo `T`; at the wrap it
+decodes to `sin²(0) = sin²(π) = 0`. -/
+theorem amplitude_estimation_straddle_close {a : ℝ} (ha0 : 0 ≤ a) {θ : ℝ}
+    (hθ : Real.sin θ = Real.sqrt a) (hθc : Real.cos θ = Real.sqrt (1 - a)) (c : Fin T)
+    (hlo : 0 ≤ θ / Real.pi - (c : ℝ) / T) (hhi : θ / Real.pi - (c : ℝ) / T ≤ 1 / T)
+    {i : Fin T} (hi : i ∈ straddleIndices T c) :
+    |Real.sin (Real.pi * i / T) ^ 2 - a|
+      ≤ 2 * Real.pi * Real.sqrt (a * (1 - a)) / T + Real.pi ^ 2 / T ^ 2 := by
+  have hTpos : (0 : ℝ) < T := by have := NeZero.ne T; positivity
+  have hTR : (T : ℝ) ≠ 0 := hTpos.ne'
+  have hπ : 0 < Real.pi := Real.pi_pos
+  have hε : 2 * Real.pi * Real.sqrt (a * (1 - a)) / T + Real.pi ^ 2 / T ^ 2
+      = 2 * Real.sqrt (a * (1 - a)) * (Real.pi / T) + (Real.pi / T) ^ 2 := by ring
+  -- the lower index
+  have hc : |Real.sin (Real.pi * c / T) ^ 2 - a|
+      ≤ 2 * Real.pi * Real.sqrt (a * (1 - a)) / T + Real.pi ^ 2 / T ^ 2 := by
+    rw [hε]
+    apply amplitude_estimation_error ha0 hθ hθc
+    have e : Real.pi * c / T - θ = -(Real.pi * (θ / Real.pi - (c : ℝ) / T)) := by
+      field_simp
+      ring
+    rw [e, abs_neg, abs_mul, abs_of_pos hπ, abs_of_nonneg hlo]
+    calc Real.pi * (θ / Real.pi - (c : ℝ) / T) ≤ Real.pi * (1 / T) :=
+          mul_le_mul_of_nonneg_left hhi hπ.le
+      _ = Real.pi / T := by ring
+  -- the upper index, unwrapped
+  have hc1 : |Real.sin (Real.pi * ((c + 1 : Fin T) : ℕ) / T) ^ 2 - a|
+      ≤ 2 * Real.pi * Real.sqrt (a * (1 - a)) / T + Real.pi ^ 2 / T ^ 2 := by
+    have hval : Real.sin (Real.pi * ((c + 1 : Fin T) : ℕ) / T) ^ 2
+        = Real.sin (Real.pi * ((c : ℝ) + 1) / T) ^ 2 := by
+      rcases Nat.lt_or_ge ((c : ℕ) + 1) T with hlt | hge
+      · rw [val_add_one_fin_of_lt T hlt]
+        push_cast
+        rfl
+      · have hcn : (c : ℕ) + 1 = T := by have := c.isLt; omega
+        have hcR : ((c : ℕ) : ℝ) + 1 = T := by exact_mod_cast hcn
+        rw [val_add_one_fin_of_eq T hcn, Nat.cast_zero, mul_zero, zero_div, Real.sin_zero,
+          hcR, mul_div_cancel_right₀ _ hTR, Real.sin_pi]
+    rw [hval, hε]
+    apply amplitude_estimation_error ha0 hθ hθc
+    have e : Real.pi * ((c : ℝ) + 1) / T - θ
+        = Real.pi * (1 / T - (θ / Real.pi - (c : ℝ) / T)) := by
+      field_simp
+      ring
+    rw [e, abs_mul, abs_of_pos hπ, abs_of_nonneg (by linarith)]
+    calc Real.pi * (1 / T - (θ / Real.pi - (c : ℝ) / T)) ≤ Real.pi * (1 / T) :=
+          mul_le_mul_of_nonneg_left (by linarith) hπ.le
+      _ = Real.pi / T := by ring
+  -- the four cases, the mirrors decoding to the same estimates
+  simp only [straddleIndices, Finset.mem_insert, Finset.mem_singleton] at hi
+  rcases hi with rfl | rfl | rfl | rfl
+  · exact hc
+  · exact hc1
+  · rw [sin_sq_mirror]; exact hc
+  · rw [sin_sq_mirror]; exact hc1
+
+/-- ★★ **BHMT Theorem 11 (`k = 1`).** For `T ≥ 2` and a lower straddling index `c` of `θ/π`
+(one exists for every `0 ≤ θ/π < 1`, `exists_straddle_index`), every accepted index decodes
+within `2π√(a(1−a))/T + π²/T²` of `a = sin²θ`, and the accepted set carries probability at
+least `8/π²`. -/
+theorem amplitude_estimation_bhmt (hT : 2 ≤ T) (hgg : inner ℂ g g = 1)
+    (hbb : inner ℂ b b = 1) (hgb : inner ℂ g b = 0) (hgsupp : ∀ i ∉ G, g i = 0)
+    (hbsupp : ∀ i ∈ G, b i = 0) {a : ℝ} (ha0 : 0 ≤ a) {θ : ℝ}
+    (hθ : Real.sin θ = Real.sqrt a) (hθc : Real.cos θ = Real.sqrt (1 - a)) (c : Fin T)
+    (hlo : 0 ≤ θ / Real.pi - (c : ℝ) / T) (hhi : θ / Real.pi - (c : ℝ) / T ≤ 1 / T) :
+    (∀ i ∈ straddleIndices T c, |Real.sin (Real.pi * i / T) ^ 2 - a|
+        ≤ 2 * Real.pi * Real.sqrt (a * (1 - a)) / T + Real.pi ^ 2 / T ^ 2)
+      ∧ 8 / Real.pi ^ 2 ≤ ∑ i ∈ straddleIndices T c, probLeft (matrixLeft (qftMatrix T)ᴴ
+          (kickbackState T (ampState g b θ) G (ampState g b θ))) i :=
+  ⟨fun _ hi => amplitude_estimation_straddle_close T ha0 hθ hθc c hlo hhi hi,
+    amplitude_estimation_straddle T hT hgg hbb hgb hgsupp hbsupp θ c hlo hhi⟩
 
 end QuantumInfo

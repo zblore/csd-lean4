@@ -9118,11 +9118,12 @@ entries:
       other branch's two divided by pi squared and decodes to the same estimate, so the
       pair jointly carries four divided by pi squared, and the estimate lands within an
       explicit distance of the truth that shrinks in proportion to one over the number of
-      rounds, with the exact expression in the mathematical section. The honest scope is
-      that the paper's literal bound of eight divided by pi squared additionally counts
-      both rounding directions, which needs a two-index Dirichlet-kernel inequality that's
-      recorded in the plan and not attempted. The standing disclaimer applies, as the
-      algorithm layer consumes the programme's unitary-evolution pillar and doesn't
+      rounds, with the exact expression in the mathematical section. The paper's literal
+      bound of eight divided by pi squared counts both rounding directions, so the corpus
+      proves a two-index inequality on the Dirichlet kernel and accepts the two grid
+      points straddling the true angle together with their mirrors, which gives the
+      paper's constant and its error bound exactly. The standing disclaimer applies, as
+      the algorithm layer consumes the programme's unitary-evolution pillar and doesn't
       support the foundations.
     mathematical: >
       The AA-5b assembly. With Q the amplification step at angle theta (sin theta = sqrt
@@ -9139,9 +9140,12 @@ entries:
       carries 4/pi^2. And sin^2(pi c / T) estimates a = sin^2 theta within 2 sqrt(a(1-a))
       eps + eps^2 at eps = pi/(2T), that is within pi sqrt(a(1-a))/T + pi^2/(4 T^2), by
       the product-form sin^2 difference identity plus the Lipschitz bound on sin
-      (amplitude_estimation). The paper's literal 8/pi^2 additionally counts both rounding
-      directions, which needs a two-index Dirichlet-kernel inequality recorded in the plan
-      and not attempted.
+      (amplitude_estimation). The paper's literal 8/pi^2 counts both rounding directions:
+      sin^2(pi x)(1/x^2 + 1/(1-x)^2) >= 8 on (0,1) gives f(delta) + f(delta - 1/T) >= 8/pi^2
+      for the Dirichlet kernel at 0 <= delta <= 1/T (dirichlet_two_index,
+      phase_estimation_two_index), so the four indices {c, c+1, -c, -(c+1)} carry at least
+      8/pi^2 and each decodes within 2 pi sqrt(a(1-a))/T + pi^2/T^2
+      (amplitude_estimation_bhmt), BHMT's Theorem 11 at k = 1.
     person: >
       The same four authors as amplitude amplification, Brassard, Hoyer, Mosca and Tapp,
       in the same 2000 paper, "Quantum Amplitude Amplification and Estimation". The

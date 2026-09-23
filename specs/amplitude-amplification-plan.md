@@ -3,8 +3,9 @@
 **Status:** scoped 2026-08-29 and **FULLY EXECUTED same day — AA-1..AA-4, AA-5a, the AA-5b
 assembly (amplitude estimation, BHMT Thm 12), then AA-6 in engine form plus the mirror-index
 refinement** — see the execution record before the references. Nothing on this plan remains
-open; the two recorded residues (the straddling-kernel inequality for literal `8/π²`, and the
-Thm 3 doubling-schedule bookkeeping) are named below with reasons. Gates and abort criteria on the
+open; of the two residues recorded below with reasons, the straddling-kernel inequality for
+literal `8/π²` (R-001) was discharged 2026-09-23 (`amplitude_estimation_bhmt`, the record after
+the correction record) and the Thm 3 doubling-schedule bookkeeping (R-002) remains. Gates and abort criteria on the
 Q11 mold; walls were pre-checked (the Q12 lesson: probe before rating), and none fired.
 
 **Provenance.** Candidate 2 of the five from the 2026-08-28 algorithms discussion (candidate 1,
@@ -318,6 +319,22 @@ can carry probability `0`, so no single-index bound composes to it. That kernel 
 a genuine new analytic brick (S–M, on the Jordan-inequality machinery of
 `PhaseEstimation.lean`), left open with this honest name. The corpus's bound on the estimate
 tops out at `4/π²`.
+
+**R-001 discharged 2026-09-23 (BACKLOG #12).** The kernel inequality is
+`eight_mul_sq_le_sin_sq_pi_mul` in `PhaseEstimation.lean`: `sin²(πx)(x² + (1−x)²) ≥ 8 (x(1−x))²`
+on `(0, 1)`, by symmetry on `(0, 1/2]`, split at `1/4` — the cubic bound `sin t ≥ t − t³/6`
+below, `cos t ≥ 1 − t²/2` at `t = π(1/2 − x)` above, each closed by a polynomial estimate with
+`3.1415 < π < 3.1416` (the margins are `0.33` and `0.09`, so the four-digit bounds are needed).
+`dirichlet_two_index` turns it into `f(δ) + f(δ − 1/T) ≥ 8/π²` for `0 ≤ δ ≤ 1/T` (both closed
+forms share the numerator `sin²(πδT)`; on the boundary one index is on resonance),
+`phase_estimation_two_index` reads it at `c` and `c + 1` (the wrap `c = T − 1 ↦ 0` through the
+`1`-periodicity `phaseStateR_add_one`), `exists_straddle_index` supplies `c = ⌊φT⌋`, and
+`AmplitudeEstimation.lean` assembles BHMT Thm 11 (`k = 1`): the `Finset`
+`straddleIndices T c = {c, c+1, −c, −(c+1)}` carries `≥ 8/π²` (`amplitude_estimation_straddle`,
+each branch through the two-index bound, the `−` branch via the mirror) and every index in it
+decodes within `2π√(a(1−a))/T + π²/T²` (`amplitude_estimation_straddle_close`; the wrap decodes
+to `sin²(0) = sin²(π) = 0`); ★★ `amplitude_estimation_bhmt` is the conjunction. The bound on the
+estimate no longer tops out at `4/π²`.
 
 One more snag for the pile: `push_cast` rewrites `↑(Real.sin x)` to `Complex.sin ↑x`
 mid-goal, splitting what `linear_combination` needs to be ONE atom — prefer targeted

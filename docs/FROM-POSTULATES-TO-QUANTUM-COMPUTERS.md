@@ -19,7 +19,7 @@ reader-type paths and the measurement story are [`TOUR.md`](TOUR.md).)*
 | 6 | Composites | non-factorisation, Bell, Tsirelson, no-signalling, contextuality, reduced-state records | Posit 7 local tomography (`R-017`, boundary); Posit 8 measurement independence |
 | 7 | States and channels | a preparation is a density operator; a flow is a channel; de-isolation is the measurement channel; second law, Landauer, Holevo | none new; strong subadditivity comes through an external bridge |
 | 8 | Gates | each standard gate is the isometry of a `Σ`-sector; a projective unitary action lifts to a `Σ`-flow | none new |
-| 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension; Grover and Shor as `Σ`-flows | the other algorithms QM-side only; `R-001`, `R-002` |
+| 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension; Grover and Shor as `Σ`-flows | the other algorithms QM-side only; `R-002` |
 | 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism | `R-003` to `R-006`: active Steane recovery, magic states, Clifford+T density, fault tolerance |
 | 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders | `R-013` |
 
@@ -241,9 +241,9 @@ readout is the record basin of the outcome (`Circuit.epistemicMeasure_globalBasi
 [`Empirical/CSD/Algorithms/CircuitFlow.lean`](../CsdLean4/Empirical/CSD/Algorithms/CircuitFlow.lean)); Grover's
 success probability and Shor's order distribution are read off the basins at the flowed ready point
 (`grover_flow_born`, `shor_flow_born_count`). The twins add the ontic reading, not new analysis: the QM-side
-theorems carry the mathematics, and the other algorithms are still QM-side only. Two residues are open mathematics:
-`R-001`, the straddling-kernel bound behind the literal amplitude-estimation constant, and `R-002`, the
-exponential-doubling schedule for unknown amplitude. The interference picture most readers bring, Feynman's
+theorems carry the mathematics, and the other algorithms are still QM-side only. One residue is open mathematics:
+`R-002`, the exponential-doubling schedule for unknown amplitude; the straddling-kernel bound behind the literal
+amplitude-estimation constant (`R-001`) is proved (`amplitude_estimation_bhmt`, BHMT Theorem 11 with its `8/π²`). The interference picture most readers bring, Feynman's
 sum over paths, is a theorem at finite dimension: the matrix element of a propagator is the limit of sums
 over discrete paths of products of one-step amplitudes (`exp_add_apply_tendsto_sum_pathWeight`,
 [`Mathlib/Analysis/Matrix/SumOverPaths.lean`](../CsdLean4/Mathlib/Analysis/Matrix/SumOverPaths.lean)), read
@@ -337,7 +337,7 @@ metric is executed Toffolis times peak qubits, and the two are not the same numb
 * **Design posits** are choices the reconstruction makes and defends: Posits 2, 3, 4, 6, 8 and 9. The work
   is to keep them visible, which [`specs/POSITS.md`](../specs/POSITS.md) does, and to constrain them from
   above where a theorem can (Posit 2 and the base half of Posit 9 are now forced by symmetry).
-* **Open mathematics** has a Lean shape and no proof yet: `R-016`, `R-001` to `R-006`, `R-013`, and the
+* **Open mathematics** has a Lean shape and no proof yet: `R-016`, `R-002` to `R-006`, `R-013`, and the
   `Σ`-twins of the algorithms. Each is a numbered row of [`specs/BACKLOG.md`](../specs/BACKLOG.md).
 * **Open foundations** is one item: Posit 1's discharge, the cell law from the de-isolation dynamics. It is
   the reconstruction frontier, and the ledgers say it is not a brick.

@@ -1020,8 +1020,8 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- HONEST SCOPE, CORRECTED: the earlier note here called the full 8/pi^2 "downstream
 -- arithmetic" -- WRONG for the both-rounding half: it needs a two-index lower bound on the
 -- Dirichlet kernel (a single index at distance up to 1/T can carry probability 0), a genuine
--- new kernel inequality, recorded in the plan and not attempted. The corpus's bound on the
--- estimate tops out at 4/pi^2. No controlled-gate decomposition claimed. Foundational triple.
+-- new kernel inequality, recorded in the plan as R-001 and PROVED 2026-09-23 (the block after
+-- the pair pin below). No controlled-gate decomposition claimed. Foundational triple.
 /-- info: 'QuantumInfo.prob_applyQFTinv_phaseStateR_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.prob_applyQFTinv_phaseStateR_neg
@@ -1029,6 +1029,56 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'QuantumInfo.amplitude_estimation_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.amplitude_estimation_pair
+
+-- 2026-09-23, R-001 DISCHARGED (BACKLOG #12): the two-index Dirichlet bound and BHMT Thm 11
+-- (k = 1) with the paper's literal constants. PhaseEstimation.lean: the kernel inequality
+-- sin^2(pi x)(x^2 + (1-x)^2) >= 8 (x(1-x))^2 on (0,1) (eight_mul_sq_le_sin_sq_pi_mul; by
+-- symmetry on (0, 1/2], split at 1/4: sin t >= t - t^3/6 below, cos t >= 1 - t^2/2 at
+-- t = pi(1/2 - x) above, polynomial estimates with 3.1415 < pi < 3.1416); the phase state is
+-- 1-periodic (phaseStateR_add_one) and reading index c is reading index 0 at phase phi - c/T
+-- (prob_applyQFTinv_phaseStateR_sub); dirichlet_two_index: f(delta) + f(delta - 1/T) >= 8/pi^2
+-- for 0 <= delta <= 1/T; phase_estimation_two_index: the indices c and c + 1 (mod T) carry
+-- >= 8/pi^2 when 0 <= phi - c/T <= 1/T; exists_straddle_index. AmplitudeEstimation.lean:
+-- straddleIndices T c = {c, c+1, -c, -(c+1)} (a Finset, so coincidences merge);
+-- amplitude_estimation_straddle (>= 8/pi^2 on it, each branch through the two-index bound,
+-- the - branch via the mirror), amplitude_estimation_straddle_close (every accepted index
+-- decodes within 2 pi sqrt(a(1-a))/T + pi^2/T^2, the wrap c = T-1 -> 0 decoding to
+-- sin^2(0) = sin^2(pi)), amplitude_estimation_bhmt (the conjunction). Foundational triple.
+/-- info: 'QuantumInfo.eight_mul_sq_le_sin_sq_pi_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.eight_mul_sq_le_sin_sq_pi_mul
+
+/-- info: 'QuantumInfo.phaseStateR_add_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.phaseStateR_add_one
+
+/-- info: 'QuantumInfo.dirichlet_two_index' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.dirichlet_two_index
+
+/-- info: 'QuantumInfo.phase_estimation_two_index' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.phase_estimation_two_index
+
+/-- info: 'QuantumInfo.exists_straddle_index' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_straddle_index
+
+/-- info: 'QuantumInfo.straddleIndices' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.straddleIndices
+
+/-- info: 'QuantumInfo.amplitude_estimation_straddle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.amplitude_estimation_straddle
+
+/-- info: 'QuantumInfo.amplitude_estimation_straddle_close' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.amplitude_estimation_straddle_close
+
+/-- info: 'QuantumInfo.amplitude_estimation_bhmt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.amplitude_estimation_bhmt
 
 -- QSearch engine, BHMT Lemma 2 (AmplitudeAmplification.lean final section, 2026-08-29; plan
 -- AA-6 in engine form). When a is UNKNOWN the optimal count cannot be computed; BHMT's
