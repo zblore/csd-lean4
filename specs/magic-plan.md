@@ -79,7 +79,7 @@ objects; nothing below is above M–L except #74, which the chain does not need.
 | R-005 | #74 | Solovay–Kitaev efficiency — not needed by the chain, not claimed | XL | #73 |
 | R-004 | #75 | `[[15, 1, 3]]` combinatorics: undetected `Z`-patterns have weight `≥ 3`, exactly `35` of weight `3`, odd weight = logical — **built 2026-09-23**, `ReedMuller15.lean` | S–M | — |
 | R-004 | #76 | transversal `T` = logical `T†` (weights `0/8` and `7/15`) — **built 2026-09-23**, `ReedMuller15Code.lean` | M | #75 |
-| R-004 | #77 | `Z_e T^{⊗15}|+̄⟩`: detected by the `X`-checks iff `syndrome e ≠ 0`, otherwise `Z̄^{[e]}|Ā'⟩` (restated 2026-09-23 — the protocol injects `T` into the encoded `|+̄⟩`; the earlier 'project fifteen bare magic states' picture has acceptance `2^{−10}` and was wrong) | M | #76, #66–#67 |
+| R-004 | #77 | `Z_e T^{⊗15}|+̄⟩`: detected by the `X`-checks iff `syndrome e ≠ 0`, otherwise `Z̄^{[e]}|Ā'⟩` (restated 2026-09-23 — the protocol injects `T` into the encoded `|+̄⟩`; the earlier 'project fifteen bare magic states' picture has acceptance `2^{−10}` and was wrong) — **built 2026-09-23**, `ReedMuller15Errors.lean` | M | #76, #66–#67 |
 | R-004 | #78 | the `35 p³` bound and the cube recursion — closes R-004 | M–L | #75, #77, `CodeCapacityThreshold.lean` |
 | R-004 | #79 | the decoder as an explicit Clifford circuit | M | #78 |
 

@@ -8265,4 +8265,34 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.ReedMuller15.tTrans_logicalPlus
 
+/-! ### Z-error patterns on the encoded magic state (ReedMuller15Errors.lean, 2026-09-23, BACKLOG #77, R-004 (c)) -/
+
+/-- info: 'QuantumInfo.ReedMuller15.measProj_row_z' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.measProj_row_z
+
+/-- info: 'QuantumInfo.ReedMuller15.exists_reject_of_syndrome_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.exists_reject_of_syndrome_ne_zero
+
+/-- info: 'QuantumInfo.ReedMuller15.pauliOp_z_logical1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.pauliOp_z_logical1
+
+/-- info: 'QuantumInfo.ReedMuller15.pauliOp_z_encodedMagic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.pauliOp_z_encodedMagic
+
+/-- info: 'QuantumInfo.ReedMuller15.outQubit_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.outQubit_eq
+
+/-- info: 'QuantumInfo.ReedMuller15.sGate_magicConj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.sGate_magicConj
+
+/-- info: 'QuantumInfo.ReedMuller15.parity_eq_one_iff_odd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.parity_eq_one_iff_odd
+
 end CSD.Tests.AxiomAudit
