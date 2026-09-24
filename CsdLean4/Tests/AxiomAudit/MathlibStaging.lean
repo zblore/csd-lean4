@@ -8243,4 +8243,26 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms ReedMuller15.card_undetected
 
+/-! ### The [[15, 1, 3]] code space and its transversal T (ReedMuller15Code.lean, 2026-09-23, BACKLOG #76, R-004 (b)) -/
+
+/-- info: 'QuantumInfo.ReedMuller15.pauliOp_row_logical0' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.pauliOp_row_logical0
+
+/-- info: 'QuantumInfo.ReedMuller15.tTrans_eq_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.tTrans_eq_comp
+
+/-- info: 'QuantumInfo.ReedMuller15.tTrans_logical0' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.tTrans_logical0
+
+/-- info: 'QuantumInfo.ReedMuller15.tTrans_logical1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.tTrans_logical1
+
+/-- info: 'QuantumInfo.ReedMuller15.tTrans_logicalPlus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.tTrans_logicalPlus
+
 end CSD.Tests.AxiomAudit
