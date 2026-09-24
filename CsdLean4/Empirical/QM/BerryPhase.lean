@@ -27,8 +27,9 @@ phase `0`. The general theory of `Mathlib/Analysis/InnerProductSpace/GeometricPh
 
 ## Honest scope
 
-⚠️ One curve, computed directly; the adiabatic setting (a spin in a slowly rotating field) is not
-modelled (`specs/berry-phase-scoping.md` BP-5). The curve is the Schrödinger evolution generated
+⚠️ One curve, computed directly (its disc and the curvature formula are `BerryPhaseCurvature.lean`);
+the adiabatic setting (a spin in a slowly rotating field) is not modelled
+(`specs/berry-phase-scoping.md` BP-5). The curve is the Schrödinger evolution generated
 by `H = diag(0, −1)`, but that reading is not stated here.
 
 References: M. V. Berry, Proc. R. Soc. A 392 (1984) 45, §5; A. Tomita, R. Chiao, PRL 57 (1986)

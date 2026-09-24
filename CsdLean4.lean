@@ -601,6 +601,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.WedgeForm
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerWedge
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPluriharmonic
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhase
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhaseCurvature
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Polarization
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.ProjectionPackage
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Descent
@@ -641,6 +642,7 @@ public import CsdLean4.LF4.ArenaStrokeFlux
 public import CsdLean4.LF4.ArenaVolume
 public import CsdLean4.Empirical.QM.Darwinism
 public import CsdLean4.Empirical.QM.BerryPhase
+public import CsdLean4.Empirical.QM.BerryPhaseCurvature
 public import CsdLean4.Empirical.CSD.Darwinism
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal

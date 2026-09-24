@@ -8187,4 +8187,16 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.wigner_freeSchrodingerS
 
+/-- info: 'GeometricPhase.hasFDerivAt_connectionFormT' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms GeometricPhase.hasFDerivAt_connectionFormT
+
+/-- info: 'GeometricPhase.curvature_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms GeometricPhase.curvature_eq
+
+/-- info: 'GeometricPhase.geometricPhase_eq_neg_integral_curvature' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms GeometricPhase.geometricPhase_eq_neg_integral_curvature
+
 end CSD.Tests.AxiomAudit

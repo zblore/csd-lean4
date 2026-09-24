@@ -47,7 +47,7 @@ record layer's phases and is a different object. The honest CSD reading is state
 |---|---|---|---|
 | **BP-1** | **Aharonov–Anandan geometric phase, on the sphere.** `connectionForm ψ t = Im⟪ψ t, ψ̇ t⟫`, `dynamicalPhase = ∫₀ᵀ A`, `geometricPhase = φ − dynamicalPhase`; ★★ gauge invariance `geometricPhase (e^{iθ} ψ) = geometricPhase ψ` for every differentiable `θ`; ★ the horizontal lift `e^{−i∫A} ψ` has `A = 0` and returns with exactly `e^{iβ}` — **the geometric phase is the holonomy**; ★ for a Schrödinger evolution with self-adjoint `H`, `A = −⟪ψ, Hψ⟫` and the energy is conserved, so `β = φ + T ⟨H⟩`. Category 1. | **M** | **yes, 2026-09-21** |
 | **BP-2** | **The spin-½ cone (Berry's example).** `ψ(t) = (cos θ/2, e^{it} sin θ/2)` over `[0, 2π]`: `A = sin²(θ/2)`, `φ = 0`, `β = −2π sin²(θ/2) = −π(1 − cos θ)` = **minus half the solid angle** of the cone. Category 3. | **S–M** | **yes, 2026-09-21** |
-| **BP-3** | **The curvature formula** `β = −∫∫ ω_FS` (Stokes on `ℂℙⁿ` for a loop bounding a disc): needs surface integrals of a 2-form pulled back along a `C¹` map of the disc — the pin has neither Stokes nor surface integrals of forms. Honest shape: for loops in a chart, the pullback to the plane and Green's theorem (also absent at the pin). | **M–L** | no — BACKLOG #54 |
+| **BP-3** | **The curvature formula** `β = −∫∫ ω_FS` (Stokes on `ℂℙⁿ` for a loop bounding a disc): needs surface integrals of a 2-form pulled back along a `C¹` map of the disc — the pin has neither Stokes nor surface integrals of forms. Honest shape: for loops in a chart, the pullback to the plane and Green's theorem (also absent at the pin). | **M–L** | **yes, 2026-09-23** (`GeometricPhaseCurvature.lean`, `BerryPhaseCurvature.lean`: the disc in polar form on a rectangle, Mathlib's divergence theorem as Green, curvature `2 Im⟪∂_sΨ, ∂_tΨ⟫`; the `fsForm` identification is BACKLOG #65) |
 | **BP-4** | **Aharonov–Bohm, discrete.** The finite-dimensional AB effect: a ring of `N` sites with Peierls phases `e^{iΦ/N}` on the hops; the spectrum `2 cos((2πk + Φ)/N)` depends on the flux `Φ` only mod `2π` and is invariant under the gauge transformation that moves all the phase onto one bond — the flux is observable, the vector potential is not. Category 1 (a circulant matrix and its eigenvectors) with a QM-side reading. The `L²(S¹)` version (`−(∂ − iΦ)²`, spectrum `(n − Φ)²`) is CV-scale and not proposed. | **S–M** | no — BACKLOG #55 |
 | **BP-5** | **Berry's adiabatic theorem**: the eigenstate of a slowly driven `H(R(t))` follows the parameter loop up to `e^{i(φ_dyn + β)}` with error `O(1/T)`. The adiabatic theorem is a genuine asymptotic ODE result (Kato 1950) absent from Mathlib and from the corpus. | **XL** | no — BACKLOG #56, not recommended |
 
@@ -66,7 +66,7 @@ the sector's Schrödinger orbits plus BP-4 for the flux experiment; ER3's status
 
 BP-1 landed as `Mathlib/Analysis/InnerProductSpace/GeometricPhase.lean` (Category 1) and BP-2 as
 `Empirical/QM/BerryPhase.lean` (Category 3); see the module headers and `BACKLOG.md` #10 for the
-theorem list and pin counts. BP-3, BP-4, BP-5 are `BACKLOG.md` #54–#56. The row's "L" was the
+theorem list and pin counts. BP-3 landed 2026-09-23 (`BACKLOG.md` #54; its `fsForm` identification is #65); BP-4, BP-5 are #55–#56. The row's "L" was the
 price of the bundle-theoretic statement, which is not stateable at the pin; the stateable half
 took M.
 

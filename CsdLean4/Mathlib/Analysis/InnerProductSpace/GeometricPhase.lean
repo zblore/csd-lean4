@@ -41,8 +41,9 @@ here without bundles, on the sphere:
 ## Honest scope
 
 ⚠️ No bundle, no parallel transport as an object: the holonomy statement is the horizontal-lift
-theorem on the sphere. Berry's adiabatic setting (a slowly driven `H(R)`), the curvature formula
-`β = −∫∫ ω_FS` and the Aharonov–Bohm flux are `specs/berry-phase-scoping.md` BP-3 to BP-5.
+theorem on the sphere. The curvature formula `β = −∫∫ dA` is `GeometricPhaseCurvature.lean` (BP-3);
+Berry's adiabatic setting (a slowly driven `H(R)`) and the Aharonov–Bohm flux are
+`specs/berry-phase-scoping.md` BP-4 and BP-5.
 
 References: Y. Aharonov, J. Anandan, PRL 58 (1987) 1593; M. V. Berry, Proc. R. Soc. A 392 (1984) 45;
 B. Simon, PRL 51 (1983) 2167; `specs/berry-phase-scoping.md`; `specs/BACKLOG.md` #10.

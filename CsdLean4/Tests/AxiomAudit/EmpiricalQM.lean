@@ -1319,6 +1319,23 @@ The unitarity proofs cite only the foundational triple; the
 /-- info: 'CSD.Empirical.QM.BerryPhase.geometricPhase_coneCurve_solidAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.BerryPhase.geometricPhase_coneCurve_solidAngle
 
+/-! ### The curvature formula on the cone (BerryPhaseCurvature.lean, 2026-09-23, BACKLOG #54 BP-3) -/
+
+-- The disc (cos(s theta/2), e^{it} sin(s theta/2)) bounded by the cone curve: curvature
+-- (theta/2) sin(s theta), disc integral pi (1 - cos theta) = half the solid angle; the general
+-- curvature formula and Berry's direct computation give the same equation.
+/-- info: 'CSD.Empirical.QM.BerryPhase.curvature_coneSurface' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.BerryPhase.curvature_coneSurface
+
+/-- info: 'CSD.Empirical.QM.BerryPhase.integral_curvature_coneSurface' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.BerryPhase.integral_curvature_coneSurface
+
+/-- info: 'CSD.Empirical.QM.BerryPhase.geometricPhase_coneCurve_eq_neg_integral_curvature' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.BerryPhase.geometricPhase_coneCurve_eq_neg_integral_curvature
+
+/-- info: 'CSD.Empirical.QM.BerryPhase.curvature_formula_consistent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.Empirical.QM.BerryPhase.curvature_formula_consistent
+
 -- ccxAtMat_lifts_denote (the arbitrary-wire lift): EXTRACTED 2026-08-21 to
 -- Mathlib/QuantumInfo/Reversible/Lift.lean; pinned in the MathlibStaging part as
 -- Reversible.ccxAtMat_lifts_denote.
