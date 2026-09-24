@@ -40,8 +40,9 @@ is one session; **distillation protocols** are not.
 * **Universality** (Clifford+T dense in SU(2ⁿ)): a gate-synthesis density theorem
   (Solovay–Kitaev territory), out of scope for the coordinate-operator corpus.
 * **The T-injection circuit** (consuming `|T⟩` implements `T` with Clifford + measurement):
-  needs the two-qubit measurement plumbing; a natural next brick on top of
-  `meas_update_fixes`, recorded not attempted.
+  **built 2026-09-23** as `MagicInjection.lean` (BACKLOG #66–#67): the pure-state identity
+  `injectSlice_magicState`, the channel `injectionChannel_apply`, the noisy resource
+  `noisyInjectionChannel_apply`; R-006 closed.
 
 No priority claim of any kind (CL-061 rule).
 
@@ -58,8 +59,8 @@ an `← h22`-style rewrite of `2`, every other `2` in the goal mutates too — p
 
 ## The split (2026-09-23): BACKLOG #15 → #66–#79
 
-Author instruction: "break up 15 so it's not so big". The three residues stay open in `residues.tsv`
-until their closing rows land (#67, #73, #78); each row is a self-contained brick in the corpus's
+Author instruction: "break up 15 so it's not so big". R-006 closed 2026-09-23 (#67); R-005 and R-004 stay open in `residues.tsv`
+until their closing rows land (#73, #78); each row is a self-contained brick in the corpus's
 coordinate-operator model (`QReg n`, `pauliOp`, `cnotGate`/`sGate`/`hGate`/`tGate`,
 `stabProjector`/`measProj`, `Channel` with Kraus operators, the pattern measure of
 `CodeCapacityThreshold.lean`). The XL / XL / L of the unsplit row were the prices of the unsplit
@@ -67,8 +68,8 @@ objects; nothing below is above M–L except #74, which the chain does not need.
 
 | Residue | Row | Brick | Price | Needs |
 |---|---|---|---|---|
-| R-006 | #66 | T-injection, pure-state form (and the `Z`-error transfer) | S–M | `JointRegister`/`RegisterTensor`, `measProj` |
-| R-006 | #67 | T-injection as a channel: `R.apply ρ = T ρ T†` — closes R-006 | M | #66, `Channel.lean` |
+| R-006 | #66 | T-injection, pure-state form (and the `Z`-error transfer) — **built 2026-09-23**, `MagicInjection.lean` | S–M | — |
+| R-006 | #67 | T-injection as a channel: `R.apply ρ = T ρ T†` — **built 2026-09-23, R-006 closed** (`injectionChannel_apply`) | M | #66, `Channel.lean` |
 | R-005 | #68 | the `HT` rotation angle is an irrational multiple of `π` (algebraic-integer argument); dense powers | M | Mathlib: `IsPrimitiveRoot.isIntegral`, `IsIntegrallyClosed ℤ`, `AddCircle.denseRange_zsmul_coe_iff` |
 | R-005 | #69 | `⟨H, T⟩` dense in `U(2)` mod phase (Euler decomposition for two non-parallel axes) | M–L | #68 |
 | R-005 | #70 | every `d × d` unitary is a product of two-level unitaries | M | — |

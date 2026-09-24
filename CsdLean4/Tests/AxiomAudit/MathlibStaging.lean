@@ -8199,4 +8199,30 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms GeometricPhase.geometricPhase_eq_neg_integral_curvature
 
+/-! ### T-gate injection (MagicInjection.lean, 2026-09-23, BACKLOG #66-#67, closes R-006) -/
+
+/-- info: 'QuantumInfo.injectSlice_magicState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.injectSlice_magicState
+
+/-- info: 'QuantumInfo.norm_sq_injectSlice_magicState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.norm_sq_injectSlice_magicState
+
+/-- info: 'QuantumInfo.injectSlice_zMagicState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.injectSlice_zMagicState
+
+/-- info: 'QuantumInfo.injectionKraus_magicState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.injectionKraus_magicState
+
+/-- info: 'QuantumInfo.injectionChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.injectionChannel_apply
+
+/-- info: 'QuantumInfo.noisyInjectionChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.noisyInjectionChannel_apply
+
 end CSD.Tests.AxiomAudit

@@ -40,8 +40,8 @@ and why *magic states* are a resource.
 Clifford closure and the resource state — not how it is **used or distilled**: the
 Bravyi–Kitaev 15-to-1 distillation protocol is not attempted (⚠️ RESIDUE(R-004)), no
 universality claim is made — that would need a gate-synthesis density theorem
-(⚠️ RESIDUE(R-005)) — and the gate-teleportation circuit injecting `T` from `magicState`
-is not attempted (⚠️ RESIDUE(R-006)). No priority claim of any kind (CL-061 rule).
+(⚠️ RESIDUE(R-005)) — and the gate-teleportation circuit injecting `T` from `magicState` is
+`MagicInjection.lean` (BACKLOG #66–#67, 2026-09-23). No priority claim of any kind (CL-061 rule).
 -/
 
 @[expose] public section
