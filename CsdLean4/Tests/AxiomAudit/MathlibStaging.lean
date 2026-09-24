@@ -8225,4 +8225,22 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.noisyInjectionChannel_apply
 
+/-! ### The [[15, 1, 3]] code's combinatorics (ReedMuller15.lean, 2026-09-23, BACKLOG #75, R-004 (a)) -/
+
+/-- info: 'ReedMuller15.syndrome_ne_zero_of_weight_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ReedMuller15.syndrome_ne_zero_of_weight_two
+
+/-- info: 'ReedMuller15.card_undetected_weight_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ReedMuller15.card_undetected_weight_three
+
+/-- info: 'ReedMuller15.dotp_add_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ReedMuller15.dotp_add_one
+
+/-- info: 'ReedMuller15.card_undetected' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ReedMuller15.card_undetected
+
 end CSD.Tests.AxiomAudit
