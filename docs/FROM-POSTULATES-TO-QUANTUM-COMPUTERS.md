@@ -321,7 +321,8 @@ tends to `0` below `p < 1/21` (`steane_concatBad_le`, `steane_threshold`): **the
 closed 2026-09-23 with the code-capacity threshold; the concatenated *quantum* recovery at level `k` is
 BACKLOG #61, the circuit-level threshold theorem #62, the `Σ`-twin of the Steane recovery #53). `R-004`,
 `R-005`, `R-006`: magic-state distillation, the density of
-Clifford+T in the unitary group, and `T`-gate injection; what exists is the `T` gate itself and the fact
+Clifford+T in the unitary group, and `T`-gate injection (fourteen priced rows, BACKLOG #66–#79); what exists is the
+`T` gate itself and the fact
 that it is not Clifford (`tGate_conj_X_not_pauli`,
 [`Mathlib/QuantumInfo/Magic.lean`](../CsdLean4/Mathlib/QuantumInfo/Magic.lean)). The three-qubit `Σ` model
 corrects the single-flip channel exactly and, under independent bit-flip noise, returns

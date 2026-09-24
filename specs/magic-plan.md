@@ -56,6 +56,36 @@ targets into bare literals, so write the post-`simp` shows against the reduced f
 an `← h22`-style rewrite of `2`, every other `2` in the goal mutates too — prove the
 `√2/2 = (√2)⁻¹` bridge as a standalone lemma with `field_simp` instead.
 
+## The split (2026-09-23): BACKLOG #15 → #66–#79
+
+Author instruction: "break up 15 so it's not so big". The three residues stay open in `residues.tsv`
+until their closing rows land (#67, #73, #78); each row is a self-contained brick in the corpus's
+coordinate-operator model (`QReg n`, `pauliOp`, `cnotGate`/`sGate`/`hGate`/`tGate`,
+`stabProjector`/`measProj`, `Channel` with Kraus operators, the pattern measure of
+`CodeCapacityThreshold.lean`). The XL / XL / L of the unsplit row were the prices of the unsplit
+objects; nothing below is above M–L except #74, which the chain does not need.
+
+| Residue | Row | Brick | Price | Needs |
+|---|---|---|---|---|
+| R-006 | #66 | T-injection, pure-state form (and the `Z`-error transfer) | S–M | `JointRegister`/`RegisterTensor`, `measProj` |
+| R-006 | #67 | T-injection as a channel: `R.apply ρ = T ρ T†` — closes R-006 | M | #66, `Channel.lean` |
+| R-005 | #68 | the `HT` rotation angle is an irrational multiple of `π` (algebraic-integer argument); dense powers | M | Mathlib: `IsPrimitiveRoot.isIntegral`, `IsIntegrallyClosed ℤ`, `AddCircle.denseRange_zsmul_coe_iff` |
+| R-005 | #69 | `⟨H, T⟩` dense in `U(2)` mod phase (Euler decomposition for two non-parallel axes) | M–L | #68 |
+| R-005 | #70 | every `d × d` unitary is a product of two-level unitaries | M | — |
+| R-005 | #71 | a two-level unitary = Gray-code CNOTs + one `C^{n−1}(U)` | M | #70 |
+| R-005 | #72 | `C^k(U)` from CNOT and single-qubit gates | M–L | #71, `Reversible/Lift.lean` |
+| R-005 | #73 | Clifford+T dense in `U(2ⁿ)` mod phase — closes R-005 | S–M | #69, #72, the telescoping bound |
+| R-005 | #74 | Solovay–Kitaev efficiency — not needed by the chain, not claimed | XL | #73 |
+| R-004 | #75 | `[[15, 1, 3]]` combinatorics: undetected `Z`-patterns have weight `≥ 3`, exactly `35` of weight `3`, odd weight = logical | S–M | — |
+| R-004 | #76 | transversal `T` = logical `T†` (weights `0/8` and `7/15`) | M | #75, `Stabilizer.lean` |
+| R-004 | #77 | `stabProjector (Z_e |A⟩^{⊗15})` is `0` or `c Z̄^{[e]}|Ā⟩` | M | #76 |
+| R-004 | #78 | the `35 p³` bound and the cube recursion — closes R-004 | M–L | #75, #77, `CodeCapacityThreshold.lean` |
+| R-004 | #79 | the decoder as an explicit Clifford circuit | M | #78 |
+
+Three independent roots (#66; #68 and #70; #75); the longest chain is #70 → #71 → #72 → #73.
+The doc's link 12 keeps saying what exists (the `T` gate and its escape from Clifford) until the
+closing rows land.
+
 ## References
 
 Gottesman–Chuang teleportation-gate hierarchy (Nature 402, 390 (1999)); Bravyi–Kitaev,
