@@ -8325,4 +8325,42 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.ReedMuller15.tendsto_distillIter
 
+/-! ### The irrational angle of T.HTH (CliffordTAngle.lean, 2026-09-25, BACKLOG #68, R-005 (a)) -/
+
+/-- info: 'isIntegral_two_mul_cos_of_eq_two_pi_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms isIntegral_two_mul_cos_of_eq_two_pi_mul
+
+/-- info: 'not_isIntegral_of_sq_add_self_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms not_isIntegral_of_sq_add_self_eq
+
+/-- info: 'QuantumInfo.CliffordT.cos_htAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.CliffordT.cos_htAngle
+
+/-- info: 'QuantumInfo.CliffordT.irrational_htAngle_div_two_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.CliffordT.irrational_htAngle_div_two_pi
+
+/-- info: 'QuantumInfo.CliffordT.denseRange_zsmul_htAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.CliffordT.denseRange_zsmul_htAngle
+
+/-- info: 'QuantumInfo.CliffordT.exists_zsmul_htAngle_approx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.CliffordT.exists_zsmul_htAngle_approx
+
+/-- info: 'QuantumInfo.CliffordT.trace_htht' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.CliffordT.trace_htht
+
+/-- info: 'QuantumInfo.CliffordT.det_htht' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.CliffordT.det_htht
+
+/-- info: 'QuantumInfo.CliffordT.trace_htht_eq_cos_htAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.CliffordT.trace_htht_eq_cos_htAngle
+
 end CSD.Tests.AxiomAudit

@@ -71,7 +71,7 @@ objects; nothing below is above M–L except #74, which the chain does not need.
 |---|---|---|---|---|
 | R-006 | #66 | T-injection, pure-state form (and the `Z`-error transfer) — **built 2026-09-23**, `MagicInjection.lean` | S–M | — |
 | R-006 | #67 | T-injection as a channel: `R.apply ρ = T ρ T†` — **built 2026-09-23, R-006 closed** (`injectionChannel_apply`) | M | #66, `Channel.lean` |
-| R-005 | #68 | the `HT` rotation angle is an irrational multiple of `π` (algebraic-integer argument); dense powers | M | Mathlib: `IsPrimitiveRoot.isIntegral`, `IsIntegrallyClosed ℤ`, `AddCircle.denseRange_zsmul_coe_iff` |
+| R-005 | #68 | the `HT` rotation angle is an irrational multiple of `π` (algebraic-integer argument); dense powers — **built 2026-09-25**, `CliffordTAngle.lean` | M | Mathlib: `monic_X_pow_sub_C`, `IsIntegrallyClosed ℤ`, `AddCircle.denseRange_zsmul_coe_iff`, `dense_addSubgroupClosure_pair_iff` |
 | R-005 | #69 | `⟨H, T⟩` dense in `U(2)` mod phase (Euler decomposition for two non-parallel axes) | M–L | #68 |
 | R-005 | #70 | every `d × d` unitary is a product of two-level unitaries | M | — |
 | R-005 | #71 | a two-level unitary = Gray-code CNOTs + one `C^{n−1}(U)` | M | #70 |

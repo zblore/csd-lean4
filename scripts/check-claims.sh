@@ -1112,8 +1112,18 @@ OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 # The two declared sites are the equivalence remarks kept ON PURPOSE (the centre
 # acts trivially on projective space, so the literature's SU(N) reading is the same
 # condition; FubiniStudy.lean header) and LF2/Setup.lean's abstract-G note.
+#
+# CliffordTAngle.lean (2026-09-25, BACKLOG #68) is the third declared site, and the
+# justification is a THEOREM IN THE SAME FILE, not a reading convention: det_htht
+# computes det(T.HTH) = e^{i pi/2} exactly, so e^{-i pi/4} . T.HTH has determinant 1
+# and the two prose mentions of SU(2) (the header and trace_htht_eq_cos_htAngle's
+# docstring, naming the group whose half-trace parametrises a rotation angle) are
+# licensed by that determinant, not asserted. Nothing in the file QUANTIFIES over a
+# group: the statements are about the trace and determinant of one 2x2 matrix. The
+# SU(2) Euler decomposition that #69 will need is not here.
 DECLARED_SU_MENTIONS="CsdLean4/LF2/Setup.lean:1
-CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:2"
+CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:2
+CsdLean4/Mathlib/QuantumInfo/CliffordTAngle.lean:2"
 
 echo "check-claims: verifying code against the canonical claims block…"
 
