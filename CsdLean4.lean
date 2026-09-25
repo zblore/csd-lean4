@@ -66,6 +66,7 @@ public import CsdLean4.Mathlib.QuantumInfo.StabilizerRecovery
 public import CsdLean4.Mathlib.QuantumInfo.Magic
 public import CsdLean4.Mathlib.QuantumInfo.MagicInjection
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTAngle
+public import CsdLean4.Mathlib.QuantumInfo.SU2Rotation
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Code
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Errors

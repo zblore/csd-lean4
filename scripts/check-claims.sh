@@ -1120,10 +1120,18 @@ OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 # docstring, naming the group whose half-trace parametrises a rotation angle) are
 # licensed by that determinant, not asserted. Nothing in the file QUANTIFIES over a
 # group: the statements are about the trace and determinant of one 2x2 matrix. The
-# SU(2) Euler decomposition that #69 will need is not here.
+# SU(2) Euler decomposition that #81 will need is not here.
+#
+# SU2Rotation.lean (2026-09-25, BACKLOG #80) is the fourth site, same justification
+# shape: su2_det computes the determinant w^2 + x^2 + y^2 + z^2 of the parametrisation,
+# so calling the unit-sphere image SU(2) is a theorem in the file, and the two mentions
+# are the module title and the honest-scope sentence about what is NOT proved (filling
+# the group needs a second axis, #81). Again nothing quantifies over a group: every
+# statement is about one 2x2 matrix or about the map R -> matrices.
 DECLARED_SU_MENTIONS="CsdLean4/LF2/Setup.lean:1
 CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:2
-CsdLean4/Mathlib/QuantumInfo/CliffordTAngle.lean:2"
+CsdLean4/Mathlib/QuantumInfo/CliffordTAngle.lean:2
+CsdLean4/Mathlib/QuantumInfo/SU2Rotation.lean:2"
 
 echo "check-claims: verifying code against the canonical claims block…"
 

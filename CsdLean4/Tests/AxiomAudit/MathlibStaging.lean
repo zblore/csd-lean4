@@ -8363,4 +8363,46 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.CliffordT.trace_htht_eq_cos_htAngle
 
+/-! ### The axis-angle layer and the word's dense circle (SU2Rotation.lean, 2026-09-25, BACKLOG #80) -/
+
+/-- info: 'QuantumInfo.SU2.su2_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.su2_mul
+
+/-- info: 'QuantumInfo.SU2.su2_det' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.su2_det
+
+/-- info: 'QuantumInfo.SU2.axisRot_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_add
+
+/-- info: 'QuantumInfo.SU2.axisRot_nat_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_nat_mul
+
+/-- info: 'QuantumInfo.SU2.htAxis_unit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.htAxis_unit
+
+/-- info: 'QuantumInfo.SU2.htht_eq_su2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.htht_eq_su2
+
+/-- info: 'QuantumInfo.SU2.htht_eq_axisRot' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.htht_eq_axisRot
+
+/-- info: 'QuantumInfo.SU2.htht_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.htht_pow
+
+/-- info: 'QuantumInfo.SU2.irrational_htAngle_div_four_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.irrational_htAngle_div_four_pi
+
+/-- info: 'QuantumInfo.SU2.mem_closure_range_axisRot' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.mem_closure_range_axisRot
+
 end CSD.Tests.AxiomAudit
