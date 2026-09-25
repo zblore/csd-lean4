@@ -8405,4 +8405,42 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.SU2.mem_closure_range_axisRot
 
+/-! ### Two-level unitaries (Matrix/TwoLevel.lean, 2026-09-25, BACKLOG #70, R-005 (c)) -/
+
+/-- info: 'QuantumInfo.TwoLevel.IdOutside.mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.IdOutside.mul
+
+/-- info: 'QuantumInfo.TwoLevel.twoLevelMat_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.twoLevelMat_mul
+
+/-- info: 'QuantumInfo.TwoLevel.twoLevelMat_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.twoLevelMat_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.TwoLevel.givensMat_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.givensMat_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.TwoLevel.givensMat_mulVec_apply_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.givensMat_mulVec_apply_snd
+
+/-- info: 'QuantumInfo.TwoLevel.givensMat_mulVec_apply_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.givensMat_mulVec_apply_fst
+
+/-- info: 'QuantumInfo.TwoLevel.exists_clear_column' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.exists_clear_column
+
+/-- info: 'QuantumInfo.TwoLevel.row_eq_of_col_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.row_eq_of_col_eq
+
+/-- info: 'QuantumInfo.TwoLevel.exists_twoLevel_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.exists_twoLevel_prod
+
 end CSD.Tests.AxiomAudit

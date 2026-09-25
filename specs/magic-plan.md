@@ -75,7 +75,7 @@ objects; nothing below is above M–L except #74, which the chain does not need.
 | R-005 | ~~#69~~ | `⟨H, T⟩` dense in `U(2)` mod phase — **re-split 2026-09-25**: the arbitrary-axis Euler decomposition is not M | ~~M–L~~ | → #80, #81 |
 | R-005 | #80 | `SU(2)` axis–angle layer + the word's own dense rotation circle — **built 2026-09-25**, `SU2Rotation.lean` | M | #68 |
 | R-005 | #81 | orthogonal-axis reduction (conjugate by `H`, take `n̂ × m̂`, one more irrationality check) + the `z`-`y`-`z` Euler decomposition + assembly | L | #80 |
-| R-005 | #70 | every `d × d` unitary is a product of two-level unitaries | M | — |
+| R-005 | #70 | every `d × d` unitary is a product of two-level unitaries — **built 2026-09-25**, `LinearAlgebra/Matrix/TwoLevel.lean` (count `d(d−1)/2` not claimed: #82) | M | — |
 | R-005 | #71 | a two-level unitary = Gray-code CNOTs + one `C^{n−1}(U)` | M | #70 |
 | R-005 | #72 | `C^k(U)` from CNOT and single-qubit gates | M–L | #71, `Reversible/Lift.lean` |
 | R-005 | #73 | Clifford+T dense in `U(2ⁿ)` mod phase — closes R-005 | S–M | #69, #72, the telescoping bound |
