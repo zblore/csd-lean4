@@ -8295,4 +8295,34 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.ReedMuller15.parity_eq_one_iff_odd
 
+/-! ### The 15-to-1 distillation bound (ReedMuller15Distill.lean, 2026-09-24, BACKLOG #78, closes R-004) -/
+
+/-- info: 'QuantumInfo.ReedMuller15.patternMeasure_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.patternMeasure_singleton
+
+/-- info: 'QuantumInfo.ReedMuller15.measure_acceptSet_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.measure_acceptSet_ge
+
+/-- info: 'QuantumInfo.ReedMuller15.measure_wrongSet_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.measure_wrongSet_le
+
+/-- info: 'QuantumInfo.ReedMuller15.distillation_error_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.distillation_error_le
+
+/-- info: 'QuantumInfo.ReedMuller15.distillation_error_le_ninety' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.distillation_error_le_ninety
+
+/-- info: 'QuantumInfo.ReedMuller15.distillIter_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.distillIter_le
+
+/-- info: 'QuantumInfo.ReedMuller15.tendsto_distillIter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.tendsto_distillIter
+
 end CSD.Tests.AxiomAudit

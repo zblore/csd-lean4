@@ -33,10 +33,11 @@ is one session; **distillation protocols** are not.
 
 ## Named residues (not attempted, with reasons)
 
-* **Distillation** (Bravyi–Kitaev 15-to-1, or any threshold statement): a
-  program-verification-scale object — a 15-qubit encoded measurement protocol with a
-  fidelity-recursion analysis. Not a session brick; would build on `Stabilizer.lean`'s
-  measurement layer if ever attempted.
+* **Distillation** (Bravyi–Kitaev 15-to-1, or any threshold statement): **built 2026-09-24**
+  across four modules (BACKLOG #75–#78) — `ReedMuller15.lean` (the code's combinatorics),
+  `ReedMuller15Code.lean` (transversal `T` = logical `T†`), `ReedMuller15Errors.lean` (detection
+  and the logical `Z̄`), `ReedMuller15Distill.lean` (the `35 p³` bound and the recursion);
+  R-004 closed. The explicit decoder circuit is #79.
 * **Universality** (Clifford+T dense in SU(2ⁿ)): a gate-synthesis density theorem
   (Solovay–Kitaev territory), out of scope for the coordinate-operator corpus.
 * **The T-injection circuit** (consuming `|T⟩` implements `T` with Clifford + measurement):
@@ -59,8 +60,8 @@ an `← h22`-style rewrite of `2`, every other `2` in the goal mutates too — p
 
 ## The split (2026-09-23): BACKLOG #15 → #66–#79
 
-Author instruction: "break up 15 so it's not so big". R-006 closed 2026-09-23 (#67); R-005 and R-004 stay open in `residues.tsv`
-until their closing rows land (#73, #78); each row is a self-contained brick in the corpus's
+Author instruction: "break up 15 so it's not so big". R-006 closed 2026-09-23 (#67) and R-004 closed 2026-09-24 (#78); R-005 stays open in
+`residues.tsv` until its closing row lands (#73); each row is a self-contained brick in the corpus's
 coordinate-operator model (`QReg n`, `pauliOp`, `cnotGate`/`sGate`/`hGate`/`tGate`,
 `stabProjector`/`measProj`, `Channel` with Kraus operators, the pattern measure of
 `CodeCapacityThreshold.lean`). The XL / XL / L of the unsplit row were the prices of the unsplit
@@ -80,7 +81,7 @@ objects; nothing below is above M–L except #74, which the chain does not need.
 | R-004 | #75 | `[[15, 1, 3]]` combinatorics: undetected `Z`-patterns have weight `≥ 3`, exactly `35` of weight `3`, odd weight = logical — **built 2026-09-23**, `ReedMuller15.lean` | S–M | — |
 | R-004 | #76 | transversal `T` = logical `T†` (weights `0/8` and `7/15`) — **built 2026-09-23**, `ReedMuller15Code.lean` | M | #75 |
 | R-004 | #77 | `Z_e T^{⊗15}|+̄⟩`: detected by the `X`-checks iff `syndrome e ≠ 0`, otherwise `Z̄^{[e]}|Ā'⟩` (restated 2026-09-23 — the protocol injects `T` into the encoded `|+̄⟩`; the earlier 'project fifteen bare magic states' picture has acceptance `2^{−10}` and was wrong) — **built 2026-09-23**, `ReedMuller15Errors.lean` | M | #76, #66–#67 |
-| R-004 | #78 | the `35 p³` bound and the cube recursion — closes R-004 | M–L | #75, #77, `CodeCapacityThreshold.lean` |
+| R-004 | #78 | the `35 p³` bound and the cube recursion — **built 2026-09-24, R-004 closed** (`distillation_error_le`, `tendsto_distillIter`) | M–L | #75, #77 |
 | R-004 | #79 | the decoder as an explicit Clifford circuit | M | #78 |
 
 Three independent roots (#66; #68 and #70; #75); the longest chain is #70 → #71 → #72 → #73.

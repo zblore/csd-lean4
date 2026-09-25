@@ -68,6 +68,7 @@ public import CsdLean4.Mathlib.QuantumInfo.MagicInjection
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Code
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Errors
+public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Distill
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 public import CsdLean4.Mathlib.QuantumInfo.QSearch
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit

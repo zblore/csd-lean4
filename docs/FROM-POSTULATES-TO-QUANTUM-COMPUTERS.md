@@ -20,7 +20,7 @@ reader-type paths and the measurement story are [`TOUR.md`](TOUR.md).)*
 | 7 | States and channels | a preparation is a density operator; a flow is a channel; de-isolation is the measurement channel; second law, Landauer, Holevo | none new; strong subadditivity comes through an external bridge |
 | 8 | Gates | each standard gate is the isometry of a `Σ`-sector; a projective unitary action lifts to a `Σ`-flow | none new |
 | 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension; Grover and Shor as `Σ`-flows | the other algorithms QM-side only |
-| 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism; the Steane recovery and its code-capacity threshold | `R-004`, `R-005`: magic-state distillation, Clifford+T density; the concatenated quantum recovery (row 61) and the circuit-level threshold (row 62) |
+| 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism; the Steane recovery and its code-capacity threshold | `R-005`: Clifford+T density; the concatenated quantum recovery (row 61) and the circuit-level threshold (row 62) |
 | 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders, amplitude-exact on the full register | — |
 
 Four kinds of seam appear, and only one is a research problem. They are defined in
@@ -319,9 +319,15 @@ tends to `0` below `p < 1/21` (`steane_concatBad_le`, `steane_threshold`): **the
 
 **The seam.** Three residues, all open mathematics with a Lean shape (`R-003`, active error correction,
 closed 2026-09-23 with the code-capacity threshold; the concatenated *quantum* recovery at level `k` is
-BACKLOG #61, the circuit-level threshold theorem #62, the `Σ`-twin of the Steane recovery #53). `R-004`,
-`R-005`: magic-state distillation and the density of Clifford+T in the unitary group (twelve priced rows,
-BACKLOG #68–#79). `R-006`, `T`-gate injection, closed 2026-09-23: the gate-teleportation circuit with one magic
+BACKLOG #61, the circuit-level threshold theorem #62, the `Σ`-twin of the Steane recovery #53). `R-005`: the density of Clifford+T in the unitary group (seven priced rows, BACKLOG #68–#74).
+`R-004`, magic-state distillation, closed 2026-09-24: the `[[15, 1, 3]]` quantum Reed–Muller code has exactly `35`
+undetected weight-3 `Z`-patterns and `2¹¹` codewords, its transversal `T` is the logical `T†`, the `X`-checks
+reject every detected pattern and an undetected one acts as the logical `Z̄` to the power of its parity, so one
+round of the 15-to-1 protocol accepts with probability at least `(1 − p)^{15}` and outputs a wrong state with
+probability at most `(35 p³ + 2¹¹ p⁵)/(1 − p)^{15}` — Bravyi–Kitaev's `35 p³` at leading order — and the
+recursion drives that to `0` below `p ≤ 1/20` (`distillation_error_le`, `tendsto_distillIter`,
+[`Mathlib/QuantumInfo/ReedMuller15Distill.lean`](../CsdLean4/Mathlib/QuantumInfo/ReedMuller15Distill.lean));
+the explicit decoding circuit is BACKLOG #79. `R-006`, `T`-gate injection, closed 2026-09-23: the gate-teleportation circuit with one magic
 state enacts `T` exactly, `Φ(ρ) = T ρ T†`, and a `Z`-error on the resource becomes a `Z`-error on the output
 (`injectionChannel_apply`, `noisyInjectionChannel_apply`,
 [`Mathlib/QuantumInfo/MagicInjection.lean`](../CsdLean4/Mathlib/QuantumInfo/MagicInjection.lean)); what exists
@@ -371,7 +377,7 @@ metric is executed Toffolis times peak qubits, and the two are not the same numb
 * **Design posits** are choices the reconstruction makes and defends: Posits 2, 3, 4, 6, 8 and 9. The work
   is to keep them visible, which [`specs/POSITS.md`](../specs/POSITS.md) does, and to constrain them from
   above where a theorem can (Posit 2 and the base half of Posit 9 are now forced by symmetry).
-* **Open mathematics** has a Lean shape and no proof yet: `R-016`, `R-004`, `R-005`, and the
+* **Open mathematics** has a Lean shape and no proof yet: `R-016`, `R-005`, and the
   `Σ`-twins of the algorithms. Each is a numbered row of [`specs/BACKLOG.md`](../specs/BACKLOG.md).
 * **Open foundations** is one item: Posit 1's discharge, the cell law from the de-isolation dynamics. It is
   the reconstruction frontier, and the ledgers say it is not a brick.
