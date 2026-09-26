@@ -8748,4 +8748,15 @@ BACKLOG #73) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Controlled.exists_phase_mem_cliffordTmLim
 
+/-! ### Discretization: the recovery corrects the span (KnillLaflamme.lean, 2026-09-26,
+BACKLOG #61) -/
+
+/-- info: 'QuantumInfo.recovery_apply_lin_comb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.recovery_apply_lin_comb
+
+/-- info: 'QuantumInfo.exists_smul_recovery_apply_of_eq_lin_comb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_smul_recovery_apply_of_eq_lin_comb
+
 end CSD.Tests.AxiomAudit

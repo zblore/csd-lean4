@@ -333,6 +333,7 @@ public import CsdLean4.Empirical.QM.QEC.IndependentNoise
 public import CsdLean4.Empirical.QM.QEC.Steane
 public import CsdLean4.Empirical.QM.QEC.SteaneRecovery
 public import CsdLean4.Empirical.QM.QEC.SteaneThreshold
+public import CsdLean4.Empirical.QM.QEC.SteaneArbitrary
 public import CsdLean4.Mathlib.Probability.CodeCapacityThreshold
 public import CsdLean4.Empirical.QM.Uncertainty
 public import CsdLean4.Empirical.QM.Ozawa

@@ -42,7 +42,7 @@ factors' phases, without any bookkeeping over lists.
 * `isMultiCtrlX_mem_closure`, `isMultiCtrlGate_mem_closure`, ★ `twoLevel_mem_closure`,
   ★★ `mem_closure_elementary`;
 * `gateOf_eq_ctrlSetOf`, `gateOf_apply_of_agree`, `gateOf_apply_of_not_agree`, `gateOf_one`,
-  `gateOf_mul`, `gateOf_smul`, `gateOfHom`, `continuous_gateOf`;
+  `gateOf_mul`, `gateOf_add`, `gateOf_smul`, `gateOfHom`, `continuous_gateOf`;
 * `cliffordTGates`, `cliffordTm`, `cliffordTmLim`, `cliffordTm_le_lim`, `isClosed_cliffordTmLim`,
   ★ `gateOf_mem_cliffordTmLim`;
 * `smul_mul_smul_eq`, `phaseLim`, `mem_phaseLim_iff`, `elementary_le_phaseLim`,
@@ -210,6 +210,15 @@ theorem gateOf_mul (j : Fin m) (M N : Matrix (Fin 2) (Fin 2) ℂ) :
   rw [gateOf_eq_ctrlSetOf, gateOf_eq_ctrlSetOf, gateOf_eq_ctrlSetOf, ctrlSetOf, ctrlSetOf,
     ctrlSetOf, ctrlSet_mul (Finset.notMem_empty j)]
   congr 1 <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
+
+theorem gateOf_add (j : Fin m) (M N : Matrix (Fin 2) (Fin 2) ℂ) :
+    gateOf j (M + N) = gateOf j M + gateOf j N := by
+  ext k l
+  by_cases hag : ∀ i, i ≠ j → k i = l i
+  · rw [gateOf_apply_of_agree hag, Matrix.add_apply, Matrix.add_apply, gateOf_apply_of_agree hag,
+      gateOf_apply_of_agree hag]
+  · rw [gateOf_apply_of_not_agree hag, Matrix.add_apply, gateOf_apply_of_not_agree hag,
+      gateOf_apply_of_not_agree hag, add_zero]
 
 /-- **A phase on the block is a global phase on the gate** — the step that makes "modulo phase"
 survive the lift, because the gate is the block tensored with the identity. -/

@@ -34,9 +34,10 @@ Knill–Laflamme theorem. This file instantiates it:
 
 ## Honest scope
 
-⚠️ Pauli errors only: the extension to an arbitrary operator on one qubit (its Pauli expansion,
-`ErrorDiscretization.lean`'s three-qubit pattern on seven qubits) is not stated, and neither is
-any two-qubit error (the Steane code does not correct them). The recovery is the channel the
+⚠️ Pauli errors here; the extension to an arbitrary operator on one qubit (its Pauli expansion,
+`ErrorDiscretization.lean`'s three-qubit pattern on seven qubits) is `SteaneArbitrary.lean`
+(BACKLOG #61, 2026-09-26). No two-qubit error is corrected, at any level (the Steane code does not
+correct them). The recovery is the channel the
 Knill–Laflamme construction produces, not the syndrome-measurement circuit; the `Σ`-side twin
 (a `Σ`-flow whose environment marginal is the single-qubit Pauli channel, as
 `Empirical/CSD/QEC/RegisterFlow.lean` does for three qubits) is BACKLOG #53.

@@ -43,7 +43,12 @@ and the theorem is that the two are equivalent (Knill–Laflamme 1997; Nielsen�
   with `u` the component of `R k E i v` orthogonal to `v`), hence is a scalar on the code
   (`exists_smul_of_forall_smul`), and `P E iᴴ E j P = ∑ₖ (R k E i P)ᴴ (R k E j P)` by trace
   preservation;
-* `knillLaflamme_iff` — the equivalence.
+* `knillLaflamme_iff` — the equivalence;
+* ★★ `recovery_apply_lin_comb` — **discretization**: the correction property is bilinear in the
+  two error slots and a channel is linear, so a recovery corrects every linear combination of
+  the family, up to the scalar the coefficients give (`exists_smul_recovery_apply_of_eq_lin_comb`
+  is the existential form). Correcting the four Paulis on a qubit therefore corrects every
+  operator on that qubit.
 
 ## Honest scope
 
@@ -521,6 +526,39 @@ theorem exists_recovery_channel_of_knillLaflamme (hP : IsCodeProjector P) (hP0 :
         _ = (∑ i, c i i) • P := Finset.sum_smul.symm
     exact (IsCodeProjector.smul_injective hP0 (by rw [one_smul, ← h1])).symm
   rw [htr, one_smul]
+
+/-! ### Discretization: the recovery corrects the whole span of the errors -/
+
+omit [DecidableEq ι] in
+/-- ★★ **The recovery corrects every linear combination of the error operators**, up to the scalar
+its coefficients give. This is the discretization step: a code that corrects finitely many errors
+corrects the whole subspace they span, because the correction property is bilinear in the two error
+slots and the recovery is linear. Correcting the four Paulis on a qubit therefore corrects *every*
+operator on that qubit. -/
+theorem recovery_apply_lin_comb {κ : Type*} [Fintype κ] {R : Channel n n κ}
+    (hR : ∀ ρ : Matrix n n ℂ, ρ = P * ρ * P →
+      ∀ i j, R.apply (E i * ρ * (E j)ᴴ) = c j i • ρ)
+    (a : ι → ℂ) {ρ : Matrix n n ℂ} (hρ : ρ = P * ρ * P) :
+    R.apply ((∑ i, a i • E i) * ρ * (∑ i, a i • E i)ᴴ)
+      = (∑ i, ∑ j, star (a i) * a j * c i j) • ρ := by
+  rw [conjTranspose_sum]
+  simp only [conjTranspose_smul, Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul,
+    Channel.apply_sum, Channel.apply_smul, hR ρ hρ, smul_smul, ← Finset.sum_smul]
+  refine congrArg (fun t : ℂ => t • ρ) (Finset.sum_congr rfl fun i _ => ?_)
+  rw [Finset.mul_sum]
+  exact Finset.sum_congr rfl fun j _ => by ring
+
+omit [DecidableEq ι] in
+/-- The same statement for an error given as a linear combination: if `F` is a combination of the
+`E i`, the recovery returns a multiple of the code state. -/
+theorem exists_smul_recovery_apply_of_eq_lin_comb {κ : Type*} [Fintype κ] {R : Channel n n κ}
+    (hR : ∀ ρ : Matrix n n ℂ, ρ = P * ρ * P →
+      ∀ i j, R.apply (E i * ρ * (E j)ᴴ) = c j i • ρ)
+    {F : Matrix n n ℂ} {a : ι → ℂ} (hF : F = ∑ i, a i • E i) :
+    ∃ γ : ℂ, ∀ ρ : Matrix n n ℂ, ρ = P * ρ * P → R.apply (F * ρ * Fᴴ) = γ • ρ := by
+  refine ⟨∑ i, ∑ j, star (a i) * a j * c i j, fun ρ hρ => ?_⟩
+  rw [hF]
+  exact recovery_apply_lin_comb hR a hρ
 
 /-! ### The converse: a recovery forces the condition -/
 

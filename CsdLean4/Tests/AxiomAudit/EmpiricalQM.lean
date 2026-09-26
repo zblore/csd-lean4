@@ -1538,4 +1538,23 @@ pointer fails Yanase) and SWAP sharpness (both disjuncts fail, conclusion fails)
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_threshold
 
+/-! ### The Steane code corrects an arbitrary error on one qubit (SteaneArbitrary.lean,
+2026-09-26, BACKLOG #61) -/
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.gateOf_eq_sum_pauliMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.gateOf_eq_sum_pauliMat
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_steane_recovery_cross' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_steane_recovery_cross
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_recovery_arbitrary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_recovery_arbitrary
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_recovery_unitary_qubit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_recovery_unitary_qubit
+
 end CSD.Tests.AxiomAudit
