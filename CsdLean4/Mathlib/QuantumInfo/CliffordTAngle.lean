@@ -46,8 +46,9 @@ unity, hence an algebraic integer, and so is its inverse, so `2 cos θ` is an al
 ## Honest scope
 
 ⚠️ This is the angle of one Clifford+T word and the density of its own powers. That
-`⟨H, T⟩` is dense in `U(2)` modulo phase needs a second axis and the Euler decomposition
-(BACKLOG #69), and the extension to `U(2ⁿ)` is #70–#73. No efficiency claim: Solovay–Kitaev is
+`⟨H, T⟩` is dense in `U(2)` modulo phase needs a second axis and the Euler decomposition: BACKLOG
+#81, **done 2026-09-26** in `CsdLean4/Mathlib/QuantumInfo/CliffordTDensity.lean`. The extension to
+`U(2ⁿ)` is #70–#73. No efficiency claim: Solovay–Kitaev is
 #74 and is not attempted.
 
 References: M. A. Nielsen, I. L. Chuang, *Quantum Computation and Quantum Information* §4.5.3 and

@@ -74,7 +74,7 @@ objects; nothing below is above M–L except #74, which the chain does not need.
 | R-005 | #68 | the `HT` rotation angle is an irrational multiple of `π` (algebraic-integer argument); dense powers — **built 2026-09-25**, `CliffordTAngle.lean` | M | Mathlib: `monic_X_pow_sub_C`, `IsIntegrallyClosed ℤ`, `AddCircle.denseRange_zsmul_coe_iff`, `dense_addSubgroupClosure_pair_iff` |
 | R-005 | ~~#69~~ | `⟨H, T⟩` dense in `U(2)` mod phase — **re-split 2026-09-25**: the arbitrary-axis Euler decomposition is not M | ~~M–L~~ | → #80, #81 |
 | R-005 | #80 | `SU(2)` axis–angle layer + the word's own dense rotation circle — **built 2026-09-25**, `SU2Rotation.lean` | M | #68 |
-| R-005 | #81 | orthogonal-axis reduction (conjugate by `H`, take `n̂ × m̂`, one more irrationality check) + the `z`-`y`-`z` Euler decomposition + assembly | L | #80 |
+| R-005 | ~~#81~~ | from one dense circle to `SU(2)`: the third axis as a cross product, its angle's irrationality by the general non-integrality test, and the Euler decomposition about two orthogonal axes — **built 2026-09-26**, `QuantumInfo/CliffordTDensity.lean` (★★ `det_one_mem_cliffordTLim`, ★★ `exists_phase_mem_cliffordTLim`) | L | #80, #84 |
 | R-005 | #70 | every `d × d` unitary is a product of two-level unitaries — **built 2026-09-25**, `LinearAlgebra/Matrix/TwoLevel.lean` (count `d(d−1)/2` not claimed: #82) | M | — |
 | R-005 | #71 | a two-level unitary = Gray-code CNOTs + one `C^{n−1}(U)` — **built 2026-09-26**, `QuantumInfo/MultiControlled.lean` | M | #70 |
 | R-005 | ~~#72~~ | `C^k(U)` from CNOT and single-qubit gates — **re-split 2026-09-26**: the work-qubit ladder is not a matrix identity, so the ancilla-free route is forced | ~~M–L~~ | → #83, #84, #85 |

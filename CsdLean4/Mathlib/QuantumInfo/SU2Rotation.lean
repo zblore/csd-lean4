@@ -41,7 +41,8 @@ circle densely: ★★ `mem_closure_range_axisRot`.
 ## Honest scope
 
 ⚠️ One axis. Filling `SU(2)` needs a second, non-parallel axis and the Euler decomposition
-`U = R_u(α) R_v(β) R_u(γ)`: that is BACKLOG #81, which also records the route worked out here
+`U = R_u(α) R_v(β) R_u(γ)`: that is BACKLOG #81, **done 2026-09-26** in
+`CsdLean4/Mathlib/QuantumInfo/CliffordTDensity.lean`, which follows the route worked out here
 (conjugating by `H` reflects the axis `(1, √2−1, 1)` to `(1, 1−√2, 1)`, the two are orthogonal to
 `(1, 0, −1)`, and the product of the two `π`-rotations is a rotation about `(1, 0, −1)` through an
 angle that is again an irrational multiple of `2π` — so two *orthogonal* dense circles are

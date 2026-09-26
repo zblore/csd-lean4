@@ -1135,9 +1135,17 @@ OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 # the theorem's hypothesis -- the determinant-one subgroup is pinned by the statement,
 # not asserted by the prose. The quantifier in that file is Matrix.unitaryGroup (Fin 2),
 # i.e. U(2), everywhere including in exists_euler, which is the U(2) statement.
+#
+# CliffordTDensity.lean (2026-09-26, BACKLOG #81) is the sixth site, three mentions: the module
+# title, the honest-scope sentence about what density means, and one section header. All three name
+# the group of det_one_mem_cliffordTLim, whose own hypothesis is hdet : U.det = 1 -- so the
+# determinant-one subgroup is pinned by a theorem in the file, not asserted by prose. The quantifier
+# there is Matrix.unitaryGroup (Fin 2) = U(2), including in exists_phase_mem_cliffordTLim, which is
+# the U(2)-modulo-phase statement.
 DECLARED_SU_MENTIONS="CsdLean4/LF2/Setup.lean:1
 CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:2
 CsdLean4/Mathlib/QuantumInfo/CliffordTAngle.lean:2
+CsdLean4/Mathlib/QuantumInfo/CliffordTDensity.lean:3
 CsdLean4/Mathlib/QuantumInfo/EulerDecomposition.lean:1
 CsdLean4/Mathlib/QuantumInfo/SU2Rotation.lean:2"
 

@@ -76,6 +76,11 @@ lemma tPhase_sq : tPhase * tPhase = Complex.I := by
         = (Real.pi : ℂ) / 2 * Complex.I from by push_cast; ring,
     Complex.exp_pi_div_two_mul_I]
 
+theorem tPhase_pow_eight : tPhase ^ 8 = 1 := by
+  rw [show (8 : ℕ) = 2 * 4 from rfl, pow_mul, pow_two, tPhase_sq, show (4 : ℕ) = 2 * 2 from rfl,
+    pow_mul, Complex.I_sq]
+  norm_num
+
 lemma tPhase_ne_zero : tPhase ≠ 0 := Complex.exp_ne_zero _
 
 /-- `√2/2 = (√2)⁻¹`. -/

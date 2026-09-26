@@ -181,11 +181,6 @@ theorem tTrans_basisState (x : Fin 15 → Fin 2) :
   · rw [h]
   · rw [if_neg h, mul_zero, mul_zero]
 
-theorem tPhase_pow_eight : tPhase ^ 8 = 1 := by
-  rw [show (8 : ℕ) = 2 * 4 from rfl, pow_mul, pow_two, tPhase_sq, show (4 : ℕ) = 2 * 2 from rfl,
-    pow_mul, Complex.I_sq]
-  norm_num
-
 theorem tPhase_pow_seven : tPhase ^ 7 = tPhaseInv := by
   have h := tPhase_pow_eight
   rw [pow_succ] at h

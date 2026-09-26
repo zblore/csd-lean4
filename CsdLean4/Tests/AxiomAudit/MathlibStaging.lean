@@ -8646,4 +8646,63 @@ BACKLOG #85) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Controlled.ctrlGateOf_mem_closure
 
+/-! ### Clifford+T fills the determinant-one unitaries (CliffordTDensity.lean, 2026-09-26,
+BACKLOG #81) -/
+
+/-- info: 'not_isIntegral_of_quadratic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms not_isIntegral_of_quadratic
+
+/-- info: 'QuantumInfo.SU2.htA_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.htA_sq
+
+/-- info: 'QuantumInfo.SU2.two_mul_cos_wAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.two_mul_cos_wAngle
+
+/-- info: 'QuantumInfo.SU2.not_isIntegral_two_mul_cos_wAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.not_isIntegral_two_mul_cos_wAngle
+
+/-- info: 'QuantumInfo.SU2.irrational_wAngle_div_two_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.irrational_wAngle_div_two_pi
+
+/-- info: 'QuantumInfo.SU2.exists_euler_zxz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.exists_euler_zxz
+
+/-- info: 'QuantumInfo.SU2.exists_euler_two_axes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.exists_euler_two_axes
+
+/-- info: 'QuantumInfo.SU2.axisRot_mem_of_irrational' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_mem_of_irrational
+
+/-- info: 'QuantumInfo.SU2.axisRot_htAxis_pi_mul_hGateM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_htAxis_pi_mul_hGateM
+
+/-- info: 'QuantumInfo.SU2.axisRot_htAxis_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_htAxis_mem
+
+/-- info: 'QuantumInfo.SU2.axisRot_wAxis_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_wAxis_mem
+
+/-- info: 'QuantumInfo.SU2.axisRot_uAxis_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_uAxis_mem
+
+/-- info: 'QuantumInfo.SU2.det_one_mem_cliffordTLim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.det_one_mem_cliffordTLim
+
+/-- info: 'QuantumInfo.SU2.exists_phase_mem_cliffordTLim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.exists_phase_mem_cliffordTLim
+
 end CSD.Tests.AxiomAudit
