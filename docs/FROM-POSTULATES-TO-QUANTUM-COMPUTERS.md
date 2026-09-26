@@ -20,7 +20,7 @@ reader-type paths and the measurement story are [`TOUR.md`](TOUR.md).)*
 | 7 | States and channels | a preparation is a density operator; a flow is a channel; de-isolation is the measurement channel; second law, Landauer, Holevo | none new; strong subadditivity comes through an external bridge |
 | 8 | Gates | each standard gate is the isometry of a `Σ`-sector; a projective unitary action lifts to a `Σ`-flow | none new |
 | 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension; Grover and Shor as `Σ`-flows | the other algorithms QM-side only |
-| 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism; the Steane recovery and its code-capacity threshold | `R-005`: Clifford+T density; the concatenated quantum recovery (row 61) and the circuit-level threshold (row 62) |
+| 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism; the Steane recovery and its code-capacity threshold | ~~`R-005`: Clifford+T density~~ **closed 2026-09-26** (row 73); the concatenated quantum recovery (row 61) and the circuit-level threshold (row 62) |
 | 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders, amplitude-exact on the full register | — |
 
 Four kinds of seam appear, and only one is a research problem. They are defined in
@@ -319,7 +319,7 @@ tends to `0` below `p < 1/21` (`steane_concatBad_le`, `steane_threshold`): **the
 
 **The seam.** Three residues, all open mathematics with a Lean shape (`R-003`, active error correction,
 closed 2026-09-23 with the code-capacity threshold; the concatenated *quantum* recovery at level `k` is
-BACKLOG #61, the circuit-level threshold theorem #62, the `Σ`-twin of the Steane recovery #53). `R-005`: the density of Clifford+T in the unitary group — eleven priced rows after two re-pricings, of which eight have landed (BACKLOG #68 the irrational rotation angle, #80 its axis–angle form, #70 the two-level decomposition, #71 the Gray-code sandwich, #83 the controlled-gate vocabulary, #84 the `z`-`y`-`z` Euler decomposition with the one-control circuit, #85 the control-count recursion — so a gate with any number of controls is an exact product of `CNOT`s and single-qubit gates — and #81, **Clifford+T dense in `U(2)` modulo phase**). What remains is #73, the `n`-qubit assembly; #82 and #74 are deferred.
+BACKLOG #61, the circuit-level threshold theorem #62, the `Σ`-twin of the Steane recovery #53). `R-005`, the density of Clifford+T in the unitary group, **closed 2026-09-26**: twelve priced rows after two re-pricings, nine of them landed (BACKLOG #68 the irrational rotation angle, #80 its axis–angle form, #70 the two-level decomposition, #71 the Gray-code sandwich, #83 the controlled-gate vocabulary, #84 the `z`-`y`-`z` Euler decomposition with the one-control circuit, #85 the control-count recursion, #81 Clifford+T dense in `U(2)` modulo phase, and #73 the assembly). The statement now proved is that **every unitary on `m ≥ 1` qubits becomes a limit of Clifford+T circuits after one global phase**, through the exact product of `CNOT`s and single-qubit gates. Two rows stay deliberately unclaimed: #74, how the circuit length grows as the accuracy tightens (Solovay–Kitaev), and #82, the gate count of the two-level decomposition.
 `R-004`, magic-state distillation, closed 2026-09-24: the `[[15, 1, 3]]` quantum Reed–Muller code has exactly `35`
 undetected weight-3 `Z`-patterns and `2¹¹` codewords, its transversal `T` is the logical `T†`, the `X`-checks
 reject every detected pattern and an undetected one acts as the logical `Z̄` to the power of its parity, so one
@@ -377,7 +377,7 @@ metric is executed Toffolis times peak qubits, and the two are not the same numb
 * **Design posits** are choices the reconstruction makes and defends: Posits 2, 3, 4, 6, 8 and 9. The work
   is to keep them visible, which [`specs/POSITS.md`](../specs/POSITS.md) does, and to constrain them from
   above where a theorem can (Posit 2 and the base half of Posit 9 are now forced by symmetry).
-* **Open mathematics** has a Lean shape and no proof yet: `R-016`, `R-005`, and the
+* **Open mathematics** has a Lean shape and no proof yet: `R-016` and the
   `Σ`-twins of the algorithms. Each is a numbered row of [`specs/BACKLOG.md`](../specs/BACKLOG.md).
 * **Open foundations** is one item: Posit 1's discharge, the cell law from the de-isolation dynamics. It is
   the reconstruction frontier, and the ledgers say it is not a brick.

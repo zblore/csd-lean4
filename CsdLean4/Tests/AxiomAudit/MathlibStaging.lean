@@ -8705,4 +8705,47 @@ BACKLOG #81) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.SU2.exists_phase_mem_cliffordTLim
 
+/-! ### Clifford+T is universal, closing R-005 (CliffordTUniversal.lean, 2026-09-26,
+BACKLOG #73) -/
+
+/-- info: 'QuantumInfo.Controlled.block_mem_unitaryGroup_of_ctrlSetOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.block_mem_unitaryGroup_of_ctrlSetOf
+
+/-- info: 'QuantumInfo.Controlled.block_mem_unitaryGroup_of_ctrlGate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.block_mem_unitaryGroup_of_ctrlGate
+
+/-- info: 'QuantumInfo.Controlled.twoLevel_mem_closure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.twoLevel_mem_closure
+
+/-- info: 'QuantumInfo.Controlled.mem_closure_elementary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.mem_closure_elementary
+
+/-- info: 'QuantumInfo.Controlled.gateOf_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.gateOf_smul
+
+/-- info: 'QuantumInfo.Controlled.gateOf_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.gateOf_mul
+
+/-- info: 'QuantumInfo.Controlled.continuous_gateOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.continuous_gateOf
+
+/-- info: 'QuantumInfo.Controlled.gateOf_mem_cliffordTmLim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.gateOf_mem_cliffordTmLim
+
+/-- info: 'QuantumInfo.Controlled.elementary_le_phaseLim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.elementary_le_phaseLim
+
+/-- info: 'QuantumInfo.Controlled.exists_phase_mem_cliffordTmLim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.exists_phase_mem_cliffordTmLim
+
 end CSD.Tests.AxiomAudit
