@@ -8507,4 +8507,74 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Controlled.ctrlSet_erase_eq_ctrlGate
 
+/-! ### The z-y-z Euler decomposition and the ABC identity (EulerDecomposition.lean,
+2026-09-26, BACKLOG #84) -/
+
+/-- info: 'QuantumInfo.SU2.su2_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.su2_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.SU2.axisRot_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.Euler.rz_ry_rz_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.rz_ry_rz_eq
+
+/-- info: 'QuantumInfo.Euler.adjugate_entries' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.adjugate_entries
+
+/-- info: 'QuantumInfo.Euler.exists_euler_of_det_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.exists_euler_of_det_one
+
+/-- info: 'QuantumInfo.Euler.exists_euler' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.exists_euler
+
+/-- info: 'QuantumInfo.Euler.abc_prod_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.abc_prod_eq_one
+
+/-- info: 'QuantumInfo.Euler.abc_identity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.abc_identity
+
+/-- info: 'QuantumInfo.Euler.exists_abc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.exists_abc
+
+/-! ### One control: C¹(U) from two CNOTs and single-qubit gates (ControlledSingle.lean,
+2026-09-26, BACKLOG #84) -/
+
+/-- info: 'QuantumInfo.Controlled.ctrlChoice_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlChoice_one
+
+/-- info: 'QuantumInfo.Controlled.ctrlChoice_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlChoice_mul
+
+/-- info: 'QuantumInfo.Controlled.gateOf_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.gateOf_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.Controlled.ctrlOf_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlOf_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.Controlled.diagGate_eq_ctrlChoice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.diagGate_eq_ctrlChoice
+
+/-- info: 'QuantumInfo.Controlled.ctrlOf_eq_ctrlChoice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlOf_eq_ctrlChoice
+
+/-- info: 'QuantumInfo.Controlled.ctrlOf_eq_circuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlOf_eq_circuit
+
 end CSD.Tests.AxiomAudit

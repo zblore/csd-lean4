@@ -79,8 +79,8 @@ objects; nothing below is above M–L except #74, which the chain does not need.
 | R-005 | #71 | a two-level unitary = Gray-code CNOTs + one `C^{n−1}(U)` — **built 2026-09-26**, `QuantumInfo/MultiControlled.lean` | M | #70 |
 | R-005 | ~~#72~~ | `C^k(U)` from CNOT and single-qubit gates — **re-split 2026-09-26**: the work-qubit ladder is not a matrix identity, so the ancilla-free route is forced | ~~M–L~~ | → #83, #84, #85 |
 | R-005 | #83 | the controlled-gate vocabulary (`ctrlSet`: single-qubit, `CNOT`, multiply-controlled in one definition) — **built 2026-09-26**, `QuantumInfo/ControlledGate.lean` | M | #71 |
-| R-005 | #84 | the `z`-`y`-`z` Euler decomposition + the `ABC` identity for one control (**shared with #81**) | M–L | #83 |
-| R-005 | #85 | pattern normalisation + the ancilla-free control-count recursion through square roots | L | #83, #84 |
+| R-005 | ~~#84~~ | the `z`-`y`-`z` Euler decomposition + the `ABC` identity + the one-control circuit — **built 2026-09-26**, `QuantumInfo/EulerDecomposition.lean` (N–C Thm 4.1 via determinant one: only two entries to match, no case split) and `QuantumInfo/ControlledSingle.lean` (N–C Fig. 4.6 via the blockwise one-control algebra `ctrlChoice_mul`) | M–L | #83 |
+| R-005 | #85 | pattern normalisation + the ancilla-free control-count recursion through square roots (**stated in #84's `ctrlChoice_mul` algebra**; #84 is its base case) | L | #83, #84 |
 | R-005 | #73 | Clifford+T dense in `U(2ⁿ)` mod phase — closes R-005 | S–M | #69, #72, the telescoping bound |
 | R-005 | #74 | Solovay–Kitaev efficiency — not needed by the chain, not claimed | XL | #73 |
 | R-004 | #75 | `[[15, 1, 3]]` combinatorics: undetected `Z`-patterns have weight `≥ 3`, exactly `35` of weight `3`, odd weight = logical — **built 2026-09-23**, `ReedMuller15.lean` | S–M | — |

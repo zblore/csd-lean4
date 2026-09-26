@@ -1128,9 +1128,17 @@ OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 # are the module title and the honest-scope sentence about what is NOT proved (filling
 # the group needs a second axis, #81). Again nothing quantifies over a group: every
 # statement is about one 2x2 matrix or about the map R -> matrices.
+#
+# EulerDecomposition.lean (2026-09-26, BACKLOG #84) is the fifth site, and the
+# tightest: its ONE mention is the docstring of exists_euler_of_det_one, whose own
+# hypothesis is hdet : U.det = 1. So "the Euler decomposition in SU(2)" names exactly
+# the theorem's hypothesis -- the determinant-one subgroup is pinned by the statement,
+# not asserted by the prose. The quantifier in that file is Matrix.unitaryGroup (Fin 2),
+# i.e. U(2), everywhere including in exists_euler, which is the U(2) statement.
 DECLARED_SU_MENTIONS="CsdLean4/LF2/Setup.lean:1
 CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:2
 CsdLean4/Mathlib/QuantumInfo/CliffordTAngle.lean:2
+CsdLean4/Mathlib/QuantumInfo/EulerDecomposition.lean:1
 CsdLean4/Mathlib/QuantumInfo/SU2Rotation.lean:2"
 
 echo "check-claims: verifying code against the canonical claims block…"
