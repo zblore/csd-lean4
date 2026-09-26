@@ -40,7 +40,11 @@ control bit `0` leaves `A B C = 1` and the control bit `1` inserts them.
 * ★ `rz_ry_rz_eq` — the Euler product as an explicit matrix;
 * `normSq_col_zero`, `adjugate_entries` — what unitarity and `det = 1` give;
 * ★★ `exists_euler_of_det_one`, ★★ `exists_euler`, ★ `abc_prod_eq_one`, ★ `abc_identity`,
-  ★★ `exists_abc`.
+  ★★ `exists_abc`;
+* `SU2.axisRot_det`, `expI_smul_mem_unitaryGroup`, `exists_su2_of_det_one`,
+  `exists_axisRot_of_det_one`, `exists_sqrt_of_det_one`, `rz_ry_rz_det` and ★★ `exists_sqrt` —
+  **every `2 × 2` unitary has a unitary square root**, through the axis–angle form of its
+  determinant-one part.
 
 ## Honest scope
 
@@ -89,6 +93,15 @@ theorem axisRot_mem_unitaryGroup {a b c : ℝ} (hu : a ^ 2 + b ^ 2 + c ^ 2 = 1) 
   rw [axisRot]
   refine su2_mem_unitaryGroup ?_
   linear_combination (Real.sin (θ / 2)) ^ 2 * hu + Real.sin_sq_add_cos_sq (θ / 2)
+
+/-- A rotation about a unit axis has determinant one. -/
+theorem axisRot_det {a b c : ℝ} (hu : a ^ 2 + b ^ 2 + c ^ 2 = 1) (θ : ℝ) :
+    (axisRot a b c θ).det = 1 := by
+  rw [axisRot, su2_det,
+    show Real.cos (θ / 2) ^ 2 + (a * Real.sin (θ / 2)) ^ 2 + (b * Real.sin (θ / 2)) ^ 2
+        + (c * Real.sin (θ / 2)) ^ 2 = 1 by
+      linear_combination (Real.sin (θ / 2)) ^ 2 * hu + Real.sin_sq_add_cos_sq (θ / 2)]
+  norm_num
 
 end SU2
 
@@ -383,6 +396,94 @@ theorem exists_abc {U : Matrix (Fin 2) (Fin 2) ℂ} (hU : U ∈ Matrix.unitaryGr
     mul_mem (ryMat_mem_unitaryGroup (-(γ / 2))) (rzMat_mem_unitaryGroup (-((δ + β) / 2))),
     rzMat_mem_unitaryGroup ((δ - β) / 2), abc_prod_eq_one β γ δ, ?_⟩
   rw [hU', abc_identity]
+
+/-! ### Axis–angle form and square roots
+
+Two consequences of the decomposition that the control-count recursion of #85 and the density
+argument of #81 both need: a determinant-one unitary is a rotation about *some* unit axis, and
+**every `2 × 2` unitary has a unitary square root**.
+-/
+
+/-- A unimodular scalar multiple of a unitary is unitary. -/
+theorem expI_smul_mem_unitaryGroup (t : ℝ) {U : Matrix (Fin 2) (Fin 2) ℂ}
+    (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    expI t • U ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+  rw [Matrix.mem_unitaryGroup_iff, star_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
+    Matrix.mem_unitaryGroup_iff.mp hU, star_expI, ← expI_add]
+  simp
+
+/-- **A determinant-one unitary is a unit quaternion.** -/
+theorem exists_su2_of_det_one {U : Matrix (Fin 2) (Fin 2) ℂ}
+    (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) (hdet : U.det = 1) :
+    ∃ w x y z : ℝ, w ^ 2 + x ^ 2 + y ^ 2 + z ^ 2 = 1 ∧ U = su2 w x y z := by
+  obtain ⟨h11, h01⟩ := adjugate_entries hU hdet
+  have hcol := normSq_col_zero hU
+  have hsq : ∀ z : ℂ, ‖z‖ ^ 2 = z.re ^ 2 + z.im ^ 2 := by
+    intro z
+    rw [Complex.sq_norm, Complex.normSq_apply]
+    ring
+  refine ⟨(U 0 0).re, -(U 1 0).im, (U 1 0).re, -(U 0 0).im, ?_, ?_⟩
+  · rw [hsq, hsq] at hcol
+    linarith
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [su2, h11, h01, Complex.ext_iff]
+
+/-- **A determinant-one unitary is a rotation about a unit axis.** -/
+theorem exists_axisRot_of_det_one {U : Matrix (Fin 2) (Fin 2) ℂ}
+    (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) (hdet : U.det = 1) :
+    ∃ a b c θ : ℝ, a ^ 2 + b ^ 2 + c ^ 2 = 1 ∧ U = axisRot a b c θ := by
+  obtain ⟨w, x, y, z, hunit, hU'⟩ := exists_su2_of_det_one hU hdet
+  have hw1 : w ≤ 1 := by nlinarith
+  have hw2 : (-1 : ℝ) ≤ w := by nlinarith
+  have hcos : Real.cos (2 * Real.arccos w / 2) = w := by
+    rw [show 2 * Real.arccos w / 2 = Real.arccos w by ring, Real.cos_arccos hw2 hw1]
+  have hsin : Real.sin (2 * Real.arccos w / 2) = Real.sqrt (x ^ 2 + y ^ 2 + z ^ 2) := by
+    rw [show 2 * Real.arccos w / 2 = Real.arccos w by ring, Real.sin_arccos,
+      show 1 - w ^ 2 = x ^ 2 + y ^ 2 + z ^ 2 by linarith]
+  by_cases hr : x ^ 2 + y ^ 2 + z ^ 2 = 0
+  · have hx : x = 0 := by nlinarith [sq_nonneg x, sq_nonneg y, sq_nonneg z]
+    have hy : y = 0 := by nlinarith [sq_nonneg x, sq_nonneg y, sq_nonneg z]
+    have hz : z = 0 := by nlinarith [sq_nonneg x, sq_nonneg y, sq_nonneg z]
+    refine ⟨0, 0, 1, 2 * Real.arccos w, by norm_num, ?_⟩
+    rw [hU', axisRot, hcos, hsin, hr, hx, hy, hz]
+    norm_num
+  · have hrpos : 0 < x ^ 2 + y ^ 2 + z ^ 2 := lt_of_le_of_ne (by positivity) (Ne.symm hr)
+    set r := Real.sqrt (x ^ 2 + y ^ 2 + z ^ 2) with hrdef
+    have hrpos' : 0 < r := Real.sqrt_pos.mpr hrpos
+    have hr2 : r ^ 2 = x ^ 2 + y ^ 2 + z ^ 2 := Real.sq_sqrt (le_of_lt hrpos)
+    refine ⟨x / r, y / r, z / r, 2 * Real.arccos w, ?_, ?_⟩
+    · field_simp
+      linarith [hr2]
+    · rw [hU', axisRot, hcos, hsin]
+      congr 1 <;> field_simp
+
+/-- A determinant-one unitary has a determinant-one unitary square root. -/
+theorem exists_sqrt_of_det_one {U : Matrix (Fin 2) (Fin 2) ℂ}
+    (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) (hdet : U.det = 1) :
+    ∃ V : Matrix (Fin 2) (Fin 2) ℂ,
+      V ∈ Matrix.unitaryGroup (Fin 2) ℂ ∧ V.det = 1 ∧ V * V = U := by
+  obtain ⟨a, b, c, θ, hu, hU'⟩ := exists_axisRot_of_det_one hU hdet
+  refine ⟨axisRot a b c (θ / 2), axisRot_mem_unitaryGroup hu _, axisRot_det hu _, ?_⟩
+  rw [← axisRot_add hu, show θ / 2 + θ / 2 = θ by ring, hU']
+
+theorem rz_ry_rz_det (β γ δ : ℝ) : (rzMat β * ryMat γ * rzMat δ).det = 1 := by
+  rw [Matrix.det_mul, Matrix.det_mul, rzMat, ryMat, rzMat,
+    axisRot_det (by norm_num), axisRot_det (by norm_num), axisRot_det (by norm_num)]
+  norm_num
+
+/-- ★★ **Every `2 × 2` unitary has a unitary square root.** The control-count recursion of #85
+consumes this: `C^k(U)` is built from `C^{k-1}` of a square root of `U`. -/
+theorem exists_sqrt {U : Matrix (Fin 2) (Fin 2) ℂ} (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    ∃ V : Matrix (Fin 2) (Fin 2) ℂ, V ∈ Matrix.unitaryGroup (Fin 2) ℂ ∧ V * V = U := by
+  obtain ⟨α, β, γ, δ, hU'⟩ := exists_euler hU
+  have hW : rzMat β * ryMat γ * rzMat δ ∈ Matrix.unitaryGroup (Fin 2) ℂ :=
+    mul_mem (mul_mem (rzMat_mem_unitaryGroup β) (ryMat_mem_unitaryGroup γ))
+      (rzMat_mem_unitaryGroup δ)
+  obtain ⟨V, hV, -, hVV⟩ := exists_sqrt_of_det_one hW (rz_ry_rz_det β γ δ)
+  refine ⟨expI (α / 2) • V, expI_smul_mem_unitaryGroup _ hV, ?_⟩
+  rw [Matrix.smul_mul, Matrix.mul_smul, smul_smul, hVV, ← expI_add,
+    show α / 2 + α / 2 = α by ring, hU']
 
 end Euler
 

@@ -8577,4 +8577,73 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Controlled.ctrlOf_eq_circuit
 
+/-! ### Axis-angle form and square roots (EulerDecomposition.lean, 2026-09-26,
+BACKLOG #85) -/
+
+/-- info: 'QuantumInfo.SU2.axisRot_det' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_det
+
+/-- info: 'QuantumInfo.Euler.expI_smul_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.expI_smul_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.Euler.exists_su2_of_det_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.exists_su2_of_det_one
+
+/-- info: 'QuantumInfo.Euler.exists_axisRot_of_det_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.exists_axisRot_of_det_one
+
+/-- info: 'QuantumInfo.Euler.exists_sqrt_of_det_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.exists_sqrt_of_det_one
+
+/-- info: 'QuantumInfo.Euler.exists_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Euler.exists_sqrt
+
+/-! ### The control-count recursion (ControlRecursion.lean, 2026-09-26, BACKLOG #85) -/
+
+/-- info: 'QuantumInfo.Controlled.xGate_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.xGate_apply
+
+/-- info: 'QuantumInfo.Controlled.xGate_conj_ctrlSet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.xGate_conj_ctrlSet
+
+/-- info: 'QuantumInfo.Controlled.diagBlock_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.diagBlock_mul
+
+/-- info: 'QuantumInfo.Controlled.flipBlock_conj_diagBlock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.flipBlock_conj_diagBlock
+
+/-- info: 'QuantumInfo.Controlled.diagBlock_five' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.diagBlock_five
+
+/-- info: 'QuantumInfo.Controlled.pairSet_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.pairSet_mul
+
+/-- info: 'QuantumInfo.Controlled.ctrlSetOf_insert' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlSetOf_insert
+
+/-- info: 'QuantumInfo.Controlled.ctrlOf_mem_closure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlOf_mem_closure
+
+/-- info: 'QuantumInfo.Controlled.ctrlSetOf_mem_closure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlSetOf_mem_closure
+
+/-- info: 'QuantumInfo.Controlled.ctrlGateOf_mem_closure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlGateOf_mem_closure
+
 end CSD.Tests.AxiomAudit
