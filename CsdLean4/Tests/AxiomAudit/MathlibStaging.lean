@@ -8477,4 +8477,34 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.MultiControlled.exists_multiCtrl_list
 
+/-! ### Controlled gates on a set of controls (ControlledGate.lean, 2026-09-26, BACKLOG #83) -/
+
+/-- info: 'QuantumInfo.Controlled.ctrlSet_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlSet_one
+
+/-- info: 'QuantumInfo.Controlled.ctrlSet_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlSet_mul
+
+/-- info: 'QuantumInfo.Controlled.ctrlSet_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlSet_conjTranspose
+
+/-- info: 'QuantumInfo.Controlled.ctrlSet_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlSet_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.Controlled.singleGate_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.singleGate_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.Controlled.cnotGate'_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.cnotGate'_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.Controlled.ctrlSet_erase_eq_ctrlGate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlSet_erase_eq_ctrlGate
+
 end CSD.Tests.AxiomAudit
