@@ -8443,4 +8443,38 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.TwoLevel.exists_twoLevel_prod
 
+/-! ### Multiply-controlled gates and the Gray-code sandwich (MultiControlled.lean, 2026-09-26, BACKLOG #71) -/
+
+/-- info: 'QuantumInfo.MultiControlled.swapMat_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.MultiControlled.swapMat_apply
+
+/-- info: 'QuantumInfo.MultiControlled.swapMat_conj_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.MultiControlled.swapMat_conj_apply
+
+/-- info: 'QuantumInfo.MultiControlled.idOutside_swapMat_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.MultiControlled.idOutside_swapMat_conj
+
+/-- info: 'QuantumInfo.MultiControlled.ctrlGate_eq_twoLevelMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.MultiControlled.ctrlGate_eq_twoLevelMat
+
+/-- info: 'QuantumInfo.MultiControlled.exists_ctrlGate_of_adjacent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.MultiControlled.exists_ctrlGate_of_adjacent
+
+/-- info: 'QuantumInfo.MultiControlled.isMultiCtrlX_swapMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.MultiControlled.isMultiCtrlX_swapMat
+
+/-- info: 'QuantumInfo.MultiControlled.exists_multiCtrl_sandwich' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.MultiControlled.exists_multiCtrl_sandwich
+
+/-- info: 'QuantumInfo.MultiControlled.exists_multiCtrl_list' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.MultiControlled.exists_multiCtrl_list
+
 end CSD.Tests.AxiomAudit
