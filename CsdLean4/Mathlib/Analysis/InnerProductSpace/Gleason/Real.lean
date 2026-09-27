@@ -55,10 +55,11 @@ observation is not needed at all.
 ## Honest scope
 
 ⚠️ The statement is for a **projection package**, as in the complex theorem. Gleason's own
-formulation is for a bare *frame function*, which at `N = 3` is exactly the core lemma
-(`frameFunction_regular_sphere`) but for `N ≥ 4` would need the weight of a `3`-space to be shown
-basis-independent without a `p` on projections — an orthonormal-basis extension argument. That is
-BACKLOG #87, and nothing in the corpus needs it.
+formulation is for a bare *frame function*; that version landed 2026-09-28 in `Gleason/RealFrame.lean`
+(BACKLOG #87), where the weight of a `3`-space is shown basis-independent without a `p` on
+projections, by completing the triple with a fixed family of the orthogonal complement. The middle
+layer of this file is stated for any function quadratic on triples
+(`exists_isSymm_sphere_of_quad`) precisely so that both consumers share it.
 ⚠️ Finite dimensions only, `N ≥ 3`, as in #57. `N = 2` is false for Gleason's theorem (the
 counterexamples are the classic ones) and nothing here suggests otherwise.
 ⚠️ The real layer duplicates the shape of the complex one rather than generalising it over
@@ -470,25 +471,36 @@ namespace RealProjectionPackage
 
 variable (OP : RealProjectionPackage N)
 
-/-! ### The degree-2 extension of the frame function -/
+end RealProjectionPackage
 
-/-- **The degree-2 extension** of the frame function: `ext v = ‖v‖² frame (v / ‖v‖)`, and `0` at
-`0`. -/
-noncomputable def ext (v : EuclideanSpace ℝ (Fin N)) : ℝ :=
-  ‖v‖ ^ 2 * OP.frame ((‖v‖⁻¹ : ℝ) • v)
+/-! ### The degree-2 extension of a function quadratic on triples
 
-lemma ext_of_norm_one {v : EuclideanSpace ℝ (Fin N)} (hv : ‖v‖ = 1) : OP.ext v = OP.frame v := by
-  simp [ext, hv]
+This layer is stated for a bare function `f` on the sphere and a hypothesis `hquad` saying that `f`
+is a symmetric quadratic form on the span of every orthonormal triple. Both consumers of the layer
+supply `hquad` from Gleason's core lemma: `RealProjectionPackage.exists_isSymm_sphere` for a
+projection package (`exists_isSymm_restrictR`), and `Gleason/RealFrame.lean` for a bare frame
+function (BACKLOG #87). -/
 
-@[simp] lemma ext_zero : OP.ext 0 = 0 := by simp [ext]
+/-- **The degree-2 extension** of a function on the sphere: `extOf f v = ‖v‖² f (v / ‖v‖)`, and `0`
+at `0` (the factor `‖v‖²` kills it). -/
+noncomputable def extOf (f : EuclideanSpace ℝ (Fin N) → ℝ) (v : EuclideanSpace ℝ (Fin N)) : ℝ :=
+  ‖v‖ ^ 2 * f ((‖v‖⁻¹ : ℝ) • v)
 
-lemma _root_.Gleason.norm_inv_smul_selfR {v : EuclideanSpace ℝ (Fin N)} (hv : v ≠ 0) :
+lemma extOf_of_norm_one (f : EuclideanSpace ℝ (Fin N) → ℝ) {v : EuclideanSpace ℝ (Fin N)}
+    (hv : ‖v‖ = 1) : extOf f v = f v := by
+  simp [extOf, hv]
+
+@[simp] lemma extOf_zero (f : EuclideanSpace ℝ (Fin N) → ℝ) : extOf f 0 = 0 := by simp [extOf]
+
+lemma norm_inv_smul_selfR {v : EuclideanSpace ℝ (Fin N)} (hv : v ≠ 0) :
     ‖(‖v‖⁻¹ : ℝ) • v‖ = 1 := by
   have hn : 0 < ‖v‖ := norm_pos_iff.mpr hv
   rw [norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr hn), inv_mul_cancel₀ hn.ne']
 
-/-- `ext` is degree-2 homogeneous. -/
-lemma ext_smul (c : ℝ) (v : EuclideanSpace ℝ (Fin N)) : OP.ext (c • v) = c ^ 2 * OP.ext v := by
+/-- `extOf f` is degree-2 homogeneous, given that `f` is even on the sphere. -/
+lemma extOf_smul {f : EuclideanSpace ℝ (Fin N) → ℝ}
+    (hneg : ∀ u : EuclideanSpace ℝ (Fin N), ‖u‖ = 1 → f (-u) = f u) (c : ℝ)
+    (v : EuclideanSpace ℝ (Fin N)) : extOf f (c • v) = c ^ 2 * extOf f v := by
   rcases eq_or_ne c 0 with rfl | hc
   · simp
   rcases eq_or_ne v 0 with rfl | hv
@@ -498,53 +510,60 @@ lemma ext_smul (c : ℝ) (v : EuclideanSpace ℝ (Fin N)) : OP.ext (c • v) = c
   have hunit : (‖c • v‖⁻¹ : ℝ) • (c • v) = (|c|⁻¹ * c) • ((‖v‖⁻¹ : ℝ) • v) := by
     rw [smul_smul, smul_smul, hcn, mul_inv]
     ring_nf
-  rw [ext, ext, hunit, hcn]
-  have hframe : OP.frame ((|c|⁻¹ * c) • ((‖v‖⁻¹ : ℝ) • v)) = OP.frame ((‖v‖⁻¹ : ℝ) • v) := by
+  rw [extOf, extOf, hunit, hcn]
+  have hframe : f ((|c|⁻¹ * c) • ((‖v‖⁻¹ : ℝ) • v)) = f ((‖v‖⁻¹ : ℝ) • v) := by
     rcases abs_cases c with ⟨habs, _⟩ | ⟨habs, _⟩
     · rw [habs, inv_mul_cancel₀ hc, one_smul]
-    · rw [habs, show (-c)⁻¹ * c = -1 from by field_simp, neg_one_smul, OP.frame_neg]
+    · rw [habs, show (-c)⁻¹ * c = -1 from by field_simp, neg_one_smul,
+        hneg _ (norm_inv_smul_selfR hv)]
   rw [hframe]
-  have : (|c| * ‖v‖) ^ 2 = c ^ 2 * ‖v‖ ^ 2 := by
+  have hsq : (|c| * ‖v‖) ^ 2 = c ^ 2 * ‖v‖ ^ 2 := by
     rw [mul_pow, sq_abs]
-  rw [this]
+  rw [hsq]
   ring
 
-lemma ext_nonneg (v : EuclideanSpace ℝ (Fin N)) : 0 ≤ OP.ext v := by
+lemma extOf_nonneg {f : EuclideanSpace ℝ (Fin N) → ℝ}
+    (h0 : ∀ v : EuclideanSpace ℝ (Fin N), ‖v‖ = 1 → 0 ≤ f v) (v : EuclideanSpace ℝ (Fin N)) :
+    0 ≤ extOf f v := by
   rcases eq_or_ne v 0 with rfl | hv
   · simp
-  exact mul_nonneg (sq_nonneg _) (OP.frame_nonneg (norm_inv_smul_selfR hv))
+  exact mul_nonneg (sq_nonneg _) (h0 _ (norm_inv_smul_selfR hv))
 
-lemma ext_le_normSq (v : EuclideanSpace ℝ (Fin N)) : OP.ext v ≤ ‖v‖ ^ 2 := by
+lemma extOf_le_normSq {f : EuclideanSpace ℝ (Fin N) → ℝ}
+    (hub : ∀ v : EuclideanSpace ℝ (Fin N), ‖v‖ = 1 → f v ≤ 1) (v : EuclideanSpace ℝ (Fin N)) :
+    extOf f v ≤ ‖v‖ ^ 2 := by
   rcases eq_or_ne v 0 with rfl | hv
   · simp
-  have h := OP.frame_le_one (norm_inv_smul_selfR hv)
-  rw [ext]
+  have h := hub _ (norm_inv_smul_selfR hv)
+  rw [extOf]
   exact mul_le_of_le_one_right (sq_nonneg ‖v‖) h
 
 /-! ### The extension on the span of an orthonormal triple -/
 
-lemma _root_.Gleason.combR_smul {k : ℕ} (e : Fin k → EuclideanSpace ℝ (Fin N)) (c : ℝ)
+lemma combR_smul {k : ℕ} (e : Fin k → EuclideanSpace ℝ (Fin N)) (c : ℝ)
     (x : EuclideanSpace ℝ (Fin k)) : combR e (c • x) = c • combR e x := by
   rw [combR, combR, Finset.smul_sum]
   exact Finset.sum_congr rfl fun i _ => by
     rw [show (c • x) i = c * x i from rfl, smul_smul]
 
-lemma _root_.Gleason.dotProduct_mulVec_smulR {k : ℕ} (A : Matrix (Fin k) (Fin k) ℝ) (c : ℝ)
+lemma dotProduct_mulVec_smulR {k : ℕ} (A : Matrix (Fin k) (Fin k) ℝ) (c : ℝ)
     (x : Fin k → ℝ) : (c • x) ⬝ᵥ (A *ᵥ (c • x)) = c ^ 2 * (x ⬝ᵥ (A *ᵥ x)) := by
   rw [Matrix.mulVec_smul, smul_dotProduct, dotProduct_smul, smul_eq_mul, smul_eq_mul]
   ring
 
 /-- The extension on the span of an orthonormal family is the quadratic form the core lemma gives,
 now at *every* point and not only on the sphere. -/
-theorem ext_combR {k : ℕ} {e : Fin k → EuclideanSpace ℝ (Fin N)} (he : Orthonormal ℝ e)
+theorem extOf_combR {f : EuclideanSpace ℝ (Fin N) → ℝ}
+    (hneg : ∀ u : EuclideanSpace ℝ (Fin N), ‖u‖ = 1 → f (-u) = f u)
+    {k : ℕ} {e : Fin k → EuclideanSpace ℝ (Fin N)} (he : Orthonormal ℝ e)
     {A : Matrix (Fin k) (Fin k) ℝ}
-    (hA : ∀ x : EuclideanSpace ℝ (Fin k), ‖x‖ = 1 → OP.frame (combR e x) = ⇑x ⬝ᵥ (A *ᵥ ⇑x))
-    (x : EuclideanSpace ℝ (Fin k)) : OP.ext (combR e x) = ⇑x ⬝ᵥ (A *ᵥ ⇑x) := by
+    (hA : ∀ x : EuclideanSpace ℝ (Fin k), ‖x‖ = 1 → f (combR e x) = ⇑x ⬝ᵥ (A *ᵥ ⇑x))
+    (x : EuclideanSpace ℝ (Fin k)) : extOf f (combR e x) = ⇑x ⬝ᵥ (A *ᵥ ⇑x) := by
   rcases eq_or_ne x 0 with rfl | hx
   · rw [show combR e (0 : EuclideanSpace ℝ (Fin k)) = 0 from by
       rw [combR]
       exact Finset.sum_eq_zero fun i _ => by
-        rw [show (0 : EuclideanSpace ℝ (Fin k)) i = 0 from rfl, zero_smul], OP.ext_zero,
+        rw [show (0 : EuclideanSpace ℝ (Fin k)) i = 0 from rfl, zero_smul], extOf_zero,
       show (⇑(0 : EuclideanSpace ℝ (Fin k)) : Fin k → ℝ) = 0 from rfl, Matrix.mulVec_zero,
       dotProduct_zero]
   have hn : 0 < ‖x‖ := norm_pos_iff.mpr hx
@@ -560,12 +579,12 @@ theorem ext_combR {k : ℕ} {e : Fin k → EuclideanSpace ℝ (Fin N)} (he : Ort
   have hrhs : (⇑x : Fin k → ℝ) ⬝ᵥ (A *ᵥ ⇑x) = r ^ 2 * ((⇑y : Fin k → ℝ) ⬝ᵥ (A *ᵥ ⇑y)) := by
     rw [show (⇑x : Fin k → ℝ) = r • (⇑y : Fin k → ℝ) from by rw [hxy]; rfl,
       dotProduct_mulVec_smulR]
-  rw [hcomb, OP.ext_smul, OP.ext_of_norm_one (norm_combR he hyn), hA y hyn, hrhs, hr]
+  rw [hcomb, extOf_smul hneg, extOf_of_norm_one f (norm_combR he hyn), hA y hyn, hrhs, hr]
 
 /-! ### Extending an orthonormal pair to a triple -/
 
 /-- An orthonormal pair in `ℝᴺ`, `N ≥ 3`, extends to an orthonormal triple. -/
-lemma _root_.Gleason.exists_orthonormal_tripleR (hN : 3 ≤ N)
+lemma exists_orthonormal_tripleR (hN : 3 ≤ N)
     {x y : EuclideanSpace ℝ (Fin N)}
     (hxy : Orthonormal ℝ ![x, y]) :
     ∃ z : EuclideanSpace ℝ (Fin N), Orthonormal ℝ ![x, y, z] := by
@@ -640,14 +659,18 @@ lemma combR_two (e : Fin 3 → EuclideanSpace ℝ (Fin N)) (a b : ℝ) :
 
 /-- **The extension is a quadratic form on every plane** spanned by an orthonormal pair: extend the
 pair to a triple (`N ≥ 3`) and read off the core lemma's matrix. -/
-theorem exists_ext_plane (hN : 3 ≤ N) {x y : EuclideanSpace ℝ (Fin N)}
-    (hxy : Orthonormal ℝ ![x, y]) :
+theorem exists_extOf_plane {f : EuclideanSpace ℝ (Fin N) → ℝ}
+    (hquad : ∀ e : Fin 3 → EuclideanSpace ℝ (Fin N), Orthonormal ℝ e →
+      ∃ A : Matrix (Fin 3) (Fin 3) ℝ, A.IsSymm ∧
+        ∀ x : EuclideanSpace ℝ (Fin 3), ‖x‖ = 1 → f (combR e x) = ⇑x ⬝ᵥ (A *ᵥ ⇑x))
+    (hneg : ∀ u : EuclideanSpace ℝ (Fin N), ‖u‖ = 1 → f (-u) = f u)
+    (hN : 3 ≤ N) {x y : EuclideanSpace ℝ (Fin N)} (hxy : Orthonormal ℝ ![x, y]) :
     ∃ c₀ c₁ c₂ : ℝ, ∀ a b : ℝ,
-      OP.ext (a • x + b • y) = c₀ * a ^ 2 + c₁ * a * b + c₂ * b ^ 2 := by
+      extOf f (a • x + b • y) = c₀ * a ^ 2 + c₁ * a * b + c₂ * b ^ 2 := by
   obtain ⟨z, hxyz⟩ := exists_orthonormal_tripleR hN hxy
-  obtain ⟨A, hA, hAf⟩ := OP.exists_isSymm_restrictR hxyz
+  obtain ⟨A, hA, hAf⟩ := hquad _ hxyz
   refine ⟨A 0 0, 2 * A 0 1, A 1 1, fun a b => ?_⟩
-  have hcomb := OP.ext_combR hxyz hAf (WithLp.toLp 2 ![a, b, 0])
+  have hcomb := extOf_combR hneg hxyz hAf (WithLp.toLp 2 ![a, b, 0])
   rw [combR_two] at hcomb
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one] at hcomb
   rw [hcomb]
@@ -659,14 +682,19 @@ theorem exists_ext_plane (hN : 3 ≤ N) {x y : EuclideanSpace ℝ (Fin N)}
 
 /-- **The parallelogram law on `ℝᴺ`.** Any two vectors lie in a plane spanned by an orthonormal
 pair (Gram–Schmidt), and every such plane sits inside an orthonormal triple, where the core lemma
-makes `ext` a quadratic form. -/
-theorem ext_parallelogramR (hN : 3 ≤ N) (u v : EuclideanSpace ℝ (Fin N)) :
-    OP.ext (u + v) + OP.ext (u - v) = 2 * OP.ext u + 2 * OP.ext v := by
+makes the extension a quadratic form. -/
+theorem extOf_parallelogramR {f : EuclideanSpace ℝ (Fin N) → ℝ}
+    (hquad : ∀ e : Fin 3 → EuclideanSpace ℝ (Fin N), Orthonormal ℝ e →
+      ∃ A : Matrix (Fin 3) (Fin 3) ℝ, A.IsSymm ∧
+        ∀ x : EuclideanSpace ℝ (Fin 3), ‖x‖ = 1 → f (combR e x) = ⇑x ⬝ᵥ (A *ᵥ ⇑x))
+    (hneg : ∀ u : EuclideanSpace ℝ (Fin N), ‖u‖ = 1 → f (-u) = f u)
+    (hN : 3 ≤ N) (u v : EuclideanSpace ℝ (Fin N)) :
+    extOf f (u + v) + extOf f (u - v) = 2 * extOf f u + 2 * extOf f v := by
   rcases eq_or_ne u 0 with rfl | hu
-  · have hneg : OP.ext (-v) = OP.ext v := by
-      have := OP.ext_smul (-1) v
+  · have hev : extOf f (-v) = extOf f v := by
+      have := extOf_smul hneg (-1) v
       simpa using this
-    rw [zero_add, zero_sub, hneg, OP.ext_zero]
+    rw [zero_add, zero_sub, hev, extOf_zero]
     ring
   obtain ⟨r, hr⟩ : ∃ r : ℝ, r = ‖u‖ := ⟨_, rfl⟩
   obtain ⟨x, hx⟩ : ∃ x : EuclideanSpace ℝ (Fin N), x = (r⁻¹ : ℝ) • u := ⟨_, rfl⟩
@@ -685,7 +713,7 @@ theorem ext_parallelogramR (hN : 3 ≤ N) (u v : EuclideanSpace ℝ (Fin N)) :
       exact sub_eq_zero.mp hw0
     have e1 : u + v = (r + c) • x := by rw [hv, hux, add_smul]
     have e2 : u - v = (r - c) • x := by rw [hv, hux, sub_smul]
-    rw [e1, e2, hv, hux, OP.ext_smul, OP.ext_smul, OP.ext_smul, OP.ext_smul]
+    rw [e1, e2, hv, hux, extOf_smul hneg, extOf_smul hneg, extOf_smul hneg, extOf_smul hneg]
     ring
   · obtain ⟨t, ht⟩ : ∃ t : ℝ, t = ‖w‖ := ⟨_, rfl⟩
     obtain ⟨y, hy⟩ : ∃ y : EuclideanSpace ℝ (Fin N), y = (t⁻¹ : ℝ) • w := ⟨_, rfl⟩
@@ -713,24 +741,51 @@ theorem ext_parallelogramR (hN : 3 ≤ N) (u v : EuclideanSpace ℝ (Fin N)) :
       rw [hux, hv, add_smul]; abel
     have e2 : u - v = (r - c) • x + (-t) • y := by
       rw [hux, hv, sub_smul, neg_smul]; abel
-    obtain ⟨c₀, c₁, c₂, hplane⟩ := OP.exists_ext_plane hN hxy
-    have hu' : OP.ext u = c₀ * r ^ 2 + c₁ * r * 0 + c₂ * 0 ^ 2 := by
+    obtain ⟨c₀, c₁, c₂, hplane⟩ := exists_extOf_plane hquad hneg hN hxy
+    have hu' : extOf f u = c₀ * r ^ 2 + c₁ * r * 0 + c₂ * 0 ^ 2 := by
       rw [show u = r • x + (0 : ℝ) • y from by rw [zero_smul, add_zero, hux], hplane]
     rw [e1, e2, hplane, hplane, hu', hv, hplane]
     ring
 
-/-- `ext` is quadratic-like: the four hypotheses of the Jordan–von Neumann engine. -/
-theorem isQuadraticLikeR_ext (hN : 3 ≤ N) : IsQuadraticLikeR OP.ext :=
-  ⟨OP.ext_smul, OP.ext_parallelogramR hN, OP.ext_nonneg, OP.ext_le_normSq⟩
+/-- The extension is quadratic-like: the four hypotheses of the Jordan–von Neumann engine. -/
+theorem isQuadraticLikeR_extOf {f : EuclideanSpace ℝ (Fin N) → ℝ}
+    (hquad : ∀ e : Fin 3 → EuclideanSpace ℝ (Fin N), Orthonormal ℝ e →
+      ∃ A : Matrix (Fin 3) (Fin 3) ℝ, A.IsSymm ∧
+        ∀ x : EuclideanSpace ℝ (Fin 3), ‖x‖ = 1 → f (combR e x) = ⇑x ⬝ᵥ (A *ᵥ ⇑x))
+    (hneg : ∀ u : EuclideanSpace ℝ (Fin N), ‖u‖ = 1 → f (-u) = f u)
+    (h0 : ∀ v : EuclideanSpace ℝ (Fin N), ‖v‖ = 1 → 0 ≤ f v)
+    (hub : ∀ v : EuclideanSpace ℝ (Fin N), ‖v‖ = 1 → f v ≤ 1)
+    (hN : 3 ≤ N) : IsQuadraticLikeR (extOf f) :=
+  ⟨extOf_smul hneg, extOf_parallelogramR hquad hneg hN, extOf_nonneg h0, extOf_le_normSq hub⟩
 
-/-- ★★ **A4, the real reduction.** For `N ≥ 3` the frame function of a real projection package is
-the quadratic form of a symmetric matrix on the unit sphere. -/
+/-- ★★ **A4, the real reduction.** A function on the unit sphere of `ℝᴺ` (`N ≥ 3`) that is even,
+between `0` and `1`, and a symmetric quadratic form on the span of every orthonormal triple, is the
+quadratic form of a single symmetric matrix. -/
+theorem exists_isSymm_sphere_of_quad {f : EuclideanSpace ℝ (Fin N) → ℝ}
+    (hquad : ∀ e : Fin 3 → EuclideanSpace ℝ (Fin N), Orthonormal ℝ e →
+      ∃ A : Matrix (Fin 3) (Fin 3) ℝ, A.IsSymm ∧
+        ∀ x : EuclideanSpace ℝ (Fin 3), ‖x‖ = 1 → f (combR e x) = ⇑x ⬝ᵥ (A *ᵥ ⇑x))
+    (hneg : ∀ u : EuclideanSpace ℝ (Fin N), ‖u‖ = 1 → f (-u) = f u)
+    (h0 : ∀ v : EuclideanSpace ℝ (Fin N), ‖v‖ = 1 → 0 ≤ f v)
+    (hub : ∀ v : EuclideanSpace ℝ (Fin N), ‖v‖ = 1 → f v ≤ 1)
+    (hN : 3 ≤ N) :
+    ∃ A : Matrix (Fin N) (Fin N) ℝ, A.IsSymm ∧
+      ∀ v : EuclideanSpace ℝ (Fin N), ‖v‖ = 1 → f v = ⇑v ⬝ᵥ (A *ᵥ ⇑v) := by
+  have hq := isQuadraticLikeR_extOf hquad hneg h0 hub hN
+  exact ⟨polarMatrixR (extOf f), hq.polarMatrixR_isSymm, fun v hv => by
+    rw [← extOf_of_norm_one f hv, hq.eq_dotProduct v]⟩
+
+namespace RealProjectionPackage
+
+variable (OP : RealProjectionPackage N)
+
+/-- ★★ **A4 for a projection package.** For `N ≥ 3` the frame function of a real projection package
+is the quadratic form of a symmetric matrix on the unit sphere. -/
 theorem exists_isSymm_sphere (hN : 3 ≤ N) :
     ∃ A : Matrix (Fin N) (Fin N) ℝ, A.IsSymm ∧
-      ∀ v : EuclideanSpace ℝ (Fin N), ‖v‖ = 1 → OP.frame v = ⇑v ⬝ᵥ (A *ᵥ ⇑v) := by
-  have hq := OP.isQuadraticLikeR_ext hN
-  exact ⟨polarMatrixR OP.ext, hq.polarMatrixR_isSymm, fun v hv => by
-    rw [← OP.ext_of_norm_one hv, hq.eq_dotProduct v]⟩
+      ∀ v : EuclideanSpace ℝ (Fin N), ‖v‖ = 1 → OP.frame v = ⇑v ⬝ᵥ (A *ᵥ ⇑v) :=
+  exists_isSymm_sphere_of_quad (fun _ he => OP.exists_isSymm_restrictR he)
+    (fun u _ => OP.frame_neg u) (fun _ hv => OP.frame_nonneg hv) (fun _ hv => OP.frame_le_one hv) hN
 
 end RealProjectionPackage
 

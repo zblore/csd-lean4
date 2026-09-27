@@ -7886,8 +7886,8 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Gleason.exists_orthonormal_tripleR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.exists_orthonormal_tripleR
 -- STAR The parallelogram law on R^N, by Gram-Schmidt on any two vectors.
-/-- info: 'Gleason.RealProjectionPackage.ext_parallelogramR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms Gleason.RealProjectionPackage.ext_parallelogramR
+/-- info: 'Gleason.extOf_parallelogramR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.extOf_parallelogramR
 -- The real Jordan-von Neumann engine: a quadratic-like function is the quadratic form of its polarisation matrix.
 /-- info: 'Gleason.IsQuadraticLikeR.eq_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.IsQuadraticLikeR.eq_dotProduct
@@ -7906,6 +7906,38 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- STAR STAR STAR Gleason's theorem for REAL Hilbert spaces, N >= 3: every real projection package is P |-> Tr(rho P) for a unique real density matrix. Foundational triple.
 /-- info: 'Gleason.RealProjectionPackage.real_gleason_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.RealProjectionPackage.real_gleason_representation
+
+-- RealFrame.lean (2026-09-28, BACKLOG #87): Gleason for bare real frame functions.
+-- STAR A4 for any function quadratic on triples: the layer both real consumers share.
+/-- info: 'Gleason.exists_isSymm_sphere_of_quad' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.exists_isSymm_sphere_of_quad
+-- Two mutually orthogonal orthonormal families glue along a sum type.
+/-- info: 'Gleason.orthonormal_sum_elim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.orthonormal_sum_elim
+-- The frame sum is the weight over an orthonormal basis indexed by any finite type.
+/-- info: 'Gleason.IsFrameFunction.sum_eq_of_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.sum_eq_of_basis
+-- The frame sum splits along a completion.
+/-- info: 'Gleason.IsFrameFunction.sum_elim_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.sum_elim_eq
+-- The orthogonal complement carries an orthonormal family of the complementary size.
+/-- info: 'Gleason.exists_orthonormal_complement' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.exists_orthonormal_complement
+-- A nonnegative frame function is bounded by its weight in any dimension.
+/-- info: 'Gleason.IsFrameFunction.le_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.le_weight
+-- A frame function is even on the sphere.
+/-- info: 'Gleason.IsFrameFunction.neg_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.neg_eq
+-- STAR STAR The weight of a 3-space is basis independent, so the restriction to its span is a frame function on R^3 -- the step the projection package gave for free.
+/-- info: 'Gleason.IsFrameFunction.exists_weight_restrict' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsFrameFunction.exists_weight_restrict
+-- STAR STAR A nonnegative frame function of weight 1 is a symmetric quadratic form on the sphere.
+/-- info: 'Gleason.exists_isSymm_sphere_of_frameFunction_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.exists_isSymm_sphere_of_frameFunction_one
+-- STAR STAR STAR Gleason's theorem for real FRAME FUNCTIONS, N >= 3 (the statement Gleason wrote): a nonnegative frame function of weight W is the quadratic form of a unique PSD matrix of trace W. Foundational triple.
+/-- info: 'Gleason.existsUnique_density_of_frameFunction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.existsUnique_density_of_frameFunction
 
 -- 2026-09-23, R-013 DISCHARGED (BACKLOG #16): Reversible/HybridLift.lean, the generic half.
 -- gateMat g is the permutation matrix of a reversible gate's Boolean action (gateMat_CCX checks
