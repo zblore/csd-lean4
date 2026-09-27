@@ -32,7 +32,8 @@ environment being the finite set of error labels:
 
 `RegisterDilation.lean` is the instance `e = Fin 4`, `E = errorOp` (the three-qubit single-error
 channel); `IndependentNoise.lean` is the instance `e = Fin 2 × Fin 2 × Fin 2`, `E = flipOp`
-(independent bit-flips); the Steane instance is BACKLOG #53.
+(independent bit-flips); the Steane instance is `Empirical/CSD/QEC/SteaneFlow.lean` (BACKLOG #53,
+2026-09-27).
 
 ## Source
 

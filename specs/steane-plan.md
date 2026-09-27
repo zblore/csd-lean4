@@ -72,7 +72,9 @@ code satisfies Knill–Laflamme with `c = 1`, so the recovery channel exists) an
 `Empirical/QM/QEC/SteaneRecovery.lean` (the twenty-two single-qubit Paulis are told apart by the
 syndromes, a `22 × 22` `𝔽₂` computation by `decide`; `exists_steane_recovery`,
 `steane_recovery_logical`). Residue (iii) is closed; what remains of `R-003` is fault tolerance
-(BACKLOG #51). The `Σ`-twin of the recovery is BACKLOG #53.
+(BACKLOG #51). The `Σ`-twin of the recovery is BACKLOG #53, **done 2026-09-27**
+(`Empirical/CSD/QEC/SteaneFlow.lean`: the Pauli channel as the environment marginal of one flow
+on `ℂℙ²⁸¹⁵`, and QEC on `Σ` end to end).
 
 ## References
 

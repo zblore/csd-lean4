@@ -2236,4 +2236,23 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.Darwinism.copyStroke_zero_eq_id
 
+/-! ### The Steane register as one Sigma-flow, and QEC on Sigma (SteaneFlow.lean,
+2026-09-27, BACKLOG #53) -/
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.isUnitaryLift_steaneFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.isUnitaryLift_steaneFlow
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.steaneFlow_traceRight_barycenter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.steaneFlow_traceRight_barycenter
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.exists_steane_recovery_mixedUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.exists_steane_recovery_mixedUnitary
+
+/-- info: 'CSD.Empirical.CSDBridge.QEC.exists_steaneFlow_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.CSDBridge.QEC.exists_steaneFlow_recovery
+
 end CSD.Tests.AxiomAudit

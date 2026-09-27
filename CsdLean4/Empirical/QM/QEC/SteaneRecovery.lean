@@ -40,7 +40,8 @@ Knill–Laflamme theorem. This file instantiates it:
 correct them). The recovery is the channel the
 Knill–Laflamme construction produces, not the syndrome-measurement circuit; the `Σ`-side twin
 (a `Σ`-flow whose environment marginal is the single-qubit Pauli channel, as
-`Empirical/CSD/QEC/RegisterFlow.lean` does for three qubits) is BACKLOG #53.
+`Empirical/CSD/QEC/RegisterFlow.lean` does for three qubits) is
+`Empirical/CSD/QEC/SteaneFlow.lean` (BACKLOG #53, 2026-09-27).
 
 References: A. Steane, *Error correcting codes in quantum theory*, PRL 77 (1996) 793;
 Nielsen–Chuang §10.4.2; `Empirical/QM/QEC/Steane.lean`;
