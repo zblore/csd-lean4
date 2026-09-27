@@ -327,7 +327,7 @@ round of the 15-to-1 protocol accepts with probability at least `(1 − p)^{15}`
 probability at most `(35 p³ + 2¹¹ p⁵)/(1 − p)^{15}` — Bravyi–Kitaev's `35 p³` at leading order — and the
 recursion drives that to `0` below `p ≤ 1/20` (`distillation_error_le`, `tendsto_distillIter`,
 [`Mathlib/QuantumInfo/ReedMuller15Distill.lean`](../CsdLean4/Mathlib/QuantumInfo/ReedMuller15Distill.lean));
-the explicit decoding circuit is BACKLOG #79. `R-006`, `T`-gate injection, closed 2026-09-23: the gate-teleportation circuit with one magic
+the explicit decoding circuit landed **2026-09-27** (row 79): sixteen `CNOT`s and no Hadamard, because the `[15, 4]` code's logical-`Z` readout is linear, after which wire `0` carries the logical qubit uniformly in the other fourteen labels and its amplitudes are the protocol's output (`decoderCircuit_logical_update`, `decoderCircuit_encodedMagic_apply`, [`Mathlib/QuantumInfo/ReedMuller15Decoder.lean`](../CsdLean4/Mathlib/QuantumInfo/ReedMuller15Decoder.lean)). `R-006`, `T`-gate injection, closed 2026-09-23: the gate-teleportation circuit with one magic
 state enacts `T` exactly, `Φ(ρ) = T ρ T†`, and a `Z`-error on the resource becomes a `Z`-error on the output
 (`injectionChannel_apply`, `noisyInjectionChannel_apply`,
 [`Mathlib/QuantumInfo/MagicInjection.lean`](../CsdLean4/Mathlib/QuantumInfo/MagicInjection.lean)); what exists

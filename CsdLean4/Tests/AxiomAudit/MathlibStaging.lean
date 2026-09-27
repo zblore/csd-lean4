@@ -8759,4 +8759,55 @@ BACKLOG #61) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.exists_smul_recovery_apply_of_eq_lin_comb
 
+/-! ### The decoder of the 15-to-1 protocol as a CNOT circuit (ReedMuller15Decoder.lean,
+2026-09-27, BACKLOG #79) -/
+
+/-- info: 'QuantumInfo.Controlled.cnotGate'_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.cnotGate'_apply
+
+/-- info: 'QuantumInfo.Controlled.cnotGate'_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.cnotGate'_mulVec_apply
+
+/-- info: 'QuantumInfo.Controlled.cnotListMat_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.cnotListMat_mulVec_apply
+
+/-- info: 'QuantumInfo.Controlled.cnotListMat_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.cnotListMat_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.ReedMuller15.cnotListPull_decoderList' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.cnotListPull_decoderList
+
+/-- info: 'QuantumInfo.ReedMuller15.decoderCircuit_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.decoderCircuit_mulVec_apply
+
+/-- info: 'QuantumInfo.ReedMuller15.decoderCircuit_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.decoderCircuit_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.ReedMuller15.decoderCircuit_mulVec_basisState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.decoderCircuit_mulVec_basisState
+
+/-- info: 'QuantumInfo.ReedMuller15.decoderCircuit_logical_update' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.decoderCircuit_logical_update
+
+/-- info: 'QuantumInfo.ReedMuller15.decoderCircuit_logical_apply_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.decoderCircuit_logical_apply_zero
+
+/-- info: 'QuantumInfo.ReedMuller15.decoderCircuit_encodedMagic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.decoderCircuit_encodedMagic
+
+/-- info: 'QuantumInfo.ReedMuller15.decoderCircuit_encodedMagic_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ReedMuller15.decoderCircuit_encodedMagic_apply
+
 end CSD.Tests.AxiomAudit

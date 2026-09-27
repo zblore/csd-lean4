@@ -37,7 +37,8 @@ is one session; **distillation protocols** are not.
   across four modules (BACKLOG #75–#78) — `ReedMuller15.lean` (the code's combinatorics),
   `ReedMuller15Code.lean` (transversal `T` = logical `T†`), `ReedMuller15Errors.lean` (detection
   and the logical `Z̄`), `ReedMuller15Distill.lean` (the `35 p³` bound and the recursion);
-  R-004 closed. The explicit decoder circuit is #79.
+  R-004 closed. The explicit decoder circuit is `ReedMuller15Decoder.lean` (#79, **built
+  2026-09-27**): sixteen `CNOT`s and no Hadamard, the output qubit on wire `0`.
 * **Universality** (Clifford+T dense in SU(2ⁿ)): a gate-synthesis density theorem
   (Solovay–Kitaev territory), out of scope for the coordinate-operator corpus.
 * **The T-injection circuit** (consuming `|T⟩` implements `T` with Clifford + measurement):
@@ -87,7 +88,7 @@ objects; nothing below is above M–L except #74, which the chain does not need.
 | R-004 | #76 | transversal `T` = logical `T†` (weights `0/8` and `7/15`) — **built 2026-09-23**, `ReedMuller15Code.lean` | M | #75 |
 | R-004 | #77 | `Z_e T^{⊗15}|+̄⟩`: detected by the `X`-checks iff `syndrome e ≠ 0`, otherwise `Z̄^{[e]}|Ā'⟩` (restated 2026-09-23 — the protocol injects `T` into the encoded `|+̄⟩`; the earlier 'project fifteen bare magic states' picture has acceptance `2^{−10}` and was wrong) — **built 2026-09-23**, `ReedMuller15Errors.lean` | M | #76, #66–#67 |
 | R-004 | #78 | the `35 p³` bound and the cube recursion — **built 2026-09-24, R-004 closed** (`distillation_error_le`, `tendsto_distillIter`) | M–L | #75, #77 |
-| R-004 | #79 | the decoder as an explicit Clifford circuit | M | #78 |
+| R-004 | ~~#79~~ | the decoder as an explicit Clifford circuit — **built 2026-09-27**, `ReedMuller15Decoder.lean`: sixteen `CNOT`s, no Hadamard (the `[15, 4]` code's logical-`Z` readout is linear), ★★ `decoderCircuit_logical_update` (wire `0` carries the logical qubit, uniformly in the other fourteen labels), ★★★ `decoderCircuit_encodedMagic_apply` (the output is #77's `outQubit e`) | M | #78 |
 
 Three independent roots (#66; #68 and #70; #75); the longest chain is #70 → #71 → #72 → #73.
 The doc's link 12 keeps saying what exists (the `T` gate and its escape from Clifford) until the

@@ -39,8 +39,9 @@ weight `3`, `2¹¹` in all.
 
 ## Honest scope
 
-⚠️ The output is read off the logical coefficients; the explicit Clifford decoding circuit is
-BACKLOG #79. The probabilities over the pattern under independent noise, and the `35 p³` bound, are
+⚠️ The output is read off the logical coefficients here; the explicit decoding circuit is
+`QuantumInfo/ReedMuller15Decoder.lean` (BACKLOG #79, 2026-09-27), sixteen `CNOT`s that put those
+coefficients on wire `0`. The probabilities over the pattern under independent noise, and the `35 p³` bound, are
 BACKLOG #78.
 
 References: S. Bravyi, A. Kitaev, PRA 71 (2005) 022316 §IV; `specs/magic-plan.md`;
