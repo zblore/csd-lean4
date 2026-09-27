@@ -20,7 +20,7 @@ reader-type paths and the measurement story are [`TOUR.md`](TOUR.md).)*
 | 7 | States and channels | a preparation is a density operator; a flow is a channel; de-isolation is the measurement channel; second law, Landauer, Holevo | none new; strong subadditivity comes through an external bridge |
 | 8 | Gates | each standard gate is the isometry of a `Σ`-sector; a projective unitary action lifts to a `Σ`-flow | none new |
 | 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension; Grover and Shor as `Σ`-flows | the other algorithms QM-side only |
-| 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism; the Steane recovery and its code-capacity threshold | ~~`R-005`: Clifford+T density~~ **closed 2026-09-26** (row 73); the concatenated quantum recovery (row 61) and the circuit-level threshold (row 62) |
+| 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism; the Steane recovery and its code-capacity threshold | ~~`R-005`: Clifford+T density~~ **closed 2026-09-26** (row 73); ~~the concatenated quantum recovery (row 61)~~ **done 2026-09-27** (row 86); the circuit-level threshold (row 62) |
 | 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders, amplitude-exact on the full register | — |
 
 Four kinds of seam appear, and only one is a research problem. They are defined in
@@ -318,8 +318,8 @@ tends to `0` below `p < 1/21` (`steane_concatBad_le`, `steane_threshold`): **the
 (2026-09-23).
 
 **The seam.** Three residues, all open mathematics with a Lean shape (`R-003`, active error correction,
-closed 2026-09-23 with the code-capacity threshold; the concatenated *quantum* recovery at level `k` is
-BACKLOG #61, the circuit-level threshold theorem #62, the `Σ`-twin of the Steane recovery, **done 2026-09-27** (row 53): the Pauli channel is the environment marginal of one flow on the joint projective space, and one recovery channel undoes the leak). `R-005`, the density of Clifford+T in the unitary group, **closed 2026-09-26**: twelve priced rows after two re-pricings, nine of them landed (BACKLOG #68 the irrational rotation angle, #80 its axis–angle form, #70 the two-level decomposition, #71 the Gray-code sandwich, #83 the controlled-gate vocabulary, #84 the `z`-`y`-`z` Euler decomposition with the one-control circuit, #85 the control-count recursion, #81 Clifford+T dense in `U(2)` modulo phase, and #73 the assembly). The statement now proved is that **every unitary on `m ≥ 1` qubits becomes a limit of Clifford+T circuits after one global phase**, through the exact product of `CNOT`s and single-qubit gates. Two rows stay deliberately unclaimed: #74, how the circuit length grows as the accuracy tightens (Solovay–Kitaev), and #82, the gate count of the two-level decomposition.
+closed 2026-09-23 with the code-capacity threshold; the concatenated *quantum* recovery at level `k`
+**landed 2026-09-27** (row 86: Knill–Laflamme in encoder form composes under the tensor over blocks, so one recovery channel per level restores every code state from every pattern with at most one bad sub-block per level, exactly when the error is unitary — the patterns it excludes are the `concatBad` whose probability #51 bounds), the circuit-level threshold theorem #62, the `Σ`-twin of the Steane recovery, **done 2026-09-27** (row 53): the Pauli channel is the environment marginal of one flow on the joint projective space, and one recovery channel undoes the leak). `R-005`, the density of Clifford+T in the unitary group, **closed 2026-09-26**: twelve priced rows after two re-pricings, nine of them landed (BACKLOG #68 the irrational rotation angle, #80 its axis–angle form, #70 the two-level decomposition, #71 the Gray-code sandwich, #83 the controlled-gate vocabulary, #84 the `z`-`y`-`z` Euler decomposition with the one-control circuit, #85 the control-count recursion, #81 Clifford+T dense in `U(2)` modulo phase, and #73 the assembly). The statement now proved is that **every unitary on `m ≥ 1` qubits becomes a limit of Clifford+T circuits after one global phase**, through the exact product of `CNOT`s and single-qubit gates. Two rows stay deliberately unclaimed: #74, how the circuit length grows as the accuracy tightens (Solovay–Kitaev), and #82, the gate count of the two-level decomposition.
 `R-004`, magic-state distillation, closed 2026-09-24: the `[[15, 1, 3]]` quantum Reed–Muller code has exactly `35`
 undetected weight-3 `Z`-patterns and `2¹¹` codewords, its transversal `T` is the logical `T†`, the `X`-checks
 reject every detected pattern and an undetected one acts as the logical `Z̄` to the power of its parity, so one
@@ -341,8 +341,8 @@ the double and triple flips are modelled, and mis-corrected into the logical fli
 code-capacity recursion drives down (`concatMeasure_concatBad_le`).
 
 **What is not claimed.** The circuit-level threshold theorem (faulty gates, error propagation through the
-recovery gadgets; row 62), the concatenated quantum recovery (row 61), or that a fault-tolerant machine
-follows from the chain.
+recovery gadgets; row 62), or that a fault-tolerant machine follows from the chain. The concatenated
+quantum recovery is no longer on this list: it landed 2026-09-27 (row 86, `exists_concat_recovery_unitary`), still at code capacity — perfect encoder and recovery gates.
 
 ## 11. Arithmetic and resource counts
 

@@ -714,6 +714,125 @@ theorem knillLaflamme_iff (hP : IsCodeProjector P) (hP0 : P ≠ 0) :
 
 end Converse
 
+/-! ### The condition in encoder form -/
+
+section Encoder
+
+variable {L : Type*} [Fintype L] [DecidableEq L] {V : Matrix n L ℂ}
+
+omit [DecidableEq n] in
+/-- An isometric encoder gives a code projector: `P = V Vᴴ` for `Vᴴ V = 1`. -/
+theorem isCodeProjector_mul_conjTranspose (hV : Vᴴ * V = 1) : IsCodeProjector (V * Vᴴ) where
+  conjTranspose_eq := by
+    rw [conjTranspose_mul, conjTranspose_conjTranspose]
+  mul_self := by
+    rw [Matrix.mul_assoc, ← Matrix.mul_assoc Vᴴ V Vᴴ, hV, Matrix.one_mul]
+
+omit [DecidableEq n] in
+/-- The code of an isometric encoder is nonzero as soon as it encodes something. -/
+theorem mul_conjTranspose_ne_zero [Nonempty L] (hV : Vᴴ * V = 1) : V * Vᴴ ≠ 0 := by
+  intro h
+  obtain ⟨i⟩ := ‹Nonempty L›
+  have h1 : (1 : Matrix L L ℂ) = 0 := by
+    calc (1 : Matrix L L ℂ) = Vᴴ * V * (Vᴴ * V) := by rw [hV, Matrix.one_mul]
+      _ = Vᴴ * (V * Vᴴ) * V := by simp only [Matrix.mul_assoc]
+      _ = 0 := by rw [h, Matrix.mul_zero, Matrix.zero_mul]
+  have h2 : (1 : ℂ) = 0 := by
+    have h3 := congrFun (congrFun h1 i) i
+    rwa [Matrix.one_apply_eq, Matrix.zero_apply] at h3
+  exact one_ne_zero h2
+
+omit [DecidableEq n] in
+theorem mul_conjTranspose_mul_encoder (hV : Vᴴ * V = 1) : V * Vᴴ * V = V := by
+  rw [Matrix.mul_assoc, hV, Matrix.mul_one]
+
+omit [DecidableEq n] in
+theorem conjTranspose_mul_mul_conjTranspose (hV : Vᴴ * V = 1) : Vᴴ * (V * Vᴴ) = Vᴴ := by
+  rw [← Matrix.mul_assoc, hV, Matrix.one_mul]
+
+omit [DecidableEq n] [Fintype ι] [DecidableEq ι] in
+/-- ★ **Encoder form implies projector form.** If the errors are scalar on the encoded qubit,
+`Vᴴ Eᵢᴴ Eⱼ V = cᵢⱼ • 1`, they satisfy Knill–Laflamme on the code `V Vᴴ`. The encoder form is what
+a concatenation composes: it needs no rank statement relating `V Vᴴ` to a stabiliser projector,
+and not even that `V` is an isometry. -/
+theorem knillLaflamme_of_encoder
+    (h : ∀ i j, Vᴴ * (E i)ᴴ * E j * V = c i j • 1) :
+    KnillLaflamme (V * Vᴴ) E c := by
+  intro i j
+  calc V * Vᴴ * (E i)ᴴ * E j * (V * Vᴴ)
+      = V * (Vᴴ * (E i)ᴴ * E j * V) * Vᴴ := by simp only [Matrix.mul_assoc]
+    _ = V * (c i j • (1 : Matrix L L ℂ)) * Vᴴ := by rw [h i j]
+    _ = c i j • (V * Vᴴ) := by
+        rw [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_one]
+
+omit [DecidableEq n] [Fintype ι] [DecidableEq ι] [Fintype L] in
+/-- ★ **Projector form implies encoder form**, for an encoder whose columns are code states. -/
+theorem encoder_of_knillLaflamme (hP : IsCodeProjector P) (hV : Vᴴ * V = 1) (hPV : P * V = V)
+    (hc : KnillLaflamme P E c) (i j : ι) : Vᴴ * (E i)ᴴ * E j * V = c i j • 1 := by
+  have hVP : Vᴴ * P = Vᴴ := by
+    conv_lhs => rw [← hP.conjTranspose_eq]
+    rw [← conjTranspose_mul, hPV]
+  calc Vᴴ * (E i)ᴴ * E j * V
+      = Vᴴ * P * (E i)ᴴ * E j * (P * V) := by rw [hVP, hPV]
+    _ = Vᴴ * (P * (E i)ᴴ * E j * P) * V := by simp only [Matrix.mul_assoc]
+    _ = Vᴴ * (c i j • P) * V := by rw [hc i j]
+    _ = c i j • (Vᴴ * P * V) := by
+        simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_assoc]
+    _ = c i j • 1 := by rw [hVP, hV]
+
+omit [Fintype ι] [DecidableEq ι] [Fintype L] in
+/-- The logical action of a single error, for a family containing the identity: the identity's row
+of the Knill–Laflamme matrix. -/
+theorem encoder_apply_of_eq_one (hP : IsCodeProjector P) (hV : Vᴴ * V = 1) (hPV : P * V = V)
+    (hc : KnillLaflamme P E c) {i₀ : ι} (hi₀ : E i₀ = 1) (j : ι) :
+    Vᴴ * E j * V = c i₀ j • 1 := by
+  have h := encoder_of_knillLaflamme hP hV hPV hc i₀ j
+  rwa [hi₀, conjTranspose_one, Matrix.mul_one] at h
+
+/-- **The Knill–Laflamme condition in encoder form**, existential in the scalars: every pair of
+errors acts on the encoded space as *some* scalar. This is the form a concatenation carries through
+its induction, where the scalars themselves are of no interest. -/
+def EncoderKL (V : Matrix n L ℂ) (E : ι → Matrix n n ℂ) : Prop :=
+  ∀ i j, ∃ γ : ℂ, Vᴴ * (E i)ᴴ * E j * V = γ • 1
+
+omit [DecidableEq n] [Fintype ι] [DecidableEq ι] [Fintype L] in
+theorem encoderKL_iff {E : ι → Matrix n n ℂ} :
+    EncoderKL V E ↔ ∀ i j, ∃ γ : ℂ, Vᴴ * (E i)ᴴ * E j * V = γ • 1 := Iff.rfl
+
+omit [DecidableEq n] [Fintype ι] [DecidableEq ι] in
+theorem exists_knillLaflamme_of_encoderKL (h : EncoderKL V E) :
+    ∃ c : Matrix ι ι ℂ, KnillLaflamme (V * Vᴴ) E c :=
+  ⟨Matrix.of fun i j => ((encoderKL_iff.mp h) i j).choose,
+    knillLaflamme_of_encoder fun i j => ((encoderKL_iff.mp h) i j).choose_spec⟩
+
+/-- ★★ **A recovery from the encoder form**: errors that act as scalars on the encoded space are
+corrected by one channel. -/
+theorem exists_recovery_of_encoderKL [Nonempty L] (hV : Vᴴ * V = 1) (h : EncoderKL V E) :
+    ∃ (c : Matrix ι ι ℂ) (R : Channel n n (Option ι)),
+      ∀ ρ : Matrix n n ℂ, ρ = V * Vᴴ * ρ * (V * Vᴴ) →
+        ∀ i j, R.apply (E i * ρ * (E j)ᴴ) = c j i • ρ := by
+  obtain ⟨c, hc⟩ := exists_knillLaflamme_of_encoderKL h
+  obtain ⟨R, hR⟩ := exists_recovery_of_knillLaflamme (isCodeProjector_mul_conjTranspose hV)
+    (mul_conjTranspose_ne_zero hV) hc
+  exact ⟨c, R, hR⟩
+
+/-- ★ **A unitary error is undone exactly**: if a recovery returns a code state up to a scalar and
+the error is unitary, that scalar is `1`, because both the error and the channel preserve the
+trace. -/
+theorem smul_eq_one_of_unitary {κ : Type*} [Fintype κ] (R : Channel n n κ)
+    {E ρ : Matrix n n ℂ} (hE : Eᴴ * E = 1) {γ : ℂ}
+    (h : R.apply (E * ρ * Eᴴ) = γ • ρ) (hρ : ρ.trace ≠ 0) : γ = 1 := by
+  have h1 : (E * ρ * Eᴴ).trace = ρ.trace := by
+    rw [Matrix.trace_mul_cycle, hE, Matrix.one_mul]
+  refine mul_right_cancel₀ hρ ?_
+  calc γ * ρ.trace = (γ • ρ).trace := by rw [Matrix.trace_smul, smul_eq_mul]
+    _ = (R.apply (E * ρ * Eᴴ)).trace := by rw [h]
+    _ = (E * ρ * Eᴴ).trace := R.apply_trace _
+    _ = ρ.trace := h1
+    _ = 1 * ρ.trace := (one_mul _).symm
+
+end Encoder
+
 end QuantumInfo
 
 end

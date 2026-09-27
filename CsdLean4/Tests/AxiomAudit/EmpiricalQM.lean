@@ -1557,4 +1557,51 @@ pointer fails Yanase) and SWAP sharpness (both disjuncts fail, conclusion fails)
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_recovery_unitary_qubit
 
+/-! ### The concatenated Steane code: the quantum recovery at level k (SteaneEncoder.lean,
+SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneEnc_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneEnc_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneEnc_pauli_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneEnc_pauli_pair
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneEnc_gateOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneEnc_gateOf
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_steaneEnc_gateOf_mul_gateOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_steaneEnc_gateOf_mul_gateOf
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_steaneEnc_blockKron' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_steaneEnc_blockKron
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_concatEnc_step' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_concatEnc_step
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.encoderKL_cErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.encoderKL_cErr
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_cErr_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_cErr_recovery
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.patErr_mem_span' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.patErr_mem_span
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_concat_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_concat_recovery
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_concat_recovery_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_concat_recovery_unitary
+
 end CSD.Tests.AxiomAudit

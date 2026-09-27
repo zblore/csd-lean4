@@ -80,6 +80,7 @@ public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Code
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Errors
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Distill
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Decoder
+public import CsdLean4.Mathlib.QuantumInfo.BlockKron
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 public import CsdLean4.Mathlib.QuantumInfo.QSearch
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
@@ -335,6 +336,8 @@ public import CsdLean4.Empirical.QM.QEC.Steane
 public import CsdLean4.Empirical.QM.QEC.SteaneRecovery
 public import CsdLean4.Empirical.QM.QEC.SteaneThreshold
 public import CsdLean4.Empirical.QM.QEC.SteaneArbitrary
+public import CsdLean4.Empirical.QM.QEC.SteaneEncoder
+public import CsdLean4.Empirical.QM.QEC.SteaneConcat
 public import CsdLean4.Mathlib.Probability.CodeCapacityThreshold
 public import CsdLean4.Empirical.QM.Uncertainty
 public import CsdLean4.Empirical.QM.Ozawa

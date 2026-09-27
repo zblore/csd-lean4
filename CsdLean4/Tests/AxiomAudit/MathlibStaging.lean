@@ -8810,4 +8810,35 @@ BACKLOG #61) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.ReedMuller15.decoderCircuit_encodedMagic_apply
 
+/-! ### The tensor over blocks, and Knill-Laflamme in encoder form (BlockKron.lean,
+KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
+
+/-- info: 'QuantumInfo.blockKron_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.blockKron_mul
+
+/-- info: 'QuantumInfo.blockKron_sum_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.blockKron_sum_smul
+
+/-- info: 'QuantumInfo.blockKron_single_eq_gateOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.blockKron_single_eq_gateOf
+
+/-- info: 'QuantumInfo.knillLaflamme_of_encoder' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.knillLaflamme_of_encoder
+
+/-- info: 'QuantumInfo.encoder_of_knillLaflamme' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.encoder_of_knillLaflamme
+
+/-- info: 'QuantumInfo.exists_recovery_of_encoderKL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_recovery_of_encoderKL
+
+/-- info: 'QuantumInfo.smul_eq_one_of_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.smul_eq_one_of_unitary
+
 end CSD.Tests.AxiomAudit

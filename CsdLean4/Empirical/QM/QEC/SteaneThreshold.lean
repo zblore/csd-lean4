@@ -39,7 +39,11 @@ whose pattern has at most one error is restored exactly. At higher levels the th
 pattern recursion of the code-capacity argument (the probability that two or more sub-blocks are
 bad); the concatenated *quantum* recovery — decode each block, correct the resulting block errors
 with the next level's code, which corrects an arbitrary error on one block because the Paulis
-span the operators of a qubit — is BACKLOG #86. Its span step is landed
+span the operators of a qubit — landed 2026-09-27 in `SteaneConcat.lean` (BACKLOG #86), so the
+quantum statement now holds at every level: one recovery channel per level restores every code
+state from every pattern with `isBad 7 k x = false`, exactly when the error is unitary
+(`exists_concat_recovery_unitary`), and the patterns it excludes are exactly the `concatBad 7 k`
+bounded here. Its span step is landed
 (`SteaneArbitrary.lean`, #61, 2026-09-26): an arbitrary error on one qubit is corrected. The circuit-level threshold theorem (faulty
 gates, error propagation through gadgets, extended rectangles) is not attempted: BACKLOG #62.
 

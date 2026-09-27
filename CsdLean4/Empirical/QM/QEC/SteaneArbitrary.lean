@@ -51,10 +51,10 @@ qubits in error are outside the Steane code's reach at level one, as before.
 trace-decreasing, and the recovery returns the code state with that weight. Nothing here normalises
 it away.
 ⚠️ This is the discretization step of BACKLOG #61, not the row: the concatenated *quantum* recovery
-at level `k` — the level-`(k+1)` code as seven blocks each carrying a level-`k` encoded qubit, a
-block decoder, and the induction — still needs a tensor layer over the blocks. What this file gives
-the induction is exactly the step its base case needs: an arbitrary *logical* error on one block is
-corrected by the next level up, because the Paulis span the operators of a qubit.
+at level `k` is `SteaneConcat.lean` (BACKLOG #86, 2026-09-27), which adds the tensor layer over the
+blocks (`Mathlib/QuantumInfo/BlockKron.lean`) and the induction. What this file gives that induction
+is exactly the step it needs: an arbitrary *logical* error on one block is corrected by the next
+level up, because the Paulis span the operators of a qubit.
 
 References: E. Knill, R. Laflamme, W. Zurek, Science 279 (1998); M. Nielsen, I. Chuang, *Quantum
 Computation and Quantum Information* §10.6; `Mathlib/QuantumInfo/KnillLaflamme.lean`;
