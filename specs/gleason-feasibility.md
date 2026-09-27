@@ -76,7 +76,7 @@ finishes. No compactness, no maximiser, no square roots except one unit square r
 (`Complex.cpow_nat_inv_pow`). This is the reason the reductions took a day rather than the
 spec's two.
 
-**A4 (real `N ≥ 3` from real `3`) was not built and is not on the path.** The complex theorem
+**A4 (real `N ≥ 3` from real `3`) was not on the path of the complex theorem, and landed 2026-09-27** (`Gleason/Real.lean`, BACKLOG #58): ★★★ `real_gleason_representation`, every real projection package on `ℝᴺ` (`N ≥ 3`) is `P ↦ Tr(ρ P)` for a unique real density matrix. It was built differently from the sketch below: the proof mirrors the complex assembly and reuses its Cauchy step (`additive_bounded_linear`), so only **pairs** need extending to a triple and the three-vector observation is never used; Gleason's bare *frame-function* form for `N ≥ 4` is BACKLOG #87. The complex theorem
 needs regularity on completely real *planes*, and every plane sits in a completely real
 `3`-space (`exists_orthonormal_triple`), so the core lemma is consumed directly. A4 is the
 reduction for a *real* Hilbert space corollary; priced S–M (the three-vector argument: any

@@ -7872,6 +7872,41 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Gleason.ProjectionPackage.gleason_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Gleason.ProjectionPackage.gleason_representation
 
+-- Real.lean (2026-09-27, BACKLOG #58): A4, Gleason for real Hilbert spaces.
+-- A1 over R: the frame function of a real package sums to 1 over every real orthonormal basis.
+/-- info: 'Gleason.RealProjectionPackage.sum_frame_orthonormalBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.RealProjectionPackage.sum_frame_orthonormalBasis
+-- A2 over R: the restriction to the span of an orthonormal family is a real frame function, of weight p of the family's projection (basis independent by the Gram identity).
+/-- info: 'Gleason.RealProjectionPackage.isFrameFunction_restrictR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.RealProjectionPackage.isFrameFunction_restrictR
+-- The core lemma of #57 applied to a triple.
+/-- info: 'Gleason.RealProjectionPackage.exists_isSymm_restrictR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.RealProjectionPackage.exists_isSymm_restrictR
+-- An orthonormal pair in R^N, N >= 3, extends to an orthonormal triple.
+/-- info: 'Gleason.exists_orthonormal_tripleR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.exists_orthonormal_tripleR
+-- STAR The parallelogram law on R^N, by Gram-Schmidt on any two vectors.
+/-- info: 'Gleason.RealProjectionPackage.ext_parallelogramR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.RealProjectionPackage.ext_parallelogramR
+-- The real Jordan-von Neumann engine: a quadratic-like function is the quadratic form of its polarisation matrix.
+/-- info: 'Gleason.IsQuadraticLikeR.eq_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.IsQuadraticLikeR.eq_dotProduct
+-- STAR A4: the frame function of a real package is the quadratic form of a symmetric matrix on the unit sphere.
+/-- info: 'Gleason.RealProjectionPackage.exists_isSymm_sphere' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.RealProjectionPackage.exists_isSymm_sphere
+-- From a quadratic form on the real sphere to a density matrix.
+/-- info: 'Gleason.quadraticForm_on_sphere_to_densityR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.quadraticForm_on_sphere_to_densityR
+-- The real projection descent: p P = Tr(A P) for every orthogonal projection.
+/-- info: 'Gleason.RealProjectionPackage.p_eq_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.RealProjectionPackage.p_eq_trace
+-- STAR Gleason's conclusion over R from the quadratic-form hypothesis.
+/-- info: 'Gleason.RealProjectionPackage.existsUnique_density_of_frame_quadraticR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.RealProjectionPackage.existsUnique_density_of_frame_quadraticR
+-- STAR STAR STAR Gleason's theorem for REAL Hilbert spaces, N >= 3: every real projection package is P |-> Tr(rho P) for a unique real density matrix. Foundational triple.
+/-- info: 'Gleason.RealProjectionPackage.real_gleason_representation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Gleason.RealProjectionPackage.real_gleason_representation
+
 -- 2026-09-23, R-013 DISCHARGED (BACKLOG #16): Reversible/HybridLift.lean, the generic half.
 -- gateMat g is the permutation matrix of a reversible gate's Boolean action (gateMat_CCX checks
 -- it against Lift.lean's hand-built ccxAtMat). measureCorrectMat pairs g mo is the

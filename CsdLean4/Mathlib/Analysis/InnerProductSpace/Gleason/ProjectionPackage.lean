@@ -20,8 +20,8 @@ algebra (`specs/gleason-feasibility.md`).
 A **projection package** on `ℂᴺ` assigns to every orthogonal projection `P` (an `IsStarProjection`
 matrix — self-adjoint idempotent) a number `p P` with `0 ≤ p P`, `p 1 = 1`, and
 `p (P + Q) = p P + p Q` whenever `P * Q = 0`. Gleason's theorem says that for `N ≥ 3` such a
-`p` is `P ↦ Tr(ρ P)` for a unique density matrix `ρ`; this file does not prove it (the core
-lemma on the real sphere `S²` is open, see `specs/gleason-feasibility.md`) but sets up:
+`p` is `P ↦ Tr(ρ P)` for a unique density matrix `ρ`; the theorem is `Gleason/Core.lean` (and its
+real counterpart `Gleason/Real.lean`), and this file sets up:
 
 * `rankOne v = |v⟩⟨v|`, a star projection for `‖v‖ = 1` (`isStarProjection_rankOne`), phase
   invariant (`rankOne_smul_of_norm_one`), with `∑ᵢ rankOne (bᵢ) = 1` over every orthonormal basis
