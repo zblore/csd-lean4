@@ -25,6 +25,8 @@ through `Matrix.kron`, which keeps the label space of a `k`-fold concatenation l
 * ★ `blockKron_sum` — **multilinearity**: expanding each block over a finite family expands the
   tensor over the function space of choices. This is what lets an arbitrary operator per block be
   written in a fixed finite family (`Matrix.matrix_eq_sum_single` at the leaves);
+* ★★ `blockKron_replace_eq_gateOf_mul` — **error propagation**: a fault at one block is a
+  single-block error after the ideal tensor;
 * ★ `blockKron_single_eq_gateOf` — the family with one slot filled and the identity elsewhere **is**
   #83's single-qubit gate `gateOf b₀ G` on a qubit register, which ties the layer back to the
   controlled-gate vocabulary.
@@ -142,5 +144,21 @@ theorem blockKron_single_eq_gateOf {m : ℕ} (b₀ : Fin m) (G : Matrix (Fin 2) 
     rw [Classical.not_imp] at hb
     refine Finset.prod_eq_zero (Finset.mem_univ b) ?_
     rw [if_neg hb.1, Matrix.one_apply, if_neg hb.2]
+
+/-- ★★ **Error propagation through a transversal gadget**: replacing the factor at one block by
+`E * A b₀` — a fault at that location, acting after the ideal single-qubit gate — is the ideal
+gadget followed by the **single-block** error `E`. One faulty location of a transversal gadget is a
+weight-one error, which is the reason transversal gadgets are fault-tolerant at all. -/
+theorem blockKron_replace_eq_gateOf_mul {m : ℕ} (A : Fin m → Matrix (Fin 2) (Fin 2) ℂ)
+    (b₀ : Fin m) (E : Matrix (Fin 2) (Fin 2) ℂ) :
+    blockKron (fun b => if b = b₀ then E * A b₀ else A b)
+      = Controlled.gateOf b₀ E * blockKron A := by
+  rw [← blockKron_single_eq_gateOf, blockKron_mul]
+  congr 1
+  funext b
+  by_cases h : b = b₀
+  · subst h
+    rw [if_pos rfl, if_pos rfl]
+  · rw [if_neg h, if_neg h, one_mul]
 
 end QuantumInfo

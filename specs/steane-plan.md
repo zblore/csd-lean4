@@ -38,8 +38,12 @@ The code space and the syndrome mechanism are exhibited; the full recovery map a
 Knill–Laflamme conditions landed 2026-09-21 (#14(a)(b)), and the code-capacity failure bound
 and threshold 2026-09-23 (#14(c) = #51, `SteaneThreshold.lean`: `≤ 21 p²` per block, `(21 p)^{2^k}/21`
 after `k` levels, `→ 0` for `p < 1/21`); the concatenated quantum recovery landed 2026-09-27 (#86, `SteaneEncoder.lean` + `SteaneConcat.lean`: Knill–Laflamme in encoder form composes under `blockKron`, one recovery channel per level, exact for unitary errors on every pattern with at most one bad sub-block per level — its discretization step #61 having landed 2026-09-26); the
-circuit-level threshold theorem (#62) is priced and **not attempted** — the same posture as the
-three-qubit modules. The `decide`-closed facts are finite computations on a
+circuit-level threshold theorem (#62) was priced and not attempted until 2026-09-28, when its
+first rung landed (#62 (a), `SteaneFaultyGate.lean` + `Mathlib/Probability/CircuitThreshold.lean`:
+faulty **gates** on a transversal gadget, the weight-one propagation, the faulty logical `X̄`, and
+the circuit's union bound and level count); (b)–(e) — the transversal Clifford gates,
+fault-tolerant syndrome extraction with the extended rectangle, the simulation theorem, the
+polylog overhead — stay priced and open. The `decide`-closed facts are finite computations on a
 fixed `3 × 7` matrix — the right tool, not a shortcut.
 
 ## Execution record — 2026-08-29

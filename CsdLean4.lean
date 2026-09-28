@@ -338,8 +338,10 @@ public import CsdLean4.Empirical.QM.QEC.Steane
 public import CsdLean4.Empirical.QM.QEC.SteaneRecovery
 public import CsdLean4.Empirical.QM.QEC.SteaneThreshold
 public import CsdLean4.Empirical.QM.QEC.SteaneArbitrary
+public import CsdLean4.Empirical.QM.QEC.SteaneFaultyGate
 public import CsdLean4.Empirical.QM.QEC.SteaneEncoder
 public import CsdLean4.Empirical.QM.QEC.SteaneConcat
+public import CsdLean4.Mathlib.Probability.CircuitThreshold
 public import CsdLean4.Mathlib.Probability.CodeCapacityThreshold
 public import CsdLean4.Empirical.QM.Uncertainty
 public import CsdLean4.Empirical.QM.Ozawa

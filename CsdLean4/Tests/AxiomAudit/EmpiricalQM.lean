@@ -1557,6 +1557,37 @@ pointer fails Yanase) and SWAP sharpness (both disjuncts fail, conclusion fails)
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_recovery_unitary_qubit
 
+/-! ### Faulty gates: a transversal gadget with one bad location (SteaneFaultyGate.lean,
+2026-09-28, BACKLOG #62 (a)) -/
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.faultyTransversal_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.faultyTransversal_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_faultyTransversal_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_faultyTransversal_recovery
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_faultyTransversal_recovery_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_faultyTransversal_recovery_unitary
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockKron_pX_eq_pauliMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockKron_pX_eq_pauliMat
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.logicalX_density' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.logicalX_density
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_faultyLogicalX_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_faultyLogicalX_recovery
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_circuit_threshold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_circuit_threshold
+
 /-! ### The concatenated Steane code: the quantum recovery at level k (SteaneEncoder.lean,
 SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 

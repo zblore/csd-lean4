@@ -340,8 +340,7 @@ corrects the single-flip channel exactly and, under independent bit-flip noise, 
 the double and triple flips are modelled, and mis-corrected into the logical flip — the residual the
 code-capacity recursion drives down (`concatMeasure_concatBad_le`).
 
-**What is not claimed.** The circuit-level threshold theorem (faulty gates, error propagation through the
-recovery gadgets; row 62), or that a fault-tolerant machine follows from the chain. The concatenated
+**What is not claimed.** The circuit-level threshold theorem in full (row 62), or that a fault-tolerant machine follows from the chain. Its first rung **landed 2026-09-28** (row 62 (a)): with the noise on the **gates**, a fault at one location of a transversal gadget is a weight-one error after the ideal gadget (`faultyTransversal_eq`), so the recovery returns the ideal output — concretely for a faulty transversal logical `X̄` on an encoded qubit (`steane_faultyLogicalX_recovery`) — and the circuit's own accounting is proved: the union bound over `N` locations and the level an accuracy needs (`circuitMeasure_circuitBad_le`, `steane_circuit_threshold`). What stays open there is the recovery gadget's own faults — extended rectangles — and the simulation theorem that makes the levels compose (row 62 (b)–(e)). The concatenated
 quantum recovery is no longer on this list: it landed 2026-09-27 (row 86, `exists_concat_recovery_unitary`), still at code capacity — perfect encoder and recovery gates.
 
 ## 11. Arithmetic and resource counts

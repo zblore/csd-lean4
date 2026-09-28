@@ -8218,6 +8218,43 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms concatMeasure_concatBad_le
 
+-- BACKLOG #62 (a) (2026-09-28), Probability/CircuitThreshold.lean: the circuit-level
+-- accounting. card_concatPat (STAR): a level-k gadget has n^k fault locations, so its
+-- pattern space has 2^(n^k) elements - the overhead of the recursive simulation.
+-- circuitMeasure/circuitBad: independent faults at every location of every gadget of a
+-- circuit of N locations, the circuit failing when some gadget is bad;
+-- circuitMeasure_circuitBad_le (STAR STAR): the union bound over the locations on top of
+-- the code-capacity recursion, N (c p)^(2^k)/c. mul_codeCapacityBound_lt_of_log_div_lt
+-- (STAR): any k with 2^k > log(c eps/N)/log(c p) suffices - the level grows like log log.
+-- exists_level_mul_lt, exists_level_circuitMeasure_lt (STAR STAR STAR): below the
+-- threshold every accuracy is reached at some level, whatever the circuit's size.
+-- blockKron_replace_eq_gateOf_mul (STAR STAR, BlockKron.lean): error propagation - a
+-- fault at one block of a tensor-over-blocks operator is a single-block error after the
+-- ideal operator.
+/-- info: 'card_concatPat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms card_concatPat
+
+/-- info: 'circuitMeasure_circuitBad_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms circuitMeasure_circuitBad_le
+
+/-- info: 'mul_codeCapacityBound_lt_of_log_div_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms mul_codeCapacityBound_lt_of_log_div_lt
+
+/-- info: 'exists_level_mul_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_level_mul_lt
+
+/-- info: 'exists_level_circuitMeasure_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_level_circuitMeasure_lt
+
+/-- info: 'QuantumInfo.blockKron_replace_eq_gateOf_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.blockKron_replace_eq_gateOf_mul
+
 /-- info: 'WignerFunction.fourier_comp_affine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.fourier_comp_affine
