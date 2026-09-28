@@ -598,6 +598,7 @@ public import CsdLean4.RecordLayer.KSigmaRecord
 public import CsdLean4.Empirical.CSD.EraserDynamics
 public import CsdLean4.Empirical.CSD.EraserSequential
 public import CsdLean4.Mathlib.Analysis.Calculus.SchrodingerCurrent
+public import CsdLean4.Mathlib.Dynamics.Koopman
 public import CsdLean4.Mathlib.Analysis.Calculus.FDeriv.Quotient
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.HamiltonianVectorField
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerClosed

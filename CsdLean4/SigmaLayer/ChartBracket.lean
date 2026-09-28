@@ -10,6 +10,7 @@ public import Mathlib.Analysis.Calculus.FDeriv.Add
 public import Mathlib.Analysis.Calculus.FDeriv.Mul
 public import Mathlib.Analysis.Calculus.Deriv.Comp
 public import Mathlib.LinearAlgebra.Pi
+public import CsdLean4.Mathlib.Dynamics.Koopman
 
 /-!
 # SigmaLayer/ChartBracket: the Poisson bracket in a Darboux chart, and why the weights commute
@@ -186,5 +187,22 @@ theorem weight_conserved_of_disjoint {w H : Chart n → ℝ} {S T : Finset (Fin 
     HasDerivAt (fun s => w (γ s)) 0 t :=
   conserved_of_bracket_eq_zero hd
     (fun z => poissonBracket_eq_zero_of_disjoint hw hwS hHT hST z) hγ hf t
+
+/-! ### ★ The Koopman generator is the Liouvillian -/
+
+/-- ★ **The Koopman generator is the Liouvillian.** Along the Hamiltonian flow, the Koopman
+evolution of an observable differentiates to its Poisson bracket with `H`: the abstract generator of
+`Mathlib/Dynamics/Koopman.lean` (`hasDerivAt_koopmanFun`, the derivative of `f` along the flow's
+velocity field) read in a Darboux chart, where the velocity field is `hamiltonianField H` and the
+derivative along it is `{f, H}` (`BracketIsDerivative`, the chain-rule step taken as a hypothesis as
+everywhere else in this file). This is BACKLOG #47's Liouvillian half: the classical unitary group of
+Koopman–von Neumann has `i{H, ·}` as its generator on differentiable observables. -/
+theorem hasDerivAt_koopmanFun_poissonBracket {f H : Chart n → ℝ} (hd : BracketIsDerivative f H)
+    {φ : ℝ → Chart n → Chart n} {x : Chart n} {t : ℝ}
+    (hφ : HasDerivAt (fun s => φ s x) (hamiltonianField H (φ t x)) t)
+    (hf : DifferentiableAt ℝ f (φ t x)) :
+    HasDerivAt (fun s => Koopman.koopmanFun (φ s) f x) (poissonBracket f H (φ t x)) t := by
+  have h := Koopman.hasDerivAt_koopmanFun hφ hf
+  rwa [hd (φ t x)] at h
 
 end CSD.SigmaLayer

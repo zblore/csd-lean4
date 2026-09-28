@@ -9198,6 +9198,37 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Schrodinger.nelson_fokkerPlanck
 
+-- BACKLOG #47 (2026-09-28), Dynamics/Koopman.lean: classical mechanics in Hilbert space.
+-- koopmanL2 (STAR): the Koopman operator of a measure-preserving map as a LINEAR isometry of
+-- L^2 (Mathlib has the AddMonoidHom and its isometry, not the linear packaging).
+-- koopmanUnitary (STAR STAR): for an invertible measure-preserving map it is unitary - a
+-- LinearIsometryEquiv whose inverse is the Koopman operator of the inverse map.
+-- koopmanL2_flow (STAR STAR): the group law U_{s+t} = U_t U_s, so t -> U_t is a
+-- one-parameter unitary group. koopmanFun_mul: on observables the map is an algebra
+-- homomorphism for the pointwise product - the classical side of the contrast.
+-- hasDerivAt_koopmanFun (STAR): the generator on differentiable observables, the derivative
+-- of f along the flow's velocity field; in a Darboux chart that is the Poisson bracket
+-- (SigmaLayer/ChartBracket.lean's hasDerivAt_koopmanFun_poissonBracket, the Liouvillian).
+/-- info: 'Koopman.koopmanL2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Koopman.koopmanL2
+
+/-- info: 'Koopman.koopmanUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Koopman.koopmanUnitary
+
+/-- info: 'Koopman.koopmanL2_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Koopman.koopmanL2_flow
+
+/-- info: 'Koopman.koopmanFun_mul' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms Koopman.koopmanFun_mul
+
+/-- info: 'Koopman.hasDerivAt_koopmanFun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Koopman.hasDerivAt_koopmanFun
+
 /-- info: 'ContinuousAlternatingMap.compContinuousLinearMap_apply_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ContinuousAlternatingMap.compContinuousLinearMap_apply_pair

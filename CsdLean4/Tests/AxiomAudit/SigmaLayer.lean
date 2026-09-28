@@ -2779,6 +2779,14 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.SigmaLayer.conserved_of_bracket_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.conserved_of_bracket_eq_zero
 
+-- BACKLOG #47 (2026-09-28): the Koopman generator IS the Liouvillian. The abstract generator
+-- of Mathlib/Dynamics/Koopman.lean (the derivative of an observable along the flow's velocity
+-- field) read in a Darboux chart, where the field is hamiltonianField H and the derivative
+-- along it is the Poisson bracket {f, H} (BracketIsDerivative, the chain-rule step taken as a
+-- hypothesis as everywhere else in this file).
+/-- info: 'CSD.SigmaLayer.hasDerivAt_koopmanFun_poissonBracket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms CSD.SigmaLayer.hasDerivAt_koopmanFun_poissonBracket
+
 -- ChartIntegralCurve (2026-09-01, SigmaLayer/ChartIntegralCurve.lean; frozen-base scoping
 -- brick 0). conserved_of_bracket_eq_zero took the integral curve as a HYPOTHESIS (hgamma),
 -- so the chart model said "the field is written down", not "the propagator IS its integral
