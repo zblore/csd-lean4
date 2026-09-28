@@ -134,7 +134,7 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   `AXIOMS.md` §3 names it one of the three load-bearing postulates, alongside the ontic substrate
   and the sector.
 * **⚠️ A second commitment rides along:** that one preparation law serves every trial — i.i.d.
-  *across preparations*. Bohmian quantum equilibrium carries the analogous assumption. It is
+  *across preparations*. Bohmian quantum equilibrium carries the analogous assumption (the shared mathematics — the continuity equation and its two single-trajectory readings — is proved in `Mathlib/Analysis/Calculus/SchrodingerCurrent.lean`, and the contrast with CSD is written out in [`bohm-nelson-scoping.md`](bohm-nelson-scoping.md), BACKLOG #46). It is
   implicit in the product measure and is registered in its own right as **Posit 8** (measurement
   independence); `specs/sigma-fibre-contextuality.md` calls it measurement-independence.
 * **What backs it short of derivation.** Self-consistency: the strong law shows the reading does not

@@ -597,6 +597,7 @@ public import CsdLean4.RecordLayer.KSigmaRecord
 -- test roots; added so the default consumer root reaches every non-test module.
 public import CsdLean4.Empirical.CSD.EraserDynamics
 public import CsdLean4.Empirical.CSD.EraserSequential
+public import CsdLean4.Mathlib.Analysis.Calculus.SchrodingerCurrent
 public import CsdLean4.Mathlib.Analysis.Calculus.FDeriv.Quotient
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.HamiltonianVectorField
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerClosed

@@ -9156,6 +9156,48 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms HasFDerivAt.div
 
+-- BACKLOG #46 (2026-09-28), Analysis/Calculus/SchrodingerCurrent.lean: the probability
+-- current and the continuity equation, with the two single-trajectory readings.
+-- hasDerivAt_probCurrent (STAR): d_x J = Im(conj psi d^2_x psi), the Im(conj dpsi dpsi) = 0
+-- cancellation. hasDerivAt_probDensity_time (STAR): d_t rho = 2 Re(conj psi d_t psi).
+-- continuity_equation (STAR STAR): d_t rho + d_x J = 0 from the pointwise Schrodinger
+-- equation with a real potential. probCurrent_polar (STAR): J = R^2 d_x S in polar form,
+-- so continuity_polar (STAR STAR) is BOHM'S EQUIVARIANCE, d_t rho + d_x(rho v) = 0, and
+-- hasDerivAt_density_along_trajectory (STAR STAR) is its Lagrangian form d rho/dt =
+-- -rho d_x v. nelsonFlux with nelson_fokkerPlanck (STAR STAR): the same flux split with
+-- the osmotic drift solves the Fokker-Planck equation of Nelson's diffusion.
+/-- info: 'Schrodinger.hasDerivAt_probCurrent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Schrodinger.hasDerivAt_probCurrent
+
+/-- info: 'Schrodinger.hasDerivAt_probDensity_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Schrodinger.hasDerivAt_probDensity_time
+
+/-- info: 'Schrodinger.continuity_equation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Schrodinger.continuity_equation
+
+/-- info: 'Schrodinger.probCurrent_polar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Schrodinger.probCurrent_polar
+
+/-- info: 'Schrodinger.continuity_polar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Schrodinger.continuity_polar
+
+/-- info: 'Schrodinger.hasDerivAt_density_along_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Schrodinger.hasDerivAt_density_along_trajectory
+
+/-- info: 'Schrodinger.nelsonFlux_eq_mul_drift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Schrodinger.nelsonFlux_eq_mul_drift
+
+/-- info: 'Schrodinger.nelson_fokkerPlanck' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Schrodinger.nelson_fokkerPlanck
+
 /-- info: 'ContinuousAlternatingMap.compContinuousLinearMap_apply_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms ContinuousAlternatingMap.compContinuousLinearMap_apply_pair
