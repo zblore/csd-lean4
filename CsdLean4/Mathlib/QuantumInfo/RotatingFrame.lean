@@ -48,10 +48,15 @@ rigid rotation of a fixed Hamiltonian.
 * `rotHam`, `rotProp`, `rotHam_isHermitian`, `rotProp_zero`, `rotProp_mem_unitaryGroup`;
 * ★★ `hasDerivAt_rotProp` — `V′ = −i H(t) V` for `V(t) = e^{−itG} e^{−it(H₀−G)}`;
 * ★ `hasDerivAt_rotState` — the same equation for the state `V(t) ψ₀` on `ℂᴺ`;
-* `pauliAxis`, `pauliAxis_isHermitian`, `su2_eq`, `pauliAxis_smul`, ★ `pauliAxis_mul_self`,
-  `axisRot_eq`, `su2_conjTranspose`, `axisRot_conjTranspose`, `axisRot_mul_conjTranspose`,
-  `axisRot_two_pi`;
-* ★ `smul_pauliAxis_mul_axisRot`, ★ `hasDerivAt_axisRot`, ★ `axisRot_z_conj`.
+* `inner_toEuclideanCLM_left` and ★ `inner_toEuclideanCLM_unitary` — a matrix crosses an inner
+  product as its conjugate transpose, and a unitary preserves it;
+* `pauliAxis`, `pauliAxis_isHermitian`, `su2_eq`, `pauliAxis_eq_smul_su2`, `su2_scalar`,
+  `su2_mul_self_imaginary`, `pauliAxis_smul`, `smul_pauliAxis`, `pauliAxis_add`, `pauliAxis_sub`,
+  ★ `pauliAxis_mul_self` (with `pauliAxis_mul_self_of_unit`);
+* `axisRot_eq`, `su2_conjTranspose`, `axisRot_conjTranspose`, `axisRot_mul_conjTranspose`,
+  `axisRot_two_pi`, `commute_smul_pauliAxis_axisRot`;
+* ★ `smul_pauliAxis_mul_axisRot`, ★ `hasDerivAt_axisRot` and ★ `hasDerivAt_axisRot_right` (the
+  generator on either side), ★ `su2_z_conj` and ★ `axisRot_z_conj`.
 
 ## Honest scope
 
