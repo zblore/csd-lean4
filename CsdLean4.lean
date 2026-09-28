@@ -651,6 +651,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMoment
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerFlow
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerHolomorphic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFisherRao
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricPhase
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCircle
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCircleTranslation

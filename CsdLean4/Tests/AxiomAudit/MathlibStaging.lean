@@ -8970,4 +8970,74 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.SU2.axisRot_z_conj
 
+/-! BACKLOG #65: the curvature of the geometric phase is the Fubini–Study form. -/
+
+/-- info: 'Projectivization.studyForm_add_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.studyForm_add_smul_left
+
+/-- info: 'Projectivization.studyForm_add_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.studyForm_add_smul_right
+
+/-- info: 'Projectivization.studyForm_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.studyForm_smul
+
+/-- info: 'Projectivization.studyForm_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.studyForm_lift
+
+/-- info: 'Projectivization.studyForm_of_unit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.studyForm_of_unit
+
+/-- info: 'Projectivization.re_inner_deriv_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.re_inner_deriv_eq_zero
+
+/-- info: 'Projectivization.fsModelForm_eq_studyForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_eq_studyForm
+
+/-- info: 'Projectivization.chartVelCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartVelCLM_apply
+
+/-- info: 'Projectivization.hasDerivAt_coordRatio' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasDerivAt_coordRatio
+
+/-- info: 'Projectivization.insertOne_coordRatio' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.insertOne_coordRatio
+
+/-- info: 'Projectivization.insertZero_chartVelCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.insertZero_chartVelCLM
+
+/-- info: 'Projectivization.studyForm_chartVelCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.studyForm_chartVelCLM
+
+/-- info: 'Projectivization.fsModelForm_eq_neg_two_mul_curvature' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_eq_neg_two_mul_curvature
+
+/-- info: 'Projectivization.hasMFDerivAt_projCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasMFDerivAt_projCurve
+
+/-- info: 'Projectivization.fsForm_eq_neg_two_mul_curvature' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_eq_neg_two_mul_curvature
+
+/-- info: 'Projectivization.curvature_eq_neg_half_fsPullback' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.curvature_eq_neg_half_fsPullback
+
+/-- info: 'Projectivization.geometricPhase_eq_half_integral_fsPullback' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.geometricPhase_eq_half_integral_fsPullback
+
 end CSD.Tests.AxiomAudit

@@ -1658,4 +1658,18 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.BerryAdiabatic.norm_inner_state_sub_exp_le
 
+/-! BACKLOG #65: the Fubini–Study reading of the cone's disc. -/
+
+/-- info: 'CSD.Empirical.QM.BerryPhase.curvature_coneSurface_eq_neg_half_fsPullback' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryPhase.curvature_coneSurface_eq_neg_half_fsPullback
+
+/-- info: 'CSD.Empirical.QM.BerryPhase.integral_fsPullback_coneSurface' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryPhase.integral_fsPullback_coneSurface
+
+/-- info: 'CSD.Empirical.QM.BerryPhase.geometricPhase_coneCurve_eq_half_integral_fsPullback' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryPhase.geometricPhase_coneCurve_eq_half_integral_fsPullback
+
 end CSD.Tests.AxiomAudit

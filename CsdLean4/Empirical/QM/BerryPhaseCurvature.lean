@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Empirical.QM.BerryPhase
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhaseCurvature
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricPhase
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
@@ -32,10 +33,22 @@ curvature `2 Im⟪∂_sΨ, ∂_tΨ⟫` is `(θ/2) sin(sθ)`, and its integral ov
   computation `β = −Ω/2` (`geometricPhase_coneCurve_solidAngle`) and the disc integral: **the two
   derivations agree.**
 
+**The Fubini–Study reading** (BACKLOG #65, 2026-09-28), through
+`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceGeometricPhase.lean`:
+
+* ★ `curvature_coneSurface_eq_neg_half_fsPullback` — the curvature on this disc is `−1/2` of the
+  Fubini–Study form of `ℂℙ¹` on the velocities of the projected disc;
+* ★★ `integral_fsPullback_coneSurface` — **the form integrates to `−Ω` over the cap** in the
+  `dd^c` normalisation of `fsForm`, so ★★
+  `geometricPhase_coneCurve_eq_half_integral_fsPullback`: **`β` is half the integral of `ω_FS`**,
+  which is Berry's `−Ω/2`.
+
 ## Honest scope
 
 ⚠️ One surface, computed directly. Berry's adiabatic setting (BP-5, BACKLOG #56) is
-`CsdLean4/Empirical/QM/BerryAdiabatic.lean`; the discrete Aharonov–Bohm ring is BP-4 (#55).
+`CsdLean4/Empirical/QM/BerryAdiabatic.lean`; the discrete Aharonov–Bohm ring is BP-4 (#55). The
+`∫∫` here is an iterated interval integral of a function on the rectangle, not an integral of a
+form over a chain (the corpus defines none).
 
 References: M. V. Berry, Proc. R. Soc. A 392 (1984) 45, §§3, 5; `specs/berry-phase-scoping.md`;
 `specs/qm-empirical-tests.md` ER3; `specs/BACKLOG.md` #54.
@@ -200,6 +213,57 @@ theorem curvature_formula_consistent (θ : ℝ) :
     -∫ s in (0 : ℝ)..1, ∫ t in (0 : ℝ)..(2 * π), curvature (coneSurface θ) (s, t)
       = geometricPhase (coneCurve θ) (2 * π) 0 := by
   rw [integral_curvature_coneSurface, geometricPhase_coneCurve_solidAngle]
+
+/-! ### The Fubini–Study reading (BACKLOG #65)
+
+`Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceGeometricPhase.lean` identifies the curvature
+with the Fubini–Study form of `ℂℙⁿ` on the velocities of the projected family. Here is that
+identification on this disc, where the number is Berry's: the form integrates to minus the solid
+angle over the cap, so half its integral is the geometric phase. -/
+
+/-- The cone's disc is a family of unit vectors, hence never zero. -/
+theorem coneSurface_ne_zero (θ : ℝ) (p : ℝ × ℝ) : coneSurface θ p ≠ 0 :=
+  Projectivization.ne_zero_of_norm_eq_one (norm_coneSurface θ p)
+
+/-- ★ **The curvature on the cone's disc is `−1/2` of the Fubini–Study form** of `ℂℙ¹` on the
+velocities of the projected disc. -/
+theorem curvature_coneSurface_eq_neg_half_fsPullback (θ s t : ℝ) :
+    curvature (coneSurface θ) (s, t)
+      = -(1 / 2) * Projectivization.fsPullback (coneSurface θ) (coneSurface_ne_zero θ) (s, t) :=
+  Projectivization.curvature_eq_neg_half_fsPullback (coneSurface_ne_zero θ) (norm_coneSurface θ)
+    ((contDiff_coneSurface θ).differentiable (by norm_num) _)
+
+/-- ★★ **The Fubini–Study form integrates to minus the solid angle over the cap.** In the
+`dd^c log(1 + ‖z‖²)` normalisation of `fsForm` — whose value at a chart origin is `−4 Im⟪·,·⟫` — the
+pullback of `ω_FS` along the cone's disc has total integral `−Ω`, `Ω = 2π(1 − cos θ)` the solid
+angle of the cone. -/
+theorem integral_fsPullback_coneSurface (θ : ℝ) :
+    ∫ s in (0 : ℝ)..1, ∫ t in (0 : ℝ)..(2 * π),
+        Projectivization.fsPullback (coneSurface θ) (coneSurface_ne_zero θ) (s, t)
+      = -solidAngle θ := by
+  have hpt : ∀ s t : ℝ,
+      Projectivization.fsPullback (coneSurface θ) (coneSurface_ne_zero θ) (s, t)
+        = -2 * curvature (coneSurface θ) (s, t) := fun s t =>
+    Projectivization.fsForm_eq_neg_two_mul_curvature (coneSurface_ne_zero θ)
+      (norm_coneSurface θ) ((contDiff_coneSurface θ).differentiable (by norm_num) _)
+  have hinner : ∀ s : ℝ, ∫ t in (0 : ℝ)..(2 * π),
+      Projectivization.fsPullback (coneSurface θ) (coneSurface_ne_zero θ) (s, t)
+        = -2 * ∫ t in (0 : ℝ)..(2 * π), curvature (coneSurface θ) (s, t) := by
+    intro s
+    rw [← integral_const_mul]
+    exact integral_congr fun t _ => hpt s t
+  rw [integral_congr fun s _ => hinner s, integral_const_mul, integral_curvature_coneSurface]
+  ring
+
+/-- ★★ **Berry's phase for the cone is half the integral of the Fubini–Study form over the cap** —
+BP-3 in the form the textbooks state it, `β = (1/2) ∫∫ [Ψ]^* ω_FS = −Ω/2`, with the repository's own
+`fsForm` and its own normalisation. -/
+theorem geometricPhase_coneCurve_eq_half_integral_fsPullback (θ : ℝ) :
+    geometricPhase (coneCurve θ) (2 * π) 0
+      = 1 / 2 * ∫ s in (0 : ℝ)..1, ∫ t in (0 : ℝ)..(2 * π),
+          Projectivization.fsPullback (coneSurface θ) (coneSurface_ne_zero θ) (s, t) := by
+  rw [integral_fsPullback_coneSurface, geometricPhase_coneCurve_solidAngle]
+  ring
 
 end BerryPhase
 end QM

@@ -48,7 +48,10 @@ collapsed edge nothing, and the cut contributes `−(φ 1 − φ 0) = −φ`, th
 (`Ψ (s, t) = F (s cos t, s sin t)`), so nothing is lost for `C²` discs, but the statement is not
 Stokes on a manifold. The identification of `curvature` with the pullback of the corpus's
 bundle-level Fubini–Study form (`fsForm` of `ProjectiveSpaceFubiniStudyForm.lean`) along the
-projection of `Ψ` to `ℙ(E)` is BACKLOG #65.
+projection of `Ψ` to `ℙ(E)` is **BACKLOG #65, done 2026-09-28**:
+`CsdLean4/Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceGeometricPhase.lean` proves
+`curvature Ψ p = −(1/2) · ω_FS` on the velocities of `[Ψ]`
+(★★★ `fsForm_eq_neg_two_mul_curvature`), hence `β = (1/2) ∫∫ [Ψ]^* ω_FS`.
 
 References: M. V. Berry, Proc. R. Soc. A 392 (1984) 45, §3; B. Simon, PRL 51 (1983) 2167;
 Y. Aharonov, J. Anandan, PRL 58 (1987) 1593; `specs/berry-phase-scoping.md` BP-3;

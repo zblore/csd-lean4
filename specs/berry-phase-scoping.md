@@ -66,7 +66,7 @@ the sector's Schrödinger orbits plus BP-4 for the flux experiment; ER3's status
 
 BP-1 landed as `Mathlib/Analysis/InnerProductSpace/GeometricPhase.lean` (Category 1) and BP-2 as
 `Empirical/QM/BerryPhase.lean` (Category 3); see the module headers and `BACKLOG.md` #10 for the
-theorem list and pin counts. BP-3 landed 2026-09-23 (`BACKLOG.md` #54; its `fsForm` identification is #65); BP-4, BP-5 are #55–#56. The row's "L" was the
+theorem list and pin counts. BP-3 landed 2026-09-23 (`BACKLOG.md` #54; its `fsForm` identification is #65, **done 2026-09-28**: the curvature IS `−(1/2)ω_FS` on the projected velocities, and the cone's cap integral of `ω_FS` is `−Ω`); BP-4, BP-5 are #55–#56. The row's "L" was the
 price of the bundle-theoretic statement, which is not stateable at the pin; the stateable half
 took M.
 
