@@ -1627,6 +1627,49 @@ BACKLOG #62 (b)) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_faultyHadamard_recovery
 
+/-! ### The transversal CNOT across two Steane blocks (SteaneTransversalCNOT.lean,
+2026-09-28, BACKLOG #62 (f)) -/
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pairEnc_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pairEnc_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneEnc_eq_cosetAmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneEnc_eq_cosetAmp
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cosetAmp_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cosetAmp_shift
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneEnc_mul_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneEnc_mul_shift
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cnotT_mul_pairEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cnotT_mul_pairEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cnotT_conj_pairEnc_code' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cnotT_conj_pairEnc_code
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.encoderKL_pairFam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.encoderKL_pairFam
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_pair_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_pair_recovery
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pairFault_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pairFault_eq_sum
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_faultyCNOT_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_faultyCNOT_recovery
+
 /-! ### The concatenated Steane code: the quantum recovery at level k (SteaneEncoder.lean,
 SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 

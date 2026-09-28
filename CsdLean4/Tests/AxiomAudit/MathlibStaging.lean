@@ -8278,6 +8278,27 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.hadTransversal_conj_pauliMat
 
+-- BACKLOG #62 (f) (2026-09-28), the permutation-matrix layer of TransversalClifford.lean:
+-- permMat sigma is the gate sending |w> to |sigma w>, with the row/column reindexing
+-- lemmas (permMat_mul_apply, mul_permMat_apply) and, for an involution, Hermitian,
+-- self-inverse and unitary. A transversal CNOT is one of these, which is why its logical
+-- action needs no amplitudes.
+/-- info: 'QuantumInfo.permMat_mul_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.permMat_mul_apply
+
+/-- info: 'QuantumInfo.mul_permMat_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.mul_permMat_apply
+
+/-- info: 'QuantumInfo.permMat_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.permMat_mul_self
+
+/-- info: 'QuantumInfo.permMat_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.permMat_mem_unitaryGroup
+
 /-- info: 'pow_eq_rpow_logb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms pow_eq_rpow_logb

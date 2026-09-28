@@ -51,7 +51,7 @@ single-qubit gate per qubit of the block, with one of its seven locations faulty
 
 ⚠️ **Faulty gates, ideal recovery.** The recovery channel here is the perfect one of #14(b): faults
 inside the *recovery* gadget — hence extended rectangles, and with them the simulation theorem that
-makes the levels compose — are not treated. That is what BACKLOG #62 (c), (d) and (f) hold.
+makes the levels compose — are not treated. That is what BACKLOG #62 (c) and (d) hold.
 
 ⚠️ **One fault per gadget, level one.** The quantum statement is for a single faulty location of a
 single transversal gadget on one block. The recursion over levels is the probabilistic one
@@ -60,9 +60,9 @@ theorem at code capacity, not a statement about faulty gates.
 
 ⚠️ A transversal gadget is not a universal gate set: `blockKron A` for arbitrary `A` need not
 preserve the code space, which is why the general theorem carries that as a hypothesis — discharged
-here for `X̄`, `Z̄` and the Hadamard. The two-block transversal `CNOT` is **not** here: it needs a
-faulty-gadget theorem across *two* blocks, a different statement from (a)'s, and it is BACKLOG
-#62 (f).
+here for `X̄`, `Z̄` and the Hadamard. The two-block transversal `CNOT` is not here because it needs
+a faulty-gadget theorem across *two* blocks, a different statement from (a)'s; that is
+[`SteaneTransversalCNOT.lean`](SteaneTransversalCNOT.lean) (#62 (f), landed 2026-09-28).
 
 ⚠️ The Hadamard's logical action is proved in the **Heisenberg** picture (where `X̄` and `Z̄` go) and
 through the projector, which is what fault tolerance needs. That `H^{⊗ 7}|0̄⟩ = (|0̄⟩ + |1̄⟩)/√2` in

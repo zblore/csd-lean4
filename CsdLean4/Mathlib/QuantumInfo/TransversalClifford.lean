@@ -19,6 +19,9 @@ once in Lean, because `pauliMat a b` is defined by its entries and `blockKron` b
 blocks. Once said, the conjugation rule of a **transversal** gate is the single-qubit rule raised to
 the tensor power, and that is the whole mechanism of transversality.
 
+* `permMat σ` — the matrix of a basis permutation, with the row/column reindexing lemmas
+  (`permMat_mul_apply`, `mul_permMat_apply`) and, for an involution, `permMat_conjTranspose`,
+  `permMat_mul_self`, `permMat_mem_unitaryGroup`. A transversal `CNOT` is one of these;
 * `onePauli u v` — the single-qubit Pauli `X^u Z^v`, and ★★ `pauliMat_eq_blockKron`:
   `pauliMat a b = ⨂ᵢ onePauli (aᵢ) (bᵢ)`;
 * `hGateM_mul_onePauli` and ★ `hGateM_conj_onePauli` — `H X^u Z^v H = (−1)^{uv} X^v Z^u`, the
@@ -53,6 +56,60 @@ namespace QuantumInfo
 open CliffordT SU2
 
 variable {n : ℕ}
+
+/-! ### Permutation matrices -/
+
+/-- The matrix of a **basis permutation**: the gate that sends `|w⟩` to `|σ w⟩`. A transversal
+`CNOT` is one of these, which is why its logical action needs no amplitudes. -/
+def permMat {α : Type*} [DecidableEq α] (σ : α → α) : Matrix α α ℂ :=
+  Matrix.of fun z w => if z = σ w then 1 else 0
+
+theorem permMat_apply {α : Type*} [DecidableEq α] (σ : α → α) (z w : α) :
+    permMat σ z w = if z = σ w then 1 else 0 := rfl
+
+/-- A permutation matrix on the left reindexes the rows by the permutation. -/
+theorem permMat_mul_apply {α β : Type*} [Fintype α] [DecidableEq α] {σ : α → α}
+    (hσ : Function.Involutive σ) (M : Matrix α β ℂ) (z : α) (c : β) :
+    (permMat σ * M) z c = M (σ z) c := by
+  rw [Matrix.mul_apply, Finset.sum_eq_single (σ z)]
+  · rw [permMat_apply, if_pos (hσ z).symm, one_mul]
+  · intro w _ hw
+    rw [permMat_apply, if_neg, zero_mul]
+    intro hzw
+    exact hw (by rw [hzw, hσ w])
+  · intro hmem
+    exact absurd (Finset.mem_univ _) hmem
+
+/-- A permutation matrix on the right reindexes the columns. -/
+theorem mul_permMat_apply {α β : Type*} [Fintype α] [DecidableEq α] (σ : α → α)
+    (M : Matrix β α ℂ) (z : β) (c : α) : (M * permMat σ) z c = M z (σ c) := by
+  rw [Matrix.mul_apply, Finset.sum_eq_single (σ c)]
+  · rw [permMat_apply, if_pos rfl, mul_one]
+  · intro d _ hd
+    rw [permMat_apply, if_neg hd, mul_zero]
+  · intro hmem
+    exact absurd (Finset.mem_univ _) hmem
+
+theorem permMat_conjTranspose {α : Type*} [DecidableEq α] {σ : α → α}
+    (hσ : Function.Involutive σ) : (permMat σ)ᴴ = permMat σ := by
+  ext z w
+  rw [Matrix.conjTranspose_apply, permMat_apply, permMat_apply]
+  by_cases h : z = σ w
+  · rw [if_pos h, if_pos (by rw [h, hσ w]), star_one]
+  · rw [if_neg h, if_neg fun hc => h (by rw [hc, hσ z]), star_zero]
+
+theorem permMat_mul_self {α : Type*} [Fintype α] [DecidableEq α] {σ : α → α}
+    (hσ : Function.Involutive σ) : permMat σ * permMat σ = 1 := by
+  ext z w
+  rw [permMat_mul_apply hσ, permMat_apply, Matrix.one_apply]
+  by_cases h : z = w
+  · rw [if_pos (by rw [h]), if_pos h]
+  · rw [if_neg fun hc => h (by rw [← hσ z, hc, hσ w]), if_neg h]
+
+theorem permMat_mem_unitaryGroup {α : Type*} [Fintype α] [DecidableEq α] {σ : α → α}
+    (hσ : Function.Involutive σ) : permMat σ ∈ Matrix.unitaryGroup α ℂ := by
+  rw [Matrix.mem_unitaryGroup_iff, Matrix.star_eq_conjTranspose, permMat_conjTranspose hσ]
+  exact permMat_mul_self hσ
 
 /-! ### A Pauli string is a tensor product over the qubits -/
 

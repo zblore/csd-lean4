@@ -44,8 +44,11 @@ faulty **gates** on a transversal gadget, the weight-one propagation, the faulty
 the circuit's union bound and level count); (b) and (e) landed the same day — the transversal `X̄`,
 `Z̄` and Hadamard are the code's logical gates (`TransversalClifford.lean`'s
 `hadTransversal_conj_pauliMat` plus the CSS condition) and the overhead is polylogarithmic — while
-(c) fault-tolerant syndrome extraction with the extended rectangle, (d) the simulation theorem and
-(f) the two-block transversal `CNOT` stay priced and open. The `decide`-closed facts are finite computations on a
+(f) the two-block transversal `CNOT` landed the same day
+(`SteaneTransversalCNOT.lean`: the gadget is a label permutation, the coset shift is the code's
+linearity, and one faulty location is corrected by the two-block Knill–Laflamme recovery), while
+(c) fault-tolerant syndrome extraction with the extended rectangle and (d) the simulation theorem
+stay priced and open. The `decide`-closed facts are finite computations on a
 fixed `3 × 7` matrix — the right tool, not a shortcut.
 
 ## Execution record — 2026-08-29
