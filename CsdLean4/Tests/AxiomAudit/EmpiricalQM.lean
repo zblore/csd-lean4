@@ -1588,6 +1588,45 @@ pointer fails Yanase) and SWAP sharpness (both disjuncts fail, conclusion fails)
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_circuit_threshold
 
+/-! ### The transversal logical gates of the Steane code (SteaneFaultyGate.lean, 2026-09-28,
+BACKLOG #62 (b)) -/
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockKron_pZ_eq_pauliMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockKron_pZ_eq_pauliMat
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.logicalZ_density' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.logicalZ_density
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_faultyLogicalZ_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_faultyLogicalZ_recovery
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneA_swapHalves' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneA_swapHalves
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.bdot_steaneA_steaneB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.bdot_steaneA_steaneB
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.hadTransversal_conj_steaneProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.hadTransversal_conj_steaneProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.hadTransversal_code_state' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.hadTransversal_code_state
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.hadTransversal_conj_logicalX' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.hadTransversal_conj_logicalX
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_faultyHadamard_recovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_faultyHadamard_recovery
+
 /-! ### The concatenated Steane code: the quantum recovery at level k (SteaneEncoder.lean,
 SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 

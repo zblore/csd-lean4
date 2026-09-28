@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Mathlib.Probability.CodeCapacityThreshold
 public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
 
 /-!
 # The circuit-level threshold: many locations, one union bound, and the level count
@@ -33,8 +34,12 @@ locations each, the union bound over the circuit, and the count of levels an acc
   at which the whole circuit fails with probability less than `ε`;
 * ★ `mul_codeCapacityBound_lt_of_log_div_lt` — the quantitative form: any `k` with
   `2^k > log(c ε / N) / log(c p)` will do. The right-hand side is a single logarithm, so the level
-  needed grows like `log log (N/ε)` and the overhead `L ^ k` of `card_concatPat` is polylogarithmic;
-  the `Nat.ceil` arithmetic of that last sentence is left to the reader and is not claimed here.
+  needed grows like `log log (N/ε)`;
+* ★★ `exists_level_two_pow_le` and ★★★ `exists_level_overhead_le` — **the overhead is
+  polylogarithmic**: the level `k = ⌈log₂ X⌉ + 1` (`X` the logarithm ratio above, floored at `1`)
+  both meets the accuracy and keeps `2^k ≤ 4X`, so the gadget's `L^k` fault locations are at most
+  `(4X)^{log₂ L}` — a fixed power of a logarithm of `N/ε`. `pow_eq_rpow_logb` is the identity
+  `L^k = (2^k)^{log₂ L}` that turns the doubling parameter into the overhead.
 
 ## Honest scope
 
@@ -213,6 +218,68 @@ theorem exists_level_circuitMeasure_lt (N L : ℕ) (ν : Measure Bool) [IsProbab
   refine ⟨k, lt_of_le_of_lt (circuitMeasure_circuitBad_le N L ν hp hν k) ?_⟩
   rw [← ENNReal.ofReal_natCast N, ← ENNReal.ofReal_mul (Nat.cast_nonneg N)]
   exact (ENNReal.ofReal_lt_ofReal_iff hε).mpr hk
+
+/-- The overhead as a power of the doubling parameter: `L ^ k = (2 ^ k) ^ (log₂ L)`. -/
+theorem pow_eq_rpow_logb {L : ℕ} (hL : 0 < L) (k : ℕ) :
+    ((L : ℝ)) ^ k = ((2 : ℝ) ^ k) ^ (Real.logb 2 L) := by
+  have hLpos : (0 : ℝ) < L := Nat.cast_pos.mpr hL
+  rw [← Real.rpow_natCast (2 : ℝ) k, ← Real.rpow_mul (by norm_num), mul_comm,
+    Real.rpow_mul (by norm_num), Real.rpow_logb (by norm_num) (by norm_num) hLpos,
+    Real.rpow_natCast]
+
+/-- ★★ **The level that meets an accuracy has a doubly-logarithmic doubling parameter.** Taking
+`k = ⌈log₂ X⌉ + 1`, where `X = max 1 (log(cε/N)/log(cp))` is the ratio of
+`mul_codeCapacityBound_lt_of_log_div_lt`, both brings the circuit bound below `ε` and keeps
+`2 ^ k ≤ 4 X`. -/
+theorem exists_level_two_pow_le {c p ε : ℝ} (hc : 0 < c) (hp : 0 < p) (h : c * p < 1)
+    {N : ℕ} (hN : 0 < N) (hε : 0 < ε) :
+    ∃ k : ℕ, (N : ℝ) * codeCapacityBound c p k < ε ∧
+      (2 : ℝ) ^ k ≤ 4 * max 1 (Real.log (c * ε / N) / Real.log (c * p)) := by
+  set X := max 1 (Real.log (c * ε / N) / Real.log (c * p)) with hXdef
+  have hX1 : (1 : ℝ) ≤ X := le_max_left _ _
+  have hXpos : (0 : ℝ) < X := lt_of_lt_of_le zero_lt_one hX1
+  have hlogX : 0 ≤ Real.logb 2 X := Real.logb_nonneg (by norm_num) hX1
+  have hceil : X ≤ (2 : ℝ) ^ (⌈Real.logb 2 X⌉₊) := by
+    calc X = (2 : ℝ) ^ (Real.logb 2 X) :=
+          (Real.rpow_logb (by norm_num) (by norm_num) hXpos).symm
+      _ ≤ (2 : ℝ) ^ ((⌈Real.logb 2 X⌉₊ : ℝ)) :=
+          (Real.rpow_le_rpow_left_iff (by norm_num)).mpr (Nat.le_ceil _)
+      _ = (2 : ℝ) ^ (⌈Real.logb 2 X⌉₊) := Real.rpow_natCast 2 _
+  have hceil2 : (2 : ℝ) ^ (⌈Real.logb 2 X⌉₊) ≤ 2 * X := by
+    have hlt : ((⌈Real.logb 2 X⌉₊ : ℕ) : ℝ) < Real.logb 2 X + 1 := Nat.ceil_lt_add_one hlogX
+    calc (2 : ℝ) ^ (⌈Real.logb 2 X⌉₊) = (2 : ℝ) ^ ((⌈Real.logb 2 X⌉₊ : ℝ)) :=
+          (Real.rpow_natCast 2 _).symm
+      _ ≤ (2 : ℝ) ^ (Real.logb 2 X + 1) :=
+          (Real.rpow_le_rpow_left_iff (by norm_num)).mpr hlt.le
+      _ = 2 * X := by
+          rw [Real.rpow_add (by norm_num), Real.rpow_logb (by norm_num) (by norm_num) hXpos,
+            Real.rpow_one]
+          ring
+  refine ⟨⌈Real.logb 2 X⌉₊ + 1, ?_, ?_⟩
+  · refine mul_codeCapacityBound_lt_of_log_div_lt hc hp h hN hε ?_
+    have hstep : (2 : ℝ) ^ (⌈Real.logb 2 X⌉₊) < (2 : ℝ) ^ (⌈Real.logb 2 X⌉₊ + 1) := by
+      rw [pow_succ]
+      nlinarith [pow_pos (show (0:ℝ) < 2 by norm_num) (⌈Real.logb 2 X⌉₊)]
+    calc Real.log (c * ε / N) / Real.log (c * p) ≤ X := le_max_right _ _
+      _ ≤ (2 : ℝ) ^ (⌈Real.logb 2 X⌉₊) := hceil
+      _ < (2 : ℝ) ^ (⌈Real.logb 2 X⌉₊ + 1) := hstep
+  · rw [pow_succ]
+    nlinarith [hceil2, hXpos]
+
+/-- ★★★ **The overhead of the recursive simulation is polylogarithmic.** At the level that meets
+the accuracy, a gadget's `L ^ k` fault locations (`card_concatPat`) are at most `(4 X) ^ (log₂ L)`,
+with `X` a *logarithm* of `N / ε`: a fixed power of a logarithm, which is what “polylogarithmic
+overhead” means in the threshold theorem. -/
+theorem exists_level_overhead_le {c p ε : ℝ} (hc : 0 < c) (hp : 0 < p) (h : c * p < 1)
+    {N : ℕ} (hN : 0 < N) (hε : 0 < ε) {L : ℕ} (hL : 0 < L) :
+    ∃ k : ℕ, (N : ℝ) * codeCapacityBound c p k < ε ∧
+      ((L : ℝ)) ^ k
+        ≤ (4 * max 1 (Real.log (c * ε / N) / Real.log (c * p))) ^ (Real.logb 2 L) := by
+  obtain ⟨k, hacc, hover⟩ := exists_level_two_pow_le hc hp h hN hε
+  refine ⟨k, hacc, ?_⟩
+  rw [pow_eq_rpow_logb hL k]
+  exact Real.rpow_le_rpow (by positivity) hover (Real.logb_nonneg (by norm_num)
+    (by exact_mod_cast hL))
 
 end Level
 

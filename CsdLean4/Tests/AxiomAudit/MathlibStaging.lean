@@ -8255,6 +8255,41 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.blockKron_replace_eq_gateOf_mul
 
+-- BACKLOG #62 (b) and (e) (2026-09-28). QuantumInfo/TransversalClifford.lean:
+-- pauliMat_eq_blockKron (STAR STAR): a Pauli string IS the tensor product of its
+-- single-qubit Paulis, onePauli (a i) (b i). hGateM_conj_onePauli (STAR): the four cases of
+-- H X H = Z, H Z H = X, with the sign (-1)^{uv}. hadTransversal_conj_pauliMat (STAR STAR):
+-- the transversal Hadamard exchanges the X- and Z-labels of every Pauli string - the
+-- single-qubit rule raised to the tensor power, and the mechanism of transversality.
+-- Probability/CircuitThreshold.lean, the overhead: pow_eq_rpow_logb (the identity
+-- L^k = (2^k)^(log2 L)), exists_level_two_pow_le (STAR STAR: the level meeting an accuracy
+-- has 2^k <= 4X, X the logarithm ratio - doubly logarithmic) and
+-- exists_level_overhead_le (STAR STAR STAR: the gadget's L^k fault locations are at most
+-- (4X)^(log2 L), a fixed power of a logarithm - polylogarithmic overhead).
+/-- info: 'QuantumInfo.pauliMat_eq_blockKron' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.pauliMat_eq_blockKron
+
+/-- info: 'QuantumInfo.hGateM_conj_onePauli' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.hGateM_conj_onePauli
+
+/-- info: 'QuantumInfo.hadTransversal_conj_pauliMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.hadTransversal_conj_pauliMat
+
+/-- info: 'pow_eq_rpow_logb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms pow_eq_rpow_logb
+
+/-- info: 'exists_level_two_pow_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_level_two_pow_le
+
+/-- info: 'exists_level_overhead_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_level_overhead_le
+
 /-- info: 'WignerFunction.fourier_comp_affine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.fourier_comp_affine

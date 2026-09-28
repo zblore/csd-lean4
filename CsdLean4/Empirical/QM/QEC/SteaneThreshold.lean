@@ -47,8 +47,10 @@ bounded here. Its span step is landed
 (`SteaneArbitrary.lean`, #61, 2026-09-26): an arbitrary error on one qubit is corrected. The circuit-level threshold theorem is BACKLOG #62, whose
 first rung landed 2026-09-28 (#62 (a), `SteaneFaultyGate.lean`): faulty **gates** on a transversal
 gadget, where one faulty location is a weight-one error after the ideal gadget, together with the
-circuit's union bound and level count (`Mathlib/Probability/CircuitThreshold.lean`). Extended
-rectangles — faults inside the recovery gadget — and the simulation theorem are still open there.
+circuit's union bound and level count (`Mathlib/Probability/CircuitThreshold.lean`). Its (b) and (e) landed the same day (the transversal `X̄`, `Z̄`
+and Hadamard as the code's logical gates; the polylogarithmic overhead). Extended rectangles —
+faults inside the recovery gadget — the simulation theorem and the two-block `CNOT` are still open
+there.
 
 References: A. Steane, *Error correcting codes in quantum theory*, PRL 77 (1996); E. Knill,
 R. Laflamme, W. Zurek, Science 279 (1998); `Empirical/QM/QEC/SteaneRecovery.lean`;

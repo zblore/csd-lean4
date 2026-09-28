@@ -9,12 +9,13 @@ public import CsdLean4.Empirical.QM.QEC.SteaneArbitrary
 public import CsdLean4.Empirical.QM.QEC.SteaneThreshold
 public import CsdLean4.Mathlib.Probability.CircuitThreshold
 public import CsdLean4.Mathlib.QuantumInfo.BlockKron
+public import CsdLean4.Mathlib.QuantumInfo.TransversalClifford
 
 /-!
 # Faulty gates: a transversal gadget on the Steane code, with one bad location
 
-**Category:** 3-Local (Empirical, QM twin). BACKLOG #62, its first rung: the noise sits on the
-**gates** now, not on resting qubits.
+**Category:** 3-Local (Empirical, QM twin). BACKLOG #62 (a) and (b): the noise sits on the
+**gates** now, not on resting qubits, and the transversal gadgets are the code's logical gates.
 
 Code capacity (#51, #86) puts the errors on the seven qubits of a block and keeps every gate
 perfect. The circuit-level model of Aharonov–Ben-Or puts a fault at every *location* of the circuit
@@ -28,12 +29,20 @@ single-qubit gate per qubit of the block, with one of its seven locations faulty
 * ★★★ `steane_faultyTransversal_recovery` — one channel returns the **ideal** output of the faulty
   gadget, up to the scalar of #61, whenever the ideal output is a code state; ★★★
   `steane_faultyTransversal_recovery_unitary` — exactly, for a unitary fault;
-* `blockKron_pX_eq_pauliMat` — the transversal `X` **is** the all-ones Pauli, the code's logical `X̄`
-  (an entrywise computation: a product of `X`s is `1` exactly on `w = z + 1⃗`), with
-  ★ `logicalX_density` — it flips the encoded qubit `a|0̄⟩ + b|1̄⟩ ↦ b|0̄⟩ + a|1̄⟩;
-* ★★★ `steane_faultyLogicalX_recovery` — **the concrete statement**: a faulty transversal logical
-  `X̄` on an encoded qubit, one location bad and the fault an arbitrary unitary, is corrected — the
-  recovery returns the ideally flipped encoded qubit;
+* `blockKron_pX_eq_pauliMat`, `blockKron_pZ_eq_pauliMat` — the transversal `X` and `Z` **are** the
+  all-ones Paulis, the code's logical `X̄` and `Z̄` (a Pauli string factorises over the qubits,
+  `pauliMat_eq_blockKron`, and `X = onePauli 1 0`, `Z = onePauli 0 1`), with ★ `logicalX_density`
+  and ★ `logicalZ_density` — they flip and sign the encoded qubit;
+* ★★★ `steane_faultyLogicalX_recovery` and ★★★ `steane_faultyLogicalZ_recovery` — **the
+  concrete statements**: a faulty transversal logical `X̄` (or `Z̄`) on an encoded qubit, one location
+  bad and the fault an arbitrary unitary, is corrected — the recovery returns the ideal output;
+* **the transversal Hadamard, #62 (b)**: `swapHalves` exchanges the halves of a stabiliser label, so
+  `steaneA_swapHalves`/`steaneB_swapHalves` turn the label swap of `hadTransversal_conj_pauliMat`
+  into a bijection of the family; with the CSS condition `bdot_steaneA_steaneB` killing the sign
+  that gives ★★ `hadTransversal_conj_steaneProj` — **the transversal Hadamard preserves the code
+  projector** — hence ★ `hadTransversal_code_state`, and ★★ `hadTransversal_conj_logicalX` /
+  `_logicalZ`: **it exchanges `X̄` and `Z̄`**, the logical Hadamard in the Heisenberg picture.
+  ★★★ `steane_faultyHadamard_recovery` is then (a)'s theorem for the Hadamard gadget;
 * ★★ `steane_circuit_threshold` — the accounting: a circuit of `N` such gadgets, faults independent
   at rate `p < 1/21`, reaches every accuracy at some concatenation level
   (`exists_level_circuitMeasure_lt` with `C(7, 2) = 21`).
@@ -42,8 +51,7 @@ single-qubit gate per qubit of the block, with one of its seven locations faulty
 
 ⚠️ **Faulty gates, ideal recovery.** The recovery channel here is the perfect one of #14(b): faults
 inside the *recovery* gadget — hence extended rectangles, and with them the simulation theorem that
-makes the levels compose — are not treated. That is what BACKLOG #62 still holds, and the two rows
-it was split into name the pieces.
+makes the levels compose — are not treated. That is what BACKLOG #62 (c), (d) and (f) hold.
 
 ⚠️ **One fault per gadget, level one.** The quantum statement is for a single faulty location of a
 single transversal gadget on one block. The recursion over levels is the probabilistic one
@@ -51,9 +59,14 @@ single transversal gadget on one block. The recursion over levels is the probabi
 theorem at code capacity, not a statement about faulty gates.
 
 ⚠️ A transversal gadget is not a universal gate set: `blockKron A` for arbitrary `A` need not
-preserve the code space, which is why the general theorem carries that as a hypothesis, discharged
-here for the logical `X̄`. Which transversal gates the Steane code admits (the Clifford group, by
-CSS self-duality) is not proved here.
+preserve the code space, which is why the general theorem carries that as a hypothesis — discharged
+here for `X̄`, `Z̄` and the Hadamard. The two-block transversal `CNOT` is **not** here: it needs a
+faulty-gadget theorem across *two* blocks, a different statement from (a)'s, and it is BACKLOG
+#62 (f).
+
+⚠️ The Hadamard's logical action is proved in the **Heisenberg** picture (where `X̄` and `Z̄` go) and
+through the projector, which is what fault tolerance needs. That `H^{⊗ 7}|0̄⟩ = (|0̄⟩ + |1̄⟩)/√2` in
+the Schrödinger picture — the MacWilliams/coset computation — is not proved here.
 
 References: D. Aharonov, M. Ben-Or, SIAM J. Comput. 38 (2008); P. Aliferis, D. Gottesman,
 J. Preskill, Quantum Inf. Comput. 6 (2006); A. Steane, PRL 77 (1996);
@@ -72,7 +85,7 @@ namespace QM
 namespace QEC
 namespace Steane
 
-open Controlled QuantumInfo.Controlled
+open Controlled QuantumInfo.Controlled QuantumInfo.CliffordT QuantumInfo.SU2
 
 /-! ### Error propagation through a transversal gadget -/
 
@@ -135,30 +148,32 @@ theorem steane_faultyTransversal_recovery_unitary :
   rw [hrewrite]
   exact hR _ hcode i E hE
 
-/-! ### The transversal `X` is the logical `X̄` -/
+/-! ### The transversal `X` and `Z` are the logical `X̄` and `Z̄` -/
 
-/-- The transversal `X` on the seven qubits **is** the all-ones Pauli: a product of `X`s is `1`
-exactly when every coordinate flips, `w = z + 1⃗`. -/
+theorem onePauli_one_zero : onePauli 1 0 = pX := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [onePauli, pX, signChar]
+
+theorem onePauli_zero_one : onePauli 0 1 = pZ := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [onePauli, pZ, signChar]
+
+/-- The transversal `X` on the seven qubits **is** the all-ones Pauli, the code's logical `X̄`: a
+Pauli string factorises over the qubits (`pauliMat_eq_blockKron`) and `X = onePauli 1 0`. -/
 theorem blockKron_pX_eq_pauliMat :
     blockKron (fun _ : Fin 7 => pX) = pauliMat allOnes 0 := by
-  have hpX : ∀ x y : Fin 2, pX x y = if y = x + 1 then 1 else 0 := by
-    intro x y
-    fin_cases x <;> fin_cases y <;> simp [pX]
-  ext z w
-  rw [blockKron_apply, pauliMat, pauliSign_zero_left,
-    Finset.prod_congr rfl fun i _ => hpX (z i) (w i)]
-  by_cases h : w = z + allOnes
-  · rw [if_pos h]
-    refine Finset.prod_eq_one fun i _ => ?_
-    rw [if_pos (show w i = z i + 1 by rw [h]; rfl)]
-  · rw [if_neg h]
-    obtain ⟨i, hi⟩ : ∃ i, w i ≠ z i + 1 := by
-      by_contra hc
-      have hall : ∀ i, w i = z i + 1 := fun i => by
-        by_contra hci
-        exact hc ⟨i, hci⟩
-      exact h (funext fun i => by rw [hall i]; rfl)
-    exact Finset.prod_eq_zero (Finset.mem_univ i) (if_neg hi)
+  rw [pauliMat_eq_blockKron]
+  congr 1
+  funext i
+  rw [show allOnes i = 1 from rfl, show (0 : Fin 7 → Fin 2) i = 0 from rfl, onePauli_one_zero]
+
+/-- The transversal `Z` **is** the other all-ones Pauli, the code's logical `Z̄`. -/
+theorem blockKron_pZ_eq_pauliMat :
+    blockKron (fun _ : Fin 7 => pZ) = pauliMat 0 allOnes := by
+  rw [pauliMat_eq_blockKron]
+  congr 1
+  funext i
+  rw [show allOnes i = 1 from rfl, show (0 : Fin 7 → Fin 2) i = 0 from rfl, onePauli_zero_one]
 
 /-- The all-ones Pauli flips the encoded qubit: `a|0̄⟩ + b|1̄⟩ ↦ b|0̄⟩ + a|1̄⟩`. -/
 theorem pauliMat_allOnes_mulVec_logicalVec (a b : ℂ) :
@@ -195,6 +210,148 @@ theorem steane_faultyLogicalX_recovery :
     exact logical_density_eq b a
   have h := hR (fun _ => pX) (vecMulVec (logicalVec a b) (star (logicalVec a b))) hcode i E hE
   rw [h, logicalX_density]
+
+/-- The all-ones `Z` Pauli signs the encoded qubit's second amplitude: `Z̄` on `a|0̄⟩ + b|1̄⟩`. -/
+theorem pauliMat_zero_allOnes_mulVec_logicalVec (a b : ℂ) :
+    pauliMat 0 allOnes *ᵥ logicalVec a b = logicalVec a (-b) := by
+  rw [logicalVec, pauliMat_mulVec, WithLp.toLp_ofLp, pauliOp_add, pauliOp_smul, pauliOp_smul,
+    logicalZ_steaneZero, logicalZ_steaneOne, logicalVec, smul_neg, ← neg_smul]
+
+/-- ★ The transversal `Z` signs the encoded qubit's density operator. -/
+theorem logicalZ_density (a b : ℂ) :
+    blockKron (fun _ : Fin 7 => pZ) * vecMulVec (logicalVec a b) (star (logicalVec a b))
+        * (blockKron (fun _ : Fin 7 => pZ))ᴴ
+      = vecMulVec (logicalVec a (-b)) (star (logicalVec a (-b))) := by
+  rw [blockKron_pZ_eq_pauliMat, conj_vecMulVec, pauliMat_zero_allOnes_mulVec_logicalVec]
+
+/-- ★★★ **A faulty transversal logical `Z̄` is corrected**, with the ideal output the signed encoded
+qubit. -/
+theorem steane_faultyLogicalZ_recovery :
+    ∃ R : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) (Option SingleErr),
+      ∀ (a b : ℂ) (i : Fin 7) (E : Matrix (Fin 2) (Fin 2) ℂ),
+        E ∈ Matrix.unitaryGroup (Fin 2) ℂ →
+        R.apply (blockKron (fun q => if q = i then E * pZ else pZ)
+              * vecMulVec (logicalVec a b) (star (logicalVec a b))
+              * (blockKron (fun q => if q = i then E * pZ else pZ))ᴴ)
+          = vecMulVec (logicalVec a (-b)) (star (logicalVec a (-b))) := by
+  obtain ⟨R, hR⟩ := steane_faultyTransversal_recovery_unitary
+  refine ⟨R, fun a b i E hE => ?_⟩
+  have hcode : blockKron (fun _ : Fin 7 => pZ) * vecMulVec (logicalVec a b)
+        (star (logicalVec a b)) * (blockKron (fun _ : Fin 7 => pZ))ᴴ
+      = steaneProj * (blockKron (fun _ : Fin 7 => pZ) * vecMulVec (logicalVec a b)
+        (star (logicalVec a b)) * (blockKron (fun _ : Fin 7 => pZ))ᴴ) * steaneProj := by
+    rw [logicalZ_density]
+    exact logical_density_eq a (-b)
+  have h := hR (fun _ => pZ) (vecMulVec (logicalVec a b) (star (logicalVec a b))) hcode i E hE
+  rw [h, logicalZ_density]
+
+/-! ### The transversal Hadamard preserves the code space -/
+
+/-- Swapping the two halves of a stabiliser label: in `Fin 6` that is `k ↦ k + 3`. -/
+def swapHalves (x : Fin 6 → Fin 2) : Fin 6 → Fin 2 := fun k => x (k + 3)
+
+theorem swapHalves_involutive : Function.Involutive swapHalves := by
+  intro x
+  funext k
+  show x (k + 3 + 3) = x k
+  congr 1
+  revert k
+  decide
+
+/-- The swap exchanges the `X`-labels for the `Z`-labels of the stabiliser family. -/
+theorem steaneA_swapHalves (x : Fin 6 → Fin 2) : steaneA (swapHalves x) = steaneB x := by
+  rw [steaneA, steaneB]
+  congr 1
+  funext i
+  show x (Fin.castAdd 3 i + 3) = x (Fin.natAdd 3 i)
+  congr 1
+  revert i
+  decide
+
+theorem steaneB_swapHalves (x : Fin 6 → Fin 2) : steaneB (swapHalves x) = steaneA x := by
+  rw [steaneA, steaneB]
+  congr 1
+  funext i
+  show x (Fin.natAdd 3 i + 3) = x (Fin.castAdd 3 i)
+  congr 1
+  revert i
+  decide
+
+/-- **The CSS condition on the family's labels**: every `X`-label is orthogonal to every `Z`-label,
+so the transversal Hadamard's sign is `1`. -/
+theorem bdot_steaneA_steaneB (x : Fin 6 → Fin 2) : bdot (steaneA x) (steaneB x) = 0 := by
+  rw [steaneA, steaneB]
+  exact bdot_rowComb_rowComb _ _
+
+/-- ★★ **The transversal Hadamard preserves the Steane code projector.** The Hadamard exchanges the
+`X`- and `Z`-labels of every group element (`hadTransversal_conj_pauliMat`), the CSS condition kills
+the sign, and swapping the halves of the label is a bijection of the family — so the group average
+comes back to itself. -/
+theorem hadTransversal_conj_steaneProj :
+    hadTransversal 7 * steaneProj * hadTransversal 7 = steaneProj := by
+  have hterm : ∀ x : Fin 6 → Fin 2,
+      hadTransversal 7 * genMat steaneA steaneB (fun _ => 0) x * hadTransversal 7
+        = genMat steaneA steaneB (fun _ => 0) (swapHalves x) := by
+    intro x
+    rw [genMat, genMat, signChar_zero, one_smul, one_smul, hadTransversal_conj_pauliMat,
+      bdot_steaneA_steaneB x, signChar_zero, one_smul, steaneA_swapHalves, steaneB_swapHalves]
+  rw [steaneProj, stabMat, Matrix.mul_smul, Matrix.smul_mul, Finset.mul_sum, Finset.sum_mul,
+    Finset.sum_congr rfl fun x _ => hterm x]
+  congr 1
+  exact Fintype.sum_bijective swapHalves swapHalves_involutive.bijective _ _ fun _ => rfl
+
+theorem steaneProj_mul_hadTransversal :
+    steaneProj * hadTransversal 7 = hadTransversal 7 * steaneProj := by
+  calc steaneProj * hadTransversal 7
+      = (hadTransversal 7 * steaneProj * hadTransversal 7) * hadTransversal 7 := by
+        rw [hadTransversal_conj_steaneProj]
+    _ = hadTransversal 7 * steaneProj * (hadTransversal 7 * hadTransversal 7) := by noncomm_ring
+    _ = hadTransversal 7 * steaneProj := by rw [hadTransversal_mul_self, mul_one]
+
+/-- ★ **The transversal Hadamard maps code states to code states**, which is what the faulty-gadget
+theorem needs of the ideal gadget. -/
+theorem hadTransversal_code_state {ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ}
+    (hρ : ρ = steaneProj * ρ * steaneProj) :
+    hadTransversal 7 * ρ * (hadTransversal 7)ᴴ
+      = steaneProj * (hadTransversal 7 * ρ * (hadTransversal 7)ᴴ) * steaneProj := by
+  rw [hadTransversal_conjTranspose]
+  calc hadTransversal 7 * ρ * hadTransversal 7
+      = hadTransversal 7 * (steaneProj * ρ * steaneProj) * hadTransversal 7 := by rw [← hρ]
+    _ = (hadTransversal 7 * steaneProj) * ρ * (steaneProj * hadTransversal 7) := by noncomm_ring
+    _ = (steaneProj * hadTransversal 7) * ρ * (hadTransversal 7 * steaneProj) := by
+        rw [← steaneProj_mul_hadTransversal, steaneProj_mul_hadTransversal]
+    _ = steaneProj * (hadTransversal 7 * ρ * hadTransversal 7) * steaneProj := by noncomm_ring
+
+/-- ★★ **The transversal Hadamard exchanges the logical `X̄` and `Z̄`** — the logical Hadamard in the
+Heisenberg picture. -/
+theorem hadTransversal_conj_logicalX :
+    hadTransversal 7 * pauliMat allOnes 0 * hadTransversal 7 = pauliMat 0 allOnes := by
+  rw [hadTransversal_conj_pauliMat, bdot_zero_right, signChar_zero, one_smul]
+
+theorem hadTransversal_conj_logicalZ :
+    hadTransversal 7 * pauliMat 0 allOnes * hadTransversal 7 = pauliMat allOnes 0 := by
+  rw [hadTransversal_conj_pauliMat, bdot_zero_left, signChar_zero, one_smul]
+
+/-- ★★★ **A faulty transversal Hadamard is corrected.** The gadget is the Hadamard on all seven
+qubits — a logical Hadamard, by `hadTransversal_conj_logicalX`/`_logicalZ` — with an arbitrary
+unitary fault at one of its seven locations; one channel returns the ideal output. -/
+theorem steane_faultyHadamard_recovery :
+    ∃ R : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) (Option SingleErr),
+      ∀ (ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ), ρ = steaneProj * ρ * steaneProj →
+        ∀ (i : Fin 7) (E : Matrix (Fin 2) (Fin 2) ℂ), E ∈ Matrix.unitaryGroup (Fin 2) ℂ →
+          R.apply (blockKron (fun q => if q = i then E * hGateM else hGateM) * ρ
+              * (blockKron (fun q => if q = i then E * hGateM else hGateM))ᴴ)
+            = hadTransversal 7 * ρ * (hadTransversal 7)ᴴ := by
+  obtain ⟨R, hR⟩ := steane_faultyTransversal_recovery_unitary
+  refine ⟨R, fun ρ hρ i E hE => ?_⟩
+  have hblock : blockKron (fun _ : Fin 7 => hGateM) = hadTransversal 7 := rfl
+  have hcode : blockKron (fun _ : Fin 7 => hGateM) * ρ * (blockKron (fun _ : Fin 7 => hGateM))ᴴ
+      = steaneProj * (blockKron (fun _ : Fin 7 => hGateM) * ρ
+          * (blockKron (fun _ : Fin 7 => hGateM))ᴴ) * steaneProj := by
+    rw [hblock]
+    exact hadTransversal_code_state hρ
+  have h := hR (fun _ => hGateM) ρ hcode i E hE
+  rw [h, hblock]
 
 /-! ### The circuit-level accounting -/
 

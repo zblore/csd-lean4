@@ -41,9 +41,11 @@ after `k` levels, `→ 0` for `p < 1/21`); the concatenated quantum recovery lan
 circuit-level threshold theorem (#62) was priced and not attempted until 2026-09-28, when its
 first rung landed (#62 (a), `SteaneFaultyGate.lean` + `Mathlib/Probability/CircuitThreshold.lean`:
 faulty **gates** on a transversal gadget, the weight-one propagation, the faulty logical `X̄`, and
-the circuit's union bound and level count); (b)–(e) — the transversal Clifford gates,
-fault-tolerant syndrome extraction with the extended rectangle, the simulation theorem, the
-polylog overhead — stay priced and open. The `decide`-closed facts are finite computations on a
+the circuit's union bound and level count); (b) and (e) landed the same day — the transversal `X̄`,
+`Z̄` and Hadamard are the code's logical gates (`TransversalClifford.lean`'s
+`hadTransversal_conj_pauliMat` plus the CSS condition) and the overhead is polylogarithmic — while
+(c) fault-tolerant syndrome extraction with the extended rectangle, (d) the simulation theorem and
+(f) the two-block transversal `CNOT` stay priced and open. The `decide`-closed facts are finite computations on a
 fixed `3 × 7` matrix — the right tool, not a shortcut.
 
 ## Execution record — 2026-08-29
