@@ -23,8 +23,9 @@ that once, as a predicate on the atlas, and then reads the torus's area form off
 
 * `HasTranslationAtlas E M` — the derivative of every chart transition is the identity, at every
   point where the local-representative machinery of `ExteriorDerivative.lean` reads it. Instances:
-  `AddCircle T` charted by translation (`Instances/AddCircleTranslation.lean`), and a product of two
-  such (`ProductSelfModel.lean`);
+  `AddCircle T` charted by translation (`Instances/AddCircleTranslation.lean`), a product of two
+  such (`ProductSelfModel.lean`), and a normed space charted on itself
+  (`instHasTranslationAtlasSelf`, the case a form on a rectangle is read in);
 * `DifferentialForm.constForm ξ` — the constant family as a `C^∞` `ι`-form, with
   ★ `localRep_constForm` (its local representative in every chart is `ξ`) and
   ★ `constForm_mextDeriv` (**it is closed**: the flat `d` of a constant is zero);
@@ -73,6 +74,17 @@ class HasTranslationAtlas (E M : Type*) [NormedAddCommGroup E] [NormedSpace ℝ 
 instance AddCircle.instHasTranslationAtlas {T : ℝ} [Fact (0 < T)] :
     HasTranslationAtlas ℝ (AddCircle T) :=
   ⟨fun x₀ y _ => AddCircle.fderiv_chart_transition x₀ y⟩
+
+/-- A normed space charted on itself is a translation atlas: there is one chart and it is the
+identity, so every transition is the identity. -/
+instance instHasTranslationAtlasSelf {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] :
+    HasTranslationAtlas E E := by
+  refine ⟨fun x₀ y _ => ?_⟩
+  have hid : (fun w => chartAt E y ((chartAt E x₀).symm w)) = fun w : E => w := by
+    funext w
+    rfl
+  show fderiv ℝ (fun w => chartAt E y ((chartAt E x₀).symm w)) _ = _
+  rw [hid, fderiv_fun_id]
 
 section Product
 

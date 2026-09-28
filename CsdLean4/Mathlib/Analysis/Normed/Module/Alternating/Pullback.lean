@@ -53,7 +53,10 @@ applied to the multilinear pullback of the inclusion, along the diagonal.
 * ★★ `ContinuousAlternatingMap.analyticAt_uncurry_compContinuousLinearMap` — the pullback is
   jointly analytic, and
 * ★ `contDiffAt_uncurry_compContinuousLinearMap` / `contDiff_uncurry_compContinuousLinearMap`
-  — the `ContDiff` corollaries, which is the form the bundle instance consumes.
+  — the `ContDiff` corollaries, which is the form the bundle instance consumes;
+* `ContinuousAlternatingMap.compContinuousLinearMap_apply_pair` — the degree-`2` evaluation
+  `(ω ∘ L) ⦃a, b⦄ = ω ⦃L a, L b⦄`, which is how a pulled-back `2`-form is read off a pair of
+  tangent vectors.
 
 ## Honest scope
 
@@ -278,5 +281,17 @@ theorem contDiff_compContinuousLinearMapCLM {n : WithTop ℕ∞} :
         (fun _ : ι => E) (fun _ : ι => F) G) (fun _ => g)) :=
     (ContinuousMultilinearMap.contDiff _).comp (contDiff_pi.2 fun _ => contDiff_id)
   exact contDiff_const.clm_comp (hM.clm_comp contDiff_const)
+
+omit [CharZero 𝕜] in
+/-- The pullback of a `2`-form, read on a pair of vectors: `(ω ∘ L) ⦃a, b⦄ = ω ⦃L a, L b⦄`. The
+`Matrix.cons` notation does not reduce under the composition on its own, so this is the lemma every
+degree-`2` pullback computation starts with. -/
+theorem compContinuousLinearMap_apply_pair (alt : F [⋀^Fin 2]→L[𝕜] G) (L : E →L[𝕜] F) (a b : E) :
+    (alt.compContinuousLinearMap L) ![a, b] = alt ![L a, L b] := by
+  have hfam : (fun k => L (![a, b] k)) = ![L a, L b] := by
+    funext k
+    fin_cases k <;> rfl
+  show alt (fun k => L (![a, b] k)) = alt ![L a, L b]
+  rw [hfam]
 
 end ContinuousAlternatingMap

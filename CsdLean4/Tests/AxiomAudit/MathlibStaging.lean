@@ -9057,6 +9057,60 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.geometricPhase_eq_half_integral_fsPullback
 
+/-! BACKLOG #89: the two-parameter pushforward, and `[Ψ]^* ω_FS` as a bundled `2`-form. -/
+
+/-- info: 'HasFDerivAt.div' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasFDerivAt.div
+
+/-- info: 'ContinuousAlternatingMap.compContinuousLinearMap_apply_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContinuousAlternatingMap.compContinuousLinearMap_apply_pair
+
+/-- info: 'instHasTranslationAtlasSelf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms instHasTranslationAtlasSelf
+
+/-- info: 'Projectivization.hasFDerivAt_coordRatio' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasFDerivAt_coordRatio
+
+/-- info: 'Projectivization.hasMFDerivAt_projFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasMFDerivAt_projFamily
+
+/-- info: 'Projectivization.mfderiv_projFamily_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_projFamily_apply
+
+/-- info: 'Projectivization.fsPullbackForm_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsPullbackForm_apply
+
+/-- info: 'Projectivization.fsPullbackForm_eq_chart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsPullbackForm_eq_chart
+
+/-- info: 'Projectivization.contDiffAt_fsPullbackForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiffAt_fsPullbackForm
+
+/-- info: 'Projectivization.contMDiff_fsPullbackFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_fsPullbackFamily
+
+/-- info: 'Projectivization.fsPullbackForm_apply_coord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsPullbackForm_apply_coord
+
+/-- info: 'Projectivization.curvature_eq_neg_half_fsPullbackForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.curvature_eq_neg_half_fsPullbackForm
+
+/-- info: 'Projectivization.geometricPhase_eq_half_integral_fsPullbackForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.geometricPhase_eq_half_integral_fsPullbackForm
+
 /-! BACKLOG #55 (BP-4): the Aharonov–Bohm ring, its spectrum and its gauges. -/
 
 /-- info: 'QuantumInfo.AharonovBohm.flux_ringHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/

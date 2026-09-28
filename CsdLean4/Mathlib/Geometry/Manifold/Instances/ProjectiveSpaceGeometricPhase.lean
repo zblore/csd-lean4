@@ -7,12 +7,14 @@ module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFisherRao
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhaseCurvature
+public import CsdLean4.Mathlib.Analysis.Calculus.FDeriv.Quotient
+public import CsdLean4.Mathlib.Geometry.Manifold.TranslationAtlasForm
 
 /-!
 # The curvature of the geometric phase is the Fubini–Study form
 
-**Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #65, the residue of #54 (brick
-BP-3 of `specs/berry-phase-scoping.md`).
+**Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #65 and #89, the residues of #54
+(brick BP-3 of `specs/berry-phase-scoping.md`).
 
 `GeometricPhaseCurvature.lean` proves the curvature formula `β = −∫∫ 2 Im⟪∂_sΨ, ∂_tΨ⟫` for a `C²`
 family of unit vectors, and says in its honest scope that identifying that integrand with the
@@ -44,10 +46,37 @@ so `β = (1/2) ∫∫ [Ψ]^* ω_FS` — Berry's phase as the integral of the Kä
   ray `[Ψ p]`, in the atlas's own chart) — **the curvature is `−1/2` of the Fubini–Study form on
   the velocities of the projected family**.
 * ★★ `hasMFDerivAt_projFamily` — those velocities *are* the pushforward: the manifold derivative
-  of `q ↦ [Ψ q]` is the derivative of the chart path, so the two theorems above are the pullback
-  `[Ψ]^* ω_FS` and not merely a formula in a chart.
+  of `q ↦ [Ψ q]` is the derivative of the chart path, for a family indexed by **any** normed space
+  (`F = ℝ` is the curve `hasMFDerivAt_projCurve`, `F = ℝ × ℝ` the two-parameter map of the
+  rectangle), so the two theorems above are the pullback `[Ψ]^* ω_FS` and not merely a formula in a
+  chart.
 * ★★★ `geometricPhase_eq_half_integral_fsPullback` — the curvature formula of #54 restated:
   `β = (1/2) ∫₀¹ ∫₀ᵀ [Ψ]^* ω_FS`.
+
+## The pullback as a form (#89)
+
+The theorems above pair `ω_FS` with the two coordinate directions, so `fsPullback` is a *function*
+of the parameter. The pullback is a **form**:
+
+* ★ `fsPullbackForm Ψ h p` — `[Ψ]^* ω_FS` at `p`: the form of `ℂℙⁿ` at `[Ψ p]` composed with
+  `mfderiv`, so alternation is structural and not a proved identity;
+* ★★★ `fsPullbackForm_apply` — **the chart-free formula**
+  `[Ψ]^* ω_FS (a, b) = −4 studyForm (Ψ p) (∂_aΨ) (∂_bΨ)`, for every nonvanishing differentiable
+  family, unit or not. Every trace of the atlas's chart choice `idx [Ψ p]` is gone, which is what
+  `fsPullbackForm_eq_chart` (the same form in *any* chart containing the ray) and the smoothness
+  argument need;
+* ★★ `contDiffAt_fsPullbackForm` and ★★★ `fsPullbackDifferentialForm` — **a bundled `C^∞`
+  `2`-form on the parameter space**, a term of `DifferentialForm 𝓘(ℝ, F) F ∞ (Fin 2) ℝ`; on the
+  rectangle `F = ℝ × ℝ` this is `[Ψ]^* ω_FS` as a differential form on the disc's parameter
+  domain. The local representative is the section itself, because a normed space is its own chart
+  (`instHasTranslationAtlasSelf`, added to `TranslationAtlasForm.lean`);
+* ★★ `fsPullbackForm_apply_coord` — the form on the coordinate directions **is** `fsPullback`, so
+  ★★★ `curvature_eq_neg_half_fsPullbackForm` and ★★★
+  `geometricPhase_eq_half_integral_fsPullbackForm` restate #65's two theorems with the form as a
+  form. The quotient rule the chart path needs is `HasFDerivAt.div`, which
+  [`Analysis/Calculus/FDeriv/Quotient.lean`](../../../Analysis/Calculus/FDeriv/Quotient.lean)
+  supplies because Mathlib has no such lemma at the pin
+  (MATHLIB-ABSENT(HasFDerivAt.div), checked there).
 
 ## The normalisation
 
@@ -67,20 +96,21 @@ which is the same number as `∫∫ [Ψ]^* ω_FS` would be. The corpus integrate
 measure (`topFormMeasure`, `riemannianVolume`); integration of a `2`-form over a `2`-chain is not
 defined here and is not claimed.
 
-⚠️ The pushforward statement `hasMFDerivAt_projCurve` is for *curves*, which is what the two
-coordinate directions are; the bundled manifold derivative of the two-parameter map
-`ℝ × ℝ → ℂℙⁿ` is not stated, because Mathlib has no quotient rule for `HasFDerivAt` at the pin
-(MATHLIB-ABSENT(HasFDerivAt.div); only `HasDerivAt.div` exists) — BACKLOG #89.
+⚠️ `fsPullbackDifferentialForm` is built for this family directly, out of the chart-free formula
+`fsPullbackForm_apply`; it is not an instance of a general “pullback of a differential form along a
+smooth map”, which the corpus does not define. Nothing here integrates the form as a form either:
+`geometricPhase_eq_half_integral_fsPullbackForm` is the iterated interval integral of its value on
+the coordinate directions, by the paragraph above.
 
 References: M. V. Berry, Proc. R. Soc. A 392 (1984) 45, §3; B. Simon, PRL 51 (1983) 2167;
 Y. Aharonov, J. Anandan, PRL 58 (1987) 1593; `specs/berry-phase-scoping.md` BP-3;
-`specs/BACKLOG.md` #65; `specs/future-work.md`.
+`specs/BACKLOG.md` #65, #89; `specs/future-work.md`.
 -/
 
 @[expose] public section
 
 open Bundle Projectivization GeometricPhase
-open scoped Manifold ComplexConjugate LinearAlgebra.Projectivization
+open scoped Manifold ComplexConjugate LinearAlgebra.Projectivization ContDiff
 
 noncomputable section
 
@@ -227,17 +257,48 @@ theorem chartVelCLM_apply (i : Fin (n + 1)) (v d : Ambient n) (j : Fin n) :
   rw [PiLp.proj_apply, PiLp.proj_apply]
   ring
 
+/-- ★ **The chart coordinates of a differentiable family of representatives are differentiable**,
+with velocity `chartVelCLM` composed with the family's derivative: the quotient rule
+(`HasFDerivAt.div`, the lemma `Analysis/Calculus/FDeriv/Quotient.lean` adds) coordinate by
+coordinate, for a family indexed by any normed space — the two-parameter case is `F = ℝ × ℝ`. -/
+theorem hasFDerivAt_coordRatio {F : Type*} [NormedAddCommGroup F] [NormedSpace ℝ F]
+    {Ψ : F → Ambient n} {D : F →L[ℝ] Ambient n} {p : F} (hΨ : HasFDerivAt Ψ D p)
+    (i : Fin (n + 1)) (hi : Ψ p i ≠ 0) :
+    HasFDerivAt (fun q => coordRatio i (Ψ q))
+      (((chartVelCLM i (Ψ p)).restrictScalars ℝ).comp D) p := by
+  have hcoord : ∀ k : Fin (n + 1), HasFDerivAt (fun q => Ψ q k)
+      ((((EuclideanSpace.proj k : Ambient n →L[ℂ] ℂ)).restrictScalars ℝ).comp D) p := fun k =>
+    (((EuclideanSpace.proj k : Ambient n →L[ℂ] ℂ)).restrictScalars ℝ).hasFDerivAt.comp p hΨ
+  refine hasFDerivAt_pi'' fun j => ?_
+  refine ((hcoord (i.succAbove j)).div (hcoord i) hi).congr_fderiv ?_
+  ext y
+  have hvel : ((ContinuousLinearMap.proj j : (Fin n → ℂ) →L[ℝ] ℂ).comp
+        (((chartVelCLM i (Ψ p)).restrictScalars ℝ).comp D)) y
+      = (D y (i.succAbove j) * Ψ p i - Ψ p (i.succAbove j) * D y i) / Ψ p i ^ 2 := by
+    show chartVelCLM i (Ψ p) (D y) j = _
+    rw [chartVelCLM_apply]
+  have hproj : ∀ k : Fin (n + 1),
+      ((((EuclideanSpace.proj k : Ambient n →L[ℂ] ℂ)).restrictScalars ℝ).comp D) y = D y k := by
+    intro k
+    show (EuclideanSpace.proj k) (D y) = _
+    rw [PiLp.proj_apply]
+  rw [hvel]
+  simp only [FunLike.coe_sub, FunLike.coe_smul, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, hproj]
+  field_simp
+
 /-- ★ **The chart coordinates of a differentiable curve of representatives are differentiable**,
-with velocity `chartVelCLM`: the quotient rule, coordinate by coordinate. -/
+with velocity `chartVelCLM`: the curve case of `hasFDerivAt_coordRatio`. -/
 theorem hasDerivAt_coordRatio {γ : ℝ → Ambient n} {D : Ambient n} {x : ℝ} (hγ : HasDerivAt γ D x)
     (i : Fin (n + 1)) (hi : γ x i ≠ 0) :
     HasDerivAt (fun y => coordRatio i (γ y)) (chartVelCLM i (γ x) D) x := by
-  have hcoord : ∀ k : Fin (n + 1), HasDerivAt (fun y => γ y k) (D k) x := fun k =>
-    (((EuclideanSpace.proj k : Ambient n →L[ℂ] ℂ)).restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt
-      x hγ
-  refine hasDerivAt_pi.2 fun j => ?_
-  refine ((hcoord (i.succAbove j)).div (hcoord i) hi).congr_deriv ?_
-  rw [chartVelCLM_apply]
+  have hclm : ((chartVelCLM i (γ x)).restrictScalars ℝ).comp
+      (ContinuousLinearMap.toSpanSingleton ℝ D)
+      = ContinuousLinearMap.toSpanSingleton ℝ (chartVelCLM i (γ x) D) := by
+    refine ContinuousLinearMap.ext fun t => ?_
+    show chartVelCLM i (γ x) (t • D) = t • chartVelCLM i (γ x) D
+    rw [← IsScalarTower.algebraMap_smul ℂ t D, map_smul, IsScalarTower.algebraMap_smul]
+  rw [hasDerivAt_iff_hasFDerivAt, ← hclm]
+  exact hasFDerivAt_coordRatio (hasDerivAt_iff_hasFDerivAt.mp hγ) i hi
 
 /-! ### The lifted chart velocity -/
 
@@ -424,6 +485,236 @@ theorem geometricPhase_eq_half_integral_fsPullback {Ψ : ℝ × ℝ → Ambient 
   ring
 
 end Curvature
+
+/-! ### The two-parameter pushforward, and the pullback as a form -/
+
+section Pullback
+
+variable {n : ℕ} {F : Type*} [NormedAddCommGroup F] [NormedSpace ℝ F]
+
+/-- ★★ **The chart velocity is the pushforward, for a family indexed by any normed space.** The
+manifold derivative of `q ↦ [Ψ q]` is the derivative of its chart path; with `F = ℝ × ℝ` this is the
+two-parameter map of `fsForm_eq_neg_two_mul_curvature`, so that identification is the pullback
+`[Ψ]^* ω_FS` and not merely a formula in a chart. -/
+theorem hasMFDerivAt_projFamily {Ψ : F → Ambient n} (h : ∀ q, Ψ q ≠ 0)
+    {D : F →L[ℝ] Ambient n} {p : F} (hΨ : HasFDerivAt Ψ D p) :
+    HasMFDerivAt (𝓘(ℝ, F)) (𝓘(ℝ, Fin n → ℂ)) (projFamily Ψ h) p
+      (((chartVelCLM (idx (projFamily Ψ h p)) (Ψ p)).restrictScalars ℝ).comp D) := by
+  have hi := idx_ne_zero h p
+  have hsub : ContinuousAt (fun y => (⟨Ψ y, h y⟩ : {v : Ambient n // v ≠ 0})) p := by
+    rw [ContinuousAt, nhds_subtype_eq_comap, Filter.tendsto_comap_iff]
+    exact hΨ.continuousAt
+  refine ⟨(continuous_mk' (K := ℂ)).continuousAt.comp hsub, ?_⟩
+  have hw : writtenInExtChartAt (𝓘(ℝ, F)) (𝓘(ℝ, Fin n → ℂ)) p (projFamily Ψ h)
+      = fun y => coordRatio (idx (projFamily Ψ h p)) (Ψ y) := by
+    funext y
+    simp only [writtenInExtChartAt, Function.comp, extChartAt_coe, extChartAt_coe_symm,
+      modelWithCornersSelf_coe, modelWithCornersSelf_coe_symm, id]
+    exact chartFun_mk _ _ _
+  rw [hw]
+  simp only [modelWithCornersSelf_coe, Set.range_id, extChartAt_coe, Function.comp_apply, id]
+  exact (hasFDerivAt_coordRatio hΨ _ hi).hasFDerivWithinAt
+
+/-- The pushforward of a coordinate direction is the derivative of the chart path along it — for
+`F = ℝ × ℝ` and the direction `(1, 0)`, exactly the derivative `fsPullback` is written with. -/
+theorem mfderiv_projFamily_apply {Ψ : F → Ambient n} (h : ∀ q, Ψ q ≠ 0) {p : F}
+    (hΨ : DifferentiableAt ℝ Ψ p) (a : F) :
+    mfderiv (𝓘(ℝ, F)) (𝓘(ℝ, Fin n → ℂ)) (projFamily Ψ h) p a
+      = chartVelCLM (idx (projFamily Ψ h p)) (Ψ p) (fderiv ℝ Ψ p a) := by
+  rw [(hasMFDerivAt_projFamily h hΨ.hasFDerivAt).mfderiv]
+  rfl
+
+/-- ★ **The pullback of the Fubini–Study form along a projected family**, `[Ψ]^* ω_FS`, as an
+alternating `2`-form at each parameter: the form of `ℂℙⁿ` at `[Ψ p]` composed with the manifold
+derivative of `q ↦ [Ψ q]`. Alternation is now structural rather than a proved identity. -/
+def fsPullbackForm (Ψ : F → Ambient n) (h : ∀ q, Ψ q ≠ 0) (p : F) : F [⋀^Fin 2]→L[ℝ] ℝ :=
+  (fsForm (projFamily Ψ h p)).compContinuousLinearMap
+    (mfderiv (𝓘(ℝ, F)) (𝓘(ℝ, Fin n → ℂ)) (projFamily Ψ h) p)
+
+/-- ★★★ **The pullback on a pair of directions is the homogeneous form on the lift and its
+velocities** — no chart anywhere on the right-hand side: `[Ψ]^* ω_FS (a, b) = −4 studyForm (Ψ p)
+(∂_a Ψ) (∂_b Ψ)`. This is `fsModelForm_eq_studyForm` and `studyForm_chartVelCLM` read through the
+pushforward, and it holds for every nonvanishing differentiable family, unit or not. -/
+theorem fsPullbackForm_apply {Ψ : F → Ambient n} (h : ∀ q, Ψ q ≠ 0) {D : F →L[ℝ] Ambient n}
+    {p : F} (hΨ : HasFDerivAt Ψ D p) (a b : F) :
+    fsPullbackForm Ψ h p ![a, b] = -4 * studyForm (Ψ p) (D a) (D b) := by
+  have hi := idx_ne_zero h p
+  have hm : mfderiv (𝓘(ℝ, F)) (𝓘(ℝ, Fin n → ℂ)) (projFamily Ψ h) p
+      = ((chartVelCLM (idx (projFamily Ψ h p)) (Ψ p)).restrictScalars ℝ).comp D :=
+    (hasMFDerivAt_projFamily h hΨ).mfderiv
+  have hchart : chartFun (idx (projFamily Ψ h p)) (projFamily Ψ h p)
+      = coordRatio (idx (projFamily Ψ h p)) (Ψ p) := chartFun_mk _ _ _
+  calc fsPullbackForm Ψ h p ![a, b]
+      = (fsForm (projFamily Ψ h p)) (fun k =>
+          (((chartVelCLM (idx (projFamily Ψ h p)) (Ψ p)).restrictScalars ℝ).comp D)
+            (![a, b] k)) := by
+        show (fsForm (projFamily Ψ h p)) (fun k => mfderiv _ _ _ p (![a, b] k)) = _
+        rw [hm]
+        rfl
+    _ = (fsForm (projFamily Ψ h p))
+          ![chartVelCLM (idx (projFamily Ψ h p)) (Ψ p) (D a),
+            chartVelCLM (idx (projFamily Ψ h p)) (Ψ p) (D b)] := by
+        congr 1
+        funext k
+        fin_cases k <;> rfl
+    _ = -4 * studyForm (Ψ p) (D a) (D b) := by
+        show fsModelForm (chartFun (idx (projFamily Ψ h p)) (projFamily Ψ h p)) ![_, _] = _
+        rw [hchart, fsModelForm_eq_studyForm (idx (projFamily Ψ h p)),
+          studyForm_chartVelCLM _ (h p) hi]
+
+/-- In **any** affine chart containing the ray, the pullback is the model form on the chart path's
+derivative. The atlas's own choice `idx [Ψ p]` jumps as `p` moves; this says the pullback does not,
+which is what makes it smooth. -/
+theorem fsPullbackForm_eq_chart {Ψ : F → Ambient n} (h : ∀ q, Ψ q ≠ 0) {q : F}
+    (hdiff : DifferentiableAt ℝ Ψ q) (i : Fin (n + 1)) (hi : Ψ q i ≠ 0) :
+    fsPullbackForm Ψ h q
+      = (fsModelForm (coordRatio i (Ψ q))).compContinuousLinearMap
+          (fderiv ℝ (fun y => coordRatio i (Ψ y)) q) := by
+  refine ContinuousAlternatingMap.ext fun v => ?_
+  have hv : v = ![v 0, v 1] := by
+    funext k
+    fin_cases k <;> rfl
+  have hfd : fderiv ℝ (fun y => coordRatio i (Ψ y)) q
+      = ((chartVelCLM i (Ψ q)).restrictScalars ℝ).comp (fderiv ℝ Ψ q) :=
+    (hasFDerivAt_coordRatio hdiff.hasFDerivAt i hi).fderiv
+  rw [hv, fsPullbackForm_apply h hdiff.hasFDerivAt, hfd,
+    ContinuousAlternatingMap.compContinuousLinearMap_apply_pair]
+  show _ = fsModelForm (coordRatio i (Ψ q))
+      ![chartVelCLM i (Ψ q) (fderiv ℝ Ψ q (v 0)), chartVelCLM i (Ψ q) (fderiv ℝ Ψ q (v 1))]
+  rw [fsModelForm_eq_studyForm i, studyForm_chartVelCLM i (h q) hi]
+
+/-- The chart path of a `C^∞` family is `C^∞` where the chart is defined. -/
+theorem contDiffAt_coordRatio {Ψ : F → Ambient n} (hΨ : ContDiff ℝ ∞ Ψ) (i : Fin (n + 1))
+    {q : F} (hq : Ψ q i ≠ 0) : ContDiffAt ℝ ∞ (fun y => coordRatio i (Ψ y)) q := by
+  have hcoord : ∀ k : Fin (n + 1), ContDiff ℝ ∞ (fun y => Ψ y k) := fun k =>
+    ((EuclideanSpace.proj k : Ambient n →L[ℂ] ℂ).restrictScalars ℝ).contDiff.comp hΨ
+  rw [contDiffAt_pi]
+  intro j
+  show ContDiffAt ℝ ∞ (fun y => Ψ y (i.succAbove j) / Ψ y i) q
+  have hmulinv : (fun y => Ψ y (i.succAbove j) / Ψ y i)
+      = fun y => Ψ y (i.succAbove j) * (Ψ y i)⁻¹ := by
+    funext y
+    rw [div_eq_mul_inv]
+  rw [hmulinv]
+  exact ((hcoord (i.succAbove j)).contDiffAt).mul (((hcoord i).contDiffAt).inv hq)
+
+/-- ★★ **The pullback is a `C^∞` family of forms.** In a fixed chart it is the model form on the
+chart path's derivative (`fsPullbackForm_eq_chart`), the model form is `C^∞`
+(`contDiff_fsModelForm`), the derivative of a `C^∞` map is `C^∞`, and the pullback operation is
+jointly smooth in the form and the linear map
+(`ContinuousAlternatingMap.contDiff_uncurry_compContinuousLinearMap`). -/
+theorem contDiffAt_fsPullbackForm {Ψ : F → Ambient n} (h : ∀ q, Ψ q ≠ 0)
+    (hΨ : ContDiff ℝ ∞ Ψ) (p : F) :
+    ContDiffAt ℝ ∞ (fun q => fsPullbackForm Ψ h q) p := by
+  have hi : Ψ p (idx (projFamily Ψ h p)) ≠ 0 := idx_ne_zero h p
+  set i := idx (projFamily Ψ h p) with hidef
+  have hcont : Continuous fun q => Ψ q i :=
+    ((EuclideanSpace.proj i : Ambient n →L[ℂ] ℂ).restrictScalars ℝ).continuous.comp hΨ.continuous
+  have hUopen : IsOpen {q : F | Ψ q i ≠ 0} := isOpen_ne.preimage hcont
+  have hpU : p ∈ {q : F | Ψ q i ≠ 0} := hi
+  have hcr : ContDiffOn ℝ ∞ (fun y => coordRatio i (Ψ y)) {q : F | Ψ q i ≠ 0} := fun q hq =>
+    (contDiffAt_coordRatio hΨ i hq).contDiffWithinAt
+  have hfdw : ContDiffOn ℝ ∞
+      (fderivWithin ℝ (fun y => coordRatio i (Ψ y)) {q : F | Ψ q i ≠ 0})
+      {q : F | Ψ q i ≠ 0} :=
+    hcr.fderivWithin hUopen.uniqueDiffOn (by simp)
+  have hfd : ContDiffOn ℝ ∞ (fun q => fderiv ℝ (fun y => coordRatio i (Ψ y)) q)
+      {q : F | Ψ q i ≠ 0} := by
+    refine hfdw.congr fun q hq => ?_
+    exact (fderivWithin_of_isOpen hUopen hq).symm
+  have hmf : ContDiffOn ℝ ∞ (fun q => fsModelForm (coordRatio i (Ψ q))) {q : F | Ψ q i ≠ 0} :=
+    contDiff_fsModelForm.comp_contDiffOn hcr
+  have hG : ContDiffOn ℝ ∞ (fun q => (fsModelForm (coordRatio i (Ψ q))).compContinuousLinearMap
+      (fderiv ℝ (fun y => coordRatio i (Ψ y)) q)) {q : F | Ψ q i ≠ 0} :=
+    ContinuousAlternatingMap.contDiff_uncurry_compContinuousLinearMap.comp_contDiffOn
+      (hfd.prodMk hmf)
+  refine (hG.contDiffAt (hUopen.mem_nhds hpU)).congr_of_eventuallyEq ?_
+  filter_upwards [hUopen.mem_nhds hpU] with q hq
+  exact fsPullbackForm_eq_chart h (hΨ.differentiable (by simp) q) i hq
+
+/-- The pullback read in the fibres of the alternating bundle over the parameter space. -/
+def fsPullbackFamily (Ψ : F → Ambient n) (h : ∀ q, Ψ q ≠ 0) (p : F) :
+    TangentSpace (𝓘(ℝ, F)) p [⋀^Fin 2]→L[ℝ] Bundle.Trivial F ℝ p :=
+  let w : F [⋀^Fin 2]→L[ℝ] ℝ := fsPullbackForm Ψ h p
+  w
+
+/-- The pullback is a `C^∞` section: the parameter space is its own chart, so its local
+representative is itself (`HasTranslationAtlas`), and that is `contDiffAt_fsPullbackForm`. -/
+theorem contMDiff_fsPullbackFamily {Ψ : F → Ambient n} (h : ∀ q, Ψ q ≠ 0)
+    (hΨ : ContDiff ℝ ∞ Ψ) :
+    ContMDiff (𝓘(ℝ, F)) ((𝓘(ℝ, F)).prod (𝓘(ℝ, F [⋀^Fin 2]→L[ℝ] ℝ))) ∞
+      (fun p : F => TotalSpace.mk' (F [⋀^Fin 2]→L[ℝ] ℝ) p (fsPullbackFamily Ψ h p)) := by
+  intro p
+  rw [contMDiffAt_section]
+  refine ((contDiffAt_fsPullbackForm h hΨ p).contMDiffAt).congr_of_eventuallyEq ?_
+  filter_upwards [(chartAt F p).open_source.mem_nhds (mem_chart_source F p)] with y hy
+  rw [DifferentialForm.trivializationAt_snd (fsPullbackFamily Ψ h) p y hy,
+    HasTranslationAtlas.fderiv_chart_transition p y hy]
+  refine ContinuousAlternatingMap.ext fun v => ?_
+  simp only [ContinuousAlternatingMap.compContinuousLinearMap_apply]
+  rfl
+
+/-- ★★★ **`[Ψ]^* ω_FS` as a differential `2`-form on the parameter space** — for `F = ℝ × ℝ`, on
+the rectangle of `GeometricPhaseCurvature.lean`: a bundled `C^∞` section of the alternating-`2`-form
+bundle, not a function of the two coordinate directions. -/
+def fsPullbackDifferentialForm (Ψ : F → Ambient n) (h : ∀ q, Ψ q ≠ 0) (hΨ : ContDiff ℝ ∞ Ψ) :
+    DifferentialForm (𝓘(ℝ, F)) F ∞ (Fin 2) ℝ :=
+  ⟨fsPullbackFamily Ψ h, contMDiff_fsPullbackFamily h hΨ⟩
+
+@[simp] theorem fsPullbackDifferentialForm_apply (Ψ : F → Ambient n) (h : ∀ q, Ψ q ≠ 0)
+    (hΨ : ContDiff ℝ ∞ Ψ) (p : F) (v : Fin 2 → F) :
+    fsPullbackDifferentialForm Ψ h hΨ p v = fsPullbackForm Ψ h p v := rfl
+
+end Pullback
+
+/-! ### The form and the curvature formula -/
+
+section PullbackCurvature
+
+variable {n : ℕ}
+
+/-- ★★ **The form on the coordinate directions is the function of `fsPullback`** — the two
+readings of `[Ψ]^* ω_FS` agree. -/
+theorem fsPullbackForm_apply_coord {Ψ : ℝ × ℝ → Ambient n} (h : ∀ q, Ψ q ≠ 0) {p : ℝ × ℝ}
+    (hΨ : DifferentiableAt ℝ Ψ p) :
+    fsPullbackForm Ψ h p ![(1, 0), (0, 1)] = fsPullback Ψ h p := by
+  have hi := idx_ne_zero h p
+  have hS : HasDerivAt (fun s => Ψ (s, p.2)) (fderiv ℝ Ψ p (1, 0)) p.1 := hasDerivAt_edgeS hΨ
+  have hT : HasDerivAt (fun t => Ψ (p.1, t)) (fderiv ℝ Ψ p (0, 1)) p.2 := hasDerivAt_edgeT hΨ
+  have hchart : chartFun (idx (projFamily Ψ h p)) (projFamily Ψ h p)
+      = coordRatio (idx (projFamily Ψ h p)) (Ψ p) := chartFun_mk _ _ _
+  rw [fsPullbackForm_apply h hΨ.hasFDerivAt]
+  show _ = fsModelForm (chartFun (idx (projFamily Ψ h p)) (projFamily Ψ h p))
+    ![deriv (fun s => coordRatio (idx (projFamily Ψ h p)) (Ψ (s, p.2))) p.1,
+      deriv (fun t => coordRatio (idx (projFamily Ψ h p)) (Ψ (p.1, t))) p.2]
+  rw [(hasDerivAt_coordRatio hS _ hi).deriv, (hasDerivAt_coordRatio hT _ hi).deriv, hchart,
+    fsModelForm_eq_studyForm (idx (projFamily Ψ h p)), studyForm_chartVelCLM _ (h p) hi]
+
+/-- ★★★ **The curvature is `−1/2` of the Fubini–Study form**, with the form now a form: the
+pullback `2`-form of the projected family, evaluated on the two coordinate directions of the
+rectangle. -/
+theorem curvature_eq_neg_half_fsPullbackForm {Ψ : ℝ × ℝ → Ambient n} (h : ∀ q, Ψ q ≠ 0)
+    (hunit : ∀ q, ‖Ψ q‖ = 1) {p : ℝ × ℝ} (hΨ : DifferentiableAt ℝ Ψ p) :
+    curvature Ψ p = -(1 / 2) * fsPullbackForm Ψ h p ![(1, 0), (0, 1)] := by
+  rw [fsPullbackForm_apply_coord h hΨ]
+  exact curvature_eq_neg_half_fsPullback h hunit hΨ
+
+/-- ★★★ **Berry's phase is half the integral of the pullback form.**
+`geometricPhase_eq_half_integral_fsPullback` with its integrand read as `[Ψ]^* ω_FS` paired with the
+coordinate directions. -/
+theorem geometricPhase_eq_half_integral_fsPullbackForm {Ψ : ℝ × ℝ → Ambient n} (h : ∀ q, Ψ q ≠ 0)
+    (hΨ : ContDiff ℝ 2 Ψ) (hunit : ∀ p, ‖Ψ p‖ = 1) {T : ℝ} {φ : ℝ → ℝ} (hφ : ContDiff ℝ 1 φ)
+    (hφ0 : φ 0 = 0) (hleft : ∀ t, Ψ (0, t) = Ψ (0, 0))
+    (htop : ∀ s, Ψ (s, T) = Complex.exp ((φ s : ℂ) * Complex.I) • Ψ (s, 0)) :
+    geometricPhase (fun t => Ψ (1, t)) T (φ 1)
+      = 1 / 2 * ∫ s in (0 : ℝ)..1, ∫ t in (0 : ℝ)..T,
+          fsPullbackForm Ψ h (s, t) ![(1, 0), (0, 1)] := by
+  have hpt : ∀ q : ℝ × ℝ, fsPullback Ψ h q = fsPullbackForm Ψ h q ![(1, 0), (0, 1)] := fun q =>
+    (fsPullbackForm_apply_coord h (hΨ.differentiable (by norm_num) q)).symm
+  rw [geometricPhase_eq_half_integral_fsPullback h hΨ hunit hφ hφ0 hleft htop]
+  simp only [hpt]
+
+end PullbackCurvature
 
 end Projectivization
 
