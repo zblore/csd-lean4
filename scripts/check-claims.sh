@@ -1142,11 +1142,19 @@ OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 # determinant-one subgroup is pinned by a theorem in the file, not asserted by prose. The quantifier
 # there is Matrix.unitaryGroup (Fin 2) = U(2), including in exists_phase_mem_cliffordTLim, which is
 # the U(2)-modulo-phase statement.
+#
+# RotatingFrame.lean (2026-09-28, BACKLOG #56) is the seventh site, one mention: the docstring
+# of axisRot_z_conj, which names the standard SU(2) -> SO(3) homomorphism to say which classical
+# map its statement is an instance of. The statement itself is about one 2x2 matrix identity
+# (conjugating pauliAxis a b c by axisRot 0 0 1 phi turns (a, b) by phi), so nothing quantifies
+# over a group here either; the file's other quantifiers are Matrix.unitaryGroup (Fin N) = U(N),
+# in rotProp_mem_unitaryGroup.
 DECLARED_SU_MENTIONS="CsdLean4/LF2/Setup.lean:1
 CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:2
 CsdLean4/Mathlib/QuantumInfo/CliffordTAngle.lean:2
 CsdLean4/Mathlib/QuantumInfo/CliffordTDensity.lean:3
 CsdLean4/Mathlib/QuantumInfo/EulerDecomposition.lean:1
+CsdLean4/Mathlib/QuantumInfo/RotatingFrame.lean:1
 CsdLean4/Mathlib/QuantumInfo/SU2Rotation.lean:2"
 
 echo "check-claims: verifying code against the canonical claims block…"

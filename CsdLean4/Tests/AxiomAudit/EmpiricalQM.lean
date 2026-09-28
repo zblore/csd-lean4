@@ -1604,4 +1604,58 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.exists_concat_recovery_unitary
 
+/-! BACKLOG #56 (BP-5): Berry's adiabatic theorem for a spin-½ in a rotating field. -/
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.drive_conj_initHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.drive_conj_initHam
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.initHam_sub_driveGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.initHam_sub_driveGen
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.prop_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.prop_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.hasDerivAt_prop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.hasDerivAt_prop
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.hasDerivAt_state' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.hasDerivAt_state
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.fieldHam_mulVec_coneCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.fieldHam_mulVec_coneCurve
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.one_sub_cosDelta_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.one_sub_cosDelta_sq
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.inner_spinUp_rabiProp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.inner_spinUp_rabiProp
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.coneCurve_eq_smul_drive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.coneCurve_eq_smul_drive
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.norm_inner_coneCurve_state_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.norm_inner_coneCurve_state_sq
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.one_sub_le_norm_inner_coneCurve_state_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.one_sub_le_norm_inner_coneCurve_state_sq
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.geometricPhase_cone_loop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.geometricPhase_cone_loop
+
+/-- info: 'CSD.Empirical.QM.BerryAdiabatic.norm_inner_state_sub_exp_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryAdiabatic.norm_inner_state_sub_exp_le
+
 end CSD.Tests.AxiomAudit

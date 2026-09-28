@@ -42,8 +42,10 @@ here without bundles, on the sphere:
 
 ⚠️ No bundle, no parallel transport as an object: the holonomy statement is the horizontal-lift
 theorem on the sphere. The curvature formula `β = −∫∫ dA` is `GeometricPhaseCurvature.lean` (BP-3);
-Berry's adiabatic setting (a slowly driven `H(R)`) and the Aharonov–Bohm flux are
-`specs/berry-phase-scoping.md` BP-4 and BP-5.
+the Aharonov–Bohm flux is `specs/berry-phase-scoping.md` BP-4. Berry's adiabatic setting is
+BP-5: `CsdLean4/Mathlib/QuantumInfo/RotatingFrame.lean` solves a rigidly rotated Hamiltonian
+exactly and `CsdLean4/Empirical/QM/BerryAdiabatic.lean` reads the phase off it (BACKLOG #56); the
+general Kato–Born–Fock theorem is BACKLOG #88 and is not claimed.
 
 References: Y. Aharonov, J. Anandan, PRL 58 (1987) 1593; M. V. Berry, Proc. R. Soc. A 392 (1984) 45;
 B. Simon, PRL 51 (1983) 2167; `specs/berry-phase-scoping.md`; `specs/BACKLOG.md` #10.

@@ -34,8 +34,8 @@ curvature `2 Im⟪∂_sΨ, ∂_tΨ⟫` is `(θ/2) sin(sθ)`, and its integral ov
 
 ## Honest scope
 
-⚠️ One surface, computed directly. Berry's adiabatic setting is `specs/berry-phase-scoping.md`
-BP-5 (BACKLOG #56); the discrete Aharonov–Bohm ring is BP-4 (#55).
+⚠️ One surface, computed directly. Berry's adiabatic setting (BP-5, BACKLOG #56) is
+`CsdLean4/Empirical/QM/BerryAdiabatic.lean`; the discrete Aharonov–Bohm ring is BP-4 (#55).
 
 References: M. V. Berry, Proc. R. Soc. A 392 (1984) 45, §§3, 5; `specs/berry-phase-scoping.md`;
 `specs/qm-empirical-tests.md` ER3; `specs/BACKLOG.md` #54.

@@ -8908,4 +8908,66 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.smul_eq_one_of_unitary
 
+/-! BACKLOG #56 (BP-5): the rotating frame and the spin-½ axis-angle calculus. -/
+
+/-- info: 'QuantumInfo.RotatingFrame.hasDerivAt_mul_of_gen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RotatingFrame.hasDerivAt_mul_of_gen
+
+/-- info: 'QuantumInfo.RotatingFrame.schrodingerUnitary_hasDerivAt_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RotatingFrame.schrodingerUnitary_hasDerivAt_left
+
+/-- info: 'QuantumInfo.RotatingFrame.rotHam_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RotatingFrame.rotHam_isHermitian
+
+/-- info: 'QuantumInfo.RotatingFrame.rotProp_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RotatingFrame.rotProp_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.RotatingFrame.hasDerivAt_rotProp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RotatingFrame.hasDerivAt_rotProp
+
+/-- info: 'QuantumInfo.RotatingFrame.hasDerivAt_rotState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RotatingFrame.hasDerivAt_rotState
+
+/-- info: 'QuantumInfo.RotatingFrame.inner_toEuclideanCLM_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RotatingFrame.inner_toEuclideanCLM_left
+
+/-- info: 'QuantumInfo.RotatingFrame.inner_toEuclideanCLM_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RotatingFrame.inner_toEuclideanCLM_unitary
+
+/-- info: 'QuantumInfo.SU2.pauliAxis_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.pauliAxis_mul_self
+
+/-- info: 'QuantumInfo.SU2.axisRot_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_eq
+
+/-- info: 'QuantumInfo.SU2.axisRot_two_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_two_pi
+
+/-- info: 'QuantumInfo.SU2.smul_pauliAxis_mul_axisRot' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.smul_pauliAxis_mul_axisRot
+
+/-- info: 'QuantumInfo.SU2.hasDerivAt_axisRot' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.hasDerivAt_axisRot
+
+/-- info: 'QuantumInfo.SU2.hasDerivAt_axisRot_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.hasDerivAt_axisRot_right
+
+/-- info: 'QuantumInfo.SU2.axisRot_z_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_z_conj
+
 end CSD.Tests.AxiomAudit

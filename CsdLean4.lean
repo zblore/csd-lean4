@@ -67,6 +67,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Magic
 public import CsdLean4.Mathlib.QuantumInfo.MagicInjection
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTAngle
 public import CsdLean4.Mathlib.QuantumInfo.SU2Rotation
+public import CsdLean4.Mathlib.QuantumInfo.RotatingFrame
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.TwoLevel
 public import CsdLean4.Mathlib.QuantumInfo.MultiControlled
 public import CsdLean4.Mathlib.QuantumInfo.ControlledGate
@@ -666,6 +667,7 @@ public import CsdLean4.LF4.ArenaVolume
 public import CsdLean4.Empirical.QM.Darwinism
 public import CsdLean4.Empirical.QM.BerryPhase
 public import CsdLean4.Empirical.QM.BerryPhaseCurvature
+public import CsdLean4.Empirical.QM.BerryAdiabatic
 public import CsdLean4.Empirical.CSD.Darwinism
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
