@@ -9040,4 +9040,94 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.geometricPhase_eq_half_integral_fsPullback
 
+/-! BACKLOG #55 (BP-4): the Aharonov–Bohm ring, its spectrum and its gauges. -/
+
+/-- info: 'QuantumInfo.AharonovBohm.flux_ringHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.flux_ringHam
+
+/-- info: 'QuantumInfo.AharonovBohm.ringHamOf_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.ringHamOf_isHermitian
+
+/-- info: 'QuantumInfo.AharonovBohm.ringMode_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.ringMode_sub_one
+
+/-- info: 'QuantumInfo.AharonovBohm.stdAddChar_neg_eq_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.stdAddChar_neg_eq_conj
+
+/-- info: 'QuantumInfo.AharonovBohm.bondPhase_mul_stdAddChar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.bondPhase_mul_stdAddChar
+
+/-- info: 'QuantumInfo.AharonovBohm.ringHam_mulVec_ringMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.ringHam_mulVec_ringMode
+
+/-- info: 'QuantumInfo.AharonovBohm.ringEigval_add_two_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.ringEigval_add_two_pi
+
+/-- info: 'QuantumInfo.AharonovBohm.ringEigval_add_card' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.ringEigval_add_card
+
+/-- info: 'QuantumInfo.AharonovBohm.range_ringEigval_add_two_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.range_ringEigval_add_two_pi
+
+/-- info: 'QuantumInfo.AharonovBohm.hasEigenvalue_ringHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.hasEigenvalue_ringHam
+
+/-- info: 'QuantumInfo.AharonovBohm.gaugeDiag_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.gaugeDiag_conjTranspose_mul
+
+/-- info: 'QuantumInfo.AharonovBohm.gaugeDiag_conj_ringHamOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.gaugeDiag_conj_ringHamOf
+
+/-- info: 'QuantumInfo.AharonovBohm.flux_gauge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.flux_gauge
+
+/-- info: 'QuantumInfo.AharonovBohm.flux_oneBondPhase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.flux_oneBondPhase
+
+/-- info: 'QuantumInfo.AharonovBohm.uniform_add_oneBondGauge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.uniform_add_oneBondGauge
+
+/-- info: 'QuantumInfo.AharonovBohm.gaugeDiag_conj_ringHam_oneBond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.gaugeDiag_conj_ringHam_oneBond
+
+/-- info: 'QuantumInfo.AharonovBohm.sum_stdAddChar_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.sum_stdAddChar_mul
+
+/-- info: 'QuantumInfo.AharonovBohm.dftMatrix_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.dftMatrix_conjTranspose_mul
+
+/-- info: 'QuantumInfo.AharonovBohm.dftMatrix_conj_ringHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.dftMatrix_conj_ringHam
+
+/-- info: 'QuantumInfo.AharonovBohm.eq_ringEigval_of_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.eq_ringEigval_of_mulVec
+
+/-- info: 'QuantumInfo.AharonovBohm.ringEigval_three_pi_ne_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.ringEigval_three_pi_ne_two
+
+/-- info: 'QuantumInfo.AharonovBohm.not_exists_unitary_conj_ringHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.not_exists_unitary_conj_ringHam
+
 end CSD.Tests.AxiomAudit

@@ -46,7 +46,8 @@ curvature `2 Im⟪∂_sΨ, ∂_tΨ⟫` is `(θ/2) sin(sθ)`, and its integral ov
 ## Honest scope
 
 ⚠️ One surface, computed directly. Berry's adiabatic setting (BP-5, BACKLOG #56) is
-`CsdLean4/Empirical/QM/BerryAdiabatic.lean`; the discrete Aharonov–Bohm ring is BP-4 (#55). The
+`CsdLean4/Empirical/QM/BerryAdiabatic.lean`; the discrete Aharonov–Bohm ring is BP-4 (#55),
+`CsdLean4/Empirical/QM/AharonovBohm.lean`. The
 `∫∫` here is an iterated interval integral of a function on the rectangle, not an integral of a
 form over a chain (the corpus defines none).
 

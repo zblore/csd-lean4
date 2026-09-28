@@ -1672,4 +1672,34 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.BerryPhase.geometricPhase_coneCurve_eq_half_integral_fsPullback
 
+/-! BACKLOG #55 (BP-4): the Aharonov–Bohm effect read as quantum mechanics. -/
+
+/-- info: 'CSD.Empirical.QM.AharonovBohm.energy_lt_energy_of_flux_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.AharonovBohm.energy_lt_energy_of_flux_lt
+
+/-- info: 'CSD.Empirical.QM.AharonovBohm.oneBond_mulVec_gauge_mode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.AharonovBohm.oneBond_mulVec_gauge_mode
+
+/-- info: 'CSD.Empirical.QM.AharonovBohm.same_levels_of_gauge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.AharonovBohm.same_levels_of_gauge
+
+/-- info: 'CSD.Empirical.QM.AharonovBohm.flux_quantum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.AharonovBohm.flux_quantum
+
+/-- info: 'CSD.Empirical.QM.AharonovBohm.flux_not_gauge_artefact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.AharonovBohm.flux_not_gauge_artefact
+
+/-- info: 'CSD.Empirical.QM.AharonovBohm.levels_three_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.AharonovBohm.levels_three_zero
+
+/-- info: 'CSD.Empirical.QM.AharonovBohm.levels_three_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.AharonovBohm.levels_three_pi
+
 end CSD.Tests.AxiomAudit
