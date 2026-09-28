@@ -42,8 +42,9 @@ differing set shrinks by one.
 
 ⚠️ Existence and structure, no gate counts: the Gray walk here flips the differing bits in the
 order the recursion picks them, and `L.length` is the Hamming distance minus one, but no optimality
-or circuit-size claim is made (the counting row is #82 for #70; efficiency overall is #74, kept not
-claimed). Decomposing a multiply-controlled gate into `CNOT`s and single-qubit gates is #72.
+or circuit-size claim is made (the two-level count of #70 is #82, landed 2026-09-28 as
+`exists_twoLevel_prod_length`, and says nothing about this file's Gray walk; efficiency overall is
+#74, kept not claimed). Decomposing a multiply-controlled gate into `CNOT`s and single-qubit gates is #72.
 
 References: M. A. Nielsen, I. L. Chuang, *Quantum Computation and Quantum Information* §4.5.2;
 `specs/magic-plan.md`; `specs/BACKLOG.md` #71; `specs/future-work.md`.

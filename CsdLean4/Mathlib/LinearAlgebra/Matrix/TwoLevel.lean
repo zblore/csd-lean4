@@ -8,17 +8,18 @@ module
 public import Mathlib.LinearAlgebra.UnitaryGroup
 public import Mathlib.Analysis.SpecialFunctions.Sqrt
 public import Mathlib.Data.Complex.Basic
+public import Mathlib.Data.Complex.BigOperators
 
 /-!
 # Every unitary matrix is a product of two-level unitaries
 
-**Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #70, part (c) of `R-005`
+**Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #70 and #82, part (c) of `R-005`
 (`specs/magic-plan.md`, "The split").
 
 A matrix is **two-level** when it agrees with the identity outside a `{i, j} × {i, j}` block
 (`IsTwoLevel`, through the predicate `IdOutside s` for a general index set). Nielsen–Chuang §4.5.1:
-every unitary is a product of two-level unitaries. The proof here is Givens elimination, organised
-as an induction on the support:
+every unitary is a product of two-level unitaries, and at most `d(d − 1)/2` of them suffice. The
+proof here is Givens elimination, organised as an induction on the support:
 
 * `IdOutside`, ★ `IdOutside.mul`, `IdOutside.mono`, `IdOutside.eq_one`, `IsTwoLevel`;
 * `twoLevelMat i j a b c d` — the identity with the `2 × 2` block `!![a, b; c, d]` at `(i, j)`;
@@ -28,17 +29,26 @@ as an induction on the support:
 * `givensMat i j v` — the Givens rotation in the `(i, j)` plane that kills the `j`-component of `v`
   (★ `givensMat_mulVec_apply_snd`, and `givensMat_mulVec_apply_fst` for the value it accumulates);
 * ★★ `exists_clear_column` — **a product of two-level unitaries kills any prescribed set of
-  components of a vector**, leaving the rest untouched;
+  components of a vector**, leaving the rest untouched, one factor per component cleared, and with
+  the pivot accumulating the *norm* of the cleared block;
 * ★★ `exists_twoLevel_prod` — **every unitary is a product of two-level unitaries** (for an index
   type with at least two elements), via `exists_twoLevel_prod_of_idOutside` by induction on the
-  support.
+  support;
+* ★★★ `exists_twoLevel_prod_length` — **Nielsen–Chuang's count: at most `d(d − 1)/2` factors**
+  (BACKLOG #82). Not one factor is spent on a phase: the pivot of an elimination round holds the
+  norm of the column it has just cleared, a nonnegative real, which for a unitary is exactly `1`, so
+  the row and column come out of the round already in the form the induction needs. The bookkeeping
+  is Pascal's rule, `(m − 1) + Nat.choose (m − 1) 2 = Nat.choose m 2`, with
+  `isTwoLevel_of_idOutside_card_le_two`
+  as the base case: on a block of at most two indices the matrix *is* two-level.
 
 ## Honest scope
 
-⚠️ Existence only. Nielsen–Chuang's count of at most `d(d − 1)/2` factors is **not** claimed: the
-construction here spends a few more factors (a phase-fixing one per elimination round), and the
-tight bound is BACKLOG #82. Nothing in the chain that consumes this theorem (the Clifford+T density
-of #71–#73) needs a count; only the efficiency row #74 would, and that is kept not claimed.
+⚠️ The count is an upper bound — which is all Nielsen–Chuang §4.5.1 asserts. No matching lower
+bound is proved: nothing here says that `d(d − 1)/2` factors are *necessary*. And it counts
+two-level factors, not elementary gates: the CNOT-and-single-qubit-gate count of a unitary is the
+efficiency row BACKLOG #74, kept not claimed. `exists_twoLevel_prod` is retained alongside the
+counted version because its consumers (the Clifford+T density of #71–#73) need no count.
 
 References: M. A. Nielsen, I. L. Chuang, *Quantum Computation and Quantum Information* §4.5.1;
 G. H. Golub, C. F. Van Loan, *Matrix Computations* §5.1 (Givens rotations); `specs/magic-plan.md`;
@@ -392,22 +402,47 @@ end Givens
 /-! ### Clearing the components of a vector -/
 
 /-- ★★ **A product of two-level unitaries kills any prescribed set of components of a vector**,
-leaving every other component except the `i`-th untouched. -/
+leaving every other component except the `i`-th untouched — one factor per component cleared, and
+with the `i`-th component accumulating the *norm* of the block. That the accumulated value is a
+nonnegative real is what makes the Nielsen–Chuang count tight: the pivot needs no separate
+phase-fixing factor. -/
 theorem exists_clear_column (i : n) (s : Finset n) (his : i ∉ s) (v : n → ℂ) :
     ∃ L : List (Matrix n n ℂ),
       (∀ V ∈ L, IsTwoLevel V ∧ V ∈ Matrix.unitaryGroup n ℂ ∧ IdOutside (insert i s) V) ∧
-      (∀ k ∈ s, (L.prod *ᵥ v) k = 0) ∧ (∀ k, k ≠ i → k ∉ s → (L.prod *ᵥ v) k = v k) := by
+      L.length = s.card ∧
+      (∀ k ∈ s, (L.prod *ᵥ v) k = 0) ∧ (∀ k, k ≠ i → k ∉ s → (L.prod *ᵥ v) k = v k) ∧
+      Complex.normSq ((L.prod *ᵥ v) i) = ∑ k ∈ insert i s, Complex.normSq (v k) ∧
+      (s.Nonempty → (L.prod *ᵥ v) i
+        = ((Real.sqrt (∑ k ∈ insert i s, Complex.normSq (v k)) : ℝ) : ℂ)) := by
   induction s using Finset.induction_on with
   | empty =>
-    refine ⟨[], by simp, by simp, ?_⟩
-    intro k _ _
-    rw [List.prod_nil, Matrix.one_mulVec]
+    refine ⟨[], by simp, by simp, by simp, ?_, ?_, ?_⟩
+    · intro k _ _
+      rw [List.prod_nil, Matrix.one_mulVec]
+    · rw [List.prod_nil, Matrix.one_mulVec, Finset.sum_insert (by simp), Finset.sum_empty,
+        add_zero]
+    · intro hne
+      exact absurd hne (by simp)
   | insert j s hjs ih =>
     have hij : i ≠ j := fun h => his (by rw [h]; exact Finset.mem_insert_self j s)
     have his' : i ∉ s := fun h => his (Finset.mem_insert_of_mem h)
-    obtain ⟨L, hL, hzero, hfix⟩ := ih his'
+    obtain ⟨L, hL, hlen, hzero, hfix, hsq, -⟩ := ih his'
     set w := L.prod *ᵥ v with hw
-    refine ⟨givensMat i j w :: L, ?_, ?_, ?_⟩
+    have hA : (0 : ℝ) ≤ ∑ k ∈ insert i s, Complex.normSq (v k) :=
+      Finset.sum_nonneg fun k _ => Complex.normSq_nonneg _
+    have hsum : ∑ k ∈ insert i (insert j s), Complex.normSq (v k)
+        = (∑ k ∈ insert i s, Complex.normSq (v k)) + Complex.normSq (v j) := by
+      rw [show insert i (insert j s) = insert j (insert i s) by rw [Finset.insert_comm],
+        Finset.sum_insert (by
+          simp only [Finset.mem_insert, not_or]
+          exact ⟨Ne.symm hij, hjs⟩)]
+      ring
+    have hnew : ((givensMat i j w :: L).prod *ᵥ v) i
+        = ((Real.sqrt (∑ k ∈ insert i (insert j s), Complex.normSq (v k)) : ℝ) : ℂ) := by
+      have hwj : w j = v j := hfix j (Ne.symm hij) hjs
+      rw [List.prod_cons, ← Matrix.mulVec_mulVec, ← hw, givensMat_mulVec_apply_fst w hij, hsq,
+        hwj, hsum]
+    refine ⟨givensMat i j w :: L, ?_, ?_, ?_, ?_, ?_, ?_⟩
     · intro V hV
       rcases List.mem_cons.mp hV with rfl | hV'
       · exact ⟨isTwoLevel_givensMat hij w, givensMat_mem_unitaryGroup w hij,
@@ -424,6 +459,7 @@ theorem exists_clear_column (i : n) (s : Finset n) (his : i ∉ s) (v : n → �
           rcases hx with rfl | hx'
           · exact Or.inl rfl
           · exact Or.inr (Or.inr hx'))⟩
+    · rw [List.length_cons, hlen, Finset.card_insert_of_notMem hjs]
     · intro k hk
       rw [List.prod_cons, ← Matrix.mulVec_mulVec, ← hw]
       rcases Finset.mem_insert.mp hk with rfl | hk'
@@ -438,6 +474,10 @@ theorem exists_clear_column (i : n) (s : Finset n) (his : i ∉ s) (v : n → �
       rw [List.prod_cons, ← Matrix.mulVec_mulVec, ← hw,
         givensMat_mulVec_apply_of_ne w hki hkj]
       exact hfix k hki hks
+    · rw [hnew, Complex.normSq_ofReal, Real.mul_self_sqrt (by
+        exact Finset.sum_nonneg fun k _ => Complex.normSq_nonneg _)]
+    · intro _
+      exact hnew
 
 /-! ### The decomposition -/
 
@@ -505,139 +545,157 @@ theorem row_eq_of_col_eq {U : Matrix n n ℂ} (hU : U ∈ Matrix.unitaryGroup n 
     exact absurd hii.symm one_ne_zero
   exact (mul_eq_zero.mp hl').resolve_left hne
 
-/-- The decomposition, by induction on the support. -/
+/-- The squared modulus of the `i`-th column of a unitary is `1`. -/
+theorem sum_normSq_col {U : Matrix n n ℂ} (hU : U ∈ Matrix.unitaryGroup n ℂ) (i : n) :
+    ∑ k, Complex.normSq (U k i) = 1 := by
+  have h1 : (Uᴴ * U) i i = 1 := by
+    rw [← Matrix.star_eq_conjTranspose, Matrix.mem_unitaryGroup_iff'.mp hU, Matrix.one_apply_eq]
+  rw [Matrix.mul_apply] at h1
+  have h2 : ∀ k, Uᴴ i k * U k i = ((Complex.normSq (U k i) : ℝ) : ℂ) := by
+    intro k
+    rw [Matrix.conjTranspose_apply, ← starRingEnd_apply, mul_comm, Complex.mul_conj]
+  rw [Finset.sum_congr rfl fun k _ => h2 k, ← Complex.ofReal_sum] at h1
+  exact_mod_cast h1
+
+/-- A unitary that is the identity outside a block of at most two indices **is** two-level. -/
+theorem isTwoLevel_of_idOutside_card_le_two (hcard : 1 < Fintype.card n) {s : Finset n}
+    (hs : s.card ≤ 2) (hne : s.Nonempty) {U : Matrix n n ℂ} (hid : IdOutside s U) :
+    IsTwoLevel U := by
+  have hpos : 0 < s.card := Finset.card_pos.mpr hne
+  rcases Nat.lt_or_ge s.card 2 with h1 | h2
+  · obtain ⟨i, rfl⟩ := Finset.card_eq_one.mp (by omega : s.card = 1)
+    obtain ⟨j, hj⟩ := Fintype.exists_ne_of_one_lt_card hcard i
+    exact ⟨i, j, Ne.symm hj, hid.mono (by
+      intro x hx
+      simp only [Finset.mem_singleton] at hx
+      simp [hx])⟩
+  · obtain ⟨i, j, hij, rfl⟩ := Finset.card_eq_two.mp (by omega : s.card = 2)
+    exact ⟨i, j, hij, hid⟩
+
+/-- **The Nielsen–Chuang count.** The decomposition, by induction on the support: a unitary that is
+the identity outside a block of `m` indices is a product of at most `(max m 2).choose 2` two-level
+unitaries — `m(m − 1)/2` once `m ≥ 2`, the `max` covering only the degenerate one-index case, where
+the matrix is a bare phase and costs one factor. -/
 theorem exists_twoLevel_prod_of_idOutside (hcard : 1 < Fintype.card n) (s : Finset n) :
     ∀ U : Matrix n n ℂ, U ∈ Matrix.unitaryGroup n ℂ → IdOutside s U →
       ∃ L : List (Matrix n n ℂ),
-        (∀ V ∈ L, IsTwoLevel V ∧ V ∈ Matrix.unitaryGroup n ℂ) ∧ L.prod = U := by
+        (∀ V ∈ L, IsTwoLevel V ∧ V ∈ Matrix.unitaryGroup n ℂ) ∧ L.prod = U ∧
+          L.length ≤ Nat.choose (max s.card 2) 2 := by
   induction s using Finset.strongInduction with
   | _ s ih =>
     intro U hU hid
-    rcases Finset.eq_empty_or_nonempty s with rfl | ⟨i, hi⟩
-    · exact ⟨[], by simp, by rw [List.prod_nil, hid.eq_one]⟩
-    -- clear the `i`-th column of `U` over `s \ {i}`
-    obtain ⟨L₁, hL₁, hzero, hfix⟩ := exists_clear_column i (s.erase i) (by simp)
-      (fun k => U k i)
-    have hins : insert i (s.erase i) = s := Finset.insert_erase hi
-    set G := L₁.prod with hG
-    have hGu : G ∈ Matrix.unitaryGroup n ℂ :=
-      unitaryGroup_list_prod_mem fun V hV => (hL₁ V hV).2.1
-    have hGid : IdOutside s G := by
-      rw [← hins]
-      exact IdOutside.list_prod fun V hV => (hL₁ V hV).2.2
-    have hGU : G * U ∈ Matrix.unitaryGroup n ℂ := mul_mem hGu hU
-    have hcolmul : ∀ k, (G * U) k i = (G *ᵥ fun m => U m i) k := by
-      intro k
-      rw [Matrix.mul_apply, Matrix.mulVec, dotProduct]
-    have hcol : ∀ k, k ≠ i → (G * U) k i = 0 := by
-      intro k hk
-      rw [hcolmul]
-      by_cases hks : k ∈ s.erase i
-      · exact hzero k hks
-      · have hkns : k ∉ s := fun h => hks (Finset.mem_erase.mpr ⟨hk, h⟩)
-        rw [hfix k hk hks]
-        rw [hid k i (Or.inl hkns), if_neg hk]
-    obtain ⟨hphase, hrow⟩ := row_eq_of_col_eq hGU i hcol
-    -- fix the phase of the `(i, i)` entry with one more two-level unitary
-    obtain ⟨j₀, hj₀⟩ := Fintype.exists_ne_of_one_lt_card hcard i
-    have hij₀ : i ≠ j₀ := Ne.symm hj₀
-    set c := (G * U) i i with hc
-    set P := twoLevelMat i j₀ (starRingEnd ℂ c) 0 0 1 with hP
-    have hPu : P ∈ Matrix.unitaryGroup n ℂ := by
-      refine twoLevelMat_mem_unitaryGroup hij₀ ?_ ?_ ?_ ?_
-      · simp only [Complex.conj_conj, map_zero, mul_zero, add_zero]
-        rw [mul_comm]
-        exact hphase
-      · simp
-      · simp
-      · simp
-    have hPtwo : IsTwoLevel P := isTwoLevel_twoLevelMat hij₀
-    -- the product is the identity outside `s.erase i`
-    have hrowP : ∀ l, (P * (G * U)) i l = if i = l then 1 else 0 := by
-      intro l
-      rw [Matrix.mul_apply, Finset.sum_eq_single i] <;> rw [hP]
-      · rw [twoLevelMat_apply_fst_fst]
-        by_cases hl : l = i
-        · subst hl
-          rw [if_pos rfl, ← hc]
-          exact hphase
-        · rw [if_neg (Ne.symm hl), hrow l hl, mul_zero]
-      · intro m _ hmi
-        by_cases hm : m = j₀
-        · subst hm
-          rw [twoLevelMat_apply_fst_snd hij₀, zero_mul]
-        · rw [twoLevelMat_apply_of_col_ne hmi hm, if_neg (Ne.symm hmi), zero_mul]
-      · intro hi'
-        exact absurd (Finset.mem_univ i) hi'
-    have hother : ∀ k l, k ≠ i → (P * (G * U)) k l = (G * U) k l := by
-      intro k l hk
-      rw [Matrix.mul_apply, Finset.sum_eq_single k] <;> rw [hP]
-      · by_cases hkj : k = j₀
-        · subst hkj
-          rw [twoLevelMat_apply_snd_snd hij₀, one_mul]
-        · rw [twoLevelMat_apply_of_row_ne hk hkj, if_pos rfl, one_mul]
-      · intro m _ hmk
-        by_cases hkj : k = j₀
-        · subst hkj
-          by_cases hm : m = i
-          · subst hm
-            rw [twoLevelMat_apply_snd_fst hij₀, zero_mul]
-          · rw [twoLevelMat_apply_of_col_ne hm hmk, if_neg (Ne.symm hmk), zero_mul]
-        · rw [twoLevelMat_apply_of_row_ne hk hkj, if_neg (Ne.symm hmk), zero_mul]
-      · intro hk'
-        exact absurd (Finset.mem_univ k) hk'
-    have hidP : IdOutside (s.erase i) (P * (G * U)) := by
-      intro k l hkl
-      by_cases hk : k = i
-      · subst hk
-        exact hrowP l
-      · rw [hother k l hk]
-        by_cases hks : k ∈ s
+    rcases Nat.lt_or_ge s.card 3 with hsmall | hbig
+    · -- at most two indices: `U` is itself two-level, or the identity
+      rcases Finset.eq_empty_or_nonempty s with rfl | hne
+      · exact ⟨[], by simp, by rw [List.prod_nil, hid.eq_one], by simp⟩
+      · refine ⟨[U], ?_, by rw [List.prod_singleton], ?_⟩
+        · intro V hV
+          rw [List.mem_singleton] at hV
+          subst hV
+          exact ⟨isTwoLevel_of_idOutside_card_le_two hcard (by omega) hne hid, hU⟩
+        · rw [List.length_singleton]
+          have h2 : 2 ≤ max s.card 2 := le_max_right _ _
+          calc 1 = Nat.choose 2 2 := by norm_num
+            _ ≤ Nat.choose (max s.card 2) 2 := Nat.choose_le_choose 2 h2
+    · -- at least three: clear a column, then induct on the smaller support
+      obtain ⟨i, hi⟩ : s.Nonempty := Finset.card_pos.mp (by omega)
+      have hcards : (s.erase i).card = s.card - 1 := Finset.card_erase_of_mem hi
+      obtain ⟨L₁, hL₁, hlen₁, hzero, hfix, -, hslot⟩ :=
+        exists_clear_column i (s.erase i) (by simp) (fun k => U k i)
+      have hins : insert i (s.erase i) = s := Finset.insert_erase hi
+      set G := L₁.prod with hG
+      have hGu : G ∈ Matrix.unitaryGroup n ℂ :=
+        unitaryGroup_list_prod_mem fun V hV => (hL₁ V hV).2.1
+      have hGid : IdOutside s G := by
+        rw [← hins]
+        exact IdOutside.list_prod fun V hV => (hL₁ V hV).2.2
+      have hGU : G * U ∈ Matrix.unitaryGroup n ℂ := mul_mem hGu hU
+      have hcolmul : ∀ k, (G * U) k i = (G *ᵥ fun m => U m i) k := by
+        intro k
+        rw [Matrix.mul_apply, Matrix.mulVec, dotProduct]
+      have hcol : ∀ k, k ≠ i → (G * U) k i = 0 := by
+        intro k hk
+        rw [hcolmul]
+        by_cases hks : k ∈ s.erase i
+        · exact hzero k hks
+        · have hkns : k ∉ s := fun h => hks (Finset.mem_erase.mpr ⟨hk, h⟩)
+          rw [hfix k hk hks, hid k i (Or.inl hkns), if_neg hk]
+      obtain ⟨-, hrow⟩ := row_eq_of_col_eq hGU i hcol
+      -- the pivot is the norm of the column, which is `1`
+      have hsumcol : ∑ k ∈ insert i (s.erase i), Complex.normSq (U k i) = 1 := by
+        rw [hins, ← sum_normSq_col hU i]
+        refine Finset.sum_subset (Finset.subset_univ s) ?_
+        intro k _ hks
+        have hki : k ≠ i := fun h => hks (h ▸ hi)
+        rw [hid k i (Or.inl hks), if_neg hki, Complex.normSq_zero]
+      have hdiag : (G * U) i i = 1 := by
+        rw [hcolmul, hslot (Finset.card_pos.mp (by omega)), hsumcol, Real.sqrt_one,
+          Complex.ofReal_one]
+      have hid' : IdOutside (s.erase i) (G * U) := by
+        intro k l hkl
+        by_cases hk : k = i
+        · subst hk
+          by_cases hl : l = k
+          · rw [hl, hdiag, if_pos rfl]
+          · rw [hrow l hl, if_neg (fun h => hl h.symm)]
         · by_cases hl : l = i
           · subst hl
             rw [hcol k hk, if_neg hk]
-          · have hlns : l ∉ s := by
-              rcases hkl with hk' | hl'
-              · exact absurd (Finset.mem_erase.mpr ⟨hk, hks⟩) hk'
-              · intro hls
-                exact hl' (Finset.mem_erase.mpr ⟨hl, hls⟩)
-            exact (hGid.mul hid) k l (Or.inr hlns)
-        · exact (hGid.mul hid) k l (Or.inl hks)
-    -- induct
-    obtain ⟨L₂, hL₂, hprod⟩ := ih (s.erase i) (Finset.erase_ssubset hi) (P * (G * U))
-      (mul_mem hPu hGU) hidP
-    -- reassemble: `U = (P * G)⁻¹ * (P * G * U)`, and inverses of two-level unitaries are such
-    refine ⟨(L₁.map fun V => Vᴴ).reverse ++ (Pᴴ :: L₂), ?_, ?_⟩
-    · intro V hV
-      rcases List.mem_append.mp hV with hV' | hV'
-      · rw [List.mem_reverse, List.mem_map] at hV'
-        obtain ⟨W, hW, rfl⟩ := hV'
-        obtain ⟨h1, h2, _⟩ := hL₁ W hW
-        refine ⟨h1.conjTranspose, ?_⟩
-        rw [← Matrix.star_eq_conjTranspose]
-        exact Unitary.star_mem h2
-      · rcases List.mem_cons.mp hV' with rfl | hV''
-        · refine ⟨hPtwo.conjTranspose, ?_⟩
+          · refine (hGid.mul hid) k l ?_
+            rcases hkl with hk' | hl'
+            · exact Or.inl fun hks => hk' (Finset.mem_erase.mpr ⟨hk, hks⟩)
+            · exact Or.inr fun hls => hl' (Finset.mem_erase.mpr ⟨hl, hls⟩)
+      obtain ⟨L₂, hL₂, hprod, hlen₂⟩ := ih (s.erase i) (Finset.erase_ssubset hi) (G * U) hGU hid'
+      refine ⟨(L₁.map fun V => Vᴴ).reverse ++ L₂, ?_, ?_, ?_⟩
+      · intro V hV
+        rcases List.mem_append.mp hV with hV' | hV'
+        · rw [List.mem_reverse, List.mem_map] at hV'
+          obtain ⟨W, hW, rfl⟩ := hV'
+          obtain ⟨h1, h2, -⟩ := hL₁ W hW
+          refine ⟨h1.conjTranspose, ?_⟩
           rw [← Matrix.star_eq_conjTranspose]
-          exact Unitary.star_mem hPu
-        · exact hL₂ V hV''
-    · rw [List.prod_append, List.prod_cons, hprod]
-      have hstarP : Pᴴ * (P * (G * U)) = G * U := by
-        have hPP : Pᴴ * P = 1 := by
-          rw [← Matrix.star_eq_conjTranspose]
-          exact Matrix.mem_unitaryGroup_iff'.mp hPu
-        rw [← mul_assoc, hPP, one_mul]
-      rw [hstarP, ← mul_assoc, hG,
-        reverse_map_conjTranspose_prod_mul L₁ (fun V hV => (hL₁ V hV).2.1), one_mul]
+          exact Unitary.star_mem h2
+        · exact hL₂ V hV'
+      · rw [List.prod_append, hprod, ← mul_assoc, hG,
+          reverse_map_conjTranspose_prod_mul L₁ (fun V hV => (hL₁ V hV).2.1), one_mul]
+      · -- `(m − 1) + (m − 1)(m − 2)/2 = m(m − 1)/2`, as binomial coefficients
+        have hlen : ((L₁.map fun V => Vᴴ).reverse ++ L₂).length = (s.card - 1) + L₂.length := by
+          rw [List.length_append, List.length_reverse, List.length_map, hlen₁, hcards]
+        have hmax₂ : max (s.erase i).card 2 = (s.card - 1) := by
+          rw [hcards]
+          exact max_eq_left (by omega)
+        have hmax : max s.card 2 = s.card := max_eq_left (by omega)
+        have hchoose : Nat.choose s.card 2 = (s.card - 1) + Nat.choose (s.card - 1) 2 := by
+          obtain ⟨k, hk⟩ : ∃ k, s.card = k + 1 := ⟨s.card - 1, by omega⟩
+          rw [hk, Nat.choose_succ_succ, Nat.choose_one_right, Nat.add_sub_cancel]
+        rw [hlen, hmax, hchoose]
+        exact Nat.add_le_add_left (by rw [← hmax₂]; exact hlen₂) _
 
 /-- ★★ **Every unitary matrix is a product of two-level unitaries** (Nielsen–Chuang §4.5.1), for
-an index type with at least two elements. The count is not claimed: see the module header. -/
+an index type with at least two elements. -/
 theorem exists_twoLevel_prod (hcard : 1 < Fintype.card n) (U : Matrix n n ℂ)
     (hU : U ∈ Matrix.unitaryGroup n ℂ) :
     ∃ L : List (Matrix n n ℂ),
-      (∀ V ∈ L, IsTwoLevel V ∧ V ∈ Matrix.unitaryGroup n ℂ) ∧ L.prod = U :=
-  exists_twoLevel_prod_of_idOutside hcard Finset.univ U hU fun k l h => by
-    rcases h with h | h <;> exact absurd (Finset.mem_univ _) h
+      (∀ V ∈ L, IsTwoLevel V ∧ V ∈ Matrix.unitaryGroup n ℂ) ∧ L.prod = U := by
+  obtain ⟨L, hL, hprod, -⟩ := exists_twoLevel_prod_of_idOutside hcard Finset.univ U hU
+    fun k l h => by rcases h with h | h <;> exact absurd (Finset.mem_univ _) h
+  exact ⟨L, hL, hprod⟩
+
+/-- ★★★ **The Nielsen–Chuang bound: `d(d − 1)/2` two-level factors suffice.** Every `d × d` unitary
+(`d ≥ 2`) is a product of at most `d(d − 1)/2` two-level unitaries — the count of §4.5.1, tight for
+`d = 2`. The construction is Givens elimination, and the reason no factor is wasted on phases is
+`exists_clear_column`: the pivot accumulates the *norm* of the column, which for a unitary is
+exactly `1`. -/
+theorem exists_twoLevel_prod_length (hcard : 1 < Fintype.card n) (U : Matrix n n ℂ)
+    (hU : U ∈ Matrix.unitaryGroup n ℂ) :
+    ∃ L : List (Matrix n n ℂ),
+      (∀ V ∈ L, IsTwoLevel V ∧ V ∈ Matrix.unitaryGroup n ℂ) ∧ L.prod = U ∧
+        L.length ≤ Fintype.card n * (Fintype.card n - 1) / 2 := by
+  obtain ⟨L, hL, hprod, hlen⟩ := exists_twoLevel_prod_of_idOutside hcard Finset.univ U hU
+    fun k l h => by rcases h with h | h <;> exact absurd (Finset.mem_univ _) h
+  refine ⟨L, hL, hprod, ?_⟩
+  rw [Finset.card_univ] at hlen
+  rwa [max_eq_left (by omega : 2 ≤ Fintype.card n), Nat.choose_two_right] at hlen
 
 end TwoLevel
 

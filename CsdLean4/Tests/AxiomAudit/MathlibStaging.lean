@@ -8472,7 +8472,8 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.SU2.mem_closure_range_axisRot
 
-/-! ### Two-level unitaries (Matrix/TwoLevel.lean, 2026-09-25, BACKLOG #70, R-005 (c)) -/
+/-! ### Two-level unitaries (Matrix/TwoLevel.lean, 2026-09-25, BACKLOG #70, R-005 (c);
+the `d(d − 1)/2` count 2026-09-28, BACKLOG #82) -/
 
 /-- info: 'QuantumInfo.TwoLevel.IdOutside.mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -8509,6 +8510,22 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'QuantumInfo.TwoLevel.exists_twoLevel_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.TwoLevel.exists_twoLevel_prod
+
+/-- info: 'QuantumInfo.TwoLevel.sum_normSq_col' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.sum_normSq_col
+
+/-- info: 'QuantumInfo.TwoLevel.isTwoLevel_of_idOutside_card_le_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.isTwoLevel_of_idOutside_card_le_two
+
+/-- info: 'QuantumInfo.TwoLevel.exists_twoLevel_prod_of_idOutside' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.exists_twoLevel_prod_of_idOutside
+
+/-- info: 'QuantumInfo.TwoLevel.exists_twoLevel_prod_length' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.TwoLevel.exists_twoLevel_prod_length
 
 /-! ### Multiply-controlled gates and the Gray-code sandwich (MultiControlled.lean, 2026-09-26, BACKLOG #71) -/
 
