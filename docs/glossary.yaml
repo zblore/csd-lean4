@@ -8502,8 +8502,8 @@ entries:
     status: definition
     source: curated
     site_link:
-      url: https://www.constraintsurfacedynamics.com/formalisation
-      text: The formalisation page tracks the Lean corpus and its scope
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page marks which layers are established and which are posited
     related: [witness-and-engine, lf1-main-theorem, partial-trace, lie-trotter-formula, does-csd-make-new-predictions]
 
   - slug: does-csd-make-new-predictions
@@ -9736,6 +9736,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/KnillLaflamme.lean
       theorem: knillLaflamme_iff
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's third stage is the finite-dimensional reconstruction this error-correction layer is built on
     related: [steane-code, shor-code, stabiliser-code, quantum-channel, transversal-gate]
     external:
       - text: "Knill-Laflamme, Theory of quantum error-correcting codes (PRA 55, 900)"
@@ -9816,6 +9819,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Stabilizer.lean
       theorem: stabProjector_rank
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap marks where the reconstruction ends and library layers like the stabiliser formalism begin
     related: [steane-code, shor-code, gottesman-knill, pauli-matrices, knill-laflamme]
     external:
       - text: "Gottesman, Stabilizer codes and quantum error correction (Caltech thesis, 1997)"
@@ -9899,6 +9905,9 @@ entries:
     lean:
       module: CsdLean4/Empirical/QM/QEC/SteaneFaultyGate.lean
       theorem: steane_faultyHadamard_recovery
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: The scope page is explicit that the reconstruction is finite-dimensional, which is the setting these gates live in
     related: [steane-code, knill-laflamme, threshold-theorem, magic-state, clifford-t]
     external:
       - text: "Eastin-Knill, Restrictions on transversal encoded quantum gate sets (PRL 102, 110502)"
@@ -9979,6 +9988,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Probability/CircuitThreshold.lean
       theorem: exists_level_circuitMeasure_lt
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: The scope page keeps the programme's own claims apart from the library results built above them
     related: [concatenated-code, steane-code, transversal-gate, knill-laflamme, magic-state-distillation]
     external:
       - text: "Aharonov-Ben-Or, Fault-tolerant quantum computation with constant error rate"
@@ -10055,6 +10067,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Probability/CodeCapacityThreshold.lean
       theorem: concatMeasure_concatBad_le
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's reconstruction stage is where this recursion sits in the programme
     related: [threshold-theorem, steane-code, stabiliser-code, knill-laflamme, transversal-gate]
     external:
       - text: "Knill-Laflamme, Concatenated quantum codes"
@@ -10136,6 +10151,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/ReedMuller15Distill.lean
       theorem: tendsto_distillIter
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page is the list of what the programme establishes, which this protocol consumes rather than extends
     related: [magic-state, gottesman-knill, clifford-t, threshold-theorem, transversal-gate]
     external:
       - text: "Bravyi-Kitaev, Universal quantum computation with ideal Clifford gates and noisy ancillas (PRA 71, 022316)"
@@ -10220,6 +10238,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/CliffordTUniversal.lean
       theorem: exists_phase_mem_cliffordTmLim
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the reconstruction that this universality statement is made over
     related: [magic-state, gottesman-knill, two-level-unitary, magic-state-distillation, toffoli-gate]
     external:
       - text: "Nielsen-Chuang, Quantum Computation and Quantum Information, section 4.5"
@@ -10297,6 +10318,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/LinearAlgebra/Matrix/TwoLevel.lean
       theorem: exists_twoLevel_prod
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper C reconstructs the operational quantum mechanics whose unitaries these factors assemble
     related: [clifford-t, toffoli-gate, pauli-matrices, kronecker-product, hermitian-operator]
     external:
       - text: "Nielsen-Chuang, Quantum Computation and Quantum Information, section 4.5.1"
@@ -10369,6 +10393,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Reversible/Cost.lean
       theorem: cost_comp_toffoli_count
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: The scope page explains why the reversible-circuit layer supports nothing in the foundations
     related: [reversible-adder, clifford-t, magic-state, landauer-principle, shor-algorithm]
     external:
       - text: "Toffoli, Reversible computing (MIT LCS, 1980)"
@@ -10443,6 +10470,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroAdd.lean
       theorem: cuccaroAdd_correct
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's reconstruction stage is what the arithmetic layer runs inside
     related: [toffoli-gate, shor-algorithm, quantum-fourier-transform, phase-estimation, clifford-t]
     external:
       - text: "Cuccaro-Draper-Kutin-Moulton, A new quantum ripple-carry addition circuit"
@@ -10520,6 +10550,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Helstrom.lean
       theorem: errorProb_helstromTest
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper C reconstructs the operational quantum mechanics in which this bound is stated
     related: [holevo-bound, quantum-channel, luders-rule, naimark-dilation, von-neumann-entropy]
     external:
       - text: "Helstrom, Quantum Detection and Estimation Theory (Academic Press, 1976)"
@@ -10600,6 +10633,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Analysis/InnerProductSpace/GeometricPhase.lean
       theorem: geometricPhase_of_schrodinger
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper D is the geometric quantum mechanics whose curvature this phase measures
     related: [aharonov-bohm, kahler-form, fubini-study-measure, fisher-rao-metric, bloch-sphere]
     external:
       - text: "Berry, Quantal phase factors accompanying adiabatic changes (Proc. R. Soc. A 392, 45)"
@@ -10675,6 +10711,9 @@ entries:
     lean:
       module: CsdLean4/Empirical/QM/AharonovBohm.lean
       theorem: flux_not_gauge_artefact
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the established results this empirical reproduction joins
     related: [geometric-phase, mach-zehnder, ramsey-interferometry, schrodinger-equation, bloch-sphere]
     external:
       - text: "Aharonov-Bohm, Significance of electromagnetic potentials in the quantum theory (Phys. Rev. 115, 485)"
@@ -10754,6 +10793,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Analysis/Fourier/Wigner.lean
       theorem: wigner_fourier
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page explains how the programme fixes the Born rule through symmetry and geometry
     related: [wigner-rigidity, quantum-fourier-transform, born-weight, liouville-measure, koopman-operator]
     external:
       - text: "Wigner, On the quantum correction for thermodynamic equilibrium (Phys. Rev. 40, 749)"
@@ -10834,6 +10876,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Dynamics/Koopman.lean
       theorem: koopmanUnitary
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page sets out why an epistemic wavefunction is compatible with the Hilbert-space formalism
     related: [liouville-measure, poisson-bracket, stone-theorem, hilbert-space, nelson-stochastic-mechanics]
     external:
       - text: "Koopman, Hamiltonian systems and transformations in Hilbert space (PNAS 17, 315)"
@@ -10917,6 +10962,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Analysis/Calculus/SchrodingerCurrent.lean
       theorem: nelson_fokkerPlanck
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page contrasts the programme with Bohmian mechanics and with stochastic dynamics
     related: [bohmian-mechanics, csd-vs-bohmian-mechanics, schrodinger-equation, born-weight, first-passage-race]
     external:
       - text: "Nelson, Derivation of the Schrodinger equation from Newtonian mechanics (Phys. Rev. 150, 1079)"
@@ -10991,6 +11039,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Geometry/Manifold/DarbouxStandardForm.lean
       theorem: IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_standard
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper D is the geometric setting this local normal form applies to
     related: [kahler-form, poisson-bracket, moment-map, liouville-measure, field-arena]
     external:
       - text: "McDuff-Salamon, Introduction to Symplectic Topology, Theorem 3.2.2"
@@ -11063,6 +11114,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Probability/FeynmanKac.lean
       theorem: feynmanKac
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's fifth stage is the controlled continuum limits this formula belongs to
     related: [lie-trotter-formula, schrodinger-equation, nelson-stochastic-mechanics, stone-theorem, gibbs-state]
     external:
       - text: "Kac, On distributions of certain Wiener functionals (Trans. AMS 65, 1)"
@@ -11151,7 +11205,101 @@ entries:
     lean:
       module: CsdLean4/Empirical/QM/WignerArakiYanase.lean
       theorem: wigner_araki_yanase
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page's no-go section is where this theorem's bearing on the programme is set out
     related: [ozawa-error-disturbance, pointer-basis, record-layer, robertson-uncertainty, luders-rule]
     external:
       - text: "Araki-Yanase, Measurement of quantum mechanical operators (Phys. Rev. 120, 622)"
         url: https://journals.aps.org/pr/abstract/10.1103/PhysRev.120.622
+
+  - slug: colbeck-renner
+    reviewed: 2026-09-29
+    hook: >
+      No deeper theory can predict a quantum measurement better than quantum mechanics does, as
+      long as it lets the settings be chosen freely, and the proof runs on a chain of correlations
+      that closes up on itself.
+    layman: >
+      Quantum mechanics gives probabilities, and a natural hope is that some deeper theory holds
+      extra information that would sharpen them into certainties. Colbeck and Renner showed that
+      the hope fails, given one assumption about the experiment: that the measurement settings can
+      be chosen freely, meaning their choice is not tied to whatever the deeper theory holds.
+
+      The argument uses a chain. Take two particles prepared in the state where each measurement on
+      one is perfectly anticorrelated with the matching measurement on the other, and lay out many
+      settings around a circle, each one a small angle from the next. Along the chain, neighbouring
+      settings almost always disagree in a fixed way, and the angles are chosen so that after going
+      all the way round you arrive back where you started. Now suppose the deeper theory has
+      information that makes one outcome more likely than the other. Follow that bias around the
+      chain: each link carries it along almost unchanged, and the closing link demands that it
+      reverse. A bias cannot survive a lap that ends by contradicting it, so there is no bias, and
+      the deeper theory's prediction is the quantum one, an even split.
+
+      The word free is carrying two ideas at once, and separating them is what makes the result
+      usable. One is that the distant setting does not affect what happens here. The other is that
+      the settings are uncorrelated with the deeper theory's extra information. A theory can give up
+      the first and keep the second, and then the argument does not apply to it.
+    in_csd: >
+      A reader who has met this theorem asks the obvious question, since CSD posits underlying
+      states that fix outcomes, so the corpus answers it with a theorem rather than a paragraph. The
+      chained walk is proved in the library layer and instantiated at the singlet, and the two
+      halves of the free-choice assumption appear as separate hypotheses: that each component of the
+      extension is no-signalling, and that one distribution over the extra information serves every
+      choice of settings.
+
+      The programme denies the first and keeps the second. Denying it is not a stance but a result
+      the corpus already had: no way of splitting a probability space into a part for each wing
+      reproduces the singlet correlations, so an underlying model of the singlet cannot have each
+      wing's response depend only on its own setting. The second half, that the settings are
+      uncorrelated with the underlying state, the corpus keeps as an explicit premise and names in
+      the module that uses it. So CSD is not superdeterministic and not retrocausal, and anyone who
+      reads it that way has collapsed the two ideas back into one.
+
+      Two cautions travel with this. Escaping a no-go theorem removes an objection and supports
+      nothing, and this escape is inherited from the corpus's Bell result rather than independent of
+      it, so if that result were ever weakened this one weakens with it. The Lean statement is for
+      the maximally entangled pair and for the prediction of one outcome, in mean over the extra
+      information; the extension to all states, which the original paper obtains by an embedding
+      argument, is not claimed.
+    mathematical: >
+      The library half is ProbabilityTheory.ChainedBell. For a two-outcome outcome law, two
+      marginals of one joint distribution satisfy |marginalA - marginalB| <= P(disagree) and
+      |marginalA + marginalB - 1| <= P(agree). No-signalling makes each wing's marginal a function
+      of that wing's setting alone, which is what lets those one-pair bounds be composed along the
+      alternating walk A 0, B 0, A 1, ..., A n, B n (abs_marginalA_sub_marginalB_chain_le); closing
+      the walk with one reversed link gives abs_marginalA_sub_half_le, and
+      integral_abs_marginalA_sub_half_le transfers the same bound to every component of a mixture,
+      the functional being affine in the law.
+
+      The instance is the LF3 singlet kernel P_st with 2n + 2 settings at the angles j(pi -
+      pi/(2n+1)) of a great circle: every link costs (1 - cos(pi/(2n+1)))/2 in disagreement and the
+      closing link is exactly correlated, since (2n+1) steps come to 2n pi
+      (dotR_crA_zero_crB_last). With 1 - cos x <= x^2/2 the bound is pi^2/(8(2n+1)), so
+      no_improved_predictive_power gives, for every positive delta, settings at which every
+      parameter-independent extension predicts Alice's outcome within delta of one half in mean over
+      the extension variable. exists_signalling_of_sharp is the contrapositive: an extension that
+      does sharpen the outcome has a component that signals.
+    person: >
+      Roger Colbeck and Renato Renner published the theorem in 2011, working at ETH Zurich, and it
+      grew out of their earlier result that free randomness can be amplified, which uses the same
+      chained correlations. Colbeck is now at York and Renner still leads the quantum information
+      theory group at ETH.
+
+      Giancarlo Ghirardi and Raffaele Romano in 2013, and Jelle Leegwater in 2016, separated the
+      free-choice condition into its two components and identified which one the argument needs,
+      which is why a theory can deny parameter independence and keep measurement independence. The
+      chained inequalities the proof runs on are Samuel Braunstein and Carlton Caves's, from 1990.
+    term: Colbeck-Renner theorem
+    eponyms: [Colbeck, Renner]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Empirical/QM/ColbeckRenner.lean
+      theorem: no_improved_predictive_power
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page states where CSD stands against the no-go theorems, this one included
+    related: [bell-chsh, hidden-variables, is-csd-superdeterministic, no-signalling, bell-not-join,
+      is-csd-a-hidden-variable-theory]
+    external:
+      - text: "Colbeck-Renner, No extension of quantum theory can have improved predictive power (Nat. Commun. 2, 411)"
+        url: https://www.nature.com/articles/ncomms1416

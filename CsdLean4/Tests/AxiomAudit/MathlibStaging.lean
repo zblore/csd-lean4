@@ -9367,4 +9367,28 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.AharonovBohm.not_exists_unitary_conj_ringHam
 
+/-- info: 'ProbabilityTheory.ChainedBell.abs_marginalA_sub_marginalB_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.ChainedBell.abs_marginalA_sub_marginalB_le
+
+/-- info: 'ProbabilityTheory.ChainedBell.abs_marginalA_add_marginalB_sub_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.ChainedBell.abs_marginalA_add_marginalB_sub_one_le
+
+/-- info: 'ProbabilityTheory.ChainedBell.abs_marginalA_sub_marginalB_chain_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.ChainedBell.abs_marginalA_sub_marginalB_chain_le
+
+/-- info: 'ProbabilityTheory.ChainedBell.abs_marginalA_sub_half_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.ChainedBell.abs_marginalA_sub_half_le
+
+/-- info: 'ProbabilityTheory.ChainedBell.integral_abs_marginalA_sub_half_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.ChainedBell.integral_abs_marginalA_sub_half_le
+
+/-- info: 'ProbabilityTheory.ChainedBell.exists_signalling_of_sharp_integral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ProbabilityTheory.ChainedBell.exists_signalling_of_sharp_integral
+
 end CSD.Tests.AxiomAudit

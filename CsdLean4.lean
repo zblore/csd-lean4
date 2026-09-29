@@ -31,6 +31,7 @@ public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.Mathlib.MeasureTheory.InvariantTwist
 public import CsdLean4.Mathlib.Probability.IIDCoordinateProcess
 public import CsdLean4.Mathlib.Probability.CGLMP
+public import CsdLean4.Mathlib.Probability.ChainedBell
 public import CsdLean4.Mathlib.Probability.CompetingExponentials
 public import CsdLean4.Mathlib.Probability.IidClockRace
 public import CsdLean4.Mathlib.QuantumInfo.Channel
@@ -316,6 +317,7 @@ public import CsdLean4.Empirical.QM.Resources.Teleportation
 public import CsdLean4.Empirical.QM.NoCommunication
 public import CsdLean4.Empirical.QM.NoBroadcasting
 public import CsdLean4.Empirical.QM.Protocols.Basic
+public import CsdLean4.Empirical.QM.ColbeckRenner
 public import CsdLean4.Empirical.QM.Crypto.QuantumMoney
 public import CsdLean4.Empirical.QM.Crypto.BB84
 public import CsdLean4.Empirical.QM.Crypto.B92

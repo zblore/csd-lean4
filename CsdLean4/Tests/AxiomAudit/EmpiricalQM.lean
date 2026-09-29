@@ -1815,4 +1815,32 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.AharonovBohm.levels_three_pi
 
+/-- info: 'CSD.Empirical.QM.ColbeckRenner.dotR_circleSetting' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.ColbeckRenner.dotR_circleSetting
+
+/-- info: 'CSD.Empirical.QM.ColbeckRenner.dotR_crA_zero_crB_last' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.ColbeckRenner.dotR_crA_zero_crB_last
+
+/-- info: 'CSD.Empirical.QM.ColbeckRenner.chainCost_P_st' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.ColbeckRenner.chainCost_P_st
+
+/-- info: 'CSD.Empirical.QM.ColbeckRenner.bound_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.ColbeckRenner.bound_le
+
+/-- info: 'CSD.Empirical.QM.ColbeckRenner.integral_abs_marginalA_sub_half_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.ColbeckRenner.integral_abs_marginalA_sub_half_le
+
+/-- info: 'CSD.Empirical.QM.ColbeckRenner.no_improved_predictive_power' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.ColbeckRenner.no_improved_predictive_power
+
+/-- info: 'CSD.Empirical.QM.ColbeckRenner.exists_signalling_of_sharp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.ColbeckRenner.exists_signalling_of_sharp
+
 end CSD.Tests.AxiomAudit

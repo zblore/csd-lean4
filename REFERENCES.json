@@ -203,7 +203,9 @@
       "arxiv_id": "1005.5173",
       "url": null,
       "cited_by": [
-        "specs/colbeck-renner-note.md"
+        "specs/colbeck-renner-note.md",
+        "CsdLean4/Empirical/QM/ColbeckRenner.lean",
+        "CsdLean4/Mathlib/Probability/ChainedBell.lean"
       ],
       "note": "Positioning theorem. CSD escapes it by denying parameter independence at the Sigma level, the same escape as Bell; NOT by denying free choice. See specs/colbeck-renner-note.md for the unbundling."
     },
@@ -276,7 +278,8 @@
       "arxiv_id": "1301.5040",
       "url": null,
       "cited_by": [
-        "specs/colbeck-renner-note.md"
+        "specs/colbeck-renner-note.md",
+        "CsdLean4/Empirical/QM/ColbeckRenner.lean"
       ],
       "note": "One of the two analyses showing Colbeck-Renner's 'free choice' bundles parameter independence with measurement independence."
     },
@@ -425,7 +428,8 @@
       "doi": "10.1016/j.shpsb.2016.03.003",
       "url": null,
       "cited_by": [
-        "specs/colbeck-renner-note.md"
+        "specs/colbeck-renner-note.md",
+        "CsdLean4/Empirical/QM/ColbeckRenner.lean"
       ],
       "note": "The second unbundling analysis: what Colbeck-Renner actually needs is parameter independence."
     },
@@ -773,6 +777,44 @@
         }
       ],
       "note": "Not imported. Bridged from outside the corpus by https://github.com/zblore/csd-qit-bridge, which depends on this corpus and on physlib by pinned revision (route (b) of specs/lieb-dpi-scoping.md)."
+    },
+    {
+      "key": "BraunsteinCaves1990",
+      "title": "Wringing out better Bell inequalities",
+      "authors": [
+        "Samuel L. Braunstein",
+        "Carlton M. Caves"
+      ],
+      "year": 1990,
+      "kind": "article",
+      "venue": "Ann. Phys. 202, 22",
+      "doi": "10.1016/0003-4916(90)90339-P",
+      "arxiv_id": null,
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Mathlib/Probability/ChainedBell.lean",
+        "CsdLean4/Empirical/QM/ColbeckRenner.lean"
+      ],
+      "note": "The chained Bell family. The corpus proves the chained WALK (marginal chaining under no-signalling), not the chained inequality on a sum of correlations; the walk is what Colbeck-Renner's argument runs on."
+    },
+    {
+      "key": "BarrettHardyKent2005",
+      "title": "No signaling and quantum key distribution",
+      "authors": [
+        "Jonathan Barrett",
+        "Lucien Hardy",
+        "Adrian Kent"
+      ],
+      "year": 2005,
+      "kind": "article",
+      "venue": "Phys. Rev. Lett. 95, 010503",
+      "doi": "10.1103/PhysRevLett.95.010503",
+      "arxiv_id": "quant-ph/0405101",
+      "url": null,
+      "cited_by": [
+        "CsdLean4/Mathlib/Probability/ChainedBell.lean"
+      ],
+      "note": "The chained walk as a device-independent tool, cited for the technique only."
     }
   ]
 }

@@ -1,7 +1,9 @@
 # Colbeck–Renner and CSD: which premise the programme denies
 
-**Status:** spec note, written 2026-09-04 (expert-review row D of `BACKLOG.md`). Positioning,
-not a Lean obligation — the Lean form is scoped at the end and is **not** queued.
+**Status:** spec note, written 2026-09-04 (expert-review row D of `BACKLOG.md`); the Lean form
+landed 2026-09-29 and is described in "The Lean form" below. The positioning is still positioning:
+what the Lean theorems add is that the premise the escape uses is now a *hypothesis of a theorem*
+rather than a sentence in this note.
 
 ## The theorem
 
@@ -49,12 +51,38 @@ Anything that reads CSD as superdeterministic or as retrocausal has collapsed th
 glossary entry `is-csd-superdeterministic` makes the same point for a general reader; this note
 is the referee-facing version with the citation trail.
 
+## The Lean form (landed 2026-09-29, BACKLOG row 23)
+
+Two modules. [`Mathlib/Probability/ChainedBell.lean`](../CsdLean4/Mathlib/Probability/ChainedBell.lean)
+is the CSD-free half: for a two-outcome outcome law, two marginals of one joint distribution differ
+by at most the probability that the outcomes disagree, and add to `1` up to the probability that
+they agree. **No-signalling is exactly what allows those one-pair statements to be chained across
+different pairs**, because it makes each wing's marginal a function of that wing's setting alone.
+Closing the chain with one reversed link gives `abs_marginalA_sub_half_le`: the marginal is `1/2` up
+to half the chain's total cost. `integral_abs_marginalA_sub_half_le` transfers the same bound to
+every component of a mixture, since the functional is affine in the law.
+
+[`Empirical/QM/ColbeckRenner.lean`](../CsdLean4/Empirical/QM/ColbeckRenner.lean) instantiates it at
+the singlet, with `2n + 2` settings placed around a great circle in steps of `π − π/(2n+1)` so that
+the chain closes exactly (`dotR_crA_zero_crB_last`, because `(2n+1)` steps come to `2nπ`). The bound
+is `π²/(8(2n+1))`, and `no_improved_predictive_power` is the limit form: for every `δ > 0` there are
+settings at which no parameter-independent extension predicts Alice's outcome better than `1/2` by
+more than `δ`, in mean over the extension variable.
+
+**The unbundling is in the hypotheses, which is the point of doing it in Lean.** Parameter
+independence is the pair `hA`, `hB` (each component is no-signalling); measurement independence is
+the single shared `μ`, fixed before the settings and used for every setting pair in `hmix`. A reader
+can see which one the theorem consumes without taking this note's word for it, and
+`exists_signalling_of_sharp` states the contrapositive: an extension that does sharpen the outcome
+has a component that signals.
+
 ## What is NOT claimed here
 
-* **No Lean theorem states the Colbeck–Renner escape.** This note is positioning prose. Recording
-  it as a named theorem would need the chained-Bell family the CR argument runs on — rated M–L in
-  `BACKLOG.md` row D, and deliberately **not queued** ("Lean only if asked"). Do not cite this
-  note as a formal result.
+* **Not the general-state theorem.** Colbeck and Renner extend from maximally entangled states to
+  all states by an embedding argument, which is not formalised. What is proved is their statement
+  for the singlet, which is where the chained-Bell machinery does its work. "Improved predictive
+  power" is formalised as sharpening the *outcome marginal* of one measurement, in mean over the
+  extension variable, not as the full conditional distribution.
 * **Satisfying or escaping a no-go is not evidence for the programme.** It removes an objection;
   it does not support a claim. The same discipline as the `excess-baggage` glossary entry.
 * **The escape is inherited, not independent.** It is the Bell escape, in the CR setting. If

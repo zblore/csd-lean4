@@ -28,6 +28,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [CGLMP inequality](https://glossary.constraintsurfacedynamics.com/cglmp-inequality/) | `` | standard-mathematics |
 | [Choi's theorem](https://glossary.constraintsurfacedynamics.com/choi-theorem/) | `choi_iff_posSemidef` | proved-in-corpus |
 | [Clifford plus T](https://glossary.constraintsurfacedynamics.com/clifford-t/) | `exists_phase_mem_cliffordTmLim` | proved-in-corpus |
+| [Colbeck-Renner theorem](https://glossary.constraintsurfacedynamics.com/colbeck-renner/) | `no_improved_predictive_power` | proved-in-corpus |
 | [Collapse](https://glossary.constraintsurfacedynamics.com/collapse/) | `no_exact_collapse` | proved-in-corpus |
 | [concatenated code](https://glossary.constraintsurfacedynamics.com/concatenated-code/) | `concatMeasure_concatBad_le` | proved-in-corpus |
 | [Constraint surface](https://glossary.constraintsurfacedynamics.com/constraint-surface/) | `` | physical-postulate |
