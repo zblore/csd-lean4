@@ -23,16 +23,17 @@ from it. This file joins the two.
   foundational triple (pinned in `Tests/AxiomAudit/MathlibStaging.lean`).
 
 What is and is not claimed. This is the finite-dimensional theorem (`ℂᴺ`, `N ≥ 3`) for
-projection-valued measures. The infinite-dimensional theorem, dimension `2` (where the
-statement fails) and the POVM generalisation (Busch's, `LF2/EffectGleason.lean`, proved
+probability assignments on orthogonal projections. The infinite-dimensional theorem,
+dimension `2` (where the statement fails) and the POVM generalisation (Busch's,
+`LF2/EffectGleason.lean`, proved
 separately) are outside it. Neither of the two theorems is derived from the other: the proofs
 share the Jordan–von Neumann engine (`Gleason/Polarization.lean`) and the descent
 (`Gleason/Descent.lean`), nothing else.
 
 ## Source
 
-Gleason 1957, *J. Math. Mech.* **6**, 885 (Theorem 2.3, the core lemma; Theorem 3.1, the
-theorem); Cooke, Keane, Moran 1985, *Math. Proc. Cambridge Philos. Soc.* **98**, 117 (the
+Gleason 1957, *J. Math. Mech.* **6**, 885 (Theorem 2.8, the nonnegative core lemma;
+Theorem 3.1, the theorem); Cooke, Keane, Moran 1985, *Math. Proc. Cambridge Philos. Soc.* **98**, 117 (the
 elementary proof of the core lemma followed in `Gleason/Sphere.lean` through
 `Gleason/General.lean`).
 -/

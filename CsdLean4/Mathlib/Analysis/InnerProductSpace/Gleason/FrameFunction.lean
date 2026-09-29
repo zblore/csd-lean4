@@ -445,8 +445,9 @@ lemma ext_parallelogram_plane (hreg : IsRealPlaneRegular OP.frame)
     Complex.mul_re, Complex.mul_im, Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im]
   ring
 
-/-- **The parallelogram law on `ℂᴺ`.** Any two vectors lie in a complex plane spanned by an
-orthonormal pair (Gram–Schmidt), where `ext` is a Hermitian form. -/
+/-- **The parallelogram law on `ℂᴺ`.** For linearly independent vectors, Gram–Schmidt
+reduces to an orthonormal pair, where `ext` is a Hermitian form. Zero vectors and
+linearly dependent pairs are handled by homogeneity. -/
 theorem ext_parallelogram (hreg : IsRealPlaneRegular OP.frame) (u v : EuclideanSpace ℂ (Fin N)) :
     OP.ext (u + v) + OP.ext (u - v) = 2 * OP.ext u + 2 * OP.ext v := by
   rcases eq_or_ne u 0 with rfl | hu

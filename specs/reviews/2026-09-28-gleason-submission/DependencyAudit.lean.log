@@ -1,0 +1,18 @@
+PASS mutation SubmissionDependencies.projectionAlias: legacy misses, expanded traversal detects
+PASS mutation SubmissionDependencies.realAlias: legacy misses, expanded traversal detects
+PASS mutation SubmissionDependencies.frameAlias: legacy misses, expanded traversal detects
+PASS mutation SubmissionDependencies.densityAlias: legacy misses, expanded traversal detects
+PASS mutation SubmissionDependencies.secondAlias: legacy misses, expanded traversal detects
+PASS independence Gleason.ProjectionPackage.gleason_representation avoids [CSD.LF2.OperationalPackage.effect_gleason_representation,
+ CSD.LF2.OperationalPackage.qdensity,
+ CSD.LF2.OperationalPackage.qmatrix]
+PASS independence CSD.LF2.OperationalPackage.effect_gleason_representation avoids [Gleason.coreLemma,
+ Gleason.ProjectionPackage.gleason_representation,
+ Gleason.RealProjectionPackage.real_gleason_representation,
+ Gleason.existsUnique_density_of_frameFunction]
+PASS independence Gleason.RealProjectionPackage.real_gleason_representation avoids [Gleason.ProjectionPackage.gleason_representation,
+ CSD.LF2.OperationalPackage.effect_gleason_representation]
+PASS independence Gleason.existsUnique_density_of_frameFunction avoids [Gleason.RealProjectionPackage.real_gleason_representation,
+ Gleason.ProjectionPackage.gleason_representation,
+ CSD.LF2.OperationalPackage.effect_gleason_representation]
+PASS positive controls: both real routes reach the proved core lemma

@@ -1,0 +1,72 @@
+module-coverage EXIT 0
+check-module-coverage: OK (771 modules reachable)
+
+claims EXIT 0
+check-claims: verifying code against the canonical claims block…
+  ok    imported axioms: none (zero-axiom posture — busch_effect_gleason discharged)
+  ok    := True placeholders: none remain (all de-vacuumed)
+  ok    FiniteQMClosure has 11 fields
+  ok    all 9 backing theorems exist
+  ok    no forbidden A5-overclaim phrases in forward-claim docs
+  ok    no A5-mislabel aliases in the swept forward-claim docs (A5≠SO-1 kept distinct)
+  ok    no epistemic overclaims (settled-claim words all cite proofs, not numerics/conjecture)
+  ok    symplectic-vocabulary names == declared inventory (36 names, each with a recorded EVEN-parity justification)
+  ok    symplectic-vocabulary FIELDS == declared inventory (5 fields)
+  ok    vocabulary-bearing THEOREM names == declared inventory (145 names; the one known misnomer is declared)
+  ok    KahlerOnticSetup instantiations == declared inventory (6 sites, each with a verified EVEN-parity Sigma)
+  ok    group naming: SU( mentions == declared explanatory sites (7 files) — everything else says U(N), matching the quantifier
+  ok    open-scope claims == declared inventory (32 files) — re-read these when a BACKLOG row is discharged
+  ok    scope-expiry ledger: no boundary outlives its BACKLOG row (every open-scope file classified)
+  ok    README: no unqualified "zero axioms" claim
+  ok    landing surface: no em dashes in README or docs/TOUR.md
+  ok    README: no dated correction lines (they belong in specs/archive)
+  ok    README size 6142B (limit 6144B)
+  ok    CITATION.cff C1 anchor names the newest C1 tag (v1.4.1-c1-complete)
+
+check-claims: PASS
+
+claim-provenance EXIT 0
+check-claim-provenance: OK (no unwitnessed property claims, no type-level content claims, no unwitnessed reasons)
+
+doc-promises EXIT 0
+check-doc-promises: OK � every declaration and module path named in a docstring exists.
+  (772 files scanned, 6 exception(s) declared.)
+
+residues EXIT 0
+residue registry: 19 rows (3 open, 3 boundary, 13 closed); 23 tags in 772 files
+check-residues: OK
+
+references EXIT 0
+check-references: OK (39 entries, every cited_by resolves, every `[Key]` citation is known)
+  coverage: 39 entries against ~134 distinct `Author YYYY` citations in Lean docstrings
+            (�8.2 obligation � one entry per source plus line-precise citations � is OPEN;
+             see specs/BACKLOG.md. This line measures the gap, it does not gate it.)
+
+terms EXIT 0
+  ok      Kahler 7 unmarked (pinned)
+  ok      Hamiltonian 9 unmarked (pinned)
+  ok      Liouville 3 unmarked (pinned)
+  ok      MomentMap 4 unmarked (pinned)
+check-terms: OK
+
+labels EXIT 0
+  ok      specs/BACKLOG.md 27 paper-prefixed row id(s) (pinned, grandfathered)
+  ok      specs/future-work.md 0 paper-prefixed row id(s) (pinned, grandfathered)
+  ok      no claims.yaml reference implies the file exists
+check-labels: OK
+
+category-tags EXIT 0
+  ok      check-category-tags: 771 module(s), every tag canonical and by location
+
+placeholder-status EXIT 0
+check-placeholder-status: OK (9 �1 rows: 9 discharged with live witnesses, 0 still bannered)
+
+import-negative EXIT 0
+check-import-negative: OK (all declared import-independence claims hold)
+
+import-hygiene EXIT 0
+  ok    no bare `import Mathlib` in the production tree
+  ok    no production module imports CsdLean4.Tests.*
+  ok    stable->Incubator imports all match the declared seam inventory
+  ok    every CsdLean4/Mathlib/ file imports only Mathlib and CsdLean4.Mathlib (exemptions: 0)
+check-import-hygiene: OK

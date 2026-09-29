@@ -1,0 +1,2 @@
+# Blank context lines in an archived unified diff contain a required space.
+documentation.patch -whitespace

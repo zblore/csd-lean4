@@ -1,0 +1,249 @@
+--- a/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Real.lean
++++ b/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Real.lean
+@@ -31,10 +31,10 @@
+   basis independent because the rank-one projections of a transported orthonormal basis sum to the
+   same matrix (`sum_rankOneR_combR`, the Gram identity `E B Bᵀ Eᵀ = E Eᵀ`). For `k = 3` the core
+   lemma applies: ★ `exists_isSymm_restrictR`;
+-* the degree-2 extension `ext v = ‖v‖² frame (v/‖v‖)`, which is the quadratic form of the core
+-  lemma's matrix on the whole span of a triple (`ext_combR`), hence a quadratic form on every plane
+-  (★ `exists_ext_plane`, extending the plane's orthonormal pair to a triple with
+-  `exists_orthonormal_tripleR`), hence ★★ `ext_parallelogramR` — **the parallelogram law on `ℝᴺ`**,
++* the degree-2 extension `extOf f v = ‖v‖² f (v/‖v‖)`, which is the quadratic form of the core
++  lemma's matrix on the whole span of a triple (`extOf_combR`), hence a quadratic form on every plane
++  (★ `exists_extOf_plane`, extending the plane's orthonormal pair to a triple with
++  `exists_orthonormal_tripleR`), hence ★★ `extOf_parallelogramR` — **the parallelogram law on `ℝᴺ`**,
+   by Gram–Schmidt on any two vectors;
+ * the **real Jordan–von Neumann engine** (`IsQuadraticLikeR`, `polarR`, `polarMatrixR`,
+   ★ `IsQuadraticLikeR.eq_dotProduct`), giving ★★ `exists_isSymm_sphere`: **A4**, the frame function
+--- a/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Core.lean
++++ b/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Core.lean
+@@ -23,16 +23,17 @@
+   foundational triple (pinned in `Tests/AxiomAudit/MathlibStaging.lean`).
+ 
+ What is and is not claimed. This is the finite-dimensional theorem (`ℂᴺ`, `N ≥ 3`) for
+-projection-valued measures. The infinite-dimensional theorem, dimension `2` (where the
+-statement fails) and the POVM generalisation (Busch's, `LF2/EffectGleason.lean`, proved
++probability assignments on orthogonal projections. The infinite-dimensional theorem,
++dimension `2` (where the statement fails) and the POVM generalisation (Busch's,
++`LF2/EffectGleason.lean`, proved
+ separately) are outside it. Neither of the two theorems is derived from the other: the proofs
+ share the Jordan–von Neumann engine (`Gleason/Polarization.lean`) and the descent
+ (`Gleason/Descent.lean`), nothing else.
+ 
+ ## Source
+ 
+-Gleason 1957, *J. Math. Mech.* **6**, 885 (Theorem 2.3, the core lemma; Theorem 3.1, the
+-theorem); Cooke, Keane, Moran 1985, *Math. Proc. Cambridge Philos. Soc.* **98**, 117 (the
++Gleason 1957, *J. Math. Mech.* **6**, 885 (Theorem 2.8, the nonnegative core lemma;
++Theorem 3.1, the theorem); Cooke, Keane, Moran 1985, *Math. Proc. Cambridge Philos. Soc.* **98**, 117 (the
+ elementary proof of the core lemma followed in `Gleason/Sphere.lean` through
+ `Gleason/General.lean`).
+ -/
+--- a/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Sphere.lean
++++ b/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Sphere.lean
+@@ -37,7 +37,7 @@
+   (`IsFrameFunction.le_weight_of_nonneg`, `weight_nonneg`);
+ * the examples: constants, `s ↦ ⟪p₀, s⟫²` (weight `1`, Parseval), and every quadratic form
+   `s ↦ s ⬝ᵥ A s` (weight `Tr A`, `isFrameFunction_quadForm`) — the *regular* frame functions,
+-  which Gleason's core lemma says are all of them.
++  Gleason's core lemma proves that every nonnegative frame function is regular.
+ 
+ ## Source
+ 
+--- a/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Piron.lean
++++ b/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Piron.lean
+@@ -17,19 +17,22 @@
+ 57(b): Cooke–Keane–Moran §4 (the vocabulary) and the **geometric lemma** of §5, due to Piron —
+ the one step of the core lemma with no Mathlib support, and the decision point of the plan.
+ 
+-Fix a unit vector `p`, the *north pole*. For a unit vector `s`:
++Fix a unit vector `p`, the *north pole*. For `s ∈ northern p` with `s ≠ p`:
+ 
+ * `latitude p s = ⟪p, s⟫²`; `northern p` is the closed northern hemisphere `⟪p, s⟫ ≥ 0`,
+   `equator p` its boundary;
+ * `coldest p s` is the unit vector orthogonal to `s` in the plane of `p` and `s` with
+   `latitude p (coldest p s) = 1 − latitude p s` — the coldest vector orthogonal to `s`;
+-* `descent p s = {t ∈ northern p : t ⟂ coldest p s}` is the great (half) circle through `s`
+-  that has `s` as its northernmost point (CKM's `D_s`).
++* `descent p s = {t ∈ northern p : t ⟂ coldest p s}` is the intersection of that
++  great circle with the northern hemisphere (CKM's `D_s`). It is the whole equator
++  when `s` lies on the equator.
++
++The definitions are total: at `s = p`, `coldest p p = 0` and `descent p p = northern p`.
+ 
+ **The gnomonic dictionary.** Projecting the open northern hemisphere from the origin onto the
+ tangent plane at `p` sends `s` to `⟪p, s⟫⁻¹ s − p`; conversely `lift p v = (p + v)/‖p + v‖` for
+ `v ⟂ p`. Latitude circles become circles centred at `p`, and `lift p w ∈ descent p (lift p v)`
+-iff `⟪w, v⟫ = ‖v‖²` (`lift_mem_descent_iff`) — the descent through `s` is the tangent line to
++iff `⟪w, v⟫ = ‖v‖²` for nonzero tangent `v` (`lift_mem_descent_iff`) — the descent through `s` is the tangent line to
+ its latitude circle. Reading the tangent plane as `ℂ` through an orthonormal pair `e₁, e₂ ⟂ p`
+ (`tangent e₁ e₂ z = Re z • e₁ + Im z • e₂`), the condition is `Re (w · conj z) = ‖z‖²`.
+ 
+@@ -68,12 +71,14 @@
+ def equator (p : EuclideanSpace ℝ (Fin 3)) : Set (EuclideanSpace ℝ (Fin 3)) :=
+   {s | ‖s‖ = 1 ∧ ⟪p, s⟫_ℝ = 0}
+ 
+-/-- The coldest unit vector orthogonal to `s`: the normalisation of `p − ⟪p, s⟫ s`. -/
++/-- The normalization of `p − ⟪p, s⟫ s`. For unit `p` and `s ∈ northern p` with
++`s ≠ p`, this is a unit vector orthogonal to `s`. At `s = p` it is zero. -/
+ noncomputable def coldest (p s : EuclideanSpace ℝ (Fin 3)) : EuclideanSpace ℝ (Fin 3) :=
+   (‖p - ⟪p, s⟫_ℝ • s‖⁻¹ : ℝ) • (p - ⟪p, s⟫_ℝ • s)
+ 
+-/-- The descent through `s`: the great half circle in the northern hemisphere orthogonal to
+-`coldest p s`, which has `s` as its northernmost point. -/
++/-- The northern vectors orthogonal to `coldest p s`. For unit `p` and
++`s ∈ northern p` with `s ≠ p`, this is a great-circle intersection with the hemisphere.
++At an equatorial `s` it is the whole equator; at the pole it is the whole hemisphere. -/
+ def descent (p s : EuclideanSpace ℝ (Fin 3)) : Set (EuclideanSpace ℝ (Fin 3)) :=
+   {t | t ∈ northern p ∧ ⟪t, coldest p s⟫_ℝ = 0}
+ 
+--- a/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/FrameFunction.lean
++++ b/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/FrameFunction.lean
+@@ -445,8 +445,9 @@
+     Complex.mul_re, Complex.mul_im, Complex.add_re, Complex.add_im, Complex.sub_re, Complex.sub_im]
+   ring
+ 
+-/-- **The parallelogram law on `ℂᴺ`.** Any two vectors lie in a complex plane spanned by an
+-orthonormal pair (Gram–Schmidt), where `ext` is a Hermitian form. -/
++/-- **The parallelogram law on `ℂᴺ`.** For linearly independent vectors, Gram–Schmidt
++reduces to an orthonormal pair, where `ext` is a Hermitian form. Zero vectors and
++linearly dependent pairs are handled by homogeneity. -/
+ theorem ext_parallelogram (hreg : IsRealPlaneRegular OP.frame) (u v : EuclideanSpace ℂ (Fin N)) :
+     OP.ext (u + v) + OP.ext (u - v) = 2 * OP.ext u + 2 * OP.ext v := by
+   rcases eq_or_ne u 0 with rfl | hu
+--- a/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/General.lean
++++ b/CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/General.lean
+@@ -407,7 +407,7 @@
+ 
+ /-! ### The reflections, and the four circles of zeros -/
+ 
+-/-- The reflection in the plane orthogonal to `a`. -/
++/-- For unit `a`, the reflection in the plane orthogonal to `a`. -/
+ noncomputable def reflect (a s : EuclideanSpace ℝ (Fin 3)) : EuclideanSpace ℝ (Fin 3) :=
+   s - (2 * ⟪a, s⟫_ℝ) • a
+ 
+--- a/CsdLean4/LF2/BornWrapper.lean
++++ b/CsdLean4/LF2/BornWrapper.lean
+@@ -17,20 +17,18 @@
+ public import Mathlib.LinearAlgebra.Matrix.DotProduct
+ 
+ /-!
+-# LF2 Born-Weight Wrapper
+-
+-**Category:** 3-Local (LF2 matrix-based `Effect`/`DensityOperator`, Born quadratic form, and `busch_effect_gleason` axiom).
+-
+-Spec §5. Packages the finite-dimensional probability assignment using
+-concrete matrix-based `Effect`/`DensityOperator` structures, an imported
+-`busch_effect_gleason` axiom, and a proved Born quadratic
+-form for rank-1 outcomes on pure preparations. The rank-1 uniqueness
+-theorem `rankOneDensity_unique_of_certainty` was carried as an axiom in
+-earlier revisions and was discharged on 2026-05-18 (no spectral theorem
+-needed; PSD inner-product route).
+-
+-This file is built incrementally; see the companion plan at
+-`specs/LF2-plan.md` §2.4.
++# Finite-dimensional effects, density operators and pure-state Born weights
++
++**Category:** 3-Local (LF2 matrix interfaces).
++
++`Effect` packages `0 ≤ E ≤ I`; `DensityOperator` packages a positive semidefinite,
++trace-one matrix. `OperationalPackage` specifies a nonnegative, normalized assignment
++on all effects, additive whenever their sum remains an effect. Its probability upper-bound
++field is redundant, derivable by additivity with the complementary effect.
++
++This file proves the outer-product identities, pure-state Born quadratic form and
++`rankOneDensity_unique_of_certainty`. The Busch representation theorem is proved in
++`LF2/EffectGleason.lean`, which imports this module; it is not an axiom imported here.
+ -/
+ 
+ @[expose] public section
+@@ -125,31 +123,9 @@
+ 
+ end Effect
+ 
+-/-- **Operational consistency package (spec Definition 5.1).** An assignment of
+-    probabilities to effects satisfying: non-negativity, boundedness by 1,
+-    total-one on the identity, and finite additivity when the sum remains
+-    below `I`.
+-
+-    **On the omission of clause 3 (unitary covariance).** Spec Def 5.1 lists a
+-    third clause: `p(U† E U) = p_U(E)` for every unitary `U`, "with the usual
+-    covariance interpretation for simultaneous transformation of preparation
+-    and effect structure."  Two natural Lean encodings exist:
+-
+-    - **Invariance reading** — `p (Effect.conjugateBy U E) = p E` for all `U`.
+-      This over-constrains to basis-invariant packages (essentially the
+-      maximally mixed state); a pure-state package from `|ψ⟩⟨ψ|` does *not*
+-      satisfy it, since `Tr(|ψ⟩⟨ψ| U† E U) = Tr(|Uψ⟩⟨Uψ| E)`, not `Tr(|ψ⟩⟨ψ| E)`.
+-    - **Covariant reading** — a functor `OperationalPackage.conjugateBy U`
+-      sending one package to another with `(conjugateBy U OP).p E = OP.p
+-      (Effect.conjugateBy U E)`, preserving the nonneg / le_one / total / add
+-      fields.  This is the mathematically correct encoding, but it's
+-      type-heavy and not needed by `busch_effect_gleason` as currently stated.
+-
+-    Rather than commit to the wrong reading, LF2 omits clause 3 from the
+-    structure and exposes `Effect.conjugateBy` below as the structural
+-    building block.  LF4 (where unitary evolution enters non-trivially) is
+-    the right place to pick one of the two encodings; see
+-    `specs/LF4-todo.md`. -/
++/-- A nonnegative, normalized assignment on all effects, additive whenever the sum
++remains an effect. The upper-bound field is derivable from the other fields using `I - E`.
++No unitary-invariance or continuity premise is assumed. -/
+ structure OperationalPackage (N : ℕ) where
+   /-- Probability assignment. -/
+   p          : Effect N → ℝ
+@@ -182,7 +158,7 @@
+ 
+ The construction `|φ⟩⟨φ|` as an N×N complex matrix, together with its basic
+ algebraic properties (Hermitian, PSD, trace). This is the raw matrix layer;
+-`rankOneEffect` / `rankOneDensity` (next phase) package it into the structure
++`rankOneEffect` / `rankOneDensity` package it into the structure
+ types above. -/
+ 
+ section OuterProduct
+@@ -339,9 +315,10 @@
+ 
+     The hypothesis `hρ` — that `OP.p` already agrees with the trace form of
+     `rankOneDensity ψ` on every effect — is the downstream consumption of
+-    `busch_effect_gleason` for the pure-preparation case. It is derivable from
++    `OperationalPackage.effect_gleason_representation` for the pure-preparation case. It is derivable from
+     a weaker purity hypothesis via `rankOneDensity_unique_of_certainty` +
+-    `busch_effect_gleason`; see `pure_state_born_weights_of_certainty` below
++    `OperationalPackage.effect_gleason_representation`; see
++    `pure_state_born_weights_of_certainty` in `LF2/EffectGleason.lean`
+     for the strengthened form. -/
+ theorem pure_state_born_weights
+     {N : ℕ} (OP : OperationalPackage N)
+--- a/CsdLean4/LF2/EffectGleason.lean
++++ b/CsdLean4/LF2/EffectGleason.lean
+@@ -184,7 +184,7 @@
+ 
+ /-- **Scalar additivity of `t ↦ p(t • E)` on `[0,1]`.** For `a, b ≥ 0` with `a + b ≤ 1`,
+ `p((a+b) • E) = p(a • E) + p(b • E)` — the Cauchy relation whose monotone solution is
+-`p(t • E) = t · p E` (the deferred homogeneity step). -/
++`p(t • E) = t · p E` (`p_smul_homog`). -/
+ theorem p_smul_add {E : Effect N} {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (hab : a + b ≤ 1) :
+     OP.p (Effect.smul (a + b) (by linarith) hab E)
+       = OP.p (Effect.smul a ha (by linarith) E) + OP.p (Effect.smul b hb (by linarith) E) := by
+@@ -509,10 +509,10 @@
+ 
+ The reconstruction of `ρ` from the rank-one values `φ ↦ p(|φ⟩⟨φ|)` rests on polarisation: the
+ diagonal quadratic form must come from a sesquilinear form. Its algebraic core is that the
+-rank-one projectors satisfy the parallelogram law at the matrix level — the cross terms of
++outer products satisfy the parallelogram law at the matrix level — the cross terms of
+ `|u±v⟩⟨u±v|` cancel — so `p`, being additive, inherits the parallelogram law. -/
+ 
+-/-- **Matrix parallelogram identity for rank-one projectors.**
++/-- **Matrix parallelogram identity for outer products.**
+ `|u+v⟩⟨u+v| + |u−v⟩⟨u−v| = 2|u⟩⟨u| + 2|v⟩⟨v|`: the off-diagonal cross terms
+ `|u⟩⟨v| + |v⟩⟨u|` appear with opposite signs in the two sums and cancel. Pure matrix algebra. -/
+ theorem outerProduct_parallelogram (u v : EuclideanSpace ℂ (Fin N)) :
+@@ -885,7 +885,7 @@
+ 
+ end OperationalPackage
+ 
+-/-- **`Tr(R · |v⟩⟨v|) = ⟨v, R v⟩`.** The trace pairing against a rank-one projector is the
++/-- **`Tr(R · |v⟩⟨v|) = ⟨v, R v⟩`.** The trace pairing against an outer product is the
+ quadratic form of `R` (`Gleason.trace_mul_vecMulVec` on the `outerProduct`). -/
+ theorem trace_mul_outerProduct (R : Matrix (Fin N) (Fin N) ℂ)
+     (v : EuclideanSpace ℂ (Fin N)) :

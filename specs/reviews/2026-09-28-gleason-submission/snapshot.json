@@ -1,0 +1,426 @@
+{
+  "commit": "5f77294d6c327d37fe824e6829097600050b1de7",
+  "lean": "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+  "lean_version": "Lean (version 4.33.0, x86_64-w64-windows-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+  "lean_path": "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean;C:\\Zayn\\csd\\lean4-codex-review\\.lake\\packages\\Cli\\.lake\\build\\lib\\lean;C:\\Zayn\\csd\\lean4-codex-review\\.lake\\packages\\batteries\\.lake\\build\\lib\\lean;C:\\Zayn\\csd\\lean4-codex-review\\.lake\\packages\\Qq\\.lake\\build\\lib\\lean;C:\\Zayn\\csd\\lean4-codex-review\\.lake\\packages\\aesop\\.lake\\build\\lib\\lean;C:\\Zayn\\csd\\lean4-codex-review\\.lake\\packages\\proofwidgets\\.lake\\build\\lib\\lean;C:\\Zayn\\csd\\lean4-codex-review\\.lake\\packages\\importGraph\\.lake\\build\\lib\\lean;C:\\Zayn\\csd\\lean4-codex-review\\.lake\\packages\\LeanSearchClient\\.lake\\build\\lib\\lean;C:\\Zayn\\csd\\lean4-codex-review\\.lake\\packages\\plausible\\.lake\\build\\lib\\lean;C:\\Zayn\\csd\\lean4-codex-review\\.lake\\packages\\mathlib\\.lake\\build\\lib\\lean;c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\lib\\lean",
+  "modules": {
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.RealFrame": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/RealFrame.lean",
+      "blob": "fa61b4afc0659f3def3eed66225e350a3d1706d7",
+      "sha256": "9a2e6698d304926d6d82ca9bd57f6edb8322c7f74504ee1fa07abc405f79700b",
+      "review_scope_this_session": "full code and comments",
+      "lines": 338,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Real": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Real.lean",
+      "blob": "6a01ae6d1dbc80d0b3a52abbf282b1a69b212ef9",
+      "sha256": "fbbd5d2147a319a3c0e103077658b8b748d6ab055a677ad4f53ba0e9c95b84f6",
+      "review_scope_this_session": "full code and comments",
+      "lines": 1016,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Core": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Core.lean",
+      "blob": "0e8aee2e02a294c0fabc2538349a39a940e44c38",
+      "sha256": "e00dfee32b579f88eb28e0dee49c475177bd1440d07a65f0bc089be764f786eb",
+      "review_scope_this_session": "full code and comments",
+      "lines": 61,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Reduction": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Reduction.lean",
+      "blob": "73854f17de4e0b2afee39231d051474b41b02586",
+      "sha256": "99946998de979146eba4aaf6aec06d8b2200f6266df67b19f8158ae8768b2e24",
+      "review_scope_this_session": "full code and comments",
+      "lines": 76,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.FrameFunction": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/FrameFunction.lean",
+      "blob": "0122eba0af20d2378177b64c746ebed058fe8505",
+      "sha256": "6a75b708cad2a03129055ee441197d00d6ec8f54e7babfcbd16a145afe464934",
+      "review_scope_this_session": "full code and comments",
+      "lines": 627,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Descent": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Descent.lean",
+      "blob": "63ebff8e2a317eea83fee9b9f9f4ca24b92a5b37",
+      "sha256": "82a235918476398b5250f53d7f73233b2dd49d83b564a570e75c5c5d8cc56a5a",
+      "review_scope_this_session": "full code and comments",
+      "lines": 265,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Polarization": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Polarization.lean",
+      "blob": "99117ac820641e3c2dfa99e43f0478c89d2317d4",
+      "sha256": "a19c465e44fb20052db8e73d2bb0a8decbe9e753640c20e104053999f8e47879",
+      "review_scope_this_session": "full code and comments",
+      "lines": 475,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.ProjectionPackage": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/ProjectionPackage.lean",
+      "blob": "3aaafe560f5ea7e2e9186c826ace0a434add26f7",
+      "sha256": "160e8bd1e55f618f121142050c470d3812c26de8f45b41f6efc0a60bb6a2cad8",
+      "review_scope_this_session": "full code and comments",
+      "lines": 380,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.General": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/General.lean",
+      "blob": "3a32836c706aef2da9ff6fa440de9593504bfc31",
+      "sha256": "07098f64f35be2d7acae733417d9672389a747f2f9879605e348c6a92e59d94b",
+      "review_scope_this_session": "full code and comments",
+      "lines": 696,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Extremal": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Extremal.lean",
+      "blob": "92c31ecbb81c7bed54d31a70ab8076a12e02ce6f",
+      "sha256": "c0b9de6aefaeaad7ac007bc25520ef008573b8ad7d9f9dc6647a02d08a256662",
+      "review_scope_this_session": "full code and comments",
+      "lines": 617,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.SimpleFrame": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/SimpleFrame.lean",
+      "blob": "19bdc6cabc04f335cb54cadbc037bfaf4594a6ec",
+      "sha256": "642825524cacbffcb6a47a0a579390889a364f7efe1c299f619ac6861bcb37f4",
+      "review_scope_this_session": "full code and comments",
+      "lines": 560,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Piron": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Piron.lean",
+      "blob": "0c330628bb995f8e22c99ca42369cbcc965c66b9",
+      "sha256": "1cba9243673574d4730667c2f7942e336ffe9752d8671ac0d5c1c022acff2fbf",
+      "review_scope_this_session": "full code and comments",
+      "lines": 621,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Sphere": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Sphere.lean",
+      "blob": "ac04b8647c1da6107267f5688c3603a74c7a8bf2",
+      "sha256": "b8ec0a4bb105f6641c8de740b8a5dc7d717a1c17b2e92540ef2af7040eab5afa",
+      "review_scope_this_session": "full code and comments",
+      "lines": 380,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Warmup": {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Warmup.lean",
+      "blob": "3c6839267d661a49f53657df87809cf0001d9105",
+      "sha256": "6101b7557303e646e453994456cea1841595fd78fc7694369184f48147b49b16",
+      "review_scope_this_session": "full code and comments",
+      "lines": 362,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.LF2.EffectGleason": {
+      "path": "CsdLean4/LF2/EffectGleason.lean",
+      "blob": "3a7feeb91febab2e24ce3933d94e36728a03e5c2",
+      "sha256": "9b3ccafe1bc1fbf8cbec123613c107a57319973fefbb4cd33d6b8c38a9a7255d",
+      "review_scope_this_session": "full code and comments",
+      "lines": 1046,
+      "manual_review_notes": "manual-review.md"
+    },
+    "CsdLean4.LF2.BornWrapper": {
+      "path": "CsdLean4/LF2/BornWrapper.lean",
+      "blob": "88b818e3b7f6286896ef90307526a17ee13e892c",
+      "sha256": "2366f5a66c8f60f39218783290f59ffc5c32055f627707b7015455207a07bd80",
+      "review_scope_this_session": "full code and comments",
+      "lines": 481,
+      "manual_review_notes": "manual-review.md"
+    }
+  },
+  "build_order": [
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Polarization",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.ProjectionPackage",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Descent",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.FrameFunction",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Reduction",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Sphere",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Piron",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Warmup",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.SimpleFrame",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Extremal",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.General",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Core",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Real",
+    "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.RealFrame",
+    "CsdLean4.LF2.BornWrapper",
+    "CsdLean4.LF2.EffectGleason"
+  ],
+  "results": [
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Polarization",
+      "returncode": 0,
+      "seconds": 71.47,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\Polarization.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Polarization.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.ProjectionPackage",
+      "returncode": 0,
+      "seconds": 11.11,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\ProjectionPackage.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/ProjectionPackage.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Descent",
+      "returncode": 0,
+      "seconds": 15.57,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\Descent.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Descent.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.FrameFunction",
+      "returncode": 0,
+      "seconds": 12.04,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\FrameFunction.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/FrameFunction.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Reduction",
+      "returncode": 0,
+      "seconds": 9.44,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\Reduction.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Reduction.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Sphere",
+      "returncode": 0,
+      "seconds": 10.79,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\Sphere.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Sphere.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Piron",
+      "returncode": 0,
+      "seconds": 17.6,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\Piron.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Piron.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Warmup",
+      "returncode": 0,
+      "seconds": 19.74,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\Warmup.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Warmup.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.SimpleFrame",
+      "returncode": 0,
+      "seconds": 10.86,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\SimpleFrame.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/SimpleFrame.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Extremal",
+      "returncode": 0,
+      "seconds": 19.23,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\Extremal.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Extremal.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.General",
+      "returncode": 0,
+      "seconds": 12.58,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\General.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/General.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Core",
+      "returncode": 0,
+      "seconds": 8.43,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\Core.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Core.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Real",
+      "returncode": 0,
+      "seconds": 11.2,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\Real.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Real.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.RealFrame",
+      "returncode": 0,
+      "seconds": 10.06,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\Mathlib\\Analysis\\InnerProductSpace\\Gleason\\RealFrame.olean",
+        "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/RealFrame.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.LF2.BornWrapper",
+      "returncode": 0,
+      "seconds": 10.84,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\LF2\\BornWrapper.olean",
+        "CsdLean4/LF2/BornWrapper.lean"
+      ]
+    },
+    {
+      "module": "CsdLean4.LF2.EffectGleason",
+      "returncode": 0,
+      "seconds": 11.88,
+      "command": [
+        "c:\\Users\\zblor\\.elan\\toolchains\\leanprover--lean4---v4.33.0\\bin\\lean.EXE",
+        "-DautoImplicit=false",
+        "-DrelaxedAutoImplicit=false",
+        "-DwarningAsError=true",
+        "-o",
+        "C:\\Zayn\\csd\\lean4-codex-review\\.lake\\gleason-submission-5f77294d\\.lake\\build\\lib\\lean\\CsdLean4\\LF2\\EffectGleason.olean",
+        "CsdLean4/LF2/EffectGleason.lean"
+      ]
+    }
+  ],
+  "mathlib_commit": "db584cd6d46c92f209a44c0f1c829460d327499d",
+  "mathlib_tracked_clean": true,
+  "source_hashes_rechecked": true,
+  "reviewer": "Codex (current session)",
+  "date": "2026-09-28",
+  "total_lines": 8001,
+  "compilation_seconds": 262.84,
+  "probes": [
+    {
+      "file": "EndpointAudit.lean",
+      "exit_code": 0,
+      "sha256": "eb9a4bd2fcd3cbe7c2281f2780ae2752df889d39fc326bd1da3766bd48b96694",
+      "log": "EndpointAudit.lean.log",
+      "archived_file_sha256": "eb9a4bd2fcd3cbe7c2281f2780ae2752df889d39fc326bd1da3766bd48b96694"
+    },
+    {
+      "file": "RealAudit.lean",
+      "exit_code": 0,
+      "sha256": "ad59ba5b9a691b7969005f5a976974b5a35e4cb3d8ae9279570148a1de148bc4",
+      "log": "RealAudit.lean.log",
+      "archived_file_sha256": "ad59ba5b9a691b7969005f5a976974b5a35e4cb3d8ae9279570148a1de148bc4"
+    },
+    {
+      "file": "DependencyAudit.lean",
+      "exit_code": 0,
+      "sha256": "17e1ac3fd11fa09d828fe6c5c8f2dfca2443c193c684912744beeb35309b5e18",
+      "log": "DependencyAudit.lean.log",
+      "archived_file_sha256": "17e1ac3fd11fa09d828fe6c5c8f2dfca2443c193c684912744beeb35309b5e18"
+    },
+    {
+      "file": "BoundaryAudit.lean",
+      "sha256": "81a62754e7a2bbf1f957c785010179d321a31cdde3f112ea9ba610b010e0a4b3",
+      "exit_code": 0,
+      "log": "BoundaryAudit.lean.log",
+      "archived_file_sha256": "9a82fcbca9213e0a743859fe4e1f771bb47d755dddb5d86a9d7782b27187654c"
+    }
+  ],
+  "full_manual_review_modules": 16,
+  "full_manual_review_lines": 8001,
+  "manual_review_complete": true,
+  "documentation_patch": {
+    "applied_to_source": false,
+    "apply_check": "passed",
+    "sha256": "ef75da32ebc55a248d604bdc3bc84f0ce47cc1dab85c928f7a5330bfbaa61dc3"
+  },
+  "archive_note": "Original-run sha256 values are retained; archived_file_sha256 identifies LF-normalized repository files. Current-tree validation recompiles these archived inputs."
+}

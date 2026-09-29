@@ -407,7 +407,7 @@ theorem inner_sq_eq_half_of_vanish {h : EuclideanSpace ℝ (Fin 3) → ℝ}
 
 /-! ### The reflections, and the four circles of zeros -/
 
-/-- The reflection in the plane orthogonal to `a`. -/
+/-- For unit `a`, the reflection in the plane orthogonal to `a`. -/
 noncomputable def reflect (a s : EuclideanSpace ℝ (Fin 3)) : EuclideanSpace ℝ (Fin 3) :=
   s - (2 * ⟪a, s⟫_ℝ) • a
 

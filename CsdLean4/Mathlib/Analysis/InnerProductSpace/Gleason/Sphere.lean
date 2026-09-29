@@ -36,8 +36,8 @@ every frame (`IsFrameFunction ℝ f W`, `Gleason/ProjectionPackage.lean`). This 
 * boundedness: a nonnegative frame function takes values in `[0, W]`
   (`IsFrameFunction.le_weight_of_nonneg`, `weight_nonneg`);
 * the examples: constants, `s ↦ ⟪p₀, s⟫²` (weight `1`, Parseval), and every quadratic form
-  `s ↦ s ⬝ᵥ A s` (weight `Tr A`, `isFrameFunction_quadForm`) — the *regular* frame functions,
-  which Gleason's core lemma says are all of them.
+  `s ↦ s ⬝ᵥ A s` (weight `Tr A`, `isFrameFunction_quadForm`) — the *regular* frame functions.
+  Gleason's core lemma proves that every nonnegative frame function is regular.
 
 ## Source
 

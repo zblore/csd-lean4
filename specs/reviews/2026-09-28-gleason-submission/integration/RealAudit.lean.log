@@ -1,0 +1,8 @@
+PASS Gleason.coreLemma: [propext, Classical.choice, Quot.sound]
+PASS Gleason.ProjectionPackage.gleason_representation: [propext, Classical.choice, Quot.sound]
+PASS CSD.LF2.OperationalPackage.effect_gleason_representation: [propext, Classical.choice, Quot.sound]
+PASS Gleason.RealProjectionPackage.real_gleason_representation: [propext, Classical.choice, Quot.sound]
+PASS Gleason.existsUnique_density_of_frameFunction: [propext, Classical.choice, Quot.sound]
+PASS SubmissionAudit.real_matrices: [propext, Classical.choice, Quot.sound]
+PASS SubmissionAudit.real_frames: [propext, Classical.choice, Quot.sound]
+PASS SubmissionAudit.weighted_coordinate: [propext, Classical.choice, Quot.sound]

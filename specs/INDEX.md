@@ -134,3 +134,10 @@ measurement-protocol plumbing (M), any-basis first measurement (M–L), composab
 
 - [`publication-errata.md`](publication-errata.md) — claims in non-editable manuscripts that the formal work has since falsified (E-1 type separation, E-2 the nudge).
 - [`c1-correction-plan.md`](c1-correction-plan.md) — the C1 correction: phasing, design corrections, and the finding that work-order item 7 was FALSE.
+
+## Busch–Gleason review integration (2026-09-29)
+
+- [Full theorem-package review](reviews/2026-09-28-gleason-submission.md): 16 local modules,
+  pinned source, mathematical assessment and executable evidence.
+- [Applied corrections and validation](reviews/2026-09-29-gleason-integration.md): source fixes,
+  expanded dependency guard and reproduction commands for the integrated work.

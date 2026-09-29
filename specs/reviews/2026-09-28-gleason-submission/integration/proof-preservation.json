@@ -1,0 +1,70 @@
+{
+  "original_commit": "5f77294d6c327d37fe824e6829097600050b1de7",
+  "method": "Compare source after stripping nested block/line comments and normalizing whitespace; strings retained. Compilation and axiom checks are separate validations.",
+  "files": [
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/RealFrame.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Real.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Core.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Reduction.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/FrameFunction.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Descent.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Polarization.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/ProjectionPackage.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/General.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Extremal.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/SimpleFrame.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Piron.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Sphere.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Warmup.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/LF2/EffectGleason.lean",
+      "comment_stripped_code_unchanged": true
+    },
+    {
+      "path": "CsdLean4/LF2/BornWrapper.lean",
+      "comment_stripped_code_unchanged": true
+    }
+  ]
+}

@@ -17,19 +17,22 @@ public import Mathlib.Algebra.Order.Ring.Pow
 57(b): Cooke–Keane–Moran §4 (the vocabulary) and the **geometric lemma** of §5, due to Piron —
 the one step of the core lemma with no Mathlib support, and the decision point of the plan.
 
-Fix a unit vector `p`, the *north pole*. For a unit vector `s`:
+Fix a unit vector `p`, the *north pole*. For `s ∈ northern p` with `s ≠ p`:
 
 * `latitude p s = ⟪p, s⟫²`; `northern p` is the closed northern hemisphere `⟪p, s⟫ ≥ 0`,
   `equator p` its boundary;
 * `coldest p s` is the unit vector orthogonal to `s` in the plane of `p` and `s` with
   `latitude p (coldest p s) = 1 − latitude p s` — the coldest vector orthogonal to `s`;
-* `descent p s = {t ∈ northern p : t ⟂ coldest p s}` is the great (half) circle through `s`
-  that has `s` as its northernmost point (CKM's `D_s`).
+* `descent p s = {t ∈ northern p : t ⟂ coldest p s}` is the intersection of that
+  great circle with the northern hemisphere (CKM's `D_s`). It is the whole equator
+  when `s` lies on the equator.
+
+The definitions are total: at `s = p`, `coldest p p = 0` and `descent p p = northern p`.
 
 **The gnomonic dictionary.** Projecting the open northern hemisphere from the origin onto the
 tangent plane at `p` sends `s` to `⟪p, s⟫⁻¹ s − p`; conversely `lift p v = (p + v)/‖p + v‖` for
 `v ⟂ p`. Latitude circles become circles centred at `p`, and `lift p w ∈ descent p (lift p v)`
-iff `⟪w, v⟫ = ‖v‖²` (`lift_mem_descent_iff`) — the descent through `s` is the tangent line to
+iff `⟪w, v⟫ = ‖v‖²` for nonzero tangent `v` (`lift_mem_descent_iff`) — the descent through `s` is the tangent line to
 its latitude circle. Reading the tangent plane as `ℂ` through an orthonormal pair `e₁, e₂ ⟂ p`
 (`tangent e₁ e₂ z = Re z • e₁ + Im z • e₂`), the condition is `Re (w · conj z) = ‖z‖²`.
 
@@ -68,12 +71,14 @@ def northern (p : EuclideanSpace ℝ (Fin 3)) : Set (EuclideanSpace ℝ (Fin 3))
 def equator (p : EuclideanSpace ℝ (Fin 3)) : Set (EuclideanSpace ℝ (Fin 3)) :=
   {s | ‖s‖ = 1 ∧ ⟪p, s⟫_ℝ = 0}
 
-/-- The coldest unit vector orthogonal to `s`: the normalisation of `p − ⟪p, s⟫ s`. -/
+/-- The normalization of `p − ⟪p, s⟫ s`. For unit `p` and `s ∈ northern p` with
+`s ≠ p`, this is a unit vector orthogonal to `s`. At `s = p` it is zero. -/
 noncomputable def coldest (p s : EuclideanSpace ℝ (Fin 3)) : EuclideanSpace ℝ (Fin 3) :=
   (‖p - ⟪p, s⟫_ℝ • s‖⁻¹ : ℝ) • (p - ⟪p, s⟫_ℝ • s)
 
-/-- The descent through `s`: the great half circle in the northern hemisphere orthogonal to
-`coldest p s`, which has `s` as its northernmost point. -/
+/-- The northern vectors orthogonal to `coldest p s`. For unit `p` and
+`s ∈ northern p` with `s ≠ p`, this is a great-circle intersection with the hemisphere.
+At an equatorial `s` it is the whole equator; at the pole it is the whole hemisphere. -/
 def descent (p s : EuclideanSpace ℝ (Fin 3)) : Set (EuclideanSpace ℝ (Fin 3)) :=
   {t | t ∈ northern p ∧ ⟪t, coldest p s⟫_ℝ = 0}
 

@@ -31,10 +31,10 @@ The real side mirrors the complex layers, which is cheaper than it looks because
   basis independent because the rank-one projections of a transported orthonormal basis sum to the
   same matrix (`sum_rankOneR_combR`, the Gram identity `E B Bᵀ Eᵀ = E Eᵀ`). For `k = 3` the core
   lemma applies: ★ `exists_isSymm_restrictR`;
-* the degree-2 extension `ext v = ‖v‖² frame (v/‖v‖)`, which is the quadratic form of the core
-  lemma's matrix on the whole span of a triple (`ext_combR`), hence a quadratic form on every plane
-  (★ `exists_ext_plane`, extending the plane's orthonormal pair to a triple with
-  `exists_orthonormal_tripleR`), hence ★★ `ext_parallelogramR` — **the parallelogram law on `ℝᴺ`**,
+* the degree-2 extension `extOf f v = ‖v‖² f (v/‖v‖)`, which is the quadratic form of the core
+  lemma's matrix on the whole span of a triple (`extOf_combR`), hence a quadratic form on every plane
+  (★ `exists_extOf_plane`, extending the plane's orthonormal pair to a triple with
+  `exists_orthonormal_tripleR`), hence ★★ `extOf_parallelogramR` — **the parallelogram law on `ℝᴺ`**,
   by Gram–Schmidt on any two vectors;
 * the **real Jordan–von Neumann engine** (`IsQuadraticLikeR`, `polarR`, `polarMatrixR`,
   ★ `IsQuadraticLikeR.eq_dotProduct`), giving ★★ `exists_isSymm_sphere`: **A4**, the frame function

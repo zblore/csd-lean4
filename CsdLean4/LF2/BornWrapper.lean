@@ -17,20 +17,18 @@ public import Mathlib.Analysis.Matrix.Order
 public import Mathlib.LinearAlgebra.Matrix.DotProduct
 
 /-!
-# LF2 Born-Weight Wrapper
+# Finite-dimensional effects, density operators and pure-state Born weights
 
-**Category:** 3-Local (LF2 matrix-based `Effect`/`DensityOperator`, Born quadratic form, and `busch_effect_gleason` axiom).
+**Category:** 3-Local (LF2 matrix interfaces).
 
-Spec §5. Packages the finite-dimensional probability assignment using
-concrete matrix-based `Effect`/`DensityOperator` structures, an imported
-`busch_effect_gleason` axiom, and a proved Born quadratic
-form for rank-1 outcomes on pure preparations. The rank-1 uniqueness
-theorem `rankOneDensity_unique_of_certainty` was carried as an axiom in
-earlier revisions and was discharged on 2026-05-18 (no spectral theorem
-needed; PSD inner-product route).
+`Effect` packages `0 ≤ E ≤ I`; `DensityOperator` packages a positive semidefinite,
+trace-one matrix. `OperationalPackage` specifies a nonnegative, normalized assignment
+on all effects, additive whenever their sum remains an effect. Its probability upper-bound
+field is redundant, derivable by additivity with the complementary effect.
 
-This file is built incrementally; see the companion plan at
-`specs/LF2-plan.md` §2.4.
+This file proves the outer-product identities, pure-state Born quadratic form and
+`rankOneDensity_unique_of_certainty`. The Busch representation theorem is proved in
+`LF2/EffectGleason.lean`, which imports this module; it is not an axiom imported here.
 -/
 
 @[expose] public section
@@ -125,31 +123,9 @@ noncomputable def conjugateBy
 
 end Effect
 
-/-- **Operational consistency package (spec Definition 5.1).** An assignment of
-    probabilities to effects satisfying: non-negativity, boundedness by 1,
-    total-one on the identity, and finite additivity when the sum remains
-    below `I`.
-
-    **On the omission of clause 3 (unitary covariance).** Spec Def 5.1 lists a
-    third clause: `p(U† E U) = p_U(E)` for every unitary `U`, "with the usual
-    covariance interpretation for simultaneous transformation of preparation
-    and effect structure."  Two natural Lean encodings exist:
-
-    - **Invariance reading** — `p (Effect.conjugateBy U E) = p E` for all `U`.
-      This over-constrains to basis-invariant packages (essentially the
-      maximally mixed state); a pure-state package from `|ψ⟩⟨ψ|` does *not*
-      satisfy it, since `Tr(|ψ⟩⟨ψ| U† E U) = Tr(|Uψ⟩⟨Uψ| E)`, not `Tr(|ψ⟩⟨ψ| E)`.
-    - **Covariant reading** — a functor `OperationalPackage.conjugateBy U`
-      sending one package to another with `(conjugateBy U OP).p E = OP.p
-      (Effect.conjugateBy U E)`, preserving the nonneg / le_one / total / add
-      fields.  This is the mathematically correct encoding, but it's
-      type-heavy and not needed by `busch_effect_gleason` as currently stated.
-
-    Rather than commit to the wrong reading, LF2 omits clause 3 from the
-    structure and exposes `Effect.conjugateBy` below as the structural
-    building block.  LF4 (where unitary evolution enters non-trivially) is
-    the right place to pick one of the two encodings; see
-    `specs/LF4-todo.md`. -/
+/-- A nonnegative, normalized assignment on all effects, additive whenever the sum
+remains an effect. The upper-bound field is derivable from the other fields using `I - E`.
+No unitary-invariance or continuity premise is assumed. -/
 structure OperationalPackage (N : ℕ) where
   /-- Probability assignment. -/
   p          : Effect N → ℝ
@@ -182,7 +158,7 @@ open scoped MatrixOrder
 
 The construction `|φ⟩⟨φ|` as an N×N complex matrix, together with its basic
 algebraic properties (Hermitian, PSD, trace). This is the raw matrix layer;
-`rankOneEffect` / `rankOneDensity` (next phase) package it into the structure
+`rankOneEffect` / `rankOneDensity` package it into the structure
 types above. -/
 
 section OuterProduct
@@ -339,9 +315,10 @@ theorem born_quadratic
 
     The hypothesis `hρ` — that `OP.p` already agrees with the trace form of
     `rankOneDensity ψ` on every effect — is the downstream consumption of
-    `busch_effect_gleason` for the pure-preparation case. It is derivable from
+    `OperationalPackage.effect_gleason_representation` for the pure-preparation case. It is derivable from
     a weaker purity hypothesis via `rankOneDensity_unique_of_certainty` +
-    `busch_effect_gleason`; see `pure_state_born_weights_of_certainty` below
+    `OperationalPackage.effect_gleason_representation`; see
+    `pure_state_born_weights_of_certainty` in `LF2/EffectGleason.lean`
     for the strengthened form. -/
 theorem pure_state_born_weights
     {N : ℕ} (OP : OperationalPackage N)

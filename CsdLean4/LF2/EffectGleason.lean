@@ -184,7 +184,7 @@ theorem p_mono {E F : Effect N} (h : (F.M - E.M).PosSemidef) : OP.p E ≤ OP.p F
 
 /-- **Scalar additivity of `t ↦ p(t • E)` on `[0,1]`.** For `a, b ≥ 0` with `a + b ≤ 1`,
 `p((a+b) • E) = p(a • E) + p(b • E)` — the Cauchy relation whose monotone solution is
-`p(t • E) = t · p E` (the deferred homogeneity step). -/
+`p(t • E) = t · p E` (`p_smul_homog`). -/
 theorem p_smul_add {E : Effect N} {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (hab : a + b ≤ 1) :
     OP.p (Effect.smul (a + b) (by linarith) hab E)
       = OP.p (Effect.smul a ha (by linarith) E) + OP.p (Effect.smul b hb (by linarith) E) := by
@@ -509,10 +509,10 @@ lemma outerEffect_eq_rankOneEffect (φ : EuclideanSpace ℂ (Fin N)) (hφ : ‖�
 
 The reconstruction of `ρ` from the rank-one values `φ ↦ p(|φ⟩⟨φ|)` rests on polarisation: the
 diagonal quadratic form must come from a sesquilinear form. Its algebraic core is that the
-rank-one projectors satisfy the parallelogram law at the matrix level — the cross terms of
+outer products satisfy the parallelogram law at the matrix level — the cross terms of
 `|u±v⟩⟨u±v|` cancel — so `p`, being additive, inherits the parallelogram law. -/
 
-/-- **Matrix parallelogram identity for rank-one projectors.**
+/-- **Matrix parallelogram identity for outer products.**
 `|u+v⟩⟨u+v| + |u−v⟩⟨u−v| = 2|u⟩⟨u| + 2|v⟩⟨v|`: the off-diagonal cross terms
 `|u⟩⟨v| + |v⟩⟨u|` appear with opposite signs in the two sums and cancel. Pure matrix algebra. -/
 theorem outerProduct_parallelogram (u v : EuclideanSpace ℂ (Fin N)) :
@@ -885,7 +885,7 @@ theorem qform_eq_re_dotProduct (v : EuclideanSpace ℂ (Fin N)) :
 
 end OperationalPackage
 
-/-- **`Tr(R · |v⟩⟨v|) = ⟨v, R v⟩`.** The trace pairing against a rank-one projector is the
+/-- **`Tr(R · |v⟩⟨v|) = ⟨v, R v⟩`.** The trace pairing against an outer product is the
 quadratic form of `R` (`Gleason.trace_mul_vecMulVec` on the `outerProduct`). -/
 theorem trace_mul_outerProduct (R : Matrix (Fin N) (Fin N) ℂ)
     (v : EuclideanSpace ℂ (Fin N)) :

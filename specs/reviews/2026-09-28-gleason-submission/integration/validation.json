@@ -1,0 +1,72 @@
+{
+  "date": "2026-09-29",
+  "base_commit": "ff5c799800709b6c52c661e8b39aec260145c461",
+  "note": "Source hashes identify the checked working tree, including uncommitted corrections.",
+  "lean": "Lean (version 4.33.0, x86_64-w64-windows-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+  "checks": [
+    {
+      "file": "specs/reviews/2026-09-28-gleason-submission/EndpointAudit.lean",
+      "exit_code": 0,
+      "seconds": 86.39,
+      "sha256": "eb9a4bd2fcd3cbe7c2281f2780ae2752df889d39fc326bd1da3766bd48b96694"
+    },
+    {
+      "file": "specs/reviews/2026-09-28-gleason-submission/RealAudit.lean",
+      "exit_code": 0,
+      "seconds": 11.44,
+      "sha256": "ad59ba5b9a691b7969005f5a976974b5a35e4cb3d8ae9279570148a1de148bc4"
+    },
+    {
+      "file": "specs/reviews/2026-09-28-gleason-submission/DependencyAudit.lean",
+      "exit_code": 0,
+      "seconds": 26.7,
+      "sha256": "17e1ac3fd11fa09d828fe6c5c8f2dfca2443c193c684912744beeb35309b5e18"
+    },
+    {
+      "file": "specs/reviews/2026-09-28-gleason-submission/BoundaryAudit.lean",
+      "exit_code": 0,
+      "seconds": 9.64,
+      "sha256": "9a82fcbca9213e0a743859fe4e1f771bb47d755dddb5d86a9d7782b27187654c"
+    },
+    {
+      "file": "scripts/gleason-free.lean",
+      "exit_code": 0,
+      "seconds": 236.66,
+      "sha256": "0243a056fa33c7fe6b8bcb9651180e6757a311558011f2bfa8eafcbe0c10c47d"
+    }
+  ],
+  "source_sha256": {
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/RealFrame.lean": "9a2e6698d304926d6d82ca9bd57f6edb8322c7f74504ee1fa07abc405f79700b",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Real.lean": "a9a8512f9cf9739cb776a68668287ddf17c732540ce4f4fea0182edb69aa0b5c",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Core.lean": "4a4739a2c8f395cabd5db77b6695ecbfeee38e96434cde05caa3aaf26d675add",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Reduction.lean": "99946998de979146eba4aaf6aec06d8b2200f6266df67b19f8158ae8768b2e24",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/FrameFunction.lean": "30bd41fe3933f686acba86cba17c9dcd422509e6fa54a0305f9ea05715cbd5f7",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Descent.lean": "82a235918476398b5250f53d7f73233b2dd49d83b564a570e75c5c5d8cc56a5a",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Polarization.lean": "a19c465e44fb20052db8e73d2bb0a8decbe9e753640c20e104053999f8e47879",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/ProjectionPackage.lean": "160e8bd1e55f618f121142050c470d3812c26de8f45b41f6efc0a60bb6a2cad8",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/General.lean": "1418361cc402a214a756a3d075f29cf1c75d67c401ce87d45b5cf0ed8ba76817",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Extremal.lean": "c0b9de6aefaeaad7ac007bc25520ef008573b8ad7d9f9dc6647a02d08a256662",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/SimpleFrame.lean": "642825524cacbffcb6a47a0a579390889a364f7efe1c299f619ac6861bcb37f4",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Piron.lean": "703b7d3d80afc1c3e4a56360d6fa7c22d6281a2556f03fe0443f8181d94a0694",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Sphere.lean": "2d78c06cf25f8bce929f398e3c69eb1df54dc79c291b9a938123d753cd2d53c7",
+    "CsdLean4/Mathlib/Analysis/InnerProductSpace/Gleason/Warmup.lean": "6101b7557303e646e453994456cea1841595fd78fc7694369184f48147b49b16",
+    "CsdLean4/LF2/EffectGleason.lean": "97dbc945341f156ce7f1c2666a32d50314f31576a5546510ebdbdf30921657a7",
+    "CsdLean4/LF2/BornWrapper.lean": "58dd5e86839542f84d099f24c6afa1d68420e7d1bffa53530d6c4b058b5a3c09",
+    "scripts/gleason-free.lean": "0243a056fa33c7fe6b8bcb9651180e6757a311558011f2bfa8eafcbe0c10c47d",
+    "scripts/check-gleason-free.sh": "2712ed8c451d1be97976ad9edb1bfd312d9921e2b6bf89ecc71a68fbb07bd6ae",
+    "lean-toolchain": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+    "lakefile.toml": "2cb1b3757842edf8e7c31481c9bbc8f8a140bf5b439422c327ede712912fe654",
+    "lake-manifest.json": "4bbc6aa75defb30b02896a90a53d49b74e7c34946087de672e0c39917dba4fb2"
+  },
+  "build": {
+    "command": "lake build --wfail CsdLean4 CsdLeanTests",
+    "exit_code": 0,
+    "jobs": 4674,
+    "log": "build.log"
+  },
+  "static_checks": {
+    "exit_code": 0,
+    "count": 12,
+    "log": "static-checks.log"
+  }
+}
