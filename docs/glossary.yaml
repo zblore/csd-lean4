@@ -374,6 +374,9 @@ entries:
     lean:
       module: CsdLean4/LF4/MomentBornN.lean
       theorem: fs_born_volume_ratio_N
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper B fixes the measure these weights are read off
     related: [fubini-study-measure, born-volume-ratio, typicality-volume, outcome-region, is-the-born-rule-derived, fisher-rao-metric]
 
   - slug: duistermaat-heckman
@@ -444,6 +447,9 @@ entries:
     lean:
       module: CsdLean4/LF4/MomentBornN.lean
       theorem: fs_volume_eq_dirichlet
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper B's measure-fixing argument is where this pushforward earns its keep
     related: [moment-map, kahler-form, fubini-study-measure, liouville-measure, dirichlet-distribution]
 
   - slug: gleason-theorem
@@ -557,6 +563,11 @@ entries:
     papers:
       - doi: 10.5281/zenodo.20100580
         note: LF2, the measure bridge and Born-weight wrapper
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: >
+        The position page explains how the programme fixes the Born rule by symmetry and geometry
+        rather than through this theorem
     related: [born-weight, naimark-dilation, hilbert-space, does-kochen-specker-rule-out-csd, epistemic-measure]
 
   - slug: wigner-rigidity
@@ -639,6 +650,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/LinearAlgebra/Projectivization/WignerRigidity.lean
       theorem: wigner_rigidity
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper C's reconstruction is what this rigidity result pins down
     related: [stone-theorem, bargmann, schrodinger-from-records, projective-sector, hilbert-space, wigner-function]
 
   - slug: stone-theorem
@@ -705,6 +719,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Analysis/Matrix/StoneC1.lean
       theorem: Matrix.StoneC1.stone_continuous
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper C reconstructs the operational quantum mechanics this generator theorem supports
     related: [wigner-rigidity, schrodinger-equation, schrodinger-from-records, hermitian-operator, bargmann]
 
   - slug: bell-chsh
@@ -794,6 +811,11 @@ entries:
     papers:
       - doi: 10.5281/zenodo.20354293
         note: LF3, the machine-verified singlet kernel and empirical chain
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: >
+        The current-claims page lists Bell-violating correlations with deterministic outcomes among
+        the established results
     related: [tsirelson-bound, contextuality, singlet-contextual-model, hidden-variables, does-csd-violate-bell]
 
   - slug: ghz-state
@@ -864,6 +886,9 @@ entries:
     lean:
       module: CsdLean4/LF6/GHZContextuality.lean
       theorem: no_product_partition_realises_ghz
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the Bell-violating correlations this state sharpens
     related: [bell-chsh, mermin-inequality, contextuality, hidden-variables, no-signalling]
 
   - slug: tsirelson-bound
@@ -939,6 +964,9 @@ entries:
     lean:
       module: CsdLean4/SigmaLayer/BellGenerality.lean
       theorem: qm_chsh_le_tsirelson
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the correlation results this bound caps
     related: [bell-chsh, cglmp-inequality, mermin-inequality, no-signalling, does-csd-violate-bell]
 
   - slug: landauer-principle
@@ -1032,6 +1060,9 @@ entries:
     lean:
       module: CsdLean4/Thermo/Landauer.lean
       theorem: landauer_bound
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the thermodynamic results the corpus reproduces
     related: [von-neumann-entropy, entropy-subadditivity, gibbs-state, klein-inequality, de-isolation, jarzynski-equality]
 
   - slug: jarzynski-equality
@@ -1166,6 +1197,9 @@ entries:
     lean:
       module: CsdLean4/Thermo/Jarzynski.lean
       theorem: jarzynski
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the fluctuation results the corpus reproduces
     related: [crooks-fluctuation-theorem, gibbs-state, landauer-principle, von-neumann-entropy, canonical-typicality]
 
   - slug: crooks-fluctuation-theorem
@@ -1272,6 +1306,9 @@ entries:
     lean:
       module: CsdLean4/Thermo/Crooks.lean
       theorem: crooks
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the fluctuation results the corpus reproduces
     related: [jarzynski-equality, gibbs-state, landauer-principle, von-neumann-entropy]
 
   - slug: von-neumann-entropy
@@ -1382,6 +1419,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Subadditivity.lean
       theorem: vonNeumannEntropy_subadditive
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the mixed states this entropy is computed from
     related: [entropy-subadditivity, klein-inequality, holevo-bound, landauer-principle, canonical-typicality]
 
   - slug: liouville-measure
@@ -1480,6 +1520,9 @@ entries:
     lean:
       module: CsdLean4/LF4/KahlerVolumeForced.lean
       theorem: unitaryFlowSetup_liouville_isForcedKahlerVolume
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper A's typicality argument needs exactly an invariant measure like this one
     related: [fubini-study-measure, kahler-form, constraint-surface, typicality, poisson-bracket, koopman-operator]
 
   - slug: kahler-form
@@ -1573,6 +1616,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudySymplectic.lean
       theorem: fsForm_isKahler
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper D develops the geometric quantum mechanics this form carries
     related: [fubini-study-measure, liouville-measure, moment-map, poisson-bracket, duistermaat-heckman, fisher-rao-metric, geometric-phase, darboux-theorem]
 
   - slug: luders-rule
@@ -1646,6 +1692,9 @@ entries:
     lean:
       module: CsdLean4/RecordLayer/PointerLudersMarginal.lean
       theorem: pointer_luders_born_prep
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN6 is the corpus's treatment of outcome sectors and sequential measurement
     related: [collapse, measurement-flow, pointer-basis, naimark-dilation, measurement-context]
 
   - slug: naimark-dilation
@@ -1726,6 +1775,9 @@ entries:
     lean:
       module: CsdLean4/LF4/BornRegionUncond.lean
       theorem: povm_born_eq_dilated_volume_uncond
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers mixed states, POVMs and reduction
     related: [stinespring-dilation, born-weight, luders-rule, measurement-flow, gleason-theorem]
 
   - slug: no-exact-finite-ccr
@@ -1785,6 +1837,11 @@ entries:
     lean:
       module: CsdLean4/CV/ApproxCCR.lean
       theorem: no_exact_finite_ccr
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: >
+        The scope page is explicit that the reconstruction is finite-dimensional, which is what this
+        obstruction is about
     related: [field-arena, wick-theorem, hermitian-operator, robertson-uncertainty, lie-trotter-formula]
 
   - slug: canonical-typicality
@@ -1872,6 +1929,10 @@ entries:
     lean:
       module: CsdLean4/Thermo/CanonicalTypicality.lean
       theorem: canonical_typicality_expectation
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-2
+      text: >
+        The second primer page is the plain-language version of typicality doing probability's work
     related: [gibbs-state, typicality, von-neumann-entropy, fubini-study-measure, kms-condition]
 
   - slug: bargmann
@@ -1966,6 +2027,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Wigner%27s_theorem
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper C reconstructs the projective structure this invariant is defined on
     related: [wigner-rigidity, schrodinger-from-records, stone-theorem, projective-sector, hilbert-space]
 
   - slug: bloch-sphere
@@ -2039,6 +2103,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Bloch_sphere
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-3
+      text: The third primer page explains why the space of states has the structure it does
     related: [pauli-matrices, fubini-study-measure, hilbert-space, stern-gerlach, ramsey-interferometry]
 
   - slug: borel-set
@@ -2108,6 +2175,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Borel_set
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN0 fixes the measure-theoretic conventions the corpus uses
     related: [outcome-region, epistemic-measure, liouville-measure, euclidean-space, typicality-volume]
 
   - slug: cglmp-inequality
@@ -2176,6 +2246,10 @@ entries:
     external:
       - text: "Overview and history"
         url: https://doi.org/10.1103/PhysRevLett.88.040404
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: >
+        The current-claims page lists the Bell-violating correlations this inequality generalises
     related: [bell-chsh, tsirelson-bound, mermin-inequality, gisin-theorem, contextuality]
 
   - slug: deutsch-jozsa
@@ -2247,6 +2321,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Deutsch%E2%80%93Jozsa_algorithm
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: The scope page explains why the algorithm layer supports nothing in the foundations
     related: [bernstein-vazirani, simon-algorithm, grover-algorithm, hadamard-test, quantum-fourier-transform]
 
   - slug: dirichlet-distribution
@@ -2315,6 +2392,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Dirichlet_distribution
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper B's pushforward of the projective measure is this distribution
     related: [fubini-study-measure, born-volume-ratio, duistermaat-heckman, typicality-volume, haar-measure]
 
   - slug: elitzur-vaidman
@@ -2385,6 +2465,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Elitzur%E2%80%93Vaidman_bomb-tester
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page explains the visibility and isolation this experiment plays with
     related: [mach-zehnder, hong-ou-mandel, collapse, what-happens-during-measurement, de-isolation]
 
   - slug: euclidean-space
@@ -2454,6 +2537,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Euclidean_space
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN0 fixes the notation these spaces are used with
     related: [hilbert-space, hermitian-operator, kronecker-product, borel-set, fubini-study-measure]
 
   - slug: fisher-information
@@ -2535,6 +2621,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Fisher_information
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper D's geometric framework is where this quantity becomes the state space's metric
     related: [ramsey-interferometry, phase-estimation, born-weight, amplitude-estimation, robertson-uncertainty, fisher-rao-metric]
 
   - slug: fisher-rao-metric
@@ -2636,6 +2725,10 @@ entries:
         url: https://doi.org/10.1103/PhysRevLett.72.3439
       - text: "Rao, Information and the accuracy attainable in the estimation of statistical parameters, 1945"
         url: https://doi.org/10.1007/978-1-4612-0919-5_16
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: >
+        Paper D is the geometric setting in which this metric and the Fubini-Study metric coincide
     related: [fisher-information, moment-map, fubini-study-measure, born-weight, kahler-form]
 
   - slug: gibbs-state
@@ -2710,6 +2803,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Gibbs_measure
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the thermal results this state appears in
     related: [canonical-typicality, kms-condition, landauer-principle, klein-inequality, von-neumann-entropy, jarzynski-equality]
 
   - slug: gisin-theorem
@@ -2778,6 +2874,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Nicolas_Gisin
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the entanglement results this theorem strengthens
     related: [bell-chsh, cglmp-inequality, peres-criterion, bell-not-join, hidden-variables]
 
   - slug: grover-algorithm
@@ -2861,6 +2960,9 @@ entries:
     term: Grover's algorithm
     eponyms: [Grover]
     status: standard-mathematics
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's third stage is the reconstruction this search algorithm runs inside
     related: [amplitude-amplification, amplitude-estimation, shor-algorithm, deutsch-jozsa, hadamard-test]
     external:
       - text: "Overview and history"
@@ -2948,6 +3050,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Haar_measure
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper B fixes the projective measure by the symmetry this measure expresses
     related: [fubini-study-measure, liouville-measure, dirichlet-distribution, born-weight, typicality]
 
   - slug: hermitian-operator
@@ -3028,6 +3133,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Hermitian_matrix
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN0 fixes the operator conventions the corpus uses
     related: [hilbert-space, pauli-matrices, loewner-order, stone-theorem, robertson-uncertainty]
 
   - slug: hilbert-space
@@ -3105,6 +3213,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Hilbert_space
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper C reconstructs operational quantum mechanics without giving Hilbert space primacy
     related: [euclidean-space, hermitian-operator, projective-sector, bloch-sphere, kronecker-product]
 
   - slug: hong-ou-mandel
@@ -3182,6 +3293,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Hong%E2%80%93Ou%E2%80%93Mandel_effect
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page explains the interference and visibility this effect displays
     related: [mach-zehnder, elitzur-vaidman, bell-not-join, typicality-volume, ramsey-interferometry]
 
   - slug: jacobi-identity
@@ -3271,6 +3385,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Jacobi_identity
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper D's geometric mechanics is where this identity carries the dynamics
     related: [poisson-bracket, kahler-form, liouville-measure, moment-map, schrodinger-from-records]
 
   - slug: kronecker-product
@@ -3348,6 +3465,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Kronecker_product
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the composite systems this product describes
     related: [partial-trace, hilbert-space, bell-not-join, field-arena, stinespring-dilation]
 
   - slug: leggett-garg
@@ -3416,6 +3536,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Leggett%E2%80%93Garg_inequality
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page explains why an intermediate measurement is not innocent
     related: [bell-chsh, contextuality, kochen-specker, single-trajectory, hidden-variables]
 
   - slug: loewner-order
@@ -3480,6 +3603,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Loewner_order
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the POVMs and mixed states this order is stated for
     related: [hermitian-operator, klein-inequality, lindblad-equation, choi-theorem, von-neumann-entropy]
 
   - slug: mach-zehnder
@@ -3552,6 +3678,10 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Mach%E2%80%93Zehnder_interferometer
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: >
+        The fourth primer page explains visibility loss, which is what this interferometer measures
     related: [elitzur-vaidman, hong-ou-mandel, ramsey-interferometry, malus-law, collapse]
 
   - slug: malus-law
@@ -3624,6 +3754,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Malus%27s_law
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper A's volume account of outcome frequencies is what this law comes out of
     related: [born-weight, stern-gerlach, mach-zehnder, bloch-sphere, born-volume-ratio]
 
   - slug: mermin-inequality
@@ -3695,6 +3828,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/GHZ_experiment
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the Bell-violating correlations this inequality tests
     related: [ghz-state, bell-chsh, tsirelson-bound, cglmp-inequality, contextuality]
 
   - slug: pauli-matrices
@@ -3770,6 +3906,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Pauli_matrices
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN0 fixes the conventions, and TN3 is the pointer Hamiltonian these matrices build
     related: [bloch-sphere, hermitian-operator, gottesman-knill, shor-code, steane-code]
 
   - slug: peres-criterion
@@ -3843,6 +3982,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Peres%E2%80%93Horodecki_criterion
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the mixed states this criterion tests
     related: [gisin-theorem, bell-not-join, partial-trace, kronecker-product, no-signalling]
 
   - slug: poisson-bracket
@@ -3930,6 +4072,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Poisson_bracket
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper D develops the geometric mechanics this bracket generates
     related: [jacobi-identity, kahler-form, liouville-measure, moment-map, schrodinger-equation]
 
   - slug: ramsey-interferometry
@@ -4002,6 +4147,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Ramsey_interferometry
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page explains the visibility this interferometry tracks
     related: [fisher-information, mach-zehnder, phase-estimation, bloch-sphere, stern-gerlach]
 
   - slug: schrodinger-equation
@@ -4086,6 +4234,11 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Schr%C3%B6dinger_equation
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: >
+        The roadmap's third stage is the reconstruction that derives this equation rather than
+        postulating it
     related: [schrodinger-from-records, stone-theorem, hermitian-operator, lindblad-equation, poisson-bracket]
 
   - slug: shor-algorithm
@@ -4160,6 +4313,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Shor%27s_algorithm
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's third stage is the reconstruction this algorithm runs inside
     related: [quantum-fourier-transform, phase-estimation, grover-algorithm, simon-algorithm, shor-code, reversible-adder, toffoli-gate]
 
   - slug: stern-gerlach
@@ -4235,6 +4391,9 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Stern%E2%80%93Gerlach_experiment
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper A is the volume-based account of the outcome frequencies this experiment measures
     related: [malus-law, bloch-sphere, pointer-basis, measurement-flow, ramsey-interferometry]
 
   - slug: contextuality
@@ -4308,6 +4467,11 @@ entries:
     external:
       - text: "Stanford Encyclopedia: the Kochen-Specker theorem"
         url: https://plato.stanford.edu/entries/kochen-specker/
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: >
+        The position page states that the programme is contextual, Bell-violating and operationally
+        no-signalling
     related: [bell-chsh, kochen-specker, singlet-contextual-model, hidden-variables, measurement-context]
 
   - slug: hidden-variables
@@ -4370,6 +4534,11 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Hidden-variable_theory
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: >
+        The position page places the programme among the hidden-variable theories and the no-go
+        results
     related: [contextuality, bell-chsh, is-csd-a-hidden-variable-theory, bohmian-mechanics, psi-epistemic]
 
   - slug: measurement-problem
@@ -4442,6 +4611,9 @@ entries:
     external:
       - text: "Stanford Encyclopedia: measurement in quantum theory"
         url: https://plato.stanford.edu/entries/qt-issues/
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page is the measurement story in plain terms
     related: [collapse, de-isolation, record-layer, what-happens-during-measurement, copenhagen]
 
   - slug: collapse
@@ -4502,6 +4674,9 @@ entries:
     external:
       - text: "Stanford Encyclopedia: collapse theories"
         url: https://plato.stanford.edu/entries/qm-collapse/
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page explains why outcomes become definite with no collapse mechanism
     related: [measurement-problem, de-isolation, luders-rule, record-layer, spontaneous-collapse]
 
   - slug: typicality
@@ -4572,6 +4747,9 @@ entries:
     external:
       - text: "Goldstein, typicality in statistical mechanics and quantum theory"
         url: https://arxiv.org/abs/1110.1349
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-2
+      text: The second primer page explains how typical behaviour replaces randomness
     related: [typicality-volume, born-weight, canonical-typicality, where-do-probabilities-come-from, fubini-study-measure]
 
   - slug: psi-epistemic
@@ -4658,6 +4836,9 @@ entries:
     lean:
       module: CsdLean4/SigmaLayer/IsolationPreparation.lean
       theorem: conditional_not_mutuallySingular
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-3
+      text: The third primer page is the plain-terms version of the wavefunction as a summary
     related: [ontic-vs-epistemic, epistemic-measure, does-csd-conflict-with-pbr, is-the-wavefunction-real, hidden-variables]
     external:
       - text: "Epistemic views of the quantum state"
@@ -4722,6 +4903,9 @@ entries:
     external:
       - text: "Stanford Encyclopedia: causal determinism"
         url: https://plato.stanford.edu/entries/determinism-causal/
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-1
+      text: The first primer page introduces the determinism the rest of the programme builds on
     related: [single-trajectory, where-do-probabilities-come-from, is-csd-superdeterministic, typicality, constraint-surface]
 
   - slug: kochen-specker
@@ -4799,6 +4983,9 @@ entries:
     external:
       - text: "Stanford Encyclopedia: the Kochen-Specker theorem"
         url: https://plato.stanford.edu/entries/kochen-specker/
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page's no-go section is where this theorem's bearing is set out
     related: [contextuality, does-kochen-specker-rule-out-csd, hidden-variables, bell-chsh, measurement-context]
 
   - slug: copenhagen
@@ -4853,6 +5040,9 @@ entries:
     external:
       - text: "Stanford Encyclopedia: the Copenhagen interpretation"
         url: https://plato.stanford.edu/entries/qm-copenhagen/
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page contrasts the programme with the Copenhagen reading
     related: [many-worlds, bohmian-mechanics, qbism, measurement-problem, collapse]
 
   - slug: many-worlds
@@ -4924,6 +5114,9 @@ entries:
     external:
       - text: "Stanford Encyclopedia: Everett's relative-state formulation"
         url: https://plato.stanford.edu/entries/qm-everett/
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page contrasts the programme with the many-worlds reading
     related: [copenhagen, bohmian-mechanics, spontaneous-collapse, single-trajectory, measurement-problem]
 
   - slug: bohmian-mechanics
@@ -4986,6 +5179,9 @@ entries:
     external:
       - text: "Stanford Encyclopedia: Bohmian mechanics"
         url: https://plato.stanford.edu/entries/qm-bohm/
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page contrasts the programme with Bohmian mechanics
     related: [csd-vs-bohmian-mechanics, hidden-variables, many-worlds, single-trajectory, determinism, nelson-stochastic-mechanics]
 
   - slug: spontaneous-collapse
@@ -5039,6 +5235,9 @@ entries:
     external:
       - text: "Stanford Encyclopedia: collapse theories"
         url: https://plato.stanford.edu/entries/qm-collapse/
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page explains why the programme introduces no collapse mechanism
     related: [collapse, copenhagen, many-worlds, qbism, does-csd-make-new-predictions]
 
   - slug: qbism
@@ -5090,6 +5289,9 @@ entries:
     external:
       - text: "Stanford Encyclopedia: QBism and quantum Bayesianism"
         url: https://plato.stanford.edu/entries/quantum-bayesian/
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page places the programme against the agent-centred readings
     related: [copenhagen, psi-epistemic, ontic-vs-epistemic, is-the-wavefunction-real, spontaneous-collapse]
 
   - slug: constraint-surface
@@ -5208,6 +5410,9 @@ entries:
     term: Ontic vs epistemic
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-3
+      text: The third primer page explains quantum states as summaries rather than physical waves
     related: [psi-epistemic, epistemic-measure, is-the-wavefunction-real, constraint-surface, many-to-one-projection]
 
   - slug: projectability
@@ -5260,6 +5465,9 @@ entries:
     source: curated
     lean:
       module: CsdLean4/LF2/Setup.lean
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: The scope page states plainly that the quantum-effective sector is posited, not derived
     related: [constraint-surface, projective-sector, many-to-one-projection, wigner-rigidity, schrodinger-from-records]
 
   - slug: projective-sector
@@ -5312,6 +5520,9 @@ entries:
     source: curated
     lean:
       module: CsdLean4/SigmaLayer/ProjectiveSector.lean
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: The scope page is explicit that this sector is posited
     related: [constraint-surface, projectability, fubini-study-measure, hilbert-space, kahler-form]
 
   - slug: record-layer
@@ -5364,6 +5575,9 @@ entries:
     term: Record layer
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page describes measurement as an engineered loss of isolation
     related: [de-isolation, measurement-flow, pointer-basis, collapse, record-light-cone]
 
   - slug: de-isolation
@@ -5446,6 +5660,9 @@ entries:
     term: De-isolation
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page is where losing isolation becomes the measurement mechanism
     related: [measurement-flow, stinespring-dilation, holevo-bound, record-layer, isolation]
 
   - slug: typicality-volume
@@ -5566,6 +5783,9 @@ entries:
     lean:
       module: CsdLean4/RecordLayer/GlobalBasin.lean
       theorem: globalBasin_born
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's fourth stage is the physical account of measurement and outcomes
     related: [born-weight, typicality-volume, preparation-region, carving, borel-set]
 
   - slug: epistemic-measure
@@ -5624,6 +5844,10 @@ entries:
     lean:
       module: CsdLean4/RecordLayer/EpistemicDisintegration.lean
       theorem: epistemicMeasure_eq_disintegration
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: >
+        The current-claims page separates the ontic measure from the epistemic regions it weights
     related: [ontic-vs-epistemic, psi-epistemic, born-weight, typicality, preparation-region]
 
   - slug: carving
@@ -5672,6 +5896,9 @@ entries:
     term: Carving
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page is the plain-terms account of outcomes being carved out
     related: [outcome-region, measurement-context, pointer-basis, fibre, record-layer]
 
   - slug: first-passage-race
@@ -5746,6 +5973,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Probability/IidClockRace.lean
       theorem: hasRaceProperty_iff_exists_expMeasure
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's fourth stage is the account of outcomes this race mechanism serves
     related: [de-isolation, fibre, record-layer, measurement-flow, single-trajectory]
 
   - slug: fibre
@@ -5871,6 +6101,9 @@ entries:
     source: curated
     lean:
       module: CsdLean4/LF4/KahlerInstance.lean
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: The scope page's section on unclosed structural gaps is where the fibre's role is honest
     related: [many-to-one-projection, constraint-surface, first-passage-race, carving, record-layer]
 
   - slug: many-to-one-projection
@@ -5925,6 +6158,9 @@ entries:
     term: Many-to-one projection
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-3
+      text: The third primer page explains quantum states as summaries of hidden detail
     related: [fibre, constraint-surface, projectability, ontic-vs-epistemic, projective-sector]
 
   - slug: pointer-basis
@@ -6011,6 +6247,10 @@ entries:
     lean:
       module: CsdLean4/Empirical/CSD/Einselection.lean
       theorem: einselectionN
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: >
+        The fourth primer page explains why the outcomes that become definite are the ones they are
     related: [measurement-flow, de-isolation, luders-rule, record-layer, stern-gerlach]
 
   - slug: preparation-region
@@ -6067,6 +6307,10 @@ entries:
     source: curated
     lean:
       module: CsdLean4/LF1/Preparation.lean
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: >
+        TN6 covers outcome sectors and sequential measurement, where preparation regions do their work
     related: [outcome-region, epistemic-measure, born-weight, von-neumann-entropy, typicality-volume]
 
   - slug: measurement-context
@@ -6120,6 +6364,9 @@ entries:
     term: Measurement context
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page explains how the apparatus fixes which outcomes are available
     related: [contextuality, carving, luders-rule, kochen-specker, pointer-basis]
 
   - slug: single-trajectory
@@ -6168,6 +6415,9 @@ entries:
     term: Single trajectory
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-1
+      text: The first primer page sets out the guiding idea of one trajectory underneath
     related: [determinism, constraint-surface, where-do-probabilities-come-from, first-passage-race, typicality]
 
   - slug: witness-and-engine
@@ -6212,6 +6462,9 @@ entries:
     term: Witness and engine
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: The scope page is where the difference between a witness and a derivation is kept honest
     related: [lf1-main-theorem, what-is-machine-checked, measurement-flow, born-volume-ratio, de-isolation]
 
   - slug: field-arena
@@ -6267,6 +6520,9 @@ entries:
     source: curated
     lean:
       module: CsdLean4/CV/ArenaBridge.lean
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's sixth stage is the quantum-effective sector this arena belongs to
     related: [lieb-robinson-bound, wick-theorem, no-exact-finite-ccr, record-light-cone, interaction-price]
 
   - slug: isolation
@@ -6313,6 +6569,9 @@ entries:
     term: Isolation
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page follows a system's trajectory in visibility and isolation
     related: [de-isolation, no-signalling, field-arena, lieb-robinson-bound, constraint-surface]
 
   - slug: moment-map
@@ -6387,6 +6646,9 @@ entries:
         url: https://en.wikipedia.org/wiki/Moment_map
       - text: "Atiyah, Convexity and commuting Hamiltonians, Bull. LMS 1982"
         url: https://doi.org/10.1112/blms/14.1.1
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper B uses the moment map to push the measure to the simplex
     related: [kahler-form, duistermaat-heckman, poisson-bracket, fubini-study-measure, liouville-measure, fisher-rao-metric]
 
   - slug: lf1-main-theorem
@@ -6442,6 +6704,9 @@ entries:
     lean:
       module: CsdLean4/LF1/MainTheorem.lean
       theorem: LF1_main_theorem_ae
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: LF1 is the machine-verified typicality and frequency-convergence theorem this states
     related: [born-weight, typicality, witness-and-engine, born-volume-ratio, what-is-machine-checked]
 
   - slug: born-volume-ratio
@@ -6499,6 +6764,9 @@ entries:
     lean:
       module: CsdLean4/LF4/BornRegionUncond.lean
       theorem: fs_born_volume_ratio_N_uncond
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper A is the volume-based account of outcome frequencies
     related: [born-weight, typicality-volume, fubini-study-measure, lf1-main-theorem, naimark-dilation]
 
   - slug: measurement-flow
@@ -6574,6 +6842,9 @@ entries:
     lean:
       module: CsdLean4/LF5/Capstone.lean
       theorem: measurement_flow_born_frequency
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's fourth stage is where measurement becomes dynamics
     related: [de-isolation, stinespring-dilation, pointer-basis, holevo-bound, naimark-dilation]
   - slug: singlet-contextual-model
     reviewed: 2026-09-14
@@ -6645,6 +6916,9 @@ entries:
     lean:
       module: CsdLean4/LF6/C1BellConsistency.lean
       theorem: c1_singlet_contextual_capstone
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper C1 is the machine-checked Bell-violating model with deterministic outcomes
     related: [bell-chsh, contextuality, no-signalling, hidden-variables, does-csd-violate-bell]
 
   - slug: no-signalling
@@ -6709,6 +6983,9 @@ entries:
     lean:
       module: CsdLean4/CV/CompositeArena.lean
       theorem: composite_no_signalling
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page states the operational no-signalling the programme keeps
     related: [singlet-contextual-model, bell-not-join, isolation, field-arena, tsirelson-bound]
 
   - slug: bell-not-join
@@ -6768,6 +7045,9 @@ entries:
     lean:
       module: CsdLean4/CV/CompositeArena.lean
       theorem: bell_not_join
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper C1 is where the Bell state's irreducibly joint character is machine-checked
     related: [no-signalling, field-arena, peres-criterion, kronecker-product, hong-ou-mandel]
 
   - slug: lieb-robinson-bound
@@ -6845,6 +7125,10 @@ entries:
     lean:
       module: CsdLean4/CV/LiebRobinson.lean
       theorem: norm_commutator_velocity_le
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: >
+        The roadmap's seventh stage is the continuum and field-theory extension this bound belongs to
     related: [field-arena, record-light-cone, interaction-price, isolation, wick-theorem]
 
   - slug: wick-theorem
@@ -6908,6 +7192,9 @@ entries:
     lean:
       module: CsdLean4/CV/Wick.lean
       theorem: timeFourPoint_wick
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's seventh stage is the field-theory extension this theorem serves
     related: [field-arena, kms-condition, no-exact-finite-ccr, lieb-robinson-bound, gibbs-state]
 
   - slug: kms-condition
@@ -6975,6 +7262,11 @@ entries:
     lean:
       module: CsdLean4/CV/ThermalPropagator.lean
       theorem: thermal_kms
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: >
+        The roadmap's seventh stage is the continuum and field-theory extension this condition belongs
+        to
     related: [gibbs-state, wick-theorem, canonical-typicality, field-arena, landauer-principle]
 
   - slug: lindblad-equation
@@ -7041,6 +7333,9 @@ entries:
     lean:
       module: CsdLean4/LF6/LindbladPositivity.lean
       theorem: lindbladSemigroup_completelyPositive
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's fourth stage is the measurement dynamics this equation summarises
     related: [quantum-channel, lie-trotter-formula, de-isolation, choi-theorem, schrodinger-equation]
 
   - slug: lie-trotter-formula
@@ -7110,6 +7405,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Analysis/NormedSpace/TrotterGeneral.lean
       theorem: trotter_product
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's fifth stage is the controlled continuum limits this formula builds
     related: [lindblad-equation, stone-theorem, schrodinger-equation, what-is-machine-checked, quantum-channel]
 
   - slug: choi-theorem
@@ -7169,6 +7467,9 @@ entries:
     lean:
       module: CsdLean4/LF2/ChoiConverse.lean
       theorem: choi_iff_posSemidef
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the mixed-state layer this correspondence characterises
     related: [quantum-channel, stinespring-dilation, lindblad-equation, loewner-order, kronecker-product]
 
   - slug: quantum-channel
@@ -7253,6 +7554,9 @@ entries:
     lean:
       module: CsdLean4/LF2/QuantumChannel.lean
       theorem: choiMatrix_posSemidef
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the mixed states and reductions channels act on
     related: [stinespring-dilation, choi-theorem, partial-trace, de-isolation, holevo-bound, helstrom-bound]
 
   - slug: record-light-cone
@@ -7306,6 +7610,10 @@ entries:
     lean:
       module: CsdLean4/CV/FibredArenaBridge.lean
       theorem: record_lightcone
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: >
+        The roadmap's seventh stage is where locality has to become a theorem rather than a bound
     related: [lieb-robinson-bound, record-layer, field-arena, no-signalling, interaction-price]
 
   - slug: partial-trace
@@ -7373,6 +7681,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/PartialTrace.lean
       theorem: partialTraceRight
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 is the corpus's treatment of mixed states, POVMs and reduction
     related: [stinespring-dilation, quantum-channel, entropy-subadditivity, kronecker-product, de-isolation]
 
   - slug: entropy-subadditivity
@@ -7438,6 +7749,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Subadditivity.lean
       theorem: vonNeumannEntropy_subadditive
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the composite mixed states this inequality is about
     related: [von-neumann-entropy, klein-inequality, landauer-principle, partial-trace, holevo-bound]
 
   - slug: schrodinger-from-records
@@ -7515,6 +7829,9 @@ entries:
     lean:
       module: CsdLean4/LF4/PhaseLift.lean
       theorem: sigmaFlow_schrodinger_form
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's fourth stage is the measurement account this derivation belongs to
     related: [schrodinger-equation, wigner-rigidity, stone-theorem, bargmann, projectability]
 
   - slug: shor-code
@@ -7622,6 +7939,9 @@ entries:
     lean:
       module: CsdLean4/Empirical/QM/QEC/ShorNine.lean
       theorem: shor_corrects_XZ
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's third stage is the finite-dimensional reconstruction this code is built on
     related: [steane-code, pauli-matrices, stinespring-dilation, quantum-channel, gottesman-knill, knill-laflamme, stabiliser-code]
 
   - slug: ozawa-error-disturbance
@@ -7717,6 +8037,9 @@ entries:
         url: https://doi.org/10.1103/PhysRevA.67.042105
       - text: "Rozema et al., Violation of Heisenberg's measurement-disturbance relationship by weak measurements, Phys. Rev. Lett. 109, 100404 (2012)"
         url: https://doi.org/10.1103/PhysRevLett.109.100404
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the measurement-theoretic results the corpus reproduces
     related: [robertson-uncertainty, luders-rule, measurement-flow, fisher-information, collapse]
 
   - slug: robertson-uncertainty
@@ -7795,6 +8118,9 @@ entries:
     lean:
       module: CsdLean4/LF4/UncertaintyKahler.lean
       theorem: kahler_robertson_ontic_variance
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-claims
+      text: The current-claims page lists the quantum-mechanical results the corpus reproduces
     related: [ozawa-error-disturbance, hermitian-operator, no-exact-finite-ccr, fisher-information, pauli-matrices]
 
   - slug: interaction-price
@@ -7860,6 +8186,9 @@ entries:
     lean:
       module: CsdLean4/CV/PriceAttainment.lean
       theorem: price_linear_attained
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page explains why gaining information costs isolation
     related: [field-arena, lieb-robinson-bound, record-light-cone, isolation, wick-theorem]
 
   - slug: does-csd-violate-bell
@@ -7923,6 +8252,10 @@ entries:
     term: Does CSD violate Bell's theorem?
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: >
+        The position page states the Bell-violating, no-signalling posture this question is about
     related: [bell-chsh, singlet-contextual-model, no-signalling, is-csd-superdeterministic, is-csd-a-hidden-variable-theory]
 
   - slug: excess-baggage
@@ -7983,6 +8316,9 @@ entries:
         url: https://doi.org/10.1016/j.shpsb.2003.12.001
       - text: "Montina, Exponential complexity and ontological theories of quantum mechanics, Phys. Rev. A 2008"
         url: https://doi.org/10.1103/PhysRevA.77.022104
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page's no-go section is where satisfied lower bounds are kept in proportion
     related: [ontic-vs-epistemic, fibre, many-to-one-projection, does-csd-conflict-with-pbr, is-the-wavefunction-real]
 
   - slug: does-csd-conflict-with-pbr
@@ -8079,6 +8415,9 @@ entries:
     external:
       - text: "Pusey, Barrett and Rudolph, On the reality of the quantum state, Nature Physics 2012"
         url: https://doi.org/10.1038/nphys2309
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/papers
+      text: Paper C2 is the machine-checked treatment of the PBR theorem
     related: [psi-epistemic, is-the-wavefunction-real, excess-baggage, ontic-vs-epistemic, epistemic-measure]
 
   - slug: is-the-born-rule-derived
@@ -8140,6 +8479,9 @@ entries:
     term: Is the Born rule derived or assumed in CSD?
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-3
+      text: The third primer page explains why the familiar probability rule follows
     related: [born-weight, typicality, fubini-study-measure, where-do-probabilities-come-from, lf1-main-theorem]
 
   - slug: where-do-probabilities-come-from
@@ -8190,6 +8532,9 @@ entries:
     term: If CSD is deterministic, where do probabilities come from?
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-2
+      text: The second primer page is where probability enters a deterministic theory
     related: [typicality, determinism, single-trajectory, is-the-born-rule-derived, typicality-volume]
 
   - slug: is-csd-a-hidden-variable-theory
@@ -8243,6 +8588,9 @@ entries:
     term: Is CSD a hidden-variable theory?
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page places the programme against the hidden-variable no-go results
     related: [hidden-variables, contextuality, does-csd-violate-bell, csd-vs-bohmian-mechanics, does-kochen-specker-rule-out-csd]
 
   - slug: does-kochen-specker-rule-out-csd
@@ -8291,6 +8639,9 @@ entries:
     term: Does the Kochen-Specker theorem rule out CSD?
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page's no-go section covers the contextuality results
     related: [kochen-specker, contextuality, measurement-context, is-csd-a-hidden-variable-theory, gleason-theorem]
 
   - slug: is-csd-superdeterministic
@@ -8339,6 +8690,9 @@ entries:
     term: Is CSD superdeterministic?
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page states which Bell premise the programme denies
     related: [determinism, does-csd-violate-bell, single-trajectory, no-signalling, hidden-variables]
 
   - slug: is-the-wavefunction-real
@@ -8388,6 +8742,9 @@ entries:
     term: Is the wavefunction real in CSD?
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-3
+      text: The third primer page explains what a quantum state is in this programme
     related: [ontic-vs-epistemic, psi-epistemic, does-csd-conflict-with-pbr, qbism, excess-baggage]
 
   - slug: what-happens-during-measurement
@@ -8440,6 +8797,9 @@ entries:
     term: What happens during a measurement in CSD?
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/primer-4
+      text: The fourth primer page answers the same question for a reader starting from scratch
     related: [de-isolation, measurement-flow, collapse, record-layer, measurement-problem]
 
   - slug: what-is-machine-checked
@@ -8617,6 +8977,9 @@ entries:
     term: How does CSD differ from Bohmian mechanics?
     status: definition
     source: curated
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/position
+      text: The position page is the short version of the same contrast
     related: [bohmian-mechanics, is-csd-a-hidden-variable-theory, single-trajectory, determinism, hidden-variables, nelson-stochastic-mechanics]
 
   # -------------------------------------------------------------------------
@@ -8699,6 +9062,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Fourier.lean
       theorem: qft_unitary
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's third stage is the reconstruction the algorithm layer is built on
     related: [shor-algorithm, phase-estimation, simon-algorithm, hadamard-test, amplitude-estimation]
     external:
       - text: "Overview"
@@ -8773,6 +9139,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/PhaseEstimation.lean
       theorem: phase_estimation_lower_bound
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's third stage is the reconstruction this algorithm consumes
     related: [quantum-fourier-transform, amplitude-estimation, shor-algorithm, fisher-information, hadamard-test]
     external:
       - text: "Overview"
@@ -8834,6 +9203,9 @@ entries:
     term: Simon's algorithm
     eponyms: []
     status: standard-mathematics
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: The scope page explains why the algorithm layer supports nothing in the foundations
     related: [deutsch-jozsa, bernstein-vazirani, shor-algorithm, quantum-fourier-transform, grover-algorithm]
     external:
       - text: "Overview"
@@ -8896,6 +9268,9 @@ entries:
     term: Bernstein-Vazirani algorithm
     eponyms: [Bernstein, Vazirani]
     status: standard-mathematics
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: The scope page keeps the algorithm layer apart from the programme's own claims
     related: [deutsch-jozsa, simon-algorithm, hadamard-test, grover-algorithm, quantum-fourier-transform]
     external:
       - text: "Overview"
@@ -8944,6 +9319,9 @@ entries:
       phase.
     term: swap test
     status: standard-mathematics
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the mixed states whose overlap this test estimates
     related: [hadamard-test, amplitude-estimation, hong-ou-mandel, fisher-information, grover-algorithm]
     external:
       - text: "Overview"
@@ -9002,6 +9380,9 @@ entries:
       child in one theorem.
     term: Hadamard test
     status: standard-mathematics
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the states and reductions this test reads an overlap from
     related: [swap-test, phase-estimation, deutsch-jozsa, bernstein-vazirani, amplitude-estimation]
     external:
       - text: "Overview"
@@ -9098,6 +9479,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/AmplitudeAmplification.lean
       theorem: amplitude_amplification
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's third stage is the reconstruction this amplification is stated over
     related: [grover-algorithm, amplitude-estimation, phase-estimation, swap-test, quantum-fourier-transform]
     external:
       - text: "BHMT, Quantum Amplitude Amplification and Estimation (quant-ph/0005055)"
@@ -9189,6 +9573,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/AmplitudeEstimation.lean
       theorem: amplitude_estimation
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's third stage is the reconstruction this estimation is stated over
     related: [amplitude-amplification, phase-estimation, grover-algorithm, fisher-information, swap-test]
     external:
       - text: "BHMT, Quantum Amplitude Amplification and Estimation (quant-ph/0005055), Thm 12"
@@ -9274,6 +9661,9 @@ entries:
       programme of David Gross on Clifford orbits and designs.
     term: Gottesman-Knill theorem
     eponyms: [Gottesman, Knill]
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: The scope page keeps the simulability layer apart from the programme's own claims
     related: [steane-code, shor-code, magic-state, pauli-matrices, grover-algorithm, stabiliser-code, clifford-t]
     status: proved-in-corpus
     lean:
@@ -9367,6 +9757,9 @@ entries:
     lean:
       module: CsdLean4/Empirical/QM/QEC/Steane.lean
       theorem: steaneZero_stabilised
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/roadmap
+      text: The roadmap's third stage is the finite-dimensional reconstruction this code is built on
     related: [shor-code, gottesman-knill, magic-state, pauli-matrices, quantum-channel, knill-laflamme, transversal-gate, threshold-theorem, stabiliser-code]
     external:
       - text: "Steane, Error correcting codes in quantum theory (PRL 77, 793)"
@@ -9442,6 +9835,10 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Magic.lean
       theorem: tGate_conj_X_not_pauli
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/current-limits
+      text: >
+        The scope page explains why the quantum-computing layer supports nothing in the foundations
     related: [gottesman-knill, steane-code, shor-code, pauli-matrices, amplitude-amplification, magic-state-distillation, clifford-t, transversal-gate]
     external:
       - text: "Bravyi-Kitaev, Universal quantum computation with ideal Clifford gates and noisy ancillas (PRA 71, 022316)"
@@ -9518,6 +9915,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/HolevoBound.lean
       theorem: holevoChi_le_log_card
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the mixed states and POVMs this bound is stated over
     related: [von-neumann-entropy, klein-inequality, de-isolation, measurement-flow, quantum-channel]
 
   - slug: stinespring-dilation
@@ -9588,6 +9988,9 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Stinespring.lean
       theorem: apply_eq_traceRight_stinespring
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the POVMs and reductions this dilation explains
     related: [quantum-channel, naimark-dilation, partial-trace, de-isolation, measurement-flow]
 
   - slug: klein-inequality
@@ -9655,10 +10058,21 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Subadditivity.lean
       theorem: klein_inequality
+    site_link:
+      url: https://www.constraintsurfacedynamics.com/technical-notes
+      text: TN4 covers the mixed states this inequality compares
     related: [von-neumann-entropy, entropy-subadditivity, holevo-bound, landauer-principle, gibbs-state]
 
   - slug: knill-laflamme
     reviewed: 2026-09-29
+    image:
+      file: img/knill-laflamme.png
+      alt: "Photograph of Raymond Laflamme seated, in front of a Canadian flag"
+      caption: "Raymond Laflamme, one of the two names on the conditions."
+      credit: "Public Policy Forum, CC BY 3.0, via Wikimedia Commons"
+      licence: "CC BY 3.0"
+      source: https://commons.wikimedia.org/wiki/File:Raymond_Laflamme.png
+      article: https://en.wikipedia.org/wiki/Raymond_Laflamme
     hook: >
       Quantum error correction has an exact test, as a set of errors is correctable if and
       only if the code can't tell those errors apart, and that condition is a piece of
@@ -9915,6 +10329,14 @@ entries:
 
   - slug: threshold-theorem
     reviewed: 2026-09-29
+    image:
+      file: img/threshold-theorem.jpg
+      alt: "Portrait photograph of Dorit Aharonov"
+      caption: "Dorit Aharonov, who proved a threshold theorem with Michael Ben-Or in 1997."
+      credit: "Gershon Weiserfirer, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:%D7%93%D7%95%D7%A8%D7%99%D7%AA_%D7%90%D7%94%D7%A8%D7%95%D7%A0%D7%95%D7%91_-_%D7%A6%D7%99%D7%9C%D7%95%D7%9D_%D7%92%D7%A8%D7%A9%D7%95%D7%9F_%D7%95%D7%95%D7%99%D7%A1%D7%A8%D7%A4%D7%99%D7%A8%D7%A8.jpg
+      article: https://en.wikipedia.org/wiki/Dorit_Aharonov
     hook: >
       The threshold theorem says imperfect components suffice, as long as each one fails
       below a fixed rate you can make a quantum computation as reliable as you like by
@@ -10161,6 +10583,14 @@ entries:
 
   - slug: clifford-t
     reviewed: 2026-09-29
+    image:
+      file: img/clifford-t.jpg
+      alt: "Engraved portrait of William Kingdon Clifford"
+      caption: "William Kingdon Clifford, whose algebras the Clifford gates descend from."
+      credit: "Frontispiece of Lectures and Essays by the Late W. K. Clifford, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Clifford_William_Kingdon_(cropped_portrait).jpg
+      article: https://en.wikipedia.org/wiki/William_Kingdon_Clifford
     hook: >
       Clifford plus T is the standard universal gate set, as the Clifford gates alone are
       classically simulable and adding the single eighth-turn phase gate makes every
@@ -10560,6 +10990,14 @@ entries:
 
   - slug: geometric-phase
     reviewed: 2026-09-29
+    image:
+      file: img/geometric-phase.jpg
+      alt: "Photograph of Michael Berry holding the Lorentz Medal in its case"
+      caption: "Michael Berry with the Lorentz Medal, 2014."
+      credit: "KNAW, Barbara Kieboom, CC BY 2.0, via Wikimedia Commons"
+      licence: "CC BY 2.0"
+      source: https://commons.wikimedia.org/wiki/File:LorentzMedaille2014-cropped.jpg
+      article: https://en.wikipedia.org/wiki/Michael_Berry_(physicist)
     hook: >
       A quantum state taken around a closed loop and brought back to where it started keeps a
       leftover phase that depends only on the shape of the loop, so the phase is a record of
@@ -10643,6 +11081,14 @@ entries:
 
   - slug: aharonov-bohm
     reviewed: 2026-09-29
+    image:
+      file: img/aharonov-bohm.jpg
+      alt: "Photograph of Yakir Aharonov seated at a chessboard in a study"
+      caption: "Yakir Aharonov, the first name on the effect."
+      credit: "Kobi Kalmanovitz, CC BY-SA 3.0, via Wikimedia Commons"
+      licence: "CC BY-SA 3.0"
+      source: https://commons.wikimedia.org/wiki/File:Yakir_aharonov.jpg
+      article: https://en.wikipedia.org/wiki/Yakir_Aharonov
     hook: >
       An electron that never enters a magnetic field can still be shifted by it, as the
       enclosed flux changes the interference between paths, which shows that the field's
@@ -10721,6 +11167,15 @@ entries:
 
   - slug: wigner-function
     reviewed: 2026-09-29
+    image:
+      file: img/wigner-function.png
+      alt: "Three-dimensional plot of the Wigner function of an even cat state, with peaks above the plane and interference fringes dipping below it"
+      caption: "The Wigner function of an even cat state. The fringes between the two peaks go negative, which no probability density can do."
+      credit: "Geek3, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:Wignerfunction_catstate_even_2.0.png
+      article: https://en.wikipedia.org/wiki/Wigner_quasiprobability_distribution
+      wide: true
     hook: >
       The Wigner function writes a quantum state as a distribution over position and momentum
       together, which reproduces every prediction of quantum mechanics and goes negative, so
@@ -10737,6 +11192,11 @@ entries:
       integrate over position and you get the momentum density. Average any position or
       momentum quantity against it and you get the quantum expectation. In every respect that
       a probability distribution is used for, it works.
+
+      There is a sharper way to say the same thing. The overlap of two Wigner functions over the
+      whole of phase space equals the squared overlap of the two states, so nothing is lost in
+      passing from a state to its Wigner function, and every quantity a measurement can produce is
+      an average of some function against it.
 
       Except that it can be negative. For any state that isn't a Gaussian bump, the function
       dips below zero somewhere, and a negative probability is no probability at all.
@@ -10774,9 +11234,16 @@ entries:
       wigner_gaussianS computes the Gaussian case and wigner_gaussianS_pos its positivity;
       wigner_zero_zero_of_odd gives the value minus twice the norm squared at the origin for
       odd states. wigner_freeSchrodingerS is the free transport W_t(x, p) = W_0(x - p t, p),
-      exact because the phase of the free propagator is the character of the shift. One
-      dimension, Schwartz data; joint integrability on the plane, general Weyl symbols and the
-      Moyal expansion are BACKLOG rows 63 and 64.
+      exact because the phase of the free propagator is the character of the shift.
+
+      Two further results make W the state rather than a pair of marginals (WignerWeyl.lean).
+      integral_integral_wigner_mul_conj is the overlap identity: the phase-space overlap of two
+      Wigner functions is the squared modulus of the states' inner product, by slicewise Plancherel
+      and the convolution integral, with integral_integral_wigner_sq its purity form. And
+      integral_conj_mul_weylOp is the Weyl expectation formula, for a symbol presented as a family
+      of Schwartz Fourier slices. One dimension, Schwartz data; the Weyl calculus proper, symbols of
+      temperate growth and the Schwartz property of W on the plane are BACKLOG row 92, and the Moyal
+      expansion is row 64.
     person: >
       Eugene Wigner introduced the function in 1932, in a paper on quantum corrections to
       thermodynamic equilibrium, and treated it as a calculational device rather than a
@@ -10972,6 +11439,14 @@ entries:
 
   - slug: darboux-theorem
     reviewed: 2026-09-29
+    image:
+      file: img/darboux-theorem.jpg
+      alt: "Photographic portrait of Jean Gaston Darboux"
+      caption: "Jean Gaston Darboux, before 1917."
+      credit: "Archivio storico dell Accademia delle Scienze di Torino, public domain, via Wikimedia Commons"
+      licence: "Public domain"
+      source: https://commons.wikimedia.org/wiki/File:Jean_Gaston_Darboux,_ante_1917_-_Accademia_delle_Scienze_di_Torino_0123_B.jpg
+      article: https://en.wikipedia.org/wiki/Jean_Gaston_Darboux
     hook: >
       Every symplectic space looks the same near any point, as there's always a chart in which
       the structure takes the textbook form, so symplectic geometry has no local invariants
@@ -11049,6 +11524,14 @@ entries:
 
   - slug: feynman-kac
     reviewed: 2026-09-29
+    image:
+      file: img/feynman-kac.jpg
+      alt: "Photograph of Mark Kac at a desk"
+      caption: "Mark Kac, who recognised his own Wiener integrals in the path integral."
+      credit: "Konrad Jacobs, Erlangen, copyright MFO, CC BY-SA 2.0 DE, via Wikimedia Commons"
+      licence: "CC BY-SA 2.0 DE"
+      source: https://commons.wikimedia.org/wiki/File:Mark_Kac.jpg
+      article: https://en.wikipedia.org/wiki/Mark_Kac
     hook: >
       The Feynman-Kac formula makes the path integral rigorous in imaginary time, as the
       solution of a heat equation with a potential is an average over Brownian paths weighted
@@ -11124,6 +11607,14 @@ entries:
 
   - slug: way-theorem
     reviewed: 2026-09-29
+    image:
+      file: img/way-theorem.jpg
+      alt: "Photograph of Huzihiro Araki at a conference"
+      caption: "Huzihiro Araki at the Bogoliubov conference, 2009."
+      credit: "Valentin A. Zagrebnov, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:Araki_Volovich_Bogoliubov_Conference_2009_(cropped).jpg
+      article: https://en.wikipedia.org/wiki/Huzihiro_Araki
     hook: >
       A conservation law restricts what can be measured, as an observable that fails to
       commute with the conserved quantity admits no exact measurement by an interaction that
@@ -11215,6 +11706,14 @@ entries:
 
   - slug: colbeck-renner
     reviewed: 2026-09-29
+    image:
+      file: img/colbeck-renner.jpg
+      alt: "Portrait photograph of Renato Renner"
+      caption: "Renato Renner, the second name on the theorem."
+      credit: "Giulia Marthaler, ETH-Bibliothek, CC BY-SA 4.0, via Wikimedia Commons"
+      licence: "CC BY-SA 4.0"
+      source: https://commons.wikimedia.org/wiki/File:ETH-BIB-Renner,_Renato_(1974-)-Portr_17905.tif
+      article: https://en.wikipedia.org/wiki/Renato_Renner
     hook: >
       No deeper theory can predict a quantum measurement better than quantum mechanics does, as
       long as it lets the settings be chosen freely, and the proof runs on a chain of correlations

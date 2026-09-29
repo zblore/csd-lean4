@@ -9391,4 +9391,32 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms ProbabilityTheory.ChainedBell.exists_signalling_of_sharp_integral
 
+/-- info: 'WignerFunction.integral_wigner_mul_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_wigner_mul_conj
+
+/-- info: 'WignerFunction.integral_mulConj_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_mulConj_shift
+
+/-- info: 'WignerFunction.integral_integral_wigner_mul_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_integral_wigner_mul_conj
+
+/-- info: 'WignerFunction.integral_integral_wigner_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_integral_wigner_sq
+
+/-- info: 'WignerFunction.integrable_weylPair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integrable_weylPair
+
+/-- info: 'WignerFunction.integral_weylPair_x' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_weylPair_x
+
+/-- info: 'WignerFunction.integral_conj_mul_weylOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_conj_mul_weylOp
+
 end CSD.Tests.AxiomAudit

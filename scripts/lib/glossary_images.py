@@ -113,6 +113,27 @@ MAP = {
     "stinespring-dilation": "Mark Naimark",
     "collapse": "Werner Heisenberg",
     "qbism": "Thomas Bayes",
+    # --- the 2026-09-29 tranche (BACKLOG Q34, row 23, row 63) ---
+    "knill-laflamme": "Raymond Laflamme",
+    "stabiliser-code": "Daniel Gottesman",
+    "transversal-gate": "Andrew Steane",
+    "threshold-theorem": "Dorit Aharonov",
+    "concatenated-code": "Concatenated error correction code",
+    "magic-state-distillation": "Reed\u2013Muller code",
+    "clifford-t": "William Kingdon Clifford",
+    "two-level-unitary": "Givens rotation",
+    "toffoli-gate": "Tommaso Toffoli",
+    "reversible-adder": "Adder (electronics)",
+    "helstrom-bound": "Quantum state discrimination",
+    "geometric-phase": "Michael Berry (physicist)",
+    "aharonov-bohm": "Yakir Aharonov",
+    "wigner-function": "Wigner quasiprobability distribution",
+    "koopman-operator": "Bernard Koopman",
+    "nelson-stochastic-mechanics": "Edward Nelson",
+    "darboux-theorem": "Jean Gaston Darboux",
+    "feynman-kac": "Mark Kac",
+    "way-theorem": "Huzihiro Araki",
+    "colbeck-renner": "Renato Renner",
 }
 
 # Second choices, tried when the first title has no usable lead image: a concept page's
@@ -144,6 +165,24 @@ ALT = {
     "stinespring-dilation": "Stinespring dilation theorem",
     "luders-rule": "Measurement in quantum mechanics",
     "bargmann": "Bargmann's theorem",
+    # --- the 2026-09-29 tranche: concept pages where the person has no free portrait ---
+    "toffoli-gate": "Toffoli gate",
+    "two-level-unitary": "Givens rotation",
+    "geometric-phase": "Geometric phase",
+    "aharonov-bohm": "Aharonov\u2013Bohm effect",
+    "koopman-operator": "Koopman\u2013von Neumann classical mechanics",
+    "way-theorem": "Wigner\u2013Araki\u2013Yanase theorem",
+    "knill-laflamme": "Quantum error correction",
+    "threshold-theorem": "Quantum threshold theorem",
+    "colbeck-renner": "Quantum nonlocality",
+    "helstrom-bound": "Trace distance",
+    "nelson-stochastic-mechanics": "Stochastic quantum mechanics",
+    "darboux-theorem": "Darboux's theorem",
+    "feynman-kac": "Feynman\u2013Kac formula",
+    "clifford-t": "Clifford gates",
+    "magic-state-distillation": "Magic state distillation",
+    "stabiliser-code": "Stabilizer code",
+    "transversal-gate": "Steane code",
 }
 
 # Explicit Commons files, for pages whose lead image is absent or wrong but which carry

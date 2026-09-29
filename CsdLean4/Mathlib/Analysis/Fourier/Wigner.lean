@@ -50,11 +50,14 @@ The variable `ξ` is the frequency; the momentum is `p = 2πξ` (`ℏ = m = 1`, 
 
 ## Honest scope
 
-⚠️ One dimension, Schwartz data. The expectation of a **general** Weyl-quantised observable as the
-phase-space integral against `W` (only the position and momentum moments are stated here), the
-joint integrability of `(x, ξ) ↦ W_ψ(x, ξ)` on `ℝ²`, and the Moyal bracket with its `ℏ²`
-expansion (only the free, quadratic case is stated, where the Moyal and Poisson flows agree)
-are BACKLOG #63 and #64.
+⚠️ One dimension, Schwartz data. Only the position and momentum moments of `W` are here; the
+**Weyl expectation formula** for a general symbol, and the **overlap identity**
+`∫∫ W_φ conj (W_ψ) = |⟨φ, ψ⟩|²` that makes `W` determine the state, are
+[`WignerWeyl.lean`](WignerWeyl.lean) (BACKLOG #63). What stays open there: `Op(a)` as a continuous
+operator on `𝒮(ℝ, ℂ)`, symbols of temperate growth, and the Schwartz property of
+`(x, ξ) ↦ W_ψ(x, ξ)` on `ℝ²` with the joint integrability it gives (BACKLOG #92). The Moyal
+bracket with its `ℏ²` expansion (only the free, quadratic case is stated, where the Moyal and
+Poisson flows agree) is BACKLOG #64.
 
 References: E. Wigner, Phys. Rev. 40 (1932) 749; J. E. Moyal, Proc. Cambridge Philos. Soc. 45
 (1949) 99; G. B. Folland, *Harmonic Analysis in Phase Space* (1989) §1.8;
