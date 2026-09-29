@@ -13,6 +13,10 @@ public import CsdLean4.Mathlib.QuantumInfo.AharonovBohmRing
 **Category:** 3-Local (QM-validity). BACKLOG #55, brick BP-4 of `specs/berry-phase-scoping.md`;
 the flux twin `specs/qm-empirical-tests.md` ER3 asked for.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/aharonov-bohm/
+Plain-language, CSD-role and formal statements of the Aharonov-Bohm effect, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 `Mathlib/QuantumInfo/AharonovBohmRing.lean` is the linear algebra: a ring of `N` sites with Peierls
 phases, its levels `2 cos((2πm + Φ)/N)`, its diagonalisation by the discrete Fourier transform, and
 its gauge covariance. This module reads those theorems as the experiment.

@@ -14,6 +14,10 @@ public import Mathlib.Analysis.Calculus.FDeriv.Mul
 
 **Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #47.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/koopman-operator/
+Plain-language, CSD-role and formal statements of the Koopman operator, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Koopman (1931) and von Neumann (1932): a measure-preserving flow on phase space acts on `L²(μ)` by
 composition, `U_t f = f ∘ φ_t`, and that action is a **unitary group**. So Hilbert space, unitarity,
 superposition and spectral theory are all available in *classical* mechanics. What is not available is

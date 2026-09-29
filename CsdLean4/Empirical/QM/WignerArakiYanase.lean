@@ -17,6 +17,10 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbabil
 `no_cloning_two_state` is). QM-generic: no CSD ontology, pure inner-product
 geometry, plus `Fin 2 × Fin 2` matrix computations for the witnesses.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/way-theorem/
+Plain-language, CSD-role and formal statements of the Wigner-Araki-Yanase theorem, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The Wigner–Araki–Yanase (WAY) theorem: an observable `A` of a system `S` that
 fails to commute with the system part `L_S` of an *additively conserved*
 quantity `L = L_S ⊗ 1 + 1 ⊗ L_A` admits no exact measurement by an isometric

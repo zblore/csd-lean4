@@ -18,6 +18,10 @@ public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 **Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #10, brick BP-1 of
 `specs/berry-phase-scoping.md`.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/geometric-phase/
+Plain-language, CSD-role and formal statements of the geometric phase, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 A curve `ψ : ℝ → E` of unit vectors in a complex inner product space whose rays close,
 `ψ T = e^{iφ} ψ 0`, carries three phases: the **total phase** `φ`, the **dynamical phase**
 `∫₀ᵀ Im⟪ψ, ψ̇⟫` (for a Schrödinger evolution `iψ̇ = Hψ`, minus the time-integrated energy), and

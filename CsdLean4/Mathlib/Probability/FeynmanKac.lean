@@ -12,6 +12,10 @@ public import CsdLean4.Mathlib.Probability.TimeSlicedWiener
 
 **Category:** 1-Mathlib (CSD-free; staged for upstream).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/feynman-kac/
+Plain-language, CSD-role and formal statements of the Feynman-Kac formula, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 For a Brownian motion `B` with almost surely continuous paths, a bounded continuous potential `V`
 and a bounded `f ∈ L²(ℝᵈ)`,
 

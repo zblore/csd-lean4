@@ -14,6 +14,10 @@ public import CsdLean4.Mathlib.QuantumInfo.CliffordTDensity
 **Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #73, part (f) of `R-005`, **which
 it closes**: the last residue of the quantum-computing chain that had a Lean shape.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/clifford-t/
+Plain-language, CSD-role and formal statements of Clifford+T universality, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 ★★ `exists_phase_mem_cliffordTmLim`: **every unitary on `m ≥ 1` qubits becomes a limit of
 Clifford+T circuits after multiplication by a single global phase.** The file assembles the whole
 chain and supplies the three joints it was missing.

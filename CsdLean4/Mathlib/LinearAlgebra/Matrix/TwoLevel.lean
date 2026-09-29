@@ -16,6 +16,10 @@ public import Mathlib.Data.Complex.BigOperators
 **Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #70 and #82, part (c) of `R-005`
 (`specs/magic-plan.md`, "The split").
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/two-level-unitary/
+Plain-language, CSD-role and formal statements of two-level unitaries, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 A matrix is **two-level** when it agrees with the identity outside a `{i, j} × {i, j}` block
 (`IsTwoLevel`, through the predicate `IdOutside s` for a general index set). Nielsen–Chuang §4.5.1:
 every unitary is a product of two-level unitaries, and at most `d(d − 1)/2` of them suffice. The

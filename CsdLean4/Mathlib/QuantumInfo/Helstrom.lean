@@ -12,6 +12,10 @@ public import CsdLean4.Mathlib.QuantumInfo.TraceDistance
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/helstrom-bound/
+Plain-language, CSD-role and formal statements of the Helstrom bound, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The **operational meaning of the trace distance**: it is exactly the advantage, over blind
 guessing, of the best possible measurement at telling two states apart.
 

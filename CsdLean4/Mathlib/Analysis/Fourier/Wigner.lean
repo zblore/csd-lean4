@@ -13,6 +13,10 @@ public import CsdLean4.Mathlib.Analysis.Semigroup.GaussianPacket
 **Category:** 1-Mathlib (staged for upstream). BACKLOG #45 — the Wigner–Moyal phase-space
 formulation, the part that is Fourier analysis.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/wigner-function/
+Plain-language, CSD-role and formal statements of the Wigner function, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 For `ψ ∈ 𝓢(ℝ, ℂ)` the **Wigner function** is the Fourier transform in `y` of the kernel
 `y ↦ ψ(x + y/2) · conj ψ(x − y/2)`, in Mathlib's convention `𝓕 f (ξ) = ∫ e^{−2πiyξ} f(y) dy`:
 

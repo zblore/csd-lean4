@@ -14,6 +14,10 @@ public import Mathlib.Analysis.SpecificLimits.Basic
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate). BACKLOG #51 (row 14's
 part (c)), the probabilistic core of the code-capacity threshold argument.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/concatenated-code/
+Plain-language, CSD-role and formal statements of concatenated codes, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 A distance-`3` code corrects any single error, so an encoded block fails only when **two or more**
 of its `n` qubits are hit. Under independent noise of rate `p` that happens with probability at
 most `C(n, 2) p²` (the union bound over pairs). Concatenating the code `k` times replaces `p` by

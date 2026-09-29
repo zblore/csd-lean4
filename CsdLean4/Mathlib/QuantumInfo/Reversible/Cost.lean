@@ -12,6 +12,10 @@ public import Mathlib.Algebra.BigOperators.Group.List.Basic
 # Reversible-circuit resource cost — the derived gate-list cost model
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/toffoli-gate/
+Plain-language, CSD-role and formal statements of the Toffoli gate and its count, with
+this module as the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The cost half of the reversible-circuit substrate (`Circuit.lean`). The design decision (locked in
 the resource plan — the application that motivated this substrate lives in the `Ecdsafail` repository, `specs/ecdsa/ecdlp-resource-plan.md` there): a
 circuit's resource cost is a **function of its gate list**, not a

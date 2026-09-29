@@ -112,7 +112,7 @@ meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
   repo: https://github.com/zblore/csd-lean4
-  sha: 8e6f3b749b19b21378e6fbff66198e1a89e653eb
+  sha: 76cb45c04b87ab3392bb153b5ffc034d707d98d4
 
 # ---------------------------------------------------------------------------
 # refs: the external reference registry.
@@ -180,7 +180,7 @@ refs:
 
 entries:
   - slug: fubini-study-measure
-    reviewed: 2026-09-16
+    reviewed: 2026-09-29
     image:
       file: img/fubini-study-measure.jpg
       alt: "Portrait photograph of Guido Fubini"
@@ -290,7 +290,7 @@ entries:
     related: [born-weight, liouville-measure, kahler-form, haar-measure, typicality-volume, fisher-rao-metric]
 
   - slug: born-weight
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     image:
       file: img/born-weight.jpg
       alt: "Portrait photograph of Max Born"
@@ -377,7 +377,7 @@ entries:
     related: [fubini-study-measure, born-volume-ratio, typicality-volume, outcome-region, is-the-born-rule-derived, fisher-rao-metric]
 
   - slug: duistermaat-heckman
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     hook: >
       Project the curved space of quantum states down to its outcome probabilities and the
       curvature disappears exactly, which is what makes the Born rule computable in every
@@ -447,7 +447,7 @@ entries:
     related: [moment-map, kahler-form, fubini-study-measure, liouville-measure, dirichlet-distribution]
 
   - slug: gleason-theorem
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     image:
       file: img/gleason-theorem.jpg
       alt: "Andrew Gleason seated on a lawn, 1959"
@@ -480,6 +480,12 @@ entries:
       probabilities come from while quietly assuming the theorem that forces them has a
       hole in the middle of its explanation. This corpus proves the effect-valued version
       outright, so nothing is borrowed.
+
+      Gleason's own version, the one about sharp questions, is now proved here as well, for
+      every quantum system of three or more dimensions, so both forms of the theorem stand
+      in the corpus rather than one. Neither is derived from the other, as the two proofs
+      share only their algebraic engine, and the original still fails for a single qubit,
+      which is why Busch's version is the one the programme's own bridge uses.
     in_csd: >
       Two things turn on this theorem, and they pull in different directions, which is why
       both matter.
@@ -518,6 +524,16 @@ entries:
       than axiom declarations, so they never appear in the output of #print axioms, and
       they're registered in specs/POSITS.md as the ontic substrate, the sector, Liouville
       preservation and the cell law.
+
+      The projection-valued theorem is ProjectionPackage.gleason_representation in
+      Mathlib/Analysis/InnerProductSpace/Gleason/Core.lean: for every projection package on
+      complex N-space with N at least 3 there's a unique density matrix reproducing the
+      assignment through the trace pairing, with no hypothesis beyond the dimension bound
+      and the foundational triple in the axiom output. The route is Gleason's own, with the
+      core lemma on the sphere proved by the elementary argument of Cooke, Keane and Moran,
+      then the Piron descent and the extremal step. Dimension two, the infinite-dimensional
+      theorem and the POVM generalisation all sit outside it, and the two theorems share the
+      Jordan-von Neumann polarisation engine and the descent, nothing else.
     person: >
       Andrew Gleason (1921-2008) was born in Fresno and read mathematics at Yale, then
       went straight into the Navy as a cryptanalyst working on Japanese ciphers. He never
@@ -623,7 +639,7 @@ entries:
     lean:
       module: CsdLean4/Mathlib/LinearAlgebra/Projectivization/WignerRigidity.lean
       theorem: wigner_rigidity
-    related: [stone-theorem, bargmann, schrodinger-from-records, projective-sector, hilbert-space]
+    related: [stone-theorem, bargmann, schrodinger-from-records, projective-sector, hilbert-space, wigner-function]
 
   - slug: stone-theorem
     reviewed: 2026-09-14
@@ -1369,7 +1385,7 @@ entries:
     related: [entropy-subadditivity, klein-inequality, holevo-bound, landauer-principle, canonical-typicality]
 
   - slug: liouville-measure
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     image:
       file: img/liouville-measure.jpg
       alt: "Portrait photograph of Joseph Liouville"
@@ -1464,10 +1480,10 @@ entries:
     lean:
       module: CsdLean4/LF4/KahlerVolumeForced.lean
       theorem: unitaryFlowSetup_liouville_isForcedKahlerVolume
-    related: [fubini-study-measure, kahler-form, constraint-surface, typicality, poisson-bracket]
+    related: [fubini-study-measure, kahler-form, constraint-surface, typicality, poisson-bracket, koopman-operator]
 
   - slug: kahler-form
-    reviewed: 2026-09-16
+    reviewed: 2026-09-29
     image:
       file: img/kahler-form.jpg
       alt: "Portrait photograph of Erich Kähler"
@@ -1557,10 +1573,10 @@ entries:
     lean:
       module: CsdLean4/Mathlib/Geometry/Manifold/Instances/ProjectiveSpaceFubiniStudySymplectic.lean
       theorem: fsForm_isKahler
-    related: [fubini-study-measure, liouville-measure, moment-map, poisson-bracket, duistermaat-heckman, fisher-rao-metric]
+    related: [fubini-study-measure, liouville-measure, moment-map, poisson-bracket, duistermaat-heckman, fisher-rao-metric, geometric-phase, darboux-theorem]
 
   - slug: luders-rule
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     hook: >
       The textbook's second rule, which says how a state changes when it's measured, isn't
       a second rule in CSD, as it's what the record layer does.
@@ -1633,7 +1649,7 @@ entries:
     related: [collapse, measurement-flow, pointer-basis, naimark-dilation, measurement-context]
 
   - slug: naimark-dilation
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     hook: >
       Every noisy, imperfect measurement made in a real laboratory is an ideal textbook
       measurement carried out on a larger system, and that single fact is what lets CSD's
@@ -1772,7 +1788,7 @@ entries:
     related: [field-arena, wick-theorem, hermitian-operator, robertson-uncertainty, lie-trotter-formula]
 
   - slug: canonical-typicality
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     image:
       file: img/canonical-typicality.jpg
       alt: "Portrait photograph of Ludwig Boltzmann"
@@ -2226,7 +2242,7 @@ entries:
       single-trajectory, rejects it outright. The algorithm works either way, which is
       rather the point against the argument.
     term: Deutsch-Jozsa algorithm
-    eponyms: [Deutsch]
+    eponyms: [Deutsch, Jozsa]
     status: standard-mathematics
     external:
       - text: "Overview and history"
@@ -2364,7 +2380,7 @@ entries:
       Herzog, Zeilinger and Kasevich at Innsbruck in 1995, using down-converted photons
       rather than bombs, to general relief.
     term: Elitzur-Vaidman bomb tester
-    eponyms: [Elitzur]
+    eponyms: [Elitzur, Vaidman]
     status: standard-mathematics
     external:
       - text: "Overview and history"
@@ -2522,7 +2538,7 @@ entries:
     related: [ramsey-interferometry, phase-estimation, born-weight, amplitude-estimation, robertson-uncertainty, fisher-rao-metric]
 
   - slug: fisher-rao-metric
-    reviewed: 2026-09-16
+    reviewed: 2026-09-29
     hook: >
       The natural way to measure distance between quantum states agrees with the
       statistician's way to measure distance between the probability distributions they
@@ -3161,7 +3177,7 @@ entries:
       effectively founded experimental quantum optics, and half the field's senior figures
       passed through his group. Ou went on to a professorship at IUPUI in Indianapolis.
     term: Hong-Ou-Mandel effect
-    eponyms: [Hong]
+    eponyms: [Hong, Mandel]
     status: standard-mathematics
     external:
       - text: "Overview and history"
@@ -3395,7 +3411,7 @@ entries:
       failing. The experiments keep siding with quantum mechanics, which Leggett, to his
       credit, keeps reporting.
     term: Leggett-Garg inequality
-    eponyms: [Leggett]
+    eponyms: [Leggett, Garg]
     status: standard-mathematics
     external:
       - text: "Overview and history"
@@ -3531,7 +3547,7 @@ entries:
       arguments about whether unobserved paths are real, and the father would have had
       opinions.
     term: Mach-Zehnder interferometer
-    eponyms: [Mach]
+    eponyms: [Mach, Zehnder]
     status: standard-mathematics
     external:
       - text: "Overview and history"
@@ -4144,7 +4160,7 @@ entries:
     external:
       - text: "Overview and history"
         url: https://en.wikipedia.org/wiki/Shor%27s_algorithm
-    related: [quantum-fourier-transform, phase-estimation, grover-algorithm, simon-algorithm, shor-code]
+    related: [quantum-fourier-transform, phase-estimation, grover-algorithm, simon-algorithm, shor-code, reversible-adder, toffoli-gate]
 
   - slug: stern-gerlach
     image:
@@ -4214,7 +4230,7 @@ entries:
       Reich's uranium programme by the war's end, and spent 1945 interned at Farm Hall,
       where the captured transcripts record the German physicists learning of Hiroshima.
     term: Stern-Gerlach experiment
-    eponyms: [Stern]
+    eponyms: [Stern, Gerlach]
     status: standard-mathematics
     external:
       - text: "Overview and history"
@@ -4970,7 +4986,7 @@ entries:
     external:
       - text: "Stanford Encyclopedia: Bohmian mechanics"
         url: https://plato.stanford.edu/entries/qm-bohm/
-    related: [csd-vs-bohmian-mechanics, hidden-variables, many-worlds, single-trajectory, determinism]
+    related: [csd-vs-bohmian-mechanics, hidden-variables, many-worlds, single-trajectory, determinism, nelson-stochastic-mechanics]
 
   - slug: spontaneous-collapse
     hook: >
@@ -5433,7 +5449,7 @@ entries:
     related: [measurement-flow, stinespring-dilation, holevo-bound, record-layer, isolation]
 
   - slug: typicality-volume
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     hook: >
       Almost every way the experiment could have started gives the quantum statistics, and
       that isn't an assumption about probability, as it's a measured volume.
@@ -5553,7 +5569,7 @@ entries:
     related: [born-weight, typicality-volume, preparation-region, carving, borel-set]
 
   - slug: epistemic-measure
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     hook: >
       Condition on what a preparation actually fixes, and the ignorance left over is a
       measure, and that measure is a theorem rather than a stipulation, as the arena's own
@@ -5849,7 +5865,7 @@ entries:
       For the record, the independent-clocks argument for the fibre was offered in August
       2026 and withdrawn on 2026-08-26, and the mixing-flow frontier was retired in the
       same month.
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     term: Fibre
     status: definition
     source: curated
@@ -6429,7 +6445,7 @@ entries:
     related: [born-weight, typicality, witness-and-engine, born-volume-ratio, what-is-machine-checked]
 
   - slug: born-volume-ratio
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     hook: >
       In every finite dimension the Born weight of an outcome equals a ratio of volumes in
       the space of quantum states, for every outcome and every state, with no genericity
@@ -6486,7 +6502,7 @@ entries:
     related: [born-weight, typicality-volume, fubini-study-measure, lf1-main-theorem, naimark-dilation]
 
   - slug: measurement-flow
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     hook: >
       A deterministic, volume-preserving flow carries out a measurement, and the volumes
       of its pointer blocks are the Born weights, for every preparation.
@@ -7231,12 +7247,13 @@ entries:
       bitFlipFlow_traceRight_barycenter and registerFlow_traceRight_barycenter
       (Empirical/CSD/QEC/).
     term: Quantum channel
+    eponyms: [Kraus]
     status: proved-in-corpus
     source: curated
     lean:
       module: CsdLean4/LF2/QuantumChannel.lean
       theorem: choiMatrix_posSemidef
-    related: [stinespring-dilation, choi-theorem, partial-trace, de-isolation, holevo-bound]
+    related: [stinespring-dilation, choi-theorem, partial-trace, de-isolation, holevo-bound, helstrom-bound]
 
   - slug: record-light-cone
     reviewed: 2026-09-14
@@ -7605,7 +7622,7 @@ entries:
     lean:
       module: CsdLean4/Empirical/QM/QEC/ShorNine.lean
       theorem: shor_corrects_XZ
-    related: [steane-code, pauli-matrices, stinespring-dilation, quantum-channel, gottesman-knill]
+    related: [steane-code, pauli-matrices, stinespring-dilation, quantum-channel, gottesman-knill, knill-laflamme, stabiliser-code]
 
   - slug: ozawa-error-disturbance
     image:
@@ -8600,7 +8617,7 @@ entries:
     term: How does CSD differ from Bohmian mechanics?
     status: definition
     source: curated
-    related: [bohmian-mechanics, is-csd-a-hidden-variable-theory, single-trajectory, determinism, hidden-variables]
+    related: [bohmian-mechanics, is-csd-a-hidden-variable-theory, single-trajectory, determinism, hidden-variables, nelson-stochastic-mechanics]
 
   # -------------------------------------------------------------------------
   # 2026-08-29 tranche: the quantum-algorithm layer, completed. Prompted by the
@@ -8688,7 +8705,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Quantum_Fourier_transform
 
   - slug: phase-estimation
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     image:
       file: img/phase-estimation.png
       wide: true
@@ -8744,7 +8761,10 @@ entries:
 
       For |delta| <= 1/(2T), Jordan's inequality bounds the numerator below and |sin t| <=
       |t| the denominator above, giving probability at least 4/pi^2 at the closest index
-      (phase_estimation_lower_bound, Nielsen and Chuang section 5.2). The module lives in
+      (phase_estimation_lower_bound, Nielsen and Chuang section 5.2). A two-index refinement
+      is proved as well, as the two grid points straddling the true angle carry at least
+      8/pi^2 between them (dirichlet_two_index, phase_estimation_two_index), which is the
+      constant BHMT's amplitude-estimation theorem needs. The module lives in
       the Cat-1 tree, extracted in 2026 from the Shor development, and Shor's order-
       finding consumes it at phase s/r. It's a single-phase statement only, so a consumer
       racing several eigenvalue branches must control its own cross-terms.
@@ -8988,7 +9008,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Hadamard_test
 
   - slug: amplitude-amplification
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     image:
       file: img/amplitude-amplification.jpg
       alt: "Portrait photograph of Gilles Brassard"
@@ -9084,7 +9104,7 @@ entries:
         url: https://arxiv.org/abs/quant-ph/0005055
 
   - slug: amplitude-estimation
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     hook: >
       Point phase estimation at the rotation inside amplitude amplification and the
       success probability itself becomes measurable, quadratically faster than sampling
@@ -9135,8 +9155,8 @@ entries:
     mathematical: >
       The AA-5b assembly. With Q the amplification step at angle theta (sin theta = sqrt
       a) on the rotation plane, the kickback state (1/sqrt T) sum_x |x> tensor Q^x psi
-      decomposes exactly as c_+ phaseState(theta/pi) tensor v_+ + c_-
-      phaseState(-theta/pi) tensor v_-, where v_+- = g +- i b are the orthogonal
+      decomposes exactly as c_+ phaseStateR(theta/pi) tensor v_+ + c_-
+      phaseStateR(-theta/pi) tensor v_-, where v_+- = g +- i b are the orthogonal
       eigenvectors, Q^x v_+- = e^(+-2 i x theta) v_+-, and |c_+-| = 1/2.
 
       Applying the inverse QFT to the counting register and taking the Born marginal gives
@@ -9254,7 +9274,7 @@ entries:
       programme of David Gross on Clifford orbits and designs.
     term: Gottesman-Knill theorem
     eponyms: [Gottesman, Knill]
-    related: [steane-code, shor-code, magic-state, pauli-matrices, grover-algorithm]
+    related: [steane-code, shor-code, magic-state, pauli-matrices, grover-algorithm, stabiliser-code, clifford-t]
     status: proved-in-corpus
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Clifford.lean
@@ -9266,7 +9286,7 @@ entries:
         url: https://arxiv.org/abs/quant-ph/0406196
 
   - slug: steane-code
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     hook: >
       Seven qubits protect one, as the Steane code was the first to correct any single-
       qubit error by using the same classical Hamming code twice, once for bit flips and
@@ -9303,9 +9323,19 @@ entries:
       The logical bit-flip and phase-flip operators act on them as a genuine encoded
       qubit. Single-qubit errors are proved to produce syndromes, patterns of check
       answers, that are nonzero and pairwise distinct, the distance-three property, which
-      is what makes every single error identifiable. The honest scope is that there's no
-      recovery map, no Knill-Laflamme conditions and no fault-tolerance claims, the same
-      posture as the three-qubit code modules the Steane code generalises.
+      is what makes every single error identifiable.
+
+      The recovery side is proved too, in rows that came later. A recovery channel is built
+      from the Knill-Laflamme conditions in encoder form and corrects every single-qubit
+      Pauli error, and then every arbitrary operator on one of the seven qubits, since a
+      recovery for a family corrects the whole span of that family. The code's failure
+      probability with ideal recovery is at most twenty-one times the square of the physical
+      error rate, which is what the concatenated threshold needs. The transversal Hadamard,
+      phase and two-block controlled-not gates are proved to act as the corresponding
+      encoded gates, each with a faulty-gadget theorem behind it, and the twin result puts
+      the whole recovery on the programme's own state space with one channel independent of
+      preparation and weights. What stays open is the fault-tolerant syndrome-extraction
+      circuit and the extended-rectangle accounting.
     mathematical: >
       Take H the 3-by-7 Hamming parity matrix whose columns are the binary expansions of 1
       through 7. The rows satisfy H H^T = 0 over F2, so the six Pauli operators X^(h_i)
@@ -9337,13 +9367,13 @@ entries:
     lean:
       module: CsdLean4/Empirical/QM/QEC/Steane.lean
       theorem: steaneZero_stabilised
-    related: [shor-code, gottesman-knill, magic-state, pauli-matrices, quantum-channel]
+    related: [shor-code, gottesman-knill, magic-state, pauli-matrices, quantum-channel, knill-laflamme, transversal-gate, threshold-theorem, stabiliser-code]
     external:
       - text: "Steane, Error correcting codes in quantum theory (PRL 77, 793)"
         url: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.77.793
 
   - slug: magic-state
-    reviewed: 2026-09-14
+    reviewed: 2026-09-29
     hook: >
       A magic state is the fuel of quantum advantage, a single special state that,
       consumed by otherwise classically trackable Clifford circuits, unlocks the one gate
@@ -9376,13 +9406,17 @@ entries:
       result, proved by comparing two columns of the matrices until the arithmetic demands
       an impossibility.
 
-      The magic state itself is exhibited with explicit coordinates and unit length. The
-      honest scope is that distillation protocols (the fifteen-to-one scheme of Bravyi and
-      Kitaev), the universality of Clifford plus T, and the injection circuit that spends
-      a magic state to perform a T gate are named residues with reasons, so the module
-      proves what magic is and not how it's farmed. The standing disclaimer applies, as
-      the algorithm layer consumes the programme's unitary-evolution pillar and doesn't
-      support the foundations.
+      The magic state itself is exhibited with explicit coordinates and unit length.
+
+      The three things this module leaves out are proved elsewhere in the corpus. The
+      injection circuit that spends a magic state to perform the T gate is a
+      gate-teleportation identity, and a noisy resource gives the expected mixture of the
+      intended gate with its phase-flipped version. The fifteen-to-one distillation protocol
+      of Bravyi and Kitaev is proved end to end, with its cubic error bound and the
+      convergence of the recursion below one twentieth. And Clifford plus T is proved
+      universal, dense in the unitary group modulo one global phase. The standing disclaimer
+      applies, as the algorithm layer consumes the programme's unitary-evolution pillar and
+      doesn't support the foundations.
     mathematical: >
       With tPhase = e^(i pi/4), tPhase squared is i, so T^2 = S on the register. The
       conjugation identity T X T-dagger = (X + i XZ)/sqrt 2 holds coordinatewise via
@@ -9408,7 +9442,7 @@ entries:
     lean:
       module: CsdLean4/Mathlib/QuantumInfo/Magic.lean
       theorem: tGate_conj_X_not_pauli
-    related: [gottesman-knill, steane-code, shor-code, pauli-matrices, amplitude-amplification]
+    related: [gottesman-knill, steane-code, shor-code, pauli-matrices, amplitude-amplification, magic-state-distillation, clifford-t, transversal-gate]
     external:
       - text: "Bravyi-Kitaev, Universal quantum computation with ideal Clifford gates and noisy ancillas (PRA 71, 022316)"
         url: https://arxiv.org/abs/quant-ph/0403025
@@ -9622,3 +9656,1501 @@ entries:
       module: CsdLean4/Mathlib/QuantumInfo/Subadditivity.lean
       theorem: klein_inequality
     related: [von-neumann-entropy, entropy-subadditivity, holevo-bound, landauer-principle, gibbs-state]
+
+  - slug: knill-laflamme
+    reviewed: 2026-09-29
+    hook: >
+      Quantum error correction has an exact test, as a set of errors is correctable if and
+      only if the code can't tell those errors apart, and that condition is a piece of
+      algebra you can check before building any repair.
+    layman: >
+      A classical computer can check its memory by reading it, and quantum memory doesn't
+      allow that, as reading a quantum state destroys the superposition you were trying to
+      protect. So the first question about any quantum code isn't how to repair it but
+      whether repair is possible at all, given the kinds of damage you expect.
+
+      Knill and Laflamme answered that with a condition on the code alone. Write down the
+      set of errors you want to survive, a bit flip on the third qubit, a phase flip on the
+      fifth, and so on, then ask what happens to the overlaps between encoded states when
+      an error hits. Overlap is the quantity that decides whether two states can be told
+      apart by any measurement, so if every error changes all the overlaps in the same
+      way, by a factor that depends on the pair of errors and not on which encoded state
+      you started from, then no measurement on the damaged state reveals anything about the
+      protected information.
+
+      That's exactly the situation you want. The damage carries no trace of what was
+      encoded, so the damage can be diagnosed and undone without disturbing the data, and
+      one repair operation works for every error in the set at once. The condition is
+      necessary as well as sufficient, so a code that fails it has no repair, however
+      clever you are.
+    in_csd: >
+      The corpus proves the equivalence in both directions and then builds the repair, so
+      the error-correction layer rests on a theorem rather than on a recipe. From the
+      condition it constructs the recovery channel explicitly, by diagonalising the matrix
+      of overlap factors, recombining the errors into a family whose images of the code
+      space are mutually orthogonal, and reading the repair off those images. In the other
+      direction, any channel that corrects the errors up to scalars is shown to force the
+      condition, which is what makes it a test and not a sufficient condition dressed up as
+      one.
+
+      One corollary carries most of the weight downstream. The correction property is
+      linear in each error slot and a channel is linear, so a recovery that handles a
+      family handles every combination of that family as well. Correcting the four basic
+      single-qubit errors therefore corrects every possible single-qubit fault, including
+      ones no one listed, which is how the Steane code's recovery covers arbitrary damage
+      on one of its seven qubits. The encoder form of the condition, stated about the map
+      that builds encoded states rather than about the projector onto them, is what lets
+      the same argument run over several blocks at once in the fault-tolerance rows.
+    mathematical: >
+      A code is an orthogonal projector P and a family of error operators E i is
+      correctable exactly when P (E i)-dagger (E j) P = c i j times P for some matrix c
+      (knillLaflamme_iff). Forward: c is Hermitian, so the spectral theorem gives c = U D
+      U-dagger, and the canonical errors F k = sum over i of U i k times E i satisfy P (F
+      k)-dagger (F l) P = d k times delta k l times P with d k nonnegative. The Kraus
+      operators R k = d k^(-1/2) P (F k)-dagger have orthogonal ranges summing to a
+      projector Q, and 1 - Q completes the channel, giving R (E i rho (E j)-dagger) = c j i
+      times rho on code states. Converse: each R k E i P sends every code vector to a
+      multiple of itself, via the sandwiched identity sum over k of |<u, R k E i v>|^2 = lam
+      times |<u, v>|^2, hence is a scalar on the code, and trace preservation reassembles
+      the condition.
+
+      Degenerate codes are included, as c need not be invertible and errors with d k = 0
+      act as zero on the code. The recovery is constructed, not shown unique.
+      recovery_apply_lin_comb is the discretisation step: the correction property is
+      bilinear in the two error slots, so a recovery for a family corrects the whole span of
+      that family, up to the scalar the coefficients supply.
+    person: >
+      Emanuel Knill and Raymond Laflamme published the conditions in 1997 while at Los
+      Alamos, and an equivalent criterion appeared at the same time in work of Bennett,
+      DiVincenzo, Smolin and Wootters. Laflamme had been Stephen Hawking's doctoral student
+      and is remembered for persuading Hawking to change his mind about the arrow of time,
+      before he turned to quantum information and helped build the first small quantum
+      processors.
+
+      The conditions arrived a year after the first codes, which is the usual order of
+      events, as Shor and Steane built working examples and the general criterion followed
+      and explained why they worked.
+    term: Knill-Laflamme conditions
+    eponyms: [Laflamme]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/KnillLaflamme.lean
+      theorem: knillLaflamme_iff
+    related: [steane-code, shor-code, stabiliser-code, quantum-channel, transversal-gate]
+    external:
+      - text: "Knill-Laflamme, Theory of quantum error-correcting codes (PRA 55, 900)"
+        url: https://arxiv.org/abs/quant-ph/9604034
+
+  - slug: stabiliser-code
+    reviewed: 2026-09-29
+    hook: >
+      A stabiliser code describes a quantum code by the measurements that leave it alone,
+      which replaces a list of encoded states by a handful of parity checks and turns error
+      correction into linear algebra over the two-element field.
+    layman: >
+      Writing down a quantum code by listing its encoded states gets hopeless quickly, as
+      the states live in a space whose size doubles with every qubit. Stabiliser codes
+      describe the code the other way round, by the questions that don't disturb it.
+
+      Pick a set of measurements, each one a pattern of bit flips and phase flips across the
+      qubits, chosen so that any two of them can be performed in either order without
+      affecting each other. The code is then everything those measurements always answer
+      yes to. Nothing about the encoded information is revealed by asking, as the answer is
+      known in advance, which is the property that makes the checks safe to repeat as often
+      as you like.
+
+      Damage shows up as a change of answer. An error that anticommutes with one of the
+      checks, meaning the two operations disagree about their order, flips that check's
+      answer, and the pattern of flipped answers names the error. So the whole business of
+      diagnosis reduces to solving a small system of equations over the numbers zero and
+      one, and the same arithmetic tells you how many qubits the code protects: each
+      independent check halves the space, so the encoded capacity is what's left.
+    in_csd: >
+      The corpus builds the stabiliser layer over its own Pauli algebra and indexes a
+      family by binary labels directly, with a sign function subject to one coherence law.
+      That law is exactly the condition that the signed operators form a genuine group with
+      the identity's negative left out, and commutativity then follows rather than being
+      assumed, which is a small saving that pays for itself in every downstream instance.
+
+      Four results carry the layer. The group average over the family is a projector, every
+      member fixes it, its trace counts the encoded dimension, and a state the whole group
+      fixes exists. The dimension count is upgraded from a trace to a rank, so a full set of
+      checks pins the state uniquely up to a scalar. The measurement rules come next: a check
+      already in the group has a deterministic answer, a check that anticommutes with a group
+      element gives each answer with probability one half, and the state after the measurement
+      is stabilised by the check itself together with everything commuting with it. The Steane
+      code is the first genuine instance, and the Shor code and the Gottesman-Knill
+      simulation both live on this layer.
+    mathematical: >
+      A stabiliser family is a pair of linear label maps A and B from the m-dimensional
+      binary vector space to the n-dimensional one, with a sign function sigma satisfying
+      sigma(x + y) = sigma(x) + sigma(y) + B(x) dot A(y). That coherence law is the phase
+      of the Pauli product rule, so the signed operators chi(sigma x) X^(A x) Z^(B x) close
+      into a group without -1; coherence at (x, y) and at (y, x) forces the symplectic form
+      of any two members to vanish (stab_symp_zero).
+
+      The group average P = 2^(-m) sum over x of chi(sigma x) X^(A x) Z^(B x) absorbs every
+      member (one reindex y to x + y), is idempotent, and has trace 2^n / 2^m for
+      independent labels. stabProjector_rank identifies P with a linear projection onto its
+      range, so Mathlib's rank-equals-trace for projections gives dimension 2^(n - m) for
+      the code space, and uniqueness up to scalar when m = n (stabState_unique). The
+      measurement section proves determinism (meas_deterministic), vanishing expectation and
+      probability one half against an anticommuting element (meas_expectation_zero,
+      meas_prob_half), and the update rules (pauliOp_measProj, meas_update_fixes). No
+      measurement dynamics is claimed; the Born weights here are bookkeeping on the
+      coordinate operators.
+    person: >
+      Daniel Gottesman introduced the stabiliser formalism in his 1997 Caltech thesis, where
+      it appeared as a way to handle codes whose descriptions had become unmanageable, and
+      it has been the standard language of quantum error correction since. The word
+      stabiliser is borrowed from group theory, where the stabiliser of a point is the set of
+      group elements that fix it.
+
+      Robert Calderbank, Peter Shor and Andrew Steane had already built the subfamily now
+      called CSS codes, which take a classical code and use it twice, and Gottesman's
+      formalism explained what those constructions had in common with everything else.
+    term: stabiliser code
+    eponyms: []
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/Stabilizer.lean
+      theorem: stabProjector_rank
+    related: [steane-code, shor-code, gottesman-knill, pauli-matrices, knill-laflamme]
+    external:
+      - text: "Gottesman, Stabilizer codes and quantum error correction (Caltech thesis, 1997)"
+        url: https://arxiv.org/abs/quant-ph/9705052
+
+  - slug: transversal-gate
+    reviewed: 2026-09-29
+    hook: >
+      A transversal gate computes on encoded information by acting on each physical qubit
+      separately, so a fault in one qubit stays in one qubit and the code keeps its
+      protection while the computation runs.
+    layman: >
+      Protecting a quantum state is only half the job, as you also have to compute with it,
+      and the obvious way of doing that destroys the protection. If a gate lets two qubits
+      of the same encoded block interact, then one faulty component can corrupt both, and a
+      code built to survive single errors is suddenly facing a double error it can't fix.
+
+      A transversal gate avoids the problem by never letting the qubits of a block meet.
+      You apply the same small gate to each of the seven physical qubits of a block, one at
+      a time, and the effect on the encoded qubit is the gate you wanted. Faults stay put,
+      because each physical gate touches one qubit and can only spoil that one, so the
+      block comes out of the operation with at most a single error and the recovery
+      procedure handles it as usual.
+
+      Not every code admits transversal gates for every operation, and the Steane code is
+      prized because it admits so many. Applying a Hadamard gate to all seven qubits
+      performs a Hadamard on the encoded qubit, and applying a controlled-not gate between
+      corresponding qubits of two blocks performs a controlled-not between the two encoded
+      qubits. What no code can do is offer a transversal version of every gate, which is why
+      fault-tolerant computers spend their budget on magic states for the one gate left
+      over.
+    in_csd: >
+      The corpus proves the Steane code's transversal gates as operator identities and then
+      composes them with its recovery theorem, which is what turns a claim about ideal gates
+      into a fault-tolerance statement. Applying the Hadamard gate to each of the seven
+      qubits conjugates the code projector to itself, exchanges the encoded bit flip and the
+      encoded phase flip, and so implements the encoded Hadamard. The two-block controlled-
+      not is proved in the forward direction, on encoded states rather than on operators,
+      which needed a coset identity about the encoder rather than any amplitude calculation.
+
+      The fault model is then the honest one. A gadget is the ideal transversal gate
+      followed by a single-qubit fault somewhere in the block, and the theorem says one
+      recovery channel, fixed in advance and independent of where the fault landed, returns
+      the encoded state. Composing that with the threshold theorem gives the circuit-level
+      statement for these gates. Together the Hadamard, the phase gate and the two-block
+      controlled-not cover the Steane code's Clifford generating set, so the gates a
+      fault-tolerant machine performs directly are all present, and the remaining gate is
+      the one magic-state distillation supplies.
+    mathematical: >
+      hadTransversal is the seven-fold tensor power of the Hadamard matrix, built through
+      permMat and the block tensor. hadTransversal_conj_pauliMat is the Clifford relation H
+      X^u Z^v H = (-1)^(u dot v) X^v Z^u at the level of the whole register, and the Steane
+      code's self-duality, proved as bdot_steaneA_steaneB together with the half-swap
+      involution swapHalves, turns that into hadTransversal_conj_steaneProj: the transversal
+      Hadamard fixes the code projector. Conjugating the encoded operators
+      (hadTransversal_conj_logicalX, hadTransversal_conj_logicalZ) exchanges them, which is
+      the encoded Hadamard.
+
+      steane_faultyHadamard_recovery states the fault-tolerant form: for the gadget that
+      applies the transversal Hadamard and then an arbitrary single-qubit operator on one of
+      the seven qubits, one recovery channel independent of the fault restores the encoded
+      state, through the encoder form of the Knill-Laflamme conditions. The two-block
+      controlled-not is cnotT_mul_pairEnc in SteaneTransversalCNOT.lean, proved from
+      cosetAmp_shift, the fact that adding a vector of one coset carries the coset of a
+      second onto the coset of their sum; its fault-tolerant form is
+      steane_faultyCNOT_recovery. Honest scope: the syndrome-extraction circuit itself is
+      not fault-tolerant here, as measurement gadgets and the extended rectangle are open
+      rows.
+    person: >
+      Transversal gates are the central device of Peter Shor's 1996 fault-tolerance paper,
+      where acting qubitwise across a block is what makes error correction compatible with
+      computation. Andrew Steane's seven-qubit code is self-dual, which is
+      the property that makes its transversal gates unusually generous.
+
+      Bryan Eastin and Emanuel Knill proved in 2009 that no code with local error
+      correction admits a transversal universal gate set, so the gap this vocabulary
+      describes is permanent rather than a failure of ingenuity.
+    term: transversal gate
+    eponyms: []
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Empirical/QM/QEC/SteaneFaultyGate.lean
+      theorem: steane_faultyHadamard_recovery
+    related: [steane-code, knill-laflamme, threshold-theorem, magic-state, clifford-t]
+    external:
+      - text: "Eastin-Knill, Restrictions on transversal encoded quantum gate sets (PRL 102, 110502)"
+        url: https://arxiv.org/abs/0811.4262
+
+  - slug: threshold-theorem
+    reviewed: 2026-09-29
+    hook: >
+      The threshold theorem says imperfect components suffice, as long as each one fails
+      below a fixed rate you can make a quantum computation as reliable as you like by
+      encoding it inside itself repeatedly, and the price is only a power of a logarithm.
+    layman: >
+      Every physical component fails sometimes, and a long computation uses a great many of
+      them, so the obvious worry about quantum computing is that errors accumulate faster
+      than any code can remove them. Error correction on its own doesn't settle the worry,
+      because the correction circuits are built from the same faulty components.
+
+      The threshold theorem settles it. Encode the computation in a code, then encode the
+      encoded computation in the same code again, and repeat. Each level of encoding turns
+      the error rate into roughly the square of itself times a constant that counts the ways
+      a level can fail. If the starting rate is below the point where that map starts
+      shrinking, which is the threshold, then repeated encoding drives the failure
+      probability down doubly exponentially in the number of levels, so a handful of levels
+      buys an enormous improvement.
+
+      What you pay is size. Each level multiplies the number of physical qubits and
+      operations by a constant factor, and the number of levels you need grows only like the
+      logarithm of the logarithm of the target accuracy, so the total overhead grows like a
+      power of the logarithm of the circuit size. Polynomial slowdown is the standard
+      currency of computer science, and a power of a logarithm is far cheaper than that,
+      which is why the theorem is read as the statement that fault-tolerant quantum
+      computing is possible in principle.
+    in_csd: >
+      The corpus proves the threshold statement at two levels of detail. At code capacity,
+      where errors strike the qubits and the recovery is ideal, the Steane code's failure
+      probability is at most twenty-one times the square of the physical rate, and
+      concatenating gives the iterated bound with its doubly exponential decay below one
+      twenty-first. At circuit level the counting is over a whole circuit of gadgets rather
+      than one block: a union bound over the gadgets, then the concatenation recursion, and
+      the result is that for any circuit size and any target accuracy there's a level at
+      which the probability that anything anywhere fails falls below the target.
+
+      The overhead statement is proved in the same place, in the form the practical claim
+      needs. The number of levels needed grows like the logarithm of the logarithm of the
+      accuracy, so the size blow-up is bounded by a power of a logarithm of the circuit
+      size. The honest boundary is that the gadgets are treated as ideal operations followed
+      by faults, with the fault-tolerant syndrome-extraction circuit and the extended
+      rectangle analysis kept as open rows, so what's proved is the counting half of
+      fault tolerance rather than the circuit design half.
+    mathematical: >
+      circuitMeasure is the product measure over the fault patterns of a circuit of N
+      gadgets at concatenation level k, with circuitBad the event that some gadget fails.
+      circuitMeasure_circuitBad_le is the union bound over gadgets composed with the
+      code-capacity recursion of CodeCapacityThreshold.lean, whose concatenated bound is
+      (c p)^(2^k) / c with c = 21 for the Steane code. exists_level_circuitMeasure_lt then
+      gives, for c p < 1 and any target eps, a level k with circuitMeasure (circuitBad) <
+      eps, through exists_level_mul_lt and the doubly exponential decay of (c p)^(2^k).
+
+      The overhead half is exists_level_two_pow_le and exists_level_overhead_le, stated with
+      Real.logb and rpow: the required level is of order log log (1/eps), so 2^k, the size
+      factor per encoded operation, is bounded by a power of log (N / eps). The Steane
+      instance is steane_circuit_threshold, which feeds the code's 21 p^2 code-capacity
+      bound into the generic statement.
+    person: >
+      The threshold theorem was proved independently in 1996 and 1997 by Peter Shor, by
+      Dorit Aharonov and Michael Ben-Or, by Emanuel Knill, Raymond Laflamme and Wojciech
+      Zurek, and by Alexei Kitaev, and it changed the subject from a curiosity into an
+      engineering programme. The numerical value of the threshold depends on the code, the
+      noise model and the architecture, and modern estimates for surface codes sit near one
+      error in a thousand operations.
+
+      Panos Aliferis, Daniel Gottesman and John Preskill later gave the extended rectangle
+      analysis, which is the accounting scheme that makes the constant in the theorem
+      trustworthy rather than merely finite.
+    term: threshold theorem
+    eponyms: []
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/Probability/CircuitThreshold.lean
+      theorem: exists_level_circuitMeasure_lt
+    related: [concatenated-code, steane-code, transversal-gate, knill-laflamme, magic-state-distillation]
+    external:
+      - text: "Aharonov-Ben-Or, Fault-tolerant quantum computation with constant error rate"
+        url: https://arxiv.org/abs/quant-ph/9906129
+
+  - slug: concatenated-code
+    reviewed: 2026-09-29
+    hook: >
+      Concatenation encodes a code inside itself, so each physical qubit of the outer block
+      becomes a whole encoded block of its own, and the failure probability drops to
+      roughly its own square at every level.
+    layman: >
+      One round of error correction improves matters but doesn't make them arbitrarily
+      good, as a code that survives a single error still fails when two errors land in the
+      same block. If the physical failure rate is small then two errors in one block is a
+      much rarer event than one, which is exactly the improvement a code delivers, and the
+      natural thing is to do it again.
+
+      Concatenation does that. Take the seven-qubit code, then replace each of its seven
+      qubits by another seven-qubit block, giving forty-nine physical qubits protecting one
+      logical qubit at level two. A level-two block fails only when two of its seven
+      level-one blocks fail, and each of those fails only when two of its seven physical
+      qubits fail, so the failure probability at each level is about a constant times the
+      square of the level below. Squaring repeatedly is very fast: below the rate where the
+      squaring starts winning, a few levels take a failure probability from one in a hundred
+      to numbers with a great many zeros.
+
+      The cost is that qubit counts multiply by seven per level, which is why concatenation
+      is the theoretical backbone of fault tolerance rather than the practical choice, as
+      surface codes achieve a similar effect with a friendlier layout.
+    in_csd: >
+      The corpus builds concatenation as a recursion on pattern types and proves the bound
+      by induction, rather than asserting the usual squaring rule. A level-k fault pattern
+      is a tree of patterns, a level-k block is bad when at least two of its n children are
+      bad, and the measure is the product measure of independent physical faults, so the
+      inductive step is a two-or-more bound on a product measure.
+
+      The outcome is the concatenated failure bound, a constant times the physical rate
+      raised to two to the power of the level, divided by that constant. Below one over the
+      constant the bound tends to zero, which is the code-capacity threshold, and the
+      Steane instance supplies the constant twenty-one by counting the weight-two error
+      patterns the code cannot correct. The circuit-level threshold theorem then adds a
+      union bound over the gadgets of a whole circuit on top of this recursion, so the two
+      results are the same induction used at two scales. What stays open is the recovery
+      channel at level k as an operator statement, which needs a tensor layer over blocks,
+      and it's a numbered row rather than an omission.
+    mathematical: >
+      ConcatPat n k is the level-k pattern type, Bool at level zero and Fin n indexed
+      patterns above, with card_concatPat giving 2^(n^k); concatMeasure is the product
+      measure of Bernoulli p over its coordinates. isBad n is the recursion, true at level
+      zero on a faulty qubit and at level k + 1 when at least two children are bad, and
+      concatMeasure_concatBad_le is the induction: the measure of concatBad n k is at most
+      (c p)^(2^k) / c, with the inductive step supplied by measure_pi_two_or_more_le, a
+      bound on the probability that two or more of n independent events occur.
+
+      For the Steane code steane_codeCapacity_failure_le gives c = 21 by counting the
+      twenty-one weight-two patterns on seven qubits, and steane_threshold is the resulting
+      convergence for p < 1/21. The level-k recovery channel is BACKLOG row 86 and is not
+      claimed; the discretisation step that makes one-qubit arbitrary errors correctable at
+      level one is proved (steane_recovery_arbitrary).
+    person: >
+      Concatenation as a route to arbitrary accuracy is due to Emanuel Knill and Raymond
+      Laflamme, who introduced concatenated codes in 1996, and it became the engine of the
+      first threshold proofs. The idea is older than quantum computing, as classical coding
+      theory had long used codes built from codes, and Forney's concatenated codes of the
+      mid-1960s are the ancestor.
+
+      Modern architectures mostly concatenate only shallowly, or not at all, and topological
+      codes have taken over the role, although every threshold estimate still reports the
+      number concatenation made meaningful.
+    term: concatenated code
+    eponyms: []
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/Probability/CodeCapacityThreshold.lean
+      theorem: concatMeasure_concatBad_le
+    related: [threshold-theorem, steane-code, stabiliser-code, knill-laflamme, transversal-gate]
+    external:
+      - text: "Knill-Laflamme, Concatenated quantum codes"
+        url: https://arxiv.org/abs/quant-ph/9608012
+
+  - slug: magic-state-distillation
+    reviewed: 2026-09-29
+    hook: >
+      Distillation turns many noisy magic states into one clean one, by encoding them in a
+      code whose checks reject the likely errors, and the error rate falls as the cube of
+      itself at every round.
+    layman: >
+      A fault-tolerant quantum computer performs most of its gates transversally, qubit by
+      qubit, and there's always one gate left that no code handles that way. The standard
+      solution is to keep a supply of a particular state, called a magic state, which can be
+      spent to perform the missing gate using only the gates the machine does well. That
+      moves the whole problem into the quality of the supply, as a noisy magic state gives a
+      noisy gate.
+
+      Distillation cleans the supply. Take fifteen noisy copies, encode them into a code
+      chosen so that the errors you expect either trigger a check or leave the answer
+      correct, measure the checks, and throw the batch away if any check complains. What
+      survives is one state whose error rate is roughly thirty-five times the cube of the
+      rate you started with. Cubing is dramatic: one error in a hundred becomes about one in
+      thirty thousand, and another round takes it to about one in a million million.
+
+      The counting is what makes the scheme work. Only errors that hide from every check can
+      survive, and the lightest error pattern that hides needs three faults at once, so the
+      cube comes from counting fault patterns rather than from any quantum subtlety. The
+      price is the fifteen states consumed per output, and in practice the distillation
+      factories dominate the size of a fault-tolerant machine.
+    in_csd: >
+      The corpus proves the fifteen-to-one protocol end to end, in four rows, so its error
+      bound is a theorem about counted fault patterns rather than a quoted figure. The
+      counting row establishes that exactly thirty-five weight-three patterns escape the
+      checks and that the whole hidden family has a bounded size. The code row exhibits the
+      encoded states and proves that applying the missing gate to each of the fifteen qubits
+      implements the inverse of that gate on the encoded qubit, which is the identity the
+      protocol runs on. The error row shows that the checks answer deterministically on the
+      ideal state, that a hidden pattern acts as an encoded phase flip whose sign is the
+      pattern's parity, and that the accepted output is the magic state up to a known
+      correction.
+
+      The bound then follows: the probability of accepting is at least the chance that
+      nothing went wrong, the probability of accepting a wrong answer is at most the counted
+      patterns weighted by their probabilities, and the conditional error is their ratio. The
+      recursion iterates that bound and the iterated rate tends to zero below one twentieth.
+      The honest boundary is the modelling assumption that a round's output errors are again
+      independent, and that the threshold used is a convenient sufficient value rather than
+      the protocol's exact fixed point.
+    mathematical: >
+      patternMeasure is the product of fifteen Bernoulli measures with weight p, and
+      patternMeasure_singleton gives p^|e| (1 - p)^(15 - |e|). measure_acceptSet_ge bounds
+      acceptance below by (1 - p)^15, and measure_wrongSet_le bounds accepted-and-wrong
+      above by 35 p^3 + 2^11 p^5, since an accepted wrong pattern has odd weight at least
+      three, with exactly 35 of weight three and at most 2^11 of weight five or more (the
+      counts of ReedMuller15.lean, transported by wt_eq_weight). distillation_error_le is
+      the ratio, and distillation_error_le_ninety weakens it to 90 p^3 for p at most 1/20.
+
+      distillIter p k iterates p to 90 p^3, distillIter_le bounds it by p (90 p^2)^k, and
+      tendsto_distillIter concludes convergence to zero for p at most 1/20. Upstream,
+      tTrans_logical0 and tTrans_logical1 are the transversal identity on the punctured
+      Reed-Muller code, and the injection identity injectSlice_magicState with the channel
+      form injectionChannel_apply are the gate-teleportation half.
+    person: >
+      Sergey Bravyi and Alexei Kitaev introduced magic-state distillation in 2005, with the
+      fifteen-to-one protocol built on the punctured Reed-Muller code, and the scheme still
+      anchors cost estimates for fault-tolerant machines. Reed and Muller's codes date from
+      1954 and were designed for classical communication, so the protocol is an example of a
+      classical construction turning out to have exactly the symmetry a quantum problem
+      needed.
+
+      Craig Gidney and Austin Fowler later cut the overhead substantially with catalysed
+      schemes, and the accounting of how much of a machine is distillation factory remains
+      an active engineering question.
+    term: magic-state distillation
+    eponyms: [Reed, Muller]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/ReedMuller15Distill.lean
+      theorem: tendsto_distillIter
+    related: [magic-state, gottesman-knill, clifford-t, threshold-theorem, transversal-gate]
+    external:
+      - text: "Bravyi-Kitaev, Universal quantum computation with ideal Clifford gates and noisy ancillas (PRA 71, 022316)"
+        url: https://arxiv.org/abs/quant-ph/0403025
+
+  - slug: clifford-t
+    reviewed: 2026-09-29
+    hook: >
+      Clifford plus T is the standard universal gate set, as the Clifford gates alone are
+      classically simulable and adding the single eighth-turn phase gate makes every
+      unitary reachable to any accuracy you ask for.
+    layman: >
+      A quantum computer needs a finite menu of gates, and the menu has to be rich enough
+      that any operation can be approximated by stringing together gates from it. The
+      Clifford gates, the ones that turn simple errors into simple errors, are not rich
+      enough, as a laptop can simulate them. Adding one more gate fixes that, and the usual
+      choice is the T gate, which rotates the phase of one branch of a superposition by an
+      eighth of a turn.
+
+      Why one extra gate suffices takes a chain of steps. Any operation on any number of
+      qubits factors exactly into operations that each touch only two levels of the state
+      space, those factor into controlled operations and single-qubit gates, and controls
+      can be built from controlled-not gates. That reduces universality to one qubit. On one
+      qubit, the words built from the Clifford gates and T include rotations by angles that
+      are irrational multiples of a turn, so their powers fill up a circle of rotations, and
+      three such circles about axes that don't line up generate every rotation of the sphere.
+
+      The word approximate is doing real work here. No finite gate set gives every unitary
+      exactly, as there are uncountably many unitaries and only countably many circuits, so
+      the claim is that the reachable set is dense: for any target and any tolerance there's
+      a circuit within the tolerance. How long that circuit needs to be is a separate
+      question, answered by the Solovay-Kitaev algorithm.
+    in_csd: >
+      The corpus proves universality as a theorem about a topological closure, and the proof
+      is assembled from rows that are each independently useful. Every unitary is an exact
+      finite product of controlled-not gates and single-qubit gates, obtained from the
+      two-level decomposition, a Gray-code sandwich that relabels a controlled gate onto an
+      adjacent pair, and a recursion that removes controls one at a time. Density on one
+      qubit comes from the axis-angle layer: a Clifford plus T word has a rotation angle that
+      is an irrational multiple of a turn, proved by showing that twice its cosine would
+      otherwise be an algebraic integer it cannot be, so its powers are dense in its own
+      rotation circle, and a cross-product construction supplies a second and third axis
+      that don't line up.
+
+      Two joints make the lift work. Sending a single-qubit gate to the many-qubit gate that
+      acts on one qubit is a continuous monoid homomorphism, so it carries closures into
+      closures, and a phase on the small block is a global phase on the big gate, which is
+      what keeps the modulo-phase statement from degenerating into relative phases. The
+      gates that become limits after one global phase form a submonoid, so the exact product
+      inherits a single phase without list bookkeeping. The honest boundary is that this is
+      density without gate counts, so the efficiency statement is a separate open row.
+    mathematical: >
+      exists_phase_mem_cliffordTmLim: for m at least one, every unitary on m qubits has a
+      global phase making it a member of cliffordTmLim, the closure of the monoid generated
+      by Clifford and T gates on single qubits and controlled-not gates on pairs. The exact
+      product is mem_closure_elementary, from exists_twoLevel_prod (TwoLevel.lean),
+      exists_multiCtrl_sandwich (MultiControlled.lean) and ctrlSetOf_mem_closure
+      (ControlRecursion.lean), joined by block_mem_unitaryGroup_of_ctrlSetOf, the converse
+      that recovers block unitarity by evaluating the unitarity relation at labels differing
+      only on the target.
+
+      One-qubit density is exists_phase_mem_cliffordTLim (CliffordTDensity.lean), which needs
+      irrational_htAngle_div_two_pi (CliffordTAngle.lean, via
+      isIntegral_two_mul_cos_of_eq_two_pi_mul), mem_closure_range_axisRot (SU2Rotation.lean),
+      and not_isIntegral_of_quadratic for the cross-product axis. The lift is gateOfHom with
+      continuous_gateOf and gateOf_smul, and the phase bookkeeping is the submonoid phaseLim
+      with elementary_le_phaseLim. No gate counts: the Solovay-Kitaev efficiency statement is
+      BACKLOG row 74 and is not claimed.
+    person: >
+      The name Clifford honours William Kingdon Clifford, the Victorian mathematician whose
+      algebras underlie the Pauli operators, and it reached quantum computing through
+      Gottesman's stabiliser formalism rather than from Clifford himself. The T gate's role
+      as the cheapest useful addition emerged from fault-tolerance practice, as it's the
+      gate a distillation factory can supply.
+
+      Robert Solovay and Alexei Kitaev independently found, in the late 1990s, that any
+      universal set reaches accuracy eps with circuits of length polylogarithmic in one over
+      eps, which turns density into something a compiler can use.
+    term: Clifford plus T
+    eponyms: [Clifford]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/CliffordTUniversal.lean
+      theorem: exists_phase_mem_cliffordTmLim
+    related: [magic-state, gottesman-knill, two-level-unitary, magic-state-distillation, toffoli-gate]
+    external:
+      - text: "Nielsen-Chuang, Quantum Computation and Quantum Information, section 4.5"
+        url: https://en.wikipedia.org/wiki/Quantum_Computation_and_Quantum_Information
+
+  - slug: two-level-unitary
+    reviewed: 2026-09-29
+    hook: >
+      Every quantum operation, on any number of qubits, factors exactly into operations that
+      each touch only two levels of the state space, and a count of how many such factors are
+      needed follows from the same elimination that produces them.
+    layman: >
+      Building a quantum computer means realising an arbitrary operation out of a fixed
+      supply of small ones, so the first question is whether an arbitrary operation can be
+      cut into small pieces at all, exactly rather than approximately. It can, and the pieces
+      are as small as you could hope for.
+
+      A two-level operation acts on just two of the state space's basis directions and leaves
+      everything else alone, so it's a rotation in a single plane. The decomposition works
+      like Gaussian elimination. Choose a column of the operation you want, and apply
+      rotations in single planes to knock out its entries one at a time until only one
+      remains, which for a norm-preserving operation must then be one. That column is
+      finished, so the problem has shrunk, and the induction repeats on what's left.
+
+      Counting the rotations gives the classical bound. Clearing a block of a given size
+      takes one rotation per entry cleared, and the running total obeys the same arithmetic
+      as counting pairs, so a space of a given dimension needs at most as many rotations as
+      there are pairs of directions in it. That bound is what makes the next step of the
+      universality argument finite: the factors are then rewritten as controlled operations,
+      and controls are built from controlled-not gates.
+    in_csd: >
+      The corpus proves the decomposition and the count, and the count needed no new
+      mathematics once the elimination was set up properly. A rotation in a single plane can
+      be chosen so that the surviving entry carries the norm of the block it just cleared,
+      which for a norm-preserving operation is exactly one, so the row and column come out of
+      each round already in the shape the induction needs and not one factor is spent on
+      fixing a phase. The bookkeeping is then the identity that counting pairs satisfies, and
+      the base case is that on a block of at most two directions the operation is already
+      two-level.
+
+      The decomposition is the first step of the universality chain, and the later steps
+      consume it directly: a two-level operation on an adjacent pair is a multiply-controlled
+      gate, relabelling one pair onto another is a Gray code, and removing controls is a
+      recursion. The honest boundary is that the count is an upper bound on two-level
+      factors, with no matching lower bound and no translation into a gate count, which is a
+      separate open row.
+    mathematical: >
+      IsTwoLevel is agreement with the identity outside a two-element index block, stated
+      through IdOutside s for a general index set; twoLevelMat i j a b c d places a 2-by-2
+      block, composition of two such is 2-by-2 matrix multiplication (twoLevelMat_mul), and
+      unitarity of the matrix is unitarity of the block. givensMat i j v is the Givens
+      rotation in the (i, j) plane killing the j-component of v.
+
+      exists_clear_column: a product of two-level unitaries kills any prescribed set of
+      components of a vector, one factor per component, with the pivot accumulating the norm
+      of the cleared block. exists_twoLevel_prod is the decomposition, by induction on the
+      support through exists_twoLevel_prod_of_idOutside. exists_twoLevel_prod_length is the
+      Nielsen-Chuang count, at most d(d - 1)/2 factors, carried as Nat.choose (max s.card 2)
+      2 with Pascal's rule (m - 1) + choose (m - 1) 2 = choose m 2 and
+      isTwoLevel_of_idOutside_card_le_two as the base case. No lower bound is proved, and the
+      elementary-gate count is BACKLOG row 74.
+    person: >
+      Wallace Givens gave the plane rotations their name in a 1958 paper on reducing a matrix
+      to triangular form, as a numerically stable way of annihilating one entry at a time, and
+      they remain standard in numerical linear algebra. The application to quantum circuits is
+      Nielsen and Chuang's textbook section 4.5, which turns the same elimination into the
+      first half of a universality proof.
+
+      Reciprocally, quantum computing has sent work back the other way, as circuits built
+      from Givens rotations are now a standard ansatz for simulating electrons, where
+      preserving particle number is exactly the two-level structure.
+    term: two-level unitary
+    eponyms: [Givens]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/LinearAlgebra/Matrix/TwoLevel.lean
+      theorem: exists_twoLevel_prod
+    related: [clifford-t, toffoli-gate, pauli-matrices, kronecker-product, hermitian-operator]
+    external:
+      - text: "Nielsen-Chuang, Quantum Computation and Quantum Information, section 4.5.1"
+        url: https://en.wikipedia.org/wiki/Quantum_Computation_and_Quantum_Information
+
+  - slug: toffoli-gate
+    reviewed: 2026-09-29
+    hook: >
+      The Toffoli gate flips its target only when both controls are set, which is enough to
+      compute anything classically while remaining reversible, and its count is the currency
+      in which the cost of a quantum algorithm is quoted.
+    layman: >
+      Ordinary logic gates throw information away, as an AND gate takes two bits to one and
+      you can't run it backwards. Quantum evolution never throws information away, so a
+      quantum computer can't use an AND gate directly, and the classical parts of a quantum
+      algorithm have to be rebuilt out of reversible pieces.
+
+      The Toffoli gate is the piece that makes that possible. It takes three bits, leaves the
+      first two alone, and flips the third when both of the first two are set, which is
+      reversible because applying it twice returns you to where you started. Set the third
+      bit to zero beforehand and it computes the AND of the other two into it, so anything a
+      classical circuit does can be done with Toffoli gates and a supply of spare bits.
+
+      In a fault-tolerant machine the Toffoli gate is also the expensive one. The cheap gates
+      are the ones a code handles qubit by qubit, and Toffoli is not among them, so it has to
+      be assembled from magic states. That's why resource estimates for quantum algorithms
+      are quoted as Toffoli counts rather than as total gate counts, as the Toffoli count is
+      what the hardware budget actually tracks.
+    in_csd: >
+      The corpus makes cost a function of a circuit's gate list rather than a number
+      annotated onto an opaque operation, so a statement that an operation costs at most so
+      many Toffoli gates is a theorem: you exhibit a circuit, prove it computes the
+      operation, and prove its counted cost. That design decision is what makes the
+      arithmetic layer's resource accounting machine-checked rather than trusted.
+
+      The cost record bundles the standard fault-tolerant fields, qubit width, ancilla,
+      Toffoli count and depth, controlled-not count, T count and measurements, and the
+      composition lemmas keep the additive and non-additive fields apart, as counts add
+      exactly while width combines by taking a maximum. Every adder, multiplier and modular
+      gadget in the reversible layer then carries a proved Toffoli count, which is what the
+      elliptic-curve resource estimates downstream consume. The honest boundary is that
+      genuine width and ancilla accounting is a later refinement, as the current model fixes
+      the width to the register size.
+    mathematical: >
+      The gate type has X, CX (controlled-not), CCX (Toffoli) and swap constructors, each
+      denoted by an involution of the state (Circuit.lean). gateCost assigns one Toffoli at
+      depth one to CCX, one controlled-not to CX, three to a swap and nothing to X, and
+      circuitCost reads each additive field off the gate list. cost_comp_toffoli_count is
+      exact additivity of the Toffoli count under composition,
+      cost_comp_toffoli_depth_le is subadditivity of depth, and cost_inverse_toffoli says
+      inverting a circuit preserves the count.
+
+      There's deliberately no AddMonoid instance on the cost record, since the width fields
+      are not additive under composition. Derived counts include cuccaroAdd_toffoli (2n for
+      an n-bit in-place addition) and the AndAdd family, and cprop_toffoli_le shows constant
+      propagation never increases the count.
+    person: >
+      Tommaso Toffoli described the gate in 1980, while at MIT, in work on reversible
+      computing that grew out of Edward Fredkin's question of whether computation must
+      dissipate energy. The answer, that it need not, connects the gate to Landauer's
+      principle: only erasure has a thermodynamic cost, and reversible circuits don't erase.
+
+      The gate's second life came with quantum computing, where Toffoli counts became the
+      standard unit of algorithmic cost, and papers now compete on the Toffoli count of
+      modular arithmetic much as classical cryptography once competed on multiplication
+      counts.
+    term: Toffoli gate
+    eponyms: [Toffoli]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/Reversible/Cost.lean
+      theorem: cost_comp_toffoli_count
+    related: [reversible-adder, clifford-t, magic-state, landauer-principle, shor-algorithm]
+    external:
+      - text: "Toffoli, Reversible computing (MIT LCS, 1980)"
+        url: https://en.wikipedia.org/wiki/Toffoli_gate
+
+  - slug: reversible-adder
+    reviewed: 2026-09-29
+    hook: >
+      A reversible adder has to return its scratch space clean, and the carry-clean
+      ripple-carry design does it with a single spare qubit, which is what makes arithmetic
+      affordable inside a quantum algorithm.
+    layman: >
+      Quantum algorithms for factoring and for discrete logarithms spend nearly all of their
+      work on ordinary arithmetic, so the cost of a quantum attack on cryptography is
+      essentially the cost of addition. Addition has to be done reversibly, and the naive way
+      is wasteful: you compute each carry into a fresh spare qubit and never clean it up, so a
+      long computation leaves a trail of rubbish qubits that can neither be reused nor thrown
+      away, since discarding a qubit that's entangled with your data damages the data.
+
+      The carry-clean adder solves this by storing the carries inside the register it's going
+      to leave untouched anyway, and then undoing that storage on the way back out. It needs
+      exactly one clean spare qubit, which it returns in its original state, so the adder can
+      be used again immediately with no fresh supply. Two three-gate blocks do the work, one
+      folding the carry forwards and one writing the sum bit while restoring what the first
+      disturbed.
+
+      The saving compounds, as multiplication is built from additions and exponentiation from
+      multiplications, so a constant factor in the adder becomes the constant factor of the
+      whole algorithm.
+    in_csd: >
+      The corpus proves the adder correct for general bit width, in place, and with its
+      ancilla restored, which are three separate statements rather than one. The register
+      holding the first operand ends with the sum modulo the register size, the second
+      operand is returned untouched, the spare qubit returns to its initial value, and wires
+      outside the layout are undisturbed. The derived Toffoli count is two per bit, read off
+      the gate list by the cost model rather than asserted.
+
+      The proof is organised as a recursion rather than as a forward and backward chain,
+      which is what makes it an induction on bit count: the adder is the first carry block,
+      then the adder on the high bits with the carry threaded in, then the closing block.
+      That shape made the compute and uncompute correctness a single induction. A second
+      design in the same layer replaces the temporary storage with measurement-based
+      uncomputation, which trades Toffoli gates for measurements, and the hybrid lift proves
+      the two agree on amplitudes, one gadget per carry cell. The honest boundary is that
+      this adder is modular in the register size only, as reduction modulo a general number
+      is a separate construction.
+    mathematical: >
+      The blocks are maj c b a = [CX a b, CX a c, CCX c b a] and uma c b a = [CCX c b a, CX a
+      c, CX c b], verified on the concrete three-wire state by decide and then lifted to
+      general layouts. cuccaroAdd_correct gives A holding (A + B) mod 2^n,
+      cuccaroAdd_preserves_B and cuccaroAdd_preserves_external give the untouched registers,
+      cuccaroAdd_ancilla_clean gives the restored carry qubit, and cuccaroAdd_toffoli gives
+      2n Toffoli gates. The recursion cuccaroRec_correct is the induction carrying all of
+      them.
+
+      The measurement-based variant is GidneyAdder.lean with the temporary-AND trick, and
+      gidneyHybridAdd_amplitude in HybridLift.lean proves the hybrid circuit reproduces the
+      unitary adder's amplitudes, with one gadget per carry cell rather than one per Toffoli.
+      Modular reduction and the multiplier assembly are separate modules.
+    person: >
+      Steven Cuccaro, Thomas Draper, Samuel Kutin and David Moulton published the carry-clean
+      ripple-carry adder in 2004, from the IDA Center for Computing Sciences, and it remains
+      the default choice when spare qubits are scarce. Their paper's contribution was
+      arranging the carries so that the uncomputation is free rather than a second pass.
+
+      Craig Gidney's 2018 temporary-AND construction takes the other trade, spending
+      measurements and classically controlled corrections to halve the Toffoli count, and the
+      two designs mark the ends of the range that current resource estimates interpolate.
+    term: reversible adder
+    eponyms: [Cuccaro, Gidney]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroAdd.lean
+      theorem: cuccaroAdd_correct
+    related: [toffoli-gate, shor-algorithm, quantum-fourier-transform, phase-estimation, clifford-t]
+    external:
+      - text: "Cuccaro-Draper-Kutin-Moulton, A new quantum ripple-carry addition circuit"
+        url: https://arxiv.org/abs/quant-ph/0410184
+
+  - slug: helstrom-bound
+    reviewed: 2026-09-29
+    hook: >
+      The Helstrom bound says how well any measurement can tell two quantum states apart,
+      and the answer is exactly the trace distance between them, attained by one specific
+      test.
+    layman: >
+      Someone prepares one of two known states and hands it to you, and you have to guess
+      which. If the states were classical probability distributions the best strategy would
+      be obvious, and the success rate would be a simple distance between the distributions.
+      Quantum states can overlap in a way distributions can't, so the question is whether
+      quantum mechanics allows a cleverer test than the classical analogy suggests, or a
+      worse one.
+
+      Helstrom answered it exactly. Among all possible measurements, including ones that
+      entangle the state with an apparatus and process the result, the best chance of
+      guessing right is one half plus half the trace distance between the two states, where
+      the trace distance is the natural quantum generalisation of the distance between two
+      probability distributions. No test beats that, and one particular test achieves it,
+      namely the measurement that asks which state is more likely at each point of the
+      spectrum of their difference.
+
+      The two extremes are the ones worth remembering. Identical states force you to guess at
+      random, and perfectly distinguishable states allow a test that never errs. Everything in
+      between is measured by one number, which is why trace distance is the right notion of
+      how different two quantum states are.
+    in_csd: >
+      The corpus proves the bound and its attainment together, so the trace distance gets its
+      operational meaning rather than remaining a definition. The optimality half says no test
+      does better than the projector onto the positive part of the weighted difference of the
+      two states, and the attainment half computes that projector's success probability
+      exactly. Both rest on the Jordan decomposition machinery already in the trace-distance
+      module, since the variational bound and the identity that makes it tight are statements
+      about positive and negative parts.
+
+      The result is stated at equal priors and in general, in success form and in error form,
+      with the two extremes proved separately: indistinguishable states force a coin flip,
+      perfectly distinguishable ones permit an error-free test. It's the converse companion to
+      the data-processing inequality, as channels can't increase distinguishability and this
+      says distinguishability is exactly what a measurement can extract. The complementary
+      problem, zero error at the cost of an inconclusive outcome, is unambiguous
+      discrimination, proved elsewhere in the corpus.
+    mathematical: >
+      A test is an effect E with 0 <= E <= 1 (IsTest), guessing the first state on outcome E.
+      With A = p0 rho0 - p1 rho1 the Helstrom operator and helstromTest the projector onto its
+      positive eigenspace, re_trace_posPart_eq gives Re Tr(A+) = (||A||_1 + Re Tr A)/2, the
+      Jordan-decomposition identity; re_trace_mul_le_helstrom is optimality, from the
+      variational bound Re Tr(A P) <= Re Tr(A+) for 0 <= P <= 1; re_trace_mul_helstrom is
+      attainment, from A times the positive projector being A+.
+
+      successProb_le and successProb_helstromTest give P_success <= (1 + D(rho0, rho1))/2 with
+      equality at helstromTest, errorProb_ge and errorProb_helstromTest the error form,
+      helstrom_indistinguishable and helstrom_perfect the two extremes, and
+      successProbPrior_le with successProbPrior_helstromTest the general-prior statement
+      P_success <= (1 + ||p0 rho0 - p1 rho1||_1)/2. Finite-dimensional matrices over the
+      complex numbers throughout.
+    person: >
+      Carl Helstrom worked out the bound in the late 1960s at the University of California, San
+      Diego, as part of a programme applying statistical decision theory to optical
+      communication, and his 1976 book Quantum Detection and Estimation Theory founded the
+      subject now called quantum estimation. Alexander Holevo proved closely related results
+      independently in Moscow at the same time.
+
+      The bound's practical face is in quantum key distribution and in optical receivers, where
+      the question of how well an eavesdropper or a detector can distinguish two signals is
+      precisely Helstrom's.
+    term: Helstrom bound
+    eponyms: [Helstrom]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/QuantumInfo/Helstrom.lean
+      theorem: errorProb_helstromTest
+    related: [holevo-bound, quantum-channel, luders-rule, naimark-dilation, von-neumann-entropy]
+    external:
+      - text: "Helstrom, Quantum Detection and Estimation Theory (Academic Press, 1976)"
+        url: https://en.wikipedia.org/wiki/Quantum_state_discrimination
+
+  - slug: geometric-phase
+    reviewed: 2026-09-29
+    hook: >
+      A quantum state taken around a closed loop and brought back to where it started keeps a
+      leftover phase that depends only on the shape of the loop, so the phase is a record of
+      the journey rather than of the time it took.
+    layman: >
+      A quantum state has an overall phase that no measurement can see, which is why states
+      differing only by a phase are counted as the same state. That makes it surprising that
+      any phase should matter, and the resolution is that a difference of phase between two
+      paths does matter, as interference can see it.
+
+      Take a state slowly around a loop and return it to the ray it started from. Part of the
+      phase it picks up is the familiar one, accumulated at a rate set by the energy, and
+      subtracting that part leaves a remainder. The remainder doesn't depend on how fast you
+      went or on how you chose to keep track of the overall phase along the way, and it
+      doesn't vanish. It depends only on the loop traced out in the space of states, which is
+      why it's called geometric.
+
+      Curvature is the right picture. The space of states is curved, and carrying a direction
+      around a loop on a curved surface brings it back rotated by an amount equal to the
+      curvature enclosed, exactly as a vector carried around a triangle on a sphere comes back
+      turned. The geometric phase is that rotation, and the enclosed curvature is the area
+      the loop bounds measured by the state space's own geometry.
+    in_csd: >
+      The geometric phase is an observable consequence of the sector geometry the programme
+      builds on, so proving it belongs with the Fubini-Study and Kahler layers rather than
+      beside them. The corpus defines the connection form along a curve of unit vectors,
+      proves that the geometric phase is unchanged by any differentiable change of the overall
+      phase, and then proves that it's the holonomy of the connection: the horizontal lift,
+      the one whose connection form vanishes, returns rotated by exactly the geometric phase.
+
+      The curvature formula comes next, with the phase written as the integral of the
+      state space's own two-form over a surface the loop bounds, proved through the
+      two-dimensional divergence theorem. The identification of that two-form is what closes
+      the circle: the pullback of the Fubini-Study form along a family of states is computed
+      chart-free and bundled as a genuine differential form, so the curvature is the Kahler
+      form of the state space and the geometric phase is half the integral of the pullback.
+      Two independent derivations agree on the cone example. The adiabatic setting, where
+      Berry's original argument lives, is handled for a rigidly rotated Hamiltonian exactly,
+      and the general adiabatic theorem is an open row.
+    mathematical: >
+      connectionForm psi t = Im <psi t, psi-dot t> along a curve of unit vectors,
+      dynamicalPhase its integral, geometricPhase psi T phi = phi - dynamicalPhase for a
+      cyclic curve with psi T = e^(i phi) psi 0. connectionForm_rephase shows the form shifts
+      by theta-prime under psi to e^(i theta) psi, and geometricPhase_rephase is gauge
+      invariance, so the phase is a function of the closed curve of rays.
+      connectionForm_horizontalLift and horizontalLift_cyclic are the holonomy statement, and
+      geometricPhase_of_schrodinger evaluates it for a self-adjoint generator as phi + T times
+      the conserved energy.
+
+      geometricPhase_eq_neg_integral_curvature (GeometricPhaseCurvature.lean) is the curvature
+      form, minus the double integral of 2 Im <d_s psi, d_t psi> over the polar-form disc.
+      fsPullbackForm_apply (ProjectiveSpaceGeometricPhase.lean) computes the pullback of the
+      Fubini-Study form along a smooth family without charts,
+      fsPullbackDifferentialForm bundles it, and
+      geometricPhase_eq_half_integral_fsPullbackForm is the identification. The general
+      Kato-Born-Fock adiabatic theorem is BACKLOG row 88 and is not claimed.
+    person: >
+      Michael Berry published the phase in 1984 at Bristol, in the adiabatic setting, and the
+      result was immediately recognised as something that ought to have been noticed decades
+      earlier. It had been, in fact, as Shivaramakrishnan Pancharatnam had described the
+      optical version in 1956 and Christopher Longuet-Higgins and colleagues had met a sign of
+      it in molecular physics across the following decade.
+
+      Barry Simon reinterpreted the phase as holonomy straight away, in a paper that appeared
+      before Berry's own, and Yakir Aharonov and Jeeva Anandan removed the adiabatic
+      assumption in 1987, leaving the general statement about closed curves of rays that the
+      corpus proves.
+    term: geometric phase
+    eponyms: [Berry]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/Analysis/InnerProductSpace/GeometricPhase.lean
+      theorem: geometricPhase_of_schrodinger
+    related: [aharonov-bohm, kahler-form, fubini-study-measure, fisher-rao-metric, bloch-sphere]
+    external:
+      - text: "Berry, Quantal phase factors accompanying adiabatic changes (Proc. R. Soc. A 392, 45)"
+        url: https://royalsocietypublishing.org/doi/10.1098/rspa.1984.0023
+
+  - slug: aharonov-bohm
+    reviewed: 2026-09-29
+    hook: >
+      An electron that never enters a magnetic field can still be shifted by it, as the
+      enclosed flux changes the interference between paths, which shows that the field's
+      potential carries physics the field strength alone doesn't.
+    layman: >
+      Classical electromagnetism describes forces by field strengths, and the potential is
+      treated as a convenience, a bookkeeping function whose absolute value has no meaning
+      since you can add a constant to it without changing anything. Quantum mechanics
+      disagrees, in a way that can be measured.
+
+      Send an electron around both sides of a region containing magnetic flux, with the field
+      itself confined so that the electron never touches it. The two paths acquire different
+      phases, the difference being set by the flux they enclose between them, and the
+      interference pattern shifts accordingly. Nothing local explains the shift, as the
+      electron went nowhere the field was.
+
+      Both halves of the story matter. The potential is still not observable on its own, as
+      moving the phase around between different parts of the path, which is what changing the
+      potential does, leaves every measurable prediction alone. What's observable is the total
+      enclosed flux, and only up to a fixed unit, since adding one whole quantum of flux is
+      undetectable. So the effect is neither that the potential is real nor that only the
+      field is, but that the right object is the phase accumulated around a closed loop.
+    in_csd: >
+      The effect is one of the empirical twins the programme keeps, so the corpus reproduces
+      it rather than interpreting it, and it does both halves on a lattice ring of sites with
+      the flux entering through the standard phase substitution on the bonds. The levels move
+      strictly and continuously with the flux, so a spectroscopic measurement reads the flux
+      off the ring although the field vanishes at every site the electron visits. Putting the
+      whole phase on a single bond leaves the levels untouched, because the two rings are the
+      same operator in two gauges, and the levels see the flux only up to one quantum.
+
+      The sharpest statement is that the two are compatible: half a quantum of flux is
+      genuinely different from none, since no change of basis carries one three-site ring to
+      the other, and yet the potential remains unobservable. The effect also sits next to the
+      geometric phase, being the same holonomy idea with the loop in space rather than in the
+      space of states. The honest boundary is that this is a ring of sites rather than a
+      solenoid, with no double slit, no interference pattern and no continuum limit, and that
+      nothing here is CSD-specific.
+    mathematical: >
+      The linear algebra is AharonovBohmRing.lean: N sites with Peierls phases, levels 2
+      cos((2 pi m + Phi)/N), diagonalised by the discrete Fourier transform, with gauge
+      covariance. energy_lt_energy_of_flux_lt is strict monotonicity of the lowest level in
+      the flux on the relevant range; oneBond_mulVec_gauge_mode and same_levels_of_gauge are
+      gauge covariance, as concentrating the phase on one bond is a unitary relabelling;
+      flux_quantum is periodicity in the flux quantum; flux_not_gauge_artefact says the
+      three-site rings at zero and at half a quantum are not related by any change of basis,
+      with the explicit levels levels_three_zero giving {2, -1, -1} and levels_three_pi giving
+      {1, -2, 1}.
+
+      The Peierls substitution is the model's definition rather than a derived statement, so
+      the sentence that the field vanishes on the ring is an input. The continuum solenoid and
+      the interference form are not formalised.
+    person: >
+      Yakir Aharonov and David Bohm published the effect in 1959 at Bristol, and Werner
+      Ehrenberg and Raymond Siday had found it a decade earlier in 1949 in a paper on electron
+      optics that went unread. Robert Chambers saw it in the laboratory in 1960, and Akira
+      Tonomura's group settled the remaining doubts in 1986 with a toroidal magnet covered in
+      superconductor, so that no stray field could reach the electrons at all.
+
+      The effect became the standard argument that gauge potentials are not mere bookkeeping,
+      and the loop phase it identifies is the same object that appears throughout gauge theory
+      as a Wilson loop.
+    term: Aharonov-Bohm effect
+    eponyms: [Aharonov]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Empirical/QM/AharonovBohm.lean
+      theorem: flux_not_gauge_artefact
+    related: [geometric-phase, mach-zehnder, ramsey-interferometry, schrodinger-equation, bloch-sphere]
+    external:
+      - text: "Aharonov-Bohm, Significance of electromagnetic potentials in the quantum theory (Phys. Rev. 115, 485)"
+        url: https://journals.aps.org/pr/abstract/10.1103/PhysRev.115.485
+
+  - slug: wigner-function
+    reviewed: 2026-09-29
+    hook: >
+      The Wigner function writes a quantum state as a distribution over position and momentum
+      together, which reproduces every prediction of quantum mechanics and goes negative, so
+      it's a phase-space picture that can't be a probability.
+    layman: >
+      Classical mechanics describes a system by a point in phase space, position and momentum
+      at once, and statistical mechanics by a probability distribution over such points.
+      Quantum mechanics is usually said to forbid this, as position and momentum have no joint
+      distribution, and the Wigner function is the precise sense in which that's both true
+      and false.
+
+      Wigner's construction takes a quantum state and produces a function of position and
+      momentum. Integrate it over momentum and you get the position probability density;
+      integrate over position and you get the momentum density. Average any position or
+      momentum quantity against it and you get the quantum expectation. In every respect that
+      a probability distribution is used for, it works.
+
+      Except that it can be negative. For any state that isn't a Gaussian bump, the function
+      dips below zero somewhere, and a negative probability is no probability at all.
+      Negativity is therefore a sharp, quantitative signature of non-classicality, and it's
+      used that way in the laboratory, where measured Wigner functions with negative regions
+      are the standard evidence that an optical or mechanical state has no classical
+      description.
+    in_csd: >
+      The phase-space formulation is one of the pictures the programme keeps agreeing with,
+      and the corpus proves the parts that are Fourier analysis, for states in the Schwartz
+      class in one dimension. The function is real, its two marginals are the position and
+      momentum densities, the total mass is the norm, the position and momentum expectations
+      are the phase-space moments, and the momentum representation is the same function with
+      its arguments exchanged, which follows from Parseval's theorem for Schwartz functions.
+
+      Two results are the interpretive ones. A Gaussian state has a positive Wigner function,
+      explicitly computed, while any odd state has a strictly negative value at the origin, so
+      negativity is exhibited rather than described. And the free evolution moves the Wigner
+      function exactly as classical free motion moves a phase-space density, which shows the
+      classical flow isn't an approximation in that case but the exact answer. For CSD the
+      lesson is a negative one worth stating: the Wigner function is a representation of a
+      state and not a candidate for the programme's ontic measure, since the measure that
+      weights regions is nonnegative by construction and this function isn't. The Moyal
+      bracket with its corrections, and general Weyl-quantised observables, are open rows.
+    mathematical: >
+      For a Schwartz psi the Wigner function is the Fourier transform in y of y to psi(x +
+      y/2) times conj psi(x - y/2), in Mathlib's convention, with momentum p = 2 pi xi.
+      wignerKernel shows the kernel is Schwartz in y; conj_wigner and im_wigner give reality;
+      integral_wigner_right gives the position marginal by Fourier inversion at the origin;
+      wigner_fourier is the momentum representation W of the transform at (xi, -x) equal to W
+      at (x, xi), by SchwartzMap.integral_inner_fourier_fourier applied to modulated affine
+      reparametrisations; integral_wigner_left is the momentum marginal, and
+      integral_integral_mul_wigner_left and its partner are the moments.
+
+      wigner_gaussianS computes the Gaussian case and wigner_gaussianS_pos its positivity;
+      wigner_zero_zero_of_odd gives the value minus twice the norm squared at the origin for
+      odd states. wigner_freeSchrodingerS is the free transport W_t(x, p) = W_0(x - p t, p),
+      exact because the phase of the free propagator is the character of the shift. One
+      dimension, Schwartz data; joint integrability on the plane, general Weyl symbols and the
+      Moyal expansion are BACKLOG rows 63 and 64.
+    person: >
+      Eugene Wigner introduced the function in 1932, in a paper on quantum corrections to
+      thermodynamic equilibrium, and treated it as a calculational device rather than a
+      foundational statement. Jose Enrique Moyal worked out in 1949 that the whole of quantum
+      mechanics can be rewritten in these terms, with a deformed product in place of the
+      operator product, which is the phase-space formulation as a formulation.
+
+      Hilbrand Groenewold had reached much of the same ground in 1946, and the construction
+      now carries all three names in different communities, with the deformed product called
+      the Moyal or star product.
+    term: Wigner function
+    eponyms: []
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/Analysis/Fourier/Wigner.lean
+      theorem: wigner_fourier
+    related: [wigner-rigidity, quantum-fourier-transform, born-weight, liouville-measure, koopman-operator]
+    external:
+      - text: "Wigner, On the quantum correction for thermodynamic equilibrium (Phys. Rev. 40, 749)"
+        url: https://journals.aps.org/pr/abstract/10.1103/PhysRev.40.749
+
+  - slug: koopman-operator
+    reviewed: 2026-09-29
+    hook: >
+      Classical mechanics has a Hilbert space and a unitary time evolution of its own, so
+      neither of those is what makes a theory quantum, and what's left as the difference is
+      that quantum observables don't commute.
+    layman: >
+      Quantum mechanics is often introduced by its apparatus: states are vectors in a Hilbert
+      space, a space with a notion of length and angle, and time evolution is unitary, meaning
+      it preserves those lengths and angles. It's natural to read that apparatus as the
+      signature of quantum physics, and it isn't.
+
+      Koopman and von Neumann showed that classical mechanics carries the same apparatus.
+      Instead of following a classical system's trajectory, follow the functions on its phase
+      space, the observables. A flow that preserves phase-space volume acts on those functions
+      by composition, and that action preserves the natural notion of length among them, so it
+      is unitary, and the flow's group structure becomes a one-parameter group of unitary
+      operators. Superposition of observables, spectra, eigenvalues and the rest of the
+      toolkit all apply, which is why this picture is now standard in the study of complex
+      classical systems.
+
+      What classical mechanics doesn't have is a noncommutative algebra of observables.
+      Classical observables multiply pointwise, in either order, and composition with the flow
+      respects that product. The commutation relation between position and momentum is the
+      thing quantum mechanics adds, and the Koopman picture is the cleanest way to see that
+      it's the only thing.
+    in_csd: >
+      The programme claims that the quantum formalism is recoverable from a single trajectory
+      on a constraint surface, so it matters exactly which parts of that formalism are
+      evidence of anything. The corpus proves the Koopman construction to settle one such
+      question: a Hilbert space with a unitary group on it is available to a classical flow,
+      so its presence in the programme's derivation isn't smuggling quantum mechanics in.
+
+      Three statements carry that. Composition with a measure-preserving map is a linear
+      isometry of the square-integrable functions, an invertible map gives a genuine unitary
+      whose inverse is composition with the inverse map, and a flow gives the group law, so
+      time evolution is a one-parameter unitary group. On differentiable observables the
+      generator is computed along a flow line, and for a Hamiltonian flow that derivative is
+      the Poisson bracket with the energy, which is the Liouville operator, consuming the
+      corpus's own bracket-is-a-derivation result. The honest boundary is that the generator is
+      pointwise, with nothing claimed about its domain, its self-adjointness, or Stone's
+      theorem for the group, and that the flow's measure-preserving property is a hypothesis
+      here, supplied elsewhere by Liouville's theorem.
+    mathematical: >
+      koopmanL2 T hT is composition with a measure-preserving T as a linear isometry of L2 of
+      the measure, built on Mathlib's Lp.compMeasurePreserving with the scalar multiplication
+      transported through QuasiMeasurePreserving.ae_eq_comp; coeFn_koopmanL2 is its pointwise
+      description almost everywhere. koopmanUnitary packages an invertible measure-preserving
+      map as a LinearIsometryEquiv whose inverse is the Koopman operator of the inverse map.
+      koopmanL2_flow is the group law U_(s + t) = U_t composed with U_s, the order reversing
+      because observables compose with the flow.
+
+      koopmanFun is the same map on observables valued anywhere, and koopmanFun_mul is the
+      algebra homomorphism property for the pointwise product, true by definition, which is the
+      classical side of the contrast. hasDerivAt_koopmanFun differentiates along a flow line,
+      giving the derivative of f composed with the flow as the derivative of f applied to the
+      velocity field, and hasDerivAt_koopmanFun_poissonBracket (SigmaLayer/ChartBracket.lean)
+      identifies that with the Poisson bracket for a Hamiltonian field. No Stone's theorem, no
+      unbounded operator theory.
+    person: >
+      Bernard Koopman published the construction in 1931 at Harvard, and John von Neumann
+      followed a year later with the operator method in classical mechanics, using it to prove
+      the mean ergodic theorem. The pair of papers founded ergodic theory as a branch of
+      operator theory, and George Birkhoff's pointwise ergodic theorem arrived in the same
+      season.
+
+      The picture has had a second life in applied mathematics, where Koopman operators are
+      the basis of data-driven methods for nonlinear systems, since a nonlinear flow becomes a
+      linear operator at the price of working in infinitely many dimensions.
+    term: Koopman operator
+    eponyms: [Koopman]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/Dynamics/Koopman.lean
+      theorem: koopmanUnitary
+    related: [liouville-measure, poisson-bracket, stone-theorem, hilbert-space, nelson-stochastic-mechanics]
+    external:
+      - text: "Koopman, Hamiltonian systems and transformations in Hilbert space (PNAS 17, 315)"
+        url: https://www.pnas.org/doi/10.1073/pnas.17.5.315
+
+  - slug: nelson-stochastic-mechanics
+    reviewed: 2026-09-29
+    hook: >
+      Nelson derived the Schrodinger equation from a diffusion, so the same continuity
+      equation that lets Bohm read a velocity off the wavefunction lets Nelson read a drift
+      with noise against it, and the Born density solves both.
+    layman: >
+      Quantum mechanics conserves probability, and the statement of that conservation is a
+      continuity equation: the rate at which the probability of finding a particle in a region
+      changes equals the flow of probability across the region's boundary. The equation is
+      ordinary bookkeeping, and what's interesting is that it can be read in more than one
+      way.
+
+      Divide the probability flow by the density and you get a velocity. Bohm's reading takes
+      that velocity literally: there is one particle, it follows that velocity, and if its
+      starting position is drawn from the quantum density then it stays distributed that way
+      forever, which is what the continuity equation guarantees. Nelson's reading splits the
+      same flow differently, into a drift plus a term that looks exactly like diffusion, and
+      then asks for a random process with that drift and that amount of noise. The Born
+      density solves the resulting diffusion equation, so a particle jiggling according to
+      Nelson's rules is distributed as quantum mechanics says at every moment.
+
+      Two very different pictures, one identity. That's worth knowing before arguing about
+      which picture is right, because the shared mathematics is not in dispute and the
+      disagreement is about what the pieces mean.
+    in_csd: >
+      Readers who know Bohmian mechanics ask how a programme with one trajectory and no
+      ontological wavefunction differs from Bohm, and the corpus answers by proving the shared
+      mathematics rather than asserting it. The continuity equation is proved from the
+      Schrodinger equation at a point, the polar form gives the current as the density times
+      the phase gradient, which is Bohm's equivariance, the same statement is given in
+      Lagrangian form along a trajectory, and Nelson's osmotic drift turns the identity into
+      the Fokker-Planck equation of his diffusion.
+
+      The differences are then stated where they belong, as positioning rather than as
+      theorems. Bohm's configuration is guided by a wavefunction that is a second ontological
+      ingredient with its own law; the programme's trajectory lives on the constraint surface
+      and the wavefunction labels an epistemic region. Bohm's dynamics reads a velocity off
+      the phase; the programme's isolated dynamics is the Hamiltonian flow of the sector's own
+      symplectic structure. Bohm samples the initial position from the quantum density by
+      hypothesis and equivariance keeps it there; the programme derives the weights as
+      typicality volumes of an invariant measure. The diffusion process itself is not claimed,
+      as stochastic differential equations aren't available at the pin, and relaxation of a
+      non-equilibrium density is a numbered open row in both settings.
+    mathematical: >
+      In one dimension with the mass and Planck constant set to one, for psi satisfying the
+      Schrodinger equation at the point in question with real potential:
+      hasDerivAt_probCurrent gives the current's divergence as Im(conj psi times the second
+      derivative), hasDerivAt_probDensity_time gives the density's time derivative as twice
+      Re(conj psi times the time derivative), and continuity_equation is their cancellation.
+      probCurrent_polar gives J = R^2 times the derivative of S in the polar form R e^(i S),
+      so continuity_polar is the equivariance statement with velocity the phase gradient, and
+      hasDerivAt_density_along_trajectory is its Lagrangian form.
+
+      nelsonFlux is rho v + (1/2) times the derivative of rho, nelsonFlux_eq_mul_drift writes
+      it as rho times the osmotic drift where the density doesn't vanish, and
+      nelson_fokkerPlanck is the rearrangement showing the continuity equation is exactly the
+      Fokker-Planck equation with diffusion coefficient one half. Nelson's theorem that a
+      diffusion with that drift has the Born density as its law at every time needs stochastic
+      differential equations and is not claimed, carried as a machine-checked absence
+      sentinel; global existence of Bohmian trajectories, singular at the nodes, is not
+      attempted; one dimension only. The positioning is specs/bohm-nelson-scoping.md.
+    person: >
+      Edward Nelson published the derivation in 1966 at Princeton, showing that a particle in
+      a diffusion with a particular drift obeys the Schrodinger equation, and later came to
+      doubt the programme himself on the grounds that the stochastic picture fails to
+      reproduce quantum correlations across separated systems. His book Quantum Fluctuations
+      of 1985 is the developed version.
+
+      Erwin Madelung had written the hydrodynamic form of the Schrodinger equation as early as
+      1927, Louis de Broglie proposed the pilot-wave reading in the same period, and David
+      Bohm revived and completed it in 1952.
+    term: Nelson stochastic mechanics
+    eponyms: [Nelson]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/Analysis/Calculus/SchrodingerCurrent.lean
+      theorem: nelson_fokkerPlanck
+    related: [bohmian-mechanics, csd-vs-bohmian-mechanics, schrodinger-equation, born-weight, first-passage-race]
+    external:
+      - text: "Nelson, Derivation of the Schrodinger equation from Newtonian mechanics (Phys. Rev. 150, 1079)"
+        url: https://journals.aps.org/pr/abstract/10.1103/PhysRev.150.1079
+
+  - slug: darboux-theorem
+    reviewed: 2026-09-29
+    hook: >
+      Every symplectic space looks the same near any point, as there's always a chart in which
+      the structure takes the textbook form, so symplectic geometry has no local invariants
+      beyond the dimension.
+    layman: >
+      Classical mechanics is written on phase space, where the essential structure isn't a
+      notion of distance but a pairing between directions, the one that says which coordinate
+      is conjugate to which and turns an energy function into a flow. The question Darboux's
+      theorem answers is how much freedom that structure has.
+
+      The answer is none, locally. Given such a pairing, you can always change coordinates
+      near any point so that it becomes the standard one, position paired with momentum, one
+      pair per degree of freedom. Curvature has no analogue here: two symplectic spaces of the
+      same dimension are indistinguishable in any small neighbourhood, and all the geometry is
+      global. The dimension is even, and that's the only local invariant.
+
+      The consequence for mechanics is that canonical coordinates always exist. Whatever the
+      phase space is and however it was built, near any point you can write Hamilton's
+      equations in their familiar form, which is why the textbook treatment loses no
+      generality by starting there.
+    in_csd: >
+      The programme's isolated dynamics is the Hamiltonian flow of the sector's own symplectic
+      structure, so the theorem that says such a structure is locally standard is
+      infrastructure the derivation leans on, and the corpus proves it rather than citing it.
+      The route is Moser's trick, which deforms the form along a path and integrates the
+      resulting vector field, so the chart comes from a flow and its regularity is the
+      regularity of that flow.
+
+      Four rows were needed. The first gives the chart in which the form is constant, the
+      second upgrades the chart from continuous to continuously differentiable by a quantitative
+      comparison of two linear flows, the third composes with a symplectic basis to reach the
+      standard form and derives evenness of the dimension, and the fourth proves smooth
+      dependence of a flow on its initial point so that the chart is smooth at every order the
+      form is. On a symplectic manifold the result is a smooth Darboux chart at every point.
+      The generator-layer question that motivated the work is recorded with it.
+    mathematical: >
+      Darboux.lean gives, by Moser's trick, a chart in which a closed non-degenerate two-form
+      equals its value at the base point; FlowSmooth.lean supplies
+      contDiffOn_flow_of_contDiffOn, the C^n dependence of a flow on the initial point, which
+      is what makes that chart C^k for a C^k form. DarbouxStandardForm.lean composes with a
+      symplectic basis: ContinuousAlternatingMap.toBilinForm is the bilinear form of a
+      two-form, alternating and non-degenerate when the form is;
+      IsAlt.exists_isSymplecticBasis (SymplecticBasis.lean) works over any field;
+      exists_continuousLinearEquiv_eq_standardSymplecticForm_comp is linear Darboux with
+      finrank E = 2n.
+
+      exists_openPartialHomeomorph_pullback_standard is Darboux on a ball in standard form,
+      with a C^k chart whose derivative pulls the standard form back to the given one, and
+      IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_standard is the manifold
+      statement at every point, with IsSymplectic.even_finrank the evenness corollary. The
+      linear change of coordinates is smooth; the chart inherits the form's order.
+    person: >
+      Jean Gaston Darboux proved the theorem in 1882 in Paris, in work on Pfaffian systems,
+      and it became the structural fact that organises symplectic geometry. The modern proof
+      is Jurgen Moser's, from a 1965 paper on volume elements on a manifold, whose trick of
+      deforming a form along a path and integrating the resulting field is now the standard
+      tool.
+
+      The absence of local invariants is what makes symplectic topology a global subject, and
+      Mikhail Gromov's non-squeezing theorem of 1985 gave it its first genuinely global
+      rigidity.
+    term: Darboux theorem
+    eponyms: [Darboux, Moser]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/Geometry/Manifold/DarbouxStandardForm.lean
+      theorem: IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_standard
+    related: [kahler-form, poisson-bracket, moment-map, liouville-measure, field-arena]
+    external:
+      - text: "McDuff-Salamon, Introduction to Symplectic Topology, Theorem 3.2.2"
+        url: https://en.wikipedia.org/wiki/Darboux%27s_theorem
+
+  - slug: feynman-kac
+    reviewed: 2026-09-29
+    hook: >
+      The Feynman-Kac formula makes the path integral rigorous in imaginary time, as the
+      solution of a heat equation with a potential is an average over Brownian paths weighted
+      by the potential they travelled through.
+    layman: >
+      Feynman's path integral says that a quantum amplitude is a sum over all histories, each
+      contributing a phase. It's the most intuitive statement in quantum mechanics and the
+      hardest to make mathematically respectable, since the sum is over an infinite-dimensional
+      space of paths and the phases refuse to settle down.
+
+      Kac noticed that the difficulty is the phase rather than the sum. Replace time by
+      imaginary time and the oscillating phases become decaying weights, and the resulting
+      integral over paths is a perfectly ordinary average with respect to the measure that
+      describes Brownian motion, which mathematics already had. The formula that comes out
+      says: to solve a diffusion equation with a potential, start a Brownian path at your
+      point, follow it for the given time, weight it by the exponential of minus the potential
+      accumulated along the way, and average.
+
+      This is the workhorse behind quantum Monte Carlo methods, behind the modern treatment of
+      Schrodinger operators, and behind option pricing in finance, which is the same equation
+      wearing different clothes. The real-time path integral remains a formal device, and the
+      imaginary-time version is a theorem.
+    in_csd: >
+      The programme's claim is that the formulations of quantum mechanics agree, so the path
+      integral had to be proved rather than gestured at, and the corpus builds it in a chain of
+      rows. The perturbed heat semigroup comes first, as a Dyson series around the free
+      semigroup with the potential as the interaction and no generator written down. The
+      time-sliced Wiener functional comes next. The formula is then the statement that the two
+      limits of the same time-sliced expression agree, one converging by the Trotter product
+      formula and one by the convergence of Riemann sums along a continuous path.
+
+      The same chain supports the rest of the programme's Feynman row: a unitary Schrodinger
+      propagator on square-integrable functions, the heat semigroup, and the Nelson result
+      that connects the diffusion picture to the Schrodinger equation. The honest boundary is
+      that a Brownian motion is a hypothesis rather than a construction, since the Mathlib pin
+      doesn't build one, and that the potential is bounded and continuous.
+    mathematical: >
+      For a Brownian motion B with almost surely continuous paths, bounded continuous V and
+      bounded f in L2 of d-dimensional space, feynmanKac states that the perturbed heat
+      semigroup applied to f at x equals the expectation of f(x + B_t) times exp(minus the
+      integral of V(x + B_s) over [0, t]), for almost every x. The operator side converges by
+      tendsto_trotter_perturbedHeat once exp_smul_neg_potential identifies the exponential of a
+      multiplication operator with multiplication by the exponential; the Wiener side is the
+      time-sliced functional of TimeSlicedWiener.lean with tendsto_riemannSum and domination;
+      the two limits agree because their integrals over every finite-measure set agree.
+
+      IsBrownianVec B P is a hypothesis (BrownianVec.lean); the extension to f in L2 alone is
+      FeynmanKacL2.lean. The real-time path integral is not claimed anywhere in the corpus; the
+      unitary propagator is obtained from the semigroup route instead.
+    person: >
+      Mark Kac heard Feynman describe the path integral at a Cornell seminar in the late
+      1940s and
+      recognised his own Wiener-integral formulas in it, which is how the formula came to carry
+      both names although the two men worked on different problems. Kac's paper that year is
+      about distributions of Wiener functionals and never mentions quantum mechanics.
+
+      Richard Feynman's thesis of 1942 and his 1948 paper introduced the sum over histories as
+      a reformulation of quantum mechanics, and it remains the language of quantum field
+      theory, where the imaginary-time version is what lattice calculations actually compute.
+    term: Feynman-Kac formula
+    eponyms: [Kac]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Mathlib/Probability/FeynmanKac.lean
+      theorem: feynmanKac
+    related: [lie-trotter-formula, schrodinger-equation, nelson-stochastic-mechanics, stone-theorem, gibbs-state]
+    external:
+      - text: "Kac, On distributions of certain Wiener functionals (Trans. AMS 65, 1)"
+        url: https://www.ams.org/journals/tran/1949-065-01/S0002-9947-1949-0027960-X/
+
+  - slug: way-theorem
+    reviewed: 2026-09-29
+    hook: >
+      A conservation law restricts what can be measured, as an observable that fails to
+      commute with the conserved quantity admits no exact measurement by an interaction that
+      conserves it, provided the apparatus pointer is blind to its own share of the charge.
+    layman: >
+      Measurement is a physical interaction, so it has to obey the conservation laws that
+      every other interaction obeys. Wigner asked what that costs, and the answer is that some
+      measurements become impossible.
+
+      Suppose the system and the apparatus together conserve a quantity, with each contributing
+      its own share, as they do for energy, momentum or spin along an axis. Now try to measure
+      an observable of the system that doesn't commute with the system's share of that
+      conserved quantity. Recording the outcome means leaving the apparatus in one of several
+      distinguishable states, and doing so exactly, with no error, turns out to be
+      incompatible with conservation, so no such measurement exists. Read the other way round,
+      exact measurements are available only for observables that commute with the conserved
+      quantity.
+
+      The result comes with a side condition, and the condition is doing real work rather than
+      tidying up. The argument needs either that the pointer states carry no information about
+      the apparatus's own share of the charge, which is Yanase's condition, or that the
+      measurement can be repeated with the same answer. Drop both and there are counterexamples,
+      so the theorem isn't a blanket prohibition but a precise one.
+    in_csd: >
+      The corpus proves the theorem on the quantum-mechanical side, as an inner-product
+      argument with no ontology in it, and then states honestly where it bears on the
+      programme, which is nowhere, for different reasons at the two places a measurement is
+      modelled. In the von Neumann tier the hypotheses can be met, since the measurement
+      interaction there is an isometry on a product of two spaces and an additive conserved
+      quantity for it is exhibited, and the conclusion then holds without effort because the
+      recorded basis is already diagonal for the conserved quantity. In the record layer the
+      hypotheses are not met at all, as the stroke that forms a record is a skew product on
+      the programme's arena rather than a linear isometry on a joint Hilbert space, and its
+      twin theorem proves that no encoding of the Hilbert data into any space, with any map and
+      any readout, reproduces the pointer image the stroke produces, because the outcome is
+      selected by the ontic fibre coordinate.
+
+      That's a scope statement and not an escape. Nothing here says the programme evades a
+      conservation law, only that no apparatus charge is modelled at either tier, which is a
+      recorded modelling boundary: which interaction an apparatus realises, and hence which
+      quantity it conserves, is an input rather than a derived fact. Two witnesses keep the
+      module honest. A controlled-not interaction meets every hypothesis, through the
+      repeatability branch, so the theorem isn't vacuous. A swap interaction conserves a charge,
+      records exactly, and still fails the conclusion, because it fails both branches of the
+      side condition at once, so a reader cannot believe that condition removable.
+    mathematical: >
+      Everything follows from arakiYanase_identity: for exact records U(a tensor xi) = phi
+      tensor xi1 and U(a' tensor xi) = phi' tensor xi2 of orthogonal system vectors, with U
+      inner-product preserving and commuting with L = L_S tensor 1 + 1 tensor L_A, one has <a,
+      L_S a'> = <phi, L_S phi'><xi1, xi2> + <phi, phi'><xi1, L_A xi2>. Orthogonal pointers kill
+      the first term and the Yanase condition or repeatability kills the second
+      (arakiYanase_offDiag_eq_zero), so summing over an eigenbasis of A makes L_S block diagonal
+      in the eigenspaces of A: Commute A L_S (wigner_araki_yanase), with
+      no_exact_record_of_not_commute the contrapositive.
+
+      The tensor structure enters only through a map with the inner-product factorisation and
+      additivity of L on product vectors, so no linearity of U, no matrix exponential and no
+      unitary group is needed. Witnesses: way_hypotheses_satisfiable (controlled-not conserves
+      one charge and records another exactly and repeatably),
+      swap_exact_record_not_commute (swap conserves, records, and fails both side conditions),
+      sigmaX_no_exact_conserving_record (the no-go in use). The record-layer twin is
+      no_joint_hilbert_map in Empirical/CSD/WignerArakiYanase.lean, stated at the level of any
+      joint lift so that base back-reaction cannot invalidate it. Ozawa's quantitative form,
+      bounding the measurement error below by the inverse apparatus variance, is not formalised.
+    person: >
+      Eugene Wigner raised the problem in 1952 in a paper on the measurement of quantum
+      observables, and Huzihiro Araki and Mutsuo Yanase gave the general theorem in 1960, with
+      Yanase adding the condition on the pointer states in 1961. All three were thinking about
+      whether the measurement postulate is consistent with the rest of physics rather than
+      about any practical limitation.
+
+      Masanao Ozawa turned the structural theorem into a quantitative one in 2002, showing that
+      a gate failing to commute with a conserved charge has a fidelity floor set by the
+      control system's charge variance, which is the form the result takes in quantum
+      computing.
+    term: Wigner-Araki-Yanase theorem
+    eponyms: [Araki, Yanase]
+    status: proved-in-corpus
+    lean:
+      module: CsdLean4/Empirical/QM/WignerArakiYanase.lean
+      theorem: wigner_araki_yanase
+    related: [ozawa-error-disturbance, pointer-basis, record-layer, robertson-uncertainty, luders-rule]
+    external:
+      - text: "Araki-Yanase, Measurement of quantum mechanical operators (Phys. Rev. 120, 622)"
+        url: https://journals.aps.org/pr/abstract/10.1103/PhysRev.120.622

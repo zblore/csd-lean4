@@ -13,6 +13,10 @@ public import Mathlib.Tactic.Ring
 # The carry-clean (Cuccaro) ripple-carry adder — in-place, ancilla-restoring
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/reversible-adder/
+Plain-language, CSD-role and formal statements of the reversible adder, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The single highest-leverage reversible gadget the corpus lacked: an **in-place, ancilla-restoring**
 ripple-carry adder (Cuccaro, Draper, Kutin, Moulton 2004). Unlike `rippleCirc` / `cRippleCirc`
 (which thread an explicit Θ(n)-wire carry chain `C` and leave its top carry dirty), the Cuccaro adder

@@ -17,6 +17,10 @@ public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
 **Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #14(a), the first brick of
 active error correction.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/knill-laflamme/
+Plain-language, CSD-role and formal statements of the Knill-Laflamme conditions, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 A **code** is an orthogonal projector `P` on a finite-dimensional Hilbert space; a family of
 **error operators** `E i` is **correctable** on the code when some quantum channel `R` (the
 recovery) undoes every error on every code state: `R (E i ρ E iᴴ) = λ i • ρ` whenever

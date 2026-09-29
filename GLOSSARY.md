@@ -11,6 +11,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 
 | Term | Lean anchor | Status |
 |---|---|---|
+| [Aharonov-Bohm effect](https://glossary.constraintsurfacedynamics.com/aharonov-bohm/) | `flux_not_gauge_artefact` | proved-in-corpus |
 | [amplitude amplification](https://glossary.constraintsurfacedynamics.com/amplitude-amplification/) | `amplitude_amplification` | proved-in-corpus |
 | [amplitude estimation](https://glossary.constraintsurfacedynamics.com/amplitude-estimation/) | `amplitude_estimation` | proved-in-corpus |
 | [Bargmann invariant](https://glossary.constraintsurfacedynamics.com/bargmann/) | `exists_continuous_phase_trivialisation` | proved-in-corpus |
@@ -26,11 +27,14 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Carving](https://glossary.constraintsurfacedynamics.com/carving/) | `` | definition |
 | [CGLMP inequality](https://glossary.constraintsurfacedynamics.com/cglmp-inequality/) | `` | standard-mathematics |
 | [Choi's theorem](https://glossary.constraintsurfacedynamics.com/choi-theorem/) | `choi_iff_posSemidef` | proved-in-corpus |
+| [Clifford plus T](https://glossary.constraintsurfacedynamics.com/clifford-t/) | `exists_phase_mem_cliffordTmLim` | proved-in-corpus |
 | [Collapse](https://glossary.constraintsurfacedynamics.com/collapse/) | `no_exact_collapse` | proved-in-corpus |
+| [concatenated code](https://glossary.constraintsurfacedynamics.com/concatenated-code/) | `concatMeasure_concatBad_le` | proved-in-corpus |
 | [Constraint surface](https://glossary.constraintsurfacedynamics.com/constraint-surface/) | `` | physical-postulate |
 | [Contextuality](https://glossary.constraintsurfacedynamics.com/contextuality/) | `no_compatible_global_chsh_assignment_realises_singlet` | proved-in-corpus |
 | [Copenhagen interpretation](https://glossary.constraintsurfacedynamics.com/copenhagen/) | `` | definition |
 | [Crooks fluctuation theorem](https://glossary.constraintsurfacedynamics.com/crooks-fluctuation-theorem/) | `crooks` | proved-in-corpus |
+| [Darboux theorem](https://glossary.constraintsurfacedynamics.com/darboux-theorem/) | `IsSymplectic.exists_openPartialHomeomorph_localRep_pullback_standard` | proved-in-corpus |
 | [De-isolation](https://glossary.constraintsurfacedynamics.com/de-isolation/) | `` | definition |
 | [Determinism](https://glossary.constraintsurfacedynamics.com/determinism/) | `` | definition |
 | [Deutsch-Jozsa algorithm](https://glossary.constraintsurfacedynamics.com/deutsch-jozsa/) | `` | standard-mathematics |
@@ -45,12 +49,14 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Entropy subadditivity](https://glossary.constraintsurfacedynamics.com/entropy-subadditivity/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
 | [Epistemic measure](https://glossary.constraintsurfacedynamics.com/epistemic-measure/) | `epistemicMeasure_eq_disintegration` | proved-in-corpus |
 | [Euclidean space](https://glossary.constraintsurfacedynamics.com/euclidean-space/) | `` | standard-mathematics |
+| [Feynman-Kac formula](https://glossary.constraintsurfacedynamics.com/feynman-kac/) | `feynmanKac` | proved-in-corpus |
 | [Fibre](https://glossary.constraintsurfacedynamics.com/fibre/) | `` | definition |
 | [Field arena](https://glossary.constraintsurfacedynamics.com/field-arena/) | `` | definition |
 | [First-passage race](https://glossary.constraintsurfacedynamics.com/first-passage-race/) | `hasRaceProperty_iff_exists_expMeasure` | proved-in-corpus |
 | [Fisher information](https://glossary.constraintsurfacedynamics.com/fisher-information/) | `` | standard-mathematics |
 | [Fisher-Rao metric](https://glossary.constraintsurfacedynamics.com/fisher-rao-metric/) | `fsMetric_eq_fisherRaoInner` | proved-in-corpus |
 | [Fubini-Study measure](https://glossary.constraintsurfacedynamics.com/fubini-study-measure/) | `fsMeasure_unique` | proved-in-corpus |
+| [geometric phase](https://glossary.constraintsurfacedynamics.com/geometric-phase/) | `geometricPhase_of_schrodinger` | proved-in-corpus |
 | [GHZ state](https://glossary.constraintsurfacedynamics.com/ghz-state/) | `no_product_partition_realises_ghz` | proved-in-corpus |
 | [Gibbs state](https://glossary.constraintsurfacedynamics.com/gibbs-state/) | `` | standard-mathematics |
 | [Gisin's theorem](https://glossary.constraintsurfacedynamics.com/gisin-theorem/) | `` | standard-mathematics |
@@ -59,6 +65,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Grover's algorithm](https://glossary.constraintsurfacedynamics.com/grover-algorithm/) | `` | standard-mathematics |
 | [Haar measure](https://glossary.constraintsurfacedynamics.com/haar-measure/) | `` | standard-mathematics |
 | [Hadamard test](https://glossary.constraintsurfacedynamics.com/hadamard-test/) | `` | standard-mathematics |
+| [Helstrom bound](https://glossary.constraintsurfacedynamics.com/helstrom-bound/) | `errorProb_helstromTest` | proved-in-corpus |
 | [Hermitian operator](https://glossary.constraintsurfacedynamics.com/hermitian-operator/) | `` | standard-mathematics |
 | [Hidden variables](https://glossary.constraintsurfacedynamics.com/hidden-variables/) | `no_product_partition_realises_singlet` | proved-in-corpus |
 | [Hilbert space](https://glossary.constraintsurfacedynamics.com/hilbert-space/) | `` | standard-mathematics |
@@ -77,7 +84,9 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Kahler form](https://glossary.constraintsurfacedynamics.com/kahler-form/) | `fsForm_isKahler` | proved-in-corpus |
 | [Klein's inequality](https://glossary.constraintsurfacedynamics.com/klein-inequality/) | `klein_inequality` | proved-in-corpus |
 | [KMS condition](https://glossary.constraintsurfacedynamics.com/kms-condition/) | `thermal_kms` | proved-in-corpus |
+| [Knill-Laflamme conditions](https://glossary.constraintsurfacedynamics.com/knill-laflamme/) | `knillLaflamme_iff` | proved-in-corpus |
 | [Kochen-Specker theorem](https://glossary.constraintsurfacedynamics.com/kochen-specker/) | `` | standard-mathematics |
+| [Koopman operator](https://glossary.constraintsurfacedynamics.com/koopman-operator/) | `koopmanUnitary` | proved-in-corpus |
 | [Kronecker product](https://glossary.constraintsurfacedynamics.com/kronecker-product/) | `` | standard-mathematics |
 | [Landauer's principle](https://glossary.constraintsurfacedynamics.com/landauer-principle/) | `landauer_bound` | proved-in-corpus |
 | [Leggett-Garg inequality](https://glossary.constraintsurfacedynamics.com/leggett-garg/) | `` | standard-mathematics |
@@ -90,6 +99,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Luders rule](https://glossary.constraintsurfacedynamics.com/luders-rule/) | `pointer_luders_born_prep` | proved-in-corpus |
 | [Mach-Zehnder interferometer](https://glossary.constraintsurfacedynamics.com/mach-zehnder/) | `` | standard-mathematics |
 | [magic state](https://glossary.constraintsurfacedynamics.com/magic-state/) | `tGate_conj_X_not_pauli` | proved-in-corpus |
+| [magic-state distillation](https://glossary.constraintsurfacedynamics.com/magic-state-distillation/) | `tendsto_distillIter` | proved-in-corpus |
 | [Malus's law](https://glossary.constraintsurfacedynamics.com/malus-law/) | `` | standard-mathematics |
 | [Many-to-one projection](https://glossary.constraintsurfacedynamics.com/many-to-one-projection/) | `` | definition |
 | [Many-Worlds interpretation](https://glossary.constraintsurfacedynamics.com/many-worlds/) | `` | definition |
@@ -99,6 +109,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Mermin inequality](https://glossary.constraintsurfacedynamics.com/mermin-inequality/) | `` | standard-mathematics |
 | [Moment map](https://glossary.constraintsurfacedynamics.com/moment-map/) | `` | standard-mathematics |
 | [Naimark dilation](https://glossary.constraintsurfacedynamics.com/naimark-dilation/) | `povm_born_eq_dilated_volume_uncond` | proved-in-corpus |
+| [Nelson stochastic mechanics](https://glossary.constraintsurfacedynamics.com/nelson-stochastic-mechanics/) | `nelson_fokkerPlanck` | proved-in-corpus |
 | [No exact finite-dimensional CCR](https://glossary.constraintsurfacedynamics.com/no-exact-finite-ccr/) | `no_exact_finite_ccr` | proved-in-corpus |
 | [No-signalling](https://glossary.constraintsurfacedynamics.com/no-signalling/) | `composite_no_signalling` | proved-in-corpus |
 | [Ontic vs epistemic](https://glossary.constraintsurfacedynamics.com/ontic-vs-epistemic/) | `` | definition |
@@ -120,6 +131,7 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Ramsey interferometry](https://glossary.constraintsurfacedynamics.com/ramsey-interferometry/) | `` | standard-mathematics |
 | [Record layer](https://glossary.constraintsurfacedynamics.com/record-layer/) | `` | definition |
 | [Record light cone](https://glossary.constraintsurfacedynamics.com/record-light-cone/) | `record_lightcone` | proved-in-corpus |
+| [reversible adder](https://glossary.constraintsurfacedynamics.com/reversible-adder/) | `cuccaroAdd_correct` | proved-in-corpus |
 | [Robertson uncertainty relation](https://glossary.constraintsurfacedynamics.com/robertson-uncertainty/) | `kahler_robertson_ontic_variance` | proved-in-corpus |
 | [Schrodinger equation](https://glossary.constraintsurfacedynamics.com/schrodinger-equation/) | `` | standard-mathematics |
 | [Schrodinger from records](https://glossary.constraintsurfacedynamics.com/schrodinger-from-records/) | `sigmaFlow_schrodinger_form` | proved-in-corpus |
@@ -129,17 +141,24 @@ Lean tree are kept symmetric with this index by `scripts/check-glossary.sh`.
 | [Single trajectory](https://glossary.constraintsurfacedynamics.com/single-trajectory/) | `` | definition |
 | [Singlet contextual model](https://glossary.constraintsurfacedynamics.com/singlet-contextual-model/) | `c1_singlet_contextual_capstone` | proved-in-corpus |
 | [Spontaneous collapse (GRW)](https://glossary.constraintsurfacedynamics.com/spontaneous-collapse/) | `` | definition |
+| [stabiliser code](https://glossary.constraintsurfacedynamics.com/stabiliser-code/) | `stabProjector_rank` | proved-in-corpus |
 | [Steane code](https://glossary.constraintsurfacedynamics.com/steane-code/) | `steaneZero_stabilised` | proved-in-corpus |
 | [Stern-Gerlach experiment](https://glossary.constraintsurfacedynamics.com/stern-gerlach/) | `` | standard-mathematics |
 | [Stinespring dilation](https://glossary.constraintsurfacedynamics.com/stinespring-dilation/) | `apply_eq_traceRight_stinespring` | proved-in-corpus |
 | [Stone's theorem](https://glossary.constraintsurfacedynamics.com/stone-theorem/) | `Matrix.StoneC1.stone_continuous` | proved-in-corpus |
 | [swap test](https://glossary.constraintsurfacedynamics.com/swap-test/) | `` | standard-mathematics |
+| [threshold theorem](https://glossary.constraintsurfacedynamics.com/threshold-theorem/) | `exists_level_circuitMeasure_lt` | proved-in-corpus |
+| [Toffoli gate](https://glossary.constraintsurfacedynamics.com/toffoli-gate/) | `cost_comp_toffoli_count` | proved-in-corpus |
+| [transversal gate](https://glossary.constraintsurfacedynamics.com/transversal-gate/) | `steane_faultyHadamard_recovery` | proved-in-corpus |
 | [Tsirelson bound](https://glossary.constraintsurfacedynamics.com/tsirelson-bound/) | `qm_chsh_le_tsirelson` | proved-in-corpus |
+| [two-level unitary](https://glossary.constraintsurfacedynamics.com/two-level-unitary/) | `exists_twoLevel_prod` | proved-in-corpus |
 | [Typicality](https://glossary.constraintsurfacedynamics.com/typicality/) | `freq_tendsto_of_iid` | proved-in-corpus |
 | [Typicality volume](https://glossary.constraintsurfacedynamics.com/typicality-volume/) | `born_frequency_convergence_N_uncond` | proved-in-corpus |
 | [von Neumann entropy](https://glossary.constraintsurfacedynamics.com/von-neumann-entropy/) | `vonNeumannEntropy_subadditive` | proved-in-corpus |
 | [What exactly is machine-checked in CSD?](https://glossary.constraintsurfacedynamics.com/what-is-machine-checked/) | `` | question |
 | [What happens during a measurement in CSD?](https://glossary.constraintsurfacedynamics.com/what-happens-during-measurement/) | `` | question |
 | [Wick's theorem](https://glossary.constraintsurfacedynamics.com/wick-theorem/) | `timeFourPoint_wick` | proved-in-corpus |
+| [Wigner function](https://glossary.constraintsurfacedynamics.com/wigner-function/) | `wigner_fourier` | proved-in-corpus |
 | [Wigner rigidity](https://glossary.constraintsurfacedynamics.com/wigner-rigidity/) | `wigner_rigidity` | proved-in-corpus |
+| [Wigner-Araki-Yanase theorem](https://glossary.constraintsurfacedynamics.com/way-theorem/) | `wigner_araki_yanase` | proved-in-corpus |
 | [Witness and engine](https://glossary.constraintsurfacedynamics.com/witness-and-engine/) | `` | definition |

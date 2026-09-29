@@ -15,6 +15,10 @@ public import Mathlib.Analysis.SpecialFunctions.Log.Base
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate). BACKLOG #62, its
 probabilistic half.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/threshold-theorem/
+Plain-language, CSD-role and formal statements of the threshold theorem, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 `CodeCapacityThreshold.lean` bounds the failure of **one** encoded block. A computation is a circuit
 of many locations, each replaced by a gadget, and it fails when *any* of them fails. This module is
 that step: the fault patterns of a circuit of `N` locations whose level-`k` gadgets have `L` fault

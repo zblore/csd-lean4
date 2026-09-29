@@ -15,6 +15,10 @@ public import Mathlib.Probability.ConditionalProbability
 **Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #78, part (d) of `R-004`
 (`specs/magic-plan.md`, "The split"); closes `R-004`.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/magic-state-distillation/
+Plain-language, CSD-role and formal statements of magic-state distillation, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The fifteen injections (BACKLOG #66–#67) leave independent `Z`-errors of rate `p` on the encoded
 magic state: the error pattern `e ∈ 𝔽₂¹⁵` is distributed by the product measure `patternMeasure ν`
 of fifteen copies of a Bernoulli `ν` with `ν {1} = p`. The `X`-checks accept exactly the undetected

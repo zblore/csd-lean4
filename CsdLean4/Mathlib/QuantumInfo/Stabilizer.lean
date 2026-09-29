@@ -14,6 +14,10 @@ public import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
 
 **Category:** 1-Mathlib (CSD-free).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/stabiliser-code/
+Plain-language, CSD-role and formal statements of stabiliser codes, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 The stabiliser layer over the Pauli algebra (plan `specs/gottesman-knill-plan.md`, GK-3),
 in the corpus's hypothesis-driven concrete style: a **stabiliser family** is indexed by
 `𝔽₂^m` directly — `𝔽₂`-linear label maps `A B : 𝔽₂^m → 𝔽₂ⁿ` and a sign function

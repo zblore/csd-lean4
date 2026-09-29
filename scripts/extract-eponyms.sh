@@ -54,7 +54,10 @@ Stern Gerlach Tsirelson Gisin Sorkin Prokhorov Cauchy Schwarz Lipschitz Borel
 Lebesgue Radon Nikodym Birkhoff Stone Kronecker Loewner Löwner Grothendieck
 Nagasawa Madelung Bohm Koopman Nelson Fisher Rao Bloch Pauli Everett Planck
 Euclidean Hermitian Hermite Euclid Poisson Jacobi Noether Casimir Frobenius Weyl
-Holevo Stinespring Klein Kraus Knill Laflamme Picard Lindelof Lindelöf Jarzynski Crooks"
+Holevo Stinespring Klein Kraus Knill Laflamme Picard Lindelof Lindelöf Jarzynski Crooks
+Berry Aharonov Steane Hamming Clifford Gottesman Preskill Aliferis Reed Muller Givens
+Solovay Kitaev Darboux Moser Feynman Kac Nielsen Chuang Cuccaro Gidney Trotter Duhamel
+Hadamard Fourier Toffoli Uhlmann Araki Yanase Helstrom"
 
 FILES="$(git ls-files "$SRC/**/*.lean")"
 [ -z "$FILES" ] && { echo "  FAIL  no source files found"; exit 1; }

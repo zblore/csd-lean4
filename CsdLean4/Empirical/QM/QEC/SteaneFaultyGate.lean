@@ -17,6 +17,10 @@ public import CsdLean4.Mathlib.QuantumInfo.TransversalClifford
 **Category:** 3-Local (Empirical, QM twin). BACKLOG #62 (a) and (b): the noise sits on the
 **gates** now, not on resting qubits, and the transversal gadgets are the code's logical gates.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/transversal-gate/
+Plain-language, CSD-role and formal statements of transversal gates, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 Code capacity (#51, #86) puts the errors on the seven qubits of a block and keeps every gate
 perfect. The circuit-level model of Aharonov–Ben-Or puts a fault at every *location* of the circuit
 — each gate of each gadget. This module does the first case of that: a **transversal gadget**, one

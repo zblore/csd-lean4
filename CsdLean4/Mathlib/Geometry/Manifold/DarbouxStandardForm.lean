@@ -13,6 +13,10 @@ public import CsdLean4.Mathlib.LinearAlgebra.BilinearForm.SymplecticBasis
 
 **Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #50, Darboux residue (b).
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/darboux-theorem/
+Plain-language, CSD-role and formal statements of Darboux's theorem, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 `Geometry/Manifold/Darboux.lean` produces, by Moser's trick, a `C¹` chart in which a closed
 non-degenerate 2-form is the **constant** form `ω(x₀)`. This file composes that chart with the
 linear change of coordinates given by a **symplectic basis** of `ω(x₀)`

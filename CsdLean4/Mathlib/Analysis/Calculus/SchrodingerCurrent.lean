@@ -19,6 +19,10 @@ public import Mathlib.Analysis.Complex.Basic
 
 **Category:** 1-Mathlib (CSD-free; staged for upstream). BACKLOG #46.
 
+**Glossary:** https://glossary.constraintsurfacedynamics.com/nelson-stochastic-mechanics/
+Plain-language, CSD-role and formal statements of Nelson stochastic mechanics, with this module as
+the Lean anchor. Kept symmetric by `scripts/check-glossary.sh`.
+
 For a wavefunction `ψ(t, x)` solving `i ∂_t ψ = −½ ∂²_x ψ + V ψ` with `V` real (units `ℏ = m = 1`),
 the Born density `ρ = |ψ|²` and the current `J = Im(ψ̄ ∂_x ψ)` satisfy
 
