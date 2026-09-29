@@ -8832,7 +8832,7 @@ entries:
       and the same session as Shor's factoring paper, which cites it as the trigger. Simon
       spent most of his subsequent career at Microsoft Research working on cryptography.
     term: Simon's algorithm
-    eponyms: [Simon]
+    eponyms: []
     status: standard-mathematics
     related: [deutsch-jozsa, bernstein-vazirani, shor-algorithm, quantum-fourier-transform, grover-algorithm]
     external:
@@ -9794,7 +9794,8 @@ entries:
       independent labels. stabProjector_rank identifies P with a linear projection onto its
       range, so Mathlib's rank-equals-trace for projections gives dimension 2^(n - m) for
       the code space, and uniqueness up to scalar when m = n (stabState_unique). The
-      measurement section proves determinism (meas_deterministic), vanishing expectation and
+      measurement section proves that the outcome is fixed (meas_deterministic), vanishing
+      expectation and
       probability one half against an anticommuting element (meas_expectation_zero,
       meas_prob_half), and the update rules (pauliOp_measProj, meas_update_fixes). No
       measurement dynamics is claimed; the Born weights here are bookkeeping on the
@@ -10345,7 +10346,7 @@ entries:
       depth one to CCX, one controlled-not to CX, three to a swap and nothing to X, and
       circuitCost reads each additive field off the gate list. cost_comp_toffoli_count is
       exact additivity of the Toffoli count under composition,
-      cost_comp_toffoli_depth_le is subadditivity of depth, and cost_inverse_toffoli says
+      cost_comp_toffoli_depth_le bounds depth subadditively, and cost_inverse_toffoli says
       inverting a circuit preserves the count.
 
       There's deliberately no AddMonoid instance on the cost record, since the width fields
@@ -10669,7 +10670,7 @@ entries:
       and the loop phase it identifies is the same object that appears throughout gauge theory
       as a Wilson loop.
     term: Aharonov-Bohm effect
-    eponyms: [Aharonov]
+    eponyms: []
     status: proved-in-corpus
     lean:
       module: CsdLean4/Empirical/QM/AharonovBohm.lean
@@ -10776,8 +10777,8 @@ entries:
       by composition, and that action preserves the natural notion of length among them, so it
       is unitary, and the flow's group structure becomes a one-parameter group of unitary
       operators. Superposition of observables, spectra, eigenvalues and the rest of the
-      toolkit all apply, which is why this picture is now standard in the study of complex
-      classical systems.
+      toolkit all apply, which is why this picture is now standard in work on complex classical
+      systems.
 
       What classical mechanics doesn't have is a noncommutative algebra of observables.
       Classical observables multiply pointwise, in either order, and composition with the flow
