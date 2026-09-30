@@ -42,7 +42,16 @@ diagonal multiplication operator on a Hilbert basis and no spectrum of one
 (MATHLIB-ABSENT(LinearPMap.diagonal, LinearPMap.spectrum)), and no unbounded spectral theory to put
 them in (MATHLIB-ABSENT(file:Mathlib/Analysis/InnerProductSpace/UnboundedSpectrum)). So "spectrum"
 here means the set of eigenvalues *of the Fourier modes*, `Set.range (circleEigval Φ)`, and every
-theorem below is about that set; `specs/BACKLOG.md` #93 prices the packaging.
+theorem below is about that set.
+
+⚠️ The missing layer is **half built** as of 2026-09-30:
+`Mathlib/Analysis/InnerProductSpace/DiagonalOperator.lean` (`BACKLOG.md` #93(a)) has the diagonal
+operator of a real weight family on a Hilbert basis, proves it self-adjoint
+(`HilbertBasis.isSelfAdjoint_diagOp`) and computes its spectrum as the closure of the weight set
+(`HilbertBasis.spectrum_diagOp`). What still separates this module from that one is the Fourier side,
+not the operator side: `H²(S¹)` as a domain and the identity `fourierCoeff (deriv f) n = i n ·
+fourierCoeff f n`, which the pin has in no form (#93(b)). Until that lands, nothing here is a
+statement about an operator.
 `circleMode_eq_fourier` is the bridge that makes the family Mathlib's own: `fourierBasis` is a
 Hilbert basis of `L²(AddCircle 2π)`, so the modes are complete and the twist does not change them —
 only their levels — but the step from that to "these are all the spectral values of a self-adjoint

@@ -9503,4 +9503,72 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.AharonovBohmCircle.gauge_periodic_iff
 
+-- Diagonal operators on a Hilbert basis (BACKLOG #93(a)): the unbounded self-adjoint
+-- operator with a prescribed spectrum. The `LinearPMap` adjoint machinery is Mathlib's;
+-- the resolvent set and the spectrum of an operator with a domain are defined here.
+
+/-- info: 'Memℓp.mul_of_bddAbove' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Memℓp.mul_of_bddAbove
+
+/-- info: 'lp.norm_mul_le_of_bddAbove' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms lp.norm_mul_le_of_bddAbove
+
+/-- info: 'HilbertBasis.basis_mem_diagDomain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.basis_mem_diagDomain
+
+/-- info: 'HilbertBasis.dense_diagDomain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.dense_diagDomain
+
+/-- info: 'HilbertBasis.repr_diagOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.repr_diagOp
+
+/-- info: 'HilbertBasis.diagOp_apply_basis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.diagOp_apply_basis
+
+/-- info: 'HilbertBasis.diagOp_isFormalAdjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.diagOp_isFormalAdjoint
+
+/-- info: 'HilbertBasis.repr_adjoint_diagOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.repr_adjoint_diagOp
+
+/-- info: 'HilbertBasis.isSelfAdjoint_diagOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.isSelfAdjoint_diagOp
+
+/-- info: 'LinearPMap.bijective_of_isResolventAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.bijective_of_isResolventAt
+
+/-- info: 'LinearPMap.mem_spectrum_of_apply_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.mem_spectrum_of_apply_eq_smul
+
+/-- info: 'HilbertBasis.norm_diagCLM_apply_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.norm_diagCLM_apply_le
+
+/-- info: 'HilbertBasis.mem_resolventSet_diagOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.mem_resolventSet_diagOp
+
+/-- info: 'HilbertBasis.closure_range_subset_spectrum_diagOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.closure_range_subset_spectrum_diagOp
+
+/-- info: 'HilbertBasis.spectrum_diagOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.spectrum_diagOp
+
+/-- info: 'HilbertBasis.mem_spectrum_diagOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HilbertBasis.mem_spectrum_diagOp
+
 end CSD.Tests.AxiomAudit

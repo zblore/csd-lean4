@@ -635,6 +635,7 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerWedge
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPluriharmonic
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhase
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhaseCurvature
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.DiagonalOperator
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Polarization
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.ProjectionPackage
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Descent
