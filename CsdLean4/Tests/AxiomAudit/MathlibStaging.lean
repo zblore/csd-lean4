@@ -9451,4 +9451,56 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.AharonovBohm.exists_eq_of_range_ringEigval_eq
 
+-- Aharonov–Bohm on the circle (BACKLOG #90): the continuum twin of the ring above. The
+-- Fourier modes are Mathlib's own (`circleMode_eq_fourier`), the twisted eigenvalue equation
+-- is pointwise on them, and the determination theorem is about `Set.range (circleEigval Φ)`.
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.circleMode_eq_fourier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.circleMode_eq_fourier
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.circleMode_periodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.circleMode_periodic
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.hasDerivAt_circleMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.hasDerivAt_circleMode
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.twisted_deriv_circleMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.twisted_deriv_circleMode
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.hasDerivAt_twisted_circleMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.hasDerivAt_twisted_circleMode
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.twisted_eigen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.twisted_eigen
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.sq_sub_round_le_circleEigval' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.sq_sub_round_le_circleEigval
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.isLeast_range_circleEigval' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.isLeast_range_circleEigval
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.range_circleEigval_add_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.range_circleEigval_add_one
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.range_circleEigval_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.range_circleEigval_neg
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.exists_eq_of_range_circleEigval_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.exists_eq_of_range_circleEigval_eq
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.gauge_periodic_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.gauge_periodic_iff
+
 end CSD.Tests.AxiomAudit

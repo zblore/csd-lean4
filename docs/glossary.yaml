@@ -11124,8 +11124,16 @@ entries:
       genuinely different from none, since no change of basis carries one three-site ring to
       the other, and yet the potential remains unobservable. The effect also sits next to the
       geometric phase, being the same holonomy idea with the loop in space rather than in the
-      space of states. The honest boundary is that this is a ring of sites rather than a
-      solenoid, with no double slit, no interference pattern and no continuum limit, and that
+      space of states.
+
+      Both halves also hold in the textbook continuum picture, a particle on a circle whose
+      derivative carries the flux as a twist, where the levels are squared distances from each
+      whole number to the flux. There the lowest level reads the flux off, rather than the
+      highest as on the ring, and the gauge factor that removes the twist is a function on the
+      circle only when the flux is a whole quantum, which is why the levels move at all. The
+      honest boundary is that the two pictures are analogues rather than one derived from the
+      other, as nothing takes a limit of large rings, and that this is a ring of sites and a bare
+      circle rather than a solenoid, with no double slit and no interference pattern, and that
       nothing here is CSD-specific.
     mathematical: >
       The linear algebra is AharonovBohmRing.lean: N sites with Peierls phases, levels 2
@@ -11145,9 +11153,19 @@ entries:
       range_ringEigval_neg shows the sign really is invisible, so that ambiguity is the truth rather
       than slack in the proof.
 
+      The continuum twin is AharonovBohmCircle.lean, on the circle of circumference 2 pi with the
+      twisted derivative: twisted_eigen is the eigenvalue equation for the Fourier modes with
+      levels (n - Phi)^2, isLeast_range_circleEigval identifies the ground level as the squared
+      distance from the flux to the nearest whole number, exists_eq_of_range_circleEigval_eq
+      determines the flux from the levels modulo a quantum and up to sign, and gauge_periodic_iff
+      says the gauge factor is single-valued on the circle exactly when the flux is whole.
+      circleMode_eq_fourier identifies the modes with Mathlib's own Fourier family.
+
       The Peierls substitution is the model's definition rather than a derived statement, so
       the sentence that the field vanishes on the ring is an input. The continuum solenoid and
-      the interference form are not formalised.
+      the interference form are not formalised, and neither is the twisted Laplacian as a
+      self-adjoint operator with a domain, so on the circle side the spectrum means the set of
+      levels of the Fourier modes.
     person: >
       Yakir Aharonov and David Bohm published the effect in 1959 at Bristol, and Werner
       Ehrenberg and Raymond Siday had found it a decade earlier in 1949 in a paper on electron

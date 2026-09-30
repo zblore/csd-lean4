@@ -1847,4 +1847,12 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.AharonovBohm.flux_determined_by_spectrum
 
+/-- info: 'CSD.Empirical.QM.AharonovBohm.flux_determined_by_circle_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.AharonovBohm.flux_determined_by_circle_spectrum
+
+/-- info: 'CSD.Empirical.QM.AharonovBohm.gauge_removable_iff_flux_quantum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.AharonovBohm.gauge_removable_iff_flux_quantum
+
 end CSD.Tests.AxiomAudit

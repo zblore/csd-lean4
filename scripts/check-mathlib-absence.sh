@@ -111,6 +111,14 @@ for f in sources:
     except OSError:
         continue
     for i, line in enumerate(text.splitlines()):
+        # A tag is parsed line by line, so one wrapped across a line break would satisfy the
+        # section-C window test (silencing the warning) while section A never checks its tokens.
+        # Found 2026-09-30 by counting sentinels before and after adding a wrapped tag: the total
+        # did not move. Fail loudly instead.
+        if line.count('MATHLIB-ABSENT(') != len(tag_re.findall(line)):
+            fails.append(f'A: {rel}:{i+1}: a MATHLIB-ABSENT( tag does not close on its own line. '
+                         f'Tags are parsed one line at a time, so a wrapped tag is never checked — '
+                         f'keep the whole tag, closing bracket included, on one line.')
         for m in tag_re.finditer(line):
             toks = [t.strip() for t in m.group(1).split(',') if t.strip()]
             if not toks:

@@ -5,6 +5,7 @@ Authors: Zayn Blore
 -/
 module
 
+public import CsdLean4.Mathlib.QuantumInfo.AharonovBohmCircle
 public import CsdLean4.Mathlib.QuantumInfo.AharonovBohmRing
 
 /-!
@@ -38,13 +39,30 @@ its gauge covariance. This module reads those theorems as the experiment.
   ring size, two fluxes with the same level set differ by a whole quantum or are reflections of one
   another. `flux_not_gauge_artefact` exhibits one pair that the spectrum tells apart; this says the
   spectrum tells *every* pair apart, up to exactly the two invisible operations.
+* ★★★ `flux_determined_by_circle_spectrum` and ★★ `gauge_removable_iff_flux_quantum` — **the same
+  two halves of the effect in the textbook continuum model**, a particle on the circle with the
+  twisted derivative `∂ − iΦ`: the levels `(n − Φ)²` determine the flux modulo a quantum and up to
+  sign, and the gauge factor that removes the twist is single-valued on the circle exactly when the
+  flux is a whole quantum. `Mathlib/QuantumInfo/AharonovBohmCircle.lean` is the linear algebra.
 
 ## Honest scope
 
 ⚠️ A lattice ring, not a solenoid: the flux enters through Peierls' substitution, which this model
 takes as its definition, and "the field vanishes on the ring" is a statement about the model's
-inputs, not a derived one. No double-slit, no interference pattern, no continuum limit
+inputs, not a derived one. No double-slit and no interference pattern
 (`specs/berry-phase-scoping.md` BP-4).
+
+⚠️ **The two models are analogues, not a limit.** The circle statements are proved about the circle,
+from its own definition of the twist; nothing here derives them as an `N → ∞` limit of the ring, and
+the flux quantum, the levels, and even which end of the spectrum reads the flux all differ between
+the two. Reading the pair as one effect in two formulations is a judgement about the physics, not a
+theorem of this corpus.
+
+⚠️ No unbounded-operator theory on the circle side: `−(∂ − iΦ)²` is iterated differentiation of the
+Fourier modes, not a self-adjoint operator with a domain, so "the spectrum" there means the set of
+levels of those modes. `QuantumInfo.AharonovBohmCircle.circleMode_eq_fourier` identifies them with
+Mathlib's `fourier` family, whose completeness in `L²` is `fourierBasis`; the step from that to a
+spectral theorem is not taken.
 
 ⚠️ Nothing here is CSD-specific: the module records that the corpus reproduces the effect, which is
 what the empirical-twin ledger asks of it.
@@ -86,6 +104,29 @@ theorem flux_determined_by_spectrum {N : ℕ} (hN : 0 < N) {Φ Φ' : ℝ}
       = Set.range (QuantumInfo.AharonovBohm.ringEigval N Φ')) :
     ∃ k : ℤ, Φ' = Φ + 2 * π * k ∨ Φ' = -Φ + 2 * π * k :=
   QuantumInfo.AharonovBohm.exists_eq_of_range_ringEigval_eq hN h
+
+/-! ### The same effect on the circle -/
+
+/-- ★★★ **The flux is observable in the continuum model too.** A particle on the circle with the
+twisted derivative `∂ − iΦ` has levels `(n − Φ)²`, and those determine the flux exactly as far as it
+can be determined: two fluxes with the same level set differ by a whole quantum, or are reflections
+of one another. The flux quantum here is `1` rather than `2π`, and it is the *ground* level, not the
+top one, that reads the flux — `QuantumInfo.AharonovBohmCircle.isLeast_range_circleEigval` — so this
+is the ring's `flux_determined_by_spectrum` in a different parametrisation, not an instance of it. -/
+theorem flux_determined_by_circle_spectrum {Φ Φ' : ℝ}
+    (h : Set.range (QuantumInfo.AharonovBohmCircle.circleEigval Φ)
+      = Set.range (QuantumInfo.AharonovBohmCircle.circleEigval Φ')) :
+    ∃ k : ℤ, Φ' = Φ + k ∨ Φ' = -Φ + k :=
+  QuantumInfo.AharonovBohmCircle.exists_eq_of_range_circleEigval_eq h
+
+/-- ★★ **The vector potential is removable, the flux is not** — the continuum form. The gauge factor
+`e^{iΦx}` that turns the twisted derivative into the plain one is a function on the circle exactly
+when the flux is a whole quantum; at any other flux it is multivalued, which is why the levels move.
+`same_levels_of_gauge` is the lattice half of the same statement. -/
+theorem gauge_removable_iff_flux_quantum (Φ : ℝ) :
+    (∀ x : ℝ, QuantumInfo.AharonovBohmCircle.gaugeMode Φ (x + 2 * π)
+        = QuantumInfo.AharonovBohmCircle.gaugeMode Φ x) ↔ ∃ k : ℤ, Φ = k :=
+  QuantumInfo.AharonovBohmCircle.gauge_periodic_iff Φ
 
 /-! ### The levels move with the flux -/
 

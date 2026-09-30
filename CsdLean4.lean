@@ -71,6 +71,7 @@ public import CsdLean4.Mathlib.QuantumInfo.CliffordTAngle
 public import CsdLean4.Mathlib.QuantumInfo.SU2Rotation
 public import CsdLean4.Mathlib.QuantumInfo.RotatingFrame
 public import CsdLean4.Mathlib.QuantumInfo.AharonovBohmRing
+public import CsdLean4.Mathlib.QuantumInfo.AharonovBohmCircle
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.TwoLevel
 public import CsdLean4.Mathlib.QuantumInfo.MultiControlled
 public import CsdLean4.Mathlib.QuantumInfo.ControlledGate
