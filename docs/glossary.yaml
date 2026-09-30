@@ -11161,11 +11161,18 @@ entries:
       says the gauge factor is single-valued on the circle exactly when the flux is whole.
       circleMode_eq_fourier identifies the modes with Mathlib's own Fourier family.
 
+      On the circle side the operator is now genuine: CircleSobolev.lean has the twisted Laplacian
+      as a self-adjoint operator on the square-integrable functions, whose spectrum is the closure of
+      those levels, and exists_eq_of_spectrum_twistedOp_eq determines the flux from that spectrum
+      rather than from a chosen list of levels. The identification with the differential operator
+      holds on every twice-differentiable periodic function, which needed the classical fact that
+      differentiating multiplies the nth Fourier coefficient by i n.
+
       The Peierls substitution is the model's definition rather than a derived statement, so
       the sentence that the field vanishes on the ring is an input. The continuum solenoid and
-      the interference form are not formalised, and neither is the twisted Laplacian as a
-      self-adjoint operator with a domain, so on the circle side the spectrum means the set of
-      levels of the Fourier modes.
+      the interference form are not formalised, and the operator statement is not extended from
+      twice-differentiable functions to every element of its domain, which would need a Sobolev
+      embedding the library does not have.
     person: >
       Yakir Aharonov and David Bohm published the effect in 1959 at Bristol, and Werner
       Ehrenberg and Raymond Siday had found it a decade earlier in 1949 in a paper on electron

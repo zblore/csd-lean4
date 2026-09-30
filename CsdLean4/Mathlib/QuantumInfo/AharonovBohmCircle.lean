@@ -44,14 +44,15 @@ them in (MATHLIB-ABSENT(file:Mathlib/Analysis/InnerProductSpace/UnboundedSpectru
 here means the set of eigenvalues *of the Fourier modes*, `Set.range (circleEigval Φ)`, and every
 theorem below is about that set.
 
-⚠️ The missing layer is **half built** as of 2026-09-30:
-`Mathlib/Analysis/InnerProductSpace/DiagonalOperator.lean` (`BACKLOG.md` #93(a)) has the diagonal
-operator of a real weight family on a Hilbert basis, proves it self-adjoint
-(`HilbertBasis.isSelfAdjoint_diagOp`) and computes its spectrum as the closure of the weight set
-(`HilbertBasis.spectrum_diagOp`). What still separates this module from that one is the Fourier side,
-not the operator side: `H²(S¹)` as a domain and the identity `fourierCoeff (deriv f) n = i n ·
-fourierCoeff f n`, which the pin has in no form (#93(b)). Until that lands, nothing here is a
-statement about an operator.
+⚠️ **The missing layer is built, elsewhere.** As of 2026-09-30 the operator statements this module
+does not make are made in [`CircleSobolev.lean`](../Analysis/Fourier/CircleSobolev.lean)
+(`BACKLOG.md` #93, closed): `twistedOp Φ` is `−(∂ − iΦ)²` on `L²(ℝ/2πℤ)` as the diagonal operator
+of these levels, ★★★ `isSelfAdjoint_twistedOp` and ★★★ `spectrum_twistedOp` give self-adjointness and
+the honest spectrum, ★★★ `twistedOp_toL2` shows it acts on every `C²` periodic function exactly as
+the differential operator does, and ★★★ `exists_eq_of_spectrum_twistedOp_eq` is the determination
+theorem below with *spectrum* in place of *level set*. What stays true of **this** module is what it
+says: the eigenvalue equation here is pointwise on the modes, and `Set.range (circleEigval Φ)` is a
+level set, not a spectrum.
 `circleMode_eq_fourier` is the bridge that makes the family Mathlib's own: `fourierBasis` is a
 Hilbert basis of `L²(AddCircle 2π)`, so the modes are complete and the twist does not change them —
 only their levels — but the step from that to "these are all the spectral values of a self-adjoint
@@ -218,19 +219,22 @@ theorem range_circleEigval_neg (Φ : ℝ) :
 same level set differ by a whole quantum, or are reflections of one another in one. With
 `range_circleEigval_add_one` and `range_circleEigval_neg` the converse holds too, so this is the
 continuum twin of the ring's `exists_eq_of_range_ringEigval_eq`. -/
+theorem exists_eq_of_sq_sub_round_eq {Φ Φ' : ℝ}
+    (hsq : (Φ - round Φ) ^ 2 = (Φ' - round Φ') ^ 2) :
+    ∃ k : ℤ, Φ' = Φ + k ∨ Φ' = -Φ + k := by
+  have hfac : (Φ - (round Φ : ℝ) - (Φ' - (round Φ' : ℝ)))
+      * (Φ - (round Φ : ℝ) + (Φ' - (round Φ' : ℝ))) = 0 := by nlinarith [hsq]
+  rcases mul_eq_zero.mp hfac with heq | heq
+  · exact ⟨round Φ' - round Φ, Or.inl (by push_cast; linarith)⟩
+  · exact ⟨round Φ + round Φ', Or.inr (by push_cast; linarith)⟩
+
 theorem exists_eq_of_range_circleEigval_eq {Φ Φ' : ℝ}
     (h : Set.range (circleEigval Φ) = Set.range (circleEigval Φ')) :
     ∃ k : ℤ, Φ' = Φ + k ∨ Φ' = -Φ + k := by
   have hg := isLeast_range_circleEigval Φ
   have hg' := isLeast_range_circleEigval Φ'
   rw [h] at hg
-  have hsq : (Φ - round Φ) ^ 2 = (Φ' - round Φ') ^ 2 :=
-    le_antisymm (hg.2 hg'.1) (hg'.2 hg.1)
-  have hfac : (Φ - (round Φ : ℝ) - (Φ' - (round Φ' : ℝ)))
-      * (Φ - (round Φ : ℝ) + (Φ' - (round Φ' : ℝ))) = 0 := by nlinarith [hsq]
-  rcases mul_eq_zero.mp hfac with heq | heq
-  · exact ⟨round Φ' - round Φ, Or.inl (by push_cast; linarith)⟩
-  · exact ⟨round Φ + round Φ', Or.inr (by push_cast; linarith)⟩
+  exact exists_eq_of_sq_sub_round_eq (le_antisymm (hg.2 hg'.1) (hg'.2 hg.1))
 
 /-! ### The gauge that removes the flux -/
 

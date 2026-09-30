@@ -9639,4 +9639,64 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.integral_prod_wigner_sq
 
+-- The twisted Laplacian on L²(S¹) (BACKLOG #93(b)(c)): the Fourier-coefficient bridge for
+-- derivatives, the diagonalisation of −(∂ − iΦ)², and the flux determined by the spectrum of a
+-- self-adjoint operator rather than by a chosen level set.
+
+/-- info: 'QuantumInfo.AharonovBohmCircle.exists_eq_of_sq_sub_round_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohmCircle.exists_eq_of_sq_sub_round_eq
+
+/-- info: 'CircleFourier.fourierCoeffOn_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.fourierCoeffOn_add
+
+/-- info: 'CircleFourier.fourierCoeffOn_deriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.fourierCoeffOn_deriv
+
+/-- info: 'CircleFourier.fourierCoeffOn_deriv_two_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.fourierCoeffOn_deriv_two_pi
+
+/-- info: 'CircleFourier.fourierCoeffOn_twistedLap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.fourierCoeffOn_twistedLap
+
+/-- info: 'CircleFourier.isSelfAdjoint_twistedOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.isSelfAdjoint_twistedOp
+
+/-- info: 'CircleFourier.spectrum_twistedOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.spectrum_twistedOp
+
+/-- info: 'CircleFourier.twistedOp_apply_fourierBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.twistedOp_apply_fourierBasis
+
+/-- info: 'CircleFourier.twistedOp_apply_of_fourierCoeff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.twistedOp_apply_of_fourierCoeff
+
+/-- info: 'CircleFourier.periodic_deriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.periodic_deriv
+
+/-- info: 'CircleFourier.fourierCoeff_toL2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.fourierCoeff_toL2
+
+/-- info: 'CircleFourier.twistedOp_toL2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.twistedOp_toL2
+
+/-- info: 'CircleFourier.isLeast_norm_image_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.isLeast_norm_image_spectrum
+
+/-- info: 'CircleFourier.exists_eq_of_spectrum_twistedOp_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CircleFourier.exists_eq_of_spectrum_twistedOp_eq
+
 end CSD.Tests.AxiomAudit
