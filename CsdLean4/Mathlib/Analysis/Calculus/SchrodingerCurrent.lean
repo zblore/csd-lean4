@@ -33,7 +33,7 @@ and that one identity is what both single-trajectory formulations of quantum mec
 * **Bohm.** In polar form `ψ = R e^{iS}` the current is `J = R² ∂_x S = ρ v` with `v = ∂_x S` the
   guidance velocity, so the continuity equation reads `∂_t ρ + ∂_x(ρ v) = 0`: **the Born density is
   transported by the guidance field** — equivariance. Along a trajectory `ẋ = v` that is
-  `dρ/dt = −ρ ∂_x v` (`deriv_probDensity_along_bohmTrajectory`), the Lagrangian form.
+  `dρ/dt = −ρ ∂_x v` (`hasDerivAt_density_along_trajectory`), the Lagrangian form.
 * **Nelson.** The same flux, split as `ρ v + ½ ∂_x ρ = ρ b` with `b = v + ½ ∂_x log ρ` the osmotic
   drift, turns the continuity equation into the **Fokker–Planck equation** of a diffusion with
   constant coefficient `½`: `∂_t ρ = −∂_x(ρ b) + ½ ∂²_x ρ` (`nelson_fokkerPlanck`). So `|ψ|²` is the
@@ -47,7 +47,7 @@ Contents:
 * ★★ `continuity_equation` — `∂_t ρ + ∂_x J = 0` from the pointwise Schrödinger equation;
 * `hasDerivAt_polar`, ★ `probCurrent_polar` — `J = R² ∂_x S`;
 * ★★ `continuity_polar` — `∂_t ρ + ∂_x(ρ v) = 0`, **equivariance**;
-* ★★ `deriv_probDensity_along_bohmTrajectory` — `dρ/dt = −ρ ∂_x v` along a Bohmian trajectory;
+* ★★ `hasDerivAt_density_along_trajectory` — `dρ/dt = −ρ ∂_x v` along a Bohmian trajectory;
 * ★★ `nelson_fokkerPlanck` — the Fokker–Planck form with the osmotic drift.
 
 ## Honest scope
@@ -67,7 +67,7 @@ theorem — needs stochastic differential equations, which Mathlib does not have
 (MATHLIB-ABSENT(ProbabilityTheory.itoIntegral)): that half of BACKLOG #46 stays unclaimed, and
 the row says so.
 
-⚠️ **No trajectory existence.** `deriv_probDensity_along_bohmTrajectory` takes a trajectory as given
+⚠️ **No trajectory existence.** `hasDerivAt_density_along_trajectory` takes a trajectory as given
 (a curve whose velocity is the guidance field at the point). Existence and uniqueness of Bohmian
 trajectories — the flow of `v`, which is singular at the nodes of `ψ` — is not addressed.
 

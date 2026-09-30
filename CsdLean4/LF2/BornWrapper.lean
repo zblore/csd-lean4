@@ -125,7 +125,15 @@ end Effect
 
 /-- A nonnegative, normalized assignment on all effects, additive whenever the sum
 remains an effect. The upper-bound field is derivable from the other fields using `I - E`.
-No unitary-invariance or continuity premise is assumed. -/
+No unitary-invariance or continuity premise is assumed.
+
+**Why unitary covariance is not a field.** Spec Def 5.1 lists a third clause,
+`p(U† E U) = p_U(E)`. Read as invariance — `p (Effect.conjugateBy U E) = p E` for every `U` — it
+over-constrains to basis-invariant packages, which a pure-state package does not satisfy. Read
+covariantly it is a map between packages, which is the right encoding and is not needed by the
+representation theorem. The structure therefore omits the clause and exposes
+`Effect.conjugateBy` as the building block; LF4 is where unitary evolution enters non-trivially
+and one of the two readings has to be chosen. -/
 structure OperationalPackage (N : ℕ) where
   /-- Probability assignment. -/
   p          : Effect N → ℝ

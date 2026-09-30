@@ -70,21 +70,43 @@ def isLocalDecl (env : Environment) (n : Name) : Bool :=
   | some m => m == env.mainModule || (`CsdLean4).isPrefixOf m
   | none => true
 
-/-- Does the stack reach any forbidden reconstruction root through local/corpus declarations? -/
-partial def reaches (env : Environment) (stack : List Name) (seen : Std.HashSet Name) : Bool :=
-  match stack with
-  | [] => false
-  | n :: rest =>
-    if forbiddenRoots.contains n then true
-    else if seen.contains n then reaches env rest seen
+/-- Reachability of a forbidden root from `n`, memoised.
+
+Whether a constant reaches a root is a property of that constant, so the answer is cached and
+shared across the whole scan: without that, each of the scanned declarations restarts the search
+from scratch over the entire local closure, which is what made the strengthened guard take about
+twenty minutes a run. A constant is provisionally recorded as `false` while its own references are
+being explored, which terminates on the cycles that `partial` definitions can introduce and is
+sound on the acyclic part of the constant graph, where every reference is to an earlier
+declaration. -/
+partial def reachesAux (env : Environment) (n : Name) :
+    StateM (Std.HashMap Name Bool) Bool := do
+  match (← get).get? n with
+  | some b => return b
+  | none =>
+    if forbiddenRoots.contains n then
+      modify (·.insert n true)
+      return true
     else
-      let seen := seen.insert n
       match env.find? n with
-      | none => reaches env rest seen
+      | none =>
+        modify (·.insert n false)
+        return false
       | some ci =>
-        let direct := refs ci
-        if direct.any forbiddenRoots.contains then true
-        else reaches env ((direct.filter (isLocalDecl env)).toList ++ rest) seen
+        modify (·.insert n false)
+        let mut acc := false
+        for m in refs ci do
+          if !acc then
+            if forbiddenRoots.contains m then
+              acc := true
+            else if isLocalDecl env m then
+              if ← reachesAux env m then acc := true
+        modify (·.insert n acc)
+        return acc
+
+/-- Does `n` reach any forbidden reconstruction root through local/corpus declarations? -/
+def reaches (env : Environment) (n : Name) : Bool :=
+  (reachesAux env n).run' {}
 
 /-- Negative fixture outside the CSD namespace: direct use of the density reconstruction. -/
 private noncomputable def densityProbe (OP : CSD.LF2.OperationalPackage 2) := OP.qdensity
@@ -116,11 +138,11 @@ private theorem benignProbe (OP : CSD.LF2.OperationalPackage 2) :
 
 /-- Exercise the rejected routes and an allowed route before scanning the corpus. -/
 def checkTraversal (env : Environment) : Bool :=
-  forbiddenRoots.all (fun n => env.contains n && reaches env [n] {}) &&
-  reaches env [``densityProbe] {} && reaches env [``aliasProbe] {} &&
-  reaches env [``projectionAlias] {} && reaches env [``realAlias] {} &&
-  reaches env [``frameAlias] {} && reaches env [``coreAlias] {} &&
-  !(reaches env [``benignProbe] {})
+  forbiddenRoots.all (fun n => env.contains n && reaches env n) &&
+  reaches env ``densityProbe && reaches env ``aliasProbe &&
+  reaches env ``projectionAlias && reaches env ``realAlias &&
+  reaches env ``frameAlias && reaches env ``coreAlias &&
+  !(reaches env ``benignProbe)
 
 end GleasonFree
 
@@ -134,26 +156,35 @@ run_cmd Elab.Command.liftCoreM do
   let known := env.header.moduleNames
   let missing := declared.filter (fun m => !known.contains m)
   if !missing.isEmpty then
-    IO.println "FAIL declared module(s) not in the environment — a rename left the claim unchecked:"
-    for m in missing do IO.println s!"       {m}"
-    IO.Process.exit 1
+    let mut msg := "FAIL declared module(s) not in the environment — a rename left the claim unchecked:"
+    for m in missing do msg := msg ++ s!"
+       {m}"
+    throwError msg
   let mut bad : Array (Name × Name) := #[]
   let mut checked := 0
+  let mut memo : Std.HashMap Name Bool := {}
   for (n, _) in env.constants.toList do
     if !n.isInternal then
       match env.getModuleFor? n with
       | some m =>
         if declared.contains m then
           checked := checked + 1
-          if reaches env [n] {} then bad := bad.push (m, n)
+          let (hit, memo') := (reachesAux env n).run memo
+          memo := memo'
+          if hit then bad := bad.push (m, n)
       | none => pure ()
   if bad.isEmpty then
     IO.println s!"check-gleason-free: OK ({checked} declaration(s) in {declared.size} module(s), \
 none reaching the {forbiddenRoots.size} reconstruction roots; traversal regressions passed)"
   else
-    IO.println "FAIL a module declaring Gleason independence reaches a forbidden reconstruction root."
-    IO.println s!"     forbidden: {forbiddenRoots}"
+    -- `IO.Process.exit` skips the stdout flush, so a printed diagnostic never reaches the
+    -- developer: the guard used to fail with nothing but the word FAILED. Raise instead.
+    let mut msg := "FAIL a module declaring Gleason independence reaches a forbidden reconstruction root."
+    msg := msg ++ s!"
+     forbidden: {forbiddenRoots}"
     for (m, n) in bad[0:20] do
-      IO.println s!"       {m}  ::  {n}"
-    IO.println "     Fix the route, or correct every header asserting Gleason-freeness."
-    IO.Process.exit 1
+      msg := msg ++ s!"
+       {m}  ::  {n}"
+    msg := msg ++ "
+     Fix the route, or correct every header asserting Gleason-freeness."
+    throwError msg

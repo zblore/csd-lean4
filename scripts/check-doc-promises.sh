@@ -35,7 +35,9 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-python - <<'PY'
+# -X utf8: a finding quotes the docstring line, and the house style puts stars in it. Without
+# this the guard dies of a UnicodeEncodeError on a Windows console instead of reporting.
+python -X utf8 - <<'PY'
 import os, re, subprocess, sys
 
 # ---------------------------------------------------------------------------
@@ -82,7 +84,12 @@ for p in files:
         for part in t.split("."):
             code_tokens.add(part)
 
-BULLET = re.compile(r"^\s*[-*]\s+`([^`]+)`")
+# The corpus writes headline bullets as `* ★★ \`name\` — …`, so the name is not the first
+# token after the bullet marker. Allowing the star/emphasis run is not a widening of the
+# documented scope; it is what makes the documented scope actually cover the house style.
+# Until 2026-09-30 every starred bullet in the corpus was invisible to this guard, which is
+# how `SchrodingerCurrent.lean` advertised a theorem under a name it never had.
+BULLET = re.compile(r"^\s*[-*]\s+[★☆⭐*_\s]*`([^`]+)`")
 LOOKS_DECL = re.compile(r"^[A-Za-z_][A-Za-z0-9_.']*$")
 
 findings = []
