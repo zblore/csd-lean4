@@ -50,13 +50,17 @@ an adjoint. BACKLOG #92.
 
 ⚠️ **Schwartz slices with an integrable dominating function**, which excludes the symbols of
 temperate growth — `a(x, ξ) = x`, `ξ`, `xξ` — whose quantisations are the position, momentum and
-symmetrised product operators. The position and momentum moments of `W_ψ` are already in
-`Wigner.lean` (`integral_integral_mul_wigner_left`, `integral_integral_mul_wigner_right`); the
-general temperate-symbol statement is BACKLOG #92 with them.
+symmetrised product operators. Their **moment identities** are now proved in
+[`WignerCalculus.lean`](WignerCalculus.lean) (★★ `integral_integral_wigner_pos`,
+★★ `integral_integral_wigner_mom`, ★★★ `integral_integral_wigner_posMom` — the last being the
+symmetrised product `½(XP + PX)`), so what is still missing for those symbols is `Op(a)` as an
+operator, not the physics: BACKLOG #92(a).
 
-⚠️ **The overlap identity is an iterated integral**, in the order `∫ x, ∫ ξ`. The Schwartz property
-of `(x, ξ) ↦ W_ψ(x, ξ)` on `ℝ²`, which would give the product-measure form and joint integrability,
-is not proved (BACKLOG #92).
+⚠️ **The overlap identity here is an iterated integral**, in the order `∫ x, ∫ ξ`. The
+product-measure form on `ℝ²` is [`WignerCalculus.lean`](WignerCalculus.lean)
+(★★★ `integral_prod_wigner_mul_conj`, on ★★★ `integrable_wigner_mul_conj`), which also gives joint
+measurability and square-integrability on the plane. The Schwartz property of
+`(x, ξ) ↦ W_ψ(x, ξ)` on `ℝ²` is still not proved, and is not needed for either.
 
 ⚠️ One dimension, Schwartz data, the conventions of `Wigner.lean` (`𝓕 f ξ = ∫ e^{−2πiyξ} f y dy`,
 momentum `p = 2πξ`).

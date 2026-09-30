@@ -9571,4 +9571,72 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms HilbertBasis.mem_spectrum_diagOp
 
+-- The Weyl calculus (BACKLOG #92(b)(c)): phase space as a measure space (joint
+-- measurability, square-integrability, the product-measure overlap identity) and the three
+-- temperate symbols x, ξ, xξ as moment identities in operator form.
+
+/-- info: 'WignerFunction.integral_fourier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_fourier
+
+/-- info: 'WignerFunction.integral_deriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_deriv
+
+/-- info: 'WignerFunction.integral_mul_fourier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_mul_fourier
+
+/-- info: 'WignerFunction.integral_mul_deriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_mul_deriv
+
+/-- info: 'WignerFunction.integral_mul_wigner_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_mul_wigner_right
+
+/-- info: 'WignerFunction.integral_deriv_mul_conj_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_deriv_mul_conj_add
+
+/-- info: 'WignerFunction.integral_mul_deriv_mul_conj_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_mul_deriv_mul_conj_add
+
+/-- info: 'WignerFunction.integral_integral_wigner_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_integral_wigner_pos
+
+/-- info: 'WignerFunction.integral_integral_wigner_mom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_integral_wigner_mom
+
+/-- info: 'WignerFunction.integral_integral_wigner_posMom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_integral_wigner_posMom
+
+/-- info: 'WignerFunction.stronglyMeasurable_wigner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.stronglyMeasurable_wigner
+
+/-- info: 'WignerFunction.integrable_wignerEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integrable_wignerEnergy
+
+/-- info: 'WignerFunction.integrable_normSq_wigner_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integrable_normSq_wigner_prod
+
+/-- info: 'WignerFunction.integrable_wigner_mul_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integrable_wigner_mul_conj
+
+/-- info: 'WignerFunction.integral_prod_wigner_mul_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_prod_wigner_mul_conj
+
+/-- info: 'WignerFunction.integral_prod_wigner_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_prod_wigner_sq
+
 end CSD.Tests.AxiomAudit

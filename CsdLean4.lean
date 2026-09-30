@@ -702,6 +702,7 @@ public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerSchwartz
 public import CsdLean4.Mathlib.Analysis.Semigroup.GaussianPacket
 public import CsdLean4.Mathlib.Analysis.Fourier.Wigner
 public import CsdLean4.Mathlib.Analysis.Fourier.WignerWeyl
+public import CsdLean4.Mathlib.Analysis.Fourier.WignerCalculus
 public import CsdLean4.Mathlib.Analysis.Semigroup.MatrixInstance
 public import CsdLean4.SigmaLayer.ChartBracket
 public import CsdLean4.SigmaLayer.ChartIntegralCurve
