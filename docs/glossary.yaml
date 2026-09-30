@@ -11080,7 +11080,7 @@ entries:
         url: https://royalsocietypublishing.org/doi/10.1098/rspa.1984.0023
 
   - slug: aharonov-bohm
-    reviewed: 2026-09-29
+    reviewed: 2026-09-30
     image:
       file: img/aharonov-bohm.jpg
       alt: "Photograph of Yakir Aharonov seated at a chessboard in a study"
@@ -11137,6 +11137,13 @@ entries:
       three-site rings at zero and at half a quantum are not related by any change of basis,
       with the explicit levels levels_three_zero giving {2, -1, -1} and levels_three_pi giving
       {1, -2, 1}.
+
+      exists_eq_of_range_ringEigval_eq closes the observability claim in general: two fluxes with
+      the same level set differ by a whole quantum or are reflections of one another, at every ring
+      size. The top of the spectrum is 2 cos(d/N) with d the distance from the flux to the nearest
+      whole quantum (isGreatest_range_ringEigval), which is strictly decreasing in d, and
+      range_ringEigval_neg shows the sign really is invisible, so that ambiguity is the truth rather
+      than slack in the proof.
 
       The Peierls substitution is the model's definition rather than a derived statement, so
       the sentence that the field vanishes on the ring is an input. The continuum solenoid and
@@ -11352,7 +11359,7 @@ entries:
         url: https://www.pnas.org/doi/10.1073/pnas.17.5.315
 
   - slug: nelson-stochastic-mechanics
-    reviewed: 2026-09-29
+    reviewed: 2026-09-30
     hook: >
       Nelson derived the Schrodinger equation from a diffusion, so the same continuity
       equation that lets Bohm read a velocity off the wavefunction lets Nelson read a drift

@@ -32,7 +32,12 @@ loop, `Φ = ∑ⱼ a j`. The whole Aharonov–Bohm effect is two theorems about 
   are not unitarily equivalent.
 
 The spectrum depends on `Φ` only modulo `2π` (★ `ringEigval_add_two_pi`,
-★★ `range_ringEigval_add_two_pi`): flux is measured in units of the quantum `2π`.
+★★ `range_ringEigval_add_two_pi`): flux is measured in units of the quantum `2π`. That is the
+whole of the ambiguity, and the converse holds: ★★★ `exists_eq_of_range_ringEigval_eq` — **two
+fluxes with the same level set differ by a whole quantum or are reflections of one another**, at
+every ring size. The top of the spectrum is `2 cos(fluxDist Φ / N)`
+(★★★ `isGreatest_range_ringEigval`), a strictly decreasing function of the distance from the flux
+to the nearest whole quantum, so the spectrum reads that distance off and nothing else.
 
 ## Main declarations
 
@@ -45,7 +50,12 @@ The spectrum depends on `Φ` only modulo `2π` (★ `ringEigval_add_two_pi`,
   ★★ `dftMatrix_conj_ringHam` — **the ring Hamiltonian is diagonalised by the discrete Fourier
   transform**, so ★★ `eq_ringEigval_of_mulVec` — those numbers are the *whole* spectrum;
 * ★★ `gaugeDiag_conj_ringHamOf`, ★ `flux_gauge`, ★★★ `gaugeDiag_conj_ringHam_oneBond`;
-* ★★★ `not_exists_unitary_conj_ringHam`.
+* ★★★ `not_exists_unitary_conj_ringHam`;
+* `fluxDist Φ` — the distance from `Φ` to the nearest whole quantum, with ★ `fluxDist_le_abs`
+  (nothing is nearer) and ★ `fluxDist_le_pi`; ★★ `ringEigval_le` and ★★ `ringEigval_neg_round`
+  (the top level and the label that attains it), ★★★ `isGreatest_range_ringEigval`,
+  ★★★ `fluxDist_eq_of_range_eq`, ★★ `range_ringEigval_neg` (the sign is invisible, so the
+  ambiguity below is real) and ★★★ `exists_eq_of_range_ringEigval_eq`.
 
 ## Honest scope
 
@@ -55,6 +65,10 @@ is not claimed (`specs/berry-phase-scoping.md` BP-4 says why: it is CV-scale).
 
 ⚠️ No solenoid, no vector potential as a `1`-form, no double slit: the flux enters as the phase of
 the hopping amplitudes, which is Peierls' substitution taken as the definition of the model.
+
+⚠️ The determination theorem compares **level sets**, `Set.range (ringEigval N ·)`. It says nothing
+about multiplicities, and nothing about what a finite number of measurements with finite resolution
+could distinguish.
 
 References: Y. Aharonov, D. Bohm, Phys. Rev. 115 (1959) 485; R. G. Chambers, Phys. Rev. Lett. 5
 (1960) 3; A. Tonomura et al., Phys. Rev. Lett. 56 (1986) 792; R. Peierls, Z. Phys. 80 (1933) 763;
@@ -544,6 +558,169 @@ theorem not_exists_unitary_conj_ringHam :
       _ = ((2 : ℝ) : ℂ) • (U *ᵥ ringMode 3 ((0 : ℤ) : ZMod 3)) := Matrix.mulVec_smul _ _ _
   obtain ⟨k, hk⟩ := eq_ringEigval_of_mulVec (N := 3) (by norm_num) π hv heig
   exact ringEigval_three_pi_ne_two _ (by exact_mod_cast hk.symm)
+
+/-! ### The flux is determined by the spectrum
+
+`range_ringEigval_add_two_pi` says the spectrum cannot distinguish `Φ` from `Φ + 2π`, and
+`energy_lt_energy_of_flux_lt` (`Empirical/QM/AharonovBohm.lean`) says a *fixed* label's level moves
+strictly with the flux over a range where nothing wraps. Neither says that the level **set** pins
+the flux down, which is what "the flux is observable" claims in full. It does, modulo a quantum and
+up to sign, because the top of the spectrum is `2 cos(d(Φ)/N)` with `d(Φ)` the distance from `Φ` to
+the nearest whole quantum, and that is a strictly decreasing function of `d`. -/
+
+/-- The distance from `Φ` to the nearest whole flux quantum: the only thing about the flux that
+the ring's spectrum can see. -/
+noncomputable def fluxDist (Φ : ℝ) : ℝ := |Φ - 2 * π * (round (Φ / (2 * π)) : ℤ)|
+
+theorem cos_abs_eq (y : ℝ) : Real.cos |y| = Real.cos y := by
+  rcases abs_cases y with ⟨h, _⟩ | ⟨h, _⟩
+  · rw [h]
+  · rw [h, Real.cos_neg]
+
+theorem fluxDist_nonneg (Φ : ℝ) : 0 ≤ fluxDist Φ := abs_nonneg _
+
+/-- The distance to a given quantum, measured in units of the quantum. -/
+theorem abs_sub_two_pi_mul (Φ : ℝ) (j : ℤ) :
+    |Φ - 2 * π * j| = |Φ / (2 * π) - (j : ℝ)| * (2 * π) := by
+  have h2 : (0 : ℝ) < 2 * π := by positivity
+  have h : Φ - 2 * π * (j : ℝ) = (Φ / (2 * π) - (j : ℝ)) * (2 * π) := by
+    rw [sub_mul, div_mul_cancel₀ _ h2.ne']
+    ring
+  rw [h, abs_mul, abs_of_pos h2]
+
+/-- ★ **No quantum is nearer.** `fluxDist` really is the distance to the nearest one. -/
+theorem fluxDist_le_abs (Φ : ℝ) (k : ℤ) : fluxDist Φ ≤ |Φ - 2 * π * k| := by
+  have h2 : (0 : ℝ) < 2 * π := by positivity
+  have hround := round_le (Φ / (2 * π)) k
+  rw [fluxDist, abs_sub_two_pi_mul Φ (round (Φ / (2 * π))), abs_sub_two_pi_mul Φ k]
+  exact mul_le_mul_of_nonneg_right hround h2.le
+
+/-- ★ Half a quantum is as far as a flux can be from the nearest whole one. -/
+theorem fluxDist_le_pi (Φ : ℝ) : fluxDist Φ ≤ π := by
+  have h2 : (0 : ℝ) < 2 * π := by positivity
+  have h := abs_sub_round (Φ / (2 * π))
+  rw [fluxDist, abs_sub_two_pi_mul Φ (round (Φ / (2 * π)))]
+  calc |Φ / (2 * π) - (round (Φ / (2 * π)) : ℝ)| * (2 * π) ≤ (1 / 2) * (2 * π) :=
+        mul_le_mul_of_nonneg_right h h2.le
+    _ = π := by ring
+
+/-- The cosine of a level's argument is the cosine of its distance from a whole turn. -/
+theorem cos_fluxDist (x : ℝ) : Real.cos (fluxDist x) = Real.cos x := by
+  rw [fluxDist, cos_abs_eq,
+    show x - 2 * π * (round (x / (2 * π)) : ℤ) = x - (round (x / (2 * π)) : ℤ) * (2 * π) by ring,
+    Real.cos_sub_int_mul_two_pi]
+
+omit [NeZero N] in
+/-- ★★ **No level rises above `2 cos(fluxDist Φ / N)`**: a label's argument sits at least
+`fluxDist Φ / N` from a whole turn, and cosine falls away from it. -/
+theorem ringEigval_le (hN : 0 < N) (Φ : ℝ) (m : ℤ) :
+    ringEigval N Φ m ≤ 2 * Real.cos (fluxDist Φ / N) := by
+  have hNR : (0 : ℝ) < N := by exact_mod_cast hN
+  set x : ℝ := (2 * π * m + Φ) / N with hx
+  have hkey : (N : ℝ) * fluxDist x
+      = |Φ - 2 * π * (((N : ℤ) * round (x / (2 * π)) - m : ℤ) : ℝ)| := by
+    rw [fluxDist, ← abs_of_pos hNR, ← abs_mul]
+    congr 1
+    rw [hx]
+    push_cast
+    rw [mul_sub, mul_div_cancel₀ _ hNR.ne']
+    ring
+  have hge : fluxDist Φ / N ≤ fluxDist x := by
+    have h1 : fluxDist Φ ≤ (N : ℝ) * fluxDist x := by
+      rw [hkey]
+      exact fluxDist_le_abs Φ ((N : ℤ) * round (x / (2 * π)) - m)
+    rw [div_le_iff₀ hNR]
+    linarith
+  have hmono := Real.cos_le_cos_of_nonneg_of_le_pi
+    (div_nonneg (fluxDist_nonneg Φ) hNR.le) (fluxDist_le_pi x) hge
+  calc ringEigval N Φ m = 2 * Real.cos x := rfl
+    _ = 2 * Real.cos (fluxDist x) := by rw [cos_fluxDist]
+    _ ≤ 2 * Real.cos (fluxDist Φ / N) := by linarith
+
+omit [NeZero N] in
+/-- ★★ **The maximum is attained**, at the label that centres its mode on the flux. -/
+theorem ringEigval_neg_round (Φ : ℝ) :
+    ringEigval N Φ (-round (Φ / (2 * π))) = 2 * Real.cos (fluxDist Φ / N) := by
+  rcases Nat.eq_zero_or_pos N with hN0 | hN
+  · rw [ringEigval, hN0]
+    simp [fluxDist]
+  have hNR : (0 : ℝ) < N := by exact_mod_cast hN
+  rw [ringEigval]
+  congr 1
+  rw [show fluxDist Φ / (N : ℝ)
+      = |(2 * π * ((-round (Φ / (2 * π)) : ℤ) : ℝ) + Φ) / N| from by
+    rw [fluxDist, abs_div, abs_of_pos hNR]
+    congr 1
+    push_cast
+    ring_nf]
+  rw [cos_abs_eq]
+
+omit [NeZero N] in
+/-- ★★★ **The top of the spectrum reads the flux**: the greatest level is `2 cos(fluxDist Φ / N)`,
+a strictly decreasing function of the distance from the flux to the nearest whole quantum. -/
+theorem isGreatest_range_ringEigval (hN : 0 < N) (Φ : ℝ) :
+    IsGreatest (Set.range (ringEigval N Φ)) (2 * Real.cos (fluxDist Φ / N)) := by
+  refine ⟨⟨-round (Φ / (2 * π)), ringEigval_neg_round Φ⟩, ?_⟩
+  rintro y ⟨m, rfl⟩
+  exact ringEigval_le hN Φ m
+
+omit [NeZero N] in
+/-- ★★★ **The spectrum determines the flux distance**: two rings of the same size with the same
+level set sit at the same distance from a whole quantum. -/
+theorem fluxDist_eq_of_range_eq (hN : 0 < N) {Φ Φ' : ℝ}
+    (h : Set.range (ringEigval N Φ) = Set.range (ringEigval N Φ')) :
+    fluxDist Φ = fluxDist Φ' := by
+  have hNR : (0 : ℝ) < N := by exact_mod_cast hN
+  have hg := isGreatest_range_ringEigval hN Φ
+  have hg' := isGreatest_range_ringEigval hN Φ'
+  rw [h] at hg
+  have hcos : Real.cos (fluxDist Φ / N) = Real.cos (fluxDist Φ' / N) := by
+    have := le_antisymm (hg'.2 hg.1) (hg.2 hg'.1)
+    linarith
+  have hmem : ∀ Ψ : ℝ, fluxDist Ψ / (N : ℝ) ∈ Set.Icc (0 : ℝ) π := by
+    intro Ψ
+    refine ⟨div_nonneg (fluxDist_nonneg Ψ) hNR.le, ?_⟩
+    have h1 : fluxDist Ψ ≤ π := fluxDist_le_pi Ψ
+    have h2 : (1 : ℝ) ≤ (N : ℝ) := by exact_mod_cast hN
+    rw [div_le_iff₀ hNR]
+    have h3 : π ≤ π * (N : ℝ) := le_mul_of_one_le_right Real.pi_pos.le h2
+    linarith
+  have hdiv := Real.injOn_cos (hmem Φ) (hmem Φ') hcos
+  rw [div_eq_div_iff hNR.ne' hNR.ne'] at hdiv
+  exact mul_right_cancel₀ hNR.ne' hdiv
+
+omit [NeZero N] in
+/-- ★★ **The spectrum cannot see the sign of the flux**: reversing it permutes the levels, so the
+ambiguity in the theorem below is real and not an artefact of the proof. -/
+theorem range_ringEigval_neg (Φ : ℝ) :
+    Set.range (ringEigval N (-Φ)) = Set.range (ringEigval N Φ) := by
+  have key : ∀ (Ψ : ℝ) (m : ℤ), ringEigval N (-Ψ) m = ringEigval N Ψ (-m) := by
+    intro Ψ m
+    rw [ringEigval, ringEigval, ← Real.cos_neg ((2 * π * ((-m : ℤ) : ℝ) + Ψ) / N)]
+    congr 1
+    push_cast
+    ring_nf
+  ext y
+  constructor
+  · rintro ⟨m, rfl⟩
+    exact ⟨-m, (key Φ m).symm⟩
+  · rintro ⟨m, rfl⟩
+    refine ⟨-m, ?_⟩
+    rw [key, neg_neg]
+
+omit [NeZero N] in
+/-- ★★★ **The flux is determined by the spectrum**, at every ring size: two fluxes with the same
+level set differ by a whole quantum, or are reflections of one another in a whole quantum. With
+`range_ringEigval_add_two_pi` and `range_ringEigval_neg` the converse holds as well, so this is
+exactly what a spectroscopic measurement of the ring determines — no more and no less. -/
+theorem exists_eq_of_range_ringEigval_eq (hN : 0 < N) {Φ Φ' : ℝ}
+    (h : Set.range (ringEigval N Φ) = Set.range (ringEigval N Φ')) :
+    ∃ k : ℤ, Φ' = Φ + 2 * π * k ∨ Φ' = -Φ + 2 * π * k := by
+  have hd := fluxDist_eq_of_range_eq hN h
+  rw [fluxDist, fluxDist] at hd
+  rcases abs_eq_abs.mp hd with heq | heq
+  · exact ⟨round (Φ' / (2 * π)) - round (Φ / (2 * π)), Or.inl (by push_cast; linarith)⟩
+  · exact ⟨round (Φ / (2 * π)) + round (Φ' / (2 * π)), Or.inr (by push_cast; linarith)⟩
 
 end AharonovBohm
 

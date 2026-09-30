@@ -9419,4 +9419,36 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.integral_conj_mul_weylOp
 
+/-- info: 'QuantumInfo.AharonovBohm.fluxDist_le_abs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.fluxDist_le_abs
+
+/-- info: 'QuantumInfo.AharonovBohm.fluxDist_le_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.fluxDist_le_pi
+
+/-- info: 'QuantumInfo.AharonovBohm.ringEigval_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.ringEigval_le
+
+/-- info: 'QuantumInfo.AharonovBohm.ringEigval_neg_round' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.ringEigval_neg_round
+
+/-- info: 'QuantumInfo.AharonovBohm.isGreatest_range_ringEigval' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.isGreatest_range_ringEigval
+
+/-- info: 'QuantumInfo.AharonovBohm.fluxDist_eq_of_range_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.fluxDist_eq_of_range_eq
+
+/-- info: 'QuantumInfo.AharonovBohm.range_ringEigval_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.range_ringEigval_neg
+
+/-- info: 'QuantumInfo.AharonovBohm.exists_eq_of_range_ringEigval_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.AharonovBohm.exists_eq_of_range_ringEigval_eq
+
 end CSD.Tests.AxiomAudit

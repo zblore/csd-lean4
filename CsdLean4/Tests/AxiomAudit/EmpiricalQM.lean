@@ -1843,4 +1843,8 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.ColbeckRenner.exists_signalling_of_sharp
 
+/-- info: 'CSD.Empirical.QM.AharonovBohm.flux_determined_by_spectrum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.AharonovBohm.flux_determined_by_spectrum
+
 end CSD.Tests.AxiomAudit

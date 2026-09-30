@@ -34,6 +34,10 @@ its gauge covariance. This module reads those theorems as the experiment.
   three-site ring to the other. Both halves of the effect, in one file.
 * The three-site levels as numbers: `levels_three_zero`, `levels_three_pi` — `{2, −1, −1}` at zero
   flux and `{1, −2, 1}` at half a quantum.
+* ★★★ `flux_determined_by_spectrum` — **the general form of the same observability claim**: at every
+  ring size, two fluxes with the same level set differ by a whole quantum or are reflections of one
+  another. `flux_not_gauge_artefact` exhibits one pair that the spectrum tells apart; this says the
+  spectrum tells *every* pair apart, up to exactly the two invisible operations.
 
 ## Honest scope
 
@@ -62,6 +66,26 @@ namespace CSD
 namespace Empirical
 namespace QM
 namespace AharonovBohm
+
+
+/-! ### The flux is determined by the spectrum -/
+
+/-- ★★★ **The flux is observable, in full.** A spectroscopic measurement of the ring determines
+the flux exactly as far as it can be determined: two fluxes with the same level set differ by a
+whole quantum, or are reflections of one another in a whole quantum. Both of those really are
+invisible — `QuantumInfo.AharonovBohm.range_ringEigval_add_two_pi` and
+`QuantumInfo.AharonovBohm.range_ringEigval_neg` — so nothing weaker would be true and nothing
+stronger is available. `flux_not_gauge_artefact` is the same statement for one concrete pair on the
+triangle; this is the statement for every pair at every ring size.
+
+The mechanism is that the top of the spectrum is `2 cos(d/N)` with `d` the distance from the flux to
+the nearest whole quantum, so the highest level falls strictly as the flux moves away from a
+quantum, and reading it off inverts the relation. -/
+theorem flux_determined_by_spectrum {N : ℕ} (hN : 0 < N) {Φ Φ' : ℝ}
+    (h : Set.range (QuantumInfo.AharonovBohm.ringEigval N Φ)
+      = Set.range (QuantumInfo.AharonovBohm.ringEigval N Φ')) :
+    ∃ k : ℤ, Φ' = Φ + 2 * π * k ∨ Φ' = -Φ + 2 * π * k :=
+  QuantumInfo.AharonovBohm.exists_eq_of_range_ringEigval_eq hN h
 
 /-! ### The levels move with the flux -/
 
