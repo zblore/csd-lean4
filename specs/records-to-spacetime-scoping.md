@@ -189,12 +189,12 @@ is "spacetime emergence"; the note says so in §8.
 
 | # | Brick | Cx | P | V | What it lands |
 |---|---|---|---|---|---|
-| **ST-1** | **The influence preorder on records.** On a CV-type arena with coupling graph `E`, define the relation "the record of context `c₁` on sector `S₁` can influence the record of `c₂` on `S₂` within `n` periods" as `S₂ ⊆ graphBall E S₁ n`, and prove: it is a preorder in `n`; records outside each other's `n`-balls commute and are jointly measurable (`commute_heisenberg_graphInteractingU_pow` lifted to basins); their joint record law factors. | **S–M** | high | medium: the first theorem *about records* with a causal shape, honestly labelled relative to `E` |
+| ~~**ST-1**~~ **DONE 2026-10-01** | ~~**The influence preorder on records.** On a CV-type arena with coupling graph `E`, define the relation "the record of context `c₁` on sector `S₁` can influence the record of `c₂` on `S₂` within `n` periods" as `S₂ ⊆ graphBall E S₁ n`, and prove: it is a preorder in `n`; records outside each other's `n`-balls commute and are jointly measurable (`commute_heisenberg_graphInteractingU_pow` lifted to basins); their joint record law factors. ~~ ([`RecordInfluence.lean`](../CsdLean4/CV/RecordInfluence.lean), 11 pins): all three parts landed — the preorder (`influences_trans`, the periods add), joint measurability (`commute_record_of_spacelike`), exact unsteerability (`recordStroke_heisenberg_comm_kick_of_spacelike`, no error term in discrete periods) and the joint law as the medium's product law (`map_recordStroke₂_prod`). The factoring is about the **medium**; independence of the base readings needs a mode-partition tensor factorisation the corpus does not have. | ~~**S–M**~~ done (S–M) | high | medium: the first theorem *about records* with a causal shape, honestly labelled relative to `E` |
 | **ST-2** | **Entanglement distance on the composite arena.** `mutualInfo` of two sectors of a joint point from the reduced states; `d := −log I`; nonnegativity, symmetry, the product-point value, and monotonicity under sector enlargement through the bridge's strong subadditivity. | **M–L** | medium: the bridge is external and the `log` bookkeeping in `ℝ≥0∞` is fiddly | medium: "entanglement geometry" at finite dimension, exactly as far as it goes and no further |
 | **ST-3** | **The macroscopic-coordinate projection as a structure.** Paper D's `π'`: a measurable map from `Σ` to a finite structure with the record statistics factoring through it, and the two theorems that any instance must satisfy (no-signalling and the chain law survive the projection). Definitional until an instance is named. | **S** for the structure; the instance unpriced | — | low until the author names `π'`; then it is the frame everything else hangs on |
 | **ST-4** | **The reading, written down.** The one-sentence form of §6 into `POSITS.md` (as a conjecture, not a posit), `CSD-CHARTER.md` and the narrative page, with the theorem citations of §5 and §6. | **S** | high | high: the programme's spacetime claim exists in the repository at the honesty level of its other claims |
 
-`ST-4` is documentation and can land now. `ST-1` is the one Lean brick that is both honest and new. `ST-2`
+~~`ST-4` is documentation and can land now. `ST-1` is the one Lean brick that is both honest and new.~~ **Both landed: `ST-4` 2026-09-19, `ST-1` 2026-10-01.** `ST-2`
 is worth doing only if the author wants entanglement geometry as a research direction; it does not feed the
 record layer. `ST-3` waits on a decision.
 
@@ -209,8 +209,8 @@ is a decision, not a theorem, and this note records it as such.
 What the corpus does have is the *causal* half, relative to an assumed geometry: bounded influence along a
 coupling graph, non-signalling correlations across a cut, and the theorems that any local account is
 impossible. Row 39's reading, restated at that level, is a conjecture about whether the cut is emergent, and
-it is consistent with everything proved. The one brick worth building now is `ST-1`, which makes the causal
-half a statement about records rather than about operators; the one document worth writing now is `ST-4`.
+it is consistent with everything proved. ~~The one brick worth building now is `ST-1`, which makes the causal
+half a statement about records rather than about operators; the one document worth writing now is `ST-4`.~~ **`ST-1` is built (2026-10-01): the causal half is now a statement about records — an influence preorder on read regions, spacelike records jointly measurable and exactly unsteerable, and a joint record law that factors through the medium. `ST-4` landed 2026-09-19. What remains unchanged is the sentence above it: the projection is the missing piece, not the arena.**
 
 The rest of the programme's spacetime vision, Lorentzian structure, causal cones as geometry rather than
 graph balls, curvature, emergent time, is deferred exactly as Paper D defers it: as work not begun, not as

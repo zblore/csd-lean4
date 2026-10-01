@@ -7560,7 +7560,7 @@ entries:
     related: [stinespring-dilation, choi-theorem, partial-trace, de-isolation, holevo-bound, helstrom-bound]
 
   - slug: record-light-cone
-    reviewed: 2026-09-14
+    reviewed: 2026-10-01
     hook: >
       Records are safe from distant meddling by theorem, as anything that happens outside
       the light cone can shift the outcome written into the arena's fibre by no more than
@@ -7604,6 +7604,18 @@ entries:
 
       Companion results give exact commutation of disjoint kicks with record writing, and
       the arena-level cone the bridge transports.
+
+      RecordInfluence.lean turns the bound into a relation between the regions two contexts read:
+      one can influence the other within n interacting periods exactly when the second region lies
+      in the coupling graph's n-ball around the first, which is reflexive, grows with the period
+      count, and composes with the periods adding. Two regions whose cones have not met have
+      commuting observables, so their records can be assigned outcomes together; a disturbance in
+      either region leaves the other's record untouched exactly, with no error term, because in
+      whole periods the evolved observable stays inside the cone; and the joint law of two records
+      written into the two channels of the fibre is the product law of the medium, so the medium
+      adds neither correlation nor bias. The relation is the causal shape the assumed coupling graph
+      defines, with no metric and no signature, and the factoring is about the medium rather than
+      about the state.
     term: Record light cone
     status: proved-in-corpus
     source: curated

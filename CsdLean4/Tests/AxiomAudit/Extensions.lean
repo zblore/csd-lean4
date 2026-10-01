@@ -1739,4 +1739,52 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.bell_local_weight₁
 
+-- ST-1, the influence preorder on records (BACKLOG #38): the causal relation the coupling
+-- graph defines on read regions, spacelike records jointly measurable and unsteerable, and
+-- the joint record law as the medium's product law.
+
+/-- info: 'CSD.CV.graphBall_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.graphBall_add
+
+/-- info: 'CSD.CV.influences_refl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.influences_refl
+
+/-- info: 'CSD.CV.influences_trans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.influences_trans
+
+/-- info: 'CSD.CV.spacelike_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spacelike_of_le
+
+/-- info: 'CSD.CV.not_influences_of_spacelike' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.not_influences_of_spacelike
+
+/-- info: 'CSD.CV.commute_record_of_spacelike' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.commute_record_of_spacelike
+
+/-- info: 'CSD.CV.arenaObs_heisenberg_kick_of_spacelike' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_heisenberg_kick_of_spacelike
+
+/-- info: 'CSD.CV.recordStroke_heisenberg_comm_kick_of_spacelike' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.recordStroke_heisenberg_comm_kick_of_spacelike
+
+/-- info: 'CSD.CV.recordStroke_channels_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.recordStroke_channels_comm
+
+/-- info: 'CSD.CV.measurePreserving_fibreShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.measurePreserving_fibreShift
+
+/-- info: 'CSD.CV.map_recordStroke₂_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.map_recordStroke₂_prod
+
 end CSD.Tests.AxiomAudit
