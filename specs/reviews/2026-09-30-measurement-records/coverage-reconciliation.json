@@ -1,0 +1,11 @@
+{
+  "base_commit": "4b396fa31cc9f0c0042e4d681bf838338049378b",
+  "tracked_lean_files": 791,
+  "old_reviewed_count": 39,
+  "old_reviewed_now": {
+    "stale-dependency": 4,
+    "stale-source": 35
+  },
+  "old_reviewed_source_unchanged": 4,
+  "scope": "Reconciliation of the old ledger only; separate September 28 and September 30 reviews are not automatically credited."
+}

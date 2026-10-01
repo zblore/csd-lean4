@@ -64,3 +64,10 @@ remain for compatibility; the main Busch theorem already covers dimensions one a
 its checked plain-matrix audit adapter derives boundedness. Production API promotion is an
 optional follow-up, not an unresolved mathematical correction. Unrelated source edits in the
 older Codex review worktree are preserved and excluded from this integration.
+
+## Combined-tree build completed
+
+The additional build after reconciling newer main commits at `49a4ae15` completed successfully:
+`lake build --wfail CsdLean4 CsdLeanTests`, **4,685 jobs**. Its log remains in the isolated
+worktree at `.lake/gleason-rebased-build.log`. Later main changes, including `3e7eb7e5`, are
+separate revisions; this result does not claim to validate future changes.

@@ -1,0 +1,4 @@
+  ok      specs/BACKLOG.md 27 paper-prefixed row id(s) (pinned, grandfathered)
+  ok      specs/future-work.md 0 paper-prefixed row id(s) (pinned, grandfathered)
+  ok      no claims.yaml reference implies the file exists
+check-labels: OK

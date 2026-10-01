@@ -1,0 +1,5 @@
+  ok    no bare `import Mathlib` in the production tree
+  ok    no production module imports CsdLean4.Tests.*
+  ok    stable->Incubator imports all match the declared seam inventory
+  ok    every CsdLean4/Mathlib/ file imports only Mathlib and CsdLean4.Mathlib (exemptions: 0)
+check-import-hygiene: OK

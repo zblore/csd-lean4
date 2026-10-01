@@ -1,0 +1,3 @@
+check-guards: mutation-testing the guards…
+  (skipping axiom-sweep / citation-use / std-lint probes: need --with-lean)
+check-guards: OK (24 probes; every guard fired on its defect and passed clean)

@@ -1,0 +1,67 @@
+[
+  {
+    "command": "bash scripts/check-claims.sh",
+    "exit_code": 0,
+    "seconds": 169.21
+  },
+  {
+    "command": "bash scripts/check-claim-provenance.sh",
+    "exit_code": 0,
+    "seconds": 9.65
+  },
+  {
+    "command": "bash scripts/check-doc-promises.sh",
+    "exit_code": 0,
+    "seconds": 2.04
+  },
+  {
+    "command": "bash scripts/check-residues.sh",
+    "exit_code": 0,
+    "seconds": 2.73
+  },
+  {
+    "command": "bash scripts/check-references.sh",
+    "exit_code": 0,
+    "seconds": 1.1
+  },
+  {
+    "command": "bash scripts/check-terms.sh",
+    "exit_code": 0,
+    "seconds": 20.61
+  },
+  {
+    "command": "bash scripts/check-labels.sh",
+    "exit_code": 0,
+    "seconds": 5.76
+  },
+  {
+    "command": "bash scripts/check-category-tags.sh",
+    "exit_code": 0,
+    "seconds": 1.03
+  },
+  {
+    "command": "bash scripts/check-placeholder-status.sh",
+    "exit_code": 0,
+    "seconds": 1.08
+  },
+  {
+    "command": "bash scripts/check-import-negative.sh",
+    "exit_code": 0,
+    "seconds": 3.25
+  },
+  {
+    "command": "bash scripts/check-import-hygiene.sh",
+    "exit_code": 0,
+    "seconds": 6.28
+  },
+  {
+    "command": "bash scripts/check-validation-ledger.sh",
+    "exit_code": 0,
+    "seconds": 69.37
+  },
+  {
+    "command": "bash scripts/check-semantic-mutations.sh",
+    "exit_code": 0,
+    "seconds": 3.37
+  }
+]

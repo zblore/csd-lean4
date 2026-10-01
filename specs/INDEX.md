@@ -141,3 +141,10 @@ measurement-protocol plumbing (M), any-basis first measurement (M–L), composab
   pinned source, mathematical assessment and executable evidence.
 - [Applied corrections and validation](reviews/2026-09-29-gleason-integration.md): source fixes,
   expanded dependency guard and reproduction commands for the integrated work.
+
+## Current file-review evidence
+
+- [Measurement and record review](reviews/2026-09-30-measurement-records.md): three full reviews,
+  mathematical improvements, current inventory reconciliation and the selected 30-file pilot.
+
+- [Corpus execution plan](corpus-review-plan.md): review order, pilot and renewal queue.

@@ -1,0 +1,79 @@
+== sector-linkage guard ==
+  OK    .projectable consumed by 2 declaration(s):
+          CsdLean4/LF4/PhaseLift.lean:483:  rw [d.projectable t x, hray t (d.pi x)]
+          CsdLean4/RecordLayer/UnifiedArena.lean:157:  (productDynamicsBridge H hH p₀).projectable t x.1.1
+  OK    .flow consumed by 73 declaration(s):
+          CsdLean4/CV/FieldStructuredFlow.lean:148:    (F.flow t).val = exp (t • ∑ e ∈ F.edges, F.piece e) := rfl
+          CsdLean4/CV/FieldStructuredFlow.lean:151:theorem flow_add (s t : ℝ) : F.flow (s + t) = F.flow s * F.flow t := by
+          CsdLean4/CV/FieldStructuredFlow.lean:161:  arenaKick (F.flow t) p
+          CsdLean4/CV/FieldStructuredFlow.lean:273:    ((freeFieldStructured K N τ).flow t).val = (freeFieldU K N (τ * t)).val := by
+          CsdLean4/CV/FieldStructuredFlow.lean:350:    ((graphStructured K N τ lam E g).flow t).val
+          CsdLean4/Empirical/CSD/Algorithms/CircuitFlow.lean:174:theorem flow_def (x : RegisterSector ι) : C.flow x = C.toUnitaryGroup • x :=
+          CsdLean4/Empirical/CSD/Algorithms/CircuitFlow.lean:178:theorem measurable_flow : Measurable C.flow :=
+          CsdLean4/Empirical/CSD/Algorithms/CircuitFlow.lean:192:    IsUnitaryLift (cpSectorData p₀) C.flow Projectivization.unitSection
+          CsdLean4/Empirical/CSD/Algorithms/CircuitFlow.lean:194:  isUnitaryLift_of_smul (cpSectorData p₀) C.flow C.toUnitaryGroup (fun _ => rfl)
+          CsdLean4/Empirical/CSD/Algorithms/CircuitFlow.lean:200:    IsUnitaryLift (cpSectorData p₀) C.flow (registerRep ι) C.U :=
+          CsdLean4/Empirical/CSD/Algorithms/CircuitFlow.lean:201:  isUnitaryLift_of_reindex (cpSectorData p₀) C.flow (idx ι) _ _ (by
+          CsdLean4/Empirical/CSD/Algorithms/ShorFlow.lean:205:    epistemicMeasure ((shorCircuit T a).flow (shorReady T))
+          CsdLean4/Empirical/CSD/Algorithms/ShorFlow.lean:208:  rw [show (shorCircuit T a).flow (shorReady T) = (shorCircuit T a).flow^[1] (shorReady T) from rfl,
+          CsdLean4/Empirical/CSD/Algorithms/ShorFlow.lean:217:    ∑ y : ZMod N, epistemicMeasure ((shorCircuit T a).flow (shorReady T))
+          CsdLean4/Empirical/CSD/Algorithms/ShorFlow.lean:228:    ∑ y : ZMod N, epistemicMeasure ((shorCircuit T a).flow (shorReady T))
+          CsdLean4/LF4/BornFlowLinkage.lean:78:          (((unitaryFlowSetup (M + 1) U p₀).flow t ∘ X n) ⁻¹' bornRegion ψ hψ0 i)
+          CsdLean4/LF4/BornFlowLinkage.lean:85:                (((unitaryFlowSetup (M + 1) U p₀).flow t ∘ X k) ⁻¹' bornRegion ψ hψ0 i)
+          CsdLean4/LF4/BornFlowLinkage.lean:91:  have hlaw' : ∀ n, Measure.map ((unitaryFlowSetup (M + 1) U p₀).flow t ∘ X n) Pr
+          CsdLean4/LF4/BornFlowLinkage.lean:94:        (congrArg (Measure.map ((unitaryFlowSetup (M + 1) U p₀).flow t)) (hlaw n))).trans
+          CsdLean4/LF4/BornFlowLinkage.lean:97:    (fun n => (unitaryFlowSetup (M + 1) U p₀).flow t ∘ X n)
+          CsdLean4/LF4/BornFlowLinkage.lean:119:          (((unitaryFlowSetup (M + 1) U p₀).flow t ∘ X n) ⁻¹' bornRegion ψ' hψ'0 j)
+          CsdLean4/LF4/BornFlowLinkage.lean:127:                  (((unitaryFlowSetup (M + 1) U p₀).flow t ∘ X k) ⁻¹' bornRegion ψ' hψ'0 (e (n, i)))
+          CsdLean4/LF4/BothPillars.lean:116:        ∀ t x, (rotationSetup p₀).pi ((rotationSetup p₀).flow t x)
+          CsdLean4/LF4/ManyToOnePillars.lean:127:    (manyToOneSetup U p₀).flow t p = (U t • p.1, p.2) := rfl
+          CsdLean4/LF4/ManyToOnePillars.lean:253:        ∀ t x, (manyToOneRotationSetup p₀).pi ((manyToOneRotationSetup p₀).flow t x)
+          CsdLean4/LF4/ManyToOnePillars.lean:312:    ∀ t x, (manyToOneSchrodingerSetup H hH p₀).pi ((manyToOneSchrodingerSetup H hH p₀).flow t x)
+          CsdLean4/LF4/ManyToOnePillars.lean:344:    (∀ t x, (manyToOneSchrodingerSetup H hH p₀).pi ((manyToOneSchrodingerSetup H hH p₀).flow t x)
+          CsdLean4/LF4/ManyToOneSchrodingerDerived.lean:100:            ((CSD.LF4.manyToOneSchrodingerSetup H hH p₀).flow t x)
+          CsdLean4/LF4/PhaseLift.lean:479:      ∀ t x, d.pi (d.flow t x) = schrodingerUnitary hH t • d.pi x := by
+          CsdLean4/LF4/PhaseLift.lean:538:          ((trivialKahlerOnticSetup N p₀).flow t x)
+          CsdLean4/LF4/RotationSchrodinger.lean:118:      ∀ t x, (rotationSetup p₀).pi ((rotationSetup p₀).flow t x)
+          CsdLean4/LF4/SectorManifold.lean:132:    MeasurePreserving ((unitaryFlowSetup (n + 1) U p₀).flow t) (fsVolume n) (fsVolume n) := by
+          CsdLean4/LF4/SectorManifold.lean:152:      ∀ t, MeasurePreserving ((unitaryFlowSetup (n + 1) U p₀).flow t) (fsVolume n) (fsVolume n) :=
+          CsdLean4/LF4/SectorManifold.lean:178:    MeasurePreserving ((manyToOneSetup U p₀).flow t)
+          CsdLean4/LF4/SectorManifold.lean:193:      ∀ t, MeasurePreserving ((manyToOneSetup U p₀).flow t)
+          CsdLean4/LF4/SectorManifold.lean:228:    (manyToOneSchrodingerSetup H hH p₀).flow t x
+          CsdLean4/LF4/SectorManifold.lean:240:    MeasurePreserving ((manyToOneSchrodingerSetup H hH p₀).flow t)
+          CsdLean4/LF4/SectorManifold.lean:254:    MeasurePreserving ((unitaryFlowSetup (n + 1) (schrodingerUnitary hH) p₀).flow t)
+          CsdLean4/RecordLayer/HamiltonianSignature.lean:163:    onticEnergy H ((CSD.SigmaLayer.productDynamics H hH p₀).flow t x) = onticEnergy H x := by
+          CsdLean4/RecordLayer/UnifiedArena.lean:105:  fun x => (((productDynamics H hH p₀).flow t x.1.1, x.1.2), x.2)
+          CsdLean4/RecordLayer/UnifiedArena.lean:147:      = Prod.map (Prod.map ((productDynamics H hH p₀).flow t) id) id := rfl
+          CsdLean4/SigmaLayer/Adapters.lean:138:    (P.toOnticSetup t).Φ = D.flow t := rfl
+          CsdLean4/SigmaLayer/Adapters.lean:144:    (hzero : ∀ x, K.flow 0 x = x) (hadd : ∀ s t x, K.flow (s + t) x = K.flow s (K.flow t x)) :
+          CsdLean4/SigmaLayer/Adapters.lean:145:    (kahlerConstraintDynamics K hzero hadd).flow = K.flow := rfl
+          CsdLean4/SigmaLayer/ConstraintDynamics.lean:76:theorem flow_neg_left (t : OnticTime) (x : Sigma) : D.flow (-t) (D.flow t x) = x := by
+          CsdLean4/SigmaLayer/ConstraintDynamics.lean:80:theorem flow_neg_right (t : OnticTime) (x : Sigma) : D.flow t (D.flow (-t) x) = x := by
+          CsdLean4/SigmaLayer/ConstraintDynamics.lean:85:theorem flow_bijective (t : OnticTime) : Function.Bijective (D.flow t) :=
+          CsdLean4/SigmaLayer/ConstraintDynamics.lean:87:    fun x => ⟨D.flow (-t) x, D.flow_neg_right t x⟩⟩
+          CsdLean4/SigmaLayer/ConstraintDynamics.lean:91:    Function.LeftInverse (D.flow (-t)) (D.flow t) := D.flow_neg_left t
+          CsdLean4/SigmaLayer/ConstraintDynamics.lean:95:    Function.RightInverse (D.flow (-t)) (D.flow t) := D.flow_neg_right t
+          CsdLean4/SigmaLayer/DynamicsBridge.lean:53:  projectable : ∀ t x, Q.pi (D.flow t x) = projectedFlow t (Q.pi x)
+          CsdLean4/SigmaLayer/Equivariance.lean:106:    Measure.map ((manyToOneSchrodingerSetup H hH p₀).flow t) (epistemicMeasure p)
+          CsdLean4/SigmaLayer/Equivariance.lean:108:      ∧ MeasurePreserving ((manyToOneSchrodingerSetup H hH p₀).flow t) (kMuL p₀) (kMuL p₀) := by
+          CsdLean4/SigmaLayer/FiniteQMClosure.lean:182:    ∀ t, MeasurePreserving ((productDynamics H hH p₀).flow t) (kMuL p₀) (kMuL p₀)
+          CsdLean4/SigmaLayer/FiniteQMClosure.lean:185:    ∀ t x, (productSector H hH p₀).pi ((productDynamics H hH p₀).flow t x)
+          CsdLean4/SigmaLayer/FiniteQMClosure.lean:204:        = (productDynamics H hH p₀).flow s ⁻¹'
+          CsdLean4/SigmaLayer/ForwardCapstone.lean:69:    (∀ t x, (productSector H hH p₀).pi ((productDynamics H hH p₀).flow t x)
+          CsdLean4/SigmaLayer/ForwardCapstone.lean:73:    ∧ (∀ t, MeasurePreserving ((productDynamics H hH p₀).flow t)
+          CsdLean4/SigmaLayer/IsolationPreparation.lean:64:  Φ := D.flow t
+          CsdLean4/SigmaLayer/ProjectiveSector.lean:97:    (hzero : ∀ x, K.flow 0 x = x)
+          CsdLean4/SigmaLayer/ProjectiveSector.lean:98:    (hadd : ∀ s t x, K.flow (s + t) x = K.flow s (K.flow t x)) :
+          CsdLean4/SigmaLayer/TheoremTargets.lean:55:        (∑ k ∈ Finset.range n, Set.indicator region (fun _ => (1 : ℝ)) (D.flow (k : ℝ) x)) / n)
+          CsdLean4/SigmaLayer/TheoremTargets.lean:67:  ∀ A : Set Sigma, MeasurableSet A → D.flow 1 ⁻¹' A = A →
+          CsdLean4/SigmaLayer/TimeIndexedRecord.lean:66:  event := fun r => D.flow r.time ⁻¹' region r.context r.outcome
+          CsdLean4/SigmaLayer/TimeIndexedRecord.lean:68:  exclusive := fun c a b t x ha hb => hexcl c a b (D.flow t x) ha hb
+          CsdLean4/SigmaLayer/TimeIndexedRecord.lean:71:    (flowedSemantics D region hmeas hexcl).event ⟨c, i, t⟩ = D.flow t ⁻¹' region c i := rfl
+          CsdLean4/SigmaLayer/TimeIndexedRecord.lean:87:      = D.flow s ⁻¹' (flowedSemantics D region hmeas hexcl).event ⟨c, i, t⟩ := by
+          CsdLean4/SigmaLayer/TimeIndexedRecord.lean:100:        = D.flow s ⁻¹' (flowedSemantics D region hmeas hexcl).event ⟨c, i, t⟩) :=
+          CsdLean4/SigmaLayer/UnifiedFlowedRecords.lean:79:        = (productDynamics H hH p₀).flow s ⁻¹'
+          CsdLean4/SigmaLayer/UnifiedMeasurement.lean:170:    (∀ t, MeasurePreserving ((productDynamics H hH p₀).flow t) (kMuL p₀) (kMuL p₀))
+          CsdLean4/SigmaLayer/UnifiedMeasurement.lean:171:    ∧ (∀ t x, (productSector H hH p₀).pi ((productDynamics H hH p₀).flow t x)
+          CsdLean4/SigmaLayer/UniqueErgodicity.lean:91:    (D : ConstraintDynamics Sigma) (h : Ergodic (D.flow 1) (D.muL : Measure Sigma)) :
+          CsdLean4/SigmaLayer/UniqueErgodicity.lean:100:    (D : ConstraintDynamics Sigma) (h : UniquelyErgodic (D.flow 1) (D.muL : Measure Sigma)) :
+== sector-linkage guard: OK ==

@@ -33,11 +33,11 @@ Concretely, on the fibre `Σ = ℝ`:
   `‖ψ i‖²` (`fibreTypicality_bornRecord`) — the ontic typicality of *recording* outcome `i` is the
   Born weight.
 
-What this is **not**: the record events here are the fibre cells `cdfCell c.rate`, whose measures are
-the (context-fixed-probability) Born weights, but whose *rate data* still comes with the state. The
-context-fixed-region form of Paper C A7 and the physical de-isolation flow generating the cells remain
-the open items (plan §3c / step 2b′); this file discharges the record-*infrastructure* obligation, not
-those. Foundational-triple, no `sorry`.
+The rate vector is part of the context and is only required to be nonnegative. Normalization
+and almost-sure record production are additional properties, proved for unit-state Born contexts.
+The time field is a label: these events do not change with time, and this file defines no register
+interaction. The preparation-independent context fields and their basins are in
+`RecordLayer/GlobalBasin.lean`; register-changing protocols are in `RecordLayer/SwapWitness.lean`.
 
 ## References
 `specs/record-layer-plan.md` (record layer, MD-1; step 3 = the record); `SigmaLayer/RecordedFact.lean`
@@ -57,9 +57,9 @@ namespace CSD.RecordLayer
 variable {n : ℕ}
 
 /-- **A measurement context on the fibre:** a nonnegative rate vector over the `n` outcomes. In the
-record layer this is the context `M` applied to the prepared state — the moment-map/Born rates. -/
+Born constructor it is the context applied to a state. General contexts need not be normalized. -/
 structure FibreContext (n : ℕ) where
-  /-- The outcome rates (the moment-map weights of the context). -/
+  /-- Nonnegative outcome rates; no normalization or moment-map identity is assumed. -/
   rate : Fin n → ℝ
   /-- The rates are nonnegative. -/
   rate_nonneg : ∀ i, 0 ≤ rate i

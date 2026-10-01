@@ -9,40 +9,38 @@ public import CsdLean4.RecordLayer.MomentMapRace
 public import CsdLean4.LF1.GeneralFrequency
 
 /-!
-# SigmaLayer/Measurement: the measurement architecture in one object (MD-1)
+# RecordLayer/Measurement: context, fibre outcome and recorded fact
 
-**Category:** 7-SigmaLayer (the record layer — the measurement as context + microstate → record).
+**Category:** 7-SigmaLayer (measurement on the real fibre).
 
-The record-layer architecture assembled into a single object `Measurement`, exactly the intended shape:
+A `Measurement` pairs a nonnegative rate vector with a time label. Its disjoint CDF cells
+select an optional outcome from a real fibre point and package that outcome as a `RecordedFact`.
+The event semantics does not depend on the time label. Rates need not sum to one, so an
+arbitrary context can leave a set of positive `fibreTypicality` measure without a record.
 
-* the **context** `m.context` is the *measurement type* — it fixes the basin partition of the fibre,
-  and therefore the outcome probabilities (the moment-map/Born weights);
-* the **microstate** `ξ : ℝ` is the *unknown* ontic fibre point (typical under `fibreTypicality`);
-* the microstate selects an **outcome** `m.outcome ξ` — the basin it occupies (`outcome_eq_some_iff`);
-* the **basins set the probabilities**: `m.prob i = fibreTypicality (m.basin i)`, which for the Born
-  measurement is `‖ψ i‖²` = the Kähler moment map (`bornMeasurement_prob`,
-  `bornMeasurement_prob_momentMap`);
-* the combined **result is the record** `m.record ξ = ⟨context, outcome, time⟩` (`record_of_mem_basin`).
+* `prob_eq_rate` identifies basin probabilities with rates when the rates sum to one.
+* `ae_record_of_sum_eq_one` proves almost-sure record production under that normalization.
+* `bornMeasurement_prob` specializes the probability identity to a unit vector's squared
+  component norms, and `bornMeasurement_prob_momentMap` identifies these with the moment map.
+* `bornMeasurement_frequency` proves the frequency limit for measurable trials with the
+  specified fibre law and pairwise independent outcome indicators.
 
-So one microstate + one context deterministically yields one record. The probabilistic content is
-*nothing special* — it is the **law of large numbers over the unknown initial microstate**: each run
-is deterministic given its microstate, and across repeated preparations the microstate is typical
-(`fibreTypicality`), so the outcome-`i` frequency converges a.s. to the basin measure `‖ψ i‖²`
-(`bornMeasurement_frequency`, via the strong law `freq_tendsto_of_iid`). Randomness = ignorance of the
-initial condition; Born = the LLN limit = the basin measure = the Kähler moment map.
+The Born constructor supplies the rate vector from the state. Identifying it with the moment
+map does not by itself force an arbitrary context to have those rates; the separate generation
+hypothesis and theorem are in `RecordLayer/CellLawForced.lean`. Likewise, a deterministic
+selector does not establish independence between preparations: the frequency theorem takes
+that assumption explicitly.
 
-**Honest scope.** Every fact here is grounded in the proven pieces (`BornFibrePartition`,
-`DeIsolationFlow`, `FibreRecord`, `MomentMapRace`, `LF1/GeneralFrequency`); the probabilities are the
-*typicality of the basins*, the basins carry the *moment map*, and the frequencies are the *strong
-law* — no injected probability vector and no extra dynamical postulate. The de-isolation flow is just
-the deterministic map from microstate to basin (which is what a measurement context *is*); there is no
-separate "derive the flow" problem, only the standard typicality+LLN story of Papers A/D.
-Foundational-triple, no `sorry`.
+This file packages a readout and its law. An interaction that changes an apparatus register
+is constructed separately in `RecordLayer/SwapWitness.lean`; sequential register laws are in
+`RecordLayer/DrivenTwoTime.lean`. The CDF packaging here does not prove those interaction laws.
 
 ## References
-`specs/record-layer-plan.md` (record layer, MD-1); `RecordLayer/FibreRecord.lean` (the P5
-`RecordSemantics`, `bornContext`); `RecordLayer/MomentMapRace.lean` (`bornRate_eq_momentMap`,
-the rates = the Kähler moment map); `RecordLayer/DeIsolationFlow.lean` (`fibreTypicality`).
+
+`RecordLayer/FibreRecord.lean` (record semantics and Born context);
+`RecordLayer/DeIsolationFlow.lean` (restricted Lebesgue typicality);
+`RecordLayer/MomentMapRace.lean` (moment-map identification);
+`LF1/GeneralFrequency.lean` (strong law for the outcome indicators).
 -/
 
 @[expose] public section
@@ -55,10 +53,10 @@ namespace CSD.RecordLayer
 variable {n : ℕ}
 
 /-- **A measurement: a context (measurement type) awaiting an unknown microstate.** The context fixes
-the fibre's basin partition (hence the outcome probabilities); a microstate `ξ` then selects the basin
-it occupies, and the combined result is the record. -/
+disjoint fibre cells and their probabilities; a microstate `ξ` selects an outcome when it lies
+in a cell, and that outcome is packaged as the record. -/
 structure Measurement (n : ℕ) where
-  /-- The measurement context — the measurement type; fixes the basins and the probabilities. -/
+  /-- The measurement context; fixes the disjoint cells and their probabilities. -/
   context : FibreContext n
   /-- The ontic time at which the record is established. -/
   time : OnticTime
@@ -68,11 +66,11 @@ namespace Measurement
 variable (m : Measurement n)
 
 /-- The **basin** of outcome `i`: the fibre region (record event) the context assigns to `i`. The
-basins are the measurement type's partition of the fibre. -/
+basins are disjoint CDF cells. Normalized rates give full typicality coverage. -/
 def basin (i : Fin n) : Set ℝ := (fibreRecordSemantics n).event ⟨m.context, i, m.time⟩
 
 /-- The **outcome** the unknown microstate `ξ` selects: the basin it occupies (`none` off the basins,
-a `fibreTypicality`-null set). -/
+which need not be a `fibreTypicality`-null set for an unnormalized context). -/
 noncomputable def outcome (ξ : ℝ) : Option (Fin n) := fibreOutcome m.context.rate ξ
 
 /-- The **record**: the combined result the microstate `ξ` produces — the recorded fact
@@ -99,6 +97,37 @@ theorem record_of_mem_basin (i : Fin n) (ξ : ℝ) (h : ξ ∈ m.basin i) :
     m.record ξ = some ⟨m.context, i, m.time⟩ := by
   rw [record, (outcome_eq_some_iff m i ξ).mpr h]; rfl
 
+/-- For normalized context rates, each basin probability equals its rate. -/
+theorem prob_eq_rate (hsum : ∑ i, m.context.rate i = 1) (i : Fin n) :
+    m.prob i = ENNReal.ofReal (m.context.rate i) := by
+  have hsub : cdfCell m.context.rate i ⊆ Ico (0 : ℝ) 1 := by
+    simpa only [hsum] using
+      cdfCell_subset_Ico m.context.rate m.context.rate_nonneg i
+  rw [prob, basin_eq, fibreTypicality,
+    Measure.restrict_apply (measurableSet_cdfCell _ _),
+    inter_eq_left.mpr hsub, volume_cdfCell]
+
+/-- Normalized contexts produce a record almost surely under `fibreTypicality`.
+Nonnegativity alone, the requirement in `FibreContext`, does not imply this. -/
+theorem ae_record_of_sum_eq_one (hsum : ∑ i, m.context.rate i = 1) :
+    ∀ᵐ ξ ∂fibreTypicality, ∃ i, m.record ξ = some ⟨m.context, i, m.time⟩ := by
+  have hcells (i : Fin n) : MeasurableSet (m.basin i) :=
+    (fibreRecordSemantics n).measurable_event ⟨m.context, i, m.time⟩
+  have hmeas : MeasurableSet (⋃ i, m.basin i) := MeasurableSet.iUnion hcells
+  have hdisj : Pairwise (Function.onFun Disjoint m.basin) :=
+    cdfCell_pairwiseDisjoint m.context.rate m.context.rate_nonneg
+  have hmass : fibreTypicality (⋃ i, m.basin i) = 1 := by
+    rw [measure_iUnion hdisj hcells, tsum_fintype]
+    change (∑ i, m.prob i) = 1
+    simp_rw [m.prob_eq_rate hsum]
+    rw [← ENNReal.ofReal_sum_of_nonneg (fun i _ => m.context.rate_nonneg i),
+      hsum, ENNReal.ofReal_one]
+  have hmem : ∀ᵐ ξ ∂fibreTypicality, ξ ∈ ⋃ i, m.basin i :=
+    (mem_ae_iff_prob_eq_one hmeas).2 hmass
+  filter_upwards [hmem] with ξ hξ
+  obtain ⟨i, hi⟩ := Set.mem_iUnion.mp hξ
+  exact ⟨i, m.record_of_mem_basin i ξ hi⟩
+
 /-- **The Born measurement** of a state `ψ`: the context whose rates are the Born weights `‖ψ i‖²`
 (= the Kähler moment map), established at time `t`. -/
 noncomputable def bornMeasurement (ψ : EuclideanSpace ℂ (Fin n)) (t : OnticTime) : Measurement n :=
@@ -109,8 +138,7 @@ the Born measurement is exactly `‖ψ i‖²`. -/
 theorem bornMeasurement_prob (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1) (i : Fin n)
     (t : OnticTime) :
     (bornMeasurement ψ t).prob i = ENNReal.ofReal (‖ψ i‖ ^ 2) := by
-  rw [prob, basin]
-  exact fibreTypicality_bornRecord ψ hψ i t
+  exact (bornMeasurement ψ t).prob_eq_rate (sum_bornRate_unit ψ hψ) i
 
 /-- **The probability is the Kähler moment map.** The Born measurement's outcome-`i` probability is
 the `i`-th torus moment-map coordinate at `[ψ]` — read off the context, not injected. That the moment map is the
@@ -131,14 +159,9 @@ theorem bornMeasurement_ae_total (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ�
     fibreTypicality (Ico (0 : ℝ) 1 \ ⋃ i, (bornMeasurement ψ t).basin i) = 0 :=
   fibreTypicality_uncovered ψ hψ
 
-/-- **The Born rule as the law of large numbers over the unknown microstate.** This is the whole
-probabilistic content, and it is *nothing special*: the microstate is unknown, each run is
-deterministic given it, and across repeated preparations the microstate is typical (`fibreTypicality`),
-so the outcome-`i` frequency converges almost surely to the basin measure `‖ψ i‖²` — the Born weight.
-Randomness = ignorance of the initial condition; the limit is the strong law (`freq_tendsto_of_iid`).
-
-For i.i.d. trials `X k` with law `fibreTypicality`, the frequency of trials whose microstate lands in
-basin `i` converges a.s. to `‖ψ i‖²`. -/
+/-- For measurable trials with law `fibreTypicality` and pairwise independent outcome-`i`
+indicators, the outcome-`i` frequency converges almost surely to the unit state's Born weight.
+The common law and indicator independence are hypotheses on the repeated preparations. -/
 theorem bornMeasurement_frequency (ψ : EuclideanSpace ℂ (Fin n)) (hψ : ‖ψ‖ = 1) (t : OnticTime)
     (i : Fin n) {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]
     (X : ℕ → Ω → ℝ) (hX : ∀ k, Measurable (X k))

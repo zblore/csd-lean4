@@ -1,0 +1,11 @@
+== connectivity guard ==
+  OK    specs/connectivity-manifest.md present.
+  OK    README carries the sector-origin honesty banner (manifest link + sector-posited caveat).
+  OK    no sector-origin overclaim phrases in README / INDEX.
+  INFO  4 non-trivial KahlerOnticSetup inhabitant(s) — the healthy state:
+        the Schrödinger chain is instantiated off the trivial witness (C1/C7).
+          CsdLean4/LF4/ManyToOnePillars.lean: manyToOneSetup
+          CsdLean4/LF4/ManyToOnePillars.lean: manyToOneRotationSetup
+          CsdLean4/LF4/NonTrivialSetup.lean: unitaryFlowSetup
+          CsdLean4/LF4/NonTrivialSetup.lean: rotationSetup
+== connectivity guard: OK ==

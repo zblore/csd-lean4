@@ -3821,4 +3821,13 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.composite_record_eq_mixed_record
 
+-- Normalized real-fibre readout and the zero-probability branch of the driven joint law.
+/-- info: 'CSD.RecordLayer.Measurement.prob_eq_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Measurement.prob_eq_rate
+
+/-- info: 'CSD.RecordLayer.Measurement.ae_record_of_sum_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Measurement.ae_record_of_sum_eq_one
+
 end CSD.Tests.AxiomAudit

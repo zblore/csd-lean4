@@ -1087,3 +1087,16 @@ per-file assessment and reproduction commands.
 
 The full pinned theorem-package review is complete. This does not close unrelated CSD
 interpretation issues or add automatic coverage credit to the older review branch's register.
+
+## Measurement and record review (2026-09-30)
+
+Source and exact scope: [review report](reviews/2026-09-30-measurement-records.md).
+
+| Finding | Status / next action |
+|---|---|
+| CR-RECORD-003 | Review branch: normalized-context probability and almost-sure record theorems added; unnormalized-context counterexamples saved. |
+| CR-RECORD-004 | Review branch: driven joint Born law strengthened to include zero first-outcome weights; thermodynamic caller migrated. |
+| CR-RECORD-005 | Review branch: readout vs register evolution, supplied context rates and trial independence documented accurately. |
+| CR-LF2-006 | Still open: record-engine dependencies have been traced, not all fully reviewed; the general LF5 event-to-record connection is not discharged here. |
+| Corpus coverage renewal | Reconcile 35 changed source entries and four changed dependency entries from the old 39-file register. See archived reconciliation; do not transfer the old 5.64% to current main. |
+| Corpus sampling pilot | Thirty files selected with recorded seed, strata and probabilities; execute and measure review/repair effort before forecasting. |

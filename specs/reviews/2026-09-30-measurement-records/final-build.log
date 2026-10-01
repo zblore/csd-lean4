@@ -1,0 +1,77 @@
+ℹ [3771/3801] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/Eval.lean:215:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/Eval.lean:220:0: 2
+ℹ [3777/3864] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularDouble.lean:489:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularDouble.lean:494:0: 2
+ℹ [3778/3864] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean:810:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean:815:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean:820:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean:825:0: 3
+ℹ [3779/3864] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroAdd.lean:497:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroAdd.lean:502:0: 6
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroAdd.lean:507:0: false
+ℹ [3780/3864] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/AndAdd.lean:765:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/AndAdd.lean:770:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/AndAdd.lean:772:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/AndAdd.lean:774:0: false
+ℹ [3786/3864] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/GidneyAdder.lean:536:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/GidneyAdder.lean:541:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/GidneyAdder.lean:545:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/GidneyAdder.lean:548:0: 3
+ℹ [3797/3869] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMul.lean:915:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMul.lean:919:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMul.lean:923:0: 2
+ℹ [3798/3869] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:852:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:857:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:862:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:864:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:868:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:872:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:877:0: false
+ℹ [3813/3875] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.ModularConst
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:487:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:492:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:497:0: 4
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:666:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:671:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:676:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:758:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:763:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:768:0: 1
+ℹ [3814/3875] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMulLoop.lean:821:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMulLoop.lean:825:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMulLoop.lean:829:0: 1
+ℹ [3833/3878] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1290:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1295:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1300:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1306:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1309:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1312:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1314:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1316:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1320:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1323:0: 2
+✔ [4275/4335] Built CsdLean4.RecordLayer.Measurement (10s)
+ℹ [4404/4511] Replayed CsdLean4.RecordLayer.ShearWitness
+info: CsdLean4/RecordLayer/ShearWitness.lean:275:2: Try this:
+  [apply] ring_nf
+
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: CsdLean4/RecordLayer/ShearWitness.lean:293:4: Try this:
+  [apply] ring_nf
+
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+Build completed successfully (4686 jobs).

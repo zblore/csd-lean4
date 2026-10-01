@@ -1,0 +1,4 @@
+check-references: OK (41 entries, every cited_by resolves, every `[Key]` citation is known)
+  coverage: 41 entries against ~135 distinct `Author YYYY` citations in Lean docstrings
+            (§8.2 obligation — one entry per source plus line-precise citations — is OPEN;
+             see specs/BACKLOG.md. This line measures the gap, it does not gate it.)

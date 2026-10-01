@@ -55,7 +55,7 @@ applies verbatim.
   ★ `spectral_born_ctx_eq_traceForm` (that mixture, in an orthonormal basis `b`, is
   `Tr(ρ ∣bᵢ⟩⟨bᵢ∣)` — `spectral_born_eq_traceForm` at a general basis).
 * ★★ `driven_mixed_two_time_born` — **the two-time law with a drive**: for a density operator `ρ`,
-  first readout in the orthonormal basis `b`, a measurable base flow `Φ'` between the readouts,
+  first readout in the orthonormal basis `b`, a measurable base map `Φ'` between the readouts,
   and an arbitrary second context `c₂`,
 
     `P(record i at t₁ ∧ record j at t₂) = Tr(ρ ∣bᵢ⟩⟨bᵢ∣) · c₂.rate (Φ' [bᵢ]) j`;
@@ -71,6 +71,9 @@ applies verbatim.
 * The drive sits between the two crossings as a composed map, exactly as the two stages do; the
   clock-glued single-propagator form remains `two-time-luders-scoping.md`'s gated presentation
   item.
+* `Φ'` is an arbitrary measurable map. Invertibility, a flow law and Hamiltonian generation
+  are not hypotheses of the joint-law theorem. The second context is an arbitrary normalized
+  rate field; it becomes a quantum Born readout when specialized to a basis context.
 * Rank-one readouts, one bank per measurement, the vertex-calibrated bank for the second
   apparatus (any probability bank would do — `sector_born_ctx` is bank-generic).
 
@@ -316,14 +319,16 @@ instance (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N))) (ρ : D
   infer_instance
 
 /-- ★★ **Measure, drive, measure — the two-time law with a flow between the readouts.** For a
-density operator `ρ`, a first readout in the orthonormal basis `b`, a measurable base flow `Φ'`
+density operator `ρ`, a first readout in the orthonormal basis `b`, a measurable base map `Φ'`
 applied between the readouts, and an ARBITRARY second context `c₂`:
 
   `P(record i at t₁ ∧ record j at t₂) = Tr(ρ ∣bᵢ⟩⟨bᵢ∣) · c₂.rate (Φ' [bᵢ]) j`.
 
-The first factor is the mixed dynamical Born weight in the basis `b`; the second is the Born
-weight, in the second context, of the collapsed state `[bᵢ]` TRANSPORTED by the flow. -/
-theorem driven_mixed_two_time_born (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+This conditional helper uses a nonzero first-outcome weight to invoke the conditioned law.
+The first factor is the Born weight in basis `b`; the second is the supplied context rate at
+`Φ' [bᵢ]`. For a basis context the latter is a Born weight. The final theorem
+`driven_mixed_two_time_born` also covers zero first-outcome weight. -/
+theorem driven_mixed_two_time_born_of_ne_zero (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
     (ρ : DensityOperator N) {Φ' : LF4.CPN N → LF4.CPN N} (hΦ' : Measurable Φ')
     (c₂ : ContextField N) (i j : Fin N)
     (hpos : traceForm ρ (rankOneEffect (b i) (b.orthonormal.1 i)) ≠ 0) :
@@ -357,5 +362,23 @@ theorem driven_mixed_two_time_first_record
       (mixedReadyPrep ρ) (fun k => epistemicMeasure (basisPoint b k)) (readyMeasure N)
       (fun k => epistemicMeasure (vertexPoint k)) i,
     mixedReadyPrep_prod_sector, spectral_born_ctx_eq_traceForm]
+
+/-- The driven joint law for every first outcome, including zero-probability outcomes.
+The first bank is calibrated to the basis rays and both apparatus are independently prepared.
+The second factor is the supplied context rate; for a basis context it is a Born weight. -/
+theorem driven_mixed_two_time_born
+    (b : OrthonormalBasis (Fin N) ℂ (EuclideanSpace ℂ (Fin N)))
+    (ρ : DensityOperator N) {Φ' : LF4.CPN N → LF4.CPN N} (hΦ' : Measurable Φ')
+    (c₂ : ContextField N) (i j : Fin N) :
+    rotatedMixedTwoPrep b ρ
+        (drivenJointRecordSector (basinIndex (basisContext b)) (baseLift Φ') (basinIndex c₂) i j)
+      = ENNReal.ofReal (traceForm ρ (rankOneEffect (b i) (b.orthonormal.1 i)))
+        * ENNReal.ofReal (c₂.rate (Φ' (basisPoint b i)) j) := by
+  by_cases hzero : traceForm ρ (rankOneEffect (b i) (b.orthonormal.1 i)) = 0
+  · rw [hzero, ENNReal.ofReal_zero, zero_mul]
+    have hfirst := driven_mixed_two_time_first_record b ρ Φ' c₂ i
+    rw [hzero, ENNReal.ofReal_zero] at hfirst
+    exact measure_mono_null (fun _ hx => hx.1) hfirst
+  · exact driven_mixed_two_time_born_of_ne_zero b ρ hΦ' c₂ i j hzero
 
 end CSD.RecordLayer

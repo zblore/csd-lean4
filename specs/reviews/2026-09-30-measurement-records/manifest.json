@@ -1,0 +1,244 @@
+{
+  "date": "2026-09-30",
+  "base_commit": "4b396fa31cc9f0c0042e4d681bf838338049378b",
+  "branch": "codex/record-review",
+  "full_review_files": [
+    "CsdLean4/RecordLayer/Measurement.lean",
+    "CsdLean4/RecordLayer/FibreRecord.lean",
+    "CsdLean4/RecordLayer/DrivenTwoTime.lean"
+  ],
+  "partial_consumer_checks": [
+    "CsdLean4/RecordLayer/JarzynskiRecord.lean",
+    "CsdLean4/Tests/AxiomAudit/SigmaLayer.lean"
+  ],
+  "sha256": {
+    "CsdLean4/RecordLayer/Measurement.lean": "665cd610c1f0bad85304646828c97ad9bd4505459780fde037b08bbd3e679064",
+    "CsdLean4/RecordLayer/FibreRecord.lean": "4215550219b85fa18e72270410cc839f334cb013dcfd2b3da55f9374c332d1bd",
+    "CsdLean4/RecordLayer/DrivenTwoTime.lean": "5e6d1a7854f3493102c145f596b8eedf53b670cb18272a2b67568196eb3412b2",
+    "CsdLean4/RecordLayer/JarzynskiRecord.lean": "5fc635106628e3fcbb68e139d7985a28855f110ab8ba2463582183fed4d0ae05",
+    "CsdLean4/Tests/AxiomAudit/SigmaLayer.lean": "0a7ca581b905e04e5b4110ef7a468e284b778c550de2349d1ff2393ce421671b",
+    "lean-toolchain": "302cd63c54178885b89e669f33b38f12f4dd7ae7e5cac537b3203e3768d8fb2b",
+    "lakefile.toml": "2cb1b3757842edf8e7c31481c9bbc8f8a140bf5b439422c327ede712912fe654",
+    "lake-manifest.json": "4bbc6aa75defb30b02896a90a53d49b74e7c34946087de672e0c39917dba4fb2",
+    "specs\\reviews\\2026-09-30-measurement-records\\BoundaryAudit.lean": "4429b024e97af1ed91f38074beb4ba0abe66a0fd0fa60835ea755e954e4aa86c"
+  },
+  "validation": "Passed: full warning-fatal library/test build, boundary audit and all 22 blocking CI guards on the recorded base.",
+  "new_code": "Normalized-context probabilities and almost-sure records; zero-first-weight driven joint law.",
+  "checks": [
+    {
+      "command": "lake build --wfail CsdLean4.RecordLayer.Measurement CsdLean4.RecordLayer.DrivenTwoTime CsdLean4.RecordLayer.JarzynskiRecord",
+      "exit_code": 0,
+      "log": "affected-build.log",
+      "note": "A subsequent comment clarification in Measurement is covered by the final incremental build."
+    },
+    {
+      "command": "lake env lean -DwarningAsError=true specs/reviews/2026-09-30-measurement-records/BoundaryAudit.lean",
+      "exit_code": 0,
+      "log": "boundary-audit.log",
+      "examples": 11
+    },
+    {
+      "command": "lake build --wfail CsdLean4 CsdLeanTests",
+      "exit_code": 0,
+      "jobs": 4686,
+      "log": "full-build.log"
+    },
+    {
+      "command": "lake build --wfail CsdLean4 CsdLeanTests",
+      "exit_code": 0,
+      "jobs": 4686,
+      "log": "final-build.log"
+    }
+  ],
+  "static_checks": [
+    {
+      "command": "bash scripts/check-claims.sh",
+      "exit_code": 0,
+      "seconds": 169.21
+    },
+    {
+      "command": "bash scripts/check-claim-provenance.sh",
+      "exit_code": 0,
+      "seconds": 9.65
+    },
+    {
+      "command": "bash scripts/check-doc-promises.sh",
+      "exit_code": 0,
+      "seconds": 2.04
+    },
+    {
+      "command": "bash scripts/check-residues.sh",
+      "exit_code": 0,
+      "seconds": 2.73
+    },
+    {
+      "command": "bash scripts/check-references.sh",
+      "exit_code": 0,
+      "seconds": 1.1
+    },
+    {
+      "command": "bash scripts/check-terms.sh",
+      "exit_code": 0,
+      "seconds": 20.61
+    },
+    {
+      "command": "bash scripts/check-labels.sh",
+      "exit_code": 0,
+      "seconds": 5.76
+    },
+    {
+      "command": "bash scripts/check-category-tags.sh",
+      "exit_code": 0,
+      "seconds": 1.03
+    },
+    {
+      "command": "bash scripts/check-placeholder-status.sh",
+      "exit_code": 0,
+      "seconds": 1.08
+    },
+    {
+      "command": "bash scripts/check-import-negative.sh",
+      "exit_code": 0,
+      "seconds": 3.25
+    },
+    {
+      "command": "bash scripts/check-import-hygiene.sh",
+      "exit_code": 0,
+      "seconds": 6.28
+    },
+    {
+      "command": "bash scripts/check-validation-ledger.sh",
+      "exit_code": 0,
+      "seconds": 69.37
+    },
+    {
+      "command": "bash scripts/check-semantic-mutations.sh",
+      "exit_code": 0,
+      "seconds": 3.37
+    }
+  ],
+  "log_note": "PowerShell build logs decoded from UTF-16; trailing whitespace normalized in archived full-build logs.",
+  "integration_checks": [
+    {
+      "command": "bash scripts/check-module-coverage.sh",
+      "exit_code": 0,
+      "seconds": 1551.52
+    },
+    {
+      "command": "bash scripts/check-connectivity.sh",
+      "exit_code": 0,
+      "seconds": 16.6
+    },
+    {
+      "command": "bash scripts/check-sector-linkage.sh",
+      "exit_code": 0,
+      "seconds": 9.53
+    },
+    {
+      "command": "bash scripts/check-axiom-imports.sh",
+      "exit_code": 0,
+      "seconds": 2726.03
+    },
+    {
+      "command": "bash scripts/check-mathlib-absence.sh",
+      "exit_code": 0,
+      "seconds": 65.97
+    },
+    {
+      "command": "bash scripts/check-claim-provenance.sh",
+      "exit_code": 0,
+      "seconds": 8.52
+    },
+    {
+      "command": "bash scripts/check-doc-promises.sh",
+      "exit_code": 0,
+      "seconds": 1.92
+    },
+    {
+      "command": "bash scripts/check-residues.sh",
+      "exit_code": 0,
+      "seconds": 2.53
+    },
+    {
+      "command": "bash scripts/check-references.sh",
+      "exit_code": 0,
+      "seconds": 0.81
+    },
+    {
+      "command": "bash scripts/check-terms.sh",
+      "exit_code": 0,
+      "seconds": 20.29
+    },
+    {
+      "command": "bash scripts/check-labels.sh",
+      "exit_code": 0,
+      "seconds": 5.31
+    },
+    {
+      "command": "bash scripts/check-category-tags.sh",
+      "exit_code": 0,
+      "seconds": 0.88
+    },
+    {
+      "command": "bash scripts/check-placeholder-status.sh",
+      "exit_code": 0,
+      "seconds": 0.87
+    },
+    {
+      "command": "bash scripts/check-import-negative.sh",
+      "exit_code": 0,
+      "seconds": 3.11
+    },
+    {
+      "command": "bash scripts/check-import-hygiene.sh",
+      "exit_code": 0,
+      "seconds": 6.16
+    },
+    {
+      "command": "bash scripts/check-validation-ledger.sh",
+      "exit_code": 0,
+      "seconds": 65.05
+    },
+    {
+      "command": "bash scripts/check-semantic-mutations.sh",
+      "exit_code": 0,
+      "seconds": 2.7
+    },
+    {
+      "command": "bash scripts/check-claims.sh",
+      "exit_code": 0,
+      "seconds": 148.38
+    },
+    {
+      "command": "bash scripts/check-citation-use.sh",
+      "exit_code": 0,
+      "seconds": 36.45
+    },
+    {
+      "command": "bash scripts/check-axiom-sweep.sh",
+      "exit_code": 0,
+      "seconds": 21.61
+    },
+    {
+      "command": "bash scripts/check-gleason-free.sh",
+      "exit_code": 0,
+      "seconds": 105.17
+    },
+    {
+      "command": "bash scripts/check-guards.sh",
+      "exit_code": 0,
+      "seconds": 96.98
+    }
+  ],
+  "rebase": {
+    "date": "2026-10-01",
+    "onto": "2e0cf246a2c7d0c783f004a92e6ed925c47fbbf7",
+    "reviewed_hashes_unchanged": true,
+    "command": "lake build --wfail CsdLean4 CsdLeanTests",
+    "exit_code": 0,
+    "jobs": 4693,
+    "log": "rebased-build.log",
+    "baseline_ci": "https://github.com/zblore/csd-lean4/actions/runs/36854060842",
+    "note": "All 22 guards passed on the original staged batch; newer upstream baseline CI passed separately. The combined rebased tree passed the full build."
+  }
+}

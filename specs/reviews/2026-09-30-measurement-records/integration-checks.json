@@ -1,0 +1,112 @@
+[
+  {
+    "command": "bash scripts/check-module-coverage.sh",
+    "exit_code": 0,
+    "seconds": 1551.52
+  },
+  {
+    "command": "bash scripts/check-connectivity.sh",
+    "exit_code": 0,
+    "seconds": 16.6
+  },
+  {
+    "command": "bash scripts/check-sector-linkage.sh",
+    "exit_code": 0,
+    "seconds": 9.53
+  },
+  {
+    "command": "bash scripts/check-axiom-imports.sh",
+    "exit_code": 0,
+    "seconds": 2726.03
+  },
+  {
+    "command": "bash scripts/check-mathlib-absence.sh",
+    "exit_code": 0,
+    "seconds": 65.97
+  },
+  {
+    "command": "bash scripts/check-claim-provenance.sh",
+    "exit_code": 0,
+    "seconds": 8.52
+  },
+  {
+    "command": "bash scripts/check-doc-promises.sh",
+    "exit_code": 0,
+    "seconds": 1.92
+  },
+  {
+    "command": "bash scripts/check-residues.sh",
+    "exit_code": 0,
+    "seconds": 2.53
+  },
+  {
+    "command": "bash scripts/check-references.sh",
+    "exit_code": 0,
+    "seconds": 0.81
+  },
+  {
+    "command": "bash scripts/check-terms.sh",
+    "exit_code": 0,
+    "seconds": 20.29
+  },
+  {
+    "command": "bash scripts/check-labels.sh",
+    "exit_code": 0,
+    "seconds": 5.31
+  },
+  {
+    "command": "bash scripts/check-category-tags.sh",
+    "exit_code": 0,
+    "seconds": 0.88
+  },
+  {
+    "command": "bash scripts/check-placeholder-status.sh",
+    "exit_code": 0,
+    "seconds": 0.87
+  },
+  {
+    "command": "bash scripts/check-import-negative.sh",
+    "exit_code": 0,
+    "seconds": 3.11
+  },
+  {
+    "command": "bash scripts/check-import-hygiene.sh",
+    "exit_code": 0,
+    "seconds": 6.16
+  },
+  {
+    "command": "bash scripts/check-validation-ledger.sh",
+    "exit_code": 0,
+    "seconds": 65.05
+  },
+  {
+    "command": "bash scripts/check-semantic-mutations.sh",
+    "exit_code": 0,
+    "seconds": 2.7
+  },
+  {
+    "command": "bash scripts/check-claims.sh",
+    "exit_code": 0,
+    "seconds": 148.38
+  },
+  {
+    "command": "bash scripts/check-citation-use.sh",
+    "exit_code": 0,
+    "seconds": 36.45
+  },
+  {
+    "command": "bash scripts/check-axiom-sweep.sh",
+    "exit_code": 0,
+    "seconds": 21.61
+  },
+  {
+    "command": "bash scripts/check-gleason-free.sh",
+    "exit_code": 0,
+    "seconds": 105.17
+  },
+  {
+    "command": "bash scripts/check-guards.sh",
+    "exit_code": 0,
+    "seconds": 96.98
+  }
+]

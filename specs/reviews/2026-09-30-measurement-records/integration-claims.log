@@ -1,0 +1,22 @@
+check-claims: verifying code against the canonical claims block…
+  ok    imported axioms: none (zero-axiom posture — busch_effect_gleason discharged)
+  ok    := True placeholders: none remain (all de-vacuumed)
+  ok    FiniteQMClosure has 11 fields
+  ok    all 9 backing theorems exist
+  ok    no forbidden A5-overclaim phrases in forward-claim docs
+  ok    no A5-mislabel aliases in the swept forward-claim docs (A5≠SO-1 kept distinct)
+  ok    no epistemic overclaims (settled-claim words all cite proofs, not numerics/conjecture)
+  ok    symplectic-vocabulary names == declared inventory (36 names, each with a recorded EVEN-parity justification)
+  ok    symplectic-vocabulary FIELDS == declared inventory (5 fields)
+  ok    vocabulary-bearing THEOREM names == declared inventory (145 names; the one known misnomer is declared)
+  ok    KahlerOnticSetup instantiations == declared inventory (6 sites, each with a verified EVEN-parity Sigma)
+  ok    group naming: SU( mentions == declared explanatory sites (7 files) — everything else says U(N), matching the quantifier
+  ok    open-scope claims == declared inventory (32 files) — re-read these when a BACKLOG row is discharged
+  ok    scope-expiry ledger: no boundary outlives its BACKLOG row (every open-scope file classified)
+  ok    README: no unqualified "zero axioms" claim
+  ok    landing surface: no em dashes in README or docs/TOUR.md
+  ok    README: no dated correction lines (they belong in specs/archive)
+  ok    README size 6142B (limit 6144B)
+  ok    CITATION.cff C1 anchor names the newest C1 tag (v1.4.1-c1-complete)
+
+check-claims: PASS

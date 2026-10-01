@@ -1,0 +1,190 @@
+ℹ [3773/3801] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/Eval.lean:215:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/Eval.lean:220:0: 2
+ℹ [3777/3802] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean:810:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean:815:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean:820:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularSub.lean:825:0: 3
+ℹ [3778/3802] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroAdd.lean:497:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroAdd.lean:502:0: 6
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroAdd.lean:507:0: false
+ℹ [3779/3802] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/AndAdd.lean:765:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/AndAdd.lean:770:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/AndAdd.lean:772:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/AndAdd.lean:774:0: false
+ℹ [3780/3802] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularDouble.lean:489:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularDouble.lean:494:0: 2
+ℹ [3786/3864] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/GidneyAdder.lean:536:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/GidneyAdder.lean:541:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/GidneyAdder.lean:545:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/GidneyAdder.lean:548:0: 3
+ℹ [3788/3864] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMul.lean:915:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMul.lean:919:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMul.lean:923:0: 2
+ℹ [3789/3864] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:852:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:857:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:862:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:864:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:868:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:872:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModAdd.lean:877:0: false
+ℹ [3801/3869] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.ModularConst
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:487:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:492:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:497:0: 4
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:666:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:671:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:676:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:758:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:763:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularConst.lean:768:0: 1
+ℹ [3802/3869] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMulLoop.lean:821:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMulLoop.lean:825:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/ModularMulLoop.lean:829:0: 1
+ℹ [3817/3869] Replayed CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1290:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1295:0: 1
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1300:0: 2
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1306:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1309:0: 0
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1312:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1314:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1316:0: false
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1320:0: 3
+info: CsdLean4/Mathlib/QuantumInfo/Reversible/CuccaroModMul.lean:1323:0: 2
+ℹ [4053/4114] Replayed CsdLean4.RecordLayer.ShearWitness
+info: CsdLean4/RecordLayer/ShearWitness.lean:275:2: Try this:
+  [apply] ring_nf
+
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: CsdLean4/RecordLayer/ShearWitness.lean:293:4: Try this:
+  [apply] ring_nf
+
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+✔ [4095/4119] Built CsdLean4.Mathlib.QuantumInfo.AharonovBohmRing (18s)
+✔ [4096/4119] Built CsdLean4.Empirical.CSD.QuantumEraserVolume (11s)
+✔ [4097/4121] Built CsdLean4.RecordLayer.BlockCollapse (11s)
+✔ [4102/4124] Built CsdLean4.RecordLayer.ShearDiscontinuity (11s)
+✔ [4106/4127] Built CsdLean4.RecordLayer.PiecewiseHamiltonian (10s)
+✔ [4112/4127] Built CsdLean4.RecordLayer.PhaseSlot (10s)
+✔ [4113/4127] Built CsdLean4.Empirical.CSD.SequentialMeasurement (11s)
+✔ [4117/4127] Built CsdLean4.RecordLayer.UnifiedArena (12s)
+✔ [4118/4127] Built CsdLean4.RecordLayer.JoinArena (10s)
+✔ [4120/4129] Built CsdLean4.Empirical.CSD.Crypto.BB84Sequential (10s)
+✔ [4122/4129] Built CsdLean4.RecordLayer.JoinProtocol (10s)
+✔ [4125/4130] Built CsdLean4.Empirical.CSD.Crypto.B92Sequential (9.8s)
+✔ [4127/4150] Built CsdLean4.Empirical.CSD.Crypto.WiesnerSequential (9.0s)
+✔ [4202/4279] Built CsdLean4.RecordLayer.JoinLuders (12s)
+✔ [4334/4444] Built CsdLean4.Empirical.CSD.HongOuMandelVolume (9.5s)
+✔ [4341/4444] Built CsdLean4.RecordLayer.PointerArena (10s)
+✔ [4405/4446] Built CsdLean4.RecordLayer.PointerRotation (9.8s)
+✔ [4413/4492] Built CsdLean4.CV.OscillatorBorn (9.1s)
+✔ [4421/4492] Built CsdLean4.RecordLayer.TorusRecord (9.8s)
+✔ [4423/4492] Built CsdLean4.RecordLayer.PointerCoupling (10s)
+✔ [4426/4492] Built CsdLean4.RecordLayer.NStepChain (9.6s)
+✔ [4427/4492] Built CsdLean4.RecordLayer.JoinClosure (10s)
+✔ [4430/4492] Built CsdLean4.RecordLayer.ShearDeIsolation (10s)
+✔ [4437/4511] Built CsdLean4.RecordLayer.BasisMeasurement (10s)
+✔ [4441/4511] Built CsdLean4.CV.FieldModes (13s)
+✔ [4448/4511] Built CsdLean4.RecordLayer.PointerWeights (15s)
+✔ [4458/4516] Built CsdLean4.CV.FreeFieldFloquet (10s)
+✔ [4459/4516] Built CsdLean4.Mathlib.Analysis.Calculus.SchrodingerCurrent (12s)
+✔ [4464/4516] Built CsdLean4.RecordLayer.PointerLanding (11s)
+✔ [4465/4516] Built CsdLean4.CV.Dispersion (11s)
+✔ [4466/4519] Built CsdLean4.RecordLayer.StatisticsRigidity (10s)
+✔ [4471/4520] Built CsdLean4.RecordLayer.ArenaTorus (11s)
+✔ [4473/4520] Built CsdLean4.CV.Interaction (14s)
+✔ [4474/4520] Built CsdLean4.RecordLayer.PointerProtocol (16s)
+✔ [4475/4559] Built CsdLean4.CV.Boost (13s)
+✔ [4479/4559] Built CsdLean4.CV.ModeLocality (11s)
+✔ [4481/4559] Built CsdLean4.RecordLayer.LocalBlockBridge (10s)
+✔ [4482/4559] Built CsdLean4.RecordLayer.PointerBorn (10s)
+✔ [4494/4559] Built CsdLean4.CV.DispersionEarned (10s)
+✔ [4496/4559] Built CsdLean4.Empirical.QM.AharonovBohm (10s)
+✔ [4497/4559] Built CsdLean4.CV.LocalAlgebra (8.9s)
+✔ [4498/4559] Built CsdLean4.Empirical.CSD.EraserDynamics (11s)
+✔ [4500/4559] Built CsdLean4.CV.DynamicalLocality (9.4s)
+✔ [4506/4562] Built CsdLean4.RecordLayer.JointFlowTransfer (9.2s)
+✔ [4512/4562] Built CsdLean4.Empirical.CSD.Darwinism (10s)
+✔ [4513/4562] Built CsdLean4.Empirical.CSD.EraserSequential (11s)
+✔ [4514/4563] Built CsdLean4.CV.SupportSpreading (11s)
+✔ [4518/4563] Built CsdLean4.CV.InteractionPrice (11s)
+✔ [4523/4564] Built CsdLean4.RecordLayer.JointLift (11s)
+✔ [4525/4564] Built CsdLean4.CV.LocalAlgebraClosed (10s)
+✔ [4526/4564] Built CsdLean4.CV.CarrierPersistence (10s)
+✔ [4527/4564] Built CsdLean4.CV.Propagator (11s)
+✔ [4528/4564] Built CsdLean4.CV.CutoffStability (9.6s)
+✔ [4535/4566] Built CsdLean4.CV.PowerCounting (10s)
+✔ [4537/4566] Built CsdLean4.Empirical.CSD.WignerArakiYanase (10s)
+✔ [4538/4566] Built CsdLean4.CV.LiebRobinson (12s)
+✔ [4539/4566] Built CsdLean4.CV.ChaosBounds (10s)
+✔ [4540/4566] Built CsdLean4.CV.ThermalPropagator (10s)
+✔ [4546/4568] Built CsdLean4.CV.Decimation (10s)
+✔ [4547/4568] Built CsdLean4.CV.ChannelRG (10s)
+✔ [4549/4568] Built CsdLean4.CV.PriceAttainment (10s)
+✔ [4550/4568] Built CsdLean4.Empirical.CSD.Ozawa (9.2s)
+✔ [4551/4568] Built CsdLean4.CV.ArenaBridge (10s)
+✔ [4556/4573] Built CsdLean4.CV.Wick (11s)
+✔ [4557/4573] Built CsdLean4.CV.FieldStructuredFlow (10s)
+✔ [4561/4573] Built CsdLean4.CV.CompositeArena (11s)
+✔ [4563/4579] Built CsdLean4.CV.WickGeneral (9.6s)
+✔ [4565/4579] Built CsdLean4.CV.FibredArenaBridge (10s)
+✔ [4566/4579] Built CsdLean4.CV.FeynmanVertex (10s)
+✔ [4569/4579] Built CsdLean4.CV.EntangledWeights (17s)
+✔ [4572/4580] Built CsdLean4.CV.WickTime (11s)
+✔ [4612/4663] Built CsdLean4.RecordLayer.EntangledRecord (10s)
+✔ [4613/4663] Built CsdLean4.RecordLayer.PointerGeneration (9.5s)
+✔ [4614/4663] Built CsdLean4.RecordLayer.PointerHamiltonianField (9.4s)
+✔ [4615/4663] Built CsdLean4.RecordLayer.MixedJoinLuders (10s)
+✔ [4616/4663] Built CsdLean4.RecordLayer.SharpenedNoGo (9.6s)
+✔ [4617/4663] Built CsdLean4.RecordLayer.PointerFrequency (10s)
+✔ [4618/4663] Built CsdLean4.RecordLayer.NullSeamWitness (11s)
+✔ [4619/4663] Built CsdLean4.RecordLayer.PointerLuders (10s)
+✔ [4625/4663] Built CsdLean4.RecordLayer.PovmDynamics (11s)
+✔ [4626/4663] Built CsdLean4.RecordLayer.PointerSmoothProfile (9.9s)
+✔ [4627/4663] Built CsdLean4.RecordLayer.CompositeRecord (10s)
+✔ [4628/4663] Built CsdLean4.RecordLayer.MeasurementCapstone (10s)
+✔ [4629/4663] Built CsdLean4.RecordLayer.NoRecordGeometry (11s)
+✔ [4630/4663] Built CsdLean4.RecordLayer.NullSeamLift (9.9s)
+✔ [4631/4663] Built CsdLean4.RecordLayer.NullSeamGeneralN (13s)
+✔ [4632/4663] Built CsdLean4.RecordLayer.RelocationObstruction (10s)
+✔ [4637/4663] Built CsdLean4.RecordLayer.PointerLudersMarginal (10s)
+✔ [4638/4663] Built CsdLean4.RecordLayer.HamiltonianShift (12s)
+✔ [4639/4663] Built CsdLean4.RecordLayer.PovmSectorBorn (9.8s)
+✔ [4645/4663] Built CsdLean4.RecordLayer.JoinGeneration (10s)
+✔ [4648/4663] Built CsdLean4.Empirical.CSD.QuantumChaos.FreeFieldClosure (9.5s)
+✔ [4655/4663] Built CsdLean4.Empirical.CSD.QuantumChaos.CarrierPersistence (11s)
+✔ [4656/4663] Built CsdLean4.Mathlib.Analysis.Fourier.Wigner (19s)
+✔ [4657/4663] Built CsdLean4.Empirical.CSD.QuantumChaos.EntropyLedger (17s)
+✔ [4659/4686] Built CsdLean4.Mathlib.Analysis.Fourier.WignerWeyl (13s)
+✔ [4665/4686] Built CsdLean4.Headlines (10s)
+✔ [4668/4686] Built CsdLean4.Tests.Witnesses.Sequential (12s)
+✔ [4669/4686] Built CsdLean4.Tests.Examples (13s)
+✔ [4670/4686] Built CsdLean4 (18s)
+✔ [4671/4686] Built CsdLean4.Tests.Witnesses.LF1Trial (14s)
+✔ [4672/4686] Built CsdLean4.Tests.AxiomAudit.Incubator (11s)
+✔ [4673/4686] Built CsdLean4.Tests.AxiomAudit.Extensions (11s)
+✔ [4674/4686] Built CsdLean4.Tests.AxiomAudit.SigmaLayer (11s)
+✔ [4675/4686] Built CsdLean4.Tests.AxiomAudit.MathlibStaging (15s)
+✔ [4676/4686] Built CsdLean4.Tests.AxiomAudit.Dynamics (10s)
+✔ [4677/4686] Built CsdLean4.Tests.AxiomAudit.LF4 (10s)
+✔ [4678/4686] Built CsdLean4.Tests.AxiomAudit.EmpiricalCSD (11s)
+✔ [4679/4686] Built CsdLean4.Tests.AxiomAudit.EmpiricalQM (11s)
+✔ [4680/4686] Built CsdLean4.Tests.AxiomAudit.Foundations (10s)
+✔ [4681/4686] Built CsdLean4.Basic (9.0s)
+✔ [4683/4686] Built CsdLean4.Tests.Witnesses (9.2s)
+✔ [4684/4686] Built CsdLean4.Tests.AxiomAudit.Witnesses (9.7s)
+✔ [4685/4686] Built CsdLean4.Tests.AxiomAudit (9.9s)
+Build completed successfully (4686 jobs).

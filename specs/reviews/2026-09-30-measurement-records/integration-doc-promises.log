@@ -1,0 +1,2 @@
+check-doc-promises: OK — every declaration and module path named in a docstring exists.
+  (782 files scanned, 6 exception(s) declared.)

@@ -1,0 +1,34 @@
+✔ [3612/3638] Built CsdLean4.RecordLayer.FibreRecord (8.7s)
+✔ [3658/3677] Built CsdLean4.RecordLayer.Measurement (8.6s)
+✔ [3659/3677] Built CsdLean4.RecordLayer.CircleRecord (8.8s)
+✔ [3660/3677] Built CsdLean4.RecordLayer.GlobalRecordClosure (8.6s)
+✔ [3661/3677] Built CsdLean4.RecordLayer.MeasurementProtocol (8.6s)
+✔ [3662/3677] Built CsdLean4.RecordLayer.RecordPersistence (8.5s)
+ℹ [3663/3677] Built CsdLean4.RecordLayer.ShearWitness (9.0s)
+info: CsdLean4/RecordLayer/ShearWitness.lean:275:2: Try this:
+  [apply] ring_nf
+
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+info: CsdLean4/RecordLayer/ShearWitness.lean:293:4: Try this:
+  [apply] ring_nf
+
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+✔ [3664/3677] Built CsdLean4.RecordLayer.DynamicBorn (8.5s)
+✔ [3665/3677] Built CsdLean4.RecordLayer.OutcomeField (10s)
+✔ [3666/3677] Built CsdLean4.RecordLayer.SwapWitness (10s)
+✔ [3667/3677] Built CsdLean4.RecordLayer.OutcomeBasin (8.5s)
+✔ [3668/3677] Built CsdLean4.RecordLayer.SwapLuders (8.5s)
+✔ [3669/3677] Built CsdLean4.RecordLayer.DegenerateLuders (13s)
+✔ [3670/3677] Built CsdLean4.RecordLayer.DynamicMeasurementClosure (13s)
+✔ [3671/3677] Built CsdLean4.RecordLayer.SwapClosure (9.5s)
+✔ [3672/3677] Built CsdLean4.RecordLayer.MixedSwap (10s)
+✔ [3673/3677] Built CsdLean4.RecordLayer.RotatedSwap (10s)
+✔ [3674/3677] Built CsdLean4.RecordLayer.MixedLuders (9.8s)
+✔ [3675/3677] Built CsdLean4.RecordLayer.TwoTimeLuders (10s)
+✔ [3676/3677] Built CsdLean4.RecordLayer.DrivenTwoTime (9.8s)
+✔ [3677/3677] Built CsdLean4.RecordLayer.JarzynskiRecord (13s)
+Build completed successfully (3677 jobs).

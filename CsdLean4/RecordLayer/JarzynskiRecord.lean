@@ -196,8 +196,7 @@ theorem sigma_tpm_law (hH₀ : H₀.IsHermitian) (hH₁ : H₁.IsHermitian)
       = ENNReal.ofReal (tpmLaw hH₀ hH₁ U β i j) := by
   rw [tpmSigmaPrep, tpmSigmaSector,
     driven_mixed_two_time_born hH₀.eigenvectorBasis (gibbsDensity hH₀ β)
-      (continuous_const_smul U).measurable (basisContext hH₁.eigenvectorBasis) i j
-      (by rw [traceForm_gibbsDensity_energy]; exact (gibbsWeight_pos H₀ hH₀ β _).ne'),
+      (continuous_const_smul U).measurable (basisContext hH₁.eigenvectorBasis) i j,
     traceForm_gibbsDensity_energy, basisContext_rate_smul, tpmLaw,
     ENNReal.ofReal_mul (gibbsWeight_pos H₀ hH₀ β _).le]
 
