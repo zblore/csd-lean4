@@ -56,8 +56,13 @@ The variable `ξ` is the frequency; the momentum is `p = 2πξ` (`ℏ = m = 1`, 
 [`WignerWeyl.lean`](WignerWeyl.lean) (BACKLOG #63). What stays open there: `Op(a)` as a continuous
 operator on `𝒮(ℝ, ℂ)`, symbols of temperate growth, and the Schwartz property of
 `(x, ξ) ↦ W_ψ(x, ξ)` on `ℝ²` with the joint integrability it gives (BACKLOG #92). The Moyal
-bracket with its `ℏ²` expansion (only the free, quadratic case is stated, where the Moyal and
-Poisson flows agree) is BACKLOG #64.
+bracket with its `ℏ²` expansion is [`MoyalBracket.lean`](MoyalBracket.lean) (BACKLOG #64): the
+potential term of the Wigner equation is the Wigner transform of `−i[V, ·]`
+(★★★ `moyalPot_eq_comm`), it differs from the Poisson bracket by at most `(sup|V'''|/24)` times the
+third moment of the kernel (★★★ `norm_moyalPot_sub_poisson_le`), and the two agree exactly when
+`V''' = 0` (★★★ `moyalPot_eq_poisson_of_third_deriv_zero`). The remaining part of #64 is the
+time-dependent equation for `U_V(t)ψ`, which needs a propagator differentiable on Schwartz
+functions.
 
 References: E. Wigner, Phys. Rev. 40 (1932) 749; J. E. Moyal, Proc. Cambridge Philos. Soc. 45
 (1949) 99; G. B. Folland, *Harmonic Analysis in Phase Space* (1989) §1.8;

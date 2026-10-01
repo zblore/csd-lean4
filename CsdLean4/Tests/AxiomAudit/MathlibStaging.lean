@@ -9699,4 +9699,56 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CircleFourier.exists_eq_of_spectrum_twistedOp_eq
 
+-- The Moyal bracket of a potential (BACKLOG #64): the potential term of the Wigner
+-- evolution as the Wigner transform of a commutator, and its classical limit with the
+-- third-derivative remainder — exact when the third derivative vanishes.
+
+/-- info: 'WignerFunction.norm_symmDiff_V''_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_symmDiff_V''_le
+
+/-- info: 'WignerFunction.norm_symmDiff_V'_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_symmDiff_V'_le
+
+/-- info: 'WignerFunction.norm_symmDiff_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_symmDiff_sub_le
+
+/-- info: 'WignerFunction.norm_symmDiff_sub_le'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_symmDiff_sub_le'
+
+/-- info: 'WignerFunction.wignerKernel₂_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wignerKernel₂_self
+
+/-- info: 'WignerFunction.wigner₂_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wigner₂_eq_integral
+
+/-- info: 'WignerFunction.moyalPot_eq_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.moyalPot_eq_comm
+
+/-- info: 'WignerFunction.deriv_wigner_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.deriv_wigner_right
+
+/-- info: 'WignerFunction.integrable_moyalPot_integrand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integrable_moyalPot_integrand
+
+/-- info: 'WignerFunction.poisson_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.poisson_eq_integral
+
+/-- info: 'WignerFunction.norm_moyalPot_sub_poisson_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_moyalPot_sub_poisson_le
+
+/-- info: 'WignerFunction.moyalPot_eq_poisson_of_third_deriv_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.moyalPot_eq_poisson_of_third_deriv_zero
+
 end CSD.Tests.AxiomAudit
