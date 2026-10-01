@@ -11210,7 +11210,7 @@ entries:
         url: https://journals.aps.org/pr/abstract/10.1103/PhysRev.115.485
 
   - slug: wigner-function
-    reviewed: 2026-09-29
+    reviewed: 2026-10-01
     image:
       file: img/wigner-function.png
       alt: "Three-dimensional plot of the Wigner function of an even cat state, with peaks above the plane and interference fringes dipping below it"
@@ -11264,7 +11264,14 @@ entries:
       lesson is a negative one worth stating: the Wigner function is a representation of a
       state and not a candidate for the programme's ontic measure, since the measure that
       weights regions is nonnegative by construction and this function isn't. The Moyal
-      bracket with its corrections, and general Weyl-quantised observables, are open rows.
+      bracket is now proved where it can be: the potential term of the Wigner equation is the
+      Wigner transform of the quantum commutator, it differs from the classical Poisson bracket by
+      a bounded correction of the order of the third derivative of the potential, and the two agree
+      exactly when that derivative vanishes, which is the classical limit as a theorem rather than a
+      slogan. What is still open there is the time-dependent equation for the evolved state, which
+      needs a propagator differentiable on Schwartz functions, and for general Weyl-quantised
+      observables the symbol class itself, since a quantisation of an arbitrary symbol need not even
+      be continuous.
     mathematical: >
       For a Schwartz psi the Wigner function is the Fourier transform in y of y to psi(x +
       y/2) times conj psi(x - y/2), in Mathlib's convention, with momentum p = 2 pi xi.
@@ -11285,9 +11292,19 @@ entries:
       Wigner functions is the squared modulus of the states' inner product, by slicewise Plancherel
       and the convolution integral, with integral_integral_wigner_sq its purity form. And
       integral_conj_mul_weylOp is the Weyl expectation formula, for a symbol presented as a family
-      of Schwartz Fourier slices. One dimension, Schwartz data; the Weyl calculus proper, symbols of
-      temperate growth and the Schwartz property of W on the plane are BACKLOG row 92, and the Moyal
-      expansion is row 64.
+      of Schwartz Fourier slices. One dimension, Schwartz data.
+
+      Row 92 (b) and (c) landed 2026-09-30 in WignerCalculus.lean: integral_prod_wigner_mul_conj is
+      the overlap identity against the product measure on the plane, through
+      integrable_normSq_wigner_prod, and integral_integral_wigner_pos, _mom and _posMom are the
+      phase-space moments in operator form, the xi-weighted one giving the symmetrised product of
+      position and momentum. The Schwartz property of W on the plane is not proved and is not needed:
+      slicewise Plancherel makes the xi-integral of the squared modulus a convolution of two L^1
+      functions, which is what Fubini wants. What remains of row 92 is (a), Op(a) as a continuous
+      operator for symbols of temperate growth, which needs differentiation under the integral sign
+      to all orders with bounds. Row 64 landed its generator half 2026-09-30 in MoyalBracket.lean:
+      moyalPot_eq_comm, norm_moyalPot_sub_poisson_le with its hbar-squared remainder, and
+      moyalPot_eq_poisson_of_third_deriv_zero; the time-dependent equation is what stays open.
     person: >
       Eugene Wigner introduced the function in 1932, in a paper on quantum corrections to
       thermodynamic equilibrium, and treated it as a calculational device rather than a

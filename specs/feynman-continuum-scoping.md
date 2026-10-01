@@ -95,12 +95,19 @@ is Mathlib-future and is **not claimed** here.
 | # | Brick | Cx | P | V | What it lands |
 |---|---|---|---|---|---|
 | ~~**FC-5**~~ **DONE 2026-09-20** | ★★ **Nelson's theorem in operator form** (Category 1). The free Schrödinger group `U₀(t) := 𝓕⁻¹ ∘ M_{e^{−itξ²/2}} ∘ 𝓕` on `L²(ℝ)` (P1 for the multiplier): unitary, a group, strongly continuous (dominated convergence on the Fourier side). FC-1 for the unitary case gives the interacting group `U(t)` (Dyson) and `(U₀(t/n) e^{−itV/n})ⁿ ψ → U(t) ψ` — **the real-time path integral as the strong limit of time-sliced products**, which is what the symbol `∫𝒟x e^{iS}` means in Nelson's definition. Also its action on Gaussians/Schwartz functions explicitly, so the free propagator's kernel is visible where it is absolutely convergent. | **L** | medium–high: the Fourier side is at the pin; the delicate part is only P1 and the group's strong continuity | high: (R) as a theorem; the `𝒟x` heuristic replaced by its definition |
-| **FC-5′** | **The kernel form.** `(U₀(t)ψ)(x) = (2πit)^{−1/2} ∫ e^{i(x−y)²/2t} ψ(y) dy` for `ψ ∈ L¹ ∩ L²` (as an improper Fresnel integral) and hence the `n`-slice iterated kernel integral with `e^{i S_n(x₀, …, xₙ)}` in the integrand — Feynman's formula with the action visible. | **XL** | low at the pin: the kernel is not absolutely integrable, so it is outside Mathlib's L¹-based Fourier theory; needs oscillatory-integral technology (Fresnel, or the `ε ↓ 0` limit of `e^{−(ε+it)H₀}` through FC-2's Gaussian kernel with complex variance) | medium: the same theorem as FC-5 in different clothes; the physics reader wants to see `e^{iS}`, the mathematics does not need it |
+| ~~**FC-5′**~~ **DONE 2026-10-01 (BACKLOG #44, `Analysis/Semigroup/FresnelKernel.lean`, M–L not XL)** | **The kernel form.** ★★★ `freeSchrodingerS_eq_integral_fresnel`: `(U₀(t)ψ)(x) = (2πit)^{−1/2} ∫ e^{i(x−y)²/(2t)} ψ(y) dy` for **Schwartz** `ψ` and `t ≠ 0` — an **exact identity with an absolutely convergent integral**, not the improper one priced here: Feynman's kernel has constant modulus and a Schwartz `ψ` is `L¹`, so the oscillation is carried by the data. The `ε ↓ 0` continuation is the proof (★★★ `tendsto_fresnelOp`), and uniqueness of limits removes it from the statement; the `n`-slice iterated integral is exact for every `n` and its integrand is `amp^n e^{iS_n}` for the discrete action (★★★ `prod_fresnelKernel_eq_exp_discreteAction`). ~~The original wording: `(U₀(t)ψ)(x) = (2πit)^{−1/2} ∫ e^{i(x−y)²/2t} ψ(y) dy` for `ψ ∈ L¹ ∩ L²` (as an improper Fresnel integral)~~ and hence the `n`-slice iterated kernel integral with `e^{i S_n(x₀, …, xₙ)}` in the integrand — Feynman's formula with the action visible. | **XL** | low at the pin: the kernel is not absolutely integrable, so it is outside Mathlib's L¹-based Fourier theory; needs oscillatory-integral technology (Fresnel, or the `ε ↓ 0` limit of `e^{−(ε+it)H₀}` through FC-2's Gaussian kernel with complex variance) | medium: the same theorem as FC-5 in different clothes; the physics reader wants to see `e^{iS}`, the mathematics does not need it |
 
-FC-5′ is the only piece of rung (c) that is XL, and it is XL for a reason that is not Lean's: real-time
-kernels are oscillatory. The honest route to the action `S[x]` in the integrand is the analytic continuation
-from FC-4 (`t ↦ it`), which is again a theorem about where the Gaussian kernel with complex variance is
-absolutely convergent; it is recorded here as the route, not priced as a brick.
+FC-5′ was priced the only XL piece of rung (c), for a reason that is not Lean's: real-time kernels are
+oscillatory. The route recorded here — the analytic continuation from FC-4 (`t ↦ it`) through the Gaussian
+kernel of complex variance, where it is absolutely convergent — **is the route that was taken, and it cost
+M–L, not XL** (2026-10-01, BACKLOG #44). Two things made it cheap. The pin acquired
+`Mathlib/Analysis/Fourier/Convolution.lean` (`SchwartzMap.convolution` with `fourier_convolution` and
+`convolution_mul_swap`), so the kernel form and the multiplier form of one operator are the same theorem;
+and `GaussianPacket.lean` already had the complex-parameter Gaussian with its Fourier transform, which **is**
+the complex-time heat kernel up to the amplitude. The surprise is in the statement, not the route: with
+Schwartz data the Feynman integral is **not** improper — the kernel's modulus is constant, `ψ ∈ L¹`, so the
+integral converges absolutely and the `ε ↓ 0` regularisation is confined to the proof. What still needs the
+oscillatory theory the pin lacks is the case `ψ ∈ L² \ L¹`, which is not claimed.
 
 ## 6. The CSD reading (FC-6, documentation, S)
 
@@ -138,8 +145,9 @@ FC-6 landed with FC-4 (2026-09-20): the narrative document now cites Feynman–K
 5. **FC-5** (L): Nelson. The real-time deliverable.
 6. **FC-2′** (S–M) and **FC-6** (S) as the author wants.
 
-Total for the arc through FC-5: **L**, in six bricks none larger than M–L. FC-5′ stays XL and is not in the
-plan unless the author asks for the action in the integrand.
+Total for the arc through FC-5: **L**, in six bricks none larger than M–L. ~~FC-5′ stays XL and is not in the
+plan unless the author asks for the action in the integrand.~~ **The author asked (2026-10-01) and FC-5′ landed
+at M–L: see the FC-5′ row in §5 and BACKLOG #44. The arc FC-0 … FC-6 and FC-5′ are now all done.**
 
 **Outcome (2026-09-20): the whole arc FC-0 to FC-6 landed in one day, five Category 1 modules, 59 pins; FC-1′ (#40),
 FC-4′ (#42), FC-5″ (#43), the Gaussian packet FC-5‴ (#48, M took M) and FC-2′ (#41: the Schrödinger modules generalised to any finite-dimensional inner product space, and the Euclidean chain to `EuclideanSpace ℝ ι` through `Probability/BrownianVec.lean`, a Brownian motion in `ℝᵈ` as `d` jointly independent real ones) landed the same day. FC-2′ took L, not the S–M priced: the vector Markov property needed "independent vectors of independent pairs" (`indepFun_pi_of_iIndepFun`), and the product Gaussian's convolution, scaling and absolute continuity had to be built (characteristic functions; a product of absolutely continuous measures is absolutely continuous, by induction on `Fin n` through `measurePreserving_piFinSuccAbove`).**
@@ -156,9 +164,14 @@ FC-4′ (#42), FC-5″ (#43), the Gaussian packet FC-5‴ (#48, M took M) and FC
 * **D3 — wait for Mathlib's Brownian motion?** No: state everything conditionally on `hB : IsBrownianReal B P`,
   exactly as Mathlib's own Brownian file does today; existence is Mathlib's Kolmogorov–Chentsov programme and
   discharges the hypothesis by a name when it lands. The recommendation is to build now.
-* **D4 — the action in the integrand (FC-5′)?** The recommendation is no: FC-4 and FC-5 are Feynman's
+* **D4 — the action in the integrand (FC-5′)?** ~~The recommendation is no: FC-4 and FC-5 are Feynman's
   formulation as theorems; FC-5′ is the same theorem with an oscillatory kernel written out, and its cost is
-  a piece of analysis Mathlib does not have.
+  a piece of analysis Mathlib does not have.~~ **ASKED FOR AND DONE 2026-10-01 (BACKLOG #44). The
+  recommendation was half right: Mathlib still does not have that piece of analysis — there is no `fresnel`
+  anything at the pin — but FC-5′ does not need it. Against Schwartz data the kernel is bounded and the
+  integral is absolutely convergent, so the `ε ↓ 0` continuation of the complex-time Gaussian kernel proves
+  the formula outright, and `e^{iS_n}` comes out as a theorem about the product of `n` kernels. The cost was
+  M–L. The recommendation stands only for `ψ ∈ L² \ L¹`, which is still outside the pin.**
 
 ## 9. What is not claimed
 

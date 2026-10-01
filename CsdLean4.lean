@@ -702,6 +702,7 @@ public import CsdLean4.Mathlib.Probability.FeynmanKacL2
 public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerGroup
 public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerSchwartz
 public import CsdLean4.Mathlib.Analysis.Semigroup.GaussianPacket
+public import CsdLean4.Mathlib.Analysis.Semigroup.FresnelKernel
 public import CsdLean4.Mathlib.Analysis.Fourier.Wigner
 public import CsdLean4.Mathlib.Analysis.Fourier.WignerWeyl
 public import CsdLean4.Mathlib.Analysis.Fourier.WignerCalculus

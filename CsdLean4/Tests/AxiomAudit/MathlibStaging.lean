@@ -9751,4 +9751,85 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.moyalPot_eq_poisson_of_third_deriv_zero
 
+-- BACKLOG #44 FC-5' (2026-10-01), Analysis/Semigroup/FresnelKernel.lean: Feynman's kernel for the
+-- free propagator. The heat kernel (4 pi w)^{-1/2} e^{-x^2/(4w)} at COMPLEX time w is a Schwartz
+-- function for Re w > 0 whose Fourier transform is the multiplier e^{-4 pi^2 w xi^2}; convolution
+-- with it is a semigroup in w, so every time-slicing is exact. Its eps -> 0 limit on the imaginary
+-- axis is the free propagator (dominated convergence on the Fourier side), and at w = it/2 the
+-- kernel IS Feynman's (2 pi i t)^{-1/2} e^{i x^2/(2t)}, of constant modulus -- bounded, so the
+-- integral against Schwartz (hence L^1) data converges absolutely and the kernel formula holds
+-- EXACTLY, with no regularisation left in it. The n-slice product of kernels is amp^n e^{i S_n}
+-- with S_n the discrete action sum (q_{k+1} - q_k)^2/(2 dt).
+/-- info: 'SchrodingerGroup.coe_fresnelS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.coe_fresnelS
+
+/-- info: 'SchrodingerGroup.fourier_fresnelS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.fourier_fresnelS
+
+/-- info: 'SchrodingerGroup.fresnelOp_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.fresnelOp_apply
+
+/-- info: 'SchrodingerGroup.fourier_fresnelOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.fourier_fresnelOp
+
+/-- info: 'SchrodingerGroup.fresnelOp_fresnelOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.fresnelOp_fresnelOp
+
+/-- info: 'SchrodingerGroup.fresnelOp_iterate_div' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.fresnelOp_iterate_div
+
+/-- info: 'SchrodingerGroup.fresnelOp_iterate_succ_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.fresnelOp_iterate_succ_apply
+
+/-- info: 'SchrodingerGroup.fourier_freeSchrodingerS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.fourier_freeSchrodingerS
+
+/-- info: 'SchrodingerGroup.tendsto_fresnelOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.tendsto_fresnelOp
+
+/-- info: 'SchrodingerGroup.tendsto_integral_fresnelKernel_freeSchrodingerS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.tendsto_integral_fresnelKernel_freeSchrodingerS
+
+/-- info: 'SchrodingerGroup.tendsto_fresnelOp_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.tendsto_fresnelOp_iterate
+
+/-- info: 'SchrodingerGroup.fresnelKernel_I_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.fresnelKernel_I_mul
+
+/-- info: 'SchrodingerGroup.norm_fresnelKernel_I_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.norm_fresnelKernel_I_mul
+
+/-- info: 'SchrodingerGroup.integrable_fresnelKernel_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.integrable_fresnelKernel_mul
+
+/-- info: 'SchrodingerGroup.tendsto_integral_fresnelKernel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.tendsto_integral_fresnelKernel
+
+/-- info: 'SchrodingerGroup.freeSchrodingerS_eq_integral_fresnel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.freeSchrodingerS_eq_integral_fresnel
+
+/-- info: 'SchrodingerGroup.freeSchrodingerS_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.freeSchrodingerS_iterate
+
+/-- info: 'SchrodingerGroup.prod_fresnelKernel_eq_exp_discreteAction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.prod_fresnelKernel_eq_exp_discreteAction
+
 end CSD.Tests.AxiomAudit
