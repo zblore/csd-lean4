@@ -584,6 +584,7 @@ public import CsdLean4.CV.ArenaBridge
 public import CsdLean4.CV.FieldStructuredFlow
 public import CsdLean4.CV.FibredArenaBridge
 public import CsdLean4.CV.RecordInfluence
+public import CsdLean4.CV.EntanglementDistance
 public import CsdLean4.CV.DispersionEarned
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment

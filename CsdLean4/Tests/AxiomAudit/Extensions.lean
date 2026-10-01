@@ -1787,4 +1787,48 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.map_recordStroke₂_prod
 
+-- ST-2, the entanglement distance (BACKLOG #38): mutual information of two sectors of the
+-- composite arena, its vanishing on product points, twice the entanglement entropy on pure
+-- states, and the separation functional -log I with its monotonicity.
+
+/-- info: 'CSD.CV.mutualInfo_congr_matrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mutualInfo_congr_matrix
+
+/-- info: 'CSD.CV.mutualInfo_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mutualInfo_nonneg
+
+/-- info: 'CSD.CV.mutualInfo_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mutualInfo_kronecker
+
+/-- info: 'CSD.CV.pureDensity_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pureDensity_mul_self
+
+/-- info: 'CSD.CV.mutualInfo_pureDensity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mutualInfo_pureDensity
+
+/-- info: 'CSD.CV.entDist_antitone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.entDist_antitone
+
+/-- info: 'CSD.CV.entDist_eq_zero_of_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.entDist_eq_zero_of_one_le
+
+/-- info: 'CSD.CV.mutualInfo_compositeDM_join' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mutualInfo_compositeDM_join
+
+/-- info: 'CSD.CV.entDist_mutualInfo_join' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.entDist_mutualInfo_join
+
+/-- info: 'CSD.CV.mutualInfoTri_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mutualInfoTri_mono
+
 end CSD.Tests.AxiomAudit
