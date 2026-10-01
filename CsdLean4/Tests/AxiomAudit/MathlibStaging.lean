@@ -9832,4 +9832,53 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms SchrodingerGroup.prod_fresnelKernel_eq_exp_discreteAction
 
+-- BACKLOG #64 time-dependent half, free part (2026-10-01), Analysis/Fourier/WignerEvolution.lean:
+-- THE FREE WIGNER EQUATION. The Wigner integrand decays like 1/(1+y^2) UNIFORMLY IN THE POSITION
+-- (the two arguments x +- y/2 differ by y, so 1 + y^2 <= 2(1+(x+y/2)^2)(1+(x-y/2)^2) and the two
+-- Schwartz bounds multiply), which lets the x-derivative pass under the Fourier integral by
+-- Mathlib's first-order parametric-differentiation lemma: d/dx W = W(psi', psi) + W(psi, psi'),
+-- a sum of cross Wigner functions. Differentiating the exact free transport in t then gives
+-- d/dt W_t = -2 pi xi d/dx W_t, i.e. d/dt W + p d/dx W = 0 in the momentum p = 2 pi xi: the
+-- classical Liouville equation as a PDE satisfied by the quantum phase-space density, exact.
+-- The interacting equation stays open on the propagator, not on the derivative (row 64).
+/-- info: 'WignerFunction.exists_bound_one_add_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.exists_bound_one_add_sq
+
+/-- info: 'WignerFunction.norm_mul_norm_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_mul_norm_le
+
+/-- info: 'WignerFunction.integrable_phase_mul_kernel₂' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integrable_phase_mul_kernel₂
+
+/-- info: 'WignerFunction.hasDerivAt_wignerKernel_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.hasDerivAt_wignerKernel_left
+
+/-- info: 'WignerFunction.hasDerivAt_wigner_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.hasDerivAt_wigner_left
+
+/-- info: 'WignerFunction.deriv_wigner_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.deriv_wigner_left
+
+/-- info: 'WignerFunction.hasDerivAt_wigner_freeSchrodingerS_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.hasDerivAt_wigner_freeSchrodingerS_pos
+
+/-- info: 'WignerFunction.hasDerivAt_wigner_freeSchrodingerS_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.hasDerivAt_wigner_freeSchrodingerS_time
+
+/-- info: 'WignerFunction.wigner_liouville' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wigner_liouville
+
+/-- info: 'WignerFunction.wigner_liouville_add_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wigner_liouville_add_eq_zero
+
 end CSD.Tests.AxiomAudit

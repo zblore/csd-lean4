@@ -950,6 +950,14 @@ isSymplectic"
 #     a non-degenerate 2-form on E is the pullback of the standard form by a linear isomorphism
 #     E ~ R^{2n} with finrank E = 2n (the symplectic basis of IsAlt.exists_isSymplecticBasis).
 #     The words name the OBJECT the theorems evaluate or reach; the parity is the object's.
+#   wigner_liouville / wigner_liouville_add_eq_zero -- (2026-10-01, BACKLOG #64 time-dependent
+#     half, Mathlib/Analysis/Fourier/WignerEvolution.lean, Category 1) the word names the
+#     EQUATION the theorems prove, not an object: d/dt W_t(x, xi) = -2 pi xi d/dx W_t(x, xi)
+#     for W_t the Wigner function of the freely evolved Schwartz state, i.e. d/dt W + p d/dx W = 0
+#     in the momentum p = 2 pi xi -- the classical Liouville transport equation, with BOTH
+#     derivatives proved (hasDerivAt_wigner_left for the position, the transport identity
+#     differentiated for the time) and no flow, measure or symplectic claim anywhere in it. The
+#     free Hamiltonian only; the interacting equation is open (the row). EARNED.
 #   (2026-09-17, Brief B S-rows: fubiniStudy_pointwise_kahler_compatibility and
 #   kahler_structure_isometry_invariant were deleted — conjunction capstones, the conjuncts stay
 #   declared; contMDiff_omega_schrodingerHamiltonian / contMDiff_omega_torusHamiltonian merged into
@@ -1098,7 +1106,9 @@ jointLift_hamiltonianShift_measurePreserving
 fsForm_isSymplectic
 standardSymplecticBilin_apply
 standardSymplecticBilin_self
-exists_continuousLinearEquiv_eq_standardSymplecticForm_comp"
+exists_continuousLinearEquiv_eq_standardSymplecticForm_comp
+wigner_liouville
+wigner_liouville_add_eq_zero"
 
 OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 

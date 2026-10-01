@@ -11268,10 +11268,13 @@ entries:
       Wigner transform of the quantum commutator, it differs from the classical Poisson bracket by
       a bounded correction of the order of the third derivative of the potential, and the two agree
       exactly when that derivative vanishes, which is the classical limit as a theorem rather than a
-      slogan. What is still open there is the time-dependent equation for the evolved state, which
-      needs a propagator differentiable on Schwartz functions, and for general Weyl-quantised
-      observables the symbol class itself, since a quantisation of an arbitrary symbol need not even
-      be continuous.
+      slogan. The free evolution is now an equation and not only a flow: the Wigner function is
+      differentiable in the position, its position derivative is a sum of cross Wigner functions, and
+      the time derivative is minus the momentum times that derivative, which is the classical
+      Liouville equation satisfied exactly by the quantum phase-space density. What is still open is
+      the same equation with a potential, which needs a propagator differentiable on Schwartz
+      functions, and for general Weyl-quantised observables the symbol class itself, since a
+      quantisation of an arbitrary symbol need not even be continuous.
     mathematical: >
       For a Schwartz psi the Wigner function is the Fourier transform in y of y to psi(x +
       y/2) times conj psi(x - y/2), in Mathlib's convention, with momentum p = 2 pi xi.
@@ -11304,7 +11307,11 @@ entries:
       operator for symbols of temperate growth, which needs differentiation under the integral sign
       to all orders with bounds. Row 64 landed its generator half 2026-09-30 in MoyalBracket.lean:
       moyalPot_eq_comm, norm_moyalPot_sub_poisson_le with its hbar-squared remainder, and
-      moyalPot_eq_poisson_of_third_deriv_zero; the time-dependent equation is what stays open.
+      moyalPot_eq_poisson_of_third_deriv_zero. Its time-dependent half landed its free part
+      2026-10-01 in WignerEvolution.lean: hasDerivAt_wigner_left is the position derivative as
+      W(psi', psi) + W(psi, psi'), passing under the Fourier integral against a bound uniform in the
+      position, and wigner_liouville is the free equation d/dt W = -2 pi xi d/dx W. The interacting
+      equation stays open on the propagator, not on the derivative.
     person: >
       Eugene Wigner introduced the function in 1932, in a paper on quantum corrections to
       thermodynamic equilibrium, and treated it as a calculational device rather than a

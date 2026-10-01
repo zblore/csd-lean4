@@ -40,13 +40,18 @@ correction at all. This file does the potential half, where the correction lives
 ## Honest scope
 
 ⚠️ **This is the generator, not the evolution.** `moyalPot` is the potential term of the Wigner
-equation, and the theorems compare it with the Poisson bracket pointwise in `(x, ξ)`. What is **not**
-proved is the time-dependent statement `∂_t W_{U_V(t)ψ} = − 2πξ ∂_x W + moyalPot V ψ`: the corpus's
-propagator for `H₀ + V` is a Trotter limit on `L²`
-([`Semigroup/BoundedPerturbation.lean`](../Semigroup/BoundedPerturbation.lean)), with no
-differentiability in `t` on Schwartz functions, and differentiating `W` in `x` would need
-differentiation under the Fourier integral in the *parameter*, which the pin does not have in usable
-form. `specs/BACKLOG.md` #64 carries that part with this measurement.
+equation, and the theorems compare it with the Poisson bracket pointwise in `(x, ξ)`. The
+time-dependent statement `∂_t W_{U_V(t)ψ} = − 2πξ ∂_x W + moyalPot V ψ` is **not** proved here. Its
+**free part now is**, in [`WignerEvolution.lean`](WignerEvolution.lean) (★★★ `wigner_liouville`,
+2026-10-01): `∂_x W` exists and equals `W(ψ', ψ) + W(ψ, ψ')`, and `∂_t W_t = − 2πξ ∂_x W_t` for the
+free group. Two corrections to what this paragraph used to say: differentiating `W` in `x` needs only
+**first-order** differentiation under the integral sign, which the pin does have
+(`Mathlib/Analysis/Calculus/ParametricIntegral.lean`) — what it lacks is the all-orders version, which
+is #92(a)'s gap, not this one. What genuinely blocks the **interacting** equation is the propagator:
+the corpus's `H₀ + V` propagator is a Trotter limit on `L²`
+([`Semigroup/BoundedPerturbation.lean`](../Semigroup/BoundedPerturbation.lean)) with no
+differentiability in `t` on Schwartz functions, and the pin has no generator or domain theory for
+`H₀ + V`. `specs/BACKLOG.md` #64 carries that part with this measurement.
 
 ⚠️ **`ℏ` is not a variable here.** The convention is the one of `Wigner.lean`
 (`𝓕 f ξ = ∫ e^{−2πiyξ} f y dy`, momentum `p = 2πξ`, so `ℏ = 1`). The `ℏ²` of the row is the third
