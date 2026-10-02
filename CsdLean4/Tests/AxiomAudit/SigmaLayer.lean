@@ -3830,4 +3830,41 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.Measurement.ae_record_of_sum_eq_one
 
+-- ST-3's structure half (BACKLOG #99, RecordLayer/MacroProjection.lean, 2026-10-02): pi-prime as a
+-- STRUCTURE and nothing more - a measurable map from the ontic space to a finite structure - with
+-- FactorsThrough saying a record event cannot distinguish two microstates of the same macroscopic
+-- coordinate, the pushforward engine that transports every identity between probabilities of
+-- factoring events, the membership pattern as the COARSEST coordinate a finite record family
+-- factors through (its universal property), and the two theorems the scoping note asks of any
+-- candidate: NO-SIGNALLING SURVIVES THE PROJECTION in both directions, and THE CHAIN LAW SURVIVES
+-- IT (csd_nstep_born's product read with pushforward measures). The frame, not a projection: the
+-- instance is row 102 and waits on the author's choice among row 38's five candidates.
+/-- info: 'CSD.RecordLayer.factorsThrough_iff' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.factorsThrough_iff
+
+/-- info: 'CSD.RecordLayer.factorsThrough_iUnion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.factorsThrough_iUnion
+
+/-- info: 'CSD.RecordLayer.factorsThrough_patternMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.factorsThrough_patternMap
+
+/-- info: 'CSD.RecordLayer.patternMap_eq_of_factorsThrough' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.patternMap_eq_of_factorsThrough
+
+/-- info: 'CSD.RecordLayer.measure_eq_map_of_factorsThrough' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_eq_map_of_factorsThrough
+
+/-- info: 'CSD.RecordLayer.noSignalling_map_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.noSignalling_map_iff
+
+/-- info: 'CSD.RecordLayer.nstep_born_map' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nstep_born_map
+
 end CSD.Tests.AxiomAudit
