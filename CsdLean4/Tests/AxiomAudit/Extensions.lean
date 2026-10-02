@@ -1843,4 +1843,39 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.mutualInfoTri_mono
 
+-- The causal order on record events (BACKLOG #38, CV/RecordCausalOrder.lean, 2026-10-02): ST-1
+-- relates REGIONS with a budget supplied separately, so its relation is graded; an EVENT carries
+-- its own time, and then the budget is inside the relation. CausalPrecedes is reflexive,
+-- transitive (the legs' periods add) and ANTISYMMETRIC (equal times force a zero budget, where
+-- the cone is the region itself), so record events carry a PARTIAL ORDER -- a causal set. The
+-- same geometric hypothesis that makes two events unordered also protects the first's record
+-- from any unitary kick on the second's region, exactly. The order is that of an ASSUMED graph.
+/-- info: 'CSD.CV.causalPrecedes_refl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalPrecedes_refl
+
+/-- info: 'CSD.CV.causalPrecedes_trans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalPrecedes_trans
+
+/-- info: 'CSD.CV.causalPrecedes_antisymm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalPrecedes_antisymm
+
+/-- info: 'CSD.CV.isPartialOrder_causalPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isPartialOrder_causalPrecedes
+
+/-- info: 'CSD.CV.causalPrecedes_same_region' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalPrecedes_same_region
+
+/-- info: 'CSD.CV.eventSpacelike_of_spacelike' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.eventSpacelike_of_spacelike
+
+/-- info: 'CSD.CV.arenaObs_kick_of_eventSpacelike' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_kick_of_eventSpacelike
+
 end CSD.Tests.AxiomAudit
