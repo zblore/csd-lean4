@@ -1855,4 +1855,27 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.AharonovBohm.gauge_removable_iff_flux_quantum
 
+-- BACKLOG #62(d1) (2026-10-02), Empirical/QM/QEC/SteaneCircuit.lean: A CIRCUIT OF FAULTY STEANE
+-- GADGETS. One faulty transversal Hadamard with its recovery is a corrected step (the recovery
+-- theorem gives one condition, hadTransversal_code_state the other), so a LIST of them -- one
+-- unitary fault per gadget, each at a location of its own -- computes exactly what the ideal
+-- circuit computes on an encoded state; and since the gate is an involution, an EVEN-LENGTH
+-- circuit of faulty gadgets returns the input state untouched. The recovery gadget is still
+-- ideal (#62(c)), only the Hadamard family is instantiated, and there is one level.
+/-- info: 'CSD.Empirical.QM.QEC.Steane.isCorrectedStep_hadStep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.isCorrectedStep_hadStep
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_hadamardCircuit_corrected' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_hadamardCircuit_corrected
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.idealRun_hadGadget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.idealRun_hadGadget
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_hadamardCircuit_even' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_hadamardCircuit_even
+
 end CSD.Tests.AxiomAudit

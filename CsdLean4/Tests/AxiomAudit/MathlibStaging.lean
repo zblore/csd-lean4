@@ -9978,4 +9978,22 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms SchrodingerGroup.coeFn_phaseGroup_freeSymbol
 
+-- BACKLOG #62(d1) (2026-10-02), QuantumInfo/FaultTolerantComposition.lean: COMPOSING CORRECTED
+-- GADGETS ALONG A CIRCUIT. A corrected step returns the IDEAL gadget's output on code states and
+-- the ideal gadget keeps code states in the code; those two conditions compose, so a circuit whose
+-- every gadget is faulty and whose every fault is corrected computes exactly what the ideal circuit
+-- computes. The step is an arbitrary map on density operators, so a faulty recovery (#62(c)) plugs
+-- into the same theorem. Deterministic half only: no fault counting, no level reduction.
+/-- info: 'QuantumInfo.isCodeState_idealRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isCodeState_idealRun
+
+/-- info: 'QuantumInfo.correctedRun_eq_idealRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.correctedRun_eq_idealRun
+
+/-- info: 'QuantumInfo.isCorrectedCircuit_replicate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isCorrectedCircuit_replicate
+
 end CSD.Tests.AxiomAudit
