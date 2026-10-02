@@ -8,7 +8,7 @@ module
 public import CsdLean4.CV.FibredArenaBridge
 
 /-!
-# ST-1: the influence preorder on records
+# ST-1: the influence relation on records
 
 **Category:** 3-Local (CV; the first theorem about *records* with a causal shape).
 BACKLOG #38, brick `ST-1` of [`records-to-spacetime-scoping.md`](../../specs/records-to-spacetime-scoping.md).
@@ -16,13 +16,19 @@ BACKLOG #38, brick `ST-1` of [`records-to-spacetime-scoping.md`](../../specs/rec
 The CV chain states causality about **operators** (`SupportedOn`, commutators, the Lieb–Robinson
 cone); [`FibredArenaBridge.lean`](FibredArenaBridge.lean) carried it to the **record** medium with an
 error bound. This module states it as a **relation between read regions** and proves the three things
-the scoping note asked of `ST-1`: the relation is a preorder in the period count, spacelike records
-are jointly measurable and unsteerable from one another, and their joint law factors.
+the scoping note asked of `ST-1`: the relation is reflexive, monotone in the period count and
+transitive with the periods adding — a *graded* reachability relation, which becomes a genuine
+preorder once the budget is existentially quantified (★ `isPreorder_eventuallyInfluences`) —
+spacelike records are jointly measurable and unsteerable from one another, and their joint law
+factors.
 
 * `Influences E S₁ S₂ n` — **the record of a context reading `S₁` can influence the record of a
   context reading `S₂` within `n` interacting periods**, defined as `S₂ ⊆ graphBall E S₁ n`;
   ★ `influences_refl`, ★ `influences_mono`, ★★ `influences_trans` (the periods add, via the new
-  `graphBall_add` and `graphBall_subset_of_subset`), ★ `influences_trans_le`;
+  `graphBall_add` and `graphBall_subset_of_subset`), ★ `influences_trans_le`. At a *fixed* budget the
+  relation is **not** transitive — two reaches within `n` compose into one within `2n` — so the word
+  *preorder* is earned only by `EventuallyInfluences E S₁ S₂ := ∃ n, Influences E S₁ S₂ n`, which is
+  one (★ `isPreorder_eventuallyInfluences`);
 * `Spacelike E R T n` — neither cone has reached the other; ★ `spacelike_of_le` (antitone in the
   period count), ★ `not_influences_of_spacelike`;
 * ★★ `commute_record_of_spacelike` — **spacelike records are jointly measurable**: their evolved
@@ -48,6 +54,16 @@ coarse-graining projection defines the macroscopic coordinates** (Paper D §5.2)
 decision for the author rather than a lemma. Finiteness of the arena is not what stands in the way
 — it bounds what is defined *directly* from `Σ`, not what can arise after coarse-graining over many
 records.
+
+⚠️ **`Influences` is *permitted* influence, not *demonstrated* influence.** It says that `S₂`
+lies inside the cone the graph allows, and everything proved from it is of the form *outside the cone
+⇒ nothing happens* (`not_influences_of_spacelike` and the three unsteerability theorems). The
+converse — inside the cone, some influence actually occurs — is **not** proved and is not true in
+general: a coupling along the path may vanish, or the particular dynamics may fail to transmit the
+perturbation. That propagation is not fictional is a separate theorem,
+[`SupportSpreading.lean`](SupportSpreading.lean)'s `spreadKick_not_supportedOn` (an operator does
+leave its region), but there is no equivalence between graph reachability and operational
+influenceability anywhere in the corpus. Read `Influences` as the **causal accessibility cone**.
 
 ⚠️ **"Record" here is the corpus's record mechanism**, the skew stroke of
 `RecordLayer/ShearWitness.lean` as carried to the field arena by `FibredArenaBridge.lean`: a
@@ -148,6 +164,29 @@ theorem influences_trans_le {E : Finset (Fin K × Fin K)} {S₁ S₂ S₃ : Fins
     (h₁ : Influences E S₁ S₂ m) (h₂ : Influences E S₂ S₃ n) (hp : m + n ≤ p) :
     Influences E S₁ S₃ p :=
   influences_mono (influences_trans h₁ h₂) hp
+
+/-- **Influence within some budget**: the relation whose transitivity needs no bookkeeping, because
+the budget is existentially quantified. This is the relation the word *preorder* belongs to. -/
+def EventuallyInfluences (E : Finset (Fin K × Fin K)) (S₁ S₂ : Finset (Fin K)) : Prop :=
+  ∃ n : ℕ, Influences E S₁ S₂ n
+
+theorem eventuallyInfluences_refl (E : Finset (Fin K × Fin K)) (S : Finset (Fin K)) :
+    EventuallyInfluences E S S :=
+  ⟨0, influences_refl E S⟩
+
+theorem eventuallyInfluences_trans {E : Finset (Fin K × Fin K)} {S₁ S₂ S₃ : Finset (Fin K)}
+    (h₁ : EventuallyInfluences E S₁ S₂) (h₂ : EventuallyInfluences E S₂ S₃) :
+    EventuallyInfluences E S₁ S₃ := by
+  obtain ⟨m, hm⟩ := h₁
+  obtain ⟨n, hn⟩ := h₂
+  exact ⟨m + n, influences_trans hm hn⟩
+
+/-- ★ **The graded relation is a preorder once the period budget is existentially quantified.** At a
+fixed budget it is not: two reaches within `n` periods compose into one within `2n`. -/
+theorem isPreorder_eventuallyInfluences (E : Finset (Fin K × Fin K)) :
+    IsPreorder (Finset (Fin K)) (EventuallyInfluences E) where
+  refl := eventuallyInfluences_refl E
+  trans := fun _ _ _ h₁ h₂ => eventuallyInfluences_trans h₁ h₂
 
 /-! ### Spacelike regions -/
 

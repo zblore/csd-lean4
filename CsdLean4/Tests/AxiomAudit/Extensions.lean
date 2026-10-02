@@ -1747,6 +1747,18 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.graphBall_add
 
+/-- info: 'CSD.CV.eventuallyInfluences_refl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.eventuallyInfluences_refl
+
+/-- info: 'CSD.CV.eventuallyInfluences_trans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.eventuallyInfluences_trans
+
+/-- info: 'CSD.CV.isPreorder_eventuallyInfluences' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isPreorder_eventuallyInfluences
+
 /-- info: 'CSD.CV.influences_refl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.influences_refl
