@@ -69,15 +69,17 @@ law is a pushforward and the relabelling is a pointwise fact.
 
 ⚠️ **Only the record coordinate moves.** `sigmaShift` fixes the base and the symplectic partner of
 the fibre. A flow that moves the **base** changes the arcs themselves, and a `ContextField` is only
-assumed *measurable*, so its arcs may move discontinuously with the base: that case is **not
-covered** and needs a modulus of continuity on the rate field. It is BACKLOG #104, with its route
-recorded there.
+assumed *measurable*, so its arcs may move discontinuously with the base: that case is **not covered
+here**. It is BACKLOG #104, landed the same day as
+[`BaseMotionStability.lean`](BaseMotionStability.lean), which carries the margin argument over with a
+hypothesis bounding the arcs' displacement — no metric on the base required.
 
-⚠️ **The write is a constant translation.** `CV/RecordInfluence.lean`'s `recordStroke` translates the
-fibre by an amount depending on the base reading; under `epistemicMeasure p` the base is a single
-point, so that write *is* a constant translation on the support — but identifying the two needs an
-a.e. argument resting on singleton measurability in `LF4.CPN N`, which is not established here, so
-nothing below is stated for base-dependent writes.
+⚠️ **The write below is a constant translation**, so nothing in *this* file is stated for the
+base-dependent write of `CV/RecordInfluence.lean`'s `recordStroke`. That is a limit of this file and
+not an obstruction: `MeasurableSingletonClass (LF4.CPN N)` **is** available at the pin, so the
+epistemic measure is concentrated on the fibre over its preparation and a base-dependent write agrees
+with a constant one almost everywhere. [`BaseMotionStability.lean`](BaseMotionStability.lean) (#104)
+proves exactly that (`ae_fst_eq`, `map_sigmaMove_id`) and covers the base-dependent case.
 
 ⚠️ **The majority half is conditional, and its hypothesis is not supplied.**
 `measure_robustBasin_ge_one_sub` assumes the concentration `1 − ε ≤ rate p i`; nothing here derives
@@ -147,16 +149,19 @@ theorem measurable_sigmaShift (δ : ℝ) : Measurable (sigmaShift (N := N) δ) :
 /-- ★ **A record write preserves the epistemic measure.** The base is a point and the record
 coordinate carries Haar measure, which translation preserves. This is what makes the macroscopic law
 *exactly* invariant (`map_recordString_sigmaShift`) however large the write. -/
-theorem measurePreserving_sigmaShift (δ : ℝ) (p : LF4.CPN N) :
-    MeasurePreserving (sigmaShift (N := N) δ) (epistemicMeasure p) (epistemicMeasure p) := by
-  have h1 : MeasurePreserving (fun θ : AddCircle (1 : ℝ) => θ + (δ : AddCircle (1 : ℝ)))
-      (volume : Measure (AddCircle (1 : ℝ))) volume := measurePreserving_add_right volume _
-  have h2 : MeasurePreserving
+theorem measurePreserving_torusShift (δ : ℝ) :
+    MeasurePreserving
       (Prod.map (fun θ : AddCircle (1 : ℝ) => θ + (δ : AddCircle (1 : ℝ)))
         (id : AddCircle (1 : ℝ) → AddCircle (1 : ℝ)))
       (volume : Measure LF4.KTorus) (volume : Measure LF4.KTorus) := by
-    rw [Measure.volume_eq_prod]
-    exact h1.prod (MeasurePreserving.id _)
+  have h1 : MeasurePreserving (fun θ : AddCircle (1 : ℝ) => θ + (δ : AddCircle (1 : ℝ)))
+      (volume : Measure (AddCircle (1 : ℝ))) volume := measurePreserving_add_right volume _
+  rw [Measure.volume_eq_prod]
+  exact h1.prod (MeasurePreserving.id _)
+
+theorem measurePreserving_sigmaShift (δ : ℝ) (p : LF4.CPN N) :
+    MeasurePreserving (sigmaShift (N := N) δ) (epistemicMeasure p) (epistemicMeasure p) := by
+  have h2 := measurePreserving_torusShift δ
   have hfun : sigmaShift (N := N) δ
       = Prod.map (id : LF4.CPN N → LF4.CPN N)
           (Prod.map (fun θ : AddCircle (1 : ℝ) => θ + (δ : AddCircle (1 : ℝ)))
@@ -287,18 +292,20 @@ theorem recordMacro_sigmaShift {k : ℕ} (c : Fin k → ContextField N) {δ : �
 
 /-! ### The measure of the boundary band -/
 
-/-- The last `δ` of an arc that ends at `T ≤ 1` has circle measure at most `δ`. The clipping is the
-only subtlety: the band may run off the bottom of the representative interval, and the
-representative's positivity removes the overhang. -/
-theorem volume_rep_preimage_band_le {T δ : ℝ} (hT : T ≤ 1) :
-    (volume : Measure CircleFibre) (rep ⁻¹' Ioc (T - δ) T) ≤ ENNReal.ofReal δ := by
-  have hclip : rep ⁻¹' Ioc (T - δ) T = rep ⁻¹' Ioc (max 0 (T - δ)) T := by
+/-- ★ **Any `rep`-preimage of an interval has measure at most the interval's length**, with no
+containment hypothesis at all: the representative's range `(0, 1]` clips the overhang at both ends.
+The boundary bands of the stability bounds are intervals that need not sit inside one turn, so this
+is the form they consume. -/
+theorem volume_rep_preimage_Ioc_le (a b : ℝ) :
+    (volume : Measure CircleFibre) (rep ⁻¹' Ioc a b) ≤ ENNReal.ofReal (b - a) := by
+  have hclip : rep ⁻¹' Ioc a b = rep ⁻¹' Ioc (max 0 a) (min 1 b) := by
     ext θ
-    simp only [Set.mem_preimage, Set.mem_Ioc, max_lt_iff]
-    exact ⟨fun h => ⟨⟨rep_pos θ, h.1⟩, h.2⟩, fun h => ⟨h.1.2, h.2⟩⟩
-  rw [hclip, volume_rep_preimage_Ioc (le_max_left 0 _) hT]
+    simp only [Set.mem_preimage, Set.mem_Ioc, max_lt_iff, le_min_iff]
+    exact ⟨fun h => ⟨⟨rep_pos θ, h.1⟩, ⟨rep_le_one θ, h.2⟩⟩, fun h => ⟨h.1.2, h.2.2⟩⟩
+  rw [hclip, volume_rep_preimage_Ioc (le_max_left 0 a) (min_le_left 1 b)]
   refine ENNReal.ofReal_le_ofReal ?_
-  have := le_max_right 0 (T - δ)
+  have h1 := min_le_right (1 : ℝ) b
+  have h2 := le_max_right (0 : ℝ) a
   linarith
 
 /-- **The boundary band is small.** Its slice over the preparation is the last `δ` of one arc, so its
@@ -314,7 +321,10 @@ theorem measure_edgeBand_le (c : ContextField N) (δ : ℝ) (i : Fin N)
     ext θ
     simp [edgeBand, cellTop, Set.mem_prod]
   rw [hslice, Measure.volume_eq_prod, Measure.prod_prod, circleFibre_volume_univ, mul_one]
-  exact volume_rep_preimage_band_le (c.loSum_le_one p i)
+  have h := volume_rep_preimage_Ioc_le (loSum (c.rate p) i + c.rate p i - δ)
+    (loSum (c.rate p) i + c.rate p i)
+  rwa [show loSum (c.rate p) i + c.rate p i - (loSum (c.rate p) i + c.rate p i - δ) = δ from by
+    ring] at h
 
 /-- ★★ **Robustness is controlled by the Born weight.** The `δ`-robust interior of the basin of `i`
 has epistemic measure at least `rate p i − δ`. A record of large Born weight survives writes far

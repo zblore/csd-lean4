@@ -4012,4 +4012,103 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.map_recordString_sigmaShift
 
+
+-- STABILITY OF RECORD MACROSTATES UNDER MOTION OF THE BASE (BACKLOG #104, out of #103,
+-- RecordLayer/BaseMotionStability.lean, 2026-10-02): #103 covered motion of the FIBRE, which is all
+-- a record write does. A flow of Sigma also moves the BASE, and then the arcs themselves move,
+-- because globalBasin reads the rate field at the microstate's own base point. The hypothesis is
+-- stated directly on the endpoints - ArcShift c eps p q, every arc moves by at most eps - which
+-- needs NO METRIC on the base and hence no continuity of the rate field; #104's row proposed a
+-- LipschitzWith hypothesis and the endpoint form is weaker. arcShift_of_rate_close reduces it to a
+-- modulus of continuity on the rates: rates within eta put the arcs within (N+1)*eta, since each
+-- endpoint is a sum of at most N+1 rates. sigmaMove f g is a measurable motion of the base plus a
+-- BASE-DEPENDENT record write. map_sigmaMove: the epistemic law is carried EXACTLY to the law at the
+-- moved base - so unlike #103 the macroscopic law is NOT invariant (the Born weights are those of
+-- the moved point) and the transport is still exact; map_sigmaMove_id discharges a caveat of #103 by
+-- covering the base-dependent write of CV/RecordInfluence.lean, and it needs no measurability of g
+-- because the epistemic measure sits on one fibre (ae_fst_eq). The robust interior is now TWO-SIDED
+-- (margin eps below, delta+eps above) because a base motion can move the lower endpoint UP;
+-- robustBasin_2_zero recovers #103's one-sided set. The bound is k*N*(delta+2eps), or
+-- k*N*(delta+2(N+1)eta) in terms of the rates - note the SECOND factor of N - and ONE exceptional
+-- set serves a whole one-parameter family of moves over a horizon, because the robust interior does
+-- not depend on the parameter. NOT claimed: that any flow of Sigma actually bounds the arc
+-- displacement (it is a hypothesis), that f is a flow at all (no group law, no invertibility, no
+-- generator), any invariance of a cell, any mixing, or the typicality half (row 105).
+-- Foundational-triple throughout.
+/-- info: 'CSD.RecordLayer.volume_rep_preimage_Ioc_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_rep_preimage_Ioc_le
+
+/-- info: 'CSD.RecordLayer.measurePreserving_torusShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurePreserving_torusShift
+
+/-- info: 'CSD.RecordLayer.abs_loSum_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_loSum_sub_le
+
+/-- info: 'CSD.RecordLayer.arcShift_of_rate_close' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arcShift_of_rate_close
+
+/-- info: 'CSD.RecordLayer.ae_fst_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ae_fst_eq
+
+/-- info: 'CSD.RecordLayer.map_sigmaMove' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_sigmaMove
+
+/-- info: 'CSD.RecordLayer.map_sigmaMove_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_sigmaMove_id
+
+/-- info: 'CSD.RecordLayer.robustBasin₂_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.robustBasin₂_zero
+
+/-- info: 'CSD.RecordLayer.globalBasin_subset_robustBasin₂_union' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_subset_robustBasin₂_union
+
+/-- info: 'CSD.RecordLayer.sigmaMove_mem_globalBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sigmaMove_mem_globalBasin
+
+/-- info: 'CSD.RecordLayer.outcomeCode_sigmaMove' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.outcomeCode_sigmaMove
+
+/-- info: 'CSD.RecordLayer.recordString_sigmaMove' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordString_sigmaMove
+
+/-- info: 'CSD.RecordLayer.recordMacro_sigmaMove' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordMacro_sigmaMove
+
+/-- info: 'CSD.RecordLayer.measure_lowerBand_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_lowerBand_le
+
+/-- info: 'CSD.RecordLayer.measure_robustBasin₂_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_robustBasin₂_ge
+
+/-- info: 'CSD.RecordLayer.measure_unstableSet₂_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_unstableSet₂_le
+
+/-- info: 'CSD.RecordLayer.measure_recordString_ne_sigmaMove_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_recordString_ne_sigmaMove_le
+
+/-- info: 'CSD.RecordLayer.measure_recordString_ne_sigmaMove_rate_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_recordString_ne_sigmaMove_rate_le
+
+/-- info: 'CSD.RecordLayer.measure_exists_recordString_ne_flow_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_exists_recordString_ne_flow_le
+
 end CSD.Tests.AxiomAudit
