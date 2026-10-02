@@ -638,6 +638,7 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPluriharmonic
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhase
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhaseCurvature
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.DiagonalOperator
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.MultiplicationOperator
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Polarization
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.ProjectionPackage
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Descent
@@ -703,6 +704,7 @@ public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerGroup
 public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerSchwartz
 public import CsdLean4.Mathlib.Analysis.Semigroup.GaussianPacket
 public import CsdLean4.Mathlib.Analysis.Semigroup.FresnelKernel
+public import CsdLean4.Mathlib.Analysis.Semigroup.FreeHamiltonian
 public import CsdLean4.Mathlib.Analysis.Fourier.Wigner
 public import CsdLean4.Mathlib.Analysis.Fourier.WignerWeyl
 public import CsdLean4.Mathlib.Analysis.Fourier.WignerCalculus

@@ -9881,4 +9881,101 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.wigner_liouville_add_eq_zero
 
+-- BACKLOG #64/#93 continuum operator layer (2026-10-02), Analysis/InnerProductSpace/MultiplicationOperator.lean:
+-- MULTIPLICATION BY A REAL MEASURABLE FUNCTION AS AN UNBOUNDED SELF-ADJOINT OPERATOR on L^2(mu),
+-- the continuum companion of #93(a)'s diagonal operator (which needs a basis, so it reaches only
+-- discrete spectra). The cut-offs {|m| <= n} exhaust alpha because m is real-valued, and that one
+-- lemma replaces every limiting argument: density (a vector orthogonal to the domain is killed by
+-- every cut-off), maximality (the adjoint's value is m.y on every cut-off set, so its domain
+-- cannot be larger), and the two-sided spectrum bound - a bounded inverse off the closure of the
+-- values, and approximate eigenvectors at every essential value. No dominated convergence, no
+-- spectral theorem, no Stone.
+/-- info: 'MeasureTheory.L2.mulCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.mulCLM
+
+/-- info: 'MeasureTheory.L2.coeFn_mulCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.coeFn_mulCLM
+
+/-- info: 'MeasureTheory.L2.ae_eq_zero_of_ae_eq_zero_on_cutSet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.ae_eq_zero_of_ae_eq_zero_on_cutSet
+
+/-- info: 'MeasureTheory.L2.cutCLM_mem_mulDomain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.cutCLM_mem_mulDomain
+
+/-- info: 'MeasureTheory.L2.inner_cutCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.inner_cutCLM
+
+/-- info: 'MeasureTheory.L2.dense_mulDomain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.dense_mulDomain
+
+/-- info: 'MeasureTheory.L2.mulOp_isFormalAdjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.mulOp_isFormalAdjoint
+
+/-- info: 'MeasureTheory.L2.coeFn_adjoint_mulOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.coeFn_adjoint_mulOp
+
+/-- info: 'MeasureTheory.L2.isSelfAdjoint_mulOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.isSelfAdjoint_mulOp
+
+/-- info: 'MeasureTheory.L2.mem_resolventSet_mulOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.mem_resolventSet_mulOp
+
+/-- info: 'MeasureTheory.L2.mem_spectrum_mulOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.mem_spectrum_mulOp
+
+-- BACKLOG #64/#93 continuum operator layer (2026-10-02), Analysis/Semigroup/FreeHamiltonian.lean:
+-- THE FREE HAMILTONIAN IN THE MOMENTUM REPRESENTATION is multiplication by the corpus's own
+-- freeSymbol 2 pi^2 xi^2: self-adjoint on its natural domain, and its SPECTRUM IS THE NONNEGATIVE
+-- REAL AXIS, both inclusions (the symbol's range is [0, infinity) and is closed, so the resolvent
+-- exists off it; every ball around a nonnegative real has preimage of positive measure because it
+-- is a nonempty open set, and of finite measure because it is bounded). The group and the
+-- generator are built from one function; Stone's theorem, the position-space conjugate and H_0 + V
+-- are not here (row 64).
+/-- info: 'SchrodingerGroup.range_freeSymbol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.range_freeSymbol
+
+/-- info: 'SchrodingerGroup.isClosed_nonnegAxis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.isClosed_nonnegAxis
+
+/-- info: 'SchrodingerGroup.range_ofReal_freeSymbol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.range_ofReal_freeSymbol
+
+/-- info: 'SchrodingerGroup.dense_domain_freeSymbolOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.dense_domain_freeSymbolOp
+
+/-- info: 'SchrodingerGroup.isSelfAdjoint_freeSymbolOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.isSelfAdjoint_freeSymbolOp
+
+/-- info: 'SchrodingerGroup.spectrum_freeSymbolOp_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.spectrum_freeSymbolOp_subset
+
+/-- info: 'SchrodingerGroup.mem_spectrum_freeSymbolOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.mem_spectrum_freeSymbolOp
+
+/-- info: 'SchrodingerGroup.spectrum_freeSymbolOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.spectrum_freeSymbolOp
+
+/-- info: 'SchrodingerGroup.coeFn_phaseGroup_freeSymbol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.coeFn_phaseGroup_freeSymbol
+
 end CSD.Tests.AxiomAudit
