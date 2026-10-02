@@ -156,6 +156,9 @@ noncomputable def recordMacro {k : ℕ} (c : Fin k → ContextField N) :
 theorem recordMacro_toFun {k : ℕ} (c : Fin k → ContextField N) :
     (recordMacro c).toFun = recordString c := rfl
 
+theorem measurable_recordString {k : ℕ} (c : Fin k → ContextField N) :
+    Measurable (recordString c) := (recordMacro c).measurable_toFun
+
 /-- ★★ **Every record event of the family factors through the string**, with the coordinate set
 written out: this is what makes #99's two theorems available for this instance. -/
 theorem globalBasin_eq_preimage {k : ℕ} (c : Fin k → ContextField N) (j : Fin k) (i : Fin N) :

@@ -116,6 +116,30 @@ theorem measurable_rep : Measurable rep :=
 lemma coe_rep (θ : CircleFibre) : ((rep θ : ℝ) : CircleFibre) = θ :=
   AddCircle.coe_equivIoc
 
+/-- The canonical representative lies in `(0, 1]`. -/
+theorem rep_mem_Ioc (θ : CircleFibre) : rep θ ∈ Ioc (0 : ℝ) 1 := by
+  have h : rep θ ∈ Ioc (0 : ℝ) (0 + 1) := (AddCircle.equivIoc (1 : ℝ) 0 θ).2
+  simpa using h
+
+theorem rep_pos (θ : CircleFibre) : 0 < rep θ := (rep_mem_Ioc θ).1
+
+theorem rep_le_one (θ : CircleFibre) : rep θ ≤ 1 := (rep_mem_Ioc θ).2
+
+/-- **A real in `(0, 1]` is its own representative** — the converse of `coe_rep`. -/
+theorem rep_coe_of_mem_Ioc {t : ℝ} (ht : t ∈ Ioc (0 : ℝ) 1) : rep ((t : CircleFibre)) = t := by
+  have ht' : t ∈ Ioc (0 : ℝ) (0 + 1) := by simpa using ht
+  rw [rep, AddCircle.equivIoc_coe_eq ht']
+
+/-- ★ **A translation that does not wrap adds to the representative.** The hypothesis is exactly
+"the shifted representative is still inside one turn"; without it the representative drops by `1`,
+which is why every stability statement built on this lemma is **quantitative** rather than an
+invariance claim (`RecordLayer/MacrostateStability.lean`). -/
+theorem rep_add_coe {θ : CircleFibre} {δ : ℝ} (h : rep θ + δ ∈ Ioc (0 : ℝ) 1) :
+    rep (θ + (δ : CircleFibre)) = rep θ + δ := by
+  have hsum : θ + (δ : CircleFibre) = ((rep θ + δ : ℝ) : CircleFibre) := by
+    rw [AddCircle.coe_add, coe_rep]
+  rw [hsum, rep_coe_of_mem_Ioc h]
+
 /-- The **Born cell on the circle**: the points whose canonical representative lies in the CDF
 interval. A *preimage*, so measurability is immediate — unlike the image of `cdfCell`. -/
 noncomputable def circleCell (r : Fin n → ℝ) (i : Fin n) : Set CircleFibre :=
@@ -144,6 +168,29 @@ theorem circleCell_pairwiseDisjoint (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) 
 
 /-! ### The Born weights survive the transport -/
 
+/-- ★ **The volume of a `rep`-preimage of an interval inside one turn is the interval's length.**
+The engine behind `volume_circleCell`, stated for an arbitrary interval because the quantitative
+stability bounds need it for intervals that are *not* Born cells — the boundary bands of
+`RecordLayer/MacrostateStability.lean`. -/
+theorem volume_rep_preimage_Ioc {a b : ℝ} (ha : 0 ≤ a) (hb : b ≤ 1) :
+    (volume : Measure CircleFibre) (rep ⁻¹' Ioc a b) = ENNReal.ofReal (b - a) := by
+  have hS : MeasurableSet (Subtype.val ⁻¹' Ioc a b : Set (Ioc (0:ℝ) ((0:ℝ) + 1))) :=
+    measurable_subtype_coe measurableSet_Ioc
+  have hpre : rep ⁻¹' Ioc a b
+      = (AddCircle.equivIoc (1:ℝ) 0) ⁻¹' (Subtype.val ⁻¹' Ioc a b) := rfl
+  rw [hpre, (AddCircle.measurePreserving_equivIoc (T := (1:ℝ)) (a := 0)).measure_preimage
+    hS.nullMeasurableSet,
+    Measure.comap_apply _ Subtype.val_injective
+      (fun s hs => measurableSet_Ioc.subtype_image hs) _ hS]
+  -- The image of the preimage is the interval cut down to one turn — which changes nothing.
+  have himg : (Subtype.val '' (Subtype.val ⁻¹' Ioc a b : Set (Ioc (0:ℝ) ((0:ℝ) + 1))))
+      = Ioc a b := by
+    rw [Subtype.image_preimage_coe]
+    apply Set.inter_eq_self_of_subset_right
+    intro x hx
+    exact ⟨lt_of_le_of_lt ha hx.1, le_trans hx.2 (by simpa using hb)⟩
+  rw [himg, Real.volume_Ioc]
+
 /-- **The circle cell carries exactly the Born weight `rᵢ`.** The whole point of the swap: moving
 to a compact fibre changes nothing about the outcome probabilities. Requires the rates to be a
 sub-probability vector, so the cells fit inside one turn of the circle. -/
@@ -151,25 +198,9 @@ theorem volume_circleCell (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i)
     (hsum : ∀ i : Fin n, loSum r i + r i ≤ 1) (i : Fin n) :
     (volume : Measure CircleFibre) (circleCell r i) = ENNReal.ofReal (r i) := by
   have hlo : 0 ≤ loSum r i := Finset.sum_nonneg fun j _ => hr j
-  have hS : MeasurableSet (Subtype.val ⁻¹' Ioc (loSum r i) (loSum r i + r i) :
-      Set (Ioc (0:ℝ) ((0:ℝ) + 1))) := measurable_subtype_coe measurableSet_Ioc
-  have hpre : circleCell r i
-      = (AddCircle.equivIoc (1:ℝ) 0) ⁻¹'
-        (Subtype.val ⁻¹' Ioc (loSum r i) (loSum r i + r i)) := rfl
-  rw [hpre, (AddCircle.measurePreserving_equivIoc (T := (1:ℝ)) (a := 0)).measure_preimage
-    hS.nullMeasurableSet,
-    Measure.comap_apply _ Subtype.val_injective
-      (fun s hs => measurableSet_Ioc.subtype_image hs) _ hS]
-  -- The image of the preimage is the interval cut down to one turn — which changes nothing.
-  have himg : (Subtype.val '' (Subtype.val ⁻¹' Ioc (loSum r i) (loSum r i + r i) :
-      Set (Ioc (0:ℝ) ((0:ℝ) + 1)))) = Ioc (loSum r i) (loSum r i + r i) := by
-    rw [Subtype.image_preimage_coe]
-    apply Set.inter_eq_self_of_subset_right
-    intro x hx
-    exact ⟨lt_of_le_of_lt hlo hx.1, le_trans hx.2 (by simpa using hsum i)⟩
-  rw [himg, Real.volume_Ioc]
-  congr 1
-  ring
+  have h := volume_rep_preimage_Ioc (a := loSum r i) (b := loSum r i + r i) hlo (hsum i)
+  rw [show loSum r i + r i - loSum r i = r i from by ring] at h
+  exact h
 
 /-- **Born rates on the compact fibre.** For a unit state the circle cell for outcome `i` has
 measure `‖ψ i‖²` — the same Born weight the `ℝ` fibre gave, now on a compact space with a genuine

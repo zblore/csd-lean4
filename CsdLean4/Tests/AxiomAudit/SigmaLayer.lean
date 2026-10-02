@@ -3909,4 +3909,107 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measure_map_recordMacro_singleton
 
+
+-- DYNAMICAL STABILITY OF RECORD MACROSTATES (BACKLOG #103, the physics half of candidate (5),
+-- RecordLayer/MacrostateStability.lean + the rep arithmetic added to RecordLayer/CircleFibre.lean,
+-- 2026-10-02): #103 opened with the warning that stability here CANNOT mean invariance - finite
+-- unitary dynamics is almost periodic and supplies no mixing - so the brick is the
+-- MEASURE-THEORETIC one, and it lands in two halves that pull against each other. (i) The
+-- macroscopic law is EXACTLY invariant: a record write translates the record coordinate of the
+-- fibre, hence preserves the epistemic measure, so the DISTRIBUTION of the record string is
+-- unchanged for every write size with no error term (map_recordString_sigmaShift). (ii) The
+-- pointwise assignment is robust to first order: the microstates whose record string a write of
+-- size delta CHANGES have epistemic measure at most k*N*delta for a family of k contexts over N
+-- outcomes (measure_recordString_ne_le), and that tends to 0. The mechanism is one lemma -
+-- rep_add_coe, a translation that does not wrap ADDS to the canonical representative - so a write
+-- pushes a microstate towards the UPPER endpoint of its own arc and can only relabel what sits
+-- within delta of it (the margin lemma sigmaShift_mem_globalBasin). Two further results:
+-- robustness is controlled by the BORN WEIGHT (measure_robustBasin_ge: rate - delta bounds the
+-- robust interior below, so heavy records are the stable ones and a cell of weight below delta
+-- gets none - with measure_robustBasin_ge_one_sub the conditional MAJORITY half: once the
+-- weights concentrate the shared-and-robust cell carries all but epsilon+delta, and since a
+-- cell's measure IS its Born weight no cell is overwhelming unless the weights are, so
+-- "overwhelmingly many microstates share the record" is a property of the preparation and the
+-- context and not of the coordinate - its hypothesis is row 105), and ONE exceptional set
+-- serves a WHOLE HORIZON, so under a drift at rate omega the
+-- string survives all of [0,T] outside measure k*N*omega*T - #103's "persistence over a horizon"
+-- with no second argument. NOT claimed: invariance of any cell, any mixing, any flow that moves
+-- the BASE (row 104), base-dependent writes, or any combination with the typicality half.
+-- Foundational-triple throughout.
+/-- info: 'CSD.RecordLayer.rep_add_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rep_add_coe
+
+/-- info: 'CSD.RecordLayer.volume_rep_preimage_Ioc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_rep_preimage_Ioc
+
+/-- info: 'CSD.RecordLayer.measurable_recordString' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_recordString
+
+/-- info: 'CSD.RecordLayer.measurePreserving_sigmaShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurePreserving_sigmaShift
+
+/-- info: 'CSD.RecordLayer.mem_globalBasin_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_globalBasin_iff
+
+/-- info: 'CSD.RecordLayer.globalBasin_subset_robustBasin_union_edgeBand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_subset_robustBasin_union_edgeBand
+
+/-- info: 'CSD.RecordLayer.sigmaShift_mem_globalBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sigmaShift_mem_globalBasin
+
+/-- info: 'CSD.RecordLayer.outcomeCode_sigmaShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.outcomeCode_sigmaShift
+
+/-- info: 'CSD.RecordLayer.recordString_sigmaShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordString_sigmaShift
+
+/-- info: 'CSD.RecordLayer.recordMacro_sigmaShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordMacro_sigmaShift
+
+/-- info: 'CSD.RecordLayer.measure_edgeBand_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_edgeBand_le
+
+/-- info: 'CSD.RecordLayer.measure_robustBasin_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_robustBasin_ge
+
+/-- info: 'CSD.RecordLayer.measure_robustBasin_ge_one_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_robustBasin_ge_one_sub
+
+/-- info: 'CSD.RecordLayer.measure_unstableSet_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_unstableSet_le
+
+/-- info: 'CSD.RecordLayer.measure_recordString_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_recordString_ne_le
+
+/-- info: 'CSD.RecordLayer.measure_exists_recordString_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_exists_recordString_ne_le
+
+/-- info: 'CSD.RecordLayer.measure_drift_recordString_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_drift_recordString_ne_le
+
+/-- info: 'CSD.RecordLayer.tendsto_measure_recordString_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tendsto_measure_recordString_ne
+
+/-- info: 'CSD.RecordLayer.map_recordString_sigmaShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_recordString_sigmaShift
+
 end CSD.Tests.AxiomAudit
