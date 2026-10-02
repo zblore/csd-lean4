@@ -3867,4 +3867,46 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.nstep_born_map
 
+-- ST-3's INSTANCE, candidate (5) at the author's decision (BACKLOG #102,
+-- RecordLayer/RecordMacrostate.lean, 2026-10-02): the macroscopic coordinate is the RECORD STRING
+-- of a finite INDEXED family of contexts - the outcome each assigns, i.succ on the basin of i and 0
+-- on the null set where none contains the microstate. Indexed, so the string remembers which
+-- context gave which outcome, which is what the chain law's step resolution needs and what a
+-- histogram loses. Every record event of the family factors through it, and BOTH of #99's
+-- requirements are VERIFIED rather than transported: no-signalling holds exactly (summing the
+-- second context's outcomes returns the first's basin, because any context's basins a.e. exhaust
+-- Sigma), and the Born chain law holds verbatim in the macroscopic law. Stability of the cells -
+-- candidate (5)'s actual physics - is row 103 and is NOT here.
+/-- info: 'CSD.RecordLayer.outcomeCode_eq_succ_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.outcomeCode_eq_succ_iff
+
+/-- info: 'CSD.RecordLayer.measurable_outcomeCode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_outcomeCode
+
+/-- info: 'CSD.RecordLayer.globalBasin_eq_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_eq_preimage
+
+/-- info: 'CSD.RecordLayer.factorsThrough_globalBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.factorsThrough_globalBasin
+
+/-- info: 'CSD.RecordLayer.recordString_coarsen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordString_coarsen
+
+/-- info: 'CSD.RecordLayer.noSignalling_pairFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.noSignalling_pairFamily
+
+/-- info: 'CSD.RecordLayer.nstep_born_recordMacro' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nstep_born_recordMacro
+
+/-- info: 'CSD.RecordLayer.measure_map_recordMacro_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_map_recordMacro_singleton
+
 end CSD.Tests.AxiomAudit
