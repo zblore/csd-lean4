@@ -90,6 +90,7 @@ public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Decoder
 public import CsdLean4.Mathlib.QuantumInfo.BlockKron
 public import CsdLean4.Mathlib.QuantumInfo.FaultTolerantComposition
 public import CsdLean4.Mathlib.QuantumInfo.ExtendedRectangle
+public import CsdLean4.Mathlib.QuantumInfo.LevelReduction
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 public import CsdLean4.Mathlib.QuantumInfo.QSearch
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit

@@ -10288,4 +10288,61 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.correctedRun_replicate_exRec
 
+
+-- LEVEL REDUCTION AND THE PROBABILISTIC JOIN (BACKLOG #97, split out of #62 (d2) - the LAST of that
+-- row's remainder; Mathlib/QuantumInfo/LevelReduction.lean, 2026-10-04). Three things were
+-- deliberately left out of #94, #95 and #96 and this supplies them: the RECURSION (a level-k gadget
+-- IS a level-(k-1) circuit), the FAULT COUNT, and the JOIN of the deterministic and probabilistic
+-- halves into one statement. The deterministic half is #62 (d1)'s correctedRun_eq_idealRun and the
+-- arithmetic half is #51's codeCapacityBound with concatMeasure_concatBad_le; neither is re-proved.
+-- LEVEL REDUCTION: isCorrectedStep_correctedRun - a corrected circuit IS a corrected step one level
+-- up, with the preserves half free from isCodeState_idealRun - and then
+-- isCorrectedStep_of_isCorrectedAtLevel: CORRECTNESS AT EVERY LEVEL FOLLOWS FROM CORRECTNESS AT
+-- LEVEL 0, by induction on the tower, with correctedRun_eq_idealRun_of_level as its circuit form.
+-- THE JOIN: one_sub_le_measure_output_eq needs NO MEASURABILITY HYPOTHESES AT ALL - subadditivity
+-- gives 1 <= mu s + mu s-complement for arbitrary sets - and
+-- one_sub_le_measure_output_eq_concat is the row's statement: for N gadgets, each a level-k
+-- concatenated block under independent noise of rate at most p, the output is EXACTLY the ideal one
+-- with probability at least 1 - N (C(n,2) p)^(2^k) / C(n,2), i.e. the row's 1 - N (cp)^(2^k)/c.
+-- tendsto_one_sub_codeCapacityBound sends the bound to 1 below threshold.
+-- NOT claimed: the deterministic premise is a NAMED HYPOTHESIS and is not discharged here, so nothing
+-- is a threshold theorem for the Steane code or for any concrete gadget set; "bad" is a pattern
+-- predicate and the correspondence between a gadget's faults and a ConcatPat is not constructed;
+-- noise is INDEPENDENT across gadgets and blocks, which is a modelling choice visible in
+-- circuitMeasure, and correlated or adversarial noise is outside everything; N is given and NO GATE
+-- COUNT OR OVERHEAD is bounded, so no polylogarithmic-overhead claim is made or implied; the constant
+-- C(n,2) is not claimed sharp; and maps, not channels - no positivity or trace preservation anywhere.
+-- Foundational-triple throughout.
+/-- info: 'QuantumInfo.isCorrectedStep_correctedRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isCorrectedStep_correctedRun
+
+/-- info: 'QuantumInfo.isCorrectedStep_of_isCorrectedAtLevel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isCorrectedStep_of_isCorrectedAtLevel
+
+/-- info: 'QuantumInfo.correctedRun_eq_idealRun_of_level' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.correctedRun_eq_idealRun_of_level
+
+/-- info: 'QuantumInfo.one_sub_le_measure_output_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.one_sub_le_measure_output_eq
+
+/-- info: 'QuantumInfo.measurableSet_of_concatPat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.measurableSet_of_concatPat
+
+/-- info: 'QuantumInfo.circuitMeasure_coord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.circuitMeasure_coord
+
+/-- info: 'QuantumInfo.one_sub_le_measure_output_eq_concat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.one_sub_le_measure_output_eq_concat
+
+/-- info: 'QuantumInfo.tendsto_one_sub_codeCapacityBound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.tendsto_one_sub_codeCapacityBound
+
 end CSD.Tests.AxiomAudit
