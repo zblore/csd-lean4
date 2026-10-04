@@ -9996,4 +9996,85 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.isCorrectedCircuit_replicate
 
+
+-- EFFECTIVE STOCHASTICITY: WHEN A COARSE-GRAINED DETERMINISTIC ORBIT IS APPROXIMATELY MARKOV
+-- (BACKLOG #100, Mathlib/Dynamics/CoarseMarkov.lean, 2026-10-04). A deterministic map observed only
+-- through a finite coarse-graining produces a stochastic-LOOKING process; this says when it is
+-- approximately Markov and with what error. The point of the design is that the hypothesis and the
+-- conclusion are about DIFFERENT OBJECTS: MicroDecoupled is about the MICROSTATE (conditioning on
+-- the whole coarse history moves the law of the microstate at step n by at most eps, uniformly over
+-- measurable sets, compared with conditioning on the present coarse value), while the conclusions
+-- are about the COARSE PROCESS. Assuming instead that the coarse process forgets its history would
+-- be assuming the conclusion - that is the circularity this file is built to avoid.
+-- abs_condProb_coarseEvent_sub_le is the one-step Markov error, via the bridge coarseEvent_succ_eq
+-- (a coarse future event IS a microstate event pulled back along the flow).
+-- measure_historyEvent_toReal_eq_prod is the EXACT chain rule, with no hypothesis beyond
+-- non-degeneracy, and abs_measure_historyEvent_sub_markov_le is the headline: the path probability
+-- factorises up to n*eps, i.e. "approximately Markovian with an explicit error", proved on the
+-- elementary product comparison abs_prod_sub_prod_le_sum.
+-- TWO BOUNDARY RESULTS. condProb_coarseEvent_succ_of_autonomous: when the coarse variable is
+-- autonomous the transitions are 0/1 indicators and the error is 0 with NO hypothesis, so the
+-- bounds are attainable. cex_not_microDecoupled: the four-point rotation coarse-grained into two
+-- cells has P(C2=1 | C1=0, C0=0) = 1 but P(C2=1 | C1=0) = 1/2, so its coarse process is NOT Markov
+-- and no eps < 1/2 exists for it - WITHOUT THIS THE THEOREMS COULD HAVE BEEN VACUOUS.
+-- NOT claimed: that any dynamics satisfies MicroDecoupled (nothing supplies it, and for finite
+-- unitary dynamics mixing is unavailable in principle, so the statement can only be conditional);
+-- any connection to the corpus's HasCorrelationDecay, which bounds a two-point correlation of one
+-- scalar observable and is a different kind of condition; uniformity in n (the error is additive,
+-- useless once n ~ 1/eps, and no infinite-horizon or invariant-measure statement is implied); any
+-- choice of coarse-graining (C is a parameter, identified with nothing); and above all NO
+-- derivation of randomness or of the Born rule - the orbit is deterministic throughout and what is
+-- bounded is only how far its coarse marginals sit from a Markov chain's.
+/-- info: 'MeasureTheory.condProb_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.condProb_le_one
+
+/-- info: 'MeasureTheory.condProb_mul_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.condProb_mul_eq
+
+/-- info: 'MeasureTheory.coarseEvent_succ_eq' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.coarseEvent_succ_eq
+
+/-- info: 'MeasureTheory.measurableSet_coarseEvent' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.measurableSet_coarseEvent
+
+/-- info: 'MeasureTheory.historyEvent_subset_coarseEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.historyEvent_subset_coarseEvent
+
+/-- info: 'MeasureTheory.abs_condProb_coarseEvent_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.abs_condProb_coarseEvent_sub_le
+
+/-- info: 'MeasureTheory.measure_historyEvent_toReal_eq_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.measure_historyEvent_toReal_eq_prod
+
+/-- info: 'MeasureTheory.abs_prod_sub_prod_le_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.abs_prod_sub_prod_le_sum
+
+/-- info: 'MeasureTheory.abs_measure_historyEvent_sub_markov_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.abs_measure_historyEvent_sub_markov_le
+
+/-- info: 'MeasureTheory.condProb_coarseEvent_succ_of_autonomous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.condProb_coarseEvent_succ_of_autonomous
+
+/-- info: 'MeasureTheory.cex_condProb_history' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cex_condProb_history
+
+/-- info: 'MeasureTheory.cex_condProb_present' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cex_condProb_present
+
+/-- info: 'MeasureTheory.cex_not_microDecoupled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cex_not_microDecoupled
+
 end CSD.Tests.AxiomAudit
