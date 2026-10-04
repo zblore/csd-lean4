@@ -65,6 +65,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Stabilizer
 public import CsdLean4.Mathlib.QuantumInfo.KnillLaflamme
 public import CsdLean4.Mathlib.QuantumInfo.StabilizerRecovery
 public import CsdLean4.Mathlib.QuantumInfo.TransversalClifford
+public import CsdLean4.Mathlib.QuantumInfo.SyndromeExtraction
 public import CsdLean4.Mathlib.QuantumInfo.Magic
 public import CsdLean4.Mathlib.QuantumInfo.MagicInjection
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTAngle
@@ -343,6 +344,7 @@ public import CsdLean4.Empirical.QM.QEC.Steane
 public import CsdLean4.Empirical.QM.QEC.SteaneRecovery
 public import CsdLean4.Empirical.QM.QEC.SteaneThreshold
 public import CsdLean4.Empirical.QM.QEC.SteaneTransversalCNOT
+public import CsdLean4.Empirical.QM.QEC.SteaneSyndromeCircuit
 public import CsdLean4.Empirical.QM.QEC.SteaneArbitrary
 public import CsdLean4.Empirical.QM.QEC.SteaneFaultyGate
 public import CsdLean4.Empirical.QM.QEC.SteaneCircuit

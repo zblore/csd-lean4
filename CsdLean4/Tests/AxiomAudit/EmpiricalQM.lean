@@ -1878,4 +1878,57 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_hadamardCircuit_even
 
+
+-- THE STEANE CODE'S SYNDROME EXTRACTION, AS A CIRCUIT (BACKLOG #94, the instance,
+-- Empirical/QM/QEC/SteaneSyndromeCircuit.lean, 2026-10-04). Steane.lean had the X-syndrome as a
+-- FUNCTION on error patterns and used it for the distance-3 mechanism; this runs the generic gadget
+-- of Mathlib/QuantumInfo/SyndromeExtraction.lean at that check map, so the syndrome the corpus
+-- reasons with is the one a CNOT ladder into a three-qubit ancilla block actually produces.
+-- steaneExtract_tags_syndrome: the ancilla ends up holding the Hamming syndrome.
+-- steaneExtract_reads_syndrome: reading the ancilla IS projecting the data onto the syndrome
+-- subspace. steaneExtract_code_state: a Steane code state comes back unchanged, ancilla included,
+-- and the all-zero outcome is certain. steane_extract_detects_single and
+-- steane_extract_names_single put the distance-3 mechanism on the ancilla: a single-qubit error
+-- changes what is read, and distinct single errors read differently, so the ancilla NAMES the faulty
+-- qubit.
+-- NOT claimed: any fault, hence no fault tolerance (rows 95 and 96); a verified ancilla; the
+-- Z-checks of this CSS code (conjugate basis, not done, nothing combines the two); or any decoding -
+-- the recovery maps of SteaneRecovery.lean and SteaneArbitrary.lean are neither re-derived nor
+-- connected to this circuit. Foundational-triple throughout.
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_syndrome_add_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_syndrome_add_self
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.syndrome_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.syndrome_add
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneExtract_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneExtract_mem_unitaryGroup
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneExtract_tags_syndrome' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneExtract_tags_syndrome
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneExtract_reads_syndrome' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneExtract_reads_syndrome
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneExtract_code_state' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneExtract_code_state
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneExtract_code_state_syndrome_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneExtract_code_state_syndrome_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_extract_detects_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_extract_detects_single
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_extract_names_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_extract_names_single
+
 end CSD.Tests.AxiomAudit

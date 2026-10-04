@@ -10077,4 +10077,75 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms MeasureTheory.cex_not_microDecoupled
 
+
+-- SYNDROME EXTRACTION AS A CIRCUIT (BACKLOG #94, split out of #62 (c1),
+-- Mathlib/QuantumInfo/SyndromeExtraction.lean, 2026-10-04). The corpus measured a syndrome as a
+-- PROJECTIVE MEASUREMENT on the data (Empirical/QM/QEC/SyndromeRecovery.lean); a circuit-level
+-- fault-tolerance argument needs it as a CIRCUIT - ancilla block prepared in 0, a ladder of
+-- transversal CNOTs, a measurement of the ancilla. The whole construction is one observation: a
+-- CNOT ladder from data to ancilla is a PERMUTATION OF BASIS LABELS, (z,a) -> (z, a + H z), so it
+-- is permMat of TransversalClifford.lean and the only arithmetic needed is H z + H z = 0.
+-- extractMat_mul_ancInit_apply is the content: the circuit takes basis state z with a fresh ancilla
+-- to (z, H z). ancProj_mul_extractMat_mul_ancInit then says READING THE ANCILLA IS PROJECTING THE
+-- DATA onto the syndrome subspace - the circuit implements the projective measurement the corpus had
+-- been assuming - and ancProj_mul_extractMat_mul_ancInit_of_ne says a syndrome the data does not
+-- carry gets zero amplitude, so the measurement is exhaustive and not merely consistent.
+-- extractMat_mul_ancInit_mul_synProj_zero and extractMat_conj_codeState: ON THE CODE EXTRACTION DOES
+-- NOTHING, ancilla included, as an operator identity rather than a statement about one state; and
+-- the all-zero outcome is then certain.
+-- NOT claimed: any fault (this is the FAULT-FREE gadget; a fault in the ladder or the ancilla is
+-- rows 95 and 96, and nothing here says the gadget is fault-TOLERANT); a verified ancilla (one
+-- unverified block, so no bound on an ancilla fault spreading into the data); more than one check
+-- map applied once (no rounds, no interleaving with gates); Z-type checks (the construction works
+-- because the ladder permutes computational-basis labels, and the conjugate-basis half is not
+-- derived); and no decoder - the syndrome is produced, never interpreted.
+-- Foundational-triple except extractPerm_involutive, which needs propext alone.
+/-- info: 'QuantumInfo.extractPerm_involutive' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.extractPerm_involutive
+
+/-- info: 'QuantumInfo.extractMat_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.extractMat_mul_self
+
+/-- info: 'QuantumInfo.extractMat_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.extractMat_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.ancInit_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancInit_conjTranspose_mul
+
+/-- info: 'QuantumInfo.sum_ancProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_ancProj
+
+/-- info: 'QuantumInfo.sum_synProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_synProj
+
+/-- info: 'QuantumInfo.extractMat_mul_ancInit_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.extractMat_mul_ancInit_apply
+
+/-- info: 'QuantumInfo.ancProj_mul_extractMat_mul_ancInit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancProj_mul_extractMat_mul_ancInit
+
+/-- info: 'QuantumInfo.ancProj_mul_extractMat_mul_ancInit_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancProj_mul_extractMat_mul_ancInit_of_ne
+
+/-- info: 'QuantumInfo.extractMat_mul_ancInit_mul_synProj_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.extractMat_mul_ancInit_mul_synProj_zero
+
+/-- info: 'QuantumInfo.extractMat_conj_codeState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.extractMat_conj_codeState
+
+/-- info: 'QuantumInfo.ancProj_zero_mul_extractMat_conj_codeState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancProj_zero_mul_extractMat_conj_codeState
+
 end CSD.Tests.AxiomAudit
