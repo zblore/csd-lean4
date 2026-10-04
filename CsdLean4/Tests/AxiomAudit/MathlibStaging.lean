@@ -10229,4 +10229,63 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.catVerify_ne_zero_of_single_flip
 
+
+-- THE EXTENDED RECTANGLE (BACKLOG #96, split out of #62 (c3),
+-- Mathlib/QuantumInfo/ExtendedRectangle.lean, 2026-10-04). #62 (d1)'s correctedRun_eq_idealRun was
+-- deliberately abstract in the step, and said so, precisely so that this row could hand it a step
+-- built from a FAULTY RECOVERY. This file builds those steps - the Aharonov-Ben-Or /
+-- Aliferis-Gottesman-Preskill rectangle argument stripped to its algebra, with a correctable set D as
+-- a parameter and three properties each about a DIFFERENT PIECE: IsRecovery (the recovery removes
+-- every D-deviation from a code state), DeviatesBy (the one-fault bound on one piece), PropagatesD
+-- (transversality - the gadget carries a D-deviation to a D-deviation, which is what stops a leading
+-- fault being amplified). Hypotheses about the pieces, conclusions about the composite: nothing
+-- assumes the rectangle is correct in order to prove it.
+-- isCorrectedStep_exRec_leading is THE ROW'S INSTANCE FOR A FAULTY RECOVERY: the leading recovery is
+-- the faulty piece, and the rectangle is still a corrected step because transversality carries its
+-- error through the gadget and the trailing recovery removes it. isCorrectedStep_exRec_gadget is the
+-- same when the gadget is faulty, isCorrectedStep_exRec_of_good packages the two as "the single fault
+-- is anywhere but the trailing recovery", and deviatesBy_exRec_trailing is the honest statement for
+-- the remaining case: a trailing-recovery fault is NOT corrected here but handed on as a
+-- D-deviation, in exactly the form the next rectangle's IsRecovery consumes - the overlapping-
+-- rectangle convention stated rather than assumed away. correctedRun_eq_idealRun_of_good_exRec is the
+-- payoff WITH NO RESTATEMENT: #62 (d1)'s theorem applied verbatim to a circuit of these rectangles.
+-- NOT claimed: any fault COUNT or probability ("at most one fault" is a hypothesis, and the counting
+-- and probabilistic join are row 97); any value for D (no code is fixed, and in particular the link
+-- to row 95's weight-w propagation bound is NOT made - that needs a concrete D and recovery);
+-- correction of a trailing-recovery fault, or that the chain of overlapping rectangles closes (row
+-- 97); transversality (PropagatesD is assumed, not instantiated - the corpus has it concretely for the
+-- Steane transversal CNOT but it is not plugged in); any instance at a concrete code; and no
+-- positivity or trace condition on the maps. Foundational-triple throughout.
+/-- info: 'QuantumInfo.IsRecovery.apply_of_isCodeState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsRecovery.apply_of_isCodeState
+
+/-- info: 'QuantumInfo.isCorrectedStep_rect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isCorrectedStep_rect
+
+/-- info: 'QuantumInfo.isCorrectedStep_exRec_leading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isCorrectedStep_exRec_leading
+
+/-- info: 'QuantumInfo.isCorrectedStep_exRec_gadget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isCorrectedStep_exRec_gadget
+
+/-- info: 'QuantumInfo.isCorrectedStep_exRec_of_good' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isCorrectedStep_exRec_of_good
+
+/-- info: 'QuantumInfo.deviatesBy_exRec_trailing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.deviatesBy_exRec_trailing
+
+/-- info: 'QuantumInfo.correctedRun_eq_idealRun_of_good_exRec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.correctedRun_eq_idealRun_of_good_exRec
+
+/-- info: 'QuantumInfo.correctedRun_replicate_exRec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.correctedRun_replicate_exRec
+
 end CSD.Tests.AxiomAudit
