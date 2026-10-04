@@ -593,6 +593,7 @@ public import CsdLean4.CV.RecordInfluence
 public import CsdLean4.CV.RecordCausalOrder
 public import CsdLean4.CV.EntanglementDistance
 public import CsdLean4.CV.DispersionEarned
+public import CsdLean4.CV.TwoCones
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment
 public import CsdLean4.CV.EntangledWeights

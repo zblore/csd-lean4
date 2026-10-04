@@ -1878,4 +1878,90 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.arenaObs_kick_of_eventSpacelike
 
+
+-- THE TWO CONES (BACKLOG #98, out of #39, CV/TwoCones.lean, 2026-10-04): the corpus had two cone
+-- structures that were never related - the RECORD cone (graphBall plus record_lightcone's
+-- Lieb-Robinson bound, whose error is (2|S|t)^d/d!) and the KINEMATIC cone of DispersionEarned,
+-- where cone_preserving_is_boost earns the boost group and cone_symmetry_characterises_omega then
+-- selects omega = sqrt(p^2+m^2). Three facts about the starting point, read off the corpus: there
+-- was NO cone object anywhere (record_lightcone is a theorem name; DispersionEarned's "cone" is the
+-- pair of light RAYS entering as hypotheses), there was NO map from sites to space (graphBall is on
+-- Fin K with integer hops, and Fin K is read as a MOMENTUM label in Dispersion.lean versus a SITE
+-- label in SupportSpreading.lean), and the factorial bound needed was already in Mathlib as
+-- Stirling.le_factorial_stirling. forwardCone is the missing object; SiteEmbedding POSITS the
+-- spatial arrangement with a bound hop on an edge's length.
+-- exists_dist_le_of_mem_graphBall is the geometric containment by induction on hops, and
+-- mem_forwardCone_of_mem_graphBall is #98's statement: with a time step tau the n-step record cone
+-- embeds in the forward cone of slope hop/tau. Its contrapositive discharges record_lightcone's
+-- Disjoint hypothesis geometrically. pow_div_factorial_le turns Stirling into x^d/d! <= (e x/d)^d,
+-- so lr_bound_le_half_pow: once d >= lrVelocity*t the error is at most 2^-d, with
+-- lrVelocity = 4e|S| AS the slope in hops per unit time. record_influence_le_of_separated is the
+-- capstone: Euclidean separation in the embedding gives geometric suppression of the record.
+-- On the kinematic side forwardCone_eq_nonnegSpan makes the cone the non-negative span of its two
+-- null rays, so mapsTo_forwardCone_of_rays: fixing both rays preserves the cone; and
+-- forwardCone_rays_is_boost rescales x -> x/v to reach cone_preserving_is_boost, so a unimodular
+-- ray-preserving map of the slope-v cone IS a boost. slope_cone_symmetry_characterises_omega then
+-- shows the slope is IMMATERIAL to P4: any v > 0 forces omega = sqrt(p^2+m^2), so the
+-- Lieb-Robinson velocity may be the kinematic cone's slope without changing the dispersion.
+-- NOT claimed: any IDENTIFICATION of the two cones (that needs a continuum limit the corpus does
+-- not have), that lrVelocity is a limiting speed or a sharp constant, that the embedding or the
+-- time step is derived rather than posited, more than one spatial dimension on the kinematic side,
+-- or any position/momentum duality - the (E,p)/(t,x) reading is a relabelling, as
+-- DispersionEarned's own header says. Foundational-triple throughout.
+/-- info: 'CSD.CV.forwardCone_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.forwardCone_mono
+
+/-- info: 'CSD.CV.exists_dist_le_of_mem_graphBall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.exists_dist_le_of_mem_graphBall
+
+/-- info: 'CSD.CV.mem_forwardCone_of_mem_graphBall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mem_forwardCone_of_mem_graphBall
+
+/-- info: 'CSD.CV.notMem_forwardCone_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.notMem_forwardCone_of_lt
+
+/-- info: 'CSD.CV.disjoint_graphBall_of_notMem_forwardCone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.disjoint_graphBall_of_notMem_forwardCone
+
+/-- info: 'CSD.CV.disjoint_graphBall_of_separated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.disjoint_graphBall_of_separated
+
+/-- info: 'CSD.CV.pow_div_factorial_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pow_div_factorial_le
+
+/-- info: 'CSD.CV.lrVelocity_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lrVelocity_nonneg
+
+/-- info: 'CSD.CV.lr_bound_le_half_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lr_bound_le_half_pow
+
+/-- info: 'CSD.CV.record_influence_le_of_separated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.record_influence_le_of_separated
+
+/-- info: 'CSD.CV.forwardCone_eq_nonnegSpan' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.forwardCone_eq_nonnegSpan
+
+/-- info: 'CSD.CV.mapsTo_forwardCone_of_rays' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mapsTo_forwardCone_of_rays
+
+/-- info: 'CSD.CV.forwardCone_rays_is_boost' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.forwardCone_rays_is_boost
+
+/-- info: 'CSD.CV.slope_cone_symmetry_characterises_omega' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.slope_cone_symmetry_characterises_omega
+
 end CSD.Tests.AxiomAudit

@@ -270,6 +270,16 @@ the mode lattice), and no identification of the `(E, p)` rays with the
 dynamical Lieb-Robinson cone — the LR cone is an upper bound, not an exact
 invariant set.
 
+**The CONTAINMENT landed 2026-10-04 as BACKLOG #98** (`CV/TwoCones.lean`): the
+record cone embeds in a `forwardCone` whose slope is the Lieb-Robinson velocity
+`4e|S|`, the two cones' unimodular ray-preserving symmetry groups are shown to
+be the same group (`forwardCone_rays_is_boost`), and the slope turns out to be
+immaterial to this row's selection of `omega`
+(`slope_cone_symmetry_characterises_omega`). **The boundary above is unchanged**:
+that is a containment and a shared symmetry group, *not* an identification of
+the `(E, p)` rays with the dynamical cone, which still needs a continuum limit
+of the graph dynamics the corpus does not have.
+
 Effort: ~~**M**. Bounded, and it converts a sufficiency cluster into something
 with direction.~~ → **spent**; the sufficiency cluster now has its direction
 reversed at the shell.
