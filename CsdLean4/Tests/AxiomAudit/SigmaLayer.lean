@@ -4222,4 +4222,68 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.robust_fraction_tendsto_one
 
+-- BACKLOG #107: THE RECORD LAYER TRANSPORTS TO A DE-ISOLATION ARENA (out of #106's surviving
+-- route (2), RecordLayer/ArenaTransport.lean, 2026-10-04). Rows #102-#106 are statements about
+-- globalBasins of a ContextField under epistemicMeasure, while the pointer the corpus actually
+-- CONSTRUCTS (ShearDeIsolation.lean) carves its outcome sectors as PREIMAGES of those basins under a
+-- de-isolation propagator, on a fibred arena with its own preparation measure
+-- (readyPrep = epistemicMeasure (x) readyMeasure). #107 is the bridge, and it is ONE condition:
+-- ReadsEpistemic p mu Phi says the arena's preparation measure pushes forward along Phi to the
+-- epistemic measure. readsEpistemic_of_measurePreserving REDUCES THAT CONDITION TO A
+-- PREPARATION-PRESERVING FLOW: on a product arena Sigma x (ready register) with a probability measure
+-- on the register, a flow F preserving the preparation makes Prod.fst o F read the epistemic measure.
+-- That is exactly the shape readyPrep has and exactly the property a propagator is built to have, so
+-- the bridge is measure preservation rather than an extra posit about the arena. AND THE CORPUS'S OWN
+-- PREPARATION MEASURE IS THAT PRODUCT: readsEpistemic_readyPrep_of_measurePreserving specialises it to
+-- readyPrep = epistemicMeasure p (x) readyMeasure N, the ontic preparation of the shear arena, so for
+-- that arena the bridge is one hypothesis about the propagator and nothing else. What transports:
+-- measure_preimage_eq (any measurable record event has the same probability in the arena as in Sigma)
+-- and isProbabilityMeasure_of_readsEpistemic (the arena's preparation is a probability measure for
+-- free); measure_preimage_globalBasin (THE FLOW-CARVED SECTOR CARRIES THE BORN WEIGHT - the shape of
+-- shear_sector_born, from the pushforward alone); measure_preimage_robustBasin_ge (the robust part of
+-- a sector is at least rate - delta) and one_sub_le_robust_fraction_preimage (#106's robust fraction
+-- for the flow-carved sector); measure_preimage_recordString_ne_le (#103's relabelling bound for the
+-- arena, at most k*N*delta).
+-- NOT claimed: THAT THE SHEAR PROPAGATOR SATISFIES THIS - the corpus has the per-sector Born identity
+-- but not the pushforward identity, and readsEpistemic_of_measurePreserving reduces that gap to "the
+-- shear propagator preserves readyPrep", which is NOT proved here and sits upstream of ShearWitness
+-- item 1 (the propagator's Hamiltonian generation is stated, not formalised) - that is row 108; any
+-- dynamics - a pushforward says where the preparation goes, not how, and no generator, interaction
+-- Hamiltonian or time parameter appears, so the de-isolation obligation of DeIsolationFlow.lean is
+-- untouched; any widening of the transported scope - #103's bound stays robustness and not invariance,
+-- #106's fraction stays conditional on the realised outcome and claims no cell is large, and the write
+-- stays a translation of the record coordinate; and anything about varying the preparation - the
+-- transport is at a fixed base point p. Foundational-triple throughout.
+/-- info: 'CSD.RecordLayer.isProbabilityMeasure_of_readsEpistemic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isProbabilityMeasure_of_readsEpistemic
+
+/-- info: 'CSD.RecordLayer.measure_preimage_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_preimage_eq
+
+/-- info: 'CSD.RecordLayer.readsEpistemic_of_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readsEpistemic_of_measurePreserving
+
+/-- info: 'CSD.RecordLayer.readsEpistemic_readyPrep_of_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readsEpistemic_readyPrep_of_measurePreserving
+
+/-- info: 'CSD.RecordLayer.measure_preimage_globalBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_preimage_globalBasin
+
+/-- info: 'CSD.RecordLayer.measure_preimage_robustBasin_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_preimage_robustBasin_ge
+
+/-- info: 'CSD.RecordLayer.one_sub_le_robust_fraction_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_le_robust_fraction_preimage
+
+/-- info: 'CSD.RecordLayer.measure_preimage_recordString_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_preimage_recordString_ne_le
+
 end CSD.Tests.AxiomAudit

@@ -548,6 +548,7 @@ public import CsdLean4.RecordLayer.MacrostateStability
 public import CsdLean4.RecordLayer.BaseMotionStability
 public import CsdLean4.RecordLayer.PointerConcentration
 public import CsdLean4.RecordLayer.PointerDynamics
+public import CsdLean4.RecordLayer.ArenaTransport
 public import CsdLean4.RecordLayer.BasinFrequency
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.BargmannContinuity
 public import CsdLean4.RecordLayer.GlobalRecordClosure
