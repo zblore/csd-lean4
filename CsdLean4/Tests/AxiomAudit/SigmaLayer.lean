@@ -4176,4 +4176,50 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measure_robustBasin_ge_of_pointer
 
+
+-- DEPHASING CANNOT CONCENTRATE THE BORN WEIGHTS - AND WHAT IS TRUE INSTEAD (BACKLOG #106, out of
+-- #105, RecordLayer/PointerDynamics.lean, 2026-10-04). #106 was opened to find the dynamics that
+-- PRODUCES the nearness to a pointer ray that #105(a) needs, and its route (1) was an explicit
+-- dephasing estimate 1 - momentMap(Phi t p) i <= exp(-lambda t)(1 - momentMap p i). THAT ROUTE IS
+-- CLOSED NEGATIVELY HERE. Dephasing acts on a pure preparation by a phase per branch - that is what
+-- destroys interference - and a phase changes no amplitude's MODULUS. Since a record weight is a
+-- modulus squared and nothing else, momentMap_eq_of_norm_coord_eq: two unit preparations with the same
+-- coordinate moduli have the SAME moment coordinates, so globalBasin_prob_eq_of_norm_coord_eq: no
+-- basin's probability changes. Hence not_concentrates_of_norm_coord_eq: the defect 1 - momentMap p i
+-- is a FIXED POINT of every modulus-preserving map, so no contraction factor q < 1 exists at any rate
+-- or any time unless the weight was already 1. The route is not unfinished but misconceived.
+-- WHAT IS TRUE INSTEAD, with no concentration hypothesis at all: one_sub_le_robust_fraction - WITHIN
+-- the cell of outcome i, the fraction of microstates robust to a write of size delta is at least
+-- 1 - delta/rate. So "overwhelmingly many microstates share the record" holds for EVERY outcome once
+-- it is read as a statement about that outcome's own cell, and what it needs is delta small compared
+-- with the weight, not a dominant weight; robust_fraction_tendsto_one sends that to 1.
+-- NOT claimed: anything about maps that genuinely REWEIGHT the amplitudes (amplitude damping, or
+-- measurement with feedback) - they are not covered and not refuted, and physically they are
+-- re-preparations rather than decoherence; any withdrawal of #105(a), whose statement stands, only the
+-- expectation that decoherence supplies its hypothesis being corrected; that any CELL IS LARGE - the
+-- replacement is conditional on the outcome and for a genuine superposition no cell is large, which is
+-- correct physics; route (2) of #106, connecting the shear de-isolation pointer to the record layer
+-- (row 107, still inheriting the de-isolation obligation); any constructed dynamics at all - no flow,
+-- generator, environment or time parameter appears; and any apparatus other than the canonical
+-- standard-basis momentContext. Foundational-triple throughout.
+/-- info: 'CSD.RecordLayer.momentMap_eq_of_norm_coord_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.momentMap_eq_of_norm_coord_eq
+
+/-- info: 'CSD.RecordLayer.globalBasin_prob_eq_of_norm_coord_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_prob_eq_of_norm_coord_eq
+
+/-- info: 'CSD.RecordLayer.not_concentrates_of_norm_coord_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_concentrates_of_norm_coord_eq
+
+/-- info: 'CSD.RecordLayer.one_sub_le_robust_fraction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_le_robust_fraction
+
+/-- info: 'CSD.RecordLayer.robust_fraction_tendsto_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.robust_fraction_tendsto_one
+
 end CSD.Tests.AxiomAudit
