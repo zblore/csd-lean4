@@ -10148,4 +10148,85 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.ancProj_zero_mul_extractMat_conj_codeState
 
+
+-- THE ANCILLA LADDER: HOW ONE FAULT PROPAGATES, AND WHY THE CAT STATE IS NEEDED (BACKLOG #95, split
+-- out of #62 (c2), Mathlib/QuantumInfo/AncillaLadder.lean, 2026-10-04). #94 built syndrome extraction
+-- as a circuit and left one thing open in its header: the ancilla is ONE UNVERIFIED BLOCK, so nothing
+-- bounded how far a single ancilla fault spreads into the data. This file prices that, in the
+-- Heisenberg picture Clifford.lean already supports. cnotGate_conj_pauliOp propagates X from control
+-- to target and Z from TARGET TO CONTROL, so for a data->ancilla ladder the dangerous fault is a Z on
+-- the ancilla, and the two wirings differ exactly there. laddGate_conj_pauliOp telescopes the one-gate
+-- theorem along the ladder (the CNOTs commute - same target, controls off it - so the ladder is an
+-- involution and the induction closes), giving explicit X and Z label maps with NO PHASE.
+-- THE SHARED-TARGET COST: zLadd_bitAt_target_apply, with dataSupport_zLadd_bitAt_target and
+-- card_dataSupport_zLadd_bitAt_target - one Z fault on the shared ancilla comes out as a Z on the
+-- ancilla AND ON EVERY CONTROL, so the data-side support is exactly the control list and ONE FAULT
+-- BECOMES w DATA ERRORS. THE CAT-STATE COST: card_dataSupport_zLadd_singleton - with one control per
+-- ancilla qubit the same fault reaches exactly ONE data qubit. That contrast is the whole
+-- justification for the cat state. And the verification half: catVerify_eq_zero_iff (verification
+-- passes exactly on the constant strings) with not_isCat_add_bitAt and
+-- catVerify_ne_zero_of_single_flip - A SINGLE PREPARATION BIT-FLIP IS FLAGGED on any register of at
+-- least two qubits.
+-- NOT claimed: any fault MODEL - "one fault" means one Pauli at one place and the conclusions are
+-- SUPPORT statements, with no fault counting, no probabilities and no threshold (rows 96, 97); any
+-- cat-state PREPARATION circuit, superposition, or the X-basis measurement whose parity gives the
+-- check value - this is the propagation and flagging content, not a gadget; anything about X faults
+-- on the ancilla (they propagate away from the data) or faults elsewhere; that weight 4 is
+-- UNCORRECTABLE by a distance-3 code (only that the distance-3 guarantee does not apply); more than
+-- one ladder and one register; and no Steane instance - the theorems hold for an arbitrary control
+-- list, but the embedding of seven data qubits plus an ancilla block into one register is not written
+-- down. Foundational-triple except zLadd_apply_target (no axioms) and the five label-level results
+-- that need only propext + Quot.sound.
+/-- info: 'QuantumInfo.cnotFlip_comm_of_target' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.cnotFlip_comm_of_target
+
+/-- info: 'QuantumInfo.cnotGate_laddGate_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.cnotGate_laddGate_comm
+
+/-- info: 'QuantumInfo.laddGate_involutive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.laddGate_involutive
+
+/-- info: 'QuantumInfo.laddGate_conj_pauliOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.laddGate_conj_pauliOp
+
+/-- info: 'QuantumInfo.zLadd_apply_target' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.zLadd_apply_target
+
+/-- info: 'QuantumInfo.zLadd_bitAt_target_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.zLadd_bitAt_target_apply
+
+/-- info: 'QuantumInfo.dataSupport_zLadd_bitAt_target' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.dataSupport_zLadd_bitAt_target
+
+/-- info: 'QuantumInfo.card_dataSupport_zLadd_bitAt_target' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.card_dataSupport_zLadd_bitAt_target
+
+/-- info: 'QuantumInfo.zLadd_singleton_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.zLadd_singleton_apply
+
+/-- info: 'QuantumInfo.card_dataSupport_zLadd_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.card_dataSupport_zLadd_singleton
+
+/-- info: 'QuantumInfo.catVerify_eq_zero_iff' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.catVerify_eq_zero_iff
+
+/-- info: 'QuantumInfo.not_isCat_add_bitAt' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.not_isCat_add_bitAt
+
+/-- info: 'QuantumInfo.catVerify_ne_zero_of_single_flip' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.catVerify_ne_zero_of_single_flip
+
 end CSD.Tests.AxiomAudit

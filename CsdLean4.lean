@@ -66,6 +66,7 @@ public import CsdLean4.Mathlib.QuantumInfo.KnillLaflamme
 public import CsdLean4.Mathlib.QuantumInfo.StabilizerRecovery
 public import CsdLean4.Mathlib.QuantumInfo.TransversalClifford
 public import CsdLean4.Mathlib.QuantumInfo.SyndromeExtraction
+public import CsdLean4.Mathlib.QuantumInfo.AncillaLadder
 public import CsdLean4.Mathlib.QuantumInfo.Magic
 public import CsdLean4.Mathlib.QuantumInfo.MagicInjection
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTAngle
