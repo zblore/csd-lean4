@@ -10345,4 +10345,37 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.tendsto_one_sub_codeCapacityBound
 
+-- BACKLOG #109 (Cat-1 half): RELATIVE ENTROPY IS A LYAPUNOV FUNCTION FOR A MARKOV DYNAMICS
+-- (Mathlib/InformationTheory/KlDivArrow.lean, 2026-10-04). Mathlib has the three data-processing
+-- inequalities for klDiv; two consequences the arrow of time is usually stated as are absent, and
+-- this adds them. klDiv_map_measurableEquiv: A REVERSIBLE RELABELLING CHANGES NO DIVERGENCE -- the
+-- DPI applied along e and along e.symm gives equality, so an invertible step produces NOTHING and
+-- whatever a coarse-grained second law produces comes from the coarse-graining or the kernel.
+-- klDiv_comp_le_of_stationary: THE H-THEOREM -- if a Markov kernel fixes pi, the divergence of any
+-- law from pi is non-increasing under one step; no symmetry, double stochasticity or detailed
+-- balance is assumed, only stationarity of the reference. Measure.compIterate with
+-- antitone_klDiv_compIterate and klDiv_compIterate_le: the divergence is monotone along the WHOLE
+-- trajectory, which is what makes it an arrow rather than a one-step inequality.
+-- NOT claimed: any constructed kernel, and stationarity is a HYPOTHESIS (the H-theorem is vacuous
+-- for a kernel with no invariant measure); Shannon entropy -- klDiv q pi decreasing is equivalent to
+-- entropy increasing only for a UNIFORM pi on a finite space, through
+-- klDiv q uniform = log card - H q, an identity NOT proved here (it needs the Radon-Nikodym
+-- derivative of one finite-type measure against another); and anything off absolute continuity,
+-- where klDiv is infinite and both inequalities are true and empty. Foundational-triple.
+/-- info: 'InformationTheory.klDiv_map_measurableEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.klDiv_map_measurableEquiv
+
+/-- info: 'InformationTheory.klDiv_comp_le_of_stationary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.klDiv_comp_le_of_stationary
+
+/-- info: 'InformationTheory.antitone_klDiv_compIterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.antitone_klDiv_compIterate
+
+/-- info: 'InformationTheory.klDiv_compIterate_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.klDiv_compIterate_le
+
 end CSD.Tests.AxiomAudit

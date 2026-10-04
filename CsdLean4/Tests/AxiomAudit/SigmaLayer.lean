@@ -4286,4 +4286,74 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measure_preimage_recordString_ne_le
 
+-- BACKLOG #109: THE ARROW OF TIME AT THE MACROSCOPIC PROJECTION (RecordLayer/MacrostateArrow.lean,
+-- 2026-10-04, out of the records-to-spacetime scoping note's ST-3). The corpus's second law was
+-- Thermo's: coarse-grained entropy monotonicity FOR A SPECIFIC coarse-graining (pinching to a
+-- pointer basis). The scoping note said the specification wanted was pi' -- and #102 chose it,
+-- #103-#107 made it stable, so the second law can now be stated AT pi'. recordLaw c p is the
+-- macroscopic law, the pushforward of the ontic measure along the record string. macroKernel c p F
+-- is THE MACRO DYNAMICS INDUCED BY A FINE DYNAMICS with no extra input: the conditional law of the
+-- next macrostate given the present one (dirac on the null macrostates, so it is Markov on the
+-- nose), and macroStep_apply_mul / comp_recordLaw show one step of it sends the macroscopic law to
+-- the pushforward along pi' o F. comp_recordLaw_of_measurePreserving: LIOUVILLE FORCES THE REFERENCE
+-- LAW -- if the fine dynamics preserves the ontic measure then the BORN RECORD LAW IS STATIONARY for
+-- the induced macro kernel, so the arrow's reference is not posited but fixed by the invariance of
+-- the ontic measure. antitone_klDiv_recordLaw: THE SECOND LAW AT pi' -- every macroscopic law's
+-- relative entropy from the Born record law is non-increasing, monotonically in the number of steps,
+-- with no detailed balance, symmetry or double stochasticity assumed. comp_recordLaw_sigmaShift and
+-- antitone_klDiv_recordLaw_sigmaShift: the corpus's OWN dynamics is an instance, since a record
+-- write preserves the epistemic measure (#103). klDiv_recordLaw_sigmaShift: BUT THE WRITE ITSELF
+-- PRODUCES NOTHING -- #103's exact invariance of the macroscopic law makes the divergence from any
+-- reference unchanged however large the write, so the production is in the conditional step and never
+-- in the write.
+-- NOT claimed: any derivation of the kernel from an interaction -- macroKernel is the conditional law
+-- of pi' o F given pi', exists for any measurable F, and leaves DeIsolationFlow.lean's obligation and
+-- #108's readyPrep hypothesis untouched; SHANNON ENTROPY -- the arrow here is relative entropy from
+-- the Born record law, and turning it into "entropy increases" needs a UNIFORM reference, which the
+-- Born record law is not (for a genuine superposition it is the spread of Born weights); strict
+-- decrease, any rate, mixing or relaxation -- a kernel can be the identity; more than one
+-- preparation or one context family; and ANY ARROW ON THE EVENT ORDER -- the monotone quantity is a
+-- divergence between macroscopic laws under a step count, not a time orientation of
+-- CV/RecordCausalOrder.lean's causal order, and nothing here bears on a metric, a volume element or
+-- a continuum limit. Foundational-triple throughout.
+/-- info: 'CSD.RecordLayer.recordLaw_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordLaw_apply
+
+/-- info: 'CSD.RecordLayer.recordLaw_sigmaShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordLaw_sigmaShift
+
+/-- info: 'CSD.RecordLayer.klDiv_recordLaw_sigmaShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.klDiv_recordLaw_sigmaShift
+
+/-- info: 'CSD.RecordLayer.isMarkovKernel_macroKernel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isMarkovKernel_macroKernel
+
+/-- info: 'CSD.RecordLayer.macroStep_apply_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.macroStep_apply_mul
+
+/-- info: 'CSD.RecordLayer.comp_recordLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.comp_recordLaw
+
+/-- info: 'CSD.RecordLayer.comp_recordLaw_of_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.comp_recordLaw_of_measurePreserving
+
+/-- info: 'CSD.RecordLayer.antitone_klDiv_recordLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.antitone_klDiv_recordLaw
+
+/-- info: 'CSD.RecordLayer.comp_recordLaw_sigmaShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.comp_recordLaw_sigmaShift
+
+/-- info: 'CSD.RecordLayer.antitone_klDiv_recordLaw_sigmaShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.antitone_klDiv_recordLaw_sigmaShift
+
 end CSD.Tests.AxiomAudit
