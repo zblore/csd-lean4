@@ -4111,4 +4111,69 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measure_exists_recordString_ne_flow_le
 
+
+-- WHERE THE OVERWHELMING MAJORITY COMES FROM (BACKLOG #105(a), out of #103,
+-- RecordLayer/PointerConcentration.lean, 2026-10-04): #103 proved the majority half of what makes
+-- #102's record string macroscopic, but CONDITIONALLY - measure_robustBasin_ge_one_sub needs
+-- 1 - eps <= rate p i - and recorded why the hypothesis cannot be dropped: globalBasin_prob makes a
+-- cell's measure EXACTLY its Born weight, so no cell is overwhelming unless the weights are. This
+-- file supplies the hypothesis for the canonical apparatus and gives it a geometric reading.
+-- offPointer is the component of the preparation orthogonal to the i-th pointer ray, and
+-- norm_offPointer_sq says the defect IS the missing Born weight. So
+-- one_sub_le_momentMap_of_near_pointer: a preparation within sqrt(eps) of the pointer ray has rate
+-- at least 1 - eps there. Feeding that into #103 gives
+-- measure_robustBasin_ge_of_near_pointer (and its distance form
+-- measure_robustBasin_ge_of_dist_le): NEAR A POINTER RAY THE RECORD MACROSTATE IS BOTH OVERWHELMING
+-- AND ROBUST - the cell of outcome i, cut to the microstates robust to a write of size delta,
+-- carries all but eps+delta. measure_map_recordMacro_ge_of_near_pointer says the same in #102's
+-- MACROSCOPIC LAW: all but eps of its mass sits on one record string. offPointer_single and
+-- measure_robustBasin_ge_of_pointer are the non-vacuity check at the pointer state itself (eps = 0,
+-- cell carries 1 - delta). NOT claimed: that anything DRIVES the base to a pointer ray (that is
+-- row 106, the hard half of #105); any relation to fs_chebyshev_concentration, which concentrates a
+-- BASE statistic over the projective space and is a different statement about a different object;
+-- any apparatus other than the canonical standard-basis momentContext (the unitary transport is not
+-- constructed); that record macrostates are GENERICALLY overwhelming - for a generic superposition
+-- no cell is, and the bound is vacuous once r^2 + delta >= 1, which is correct physics; or anything
+-- about a joint cell of two contexts, where #102's contextuality warning applies.
+-- Foundational-triple throughout.
+/-- info: 'CSD.RecordLayer.offPointer_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.offPointer_apply
+
+/-- info: 'CSD.RecordLayer.norm_offPointer_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_offPointer_sq
+
+/-- info: 'CSD.RecordLayer.offPointer_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.offPointer_single
+
+/-- info: 'CSD.RecordLayer.momentMap_mk_eq_coord_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.momentMap_mk_eq_coord_sq
+
+/-- info: 'CSD.RecordLayer.one_sub_le_momentMap_of_near_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_le_momentMap_of_near_pointer
+
+/-- info: 'CSD.RecordLayer.measure_robustBasin_ge_of_near_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_robustBasin_ge_of_near_pointer
+
+/-- info: 'CSD.RecordLayer.measure_robustBasin_ge_of_dist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_robustBasin_ge_of_dist_le
+
+/-- info: 'CSD.RecordLayer.measure_globalBasin_ge_of_near_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_globalBasin_ge_of_near_pointer
+
+/-- info: 'CSD.RecordLayer.measure_map_recordMacro_ge_of_near_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_map_recordMacro_ge_of_near_pointer
+
+/-- info: 'CSD.RecordLayer.measure_robustBasin_ge_of_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_robustBasin_ge_of_pointer
+
 end CSD.Tests.AxiomAudit
