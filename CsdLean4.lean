@@ -552,6 +552,7 @@ public import CsdLean4.RecordLayer.ArenaTransport
 public import CsdLean4.RecordLayer.MacrostateArrow
 public import CsdLean4.RecordLayer.BasinFrequency
 public import CsdLean4.Mathlib.InformationTheory.KlDivArrow
+public import CsdLean4.Mathlib.InformationTheory.FiniteEntropy
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.BargmannContinuity
 public import CsdLean4.RecordLayer.GlobalRecordClosure
 public import CsdLean4.RecordLayer.MeasurementConstraints

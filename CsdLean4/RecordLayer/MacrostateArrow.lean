@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.RecordLayer.ArenaTransport
 public import CsdLean4.Mathlib.InformationTheory.KlDivArrow
+public import CsdLean4.Mathlib.InformationTheory.FiniteEntropy
 
 /-!
 # The arrow of time at the macroscopic projection
@@ -40,7 +41,11 @@ the second law can be stated *at* `π′`. That is what this file does.
   macro kernel has the Born record law stationary and carries the arrow;
 * ★★ `klDiv_recordLaw_sigmaShift` — **but the write itself produces nothing.** #103's exact invariance
   of the macroscopic law says the divergence from any reference is *unchanged* by a write, however
-  large. The production is in the conditional step, never in the write.
+  large. The production is in the conditional step, never in the write;
+* ★★ `measureEntropy_recordLaw_le` (added with #110) — **the macroscopic entropy of a record is at
+  most its capacity**: a `k`-context record string over `N + 1` codes carries at most
+  `k · log (N + 1)` of Shannon entropy, whatever the preparation and whatever the context family.
+  Unconditional, and the only *entropy* statement available here — see the scope note.
 
 ## Honest scope
 
@@ -50,10 +55,13 @@ dynamics. The de-isolation obligation of [`DeIsolationFlow.lean`](DeIsolationFlo
 `readyPrep` hypothesis are untouched.
 
 ⚠️ **Divergence, not Shannon entropy.** The arrow here is "relative entropy from the Born record law
-decreases", which is the modern form. Turning it into "Shannon entropy increases" needs
-`klDiv q uniform = log (card) − H q` and a *uniform* reference, and the Born record law is not uniform
-— for a genuine superposition it is the spread of Born weights. Neither the identity nor the uniform
-case is claimed; see `Mathlib/InformationTheory/KlDivArrow.lean`'s scope note.
+decreases", which is the modern form. #110 supplied the missing identity
+(`klDiv μ uniform = ofReal (log card − measureEntropy μ)`), but turning the arrow into "Shannon
+entropy increases" *also* needs the reference law to be **uniform**, and the Born record law is not —
+for a genuine superposition it is the spread of Born weights. So the entropy form of the H-theorem is
+proved in `Mathlib/InformationTheory/FiniteEntropy.lean` for a uniform-preserving kernel and is **not**
+claimed for the record dynamics; what #110 buys here is the unconditional capacity bound
+`measureEntropy_recordLaw_le`.
 
 ⚠️ **Monotone is not strictly decreasing, and no rate is claimed.** Nothing here says the divergence
 reaches `0`, or that it decreases at all at any particular step: a kernel can be the identity. Mixing,
@@ -69,9 +77,10 @@ a metric, a volume element or a continuum limit.
 
 References: [`records-to-spacetime-scoping.md`](../../specs/records-to-spacetime-scoping.md) `ST-3`;
 [`future-work.md`](../../specs/future-work.md); `Mathlib/InformationTheory/KlDivArrow.lean`,
+`Mathlib/InformationTheory/FiniteEntropy.lean` (#110),
 `MacrostateStability.lean` (#103), `RecordMacrostate.lean` (#102), `MacroProjection.lean` (#99),
 `ArenaTransport.lean` (#107), `Thermo/FreeEnergy.lean` (`vonNeumannEntropy_le_pinching`, the pinching
-second law this stands beside); `specs/BACKLOG.md` #109, #107, #103, #102, #100, #99.
+second law this stands beside); `specs/BACKLOG.md` #110, #109, #107, #103, #102, #100, #99.
 -/
 
 @[expose] public section
@@ -271,6 +280,23 @@ theorem antitone_klDiv_recordLaw_sigmaShift (c : Fin k → ContextField N) (δ :
     Antitone fun n : ℕ =>
       klDiv (q.compIterate (macroKernel c p (sigmaShift δ)) n) (recordLaw c p) :=
   antitone_klDiv_recordLaw c p (measurePreserving_sigmaShift δ p) q
+
+/-! ### The capacity of a record -/
+
+/-- ★★ **The macroscopic entropy of a record is at most its capacity.** A `k`-context record string
+over `N + 1` codes carries at most `k · log (N + 1)` of Shannon entropy — whatever the preparation,
+and whatever the context family.
+
+This is #110's maximum-entropy theorem at `π′`, and it is the *only* unconditional entropy statement
+available here: the arrow of this file is in divergence form, because the Born record law it is
+measured from is not uniform. -/
+theorem measureEntropy_recordLaw_le (c : Fin k → ContextField N) (p : LF4.CPN N) :
+    measureEntropy (recordLaw c p) ≤ k * Real.log (N + 1) := by
+  have h := measureEntropy_le_log_card (recordLaw c p)
+  rw [show Fintype.card (Fin k → Fin (N + 1)) = (N + 1) ^ k from by simp, Nat.cast_pow,
+    Real.log_pow] at h
+  push_cast at h
+  exact h
 
 end CSD.RecordLayer
 

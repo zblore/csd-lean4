@@ -10378,4 +10378,59 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms InformationTheory.klDiv_compIterate_le
 
+-- BACKLOG #110: SHANNON ENTROPY ON A FINITE TYPE, AND THE H-THEOREM IN ENTROPY FORM
+-- (Mathlib/InformationTheory/FiniteEntropy.lean, 2026-10-05, the residue #109 named). Mathlib has
+-- the Kullback-Leibler divergence but NO Shannon entropy of a measure - not for a finite type, not
+-- anywhere - so #109's arrow could only be stated in divergence form. measureEntropy mu =
+-- sum over x of negMulLog (mu.real {x}) supplies it. The work is the Radon-Nikodym computation:
+-- withDensity_uniformOn_univ, the density of a measure against the uniform law is card * mu{x},
+-- which holds for ANY measure on a finite type and not only a probability measure (and so do
+-- absolutelyContinuous_uniformOn_univ and llr_uniformOn_univ_ae, hence the log-likelihood ratio is
+-- log (card * mu{x}) almost everywhere). Then integral_llr_uniformOn_univ and klDiv_uniformOn_univ:
+-- THE IDENTITY klDiv mu uniform = ofReal (log card - measureEntropy mu), clean because both
+-- correction terms in klDiv's definition vanish for probability measures.
+-- measureEntropy_le_log_card: THE MAXIMUM-ENTROPY THEOREM, Gibbs' inequality read through the
+-- identity, and measureEntropy_uniformOn_univ shows the uniform law attains it so the bound is
+-- tight. monotone_measureEntropy_compIterate: THE H-THEOREM IN ENTROPY FORM - under a Markov kernel
+-- that FIXES THE UNIFORM LAW, Shannon entropy is non-decreasing along the whole trajectory; it is
+-- #109's divergence form composed with the identity, with the maximum-entropy bound licensing the
+-- removal of ENNReal.ofReal.
+-- NOT claimed: anything for a non-uniform reference - entropy increases along a kernel fixing the
+-- UNIFORM law, and for any other stationary law what is monotone is the divergence from that law
+-- (#109) and not the entropy, the two statements coinciding only here; anything beyond a finite type
+-- - differential entropy, countable types with infinite entropy, and the conditional and joint
+-- entropies are untouched; and any convergence or rate - monotone is not strictly increasing and a
+-- kernel can be the identity. Foundational-triple.
+/-- info: 'InformationTheory.measureEntropy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.measureEntropy
+
+/-- info: 'InformationTheory.withDensity_uniformOn_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.withDensity_uniformOn_univ
+
+/-- info: 'InformationTheory.llr_uniformOn_univ_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.llr_uniformOn_univ_ae
+
+/-- info: 'InformationTheory.integral_llr_uniformOn_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.integral_llr_uniformOn_univ
+
+/-- info: 'InformationTheory.klDiv_uniformOn_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.klDiv_uniformOn_univ
+
+/-- info: 'InformationTheory.measureEntropy_le_log_card' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.measureEntropy_le_log_card
+
+/-- info: 'InformationTheory.measureEntropy_uniformOn_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.measureEntropy_uniformOn_univ
+
+/-- info: 'InformationTheory.monotone_measureEntropy_compIterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.monotone_measureEntropy_compIterate
+
 end CSD.Tests.AxiomAudit

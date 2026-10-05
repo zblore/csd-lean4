@@ -4356,4 +4356,16 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.antitone_klDiv_recordLaw_sigmaShift
 
+-- BACKLOG #110 (the record-layer corollary): THE CAPACITY OF A RECORD
+-- (RecordLayer/MacrostateArrow.lean, 2026-10-05). #110's maximum-entropy theorem at pi':
+-- measureEntropy_recordLaw_le - a k-context record string over N+1 codes carries at most
+-- k * log (N+1) of Shannon entropy, whatever the preparation and whatever the context family.
+-- Unconditional, and the ONLY entropy statement available for the record layer: #109's arrow is in
+-- DIVERGENCE form because the Born record law it is measured from is NOT UNIFORM, so the entropy
+-- form of the H-theorem (monotone_measureEntropy_compIterate) is proved for a uniform-preserving
+-- kernel in the Cat-1 file and is NOT claimed for the record dynamics. Foundational-triple.
+/-- info: 'CSD.RecordLayer.measureEntropy_recordLaw_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measureEntropy_recordLaw_le
+
 end CSD.Tests.AxiomAudit
