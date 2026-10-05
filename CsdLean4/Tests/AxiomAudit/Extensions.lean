@@ -1964,4 +1964,101 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.slope_cone_symmetry_characterises_omega
 
+-- BACKLOG #111: THE LONGEST CAUSAL CHAIN IS A LORENTZIAN DISTANCE ON RECORD EVENTS
+-- (CV/CausalDistance.lean, 2026-10-05, the first of the two geometry bricks priced in the
+-- records-to-spacetime answer of 2026-10-04). RecordCausalOrder.lean gives a partial order on
+-- record events and #98 gives a cone with a boost symmetry; NEITHER GIVES A DISTANCE - before this
+-- file the event order carried no interval, no chain length and no numerical separation at all.
+-- strictPrecedes E is strict causal precedence as a relation chains run on, transitive because the
+-- order is ANTISYMMETRIC (isTrans_strictPrecedes: a strict step cannot return). causalDist E e1 e2
+-- is the LENGTH OF THE LONGEST CAUSAL CHAIN, the supremum of chainLengths, well defined because
+-- chainLengths_le / bddAbove_chainLengths: a chain's events are DISTINCT (a strict chain cannot
+-- repeat) and all lie between the endpoints in time, so there are at most
+-- 2^K * (e2.time + 1 - e1.time) of them -- causalDist_le states that bound, and the finiteness
+-- doing the work is THE ARENA'S, not an assumption about the order. causalDist_add_le: THE REVERSE
+-- TRIANGLE INEQUALITY, causalDist e1 e2 + causalDist e2 e3 <= causalDist e1 e3 for e1 <= e2 <= e3 --
+-- the signature of LORENTZIAN geometry and the discrete twin paradox, since a path by way of e2 is
+-- never longer than the longest path, so the longest chain is the STRAIGHT one (a metric satisfies
+-- the inequality the other way round); proved by chain concatenation, the longest chains being
+-- attained (causalDist_mem_chainLengths, Nat.sSup_mem on a bounded nonempty set) and smashed.
+-- causalDist_pos_iff: the distance is POSITIVE EXACTLY ON THE STRICTLY CAUSALLY RELATED PAIRS, so it
+-- vanishes exactly on the spacelike-or-equal ones, with causalDist_self and
+-- causalDist_eq_zero_of_not_causalPrecedes the two ways of vanishing; and
+-- causalDist_le_of_causalPrecedes_right, monotonicity into the causal future.
+-- NOT claimed: THE METRIC - order plus LENGTH is not order plus VOLUME, and the classical route from
+-- a causal order to a Lorentzian metric (Hawking-King-McCarthy and Malament for manifolds, "order
+-- plus number equals geometry" for causal sets) fixes the conformal factor from a VOLUME ELEMENT,
+-- which this corpus does not have on the event order (its measure lives on Sigma and weights events
+-- by Born probability, which is not a spacetime volume); any EMBEDDING - that a discrete order with
+-- a volume is approximated by a Lorentzian manifold is a PROGRAMME (sprinkling; the Hauptvermutung
+-- is open) and no statement says the event order is a spacetime or that causalDist approximates a
+-- proper time; anything independent of the coupling graph - everything is relative to a fixed E,
+-- exactly as ST-1 is; and any continuum limit, curvature or dimension estimator. Note that
+-- causalDist is 0 on unrelated pairs by construction (sSup of the empty set is 0 in the naturals),
+-- the usual convention for a Lorentzian distance, so it is NOT a metric and its vanishing does not
+-- imply equality - that is causalDist_pos_iff's content and not a defect. Foundational-triple.
+/-- info: 'CSD.CV.mem_strictPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mem_strictPrecedes
+
+/-- info: 'CSD.CV.causalPrecedes_of_strictPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalPrecedes_of_strictPrecedes
+
+/-- info: 'CSD.CV.ne_of_strictPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ne_of_strictPrecedes
+
+/-- info: 'CSD.CV.isTrans_strictPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isTrans_strictPrecedes
+
+/-- info: 'CSD.CV.chainLengths_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainLengths_le
+
+/-- info: 'CSD.CV.bddAbove_chainLengths' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.bddAbove_chainLengths
+
+/-- info: 'CSD.CV.causalDist_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalDist_le
+
+/-- info: 'CSD.CV.zero_mem_chainLengths' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.zero_mem_chainLengths
+
+/-- info: 'CSD.CV.one_mem_chainLengths' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.one_mem_chainLengths
+
+/-- info: 'CSD.CV.nonempty_chainLengths_of_causalPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.nonempty_chainLengths_of_causalPrecedes
+
+/-- info: 'CSD.CV.causalDist_mem_chainLengths' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalDist_mem_chainLengths
+
+/-- info: 'CSD.CV.causalDist_eq_zero_of_not_causalPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalDist_eq_zero_of_not_causalPrecedes
+
+/-- info: 'CSD.CV.causalDist_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalDist_self
+
+/-- info: 'CSD.CV.causalDist_pos_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalDist_pos_iff
+
+/-- info: 'CSD.CV.causalDist_add_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalDist_add_le
+
+/-- info: 'CSD.CV.causalDist_le_of_causalPrecedes_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.causalDist_le_of_causalPrecedes_right
+
 end CSD.Tests.AxiomAudit
