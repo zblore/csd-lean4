@@ -550,6 +550,7 @@ public import CsdLean4.RecordLayer.PointerConcentration
 public import CsdLean4.RecordLayer.PointerDynamics
 public import CsdLean4.RecordLayer.ArenaTransport
 public import CsdLean4.RecordLayer.MacrostateArrow
+public import CsdLean4.RecordLayer.ShearArenaBridge
 public import CsdLean4.RecordLayer.BasinFrequency
 public import CsdLean4.Mathlib.InformationTheory.KlDivArrow
 public import CsdLean4.Mathlib.InformationTheory.FiniteEntropy

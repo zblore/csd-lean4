@@ -4368,4 +4368,74 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measureEntropy_recordLaw_le
 
+-- BACKLOG #108: THE SHEAR PROPAGATOR READS THE EPISTEMIC MEASURE - AND WHY, WHICH IS NOT WHAT THE
+-- ROW RECORDED (RecordLayer/ShearArenaBridge.lean, 2026-10-05, out of #107). #107 reduced the
+-- record-layer-to-arena bridge to one hypothesis and recorded route (i): build the shear propagator
+-- and prove it PRESERVES readyPrep. THAT ROUTE IS REFUTED HERE, and the bridge holds anyway.
+-- not_measurePreserving_shearEvolve_readyPrep: a record IS the pointer leaving the ready arc for a
+-- pointer arc, shearProtocol's own ready_disjoint_pointer says the arcs are disjoint, so the ready
+-- region has readyPrep measure 1 while its preimage has measure 0. Route (i) was not unfinished; it
+-- asked for the negation of the construction's purpose. (shear_measurePreserving is no
+-- counterexample: it preserves mu (x) volume, the UNCONDITIONED Haar measure on the register, and
+-- readyPrep conditions on the ready arc - conditioning is what the shift destroys.)
+-- WHAT IS TRUE INSTEAD, and it discharges #108: readsEpistemic_of_fst_eq - A PROPAGATOR THAT DOES
+-- NOT MOVE THE SYSTEM READS THE EPISTEMIC MEASURE, with no measure preservation and no hypothesis on
+-- the register; readsEpistemic_readyPrep_fst and readsEpistemic_shearEvolve - the shear propagator
+-- satisfies it at every pair of times, because the shear moves only the pointer (fst_shearEvolve).
+-- So #107's transports all apply to the constructed propagator: readyPrep_preimage_globalBasin (the
+-- transported basin carries the Born weight), readyPrep_outcomeSector_eq_preimage_globalBasin (AND
+-- IT IS THE SAME WEIGHT THE FLOW-CARVED OUTCOME SECTOR CARRIES, via shear_sector_born, outcome by
+-- outcome), readyPrep_recordString_ne_le (#103's relabelling bound on the shear arena, at most
+-- k*N*delta) and one_sub_le_robust_fraction_readyPrep (#106's robust fraction there).
+-- THE PRICE, which the corpus already knows: the property that discharges the bridge - NO
+-- BACK-REACTION ON THE SYSTEM FACTOR - is the same one shear_base_marginal_unchanged identifies as
+-- the witness's limitation, namely that the shear gives repeatability but NOT the Lueders update. So
+-- #108 is discharged BECAUSE the witness does not collapse the state, and a propagator that did
+-- disturb the system would need #107's other sufficient condition or a new argument.
+-- NOT claimed: equality of SETS - readyPrep_outcomeSector_eq_preimage_globalBasin is equality of
+-- MEASURES, not of sets and not almost-everywhere agreement, which would need the injectivity of the
+-- arc labelling; any progress on the de-isolation obligation - ShearWitness item 1 (the propagator's
+-- Hamiltonian generation is stated, not formalised) is upstream of everything here and nothing makes
+-- the shear propagator a Hamiltonian flow; and more than one preparation or any context other than
+-- the canonical standard-basis momentContext selector. Foundational-triple throughout.
+/-- info: 'CSD.RecordLayer.readsEpistemic_of_fst_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readsEpistemic_of_fst_eq
+
+/-- info: 'CSD.RecordLayer.fst_shearEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fst_shearEvolve
+
+/-- info: 'CSD.RecordLayer.readsEpistemic_readyPrep_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readsEpistemic_readyPrep_fst
+
+/-- info: 'CSD.RecordLayer.readsEpistemic_shearEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readsEpistemic_shearEvolve
+
+/-- info: 'CSD.RecordLayer.readyPrep_readyRegion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readyPrep_readyRegion
+
+/-- info: 'CSD.RecordLayer.not_measurePreserving_shearEvolve_readyPrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_measurePreserving_shearEvolve_readyPrep
+
+/-- info: 'CSD.RecordLayer.readyPrep_preimage_globalBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readyPrep_preimage_globalBasin
+
+/-- info: 'CSD.RecordLayer.readyPrep_outcomeSector_eq_preimage_globalBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readyPrep_outcomeSector_eq_preimage_globalBasin
+
+/-- info: 'CSD.RecordLayer.readyPrep_recordString_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readyPrep_recordString_ne_le
+
+/-- info: 'CSD.RecordLayer.one_sub_le_robust_fraction_readyPrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_le_robust_fraction_readyPrep
+
 end CSD.Tests.AxiomAudit
