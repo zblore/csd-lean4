@@ -10663,4 +10663,52 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.SU2.star_groupCommutator
 
+-- BACKLOG #115 (the ERROR half; the length half is NEW ROW 117): WHY THE SOLOVAY-KITAEV ERROR
+-- CONTRACTS AT EXPONENT 3/2 (Mathlib/QuantumInfo/SolovayKitaevStep.lean, 2026-10-06, the fourth
+-- brick of #74's split). #112 contracts a commutator, #114 produces one, #113 supplies the base
+-- case; this is the step that makes them a recursion, and the whole content is WHY THE EXPONENT IS
+-- 3/2 AND NOT 1. Replacing each factor of a commutator by a delta-approximation gives the naive
+-- bound 4 delta (#112's norm_groupCommutator_sub_groupCommutator_le), which CONTRACTS NOTHING since
+-- the input error was already delta. The gain is that the commutator is BILINEAR IN THE DEVIATIONS
+-- FROM THE IDENTITY: norm_mul_sub_mul_le' exposes the pairing (AB - A'B' = (A-A')B + A'(B-B')), and
+-- norm_groupCommutator_sub_le is THE SHARP ESTIMATE, ||[V,W] - [V',W']|| <= 4 a delta (1 + a) with a
+-- bounding all four distances to the identity - smaller than #112's by a FACTOR a, and that factor
+-- is the whole algorithm. norm_groupCommutator_sub_le_sqrt is the same at #114's factor size
+-- a = sqrt 2 * sqrt eps, the sqrt(eps)*delta shape, which at delta = eps is eps^{3/2}.
+-- skError_le_rpow is the error bookkeeping in CLOSED FORM: a sequence with
+-- eps_{n+1} <= C eps_n^{3/2} satisfies C^2 eps_n <= (C^2 eps_0)^{(3/2)^n}, by induction through
+-- Real.rpow - DOUBLY exponentially small in the number of levels, which is what makes the gate count
+-- polylogarithmic, and the inequality #116 takes logarithms of.
+-- NOT claimed: THE LENGTH HALF, which the row also asked for and which is NOT a formality - it needs
+-- a notion of WORD LENGTH in the generating set, and the corpus has none (cliffordT is
+-- Submonoid.closure {H, T}, matrices with no length function, and #113's net is a Finset of matrices
+-- rather than of words); that is NEW ROW 117. A FINDING recorded with it: the quoted exponent
+-- log 5 / log(3/2) ~ 3.97 is a COST-MODEL CHOICE, not a mathematical fact about this gate set. The
+-- recursion uses the inverses of its two factors, and over the letters {H, T} a shortest word for
+-- T inverse has length 7 (T inverse = T^7), so the per-level factor is 1+1+7+7+1 = 17 and the
+-- exponent is log 17 / log(3/2) ~ 6.99; counting T inverse as one letter restores 5 and 3.97, and
+-- BOTH GENERATE THE SAME SUBMONOID (T^7 is already in closure {H, T}), so the choice costs no
+-- density and changes only the length function. #116 must say which cost model it means.
+-- Also not claimed: any constructed approximant - skError_le_rpow is a statement about real
+-- sequences, saying what the recursion's error does GIVEN the recurrence. Foundational-triple.
+/-- info: 'CSD.SolovayKitaev.norm_mul_sub_mul_le'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SolovayKitaev.norm_mul_sub_mul_le'
+
+/-- info: 'CSD.SolovayKitaev.norm_mul_sub_mul_comm_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SolovayKitaev.norm_mul_sub_mul_comm_sub_le
+
+/-- info: 'CSD.SolovayKitaev.norm_groupCommutator_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SolovayKitaev.norm_groupCommutator_sub_le
+
+/-- info: 'CSD.SolovayKitaev.norm_groupCommutator_sub_le_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SolovayKitaev.norm_groupCommutator_sub_le_sqrt
+
+/-- info: 'CSD.SolovayKitaev.skError_le_rpow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SolovayKitaev.skError_le_rpow
+
 end CSD.Tests.AxiomAudit
