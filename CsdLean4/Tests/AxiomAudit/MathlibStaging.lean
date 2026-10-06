@@ -10433,4 +10433,54 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms InformationTheory.monotone_measureEntropy_compIterate
 
+-- BACKLOG #112: THE GROUP-COMMUTATOR CONTRACTION, SOLOVAY-KITAEV'S SHRINKING LEMMA
+-- (Mathlib/Analysis/CStarAlgebra/GroupCommutator.lean, 2026-10-06, the first brick of #74's split).
+-- Two gates near the identity have a group commutator QUADRATICALLY nearer it, and that quadratic
+-- gain is the entire engine of the Solovay-Kitaev recursion. norm_mul_sub_mul_comm_le holds in ANY
+-- normed ring: ||VW - WV|| <= 2||V-1||*||W-1||, the whole content being the identity
+-- VW - WV = (V-1)(W-1) - (W-1)(V-1), so the commutator sees only how far the factors are from 1.
+-- CStarRing.norm_groupCommutator_sub_one_le is the unitary form,
+-- ||V W V* W* - 1|| <= 2||V-1||*||W-1||, where unitarity enters exactly twice: to write
+-- V W V* W* - 1 = (VW - WV)(V* W*) (groupCommutator_sub_one_eq) and to drop the trailing unitary
+-- from the norm. CStarRing.norm_groupCommutator_sub_one_le_two_mul_sq is the form the recursion
+-- uses (both factors within delta gives 2 delta^2) and
+-- CStarRing.norm_groupCommutator_sub_one_lt is THE CONTRACTION: for 0 < delta < 1/2 the commutator
+-- is STRICTLY closer to 1 than its factors were. The error budget comes with it:
+-- CStarRing.norm_mul_sub_mul_le (a product of unitaries is stable) and
+-- CStarRing.norm_groupCommutator_sub_groupCommutator_le (the commutator of two eps-approximations
+-- is a 4 eps-approximation of the commutator, the adjoints moving by norm_star).
+-- NOT claimed: any gate count or algorithm - this is the shrinking lemma alone, with the recursion
+-- (#115), the eps-net (#113), the commutator decomposition (#114) and the O(log^c(1/eps)) bound
+-- (#116) all separate rows; optimality of the constants 2 and 4, which are what the telescoping
+-- gives and which the Solovay-Kitaev exponent does not depend on; and anything at delta >= 1/2,
+-- where the bound is weaker than its input and says nothing - which is why the algorithm needs a
+-- base accuracy from the net before it can recurse. Foundational-triple.
+/-- info: 'norm_mul_sub_mul_comm_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_mul_sub_mul_comm_le
+
+/-- info: 'CStarRing.groupCommutator_sub_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CStarRing.groupCommutator_sub_one_eq
+
+/-- info: 'CStarRing.norm_groupCommutator_sub_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CStarRing.norm_groupCommutator_sub_one_le
+
+/-- info: 'CStarRing.norm_groupCommutator_sub_one_le_two_mul_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CStarRing.norm_groupCommutator_sub_one_le_two_mul_sq
+
+/-- info: 'CStarRing.norm_groupCommutator_sub_one_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CStarRing.norm_groupCommutator_sub_one_lt
+
+/-- info: 'CStarRing.norm_mul_sub_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CStarRing.norm_mul_sub_mul_le
+
+/-- info: 'CStarRing.norm_groupCommutator_sub_groupCommutator_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CStarRing.norm_groupCommutator_sub_groupCommutator_le
+
 end CSD.Tests.AxiomAudit
