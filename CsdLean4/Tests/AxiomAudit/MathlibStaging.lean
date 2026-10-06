@@ -10711,4 +10711,62 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SolovayKitaev.skError_le_rpow
 
+-- BACKLOG #117: CLIFFORD+T AS WORDS - THE COST MODEL AND THE 5^n HALF OF SOLOVAY-KITAEV
+-- (Mathlib/QuantumInfo/CliffordTWords.lean, 2026-10-06, out of #115's split). #115 proved the error
+-- half and found the length half was blocked on missing infrastructure: cliffordT is
+-- Submonoid.closure {H, T}, a set of MATRICES with no notion of how many gates an element costs, and
+-- #113's net is a Finset of matrices rather than of words. This file supplies the cost structure and
+-- proves the length recursion.
+-- THE COST MODEL IS STATED RATHER THAN INHERITED. The letters are H, T and T inverse - THREE, not
+-- two - because #115 found the quoted exponent log 5 / log(3/2) ~ 3.97 to be a COST-MODEL CHOICE:
+-- the recursion inverts its two factors, and over {H, T} alone a shortest word for T inverse is T^7,
+-- so a level costs 1+1+7+7+1 = 17 and the exponent is log 17 / log(3/2) ~ 6.99.
+-- mem_cliffordT_iff_exists_word shows the price of the three-letter model is NOTHING: the values of
+-- words are EXACTLY cliffordT, because T^7 was already in closure {H, T}. So the inverse-closed model
+-- costs no density and changes only the length function, and it is the one used here.
+-- length_ctInvWord is the fact the 5 rests on: reversing a word and flipping each letter inverts it
+-- (ctEval_ctInvWord) AT THE SAME LENGTH. exists_word_net restates #113's net as a Finset of WORDS
+-- with a common length bound ell_0 - the base case the recursion starts from.
+-- length_le_of_mem_skWords is the recursion: a word of the Solovay-Kitaev shape
+-- v w v^-1 w^-1 a with all five parts at level n has length at most 5^n * ell_0. Five parts, each
+-- inverse free, so the factor is exactly 5. With #115's C^2 eps_n <= (C^2 eps_0)^{(3/2)^n} this is
+-- the pair #116 turns into a polylogarithmic gate count.
+-- NOT claimed: skWords is the SHAPE of the recursion, not the algorithm - it is the set of words of
+-- that form, and the theorem bounds their length; it does NOT say which element of skWords n
+-- approximates a given U, which is #116's job. The length bound is an INEQUALITY, not a count:
+-- nothing says 5^n * ell_0 is attained or that these are shortest words for their values. And
+-- nothing about ell_0's SIZE - exists_word_net inherits #113's existence-only net, with no bound on
+-- ell_0 in terms of eps_0. Foundational-triple throughout (length_ctInvWord needs propext alone).
+/-- info: 'QuantumInfo.SU2.ctEval_mem_cliffordT' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.ctEval_mem_cliffordT
+
+/-- info: 'QuantumInfo.SU2.mem_cliffordT_iff_exists_word' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.mem_cliffordT_iff_exists_word
+
+/-- info: 'QuantumInfo.SU2.ctGen_invLetter_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.ctGen_invLetter_mul
+
+/-- info: 'QuantumInfo.SU2.length_ctInvWord' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.length_ctInvWord
+
+/-- info: 'QuantumInfo.SU2.ctEval_ctInvWord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.ctEval_ctInvWord
+
+/-- info: 'QuantumInfo.SU2.exists_word_net' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.exists_word_net
+
+/-- info: 'QuantumInfo.SU2.length_le_of_mem_skWords' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.length_le_of_mem_skWords
+
+/-- info: 'QuantumInfo.SU2.ctEval_mem_cliffordT_of_mem_skWords' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.ctEval_mem_cliffordT_of_mem_skWords
+
 end CSD.Tests.AxiomAudit
