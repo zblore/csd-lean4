@@ -86,6 +86,7 @@ public import CsdLean4.Mathlib.QuantumInfo.CliffordTNet
 public import CsdLean4.Mathlib.QuantumInfo.CommutatorDecomposition
 public import CsdLean4.Mathlib.QuantumInfo.SolovayKitaevStep
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTWords
+public import CsdLean4.Mathlib.QuantumInfo.SolovayKitaevCount
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTUniversal
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Code

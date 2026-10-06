@@ -25,7 +25,10 @@ Everything runs on the quaternion product `su2_mul`, so the matrix work is real 
 
 * ★★★ `exists_commutator_of_det_one` — **the target: every determinant-one unitary is a group
   commutator of two unitaries within `√2·√‖U - 1‖` of the identity**, with the commutator *exact*.
-  Read with #112's contraction, that is the Solovay-Kitaev step in both directions;
+  Read with #112's contraction, that is the Solovay-Kitaev step in both directions. **The two factors
+  are themselves determinant one** (`SU2Rotation.axisRot_det`, `det_conj_of_mem_unitary`), which the construction
+  always produced and the statement records since #116 — that is what lets the Solovay-Kitaev
+  recursion re-enter itself on them;
 * ★★ `norm_su2_sub_one` — **the distance to the identity is `√(2 - 2w)`**, where `w` is the scalar
   part: `star M * M` is a *scalar* for `M = su2 w x y z - 1`, so the C\*-identity `‖M‖² = ‖M⋆M‖` gives
   the norm with no eigenvalue computation. For a rotation this is ★ `norm_axisRot_sub_one`;
@@ -397,6 +400,17 @@ theorem star_groupCommutator {E : Type*} [Monoid E] [StarMul E] (V W : E) :
 
 /-! ### The theorem: every determinant-one unitary is such a commutator -/
 
+/-- Conjugation by a unitary leaves the determinant alone. -/
+theorem det_conj_of_mem_unitary {S : Matrix (Fin 2) (Fin 2) ℂ}
+    (hS : S ∈ unitary (Matrix (Fin 2) (Fin 2) ℂ)) (X : Matrix (Fin 2) (Fin 2) ℂ) :
+    (S * X * star S).det = X.det := by
+  have hone : S.det * (star S).det = 1 := by
+    rw [← Matrix.det_mul, Unitary.mul_star_self_of_mem hS, Matrix.det_one]
+  rw [Matrix.det_mul, Matrix.det_mul]
+  calc S.det * X.det * (star S).det = S.det * (star S).det * X.det := by ring
+    _ = X.det := by rw [hone, one_mul]
+
+
 /-- ★★★ **#114's target: every determinant-one unitary is a group commutator of two unitaries that
 are only square-root far from the identity.**
 
@@ -413,6 +427,7 @@ theorem exists_commutator_of_det_one {U : Matrix (Fin 2) (Fin 2) ℂ}
     (hU : U ∈ unitary (Matrix (Fin 2) (Fin 2) ℂ)) (hdet : U.det = 1) :
     ∃ V W : Matrix (Fin 2) (Fin 2) ℂ,
       V ∈ unitary (Matrix (Fin 2) (Fin 2) ℂ) ∧ W ∈ unitary (Matrix (Fin 2) (Fin 2) ℂ) ∧
+      V.det = 1 ∧ W.det = 1 ∧
       U = V * W * star V * star W ∧
       ‖V - 1‖ ≤ Real.sqrt 2 * Real.sqrt ‖U - 1‖ ∧
       ‖W - 1‖ ≤ Real.sqrt 2 * Real.sqrt ‖U - 1‖ := by
@@ -464,9 +479,11 @@ theorem exists_commutator_of_det_one {U : Matrix (Fin 2) (Fin 2) ℂ}
     have hconj : su2 0 m₁ m₂ m₃ * skComm φ * star (su2 0 m₁ m₂ m₃) = U := by
       rw [hKeq, su2_conj_pure hm, hUeq, hr₁, hr₂, hr₃]
     refine ⟨su2 0 m₁ m₂ m₃ * skV φ * star (su2 0 m₁ m₂ m₃),
-      su2 0 m₁ m₂ m₃ * skW φ * star (su2 0 m₁ m₂ m₃), ?_, ?_, ?_, ?_, ?_⟩
+      su2 0 m₁ m₂ m₃ * skW φ * star (su2 0 m₁ m₂ m₃), ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
     · exact mul_mem (mul_mem hSu hVu) (Unitary.star_mem hSu)
     · exact mul_mem (mul_mem hSu hWu) (Unitary.star_mem hSu)
+    · rw [det_conj_of_mem_unitary hSu, skV, axisRot_det (by norm_num)]
+    · rw [det_conj_of_mem_unitary hSu, skW, axisRot_det (by norm_num)]
     · rw [conj_groupCommutator hSu, ← skComm, hconj]
     · rw [norm_conj_sub_one hSu]
       exact hVb
@@ -505,7 +522,9 @@ theorem exists_commutator_of_det_one {U : Matrix (Fin 2) (Fin 2) ℂ}
       rw [hKeq, su2_star, hUeq, hx, hy, hz]
       congr 1
       ring
-    refine ⟨skW φ, skV φ, hWu, hVu, ?_, ?_, ?_⟩
+    refine ⟨skW φ, skV φ, hWu, hVu, ?_, ?_, ?_, ?_, ?_⟩
+    · rw [skW, axisRot_det (by norm_num)]
+    · rw [skV, axisRot_det (by norm_num)]
     · rw [hUstar, skComm, star_groupCommutator]
     · exact hWb
     · exact hVb

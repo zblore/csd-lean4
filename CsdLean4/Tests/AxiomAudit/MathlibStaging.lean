@@ -10769,4 +10769,100 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.SU2.ctEval_mem_cliffordT_of_mem_skWords
 
+-- BACKLOG #116: THE SOLOVAY-KITAEV THEOREM WITH ITS GATE COUNT - LINK 12'S LAST ROW
+-- (Mathlib/QuantumInfo/SolovayKitaevCount.lean, 2026-10-06, the last brick of #74's split; two
+-- strengthening lemmas also landed in CommutatorDecomposition.lean).
+-- #115 proved the error side and #117 the length side. Two things were left, and this row does both.
+-- (1) ELIMINATING n. skLevel b eps = ceil(log R / log(3/2)) with R = log eps / log b;
+-- skLevel_rpow_le says that many levels reach eps, five_pow_skLevel_le says five to that power is at
+-- most 5 * R^c, and skExponent = log 5 / log(3/2) with three_lt_skExponent and skExponent_lt_four
+-- placing c in the open interval (3, 4) - the literature's 3.97 - each by ONE application of
+-- Real.log_lt_log to (3/2)^3 = 27/8 < 5 < 81/16 = (3/2)^4. No decimal expansion is claimed.
+-- (2) THE PAIRING, which #117 explicitly declined: WHICH word approximates a given U.
+-- exists_mem_skWords_norm_sub_le is the recursion - from a net at base accuracy e, the level-n words
+-- of #117's shape reach skErr e n on EVERY determinant-one unitary. One level approximates U, takes
+-- the residual Delta = U * star (ctEval u), writes it as a group commutator of two near-identity
+-- determinant-one factors (#114), approximates those one level down, and reassembles. The
+-- reassembled approximant is a WORD because star_ctEval identifies #117's ctInvWord with the
+-- ADJOINT, so a group commutator of word values is the value of
+-- v ++ w ++ ctInvWord v ++ ctInvWord w - exactly skWords' shape, so #117's length bound transfers
+-- untouched.
+-- TWO THINGS HAD TO BE BUILT FOR THAT STEP, NEITHER OF THEM BOOKKEEPING.
+-- ctEval_mem_unitary: words are unitary (hGateM_mem_unitary and tGateM_mem_unitary, which the corpus
+-- did not have), so right multiplication by one is an isometry and the residual is as close to 1 as
+-- the approximation is good. And THE DETERMINANT: #114 needs its input to have determinant one, and
+-- a Clifford+T word does not. It is FORCED. det_ctEval_pow_eight - the determinant of a word is an
+-- eighth root of unity, because H^2 = 1 and T^8 = 1 and nothing else enters - together with
+-- eq_one_of_pow_eight_eq_one: an eighth root of unity within 1/8 of 1 IS 1. That last needs no
+-- root-of-unity theory, only (z-1) * sum_{k<8} z^k = z^8 - 1 = 0 and ||1 - z^k|| <= k ||1 - z|| on
+-- the unit circle, which bounds the sum by 28/8 < 8.
+-- #114 WAS STRENGTHENED IN PLACE to record that its commutator factors are determinant one, which
+-- its construction already produced but its statement did not say: axisRot_det (a rotation has
+-- determinant one) and the new det_conj_of_mem_unitary (conjugation by a unitary leaves the
+-- determinant alone) discharge both branches, the generic one through the conjugating su2 and the
+-- antipodal one directly. exists_commutator_of_det_one now carries V.det = 1 and W.det = 1; its
+-- axiom pin is unchanged and sits with #114 above.
+-- axisRot_det was NOT new - it already existed in EulerDecomposition.lean, and writing a second copy
+-- surfaced the duplication. Both copies are gone and the lemma now lives once in SU2Rotation.lean
+-- beside axisRot and su2_det, which both files already import; its pin is the pre-existing one.
+-- THE THEOREM: exists_word_approx_polylog - for every determinant-one U and every small enough eps,
+-- a Clifford+T WORD within eps of U of length at most K * log(1/eps)^c.
+-- NOT claimed: K and eps_0 are EXISTENTIAL, by inheritance - #113's net comes from compactness with
+-- no bound on its size, and the radius forcing the residual's determinant comes from continuity of
+-- det; neither is quantitative, so no constant here is. The EXPONENT is. The exponent is also #117's
+-- COST MODEL and not a fact about {H, T}: the letters are H, T and T inverse, so inverting a word is
+-- free and a level costs five; over two letters a shortest T inverse is T^7, a level costs 17, and
+-- the exponent is log 17 / log(3/2) ~ 6.99. #117's mem_cliffordT_iff_exists_word is what makes the
+-- choice free. The literature's 3 + delta needs a different net argument and stays unclaimed. And
+-- NOTHING IS COMPUTED: the word comes from a recursion over an existence statement, not an
+-- algorithm, and skErr's constant 33 is a sufficient one rather than the best.
+-- Foundational-triple throughout.
+/-- info: 'QuantumInfo.SU2.three_lt_skExponent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.three_lt_skExponent
+
+/-- info: 'QuantumInfo.SU2.skExponent_lt_four' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.skExponent_lt_four
+
+/-- info: 'QuantumInfo.SU2.skLevel_rpow_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.skLevel_rpow_le
+
+/-- info: 'QuantumInfo.SU2.five_pow_skLevel_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.five_pow_skLevel_le
+
+/-- info: 'QuantumInfo.SU2.ctEval_mem_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.ctEval_mem_unitary
+
+/-- info: 'QuantumInfo.SU2.star_ctEval' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.star_ctEval
+
+/-- info: 'QuantumInfo.SU2.det_ctEval_pow_eight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.det_ctEval_pow_eight
+
+/-- info: 'QuantumInfo.SU2.eq_one_of_pow_eight_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.eq_one_of_pow_eight_eq_one
+
+/-- info: 'QuantumInfo.SU2.skErr_le_base' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.skErr_le_base
+
+/-- info: 'QuantumInfo.SU2.det_conj_of_mem_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.det_conj_of_mem_unitary
+
+/-- info: 'QuantumInfo.SU2.exists_mem_skWords_norm_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.exists_mem_skWords_norm_sub_le
+
+/-- info: 'QuantumInfo.SU2.exists_word_approx_polylog' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.exists_word_approx_polylog
+
 end CSD.Tests.AxiomAudit

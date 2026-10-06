@@ -104,6 +104,15 @@ noncomputable def axisRot (a b c θ : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
   rw [axisRot]
   norm_num [su2_one]
 
+/-- A rotation about a unit axis has determinant one. -/
+theorem axisRot_det {a b c : ℝ} (hu : a ^ 2 + b ^ 2 + c ^ 2 = 1) (θ : ℝ) :
+    (axisRot a b c θ).det = 1 := by
+  rw [axisRot, su2_det,
+    show Real.cos (θ / 2) ^ 2 + (a * Real.sin (θ / 2)) ^ 2 + (b * Real.sin (θ / 2)) ^ 2
+        + (c * Real.sin (θ / 2)) ^ 2 = 1 by
+      linear_combination (Real.sin (θ / 2)) ^ 2 * hu + Real.sin_sq_add_cos_sq (θ / 2)]
+  norm_num
+
 /-- ★ **The rotations about a fixed unit axis form a one-parameter group.** -/
 theorem axisRot_add {a b c : ℝ} (hu : a ^ 2 + b ^ 2 + c ^ 2 = 1) (α β : ℝ) :
     axisRot a b c (α + β) = axisRot a b c α * axisRot a b c β := by
