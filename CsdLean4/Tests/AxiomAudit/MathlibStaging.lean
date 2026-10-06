@@ -10483,4 +10483,59 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CStarRing.norm_groupCommutator_sub_groupCommutator_le
 
+-- BACKLOG #113: THE DETERMINANT-ONE UNITARIES ARE COMPACT, SO THE CLIFFORD+T WORDS CONTAIN A
+-- FINITE EPS-NET
+-- (Mathlib/QuantumInfo/CliffordTNet.lean, 2026-10-06, the second brick of #74's split).
+-- Solovay-Kitaev's base case needs a FINITE set of words within eps_0 of every target. #81 gives
+-- DENSITY, and density alone gives one word per target - a set with no finiteness and no bound.
+-- COMPACTNESS is what upgrades it. IsCompact.exists_finite_net is the general statement in any
+-- metric space: a compact set inside the closure of D is covered by finitely many eps-balls centred
+-- in D (elim_finite_subcover over the cover by balls around points of D). isClosed_unitaryGroup:
+-- the unitary group of any finite index type is closed, as the preimage of {1} under U |-> U U*;
+-- Mathlib has IsCompact.matrix for entrywise-compact sets but nothing about the unitary group.
+-- isCompact_su2Set: THE DETERMINANT-ONE 2x2 UNITARIES ARE COMPACT - closed (the unitary condition
+-- and det = 1 are both closed) and inside the closed unit ball, because a unitary has operator norm
+-- 1 in the C*-norm (CStarRing.norm_of_mem_unitary), with compactness of the ball from the space
+-- being finite-dimensional hence proper. su2Set_subset_closure_cliffordT is #81's density as an
+-- inclusion of sets, and exists_finite_cliffordT_net is THE BASE CASE: for every eps > 0 there are
+-- FINITELY MANY genuine Clifford+T words such that every determinant-one unitary is within eps of
+-- one of them.
+-- NOT claimed: ANY CONSTRUCTION - the net comes from elim_finite_subcover, so nothing bounds its
+-- cardinality or its words' lengths, and that is not a gap to be filled by the same argument but
+-- exactly WHY Solovay-Kitaev needs a recursion on top of the net (#115), the net being the O(1)
+-- base rather than the algorithm; any calibration of eps_0 against #112's contraction threshold
+-- delta < 1/2, which is #115's business; the route the row recorded (the det-one unitaries as the
+-- continuous image
+-- of the unit sphere in R^4), which would need the SURJECTIVITY of the su2 parametrisation onto the
+-- determinant-one unitaries and the corpus has no such statement - closed and bounded is shorter and
+-- needs nothing new, so the sphere picture appears nowhere; and anything modulo phase, the net being
+-- for det = 1 as in #81. Foundational-triple.
+/-- info: 'IsCompact.exists_finite_net' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms IsCompact.exists_finite_net
+
+/-- info: 'QuantumInfo.SU2.isClosed_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.isClosed_unitaryGroup
+
+/-- info: 'QuantumInfo.SU2.isClosed_su2Set' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.isClosed_su2Set
+
+/-- info: 'QuantumInfo.SU2.su2Set_subset_closedBall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.su2Set_subset_closedBall
+
+/-- info: 'QuantumInfo.SU2.isCompact_su2Set' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.isCompact_su2Set
+
+/-- info: 'QuantumInfo.SU2.su2Set_subset_closure_cliffordT' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.su2Set_subset_closure_cliffordT
+
+/-- info: 'QuantumInfo.SU2.exists_finite_cliffordT_net' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.exists_finite_cliffordT_net
+
 end CSD.Tests.AxiomAudit

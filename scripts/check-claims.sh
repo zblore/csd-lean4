@@ -1159,10 +1159,17 @@ OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 # (conjugating pauliAxis a b c by axisRot 0 0 1 phi turns (a, b) by phi), so nothing quantifies
 # over a group here either; the file's other quantifiers are Matrix.unitaryGroup (Fin N) = U(N),
 # in rotProp_mem_unitaryGroup.
+# CliffordTNet.lean (2026-10-06, BACKLOG #113) is the eighth site, three mentions: the module title,
+# the section header, and the scope note recording the route the row proposed and the file does not
+# take. The equivalence is LITERAL here rather than argued: every statement in the file quantifies
+# over su2Set = {U | U in Matrix.unitaryGroup (Fin 2) C AND U.det = 1}, so the det = 1 conjunct is
+# present in the Lean text and "SU(2)" names exactly that set. Nothing in the file quantifies over
+# U(2) and calls it SU(2); the net theorem's hypothesis is membership in su2Set.
 DECLARED_SU_MENTIONS="CsdLean4/LF2/Setup.lean:1
 CsdLean4/Mathlib/LinearAlgebra/Projectivization/FubiniStudy.lean:2
 CsdLean4/Mathlib/QuantumInfo/CliffordTAngle.lean:2
 CsdLean4/Mathlib/QuantumInfo/CliffordTDensity.lean:3
+CsdLean4/Mathlib/QuantumInfo/CliffordTNet.lean:3
 CsdLean4/Mathlib/QuantumInfo/EulerDecomposition.lean:1
 CsdLean4/Mathlib/QuantumInfo/RotatingFrame.lean:1
 CsdLean4/Mathlib/QuantumInfo/SU2Rotation.lean:2"
