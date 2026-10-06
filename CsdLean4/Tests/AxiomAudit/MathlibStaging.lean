@@ -10538,4 +10538,129 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.SU2.exists_finite_cliffordT_net
 
+-- BACKLOG #114: EVERY DETERMINANT-ONE UNITARY IS A GROUP COMMUTATOR OF TWO SQUARE-ROOT-CLOSE
+-- UNITARIES (Mathlib/QuantumInfo/CommutatorDecomposition.lean, 2026-10-06, the third brick of #74's
+-- split). #112 proved a commutator of near-identity unitaries is QUADRATICALLY nearer the identity;
+-- this is the converse the recursion needs, and exists_commutator_of_det_one is the target:
+-- ||V-1||, ||W-1|| <= sqrt 2 * sqrt ||U-1|| with the commutator EXACT.
+-- The pieces. norm_su2_sub_one: the distance to the identity is sqrt(2 - 2w), w the scalar part,
+-- with NO eigenvalue computation - star M * M is a SCALAR multiple of 1 for M = su2 w x y z - 1
+-- (star_su2_sub_one_mul_self), so the C*-identity ||M||^2 = ||M* M|| settles it. skComm_eq: THE
+-- EXACT COMMUTATOR IDENTITY - with c = cos(phi/2), s = sin(phi/2), the commutator of the x-axis and
+-- y-axis rotations by phi is the unit quaternion (1 - 2s^4, 2cs^3, -2cs^3, 2c^2s^2), by su2_mul
+-- alone, so the matrix work is quaternion algebra; the scalar part is the angle relation, QUARTIC in
+-- s hence quadratic in the angle. norm_skComm_sub_one = 2 sin^2(phi/2), norm_skV_sub_one_le is the
+-- SQUARE-ROOT BOUND and exists_skComm_norm_eq realises every distance in [0,2] EXACTLY, at factor
+-- angle 2 arcsin sqrt(eps/2). exists_su2_of_det_one: THE su2 PARAMETRISATION IS ONTO the
+-- determinant-one unitaries - the surjectivity #113 found missing - because for det U = 1 the
+-- inverse is the adjugate and for a unitary it is the adjoint, forcing U 1 1 = conj (U 0 0) and
+-- U 1 0 = -conj (U 0 1), exactly the shape su2 has. su2_conj_pure: conjugating by a pi-rotation
+-- REFLECTS the axis, v |-> 2(m.v)m - v; bisector_reflect: the bisector reflection swaps two vectors
+-- of EQUAL LENGTH (no normalisation needed), so the axis moves anywhere except to its exact
+-- opposite; and star_groupCommutator disposes of that case - the opposite axis belongs to the
+-- ADJOINT of the commutator, which is the same pair in the other order, so NO PERPENDICULAR-VECTOR
+-- CONSTRUCTION IS NEEDED ANYWHERE. norm_conj_sub_one and conj_groupCommutator are the transport.
+-- NOT claimed: V and W are UNITARIES, NOT GATE WORDS - the commutator is exact and the factors are
+-- rotations, nothing expresses them in a generating set, which is the division of labour the
+-- algorithm needs (the net #113 supplies words, the recursion #115 approximates these factors by
+-- them) and means this row alone implies NO GATE COUNT; determinant one and 2x2 only, a general
+-- unitary needing a phase exactly as in #81, with nothing in higher dimension; optimality of the
+-- constant sqrt 2, which comes from sin(phi/4) <= sin(phi/2) and is lossy by design; and anything
+-- outside 0 <= phi <= pi for the standard pair, where the sign analysis (2c+1)(c-1) <= 0 holds -
+-- exists_skComm_norm_eq only ever produces angles in that range.
+-- Two of these need no choice, and are pinned as they ARE rather than padded to the triple:
+-- conj_groupCommutator and star_groupCommutator are pure monoid-with-star algebra, so the first
+-- needs [propext, Quot.sound] and the second needs [propext] alone.
+/-- info: 'QuantumInfo.SU2.su2_star' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.su2_star
+
+/-- info: 'QuantumInfo.SU2.su2_star_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.su2_star_mul_self
+
+/-- info: 'QuantumInfo.SU2.su2_add_star' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.su2_add_star
+
+/-- info: 'QuantumInfo.SU2.star_su2_sub_one_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.star_su2_sub_one_mul_self
+
+/-- info: 'QuantumInfo.SU2.norm_su2_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.norm_su2_sub_one
+
+/-- info: 'QuantumInfo.SU2.norm_axisRot_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.norm_axisRot_sub_one
+
+/-- info: 'QuantumInfo.SU2.skComm_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.skComm_eq
+
+/-- info: 'QuantumInfo.SU2.skComm_unit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.skComm_unit
+
+/-- info: 'QuantumInfo.SU2.norm_skComm_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.norm_skComm_sub_one
+
+/-- info: 'QuantumInfo.SU2.norm_skV_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.norm_skV_sub_one
+
+/-- info: 'QuantumInfo.SU2.norm_skW_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.norm_skW_sub_one
+
+/-- info: 'QuantumInfo.SU2.norm_skV_sub_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.norm_skV_sub_one_le
+
+/-- info: 'QuantumInfo.SU2.norm_skW_sub_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.norm_skW_sub_one_le
+
+/-- info: 'QuantumInfo.SU2.exists_skComm_norm_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.exists_skComm_norm_eq
+
+/-- info: 'QuantumInfo.SU2.exists_su2_of_det_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.exists_su2_of_det_one
+
+/-- info: 'QuantumInfo.SU2.su2_conj_pure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.su2_conj_pure
+
+/-- info: 'QuantumInfo.SU2.su2_mem_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.su2_mem_unitary
+
+/-- info: 'QuantumInfo.SU2.axisRot_mem_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.axisRot_mem_unitary
+
+/-- info: 'QuantumInfo.SU2.bisector_reflect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.bisector_reflect
+
+/-- info: 'QuantumInfo.SU2.norm_conj_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.norm_conj_sub_one
+
+/-- info: 'QuantumInfo.SU2.exists_commutator_of_det_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.exists_commutator_of_det_one
+
+/-- info: 'QuantumInfo.SU2.conj_groupCommutator' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.conj_groupCommutator
+
+/-- info: 'QuantumInfo.SU2.star_groupCommutator' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.SU2.star_groupCommutator
+
 end CSD.Tests.AxiomAudit

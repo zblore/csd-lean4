@@ -83,6 +83,7 @@ public import CsdLean4.Mathlib.QuantumInfo.ControlledSingle
 public import CsdLean4.Mathlib.QuantumInfo.ControlRecursion
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTDensity
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTNet
+public import CsdLean4.Mathlib.QuantumInfo.CommutatorDecomposition
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTUniversal
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Code
