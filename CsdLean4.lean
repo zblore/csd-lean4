@@ -743,6 +743,7 @@ public import CsdLean4.Mathlib.Analysis.Fourier.WignerCalculus
 public import CsdLean4.Mathlib.Analysis.Fourier.WeylSymbolClass
 public import CsdLean4.Mathlib.Analysis.Fourier.SchwartzSlice
 public import CsdLean4.Mathlib.Analysis.Fourier.PartialFourier
+public import CsdLean4.Mathlib.Analysis.Fourier.WeylSmooth
 public import CsdLean4.Mathlib.Analysis.Fourier.CircleSobolev
 public import CsdLean4.Mathlib.Analysis.Fourier.MoyalBracket
 public import CsdLean4.Mathlib.Analysis.Fourier.WignerEvolution

@@ -11220,4 +11220,50 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms contDiffOn_integral_of_iteratedFDeriv_bound
 
+-- BACKLOG #122, THE SMOOTHNESS HALF: THE WEYL OPERATOR'S OUTPUT IS C-INFINITY
+-- (Mathlib/Analysis/Fourier/WeylSmooth.lean, 2026-10-07).
+-- #92(a1) proved the output CONTINUOUS and said continuity is the first of the Schwartz seminorm
+-- estimates, not the last. This is the next one.
+-- iteratedFDeriv_comp_affine is THE ITERATED CHAIN RULE ALONG AN AFFINE LINE, as an identity: the
+-- linear part contributes its velocity in every slot. The Weyl kernel needs exactly this, because x
+-- enters K through ((x+y)/2, x-y) = (y/2, -y) + x*(1/2, 1) - an affine path with constant velocity.
+-- Mathlib has the two halves (ContinuousLinearMap.iteratedFDeriv_comp_right for the linear part,
+-- iteratedFDeriv_comp_add_left for the translation) and not the composite;
+-- norm_iteratedFDeriv_comp_affine_le is the bound it gives, the velocity's norm to the order.
+-- exists_bound_snd_iteratedFDeriv is #92(a1)'s second-slot decay at EVERY order, and
+-- inv_one_add_sq_le_of_abs_sub_le is the majorant uniform on a unit ball of parameters.
+-- contDiff_weylOpK assembles them through #120: smoothness at every order on each ball, hence
+-- ContDiffAt everywhere, hence ContDiff. The product rule is not needed anywhere, because psi does not
+-- depend on x - only the chain rule does the work, which is why this was reachable at all.
+-- NOT claimed, and the second point is the useful one. THIS IS SMOOTHNESS, NOT SCHWARTZNESS:
+-- Op(K) as a continuous map of Schwartz space into itself needs the output AND all its derivatives to
+-- decay faster than every power, with the bound linear in psi's seminorms (SchwartzMap.mkCLM), and
+-- nothing here gives decay of a single derivative.
+-- AND THE OBSTRUCTION IS NOW IDENTIFIED. The decay estimate needs the derivative FORMULA - that the
+-- k-th derivative of the output is the integral of psi times the kernel's k-th derivative along the
+-- path - so that the weight x^N can be moved onto the kernel through the substitution. #120 and #124
+-- DELIBERATELY give smoothness WITHOUT the formula; both say so in their own scope notes. So the next
+-- brick on this row is a formula-tracking version of #120, not more estimates: the estimates are
+-- straightforward once the formula is available and impossible without it.
+-- Foundational-triple.
+/-- info: 'WignerFunction.iteratedFDeriv_comp_affine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.iteratedFDeriv_comp_affine
+
+/-- info: 'WignerFunction.norm_iteratedFDeriv_comp_affine_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_iteratedFDeriv_comp_affine_le
+
+/-- info: 'WignerFunction.exists_bound_snd_iteratedFDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.exists_bound_snd_iteratedFDeriv
+
+/-- info: 'WignerFunction.inv_one_add_sq_le_of_abs_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.inv_one_add_sq_le_of_abs_sub_le
+
+/-- info: 'WignerFunction.contDiff_weylOpK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.contDiff_weylOpK
+
 end CSD.Tests.AxiomAudit
