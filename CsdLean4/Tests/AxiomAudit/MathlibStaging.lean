@@ -11131,4 +11131,60 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.exists_bound_weylSymbol_slice
 
+-- BACKLOG #124: DIFFERENTIATION UNDER THE INTEGRAL SIGN OVER A FINITE-DIMENSIONAL PARAMETER
+-- (Mathlib/Analysis/Calculus/ContDiffParametricIntegralFDeriv.lean, 2026-10-07, out of #121(ii)).
+-- #120 did the one-dimensional-parameter case deliberately, its scope note recording that the fderiv
+-- version "is the same induction with ContinuousLinearMap plumbing and is not done here". #121(ii) is
+-- what wants the general case, since the joint Schwartz claim needs differentiating in two variables
+-- at once, so here it is for a parameter in any finite-dimensional normed space.
+-- THE INTERFACE IS DIRECTIONAL, AND THAT IS THE WHOLE DESIGN - AND IT REFUTES THE ROW'S OWN FORECAST.
+-- #124's row warned that the hypothesis-design question #120 flagged "returns in harder form: a
+-- per-order, locally-uniform bound on a MULTILINEAR norm". It does not have to. Bounding
+-- iteratedFDeriv means bounding a multilinear map, which drags currying equivalences through every
+-- step; bounding ITERATED DIRECTIONAL derivatives keeps every hypothesis valued in E, and the
+-- recursion is then literally list-append - dirDeriv F hs differentiates along the list hs with
+-- dirDeriv_append_singleton the shift, and dirWeight carries the product of the directions' norms so
+-- that appending one direction multiplies the weight by its norm and raises the order by one
+-- (dirWeight_append_singleton), leaving the inner call with fun k a => ||h|| * bound (k+1) a, still
+-- integrable. No multilinear norm appears anywhere in the statement.
+-- contDiffOn_integral_of_dirBound is the theorem; contDiff_integral_of_dirBound is the global case
+-- (U = univ) and contDiffOn_integral_of_dirBound_all smoothness at every order.
+-- TWO HYPOTHESES THE ROW DID NOT ANTICIPATE, both honest and both in the header. (1) ONE HYPOTHESIS IS
+-- UNAVOIDABLY OPERATOR-VALUED: Mathlib's hasFDerivAt_integral_of_dominated_of_fderiv_le takes the
+-- derivative as a map into H -> L E, so strong measurability of a |-> fderiv (F . a) x is required and
+-- cannot be reduced to directional data; it appears as hmeasD and is closed under the recursion for
+-- the same list-append reason. (2) THE BOUND FAMILY MUST BE NONNEGATIVE (hb0), which #120 needed not,
+-- because its one-dimensional engine takes a bound on ||F' x a|| directly while here the directional
+-- bounds must be turned into an OPERATOR-norm bound through opNorm_le_bound - false for a negative
+-- constant when H is trivial. One line to discharge for any bound family anyone builds.
+-- FiniteDimensional H is used exactly once, in contDiffOn_clm_apply, to assemble the directional
+-- components back into the operator-valued derivative; that is the same place #60 needed it.
+-- NOT claimed: no formula for the derivatives, as in #120 - each step produces
+-- fderiv (integral) = integral of fderiv on U as a by-product and only the smoothness is recorded.
+-- #121(ii) is the consumer this was built for and remains open; #123 is its alternative route.
+-- Foundational-triple.
+/-- info: 'dirDeriv_append_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms dirDeriv_append_singleton
+
+/-- info: 'dirWeight_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms dirWeight_nonneg
+
+/-- info: 'dirWeight_append_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms dirWeight_append_singleton
+
+/-- info: 'contDiffOn_integral_of_dirBound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_integral_of_dirBound
+
+/-- info: 'contDiff_integral_of_dirBound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiff_integral_of_dirBound
+
+/-- info: 'contDiffOn_integral_of_dirBound_all' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_integral_of_dirBound_all
+
 end CSD.Tests.AxiomAudit
