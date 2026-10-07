@@ -11046,4 +11046,50 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms contDiff_integral_schwartz_sub_mul
 
+-- BACKLOG #121(i): SLICING A SCHWARTZ FUNCTION ON A PRODUCT, AND THE PAYOFF
+-- (Mathlib/Analysis/Fourier/SchwartzSlice.lean, 2026-10-07, out of #92's split).
+-- A Schwartz function on a product restricts to a Schwartz function on each slice. Mathlib has the
+-- machinery - SchwartzMap.compCLM composes on the right with any map of temperate growth that does not
+-- shrink the norm too much - but not the instance, because the slice map w |-> (e, w) is AFFINE rather
+-- than linear and fun_prop has no Prod.mk rule for HasTemperateGrowth.
+-- Function.hasTemperateGrowth_prodMk_left supplies it through HasTemperateGrowth.of_fderiv: the slice
+-- map's derivative is the CONSTANT inr (hasFDerivAt_prodMk_right) and its value grows linearly, since
+-- the product norm is a max. exists_norm_le_prodMk_left is compCLM's other hypothesis, that the slice
+-- map does not shrink the norm. SchwartzMap.sliceCLM is then the slice AS A CONTINUOUS LINEAR MAP IN
+-- THE KERNEL and SchwartzMap.slice_apply its defining equation, slice K e w = K (e, w).
+-- THE PAYOFF IS integral_conj_mul_weylOpK: THE WEYL EXPECTATION FORMULA ON THE SCHWARTZ KERNEL CLASS
+-- WITH NO HYPOTHESES AT ALL - the expectation of the Weyl operator in a state is the phase-space
+-- average of the symbol against the state's Wigner function. WignerWeyl.lean proves that for a slice
+-- family under three assumptions its datum could not supply (joint continuity, and a bound integrable
+-- in the first slot); #92(a1) discharged the latter two for a jointly Schwartz kernel
+-- (continuous_weylKernel, exists_integrable_bound) and the slice supplies the family itself, so on
+-- this class nothing is left to assume. weylOpK_eq_weylOp_slice is the bridge made unconditional.
+-- NOT claimed: CONTINUITY IN THE SLICE PARAMETER, which is the other half of #121(i) and is now
+-- BACKLOG #123. What is continuous here is slicing IN THE KERNEL (sliceCLM is a continuous linear map
+-- for each fixed e), which is what transfers theorems; that e |-> slice K e is continuous into
+-- Schwartz space for the SCHWARTZ TOPOLOGY is a different statement, needs one more order of decay and
+-- a mean-value estimate in the sliced variable, and Mathlib has no curry to get it from. Nothing in
+-- the corpus needs it. Also NOT claimed: the partial Fourier transform, which is #121(ii) and the half
+-- a pseudodifferential calculus would need.
+-- Foundational-triple.
+/-- info: 'Function.hasTemperateGrowth_prodMk_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Function.hasTemperateGrowth_prodMk_left
+
+/-- info: 'exists_norm_le_prodMk_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_norm_le_prodMk_left
+
+/-- info: 'SchwartzMap.slice_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.slice_apply
+
+/-- info: 'WignerFunction.weylOpK_eq_weylOp_slice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylOpK_eq_weylOp_slice
+
+/-- info: 'WignerFunction.integral_conj_mul_weylOpK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integral_conj_mul_weylOpK
+
 end CSD.Tests.AxiomAudit
