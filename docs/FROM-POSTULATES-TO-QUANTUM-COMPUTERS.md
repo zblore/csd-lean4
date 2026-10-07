@@ -20,8 +20,8 @@ reader-type paths and the measurement story are [`TOUR.md`](TOUR.md).)*
 | 7 | States and channels | a preparation is a density operator; a flow is a channel; de-isolation is the measurement channel; second law, Landauer, Holevo | none new; strong subadditivity comes through an external bridge |
 | 8 | Gates | each standard gate is the isometry of a `Σ`-sector; a projective unitary action lifts to a `Σ`-flow | none new |
 | 9 | Algorithms | Deutsch–Jozsa, Bernstein–Vazirani, Simon, Grover, the Fourier transform, Shor, teleportation; the sum over paths at finite dimension; Grover and Shor as `Σ`-flows | the other algorithms QM-side only |
-| 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism; the Steane recovery and its code-capacity threshold | ~~`R-005`: Clifford+T density~~ **closed 2026-09-26** (row 73); ~~the concatenated quantum recovery (row 61)~~ **done 2026-09-27** (row 86); the circuit-level threshold (row 62) |
-| 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders, amplitude-exact on the full register | — |
+| 10 | Error correction | QEC on `Σ` end to end for the three-qubit code; Shor-nine and Steane code mechanisms; stabiliser formalism; the Steane recovery and its code-capacity threshold | ~~`R-005`: Clifford+T density~~ **closed 2026-09-26** (row 73); ~~the concatenated quantum recovery (row 61)~~ **done 2026-09-27** (row 86); ~~the circuit-level threshold (row 62)~~ **closed 2026-10-04** (rows 94–97), as an abstract theorem whose gadget-set premise is named and not discharged for any concrete code |
+| 11 | Arithmetic and cost | verified reversible adders and modular arithmetic; measurement-gadget adders, amplitude-exact on the full register; Solovay–Kitaev with a gate count | the gate count’s constants are existential and its exponent is a cost model (row 74) |
 
 Four kinds of seam appear, and only one is a research problem. They are defined in
 [`specs/POSITS.md`](../specs/POSITS.md) ("What frontier means here") and summarised at the end of this page.
@@ -317,9 +317,9 @@ and `k` levels of concatenation leave bad error patterns with probability at mos
 tends to `0` below `p < 1/21` (`steane_concatBad_le`, `steane_threshold`): **the code-capacity threshold**
 (2026-09-23).
 
-**The seam.** Three residues, all open mathematics with a Lean shape (`R-003`, active error correction,
+**The seam, and all three of its residues are now closed.** Three stood here, each open mathematics with a Lean shape when this page was written (`R-003`, active error correction,
 closed 2026-09-23 with the code-capacity threshold; the concatenated *quantum* recovery at level `k`
-**landed 2026-09-27** (row 86: Knill–Laflamme in encoder form composes under the tensor over blocks, so one recovery channel per level restores every code state from every pattern with at most one bad sub-block per level, exactly when the error is unitary — the patterns it excludes are the `concatBad` whose probability #51 bounds), the circuit-level threshold theorem #62, the `Σ`-twin of the Steane recovery, **done 2026-09-27** (row 53): the Pauli channel is the environment marginal of one flow on the joint projective space, and one recovery channel undoes the leak). `R-005`, the density of Clifford+T in the unitary group, **closed 2026-09-26**: twelve priced rows after two re-pricings, nine of them landed (BACKLOG #68 the irrational rotation angle, #80 its axis–angle form, #70 the two-level decomposition, #71 the Gray-code sandwich, #83 the controlled-gate vocabulary, #84 the `z`-`y`-`z` Euler decomposition with the one-control circuit, #85 the control-count recursion, #81 Clifford+T dense in `U(2)` modulo phase, and #73 the assembly). The statement now proved is that **every unitary on `m ≥ 1` qubits becomes a limit of Clifford+T circuits after one global phase**, through the exact product of `CNOT`s and single-qubit gates. #82, the count of the two-level decomposition, **landed 2026-09-28**: at most `d(d − 1)/2` two-level factors, the phase-fixing factor of the original construction turning out never to have been needed. One row stays deliberately unclaimed: #74, how the circuit length grows as the accuracy tightens (Solovay–Kitaev).
+**landed 2026-09-27** (row 86: Knill–Laflamme in encoder form composes under the tensor over blocks, so one recovery channel per level restores every code state from every pattern with at most one bad sub-block per level, exactly when the error is unitary — the patterns it excludes are the `concatBad` whose probability #51 bounds), the circuit-level threshold theorem #62, **closed 2026-10-04** through rows 94–97 — syndrome extraction as a circuit, the ancilla ladder’s fault propagation, the extended rectangle with a faulty recovery, and level reduction with the probabilistic join — the `Σ`-twin of the Steane recovery, **done 2026-09-27** (row 53): the Pauli channel is the environment marginal of one flow on the joint projective space, and one recovery channel undoes the leak). `R-005`, the density of Clifford+T in the unitary group, **closed 2026-09-26**: twelve priced rows after two re-pricings, nine of them landed (BACKLOG #68 the irrational rotation angle, #80 its axis–angle form, #70 the two-level decomposition, #71 the Gray-code sandwich, #83 the controlled-gate vocabulary, #84 the `z`-`y`-`z` Euler decomposition with the one-control circuit, #85 the control-count recursion, #81 Clifford+T dense in `U(2)` modulo phase, and #73 the assembly). The statement now proved is that **every unitary on `m ≥ 1` qubits becomes a limit of Clifford+T circuits after one global phase**, through the exact product of `CNOT`s and single-qubit gates. #82, the count of the two-level decomposition, **landed 2026-09-28**: at most `d(d − 1)/2` two-level factors, the phase-fixing factor of the original construction turning out never to have been needed. One row stays deliberately unclaimed: #74, how the circuit length grows as the accuracy tightens (Solovay–Kitaev).
 `R-004`, magic-state distillation, closed 2026-09-24: the `[[15, 1, 3]]` quantum Reed–Muller code has exactly `35`
 undetected weight-3 `Z`-patterns and `2¹¹` codewords, its transversal `T` is the logical `T†`, the `X`-checks
 reject every detected pattern and an undetected one acts as the logical `Z̄` to the power of its parity, so one
@@ -340,7 +340,7 @@ corrects the single-flip channel exactly and, under independent bit-flip noise, 
 the double and triple flips are modelled, and mis-corrected into the logical flip — the residual the
 code-capacity recursion drives down (`concatMeasure_concatBad_le`).
 
-**What is not claimed.** The circuit-level threshold theorem in full (row 62), or that a fault-tolerant machine follows from the chain. Its first rung **landed 2026-09-28** (row 62 (a)): with the noise on the **gates**, a fault at one location of a transversal gadget is a weight-one error after the ideal gadget (`faultyTransversal_eq`), so the recovery returns the ideal output — concretely for a faulty transversal logical `X̄` on an encoded qubit (`steane_faultyLogicalX_recovery`) — and the circuit's own accounting is proved: the union bound over `N` locations and the level an accuracy needs (`circuitMeasure_circuitBad_le`, `steane_circuit_threshold`). Row 62 (b) and (e) landed with it: the transversal `X̄`, `Z̄` and Hadamard **are** the code's logical gates (`hadTransversal_conj_steaneProj`, `hadTransversal_conj_logicalX`), so the faulty-gate theorem covers a gate set and not one gate, and the overhead of the recursive simulation is **polylogarithmic** (`exists_level_overhead_le`). Row 62 (f) followed the same day: the transversal `CNOT` across two blocks **is** the logical `CNOT` (`cnotT_mul_pairEnc`, whose only input is the linearity of the code) and a fault at one of its seven locations is corrected by the two-block recovery (`steane_faultyCNOT_recovery`) — so the whole Clifford generating set is covered. What stays open there is the recovery gadget's own faults — extended rectangles — and the simulation theorem that makes the levels compose (row 62 (c) and (d)). The concatenated
+**What is not claimed.** That a fault-tolerant machine follows from the chain — and since **2026-10-04** that is a statement about one named premise rather than a missing theorem. Row 62 is complete: its (c) and (d) parts landed through rows 94–97, so the chain now contains syndrome extraction **as a circuit** (reading the ancilla *is* projecting the data onto the syndrome subspace, `ancProj_mul_extractMat_mul_ancInit`), the ancilla ladder’s fault propagation and with it the cat state’s justification (one `Z` fault on a shared ancilla reaches every control, `card_dataSupport_zLadd_bitAt_target`, against one data qubit for a cat state), the **extended rectangle with a faulty recovery** as a corrected step (`isCorrectedStep_exRec_of_good`), and **level reduction with the probabilistic join** (`isCorrectedStep_of_isCorrectedAtLevel`, `one_sub_le_measure_output_eq_concat`). ⚠️ The honest status of the threshold claim after that is the one row 97 records: the **statement** is a theorem in abstract form, with its gadget-set premise *named* — no concrete gadget set is plugged in, so it is **not** a threshold theorem for the Steane code, and noise is independent by modelling choice. Discharging that premise for one code is what "a fault-tolerant machine" would mean here. Row 62’s earlier rungs, for the record. (a) **landed 2026-09-28**: with the noise on the **gates**, a fault at one location of a transversal gadget is a weight-one error after the ideal gadget (`faultyTransversal_eq`), so the recovery returns the ideal output — concretely for a faulty transversal logical `X̄` on an encoded qubit (`steane_faultyLogicalX_recovery`) — and the circuit's own accounting is proved: the union bound over `N` locations and the level an accuracy needs (`circuitMeasure_circuitBad_le`, `steane_circuit_threshold`). Row 62 (b) and (e) landed with it: the transversal `X̄`, `Z̄` and Hadamard **are** the code's logical gates (`hadTransversal_conj_steaneProj`, `hadTransversal_conj_logicalX`), so the faulty-gate theorem covers a gate set and not one gate, and the overhead of the recursive simulation is **polylogarithmic** (`exists_level_overhead_le`). Row 62 (f) followed the same day: the transversal `CNOT` across two blocks **is** the logical `CNOT` (`cnotT_mul_pairEnc`, whose only input is the linearity of the code) and a fault at one of its seven locations is corrected by the two-block recovery (`steane_faultyCNOT_recovery`) — so the whole Clifford generating set is covered. What stood open there — the recovery gadget’s own faults, and the simulation theorem that makes the levels compose (row 62 (c) and (d)) — is what rows 94–97 closed, as above. The concatenated
 quantum recovery is no longer on this list: it landed 2026-09-27 (row 86, `exists_concat_recovery_unitary`), still at code capacity — perfect encoder and recovery gates.
 
 ## 11. Arithmetic and resource counts
@@ -356,6 +356,16 @@ measurement-gadget adders in [`Empirical/QM/`](../CsdLean4/Empirical/QM/) re-cos
 mid-circuit measurement. The elliptic-curve harness that turned these into machine sizes lives in a separate
 repository by design, with a one-way dependency on this one.
 
+**The synthesis cost.** The other resource count a machine needs is how many gates it takes to *reach*
+a target unitary, and that landed **2026-10-06** (row 74, through rows #112–#117): for every
+determinant-one unitary and every small enough `ε` there is a Clifford+T **word** within `ε` of it of
+length at most `K·log(1/ε)^c`, with `c = log 5 / log(3/2)` bracketed in `(3, 4)`
+(`exists_word_approx_polylog`,
+[`Mathlib/QuantumInfo/SolovayKitaevCount.lean`](../CsdLean4/Mathlib/QuantumInfo/SolovayKitaevCount.lean)).
+The words are `skWords`, whose length obeys `5ⁿ·ℓ₀` because inverting a word costs nothing in this
+alphabet (`length_ctInvWord`, `length_le_of_mem_skWords`), and the error contracts at exponent `3/2`
+(`skError_le_rpow`); eliminating the level count between the two is what produces the bound.
+
 **The seam, closed.** `R-013` was the `n`-fold hybrid amplitude equality that threads the non-permutation
 gadget through every block of the adder; it is proved (`hybridAdd_amplitude`,
 [`Empirical/QM/MeasurementAdderHybrid.lean`](../CsdLean4/Empirical/QM/MeasurementAdderHybrid.lean), on the
@@ -367,7 +377,15 @@ right, is `gidneyHybridAdd_amplitude`
 ([`Empirical/QM/MeasurementGidneyAdderHybrid.lean`](../CsdLean4/Empirical/QM/MeasurementGidneyAdderHybrid.lean)).
 
 **What is not claimed.** Average-case costs. The corpus's counts are worst-case gate counts; the harness's
-metric is executed Toffolis times peak qubits, and the two are not the same number.
+metric is executed Toffolis times peak qubits, and the two are not the same number. Nor any constant in
+the synthesis bound: `K` and the accuracy it holds below are **existential**, inherited from the
+compactness net that supplies the base case, so what is quantitative there is the *exponent* alone. And
+that exponent is a **cost model**, not a fact about `{H, T}`: the letters are `H`, `T` and `T⁻¹`, so
+inverting a word is free and a level of the recursion costs five, where over two letters a shortest
+`T⁻¹` is `T⁷`, a level costs seventeen and the exponent is `log 17 / log(3/2)`. The choice costs no
+generality (`mem_cliffordT_iff_exists_word`), and the literature's `3 + δ` needs a different net and is
+not claimed. Nothing is computed either: the word comes from a recursion over an existence statement,
+not from an algorithm.
 
 ## The four kinds of seam, and where each is tracked
 
@@ -378,9 +396,18 @@ metric is executed Toffolis times peak qubits, and the two are not the same numb
   above where a theorem can (Posit 2 and the base half of Posit 9 are now forced by symmetry).
 * **Open mathematics** has a Lean shape and no proof yet: `R-016` and the
   `Σ`-twins of the algorithms. Each is a numbered row of [`specs/BACKLOG.md`](../specs/BACKLOG.md).
+  `R-019`, the fibre relaxation, has the same character but is not a link of this chain: it belongs to
+  the prediction programme, not the reconstruction, and its monotonicity clause landed 2026-10-06
+  while the convergence it would need stays open.
 * **Open foundations** is one item: Posit 1's discharge, the cell law from the de-isolation dynamics. It is
   the reconstruction frontier, and the ledgers say it is not a brick.
 
 So the chain from the postulates to a working machine's parts is continuous, with a theorem behind every
 link, and the only research seam in it is the cell law. What the chain does not yet contain is a
-fault-tolerant machine.
+fault-tolerant machine: the circuit-level threshold theorem is in it, in the abstract form row 97
+states, and what is missing is its gadget-set premise discharged for a concrete code.
+
+Three residues remain open in the whole registry — `R-012` (Posit 2’s, a design posit constrained from
+above), `R-016` (open mathematics, with a Lean shape) and `R-019` (the prediction programme, not this
+chain). Every residue this page was written to track at the quantum-computer end, `R-001` through
+`R-006` and `R-013`, is discharged.
