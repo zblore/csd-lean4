@@ -4438,4 +4438,46 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.one_sub_le_robust_fraction_readyPrep
 
+-- BACKLOG #18 / R-019 BRICK (b): THE COARSE-GRAINED ARROW ON THE FIBRE
+-- (SigmaLayer/FibreCoarseArrow.lean, 2026-10-06, the fibre instance of brick (a)).
+-- R-019 asks for a relaxation H-theorem on the fibre: for a partition into cells of size delta the
+-- coarse-grained relative entropy with respect to Haar decreases, and the distribution approaches
+-- Haar. It has stood open as research-grade, blocked on first-passage asymptotics for small sets.
+-- This settles the FIRST CLAUSE and, in doing so, says exactly where the difficulty is not.
+-- circCell, torusCell and fibreCell cut the fibre into (m+1)^2 cells, measurable through
+-- AddCircle.measurableEquivIoc and Nat.measurable_floor; fibreStroke is the hyperbolic catStroke
+-- acting on Sigma with the base fixed, measure-preserving for kMuL because kMuL is a product.
+-- antitone_klDiv_fibreCell_stroke: the coarse-grained relative entropy from the Haar cell law is
+-- NON-INCREASING along the hyperbolic stroke, monotonically in the number of steps.
+-- antitone_klDiv_fibreCell_kFlow: AND ALONG THE TRANSLATION TOO, by the same one-line instantiation.
+-- THE PAIR IS THE POINT. relaxation_requires_hyperbolic_fibre, in this file's own import, proves that
+-- on one and the same fibre the translation kFlow admits NO summable decay envelope while catStroke
+-- has a finitely supported one - the corpus's reason for saying relaxation needs a hyperbolic fibre
+-- map. Yet both maps satisfy the monotonicity clause. So THE MONOTONE DECREASE IS NOT THE CONTENT OF
+-- RELAXATION and cannot distinguish a fibre that relaxes from one that does not: it holds for any
+-- measure-preserving map and any finite measurable partition, cell geometry included. R-019's
+-- difficulty is located entirely in its second clause - that the divergence tends to 0, at a rate set
+-- by the cell size - and that is where first-passage asymptotics are needed. The split is now visible
+-- rather than inferred, and is BACKLOG #118.
+-- NOT claimed: NO CONVERGENCE for either map; NO RATE, and nothing about delta - the cells are indexed
+-- by m and m appears in no bound; NOT A RELAXATION THEOREM and in particular not a Track B
+-- prediction, which needs a fibre demonstrably OUT of equilibrium that returns to it; and the arrow is
+-- for the induced macro chain, not for coarse-graining the fine orbit.
+-- Foundational-triple.
+/-- info: 'CSD.SigmaLayer.measurable_fibreCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.measurable_fibreCell
+
+/-- info: 'CSD.SigmaLayer.fibreStroke_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fibreStroke_measurePreserving
+
+/-- info: 'CSD.SigmaLayer.antitone_klDiv_fibreCell_stroke' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.antitone_klDiv_fibreCell_stroke
+
+/-- info: 'CSD.SigmaLayer.antitone_klDiv_fibreCell_kFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.antitone_klDiv_fibreCell_kFlow
+
 end CSD.Tests.AxiomAudit

@@ -10865,4 +10865,48 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.SU2.exists_word_approx_polylog
 
+-- BACKLOG #18 / R-019 BRICK (a): THE COARSE-GRAINED ARROW FOR AN ARBITRARY FINITE COARSE-GRAINING
+-- (Mathlib/InformationTheory/CoarseGrainArrow.lean, 2026-10-06).
+-- #109 proved an H-theorem for ONE coarse-graining - the record string on Sigma - and its proof used
+-- nothing about records beyond measurability into a finite type. This is that proof with the
+-- vocabulary abstracted: a probability measure pi on alpha, a finite beta, a measurable q from alpha
+-- to beta, and a pi-preserving F on alpha. coarseLaw pi q = pi.map q; coarseStep and coarseKernel are
+-- the INDUCED MACRO DYNAMICS (from a cell, condition pi on it, evolve by F, read the cell; null cells
+-- get dirac, which keeps the kernel Markov on the nose). comp_coarseLaw: one macro step is the
+-- pushforward along q composed with F. comp_coarseLaw_of_measurePreserving: INVARIANCE OF THE FINE
+-- MEASURE MAKES THE COARSE LAW STATIONARY - the reference law the divergence is measured from is not
+-- chosen, it is the coarse-grained law itself. antitone_klDiv_coarseLaw is the H-theorem, and
+-- monotone_measureEntropy_coarseLaw the entropy form through #110 when the cells carry equal weight.
+-- NOT claimed, and both caveats are in the header. THE ARROW IS FOR THE INDUCED MACRO CHAIN, not for
+-- coarse-graining the fine orbit: the statement that
+-- klDiv (coarseLaw (pi.map F^[n]) q) (coarseLaw pi q) decreases is FALSE as a theorem - for a
+-- measure-preserving F that quantity is CONSTANT, by data processing in both directions - which is
+-- why coarseStep is a definition here and not a hypothesis. And MONOTONE IS NOT CONVERGENT: nothing
+-- says the divergence tends to 0, and nothing depends on the geometry of the cells. A rate is where
+-- the cell size enters, and that is R-019's remaining half, now BACKLOG #118.
+-- Foundational-triple.
+/-- info: 'InformationTheory.isMarkovKernel_coarseKernel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.isMarkovKernel_coarseKernel
+
+/-- info: 'InformationTheory.coarseStep_apply_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.coarseStep_apply_mul
+
+/-- info: 'InformationTheory.comp_coarseLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.comp_coarseLaw
+
+/-- info: 'InformationTheory.comp_coarseLaw_of_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.comp_coarseLaw_of_measurePreserving
+
+/-- info: 'InformationTheory.antitone_klDiv_coarseLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.antitone_klDiv_coarseLaw
+
+/-- info: 'InformationTheory.monotone_measureEntropy_coarseLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.monotone_measureEntropy_coarseLaw
+
 end CSD.Tests.AxiomAudit
