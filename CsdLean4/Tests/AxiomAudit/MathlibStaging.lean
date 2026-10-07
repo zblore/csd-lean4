@@ -10909,4 +10909,67 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms InformationTheory.monotone_measureEntropy_coarseLaw
 
+-- BACKLOG #92(a) BRICK (a1): THE WEYL OPERATOR'S SYMBOL CLASS
+-- (Mathlib/Analysis/Fourier/WeylSymbolClass.lean, 2026-10-07).
+-- #92's own measurement of its part (a) was that Op(a) as a continuous operator on Schwartz space is
+-- NOT a gap in the proofs but A STATEMENT NEEDING A DIFFERENT SYMBOL CLASS: with weylOp's datum, a
+-- family b from R to Schwartz(R) with no regularity in its first slot, weylOp b psi need not even be
+-- continuous. WignerWeyl.lean works around that by ASSUMING what it needs - integrable_weylPair takes
+-- joint continuity (hbc) and a bound integrable in the first slot (hM, hbM) as hypotheses. This file
+-- fixes the class and discharges those hypotheses as theorems.
+-- exists_bound_fst and exists_bound_snd: a Schwartz function on the plane decays like (1 + t^2)^-1 in
+-- EACH SLOT SEPARATELY, uniformly in the other - two orders of SchwartzMap.decay (k = 2 and k = 0)
+-- together with ||p||^2 >= p_i^2. weylOpK is the Weyl operator of a JOINTLY SCHWARTZ KERNEL, and
+-- weylOpK_eq_weylOp is the bridge: it agrees with weylOp of any slice family, so everything already
+-- proved about weylOp transfers whenever a slice family is available. continuous_weylKernel and
+-- exists_integrable_bound are WignerWeyl.lean's three assumed hypotheses, now theorems on this class.
+-- integrable_weylOpK_integrand and continuous_weylOpK are THE DEFECT #92 RECORDED, FIXED: on the
+-- Schwartz kernel class the Weyl operator's output IS continuous, by dominated continuity
+-- (continuousAt_of_dominated) against 4C(1 + (y - x_0)^2)^-1, the majorant the second-slot decay
+-- supplies uniformly for parameters within 1 of the point (norm_weylKernel_le, whose arithmetic is
+-- the identity (d - a)^2 <= 2d^2 + 2a^2 at d = x - x_0 and a = x - y).
+-- NOT claimed, and both caveats are in the header. THIS IS THE SYMBOL CLASS, NOT THE CALCULUS:
+-- Op(a) as a continuous map of Schwartz space into itself is NOT proved - continuity of the output
+-- function is the FIRST of the Schwartz seminorm estimates, not the last - and the remaining
+-- obstruction is the one #92 measured and is unchanged, namely differentiation under the integral sign
+-- TO ALL ORDERS WITH BOUNDS, which the pin has in no form for integrals over R (the corpus's
+-- ContDiffParametricIntervalIntegral.lean, from #60, is INTERVAL integrals on a compact interval,
+-- where the bounds come free from continuity); that is BACKLOG #120. And NO SLICING:
+-- weylOpK_eq_weylOp takes the slice family as a HYPOTHESIS, because that a Schwartz function on the
+-- plane slices into a Schwartz-valued family is exactly the two-variable Schwartz API #92 names as
+-- absent, which is BACKLOG #121 - and the reason the properties above are proved for weylOpK directly
+-- rather than inherited through weylOp.
+-- Foundational-triple.
+/-- info: 'WignerFunction.exists_bound_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.exists_bound_fst
+
+/-- info: 'WignerFunction.exists_bound_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.exists_bound_snd
+
+/-- info: 'WignerFunction.weylOpK_eq_weylOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylOpK_eq_weylOp
+
+/-- info: 'WignerFunction.continuous_weylKernel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.continuous_weylKernel
+
+/-- info: 'WignerFunction.exists_integrable_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.exists_integrable_bound
+
+/-- info: 'WignerFunction.norm_weylKernel_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_weylKernel_le
+
+/-- info: 'WignerFunction.integrable_weylOpK_integrand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integrable_weylOpK_integrand
+
+/-- info: 'WignerFunction.continuous_weylOpK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.continuous_weylOpK
+
 end CSD.Tests.AxiomAudit
