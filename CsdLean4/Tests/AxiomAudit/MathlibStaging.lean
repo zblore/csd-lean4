@@ -10972,4 +10972,78 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.continuous_weylOpK
 
+-- BACKLOG #120: DIFFERENTIATION UNDER THE INTEGRAL SIGN, TO ALL ORDERS
+-- (Mathlib/Analysis/Calculus/ContDiffParametricIntegral.lean, 2026-10-07, out of #92's split).
+-- Mathlib differentiates a parametric integral ONCE
+-- (hasDerivAt_integral_of_dominated_loc_of_deriv_le and its fderiv siblings). The corpus
+-- differentiates one to ALL orders but only for an INTERVAL integral on a compact interval
+-- (ContDiffParametricIntervalIntegral.lean, #60), where the bounds come free from continuity on a
+-- compact set. For an integral over a general measure space there is no such shortcut and the bounds
+-- have to be hypotheses; this supplies that.
+-- partialDeriv F k is the k-th derivative of F in its PARAMETER, defined by recursion rather than
+-- through iteratedDeriv so the induction shifts the order with no API friction;
+-- partialDeriv_eq_iteratedDeriv is the bridge so a user can discharge bounds with either vocabulary,
+-- and partialDeriv_succ_left is the shift the induction runs on. contDiff_partialDeriv_one is the
+-- step that passes parameter-smoothness to the parameter derivative, through contDiff_succ_iff_deriv.
+-- contDiffOn_integral_of_bound is THE THEOREM: if each x |-> F x a is C^n in the parameter, each
+-- partialDeriv F k x is measurable in a, and the k-th one is bounded on an open U by an integrable
+-- bound k UNIFORMLY IN THE PARAMETER, then the integral is C^n on U. contDiff_integral_of_bound is
+-- the global corollary (U = univ) and contDiffOn_integral_of_bound_all is smoothness at every order.
+-- THE HYPOTHESES ARE THE STATEMENT, and the row that opened this warned that a version nobody can
+-- discharge would be worse than none - so they are one integrable function per order, valid for every
+-- parameter in U, rather than a Lipschitz modulus or something per-point. The U is there because that
+-- is how such bounds actually arise: for a kernel like K ((x + y)/2, x - y) the majorant depends on
+-- where the parameter sits, so a bound uniform on a ball is available and a globally uniform one is
+-- not. ContDiffOn on an open set is exactly what that buys.
+-- AND THE INTERFACE IS SHOWN DISCHARGEABLE rather than asserted to be:
+-- contDiff_integral_schwartz_sub_mul proves CONVOLUTION WITH A SCHWARTZ FUNCTION IS SMOOTH TO EVERY
+-- ORDER for any integrable weight, meeting all four hypotheses - partialDeriv_sub_mul computes the
+-- parameter derivatives as iteratedDeriv k f (x - t) * g t through deriv_comp_sub_const, and
+-- exists_bound_iteratedDeriv supplies the uniform bound from decay 0 k, which is exactly the
+-- "uniformly in the parameter" the bound family asks for.
+-- NOT claimed: NO FORMULA FOR THE DERIVATIVES - the proof produces
+-- deriv (integral) = integral of partialDeriv F 1 on U as a by-product of each step, but the
+-- statement records only the smoothness; exposing the identity at every order would want a statement
+-- about iteratedDeriv OF the integral, which nothing needs. And the PARAMETER IS ONE-DIMENSIONAL: the
+-- integration variable ranges over an arbitrary measure space, but the parameter is in R, which is
+-- what lets the proof use deriv throughout and keeps the bounds scalar; the fderiv version over a
+-- finite-dimensional parameter is the same induction with ContinuousLinearMap plumbing and is not
+-- done here. #92(a3) is the consumer this was built for and remains open.
+-- Foundational-triple.
+/-- info: 'partialDeriv_eq_iteratedDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms partialDeriv_eq_iteratedDeriv
+
+/-- info: 'partialDeriv_succ_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms partialDeriv_succ_left
+
+/-- info: 'contDiff_partialDeriv_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiff_partialDeriv_one
+
+/-- info: 'contDiffOn_integral_of_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_integral_of_bound
+
+/-- info: 'contDiff_integral_of_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiff_integral_of_bound
+
+/-- info: 'contDiffOn_integral_of_bound_all' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_integral_of_bound_all
+
+/-- info: 'partialDeriv_sub_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms partialDeriv_sub_mul
+
+/-- info: 'exists_bound_iteratedDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_bound_iteratedDeriv
+
+/-- info: 'contDiff_integral_schwartz_sub_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiff_integral_schwartz_sub_mul
+
 end CSD.Tests.AxiomAudit

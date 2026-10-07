@@ -654,6 +654,7 @@ public import CsdLean4.Mathlib.Analysis.ODE.FlowDerivative
 public import CsdLean4.Mathlib.Analysis.ODE.FlowSmooth
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianLieDerivative
 public import CsdLean4.Mathlib.Analysis.Calculus.ContDiffParametricIntervalIntegral
+public import CsdLean4.Mathlib.Analysis.Calculus.ContDiffParametricIntegral
 public import CsdLean4.Mathlib.Analysis.Calculus.DifferentialForm.Poincare
 public import CsdLean4.Mathlib.Geometry.Manifold.Darboux
 public import CsdLean4.Mathlib.Geometry.Manifold.DarbouxStandardForm
