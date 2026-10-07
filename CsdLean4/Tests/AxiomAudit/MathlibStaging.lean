@@ -11187,4 +11187,37 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms contDiffOn_integral_of_dirBound_all
 
+-- BACKLOG #124, ADDENDUM 2026-10-07: THE MULTILINEAR INTERFACE AS A COROLLARY OF THE DIRECTIONAL ONE
+-- (same module). Added after #121(ii) tried to consume #124 and COULD NOT: SchwartzMap.decay gives
+-- bounds on iteratedFDeriv, so without a bridge the directional hypotheses were not dischargeable
+-- from Schwartz data and the file was unusable by the row it was built for. #124 was under-delivered
+-- as landed, and trying to consume it is what showed that.
+-- norm_dirDeriv_le: an iterated DIRECTIONAL derivative is bounded by the iterated TOTAL derivative
+-- times the product of the directions' norms. The induction peels the INNERMOST direction through
+-- dirDeriv_append_singleton - peeling the head does not work, because the head is the outermost
+-- derivative and the result is then not of the form dirDeriv G hs for any G - turns the evaluation
+-- into a left composition with ContinuousLinearMap.apply
+-- (ContinuousLinearMap.iteratedFDeriv_comp_left, with norm_applyCLM_le bounding its operator norm by
+-- the direction's) and puts the extra order back with norm_iteratedFDeriv_fderiv. Smoothness is
+-- assumed outright rather than tracked order by order, which is what removes all the bookkeeping and
+-- is what a Schwartz integrand supplies anyway.
+-- contDiffOn_integral_of_iteratedFDeriv_bound is then the form a user with SchwartzMap.decay data
+-- actually has, and it makes the module header's claim honest: the directional form is easier to meet
+-- AND strictly more general, since the multilinear form follows from it rather than competing with it.
+-- NOT claimed: #121(ii) is still open. This supplies what it needs from #124 and nothing more - the
+-- joint Schwartz conclusion also wants the Fourier seminorm identities and a Leibniz expansion across
+-- the exponential, which is where that row now sits.
+-- Foundational-triple.
+/-- info: 'norm_applyCLM_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_applyCLM_le
+
+/-- info: 'norm_dirDeriv_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_dirDeriv_le
+
+/-- info: 'contDiffOn_integral_of_iteratedFDeriv_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiffOn_integral_of_iteratedFDeriv_bound
+
 end CSD.Tests.AxiomAudit

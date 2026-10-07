@@ -35,7 +35,13 @@ recursion is then literally list-append:
   open `U` by `(∏ ‖hᵢ‖)·bound hs.length a` with each `bound k` integrable, then `x ↦ ∫ a, F x a` is
   `C^n` on `U`;
 * ★★ `contDiff_integral_of_dirBound` — the global corollary, and ★★
-  `contDiffOn_integral_of_dirBound_all` smoothness at every order.
+  `contDiffOn_integral_of_dirBound_all` smoothness at every order;
+* ★★ `norm_dirDeriv_le` and ★★ `contDiffOn_integral_of_iteratedFDeriv_bound` — **the multilinear
+  interface, as a corollary of the directional one.** Added after #121(ii) tried to consume this file
+  and could not: `SchwartzMap.decay` gives bounds on `iteratedFDeriv`, so without the bridge the
+  directional hypotheses were not dischargeable from Schwartz data and the file was unusable by the
+  row it was built for. The bridge also makes the header's claim honest — the directional form is
+  easier to meet *and* strictly more general, since the multilinear form follows from it.
 
 The product `∏ ‖hᵢ‖` is what makes the bound family shift cleanly: appending one direction `h`
 multiplies it by `‖h‖` and raises the order by one, so the inner call runs with
@@ -258,5 +264,97 @@ theorem contDiffOn_integral_of_dirBound_all {F : H → α → E} {U : Set H} {bo
   contDiffOn_integral_of_dirBound m F U bound hU (hsm m) (fun hs _ x => hmeas hs x)
     (fun hs _ x => hmeasD hs x) (fun k _ => hint k) (fun k _ a => hb0 k a)
     fun hs _ x hx a => hbd hs x hx a
+
+/-! ### The multilinear interface, as a corollary of the directional one
+
+This file's header claims the directional hypotheses are easier to meet than multilinear ones. That
+is only worth claiming if the multilinear form *follows*, so here it does. The bridge is that an
+iterated directional derivative is bounded by the iterated total derivative times the product of the
+directions' norms — proved by peeling the **innermost** direction, which is what
+`dirDeriv_append_singleton` is for. -/
+
+omit [FiniteDimensional ℝ H] in
+theorem norm_applyCLM_le (h : H) : ‖ContinuousLinearMap.apply ℝ E h‖ ≤ ‖h‖ := by
+  refine ContinuousLinearMap.opNorm_le_bound _ (norm_nonneg h) fun L => ?_
+  rw [mul_comm]
+  exact L.le_opNorm h
+
+omit [MeasurableSpace α] [FiniteDimensional ℝ H] in
+/-- ★★ **A directional derivative is bounded by the total one.** The induction peels the innermost
+direction through `dirDeriv_append_singleton`, turns the evaluation into a left composition with
+`ContinuousLinearMap.apply` (`ContinuousLinearMap.iteratedFDeriv_comp_left`), and puts the extra
+order back with `norm_iteratedFDeriv_fderiv`. Smoothness is assumed outright, which is what removes
+all order bookkeeping and is what a Schwartz integrand supplies. -/
+theorem norm_dirDeriv_le :
+    ∀ (hs : List H) (F : H → α → E), (∀ a, ContDiff ℝ (⊤ : ℕ∞) fun y => F y a) →
+      ∀ (x : H) (a : α),
+        ‖dirDeriv F hs x a‖
+          ≤ ‖iteratedFDeriv ℝ hs.length (fun y => F y a) x‖ * dirWeight hs := by
+  intro hs
+  induction hs using List.reverseRecOn with
+  | nil =>
+      intro F _ x a
+      simp [norm_iteratedFDeriv_zero]
+  | append_singleton hs h ih =>
+      intro F hsm x a
+      -- the innermost derivative, as a left composition with evaluation at `h`
+      have hfd : ∀ a, ContDiff ℝ (⊤ : ℕ∞) fun y => fderiv ℝ (fun z => F z a) y := fun a =>
+        (hsm a).fderiv_right (by exact_mod_cast le_top)
+      have hG : ∀ a, ContDiff ℝ (⊤ : ℕ∞) fun y => dirDeriv F [h] y a := fun a =>
+        (hfd a).clm_apply contDiff_const
+      have hcomp : (fun y => dirDeriv F [h] y a)
+          = (ContinuousLinearMap.apply ℝ E h) ∘ fun y => fderiv ℝ (fun z => F z a) y := rfl
+      have hiter : iteratedFDeriv ℝ hs.length (fun y => dirDeriv F [h] y a) x
+          = (ContinuousLinearMap.apply ℝ E h).compContinuousMultilinearMap
+              (iteratedFDeriv ℝ hs.length (fun y => fderiv ℝ (fun z => F z a) y) x) := by
+        rw [hcomp]
+        exact (ContinuousLinearMap.apply ℝ E h).iteratedFDeriv_comp_left
+          ((hfd a).contDiffAt) (by exact_mod_cast le_top)
+      have hnorm : ‖iteratedFDeriv ℝ hs.length (fun y => dirDeriv F [h] y a) x‖
+          ≤ ‖h‖ * ‖iteratedFDeriv ℝ (hs.length + 1) (fun y => F y a) x‖ := by
+        rw [hiter]
+        calc ‖(ContinuousLinearMap.apply ℝ E h).compContinuousMultilinearMap
+                (iteratedFDeriv ℝ hs.length (fun y => fderiv ℝ (fun z => F z a) y) x)‖
+            ≤ ‖ContinuousLinearMap.apply ℝ E h‖
+                * ‖iteratedFDeriv ℝ hs.length (fun y => fderiv ℝ (fun z => F z a) y) x‖ :=
+              ContinuousLinearMap.norm_compContinuousMultilinearMap_le _ _
+          _ ≤ ‖h‖ * ‖iteratedFDeriv ℝ (hs.length + 1) (fun y => F y a) x‖ := by
+              gcongr
+              · exact norm_applyCLM_le h
+              · rw [norm_iteratedFDeriv_fderiv]
+      -- assemble
+      have hIH := ih (dirDeriv F [h]) hG x a
+      rw [dirDeriv_append_singleton] at hIH
+      rw [dirWeight_append_singleton, List.length_append, List.length_cons, List.length_nil]
+      calc ‖dirDeriv F (hs ++ [h]) x a‖
+          ≤ ‖iteratedFDeriv ℝ hs.length (fun y => dirDeriv F [h] y a) x‖ * dirWeight hs := hIH
+        _ ≤ ‖h‖ * ‖iteratedFDeriv ℝ (hs.length + 1) (fun y => F y a) x‖ * dirWeight hs := by
+            gcongr
+            exact dirWeight_nonneg hs
+        _ = ‖iteratedFDeriv ℝ (hs.length + 0 + 1) (fun y => F y a) x‖ * (dirWeight hs * ‖h‖) := by
+            simp; ring
+
+/-- ★★ **The multilinear form of this file's theorem**, for a user whose bounds come from
+`iteratedFDeriv` — which is what `SchwartzMap.decay` gives. It is a corollary of the directional form,
+which is the claim the header makes. -/
+theorem contDiffOn_integral_of_iteratedFDeriv_bound {F : H → α → E} {U : Set H}
+    {bound : ℕ → α → ℝ} (hU : IsOpen U)
+    (hsm : ∀ a, ContDiff ℝ (⊤ : ℕ∞) fun x => F x a)
+    (hmeas : ∀ (hs : List H) (x : H), AEStronglyMeasurable (fun a => dirDeriv F hs x a) μ)
+    (hmeasD : ∀ (hs : List H) (x : H),
+      AEStronglyMeasurable (fun a => fderiv ℝ (fun y => dirDeriv F hs y a) x) μ)
+    (hint : ∀ k : ℕ, Integrable (bound k) μ)
+    (hb0 : ∀ (k : ℕ) (a : α), 0 ≤ bound k a)
+    (hbd : ∀ (k : ℕ), ∀ x ∈ U, ∀ a, ‖iteratedFDeriv ℝ k (fun y => F y a) x‖ ≤ bound k a)
+    (m : ℕ) :
+    ContDiffOn ℝ (m : ℕ) (fun x => ∫ a, F x a ∂μ) U := by
+  refine contDiffOn_integral_of_dirBound_all hU (fun k a => (hsm a).of_le (by exact_mod_cast le_top))
+    hmeas hmeasD hint hb0 (fun hs x hx a => ?_) m
+  calc ‖dirDeriv F hs x a‖
+      ≤ ‖iteratedFDeriv ℝ hs.length (fun y => F y a) x‖ * dirWeight hs :=
+        norm_dirDeriv_le hs F hsm x a
+    _ ≤ bound hs.length a * dirWeight hs :=
+        mul_le_mul_of_nonneg_right (hbd hs.length x hx a) (dirWeight_nonneg hs)
+    _ = dirWeight hs * bound hs.length a := by ring
 
 end
