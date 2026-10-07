@@ -11092,4 +11092,43 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.integral_conj_mul_weylOpK
 
+-- BACKLOG #121(ii), PARTIALLY: THE SYMBOL OF A SCHWARTZ KERNEL AT EACH MIDPOINT
+-- (Mathlib/Analysis/Fourier/PartialFourier.lean, 2026-10-07).
+-- #121(ii) asked for the PARTIAL FOURIER TRANSFORM on Schwartz functions of the plane: the transform
+-- in the second slot alone, landing in Schwartz functions ON THE PLANE. What is delivered is the
+-- SLICE-WISE transform, which is the object weylSymbol actually is.
+-- SchwartzMap.sliceFourierCLM composes #121(i)'s sliceCLM with Mathlib's fourierTransformCLM, so the
+-- symbol at a fixed midpoint IS a Schwartz function of the frequency, continuously and linearly in the
+-- kernel; weylSymbol_slice_apply identifies it with the corpus's weylSymbol of the slice family, and
+-- integrable_weylSymbol_slice with exists_bound_weylSymbol_slice are the two consequences a consumer
+-- wants, both free once the symbol slice is Schwartz.
+-- NOT claimed, and this is the point of the file: THIS DOES NOT CLOSE #121(ii), AND THE JOINT
+-- STATEMENT IS NOT A COROLLARY OF IT. That (u, xi) |-> weylSymbol (slice K) u xi is Schwartz ON THE
+-- PLANE needs decay and smoothness JOINTLY, and slice-wise Schwartzness gives neither, since every
+-- constant here may depend on the midpoint u.
+-- AND THE REASON IS STRUCTURAL, WHICH IS NEW INFORMATION THE ROW DID NOT HAVE. The natural proof of
+-- the joint statement factors through the CURRY of Schwartz spaces on a product, after which a partial
+-- transform is just fourierTransformCLM applied in the inner factor - and Mathlib has no such curry,
+-- whose first half is #123. The alternative is bespoke: differentiate under the integral in BOTH
+-- variables to all orders, which needs the finite-dimensional-parameter version of #120 (that row's
+-- own scope note records its one-dimensional restriction), plus the seminorm estimates assembled
+-- against K's decay. Either way it is not a one-sitting build, which the row's L did not reflect; the
+-- joint form is re-priced and kept open as #121(ii).
+-- Foundational-triple.
+/-- info: 'SchwartzMap.sliceFourierCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.sliceFourierCLM_apply
+
+/-- info: 'WignerFunction.weylSymbol_slice_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylSymbol_slice_apply
+
+/-- info: 'WignerFunction.integrable_weylSymbol_slice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integrable_weylSymbol_slice
+
+/-- info: 'WignerFunction.exists_bound_weylSymbol_slice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.exists_bound_weylSymbol_slice
+
 end CSD.Tests.AxiomAudit

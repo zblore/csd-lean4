@@ -14,9 +14,9 @@ public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
 BACKLOG #92(a), brick (a1).
 
-#92's measurement of its own part (a) was that `Op(a)` as a continuous operator on `𝒢(ℝ, ℂ)` is *not*
+#92's measurement of its own part (a) was that `Op(a)` as a continuous operator on `𝓢(ℝ, ℂ)` is *not*
 a gap in the proofs but **a statement needing a different symbol class**: with `weylOp`'s datum — a
-family `b : ℝ → 𝒢(ℝ, ℂ)` with no regularity in its first slot — `weylOp b ψ` need not even be
+family `b : ℝ → 𝓢(ℝ, ℂ)` with no regularity in its first slot — `weylOp b ψ` need not even be
 continuous. `WignerWeyl.lean` works around this by *assuming* what it needs: `integrable_weylPair`
 takes joint continuity (`hbc`) and a uniform bound integrable in the first slot (`hM`, `hbM`) as
 hypotheses.
@@ -38,7 +38,7 @@ This file fixes the class and discharges those hypotheses as theorems.
 
 ## Honest scope
 
-⚠️ **This is the symbol class, not the calculus.** `Op(a) : 𝒢(ℝ, ℂ) →L 𝒢(ℝ, ℂ)` is *not* proved —
+⚠️ **This is the symbol class, not the calculus.** `Op(a) : 𝓢(ℝ, ℂ) →L 𝓢(ℝ, ℂ)` is *not* proved —
 continuity of the output function is the first of the Schwartz seminorm estimates, not the last. The
 remaining obstruction is the one #92 measured and it is unchanged: smoothness of the output to all
 orders needs differentiation under the integral sign **to all orders with bounds**, which the pin has

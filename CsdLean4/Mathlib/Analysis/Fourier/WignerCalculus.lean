@@ -39,7 +39,7 @@ operator form:
 
 * `posCLM` and `momCLM` — the position operator `Xψ = xψ` and, in the conventions of `Wigner.lean`
   (momentum `p = 2πξ`), the momentum operator `P = (2πi)⁻¹ d/dx`, both as continuous operators on
-  `𝒢(ℝ, ℂ)`;
+  `𝓢(ℝ, ℂ)`;
 * ★★ `integral_integral_wigner_pos` and ★★ `integral_integral_wigner_mom` — the symbols `x` and `ξ`
   average against `W_ψ` to `⟨ψ, Xψ⟩` and `⟨ψ, Pψ⟩`;
 * ★★★ `integral_integral_wigner_posMom` — **the symbol `xξ` averages to `⟨ψ, ½(XP + PX)ψ⟩`**, the
@@ -59,11 +59,11 @@ Along the way, three lemmas that are about the Fourier transform rather than abo
 here is what it was wanted for — joint measurability, square-integrability, and the product-measure
 form of the overlap identity — by a cheaper route: slicewise Plancherel plus a convolution, rather
 than seminorm estimates on the plane. The Schwartz property itself would need the partial Fourier
-transform to act on `𝒢(ℝ², ℂ)`, which the pin has in no form.
+transform to act on `𝓢(ℝ², ℂ)`, which the pin has in no form.
 
-⚠️ **`Op(a)` is still not an operator on `𝒢(ℝ, ℂ)`** (#92(a)). Nothing here maps Schwartz functions
+⚠️ **`Op(a)` is still not an operator on `𝓢(ℝ, ℂ)`** (#92(a)). Nothing here maps Schwartz functions
 to Schwartz functions, composes symbols, or takes adjoints. With `weylOp`'s datum — a family
-`b : ℝ → 𝒢(ℝ, ℂ)` with no regularity in its first slot — `weylOp b ψ` need not even be continuous,
+`b : ℝ → 𝓢(ℝ, ℂ)` with no regularity in its first slot — `weylOp b ψ` need not even be continuous,
 so this is not a gap in the proofs but a statement that needs a different symbol class (a jointly
 Schwartz kernel), and then differentiation under the integral sign **to all orders with bounds**,
 which neither Mathlib nor this corpus has

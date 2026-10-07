@@ -32,11 +32,11 @@ rather than linear and `fun_prop` has no `Prod.mk` rule for `HasTemperateGrowth`
 ## Honest scope
 
 ⚠️ **Continuity in the slice parameter is not proved**, and that is the other half of #121(i). What is
-continuous here is slicing *in the kernel* (`sliceCLM` is a continuous linear map `𝒢(E × F, G) →L
-𝒢(F, G)` for each fixed `e`), which is what transfers theorems. That `e ↦ slice K e` is continuous
-into `𝒢(F, G)` for the Schwartz topology is a different statement, it needs one more order of decay
+continuous here is slicing *in the kernel* (`sliceCLM` is a continuous linear map `𝓢(E × F, G) →L
+𝓢(F, G)` for each fixed `e`), which is what transfers theorems. That `e ↦ slice K e` is continuous
+into `𝓢(F, G)` for the Schwartz topology is a different statement, it needs one more order of decay
 and a mean-value estimate in the sliced variable, and Mathlib has no curry
-`𝒢(E × F, G) ≃ 𝒢(E, 𝒢(F, G))` to get it from. It is **#123**, and nothing in the corpus needs it.
+`𝓢(E × F, G) ≃ 𝓢(E, 𝓢(F, G))` to get it from. It is **#123**, and nothing in the corpus needs it.
 
 ⚠️ **No partial Fourier transform**, which is #121(ii) and the half a pseudodifferential calculus
 would need.
