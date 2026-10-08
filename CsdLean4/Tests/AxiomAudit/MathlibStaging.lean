@@ -11279,6 +11279,80 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms norm_iteratedFDeriv_integral_le
 
+-- BACKLOG #126(ii): INTEGRATING OUT ONE VARIABLE PRESERVES SCHWARTZ SPACE
+-- (Mathlib/Analysis/Fourier/SchwartzPartialIntegral.lean, 2026-10-08).
+-- SchwartzMap.integralLastCLM is 𝓢(E × ℝ, F) →L[ℂ] 𝓢(E, F), G ↦ fun p => integral over t of G (p, t).
+-- Mathlib has SchwartzMap.integralCLM, which integrates over the WHOLE domain into a scalar, and
+-- nothing that integrates out ONE variable: this is the two-variable gap #121 names, in its integral
+-- form, and it is what #126 needs - a composite integral kernel is exactly one variable integrated
+-- out of a product of two kernels.
+-- SMOOTHNESS is #124 and DECAY is #126's gate (norm_iteratedFDeriv_integral_le). What this file
+-- supplies is the BRIDGE FROM SCHWARTZ DATA TO #124's DIRECTIONAL HYPOTHESES, in three pieces.
+-- (1) iteratedFDeriv_comp_inl is the iterated chain rule through the inclusion y -> (y, t), with
+-- norm_iteratedFDeriv_comp_inl_le: a derivative in the first factor is no bigger than the full
+-- derivative, because the inclusion has norm one.
+-- (2) THE MEASURABILITY HYPOTHESES, WHICH NOTHING HAD DISCHARGED BEFORE. #124's scope note flags one
+-- of its hypotheses as unavoidably operator-valued (Mathlib's first-derivative theorem forces it).
+-- contDiff_prodDirDeriv + dirDeriv_eq_prodDirDeriv are how both get discharged: folding the
+-- inclusion into the recursion makes each directional derivative a SLICE OF SOMETHING JOINTLY
+-- SMOOTH, hence continuous in the integration variable, hence measurable - and
+-- aestronglyMeasurable_fderiv_dirDeriv_prodMk is the operator-valued one, which is continuity of a
+-- CLM-valued map on ℝ (the domain is second countable, so only metrizability of the target is
+-- needed, and a normed space has it).
+-- (3) one_add_norm_pow_mul_norm_iteratedFDeriv_le is THE WEIGHT TRANSFER: two orders of G's decay
+-- give (1 + ‖p‖)^N * ‖d^k G (p,t)‖ <= 2^(N+2) * S * (1 + t^2)^-1 with S a SINGLE Finset.sup of G's
+-- seminorms - the same two-order combination #122's decay half runs on, with the slots swapped, and
+-- in the shape SchwartzMap.mkCLM consumes. norm_dirDeriv_slice_le packages it as #124's bound family,
+-- contDiff_integral_slice is the smoothness (uniform in the parameter, so no ball is needed), and
+-- norm_pow_mul_norm_iteratedFDeriv_integral_le is the seminorm estimate, where the weight rides a
+-- bound family CONSTANT ON A UNIT BALL of parameters (which is the shape the gate consumes) and
+-- the integral of (1 + t^2)^-1 = pi finishes it.
+-- NOT claimed. ONE VARIABLE, AND IT IS THE LAST ONE: 𝓢(E × F, ℂ) → 𝓢(E, ℂ) for a general second
+-- factor is the same proof with (1 + t^2)^-1 replaced by an integrable profile on F, and only F = ℝ
+-- is proved, because that is what a kernel composition integrates over. THE CONSTANTS ARE NOT SHARP.
+-- AND NOTHING HERE IS A FUBINI STATEMENT: that an iterated integral equals a double integral is a
+-- separate step, which the consumer does with Mathlib's integral_integral_swap.
+-- Foundational-triple.
+/-- info: 'iteratedFDeriv_comp_inl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms iteratedFDeriv_comp_inl
+
+/-- info: 'norm_iteratedFDeriv_comp_inl_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_iteratedFDeriv_comp_inl_le
+
+/-- info: 'contDiff_prodDirDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiff_prodDirDeriv
+
+/-- info: 'dirDeriv_eq_prodDirDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms dirDeriv_eq_prodDirDeriv
+
+/-- info: 'aestronglyMeasurable_fderiv_dirDeriv_prodMk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms aestronglyMeasurable_fderiv_dirDeriv_prodMk
+
+/-- info: 'one_add_norm_pow_mul_norm_iteratedFDeriv_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms one_add_norm_pow_mul_norm_iteratedFDeriv_le
+
+/-- info: 'norm_dirDeriv_slice_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_dirDeriv_slice_le
+
+/-- info: 'contDiff_integral_slice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiff_integral_slice
+
+/-- info: 'norm_pow_mul_norm_iteratedFDeriv_integral_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_pow_mul_norm_iteratedFDeriv_integral_le
+
+/-- info: 'SchwartzMap.integralLastCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.integralLastCLM
+
 -- BACKLOG #122: THE WEYL OPERATOR MAPS SCHWARTZ SPACE TO SCHWARTZ SPACE
 -- (Mathlib/Analysis/Fourier/WeylSmooth.lean, smoothness 2026-10-07, decay 2026-10-08).
 -- #92(a1) proved the output CONTINUOUS and said continuity is the first of the Schwartz seminorm
