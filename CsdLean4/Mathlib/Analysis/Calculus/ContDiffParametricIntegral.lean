@@ -44,10 +44,16 @@ globally uniform one is not. `ContDiffOn` on an open set is exactly what that bu
 `contDiff_integral_of_bound` is the special case `U = univ` for the rarer situation where the bound
 really is global.
 
-⚠️ **No formula for the derivatives.** The proof produces `deriv (fun x => ∫ a, F x a) = fun x => ∫ a,
-partialDeriv F 1 x a` on `U` as a by-product of each induction step, but the statement records only
-the smoothness. Exposing the identity at every order would want a statement about `iteratedDeriv` of
-the integral, which nothing here needs.
+▸ **The derivative formula is now exported too** (added 2026-10-08, #125). The original version of
+this file recorded only the smoothness, with a scope note saying the identity was "a by-product of
+each induction step" that "nothing here needs". #122's decay half and #121(ii) both needed it —
+without a formula for `∂ᵏ(∫ F)` there is nothing to move a polynomial weight onto — so
+★★★ `hasDerivAt_integral_of_bound` states the first-order identity and
+★★★ `iteratedDeriv_integral_of_bound` iterates it: on an open `U`, the `n`-th derivative of the
+integral is the integral of the `n`-th parameter derivative. `iteratedDeriv_integral_of_bound_le` is
+the every-order-up-to-`n` form a consumer wants, and `integrable_partialDeriv` is the integrability
+the formula is false without. The smoothness theorem now *calls* the first-order identity rather than
+re-proving it inline.
 
 ⚠️ **Parameter in `ℝ`.** The integration variable ranges over an arbitrary measure space, but the
 parameter is one-dimensional, which is what lets the proof use `deriv` throughout and keeps the
@@ -107,6 +113,51 @@ variable [MeasurableSpace α] {μ : Measure α}
 
 /-! ### The theorem -/
 
+/-! ### One derivative, with the derivative
+
+The first-order identity is proved here rather than inside the induction below, because #122's decay
+half and #121(ii) need the *derivative*, not only the smoothness, and a statement that discards it
+cannot be reused. The smoothness theorem then calls it. -/
+
+/-- The parameter derivatives are integrable, which the formula below is false without. -/
+theorem integrable_partialDeriv {F : ℝ → α → E} {U : Set ℝ} {bound : ℕ → α → ℝ} {n k : ℕ}
+    (hk : k ≤ n)
+    (hmeas : ∀ k, k ≤ n → ∀ x, AEStronglyMeasurable (partialDeriv F k x) μ)
+    (hint : ∀ k, k ≤ n → Integrable (bound k) μ)
+    (hbd : ∀ k, k ≤ n → ∀ x ∈ U, ∀ a, ‖partialDeriv F k x a‖ ≤ bound k a)
+    {x : ℝ} (hx : x ∈ U) : Integrable (partialDeriv F k x) μ := by
+  refine (hint k hk).mono' (hmeas k hk x) ?_
+  filter_upwards with a using hbd k hk x hx a
+
+/-- ★★★ **Differentiation under the integral sign, with the derivative.** The identity
+`contDiffOn_integral_of_bound` proves and throws away. -/
+theorem hasDerivAt_integral_of_bound {F : ℝ → α → E} {U : Set ℝ} {bound : ℕ → α → ℝ} {n : ℕ}
+    (hn : 1 ≤ n) (hU : IsOpen U)
+    (hsm : ∀ a, ContDiff ℝ (n : ℕ) fun x => F x a)
+    (hmeas : ∀ k, k ≤ n → ∀ x, AEStronglyMeasurable (partialDeriv F k x) μ)
+    (hint : ∀ k, k ≤ n → Integrable (bound k) μ)
+    (hbd : ∀ k, k ≤ n → ∀ x ∈ U, ∀ a, ‖partialDeriv F k x a‖ ≤ bound k a)
+    {x : ℝ} (hx : x ∈ U) :
+    HasDerivAt (fun x => ∫ a, F x a ∂μ) (∫ a, partialDeriv F 1 x a ∂μ) x := by
+  have hFdiff : ∀ (a : α) (y : ℝ), HasDerivAt (fun x => F x a) (partialDeriv F 1 y a) y := by
+    intro a y
+    have h1 : Differentiable ℝ fun x => F x a := by
+      refine (hsm a).differentiable ?_
+      exact_mod_cast Nat.one_le_iff_ne_zero.1 hn
+    exact (h1 y).hasDerivAt
+  have hF0 : Integrable (F x) μ :=
+    integrable_partialDeriv (n := n) (k := 0) (by omega) hmeas hint hbd hx
+  refine (hasDerivAt_integral_of_dominated_loc_of_deriv_le (F := F) (bound := bound 1)
+    (F' := fun x a => partialDeriv F 1 x a) (hU.mem_nhds hx) ?_ hF0
+    (hmeas 1 hn x) ?_ (hint 1 hn) ?_).2
+  · filter_upwards with y using hmeas 0 (by omega) y
+  · filter_upwards with a
+    intro y hy
+    exact hbd 1 hn y hy a
+  · filter_upwards with a
+    intro y _
+    exact hFdiff a y
+
 /-- ★★★ **Differentiation under the integral sign, to all orders.** If each `x ↦ F x a` is `C^n` in
 the parameter, each parameter derivative is measurable in `a`, and the `k`-th one is bounded on an
 open `U` by an integrable `bound k` uniformly in the parameter, then the integral is `C^n` on `U`. -/
@@ -135,30 +186,10 @@ theorem contDiffOn_integral_of_bound (n : ℕ) :
       -- the parameter derivative, and its own hypotheses
       have hGsm : ∀ a, ContDiff ℝ (n : ℕ) fun x => partialDeriv F 1 x a :=
         contDiff_partialDeriv_one hsm
-      have hFdiff : ∀ (a : α) (x : ℝ), HasDerivAt (fun x => F x a) (partialDeriv F 1 x a) x := by
-        intro a x
-        have h1 : Differentiable ℝ fun x => F x a := by
-          have h := hsm a
-          rw [hcast] at h
-          exact h.differentiable (by simp)
-        exact (h1 x).hasDerivAt
       -- the integral is differentiable on `U`, with the expected derivative
       have hderiv : ∀ x ∈ U, HasDerivAt (fun x => ∫ a, F x a ∂μ)
-          (∫ a, partialDeriv F 1 x a ∂μ) x := by
-        intro x hx
-        have hFint : Integrable (F x) μ := by
-          refine (hint 0 (by omega)).mono' (hmeas 0 (by omega) x) ?_
-          filter_upwards with a using hbd 0 (by omega) x hx a
-        refine (hasDerivAt_integral_of_dominated_loc_of_deriv_le (bound := bound 1)
-          (F' := fun x a => partialDeriv F 1 x a) (hU.mem_nhds hx) ?_ hFint
-          (hmeas 1 (by omega) x) ?_ (hint 1 (by omega)) ?_).2
-        · filter_upwards with y using hmeas 0 (by omega) y
-        · filter_upwards with a
-          intro y hy
-          exact hbd 1 (by omega) y hy a
-        · filter_upwards with a
-          intro y _
-          exact hFdiff a y
+          (∫ a, partialDeriv F 1 x a ∂μ) x := fun x hx =>
+        hasDerivAt_integral_of_bound (n := n + 1) (by omega) hU hsm hmeas hint hbd hx
       rw [hcast, contDiffOn_succ_iff_deriv_of_isOpen hU]
       refine ⟨fun x hx => ((hderiv x hx).differentiableAt).differentiableWithinAt,
         fun h => absurd h (by simp), ?_⟩
@@ -255,5 +286,63 @@ theorem contDiff_integral_schwartz_sub_mul (f : 𝓢(ℝ, ℂ)) {g : ℝ → ℂ
   · intro k _ x t
     rw [partialDeriv_sub_mul, norm_mul]
     exact mul_le_mul_of_nonneg_right (hC k (x - t)) (norm_nonneg _)
+
+/-! ### The formula at every order -/
+
+/-- ★★★ **The formula at every order.** On an open `U`, the `n`-th derivative of the integral is the
+integral of the `n`-th parameter derivative. The induction is the same shift
+(`partialDeriv_succ_left`) the smoothness proof runs on, with the identity kept instead of
+discarded; locality of `iteratedDeriv` on the open set is what lets the first-order identity be
+substituted under the remaining derivatives. -/
+theorem iteratedDeriv_integral_of_bound (n : ℕ) :
+    ∀ (F : ℝ → α → E) (U : Set ℝ) (bound : ℕ → α → ℝ), IsOpen U →
+      (∀ a, ContDiff ℝ (n : ℕ) fun x => F x a) →
+      (∀ k, k ≤ n → ∀ x, AEStronglyMeasurable (partialDeriv F k x) μ) →
+      (∀ k, k ≤ n → Integrable (bound k) μ) →
+      (∀ k, k ≤ n → ∀ x ∈ U, ∀ a, ‖partialDeriv F k x a‖ ≤ bound k a) →
+      ∀ x ∈ U, iteratedDeriv n (fun x => ∫ a, F x a ∂μ) x = ∫ a, partialDeriv F n x a ∂μ := by
+  induction n with
+  | zero =>
+      intro F U bound _ _ _ _ _ x _
+      simp [iteratedDeriv_zero]
+  | succ n ih =>
+      intro F U bound hU hsm hmeas hint hbd x hx
+      -- the first-order identity, on all of `U`
+      have hd1 : ∀ y ∈ U, deriv (fun x => ∫ a, F x a ∂μ) y = ∫ a, partialDeriv F 1 y a ∂μ :=
+        fun y hy =>
+          (hasDerivAt_integral_of_bound (n := n + 1) (by omega) hU hsm hmeas hint hbd hy).deriv
+      have heq : deriv (fun x => ∫ a, F x a ∂μ)
+          =ᶠ[nhds x] fun y => ∫ a, partialDeriv F 1 y a ∂μ := by
+        filter_upwards [hU.mem_nhds hx] with y hy using hd1 y hy
+      -- the inner call, on the parameter derivative
+      have hGsm : ∀ a, ContDiff ℝ (n : ℕ) fun y => partialDeriv F 1 y a :=
+        contDiff_partialDeriv_one hsm
+      have hmeas' : ∀ k, k ≤ n → ∀ y,
+          AEStronglyMeasurable (partialDeriv (partialDeriv F 1) k y) μ := by
+        intro k hk y
+        rw [partialDeriv_succ_left]
+        exact hmeas (k + 1) (by omega) y
+      have hbd' : ∀ k, k ≤ n → ∀ y ∈ U, ∀ a,
+          ‖partialDeriv (partialDeriv F 1) k y a‖ ≤ bound (k + 1) a := by
+        intro k hk y hy a
+        rw [partialDeriv_succ_left]
+        exact hbd (k + 1) (by omega) y hy a
+      have hIH := ih (partialDeriv F 1) U (fun k => bound (k + 1)) hU hGsm hmeas'
+        (fun k hk => hint (k + 1) (by omega)) hbd' x hx
+      rw [iteratedDeriv_succ', heq.iteratedDeriv_eq, hIH, partialDeriv_succ_left]
+
+/-- ★★ The formula at every order up to `n`, which is the form a consumer wants. -/
+theorem iteratedDeriv_integral_of_bound_le {F : ℝ → α → E} {U : Set ℝ} {bound : ℕ → α → ℝ} {n : ℕ}
+    (hU : IsOpen U)
+    (hsm : ∀ a, ContDiff ℝ (n : ℕ) fun x => F x a)
+    (hmeas : ∀ k, k ≤ n → ∀ x, AEStronglyMeasurable (partialDeriv F k x) μ)
+    (hint : ∀ k, k ≤ n → Integrable (bound k) μ)
+    (hbd : ∀ k, k ≤ n → ∀ x ∈ U, ∀ a, ‖partialDeriv F k x a‖ ≤ bound k a)
+    {k : ℕ} (hk : k ≤ n) {x : ℝ} (hx : x ∈ U) :
+    iteratedDeriv k (fun x => ∫ a, F x a ∂μ) x = ∫ a, partialDeriv F k x a ∂μ :=
+  iteratedDeriv_integral_of_bound k F U bound hU
+    (fun a => (hsm a).of_le (by exact_mod_cast hk))
+    (fun j hj => hmeas j (by omega)) (fun j hj => hint j (by omega))
+    (fun j hj => hbd j (by omega)) x hx
 
 end

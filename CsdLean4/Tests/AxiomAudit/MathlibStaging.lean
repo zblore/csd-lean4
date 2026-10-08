@@ -11266,4 +11266,43 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.contDiff_weylOpK
 
+-- BACKLOG #125: DIFFERENTIATION UNDER THE INTEGRAL SIGN, WITH THE DERIVATIVE FORMULA KEPT
+-- (Mathlib/Analysis/Calculus/ContDiffParametricIntegral.lean, 2026-10-08, out of #122).
+-- #120 and #124 both recorded, deliberately, that they produce the identity
+-- fderiv (integral of F) = integral of fderiv F on U as a BY-PRODUCT of each induction step and keep
+-- only the smoothness; #120's scope note said "nothing here needs" the formula. #122's decay half and
+-- #121(ii) both need it: without a formula for the k-th derivative of the integral there is nothing
+-- to move a polynomial weight x^N onto, so no Schwartz seminorm estimate is possible.
+-- hasDerivAt_integral_of_bound states the first-order identity under #120's own hypotheses;
+-- iteratedDeriv_integral_of_bound iterates it - on an open U, the n-th derivative of the integral IS
+-- the integral of the n-th parameter derivative - by the same shift (partialDeriv_succ_left) the
+-- smoothness proof runs on, with the identity kept instead of discarded. The step that makes the
+-- iteration legitimate is LOCALITY: Filter.EventuallyEq.iteratedDeriv_eq lets the first-order identity,
+-- which holds only on U, be substituted under the remaining derivatives at a point of the open U.
+-- iteratedDeriv_integral_of_bound_le is the every-order-up-to-n form a consumer wants, and
+-- integrable_partialDeriv is the integrability the formula is false without.
+-- THE ROW CALLED THIS A RESTATEMENT RATHER THAN NEW MATHEMATICS, AND IT WAS. The one-line change that
+-- matters is in the other direction: contDiffOn_integral_of_bound now CALLS
+-- hasDerivAt_integral_of_bound instead of re-proving it inline, so the proof exists once rather than
+-- twice, and the dead hFdiff it used is gone.
+-- NOT claimed: still no formula over a finite-dimensional parameter - #124 keeps its own scope note,
+-- and #121(ii) would want the fderiv analogue of this. #122's decay half is now unblocked but not
+-- done: the estimates still have to be written.
+-- Foundational-triple.
+/-- info: 'integrable_partialDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms integrable_partialDeriv
+
+/-- info: 'hasDerivAt_integral_of_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasDerivAt_integral_of_bound
+
+/-- info: 'iteratedDeriv_integral_of_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms iteratedDeriv_integral_of_bound
+
+/-- info: 'iteratedDeriv_integral_of_bound_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms iteratedDeriv_integral_of_bound_le
+
 end CSD.Tests.AxiomAudit
