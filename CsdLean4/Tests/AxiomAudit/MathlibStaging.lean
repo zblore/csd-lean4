@@ -11220,8 +11220,8 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms contDiffOn_integral_of_iteratedFDeriv_bound
 
--- BACKLOG #122, THE SMOOTHNESS HALF: THE WEYL OPERATOR'S OUTPUT IS C-INFINITY
--- (Mathlib/Analysis/Fourier/WeylSmooth.lean, 2026-10-07).
+-- BACKLOG #122: THE WEYL OPERATOR MAPS SCHWARTZ SPACE TO SCHWARTZ SPACE
+-- (Mathlib/Analysis/Fourier/WeylSmooth.lean, smoothness 2026-10-07, decay 2026-10-08).
 -- #92(a1) proved the output CONTINUOUS and said continuity is the first of the Schwartz seminorm
 -- estimates, not the last. This is the next one.
 -- iteratedFDeriv_comp_affine is THE ITERATED CHAIN RULE ALONG AN AFFINE LINE, as an identity: the
@@ -11235,16 +11235,6 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 -- contDiff_weylOpK assembles them through #120: smoothness at every order on each ball, hence
 -- ContDiffAt everywhere, hence ContDiff. The product rule is not needed anywhere, because psi does not
 -- depend on x - only the chain rule does the work, which is why this was reachable at all.
--- NOT claimed, and the second point is the useful one. THIS IS SMOOTHNESS, NOT SCHWARTZNESS:
--- Op(K) as a continuous map of Schwartz space into itself needs the output AND all its derivatives to
--- decay faster than every power, with the bound linear in psi's seminorms (SchwartzMap.mkCLM), and
--- nothing here gives decay of a single derivative.
--- AND THE OBSTRUCTION IS NOW IDENTIFIED. The decay estimate needs the derivative FORMULA - that the
--- k-th derivative of the output is the integral of psi times the kernel's k-th derivative along the
--- path - so that the weight x^N can be moved onto the kernel through the substitution. #120 and #124
--- DELIBERATELY give smoothness WITHOUT the formula; both say so in their own scope notes. So the next
--- brick on this row is a formula-tracking version of #120, not more estimates: the estimates are
--- straightforward once the formula is available and impossible without it.
 -- Foundational-triple.
 /-- info: 'WignerFunction.iteratedFDeriv_comp_affine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -11265,6 +11255,61 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 /-- info: 'WignerFunction.contDiff_weylOpK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.contDiff_weylOpK
+
+-- THE DECAY HALF (2026-10-08), WHICH MAKES Op(K) A MAP OF SCHWARTZ SPACE INTO ITSELF.
+-- The obstruction this row recorded was the derivative FORMULA, and #125 supplied it.
+-- iteratedDeriv_weylOpK is that formula on this integrand: the k-th derivative of the output IS the
+-- integral of the k-th parameter derivative, so a weight has something to move onto. The hoisted
+-- partialDeriv_weylIntegrand and norm_partialDeriv_weylIntegrand_le are the identity and the
+-- primitive bound BOTH halves run on - the state's value times the kernel's k-th derivative at the
+-- path point, with no power of the velocity because it is a unit vector.
+-- abs_le_norm_weylPath is the one inequality the half turns on: |x| <= (3/2)*norm of the path point,
+-- so a polynomial weight in the PARAMETER becomes a polynomial weight on the KERNEL, where the
+-- kernel's own decay can eat it.
+-- exists_bound_snd_iteratedFDeriv_weighted does the eating: the kernel's decay at orders N and N+2
+-- combine into a bound carrying the weight AND still decaying in the second slot, which is what
+-- keeps the majorant integrable (the unweighted lemma above is its N = 0 case).
+-- exists_bound_weylOpK integrates that against the state and comes out with a constant depending
+-- only on K and a bound LINEAR IN ONE SEMINORM of the state - the shape SchwartzMap.mkCLM consumes -
+-- and weylCLM is the operator itself, continuous and linear on Schwartz space.
+-- NOT claimed. ONE KERNEL CLASS: this is the operator of a jointly Schwartz kernel, and Weyl
+-- quantisation of a wider symbol class (polynomially bounded symbols, Hormander classes) is a
+-- different theorem that is not proved here; #92's slicing caveat stands as written. THE CONSTANT IS
+-- NOT SHARP: (3/2)^N*C*pi falls out of this route, not out of an optimisation. AND NOTHING ABOUT
+-- COMPOSITION: that Op(a) composed with Op(b) is again a Weyl operator - the Moyal product - is a
+-- separate brick.
+-- Foundational-triple.
+/-- info: 'WignerFunction.abs_le_norm_weylPath' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.abs_le_norm_weylPath
+
+/-- info: 'WignerFunction.partialDeriv_weylIntegrand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.partialDeriv_weylIntegrand
+
+/-- info: 'WignerFunction.norm_partialDeriv_weylIntegrand_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_partialDeriv_weylIntegrand_le
+
+/-- info: 'WignerFunction.iteratedDeriv_weylOpK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.iteratedDeriv_weylOpK
+
+/-- info: 'WignerFunction.exists_bound_snd_iteratedFDeriv_weighted' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.exists_bound_snd_iteratedFDeriv_weighted
+
+/-- info: 'WignerFunction.exists_bound_weylOpK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.exists_bound_weylOpK
+
+/-- info: 'WignerFunction.weylCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCLM
+
+/-- info: 'WignerFunction.weylCLM_apply_eq_weylOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCLM_apply_eq_weylOp
 
 -- BACKLOG #125: DIFFERENTIATION UNDER THE INTEGRAL SIGN, WITH THE DERIVATIVE FORMULA KEPT
 -- (Mathlib/Analysis/Calculus/ContDiffParametricIntegral.lean, 2026-10-08, out of #122).
