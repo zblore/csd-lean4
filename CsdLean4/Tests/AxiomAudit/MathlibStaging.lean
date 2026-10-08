@@ -11220,6 +11220,65 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms contDiffOn_integral_of_iteratedFDeriv_bound
 
+-- BACKLOG #126, FIRST SLICE: THE DERIVATIVE FORMULA OVER A FINITE-DIMENSIONAL PARAMETER
+-- (Mathlib/Analysis/Calculus/ContDiffParametricIntegralFDeriv.lean, 2026-10-08, out of #124 + #125).
+-- #125 exported the identity #120 proves and discards, for a ONE-DIMENSIONAL parameter, and its own
+-- scope note recorded what stayed missing: the same identity over a finite-dimensional parameter.
+-- #126 is the consumer - a composite Weyl kernel is a parametric integral over a TWO-dimensional
+-- parameter, and with no formula for its derivatives there is nothing to move a polynomial weight
+-- onto, which is exactly the wall #122's decay half hit before #125.
+-- hasFDerivAt_integral_of_bound is the first-order identity, exported from inside #124's induction
+-- with the WEAKEST hypotheses that give it (differentiability of each slice, not smoothness), and
+-- fderiv_integral_apply_of_bound is its directional form, in which no operator-valued integral
+-- survives in the statement. integrable_of_bound and integrable_fderiv_of_bound are the
+-- integrability the two statements are false without.
+-- norm_iteratedFDeriv_integral_le is WHAT A CONSUMER ACTUALLY NEEDS, and it is a BOUND rather than
+-- an identity: with #124's own hypotheses, the n-th iterated derivative of the integral obeys the
+-- bound family, ‖iteratedFDeriv n (integral of F) x‖ <= integral of bound n. STATING the identity at
+-- order n would need the iterated derivative of the integral AS A MULTILINEAR MAP, which is the
+-- plumbing this file exists to avoid; the bound is scalar and is the shape every Schwartz seminorm
+-- estimate asks for.
+-- The induction peels the LAST direction (iteratedFDeriv_apply_succ_last, which puts Mathlib's
+-- iteratedFDeriv_succ_apply_right back into E by composing with evaluation), replaces the derivative
+-- of the integral by the integral of the directional derivative - legitimate under the remaining
+-- derivatives because the identity holds on all of the OPEN U, which is what
+-- Filter.EventuallyEq.iteratedFDeriv_eq is for (Mathlib has the iteratedFDerivWithin version only) -
+-- and calls itself on dirDeriv F [h] with the bound family shifted exactly as #124 shifts it.
+-- AND THE CHANGE THAT MATTERS MOST GOES THE OTHER WAY: #124's induction now CALLS the exported
+-- first-order identity instead of rebuilding it inline, so that proof exists once.
+-- NOT claimed. NO IDENTITY AT ORDER n, only the bound, for the reason above - a consumer wanting the
+-- multilinear identity would have to state it, and nothing needs it. The bound family must still be
+-- LOCALLY UNIFORM in the parameter (that is what U is for), and #124's two scope notes about the
+-- operator-valued measurability hypothesis and the nonnegativity of the bound family stand unchanged.
+-- Foundational-triple.
+/-- info: 'integrable_of_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms integrable_of_bound
+
+/-- info: 'hasFDerivAt_integral_of_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasFDerivAt_integral_of_bound
+
+/-- info: 'integrable_fderiv_of_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms integrable_fderiv_of_bound
+
+/-- info: 'fderiv_integral_apply_of_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms fderiv_integral_apply_of_bound
+
+/-- info: 'Filter.EventuallyEq.iteratedFDeriv_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Filter.EventuallyEq.iteratedFDeriv_eq
+
+/-- info: 'iteratedFDeriv_apply_succ_last' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms iteratedFDeriv_apply_succ_last
+
+/-- info: 'norm_iteratedFDeriv_integral_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_iteratedFDeriv_integral_le
+
 -- BACKLOG #122: THE WEYL OPERATOR MAPS SCHWARTZ SPACE TO SCHWARTZ SPACE
 -- (Mathlib/Analysis/Fourier/WeylSmooth.lean, smoothness 2026-10-07, decay 2026-10-08).
 -- #92(a1) proved the output CONTINUOUS and said continuity is the first of the Schwartz seminorm
