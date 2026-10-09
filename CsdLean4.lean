@@ -745,6 +745,8 @@ public import CsdLean4.Mathlib.Analysis.Fourier.SchwartzSlice
 public import CsdLean4.Mathlib.Analysis.Fourier.SchwartzPartialIntegral
 public import CsdLean4.Mathlib.Analysis.Fourier.PartialFourier
 public import CsdLean4.Mathlib.Analysis.Fourier.WeylSmooth
+public import CsdLean4.Mathlib.Analysis.Fourier.SchwartzTensor
+public import CsdLean4.Mathlib.Analysis.Fourier.WeylComposition
 public import CsdLean4.Mathlib.Analysis.Fourier.CircleSobolev
 public import CsdLean4.Mathlib.Analysis.Fourier.MoyalBracket
 public import CsdLean4.Mathlib.Analysis.Fourier.WignerEvolution

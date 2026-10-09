@@ -11353,6 +11353,103 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms SchwartzMap.integralLastCLM
 
+-- BACKLOG #126(i): THE TENSOR PRODUCT OF SCHWARTZ FUNCTIONS
+-- (Mathlib/Analysis/Fourier/SchwartzTensor.lean, 2026-10-08).
+-- SchwartzMap.tensorProd: (p, q) -> f p * g q is Schwartz on D1 x D2 when f and g are Schwartz on the
+-- factors. Mathlib has no such lemma, and #126 needs it - a composite integral kernel is built from a
+-- PRODUCT of two kernels with one variable then integrated out.
+-- Two ingredients. The Leibniz bound norm_iteratedFDeriv_mul_le expands the derivatives of the
+-- product, and norm_iteratedFDeriv_comp_clm_le returns each factor's derivative to its own variable:
+-- a derivative along a continuous linear map of norm at most one is no bigger than the derivative of
+-- the function it is composed with, which is what the two projections of a product are.
+-- norm_le_one_add_mul_one_add is the other: the weight SPLITS MULTIPLICATIVELY, ‖(p,q)‖ <=
+-- (1+‖p‖)(1+‖q‖), because the product norm is a max - so one weight on the pair becomes one weight on
+-- each factor and one_add_le_sup_seminorm_apply bounds each side. The SAME bound then serves EVERY
+-- term of the Leibniz sum, which is what keeps the constant short.
+-- NOT claimed. NOT BILINEAR-CONTINUOUS: this is a function of two Schwartz functions, not a
+-- continuous bilinear map of Schwartz spaces. The estimate IS linear in one Finset.sup of each
+-- factor's seminorms, so the stronger statement is packaging, but nothing needs it and
+-- SchwartzMap.decay' asks only that a bound exist. AND SCALAR-VALUED: both factors are ℂ-valued and
+-- the product is multiplication; a general bounded bilinear map is the same proof.
+-- Foundational-triple.
+/-- info: 'norm_iteratedFDeriv_comp_clm_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_iteratedFDeriv_comp_clm_le
+
+/-- info: 'norm_le_one_add_mul_one_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_le_one_add_mul_one_add
+
+/-- info: 'SchwartzMap.tensorProd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.tensorProd
+
+-- BACKLOG #126(iii)(iv), WHICH CLOSES #126: THE COMPOSITION OF TWO WEYL OPERATORS IS A WEYL OPERATOR
+-- (Mathlib/Analysis/Fourier/WeylComposition.lean, 2026-10-08).
+-- weylCLM_comp: Op(K1) composed with Op(K2) = Op of a single jointly Schwartz kernel, as continuous
+-- linear maps of Schwartz space. #122 made Op(K) an operator on 𝓢(ℝ, ℂ); this is the first thing a
+-- CALCULUS needs, and the first statement in which the OPERATORS compose rather than the integrals.
+-- THE REFRAMING IS WHAT MAKES IT SHORT. A Weyl operator IS an integral operator with a Schwartz
+-- kernel: x and y enter K through the linear isomorphism (x,y) -> ((x+y)/2, x-y), so weylKernelCLM
+-- (composition with it, which Mathlib's compCLMOfContinuousLinearEquiv makes a continuous linear map)
+-- turns the symbol-kernel into the integral kernel AND BACK, and weylOpK_eq_integral_kernel says the
+-- operator is the integral operator of that kernel. In those coordinates composition is the classical
+-- kernel product, and the whole content is that the product is again SCHWARTZ.
+-- compAffineCLM is composition with an INJECTIVE AFFINE map on the right, as a CLM on Schwartz space:
+-- Mathlib's compCLMOfAntilipschitz wants an antilipschitz constant, and
+-- antilipschitzWith_affine_of_leftInverse supplies it from an explicit linear LEFT INVERSE, which is
+-- what a concrete coordinate map always has. (Wigner.lean's antilipschitzWith_affine is the
+-- one-dimensional x + s*y case of the same thing; it is left as it stands because it sits below this
+-- file in the import order.)
+-- weylCompKernel is then the composite kernel: #126(i)'s tensor product of the two integral kernels,
+-- composed with the injective ((x,z),w) -> ((x,w),(w,z)), is Schwartz on (ℝ x ℝ) x ℝ, #126(ii)
+-- integrates w out, and the change of variables carries the result back to a symbol-kernel.
+-- weylCompKernel_apply is the formula - the classical kernel product - and weylOpK_comp the operator
+-- identity, by integral_integral_swap with integrable_weylCompIntegrand supplying Fubini's
+-- hypothesis through the same tensor construction at a fixed output point.
+-- NOT claimed. THE SYMBOL-LEVEL STATEMENT IS NOT HERE: that the composite's SYMBOL is the Moyal star
+-- product needs the joint partial Fourier transform of #121(ii), and the h-bar squared expansion of
+-- the bracket is #64; this is the operator identity with the kernel named, which is what is reachable
+-- without them. ONE KERNEL CLASS, as in #122. AND NO ALGEBRA STRUCTURE IS CLAIMED: associativity, or
+-- that these operators form an algebra, follows from the identity and the injectivity of
+-- weylKernelCLM, but neither is stated and nothing needs them.
+-- Foundational-triple.
+/-- info: 'WignerFunction.antilipschitzWith_affine_of_leftInverse' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.antilipschitzWith_affine_of_leftInverse
+
+/-- info: 'WignerFunction.compAffineCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.compAffineCLM
+
+/-- info: 'WignerFunction.weylKernelCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylKernelCLM
+
+/-- info: 'WignerFunction.weylOpK_eq_integral_kernel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylOpK_eq_integral_kernel
+
+/-- info: 'WignerFunction.weylCompKernel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCompKernel
+
+/-- info: 'WignerFunction.weylCompKernel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCompKernel_apply
+
+/-- info: 'WignerFunction.integrable_weylCompIntegrand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.integrable_weylCompIntegrand
+
+/-- info: 'WignerFunction.weylOpK_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylOpK_comp
+
+/-- info: 'WignerFunction.weylCLM_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCLM_comp
+
 -- BACKLOG #122: THE WEYL OPERATOR MAPS SCHWARTZ SPACE TO SCHWARTZ SPACE
 -- (Mathlib/Analysis/Fourier/WeylSmooth.lean, smoothness 2026-10-07, decay 2026-10-08).
 -- #92(a1) proved the output CONTINUOUS and said continuity is the first of the Schwartz seminorm
