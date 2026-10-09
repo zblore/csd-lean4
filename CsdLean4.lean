@@ -672,6 +672,7 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhaseCurvatur
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.DiagonalOperator
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.MultiplicationOperator
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.LinearPMapConj
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.LinearPMapPerturb
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Polarization
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.ProjectionPackage
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Descent

@@ -321,6 +321,24 @@ theorem mulOp_isFormalAdjoint (m : α → ℝ) :
   rw [h1, h2, RCLike.inner_apply', RCLike.inner_apply', map_mul, Complex.conj_ofReal]
   ring
 
+/-- ★★ **Multiplication by a bounded real function is symmetric as a bounded operator** — the
+hypothesis #64(ii)'s perturbation theorem consumes, discharged here for the only perturbation the
+corpus needs. Reality of the function is the whole of it, exactly as for the unbounded `mulOp`. -/
+theorem isSymmetric_mulCLM (g : α → ℝ) (hg : AEStronglyMeasurable (fun x => ((g x : ℂ))) μ) {C : ℝ}
+    (hb : ∀ᵐ x ∂μ, ‖((g x : ℂ))‖ ≤ C) :
+    LinearMap.IsSymmetric
+      ((mulCLM (fun x => ((g x : ℂ))) hg hb : Lp ℂ 2 μ →L[ℂ] Lp ℂ 2 μ) : Lp ℂ 2 μ →ₗ[ℂ] Lp ℂ 2 μ) := by
+  intro f h
+  rw [MeasureTheory.L2.inner_def, MeasureTheory.L2.inner_def]
+  refine integral_congr_ae ?_
+  filter_upwards [coeFn_mulCLM (fun x => ((g x : ℂ))) hg hb f,
+    coeFn_mulCLM (fun x => ((g x : ℂ))) hg hb h] with x h1 h2
+  rw [show ((mulCLM (fun x => ((g x : ℂ))) hg hb : Lp ℂ 2 μ →ₗ[ℂ] Lp ℂ 2 μ) f) = mulCLM _ hg hb f
+      from rfl,
+    show ((mulCLM (fun x => ((g x : ℂ))) hg hb : Lp ℂ 2 μ →ₗ[ℂ] Lp ℂ 2 μ) h) = mulCLM _ hg hb h
+      from rfl, h1, h2, RCLike.inner_apply', RCLike.inner_apply', map_mul, Complex.conj_ofReal]
+  ring
+
 /-- Pairing the operator against a cut-off moves the cut-off `m` to the other slot. -/
 theorem inner_cutMulCLM (hm : Measurable m) (n : ℕ) (k y : Lp ℂ 2 μ) :
     inner ℂ (cutMulCLM hm n y) k

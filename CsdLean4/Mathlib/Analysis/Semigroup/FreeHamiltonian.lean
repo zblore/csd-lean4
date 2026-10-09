@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.MultiplicationOperator
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.LinearPMapConj
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.LinearPMapPerturb
 public import Mathlib.Analysis.Fourier.LpSpace
 public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerGroup
 
@@ -264,6 +265,45 @@ independent, so the continuum spectrum of the free Hamiltonian is `[0, ∞)` in 
 well — and the proof is the conjugation lemma, not a second computation. -/
 theorem spectrum_freePositionOp : LinearPMap.spectrum freePositionOp = nonnegAxis := by
   rw [freePositionOp, LinearPMap.spectrum_conjIsometry, spectrum_freeSymbolOp]
+
+
+/-! ### The Schrödinger operator with a bounded potential
+
+#64(ii)'s payoff, and the reason (i) and (ii) belong together: the free Hamiltonian lives in the
+**momentum** representation, a potential multiplies in the **position** representation, so `H₀ + V`
+is only a statement once both are in the same place. (i) moved `H₀` across the Fourier transform and
+(ii) adds the potential there. -/
+
+/-- **The Schrödinger operator `H₀ + V`** for a bounded real potential, in the position
+representation, on the same domain as the free Hamiltonian. -/
+noncomputable def schrodingerOp (V : ℝ → ℝ)
+    (hV : AEStronglyMeasurable (fun x => ((V x : ℂ))) (volume : Measure ℝ)) {C : ℝ}
+    (hb : ∀ᵐ x ∂(volume : Measure ℝ), ‖((V x : ℂ))‖ ≤ C) :
+    Lp ℂ 2 (volume : Measure ℝ) →ₗ.[ℂ] Lp ℂ 2 (volume : Measure ℝ) :=
+  freePositionOp.addCLM (MeasureTheory.L2.mulCLM (fun x => ((V x : ℂ))) hV hb)
+
+theorem schrodingerOp_domain (V : ℝ → ℝ)
+    (hV : AEStronglyMeasurable (fun x => ((V x : ℂ))) (volume : Measure ℝ)) {C : ℝ}
+    (hb : ∀ᵐ x ∂(volume : Measure ℝ), ‖((V x : ℂ))‖ ≤ C) :
+    (schrodingerOp V hV hb).domain = freePositionOp.domain := rfl
+
+/-- ★★★ **The Schrödinger operator is self-adjoint for every bounded real potential**, on the free
+Hamiltonian's own domain. This is what #64's interacting half needed from (i) and (ii) together: the
+generator of the interacting dynamics exists as a self-adjoint operator, and what is still missing is
+Stone's theorem to turn it into the unitary group the equation differentiates. -/
+theorem isSelfAdjoint_schrodingerOp (V : ℝ → ℝ)
+    (hV : AEStronglyMeasurable (fun x => ((V x : ℂ))) (volume : Measure ℝ)) {C : ℝ}
+    (hb : ∀ᵐ x ∂(volume : Measure ℝ), ‖((V x : ℂ))‖ ≤ C) :
+    IsSelfAdjoint (schrodingerOp V hV hb) :=
+  isSelfAdjoint_freePositionOp.addCLM _ (MeasureTheory.L2.isSymmetric_mulCLM V hV hb)
+
+/-- The domain is dense, as it must be. -/
+theorem dense_domain_schrodingerOp (V : ℝ → ℝ)
+    (hV : AEStronglyMeasurable (fun x => ((V x : ℂ))) (volume : Measure ℝ)) {C : ℝ}
+    (hb : ∀ᵐ x ∂(volume : Measure ℝ), ‖((V x : ℂ))‖ ≤ C) :
+    Dense (((schrodingerOp V hV hb).domain :
+      Submodule ℂ (Lp ℂ 2 (volume : Measure ℝ))) : Set (Lp ℂ 2 (volume : Measure ℝ))) :=
+  dense_domain_freePositionOp
 
 end SchrodingerGroup
 

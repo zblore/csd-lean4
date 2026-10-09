@@ -10067,6 +10067,82 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms SchrodingerGroup.spectrum_freePositionOp
 
+-- BACKLOG #64(ii): A BOUNDED SYMMETRIC PERTURBATION KEEPS SELF-ADJOINTNESS AND THE DOMAIN
+-- (Mathlib/Analysis/InnerProductSpace/LinearPMapPerturb.lean + isSymmetric_mulCLM in
+-- MultiplicationOperator.lean + the Schrodinger operator in Analysis/Semigroup/FreeHamiltonian.lean,
+-- 2026-10-09). The second of row 64's three recorded pieces.
+-- LinearPMap.addCLM is T + V for a bounded V, with domain EXACTLY dom T. Mathlib's + on LinearPMap
+-- intersects domains, so T + V.toPMap-top has domain dom T meet top, which is equal to dom T but not
+-- syntactically it, and a perturbation statement wants the domain unchanged on the nose.
+-- WHY THE DOMAIN IS THE WHOLE CONTENT. Symmetry of T + V is three lines and says nothing: with an
+-- unbounded operator the issue is always MAXIMALITY, that the adjoint has no larger domain.
+-- addCLM_adjointDomain is where that is settled, and it needs only BOUNDEDNESS of V, not symmetry -
+-- the functional x -> inner y (V x) is continuous outright, so it cannot affect whether
+-- x -> inner y (T x) is. That is exactly why the bounded case is elementary and Kato-Rellich proper
+-- (a merely relatively bounded perturbation with relative bound < 1) is not: there the domain
+-- argument needs the resolvent and a Neumann series.
+-- adjoint_addCLM is the general statement, (T + V)-adjoint = T-adjoint + V, which does NOT need T
+-- self-adjoint; IsSelfAdjoint.addCLM is the corollary that a bounded symmetric perturbation
+-- preserves self-adjointness on the same domain.
+-- isSymmetric_mulCLM DISCHARGES the hypothesis for the only perturbation the corpus needs:
+-- multiplication by a bounded REAL function is symmetric as a bounded operator, reality being the
+-- whole of it, exactly as for the unbounded mulOp.
+-- AND THE PAYOFF IS WHY (i) AND (ii) BELONG TOGETHER. The free Hamiltonian lives in the MOMENTUM
+-- representation and a potential multiplies in the POSITION representation, so H0 + V is only a
+-- statement once both are in the same place: (i) moved H0 across the Fourier transform and (ii) adds
+-- the potential there. schrodingerOp is H0 + V in the position representation and
+-- isSelfAdjoint_schrodingerOp is SELF-ADJOINTNESS FOR EVERY BOUNDED REAL POTENTIAL, on the free
+-- Hamiltonian's own domain.
+-- NOT claimed. BOUNDED, NOT RELATIVELY BOUNDED: V is a ContinuousLinearMap, and the Kato-Rellich
+-- theorem for T-bounded perturbations with relative bound < 1 - the version that covers Coulomb
+-- potentials - is a different theorem that is not proved here. NO SEMIBOUNDEDNESS, NO FORM SUMS
+-- (nothing about KLMN or quadratic forms, which is how potentials that are not operator-bounded are
+-- handled). SYMMETRIC IS TAKEN AS THE HYPOTHESIS in the form LinearMap.IsSymmetric rather than
+-- IsSelfAdjoint for a ContinuousLinearMap: they agree for a bounded operator on a complete space and
+-- the symmetric form is what a consumer discharges. AND row 64's THIRD piece, STONE'S THEOREM, is
+-- untouched: the generator of the interacting dynamics now exists as a self-adjoint operator, and
+-- turning it into the unitary group the equation differentiates is still absent from the pin.
+-- Foundational-triple.
+/-- info: 'LinearPMap.addCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.addCLM
+
+/-- info: 'LinearPMap.addCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.addCLM_apply
+
+/-- info: 'LinearPMap.continuous_inner_apply_clm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.continuous_inner_apply_clm
+
+/-- info: 'LinearPMap.addCLM_adjointDomain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.addCLM_adjointDomain
+
+/-- info: 'LinearPMap.adjoint_addCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.adjoint_addCLM
+
+/-- info: 'IsSelfAdjoint.addCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms IsSelfAdjoint.addCLM
+
+/-- info: 'MeasureTheory.L2.isSymmetric_mulCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.L2.isSymmetric_mulCLM
+
+/-- info: 'SchrodingerGroup.schrodingerOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.schrodingerOp
+
+/-- info: 'SchrodingerGroup.isSelfAdjoint_schrodingerOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.isSelfAdjoint_schrodingerOp
+
+/-- info: 'SchrodingerGroup.dense_domain_schrodingerOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.dense_domain_schrodingerOp
+
 /-- info: 'SchrodingerGroup.coeFn_phaseGroup_freeSymbol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms SchrodingerGroup.coeFn_phaseGroup_freeSymbol
