@@ -10143,6 +10143,79 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms SchrodingerGroup.dense_domain_schrodingerOp
 
+-- BACKLOG #64(iii): THE PHASE GROUP'S GENERATOR IS ITS MULTIPLICATION OPERATOR
+-- (Mathlib/Analysis/Semigroup/PhaseGenerator.lean, 2026-10-09) - AND A CORRECTION TO THAT ROW.
+-- Row 64 said it waits on STONE'S THEOREM. IT DOES NOT, and that is the finding. Stone's theorem is
+-- an EXISTENCE statement (every self-adjoint operator generates a unitary group). Here the group was
+-- already explicit - phaseGroup, with its group law, unitarity and strong continuity all proved in
+-- SchrodingerGroup.lean - and #64(i)+(ii) made the generator self-adjoint. What was missing is only
+-- that the two are RELATED, which is a derivative computation, not an existence theorem.
+-- (The corpus does have Stone's theorem in FINITE DIMENSIONS, Analysis/Matrix/StoneC1.lean, in both
+-- the C1 and the continuity-only forms; the infinite-dimensional existence theorem is still absent
+-- from the pin and is NOT needed by #64.)
+-- hasDerivAt_phaseGroup_apply is the theorem: on the natural domain, d/dt of e^{-it kappa} f is
+-- -i kappa e^{-it kappa} f in L2. THE PROOF IS A SCALAR DOMINATED CONVERGENCE, and the domain
+-- hypothesis is not a technical convenience - IT IS THE DOMINATING FUNCTION. The difference between
+-- the slope and the claimed derivative is multiplication by phaseDefect, so its squared L2 norm is
+-- the scalar integral of (norm f)^2 (norm phaseDefect)^2 (norm_sq_eq_integral); that integrand tends
+-- to 0 pointwise by the scalar exponential's derivative (tendsto_phaseDefect) and is dominated by
+-- 4 (norm (kappa f))^2, integrable exactly because f is in the domain. norm_phaseDefect_le is the
+-- uniform bound, which rides the global estimate norm_phaseFun_sub_one_le (Mathlib's
+-- Real.norm_exp_I_mul_ofReal_sub_one_le, valid for all t, not just small t).
+-- hasDerivAt_phaseGroup_freeSymbolOp and hasDerivAt_fourierGroup_freePositionOp are THE FREE
+-- SCHRODINGER EQUATION IN BOTH REPRESENTATIONS, with the generator being the SELF-ADJOINT OPERATOR
+-- of #64(i) rather than a fresh object - which is what makes "H0 generates the free dynamics" a
+-- statement rather than a name. The position form APPLIES THE FOURIER ISOMETRY to the momentum form
+-- through #64(i)'s conjugation lemmas and recomputes nothing.
+-- phaseGroup_mem_mulDomain: the group PRESERVES THE DOMAIN, free here because a phase commutes with
+-- a multiplication, and the first thing an interacting version needs.
+-- NOT claimed. THE INTERACTING GENERATOR IS NOT HERE. SchrodingerGroup.schrodinger already exists as
+-- a unitary propagator for a bounded potential (Dyson series, Duhamel, Trotter, in
+-- Semigroup/BoundedPerturbation.lean) and #64(ii) made H0 + V self-adjoint, but differentiating the
+-- Duhamel integral - showing the MILD solution is a CLASSICAL one - needs more than the domain
+-- invariance proved here, and that is #129. AND ONE DERIVATIVE IS NOT A FLOW STATEMENT: nothing here
+-- says the orbit is the unique solution of the Cauchy problem.
+-- Foundational-triple.
+/-- info: 'SchrodingerGroup.norm_sq_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.norm_sq_eq_integral
+
+/-- info: 'SchrodingerGroup.norm_phaseFun_sub_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.norm_phaseFun_sub_one_le
+
+/-- info: 'SchrodingerGroup.hasDerivAt_phaseFun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasDerivAt_phaseFun
+
+/-- info: 'SchrodingerGroup.norm_phaseDefect_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.norm_phaseDefect_le
+
+/-- info: 'SchrodingerGroup.tendsto_phaseDefect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.tendsto_phaseDefect
+
+/-- info: 'SchrodingerGroup.coeFn_slope_phaseGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.coeFn_slope_phaseGroup
+
+/-- info: 'SchrodingerGroup.hasDerivAt_phaseGroup_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasDerivAt_phaseGroup_apply
+
+/-- info: 'SchrodingerGroup.phaseGroup_mem_mulDomain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.phaseGroup_mem_mulDomain
+
+/-- info: 'SchrodingerGroup.hasDerivAt_phaseGroup_freeSymbolOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasDerivAt_phaseGroup_freeSymbolOp
+
+/-- info: 'SchrodingerGroup.hasDerivAt_fourierGroup_freePositionOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasDerivAt_fourierGroup_freePositionOp
+
 /-- info: 'SchrodingerGroup.coeFn_phaseGroup_freeSymbol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms SchrodingerGroup.coeFn_phaseGroup_freeSymbol
