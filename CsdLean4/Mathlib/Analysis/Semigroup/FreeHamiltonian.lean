@@ -6,6 +6,8 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.MultiplicationOperator
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.LinearPMapConj
+public import Mathlib.Analysis.Fourier.LpSpace
 public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerGroup
 
 /-!
@@ -216,6 +218,52 @@ theorem coeFn_phaseGroup_freeSymbol (t : ℝ) (f : Lp ℂ 2 (volume : Measure �
     phaseGroup (measurable_freeSymbol (E := ℝ)) t f
       =ᵐ[volume] fun ξ => Complex.exp ((-(t * freeSymbol ξ) : ℝ) * Complex.I) * f ξ :=
   coeFn_phaseGroup _ t f
+
+
+/-! ### The position representation
+
+#64(i)'s point: with `LinearPMap.conjIsometry` the momentum-space operator moves across the Fourier
+transform, which is a unitary of `L²(ℝ)` at this pin (`MeasureTheory.Lp.fourierTransformₗᵢ`). What
+comes out is the free Hamiltonian in the **position** representation — self-adjoint, with the same
+spectrum, and defined on the image of the momentum domain. -/
+
+/-- **The free Hamiltonian in the position representation**: the momentum-space multiplication
+operator conjugated by the Fourier transform. -/
+noncomputable def freePositionOp :
+    Lp ℂ 2 (volume : Measure ℝ) →ₗ.[ℂ] Lp ℂ 2 (volume : Measure ℝ) :=
+  LinearPMap.conjIsometry (MeasureTheory.Lp.fourierTransformₗᵢ ℝ ℂ).symm freeSymbolOp
+
+theorem freePositionOp_domain :
+    freePositionOp.domain
+      = freeSymbolOp.domain.map
+          ((MeasureTheory.Lp.fourierTransformₗᵢ ℝ ℂ).symm.toLinearEquiv :
+            Lp ℂ 2 (volume : Measure ℝ) →ₗ[ℂ] Lp ℂ 2 (volume : Measure ℝ)) := rfl
+
+/-- ★★ **The two representations are unitarily equivalent by construction**: applying the position
+operator to the inverse transform of a momentum-domain state is the inverse transform of the
+momentum operator's value. This is the statement that makes the name honest. -/
+theorem freePositionOp_apply (f : freeSymbolOp.domain) :
+    freePositionOp ⟨(MeasureTheory.Lp.fourierTransformₗᵢ ℝ ℂ).symm (f : Lp ℂ 2 (volume : Measure ℝ)),
+        LinearPMap.mem_conjIsometry_domain _ _ f.2⟩
+      = (MeasureTheory.Lp.fourierTransformₗᵢ ℝ ℂ).symm (freeSymbolOp f) :=
+  LinearPMap.conjIsometry_apply_image _ _ f
+
+/-- ★★★ **The free Hamiltonian is self-adjoint in the position representation too.** Self-adjointness
+is a property of the operator, not of the representation, and this is that sentence as a theorem. -/
+theorem isSelfAdjoint_freePositionOp : IsSelfAdjoint freePositionOp :=
+  isSelfAdjoint_freeSymbolOp.conjIsometry _
+
+/-- The position-space domain is dense, which it has to be for the operator to be self-adjoint. -/
+theorem dense_domain_freePositionOp :
+    Dense ((freePositionOp.domain : Submodule ℂ (Lp ℂ 2 (volume : Measure ℝ))) :
+      Set (Lp ℂ 2 (volume : Measure ℝ))) :=
+  LinearPMap.dense_conjIsometry_domain _ _ dense_domain_freeSymbolOp
+
+/-- ★★★ **The spectrum is the same nonnegative real axis.** The spectrum is representation-
+independent, so the continuum spectrum of the free Hamiltonian is `[0, ∞)` in position space as
+well — and the proof is the conjugation lemma, not a second computation. -/
+theorem spectrum_freePositionOp : LinearPMap.spectrum freePositionOp = nonnegAxis := by
+  rw [freePositionOp, LinearPMap.spectrum_conjIsometry, spectrum_freeSymbolOp]
 
 end SchrodingerGroup
 

@@ -9974,6 +9974,99 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms SchrodingerGroup.spectrum_freeSymbolOp
 
+-- BACKLOG #64(i): CONJUGATING AN UNBOUNDED OPERATOR BY A UNITARY
+-- (Mathlib/Analysis/InnerProductSpace/LinearPMapConj.lean + the position representation in
+-- Analysis/Semigroup/FreeHamiltonian.lean, 2026-10-09).
+-- Row 64 recorded three pieces it waits on, and this is the first: conjugating a LinearPMap by a
+-- unitary, so the momentum-space operator moves to position space.
+-- LinearPMap.conjIsometry is U T U-inverse, with domain U(dom T). Mathlib has LinearMap.compPMap (a
+-- bounded map after a partial one, same domain) and LinearPMap.comp (two partial ones with a domain
+-- condition), and nothing that moves an operator ACROSS a unitary - which is what a change of
+-- representation is.
+-- WHAT MAKES IT SHORT IS THE ORDER ON LinearPMap, not a computation of the adjoint's domain.
+-- conjIsometry U T-adjoint is shown to be a FORMAL adjoint of conjIsometry U T (four inner products,
+-- a unitary moving across each time: IsFormalAdjoint.conjIsometry), so Mathlib's
+-- IsFormalAdjoint.le_adjoint gives one inclusion; the other is the same statement for U-inverse,
+-- through conjIsometry_symm_conjIsometry and conjIsometry_conjIsometry_symm (conjugation is an
+-- involution) and conjIsometry_mono (it is monotone), with le_antisymm closing it. Hence
+-- adjoint_conjIsometry - THE ADJOINT CONJUGATES - and IsSelfAdjoint.conjIsometry, a unitary
+-- conjugate of a self-adjoint operator is self-adjoint.
+-- conjIsometry_apply_of_eq is the technical workhorse: the conjugate's value at any element whose
+-- coordinate is an image point. Stating it that way is what avoids rewriting under a membership
+-- proof, which is where every earlier attempt in this file died (motive is not type correct).
+-- resolventSet_conjIsometry and spectrum_conjIsometry: THE SPECTRUM IS UNCHANGED, with conjCLM the
+-- conjugated bounded inverse. A change of representation does not move the spectrum, and this is
+-- that sentence as a theorem; note it needs no completeness, so it sits above that hypothesis.
+-- THE APPLICATION, which is why the row wanted it: freePositionOp is the free Hamiltonian in the
+-- POSITION representation, the momentum-space multiplication operator conjugated by the Fourier
+-- transform - which IS a unitary of L2 at this pin (MeasureTheory.Lp.fourierTransformₗᵢ, which the
+-- row did not know was there). isSelfAdjoint_freePositionOp and spectrum_freePositionOp transfer
+-- self-adjointness and the nonnegative real axis with no second computation, and
+-- freePositionOp_apply is the unitary equivalence that makes the name honest.
+-- NOT claimed. UNITARY, NOT MERELY ISOMETRIC: the inverse has to exist for the conjugate to be
+-- defined on all of U(dom T), and a non-surjective isometry gives a compression, not a conjugate.
+-- SAME FIELD: U is 𝕜-linear, so this is not the antiunitary (conjugate-linear) case, which is a
+-- genuinely different statement. NO FUNCTIONAL CALCULUS: that the conjugate has the same functional
+-- calculus, or that unitary equivalence preserves a spectral measure, is not claimed - only the
+-- resolvent set, which is what the spectrum is defined from here.
+-- AND freePositionOp IS NOT YET IDENTIFIED WITH -(1/2)d²/dx². It is the conjugate, with its domain
+-- the Fourier image of the momentum domain; proving it IS the second derivative there needs the
+-- Fourier-derivative identity at the L2 level and the identification of that image as a Sobolev
+-- space, which is a separate brick. #64's remaining two pieces (bounded symmetric perturbation,
+-- Stone's theorem) are untouched by this.
+-- Foundational-triple.
+/-- info: 'LinearPMap.conjIsometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.conjIsometry
+
+/-- info: 'LinearPMap.conjIsometry_apply_of_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.conjIsometry_apply_of_eq
+
+/-- info: 'LinearPMap.conjIsometry_symm_conjIsometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.conjIsometry_symm_conjIsometry
+
+/-- info: 'LinearPMap.conjIsometry_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.conjIsometry_mono
+
+/-- info: 'LinearPMap.dense_conjIsometry_domain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.dense_conjIsometry_domain
+
+/-- info: 'LinearPMap.spectrum_conjIsometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.spectrum_conjIsometry
+
+/-- info: 'LinearPMap.IsFormalAdjoint.conjIsometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.IsFormalAdjoint.conjIsometry
+
+/-- info: 'LinearPMap.adjoint_conjIsometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LinearPMap.adjoint_conjIsometry
+
+/-- info: 'IsSelfAdjoint.conjIsometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms IsSelfAdjoint.conjIsometry
+
+/-- info: 'SchrodingerGroup.freePositionOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.freePositionOp
+
+/-- info: 'SchrodingerGroup.freePositionOp_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.freePositionOp_apply
+
+/-- info: 'SchrodingerGroup.isSelfAdjoint_freePositionOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.isSelfAdjoint_freePositionOp
+
+/-- info: 'SchrodingerGroup.spectrum_freePositionOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.spectrum_freePositionOp
+
 /-- info: 'SchrodingerGroup.coeFn_phaseGroup_freeSymbol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms SchrodingerGroup.coeFn_phaseGroup_freeSymbol
