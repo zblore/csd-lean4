@@ -11450,6 +11450,103 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms WignerFunction.weylCLM_comp
 
+-- BACKLOG #127: THE WEYL OPERATORS OF SCHWARTZ KERNELS FORM A NON-UNITAL ALGEBRA
+-- (Mathlib/Analysis/Fourier/WeylAlgebra.lean, 2026-10-09, out of #126).
+-- #126 proved Op(K1) composed with Op(K2) = Op(K1 star K2) and claimed nothing about the structure.
+-- THE ROW'S OWN ROUTE WAS WRONG, AND THAT IS THE FINDING. It said associativity follows from
+-- associativity of operator composition AND the injectivity of weylKernelCLM. That does not close:
+-- weylKernelCLM is the CHANGE OF COORDINATES (x,y) -> ((x+y)/2, x-y), and its injectivity says
+-- nothing about whether two different kernels can give the same operator - which is exactly what
+-- turning an operator identity into a kernel identity needs. The ingredient is FAITHFULNESS of Op,
+-- and that is a theorem rather than bookkeeping.
+-- eq_zero_of_weylOpK_eq_zero and weylOpK_injective: THE KERNEL IS DETERMINED BY THE OPERATOR. The
+-- proof feeds the operator the CONJUGATE OF ITS OWN KERNEL SLICE (SchwartzMap.conjCLM of #121(i)'s
+-- slice, conjugation being R-linear and not C-linear, which is why conjCLM is a map over R), so the
+-- pairing becomes the integral of the squared modulus of the slice; that vanishes only if the slice
+-- vanishes almost everywhere, and a continuous function vanishing almost everywhere for Lebesgue
+-- measure vanishes (Measure.eq_of_ae_eq). weylCLM_injective is the same for #122's packaged
+-- operators, and weylKernelCLM_injective the coordinate change (which IS bookkeeping - composition
+-- with a surjection).
+-- Then the algebra laws are corollaries: weylCompKernel_assoc (associativity, from
+-- ContinuousLinearMap.comp_assoc), weylCompKernel_add_left/_right and
+-- weylCompKernel_smul_left/_right (bilinearity). The LEFT slot rides linearity of the integral in
+-- the kernel (weylOpK_add_kernel, weylOpK_smul_kernel); the RIGHT slot is the INNER operator, so it
+-- goes through the operators' action on the state instead - the asymmetry is real, not cosmetic.
+-- not_weylOpK_eq_id and weylCLM_ne_one: THERE IS NO UNIT, which makes the non-unitality a theorem
+-- rather than a caveat. The witness is shrinkBump, a bump at the origin of outer radius 2/(n+1) as a
+-- complex Schwartz function: it keeps the value 1 at the origin for every n while its pairing with
+-- the kernel's slice tends to 0 by dominated convergence, dominated by the slice's own norm because
+-- the bump is bounded by 1. A unit would have to reproduce a state's value at a point from an
+-- integral against a BOUNDED kernel, and that is what fails.
+-- NOT claimed. NO Mul INSTANCE, DELIBERATELY: declaring star as the Mul of the Schwartz space on the
+-- plane would commit the type globally to the Weyl product when the pointwise product is at least as
+-- natural, and a NonUnitalAlgebra instance would then fix which one every downstream file means; the
+-- facts are theorems and a bundled NonUnitalAlgHom is one letI away for a consumer who wants it.
+-- NOTHING ABOUT THE SYMBOL PRODUCT: faithfulness here is of K -> Op(K) on KERNELS, and that the
+-- SYMBOL composes by the Moyal star product still needs #121(ii), with the h-bar squared expansion
+-- at #64. AND THE NON-UNITALITY IS FOR THIS CLASS ONLY: a wider class (distributional kernels, where
+-- the identity's kernel is a delta) is a different setting and is not formalised.
+-- Foundational-triple.
+/-- info: 'SchwartzMap.conjCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.conjCLM
+
+/-- info: 'WignerFunction.weylOpK_add_kernel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylOpK_add_kernel
+
+/-- info: 'WignerFunction.weylOpK_smul_kernel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylOpK_smul_kernel
+
+/-- info: 'WignerFunction.weylKernelCLM_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylKernelCLM_injective
+
+/-- info: 'WignerFunction.eq_zero_of_weylOpK_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.eq_zero_of_weylOpK_eq_zero
+
+/-- info: 'WignerFunction.weylOpK_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylOpK_injective
+
+/-- info: 'WignerFunction.weylCLM_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCLM_injective
+
+/-- info: 'WignerFunction.weylCompKernel_assoc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCompKernel_assoc
+
+/-- info: 'WignerFunction.weylCompKernel_add_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCompKernel_add_left
+
+/-- info: 'WignerFunction.weylCompKernel_add_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCompKernel_add_right
+
+/-- info: 'WignerFunction.weylCompKernel_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCompKernel_smul_left
+
+/-- info: 'WignerFunction.weylCompKernel_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCompKernel_smul_right
+
+/-- info: 'WignerFunction.shrinkBump' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.shrinkBump
+
+/-- info: 'WignerFunction.not_weylOpK_eq_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.not_weylOpK_eq_id
+
+/-- info: 'WignerFunction.weylCLM_ne_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.weylCLM_ne_one
+
 -- BACKLOG #122: THE WEYL OPERATOR MAPS SCHWARTZ SPACE TO SCHWARTZ SPACE
 -- (Mathlib/Analysis/Fourier/WeylSmooth.lean, smoothness 2026-10-07, decay 2026-10-08).
 -- #92(a1) proved the output CONTINUOUS and said continuity is the first of the Schwartz seminorm
