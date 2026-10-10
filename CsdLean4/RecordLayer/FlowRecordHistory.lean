@@ -28,6 +28,11 @@ base-moving flow does **not** preserve — it moves the Dirac. The record layer'
   *prepared* one to the *post-measurement* one. Since `LF6`'s Born clause is stated at the
   post-measurement ray, that is exactly the composition the experiment needs, and blocker (II)
   dissolves rather than having to be worked around;
+* ★★★ `measure_preimage_liftBase` — the same law in **preimage form**, which is the form a
+  statement about the *run* needs: the probability, in the prepared measure, that the microstate
+  *after* the flow lies in a record event is that event's probability at the post-measurement ray.
+  Any record event works, so this is what composes the flow with the coarsened two-wing events of
+  [`TwoWingCoarsening.lean`](TwoWingCoarsening.lean);
 * ★★★ `map_outcomeCode_liftBase` and ★★★ `measure_outcomeCode_liftBase` — **the record history**:
   the law of the outcome code *after* the flow, in the prepared measure, is its law at the
   post-measurement ray. So an outcome statement proved at `Φ p` (which is what a Naimark-dilation
@@ -105,6 +110,16 @@ theorem map_epistemicMeasure_liftBase {Φ : LF4.CPN N → LF4.CPN N} (hΦ : Meas
   rw [epistemicMeasure, epistemicMeasure, hfun,
     ← Measure.map_prod_map _ _ hΦ (measurable_id (α := LF4.KTorus)),
     Measure.map_dirac' hΦ, Measure.map_id]
+
+/-- ★★★ **The transport law in preimage form.** The probability, in the *prepared* epistemic
+measure, that the microstate *after* the flow lies in the record event `S` is `S`'s probability at
+the post-measurement ray. This is the shape every statement about a run takes, and unlike
+`measure_outcomeCode_liftBase` it is stated for an arbitrary measurable event, so it composes with
+any record coordinate or coarsening. -/
+theorem measure_preimage_liftBase {Φ : LF4.CPN N → LF4.CPN N} (hΦ : Measurable Φ)
+    (p : LF4.CPN N) {S : Set (LF4.KSigma N)} (hS : MeasurableSet S) :
+    epistemicMeasure p (liftBase Φ ⁻¹' S) = epistemicMeasure (Φ p) S := by
+  rw [← map_epistemicMeasure_liftBase hΦ p, Measure.map_apply (measurable_liftBase hΦ) hS]
 
 /-! ### The record history of a run -/
 

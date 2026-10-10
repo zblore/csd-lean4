@@ -1266,4 +1266,110 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF6.lindbladSemigroup_completelyPositive
 
+-- THE TWO-WING RECORD OF THE LOCAL DE-ISOLATION FLOW (BACKLOG #131, OBLIGATION (1), SECOND HALF -
+-- LF6/TwoWingRecord.lean, 2026-10-10): clause (3) already said the de-isolation reproduces the
+-- singlet and localDeisolation_A_marginal_volume_eq_half already said each wing's marginal is 1/2 at
+-- every setting pair. THOSE NUMBERS ARE IMPORTED HERE, NOT RE-PROVED. What was missing is that every
+-- one of those statements is about a SUM OVER AN INDEX SET - sum over n : Fin 4 of the basin volume
+-- at e (n, stIdx (s,t)) - and a sum of numbers is not an event. There was no SET whose measure is
+-- "the two wings recorded (s,t)", so there was nothing to transport along the flow, nothing to
+-- intersect, and nothing to factor through a macroscopic coordinate.
+-- pointerDecode is the decoding LF6 was using implicitly: a basin index records the wing pair
+-- stIdx-inverse of (e-inverse i).2, the system index n being exactly what the pointer block sums
+-- over. filter_pointerDecode IS THE INDEX TRANSPORT OF THE AUDIT'S SECTION 3: the fine cells the
+-- decoding sends to (s,t) are PRECISELY LF6's pointer block, so the coarsening of
+-- RecordLayer/TwoWingCoarsening.lean and the index map of clause (3) describe the same basins and
+-- nothing has been quietly re-indexed.
+-- toReal_measure_wingEvent_eq_P_st: THE TWO-WING RECORD EVENT'S BORN WEIGHT IS THE SINGLET'S JOINT
+-- DISTRIBUTION P_st a b s t, at EVERY setting pair with no genericity hypothesis (routing through
+-- localDeisolation_pointer_volume_local). This is clause (3) restated about ONE EVENT rather than a
+-- sum, and that restatement is what makes the rest possible.
+-- toReal_measure_preimage_wingEvent_eq_P_st: ONE PHYSICAL RECORD HISTORY, which is the obligation.
+-- The probability, IN THE PREPARED PRE-MEASUREMENT EPISTEMIC MEASURE, that the run ends with the two
+-- wings recording (s,t) is P_st a b s t. The Born clause was only ever available at the
+-- POST-MEASUREMENT ray; composing it with measure_preimage_liftBase (the transport law in preimage
+-- form) and clause (6) (localDeisolationFlow_realises_localNaimark) moves it to the PREPARED ray,
+-- which is where an experiment starts. All three pieces are needed: the dynamics, the measure, and
+-- the event.
+-- toReal_measure_wingAEvent_eq_half / _wingBEvent_ and the preimage forms: each wing's marginal is
+-- 1/2 as an EVENT PROBABILITY and then ALONG THE FLOW FROM THE PREPARED RAY. The arithmetic is
+-- LF3.marginal_a_eq_half, imported; what is new is that these are measures of sets and that they
+-- hold at the start of the run.
+-- toReal_measure_preimage_wingAEvent_eq_of_setting: OPERATIONAL NO-SIGNALLING ALONG THE DYNAMICS -
+-- A's wing-event probability is the same for b and b', each side evaluated in its own prepared
+-- measure and after its own flow. It also DISCHARGES, FOR THE SINGLET, THE PREMISE that
+-- RecordLayer.measure_wingAEvent_eq_of_fineSum_eq leaves open: there the summed fine weights were
+-- assumed equal, and here marginal_a_eq_half supplies that equality. #131 recorded the premise as
+-- not discharged; for this model it now is.
+-- factorsThrough_wingEvent_pointerDecode: the two-wing events are MACROSCOPIC, preimages of #102's
+-- record string, which is obligation (5)'s shape at this instance.
+-- NOT claimed. THE MARGINALS AND NO-SIGNALLING ARE IMPORTED ARITHMETIC, NOT NEW CONTENT: the
+-- contribution is the EVENT formulation and the PREPARED-RAY formulation, not the numbers. ONE ONTIC
+-- SELECTOR: everything inherits option I1's concession that the two wings are two readings of x.2.1
+-- (row 132 is the alternative). NOT BELL AND NOT C-1: no CHSH value is computed here and no causal
+-- structure is used, obligation (3) and obligation (4)'s Bell half are separate, the missing
+-- RemoteSettingLocalityB witness of the audit's section 4 is still missing, and nothing here shows
+-- that apparent nonlocality is a consequence of projection alone. THE PREPARATION IS THE MODULI-FREE
+-- LOCAL OBJECT localNudgeVec a b = (U_A(a) (x) U_B(b))^H psi-minus, not nudgedSinglet, which is why
+-- no genericity hypothesis appears. ONE FLOW, ONE MEASUREMENT: liftBase localDeisolationFlow moves
+-- the base and leaves the record medium fixed, so this says nothing about record WRITES on the fibre
+-- or about record stability over time, which is obligation (2).
+-- Foundational-triple.
+/-- info: 'CSD.LF6.pointerDecode_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.pointerDecode_eq_iff
+
+/-- info: 'CSD.LF6.filter_pointerDecode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.filter_pointerDecode
+
+/-- info: 'CSD.LF6.injOn_pointerBlock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.injOn_pointerBlock
+
+/-- info: 'CSD.LF6.measure_wingEvent_pointerDecode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.measure_wingEvent_pointerDecode
+
+/-- info: 'CSD.LF6.toReal_measure_wingEvent_pointerDecode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.toReal_measure_wingEvent_pointerDecode
+
+/-- info: 'CSD.LF6.toReal_measure_wingEvent_eq_P_st' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.toReal_measure_wingEvent_eq_P_st
+
+/-- info: 'CSD.LF6.toReal_measure_wingAEvent_eq_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.toReal_measure_wingAEvent_eq_half
+
+/-- info: 'CSD.LF6.toReal_measure_wingBEvent_eq_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.toReal_measure_wingBEvent_eq_half
+
+/-- info: 'CSD.LF6.factorsThrough_wingEvent_pointerDecode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.factorsThrough_wingEvent_pointerDecode
+
+/-- info: 'CSD.LF6.localDeisolationFlow_preparedRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.localDeisolationFlow_preparedRay
+
+/-- info: 'CSD.LF6.measurable_localDeisolationFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.measurable_localDeisolationFlow
+
+/-- info: 'CSD.LF6.toReal_measure_preimage_wingEvent_eq_P_st' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.toReal_measure_preimage_wingEvent_eq_P_st
+
+/-- info: 'CSD.LF6.toReal_measure_preimage_wingAEvent_eq_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.toReal_measure_preimage_wingAEvent_eq_half
+
+/-- info: 'CSD.LF6.toReal_measure_preimage_wingAEvent_eq_of_setting' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.toReal_measure_preimage_wingAEvent_eq_of_setting
+
+
 end CSD.Tests.AxiomAudit

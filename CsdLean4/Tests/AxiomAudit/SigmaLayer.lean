@@ -3937,6 +3937,10 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.map_epistemicMeasure_liftBase
 
+/-- info: 'CSD.RecordLayer.measure_preimage_liftBase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_preimage_liftBase
+
 /-- info: 'CSD.RecordLayer.map_outcomeCode_liftBase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.map_outcomeCode_liftBase

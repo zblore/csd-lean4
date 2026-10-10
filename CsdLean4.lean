@@ -295,6 +295,7 @@ public import CsdLean4.LF6.ForcedContextuality
 public import CsdLean4.LF6.GHZContextuality
 public import CsdLean4.LF6.SingletDeisolationFlow
 public import CsdLean4.LF6.NudgeLocality
+public import CsdLean4.LF6.TwoWingRecord
 public import CsdLean4.LF6.C1BellConsistency
 public import CsdLean4.LF6.GHZDeisolationFlow
 public import CsdLean4.LF6.GHZMerminCarve
