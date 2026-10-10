@@ -4480,4 +4480,67 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.antitone_klDiv_fibreCell_kFlow
 
+-- BACKLOG #118(ii): FINITE-HORIZON EQUILIBRATION OF THE FIBRE CELLS
+-- (SigmaLayer/FibreFiniteHorizon.lean, 2026-10-10). The one clause of R-019's convergence half that
+-- #118 priced as a brick rather than as research.
+-- fibreCellInd is a cell's indicator as a bounded observable on Sigma, and integral_fibreCellInd
+-- identifies its space average as THE HAAR CELL LAW'S MASS at that cell - which is what makes the
+-- estimates statements about the coarse-grained law rather than about an arbitrary observable.
+-- integral_birkhoffAverage_fibreCellInd_sub_sq_le: at horizon T the mean-square deviation of a
+-- cell's TIME-AVERAGED occupation from its Haar value is at most (2/T) times the envelope sum.
+-- integral_sum_birkhoffAverage_fibreCellInd_sub_sq_le is the row's "rate in terms of the cell count
+-- m": summed over all (m+1)^2 cells under a common envelope the bound carries a factor (m+1)^2.
+-- tendsto_integral_birkhoffAverage_fibreCellInd_sub_sq is the convergence, under a summable envelope.
+-- THE WORK WAS THE INSTANTIATION, NOT THE ENGINE: Mathlib/Dynamics/CorrelationDecay.lean already had
+-- the finite-horizon definition and the Cesaro estimate in both the block and the (2/T) forms; what
+-- this file adds is the fibre's cells as observables and the identification of the space average.
+-- NOT claimed, and the first point is the finding.
+-- IT IS TIME-AVERAGED, NOT INSTANTANEOUS. The Cesaro estimate controls the Birkhoff average over
+-- [0, T), so what equilibrates is a cell's TIME-AVERAGED occupation. R-019 asks for the LAW AT STEP n
+-- to approach Haar, which is a MIXING statement, not an ergodic one. So the finite-horizon escape
+-- buys an ergodic conclusion and leaves the mixing one untouched: genuinely weaker than R-019,
+-- exactly as #118 recorded, and sharpening the envelope does not close that gap.
+-- THE HYPOTHESIS IS ASSUMED, NOT DERIVED: whether the fibre's CELL INDICATORS satisfy
+-- HasCorrelationDecayUpTo is #118(i), a genuine mathematical question - the corpus has decay for the
+-- single observable catObs and extending it to indicators is a statement about the cat map's spectral
+-- gap on indicator functions, which nothing here supplies.
+-- THE CELL COUNT COSTS (m+1)^2: the summed bound degrades quadratically in the fineness of the
+-- coarse-graining, so a finite-horizon statement at fixed horizon is NOT uniform in m; R-019's "rate
+-- set by the cell size" would need the envelope itself to improve with m, which is not available.
+-- NOT THE klDiv FORM: the Haar cell law is uniform on these cells so klDiv <= chi-squared would
+-- convert the bound at the cost of one more factor (m+1)^2, but it needs the time-averaged
+-- occupations packaged as a MEASURE, measurably in the base point - a restatement rather than new
+-- mathematics, and #130.
+-- AND NOT A TRACK B PREDICTION: nothing here exhibits a fibre out of equilibrium returning to it, and
+-- #18's translation comparison still applies - the hypothesis is what distinguishes the maps here,
+-- not the conclusion.
+-- Foundational-triple.
+/-- info: 'CSD.SigmaLayer.measurable_fibreCellInd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.measurable_fibreCellInd
+
+/-- info: 'CSD.SigmaLayer.integral_fibreCellInd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.integral_fibreCellInd
+
+/-- info: 'CSD.SigmaLayer.measurable_fibreStroke' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.measurable_fibreStroke
+
+/-- info: 'CSD.SigmaLayer.integral_iterate_fibreCellInd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.integral_iterate_fibreCellInd
+
+/-- info: 'CSD.SigmaLayer.integral_birkhoffAverage_fibreCellInd_sub_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.integral_birkhoffAverage_fibreCellInd_sub_sq_le
+
+/-- info: 'CSD.SigmaLayer.integral_sum_birkhoffAverage_fibreCellInd_sub_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.integral_sum_birkhoffAverage_fibreCellInd_sub_sq_le
+
+/-- info: 'CSD.SigmaLayer.tendsto_integral_birkhoffAverage_fibreCellInd_sub_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.tendsto_integral_birkhoffAverage_fibreCellInd_sub_sq
+
 end CSD.Tests.AxiomAudit

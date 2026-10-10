@@ -523,6 +523,7 @@ public import CsdLean4.SigmaLayer.SectorPostulateNoGo
 public import CsdLean4.SigmaLayer.Equivariance
 public import CsdLean4.SigmaLayer.MovingFibreWitness
 public import CsdLean4.SigmaLayer.FibreCoarseArrow
+public import CsdLean4.SigmaLayer.FibreFiniteHorizon
 public import CsdLean4.SigmaLayer.UniqueErgodicity
 public import CsdLean4.SigmaLayer.Interference
 public import CsdLean4.SigmaLayer.TensorSector
