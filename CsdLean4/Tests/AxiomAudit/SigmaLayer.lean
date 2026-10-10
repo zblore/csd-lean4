@@ -4713,4 +4713,104 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.wingCode_ne_of_mem_of_mem
 
 
+-- A NON-PRODUCT RECORD PARTITION OF THE TORUS: OPTION I3 (BACKLOG #134, TAKEN AT THE AUTHOR'S
+-- DECISION BY THE I3 ROUTE - RecordLayer/SkewFibrePartition.lean, 2026-10-10): torusCell's
+-- mem_torusCell_iff records that the Born partition reads theta-1 and ignores theta-2, "the
+-- symplectic partner carries no record content". Option I1 keeps that and obtains the two wings by
+-- coarsening ONE selector; the objection it concedes is that x.2.2 stays inert. I3 is the other
+-- route: give the second coordinate record content.
+-- IT IS NOT A FREE CHOICE. volume_prodPartition_eq_mul says that if A's region is a theta-1 set and
+-- B's region a theta-2 set then the joint law is EXACTLY the product of the marginals (Fubini, no
+-- hypothesis on the sets), and not_exists_prodPartition_of_ne_mul turns that around: A JOINT LAW
+-- THAT IS NOT THE PRODUCT OF ITS OWN MARGINALS HAS NO PRODUCT PARTITION OF THE FIBRE AT ALL. So
+-- correlation FORCES one wing's region to read both coordinates. That is the fibre-level analogue of
+-- LF6.no_product_partition_realises_singlet, proved rather than assumed, and it is the reason I3
+-- exists.
+-- skewCell is the I3 cell: A's arc in theta-1, and in theta-2 the arc of the CONDITIONAL rate
+-- q s t / rowSum q s. The cells are rectangles but the PARTITION IS NOT A PRODUCT - the theta-2 arc
+-- moves with s, and that is what carries the correlation. volume_skewCell: EXACT BORN WEIGHTS for an
+-- ARBITRARY joint law, because rowSum * condRate = rate, so I3 realises any correlation on the fibre
+-- with no error term. volume_wingAFibre and volume_wingBFibre: BOTH MARGINALS COME OUT RIGHT, and
+-- B's is the non-trivial one - the construction never mentions colSum, so NO-SIGNALLING FOR B IS A
+-- THEOREM ABOUT THE GEOMETRY rather than something arranged.
+-- not_exists_sndSet_of_condRate_ne: x.2.1 IS LOAD-BEARING FOR B'S RECORD. If some single
+-- second-coordinate set described B's outcome across all of A's cells, the conditional law of B given
+-- A would be the same in every A-cell. So exactly when the conditional law depends on A's cell -
+-- exactly when there is correlation - no theta-2 set describes B's region. With the no-go above these
+-- are two sides of one fact: correlation and the theta-2 nonlocality of B's region are the same
+-- thing.
+-- THE FINDING: I2 AND I3 ARE THE SAME CONSTRUCTION. #132 listed I2 (chained selectors - a second
+-- selector whose rates depend on the first's outcome) and I3 (a non-product partition of the torus)
+-- as two alternatives. They are not two. A partition of the torus that carries correlation must, by
+-- the no-go, have a wing reading both coordinates; writing the joint law as marginal-times-
+-- conditional is then the chain rule, and condRate IS that conditional. So the construction is
+-- simultaneously I2 and I3, and the author's choice is BINARY - I1's single coarsened selector, or
+-- this - not ternary.
+-- NOT claimed. THIS IS THE FIBRE ONLY: the rates are an argument, nothing is attached to a base
+-- point, so there is no ContextField, no globalBasin and no epistemicMeasure here; coupling it to the
+-- base is row 135. NO P_st AND NO BELL: the joint law is arbitrary, the singlet is not mentioned, and
+-- nothing computes a CHSH value or claims a Bell violation - what is shown is that the FIBRE can
+-- carry any joint law exactly and that it must be non-product to do so. rowPos IS A RESTRICTION: an
+-- A-outcome of probability zero has no conditional law (for the singlet this always holds, 1/2 at
+-- every setting pair, including the perfectly correlated endpoints where individual joint weights
+-- vanish). I3 DOES NOT MAKE THE TWO WINGS SYMMETRIC: A's region IS a theta-1 set and it is B's that
+-- reads both coordinates, because the no-go only forces ONE wing to be non-local and the chain rule
+-- picks which - calling the result "two independent selectors" would be wrong, there are two
+-- coordinates, both load-bearing, and one conditional dependence between them. AND NOTHING HERE IS A
+-- CLAIM ABOUT SIGMA'S DYNAMICS: whether a flow writes these cells is MacrostateStability's and LF6's
+-- business and is untouched.
+-- Foundational-triple.
+/-- info: 'CSD.RecordLayer.volume_prodPartition_eq_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_prodPartition_eq_mul
+
+/-- info: 'CSD.RecordLayer.not_exists_prodPartition_of_ne_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_exists_prodPartition_of_ne_mul
+
+/-- info: 'CSD.RecordLayer.JointRates.sum_colSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.JointRates.sum_colSum
+
+/-- info: 'CSD.RecordLayer.JointRates.sum_condRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.JointRates.sum_condRate
+
+/-- info: 'CSD.RecordLayer.JointRates.rowSum_mul_condRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.JointRates.rowSum_mul_condRate
+
+/-- info: 'CSD.RecordLayer.measurableSet_skewCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_skewCell
+
+/-- info: 'CSD.RecordLayer.volume_skewCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_skewCell
+
+/-- info: 'CSD.RecordLayer.skewCell_pairwiseDisjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.skewCell_pairwiseDisjoint
+
+/-- info: 'CSD.RecordLayer.wingAFibre_inter_wingBFibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wingAFibre_inter_wingBFibre
+
+/-- info: 'CSD.RecordLayer.volume_wingAFibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_wingAFibre
+
+/-- info: 'CSD.RecordLayer.volume_wingBFibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_wingBFibre
+
+/-- info: 'CSD.RecordLayer.not_exists_sndSet_of_condRate_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_exists_sndSet_of_condRate_ne
+
+/-- info: 'CSD.RecordLayer.skewCell_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.skewCell_ae_total
+
+
 end CSD.Tests.AxiomAudit
