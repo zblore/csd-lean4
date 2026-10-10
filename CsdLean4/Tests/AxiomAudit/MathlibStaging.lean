@@ -11595,6 +11595,61 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms SchwartzMap.integralLastCLM
 
+-- BACKLOG #123: SLICING IS LIPSCHITZ IN THE SLICE PARAMETER
+-- (Mathlib/Analysis/Fourier/SchwartzSliceContinuous.lean, 2026-10-09, out of #121(i)).
+-- continuous_slice: the slice family e -> slice K e is continuous into the Schwartz space of the
+-- second factor, for the SCHWARTZ TOPOLOGY. #121(i) proved slicing continuous IN THE KERNEL
+-- (sliceCLM is a continuous linear map for each fixed e), which is what transfers theorems; this is
+-- the other direction, and the row was right that it is a genuinely different statement.
+-- THE ROW'S OWN ROUTE WORKED, AND BOTH PIECES IT NAMED WERE NEEDED.
+-- (1) iteratedFDeriv_comp_inr: the derivatives of a slice are the kernel's derivatives precomposed
+-- with the inclusion w -> (e, w). This is the MIRROR of #126(ii)'s iteratedFDeriv_comp_inl, which is
+-- why it was cheap - the proof is the same affine-translation-plus-linear-map factorisation.
+-- (2) norm_fderiv_iteratedFDeriv_comp_inl_le: the kernel's n-th derivative is differentiable in the
+-- parameter with derivative bounded by its (n+1)-st - K's decay AT ONE ORDER HIGHER, exactly as the
+-- row predicted, through Mathlib's norm_fderiv_iteratedFDeriv.
+-- lipschitz_seminorm_slice is the estimate: each Schwartz seminorm of the slice difference is at most
+-- the norm of (e - e0) times ONE seminorm of K, the same one at one order higher.
+-- THE ROW SAID "LOCALLY LIPSCHITZ"; IT IS GLOBALLY LIPSCHITZ. The derivative bound is a seminorm of
+-- K, which does not depend on the base point, so no localisation is needed.
+-- A NOTE ON THE PROOF: the weight is handled by a CASE SPLIT on whether it vanishes, not by weighting
+-- the function before the mean value step. Weighting first is the mathematically natural move (the
+-- derivative bound is then uniform in both variables) but it puts a scalar smul on a space of
+-- continuous multilinear maps, where the NormSMulClass instance needed for the norm computation is
+-- absent at this pin; the case split costs two lines and needs no instances.
+-- NOT claimed. NOTHING IS GATED ON THIS - the row records it because #121(i) names it and because a
+-- symbol-valued calculus would want it, and #121(ii) goes by #124 alone; it is here because it was
+-- UNBLOCKED, not because anything waits on it. NOT A CURRY: as #123 was corrected on 2026-10-07, the
+-- type 𝓢(E, 𝓢(F, G)) does not typecheck (SchwartzMap needs a normed target, Schwartz space is
+-- Frechet), so this is a continuity statement about one map with no larger object behind it, and the
+-- slice family is NOT claimed to be a Schwartz function of e - that would need every derivative in e
+-- and a weight. AND LIPSCHITZ IN EACH SEMINORM, NOT FOR A NORM: the target has no norm, so the
+-- conclusion is the seminorm-wise estimate and the continuity it gives, not LipschitzWith.
+-- Foundational-triple.
+/-- info: 'SchwartzMap.iteratedFDeriv_comp_inr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.iteratedFDeriv_comp_inr
+
+/-- info: 'SchwartzMap.norm_inr_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_inr_le_one
+
+/-- info: 'SchwartzMap.norm_fderiv_iteratedFDeriv_comp_inl_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_fderiv_iteratedFDeriv_comp_inl_le
+
+/-- info: 'SchwartzMap.norm_pow_mul_norm_iteratedFDeriv_slice_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_pow_mul_norm_iteratedFDeriv_slice_sub_le
+
+/-- info: 'SchwartzMap.lipschitz_seminorm_slice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.lipschitz_seminorm_slice
+
+/-- info: 'SchwartzMap.continuous_slice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.continuous_slice
+
 -- BACKLOG #126(i): THE TENSOR PRODUCT OF SCHWARTZ FUNCTIONS
 -- (Mathlib/Analysis/Fourier/SchwartzTensor.lean, 2026-10-08).
 -- SchwartzMap.tensorProd: (p, q) -> f p * g q is Schwartz on D1 x D2 when f and g are Schwartz on the
