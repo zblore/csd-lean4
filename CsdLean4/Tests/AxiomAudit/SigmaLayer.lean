@@ -4595,4 +4595,118 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.tendsto_integral_birkhoffAverage_fibreCellInd_sub_sq
 
+-- TWO WINGS FROM ONE JOINT SELECTOR (BACKLOG #131, BLOCKER (I), RESOLVED AT THE AUTHOR'S DECISION
+-- BY OPTION I1 - RecordLayer/TwoWingCoarsening.lean, 2026-10-10): the audit found that globalBasin's
+-- selector is ONE-DIMENSIONAL (it reads x.2.1, and TorusFibre.mem_torusCell_iff records that the
+-- second torus coordinate carries no record content), while a two-wing experiment needs two RECORDS.
+-- The tempting minimal choice - one selector per wing, each wing's cell geometry depending only on
+-- that wing's setting - FAILS TWICE OVER: it is the product-partition arity that
+-- LF6.no_product_partition_realises_singlet kills, AND with independent selectors the joint law
+-- factorises, so it cannot carry correlation at all.
+-- OPTION I1 TAKES THE OTHER ROUTE: ONE selector, a context whose rates are the JOINT outcome
+-- probabilities, and the wings obtained by COARSENING the fine outcome code. Two facts make this the
+-- cheapest option that is also foundationally clean: circleCell has NO FREE OFFSET (a cell's position
+-- is determined by the rate vector alone), so "whose geometry sees the joint context" is really
+-- "which rate vector is the joint one" and I1 answers that there is one and it is joint; and the
+-- architecture sigma-fibre-contextuality.md settles on is PROBABILITIES BORN, REGIONS CONTEXTUAL,
+-- which coarsening preserves - the fine widths are Born weights, the coarse cells move with the joint
+-- context, the fibre law stays fixed, and x.2.2 keeps its symplectic role.
+-- The content is stated ONCE for an arbitrary decoding u : Fin N -> kappa and the two wings are
+-- instances. measure_coarseEvent: the coarse law is the SUM OF THE FINE BORN WEIGHTS over the
+-- decoding's fibre, which is the shape LF6's clause (3) already uses, now as a theorem about any
+-- decoding. measure_coarseEvent_comp: COARSENING COMPOSES, and the two wing marginals
+-- (measure_wingAEvent_eq_sum, measure_wingBEvent_eq_sum) are its two instances - so EACH WING'S
+-- MARGINAL IS THE SUM OVER THE OTHER WING'S OUTCOMES, not as an assumption but as a consequence of
+-- the fine cells partitioning Sigma. measure_coarseEvent_eq_of_fineSum_eq and its wing forms are
+-- OPERATIONAL NO-SIGNALLING WITH ITS PREMISE NAMED: A's marginal agrees between two joint contexts
+-- exactly when their summed fine weights agree, so the construction supplies the identity while
+-- whether the premise holds is a checkable property of the rate vector rather than something
+-- smuggled. factorsThrough_coarseEvent: every coarse event is MACROSCOPIC, a preimage of #102's
+-- record string, which is what obligation 5 asks of an outcome. wingCode_ne_of_mem_of_mem is the
+-- NON-VACUITY CHECK against the no-go: the coarse code genuinely moves between joint contexts at the
+-- same ontic point, so these outcome maps are NOT of product-partition arity - the analogue of
+-- LF3.translation_wingA_setting_dependent, without which the construction would be the pointwise
+-- primitive in disguise.
+-- NOT claimed. THE TWO WINGS SHARE ONE ONTIC SELECTOR: that is what I1 concedes, and it is a
+-- commitment about Sigma rather than a formalisation artefact - the "two records" are two readings of
+-- x.2.1, so CV.recordStroke2's two channels are not the write mechanism for this model. It is honest
+-- for CSD (Sigma is unified and the apparent nonlocality sits in the projection) and it is the
+-- easiest point for a critic to press; options I2 (chained selectors) and I3 (a non-product partition
+-- of the torus) are the alternatives and both would repurpose x.2.2. THE MEASURABLE COORDINATE IS
+-- STILL outcomeCode: fineIndex and wingCode are convenience codes into Option, a type with no
+-- measurable structure in scope, and NO MEASURABILITY IS CLAIMED FOR THEM - nothing is lost because
+-- every probability statement here is about an EVENT and factorsThrough_coarseEvent is what ties
+-- those events to the measurable record coordinate. NO P_st: nothing here mentions the singlet, the
+-- decoding and the context are arguments, and instantiating them with LF6's pointer-pair index and
+-- the joint Born rates is obligation 1's second half. NO-SIGNALLING IS CONDITIONAL ON ITS PREMISE,
+-- which is the honest form. MEASUREMENT INDEPENDENCE IS INHERITED, NOT REMOVED: as in
+-- LF3/SettingLocality.lean the statements are made against one fixed epistemicMeasure p across
+-- contexts, and that fixture is the Bell premise. AND NOT C-1: no causal structure, and #131's
+-- adjacency is still supplied.
+-- Foundational-triple.
+/-- info: 'CSD.RecordLayer.fineIndex_eq_some_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineIndex_eq_some_iff
+
+/-- info: 'CSD.RecordLayer.fineIndex_eq_none_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineIndex_eq_none_iff
+
+/-- info: 'CSD.RecordLayer.mem_coarseEvent_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_coarseEvent_iff
+
+/-- info: 'CSD.RecordLayer.measurableSet_coarseEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_coarseEvent
+
+/-- info: 'CSD.RecordLayer.measure_coarseEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_coarseEvent
+
+/-- info: 'CSD.RecordLayer.measure_coarseEvent_eq_of_fineSum_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_coarseEvent_eq_of_fineSum_eq
+
+/-- info: 'CSD.RecordLayer.factorsThrough_coarseEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.factorsThrough_coarseEvent
+
+/-- info: 'CSD.RecordLayer.measure_coarseEvent_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_coarseEvent_comp
+
+/-- info: 'CSD.RecordLayer.sum_filter_fst_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_filter_fst_eq
+
+/-- info: 'CSD.RecordLayer.sum_filter_snd_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_filter_snd_eq
+
+/-- info: 'CSD.RecordLayer.mem_wingEvent_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_wingEvent_iff
+
+/-- info: 'CSD.RecordLayer.measure_wingAEvent_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_wingAEvent_eq_sum
+
+/-- info: 'CSD.RecordLayer.measure_wingBEvent_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_wingBEvent_eq_sum
+
+/-- info: 'CSD.RecordLayer.measure_wingAEvent_eq_of_fineSum_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_wingAEvent_eq_of_fineSum_eq
+
+/-- info: 'CSD.RecordLayer.measure_wingBEvent_eq_of_fineSum_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_wingBEvent_eq_of_fineSum_eq
+
+/-- info: 'CSD.RecordLayer.wingCode_ne_of_mem_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wingCode_ne_of_mem_of_mem
+
+
 end CSD.Tests.AxiomAudit
