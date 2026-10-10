@@ -2061,4 +2061,102 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.causalDist_le_of_causalPrecedes_right
 
+-- THE TWO-WING COUPLING GRAPH: CAUSAL SEPARATION AT EVERY PERIOD COUNT (BACKLOG #131, OBLIGATION
+-- (3), THE CAUSAL-SEPARATION HALF - CV/TwoWingCone.lean, 2026-10-10): RecordInfluence states the
+-- record cone for an ARBITRARY coupling graph E; #131's experiment supplies a particular one, four
+-- modes (each wing's system and its own pointer) with NO A-B EDGE, which is the sense in which the
+-- two wings are spacelike. ONE FACT DRIVES EVERYTHING: graphNeighborhood twoWingGraph wingAModes =
+-- wingAModes, A's mode set is CLOSED under the graph's one-step neighbourhood because the only edge
+-- touching it has both endpoints inside it. So graphBall twoWingGraph wingAModes n = wingAModes for
+-- EVERY n - A's cone never grows - and the same for B.
+-- spacelike_twoWing: the two wings are Spacelike at EVERY period count, so causal separation here is
+-- NOT a bound that degrades with time and every theorem of RecordInfluence applies at every n with
+-- no budget to track. not_eventuallyInfluences_twoWing: neither wing EVER influences the other, in
+-- the graded relation's existential form. commute_record_twoWing: the two wings' evolved observables
+-- commute at every n, so THE RECORD LAYER MAY ASSIGN BOTH WINGS OUTCOMES AT ONCE, which is what a
+-- two-wing experiment needs in order to HAVE a joint outcome. arenaObs_kick_twoWing and
+-- recordStroke_comm_kick_twoWing: A B-WING INTERVENTION CANNOT STEER A'S READING OR A'S RECORD WRITE,
+-- EXACTLY and at every period count - no Lieb-Robinson error term, because the evolved observable's
+-- support stays inside A's cone on the nose.
+-- NON-VACUITY: the theorems are stated for any wing-supported observable and any wing-supported
+-- unitary, so they would be empty if the wing algebras were trivial. supportedOn_wingAModes_modeOp
+-- gives every single-mode operator at A's system mode, supportedOn_wingBModes_phaseDiagU gives a
+-- diagonal phase unitary reading B's system mode only, and recordStroke_comm_kick_twoWing_witness is
+-- the unsteerability statement at that explicit pair.
+-- NOT claimed. THE GRAPH IS SUPPLIED, AS #131 INTENDS: twoWingGraph is a MODELLING CHOICE, the
+-- experiment's layout, and the adjacency is put in by hand rather than derived - nothing here shows
+-- that spatial separation EMERGES, which is C-1 and which #131 says explicitly would not be
+-- established even with all five obligations met. THIS IS Influences, WHICH IS PERMITTED INFLUENCE:
+-- everything proved is of the form "outside the cone implies nothing happens", and the converse is
+-- not proved and is not true in general. THIS IS THE CV ARENA, NOT YET LF4.KSigma: the fibre IS
+-- LF4.KTorus (the same type, no transport needed) but the base is the projectivisation over
+-- FieldConfig 4 2 rather than CPN 16, and carrying these statements across the index equivalence is
+-- NOT the thin transport the audit expected - dmVec, arenaObs, arenaKick and SupportedOn are all
+-- indexed by FieldConfig K N specifically, so the carry needs the CV arena API generalised over its
+-- index type, which CompositeArena.lean already records as owed (row 133, not done here).
+-- AND THE RECORD-LAYER STATEMENT IS ABOUT A DIFFERENT OBJECT: these theorems are about a WING-LOCAL
+-- OBSERVABLE on the field arena, while the record layer's wing reading under option I1 is a
+-- COARSENING OF A JOINT CODE - momentContext's rate is the moment map in the configuration basis, a
+-- reading of the WHOLE configuration rather than of either wing - so the record-layer counterpart of
+-- unsteerability is the MARGINAL statement (LF6.toReal_measure_preimage_wingAEvent_eq_of_setting) and
+-- the two are not the same theorem; a genuinely wing-local ContextField is row 134, and it bears on
+-- row 132 since under I1 the two wings share one selector.
+-- Foundational-triple.
+/-- info: 'CSD.CV.disjoint_wingModes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.disjoint_wingModes
+
+/-- info: 'CSD.CV.graphNeighborhood_wingAModes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.graphNeighborhood_wingAModes
+
+/-- info: 'CSD.CV.graphNeighborhood_wingBModes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.graphNeighborhood_wingBModes
+
+/-- info: 'CSD.CV.graphBall_wingAModes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.graphBall_wingAModes
+
+/-- info: 'CSD.CV.graphBall_wingBModes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.graphBall_wingBModes
+
+/-- info: 'CSD.CV.spacelike_twoWing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spacelike_twoWing
+
+/-- info: 'CSD.CV.not_influences_twoWing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.not_influences_twoWing
+
+/-- info: 'CSD.CV.not_eventuallyInfluences_twoWing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.not_eventuallyInfluences_twoWing
+
+/-- info: 'CSD.CV.commute_record_twoWing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.commute_record_twoWing
+
+/-- info: 'CSD.CV.arenaObs_kick_twoWing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_kick_twoWing
+
+/-- info: 'CSD.CV.recordStroke_comm_kick_twoWing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.recordStroke_comm_kick_twoWing
+
+/-- info: 'CSD.CV.supportedOn_wingAModes_modeOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.supportedOn_wingAModes_modeOp
+
+/-- info: 'CSD.CV.supportedOn_wingBModes_phaseDiagU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.supportedOn_wingBModes_phaseDiagU
+
+/-- info: 'CSD.CV.recordStroke_comm_kick_twoWing_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.recordStroke_comm_kick_twoWing_witness
+
+
 end CSD.Tests.AxiomAudit
