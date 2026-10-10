@@ -3897,6 +3897,58 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.recordString_coarsen
 
+-- BACKLOG #131, OBLIGATION 1 (first half): A DE-ISOLATION FLOW'S RECORD HISTORY
+-- (RecordLayer/FlowRecordHistory.lean, 2026-10-10) - AND #131's BLOCKER (II), DISSOLVED.
+-- The audit (specs/two-wing-experiment-scoping.md section 5) recorded a real obstruction: LF6's
+-- de-isolation flow moves the BASE and preserves fsMeasure, while the Born and record statements are
+-- made in epistemicMeasure p = dirac p times vol, which a base-moving flow does NOT preserve - it
+-- moves the Dirac. The record layer's own dynamics sigmaShift preserves epistemicMeasure but moves
+-- only the fibre. Two dynamics, two measures.
+-- THE RESOLUTION IS THAT "PRESERVES" WAS THE WRONG DEMAND. map_epistemicMeasure_liftBase is the
+-- transport law: the pushforward of the PREPARED epistemic measure along the lifted flow is the
+-- epistemic measure of the IMAGE ray. The Dirac moves with the ray and the record medium's Haar
+-- measure does not move at all. Since LF6's Born clause is stated at the POST-MEASUREMENT ray, that
+-- is exactly the composition the experiment needs, so the blocker dissolves rather than being worked
+-- around. liftBase is the de-isolation flow as a map of the ontic space: it rotates the ray and
+-- leaves the record medium alone.
+-- map_outcomeCode_liftBase and measure_outcomeCode_liftBase are THE RECORD HISTORY: the law of the
+-- outcome code AFTER the flow, in the prepared measure, is its law at the post-measurement ray - so
+-- an outcome statement proved at the image ray IS a statement about the run that starts at the
+-- prepared one, which is what makes "the flow produces this record" a theorem rather than a
+-- juxtaposition of a flow clause and a volume clause. measure_recordString_liftBase is the
+-- multi-context form #102's coordinate is stated in.
+-- WHY THIS IS THE RIGHT FIRST BRICK: it needs no choice about blocker (I), the one-selector versus
+-- two-channel question, so it can be built before that physics decision is taken, and it tests the
+-- measure question on its own.
+-- NOT claimed. THE OUTCOME EVENTS ARE NOT YET TIED TO POINTER BLOCKS HERE: that tie is LF6's clause
+-- (3), and this file transports WHATEVER outcome statement holds at the image ray back to the
+-- prepared measure, and does not import LF6 - composing the two is obligation 1's second half and
+-- needs the index transport of the audit's section 3. ONE WING: outcomeCode reads a single selector,
+-- so this is one joint outcome code and the two-wing version waits on blocker (I). NO DYNAMICS ON
+-- THE FIBRE: liftBase leaves the record medium fixed, so this says nothing about record WRITES, which
+-- are sigmaShift's and MacrostateStability's business, and the two have not been composed. AND NOT
+-- C-1: nothing here concerns causal structure, and #131's adjacency is still supplied.
+-- Foundational-triple.
+/-- info: 'CSD.RecordLayer.measurable_liftBase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_liftBase
+
+/-- info: 'CSD.RecordLayer.map_epistemicMeasure_liftBase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_epistemicMeasure_liftBase
+
+/-- info: 'CSD.RecordLayer.map_outcomeCode_liftBase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_outcomeCode_liftBase
+
+/-- info: 'CSD.RecordLayer.measure_outcomeCode_liftBase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_outcomeCode_liftBase
+
+/-- info: 'CSD.RecordLayer.measure_recordString_liftBase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_recordString_liftBase
+
 /-- info: 'CSD.RecordLayer.noSignalling_pairFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.noSignalling_pairFamily

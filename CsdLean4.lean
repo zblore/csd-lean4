@@ -552,6 +552,7 @@ public import CsdLean4.RecordLayer.CellLawForced
 public import CsdLean4.RecordLayer.NStepChain
 public import CsdLean4.RecordLayer.MacroProjection
 public import CsdLean4.RecordLayer.RecordMacrostate
+public import CsdLean4.RecordLayer.FlowRecordHistory
 public import CsdLean4.RecordLayer.MacrostateStability
 public import CsdLean4.RecordLayer.BaseMotionStability
 public import CsdLean4.RecordLayer.PointerConcentration
