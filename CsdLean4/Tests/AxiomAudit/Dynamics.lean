@@ -1422,4 +1422,71 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #print axioms CSD.LF3.symmTranslation_wingB_setting_dependent
 
 
+-- THE TWO-WING RECORD VIOLATES THE CHSH BOUND (BACKLOG #131 OBLIGATION (4), THE BELL HALF -
+-- LF6/TwoWingBell.lean, 2026-10-11): the no-signalling half landed with LF3.symmTranslationLocalityB
+-- and the marginal theorems of TwoWingRecord; this is the other half, and it was the last item on
+-- #131 with a price.
+-- NO BELL THEOREM IS PROVED HERE AND NONE IS NEEDED. The singlet's E(a,b) = -a.b is
+-- LF3.correlation_eq_neg_dot, the -2 root 2 at the canonical angles is
+-- Empirical.Bell.chsh_singlet_at_optimal_angles, and the local-hidden-variable bound |S| <= 2 is
+-- Empirical.QM.E91.lhvCHSH_abs_le_two over a genuine measure-theoretic model. All three are IMPORTED.
+-- WHAT IS NEW IS THE QUANTITY BEING CORRELATED. Until now the corpus' CHSH was a function of P_st, an
+-- algebraic kernel. Here it is a function of the MEASURES OF RECORD EVENTS ON SIGMA: sets of ontic
+-- microstates, read in epistemicMeasure, AFTER THE DE-ISOLATION FLOW FROM THE PREPARED RAY. So for the
+-- first time Bell violation is a statement about the SAME OBJECTS as no-signalling
+-- (toReal_measure_preimage_wingAEvent_eq_of_setting), record stability
+-- (RecordLayer.measure_drift_wingCode_ne_le) and causal separation (CV.spacelike_twoWing) - which is
+-- what "within the same dynamical model" means.
+-- recordCorrelation_eq_correlation and recordCorrelation_eq_neg_dotR: the record correlation IS the
+-- singlet correlation, -a.b, at every setting pair and with no genericity hypothesis, term by term
+-- through toReal_measure_wingEvent_eq_P_st. preparedRecordCorrelation_eq_correlation: the same read at
+-- the PREPARED, pre-measurement ray through liftBase localDeisolationFlow - the correlation of an
+-- actual run. chsh_preparedRecord_eq_neg_two_sqrt_two: the CHSH of the four runs' record correlations
+-- is -2 root 2. bellClassicalBound_lt_abs_chsh_preparedRecord: and that EXCEEDS the LHV bound, 2 < 2
+-- root 2.
+-- NOT claimed. THE FOUR TERMS ARE FOUR DIFFERENT RUNS: each preparedRecordCorrelation a b is evaluated
+-- in its OWN prepared measure, at the ray built from localNudgeVec a b. That is what a Bell test is -
+-- four setting configurations, separate runs - but it is NOT the single-measure idealisation
+-- LF3.OperationalNoSignalling is stated in, and the two must not be run together: the no-signalling
+-- predicate fixes one measure across contexts (which IS the measurement-independence premise) while
+-- this statement ranges over four preparations. THIS DOES NOT MAKE CSD LOCAL AND DOES NOT PRETEND TO:
+-- the record events move with the joint context (RecordLayer.wingCode_ne_of_mem_of_mem), so the outcome
+-- maps are not of product-partition arity and no_product_partition_realises_singlet does not apply,
+-- which is why a violation is possible at all; nothing here is a non-contextual value assignment and
+-- the violation is of the LHV bound, not of anything CSD claims. P_st IS NOT RE-DERIVED AND THE ANGLES
+-- ARE NOT OPTIMISED: chshA, chshA', chshB, chshB' are the canonical settings already in
+-- Empirical/QM/Bell.lean and nothing here shows they are optimal, which is Tsirelson. AND STILL NOT
+-- C-1: causal adjacency is supplied through CV.twoWingGraph, and nothing here shows that the apparent
+-- nonlocality is a consequence of projection alone - obligation (4) being discharged does not change
+-- that.
+-- Foundational-triple.
+/-- info: 'CSD.LF6.recordCorrelation_eq_correlation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.recordCorrelation_eq_correlation
+
+/-- info: 'CSD.LF6.recordCorrelation_eq_neg_dotR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.recordCorrelation_eq_neg_dotR
+
+/-- info: 'CSD.LF6.preparedRecordCorrelation_eq_correlation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.preparedRecordCorrelation_eq_correlation
+
+/-- info: 'CSD.LF6.preparedRecordCorrelation_eq_neg_dotR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.preparedRecordCorrelation_eq_neg_dotR
+
+/-- info: 'CSD.LF6.chshPreparedRecord_eq_chshOperator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.chshPreparedRecord_eq_chshOperator
+
+/-- info: 'CSD.LF6.chsh_preparedRecord_eq_neg_two_sqrt_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.chsh_preparedRecord_eq_neg_two_sqrt_two
+
+/-- info: 'CSD.LF6.bellClassicalBound_lt_abs_chsh_preparedRecord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF6.bellClassicalBound_lt_abs_chsh_preparedRecord
+
+
 end CSD.Tests.AxiomAudit
