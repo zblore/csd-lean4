@@ -19,6 +19,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Metric
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyLebesgue
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Congr
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MomentMap
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitSection
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
@@ -620,6 +621,7 @@ public import CsdLean4.CV.FieldStructuredFlow
 public import CsdLean4.CV.FibredArenaBridge
 public import CsdLean4.CV.RecordInfluence
 public import CsdLean4.CV.TwoWingCone
+public import CsdLean4.CV.ArenaIndexBridge
 public import CsdLean4.CV.RecordCausalOrder
 public import CsdLean4.CV.CausalDistance
 public import CsdLean4.CV.EntanglementDistance

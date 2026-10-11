@@ -2159,4 +2159,49 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.recordStroke_comm_kick_twoWing_witness
 
 
+-- ONE ARENA: THE FIELD ARENA IS SIGMA, UP TO THE INDEX OF ITS CONFIGURATIONS (BACKLOG #133, and the
+-- last structural gap in #131 - CV/ArenaIndexBridge.lean, 2026-10-11): #131 asks for four properties
+-- "within the SAME dynamical model". Born weights, record stability, no-signalling and the CHSH
+-- violation are statements about LF4.KSigma 16; causal separation (CV/TwoWingCone.lean) is a statement
+-- about FibredFieldArena 4 2. Those are the same space, since FieldConfig 4 2 has 16 elements - but
+-- until now that was a REMARK, because Projectivization.map has no inverse and the corpus had no
+-- equivalence of projectivizations. Projectivization.congr supplies it and this file uses it.
+-- configEquiv is the index change; fieldSpaceEquiv the induced LINEAR ISOMETRY, so norms and inner
+-- products and therefore every Born weight are untouched; arenaEquiv the arena identification with
+-- continuity and measurability; fibredArenaEquiv the fibred one, the fibre needing NO transport at all
+-- because CV.RecordFibre and LF4.KTorus are the SAME TYPE; twoWingArenaEquiv the instance #131 needs.
+-- sigmaRecordStroke and sigmaFibredKick are the CV record write and the CV mode-local intervention
+-- TRANSPORTED TO SIGMA, and sigmaRecordStroke_comm_sigmaFibredKick_twoWing says a B-wing intervention
+-- cannot steer A's record write AS A STATEMENT ABOUT SIGMA, at every period count.
+-- NOT claimed. THE TRANSPORTED OPERATIONS ARE DEFINED THROUGH THE EQUIVALENCE, so the transported
+-- theorem is TwoWingCone's conjugated and NO NEW MATHEMATICS IS IN IT; what it buys is the one thing
+-- #131 was missing, that all four properties are now statements about LF4.KSigma 16, so "within the
+-- same dynamical model" is a fact about the corpus rather than a remark about two spaces being
+-- isomorphic. IT DOES NOT IDENTIFY CV'S RECORD WRITE WITH THE RECORD LAYER'S OWN: recordStroke is a
+-- base-dependent shift of the fibre read through an arena observable while RecordLayer.sigmaShift is a
+-- constant translation of the record coordinate, and they are different maps. NO MEASURE PRESERVATION
+-- IS CLAIMED: measurable_arenaEquiv says the identification is measurable, not that it carries
+-- fsMeasure or epistemicMeasure anywhere, and the transported statements here are POINTWISE which is
+-- why they need nothing more. AND THE CV ARENA API IS STILL FieldConfig-INDEXED: #133 also asks for
+-- arenaObs, arenaDM, arenaKick and SupportedOn to be GENERALISED over the index type, which would let
+-- the CV notions themselves be read on Sigma rather than transported wholesale - that is the difference
+-- between "one arena" (this file) and "one API" (the rest of the row).
+-- Foundational-triple.
+/-- info: 'CSD.CV.measurable_arenaEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.measurable_arenaEquiv
+
+/-- info: 'CSD.CV.continuous_arenaEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_arenaEquiv
+
+/-- info: 'CSD.CV.measurable_fibredArenaEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.measurable_fibredArenaEquiv
+
+/-- info: 'CSD.CV.sigmaRecordStroke_comm_sigmaFibredKick_twoWing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sigmaRecordStroke_comm_sigmaFibredKick_twoWing
+
+
 end CSD.Tests.AxiomAudit

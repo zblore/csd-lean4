@@ -11974,4 +11974,51 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms iteratedDeriv_integral_of_bound_le
 
+-- A LINEAR EQUIVALENCE INDUCES AN EQUIVALENCE OF PROJECTIVE SPACES (BACKLOG #133, the piece
+-- everything else on that row needs - Mathlib/LinearAlgebra/Projectivization/Congr.lean, 2026-10-11):
+-- Mathlib has Projectivization.map, which sends an INJECTIVE SEMILINEAR MAP to a map of
+-- projectivizations, and this repository's Topology.lean has mapEquiv, the action of a linear
+-- SELF-equivalence. What is missing in both is the obvious thing in between: a linear equivalence of
+-- DIFFERENT spaces induces an EQUIVALENCE of their projectivizations. Without it two projective
+-- spaces that are the same up to a change of index cannot be identified at all, only mapped one way
+-- with no inverse - which is exactly the gap #133 records between the CV field arena and LF4.CPN.
+-- congr is the equivalence (map of e and map of e.symm, inverting each other because they do so on
+-- representatives, via mk_eq_mk_iff' with the unit scalar); congr_mk is the representative form;
+-- congr_symm identifies the inverse as the equivalence of e.symm; congr_refl and congr_trans make it
+-- functorial so composing index changes composes; congr_continuous is continuity.
+-- NOT claimed. THE CONSTRUCTION IS FOR A LINEAR EQUIVALENCE OVER ONE RING: Mathlib's map is
+-- semilinear and the semilinear equivalence version would need RingHomInvPair bookkeeping on both
+-- sides, nothing in this repository wants it, and the linear case is what an index change gives.
+-- AND NO MEASURABILITY LEMMA, DELIBERATELY: MeasureSpace.lean installs the Borel structure on the
+-- projectivization only under RCLike scalars and finite-dimensional normed spaces, and a general
+-- congr_measurable stated without those hypotheses resolves MeasurableSpace by some other path - the
+-- unused-section-variable linter caught exactly that. Rather than land a measurability claim whose
+-- sigma-algebra is not pinned, measurability is left to the use site, where the spaces are concrete
+-- and (congr_continuous ...).measurable fires against the intended instance.
+-- Foundational-triple.
+/-- info: 'Projectivization.congr_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.congr_mk
+
+/-- info: 'Projectivization.congr_symm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.congr_symm
+
+/-- info: 'Projectivization.congr_symm_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.congr_symm_mk
+
+/-- info: 'Projectivization.congr_refl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.congr_refl
+
+/-- info: 'Projectivization.congr_trans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.congr_trans
+
+/-- info: 'Projectivization.congr_continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.congr_continuous
+
+
 end CSD.Tests.AxiomAudit
