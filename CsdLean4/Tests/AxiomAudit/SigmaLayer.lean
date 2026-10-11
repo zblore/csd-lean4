@@ -4755,10 +4755,16 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- point, so there is no ContextField, no globalBasin and no epistemicMeasure here; coupling it to the
 -- base is row 135. NO P_st AND NO BELL: the joint law is arbitrary, the singlet is not mentioned, and
 -- nothing computes a CHSH value or claims a Bell violation - what is shown is that the FIBRE can
--- carry any joint law exactly and that it must be non-product to do so. rowPos IS A RESTRICTION: an
--- A-outcome of probability zero has no conditional law (for the singlet this always holds, 1/2 at
--- every setting pair, including the perfectly correlated endpoints where individual joint weights
--- vanish). I3 DOES NOT MAKE THE TWO WINGS SYMMETRIC: A's region IS a theta-1 set and it is B's that
+-- carry any joint law exactly and that it must be non-product to do so.
+-- AND rowPos IS GONE (2026-10-11, row 136): an earlier version demanded strictly positive
+-- A-marginals because an A-outcome of probability zero has no conditional law, and the hypothesis
+-- turned out to be REMOVABLE - Lean's x / 0 = 0 gives a null row condRate = 0, and non-negativity
+-- forces the whole row to vanish with its sum (rate_eq_zero_of_rowSum_eq_zero), so
+-- rowSum_mul_condRate and loSum_condRate_le_one both hold by a case split and the null row
+-- contributes an EMPTY theta-2 cell of measure zero. Positivity survives only where it is genuinely
+-- needed, as an explicit hypothesis of not_exists_sndSet_of_condRate_ne - a null A-cell has no
+-- second coordinate to be non-local in.
+-- I3 DOES NOT MAKE THE TWO WINGS SYMMETRIC: A's region IS a theta-1 set and it is B's that
 -- reads both coordinates, because the no-go only forces ONE wing to be non-local and the chain rule
 -- picks which - calling the result "two independent selectors" would be wrong, there are two
 -- coordinates, both load-bearing, and one conditional dependence between them. AND NOTHING HERE IS A
@@ -4777,9 +4783,21 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.JointRates.sum_colSum
 
-/-- info: 'CSD.RecordLayer.JointRates.sum_condRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'CSD.RecordLayer.JointRates.rate_eq_zero_of_rowSum_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.RecordLayer.JointRates.sum_condRate
+#print axioms CSD.RecordLayer.JointRates.rate_eq_zero_of_rowSum_eq_zero
+
+/-- info: 'CSD.RecordLayer.JointRates.condRate_eq_zero_of_rowSum_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.JointRates.condRate_eq_zero_of_rowSum_eq_zero
+
+/-- info: 'CSD.RecordLayer.JointRates.sum_condRate_of_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.JointRates.sum_condRate_of_pos
+
+/-- info: 'CSD.RecordLayer.JointRates.loSum_condRate_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.JointRates.loSum_condRate_le_one
 
 /-- info: 'CSD.RecordLayer.JointRates.rowSum_mul_condRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -4845,7 +4863,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- POINT. That both coordinates are read is the whole content of I3.
 -- measurableSet_skewBasin: the work in it is measurable_condRate, the measurability of the QUOTIENT
 -- rate / rowSum, which is THE ONE NEW REGULARITY OBLIGATION I3 INCURS OVER I1 (the denominator is
--- measurable and nowhere zero, by rowPos).
+-- measurable, the division being total in Lean so no positivity is needed).
 -- skewBasin_prob: THE BORN WEIGHT, epistemicMeasure p (skewBasin c s t) = ofReal (c.rate p s t). That
 -- is the statement LF6's Born clause is written in, so option I3 now reaches the level option I1 was
 -- already at. wingABasin_prob and wingBBasin_prob: the two wing marginals on Sigma, rowSum and
@@ -4864,11 +4882,14 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- THE CORPUS STILL RUNS ON I1: globalBasin, outcomeCode, recordString, LF6's capstone and everything
 -- #131 has landed read theta-1 alone; this file supplies the I3 alternative AT THE SAME LEVEL, it does
 -- not retire the I1 construction, and no theorem here replaces one there - Posit 10 records the
--- decision and this file makes it available. rowPos IS A REAL RESTRICTION, and stronger than the fibre
--- version: a joint context field must keep every A-marginal strictly positive at EVERY base point,
--- which is why momentContext has no I3 analogue here (a ray with a vanishing coordinate block would
--- violate it) - a momentMap-derived joint field needs a positivity hypothesis or a block coarsening
--- that keeps the marginals positive, and neither is in this file. AND NO P_st, NO BELL, NO DYNAMICS:
+-- decision and this file makes it available.
+-- AND rowPos IS GONE (2026-10-11, row 136): an earlier version of JointRates demanded a strictly
+-- positive A-marginal, which a joint context field would have had to satisfy at EVERY base point,
+-- and a momentMap-derived block marginal vanishes on rays whose block has zero amplitude, so
+-- momentContext could have had no I3 analogue. The hypothesis turned out to be removable, so that
+-- obstacle is gone; what remains of row 136 is the FIELD ITSELF, since this file still exhibits only
+-- constJointContext, whose table does not move with the ontic point.
+-- AND NO P_st, NO BELL, NO DYNAMICS:
 -- the rate field is an argument, the singlet is not mentioned, and nothing here concerns a flow, so
 -- this says nothing about record writes or stability.
 -- Foundational-triple.

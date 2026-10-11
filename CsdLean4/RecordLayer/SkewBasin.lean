@@ -61,12 +61,13 @@ and everything #131 has landed read `θ₁` alone. This file supplies the I3 alt
 level*; it does not retire the I1 construction, and no theorem here replaces one there. Posit 10
 records the decision; this file makes it available.
 
-⚠️ **`rowPos` is a real restriction**, inherited from `JointRates`: an A-outcome of probability zero
-has no conditional law, so a joint context field must keep every A-marginal strictly positive at
-**every** base point. That is stronger than the fibre version, where it was needed at one table
-only, and it is the reason `momentContext` has no I3 analogue here — a ray with a vanishing
-coordinate block would violate it. A `momentMap`-derived joint field needs a positivity hypothesis
-or a block-coarsening that keeps the marginals positive; neither is in this file.
+✅ **No positivity restriction** (BACKLOG #136, 2026-10-11). An earlier version of `JointRates`
+demanded a strictly positive A-marginal, which a joint context field would have had to satisfy at
+**every** base point — and a `momentMap`-derived block marginal vanishes on rays whose block has
+zero amplitude, so `momentContext` could have had no I3 analogue. The hypothesis turned out to be
+removable, so that obstacle is gone. ⚠️ What remains of #136 is the **field itself**: this
+file still exhibits only `constJointContext`, whose table does not move with the ontic point, and
+building the `momentMap`-derived one is the open half.
 
 ⚠️ **No `P_st`, no Bell, no dynamics.** The rate field is an argument; the singlet is not mentioned;
 nothing here concerns a flow, so this says nothing about record writes or stability.
@@ -93,8 +94,8 @@ variable {N m n : ℕ}
 /-! ### A joint context field -/
 
 /-- **A joint measurement context, as a field over the base**: the joint outcome probabilities at
-each ontic base point. The A-marginal is strictly positive everywhere, so the conditional law of B
-given A's cell exists at every point. -/
+each ontic base point. No positivity of the A-marginals is required (BACKLOG #136), so a
+`momentMap`-derived field is not excluded by a ray whose block has zero amplitude. -/
 structure JointContextField (N m n : ℕ) where
   /-- The joint probability of the outcome pair at a base point. -/
   rate : LF4.CPN N → Fin m → Fin n → ℝ
@@ -102,8 +103,6 @@ structure JointContextField (N m n : ℕ) where
   measurable_rate : ∀ s t, Measurable fun p => rate p s t
   /-- Joint probabilities are non-negative. -/
   nonneg : ∀ p s t, 0 ≤ rate p s t
-  /-- Every A-marginal is strictly positive, at every base point. -/
-  rowPos : ∀ p s, 0 < ∑ t, rate p s t
   /-- The table is normalised at every base point. -/
   sum_one : ∀ p, ∑ s, ∑ t, rate p s t = 1
 
@@ -116,7 +115,6 @@ this, so the fibre theorems of `SkewFibrePartition.lean` apply unchanged. -/
 def rates (p : LF4.CPN N) : JointRates m n where
   rate := c.rate p
   nonneg := c.nonneg p
-  rowPos := c.rowPos p
   sum_one := c.sum_one p
 
 @[simp] theorem rates_rate (p : LF4.CPN N) : (c.rates p).rate = c.rate p := rfl
@@ -287,13 +285,12 @@ nothing above is vacuous, and in particular a *correlated* table is realisable, 
 
 ⚠️ Base-independent rates are the degenerate case of a context field: the record is still
 contextual in the sense that matters (the cells are those of the chosen table), but the table does
-not move with the ontic point. A field whose table varies — the analogue of `momentContext` — needs
-`rowPos` at every base point, which is the restriction the module docstring records. -/
+not move with the ontic point. A field whose table varies — the analogue of `momentContext` — is
+the open half of BACKLOG #136; nothing in the structure stands in its way any more. -/
 def constJointContext (q : JointRates m n) : JointContextField N m n where
   rate := fun _ => q.rate
   measurable_rate := fun _ _ => measurable_const
   nonneg := fun _ => q.nonneg
-  rowPos := fun _ => q.rowPos
   sum_one := fun _ => q.sum_one
 
 @[simp] theorem constJointContext_rate (q : JointRates m n) (p : LF4.CPN N) :

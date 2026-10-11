@@ -81,10 +81,15 @@ continuation, priced as #135.
 computes a CHSH value or claims a Bell violation. What is shown is that the *fibre* can carry any
 joint law exactly, and that it must be non-product to do so.
 
-⚠️ **`rowPos` is a restriction.** An A-outcome of probability zero has no conditional law, and the
-construction asks for strictly positive A-marginals. For the singlet this always holds (`1/2` at
-every setting pair), including at the perfectly (anti)correlated endpoints where individual joint
-weights vanish.
+✅ **No positivity hypothesis** (`rowPos` dropped 2026-10-11, BACKLOG #136). An A-outcome of
+probability zero has no conditional law, and an earlier version of this file demanded strictly
+positive A-marginals for that reason. It is not needed: Lean's `x / 0 = 0` gives a null row
+`condRate = 0`, and non-negativity forces the whole row to vanish with its sum
+(`rate_eq_zero_of_rowSum_eq_zero`), so ★ `rowSum_mul_condRate` and ★
+`loSum_condRate_le_one` both hold by a case split. The null row simply contributes an **empty**
+`θ₂` cell of measure zero. Positivity survives only where it is genuinely needed, as an
+explicit hypothesis of `not_exists_sndSet_of_condRate_ne` — a null A-cell has no second
+coordinate to be non-local in.
 
 ⚠️ **I3 does not make the two wings symmetric.** A's region *is* a `θ₁`-set; it is B's that reads
 both coordinates. The no-go only forces *one* wing to be non-local, and the chain rule picks which.
@@ -147,15 +152,14 @@ theorem not_exists_prodPartition_of_ne_mul {m n : ℕ} (q : Fin m → Fin n → 
 
 /-! ### A joint rate table -/
 
-/-- **The joint outcome probabilities of one joint context**, with every A-marginal strictly
-positive so that the conditional law of B given A's cell is defined. -/
+/-- **The joint outcome probabilities of one joint context.** No positivity of the A-marginals is
+required: a null row gets `condRate = 0` through `x / 0 = 0`, and every identity below survives it
+because non-negativity forces the whole row to vanish with its sum. -/
 structure JointRates (m n : ℕ) where
   /-- The joint probability of the outcome pair. -/
   rate : Fin m → Fin n → ℝ
   /-- Joint probabilities are non-negative. -/
   nonneg : ∀ s t, 0 ≤ rate s t
-  /-- Every A-marginal is strictly positive, so the conditional law is defined. -/
-  rowPos : ∀ s, 0 < ∑ t, rate s t
   /-- The table is normalised. -/
   sum_one : ∑ s, ∑ t, rate s t = 1
 
@@ -172,9 +176,14 @@ def colSum (t : Fin n) : ℝ := ∑ s, q.rate s t
 /-- **The conditional law of B given A's cell** — the dependence that carries the correlation. -/
 def condRate (s : Fin m) (t : Fin n) : ℝ := q.rate s t / q.rowSum s
 
-theorem rowSum_pos (s : Fin m) : 0 < q.rowSum s := q.rowPos s
+theorem rowSum_nonneg (s : Fin m) : 0 ≤ q.rowSum s :=
+  Finset.sum_nonneg fun t _ => q.nonneg s t
 
-theorem rowSum_nonneg (s : Fin m) : 0 ≤ q.rowSum s := (q.rowSum_pos s).le
+/-- **A null row is null entrywise.** Non-negativity turns a vanishing A-marginal into a vanishing
+joint rate, which is what lets the positivity hypothesis go. -/
+theorem rate_eq_zero_of_rowSum_eq_zero {s : Fin m} (h : q.rowSum s = 0) (t : Fin n) :
+    q.rate s t = 0 :=
+  (Finset.sum_eq_zero_iff_of_nonneg fun t' _ => q.nonneg s t').1 h t (Finset.mem_univ t)
 
 theorem colSum_nonneg (t : Fin n) : 0 ≤ q.colSum t :=
   Finset.sum_nonneg fun s _ => q.nonneg s t
@@ -189,23 +198,44 @@ theorem sum_colSum : ∑ t, q.colSum t = 1 := by
 theorem condRate_nonneg (s : Fin m) (t : Fin n) : 0 ≤ q.condRate s t :=
   div_nonneg (q.nonneg s t) (q.rowSum_nonneg s)
 
-theorem sum_condRate (s : Fin m) : ∑ t, q.condRate s t = 1 := by
+theorem condRate_eq_zero_of_rowSum_eq_zero {s : Fin m} (h : q.rowSum s = 0) (t : Fin n) :
+    q.condRate s t = 0 := by
+  show q.rate s t / q.rowSum s = 0
+  rw [h, div_zero]
+
+/-- The conditional law is a probability vector on a **non-null** row, and identically zero on a
+null one — which is why `loSum_condRate_le_one` holds either way. -/
+theorem sum_condRate_of_pos {s : Fin m} (h : 0 < q.rowSum s) : ∑ t, q.condRate s t = 1 := by
   show ∑ t, q.rate s t / q.rowSum s = 1
   rw [← Finset.sum_div, show (∑ t, q.rate s t) = q.rowSum s from rfl]
-  exact div_self (ne_of_gt (q.rowSum_pos s))
+  exact div_self (ne_of_gt h)
 
+/-- ★ **`rowSum · condRate = rate`, with no positivity hypothesis.** On a null row both sides
+vanish, by `rate_eq_zero_of_rowSum_eq_zero`; off it, the division cancels. -/
 theorem rowSum_mul_condRate (s : Fin m) (t : Fin n) :
     q.rowSum s * q.condRate s t = q.rate s t := by
-  have h : q.rowSum s ≠ 0 := ne_of_gt (q.rowSum_pos s)
-  show q.rowSum s * (q.rate s t / q.rowSum s) = q.rate s t
-  field_simp
+  rcases eq_or_lt_of_le (q.rowSum_nonneg s) with h | h
+  · rw [q.condRate_eq_zero_of_rowSum_eq_zero h.symm t, ← h,
+      q.rate_eq_zero_of_rowSum_eq_zero h.symm t, mul_zero]
+  · have hne : q.rowSum s ≠ 0 := ne_of_gt h
+    show q.rowSum s * (q.rate s t / q.rowSum s) = q.rate s t
+    field_simp
 
 theorem loSum_rowSum_le_one (s : Fin m) : loSum q.rowSum s + q.rowSum s ≤ 1 :=
   loSum_add_self_le_one _ q.rowSum_nonneg q.sum_rowSum s
 
+/-- ★ **The conditional cells fit in one turn, null rows included.** On a null row every
+conditional rate is `0`, so the bound is `0 ≤ 1` and nothing needs the row to be positive. -/
 theorem loSum_condRate_le_one (s : Fin m) (t : Fin n) :
-    loSum (q.condRate s) t + q.condRate s t ≤ 1 :=
-  loSum_add_self_le_one _ (q.condRate_nonneg s) (q.sum_condRate s) t
+    loSum (q.condRate s) t + q.condRate s t ≤ 1 := by
+  classical
+  rcases eq_or_lt_of_le (q.rowSum_nonneg s) with h | h
+  · have hz : ∀ t', q.condRate s t' = 0 := q.condRate_eq_zero_of_rowSum_eq_zero h.symm
+    have : loSum (q.condRate s) t + q.condRate s t = 0 := by
+      simp [loSum, hz]
+    rw [this]
+    exact zero_le_one
+  · exact loSum_add_self_le_one _ (q.condRate_nonneg s) (q.sum_condRate_of_pos h) t
 
 end JointRates
 
@@ -330,17 +360,18 @@ not a product.
 With `volume_prodPartition_eq_mul` this is the two sides of one fact: correlation and the
 `θ₂`-nonlocality of B's region are the same thing. -/
 theorem not_exists_sndSet_of_condRate_ne (q : JointRates m n) {s₁ s₂ : Fin m} {t : Fin n}
+    (hp₁ : 0 < q.rowSum s₁) (hp₂ : 0 < q.rowSum s₂)
     (hne : q.condRate s₁ t ≠ q.condRate s₂ t) :
     ¬∃ T : Set CircleFibre, ∀ s, skewCell q s t = circleCell q.rowSum s ×ˢ T := by
   rintro ⟨T, hT⟩
-  have hfst : ∀ s : Fin m, (circleCell q.rowSum s).Nonempty := by
-    intro s
+  have hfst : ∀ s : Fin m, 0 < q.rowSum s → (circleCell q.rowSum s).Nonempty := by
+    intro s hs
     refine nonempty_of_measure_ne_zero (μ := (volume : Measure CircleFibre)) ?_
     rw [volume_circleCell _ q.rowSum_nonneg q.loSum_rowSum_le_one s]
-    exact ne_of_gt (ENNReal.ofReal_pos.2 (q.rowSum_pos s))
-  have hTeq : ∀ s : Fin m, T = circleCell (q.condRate s) t := by
-    intro s
-    obtain ⟨x, hx⟩ := hfst s
+    exact ne_of_gt (ENNReal.ofReal_pos.2 hs)
+  have hTeq : ∀ s : Fin m, 0 < q.rowSum s → T = circleCell (q.condRate s) t := by
+    intro s hs
+    obtain ⟨x, hx⟩ := hfst s hs
     ext y
     constructor
     · intro hy
@@ -352,7 +383,7 @@ theorem not_exists_sndSet_of_condRate_ne (q : JointRates m n) {s₁ s₂ : Fin m
       rw [hT s] at hmem
       exact hmem.2
   have hcells : circleCell (q.condRate s₁) t = circleCell (q.condRate s₂) t :=
-    (hTeq s₁).symm.trans (hTeq s₂)
+    (hTeq s₁ hp₁).symm.trans (hTeq s₂ hp₂)
   have h12 : ENNReal.ofReal (q.condRate s₁ t) = ENNReal.ofReal (q.condRate s₂ t) := by
     rw [← volume_circleCell _ (q.condRate_nonneg s₁) (q.loSum_condRate_le_one s₁) t,
       ← volume_circleCell _ (q.condRate_nonneg s₂) (q.loSum_condRate_le_one s₂) t, hcells]
