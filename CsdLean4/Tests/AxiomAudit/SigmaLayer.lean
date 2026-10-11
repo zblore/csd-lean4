@@ -4818,4 +4818,111 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.skewCell_ae_total
 
 
+-- THE SKEW BASIN: OPTION I3 COUPLED TO THE BASE (BACKLOG #135, out of #134; POSITS.md Posit 10 -
+-- RecordLayer/SkewBasin.lean, 2026-10-11): SkewFibrePartition is KINEMATIC - its joint rate table is
+-- an argument, so nothing there is attached to a base point, and the construction the author chose on
+-- #134 was recorded rather than implemented. This file closes that gap. It is to SkewFibrePartition
+-- exactly what GlobalBasin is to TorusFibre: the rates become a FIELD OVER THE BASE, the cells become
+-- BASINS IN SIGMA, and the Born weight is read in epistemicMeasure rather than in the fibre's Haar
+-- measure.
+-- JointContextField is the joint context as a field over the base, with every A-marginal strictly
+-- positive at every base point so the conditional law exists there; JointContextField.rates evaluates
+-- it to a JointRates at a base point, which is what every statement goes through, so the fibre
+-- theorems apply unchanged. skewBasin c s t is the basin of the joint outcome (s,t): the microstates
+-- whose FIBRE POINT - BOTH coordinates - lies in the skew cell of the rate table AT THEIR OWN BASE
+-- POINT. That both coordinates are read is the whole content of I3.
+-- measurableSet_skewBasin: the work in it is measurable_condRate, the measurability of the QUOTIENT
+-- rate / rowSum, which is THE ONE NEW REGULARITY OBLIGATION I3 INCURS OVER I1 (the denominator is
+-- measurable and nowhere zero, by rowPos).
+-- skewBasin_prob: THE BORN WEIGHT, epistemicMeasure p (skewBasin c s t) = ofReal (c.rate p s t). That
+-- is the statement LF6's Born clause is written in, so option I3 now reaches the level option I1 was
+-- already at. wingABasin_prob and wingBBasin_prob: the two wing marginals on Sigma, rowSum and
+-- colSum, and as on the fibre B's is the non-trivial one because the construction never mentions
+-- colSum. wingBBasin_prob_eq_of_colSum_eq and its A-side twin: OPERATIONAL NO-SIGNALLING WITH ITS
+-- PREMISE NAMED in the I3 setting - the basin weight agrees between two joint context fields exactly
+-- when their marginals agree at that base point, so the construction supplies the identity while the
+-- premise stays a checkable property of the rate fields. skewBasin_pairwiseDisjoint and
+-- skewBasin_ae_total: it is a partition of Sigma up to a null set. constJointContext: NON-VACUITY -
+-- every joint rate table, including every correlated one, is realised by a joint context field.
+-- NOT claimed. THIS DOES NOT GIVE A WING-LOCAL RECORD AND MUST NOT BE READ AS DOING SO: under I3 the
+-- theta-2 arc is conditioned on A's cell BY CONSTRUCTION, so "B's record reads only B" is FALSE here
+-- and is not claimed; what CV/TwoWingCone proves about wing-local FIELD OBSERVABLES is still a
+-- different statement about a different object, #131's obligation (3) asked for the bridge and this is
+-- not it, and the honest record-side counterpart of unsteerability remains the MARGINAL statement.
+-- THE CORPUS STILL RUNS ON I1: globalBasin, outcomeCode, recordString, LF6's capstone and everything
+-- #131 has landed read theta-1 alone; this file supplies the I3 alternative AT THE SAME LEVEL, it does
+-- not retire the I1 construction, and no theorem here replaces one there - Posit 10 records the
+-- decision and this file makes it available. rowPos IS A REAL RESTRICTION, and stronger than the fibre
+-- version: a joint context field must keep every A-marginal strictly positive at EVERY base point,
+-- which is why momentContext has no I3 analogue here (a ray with a vanishing coordinate block would
+-- violate it) - a momentMap-derived joint field needs a positivity hypothesis or a block coarsening
+-- that keeps the marginals positive, and neither is in this file. AND NO P_st, NO BELL, NO DYNAMICS:
+-- the rate field is an argument, the singlet is not mentioned, and nothing here concerns a flow, so
+-- this says nothing about record writes or stability.
+-- Foundational-triple.
+/-- info: 'CSD.RecordLayer.JointContextField.measurable_rowSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.JointContextField.measurable_rowSum
+
+/-- info: 'CSD.RecordLayer.JointContextField.measurable_condRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.JointContextField.measurable_condRate
+
+/-- info: 'CSD.RecordLayer.JointContextField.measurable_loSum_rowSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.JointContextField.measurable_loSum_rowSum
+
+/-- info: 'CSD.RecordLayer.JointContextField.measurable_loSum_condRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.JointContextField.measurable_loSum_condRate
+
+/-- info: 'CSD.RecordLayer.measurableSet_skewBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_skewBasin
+
+/-- info: 'CSD.RecordLayer.preimage_skewBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.preimage_skewBasin
+
+/-- info: 'CSD.RecordLayer.skewBasin_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.skewBasin_prob
+
+/-- info: 'CSD.RecordLayer.skewBasin_pairwiseDisjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.skewBasin_pairwiseDisjoint
+
+/-- info: 'CSD.RecordLayer.skewBasin_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.skewBasin_ae_total
+
+/-- info: 'CSD.RecordLayer.measurableSet_wingABasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_wingABasin
+
+/-- info: 'CSD.RecordLayer.preimage_wingBBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.preimage_wingBBasin
+
+/-- info: 'CSD.RecordLayer.wingABasin_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wingABasin_prob
+
+/-- info: 'CSD.RecordLayer.wingBBasin_prob' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wingBBasin_prob
+
+/-- info: 'CSD.RecordLayer.wingBBasin_prob_eq_of_colSum_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wingBBasin_prob_eq_of_colSum_eq
+
+/-- info: 'CSD.RecordLayer.wingABasin_prob_eq_of_rowSum_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wingABasin_prob_eq_of_rowSum_eq
+
+/-- info: 'CSD.RecordLayer.skewBasin_prob_constJointContext' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.skewBasin_prob_constJointContext
+
+
 end CSD.Tests.AxiomAudit

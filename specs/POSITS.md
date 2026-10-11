@@ -310,12 +310,10 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   construction — `skewCell`, with ★★★ `volume_skewCell` giving exact Born weights for
   an arbitrary joint law and ★★★ `volume_wingBFibre` giving the second wing's marginal
   without the construction ever mentioning it.
-* **⚠️ Recorded, not yet implemented.** `globalBasin` and everything `LF6`'s Born clause is
-  stated against still read `θ₁` alone, and `SkewFibrePartition.lean` is **kinematic**: its
-  rates are an argument, with no base point, no `ContextField` and no `epistemicMeasure`. So the
-  corpus today *runs* on I1 while the decision is I3, and that gap is BACKLOG #135 (the base-coupled
-  joint context field and its skew basin). Until #135 lands, cite `torusCell`/`globalBasin` for what
-  the corpus computes and this entry for what it intends — not the other way round.
+* **⚠️ Available, but not the construction the corpus runs on.** *Updated 2026-10-11 (BACKLOG ~~#135~~):* `RecordLayer/SkewBasin.lean` now couples I3 to the base — `JointContextField`, `skewBasin`, and ★★★ `skewBasin_prob` giving the Born weight in `epistemicMeasure`, which is the statement `LF6`'s Born clause is written in. So I3
+  reaches the level I1 was already at, and the decision is no longer merely recorded.
+  **What is still true:** `globalBasin`, `outcomeCode`, `recordString`, `LF6`'s capstone and everything #131 has landed read `θ₁` alone. Nothing was migrated and no theorem there was retired, so the corpus *computes* with I1 while its posited answer is I3.
+  **And the two are not yet at parity.** I1 has a rate field that comes from the base (`momentContext`); the only I3 field exhibited is the base-independent `constJointContext`, because `JointRates.rowPos` demands a strictly positive A-marginal at every base point and a `momentMap`-derived block marginal vanishes on some rays. That is BACKLOG #136, with the route recorded. Until it lands, do not describe I3 as a drop-in replacement for `momentContext`.
 * **What would discharge it.** Derive which fibre coordinates carry record content **from the
   de-isolation dynamics**: show that the interaction creating the record writes the second channel,
   rather than choosing that it does. That is the `H_int` frontier again (Posit 1's discharge
