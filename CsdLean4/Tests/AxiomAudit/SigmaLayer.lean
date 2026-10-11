@@ -4937,4 +4937,86 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.skewBasin_prob_constJointContext
 
 
+-- STABILITY OF THE TWO-WING RECORD (BACKLOG #131, OBLIGATION (2) - RecordLayer/TwoWingStability.lean,
+-- 2026-10-11): #103 settled what stability can mean here - not invariance, which finite unitary
+-- dynamics cannot supply, but a measure bound on the microstates a record WRITE relabels - and
+-- MacrostateStability proved it for the record string of a FAMILY of contexts. Obligation (2) asks for
+-- the same thing about the TWO-WING record, which is the coarsening of ONE joint context.
+-- THE WHOLE CONTENT IN ONE SENTENCE: COARSENING CANNOT DESTABILISE. wingCode is a function of
+-- outcomeCode (wingCode_eq_of_outcomeCode_eq, through fineIndex), so a write that leaves the fine
+-- outcome alone leaves the two-wing reading alone, and unstable_wingCode_subset says the coarse
+-- exceptional set sits INSIDE the fine one. Every bound #103 proved is therefore inherited with no new
+-- argument and no loss: measure_wingCode_ne_le bounds the relabelled set by N * delta (ONE context, so
+-- no factor of k), measure_exists_wingCode_ne_le makes one exceptional set serve the whole horizon,
+-- and measure_drift_wingCode_ne_le is PERSISTENCE OVER A HORIZON - under a drift of the record
+-- coordinate at rate omega the two-wing record survives all of [0,T] outside a set of measure
+-- N * omega * T, which is obligation (2) for this experiment. measure_wingA_ne_le and
+-- measure_wingB_ne_le give it for each wing separately, since a wing's reading is a function of the
+-- pair. mem_wingEvent_sigmaShift_iff is the event form: a write cannot move a microstate with margin
+-- into or out of a joint record event.
+-- NOT claimed. NO SHARPENING, AND THE REASON IS WORTH RECORDING: one might expect the coarse record to
+-- be MORE stable in proportion - four joint outcomes rather than N fine cells - and this bound does NOT
+-- deliver that. A write pushes a microstate towards the upper endpoint of its own arc, so it can only
+-- relabel across a FINE cell boundary, and the coarse reading survives such a crossing exactly when the
+-- decoding gives the two adjacent cells the same value. That is a property of the decoding's ADJACENCY,
+-- and circleCell orders cells by index while a pointer decoding groups them by the pointer half of an
+-- arbitrary index equivalence, so adjacent fine cells need not share a coarse value and nothing can be
+-- claimed for free; a bound scaling with the number of COARSE boundaries is row 138.
+-- THE WRITE IS THE FIBRE TRANSLATION sigmaShift, as in #103: the base and the symplectic partner are
+-- fixed, and a flow that moves the BASE moves the arcs themselves, which is BaseMotionStability's
+-- subject and is not composed with this. THIS IS NOT INVARIANCE AND CONTAINS NO MIXING CLAIM, inherited
+-- verbatim from #103 - no cell is an invariant set and no flow is shown to mix. AND OBLIGATION (2) WAS
+-- PRICED "S, CONDITIONAL" AND THE CONDITION STANDS: cheap for the fibre dynamics and ABSENT for a
+-- general flow, so nothing here covers a write that is not a translation of the record coordinate, and
+-- in particular CV.recordStroke's base-dependent write is not covered.
+-- Foundational-triple.
+/-- info: 'CSD.RecordLayer.fineIndex_eq_of_outcomeCode_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineIndex_eq_of_outcomeCode_eq
+
+/-- info: 'CSD.RecordLayer.wingCode_eq_of_outcomeCode_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wingCode_eq_of_outcomeCode_eq
+
+/-- info: 'CSD.RecordLayer.unstable_wingCode_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.unstable_wingCode_subset
+
+/-- info: 'CSD.RecordLayer.wingCode_sigmaShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wingCode_sigmaShift
+
+/-- info: 'CSD.RecordLayer.wingCode_sigmaShift_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wingCode_sigmaShift_of_le
+
+/-- info: 'CSD.RecordLayer.mem_wingEvent_sigmaShift_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_wingEvent_sigmaShift_iff
+
+/-- info: 'CSD.RecordLayer.measure_wingCode_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_wingCode_ne_le
+
+/-- info: 'CSD.RecordLayer.measure_exists_wingCode_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_exists_wingCode_ne_le
+
+/-- info: 'CSD.RecordLayer.measure_drift_wingCode_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_drift_wingCode_ne_le
+
+/-- info: 'CSD.RecordLayer.measure_wingA_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_wingA_ne_le
+
+/-- info: 'CSD.RecordLayer.measure_wingB_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_wingB_ne_le
+
+/-- info: 'CSD.RecordLayer.tendsto_measure_wingCode_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tendsto_measure_wingCode_ne
+
+
 end CSD.Tests.AxiomAudit
