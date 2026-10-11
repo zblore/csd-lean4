@@ -2204,4 +2204,79 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.sigmaRecordStroke_comm_sigmaFibredKick_twoWing
 
 
+-- THE TWO-WING CONE FROM THE FLOW'S OWN FACTORISATION (BACKLOG #139, taken the way CSD's own
+-- foundations prefer - CV/TwoWingFactorisation.lean, 2026-10-11): TwoWingCone gets the wings' causal
+-- separation from a SUPPLIED coupling graph, which left #131 with one arena and TWO DYNAMICS - the
+-- cone from graphInteractingU, the Born weights and CHSH value from LF6.localDeisolationFlow, and
+-- nothing relating them. CSD does not want two: CSD-CHARTER.md says "there is one flow and one
+-- microstate", and the corpus gives the same discharge condition for Posit 1 and Posit 10, derive it
+-- from the de-isolation dynamics. The fully principled route is one Hamiltonian generating both, which
+-- is the H_int frontier (R-016) and has no cheap brick; THIS FILE TAKES THE REACHABLE FORM OF THE SAME
+-- IDEA, dropping the second interaction and reading the separation off the measurement flow itself.
+-- THE POINT: localFlowUnitary is reindex (vnUnitary 2 (x) vnUnitary 2) and
+-- localDeisolation_factorises says the dilation is V_A (x) V_B, so THE MEASUREMENT INTERACTION IS
+-- ALREADY A PRODUCT OF PER-WING UNITARIES. A product unitary has disjoint per-wing support and
+-- disjoint supports commute, so the separation is a property of the MEASUREMENT, with NO GRAPH AND NO
+-- PERIOD COUNT.
+-- leftModes_two_two and rightModes_two_two: CompositeArena's mode blocks at K1 = K2 = 2 ARE
+-- TwoWingCone's wing mode sets, so the two files are about the same regions and nothing has been
+-- re-indexed between them (by decide). supportedOn_heisenberg_pow_of_factorised: THE EVOLVED
+-- A-OBSERVABLE STAYS A-LOCAL AT EVERY POWER of a factorised flow - this is what replaces the cone,
+-- there being no ball to grow because the B-factor acts trivially on an A-supported observable
+-- (heisenberg_eq_of_disjoint) and the A-factor cannot leave A's modes. arenaObs_kick_of_factorised and
+-- recordStroke_comm_kick_of_factorised: a B-wing intervention cannot steer A's reading or A's record
+-- write AFTER ANY NUMBER OF APPLICATIONS of the measurement interaction, exactly.
+-- supportedOn_wingAModes_leftOp and supportedOn_wingBModes_rightOp are non-vacuity through
+-- CompositeArena's leftOp/rightOp.
+-- WHAT THIS CHANGES FOR #131: it changes WHAT IS ASSUMED. The standing caveat is that adjacency is
+-- SUPPLIED through E; here there is no E, and the separation follows from the measurement interaction
+-- being a product over the wings - the assumption moves from "the graph has no A-B edge" to "the
+-- apparatus couples each wing to its own pointer", a statement about the experiment rather than about
+-- an auxiliary graph.
+-- NOT claimed. IT IS STILL AN ASSUMPTION: localDeisolation_factorises holds BY CONSTRUCTION, LF6-A.3
+-- having chosen a product dilation, so locality is still put in, just somewhere more physical -
+-- deriving it is R-016 and nothing here touches that. WEAKER THAN A CONE, AND DELIBERATELY: a product
+-- unitary gives STATIC locality (disjoint supports commute) and not a propagating bound with a
+-- velocity, which is the right statement for one measurement since the question is whether the two
+-- wings' records can influence each other; a propagating cone matters only for a dynamics that is NOT
+-- a product, and TwoWingCone keeps the graded version for that case - neither file supersedes the
+-- other. AND THE INDEX ALIGNMENT WITH LF6 IS CHECKED BUT NOT FORMALISED: jointDilEquiv regroups
+-- ((sA,pA),(sB,pB)) to ((sA,sB),(pA,pB)) so the dilated space is four Fin 2 factors grouped per wing,
+-- and FieldConfig 4 2 is four Fin 2 factors indexed by mode, and under modes 0,1 = (sysA, ptrA) and
+-- 2,3 = (sysB, ptrB) the de-isolation's tensor split IS the wing mode split - which is why
+-- wingAModes = {0,1} was the right choice. CARRYING localFlowUnitary ITSELF ACROSS THAT ALIGNMENT IS
+-- BOOKKEEPING THIS FILE DOES NOT DO: the theorems are stated for ANY wing-factorised flow and
+-- instantiated at leftOp/rightOp, NOT at localFlowUnitary, so "the de-isolation flow satisfies the
+-- hypothesis" is a checked claim about index conventions and not a theorem. #131's two-dynamics gap is
+-- therefore NARROWED, NOT CLOSED.
+-- Foundational-triple.
+/-- info: 'CSD.CV.leftModes_two_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.leftModes_two_two
+
+/-- info: 'CSD.CV.rightModes_two_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rightModes_two_two
+
+/-- info: 'CSD.CV.supportedOn_heisenberg_pow_of_factorised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.supportedOn_heisenberg_pow_of_factorised
+
+/-- info: 'CSD.CV.arenaObs_kick_of_factorised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_kick_of_factorised
+
+/-- info: 'CSD.CV.recordStroke_comm_kick_of_factorised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.recordStroke_comm_kick_of_factorised
+
+/-- info: 'CSD.CV.supportedOn_wingAModes_leftOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.supportedOn_wingAModes_leftOp
+
+/-- info: 'CSD.CV.supportedOn_wingBModes_rightOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.supportedOn_wingBModes_rightOp
+
+
 end CSD.Tests.AxiomAudit
