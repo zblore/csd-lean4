@@ -21,13 +21,20 @@ symplectic partner carries no record content". Option I1 (#131 blocker (I)) keep
 the two wings by coarsening one selector. The objection it concedes is that `x.2.2` stays inert. I3
 is the other route: give the second coordinate record content.
 
-**It is not a free choice.** ★★★ `volume_prodPartition_eq_mul` says that if A's region is a
-`θ₁`-set and B's region a `θ₂`-set then the joint law is *exactly* the product of the marginals, and
-★★★ `not_exists_prodPartition_of_ne_mul` turns that around: **a joint law that is not the product of
-its own marginals has no product partition of the fibre at all.** Correlation therefore *forces* one
-wing's region to read both coordinates. That is the fibre-level analogue of
-`LF6.no_product_partition_realises_singlet`, proved here by Fubini rather than assumed, and it is
-the reason I3 exists.
+**And the choice is constrained.** ★★★ `volume_prodPartition_eq_mul` says that if A's
+region is a `θ₁`-set and B's region a `θ₂`-set then the joint law is *exactly* the
+product of the marginals, and ★★★ `not_exists_prodPartition_of_ne_mul` turns that around:
+**a joint law that is not the product of its own marginals has no such partition of the fibre at
+all.**
+
+⚠️ **Read the hypothesis exactly.** It is that the two wings read *different* coordinates —
+one each. So the theorem does **not** apply to option I1, where both wings read `θ₁` and
+correlation is carried fine (`TwoWingCoarsening.measure_coarseEvent`). What it rules out is the
+**one-coordinate-per-wing** shape, and it leaves exactly two live options: the wings share a
+coordinate (I1), or at least one wing's region reads both (I3, below). It is the fibre-level
+analogue of `LF6.no_product_partition_realises_singlet`, proved here by Fubini rather than assumed,
+and it turns a claim `TwoWingCoarsening`'s header had been making in prose — that with independent
+selectors the joint law factorises, so they could not carry correlation at all — into a theorem.
 
 ## What is proved
 

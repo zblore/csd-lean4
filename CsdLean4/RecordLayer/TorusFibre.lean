@@ -38,6 +38,13 @@ symplectic partner.
 * `mem_torusCell_iff` — membership depends on `θ₁` alone; `θ₂` is unconstrained. This is the
   content of "the second coordinate is the free symplectic partner", stated as a theorem rather
   than left to the prose.
+  ⚠️ **It is a theorem about *this* definition, and that definition is a posit.**
+  Whether `θ₂` may carry record content is `specs/POSITS.md` **Posit 10**, and the
+  author's decision there (2026-10-10) is that it may: [`SkewFibrePartition.lean`](SkewFibrePartition.lean)
+  supplies the alternative partition, where the `θ₂` arc moves with the first
+  coordinate's cell and ★★★ `volume_skewCell` still gives exact Born weights. Nothing in
+  this file is wrong, but `mem_torusCell_iff` must not be read as saying that a record *cannot*
+  be written on the second coordinate — only that `torusCell` does not write one there.
 * `measurableSet_torusCell`, `volume_torusCell` — measurable, with
   `volume (torusCell r i) = ENNReal.ofReal (r i)`: **the Born weights survive the move**, since the
   free coordinate contributes a factor of `1` (`instProbKTorusVolume`).

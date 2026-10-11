@@ -4719,13 +4719,18 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- symplectic partner carries no record content". Option I1 keeps that and obtains the two wings by
 -- coarsening ONE selector; the objection it concedes is that x.2.2 stays inert. I3 is the other
 -- route: give the second coordinate record content.
--- IT IS NOT A FREE CHOICE. volume_prodPartition_eq_mul says that if A's region is a theta-1 set and
--- B's region a theta-2 set then the joint law is EXACTLY the product of the marginals (Fubini, no
--- hypothesis on the sets), and not_exists_prodPartition_of_ne_mul turns that around: A JOINT LAW
--- THAT IS NOT THE PRODUCT OF ITS OWN MARGINALS HAS NO PRODUCT PARTITION OF THE FIBRE AT ALL. So
--- correlation FORCES one wing's region to read both coordinates. That is the fibre-level analogue of
--- LF6.no_product_partition_realises_singlet, proved rather than assumed, and it is the reason I3
--- exists.
+-- AND THE CHOICE IS CONSTRAINED. volume_prodPartition_eq_mul says that if A's region is a theta-1
+-- set and B's region a theta-2 set then the joint law is EXACTLY the product of the marginals
+-- (Fubini, no hypothesis on the sets), and not_exists_prodPartition_of_ne_mul turns that around: a
+-- joint law that is not the product of its own marginals has NO SUCH PARTITION OF THE FIBRE AT ALL.
+-- READ THE HYPOTHESIS EXACTLY: it is that the two wings read DIFFERENT coordinates, one each. So the
+-- theorem does NOT apply to option I1, where both wings read theta-1 and correlation is carried fine
+-- (TwoWingCoarsening.measure_coarseEvent). What it rules out is the ONE-COORDINATE-PER-WING shape,
+-- and it leaves exactly two live options: the wings share a coordinate (I1), or at least one wing's
+-- region reads both (I3). It is the fibre-level analogue of
+-- LF6.no_product_partition_realises_singlet, proved rather than assumed, and it turns a claim
+-- TwoWingCoarsening's header had been making in prose - that with independent selectors the joint law
+-- factorises, so they could not carry correlation at all - into a theorem.
 -- skewCell is the I3 cell: A's arc in theta-1, and in theta-2 the arc of the CONDITIONAL rate
 -- q s t / rowSum q s. The cells are rectangles but the PARTITION IS NOT A PRODUCT - the theta-2 arc
 -- moves with s, and that is what carries the correlation. volume_skewCell: EXACT BORN WEIGHTS for an

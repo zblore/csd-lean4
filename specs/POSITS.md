@@ -263,6 +263,72 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
 
 ---
 
+## Posit 10 — the record dimension of the fibre (which torus coordinates carry record content)
+
+* **Statement.** *As the corpus stands:* the record partition of the fibre reads the **first** torus
+  coordinate only. The second is the free symplectic partner and carries no record content. *As the
+  author has decided (2026-10-10, BACKLOG ~~#134~~, option I3):* **it does carry record content**,
+  and the single-coordinate reading is the special case. The two halves of that sentence are not yet
+  the same corpus; see the ⚠️ on implementation below.
+* **Where it enters.** `RecordLayer/TorusFibre.lean`: `torusCell (r) (i) = circleCell r i ×ˢ univ`,
+  a *definition*, with `mem_torusCell_iff` stating the restriction as a theorem about that
+  definition. `RecordLayer/GlobalBasin.lean`'s `globalBasin c i = {x | x.2.1 ∈ circleCell (c.rate x.1) i}`
+  inherits it, and therefore so does everything downstream — `outcomeCode`, `recordString`,
+  `LF6`'s Born clause, and the two wings of `RecordLayer/TwoWingCoarsening.lean`, which are
+  coarsenings of that one selector.
+* **What backs it short of derivation.**
+  1. **Parity needs the second coordinate but says nothing about its role.** `TorusFibre.lean`'s
+     reason for `T²` is dimensional: `ℂℙ^{N−1} × AddCircle 1` is odd-dimensional and
+     carries no symplectic form. That argument delivers a second coordinate; it is silent on whether
+     a record may be read from it.
+  2. **Economy.** Every record theorem landed before 2026-10-10 needs one selector only —
+     single-context Born weights (`volume_torusCell`, `globalBasin_prob`), the record string (#102),
+     the stability bounds (`measure_drift_recordString_ne_le`). Nothing forced a second.
+  3. **And it is in tension with the field side, which is support for the *other* branch.**
+     `CV/RecordInfluence.lean`'s `recordStroke₂` writes **both** fibre coordinates, as two record
+     channels. The corpus has therefore been running two incompatible conventions, which is what
+     #131's blocker (I) was.
+* **⚠️ Now constrained from one side, by theorem (2026-10-11).**
+  `RecordLayer/SkewFibrePartition.lean`: ★★★ `volume_prodPartition_eq_mul` — if one
+  wing's region is a `θ₁`-set and the other's a `θ₂`-set, the joint law is *exactly*
+  the product of the marginals — and ★★★ `not_exists_prodPartition_of_ne_mul`: a joint
+  law that is not the product of its own marginals has no such partition at all. **Read the
+  hypothesis exactly**: the two wings read *different* coordinates, one each. So this does **not**
+  rule out the single-selector reading, where both wings read `θ₁` and correlation is carried
+  fine (`TwoWingCoarsening.measure_coarseEvent`). What it rules out is **one coordinate per wing**,
+  and the posit is thereby reduced to a genuine binary:
+  * **I1** — the wings share `θ₁`; `θ₂` is inert. Cost: `recordStroke₂`'s two
+    channels are not the write mechanism, and "two records" means two readings of one ontic quantity.
+  * **I3** — at least one wing's region reads both coordinates. Cost: the reading is
+    *conditional*, so the wings are not symmetric, and no wing's record is a function of its own
+    coordinate alone (`not_exists_sndSet_of_condRate_ne`).
+
+  There is no third branch, and the middle one — two independent per-wing selectors — is now
+  closed by Fubini as well as by the base-level `LF6.no_product_partition_realises_singlet`.
+* **The decision, and it is the author's.** **I3**, taken 2026-10-10 on BACKLOG ~~#134~~:
+  `θ₂` carries record content. `RecordLayer/SkewFibrePartition.lean` supplies the
+  construction — `skewCell`, with ★★★ `volume_skewCell` giving exact Born weights for
+  an arbitrary joint law and ★★★ `volume_wingBFibre` giving the second wing's marginal
+  without the construction ever mentioning it.
+* **⚠️ Recorded, not yet implemented.** `globalBasin` and everything `LF6`'s Born clause is
+  stated against still read `θ₁` alone, and `SkewFibrePartition.lean` is **kinematic**: its
+  rates are an argument, with no base point, no `ContextField` and no `epistemicMeasure`. So the
+  corpus today *runs* on I1 while the decision is I3, and that gap is BACKLOG #135 (the base-coupled
+  joint context field and its skew basin). Until #135 lands, cite `torusCell`/`globalBasin` for what
+  the corpus computes and this entry for what it intends — not the other way round.
+* **What would discharge it.** Derive which fibre coordinates carry record content **from the
+  de-isolation dynamics**: show that the interaction creating the record writes the second channel,
+  rather than choosing that it does. That is the `H_int` frontier again (Posit 1's discharge
+  condition, `R-016`), and `recordStroke₂` is the field-side precedent for a two-channel write.
+  Nothing cheaper will do: the posit is about what the record medium *is*, and no counting or
+  measure-theoretic argument reaches it.
+* **What would refute each branch.** I3 is refuted by a demonstration that the second coordinate's
+  symplectic role is incompatible with carrying record content — which would force I1 and a
+  different answer to #131. I1 is not refuted by anything in the corpus; it is a live option whose
+  cost is stated above. Neither is refuted by the no-go, which only closes the middle.
+
+---
+
 ## Correspondence with the external review's Part II
 
 ⚠️ **Two registers, two numberings.** This file's numbers are the repository's and are frozen; the
@@ -393,8 +459,8 @@ Keep these in step with this file, or the register stops being a register:
 `specs/cr-queue.md`.
 
 ⚠️ **`AXIOMS.md` §3 currently registers Posits 1–5 only.** Posits 6–9 arrived 2026-09-05 from the
-review's Part II and have no §3 section yet; `CR-6` covers the unitary class specifically. Adding
-them is queued, not forgotten.
+review's Part II, and Posit 10 on 2026-10-11; none has a §3 section yet, and `CR-6` covers the
+unitary class specifically. Adding them is queued, not forgotten.
 
 ⚠️ **Known undercount, deliberately not fixed here.** `README.md` and `docs/TOUR.md` both carry a
 "what is posited and not derived" inventory that omits the cell law. Those are landing-surface
