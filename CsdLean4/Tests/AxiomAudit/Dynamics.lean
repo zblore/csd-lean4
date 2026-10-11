@@ -1372,4 +1372,54 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #print axioms CSD.LF6.toReal_measure_preimage_wingAEvent_eq_of_setting
 
 
+-- THE B-WING PRIMITIVE GETS A MODEL (BACKLOG #131 OBLIGATION (4), the audit's section 4 gap -
+-- LF3/SettingLocality.lean, 2026-10-11): UNTIL NOW THE B-WING PRIMITIVE HAD NO WITNESS ANYWHERE IN
+-- THE CORPUS, so operationalNoSignalling_of_settingLocality - which consumes both wings - had NO
+-- MODEL AT ALL. translationLocality supplies the A-wing only, and in translationMaps the B-reading
+-- fB C.b l ignores a entirely, which is product-partition arity for B, so
+-- no_product_partition_realises_singlet applies to that wing and it cannot be the half of a singlet
+-- model. The fix is to let EACH wing see the remote setting through its own offset: symmTranslationMaps
+-- reads A at l - g C.b and B at l - h C.a. The two primitives constrain DIFFERENT wings, so their
+-- relabellings are independent and both hold at once - symmTranslationLocalityA by the old
+-- translation and symmTranslationLocalityB by its mirror l + (-h a + h a').
+-- operationalNoSignalling_symmTranslation is the payoff: the derived predicate is inhabited, so the
+-- theorem is not vacuous. symmTranslation_wingA_setting_dependent and
+-- symmTranslation_wingB_setting_dependent are what make the witness a real one: BOTH wings' readings
+-- genuinely move with the REMOTE setting, so these outcome maps are not of product-partition arity and
+-- the no-go does not reach them.
+-- NOT claimed. THE MODEL IS NOT SHOWN TO REPRODUCE P_st: it is a witness for the PRIMITIVES, and the
+-- content of the witness is the non-product arity, not a Bell violation. Whether some instance of this
+-- shape realises the singlet's correlations is a further question and is not settled. MEASUREMENT
+-- INDEPENDENCE IS INHERITED, NOT REMOVED: the conclusion is stated against one fixed measure across
+-- all four contexts, exactly as OperationalNoSignalling is, and that fixture IS the Bell premise. AND
+-- THIS IS NOT THE RECORD-LAYER INSTANTIATION the #131 audit asked for: it is an abstract additive
+-- group, not Sigma with the basins as readout - see RecordLayer/SkewFibrePartition.lean's
+-- eq_of_vadd_preimage_circleCell_eq for what that instantiation cannot be, and row 137 for what is
+-- left of it.
+-- Foundational-triple.
+/-- info: 'CSD.LF3.measurable_symmTranslationMaps' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.measurable_symmTranslationMaps
+
+/-- info: 'CSD.LF3.symmTranslationLocalityA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.symmTranslationLocalityA
+
+/-- info: 'CSD.LF3.symmTranslationLocalityB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.symmTranslationLocalityB
+
+/-- info: 'CSD.LF3.operationalNoSignalling_symmTranslation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.operationalNoSignalling_symmTranslation
+
+/-- info: 'CSD.LF3.symmTranslation_wingA_setting_dependent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.symmTranslation_wingA_setting_dependent
+
+/-- info: 'CSD.LF3.symmTranslation_wingB_setting_dependent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.symmTranslation_wingB_setting_dependent
+
+
 end CSD.Tests.AxiomAudit

@@ -62,7 +62,8 @@ setting while the marginal does not.
   strictly more primitive, and falsifiable, hypothesis, but a hypothesis.
 * **This is a sufficient condition, not a characterisation.** No claim that CSD's `Σ` satisfies
   it; exhibiting a sector that does is the separate, open half of the row.
-* The A-wing is done in full and the B-wing is its mirror; both are supplied.
+* The A-wing and B-wing **primitives and derivations** are both supplied. ⚠️ *Corrected 2026-10-11:* for a year the only **witness** was `translationLocality`, which satisfies the A-wing primitive alone — its `fB C.b l` ignores `a`, which is product-partition arity for B — so
+  `operationalNoSignalling_of_settingLocality` had **no model at all**. `symmTranslationLocalityB` now supplies one; see the last section.
 
 References: `specs/q10-no-signalling-scoping.md` (the wall-check, the retracted §4 conjecture,
 and candidate (b)); `CV/CompositeArena.lean` (`composite_no_signalling`, the pointwise
@@ -192,5 +193,103 @@ theorem translation_wingA_setting_dependent {G : Type*} [AddGroup G]
     (fA fB : DetectorSetting → G → Sign) (g : DetectorSetting → G)
     {a b b' : DetectorSetting} {l : G} (h : fA a (l - g b) ≠ fA a (l - g b')) :
     (translationMaps fA fB g).wingA ⟨a, b⟩ l ≠ (translationMaps fA fB g).wingA ⟨a, b'⟩ l := h
+
+/-! ### ★ The symmetric witness: the B-wing primitive gets a model
+
+⚠️ **Until 2026-10-11 the B-wing primitive had no witness anywhere in the corpus**, so
+`operationalNoSignalling_of_settingLocality` — which consumes both — had **no model at all**.
+`translationLocality` supplies the A-wing only, and in `translationMaps` the B-reading `fB C.b l`
+ignores `a` entirely, which is product-partition arity for B: `no_product_partition_realises_singlet`
+applies to that wing, so it cannot be the half of a singlet model. The audit of BACKLOG #131
+(`specs/two-wing-experiment-scoping.md` §4) recorded this as the one place the corpus was emptier
+than its headline.
+
+The fix is to let **each** wing see the remote setting through its own offset. The two primitives
+constrain different wings, so their relabellings are independent and both hold at once. -/
+
+/-- The **symmetric translation model**: each wing reads a *remotely* offset ontic point — A
+through `g C.b` and B through `h C.a`. Compare `translationMaps`, whose B-reading ignores `a`. -/
+def symmTranslationMaps {G : Type*} [AddGroup G]
+    (fA fB : DetectorSetting → G → Sign) (g h : DetectorSetting → G) :
+    SharedContextOutcomeMaps G where
+  F := fun C l => (fA C.a (l - g C.b), fB C.b (l - h C.a))
+
+/-- The symmetric model's outcome maps are measurable, given measurable wing responses. -/
+theorem measurable_symmTranslationMaps {G : Type*} [MeasurableSpace G] [AddGroup G]
+    [MeasurableAdd G] {fA fB : DetectorSetting → G → Sign}
+    (hfA : ∀ a, Measurable (fA a)) (hfB : ∀ b, Measurable (fB b))
+    (g h : DetectorSetting → G) :
+    MeasurableSharedContextOutcomeMaps (symmTranslationMaps fA fB g h) := by
+  intro C
+  refine Measurable.prodMk ((hfA C.a).comp ?_) ((hfB C.b).comp ?_)
+  · simpa [sub_eq_add_neg] using measurable_add_const (-g C.b)
+  · simpa [sub_eq_add_neg] using measurable_add_const (-h C.a)
+
+/-- ★ **The symmetric model satisfies the A-wing primitive**, exactly as `translationLocality`
+does: the extra `h C.a` in the B-reading is invisible to `wingA`. -/
+def symmTranslationLocalityA {G : Type*} [MeasurableSpace G] [AddGroup G]
+    [MeasurableAdd G] (μ : Measure G) [Measure.IsAddRightInvariant μ]
+    (fA fB : DetectorSetting → G → Sign) (g h : DetectorSetting → G) :
+    RemoteSettingLocalityA μ (symmTranslationMaps fA fB g h) where
+  reroute := fun b b' l => l + (-g b + g b')
+  measurePreserving := fun b b' => measurePreserving_add_right μ (-g b + g b')
+  wingA_invariant := by
+    intro a b b' l
+    show fA a (l + (-g b + g b') - g b') = fA a (l - g b)
+    have harg : l + (-g b + g b') - g b' = l - g b := by
+      simp [sub_eq_add_neg, add_assoc]
+    rw [harg]
+
+/-- ★★★ **The B-wing primitive gets its witness.** The mirror relabelling
+`l ↦ l + (-h a + h a')` leaves B's reading unchanged, because B sees A's setting only through the
+offset `h a`. This is the declaration whose absence left
+`operationalNoSignalling_of_settingLocality` without a model. -/
+def symmTranslationLocalityB {G : Type*} [MeasurableSpace G] [AddGroup G]
+    [MeasurableAdd G] (μ : Measure G) [Measure.IsAddRightInvariant μ]
+    (fA fB : DetectorSetting → G → Sign) (g h : DetectorSetting → G) :
+    RemoteSettingLocalityB μ (symmTranslationMaps fA fB g h) where
+  reroute := fun a a' l => l + (-h a + h a')
+  measurePreserving := fun a a' => measurePreserving_add_right μ (-h a + h a')
+  wingB_invariant := by
+    intro a a' b l
+    show fB b (l + (-h a + h a') - h a') = fB b (l - h a)
+    have harg : l + (-h a + h a') - h a' = l - h a := by
+      simp [sub_eq_add_neg, add_assoc]
+    rw [harg]
+
+/-- ★★★ **`operationalNoSignalling_of_settingLocality` now has a model.** Both primitives
+hold of the symmetric translation model, so the derived predicate is inhabited and the theorem is
+not vacuous.
+
+⚠️ What this does **not** say: that the model reproduces `P_st`. It is a witness for the
+*primitives*, and the content of the witness is that neither wing is of product-partition arity
+(the two lemmas below), so `no_product_partition_realises_singlet` does not apply to it. Whether
+some instance of this shape realises the singlet's correlations is a further question and is not
+settled here. -/
+theorem operationalNoSignalling_symmTranslation {G : Type*} [MeasurableSpace G] [AddGroup G]
+    [MeasurableAdd G] (μ : Measure G) [Measure.IsAddRightInvariant μ]
+    {fA fB : DetectorSetting → G → Sign} (hfA : ∀ a, Measurable (fA a))
+    (hfB : ∀ b, Measurable (fB b)) (g h : DetectorSetting → G) :
+    OperationalNoSignalling μ (symmTranslationMaps fA fB g h) :=
+  operationalNoSignalling_of_settingLocality
+    (measurable_symmTranslationMaps hfA hfB g h)
+    (symmTranslationLocalityA μ fA fB g h)
+    (symmTranslationLocalityB μ fA fB g h)
+
+/-- ★ **A's reading moves with the remote setting** in the symmetric model. -/
+theorem symmTranslation_wingA_setting_dependent {G : Type*} [AddGroup G]
+    (fA fB : DetectorSetting → G → Sign) (g h : DetectorSetting → G)
+    {a b b' : DetectorSetting} {l : G} (hne : fA a (l - g b) ≠ fA a (l - g b')) :
+    (symmTranslationMaps fA fB g h).wingA ⟨a, b⟩ l
+      ≠ (symmTranslationMaps fA fB g h).wingA ⟨a, b'⟩ l := hne
+
+/-- ★ **And so does B's — which `translationMaps` could not manage.** This is what makes the
+B-wing witness a real one: `wingB` genuinely depends on the *remote* setting `a`, so these outcome
+maps are **not** of product-partition arity and the no-go does not reach them. -/
+theorem symmTranslation_wingB_setting_dependent {G : Type*} [AddGroup G]
+    (fA fB : DetectorSetting → G → Sign) (g h : DetectorSetting → G)
+    {a a' b : DetectorSetting} {l : G} (hne : fB b (l - h a) ≠ fB b (l - h a')) :
+    (symmTranslationMaps fA fB g h).wingB ⟨a, b⟩ l
+      ≠ (symmTranslationMaps fA fB g h).wingB ⟨a', b⟩ l := hne
 
 end CSD.LF3

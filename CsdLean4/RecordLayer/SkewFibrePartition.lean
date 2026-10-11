@@ -53,7 +53,11 @@ selectors the joint law factorises, so they could not carry correlation at all �
   the no-go above this is an equivalence in spirit: correlation and `θ₂`-nonlocality of B's region
   are the same fact;
 * `skewCell_pairwiseDisjoint`, `skewCell_ae_total`, ★ `wingAFibre_inter_wingBFibre` — it is a
-  partition, it covers `T²` up to a null set, and the two wing regions meet in exactly one cell.
+  partition, it covers `T²` up to a null set, and the two wing regions meet in exactly one cell;
+* ★★★ `eq_of_vadd_preimage_circleCell_eq` — **what a reroute cannot be**: a rotation of the
+  record circle preserves a cell's width, so it can never implement a change of conditional law.
+  A `LF3.RemoteSettingLocalityB` relabelling at the record-layer basins therefore cannot be a
+  fibrewise rotation, which rules out the cheapest candidate the #131 audit suggested.
 
 ## The finding: I2 and I3 are the same construction
 
@@ -354,6 +358,40 @@ theorem not_exists_sndSet_of_condRate_ne (q : JointRates m n) {s₁ s₂ : Fin m
       ← volume_circleCell _ (q.condRate_nonneg s₂) (q.loSum_condRate_le_one s₂) t, hcells]
   exact hne ((ENNReal.ofReal_eq_ofReal_iff (q.condRate_nonneg s₁ t)
     (q.condRate_nonneg s₂ t)).1 h12)
+
+/-! ### What a reroute cannot be
+
+`LF3.RemoteSettingLocalityB` asks for a measure-preserving relabelling of `Σ` under which B's
+reading is unchanged when A's setting moves. At the record-layer basins B's reading is an arc of the
+second coordinate whose **width** is the conditional rate, and the audit of #131 suggested the
+relabelling would be a rotation (or piecewise rotation) of the record circle. The next theorem says
+it cannot be: a translation preserves Haar measure, so it preserves an arc's width, while a change
+of A's setting changes the conditional width. -/
+
+/-- ★★★ **A rotation cannot change a cell's width.** If translating the record circle by
+`c` carries the cell of `r'` onto the cell of `r`, then `r i = r' i` — because translation
+preserves Haar measure and a cell's measure *is* its rate.
+
+So a **rotation of the record coordinate can never implement a change of conditional law**, and a
+`LF3.RemoteSettingLocalityB` reroute at the record-layer basins cannot be a fibrewise rotation: it
+has to move mass between A's cells. That is permitted — the B-wing primitive constrains only
+`wingB` — but it means the two wings' relabellings cannot be built from one fibrewise family, and
+it rules out the cheapest candidate construction. -/
+theorem eq_of_vadd_preimage_circleCell_eq {k : ℕ} (r r' : Fin k → ℝ)
+    (hr : ∀ i, 0 ≤ r i) (hr' : ∀ i, 0 ≤ r' i)
+    (hs : ∀ i : Fin k, loSum r i + r i ≤ 1) (hs' : ∀ i : Fin k, loSum r' i + r' i ≤ 1)
+    (c : CircleFibre) (i : Fin k)
+    (h : (fun θ : CircleFibre => θ + c) ⁻¹' circleCell r' i = circleCell r i) :
+    r i = r' i := by
+  have hmp : MeasurePreserving (fun θ : CircleFibre => θ + c)
+      (volume : Measure CircleFibre) (volume : Measure CircleFibre) :=
+    measurePreserving_add_right _ c
+  have h1 : (volume : Measure CircleFibre) (circleCell r i)
+      = (volume : Measure CircleFibre) (circleCell r' i) := by
+    rw [← h]
+    exact hmp.measure_preimage (measurableSet_circleCell r' i).nullMeasurableSet
+  rw [volume_circleCell r hr hs i, volume_circleCell r' hr' hs' i] at h1
+  exact (ENNReal.ofReal_eq_ofReal_iff (hr i) (hr' i)).1 h1
 
 /-! ### Totality -/
 

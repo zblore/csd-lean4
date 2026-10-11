@@ -4813,6 +4813,18 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.not_exists_sndSet_of_condRate_ne
 
+-- WHAT A REROUTE CANNOT BE (added 2026-10-11 with #131 obligation (4)):
+-- eq_of_vadd_preimage_circleCell_eq says a ROTATION of the record circle cannot change a cell's
+-- WIDTH, because translation preserves Haar measure and a cell's measure IS its rate. So a rotation
+-- can never implement a change of conditional law, and an LF3.RemoteSettingLocalityB reroute at the
+-- record-layer basins cannot be a fibrewise rotation - it has to move mass between A's cells. That is
+-- permitted (the B-wing primitive constrains only wingB) but it means the two wings' relabellings
+-- cannot be built from one fibrewise family, and it rules out the cheapest candidate construction the
+-- #131 audit suggested.
+/-- info: 'CSD.RecordLayer.eq_of_vadd_preimage_circleCell_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.eq_of_vadd_preimage_circleCell_eq
+
 /-- info: 'CSD.RecordLayer.skewCell_ae_total' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.skewCell_ae_total
