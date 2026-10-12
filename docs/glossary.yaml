@@ -120,7 +120,7 @@ meta:
   site_main: https://www.constraintsurfacedynamics.com
   course: https://explainquantum.com
   repo: https://github.com/zblore/csd-lean4
-  sha: 39182b9e91a2791f5acb5ceaa2612ed71da921b5
+  sha: 44a5a4bfc3f89b9a55a76b8be99231ce02b45612
 
 # ---------------------------------------------------------------------------
 # refs: the external reference registry.
@@ -6530,7 +6530,7 @@ entries:
     related: [lf1-main-theorem, what-is-machine-checked, measurement-flow, born-volume-ratio, de-isolation]
 
   - slug: field-arena
-    reviewed: 2026-09-14
+    reviewed: 2026-10-12
     hook: >
       Take finitely many field modes, cap the number of quanta each can hold, and the
       whole toolbox of quantum field theory, propagators, light cones, Wick's theorem and
@@ -6568,6 +6568,11 @@ entries:
       pairings with a density, dynamics act by kicks, observables supported on disjoint
       sets of modes commute exactly, and the Lieb-Robinson light cone bounds how fast a
       record cell in the fibre can be steered from afar.
+      The arena stopped being a special case in October 2026, as the construction behind it now
+      works for any finite way of labelling configurations rather than only for mode
+      configurations, so the field arena and the state space the rest of the programme works in
+      are one construction read two ways. That's what let a single two-wing experiment be stated
+      on one arena instead of on two spaces that were only believed to be the same.
     mathematical: >
       FieldArena K N is the projective space over configurations of K modes at cutoff N.
       Mode-local subalgebras are unital star-subalgebras supported on their blocks, free
@@ -6577,6 +6582,11 @@ entries:
       The commutator bound decays factorially in graph distance with velocity constant
       2e^2 times the coupling norm, and composite arenas compose by mode concatenation,
       with no-signalling exact for all states, entangled included.
+      GenArena is the arena over any finite index with decidable equality, and FieldArena K N is
+      that at the configuration space, so unitVec, dmVec, arenaDM, arenaObs and arenaKick now read
+      over any index with every earlier statement unchanged. SupportedOn stays mode-indexed, as its
+      content is that an operator leaves the modes outside a region alone, which needs the index to
+      be a space of functions.
     term: Field arena
     status: definition
     source: curated
@@ -6909,7 +6919,7 @@ entries:
       text: The roadmap's fourth stage is where measurement becomes dynamics
     related: [de-isolation, stinespring-dilation, pointer-basis, holevo-bound, naimark-dilation]
   - slug: singlet-contextual-model
-    reviewed: 2026-09-14
+    reviewed: 2026-10-12
     hook: >
       One machine-checked theorem settles both halves of the Bell question, as an explicit
       model in which outcomes depend on the measurement context reproduces the singlet
@@ -6957,6 +6967,12 @@ entries:
 
       The pair of results, existence together with obstruction, is the citation anchor for
       the programme's Bell analysis.
+      The model runs on the programme's own ontic space as well, as a two-wing experiment built in
+      October 2026 reads each wing's result off a region of that space and recovers the singlet's
+      own correlation for those regions, with the CHSH combination coming out at the quantum
+      maximum. The regions are read after the measurement interaction has run and starting from the
+      prepared state, so what's correlated is the record a run leaves behind rather than a number
+      attached to the kernel.
     mathematical: >
       The capstone theorem c1_singlet_contextual_capstone states that a measurable shared-
       context family reproduces the full singlet table (marginals one-half, correlations
@@ -6972,6 +6988,14 @@ entries:
       independence named as a premise rather than smuggled in, and the model's non-product
       character. The general obstruction is retained as a separate ledger row, and the two
       are designed to be read together.
+      The record-level form landed in October 2026. toReal_measure_preimage_wingEvent_eq_P_st gives
+      the Born weight of the two-wing record event, in the prepared epistemic measure and after the
+      lifted de-isolation flow, as P_st a b s t, and chsh_preparedRecord_eq_neg_two_sqrt_two gives
+      the CHSH combination of those record correlations as minus two times the square root of two,
+      which exceeds the hidden-variable bound of E91.lhvCHSH_abs_le_two. Causal separation for the
+      same experiment follows from the measurement interaction being a product over the wings, so
+      locality enters once through localDeisolation_factorises rather than through a supplied
+      adjacency graph, and it enters as a construction rather than as a theorem.
     term: Singlet contextual model
     status: proved-in-corpus
     source: curated
@@ -8324,6 +8348,11 @@ entries:
 
       Evading Bell is cheap until the model is on the table, and the point of the capstone
       is that the model is on the table.
+      Since October 2026 the violation is proved of records as well as of outcome maps, as a
+      two-wing experiment on the programme's own space reads each wing's result off a region of
+      that space and reaches the quantum maximum for those regions. Locality still enters as an
+      assumption about how the apparatus couples to each wing, so the result widens what the model
+      covers without touching what the theorem demands.
     mathematical: >
       The capstone c1_singlet_contextual_capstone states existence and obstruction in one
       statement, and the supporting results are no_product_partition_realises_singlet over
