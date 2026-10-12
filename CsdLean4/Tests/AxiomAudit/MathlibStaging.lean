@@ -12024,5 +12024,15 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.congr_continuous
 
+-- BACKLOG #133: reindexing a square matrix (Mathlib/LinearAlgebra/Matrix/ReindexTrace.lean)
+
+/-- info: 'Matrix.reindex_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.reindex_mul
+
+/-- info: 'Matrix.trace_reindex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.trace_reindex
+
 
 end CSD.Tests.AxiomAudit

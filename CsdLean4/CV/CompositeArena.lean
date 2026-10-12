@@ -470,19 +470,6 @@ noncomputable def joinU (U : Matrix.unitaryGroup (FieldConfig K₁ N) ℂ)
       compositeReindex_conjTranspose, ← map_mul, Matrix.conjTranspose_kronecker,
       ← Matrix.mul_kronecker_mul, hU, hV, Matrix.one_kronecker_one, map_one]⟩
 
-/-- Kicks on representatives: the `rep` choice washes out (general-`K` API,
-placed here as its first consumer; `ArenaBridge` inlines the same dance). -/
-lemma arenaKick_mk {K N : ℕ} (W : Matrix.unitaryGroup (FieldConfig K N) ℂ)
-    {v : EuclideanSpace ℂ (FieldConfig K N)} (hv : v ≠ 0) :
-    arenaKick W (Projectivization.mk ℂ v hv)
-      = Projectivization.mk ℂ (Matrix.toEuclideanLin W.val v)
-          (toEuclideanLin_ne_zero W hv) := by
-  obtain ⟨a, ha⟩ := (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mp
-    (Projectivization.mk_rep (Projectivization.mk ℂ v hv))
-  rw [arenaKick]
-  apply (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mpr
-  exact ⟨a, by rw [← map_smul, ha]⟩
-
 /-- The product unitary acts on join vectors as the pair of local actions. -/
 lemma toEuclideanLin_joinU (U : Matrix.unitaryGroup (FieldConfig K₁ N) ℂ)
     (V : Matrix.unitaryGroup (FieldConfig K₂ N) ℂ)

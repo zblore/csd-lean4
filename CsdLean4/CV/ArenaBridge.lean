@@ -305,6 +305,23 @@ noncomputable def arenaKick (U : Matrix.unitaryGroup ι ℂ)
   Projectivization.mk ℂ (Matrix.toEuclideanLin U.val p.rep)
     (toEuclideanLin_ne_zero U (Projectivization.rep_nonzero p))
 
+/-- The kick of `mk v` is the ray of `U v`: the `rep` choice washes out, exactly as it does for
+`arenaDM_mk`. Generalised from `CompositeArena.lean`'s `FieldConfig`-indexed copy 2026-10-12
+(#133), which had recorded that it was "general-`K` API, placed here as its first consumer". -/
+lemma arenaKick_mk (U : Matrix.unitaryGroup ι ℂ) {v : EuclideanSpace ℂ ι}
+    (hv : v ≠ 0) :
+    arenaKick U (Projectivization.mk ℂ v hv)
+      = Projectivization.mk ℂ (Matrix.toEuclideanLin U.val v)
+          (toEuclideanLin_ne_zero U hv) := by
+  have hmk : Projectivization.mk ℂ
+        (Projectivization.mk ℂ v hv).rep (Projectivization.rep_nonzero _)
+      = Projectivization.mk ℂ v hv :=
+    Projectivization.mk_rep _
+  obtain ⟨a, ha⟩ := (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mp hmk
+  simp only [arenaKick]
+  refine (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mpr ⟨a, ?_⟩
+  rw [← ha, map_smul]
+
 /-- Coordinates of the kicked representative: matrix-vector multiplication. -/
 lemma toEuclideanLin_coord (M : Matrix ι ι ℂ)
     (v : EuclideanSpace ℂ ι) (i : ι) :

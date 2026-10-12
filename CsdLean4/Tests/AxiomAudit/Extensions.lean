@@ -2415,5 +2415,63 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.arenaObs_kick_conj
 
+-- BACKLOG #133: transport along an index equivalence (CV/ArenaIndexBridge.lean, CV/ArenaBridge.lean)
+
+/-- info: 'CSD.CV.idxArenaEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.idxArenaEquiv
+
+/-- info: 'CSD.CV.idxUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.idxUnitary
+
+/-- info: 'CSD.CV.idxArenaEquiv_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.idxArenaEquiv_mk
+
+/-- info: 'CSD.CV.idxArenaEquiv_eq_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.idxArenaEquiv_eq_mk
+
+/-- info: 'CSD.CV.unitVec_idxSpaceEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.unitVec_idxSpaceEquiv
+
+/-- info: 'CSD.CV.dmVec_idxSpaceEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dmVec_idxSpaceEquiv
+
+/-- info: 'CSD.CV.arenaDM_idxArenaEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaDM_idxArenaEquiv
+
+/-- info: 'CSD.CV.arenaObs_reindex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_reindex
+
+/-- info: 'CSD.CV.toEuclideanLin_reindex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.toEuclideanLin_reindex
+
+/-- info: 'CSD.CV.arenaKick_reindex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaKick_reindex
+
+/-- info: 'CSD.CV.arenaKick_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaKick_mk
+
+/-- info: 'CSD.CV.arenaEquiv_eq_idxArenaEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaEquiv_eq_idxArenaEquiv
+
+/-- info: 'CSD.CV.arenaObs_arenaEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_arenaEquiv
+
+/-- info: 'CSD.CV.arenaKick_arenaEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaKick_arenaEquiv
+
 
 end CSD.Tests.AxiomAudit
