@@ -295,6 +295,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper B derives the Born rule from this measure
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [born-weight, liouville-measure, kahler-form, haar-measure, typicality-volume, fisher-rao-metric]
 
   - slug: born-weight
@@ -385,6 +388,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper B fixes the measure these weights are read off
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [fubini-study-measure, born-volume-ratio, typicality-volume, outcome-region, is-the-born-rule-derived, fisher-rao-metric]
 
   - slug: duistermaat-heckman
@@ -458,6 +464,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper B's measure-fixing argument is where this pushforward earns its keep
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [moment-map, kahler-form, fubini-study-measure, liouville-measure, dirichlet-distribution]
 
   - slug: gleason-theorem
@@ -576,6 +585,9 @@ entries:
       text: >
         The position page explains how the programme fixes the Born rule by symmetry and geometry
         rather than through this theorem
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [born-weight, naimark-dilation, hilbert-space, does-kochen-specker-rule-out-csd, epistemic-measure]
 
   - slug: wigner-rigidity
@@ -661,6 +673,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper C's reconstruction is what this rigidity result pins down
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [stone-theorem, bargmann, schrodinger-from-records, projective-sector, hilbert-space, wigner-function]
 
   - slug: stone-theorem
@@ -730,6 +745,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper C reconstructs the operational quantum mechanics this generator theorem supports
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [wigner-rigidity, schrodinger-equation, schrodinger-from-records, hermitian-operator, bargmann]
 
   - slug: bell-chsh
@@ -900,6 +918,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the Bell-violating correlations this state sharpens
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [bell-chsh, mermin-inequality, contextuality, hidden-variables, no-signalling]
 
   - slug: tsirelson-bound
@@ -1077,6 +1098,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the thermodynamic results the corpus reproduces
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [von-neumann-entropy, entropy-subadditivity, gibbs-state, klein-inequality, de-isolation, jarzynski-equality]
 
   - slug: jarzynski-equality
@@ -1214,6 +1238,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the fluctuation results the corpus reproduces
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [crooks-fluctuation-theorem, gibbs-state, landauer-principle, von-neumann-entropy, canonical-typicality]
 
   - slug: crooks-fluctuation-theorem
@@ -1323,6 +1350,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the fluctuation results the corpus reproduces
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [jarzynski-equality, gibbs-state, landauer-principle, von-neumann-entropy]
 
   - slug: von-neumann-entropy
@@ -1436,6 +1466,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the mixed states this entropy is computed from
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [entropy-subadditivity, klein-inequality, holevo-bound, landauer-principle, canonical-typicality]
 
   - slug: liouville-measure
@@ -1537,6 +1570,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper A's typicality argument needs exactly an invariant measure like this one
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [fubini-study-measure, kahler-form, constraint-surface, typicality, poisson-bracket, koopman-operator]
 
   - slug: kahler-form
@@ -1633,6 +1669,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper D develops the geometric quantum mechanics this form carries
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [fubini-study-measure, liouville-measure, moment-map, poisson-bracket, duistermaat-heckman, fisher-rao-metric, geometric-phase, darboux-theorem]
 
   - slug: luders-rule
@@ -1709,6 +1748,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN6 is the corpus's treatment of outcome sectors and sequential measurement
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [collapse, measurement-flow, pointer-basis, naimark-dilation, measurement-context]
 
   - slug: naimark-dilation
@@ -1792,6 +1834,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers mixed states, POVMs and reduction
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [stinespring-dilation, born-weight, luders-rule, measurement-flow, gleason-theorem]
 
   - slug: no-exact-finite-ccr
@@ -1856,6 +1901,9 @@ entries:
       text: >
         The scope page is explicit that the reconstruction is finite-dimensional, which is what this
         obstruction is about
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [field-arena, wick-theorem, hermitian-operator, robertson-uncertainty, lie-trotter-formula]
 
   - slug: canonical-typicality
@@ -1947,6 +1995,9 @@ entries:
       url: https://www.constraintsurfacedynamics.com/primer-2
       text: >
         The second primer page is the plain-language version of typicality doing probability's work
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [gibbs-state, typicality, von-neumann-entropy, fubini-study-measure, kms-condition]
 
   - slug: bargmann
@@ -2044,6 +2095,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper C reconstructs the projective structure this invariant is defined on
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [wigner-rigidity, schrodinger-from-records, stone-theorem, projective-sector, hilbert-space]
 
   - slug: bloch-sphere
@@ -2195,6 +2249,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN0 fixes the measure-theoretic conventions the corpus uses
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [outcome-region, epistemic-measure, liouville-measure, euclidean-space, typicality-volume]
 
   - slug: cglmp-inequality
@@ -2267,6 +2324,9 @@ entries:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: >
         The current-claims page lists the Bell-violating correlations this inequality generalises
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [bell-chsh, tsirelson-bound, mermin-inequality, gisin-theorem, contextuality]
 
   - slug: deutsch-jozsa
@@ -2415,6 +2475,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper B's pushforward of the projective measure is this distribution
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [fubini-study-measure, born-volume-ratio, duistermaat-heckman, typicality-volume, haar-measure]
 
   - slug: elitzur-vaidman
@@ -2488,6 +2551,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page explains the visibility and isolation this experiment plays with
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [mach-zehnder, hong-ou-mandel, collapse, what-happens-during-measurement, de-isolation]
 
   - slug: euclidean-space
@@ -2560,6 +2626,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN0 fixes the notation these spaces are used with
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [hilbert-space, hermitian-operator, kronecker-product, borel-set, fubini-study-measure]
 
   - slug: fisher-information
@@ -2644,6 +2713,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper D's geometric framework is where this quantity becomes the state space's metric
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [ramsey-interferometry, phase-estimation, born-weight, amplitude-estimation, robertson-uncertainty, fisher-rao-metric]
 
   - slug: fisher-rao-metric
@@ -2749,6 +2821,9 @@ entries:
       url: https://www.constraintsurfacedynamics.com/papers
       text: >
         Paper D is the geometric setting in which this metric and the Fubini-Study metric coincide
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [fisher-information, moment-map, fubini-study-measure, born-weight, kahler-form]
 
   - slug: gibbs-state
@@ -2826,6 +2901,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the thermal results this state appears in
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [canonical-typicality, kms-condition, landauer-principle, klein-inequality, von-neumann-entropy, jarzynski-equality]
 
   - slug: gisin-theorem
@@ -2897,6 +2975,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the entanglement results this theorem strengthens
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [bell-chsh, cglmp-inequality, peres-criterion, bell-not-join, hidden-variables]
 
   - slug: grover-algorithm
@@ -3076,6 +3157,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper B fixes the projective measure by the symmetry this measure expresses
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [fubini-study-measure, liouville-measure, dirichlet-distribution, born-weight, typicality]
 
   - slug: hermitian-operator
@@ -3159,6 +3243,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN0 fixes the operator conventions the corpus uses
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [hilbert-space, pauli-matrices, loewner-order, stone-theorem, robertson-uncertainty]
 
   - slug: hilbert-space
@@ -3322,6 +3409,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page explains the interference and visibility this effect displays
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [mach-zehnder, elitzur-vaidman, bell-not-join, typicality-volume, ramsey-interferometry]
 
   - slug: jacobi-identity
@@ -3414,6 +3504,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper D's geometric mechanics is where this identity carries the dynamics
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [poisson-bracket, kahler-form, liouville-measure, moment-map, schrodinger-from-records]
 
   - slug: kronecker-product
@@ -3494,6 +3587,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the composite systems this product describes
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [partial-trace, hilbert-space, bell-not-join, field-arena, stinespring-dilation]
 
   - slug: leggett-garg
@@ -3565,6 +3661,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page explains why an intermediate measurement is not innocent
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [bell-chsh, contextuality, kochen-specker, single-trajectory, hidden-variables]
 
   - slug: loewner-order
@@ -3632,6 +3731,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the POVMs and mixed states this order is stated for
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [hermitian-operator, klein-inequality, lindblad-equation, choi-theorem, von-neumann-entropy]
 
   - slug: mach-zehnder
@@ -3786,6 +3888,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper A's volume account of outcome frequencies is what this law comes out of
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [born-weight, stern-gerlach, mach-zehnder, bloch-sphere, born-volume-ratio]
 
   - slug: mermin-inequality
@@ -3860,6 +3965,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the Bell-violating correlations this inequality tests
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [ghz-state, bell-chsh, tsirelson-bound, cglmp-inequality, contextuality]
 
   - slug: pauli-matrices
@@ -3938,6 +4046,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN0 fixes the conventions, and TN3 is the pointer Hamiltonian these matrices build
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [bloch-sphere, hermitian-operator, gottesman-knill, shor-code, steane-code]
 
   - slug: peres-criterion
@@ -4014,6 +4125,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the mixed states this criterion tests
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [gisin-theorem, bell-not-join, partial-trace, kronecker-product, no-signalling]
 
   - slug: poisson-bracket
@@ -4104,6 +4218,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper D develops the geometric mechanics this bracket generates
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [jacobi-identity, kahler-form, liouville-measure, moment-map, schrodinger-equation]
 
   - slug: ramsey-interferometry
@@ -4271,6 +4388,9 @@ entries:
       text: >
         The roadmap's third stage is the reconstruction that derives this equation rather than
         postulating it
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [schrodinger-from-records, stone-theorem, hermitian-operator, lindblad-equation, poisson-bracket]
 
   - slug: shor-algorithm
@@ -4510,6 +4630,9 @@ entries:
       text: >
         The position page states that the programme is contextual, Bell-violating and operationally
         no-signalling
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [bell-chsh, kochen-specker, singlet-contextual-model, hidden-variables, measurement-context]
 
   - slug: hidden-variables
@@ -4577,6 +4700,9 @@ entries:
       text: >
         The position page places the programme among the hidden-variable theories and the no-go
         results
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [contextuality, bell-chsh, is-csd-a-hidden-variable-theory, bohmian-mechanics, psi-epistemic]
 
   - slug: measurement-problem
@@ -4794,6 +4920,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-2
       text: The second primer page explains how typical behaviour replaces randomness
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [typicality-volume, born-weight, canonical-typicality, where-do-probabilities-come-from, fubini-study-measure]
 
   - slug: psi-epistemic
@@ -4883,6 +5012,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-3
       text: The third primer page is the plain-terms version of the wavefunction as a summary
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [ontic-vs-epistemic, epistemic-measure, does-csd-conflict-with-pbr, is-the-wavefunction-real, hidden-variables]
     external:
       - text: "Epistemic views of the quantum state"
@@ -4950,6 +5082,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-1
       text: The first primer page introduces the determinism the rest of the programme builds on
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [single-trajectory, where-do-probabilities-come-from, is-csd-superdeterministic, typicality, constraint-surface]
 
   - slug: kochen-specker
@@ -5030,6 +5165,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page's no-go section is where this theorem's bearing is set out
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [contextuality, does-kochen-specker-rule-out-csd, hidden-variables, bell-chsh, measurement-context]
 
   - slug: copenhagen
@@ -5421,6 +5559,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper A builds outcome frequencies on exactly this arena
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
 
   - slug: ontic-vs-epistemic
     hook: >
@@ -5472,6 +5613,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-3
       text: The third primer page explains quantum states as summaries rather than physical waves
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [psi-epistemic, epistemic-measure, is-the-wavefunction-real, constraint-surface, many-to-one-projection]
 
   - slug: projectability
@@ -5527,6 +5671,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: The scope page states plainly that the quantum-effective sector is posited, not derived
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [constraint-surface, projective-sector, many-to-one-projection, wigner-rigidity, schrodinger-from-records]
 
   - slug: projective-sector
@@ -5582,6 +5729,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: The scope page is explicit that this sector is posited
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [constraint-surface, projectability, fubini-study-measure, hilbert-space, kahler-form]
 
   - slug: record-layer
@@ -5637,6 +5787,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page describes measurement as an engineered loss of isolation
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [de-isolation, measurement-flow, pointer-basis, collapse, record-light-cone]
 
   - slug: de-isolation
@@ -5722,6 +5875,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page is where losing isolation becomes the measurement mechanism
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [measurement-flow, stinespring-dilation, holevo-bound, record-layer, isolation]
 
   - slug: typicality-volume
@@ -5779,6 +5935,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper A is the volume-based account of outcome frequencies
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
 
   - slug: outcome-region
     reviewed: 2026-09-14
@@ -5845,6 +6004,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's fourth stage is the physical account of measurement and outcomes
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [born-weight, typicality-volume, preparation-region, carving, borel-set]
 
   - slug: epistemic-measure
@@ -5907,6 +6069,9 @@ entries:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: >
         The current-claims page separates the ontic measure from the epistemic regions it weights
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [ontic-vs-epistemic, psi-epistemic, born-weight, typicality, preparation-region]
 
   - slug: carving
@@ -5958,6 +6123,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page is the plain-terms account of outcomes being carved out
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [outcome-region, measurement-context, pointer-basis, fibre, record-layer]
 
   - slug: first-passage-race
@@ -6035,6 +6203,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's fourth stage is the account of outcomes this race mechanism serves
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [de-isolation, fibre, record-layer, measurement-flow, single-trajectory]
 
   - slug: fibre
@@ -6163,6 +6334,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: The scope page's section on unclosed structural gaps is where the fibre's role is honest
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [many-to-one-projection, constraint-surface, first-passage-race, carving, record-layer]
 
   - slug: many-to-one-projection
@@ -6220,6 +6394,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-3
       text: The third primer page explains quantum states as summaries of hidden detail
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [fibre, constraint-surface, projectability, ontic-vs-epistemic, projective-sector]
 
   - slug: pointer-basis
@@ -6373,6 +6550,9 @@ entries:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: >
         TN6 covers outcome sectors and sequential measurement, where preparation regions do their work
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [outcome-region, epistemic-measure, born-weight, von-neumann-entropy, typicality-volume]
 
   - slug: measurement-context
@@ -6429,6 +6609,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page explains how the apparatus fixes which outcomes are available
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [contextuality, carving, luders-rule, kochen-specker, pointer-basis]
 
   - slug: single-trajectory
@@ -6480,6 +6663,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-1
       text: The first primer page sets out the guiding idea of one trajectory underneath
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [determinism, constraint-surface, where-do-probabilities-come-from, first-passage-race, typicality]
 
   - slug: witness-and-engine
@@ -6527,6 +6713,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: The scope page is where the difference between a witness and a derivation is kept honest
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [lf1-main-theorem, what-is-machine-checked, measurement-flow, born-volume-ratio, de-isolation]
 
   - slug: field-arena
@@ -6595,6 +6784,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's sixth stage is the quantum-effective sector this arena belongs to
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [lieb-robinson-bound, wick-theorem, no-exact-finite-ccr, record-light-cone, interaction-price]
 
   - slug: isolation
@@ -6644,6 +6836,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page follows a system's trajectory in visibility and isolation
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [de-isolation, no-signalling, field-arena, lieb-robinson-bound, constraint-surface]
 
   - slug: moment-map
@@ -6721,6 +6916,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper B uses the moment map to push the measure to the simplex
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [kahler-form, duistermaat-heckman, poisson-bracket, fubini-study-measure, liouville-measure, fisher-rao-metric]
 
   - slug: lf1-main-theorem
@@ -6779,6 +6977,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: LF1 is the machine-verified typicality and frequency-convergence theorem this states
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [born-weight, typicality, witness-and-engine, born-volume-ratio, what-is-machine-checked]
 
   - slug: born-volume-ratio
@@ -6839,6 +7040,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper A is the volume-based account of outcome frequencies
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [born-weight, typicality-volume, fubini-study-measure, lf1-main-theorem, naimark-dilation]
 
   - slug: measurement-flow
@@ -6917,6 +7121,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's fourth stage is where measurement becomes dynamics
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [de-isolation, stinespring-dilation, pointer-basis, holevo-bound, naimark-dilation]
   - slug: singlet-contextual-model
     reviewed: 2026-10-12
@@ -7005,6 +7212,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper C1 is the machine-checked Bell-violating model with deterministic outcomes
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [bell-chsh, contextuality, no-signalling, hidden-variables, does-csd-violate-bell]
 
   - slug: no-signalling
@@ -7137,6 +7347,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper C1 is where the Bell state's irreducibly joint character is machine-checked
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [no-signalling, field-arena, peres-criterion, kronecker-product, hong-ou-mandel]
 
   - slug: lieb-robinson-bound
@@ -7218,6 +7431,9 @@ entries:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: >
         The roadmap's seventh stage is the continuum and field-theory extension this bound belongs to
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [field-arena, record-light-cone, interaction-price, isolation, wick-theorem]
 
   - slug: wick-theorem
@@ -7284,6 +7500,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's seventh stage is the field-theory extension this theorem serves
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [field-arena, kms-condition, no-exact-finite-ccr, lieb-robinson-bound, gibbs-state]
 
   - slug: kms-condition
@@ -7356,6 +7575,9 @@ entries:
       text: >
         The roadmap's seventh stage is the continuum and field-theory extension this condition belongs
         to
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [gibbs-state, wick-theorem, canonical-typicality, field-arena, landauer-principle]
 
   - slug: lindblad-equation
@@ -7500,6 +7722,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's fifth stage is the controlled continuum limits this formula builds
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [lindblad-equation, stone-theorem, schrodinger-equation, what-is-machine-checked, quantum-channel]
 
   - slug: choi-theorem
@@ -7562,6 +7787,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the mixed-state layer this correspondence characterises
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [quantum-channel, stinespring-dilation, lindblad-equation, loewner-order, kronecker-product]
 
   - slug: quantum-channel
@@ -7649,6 +7877,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the mixed states and reductions channels act on
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [stinespring-dilation, choi-theorem, partial-trace, de-isolation, holevo-bound, helstrom-bound]
 
   - slug: record-light-cone
@@ -7718,6 +7949,9 @@ entries:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: >
         The roadmap's seventh stage is where locality has to become a theorem rather than a bound
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [lieb-robinson-bound, record-layer, field-arena, no-signalling, interaction-price]
 
   - slug: partial-trace
@@ -7788,6 +8022,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 is the corpus's treatment of mixed states, POVMs and reduction
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [stinespring-dilation, quantum-channel, entropy-subadditivity, kronecker-product, de-isolation]
 
   - slug: entropy-subadditivity
@@ -7856,6 +8093,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the composite mixed states this inequality is about
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [von-neumann-entropy, klein-inequality, landauer-principle, partial-trace, holevo-bound]
 
   - slug: schrodinger-from-records
@@ -7936,6 +8176,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's fourth stage is the measurement account this derivation belongs to
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [schrodinger-equation, wigner-rigidity, stone-theorem, bargmann, projectability]
 
   - slug: shor-code
@@ -8147,6 +8390,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the measurement-theoretic results the corpus reproduces
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [robertson-uncertainty, luders-rule, measurement-flow, fisher-information, collapse]
 
   - slug: robertson-uncertainty
@@ -8228,6 +8474,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the quantum-mechanical results the corpus reproduces
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [ozawa-error-disturbance, hermitian-operator, no-exact-finite-ccr, fisher-information, pauli-matrices]
 
   - slug: interaction-price
@@ -8296,6 +8545,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page explains why gaining information costs isolation
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [field-arena, lieb-robinson-bound, record-light-cone, isolation, wick-theorem]
 
   - slug: does-csd-violate-bell
@@ -8368,6 +8620,9 @@ entries:
       url: https://www.constraintsurfacedynamics.com/position
       text: >
         The position page states the Bell-violating, no-signalling posture this question is about
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [bell-chsh, singlet-contextual-model, no-signalling, is-csd-superdeterministic, is-csd-a-hidden-variable-theory]
 
   - slug: excess-baggage
@@ -8431,6 +8686,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page's no-go section is where satisfied lower bounds are kept in proportion
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [ontic-vs-epistemic, fibre, many-to-one-projection, does-csd-conflict-with-pbr, is-the-wavefunction-real]
 
   - slug: does-csd-conflict-with-pbr
@@ -8530,6 +8788,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper C2 is the machine-checked treatment of the PBR theorem
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [psi-epistemic, is-the-wavefunction-real, excess-baggage, ontic-vs-epistemic, epistemic-measure]
 
   - slug: is-the-born-rule-derived
@@ -8594,6 +8855,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-3
       text: The third primer page explains why the familiar probability rule follows
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [born-weight, typicality, fubini-study-measure, where-do-probabilities-come-from, lf1-main-theorem]
 
   - slug: where-do-probabilities-come-from
@@ -8688,6 +8952,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-2
       text: The second primer page is where probability enters a deterministic theory
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [typicality, determinism, single-trajectory, is-the-born-rule-derived, typicality-volume]
 
   - slug: is-csd-a-hidden-variable-theory
@@ -8744,6 +9011,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page places the programme against the hidden-variable no-go results
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [hidden-variables, contextuality, does-csd-violate-bell, csd-vs-bohmian-mechanics, does-kochen-specker-rule-out-csd]
 
   - slug: does-kochen-specker-rule-out-csd
@@ -8795,6 +9065,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page's no-go section covers the contextuality results
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [kochen-specker, contextuality, measurement-context, is-csd-a-hidden-variable-theory, gleason-theorem]
 
   - slug: is-csd-superdeterministic
@@ -9026,6 +9299,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page marks which layers are established and which are posited
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [witness-and-engine, lf1-main-theorem, partial-trace, lie-trotter-formula, does-csd-make-new-predictions]
 
   - slug: does-csd-make-new-predictions
@@ -9078,6 +9354,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page states what is and is not claimed
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [what-is-machine-checked, spontaneous-collapse, record-light-cone, interaction-price, where-do-probabilities-come-from]
 
   - slug: csd-vs-bohmian-mechanics
@@ -9142,6 +9421,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page is the short version of the same contrast
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [bohmian-mechanics, is-csd-a-hidden-variable-theory, single-trajectory, determinism, hidden-variables, nelson-stochastic-mechanics]
 
   # -------------------------------------------------------------------------
@@ -9307,6 +9589,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's third stage is the reconstruction this algorithm consumes
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [quantum-fourier-transform, amplitude-estimation, shor-algorithm, fisher-information, hadamard-test]
     external:
       - text: "Overview"
@@ -9371,6 +9656,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: The scope page explains why the algorithm layer supports nothing in the foundations
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [deutsch-jozsa, bernstein-vazirani, shor-algorithm, quantum-fourier-transform, grover-algorithm]
     external:
       - text: "Overview"
@@ -9436,6 +9724,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: The scope page keeps the algorithm layer apart from the programme's own claims
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [deutsch-jozsa, simon-algorithm, hadamard-test, grover-algorithm, quantum-fourier-transform]
     external:
       - text: "Overview"
@@ -9487,6 +9778,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the mixed states whose overlap this test estimates
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [hadamard-test, amplitude-estimation, hong-ou-mandel, fisher-information, grover-algorithm]
     external:
       - text: "Overview"
@@ -9548,6 +9842,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the states and reductions this test reads an overlap from
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [swap-test, phase-estimation, deutsch-jozsa, bernstein-vazirani, amplitude-estimation]
     external:
       - text: "Overview"
@@ -9647,6 +9944,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's third stage is the reconstruction this amplification is stated over
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [grover-algorithm, amplitude-estimation, phase-estimation, swap-test, quantum-fourier-transform]
     external:
       - text: "BHMT, Quantum Amplitude Amplification and Estimation (quant-ph/0005055)"
@@ -9741,6 +10041,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's third stage is the reconstruction this estimation is stated over
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [amplitude-amplification, phase-estimation, grover-algorithm, fisher-information, swap-test]
     external:
       - text: "BHMT, Quantum Amplitude Amplification and Estimation (quant-ph/0005055), Thm 12"
@@ -9829,6 +10132,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: The scope page keeps the simulability layer apart from the programme's own claims
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [steane-code, shor-code, magic-state, pauli-matrices, grover-algorithm, stabiliser-code, clifford-t]
     status: proved-in-corpus
     lean:
@@ -9925,6 +10231,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's third stage is the finite-dimensional reconstruction this code is built on
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [shor-code, gottesman-knill, magic-state, pauli-matrices, quantum-channel, knill-laflamme, transversal-gate, threshold-theorem, stabiliser-code]
     external:
       - text: "Steane, Error correcting codes in quantum theory (PRL 77, 793)"
@@ -10004,6 +10313,9 @@ entries:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: >
         The scope page explains why the quantum-computing layer supports nothing in the foundations
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [gottesman-knill, steane-code, shor-code, pauli-matrices, amplitude-amplification, magic-state-distillation, clifford-t, transversal-gate]
     external:
       - text: "Bravyi-Kitaev, Universal quantum computation with ideal Clifford gates and noisy ancillas (PRA 71, 022316)"
@@ -10083,6 +10395,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the mixed states and POVMs this bound is stated over
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [von-neumann-entropy, klein-inequality, de-isolation, measurement-flow, quantum-channel]
 
   - slug: stinespring-dilation
@@ -10156,6 +10471,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the POVMs and reductions this dilation explains
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [quantum-channel, naimark-dilation, partial-trace, de-isolation, measurement-flow]
 
   - slug: klein-inequality
@@ -10226,6 +10544,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/technical-notes
       text: TN4 covers the mixed states this inequality compares
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [von-neumann-entropy, entropy-subadditivity, holevo-bound, landauer-principle, gibbs-state]
 
   - slug: knill-laflamme
@@ -10318,6 +10639,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's third stage is the finite-dimensional reconstruction this error-correction layer is built on
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [steane-code, shor-code, stabiliser-code, quantum-channel, transversal-gate]
     external:
       - text: "Knill-Laflamme, Theory of quantum error-correcting codes (PRA 55, 900)"
@@ -10490,6 +10814,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: The scope page is explicit that the reconstruction is finite-dimensional, which is the setting these gates live in
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [steane-code, knill-laflamme, threshold-theorem, magic-state, clifford-t]
     external:
       - text: "Eastin-Knill, Restrictions on transversal encoded quantum gate sets (PRL 102, 110502)"
@@ -10663,6 +10990,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's reconstruction stage is where this recursion sits in the programme
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [threshold-theorem, steane-code, stabiliser-code, knill-laflamme, transversal-gate]
     external:
       - text: "Knill-Laflamme, Concatenated quantum codes"
@@ -10747,6 +11077,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page is the list of what the programme establishes, which this protocol consumes rather than extends
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [magic-state, gottesman-knill, clifford-t, threshold-theorem, transversal-gate]
     external:
       - text: "Bravyi-Kitaev, Universal quantum computation with ideal Clifford gates and noisy ancillas (PRA 71, 022316)"
@@ -10842,6 +11175,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the reconstruction that this universality statement is made over
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [magic-state, gottesman-knill, two-level-unitary, magic-state-distillation, toffoli-gate]
     external:
       - text: "Nielsen-Chuang, Quantum Computation and Quantum Information, section 4.5"
@@ -10922,6 +11258,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper C reconstructs the operational quantum mechanics whose unitaries these factors assemble
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [clifford-t, toffoli-gate, pauli-matrices, kronecker-product, hermitian-operator]
     external:
       - text: "Nielsen-Chuang, Quantum Computation and Quantum Information, section 4.5.1"
@@ -10997,6 +11336,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: The scope page explains why the reversible-circuit layer supports nothing in the foundations
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [reversible-adder, clifford-t, magic-state, landauer-principle, shor-algorithm]
     external:
       - text: "Toffoli, Reversible computing (MIT LCS, 1980)"
@@ -11074,6 +11416,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's reconstruction stage is what the arithmetic layer runs inside
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [toffoli-gate, shor-algorithm, quantum-fourier-transform, phase-estimation, clifford-t]
     external:
       - text: "Cuccaro-Draper-Kutin-Moulton, A new quantum ripple-carry addition circuit"
@@ -11154,6 +11499,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper C reconstructs the operational quantum mechanics in which this bound is stated
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [holevo-bound, quantum-channel, luders-rule, naimark-dilation, von-neumann-entropy]
     external:
       - text: "Helstrom, Quantum Detection and Estimation Theory (Academic Press, 1976)"
@@ -11245,6 +11593,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper D is the geometric quantum mechanics whose curvature this phase measures
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [aharonov-bohm, kahler-form, fubini-study-measure, fisher-rao-metric, bloch-sphere]
     external:
       - text: "Berry, Quantal phase factors accompanying adiabatic changes (Proc. R. Soc. A 392, 45)"
@@ -11363,6 +11714,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the established results this empirical reproduction joins
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [geometric-phase, mach-zehnder, ramsey-interferometry, schrodinger-equation, bloch-sphere]
     external:
       - text: "Aharonov-Bohm, Significance of electromagnetic potentials in the quantum theory (Phys. Rev. 115, 485)"
@@ -11490,6 +11844,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page explains how the programme fixes the Born rule through symmetry and geometry
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [wigner-rigidity, quantum-fourier-transform, born-weight, liouville-measure, koopman-operator]
     external:
       - text: "Wigner, On the quantum correction for thermodynamic equilibrium (Phys. Rev. 40, 749)"
@@ -11573,6 +11930,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page sets out why an epistemic wavefunction is compatible with the Hilbert-space formalism
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [liouville-measure, poisson-bracket, stone-theorem, hilbert-space, nelson-stochastic-mechanics]
     external:
       - text: "Koopman, Hamiltonian systems and transformations in Hilbert space (PNAS 17, 315)"
@@ -11659,6 +12019,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page contrasts the programme with Bohmian mechanics and with stochastic dynamics
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [bohmian-mechanics, csd-vs-bohmian-mechanics, schrodinger-equation, born-weight, first-passage-race]
     external:
       - text: "Nelson, Derivation of the Schrodinger equation from Newtonian mechanics (Phys. Rev. 150, 1079)"
@@ -11744,6 +12107,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper D is the geometric setting this local normal form applies to
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [kahler-form, poisson-bracket, moment-map, liouville-measure, field-arena]
     external:
       - text: "McDuff-Salamon, Introduction to Symplectic Topology, Theorem 3.2.2"
@@ -11827,6 +12193,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's fifth stage is the controlled continuum limits this formula belongs to
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [lie-trotter-formula, schrodinger-equation, nelson-stochastic-mechanics, stone-theorem, gibbs-state]
     external:
       - text: "Kac, On distributions of certain Wiener functionals (Trans. AMS 65, 1)"
@@ -11926,6 +12295,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page's no-go section is where this theorem's bearing on the programme is set out
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [ozawa-error-disturbance, pointer-basis, record-layer, robertson-uncertainty, luders-rule]
     external:
       - text: "Araki-Yanase, Measurement of quantum mechanical operators (Phys. Rev. 120, 622)"
@@ -12024,6 +12396,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page states where CSD stands against the no-go theorems, this one included
+    course_link:
+      url: https://explainquantum.com
+      text: 'explainquantum is a beginners'' course in quantum mechanics, which starts from scratch and needs no maths'
     related: [bell-chsh, hidden-variables, is-csd-superdeterministic, no-signalling, bell-not-join,
       is-csd-a-hidden-variable-theory]
     external:
