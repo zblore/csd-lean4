@@ -36,6 +36,40 @@ SU(n)-fixed μ_FS (Paper B) — is the Born weight |⟨i|ψ⟩|². So: **the reg
 ℂℙ); the measure/typicality that weights them is ontic (μL over Ω₀ ⊂ Σ).** QM is the
 calculation engine born from this structure.
 
+**Three regimes of “random”, and the flow is deterministic in all three.** “All
+indeterminacy is epistemic” is the whole ontology, and it is compatible with three different
+*appearances* of randomness, which the corpus keeps apart. **(i) Ontic: none.** Given a microstate
+σ₀ the trajectory is fixed; there is one flow and one microstate. **(ii) Quantum
+operational: the Born weights, from ignorance of the microstate in Ω₀** — the
+typicality reading above, with the long-run frequency of outcome `i` over repeated preparations
+converging to the ontic volume ratio (`Measurement.bornMeasurement_frequency`). **(iii) Macroscopic:
+effective stochasticity from coarse-graining.** A coarse variable `C` on Σ, read along the
+deterministic orbit, has a path law that factorises like a Markov chain's up to `n·ε` once
+the unresolved degrees of freedom decouple at scale ε
+(★★★ `abs_measure_historyEvent_sub_markov_le`,
+[`Mathlib/Dynamics/CoarseMarkov.lean`](../CsdLean4/Mathlib/Dynamics/CoarseMarkov.lean), BACKLOG
+#100). The decoupling is a **hypothesis** (`MicroDecoupled`) and nothing in the corpus supplies it;
+`cex_not_microDecoupled` shows it is load-bearing rather than cosmetic, since a four-point rotation
+coarse-grained into two cells is not Markov at any ε < 1/2. **(iii) does not add a new kind of
+indeterminacy** — it is still ignorance of the microstate, read through a coarser variable, so
+the sentence above stands unqualified.
+
+⚠️ **(iii) is not a route to (ii), and chaos is not where the Born weights come from.** The
+hitting-time / mixing route to the Born race was examined and **abandoned as mis-specified**
+([`q12-fibre-mechanism-scoping.md`](q12-fibre-mechanism-scoping.md)): limit theorems of that kind
+concern vanishingly rare sets while a Born partition's cells sum to one, the conclusion would be
+asymptotic where `measure_raceCell` is already exact, and one deterministic trajectory is not `n`
+independent competing clocks. Nor can the corpus's own flows supply mixing — compact-group
+translation cannot decorrelate (`not_hasCorrelationDecay_of_compactGroup`, with the base and fibre
+cases `not_hasCorrelationDecay_blockPop_of_unitary` and `not_hasCorrelationDecay_kFlow`), so
+equilibration here runs through dephasing and ETH-type reasoning (`Thermo/ETH.lean`) rather than
+through dynamical mixing. **That is a fact about the class of maps isolated QM uses, not about
+Σ**: `torusDouble_hasCorrelationDecay` exhibits a map of the very same fibre whose correlations
+vanish at every nonzero lag, so “Σ cannot mix” is false. Whether a *de-isolation* flow
+is chaotic — a positive Lyapunov exponent, random-matrix level statistics, an exponential OTOC
+— is **open and unclaimed** (BACKLOG #101; the corpus's own interacting family is provably
+*slow* scrambling, `otoc_interactingU_le`).
+
 **The cell law — posit plus characterisation.** The record layer's outcome rates are the
 Fubini–Study torus moment map. That is a **posit** (`specs/POSITS.md` Posit 1) *with a
 characterisation*: a context field whose rates **generate** the coordinate phase rotations is

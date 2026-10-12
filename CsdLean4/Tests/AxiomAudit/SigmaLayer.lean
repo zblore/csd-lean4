@@ -5039,5 +5039,31 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.tendsto_measure_wingCode_ne
 
+-- BACKLOG #140: the typicality price of a majority record (TypicalMajority.lean)
+
+/-- info: 'CSD.RecordLayer.fsMeasure_momentMap_dev_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fsMeasure_momentMap_dev_le
+
+/-- info: 'CSD.RecordLayer.fsMeasure_momentMap_ge_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fsMeasure_momentMap_ge_le
+
+/-- info: 'CSD.RecordLayer.fsMeasure_exists_momentMap_ge_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fsMeasure_exists_momentMap_ge_le
+
+/-- info: 'CSD.RecordLayer.fsMeasure_exists_momentMap_ge_le_inv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fsMeasure_exists_momentMap_ge_le_inv
+
+/-- info: 'CSD.RecordLayer.fsMeasure_exists_majority_basin_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fsMeasure_exists_majority_basin_le
+
+/-- info: 'CSD.RecordLayer.tendsto_majorityBound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tendsto_majorityBound
+
 
 end CSD.Tests.AxiomAudit

@@ -564,6 +564,7 @@ public import CsdLean4.RecordLayer.TwoWingStability
 public import CsdLean4.RecordLayer.BaseMotionStability
 public import CsdLean4.RecordLayer.PointerConcentration
 public import CsdLean4.RecordLayer.PointerDynamics
+public import CsdLean4.RecordLayer.TypicalMajority
 public import CsdLean4.RecordLayer.ArenaTransport
 public import CsdLean4.RecordLayer.MacrostateArrow
 public import CsdLean4.RecordLayer.ShearArenaBridge

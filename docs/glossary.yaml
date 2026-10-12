@@ -8621,6 +8621,18 @@ entries:
 
       So there's one path through the world, dice nowhere, and the randomness lies
       entirely in which microstate each preparation happened to land on.
+      Everyday randomness is a third thing again, and it's worth keeping apart from the quantum
+      kind. A tossed coin, a stirred cup of tea and next week's weather all run on ordinary
+      deterministic physics, and they look random because nobody tracks the fine detail, so tiny
+      differences in how they start grow fast enough that only the broad features stay
+      predictable. CSD has a theorem of that shape for its own state space, which says a broad
+      description of a deterministic path behaves like a chain of random steps once the untracked
+      detail stops carrying information forward, with an error that grows with how many steps you
+      ask about.
+      
+      That leaves three different things called random and not a dice roll among them, as the path
+      itself is fixed, the quantum probabilities come from not knowing which microstate a
+      preparation landed on, and the everyday kind comes from not following the detail.
     in_csd: >
       This is typicality under repeated preparation, and it's worth stating what it isn't.
       Probabilities don't come from watching one trajectory for ever and hoping it
@@ -8633,6 +8645,25 @@ entries:
       The measure-choice debt is paid by a uniqueness theorem. The Fubini-Study measure,
       the natural volume on the space of quantum states, is the only one invariant under
       the symmetries of that space, so the ignorance is priced by a ruler nobody selected.
+      The programme separates three regimes of randomness and the dynamics stays deterministic in
+      all three. The path itself has none, the quantum probabilities are the typicality account
+      above, and the apparent randomness of large-scale variables comes from reading a
+      deterministic path through a broad description that throws most of the detail away. The
+      third regime became a theorem in October 2026, which gives the broad description's path
+      probabilities as a chain of one-step probabilities up to an error set by how far the
+      untracked parts have stopped influencing where the microstate is, and that decoupling is a
+      hypothesis the programme supplies nowhere, so the theorem says what follows from
+      decorrelation rather than that the dynamics decorrelates.
+      
+      Chaos doesn't deliver the quantum probabilities, and the programme checked that rather than
+      assuming it. The route through chaotic waiting times was examined and dropped as the wrong
+      shape for the job, since results of that kind describe sets that are vanishingly rare while
+      the outcome regions of a measurement share out all of the weight between them. The flows
+      the programme uses for isolated systems can't decorrelate at all, as they translate a
+      compact space and so keep returning close to where they began, which is a fact about those
+      particular flows and not about the state space, because the same fibre carries a map whose
+      correlations vanish outright. Whether a realistic de-isolation flow is chaotic stays open
+      and the programme claims nothing either way.
     mathematical: >
       LF1_main_theorem_ae converts region volumes into almost-sure limiting frequencies
       under i.i.d. preparation sampling, fsMeasure_unique removes the measure
@@ -8641,6 +8672,16 @@ entries:
 
       The non-ergodicity of the epistemic unitary flow is proved and kept as a boundary
       marker between the claimed route and the unclaimed one.
+      The third regime is abs_measure_historyEvent_sub_markov_le, where the path law of the coarse
+      process factorises into its one-step transitions up to the step count times the decoupling
+      parameter of MicroDecoupled, and cex_not_microDecoupled exhibits a four-point rotation whose
+      coarse process is not Markov for any parameter below one half, so the hypothesis is
+      load-bearing.
+      
+      The no-mixing boundary is not_hasCorrelationDecay_of_compactGroup, instantiated at the base
+      by not_hasCorrelationDecay_blockPop_of_unitary and at the fibre by
+      not_hasCorrelationDecay_kFlow, against torusDouble_hasCorrelationDecay for the doubling map
+      on that same fibre.
     term: If CSD is deterministic, where do probabilities come from?
     status: definition
     source: curated
