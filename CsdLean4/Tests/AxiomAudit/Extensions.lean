@@ -2392,4 +2392,28 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.flowArenaEquiv_arenaKick
 
 
+-- THE CV ARENA API OVER AN ARBITRARY FINITE INDEX (BACKLOG #133 first deliverable -
+-- CV/ArenaBridge.lean generalised in place, 2026-10-12): the rank-one density, the arena observable
+-- and the unitary kick never used the mode structure of FieldConfig K N - only that the index is a
+-- finite type with decidable equality - and keeping them special-cased is what made FieldArena K N and
+-- LF4.CPN M two arenas with no shared vocabulary. GenArena is the generic arena and FieldArena K N is
+-- its instance at the configuration space, so unitVec, dmVec, arenaDM, arenaObs and arenaKick now read
+-- over any finite index and EVERY EXISTING STATEMENT ELSEWHERE IN THE CORPUS IS UNCHANGED: the full
+-- build has zero downstream errors, which is what the row asked for when it said "with the old names
+-- as abbreviations, so nothing downstream breaks".
+-- arenaObs_kick_conj is the bridge identity stated index-generically, with the conjugation written out.
+-- NOT claimed. SupportedOn IS NOT GENERALISED AND CANNOT BE: its content is that an operator does not
+-- move the modes outside a region, which is a statement about the index BEING a function space, so the
+-- statics and light-cone sections stay FieldConfig-indexed and that is not a gap. heisenberg IS ALSO
+-- STILL FieldConfig-INDEXED (its companion lemmas are about mode support), which is why the bridge
+-- identity splits in two - arenaObs_kick_conj generically and arenaObs_kick in heisenberg form at the
+-- configuration space. AND THE TRANSPORT LEMMAS ARE NOT HERE: the row also asks for arenaObs_reindex
+-- and arenaKick_reindex along an index equivalence, which is what would let a CV reading be carried
+-- between arenas rather than merely stated over either; that is the row's remaining half.
+-- Foundational-triple.
+/-- info: 'CSD.CV.arenaObs_kick_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_kick_conj
+
+
 end CSD.Tests.AxiomAudit

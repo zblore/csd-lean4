@@ -122,25 +122,49 @@ lemma euclid_sum_norm_sq {ι : Type*} [Fintype ι]
   rw [EuclideanSpace.norm_eq, Real.sq_sqrt]
   positivity
 
+/-! ### The index-generic layer
+
+▸ **Generalised 2026-10-12 (BACKLOG #133).** Everything from here to the statics section is about
+an arbitrary finite index `ι`, not about `FieldConfig K N`. The mathematics never used the mode
+structure — only that the index is a finite type with decidable equality — and keeping it
+special-cased is what made `FieldArena K N` and `LF4.CPN M` two different arenas with no shared
+vocabulary. `GenArena ι` is the generic arena and `FieldArena K N` is its instance at the
+configuration space, so every statement elsewhere in the corpus reads unchanged.
+
+⚠️ `SupportedOn` is **not** here and cannot be: its content is that an operator does not move
+the modes outside a region, which is a statement about the index *being* a function space. The
+statics and light-cone sections below therefore stay `FieldConfig`-indexed, and that is not a gap. -/
+
+/-- **The generic arena**: the projectivisation of a finite-dimensional state space over any finite
+index. `FieldArena K N` is this at `ι := FieldConfig K N`. -/
+abbrev GenArena (ι : Type*) :=
+  ℙ ℂ (EuclideanSpace ℂ ι)
+
+section Generic
+
+variable {ι : Type*} [Fintype ι] [DecidableEq ι]
+
 /-! ### The rank-one density of a ray -/
 
 /-- The **unit representative** of a vector, as a plain function: `v/‖v‖`. -/
-noncomputable def unitVec (v : EuclideanSpace ℂ (FieldConfig K N)) :
-    FieldConfig K N → ℂ :=
+noncomputable def unitVec (v : EuclideanSpace ℂ ι) :
+    ι → ℂ :=
   fun i => ((‖v‖ : ℝ) : ℂ)⁻¹ * v i
 
 /-- The **rank-one density** of a vector: `|v/‖v‖⟩⟨v/‖v‖|`. -/
-noncomputable def dmVec (v : EuclideanSpace ℂ (FieldConfig K N)) :
-    Matrix (FieldConfig K N) (FieldConfig K N) ℂ :=
+noncomputable def dmVec (v : EuclideanSpace ℂ ι) :
+    Matrix ι ι ℂ :=
   Matrix.vecMulVec (unitVec v) (star (unitVec v))
 
-lemma dmVec_apply (v : EuclideanSpace ℂ (FieldConfig K N))
-    (i j : FieldConfig K N) :
+omit [DecidableEq ι] in
+lemma dmVec_apply (v : EuclideanSpace ℂ ι)
+    (i j : ι) :
     dmVec v i j = unitVec v i * star (unitVec v j) := by
   rw [dmVec, Matrix.vecMulVec_apply, Pi.star_apply]
 
+omit [DecidableEq ι] in
 /-- The rank-one density is positive semidefinite. -/
-lemma dmVec_posSemidef (v : EuclideanSpace ℂ (FieldConfig K N)) :
+lemma dmVec_posSemidef (v : EuclideanSpace ℂ ι) :
     (dmVec v).PosSemidef :=
   Matrix.posSemidef_vecMulVec_self_star (unitVec v)
 
@@ -148,10 +172,11 @@ lemma dmVec_posSemidef (v : EuclideanSpace ℂ (FieldConfig K N)) :
 lemma mul_star_self_eq_norm_sq (z : ℂ) : z * star z = ((‖z‖ ^ 2 : ℝ) : ℂ) := by
   rw [Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq]
 
+omit [DecidableEq ι] in
 /-- The canonical entry form of the density: normalisation outside, raw
 coordinates inside. -/
-lemma dmVec_apply' {v : EuclideanSpace ℂ (FieldConfig K N)}
-    (i j : FieldConfig K N) :
+lemma dmVec_apply' {v : EuclideanSpace ℂ ι}
+    (i j : ι) :
     dmVec v i j = (((‖v‖ ^ 2 : ℝ)) : ℂ)⁻¹ * (v i * star (v j)) := by
   rw [dmVec_apply, unitVec, unitVec]
   simp only [star_mul', star_inv₀, Complex.star_def, Complex.conj_ofReal]
@@ -160,8 +185,9 @@ lemma dmVec_apply' {v : EuclideanSpace ℂ (FieldConfig K N)}
       = (((‖v‖ : ℝ) : ℂ)⁻¹ * ((‖v‖ : ℝ) : ℂ)⁻¹) * (v i * (starRingEnd ℂ) (v j))
       from by ring, ← mul_inv, ← Complex.ofReal_mul, ← sq]
 
+omit [DecidableEq ι] in
 /-- The rank-one density of a nonzero vector has trace one. -/
-lemma dmVec_trace {v : EuclideanSpace ℂ (FieldConfig K N)} (hv : v ≠ 0) :
+lemma dmVec_trace {v : EuclideanSpace ℂ ι} (hv : v ≠ 0) :
     (dmVec v).trace = 1 := by
   classical
   have hterm : ∀ i, dmVec v i i
@@ -176,15 +202,16 @@ lemma dmVec_trace {v : EuclideanSpace ℂ (FieldConfig K N)} (hv : v ≠ 0) :
   rw [inv_mul_cancel₀]
   exact Complex.ofReal_ne_zero.mpr (pow_ne_zero 2 (norm_ne_zero_iff.mpr hv))
 
+omit [DecidableEq ι] in
 /-- Scale invariance: the density depends only on the ray. -/
 lemma dmVec_smul {c : ℂ} (hc : c ≠ 0)
-    {v : EuclideanSpace ℂ (FieldConfig K N)} (hv : v ≠ 0) :
+    {v : EuclideanSpace ℂ ι} (hv : v ≠ 0) :
     dmVec (c • v) = dmVec v := by
   ext i j
   rw [dmVec_apply', dmVec_apply']
-  have hcv : ∀ k, (c • v : EuclideanSpace ℂ (FieldConfig K N)) k = c * v k :=
+  have hcv : ∀ k, (c • v : EuclideanSpace ℂ ι) k = c * v k :=
     fun k => by rw [PiLp.smul_apply, smul_eq_mul]
-  have hnc : ‖(c • v : EuclideanSpace ℂ (FieldConfig K N))‖ = ‖c‖ * ‖v‖ :=
+  have hnc : ‖(c • v : EuclideanSpace ℂ ι)‖ = ‖c‖ * ‖v‖ :=
     norm_smul c v
   rw [hcv i, hcv j, hnc, star_mul']
   have hcc : c * star c = ((‖c‖ ^ 2 : ℝ) : ℂ) := mul_star_self_eq_norm_sq c
@@ -205,18 +232,21 @@ lemma dmVec_smul {c : ℂ} (hc : c ≠ 0)
 
 /-- **The density of a ray**: `arenaDM p = |p⟩⟨p|` through the canonical
 representative — well-defined on the arena by `dmVec_smul`. -/
-noncomputable def arenaDM (p : FieldArena K N) :
-    Matrix (FieldConfig K N) (FieldConfig K N) ℂ :=
+noncomputable def arenaDM (p : GenArena ι) :
+    Matrix ι ι ℂ :=
   dmVec p.rep
 
-lemma arenaDM_posSemidef (p : FieldArena K N) : (arenaDM p).PosSemidef :=
+omit [DecidableEq ι] in
+lemma arenaDM_posSemidef (p : GenArena ι) : (arenaDM p).PosSemidef :=
   dmVec_posSemidef p.rep
 
-lemma arenaDM_trace (p : FieldArena K N) : (arenaDM p).trace = 1 :=
+omit [DecidableEq ι] in
+lemma arenaDM_trace (p : GenArena ι) : (arenaDM p).trace = 1 :=
   dmVec_trace (Projectivization.rep_nonzero p)
 
+omit [DecidableEq ι] in
 /-- The density of `mk v` is the density of `v`: the `rep` choice washes out. -/
-lemma arenaDM_mk {v : EuclideanSpace ℂ (FieldConfig K N)} (hv : v ≠ 0) :
+lemma arenaDM_mk {v : EuclideanSpace ℂ ι} (hv : v ≠ 0) :
     arenaDM (Projectivization.mk ℂ v hv) = dmVec v := by
   have hmk : Projectivization.mk ℂ
         (Projectivization.mk ℂ v hv).rep
@@ -235,17 +265,16 @@ lemma arenaDM_mk {v : EuclideanSpace ℂ (FieldConfig K N)} (hv : v ≠ 0) :
 /-- **An operator read as a function on the arena**: `arenaObs A p = re tr(ρ_p A)`
 — the expectation of `A` in the ray `p`. This is the object that lives on the
 record layer's side of the category divide. -/
-noncomputable def arenaObs (A : Matrix (FieldConfig K N) (FieldConfig K N) ℂ)
-    (p : FieldArena K N) : ℝ :=
+noncomputable def arenaObs (A : Matrix ι ι ℂ)
+    (p : GenArena ι) : ℝ :=
   RCLike.re ((arenaDM p * A).trace)
 
 /-- ★ **The Lipschitz transport** (CR-1 as the category bridge): arena
 observables are 1-Lipschitz in the operator norm. Every operator-norm estimate
 becomes a uniform estimate on arena functions through this single inequality. -/
-theorem arenaObs_sub_le [NeZero N]
-    (A B : Matrix (FieldConfig K N) (FieldConfig K N) ℂ) (p : FieldArena K N) :
+theorem arenaObs_sub_le [Nonempty ι]
+    (A B : Matrix ι ι ℂ) (p : GenArena ι) :
     |arenaObs A p - arenaObs B p| ≤ ‖A - B‖ := by
-  have hne : Nonempty (FieldConfig K N) := ⟨fun _ => 0⟩
   have hsplit : arenaObs A p - arenaObs B p
       = RCLike.re ((arenaDM p * (A - B)).trace) := by
     rw [arenaObs, arenaObs, Matrix.mul_sub, Matrix.trace_sub, map_sub]
@@ -257,8 +286,8 @@ theorem arenaObs_sub_le [NeZero N]
 /-! ### Unitary kicks on the arena -/
 
 /-- A unitary sends nonzero vectors to nonzero vectors. -/
-lemma toEuclideanLin_ne_zero (U : Matrix.unitaryGroup (FieldConfig K N) ℂ)
-    {v : EuclideanSpace ℂ (FieldConfig K N)} (hv : v ≠ 0) :
+lemma toEuclideanLin_ne_zero (U : Matrix.unitaryGroup ι ℂ)
+    {v : EuclideanSpace ℂ ι} (hv : v ≠ 0) :
     Matrix.toEuclideanLin U.val v ≠ 0 := by
   intro h0
   apply hv
@@ -271,19 +300,19 @@ lemma toEuclideanLin_ne_zero (U : Matrix.unitaryGroup (FieldConfig K N) ℂ)
 
 /-- **A unitary as an arena self-map**, constructed directly through
 `Projectivization.mk`. -/
-noncomputable def arenaKick (U : Matrix.unitaryGroup (FieldConfig K N) ℂ)
-    (p : FieldArena K N) : FieldArena K N :=
+noncomputable def arenaKick (U : Matrix.unitaryGroup ι ℂ)
+    (p : GenArena ι) : GenArena ι :=
   Projectivization.mk ℂ (Matrix.toEuclideanLin U.val p.rep)
     (toEuclideanLin_ne_zero U (Projectivization.rep_nonzero p))
 
 /-- Coordinates of the kicked representative: matrix-vector multiplication. -/
-lemma toEuclideanLin_coord (M : Matrix (FieldConfig K N) (FieldConfig K N) ℂ)
-    (v : EuclideanSpace ℂ (FieldConfig K N)) (i : FieldConfig K N) :
+lemma toEuclideanLin_coord (M : Matrix ι ι ℂ)
+    (v : EuclideanSpace ℂ ι) (i : ι) :
     (Matrix.toEuclideanLin M v) i = (M *ᵥ (fun j => v j)) i := rfl
 
 /-- The kicked density is the conjugated density: `ρ_{U•p} = U ρ_p Uᴴ`. -/
-lemma arenaDM_kick (U : Matrix.unitaryGroup (FieldConfig K N) ℂ)
-    (p : FieldArena K N) :
+lemma arenaDM_kick (U : Matrix.unitaryGroup ι ℂ)
+    (p : GenArena ι) :
     arenaDM (arenaKick U p) = U.val * arenaDM p * (U.val)ᴴ := by
   classical
   set v := p.rep with hvdef
@@ -326,6 +355,21 @@ lemma arenaDM_kick (U : Matrix.unitaryGroup (FieldConfig K N) ℂ)
     exact Finset.sum_congr rfl fun l _ => by rw [star_mul']; ring]
   rfl
 
+/-- ★ **The bridge identity, index-generically**: Schrödinger on the arena IS conjugation on
+the operator. Stated with the conjugation written out, because `heisenberg` itself is
+`FieldConfig`-indexed (its companion lemmas are about mode support); `arenaObs_kick` below is this
+in `heisenberg` form. -/
+theorem arenaObs_kick_conj (U : Matrix.unitaryGroup ι ℂ)
+    (A : Matrix ι ι ℂ) (p : GenArena ι) :
+    arenaObs A (arenaKick U p) = arenaObs (star U.val * A * U.val) p := by
+  rw [arenaObs, arenaObs, arenaDM_kick, Matrix.star_eq_conjTranspose]
+  congr 1
+  rw [Matrix.mul_assoc (U.val * arenaDM p) ((U.val)ᴴ) A,
+    Matrix.trace_mul_comm, ← Matrix.mul_assoc, ← Matrix.mul_assoc,
+    Matrix.trace_mul_comm, Matrix.mul_assoc (arenaDM p), Matrix.mul_assoc]
+
+end Generic
+
 /-- ★ **The bridge identity**: Schrödinger on the arena IS Heisenberg on the
 operator. `arenaObs A (U • p) = arenaObs (U† A U) p`, with `heisenberg` the CV
 chain's own Heisenberg map — so the entire CV estimate stack applies verbatim to
@@ -339,6 +383,7 @@ theorem arenaObs_kick (U : Matrix.unitaryGroup (FieldConfig K N) ℂ)
   rw [Matrix.mul_assoc (U.val * arenaDM p) ((U.val)ᴴ) A,
     Matrix.trace_mul_comm, ← Matrix.mul_assoc, ← Matrix.mul_assoc,
     Matrix.trace_mul_comm, Matrix.mul_assoc (arenaDM p), Matrix.mul_assoc]
+
 
 /-! ### Statics: exact locality on the arena -/
 
