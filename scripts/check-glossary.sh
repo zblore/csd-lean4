@@ -272,6 +272,26 @@ for e in entries:
     elif st_ != 200:
         Ee.append(f"{s}: site_link.url returned HTTP {st_}, not 200 — {url}")
 
+# (E2) COURSE LINKS — a `course_link.url` off the `meta.course` domain, or one that
+# doesn't return 200, is an ERROR. Optional: an entry without one draws nothing.
+COURSE = (meta.get("course") or "").rstrip("/")
+for e in entries:
+    s, cl = e.get("slug"), e.get("course_link")
+    if not cl:
+        continue
+    url, text = cl.get("url"), cl.get("text")
+    if not url or not text:
+        Ee.append(f"{s}: course_link must carry both `url` and `text`")
+        continue
+    if not COURSE or not (url == COURSE or url.startswith(COURSE + "/")):
+        Ee.append(f"{s}: course_link.url is off the meta.course domain — {url}")
+        continue
+    st_ = _http_status(url)
+    if st_ is None:
+        D.append(f"{s}: course_link.url unreachable (network?) — {url}")
+    elif st_ != 200:
+        Ee.append(f"{s}: course_link.url returned HTTP {st_}, not 200 — {url}")
+
 # (F) STALENESS — has the Lean module an entry anchors to moved since the entry
 # was last reviewed? This is the one drift signal that IS mechanically checkable.
 # It does not check the mathematics (nothing can); it checks whether the ground

@@ -351,6 +351,12 @@ for e in entries:
     if sl:
         rows.append(("On the site", '<a href="' + sl["url"] + '">'
                      + E(sl["text"]) + "</a>"))
+    # The beginners' course for this idea, on explainquantum (meta.course): one page,
+    # one sentence saying what it gives. check-glossary.sh validates the domain and 200.
+    cl = e.get("course_link")
+    if cl:
+        rows.append(("New to this?", '<a href="' + cl["url"] + '">'
+                     + E(cl["text"]) + "</a>"))
     for x in e.get("external") or []:
         rows.append(("Background", '<a href="' + x["url"] + '">' + E(x["text"]) + "</a>"))
     # Related entries are a section of the page, not a footnote: five pages a reader of

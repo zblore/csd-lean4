@@ -34,6 +34,13 @@
 #                 rule from this measure" -- never "Read more about CSD".
 #                 check-glossary.sh verifies the URL is on the site_main domain
 #                 and returns 200; an entry without one draws a warning.
+#   course_link   OPTIONAL {url, text}: the ONE page on explainquantum, the beginners'
+#                 course (meta.course), for a reader who wants the idea from scratch
+#                 before this entry. The text names the course page and says what it
+#                 gives; never a generic "learn more". check-glossary.sh verifies the
+#                 URL is on the meta.course domain and returns 200. Optional: no
+#                 warning without one. The course links back to these entries
+#                 (author direction, 2026-10-12).
 #
 # EDITORIAL RULES (author direction, 2026-09-11; replaces the 2026-08-19 voice note).
 # Write for a curious, intelligent adult who has no specialist knowledge of quantum
@@ -111,6 +118,7 @@
 meta:
   site: https://glossary.constraintsurfacedynamics.com
   site_main: https://www.constraintsurfacedynamics.com
+  course: https://explainquantum.com
   repo: https://github.com/zblore/csd-lean4
   sha: 39182b9e91a2791f5acb5ceaa2612ed71da921b5
 
@@ -816,6 +824,9 @@ entries:
       text: >
         The current-claims page lists Bell-violating correlations with deterministic outcomes among
         the established results
+    course_link:
+      url: https://explainquantum.com/learn/what-is-entanglement
+      text: 'explainquantum''s chapter 5, "What is entanglement?", explains it from scratch, with no maths'
     related: [tsirelson-bound, contextuality, singlet-contextual-model, hidden-variables, does-csd-violate-bell]
 
   - slug: ghz-state
@@ -967,6 +978,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-claims
       text: The current-claims page lists the correlation results this bound caps
+    course_link:
+      url: https://explainquantum.com/learn/what-is-entanglement
+      text: 'explainquantum''s chapter 5, "What is entanglement?", explains it from scratch, with no maths'
     related: [bell-chsh, cglmp-inequality, mermin-inequality, no-signalling, does-csd-violate-bell]
 
   - slug: landauer-principle
@@ -2106,6 +2120,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-3
       text: The third primer page explains why the space of states has the structure it does
+    course_link:
+      url: https://explainquantum.com/learn/what-is-superposition-really
+      text: 'explainquantum''s chapter 2, "What is superposition, really?", explains it from scratch, with no maths'
     related: [pauli-matrices, fubini-study-measure, hilbert-space, stern-gerlach, ramsey-interferometry]
 
   - slug: borel-set
@@ -2324,6 +2341,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: The scope page explains why the algorithm layer supports nothing in the foundations
+    course_link:
+      url: https://explainquantum.com/learn/what-does-a-quantum-computer-do
+      text: 'explainquantum''s chapter 7, "What is a qubit, and what does a quantum computer actually do?", explains it from scratch, with no maths'
     related: [bernstein-vazirani, simon-algorithm, grover-algorithm, hadamard-test, quantum-fourier-transform]
 
   - slug: dirichlet-distribution
@@ -2963,6 +2983,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's third stage is the reconstruction this search algorithm runs inside
+    course_link:
+      url: https://explainquantum.com/learn/what-does-a-quantum-computer-do
+      text: 'explainquantum''s chapter 7, "What is a qubit, and what does a quantum computer actually do?", explains it from scratch, with no maths'
     related: [amplitude-amplification, amplitude-estimation, shor-algorithm, deutsch-jozsa, hadamard-test]
     external:
       - text: "Overview and history"
@@ -3216,6 +3239,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper C reconstructs operational quantum mechanics without giving Hilbert space primacy
+    course_link:
+      url: https://explainquantum.com/learn/what-is-superposition-really
+      text: 'explainquantum''s chapter 2, "What is superposition, really?", explains it from scratch, with no maths'
     related: [euclidean-space, hermitian-operator, projective-sector, bloch-sphere, kronecker-product]
 
   - slug: hong-ou-mandel
@@ -3682,6 +3708,9 @@ entries:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: >
         The fourth primer page explains visibility loss, which is what this interferometer measures
+    course_link:
+      url: https://explainquantum.com/learn/what-is-interference
+      text: 'explainquantum''s chapter 4, "What is interference, and why does everything depend on it?", explains it from scratch, with no maths'
     related: [elitzur-vaidman, hong-ou-mandel, ramsey-interferometry, malus-law, collapse]
 
   - slug: malus-law
@@ -4150,6 +4179,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page explains the visibility this interferometry tracks
+    course_link:
+      url: https://explainquantum.com/learn/how-does-quantum-sensing-work
+      text: 'explainquantum''s chapter 12, "How does quantum sensing work, and where is it used today?", explains it from scratch, with no maths'
     related: [fisher-information, mach-zehnder, phase-estimation, bloch-sphere, stern-gerlach]
 
   - slug: schrodinger-equation
@@ -4316,6 +4348,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's third stage is the reconstruction this algorithm runs inside
+    course_link:
+      url: https://explainquantum.com/learn/how-does-shors-algorithm-work
+      text: 'explainquantum''s page 7a, "How does Shor''s algorithm work?", explains it from scratch, with no maths'
     related: [quantum-fourier-transform, phase-estimation, grover-algorithm, simon-algorithm, shor-code, reversible-adder, toffoli-gate]
 
   - slug: stern-gerlach
@@ -4394,6 +4429,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/papers
       text: Paper A is the volume-based account of the outcome frequencies this experiment measures
+    course_link:
+      url: https://explainquantum.com/learn/what-did-the-stern-gerlach-experiment-show
+      text: 'explainquantum''s page 2b, "What did the Stern-Gerlach experiment show?", explains it from scratch, with no maths'
     related: [malus-law, bloch-sphere, pointer-basis, measurement-flow, ramsey-interferometry]
 
   - slug: contextuality
@@ -4614,6 +4652,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page is the measurement story in plain terms
+    course_link:
+      url: https://explainquantum.com/learn/what-does-measuring-actually-do
+      text: 'explainquantum''s chapter 3, "What does measuring actually do?", explains it from scratch, with no maths'
     related: [collapse, de-isolation, record-layer, what-happens-during-measurement, copenhagen]
 
   - slug: collapse
@@ -4677,6 +4718,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page explains why outcomes become definite with no collapse mechanism
+    course_link:
+      url: https://explainquantum.com/learn/what-does-measuring-actually-do
+      text: 'explainquantum''s chapter 3, "What does measuring actually do?", explains it from scratch, with no maths'
     related: [measurement-problem, de-isolation, luders-rule, record-layer, spontaneous-collapse]
 
   - slug: typicality
@@ -5043,6 +5087,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page contrasts the programme with the Copenhagen reading
+    course_link:
+      url: https://explainquantum.com/learn/what-do-the-interpretations-say
+      text: 'explainquantum''s chapter 6, "What do the interpretations say, and how does popular culture show them?", explains it from scratch, with no maths'
     related: [many-worlds, bohmian-mechanics, qbism, measurement-problem, collapse]
 
   - slug: many-worlds
@@ -5117,6 +5164,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page contrasts the programme with the many-worlds reading
+    course_link:
+      url: https://explainquantum.com/learn/what-do-the-interpretations-say
+      text: 'explainquantum''s chapter 6, "What do the interpretations say, and how does popular culture show them?", explains it from scratch, with no maths'
     related: [copenhagen, bohmian-mechanics, spontaneous-collapse, single-trajectory, measurement-problem]
 
   - slug: bohmian-mechanics
@@ -5182,6 +5232,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page contrasts the programme with Bohmian mechanics
+    course_link:
+      url: https://explainquantum.com/learn/what-do-the-interpretations-say
+      text: 'explainquantum''s chapter 6, "What do the interpretations say, and how does popular culture show them?", explains it from scratch, with no maths'
     related: [csd-vs-bohmian-mechanics, hidden-variables, many-worlds, single-trajectory, determinism, nelson-stochastic-mechanics]
 
   - slug: spontaneous-collapse
@@ -5238,6 +5291,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page explains why the programme introduces no collapse mechanism
+    course_link:
+      url: https://explainquantum.com/learn/what-do-the-interpretations-say
+      text: 'explainquantum''s chapter 6, "What do the interpretations say, and how does popular culture show them?", explains it from scratch, with no maths'
     related: [collapse, copenhagen, many-worlds, qbism, does-csd-make-new-predictions]
 
   - slug: qbism
@@ -5292,6 +5348,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page places the programme against the agent-centred readings
+    course_link:
+      url: https://explainquantum.com/learn/five-more-interpretations
+      text: 'explainquantum''s page 6b, "What do QBism, relational, consistent histories, ensemble and superdeterminism say?", explains it from scratch, with no maths'
     related: [copenhagen, psi-epistemic, ontic-vs-epistemic, is-the-wavefunction-real, spontaneous-collapse]
 
   - slug: constraint-surface
@@ -6251,6 +6310,9 @@ entries:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: >
         The fourth primer page explains why the outcomes that become definite are the ones they are
+    course_link:
+      url: https://explainquantum.com/learn/what-does-measuring-actually-do
+      text: 'explainquantum''s chapter 3, "What does measuring actually do?", explains it from scratch, with no maths'
     related: [measurement-flow, de-isolation, luders-rule, record-layer, stern-gerlach]
 
   - slug: preparation-region
@@ -6986,6 +7048,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page states the operational no-signalling the programme keeps
+    course_link:
+      url: https://explainquantum.com/learn/what-is-entanglement
+      text: 'explainquantum''s chapter 5, "What is entanglement?", explains it from scratch, with no maths'
     related: [singlet-contextual-model, bell-not-join, isolation, field-arena, tsirelson-bound]
 
   - slug: bell-not-join
@@ -7336,6 +7401,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's fourth stage is the measurement dynamics this equation summarises
+    course_link:
+      url: https://explainquantum.com/learn/why-do-qubits-lose-their-information
+      text: 'explainquantum''s page 3b, "Why do qubits lose their information?", explains it from scratch, with no maths'
     related: [quantum-channel, lie-trotter-formula, de-isolation, choi-theorem, schrodinger-equation]
 
   - slug: lie-trotter-formula
@@ -7954,6 +8022,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's third stage is the finite-dimensional reconstruction this code is built on
+    course_link:
+      url: https://explainquantum.com/learn/who-invented-quantum-error-correction
+      text: 'explainquantum''s page 8c, "Who invented quantum error correction?", explains it from scratch, with no maths'
     related: [steane-code, pauli-matrices, stinespring-dilation, quantum-channel, gottesman-knill, knill-laflamme, stabiliser-code]
 
   - slug: ozawa-error-disturbance
@@ -8705,6 +8776,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/position
       text: The position page states which Bell premise the programme denies
+    course_link:
+      url: https://explainquantum.com/learn/what-do-the-interpretations-say
+      text: 'explainquantum''s chapter 6, "What do the interpretations say, and how does popular culture show them?", explains it from scratch, with no maths'
     related: [determinism, does-csd-violate-bell, single-trajectory, no-signalling, hidden-variables]
 
   - slug: is-the-wavefunction-real
@@ -8757,6 +8831,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-3
       text: The third primer page explains what a quantum state is in this programme
+    course_link:
+      url: https://explainquantum.com/learn/five-more-interpretations
+      text: 'explainquantum''s page 6b, "What do QBism, relational, consistent histories, ensemble and superdeterminism say?", explains it from scratch, with no maths'
     related: [ontic-vs-epistemic, psi-epistemic, does-csd-conflict-with-pbr, qbism, excess-baggage]
 
   - slug: what-happens-during-measurement
@@ -8812,6 +8889,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/primer-4
       text: The fourth primer page answers the same question for a reader starting from scratch
+    course_link:
+      url: https://explainquantum.com/learn/what-does-measuring-actually-do
+      text: 'explainquantum''s chapter 3, "What does measuring actually do?", explains it from scratch, with no maths'
     related: [de-isolation, measurement-flow, collapse, record-layer, measurement-problem]
 
   - slug: what-is-machine-checked
@@ -9077,6 +9157,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap's third stage is the reconstruction the algorithm layer is built on
+    course_link:
+      url: https://explainquantum.com/learn/how-does-shors-algorithm-work
+      text: 'explainquantum''s page 7a, "How does Shor''s algorithm work?", explains it from scratch, with no maths'
     related: [shor-algorithm, phase-estimation, simon-algorithm, hadamard-test, amplitude-estimation]
     external:
       - text: "Overview"
@@ -10248,6 +10331,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/roadmap
       text: The roadmap marks where the reconstruction ends and library layers like the stabiliser formalism begin
+    course_link:
+      url: https://explainquantum.com/learn/why-are-qubits-fragile
+      text: 'explainquantum''s chapter 8, "Why are qubits fragile, and how do we fix that?", explains it from scratch, with no maths'
     related: [steane-code, shor-code, gottesman-knill, pauli-matrices, knill-laflamme]
     external:
       - text: "Gottesman, Stabilizer codes and quantum error correction (Caltech thesis, 1997)"
@@ -10425,6 +10511,9 @@ entries:
     site_link:
       url: https://www.constraintsurfacedynamics.com/current-limits
       text: The scope page keeps the programme's own claims apart from the library results built above them
+    course_link:
+      url: https://explainquantum.com/learn/why-are-qubits-fragile
+      text: 'explainquantum''s chapter 8, "Why are qubits fragile, and how do we fix that?", explains it from scratch, with no maths'
     related: [concatenated-code, steane-code, transversal-gate, knill-laflamme, magic-state-distillation]
     external:
       - text: "Aharonov-Ben-Or, Fault-tolerant quantum computation with constant error rate"
