@@ -12034,5 +12034,15 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.trace_reindex
 
+-- BACKLOG #130: the chi-squared bound on klDiv (Mathlib/InformationTheory/ChiSquare.lean)
+
+/-- info: 'InformationTheory.log_card_sub_measureEntropy_le_chiSq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.log_card_sub_measureEntropy_le_chiSq
+
+/-- info: 'InformationTheory.klDiv_uniformOn_univ_le_chiSq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms InformationTheory.klDiv_uniformOn_univ_le_chiSq
+
 
 end CSD.Tests.AxiomAudit

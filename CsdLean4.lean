@@ -528,6 +528,7 @@ public import CsdLean4.SigmaLayer.Equivariance
 public import CsdLean4.SigmaLayer.MovingFibreWitness
 public import CsdLean4.SigmaLayer.FibreCoarseArrow
 public import CsdLean4.SigmaLayer.FibreFiniteHorizon
+public import CsdLean4.SigmaLayer.FibreHorizonDivergence
 public import CsdLean4.SigmaLayer.UniqueErgodicity
 public import CsdLean4.SigmaLayer.Interference
 public import CsdLean4.SigmaLayer.TensorSector
@@ -572,6 +573,7 @@ public import CsdLean4.RecordLayer.ShearArenaBridge
 public import CsdLean4.RecordLayer.BasinFrequency
 public import CsdLean4.Mathlib.InformationTheory.KlDivArrow
 public import CsdLean4.Mathlib.InformationTheory.FiniteEntropy
+public import CsdLean4.Mathlib.InformationTheory.ChiSquare
 public import CsdLean4.Mathlib.InformationTheory.CoarseGrainArrow
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.BargmannContinuity
 public import CsdLean4.RecordLayer.GlobalRecordClosure
