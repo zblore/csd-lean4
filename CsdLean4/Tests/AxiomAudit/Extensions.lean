@@ -2279,4 +2279,83 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.supportedOn_wingBModes_rightOp
 
 
+-- THE DE-ISOLATION FLOW IS THE WING-FACTORISED FLOW (BACKLOG #139 SECOND HALF; CLOSES #131'S
+-- TWO-DYNAMICS GAP - CV/DeisolationFactorised.lean, 2026-10-12): TwoWingFactorisation proved the cone
+-- for ANY wing-factorised flow and instantiated it at CompositeArena's leftOp/rightOp, leaving the
+-- index alignment with LF6 checked by hand and recorded as a claim about conventions. This file
+-- formalises it, so "the cone comes from the measurement interaction" stops being a reading of two
+-- index conventions and becomes a theorem.
+-- THE ALIGNMENT: LF6.jointFlowEquiv is jointDilEquiv.trans finProdFinEquiv and jointDilEquiv's SOURCE
+-- is (sys_A x ptr_A) x (sys_B x ptr_B) - per wing - so localFlowUnitary is a per-wing Kronecker
+-- product wearing a Fin (4*4) label, while FieldConfig 4 2 is four two-level modes. The identification
+-- is three steps: wingIndexEquiv (a two-mode configuration IS a (system, pointer) pair, piFinTwoEquiv),
+-- wingSplitEquiv (CompositeArena's configSplit followed by that, per wing) and configFlowEquiv (the
+-- whole way across, composing with jointFlowEquiv).
+-- reindex_localFlowUnitary_eq_joinU: THE DE-ISOLATION FLOW, READ ON THE FOUR-MODE CONFIGURATION SPACE,
+-- IS CompositeArena's PRODUCT UNITARY joinU wingU wingU - the jointFlowEquiv cancels against its own
+-- inverse and what is left is the per-wing Kronecker product read through configSplit, which is exactly
+-- what compositeReindex does, so the measurement interaction and the composite arena's product dynamics
+-- are THE SAME MATRIX. joinU_wingU_eq_mul: and a product unitary is the product of its two wing
+-- factors, so the de-isolation flow meets the hypothesis of TwoWingFactorisation's theorems, with
+-- wingLeftU_mul_wingRightU_eq_reindex_localFlowUnitary chaining the two.
+-- arenaObs_kick_deisolation and recordStroke_comm_kick_deisolation: A B-WING INTERVENTION CANNOT STEER
+-- A'S READING OR A'S RECORD WRITE, AT EVERY POWER OF THE DE-ISOLATION FLOW. No coupling graph is
+-- supplied and no period budget is tracked, because the interaction does not couple the wings at all.
+-- WHAT THIS CLOSES: #131's two-dynamics gap. Causal separation and the Born/record/CHSH statements are
+-- now about the SAME INTERACTION, localFlowUnitary, up to the index relabelling written out above - the
+-- experiment no longer takes its causal structure from one dynamics and its statistics from another.
+-- NOT claimed. LOCALITY IS STILL ASSUMED, JUST ONCE AND PHYSICALLY:
+-- localDeisolation_factorises holds BY CONSTRUCTION, LF6-A.3 having chosen a product dilation, so what
+-- is derived is "the cone follows from the product form" and NOT "the product form follows from
+-- anything" - deriving that is R-016, untouched. ONE THREAD REMAINS, AND IT IS ABOUT THE PROJECTIVE
+-- ACTION RATHER THAN ABOUT WHICH DYNAMICS: these statements are about arenaKick of the pulled-back
+-- unitary on FieldArena 4 2, while LF6.localDeisolationFlow is localFlowUnitary acting on CPN (4*4),
+-- and those agree up to ArenaIndexBridge's arenaEquiv - the identity
+-- arenaKick (pullback) = arenaEquiv.symm o localDeisolationFlow o arenaEquiv is NOT PROVED HERE. It is
+-- bookkeeping about a projective action with no choice left in it, and it is recorded on #139 rather
+-- than claimed. AND STATIC, NOT PROPAGATING, inherited from TwoWingFactorisation: a product unitary
+-- gives disjoint-support commutation and not a velocity, with TwoWingCone keeping the graded version
+-- for a coupled dynamics.
+-- Foundational-triple.
+/-- info: 'CSD.CV.wingU_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wingU_apply
+
+/-- info: 'CSD.CV.reindex_localFlowUnitary_eq_joinU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.reindex_localFlowUnitary_eq_joinU
+
+/-- info: 'CSD.CV.wingLeftU_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wingLeftU_val
+
+/-- info: 'CSD.CV.wingRightU_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wingRightU_val
+
+/-- info: 'CSD.CV.joinU_wingU_eq_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.joinU_wingU_eq_mul
+
+/-- info: 'CSD.CV.supportedOn_wingAModes_wingLeftU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.supportedOn_wingAModes_wingLeftU
+
+/-- info: 'CSD.CV.supportedOn_wingBModes_wingRightU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.supportedOn_wingBModes_wingRightU
+
+/-- info: 'CSD.CV.wingLeftU_mul_wingRightU_eq_reindex_localFlowUnitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.wingLeftU_mul_wingRightU_eq_reindex_localFlowUnitary
+
+/-- info: 'CSD.CV.arenaObs_kick_deisolation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_kick_deisolation
+
+/-- info: 'CSD.CV.recordStroke_comm_kick_deisolation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.recordStroke_comm_kick_deisolation
+
+
 end CSD.Tests.AxiomAudit

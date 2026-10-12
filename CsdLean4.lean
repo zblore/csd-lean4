@@ -623,6 +623,7 @@ public import CsdLean4.CV.RecordInfluence
 public import CsdLean4.CV.TwoWingCone
 public import CsdLean4.CV.ArenaIndexBridge
 public import CsdLean4.CV.TwoWingFactorisation
+public import CsdLean4.CV.DeisolationFactorised
 public import CsdLean4.CV.RecordCausalOrder
 public import CsdLean4.CV.CausalDistance
 public import CsdLean4.CV.EntanglementDistance
