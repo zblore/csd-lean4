@@ -101,16 +101,16 @@ noncomputable def pairSwap (b : Fin N → Fin K) (i : Fin K)
       else (p.1 : EuclideanSpace ℂ (Fin N)), by
       by_cases h : pairSwapCond b i ((p.1 : EuclideanSpace ℂ (Fin N)),
           (p.2 : EuclideanSpace ℂ (Fin N)))
-      · rw [if_pos h]; exact h.1
-      · rw [if_neg h]; exact p.1.2⟩,
+      · rw [ite_eq_left h]; exact h.1
+      · rw [ite_eq_right h]; exact p.1.2⟩,
    ⟨if pairSwapCond b i ((p.1 : EuclideanSpace ℂ (Fin N)), (p.2 : EuclideanSpace ℂ (Fin N)))
       then (componentSwap b i ((p.1 : EuclideanSpace ℂ (Fin N)),
         (p.2 : EuclideanSpace ℂ (Fin N)))).2
       else (p.2 : EuclideanSpace ℂ (Fin N)), by
       by_cases h : pairSwapCond b i ((p.1 : EuclideanSpace ℂ (Fin N)),
           (p.2 : EuclideanSpace ℂ (Fin N)))
-      · rw [if_pos h]; exact h.2
-      · rw [if_neg h]; exact p.2.2⟩)
+      · rw [ite_eq_left h]; exact h.2
+      · rw [ite_eq_right h]; exact p.2.2⟩)
 
 /-- The fired-branch values. -/
 lemma pairSwap_of_cond (b : Fin N → Fin K) (i : Fin K)
@@ -124,7 +124,7 @@ lemma pairSwap_of_cond (b : Fin N → Fin K) (i : Fin K)
             (p.2 : EuclideanSpace ℂ (Fin N)))).2 := by
   constructor <;>
     · show ite _ _ _ = _
-      rw [if_pos h]
+      rw [ite_eq_left h]
 
 /-- The unfired-branch value. -/
 lemma pairSwap_of_not_cond (b : Fin N → Fin K) (i : Fin K)
@@ -134,7 +134,7 @@ lemma pairSwap_of_not_cond (b : Fin N → Fin K) (i : Fin K)
     pairSwap b i p = p := by
   refine Prod.ext (Subtype.ext ?_) (Subtype.ext ?_) <;>
     · show ite _ _ _ = _
-      rw [if_neg h]
+      rw [ite_eq_right h]
 
 /-- **★ The pair swap is a genuine involution** — the reversibility that makes the collapse a
 relocation-with-storage rather than a contraction. The key: at a fired image the firing

@@ -79,9 +79,9 @@ theorem triggeredRecordKick_measurePreserving
       (Measurable.ite (measurable_fst hC) measurable_const measurable_const))
     (Filter.Eventually.of_forall fun a => by
       rcases Classical.em (a ∈ C) with h | h
-      · simp only [if_pos h]
+      · simp only [ite_eq_left h]
         exact hmap δ
-      · simp only [if_neg h]
+      · simp only [ite_eq_right h]
         exact hmap 0)
   exact h
 
@@ -95,7 +95,7 @@ theorem recordFlip_triggeredRecordKick
   simp only [recordFlip, triggeredRecordKick, Set.mem_ofPred_eq, Set.mem_prod,
     Set.mem_univ, and_true]
   by_cases h : a ∈ C
-  · simp only [h, if_true, iff_true]
+  · simp only [h, ite_true, iff_true]
     intro heq
     exact hδ (add_left_cancel (show r + δ = r + 0 by rw [add_zero]; exact heq))
   · simp [h]

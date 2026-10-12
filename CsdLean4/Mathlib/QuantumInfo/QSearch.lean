@@ -252,12 +252,12 @@ lemma meas_J_inter_reach (l j : ℕ) :
   have h := R.indep.meas_biInter (S := Finset.range (l + 1))
     (s := fun k => if k < l then R.W k ⁻¹' {false} else R.J k ⁻¹' {j}) (fun k _ => by
       by_cases hk : k < l
-      · rw [if_pos hk]; exact R.comap_W_false k
-      · rw [if_neg hk]; exact R.comap_J k j)
+      · rw [ite_eq_left hk]; exact R.comap_W_false k
+      · rw [ite_eq_right hk]; exact R.comap_J k j)
   rw [Finset.range_add_one, Finset.set_biInter_insert,
-    Finset.prod_insert Finset.notMem_range_self, if_neg (lt_irrefl l),
-    Set.iInter₂_congr fun k (hk : k ∈ Finset.range l) => if_pos (Finset.mem_range.mp hk),
-    Finset.prod_congr rfl fun k hk => congrArg μ (if_pos (Finset.mem_range.mp hk))] at h
+    Finset.prod_insert Finset.notMem_range_self, ite_eq_right (lt_irrefl l),
+    Set.iInter₂_congr fun k (hk : k ∈ Finset.range l) => ite_eq_left (Finset.mem_range.mp hk),
+    Finset.prod_congr rfl fun k hk => congrArg μ (ite_eq_left (Finset.mem_range.mp hk))] at h
   calc μ (R.J l ⁻¹' {j} ∩ R.reach l)
       = μ (R.J l ⁻¹' {j} ∩ ⋂ k ∈ Finset.range l, R.W k ⁻¹' {false}) := rfl
     _ = μ (R.J l ⁻¹' {j}) * ∏ k ∈ Finset.range l, μ (R.W k ⁻¹' {false}) := h
@@ -320,8 +320,8 @@ lemma lintegral_stageCost (l : ℕ) (hM : 0 < M l) :
   rw [ENNReal.tsum_mul_right]
   congr 1
   rw [tsum_eq_sum (s := Finset.range (M l)) fun j hj => by
-      rw [R.uniform, if_neg (by simpa using hj), mul_zero]]
-  rw [Finset.sum_congr rfl fun j hj => by rw [R.uniform, if_pos (Finset.mem_range.mp hj)],
+      rw [R.uniform, ite_eq_right (by simpa using hj), mul_zero]]
+  rw [Finset.sum_congr rfl fun j hj => by rw [R.uniform, ite_eq_left (Finset.mem_range.mp hj)],
     ← Finset.sum_mul]
   have hsum : ∑ j ∈ Finset.range (M l), ((2 : ℝ≥0∞) + 2 * (j : ℝ≥0∞))
       = ((M l * (M l + 1) : ℕ) : ℝ≥0∞) := by
@@ -356,8 +356,8 @@ lemma meas_W_true (ha1 : goodProb G ψ < 1) (l : ℕ) (hM : 0 < M l) :
   rw [hU, measure_iUnion hdisj fun j => (R.measurableSet_J l j).inter (R.measurableSet_W_true l)]
   simp_rw [R.law]
   rw [tsum_eq_sum (s := Finset.range (M l)) fun j hj => by
-      rw [R.uniform, if_neg (by simpa using hj), zero_mul]]
-  rw [Finset.sum_congr rfl fun j hj => by rw [R.uniform, if_pos (Finset.mem_range.mp hj)]]
+      rw [R.uniform, ite_eq_right (by simpa using hj), zero_mul]]
+  rw [Finset.sum_congr rfl fun j hj => by rw [R.uniform, ite_eq_left (Finset.mem_range.mp hj)]]
   rw [← Finset.mul_sum, ← ENNReal.ofReal_sum_of_nonneg fun j _ => stageProbAt_nonneg ha1 j,
     stageProb, ENNReal.ofReal_mul (inv_nonneg.2 (Nat.cast_nonneg _)),
     ENNReal.ofReal_inv_of_pos (Nat.cast_pos.2 hM), ENNReal.ofReal_natCast]
@@ -408,10 +408,10 @@ lemma sum_qsearchWeight_le (l₀ N : ℕ) : ∑ l ∈ Finset.range N, qsearchWei
             (Finset.range_mono (le_max_left N (l₀ + 1))) fun l _ _ => hnn l
       _ = ∑ l ∈ Finset.range (l₀ + 1), (if l ≤ l₀ then (5 / 6 : ℝ) ^ (l₀ - l) else 0) := by
           rw [← Finset.sum_range_add_sum_Ico _ (le_max_right N (l₀ + 1)),
-            Finset.sum_eq_zero (s := Finset.Ico (l₀ + 1) (max N (l₀ + 1))) fun l hl => if_neg (by
+            Finset.sum_eq_zero (s := Finset.Ico (l₀ + 1) (max N (l₀ + 1))) fun l hl => ite_eq_right (by
               have := (Finset.mem_Ico.mp hl).1; omega), add_zero]
       _ = ∑ l ∈ Finset.range (l₀ + 1), (5 / 6 : ℝ) ^ (l₀ - l) :=
-          Finset.sum_congr rfl fun l hl => if_pos (by
+          Finset.sum_congr rfl fun l hl => ite_eq_left (by
             have := Finset.mem_range.mp hl; omega)
       _ = ∑ i ∈ Finset.range (l₀ + 1), (5 / 6 : ℝ) ^ i := by
           rw [← Finset.sum_range_reflect (fun i => (5 / 6 : ℝ) ^ i) (l₀ + 1)]
@@ -424,12 +424,12 @@ lemma sum_qsearchWeight_le (l₀ N : ℕ) : ∑ l ∈ Finset.range N, qsearchWei
   have hB : ∀ N, ∑ l ∈ Finset.range N, (if l ≤ l₀ then 0 else (9 / 10 : ℝ) ^ (l - l₀)) ≤ 9 := by
     intro N
     rcases le_or_gt N (l₀ + 1) with hN | hN
-    · rw [Finset.sum_eq_zero fun l hl => if_pos (by have := Finset.mem_range.mp hl; omega)]
+    · rw [Finset.sum_eq_zero fun l hl => ite_eq_left (by have := Finset.mem_range.mp hl; omega)]
       norm_num
     · rw [← Finset.sum_range_add_sum_Ico _ hN.le,
-        Finset.sum_eq_zero fun l hl => if_pos (by have := Finset.mem_range.mp hl; omega),
+        Finset.sum_eq_zero fun l hl => ite_eq_left (by have := Finset.mem_range.mp hl; omega),
         zero_add,
-        Finset.sum_congr rfl fun l hl => if_neg (by have := (Finset.mem_Ico.mp hl).1; omega),
+        Finset.sum_congr rfl fun l hl => ite_eq_right (by have := (Finset.mem_Ico.mp hl).1; omega),
         Finset.sum_Ico_eq_sum_range]
       calc ∑ k ∈ Finset.range (N - (l₀ + 1)), (9 / 10 : ℝ) ^ (l₀ + 1 + k - l₀)
           = ∑ k ∈ Finset.range (N - (l₀ + 1)), (9 / 10 : ℝ) * (9 / 10) ^ k :=

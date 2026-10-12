@@ -227,15 +227,15 @@ theorem zLadd_bitAt_target_apply (anc : Fin n) (L : List (Fin n)) (hL : ∀ d �
       by_cases hid : i = d
       · subst hid
         rw [cnotFlip_apply_k, zLadd_apply_target anc L hL', ih hL' hnd',
-          if_neg hd, if_neg hdL]
+          ite_eq_right hd, ite_eq_right hdL]
         simp [hd]
       · rw [cnotFlip_apply_ne _ _ _ hid, ih hL' hnd']
         by_cases hi : i = anc
         · subst hi; simp
-        · rw [if_neg hi, if_neg hi]
+        · rw [ite_eq_right hi, ite_eq_right hi]
           by_cases hiL : i ∈ L
-          · rw [if_pos hiL, if_pos (List.mem_cons_of_mem d hiL)]
-          · rw [if_neg hiL, if_neg]
+          · rw [ite_eq_left hiL, ite_eq_left (List.mem_cons_of_mem d hiL)]
+          · rw [ite_eq_right hiL, ite_eq_right]
             simpa [hid] using hiL
 
 /-- The data-side support of the propagated fault: the qubits other than the ancilla that carry a
@@ -250,14 +250,14 @@ theorem dataSupport_zLadd_bitAt_target (anc : Fin n) (L : List (Fin n)) (hL : �
   rw [dataSupport, Finset.mem_filter, List.mem_toFinset]
   constructor
   · rintro ⟨-, hne, hval⟩
-    rw [zLadd_bitAt_target_apply anc L hL hnd i, if_neg hne] at hval
+    rw [zLadd_bitAt_target_apply anc L hL hnd i, ite_eq_right hne] at hval
     by_cases hiL : i ∈ L
     · exact hiL
-    · rw [if_neg hiL] at hval
+    · rw [ite_eq_right hiL] at hval
       exact absurd hval (by decide)
   · intro hiL
     refine ⟨Finset.mem_univ i, hL i hiL, ?_⟩
-    rw [zLadd_bitAt_target_apply anc L hL hnd i, if_neg (hL i hiL), if_pos hiL]
+    rw [zLadd_bitAt_target_apply anc L hL hnd i, ite_eq_right (hL i hiL), ite_eq_left hiL]
 
 /-- ★★ **One fault, `w` data errors**, where `w` is the weight of the check the ladder measures. -/
 theorem card_dataSupport_zLadd_bitAt_target (anc : Fin n) (L : List (Fin n))

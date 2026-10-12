@@ -71,11 +71,11 @@ theorem cAccStep {w : ℕ} (L : CRippleLayout m w) (Acc : ℕ → Fin m) (s : St
       regValRange_split Acc s i W hiW, hlow, hWi]
   cases hc : s L.ctrl with
   | true =>
-    simp only [hc, if_true] at hcorr ⊢
+    simp only [hc, ite_true] at hcorr ⊢
     rw [Nat.mod_eq_of_lt hno] at hcorr
     rw [hcorr]; ring
   | false =>
-    simp only [hc, Bool.false_eq_true, if_false] at hcorr ⊢
+    simp only [hc, Bool.false_eq_true, ite_false] at hcorr ⊢
     rw [hcorr]; ring
 
 /-! ### The quantum×quantum multiplier and its correctness

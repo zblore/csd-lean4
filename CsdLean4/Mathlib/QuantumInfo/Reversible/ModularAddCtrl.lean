@@ -373,8 +373,8 @@ theorem cModAdd_correct (L : CModAddLayout m n) (s : State m)
     simp only [CModAddLayout.cAddStep, hAop, hB, hsadddef] at this ⊢
     rw [this]
     cases s L.ctrl with
-    | true => simp only [if_true]; rw [Nat.mod_eq_of_lt habsum]
-    | false => simp only [Bool.false_eq_true, if_false]
+    | true => simp only [ite_true]; rw [Nat.mod_eq_of_lt habsum]
+    | false => simp only [Bool.false_eq_true, ite_false]
   -- ADD STEP frame: reduce-step presets / clean carries survive
   have hA1add : regValRange L.reduceStep.A1 sadd n = 2 ^ n - N := by
     rw [← hA1]
@@ -407,8 +407,8 @@ theorem cModAdd_correct (L : CModAddLayout m n) (s : State m)
   rw [hred, hBadd]
   -- evaluate the mod on each branch
   cases s L.ctrl with
-  | true => simp only [if_true]
-  | false => simp only [Bool.false_eq_true, if_false]; exact Nat.mod_eq_of_lt hbN
+  | true => simp only [ite_true]
+  | false => simp only [Bool.false_eq_true, ite_false]; exact Nat.mod_eq_of_lt hbN
 
 /-- **The operand register is intact.** `cModAdd L` leaves `Aop` holding `a` (read-only addend). The
 controlled add step preserves `Aop` (P2 of the controlled-ripple invariant) and the reduce step is
@@ -462,8 +462,8 @@ theorem cModAdd_in_range (L : CModAddLayout m n) (s : State m)
     regValRange L.B (denote (cModAdd L) s) n < N := by
   rw [cModAdd_correct L s hCcadd hancC hC1 hC2 hanc h2N hA1 hA2 hAop hB haN hbN]
   cases s L.ctrl with
-  | true => simp only [if_true]; exact Nat.mod_lt _ (Nat.lt_of_le_of_lt (Nat.zero_le a) haN)
-  | false => simp only [Bool.false_eq_true, if_false]; exact hbN
+  | true => simp only [ite_true]; exact Nat.mod_lt _ (Nat.lt_of_le_of_lt (Nat.zero_le a) haN)
+  | false => simp only [Bool.false_eq_true, ite_false]; exact hbN
 
 /-! ### Derived cost -/
 

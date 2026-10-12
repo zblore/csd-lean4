@@ -70,11 +70,11 @@ noncomputable def steaneEnc : Matrix (Fin 7 → Fin 2) (Fin 2) ℂ :=
 
 theorem steaneEnc_col_zero : (fun z => steaneEnc z 0) = WithLp.ofLp steaneZero := by
   funext z
-  rw [steaneEnc, Matrix.of_apply, if_pos rfl]
+  rw [steaneEnc, Matrix.of_apply, ite_eq_left rfl]
 
 theorem steaneEnc_col_one : (fun z => steaneEnc z 1) = WithLp.ofLp steaneOne := by
   funext z
-  rw [steaneEnc, Matrix.of_apply, if_neg (by decide : ¬((1 : Fin 2) = 0))]
+  rw [steaneEnc, Matrix.of_apply, ite_eq_right (by decide : ¬((1 : Fin 2) = 0))]
 
 /-- The coordinate form of the inner product on the register. -/
 theorem inner_eq_sum_star (ψ φ : QReg 7) :
@@ -88,8 +88,8 @@ theorem steaneEnc_conjTranspose_mul : steaneEncᴴ * steaneEnc = 1 := by
       = WithLp.ofLp (if a = 0 then steaneZero else steaneOne) := by
     intro a
     rcases (by decide : ∀ v : Fin 2, v = 0 ∨ v = 1) a with ha | ha
-    · rw [ha, if_pos rfl, steaneEnc_col_zero]
-    · rw [ha, if_neg (by decide : ¬((1 : Fin 2) = 0)), steaneEnc_col_one]
+    · rw [ha, ite_eq_left rfl, steaneEnc_col_zero]
+    · rw [ha, ite_eq_right (by decide : ¬((1 : Fin 2) = 0)), steaneEnc_col_one]
   have hentry : ∀ a b : Fin 2, (steaneEncᴴ * steaneEnc) a b
       = inner ℂ (if a = 0 then steaneZero else steaneOne)
           (if b = 0 then steaneZero else steaneOne) := by
@@ -101,13 +101,13 @@ theorem steaneEnc_conjTranspose_mul : steaneEncᴴ * steaneEnc = 1 := by
   rcases (by decide : ∀ v : Fin 2, v = 0 ∨ v = 1) a with ha | ha <;>
     rcases (by decide : ∀ v : Fin 2, v = 0 ∨ v = 1) b with hb | hb <;>
     rw [hentry a b, ha, hb]
-  · rw [if_pos rfl, inner_steaneZero_self, Matrix.one_apply_eq]
-  · rw [if_pos rfl, if_neg (by decide : ¬((1 : Fin 2) = 0)), inner_steaneZero_steaneOne,
+  · rw [ite_eq_left rfl, inner_steaneZero_self, Matrix.one_apply_eq]
+  · rw [ite_eq_left rfl, ite_eq_right (by decide : ¬((1 : Fin 2) = 0)), inner_steaneZero_steaneOne,
       Matrix.one_apply_ne (by decide : ¬((0 : Fin 2) = 1))]
-  · rw [if_pos rfl, if_neg (by decide : ¬((1 : Fin 2) = 0)),
+  · rw [ite_eq_left rfl, ite_eq_right (by decide : ¬((1 : Fin 2) = 0)),
       Matrix.one_apply_ne (by decide : ¬((1 : Fin 2) = 0))]
     rw [← inner_conj_symm, inner_steaneZero_steaneOne, map_zero]
-  · rw [if_neg (by decide : ¬((1 : Fin 2) = 0)), inner_steaneOne_self, Matrix.one_apply_eq]
+  · rw [ite_eq_right (by decide : ¬((1 : Fin 2) = 0)), inner_steaneOne_self, Matrix.one_apply_eq]
 
 /-- The columns of the encoder are code states. -/
 theorem steaneProj_mul_steaneEnc : steaneProj * steaneEnc = steaneEnc := by
@@ -223,8 +223,8 @@ theorem exists_steaneEnc_blockKron (b₀ b₁ : Fin 7) (N : Fin 7 → Matrix (Fi
   · have hMeq : M = fun b => if b = b₀ then M b₀ else 1 := by
       funext b
       by_cases hb : b = b₀
-      · rw [if_pos hb, hb]
-      · rw [if_neg hb, hM1 b hb (by rw [← hbb]; exact hb)]
+      · rw [ite_eq_left hb, hb]
+      · rw [ite_eq_right hb, hM1 b hb (by rw [← hbb]; exact hb)]
     have hg : blockKron M = gateOf b₀ (M b₀) := by
       conv_lhs => rw [hMeq]
       rw [blockKron_single_eq_gateOf]
@@ -234,10 +234,10 @@ theorem exists_steaneEnc_blockKron (b₀ b₁ : Fin 7) (N : Fin 7 → Matrix (Fi
         (if b = b₀ then M b₀ else 1) * (if b = b₁ then M b₁ else 1) := by
       funext b
       by_cases hb₀ : b = b₀
-      · rw [if_pos hb₀, if_neg (by rw [hb₀]; exact hbb), Matrix.mul_one, hb₀]
+      · rw [ite_eq_left hb₀, ite_eq_right (by rw [hb₀]; exact hbb), Matrix.mul_one, hb₀]
       · by_cases hb₁ : b = b₁
-        · rw [if_neg hb₀, if_pos hb₁, Matrix.one_mul, hb₁]
-        · rw [if_neg hb₀, if_neg hb₁, Matrix.one_mul, hM1 b hb₀ hb₁]
+        · rw [ite_eq_right hb₀, ite_eq_left hb₁, Matrix.one_mul, hb₁]
+        · rw [ite_eq_right hb₀, ite_eq_right hb₁, Matrix.one_mul, hM1 b hb₀ hb₁]
     obtain ⟨δ, hδ⟩ := exists_steaneEnc_gateOf_mul_gateOf b₀ b₁ (M b₀) (M b₁)
     refine ⟨(∏ b, γ b) * δ, ?_⟩
     rw [hN, Matrix.mul_smul, Matrix.smul_mul, hMeq, ← blockKron_mul, blockKron_single_eq_gateOf,

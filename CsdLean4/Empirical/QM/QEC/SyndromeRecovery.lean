@@ -281,7 +281,7 @@ lemma recovery_term (j k : Fin 4) (ρ : Matrix (Fin 2 × Fin 2 × Fin 2) (Fin 2 
     _ = if j = k then codeProj * ρ * codeProj else 0 := by
         by_cases h : j = k
         · subst h
-          simp only [if_true]
+          simp only [ite_true]
           rw [show errorOp j * (syndromeProj j * errorOp j) * ρ * (errorOp j * syndromeProj j)
                 * errorOp j
               = (errorOp j * (syndromeProj j * errorOp j)) * ρ
@@ -302,7 +302,7 @@ theorem recoveryChannel_apply_singleFlipChannel_apply (q : Fin 4 → ℝ) (hq0 :
   simp only [recoveryChannel_kraus, Matrix.conjTranspose_mul, syndromeProj_conjTranspose,
     errorOp_conjTranspose, Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_smul, Matrix.smul_mul]
   rw [Finset.sum_comm]
-  simp only [recovery_term, smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  simp only [recovery_term, smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   rw [← Finset.sum_smul, ← Complex.ofReal_sum, hq1, Complex.ofReal_one, one_smul, hρ]
 
 /-- The composite channel `R ∘ N_q` (`Channel.comp`) is the identity on the code. -/

@@ -146,7 +146,7 @@ lemma krausBlock_blockDiagonal_mul_embedEnv (E : e → Matrix n n ℂ) (v : Eucl
     CSD.LF2.embedEnv_apply, Fintype.sum_prod_type (α₁ := n) (α₂ := e), ite_mul, mul_ite,
     zero_mul, mul_zero, Matrix.smul_apply, smul_eq_mul]
   rw [Finset.sum_comm]
-  simp only [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  simp only [Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   ring
 
 /-- The environment blocks of `U (· ⊗ e₀)` are the Kraus operators `√qₖ Eₖ`. -/

@@ -164,19 +164,19 @@ theorem modeMarginal_tprod (ψ : Fin K → EuclideanSpace ℂ (Fin N)) (k₀ : F
     have herase : ∏ k ∈ Finset.univ.erase k₀, H k (c k)
         = ∏ k ∈ Finset.univ.erase k₀, ‖ψ k (c k)‖ ^ 2 :=
       Finset.prod_congr rfl fun k hk => by
-        simp only [hH, if_neg (Finset.ne_of_mem_erase hk)]
+        simp only [hH, ite_eq_right (Finset.ne_of_mem_erase hk)]
     rw [herase]
-    simp only [hH, if_pos rfl]
+    simp only [hH, ite_eq_left rfl]
     by_cases hck : c k₀ = n
-    · rw [if_pos hck, if_pos hck]
-    · rw [if_neg hck, if_neg hck, zero_mul]
+    · rw [ite_eq_left hck, ite_eq_left hck]
+    · rw [ite_eq_right hck, ite_eq_right hck, zero_mul]
   rw [modeMarginal, Finset.sum_filter, Finset.sum_congr rfl fun c _ => hstep c,
     ← Fintype.piFinset_univ, ← Finset.prod_univ_sum,
     ← Finset.mul_prod_erase _ (fun k => ∑ m, H k m) (Finset.mem_univ k₀)]
   congr 1
-  · simp only [hH, if_pos rfl, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  · simp only [hH, ite_eq_left rfl, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   · exact Finset.prod_congr rfl fun k hk => by
-      simp only [hH, if_neg (Finset.ne_of_mem_erase hk)]; exact (hns (ψ k)).symm
+      simp only [hH, ite_eq_right (Finset.ne_of_mem_erase hk)]; exact (hns (ψ k)).symm
 
 /-- **Mode-wise Born for unit modes.** For a product of unit modes, the marginal Born probability that
 mode `k₀` carries `n` quanta is exactly the single-mode Born weight `‖ψ_{k₀} n‖²` — measuring one mode

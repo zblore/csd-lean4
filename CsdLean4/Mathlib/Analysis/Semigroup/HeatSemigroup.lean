@@ -408,7 +408,7 @@ theorem integrable_shift_prod (f : L2) (t : ℝ) {s : Set E} (hμs : volume s < 
   refine Integrable.of_bound (hmeas.norm.prod_swap.integral_prod_right') ((volume.real s + M) / 2)
     (Eventually.of_forall fun y => ?_)
   have hsq : Integrable (fun x => ‖f (x + y)‖ ^ 2) ((volume : Measure E).restrict s) :=
-    (memLp_two_iff_integrable_sq_norm (hsec y).1).mp (hsec y)
+    (memLp_two_iff_integrable_sq_norm (hsec y).aestronglyMeasurable).mp (hsec y)
   have h1 : ∫ x in s, ‖f (x + y)‖ ≤ ∫ x in s, (1 + ‖f (x + y)‖ ^ 2) / 2 := by
     refine integral_mono ((hsec y).integrable one_le_two).norm ((integrable_const 1).add hsq |>.div_const 2)
       fun x => ?_
@@ -419,7 +419,8 @@ theorem integrable_shift_prod (f : L2) (t : ℝ) {s : Set E} (hμs : volume s < 
   have h3 : ∫ x in s, ‖f (x + y)‖ ^ 2 ≤ M := by
     refine le_trans (setIntegral_le_integral ?_ (Eventually.of_forall fun x => by positivity)) ?_
     · exact (memLp_two_iff_integrable_sq_norm
-        ((Lp.memLp f).comp_measurePreserving (measurePreserving_add_right _ y)).1).mp
+        ((Lp.memLp f).comp_measurePreserving
+          (measurePreserving_add_right _ y)).aestronglyMeasurable).mp
         ((Lp.memLp f).comp_measurePreserving (measurePreserving_add_right _ y))
     · rw [hM, integral_add_right_eq_self (fun x => ‖f x‖ ^ 2) y]
   rw [Real.norm_of_nonneg (integral_nonneg fun x => norm_nonneg _)]

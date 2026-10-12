@@ -327,10 +327,10 @@ noncomputable def graphStructured (K N : ℕ) (τ lam : ℝ)
   piece_supported := by
     intro e _
     by_cases hself : e.1 = e.2
-    · rw [if_pos hself]
+    · rw [ite_eq_left hself]
       exact SupportedOn.smul _ (supportedOn_diagonal_pair e.1 e.2
         (fun x _ => ((oscEnergy (x : ℕ) : ℝ) : ℂ)))
-    · rw [if_neg hself]
+    · rw [ite_eq_right hself]
       exact SupportedOn.smul _ (supportedOn_diagonal_pair e.1 e.2
         (fun x y => ((g e x y : ℝ) : ℂ)))
   gen_skew := by
@@ -365,8 +365,8 @@ theorem graphStructured_flow_eq (τ lam t : ℝ)
   rw [Finset.sum_union hdisj]
   rw [Finset.sum_congr rfl (fun e he => by
       obtain ⟨k, _, hk⟩ := Finset.mem_image.mp he
-      rw [if_pos (show e.1 = e.2 by rw [← hk])]),
-    Finset.sum_congr rfl (fun e (he : e ∈ E) => by rw [if_neg (hE e he)])]
+      rw [ite_eq_left (show e.1 = e.2 by rw [← hk])]),
+    Finset.sum_congr rfl (fun e (he : e ∈ E) => by rw [ite_eq_right (hE e he)])]
   rw [Finset.sum_image (fun a _ b _ h => (Prod.ext_iff.mp h).1),
     ← Finset.smul_sum, ← Finset.smul_sum, sum_oscHamAt, sum_edgeHamAt]
   -- normalise every scalar action to a ℂ-scalar on a fixed matrix

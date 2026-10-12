@@ -166,7 +166,7 @@ theorem copyReg_invariant (L : ModDoubleLayout m n) (s : State m)
     have hBkAk : L.B k ≠ L.Aop k := (L.addLayout.hAopB k k).symm
     have hstep : denote (copyPrefix L (k + 1)) s
         = Function.update sk (L.Aop k) (sk (L.B k) ^^ sk (L.Aop k)) := by
-      rw [denote_copyPrefix_succ, denoteGate, if_neg hBkAk]
+      rw [denote_copyPrefix_succ, denoteGate, ite_eq_right hBkAk]
     refine ⟨?_, ?_, ?_⟩
     · -- Aop i = B i for i < k+1
       intro i hi

@@ -111,9 +111,9 @@ lemma vertex_mem_globalBasin [NeZero N] (j : Fin N) (θ : LF4.KTorus) :
     intro k hk
     rw [momentMap_vertex]
     rw [Finset.mem_filter] at hk
-    exact if_neg (fun h => absurd hk.2 (by rw [h]; exact lt_irrefl _))
+    exact ite_eq_right (fun h => absurd hk.2 (by rw [h]; exact lt_irrefl _))
   have hone : LF4.momentMap (vertexPoint j) j = 1 := by
-    rw [momentMap_vertex, if_pos rfl]
+    rw [momentMap_vertex, ite_eq_left rfl]
   show rep θ.1 ∈ Ioc (loSum (LF4.momentMap (vertexPoint j)) j)
     (loSum (LF4.momentMap (vertexPoint j)) j + LF4.momentMap (vertexPoint j) j)
   rw [hlo, hone, zero_add]

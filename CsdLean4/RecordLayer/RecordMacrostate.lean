@@ -94,15 +94,15 @@ theorem outcomeCode_eq_succ_iff (c : ContextField N) (x : LF4.KSigma N) (i : Fin
   · intro h
     rw [outcomeCode] at h
     by_cases hex : ∃ j, x ∈ globalBasin c j
-    · rw [dif_pos hex] at h
+    · rw [dite_eq_left hex] at h
       have : hex.choose = i := Fin.succ_injective N h
       rw [← this]
       exact hex.choose_spec
-    · rw [dif_neg hex] at h
+    · rw [dite_eq_right hex] at h
       exact absurd h.symm (Fin.succ_ne_zero i)
   · intro hx
     have hex : ∃ j, x ∈ globalBasin c j := ⟨i, hx⟩
-    rw [outcomeCode, dif_pos hex]
+    rw [outcomeCode, dite_eq_left hex]
     have huniq : hex.choose = i := by
       by_contra hne
       exact Set.disjoint_left.mp (globalBasin_pairwiseDisjoint c hne) hex.choose_spec hx
@@ -124,7 +124,7 @@ theorem preimage_outcomeCode_zero (c : ContextField N) :
     rw [(outcomeCode_eq_succ_iff c x i).2 hi] at h
     exact Fin.succ_ne_zero i h
   · intro h
-    rw [outcomeCode, dif_neg]
+    rw [outcomeCode, dite_eq_right]
     exact fun hex => h ⟨hex.choose, hex.choose_spec⟩
 
 theorem measurable_outcomeCode (c : ContextField N) : Measurable (outcomeCode c) := by

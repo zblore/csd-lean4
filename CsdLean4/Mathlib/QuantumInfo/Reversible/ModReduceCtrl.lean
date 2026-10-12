@@ -315,7 +315,7 @@ theorem modReduce_correct (L : ModReduceLayout m n) (s : State m)
   -- now branch on x < N
   by_cases hlt : x < N
   · -- x < N: ctrl set, add N back
-    simp only [hlt, decide_true, if_true]
+    simp only [hlt, decide_true, ite_true]
     -- step-1 value = (2ⁿ − N) + x, no wrap since x < N ≤ 2ⁿ
     have hnowrap : (2 ^ n - N + x) % 2 ^ n = 2 ^ n - N + x := Nat.mod_eq_of_lt (by omega)
     rw [hnowrap]
@@ -325,7 +325,7 @@ theorem modReduce_correct (L : ModReduceLayout m n) (s : State m)
     exact (Nat.mod_eq_of_lt hlt).symm
   · -- x ≥ N: ctrl clear, no add-back; step-1 value is x − N = x mod N
     have hge : N ≤ x := by omega
-    simp only [hlt, decide_false, Bool.false_eq_true, if_false]
+    simp only [hlt, decide_false, Bool.false_eq_true, ite_false]
     -- (2ⁿ − N + x) % 2ⁿ = x − N
     have hsum : 2 ^ n - N + x = 2 ^ n + (x - N) := by omega
     rw [hsum, Nat.add_mod_left, Nat.mod_eq_of_lt (by omega)]

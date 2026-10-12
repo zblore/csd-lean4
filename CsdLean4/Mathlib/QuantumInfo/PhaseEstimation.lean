@@ -98,8 +98,8 @@ omit [NeZero T] in
 @[simp] lemma phaseColumn_apply (j₀ x : Fin T) :
     phaseColumn T j₀ x = (Real.sqrt T : ℂ)⁻¹ * qftω T ^ ((x : ℕ) * (j₀ : ℕ)) := by
   rw [phaseColumn, applyQFT_apply, Finset.sum_eq_single j₀]
-  · rw [basisState_apply, if_pos rfl, mul_one, qftMatrix_apply]
-  · intro b _ hb; rw [basisState_apply, if_neg hb, mul_zero]
+  · rw [basisState_apply, ite_eq_left rfl, mul_one, qftMatrix_apply]
+  · intro b _ hb; rw [basisState_apply, ite_eq_right hb, mul_zero]
   · intro h; exact absurd (Finset.mem_univ _) h
 
 /-- **Phase-estimation exactness:** the inverse QFT inverts the QFT, so the QFT column `j₀` is
@@ -116,7 +116,7 @@ theorem applyQFTinv_phaseColumn (j₀ : Fin T) :
 /-- **The exact case:** phase estimation reads the QFT column `j₀` with certainty. -/
 theorem phase_estimation_exact (j₀ : Fin T) :
     prob (applyQFTinv T (phaseColumn T j₀)) j₀ = 1 := by
-  rw [applyQFTinv_phaseColumn, prob_basisState, if_pos rfl]
+  rw [applyQFTinv_phaseColumn, prob_basisState, ite_eq_left rfl]
 
 /-! ## The general case: the `4/π²` lower bound (Dirichlet kernel)
 
@@ -147,9 +147,9 @@ lemma applyQFTinv_phaseStateR_apply (φ : ℝ) (c : Fin T) :
     rw [phaseStateR, WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul, sum_coord]
     congr 1
     rw [Finset.sum_eq_single x]
-    · rw [WithLp.ofLp_smul, Pi.smul_apply, basisState_apply, if_pos rfl, smul_eq_mul, mul_one]
+    · rw [WithLp.ofLp_smul, Pi.smul_apply, basisState_apply, ite_eq_left rfl, smul_eq_mul, mul_one]
     · intro b _ hb
-      rw [WithLp.ofLp_smul, Pi.smul_apply, basisState_apply, if_neg (fun h => hb h.symm),
+      rw [WithLp.ofLp_smul, Pi.smul_apply, basisState_apply, ite_eq_right (fun h => hb h.symm),
         smul_eq_mul, mul_zero]
     · intro h; exact absurd (Finset.mem_univ _) h
   simp_rw [hcoord]

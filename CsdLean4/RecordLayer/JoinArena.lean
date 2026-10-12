@@ -128,7 +128,7 @@ theorem joinMat_mem_unitaryGroup (b : Fin N → Fin K) (i : Fin K) :
   ext j k
   simp only [Matrix.mul_apply, Matrix.star_apply, joinMat, Matrix.of_apply,
     apply_ite (star : ℂ → ℂ), star_one, star_zero, ite_mul, one_mul, zero_mul,
-    Finset.sum_ite_eq', Finset.mem_univ, if_true, Matrix.one_apply]
+    Finset.sum_ite_eq', Finset.mem_univ, ite_true, Matrix.one_apply]
   exact if_congr ⟨fun h => joinPerm_injective b i h, fun h => h ▸ rfl⟩ rfl rfl
 
 /-- The join unitary. -/
@@ -191,17 +191,17 @@ lemma toEuclideanLin_joinMat_dblVec (b : Fin N → Fin K) (i : Fin K)
     rw [Equiv.symm_apply_apply]
     by_cases h : b k = i
     · rw [show swpSum b i (Sum.inl k) = Sum.inl k from by simp [swpSum, h], dblVec_inl,
-        if_pos h]
+        ite_eq_left h]
     · rw [show swpSum b i (Sum.inl k) = Sum.inr k from by simp [swpSum, h], dblVec_inr,
-        if_neg h]
+        ite_eq_right h]
   · rw [dblVec_inr, componentSwap_snd_apply]
     unfold joinPerm
     rw [Equiv.symm_apply_apply]
     by_cases h : b k = i
     · rw [show swpSum b i (Sum.inr k) = Sum.inr k from by simp [swpSum, h], dblVec_inr,
-        if_pos h]
+        ite_eq_left h]
     · rw [show swpSum b i (Sum.inr k) = Sum.inl k from by simp [swpSum, h], dblVec_inl,
-        if_neg h]
+        ite_eq_right h]
 
 /-! ### The join dynamics -/
 
@@ -252,8 +252,8 @@ noncomputable def joinFstAux (v : { w : EuclideanSpace ℂ (Fin (N + N)) // w �
       then fstPart (v : EuclideanSpace ℂ (Fin (N + N)))
       else EuclideanSpace.single 0 (1 : ℂ), by
     by_cases h : fstPart (v : EuclideanSpace ℂ (Fin (N + N))) ≠ 0
-    · rwa [if_pos h]
-    · rw [if_neg h]
+    · rwa [ite_eq_left h]
+    · rw [ite_eq_right h]
       exact single_ne_zero' 0⟩
 
 /-- On the physical branch (nonzero system component), the readout representative IS the
@@ -262,7 +262,7 @@ lemma joinFstAux_coe_of_ne {v : { w : EuclideanSpace ℂ (Fin (N + N)) // w ≠ 
     (h : fstPart (v : EuclideanSpace ℂ (Fin (N + N))) ≠ 0) :
     (joinFstAux v : EuclideanSpace ℂ (Fin N))
       = fstPart (v : EuclideanSpace ℂ (Fin (N + N))) := by
-  simp only [joinFstAux, if_pos h]
+  simp only [joinFstAux, ite_eq_left h]
 
 /-- On the junk branch (vanishing system component), the readout representative is the
 documented junk vertex (interface lemma, §9.1). -/
@@ -270,7 +270,7 @@ lemma joinFstAux_coe_of_eq {v : { w : EuclideanSpace ℂ (Fin (N + N)) // w ≠ 
     (h : fstPart (v : EuclideanSpace ℂ (Fin (N + N))) = 0) :
     (joinFstAux v : EuclideanSpace ℂ (Fin N))
       = EuclideanSpace.single 0 (1 : ℂ) := by
-  simp only [joinFstAux, if_neg (not_not_intro h)]
+  simp only [joinFstAux, ite_eq_right (not_not_intro h)]
 
 /-- **The system readout from the join**: project a join microstate to its system ray (junk
 vertex where the system component vanishes — documented, off the physical set). -/
@@ -284,19 +284,19 @@ noncomputable def joinFst : LF4.CPN (N + N) → LF4.CPN N :=
       · have h' : fstPart (t • w) ≠ 0 := by
           rw [map_smul]
           simpa [smul_eq_zero, ht] using h
-        simp only [joinFstAux, Projectivization.mk'_eq_mk, if_pos h', if_pos h]
+        simp only [joinFstAux, Projectivization.mk'_eq_mk, ite_eq_left h', ite_eq_left h]
         rw [Projectivization.mk_eq_mk_iff']
         exact ⟨t, by rw [map_smul]⟩
       · have h' : ¬ fstPart (t • w) ≠ 0 := by
           rw [map_smul]
           simpa [smul_eq_zero, ht] using h
-        simp only [joinFstAux, Projectivization.mk'_eq_mk, if_neg h', if_neg h])
+        simp only [joinFstAux, Projectivization.mk'_eq_mk, ite_eq_right h', ite_eq_right h])
 
 lemma joinFst_mk {w : EuclideanSpace ℂ (Fin (N + N))} (hw : w ≠ 0)
     (h : fstPart w ≠ 0) :
     joinFst (Projectivization.mk ℂ w hw) = Projectivization.mk ℂ (fstPart w) h := by
   rw [joinFst, Projectivization.lift_mk]
-  simp only [joinFstAux, if_pos h, Projectivization.mk'_eq_mk]
+  simp only [joinFstAux, ite_eq_left h, Projectivization.mk'_eq_mk]
 
 /-- The readout is measurable — same coinduced-Borel route as `blockCollapse`. -/
 theorem measurable_joinFst : Measurable (joinFst (N := N)) := by

@@ -77,7 +77,7 @@ noncomputable def coordsN :
   right_inv z := by
     ext i
     simp only [WithLp.equiv_symm_apply, PiLp.toLp_apply, show (1 : Fin 2) = 0 ↔ False by decide,
-      if_true, if_false]
+      ite_true, ite_false]
     exact Complex.re_add_im (z i)
   norm_map' y := by
     show ‖(WithLp.equiv 2 (Fin N → ℂ)).symm
@@ -111,7 +111,7 @@ lemma measurable_gaussianProjN (p₀ : CPN N) : Measurable (gaussianProjN p₀) 
   have hrestr : {v : EuclideanSpace ℂ (Fin N) | v ≠ 0}.domRestrict (gaussianProjN p₀)
       = fun v => Projectivization.mk' ℂ ⟨v.1, v.2⟩ := by
     funext v
-    simp only [Set.domRestrict_apply, gaussianProjN, dif_neg v.2, Projectivization.mk'_eq_mk]
+    simp only [Set.domRestrict_apply, gaussianProjN, dite_eq_right v.2, Projectivization.mk'_eq_mk]
   rw [hrestr]
   exact Projectivization.measurable_mk'.comp (measurable_subtype_coe.subtype_mk)
 
@@ -261,8 +261,8 @@ lemma gaussianCPN_smul_invariant [NeZero N] (p₀ : CPN N) (U : Matrix.unitaryGr
     by_contra hv0
     simp only [Set.mem_singleton_iff] at hv0
     apply hv
-    rw [gaussianProjN, dif_neg hv0, gaussianProjN,
-      dif_neg (toEuclideanLinN_ne_zero U hv0), smul_mk_eq_mk U v hv0]
+    rw [gaussianProjN, dite_eq_right hv0, gaussianProjN,
+      dite_eq_right (toEuclideanLinN_ne_zero U hv0), smul_mk_eq_mk U v hv0]
   rw [Measure.map_congr hae,
     ← Measure.map_map (measurable_gaussianProjN p₀) (measurable_toEuclideanLinN U),
     gaussianHN_map_unitary U]

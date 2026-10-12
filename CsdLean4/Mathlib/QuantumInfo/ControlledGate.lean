@@ -102,17 +102,17 @@ variable {S : Finset (Fin m)} {j : Fin m} {pat : Fin m → Fin 2} {a b c d : ℂ
 
 theorem ctrlSet_apply_of_not_agree {k l : Fin m → Fin 2} (h : ¬(∀ i, i ≠ j → k i = l i)) :
     ctrlSet S j pat a b c d k l = 0 := by
-  rw [ctrlSet, if_neg h]
+  rw [ctrlSet, ite_eq_right h]
 
 theorem ctrlSet_apply_of_ctrl {k l : Fin m → Fin 2} (hag : ∀ i, i ≠ j → k i = l i)
     (hc : ∀ i ∈ S, k i = pat i) :
     ctrlSet S j pat a b c d k l = blockEntry (k j) (l j) a b c d := by
-  rw [ctrlSet, if_pos hag, if_pos hc]
+  rw [ctrlSet, ite_eq_left hag, ite_eq_left hc]
 
 theorem ctrlSet_apply_of_not_ctrl {k l : Fin m → Fin 2} (hag : ∀ i, i ≠ j → k i = l i)
     (hc : ¬(∀ i ∈ S, k i = pat i)) :
     ctrlSet S j pat a b c d k l = if k j = l j then 1 else 0 := by
-  rw [ctrlSet, if_pos hag, if_neg hc]
+  rw [ctrlSet, ite_eq_left hag, ite_eq_right hc]
 
 theorem ctrlSet_one (S : Finset (Fin m)) (j : Fin m) (pat : Fin m → Fin 2) :
     ctrlSet S j pat 1 0 0 1 = 1 := by
@@ -134,9 +134,9 @@ theorem ctrlSet_one (S : Finset (Fin m)) (j : Fin m) (pat : Fin m → Fin 2) :
         simp_all
     · rw [ctrlSet_apply_of_not_ctrl hag hc, Matrix.one_apply]
       by_cases h : k j = l j
-      · rw [if_pos h, if_pos (hkl.mpr h)]
-      · rw [if_neg h, if_neg (fun hc' => h (hkl.mp hc'))]
-  · rw [ctrlSet_apply_of_not_agree hag, Matrix.one_apply, if_neg]
+      · rw [ite_eq_left h, ite_eq_left (hkl.mpr h)]
+      · rw [ite_eq_right h, ite_eq_right (fun hc' => h (hkl.mp hc'))]
+  · rw [ctrlSet_apply_of_not_agree hag, Matrix.one_apply, ite_eq_right]
     intro h
     exact hag (fun i _ => by rw [h])
 
@@ -229,8 +229,8 @@ theorem ctrlSet_conjTranspose (hjS : j ∉ S) (a b c d : ℂ) :
     · rw [ctrlSet_apply_of_not_ctrl hagsym (fun hcc => hc (hciff.mp hcc)),
         ctrlSet_apply_of_not_ctrl hag hc]
       by_cases h : k j = l j
-      · rw [if_pos h, if_pos h.symm, star_one]
-      · rw [if_neg h, if_neg (fun hc' => h hc'.symm), star_zero]
+      · rw [ite_eq_left h, ite_eq_left h.symm, star_one]
+      · rw [ite_eq_right h, ite_eq_right (fun hc' => h hc'.symm), star_zero]
   · rw [ctrlSet_apply_of_not_agree hag, ctrlSet_apply_of_not_agree
       (fun hc => hag fun i hi => (hc i hi).symm), star_zero]
 
@@ -294,25 +294,25 @@ theorem ctrlSet_erase_eq_ctrlGate (j : Fin m) (pat : Fin m → Fin 2) (a b c d :
   by_cases hk : ∀ i, i ≠ j → k i = pat i
   · by_cases hl : ∀ i, i ≠ j → l i = pat i
     · have hag : ∀ i, i ≠ j → k i = l i := fun i hi => (hk i hi).trans (hl i hi).symm
-      rw [ctrlSet_apply_of_ctrl hag (fun i hi => hk i ((hmem i).mp hi)), ctrlGate, if_pos ⟨hk, hl⟩]
+      rw [ctrlSet_apply_of_ctrl hag (fun i hi => hk i ((hmem i).mp hi)), ctrlGate, ite_eq_left ⟨hk, hl⟩]
     · have hag : ¬(∀ i, i ≠ j → k i = l i) := by
         intro hag
         exact hl fun i hi => (hag i hi).symm.trans (hk i hi)
-      rw [ctrlSet_apply_of_not_agree hag, ctrlGate, if_neg (by tauto)]
+      rw [ctrlSet_apply_of_not_agree hag, ctrlGate, ite_eq_right (by tauto)]
       have hkl : k ≠ l := by
         intro h
         exact hag fun i _ => by rw [h]
-      rw [if_neg hkl]
+      rw [ite_eq_right hkl]
   · by_cases hl : ∀ i, i ≠ j → l i = pat i
     · have hag : ¬(∀ i, i ≠ j → k i = l i) := by
         intro hag
         exact hk fun i hi => (hag i hi).trans (hl i hi)
-      rw [ctrlSet_apply_of_not_agree hag, ctrlGate, if_neg (by tauto)]
+      rw [ctrlSet_apply_of_not_agree hag, ctrlGate, ite_eq_right (by tauto)]
       have hkl : k ≠ l := by
         intro h
         exact hag fun i _ => by rw [h]
-      rw [if_neg hkl]
-    · rw [ctrlGate, if_neg (by tauto)]
+      rw [ite_eq_right hkl]
+    · rw [ctrlGate, ite_eq_right (by tauto)]
       by_cases hag : ∀ i, i ≠ j → k i = l i
       · rw [ctrlSet_apply_of_not_ctrl hag (fun hc => hk fun i hi => hc i ((hmem i).mpr hi))]
         have hkl : k = l ↔ k j = l j := by
@@ -325,9 +325,9 @@ theorem ctrlSet_erase_eq_ctrlGate (j : Fin m) (pat : Fin m → Fin 2) (a b c d :
             · rw [hi, h]
             · exact hag i hi
         by_cases h : k j = l j
-        · rw [if_pos h, if_pos (hkl.mpr h)]
-        · rw [if_neg h, if_neg (fun hc => h (hkl.mp hc))]
-      · rw [ctrlSet_apply_of_not_agree hag, if_neg]
+        · rw [ite_eq_left h, ite_eq_left (hkl.mpr h)]
+        · rw [ite_eq_right h, ite_eq_right (fun hc => h (hkl.mp hc))]
+      · rw [ctrlSet_apply_of_not_agree hag, ite_eq_right]
         intro h
         exact hag fun i _ => by rw [h]
 

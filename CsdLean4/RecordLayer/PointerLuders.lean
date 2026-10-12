@@ -91,7 +91,7 @@ theorem pointerIndex_eq_some_of_mem {q : Pointer N} {j : Fin N} (hq : q ∈ reco
     pointerIndex q = some j := by
   classical
   have hex : ∃ j, q ∈ recordRegion j := ⟨j, hq⟩
-  rw [pointerIndex, dif_pos hex]
+  rw [pointerIndex, dite_eq_left hex]
   congr 1
   by_contra hne
   exact Set.disjoint_left.mp (recordRegion_pairwiseDisjoint (Ne.symm hne)) hq hex.choose_spec

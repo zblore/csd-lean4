@@ -161,9 +161,9 @@ theorem stabProjector_trace (hinj : ∀ x, A x = 0 → B x = 0 → x = 0) :
   rw [Finset.sum_congr rfl fun z _ => hterm z, ← Finset.mul_sum, Finset.sum_comm,
     Finset.sum_congr rfl fun x _ => by rw [← Finset.mul_sum, pauliOp_trace],
     Finset.sum_eq_single 0
-      (fun x _ hx => by rw [if_neg fun h => hx (hinj x h.1 h.2), mul_zero])
+      (fun x _ hx => by rw [ite_eq_right fun h => hx (hinj x h.1 h.2), mul_zero])
       (fun h => absurd (Finset.mem_univ _) h),
-    if_pos ⟨stab_label_zero hA, stab_label_zero hB⟩, stab_sigma_zero hB hσ,
+    ite_eq_left ⟨stab_label_zero hA, stab_label_zero hB⟩, stab_sigma_zero hB hσ,
     signChar_zero, one_mul, mul_comm, ← div_eq_mul_inv]
 
 include hA hB hσ in

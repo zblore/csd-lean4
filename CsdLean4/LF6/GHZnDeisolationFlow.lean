@@ -186,10 +186,10 @@ lemma ghzN_normSq_eq_weight (n : ℕ) (i : Fin (2 ^ n)) :
   rw [ghzN_apply]
   unfold ghzNWeight
   by_cases h : i = 0 ∨ i = topIdx n
-  · rw [if_pos h, if_pos h, norm_inv, Complex.norm_real, Real.norm_eq_abs,
+  · rw [ite_eq_left h, ite_eq_left h, norm_inv, Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonneg (Real.sqrt_nonneg _), inv_pow,
       Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
-  · rw [if_neg h, if_neg h, norm_zero]; norm_num
+  · rw [ite_eq_right h, ite_eq_right h, norm_zero]; norm_num
 
 /-- The GHZ_n Born weights sum to `1` (two support cells, each `1/2`), for `n ≥ 1`. -/
 lemma sum_ghzNWeight (n : ℕ) (hn : 0 < n) :
@@ -201,18 +201,18 @@ lemma sum_ghzNWeight (n : ℕ) (hn : 0 < n) :
       from ?_]
   · rw [Finset.sum_add_distrib, Finset.sum_ite_eq' Finset.univ (0 : Fin (2 ^ n)),
       Finset.sum_ite_eq' Finset.univ (topIdx n)]
-    simp only [Finset.mem_univ, if_true]
+    simp only [Finset.mem_univ, ite_true]
     norm_num
   · apply Finset.sum_congr rfl
     intro i _
     unfold ghzNWeight
     by_cases h0 : i = 0
     · subst h0
-      rw [if_pos (Or.inl rfl), if_pos rfl, if_neg (Ne.symm hne), add_zero]
+      rw [ite_eq_left (Or.inl rfl), ite_eq_left rfl, ite_eq_right (Ne.symm hne), add_zero]
     · by_cases ht : i = topIdx n
       · subst ht
-        rw [if_pos (Or.inr rfl), if_neg hne, if_pos rfl, zero_add]
-      · rw [if_neg (not_or.mpr ⟨h0, ht⟩), if_neg h0, if_neg ht, add_zero]
+        rw [ite_eq_left (Or.inr rfl), ite_eq_right hne, ite_eq_left rfl, zero_add]
+      · rw [ite_eq_right (not_or.mpr ⟨h0, ht⟩), ite_eq_right h0, ite_eq_right ht, add_zero]
 
 /-- **GHZ_n is a unit preparation** for `n ≥ 1`. `‖ghzN n‖² = ∑_i ghzNWeight n i = 1`.
 Discharges the `hψ` hypothesis of the LF5 pointer-volume / frequency theorems. -/
@@ -661,13 +661,13 @@ lemma ghzN_eq_smul (n : ℕ) (hn : 0 < n) :
   simp only [PiLp.smul_apply, PiLp.add_apply, PiLp.single_apply, smul_eq_mul]
   by_cases h0 : i = 0
   · subst h0
-    rw [if_pos (Or.inl rfl), if_pos rfl, if_neg (Ne.symm hne)]
+    rw [ite_eq_left (Or.inl rfl), ite_eq_left rfl, ite_eq_right (Ne.symm hne)]
     ring
   · by_cases ht : i = topIdx n
     · subst ht
-      rw [if_pos (Or.inr rfl), if_neg h0, if_pos rfl]
+      rw [ite_eq_left (Or.inr rfl), ite_eq_right h0, ite_eq_left rfl]
       ring
-    · rw [if_neg (not_or.mpr ⟨h0, ht⟩), if_neg h0, if_neg ht]
+    · rw [ite_eq_right (not_or.mpr ⟨h0, ht⟩), ite_eq_right h0, ite_eq_right ht]
       ring
 
 /-- Coordinate readout of `toEuclideanLin`: `⟨e_i, (toEuclideanLin M) e_j⟩ = M i j`. -/
@@ -761,12 +761,12 @@ lemma pauliDot_axisVec_11 (ax : PauliAxis) : pauliDot (axisVec ax) 1 1 = 0 := by
 lemma pauliDot_axisVec_01 (ax : PauliAxis) :
     pauliDot (axisVec ax) 0 1 = if ax = PauliAxis.y then -Complex.I else 1 := by
   cases ax
-  · rw [if_neg (by decide)]
+  · rw [ite_eq_right (by decide)]
     show pauliDot chshA 0 1 = 1
     rw [pauliDot_apply_01]
     simp only [chshA_vec_ofLp_0, chshA_vec_ofLp_1, Complex.ofReal_one, Complex.ofReal_zero,
       mul_zero, sub_zero]
-  · rw [if_pos rfl]
+  · rw [ite_eq_left rfl]
     show pauliDot chshA' 0 1 = -Complex.I
     rw [pauliDot_apply_01]
     simp only [chshA'_vec_ofLp_0, chshA'_vec_ofLp_1, Complex.ofReal_one, Complex.ofReal_zero,
@@ -776,12 +776,12 @@ lemma pauliDot_axisVec_01 (ax : PauliAxis) :
 lemma pauliDot_axisVec_10 (ax : PauliAxis) :
     pauliDot (axisVec ax) 1 0 = if ax = PauliAxis.y then Complex.I else 1 := by
   cases ax
-  · rw [if_neg (by decide)]
+  · rw [ite_eq_right (by decide)]
     show pauliDot chshA 1 0 = 1
     rw [pauliDot_apply_10]
     simp only [chshA_vec_ofLp_0, chshA_vec_ofLp_1, Complex.ofReal_one, Complex.ofReal_zero,
       mul_zero, add_zero]
-  · rw [if_pos rfl]
+  · rw [ite_eq_left rfl]
     show pauliDot chshA' 1 0 = Complex.I
     rw [pauliDot_apply_10]
     simp only [chshA'_vec_ofLp_0, chshA'_vec_ofLp_1, Complex.ofReal_one, Complex.ofReal_zero,
@@ -835,7 +835,7 @@ lemma prod_ghzNCtx {F : PauliAxis → ℂ} (hF : F PauliAxis.x = 1)
     have hv1 : x.val ≠ 1 := fun h => hx1 (Fin.ext (by simpa using h))
     have hv2 : x.val ≠ 2 := fun h => hx2 (Fin.ext (by simpa using h))
     unfold ghzNCtx
-    rw [if_neg hv0, if_neg hv1, if_neg hv2]
+    rw [ite_eq_right hv0, ite_eq_right hv1, ite_eq_right hv2]
     exact hF
   rw [← Finset.prod_subset hsub hrest]
   rw [Finset.prod_insert (by simp [Fin.ext_iff]), Finset.prod_insert (by simp [Fin.ext_iff]),
@@ -873,7 +873,7 @@ GHZ_n's own tensor-Pauli correlation. -/
 theorem ghzN_correlation_allX (n : ℕ) (hn : 3 ≤ n) :
     ghzNPauliExpectation n (ghzNCtx PauliAxis.x PauliAxis.x PauliAxis.x n) = 1 := by
   rw [ghzN_mermin_correlation n hn]
-  simp only [if_neg (show ¬ PauliAxis.x = PauliAxis.y by decide)]
+  simp only [ite_eq_right (show ¬ PauliAxis.x = PauliAxis.y by decide)]
   norm_num
 
 /-- **GHZ_n `⟨XYY…⟩ = −1`** (twisted `X,Y,Y` context, `X`-spectators, general `n ≥ 3`).
@@ -881,7 +881,7 @@ Mermin identity #2; `n_y = 2`, `cos(π) = −1`. -/
 theorem ghzN_correlation_xyy (n : ℕ) (hn : 3 ≤ n) :
     ghzNPauliExpectation n (ghzNCtx PauliAxis.x PauliAxis.y PauliAxis.y n) = -1 := by
   rw [ghzN_mermin_correlation n hn]
-  simp only [reduceIte, if_neg (show ¬ PauliAxis.x = PauliAxis.y by decide)]
+  simp only [reduceIte, ite_eq_right (show ¬ PauliAxis.x = PauliAxis.y by decide)]
   linear_combination Complex.I_mul_I
 
 /-- **GHZ_n `⟨YXY…⟩ = −1`** (twisted `Y,X,Y` context, general `n ≥ 3`). Mermin
@@ -889,7 +889,7 @@ identity #3. -/
 theorem ghzN_correlation_yxy (n : ℕ) (hn : 3 ≤ n) :
     ghzNPauliExpectation n (ghzNCtx PauliAxis.y PauliAxis.x PauliAxis.y n) = -1 := by
   rw [ghzN_mermin_correlation n hn]
-  simp only [reduceIte, if_neg (show ¬ PauliAxis.x = PauliAxis.y by decide)]
+  simp only [reduceIte, ite_eq_right (show ¬ PauliAxis.x = PauliAxis.y by decide)]
   linear_combination Complex.I_mul_I
 
 /-- **GHZ_n `⟨YYX…⟩ = −1`** (twisted `Y,Y,X` context, general `n ≥ 3`). Mermin
@@ -897,7 +897,7 @@ identity #4. -/
 theorem ghzN_correlation_yyx (n : ℕ) (hn : 3 ≤ n) :
     ghzNPauliExpectation n (ghzNCtx PauliAxis.y PauliAxis.y PauliAxis.x n) = -1 := by
   rw [ghzN_mermin_correlation n hn]
-  simp only [reduceIte, if_neg (show ¬ PauliAxis.x = PauliAxis.y by decide)]
+  simp only [reduceIte, ite_eq_right (show ¬ PauliAxis.x = PauliAxis.y by decide)]
   linear_combination Complex.I_mul_I
 
 /-- **The four GHZ_n Mermin correlations, general `n ≥ 3` (the residual-closing bundle).**

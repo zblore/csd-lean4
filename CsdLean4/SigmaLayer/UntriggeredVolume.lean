@@ -221,7 +221,7 @@ theorem hamiltonianField_interactionH (c : Fin n → ℝ) (k : Fin n) :
 theorem lipschitzWith_interactionH_field (c : Fin n → ℝ) (k : Fin n) :
     LipschitzWith ‖untriggeredField c k‖₊ (hamiltonianField (interactionH (n := n) c k)) := by
   rw [hamiltonianField_interactionH]
-  exact (untriggeredField c k).lipschitz
+  exact (untriggeredField c k).lipschitzWith
 
 /-- ★ **The untriggered curve is THE integral curve.** Any integral curve of the coupling
 through `z₀` at time `0` is `untriggeredCurve c k z₀` — the uniqueness brick 2's honest scope

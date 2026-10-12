@@ -346,8 +346,8 @@ theorem single_commute_diagonal (i : Fin N) (d : Fin N → ℂ) :
   ext a b
   simp only [Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.single_apply]
   by_cases h : i = a ∧ i = b
-  · rw [if_pos h, one_mul, mul_one, ← h.2, ← h.1]
-  · rw [if_neg h, zero_mul, mul_zero]
+  · rw [ite_eq_left h, one_mul, mul_one, ← h.2, ← h.1]
+  · rw [ite_eq_right h, zero_mul, mul_zero]
 
 /-- The computational pointer projections are idempotent. -/
 theorem single_mul_self (i : Fin N) :

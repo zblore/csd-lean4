@@ -176,7 +176,7 @@ lemma Q_apply_zero_eq_zero [NeZero N] {m : Fin N} (hm : (m : ℕ) ≠ 1) :
     Q N m (0 : Fin N) = 0 := by
   have h0 : ((0 : Fin N) : ℕ) = 0 := Fin.val_zero N
   rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply,
-    creation_apply, h0, if_neg (by omega), if_neg (by omega)]
+    creation_apply, h0, ite_eq_right (by omega), ite_eq_right (by omega)]
   simp
 
 /-- A pure phase has unit modulus. -/
@@ -209,7 +209,7 @@ lemma modeOp_Q_apply_vac [NeZero N] (hN : 1 < N) (l : Fin K)
   · rw [show modeOp l (Q N) e (vacCfg K N)
         = if (∀ j, j ≠ l → e j = (vacCfg K N) j)
             then Q N (e l) ((vacCfg K N) l) else 0 from rfl,
-      if_neg hoff]
+      ite_eq_right hoff]
 
 /-- ★★ **The lattice propagator.** The free two-point function is
 diagonal in the mode index and oscillates at the excitation energy:
@@ -231,7 +231,7 @@ theorem freeTwoPoint_eq [NeZero N] (hN : 1 < N) (τ : ℝ) (n : ℕ)
       freeFieldU_pow, heisenberg_phaseDiagU_apply]
     by_cases hkl : k = l
     · subst hkl
-      rw [if_pos rfl,
+      rw [ite_eq_left rfl,
         modeOp_apply_of_agree k (Q N) (fun j hj => by
           rw [vacCfg_apply, excCfg_of_ne hN hj]),
         vacCfg_apply, excCfg_self, Q_zero_one hN]
@@ -255,11 +255,11 @@ theorem freeTwoPoint_eq [NeZero N] (hN : 1 < N) (τ : ℝ) (n : ℕ)
             - (n : ℝ) * (τ * fieldEnergy (vacCfg K N)) = (n : ℝ) * τ := by
           linear_combination (n : ℝ) * τ * hdiff
         rw [star_exp_phase_mul, hreal]
-    · rw [if_neg hkl,
+    · rw [ite_eq_right hkl,
         show modeOp k (Q N) (vacCfg K N) (excCfg hN l)
           = if (∀ j, j ≠ k → (vacCfg K N) j = (excCfg hN l) j)
               then Q N ((vacCfg K N) k) ((excCfg hN l) k) else 0 from rfl,
-        if_neg ?_]
+        ite_eq_right ?_]
       · ring
       · intro hall
         have := hall l (fun h => hkl h.symm)
@@ -275,7 +275,7 @@ theorem freeTwoPoint_eq [NeZero N] (hN : 1 < N) (τ : ℝ) (n : ℕ)
 `1/2` on the diagonal. -/
 theorem freeTwoPoint_zero [NeZero N] (hN : 1 < N) (τ : ℝ) (k : Fin K) :
     freeTwoPoint (K := K) (N := N) τ 0 k k = (2 : ℂ)⁻¹ := by
-  rw [freeTwoPoint_eq hN, if_pos rfl]
+  rw [freeTwoPoint_eq hN, ite_eq_left rfl]
   norm_num
 
 /-- **The free propagator does not decay**: its modulus is independent of
@@ -283,7 +283,7 @@ the period count (all the dynamics is in the phase). -/
 theorem norm_freeTwoPoint [NeZero N] (hN : 1 < N) (τ : ℝ) (n : ℕ)
     (k : Fin K) :
     ‖freeTwoPoint (K := K) (N := N) τ n k k‖ = 1 / 2 := by
-  rw [freeTwoPoint_eq hN, if_pos rfl, norm_mul, norm_exp_neg_I_mul_real]
+  rw [freeTwoPoint_eq hN, ite_eq_left rfl, norm_mul, norm_exp_neg_I_mul_real]
   norm_num
 
 /-! ### The interacting correction, priced -/
@@ -432,8 +432,8 @@ lemma Q_apply_one_eq_zero [NeZero N] (hN : 1 < N) {m : Fin N}
     Q N m ⟨1, hN⟩ = 0 := by
   rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply,
     creation_apply,
-    if_neg (show ¬((m : ℕ) + 1 = ((1 : ℕ))) from by omega),
-    if_neg (show ¬((1 : ℕ) + 1 = ((m : ℕ))) from by omega)]
+    ite_eq_right (show ¬((m : ℕ) + 1 = ((1 : ℕ))) from by omega),
+    ite_eq_right (show ¬((1 : ℕ) + 1 = ((m : ℕ))) from by omega)]
   simp
 
 /-- The quadrature is a symmetric matrix. -/
@@ -448,8 +448,8 @@ lemma modeOpQ_symm [NeZero N] (k : Fin K) (c d : FieldConfig K N) :
     modeOp k (Q N) c d = modeOp k (Q N) d c := by
   rw [modeOp, modeOp]
   by_cases h : ∀ j, j ≠ k → c j = d j
-  · rw [if_pos h, if_pos (fun j hj => (h j hj).symm), Q_symm]
-  · rw [if_neg h, if_neg (fun h' => h (fun j hj => (h' j hj).symm))]
+  · rw [ite_eq_left h, ite_eq_left (fun j hj => (h j hj).symm), Q_symm]
+  · rw [ite_eq_right h, ite_eq_right (fun h' => h (fun j hj => (h' j hj).symm))]
 
 /-- The **two-quantum configuration** at mode `l`. -/
 def exc2Cfg [NeZero N] (hN2 : 2 < N) (l : Fin K) : FieldConfig K N :=
@@ -494,7 +494,7 @@ lemma modeOp_Q_apply_exc [NeZero N] (hN2 : 2 < N) (k : Fin K)
         rw [exc2Cfg_self]
         exact Fin.ext (by simpa using hval)
       · rw [hoff j hj, vacCfg_apply, exc2Cfg_of_ne hN2 hj]
-  · rw [modeOp, if_neg (fun h' => hoff (fun j hj => by
+  · rw [modeOp, ite_eq_right (fun h' => hoff (fun j hj => by
       rw [h' j hj, excCfg_of_ne _ hj, vacCfg_apply]))]
 
 /-- The equal-time single-mode second moment: `(Q_k²)(vac, vac) = 1/2`. -/
@@ -551,7 +551,7 @@ lemma modeOpQ_sq_exc2_vac [NeZero N] (hN2 : 2 < N) (k : Fin K) :
     (modeOp k (Q N) * modeOp k (Q N)) (exc2Cfg hN2 k) (vacCfg K N)
       = (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ := by
   rw [modeOpQ_sq_apply_vac hN2 k,
-    if_neg (Ne.symm (vacCfg_ne_exc2Cfg hN2 k)), if_pos rfl]
+    ite_eq_right (Ne.symm (vacCfg_ne_exc2Cfg hN2 k)), ite_eq_left rfl]
 
 /-- **The equal-time four-point function**
 `⟨vac∣ Q_k Q_l Q_m Q_p ∣vac⟩`. -/
@@ -578,8 +578,8 @@ theorem eqFourPoint_same [NeZero N] (hN2 : 2 < N) (k : Fin K) :
       (Finset.subset_univ ({vacCfg K N, exc2Cfg hN2 k} : Finset _))
       (fun e _ he => by
         rw [modeOpQ_sq_apply_vac hN2 k e,
-          if_neg (fun h => he (by simp [h])),
-          if_neg (fun h => he (by simp [h])), zero_mul])]
+          ite_eq_right (fun h => he (by simp [h])),
+          ite_eq_right (fun h => he (by simp [h])), zero_mul])]
   rw [Finset.sum_pair (vacCfg_ne_exc2Cfg hN2 k),
     modeOpQ_sq_vac (show 1 < N by omega) k, modeOpQ_sq_exc2_vac hN2 k]
   rw [show ((((Real.sqrt 2 : ℝ) : ℂ))⁻¹ * (((Real.sqrt 2 : ℝ) : ℂ))⁻¹)

@@ -152,7 +152,7 @@ lemma inner_outcome_collapse (x y : Bool) (k l : ZMod 3) :
     rw [show (maxEntangled 3).ofLp (i,j) = (maxEntangled 3) (i,j) from rfl, maxEntangled_apply]
     by_cases h : i = j
     · subst h; simp [Pi.star_apply]
-    · rw [if_neg (by simpa using h), if_neg h, zero_mul]
+    · rw [ite_eq_right (by simpa using h), ite_eq_right h, zero_mul]
   rw [Finset.sum_congr rfl (fun j _ => hterm j), Finset.sum_ite_eq Finset.univ i]
   simp
 

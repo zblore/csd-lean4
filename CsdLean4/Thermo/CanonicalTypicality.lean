@@ -298,7 +298,7 @@ lemma momentMap_permU [NeZero N] (σ : Equiv.Perm (Fin N)) (p : CPN N) (a : Fin 
 lemma signFlip_smul_offdiag [NeZero N] (i j : Fin N) (hji : j ≠ i) (p : CPN N) :
     rayDensity ((signFlip i) • p) i j = - rayDensity p i j := by
   rw [smul_eq_mk, rayDensity_mk, signFlip_val, toEuclideanLin_signFlip_coord,
-      toEuclideanLin_signFlip_coord, if_pos rfl, if_neg hji, one_mul, neg_one_mul]
+      toEuclideanLin_signFlip_coord, ite_eq_left rfl, ite_eq_right hji, one_mul, neg_one_mul]
   have hden : (‖(Matrix.toEuclideanLin (signFlipMat i) p.rep)‖ : ℂ) ^ 2 = (‖p.rep‖ : ℂ) ^ 2 := by
     rw [← Complex.ofReal_pow, signFlip_normSq, Complex.ofReal_pow]
   rw [hden]
@@ -392,13 +392,13 @@ theorem fs_first_moment [NeZero N] (p₀ : CPN N) :
   rw [fsFirstMoment, Matrix.of_apply, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul]
   by_cases h : i = j
   · subst h
-    rw [if_pos rfl, mul_one]
+    rw [ite_eq_left rfl, mul_one]
     have hfun : (fun p => rayDensity p i i) = fun p => ((momentMap p i : ℝ) : ℂ) := by
       funext p; exact rayDensity_diag p i
     have hof : ∫ p, ((momentMap p i : ℝ) : ℂ) ∂(fsMeasure p₀)
         = ((∫ p, momentMap p i ∂(fsMeasure p₀) : ℝ) : ℂ) := integral_ofReal
     rw [hfun, hof, fsFirstMoment_diag p₀ i, Complex.ofReal_inv, Complex.ofReal_natCast]
-  · rw [if_neg h, mul_zero]
+  · rw [ite_eq_right h, mul_zero]
     exact fsFirstMoment_offdiag p₀ i j h
 
 /-! ## Deliverable 2: canonical typicality in expectation (the headline) -/
@@ -469,18 +469,18 @@ theorem canonical_typicality_expectation [NeZero N] [NeZero dS] [NeZero dE]
     rw [hfm]
     congr 1
     by_cases h : i = i'
-    · rw [if_pos h, if_pos (by rw [h])]
-    · rw [if_neg h, if_neg (fun hh => h (by
+    · rw [ite_eq_left h, ite_eq_left (by rw [h])]
+    · rw [ite_eq_right h, ite_eq_right (fun hh => h (by
         have := e.injective hh; exact (Prod.mk.injEq _ _ _ _ ▸ this).1))]
   simp_rw [hentry]
   rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
   -- (d_E) * ((N)⁻¹ * delta) = (d_S)⁻¹ * delta
   rw [hNval]
   by_cases h : i = i'
-  · rw [if_pos h, mul_one, mul_one]
+  · rw [ite_eq_left h, mul_one, mul_one]
     push_cast
     field_simp
-  · rw [if_neg h, mul_zero, mul_zero, mul_zero]
+  · rw [ite_eq_right h, mul_zero, mul_zero, mul_zero]
 
 /-! ## Concentration residual (the named stretch -- NOT proved here)
 
@@ -587,7 +587,7 @@ lemma hadamardMat_apply (i j a b : Fin N) :
 /-- Off the pair `{i, j}`, a Hadamard-rotation row is a delta row. -/
 lemma hadamardMat_apply_of_ne (i j : Fin N) {a : Fin N} (hai : a ≠ i) (haj : a ≠ j)
     (b : Fin N) : hadamardMat i j a b = if b = a then 1 else 0 := by
-  rw [hadamardMat_apply, if_neg hai, if_neg haj]
+  rw [hadamardMat_apply, ite_eq_right hai, ite_eq_right haj]
 
 /-- The Hadamard rotation is Hermitian (real symmetric). -/
 lemma hadamardMat_conjTranspose (i j : Fin N) (hij : i ≠ j) :
@@ -617,21 +617,21 @@ lemma hadamardMat_mem (i j : Fin N) (hij : i ≠ j) :
       (Finset.sum_subset (Finset.subset_univ _) (fun c _ hc => by
         rw [Finset.mem_insert, Finset.mem_singleton] at hc
         push Not at hc
-        rw [hadamardMat_apply i j i c, if_pos rfl, if_neg hc.1, if_neg hc.2,
+        rw [hadamardMat_apply i j i c, ite_eq_left rfl, ite_eq_right hc.1, ite_eq_right hc.2,
           zero_mul])).symm]
     rw [Finset.sum_pair hij]
-    rw [hadamardMat_apply i j i i, if_pos rfl, if_pos rfl,
-      hadamardMat_apply i j i j, if_pos rfl, if_neg (Ne.symm hij), if_pos rfl,
-      hadamardMat_apply i j i b, if_pos rfl,
-      hadamardMat_apply i j j b, if_neg (Ne.symm hij), if_pos rfl]
+    rw [hadamardMat_apply i j i i, ite_eq_left rfl, ite_eq_left rfl,
+      hadamardMat_apply i j i j, ite_eq_left rfl, ite_eq_right (Ne.symm hij), ite_eq_left rfl,
+      hadamardMat_apply i j i b, ite_eq_left rfl,
+      hadamardMat_apply i j j b, ite_eq_right (Ne.symm hij), ite_eq_left rfl]
     by_cases hbi : b = i
-    · rw [if_pos hbi, if_pos hbi, if_pos hbi.symm, hs]
+    · rw [ite_eq_left hbi, ite_eq_left hbi, ite_eq_left hbi.symm, hs]
       norm_num
-    · rw [if_neg hbi, if_neg hbi, if_neg (fun h : i = b => hbi h.symm)]
+    · rw [ite_eq_right hbi, ite_eq_right hbi, ite_eq_right (fun h : i = b => hbi h.symm)]
       by_cases hbj : b = j
-      · rw [if_pos hbj, if_pos hbj]
+      · rw [ite_eq_left hbj, ite_eq_left hbj]
         ring
-      · rw [if_neg hbj, if_neg hbj]
+      · rw [ite_eq_right hbj, ite_eq_right hbj]
         ring
   · by_cases haj : a = j
     · -- row `j`: supported on `{i, j}`.
@@ -641,34 +641,34 @@ lemma hadamardMat_mem (i j : Fin N) (hij : i ≠ j) :
         (Finset.sum_subset (Finset.subset_univ _) (fun c _ hc => by
           rw [Finset.mem_insert, Finset.mem_singleton] at hc
           push Not at hc
-          rw [hadamardMat_apply i j j c, if_neg (Ne.symm hij), if_pos rfl,
-            if_neg hc.1, if_neg hc.2, zero_mul])).symm]
+          rw [hadamardMat_apply i j j c, ite_eq_right (Ne.symm hij), ite_eq_left rfl,
+            ite_eq_right hc.1, ite_eq_right hc.2, zero_mul])).symm]
       rw [Finset.sum_pair hij]
-      rw [hadamardMat_apply i j j i, if_neg (Ne.symm hij), if_pos rfl, if_pos rfl,
-        hadamardMat_apply i j j j, if_neg (Ne.symm hij), if_pos rfl,
-        if_neg (Ne.symm hij), if_pos rfl,
-        hadamardMat_apply i j i b, if_pos rfl,
-        hadamardMat_apply i j j b, if_neg (Ne.symm hij), if_pos rfl]
+      rw [hadamardMat_apply i j j i, ite_eq_right (Ne.symm hij), ite_eq_left rfl, ite_eq_left rfl,
+        hadamardMat_apply i j j j, ite_eq_right (Ne.symm hij), ite_eq_left rfl,
+        ite_eq_right (Ne.symm hij), ite_eq_left rfl,
+        hadamardMat_apply i j i b, ite_eq_left rfl,
+        hadamardMat_apply i j j b, ite_eq_right (Ne.symm hij), ite_eq_left rfl]
       by_cases hbi : b = i
-      · rw [if_pos hbi, if_pos hbi, if_neg (fun h : j = b => hij (h.trans hbi).symm)]
+      · rw [ite_eq_left hbi, ite_eq_left hbi, ite_eq_right (fun h : j = b => hij (h.trans hbi).symm)]
         ring
-      · rw [if_neg hbi, if_neg hbi]
+      · rw [ite_eq_right hbi, ite_eq_right hbi]
         by_cases hbj : b = j
-        · rw [if_pos hbj, if_pos hbj, if_pos hbj.symm]
+        · rw [ite_eq_left hbj, ite_eq_left hbj, ite_eq_left hbj.symm]
           rw [show -((Real.sqrt 2 : ℝ) : ℂ)⁻¹ * -((Real.sqrt 2 : ℝ) : ℂ)⁻¹
               = ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ * ((Real.sqrt 2 : ℝ) : ℂ)⁻¹ by ring, hs]
           norm_num
-        · rw [if_neg hbj, if_neg hbj, if_neg (fun h : j = b => hbj h.symm)]
+        · rw [ite_eq_right hbj, ite_eq_right hbj, ite_eq_right (fun h : j = b => hbj h.symm)]
           ring
     · -- delta row: the sum collapses to `c = a`.
       rw [Finset.sum_eq_single a
-        (fun c _ hca => by rw [hadamardMat_apply_of_ne i j hai haj, if_neg hca, zero_mul])
+        (fun c _ hca => by rw [hadamardMat_apply_of_ne i j hai haj, ite_eq_right hca, zero_mul])
         (fun ha => absurd (Finset.mem_univ a) ha)]
-      rw [hadamardMat_apply_of_ne i j hai haj, if_pos rfl, one_mul,
-        hadamardMat_apply i j a b, if_neg hai, if_neg haj]
+      rw [hadamardMat_apply_of_ne i j hai haj, ite_eq_left rfl, one_mul,
+        hadamardMat_apply i j a b, ite_eq_right hai, ite_eq_right haj]
       by_cases hab : b = a
-      · rw [if_pos hab, if_pos hab.symm]
-      · rw [if_neg hab, if_neg (fun h : a = b => hab h.symm)]
+      · rw [ite_eq_left hab, ite_eq_left hab.symm]
+      · rw [ite_eq_right hab, ite_eq_right (fun h : a = b => hab h.symm)]
 
 /-- The Hadamard rotation as a unitary group element. -/
 noncomputable def hadamardU (i j : Fin N) (hij : i ≠ j) : Matrix.unitaryGroup (Fin N) ℂ :=
@@ -691,11 +691,11 @@ lemma toEuclideanLin_hadamard_coord_i (i j : Fin N) (hij : i ≠ j)
     (Finset.sum_subset (Finset.subset_univ _) (fun c _ hc => by
       rw [Finset.mem_insert, Finset.mem_singleton] at hc
       push Not at hc
-      rw [hadamardMat_apply i j i c, if_pos rfl, if_neg hc.1, if_neg hc.2,
+      rw [hadamardMat_apply i j i c, ite_eq_left rfl, ite_eq_right hc.1, ite_eq_right hc.2,
         zero_mul])).symm]
   rw [Finset.sum_pair hij]
-  rw [hadamardMat_apply i j i i, if_pos rfl, if_pos rfl,
-    hadamardMat_apply i j i j, if_pos rfl, if_neg (Ne.symm hij), if_pos rfl]
+  rw [hadamardMat_apply i j i i, ite_eq_left rfl, ite_eq_left rfl,
+    hadamardMat_apply i j i j, ite_eq_left rfl, ite_eq_right (Ne.symm hij), ite_eq_left rfl]
   ring
 
 /-- Coordinate `j` of the Hadamard rotation: `(H v)ⱼ = (vᵢ − vⱼ)/√2`. -/
@@ -710,12 +710,12 @@ lemma toEuclideanLin_hadamard_coord_j (i j : Fin N) (hij : i ≠ j)
     (Finset.sum_subset (Finset.subset_univ _) (fun c _ hc => by
       rw [Finset.mem_insert, Finset.mem_singleton] at hc
       push Not at hc
-      rw [hadamardMat_apply i j j c, if_neg (Ne.symm hij), if_pos rfl,
-        if_neg hc.1, if_neg hc.2, zero_mul])).symm]
+      rw [hadamardMat_apply i j j c, ite_eq_right (Ne.symm hij), ite_eq_left rfl,
+        ite_eq_right hc.1, ite_eq_right hc.2, zero_mul])).symm]
   rw [Finset.sum_pair hij]
-  rw [hadamardMat_apply i j j i, if_neg (Ne.symm hij), if_pos rfl, if_pos rfl,
-    hadamardMat_apply i j j j, if_neg (Ne.symm hij), if_pos rfl,
-    if_neg (Ne.symm hij), if_pos rfl]
+  rw [hadamardMat_apply i j j i, ite_eq_right (Ne.symm hij), ite_eq_left rfl, ite_eq_left rfl,
+    hadamardMat_apply i j j j, ite_eq_right (Ne.symm hij), ite_eq_left rfl,
+    ite_eq_right (Ne.symm hij), ite_eq_left rfl]
   ring
 
 /-- Away from the pair, the Hadamard rotation fixes coordinates. -/
@@ -726,9 +726,9 @@ lemma toEuclideanLin_hadamard_coord_ne (i j : Fin N) {a : Fin N}
   show ∑ c, hadamardMat i j a c * v c = v a
   rw [Finset.sum_eq_single a
     (fun c _ hca => by
-      rw [hadamardMat_apply_of_ne i j hai haj, if_neg hca, zero_mul])
+      rw [hadamardMat_apply_of_ne i j hai haj, ite_eq_right hca, zero_mul])
     (fun ha => absurd (Finset.mem_univ a) ha)]
-  rw [hadamardMat_apply_of_ne i j hai haj, if_pos rfl, one_mul]
+  rw [hadamardMat_apply_of_ne i j hai haj, ite_eq_left rfl, one_mul]
 
 /-- The Hadamard rotation is norm-preserving (squared form): the parallelogram
 law on the pair, the identity elsewhere. -/
@@ -783,7 +783,7 @@ lemma momentMap_phaseFlip [NeZero N] (i : Fin N) (p : CPN N) (a : Fin N) :
 lemma phaseFlip_smul_cross [NeZero N] (i j : Fin N) (hji : j ≠ i) (p : CPN N) :
     rayDensity ((phaseFlip i) • p) i j = Complex.I * rayDensity p i j := by
   rw [smul_eq_mk, rayDensity_mk, phaseFlip_val, toEuclideanLin_phaseFlip_coord,
-      toEuclideanLin_phaseFlip_coord, if_pos rfl, if_neg hji, one_mul]
+      toEuclideanLin_phaseFlip_coord, ite_eq_left rfl, ite_eq_right hji, one_mul]
   have hden : (‖(Matrix.toEuclideanLin (phaseFlipMat i) p.rep)‖ : ℂ) ^ 2
       = (‖p.rep‖ : ℂ) ^ 2 := by
     rw [← Complex.ofReal_pow, phaseFlip_normSq, Complex.ofReal_pow]
@@ -1157,14 +1157,14 @@ theorem fs_linear_sq_moment [NeZero N] (p₀ : CPN N) (lam : Fin N → ℝ) :
         Finset.sum_congr rfl (fun a _ => Finset.sum_congr rfl (fun b _ => by
           rw [integral_const_mul]
           by_cases hba : b = a
-          · rw [if_pos hba, hba]
+          · rw [ite_eq_left hba, hba]
             congr 1
             calc ∫ p, momentMap p a * momentMap p a ∂(fsMeasure p₀)
                 = ∫ p, momentMap p a ^ 2 ∂(fsMeasure p₀) :=
                   integral_congr_ae (ae_of_all _ (fun p => by
                     dsimp only; rw [← pow_two]))
               _ = 2 / ((N:ℝ) * ((N:ℝ)+1)) := fs_x_sq_moment p₀ a
-          · rw [if_neg hba, fs_x_cross_moment p₀ (fun h => hba h.symm)]))
+          · rw [ite_eq_right hba, fs_x_cross_moment p₀ (fun h => hba h.symm)]))
     _ = ((∑ k, lam k) ^ 2 + ∑ k, lam k ^ 2) / ((N : ℝ) * ((N : ℝ) + 1)) := by
         rw [show (∑ a, ∑ b, lam a * lam b *
             (if b = a then 2 / ((N:ℝ) * ((N:ℝ)+1)) else 1 / ((N:ℝ) * ((N:ℝ)+1))))
@@ -1177,8 +1177,8 @@ theorem fs_linear_sq_moment [NeZero N] (p₀ : CPN N) (lam : Fin N → ℝ) :
                   + (if b = a then lam a * lam b * (1 / ((N:ℝ) * ((N:ℝ)+1))) else 0)) from
               Finset.sum_congr rfl (fun b _ => by split_ifs <;> ring)]
             rw [Finset.sum_add_distrib, ← Finset.mul_sum,
-              Finset.sum_eq_single a (fun b _ hba => if_neg hba)
-                (fun ha => absurd (Finset.mem_univ a) ha), if_pos rfl]
+              Finset.sum_eq_single a (fun b _ hba => ite_eq_right hba)
+                (fun ha => absurd (Finset.mem_univ a) ha), ite_eq_left rfl]
             ring)]
         rw [Finset.sum_add_distrib, ← Finset.sum_mul, ← Finset.sum_mul,
           ← Finset.sum_mul]

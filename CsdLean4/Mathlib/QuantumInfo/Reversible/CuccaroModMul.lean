@@ -370,14 +370,14 @@ theorem cuccaroModDouble_spec (L : CuccaroModLayout m n) (s : State m)
     rw [hflag6, hs3flag, hFeq]
     have hr0 : ((2 * a) % N) % 2 = (if 2 * a < N then 0 else 1) := by
       rcases lt_or_ge (2 * a) N with hlt | hge
-      · rw [Nat.mod_eq_of_lt hlt, if_pos hlt]; omega
-      · rw [mod_eq_sub_of_le_of_lt_two_mul hge (by omega), if_neg (by omega)]; omega
+      · rw [Nat.mod_eq_of_lt hlt, ite_eq_left hlt]; omega
+      · rw [mod_eq_sub_of_le_of_lt_two_mul hge (by omega), ite_eq_right (by omega)]; omega
     rcases lt_or_ge (2 * a) N with hlt | hge
     · have hb0 : s6 (L.Acc 0) = false :=
-        Bool.toNat_eq_zero.mp (by rw [hAcc0bit, hr0, if_pos hlt])
+        Bool.toNat_eq_zero.mp (by rw [hAcc0bit, hr0, ite_eq_left hlt])
       rw [hb0, show decide (2 * a < N) = true from by rw [decide_eq_true_eq]; exact hlt]; rfl
     · have hb0 : s6 (L.Acc 0) = true :=
-        Bool.toNat_eq_one.mp (by rw [hAcc0bit, hr0, if_neg (by omega)])
+        Bool.toNat_eq_one.mp (by rw [hAcc0bit, hr0, ite_eq_right (by omega)])
       rw [hb0, show decide (2 * a < N) = false from by rw [decide_eq_false_iff_not]; omega]; rfl
   have hf7 : s7 L.flag = false := by
     rw [hs7, denoteGate_x_target, denoteGate_cx_target (L.hAccflag 0) s6]
@@ -605,7 +605,7 @@ theorem maskCopyCtrlPrefix_spec (L : CuccaroModLayout m n) (Y : ℕ → Fin m) (
       · have key : denoteGate (Gate.CCX ctrl (Y j) (L.B j)) sk (L.B j)
               = (sk (L.B j) ^^ (sk ctrl && sk (Y j))) := by
           simp only [denoteGate]
-          rw [if_neg (by
+          rw [ite_eq_right (by
             rintro (h | h)
             · exact (hctrlB j) h.symm
             · exact (hYB j j) h.symm)]

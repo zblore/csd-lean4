@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.InformationTheory.KlDivArrow
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.Mathlib.InformationTheory.FiniteEntropy
 
 /-!
@@ -71,7 +72,7 @@ theorem coarseLaw_apply (π : Measure α) {q : α → β} (hq : Measurable q) {s
 
 theorem isProbabilityMeasure_coarseLaw (π : Measure α) [IsProbabilityMeasure π] {q : α → β}
     (hq : Measurable q) : IsProbabilityMeasure (coarseLaw π q) :=
-  Measure.isProbabilityMeasure_map (μ := π) hq.aemeasurable
+  Measure.isProbabilityMeasure_map' (μ := π) hq.aemeasurable
 
 variable [DiscreteMeasurableSpace β]
 
@@ -94,11 +95,11 @@ theorem isMarkovKernel_coarseKernel (π : Measure α) [IsProbabilityMeasure π] 
   refine ⟨fun v => ?_⟩
   rw [coarseKernel_apply, coarseStep]
   by_cases h0 : π (q ⁻¹' {v}) = 0
-  · rw [if_pos h0]
+  · rw [ite_eq_left h0]
     infer_instance
-  · rw [if_neg h0]
+  · rw [ite_eq_right h0]
     have : IsProbabilityMeasure (π[|q ⁻¹' {v}]) := cond_isProbabilityMeasure h0
-    exact Measure.isProbabilityMeasure_map (hf := (hq.comp hF).aemeasurable)
+    exact Measure.isProbabilityMeasure_map' (hf := (hq.comp hF).aemeasurable)
 
 /-- ★★ **The weighted step is the joint measure.** Multiplying one macro step by the weight of the
 cell it starts from clears the conditioning, leaving the fine measure of "now in `v`, next in `s`". -/
@@ -109,7 +110,7 @@ theorem coarseStep_apply_mul (π : Measure α) [IsFiniteMeasure π] {q : α → 
   by_cases h0 : π (q ⁻¹' {v}) = 0
   · rw [h0, zero_mul]
     exact (measure_mono_null inter_subset_left h0).symm
-  · rw [coarseStep, if_neg h0, Measure.map_apply hmF (.of_discrete),
+  · rw [coarseStep, ite_eq_right h0, Measure.map_apply hmF (.of_discrete),
       cond_apply (hq MeasurableSet.of_discrete), ← mul_assoc,
       ENNReal.mul_inv_cancel h0 (measure_ne_top _ _), one_mul]
 

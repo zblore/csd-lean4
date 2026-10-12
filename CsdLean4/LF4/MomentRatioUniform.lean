@@ -178,9 +178,9 @@ theorem ratioSqNorm_map_expHalf_prod :
   -- The post-density integrand `F q = d q.1 · d q.2 · g(R q)` (folded by defeq).
   set d : ℝ → ℝ≥0∞ :=
     fun s => ENNReal.ofReal (if 0 < s then (1 / 2) * Real.exp (-s / 2) else 0) with hd
-  have hd0 : ∀ s : ℝ, ¬ 0 < s → d s = 0 := fun s hs => by rw [hd]; simp [if_neg hs]
+  have hd0 : ∀ s : ℝ, ¬ 0 < s → d s = 0 := fun s hs => by rw [hd]; simp [ite_eq_right hs]
   have hdpos : ∀ s : ℝ, 0 < s → d s = ENNReal.ofReal ((1 / 2) * Real.exp (-s / 2)) :=
-    fun s hs => by rw [hd]; simp [if_pos hs]
+    fun s hs => by rw [hd]; simp [ite_eq_left hs]
   -- Step B: the integrand is supported on the open quadrant; restrict to it.
   have hFeqInd :
       (fun q : ℝ × ℝ => d q.1 * d q.2 * g (q.1 / (q.1 + q.2)))
@@ -189,8 +189,8 @@ theorem ratioSqNorm_map_expHalf_prod :
     ext q
     rw [Set.indicator_apply]
     by_cases hq : q ∈ Ioi (0 : ℝ) ×ˢ Ioi (0 : ℝ)
-    · rw [if_pos hq]
-    · rw [if_neg hq]
+    · rw [ite_eq_left hq]
+    · rw [ite_eq_right hq]
       rw [Set.mem_prod, mem_Ioi, mem_Ioi, not_and_or] at hq
       rcases hq with h | h
       · rw [hd0 q.1 h]; simp

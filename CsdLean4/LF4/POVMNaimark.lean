@@ -120,8 +120,8 @@ lemma blockProj_mul_naimarkV (P : POVM N ι) (i : ι) (n : Fin N) (j : ι) (m : 
     rw [Matrix.mul_apply]; rfl
   rw [hrw, blockProj_mulVec]
   by_cases hj : j = i
-  · simp only [if_pos hj, naimarkV, Matrix.of_apply]
-  · simp only [if_neg hj]
+  · simp only [ite_eq_left hj, naimarkV, Matrix.of_apply]
+  · simp only [ite_eq_right hj]
 
 /-- **Naimark pullback:** the ancilla-`i` projector compresses `V` back to the
 effect, `Vᴴ Πᵢ V = Eᵢ`. -/

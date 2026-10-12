@@ -82,7 +82,7 @@ theorem pauliMat_mulVec (a b : Fin n → Fin 2) (v : (Fin n → Fin 2) → ℂ) 
     pauliMat a b *ᵥ v = WithLp.ofLp (pauliOp a b (WithLp.toLp 2 v)) := by
   funext z
   simp only [mulVec, dotProduct, pauliMat, ite_mul, zero_mul, Finset.sum_ite_eq',
-    Finset.mem_univ, if_true, pauliOp_apply]
+    Finset.mem_univ, ite_true, pauliOp_apply]
 
 theorem pauliMat_zero : pauliMat (0 : Fin n → Fin 2) 0 = 1 := by
   refine Matrix.ext_of_mulVec fun v => ?_
@@ -116,9 +116,9 @@ theorem pauliMat_conjTranspose (a b : Fin n → Fin 2) :
     · rintro rfl
       rw [add_add_self]
   by_cases h : w = z + a
-  · rw [if_pos (hiff.mpr h), if_pos h, Complex.star_def, conj_pauliSign, h, pauliSign_add_right]
+  · rw [ite_eq_left (hiff.mpr h), ite_eq_left h, Complex.star_def, conj_pauliSign, h, pauliSign_add_right]
     linear_combination (-(pauliSign b z)) * pauliSign_mul_self b a
-  · rw [if_neg (fun h' => h (hiff.mp h')), if_neg h, star_zero, mul_zero]
+  · rw [ite_eq_right (fun h' => h (hiff.mp h')), ite_eq_right h, star_zero, mul_zero]
 
 /-- A Pauli is unitary: `Eᴴ E = 1`. -/
 theorem pauliMat_conjTranspose_mul_self (a b : Fin n → Fin 2) :

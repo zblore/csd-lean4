@@ -162,7 +162,7 @@ lemma sin_sq_pi_delta (x y : Bool) (m : ℤ) :
       = Real.cos (π*(m:ℝ))^2 * Real.sin (π * deltaOff x y)^2 := by
     rw [mul_add, Real.sin_add, hsin0]; ring
   rw [key, hcos1, one_mul]
-  cases x <;> cases y <;> simp only [deltaOff, alphaOff, betaOff, Bool.false_eq_true, if_true, if_false]
+  cases x <;> cases y <;> simp only [deltaOff, alphaOff, betaOff, Bool.false_eq_true, ite_true, ite_false]
   · rw [show π * ((0:ℝ) - -1/4) = π/4 by ring, Real.sin_pi_div_four, div_pow,
       Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2)]; norm_num
   · rw [show π * ((0:ℝ) - 1/4) = -(π/4) by ring, Real.sin_neg, neg_pow, Real.sin_pi_div_four,
@@ -173,7 +173,7 @@ lemma sin_sq_pi_delta (x y : Bool) (m : ℤ) :
       Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 2)]; norm_num
 
 lemma deltaOff_not_int (x y : Bool) (N : ℤ) : deltaOff x y ≠ (N:ℝ) := by
-  cases x <;> cases y <;> simp only [deltaOff, alphaOff, betaOff, Bool.false_eq_true, if_true, if_false]
+  cases x <;> cases y <;> simp only [deltaOff, alphaOff, betaOff, Bool.false_eq_true, ite_true, ite_false]
   · intro hN; have hi : (4*N:ℤ) = 1 := by
       have : ((4*N:ℤ):ℝ)=1 := by push_cast; linarith [hN]
       exact_mod_cast this
@@ -278,7 +278,7 @@ lemma inner_outcome_collapse (x y : Bool) (k l : ZMod d) :
     rw [show (maxEntangled d).ofLp (i,j) = (maxEntangled d) (i,j) from rfl, maxEntangled_apply]
     by_cases h : i = j
     · subst h; simp [Pi.star_apply]
-    · rw [if_neg (by simpa using h), if_neg h, zero_mul]
+    · rw [ite_eq_right (by simpa using h), ite_eq_right h, zero_mul]
   rw [Finset.sum_congr rfl (fun j _ => hterm j), Finset.sum_ite_eq Finset.univ i]
   simp
 

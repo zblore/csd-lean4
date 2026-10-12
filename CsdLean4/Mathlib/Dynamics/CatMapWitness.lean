@@ -313,7 +313,7 @@ lemma integral_chi_re (z : ℤ × ℤ) :
   by_cases hz : z = 0
   · subst hz
     simp [chi_zero]
-  · rw [integral_chi_eq_zero hz, if_neg hz]
+  · rw [integral_chi_eq_zero hz, ite_eq_right hz]
     simp
 
 /-- The lag-`u` orbit index of the base character `(1,0)`. -/
@@ -372,7 +372,7 @@ theorem integral_catObs_pair (u : ℕ) :
       intro h; have h' := congrArg Prod.snd h; simp at h'; omega
     have hD : (-(1,0) + -catIdx (k+1) : ℤ × ℤ) ≠ 0 := by
       intro h; have h' := congrArg Prod.snd h; simp at h'; omega
-    rw [if_neg hA, if_neg hB, if_neg hC, if_neg hD, if_neg (by omega : ¬(k+1 = 0))]
+    rw [ite_eq_right hA, ite_eq_right hB, ite_eq_right hC, ite_eq_right hD, ite_eq_right (by omega : ¬(k+1 = 0))]
     norm_num
 
 /-! ### ★★ The witness -/

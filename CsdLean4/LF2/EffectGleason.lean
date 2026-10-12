@@ -224,7 +224,7 @@ noncomputable def smulVal (E : Effect N) (t : ℝ) : ℝ :=
   if h : 0 ≤ t ∧ t ≤ 1 then OP.p (Effect.smul t h.1 h.2 E) else 0
 
 lemma smulVal_of {E : Effect N} {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
-    OP.smulVal E t = OP.p (Effect.smul t ht0 ht1 E) := dif_pos ⟨ht0, ht1⟩
+    OP.smulVal E t = OP.p (Effect.smul t ht0 ht1 E) := dite_eq_left ⟨ht0, ht1⟩
 
 lemma smulVal_zero (E : Effect N) : OP.smulVal E 0 = 0 := by
   rw [OP.smulVal_of (le_refl 0) zero_le_one,

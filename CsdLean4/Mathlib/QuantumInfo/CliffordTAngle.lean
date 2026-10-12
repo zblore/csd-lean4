@@ -103,7 +103,7 @@ theorem isIntegral_two_mul_cos_of_eq_two_pi_mul {θ : ℝ} {q : ℚ} (hθ : θ =
     rw [Complex.ofReal_mul, Complex.ofReal_cos, Complex.ofReal_ofNat, h2, hζdef,
       show -(θ : ℂ) * Complex.I = -((θ : ℂ) * Complex.I) by ring, Complex.exp_neg]
   rw [hcos] at hsum
-  rwa [← isIntegral_algebraMap_iff (R := ℤ) (A := ℝ) (B := ℂ) Complex.ofReal_injective,
+  rwa [← isIntegral_algebraMap_iff (R := ℤ) (A := ℝ) (B := ℂ),
     Complex.coe_algebraMap]
 
 /-! ### `x² + x = 7/4` has no algebraic-integer solution -/
@@ -116,7 +116,7 @@ theorem not_isIntegral_of_sq_add_self_eq {x : ℝ} (hx : x ^ 2 + x = 7 / 4) : ¬
     rw [← hx]
     exact (h.pow 2).add h
   have hq : IsIntegral ℤ ((7 / 4 : ℚ)) := by
-    rw [← isIntegral_algebraMap_iff (R := ℤ) (A := ℚ) (B := ℝ) Rat.cast_injective]
+    rw [← isIntegral_algebraMap_iff (R := ℤ) (A := ℚ) (B := ℝ)]
     have hmap : (algebraMap ℚ ℝ) (7 / 4 : ℚ) = (7 / 4 : ℝ) := by norm_num
     rw [hmap]
     exact h74

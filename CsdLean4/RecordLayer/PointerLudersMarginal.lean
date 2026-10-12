@@ -155,7 +155,7 @@ omit [NeZero N] in
 theorem pointerIndex_eq_none {q : Pointer N} (h : ¬∃ j, q ∈ recordRegion j) :
     pointerIndex q = none := by
   classical
-  rw [pointerIndex, dif_neg h]
+  rw [pointerIndex, dite_eq_right h]
 
 omit [NeZero N] in
 /-- Off every record region, the relocation does nothing. -/

@@ -168,9 +168,9 @@ theorem sqNorm_map_gaussian2 :
       ext s
       simp only [Set.indicator_apply, mem_Ioi]
       by_cases hs : 0 < s
-      · simp only [if_pos hs]
+      · simp only [ite_eq_left hs]
         ring
-      · simp only [if_neg hs, ENNReal.ofReal_zero, zero_mul]
+      · simp only [ite_eq_right hs, ENNReal.ofReal_zero, zero_mul]
     rw [show (fun a => ((fun s : ℝ =>
           ENNReal.ofReal (if 0 < s then (1 / 2) * Real.exp (-s / 2) else 0)) * g) a)
           = (fun s : ℝ =>

@@ -196,7 +196,7 @@ theorem heisenberg_kick_supportedOn {R : Finset (Fin K)}
     SupportedOn (kickFoldStep k.edge R) (heisenberg k.U A) := by
   rw [kickFoldStep]
   by_cases h : k.edge.1 ∈ R ∨ k.edge.2 ∈ R
-  · rw [if_pos h]
+  · rw [ite_eq_left h]
     refine (heisenberg_supportedOn_union k.supported hA).mono ?_
     intro x hx
     rcases Finset.mem_union.mp hx with hxR | hxe
@@ -205,7 +205,7 @@ theorem heisenberg_kick_supportedOn {R : Finset (Fin K)}
       · exact h1 ▸ Finset.mem_insert_self _ _
       · rw [Finset.mem_singleton.mp h2]
         exact Finset.mem_insert_of_mem (Finset.mem_insert_self _ _)
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     rw [heisenberg_eq_of_disjoint ?_ k.supported hA]
     · exact hA
     · rw [Finset.disjoint_right]

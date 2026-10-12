@@ -326,14 +326,14 @@ lemma norm_motion (p e₀ e₁ q : EuclideanSpace ℝ (Fin 3)) {x : EuclideanSpa
 lemma motion_pole (he : Orthonormal ℝ ![p, e₀, e₁]) (hq : ‖q‖ = 1) (hpq : 0 < ⟪p, q⟫_ℝ)
     (hqp : q ≠ p) : motion p e₀ e₁ q p = q := by
   unfold motion
-  rw [dif_pos ⟨he, hq, hpq, hqp⟩]
+  rw [dite_eq_left ⟨he, hq, hpq, hqp⟩]
   exact (Classical.choose_spec (exists_motion he hq hpq hqp)).2.1
 
 lemma motion_meridian (he : Orthonormal ℝ ![p, e₀, e₁]) (hq : ‖q‖ = 1) (hpq : 0 < ⟪p, q⟫_ℝ)
     (hqp : q ≠ p) :
     motion p e₀ e₁ q (lift p (tangent e₀ e₁ (meridianParam p q : ℂ))) = p := by
   unfold motion
-  rw [dif_pos ⟨he, hq, hpq, hqp⟩]
+  rw [dite_eq_left ⟨he, hq, hpq, hqp⟩]
   exact (Classical.choose_spec (exists_motion he hq hpq hqp)).2.2
 
 end Motion
@@ -436,7 +436,7 @@ theorem exists_forall_le (hf : IsFrameFunction ℝ f W) {M m : ℝ}
   -- the cluster point, extended to a function on the space
   obtain ⟨h, hh⟩ : ∃ h : EuclideanSpace ℝ (Fin 3) → ℝ,
       h = fun s => if hs : ‖s‖ = 1 then h₀ ⟨s, hs⟩ else 0 := ⟨_, rfl⟩
-  have hhs : ∀ s (hs : ‖s‖ = 1), h s = h₀ ⟨s, hs⟩ := fun s hs => by rw [hh]; exact dif_pos hs
+  have hhs : ∀ s (hs : ‖s‖ = 1), h s = h₀ ⟨s, hs⟩ := fun s hs => by rw [hh]; exact dite_eq_left hs
   have hhframe : IsFrameFunction ℝ h (W + W) := by
     intro b
     have hb : ∀ i, ‖b i‖ = 1 := b.orthonormal.norm_eq_one

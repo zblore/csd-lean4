@@ -138,8 +138,8 @@ lemma cpBasisRay_ne (j k : Fin N) (hjk : j ≠ k) : cpBasisRay j ≠ cpBasisRay 
     (Projectivization.mk_eq_mk_iff' ℂ _ _ (cpBasisVec_ne_zero j) (cpBasisVec_ne_zero k)).mp he
   -- `a • eₖ` vanishes at coordinate `j` (since `j ≠ k`); but `ha` makes it `eⱼ`, value `1` there.
   have hj : (a • EuclideanSpace.single k (1 : ℂ)) j = 0 := by
-    simp only [PiLp.smul_apply, PiLp.single_apply, if_neg hjk, smul_zero]
-  rw [ha, PiLp.single_apply, if_pos rfl] at hj
+    simp only [PiLp.smul_apply, PiLp.single_apply, ite_eq_right hjk, smul_zero]
+  rw [ha, PiLp.single_apply, ite_eq_left rfl] at hj
   exact one_ne_zero hj
 
 /-! ## (B) — the eigenstate ray is a fixed point of `obsFlow` -/
@@ -496,8 +496,8 @@ theorem momentMap_obsFlow_nonconstant_conserved (hN : 1 < N) (lam : Fin N → �
     ∧ ∃ p q : CPN N, momentMap p (obsIdx0 hN) ≠ momentMap q (obsIdx0 hN) := by
   refine ⟨fun p => momentMap_obsFlow lam t p (obsIdx0 hN), momentMap_measurable _,
     cpBasisRay (obsIdx0 hN), cpBasisRay (obsIdx1 hN), ?_⟩
-  rw [momentMap_cpBasisRay, momentMap_cpBasisRay, if_pos rfl,
-    if_neg (obsIdx0_ne_obsIdx1 hN)]
+  rw [momentMap_cpBasisRay, momentMap_cpBasisRay, ite_eq_left rfl,
+    ite_eq_right (obsIdx0_ne_obsIdx1 hN)]
   norm_num
 
 /-- **(2) Headline: `obsFlow` is NOT `μFS`-ergodic.** The set `S = {p | momentMap p 1 ≤
@@ -536,7 +536,7 @@ theorem obsFlow_not_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t
     rw [hS]; exact Set.ofPred_subset_ofPred.2 (fun p => le_of_lt)
   have hgtne : {p : CPN N | momentMap p j < momentMap p i}.Nonempty :=
     ⟨cpBasisRay i, by
-      simp only [Set.mem_ofPred_eq, momentMap_cpBasisRay, if_neg hji]; norm_num⟩
+      simp only [Set.mem_ofPred_eq, momentMap_cpBasisRay, ite_eq_right hji]; norm_num⟩
   have hSne : fsMeasure p₀ S ≠ 0 := by
     intro h0
     exact (fsMeasure_pos_of_isOpen p₀ (isOpen_momentMap_lt j i) hgtne)
@@ -546,7 +546,7 @@ theorem obsFlow_not_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t
     rw [hS]; ext p; simp only [Set.mem_compl_iff, Set.mem_ofPred_eq, not_le]
   have hltne : {p : CPN N | momentMap p i < momentMap p j}.Nonempty :=
     ⟨cpBasisRay j, by
-      simp only [Set.mem_ofPred_eq, momentMap_cpBasisRay, if_neg hji.symm]; norm_num⟩
+      simp only [Set.mem_ofPred_eq, momentMap_cpBasisRay, ite_eq_right hji.symm]; norm_num⟩
   have hScpos : fsMeasure p₀ Sᶜ ≠ 0 := by
     rw [hScompl]; exact fsMeasure_pos_of_isOpen p₀ (isOpen_momentMap_lt i j) hltne
   -- Combine: neither 0 nor 1 is possible.

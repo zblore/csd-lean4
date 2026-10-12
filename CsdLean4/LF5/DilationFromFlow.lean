@@ -95,9 +95,9 @@ lemma outerProduct_single (i : Fin N) :
     Matrix.single_apply]
   by_cases ha : a = i
   · by_cases hb : b = i
-    · rw [if_pos ha, if_pos hb, star_one, one_mul, if_pos ⟨ha.symm, hb.symm⟩]
-    · rw [if_neg hb, star_zero, mul_zero, if_neg (fun h => hb h.2.symm)]
-  · rw [if_neg ha, zero_mul, if_neg (fun h => ha h.1.symm)]
+    · rw [ite_eq_left ha, ite_eq_left hb, star_one, one_mul, ite_eq_left ⟨ha.symm, hb.symm⟩]
+    · rw [ite_eq_right hb, star_zero, mul_zero, ite_eq_right (fun h => hb h.2.symm)]
+  · rw [ite_eq_right ha, zero_mul, ite_eq_right (fun h => ha h.1.symm)]
 
 /-- **The computational-basis projective POVM** `Eᵢ = |eᵢ⟩⟨eᵢ|`: the canonical
 rank-1 projective measurement the von Neumann coupling reads out. Completeness
@@ -120,15 +120,15 @@ lemma single_one_mulVec_apply (i a : Fin N) (v : Fin N → ℂ) :
     (Matrix.single i i (1 : ℂ) *ᵥ v) a = if i = a then v i else 0 := by
   simp only [Matrix.mulVec, dotProduct, Matrix.single_apply]
   by_cases ha : i = a
-  · rw [if_pos ha, Finset.sum_eq_single i]
-    · rw [if_pos ⟨ha, rfl⟩, one_mul]
+  · rw [ite_eq_left ha, Finset.sum_eq_single i]
+    · rw [ite_eq_left ⟨ha, rfl⟩, one_mul]
     · intro b _ hb
-      rw [if_neg (fun h => hb h.2.symm), zero_mul]
+      rw [ite_eq_right (fun h => hb h.2.symm), zero_mul]
     · intro h; exact absurd (Finset.mem_univ i) h
-  · rw [if_neg ha]
+  · rw [ite_eq_right ha]
     apply Finset.sum_eq_zero
     intro b _
-    rw [if_neg (fun h => ha h.1), zero_mul]
+    rw [ite_eq_right (fun h => ha h.1), zero_mul]
 
 /-- **Rank-1 Born weight of the basis POVM.** The `i`-th weight of preparation
 `ψ` is the Born quadratic form `‖⟨eᵢ, ψ⟩‖²`. -/
@@ -140,10 +140,10 @@ theorem basisPOVM_weight (ψ : EuclideanSpace ℂ (Fin N)) (i : Fin N) :
     rw [EuclideanSpace.inner_eq_star_dotProduct, Matrix.ofLp_toLpLin, dotProduct]
     rw [Finset.sum_eq_single i]
     · simp only [Matrix.toLin'_apply, Pi.star_apply]
-      rw [single_one_mulVec_apply, if_pos rfl]
+      rw [single_one_mulVec_apply, ite_eq_left rfl]
     · intro a _ ha
       simp only [Matrix.toLin'_apply, Pi.star_apply]
-      rw [single_one_mulVec_apply, if_neg (Ne.symm ha), zero_mul]
+      rw [single_one_mulVec_apply, ite_eq_right (Ne.symm ha), zero_mul]
     · intro h; exact absurd (Finset.mem_univ i) h
   unfold POVM.weight
   rw [basisPOVM_E_M, hinner,
@@ -209,15 +209,15 @@ lemma embedGround_mulVec (v : Fin N → ℂ) (j k : Fin N) :
     (embedGround N *ᵥ v) (j, k) = if k = 0 then v j else 0 := by
   simp only [Matrix.mulVec, dotProduct, embedGround_apply, Prod.mk.injEq]
   by_cases hk : k = 0
-  · rw [if_pos hk, Finset.sum_eq_single j]
-    · rw [if_pos ⟨rfl, hk⟩, one_mul]
+  · rw [ite_eq_left hk, Finset.sum_eq_single j]
+    · rw [ite_eq_left ⟨rfl, hk⟩, one_mul]
     · intro m _ hm
-      rw [if_neg (fun h => hm h.1.symm), zero_mul]
+      rw [ite_eq_right (fun h => hm h.1.symm), zero_mul]
     · intro h; exact absurd (Finset.mem_univ j) h
-  · rw [if_neg hk]
+  · rw [ite_eq_right hk]
     apply Finset.sum_eq_zero
     intro m _
-    rw [if_neg (fun h => hk h.2), zero_mul]
+    rw [ite_eq_right (fun h => hk h.2), zero_mul]
 
 /-- The ground embedding is an isometry: `embedᴴ embed = 1` (the columns
 `e_{(m,0)}` are orthonormal). -/
@@ -230,23 +230,23 @@ theorem embedGround_isom : (embedGround N)ᴴ * embedGround N = 1 := by
     intro p
     rw [Matrix.conjTranspose_apply, embedGround_apply, embedGround_apply]
     by_cases h1 : p = (a, 0)
-    · rw [if_pos h1, star_one, one_mul]
+    · rw [ite_eq_left h1, star_one, one_mul]
       by_cases h2 : p = (b, 0)
-      · rw [if_pos h2, if_pos ⟨h1, h2⟩]
-      · rw [if_neg h2, if_neg (fun h => h2 h.2)]
-    · rw [if_neg h1, star_zero, zero_mul, if_neg (fun h => h1 h.1)]
+      · rw [ite_eq_left h2, ite_eq_left ⟨h1, h2⟩]
+      · rw [ite_eq_right h2, ite_eq_right (fun h => h2 h.2)]
+    · rw [ite_eq_right h1, star_zero, zero_mul, ite_eq_right (fun h => h1 h.1)]
   simp only [hterm]
   by_cases hab : a = b
   · subst hab
-    rw [if_pos rfl, Finset.sum_eq_single ((a, 0) : Fin N × Fin N)]
-    · rw [if_pos ⟨rfl, rfl⟩]
+    rw [ite_eq_left rfl, Finset.sum_eq_single ((a, 0) : Fin N × Fin N)]
+    · rw [ite_eq_left ⟨rfl, rfl⟩]
     · intro p _ hp
-      rw [if_neg (fun h => hp h.1)]
+      rw [ite_eq_right (fun h => hp h.1)]
     · intro h; exact absurd (Finset.mem_univ _) h
-  · rw [if_neg hab]
+  · rw [ite_eq_right hab]
     apply Finset.sum_eq_zero
     intro p _
-    exact if_neg (fun h => hab (congrArg Prod.fst (h.1.symm.trans h.2)))
+    exact ite_eq_right (fun h => hab (congrArg Prod.fst (h.1.symm.trans h.2)))
 
 /-- Operator-level isometry of the ground embedding: `‖ψ ⊗ a₀‖ = ‖ψ‖`. -/
 theorem embedGround_norm_map (ψ : EuclideanSpace ℂ (Fin N)) :
@@ -295,15 +295,15 @@ lemma vnDilationV_mulVec (v : Fin N → ℂ) (j k : Fin N) :
     (vnDilationV N *ᵥ v) (j, k) = if k = j then v j else 0 := by
   simp only [Matrix.mulVec, dotProduct, vnDilationV_apply, Prod.mk.injEq]
   by_cases hk : k = j
-  · rw [if_pos hk, Finset.sum_eq_single j]
-    · rw [if_pos ⟨rfl, hk⟩, one_mul]
+  · rw [ite_eq_left hk, Finset.sum_eq_single j]
+    · rw [ite_eq_left ⟨rfl, hk⟩, one_mul]
     · intro b _ hb
-      rw [if_neg (fun h => hb h.1.symm), zero_mul]
+      rw [ite_eq_right (fun h => hb h.1.symm), zero_mul]
     · intro h; exact absurd (Finset.mem_univ j) h
-  · rw [if_neg hk]
+  · rw [ite_eq_right hk]
     apply Finset.sum_eq_zero
     intro b _
-    rw [if_neg (fun h => hk (h.2.trans h.1.symm)), zero_mul]
+    rw [ite_eq_right (fun h => hk (h.2.trans h.1.symm)), zero_mul]
 
 /-- **`V` is an isometry:** `Vᴴ V = embedᴴ (U_vNᴴ U_vN) embed = embedᴴ embed = 1`
 (unitarity of the coupling + isometry of the ground embedding). -/
@@ -329,13 +329,13 @@ lemma blockProj_mul_vnDilationV (i n j m : Fin N) :
     rw [Matrix.mul_apply]; rfl
   rw [hrw, blockProj_mulVec]
   by_cases hj : j = i
-  · rw [if_pos hj, vnDilationV_apply]
+  · rw [ite_eq_left hj, vnDilationV_apply]
     by_cases hc : n = m ∧ i = m
-    · rw [if_pos (show ((n, i) : Fin N × Fin N) = (m, m) from by rw [hc.1, hc.2]),
-        if_pos ⟨hj, hc⟩]
-    · rw [if_neg (fun h => hc ⟨congrArg Prod.fst h, congrArg Prod.snd h⟩),
-        if_neg (fun h => hc h.2)]
-  · rw [if_neg hj, if_neg (fun h => hj h.1)]
+    · rw [ite_eq_left (show ((n, i) : Fin N × Fin N) = (m, m) from by rw [hc.1, hc.2]),
+        ite_eq_left ⟨hj, hc⟩]
+    · rw [ite_eq_right (fun h => hc ⟨congrArg Prod.fst h, congrArg Prod.snd h⟩),
+        ite_eq_right (fun h => hc h.2)]
+  · rw [ite_eq_right hj, ite_eq_right (fun h => hj h.1)]
 
 /-- **The Naimark pullback, dynamically realised (the LF5-C crux):** the
 context-fixed pointer block compresses through the de-isolation isometry to the
@@ -352,30 +352,30 @@ theorem vnDilationV_pullback (i : Fin N) :
     intro n j
     rw [Matrix.conjTranspose_apply, vnDilationV_apply, blockProj_mul_vnDilationV]
     by_cases h1 : (n, j) = ((a, a) : Fin N × Fin N)
-    · rw [if_pos h1, star_one, one_mul]
+    · rw [ite_eq_left h1, star_one, one_mul]
       exact (if_congr (and_iff_right h1) rfl rfl).symm
-    · rw [if_neg h1, star_zero, zero_mul, if_neg (fun h => h1 h.1)]
+    · rw [ite_eq_right h1, star_zero, zero_mul, ite_eq_right (fun h => h1 h.1)]
   simp only [hterm]
   rw [Matrix.single_apply]
   by_cases hab : i = a ∧ i = b
   · obtain ⟨ha, hb⟩ := hab
-    rw [if_pos ⟨ha, hb⟩, Finset.sum_eq_single a]
+    rw [ite_eq_left ⟨ha, hb⟩, Finset.sum_eq_single a]
     · rw [Finset.sum_eq_single a]
-      · rw [if_pos ⟨rfl, ha.symm, ha.symm.trans hb, hb⟩]
+      · rw [ite_eq_left ⟨rfl, ha.symm, ha.symm.trans hb, hb⟩]
       · intro j _ hj
-        rw [if_neg (fun h => hj (congrArg Prod.snd h.1))]
+        rw [ite_eq_right (fun h => hj (congrArg Prod.snd h.1))]
       · intro h; exact absurd (Finset.mem_univ a) h
     · intro n _ hn
       apply Finset.sum_eq_zero
       intro j _
-      rw [if_neg (fun h => hn (congrArg Prod.fst h.1))]
+      rw [ite_eq_right (fun h => hn (congrArg Prod.fst h.1))]
     · intro h; exact absurd (Finset.mem_univ a) h
-  · rw [if_neg hab]
+  · rw [ite_eq_right hab]
     apply Finset.sum_eq_zero
     intro n _
     apply Finset.sum_eq_zero
     intro j _
-    exact if_neg (fun h =>
+    exact ite_eq_right (fun h =>
       hab ⟨h.2.1.symm.trans (congrArg Prod.snd h.1), h.2.2.2⟩)
 
 /-- **The LF5-C headline: the canonical projective measurement's Naimark

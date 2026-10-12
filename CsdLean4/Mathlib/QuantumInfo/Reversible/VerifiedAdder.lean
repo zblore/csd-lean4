@@ -301,8 +301,8 @@ theorem corpusAdder_correct (L : MulLoopLayout m n) (N : ℕ) (h2N : 2 * N ≤ 2
   rw [show L.B = (L.bank k).B from (L.hBshare k 0).symm, hstep,
     show (L.bank k).add.ctrl = L.X (n - 1 - k) from L.hctrl k]
   cases s (L.X (n - 1 - k)) with
-  | true => simp only [if_true, one_mul]
-  | false => simp only [Bool.false_eq_true, if_false, Nat.zero_mul]
+  | true => simp only [ite_true, one_mul]
+  | false => simp only [Bool.false_eq_true, ite_false, Nat.zero_mul]
 
 /-- Corpus `presY` field: `hornerStep_preserves_Y`. -/
 theorem corpusAdder_presY (L : MulLoopLayout m n) (N : ℕ) :

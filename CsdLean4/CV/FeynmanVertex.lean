@@ -219,8 +219,8 @@ theorem dysonTerm_two_vac_quadratic [NeZero N] (hN2 : 2 < N) (lam : ℝ) (a b : 
   congr 2
   refine intervalIntegral.integral_congr fun s₂ _ => ?_
   refine intervalIntegral.integral_congr fun s₁ _ => ?_
-  rw [vertexPair_eq_timeFourPoint, timeFourPoint_wick hN2, if_pos (rfl : a = a),
-    if_pos (rfl : b = b)]
+  rw [vertexPair_eq_timeFourPoint, timeFourPoint_wick hN2, ite_eq_left (rfl : a = a),
+    ite_eq_left (rfl : b = b)]
 
 /-- ★ **The connected bubble**: for distinct modes `a ≠ b` only the pairing across the vertices
 survives, both propagator lines running from one vertex to the other. -/
@@ -236,7 +236,7 @@ theorem dysonTerm_two_vac_quadratic_of_ne [NeZero N] (hN2 : 2 < N) (lam : ℝ) {
   congr 2
   refine intervalIntegral.integral_congr fun s₂ _ => ?_
   refine intervalIntegral.integral_congr fun s₁ _ => ?_
-  rw [if_neg hab, if_neg hab, if_neg hab, if_neg (Ne.symm hab)]
+  rw [ite_eq_right hab, ite_eq_right hab, ite_eq_right hab, ite_eq_right (Ne.symm hab)]
   ring
 
 /-- ★ **The disconnected double tadpole and the two bubbles**: for the one-mode vertex `Q_a²` the
@@ -253,7 +253,7 @@ theorem dysonTerm_two_vac_quadratic_self [NeZero N] (hN2 : 2 < N) (lam : ℝ) (a
   congr 2
   refine intervalIntegral.integral_congr fun s₂ _ => ?_
   refine intervalIntegral.integral_congr fun s₁ _ => ?_
-  rw [if_pos rfl, if_pos rfl, if_pos rfl, twoPointKernel_self, twoPointKernel_self]
+  rw [ite_eq_left rfl, ite_eq_left rfl, ite_eq_left rfl, twoPointKernel_self, twoPointKernel_self]
   ring
 
 end CSD.CV

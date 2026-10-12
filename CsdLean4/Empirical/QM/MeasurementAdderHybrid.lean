@@ -80,7 +80,7 @@ lemma correctionPhase_single (mo : Fin 2) (z : B3) :
   simp only [List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero]
   fin_cases mo
   · simp
-  · simp only [Fin.isValue, Fin.mk_one, if_true, one_mul]
+  · simp only [Fin.isValue, Fin.mk_one, ite_true, one_mul]
     exact neg_one_pow_fin_mul (z 0) (z 1)
 
 /-- The entry identity behind the bridge: the general-wire gadget entry is the product of
@@ -91,17 +91,17 @@ lemma measureCorrect_entry (mo : Fin 2) (z w : B3) :
           * ((if z 2 = mo then 1 else 0) * hadA z w) := by
   rw [measureCorrectMat_apply, hadA_apply, update_two_eq, correctionPhase_single]
   by_cases h : z = ![w 0, w 1, mo]
-  · rw [if_pos h]
+  · rw [ite_eq_left h]
     have h' := (b3_eq_iff z (w 0) (w 1) mo).mp h
-    rw [if_pos h'.2.2, if_pos (show z 0 = w 0 ∧ z 1 = w 1 from ⟨h'.1, h'.2.1⟩), h'.2.2]
+    rw [ite_eq_left h'.2.2, ite_eq_left (show z 0 = w 0 ∧ z 1 = w 1 from ⟨h'.1, h'.2.1⟩), h'.2.2]
     ring
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     have h' : ¬ (z 0 = w 0 ∧ z 1 = w 1 ∧ z 2 = mo) :=
       fun hh => h ((b3_eq_iff z (w 0) (w 1) mo).mpr hh)
     by_cases h2 : z 2 = mo
-    · rw [if_pos h2, if_neg (show ¬ (z 0 = w 0 ∧ z 1 = w 1) from fun hh => h' ⟨hh.1, hh.2, h2⟩)]
+    · rw [ite_eq_left h2, ite_eq_right (show ¬ (z 0 = w 0 ∧ z 1 = w 1) from fun hh => h' ⟨hh.1, hh.2, h2⟩)]
       ring
-    · rw [if_neg h2]
+    · rw [ite_eq_right h2]
       ring
 
 /-- ★ **The general-wire gadget is #31's gadget.** On `QReg 3`, the measure-and-correct gadget

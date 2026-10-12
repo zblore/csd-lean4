@@ -6,11 +6,9 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF2.Setup
-public import Mathlib.MeasureTheory.Measure.MeasureSpace
 public import Mathlib.MeasureTheory.Measure.Map
 public import Mathlib.MeasureTheory.Measure.FiniteMeasure
-public import Mathlib.Data.ENNReal.Basic
-
+public import Mathlib.Basic.ENNReal.Basic
 /-!
 # LF2 Measure Bridge
 

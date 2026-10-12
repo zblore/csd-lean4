@@ -118,7 +118,7 @@ theorem norm_pathFunctional_le {g f : E → ℂ} {Cg Cf : ℝ} (hCg : ∀ x, ‖
   rw [norm_mul, norm_prod]
   refine mul_le_mul ?_ (hCf _) (norm_nonneg _) (by positivity)
   calc ∏ k ∈ Finset.range n, ‖g (p.1 + p.2 (((k + 1 : ℕ) : ℝ≥0) * h))‖
-      ≤ ∏ _k ∈ Finset.range n, Cg := Finset.prod_le_prod (fun _ _ => norm_nonneg _) fun _ _ => hCg _
+      ≤ ∏ _k ∈ Finset.range n, Cg := Finset.prod_le_prod₀ (fun _ _ => norm_nonneg _) fun _ _ => hCg _
     _ = Cg ^ n := by rw [Finset.prod_const, Finset.card_range]
 
 /-- `x ↦ W_n(x)` is measurable. -/

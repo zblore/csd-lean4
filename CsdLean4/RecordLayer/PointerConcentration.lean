@@ -115,7 +115,7 @@ theorem norm_offPointer_sq (i : Fin N) (ψ : EuclideanSpace ℂ (Fin N)) :
   have hsum : ∀ j ∈ Finset.univ.erase i,
       ‖if j = i then (0 : ℂ) else ψ j‖ ^ 2 = ‖ψ j‖ ^ 2 := by
     intro j hj
-    rw [if_neg (Finset.ne_of_mem_erase hj)]
+    rw [ite_eq_right (Finset.ne_of_mem_erase hj)]
   rw [Finset.sum_congr rfl hsum]
   simp
 

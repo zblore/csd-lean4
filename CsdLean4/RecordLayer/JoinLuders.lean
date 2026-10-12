@@ -322,7 +322,7 @@ lemma preimage_sector_ae (i : Fin K) :
       ext q
       simp [Set.mem_prod]
     rw [hset, paramMeasure, Measure.prod_prod, readyMeasure_compl, mul_zero]
-  rw [Filter.eventuallyEq_set, MeasureTheory.ae_iff]
+  rw [Filter.eventuallyEqSet_iff, MeasureTheory.ae_iff]
   refine measure_mono_null (fun q hq => ?_) hnull
   show q.2 ∉ readyArc K
   intro hr
@@ -348,9 +348,9 @@ theorem goodTheta_vol_pos (i : Fin K) (hPi : blockProj b i ψ ≠ 0) :
     intro k
     show (if b k = i then ψ k else 0) = 0
     by_cases hk : b k = i
-    · rw [if_pos hk]
+    · rw [ite_eq_left hk]
       exact h k hk
-    · rw [if_neg hk]
+    · rw [ite_eq_right hk]
   have hsub : torusCell (LF4.momentMap (Projectivization.mk ℂ ψ hψ0)) j
       ⊆ goodTheta b ψ hψ0 i := by
     intro θs hθ

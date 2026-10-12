@@ -174,17 +174,17 @@ noncomputable def rsign (x : ℝ) : ℝ := if 0 < x then 1 else if x < 0 then -1
 lemma rsign_mul_self (x : ℝ) : rsign x * x = |x| := by
   unfold rsign
   rcases lt_trichotomy x 0 with h | h | h
-  · rw [if_neg (not_lt.mpr h.le), if_pos h, abs_of_neg h]; ring
+  · rw [ite_eq_right (not_lt.mpr h.le), ite_eq_left h, abs_of_neg h]; ring
   · subst h; simp
-  · rw [if_pos h, abs_of_pos h]; ring
+  · rw [ite_eq_left h, abs_of_pos h]; ring
 
 /-- `|rsign x| ≤ 1`. -/
 lemma abs_rsign_le_one (x : ℝ) : |rsign x| ≤ 1 := by
   unfold rsign
   rcases lt_trichotomy x 0 with h | h | h
-  · rw [if_neg (not_lt.mpr h.le), if_pos h]; norm_num
+  · rw [ite_eq_right (not_lt.mpr h.le), ite_eq_left h]; norm_num
   · subst h; norm_num
-  · rw [if_pos h]; norm_num
+  · rw [ite_eq_left h]; norm_num
 
 /-- `rsign` is measurable. -/
 lemma measurable_rsign : Measurable rsign := by

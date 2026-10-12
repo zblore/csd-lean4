@@ -104,22 +104,22 @@ theorem deisolationChannel_apply_eq_pinch {ρ : Matrix (Fin N) (Fin N) ℂ} (hρ
       by_cases hkb : k = b
       · subst hkb
         simp
-      · rw [if_neg (fun h => hkb h.2)]
+      · rw [ite_eq_right (fun h => hkb h.2)]
         refine Finset.sum_eq_zero fun x _ => ?_
-        rw [if_neg (fun h => hkb (h.2.trans h.1.symm))]
+        rw [ite_eq_right (fun h => hkb (h.2.trans h.1.symm))]
         simp
-    · rw [if_neg (fun h => hka h.1)]
+    · rw [ite_eq_right (fun h => hka h.1)]
       refine Finset.sum_eq_zero fun x _ => ?_
       have hin : (∑ y, (if a = y ∧ k = y then (1 : ℂ) else 0) * ρ y x) = 0 :=
         Finset.sum_eq_zero fun y _ => by
-          rw [if_neg (fun h => hka (h.2.trans h.1.symm)), zero_mul]
+          rw [ite_eq_right (fun h => hka (h.2.trans h.1.symm)), zero_mul]
       rw [hin, zero_mul]
   simp_rw [hterm]
   by_cases hab : a = b
   · subst hab
     simp [diag_ofReal_re_of_isHermitian hρ a]
-  · rw [if_neg hab]
-    exact Finset.sum_eq_zero fun x _ => if_neg (fun h => hab (h.1.symm.trans h.2))
+  · rw [ite_eq_right hab]
+    exact Finset.sum_eq_zero fun x _ => ite_eq_right (fun h => hab (h.1.symm.trans h.2))
 
 end Deisolation
 

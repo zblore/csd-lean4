@@ -25,9 +25,14 @@ maps, with two knock-on breaks against the pin (both caught by the Compat canary
   master. `map_smul'` takes `Measurable f` — every call site has it in hand — and is
   proved by `ext` from the stable `map_apply`/`smul_apply` API.
 
-All call sites route through these spellings. When the pin advances past the
-master change, the shims collapse to `inferInstance` / master's `Measure.map_smul` and
-this file can be deleted — noted in this repository's canary log.
+All call sites route through these spellings. **The pin has now advanced past that master
+change** (Lean v4.34.0, Mathlib 5ed2965, 2026-10-12): upstream carries the unconditional
+instance and `Measure.map_smul`'s measurability hypothesis, so `isProbabilityMeasure_map'`
+is a redundant restatement that still compiles and `map_smul'` is a `Measurable`-flavoured
+wrapper around the upstream lemma. Collapsing the call sites to `inferInstance` and the
+upstream spelling, and deleting this file, is BACKLOG #142 — it is a refactor of about
+thirty call sites rather than part of the bump, and nothing is wrong with the shims
+meanwhile.
 -/
 
 @[expose] public section

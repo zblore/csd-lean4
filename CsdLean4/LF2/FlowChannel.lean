@@ -208,7 +208,7 @@ theorem embedEnv_conjTranspose_mul (e₀ : EuclideanSpace ℂ e) (he₀ : ‖e�
   by_cases h : j = j'
   · subst h
     rw [Finset.sum_eq_single j]
-    · simp only [if_true]
+    · simp only [ite_true]
       have := dotProduct_self_star_of_unit_norm e₀ he₀
       simp only [dotProduct] at this
       rw [← this]
@@ -216,11 +216,11 @@ theorem embedEnv_conjTranspose_mul (e₀ : EuclideanSpace ℂ e) (he₀ : ‖e�
     · intro a _ ha
       simp [ha]
     · intro h; exact absurd (Finset.mem_univ j) h
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     refine Finset.sum_eq_zero fun a _ => Finset.sum_eq_zero fun i _ => ?_
     by_cases ha : a = j'
-    · rw [if_neg (fun h' => h (h'.symm.trans ha))]; simp
-    · rw [if_neg ha]; simp
+    · rw [ite_eq_right (fun h' => h (h'.symm.trans ha))]; simp
+    · rw [ite_eq_right ha]; simp
 
 omit [Fintype e] [DecidableEq e] in
 /-- Conjugating by the embedding tensors on the ready projector: `E ρ Eᴴ = ρ ⊗ |e₀⟩⟨e₀|`. -/
@@ -230,11 +230,11 @@ theorem embedEnv_mul_mul_conjTranspose (e₀ : EuclideanSpace ℂ e) (ρ : Matri
   simp only [mul_apply, conjTranspose_apply, embedEnv_apply, kronecker_apply, outerProduct,
     vecMulVec_apply]
   rw [Finset.sum_eq_single b]
-  · rw [if_pos rfl, Finset.sum_eq_single a]
-    · rw [if_pos rfl]; ring
-    · intro c _ hc; rw [if_neg (Ne.symm hc)]; simp
+  · rw [ite_eq_left rfl, Finset.sum_eq_single a]
+    · rw [ite_eq_left rfl]; ring
+    · intro c _ hc; rw [ite_eq_right (Ne.symm hc)]; simp
     · intro h; exact absurd (Finset.mem_univ a) h
-  · intro c _ hc; rw [if_neg (Ne.symm hc)]; simp
+  · intro c _ hc; rw [ite_eq_right (Ne.symm hc)]; simp
   · intro h; exact absurd (Finset.mem_univ b) h
 
 /-- **The Stinespring channel of a unitary with a ready environment**: couple the system to the

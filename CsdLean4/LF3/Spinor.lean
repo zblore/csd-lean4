@@ -183,7 +183,7 @@ lemma spinor_normSq (s : Sign) (a : DetectorSetting) :
     ‖spinor s a 0‖ ^ 2 + ‖spinor s a 1‖ ^ 2 = 1 := by
   unfold spinor
   by_cases hpos : 0 < 1 + (s.val : ℝ) * (a.vec 2 : ℝ)
-  · rw [if_pos hpos]
+  · rw [ite_eq_left hpos]
     have hraw := spinorRaw_normSq s a
     have hNpos : 0 < Real.sqrt (2 * (1 + (s.val : ℝ) * (a.vec 2 : ℝ))) :=
       Real.sqrt_pos.mpr (by linarith)
@@ -197,7 +197,7 @@ lemma spinor_normSq (s : Sign) (a : DetectorSetting) :
         Real.norm_eq_abs, abs_of_pos hNpos]
     rw [hexp 0, hexp 1, ← mul_add, hraw, inv_pow, hN2]
     field_simp
-  · rw [if_neg hpos]
+  · rw [ite_eq_right hpos]
     simp
 
 /-- ★★ **The projector is the spinor's outer product**: `Πˢ(a) = u uᴴ`.
@@ -209,7 +209,7 @@ lemma spinProj_eq_outer (s : Sign) (a : DetectorSetting) (i j : Fin 2) :
     spinProj s a i j = spinor s a i * star (spinor s a j) := by
   unfold spinor
   by_cases hpos : 0 < 1 + (s.val : ℝ) * (a.vec 2 : ℝ)
-  · rw [if_pos hpos]
+  · rw [ite_eq_left hpos]
     have hNpos : 0 < Real.sqrt (2 * (1 + (s.val : ℝ) * (a.vec 2 : ℝ))) :=
       Real.sqrt_pos.mpr (by linarith)
     have hNne : ((Real.sqrt (2 * (1 + (s.val : ℝ) * (a.vec 2 : ℝ))) : ℝ) : ℂ) ≠ 0 := by
@@ -238,7 +238,7 @@ lemma spinProj_eq_outer (s : Sign) (a : DetectorSetting) (i j : Fin 2) :
             * (((Real.sqrt (2 * (1 + (s.val : ℝ) * (a.vec 2 : ℝ))) : ℝ) : ℂ)⁻¹
               * (starRingEnd ℂ) (spinorRaw s a j)) := by
           rw [← hN2sq, sq, mul_inv]; ring
-  · rw [if_neg hpos]
+  · rw [ite_eq_right hpos]
     obtain ⟨hx, hy, hz⟩ := pole_facts s a hpos
     have hzC : ((s.val : ℝ) : ℂ) * ((a.vec 2 : ℝ) : ℂ) = -1 := by
       rw [← Complex.ofReal_mul, hz]

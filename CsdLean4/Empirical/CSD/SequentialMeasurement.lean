@@ -134,7 +134,7 @@ theorem csd_repeatability_same (μ12 : Measure (LF4.KSigma N × LF4.KTorus))
     postEnsemble μ12 i
         ((fun y : SwapArena (LF4.KSigma N) N => y.1.1) ⁻¹' globalBasin (momentContext N) i)
       = 1 := by
-  rw [csd_repeatability μ12 i hpos i, if_pos rfl]
+  rw [csd_repeatability μ12 i hpos i, ite_eq_left rfl]
 
 /-- …and impossibility of every other outcome. -/
 theorem csd_repeatability_other (μ12 : Measure (LF4.KSigma N × LF4.KTorus))
@@ -145,6 +145,6 @@ theorem csd_repeatability_other (μ12 : Measure (LF4.KSigma N × LF4.KTorus))
     postEnsemble μ12 i
         ((fun y : SwapArena (LF4.KSigma N) N => y.1.1) ⁻¹' globalBasin (momentContext N) j)
       = 0 := by
-  rw [csd_repeatability μ12 i hpos j, if_neg hj]
+  rw [csd_repeatability μ12 i hpos j, ite_eq_right hj]
 
 end CSD.Empirical.CSDBridge.SequentialMeasurement

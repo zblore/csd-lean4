@@ -6,8 +6,7 @@ Authors: Zayn Blore
 module
 
 public import Mathlib.LinearAlgebra.Matrix.Notation
-public import Mathlib.Data.Complex.Basic
-
+public import Mathlib.Basic.Complex.Basic
 /-!
 # Empirical/QM: Two-qubit gates (CNOT, SWAP, CZ)
 

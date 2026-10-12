@@ -121,7 +121,7 @@ theorem exists_linearODE_solution (A : ℝ → F →L[ℝ] F) {T M τ : ℝ} (hT
       ⟨0, ⟨le_rfl, hτ0.le⟩⟩ Y₀ ⟨1, zero_le_one⟩ 0 ⟨L, hL0.le⟩ ⟨M, hM0⟩ := by
     refine ⟨?_, ?_, ?_, ?_⟩
     · intro t ht
-      refine ((A t).lipschitz.weaken ?_).lipschitzOnWith
+      refine ((A t).lipschitzWith.weaken ?_).lipschitzOnWith
       exact_mod_cast hM t (hsub ht)
     · intro Y _
       exact (hA Y).mono hsub
@@ -156,7 +156,7 @@ theorem exists_linearODE_solution_of_le (A : ℝ → F →L[ℝ] F) {T M : ℝ} 
       ⟨0, ⟨le_rfl, hT.le⟩⟩ Y₀ ⟨1, zero_le_one⟩ 0 ⟨L, hL0⟩ ⟨M, hM0⟩ := by
     refine ⟨?_, ?_, ?_, ?_⟩
     · intro t ht
-      refine ((A t).lipschitz.weaken ?_).lipschitzOnWith
+      refine ((A t).lipschitzWith.weaken ?_).lipschitzOnWith
       exact_mod_cast hM t ht
     · intro Y _
       exact hA Y
@@ -189,7 +189,7 @@ theorem norm_le_mul_exp_of_linearODE (A : ℝ → F →L[ℝ] F) {T M : ℝ} (hM
   have h := dist_le_of_trajectories_ODE_of_mem
     (v := fun s Z => A s Z) (s := fun _ => univ) (K := ⟨M, hM0⟩)
     (f := Y) (g := fun _ => 0) (a := 0) (b := T) (δ := ‖Y 0‖)
-    (fun s hs => ((A s).lipschitz.weaken (by
+    (fun s hs => ((A s).lipschitzWith.weaken (by
       exact_mod_cast hM s (Ico_subset_Icc_self hs))).lipschitzOnWith)
     (fun s hs => (hY s hs).continuousWithinAt)
     (fun s hs => (hY s (Ico_subset_Icc_self hs)).mono_of_mem_nhdsWithin (hIci s hs))
@@ -221,19 +221,19 @@ theorem hasDerivWithinAt_Icc_glue {v : ℝ → F → F} {Y₁ Y₂ : ℝ → F} 
     · rw [le_antisymm hsb hs.1]
       exact hj
     · rfl
-  have hY₁ : ∀ s ∈ Icc a b, (if s ≤ b then Y₁ s else Y₂ s) = Y₁ s := fun s hs => if_pos hs.2
+  have hY₁ : ∀ s ∈ Icc a b, (if s ≤ b then Y₁ s else Y₂ s) = Y₁ s := fun s hs => ite_eq_left hs.2
   by_cases htb : t ≤ b
-  · rw [if_pos htb]
-    refine HasDerivWithinAt.union ((h₁ t ⟨ht.1, htb⟩).congr hY₁ (if_pos htb)) ?_
+  · rw [ite_eq_left htb]
+    refine HasDerivWithinAt.union ((h₁ t ⟨ht.1, htb⟩).congr hY₁ (ite_eq_left htb)) ?_
     rcases htb.lt_or_eq with hlt | rfl
     · refine hasDerivWithinAt_iff_hasFDerivWithinAt.mpr (HasFDerivWithinAt.of_notMem_closure ?_)
       rw [closure_Icc]
       exact fun h => absurd h.1 (not_le.mpr hlt)
     · rw [hj]
       exact (h₂ t ⟨le_rfl, hbc⟩).congr hY₂ (hY₂ t ⟨le_rfl, hbc⟩)
-  · rw [if_neg htb]
+  · rw [ite_eq_right htb]
     have hbt : b < t := not_le.mp htb
-    refine HasDerivWithinAt.union ?_ ((h₂ t ⟨hbt.le, ht.2⟩).congr hY₂ (if_neg htb))
+    refine HasDerivWithinAt.union ?_ ((h₂ t ⟨hbt.le, ht.2⟩).congr hY₂ (ite_eq_right htb))
     refine hasDerivWithinAt_iff_hasFDerivWithinAt.mpr (HasFDerivWithinAt.of_notMem_closure ?_)
     rw [closure_Icc]
     exact fun h => absurd h.2 htb
@@ -537,7 +537,7 @@ theorem hasFDerivAt_flow_of_variational_timeDependent
     (g' := fun s => (fderiv ℝ (f s) (α x s) ∘L Y s) h) (a := 0) (b := T)
     (εf := ε * ((L' : ℝ) * ‖h‖)) (εg := 0) (δ := 0)
     (fun s hs => by
-      refine lipschitzOnWith_univ.mpr ((fderiv ℝ (f s) (α x s)).lipschitz.weaken ?_)
+      refine lipschitzOnWith_univ.mpr ((fderiv ℝ (f s) (α x s)).lipschitzWith.weaken ?_)
       exact_mod_cast hM s (Ico_subset_Icc_self hs) _
         (self_subset_cthickening _ (hαK x hxρ s (Ico_subset_Icc_self hs))))
     ((hcontα _ hxh).sub (hcontα _ hxρ))
@@ -676,7 +676,7 @@ theorem ContDiffAt.exists_localFlow_hasFDerivAt {f : E → E} {x₀ : E} (hf : C
   refine ⟨U, hUo, hx₀U, hUs, hfU, r, hr, ε', hε'0, α, Y', fun x hx => ?_, fun x hx => ?_⟩
   · exact ⟨(hα x hx).1, fun t ht => ((hα x hx).2.1 t (hsub2 ht)).mono hsub2,
       fun t => haU ((hα x hx).2.2 t)⟩
-  · have hYx : Y' x = Y x hx := by simp only [Y', dif_pos hx]
+  · have hYx : Y' x = Y x hx := by simp only [Y', dite_eq_left hx]
     rw [hYx]
     refine ⟨(hY x hx).1, (hY x hx).2, ?_⟩
     -- the core lemma on the ball `closedBall x ρ ⊆ closedBall x₀ r`
@@ -803,7 +803,7 @@ theorem exists_flow_hasFDerivAt_of_norm_fderiv_le
     if hx : x ∈ ball x₀ (a / 2) then Y x hx else fun _ => 1 with hY'
   refine ⟨α, Y', fun x hx => ⟨(hα x hx).1, (hα x hx).2.1, (hα x hx).2.2⟩, hgron,
     fun x hx => ?_, ?_⟩
-  · have hYx : Y' x = Y x hx := by simp only [Y', dif_pos hx]
+  · have hYx : Y' x = Y x hx := by simp only [Y', dite_eq_left hx]
     rw [hYx]
     refine ⟨(hY x hx).1, (hY x hx).2, ?_⟩
     set ρ : ℝ := a / 2 - dist x x₀ with hρ
@@ -852,8 +852,8 @@ theorem exists_flow_hasFDerivAt_of_norm_fderiv_le
       rw [dist_eq_norm] at this
       exact this.le
     show dist (Y' y t) (Y' x t) < ε
-    have hYx : Y' x = Y x hx := by simp only [Y', dif_pos hx]
-    have hYy : Y' y = Y y hy := by simp only [Y', dif_pos hy]
+    have hYx : Y' x = Y x hx := by simp only [Y', dite_eq_left hx]
+    have hYy : Y' y = Y y hy := by simp only [Y', dite_eq_left hy]
     rw [hYy, hYx, dist_comm]
     calc dist (Y x hx t) (Y y hy t)
         ≤ ε₁ * Real.exp (M * T) * (T * Real.exp (M * T)) :=
@@ -910,7 +910,6 @@ theorem form_invariant_of_flatLieDeriv_eq_zero_timeDependent
     have h4 := h3.hasDerivWithinAt
     have := hL s hs _ (hαU s hs) (fun i => Y s (m i))
     convert h4 using 1
-    all_goals try rfl
     simp only [add_apply, ContinuousLinearMap.comp_apply, sum_apply,
       ContinuousLinearMap.toSpanSingleton_apply, ContinuousLinearMap.smulRight_apply, one_smul,
       one_apply_eq_self, ContinuousAlternatingMap.apply_apply,

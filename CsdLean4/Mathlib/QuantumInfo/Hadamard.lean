@@ -60,11 +60,11 @@ lemma applyHn_apply (ψ : QReg n) (y : Fin n → Fin 2) :
 theorem Hn_apply_zero (y : Fin n → Fin 2) :
     applyHn (basisState 0) y = ((Real.sqrt 2 : ℂ)⁻¹) ^ n := by
   rw [applyHn_apply, Finset.sum_eq_single (0 : Fin n → Fin 2)]
-  · rw [basisState_apply, if_pos rfl, mul_one, Hn_apply]
+  · rw [basisState_apply, ite_eq_left rfl, mul_one, Hn_apply]
     rw [show (fun i => hadEntry (y i) ((0 : Fin n → Fin 2) i)) = fun _ => (Real.sqrt 2 : ℂ)⁻¹
         from funext fun i => by rw [Pi.zero_apply, hadEntry_zero_right]]
     rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-  · intro x _ hx; rw [basisState_apply, if_neg hx, mul_zero]
+  · intro x _ hx; rw [basisState_apply, ite_eq_right hx, mul_zero]
   · intro h; exact absurd (Finset.mem_univ _) h
 
 /-! ## R3 — character orthogonality ⟹ `H^⊗n` unitary
@@ -130,9 +130,9 @@ theorem Hn_unitary : (Hn : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)ᴴ * 
   simp_rw [hadEntry_mul_sum]
   by_cases h : x = x'
   · subst h; simp
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     obtain ⟨i, hi⟩ := Function.ne_iff.1 h
-    exact Finset.prod_eq_zero (Finset.mem_univ i) (if_neg hi)
+    exact Finset.prod_eq_zero (Finset.mem_univ i) (ite_eq_right hi)
 
 /-- **`H^⊗n` is an involution:** applying the Hadamard transform twice is the identity
 (`Hn * Hn = 1`), since `Hn` is both Hermitian and unitary. -/

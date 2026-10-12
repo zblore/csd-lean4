@@ -239,11 +239,11 @@ theorem partialTraceRight_posSemidef {M : Matrix (n × m) (n × m) ℂ} (hM : M.
       rw [Fintype.sum_prod_type]
       refine Finset.sum_congr rfl fun j _ => ?_
       rw [Finset.sum_eq_single k]
-      · simp only [hw, if_pos rfl]
-      · intro l _ hl; simp only [hw, if_neg hl, mul_zero]
+      · simp only [hw, ite_eq_left rfl]
+      · intro l _ hl; simp only [hw, ite_eq_right hl, mul_zero]
       · intro hk; exact absurd (Finset.mem_univ k) hk
     · intro k' _ hk'
-      simp only [hw, if_neg hk', star_zero, zero_mul, Finset.sum_const_zero]
+      simp only [hw, ite_eq_right hk', star_zero, zero_mul, Finset.sum_const_zero]
     · intro hk; exact absurd (Finset.mem_univ k) hk
   -- the reduced quadratic form is the sum over k of those (Fubini in the traced index).
   have key : star v ⬝ᵥ (partialTraceRight M *ᵥ v) = ∑ k : m, star (w k) ⬝ᵥ (M *ᵥ (w k)) := by
@@ -277,11 +277,11 @@ theorem partialTraceLeft_posSemidef {M : Matrix (n × m) (n × m) ℂ} (hM : M.P
     · rw [Fintype.sum_prod_type, Finset.sum_comm]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [Finset.sum_eq_single i]
-      · simp only [hw, if_pos rfl]
-      · intro i' _ hi'; simp only [hw, if_neg hi', mul_zero]
+      · simp only [hw, ite_eq_left rfl]
+      · intro i' _ hi'; simp only [hw, ite_eq_right hi', mul_zero]
       · intro hi; exact absurd (Finset.mem_univ i) hi
     · intro i' _ hi'
-      simp only [hw, if_neg hi', star_zero, zero_mul, Finset.sum_const_zero]
+      simp only [hw, ite_eq_right hi', star_zero, zero_mul, Finset.sum_const_zero]
     · intro hi; exact absurd (Finset.mem_univ i) hi
   have key : star v ⬝ᵥ (partialTraceLeft M *ᵥ v) = ∑ i : n, star (w i) ⬝ᵥ (M *ᵥ (w i)) := by
     rw [star_dotProduct_mulVec_eq_sum]
@@ -342,7 +342,7 @@ theorem trace_mul_kronecker_one_right (M : Matrix (n × m) (n × m) ℂ) (X : Ma
   rw [Finset.sum_eq_single k]
   · rw [Matrix.kronecker_apply, Matrix.one_apply_eq, mul_one]
   · intro l _ hl
-    rw [Matrix.kronecker_apply, Matrix.one_apply, if_neg hl, mul_zero, mul_zero]
+    rw [Matrix.kronecker_apply, Matrix.one_apply, ite_eq_right hl, mul_zero, mul_zero]
   · intro hk; exact absurd (Finset.mem_univ k) hk
 
 omit [DecidableEq m] in
@@ -365,7 +365,7 @@ theorem trace_mul_one_kronecker_left (M : Matrix (n × m) (n × m) ℂ) (Y : Mat
   rw [Finset.sum_eq_single i]
   · rw [Matrix.kronecker_apply, Matrix.one_apply_eq, one_mul]
   · intro i' _ hi'
-    rw [Matrix.kronecker_apply, Matrix.one_apply, if_neg hi', zero_mul, mul_zero]
+    rw [Matrix.kronecker_apply, Matrix.one_apply, ite_eq_right hi', zero_mul, mul_zero]
   · intro hi; exact absurd (Finset.mem_univ i) hi
 
 end QuantumInfo

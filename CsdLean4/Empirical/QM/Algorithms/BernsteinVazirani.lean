@@ -94,11 +94,11 @@ lemma bitInner_char_sum (z : Fin n → Fin 2) :
   simp_rw [hfacf]
   by_cases hz : z = 0
   · subst hz
-    simp only [Pi.zero_apply, if_true, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
-  · rw [if_neg hz]
+    simp only [Pi.zero_apply, ite_true, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
+  · rw [ite_eq_right hz]
     obtain ⟨i, hi⟩ := Function.ne_iff.1 hz
     refine Finset.prod_eq_zero (Finset.mem_univ i) ?_
-    rw [if_neg (by simpa using hi)]
+    rw [ite_eq_right (by simpa using hi)]
 
 /-- `bxor y a = 0` over `𝔽₂` exactly when `y = a` (bitwise: `yᵢ + aᵢ = 0 ↔ yᵢ = aᵢ`). -/
 lemma bxor_eq_zero_iff (y a : Fin n → Fin 2) : bxor y a = 0 ↔ y = a := by
@@ -137,19 +137,19 @@ theorem bv_amplitude (a y : Fin n → Fin 2) :
   rw [← Finset.mul_sum, bitInner_char_sum (bxor y a)]
   simp only [bxor_eq_zero_iff]
   by_cases h : y = a
-  · rw [if_pos h, if_pos h, inv_mul_cancel₀ (pow_ne_zero n (by norm_num : (2 : ℂ) ≠ 0))]
-  · rw [if_neg h, if_neg h, mul_zero]
+  · rw [ite_eq_left h, ite_eq_left h, inv_mul_cancel₀ (pow_ne_zero n (by norm_num : (2 : ℂ) ≠ 0))]
+  · rw [ite_eq_right h, ite_eq_right h, mul_zero]
 
 /-- **Bernstein–Vazirani:** the hidden linear string `a` is measured with **certainty** after
 one query. -/
 theorem bv_certain (a : Fin n → Fin 2) : prob (bvCircuit a (basisState 0)) a = 1 := by
-  rw [prob, bv_amplitude, if_pos rfl, norm_one, one_pow]
+  rw [prob, bv_amplitude, ite_eq_left rfl, norm_one, one_pow]
 
 /-- **Bernstein–Vazirani:** every outcome other than the hidden string `a` has probability
 `0`. -/
 theorem bv_zero (a y : Fin n → Fin 2) (h : y ≠ a) :
     prob (bvCircuit a (basisState 0)) y = 0 := by
-  rw [prob, bv_amplitude, if_neg h, norm_zero]
+  rw [prob, bv_amplitude, ite_eq_right h, norm_zero]
   norm_num
 
 end BernsteinVazirani

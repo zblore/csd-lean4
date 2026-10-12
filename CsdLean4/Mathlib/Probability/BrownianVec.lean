@@ -13,6 +13,7 @@ public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
 public import Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
 public import Mathlib.Probability.Distributions.Gaussian.Real
 public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 
 /-!
 # Brownian motion in `ℝᵈ` as independent real coordinates
@@ -96,8 +97,8 @@ theorem indepFun_pi_of_iIndepFun [IsProbabilityMeasure P] {α : ι → Type*}
     IndepFun (fun ω i => x i (F i ω)) (fun ω i => y i (F i ω)) P := by
   have hxm : ∀ i, Measurable fun ω => x i (F i ω) := fun i => (hx i).comp (hFm i)
   have hym : ∀ i, Measurable fun ω => y i (F i ω) := fun i => (hy i).comp (hFm i)
-  have hXm : Measurable fun ω i => x i (F i ω) := measurable_pi_lambda _ hxm
-  have hYm : Measurable fun ω i => y i (F i ω) := measurable_pi_lambda _ hym
+  have hXm : Measurable fun ω i => x i (F i ω) := Measurable.of_eval hxm
+  have hYm : Measurable fun ω i => y i (F i ω) := Measurable.of_eval hym
   rw [indepFun_iff_map_prod_eq_prod_map_map hXm.aemeasurable hYm.aemeasurable]
   -- the joint law of the pairs is a product of products
   have hpair : iIndepFun (fun i ω => (x i (F i ω), y i (F i ω))) P :=
@@ -117,7 +118,7 @@ theorem indepFun_pi_of_iIndepFun [IsProbabilityMeasure P] {α : ι → Type*}
     rfl
   show P.map (fun ω => ((fun i => x i (F i ω)), (fun i => y i (F i ω)))) = _
   rw [hE, ← Measure.map_map (MeasurableEquiv.arrowProdEquivProdArrow β γ ι).measurable
-    (measurable_pi_lambda _ hZm), hZ]
+    (Measurable.of_eval hZm), hZ]
   simp_rw [hpair_law]
   rw [(measurePreserving_arrowProdEquivProdArrow β γ ι _ _).map_eq, hX, hY]
 
@@ -139,7 +140,7 @@ noncomputable def gaussianVec (ι : Type*) [Fintype ι] (v : ℝ≥0) : Measure 
   (Measure.pi fun _ : ι => gaussianReal 0 v).map (WithLp.toLp 2)
 
 instance (v : ℝ≥0) : IsProbabilityMeasure (gaussianVec ι v) :=
-  Measure.isProbabilityMeasure_map (WithLp.measurable_toLp 2 _).aemeasurable
+  Measure.isProbabilityMeasure_map' (WithLp.measurable_toLp 2 _).aemeasurable
 
 /-- The characteristic function of the product Gaussian: `e^{−v‖ξ‖²/2}`. -/
 theorem charFun_gaussianVec (v : ℝ≥0) (ξ : EuclideanSpace ℝ ι) :
@@ -193,7 +194,7 @@ theorem hasLaw_eval (hBm : ∀ t, Measurable (B t)) (t : ℝ≥0) :
       funext i
       exact hlaw i
     have hF : Measurable fun ω (i : ι) => B t ω i :=
-      measurable_pi_lambda _ fun i => (measurable_coord i).comp (hBm t)
+      Measurable.of_eval fun i => (measurable_coord i).comp (hBm t)
     rw [gaussianVec, ← hmap', Measure.map_map (WithLp.measurable_toLp 2 _) hF]
     congr 1
 
@@ -203,13 +204,13 @@ theorem shift (t₀ : ℝ≥0) : IsPreBrownianVec (fun t ω => B (t₀ + t) ω -
   coord i := (hB.coord i).shift t₀
   iIndep :=
     hB.iIndep.comp (fun _ (p : ℝ≥0 → ℝ) => fun t => p (t₀ + t) - p t₀) fun _ =>
-      measurable_pi_lambda _ fun t => (measurable_pi_apply (t₀ + t)).sub (measurable_pi_apply t₀)
+      Measurable.of_eval fun t => (measurable_pi_apply (t₀ + t)).sub (measurable_pi_apply t₀)
 
 /-- ★ **The weak Markov property**: the process shifted by `t₀` is independent of `B t₀`. -/
 theorem indepFun_shift [IsProbabilityMeasure P] (hBm : ∀ t, Measurable (B t)) (t₀ : ℝ≥0) :
     IndepFun (B t₀) (fun ω t => B (t₀ + t) ω - B t₀ ω) P := by
   have hFm : ∀ i, Measurable fun ω (t : ℝ≥0) => B t ω i := fun i =>
-    measurable_pi_lambda _ fun t => (measurable_coord i).comp (hBm t)
+    Measurable.of_eval fun t => (measurable_coord i).comp (hBm t)
   have hpair : ∀ i, IndepFun (fun ω => (fun t : ℝ≥0 => B t ω i) t₀)
       (fun ω => (fun t => (fun t : ℝ≥0 => B t ω i) (t₀ + t) - (fun t : ℝ≥0 => B t ω i) t₀)) P := by
     intro i
@@ -218,13 +219,13 @@ theorem indepFun_shift [IsProbabilityMeasure P] (hBm : ∀ t, Measurable (B t)) 
     exact h.symm
   have h := indepFun_pi_of_iIndepFun hB.iIndep hFm (x := fun _ (p : ℝ≥0 → ℝ) => p t₀)
     (y := fun _ (p : ℝ≥0 → ℝ) => fun t => p (t₀ + t) - p t₀) (fun _ => measurable_pi_apply t₀)
-    (fun _ => measurable_pi_lambda _ fun t =>
+    (fun _ => Measurable.of_eval fun t =>
       (measurable_pi_apply (t₀ + t)).sub (measurable_pi_apply t₀))
     hpair
   have h2 := h.comp (WithLp.measurable_toLp 2 (ι → ℝ))
-    (measurable_pi_lambda (fun (g : ι → ℝ≥0 → ℝ) (t : ℝ≥0) => WithLp.toLp 2 fun i => g i t)
+    (Measurable.of_eval (f := fun (g : ι → ℝ≥0 → ℝ) (t : ℝ≥0) => WithLp.toLp 2 fun i => g i t)
       fun t => (WithLp.measurable_toLp 2 _).comp
-        (measurable_pi_lambda _ fun i => (measurable_pi_apply t).comp (measurable_pi_apply i)))
+        (Measurable.of_eval fun i => (measurable_pi_apply t).comp (measurable_pi_apply i)))
   refine h2.congr (Filter.EventuallyEq.of_eq (funext fun ω => rfl))
     (Filter.EventuallyEq.of_eq (funext fun ω => funext fun t => ?_))
   ext i

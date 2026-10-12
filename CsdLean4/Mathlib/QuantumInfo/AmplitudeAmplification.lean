@@ -124,8 +124,8 @@ lemma goodProj_ampState {G : Finset ι} {g b : EuclideanSpace ℂ ι}
   ext i
   rw [goodProj_apply, WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul]
   by_cases hi : i ∈ G
-  · rw [if_pos hi, ampState_apply, hbsupp i hi, mul_zero, add_zero]
-  · rw [if_neg hi, hgsupp i hi, mul_zero]
+  · rw [ite_eq_left hi, ampState_apply, hbsupp i hi, mul_zero, add_zero]
+  · rw [ite_eq_right hi, hgsupp i hi, mul_zero]
 
 omit [Fintype ι] in
 /-- **The oracle flip negates the angle**: `oracleFlip (ampState γ) = ampState (−γ)`. -/
@@ -239,13 +239,13 @@ omit [Fintype ι] in
 lemma goodUnit_supp (G : Finset ι) (ψ : EuclideanSpace ℂ ι) :
     ∀ i ∉ G, goodUnit G ψ i = 0 := by
   intro i hi
-  rw [goodUnit_apply, if_neg hi, mul_zero]
+  rw [goodUnit_apply, ite_eq_right hi, mul_zero]
 
 omit [Fintype ι] in
 lemma badUnit_supp (G : Finset ι) (ψ : EuclideanSpace ℂ ι) :
     ∀ i ∈ G, badUnit G ψ i = 0 := by
   intro i hi
-  rw [badUnit_apply, if_pos hi, sub_self, mul_zero]
+  rw [badUnit_apply, ite_eq_left hi, sub_self, mul_zero]
 
 section Decomposition
 
@@ -269,7 +269,7 @@ lemma goodUnit_weight (ha0 : 0 < goodProb G ψ) :
     ∑ i ∈ G, ‖goodUnit G ψ i‖ ^ 2 = 1 := by
   have hterm : ∀ i ∈ G, ‖goodUnit G ψ i‖ ^ 2 = (goodProb G ψ)⁻¹ * ‖ψ i‖ ^ 2 := by
     intro i hi
-    rw [goodUnit_apply, if_pos hi, norm_mul, mul_pow, norm_inv, Complex.norm_real,
+    rw [goodUnit_apply, ite_eq_left hi, norm_mul, mul_pow, norm_inv, Complex.norm_real,
       Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _), inv_pow,
       Real.sq_sqrt (goodProb_nonneg G ψ)]
   rw [Finset.sum_congr rfl hterm, ← Finset.mul_sum]
@@ -310,7 +310,7 @@ lemma inner_badUnit_self (hψ : ‖ψ‖ = 1) (ha1 : goodProb G ψ < 1) :
       = (1 - goodProb G ψ)⁻¹ * ‖ψ i‖ ^ 2 := by
     intro i hi
     have hiG : i ∉ G := by simpa using hi
-    rw [badUnit_apply, if_neg hiG, sub_zero, norm_mul, mul_pow, norm_inv, Complex.norm_real,
+    rw [badUnit_apply, ite_eq_right hiG, sub_zero, norm_mul, mul_pow, norm_inv, Complex.norm_real,
       Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _), inv_pow,
       Real.sq_sqrt (by linarith : (0:ℝ) ≤ 1 - goodProb G ψ)]
   have hsum2 : ∑ i ∈ Gᶜ, ‖badUnit G ψ i‖ ^ 2

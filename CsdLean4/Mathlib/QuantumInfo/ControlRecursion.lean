@@ -151,32 +151,32 @@ theorem xGate_apply (a : Fin m) (k l : Fin m → Fin 2) :
   by_cases hag : ∀ i, i ≠ a → k i = l i
   · rw [xGate, singleGate, ctrlSet_apply_of_ctrl hag (by simp), blockEntry]
     by_cases hka : k a = l a
-    · rw [if_neg (fun h => (eq_flipAt_iff.mp h).2 hka)]
+    · rw [ite_eq_right (fun h => (eq_flipAt_iff.mp h).2 hka)]
       rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (k a) with h | h <;>
         rw [h] at hka ⊢ <;> rw [← hka] <;> simp
-    · rw [if_pos (eq_flipAt_iff.mpr ⟨hag, hka⟩)]
+    · rw [ite_eq_left (eq_flipAt_iff.mpr ⟨hag, hka⟩)]
       rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (k a) with h | h <;>
         rw [h] at hka ⊢ <;> rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (l a) with h' | h' <;>
         rw [h'] at hka ⊢ <;> simp_all
-  · rw [xGate, singleGate, ctrlSet_apply_of_not_agree hag, if_neg]
+  · rw [xGate, singleGate, ctrlSet_apply_of_not_agree hag, ite_eq_right]
     intro h
     exact hag (eq_flipAt_iff.mp h).1
 
 theorem xGate_mul_apply (a : Fin m) (G : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ)
     (k l : Fin m → Fin 2) : (xGate a * G) k l = G (flipAt a k) l := by
   rw [Matrix.mul_apply, Finset.sum_eq_single (flipAt a k)]
-  · rw [xGate_apply, if_pos rfl, one_mul]
+  · rw [xGate_apply, ite_eq_left rfl, one_mul]
   · intro p _ hp
-    rw [xGate_apply, if_neg hp, zero_mul]
+    rw [xGate_apply, ite_eq_right hp, zero_mul]
   · intro h
     exact absurd (Finset.mem_univ _) h
 
 theorem mul_xGate_apply (a : Fin m) (G : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ)
     (k l : Fin m → Fin 2) : (G * xGate a) k l = G k (flipAt a l) := by
   rw [Matrix.mul_apply, Finset.sum_eq_single (flipAt a l)]
-  · rw [xGate_apply, flipAt_flipAt, if_pos rfl, mul_one]
+  · rw [xGate_apply, flipAt_flipAt, ite_eq_left rfl, mul_one]
   · intro p _ hp
-    rw [xGate_apply, if_neg, mul_zero]
+    rw [xGate_apply, ite_eq_right, mul_zero]
     intro hl
     exact hp (by rw [hl, flipAt_flipAt])
   · intro h
@@ -237,18 +237,18 @@ def flipBlock : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ :=
 
 theorem diagBlock_apply_of_fst_ne {A B : Matrix (Fin 2) (Fin 2) ℂ} {p q : Fin 2 × Fin 2}
     (h : p.1 ≠ q.1) : diagBlock A B p q = 0 := by
-  rw [diagBlock, if_neg h]
+  rw [diagBlock, ite_eq_right h]
 
 theorem diagBlock_apply_of_fst_eq {A B : Matrix (Fin 2) (Fin 2) ℂ} {p q : Fin 2 × Fin 2}
     (h : p.1 = q.1) : diagBlock A B p q = (if p.1 = 0 then A else B) p.2 q.2 := by
-  rw [diagBlock, if_pos h]
+  rw [diagBlock, ite_eq_left h]
 
 theorem flipBlock_apply_of_snd_ne {p q : Fin 2 × Fin 2} (h : p.2 ≠ q.2) : flipBlock p q = 0 := by
-  rw [flipBlock, if_neg h]
+  rw [flipBlock, ite_eq_right h]
 
 theorem flipBlock_apply_of_snd_eq {p q : Fin 2 × Fin 2} (h : p.2 = q.2) :
     flipBlock p q = xMat p.1 q.1 := by
-  rw [flipBlock, if_pos h]
+  rw [flipBlock, ite_eq_left h]
 
 theorem diagBlock_mul (A B C D : Matrix (Fin 2) (Fin 2) ℂ) :
     diagBlock A B * diagBlock C D = diagBlock (A * C) (B * D) := by
@@ -296,12 +296,12 @@ theorem pairSet_apply_of_agree {M N : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) �
     {k l : Fin m → Fin 2} (hag : ∀ i, i ≠ u → i ≠ t → k i = l i) :
     pairSet S u t pat M N k l =
       (if ∀ i ∈ S, k i = pat i then M else N) (k u, k t) (l u, l t) := by
-  rw [pairSet, if_pos hag]
+  rw [pairSet, ite_eq_left hag]
 
 theorem pairSet_apply_of_not_agree {M N : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ}
     {k l : Fin m → Fin 2} (h : ¬(∀ i, i ≠ u → i ≠ t → k i = l i)) :
     pairSet S u t pat M N k l = 0 := by
-  rw [pairSet, if_neg h]
+  rw [pairSet, ite_eq_right h]
 
 /-- Every sum here collapses to the four labels that agree with `k` away from the pair. -/
 theorem sum_collapse_pair (hut : u ≠ t) (k : Fin m → Fin 2) (f : (Fin m → Fin 2) → ℂ)
@@ -384,14 +384,14 @@ theorem pairSet_mul (hut : u ≠ t) (huS : u ∉ S) (htS : t ∉ S)
       rw [pairSet_apply_of_not_agree (fun hc => hp fun i hiu hit => (hc i hiu hit).symm), zero_mul]
     rw [hcol, pairSet_apply_of_agree hag, Fintype.sum_prod_type]
     by_cases hc : ∀ i ∈ S, k i = pat i
-    · rw [if_pos hc, Matrix.mul_apply, Fintype.sum_prod_type]
+    · rw [ite_eq_left hc, Matrix.mul_apply, Fintype.sum_prod_type]
       refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun b' _ => ?_
       rw [pairSet_apply_of_agree (hagp (b, b')), pairSet_apply_of_agree (hagl (b, b')),
-        if_pos hc, if_pos ((key (b, b')).mpr hc), hvu (b, b'), hvt (b, b')]
-    · rw [if_neg hc, Matrix.mul_apply, Fintype.sum_prod_type]
+        ite_eq_left hc, ite_eq_left ((key (b, b')).mpr hc), hvu (b, b'), hvt (b, b')]
+    · rw [ite_eq_right hc, Matrix.mul_apply, Fintype.sum_prod_type]
       refine Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun b' _ => ?_
       rw [pairSet_apply_of_agree (hagp (b, b')), pairSet_apply_of_agree (hagl (b, b')),
-        if_neg hc, if_neg (fun h => hc ((key (b, b')).mp h)), hvu (b, b'), hvt (b, b')]
+        ite_eq_right hc, ite_eq_right (fun h => hc ((key (b, b')).mp h)), hvu (b, b'), hvt (b, b')]
   · rw [pairSet_apply_of_not_agree hag, Matrix.mul_apply]
     refine Finset.sum_eq_zero fun p _ => ?_
     by_cases hp : ∀ i, i ≠ u → i ≠ t → k i = p i
@@ -442,12 +442,12 @@ theorem pairSet_eq_ctrlOf (hut : u ≠ t) (V : Matrix (Fin 2) (Fin 2) ℂ) :
         diagBlock_apply_of_fst_eq (show ((k u, k t) : Fin 2 × Fin 2).1 = (l u, l t).1 from hu)]
       by_cases hk1 : k u = 1
       · rw [ctrlSetOf_apply_block hagt (by simpa using hk1), hk1]
-        rw [if_neg (by decide : ¬((1 : Fin 2) = 0))]
+        rw [ite_eq_right (by decide : ¬((1 : Fin 2) = 0))]
       · have hk0 : k u = 0 := by
           rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (k u) with h | h
           · exact h
           · exact absurd h hk1
-        rw [ctrlSetOf_apply_id hagt (by simpa using hk1), hk0, if_pos rfl]
+        rw [ctrlSetOf_apply_id hagt (by simpa using hk1), hk0, ite_eq_left rfl]
     · rw [pairSet_apply_of_not_agree, ctrlOf_eq_ctrlSetOf, ctrlSetOf_apply_of_not_agree hagt]
       intro hag
       exact hagt fun i hit => by
@@ -470,12 +470,12 @@ theorem pairSet_eq_ctrlSetOf_fst (hut : u ≠ t) :
     · have hag : ∀ i, i ≠ u → i ≠ t → k i = l i := fun i hiu _ => hagu i hiu
       rw [pairSet_apply_of_agree hag]
       by_cases hc : ∀ i ∈ S, k i = pat i
-      · rw [if_pos hc, ctrlSetOf_apply_block hagu hc,
+      · rw [ite_eq_left hc, ctrlSetOf_apply_block hagu hc,
           flipBlock_apply_of_snd_eq (show ((k u, k t) : Fin 2 × Fin 2).2 = (l u, l t).2 from ht)]
-      · rw [if_neg hc, ctrlSetOf_apply_id hagu hc, one_pair_apply, Matrix.one_apply]
+      · rw [ite_eq_right hc, ctrlSetOf_apply_id hagu hc, one_pair_apply, Matrix.one_apply]
         by_cases h : k u = l u
-        · rw [if_pos (Prod.ext h ht), if_pos h]
-        · rw [if_neg (fun hc' => h (congrArg Prod.fst hc')), if_neg h]
+        · rw [ite_eq_left (Prod.ext h ht), ite_eq_left h]
+        · rw [ite_eq_right (fun hc' => h (congrArg Prod.fst hc')), ite_eq_right h]
     · rw [pairSet_apply_of_not_agree, ctrlSetOf_apply_of_not_agree hagu]
       intro hag
       exact hagu fun i hiu => by
@@ -488,7 +488,7 @@ theorem pairSet_eq_ctrlSetOf_fst (hut : u ≠ t) :
     · rw [pairSet_apply_of_agree hag]
       split
       · exact flipBlock_apply_of_snd_ne ht
-      · rw [one_pair_apply, if_neg (fun hc => ht (congrArg Prod.snd hc))]
+      · rw [one_pair_apply, ite_eq_right (fun hc => ht (congrArg Prod.snd hc))]
     · rw [pairSet_apply_of_not_agree hag]
 
 /-- The multiply-controlled gate on the second qubit of the pair. -/
@@ -500,13 +500,13 @@ theorem pairSet_eq_ctrlSetOf_snd (hut : u ≠ t) (V : Matrix (Fin 2) (Fin 2) ℂ
     · have hag : ∀ i, i ≠ u → i ≠ t → k i = l i := fun i _ hit => hagt i hit
       rw [pairSet_apply_of_agree hag]
       by_cases hc : ∀ i ∈ S, k i = pat i
-      · rw [if_pos hc, ctrlSetOf_apply_block hagt hc,
+      · rw [ite_eq_left hc, ctrlSetOf_apply_block hagt hc,
           diagBlock_apply_of_fst_eq (show ((k u, k t) : Fin 2 × Fin 2).1 = (l u, l t).1 from hu)]
         split <;> rfl
-      · rw [if_neg hc, ctrlSetOf_apply_id hagt hc, one_pair_apply, Matrix.one_apply]
+      · rw [ite_eq_right hc, ctrlSetOf_apply_id hagt hc, one_pair_apply, Matrix.one_apply]
         by_cases h : k t = l t
-        · rw [if_pos (Prod.ext hu h), if_pos h]
-        · rw [if_neg (fun hc' => h (congrArg Prod.snd hc')), if_neg h]
+        · rw [ite_eq_left (Prod.ext hu h), ite_eq_left h]
+        · rw [ite_eq_right (fun hc' => h (congrArg Prod.snd hc')), ite_eq_right h]
     · rw [pairSet_apply_of_not_agree, ctrlSetOf_apply_of_not_agree hagt]
       intro hag
       exact hagt fun i hit => by
@@ -519,7 +519,7 @@ theorem pairSet_eq_ctrlSetOf_snd (hut : u ≠ t) (V : Matrix (Fin 2) (Fin 2) ℂ
     · rw [pairSet_apply_of_agree hag]
       split
       · exact diagBlock_apply_of_fst_ne hu
-      · rw [one_pair_apply, if_neg (fun hc => hu (congrArg Prod.fst hc))]
+      · rw [one_pair_apply, ite_eq_right (fun hc => hu (congrArg Prod.fst hc))]
     · rw [pairSet_apply_of_not_agree hag]
 
 /-- The gate with one more control: the first qubit of the pair joins the control set. -/
@@ -536,21 +536,21 @@ theorem pairSet_eq_ctrlSetOf_insert (hut : u ≠ t) (hpu : pat u = 1)
     · have hag : ∀ i, i ≠ u → i ≠ t → k i = l i := fun i _ hit => hagt i hit
       rw [pairSet_apply_of_agree hag]
       by_cases hc : ∀ i ∈ S, k i = pat i
-      · rw [if_pos hc,
+      · rw [ite_eq_left hc,
           diagBlock_apply_of_fst_eq (show ((k u, k t) : Fin 2 × Fin 2).1 = (l u, l t).1 from hu)]
         by_cases hk1 : k u = 1
         · rw [ctrlSetOf_apply_block hagt ((hins k).mpr ⟨hk1, hc⟩), hk1,
-            if_neg (by decide : ¬((1 : Fin 2) = 0))]
+            ite_eq_right (by decide : ¬((1 : Fin 2) = 0))]
         · have hk0 : k u = 0 := by
             rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (k u) with h | h
             · exact h
             · exact absurd h hk1
-          rw [ctrlSetOf_apply_id hagt (fun h => hk1 ((hins k).mp h).1), hk0, if_pos rfl]
-      · rw [if_neg hc, ctrlSetOf_apply_id hagt (fun h => hc ((hins k).mp h).2), one_pair_apply,
+          rw [ctrlSetOf_apply_id hagt (fun h => hk1 ((hins k).mp h).1), hk0, ite_eq_left rfl]
+      · rw [ite_eq_right hc, ctrlSetOf_apply_id hagt (fun h => hc ((hins k).mp h).2), one_pair_apply,
           Matrix.one_apply]
         by_cases h : k t = l t
-        · rw [if_pos (Prod.ext hu h), if_pos h]
-        · rw [if_neg (fun hc' => h (congrArg Prod.snd hc')), if_neg h]
+        · rw [ite_eq_left (Prod.ext hu h), ite_eq_left h]
+        · rw [ite_eq_right (fun hc' => h (congrArg Prod.snd hc')), ite_eq_right h]
     · rw [pairSet_apply_of_not_agree, ctrlSetOf_apply_of_not_agree hagt]
       intro hag
       exact hagt fun i hit => by
@@ -563,7 +563,7 @@ theorem pairSet_eq_ctrlSetOf_insert (hut : u ≠ t) (hpu : pat u = 1)
     · rw [pairSet_apply_of_agree hag]
       split
       · exact diagBlock_apply_of_fst_ne hu
-      · rw [one_pair_apply, if_neg (fun hc => hu (congrArg Prod.fst hc))]
+      · rw [one_pair_apply, ite_eq_right (fun hc => hu (congrArg Prod.fst hc))]
     · rw [pairSet_apply_of_not_agree hag]
 
 /-- ★★ **The control-count recursion** (Nielsen–Chuang Figure 4.10, ancilla-free): one more control

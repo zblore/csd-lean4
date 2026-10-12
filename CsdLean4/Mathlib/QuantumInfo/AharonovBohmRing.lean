@@ -130,16 +130,16 @@ theorem self_ne_add_two (hN : 3 ≤ N) (i : ZMod N) : i ≠ i + 2 := by
 
 theorem ringHamOf_apply_of_ne {a : ZMod N → ℝ} {i j : ZMod N} (h1 : i ≠ j + 1) (h2 : j ≠ i + 1) :
     ringHamOf N a i j = 0 := by
-  rw [ringHamOf, Matrix.of_apply, if_neg h1, if_neg h2]
+  rw [ringHamOf, Matrix.of_apply, ite_eq_right h1, ite_eq_right h2]
 
 theorem ringHamOf_apply_succ (a : ZMod N → ℝ) (j : ZMod N) :
     ringHamOf N a (j + 1) j = Complex.exp (((a j : ℝ) : ℂ) * Complex.I) := by
-  rw [ringHamOf, Matrix.of_apply, if_pos rfl]
+  rw [ringHamOf, Matrix.of_apply, ite_eq_left rfl]
 
 theorem ringHamOf_apply_pred (hN : 3 ≤ N) (a : ZMod N → ℝ) (j : ZMod N) :
     ringHamOf N a j (j + 1) = conj (Complex.exp (((a j : ℝ) : ℂ) * Complex.I)) := by
-  rw [ringHamOf, Matrix.of_apply, if_neg (fun h => self_ne_add_two hN j (by linear_combination h)),
-    if_pos rfl]
+  rw [ringHamOf, Matrix.of_apply, ite_eq_right (fun h => self_ne_add_two hN j (by linear_combination h)),
+    ite_eq_left rfl]
 
 /-- ★ **The ring Hamiltonian is Hermitian.** -/
 theorem ringHamOf_isHermitian (hN : 3 ≤ N) (a : ZMod N → ℝ) :
@@ -376,12 +376,12 @@ theorem uniform_add_oneBondGauge (hN : 3 ≤ N) (Φ : ℝ) (j : ZMod N) :
   by_cases h : j = -1
   · obtain ⟨n, rfl⟩ : ∃ n, N = n + 1 := ⟨N - 1, by omega⟩
     subst h
-    rw [oneBondPhase, if_pos rfl, oneBondGauge, oneBondGauge, neg_add_cancel, ZMod.val_zero,
+    rw [oneBondPhase, ite_eq_left rfl, oneBondGauge, oneBondGauge, neg_add_cancel, ZMod.val_zero,
       ZMod.val_neg_one]
     push_cast at hNne ⊢
     field_simp
     ring
-  · rw [oneBondPhase, if_neg h, oneBondGauge, oneBondGauge, val_add_one_of_ne hN h]
+  · rw [oneBondPhase, ite_eq_right h, oneBondGauge, oneBondGauge, val_add_one_of_ne hN h]
     push_cast
     ring
 
@@ -447,8 +447,8 @@ theorem dftMatrix_conjTranspose_mul : (dftMatrix N)ᴴ * dftMatrix N = 1 := by
   rw [Finset.sum_congr rfl fun j _ => hterm j, ← Finset.sum_div, sum_stdAddChar_mul]
   have hNc : (N : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (NeZero.ne N)
   by_cases h : k = k'
-  · rw [if_pos h, if_pos (by rw [h]; ring), div_self hNc]
-  · rw [if_neg h, if_neg (fun hz => h (by linear_combination hz))]
+  · rw [ite_eq_left h, ite_eq_left (by rw [h]; ring), div_self hNc]
+  · rw [ite_eq_right h, ite_eq_right (fun hz => h (by linear_combination hz))]
     simp
 
 theorem dftMatrix_mul_conjTranspose : dftMatrix N * (dftMatrix N)ᴴ = 1 :=

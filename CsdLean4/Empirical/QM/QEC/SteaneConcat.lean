@@ -242,7 +242,7 @@ theorem exists_cBlocks_eq (k : ℕ) (i : cFam (k + 1)) {b : Fin 7} (hb : b ≠ c
       obtain ⟨b₀, u, v⟩ := p
       exact ⟨g b, by
         show (if b = b₀ then Matrix.single u v 1 else cErr k (g b)) = cErr k (g b)
-        rw [if_neg (show b ≠ b₀ from hb)]⟩
+        rw [ite_eq_right (show b ≠ b₀ from hb)]⟩
 
 /-- ★★★ **Knill–Laflamme at every level, in encoder form.** Every pair of the level-`k` family acts
 on the encoded qubit as a scalar: the good blocks by induction, the one arbitrary block of each error
@@ -364,10 +364,10 @@ theorem patErr_mem_span : ∀ (k : ℕ) (x : ConcatPat 7 k), isBad 7 k x = false
         rw [Fintype.sum_sum_type]
         simp only [cSpanCoef, cSpanFam, Sum.elim_inl, Sum.elim_inr]
         by_cases hb : b = b₀
-        · simp only [if_pos hb, zero_smul, Finset.sum_const_zero, zero_add]
+        · simp only [ite_eq_left hb, zero_smul, Finset.sum_const_zero, zero_add]
           rw [hb]
           exact hbad
-        · simp only [if_neg hb, zero_smul, Finset.sum_const_zero, add_zero]
+        · simp only [ite_eq_right hb, zero_smul, Finset.sum_const_zero, add_zero]
           exact ha b hb
       have hexp : E = ∑ g : Fin 7 → (cFam k ⊕ (cLabel k × cLabel k)),
           (∏ b, cSpanCoef k b₀ a (N b₀) b (g b)) • blockKron (fun b => cSpanFam k (g b)) := by
@@ -390,7 +390,7 @@ theorem patErr_mem_span : ∀ (k : ℕ) (x : ConcatPat 7 k), isBad 7 k x = false
             refine absurd ?_ (hne b₀)
             rw [hg]
             show (if b₀ = b₀ then (0 : ℂ) else a b₀ i) = 0
-            rw [if_pos rfl]
+            rw [ite_eq_left rfl]
         | inr q => exact ⟨q, rfl⟩
       have hinl : ∀ b, b ≠ b₀ → ∃ i, g b = Sum.inl i := by
         intro b hb
@@ -400,7 +400,7 @@ theorem patErr_mem_span : ∀ (k : ℕ) (x : ConcatPat 7 k), isBad 7 k x = false
             refine absurd ?_ (hne b)
             rw [hg]
             show (if b = b₀ then N b₀ q.1 q.2 else (0 : ℂ)) = 0
-            rw [if_neg hb]
+            rw [ite_eq_right hb]
       refine Submodule.subset_span
         ⟨((fun b => Sum.elim id (fun _ => cIdOne k) (g b), some (b₀, p.1, p.2)) : cFam (k + 1)), ?_⟩
       show blockKron (fun b => if b = b₀ then Matrix.single p.1 p.2 (1 : ℂ)
@@ -409,10 +409,10 @@ theorem patErr_mem_span : ∀ (k : ℕ) (x : ConcatPat 7 k), isBad 7 k x = false
       refine congrArg blockKron (funext fun b => ?_)
       by_cases hb : b = b₀
       · subst hb
-        rw [if_pos rfl, hp]
+        rw [ite_eq_left rfl, hp]
         rfl
       · obtain ⟨i, hi⟩ := hinl b hb
-        rw [if_neg hb, hi]
+        rw [ite_eq_right hb, hi]
         rfl
 
 /-! ### The concatenated quantum recovery -/

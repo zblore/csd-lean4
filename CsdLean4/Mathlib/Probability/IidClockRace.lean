@@ -621,7 +621,7 @@ theorem HasRaceProperty.exists_eq_expMeasure {μ : Measure ℝ} [IsProbabilityMe
     set c : ℝ := Real.exp (-(lam * s)) with hc
     have hcpos : 0 < c := Real.exp_pos _
     have hset : Ioi s =ᵐ[μ] (survival μ) ⁻¹' (Iio c) := by
-      rw [Filter.eventuallyEq_set]
+      rw [Filter.eventuallyEqSet_iff]
       filter_upwards [hreg] with t ht
       rw [Set.mem_Ioi, Set.mem_preimage, Set.mem_Iio, hG t ht, hc, Real.exp_lt_exp]
       constructor <;> intro hh <;> nlinarith [hlampos]
@@ -646,7 +646,7 @@ theorem HasRaceProperty.exists_eq_expMeasure {μ : Measure ℝ} [IsProbabilityMe
         simp only [Set.mem_inter_iff, Set.mem_Iio, Set.mem_Icc]
         exact ⟨fun hx => hx.2, fun hx => ⟨lt_of_le_of_lt hx.2 hc1, hx⟩⟩
       have hIic : expMeasure lam (Iic s) = 0 := by
-        rw [← ofReal_cdf, cdf_expMeasure_eq hlampos s, if_neg (not_le.mpr hs)]
+        rw [← ofReal_cdf, cdf_expMeasure_eq hlampos s, ite_eq_right (not_le.mpr hs)]
         simp
       rw [hslice, Real.volume_Icc, ← compl_Iic, prob_compl_eq_one_sub measurableSet_Iic, hIic]
       simp

@@ -282,7 +282,7 @@ theorem traceLeft_conjTranspose_kronecker_one
     simp only [Matrix.mul_apply, conjTranspose_apply, kronecker_apply, one_apply,
       Fintype.sum_prod_type, apply_ite star, star_zero, mul_ite, ite_mul,
       mul_zero, zero_mul, mul_one, Finset.sum_ite_eq,
-      Finset.mem_univ, if_true]
+      Finset.mem_univ, ite_true]
     -- Bob deltas collapsed (b = i, d = j); after collapse the outer index is the
     -- Bob-`d` survivor `c`, the inner `Finset.sum_mul` exposes the Alice index `a`.
     refine Finset.sum_congr rfl (fun c _ => ?_)
@@ -336,7 +336,7 @@ theorem traceLeft_sum_conjTranspose_kronecker_one
     intro l k
     simp only [Matrix.mul_apply, conjTranspose_apply, kronecker_apply, one_apply,
       Fintype.sum_prod_type, apply_ite star, star_zero, mul_ite, ite_mul,
-      mul_zero, zero_mul, mul_one, Finset.sum_ite_eq, Finset.mem_univ, if_true]
+      mul_zero, zero_mul, mul_one, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
     refine Finset.sum_congr rfl (fun c _ => ?_)
     rw [Finset.sum_mul]
     refine Finset.sum_congr rfl (fun a _ => by ring)

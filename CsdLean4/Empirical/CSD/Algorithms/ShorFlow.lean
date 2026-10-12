@@ -170,14 +170,14 @@ theorem initialState_norm : ‖initialState T (N := N)‖ = 1 := by
       initialState T (N := N) p = (Real.sqrt T : ℂ)⁻¹ * (if p.2 = 1 then 1 else 0) := by
     rintro ⟨c, y⟩
     rw [initialState, tensorCN_apply, uniformCount, WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul,
-      sum_coord, Finset.sum_eq_single c (fun x _ hx => by rw [basisState_apply, if_neg hx.symm])
-        (fun h => absurd (Finset.mem_univ _) h), basisState_apply, if_pos rfl, mul_one,
+      sum_coord, Finset.sum_eq_single c (fun x _ hx => by rw [basisState_apply, ite_eq_right hx.symm])
+        (fun h => absurd (Finset.mem_univ _) h), basisState_apply, ite_eq_left rfl, mul_one,
       basisState_apply]
   rw [← sq_eq_sq₀ (norm_nonneg _) zero_le_one, one_pow, EuclideanSpace.norm_sq_eq]
   simp_rw [hcoord]
   rw [Fintype.sum_prod_type]
   simp only [apply_ite norm, norm_zero, apply_ite (· ^ 2),
-    zero_pow two_ne_zero, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true,
+    zero_pow two_ne_zero, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true,
     Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, norm_inv, Complex.norm_real,
     Real.norm_eq_abs, abs_of_nonneg (Real.sqrt_nonneg _), inv_pow, Real.sq_sqrt hT.le]
   exact mul_inv_cancel₀ hT.ne'

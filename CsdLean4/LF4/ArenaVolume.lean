@@ -157,14 +157,18 @@ theorem arenaVolume_eq_smul_kMuL (N : ℕ) (p₀ : CPN (N + 1)) :
     ⟨by rw [hν, Measure.smul_apply, smul_eq_mul, ENNReal.inv_mul_cancel h0 hct]⟩
   have hνU : ∀ U : Matrix.unitaryGroup (Fin (N + 1)) ℂ,
       Measure.map (fun p : KSigma (N + 1) => U • p) ν = ν := fun U => by
-    rw [hν, Measure.map_smul, arenaVolume_map_smul]
+    have hm : Measurable (fun p : KSigma (N + 1) => U • p) :=
+      (((continuous_const_smul U).comp continuous_fst).measurable).prodMk measurable_snd
+    rw [hν, Measure.map_smul' _ _ hm, arenaVolume_map_smul]
   have hνθ : ∀ θ : KTorus,
       Measure.map (fun p : KSigma (N + 1) => (p.1, θ + p.2)) ν = ν := fun θ => by
-    rw [hν, Measure.map_smul, arenaVolume_map_addLeft]
+    have hm : Measurable (fun p : KSigma (N + 1) => (p.1, θ + p.2)) :=
+      measurable_fst.prodMk ((measurable_const_add θ).comp measurable_snd)
+    rw [hν, Measure.map_smul' _ _ hm, arenaVolume_map_addLeft]
   -- the sector marginal is a `U(N+1)`-invariant probability measure, hence Fubini–Study
   set μ₁ : Measure (CPN (N + 1)) := ν.map Prod.fst with hμ₁
   have : IsProbabilityMeasure μ₁ :=
-    Measure.isProbabilityMeasure_map measurable_fst.aemeasurable
+    Measure.isProbabilityMeasure_map' measurable_fst.aemeasurable
   have hμ₁U : ∀ U : Matrix.unitaryGroup (Fin (N + 1)) ℂ,
       Measure.map (fun x => U • x) μ₁ = μ₁ := fun U => by
     rw [hμ₁, Measure.map_map (continuous_const_smul U).measurable measurable_fst]
@@ -278,7 +282,8 @@ theorem kMuL_map_hamiltonianFlow (N : ℕ) (p₀ : CPN (N + 1)) {H : KSigma (N +
     (hH : ContMDiff 𝓘(ℝ, ArenaModel N) 𝓘(ℝ, ℝ) ∞ H) (t : ℝ) :
     Measure.map ((arenaForm_isSymplectic N).hamiltonianFlow hH t) (kMuL p₀) = kMuL p₀ := by
   have h := kMuL_smul_map_hamiltonianFlow N p₀ hH t
-  rw [Measure.map_smul] at h
+  rw [Measure.map_smul' _ _
+    ((arenaForm_isSymplectic N).continuous_hamiltonianFlow hH t).measurable] at h
   have hc0 : arenaVolume N Set.univ ≠ 0 := by
     rw [arenaVolume_univ]
     exact (ENNReal.ofReal_pos.2 (by positivity)).ne'

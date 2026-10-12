@@ -378,9 +378,9 @@ theorem syndromeWeight_logical (a b : ℂ) (s : Fin 4) :
     rw [Finset.mem_filter]
     exact ⟨fun h => h.2.symm, fun h => ⟨Finset.mem_univ _, h.symm⟩⟩
   by_cases hs : s = 0
-  · rw [if_pos (hmem000.mpr hs), if_pos (hmem111.mpr hs), if_pos hs]
-  · rw [if_neg (fun h => hs (hmem000.mp h)), if_neg (fun h => hs (hmem111.mp h)),
-      if_neg hs, add_zero]
+  · rw [ite_eq_left (hmem000.mpr hs), ite_eq_left (hmem111.mpr hs), ite_eq_left hs]
+  · rw [ite_eq_right (fun h => hs (hmem000.mp h)), ite_eq_right (fun h => hs (hmem111.mp h)),
+      ite_eq_right hs, add_zero]
 
 /-! ### Errored codewords: deterministic syndrome -/
 
@@ -412,8 +412,8 @@ lemma erroredLogical_syndromeWeight
   have hmem1 : p₁ ∈ Finset.univ.filter (fun x => synClass3 x = s) ↔ s = cj := by
     rw [Finset.mem_filter]; exact ⟨fun h => hc1 ▸ h.2.symm, fun h => ⟨Finset.mem_univ _, hc1.trans h.symm⟩⟩
   by_cases hs : s = cj
-  · rw [if_pos (hmem0.mpr hs), if_pos (hmem1.mpr hs), if_pos hs]
-  · rw [if_neg (fun h => hs (hmem0.mp h)), if_neg (fun h => hs (hmem1.mp h)), if_neg hs, add_zero]
+  · rw [ite_eq_left (hmem0.mpr hs), ite_eq_left (hmem1.mpr hs), ite_eq_left hs]
+  · rw [ite_eq_right (fun h => hs (hmem0.mp h)), ite_eq_right (fun h => hs (hmem1.mp h)), ite_eq_right hs, add_zero]
 
 /-- Squared register amplitudes of `X1 · logical = a|100⟩ + b|011⟩`. -/
 lemma X1_logical_amp (a b : ℂ) (x : Fin 2 × Fin 2 × Fin 2) :

@@ -133,6 +133,9 @@ if empty_rows:
         print(f'  * {r}')
     print()
 
-print('None of this is executable on the pin: the replacement names do not exist here.')
+print('Sections (1)(2)(3)(6) were SWEPT at the v4.34.0 pin move (2026-10-12) and now read')
+print('zero, which here is the intended outcome rather than a wrong pattern. What is left is')
+print('(4) the stdSimplex restatement, deliberately deferred with the deprecation silenced')
+print('per declaration, and (5) the shim collapse, which is BACKLOG #142.')
 print('HY-6 in specs/BACKLOG.md section D carries what to do with each row.')
 PY

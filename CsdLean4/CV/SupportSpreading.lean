@@ -379,10 +379,10 @@ theorem spreadKick_not_supportedOn :
     (by decide) (by decide) (by decide) (by decide)
   rw [show spreadKick = phaseDiagU spreadPotential from rfl,
     heisenberg_phaseDiagU_apply, heisenberg_phaseDiagU_apply] at key
-  have hp00 : spreadPotential ![0, 0] = 0 := if_neg (by decide)
-  have hp10 : spreadPotential ![1, 0] = 0 := if_neg (by decide)
-  have hp01 : spreadPotential ![0, 1] = 0 := if_neg (by decide)
-  have hp11 : spreadPotential ![1, 1] = Real.pi := if_pos (by decide)
+  have hp00 : spreadPotential ![0, 0] = 0 := ite_eq_right (by decide)
+  have hp10 : spreadPotential ![1, 0] = 0 := ite_eq_right (by decide)
+  have hp01 : spreadPotential ![0, 1] = 0 := ite_eq_right (by decide)
+  have hp11 : spreadPotential ![1, 1] = Real.pi := ite_eq_left (by decide)
   have hm : ∀ c d : FieldConfig 2 2, c 1 = d 1 →
       modeOp 0 raiseMat c d = raiseMat (c 0) (d 0) := fun c d hcd =>
     modeOp_apply_of_agree 0 raiseMat fun k hk => by

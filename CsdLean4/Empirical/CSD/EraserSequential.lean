@@ -72,11 +72,11 @@ lemma sliceB_markPost (j a : Fin 2) :
   rw [show (EuclideanSpace.single ((j, j) : Fin 2 × Fin 2) (1 : ℂ)) (a, k)
       = if (a, k) = (j, j) then 1 else 0 from PiLp.single_apply 2 ℂ (j, j) 1 (a, k)]
   rcases eq_or_ne a j with rfl | ha
-  · rw [if_pos rfl]
+  · rw [ite_eq_left rfl]
     rw [show (EuclideanSpace.single a (1 : ℂ)) k = if k = a then 1 else 0 from
       PiLp.single_apply 2 ℂ a 1 k]
     exact if_congr (by rw [Prod.ext_iff]; simp) rfl rfl
-  · rw [if_neg ha, if_neg (by rw [Prod.ext_iff]; rintro ⟨h1, _⟩; exact ha h1)]
+  · rw [ite_eq_right ha, ite_eq_right (by rw [Prod.ext_iff]; rintro ⟨h1, _⟩; exact ha h1)]
     rfl
 
 /-- The system profile of the second (erase) stroke, acting on the mark post-state. -/
@@ -98,10 +98,10 @@ theorem seqProfile_eq (j m : Fin 2) :
   rw [show (EuclideanSpace.single j (1 : ℂ)) a = if a = j then 1 else 0 from
     PiLp.single_apply 2 ℂ j 1 a]
   rcases eq_or_ne a j with rfl | ha
-  · rw [if_pos rfl, if_pos rfl, mul_one]
+  · rw [ite_eq_left rfl, ite_eq_left rfl, mul_one]
     rw [PiLp.inner_apply, Fin.sum_univ_two]
     fin_cases a <;> simp [RCLike.inner_apply]
-  · rw [if_neg ha, if_neg ha, mul_zero, inner_zero_right]
+  · rw [ite_eq_right ha, ite_eq_right ha, mul_zero, inner_zero_right]
 
 lemma normSq_pmVec_component (m j : Fin 2) : ‖pmVec m j‖ ^ 2 = 1 / 2 := by
   fin_cases j

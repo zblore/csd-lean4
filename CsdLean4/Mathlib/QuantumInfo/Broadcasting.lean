@@ -346,7 +346,7 @@ theorem star_onbVec_dotProduct (k l : n) :
   exact this
 
 theorem star_onbVec_dotProduct_self (k : n) : star (onbVec b k) ⬝ᵥ onbVec b k = 1 := by
-  rw [star_onbVec_dotProduct, if_pos rfl]
+  rw [star_onbVec_dotProduct, ite_eq_left rfl]
 
 /-- The rank-one projector `|b k⟩⟨b k|`. -/
 noncomputable def onbProj (k : n) : Matrix n n ℂ := vecMulVec (onbVec b k) (star (onbVec b k))
@@ -1534,7 +1534,7 @@ theorem onbProjSet_mul_self (K : Finset n) : onbProjSet b K * onbProjSet b K = o
   simp only [onbProj_mul_onbProj]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun k hk => ?_
-  rw [Finset.sum_ite_eq' K k, if_pos hk]
+  rw [Finset.sum_ite_eq' K k, ite_eq_left hk]
 
 omit [DecidableEq n] in
 theorem star_dotProduct_onbProjSet_mulVec (K : Finset n) (z : n → ℂ) :

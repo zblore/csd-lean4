@@ -604,24 +604,24 @@ section SeamRotation
 variable {n : ℕ} (a : Fin (n + 1) → ℝ)
 
 @[simp] lemma seamRotationR_zero_zero : seamRotationR a 0 0 = 0 := by
-  rw [seamRotationR, Matrix.of_apply, if_pos rfl, if_pos rfl]
+  rw [seamRotationR, Matrix.of_apply, ite_eq_left rfl, ite_eq_left rfl]
 
 @[simp] lemma seamRotationR_zero_succ (m : Fin n) :
     seamRotationR a 0 m.succ = -(a m.succ) := by
-  rw [seamRotationR, Matrix.of_apply, if_pos rfl, if_neg (Fin.succ_ne_zero m)]
+  rw [seamRotationR, Matrix.of_apply, ite_eq_left rfl, ite_eq_right (Fin.succ_ne_zero m)]
 
 @[simp] lemma seamRotationR_succ_zero (k : Fin n) :
     seamRotationR a k.succ 0 = a k.succ := by
-  rw [seamRotationR, Matrix.of_apply, if_neg (Fin.succ_ne_zero k), if_pos rfl]
+  rw [seamRotationR, Matrix.of_apply, ite_eq_right (Fin.succ_ne_zero k), ite_eq_left rfl]
 
 @[simp] lemma seamRotationR_succ_succ (k l : Fin n) :
     seamRotationR a k.succ l.succ
       = (if k = l then (1:ℝ) else 0) - a k.succ * a l.succ := by
-  rw [seamRotationR, Matrix.of_apply, if_neg (Fin.succ_ne_zero k),
-    if_neg (Fin.succ_ne_zero l)]
+  rw [seamRotationR, Matrix.of_apply, ite_eq_right (Fin.succ_ne_zero k),
+    ite_eq_right (Fin.succ_ne_zero l)]
   by_cases h : k = l
-  · rw [if_pos (show k.succ = l.succ from by rw [h]), if_pos h]
-  · rw [if_neg (fun hc => h (Fin.succ_inj.mp hc)), if_neg h]
+  · rw [ite_eq_left (show k.succ = l.succ from by rw [h]), ite_eq_left h]
+  · rw [ite_eq_right (fun hc => h (Fin.succ_inj.mp hc)), ite_eq_right h]
 
 /-- Orthogonality of the seam rotation, for every unit amplitude vector with
 empty ready slot. -/
@@ -652,9 +652,9 @@ theorem seamRotationR_orthogonal (h0 : a 0 = 0) (hsum : ∑ k, a k ^ 2 = 1) :
             ((if j = m' then a j.succ else 0) - a j.succ ^ 2 * a m'.succ) from
       Finset.sum_congr rfl fun j _ => by
         by_cases hj : j = m'
-        · rw [if_pos hj, if_pos hj]
+        · rw [ite_eq_left hj, ite_eq_left hj]
           ring
-        · rw [if_neg hj, if_neg hj]
+        · rw [ite_eq_right hj, ite_eq_right hj]
           ring]
     rw [Finset.sum_sub_distrib, ← Finset.sum_mul,
       Finset.sum_ite_eq' Finset.univ m' (fun j => a j.succ), hsum',
@@ -670,9 +670,9 @@ theorem seamRotationR_orthogonal (h0 : a 0 = 0) (hsum : ∑ k, a k ^ 2 = 1) :
             ((if j = l' then a j.succ else 0) - a l'.succ * a j.succ ^ 2) from
       Finset.sum_congr rfl fun j _ => by
         by_cases hj : j = l'
-        · rw [if_pos hj, if_pos hj]
+        · rw [ite_eq_left hj, ite_eq_left hj]
           ring
-        · rw [if_neg hj, if_neg hj]
+        · rw [ite_eq_right hj, ite_eq_right hj]
           ring]
     rw [Finset.sum_sub_distrib, ← Finset.mul_sum,
       Finset.sum_ite_eq' Finset.univ l' (fun j => a j.succ), hsum',
@@ -693,15 +693,15 @@ theorem seamRotationR_orthogonal (h0 : a 0 = 0) (hsum : ∑ k, a k ^ 2 = 1) :
         by_cases hjl : j = l' <;> by_cases hjm : j = m'
         · subst hjl
           subst hjm
-          simp only [if_true]
+          simp only [ite_true]
           ring
         · subst hjl
-          simp only [if_true, if_neg hjm]
+          simp only [ite_true, ite_eq_right hjm]
           ring
         · subst hjm
-          simp only [if_true, if_neg hjl]
+          simp only [ite_true, ite_eq_right hjl]
           ring
-        · simp only [if_neg hjl, if_neg hjm]
+        · simp only [ite_eq_right hjl, ite_eq_right hjm]
           ring]
     rw [Finset.sum_add_distrib, Finset.sum_sub_distrib, Finset.sum_sub_distrib,
       ← Finset.sum_mul,
@@ -710,13 +710,13 @@ theorem seamRotationR_orthogonal (h0 : a 0 = 0) (hsum : ∑ k, a k ^ 2 = 1) :
       Finset.sum_ite_eq' Finset.univ l' (fun _ => a l'.succ * a m'.succ),
       Finset.sum_ite_eq' Finset.univ m' (fun _ => a m'.succ * a l'.succ),
       hsum']
-    simp only [Finset.mem_univ, if_true, one_mul]
+    simp only [Finset.mem_univ, ite_true, one_mul]
     rw [Matrix.one_apply]
     by_cases hlm : l' = m'
-    · rw [if_pos hlm, if_pos (show l'.succ = m'.succ from by rw [hlm])]
+    · rw [ite_eq_left hlm, ite_eq_left (show l'.succ = m'.succ from by rw [hlm])]
       subst hlm
       ring
-    · rw [if_neg hlm, if_neg (fun h => hlm (Fin.succ_inj.mp h))]
+    · rw [ite_eq_right hlm, ite_eq_right (fun h => hlm (Fin.succ_inj.mp h))]
       ring
 
 /-- The seam rotation over `ℂ`: the real matrix, entrywise embedded. -/

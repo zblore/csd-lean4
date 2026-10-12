@@ -123,7 +123,7 @@ lemma joinMat_mul_self (b : Fin N → Fin K) (i : Fin K) :
     joinMat b i * joinMat b i = 1 := by
   ext j k
   simp only [Matrix.mul_apply, joinMat, Matrix.of_apply, ite_mul, one_mul, zero_mul,
-    Finset.sum_ite_eq', Finset.mem_univ, if_true, Matrix.one_apply]
+    Finset.sum_ite_eq', Finset.mem_univ, ite_true, Matrix.one_apply]
   rw [joinPerm_involutive b i j]
   exact if_congr eq_comm rfl rfl
 
@@ -324,21 +324,21 @@ noncomputable def joinEvolve (s t : CSD.SigmaLayer.OnticTime) :
   else shearEvolve (joinIdx b) s t
 
 theorem joinEvolve_fwd {s t : CSD.SigmaLayer.OnticTime} (hs : s < 1) (ht : 1 ≤ t) :
-    joinEvolve (N := N) b s t = joinG b ∘ shearEvolve (joinIdx b) s t := if_pos ⟨hs, ht⟩
+    joinEvolve (N := N) b s t = joinG b ∘ shearEvolve (joinIdx b) s t := ite_eq_left ⟨hs, ht⟩
 
 theorem joinEvolve_bwd {s t : CSD.SigmaLayer.OnticTime} (ht : t < 1) (hs : 1 ≤ s) :
     joinEvolve (N := N) b s t = shearEvolve (joinIdx b) s t ∘ joinG b := by
-  rw [joinEvolve, if_neg (fun h => absurd hs (not_le.mpr h.1)), if_pos ⟨ht, hs⟩]
+  rw [joinEvolve, ite_eq_right (fun h => absurd hs (not_le.mpr h.1)), ite_eq_left ⟨ht, hs⟩]
 
 theorem joinEvolve_lo {s t : CSD.SigmaLayer.OnticTime} (hs : s < 1) (ht : t < 1) :
     joinEvolve (N := N) b s t = shearEvolve (joinIdx b) s t := by
-  rw [joinEvolve, if_neg (fun h => absurd h.2 (not_le.mpr ht)),
-    if_neg (fun h => absurd h.2 (not_le.mpr hs))]
+  rw [joinEvolve, ite_eq_right (fun h => absurd h.2 (not_le.mpr ht)),
+    ite_eq_right (fun h => absurd h.2 (not_le.mpr hs))]
 
 theorem joinEvolve_hi {s t : CSD.SigmaLayer.OnticTime} (hs : 1 ≤ s) (ht : 1 ≤ t) :
     joinEvolve (N := N) b s t = shearEvolve (joinIdx b) s t := by
-  rw [joinEvolve, if_neg (fun h => absurd h.1 (not_lt.mpr hs)),
-    if_neg (fun h => absurd h.1 (not_lt.mpr ht))]
+  rw [joinEvolve, ite_eq_right (fun h => absurd h.1 (not_lt.mpr hs)),
+    ite_eq_right (fun h => absurd h.1 (not_lt.mpr ht))]
 
 /-- Pointwise shear composition. -/
 lemma sE_comp (s t u : CSD.SigmaLayer.OnticTime) (x : JoinSel N × LF4.KTorus) :

@@ -107,7 +107,7 @@ lemma exists_unitary_single_eq (i₀ : ι) (v : EuclideanSpace ℂ ι) (hv : ‖
     rw [orthonormal_iff_ite]
     rintro ⟨i, (hi : i = i₀)⟩ ⟨j, (hj : j = i₀)⟩
     subst hi; subst hj
-    simp only [Set.domRestrict_apply, if_true, f]
+    simp only [Set.domRestrict_apply, ite_true, f]
     rw [inner_self_eq_norm_sq_to_K, hv]
     simp
   have card_eq : Module.finrank ℂ (EuclideanSpace ℂ ι) = Fintype.card ι :=

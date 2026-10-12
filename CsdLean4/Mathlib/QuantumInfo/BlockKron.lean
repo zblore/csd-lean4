@@ -134,16 +134,16 @@ theorem blockKron_single_eq_gateOf {m : ℕ} (b₀ : Fin m) (G : Matrix (Fin 2) 
       Controlled.ctrlSet_apply_of_ctrl hag (by simp), Controlled.blockEntry_eq_apply,
       ← Matrix.eta_fin_two G]
     rw [Finset.prod_eq_single b₀]
-    · rw [if_pos rfl]
+    · rw [ite_eq_left rfl]
     · intro b _ hb
-      rw [if_neg hb, Matrix.one_apply, if_pos (hag b hb)]
+      rw [ite_eq_right hb, Matrix.one_apply, ite_eq_left (hag b hb)]
     · intro h
       exact absurd (Finset.mem_univ b₀) h
   · rw [Controlled.gateOf, Controlled.singleGate, Controlled.ctrlSet_apply_of_not_agree hag]
     obtain ⟨b, hb⟩ := not_forall.mp hag
     rw [Classical.not_imp] at hb
     refine Finset.prod_eq_zero (Finset.mem_univ b) ?_
-    rw [if_neg hb.1, Matrix.one_apply, if_neg hb.2]
+    rw [ite_eq_right hb.1, Matrix.one_apply, ite_eq_right hb.2]
 
 /-- ★★ **Error propagation through a transversal gadget**: replacing the factor at one block by
 `E * A b₀` — a fault at that location, acting after the ideal single-qubit gate — is the ideal
@@ -158,7 +158,7 @@ theorem blockKron_replace_eq_gateOf_mul {m : ℕ} (A : Fin m → Matrix (Fin 2) 
   funext b
   by_cases h : b = b₀
   · subst h
-    rw [if_pos rfl, if_pos rfl]
-  · rw [if_neg h, if_neg h, one_mul]
+    rw [ite_eq_left rfl, ite_eq_left rfl]
+  · rw [ite_eq_right h, ite_eq_right h, one_mul]
 
 end QuantumInfo

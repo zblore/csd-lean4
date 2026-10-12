@@ -93,7 +93,7 @@ theorem wiesner_honest_x_pass :
 /-- **Honest verification is certain (computational-basis note).** -/
 theorem wiesner_honest_z_pass (a : Fin 2) :
     epistemicMeasure (vertexPoint a) (globalBasin (momentContext 2) a) = 1 := by
-  rw [globalBasin_prob, momentContext_rate, momentMap_vertex, if_pos rfl, ENNReal.ofReal_one]
+  rw [globalBasin_prob, momentContext_rate, momentMap_vertex, ite_eq_left rfl, ENNReal.ofReal_one]
 
 /-! ### The counterfeit round -/
 

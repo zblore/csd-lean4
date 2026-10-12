@@ -105,7 +105,7 @@ theorem fs_moment_joint_dirichlet_N (p₀ : CPN (M + 1)) :
     have hz : (WithLp.toLp 2 y : EuclideanSpace ℝ (Fin (M + 1) × Fin 2)) = 0 :=
       coordsN.injective (by rw [h, map_zero])
     simpa using congrArg (WithLp.equiv 2 ((Fin (M + 1) × Fin 2) → ℝ)) hz
-  rw [gaussianProjN, dif_neg hv0]
+  rw [gaussianProjN, dite_eq_right hv0]
   -- Per-coordinate: `‖v i‖² = y(i,0)² + y(i,1)²`, and `∑ᵢ ‖v i‖² = ‖v‖²`.
   have hvival : ∀ i, ‖v i‖ ^ 2 = (y (i, 0)) ^ 2 + (y (i, 1)) ^ 2 := by
     intro i

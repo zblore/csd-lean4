@@ -520,7 +520,7 @@ lemma blockAtCLM_one_kronecker_mul (i j : m') (A : Matrix n n ℂ)
   · intro i' _ hi'
     refine Finset.sum_eq_zero fun k' _ => ?_
     rw [Matrix.kronecker_apply, Matrix.one_apply,
-      if_neg (fun h => hi' h.symm), zero_mul, zero_mul]
+      ite_eq_right (fun h => hi' h.symm), zero_mul, zero_mul]
   · intro hi
     exact absurd (Finset.mem_univ i) hi
 
@@ -540,7 +540,7 @@ lemma blockAtCLM_mul_one_kronecker (i j : m') (B : Matrix n n ℂ)
       blockAtCLM_apply_entry]
   · intro j' _ hj'
     refine Finset.sum_eq_zero fun l' _ => ?_
-    rw [Matrix.kronecker_apply, Matrix.one_apply, if_neg hj', zero_mul,
+    rw [Matrix.kronecker_apply, Matrix.one_apply, ite_eq_right hj', zero_mul,
       mul_zero]
   · intro hj
     exact absurd (Finset.mem_univ j) hj

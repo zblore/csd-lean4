@@ -93,7 +93,7 @@ lemma measurable_gaussianProj (p₀ : CPN 2) : Measurable (gaussianProj p₀) :=
   have hrestr : {v : EuclideanSpace ℂ (Fin 2) | v ≠ 0}.domRestrict (gaussianProj p₀)
       = fun v => Projectivization.mk' ℂ ⟨v.1, v.2⟩ := by
     funext v
-    simp only [Set.domRestrict_apply, gaussianProj, dif_neg v.2,
+    simp only [Set.domRestrict_apply, gaussianProj, dite_eq_right v.2,
       Projectivization.mk'_eq_mk]
   rw [hrestr]
   exact Projectivization.measurable_mk'.comp
@@ -249,8 +249,8 @@ lemma gaussianCP_smul_invariant (p₀ : CPN 2) (U : Matrix.unitaryGroup (Fin 2) 
     by_contra hv0
     simp only [Set.mem_singleton_iff] at hv0
     apply hv
-    rw [gaussianProj, dif_neg hv0, gaussianProj,
-      dif_neg (toEuclideanLin_ne_zero U hv0), smul_mk_eq_mk U v hv0]
+    rw [gaussianProj, dite_eq_right hv0, gaussianProj,
+      dite_eq_right (toEuclideanLin_ne_zero U hv0), smul_mk_eq_mk U v hv0]
   rw [Measure.map_congr hae,
     ← Measure.map_map (measurable_gaussianProj p₀) (measurable_toEuclideanLin U),
     gaussianH_map_unitary U]

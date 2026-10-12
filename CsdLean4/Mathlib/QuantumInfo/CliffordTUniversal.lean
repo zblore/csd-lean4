@@ -131,8 +131,8 @@ theorem block_mem_unitaryGroup_of_ctrlSetOf {S : Finset (Fin m)} {j : Fin m} (hj
   rw [Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply, Matrix.conjTranspose_apply,
     hcol, Matrix.one_apply, Matrix.one_apply]
   by_cases hxy : x = y
-  · rw [if_pos hxy, if_pos (show Function.update pat j x = Function.update pat j y by rw [hxy])]
-  · rw [if_neg hxy, if_neg ?_]
+  · rw [ite_eq_left hxy, ite_eq_left (show Function.update pat j x = Function.update pat j y by rw [hxy])]
+  · rw [ite_eq_right hxy, ite_eq_right ?_]
     intro hc
     exact hxy (by rw [← hself x, ← hself y, hc])
 

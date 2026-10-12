@@ -113,7 +113,7 @@ theorem isWeightedPairFamily_prodTorus :
       slotMem_inl_eq_memIdx]
     simp only [pairFamily, stdForm_single, id, im_conj_mul_pairs, TorusForm.areaForm_apply,
       Matrix.cons_val_zero, Matrix.cons_val_one, TorusForm.area_self, add_zero, smul_eq_mul,
-      prodTorusWeight, hne', if_false, Fin.castSucc_inj]
+      prodTorusWeight, hne', ite_false, Fin.castSucc_inj]
     split_ifs <;> ring
   · have h1 : ((-4 : ℝ) • stdForm n) ![stdBasis n i, 0] = 0 :=
       ContinuousMultilinearMap.map_coord_zero _ 1 rfl
@@ -121,20 +121,20 @@ theorem isWeightedPairFamily_prodTorus :
       ContinuousMultilinearMap.map_coord_zero _ 0 rfl
     rw [Module.Basis.prod_apply_inl_fst, Module.Basis.prod_apply_inr_fst,
       Module.Basis.prod_apply_inl_snd, Module.Basis.prod_apply_inr_snd, slotPair_inr,
-      slotPair_inl_eq_castSucc, if_neg (hne' _), h1, h2, add_zero]
+      slotPair_inl_eq_castSucc, ite_eq_right (hne' _), h1, h2, add_zero]
   · have h1 : ((-4 : ℝ) • stdForm n) ![0, stdBasis n i'] = 0 :=
       ContinuousMultilinearMap.map_coord_zero _ 0 rfl
     have h2 : TorusForm.areaForm ![Module.Basis.finTwoProd ℝ a, 0] = 0 :=
       ContinuousMultilinearMap.map_coord_zero _ 1 rfl
     rw [Module.Basis.prod_apply_inr_fst, Module.Basis.prod_apply_inl_fst,
       Module.Basis.prod_apply_inr_snd, Module.Basis.prod_apply_inl_snd, slotPair_inr,
-      slotPair_inl_eq_castSucc, if_neg (hne' _).symm, h1, h2, add_zero]
+      slotPair_inl_eq_castSucc, ite_eq_right (hne' _).symm, h1, h2, add_zero]
   · have h1 : ((-4 : ℝ) • stdForm n) ![0, 0] = 0 :=
       ContinuousMultilinearMap.map_coord_zero _ 0 rfl
     rw [Module.Basis.prod_apply_inr_fst, Module.Basis.prod_apply_inr_fst,
       Module.Basis.prod_apply_inr_snd, Module.Basis.prod_apply_inr_snd, slotPair_inr,
-      slotPair_inr, slotMem_inr, slotMem_inr, if_pos rfl, h1, zero_add, prodTorusWeight,
-      if_pos rfl, one_mul, TorusForm.areaForm_apply]
+      slotPair_inr, slotMem_inr, slotMem_inr, ite_eq_left rfl, h1, zero_add, prodTorusWeight,
+      ite_eq_left rfl, one_mul, TorusForm.areaForm_apply]
     fin_cases a <;> fin_cases b <;>
       simp [TorusForm.area, Module.Basis.finTwoProd_zero, Module.Basis.finTwoProd_one, pairSign]
 

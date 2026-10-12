@@ -239,7 +239,7 @@ lemma measureUncompute_basisState (m x y : Fin 2) :
   · by_cases h1 : z 1 = y
     · by_cases h2 : z 2 = m
       · rw [h0, h1, h2]
-        simp only [and_self, if_true, one_mul, mul_one]
+        simp only [and_self, ite_true, one_mul, mul_one]
         exact corr_had_eq m x y
       · simp [h2]
     · simp [h1]
@@ -282,7 +282,7 @@ theorem andInput_nontrivial :
   intro h
   have hne : andIdx 1 1 ≠ (![1, 1, 0] : B3) := by decide
   have hcoord := congrArg (fun v : QReg 3 => v (andIdx 1 1)) h
-  simp only [basisState_apply, if_neg hne] at hcoord
+  simp only [basisState_apply, ite_eq_right hne] at hcoord
   exact one_ne_zero hcoord
 
 /-! ## Cost: zero Toffoli (the ~2× saving) -/

@@ -102,7 +102,7 @@ theorem apply_eq_sum [Fintype ι] [DecidableEq ι] (hB : B.IsAlt) (h : B.IsSympl
   simp only [sum_left, sum_right, smul_left, smul_right]
   simp only [Fintype.sum_sum_type, h.inl_inl, h.inr_inr, h.inl_inr, h.inr_inl hB, mul_zero,
     Finset.sum_const_zero, mul_ite, mul_one, mul_neg, Finset.sum_ite_eq, Finset.sum_ite_eq',
-    Finset.mem_univ, if_true, zero_add, add_zero, Finset.sum_neg_distrib, Finset.sum_sub_distrib]
+    Finset.mem_univ, ite_true, zero_add, add_zero, Finset.sum_neg_distrib, Finset.sum_sub_distrib]
   simp only [mul_comm]
   ring
 

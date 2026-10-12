@@ -126,11 +126,11 @@ theorem circuitMeasure_coord (N L : ℕ) (ν : Measure Bool) [IsProbabilityMeasu
       · exact mem_univ _
     · intro h
       have hj := h j
-      rwa [if_pos rfl] at hj
+      rwa [ite_eq_left rfl] at hj
   rw [circuitMeasure, hcyl, Measure.pi_pi, Finset.prod_eq_single j]
-  · rw [if_pos rfl]
+  · rw [ite_eq_left rfl]
   · intro i _ hi
-    rw [if_neg hi, measure_univ]
+    rw [ite_eq_right hi, measure_univ]
   · intro h
     exact absurd (Finset.mem_univ j) h
 

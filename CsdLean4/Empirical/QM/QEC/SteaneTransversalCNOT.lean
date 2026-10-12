@@ -161,7 +161,7 @@ theorem steaneEnc_mul_shift (u v : Fin 7 → Fin 2) (x y : Fin 2) :
       refine h ?_
       rw [cosetAmp]
       refine Finset.sum_eq_zero fun c _ => ?_
-      rw [if_neg fun hcc => hcon ⟨c, hcc⟩]
+      rw [ite_eq_right fun hcc => hcon ⟨c, hcc⟩]
     rw [steaneEnc_eq_cosetAmp (u + v) y, steaneEnc_eq_cosetAmp v (x + y), cosetAmp_shift hc₀]
 
 /-! ### The transversal `CNOT` -/
@@ -312,9 +312,9 @@ theorem pairFault_conjTranspose_mul {q : Fin 7} {A B : Matrix (Fin 2) (Fin 2) �
           = fun _ : Fin 7 => (1 : Matrix (Fin 2) (Fin 2) ℂ) from by
         funext b
         by_cases h : b = q
-        · rw [if_pos h, ← Matrix.star_eq_conjTranspose]
+        · rw [ite_eq_left h, ← Matrix.star_eq_conjTranspose]
           exact Matrix.mem_unitaryGroup_iff'.mp hM
-        · rw [if_neg h, Matrix.conjTranspose_one, one_mul],
+        · rw [ite_eq_right h, Matrix.conjTranspose_one, one_mul],
       blockKron_one]
   rw [pairFault, blockKron_conjTranspose, blockKron_mul,
     show (fun b : Fin 2 => (![gateOf q A, gateOf q B] b)ᴴ * ![gateOf q A, gateOf q B] b)

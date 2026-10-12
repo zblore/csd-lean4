@@ -175,7 +175,7 @@ noncomputable def modeOp (k₀ : Fin K) (a : Matrix (Fin N) (Fin N) ℂ) :
 theorem modeOp_apply_of_agree (k₀ : Fin K) (a : Matrix (Fin N) (Fin N) ℂ)
     {c d : FieldConfig K N} (h : ∀ k, k ≠ k₀ → c k = d k) :
     modeOp k₀ a c d = a (c k₀) (d k₀) := by
-  rw [modeOp, if_pos h]
+  rw [modeOp, ite_eq_left h]
 
 /-- **A single-mode operator is supported on that one mode.** The support notion is not vacuous:
 every `modeOp` inhabits it. -/
@@ -184,7 +184,7 @@ theorem modeOp_supportedOn (k₀ : Fin K) (a : Matrix (Fin N) (Fin N) ℂ) :
   classical
   constructor
   · intro c d k hk hcd
-    rw [modeOp, if_neg]
+    rw [modeOp, ite_eq_right]
     exact fun h => hcd (h k (by simpa using hk))
   · intro c d c' d' hS hS' hoff hoff'
     have hk₀ : (k₀ : Fin K) ∈ ({k₀} : Finset (Fin K)) := Finset.mem_singleton_self k₀

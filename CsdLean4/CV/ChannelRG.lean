@@ -105,7 +105,7 @@ lemma fieldEnergy_modeSplit_symm (k : Fin K) (s : SpectatorCfg K N k) (m : Fin N
     intro j h
     rw [hc]
     show (if hj : j = k then m else s ⟨j, hj⟩) = s ⟨j, h⟩
-    rw [dif_neg h]
+    rw [dite_eq_right h]
   have hsplit : fieldEnergy c
       = oscEnergy (c k) + ∑ j ∈ Finset.univ.erase k, oscEnergy (c j) :=
     (Finset.add_sum_erase _ (fun j => oscEnergy (c j)) (Finset.mem_univ k)).symm
@@ -135,16 +135,16 @@ lemma coarseIsom_isometry (k : Fin K) :
   classical
   ext c c'
   rw [Matrix.mul_apply, Finset.sum_eq_single (modeSplit (N := N) k c)]
-  · rw [Matrix.conjTranspose_apply, coarseIsom_apply, coarseIsom_apply, if_pos rfl]
+  · rw [Matrix.conjTranspose_apply, coarseIsom_apply, coarseIsom_apply, ite_eq_left rfl]
     by_cases h : c = c'
     · subst h
-      rw [if_pos rfl, Matrix.one_apply_eq]
+      rw [ite_eq_left rfl, Matrix.one_apply_eq]
       simp
-    · rw [if_neg (fun heq => h ((modeSplit (N := N) k).injective heq)),
+    · rw [ite_eq_right (fun heq => h ((modeSplit (N := N) k).injective heq)),
         Matrix.one_apply_ne h]
       simp
   · intro b _ hb
-    rw [Matrix.conjTranspose_apply, coarseIsom_apply, if_neg hb]
+    rw [Matrix.conjTranspose_apply, coarseIsom_apply, ite_eq_right hb]
     simp
   · intro h
     exact absurd (Finset.mem_univ _) h
@@ -171,18 +171,18 @@ lemma coarseIsom_conj (k : Fin K) (X : Matrix (FieldConfig K N) (FieldConfig K N
         fun hh => by rw [hh, Equiv.apply_symm_apply]⟩
     rw [coarseIsom_apply]
     by_cases h : c = (modeSplit (N := N) k).symm pp
-    · rw [if_pos (hiff.mpr h), if_pos h]
-    · rw [if_neg (fun hc => h (hiff.mp hc)), if_neg h]
+    · rw [ite_eq_left (hiff.mpr h), ite_eq_left h]
+    · rw [ite_eq_right (fun hc => h (hiff.mp hc)), ite_eq_right h]
   rw [Matrix.mul_apply, Finset.sum_eq_single ((modeSplit (N := N) k).symm q)]
-  · rw [Matrix.conjTranspose_apply, hrow q, if_pos rfl, star_one, mul_one,
+  · rw [Matrix.conjTranspose_apply, hrow q, ite_eq_left rfl, star_one, mul_one,
       Matrix.mul_apply, Finset.sum_eq_single ((modeSplit (N := N) k).symm p)]
-    · rw [hrow p, if_pos rfl, one_mul]
+    · rw [hrow p, ite_eq_left rfl, one_mul]
     · intro b _ hb
-      rw [hrow p b, if_neg hb, zero_mul]
+      rw [hrow p b, ite_eq_right hb, zero_mul]
     · intro h
       exact absurd (Finset.mem_univ _) h
   · intro b _ hb
-    rw [Matrix.conjTranspose_apply, hrow q b, if_neg hb, star_zero, mul_zero]
+    rw [Matrix.conjTranspose_apply, hrow q b, ite_eq_right hb, star_zero, mul_zero]
   · intro h
     exact absurd (Finset.mem_univ _) h
 

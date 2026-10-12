@@ -135,7 +135,7 @@ theorem cfullAdder_correct_general {ctrl a b cin cout anc : Fin n}
       hbanc, hcincout, hcinanc, hcoutanc, hctrla.symm, hctrlb.symm, hctrlcin.symm, hctrlcout.symm,
       hctrlanc.symm, hab.symm, hacin.symm, hacout.symm, haanc.symm, hbcin.symm, hbcout.symm,
       hbanc.symm, hcincout.symm, hcinanc.symm, hcoutanc.symm, majority,
-      eq_self_iff_true, or_self, or_false, false_or, if_true, if_false,
+      eq_self_iff_true, or_self, or_false, false_or, ite_true, ite_false,
       Bool.xor_false, Bool.xor_true, Bool.and_false, Bool.and_true, Bool.or_false, Bool.or_true,
       Bool.not_true, Bool.not_false, Bool.false_eq_true]
 
@@ -257,7 +257,7 @@ theorem cRippleCirc_invariant (L : CRippleLayout m n) (s : State m)
       cases hc : s L.ctrl with
       | true =>
         -- ctrl set: the standard ripple-sum step
-        simp only [hc, if_true] at hP1 ⊢
+        simp only [hc, ite_true] at hP1 ⊢
         have hfn := fulladder_nat (s (L.A k)) (s (L.B k)) (sk (L.C k))
         cases h1 : s (L.A k) <;> cases h2 : s (L.B k) <;> cases h3 : sk (L.C k) <;>
           simp only [h1, h2, h3, majority, Bool.xor_false, Bool.xor_true, Bool.not_true,
@@ -268,7 +268,7 @@ theorem cRippleCirc_invariant (L : CRippleLayout m n) (s : State m)
       | false =>
         -- ctrl clear: the added value is 0 and the carry was false, so B is unchanged
         have hckf : sk (L.C k) = false := hP7 hc
-        simp only [hc, Bool.false_eq_true, if_false, hckf, Bool.toNat_false, zero_mul,
+        simp only [hc, Bool.false_eq_true, ite_false, hckf, Bool.toNat_false, zero_mul,
           add_zero] at hP1 ⊢
         omega
     · -- P2: A untouched
@@ -314,7 +314,7 @@ theorem cRippleCirc_correct (L : CRippleLayout m n) (s : State m)
   have hlt : regValRange L.B (denote (cRipplePrefix L n) s) n < 2 ^ n := regValRange_lt _ _ _
   cases hc : s L.ctrl with
   | true =>
-    simp only [hc, if_true] at hP1 ⊢
+    simp only [hc, ite_true] at hP1 ⊢
     cases h : denote (cRipplePrefix L n) s (L.C n)
     · simp only [h, Bool.toNat_false, zero_mul, add_zero] at hP1
       rw [← hP1, Nat.mod_eq_of_lt hlt]
@@ -322,7 +322,7 @@ theorem cRippleCirc_correct (L : CRippleLayout m n) (s : State m)
       rw [hP1.symm, Nat.add_mod_right, Nat.mod_eq_of_lt hlt]
   | false =>
     have hcnf : denote (cRipplePrefix L n) s (L.C n) = false := hP7 hc
-    simp only [hc, Bool.false_eq_true, if_false, hcnf, Bool.toNat_false, zero_mul,
+    simp only [hc, Bool.false_eq_true, ite_false, hcnf, Bool.toNat_false, zero_mul,
       add_zero, zero_add] at hP1 ⊢
     exact hP1
 

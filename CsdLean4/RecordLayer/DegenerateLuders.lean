@@ -132,7 +132,7 @@ theorem vertexPoint_injective : Function.Injective (vertexPoint (N := N)) := by
   obtain ⟨a, ha⟩ := h
   have h1 := congrArg (fun v : EuclideanSpace ℂ (Fin N) => v j1) ha
   simp only [PiLp.smul_apply, PiLp.single_apply,
-    if_neg hne, smul_eq_mul, mul_zero, Units.smul_def] at h1
+    ite_eq_right hne, smul_eq_mul, mul_zero, Units.smul_def] at h1
   exact one_ne_zero h1.symm
 
 omit [NeZero N] in

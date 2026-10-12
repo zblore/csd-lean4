@@ -376,7 +376,7 @@ theorem exists_entangled_mem_nhds (hA : 2 ≤ nA) (hB : 2 ≤ nB)
       (fun z : EuclideanSpace ℂ (Fin nA × Fin nB) => z (j₀, k₀)) h0
     have hsingle : e (j₀, k₀) = 0 := by
       rw [he_apply]
-      exact if_neg (by intro h; exact hj₁ (congrArg Prod.fst h).symm)
+      exact ite_eq_right (by intro h; exact hj₁ (congrArg Prod.fst h).symm)
     simp only [PiLp.add_apply, PiLp.smul_apply, tensorState_apply, hsingle,
       smul_eq_mul, mul_zero, add_zero, PiLp.zero_apply] at h00
     exact mul_ne_zero hj₀ hk₀ h00
@@ -411,10 +411,10 @@ theorem exists_entangled_mem_nhds (hA : 2 ≤ nA) (hB : 2 ≤ nB)
     simp only [PiLp.add_apply, PiLp.smul_apply, tensorState_apply, he_apply,
       smul_eq_mul]
   rw [hval j₀ k₀, hval j₁ k₁, hval j₀ k₁, hval j₁ k₀]
-  rw [if_neg (by intro h; exact hj₁ (congrArg Prod.fst h).symm),
-    if_pos rfl,
-    if_neg (by intro h; exact hj₁ (congrArg Prod.fst h).symm),
-    if_neg (by intro h; exact hk₁ (congrArg Prod.snd h).symm)]
+  rw [ite_eq_right (by intro h; exact hj₁ (congrArg Prod.fst h).symm),
+    ite_eq_left rfl,
+    ite_eq_right (by intro h; exact hj₁ (congrArg Prod.fst h).symm),
+    ite_eq_right (by intro h; exact hk₁ (congrArg Prod.snd h).symm)]
   intro heq
   have hz : a j₀ * b k₀ * t = 0 := by linear_combination heq
   exact mul_ne_zero (mul_ne_zero hj₀ hk₀) ht0 hz

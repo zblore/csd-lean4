@@ -153,8 +153,8 @@ lemma measureCorrectMat_basisState (pairs : List (Fin m × Fin m)) (g : Fin m) (
   rw [toEuclideanLin_basisState_m, PiLp.smul_apply, basisState_apply, smul_eq_mul,
     measureCorrectMat_apply]
   by_cases h : z = Function.update w g mo
-  · rw [if_pos h, if_pos h, h, mul_one]
-  · rw [if_neg h, if_neg h, mul_zero]
+  · rw [ite_eq_left h, ite_eq_left h, h, mul_one]
+  · rw [ite_eq_right h, ite_eq_right h, mul_zero]
 
 /-- Corrections that avoid the ancilla read the same parity before and after the reset. -/
 lemma andParity_update_of_forall_ne (pairs : List (Fin m × Fin m)) {g : Fin m}

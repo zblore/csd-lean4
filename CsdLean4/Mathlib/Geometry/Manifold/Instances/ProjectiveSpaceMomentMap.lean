@@ -450,7 +450,7 @@ theorem torusHamiltonian_single (k : Fin (n + 1)) (p : ℙ ℂ (Ambient n)) :
     torusHamiltonian (Pi.single k (1 : ℝ)) p = 2 * momentMap p k := by
   unfold torusHamiltonian
   simp only [Pi.single_apply, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ,
-    if_true]
+    ite_true]
 
 theorem mdifferentiable_torusHamiltonian (θ : Fin (n + 1) → ℝ) :
     MDifferentiable (𝓘(ℝ, Fin n → ℂ)) (𝓘(ℝ, ℝ))
@@ -539,8 +539,17 @@ theorem eq_torusHamiltonian_of_nonneg_of_sum (H : Fin (n + 1) → ℙ ℂ (Ambie
   rw [hc k, hall k, add_zero]
 
 
-/-! ### The image of the moment map is the standard simplex (G9) -/
+/-! ### The image of the moment map is the standard simplex (G9)
 
+`stdSimplex` (the `Set (iota -> k)`) was deprecated on 2026-08-29 in favour of the bundled
+type `StdSimplex`, which is a different object: its elements carry `.weights`, and the whole
+`Set`-level API below it is deprecated with no `Set`-level successor. Restating these five
+theorems against the new type is a genuine restatement of their statements (and of four axiom
+pins), which is BACKLOG #27's `HY-6` sweep and not part of a toolchain bump, so the
+deprecation is silenced per declaration here rather than file-wide. Nothing below is weakened:
+the statements are the ones the pin at Lean v4.33.0 proved. -/
+
+set_option linter.deprecated false in
 /-- Every value of the moment map lies in the standard simplex: `momentMap_nonneg` and
 `momentMap_sum_eq_one`. -/
 theorem momentMap_mem_stdSimplex (p : ℙ ℂ (Ambient n)) :
@@ -556,12 +565,14 @@ theorem norm_sqrtVec_apply_sq (t : Fin (n + 1) → ℝ) (k : Fin (n + 1)) (ht : 
   show ‖((Real.sqrt (t k) : ℝ) : ℂ)‖ ^ 2 = t k
   rw [Complex.norm_of_nonneg (Real.sqrt_nonneg _), Real.sq_sqrt ht]
 
+set_option linter.deprecated false in
 theorem norm_sqrtVec_sq (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fin (n + 1))) :
     ‖sqrtVec t‖ ^ 2 = 1 := by
   rw [EuclideanSpace.norm_sq_eq,
     Finset.sum_congr rfl fun k _ => norm_sqrtVec_apply_sq t k (ht.1 k)]
   exact ht.2
 
+set_option linter.deprecated false in
 theorem sqrtVec_ne_zero (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fin (n + 1))) :
     sqrtVec t ≠ 0 := by
   intro h
@@ -569,12 +580,14 @@ theorem sqrtVec_ne_zero (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fi
   rw [h, norm_zero] at h1
   norm_num at h1
 
+set_option linter.deprecated false in
 /-- The ray of `(√t₀, …, √tₙ)` maps to `t`. -/
 theorem momentMap_mk_sqrtVec (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fin (n + 1))) :
     momentMap (Projectivization.mk ℂ (sqrtVec t) (sqrtVec_ne_zero t ht)) = t := by
   funext k
   rw [momentMap_mk, norm_sqrtVec_sq t ht, norm_sqrtVec_apply_sq t k (ht.1 k), div_one]
 
+set_option linter.deprecated false in
 /-- ★★ **The image of the moment map is exactly the standard simplex** — the moment polytope of
 the torus action on `ℂℙⁿ`, by direct computation: `⊆` is the normalisation, `⊇` is the ray of
 `(√t₀, …, √tₙ)`. The Atiyah–Guillemin–Sternberg convexity theorem is neither used nor proved. -/

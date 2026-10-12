@@ -462,16 +462,16 @@ lemma Q_mul_Q_apply (a m : Fin N) :
     norm_num
   by_cases h1 : (a : ℕ) + 1 = (m : ℕ)
   · have h2 : ¬ ((m : ℕ) + 1 = (a : ℕ)) := by omega
-    rw [if_pos h1]
+    rw [ite_eq_left h1]
     have hQam : Q N a m = (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ * ((Real.sqrt (m : ℕ) : ℝ) : ℂ) := by
       simp only [Q, Matrix.smul_apply, Matrix.add_apply, annihilation, creation,
         Matrix.conjTranspose_apply, Matrix.of_apply, smul_eq_mul]
-      rw [if_pos h1, if_neg h2]
+      rw [ite_eq_left h1, ite_eq_right h2]
       simp
     have hQma : Q N m a = (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ * ((Real.sqrt (m : ℕ) : ℝ) : ℂ) := by
       simp only [Q, Matrix.smul_apply, Matrix.add_apply, annihilation, creation,
         Matrix.conjTranspose_apply, Matrix.of_apply, smul_eq_mul]
-      rw [if_neg h2, if_pos h1]
+      rw [ite_eq_right h2, ite_eq_left h1]
       simp [Complex.conj_ofReal]
     have hsm : ((Real.sqrt (m : ℕ) : ℝ) : ℂ) * ((Real.sqrt (m : ℕ) : ℝ) : ℂ)
         = ((m : ℕ) : ℂ) := by
@@ -486,16 +486,16 @@ lemma Q_mul_Q_apply (a m : Fin N) :
       ring
     rw [hexpand, hs2, hsm]
   · by_cases h2 : (m : ℕ) + 1 = (a : ℕ)
-    · rw [if_neg h1, if_pos h2]
+    · rw [ite_eq_right h1, ite_eq_left h2]
       have hQam : Q N a m = (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ * ((Real.sqrt (a : ℕ) : ℝ) : ℂ) := by
         simp only [Q, Matrix.smul_apply, Matrix.add_apply, annihilation, creation,
           Matrix.conjTranspose_apply, Matrix.of_apply, smul_eq_mul]
-        rw [if_neg h1, if_pos h2]
+        rw [ite_eq_right h1, ite_eq_left h2]
         simp [Complex.conj_ofReal]
       have hQma : Q N m a = (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ * ((Real.sqrt (a : ℕ) : ℝ) : ℂ) := by
         simp only [Q, Matrix.smul_apply, Matrix.add_apply, annihilation, creation,
           Matrix.conjTranspose_apply, Matrix.of_apply, smul_eq_mul]
-        rw [if_pos h2, if_neg h1]
+        rw [ite_eq_left h2, ite_eq_right h1]
         simp
       have hsa : ((Real.sqrt (a : ℕ) : ℝ) : ℂ) * ((Real.sqrt (a : ℕ) : ℝ) : ℂ)
           = ((a : ℕ) : ℂ) := by
@@ -509,11 +509,11 @@ lemma Q_mul_Q_apply (a m : Fin N) :
             / (((Real.sqrt 2 : ℝ) : ℂ) * ((Real.sqrt 2 : ℝ) : ℂ)) := by
         ring
       rw [hexpand, hs2, hsa]
-    · rw [if_neg h1, if_neg h2]
+    · rw [ite_eq_right h1, ite_eq_right h2]
       have hQam : Q N a m = 0 := by
         simp only [Q, Matrix.smul_apply, Matrix.add_apply, annihilation, creation,
           Matrix.conjTranspose_apply, Matrix.of_apply, smul_eq_mul]
-        rw [if_neg h1, if_neg h2]
+        rw [ite_eq_right h1, ite_eq_right h2]
         simp
       rw [hQam, zero_mul]
 
@@ -570,38 +570,38 @@ lemma qWalk_eval [NeZero N] (θ : ℝ) (a : Fin N) :
     rw [Q_mul_Q_apply]
     by_cases h1 : (a : ℕ) + 1 = (m : ℕ)
     · have h2 : ¬ ((m : ℕ) + 1 = (a : ℕ)) := by omega
-      rw [if_pos h1, if_pos h1, if_neg h2, add_zero, hΔup m h1]
+      rw [ite_eq_left h1, ite_eq_left h1, ite_eq_right h2, add_zero, hΔup m h1]
       ring
     · by_cases h2 : (m : ℕ) + 1 = (a : ℕ)
-      · rw [if_neg h1, if_pos h2, if_neg h1, if_pos h2, zero_add, hΔdown m h2]
+      · rw [ite_eq_right h1, ite_eq_left h2, ite_eq_right h1, ite_eq_left h2, zero_add, hΔdown m h2]
         ring
-      · rw [if_neg h1, if_neg h2, if_neg h1, if_neg h2, add_zero, mul_zero]
+      · rw [ite_eq_right h1, ite_eq_right h2, ite_eq_right h1, ite_eq_right h2, add_zero, mul_zero]
   simp only [hsummand]
   rw [Finset.sum_add_distrib]
   congr 1
   · by_cases hlt : (a : ℕ) + 1 < N
-    · rw [if_pos hlt, Finset.sum_eq_single (⟨(a : ℕ) + 1, hlt⟩ : Fin N)]
-      · rw [if_pos rfl]
+    · rw [ite_eq_left hlt, Finset.sum_eq_single (⟨(a : ℕ) + 1, hlt⟩ : Fin N)]
+      · rw [ite_eq_left rfl]
       · intro b _ hb
-        rw [if_neg fun h => hb (Fin.ext h.symm)]
+        rw [ite_eq_right fun h => hb (Fin.ext h.symm)]
       · intro h
         exact absurd (Finset.mem_univ _) h
-    · rw [if_neg hlt]
+    · rw [ite_eq_right hlt]
       refine (Finset.sum_eq_zero fun m _ => ?_)
-      rw [if_neg (fun h => hlt (by omega))]
+      rw [ite_eq_right (fun h => hlt (by omega))]
   · by_cases ha : (a : ℕ) = 0
     · have hz : ∀ m ∈ (Finset.univ : Finset (Fin N)), (if (m : ℕ) + 1 = (a : ℕ)
           then ((a : ℕ) : ℂ) / 2 * Complex.exp (Complex.I * (θ : ℂ)) else 0) = (0 : ℂ) := by
         intro m _
-        rw [if_neg (by omega)]
+        rw [ite_eq_right (by omega)]
       rw [Finset.sum_congr rfl hz, Finset.sum_const_zero, ha]
       norm_num
     · have haN : (a : ℕ) - 1 < N := lt_of_le_of_lt (Nat.sub_le _ _) a.isLt
       rw [Finset.sum_eq_single (⟨(a : ℕ) - 1, haN⟩ : Fin N)]
-      · rw [if_pos (show ((⟨(a : ℕ) - 1, haN⟩ : Fin N) : ℕ) + 1 = (a : ℕ) from
+      · rw [ite_eq_left (show ((⟨(a : ℕ) - 1, haN⟩ : Fin N) : ℕ) + 1 = (a : ℕ) from
           Nat.succ_pred_eq_of_pos (Nat.pos_of_ne_zero ha))]
       · intro b _ hb
-        rw [if_neg fun h => hb (Fin.ext (show (b : ℕ) = (a : ℕ) - 1 by omega))]
+        rw [ite_eq_right fun h => hb (Fin.ext (show (b : ℕ) = (a : ℕ) - 1 by omega))]
       · intro h
         exact absurd (Finset.mem_univ _) h
 
@@ -621,7 +621,7 @@ lemma evolved_mul_modeOpQ_diag [NeZero N] (τ : ℝ) (n : ℕ) (k : Fin K)
     rw [heisenberg_freeFieldU_pow_apply]
     have hz : modeOp k (Q N) c d = 0 := by
       unfold modeOp
-      rw [if_neg hd]
+      rw [ite_eq_right hd]
     rw [hz, mul_zero, zero_mul]
   rw [sum_collapse_of_support c k
     (fun d => heisenberg (freeFieldU K N τ ^ n) (modeOp k (Q N)) c d * modeOp k (Q N) d c) h0]
@@ -739,9 +739,9 @@ theorem thermalTwoPoint_tendsto_vacuum [NeZero N] (hN : 1 < N) (τ : ℝ) (n : �
       rw [this]
     rw [hnum, hZ, mul_div_mul_left _ _ (Complex.ofReal_ne_zero.mpr (Real.exp_ne_zero _))]
   have hfree : freeTwoPoint (K := K) (N := N) τ n k k = g ⟨0, hzero⟩ := by
-    rw [freeTwoPoint_eq hN, if_pos rfl, hg]
+    rw [freeTwoPoint_eq hN, ite_eq_left rfl, hg]
     simp only []
-    rw [if_pos (show ((⟨0, hzero⟩ : Fin N) : ℕ) + 1 < N from hN)]
+    rw [ite_eq_left (show ((⟨0, hzero⟩ : Fin N) : ℕ) + 1 < N from hN)]
     norm_num
   rw [hfree]
   refine Filter.Tendsto.congr (fun β => (heq β).symm) ?_

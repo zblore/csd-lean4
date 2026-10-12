@@ -153,8 +153,8 @@ theorem reduceA_localLuders_mixture (v : EuclideanSpace ℂ (Fin nA × Fin nB)) 
       = (((‖v‖ ^ 2 : ℝ) : ℂ))⁻¹ • traceRight (vecOuter (localProjB j v)) := by
     intro j
     by_cases h : localProjB j v = 0
-    · rw [dif_pos h, smul_zero, h, vecOuter_zero, traceRight_zero, smul_zero]
-    · rw [dif_neg h, reduceA_mk _ h, smul_smul]
+    · rw [dite_eq_left h, smul_zero, h, vecOuter_zero, traceRight_zero, smul_zero]
+    · rw [dite_eq_right h, reduceA_mk _ h, smul_smul]
       congr 1
       have hp : ((‖localProjB j v‖ ^ 2 : ℝ) : ℂ) ≠ 0 :=
         Complex.ofReal_ne_zero.mpr (pow_ne_zero 2 (norm_ne_zero_iff.mpr h))

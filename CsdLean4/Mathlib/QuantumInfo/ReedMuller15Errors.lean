@@ -99,7 +99,7 @@ theorem pauliOp_basisState_z (e x : Fin 15 → Fin 2) :
   rw [pauliOp_apply, add_zero, PiLp.smul_apply, smul_eq_mul, basisState_apply]
   by_cases h : z = x
   · rw [h]
-  · rw [if_neg h, mul_zero, mul_zero]
+  · rw [ite_eq_right h, mul_zero, mul_zero]
 
 /-- `Z_e X^{row i} = (−1)^{(syndrome e)ᵢ} X^{row i} Z_e`. -/
 theorem pauliOp_z_comm_row (e : Fin 15 → Fin 2) (i : Fin 4) (ψ : QReg 15) :
@@ -202,8 +202,8 @@ theorem magicConj_apply (z : Fin 1 → Fin 2) :
     show (Function.update z 0 1 : Fin 1 → Fin 2) = (fun _ => 1) from by
       funext i
       rw [Subsingleton.elim i 0, Function.update_self],
-    basisState_apply, basisState_apply, if_pos rfl,
-    if_neg (by intro hc; exact absurd (congrFun hc 0) (by decide))]
+    basisState_apply, basisState_apply, ite_eq_left rfl,
+    ite_eq_right (by intro hc; exact absurd (congrFun hc 0) (by decide))]
   simp only [mul_zero, mul_one, add_zero, signChar_zero]
   ring
 
@@ -228,24 +228,24 @@ theorem outQubit_eq (e : Fin 15 → Fin 2) :
     basisState_apply, basisState_apply]
   rcases (by decide : ∀ v : Fin 2, v = 0 ∨ v = 1) (parity e) with hp | hp <;>
     rcases (by decide : ∀ v : Fin 2, v = 0 ∨ v = 1) (z 0) with hz | hz
-  · rw [hp, if_pos rfl, magicConj_apply, hz, if_pos (funext fun i => by rw [Subsingleton.elim i 0, hz]),
-      if_neg (by intro hc; exact absurd ((congrFun hc 0).symm.trans hz) (by decide))]
+  · rw [hp, ite_eq_left rfl, magicConj_apply, hz, ite_eq_left (funext fun i => by rw [Subsingleton.elim i 0, hz]),
+      ite_eq_right (by intro hc; exact absurd ((congrFun hc 0).symm.trans hz) (by decide))]
     simp only [signChar_zero, one_mul, Fin.isValue, Fin.val_zero, pow_zero, mul_one, mul_zero,
       add_zero]
     exact hsq.symm
-  · rw [hp, if_pos rfl, magicConj_apply, hz, if_neg (by intro hc; exact absurd ((congrFun hc 0).symm.trans hz) (by decide)),
-      if_pos (funext fun i => by rw [Subsingleton.elim i 0, hz])]
+  · rw [hp, ite_eq_left rfl, magicConj_apply, hz, ite_eq_right (by intro hc; exact absurd ((congrFun hc 0).symm.trans hz) (by decide)),
+      ite_eq_left (funext fun i => by rw [Subsingleton.elim i 0, hz])]
     simp only [signChar_zero, one_mul, Fin.isValue, Fin.val_one, pow_one, mul_one, zero_add]
     rw [← mul_assoc, hsq, one_mul]
-  · rw [hp, if_neg (show ¬ ((1 : Fin 2) = 0) by decide), pauliOp_apply, add_zero, pauliSign, bdot_unitV, magicConj_apply, hz,
-      if_pos (funext fun i => by rw [Subsingleton.elim i 0, hz]),
-      if_neg (by intro hc; exact absurd ((congrFun hc 0).symm.trans hz) (by decide))]
+  · rw [hp, ite_eq_right (show ¬ ((1 : Fin 2) = 0) by decide), pauliOp_apply, add_zero, pauliSign, bdot_unitV, magicConj_apply, hz,
+      ite_eq_left (funext fun i => by rw [Subsingleton.elim i 0, hz]),
+      ite_eq_right (by intro hc; exact absurd ((congrFun hc 0).symm.trans hz) (by decide))]
     simp only [signChar_zero, one_mul, Fin.isValue, Fin.val_zero, pow_zero, mul_one, mul_zero,
       add_zero]
     exact hsq.symm
-  · rw [hp, if_neg (show ¬ ((1 : Fin 2) = 0) by decide), pauliOp_apply, add_zero, pauliSign, bdot_unitV, magicConj_apply, hz,
-      if_neg (by intro hc; exact absurd ((congrFun hc 0).symm.trans hz) (by decide)),
-      if_pos (funext fun i => by rw [Subsingleton.elim i 0, hz])]
+  · rw [hp, ite_eq_right (show ¬ ((1 : Fin 2) = 0) by decide), pauliOp_apply, add_zero, pauliSign, bdot_unitV, magicConj_apply, hz,
+      ite_eq_right (by intro hc; exact absurd ((congrFun hc 0).symm.trans hz) (by decide)),
+      ite_eq_left (funext fun i => by rw [Subsingleton.elim i 0, hz])]
     simp only [Fin.isValue, Fin.val_one, pow_one, mul_one, zero_add]
     rw [show signChar 1 = -1 from rfl]
     linear_combination tPhaseInv * hsq

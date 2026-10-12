@@ -163,7 +163,7 @@ lemma modeOp_mulVec_apply (k : Fin K) (a : Matrix (Fin N) (Fin N) ℂ)
     intro d _ hd
     rw [show modeOp k a c d
         = if (∀ j, j ≠ k → c j = d j) then a (c k) (d k) else 0 from rfl,
-      if_neg, zero_mul]
+      ite_eq_right, zero_mul]
     intro hall
     exact hd (Finset.mem_image.mpr ⟨d k, Finset.mem_univ _, funext fun j => by
       by_cases hj : j = k
@@ -268,9 +268,9 @@ lemma modeOp_conjTranspose (k : Fin K) (a : Matrix (Fin N) (Fin N) ℂ) :
     show modeOp k aᴴ c d
       = if (∀ j, j ≠ k → c j = d j) then aᴴ (c k) (d k) else 0 from rfl]
   by_cases h : ∀ j, j ≠ k → c j = d j
-  · rw [if_pos h, if_pos fun j hj => (h j hj).symm,
+  · rw [ite_eq_left h, ite_eq_left fun j hj => (h j hj).symm,
       Matrix.conjTranspose_apply]
-  · rw [if_neg h, if_neg (fun h' => h fun j hj => (h' j hj).symm), star_zero]
+  · rw [ite_eq_right h, ite_eq_right (fun h' => h fun j hj => (h' j hj).symm), star_zero]
 
 /-- **The grade-`m` interaction**: `Q_k^m` — `m` quadrature factors on mode
 `k`, embedded in the field. -/

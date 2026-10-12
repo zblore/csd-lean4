@@ -268,13 +268,13 @@ theorem stdBasis_inner_re (p q : Fin (2 * n)) :
   obtain ⟨mq, hmq⟩ : ∃ m, memIdx q = m := ⟨_, rfl⟩
   rw [hmp, hmq] at hpq ⊢
   by_cases h1 : pairIdx p = pairIdx q
-  · rw [if_pos h1]
+  · rw [ite_eq_left h1]
     by_cases h2 : mp = mq
-    · rw [if_pos (hpq.2 ⟨h1, h2⟩), h2]
+    · rw [ite_eq_left (hpq.2 ⟨h1, h2⟩), h2]
       fin_cases mq <;> simp [Complex.conj_I]
-    · rw [if_neg (fun h => h2 (hpq.1 h).2)]
+    · rw [ite_eq_right (fun h => h2 (hpq.1 h).2)]
       fin_cases mp <;> fin_cases mq <;> simp_all [Complex.conj_I]
-  · rw [if_neg h1, if_neg (fun h => h1 (hpq.1 h).1)]
+  · rw [ite_eq_right h1, ite_eq_right (fun h => h1 (hpq.1 h).1)]
     simp
 
 theorem toMatrix_fsModelMetric_zero :

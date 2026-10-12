@@ -141,8 +141,8 @@ omit [Fintype ι] in
 unchanged state: `hadAnc (hadInit ψ) (a,i) = (√2)⁻¹·ψ i` for every `a`. -/
 lemma had1_apply (a : Fin 2) (i : ι) :
     hadAnc (hadInit ψ) (a, i) = (Real.sqrt 2 : ℂ)⁻¹ * ψ i := by
-  rw [hadAnc_apply, Fin.sum_univ_two, hadInit_apply, hadInit_apply, if_pos rfl,
-      if_neg (by decide : ¬ (1 : Fin 2) = 0), mul_zero, add_zero, hadEntry_zero_right]
+  rw [hadAnc_apply, Fin.sum_univ_two, hadInit_apply, hadInit_apply, ite_eq_left rfl,
+      ite_eq_right (by decide : ¬ (1 : Fin 2) = 0), mul_zero, add_zero, hadEntry_zero_right]
 
 omit [Fintype ι] in
 /-- After the controlled-`U` the two pointer branches carry `ψ` and `Uψ`: ancilla `1`
@@ -167,7 +167,7 @@ ancilla (`hadEntry` orthogonality) leaves the symmetric combination:
 lemma hadTest_apply (i : ι) :
     hadTest U ψ (0, i) = (1 / 2 : ℂ) * (ψ i + (U ψ) i) := by
   rw [hadTest, hadAnc_apply, Fin.sum_univ_two, cU_had1_apply, cU_had1_apply,
-      if_neg (by decide : ¬ (0 : Fin 2) = 1), if_pos rfl, hadEntry_zero_left,
+      ite_eq_right (by decide : ¬ (0 : Fin 2) = 1), ite_eq_left rfl, hadEntry_zero_left,
       hadEntry_zero_left]
   have h2 : (Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹ = 1 / 2 := by
     rw [← mul_inv, sqrt2_mul_self]; norm_num
@@ -181,7 +181,7 @@ flips the sign of the `Uψ` branch:
 lemma hadTest_apply_one (i : ι) :
     hadTest U ψ (1, i) = (1 / 2 : ℂ) * (ψ i - (U ψ) i) := by
   rw [hadTest, hadAnc_apply, Fin.sum_univ_two, cU_had1_apply, cU_had1_apply,
-      if_neg (by decide : ¬ (0 : Fin 2) = 1), if_pos rfl, hadEntry_zero_right,
+      ite_eq_right (by decide : ¬ (0 : Fin 2) = 1), ite_eq_left rfl, hadEntry_zero_right,
       hadEntry_one_one]
   have h2 : (Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹ = 1 / 2 := by
     rw [← mul_inv, sqrt2_mul_self]; norm_num

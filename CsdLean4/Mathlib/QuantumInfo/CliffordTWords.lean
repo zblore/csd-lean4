@@ -182,7 +182,7 @@ noncomputable def wordOf (A : Matrix (Fin 2) (Fin 2) ℂ) : List (Fin 3) :=
 theorem ctEval_wordOf {A : Matrix (Fin 2) (Fin 2) ℂ} (hA : A ∈ cliffordT) :
     ctEval (wordOf A) = A := by
   have hex : ∃ w, ctEval w = A := mem_cliffordT_iff_exists_word.1 hA
-  rw [wordOf, dif_pos hex]
+  rw [wordOf, dite_eq_left hex]
   exact hex.choose_spec
 
 /-- ★★★ **#113's net, as words with a length bound.** For every `ε > 0` there are finitely many

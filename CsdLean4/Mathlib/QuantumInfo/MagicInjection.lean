@@ -101,9 +101,9 @@ lemma injectSlice_apply_eq (φ : QReg 1) (m : Fin 2) (ψ : QReg 1) (x : Fin 1 �
       = Complex.I ^ ((m : ℕ) * (x 0 : ℕ)) * (ψ x * φ (fun _ => m + x 0)) := by
   rw [injectSlice_apply, sCorr]
   rcases (by decide : ∀ v : Fin 2, v = 0 ∨ v = 1) m with rfl | rfl
-  · rw [if_pos rfl]
+  · rw [ite_eq_left rfl]
     simp [cnotFlip_pair, fun_const_eq]
-  · rw [if_neg (by decide)]
+  · rw [ite_eq_right (by decide)]
     simp [cnotFlip_pair, fun_const_eq]
 
 /-! ### The injection identity -/
@@ -198,7 +198,7 @@ lemma tGate_basisState_apply (x y : Fin 1 → Fin 2) :
   by_cases h : x = y
   · subst h
     simp
-  · rw [if_neg h, if_neg h, mul_zero]
+  · rw [ite_eq_right h, ite_eq_right h, mul_zero]
 
 lemma injectionKraus_magicState (m : Fin 2) :
     injectionKraus magicState m = ((Real.sqrt 2 : ℂ)⁻¹ * tPhase ^ (m : ℕ)) • tMat := by
@@ -322,7 +322,7 @@ noncomputable def noisyInjectionChannel (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1)
     else (Real.sqrt (1 - p) : ℂ) • injectionKraus magicState me.1
   tp := by
     rw [Fintype.sum_prod_type]
-    simp only [Fintype.sum_bool, Bool.false_eq_true, if_true, if_false, conjTranspose_smul_mul_smul,
+    simp only [Fintype.sum_bool, Bool.false_eq_true, ite_true, ite_false, conjTranspose_smul_mul_smul,
       Finset.sum_add_distrib, ← Finset.smul_sum, sum_kraus_magicState, sum_kraus_zMagicState,
       Complex.conj_ofReal, ← Complex.ofReal_mul, Real.mul_self_sqrt hp,
       Real.mul_self_sqrt (sub_nonneg.mpr hp1)]
@@ -337,7 +337,7 @@ theorem noisyInjectionChannel_apply {p : ℝ} (hp : 0 ≤ p) (hp1 : p ≤ 1)
       = ((1 - p : ℝ) : ℂ) • (tMat * ρ * tMatᴴ)
         + (p : ℂ) • ((zMat * tMat) * ρ * (zMat * tMat)ᴴ) := by
   rw [Channel.apply_def, Fintype.sum_prod_type]
-  simp only [noisyInjectionChannel, Fintype.sum_bool, Bool.false_eq_true, if_true, if_false,
+  simp only [noisyInjectionChannel, Fintype.sum_bool, Bool.false_eq_true, ite_true, ite_false,
     smul_mul_mul_conjTranspose_smul, Finset.sum_add_distrib, ← Finset.smul_sum,
     sum_apply_magicState, sum_apply_zMagicState, Complex.conj_ofReal, ← Complex.ofReal_mul,
     Real.mul_self_sqrt hp, Real.mul_self_sqrt (sub_nonneg.mpr hp1)]

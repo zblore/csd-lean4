@@ -66,11 +66,11 @@ theorem foldGate_denote {α : Abs m} {s : State m} (h : absAgree α s) (g : Gate
   | swap i j => rfl
   | CCX c₁ c₂ t =>
     by_cases hdeg : t = c₁ ∨ t = c₂
-    · have hf : foldGate α (.CCX c₁ c₂ t) = [] := by simp only [foldGate, if_pos hdeg]
-      rw [hf, denote_nil, denoteGate, if_pos hdeg]
+    · have hf : foldGate α (.CCX c₁ c₂ t) = [] := by simp only [foldGate, ite_eq_left hdeg]
+      rw [hf, denote_nil, denoteGate, ite_eq_left hdeg]
     · by_cases h0 : α c₁ = some false ∨ α c₂ = some false
-      · have hf : foldGate α (.CCX c₁ c₂ t) = [] := by simp only [foldGate, if_neg hdeg, if_pos h0]
-        rw [hf, denote_nil, denoteGate, if_neg hdeg]
+      · have hf : foldGate α (.CCX c₁ c₂ t) = [] := by simp only [foldGate, ite_eq_right hdeg, ite_eq_left h0]
+        rw [hf, denote_nil, denoteGate, ite_eq_right hdeg]
         have hff : (s c₁ && s c₂) = false := by
           rcases h0 with hc | hc
           · rw [h c₁ false hc]; rfl
@@ -78,22 +78,22 @@ theorem foldGate_denote {α : Abs m} {s : State m} (h : absAgree α s) (g : Gate
         rw [hff, Bool.xor_false, Function.update_eq_self]
       · by_cases h1 : α c₁ = some true
         · have hf : foldGate α (.CCX c₁ c₂ t) = [.CX c₂ t] := by
-            simp only [foldGate, if_neg hdeg, if_neg h0, if_pos h1]
+            simp only [foldGate, ite_eq_right hdeg, ite_eq_right h0, ite_eq_left h1]
           have hc₁ : s c₁ = true := h c₁ true h1
           have hne2 : ¬ (c₂ = t) := fun e => hdeg (Or.inr e.symm)
           rw [hf]
-          simp only [denote_cons, denote_nil, denoteGate, if_neg hne2, if_neg hdeg, hc₁,
+          simp only [denote_cons, denote_nil, denoteGate, ite_eq_right hne2, ite_eq_right hdeg, hc₁,
             Bool.true_and, Bool.xor_comm]
         · by_cases h2 : α c₂ = some true
           · have hf : foldGate α (.CCX c₁ c₂ t) = [.CX c₁ t] := by
-              simp only [foldGate, if_neg hdeg, if_neg h0, if_neg h1, if_pos h2]
+              simp only [foldGate, ite_eq_right hdeg, ite_eq_right h0, ite_eq_right h1, ite_eq_left h2]
             have hc₂ : s c₂ = true := h c₂ true h2
             have hne1 : ¬ (c₁ = t) := fun e => hdeg (Or.inl e.symm)
             rw [hf]
-            simp only [denote_cons, denote_nil, denoteGate, if_neg hne1, if_neg hdeg, hc₂,
+            simp only [denote_cons, denote_nil, denoteGate, ite_eq_right hne1, ite_eq_right hdeg, hc₂,
               Bool.and_true, Bool.xor_comm]
           · have hf : foldGate α (.CCX c₁ c₂ t) = [.CCX c₁ c₂ t] := by
-              simp only [foldGate, if_neg hdeg, if_neg h0, if_neg h1, if_neg h2]
+              simp only [foldGate, ite_eq_right hdeg, ite_eq_right h0, ite_eq_right h1, ite_eq_right h2]
             rw [hf]; rfl
 
 /-! ### Forward-updating the abstract state -/
@@ -127,8 +127,8 @@ theorem stepAbs_agree {α : Abs m} {s : State m} (h : absAgree α s) (g : Gate m
     · rw [Function.update_of_ne hit] at hib
       have hi : denoteGate (.CX c t) s i = s i := by
         by_cases hct : c = t
-        · rw [denoteGate, if_pos hct]
-        · rw [denoteGate, if_neg hct, Function.update_of_ne hit]
+        · rw [denoteGate, ite_eq_left hct]
+        · rw [denoteGate, ite_eq_right hct, Function.update_of_ne hit]
       rw [hi]; exact h i b hib
   | CCX c₁ c₂ t =>
     simp only [stepAbs] at hib
@@ -137,18 +137,18 @@ theorem stepAbs_agree {α : Abs m} {s : State m} (h : absAgree α s) (g : Gate m
     · rw [Function.update_of_ne hit] at hib
       have hi : denoteGate (.CCX c₁ c₂ t) s i = s i := by
         by_cases hdeg : t = c₁ ∨ t = c₂
-        · rw [denoteGate, if_pos hdeg]
-        · rw [denoteGate, if_neg hdeg, Function.update_of_ne hit]
+        · rw [denoteGate, ite_eq_left hdeg]
+        · rw [denoteGate, ite_eq_right hdeg, Function.update_of_ne hit]
       rw [hi]; exact h i b hib
   | swap p q =>
     simp only [stepAbs] at hib
     by_cases hip : i = p
-    · simp only [if_pos hip] at hib
+    · simp only [ite_eq_left hip] at hib
       rw [denoteGate, Function.comp_apply, hip, Equiv.swap_apply_left]; exact h q b hib
     · by_cases hiq : i = q
-      · simp only [if_neg hip, if_pos hiq] at hib
+      · simp only [ite_eq_right hip, ite_eq_left hiq] at hib
         rw [denoteGate, Function.comp_apply, hiq, Equiv.swap_apply_right]; exact h p b hib
-      · simp only [if_neg hip, if_neg hiq] at hib
+      · simp only [ite_eq_right hip, ite_eq_right hiq] at hib
         rw [denoteGate, Function.comp_apply, Equiv.swap_apply_of_ne_of_ne hip hiq]; exact h i b hib
 
 /-! ### The pass and its value-exactness -/
@@ -183,7 +183,7 @@ theorem demoAbs_agree (s : State 3) (h0 : s 0 = false) : absAgree demoAbs s := b
   by_cases hi : i = 0
   · subst hi
     cases b <;> simp_all [demoAbs]
-  · simp only [demoAbs, if_neg hi] at hib
+  · simp only [demoAbs, ite_eq_right hi] at hib
     simp at hib
 
 /-- `cprop` DROPS the Toffoli in `[CCX 0 1 2]` (control wire `0` known `0`): the emitted Toffoli count
@@ -230,7 +230,7 @@ theorem cprop_toffoli_le (α : Abs m) (c : Circuit m) :
 theorem foldGate_ccx_known_false (α : Abs m) (c₁ c₂ t : Fin m)
     (hdeg : ¬ (t = c₁ ∨ t = c₂)) (h0 : α c₁ = some false ∨ α c₂ = some false) :
     foldGate α (Gate.CCX c₁ c₂ t) = [] := by
-  simp only [foldGate, if_neg hdeg, if_pos h0]
+  simp only [foldGate, ite_eq_right hdeg, ite_eq_left h0]
 
 /-- **A real multi-Toffoli win on the AND-adder's carry cell.** The three-`CCX` carry cell
 `[CCX a b g, CCX a c g, CCX b c g]` with the carry-in `c` a known-`0` ancilla constant-propagates to a

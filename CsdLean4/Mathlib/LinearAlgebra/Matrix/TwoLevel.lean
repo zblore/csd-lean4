@@ -7,9 +7,8 @@ module
 
 public import Mathlib.LinearAlgebra.UnitaryGroup
 public import Mathlib.Analysis.SpecialFunctions.Sqrt
-public import Mathlib.Data.Complex.Basic
-public import Mathlib.Data.Complex.BigOperators
-
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Basic.Complex.BigOperators
 /-!
 # Every unitary matrix is a product of two-level unitaries
 
@@ -96,17 +95,17 @@ theorem IdOutside.mul {s : Finset n} {U V : Matrix n n ℂ} (hU : IdOutside s U)
   intro k l hkl
   rcases hkl with hk | hl
   · rw [Matrix.mul_apply, Finset.sum_eq_single k]
-    · rw [hU k k (Or.inl hk), if_pos rfl, one_mul]
+    · rw [hU k k (Or.inl hk), ite_eq_left rfl, one_mul]
       exact hV k l (Or.inl hk)
     · intro m _ hmk
-      rw [hU k m (Or.inl hk), if_neg (Ne.symm hmk), zero_mul]
+      rw [hU k m (Or.inl hk), ite_eq_right (Ne.symm hmk), zero_mul]
     · intro hk'
       exact absurd (Finset.mem_univ k) hk'
   · rw [Matrix.mul_apply, Finset.sum_eq_single l]
-    · rw [hV l l (Or.inr hl), if_pos rfl, mul_one]
+    · rw [hV l l (Or.inr hl), ite_eq_left rfl, mul_one]
       exact hU k l (Or.inr hl)
     · intro m _ hml
-      rw [hV m l (Or.inr hl), if_neg hml, mul_zero]
+      rw [hV m l (Or.inr hl), ite_eq_right hml, mul_zero]
     · intro hl'
       exact absurd (Finset.mem_univ l) hl'
 
@@ -203,16 +202,16 @@ theorem mul_apply_of_idOutside_pair (hij : i ≠ j) (U V : Matrix n n ℂ)
     (hU : IdOutside ({i, j} : Finset n) U) (k l : n) :
     (U * V) k l = if k = i ∨ k = j then U k i * V i l + U k j * V j l else V k l := by
   by_cases hk : k = i ∨ k = j
-  · rw [if_pos hk, Matrix.mul_apply, sum_eq_pair hij]
+  · rw [ite_eq_left hk, Matrix.mul_apply, sum_eq_pair hij]
     intro m hmi hmj
-    rw [hU k m (Or.inr (by simp [hmi, hmj])), if_neg ?_, zero_mul]
+    rw [hU k m (Or.inr (by simp [hmi, hmj])), ite_eq_right ?_, zero_mul]
     rcases hk with rfl | rfl
     · exact fun h => hmi h.symm
     · exact fun h => hmj h.symm
-  · rw [if_neg hk, Matrix.mul_apply, Finset.sum_eq_single k]
-    · rw [hU k k (Or.inl (by simp [not_or.mp hk])), if_pos rfl, one_mul]
+  · rw [ite_eq_right hk, Matrix.mul_apply, Finset.sum_eq_single k]
+    · rw [hU k k (Or.inl (by simp [not_or.mp hk])), ite_eq_left rfl, one_mul]
     · intro m _ hmk
-      rw [hU k m (Or.inl (by simp [not_or.mp hk])), if_neg (Ne.symm hmk), zero_mul]
+      rw [hU k m (Or.inl (by simp [not_or.mp hk])), ite_eq_right (Ne.symm hmk), zero_mul]
     · intro hk'
       exact absurd (Finset.mem_univ k) hk'
 
@@ -255,21 +254,21 @@ theorem twoLevelMat_mulVec_apply_fst (hij : i ≠ j) (v : n → ℂ) :
   rw [Matrix.mulVec, dotProduct, sum_eq_pair hij]
   · rw [twoLevelMat_apply_fst_fst, twoLevelMat_apply_fst_snd hij]
   · intro m hmi hmj
-    rw [twoLevelMat_apply_of_col_ne hmi hmj, if_neg (Ne.symm hmi), zero_mul]
+    rw [twoLevelMat_apply_of_col_ne hmi hmj, ite_eq_right (Ne.symm hmi), zero_mul]
 
 theorem twoLevelMat_mulVec_apply_snd (hij : i ≠ j) (v : n → ℂ) :
     (twoLevelMat i j a b c d *ᵥ v) j = c * v i + d * v j := by
   rw [Matrix.mulVec, dotProduct, sum_eq_pair hij]
   · rw [twoLevelMat_apply_snd_fst hij, twoLevelMat_apply_snd_snd hij]
   · intro m hmi hmj
-    rw [twoLevelMat_apply_of_col_ne hmi hmj, if_neg (Ne.symm hmj), zero_mul]
+    rw [twoLevelMat_apply_of_col_ne hmi hmj, ite_eq_right (Ne.symm hmj), zero_mul]
 
 theorem twoLevelMat_mulVec_apply_of_ne {k : n} (hki : k ≠ i) (hkj : k ≠ j) (v : n → ℂ) :
     (twoLevelMat i j a b c d *ᵥ v) k = v k := by
   rw [Matrix.mulVec, dotProduct, Finset.sum_eq_single k]
-  · rw [twoLevelMat_apply_of_row_ne hki hkj, if_pos rfl, one_mul]
+  · rw [twoLevelMat_apply_of_row_ne hki hkj, ite_eq_left rfl, one_mul]
   · intro m _ hmk
-    rw [twoLevelMat_apply_of_row_ne hki hkj, if_neg (Ne.symm hmk), zero_mul]
+    rw [twoLevelMat_apply_of_row_ne hki hkj, ite_eq_right (Ne.symm hmk), zero_mul]
   · intro hk
     exact absurd (Finset.mem_univ k) hk
 
@@ -503,7 +502,7 @@ theorem IsTwoLevel.conjTranspose {U : Matrix n n ℂ} (h : IsTwoLevel U) : IsTwo
   by_cases hlk : l = k
   · subst hlk
     simp
-  · rw [if_neg hlk, if_neg (Ne.symm hlk)]
+  · rw [ite_eq_right hlk, ite_eq_right (Ne.symm hlk)]
     simp
 
 /-- The reversed list of adjoints inverts the product of a list of unitaries. -/
@@ -539,10 +538,10 @@ theorem row_eq_of_col_eq {U : Matrix n n ℂ} (hU : U ∈ Matrix.unitaryGroup n 
     · intro hi
       exact absurd (Finset.mem_univ i) hi
   have hii := hentry i
-  rw [if_pos rfl] at hii
+  rw [ite_eq_left rfl] at hii
   refine ⟨hii, fun l hl => ?_⟩
   have hl' := hentry l
-  rw [if_neg (Ne.symm hl)] at hl'
+  rw [ite_eq_right (Ne.symm hl)] at hl'
   have hne : starRingEnd ℂ (U i i) ≠ 0 := by
     intro hzero
     rw [hzero, zero_mul] at hii
@@ -623,7 +622,7 @@ theorem exists_twoLevel_prod_of_idOutside (hcard : 1 < Fintype.card n) (s : Fins
         by_cases hks : k ∈ s.erase i
         · exact hzero k hks
         · have hkns : k ∉ s := fun h => hks (Finset.mem_erase.mpr ⟨hk, h⟩)
-          rw [hfix k hk hks, hid k i (Or.inl hkns), if_neg hk]
+          rw [hfix k hk hks, hid k i (Or.inl hkns), ite_eq_right hk]
       obtain ⟨-, hrow⟩ := row_eq_of_col_eq hGU i hcol
       -- the pivot is the norm of the column, which is `1`
       have hsumcol : ∑ k ∈ insert i (s.erase i), Complex.normSq (U k i) = 1 := by
@@ -631,7 +630,7 @@ theorem exists_twoLevel_prod_of_idOutside (hcard : 1 < Fintype.card n) (s : Fins
         refine Finset.sum_subset (Finset.subset_univ s) ?_
         intro k _ hks
         have hki : k ≠ i := fun h => hks (h ▸ hi)
-        rw [hid k i (Or.inl hks), if_neg hki, Complex.normSq_zero]
+        rw [hid k i (Or.inl hks), ite_eq_right hki, Complex.normSq_zero]
       have hdiag : (G * U) i i = 1 := by
         rw [hcolmul, hslot (Finset.card_pos.mp (by omega)), hsumcol, Real.sqrt_one,
           Complex.ofReal_one]
@@ -640,11 +639,11 @@ theorem exists_twoLevel_prod_of_idOutside (hcard : 1 < Fintype.card n) (s : Fins
         by_cases hk : k = i
         · subst hk
           by_cases hl : l = k
-          · rw [hl, hdiag, if_pos rfl]
-          · rw [hrow l hl, if_neg (fun h => hl h.symm)]
+          · rw [hl, hdiag, ite_eq_left rfl]
+          · rw [hrow l hl, ite_eq_right (fun h => hl h.symm)]
         · by_cases hl : l = i
           · subst hl
-            rw [hcol k hk, if_neg hk]
+            rw [hcol k hk, ite_eq_right hk]
           · refine (hGid.mul hid) k l ?_
             rcases hkl with hk' | hl'
             · exact Or.inl fun hks => hk' (Finset.mem_erase.mpr ⟨hk, hks⟩)

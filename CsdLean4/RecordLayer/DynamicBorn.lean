@@ -63,7 +63,7 @@ theorem basinIndex_eq_of_mem {c : ContextField N} {x : LF4.KSigma N} {i : Fin N}
   classical
   have hex : ∃ j, x ∈ globalBasin c j := ⟨i, hx⟩
   unfold basinIndex
-  rw [dif_pos hex]
+  rw [dite_eq_left hex]
   by_contra hne
   exact Set.disjoint_left.mp (globalBasin_pairwiseDisjoint c hne) hex.choose_spec hx
 
@@ -86,7 +86,7 @@ theorem measurable_basinIndex (c : ContextField N) : Measurable (basinIndex c) :
       · rintro (h | h)
         · exact basinIndex_eq_of_mem h
         · unfold basinIndex
-          rw [dif_neg (by simpa [not_exists] using h)]
+          rw [dite_eq_right (by simpa [not_exists] using h)]
     rw [hset]
     exact (measurableSet_globalBasin c i).union
       (MeasurableSet.iUnion fun j => measurableSet_globalBasin c j).compl
@@ -103,7 +103,7 @@ theorem measurable_basinIndex (c : ContextField N) : Measurable (basinIndex c) :
         · exfalso
           apply hi
           unfold basinIndex at hb
-          rw [dif_neg hex] at hb
+          rw [dite_eq_right hex] at hb
           exact hb.symm
       · exact basinIndex_eq_of_mem
     rw [hset]

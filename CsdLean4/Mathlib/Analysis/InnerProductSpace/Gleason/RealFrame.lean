@@ -105,19 +105,19 @@ theorem orthonormal_sum_elim {k m : ℕ} {v : Fin k → EuclideanSpace ℝ (Fin 
       | inl j' =>
           rw [Sum.elim_inl, Sum.elim_inl, hv j j']
           by_cases h : j = j'
-          · rw [if_pos h, if_pos (by rw [h])]
-          · rw [if_neg h, if_neg (by simpa using h)]
+          · rw [ite_eq_left h, ite_eq_left (by rw [h])]
+          · rw [ite_eq_right h, ite_eq_right (by simpa using h)]
       | inr i =>
-          rw [Sum.elim_inl, Sum.elim_inr, hvg j i, if_neg (by simp)]
+          rw [Sum.elim_inl, Sum.elim_inr, hvg j i, ite_eq_right (by simp)]
   | inr i =>
       cases b with
       | inl j =>
-          rw [Sum.elim_inr, Sum.elim_inl, real_inner_comm, hvg j i, if_neg (by simp)]
+          rw [Sum.elim_inr, Sum.elim_inl, real_inner_comm, hvg j i, ite_eq_right (by simp)]
       | inr i' =>
           rw [Sum.elim_inr, Sum.elim_inr, hg i i']
           by_cases h : i = i'
-          · rw [if_pos h, if_pos (by rw [h])]
-          · rw [if_neg h, if_neg (by simpa using h)]
+          · rw [ite_eq_left h, ite_eq_left (by rw [h])]
+          · rw [ite_eq_right h, ite_eq_right (by simpa using h)]
 
 /-! ### The frame sum over any orthonormal basis -/
 
@@ -192,7 +192,7 @@ theorem IsFrameFunction.exists_tail (hf : IsFrameFunction ℝ f W) {v : Euclidea
   have hv1 : Orthonormal ℝ (fun _ : Fin 1 => v) := by
     rw [orthonormal_iff_ite]
     intro i j
-    rw [real_inner_self_eq_norm_sq, hv, if_pos (Subsingleton.elim i j)]
+    rw [real_inner_self_eq_norm_sq, hv, ite_eq_left (Subsingleton.elim i j)]
     norm_num
   have hone : Orthonormal ℝ (Sum.elim (fun _ : Fin 1 => v) g) :=
     orthonormal_sum_elim hv1 hg fun _ i => hvg i
@@ -219,7 +219,7 @@ theorem IsFrameFunction.neg_eq (hf : IsFrameFunction ℝ f W) {v : EuclideanSpac
   have hneg1 : Orthonormal ℝ (fun _ : Fin 1 => -v) := by
     rw [orthonormal_iff_ite]
     intro i j
-    rw [real_inner_self_eq_norm_sq, hvn, if_pos (Subsingleton.elim i j)]
+    rw [real_inner_self_eq_norm_sq, hvn, ite_eq_left (Subsingleton.elim i j)]
     norm_num
   have hone : Orthonormal ℝ (Sum.elim (fun _ : Fin 1 => -v) g) :=
     orthonormal_sum_elim hneg1 hg fun _ i => by

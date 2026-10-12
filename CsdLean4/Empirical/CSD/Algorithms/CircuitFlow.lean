@@ -266,7 +266,7 @@ noncomputable def readout {M : ℕ} [NeZero M] (ρ : Matrix (Fin M) (Fin M) ℂ)
 /-- On a pure input the readout is the Born weight. -/
 theorem readout_outerProduct {M : ℕ} [NeZero M] (φ : EuclideanSpace ℂ (Fin M)) (i : Fin M) :
     readout (outerProduct φ) i = ((‖φ i‖ ^ 2 : ℝ) : ℂ) := by
-  rw [readout, deisolationChannel_apply_outerProduct, decohereReduced_apply, if_pos rfl,
+  rw [readout, deisolationChannel_apply_outerProduct, decohereReduced_apply, ite_eq_left rfl,
     Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq]
 
 /-- After a unitary, the readout of a pure input is the Born weight of the image. -/

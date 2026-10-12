@@ -70,8 +70,8 @@ lemma blockProj_born_eq_block_sum (i : ι) (w : EuclideanSpace ℂ (Fin N × ι)
     refine Finset.sum_congr rfl (fun n _ => ?_)
     simp only [Matrix.toLin'_apply, Pi.star_apply]
     rw [Finset.sum_eq_single i]
-    · rw [blockProj_mulVec, if_pos rfl]
-    · intro j _ hj; rw [blockProj_mulVec, if_neg hj, zero_mul]
+    · rw [blockProj_mulVec, ite_eq_left rfl]
+    · intro j _ hj; rw [blockProj_mulVec, ite_eq_right hj, zero_mul]
     · intro h; exact absurd (Finset.mem_univ i) h
   rw [hcomp, map_sum]
   refine Finset.sum_congr rfl (fun n _ => ?_)

@@ -203,7 +203,8 @@ theorem exp_eq_potential {m : E → ℂ} (hm : Measurable m) {C : ℝ} (hC : ∀
 theorem norm_potential_apply_le {V : Lp ℂ ∞ (volume : Measure E)}
     (hV : ∀ᵐ x ∂(volume : Measure E), ‖V x‖ ≤ 1) (f : L2) : ‖potential V f‖ ≤ ‖f‖ := by
   rw [Lp.norm_def, Lp.norm_def]
-  refine ENNReal.toReal_mono (Lp.eLpNorm_ne_top f) (eLpNorm_mono_ae ?_)
+  refine ENNReal.toReal_mono (Lp.eLpNorm_ne_top f)
+    (eLpNorm_mono_ae (Lp.aestronglyMeasurable _) ?_)
   filter_upwards [coeFn_potential V f, hV] with x h1 h2
   rw [h1, norm_mul]
   exact mul_le_of_le_one_left (norm_nonneg _) h2
@@ -213,7 +214,7 @@ theorem norm_potential_apply_eq {V : Lp ℂ ∞ (volume : Measure E)}
     (hV : ∀ᵐ x ∂(volume : Measure E), ‖V x‖ = 1) (f : L2) : ‖potential V f‖ = ‖f‖ := by
   rw [Lp.norm_def, Lp.norm_def]
   congr 1
-  refine eLpNorm_congr_norm_ae ?_
+  refine eLpNorm_congr_norm_ae (Lp.aestronglyMeasurable _) (Lp.aestronglyMeasurable _) ?_
   filter_upwards [coeFn_potential V f, hV] with x h1 h2
   rw [h1, norm_mul, h2, one_mul]
 
@@ -464,7 +465,7 @@ theorem trotterStep_eq (hVL : (VL : E → ℂ) =ᵐ[volume] fun x => (V x : ℂ)
     ContractionSemigroup.trotterStep (fun t => if 0 ≤ t then fourierGroup hκ t else 1)
         (-(Complex.I • potential VL)) h
       = fourierGroup hκ h * phaseGroup hVm h := by
-  rw [ContractionSemigroup.trotterStep, if_pos hh]
+  rw [ContractionSemigroup.trotterStep, ite_eq_left hh]
   congr 1
   refine exp_eq_potential (m := fun x => ((-(h * V x) : ℝ) : ℂ) * Complex.I) ?_ (C := |h| * CV)
     ?_ ?_ (coeFn_phase hVm h)

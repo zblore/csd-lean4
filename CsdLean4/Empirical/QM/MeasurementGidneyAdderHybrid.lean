@@ -200,7 +200,7 @@ theorem gidneyHybrid_invariant (L : GidneyLayout m n) (mo : ℕ → Fin 2) (t : 
       intro i hi
       have hi' : i ≠ L.G (k + 1) := hi k le_rfl hkn
       rw [hu₂, stateOfReg_update, Function.update_of_ne hi', hT₂, denoteGate,
-        if_neg (not_or.mpr ⟨hoa, hob⟩), Function.update_of_ne hi']
+        ite_eq_right (not_or.mpr ⟨hoa, hob⟩), Function.update_of_ne hi']
       exact h1 i fun j hj hjn => hi j (by omega) hjn
     -- (3) after `CX cin b`
     have h3 : ∀ i : Fin m, (∀ j, k ≤ j → j < n → i ≠ L.G (j + 1)) →
@@ -232,13 +232,13 @@ theorem gidneyHybrid_invariant (L : GidneyLayout m n) (mo : ℕ → Fin 2) (t : 
           simp only [gateTarget, Finset.mem_singleton]; exact (L.hBG k (j + 1)).symm),
         hu₂, Function.update_apply]
       rcases Nat.lt_or_ge k j with hjk | hjk
-      · rw [if_neg (hGk1_ne j (by omega) hjn).symm, hu₁,
+      · rw [ite_eq_right (hGk1_ne j (by omega) hjn).symm, hu₁,
           shadow_gate_apply_of_not_mem_target _ _ (by
             simp only [gateTarget, Finset.mem_singleton]; exact (hGk1_ne j (by omega) hjn).symm)]
         exact ho j (by omega) hjn
       · have hjk' : j = k := by omega
         subst hjk'
-        rw [if_pos rfl]
+        rw [ite_eq_left rfl]
     -- the cells `< k` stay fresh: the block writes only `G (k+1)`, `B k`, `A k`
     have hT₄T : ∀ i : Fin m, i ≠ L.A k → i ≠ L.B k → i ≠ L.G (k + 1) → T₄ i = T i := by
       intro i hia hib hig
@@ -273,7 +273,7 @@ theorem gidneyHybrid_invariant (L : GidneyLayout m n) (mo : ℕ → Fin 2) (t : 
       have hva := val_eq_of_stateOfReg_eq (h1 (L.A k) fun j _ _ => L.hAG k (j + 1))
       have hvb := val_eq_of_stateOfReg_eq (h1 (L.B k) fun j _ _ => L.hBG k (j + 1))
       have hTc : T₁ (L.G (k + 1)) = (t (L.A k) && t (L.B k)) := by
-        rw [hT₁, denoteGate, if_neg hcc, Function.update_self, hfG, hfG1, Bool.xor_comm,
+        rw [hT₁, denoteGate, ite_eq_right hcc, Function.update_self, hfG, hfG1, Bool.xor_comm,
           hcell k hkn]
       have hTa : T₁ (L.A k) = t (L.A k) := by
         rw [hT₁, denoteGate_apply_of_not_mem_target (by

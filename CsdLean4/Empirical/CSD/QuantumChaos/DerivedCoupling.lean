@@ -384,14 +384,14 @@ noncomputable def phaseFlipW : Matrix.unitaryGroup (Fin 2) ℂ :=
 
 lemma phaseFlipW_phase_zero :
     obsPhase (fun i : Fin 2 => if i = 0 then (1:ℝ) else 0) Real.pi 0 = -1 := by
-  rw [obsPhase, if_pos rfl, mul_one]
+  rw [obsPhase, ite_eq_left rfl, mul_one]
   rw [show Complex.I * ((Real.pi : ℝ) : ℂ) = (Real.pi : ℂ) * Complex.I from
     mul_comm _ _]
   exact Complex.exp_pi_mul_I
 
 lemma phaseFlipW_phase_one :
     obsPhase (fun i : Fin 2 => if i = 0 then (1:ℝ) else 0) Real.pi 1 = 1 := by
-  rw [obsPhase, if_neg (by norm_num : (1 : Fin 2) ≠ 0), mul_zero]
+  rw [obsPhase, ite_eq_right (by norm_num : (1 : Fin 2) ≠ 0), mul_zero]
   simp
 
 /-- **The deficit of the phase flip is twice the moment coordinate**:

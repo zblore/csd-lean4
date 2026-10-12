@@ -72,7 +72,7 @@ theorem denoteGate_involutive (g : Gate n) : Function.Involutive (denoteGate g) 
     by_cases h : c = t
     · simp [denoteGate, h]
     · funext k
-      simp only [denoteGate, if_neg h, Function.update_apply]
+      simp only [denoteGate, ite_eq_right h, Function.update_apply]
       by_cases hk : k = t
       · subst hk; simp only []; cases s c <;> cases s k <;> rfl
       · simp [hk]
@@ -82,10 +82,10 @@ theorem denoteGate_involutive (g : Gate n) : Function.Involutive (denoteGate g) 
     · push Not at h
       obtain ⟨h1, h2⟩ := h
       funext k
-      simp only [denoteGate, if_neg (not_or.mpr ⟨h1, h2⟩), Function.update_apply]
+      simp only [denoteGate, ite_eq_right (not_or.mpr ⟨h1, h2⟩), Function.update_apply]
       by_cases hk : k = t
       · subst hk
-        simp only [if_neg (Ne.symm h1), if_neg (Ne.symm h2)]
+        simp only [ite_eq_right (Ne.symm h1), ite_eq_right (Ne.symm h2)]
         cases s k <;> cases (s c₁ && s c₂) <;> rfl
       · simp [hk]
   | swap i j =>
@@ -182,13 +182,13 @@ theorem denoteGate_apply_of_not_mem {g : Gate n} {s : State n} {i : Fin n}
   | CX c t =>
     simp only [gateWires, Finset.mem_insert, Finset.mem_singleton, not_or] at hi
     by_cases h : c = t
-    · simp [denoteGate, if_pos h]
-    · simp [denoteGate, if_neg h, Function.update_of_ne hi.2]
+    · simp [denoteGate, ite_eq_left h]
+    · simp [denoteGate, ite_eq_right h, Function.update_of_ne hi.2]
   | CCX c₁ c₂ t =>
     simp only [gateWires, Finset.mem_insert, Finset.mem_singleton, not_or] at hi
     by_cases h : t = c₁ ∨ t = c₂
-    · simp [denoteGate, if_pos h]
-    · simp [denoteGate, if_neg h, Function.update_of_ne hi.2.2]
+    · simp [denoteGate, ite_eq_left h]
+    · simp [denoteGate, ite_eq_right h, Function.update_of_ne hi.2.2]
   | swap a b =>
     simp only [gateWires, Finset.mem_insert, Finset.mem_singleton, not_or] at hi
     simp only [denoteGate, Function.comp_apply, Equiv.swap_apply_of_ne_of_ne hi.1 hi.2]

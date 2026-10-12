@@ -166,7 +166,7 @@ noncomputable def freeSemigroup (A : Matrix m m ℂ) (t : ℝ) : E →L[ℂ] E :
 
 theorem freeSemigroup_of_nonneg (A : Matrix m m ℂ) {t : ℝ} (ht : 0 ≤ t) :
     freeSemigroup A t = expGroup A t :=
-  if_pos ht
+  ite_eq_left ht
 
 /-! ### The Dyson terms and the propagator -/
 

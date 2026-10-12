@@ -63,13 +63,13 @@ lemma psQubit_apply (c s : ℝ) (w : Fin 2 × Fin 2) :
     psQubit c s w = if w = (0, 0) then (c : ℂ) else if w = (1, 1) then (s : ℂ) else 0 := rfl
 
 lemma psQubit_apply_00 (c s : ℝ) : psQubit c s (0, 0) = (c : ℂ) := by
-  rw [psQubit_apply, if_pos rfl]
+  rw [psQubit_apply, ite_eq_left rfl]
 lemma psQubit_apply_01 (c s : ℝ) : psQubit c s (0, 1) = 0 := by
-  rw [psQubit_apply, if_neg (by decide), if_neg (by decide)]
+  rw [psQubit_apply, ite_eq_right (by decide), ite_eq_right (by decide)]
 lemma psQubit_apply_10 (c s : ℝ) : psQubit c s (1, 0) = 0 := by
-  rw [psQubit_apply, if_neg (by decide), if_neg (by decide)]
+  rw [psQubit_apply, ite_eq_right (by decide), ite_eq_right (by decide)]
 lemma psQubit_apply_11 (c s : ℝ) : psQubit c s (1, 1) = (s : ℂ) := by
-  rw [psQubit_apply, if_neg (by decide), if_pos rfl]
+  rw [psQubit_apply, ite_eq_right (by decide), ite_eq_left rfl]
 
 /-- Expectation `⟨Ψ(c,s) | M | Ψ(c,s)⟩` for a `(Fin 2 × Fin 2)`-indexed matrix `M`. -/
 noncomputable def psExpectation (c s : ℝ) (M : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) : ℂ :=

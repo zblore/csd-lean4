@@ -145,11 +145,11 @@ theorem arcIndex_eq_none_iff (r : LF4.KTorus) :
   constructor
   · intro h j hj
     unfold arcIndex at h
-    rw [dif_pos ⟨j, hj⟩] at h
+    rw [dite_eq_left ⟨j, hj⟩] at h
     simp at h
   · intro h
     unfold arcIndex
-    rw [dif_neg (not_exists.mpr h)]
+    rw [dite_eq_right (not_exists.mpr h)]
 
 /-! ### The record-triggered bank swap -/
 
@@ -373,24 +373,24 @@ noncomputable def swapEvolve (idx : Xsel → Fin K) (s t : OnticTime) :
 
 omit [MeasurableSpace Xsel] in
 theorem swapEvolve_fwd (idx : Xsel → Fin K) {s t : OnticTime} (hs : s < 1) (ht : 1 ≤ t) :
-    swapEvolve idx s t = swapG ∘ liftShear idx s t := if_pos ⟨hs, ht⟩
+    swapEvolve idx s t = swapG ∘ liftShear idx s t := ite_eq_left ⟨hs, ht⟩
 
 omit [MeasurableSpace Xsel] in
 theorem swapEvolve_bwd (idx : Xsel → Fin K) {s t : OnticTime} (ht : t < 1) (hs : 1 ≤ s) :
     swapEvolve idx s t = liftShear idx s t ∘ swapG := by
-  rw [swapEvolve, if_neg (fun h => absurd hs (not_le.mpr h.1)), if_pos ⟨ht, hs⟩]
+  rw [swapEvolve, ite_eq_right (fun h => absurd hs (not_le.mpr h.1)), ite_eq_left ⟨ht, hs⟩]
 
 omit [MeasurableSpace Xsel] in
 theorem swapEvolve_lo (idx : Xsel → Fin K) {s t : OnticTime} (hs : s < 1) (ht : t < 1) :
     swapEvolve idx s t = liftShear idx s t := by
-  rw [swapEvolve, if_neg (fun h => absurd h.2 (not_le.mpr ht)),
-    if_neg (fun h => absurd h.2 (not_le.mpr hs))]
+  rw [swapEvolve, ite_eq_right (fun h => absurd h.2 (not_le.mpr ht)),
+    ite_eq_right (fun h => absurd h.2 (not_le.mpr hs))]
 
 omit [MeasurableSpace Xsel] in
 theorem swapEvolve_hi (idx : Xsel → Fin K) {s t : OnticTime} (hs : 1 ≤ s) (ht : 1 ≤ t) :
     swapEvolve idx s t = liftShear idx s t := by
-  rw [swapEvolve, if_neg (fun h => absurd h.1 (not_lt.mpr hs)),
-    if_neg (fun h => absurd h.1 (not_lt.mpr ht))]
+  rw [swapEvolve, ite_eq_right (fun h => absurd h.1 (not_lt.mpr hs)),
+    ite_eq_right (fun h => absurd h.1 (not_lt.mpr ht))]
 
 omit [MeasurableSpace Xsel] in
 /-- **The two-time composition law**, all eight side-of-readout cases. Closes on `G² = id` and the

@@ -267,10 +267,10 @@ theorem inner_steaneZero_steaneOne : inner ℂ steaneZero steaneOne = 0 := by
     refine Finset.sum_eq_zero fun z _ => ?_
     rw [RCLike.inner_apply', basisState_apply, basisState_apply]
     by_cases hz : z = rowComb c
-    · rw [if_pos hz,
-        if_neg (fun h : z = rowComb d + allOnes => hdisj c d (by rw [← hz]; exact h)),
+    · rw [ite_eq_left hz,
+        ite_eq_right (fun h : z = rowComb d + allOnes => hdisj c d (by rw [← hz]; exact h)),
         mul_zero]
-    · rw [if_neg hz, map_zero, zero_mul]
+    · rw [ite_eq_right hz, map_zero, zero_mul]
   rw [steaneZero, steaneOne, inner_smul_left, inner_smul_right, sum_inner,
     Finset.sum_congr rfl fun c _ => by
       rw [inner_sum, Finset.sum_congr rfl fun d _ => hbasis c d, Finset.sum_const_zero],
@@ -282,17 +282,17 @@ lemma inner_basisState (u v : Fin 7 → Fin 2) :
   rw [PiLp.inner_apply]
   by_cases huv : v = u
   · subst huv
-    rw [if_pos rfl, Finset.sum_eq_single v
+    rw [ite_eq_left rfl, Finset.sum_eq_single v
       (fun z _ hz => by
-        rw [RCLike.inner_apply', basisState_apply, if_neg hz, mul_zero])
+        rw [RCLike.inner_apply', basisState_apply, ite_eq_right hz, mul_zero])
       (fun h => absurd (Finset.mem_univ _) h),
-      RCLike.inner_apply', basisState_apply, if_pos rfl, map_one, one_mul]
-  · rw [if_neg huv]
+      RCLike.inner_apply', basisState_apply, ite_eq_left rfl, map_one, one_mul]
+  · rw [ite_eq_right huv]
     refine Finset.sum_eq_zero fun z _ => ?_
     rw [RCLike.inner_apply', basisState_apply, basisState_apply]
     by_cases hz : z = u
-    · rw [if_neg (fun h : z = v => huv (by rw [← h]; exact hz)), mul_zero]
-    · rw [if_neg hz, map_zero, zero_mul]
+    · rw [ite_eq_right (fun h : z = v => huv (by rw [← h]; exact hz)), mul_zero]
+    · rw [ite_eq_right hz, map_zero, zero_mul]
 
 /-- The normalisation constant: `(1/√8)·(1/√8)·8 = 1`. -/
 lemma sqrt_eight_inv_sq :
@@ -309,9 +309,9 @@ theorem inner_steaneZero_self : inner ℂ steaneZero steaneZero = 1 := by
     intro c
     rw [Finset.sum_congr rfl fun d _ => inner_basisState (rowComb c) (rowComb d),
       Finset.sum_eq_single c
-        (fun d _ hd => by rw [if_neg fun h => hd (rowComb_injective d c h)])
+        (fun d _ hd => by rw [ite_eq_right fun h => hd (rowComb_injective d c h)])
         (fun h => absurd (Finset.mem_univ _) h),
-      if_pos rfl]
+      ite_eq_left rfl]
   rw [steaneZero, inner_smul_left, inner_smul_right, sum_inner,
     Finset.sum_congr rfl fun c _ => by rw [inner_sum, hrow c],
     Finset.sum_const, Finset.card_univ, Fintype.card_fun, Fintype.card_fin,
@@ -335,9 +335,9 @@ theorem inner_steaneOne_self : inner ℂ steaneOne steaneOne = 1 := by
     rw [Finset.sum_congr rfl fun d _ =>
         inner_basisState (rowComb c + allOnes) (rowComb d + allOnes),
       Finset.sum_eq_single c
-        (fun d _ hd => by rw [if_neg fun h => hd (hinj1 d c h)])
+        (fun d _ hd => by rw [ite_eq_right fun h => hd (hinj1 d c h)])
         (fun h => absurd (Finset.mem_univ _) h),
-      if_pos rfl]
+      ite_eq_left rfl]
   rw [steaneOne, inner_smul_left, inner_smul_right, sum_inner,
     Finset.sum_congr rfl fun c _ => by rw [inner_sum, hrow c],
     Finset.sum_const, Finset.card_univ, Fintype.card_fun, Fintype.card_fin,

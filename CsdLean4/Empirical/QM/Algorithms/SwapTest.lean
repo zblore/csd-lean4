@@ -107,8 +107,8 @@ omit [Fintype ι] in
 unchanged product: `hadAnc (swapInit ψ φ) (a,i,j) = (√2)⁻¹·ψ i·φ j` for every `a`. -/
 lemma had1_apply (a : Fin 2) (i j : ι) :
     hadAnc (swapInit ψ φ) (a, i, j) = (Real.sqrt 2 : ℂ)⁻¹ * (ψ i * φ j) := by
-  rw [hadAnc_apply, Fin.sum_univ_two, swapInit_apply, swapInit_apply, if_pos rfl,
-      if_neg (by decide : ¬ (1 : Fin 2) = 0), hadEntry_zero_right, mul_zero, add_zero]
+  rw [hadAnc_apply, Fin.sum_univ_two, swapInit_apply, swapInit_apply, ite_eq_left rfl,
+      ite_eq_right (by decide : ¬ (1 : Fin 2) = 0), hadEntry_zero_right, mul_zero, add_zero]
 
 omit [Fintype ι] in
 /-- After the controlled swap the two pointer branches carry the two orderings:
@@ -130,7 +130,7 @@ ancilla (`hadEntry` orthogonality) leaves the symmetric combination:
 lemma swapTest_apply (i j : ι) :
     swapTest ψ φ (0, i, j) = (1 / 2 : ℂ) * (ψ i * φ j + φ i * ψ j) := by
   rw [swapTest, hadAnc_apply, Fin.sum_univ_two, cswap_had1_apply, cswap_had1_apply,
-      if_neg (by decide : ¬ (0 : Fin 2) = 1), if_pos rfl, hadEntry_zero_left,
+      ite_eq_right (by decide : ¬ (0 : Fin 2) = 1), ite_eq_left rfl, hadEntry_zero_left,
       hadEntry_zero_left]
   have h2 : (Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹ = 1 / 2 := by
     rw [← mul_inv, sqrt2_mul_self]; norm_num

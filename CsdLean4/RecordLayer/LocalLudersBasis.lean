@@ -86,10 +86,10 @@ theorem localProjOn_basisFun (j : Fin nB) (v : EuclideanSpace ℂ (Fin nA × Fin
   rw [EuclideanSpace.basisFun_apply, EuclideanSpace.inner_single_left]
   simp only [map_one, one_mul, PiLp.single_apply]
   rcases eq_or_ne ak.2 j with h | h
-  · rw [if_pos h, if_pos h, mul_one]
+  · rw [ite_eq_left h, ite_eq_left h, mul_one]
     show v (ak.1, j) = v ak
     rw [← h]
-  · rw [if_neg h, if_neg h, mul_zero]
+  · rw [ite_eq_right h, ite_eq_right h, mul_zero]
 
 /-! ### Identity and norm resolution -/
 
@@ -230,8 +230,8 @@ theorem reduceA_localLudersOn_mixture
       = (((‖v‖ ^ 2 : ℝ) : ℂ))⁻¹ • traceRight (vecOuter (localProjOn g j v)) := by
     intro j
     by_cases h : localProjOn g j v = 0
-    · rw [dif_pos h, smul_zero, h, vecOuter_zero, traceRight_zero, smul_zero]
-    · rw [dif_neg h, reduceA_mk _ h, smul_smul]
+    · rw [dite_eq_left h, smul_zero, h, vecOuter_zero, traceRight_zero, smul_zero]
+    · rw [dite_eq_right h, reduceA_mk _ h, smul_smul]
       congr 1
       have hp : ((‖localProjOn g j v‖ ^ 2 : ℝ) : ℂ) ≠ 0 :=
         Complex.ofReal_ne_zero.mpr (pow_ne_zero 2 (norm_ne_zero_iff.mpr h))

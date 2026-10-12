@@ -157,17 +157,17 @@ lemma bell_norm_sq {x₀ x₁ : FieldConfig K₁ N} (hx : x₀ ≠ x₁)
     rw [bellVec_apply, Equiv.apply_symm_apply]
     by_cases h0 : z = (x₀, y₀) <;> by_cases h1 : z = (x₁, y₁)
     · exact absurd (congrArg Prod.fst (h0.symm.trans h1)) hx
-    · rw [if_pos (Or.inl h0), if_pos h0, if_neg h1]
+    · rw [ite_eq_left (Or.inl h0), ite_eq_left h0, ite_eq_right h1]
       norm_num
-    · rw [if_pos (Or.inr h1), if_neg h0, if_pos h1]
+    · rw [ite_eq_left (Or.inr h1), ite_eq_right h0, ite_eq_left h1]
       norm_num
-    · rw [if_neg (by rintro (h | h) <;> [exact h0 h; exact h1 h]),
-        if_neg h0, if_neg h1]
+    · rw [ite_eq_right (by rintro (h | h) <;> [exact h0 h; exact h1 h]),
+        ite_eq_right h0, ite_eq_right h1]
       norm_num
   rw [Finset.sum_congr rfl fun z _ => hterm z, Finset.sum_add_distrib,
     Finset.sum_ite_eq' Finset.univ ((x₀, y₀)) (fun _ => (1 : ℝ)),
     Finset.sum_ite_eq' Finset.univ ((x₁, y₁)) (fun _ => (1 : ℝ)),
-    if_pos (Finset.mem_univ _), if_pos (Finset.mem_univ _)]
+    ite_eq_left (Finset.mem_univ _), ite_eq_left (Finset.mem_univ _)]
   norm_num
 
 /-- ★★ **What entanglement does to the weights, exactly**: the reduced state
@@ -200,11 +200,11 @@ theorem reducedDM_bell {x₀ x₁ : FieldConfig K₁ N} (hx : x₀ ≠ x₁)
       rw [bellVec_apply, Equiv.apply_symm_apply]
       by_cases h0 : a = x₀ ∧ b = y₀ <;> by_cases h1 : a = x₁ ∧ b = y₁
       · exact absurd (h0.1.symm.trans h1.1) hx
-      · rw [if_pos (Or.inl (by rw [h0.1, h0.2])), if_pos h0, if_neg h1,
+      · rw [ite_eq_left (Or.inl (by rw [h0.1, h0.2])), ite_eq_left h0, ite_eq_right h1,
           add_zero]
-      · rw [if_pos (Or.inr (by rw [h1.1, h1.2])), if_neg h0, if_pos h1,
+      · rw [ite_eq_left (Or.inr (by rw [h1.1, h1.2])), ite_eq_right h0, ite_eq_left h1,
           zero_add]
-      · rw [if_neg ?_, if_neg h0, if_neg h1, add_zero]
+      · rw [ite_eq_right ?_, ite_eq_right h0, ite_eq_right h1, add_zero]
         rintro (h | h)
         · exact h0 ⟨congrArg Prod.fst h, congrArg Prod.snd h⟩
         · exact h1 ⟨congrArg Prod.fst h, congrArg Prod.snd h⟩
@@ -243,7 +243,7 @@ theorem reducedDM_bell {x₀ x₁ : FieldConfig K₁ N} (hx : x₀ ≠ x₁)
         (fun _ => if i = x₀ ∧ j = x₀ then (1 : ℂ) else 0),
       Finset.sum_ite_eq' Finset.univ y₁
         (fun _ => if i = x₁ ∧ j = x₁ then (1 : ℂ) else 0),
-      if_pos (Finset.mem_univ _), if_pos (Finset.mem_univ _)]
+      ite_eq_left (Finset.mem_univ _), ite_eq_left (Finset.mem_univ _)]
   rw [hsum]
   rw [Matrix.smul_apply, Matrix.add_apply]
   simp only [Matrix.single, Matrix.of_apply]
@@ -267,9 +267,9 @@ lemma trace_mul_single (M : Matrix (FieldConfig K₁ N) (FieldConfig K₁ N) ℂ
   rw [Finset.sum_congr rfl fun i _ => by
     rw [Finset.sum_congr rfl fun j _ => hterm i j,
       Finset.sum_ite_eq' Finset.univ a (fun j => if i = a then M i j else 0),
-      if_pos (Finset.mem_univ _)]]
+      ite_eq_left (Finset.mem_univ _)]]
   rw [Finset.sum_ite_eq' Finset.univ a (fun i => M i a),
-    if_pos (Finset.mem_univ _)]
+    ite_eq_left (Finset.mem_univ _)]
 
 /-- ★ **The Bell local weight at the first pattern is exactly `1/2`.** -/
 theorem bell_local_weight₀ {x₀ x₁ : FieldConfig K₁ N} (hx : x₀ ≠ x₁)
@@ -281,8 +281,8 @@ theorem bell_local_weight₀ {x₀ x₁ : FieldConfig K₁ N} (hx : x₀ ≠ x�
     Matrix.add_mul, trace_smul, Matrix.trace_add, trace_mul_single,
     trace_mul_single]
   simp only [Matrix.single, Matrix.of_apply]
-  rw [if_pos (⟨trivial, trivial⟩ : True ∧ True),
-    if_neg (fun h : x₁ = x₀ ∧ x₁ = x₀ => hx h.1.symm)]
+  rw [ite_eq_left (⟨trivial, trivial⟩ : True ∧ True),
+    ite_eq_right (fun h : x₁ = x₀ ∧ x₁ = x₀ => hx h.1.symm)]
   simp only [add_zero, smul_eq_mul, mul_one, RCLike.re_to_complex]
   norm_num [Complex.div_re, Complex.normSq_apply]
 
@@ -298,8 +298,8 @@ theorem bell_local_weight₁ {x₀ x₁ : FieldConfig K₁ N} (hx : x₀ ≠ x�
     Matrix.add_mul, trace_smul, Matrix.trace_add, trace_mul_single,
     trace_mul_single]
   simp only [Matrix.single, Matrix.of_apply]
-  rw [if_neg (fun h : x₀ = x₁ ∧ x₀ = x₁ => hx h.1),
-    if_pos (⟨trivial, trivial⟩ : True ∧ True)]
+  rw [ite_eq_right (fun h : x₀ = x₁ ∧ x₀ = x₁ => hx h.1),
+    ite_eq_left (⟨trivial, trivial⟩ : True ∧ True)]
   simp only [zero_add, smul_eq_mul, mul_one, RCLike.re_to_complex]
   norm_num [Complex.div_re, Complex.normSq_apply]
 

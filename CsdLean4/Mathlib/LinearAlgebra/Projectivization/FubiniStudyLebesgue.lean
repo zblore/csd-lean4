@@ -408,7 +408,7 @@ noncomputable def projOfVec (N : ℕ) [NeZero N] :
 
 lemma projOfVec_of_ne_zero {v : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) :
     projOfVec N v = Projectivization.mk ℂ v hv := by
-  rw [projOfVec, dif_neg hv]
+  rw [projOfVec, dite_eq_right hv]
 
 lemma measurable_projOfVec : Measurable (projOfVec N) := by
   classical

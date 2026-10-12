@@ -444,10 +444,10 @@ theorem hornerStep_correct (L : HornerStepLayout m n) (s : State m)
   -- absorb the inner mod N and match the target form on each branch
   cases s L.add.ctrl with
   | true =>
-    simp only [if_true]
+    simp only [ite_true]
     rw [Nat.add_mod_mod, Nat.add_comm Yval (2 * c)]
   | false =>
-    simp only [Bool.false_eq_true, if_false, Nat.add_zero]
+    simp only [Bool.false_eq_true, ite_false, Nat.add_zero]
 
 /-- **The Horner-step output is a genuine residue in `[0, N)`.** Corollary of `hornerStep_correct`
 and `Nat.mod_lt`. -/
@@ -632,7 +632,7 @@ theorem mulStep2_correct (L1 L2 : HornerStepLayout m n) (s : State m)
   -- arguments (`congr 1` + `omega`).
   rw [hacc1def]
   cases hX1 : s L1.add.ctrl <;> cases hX0 : s L2.add.ctrl <;>
-    simp only [if_true, if_false, Bool.false_eq_true, Nat.zero_mod, Nat.mod_eq_of_lt hYN]
+    simp only [ite_true, ite_false, Bool.false_eq_true, Nat.zero_mod, Nat.mod_eq_of_lt hYN]
   all_goals first | rfl | (congr 1; omega)
 
 /-! ### Concrete `#eval` cross-check: the verified `n = 2` modular multiply on `Fin 92`

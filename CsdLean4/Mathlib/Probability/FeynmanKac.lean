@@ -149,6 +149,14 @@ theorem exp_smul_neg_potential {VL : Lp ℂ ∞ (volume : Measure E)}
   refine ContinuousLinearMap.ext fun f => ?_
   refine Lp.ext ?_
   set A : L2 →L[ℂ] L2 := -potential VL
+  -- `smul_pow` needs the real scalar to commute past composition. Mathlib v4.34.0 has
+  -- `Algebra ℝ (L2 →L[ℂ] L2)` but its `SMul` is `Algebra.toSMul`, while the action here is
+  -- `ContinuousLinearMap.instSMul` (pointwise on the codomain), so `IsScalarTower.right` does
+  -- not apply and these two have to be supplied. Both are one line.
+  have : IsScalarTower ℝ (L2 →L[ℂ] L2) (L2 →L[ℂ] L2) :=
+    ⟨fun r f g => by ext x; simp⟩
+  have : SMulCommClass ℝ (L2 →L[ℂ] L2) (L2 →L[ℂ] L2) :=
+    ⟨fun r f g => by ext x; simp [ContinuousLinearMap.map_smul_of_tower]⟩
   -- the series in the operator algebra, applied to `f`
   have hsum := (ContinuousLinearMap.apply ℂ L2 f).hasSum (exp_series_hasSum_exp' (𝕂 := ℝ) (h • A))
   have hlim := hsum.tendsto_sum_nat

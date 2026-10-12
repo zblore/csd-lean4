@@ -94,13 +94,13 @@ theorem denoteGate_apply_of_not_mem_target {g : Gate n} {s : State n} {i : Fin n
   | CX c t =>
     simp only [gateTarget, Finset.mem_singleton] at hi
     by_cases h : c = t
-    · simp [denoteGate, if_pos h]
-    · simp [denoteGate, if_neg h, Function.update_of_ne hi]
+    · simp [denoteGate, ite_eq_left h]
+    · simp [denoteGate, ite_eq_right h, Function.update_of_ne hi]
   | CCX c₁ c₂ t =>
     simp only [gateTarget, Finset.mem_singleton] at hi
     by_cases h : t = c₁ ∨ t = c₂
-    · simp [denoteGate, if_pos h]
-    · simp [denoteGate, if_neg h, Function.update_of_ne hi]
+    · simp [denoteGate, ite_eq_left h]
+    · simp [denoteGate, ite_eq_right h, Function.update_of_ne hi]
   | swap a b =>
     simp only [gateTarget, Finset.mem_insert, Finset.mem_singleton, not_or] at hi
     simp only [denoteGate, Function.comp_apply, Equiv.swap_apply_of_ne_of_ne hi.1 hi.2]
@@ -128,24 +128,24 @@ theorem denoteGate_agree {P : Fin n → Prop} {g : Gate n}
   | X i =>
     simp only [denoteGate, Function.update_apply]
     by_cases h : w = i
-    · rw [if_pos h, if_pos h, hss i (hg i (by simp [gateWires]))]
-    · rw [if_neg h, if_neg h]; exact hss w hw
+    · rw [ite_eq_left h, ite_eq_left h, hss i (hg i (by simp [gateWires]))]
+    · rw [ite_eq_right h, ite_eq_right h]; exact hss w hw
   | CX c t =>
     by_cases hct : c = t
-    · simp only [denoteGate, if_pos hct]; exact hss w hw
-    · simp only [denoteGate, if_neg hct, Function.update_apply]
+    · simp only [denoteGate, ite_eq_left hct]; exact hss w hw
+    · simp only [denoteGate, ite_eq_right hct, Function.update_apply]
       by_cases h : w = t
-      · rw [if_pos h, if_pos h, hss c (hg c (by simp [gateWires])),
+      · rw [ite_eq_left h, ite_eq_left h, hss c (hg c (by simp [gateWires])),
           hss t (hg t (by simp [gateWires]))]
-      · rw [if_neg h, if_neg h]; exact hss w hw
+      · rw [ite_eq_right h, ite_eq_right h]; exact hss w hw
   | CCX c₁ c₂ t =>
     by_cases hguard : t = c₁ ∨ t = c₂
-    · simp only [denoteGate, if_pos hguard]; exact hss w hw
-    · simp only [denoteGate, if_neg hguard, Function.update_apply]
+    · simp only [denoteGate, ite_eq_left hguard]; exact hss w hw
+    · simp only [denoteGate, ite_eq_right hguard, Function.update_apply]
       by_cases h : w = t
-      · rw [if_pos h, if_pos h, hss c₁ (hg c₁ (by simp [gateWires])),
+      · rw [ite_eq_left h, ite_eq_left h, hss c₁ (hg c₁ (by simp [gateWires])),
           hss c₂ (hg c₂ (by simp [gateWires])), hss t (hg t (by simp [gateWires]))]
-      · rw [if_neg h, if_neg h]; exact hss w hw
+      · rw [ite_eq_right h, ite_eq_right h]; exact hss w hw
   | swap i j =>
     simp only [denoteGate, Function.comp_apply]
     apply hss
@@ -192,7 +192,7 @@ theorem andCarry_correct {a b g : Fin n} (hga : g ≠ a) (hgb : g ≠ b) (s : St
   have hbg : b ≠ g := hgb.symm
   refine ⟨?_, ?_, ?_⟩ <;>
     simp only [andCarry, denote_cons, denote_nil, denoteGate,
-      if_neg (not_or.mpr ⟨hga, hgb⟩)] <;>
+      ite_eq_right (not_or.mpr ⟨hga, hgb⟩)] <;>
     simp [hag, hbg]
 
 /-- **Ancilla-clean for a `|0⟩` ancilla.** `andCarry` on a fresh `g = false` writes exactly `a ∧ b`. -/
@@ -234,7 +234,7 @@ theorem andCell_correct {a b g out : Fin n}
   have hgo : g ≠ out := hog.symm
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
     simp only [andCell, andCarry, andUncompute, denote_append, denote_cons, denote_nil, denoteGate,
-      if_neg (not_or.mpr ⟨hga, hgb⟩)] <;>
+      ite_eq_right (not_or.mpr ⟨hga, hgb⟩)] <;>
     simp_all <;>
     cases s a <;> cases s b <;> cases s g <;> cases s out <;> decide
 
@@ -303,8 +303,8 @@ theorem andCarryCell_correct {a b c g : Fin n}
   rw [majority_eq_xor3]
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
     simp only [andCarryCell, denote_cons, denote_nil, denoteGate,
-      if_neg (not_or.mpr ⟨hga, hgb⟩), if_neg (not_or.mpr ⟨hga, hgc⟩),
-      if_neg (not_or.mpr ⟨hgb, hgc⟩)] <;>
+      ite_eq_right (not_or.mpr ⟨hga, hgb⟩), ite_eq_right (not_or.mpr ⟨hga, hgc⟩),
+      ite_eq_right (not_or.mpr ⟨hgb, hgc⟩)] <;>
     simp only [Function.update_apply, hag, hbg, hcg, hg0] <;>
     simp_all
 
@@ -545,7 +545,7 @@ theorem andSumSlice_correct (L : AndAddLayout m n) (u : State m) (k : ℕ) :
   have hAS' : L.A k ≠ L.S k := L.hAS k k
   have hBS' : L.B k ≠ L.S k := L.hBS k k
   have hGS' : L.G k ≠ L.S k := (L.hSG k k).symm
-  simp only [andSumSlice, denote_cons, denote_nil, denoteGate, if_neg hAS', if_neg hBS', if_neg hGS',
+  simp only [andSumSlice, denote_cons, denote_nil, denoteGate, ite_eq_right hAS', ite_eq_right hBS', ite_eq_right hGS',
     Function.update_apply]
   simp_all
   cases u (L.S k) <;> cases u (L.A k) <;> cases u (L.B k) <;> cases u (L.G k) <;> simp_all

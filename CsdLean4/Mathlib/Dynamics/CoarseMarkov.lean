@@ -238,7 +238,7 @@ theorem abs_prod_sub_prod_le_sum (a b : ℕ → ℝ) :
       have hprodA : ∏ m ∈ Finset.range n, a m ∈ Set.Icc (0:ℝ) 1 :=
         ⟨Finset.prod_nonneg fun m hm => (ha m (Finset.mem_range.1 hm |>.trans
             (Nat.lt_succ_self n))).1,
-          Finset.prod_le_one (fun m hm => (ha m (Finset.mem_range.1 hm |>.trans
+          Finset.prod_le_one₀ (fun m hm => (ha m (Finset.mem_range.1 hm |>.trans
             (Nat.lt_succ_self n))).1)
             (fun m hm => (ha m (Finset.mem_range.1 hm |>.trans (Nat.lt_succ_self n))).2)⟩
       have hbn := hb n (Nat.lt_succ_self n)
@@ -329,11 +329,11 @@ theorem condProb_coarseEvent_succ_of_autonomous [DecidableEq X] {μ : Measure Ω
   · have hsub : H ∩ coarseEvent C Φ (n + 1) z = H := by
       refine Set.inter_eq_self_of_subset_left fun ω hω => ?_
       exact (hmem ω hω).2 hz
-    rw [if_pos hz, condProb, hsub, div_self (ENNReal.toReal_ne_zero.2 ⟨h0, hfin⟩)]
+    rw [ite_eq_left hz, condProb, hsub, div_self (ENNReal.toReal_ne_zero.2 ⟨h0, hfin⟩)]
   · have hempty : H ∩ coarseEvent C Φ (n + 1) z = ∅ := by
       refine Set.eq_empty_iff_forall_notMem.2 fun ω hω => ?_
       exact hz ((hmem ω hω.1).1 hω.2)
-    rw [if_neg hz, condProb, hempty, measure_empty]
+    rw [ite_eq_right hz, condProb, hempty, measure_empty]
     simp
 
 /-! ### The hypothesis is load-bearing: a coarse process that is not Markov -/

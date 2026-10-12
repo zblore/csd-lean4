@@ -557,7 +557,7 @@ theorem modSub_correct (L : ModSubLayout m n) (s : State m)
   rw [hflag, hNregsub, hBsub]
   by_cases hlt : a < b
   · -- a < b: flag set, add N back; subtract value is a + 2ⁿ − b (no wrap)
-    simp only [hlt, decide_true, if_true]
+    simp only [hlt, decide_true, ite_true]
     have hnowrap : (a + 2 ^ n - b) % 2 ^ n = a + 2 ^ n - b := Nat.mod_eq_of_lt (by omega)
     rw [hnowrap]
     -- N + (a + 2ⁿ − b) = 2ⁿ + (a + N − b), and a + N − b < N ≤ 2ⁿ
@@ -566,7 +566,7 @@ theorem modSub_correct (L : ModSubLayout m n) (s : State m)
     exact (Nat.mod_eq_of_lt (by omega)).symm
   · -- a ≥ b: flag clear, no add-back; subtract value is a − b
     have hge : b ≤ a := by omega
-    simp only [hlt, decide_false, Bool.false_eq_true, if_false]
+    simp only [hlt, decide_false, Bool.false_eq_true, ite_false]
     have hsubval : (a + 2 ^ n - b) % 2 ^ n = a - b := by
       have hsum : a + 2 ^ n - b = 2 ^ n + (a - b) := by omega
       rw [hsum, Nat.add_mod_left, Nat.mod_eq_of_lt (by omega)]

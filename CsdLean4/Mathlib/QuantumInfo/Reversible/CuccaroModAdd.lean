@@ -89,7 +89,7 @@ theorem denoteGate_cx_ne {c t w : Fin m} (h : w ≠ t) (s : State m) :
 /-- The target of a non-degenerate `CX` reads `s c ^^ s t`. -/
 theorem denoteGate_cx_target {c t : Fin m} (h : c ≠ t) (s : State m) :
     denoteGate (Gate.CX c t) s t = (s c ^^ s t) := by
-  simp only [denoteGate, if_neg h]
+  simp only [denoteGate, ite_eq_right h]
   rw [Function.update_self]
 
 /-- A wire distinct from the target of an `X` is unchanged. -/
@@ -319,7 +319,7 @@ theorem maskCopyPrefix_spec (L : CuccaroModLayout m n) (s : State m) :
       · have key : denoteGate (Gate.CCX L.flag (L.Nreg j) (L.Mask j)) sk (L.Mask j)
               = (sk (L.Mask j) ^^ (sk L.flag && sk (L.Nreg j))) := by
           simp only [denoteGate]
-          rw [if_neg (by
+          rw [ite_eq_right (by
             rintro (h | h)
             · exact (L.hMflag j) h
             · exact (L.hNM j j) h.symm)]

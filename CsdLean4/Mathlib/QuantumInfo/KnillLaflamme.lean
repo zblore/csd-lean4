@@ -183,7 +183,7 @@ theorem mul_codeProj_eq_zero_of_eq_zero (hP : IsCodeProjector P)
     (hF : ∀ k l, P * (F k)ᴴ * F l * P = if k = l then ((d k : ℝ) : ℂ) • P else 0)
     {k : κ} (hk : d k = 0) : F k * P = 0 := by
   have h := hF k k
-  rw [if_pos rfl, hk, Complex.ofReal_zero, zero_smul] at h
+  rw [ite_eq_left rfl, hk, Complex.ofReal_zero, zero_smul] at h
   have h2 : (F k * P)ᴴ * (F k * P) = 0 := by
     rw [conjTranspose_mul, hP.conjTranspose_eq, ← h]
     simp only [Matrix.mul_assoc]
@@ -213,7 +213,7 @@ theorem errorImageProj_mul
   by_cases hl : d l = 0
   · have hkl : k ≠ l := fun h => hk (h ▸ hl)
     simp [hl, hkl]
-  rw [if_neg hk, if_neg hl, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
+  rw [ite_eq_right hk, ite_eq_right hl, Matrix.smul_mul, Matrix.mul_smul, smul_smul]
   have key : F k * P * (F k)ᴴ * (F l * P * (F l)ᴴ) = F k * (P * (F k)ᴴ * F l * P) * (F l)ᴴ := by
     simp only [Matrix.mul_assoc]
   rw [key, hF k l]
@@ -284,10 +284,10 @@ theorem recoveryOp_mul_mul_codeProj
   unfold recoveryOp
   by_cases hm : d m = 0
   · simp [hm]
-  rw [if_neg hm, Matrix.smul_mul, Matrix.smul_mul, hF m k]
+  rw [ite_eq_right hm, Matrix.smul_mul, Matrix.smul_mul, hF m k]
   by_cases hmk : m = k
   · subst hmk
-    rw [if_pos rfl, if_pos ⟨rfl, hm⟩, smul_smul, ← Complex.ofReal_mul, inv_mul_eq_div,
+    rw [ite_eq_left rfl, ite_eq_left ⟨rfl, hm⟩, smul_smul, ← Complex.ofReal_mul, inv_mul_eq_div,
       Real.div_sqrt]
   · simp [hmk]
 
@@ -308,7 +308,7 @@ theorem recoveryOp_conj (hP : IsCodeProjector P) (hd : ∀ k, 0 ≤ d k)
   · by_cases hml : m = l
     · by_cases hm : d m = 0
       · simp [hm]
-      · rw [if_pos ⟨hmk, hm⟩, if_pos ⟨hml, hm⟩, if_pos ⟨hmk, hml, hm⟩, conjTranspose_smul,
+      · rw [ite_eq_left ⟨hmk, hm⟩, ite_eq_left ⟨hml, hm⟩, ite_eq_left ⟨hmk, hml, hm⟩, conjTranspose_smul,
           Complex.star_def, Complex.conj_ofReal, hP.conjTranspose_eq]
         simp only [Matrix.smul_mul, Matrix.mul_smul, smul_smul]
         rw [← Complex.ofReal_mul, Real.mul_self_sqrt (hd m), ← hρ]
@@ -328,14 +328,14 @@ theorem one_sub_recoveryProj_mul (hP : IsCodeProjector P) (hd : ∀ k, 0 ≤ d k
       · rw [mul_codeProj_eq_zero_of_eq_zero hP hF hk]
         simp
       · simp only [Matrix.smul_mul, Matrix.mul_assoc]
-        rw [hF' k k, if_pos rfl, Matrix.mul_smul, smul_smul, ← Complex.ofReal_mul,
+        rw [hF' k k, ite_eq_left rfl, Matrix.mul_smul, smul_smul, ← Complex.ofReal_mul,
           inv_mul_cancel₀ hk, Complex.ofReal_one, one_smul]
     · intro m _ hmk
       unfold errorImageProj
       split_ifs with hm
       · simp
       · simp only [Matrix.smul_mul, Matrix.mul_assoc]
-        rw [hF' m k, if_neg hmk]
+        rw [hF' m k, ite_eq_right hmk]
         simp
     · intro hk
       exact absurd (Finset.mem_univ k) hk
@@ -367,17 +367,17 @@ theorem recoveryChannel_apply (hP : IsCodeProjector P) (hd : ∀ k, 0 ≤ d k)
   simp only [hsome]
   by_cases hkl : k = l
   · subst hkl
-    rw [if_pos rfl, Finset.sum_eq_single k]
+    rw [ite_eq_left rfl, Finset.sum_eq_single k]
     · by_cases hk : d k = 0
       · simp [hk]
-      · rw [if_pos ⟨rfl, rfl, hk⟩]
+      · rw [ite_eq_left ⟨rfl, rfl, hk⟩]
     · intro m _ hmk
       simp [hmk]
     · intro hk
       exact absurd (Finset.mem_univ k) hk
-  · rw [if_neg hkl]
+  · rw [ite_eq_right hkl]
     refine Finset.sum_eq_zero fun m _ => ?_
-    rw [if_neg]
+    rw [ite_eq_right]
     rintro ⟨rfl, rfl, -⟩
     exact hkl rfl
 
@@ -455,7 +455,7 @@ theorem eq_sum_canonicalError (i : ι) :
     simp only [Matrix.mul_apply, Matrix.star_apply]
     exact Finset.sum_congr rfl fun k _ => mul_comm _ _
   simp only [h, klUnitary_mul_star, Matrix.one_apply, ite_smul, one_smul, zero_smul,
-    Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    Finset.sum_ite_eq', Finset.mem_univ, ite_true]
 
 /-- The Knill–Laflamme matrix in terms of the eigen-data: `c j i = ∑ₖ U j k d k conj(U i k)`. -/
 theorem knillLaflamme_matrix_apply (i j : ι) :
@@ -487,7 +487,7 @@ theorem exists_recovery_of_knillLaflamme (hP : IsCodeProjector P) (hP0 : P ≠ 0
     intro k
     refine hP.nonneg_of_smul_posSemidef hP0 ?_
     have h := hF k k
-    rw [if_pos rfl] at h
+    rw [ite_eq_left rfl] at h
     rw [← h]
     have h2 : P * (F k)ᴴ * F k * P = (F k * P)ᴴ * (F k * P) := by
       rw [conjTranspose_mul, hP.conjTranspose_eq]
@@ -503,7 +503,7 @@ theorem exists_recovery_of_knillLaflamme (hP : IsCodeProjector P) (hP0 : P ≠ 0
   rw [hE i, hEH j]
   simp only [Matrix.sum_mul, Matrix.mul_sum, Matrix.smul_mul, Matrix.mul_smul,
     Channel.apply_sum, Channel.apply_smul, recoveryChannel_apply hP hd hF hρ]
-  simp only [smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true, smul_smul]
+  simp only [smul_ite, smul_zero, Finset.sum_ite_eq', Finset.mem_univ, ite_true, smul_smul]
   rw [← Finset.sum_smul, knillLaflamme_matrix_apply hc' i j]
   congr 1
   refine Finset.sum_congr rfl fun k _ => ?_

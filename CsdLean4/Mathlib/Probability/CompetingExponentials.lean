@@ -69,7 +69,7 @@ lemma expMeasure_Ioi {r : ℝ} (hr : 0 < r) {t : ℝ} (ht : 0 ≤ t) :
     expMeasure r (Ioi t) = ENNReal.ofReal (exp (-(r * t))) := by
   have := isProbabilityMeasure_expMeasure hr
   have hIic : expMeasure r (Iic t) = ENNReal.ofReal (1 - exp (-(r * t))) := by
-    rw [← ofReal_cdf, cdf_expMeasure_eq hr t, if_pos ht]
+    rw [← ofReal_cdf, cdf_expMeasure_eq hr t, ite_eq_left ht]
   have hle : exp (-(r * t)) ≤ 1 := by
     rw [exp_le_one_iff]
     nlinarith
@@ -110,7 +110,7 @@ lemma lintegral_exp_neg_expMeasure {r S : ℝ} (hr : 0 < r) (hS : 0 ≤ S) :
 lemma expMeasure_ae_nonneg {r : ℝ} (hr : 0 < r) : ∀ᵐ t ∂(expMeasure r), 0 ≤ t := by
   have hprob := isProbabilityMeasure_expMeasure hr
   have hIic : expMeasure r (Iic 0) = 0 := by
-    rw [← ofReal_cdf, cdf_expMeasure_eq hr 0, if_pos le_rfl]
+    rw [← ofReal_cdf, cdf_expMeasure_eq hr 0, ite_eq_left le_rfl]
     norm_num
   rw [ae_iff]
   refine measure_mono_null (fun t ht => ?_) hIic

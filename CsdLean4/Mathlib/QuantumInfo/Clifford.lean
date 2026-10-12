@@ -248,10 +248,10 @@ theorem hGate_hGate (j : Fin n) (ψ : QReg n) : hGate j (hGate j ψ) = ψ := by
   rw [Finset.sum_congr rfl fun w _ => hcol w,
     Finset.sum_eq_single (z j)
       (fun w _ hw => by
-        rw [if_neg fun h => hw ((by decide : ∀ p q : Fin 2, p + q = 0 → q = p) _ _ h),
+        rw [ite_eq_right fun h => hw ((by decide : ∀ p q : Fin 2, p + q = 0 → q = p) _ _ h),
           zero_mul])
       (fun h => absurd (Finset.mem_univ _) h),
-    if_pos (fin2_add_self (z j)), Function.update_eq_self,
+    ite_eq_left (fin2_add_self (z j)), Function.update_eq_self,
     show (Real.sqrt 2 : ℂ)⁻¹ * ((Real.sqrt 2 : ℂ)⁻¹ * (2 * ψ z))
         = ((Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹ * 2) * ψ z from by ring,
     sqrt_two_inv_sq, one_mul]
@@ -304,10 +304,10 @@ theorem hGate_conj_pauliOp (j : Fin n) (a b : Fin n → Fin 2) (ψ : QReg n) :
   rw [Finset.sum_congr rfl fun w _ => hcol w,
     Finset.sum_eq_single (z j + b j)
       (fun w _ hw => by
-        rw [if_neg fun h => hw ((by decide : ∀ p q : Fin 2, p + q = 0 → q = p) _ _ h),
+        rw [ite_eq_right fun h => hw ((by decide : ∀ p q : Fin 2, p + q = 0 → q = p) _ _ h),
           zero_mul, zero_mul])
       (fun h => absurd (Finset.mem_univ _) h),
-    if_pos (fin2_add_self (z j + b j)),
+    ite_eq_left (fin2_add_self (z j + b j)),
     pauliSign, bdot_update_left b (Function.update (z + a) j (z j + b j)) j (a j),
     Function.update_self, bdot_update b (z + a) j (z j + b j), Pi.add_apply z a j]
   have hχ : signChar (bdot b (z + a) + b j * z j + a j * (z j + b j))

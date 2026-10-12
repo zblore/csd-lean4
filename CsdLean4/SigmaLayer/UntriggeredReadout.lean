@@ -6,7 +6,6 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.SigmaLayer.UntriggeredFlow
-public import Mathlib.MeasureTheory.Measure.MeasureSpace
 
 /-!
 # SigmaLayer/UntriggeredReadout: the record of the untriggered flow is faithful

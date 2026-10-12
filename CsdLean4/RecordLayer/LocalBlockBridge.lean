@@ -153,8 +153,8 @@ theorem reduceA_blockLuders_mixture (u : EuclideanSpace ℂ (Fin (nA * nB))) (hu
     intro j
     rw [norm_blockProj_localBlock, norm_toComposite]
     by_cases h : blockProj (localBlock nA nB) j u = 0
-    · rw [dif_pos h, dif_pos ((blockProj_localBlock_eq_zero_iff j u).mp h)]
-    · rw [dif_neg h, dif_neg (fun h' => h ((blockProj_localBlock_eq_zero_iff j u).mpr h'))]
+    · rw [dite_eq_left h, dite_eq_left ((blockProj_localBlock_eq_zero_iff j u).mp h)]
+    · rw [dite_eq_right h, dite_eq_right (fun h' => h ((blockProj_localBlock_eq_zero_iff j u).mpr h'))]
       have hsub : (⟨toComposite (blockProj (localBlock nA nB) j u), toComposite_ne_zero h⟩
             : {v : EuclideanSpace ℂ (Fin nA × Fin nB) // v ≠ 0})
           = ⟨localProjB j (toComposite u),

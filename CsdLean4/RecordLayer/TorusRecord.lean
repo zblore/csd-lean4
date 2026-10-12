@@ -114,13 +114,13 @@ theorem torusOutcome_eq_some_iff (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i)
   constructor
   · intro h
     by_cases hex : ∃ j, x ∈ torusCell r j
-    · rw [torusOutcome, dif_pos hex] at h
+    · rw [torusOutcome, dite_eq_left hex] at h
       have : hex.choose = i := by simpa using h
       exact this ▸ hex.choose_spec
-    · rw [torusOutcome, dif_neg hex] at h; exact absurd h (by simp)
+    · rw [torusOutcome, dite_eq_right hex] at h; exact absurd h (by simp)
   · intro hx
     have hex : ∃ j, x ∈ torusCell r j := ⟨i, hx⟩
-    rw [torusOutcome, dif_pos hex]
+    rw [torusOutcome, dite_eq_left hex]
     by_cases hij : hex.choose = i
     · rw [hij]
     · exact absurd hx (Set.disjoint_left.mp

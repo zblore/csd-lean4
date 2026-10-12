@@ -46,7 +46,7 @@ lemma cellPointer_eq_of_mem {C : ι → Set F} (hdisj : Pairwise (Function.onFun
     (i₀ : ι) {x : F} {i : ι} (hx : x ∈ C i) : cellPointer C i₀ x = i := by
   classical
   have hex : ∃ j, x ∈ C j := ⟨i, hx⟩
-  rw [cellPointer, dif_pos hex]
+  rw [cellPointer, dite_eq_left hex]
   by_contra hne
   exact absurd hx (Set.disjoint_left.mp (hdisj hne) hex.choose_spec)
 
@@ -67,21 +67,21 @@ lemma cellPointer_preimage {C : ι → Set F} (hdisj : Pairwise (Function.onFun 
     rintro (hmem | hmem)
     · exact (cellPointer_eq_of_mem hdisj i₀ hmem) ▸ hpt ▸ rfl
     · by_cases hii : i = i₀
-      · rw [if_pos hii, Set.mem_compl_iff] at hmem
+      · rw [ite_eq_left hii, Set.mem_compl_iff] at hmem
         exact absurd hin hmem
-      · rw [if_neg hii] at hmem
+      · rw [ite_eq_right hii] at hmem
         exact absurd hmem (by simp)
-  · have hpt : cellPointer C i₀ x = i₀ := by rw [cellPointer, dif_neg hx]
+  · have hpt : cellPointer C i₀ x = i₀ := by rw [cellPointer, dite_eq_right hx]
     have hout : x ∈ (⋃ j, C j)ᶜ := by
       rw [Set.mem_compl_iff, Set.mem_iUnion]
       exact fun ⟨j, hj⟩ => hx ⟨j, hj⟩
     rw [hpt]
-    refine ⟨fun h => Or.inr (by rw [if_pos h.symm]; exact hout), ?_⟩
+    refine ⟨fun h => Or.inr (by rw [ite_eq_left h.symm]; exact hout), ?_⟩
     rintro (hmem | hmem)
     · exact absurd ⟨i, hmem⟩ hx
     · by_cases hii : i = i₀
       · exact hii.symm
-      · rw [if_neg hii] at hmem
+      · rw [ite_eq_right hii] at hmem
         exact absurd hmem (by simp)
 
 omit [MeasurableSingletonClass ι] in
@@ -93,9 +93,9 @@ lemma measurable_cellPointer {C : ι → Set F} (hmeas : ∀ i, MeasurableSet (C
   rw [cellPointer_preimage hdisj i₀ i]
   refine (hmeas i).union ?_
   by_cases hii : i = i₀
-  · rw [if_pos hii]
+  · rw [ite_eq_left hii]
     exact (MeasurableSet.iUnion hmeas).compl
-  · rw [if_neg hii]
+  · rw [ite_eq_right hii]
     exact MeasurableSet.empty
 
 omit [MeasurableSpace ι] [MeasurableSingletonClass ι] in
@@ -116,12 +116,12 @@ theorem measure_cellPointer_preimage {ν : Measure F} [IsProbabilityMeasure ν] 
       measure_univ, tsub_self]
   rw [cellPointer_preimage hdisj i₀ i]
   by_cases hii : i = i₀
-  · rw [if_pos hii]
+  · rw [ite_eq_left hii]
     refine le_antisymm ?_ ?_
     · refine le_trans (measure_union_le _ _) ?_
       rw [hr i, hnull, add_zero]
     · rw [← hr i]
       exact measure_mono Set.subset_union_left
-  · rw [if_neg hii, Set.union_empty, hr i]
+  · rw [ite_eq_right hii, Set.union_empty, hr i]
 
 end MeasureTheory

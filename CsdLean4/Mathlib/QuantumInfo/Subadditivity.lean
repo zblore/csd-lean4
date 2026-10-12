@@ -227,9 +227,9 @@ theorem trace_diag_overlap_expand {ρ σ : Matrix n n ℂ} (hρ : ρ.IsHermitian
     rw [Finset.sum_eq_single x]
     · rw [Finset.sum_eq_single i]
       · simp
-      · intro b _ hb; rw [if_neg (Ne.symm hb)]; ring
+      · intro b _ hb; rw [ite_eq_right (Ne.symm hb)]; ring
       · intro hi; exact absurd (Finset.mem_univ i) hi
-    · intro b _ hb; rw [if_neg hb]; ring
+    · intro b _ hb; rw [ite_eq_right hb]; ring
     · intro hx; exact absurd (Finset.mem_univ x) hx
   simp_rw [hentry]
   refine Finset.sum_congr rfl fun j _ => ?_

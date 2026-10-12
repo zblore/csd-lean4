@@ -163,8 +163,8 @@ lemma diagonal_const_eq_smul_one {N : ℕ} (c : ℂ) :
   ext i j
   rw [Matrix.smul_apply, Matrix.one_apply, smul_eq_mul, Matrix.diagonal_apply]
   by_cases h : i = j
-  · rw [if_pos h, if_pos h, mul_one]
-  · rw [if_neg h, if_neg h, mul_zero]
+  · rw [ite_eq_left h, ite_eq_left h, mul_one]
+  · rw [ite_eq_right h, ite_eq_right h, mul_zero]
 
 /-- **The Hadamard-rotated off-diagonal of the decohered qubit state.**
 `(qmH · decohereReduced ψ · qmH) 0 1 = (ψ₀·star ψ₀ − ψ₁·star ψ₁)/2 = (p₀ − p₁)/2`.
@@ -180,7 +180,7 @@ theorem decohere_hadamard_offDiag (ψ : EuclideanSpace ℂ (Fin 2)) :
               * !![(1 : ℂ), 1; 1, -1]) 0 1
             = ψ 0 * star (ψ 0) - ψ 1 * star (ψ 1) := by
     simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal_apply, Fin.isValue,
-      Fin.reduceEq, if_true, if_false, mul_zero, add_zero, zero_add]
+      Fin.reduceEq, ite_true, ite_false, mul_zero, add_zero, zero_add]
     rw [show !![(1 : ℂ), 1; 1, -1] 0 0 = 1 from rfl,
       show !![(1 : ℂ), 1; 1, -1] 0 1 = 1 from rfl,
       show !![(1 : ℂ), 1; 1, -1] 1 1 = -1 from rfl]
@@ -421,13 +421,13 @@ noncomputable def decohereReducedN {N : ℕ} (ρ : Matrix (Fin N) (Fin N) ℂ) :
 theorem decohereReducedN_offDiag_zero {N : ℕ} (ρ : Matrix (Fin N) (Fin N) ℂ)
     {i j : Fin N} (h : i ≠ j) : decohereReducedN ρ i j = 0 := by
   show Matrix.diagonal (fun i => ρ i i) i j = 0
-  rw [Matrix.diagonal_apply, if_neg h]
+  rw [Matrix.diagonal_apply, ite_eq_right h]
 
 /-- **Diagonal preserved (the pointer populations).** `(decohereReducedN ρ) i i = ρ i i`. -/
 theorem decohereReducedN_diagonal {N : ℕ} (ρ : Matrix (Fin N) (Fin N) ℂ) (i : Fin N) :
     decohereReducedN ρ i i = ρ i i := by
   show Matrix.diagonal (fun i => ρ i i) i i = ρ i i
-  rw [Matrix.diagonal_apply, if_pos rfl]
+  rw [Matrix.diagonal_apply, ite_eq_left rfl]
 
 /-- **General-`N` einselection.** The dephasing channel kills off-diagonals and
 preserves the diagonal pointer populations: the computational basis is the pointer
@@ -450,8 +450,8 @@ theorem decohereReducedN_outerProduct {N : ℕ} [NeZero N] (ψ : EuclideanSpace 
   show Matrix.diagonal (fun i => outerProduct ψ i i) i j = decohereReduced ψ i j
   rw [decohereReduced_apply, Matrix.diagonal_apply]
   by_cases h : i = j
-  · rw [if_pos h, if_pos h]; subst h; simp only [outerProduct, Matrix.vecMulVec_apply]
-  · rw [if_neg h, if_neg h]
+  · rw [ite_eq_left h, ite_eq_left h]; subst h; simp only [outerProduct, Matrix.vecMulVec_apply]
+  · rw [ite_eq_right h, ite_eq_right h]
 
 /-- **Non-vacuity: the dephasing genuinely acts.** For a pure-state density with two
 nonzero components `ψᵢ, ψⱼ` (`i ≠ j`), the off-diagonal `(|ψ⟩⟨ψ|) i j = ψᵢ·star ψⱼ`

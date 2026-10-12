@@ -106,12 +106,12 @@ theorem localProjB_bellE (j : Fin 2) :
   rw [show (EuclideanSpace.single ((j, j) : Fin 2 × Fin 2) (1 : ℂ)) ak
       = if ak = (j, j) then 1 else 0 from PiLp.single_apply 2 ℂ (j, j) 1 ak]
   rcases eq_or_ne ak.2 j with hk | hk
-  · rw [if_pos hk, bellE_apply, bellVec_eq]
+  · rw [ite_eq_left hk, bellE_apply, bellVec_eq]
     rcases eq_or_ne ak.1 ak.2 with ha | ha
-    · rw [if_pos ha, if_pos (by rw [Prod.ext_iff]; exact ⟨ha.trans hk, hk⟩)]
-    · rw [if_neg ha,
-        if_neg (by rw [Prod.ext_iff]; rintro ⟨h1, _⟩; exact ha (h1.trans hk.symm))]
-  · rw [if_neg hk, if_neg (by rw [Prod.ext_iff]; rintro ⟨_, h2⟩; exact hk h2)]
+    · rw [ite_eq_left ha, ite_eq_left (by rw [Prod.ext_iff]; exact ⟨ha.trans hk, hk⟩)]
+    · rw [ite_eq_right ha,
+        ite_eq_right (by rw [Prod.ext_iff]; rintro ⟨h1, _⟩; exact ha (h1.trans hk.symm))]
+  · rw [ite_eq_right hk, ite_eq_right (by rw [Prod.ext_iff]; rintro ⟨_, h2⟩; exact hk h2)]
 
 /-- The screen-basis state, as a Euclidean vector. -/
 noncomputable def sysE (φ a : ℝ) : EuclideanSpace ℂ (Fin 2) :=

@@ -462,8 +462,8 @@ theorem two_mul_card_diag_le {G₁ G₂ : Type*}
     apply Finset.sum_congr rfl
     intro a₂ _
     by_cases h : (orderOf a₂).factorization 2 = (orderOf a₁).factorization 2
-    · rw [if_pos h, if_pos h.symm]
-    · rw [if_neg h, if_neg (fun hc => h hc.symm)]
+    · rw [ite_eq_left h, ite_eq_left h.symm]
+    · rw [ite_eq_right h, ite_eq_right (fun hc => h hc.symm)]
   rw [hdecomp, Finset.mul_sum]
   -- Step 2/3: bound each fiber by S7b and sum the constant bound.
   calc ∑ a₁ : G₁, 2 * (Finset.univ.filter
@@ -753,7 +753,7 @@ theorem shor_random_a_success {p q : ℕ} (hp : p.Prime) (hq : q.Prime)
         _ ≤ p ^ α := Nat.le_self_pow (by omega) p⟩
     have : Nontrivial (ZMod (p ^ α)) := ZMod.nontrivial _
     rw [← orderOf_units, Units.val_neg, Units.val_one, orderOf_neg_one,
-      ZMod.ringChar_zmod_n, if_neg hne2]
+      ZMod.ringChar_zmod_n, ite_eq_right hne2]
   have hn : orderOf (-1 : (ZMod (q ^ β))ˣ) = 2 := by
     have hne2 : q ^ β ≠ 2 := by
       have h3 : 3 ≤ q := by
@@ -767,7 +767,7 @@ theorem shor_random_a_success {p q : ℕ} (hp : p.Prime) (hq : q.Prime)
         _ ≤ q ^ β := Nat.le_self_pow (by omega) q⟩
     have : Nontrivial (ZMod (q ^ β)) := ZMod.nontrivial _
     rw [← orderOf_units, Units.val_neg, Units.val_one, orderOf_neg_one,
-      ZMod.ringChar_zmod_n, if_neg hne2]
+      ZMod.ringChar_zmod_n, ite_eq_right hne2]
   exact shor_good_transport hcop hm hn
 
 /-- **S7★ — Shor random-`a` success, probability reading.** The counting bound
@@ -1385,7 +1385,7 @@ theorem shor_random_a_success_general (N : ℕ) [NeZero N] (hodd : Odd N)
     have : Nontrivial (ZMod ((p : ℕ) ^ α)) := ZMod.nontrivial _
     show orderOf (-1 : (ZMod ((p : ℕ) ^ α))ˣ) = 2
     rw [← orderOf_units, Units.val_neg, Units.val_one, orderOf_neg_one,
-      ZMod.ringChar_zmod_n, if_neg hne2]
+      ZMod.ringChar_zmod_n, ite_eq_right hne2]
   -- the free-index pair `i₁ ≠ i₀` from `2 ≤ N.primeFactors.card`
   obtain ⟨a, ha, b, hb, hab⟩ := Finset.one_lt_card.mp hN
   set i₀ : N.primeFactors := ⟨a, ha⟩ with hi₀

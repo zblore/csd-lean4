@@ -142,7 +142,7 @@ theorem exists_variational_of_lipschitz {f : ℝ → E → E} {U : Set E} (hU : 
     exact ⟨Y, hY0, fun t ht => by simpa [ContinuousLinearMap.compL_apply] using hY t ht⟩
   choose Y hY using hlin
   set Y' : E → ℝ → E →L[ℝ] E := fun x => if hx : x ∈ S then Y x hx else fun _ => 1
-  have hYx : ∀ x (hx : x ∈ S), Y' x = Y x hx := fun x hx => by simp only [Y', dif_pos hx]
+  have hYx : ∀ x (hx : x ∈ S), Y' x = Y x hx := fun x hx => by simp only [Y', dite_eq_left hx]
   refine ⟨Y', fun x hx => ?_, ?_⟩
   · rw [hYx x hx]
     refine ⟨(hY x hx).1, (hY x hx).2, ?_⟩

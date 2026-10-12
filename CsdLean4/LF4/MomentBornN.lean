@@ -118,10 +118,10 @@ theorem replaceMap_apply {N : ℕ} (b : Fin N → ℝ) (i : Fin N) (t : Fin N �
   classical
   rw [replaceMap, Matrix.toLin'_apply]
   show (∑ j, ((1 : Matrix (Fin N) (Fin N) ℝ).updateCol i b) k j * t j) = _
-  rw [← Finset.add_sum_erase Finset.univ _ (Finset.mem_univ i), Matrix.updateCol_apply, if_pos rfl]
+  rw [← Finset.add_sum_erase Finset.univ _ (Finset.mem_univ i), Matrix.updateCol_apply, ite_eq_left rfl]
   congr 1
   rw [Finset.sum_congr rfl (fun j hj => by
-    rw [Matrix.updateCol_apply, if_neg (Finset.ne_of_mem_erase hj), Matrix.one_apply, ite_mul,
+    rw [Matrix.updateCol_apply, ite_eq_right (Finset.ne_of_mem_erase hj), Matrix.one_apply, ite_mul,
       one_mul, zero_mul]),
     Finset.sum_ite_eq (Finset.univ.erase i) k t]
   by_cases hk : k = i <;> simp [Finset.mem_erase, hk]
@@ -146,15 +146,15 @@ theorem replaceMap_image_subset {M : ℕ} (b : Fin M → ℝ) (i : Fin M)
       refine Finset.sum_congr rfl (fun k _ => ?_)
       by_cases hk : k = i
       · subst hk; simp
-      · rw [if_neg hk, if_neg (Ne.symm hk), add_zero]
+      · rw [ite_eq_right hk, ite_eq_right (Ne.symm hk), add_zero]
     rw [Finset.sum_add_distrib, Finset.sum_ite_eq Finset.univ i t,
-      if_pos (Finset.mem_univ i)] at h1
+      ite_eq_left (Finset.mem_univ i)] at h1
     linarith
   refine ⟨fun k => ?_, ?_⟩
   · rw [replaceMap_apply]
     by_cases hk : k = i
-    · rw [if_pos hk, add_zero]; exact mul_pos (hbpos k) (htpos i)
-    · rw [if_neg hk]; nlinarith [hbpos k, htpos i, htpos k]
+    · rw [ite_eq_left hk, add_zero]; exact mul_pos (hbpos k) (htpos i)
+    · rw [ite_eq_right hk]; nlinarith [hbpos k, htpos i, htpos k]
   · rw [Finset.sum_congr rfl (fun k _ => replaceMap_apply b i t k), Finset.sum_add_distrib,
       ← Finset.sum_mul, hcompl]
     nlinarith [htsum, mul_pos (htpos i) (sub_pos.mpr hbsum)]

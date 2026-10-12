@@ -154,7 +154,7 @@ theorem cellPointer_outcomeSector_eq_readout {Sigma : Type*} [MeasurableSpace Si
       P.readout_evolve_outcomeSector hi]
     rfl
   · have hmem : x ∈ cellPointer P.outcomeSector i₀ ⁻¹' {i₀} := by
-      rw [cellPointer_preimage P.outcomeSector_pairwiseDisjoint i₀ i₀, if_pos rfl]
+      rw [cellPointer_preimage P.outcomeSector_pairwiseDisjoint i₀ i₀, ite_eq_left rfl]
       right
       simpa [Set.mem_iUnion] using hx
     rcases hro : P.readout (P.evolve P.startTime P.readoutTime x) with _ | j

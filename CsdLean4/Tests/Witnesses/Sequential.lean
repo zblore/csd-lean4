@@ -71,7 +71,7 @@ theorem superposition_ne_vertex [NeZero N] (hN : 1 < N) :
     have hb : (0 : ℝ) < ‖obsWitnessVec hN‖ :=
       norm_pos_iff.mpr (obsWitnessVec_ne_zero hN)
     positivity
-  rw [h, momentMap_vertex, if_neg (obsIdx0_ne_obsIdx1 hN).symm] at h1
+  rw [h, momentMap_vertex, ite_eq_right (obsIdx0_ne_obsIdx1 hN).symm] at h1
   exact lt_irrefl 0 h1
 
 /-- **The first-step positivity, discharged at the concrete superposition.**

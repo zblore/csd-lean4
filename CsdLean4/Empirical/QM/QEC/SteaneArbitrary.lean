@@ -79,26 +79,26 @@ theorem eq_add_unitErr_iff {q : Fin 7} {z w : Fin 7 → Fin 2} :
   constructor
   · intro h
     refine ⟨fun i hi => ?_, ?_⟩
-    · rw [h, Pi.add_apply, unitErr_apply, if_neg hi, add_zero]
-    · rw [h, Pi.add_apply, unitErr_apply, if_pos rfl]
+    · rw [h, Pi.add_apply, unitErr_apply, ite_eq_right hi, add_zero]
+    · rw [h, Pi.add_apply, unitErr_apply, ite_eq_left rfl]
       have hne : ∀ x : Fin 2, x ≠ x + 1 := by decide
       exact hne (z q)
   · intro ⟨hag, hne⟩
     funext i
     by_cases hi : i = q
     · subst hi
-      rw [Pi.add_apply, unitErr_apply, if_pos rfl]
+      rw [Pi.add_apply, unitErr_apply, ite_eq_left rfl]
       have hstep : ∀ x y : Fin 2, x ≠ y → y = x + 1 := by decide
       exact hstep (z i) (w i) hne
-    · rw [Pi.add_apply, unitErr_apply, if_neg hi, add_zero]
+    · rw [Pi.add_apply, unitErr_apply, ite_eq_right hi, add_zero]
       exact (hag i hi).symm
 
 theorem bdot_unitErr (q : Fin 7) (w : Fin 7 → Fin 2) : bdot (unitErr q) w = w q := by
   rw [bdot]
   rw [Finset.sum_eq_single q]
-  · rw [unitErr_apply, if_pos rfl, one_mul]
+  · rw [unitErr_apply, ite_eq_left rfl, one_mul]
   · intro i _ hi
-    rw [unitErr_apply, if_neg hi, zero_mul]
+    rw [unitErr_apply, ite_eq_right hi, zero_mul]
   · intro h
     exact absurd (Finset.mem_univ q) h
 
@@ -112,14 +112,14 @@ theorem gateOf_pX_eq_pauliMat (q : Fin 7) : gateOf q pX = pauliMat (unitErr q) 0
   by_cases hag : ∀ i, i ≠ q → z i = w i
   · rw [gateOf_apply_of_agree hag]
     by_cases hq : z q = w q
-    · rw [if_neg (fun h => (eq_add_unitErr_iff.mp h).2 hq), pX, hq]
+    · rw [ite_eq_right (fun h => (eq_add_unitErr_iff.mp h).2 hq), pX, hq]
       rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (w q) with h | h <;> rw [h] <;> simp
-    · rw [if_pos (eq_add_unitErr_iff.mpr ⟨hag, hq⟩), pX, pauliSign, bdot]
+    · rw [ite_eq_left (eq_add_unitErr_iff.mpr ⟨hag, hq⟩), pX, pauliSign, bdot]
       simp only [Pi.zero_apply, zero_mul, Finset.sum_const_zero, signChar_zero]
       rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (z q) with h | h <;>
         rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (w q) with h' | h' <;>
         rw [h, h'] at hq ⊢ <;> simp_all
-  · rw [gateOf_apply_of_not_agree hag, if_neg]
+  · rw [gateOf_apply_of_not_agree hag, ite_eq_right]
     intro h
     exact hag (eq_add_unitErr_iff.mp h).1
 
@@ -129,10 +129,10 @@ theorem gateOf_pZ_eq_pauliMat (q : Fin 7) : gateOf q pZ = pauliMat 0 (unitErr q)
   by_cases hag : ∀ i, i ≠ q → z i = w i
   · rw [gateOf_apply_of_agree hag]
     by_cases hq : w = z
-    · rw [if_pos hq, pauliSign, bdot_unitErr, hq]
+    · rw [ite_eq_left hq, pauliSign, bdot_unitErr, hq]
       rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (z q) with h | h <;> rw [h] <;>
         simp [pZ, signChar]
-    · rw [if_neg hq]
+    · rw [ite_eq_right hq]
       have hqq : z q ≠ w q := fun hc => hq (funext fun i => by
         by_cases hi : i = q
         · rw [hi, hc]
@@ -140,7 +140,7 @@ theorem gateOf_pZ_eq_pauliMat (q : Fin 7) : gateOf q pZ = pauliMat 0 (unitErr q)
       rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (z q) with h | h <;>
         rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (w q) with h' | h' <;>
         rw [h, h'] at hqq ⊢ <;> simp_all [pZ]
-  · rw [gateOf_apply_of_not_agree hag, if_neg]
+  · rw [gateOf_apply_of_not_agree hag, ite_eq_right]
     intro h
     exact hag fun i _ => by rw [h]
 
@@ -151,13 +151,13 @@ theorem gateOf_pXZ_eq_pauliMat (q : Fin 7) :
   by_cases hag : ∀ i, i ≠ q → z i = w i
   · rw [gateOf_apply_of_agree hag]
     by_cases hq : z q = w q
-    · rw [if_neg (fun h => (eq_add_unitErr_iff.mp h).2 hq), pXZ_eq, hq]
+    · rw [ite_eq_right (fun h => (eq_add_unitErr_iff.mp h).2 hq), pXZ_eq, hq]
       rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (w q) with h | h <;> rw [h] <;> simp
-    · rw [if_pos (eq_add_unitErr_iff.mpr ⟨hag, hq⟩), pXZ_eq, pauliSign, bdot_unitErr]
+    · rw [ite_eq_left (eq_add_unitErr_iff.mpr ⟨hag, hq⟩), pXZ_eq, pauliSign, bdot_unitErr]
       rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (z q) with h | h <;>
         rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (w q) with h' | h' <;>
         rw [h, h'] at hq ⊢ <;> simp_all [signChar]
-  · rw [gateOf_apply_of_not_agree hag, if_neg]
+  · rw [gateOf_apply_of_not_agree hag, ite_eq_right]
     intro h
     exact hag (eq_add_unitErr_iff.mp h).1
 
@@ -188,7 +188,7 @@ theorem gateOf_eq_sum_pauliMat (q : Fin 7) (M : Matrix (Fin 2) (Fin 2) ℂ) :
     · rw [Fin.sum_univ_three]
       simp only [singleCoeff, errA, errB, show ((2 : Fin 3) = 0) = False from by simp,
         show ((2 : Fin 3) = 1) = False from by simp, show ((1 : Fin 3) = 0) = False from by simp,
-        if_false]
+        ite_false]
       norm_num
     · intro j _ hj
       simp [singleCoeff, hj]
@@ -241,7 +241,7 @@ theorem sum_singleCoeff_sq (q : Fin 7) (M : Matrix (Fin 2) (Fin 2) ℂ) :
       rw [← starRingEnd_apply, map_div₀, map_ofNat, starRingEnd_apply]
     simp only [hs, star_add, star_sub, show ((2 : Fin 3) = 0) = False from by simp,
       show ((2 : Fin 3) = 1) = False from by simp, show ((1 : Fin 3) = 0) = False from by simp,
-      show ((0 : Fin 3) = 1) = False from by simp, if_false, if_true]
+      show ((0 : Fin 3) = 1) = False from by simp, ite_false, ite_true]
     ring
   · intro j _ hj
     simp [singleCoeff, hj]

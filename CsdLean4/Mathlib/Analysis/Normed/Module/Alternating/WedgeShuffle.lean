@@ -110,7 +110,7 @@ theorem slotOf_slotPair_slotMem (x : Fin (2 * k) ⊕ Fin 2) :
   rcases x with p | b
   · show slotOf ⟨(p : ℕ) / 2, by omega⟩ ⟨(p : ℕ) % 2, by omega⟩ = Sum.inl p
     unfold slotOf
-    rw [dif_pos (show ((⟨(p : ℕ) / 2, by omega⟩ : Fin (k + 1)) : ℕ) < k by
+    rw [dite_eq_left (show ((⟨(p : ℕ) / 2, by omega⟩ : Fin (k + 1)) : ℕ) < k by
       show (p : ℕ) / 2 < k; omega)]
     refine congrArg Sum.inl (Fin.ext ?_)
     show 2 * ((p : ℕ) / 2) + (p : ℕ) % 2 = p
@@ -278,7 +278,7 @@ theorem slotPair_eq_of_classTerm_ne_zero {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ}
     slotPair (σ (Sum.inr 0)) = slotPair (σ (Sum.inr 1)) := by
   by_contra hne
   apply h
-  rw [classTerm_mk'', beta_inr_eq, hu, if_neg hne, mul_zero, smul_zero]
+  rw [classTerm_mk'', beta_inr_eq, hu, ite_eq_right hne, mul_zero, smul_zero]
 
 /-- A non-vanishing class is the class of the two-transposition representative of its pair. -/
 theorem mk_eq_pairRep_of_classTerm_ne_zero {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ}
@@ -303,7 +303,7 @@ theorem classTerm_pairRep_weighted {α : E [⋀^Fin (2 * k)]→L[ℝ] ℝ} {β :
     classTerm α β u (Quotient.mk'' (pairRep j))
       = c j * α (fun i => u (pairRep j (Sum.inl i))) := by
   rw [classTerm_mk'', sign_pairRep, beta_inr_eq, pairRep_inr, pairRep_inr, hu,
-    if_pos (by rw [slotPair_slotOf, slotPair_slotOf]), slotPair_slotOf, slotMem_slotOf,
+    ite_eq_left (by rw [slotPair_slotOf, slotPair_slotOf]), slotPair_slotOf, slotMem_slotOf,
     slotMem_slotOf]
   simp [pairSign, mul_comm]
 

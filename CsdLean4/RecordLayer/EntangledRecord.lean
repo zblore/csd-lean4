@@ -152,9 +152,9 @@ lemma trace_mul_single' {ι : Type*} [Fintype ι] [DecidableEq ι]
   rw [Finset.sum_congr rfl fun i _ => by
     rw [Finset.sum_congr rfl fun j _ => hterm i j,
       Finset.sum_ite_eq' Finset.univ a (fun j => if i = a then M i j else 0),
-      if_pos (Finset.mem_univ _)]]
+      ite_eq_left (Finset.mem_univ _)]]
   rw [Finset.sum_ite_eq' Finset.univ a (fun i => M i a),
-    if_pos (Finset.mem_univ _)]
+    ite_eq_left (Finset.mem_univ _)]
 
 /-- The rank-one projector of a standard basis vector is the matrix unit `∣i⟩⟨i∣`. -/
 lemma outerProduct_single {ι : Type*} [DecidableEq ι] (i : ι) :

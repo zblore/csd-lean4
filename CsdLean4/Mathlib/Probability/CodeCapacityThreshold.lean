@@ -84,7 +84,7 @@ theorem measure_pi_two_or_more_le (ν : Measure α) [IsProbabilityMeasure ν] (P
         · exact mem_univ _
       · intro h i hi
         have := h i
-        rwa [if_pos hi] at this
+        rwa [ite_eq_left hi] at this
     rw [hcyl, Measure.pi_pi]
     have hfac : ∀ i, ν (if i ∈ s then {a | P a} else univ) = if i ∈ s then ν {a | P a} else 1 := by
       intro i

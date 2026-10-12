@@ -189,7 +189,7 @@ theorem fs_moment_pushforward_uniform (p₀ : CPN 2) :
     have hz : (WithLp.toLp 2 y : EuclideanSpace ℝ (Fin 4)) = 0 :=
       coords.injective (by rw [h, map_zero])
     simpa using congrArg (WithLp.equiv 2 (Fin 4 → ℝ)) hz
-  rw [gaussianProj, dif_neg hv0, momentMap_mk v hv0 0]
+  rw [gaussianProj, dite_eq_right hv0, momentMap_mk v hv0 0]
   -- `v 0 = y₀ + y₁·i`, `‖v‖² = ∑ yᵢ²`.
   have hv0val : ‖v 0‖ ^ 2 = y 0 ^ 2 + y 1 ^ 2 := by
     have hv0eq : v 0 = ((y 0 : ℂ) + (y 1 : ℂ) * Complex.I) := rfl

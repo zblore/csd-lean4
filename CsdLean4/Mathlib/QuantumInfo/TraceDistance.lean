@@ -467,8 +467,8 @@ lemma mul_one_sub_posProj_eq_neg_negPart {A : Matrix n n ℂ} (hA : A.IsHermitia
     funext x
     simp only [id_eq]
     rcases le_or_gt x 0 with h | h
-    · rw [if_neg (not_lt.mpr h), max_eq_left (by linarith)]; ring
-    · rw [if_pos h, max_eq_right (by linarith)]; ring
+    · rw [ite_eq_right (not_lt.mpr h), max_eq_left (by linarith)]; ring
+    · rw [ite_eq_left h, max_eq_right (by linarith)]; ring
   rw [← hstep, cfc_id hA]
 
 /-- **L7 (negative part):** `Re Tr(H₋) ≤ Re Tr(A₋) + Re Tr(B₋)` for `H = A + B`. -/

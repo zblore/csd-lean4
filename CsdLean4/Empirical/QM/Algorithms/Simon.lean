@@ -120,8 +120,8 @@ lemma applyHn_smul (c : ℂ) (ψ : QReg n) : applyHn (c • ψ) = c • applyHn 
 /-- `H^⊗n` of a basis state picks out a Hadamard column: `applyHn |x⟩ y = Hn y x`. -/
 lemma applyHn_basisState (x y : Fin n → Fin 2) : applyHn (basisState x) y = Hn y x := by
   rw [applyHn_apply, Finset.sum_eq_single x]
-  · rw [basisState_apply, if_pos rfl, mul_one]
-  · intro x' _ hx'; rw [basisState_apply, if_neg hx', mul_zero]
+  · rw [basisState_apply, ite_eq_left rfl, mul_one]
+  · intro x' _ hx'; rw [basisState_apply, ite_eq_right hx', mul_zero]
   · intro h; exact absurd (Finset.mem_univ _) h
 
 /-- **The Simon amplitude.** Measuring outcome `y` after `H^⊗n` on the coset state has
@@ -185,14 +185,14 @@ theorem cosetState_normalized (x₀ s : Fin n → Fin 2) (hs : s ≠ 0) :
       by_cases h1 : z = x₀
       · by_cases h2 : z = bxor x₀ s
         · exact absurd (h1.symm.trans h2) (fun hc => hne hc.symm)
-        · simp only [if_pos h1, if_neg h2]; norm_num
+        · simp only [ite_eq_left h1, ite_eq_right h2]; norm_num
       · by_cases h2 : z = bxor x₀ s
-        · simp only [if_neg h1, if_pos h2]; norm_num
-        · simp only [if_neg h1, if_neg h2]; norm_num
+        · simp only [ite_eq_right h1, ite_eq_left h2]; norm_num
+        · simp only [ite_eq_right h1, ite_eq_right h2]; norm_num
     simp only [hpt, Finset.sum_add_distrib]
     rw [Finset.sum_ite_eq' Finset.univ x₀ (fun _ => (1 : ℝ)),
         Finset.sum_ite_eq' Finset.univ (bxor x₀ s) (fun _ => (1 : ℝ))]
-    simp only [Finset.mem_univ, if_true]
+    simp only [Finset.mem_univ, ite_true]
     norm_num
   rw [cosetState, norm_smul, hnorm, norm_inv, Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonneg (Real.sqrt_nonneg 2),

@@ -7,9 +7,8 @@ module
 
 public import Mathlib.LinearAlgebra.Matrix.Hermitian
 public import Mathlib.LinearAlgebra.Matrix.Trace
-public import Mathlib.Data.Complex.Basic
-public import Mathlib.Data.Complex.BigOperators
-
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Basic.Complex.BigOperators
 /-!
 # CV-1: a finite position observable on a lattice
 

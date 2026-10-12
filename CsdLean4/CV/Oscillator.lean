@@ -6,7 +6,7 @@ Authors: Zayn Blore
 module
 
 public import Mathlib.LinearAlgebra.Matrix.Hermitian
-public import Mathlib.Data.Complex.Basic
+public import Mathlib.Basic.Complex.Basic
 public import Mathlib.Analysis.Real.Sqrt
 public import Mathlib.Tactic.NoncommRing
 
@@ -75,15 +75,15 @@ open Matrix
 lemma sum_ite_valEq (N c : ℕ) (v : ℂ) :
     (∑ j : Fin N, if (j : ℕ) = c then v else 0) = if c < N then v else 0 := by
   by_cases hc : c < N
-  · rw [if_pos hc, Finset.sum_eq_single (⟨c, hc⟩ : Fin N)]
-    · rw [if_pos rfl]
+  · rw [ite_eq_left hc, Finset.sum_eq_single (⟨c, hc⟩ : Fin N)]
+    · rw [ite_eq_left rfl]
     · intro j _ hj
-      rw [if_neg]
+      rw [ite_eq_right]
       intro h; exact hj (Fin.ext h)
     · intro h; exact absurd (Finset.mem_univ _) h
-  · rw [if_neg hc]
+  · rw [ite_eq_right hc]
     refine Finset.sum_eq_zero fun j _ => ?_
-    rw [if_neg]
+    rw [ite_eq_right]
     intro h; exact hc (h ▸ j.isLt)
 
 /-- A single-term sum for the shifted condition: `∑_{j:Fin N} [j+1 = c]·v =
@@ -93,15 +93,15 @@ lemma sum_ite_valAdd (N c : ℕ) (v : ℂ) :
   by_cases hc : 1 ≤ c ∧ c ≤ N
   · obtain ⟨hc1, hcN⟩ := hc
     have hlt : c - 1 < N := by omega
-    rw [if_pos ⟨hc1, hcN⟩, Finset.sum_eq_single (⟨c - 1, hlt⟩ : Fin N)]
-    · rw [if_pos]; show c - 1 + 1 = c; omega
+    rw [ite_eq_left ⟨hc1, hcN⟩, Finset.sum_eq_single (⟨c - 1, hlt⟩ : Fin N)]
+    · rw [ite_eq_left]; show c - 1 + 1 = c; omega
     · intro j _ hj
-      rw [if_neg]
+      rw [ite_eq_right]
       intro h; exact hj (Fin.ext (by show (j : ℕ) = c - 1; omega))
     · intro h; exact absurd (Finset.mem_univ _) h
-  · rw [if_neg hc]
+  · rw [ite_eq_right hc]
     refine Finset.sum_eq_zero fun j _ => ?_
-    rw [if_neg]
+    rw [ite_eq_right]
     intro h; exact hc ⟨by omega, by have := j.isLt; omega⟩
 
 /-- `(√n : ℂ)·(√n : ℂ) = n`. -/
@@ -152,7 +152,7 @@ theorem creation_mul_annihilation : creation N * annihilation N = numberOp N := 
   rw [Matrix.mul_apply, numberOp]
   rcases eq_or_ne i k with hik | hik
   · subst hik
-    rw [Matrix.diagonal_apply, if_pos rfl]
+    rw [Matrix.diagonal_apply, ite_eq_left rfl]
     -- ∑_j [j+1=i]·√i · [j+1=i]·√i  =  (i:ℂ)
     have hconv : ∀ j : Fin N,
         creation N i j * annihilation N j i
@@ -160,21 +160,21 @@ theorem creation_mul_annihilation : creation N * annihilation N = numberOp N := 
       intro j
       rw [creation_apply, annihilation_apply]
       by_cases h : (j : ℕ) + 1 = (i : ℕ)
-      · rw [if_pos h, if_pos h, sqrt_mul_self_cast]
-      · rw [if_neg h, if_neg h, mul_zero]
+      · rw [ite_eq_left h, ite_eq_left h, sqrt_mul_self_cast]
+      · rw [ite_eq_right h, ite_eq_right h, mul_zero]
     rw [Finset.sum_congr rfl (fun j _ => hconv j), sum_ite_valAdd]
     have hi : (i : ℕ) < N := i.isLt
     split_ifs with h
     · rfl
     · have h0 : (i : ℕ) = 0 := by omega
       rw [h0]; simp
-  · rw [Matrix.diagonal_apply, if_neg hik]
+  · rw [Matrix.diagonal_apply, ite_eq_right hik]
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [creation_apply, annihilation_apply]
     by_cases h1 : (j : ℕ) + 1 = (i : ℕ)
-    · rw [if_neg (show ¬((j : ℕ) + 1 = (k : ℕ)) from fun h2 => hik (Fin.ext (by omega))),
+    · rw [ite_eq_right (show ¬((j : ℕ) + 1 = (k : ℕ)) from fun h2 => hik (Fin.ext (by omega))),
         mul_zero]
-    · rw [if_neg h1, zero_mul]
+    · rw [ite_eq_right h1, zero_mul]
 
 /-- **`aa† = diag(1, 2, …, N−1, 0)`**: annihilation ∘ creation, the number
 operator shifted up by one with a zero at the top level. -/
@@ -185,7 +185,7 @@ theorem annihilation_mul_creation :
   rw [Matrix.mul_apply]
   rcases eq_or_ne i k with hik | hik
   · subst hik
-    rw [Matrix.diagonal_apply, if_pos rfl]
+    rw [Matrix.diagonal_apply, ite_eq_left rfl]
     -- ∑_j [i+1=j]·√j · [i+1=j]·√j = if i+1<N then (i+1) else 0
     have hconv : ∀ j : Fin N,
         annihilation N i j * creation N j i
@@ -193,16 +193,16 @@ theorem annihilation_mul_creation :
       intro j
       rw [annihilation_apply, creation_apply]
       by_cases h : (i : ℕ) + 1 = (j : ℕ)
-      · rw [if_pos h, if_pos h.symm, sqrt_mul_self_cast, h]
-      · rw [if_neg h, if_neg (fun h2 => h h2.symm), mul_zero]
+      · rw [ite_eq_left h, ite_eq_left h.symm, sqrt_mul_self_cast, h]
+      · rw [ite_eq_right h, ite_eq_right (fun h2 => h h2.symm), mul_zero]
     rw [Finset.sum_congr rfl (fun j _ => hconv j), sum_ite_valEq]
-  · rw [Matrix.diagonal_apply, if_neg hik]
+  · rw [Matrix.diagonal_apply, ite_eq_right hik]
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [annihilation_apply, creation_apply]
     by_cases h1 : (i : ℕ) + 1 = (j : ℕ)
-    · rw [if_neg (show ¬((k : ℕ) + 1 = (j : ℕ)) from fun h2 => hik (Fin.ext (by omega))),
+    · rw [ite_eq_right (show ¬((k : ℕ) + 1 = (j : ℕ)) from fun h2 => hik (Fin.ext (by omega))),
         mul_zero]
-    · rw [if_neg h1, zero_mul]
+    · rw [ite_eq_right h1, zero_mul]
 
 /-! ### The truncated CCR -/
 
@@ -220,9 +220,9 @@ theorem truncated_ccr :
     simp only [↓reduceIte]
     have hi : (i : ℕ) < N := i.isLt
     by_cases htop : (i : ℕ) + 1 < N
-    · rw [if_pos htop, if_neg (show ¬((i : ℕ) = N - 1) by omega)]
+    · rw [ite_eq_left htop, ite_eq_right (show ¬((i : ℕ) = N - 1) by omega)]
       push_cast; ring
-    · rw [if_neg htop, if_pos (show (i : ℕ) = N - 1 by omega)]
+    · rw [ite_eq_right htop, ite_eq_left (show (i : ℕ) = N - 1 by omega)]
       rw [show (i : ℕ) = N - 1 by omega, Nat.cast_sub (by omega : 1 ≤ N)]
       push_cast; ring
   · simp [hik]
@@ -307,8 +307,8 @@ theorem ccr_exact_on_bulk (j : Fin N) (hj : (j : ℕ) ≠ N - 1) :
     funext i
     rw [Matrix.mulVec_diagonal, Pi.zero_apply, Pi.single_apply]
     by_cases h : i = j
-    · subst h; rw [if_neg hj, zero_mul]
-    · rw [if_neg h, mul_zero]
+    · subst h; rw [ite_eq_right hj, zero_mul]
+    · rw [ite_eq_right h, mul_zero]
   rw [htop, smul_zero, sub_zero]
 
 end CSD.CV

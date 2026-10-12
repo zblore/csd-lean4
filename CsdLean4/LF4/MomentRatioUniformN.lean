@@ -121,10 +121,10 @@ theorem psiMat_col_sum (S : ℝ) (t : Fin M → ℝ) (j : Fin (M + 1)) :
   simp only [psiMat, Matrix.of_apply, Fin.lastCases_castSucc, Fin.lastCases_last]
   induction j using Fin.lastCases with
   | last =>
-    simp only [Fin.lastCases_last, if_true]
+    simp only [Fin.lastCases_last, ite_true]
     abel
   | cast a =>
-    simp only [Fin.lastCases_castSucc, if_neg (Fin.castSucc_ne_last a)]
+    simp only [Fin.lastCases_castSucc, ite_eq_right (Fin.castSucc_ne_last a)]
     rw [Finset.sum_eq_single a]
     · simp
     · intro b _ hb; simp [hb]
@@ -158,7 +158,7 @@ theorem psiMat_det (S : ℝ) (t : Fin M → ℝ) : (psiMat S t).det = S ^ M := b
   have htri : ∀ i, ¬ (i ≠ Fin.last M) → ∀ j, (j ≠ Fin.last M) → B i j = 0 := by
     intro i hi j hj
     rw [not_not] at hi; subst hi
-    rw [hBlast, if_neg hj]
+    rw [hBlast, ite_eq_right hj]
   rw [hdet_eq, B.twoBlockTriangular_det (· ≠ Fin.last M) htri]
   -- Corner block (i = last): 1×1 with entry B last last = 1.
   have hcorner : (B.toSquareBlockProp (fun i => ¬ (i ≠ Fin.last M))).det = 1 := by
@@ -169,7 +169,7 @@ theorem psiMat_det (S : ℝ) (t : Fin M → ℝ) : (psiMat S t).det = S ^ M := b
     obtain ⟨k, hk⟩ := (Classical.arbitrary {i : Fin (M + 1) // ¬ (i ≠ Fin.last M)})
     rw [not_not] at hk
     show B k k = 1
-    rw [hk, hBlast, if_pos rfl]
+    rw [hk, hBlast, ite_eq_left rfl]
   -- Big block (i ≠ last): `S·I` on the `M` `castSucc` indices, det `S^M`.
   have hbig : (B.toSquareBlockProp (· ≠ Fin.last M)).det = S ^ M := by
     have hblock : B.toSquareBlockProp (· ≠ Fin.last M)
@@ -182,7 +182,7 @@ theorem psiMat_det (S : ℝ) (t : Fin M → ℝ) : (psiMat S t).det = S ^ M := b
       simp only [hA, psiMat, Matrix.of_apply, Fin.lastCases_castSucc, Matrix.diagonal_apply]
       by_cases h : a' = b'
       · subst h; simp
-      · rw [if_neg h, if_neg]; exact fun hc => h (by simpa using Subtype.ext_iff.mp hc)
+      · rw [ite_eq_right h, ite_eq_right]; exact fun hc => h (by simpa using Subtype.ext_iff.mp hc)
     rw [hblock, Matrix.det_diagonal, Finset.prod_const, Finset.card_univ,
       Fintype.card_subtype_compl, Fintype.card_fin, Fintype.card_subtype_eq, Nat.add_sub_cancel]
   rw [hbig, hcorner, mul_one]
@@ -449,13 +449,13 @@ theorem ratioSqNorm_map_expHalf_pi :
     funext s
     rw [Set.indicator_apply]
     by_cases hs : s ∈ posQuadrant
-    · rw [if_pos hs]
-    · rw [if_neg hs, hF]
+    · rw [ite_eq_left hs]
+    · rw [ite_eq_right hs, hF]
       simp only [posQuadrant, Set.mem_ofPred_eq, not_forall, not_lt] at hs
       obtain ⟨i, hi⟩ := hs
       refine mul_eq_zero.mpr (Or.inl ?_)
       refine Finset.prod_eq_zero (Finset.mem_univ i) ?_
-      rw [dExp, if_neg (not_lt.mpr hi), ENNReal.ofReal_zero]
+      rw [dExp, ite_eq_right (not_lt.mpr hi), ENNReal.ofReal_zero]
   -- Pointwise integrand after the substitution, on `domainN`.
   have hcongr : ∀ y ∈ domainN (M := M),
       ENNReal.ofReal |(psiFDerivN y).det| * F (PsiN y)
@@ -480,7 +480,7 @@ theorem ratioSqNorm_map_expHalf_pi :
     have hprodPsi : (∏ i, dExp (PsiN y i))
         = ENNReal.ofReal ((1 / 2) ^ (M + 1) * Real.exp (-(y (Fin.last M)) / 2)) := by
       have hpos : ∀ i, dExp (PsiN y i) = ENNReal.ofReal ((1 / 2) * Real.exp (-(PsiN y i) / 2)) :=
-        fun i => by rw [dExp, if_pos (hposPsi i)]
+        fun i => by rw [dExp, ite_eq_left (hposPsi i)]
       simp_rw [hpos]
       rw [← ENNReal.ofReal_prod_of_nonneg (fun i _ => by positivity),
         Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ, Fintype.card_fin,

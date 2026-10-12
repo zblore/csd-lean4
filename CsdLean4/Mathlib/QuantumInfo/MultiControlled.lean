@@ -89,17 +89,17 @@ theorem swapMat_apply {u v : Fin m → Fin 2} (huv : u ≠ v) (k l : Fin m → F
   by_cases hl : l = u
   · rw [hl, Equiv.swap_apply_left]
     by_cases hk : k = u
-    · rw [hk, twoLevelMat_apply_fst_fst, if_neg huv]
+    · rw [hk, twoLevelMat_apply_fst_fst, ite_eq_right huv]
     · by_cases hk' : k = v
-      · rw [hk', twoLevelMat_apply_snd_fst huv, if_pos rfl]
-      · rw [twoLevelMat_apply_of_row_ne hk hk', if_neg hk, if_neg hk']
+      · rw [hk', twoLevelMat_apply_snd_fst huv, ite_eq_left rfl]
+      · rw [twoLevelMat_apply_of_row_ne hk hk', ite_eq_right hk, ite_eq_right hk']
   · by_cases hl' : l = v
     · rw [hl', Equiv.swap_apply_right]
       by_cases hk : k = u
-      · rw [hk, twoLevelMat_apply_fst_snd huv, if_pos rfl]
+      · rw [hk, twoLevelMat_apply_fst_snd huv, ite_eq_left rfl]
       · by_cases hk' : k = v
-        · rw [hk', twoLevelMat_apply_snd_snd huv, if_neg (Ne.symm huv)]
-        · rw [twoLevelMat_apply_of_row_ne hk hk', if_neg hk', if_neg hk]
+        · rw [hk', twoLevelMat_apply_snd_snd huv, ite_eq_right (Ne.symm huv)]
+        · rw [twoLevelMat_apply_of_row_ne hk hk', ite_eq_right hk', ite_eq_right hk]
     · rw [Equiv.swap_apply_of_ne_of_ne hl hl', twoLevelMat_apply_of_col_ne hl hl']
 
 /-- ★ **Conjugating by a transposition relabels the matrix.** -/
@@ -109,17 +109,17 @@ theorem swapMat_conj_apply {u v : Fin m → Fin 2} (huv : u ≠ v)
   have hinner : ∀ p : Fin m → Fin 2, (swapMat u v * V) k p = V (Equiv.swap u v k) p := by
     intro p
     rw [Matrix.mul_apply, Finset.sum_eq_single (Equiv.swap u v k)]
-    · rw [swapMat_apply huv, Equiv.swap_apply_self, if_pos rfl, one_mul]
+    · rw [swapMat_apply huv, Equiv.swap_apply_self, ite_eq_left rfl, one_mul]
     · intro q _ hq
-      rw [swapMat_apply huv, if_neg ?_, zero_mul]
+      rw [swapMat_apply huv, ite_eq_right ?_, zero_mul]
       intro hkq
       exact hq (by rw [hkq, Equiv.swap_apply_self])
     · intro hq
       exact absurd (Finset.mem_univ _) hq
   rw [Matrix.mul_apply, Finset.sum_eq_single (Equiv.swap u v l)]
-  · rw [hinner, swapMat_apply huv, if_pos rfl, mul_one]
+  · rw [hinner, swapMat_apply huv, ite_eq_left rfl, mul_one]
   · intro q _ hq
-    rw [swapMat_apply huv, if_neg hq, mul_zero]
+    rw [swapMat_apply huv, ite_eq_right hq, mul_zero]
   · intro hq
     exact absurd (Finset.mem_univ _) hq
 
@@ -149,12 +149,12 @@ theorem idOutside_swapMat_conj {u u' v : Fin m → Fin 2} (huu' : u ≠ u')
   rcases hkl with hk | hl
   · rw [hid _ _ (Or.inl (hmap k hk))]
     by_cases h : k = l
-    · rw [h, if_pos rfl, if_pos rfl]
-    · rw [if_neg h, if_neg (fun hc => h (hswap.mp hc))]
+    · rw [h, ite_eq_left rfl, ite_eq_left rfl]
+    · rw [ite_eq_right h, ite_eq_right (fun hc => h (hswap.mp hc))]
   · rw [hid _ _ (Or.inr (hmap l hl))]
     by_cases h : k = l
-    · rw [h, if_pos rfl, if_pos rfl]
-    · rw [if_neg h, if_neg (fun hc => h (hswap.mp hc))]
+    · rw [h, ite_eq_left rfl, ite_eq_left rfl]
+    · rw [ite_eq_right h, ite_eq_right (fun hc => h (hswap.mp hc))]
 
 /-! ### Adjacent labels -/
 
@@ -230,7 +230,7 @@ theorem ctrlGate_eq_twoLevelMat (j : Fin m) (pat : Fin m → Fin 2) (a b c d : �
   · by_cases hl : ∀ i, i ≠ j → l i = pat i
     · rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (k j) with hkj | hkj <;>
         rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (l j) with hlj | hlj <;>
-        rw [ctrlGate, if_pos ⟨hk, hl⟩, blockEntry] <;>
+        rw [ctrlGate, ite_eq_left ⟨hk, hl⟩, blockEntry] <;>
         rw [show k = Function.update pat j (k j) from eq_update_iff.mpr ⟨hk, rfl⟩,
           show l = Function.update pat j (l j) from eq_update_iff.mpr ⟨hl, rfl⟩] <;>
         rw [hkj, hlj] <;>
@@ -238,10 +238,10 @@ theorem ctrlGate_eq_twoLevelMat (j : Fin m) (pat : Fin m → Fin 2) (a b c d : �
           twoLevelMat_apply_snd_snd update_ne_update]
     · have hl0 : l ≠ Function.update pat j 0 := fun h => hl (eq_update_iff.mp h).1
       have hl1 : l ≠ Function.update pat j 1 := fun h => hl (eq_update_iff.mp h).1
-      rw [ctrlGate, if_neg (by tauto), twoLevelMat_apply_of_col_ne hl0 hl1]
+      rw [ctrlGate, ite_eq_right (by tauto), twoLevelMat_apply_of_col_ne hl0 hl1]
   · have hk0 : k ≠ Function.update pat j 0 := fun h => hk (eq_update_iff.mp h).1
     have hk1 : k ≠ Function.update pat j 1 := fun h => hk (eq_update_iff.mp h).1
-    rw [ctrlGate, if_neg (by tauto), twoLevelMat_apply_of_row_ne hk0 hk1]
+    rw [ctrlGate, ite_eq_right (by tauto), twoLevelMat_apply_of_row_ne hk0 hk1]
 
 theorem ctrlGate_mem_unitaryGroup (j : Fin m) (pat : Fin m → Fin 2) {a b c d : ℂ}
     (h1 : starRingEnd ℂ a * a + starRingEnd ℂ c * c = 1)

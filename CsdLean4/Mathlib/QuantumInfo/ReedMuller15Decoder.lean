@@ -148,8 +148,8 @@ theorem cnotGate'_apply {m : ℕ} {a b : Fin m} (hab : a ≠ b) (k l : Fin m →
         (fun i hi => by rw [Finset.mem_singleton.mp hi]; exact hctrl), blockEntry_flip]
       have hcond : (l b = k b + 1) ↔ (l = cnotAct a b k) := by rw [hiff, hctrl]
       by_cases h : l b = k b + 1
-      · rw [if_pos h, if_pos (hcond.mp h)]
-      · rw [if_neg h, if_neg (fun hk => h (hcond.mpr hk))]
+      · rw [ite_eq_left h, ite_eq_left (hcond.mp h)]
+      · rw [ite_eq_right h, ite_eq_right (fun hk => h (hcond.mpr hk))]
     · have hka : k a = 0 := by
         rcases (by decide : ∀ v : Fin 2, v = 0 ∨ v = 1) (k a) with h | h
         · exact h
@@ -160,9 +160,9 @@ theorem cnotGate'_apply {m : ℕ} {a b : Fin m} (hab : a ≠ b) (k l : Fin m →
         rw [hiff, hka, add_zero]
         exact eq_comm
       by_cases h : k b = l b
-      · rw [if_pos h, if_pos (hcond.mp h)]
-      · rw [if_neg h, if_neg (fun hk => h (hcond.mpr hk))]
-  · rw [cnotGate', ctrlSet_apply_of_not_agree hag, if_neg]
+      · rw [ite_eq_left h, ite_eq_left (hcond.mp h)]
+      · rw [ite_eq_right h, ite_eq_right (fun hk => h (hcond.mpr hk))]
+  · rw [cnotGate', ctrlSet_apply_of_not_agree hag, ite_eq_right]
     intro h
     exact hag fun i hi => by rw [h, cnotAct_apply_of_ne hi]
 
@@ -172,9 +172,9 @@ theorem cnotGate'_mulVec_apply {m : ℕ} {a b : Fin m} (hab : a ≠ b)
     (cnotGate' a b *ᵥ v) k = v (cnotAct a b k) := by
   simp only [Matrix.mulVec, dotProduct]
   rw [Finset.sum_eq_single (cnotAct a b k)]
-  · rw [cnotGate'_apply hab, if_pos rfl, one_mul]
+  · rw [cnotGate'_apply hab, ite_eq_left rfl, one_mul]
   · intro l _ hl
-    rw [cnotGate'_apply hab, if_neg hl, zero_mul]
+    rw [cnotGate'_apply hab, ite_eq_right hl, zero_mul]
   · intro h
     exact absurd (Finset.mem_univ _) h
 
@@ -277,11 +277,11 @@ def decodeLabel (x : Fin 15 → Fin 2) (j : Fin 15) : Fin 2 :=
   if j = 0 then logicalBit x else x j + logicalBit x
 
 theorem decodeLabel_zero (x : Fin 15 → Fin 2) : decodeLabel x 0 = logicalBit x := by
-  rw [decodeLabel, if_pos rfl]
+  rw [decodeLabel, ite_eq_left rfl]
 
 theorem decodeLabel_of_ne {j : Fin 15} (hj : j ≠ 0) (x : Fin 15 → Fin 2) :
     decodeLabel x j = x j + logicalBit x := by
-  rw [decodeLabel, if_neg hj]
+  rw [decodeLabel, ite_eq_right hj]
 
 /-- The inverse label map: wire `0` is added back to the others, and the readout of the *result*
 lands on wire `0`. -/
@@ -289,11 +289,11 @@ def decodeLabelInv (y : Fin 15 → Fin 2) (j : Fin 15) : Fin 2 :=
   if j = 0 then logicalBit y else y j + y 0
 
 theorem decodeLabelInv_zero (y : Fin 15 → Fin 2) : decodeLabelInv y 0 = logicalBit y := by
-  rw [decodeLabelInv, if_pos rfl]
+  rw [decodeLabelInv, ite_eq_left rfl]
 
 theorem decodeLabelInv_of_ne {j : Fin 15} (hj : j ≠ 0) (y : Fin 15 → Fin 2) :
     decodeLabelInv y j = y j + y 0 := by
-  rw [decodeLabelInv, if_neg hj]
+  rw [decodeLabelInv, ite_eq_right hj]
 
 theorem logicalBit_decodeLabel (x : Fin 15 → Fin 2) : logicalBit (decodeLabel x) = x 0 := by
   rw [logicalBit, decodeLabel_zero, decodeLabel_of_ne (by decide : (1 : Fin 15) ≠ 0),
@@ -384,21 +384,21 @@ theorem cnotListPull_clean : ∀ (l : List (Fin 15)), (0 : Fin 15) ∉ l → l.N
   induction l with
   | nil =>
       intro _ _ y j
-      rw [List.map_nil, cnotListPull_nil, if_neg List.not_mem_nil]
+      rw [List.map_nil, cnotListPull_nil, ite_eq_right List.not_mem_nil]
   | cons t l ih =>
       intro h0 hnd y j
       have htl : t ∉ l := (List.nodup_cons.mp hnd).1
       have hih := ih (fun h => h0 (List.mem_cons_of_mem _ h)) (List.nodup_cons.mp hnd).2 y
       rw [List.map_cons, cnotListPull_cons]
       have hz0 : cnotListPull (l.map fun t => ((0 : Fin 15), t)) y 0 = y 0 := by
-        rw [hih 0, if_neg (fun h => h0 (List.mem_cons_of_mem _ h))]
+        rw [hih 0, ite_eq_right (fun h => h0 (List.mem_cons_of_mem _ h))]
       by_cases hj : j = t
       · subst hj
-        rw [cnotAct_apply_self, hz0, hih j, if_neg htl, if_pos (List.mem_cons_self ..)]
+        rw [cnotAct_apply_self, hz0, hih j, ite_eq_right htl, ite_eq_left (List.mem_cons_self ..)]
       · rw [cnotAct_apply_of_ne hj, hih j]
         by_cases hjl : j ∈ l
-        · rw [if_pos hjl, if_pos (List.mem_cons_of_mem _ hjl)]
-        · rw [if_neg hjl, if_neg (fun h => by
+        · rw [ite_eq_left hjl, ite_eq_left (List.mem_cons_of_mem _ hjl)]
+        · rw [ite_eq_right hjl, ite_eq_right (fun h => by
             rcases List.mem_cons.mp h with h1 | h2
             · exact hj h1
             · exact hjl h2)]
@@ -413,16 +413,16 @@ theorem cnotListPull_decoderList (y : Fin 15 → Fin 2) :
   · subst hj
     rw [cnotAct_apply_self, cnotAct_apply_self,
       cnotAct_apply_of_ne (by decide : (1 : Fin 15) ≠ 0), hclean 0, hclean 1, hclean 2,
-      if_neg (by decide : (0 : Fin 15) ∉ cleanTargets),
-      if_pos (by decide : (1 : Fin 15) ∈ cleanTargets),
-      if_pos (by decide : (2 : Fin 15) ∈ cleanTargets), decodeLabelInv_zero, logicalBit]
+      ite_eq_right (by decide : (0 : Fin 15) ∉ cleanTargets),
+      ite_eq_left (by decide : (1 : Fin 15) ∈ cleanTargets),
+      ite_eq_left (by decide : (2 : Fin 15) ∈ cleanTargets), decodeLabelInv_zero, logicalBit]
     generalize y 0 = p
     generalize y 1 = q
     generalize y 2 = r
     revert p q r
     decide
   · rw [cnotAct_apply_of_ne hj, cnotAct_apply_of_ne hj, hclean j,
-      if_pos (mem_cleanTargets hj), decodeLabelInv_of_ne hj]
+      ite_eq_left (mem_cleanTargets hj), decodeLabelInv_of_ne hj]
 
 /-- ★★ **Every decoded amplitude.** -/
 theorem decoderCircuit_mulVec_apply (v : (Fin 15 → Fin 2) → ℂ) (z : Fin 15 → Fin 2) :
@@ -468,7 +468,7 @@ theorem logical1_apply_of_logicalBit_zero {x : Fin 15 → Fin 2} (hx : logicalBi
     logical1 x = 0 := by
   rw [logical1_apply]
   refine Finset.sum_eq_zero fun a _ => ?_
-  rw [if_neg]
+  rw [ite_eq_right]
   intro h
   rw [h, logicalBit_add_one, logicalBit_codeword] at hx
   exact absurd hx (by decide)
@@ -494,9 +494,9 @@ theorem logical1_apply_add_one (x : Fin 15 → Fin 2) : logical1 (x + 1) = logic
 theorem logical0_apply_zero : logical0 (0 : Fin 15 → Fin 2) = 1 := by
   have hz : codeword (0 : Fin 4 → Fin 2) = (0 : Fin 15 → Fin 2) := by decide
   rw [logical0_apply, Finset.sum_eq_single (0 : Fin 4 → Fin 2)]
-  · rw [if_pos hz.symm]
+  · rw [ite_eq_left hz.symm]
   · intro a _ ha
-    rw [if_neg]
+    rw [ite_eq_right]
     intro h
     exact ha (codeword_injective (h.symm.trans hz.symm))
   · intro h
@@ -565,13 +565,13 @@ theorem decoderCircuit_logical_apply_zero (lam : ℂ) :
 
 theorem outQubit_apply_zero (e : Fin 15 → Fin 2) : outQubit e (fun _ => 0) = 1 := by
   rw [outQubit, PiLp.add_apply, PiLp.smul_apply, smul_eq_mul, basisState_apply, basisState_apply,
-    if_pos rfl, if_neg (by decide : ¬((fun _ => (0 : Fin 2)) = (fun _ => (1 : Fin 2)))),
+    ite_eq_left rfl, ite_eq_right (by decide : ¬((fun _ => (0 : Fin 2)) = (fun _ => (1 : Fin 2)))),
     mul_zero, add_zero]
 
 theorem outQubit_apply_one (e : Fin 15 → Fin 2) :
     outQubit e (fun _ => 1) = signChar (parity e) * tPhaseInv := by
   rw [outQubit, PiLp.add_apply, PiLp.smul_apply, smul_eq_mul, basisState_apply, basisState_apply,
-    if_pos rfl, if_neg (by decide : ¬((fun _ => (1 : Fin 2)) = (fun _ => (0 : Fin 2)))),
+    ite_eq_left rfl, ite_eq_right (by decide : ¬((fun _ => (1 : Fin 2)) = (fun _ => (0 : Fin 2)))),
     mul_one, zero_add]
 
 /-- ★★★ **The decoder outputs `outQubit e` on wire `0`.** For an undetected pattern `e`, the decoded

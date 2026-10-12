@@ -79,9 +79,9 @@ lemma inner_unitary_flip (a : EuclideanSpace ℂ (Fin 2)) (ha : ‖a‖ = 1)
 lemma rsign_neg (x : ℝ) : rsign (-x) = - rsign x := by
   unfold rsign
   rcases lt_trichotomy x 0 with h | h | h
-  · rw [if_pos (by linarith : (0:ℝ) < -x), if_neg (by linarith : ¬ (0:ℝ) < x), if_pos h]; ring
+  · rw [ite_eq_left (by linarith : (0:ℝ) < -x), ite_eq_right (by linarith : ¬ (0:ℝ) < x), ite_eq_left h]; ring
   · subst h; simp
-  · rw [if_neg (by linarith : ¬ (0:ℝ) < -x), if_pos (by linarith : -x < 0), if_pos h]
+  · rw [ite_eq_right (by linarith : ¬ (0:ℝ) < -x), ite_eq_left (by linarith : -x < 0), ite_eq_left h]
 
 /-- The Fubini–Study measure is independent of the base point (uniqueness of the invariant law). -/
 lemma fubiniStudy_eq (p₀ p₁ : CPN 2) : fsMeasure p₀ = fsMeasure p₁ :=

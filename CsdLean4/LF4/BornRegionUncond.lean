@@ -140,16 +140,16 @@ theorem replaceMap_image_subset_of_closedSimplex (b : Fin M → ℝ) (i : Fin M)
       refine Finset.sum_congr rfl (fun k _ => ?_)
       by_cases hk : k = i
       · subst hk; simp
-      · rw [if_neg hk, if_neg (Ne.symm hk), add_zero]
+      · rw [ite_eq_right hk, ite_eq_right (Ne.symm hk), add_zero]
     rw [Finset.sum_add_distrib, Finset.sum_ite_eq Finset.univ i t,
-      if_pos (Finset.mem_univ i)] at h1
+      ite_eq_left (Finset.mem_univ i)] at h1
     linarith
   refine ⟨fun k => ?_, ?_⟩
   · rw [replaceMap_apply]
     by_cases hk : k = i
-    · rw [if_pos hk, add_zero, hk]
+    · rw [ite_eq_left hk, add_zero, hk]
       exact mul_pos hbi (htpos i)
-    · rw [if_neg hk]
+    · rw [ite_eq_right hk]
       have hbk := mul_nonneg (hb0 k) (le_of_lt (htpos i))
       linarith [htpos k]
   · rw [Finset.sum_congr rfl (fun k _ => replaceMap_apply b i t k), Finset.sum_add_distrib,

@@ -136,10 +136,10 @@ lemma maxEntangled_normSq_eq_weight (d : ℕ) (w : Fin d × Fin d) :
   rw [maxEntangled_apply]
   unfold medWeight
   by_cases h : w.1 = w.2
-  · rw [if_pos h, if_pos h, norm_inv, Complex.norm_real, Real.norm_eq_abs,
+  · rw [ite_eq_left h, ite_eq_left h, norm_inv, Complex.norm_real, Real.norm_eq_abs,
       abs_of_nonneg (Real.sqrt_nonneg _), inv_pow,
       Real.sq_sqrt (by positivity : (0 : ℝ) ≤ (d : ℝ))]
-  · rw [if_neg h, if_neg h, norm_zero]; norm_num
+  · rw [ite_eq_right h, ite_eq_right h, norm_zero]; norm_num
 
 /-- The maximally-entangled Born weights sum to `1` (the `d` diagonal cells, each
 `1/d`; the off-diagonal cells `0`). The prepared state is normalised. -/
@@ -194,15 +194,15 @@ lemma medWeight_sector (d : ℕ) (hd : 2 ≤ d) (i j : Fin 2) :
       = if i = j then (d : ℝ)⁻¹ else 0 := by
   unfold medWeight
   by_cases h : i = j
-  · rw [if_pos h, if_pos (by rw [h])]
-  · rw [if_neg h, if_neg (fun hh => h (sectorEmbed_injective d hd hh))]
+  · rw [ite_eq_left h, ite_eq_left (by rw [h])]
+  · rw [ite_eq_right h, ite_eq_right (fun hh => h (sectorEmbed_injective d hd hh))]
 
 /-- **The 2x2 sector diagonal weight.** On the `{0,1}×{0,1}` Schmidt block the
 diagonal Born weight is `1/d` (the two Schmidt vectors `(0,0)`, `(1,1)` are the
 `Φ⁺` support). -/
 lemma maxEntangled_sector_diagonal (d : ℕ) (hd : 2 ≤ d) (i : Fin 2) :
     medWeight d (sectorEmbed d hd i, sectorEmbed d hd i) = (d : ℝ)⁻¹ := by
-  rw [medWeight_sector d hd i i, if_pos rfl]
+  rw [medWeight_sector d hd i i, ite_eq_left rfl]
 
 /-- **The 2x2 sector off-diagonal weight.** Off the diagonal the sector Born
 weight is `0`; the embedding is injective, so distinct sector indices map to
@@ -210,7 +210,7 @@ distinct system indices. -/
 lemma maxEntangled_sector_offdiagonal (d : ℕ) (hd : 2 ≤ d) (i j : Fin 2)
     (hij : i ≠ j) :
     medWeight d (sectorEmbed d hd i, sectorEmbed d hd j) = 0 := by
-  rw [medWeight_sector d hd i j, if_neg hij]
+  rw [medWeight_sector d hd i j, ite_eq_right hij]
 
 /-- **The 2x2 sector diagonal Born-weight marginal is uniform (`1/d`).** The
 sector diagonal marginal `∑_j medWeight d (sectorEmbed i, sectorEmbed j) = 1/d` is
@@ -257,10 +257,10 @@ the diagonal (the `(0,0)`, `(1,1)` support), `0` off it. -/
 lemma phiPlus_apply_sector (i j : Fin 2) :
     phiPlus (i, j) = if i = j then ((Real.sqrt 2 : ℂ)⁻¹) else 0 := by
   fin_cases i <;> fin_cases j
-  · rw [if_pos rfl]; exact phiPlus_apply_00
-  · rw [if_neg (by decide)]; exact phiPlus_apply_01
-  · rw [if_neg (by decide)]; exact phiPlus_apply_10
-  · rw [if_pos rfl]; exact phiPlus_apply_11
+  · rw [ite_eq_left rfl]; exact phiPlus_apply_00
+  · rw [ite_eq_right (by decide)]; exact phiPlus_apply_01
+  · rw [ite_eq_right (by decide)]; exact phiPlus_apply_10
+  · rw [ite_eq_left rfl]; exact phiPlus_apply_11
 
 /-- Expectation `⟨Φ⁺ | M | Φ⁺⟩` for a `(Fin 2 × Fin 2)`-indexed matrix `M`. -/
 noncomputable def phiPlusExpectation (M : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) : ℂ :=
@@ -334,8 +334,8 @@ lemma maxEntangled_sector_apply (d : ℕ) (hd : 2 ≤ d) (i j : Fin 2) :
       = if i = j then ((Real.sqrt d : ℂ))⁻¹ else 0 := by
   rw [maxEntangled_apply]
   by_cases h : i = j
-  · rw [if_pos h, if_pos (by rw [h])]
-  · rw [if_neg h, if_neg (fun hh => h (sectorEmbed_injective d hd hh))]
+  · rw [ite_eq_left h, ite_eq_left (by rw [h])]
+  · rw [ite_eq_right h, ite_eq_right (fun hh => h (sectorEmbed_injective d hd hh))]
 
 /-- **The 2x2 Schmidt sector IS the Bell `Φ⁺` state** (up to the positive real
 scalar `√2/√d`): `maxEntangledSector d = (√2/√d) • Φ⁺`. This is the derived,
@@ -364,8 +364,8 @@ theorem maxEntangledSector_eq_phiPlus (d : ℕ) (hd : 2 ≤ d) :
   rw [maxEntangled_sector_apply d hd i j, PiLp.smul_apply, phiPlus_apply_sector,
       smul_eq_mul]
   by_cases h : i = j
-  · rw [if_pos h, if_pos h, hscalar]
-  · rw [if_neg h, if_neg h, mul_zero]
+  · rw [ite_eq_left h, ite_eq_left h, hscalar]
+  · rw [ite_eq_right h, ite_eq_right h, mul_zero]
 
 /-! ### The reindexed (nudged) maximally-entangled state -/
 

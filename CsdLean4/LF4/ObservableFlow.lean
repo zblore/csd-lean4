@@ -156,12 +156,12 @@ noncomputable def obsTWitness : ℝ := Real.pi
 
 @[simp] lemma obsPhase_obsLamWitness_zero (hN : 1 < N) :
     obsPhase (obsLamWitness hN) obsTWitness (obsIdx0 hN) = 1 := by
-  have : obsLamWitness hN (obsIdx0 hN) = 0 := if_neg (obsIdx0_ne_obsIdx1 hN)
+  have : obsLamWitness hN (obsIdx0 hN) = 0 := ite_eq_right (obsIdx0_ne_obsIdx1 hN)
   simp only [obsPhase, this, mul_zero, Complex.ofReal_zero, mul_zero, Complex.exp_zero]
 
 @[simp] lemma obsPhase_obsLamWitness_one (hN : 1 < N) :
     obsPhase (obsLamWitness hN) obsTWitness (obsIdx1 hN) = -1 := by
-  have hl : obsLamWitness hN (obsIdx1 hN) = 1 := if_pos rfl
+  have hl : obsLamWitness hN (obsIdx1 hN) = 1 := ite_eq_left rfl
   simp only [obsPhase, obsTWitness, hl, mul_one]
   rw [show (Complex.I * ((Real.pi : ℝ) : ℂ)) = (Real.pi : ℂ) * Complex.I by
         ring,
@@ -174,12 +174,12 @@ noncomputable def obsWitnessVec (hN : 1 < N) : EuclideanSpace ℂ (Fin N) :=
 
 lemma obsWitnessVec_apply_zero (hN : 1 < N) : (obsWitnessVec hN) (obsIdx0 hN) = 1 := by
   simp only [obsWitnessVec, PiLp.add_apply, PiLp.single_apply,
-    if_neg (obsIdx0_ne_obsIdx1 hN), add_zero, if_true]
+    ite_eq_right (obsIdx0_ne_obsIdx1 hN), add_zero, ite_true]
 
 lemma obsWitnessVec_apply_one (hN : 1 < N) :
     (obsWitnessVec hN) (obsIdx1 hN) = 1 := by
   simp only [obsWitnessVec, PiLp.add_apply, PiLp.single_apply,
-    if_neg (obsIdx0_ne_obsIdx1 hN).symm, zero_add, if_true]
+    ite_eq_right (obsIdx0_ne_obsIdx1 hN).symm, zero_add, ite_true]
 
 lemma obsWitnessVec_ne_zero (hN : 1 < N) : obsWitnessVec hN ≠ 0 := fun h => by
   have := obsWitnessVec_apply_zero hN

@@ -7,7 +7,6 @@ module
 
 public import Mathlib.MeasureTheory.Measure.FiniteMeasure
 public import Mathlib.Dynamics.Ergodic.MeasurePreserving
-public import Mathlib.MeasureTheory.Measure.MeasureSpace
 public import CsdLean4.SigmaLayer.ConstraintSurface
 
 /-!

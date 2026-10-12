@@ -569,7 +569,7 @@ lemma bellVec_ne_zero (x₀ x₁ : FieldConfig K₁ N) (y₀ y₁ : FieldConfig 
     bellVec x₀ x₁ y₀ y₁ ≠ 0 := by
   intro h0
   have h := euclid_congrFun h0 (configSplit.symm (x₀, y₀))
-  rw [bellVec_apply, Equiv.apply_symm_apply, if_pos (Or.inl rfl),
+  rw [bellVec_apply, Equiv.apply_symm_apply, ite_eq_left (Or.inl rfl),
     PiLp.zero_apply] at h
   exact one_ne_zero h
 
@@ -601,13 +601,13 @@ theorem bell_not_join {x₀ x₁ : FieldConfig K₁ N} (hx : x₀ ≠ x₁)
     exact h.symm
   have h00 : u x₀ * v y₀ = a := by
     have h := hread (x₀, y₀)
-    rwa [if_pos (Or.inl rfl), mul_one] at h
+    rwa [ite_eq_left (Or.inl rfl), mul_one] at h
   have h11 : u x₁ * v y₁ = a := by
     have h := hread (x₁, y₁)
-    rwa [if_pos (Or.inr rfl), mul_one] at h
+    rwa [ite_eq_left (Or.inr rfl), mul_one] at h
   have h01 : u x₀ * v y₁ = 0 := by
     have h := hread (x₀, y₁)
-    rwa [if_neg (by
+    rwa [ite_eq_right (by
       rintro (h' | h')
       · exact hy (congrArg Prod.snd h').symm
       · exact hx (congrArg Prod.fst h')), mul_zero] at h

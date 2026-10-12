@@ -191,7 +191,7 @@ lemma sum_workValues_workDist_mul (hH₀ : H₀.IsHermitian) (hH₁ : H₁.IsHer
   refine Finset.sum_congr rfl fun q _ => ?_
   rw [Finset.sum_ite_eq]
   simp only [workValues, Finset.mem_image, Finset.mem_univ, true_and, exists_apply_eq_apply,
-    if_true]
+    ite_true]
 
 /-- The work distribution is a probability law on the work values. -/
 lemma sum_workDist [Nonempty n] (hH₀ : H₀.IsHermitian) (hH₁ : H₁.IsHermitian)

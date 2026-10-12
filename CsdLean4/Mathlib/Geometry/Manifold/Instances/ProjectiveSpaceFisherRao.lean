@@ -421,8 +421,8 @@ theorem mem_horizontalSpace_iff (x : ℙ ℂ (Ambient n)) (u : Fin n → ℂ) :
       intro j'
       by_cases hjj : j' = j
       · subst hjj; simp
-      · rw [Pi.single_eq_of_ne (fun h => hjj (Fin.succAbove_right_injective h)), if_neg hjj]
-    simp only [hθ, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true, hS,
+      · rw [Pi.single_eq_of_ne (fun h => hjj (Fin.succAbove_right_injective h)), ite_eq_right hjj]
+    simp only [hθ, ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true, hS,
       mul_zero, sub_zero, mul_eq_zero, inv_eq_zero, hD, OfNat.ofNat_ne_zero, false_or] at hj
     exact hj
   · intro h θ

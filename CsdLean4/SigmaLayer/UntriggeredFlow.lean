@@ -205,7 +205,7 @@ theorem untriggeredCurve_snd_k (c : Fin n → ℝ) (k : Fin n) (hck : c k = 0) (
 theorem untriggeredCurve_fst_ne (c : Fin n → ℝ) (k : Fin n) (z₀ : Chart n) (t : ℝ)
     {j : Fin n} (hj : j ≠ k) : (untriggeredCurve c k z₀ t).1 j = z₀.1 j := by
   show (if j = k then z₀.1 k + t * (∑ i, c i * z₀.1 i) else z₀.1 j) = z₀.1 j
-  rw [if_neg hj]
+  rw [ite_eq_right hj]
 
 /-- The coupling's value is conserved along the curve — the reason the system is affine. -/
 theorem untriggeredCurve_sum (c : Fin n → ℝ) (k : Fin n) (hck : c k = 0) (z₀ : Chart n)
@@ -231,11 +231,11 @@ theorem untriggeredCurve_isHamiltonianCurve (c : Fin n → ℝ) (k : Fin n) (hck
   · rw [hasDerivAt_pi]
     intro j
     by_cases h : j = k
-    · simp only [if_pos h]
-      rw [dMom_interactionH, if_pos h, untriggeredCurve_sum c k hck z₀ t]
+    · simp only [ite_eq_left h]
+      rw [dMom_interactionH, ite_eq_left h, untriggeredCurve_sum c k hck z₀ t]
       simpa using ((hasDerivAt_id t).mul_const (∑ i, c i * z₀.1 i)).const_add (z₀.1 k)
-    · simp only [if_neg h]
-      rw [dMom_interactionH, if_neg h]
+    · simp only [ite_eq_right h]
+      rw [dMom_interactionH, ite_eq_right h]
       exact hasDerivAt_const t (z₀.1 j)
   · rw [hasDerivAt_pi]
     intro j

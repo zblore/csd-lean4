@@ -156,7 +156,7 @@ noncomputable def fresnelS (w : ℂ) : 𝓢(ℝ, ℂ) :=
 
 theorem fresnelS_eq (hw : 0 < w.re) :
     fresnelS w = fresnelAmp w • gaussianS ((4 * (Real.pi : ℂ) * w)⁻¹) (re_fresnelParam_pos hw) :=
-  dif_pos hw
+  dite_eq_left hw
 
 /-- The Schwartz function is the kernel. -/
 theorem coe_fresnelS (hw : 0 < w.re) : ⇑(fresnelS w) = fresnelKernel w := by

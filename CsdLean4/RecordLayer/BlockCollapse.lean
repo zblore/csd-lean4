@@ -80,9 +80,9 @@ lemma blockProj_idem (b : Fin N → Fin K) (i : Fin K) (ψ : EuclideanSpace ℂ 
   intro j
   show (if b j = i then (blockProj b i ψ) j else 0) = (if b j = i then ψ j else 0)
   by_cases h : b j = i
-  · simp only [if_pos h]
+  · simp only [ite_eq_left h]
     show (if b j = i then ψ j else 0) = ψ j
-    rw [if_pos h]
+    rw [ite_eq_left h]
   · simp [h]
 
 lemma blockProj_compl (b : Fin N → Fin K) (i : Fin K) (ψ : EuclideanSpace ℂ (Fin N)) :
@@ -157,8 +157,8 @@ noncomputable def blockCollapseAux (b : Fin N → Fin K) (i : Fin K)
       then blockProj b i (v : EuclideanSpace ℂ (Fin N))
       else (v : EuclideanSpace ℂ (Fin N)), by
     by_cases h : blockProj b i (v : EuclideanSpace ℂ (Fin N)) ≠ 0
-    · rwa [if_pos h]
-    · rw [if_neg h]
+    · rwa [ite_eq_left h]
+    · rw [ite_eq_right h]
       exact v.2⟩
 
 /-- On the physical branch (nonzero block component), the representative IS the block
@@ -168,7 +168,7 @@ lemma blockCollapseAux_coe_of_ne {b : Fin N → Fin K} {i : Fin K}
     (h : blockProj b i (v : EuclideanSpace ℂ (Fin N)) ≠ 0) :
     (blockCollapseAux b i v : EuclideanSpace ℂ (Fin N))
       = blockProj b i (v : EuclideanSpace ℂ (Fin N)) := by
-  simp only [blockCollapseAux, if_pos h]
+  simp only [blockCollapseAux, ite_eq_left h]
 
 /-- On the junk branch (vanishing block component), the representative is the identity
 (interface lemma, §9.1). -/
@@ -177,7 +177,7 @@ lemma blockCollapseAux_coe_of_eq {b : Fin N → Fin K} {i : Fin K}
     (h : blockProj b i (v : EuclideanSpace ℂ (Fin N)) = 0) :
     (blockCollapseAux b i v : EuclideanSpace ℂ (Fin N))
       = (v : EuclideanSpace ℂ (Fin N)) := by
-  simp only [blockCollapseAux, if_neg (not_not_intro h)]
+  simp only [blockCollapseAux, ite_eq_right (not_not_intro h)]
 
 /-- **★ The ray-level collapse map** `[ψ] ↦ [Πᵢψ]` (identity where the block component
 vanishes), by quotient descent. This is the object any degenerate-Lüders witness must realise
@@ -192,13 +192,13 @@ noncomputable def blockCollapse (b : Fin N → Fin K) (i : Fin K) : LF4.CPN N �
       · have h' : blockProj b i (t • w) ≠ 0 := by
           rw [map_smul]
           simpa [smul_eq_zero, ht] using h
-        simp only [blockCollapseAux, Projectivization.mk'_eq_mk, if_pos h', if_pos h]
+        simp only [blockCollapseAux, Projectivization.mk'_eq_mk, ite_eq_left h', ite_eq_left h]
         rw [Projectivization.mk_eq_mk_iff']
         exact ⟨t, by rw [map_smul]⟩
       · have h' : ¬ blockProj b i (t • w) ≠ 0 := by
           rw [map_smul]
           simpa [smul_eq_zero, ht] using h
-        simp only [blockCollapseAux, Projectivization.mk'_eq_mk, if_neg h', if_neg h]
+        simp only [blockCollapseAux, Projectivization.mk'_eq_mk, ite_eq_right h', ite_eq_right h]
         rw [Projectivization.mk_eq_mk_iff']
         exact ⟨t, rfl⟩)
 
@@ -208,7 +208,7 @@ theorem blockCollapse_mk (b : Fin N → Fin K) (i : Fin K)
     blockCollapse b i (Projectivization.mk ℂ ψ hψ0)
       = Projectivization.mk ℂ (blockProj b i ψ) h := by
   rw [blockCollapse, Projectivization.lift_mk]
-  simp only [blockCollapseAux, if_pos h, Projectivization.mk'_eq_mk]
+  simp only [blockCollapseAux, ite_eq_left h, Projectivization.mk'_eq_mk]
 
 /-- Collapsed states are fixed points: idempotence on the good set. -/
 theorem blockCollapse_idem (b : Fin N → Fin K) (i : Fin K)

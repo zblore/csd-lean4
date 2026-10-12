@@ -108,7 +108,7 @@ theorem recordLaw_apply (c : Fin k → ContextField N) (p : LF4.CPN N)
 
 instance isProbabilityMeasure_recordLaw (c : Fin k → ContextField N) (p : LF4.CPN N) :
     IsProbabilityMeasure (recordLaw c p) :=
-  Measure.isProbabilityMeasure_map (measurable_recordString c).aemeasurable
+  Measure.isProbabilityMeasure_map' (measurable_recordString c).aemeasurable
 
 /-! ### A record write produces nothing -/
 
@@ -159,7 +159,7 @@ theorem isMarkovKernel_macroKernel (c : Fin k → ContextField N) (p : LF4.CPN N
   · rename_i h0
     have : IsProbabilityMeasure ((epistemicMeasure p)[|recordString c ⁻¹' {v}]) :=
       cond_isProbabilityMeasure h0
-    exact Measure.isProbabilityMeasure_map
+    exact Measure.isProbabilityMeasure_map'
       (hf := ((measurable_recordString c).comp hF).aemeasurable)
 
 /-- ★★ **The weighted step is the joint measure.** Multiplying one step of the macro dynamics by the
@@ -176,7 +176,7 @@ theorem macroStep_apply_mul (c : Fin k → ContextField N) (p : LF4.CPN N)
   by_cases h0 : epistemicMeasure p (recordString c ⁻¹' {v}) = 0
   · rw [h0, zero_mul]
     exact (measure_mono_null inter_subset_left h0).symm
-  · rw [macroStep, if_neg h0, Measure.map_apply hmF (.of_discrete),
+  · rw [macroStep, ite_eq_right h0, Measure.map_apply hmF (.of_discrete),
       cond_apply ((measurable_recordString c) (measurableSet_singleton v)), ← mul_assoc,
       ENNReal.mul_inv_cancel h0 (measure_ne_top _ _), one_mul]
 

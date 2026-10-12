@@ -78,12 +78,12 @@ lemma blockProj_mulVec (i : ι) (v : Fin N × ι → ℂ) (n : Fin N) (j : ι) :
       · intro k _ hk
         rw [Matrix.single_apply_of_col_ne _ _ (Ne.symm hk)]; ring
       · intro h; exact absurd (Finset.mem_univ j) h
-    · simp only [if_neg hj]
+    · simp only [ite_eq_right hj]
       apply Finset.sum_eq_zero
       intro k _
       rw [Matrix.single_apply_of_row_ne (Ne.symm hj)]; ring
   · intro m _ hm
-    simp only [if_neg (Ne.symm hm), zero_mul, Finset.sum_const_zero]
+    simp only [ite_eq_right (Ne.symm hm), zero_mul, Finset.sum_const_zero]
   · intro h; exact absurd (Finset.mem_univ n) h
 
 /-- **Naimark dilation of a POVM (supplied data).** An isometry

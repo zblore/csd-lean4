@@ -196,12 +196,12 @@ def entDist (I : ℝ) : ℝ≥0∞ := if I ≤ 0 then ⊤ else ENNReal.ofReal (-
 
 @[simp]
 theorem entDist_of_nonpos {I : ℝ} (h : I ≤ 0) : entDist I = ⊤ := by
-  rw [entDist, if_pos h]
+  rw [entDist, ite_eq_left h]
 
 theorem entDist_zero : entDist 0 = ⊤ := entDist_of_nonpos le_rfl
 
 theorem entDist_of_pos {I : ℝ} (h : 0 < I) : entDist I = ENNReal.ofReal (-Real.log I) := by
-  rw [entDist, if_neg (not_le.mpr h)]
+  rw [entDist, ite_eq_right (not_le.mpr h)]
 
 /-- ★ **More correlation is less distance**: the distance is antitone in the mutual information. -/
 theorem entDist_antitone {I J : ℝ} (hI : 0 < I) (hIJ : I ≤ J) : entDist J ≤ entDist I := by

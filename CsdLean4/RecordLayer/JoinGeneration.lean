@@ -96,8 +96,8 @@ theorem joinMat_conjTranspose (b : Fin N → Fin K) (i : Fin K) :
   simp only [Matrix.conjTranspose_apply, joinMat, Matrix.of_apply,
     apply_ite (star : ℂ → ℂ), star_one, star_zero]
   by_cases h : j = joinPerm b i k
-  · rw [if_pos h, if_pos (by rw [h, joinPerm_involutive b i k])]
-  · rw [if_neg h, if_neg (fun hk => h (by rw [hk, joinPerm_involutive b i j]))]
+  · rw [ite_eq_left h, ite_eq_left (by rw [h, joinPerm_involutive b i k])]
+  · rw [ite_eq_right h, ite_eq_right (fun hk => h (by rw [hk, joinPerm_involutive b i j]))]
 
 /-- The join permutation matrix is an **involution**. Being unitary and
 Hermitian, it squares to the identity. -/

@@ -153,14 +153,14 @@ protected theorem SupportedOn.mul (hA : SupportedOn S A)
       funext k
       by_cases hk : k ∈ S
       · simp [hk]
-      · simp only [hk, if_false]
+      · simp only [hk, ite_false]
         exact (he.2 k hk).symm
     · intro e he
       rw [Finset.mem_filter] at he
       funext k
       by_cases hk : k ∈ S
       · simp [hk]
-      · simp only [hk, if_false]
+      · simp only [hk, ite_false]
         exact (he.2 k hk).symm
     · intro e he
       rw [Finset.mem_filter] at he
@@ -170,7 +170,7 @@ protected theorem SupportedOn.mul (hA : SupportedOn S A)
       have hBeq : B e d = B (fun k => if k ∈ S then e k else c' k) d' :=
         hB.indep (fun k hk => by simp [hk]) h2
           (fun k hk => (he.2 k hk).trans (h3 k hk))
-          (fun k hk => by simp only [hk, if_false]; exact h4 k hk)
+          (fun k hk => by simp only [hk, ite_false]; exact h4 k hk)
       rw [hAeq, hBeq]
 
 /-! ### Monotonicity -/

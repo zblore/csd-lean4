@@ -75,8 +75,8 @@ lemma J_coord (z : Fin n → Fin 2) : J n z = ∑ x, (basisState x z) := by
 
 @[simp] lemma J_apply (z : Fin n → Fin 2) : J n z = 1 := by
   rw [J_coord, Finset.sum_eq_single z]
-  · rw [basisState_apply, if_pos rfl]
-  · intro b _ hb; rw [basisState_apply]; rw [if_neg (Ne.symm hb)]
+  · rw [basisState_apply, ite_eq_left rfl]
+  · intro b _ hb; rw [basisState_apply]; rw [ite_eq_right (Ne.symm hb)]
   · intro h; exact absurd (Finset.mem_univ _) h
 
 /-- The **uniform superposition** `|s⟩ = (1/√N) ∑ z |z⟩`. -/
@@ -176,7 +176,7 @@ lemma sum_ite_single (w : Fin n → Fin 2) (a b : ℂ) :
     intro z; split <;> ring
   simp_rw [hsplit]
   rw [Finset.sum_add_distrib, Finset.sum_const, Finset.sum_ite_eq' Finset.univ w (fun _ => a - b),
-    if_pos (Finset.mem_univ w)]
+    ite_eq_left (Finset.mem_univ w)]
   rw [Finset.card_univ, Fintype.card_fun, Fintype.card_fin, Fintype.card_fin, nsmul_eq_mul,
     Nat.cast_pow, Nat.cast_ofNat]
   ring
@@ -185,21 +185,21 @@ lemma sum_ite_single (w : Fin n → Fin 2) (a b : ℂ) :
 lemma basisState_supp (w : Fin n → Fin 2) :
     ∀ z ∉ ({w} : Finset (Fin n → Fin 2)), basisState w z = 0 := by
   intro z hz
-  rw [basisState_apply, if_neg (by simpa using hz)]
+  rw [basisState_apply, ite_eq_right (by simpa using hz)]
 
 /-- The rest state vanishes on `{w}`. -/
 lemma restState_supp (w : Fin n → Fin 2) :
     ∀ z ∈ ({w} : Finset (Fin n → Fin 2)), restState w z = 0 := by
   intro z hz
-  rw [restState_apply, if_pos (by simpa using hz), sub_self, mul_zero]
+  rw [restState_apply, ite_eq_left (by simpa using hz), sub_self, mul_zero]
 
 /-- `⟨|w⟩, |w⟩⟩ = 1`. -/
 lemma inner_basis_self (w : Fin n → Fin 2) :
     inner ℂ (basisState w : QReg n) (basisState w) = 1 := by
   rw [PiLp.inner_apply, Finset.sum_eq_single w]
-  · rw [RCLike.inner_apply', basisState_apply, if_pos rfl, map_one, one_mul]
+  · rw [RCLike.inner_apply', basisState_apply, ite_eq_left rfl, map_one, one_mul]
   · intro z _ hz
-    rw [RCLike.inner_apply', basisState_apply, if_neg hz, map_zero, zero_mul]
+    rw [RCLike.inner_apply', basisState_apply, ite_eq_right hz, map_zero, zero_mul]
   · intro h; exact absurd (Finset.mem_univ _) h
 
 /-- `⟨rest, rest⟩ = 1` for `n ≥ 1`. -/
@@ -213,9 +213,9 @@ lemma inner_rest_self (hn : 1 ≤ n) (w : Fin n → Fin 2) :
         = if z = w then (0 : ℂ) else ((((2 : ℝ) ^ n - 1)⁻¹ : ℝ) : ℂ) := by
     intro z
     by_cases h : z = w
-    · rw [if_pos h, RCLike.inner_apply', restState_apply, if_pos h, sub_self, mul_zero,
+    · rw [ite_eq_left h, RCLike.inner_apply', restState_apply, ite_eq_left h, sub_self, mul_zero,
         map_zero, zero_mul]
-    · rw [if_neg h, RCLike.inner_apply', restState_apply, if_neg h, sub_zero, mul_one,
+    · rw [ite_eq_right h, RCLike.inner_apply', restState_apply, ite_eq_right h, sub_zero, mul_one,
         map_inv₀, Complex.conj_ofReal, ← mul_inv, ← Complex.ofReal_mul, hs,
         Complex.ofReal_inv]
   rw [Finset.sum_congr rfl fun z _ => hterm z, sum_ite_single w (0 : ℂ) _, zero_add]
@@ -230,7 +230,7 @@ lemma inner_basis_rest (w : Fin n → Fin 2) :
   rw [PiLp.inner_apply, Finset.sum_eq_single w]
   · rw [RCLike.inner_apply', restState_supp w w (by simp), mul_zero]
   · intro z _ hz
-    rw [RCLike.inner_apply', basisState_apply, if_neg hz, map_zero, zero_mul]
+    rw [RCLike.inner_apply', basisState_apply, ite_eq_right hz, map_zero, zero_mul]
   · intro h; exact absurd (Finset.mem_univ _) h
 
 /-- **The uniform state is the rotation-plane state at the Grover angle:** given
@@ -243,9 +243,9 @@ lemma uniformState_eq_ampState (hn : 1 ≤ n) (w : Fin n → Fin 2) {θ : ℝ}
   ext z
   rw [uniformState_apply, ampState_apply, basisState_apply, restState_apply, databaseSize]
   by_cases h : z = w
-  · rw [if_pos h, sub_self, mul_zero, mul_zero, add_zero, mul_one, hsin,
+  · rw [ite_eq_left h, sub_self, mul_zero, mul_zero, add_zero, mul_one, hsin,
       Complex.ofReal_inv]
-  · rw [if_neg h, mul_zero, zero_add, sub_zero, mul_one, hcos]
+  · rw [ite_eq_right h, mul_zero, zero_add, sub_zero, mul_one, hcos]
     have hN : Real.sqrt ((2 : ℝ) ^ n) ≠ 0 := by positivity
     rw [← Complex.ofReal_inv, ← Complex.ofReal_inv, ← Complex.ofReal_mul]
     congr 1
@@ -254,7 +254,7 @@ lemma uniformState_eq_ampState (hn : 1 ≤ n) (w : Fin n → Fin 2) {θ : ℝ}
 /-- `∑ z ∈ {w}, ‖(basisState w) z‖² = 1`. -/
 lemma basisState_weight (w : Fin n → Fin 2) :
     ∑ z ∈ ({w} : Finset (Fin n → Fin 2)), ‖basisState w z‖ ^ 2 = 1 := by
-  rw [Finset.sum_singleton, basisState_apply, if_pos rfl, norm_one, one_pow]
+  rw [Finset.sum_singleton, basisState_apply, ite_eq_left rfl, norm_one, one_pow]
 
 /-! ## The headline, re-derived from the general theorem -/
 
@@ -269,7 +269,7 @@ theorem grover_success {n : ℕ} (hn : 1 ≤ n) (w : Fin n → Fin 2) (k : ℕ) 
   rw [groverStep_eq_ampStep w, uniformState_eq_ampState hn w hsin hcos,
     ampStep_iterate (inner_basis_self w) (inner_rest_self hn w) (inner_basis_rest w)
       (basisState_supp w) (restState_supp w) θ k]
-  rw [prob, ampState_apply, basisState_apply, if_pos rfl, mul_one,
+  rw [prob, ampState_apply, basisState_apply, ite_eq_left rfl, mul_one,
     restState_supp w w (by simp), mul_zero, add_zero, Complex.norm_real,
     Real.norm_eq_abs, sq_abs]
 

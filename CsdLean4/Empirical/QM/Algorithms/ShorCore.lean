@@ -134,9 +134,9 @@ omit [NeZero N] in
   rw [mulOracle_apply, basisState_apply, basisState_apply]
   by_cases h : z = (a : ZMod N) * y
   · subst h
-    rw [if_pos rfl, if_pos]
+    rw [ite_eq_left rfl, ite_eq_left]
     rw [← mul_assoc, Units.inv_mul, one_mul]
-  · rw [if_neg h, if_neg]
+  · rw [ite_eq_right h, ite_eq_right]
     intro hc
     apply h
     rw [← hc, ← mul_assoc, Units.mul_inv, one_mul]
@@ -260,7 +260,7 @@ lemma sum_pow_orbit_phase (j : Fin (ord a)) :
   by_cases hj : j = ⟨0, ord_pos a⟩
   · -- `j = 0`: `ζ = 1`, the sum is `r`
     have hζ1 : ζ = 1 := by rw [hζdef, hj]; simp
-    rw [hζ1, if_pos hj]
+    rw [hζ1, ite_eq_left hj]
     simp
   · -- `j ≠ 0`: `ζ ≠ 1` is an `r`-th root of unity, geometric sum vanishes
     have hζN : ζ ^ ord a = 1 := by
@@ -278,7 +278,7 @@ lemma sum_pow_orbit_phase (j : Fin (ord a)) :
       have hprim : IsPrimitiveRoot (omega a) (ord a) := by rw [omega]; exact qftω_primitive (ord a)
       have := hprim.pow_inj j.isLt (ord_pos a) (by rw [hωj, pow_zero])
       exact hj (Fin.ext this)
-    rw [geom_sum_eq hζne (ord a), hζN, sub_self, zero_div, if_neg hj]
+    rw [geom_sum_eq hζne (ord a), hζN, sub_self, zero_div, ite_eq_right hj]
 
 /-- **S2 decomposition lemma:** `(1/√r) ∑_{s<r} u_s = |1⟩`. Summing the eigenvectors collapses the
 phase sum by roots-of-unity orthogonality to the single orbit term `|a^0⟩ = |1⟩`. -/
@@ -306,7 +306,7 @@ theorem sum_eigU :
   rw [hexpand]
   simp_rw [sum_pow_orbit_phase a, ite_smul, zero_smul]
   rw [Finset.sum_ite_eq' Finset.univ (⟨0, ord_pos a⟩ : Fin (ord a))
-        (fun j => (ord a : ℂ) • basisState (orbit a j)), if_pos (Finset.mem_univ _)]
+        (fun j => (ord a : ℂ) • basisState (orbit a j)), ite_eq_left (Finset.mem_univ _)]
   rw [orbit_zero, smul_smul, hc, inv_sqrtN_sq, inv_mul_cancel₀ hrne, one_smul]
 
 /-! ## S3 — phase estimation on the counting register `EuclideanSpace ℂ (Fin T)`
@@ -361,14 +361,14 @@ lemma eigenPhase_eq_phaseColumn {r : ℕ} (hr : 0 < r) (hT : 0 < T) (hdvd : r �
   rw [phaseColumn_apply]
   rw [WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul, sum_coord]
   rw [Finset.sum_eq_single y]
-  · rw [WithLp.ofLp_smul, Pi.smul_apply, basisState_apply, if_pos rfl, smul_eq_mul, mul_one]
+  · rw [WithLp.ofLp_smul, Pi.smul_apply, basisState_apply, ite_eq_left rfl, smul_eq_mul, mul_one]
     -- `ω_r^{s y} = ω_T^{y · (s · T/r)}`
     rw [qftω_div hr hT hdvd]
     rw [← pow_mul]
     congr 2
     ring
   · intro x _ hx
-    rw [WithLp.ofLp_smul, Pi.smul_apply, basisState_apply, if_neg (fun h => hx h.symm),
+    rw [WithLp.ofLp_smul, Pi.smul_apply, basisState_apply, ite_eq_right (fun h => hx h.symm),
       smul_eq_mul, mul_zero]
   · intro h; exact absurd (Finset.mem_univ _) h
 
@@ -510,8 +510,8 @@ omit [NeZero N] [NeZero T] in
       subst hcx
       rw [hzy, ← mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one, one_mul]
   by_cases h : (c, z) = (x, ((a ^ (x : ℕ) : (ZMod N)ˣ) : ZMod N) * y)
-  · rw [if_pos h, if_pos (hiff.mpr h)]
-  · rw [if_neg h, if_neg (fun hh => h (hiff.mp hh))]
+  · rw [ite_eq_left h, ite_eq_left (hiff.mpr h)]
+  · rw [ite_eq_right h, ite_eq_right (fun hh => h (hiff.mp hh))]
 
 omit [NeZero T] in
 set_option linter.unusedSectionVars false in
@@ -604,17 +604,17 @@ theorem eigU_norm (s : Fin (ord a)) : ‖eigU a s‖ = 1 := by
     by_cases hy : ∃ j : Fin (ord a), y = orbit a j
     · obtain ⟨j0, hj0⟩ := hy
       rw [Finset.sum_eq_single j0]
-      · rw [if_pos hj0, mul_one, if_pos ⟨j0, hj0⟩]
+      · rw [ite_eq_left hj0, mul_one, ite_eq_left ⟨j0, hj0⟩]
         have hω1 : ‖omega a‖ = 1 := by
           rw [omega]; exact (qftω_primitive (ord a)).norm'_eq_one hr.ne'
         rw [norm_pow, Complex.norm_conj, hω1, one_pow, one_pow]
       · intro b _ hb
-        rw [if_neg (fun h => hb (orbit_injective a (hj0.symm.trans h)).symm), mul_zero]
+        rw [ite_eq_right (fun h => hb (orbit_injective a (hj0.symm.trans h)).symm), mul_zero]
       · intro h; exact absurd (Finset.mem_univ _) h
-    · rw [if_neg hy]
+    · rw [ite_eq_right hy]
       rw [Finset.sum_eq_zero, norm_zero]; · simp
       intro j _
-      rw [if_neg (fun h => hy ⟨j, h⟩), mul_zero]
+      rw [ite_eq_right (fun h => hy ⟨j, h⟩), mul_zero]
   simp_rw [hinner]
   -- ∑_y [∃j, y = orbit j] = r  (orbit injective)
   have hcount : (∑ y : ZMod N, if ∃ j : Fin (ord a), y = orbit a j then (1 : ℝ) else 0)
@@ -693,7 +693,7 @@ theorem basisState_apow_eq (x : ℕ) :
         rw [this, hjm]
         congr 1
         exact (Nat.ModEq.symm hmod)
-      rw [hζ1, if_pos hj]
+      rw [hζ1, ite_eq_left hj]
       simp
     · -- j ≢ x mod r, ζ ≠ 1 is an r-th root of unity, geometric sum vanishes
       have hζN : ζ ^ ord a = 1 := by
@@ -718,7 +718,7 @@ theorem basisState_apow_eq (x : ℕ) :
           hprim.pow_inj (Nat.mod_lt _ hr) (Nat.mod_lt _ hr) hmodeq
         rw [pow_eq_pow_iff_modEq, ← ord]
         exact hxj.symm
-      rw [geom_sum_eq hζne (ord a), hζN, sub_self, zero_div, if_neg hj]
+      rw [geom_sum_eq hζne (ord a), hζN, sub_self, zero_div, ite_eq_right hj]
   simp_rw [hcollapse]
   -- only the single index j₀ = x % r with a^{j₀} = a^x survives
   set j₀ : Fin (ord a) := ⟨x % ord a, Nat.mod_lt _ hr⟩ with hj₀def
@@ -731,9 +731,9 @@ theorem basisState_apow_eq (x : ℕ) :
           • basisState (orbit a j))
       = (ord a : ℂ) • basisState (orbit a j₀) := by
     rw [Finset.sum_eq_single j₀]
-    · rw [if_pos hcond]
+    · rw [ite_eq_left hcond]
     · intro j _ hj
-      rw [if_neg, zero_smul]
+      rw [ite_eq_right, zero_smul]
       intro hcontra
       apply hj
       apply Fin.ext
@@ -850,9 +850,9 @@ theorem shor_order_distribution (hr : 0 < ord a) (hT : 0 < T) (hdvd : ord a ∣ 
     rw [WithLp.ofLp_smul, Pi.smul_apply, smul_eq_mul, sum_coord]
     congr 1
     rw [Finset.sum_eq_single s]
-    · rw [tensorCN_apply, basisState_apply, if_pos rfl, one_mul]
+    · rw [tensorCN_apply, basisState_apply, ite_eq_left rfl, one_mul]
     · intro s' _ hs'
-      rw [tensorCN_apply, basisState_apply, if_neg, zero_mul]
+      rw [tensorCN_apply, basisState_apply, ite_eq_right, zero_mul]
       intro heq
       exact hs' (bridgeIndex_inj T hr hT hdvd heq.symm)
     · intro h; exact absurd (Finset.mem_univ _) h
@@ -879,7 +879,7 @@ theorem shor_order_distribution_zero (hr : 0 < ord a) (hT : 0 < T) (hdvd : ord a
       (tensorCN T (basisState ⟨(s : ℕ) * (T / ord a), bridgeIndex_lt hr hT hdvd s⟩) (eigU a s)) (c, y)) = 0 := by
     rw [Finset.sum_eq_zero]
     intro s _
-    rw [tensorCN_apply, basisState_apply, if_neg, zero_mul]
+    rw [tensorCN_apply, basisState_apply, ite_eq_right, zero_mul]
     intro heq
     exact hc s (Fin.val_eq_of_eq heq)
   rw [hzero, mul_zero, norm_zero]

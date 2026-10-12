@@ -520,10 +520,10 @@ theorem exists_descent_chain {p s t : EuclideanSpace ℝ (Fin 3)} (hp : ‖p‖ 
       · exact ⟨ht, htp⟩
     · intro i hi
       rcases Nat.lt_or_ge i 3 with h3 | h3
-      · rw [if_pos (by omega : i + 1 ≤ 3), if_pos h3.le]
+      · rw [ite_eq_left (by omega : i + 1 ≤ 3), ite_eq_left h3.le]
         exact hcstep i h3
       · have hi3 : i = 3 := by omega
-        rw [hi3, if_neg (by omega : ¬ (3 + 1 ≤ 3)), if_pos le_rfl, hcn]
+        rw [hi3, ite_eq_right (by omega : ¬ (3 + 1 ≤ 3)), ite_eq_left le_rfl, hcn]
         refine mem_descent_of_equator ⟨ht.1, hpt.symm⟩ ?_
         -- `⟪t, lift (tangent w)⟫ = 0` because `Re (τ · conj w) = 0` for `w ∝ i τ`
         rw [lift, inner_smul_right, inner_add_right, real_inner_comm p t, hpt.symm, ← hτ,
@@ -609,15 +609,15 @@ theorem exists_descent_chain {p s t : EuclideanSpace ℝ (Fin 3)} (hp : ‖p‖ 
       · exact ⟨ht, htp⟩
     · intro i hi
       rcases Nat.lt_or_ge i n with h1 | h1
-      · rw [if_pos (by omega : i + 1 ≤ n), if_pos h1.le]
+      · rw [ite_eq_left (by omega : i + 1 ≤ n), ite_eq_left h1.le]
         exact hcstep i h1
       · rcases eq_or_lt_of_le h1 with h2 | h2
-        · rw [← h2, if_neg (by omega : ¬ (n + 1 ≤ n)), if_pos rfl, if_pos le_rfl, hcn,
+        · rw [← h2, ite_eq_right (by omega : ¬ (n + 1 ≤ n)), ite_eq_left rfl, ite_eq_left le_rfl, hcn,
             lift_tangent_mem_descent_iff he (mul_ne_zero hρC hζ0)]
           exact hstep1
         · have h3 : i = n + 1 := by omega
-          rw [h3, if_neg (by omega : ¬ (n + 1 + 1 ≤ n)), if_neg (by omega : n + 1 + 1 ≠ n + 1),
-            if_neg (by omega : ¬ (n + 1 ≤ n)), if_pos rfl, htl, ← hζ,
+          rw [h3, ite_eq_right (by omega : ¬ (n + 1 + 1 ≤ n)), ite_eq_right (by omega : n + 1 + 1 ≠ n + 1),
+            ite_eq_right (by omega : ¬ (n + 1 ≤ n)), ite_eq_left rfl, htl, ← hζ,
             lift_tangent_mem_descent_iff he hz'0]
           exact hstep2
 

@@ -151,17 +151,17 @@ theorem mul_prod_removeWeight (c : Fin (k + 1) → ℝ) (j : Fin (k + 1)) :
   induction j using Fin.lastCases with
   | last =>
     have h : ∀ i : Fin k, removeWeight c (Fin.last k) i = c (Fin.castSucc i) := fun i =>
-      if_neg (Fin.castSucc_lt_last i).ne
+      ite_eq_right (Fin.castSucc_lt_last i).ne
     simp only [h]
     ring
   | cast j₀ =>
     rw [← Finset.mul_prod_erase Finset.univ (fun i => removeWeight c (Fin.castSucc j₀) i)
         (Finset.mem_univ j₀),
       ← Finset.mul_prod_erase Finset.univ (fun i => c (Fin.castSucc i)) (Finset.mem_univ j₀)]
-    have h1 : removeWeight c (Fin.castSucc j₀) j₀ = c (Fin.last k) := if_pos rfl
+    have h1 : removeWeight c (Fin.castSucc j₀) j₀ = c (Fin.last k) := ite_eq_left rfl
     have h2 : ∀ i ∈ Finset.univ.erase j₀,
         removeWeight c (Fin.castSucc j₀) i = c (Fin.castSucc i) := fun i hi =>
-      if_neg fun h => Finset.ne_of_mem_erase hi (Fin.castSucc_inj.1 h)
+      ite_eq_right fun h => Finset.ne_of_mem_erase hi (Fin.castSucc_inj.1 h)
     rw [h1, Finset.prod_congr rfl h2]
     ring
 
@@ -185,18 +185,18 @@ theorem IsWeightedPairTuple.pairRep {β : E [⋀^Fin 2]→L[ℝ] ℝ} {c : Fin (
   dsimp only
   rw [key p, key q]
   by_cases hp : Fin.castSucc (pairIdx p) = j <;> by_cases hq : Fin.castSucc (pairIdx q) = j
-  · rw [if_pos hp, if_pos hq, hu, if_pos (Fin.castSucc_inj.1 (hp.trans hq.symm))]
-    simp only [pairIdx_powEquiv, memIdx_powEquiv, slotPair_inr, slotMem_inr, if_true,
+  · rw [ite_eq_left hp, ite_eq_left hq, hu, ite_eq_left (Fin.castSucc_inj.1 (hp.trans hq.symm))]
+    simp only [pairIdx_powEquiv, memIdx_powEquiv, slotPair_inr, slotMem_inr, ite_true,
       removeWeight, hp]
-  · rw [if_pos hp, if_neg hq, hu,
-      if_neg fun h : pairIdx p = pairIdx q => hq (by rw [← h]; exact hp)]
-    simp only [pairIdx_powEquiv, slotPair_inr, slotPair_inl_eq_castSucc, hne, if_false]
-  · rw [if_neg hp, if_pos hq, hu,
-      if_neg fun h : pairIdx p = pairIdx q => hp (by rw [h]; exact hq)]
-    simp only [pairIdx_powEquiv, slotPair_inr, slotPair_inl_eq_castSucc, hne', if_false]
-  · rw [if_neg hp, if_neg hq, hu]
+  · rw [ite_eq_left hp, ite_eq_right hq, hu,
+      ite_eq_right fun h : pairIdx p = pairIdx q => hq (by rw [← h]; exact hp)]
+    simp only [pairIdx_powEquiv, slotPair_inr, slotPair_inl_eq_castSucc, hne, ite_false]
+  · rw [ite_eq_right hp, ite_eq_left hq, hu,
+      ite_eq_right fun h : pairIdx p = pairIdx q => hp (by rw [h]; exact hq)]
+    simp only [pairIdx_powEquiv, slotPair_inr, slotPair_inl_eq_castSucc, hne', ite_false]
+  · rw [ite_eq_right hp, ite_eq_right hq, hu]
     simp only [pairIdx_powEquiv, memIdx_powEquiv, slotPair_inl_eq_castSucc,
-      slotMem_inl_eq_memIdx, Fin.castSucc_inj, removeWeight, hp, if_false]
+      slotMem_inl_eq_memIdx, Fin.castSucc_inj, removeWeight, hp, ite_false]
 
 /-- ★★ **The count.** The `k`-th power of a real 2-form on a weighted pair tuple of `k` pairs is
 `k!` times the product of the weights. -/

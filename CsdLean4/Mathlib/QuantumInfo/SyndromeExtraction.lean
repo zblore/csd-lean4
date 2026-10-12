@@ -220,11 +220,11 @@ theorem extractMat_mul_ancInit_apply {H : α → β} (hH : ∀ z, H z + H z = 0)
   rw [extractMat, permMat_mul_apply (extractPerm_involutive hH), ancInit_apply]
   by_cases h : p = (z, H z)
   · subst h
-    rw [if_pos rfl, if_pos]
+    rw [ite_eq_left rfl, ite_eq_left]
     refine Prod.ext rfl ?_
     simp only [extractPerm]
     rw [hH]
-  · rw [if_neg h, if_neg]
+  · rw [ite_eq_right h, ite_eq_right]
     intro hc
     have h1 : p.1 = z := by simpa using congrArg Prod.fst hc
     have h2 : p.2 + H p.1 = 0 := by simpa using congrArg Prod.snd hc
@@ -249,18 +249,18 @@ theorem ancProj_mul_extractMat_mul_ancInit {H : α → β} (hH : ∀ z, H z + H 
     by_cases h : p = (z, H z)
     · subst h; simp
     · simp [h]
-  · rw [if_neg hz, mul_zero]
+  · rw [ite_eq_right hz, mul_zero]
     by_cases h : p = (z, H z)
     · subst h
-      rw [if_neg hz, zero_mul]
-    · rw [if_neg h, mul_zero]
+      rw [ite_eq_right hz, zero_mul]
+    · rw [ite_eq_right h, mul_zero]
 
 /-- ★ **A syndrome the data does not carry gets zero amplitude.** The measurement is exhaustive, not
 merely consistent. -/
 theorem ancProj_mul_extractMat_mul_ancInit_of_ne {H : α → β} (hH : ∀ z, H z + H z = 0) {s : β}
     (p : α × β) (z : α) (hz : H z ≠ s) :
     (ancProj (α := α) s * (extractMat H * (ancInit : Matrix (α × β) α ℂ))) p z = 0 := by
-  rw [ancProj_mul_extractMat_mul_ancInit hH, synProj, Matrix.mul_diagonal, if_neg hz, mul_zero]
+  rw [ancProj_mul_extractMat_mul_ancInit hH, synProj, Matrix.mul_diagonal, ite_eq_right hz, mul_zero]
 
 /-- The prepared ancilla is already in the `0` branch. -/
 theorem ancProj_zero_mul_ancInit :
@@ -282,7 +282,7 @@ theorem extractMat_mul_ancInit_mul_synProj_zero {H : α → β} (hH : ∀ z, H z
     ancInit_apply]
   by_cases hz : H z = 0
   · rw [hz]
-  · rw [if_neg hz, mul_zero, mul_zero]
+  · rw [ite_eq_right hz, mul_zero, mul_zero]
 
 /-- ★★★ **A code state is returned unchanged, ancilla included.** For any operator supported on the
 syndrome-`0` subspace, extraction conjugates it to itself with a fresh ancilla. -/

@@ -474,8 +474,8 @@ theorem way_hypotheses_satisfiable :
     norm_ket 0, ?_, ?_, ?_, ?_⟩
   · intro i; rw [basisFun_eq_ket]; exact sigmaZ_ket i
   · intro i; rw [basisFun_eq_ket]; exact cnot_record i
-  · intro i j h; rw [inner_ket, if_neg (hne i j h)]
-  · intro i j h; exact Or.inr (by rw [inner_ket, if_neg (hne i j h)])
+  · intro i j h; rw [inner_ket, ite_eq_right (hne i j h)]
+  · intro i j h; exact Or.inr (by rw [inner_ket, ite_eq_right (hne i j h)])
   · rw [cnot_pointer_not_yanase]; exact one_ne_zero
 
 /-- SWAP conserves `chargeZZ` pointwise: `L (swap x) = swap (L x)`. -/

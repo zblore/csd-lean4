@@ -292,9 +292,9 @@ theorem tendsto_cesaro_trigPoly {ι : Type*} [Fintype ι]
   simp_rw [hrw]
   refine tendsto_finsetSum _ fun q _ => ?_
   by_cases hq : l q = 1
-  · rw [if_pos hq, hq]
+  · rw [ite_eq_left hq, hq]
     simpa using tendsto_cesaro_one.const_mul (α q)
-  · rw [if_neg hq]
+  · rw [ite_eq_right hq]
     simpa using (tendsto_cesaro_geom (hl q) hq).const_mul (α q)
 
 /-! ## ★★ Dephasing: the time average is the diagonal ensemble -/
@@ -351,12 +351,12 @@ theorem tendsto_birkhoffAverage_heisenbergObs (hH : H.IsHermitian) {τ : ℝ}
         show star (energyPhase hH τ n) * energyPhase hH τ n = 1
         rw [Complex.star_def, Complex.conj_mul', norm_energyPhase]
         norm_num
-      rw [if_pos hnn, hα]
+      rw [ite_eq_left hnn, hα]
       show star (eigenCoord hH ψ n) * eigenMatrix hH A n n * eigenCoord hH ψ n = _
       rw [mul_comm (star _), mul_assoc, Complex.star_def, Complex.conj_mul', mul_comm,
         ← Complex.ofReal_pow]
     · intro m _ hm
-      rw [if_neg (hres n m (Ne.symm hm))]
+      rw [ite_eq_right (hres n m (Ne.symm hm))]
     · intro h
       exact absurd (Finset.mem_univ n) h
   have hmain := tendsto_cesaro_trigPoly α l hl1

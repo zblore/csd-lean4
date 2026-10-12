@@ -148,11 +148,11 @@ noncomputable def localAmp (ax : PauliAxis) (o : Fin 2) (b : Fin 2) : ℂ :=
 
 lemma localAmp_zero (ax : PauliAxis) (o : Fin 2) :
     localAmp ax o 0 = (Real.sqrt 2 : ℂ)⁻¹ := by
-  unfold localAmp; rw [if_pos rfl, mul_one]
+  unfold localAmp; rw [ite_eq_left rfl, mul_one]
 
 lemma localAmp_one (ax : PauliAxis) (o : Fin 2) :
     localAmp ax o 1 = (Real.sqrt 2 : ℂ)⁻¹ * ((signC o : ℂ) * axisPhase ax) := by
-  unfold localAmp; rw [if_neg (by decide : ¬ ((1 : Fin 2) = 0))]
+  unfold localAmp; rw [ite_eq_right (by decide : ¬ ((1 : Fin 2) = 0))]
 
 /-- **The genuine single-qubit Pauli eigenstate.** -/
 noncomputable def localEig (ax : PauliAxis) (o : Fin 2) : EuclideanSpace ℂ (Fin 2) :=

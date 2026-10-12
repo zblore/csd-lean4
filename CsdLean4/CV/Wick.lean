@@ -361,9 +361,9 @@ theorem timeTwoPoint_eq [NeZero N] (hN : 1 < N) (τ : ℝ) (n m : ℕ) (k l : Fi
       = if k = l then twoPointKernel τ n m else 0 := by
   by_cases hkl : k = l
   · subst hkl
-    rw [if_pos rfl, timeTwoPoint]
+    rw [ite_eq_left rfl, timeTwoPoint]
     exact evolvedPair_vac_vac hN τ n m k
-  · rw [if_neg hkl, timeTwoPoint]
+  · rw [ite_eq_right hkl, timeTwoPoint]
     exact evolvedPair_vac_vac_offdiag τ n m hkl
 
 /-- Right period `0` recovers CV-13's `freeTwoPoint` at the definition level. -/
@@ -637,8 +637,8 @@ lemma Q_three_two [NeZero N] (hN3 : 3 < N) :
 lemma Q_apply_two_eq_zero [NeZero N] (hN2 : 2 < N) {m : Fin N} (h1 : (m : ℕ) ≠ 1)
     (h3 : (m : ℕ) ≠ 3) : Q N m ⟨2, hN2⟩ = 0 := by
   rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply, creation_apply,
-    if_neg (show ¬((m : ℕ) + 1 = ((2 : ℕ))) from by omega),
-    if_neg (show ¬((2 : ℕ) + 1 = ((m : ℕ))) from by omega)]
+    ite_eq_right (show ¬((m : ℕ) + 1 = ((2 : ℕ))) from by omega),
+    ite_eq_right (show ¬((2 : ℕ) + 1 = ((m : ℕ))) from by omega)]
   simp
 
 /-- The **three-quantum configuration** at mode `l`. -/
@@ -685,7 +685,7 @@ lemma modeOp_Q_apply_exc2 [NeZero N] (hN3 : 3 < N) (hN2 : 2 < N) (hN : 1 < N)
         rw [exc3Cfg_self]
         exact Fin.ext (by simpa using hval)
       · rw [hoff j hj, vacCfg_apply, exc3Cfg_of_ne hN3 hj]
-  · rw [modeOp, if_neg (fun h' => hoff (fun j hj => by
+  · rw [modeOp, ite_eq_right (fun h' => hoff (fun j hj => by
       rw [h' j hj, exc2Cfg_of_ne hN2 hj, vacCfg_apply]))]
 
 /-- The mode quadrature is symmetric as a matrix transpose identity. -/
@@ -719,8 +719,8 @@ lemma modeOpQ_cube_apply_vac [NeZero N] (hN3 : 3 < N) (hN2 : 2 < N) (hN : 1 < N)
   rw [← Finset.sum_subset
       (Finset.subset_univ ({vacCfg K N, exc2Cfg hN2 k} : Finset _))
       (fun c _ hc => by
-        rw [modeOpQ_sq_apply_vac hN2 k c, if_neg (fun h => hc (by simp [h])),
-          if_neg (fun h => hc (by simp [h])), mul_zero])]
+        rw [modeOpQ_sq_apply_vac hN2 k c, ite_eq_right (fun h => hc (by simp [h])),
+          ite_eq_right (fun h => hc (by simp [h])), mul_zero])]
   rw [Finset.sum_pair (vacCfg_ne_exc2Cfg hN2 k), modeOpQ_sq_vac hN k,
     modeOpQ_sq_exc2_vac hN2 k]
   split_ifs with he1 he3
@@ -754,12 +754,12 @@ theorem modeOpQ_six_vac [NeZero N] (hN3 : 3 < N) (k : Fin K) :
   have h1 : (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N))
       (excCfg hN k) (vacCfg K N)
       = (3 / 2 : ℂ) * (((Real.sqrt 2 : ℝ) : ℂ))⁻¹ := by
-    rw [modeOpQ_cube_apply_vac hN3 hN2 hN k, if_pos rfl]
+    rw [modeOpQ_cube_apply_vac hN3 hN2 hN k, ite_eq_left rfl]
   have h3 : (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N))
       (exc3Cfg hN3 k) (vacCfg K N)
       = ((Real.sqrt 3 : ℝ) : ℂ) * (2 : ℂ)⁻¹ := by
     rw [modeOpQ_cube_apply_vac hN3 hN2 hN k,
-      if_neg (excCfg_ne_exc3Cfg hN3 hN k).symm, if_pos rfl]
+      ite_eq_right (excCfg_ne_exc3Cfg hN3 hN k).symm, ite_eq_left rfl]
   have hpow : modeOp k (Q N) ^ 6
       = (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N))
         * (modeOp k (Q N) * modeOp k (Q N) * modeOp k (Q N)) := by
@@ -772,7 +772,7 @@ theorem modeOpQ_six_vac [NeZero N] (hN3 : 3 < N) (k : Fin K) :
       (Finset.subset_univ ({excCfg hN k, exc3Cfg hN3 k} : Finset _))
       (fun e _ he => by
         rw [modeOpQ_cube_apply_vac hN3 hN2 hN k e,
-          if_neg (fun h => he (by simp [h])), if_neg (fun h => he (by simp [h])),
+          ite_eq_right (fun h => he (by simp [h])), ite_eq_right (fun h => he (by simp [h])),
           zero_mul])]
   rw [Finset.sum_pair (excCfg_ne_exc3Cfg hN3 hN k), h1, h3]
   have hs3 : ((Real.sqrt 3 : ℝ) : ℂ) * ((Real.sqrt 3 : ℝ) : ℂ) = 3 := by
@@ -841,7 +841,7 @@ lemma commutator_pow_expand {R : Type*} [Ring R] (A B : R) (m : ℕ) :
 lemma Q_apply_eq_zero_of_far [NeZero N] {i j : Fin N} (h1 : (i : ℕ) + 1 ≠ (j : ℕ))
     (h2 : (j : ℕ) + 1 ≠ (i : ℕ)) : Q N i j = 0 := by
   rw [Q, Matrix.smul_apply, Matrix.add_apply, annihilation_apply, creation_apply,
-    if_neg h1, if_neg h2]
+    ite_eq_right h1, ite_eq_right h2]
   simp
 
 /-- The quadrature is symmetric as a transpose identity. -/
@@ -919,9 +919,9 @@ lemma mul_topProj_mul_apply [NeZero N] (hlt : N - 1 < N)
     (X * topProj N * Y) 0 0 = X 0 ⟨N - 1, hlt⟩ * Y ⟨N - 1, hlt⟩ 0 := by
   classical
   rw [mul_assoc, Matrix.mul_apply, Finset.sum_eq_single (⟨N - 1, hlt⟩ : Fin N)]
-  · rw [topProj, Matrix.diagonal_mul, if_pos rfl, one_mul]
+  · rw [topProj, Matrix.diagonal_mul, ite_eq_left rfl, one_mul]
   · intro j _ hj
-    rw [topProj, Matrix.diagonal_mul, if_neg (fun h => hj (Fin.ext h)), zero_mul,
+    rw [topProj, Matrix.diagonal_mul, ite_eq_right (fun h => hj (Fin.ext h)), zero_mul,
       mul_zero]
   · intro h
     exact absurd (Finset.mem_univ _) h
@@ -936,9 +936,9 @@ theorem Q_pow_vac_recursion [NeZero N] (n : ℕ) (hn : n + 1 < N) :
   classical
   have hlt : N - 1 < N := by omega
   have hannihilation_col : ∀ c : Fin N, annihilation N c 0 = 0 := fun c => by
-    rw [annihilation_apply, if_neg (by simp)]
+    rw [annihilation_apply, ite_eq_right (by simp)]
   have hcreation_row : ∀ c : Fin N, creation N 0 c = 0 := fun c => by
-    rw [creation_apply, if_neg (by simp)]
+    rw [creation_apply, ite_eq_right (by simp)]
   have hX_a : (Q N ^ (2 * n + 1) * annihilation N) 0 0 = 0 := by
     rw [Matrix.mul_apply]
     exact Finset.sum_eq_zero fun c _ => by rw [hannihilation_col c, mul_zero]
@@ -1031,7 +1031,7 @@ lemma modeOp_one (k : Fin K) : modeOp k (1 : Matrix (Fin N) (Fin N) ℂ) = 1 := 
         · exact h j hj)
       rw [Matrix.one_apply_ne hk, Matrix.one_apply_ne hcd]
   · rw [show modeOp k (1 : Matrix (Fin N) (Fin N) ℂ) c d = 0 from by
-      rw [modeOp, if_neg h]]
+      rw [modeOp, ite_eq_right h]]
     push Not at h
     obtain ⟨j, hjk, hne⟩ := h
     exact (Matrix.one_apply_ne (fun hcd => hne (congrFun hcd j))).symm
@@ -1046,19 +1046,19 @@ lemma modeOp_mul (k : Fin K) (a b : Matrix (Fin N) (Fin N) ℂ) :
   by_cases h : ∀ j, j ≠ k → c j = d j
   · rw [modeOp_apply_of_agree k _ h, Matrix.mul_apply,
       sum_collapse_of_support c k _ (fun e he => by
-        rw [show modeOp k a c e = 0 from by rw [modeOp, if_neg he], zero_mul])]
+        rw [show modeOp k a c e = 0 from by rw [modeOp, ite_eq_right he], zero_mul])]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [modeOp_apply_of_agree k a (fun j hj => (Function.update_of_ne hj _ _).symm),
       modeOp_apply_of_agree k b (fun j hj =>
         (Function.update_of_ne hj _ _).trans (h j hj)),
       Function.update_self]
-  · rw [show modeOp k (a * b) c d = 0 from by rw [modeOp, if_neg h]]
+  · rw [show modeOp k (a * b) c d = 0 from by rw [modeOp, ite_eq_right h]]
     refine Finset.sum_eq_zero fun e _ => ?_
     by_cases hce : ∀ j, j ≠ k → c j = e j
     · have hed : ¬ ∀ j, j ≠ k → e j = d j :=
         fun hed => h (fun j hj => (hce j hj).trans (hed j hj))
-      rw [show modeOp k b e d = 0 from by rw [modeOp, if_neg hed], mul_zero]
-    · rw [show modeOp k a c e = 0 from by rw [modeOp, if_neg hce], zero_mul]
+      rw [show modeOp k b e d = 0 from by rw [modeOp, ite_eq_right hed], mul_zero]
+    · rw [show modeOp k a c e = 0 from by rw [modeOp, ite_eq_right hce], zero_mul]
 
 /-- `modeOp` respects powers. -/
 lemma modeOp_pow (k : Fin K) (a : Matrix (Fin N) (Fin N) ℂ) (m : ℕ) :

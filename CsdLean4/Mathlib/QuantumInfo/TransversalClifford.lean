@@ -72,9 +72,9 @@ theorem permMat_mul_apply {α β : Type*} [Fintype α] [DecidableEq α] {σ : α
     (hσ : Function.Involutive σ) (M : Matrix α β ℂ) (z : α) (c : β) :
     (permMat σ * M) z c = M (σ z) c := by
   rw [Matrix.mul_apply, Finset.sum_eq_single (σ z)]
-  · rw [permMat_apply, if_pos (hσ z).symm, one_mul]
+  · rw [permMat_apply, ite_eq_left (hσ z).symm, one_mul]
   · intro w _ hw
-    rw [permMat_apply, if_neg, zero_mul]
+    rw [permMat_apply, ite_eq_right, zero_mul]
     intro hzw
     exact hw (by rw [hzw, hσ w])
   · intro hmem
@@ -84,9 +84,9 @@ theorem permMat_mul_apply {α β : Type*} [Fintype α] [DecidableEq α] {σ : α
 theorem mul_permMat_apply {α β : Type*} [Fintype α] [DecidableEq α] (σ : α → α)
     (M : Matrix β α ℂ) (z : β) (c : α) : (M * permMat σ) z c = M z (σ c) := by
   rw [Matrix.mul_apply, Finset.sum_eq_single (σ c)]
-  · rw [permMat_apply, if_pos rfl, mul_one]
+  · rw [permMat_apply, ite_eq_left rfl, mul_one]
   · intro d _ hd
-    rw [permMat_apply, if_neg hd, mul_zero]
+    rw [permMat_apply, ite_eq_right hd, mul_zero]
   · intro hmem
     exact absurd (Finset.mem_univ _) hmem
 
@@ -95,16 +95,16 @@ theorem permMat_conjTranspose {α : Type*} [DecidableEq α] {σ : α → α}
   ext z w
   rw [Matrix.conjTranspose_apply, permMat_apply, permMat_apply]
   by_cases h : z = σ w
-  · rw [if_pos h, if_pos (by rw [h, hσ w]), star_one]
-  · rw [if_neg h, if_neg fun hc => h (by rw [hc, hσ z]), star_zero]
+  · rw [ite_eq_left h, ite_eq_left (by rw [h, hσ w]), star_one]
+  · rw [ite_eq_right h, ite_eq_right fun hc => h (by rw [hc, hσ z]), star_zero]
 
 theorem permMat_mul_self {α : Type*} [Fintype α] [DecidableEq α] {σ : α → α}
     (hσ : Function.Involutive σ) : permMat σ * permMat σ = 1 := by
   ext z w
   rw [permMat_mul_apply hσ, permMat_apply, Matrix.one_apply]
   by_cases h : z = w
-  · rw [if_pos (by rw [h]), if_pos h]
-  · rw [if_neg fun hc => h (by rw [← hσ z, hc, hσ w]), if_neg h]
+  · rw [ite_eq_left (by rw [h]), ite_eq_left h]
+  · rw [ite_eq_right fun hc => h (by rw [← hσ z, hc, hσ w]), ite_eq_right h]
 
 theorem permMat_mem_unitaryGroup {α : Type*} [Fintype α] [DecidableEq α] {σ : α → α}
     (hσ : Function.Involutive σ) : permMat σ ∈ Matrix.unitaryGroup α ℂ := by
@@ -126,11 +126,11 @@ theorem pauliMat_eq_blockKron (a b : Fin n → Fin 2) :
   ext z w
   rw [blockKron_apply, pauliMat]
   by_cases h : w = z + a
-  · rw [if_pos h, Finset.prod_congr rfl fun i _ =>
-      (by rw [onePauli_apply, if_pos (show w i = z i + a i by rw [h]; rfl)] :
+  · rw [ite_eq_left h, Finset.prod_congr rfl fun i _ =>
+      (by rw [onePauli_apply, ite_eq_left (show w i = z i + a i by rw [h]; rfl)] :
         onePauli (a i) (b i) (z i) (w i) = signChar (b i * w i)), ← signChar_sum]
     rfl
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     obtain ⟨i, hi⟩ : ∃ i, w i ≠ z i + a i := by
       by_contra hc
       have hall : ∀ i, w i = z i + a i := fun i => by
@@ -138,7 +138,7 @@ theorem pauliMat_eq_blockKron (a b : Fin n → Fin 2) :
         exact hc ⟨i, hci⟩
       exact h (funext fun i => by rw [hall i]; rfl)
     refine (Finset.prod_eq_zero (Finset.mem_univ i) ?_).symm
-    rw [onePauli_apply, if_neg hi]
+    rw [onePauli_apply, ite_eq_right hi]
 
 /-! ### The single-qubit Hadamard on a Pauli -/
 

@@ -114,7 +114,7 @@ theorem recordRegion_pairwiseDisjoint :
 theorem recordState_mem_recordRegion (j : Fin K) :
     recordState j ∈ recordRegion (K := K) j := by
   show (1 / 2 : ℝ) < LF4.momentMap (vertexPoint j.succ) j.succ
-  rw [momentMap_vertex, if_pos rfl]
+  rw [momentMap_vertex, ite_eq_left rfl]
   norm_num
 
 /-- Every record region has positive Fubini–Study measure (openness + full support). -/
@@ -141,7 +141,7 @@ theorem measurableSet_readyRegion (δ : ℝ) :
 theorem readyState_mem_readyRegion {δ : ℝ} (hδ : 0 < δ) :
     readyState ∈ readyRegion (K := K) δ := by
   show (1 - δ : ℝ) < LF4.momentMap (vertexPoint 0) 0
-  rw [momentMap_vertex, if_pos rfl]
+  rw [momentMap_vertex, ite_eq_left rfl]
   linarith
 
 /-- The ready region has positive Fubini–Study measure for every positive margin. -/

@@ -134,8 +134,8 @@ theorem dephasing_fixes_basis_state {N : ℕ} (i : Fin N) :
   ext a b
   rw [Matrix.diagonal_apply]
   by_cases hab : a = b
-  · subst hab; rw [if_pos rfl]
-  · rw [if_neg hab, Matrix.single_apply, if_neg (fun h => hab (h.1.symm.trans h.2))]
+  · subst hab; rw [ite_eq_left rfl]
+  · rw [ite_eq_right hab, Matrix.single_apply, ite_eq_right (fun h => hab (h.1.symm.trans h.2))]
 
 /-- The classical-ensemble average of the channel outputs is the maximally mixed
 `½I`: `½|0⟩⟨0| + ½|1⟩⟨1| = ½I`. The two computational-basis projectors sum to `I`. -/

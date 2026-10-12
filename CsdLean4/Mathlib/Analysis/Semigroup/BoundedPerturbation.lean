@@ -133,9 +133,9 @@ theorem of_group (U : ℝ → E →L[ℂ] E) (h0 : U 0 = 1) (hadd : ∀ s t, U (
     IsContractionSemigroup fun t => if 0 ≤ t then U t else 1 where
   eq_one_of_nonpos t ht := by
     by_cases h : 0 ≤ t
-    · rw [if_pos h, le_antisymm ht h, h0]
-    · rw [if_neg h]
-  map_add s t hs ht := by rw [if_pos hs, if_pos ht, if_pos (add_nonneg hs ht), hadd]
+    · rw [ite_eq_left h, le_antisymm ht h, h0]
+    · rw [ite_eq_right h]
+  map_add s t hs ht := by rw [ite_eq_left hs, ite_eq_left ht, ite_eq_left (add_nonneg hs ht), hadd]
   norm_le_one t := by
     split_ifs with h
     · exact hnorm t

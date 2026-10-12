@@ -83,10 +83,11 @@ second-countable (finite-dim normed over `RCLike` is proper via
 second-countable via `secondCountable_of_proper`), so the open subtype
 `{v : V // v ≠ 0}` is second-countable
 (`Subtype.secondCountableTopology`), and the open quotient map carries
-that to `ℙ K V` (`Topology.IsQuotientMap.secondCountableTopology`). -/
+that to `ℙ K V` (`Topology.IsOpenQuotientMap.secondCountableTopology`). -/
 instance instSecondCountableTopology : SecondCountableTopology (ℙ K V) := by
   have : ProperSpace V := FiniteDimensional.proper_rclike K V
-  exact isQuotientMap_mk'.secondCountableTopology isOpenMap_mk'
+  exact (IsOpenQuotientMap.of_isOpenMap_isQuotientMap isOpenMap_mk'
+    isQuotientMap_mk').secondCountableTopology
 
 /-- The Borel σ-algebra on `Projectivization K V`, derived from its
 quotient topology (`Topology.lean`).

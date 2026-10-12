@@ -114,11 +114,11 @@ lemma blockPop_eq_linear (e : Fin N ≃ Fin dA × Fin dB) (p : CPN N) (a : Fin d
       = ∑ b : Fin dB, blockIndicator e a (e.symm (a, b)) * momentMap p (e.symm (a, b)) :=
         Finset.sum_eq_single a
           (fun a' _ ha' => Finset.sum_eq_zero (fun b _ => by
-            simp only [blockIndicator, Equiv.apply_symm_apply, if_neg ha', zero_mul]))
+            simp only [blockIndicator, Equiv.apply_symm_apply, ite_eq_right ha', zero_mul]))
           (fun h => absurd (Finset.mem_univ a) h)
     _ = ∑ b : Fin dB, momentMap p (e.symm (a, b)) :=
         Finset.sum_congr rfl (fun b _ => by
-          simp only [blockIndicator, Equiv.apply_symm_apply, if_pos, one_mul])
+          simp only [blockIndicator, Equiv.apply_symm_apply, ite_eq_left, one_mul])
 
 /-! ### The block indicator's own sums -/
 
@@ -131,11 +131,11 @@ lemma sum_blockIndicator (e : Fin N ≃ Fin dA × Fin dB) (a : Fin dA) :
       = ∑ b : Fin dB, blockIndicator e a (e.symm (a, b)) :=
         Finset.sum_eq_single a
           (fun a' _ ha' => Finset.sum_eq_zero (fun b _ => by
-            simp only [blockIndicator, Equiv.apply_symm_apply, if_neg ha']))
+            simp only [blockIndicator, Equiv.apply_symm_apply, ite_eq_right ha']))
           (fun h => absurd (Finset.mem_univ a) h)
     _ = ∑ _b : Fin dB, (1 : ℝ) :=
         Finset.sum_congr rfl (fun b _ => by
-          simp only [blockIndicator, Equiv.apply_symm_apply, if_pos])
+          simp only [blockIndicator, Equiv.apply_symm_apply, ite_eq_left])
     _ = (dB : ℝ) := by simp
 
 omit [NeZero N] in
@@ -174,7 +174,7 @@ indices), and the engine behind the four-index vanishing below. -/
 lemma signFlip_smul_rayDensity_ne (k i j : Fin N) (hik : i ≠ k) (hjk : j ≠ k) (p : CPN N) :
     rayDensity ((signFlip k) • p) i j = rayDensity p i j := by
   rw [smul_eq_mk, rayDensity_mk, signFlip_val, toEuclideanLin_signFlip_coord,
-    toEuclideanLin_signFlip_coord, if_neg hik, if_neg hjk, one_mul, one_mul]
+    toEuclideanLin_signFlip_coord, ite_eq_right hik, ite_eq_right hjk, one_mul, one_mul]
   have hden : (‖(Matrix.toEuclideanLin (signFlipMat k) p.rep)‖ : ℂ) ^ 2
       = (‖p.rep‖ : ℂ) ^ 2 := by
     rw [← Complex.ofReal_pow, signFlip_normSq, Complex.ofReal_pow]

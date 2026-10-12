@@ -1209,7 +1209,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 -- Scope: free (mode-diagonal) drive, matching freeTwoPoint; no continuum limit
 -- (no_exact_finite_ccr stands); no thermodynamic limit in K. Proof-engineering notes: the
 -- Pi.div module-system defeq wall (Complex.mulAux unexposed) bridged via Pi.div_apply; the
--- unannotated-binder nat-default trap on oscEnergy sums; Fin-literal if_pos conditions
+-- unannotated-binder nat-default trap on oscEnergy sums; Fin-literal ite_eq_left conditions
 -- stated via show-ascriptions (the B5-geom idiom family).
 /-- info: 'CSD.CV.thermalFieldState_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

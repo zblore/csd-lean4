@@ -162,16 +162,16 @@ lemma decohereReduced_apply (ψ : EuclideanSpace ℂ (Fin N)) (i i' : Fin N) :
   simp only [hc]
   by_cases h : i = i'
   · subst h
-    rw [if_pos rfl, Finset.sum_eq_single i]
+    rw [ite_eq_left rfl, Finset.sum_eq_single i]
     · simp
-    · intro k _ hk; rw [if_neg hk, zero_mul]
+    · intro k _ hk; rw [ite_eq_right hk, zero_mul]
     · intro hni; exact absurd (Finset.mem_univ i) hni
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     apply Finset.sum_eq_zero
     intro k _
     rcases eq_or_ne k i with hk | hk
-    · subst hk; rw [if_neg h, star_zero, mul_zero]
-    · rw [if_neg hk, zero_mul]
+    · subst hk; rw [ite_eq_right h, star_zero, mul_zero]
+    · rw [ite_eq_right hk, zero_mul]
 
 /-! ### Off-diagonal vanishing (coherences gone) -/
 
@@ -179,7 +179,7 @@ lemma decohereReduced_apply (ψ : EuclideanSpace ℂ (Fin N)) (i i' : Fin N) :
 exactly `0`: the unmonitored pointer trace dephases the system. -/
 theorem decoherence_offdiagonal_vanish (ψ : EuclideanSpace ℂ (Fin N)) {i i' : Fin N}
     (h : i ≠ i') : decohereReduced ψ i i' = 0 := by
-  rw [decohereReduced_apply, if_neg h]
+  rw [decohereReduced_apply, ite_eq_right h]
 
 /-! ### Diagonal weights are the Born weights -/
 
@@ -187,7 +187,7 @@ theorem decoherence_offdiagonal_vanish (ψ : EuclideanSpace ℂ (Fin N)) {i i' :
 theorem decoherence_diagonal_born (ψ : EuclideanSpace ℂ (Fin N)) (i : Fin N) :
     decohereReduced ψ i i
       = ((‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2 : ℝ) : ℂ) := by
-  rw [decohereReduced_apply, if_pos rfl, mul_star_eq_normSq,
+  rw [decohereReduced_apply, ite_eq_left rfl, mul_star_eq_normSq,
     EuclideanSpace.inner_single_left, map_one, one_mul]
   push_cast
   ring
@@ -211,15 +211,15 @@ theorem decoherence_dephases (ψ : EuclideanSpace ℂ (Fin N)) :
   simp only [Matrix.smul_apply, outerProduct_single, Matrix.single_apply]
   by_cases h : i = i'
   · subst h
-    rw [if_pos rfl, Finset.sum_eq_single i]
-    · rw [if_pos ⟨rfl, rfl⟩, Complex.real_smul, mul_one, mul_star_eq_normSq,
+    rw [ite_eq_left rfl, Finset.sum_eq_single i]
+    · rw [ite_eq_left ⟨rfl, rfl⟩, Complex.real_smul, mul_one, mul_star_eq_normSq,
         EuclideanSpace.inner_single_left, map_one, one_mul]
       push_cast; ring
-    · intro j _ hj; rw [if_neg (fun hc => hj hc.1)]; exact smul_zero _
+    · intro j _ hj; rw [ite_eq_right (fun hc => hj hc.1)]; exact smul_zero _
     · intro hni; exact absurd (Finset.mem_univ i) hni
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
     refine (Finset.sum_eq_zero fun j _ => ?_).symm
-    rw [if_neg (fun hc => h (hc.1.symm.trans hc.2))]; exact smul_zero _
+    rw [ite_eq_right (fun hc => h (hc.1.symm.trans hc.2))]; exact smul_zero _
 
 /-! ### The decohered weights ARE the ontic typicality measures -/
 

@@ -104,10 +104,10 @@ lemma orthonormal_pair_iff {x y : EuclideanSpace ℂ (Fin N)} :
   · intro h
     refine ⟨?_, ?_, ?_⟩
     · have := h 0 0
-      simp only [Matrix.cons_val_zero, if_true] at this
+      simp only [Matrix.cons_val_zero, ite_true] at this
       exact norm_eq_one_of_inner_self this
     · have := h 1 1
-      simp only [Matrix.cons_val_one, if_true] at this
+      simp only [Matrix.cons_val_one, ite_true] at this
       exact norm_eq_one_of_inner_self this
     · have := h 0 1
       simpa using this
@@ -116,7 +116,7 @@ lemma orthonormal_pair_iff {x y : EuclideanSpace ℂ (Fin N)} :
     · simp [inner_self_eq_norm_sq_to_K, hx]
     · simpa using hxy
     · simp only [Fin.mk_one, Fin.isValue, Matrix.cons_val_one, Fin.zero_eta,
-        Matrix.cons_val_zero, one_ne_zero, if_false]
+        Matrix.cons_val_zero, one_ne_zero, ite_false]
       rw [← inner_conj_symm, hxy, map_zero]
     · simp [inner_self_eq_norm_sq_to_K, hy]
 

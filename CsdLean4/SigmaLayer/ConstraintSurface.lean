@@ -5,8 +5,7 @@ Authors: Zayn Blore
 -/
 module
 
-public import Mathlib.Data.Real.Basic
-
+public import Mathlib.Basic.Real.Basic
 /-!
 # SigmaLayer/ConstraintSurface: ontic time and the concrete constrained state space
 

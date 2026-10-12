@@ -185,7 +185,7 @@ lemma priceObs_apply_c00 (e : FieldConfig 2 2) :
     priceObs ![0, 0] e = if e = ![1, 0] then 1 else 0 := by
   by_cases he : e = ![1, 0]
   · subst he
-    rw [if_pos rfl, priceObs]
+    rw [ite_eq_left rfl, priceObs]
     have hag : ∀ k, k ≠ (0 : Fin 2) →
         (![0, 0] : FieldConfig 2 2) k = (![1, 0] : FieldConfig 2 2) k := by
       intro k hk
@@ -194,7 +194,7 @@ lemma priceObs_apply_c00 (e : FieldConfig 2 2) :
       · rfl
     rw [modeOp_apply_of_agree 0 _ hag]
     simp [Matrix.single]
-  · rw [if_neg he, priceObs]
+  · rw [ite_eq_right he, priceObs]
     by_cases hag : ∀ k, k ≠ 0 → (![0, 0] : FieldConfig 2 2) k = e k
     · rw [modeOp_apply_of_agree 0 _ hag]
       have h1 : e 1 = 0 := (hag 1 (by decide)).symm
@@ -205,16 +205,16 @@ lemma priceObs_apply_c00 (e : FieldConfig 2 2) :
           · exact h.symm
           · exact h1)
       simp only [Matrix.single, Matrix.of_apply]
-      rw [if_neg (fun hc => h0 hc.2)]
+      rw [ite_eq_right (fun hc => h0 hc.2)]
     · rw [modeOp]
-      exact if_neg hag
+      exact ite_eq_right hag
 
 /-- The witness observable into `config (1,1)`: only out of `config (0,1)`. -/
 lemma priceObs_apply_c11 (e : FieldConfig 2 2) :
     priceObs e ![1, 1] = if e = ![0, 1] then 1 else 0 := by
   by_cases he : e = ![0, 1]
   · subst he
-    rw [if_pos rfl, priceObs]
+    rw [ite_eq_left rfl, priceObs]
     have hag : ∀ k, k ≠ (0 : Fin 2) →
         (![0, 1] : FieldConfig 2 2) k = (![1, 1] : FieldConfig 2 2) k := by
       intro k hk
@@ -223,7 +223,7 @@ lemma priceObs_apply_c11 (e : FieldConfig 2 2) :
       · rfl
     rw [modeOp_apply_of_agree 0 _ hag]
     simp [Matrix.single]
-  · rw [if_neg he, priceObs]
+  · rw [ite_eq_right he, priceObs]
     by_cases hag : ∀ k, k ≠ 0 → e k = (![1, 1] : FieldConfig 2 2) k
     · rw [modeOp_apply_of_agree 0 _ hag]
       have h1 : e 1 = 1 := hag 1 (by decide)
@@ -234,16 +234,16 @@ lemma priceObs_apply_c11 (e : FieldConfig 2 2) :
           · exact h.symm
           · exact h1)
       simp only [Matrix.single, Matrix.of_apply]
-      rw [if_neg (fun hc => h0 hc.1)]
+      rw [ite_eq_right (fun hc => h0 hc.1)]
     · rw [modeOp]
-      exact if_neg hag
+      exact ite_eq_right hag
 
 /-- The probe into `config (1,1)`: only out of `config (1,0)`. -/
 lemma priceProbe_apply_c11 (e : FieldConfig 2 2) :
     priceProbe e ![1, 1] = if e = ![1, 0] then 1 else 0 := by
   by_cases he : e = ![1, 0]
   · subst he
-    rw [if_pos rfl, priceProbe]
+    rw [ite_eq_left rfl, priceProbe]
     have hag : ∀ k, k ≠ (1 : Fin 2) →
         (![1, 0] : FieldConfig 2 2) k = (![1, 1] : FieldConfig 2 2) k := by
       intro k hk
@@ -252,7 +252,7 @@ lemma priceProbe_apply_c11 (e : FieldConfig 2 2) :
       · exact absurd rfl hk
     rw [modeOp_apply_of_agree 1 _ hag]
     simp [Matrix.single]
-  · rw [if_neg he, priceProbe]
+  · rw [ite_eq_right he, priceProbe]
     by_cases hag : ∀ k, k ≠ 1 → e k = (![1, 1] : FieldConfig 2 2) k
     · rw [modeOp_apply_of_agree 1 _ hag]
       have h0 : e 0 = 1 := hag 0 (by decide)
@@ -263,16 +263,16 @@ lemma priceProbe_apply_c11 (e : FieldConfig 2 2) :
           · exact h0
           · exact h.symm)
       simp only [Matrix.single, Matrix.of_apply]
-      rw [if_neg (fun hc => h1 hc.1)]
+      rw [ite_eq_right (fun hc => h1 hc.1)]
     · rw [modeOp]
-      exact if_neg hag
+      exact ite_eq_right hag
 
 /-- The probe out of `config (0,0)`: only into `config (0,1)`. -/
 lemma priceProbe_apply_c00 (e : FieldConfig 2 2) :
     priceProbe ![0, 0] e = if e = ![0, 1] then 1 else 0 := by
   by_cases he : e = ![0, 1]
   · subst he
-    rw [if_pos rfl, priceProbe]
+    rw [ite_eq_left rfl, priceProbe]
     have hag : ∀ k, k ≠ (1 : Fin 2) →
         (![0, 0] : FieldConfig 2 2) k = (![0, 1] : FieldConfig 2 2) k := by
       intro k hk
@@ -281,7 +281,7 @@ lemma priceProbe_apply_c00 (e : FieldConfig 2 2) :
       · exact absurd rfl hk
     rw [modeOp_apply_of_agree 1 _ hag]
     simp [Matrix.single]
-  · rw [if_neg he, priceProbe]
+  · rw [ite_eq_right he, priceProbe]
     by_cases hag : ∀ k, k ≠ 1 → (![0, 0] : FieldConfig 2 2) k = e k
     · rw [modeOp_apply_of_agree 1 _ hag]
       have h0 : e 0 = 0 := (hag 0 (by decide)).symm
@@ -292,9 +292,9 @@ lemma priceProbe_apply_c00 (e : FieldConfig 2 2) :
           · exact h0
           · exact h.symm)
       simp only [Matrix.single, Matrix.of_apply]
-      rw [if_neg (fun hc => h1 hc.2)]
+      rw [ite_eq_right (fun hc => h1 hc.2)]
     · rw [modeOp]
-      exact if_neg hag
+      exact ite_eq_right hag
 
 /-! ### The phase bookkeeping -/
 
@@ -347,10 +347,10 @@ lemma XP_entry (τ lam : ℝ) :
   rw [Finset.sum_congr rfl fun e _ => by
     rw [priceProbe_apply_c11 e, mul_ite, mul_one, mul_zero]]
   rw [Finset.sum_ite_eq' Finset.univ (![1, 0] : FieldConfig 2 2) _,
-    if_pos (Finset.mem_univ _)]
+    ite_eq_left (Finset.mem_univ _)]
   rw [interactingU_priceV, heisenberg_phaseDiagU_apply,
     show priceObs ![0, 0] ![1, 0] = 1 from by
-      rw [priceObs_apply_c00, if_pos rfl],
+      rw [priceObs_apply_c00, ite_eq_left rfl],
     star_exp_neg_I_mul_real]
   ring
 
@@ -364,10 +364,10 @@ lemma PX_entry (τ lam : ℝ) :
   rw [Finset.sum_congr rfl fun e _ => by
     rw [priceProbe_apply_c00 e, ite_mul, one_mul, zero_mul]]
   rw [Finset.sum_ite_eq' Finset.univ (![0, 1] : FieldConfig 2 2) _,
-    if_pos (Finset.mem_univ _)]
+    ite_eq_left (Finset.mem_univ _)]
   rw [interactingU_priceV, heisenberg_phaseDiagU_apply,
     show priceObs ![0, 1] ![1, 1] = 1 from by
-      rw [priceObs_apply_c11, if_pos rfl],
+      rw [priceObs_apply_c11, ite_eq_left rfl],
     star_exp_neg_I_mul_real]
   ring
 

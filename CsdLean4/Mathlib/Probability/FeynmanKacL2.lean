@@ -135,7 +135,7 @@ theorem fkFunctional_congr_ae {B : ℝ≥0 → Ω → E} (hB : IsBrownianVec B P
     (h : f₁ =ᵐ[volume] f₂) (x : E) : fkFunctional V P B t f₁ x = fkFunctional V P B t f₂ x := by
   refine integral_congr_ae ?_
   have h1 : ∀ᵐ y ∂(volume : Measure E), f₁ (x + y) = f₂ (x + y) :=
-    (measurePreserving_add_left volume x).quasiMeasurePreserving.ae_eq h
+    (measurePreserving_add_left volume x).quasiMeasurePreserving.ae_eq_comp h
   have h2 : ∀ᵐ y ∂(gaussianVec ι t), f₁ (x + y) = f₂ (x + y) :=
     (gaussianVec_absolutelyContinuous ht.ne').ae_eq h1
   rw [← (hB.toIsPreBrownianVec.hasLaw_eval hBm t).map_eq] at h2
@@ -162,7 +162,8 @@ theorem coeFn_absL (g : L2) : (absL g : E → ℂ) =ᵐ[volume] fun x => ((‖g 
 theorem norm_absL (g : L2) : ‖absL g‖ = ‖g‖ := by
   rw [absL, Lp.norm_toLp, Lp.norm_def]
   congr 1
-  exact eLpNorm_congr_norm_ae (Eventually.of_forall fun x => by simp)
+  exact eLpNorm_congr_norm_ae ((Lp.memLp g).norm.ofReal).aestronglyMeasurable
+    (Lp.aestronglyMeasurable g) (Eventually.of_forall fun x => by simp)
 
 /-- The heat convolution depends only on the a.e.-class of the function (`t > 0`). -/
 theorem heatConv_congr_ae {t : ℝ} (ht : 0 < t) {f₁ f₂ : E → ℂ} (h : f₁ =ᵐ[volume] f₂) (x : E) :
@@ -170,7 +171,7 @@ theorem heatConv_congr_ae {t : ℝ} (ht : 0 < t) {f₁ f₂ : E → ℂ} (h : f�
   simp only [heatConv]
   refine integral_congr_ae ?_
   have h1 : ∀ᵐ y ∂(volume : Measure E), f₁ (x + y) = f₂ (x + y) :=
-    (measurePreserving_add_left volume x).quasiMeasurePreserving.ae_eq h
+    (measurePreserving_add_left volume x).quasiMeasurePreserving.ae_eq_comp h
   exact (gaussian_absolutelyContinuous ht).ae_eq h1
 
 /-- ★ **The averaged modulus is the heat semigroup of `|g|`**: `E‖g (x + B_t)‖ = (P_t |g|)(x)` for

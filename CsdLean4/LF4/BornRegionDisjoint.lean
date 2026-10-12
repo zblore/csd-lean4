@@ -74,8 +74,8 @@ theorem replaceMap_image_disjoint_replaceMap (b : Fin M → ℝ) (i j : Fin M)
   -- `hx : replaceMap b j t' = replaceMap b i t`; read coordinates `i`, `j`
   have hci : (replaceMap b j t') i = (replaceMap b i t) i := congrFun hx i
   have hcj : (replaceMap b j t') j = (replaceMap b i t) j := congrFun hx j
-  rw [replaceMap_apply, replaceMap_apply, if_neg hij, if_pos rfl, add_zero] at hci
-  rw [replaceMap_apply, replaceMap_apply, if_pos rfl, if_neg (Ne.symm hij), add_zero] at hcj
+  rw [replaceMap_apply, replaceMap_apply, ite_eq_right hij, ite_eq_left rfl, add_zero] at hci
+  rw [replaceMap_apply, replaceMap_apply, ite_eq_left rfl, ite_eq_right (Ne.symm hij), add_zero] at hcj
   -- the shared point's `i` and `j` coordinates, read both ways
   have hi : b i * t i = b i * t' j + t' i := hci.symm
   have hj : b j * t i + t j = b j * t' j := by linarith [hcj]
@@ -104,7 +104,7 @@ theorem replaceMap_image_disjoint_apexMap (b : Fin M → ℝ) (i : Fin M)
   have happ : ∀ k, (apexLin b t' + b) k = t' k + (1 - ∑ j, t' j) * b k := by
     intro k; rw [Pi.add_apply, apexLin_apply]; ring
   have hci : (apexLin b t' + b) i = (replaceMap b i t) i := congrFun hx i
-  rw [happ i, replaceMap_apply, if_pos rfl, add_zero] at hci
+  rw [happ i, replaceMap_apply, ite_eq_left rfl, add_zero] at hci
   -- `xᵢ` both ways
   have hi : b i * t i = t' i + (1 - ∑ j, t' j) * b i := hci.symm
   -- `∑ x` both ways (free cell): `∑ x = ∑t + tᵢ·(∑b − 1)`
@@ -116,9 +116,9 @@ theorem replaceMap_image_disjoint_apexMap (b : Fin M → ℝ) (i : Fin M)
         refine Finset.sum_congr rfl (fun k _ => ?_)
         by_cases hk : k = i
         · subst hk; simp
-        · rw [if_neg hk, if_neg (Ne.symm hk), add_zero]
+        · rw [ite_eq_right hk, ite_eq_right (Ne.symm hk), add_zero]
       rw [Finset.sum_add_distrib, Finset.sum_ite_eq Finset.univ i t,
-        if_pos (Finset.mem_univ i)] at h1
+        ite_eq_left (Finset.mem_univ i)] at h1
       linarith
     rw [Finset.sum_add_distrib, hcompl, ← Finset.sum_mul]
     ring
@@ -279,7 +279,7 @@ theorem bornOutcome_eq_some_iff (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : 
     exact hspec
   · intro hp
     have hex : ∃ j, p ∈ bornRegion ψ hψ0 j := ⟨i, hp⟩
-    rw [dif_pos hex, Option.some.injEq]
+    rw [dite_eq_left hex, Option.some.injEq]
     -- uniqueness: `p ∈ cell hex.choose ∩ cell i` forces `hex.choose = i`
     by_contra hne
     exact Set.disjoint_left.mp (bornRegion_pairwiseDisjoint ψ hψ0 hne) hex.choose_spec hp
@@ -320,7 +320,7 @@ theorem bornOutcome_measurable (ψ : EuclideanSpace ℂ (Fin (M + 1))) (hψ0 : �
         exact absurd h (by simp)
       · intro h
         unfold bornOutcome
-        rw [dif_neg]
+        rw [dite_eq_right]
         rintro ⟨i, hi⟩
         exact h ⟨i, hi⟩
     rw [hpre]

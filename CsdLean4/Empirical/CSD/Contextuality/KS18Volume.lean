@@ -157,10 +157,10 @@ lemma ksCtxVec_orthonormal : Orthonormal ℂ ksCtxVec := by
   intro a b
   by_cases hab : a = b
   · subst hab
-    simp only [if_true]
+    simp only [ite_true]
     rw [inner_self_eq_norm_sq_to_K, norm_ksCtxVec a]
     norm_num
-  · simp only [if_neg hab]
+  · simp only [ite_eq_right hab]
     unfold ksCtxVec
     rw [inner_smul_left, inner_smul_right, cabelloVecC_inner]
     have horth : (inner ℝ (cabelloVec (ksRayIdx a)) (cabelloVec (ksRayIdx b)) : ℝ) = 0 := by

@@ -98,10 +98,10 @@ lemma cyclicKick_iterate (m : ℕ) [NeZero m] (δ : RecordCircle) (x : Fin m)
         if x + Fin.ofNat m j = 0 then δ else 0
       rw [Finset.sum_range_succ, ← add_assoc]
       by_cases hmem : x + Fin.ofNat m k = 0
-      · rw [if_pos hmem,
-          if_pos (show x + Fin.ofNat m k ∈ ({0} : Set (Fin m)) from hmem)]
-      · rw [if_neg hmem,
-          if_neg (show x + Fin.ofNat m k ∉ ({0} : Set (Fin m)) from hmem)]
+      · rw [ite_eq_left hmem,
+          ite_eq_left (show x + Fin.ofNat m k ∈ ({0} : Set (Fin m)) from hmem)]
+      · rw [ite_eq_right hmem,
+          ite_eq_right (show x + Fin.ofNat m k ∉ ({0} : Set (Fin m)) from hmem)]
 
 /-! ### The unstable set, exactly -/
 
@@ -125,7 +125,7 @@ theorem recordIntact_compl_cyclicKick {m : ℕ} [NeZero m]
         if x + Fin.ofNat m j = 0 then δ else 0) = r
     rw [Finset.sum_eq_zero, add_zero]
     intro j hj
-    exact if_neg (hno j (lt_of_lt_of_le (Finset.mem_range.mp hj) hkn))
+    exact ite_eq_right (hno j (lt_of_lt_of_le (Finset.mem_range.mp hj) hkn))
   · rintro ⟨j₀, hj₀n, hx⟩
     refine ⟨j₀ + 1, by omega, ?_⟩
     rw [cyclicKick_iterate]
@@ -136,9 +136,9 @@ theorem recordIntact_compl_cyclicKick {m : ℕ} [NeZero m]
     · intro habs
       exact hδ (add_left_cancel (habs.trans (add_zero r).symm))
     · rw [Finset.sum_eq_single j₀]
-      · rw [if_pos hx]
+      · rw [ite_eq_left hx]
       · intro j hj hne'
-        refine if_neg fun h0 => hne' ?_
+        refine ite_eq_right fun h0 => hne' ?_
         have hcast : Fin.ofNat m j = Fin.ofNat m j₀ :=
           add_left_cancel (h0.trans hx.symm)
         have hjm : j < m := by

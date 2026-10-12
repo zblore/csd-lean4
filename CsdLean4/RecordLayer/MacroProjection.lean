@@ -147,8 +147,8 @@ theorem patternMap_eq_of_factorsThrough {k : ℕ} {B : Fin k → Set X} {π : X 
   have hiff := (factorsThrough_iff.1 (h i)) x y hxy
   simp only [patternMap]
   by_cases hx : x ∈ B i
-  · rw [if_pos hx, if_pos (hiff.1 hx)]
-  · rw [if_neg hx, if_neg (fun hy => hx (hiff.2 hy))]
+  · rw [ite_eq_left hx, ite_eq_left (hiff.1 hx)]
+  · rw [ite_eq_right hx, ite_eq_right (fun hy => hx (hiff.2 hy))]
 
 end Factoring
 

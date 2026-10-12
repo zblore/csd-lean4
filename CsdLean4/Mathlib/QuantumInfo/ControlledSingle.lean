@@ -81,11 +81,11 @@ variable {a j : Fin m} {M N : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ}
 
 theorem ctrlChoice_apply_of_agree {k l : Fin m → Fin 2} (hag : ∀ i, i ≠ j → k i = l i) :
     ctrlChoice a j M k l = M (k a) (k j) (l j) := by
-  rw [ctrlChoice, if_pos hag]
+  rw [ctrlChoice, ite_eq_left hag]
 
 theorem ctrlChoice_apply_of_not_agree {k l : Fin m → Fin 2} (h : ¬(∀ i, i ≠ j → k i = l i)) :
     ctrlChoice a j M k l = 0 := by
-  rw [ctrlChoice, if_neg h]
+  rw [ctrlChoice, ite_eq_right h]
 
 theorem ctrlChoice_one (a j : Fin m) : ctrlChoice a j (fun _ => 1) = 1 := by
   ext k l
@@ -101,9 +101,9 @@ theorem ctrlChoice_one (a j : Fin m) : ctrlChoice a j (fun _ => 1) = 1 := by
         · exact hag i hi
     rw [ctrlChoice_apply_of_agree hag, Matrix.one_apply, Matrix.one_apply]
     by_cases h : k j = l j
-    · rw [if_pos h, if_pos (hkl.mpr h)]
-    · rw [if_neg h, if_neg fun hc => h (hkl.mp hc)]
-  · rw [ctrlChoice_apply_of_not_agree hag, Matrix.one_apply, if_neg]
+    · rw [ite_eq_left h, ite_eq_left (hkl.mpr h)]
+    · rw [ite_eq_right h, ite_eq_right fun hc => h (hkl.mp hc)]
+  · rw [ctrlChoice_apply_of_not_agree hag, Matrix.one_apply, ite_eq_right]
     intro h
     exact hag fun i _ => by rw [h]
 
@@ -210,9 +210,9 @@ theorem diagGate_apply (p q : ℂ) (k l : Fin m → Fin 2) :
     singleGate a p 0 0 q k l = if k = l then (if k a = 0 then p else q) else 0 := by
   by_cases hkl : k = l
   · subst hkl
-    rw [singleGate, ctrlSet_apply_of_ctrl (fun i _ => rfl) (by simp), if_pos rfl, blockEntry]
+    rw [singleGate, ctrlSet_apply_of_ctrl (fun i _ => rfl) (by simp), ite_eq_left rfl, blockEntry]
     rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (k a) with h | h <;> rw [h] <;> simp
-  · rw [if_neg hkl, singleGate]
+  · rw [ite_eq_right hkl, singleGate]
     by_cases hag : ∀ i, i ≠ a → k i = l i
     · have hka : k a ≠ l a := fun hi => hkl (funext fun i' => by
         by_cases h : i' = a
@@ -230,9 +230,9 @@ theorem ctrlChoice_diag_apply (p q : ℂ) (k l : Fin m → Fin 2) :
       = if k = l then (if k a = 0 then p else q) else 0 := by
   by_cases hkl : k = l
   · subst hkl
-    rw [ctrlChoice_apply_of_agree (fun i _ => rfl), if_pos rfl]
+    rw [ctrlChoice_apply_of_agree (fun i _ => rfl), ite_eq_left rfl]
     rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (k a) with h | h <;> rw [h] <;> simp
-  · rw [if_neg hkl]
+  · rw [ite_eq_right hkl]
     by_cases hag : ∀ i, i ≠ j → k i = l i
     · have hkj : k j ≠ l j := fun hi => hkl (funext fun i' => by
         by_cases h : i' = j
@@ -258,9 +258,9 @@ theorem ctrlOf_eq_ctrlChoice (M : Matrix (Fin 2) (Fin 2) ℂ) :
   by_cases hag : ∀ i, i ≠ j → k i = l i
   · rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (k a) with hka | hka
     · rw [ctrlOf, ctrlSet_apply_of_not_ctrl hag (by simp [hka]),
-        ctrlChoice_apply_of_agree hag, hka, if_pos rfl, Matrix.one_apply]
+        ctrlChoice_apply_of_agree hag, hka, ite_eq_left rfl, Matrix.one_apply]
     · rw [ctrlOf, ctrlSet_apply_of_ctrl hag (by simp [hka]), ctrlChoice_apply_of_agree hag, hka,
-        if_neg (show ¬((1 : Fin 2) = 0) by decide), blockEntry_eq_apply, ← Matrix.eta_fin_two M]
+        ite_eq_right (show ¬((1 : Fin 2) = 0) by decide), blockEntry_eq_apply, ← Matrix.eta_fin_two M]
   · rw [ctrlOf, ctrlSet_apply_of_not_agree hag, ctrlChoice_apply_of_not_agree hag]
 
 theorem cnotGate'_eq_ctrlChoice (a j : Fin m) :
@@ -295,7 +295,7 @@ theorem ctrlOf_eq_circuit (haj : a ≠ j) {U : Matrix (Fin 2) (Fin 2) ℂ}
     simp only [reduceIte, one_smul, one_mul, mul_one]
     exact habc.symm
   · rw [hb]
-    repeat rw [if_neg (show ¬((1 : Fin 2) = 0) by decide)]
+    repeat rw [ite_eq_right (show ¬((1 : Fin 2) = 0) by decide)]
     rw [hUeq]
     simp only [Matrix.smul_mul, one_mul]
 

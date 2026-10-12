@@ -160,15 +160,15 @@ theorem no_value_assignment_18_9
     · -- LHS becomes ∑ B, if v ∈ bases B then 1 else 0 = card_filter
       have h_summand : ∀ B, f B v = if v ∈ bases B then (1 : ℕ) else 0 := by
         intro B; simp only [f, hl, and_true]
-      rw [Finset.sum_congr rfl (fun B _ => h_summand B), if_pos hl, Finset.card_filter]
+      rw [Finset.sum_congr rfl (fun B _ => h_summand B), ite_eq_left hl, Finset.card_filter]
     · -- LHS becomes ∑ B, 0 = 0
       have h_summand : ∀ B, f B v = (0 : ℕ) := by
         intro B
         simp only [f]
-        rw [if_neg]
+        rw [ite_eq_right]
         intro ⟨_, h⟩
         exact hl h
-      rw [Finset.sum_congr rfl (fun B _ => h_summand B), if_neg hl, Finset.sum_const_zero]
+      rw [Finset.sum_congr rfl (fun B _ => h_summand B), ite_eq_right hl, Finset.sum_const_zero]
   -- Combine: total = 2 * |{λ-true}|.
   have hT_card :
       ∑ B : Fin 9, ((bases B).filter (fun v => lambda v = true)).card

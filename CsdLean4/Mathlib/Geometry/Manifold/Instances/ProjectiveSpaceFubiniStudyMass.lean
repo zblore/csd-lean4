@@ -236,7 +236,7 @@ theorem normSq_det_fsScale (r : ℝ) :
   obtain ⟨m, hm⟩ := Nat.exists_eq_succ_of_ne_zero (NeZero.ne n)
   subst hm
   rw [fsScale, Matrix.det_diagonal, map_prod, Fin.prod_univ_succ]
-  simp only [fsScaleEntry, if_true, Fin.succ_ne_zero, if_false, Complex.normSq_ofReal,
+  simp only [fsScaleEntry, ite_true, Fin.succ_ne_zero, ite_false, Complex.normSq_ofReal,
     Finset.prod_const, Finset.card_univ, Fintype.card_fin]
   rw [Real.mul_self_sqrt (inv_nonneg.2 (by positivity)), Nat.succ_eq_add_one, pow_succ]
   ring

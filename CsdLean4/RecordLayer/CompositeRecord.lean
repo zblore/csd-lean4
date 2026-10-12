@@ -112,7 +112,7 @@ lemma localBlock_sum_normSq (u : EuclideanSpace ℂ (Fin (nA * nB))) (j : Fin nB
     rw [show localBlock nA nB (finProdFinEquiv (a, k)) = k from by
       rw [localBlock, Equiv.symm_apply_apply]]]
   rw [Finset.sum_ite_eq' Finset.univ j (fun k => ‖u (finProdFinEquiv (a, k))‖ ^ 2),
-    if_pos (Finset.mem_univ _)]
+    ite_eq_left (Finset.mem_univ _)]
 
 /-! ### Bob's reduced state as a density operator -/
 

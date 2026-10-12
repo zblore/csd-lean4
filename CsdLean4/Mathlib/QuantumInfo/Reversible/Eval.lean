@@ -135,8 +135,8 @@ theorem applyGate_apply (g : Gate m) {a : Array Bool} {s : State m} (h : Represe
       rw [getElem!_set!_ne hik', hget i, Function.update_of_ne hik]
   | CX c t =>
     by_cases hct : c = t
-    · simp only [applyGate, denoteGate, if_pos hct]; rw [hget i]
-    · simp only [applyGate, denoteGate, if_neg hct]
+    · simp only [applyGate, denoteGate, ite_eq_left hct]; rw [hget i]
+    · simp only [applyGate, denoteGate, ite_eq_right hct]
       by_cases hit : i = t
       · subst hit
         rw [getElem!_set!_self (by rw [hsize]; exact i.2), hget c, hget i, Function.update_self]
@@ -144,8 +144,8 @@ theorem applyGate_apply (g : Gate m) {a : Array Bool} {s : State m} (h : Represe
         rw [getElem!_set!_ne hit', hget i, Function.update_of_ne hit]
   | CCX c₁ c₂ t =>
     by_cases hguard : t = c₁ ∨ t = c₂
-    · simp only [applyGate, denoteGate, if_pos hguard]; rw [hget i]
-    · simp only [applyGate, denoteGate, if_neg hguard]
+    · simp only [applyGate, denoteGate, ite_eq_left hguard]; rw [hget i]
+    · simp only [applyGate, denoteGate, ite_eq_right hguard]
       by_cases hit : i = t
       · subst hit
         rw [getElem!_set!_self (by rw [hsize]; exact i.2), hget i, hget c₁, hget c₂,

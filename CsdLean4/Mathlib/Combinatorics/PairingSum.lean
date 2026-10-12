@@ -208,8 +208,8 @@ variable {R : Type*} [CommSemiring R]
 theorem prod_glue (c : Fin (n + 2) → Fin (n + 2) → R) (j : Fin (n + 1)) (τ : Fin n → Fin n) :
     (∏ i, if i < glue j τ i then c i (glue j τ i) else 1)
       = c 0 j.succ * ∏ a, if a < τ a then c (emb j a) (emb j (τ a)) else 1 := by
-  rw [Fin.prod_univ_succ, Fin.prod_univ_succAbove _ j, glue_zero, if_pos (Fin.succ_pos j),
-    glue_succ_self, if_neg (Fin.not_lt_zero _), one_mul]
+  rw [Fin.prod_univ_succ, Fin.prod_univ_succAbove _ j, glue_zero, ite_eq_left (Fin.succ_pos j),
+    glue_succ_self, ite_eq_right (Fin.not_lt_zero _), one_mul]
   congr 1
   refine Finset.prod_congr rfl fun a _ => ?_
   rw [show (j.succAbove a).succ = emb j a from rfl, glue_emb]

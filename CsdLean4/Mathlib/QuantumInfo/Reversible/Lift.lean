@@ -123,7 +123,7 @@ lemma denote_andUncompute_012 (s : State 3) :
     denote (andUncompute 0 1 2) s
       = Function.update s 2 (s 2 ^^ (s 0 && s 1)) := by
   show denoteGate (Gate.CCX 0 1 2) s = _
-  simp only [denoteGate, if_neg (show ¬((2 : Fin 3) = 0 ∨ (2 : Fin 3) = 1) by decide)]
+  simp only [denoteGate, ite_eq_right (show ¬((2 : Fin 3) = 0 ∨ (2 : Fin 3) = 1) by decide)]
 
 /-- **The Boolean ↔ Fin 2 link.** `ccx` is exactly the recast of the Boolean
 `denote (andUncompute 0 1 2)`: the `Fin 2` permutation and the Boolean Toffoli agree
@@ -141,9 +141,9 @@ lemma ccx_eq_denote_recast (w : Fin 3 → Fin 2) :
   simp only [ccx, b3OfState, stateOfB3, Function.update_apply]
   by_cases h : i = 2
   · subst h
-    rw [if_pos (rfl : (2 : Fin 3) = 2), if_pos (rfl : (2 : Fin 3) = 2)]
+    rw [ite_eq_left (rfl : (2 : Fin 3) = 2), ite_eq_left (rfl : (2 : Fin 3) = 2)]
     exact ccx_index2 (w 0) (w 1) (w 2)
-  · simp only [if_neg h]
+  · simp only [ite_eq_right h]
     exact (b3OfState_decide (w i)).symm
 
 /-- **The three-wire gate lift.** The unitary `andUncompMat` acts on computational basis
@@ -197,7 +197,7 @@ lemma denote_andUncompute (wa wb wg : Fin m) (hga : wg ≠ wa) (hgb : wg ≠ wb)
     denote (andUncompute wa wb wg) s
       = Function.update s wg (s wg ^^ (s wa && s wb)) := by
   show denoteGate (Gate.CCX wa wb wg) s = _
-  simp only [denoteGate, if_neg (not_or.mpr ⟨hga, hgb⟩)]
+  simp only [denoteGate, ite_eq_right (not_or.mpr ⟨hga, hgb⟩)]
 
 /-- **The Boolean ↔ `Fin 2` link, arbitrary wires.** `ccxAt` is the recast of the Boolean
 `denote (andUncompute wa wb wg)`: the full-register `Fin 2` permutation and the Boolean
@@ -217,9 +217,9 @@ lemma ccxAt_eq_denote_recast (wa wb wg : Fin m) (hga : wg ≠ wa) (hgb : wg ≠ 
   simp only [ccxAt, regOfState, stateOfReg, Function.update_apply]
   by_cases h : i = wg
   · subst h
-    rw [if_pos rfl, if_pos rfl]
+    rw [ite_eq_left rfl, ite_eq_left rfl]
     exact hidx (w wa) (w wb) (w i)
-  · simp only [if_neg h]
+  · simp only [ite_eq_right h]
     exact (b3OfState_decide (w i)).symm
 
 /-- **The arbitrary-wire gate lift on `QReg m`.** The full-register unitary `ccxAtMat` acts

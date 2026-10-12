@@ -122,10 +122,10 @@ theorem volume_inter_openSimplexFree_pos {M : ℕ} {T : Set ℝ} {j k : Fin M} (
     rw [volume_pi_pi, pos_iff_ne_zero, Finset.prod_ne_zero_iff]
     intro i _
     by_cases h1 : i = j
-    · simp only [boxSet, if_pos h1]; exact ne_of_gt hcpos
+    · simp only [boxSet, ite_eq_left h1]; exact ne_of_gt hcpos
     · by_cases h2 : i = k
-      · simp only [boxSet, if_neg h1, if_pos h2]; exact ne_of_gt hcpos
-      · simp only [boxSet, if_neg h1, if_neg h2, Real.volume_Ioo, sub_zero]
+      · simp only [boxSet, ite_eq_right h1, ite_eq_left h2]; exact ne_of_gt hcpos
+      · simp only [boxSet, ite_eq_right h1, ite_eq_right h2, Real.volume_Ioo, sub_zero]
         exact ne_of_gt (ENNReal.ofReal_pos.mpr hεpos)
   refine lt_of_lt_of_le hbox_pos (measure_mono ?_)
   intro t ht
@@ -133,7 +133,7 @@ theorem volume_inter_openSimplexFree_pos {M : ℕ} {T : Set ℝ} {j k : Fin M} (
   have htj : t j ∈ T' := by simpa [boxSet] using ht j
   have htk : t k ∈ T' := by simpa [boxSet, Ne.symm hjk, hjk] using ht k
   have hother : ∀ i, i ≠ j → i ≠ k → t i ∈ Set.Ioo 0 ε := by
-    intro i h1 h2; simpa [boxSet, if_neg h1, if_neg h2] using ht i
+    intro i h1 h2; simpa [boxSet, ite_eq_right h1, ite_eq_right h2] using ht i
   refine ⟨⟨hT'sub htj, hT'sub htk⟩, ?_, ?_⟩
   · -- all coordinates strictly positive
     intro i

@@ -90,10 +90,10 @@ noncomputable def wickMoment (m : ℕ) : ℂ :=
   if Even m then (((m - 1)‼ : ℕ) : ℂ) / 2 ^ (m / 2) else 0
 
 theorem wickMoment_even (n : ℕ) : wickMoment (2 * n) = (((2 * n - 1)‼ : ℕ) : ℂ) / 2 ^ n := by
-  rw [wickMoment, if_pos (even_two_mul n), Nat.mul_div_cancel_left n two_pos]
+  rw [wickMoment, ite_eq_left (even_two_mul n), Nat.mul_div_cancel_left n two_pos]
 
 theorem wickMoment_odd (n : ℕ) : wickMoment (2 * n + 1) = 0 := by
-  rw [wickMoment, if_neg]
+  rw [wickMoment, ite_eq_right]
   exact Nat.not_even_iff_odd.mpr (odd_two_mul_add_one n)
 
 /-- The single-mode ladder, indexed by the multiplicity: below threshold the vacuum moment of

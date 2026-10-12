@@ -113,8 +113,8 @@ theorem pauliOp_basisState_zero (a x : Fin 15 → Fin 2) :
   ext z
   rw [pauliOp_apply, pauliSign_zero_left, one_mul, basisState_apply, basisState_apply]
   by_cases h : z + a = x
-  · rw [if_pos h, if_pos (by rw [← h, fin2_add_add_self])]
-  · rw [if_neg h, if_neg (by intro hz; exact h (by rw [hz, fin2_add_add_self]))]
+  · rw [ite_eq_left h, ite_eq_left (by rw [← h, fin2_add_add_self])]
+  · rw [ite_eq_right h, ite_eq_right (by intro hz; exact h (by rw [hz, fin2_add_add_self]))]
 
 /-- ★ The `X`-stabilisers fix `|0̄⟩`. -/
 theorem pauliOp_row_logical0 (i : Fin 4) : pauliOp (row i) 0 logical0 = logical0 := by
@@ -179,7 +179,7 @@ theorem tTrans_basisState (x : Fin 15 → Fin 2) :
   rw [tTrans_apply, PiLp.smul_apply, smul_eq_mul, basisState_apply]
   by_cases h : z = x
   · rw [h]
-  · rw [if_neg h, mul_zero, mul_zero]
+  · rw [ite_eq_right h, mul_zero, mul_zero]
 
 theorem tPhase_pow_seven : tPhase ^ 7 = tPhaseInv := by
   have h := tPhase_pow_eight

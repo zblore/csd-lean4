@@ -194,7 +194,7 @@ lemma recoveryChannel_apply_errorOp (k : Fin 4)
   conv_lhs => rw [← hρ]
   rw [Channel.apply_def]
   simp only [recoveryChannel_kraus, Matrix.conjTranspose_mul, syndromeProj_conjTranspose,
-    errorOp_conjTranspose, recovery_term, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+    errorOp_conjTranspose, recovery_term, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   exact hρ
 
 /-- **Recovery on one pattern**: the input for weight `≤ 1`, the logically flipped input for

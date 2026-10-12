@@ -128,6 +128,6 @@ theorem blockField_id (p : LF4.CPN N) (i : Fin N) :
     (blockField (id : Fin N → Fin N)).rate p i = (momentContext N).rate p i := by
   classical
   simp only [blockField, momentContext, id_eq]
-  rw [Finset.filter_eq' Finset.univ i, if_pos (Finset.mem_univ i), Finset.sum_singleton]
+  rw [Finset.filter_eq' Finset.univ i, ite_eq_left (Finset.mem_univ i), Finset.sum_singleton]
 
 end CSD.RecordLayer

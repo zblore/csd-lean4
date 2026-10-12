@@ -11,8 +11,7 @@ public import Mathlib.Tactic.Ring
 public import Mathlib.Tactic.NormNum
 public import Mathlib.LinearAlgebra.Matrix.Kronecker
 public import Mathlib.LinearAlgebra.Matrix.Notation
-public import Mathlib.Data.Complex.Basic
-
+public import Mathlib.Basic.Complex.Basic
 /-!
 # Empirical: Mermin–Peres magic square (no LHV assignment)
 

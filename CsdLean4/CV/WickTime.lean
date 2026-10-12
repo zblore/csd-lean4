@@ -134,16 +134,16 @@ theorem quadratureAt_apply (t : ℝ) (i j : Fin N) :
   · have h2 : ¬ (j : ℕ) + 1 = (i : ℕ) := by omega
     have hij : ((i : ℕ) : ℂ) - ((j : ℕ) : ℂ) = -1 := by
       rw [← h1]; push_cast; ring
-    rw [if_pos h1, if_neg h2, hij, Complex.ofReal_neg, mul_neg, neg_neg]
+    rw [ite_eq_left h1, ite_eq_right h2, hij, Complex.ofReal_neg, mul_neg, neg_neg]
     simp only [mul_zero, add_zero, mul_neg, mul_one]
     ring
   · by_cases h2 : (j : ℕ) + 1 = (i : ℕ)
     · have hij : ((i : ℕ) : ℂ) - ((j : ℕ) : ℂ) = 1 := by
         rw [← h2]; push_cast; ring
-      rw [if_neg h1, if_pos h2, hij, Complex.ofReal_neg, mul_neg, neg_neg]
+      rw [ite_eq_right h1, ite_eq_left h2, hij, Complex.ofReal_neg, mul_neg, neg_neg]
       simp only [mul_zero, zero_add, mul_one]
       ring
-    · rw [if_neg h1, if_neg h2]
+    · rw [ite_eq_right h1, ite_eq_right h2]
       simp
 
 /-- The evolved quadrature is strictly tridiagonal, like the bare one. -/
@@ -165,7 +165,7 @@ theorem annihilation_quadratureAt_commutator (t : ℝ) :
 
 theorem modeOp_apply_of_not_agree (k : Fin K) (a : Matrix (Fin N) (Fin N) ℂ)
     {c d : FieldConfig K N} (h : ¬ ∀ j, j ≠ k → c j = d j) : modeOp k a c d = 0 := by
-  rw [modeOp, if_neg h]
+  rw [modeOp, ite_eq_right h]
 
 theorem modeOp_add (k : Fin K) (a b : Matrix (Fin N) (Fin N) ℂ) :
     modeOp k (a + b) = modeOp k a + modeOp k b := by
@@ -212,14 +212,14 @@ theorem modeOp_diagonal (k : Fin K) (f : Fin N → ℂ) :
 theorem modeOp_creation_vac_apply [NeZero N] (k : Fin K) (e : FieldConfig K N) :
     modeOp k (creation N) (vacCfg K N) e = 0 := by
   by_cases h : ∀ j, j ≠ k → vacCfg K N j = e j
-  · rw [modeOp_apply_of_agree k _ h, creation_apply, vacCfg_apply, if_neg (by simp)]
+  · rw [modeOp_apply_of_agree k _ h, creation_apply, vacCfg_apply, ite_eq_right (by simp)]
   · exact modeOp_apply_of_not_agree k _ h
 
 /-- The annihilation operator has no vacuum column. -/
 theorem modeOp_annihilation_apply_vac [NeZero N] (k : Fin K) (e : FieldConfig K N) :
     modeOp k (annihilation N) e (vacCfg K N) = 0 := by
   by_cases h : ∀ j, j ≠ k → e j = vacCfg K N j
-  · rw [modeOp_apply_of_agree k _ h, annihilation_apply, vacCfg_apply, if_neg (by simp)]
+  · rw [modeOp_apply_of_agree k _ h, annihilation_apply, vacCfg_apply, ite_eq_right (by simp)]
   · exact modeOp_apply_of_not_agree k _ h
 
 /-! ### The quadrature of a mode at a real time -/
@@ -356,10 +356,10 @@ theorem timeWord_apply_eq_zero_of_lt [NeZero N] :
       have hlt : (e k : ℕ) + (l.map Prod.fst).count k < (d k : ℕ) := by
         by_cases hk : x.1 = k
         · subst hk
-          simp only [beq_self_eq_true, if_true] at h
+          simp only [beq_self_eq_true, ite_true] at h
           omega
         · rw [hagree k (Ne.symm hk)] at h
-          simp only [beq_iff_eq, hk, if_false, add_zero] at h
+          simp only [beq_iff_eq, hk, ite_false, add_zero] at h
           exact h
       rw [timeWord_apply_eq_zero_of_lt l e d k hlt, mul_zero]
 
@@ -384,10 +384,10 @@ theorem timeWord_apply_eq_zero_of_lt' [NeZero N] :
       have hlt : (d k : ℕ) + (l.map Prod.fst).count k < (e k : ℕ) := by
         by_cases hk : x.1 = k
         · subst hk
-          simp only [beq_self_eq_true, if_true] at h
+          simp only [beq_self_eq_true, ite_true] at h
           omega
         · rw [hagree k (Ne.symm hk)] at h
-          simp only [beq_iff_eq, hk, if_false, add_zero] at h
+          simp only [beq_iff_eq, hk, ite_false, add_zero] at h
           exact h
       rw [timeWord_apply_eq_zero_of_lt' l e d k hlt, mul_zero]
 
@@ -408,7 +408,7 @@ theorem timeWord_mul_topProj_mul_timeWord_vac [NeZero N] (l₁ l₂ : List (Fin 
         zero_mul, zero_mul]
     · rw [timeWord_apply_eq_zero_of_lt' l₂ e _ k (by rw [vacCfg_apply, Fin.val_zero]; omega),
         mul_zero]
-  · rw [if_neg he, mul_zero, zero_mul]
+  · rw [ite_eq_right he, mul_zero, zero_mul]
 
 /-! ### The first-contraction recursion -/
 
@@ -464,18 +464,18 @@ theorem timeWord_cons_vac [NeZero N] (x : Fin K × ℝ) (l : List (Fin K × ℝ)
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [modeOp_annihilation_timeQ_commutator]
   by_cases hk : (l[j]).1 = k
-  · rw [if_pos hk, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_sub, Matrix.sub_mul,
+  · rw [ite_eq_left hk, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_sub, Matrix.sub_mul,
       Matrix.mul_one, Matrix.mul_smul, Matrix.smul_mul, Matrix.smul_apply, Matrix.sub_apply,
       Matrix.smul_apply, smul_eq_mul, smul_eq_mul,
       timeWord_mul_topProj_mul_timeWord_vac (l.take j) (l.drop (j + 1)) k (by
         have := hN k
-        rw [List.map_cons, List.count_cons, count_map_fst_eq l j k, if_pos hk] at this
-        simp only [beq_self_eq_true, if_true] at this
+        rw [List.map_cons, List.count_cons, count_map_fst_eq l j k, ite_eq_left hk] at this
+        simp only [beq_self_eq_true, ite_true] at this
         omega),
-      mul_zero, sub_zero, ← timeWord_eraseIdx, ← mul_assoc, contraction, if_pos hk.symm,
+      mul_zero, sub_zero, ← timeWord_eraseIdx, ← mul_assoc, contraction, ite_eq_left hk.symm,
       ladderPhase_mul_ladderPhase_neg]
-  · rw [if_neg hk, Matrix.mul_zero, Matrix.zero_mul, Matrix.zero_apply, mul_zero, contraction,
-      if_neg (fun h => hk h.symm), zero_mul]
+  · rw [ite_eq_right hk, Matrix.mul_zero, Matrix.zero_mul, Matrix.zero_apply, mul_zero, contraction,
+      ite_eq_right (fun h => hk h.symm), zero_mul]
 
 /-! ### Wick's theorem, every word, every time -/
 
@@ -514,7 +514,7 @@ theorem wickSum_eq_zero_of_odd :
     refine Finset.sum_eq_zero fun j _ => ?_
     rw [wickSum_eq_zero_of_odd (l.eraseIdx j) (by
       have hj := j.isLt
-      rw [List.length_eraseIdx, if_pos hj]
+      rw [List.length_eraseIdx, ite_eq_left hj]
       rw [List.length_cons] at h
       rcases h with ⟨m, hm⟩
       exact ⟨m - 1, by omega⟩), mul_zero]
@@ -665,7 +665,7 @@ theorem wickSum_eq_pairingSum :
     rw [Fin.pairingSum_succ_succ]
     refine Finset.sum_congr rfl fun j _ => ?_
     have hlen : ((y :: l).eraseIdx j).length = l.length := by
-      rw [List.length_eraseIdx, if_pos j.isLt]
+      rw [List.length_eraseIdx, ite_eq_left j.isLt]
       rfl
     have hget : ∀ i : Fin ((y :: l).eraseIdx j).length,
         ((y :: l).eraseIdx j)[(i : ℕ)] = (x :: y :: l)[(Fin.emb j (Fin.cast hlen i) : ℕ)] := by

@@ -118,13 +118,13 @@ theorem circleOutcome_eq_some_iff (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) (x
   constructor
   · intro h
     by_cases hex : ∃ j, x ∈ circleCell r j
-    · rw [circleOutcome, dif_pos hex] at h
+    · rw [circleOutcome, dite_eq_left hex] at h
       have : hex.choose = i := by simpa using h
       exact this ▸ hex.choose_spec
-    · rw [circleOutcome, dif_neg hex] at h; exact absurd h (by simp)
+    · rw [circleOutcome, dite_eq_right hex] at h; exact absurd h (by simp)
   · intro hx
     have hex : ∃ j, x ∈ circleCell r j := ⟨i, hx⟩
-    rw [circleOutcome, dif_pos hex]
+    rw [circleOutcome, dite_eq_left hex]
     -- Disjointness forces the chosen index to be `i`.
     by_cases hij : hex.choose = i
     · rw [hij]

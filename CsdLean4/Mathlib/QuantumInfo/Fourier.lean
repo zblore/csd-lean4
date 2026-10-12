@@ -116,7 +116,7 @@ theorem qft_unitary [NeZero N] : (qftMatrix N)ᴴ * qftMatrix N = 1 := by
     have hζ1 : ζ = 1 := by
       rw [hζdef, h, qftω_conj, inv_pow,
         inv_mul_cancel₀ (pow_ne_zero _ (qftω_ne_zero N))]
-    rw [hrw, hζ1, if_pos h]
+    rw [hrw, hζ1, ite_eq_left h]
     simp only [one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
     rw [inv_mul_cancel₀ hN]
   · -- `ζ ≠ 1` is an `N`-th root of unity, so the geometric sum vanishes
@@ -131,6 +131,6 @@ theorem qft_unitary [NeZero N] : (qftMatrix N)ᴴ * qftMatrix N = 1 := by
         rw [hζdef, qftω_conj, inv_pow] at hζ1; exact hζ1
       have key : qftω N ^ j.val = qftω N ^ j'.val := (inv_mul_eq_one₀ hω).mp h2
       exact h (Fin.ext ((qftω_primitive N).pow_inj j.isLt j'.isLt key))
-    rw [hrw, geom_sum_eq hζne N, hζN, sub_self, zero_div, mul_zero, if_neg h]
+    rw [hrw, geom_sum_eq hζne N, hζN, sub_self, zero_div, mul_zero, ite_eq_right h]
 
 end QuantumInfo
