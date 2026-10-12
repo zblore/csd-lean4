@@ -83,6 +83,10 @@ def congr (e : V ≃ₗ[K] W) : ℙ K V ≃ ℙ K W where
         exact (mk_eq_mk_iff' K _ _ _ _).mpr
           ⟨1, by rw [one_smul]; exact (e.apply_symm_apply w).symm⟩
 
+/-- The induced map, in `Projectivization.map` form — the shape `map_mk` rewrites with. -/
+theorem congr_apply (e : V ≃ₗ[K] W) (p : ℙ K V) :
+    congr e p = Projectivization.map e.toLinearMap e.injective p := rfl
+
 /-- ★ **On representatives it is what it should be.** -/
 theorem congr_mk (e : V ≃ₗ[K] W) (v : V) (hv : v ≠ 0) (hev : e v ≠ 0) :
     congr e (mk K v hv) = mk K (e v) hev := rfl

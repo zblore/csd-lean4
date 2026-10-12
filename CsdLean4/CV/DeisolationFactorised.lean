@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.CV.TwoWingFactorisation
 public import CsdLean4.LF6.LocalDeisolationFlow
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Congr
 
 /-!
 # The de-isolation flow **is** the wing-factorised flow
@@ -191,6 +192,66 @@ theorem recordStroke_comm_kick_deisolation
       = fibredKick W (recordStroke (heisenberg ((wingLeftU * wingRightU) ^ n) A) g x) :=
   recordStroke_comm_kick_of_factorised disjoint_wingModes hA
     supportedOn_wingAModes_wingLeftU supportedOn_wingBModes_wingRightU n hW g x
+
+/-! ### The arena identification intertwines the two actions
+
+The theorems above are about `arenaKick` of the pulled-back unitary on `FieldArena 4 2`, while
+`LF6.localDeisolationFlow` acts on `CPN (4 * 4)`. This section closes that last thread: the aligned
+arena identification carries one to the other, so the CV statements and the `LF6` statements are
+about the same map and not merely the same space. -/
+
+/-- The identification of the **state spaces**, aligned with the de-isolation's own wing split. (Not
+`ArenaIndexBridge`'s `fieldSpaceEquiv`, whose index change is an arbitrary
+`Fintype.equivFinOfCardEq` and therefore carries no wing structure.) -/
+noncomputable def flowFieldSpaceEquiv :
+    EuclideanSpace ℂ (FieldConfig 4 2) ≃ₗᵢ[ℂ] EuclideanSpace ℂ (Fin (4 * 4)) :=
+  LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ configFlowEquiv
+
+/-- **The aligned arena identification**: the CV field arena and the projective space `LF6` works
+in, identified so that the wing split is respected. -/
+noncomputable def flowArenaEquiv : FieldArena 4 2 ≃ LF4.CPN (4 * 4) :=
+  Projectivization.congr flowFieldSpaceEquiv.toLinearEquiv
+
+theorem flowFieldSpaceEquiv_apply (v : EuclideanSpace ℂ (FieldConfig 4 2)) (i : Fin (4 * 4)) :
+    flowFieldSpaceEquiv v i = v (configFlowEquiv.symm i) := rfl
+
+/-- ★★ **The pulled-back unitary acts as the de-isolation unitary, through the identification.**
+A coordinate computation: reindexing the matrix and reindexing the vector cancel, the sum being
+reindexed by `configFlowEquiv`. -/
+theorem flowFieldSpaceEquiv_toEuclideanLin (v : EuclideanSpace ℂ (FieldConfig 4 2)) :
+    flowFieldSpaceEquiv (Matrix.toEuclideanLin (wingLeftU * wingRightU).val v)
+      = Matrix.toEuclideanLin LF6.localFlowUnitary.val (flowFieldSpaceEquiv v) := by
+  ext i
+  have hW : ∀ (c d : FieldConfig 4 2), (wingLeftU * wingRightU).val c d
+      = LF6.localFlowUnitary.val (configFlowEquiv c) (configFlowEquiv d) := by
+    intro c d
+    rw [wingLeftU_mul_wingRightU_eq_reindex_localFlowUnitary]
+    simp [Matrix.reindex_apply]
+  show ((wingLeftU * wingRightU).val *ᵥ (fun k => v k)) (configFlowEquiv.symm i)
+    = (LF6.localFlowUnitary.val *ᵥ (fun k => flowFieldSpaceEquiv v k)) i
+  simp only [Matrix.mulVec, dotProduct]
+  rw [← Equiv.sum_comp configFlowEquiv
+    (fun j => LF6.localFlowUnitary.val i j * flowFieldSpaceEquiv v j)]
+  refine Finset.sum_congr rfl fun d _ => ?_
+  rw [hW, Equiv.apply_symm_apply, flowFieldSpaceEquiv_apply, Equiv.symm_apply_apply]
+
+/-- ★★★ **The identification intertwines the CV kick with the de-isolation flow.** So every
+statement proved above about `arenaKick (wingLeftU * wingRightU)` is a statement about
+`LF6.localDeisolationFlow`, transported — the CV cone and the `LF6` Born/record/CHSH statements are
+about the **same map**, not merely the same space.
+
+This is the last thread #131 was carrying. -/
+theorem flowArenaEquiv_arenaKick (p : FieldArena 4 2) :
+    flowArenaEquiv (arenaKick (wingLeftU * wingRightU) p)
+      = LF6.localDeisolationFlow (flowArenaEquiv p) := by
+  induction p using Projectivization.ind with
+  | h v hv =>
+      rw [arenaKick_mk, flowArenaEquiv, Projectivization.congr_apply,
+        Projectivization.congr_apply, Projectivization.map_mk, Projectivization.map_mk,
+        LF6.localDeisolationFlow, Projectivization.smul_mk_eq_mk_toEuclideanLin]
+      refine (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mpr ⟨1, ?_⟩
+      rw [one_smul]
+      exact (flowFieldSpaceEquiv_toEuclideanLin v).symm
 
 end CSD.CV
 

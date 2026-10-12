@@ -11996,6 +11996,10 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 -- sigma-algebra is not pinned, measurability is left to the use site, where the spaces are concrete
 -- and (congr_continuous ...).measurable fires against the intended instance.
 -- Foundational-triple.
+/-- info: 'Projectivization.congr_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.congr_apply
+
 /-- info: 'Projectivization.congr_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.congr_mk

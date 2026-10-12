@@ -2358,4 +2358,38 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.recordStroke_comm_kick_deisolation
 
 
+-- AND THE LAST THREAD, CLOSED (BACKLOG #131's final caveat - CV/DeisolationFactorised.lean, second
+-- section, 2026-10-12): the cone theorems are about arenaKick of the pulled-back unitary on
+-- FieldArena 4 2, while LF6.localDeisolationFlow acts on CPN (4*4). flowFieldSpaceEquiv is the
+-- identification of the STATE SPACES aligned with the de-isolation's own wing split - NOT
+-- ArenaIndexBridge's fieldSpaceEquiv, whose index change is an arbitrary Fintype.equivFinOfCardEq and
+-- therefore carries no wing structure - and flowArenaEquiv is the induced arena identification through
+-- Projectivization.congr. flowFieldSpaceEquiv_toEuclideanLin: the pulled-back unitary acts as the
+-- de-isolation unitary through the identification, by a coordinate computation in which reindexing the
+-- matrix and reindexing the vector cancel, the sum being reindexed by configFlowEquiv.
+-- flowArenaEquiv_arenaKick: THE IDENTIFICATION INTERTWINES THE CV KICK WITH THE DE-ISOLATION FLOW, so
+-- every statement proved about arenaKick (wingLeftU * wingRightU) is a statement about
+-- LF6.localDeisolationFlow transported - the CV cone and the LF6 Born/record/CHSH statements are about
+-- the SAME MAP, not merely the same space.
+-- NOT claimed. This is bookkeeping about a projective action and contains no new physics; what it
+-- removes is the last place where #131's conjunction rested on an unformalised identification. Two
+-- things remain true of that row and neither is a gap in its mathematics: NO CAPSTONE CONJOINS THE
+-- FIVE PROPERTIES, DELIBERATELY, because the author's instruction was that the existence claim not be
+-- proved by packaging the desired conclusions as fields of a structure; and LOCALITY IS STILL ASSUMED
+-- ONCE AND PHYSICALLY, localDeisolation_factorises holding by construction since LF6-A.3 chose a
+-- product dilation, with deriving it being R-016.
+-- Foundational-triple.
+/-- info: 'CSD.CV.flowFieldSpaceEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.flowFieldSpaceEquiv_apply
+
+/-- info: 'CSD.CV.flowFieldSpaceEquiv_toEuclideanLin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.flowFieldSpaceEquiv_toEuclideanLin
+
+/-- info: 'CSD.CV.flowArenaEquiv_arenaKick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.flowArenaEquiv_arenaKick
+
+
 end CSD.Tests.AxiomAudit
