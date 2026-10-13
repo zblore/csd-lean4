@@ -5157,5 +5157,31 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.volume_rep_preimage
 
+-- BACKLOG #136: the joint moment context (RecordLayer/JointMomentContext.lean)
+
+/-- info: 'CSD.RecordLayer.jointMomentContext' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.jointMomentContext
+
+/-- info: 'CSD.RecordLayer.jointMomentContext_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.jointMomentContext_rate
+
+/-- info: 'CSD.RecordLayer.jointMomentContext_rowSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.jointMomentContext_rowSum
+
+/-- info: 'CSD.RecordLayer.jointMomentContext_colSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.jointMomentContext_colSum
+
+/-- info: 'CSD.RecordLayer.skewBasin_prob_jointMomentContext' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.skewBasin_prob_jointMomentContext
+
+/-- info: 'CSD.RecordLayer.jointMomentContext_rowSum_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.jointMomentContext_rowSum_single
+
 
 end CSD.Tests.AxiomAudit

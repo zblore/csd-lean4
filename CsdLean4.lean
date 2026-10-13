@@ -554,6 +554,7 @@ public import CsdLean4.RecordLayer.TorusFibre
 public import CsdLean4.RecordLayer.SkewFibrePartition
 public import CsdLean4.RecordLayer.GlobalBasin
 public import CsdLean4.RecordLayer.SkewBasin
+public import CsdLean4.RecordLayer.JointMomentContext
 public import CsdLean4.RecordLayer.CellLawFreedom
 public import CsdLean4.RecordLayer.CellLawForced
 public import CsdLean4.RecordLayer.NStepChain

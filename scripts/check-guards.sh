@@ -332,6 +332,25 @@ end CSD.GuardSelfTest'
   else
     pass=$((pass + 1))
   fi
+
+  # (11c) the check-duplicates RATCHET must fire when a new statement is proved twice.
+  # Mutating the pin down by one is the same defect as a new duplicate appearing, and costs
+  # one scan instead of a rebuild. The DETECTOR itself was mutation-tested by hand on
+  # 2026-10-13 — a theorem with `measurableSet_cellSet`'s statement planted in a second
+  # namespace took the TO REVIEW count from 42 to 43 and the guard from exit 0 to exit 1 —
+  # which is the half this cheap probe does not cover.
+  dp="scripts/check-duplicates.sh"
+  cp "$dp" "$dp.guardbak"
+  sed -i -E 's/^(PINNED_REVIEW=)([0-9]+)$/'"$(( $(sed -nE 's/^PINNED_REVIEW=([0-9]+)$//p' "$dp") - 1 ))"'/' "$dp"
+  bash scripts/check-duplicates.sh >/dev/null 2>&1
+  rc=$?
+  mv "$dp.guardbak" "$dp"
+  if [ "$rc" -eq 0 ]; then
+    echo "  BROKEN  check-duplicates — ratchet did NOT fire on a count over its pin"
+    fail=1
+  else
+    pass=$((pass + 1))
+  fi
 else
   echo "  (skipping axiom-sweep / citation-use / std-lint probes: need --with-lean)"
 fi
