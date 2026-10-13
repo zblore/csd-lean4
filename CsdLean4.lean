@@ -528,6 +528,7 @@ public import CsdLean4.SigmaLayer.MovingFibreWitness
 public import CsdLean4.SigmaLayer.FibreCoarseArrow
 public import CsdLean4.SigmaLayer.FibreFiniteHorizon
 public import CsdLean4.SigmaLayer.FibreHorizonDivergence
+public import CsdLean4.SigmaLayer.FibreCellUniform
 public import CsdLean4.SigmaLayer.UniqueErgodicity
 public import CsdLean4.SigmaLayer.Interference
 public import CsdLean4.SigmaLayer.TensorSector

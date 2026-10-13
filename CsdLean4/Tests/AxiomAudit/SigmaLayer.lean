@@ -5095,5 +5095,67 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.klDiv_horizonLaw_le_chiSq
 
+-- BACKLOG #144: the Haar cell law of the fibre grid is uniform (SigmaLayer/FibreCellUniform.lean)
+
+/-- info: 'CSD.SigmaLayer.cellSet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.cellSet
+
+/-- info: 'CSD.SigmaLayer.measurableSet_cellSet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.measurableSet_cellSet
+
+/-- info: 'CSD.SigmaLayer.circRep_eq_rep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.circRep_eq_rep
+
+/-- info: 'CSD.SigmaLayer.circCell_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.circCell_preimage
+
+/-- info: 'CSD.SigmaLayer.Ioo_subset_cellSet_inter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.Ioo_subset_cellSet_inter
+
+/-- info: 'CSD.SigmaLayer.cellSet_inter_subset_Icc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.cellSet_inter_subset_Icc
+
+/-- info: 'CSD.SigmaLayer.volume_circCell_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.volume_circCell_preimage
+
+/-- info: 'CSD.SigmaLayer.volume_torusCell_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.volume_torusCell_preimage
+
+/-- info: 'CSD.SigmaLayer.coarseLaw_fibreCell_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.coarseLaw_fibreCell_apply
+
+/-- info: 'CSD.SigmaLayer.coarseLaw_fibreCell_toReal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.coarseLaw_fibreCell_toReal
+
+/-- info: 'CSD.SigmaLayer.measurable_birkhoffAverage_fibreCellInd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.measurable_birkhoffAverage_fibreCellInd
+
+/-- info: 'CSD.SigmaLayer.birkhoffAverage_fibreCellInd_mem_Icc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.birkhoffAverage_fibreCellInd_mem_Icc
+
+/-- info: 'CSD.SigmaLayer.integrable_birkhoffAverage_sub_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.integrable_birkhoffAverage_sub_sq
+
+/-- info: 'CSD.SigmaLayer.lintegral_klDiv_horizonLaw_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.lintegral_klDiv_horizonLaw_le
+
+/-- info: 'CSD.RecordLayer.volume_rep_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_rep_preimage
+
 
 end CSD.Tests.AxiomAudit

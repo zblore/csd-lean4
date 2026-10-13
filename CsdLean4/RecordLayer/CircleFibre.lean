@@ -168,28 +168,40 @@ theorem circleCell_pairwiseDisjoint (r : Fin n → ℝ) (hr : ∀ i, 0 ≤ r i) 
 
 /-! ### The Born weights survive the transport -/
 
+/-- ★★ **The volume of a `rep`-preimage is the Lebesgue measure of the set's trace on one
+turn.** `rep` lands in `(0, 1]` and carries Haar measure to Lebesgue measure there, so a
+`rep`-preimage weighs exactly what the set weighs inside one turn — for *any* measurable set, not
+only an interval. The interval forms below are corollaries, and the cell computation of
+`SigmaLayer/FibreCellUniform.lean` needs the general one, because a floor cell is half-open the
+other way round from `Ioc`. -/
+theorem volume_rep_preimage {S : Set ℝ} (hS : MeasurableSet S) :
+    (volume : Measure CircleFibre) (rep ⁻¹' S) = volume (S ∩ Ioc (0:ℝ) 1) := by
+  have hpre : rep ⁻¹' S = rep ⁻¹' (S ∩ Ioc (0:ℝ) 1) :=
+    Set.ext fun θ => ⟨fun h => ⟨h, rep_mem_Ioc θ⟩, fun h => h.1⟩
+  rw [hpre]
+  have hTm : MeasurableSet (S ∩ Ioc (0:ℝ) 1) := hS.inter measurableSet_Ioc
+  have hsub : S ∩ Ioc (0:ℝ) 1 ⊆ Ioc (0:ℝ) ((0:ℝ) + 1) := fun x hx => by simpa using hx.2
+  have hS' : MeasurableSet
+      (Subtype.val ⁻¹' (S ∩ Ioc (0:ℝ) 1) : Set (Ioc (0:ℝ) ((0:ℝ) + 1))) :=
+    measurable_subtype_coe hTm
+  have hpre2 : rep ⁻¹' (S ∩ Ioc (0:ℝ) 1)
+      = (AddCircle.equivIoc (1:ℝ) 0) ⁻¹' (Subtype.val ⁻¹' (S ∩ Ioc (0:ℝ) 1)) := rfl
+  rw [hpre2, (AddCircle.measurePreserving_equivIoc (T := (1:ℝ)) (a := 0)).measure_preimage
+      hS'.nullMeasurableSet,
+    Measure.comap_apply _ Subtype.val_injective
+      (fun s hs => measurableSet_Ioc.subtype_image hs) _ hS',
+    Subtype.image_preimage_coe, Set.inter_eq_self_of_subset_right hsub]
+
 /-- ★ **The volume of a `rep`-preimage of an interval inside one turn is the interval's length.**
 The engine behind `volume_circleCell`, stated for an arbitrary interval because the quantitative
 stability bounds need it for intervals that are *not* Born cells — the boundary bands of
 `RecordLayer/MacrostateStability.lean`. -/
 theorem volume_rep_preimage_Ioc {a b : ℝ} (ha : 0 ≤ a) (hb : b ≤ 1) :
     (volume : Measure CircleFibre) (rep ⁻¹' Ioc a b) = ENNReal.ofReal (b - a) := by
-  have hS : MeasurableSet (Subtype.val ⁻¹' Ioc a b : Set (Ioc (0:ℝ) ((0:ℝ) + 1))) :=
-    measurable_subtype_coe measurableSet_Ioc
-  have hpre : rep ⁻¹' Ioc a b
-      = (AddCircle.equivIoc (1:ℝ) 0) ⁻¹' (Subtype.val ⁻¹' Ioc a b) := rfl
-  rw [hpre, (AddCircle.measurePreserving_equivIoc (T := (1:ℝ)) (a := 0)).measure_preimage
-    hS.nullMeasurableSet,
-    Measure.comap_apply _ Subtype.val_injective
-      (fun s hs => measurableSet_Ioc.subtype_image hs) _ hS]
-  -- The image of the preimage is the interval cut down to one turn — which changes nothing.
-  have himg : (Subtype.val '' (Subtype.val ⁻¹' Ioc a b : Set (Ioc (0:ℝ) ((0:ℝ) + 1))))
-      = Ioc a b := by
-    rw [Subtype.image_preimage_coe]
-    apply Set.inter_eq_self_of_subset_right
-    intro x hx
-    exact ⟨lt_of_le_of_lt ha hx.1, le_trans hx.2 (by simpa using hb)⟩
-  rw [himg, Real.volume_Ioc]
+  have hsub : Ioc a b ⊆ Ioc (0:ℝ) 1 :=
+    fun x hx => ⟨lt_of_le_of_lt ha hx.1, le_trans hx.2 hb⟩
+  rw [volume_rep_preimage measurableSet_Ioc,
+    Set.inter_eq_self_of_subset_left hsub, Real.volume_Ioc]
 
 /-- **The circle cell carries exactly the Born weight `rᵢ`.** The whole point of the swap: moving
 to a compact fibre changes nothing about the outcome probabilities. Requires the rates to be a
