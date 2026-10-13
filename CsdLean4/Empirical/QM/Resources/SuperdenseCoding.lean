@@ -100,20 +100,7 @@ noncomputable def pauliXZ_tensor_I : Matrix (Fin 4) (Fin 4) ℂ :=
 
 /-! ## Component extraction for `|Φ⁺⟩`
 
-`qmKetPhiPlus.ofLp` is `(1/√2)` at indices `0, 3` and `0` elsewhere
-(re-derived locally; `BellPrep`'s versions are `private`). -/
-
-lemma phiPlus_ofLp_zero : qmKetPhiPlus.ofLp 0 = (Real.sqrt 2 : ℂ)⁻¹ := by
-  simp [qmKetPhiPlus, EuclideanSpace.single]
-
-lemma phiPlus_ofLp_one : qmKetPhiPlus.ofLp 1 = (0 : ℂ) := by
-  simp [qmKetPhiPlus, EuclideanSpace.single]
-
-lemma phiPlus_ofLp_two : qmKetPhiPlus.ofLp 2 = (0 : ℂ) := by
-  simp [qmKetPhiPlus, EuclideanSpace.single]
-
-lemma phiPlus_ofLp_three : qmKetPhiPlus.ofLp 3 = (Real.sqrt 2 : ℂ)⁻¹ := by
-  simp [qmKetPhiPlus, EuclideanSpace.single]
+`qmKetPhiPlus.ofLp` is `(1/√2)` at indices `0, 3` and `0` elsewhere. **`Gates.BellPrep` proves this**, and this file imports it, so the four components are cited rather than re-derived (BACKLOG #146 cluster (B)). They were local copies from 2026-05-24 to 2026-10-13, for a reason that had expired: `BellPrep`'s versions were `private` when this file was written, and stopped being private at the module-system migration. -/
 
 /-- For any row `k`, applying a matrix `M` to `|Φ⁺⟩` collapses to
 `(M[k,0] + M[k,3]) / √2`. -/
@@ -121,8 +108,8 @@ lemma mulVec_phiPlus (M : Matrix (Fin 4) (Fin 4) ℂ) (k : Fin 4) :
     (M *ᵥ qmKetPhiPlus.ofLp) k
       = (Real.sqrt 2 : ℂ)⁻¹ * (M k 0 + M k 3) := by
   show ∑ j, M k j * qmKetPhiPlus.ofLp j = _
-  rw [Fin.sum_univ_four, phiPlus_ofLp_zero, phiPlus_ofLp_one,
-      phiPlus_ofLp_two, phiPlus_ofLp_three]
+  rw [Fin.sum_univ_four, Gates.qmKetPhiPlus_ofLp_zero, Gates.qmKetPhiPlus_ofLp_one,
+      Gates.qmKetPhiPlus_ofLp_two, Gates.qmKetPhiPlus_ofLp_three]
   ring
 
 /-! ## Image identities: the four encodings produce the four Bell states -/

@@ -21,7 +21,7 @@
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"; cd "$ROOT"
 
-PINNED_REVIEW=19
+PINNED_REVIEW=15
 
 out="$(lake env lean scripts/duplicate-scan.lean 2>&1)" || {
   echo "$out"
