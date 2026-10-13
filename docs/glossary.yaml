@@ -188,7 +188,7 @@ refs:
 
 entries:
   - slug: fubini-study-measure
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     image:
       file: img/fubini-study-measure.jpg
       alt: "Portrait photograph of Guido Fubini"
@@ -301,7 +301,7 @@ entries:
     related: [born-weight, liouville-measure, kahler-form, haar-measure, typicality-volume, fisher-rao-metric]
 
   - slug: born-weight
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     image:
       file: img/born-weight.jpg
       alt: "Portrait photograph of Max Born"
@@ -394,7 +394,7 @@ entries:
     related: [fubini-study-measure, born-volume-ratio, typicality-volume, outcome-region, is-the-born-rule-derived, fisher-rao-metric]
 
   - slug: duistermaat-heckman
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     hook: >
       Project the curved space of quantum states down to its outcome probabilities and the
       curvature disappears exactly, which is what makes the Born rule computable in every
@@ -470,7 +470,7 @@ entries:
     related: [moment-map, kahler-form, fubini-study-measure, liouville-measure, dirichlet-distribution]
 
   - slug: gleason-theorem
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     image:
       file: img/gleason-theorem.jpg
       alt: "Andrew Gleason seated on a lawn, 1959"
@@ -591,7 +591,7 @@ entries:
     related: [born-weight, naimark-dilation, hilbert-space, does-kochen-specker-rule-out-csd, epistemic-measure]
 
   - slug: wigner-rigidity
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     image:
       file: img/wigner-rigidity.jpg
       alt: "Portrait photograph of Eugene Wigner"
@@ -1244,7 +1244,7 @@ entries:
     related: [crooks-fluctuation-theorem, gibbs-state, landauer-principle, von-neumann-entropy, canonical-typicality]
 
   - slug: crooks-fluctuation-theorem
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     hook: >
       Run a process forwards many times and backwards many times, and the two records of
       work done cross at exactly the free energy difference. Every irreversible run is priced,
@@ -1356,7 +1356,7 @@ entries:
     related: [jarzynski-equality, gibbs-state, landauer-principle, von-neumann-entropy]
 
   - slug: von-neumann-entropy
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     image:
       file: img/von-neumann-entropy.gif
       alt: "Portrait photograph of John von Neumann"
@@ -1675,7 +1675,7 @@ entries:
     related: [fubini-study-measure, liouville-measure, moment-map, poisson-bracket, duistermaat-heckman, fisher-rao-metric, geometric-phase, darboux-theorem]
 
   - slug: luders-rule
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     hook: >
       The textbook's second rule, which says how a state changes when it's measured, isn't
       a second rule in CSD, as it's what the record layer does.
@@ -1754,7 +1754,7 @@ entries:
     related: [collapse, measurement-flow, pointer-basis, naimark-dilation, measurement-context]
 
   - slug: naimark-dilation
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     hook: >
       Every noisy, imperfect measurement made in a real laboratory is an ideal textbook
       measurement carried out on a larger system, and that single fact is what lets CSD's
@@ -1907,7 +1907,7 @@ entries:
     related: [field-arena, wick-theorem, hermitian-operator, robertson-uncertainty, lie-trotter-formula]
 
   - slug: canonical-typicality
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     image:
       file: img/canonical-typicality.jpg
       alt: "Portrait photograph of Ludwig Boltzmann"
@@ -2719,7 +2719,7 @@ entries:
     related: [ramsey-interferometry, phase-estimation, born-weight, amplitude-estimation, robertson-uncertainty, fisher-rao-metric]
 
   - slug: fisher-rao-metric
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     hook: >
       The natural way to measure distance between quantum states agrees with the
       statistician's way to measure distance between the probability distributions they
@@ -5881,7 +5881,7 @@ entries:
     related: [measurement-flow, stinespring-dilation, holevo-bound, record-layer, isolation]
 
   - slug: typicality-volume
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     hook: >
       Almost every way the experiment could have started gives the quantum statistics, and
       that isn't an assumption about probability, as it's a measured volume.
@@ -6193,7 +6193,7 @@ entries:
       along the way rather than assumed. The quantification over the number of clocks is
       load-bearing, as at a fixed number of clocks only finitely many moments are
       constrained, so what's characterised is the law that serves every number of clocks.
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     term: First-passage race
     status: proved-in-corpus
     source: curated
@@ -6400,7 +6400,7 @@ entries:
     related: [fibre, constraint-surface, projectability, ontic-vs-epistemic, projective-sector]
 
   - slug: pointer-basis
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     hook: >
       A measuring apparatus doesn't record what you ask it to, as it records what it can
       keep, and what it can keep is decided by its interaction with the surroundings and
@@ -6983,7 +6983,7 @@ entries:
     related: [born-weight, typicality, witness-and-engine, born-volume-ratio, what-is-machine-checked]
 
   - slug: born-volume-ratio
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     hook: >
       In every finite dimension the Born weight of an outcome equals a ratio of volumes in
       the space of quantum states, for every outcome and every state, with no genericity
@@ -7218,7 +7218,7 @@ entries:
     related: [bell-chsh, contextuality, no-signalling, hidden-variables, does-csd-violate-bell]
 
   - slug: no-signalling
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     image:
       file: img/no-signalling.jpg
       alt: "Portrait photograph of Albert Einstein"
@@ -7288,7 +7288,7 @@ entries:
     related: [singlet-contextual-model, bell-not-join, isolation, field-arena, tsirelson-bound]
 
   - slug: bell-not-join
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     hook: >
       The arena CSD assigns to two systems together is strictly larger than the two arenas
       simply paired, and the Bell state is a point of the excess, so entanglement is
@@ -7437,7 +7437,7 @@ entries:
     related: [field-arena, record-light-cone, interaction-price, isolation, wick-theorem]
 
   - slug: wick-theorem
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     hook: >
       The bookkeeping rule at the heart of quantum field theory, which reduces any
       correlation of field operators to a sum over pairings, survives a finite cutoff
@@ -7506,7 +7506,7 @@ entries:
     related: [field-arena, kms-condition, no-exact-finite-ccr, lieb-robinson-bound, gibbs-state]
 
   - slug: kms-condition
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     image:
       file: img/kms-condition.jpg
       alt: "Equations engraved on a black stone wall in Warsaw"
@@ -7581,7 +7581,7 @@ entries:
     related: [gibbs-state, wick-theorem, canonical-typicality, field-arena, landauer-principle]
 
   - slug: lindblad-equation
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     hook: >
       The master equation of open quantum systems is formalised end to end, as the
       evolution generated by every Lindblad generator is proved to be completely positive,
@@ -7955,7 +7955,7 @@ entries:
     related: [lieb-robinson-bound, record-layer, field-arena, no-signalling, interaction-price]
 
   - slug: partial-trace
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     hook: >
       Mathlib has no partial trace for matrices, so the corpus built one, the staple
       operation of quantum information, with its working properties proved and staged for
@@ -8028,7 +8028,7 @@ entries:
     related: [stinespring-dilation, quantum-channel, entropy-subadditivity, kronecker-product, de-isolation]
 
   - slug: entropy-subadditivity
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     image:
       file: img/entropy-subadditivity.jpg
       alt: "Portrait photograph of Claude Shannon"
@@ -8480,7 +8480,7 @@ entries:
     related: [ozawa-error-disturbance, hermitian-operator, no-exact-finite-ccr, fisher-information, pauli-matrices]
 
   - slug: interaction-price
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     hook: >
       Switching on an interaction between field modes makes local quantities spread at a
       rate proportional to the coupling, and the corpus proves the rate is exact, at most
@@ -9435,7 +9435,7 @@ entries:
   # -------------------------------------------------------------------------
 
   - slug: quantum-fourier-transform
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     image:
       file: img/quantum-fourier-transform.jpg
       alt: "Portrait of Joseph Fourier"
@@ -9518,7 +9518,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Quantum_Fourier_transform
 
   - slug: phase-estimation
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     image:
       file: img/phase-estimation.png
       wide: true
@@ -9851,7 +9851,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Hadamard_test
 
   - slug: amplitude-amplification
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     image:
       file: img/amplitude-amplification.jpg
       alt: "Portrait photograph of Gilles Brassard"
@@ -10050,7 +10050,7 @@ entries:
         url: https://arxiv.org/abs/quant-ph/0005055
 
   - slug: gottesman-knill
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     hook: >
       The Gottesman-Knill theorem marks the boundary of quantum advantage, as circuits
       built from the Clifford gates can be simulated classically, because in the right
@@ -10147,7 +10147,7 @@ entries:
         url: https://arxiv.org/abs/quant-ph/0406196
 
   - slug: steane-code
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     hook: >
       Seven qubits protect one, as the Steane code was the first to correct any single-
       qubit error by using the same classical Hamming code twice, once for bit flips and
@@ -10240,7 +10240,7 @@ entries:
         url: https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.77.793
 
   - slug: magic-state
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     hook: >
       A magic state is the fuel of quantum advantage, a single special state that,
       consumed by otherwise classically trackable Clifford circuits, unlocks the one gate
@@ -10477,7 +10477,7 @@ entries:
     related: [quantum-channel, naimark-dilation, partial-trace, de-isolation, measurement-flow]
 
   - slug: klein-inequality
-    reviewed: 2026-09-14
+    reviewed: 2026-10-13
     image:
       file: img/klein-inequality.jpg
       alt: "Portrait photograph of Oskar Klein"
@@ -10550,7 +10550,7 @@ entries:
     related: [von-neumann-entropy, entropy-subadditivity, holevo-bound, landauer-principle, gibbs-state]
 
   - slug: knill-laflamme
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     image:
       file: img/knill-laflamme.png
       alt: "Photograph of Raymond Laflamme seated, in front of a Canadian flag"
@@ -10648,7 +10648,7 @@ entries:
         url: https://arxiv.org/abs/quant-ph/9604034
 
   - slug: stabiliser-code
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     hook: >
       A stabiliser code describes a quantum code by the measurements that leave it alone,
       which replaces a list of encoded states by a handful of parity checks and turns error
@@ -10823,7 +10823,7 @@ entries:
         url: https://arxiv.org/abs/0811.4262
 
   - slug: threshold-theorem
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     image:
       file: img/threshold-theorem.jpg
       alt: "Portrait photograph of Dorit Aharonov"
@@ -10917,7 +10917,7 @@ entries:
         url: https://arxiv.org/abs/quant-ph/9906129
 
   - slug: concatenated-code
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     hook: >
       Concatenation encodes a code inside itself, so each physical qubit of the outer block
       becomes a whole encoded block of its own, and the failure probability drops to
@@ -11086,7 +11086,7 @@ entries:
         url: https://arxiv.org/abs/quant-ph/0403025
 
   - slug: clifford-t
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     image:
       file: img/clifford-t.jpg
       alt: "Engraved portrait of William Kingdon Clifford"
@@ -11184,7 +11184,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Quantum_Computation_and_Quantum_Information
 
   - slug: two-level-unitary
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     hook: >
       Every quantum operation, on any number of qubits, factors exactly into operations that
       each touch only two levels of the state space, and a count of how many such factors are
@@ -11237,8 +11237,12 @@ entries:
       support through exists_twoLevel_prod_of_idOutside. exists_twoLevel_prod_length is the
       Nielsen-Chuang count, at most d(d - 1)/2 factors, carried as Nat.choose (max s.card 2)
       2 with Pascal's rule (m - 1) + choose (m - 1) 2 = choose m 2 and
-      isTwoLevel_of_idOutside_card_le_two as the base case. No lower bound is proved, and the
-      elementary-gate count is BACKLOG row 74.
+      isTwoLevel_of_idOutside_card_le_two as the base case. No lower bound is proved, so the count is an
+      upper bound and nothing here says it can't be beaten. How many elementary gates one
+      two-level unitary costs is answered by the multiply-controlled layer, as
+      ctrlGate_eq_twoLevelMat identifies a multiply-controlled gate with a two-level
+      matrix on an adjacent pair and exists_multiCtrl_sandwich relabels an arbitrary pair
+      to an adjacent one by a Gray code.
     person: >
       Wallace Givens gave the plane rotations their name in a 1958 paper on reducing a matrix
       to triangular form, as a numerically stable way of annihilating one entry at a time, and
@@ -12116,7 +12120,7 @@ entries:
         url: https://en.wikipedia.org/wiki/Darboux%27s_theorem
 
   - slug: feynman-kac
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     image:
       file: img/feynman-kac.jpg
       alt: "Photograph of Mark Kac at a desk"
@@ -12202,7 +12206,7 @@ entries:
         url: https://www.ams.org/journals/tran/1949-065-01/S0002-9947-1949-0027960-X/
 
   - slug: way-theorem
-    reviewed: 2026-09-29
+    reviewed: 2026-10-13
     image:
       file: img/way-theorem.jpg
       alt: "Photograph of Huzihiro Araki at a conference"
