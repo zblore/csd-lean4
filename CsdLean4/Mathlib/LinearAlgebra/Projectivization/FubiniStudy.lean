@@ -6,7 +6,6 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
-public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
 public import Mathlib.Topology.Instances.Matrix
@@ -136,7 +135,7 @@ instance instIsProbabilityMeasureFsMeasure
     (p₀ : ℙ ℂ (EuclideanSpace ℂ ι)) :
     IsProbabilityMeasure (fsMeasure p₀) := by
   unfold fsMeasure
-  exact Measure.isProbabilityMeasure_map' (orbit_map_measurable p₀).aemeasurable
+  exact inferInstance
 
 /-! ## Phase D — U(N)-invariance -/
 

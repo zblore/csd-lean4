@@ -139,11 +139,9 @@ variable (D : SectorData SigmaSpace P G) (μprep : Measure SigmaSpace) [IsProbab
   (Φ : SigmaSpace → SigmaSpace) (rep : P → EuclideanSpace ℂ ι)
 
 /-- The projective law of the flowed preparation is a probability measure. -/
-theorem isProbabilityMeasure_projectiveLaw_flow (hΦ : Measurable Φ) :
-    IsProbabilityMeasure (Measure.map D.π (Measure.map Φ μprep)) := by
-  have : IsProbabilityMeasure (Measure.map Φ μprep) :=
-    Measure.isProbabilityMeasure_map' hΦ.aemeasurable
-  exact Measure.isProbabilityMeasure_map' D.measurable_π.aemeasurable
+theorem isProbabilityMeasure_projectiveLaw_flow :
+    IsProbabilityMeasure (Measure.map D.π (Measure.map Φ μprep)) :=
+  inferInstance
 
 /-- ★ **Entropy is conserved along the ontic flow.** The density operator of the flowed
 preparation is `U ρ Uᴴ` (`barycenter_flow`), and conjugation by a unitary preserves the
@@ -176,7 +174,7 @@ theorem vonNeumannEntropy_le_pinching_flow (hΦ : Measurable Φ) (hrep_unit : �
     vonNeumannEntropy (barycenterMatrix_isHermitian rep (Measure.map D.π μprep))
       ≤ vonNeumannEntropy
           (pinch_isHermitian (barycenterMatrix rep (Measure.map D.π (Measure.map Φ μprep)))) := by
-  have := isProbabilityMeasure_projectiveLaw_flow D μprep Φ hΦ
+  have := isProbabilityMeasure_projectiveLaw_flow D μprep Φ
   rw [← vonNeumannEntropy_flow_eq D μprep Φ rep hΦ hrep_unit hrep_meas U hU hlift]
   exact vonNeumannEntropy_le_pinching (barycenterMatrix_posSemidef rep hrep_unit hrep_meas _)
     (barycenterMatrix_trace rep hrep_unit hrep_meas _) hpos
@@ -325,7 +323,7 @@ theorem landauer_flow (D : SectorData (SigmaS × SigmaE) (PS × PE) G)
       ≤ β * (energy HB (Matrix.traceLeft
               (barycenterMatrix rep (Measure.map D.π (Measure.map Φ (μS.prod μE)))))
             - energy HB (gibbsState HB hHB β)) := by
-  have hS : IsProbabilityMeasure (Measure.map πS μS) := Measure.isProbabilityMeasure_map' hπS.aemeasurable
+  have hS : IsProbabilityMeasure (Measure.map πS μS) := inferInstance
   have hjoint := barycenter_flow_prod D πS πE hπS hπE hπ μS μE Φ hΦ rep hrep_unit hrep_meas repS repE
     hprod U hlift
   rw [hgibbs] at hjoint

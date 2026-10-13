@@ -573,14 +573,14 @@ theorem traceRight_barycenter_flow_prod (D : SectorData (SigmaS × SigmaE) (PS �
     (U : Matrix (n × e) (n × e) ℂ) (hU : Uᴴ * U = 1)
     (hlift : IsUnitaryLift D Φ rep U) :
     haveI : IsProbabilityMeasure (Measure.map πE μE) :=
-      Measure.isProbabilityMeasure_map' hπE.aemeasurable
+      inferInstance
     Matrix.traceRight (barycenterMatrix rep (Measure.map D.π (Measure.map Φ (μS.prod μE))))
       = (stinespringChannelMixed U hU
           (barycenterMatrix_posSemidef repE hrepE_unit hrepE_meas (Measure.map πE μE))
           (barycenterMatrix_trace repE hrepE_unit hrepE_meas (Measure.map πE μE))).apply
         (barycenterMatrix repS (Measure.map πS μS)) := by
   have : IsProbabilityMeasure (Measure.map πE μE) :=
-    Measure.isProbabilityMeasure_map' hπE.aemeasurable
+    inferInstance
   rw [barycenter_flow D (μS.prod μE) Φ hΦ rep hrep_unit hrep_meas U hlift,
     stinespringChannelMixed_apply, hπ, ← Measure.map_prod_map μS μE hπS hπE,
     barycenterMatrix_prod rep repS repE hprod]

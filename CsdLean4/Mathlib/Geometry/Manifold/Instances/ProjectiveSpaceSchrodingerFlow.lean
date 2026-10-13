@@ -806,8 +806,8 @@ theorem fsVolumeNormalized_map_schrodingerUnitary_smul {H : Matrix (Fin (n + 1))
     Measure.map (fun p : ℙ ℂ (Ambient n) => Matrix.schrodingerUnitary hH t • p)
       (fsVolumeNormalized n) = fsVolumeNormalized n := by
   rw [fsVolumeNormalized,
-    Measure.map_smul' _ _ (f := fun p : ℙ ℂ (Ambient n) => Matrix.schrodingerUnitary hH t • p)
-      (Homeomorph.smul (Matrix.schrodingerUnitary hH t)).continuous.measurable,
+    Measure.map_smul _ (f := fun p : ℙ ℂ (Ambient n) => Matrix.schrodingerUnitary hH t • p)
+      (Homeomorph.smul (Matrix.schrodingerUnitary hH t)).continuous.measurable.aemeasurable,
     fsVolume_map_schrodingerUnitary_smul]
 
 end HamiltonianFlows

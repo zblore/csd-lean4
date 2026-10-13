@@ -6,7 +6,6 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF4.GaussianFS
-public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 public import Mathlib.Probability.Distributions.Gaussian.Multivariate
 public import Mathlib.Probability.Distributions.Gaussian.Fernique
@@ -100,7 +99,7 @@ noncomputable def gaussianHN : Measure (EuclideanSpace ℂ (Fin N)) :=
 
 instance instProbGaussianHN : IsProbabilityMeasure (gaussianHN (N := N)) := by
   unfold gaussianHN
-  exact Measure.isProbabilityMeasure_map' coordsN.continuous.measurable.aemeasurable
+  exact inferInstance
 
 /-- The projectivisation map `ℂ^N → ℂℙ^{N-1}`, junk value `p₀` at `0`. -/
 noncomputable def gaussianProjN (p₀ : CPN N) (v : EuclideanSpace ℂ (Fin N)) : CPN N :=
@@ -121,7 +120,7 @@ noncomputable def gaussianCPN (p₀ : CPN N) : Measure (CPN N) :=
 
 instance instProbGaussianCPN (p₀ : CPN N) : IsProbabilityMeasure (gaussianCPN p₀) := by
   unfold gaussianCPN
-  exact Measure.isProbabilityMeasure_map' (measurable_gaussianProjN p₀).aemeasurable
+  exact inferInstance
 
 /-! ### C4 — `U(N)`-invariance -/
 

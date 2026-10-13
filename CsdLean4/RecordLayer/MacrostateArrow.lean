@@ -107,8 +107,9 @@ theorem recordLaw_apply (c : Fin k → ContextField N) (p : LF4.CPN N)
   rw [recordLaw, Measure.map_apply (measurable_recordString c) hs]
 
 instance isProbabilityMeasure_recordLaw (c : Fin k → ContextField N) (p : LF4.CPN N) :
-    IsProbabilityMeasure (recordLaw c p) :=
-  Measure.isProbabilityMeasure_map' (measurable_recordString c).aemeasurable
+    IsProbabilityMeasure (recordLaw c p) := by
+  rw [recordLaw]
+  infer_instance
 
 /-! ### A record write produces nothing -/
 
@@ -150,7 +151,7 @@ noncomputable def macroKernel (c : Fin k → ContextField N) (p : LF4.CPN N)
     macroKernel c p F v = macroStep c p F v := rfl
 
 theorem isMarkovKernel_macroKernel (c : Fin k → ContextField N) (p : LF4.CPN N)
-    {F : LF4.KSigma N → LF4.KSigma N} (hF : Measurable F) :
+    {F : LF4.KSigma N → LF4.KSigma N} :
     IsMarkovKernel (macroKernel c p F) := by
   refine ⟨fun v => ?_⟩
   rw [macroKernel_apply, macroStep]
@@ -159,8 +160,7 @@ theorem isMarkovKernel_macroKernel (c : Fin k → ContextField N) (p : LF4.CPN N
   · rename_i h0
     have : IsProbabilityMeasure ((epistemicMeasure p)[|recordString c ⁻¹' {v}]) :=
       cond_isProbabilityMeasure h0
-    exact Measure.isProbabilityMeasure_map'
-      (hf := ((measurable_recordString c).comp hF).aemeasurable)
+    exact inferInstance
 
 /-- ★★ **The weighted step is the joint measure.** Multiplying one step of the macro dynamics by the
 weight of the macrostate it starts from clears the conditioning, and what is left is the ontic measure
@@ -258,7 +258,7 @@ theorem antitone_klDiv_recordLaw (c : Fin k → ContextField N) (p : LF4.CPN N)
     (hF : MeasurePreserving F (epistemicMeasure p) (epistemicMeasure p))
     (q : Measure (Fin k → Fin (N + 1))) [IsProbabilityMeasure q] :
     Antitone fun n : ℕ => klDiv (q.compIterate (macroKernel c p F) n) (recordLaw c p) := by
-  have := isMarkovKernel_macroKernel c p hF.measurable
+  have := isMarkovKernel_macroKernel c p (F := F)
   exact antitone_klDiv_compIterate _ (comp_recordLaw_of_measurePreserving c p hF)
 
 /-! ### The corpus's own dynamics is an instance -/

@@ -259,7 +259,7 @@ variable (D : SectorData SigmaSpace P G) (μFS : Measure P) [IsProbabilityMeasur
 
 /-- The projective law `π_* μprep` of a preparation is a probability measure. -/
 theorem isProbabilityMeasure_projectiveLaw : IsProbabilityMeasure (Measure.map D.π μprep) :=
-  Measure.isProbabilityMeasure_map' D.measurable_π.aemeasurable
+  inferInstance
 
 /-- **The barycentre of a preparation**: `∫ |rep ψ⟩⟨rep ψ| d(π_* μprep)(ψ)`, packaged as a density
 operator. -/

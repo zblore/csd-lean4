@@ -6,7 +6,6 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
-public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
 public import Mathlib.MeasureTheory.Measure.Haar.Unique
 public import Mathlib.MeasureTheory.Measure.Lebesgue.Complex
@@ -375,9 +374,9 @@ omit [NeZero N] in
 lemma map_toEuclideanLin_ballMeasure (U : Matrix.unitaryGroup (Fin N) ℂ) :
     Measure.map (fun v : EuclideanSpace ℂ (Fin N) => Matrix.toEuclideanLin U.val v)
       (ballMeasure N) = ballMeasure N := by
-  rw [ballMeasure, Measure.map_smul' _ _
+  rw [ballMeasure, Measure.map_smul _
     (Matrix.toEuclideanLin (U.val : Matrix (Fin N) (Fin N) ℂ)
-      |>.continuous_of_finiteDimensional.measurable)]
+      |>.continuous_of_finiteDimensional.measurable.aemeasurable)]
   congr 1
   calc Measure.map (fun v : EuclideanSpace ℂ (Fin N) => Matrix.toEuclideanLin U.val v)
         ((volume : Measure (EuclideanSpace ℂ (Fin N))).restrict (puncturedBall N))
@@ -455,7 +454,7 @@ an absolutely-continuous source. -/
 theorem map_ballMeasure_eq_fubiniStudy (p₀ : ℙ ℂ (EuclideanSpace ℂ (Fin N))) :
     Measure.map (projOfVec N) (ballMeasure N) = fsMeasure p₀ := by
   have hprob : IsProbabilityMeasure (Measure.map (projOfVec N) (ballMeasure N)) :=
-    Measure.isProbabilityMeasure_map' measurable_projOfVec.aemeasurable
+    inferInstance
   refine fsMeasure_unique p₀ _ ?_
   intro U
   have hsmul_meas : Measurable (fun p : ℙ ℂ (EuclideanSpace ℂ (Fin N)) => U • p) :=

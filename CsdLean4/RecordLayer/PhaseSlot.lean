@@ -6,7 +6,6 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.RecordLayer.BlockCollapse
-public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 
 /-!
@@ -261,8 +260,9 @@ noncomputable def phasePrep (ψ : EuclideanSpace ℂ (Fin N)) (hψ0 : ψ ≠ 0) 
   Measure.map (phaseVec ψ hψ0) volume
 
 instance (ψ : EuclideanSpace ℂ (Fin N)) (hψ0 : ψ ≠ 0) :
-    IsProbabilityMeasure (phasePrep ψ hψ0) :=
-  Measure.isProbabilityMeasure_map' (measurable_phaseVec ψ hψ0).aemeasurable
+    IsProbabilityMeasure (phasePrep ψ hψ0) := by
+  rw [phasePrep]
+  infer_instance
 
 /-- Every point of the phase orbit reads out to the same ray. -/
 lemma mk'_phaseVec (ψ : EuclideanSpace ℂ (Fin N)) (hψ0 : ψ ≠ 0) (θ : AddCircle (1 : ℝ)) :

@@ -30,7 +30,6 @@ public import CsdLean4.Mathlib.LinearAlgebra.Matrix.ReindexTrace
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.KroneckerAlgHom
 public import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 public import CsdLean4.Mathlib.MeasureTheory.MutuallySingularMap
-public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.Mathlib.MeasureTheory.InvariantTwist
 public import CsdLean4.Mathlib.Probability.IIDCoordinateProcess
 public import CsdLean4.Mathlib.Probability.CGLMP

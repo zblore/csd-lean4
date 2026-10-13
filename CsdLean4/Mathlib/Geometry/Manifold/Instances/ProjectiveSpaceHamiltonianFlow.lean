@@ -55,8 +55,8 @@ theorem fsVolumeNormalized_map_hamiltonianFlow {H : ℙ ℂ (Ambient n) → ℝ}
     (hH : ContMDiff (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ ℝ) ∞ H) (t : ℝ) :
     Measure.map ((fsForm_isSymplectic n).hamiltonianFlow hH t) (fsVolumeNormalized n)
       = fsVolumeNormalized n := by
-  rw [fsVolumeNormalized, Measure.map_smul' _ _
-    ((fsForm_isSymplectic n).continuous_hamiltonianFlow hH t).measurable,
+  rw [fsVolumeNormalized, Measure.map_smul _
+    ((fsForm_isSymplectic n).continuous_hamiltonianFlow hH t).measurable.aemeasurable,
     fsVolume_map_hamiltonianFlow]
 
 end Projectivization

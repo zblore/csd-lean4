@@ -6,7 +6,6 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.InformationTheory.KlDivArrow
-public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.Mathlib.InformationTheory.FiniteEntropy
 
 /-!
@@ -70,9 +69,10 @@ theorem coarseLaw_apply (π : Measure α) {q : α → β} (hq : Measurable q) {s
     (hs : MeasurableSet s) : coarseLaw π q s = π (q ⁻¹' s) := by
   rw [coarseLaw, Measure.map_apply hq hs]
 
-theorem isProbabilityMeasure_coarseLaw (π : Measure α) [IsProbabilityMeasure π] {q : α → β}
-    (hq : Measurable q) : IsProbabilityMeasure (coarseLaw π q) :=
-  Measure.isProbabilityMeasure_map' (μ := π) hq.aemeasurable
+theorem isProbabilityMeasure_coarseLaw (π : Measure α) [IsProbabilityMeasure π]
+    {q : α → β} : IsProbabilityMeasure (coarseLaw π q) := by
+  rw [coarseLaw]
+  infer_instance
 
 variable [DiscreteMeasurableSpace β]
 
@@ -89,8 +89,8 @@ noncomputable def coarseKernel (π : Measure α) (q : α → β) (F : α → α)
 @[simp] theorem coarseKernel_apply (π : Measure α) (q : α → β) (F : α → α) (v : β) :
     coarseKernel π q F v = coarseStep π q F v := rfl
 
-theorem isMarkovKernel_coarseKernel (π : Measure α) [IsProbabilityMeasure π] {q : α → β}
-    (hq : Measurable q) {F : α → α} (hF : Measurable F) :
+theorem isMarkovKernel_coarseKernel (π : Measure α) [IsProbabilityMeasure π]
+    {q : α → β} {F : α → α} :
     IsMarkovKernel (coarseKernel π q F) := by
   refine ⟨fun v => ?_⟩
   rw [coarseKernel_apply, coarseStep]
@@ -99,7 +99,7 @@ theorem isMarkovKernel_coarseKernel (π : Measure α) [IsProbabilityMeasure π] 
     infer_instance
   · rw [ite_eq_right h0]
     have : IsProbabilityMeasure (π[|q ⁻¹' {v}]) := cond_isProbabilityMeasure h0
-    exact Measure.isProbabilityMeasure_map' (hf := (hq.comp hF).aemeasurable)
+    exact inferInstance
 
 /-- ★★ **The weighted step is the joint measure.** Multiplying one macro step by the weight of the
 cell it starts from clears the conditioning, leaving the fine measure of "now in `v`, next in `s`". -/
@@ -177,8 +177,8 @@ theorem antitone_klDiv_coarseLaw (π : Measure α) [IsProbabilityMeasure π] {q 
     (hq : Measurable q) {F : α → α} (hF : MeasurePreserving F π π)
     (μ : Measure β) [IsProbabilityMeasure μ] :
     Antitone fun n : ℕ => klDiv (μ.compIterate (coarseKernel π q F) n) (coarseLaw π q) := by
-  have := isMarkovKernel_coarseKernel π hq hF.measurable
-  have := isProbabilityMeasure_coarseLaw π hq
+  have := isMarkovKernel_coarseKernel π (q := q) (F := F)
+  have := isProbabilityMeasure_coarseLaw π (q := q)
   exact antitone_klDiv_compIterate _ (comp_coarseLaw_of_measurePreserving π hq hF)
 
 /-- ★★ **The entropy form.** If the cells carry equal weight — the coarse law is uniform — the
@@ -188,7 +188,7 @@ theorem monotone_measureEntropy_coarseLaw [Nonempty β] (π : Measure α) [IsPro
     (huniform : coarseLaw π q = uniformOn (univ : Set β))
     (μ : Measure β) [IsProbabilityMeasure μ] :
     Monotone fun n : ℕ => measureEntropy (μ.compIterate (coarseKernel π q F) n) := by
-  have := isMarkovKernel_coarseKernel π hq hF.measurable
+  have := isMarkovKernel_coarseKernel π (q := q) (F := F)
   refine monotone_measureEntropy_compIterate _ _ ?_
   rw [← huniform]
   exact comp_coarseLaw_of_measurePreserving π hq hF

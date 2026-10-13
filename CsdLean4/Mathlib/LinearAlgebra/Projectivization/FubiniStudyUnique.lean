@@ -6,7 +6,6 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
-public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
 public import Mathlib.MeasureTheory.Measure.Haar.Unique
 public import Mathlib.Topology.Instances.Matrix
@@ -129,7 +128,7 @@ Haar probability measure, hence equal to `unitaryHaarProb`.
 
 Proof: `Measure.map (· * g) unitaryHaarProb` is `IsHaarMeasure` (via
 `isHaarMeasure_map_mul_right`, an instance) and `IsProbabilityMeasure`
-(via `Measure.isProbabilityMeasure_map'`, since `(· * g)` is measurable).
+(Mathlib's instance on a pushforward, which needs no measurability).
 `unitaryHaarProb` itself is both. By Haar uniqueness on compact groups
 (`isHaarMeasure_eq_of_isProbabilityMeasure`), the two measures coincide. -/
 instance instIsMulRightInvariantUnitaryHaarProb (ι : Type*) [Fintype ι] [DecidableEq ι] :
@@ -140,8 +139,7 @@ instance instIsMulRightInvariantUnitaryHaarProb (ι : Type*) [Fintype ι] [Decid
         (MeasureTheory.Measure.map (· * g)
           (unitaryHaarProb : MeasureTheory.Measure
             (Matrix.unitaryGroup ι ℂ))) :=
-      MeasureTheory.Measure.isProbabilityMeasure_map'
-        (continuous_mul_const g).measurable.aemeasurable
+      inferInstance
     exact MeasureTheory.Measure.isHaarMeasure_eq_of_isProbabilityMeasure _ _
 
 /-! ## Phase G3 — Haar-orbit-indicator key lemma
@@ -324,7 +322,7 @@ theorem invariant_finiteMeasure_eq_smul_fubiniStudy
         MeasureTheory.Measure.map (fun p => U • p) ((μ Set.univ)⁻¹ • μ)
           = (μ Set.univ)⁻¹ • μ := by
       intro U
-      rw [MeasureTheory.Measure.map_smul' _ _ (hμ_inv U).measurable, (hμ_inv U).map_eq]
+      rw [MeasureTheory.Measure.map_smul _ (hμ_inv U).measurable.aemeasurable, (hμ_inv U).map_eq]
     -- Uniqueness pins the normalised measure to Fubini–Study.
     have heq : ((μ Set.univ)⁻¹ • μ) = fsMeasure p₀ :=
       fsMeasure_unique p₀ ((μ Set.univ)⁻¹ • μ) hinv

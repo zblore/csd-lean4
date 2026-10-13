@@ -6,7 +6,6 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.RecordLayer.SwapClosure
-public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 
 /-!
 # RecordLayer/TwoTimeLuders: records at t₁ then t₂, on one arena (Q25)
@@ -250,7 +249,7 @@ theorem cond_map {X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y]
       = Measure.map f (ProbabilityTheory.cond μ (f ⁻¹' A)) := by
   show ((Measure.map f μ) A)⁻¹ • (Measure.map f μ).restrict A
     = Measure.map f ((μ (f ⁻¹' A))⁻¹ • μ.restrict (f ⁻¹' A))
-  rw [Measure.map_apply hf hA, Measure.restrict_map hf hA, Measure.map_smul' _ _ hf]
+  rw [Measure.map_apply hf hA, Measure.restrict_map hf hA, Measure.map_smul _ hf.aemeasurable]
 
 /-! ### The generic two-stage composition -/
 
@@ -320,7 +319,7 @@ theorem two_stage_joint (idx₁ idx₂ : Xsel → Fin K)
   set E₁ := swapEvolve idx₁ 0 1 with hE₁
   have hE₁meas : Measurable E₁ := measurable_swapEvolve idx₁ h₁ 0 1
   have : IsProbabilityMeasure (Measure.map E₁ μ₁) :=
-    Measure.isProbabilityMeasure_map' hE₁meas.aemeasurable
+    inferInstance
   have hA₁meas : MeasurableSet {y : SwapArena Xsel K | y.1.2 ∈ pointerArc K i} :=
     (measurable_snd.comp measurable_fst) (measurableSet_pointerArc i)
   have hsec0 : μ₁ ((swapProtocol idx₁ h₁).outcomeSector i) ≠ 0 := by
@@ -332,8 +331,7 @@ theorem two_stage_joint (idx₁ idx₂ : Xsel → Fin K)
     exact ProbabilityTheory.cond_isProbabilityMeasure hsec0
   have hpostprob : IsProbabilityMeasure ((swapProtocol idx₁ h₁).postMeasure μ₁ i) := by
     rw [MeasurementProtocol.postMeasure]
-    exact Measure.isProbabilityMeasure_map'
-      ((swapProtocol idx₁ h₁).measurable_evolve _ _).aemeasurable
+    exact inferInstance
   -- the events, downstairs
   set C := recordOneEvent (Xsel := Xsel) i with hCdef
   set D := regroup (Xsel := Xsel) (K := K) ⁻¹'

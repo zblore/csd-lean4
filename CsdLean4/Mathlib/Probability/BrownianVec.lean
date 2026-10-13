@@ -13,7 +13,6 @@ public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
 public import Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
 public import Mathlib.Probability.Distributions.Gaussian.Real
 public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
-public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 
 /-!
 # Brownian motion in `ℝᵈ` as independent real coordinates
@@ -139,8 +138,9 @@ structure IsBrownianVec (B : ℝ≥0 → Ω → EuclideanSpace ℝ ι) (P : Meas
 noncomputable def gaussianVec (ι : Type*) [Fintype ι] (v : ℝ≥0) : Measure (EuclideanSpace ℝ ι) :=
   (Measure.pi fun _ : ι => gaussianReal 0 v).map (WithLp.toLp 2)
 
-instance (v : ℝ≥0) : IsProbabilityMeasure (gaussianVec ι v) :=
-  Measure.isProbabilityMeasure_map' (WithLp.measurable_toLp 2 _).aemeasurable
+instance (v : ℝ≥0) : IsProbabilityMeasure (gaussianVec ι v) := by
+  rw [gaussianVec]
+  infer_instance
 
 /-- The characteristic function of the product Gaussian: `e^{−v‖ξ‖²/2}`. -/
 theorem charFun_gaussianVec (v : ℝ≥0) (ξ : EuclideanSpace ℝ ι) :

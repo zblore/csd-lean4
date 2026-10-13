@@ -6,7 +6,6 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Thermo.ReducedSecondMoment
-public import CsdLean4.Mathlib.MeasureTheory.MapProbability
 
 /-!
 # E2: the microcanonical energy window
@@ -212,7 +211,7 @@ lemma map_signFlip_microMeasure (p₀ : CPN N) (lam : Fin N → ℝ) (ε : ℝ) 
         • (fsMeasure p₀).restrict (energyWindow lam ε))
     = (fsMeasure p₀ (energyWindow lam ε))⁻¹
         • (fsMeasure p₀).restrict (energyWindow lam ε)
-  rw [Measure.map_smul' _ _ (continuous_const_smul (signFlip k)).measurable, key]
+  rw [Measure.map_smul _ (continuous_const_smul (signFlip k)).measurable.aemeasurable, key]
 
 /-- The change-of-variables engine, conditioned: integrals against the microcanonical law are
 unchanged by a sign flip. The conditioned analogue of `fs_integral_unitary`, available for the

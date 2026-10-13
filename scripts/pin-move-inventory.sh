@@ -135,7 +135,8 @@ if empty_rows:
 
 print('Sections (1)(2)(3)(6) were SWEPT at the v4.34.0 pin move (2026-10-12) and now read')
 print('zero, which here is the intended outcome rather than a wrong pattern. What is left is')
-print('(4) the stdSimplex restatement, deliberately deferred with the deprecation silenced')
-print('per declaration, and (5) the shim collapse, which is BACKLOG #142.')
+print('(4) the stdSimplex restatement alone, deliberately deferred with the deprecation')
+print('silenced per declaration (BACKLOG #27). Section (5), the MapProbability shim, was')
+print('collapsed and the file deleted on 2026-10-13 (BACKLOG #142).')
 print('HY-6 in specs/BACKLOG.md section D carries what to do with each row.')
 PY
