@@ -455,11 +455,19 @@ theorem hardyMaxAmp_A'_B' :
     rw [this, hpc]; push_cast; ring
   linear_combination (2 - (phi : ℂ)^2) * hsq - hcube
 
-/-- **QM realises the Hardy constraints at the golden-ratio maximum.**
+/-- **QM realises the Hardy constraints, discharged by the golden-ratio witnesses.**
 
 Strengthened 2026-08-08 (vacuity audit), as `exists_hardy_realisation`:
 nondegeneracy and orthogonality of the witnesses are part of the
-statement. -/
+statement.
+
+⚠️ **The statement is the same as `exists_hardy_realisation`'s** — identical after
+binder renaming, as `check-duplicates` reports (2026-10-13). What is specific to this one is
+its *proof*: the witnesses are the golden-ratio state `hardyMaxVec` and `aPrimeMax`, where the
+Hardy probability attains its maximum. **The maximality is NOT in this statement** and never
+was; it is `hardyMax_probability_eq`, which gives that probability as `(5√5 − 11)/2`.
+The earlier heading, "at the golden-ratio maximum", read as though the statement pinned the
+maximum, and it does not. -/
 theorem exists_hardy_realisation_max :
     ∃ (ψ : Fin 2 × Fin 2 → ℂ) (a aPrime b bPrime aPrime_perp bPrime_perp : Fin 2 → ℂ),
       aPrime ≠ 0 ∧ aPrime_perp ≠ 0 ∧ bPrime ≠ 0 ∧ bPrime_perp ≠ 0 ∧

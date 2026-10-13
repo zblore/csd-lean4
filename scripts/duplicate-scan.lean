@@ -100,18 +100,35 @@ def run : CoreM Unit := do
   let prefixOf (n : Name) : Name := n.getPrefix
   let isAlias (ns : Array Name) : Bool :=
     ns.all fun n => prefixOf n == prefixOf ns[0]!
+  -- An ALIAS CITES ITS ORIGINAL: if one member of the group appears in another member's proof
+  -- term, there is only one proof in the group and the other names are derived from it. That is
+  -- the structural difference between a second name and a second proof, and it is the test that
+  -- matters — `b92_nonorthogonal := bb84_states_nonorthogonal` is a name, not a duplication.
+  let usesSibling (ns : Array Name) : Bool :=
+    ns.any fun n =>
+      match env.find? n with
+      | some (.thmInfo v) =>
+        let used := v.value.getUsedConstants
+        ns.any fun m => m != n && used.contains m
+      | _ => false
   let twins := sameType.filter isTwin
+  let derived := sameType.filter fun ns => !isTwin ns && !isAlias ns && usesSibling ns
   let aliases := sameType.filter fun ns => !isTwin ns && isAlias ns
-  let review := sameType.filter fun ns => !isTwin ns && !isAlias ns
+  let review := sameType.filter fun ns =>
+    !isTwin ns && !isAlias ns && !usesSibling ns
   let sameLast := byLast.toList.filterMap fun (c, ns) =>
     if ns.size ≥ 2 then some (c, ns) else none
   IO.println s!"check-duplicates: {byType.size} distinct statements over \
 {byType.toList.foldl (fun a (_, ns) => a + ns.size) 0} hand-written CSD theorems"
   IO.println ""
-  IO.println s!"(1) SAME STATEMENT, DIFFERENT NAMES: {sameType.length} group(s) = {twins.length} Empirical twin(s) + {aliases.length} in-namespace alias(es) + {review.length} TO REVIEW"
+  IO.println s!"(1) SAME STATEMENT, DIFFERENT NAMES: {sameType.length} group(s) = {twins.length} Empirical twin(s) + {aliases.length} in-namespace alias(es) + {derived.length} derived (one cites the other) + {review.length} TO REVIEW"
   IO.println ""
   IO.println s!"  TO REVIEW ({review.length}) — two namespaces, no twin, no alias:"
   for ns in review do
+    IO.println s!"    {String.intercalate ", " (ns.toList.map toString)}"
+  IO.println ""
+  IO.println s!"  derived — one member's proof CITES another, so one proof, several names ({derived.length}):"
+  for ns in derived do
     IO.println s!"    {String.intercalate ", " (ns.toList.map toString)}"
   IO.println ""
   IO.println s!"  twins by design ({twins.length}), not findings:"
