@@ -395,6 +395,7 @@ public import CsdLean4.Empirical.CSD.Ozawa
 public import CsdLean4.Empirical.CSD.LocalFriendliness
 public import CsdLean4.Empirical.CSD.SternGerlach
 public import CsdLean4.Empirical.CSD.SternGerlachVolume
+public import CsdLean4.Empirical.CSD.VolumeArith
 public import CsdLean4.Empirical.CSD.MachZehnderVolume
 public import CsdLean4.Empirical.CSD.DoubleSlitVolume
 public import CsdLean4.Empirical.CSD.MalusVolume

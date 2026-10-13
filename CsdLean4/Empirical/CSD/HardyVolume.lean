@@ -8,6 +8,7 @@ module
 public import CsdLean4.LF4.BornFrequencyN
 public import CsdLean4.Empirical.QM.Hardy
 public import CsdLean4.RecordLayer.BasinFrequency
+public import CsdLean4.Empirical.CSD.VolumeArith
 
 /-!
 # Empirical/CSD: Hardy's probability as a derived Kähler-volume frequency
@@ -87,17 +88,6 @@ namespace CSD
 namespace Empirical
 namespace CSDBridge
 namespace HardyVolume
-
-/-! ### Helpers (file-local, mirroring `GHZVolume.lean`) -/
-
-/-- `‖⟨eᵢ, ψ⟩‖² = ‖ψᵢ‖²` on `ℂℙ³`. -/
-lemma normSq_inner_single (ψ : EuclideanSpace ℂ (Fin 4)) (i : Fin 4) :
-    ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2 = ‖ψ.ofLp i‖ ^ 2 := by
-  rw [EuclideanSpace.inner_single_left, map_one, one_mul]
-
-/-- `‖↑r‖² = r²`. -/
-lemma realNormSq (r : ℝ) : ‖((r : ℝ) : ℂ)‖ ^ 2 = r ^ 2 := by
-  rw [Complex.norm_real, Real.norm_eq_abs, sq_abs]
 
 /-! ### The normalising constant `nrm = √(5φ+3)` -/
 

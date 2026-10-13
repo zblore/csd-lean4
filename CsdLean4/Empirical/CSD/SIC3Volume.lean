@@ -9,6 +9,7 @@ public import CsdLean4.LF4.POVMNaimark
 public import CsdLean4.LF4.BornRegionUncond
 public import CsdLean4.LF2.EffectAux
 public import CsdLean4.RecordLayer.BasinFrequency
+public import CsdLean4.Empirical.CSD.VolumeArith
 
 /-!
 # Empirical/CSD: the d=3 SIC-POVM (Hesse) and its Born weights as Kähler volumes
@@ -71,17 +72,8 @@ noncomputable def om : ℂ := ((-1 / 2 : ℝ) : ℂ) + ((Real.sqrt 3 / 2 : ℝ) 
 /-- `ω² = e^{−2πi/3} = −1/2 − i√3/2`. -/
 noncomputable def om2 : ℂ := ((-1 / 2 : ℝ) : ℂ) - ((Real.sqrt 3 / 2 : ℝ) : ℂ) * Complex.I
 
-lemma r2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-lemma r3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-lemma r6 : Real.sqrt 6 ^ 2 = 6 := Real.sq_sqrt (by norm_num)
 lemma r2_4 : Real.sqrt 2 ^ 4 = 4 := by
   rw [show (4 : ℕ) = 2 * 2 from rfl, pow_mul, r2]; norm_num
-lemma r3_4 : Real.sqrt 3 ^ 4 = 9 := by
-  rw [show (4 : ℕ) = 2 * 2 from rfl, pow_mul, r3]; norm_num
-
-/-- `‖z‖² = z.re·z.re + z.im·z.im`, the bridge to real coordinates. -/
-lemma normSq_coord (z : ℂ) : ‖z‖ ^ 2 = z.re * z.re + z.im * z.im := by
-  rw [Complex.sq_norm, Complex.normSq_apply]
 
 /-! ### The 9 SIC fiducial states (Weyl–Heisenberg orbit) -/
 
@@ -171,13 +163,6 @@ noncomputable def sic3POVM : POVM 3 (Fin 3 × Fin 3) where
   complete := sic3_complete
 
 /-! ### The equiangular SIC property -/
-
-/-- `⟨x, y⟩ = ∑ⱼ star(xⱼ)·yⱼ` on `ℂ³`. -/
-lemma inner_three (x y : EuclideanSpace ℂ (Fin 3)) :
-    inner ℂ x y = star (x.ofLp 0) * y.ofLp 0 + star (x.ofLp 1) * y.ofLp 1
-      + star (x.ofLp 2) * y.ofLp 2 := by
-  rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct, Fin.sum_univ_three]
-  simp only [Pi.star_apply]; ring
 
 set_option maxHeartbeats 1600000 in
 /-- **The defining SIC symmetry:** all pairwise overlaps are equal,

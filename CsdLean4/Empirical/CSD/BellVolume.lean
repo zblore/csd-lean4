@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF4.BornRegionUncond
 public import CsdLean4.RecordLayer.BasinFrequency
+public import CsdLean4.Empirical.CSD.VolumeArith
 
 /-!
 # Empirical/CSD: Bell singlet joint probabilities as derived Kähler-volume frequencies
@@ -85,15 +86,6 @@ namespace CSDBridge
 namespace BellVolume
 
 /-! ### Reusable amplitude helpers -/
-
-/-- `‖⟨eᵢ, ψ⟩‖² = ‖ψᵢ‖²` on `ℂℙ³` (the fixed-outcome Born amplitude is the `i`-th
-coordinate squared norm). -/
-lemma normSq_inner_single (ψ : EuclideanSpace ℂ (Fin 4)) (i : Fin 4) :
-    ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2 = ‖ψ.ofLp i‖ ^ 2 := by
-  have h : inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ = ψ.ofLp i := by
-    rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct, Fin.sum_univ_four]
-    fin_cases i <;> simp [EuclideanSpace.single, Pi.star_apply]
-  rw [h]
 
 /-- `‖↑(r/√2)‖² = r²/2`. -/
 lemma normSq_ofReal_div_sqrt2 (r : ℝ) :

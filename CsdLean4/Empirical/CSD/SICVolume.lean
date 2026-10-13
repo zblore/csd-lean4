@@ -9,6 +9,7 @@ public import CsdLean4.LF4.POVMNaimark
 public import CsdLean4.LF4.BornRegionUncond
 public import CsdLean4.LF2.EffectAux
 public import CsdLean4.RecordLayer.BasinFrequency
+public import CsdLean4.Empirical.CSD.VolumeArith
 
 /-!
 # Empirical/CSD: the d=2 SIC-POVM and its Born weights as Kähler volumes
@@ -53,12 +54,6 @@ namespace SICVolume
 
 open CSD.LF2 CSD.LF4
 
-/-! ### Square-root facts -/
-
-lemma r2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-lemma r3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-lemma r6 : Real.sqrt 6 ^ 2 = 6 := Real.sq_sqrt (by norm_num)
-
 /-! ### The SIC fiducial states -/
 
 /-- The complex amplitudes of the four tetrahedral SIC states on the computational
@@ -83,10 +78,6 @@ lemma sicState_ofLp (k : Fin 4) (i : Fin 2) : (sicState k).ofLp i = sicAmp k i :
 
 lemma sicState_apply (k : Fin 4) (i : Fin 2) : sicState k i = sicAmp k i := by
   fin_cases i <;> simp [sicState, EuclideanSpace.single]
-
-/-- `‖z‖² = z.re·z.re + z.im·z.im`, the bridge to real coordinates. -/
-lemma normSq_coord (z : ℂ) : ‖z‖ ^ 2 = z.re * z.re + z.im * z.im := by
-  rw [Complex.sq_norm, Complex.normSq_apply]
 
 lemma sicState_norm (k : Fin 4) : ‖sicState k‖ = 1 := by
   rw [EuclideanSpace.norm_eq, Fin.sum_univ_two, sicState_ofLp, sicState_ofLp]

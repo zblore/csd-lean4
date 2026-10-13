@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF4.BornRegionUncond
 public import CsdLean4.RecordLayer.BasinFrequency
+public import CsdLean4.Empirical.CSD.VolumeArith
 
 /-!
 # Empirical/CSD: GHZ three-qubit joint probabilities as derived Kähler-volume frequencies
@@ -86,15 +87,6 @@ namespace GHZVolume
 lemma sum_univ_eight {M : Type*} [AddCommMonoid M] (f : Fin 8 → M) :
     ∑ i, f i = f 0 + f 1 + f 2 + f 3 + f 4 + f 5 + f 6 + f 7 := by
   simp [Fin.sum_univ_succ, add_assoc]
-
-/-- `‖⟨eᵢ, ψ⟩‖² = ‖ψᵢ‖²` on `ℂℙ⁷`. -/
-lemma normSq_inner_single (ψ : EuclideanSpace ℂ (Fin 8)) (i : Fin 8) :
-    ‖inner ℂ (EuclideanSpace.single i (1 : ℂ)) ψ‖ ^ 2 = ‖ψ.ofLp i‖ ^ 2 := by
-  rw [EuclideanSpace.inner_single_left, map_one, one_mul]
-
-/-- `‖↑r‖² = r²`. -/
-lemma realNormSq (r : ℝ) : ‖((r : ℝ) : ℂ)‖ ^ 2 = r ^ 2 := by
-  rw [Complex.norm_real, Real.norm_eq_abs, sq_abs]
 
 /-- `‖↑r · i‖² = r²`. -/
 lemma imagNormSq (r : ℝ) : ‖((r : ℝ) : ℂ) * Complex.I‖ ^ 2 = r ^ 2 := by
