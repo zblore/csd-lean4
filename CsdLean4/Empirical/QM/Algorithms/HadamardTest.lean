@@ -127,10 +127,6 @@ omit [Fintype ι] in
 lemma cU_apply (s : Fin 2 × ι → ℂ) (a : Fin 2) (i : ι) :
     cU U s (a, i) = if a = 1 then U (sliceAt s 1) i else s (a, i) := rfl
 
-/-- `H(0,b) = (√2)⁻¹` (the all-zero ancilla row). -/
-lemma hadEntry_zero_left (b : Fin 2) : hadEntry (0 : Fin 2) b = (Real.sqrt 2 : ℂ)⁻¹ := by
-  simp [hadEntry]
-
 /-- `H(1,1) = -(√2)⁻¹` (the `(-1)` interference entry). -/
 lemma hadEntry_one_one : hadEntry (1 : Fin 2) (1 : Fin 2) = -(Real.sqrt 2 : ℂ)⁻¹ := by
   rw [hadEntry, show (1 : Fin 2).val * (1 : Fin 2).val = 1 from rfl, pow_one,
@@ -186,19 +182,6 @@ lemma hadTest_apply_one (i : ι) :
   have h2 : (Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹ = 1 / 2 := by
     rw [← mul_inv, sqrt2_mul_self]; norm_num
   linear_combination (ψ i - (U ψ) i) * h2
-
-/-! ## Inner-product infrastructure -/
-
-/-- The Euclidean inner product in coordinates: `⟨x,y⟩ = ∑ i, conj (x i) · y i`. -/
-lemma inner_eq_sum (x y : EuclideanSpace ℂ ι) :
-    inner ℂ x y = ∑ i, conj (x i) * y i := by
-  rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct]
-  refine Finset.sum_congr rfl (fun i _ => ?_)
-  rw [mul_comm]; rfl
-
-/-- `z · conj z = ‖z‖²` (the `Complex.ofReal` form, used to keep the cast atom canonical). -/
-lemma mul_conj_eq (z : ℂ) : z * conj z = ((‖z‖ ^ 2 : ℝ) : ℂ) := by
-  rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
 
 /-! ## The headline -/
 

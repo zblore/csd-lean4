@@ -200,11 +200,6 @@ lemma proj_apply (m : Fin 2) (v : QReg 3) (z : B3) :
     Matrix.toEuclideanLin (projA m) v z = (if z 2 = m then 1 else 0) * v z := by
   rw [projA, toEuclideanLin_diagonal_apply]
 
-/-- The `m = 0` numeric branch: the Hadamard projects the ancilla onto `|0⟩` with amplitude
-`(√2)⁻¹`, independent of the data. -/
-lemma hadEntry_zero_left (c : Fin 2) : hadEntry 0 c = (Real.sqrt 2 : ℂ)⁻¹ := by
-  simp [hadEntry]
-
 /-- **The genuine phase cancellation** (the `m = 1` branch): the `(-1)^{x∧y}` phase picked up
 by the `|1⟩` projection is exactly cancelled by the data CZ, leaving amplitude `(√2)⁻¹` for
 every data branch `(x,y)`. This is `((-1)^{x∧y})² = 1`. -/
@@ -214,12 +209,13 @@ lemma czPhase_mul_hadEntry (x y : Fin 2) :
 
 /-- The combined correction × Hadamard-projection amplitude, both outcomes: `(√2)⁻¹` for
 every `m` and every data branch `(x,y)`. The `m = 0` branch is the clean projection
-(`hadEntry_zero_left`); the `m = 1` branch is the genuine phase cancellation
+(`QuantumInfo.hadEntry_zero_left`, a `simp` lemma, which is why the first branch
+closes by `simp` alone); the `m = 1` branch is the genuine phase cancellation
 (`czPhase_mul_hadEntry`). -/
 lemma corr_had_eq (m x y : Fin 2) :
     (if m = 1 then czPhase x y else 1) * hadEntry m (x * y) = (Real.sqrt 2 : ℂ)⁻¹ := by
   fin_cases m
-  · simpa using hadEntry_zero_left (x * y)
+  · simp
   · simpa using czPhase_mul_hadEntry x y
 
 /-! ## The headline: per-basis correctness (genuine phase cancellation) -/

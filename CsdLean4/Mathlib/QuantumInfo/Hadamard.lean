@@ -40,6 +40,12 @@ noncomputable def hadEntry (a b : Fin 2) : ℂ := (-1) ^ (a.val * b.val) / Real.
 @[simp] lemma hadEntry_zero_right (b : Fin 2) : hadEntry b 0 = (Real.sqrt 2 : ℂ)⁻¹ := by
   simp [hadEntry]
 
+/-- The mirror of `hadEntry_zero_right`: the all-zero **row**. Three separate protocol
+files had each re-proved this while importing the `_right` half from here (BACKLOG #146
+cluster (C)). -/
+@[simp] lemma hadEntry_zero_left (b : Fin 2) : hadEntry 0 b = (Real.sqrt 2 : ℂ)⁻¹ := by
+  simp [hadEntry]
+
 /-- The **Hadamard transform** `H^⊗n` on the n-qubit register, as a matrix indexed by
 bitstrings: `Hn x y = ∏ᵢ H(xᵢ, yᵢ)`. -/
 noncomputable def Hn : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ :=

@@ -98,10 +98,6 @@ omit [Fintype ι] in
 lemma cSwap_apply (s : Fin 2 × ι × ι → ℂ) (a : Fin 2) (i j : ι) :
     cSwap s (a, i, j) = if a = 1 then s (a, j, i) else s (a, i, j) := rfl
 
-/-- `H(0,b) = (√2)⁻¹` (the all-zero ancilla row). -/
-lemma hadEntry_zero_left (b : Fin 2) : hadEntry (0 : Fin 2) b = (Real.sqrt 2 : ℂ)⁻¹ := by
-  simp [hadEntry]
-
 omit [Fintype ι] in
 /-- After the **first** Hadamard the ancilla is in a uniform superposition over the
 unchanged product: `hadAnc (swapInit ψ φ) (a,i,j) = (√2)⁻¹·ψ i·φ j` for every `a`. -/
@@ -135,19 +131,6 @@ lemma swapTest_apply (i j : ι) :
   have h2 : (Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹ = 1 / 2 := by
     rw [← mul_inv, sqrt2_mul_self]; norm_num
   linear_combination (ψ i * φ j + ψ j * φ i) * h2
-
-/-! ## Inner-product infrastructure -/
-
-/-- The Euclidean inner product in coordinates: `⟨x,y⟩ = ∑ i, conj (x i) · y i`. -/
-lemma inner_eq_sum (x y : EuclideanSpace ℂ ι) :
-    inner ℂ x y = ∑ i, conj (x i) * y i := by
-  rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct]
-  refine Finset.sum_congr rfl (fun i _ => ?_)
-  rw [mul_comm]; rfl
-
-/-- `z · conj z = ‖z‖²` (the `Complex.ofReal` form, used to keep the cast atom canonical). -/
-lemma mul_conj_eq (z : ℂ) : z * conj z = ((‖z‖ ^ 2 : ℝ) : ℂ) := by
-  rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
 
 /-! ## The headline -/
 

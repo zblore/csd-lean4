@@ -96,4 +96,26 @@ lemma sum_coord {κ : Type*} (s : Finset κ) (f : κ → EuclideanSpace ℂ ι) 
     _ = (∑ k ∈ s, (f k).ofLp) y := by rw [h]
     _ = ∑ k ∈ s, (f k) y := by rw [Finset.sum_apply]
 
+/-! ## Coordinates of the inner product
+
+`normSq_eq_sum_prob` above is the diagonal case of `inner_eq_sum`, which was missing: two
+protocol files each carried a copy (BACKLOG #146 cluster (C)). Both lemmas here are
+**convenience specialisations, not library additions** — `inner_eq_sum` is
+`PiLp.inner_apply` with the `ℂ` coordinate inner product unfolded, and `mul_conj_eq` is
+`Complex.mul_conj` carrying the norm-squared cast rather than `normSq`. The cast form is the
+reason to have the second one at all: the Born sums downstream need `((‖z‖ ^ 2 : ℝ) : ℂ)`
+as the atom, so that `Complex.ofReal_sum` and friends fire. -/
+
+omit [DecidableEq ι] in
+/-- The Euclidean inner product in coordinates: `⟨x,y⟩ = ∑ i, conj (x i) · y i`. -/
+lemma inner_eq_sum [Fintype ι] (x y : EuclideanSpace ℂ ι) :
+    inner ℂ x y = ∑ i, conj (x i) * y i := by
+  rw [EuclideanSpace.inner_eq_star_dotProduct, dotProduct]
+  refine Finset.sum_congr rfl (fun i _ => ?_)
+  rw [mul_comm]; rfl
+
+/-- `z · conj z = ‖z‖²` (the `Complex.ofReal` form, used to keep the cast atom canonical). -/
+lemma mul_conj_eq (z : ℂ) : z * conj z = ((‖z‖ ^ 2 : ℝ) : ℂ) := by
+  rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
+
 end QuantumInfo

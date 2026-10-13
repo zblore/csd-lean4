@@ -289,7 +289,8 @@ section TwoQubit
 
 open CSD.Empirical.MerminPeres (sigmaX sigmaZ)
 open CSD.Empirical.QM.HadamardTest (tensorEuc tensorEuc_apply inner_tensorEuc swapMap
-  swapMap_apply swapMap_tensorEuc inner_swapMap inner_eq_sum)
+  swapMap_apply swapMap_tensorEuc inner_swapMap)
+open QuantumInfo (inner_eq_sum)
 open CSD.LF5 (vnUnitary vnPerm)
 
 variable {κ : Type*} [Fintype κ] [DecidableEq κ]
@@ -380,7 +381,8 @@ section Witnesses
 
 open CSD.Empirical.MerminPeres (sigmaX sigmaZ)
 open CSD.Empirical.QM.HadamardTest (tensorEuc tensorEuc_apply inner_tensorEuc swapMap
-  swapMap_apply swapMap_tensorEuc inner_swapMap inner_eq_sum)
+  swapMap_apply swapMap_tensorEuc inner_swapMap)
+open QuantumInfo (inner_eq_sum)
 open CSD.LF5 (vnUnitary vnPerm)
 
 /-- The additive charge `σ_z ⊗ 1 + 1 ⊗ σ_x` conserved by CNOT (`L_S = σ_z`, `L_A = σ_x`). -/
