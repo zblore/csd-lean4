@@ -12087,5 +12087,43 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms MeasureTheory.cat_hasCorrelationDecay_rectIndR
 
+/-! #147: the cat map is strongly mixing on `L²(T²)` (`Mathlib/Dynamics/CatMapStrongMixing.lean`). -/
+
+/-- info: 'Mixing.ergodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Mixing.ergodic
+
+/-- info: 'MeasureTheory.exists_trigPoly_integral_normSq_sub_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.exists_trigPoly_integral_normSq_sub_lt
+
+/-- info: 'MeasureTheory.tendsto_supNormZ_catZ_iterate_atTop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.tendsto_supNormZ_catZ_iterate_atTop
+
+/-- info: 'MeasureTheory.eventually_integral_trigPoly_iterate_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.eventually_integral_trigPoly_iterate_mul
+
+/-- info: 'MeasureTheory.tendsto_integral_comp_cat_iterate_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.tendsto_integral_comp_cat_iterate_mul
+
+/-- info: 'MeasureTheory.tendsto_integral_comp_cat_iterate_mul_real' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.tendsto_integral_comp_cat_iterate_mul_real
+
+/-- info: 'MeasureTheory.tendsto_measureReal_preimage_cat_iterate_inter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.tendsto_measureReal_preimage_cat_iterate_inter
+
+/-- info: 'MeasureTheory.cat_mixing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cat_mixing
+
+/-- info: 'MeasureTheory.cat_ergodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cat_ergodic
+
 
 end CSD.Tests.AxiomAudit

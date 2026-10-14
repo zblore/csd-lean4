@@ -5228,5 +5228,27 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.klDiv_stepLaw_le
 
+/-! #147: relaxation of a general `L²` fibre density (`SigmaLayer/FibreRelaxation.lean`). -/
+
+/-- info: 'CSD.SigmaLayer.tendsto_integral_fibreStroke_iterate_mul_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.tendsto_integral_fibreStroke_iterate_mul_snd
+
+/-- info: 'CSD.SigmaLayer.tendsto_fibreStepWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.tendsto_fibreStepWeight
+
+/-- info: 'CSD.SigmaLayer.sum_fibreStepWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.sum_fibreStepWeight
+
+/-- info: 'CSD.SigmaLayer.isProbabilityMeasure_fibreStepLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.isProbabilityMeasure_fibreStepLaw
+
+/-- info: 'CSD.SigmaLayer.tendsto_klDiv_fibreStepLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.tendsto_klDiv_fibreStepLaw
+
 
 end CSD.Tests.AxiomAudit

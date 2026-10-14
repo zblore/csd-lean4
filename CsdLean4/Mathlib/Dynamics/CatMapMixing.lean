@@ -15,7 +15,7 @@ public import Mathlib.Analysis.PSeries
 # Exponential decay of correlations for rectangles under Arnold's cat map
 
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate).
-BACKLOG #118(i); consumed by `SigmaLayer/FibreCellDecay.lean`.
+BACKLOG #118(i); consumed by `SigmaLayer/FibreCellDecay.lean` and `Mathlib/Dynamics/CatMapStrongMixing.lean`.
 
 `CatMapWitness.lean` proved that the cat map `(x, y) ↦ (2x + y, x + y)` on `T²` decorrelates the
 single trigonometric observable `Re e^{2πix}`, with correlations exactly zero at every nonzero lag.
@@ -62,10 +62,11 @@ Four stages, each a section below.
 
 ## Honest scope
 
-* **Rectangles of arcs only.** Indicators of products of arcs, and by linearity their finite
-  combinations. Decay for a general `L²` observable follows from the density of such step functions
-  in `L²(T²)` by an `ε/3` argument, which is not formalised here; the rate would depend on the
-  observable.
+* **Rectangles of arcs only, with a rate.** Indicators of products of arcs, and by linearity their
+  finite combinations. The statement for a general `L²` observable — convergence of the correlation
+  with no rate — is `CatMapStrongMixing.lean` (★★★ `tendsto_integral_comp_cat_iterate_mul`, by the
+  density of trigonometric polynomials and an `ε/3` argument); the rate is what this file adds,
+  and it is for rectangles only.
 * **The concrete matrix only**, as in `CatMapWitness.lean`: `[[2,1],[1,1]]`. The argument uses
   nothing about it beyond `φ² = φ + 1` and the invariant form, so a general hyperbolic element of
   `SL₂(ℤ)` would go the same way with its own quadratic form; not attempted.
@@ -723,8 +724,9 @@ lemma integral_comp_cat_iterate (g : Torus2 → ℝ) (hg : Measurable g) (n : �
     ∫ p, g (cat^[n] p) ∂(volume : Measure Torus2) = ∫ p, g p ∂(volume : Measure Torus2) :=
   integral_iterate_of_measurePreserving measurePreserving_cat hg.aestronglyMeasurable n
 
-/-- **Cauchy–Schwarz** on the torus, in squared form. -/
-theorem normSq_integral_mul_le {F G : Torus2 → ℂ} (hF : BddT F) (hG : BddT G) :
+/-- **Cauchy–Schwarz** on the torus, in squared form, for two `L²` observables. -/
+theorem normSq_integral_mul_le {F G : Torus2 → ℂ} (hF : MemLp F 2 (volume : Measure Torus2))
+    (hG : MemLp G 2 (volume : Measure Torus2)) :
     ‖∫ p, F p * G p ∂(volume : Measure Torus2)‖ ^ 2
       ≤ (∫ p, ‖F p‖ ^ 2 ∂(volume : Measure Torus2))
         * ∫ p, ‖G p‖ ^ 2 ∂(volume : Measure Torus2) := by
@@ -733,9 +735,9 @@ theorem normSq_integral_mul_le {F G : Torus2 → ℂ} (hF : BddT F) (hG : BddT G
     refine (norm_integral_le_integral_norm _).trans (le_of_eq ?_)
     exact integral_congr_ae (ae_of_all _ fun p => norm_mul _ _)
   have hF2 : MemLp (fun p => ‖F p‖) (ENNReal.ofReal 2) (volume : Measure Torus2) := by
-    rw [ENNReal.ofReal_ofNat]; exact hF.memLp_two.norm
+    rw [ENNReal.ofReal_ofNat]; exact hF.norm
   have hG2 : MemLp (fun p => ‖G p‖) (ENNReal.ofReal 2) (volume : Measure Torus2) := by
-    rw [ENNReal.ofReal_ofNat]; exact hG.memLp_two.norm
+    rw [ENNReal.ofReal_ofNat]; exact hG.norm
   have h2 := integral_mul_le_Lp_mul_Lq_of_nonneg Real.HolderConjugate.two_two
     (ae_of_all _ fun p => norm_nonneg (F p)) (ae_of_all _ fun p => norm_nonneg (G p)) hF2 hG2
   simp only [Real.rpow_two] at h2
@@ -1015,13 +1017,13 @@ theorem norm_integral_rect_iterate_mul_sub_le {a b c d a' b' c' d' : ℝ}
     exact integral_normSq_rect_sub_trunc_le ha' hab' hb' hc' hcd' hd' R hR1
   -- the two error terms, squared
   have hE1 : ‖∫ p, T (cat^[n] p) * (f' - T') p ∂(volume : Measure Torus2)‖ ^ 2 ≤ 4 / R := by
-    refine (normSq_integral_mul_le (hBT.comp_cat_iterate n) hBD').trans ?_
+    refine (normSq_integral_mul_le (hBT.comp_cat_iterate n).memLp_two hBD'.memLp_two).trans ?_
     rw [integral_comp_cat_iterate (fun p => ‖T p‖ ^ 2) (hBT.measurable.norm.pow_const 2) n]
     calc _ ≤ (1 : ℝ) * (4 / (R : ℝ)) :=
           mul_le_mul hTe hDe' (integral_nonneg fun p => by positivity) zero_le_one
       _ = 4 / (R : ℝ) := one_mul _
   have hE2 : ‖∫ p, (f - T) (cat^[n] p) * f' p ∂(volume : Measure Torus2)‖ ^ 2 ≤ 4 / R := by
-    refine (normSq_integral_mul_le (hBD.comp_cat_iterate n) hBf').trans ?_
+    refine (normSq_integral_mul_le (hBD.comp_cat_iterate n).memLp_two hBf'.memLp_two).trans ?_
     rw [integral_comp_cat_iterate (fun p => ‖(f - T) p‖ ^ 2) (hBD.measurable.norm.pow_const 2) n]
     calc _ ≤ (4 / (R : ℝ)) * (1 : ℝ) :=
           mul_le_mul hDe hfe' (integral_nonneg fun p => by positivity) (by positivity)

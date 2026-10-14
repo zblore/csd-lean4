@@ -13,7 +13,8 @@ public import CsdLean4.Mathlib.Dynamics.CatMapMixing
 # The fibre cells decorrelate under the hyperbolic stroke
 
 **Category:** 7-SigmaLayer.
-BACKLOG #118(i), the hypothesis #118(ii), #130 and #144 consumed; `R-019`.
+BACKLOG #118(i), the hypothesis #118(ii), #130 and #144 consumed; `R-019`; consumed by
+`FibreRelaxation.lean` (#147).
 
 Every finite-horizon theorem of [`FibreFiniteHorizon.lean`](FibreFiniteHorizon.lean),
 [`FibreHorizonDivergence.lean`](FibreHorizonDivergence.lean) and
@@ -67,9 +68,11 @@ fibre to `Σ` along the second projection (`HasCorrelationDecay.liftSnd`, the ba
   here derives it. What is proved is: *given* that map, the fibre relaxes, with these rates.
 * **Initial densities coarse-grained on the grid.** `cellDensity` is constant on the `(m+1)²`
   cells. A density that is a finite combination of indicators of arbitrary rectangles of arcs is
-  covered by the same Category-1 pair bound; a general `L²` density is not formalised (the step
-  functions are dense, which is the one missing step, BACKLOG #147).
-  The relaxation H-theorem for the fibre stays on the map identification and on general initial densities. RESIDUE(R-019)
+  covered by the same Category-1 pair bound; a general `L²` density is
+  [`FibreRelaxation.lean`](FibreRelaxation.lean) (#147): convergence with no rate, by the strong
+  mixing of the cat map on `L²(T²)`. The rate is what this file adds, and it is for the
+  coarse-grained class.
+  The relaxation H-theorem for the fibre stays on the map identification. RESIDUE(R-019)
 * **The constants are polynomial in the cell count**, `(m+1)⁸` in the divergence bound, from
   `(m+1)²` cells each deviating by at most `(m+1)² · catRectEnv n`, and the envelope is not sharp
   (see the Category-1 file). The exponential rate in `n` is what matters, and the first-passage
