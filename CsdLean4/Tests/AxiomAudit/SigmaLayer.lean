@@ -5298,5 +5298,35 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.shearEvolve_fibrePreserving
 
+/-! #152: the cell law from a Σ-local coupling (`RecordLayer/SigmaLocalCoupling.lean`). -/
+
+/-- info: 'CSD.RecordLayer.SigmaLocalCoupling.A_eq_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.SigmaLocalCoupling.A_eq_diagonal
+
+/-- info: 'CSD.RecordLayer.SigmaLocalCoupling.baseGen_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.SigmaLocalCoupling.baseGen_eq_sum
+
+/-- info: 'CSD.RecordLayer.SigmaLocalCoupling.fundamentalForm_torusField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.SigmaLocalCoupling.fundamentalForm_torusField
+
+/-- info: 'CSD.RecordLayer.SigmaLocalCoupling.drift_eq_sum_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.SigmaLocalCoupling.drift_eq_sum_momentMap
+
+/-- info: 'CSD.RecordLayer.isCalibrated_forall_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isCalibrated_forall_iff
+
+/-- info: 'CSD.RecordLayer.rate_eq_momentMap_of_calibrated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rate_eq_momentMap_of_calibrated
+
+/-- info: 'CSD.RecordLayer.isTorusGenerated_of_calibrated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isTorusGenerated_of_calibrated
+
 
 end CSD.Tests.AxiomAudit

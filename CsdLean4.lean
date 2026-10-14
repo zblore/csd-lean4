@@ -587,6 +587,7 @@ public import CsdLean4.RecordLayer.MeasurementProtocol
 public import CsdLean4.RecordLayer.RecordPersistence
 public import CsdLean4.RecordLayer.ShearWitness
 public import CsdLean4.RecordLayer.BackReactionNecessity
+public import CsdLean4.RecordLayer.SigmaLocalCoupling
 public import CsdLean4.RecordLayer.DynamicBorn
 public import CsdLean4.RecordLayer.OutcomeField
 public import CsdLean4.RecordLayer.OutcomeBasin
