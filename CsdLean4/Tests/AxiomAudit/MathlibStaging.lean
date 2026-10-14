@@ -12045,4 +12045,47 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms InformationTheory.klDiv_uniformOn_univ_le_chiSq
 
 
+-- Mathlib/Dynamics/CatMapMixing.lean (#118(i), 2026-10-14): exponential decay of correlations
+-- for rectangles of arcs under the cat map. The frequency orbit grows like phi^(2n) because the
+-- integer form m^2 - mn - n^2 is invariant and nonzero; an arc's coefficients are <= 1/(pi |n|);
+-- Parseval turns the truncation error into the tail <= 1/R; at the lag-dependent cutoff the
+-- truncated rectangles share no frequency after n steps, so the main term is the product of
+-- the means. Envelope catRectEnv n = 4 * 2^(-floor((n-2)/3)) from lag 2, summable.
+/-- info: 'MeasureTheory.goldenRatio_pow_le_supNormZ_catZ_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.goldenRatio_pow_le_supNormZ_catZ_iterate
+
+/-- info: 'MeasureTheory.catCutoff_lt_supNormZ_catZ_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catCutoff_lt_supNormZ_catZ_iterate
+
+/-- info: 'MeasureTheory.norm_fourierCoeff_arcInd_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.norm_fourierCoeff_arcInd_le
+
+/-- info: 'MeasureTheory.integral_normSq_arcInd_sub_trunc_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.integral_normSq_arcInd_sub_trunc_le
+
+/-- info: 'MeasureTheory.integral_rect_trunc_mul_rect_trunc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.integral_rect_trunc_mul_rect_trunc
+
+/-- info: 'MeasureTheory.norm_integral_rect_iterate_mul_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.norm_integral_rect_iterate_mul_sub_le
+
+/-- info: 'MeasureTheory.abs_integral_rectIndR_iterate_mul_sub_le_env' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.abs_integral_rectIndR_iterate_mul_sub_le_env
+
+/-- info: 'MeasureTheory.summable_catRectEnv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.summable_catRectEnv
+
+/-- info: 'MeasureTheory.cat_hasCorrelationDecay_rectIndR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cat_hasCorrelationDecay_rectIndR
+
+
 end CSD.Tests.AxiomAudit

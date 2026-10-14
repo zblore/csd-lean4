@@ -5184,4 +5184,49 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.jointMomentContext_rowSum_single
 
 
+-- SigmaLayer/FibreCellDecay.lean (#118(i), 2026-10-14): the fibre cells decorrelate under the
+-- hyperbolic stroke. A fibre cell is a rectangle of grid arcs a.e., so the Category-1 decay
+-- transfers; the corpus's finite-horizon theorems become unconditional (130/T at horizon T,
+-- L^2 convergence of the time averages); two cells decorrelate at step n; and the step-n law of
+-- a grid-coarse-grained density satisfies klDiv <= (m+1)^8 catRectEnv(n)^2 from the uniform
+-- cell law -- R-019's convergence clause at step n, on the hyperbolic witness. Honest scope:
+-- the map is the available witness, not a derived de-isolation dynamics; densities are
+-- grid-coarse-grained (general L^2 is #147).
+/-- info: 'CSD.SigmaLayer.circCell_ind_ae_eq_arcIndR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.circCell_ind_ae_eq_arcIndR
+
+/-- info: 'CSD.SigmaLayer.fibreCellInd_ae_eq_rectIndR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fibreCellInd_ae_eq_rectIndR
+
+/-- info: 'CSD.SigmaLayer.fibreStroke_hasCorrelationDecay_fibreCellInd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fibreStroke_hasCorrelationDecay_fibreCellInd
+
+/-- info: 'CSD.SigmaLayer.integral_birkhoffAverage_fibreCellInd_sub_sq_le_hyperbolic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.integral_birkhoffAverage_fibreCellInd_sub_sq_le_hyperbolic
+
+/-- info: 'CSD.SigmaLayer.tendsto_integral_birkhoffAverage_fibreCellInd_sub_sq_hyperbolic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.tendsto_integral_birkhoffAverage_fibreCellInd_sub_sq_hyperbolic
+
+/-- info: 'CSD.SigmaLayer.abs_integral_fibreCellInd_iterate_mul_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.abs_integral_fibreCellInd_iterate_mul_sub_le
+
+/-- info: 'CSD.SigmaLayer.abs_stepWeight_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.abs_stepWeight_sub_le
+
+/-- info: 'CSD.SigmaLayer.isProbabilityMeasure_stepLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.isProbabilityMeasure_stepLaw
+
+/-- info: 'CSD.SigmaLayer.klDiv_stepLaw_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.klDiv_stepLaw_le
+
+
 end CSD.Tests.AxiomAudit
