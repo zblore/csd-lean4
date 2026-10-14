@@ -12147,5 +12147,15 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms MeasureTheory.hasLyapunovExponent_catR_stable
 
+/-! #19-A: fibre-preserving maps against fibre-only readouts (`Mathlib/MeasureTheory/FibrePreserving.lean`). -/
+
+/-- info: 'MeasureTheory.measure_dirac_prod_univ_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.measure_dirac_prod_univ_prod
+
+/-- info: 'MeasureTheory.FibrePreserving.measure_preimage_univ_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.FibrePreserving.measure_preimage_univ_prod
+
 
 end CSD.Tests.AxiomAudit

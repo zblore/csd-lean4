@@ -5276,5 +5276,27 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.fibre_witnesses_lyapunov
 
+/-! #19-A: back-reaction is necessary (`RecordLayer/BackReactionNecessity.lean`). -/
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_preimage_univ_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_preimage_univ_prod
+
+/-- info: 'CSD.RecordLayer.no_fibrePreserving_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.no_fibrePreserving_born
+
+/-- info: 'CSD.RecordLayer.exists_fst_ne_of_born' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_fst_ne_of_born
+
+/-- info: 'CSD.RecordLayer.globalBasin_not_fibreOnly' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_not_fibreOnly
+
+/-- info: 'CSD.RecordLayer.shearEvolve_fibrePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shearEvolve_fibrePreserving
+
 
 end CSD.Tests.AxiomAudit

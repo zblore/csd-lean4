@@ -586,11 +586,13 @@ public import CsdLean4.RecordLayer.MeasurementConstraints
 public import CsdLean4.RecordLayer.MeasurementProtocol
 public import CsdLean4.RecordLayer.RecordPersistence
 public import CsdLean4.RecordLayer.ShearWitness
+public import CsdLean4.RecordLayer.BackReactionNecessity
 public import CsdLean4.RecordLayer.DynamicBorn
 public import CsdLean4.RecordLayer.OutcomeField
 public import CsdLean4.RecordLayer.OutcomeBasin
 public import CsdLean4.RecordLayer.DynamicMeasurementClosure
 public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
+public import CsdLean4.Mathlib.MeasureTheory.FibrePreserving
 public import CsdLean4.Mathlib.MeasureTheory.CellPointer
 public import CsdLean4.Mathlib.MeasureTheory.MomentDeterminacy
 public import CsdLean4.Mathlib.Topology.Algebra.CompactRecurrence
