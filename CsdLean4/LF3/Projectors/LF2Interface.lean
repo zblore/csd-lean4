@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF3.Projectors.SectorVolume
 public import CsdLean4.LF2.BornWrapper
+public import CsdLean4.LF2.EffectAux
 
 /-!
 # LF3 Projectors / LF2 interface: sector volume ↔ LF2 Born form
@@ -63,28 +64,10 @@ noncomputable def effectOfM {N : ℕ} (M : Matrix (Fin N) (Fin N) ℂ)
     CSD.LF2.Effect N :=
   ⟨M, h1, h2, h3⟩
 
-/-! ### Trace-inner core identity (paper §5.14) -/
+/-! ### Trace-inner core identity (paper §5.14)
 
-/-- `Tr(|φ⟩⟨φ| · M) = ⟨φ, Mφ⟩`. The generalised Born trace identity for an
-    arbitrary effect matrix `M` and a vector `φ`. Composes `vecMulVec_mul`,
-    `trace_vecMulVec`, the EuclideanSpace inner-product formula, and
-    `dotProduct_mulVec` plus `dotProduct_comm`. -/
-lemma trace_outerProduct_mul_eq_inner {N : ℕ}
-    (φ : EuclideanSpace ℂ (Fin N)) (M : Matrix (Fin N) (Fin N) ℂ) :
-    ((CSD.LF2.outerProduct φ) * M).trace
-      = inner ℂ φ ((Matrix.toEuclideanLin M) φ) := by
-  unfold CSD.LF2.outerProduct
-  rw [Matrix.vecMulVec_mul, Matrix.trace_vecMulVec]
-  -- LHS: (fun i => φ i) ⬝ᵥ ((fun i => star (φ i)) ᵥ* M)
-  rw [EuclideanSpace.inner_eq_star_dotProduct, Matrix.ofLp_toEuclideanLin]
-  -- RHS: M *ᵥ ofLp φ ⬝ᵥ star (ofLp φ)
-  -- (ofLp φ) i = φ i  (η-definitional on EuclideanSpace = WithLp 2 (Fin N → ℂ))
-  show (φ.ofLp) ⬝ᵥ ((fun i => star (φ.ofLp i)) ᵥ* M)
-      = (M *ᵥ φ.ofLp) ⬝ᵥ star (φ.ofLp)
-  rw [dotProduct_comm φ.ofLp]
-  rw [← dotProduct_mulVec]
-  rw [dotProduct_comm]
-  rfl
+The identity `Tr(|φ⟩⟨φ| · M) = ⟨φ, Mφ⟩` is `CSD.LF2.trace_outer_mul_eq_inner`
+(`LF2/EffectAux.lean`); this file's own copy was retired under BACKLOG #146 (D). -/
 
 /-! ### Bridge theorem (paper §5.14 / spec §9.7) -/
 
@@ -121,7 +104,7 @@ theorem sectorVolume_eq_LF2_Born
   show inner ℂ (basisIso Ψ) ((Matrix.toEuclideanLin M) (basisIso Ψ))
        = ((CSD.LF2.rankOneDensity (basisIso Ψ) _).M * M).trace
   unfold CSD.LF2.rankOneDensity
-  exact (trace_outerProduct_mul_eq_inner (basisIso Ψ) M).symm
+  exact (CSD.LF2.trace_outer_mul_eq_inner (basisIso Ψ) M).symm
 
 end LF3
 end CSD

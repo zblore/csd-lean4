@@ -65,15 +65,10 @@ theorem embedGround_eq_embedEnv :
     · simp [hk]
   · simp [hj]
 
-/-- `vnUnitary N` in the `Uᴴ U = 1` form the channel constructor takes. -/
-theorem vnUnitary_conjTranspose_mul : (vnUnitary N)ᴴ * vnUnitary N = 1 := by
-  rw [← Matrix.star_eq_conjTranspose]
-  exact Matrix.mem_unitaryGroup_iff'.mp vnUnitary_mem_unitaryGroup
-
 /-- **The de-isolation channel**: the Stinespring channel of the von Neumann coupling with the
 apparatus ready in `a₀`. -/
 noncomputable def deisolationChannel (N : ℕ) [NeZero N] : Channel (Fin N) (Fin N) (Fin N) :=
-  stinespringChannel (vnUnitary N) vnUnitary_conjTranspose_mul
+  stinespringChannel (vnUnitary N) vnUnitary_unitary
     (EuclideanSpace.single (0 : Fin N) (1 : ℂ)) (by rw [PiLp.norm_single]; exact norm_one)
 
 /-- ★ **`decohereReduced` IS the action of a `QuantumInfo.Channel`** — the de-isolation channel

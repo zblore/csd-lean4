@@ -9,6 +9,7 @@ public import CsdLean4.CV.LiebRobinson
 public import CsdLean4.Mathlib.QuantumInfo.UnitaryPerturbation
 public import CsdLean4.Mathlib.Analysis.Matrix.TrotterProduct
 public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # P1: the arena bridge — operator locality carried onto the record arena
@@ -59,8 +60,8 @@ generator) in `CV/FieldStructuredFlow.lean` (2026-08-20), and the fibre-active
 extension (records written into the `T²` fibre by base-dependent strokes
 inherit the cone) in `CV/FibredArenaBridge.lean` (2026-08-20). What stays true
 of this module: its statements concern the base factor, and the fibred module
-consumes them through `arenaObs`. `euclidean_norm_map_of_isom` restates LF5's
-`toEuclideanLin_norm_map_of_isom` (same proof) to keep CV free of an LF5 import
+consumes them through `arenaObs`. `Matrix.norm_toEuclideanLin_of_isom` restates LF5's
+`Matrix.norm_toEuclideanLin_of_isom` (same proof) to keep CV free of an LF5 import
 — rule-of-two note: unify in Mathlib staging when next touched.
 
 ## References
@@ -91,30 +92,6 @@ variable {K N : ℕ}
 space — the epistemic base on which records are read. -/
 abbrev FieldArena (K N : ℕ) : Type :=
   ℙ ℂ (EuclideanSpace ℂ (FieldConfig K N))
-
-/-- Norm preservation for isometric matrices through `toEuclideanLin`. Same
-proof as LF5's `toEuclideanLin_norm_map_of_isom`; restated to keep CV free of an
-LF5 import (rule-of-two note in the module docstring). -/
-lemma euclidean_norm_map_of_isom {ι κ : Type*} [Fintype ι] [DecidableEq ι]
-    [Fintype κ] [DecidableEq κ] {A : Matrix κ ι ℂ} (hA : Aᴴ * A = 1)
-    (ψ : EuclideanSpace ℂ ι) :
-    ‖Matrix.toEuclideanLin A ψ‖ = ‖ψ‖ := by
-  have hinner : inner ℂ (Matrix.toEuclideanLin A ψ) (Matrix.toEuclideanLin A ψ)
-      = inner ℂ ψ ψ := by
-    rw [← LinearMap.adjoint_inner_right (Matrix.toEuclideanLin A),
-      show (Matrix.toEuclideanLin A).adjoint = Matrix.toEuclideanLin Aᴴ from
-        (Matrix.toEuclideanLin_conjTranspose_eq_adjoint A).symm,
-      show Matrix.toEuclideanLin Aᴴ (Matrix.toEuclideanLin A ψ)
-          = Matrix.toEuclideanLin (Aᴴ * A) ψ from by
-        simp only [Matrix.toLpLin_mul_same, LinearMap.comp_apply],
-      hA,
-      show Matrix.toEuclideanLin (1 : Matrix ι ι ℂ) = LinearMap.id from
-        Matrix.toLpLin_one 2,
-      LinearMap.id_apply]
-  have hsq : ‖Matrix.toEuclideanLin A ψ‖ ^ 2 = ‖ψ‖ ^ 2 := by
-    rw [inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K] at hinner
-    exact_mod_cast hinner
-  exact (pow_left_inj₀ (norm_nonneg _) (norm_nonneg _) two_ne_zero).mp hsq
 
 /-- Coordinate sum of squared norms is the squared Euclidean norm. -/
 lemma euclid_sum_norm_sq {ι : Type*} [Fintype ι]
@@ -285,25 +262,12 @@ theorem arenaObs_sub_le [Nonempty ι]
 
 /-! ### Unitary kicks on the arena -/
 
-/-- A unitary sends nonzero vectors to nonzero vectors. -/
-lemma toEuclideanLin_ne_zero (U : Matrix.unitaryGroup ι ℂ)
-    {v : EuclideanSpace ℂ ι} (hv : v ≠ 0) :
-    Matrix.toEuclideanLin U.val v ≠ 0 := by
-  intro h0
-  apply hv
-  have hU : (U.val)ᴴ * U.val = 1 := by
-    have hmem := U.property
-    rwa [Matrix.mem_unitaryGroup_iff', Matrix.star_eq_conjTranspose] at hmem
-  have hnorm := euclidean_norm_map_of_isom hU v
-  rw [h0, norm_zero] at hnorm
-  exact norm_eq_zero.mp hnorm.symm
-
 /-- **A unitary as an arena self-map**, constructed directly through
 `Projectivization.mk`. -/
 noncomputable def arenaKick (U : Matrix.unitaryGroup ι ℂ)
     (p : GenArena ι) : GenArena ι :=
   Projectivization.mk ℂ (Matrix.toEuclideanLin U.val p.rep)
-    (toEuclideanLin_ne_zero U (Projectivization.rep_nonzero p))
+    (Matrix.UnitaryGroup.toEuclideanLin_unitary_ne_zero U (Projectivization.rep_nonzero p))
 
 /-- The kick of `mk v` is the ray of `U v`: the `rep` choice washes out, exactly as it does for
 `arenaDM_mk`. Generalised from `CompositeArena.lean`'s `FieldConfig`-indexed copy 2026-10-12
@@ -312,7 +276,7 @@ lemma arenaKick_mk (U : Matrix.unitaryGroup ι ℂ) {v : EuclideanSpace ℂ ι}
     (hv : v ≠ 0) :
     arenaKick U (Projectivization.mk ℂ v hv)
       = Projectivization.mk ℂ (Matrix.toEuclideanLin U.val v)
-          (toEuclideanLin_ne_zero U hv) := by
+          (Matrix.UnitaryGroup.toEuclideanLin_unitary_ne_zero U hv) := by
   have hmk : Projectivization.mk ℂ
         (Projectivization.mk ℂ v hv).rep (Projectivization.rep_nonzero _)
       = Projectivization.mk ℂ v hv :=
@@ -338,8 +302,8 @@ lemma arenaDM_kick (U : Matrix.unitaryGroup ι ℂ)
     have hmem := U.property
     rwa [Matrix.mem_unitaryGroup_iff', Matrix.star_eq_conjTranspose] at hmem
   have hnormeq : ‖Matrix.toEuclideanLin U.val v‖ = ‖v‖ :=
-    euclidean_norm_map_of_isom hU v
-  rw [arenaKick, arenaDM_mk (toEuclideanLin_ne_zero U hv)]
+    Matrix.norm_toEuclideanLin_of_isom hU v
+  rw [arenaKick, arenaDM_mk (Matrix.UnitaryGroup.toEuclideanLin_unitary_ne_zero U hv)]
   ext i j
   -- LHS in canonical form, with the kicked coordinates as mulVec
   have hcoord : ∀ m, (Matrix.toEuclideanLin U.val v) m

@@ -9,6 +9,7 @@ public import CsdLean4.Empirical.CSD.ContextVolume
 public import CsdLean4.Empirical.CSD.VolumeCanonical
 public import CsdLean4.Empirical.QM.Contextuality.KS18
 public import CsdLean4.RecordLayer.BasinFrequency
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # Empirical/CSD: Kochen-Specker (Cabello-18) contextual Born weights as Kähler volumes
@@ -94,10 +95,6 @@ by `PiLp.inner_apply` on a real `EuclideanSpace`): `⟨a, b⟩_ℝ = a * b`. -/
 lemma real_scalar_inner (a b : ℝ) : (inner ℝ a b : ℝ) = a * b := by
   rw [real_inner_eq_re_inner ℝ]; simp [RCLike.inner_apply, mul_comm]
 
-/-- Scalar complex inner product of two real coercions: `⟨↑a, ↑b⟩_ℂ = ↑(a * b)`. -/
-lemma cplx_scalar_inner (a b : ℝ) : (inner ℂ (↑a : ℂ) (↑b : ℂ) : ℂ) = ↑(a * b) := by
-  rw [RCLike.inner_apply, Complex.conj_ofReal]; push_cast; ring
-
 /-- **Complexification transport.** The complex inner product of two complexified Cabello rays
 is the real-to-complex coercion of their real inner product:
 `⟨cabelloVecC i, cabelloVecC j⟩_ℂ = ↑⟨cabelloVec i, cabelloVec j⟩_ℝ`. This is the bridge that
@@ -109,7 +106,7 @@ lemma cabelloVecC_inner (i j : Fin 18) :
   rw [PiLp.inner_apply, PiLp.inner_apply, Complex.ofReal_sum]
   refine Finset.sum_congr rfl (fun k _ => ?_)
   simp only [cabelloVec, cabelloVecC, WithLp.ofLp_toLp]
-  rw [real_scalar_inner, cplx_scalar_inner]
+  rw [real_scalar_inner, Complex.inner_ofReal_ofReal]
 
 /-! ### The representative context (basis 0) as an `OrthonormalBasis` -/
 

@@ -10,6 +10,7 @@ public import CsdLean4.Empirical.QM.Crypto.B92
 public import CsdLean4.Empirical.CSD.SequentialMeasurement
 public import CsdLean4.RecordLayer.RotatedContext
 public import CsdLean4.RecordLayer.RotatedSwap
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # Empirical/CSD/Crypto: BB84 intercept-resend with a dynamical collapse step
@@ -167,7 +168,7 @@ now as a context-field fact. -/
 theorem xContext_rate_vertex (i j : Fin 2) :
     (basisContext xBasisON).rate (vertexPoint i) j = 1 / 2 := by
   unfold vertexPoint
-  rw [basisContext_rate_mk xBasisON (EuclideanSpace.single i 1) (single_ne_zero' i)
+  rw [basisContext_rate_mk xBasisON (EuclideanSpace.single i 1) (EuclideanSpace.single_one_ne_zero i)
     (by simp) j, xBasisON_apply]
   fin_cases i <;> fin_cases j
   · show ‖(inner ℂ ketPlus ket0 : ℂ)‖ ^ 2 = 1 / 2
@@ -296,8 +297,8 @@ theorem bb84_primal_wrong_basis (a i j : Fin 2) :
     rw [xBasisON_apply, normsq_inner_xVec_single]
     norm_num
   have hvp : vertexPoint a
-      = Projectivization.mk ℂ (EuclideanSpace.single a (1 : ℂ)) (single_ne_zero' a) := rfl
-  rw [hvp, rotated_swap_luders_born xBasisON (single_ne_zero' a) (by simp) i hpos
+      = Projectivization.mk ℂ (EuclideanSpace.single a (1 : ℂ)) (EuclideanSpace.single_one_ne_zero a) := rfl
+  rw [hvp, rotated_swap_luders_born xBasisON (EuclideanSpace.single_one_ne_zero a) (by simp) i hpos
     (momentContext 2) j, momentContext_rate,
     show basisPoint xBasisON i
       = Projectivization.mk ℂ (xBasisON i) (xBasisON.orthonormal.ne_zero i) from rfl,

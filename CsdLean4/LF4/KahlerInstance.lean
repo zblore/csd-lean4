@@ -79,10 +79,6 @@ namespace LF4
 
 variable {N : ℕ} [NeZero N]
 
-/-- `Fact (0 < 1)`, needed for `AddCircle 1`'s Haar measure to be a probability
-measure. -/
-instance : Fact ((0 : ℝ) < 1) := ⟨one_pos⟩
-
 /-- `AddCircle 1`'s Haar `volume` is a probability measure (`volume univ = 1`). -/
 instance instProbAddCircleOne : IsProbabilityMeasure (volume : Measure (AddCircle (1 : ℝ))) :=
   ⟨by rw [AddCircle.measure_univ, ENNReal.ofReal_one]⟩

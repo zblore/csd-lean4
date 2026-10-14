@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.LF3.Singlet.JointProjector
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 public import Mathlib.Analysis.Matrix.Hermitian
 
 /-!
@@ -60,21 +61,13 @@ noncomputable def singletJointEig : EuclideanSpace ℂ (Fin 2 × Fin 2) :=
   ((Real.sqrt (P_st a b s t) : ℂ))⁻¹ •
     (Matrix.toEuclideanLin (jointSpinProj s t a b) singlet)
 
-/-- `toEuclideanLin` turns matrix multiplication into composition. -/
-lemma toEuclideanLin_mul_apply
-    (M N : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)
-    (v : EuclideanSpace ℂ (Fin 2 × Fin 2)) :
-    Matrix.toEuclideanLin (M * N) v
-      = Matrix.toEuclideanLin M (Matrix.toEuclideanLin N v) := by
-  simp only [Matrix.toLpLin_apply, Matrix.mulVec_mulVec]
-
 /-- The joint projector acts idempotently on vectors. -/
 lemma toEuclideanLin_jointSpinProj_idem
     (v : EuclideanSpace ℂ (Fin 2 × Fin 2)) :
     Matrix.toEuclideanLin (jointSpinProj s t a b)
         (Matrix.toEuclideanLin (jointSpinProj s t a b) v)
       = Matrix.toEuclideanLin (jointSpinProj s t a b) v := by
-  rw [← toEuclideanLin_mul_apply, jointSpinProj_idem]
+  rw [← Matrix.toEuclideanLin_mul_apply, jointSpinProj_idem]
 
 /-- `T_P` is symmetric (self-adjoint), from `jointSpinProj` Hermitian. -/
 lemma toEuclideanLin_jointSpinProj_isSymmetric :
@@ -134,7 +127,7 @@ theorem singletJointEig_orthogonal {s t s' t' : Sign} (a b : DetectorSetting)
   have hzero : inner ℂ (Matrix.toEuclideanLin (jointSpinProj s t a b) singlet)
         (Matrix.toEuclideanLin (jointSpinProj s' t' a b) singlet) = 0 := by
     rw [hsymm singlet (Matrix.toEuclideanLin (jointSpinProj s' t' a b) singlet),
-        ← toEuclideanLin_mul_apply, jointSpinProj_mul_orthogonal a b h]
+        ← Matrix.toEuclideanLin_mul_apply, jointSpinProj_mul_orthogonal a b h]
     simp
   unfold singletJointEig
   rw [inner_smul_left, inner_smul_right, hzero, mul_zero, mul_zero]

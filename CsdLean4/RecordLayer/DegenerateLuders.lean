@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.RecordLayer.SwapLuders
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # SigmaLayer/DegenerateLuders: the degenerate case — the problem made precise, the boundary proved
@@ -100,11 +101,6 @@ theorem blockProj_single {b : Fin N → Fin K} {i : Fin K} {j : Fin N} (hb : b j
     simp [hb]
   · by_cases hbk : b k = i <;> simp [hbk, hk]
 
-theorem single_ne_zero' (j : Fin N) : (EuclideanSpace.single j (1 : ℂ)) ≠ 0 := by
-  intro h
-  have := congrFun (congrArg (fun v : EuclideanSpace ℂ (Fin N) => (v : Fin N → ℂ)) h) j
-  simp at this
-
 /-! ### Vertex facts -/
 
 variable [NeZero N]
@@ -114,7 +110,7 @@ omit [NeZero N] in
 theorem momentMap_vertex (j k : Fin N) :
     LF4.momentMap (vertexPoint j) k = if k = j then 1 else 0 := by
   unfold vertexPoint
-  rw [LF4.momentMap_mk _ (single_ne_zero' j)]
+  rw [LF4.momentMap_mk _ (EuclideanSpace.single_one_ne_zero j)]
   have hnorm : ‖(EuclideanSpace.single j (1:ℂ) : EuclideanSpace ℂ (Fin N))‖ = 1 := by
     simp
   rw [hnorm]
@@ -295,11 +291,11 @@ theorem swap_not_blockLuders (b : Fin N → Fin K) {i : Fin K} {j₁ j₂ : Fin 
   intro hob
   -- The obligation at the two vertex preparations.
   have key : ∀ (j : Fin N), b j = i →
-      swapPostMarg b ν (EuclideanSpace.single j 1) (single_ne_zero' j) i
+      swapPostMarg b ν (EuclideanSpace.single j 1) (EuclideanSpace.single_one_ne_zero j) i
         = epistemicMeasure (vertexPoint j) := by
     intro j hbj
-    have h := hob (EuclideanSpace.single j 1) (single_ne_zero' j) i
-      (by rw [blockProj_single hbj]; exact single_ne_zero' j)
+    have h := hob (EuclideanSpace.single j 1) (EuclideanSpace.single_one_ne_zero j) i
+      (by rw [blockProj_single hbj]; exact EuclideanSpace.single_one_ne_zero j)
     rw [h]
     congr 1
     unfold vertexPoint
@@ -307,12 +303,12 @@ theorem swap_not_blockLuders (b : Fin N → Fin K) {i : Fin K} {j₁ j₂ : Fin 
     exact ⟨1, by simp [blockProj_single hbj]⟩
   -- But the swap's post-marginal is the fixed slot state, for both.
   have marg : ∀ (j : Fin N), b j = i →
-      swapPostMarg b ν (EuclideanSpace.single j 1) (single_ne_zero' j) i = ν i := by
+      swapPostMarg b ν (EuclideanSpace.single j 1) (EuclideanSpace.single_one_ne_zero j) i = ν i := by
     intro j hbj
     rw [swapPostMarg]
     exact swap_luders_marginal (blockIndex b) (measurable_blockIndex b)
       ((epistemicMeasure (Projectivization.mk ℂ (EuclideanSpace.single j 1)
-        (single_ne_zero' j))).prod (readyMeasure K)) ν i
+        (EuclideanSpace.single_one_ne_zero j))).prod (readyMeasure K)) ν i
       (vertex_outcome_pos b hbj)
   have h1 := (marg j₁ hb₁).symm.trans (key j₁ hb₁)
   have h2 := (marg j₂ hb₂).symm.trans (key j₂ hb₂)

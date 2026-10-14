@@ -258,7 +258,7 @@ theorem vonNeumannEntropy_le_deisolation
   have hred : Matrix.traceRight (barycenterMatrix rep (Measure.map D.π (Measure.map Φ μprep)))
       = pinch (barycenterMatrix repS (Measure.map D.π μprep)) := by
     rw [traceRight_barycenter_flow D μprep Φ hΦ rep hrep_unit hrep_meas repS hrepS_meas
-      (vnUnitary N) vnUnitary_conjTranspose_mul _ (by rw [PiLp.norm_single]; exact norm_one) hlift hprod]
+      (vnUnitary N) vnUnitary_unitary _ (by rw [PiLp.norm_single]; exact norm_one) hlift hprod]
     exact deisolationChannel_apply_eq_pinch (barycenterMatrix_isHermitian repS _)
   rw [vonNeumannEntropy_congr_of_eq _ (pinch_isHermitian _) hred]
   exact vonNeumannEntropy_le_pinching (barycenterMatrix_posSemidef repS hrepS_unit hrepS_meas _)

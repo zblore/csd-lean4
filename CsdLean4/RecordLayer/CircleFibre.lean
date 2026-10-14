@@ -90,8 +90,6 @@ variable {n : ℕ}
 from. Replaces the non-compact `ℝ` of `FibredSigma`. -/
 abbrev CircleFibre : Type := AddCircle (1 : ℝ)
 
-instance circleFibre_factPos : Fact ((0:ℝ) < 1) := ⟨zero_lt_one⟩
-
 instance circleFibre_compactSpace : CompactSpace CircleFibre :=
   AddCircle.compactSpace (p := (1:ℝ))
 

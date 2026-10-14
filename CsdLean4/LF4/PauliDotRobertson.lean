@@ -8,6 +8,7 @@ module
 public import CsdLean4.LF4.UncertaintyKahler
 public import CsdLean4.LF4.SingleQubitKahler
 public import CsdLean4.LF3.Setup
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # LF4 §14.2 parametric Robertson: σ·â, σ·b̂ on |0⟩ for arbitrary axes (N=2)
@@ -102,14 +103,6 @@ lemma pauliDot_zPlus_ontic_integral (a : DetectorSetting) (p₀ : CPN 2) :
 
 /-! ### Matrix ↔ Module.End commutator bridge -/
 
-lemma toEuclideanLin_mul_apply (A B : Matrix (Fin 2) (Fin 2) ℂ)
-    (v : EuclideanSpace ℂ (Fin 2)) :
-    (A * B).toEuclideanLin v = A.toEuclideanLin (B.toEuclideanLin v) := by
-  apply (WithLp.equiv 2 (Fin 2 → ℂ)).injective
-  rw [Matrix.toLpLin_apply, Matrix.toLpLin_apply,
-      Matrix.toLpLin_apply, WithLp.ofLp_toLp, WithLp.ofLp_toLp,
-      ← Matrix.mulVec_mulVec]
-
 /-! ### Commutator matrix entry (0,0) -/
 
 /-- The `(0,0)` entry of the matrix commutator `[σ·â, σ·b̂]` is
@@ -132,7 +125,7 @@ lemma pauliDot_commutator_inner_zPlus (a b : DetectorSetting) :
         - (pauliDot b).toEuclideanLin * (pauliDot a).toEuclideanLin) zPlusVec
       = (pauliDot a * pauliDot b - pauliDot b * pauliDot a).toEuclideanLin zPlusVec := by
     simp only [LinearMap.sub_apply, Module.End.mul_apply,
-               ← toEuclideanLin_mul_apply, map_sub]
+               ← Matrix.toEuclideanLin_mul_apply, map_sub]
   rw [h_bridge, zPlus_expectation, pauliDot_commutator_matrix_00]
 
 /-! ### Commutator inner squared norm -/

@@ -93,8 +93,8 @@ noncomputable def noisyEffect (ε : ℝ) (hε0 : 0 ≤ ε) (hε1 : ε ≤ 1) (k 
         (Complex.conj_ofReal _)).add
       (Matrix.isHermitian_one.smul (k := ((ε / 3 : ℝ) : ℂ)) (Complex.conj_ofReal _))
   nonneg :=
-    (psd_smul (outerProduct_posSemidef (basisVec k)) (by linarith)).add
-      (psd_smul Matrix.PosSemidef.one (by linarith))
+    ((outerProduct_posSemidef (basisVec k)).smul (Complex.zero_le_real.mpr (by linarith))).add
+      (Matrix.PosSemidef.one.smul (Complex.zero_le_real.mpr (by linarith)))
   le_one := by
     have hdecomp :
         (1 : Matrix (Fin 3) (Fin 3) ℂ)
@@ -105,9 +105,9 @@ noncomputable def noisyEffect (ε : ℝ) (hε0 : 0 ≤ ε) (hε1 : ε ≤ 1) (k 
       push_cast
       module
     rw [hdecomp]
-    exact (psd_smul (one_sub_outerProduct_posSemidef (basisVec k) (basisVec_norm k))
-        (by linarith)).add
-      (psd_smul (outerProduct_posSemidef (basisVec k)) (by linarith))
+    exact ((one_sub_outerProduct_posSemidef (basisVec k) (basisVec_norm k)).smul
+        (Complex.zero_le_real.mpr (by linarith))).add
+      ((outerProduct_posSemidef (basisVec k)).smul (Complex.zero_le_real.mpr (by linarith)))
 
 @[simp] lemma noisyEffect_M (ε : ℝ) (hε0 : 0 ≤ ε) (hε1 : ε ≤ 1) (k : Fin 3) :
     (noisyEffect ε hε0 hε1 k).M

@@ -276,17 +276,6 @@ theorem pointerLudersStroke_measurePreserving (c : ContextField N)
 /-! ### The conditioned post-measurement marginal -/
 
 omit [NeZero N] in
-/-- **The sector identification**: the smooth protocol's outcome sector is the brick-2b
-propagator's preimage of the record cylinder. Pins down the trigger the relocation reads. -/
-theorem pointerProtocol_outcomeSector (c : ContextField N)
-    (hc : ∀ j, Continuous fun p => c.rate p j) {ε δ : ℝ} (hδ : δ ≤ 1 / 2) (i : Fin N) :
-    (pointerProtocol c hc ε hδ).outcomeSector i
-      = pointerEvolve c ε ⁻¹' arenaRecord N i := by
-  have h : (pointerProtocol c hc ε hδ).outcomeSector i
-      = (pointerProtocol c hc ε hδ).evolve 0 1 ⁻¹' arenaRecord N i := rfl
-  rw [h, pointerProtocol_evolve_stroke]
-
-omit [NeZero N] in
 /-- On the outcome-`i` sector, the post-stroke system coordinate is bank slot `i`: the
 stroke lands the pointer in `recordRegion i`, so the relocation is the slot-`i` swap. -/
 theorem pointerLudersStroke_sys_on_sector (c : ContextField N)

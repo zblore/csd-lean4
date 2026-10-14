@@ -447,7 +447,6 @@ Projectors/
   SectorVolume.lean     — sectorVolume, StrongReadoutCompat, LeakageCompat,
                           sectorVolume_strong_readout, sectorVolume_finite_leakage
   LF2Interface.lean     — BasisIso, rankOneStateOfΨ, effectOfM,
-                          trace_outerProduct_mul_eq_inner,
                           sectorVolume_eq_LF2_Born
 Singlet/
   State.lean            — singlet, singlet_norm, expectation

@@ -110,14 +110,6 @@ theorem inner_toEuclideanLin_adjoint' (W : Matrix (Fin N) (Fin N) ℂ)
   rw [Matrix.star_mulVec, ← Matrix.star_eq_conjTranspose, dotProduct_comm (WithLp.ofLp y),
       ← dotProduct_mulVec, dotProduct_comm]
 
-/-- Matrix multiplication composes through `toEuclideanLin`, pointwise. -/
-theorem toEuclideanLin_mul_apply (A B : Matrix (Fin N) (Fin N) ℂ)
-    (v : EuclideanSpace ℂ (Fin N)) :
-    Matrix.toEuclideanLin A (Matrix.toEuclideanLin B v)
-      = Matrix.toEuclideanLin (A * B) v := by
-  show WithLp.toLp 2 (A *ᵥ (B *ᵥ WithLp.ofLp v)) = WithLp.toLp 2 ((A * B) *ᵥ WithLp.ofLp v)
-  rw [Matrix.mulVec_mulVec]
-
 /-- **Energy is invariant under any unitary commuting with `H`** — the algebraic core of
 conservation. -/
 theorem baseEnergy_smul_invariant (H : Matrix (Fin N) (Fin N) ℂ)
@@ -137,13 +129,13 @@ theorem baseEnergy_smul_invariant (H : Matrix (Fin N) (Fin N) ℂ)
   have hnum : inner ℂ (Matrix.toEuclideanLin (U : Matrix (Fin N) (Fin N) ℂ) v)
       (Matrix.toEuclideanLin H (Matrix.toEuclideanLin (U : Matrix (Fin N) (Fin N) ℂ) v))
       = inner ℂ v (Matrix.toEuclideanLin H v) := by
-    rw [toEuclideanLin_mul_apply, inner_toEuclideanLin_adjoint', toEuclideanLin_mul_apply,
-      hstar]
+    rw [← Matrix.toEuclideanLin_mul_apply, inner_toEuclideanLin_adjoint',
+      ← Matrix.toEuclideanLin_mul_apply, hstar]
   -- Denominator: unitaries preserve the norm.
   have hnorm : ‖Matrix.toEuclideanLin (U : Matrix (Fin N) (Fin N) ℂ) v‖ = ‖v‖ := by
     have h2 : inner ℂ (Matrix.toEuclideanLin (U : Matrix (Fin N) (Fin N) ℂ) v)
         (Matrix.toEuclideanLin (U : Matrix (Fin N) (Fin N) ℂ) v) = inner ℂ v v := by
-      rw [inner_toEuclideanLin_adjoint', toEuclideanLin_mul_apply,
+      rw [inner_toEuclideanLin_adjoint', ← Matrix.toEuclideanLin_mul_apply,
         Unitary.coe_star_mul_self U]
       simp
     have h3 : ‖Matrix.toEuclideanLin (U : Matrix (Fin N) (Fin N) ℂ) v‖ ^ 2 = ‖v‖ ^ 2 := by

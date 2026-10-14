@@ -174,14 +174,14 @@ lemma weakMinusM_isHermitian (η : ℝ) : (weakMinusM η).IsHermitian := by
 `(1±η)/2 ∈ [0,1]`). -/
 lemma weakPlusM_psd (η : ℝ) (h0 : 0 ≤ η) (h1 : η ≤ 1) : (weakPlusM η).PosSemidef := by
   rw [weakPlusM_decomp]
-  exact (psd_smul (outerProduct_posSemidef e0) (by linarith)).add
-    (psd_smul (outerProduct_posSemidef e1) (by linarith))
+  exact ((outerProduct_posSemidef e0).smul (Complex.zero_le_real.mpr (by linarith))).add
+    ((outerProduct_posSemidef e1).smul (Complex.zero_le_real.mpr (by linarith)))
 
 /-- **Unsharpness constraint (minus):** `weakMinusM η` is PSD for `0 ≤ η ≤ 1`. -/
 lemma weakMinusM_psd (η : ℝ) (h0 : 0 ≤ η) (h1 : η ≤ 1) : (weakMinusM η).PosSemidef := by
   rw [weakMinusM_decomp]
-  exact (psd_smul (outerProduct_posSemidef e0) (by linarith)).add
-    (psd_smul (outerProduct_posSemidef e1) (by linarith))
+  exact ((outerProduct_posSemidef e0).smul (Complex.zero_le_real.mpr (by linarith))).add
+    ((outerProduct_posSemidef e1).smul (Complex.zero_le_real.mpr (by linarith)))
 
 /-- **POVM completeness at the matrix level:** `(1/2)(I+ησ) + (1/2)(I−ησ) = I`. -/
 lemma weakM_sum (η : ℝ) : weakPlusM η + weakMinusM η = 1 := by

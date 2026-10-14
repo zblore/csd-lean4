@@ -202,18 +202,10 @@ lemma momentMap_integrable (p₀ : CPN N) (i : Fin N) :
 
 /-! ## The two symmetry unitaries: sign flip and permutation -/
 
-/-- A general nonzero-preservation for the unitary matrix action (local re-proof;
-the corpus's `toEuclideanLin_unitary_ne_zero` is `private`). -/
-lemma toLin_unit_ne_zero (U : Matrix.unitaryGroup (Fin N) ℂ)
-    {v : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) :
-    (Matrix.toEuclideanLin U.val) v ≠ 0 := by
-  intro h
-  exact hv ((toEuclideanLinearEquiv U).injective (h.trans (LinearEquiv.map_zero _).symm))
-
 /-- The projective unitary action, written as `mk` of the matrix action on `rep`. -/
 lemma smul_eq_mk [NeZero N] (U : Matrix.unitaryGroup (Fin N) ℂ) (p : CPN N) :
     U • p = Projectivization.mk ℂ ((Matrix.toEuclideanLin U.val) p.rep)
-      (toLin_unit_ne_zero U p.rep_nonzero) := by
+      (Matrix.UnitaryGroup.toEuclideanLin_unitary_ne_zero U p.rep_nonzero) := by
   conv_lhs => rw [← p.mk_rep]
   exact smul_mk_eq_mk U p.rep p.rep_nonzero
 

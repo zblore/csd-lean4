@@ -8,6 +8,7 @@ module
 public import CsdLean4.LF5.VonNeumannUnitary
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # LF5: the von Neumann measurement flow (LF5-B)
@@ -149,18 +150,13 @@ lemma vnUnitaryReindexed_toEuclideanLin_single (e : Fin N × Fin N ≃ Fin m)
 
 /-! ## Distinct basis rays -/
 
-/-- A computational-basis vector is nonzero. -/
-lemma single_one_ne_zero {n : ℕ} (i : Fin n) :
-    (EuclideanSpace.single i (1 : ℂ)) ≠ 0 := fun h =>
-  one_ne_zero ((PiLp.single_eq_zero_iff 2 i).mp h)
-
 /-- Distinct computational-basis vectors are non-collinear, so they project to
 distinct rays: any scalar relation `c • e_k = e_i` evaluated at coordinate `i`
 gives `0 = 1`. -/
 lemma mk_single_ne {n : ℕ} {i k : Fin n} (hik : i ≠ k) :
-    Projectivization.mk ℂ (EuclideanSpace.single i (1 : ℂ)) (single_one_ne_zero i)
+    Projectivization.mk ℂ (EuclideanSpace.single i (1 : ℂ)) (EuclideanSpace.single_one_ne_zero i)
       ≠ Projectivization.mk ℂ (EuclideanSpace.single k (1 : ℂ))
-          (single_one_ne_zero k) := by
+          (EuclideanSpace.single_one_ne_zero k) := by
   rw [Ne, Projectivization.mk_eq_mk_iff']
   rintro ⟨c, hc⟩
   have h := congrFun (congrArg WithLp.ofLp hc) i
@@ -192,12 +188,12 @@ the projective copy `[e_j ⊗ a₀] ↦ [e_j ⊗ a_j]` (LF5-C input). -/
 lemma measurementFlow_mk_single (e : Fin N × Fin N ≃ Fin m) (a : Fin N × Fin N) :
     measurementFlow N e
         (Projectivization.mk ℂ (EuclideanSpace.single (e a) (1 : ℂ))
-          (single_one_ne_zero _))
+          (EuclideanSpace.single_one_ne_zero _))
       = Projectivization.mk ℂ (EuclideanSpace.single (e (vnPerm N a)) (1 : ℂ))
-          (single_one_ne_zero _) := by
+          (EuclideanSpace.single_one_ne_zero _) := by
   have : NeZero m := ⟨fun h => Fin.elim0 (h ▸ e a)⟩
-  refine (smul_mk_eq_mk (vnUnitaryReindexed N e) _ (single_one_ne_zero _)).trans ?_
-  exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ (single_one_ne_zero _)).mpr
+  refine (smul_mk_eq_mk (vnUnitaryReindexed N e) _ (EuclideanSpace.single_one_ne_zero _)).trans ?_
+  exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ (EuclideanSpace.single_one_ne_zero _)).mpr
     ⟨1, by rw [one_smul]; exact (vnUnitaryReindexed_toEuclideanLin_single e a).symm⟩
 
 @[fun_prop]

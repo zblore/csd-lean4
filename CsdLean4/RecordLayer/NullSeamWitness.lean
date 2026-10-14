@@ -9,6 +9,7 @@ public import CsdLean4.RecordLayer.PointerWeights
 public import Mathlib.Topology.Instances.AddCircle.Defs
 public import Mathlib.Analysis.Real.Pi.Bounds
 public import Mathlib.MeasureTheory.Group.AddCircle
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # SigmaLayer/NullSeamWitness: the third horn — continuous, exact Born, null seam
@@ -468,7 +469,7 @@ lemma nullSeamEvolve_ready (r : ℝ) (hr0 : 0 < r) (hr1 : r < 1) (θ : CircleFib
           (nullSeamVec_ne_zero (nullSeamAngle_mem r hr0 hr1 θ)) := by
   show nullSeamUU r θ • readyState = _
   rw [readyState, vertexPoint,
-    Projectivization.smul_mk_eq_mk_toEuclideanLin _ (single_ne_zero' 0)]
+    Projectivization.smul_mk_eq_mk_toEuclideanLin _ (EuclideanSpace.single_one_ne_zero 0)]
   congr 1
   exact nullSeamMat_mulVec _
 

@@ -253,13 +253,6 @@ The three lemmas below are generic (no CSD content) and are **extraction candida
 -/
 
 omit [NeZero N] in
-lemma toEuclideanLin_comp (A B : Matrix (Fin N) (Fin N) ℂ) (v : EuclideanSpace ℂ (Fin N)) :
-    Matrix.toEuclideanLin A (Matrix.toEuclideanLin B v) = Matrix.toEuclideanLin (A * B) v := by
-  ext k
-  show (A *ᵥ (B *ᵥ (WithLp.ofLp v))) k = ((A * B) *ᵥ WithLp.ofLp v) k
-  rw [Matrix.mulVec_mulVec]
-
-omit [NeZero N] in
 lemma continuous_unitaryEntry (k j : Fin N) :
     Continuous (fun V : Matrix.unitaryGroup (Fin N) ℂ => V.val k j) :=
   continuous_subtype_val.matrix_elem k j

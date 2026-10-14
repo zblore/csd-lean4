@@ -92,8 +92,6 @@ open scoped Manifold ContDiff LinearAlgebra.Projectivization
 namespace CSD
 namespace LF4
 
-instance instFactZeroLtOne : Fact ((0 : ℝ) < 1) := ⟨one_pos⟩
-
 /-- The arena's normed model: the model of `ℂℙᴺ` times the model of the torus. -/
 abbrev ArenaModel (N : ℕ) : Type := (Fin N → ℂ) × (ℝ × ℝ)
 

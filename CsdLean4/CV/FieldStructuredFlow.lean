@@ -167,7 +167,7 @@ lemma _root_.CSD.CV.arenaKick_mul (U V : Matrix.unitaryGroup (FieldConfig K N) �
     (p : FieldArena K N) :
     arenaKick (U * V) p = arenaKick U (arenaKick V p) := by
   set w := Matrix.toEuclideanLin V.val p.rep with hwdef
-  have hw : w ≠ 0 := toEuclideanLin_ne_zero V (Projectivization.rep_nonzero p)
+  have hw : w ≠ 0 := Matrix.UnitaryGroup.toEuclideanLin_unitary_ne_zero V (Projectivization.rep_nonzero p)
   -- the representative of the intermediate kick is a scalar multiple of `w`
   have hmk : Projectivization.mk ℂ
         (Projectivization.mk ℂ w hw).rep (Projectivization.rep_nonzero _)

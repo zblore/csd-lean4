@@ -149,7 +149,7 @@ omit [NeZero T] in
 /-- The circuit matrix acts as the circuit. -/
 theorem toEuclideanLin_shorMatrix (Φ : EuclideanSpace ℂ (Fin T × ZMod N)) :
     Matrix.toEuclideanLin (shorMatrix T a) Φ = qftInvCount T (jointModexp T a Φ) := by
-  rw [shorMatrix, toEuclideanLin_mul_apply', toEuclideanLin_modexpMatrix, toEuclideanLin_qftInvJoint]
+  rw [shorMatrix, Matrix.toEuclideanLin_mul_apply, toEuclideanLin_modexpMatrix, toEuclideanLin_qftInvJoint]
 
 /-- The circuit matrix is unitary. -/
 theorem shorMatrix_conjTranspose_mul : (shorMatrix T a)ᴴ * shorMatrix T a = 1 := by

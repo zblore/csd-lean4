@@ -21,7 +21,10 @@
 set -uo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"; cd "$ROOT"
 
-PINNED_REVIEW=12
+# 2026-10-14 (#146 (D)): the one remaining group is exists_hardy_realisation /
+# exists_hardy_realisation_max, kept by design — same statement, different witnesses, and the
+# `_max` docstring says so (#145's finding). Retiring it is a naming decision, not a merge.
+PINNED_REVIEW=1
 
 out="$(lake env lean scripts/duplicate-scan.lean 2>&1)" || {
   echo "$out"

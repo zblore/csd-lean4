@@ -129,16 +129,6 @@ lemma measurable_toEuclideanLinN (U : Matrix.unitaryGroup (Fin N) ℂ) :
     Measurable (Matrix.toEuclideanLin U.val) :=
   (LinearMap.continuous_of_finiteDimensional (Matrix.toEuclideanLin U.val)).measurable
 
-/-- A unitary's `toEuclideanLin` action sends nonzero vectors to nonzero vectors. -/
-lemma toEuclideanLinN_ne_zero (U : Matrix.unitaryGroup (Fin N) ℂ)
-    {v : EuclideanSpace ℂ (Fin N)} (hv : v ≠ 0) :
-    (Matrix.toEuclideanLin U.val) v ≠ 0 := by
-  intro h
-  apply hv
-  have hnorm : ‖(Matrix.toEuclideanLin U.val) v‖ = ‖v‖ := unitary_norm_preserving U v
-  rw [h, norm_zero] at hnorm
-  exact norm_eq_zero.mp hnorm.symm
-
 /-- `Uᴴ * U = 1` for a unitary matrix. -/
 lemma unitary_conjTranspose_mulN (U : Matrix.unitaryGroup (Fin N) ℂ) :
     U.valᴴ * U.val = 1 := by
@@ -261,7 +251,7 @@ lemma gaussianCPN_smul_invariant [NeZero N] (p₀ : CPN N) (U : Matrix.unitaryGr
     simp only [Set.mem_singleton_iff] at hv0
     apply hv
     rw [gaussianProjN, dite_eq_right hv0, gaussianProjN,
-      dite_eq_right (toEuclideanLinN_ne_zero U hv0), smul_mk_eq_mk U v hv0]
+      dite_eq_right (Matrix.UnitaryGroup.toEuclideanLin_unitary_ne_zero U hv0), smul_mk_eq_mk U v hv0]
   rw [Measure.map_congr hae,
     ← Measure.map_map (measurable_gaussianProjN p₀) (measurable_toEuclideanLinN U),
     gaussianHN_map_unitary U]

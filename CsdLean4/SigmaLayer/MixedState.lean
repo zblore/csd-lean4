@@ -52,11 +52,6 @@ variable {N : ℕ}
 theorem isSelfAdjoint_ofReal (r : ℝ) : IsSelfAdjoint ((r : ℂ)) := by
   rw [isSelfAdjoint_iff]; exact Complex.conj_ofReal r
 
-/-- A nonnegative real multiple of a positive semidefinite complex matrix is positive semidefinite. -/
-theorem posSemidef_real_smul {A : Matrix (Fin N) (Fin N) ℂ} (hA : A.PosSemidef)
-    {p : ℝ} (hp : 0 ≤ p) : ((p : ℂ) • A).PosSemidef :=
-  hA.smul (by exact_mod_cast hp)
-
 /-! ### The convex mixture of density operators -/
 
 /-- **The statistical mixture of two density operators.** The convex combination
@@ -67,7 +62,9 @@ noncomputable def mix (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) (ρ₁ ρ₂ : D
   M := (p : ℂ) • ρ₁.M + ((1 - p : ℝ) : ℂ) • ρ₂.M
   isHermitian :=
     (ρ₁.isHermitian.smul (isSelfAdjoint_ofReal p)).add (ρ₂.isHermitian.smul (isSelfAdjoint_ofReal _))
-  nonneg := (posSemidef_real_smul ρ₁.nonneg hp0).add (posSemidef_real_smul ρ₂.nonneg (by linarith))
+  nonneg :=
+    (ρ₁.nonneg.smul (Complex.zero_le_real.mpr hp0)).add
+      (ρ₂.nonneg.smul (Complex.zero_le_real.mpr (by linarith)))
   trace_one := by
     rw [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul, ρ₁.trace_one, ρ₂.trace_one,
       smul_eq_mul, smul_eq_mul, mul_one, mul_one]
@@ -154,7 +151,7 @@ canonical genuinely-mixed preparation. -/
 noncomputable def maximallyMixed (N : ℕ) [NeZero N] : DensityOperator N where
   M := (Complex.ofReal ((N : ℝ)⁻¹)) • (1 : Matrix (Fin N) (Fin N) ℂ)
   isHermitian := Matrix.isHermitian_one.smul (isSelfAdjoint_ofReal _)
-  nonneg := posSemidef_real_smul Matrix.PosSemidef.one (by positivity)
+  nonneg := Matrix.PosSemidef.one.smul (Complex.zero_le_real.mpr (by positivity))
   trace_one := by
     rw [Matrix.trace_smul, Matrix.trace_one, Fintype.card_fin, smul_eq_mul]
     push_cast

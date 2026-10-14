@@ -688,6 +688,7 @@ public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerWedge
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPluriharmonic
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhase
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhaseCurvature
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.DiagonalOperator
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.MultiplicationOperator
 public import CsdLean4.Mathlib.Analysis.InnerProductSpace.LinearPMapConj

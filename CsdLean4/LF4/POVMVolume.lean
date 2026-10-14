@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF4.POVMDilation
 public import CsdLean4.LF4.BornFrequencyN
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # LF4: POVM Born weight as a dilated rank-1 block sum (P.3a)
@@ -51,11 +52,6 @@ lemma piLpCongrLeft_inner_single_sq {α κ : Type*} [Fintype α] [DecidableEq α
       = ‖inner ℂ (EuclideanSpace.single p (1 : ℂ)) w‖ ^ 2 := by
   rw [← EuclideanSpace.piLpCongrLeft_single e p (1 : ℂ), LinearIsometryEquiv.inner_map_map]
 
-/-- `‖⟨e_p, w⟩‖² = ‖w_p‖²` on the dilated `EuclideanSpace ℂ (Fin N × ι)`. -/
-lemma normSq_inner_single (w : EuclideanSpace ℂ (Fin N × ι)) (p : Fin N × ι) :
-    ‖inner ℂ (EuclideanSpace.single p (1 : ℂ)) w‖ ^ 2 = ‖w.ofLp p‖ ^ 2 := by
-  rw [EuclideanSpace.inner_single_left, map_one, one_mul]
-
 /-- **Block decomposition.** The projective Born weight of `w` against the
 ancilla-`i` projector is the sum of the rank-1 computational-basis Born weights
 over the `i`-th block:
@@ -75,7 +71,7 @@ lemma blockProj_born_eq_block_sum (i : ι) (w : EuclideanSpace ℂ (Fin N × ι)
     · intro h; exact absurd (Finset.mem_univ i) h
   rw [hcomp, map_sum]
   refine Finset.sum_congr rfl (fun n _ => ?_)
-  rw [normSq_inner_single, ← starRingEnd_apply, RCLike.mul_conj]
+  rw [EuclideanSpace.normSq_inner_single, ← starRingEnd_apply, RCLike.mul_conj]
   norm_cast
 
 /-- **POVM Born weight as a dilated rank-1 block sum (P.3a).** Composing the

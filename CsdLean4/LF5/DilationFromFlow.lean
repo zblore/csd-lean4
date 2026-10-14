@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.LF5.MeasurementFlow
 public import CsdLean4.LF4.POVMDilation
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # LF5: de-isolation realises the Naimark dilation (LF5-C)
@@ -161,30 +162,6 @@ end BasisPOVM
 
 /-! ## Isometry helper -/
 
-/-- A matrix with `Aᴴ A = 1` induces a norm-preserving map on `EuclideanSpace`:
-`‖Aψ‖² = re⟨Aψ, Aψ⟩ = re⟨ψ, Aᴴ A ψ⟩ = ‖ψ‖²` via the matrix↔operator adjoint
-bridge. Generic helper (Mathlib upstream candidate). -/
-lemma toEuclideanLin_norm_map_of_isom {ι κ : Type*} [Fintype ι] [DecidableEq ι]
-    [Fintype κ] [DecidableEq κ] {A : Matrix κ ι ℂ} (hA : Aᴴ * A = 1)
-    (ψ : EuclideanSpace ℂ ι) :
-    ‖Matrix.toEuclideanLin A ψ‖ = ‖ψ‖ := by
-  have hinner : inner ℂ (Matrix.toEuclideanLin A ψ) (Matrix.toEuclideanLin A ψ)
-      = inner ℂ ψ ψ := by
-    rw [← LinearMap.adjoint_inner_right (Matrix.toEuclideanLin A),
-      show (Matrix.toEuclideanLin A).adjoint = Matrix.toEuclideanLin Aᴴ from
-        (Matrix.toEuclideanLin_conjTranspose_eq_adjoint A).symm,
-      show Matrix.toEuclideanLin Aᴴ (Matrix.toEuclideanLin A ψ)
-          = Matrix.toEuclideanLin (Aᴴ * A) ψ from by
-        simp only [Matrix.toLpLin_mul_same, LinearMap.comp_apply],
-      hA,
-      show Matrix.toEuclideanLin (1 : Matrix ι ι ℂ) = LinearMap.id from
-        Matrix.toLpLin_one 2,
-      LinearMap.id_apply]
-  have hsq : ‖Matrix.toEuclideanLin A ψ‖ ^ 2 = ‖ψ‖ ^ 2 := by
-    rw [inner_self_eq_norm_sq_to_K, inner_self_eq_norm_sq_to_K] at hinner
-    exact_mod_cast hinner
-  exact (pow_left_inj₀ (norm_nonneg _) (norm_nonneg _) two_ne_zero).mp hsq
-
 /-! ## The ground-state embedding `ψ ↦ ψ ⊗ a₀` -/
 
 variable {N : ℕ} [NeZero N]
@@ -251,7 +228,7 @@ theorem embedGround_isom : (embedGround N)ᴴ * embedGround N = 1 := by
 /-- Operator-level isometry of the ground embedding: `‖ψ ⊗ a₀‖ = ‖ψ‖`. -/
 theorem embedGround_norm_map (ψ : EuclideanSpace ℂ (Fin N)) :
     ‖Matrix.toEuclideanLin (embedGround N) ψ‖ = ‖ψ‖ :=
-  toEuclideanLin_norm_map_of_isom embedGround_isom ψ
+  Matrix.norm_toEuclideanLin_of_isom embedGround_isom ψ
 
 /-! ## The dynamically-realised dilation isometry `V = U_vN ∘ (· ⊗ a₀)` -/
 
@@ -316,7 +293,7 @@ theorem vnDilationV_isom : (vnDilationV N)ᴴ * vnDilationV N = 1 := by
 /-- Operator-level isometry: `‖Vψ‖ = ‖ψ‖` (feeds LF5-D's `hnorm`). -/
 theorem vnDilationV_norm_map (ψ : EuclideanSpace ℂ (Fin N)) :
     ‖Matrix.toEuclideanLin (vnDilationV N) ψ‖ = ‖ψ‖ :=
-  toEuclideanLin_norm_map_of_isom vnDilationV_isom ψ
+  Matrix.norm_toEuclideanLin_of_isom vnDilationV_isom ψ
 
 /-- The pointer-`i` block projector acting on `V`:
 `(Πᵢ V)_{(n,j), m} = δ_{j i} δ_{n m} δ_{m i}` — only the `(i, i)` cell of

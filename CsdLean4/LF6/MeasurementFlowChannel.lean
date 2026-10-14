@@ -118,7 +118,7 @@ theorem measurementFlow_traceRight_barycenter (e : Fin N × Fin N ≃ Fin m)
   traceRight_barycenter_flow D μprep Φ hΦ _
     (fun p => by simp only [Function.comp_apply, LinearIsometryEquiv.norm_map, hrep_unit])
     ((LinearIsometryEquiv.piLpCongrLeft 2 ℂ ℂ e).symm.continuous.measurable.comp hrep_meas)
-    repS hrepS_meas (vnUnitary N) vnUnitary_conjTranspose_mul _
+    repS hrepS_meas (vnUnitary N) vnUnitary_unitary _
     (by rw [PiLp.norm_single]; exact norm_one)
     (isUnitaryLift_measurementFlow e D Φ hproj rep' hrep_unit hrep_ne hsec) hprod
 

@@ -8,6 +8,7 @@ module
 public import CsdLean4.LF6.LocalDeisolationFlow
 public import CsdLean4.LF6.GHZDeisolationFlow
 public import CsdLean4.RecordLayer.BasinFrequency
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # LF6-C.4: a manifestly LOCAL product de-isolation flow realising the GHZ measurement
@@ -275,7 +276,7 @@ noncomputable def ghzLocalNaimark : NaimarkDilation (basisPOVM 8) where
 /-- Operator-level isometry: `‖V_loc ψ‖ = ‖ψ‖`. -/
 theorem ghzLocal_norm_map (ψ : EuclideanSpace ℂ (Fin 8)) :
     ‖Matrix.toEuclideanLin ghzLocalV ψ‖ = ‖ψ‖ :=
-  toEuclideanLin_norm_map_of_isom ghzLocal_isom ψ
+  Matrix.norm_toEuclideanLin_of_isom ghzLocal_isom ψ
 
 /-! ### Deliverable 4: the local product flow reproduces the GHZ diagonal weights -/
 
@@ -405,13 +406,13 @@ theorem ghzLocalFlow_measurePreserving (p₀ : CPN (8 * 8)) :
 lemma ghzLocalFlow_mk_single (z0 z1 z2 : Fin 2 × Fin 2) :
     ghzLocalFlow
         (Projectivization.mk ℂ (EuclideanSpace.single (ghzFlowEquiv (z0, z1, z2)) (1 : ℂ))
-          (single_one_ne_zero _))
+          (EuclideanSpace.single_one_ne_zero _))
       = Projectivization.mk ℂ
           (EuclideanSpace.single (ghzFlowEquiv (vnPerm 2 z0, vnPerm 2 z1, vnPerm 2 z2)) (1 : ℂ))
-          (single_one_ne_zero _) := by
+          (EuclideanSpace.single_one_ne_zero _) := by
   have : NeZero (8 * 8) := ⟨by norm_num⟩
-  refine (smul_mk_eq_mk ghzLocalFlowUnitary _ (single_one_ne_zero _)).trans ?_
-  exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ (single_one_ne_zero _)).mpr
+  refine (smul_mk_eq_mk ghzLocalFlowUnitary _ (EuclideanSpace.single_one_ne_zero _)).trans ?_
+  exact (Projectivization.mk_eq_mk_iff' ℂ _ _ _ (EuclideanSpace.single_one_ne_zero _)).mpr
     ⟨1, by rw [one_smul]; exact (ghzLocalFlowUnitary_toEuclideanLin_single z0 z1 z2).symm⟩
 
 /-- **The local product flow is genuinely not the identity** (`Φ_loc ≠ id`): the
@@ -504,7 +505,7 @@ theorem toEuclideanLin_ghzLocalEmbedGround_ne_zero (ψ : EuclideanSpace ℂ (Fin
     (hψ : ψ ≠ 0) : Matrix.toEuclideanLin ghzLocalEmbedGround ψ ≠ 0 := by
   intro h
   apply hψ
-  have hn := toEuclideanLin_norm_map_of_isom ghzLocalEmbedGround_isom ψ
+  have hn := Matrix.norm_toEuclideanLin_of_isom ghzLocalEmbedGround_isom ψ
   rw [h, norm_zero] at hn
   exact norm_eq_zero.mp hn.symm
 
@@ -513,7 +514,7 @@ theorem toEuclideanLin_ghzLocalV_ne_zero (ψ : EuclideanSpace ℂ (Fin 8))
     (hψ : ψ ≠ 0) : Matrix.toEuclideanLin ghzLocalV ψ ≠ 0 := by
   intro h
   apply hψ
-  have hn := toEuclideanLin_norm_map_of_isom ghzLocal_isom ψ
+  have hn := Matrix.norm_toEuclideanLin_of_isom ghzLocal_isom ψ
   rw [h, norm_zero] at hn
   exact norm_eq_zero.mp hn.symm
 

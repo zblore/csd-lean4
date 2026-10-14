@@ -10,6 +10,7 @@ public import CsdLean4.Empirical.CSD.VolumeCanonical
 public import CsdLean4.Empirical.CSD.Contextuality.MerminPeres
 public import CsdLean4.RecordLayer.BasinFrequency
 public import CsdLean4.Mathlib.MeasureTheory.IidTrials
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # Empirical/CSD: a Mermin–Peres rank-2 observable's outcome Born weights as Kähler volumes
@@ -135,10 +136,6 @@ noncomputable def mpXXReal : Fin 4 → Fin 4 → ℝ :=
 noncomputable def mpXXVec (i : Fin 4) : EuclideanSpace ℂ (Fin 4) :=
   WithLp.toLp 2 (fun k => ((mpXXReal i k : ℝ) : ℂ))
 
-/-- Scalar complex inner product of two real coercions: `⟨↑a, ↑b⟩_ℂ = ↑(a * b)`. -/
-lemma mp_scalar_inner (a b : ℝ) : (inner ℂ (↑a : ℂ) (↑b : ℂ) : ℂ) = ↑(a * b) := by
-  rw [RCLike.inner_apply, Complex.conj_ofReal]; push_cast; ring
-
 /-- **The `H ⊗ H` family is orthonormal.** A direct `norm_num` computation on the
 explicit `(±1/2)`-component vectors: each squared norm is `4 · (1/2)² = 1` and each
 off-diagonal inner product is a balanced `±1/4` sum equal to `0`. -/
@@ -146,7 +143,7 @@ lemma mpXXVec_orthonormal : Orthonormal ℂ mpXXVec := by
   rw [orthonormal_iff_ite]
   intro a b
   rw [PiLp.inner_apply, Fin.sum_univ_four]
-  simp only [mpXXVec, WithLp.ofLp_toLp, mp_scalar_inner]
+  simp only [mpXXVec, WithLp.ofLp_toLp, Complex.inner_ofReal_ofReal]
   fin_cases a <;> fin_cases b <;>
     norm_num [mpXXReal, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
       Matrix.cons_val_two, Matrix.cons_val_three, Matrix.tail_cons]
@@ -433,7 +430,7 @@ lemma mpHIVec_orthonormal : Orthonormal ℂ mpHIVec := by
   rw [orthonormal_iff_ite]
   intro a b
   rw [PiLp.inner_apply, Fin.sum_univ_four]
-  simp only [mpHIVec, WithLp.ofLp_toLp, mp_scalar_inner]
+  simp only [mpHIVec, WithLp.ofLp_toLp, Complex.inner_ofReal_ofReal]
   fin_cases a <;> fin_cases b <;>
     norm_num [mpHIReal, invSqrt2_sq, mul_neg, neg_mul,
       Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
@@ -469,7 +466,7 @@ lemma mpIHVec_orthonormal : Orthonormal ℂ mpIHVec := by
   rw [orthonormal_iff_ite]
   intro a b
   rw [PiLp.inner_apply, Fin.sum_univ_four]
-  simp only [mpIHVec, WithLp.ofLp_toLp, mp_scalar_inner]
+  simp only [mpIHVec, WithLp.ofLp_toLp, Complex.inner_ofReal_ofReal]
   fin_cases a <;> fin_cases b <;>
     norm_num [mpIHReal, invSqrt2_sq, mul_neg, neg_mul,
       Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
@@ -1077,7 +1074,7 @@ theorem mp_iz_born_frequency_volume_canonical
 The remaining cell. `U_Y` diagonalises `σy` with columns `|y±⟩ = (1, ±i)/√2`; the
 product eigenbasis `|y±⟩ ⊗ |y±⟩` has **complex** `(±1/2, ±i/2)` components, so the
 orthonormality and eigenvector proofs run over `ℂ` directly (not the real-coercion
-`mp_scalar_inner` route). This closes the `Y ⊗ Y` cell — and the full square. -/
+`Complex.inner_ofReal_ofReal` route). This closes the `Y ⊗ Y` cell — and the full square. -/
 
 /-- The four `Y ⊗ Y` eigenvectors `|y±⟩ ⊗ |y±⟩` with explicit complex `(±1/2, ±i/2)`
 components: `v0 = |y+⟩⊗|y+⟩`, `v1 = |y+⟩⊗|y−⟩`, `v2 = |y−⟩⊗|y+⟩`, `v3 = |y−⟩⊗|y−⟩`. -/

@@ -10,6 +10,7 @@ public import CsdLean4.LF4.BornFS
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 public import Mathlib.Dynamics.Ergodic.Ergodic
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # SO-1 onramp: where the Fubini–Study typicality measure comes from
@@ -113,18 +114,9 @@ variable {N : ℕ} [NeZero N]
 
 /-! ## Computational-basis eigenstate rays -/
 
-omit [NeZero N] in
-/-- The computational-basis vector `eⱼ = single j 1` is nonzero. -/
-lemma cpBasisVec_ne_zero (j : Fin N) : (EuclideanSpace.single j (1 : ℂ)) ≠ 0 := by
-  intro h
-  have h2 : (EuclideanSpace.single j (1 : ℂ)) j = (0 : EuclideanSpace ℂ (Fin N)) j := by
-    rw [h]
-  rw [PiLp.single_apply] at h2
-  simp at h2
-
 /-- The computational-basis eigenstate **ray** `[eⱼ] ∈ ℂℙ^{N-1}`. -/
 noncomputable def cpBasisRay (j : Fin N) : CPN N :=
-  Projectivization.mk ℂ (EuclideanSpace.single j (1 : ℂ)) (cpBasisVec_ne_zero j)
+  Projectivization.mk ℂ (EuclideanSpace.single j (1 : ℂ)) (EuclideanSpace.single_one_ne_zero j)
 
 omit [NeZero N] in
 /-- Distinct indices give distinct basis rays (`[eⱼ] ≠ [eₖ]` for `j ≠ k`): if they
@@ -134,7 +126,7 @@ lemma cpBasisRay_ne (j k : Fin N) (hjk : j ≠ k) : cpBasisRay j ≠ cpBasisRay 
   intro he
   rw [cpBasisRay, cpBasisRay] at he
   obtain ⟨a, ha⟩ :=
-    (Projectivization.mk_eq_mk_iff' ℂ _ _ (cpBasisVec_ne_zero j) (cpBasisVec_ne_zero k)).mp he
+    (Projectivization.mk_eq_mk_iff' ℂ _ _ (EuclideanSpace.single_one_ne_zero j) (EuclideanSpace.single_one_ne_zero k)).mp he
   -- `a • eₖ` vanishes at coordinate `j` (since `j ≠ k`); but `ha` makes it `eⱼ`, value `1` there.
   have hj : (a • EuclideanSpace.single k (1 : ℂ)) j = 0 := by
     simp only [PiLp.smul_apply, PiLp.single_apply, ite_eq_right hjk, smul_zero]

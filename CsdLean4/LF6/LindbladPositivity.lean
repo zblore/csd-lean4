@@ -73,27 +73,10 @@ namespace CSD.LF6
 
 variable {n : Type*} [Fintype n] [DecidableEq n] {ι : Type*} [Fintype ι]
 
-/-! ### PSD is closed under nonnegative scaling and under limits -/
+/-! ### PSD is closed under limits
 
-omit [DecidableEq n] in
-/-- Nonnegative real scaling preserves positive semidefiniteness
-(instance-free form). -/
-lemma posSemidef_real_smul {M : Matrix n n ℂ} (hM : M.PosSemidef) {t : ℝ}
-    (ht : 0 ≤ t) : (t • M).PosSemidef := by
-  refine Matrix.PosSemidef.of_dotProduct_mulVec_nonneg ?_ fun x => ?_
-  · show (t • M)ᴴ = t • M
-    rw [Matrix.conjTranspose_smul, star_trivial, hM.1.eq]
-  · have hq := hM.dotProduct_mulVec_nonneg x
-    have harg : star x ⬝ᵥ ((t • M) *ᵥ x) = (t : ℂ) * (star x ⬝ᵥ (M *ᵥ x)) := by
-      rw [Matrix.smul_mulVec, dotProduct_smul, Complex.real_smul]
-    rw [harg]
-    obtain ⟨hre, him⟩ := Complex.nonneg_iff.mp hq
-    refine Complex.nonneg_iff.mpr ⟨?_, ?_⟩
-    · rw [Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul,
-        sub_zero]
-      exact mul_nonneg ht hre
-    · rw [Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im, zero_mul,
-        add_zero, ← him, mul_zero]
+(Closure under nonnegative real scaling is Mathlib's `Matrix.PosSemidef.smul`; this file's own
+copy was retired under BACKLOG #146 (D).) -/
 
 omit [DecidableEq n] in
 /-- The quadratic form of a matrix at a fixed vector, as a linear
@@ -375,7 +358,7 @@ lemma smul_jumpCLM_pow_posSemidef (L : ι → Matrix n n ℂ) {t : ℝ}
         = ((t • jumpCLM L) ^ m) ((t • jumpCLM L) ρ) from rfl]
     refine ih ?_
     rw [_root_.smul_apply]
-    exact posSemidef_real_smul (jumpCLM_posSemidef_apply L hρ) ht
+    exact (jumpCLM_posSemidef_apply L hρ).smul ht
 
 /-- **The jump flow is positive** for `t ≥ 0`: every term of the exponential
 series is PSD, and PSD passes to the limit. -/
@@ -386,8 +369,7 @@ theorem exp_smul_jumpCLM_posSemidef (L : ι → Matrix n n ℂ) {t : ℝ}
   refine posSemidef_of_tendsto hsum.tendsto_sum_nat fun N => ?_
   refine Matrix.posSemidef_sum _ fun m _ => ?_
   rw [_root_.smul_apply]
-  exact posSemidef_real_smul (smul_jumpCLM_pow_posSemidef L ht m hρ)
-    (by positivity)
+  exact (smul_jumpCLM_pow_posSemidef L ht m hρ).smul (by positivity)
 
 /-! ### Assembly: the semigroup is positive -/
 

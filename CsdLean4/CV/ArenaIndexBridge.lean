@@ -274,8 +274,8 @@ theorem arenaKick_reindex (e : ι ≃ κ) (U : Matrix.unitaryGroup ι ℂ) (p : 
   have hne : idxSpaceEquiv e p.rep ≠ 0 := idxSpaceEquiv_ne_zero e hv
   have hR : idxArenaEquiv e (arenaKick U p)
       = Projectivization.mk ℂ (idxSpaceEquiv e (Matrix.toEuclideanLin U.val p.rep))
-          (idxSpaceEquiv_ne_zero e (toEuclideanLin_ne_zero U hv)) :=
-    idxArenaEquiv_mk e (toEuclideanLin_ne_zero U hv)
+          (idxSpaceEquiv_ne_zero e (Matrix.UnitaryGroup.toEuclideanLin_unitary_ne_zero U hv)) :=
+    idxArenaEquiv_mk e (Matrix.UnitaryGroup.toEuclideanLin_unitary_ne_zero U hv)
   rw [idxArenaEquiv_eq_mk e p, arenaKick_mk (idxUnitary e U) hne, hR]
   refine (Projectivization.mk_eq_mk_iff' ℂ _ _ _ _).mpr ⟨1, ?_⟩
   rw [one_smul, idxUnitary_val, toEuclideanLin_reindex]

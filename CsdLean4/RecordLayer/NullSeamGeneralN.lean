@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.RecordLayer.NullSeamWitness
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # SigmaLayer/NullSeamGeneralN: the third horn at every `N` (D3b)
@@ -855,7 +856,7 @@ lemma nullSeamGenEvolve_ready (hr : ∀ i, 0 < r i) (hsum : ∑ i, r i = 1)
       = Projectivization.mk ℂ (tentVec r θ) (tentVec_ne_zero hr hsum θ) := by
   show nullSeamGenUU hr hsum θ • readyState = _
   rw [readyState, vertexPoint,
-    Projectivization.smul_mk_eq_mk_toEuclideanLin _ (single_ne_zero' 0)]
+    Projectivization.smul_mk_eq_mk_toEuclideanLin _ (EuclideanSpace.single_one_ne_zero 0)]
   rw [Projectivization.mk_eq_mk_iff']
   refine ⟨(((tentTotal r θ)⁻¹ : ℝ) : ℂ), ?_⟩
   show (((tentTotal r θ)⁻¹ : ℝ) : ℂ) • tentVec r θ

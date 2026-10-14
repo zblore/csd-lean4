@@ -8,6 +8,7 @@ module
 public import CsdLean4.RecordLayer.PhaseSlot
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # SigmaLayer/JoinArena: the projective join — Liouville-preserving degenerate Lüders
@@ -254,7 +255,7 @@ noncomputable def joinFstAux (v : { w : EuclideanSpace ℂ (Fin (N + N)) // w �
     by_cases h : fstPart (v : EuclideanSpace ℂ (Fin (N + N))) ≠ 0
     · rwa [ite_eq_left h]
     · rw [ite_eq_right h]
-      exact single_ne_zero' 0⟩
+      exact EuclideanSpace.single_one_ne_zero 0⟩
 
 /-- On the physical branch (nonzero system component), the readout representative IS the
 first copy (interface lemma, §9.1 — the case split its unfold sites re-derive). -/

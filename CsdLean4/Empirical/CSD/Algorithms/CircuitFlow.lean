@@ -71,19 +71,10 @@ section Helpers
 
 variable {ι κ : Type*} [Fintype ι] [DecidableEq ι] [Fintype κ] [DecidableEq κ]
 
-/-- `toEuclideanLin` of a product is the composite. -/
-theorem toEuclideanLin_mul_apply' (A B : Matrix ι ι ℂ) (v : EuclideanSpace ℂ ι) :
-    Matrix.toEuclideanLin (A * B) v = Matrix.toEuclideanLin A (Matrix.toEuclideanLin B v) := by
-  show WithLp.toLp 2 ((A * B) *ᵥ WithLp.ofLp v) = WithLp.toLp 2 (A *ᵥ (B *ᵥ WithLp.ofLp v))
-  rw [Matrix.mulVec_mulVec]
-
-/-- `toEuclideanLin` of a power is the iterate. -/
+/-- `toEuclideanLin` of a power is the iterate: `@[simp] Matrix.toLpLin_pow` applied to a vector. -/
 theorem toEuclideanLin_pow_apply (U : Matrix ι ι ℂ) (k : ℕ) (v : EuclideanSpace ℂ ι) :
     Matrix.toEuclideanLin (U ^ k) v = (Matrix.toEuclideanLin U)^[k] v := by
-  induction k generalizing v with
-  | zero => simp
-  | succ k ih =>
-    rw [pow_succ, toEuclideanLin_mul_apply', ih, Function.iterate_succ_apply]
+  rw [Matrix.toLpLin_pow, Module.End.pow_apply]
 
 /-- Reindexing a matrix and its argument together. -/
 theorem toEuclideanLin_reindex_piLpCongrLeft (e : ι ≃ κ) (U : Matrix ι ι ℂ)

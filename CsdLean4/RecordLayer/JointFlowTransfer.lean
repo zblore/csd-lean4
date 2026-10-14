@@ -164,22 +164,13 @@ theorem landing (h : IsJointLift c ε Φ) {δ : ℝ} (hε : 0 < ε) (hδ : δ �
   exact pointer_landing c hε hδ hsec hready
 
 omit [NeZero N] in
-/-- The fibrewise witness's outcome sector, in record-preimage form. -/
-lemma protocol_outcomeSector_eq (c : ContextField N)
-    (hc : ∀ j, Continuous fun p => c.rate p j) {ε δ : ℝ} (hδ : δ ≤ 1 / 2) (j : Fin N) :
-    (pointerProtocol c hc ε hδ).outcomeSector j
-      = pointerEvolve c ε ⁻¹' arenaRecord N j := by
-  show (pointerProtocol c hc ε hδ).evolve 0 1 ⁻¹' arenaRecord N j = _
-  rw [pointerProtocol_evolve_stroke c hc ε hδ]
-
-omit [NeZero N] in
 /-- ★ **The lower Born bound transfers.** -/
 theorem born_lower (h : IsJointLift c ε Φ) (hc : ∀ j, Continuous fun p => c.rate p j)
     {δ : ℝ} (hε : 0 < ε) (hδpos : 0 < δ) (hδ : δ ≤ 1 / 2)
     (p : LF4.CPN N) (q₀ : Pointer N) (j : Fin N) :
     ENNReal.ofReal (c.rate p j - 2 * ε)
       ≤ pointerPrep p q₀ δ (Φ ⁻¹' arenaRecord N j) := by
-  rw [h.outcomeSector_eq j, ← protocol_outcomeSector_eq c hc hδ j]
+  rw [h.outcomeSector_eq j, ← pointerProtocol_outcomeSector c hc hδ j]
   exact pointer_born_lower c hc hε hδpos hδ p q₀ j
 
 /-- ★ **The upper Born bound transfers.** -/
@@ -188,7 +179,7 @@ theorem born_upper (h : IsJointLift c ε Φ) (hc : ∀ j, Continuous fun p => c.
     (p : LF4.CPN N) (q₀ : Pointer N) (i : Fin N) :
     pointerPrep p q₀ δ (Φ ⁻¹' arenaRecord N i)
       ≤ ENNReal.ofReal (c.rate p i + 2 * ((N : ℝ) - 1) * ε) := by
-  rw [h.outcomeSector_eq i, ← protocol_outcomeSector_eq c hc hδ i]
+  rw [h.outcomeSector_eq i, ← pointerProtocol_outcomeSector c hc hδ i]
   exact pointer_born_upper c hc hε hδpos hδ p q₀ i
 
 end IsJointLift

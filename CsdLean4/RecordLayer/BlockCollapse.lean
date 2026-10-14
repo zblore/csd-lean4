@@ -8,6 +8,7 @@ module
 public import CsdLean4.RecordLayer.DegenerateLuders
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
 public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
 
 /-!
 # SigmaLayer/BlockCollapse: the degenerate-Lüders target as a relocation — the join route, brick 1
@@ -225,8 +226,8 @@ theorem blockCollapse_vertex [NeZero N] (b : Fin N → Fin K) {i : Fin K} {j : F
     (hb : b j = i) :
     blockCollapse b i (vertexPoint j) = vertexPoint j := by
   unfold vertexPoint
-  rw [blockCollapse_mk b i (single_ne_zero' j)
-    (by rw [blockProj_single hb]; exact single_ne_zero' j)]
+  rw [blockCollapse_mk b i (EuclideanSpace.single_one_ne_zero j)
+    (by rw [blockProj_single hb]; exact EuclideanSpace.single_one_ne_zero j)]
   congr 1
   exact blockProj_single hb
 

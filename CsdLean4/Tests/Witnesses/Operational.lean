@@ -58,7 +58,7 @@ namespace Witnesses
 /-! ## The proper mixed state -/
 
 /-- **The maximally mixed qubit `½·I` as a `DensityOperator`** — every field
-proved: Hermitian, PSD (via the production `psd_smul`), trace `1`. -/
+proved: Hermitian, PSD (via Mathlib's `Matrix.PosSemidef.smul`), trace `1`. -/
 noncomputable def mixedHalf : LF2.DensityOperator 2 where
   M := ((1 / 2 : ℝ) : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)
   isHermitian := by
@@ -66,7 +66,7 @@ noncomputable def mixedHalf : LF2.DensityOperator 2 where
     rw [Matrix.conjTranspose_smul, Matrix.conjTranspose_one]
     congr 1
     simp
-  nonneg := psd_smul Matrix.PosSemidef.one (by norm_num)
+  nonneg := Matrix.PosSemidef.one.smul (Complex.zero_le_real.mpr (by norm_num))
   trace_one := by
     rw [Matrix.trace_smul, Matrix.trace_one]
     norm_num

@@ -62,9 +62,6 @@ namespace CSD.LF3
 
 /-! ### Preliminaries -/
 
-lemma sign_sq (s : Sign) : (s.val : ℝ) ^ 2 = 1 := by
-  cases s <;> norm_num [Sign.val]
-
 lemma sign_ne_zero (s : Sign) : (s.val : ℝ) ≠ 0 := by
   cases s <;> norm_num [Sign.val]
 
@@ -79,7 +76,7 @@ lemma transverse_eq_zero_of_pole (s : Sign) (a : DetectorSetting)
     (h : 1 + (s.val : ℝ) * (a.vec 2 : ℝ) = 0) :
     (a.vec 0 : ℝ) = 0 ∧ (a.vec 1 : ℝ) = 0 := by
   have hsum := a.sum_sq_components_eq_one
-  have hs := sign_sq s
+  have hs := Sign.val_sq s
   have hz : (a.vec 2 : ℝ) ^ 2 = 1 := by nlinarith [h, hs]
   constructor <;> nlinarith [sq_nonneg (a.vec 0), sq_nonneg (a.vec 1)]
 
@@ -121,7 +118,7 @@ lemma sum_sq_components_eq_one_C (a : DetectorSetting) :
     Complex.ofReal_one]
 
 lemma sign_sq_C (s : Sign) : ((s.val : ℝ) : ℂ) ^ 2 = 1 := by
-  rw [← Complex.ofReal_pow, sign_sq, Complex.ofReal_one]
+  rw [← Complex.ofReal_pow, Sign.val_sq, Complex.ofReal_one]
 
 /-- ★ **The division-free outer-product identity.**
 `2(1 + s·a_z) · Πˢ(a)ᵢⱼ = rawᵢ · conj(rawⱼ)`. Away from the pole, dividing by the
@@ -149,7 +146,7 @@ lemma spinorRaw_normSq (s : Sign) (a : DetectorSetting) :
     ‖spinorRaw s a 0‖ ^ 2 + ‖spinorRaw s a 1‖ ^ 2
       = 2 * (1 + (s.val : ℝ) * (a.vec 2 : ℝ)) := by
   have hsum := a.sum_sq_components_eq_one
-  have hs := sign_sq s
+  have hs := Sign.val_sq s
   simp only [spinorRaw, Matrix.cons_val_zero, Matrix.cons_val_one]
   rw [Complex.norm_real, Real.norm_eq_abs, sq_abs, Complex.norm_mul, mul_pow,
     Complex.sq_norm, Complex.sq_norm, Complex.normSq_apply, Complex.normSq_apply]
@@ -169,7 +166,7 @@ lemma pole_facts (s : Sign) (a : DetectorSetting)
     (hpos : ¬ (0 < 1 + (s.val : ℝ) * (a.vec 2 : ℝ))) :
     (a.vec 0 : ℝ) = 0 ∧ (a.vec 1 : ℝ) = 0 ∧ (s.val : ℝ) * (a.vec 2 : ℝ) = -1 := by
   have hb := abs_vec_two_le_one a
-  have hs := sign_sq s
+  have hs := Sign.val_sq s
   have hzero : 1 + (s.val : ℝ) * (a.vec 2 : ℝ) = 0 := by
     rcases abs_le.mp hb with ⟨h1, h2⟩
     cases s <;> simp only [Sign.val] at * <;> linarith

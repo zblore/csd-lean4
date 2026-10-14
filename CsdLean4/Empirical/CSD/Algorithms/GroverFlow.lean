@@ -136,7 +136,7 @@ theorem toEuclideanLin_diffusionMatrix (ψ : QReg n) :
 theorem toEuclideanLin_groverMatrix (w : Fin n → Fin 2) :
     ⇑(Matrix.toEuclideanLin (groverMatrix w)) = groverStep w := by
   funext ψ
-  rw [groverMatrix, toEuclideanLin_mul_apply', toEuclideanLin_oracleMatrix,
+  rw [groverMatrix, Matrix.toEuclideanLin_mul_apply, toEuclideanLin_oracleMatrix,
     toEuclideanLin_diffusionMatrix]
   rfl
 
