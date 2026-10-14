@@ -532,6 +532,7 @@ public import CsdLean4.SigmaLayer.FibreHorizonDivergence
 public import CsdLean4.SigmaLayer.FibreCellUniform
 public import CsdLean4.SigmaLayer.FibreCellDecay
 public import CsdLean4.SigmaLayer.FibreRelaxation
+public import CsdLean4.SigmaLayer.FibreLyapunov
 public import CsdLean4.SigmaLayer.UniqueErgodicity
 public import CsdLean4.SigmaLayer.Interference
 public import CsdLean4.SigmaLayer.TensorSector
@@ -601,6 +602,7 @@ public import CsdLean4.Mathlib.Dynamics.CoarseMarkov
 public import CsdLean4.Mathlib.Dynamics.CatMapWitness
 public import CsdLean4.Mathlib.Dynamics.CatMapMixing
 public import CsdLean4.Mathlib.Dynamics.CatMapStrongMixing
+public import CsdLean4.Mathlib.Dynamics.LyapunovExponent
 public import CsdLean4.RecordLayer.SwapWitness
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.TwoTimeLuders

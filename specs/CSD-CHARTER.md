@@ -67,7 +67,7 @@ through dynamical mixing. **That is a fact about the class of maps isolated QM u
 Σ**: `torusDouble_hasCorrelationDecay` exhibits a map of the very same fibre whose correlations
 vanish at every nonzero lag, so “Σ cannot mix” is false. Whether a *de-isolation* flow
 is chaotic — a positive Lyapunov exponent, random-matrix level statistics, an exponential OTOC
-— is **open and unclaimed** (BACKLOG #148–#150, split from #101 on 2026-10-14; the corpus's own interacting family is provably
+— is partly answered and partly open (BACKLOG #148–#150, split from #101 on 2026-10-14): the hyperbolic fibre witness has Lyapunov exponent `2 log φ` and the constructed de-isolation witness has exponent `0` (`fibre_witnesses_lyapunov`, `SigmaLayer/FibreLyapunov.lean`), which map nature uses is #19, and the OTOC regime (#149) and random-matrix statistics (#150) are unclaimed; the corpus's own interacting family is provably
 *slow* scrambling, `otoc_interactingU_le`).
 
 **The cell law — posit plus characterisation.** The record layer's outcome rates are the

@@ -12125,5 +12125,27 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms MeasureTheory.cat_ergodic
 
+/-! #148: Lyapunov exponents of linear maps and the cat map's (`Mathlib/Dynamics/LyapunovExponent.lean`). -/
+
+/-- info: 'hasLyapunovExponent_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasLyapunovExponent_id
+
+/-- info: 'hasLyapunovExponent_of_geometric_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasLyapunovExponent_of_geometric_bounds
+
+/-- info: 'MeasureTheory.cat_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cat_coe
+
+/-- info: 'MeasureTheory.hasLyapunovExponent_catR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.hasLyapunovExponent_catR
+
+/-- info: 'MeasureTheory.hasLyapunovExponent_catR_stable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.hasLyapunovExponent_catR_stable
+
 
 end CSD.Tests.AxiomAudit

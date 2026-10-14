@@ -5250,5 +5250,31 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.SigmaLayer.tendsto_klDiv_fibreStepLaw
 
+/-! #148: the Lyapunov exponents of the fibre witnesses (`SigmaLayer/FibreLyapunov.lean`). -/
+
+/-- info: 'CSD.SigmaLayer.catStroke_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.catStroke_coe
+
+/-- info: 'CSD.SigmaLayer.pshift_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.pshift_coe
+
+/-- info: 'CSD.SigmaLayer.kFlow_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.kFlow_coe
+
+/-- info: 'CSD.SigmaLayer.catR_fderiv_hasLyapunovExponent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.catR_fderiv_hasLyapunovExponent
+
+/-- info: 'CSD.SigmaLayer.transR_fderiv_hasLyapunovExponent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.transR_fderiv_hasLyapunovExponent
+
+/-- info: 'CSD.SigmaLayer.fibre_witnesses_lyapunov' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fibre_witnesses_lyapunov
+
 
 end CSD.Tests.AxiomAudit
