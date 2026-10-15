@@ -5376,4 +5376,39 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.fibre_two_shears
 
 
+/-! #149: the classical OTOC of the fibre witnesses (`SigmaLayer/FibreOtoc.lean`). -/
+
+/-- info: 'CSD.SigmaLayer.classicalOtoc_catStroke_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.classicalOtoc_catStroke_lift
+
+/-- info: 'CSD.SigmaLayer.tendsto_log_classicalOtoc_catStroke_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.tendsto_log_classicalOtoc_catStroke_lift
+
+/-- info: 'CSD.SigmaLayer.tendsto_log_classicalOtoc_sq_catStroke_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.tendsto_log_classicalOtoc_sq_catStroke_lift
+
+/-- info: 'CSD.SigmaLayer.classicalOtoc_transR_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.classicalOtoc_transR_lift
+
+/-- info: 'CSD.SigmaLayer.tendsto_log_classicalOtoc_transR_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.tendsto_log_classicalOtoc_transR_lift
+
+/-- info: 'CSD.SigmaLayer.classicalOtoc_shearXR_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.classicalOtoc_shearXR_lift
+
+/-- info: 'CSD.SigmaLayer.classicalOtoc_shearYR_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.classicalOtoc_shearYR_lift
+
+/-- info: 'CSD.SigmaLayer.fibre_witnesses_otoc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fibre_witnesses_otoc
+
+
 end CSD.Tests.AxiomAudit

@@ -12213,4 +12213,83 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms MeasureTheory.cat_two_shears
 
 
+/-! #149: the classical OTOC of a linear map, and the cat map's (`Mathlib/Dynamics/ClassicalOtoc.lean`). -/
+
+/-- info: 'poissonBracket_clm_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms poissonBracket_clm_snd
+
+/-- info: 'classicalOtoc_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms classicalOtoc_eq
+
+/-- info: 'poissonBracket_pow_fst_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms poissonBracket_pow_fst_snd
+
+/-- info: 'poissonBracket_pow_snd_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms poissonBracket_pow_snd_snd
+
+/-- info: 'classicalOtoc_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms classicalOtoc_id
+
+/-- info: 'tendsto_log_classicalOtoc_id' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms tendsto_log_classicalOtoc_id
+
+/-- info: 'MeasureTheory.classicalOtoc_shearXR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.classicalOtoc_shearXR
+
+/-- info: 'MeasureTheory.classicalOtoc_shearYR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.classicalOtoc_shearYR
+
+/-- info: 'MeasureTheory.poissonBracket_snd_shearYR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.poissonBracket_snd_shearYR
+
+/-- info: 'MeasureTheory.catR_pow_one_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catR_pow_one_zero
+
+/-- info: 'MeasureTheory.catR_pow_zero_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catR_pow_zero_one
+
+/-- info: 'MeasureTheory.catR_pow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catR_pow_apply
+
+/-- info: 'MeasureTheory.classicalOtoc_catR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.classicalOtoc_catR
+
+/-- info: 'MeasureTheory.classicalOtoc_catR_binet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.classicalOtoc_catR_binet
+
+/-- info: 'MeasureTheory.norm_catR_pow_one_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.norm_catR_pow_one_zero
+
+/-- info: 'MeasureTheory.tendsto_log_classicalOtoc_catR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.tendsto_log_classicalOtoc_catR
+
+/-- info: 'MeasureTheory.tendsto_log_classicalOtoc_sq_catR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.tendsto_log_classicalOtoc_sq_catR
+
+/-- info: 'MeasureTheory.classicalOtoc_catR_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.classicalOtoc_catR_pos
+
+/-- info: 'MeasureTheory.cat_classicalOtoc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cat_classicalOtoc
+
+
 end CSD.Tests.AxiomAudit
