@@ -5411,4 +5411,87 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.fibre_witnesses_otoc
 
 
+/-! #138: stability that scales with the coarse boundaries (`RecordLayer/CoarseBoundaryStability.lean`). -/
+
+/-- info: 'CSD.RecordLayer.exists_mem_globalBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_mem_globalBasin
+
+/-- info: 'CSD.RecordLayer.outcomeCode_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.outcomeCode_ne_zero
+
+/-- info: 'CSD.RecordLayer.fineIndex_ne_none' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineIndex_ne_none
+
+/-- info: 'CSD.RecordLayer.rep_add_coe_of_one_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rep_add_coe_of_one_lt
+
+/-- info: 'CSD.RecordLayer.rep_sigmaShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rep_sigmaShift
+
+/-- info: 'CSD.RecordLayer.cellTop_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cellTop_mono
+
+/-- info: 'CSD.RecordLayer.cellTop_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cellTop_eq_one
+
+/-- info: 'CSD.RecordLayer.coarseBoundaryCount_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coarseBoundaryCount_le
+
+/-- info: 'CSD.RecordLayer.exists_ne_succ_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_ne_succ_of_ne
+
+/-- info: 'CSD.RecordLayer.exists_boundary_between' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_boundary_between
+
+/-- info: 'CSD.RecordLayer.cyclicBand_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cyclicBand_mono
+
+/-- info: 'CSD.RecordLayer.measure_cyclicBand_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_cyclicBand_le
+
+/-- info: 'CSD.RecordLayer.coarseCode_ne_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coarseCode_ne_subset
+
+/-- info: 'CSD.RecordLayer.measure_coarseCode_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_coarseCode_ne_le
+
+/-- info: 'CSD.RecordLayer.measure_exists_coarseCode_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_exists_coarseCode_ne_le
+
+/-- info: 'CSD.RecordLayer.measure_drift_coarseCode_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_drift_coarseCode_ne_le
+
+/-- info: 'CSD.RecordLayer.nextIdx_image_ne' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nextIdx_image_ne
+
+/-- info: 'CSD.RecordLayer.coarseBoundaryCount_comp_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coarseBoundaryCount_comp_le
+
+/-- info: 'CSD.RecordLayer.measure_wingCode_ne_le_of_blocks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_wingCode_ne_le_of_blocks
+
+/-- info: 'CSD.RecordLayer.measure_drift_wingCode_ne_le_of_blocks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_drift_wingCode_ne_le_of_blocks
+
+
 end CSD.Tests.AxiomAudit

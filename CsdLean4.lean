@@ -570,6 +570,7 @@ public import CsdLean4.RecordLayer.FlowRecordHistory
 public import CsdLean4.RecordLayer.TwoWingCoarsening
 public import CsdLean4.RecordLayer.MacrostateStability
 public import CsdLean4.RecordLayer.TwoWingStability
+public import CsdLean4.RecordLayer.CoarseBoundaryStability
 public import CsdLean4.RecordLayer.BaseMotionStability
 public import CsdLean4.RecordLayer.PointerConcentration
 public import CsdLean4.RecordLayer.PointerDynamics
