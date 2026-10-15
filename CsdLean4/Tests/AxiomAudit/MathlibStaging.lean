@@ -12292,4 +12292,59 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms MeasureTheory.cat_classicalOtoc
 
 
+/-! #128: the free Hamiltonian in position space is `−½ d²/dx²` on Schwartz functions (`Mathlib/Analysis/Semigroup/FreeHamiltonianSchwartz.lean`). -/
+
+/-- info: 'SchrodingerGroup.freeSymbol_eq_neg_half_mul_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.freeSymbol_eq_neg_half_mul_sq
+
+/-- info: 'SchrodingerGroup.fourier_kineticOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.fourier_kineticOp
+
+/-- info: 'SchrodingerGroup.fourier_kineticOp_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.fourier_kineticOp_apply
+
+/-- info: 'SchrodingerGroup.toLp_fourier_mem_freeSymbolOp_domain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.toLp_fourier_mem_freeSymbolOp_domain
+
+/-- info: 'SchrodingerGroup.coeFn_freeSymbolOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.coeFn_freeSymbolOp
+
+/-- info: 'SchrodingerGroup.freeSymbolOp_eq_of_coe_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.freeSymbolOp_eq_of_coe_eq
+
+/-- info: 'SchrodingerGroup.freeSymbolOp_toLp_fourier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.freeSymbolOp_toLp_fourier
+
+/-- info: 'SchrodingerGroup.fourierL2_symm_toLp_fourier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.fourierL2_symm_toLp_fourier
+
+/-- info: 'SchrodingerGroup.toLp_mem_freePositionOp_domain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.toLp_mem_freePositionOp_domain
+
+/-- info: 'SchrodingerGroup.freePositionOp_toLp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.freePositionOp_toLp
+
+/-- info: 'SchrodingerGroup.freePositionOp_toLp_eq_laplacian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.freePositionOp_toLp_eq_laplacian
+
+/-- info: 'SchrodingerGroup.freePositionOp_toLp_ae' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.freePositionOp_toLp_ae
+
+/-- info: 'SchrodingerGroup.freePositionOp_toLp_ae_deriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.freePositionOp_toLp_ae_deriv
+
+
 end CSD.Tests.AxiomAudit
