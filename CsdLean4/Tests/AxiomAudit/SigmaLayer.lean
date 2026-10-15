@@ -5329,4 +5329,51 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.isTorusGenerated_of_calibrated
 
 
+/-! #153: the fibre carries both record coordinates — the hyperbolic stroke is two transverse shears, the constructed de-isolation one (`SigmaLayer/FibreTwoShears.lean`). -/
+
+/-- info: 'CSD.SigmaLayer.measurePreserving_qshift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.measurePreserving_qshift
+
+/-- info: 'CSD.SigmaLayer.shearX_eq_pshift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearX_eq_pshift
+
+/-- info: 'CSD.SigmaLayer.shearY_eq_qshift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearY_eq_qshift
+
+/-- info: 'CSD.SigmaLayer.catStroke_eq_two_shears' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.catStroke_eq_two_shears
+
+/-- info: 'CSD.SigmaLayer.catStroke_snd_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.catStroke_snd_ne
+
+/-- info: 'CSD.SigmaLayer.catStroke_ne_pshift_type' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.catStroke_ne_pshift_type
+
+/-- info: 'CSD.SigmaLayer.shearXR_fderiv_hasLyapunovExponent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearXR_fderiv_hasLyapunovExponent
+
+/-- info: 'CSD.SigmaLayer.shearYR_fderiv_hasLyapunovExponent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearYR_fderiv_hasLyapunovExponent
+
+/-- info: 'CSD.SigmaLayer.areaForm_shearXR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.areaForm_shearXR
+
+/-- info: 'CSD.SigmaLayer.areaForm_shearYR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.areaForm_shearYR
+
+/-- info: 'CSD.SigmaLayer.fibre_two_shears' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fibre_two_shears
+
+
 end CSD.Tests.AxiomAudit

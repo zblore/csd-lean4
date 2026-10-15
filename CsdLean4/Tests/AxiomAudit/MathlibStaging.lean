@@ -12158,4 +12158,59 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms MeasureTheory.FibrePreserving.measure_preimage_univ_prod
 
 
+/-! #153: the cat map is two transverse shears, and neither shear stretches on its own (`Mathlib/Dynamics/CatMapShears.lean`). -/
+
+/-- info: 'tendsto_log_natCast_add_one_div' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms tendsto_log_natCast_add_one_div
+
+/-- info: 'hasLyapunovExponent_zero_of_linear_growth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasLyapunovExponent_zero_of_linear_growth
+
+/-- info: 'MeasureTheory.cat_eq_shearX_comp_shearY' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cat_eq_shearX_comp_shearY
+
+/-- info: 'MeasureTheory.measurePreserving_shearX' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.measurePreserving_shearX
+
+/-- info: 'MeasureTheory.measurePreserving_shearY' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.measurePreserving_shearY
+
+/-- info: 'MeasureTheory.catR_eq_shearXR_comp_shearYR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catR_eq_shearXR_comp_shearYR
+
+/-- info: 'MeasureTheory.shearXR_area' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.shearXR_area
+
+/-- info: 'MeasureTheory.shearYR_area' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.shearYR_area
+
+/-- info: 'MeasureTheory.shearXR_pow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.shearXR_pow_apply
+
+/-- info: 'MeasureTheory.shearYR_pow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.shearYR_pow_apply
+
+/-- info: 'MeasureTheory.hasLyapunovExponent_shearXR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.hasLyapunovExponent_shearXR
+
+/-- info: 'MeasureTheory.hasLyapunovExponent_shearYR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.hasLyapunovExponent_shearYR
+
+/-- info: 'MeasureTheory.cat_two_shears' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cat_two_shears
+
+
 end CSD.Tests.AxiomAudit
