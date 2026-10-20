@@ -12426,4 +12426,39 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms SchrodingerGroup.schrodinger_classical
 
 
+/-! #154: the generator domain of the phase group is the multiplication domain, by Fatou; the interacting orbit lies in `dom H₀` (`Mathlib/Analysis/Semigroup/PhaseGeneratorDomain.lean`). -/
+
+/-- info: 'SchrodingerGroup.coeFn_quotient_phaseGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.coeFn_quotient_phaseGroup
+
+/-- info: 'SchrodingerGroup.mem_mulDomain_of_hasGeneratorAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.mem_mulDomain_of_hasGeneratorAt
+
+/-- info: 'SchrodingerGroup.hasGeneratorAt_phaseGroup_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasGeneratorAt_phaseGroup_iff
+
+/-- info: 'SchrodingerGroup.hasGeneratorAt_phaseGroup_fourierL2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasGeneratorAt_phaseGroup_fourierL2
+
+/-- info: 'SchrodingerGroup.mem_freePositionOp_domain_of_hasGeneratorAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.mem_freePositionOp_domain_of_hasGeneratorAt
+
+/-- info: 'SchrodingerGroup.schrodinger_mem_freePositionOp_domain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.schrodinger_mem_freePositionOp_domain
+
+/-- info: 'SchrodingerGroup.hasGeneratorAt_freeGroup_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasGeneratorAt_freeGroup_of_mem
+
+/-- info: 'SchrodingerGroup.hasDerivAt_schrodinger_orbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasDerivAt_schrodinger_orbit
+
+
 end CSD.Tests.AxiomAudit

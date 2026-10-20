@@ -776,6 +776,7 @@ public import CsdLean4.Mathlib.Analysis.Semigroup.FreeHamiltonian
 public import CsdLean4.Mathlib.Analysis.Semigroup.FreeHamiltonianSchwartz
 public import CsdLean4.Mathlib.Analysis.Semigroup.PerturbedGenerator
 public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerGenerator
+public import CsdLean4.Mathlib.Analysis.Semigroup.PhaseGeneratorDomain
 public import CsdLean4.Mathlib.Analysis.Semigroup.PhaseGenerator
 public import CsdLean4.Mathlib.Analysis.Fourier.Wigner
 public import CsdLean4.Mathlib.Analysis.Fourier.WignerWeyl
