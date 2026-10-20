@@ -24,8 +24,9 @@ eigenvalue branch `lam s` isolated from the rest of the spectrum by a gap `g > 0
 `g/2` about `lam s` (`RieszProjector.lean`). This file proves that `proj` is as smooth as `H`,
 and the identity `P Ṗ P = 0` that Kato's intertwiner (#160) is built on.
 
-* ★ `HasDerivAt.mul_deriv_mul_eq_zero_of_idempotent` — **an idempotent `C¹` family has
-  `P Ṗ P = 0`**: differentiate `P² = P` to `Ṗ = ṖP + PṖ` and sandwich. Any normed algebra.
+* `HasDerivAt.eq_mul_add_mul_of_idempotent`, ★ `HasDerivAt.mul_deriv_mul_eq_zero_of_idempotent` —
+  **an idempotent `C¹` family has `Ṗ = ṖP + PṖ` and `P Ṗ P = 0`**: differentiate `P² = P` and
+  sandwich. Any normed algebra.
 * `resolventIntegrand`, `rieszProj_eq_integral`, `rieszProj_eq_integral_unit` — the Riesz
   projector as an interval integral over `[0, 1]` of the resolvent on the circle;
 * ★★ `contDiffOn_rieszProj` — **over a fixed contour the Riesz projector is `C^n` in the
@@ -37,7 +38,8 @@ and the identity `P Ṗ P = 0` that Kato's intertwiner (#160) is built on.
   the disc about `lam s₀` isolates the same eigenvalue, so `proj s` is the integral over the
   fixed circle about `lam s₀`;
 * ★★ `GappedPath.contDiff_proj` — **`proj` is `C^n` whenever `H` is**, by the two previous items;
-* ★ `GappedPath.proj_mul_deriv_mul_proj` — **`P Ṗ P = 0` along the path**;
+* `GappedPath.deriv_proj_eq`, ★ `GappedPath.proj_mul_deriv_mul_proj` — **`Ṗ = ṖP + PṖ` and
+  `P Ṗ P = 0` along the path**;
 * `GappedPath.proj_mul_self`, `proj_isHermitian`, `H_mul_proj` / `proj_mul_H` (`H P = lam • P`),
   `trace_proj` (the trace is the multiplicity), ★ `mult_eq` (**the multiplicity is constant**,
   by continuity of the trace into `ℕ`), ★ `contDiff_lam` — **the eigenvalue branch is `C^n`**
@@ -76,12 +78,16 @@ variable {𝕜 : Type*} [NontriviallyNormedField 𝕜] {A : Type*} [NormedRing A
 /-- ★ **An idempotent `C¹` family has `P Ṗ P = 0`.** If `P t * P t = P t` for all `t` and `P` has
 derivative `P'` at `s`, then `P s * P' * P s = 0`: differentiating `P² = P` gives
 `P' = P' P + P P'`, and sandwiching with `P` gives `P P' P = 2 P P' P`. -/
-theorem HasDerivAt.mul_deriv_mul_eq_zero_of_idempotent {P : 𝕜 → A} {P' : A} {s : 𝕜}
-    (hP : ∀ t, P t * P t = P t) (hd : HasDerivAt P P' s) : P s * P' * P s = 0 := by
+theorem HasDerivAt.eq_mul_add_mul_of_idempotent {P : 𝕜 → A} {P' : A} {s : 𝕜}
+    (hP : ∀ t, P t * P t = P t) (hd : HasDerivAt P P' s) : P' = P' * P s + P s * P' := by
   have h1 : HasDerivAt (fun t => P t * P t) (P' * P s + P s * P') s := hd.mul hd
   have h2 : (fun t => P t * P t) = P := funext hP
   rw [h2] at h1
-  have h3 : P' = P' * P s + P s * P' := hd.unique h1
+  exact hd.unique h1
+
+theorem HasDerivAt.mul_deriv_mul_eq_zero_of_idempotent {P : 𝕜 → A} {P' : A} {s : 𝕜}
+    (hP : ∀ t, P t * P t = P t) (hd : HasDerivAt P P' s) : P s * P' * P s = 0 := by
+  have h3 : P' = P' * P s + P s * P' := hd.eq_mul_add_mul_of_idempotent hP
   have h4 : P s * P' * P s = P s * P' * P s + P s * P' * P s := by
     calc P s * P' * P s = P s * (P' * P s + P s * P') * P s := by rw [← h3]
       _ = P s * P' * (P s * P s) + (P s * P s) * P' * P s := by noncomm_ring
@@ -343,6 +349,11 @@ theorem hasDerivAt_proj {n : ℕ∞} (hn : 1 ≤ n) (hH : ContDiff ℝ n Γ.H) (
     rintro rfl
     simp at hn
   exact ((Γ.contDiff_proj hH).differentiable (by exact_mod_cast hn') s).hasDerivAt
+
+/-- `Ṗ = Ṗ P + P Ṗ` along a gapped `C¹` path. -/
+theorem deriv_proj_eq {n : ℕ∞} (hn : 1 ≤ n) (hH : ContDiff ℝ n Γ.H) (s : ℝ) :
+    deriv Γ.proj s = deriv Γ.proj s * Γ.proj s + Γ.proj s * deriv Γ.proj s :=
+  (Γ.hasDerivAt_proj hn hH s).eq_mul_add_mul_of_idempotent Γ.proj_mul_self
 
 /-- ★ **`P Ṗ P = 0` along a gapped `C¹` path.** -/
 theorem proj_mul_deriv_mul_proj {n : ℕ∞} (hn : 1 ≤ n) (hH : ContDiff ℝ n Γ.H) (s : ℝ) :

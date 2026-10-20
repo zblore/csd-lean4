@@ -12710,4 +12710,79 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms Matrix.GappedPath.contDiff_lam
 
 
+/-! #160: the adiabatic intertwiner exists, is unitary, and satisfies Kato's intertwining identity `A P(0) = P A` (`Mathlib/Analysis/Matrix/AdiabaticIntertwiner.lean`; the first two pins extend #159's module). -/
+
+/-- info: 'HasDerivAt.eq_mul_add_mul_of_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasDerivAt.eq_mul_add_mul_of_idempotent
+
+/-- info: 'Matrix.GappedPath.deriv_proj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.deriv_proj_eq
+
+/-- info: 'eq_of_hasDerivWithinAt_zero_Icc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms eq_of_hasDerivWithinAt_zero_Icc
+
+/-- info: 'Matrix.conjTransposeCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.conjTransposeCLM_apply
+
+/-- info: 'Matrix.HasDerivWithinAt.matrixConjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.HasDerivWithinAt.matrixConjTranspose
+
+/-- info: 'Matrix.HasDerivAt.matrixConjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.HasDerivAt.matrixConjTranspose
+
+/-- info: 'Matrix.GappedPath.continuous_K' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.continuous_K
+
+/-- info: 'Matrix.GappedPath.conjTranspose_deriv_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.conjTranspose_deriv_proj
+
+/-- info: 'Matrix.GappedPath.conjTranspose_K' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.conjTranspose_K
+
+/-- info: 'Matrix.GappedPath.deriv_proj_sub_comm_K' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.deriv_proj_sub_comm_K
+
+/-- info: 'Matrix.GappedPath.exists_isIntertwiner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.exists_isIntertwiner
+
+/-- info: 'Matrix.GappedPath.IsIntertwiner.conjTranspose_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsIntertwiner.conjTranspose_mul_self
+
+/-- info: 'Matrix.GappedPath.IsIntertwiner.mul_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsIntertwiner.mul_conjTranspose
+
+/-- info: 'Matrix.GappedPath.IsIntertwiner.mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsIntertwiner.mem_unitaryGroup
+
+/-- info: 'Matrix.GappedPath.IsIntertwiner.conjTranspose_mul_proj_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsIntertwiner.conjTranspose_mul_proj_mul
+
+/-- info: 'Matrix.GappedPath.IsIntertwiner.mul_proj_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsIntertwiner.mul_proj_zero
+
+/-- info: 'Matrix.GappedPath.IsIntertwiner.proj_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsIntertwiner.proj_mulVec
+
+/-- info: 'Matrix.GappedPath.IsIntertwiner.unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsIntertwiner.unique
+
+
 end CSD.Tests.AxiomAudit
