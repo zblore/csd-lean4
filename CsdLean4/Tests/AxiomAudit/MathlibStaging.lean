@@ -13007,4 +13007,63 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms Matrix.GappedPath.exists_norm_sub_le
 
 
+/-! #163: the Born-Fock statement for states, `‖(1 − P s)(U_T s ψ₀)‖ ≤ (C/T)‖ψ₀‖` (`Mathlib/Analysis/Matrix/AdiabaticBornFock.lean`). -/
+
+/-- info: 'Matrix.norm_le_one_of_conjTranspose_mul_self_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_le_one_of_conjTranspose_mul_self_eq
+
+/-- info: 'Matrix.norm_toEuclideanCLM_apply_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_toEuclideanCLM_apply_le
+
+/-- info: 'Matrix.norm_toEuclideanCLM_apply_of_conjTranspose_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_toEuclideanCLM_apply_of_conjTranspose_mul_self
+
+/-- info: 'Matrix.norm_toEuclideanCLM_apply_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_toEuclideanCLM_apply_sub_le
+
+/-- info: 'Matrix.GappedPath.norm_proj_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_proj_le
+
+/-- info: 'Matrix.GappedPath.norm_one_sub_proj_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_one_sub_proj_le
+
+/-- info: 'Matrix.GappedPath.mem_range_proj_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.mem_range_proj_iff
+
+/-- info: 'Matrix.GappedPath.IsPhysPropagator.norm_toEuclideanCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsPhysPropagator.norm_toEuclideanCLM_apply
+
+/-- info: 'Matrix.GappedPath.IsAdPropagator.proj_toEuclideanCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsAdPropagator.proj_toEuclideanCLM_apply
+
+/-- info: 'Matrix.GappedPath.IsAdPropagator.toEuclideanCLM_apply_mem_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsAdPropagator.toEuclideanCLM_apply_mem_range
+
+/-- info: 'Matrix.GappedPath.IsAdPropagator.one_sub_proj_toEuclideanCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsAdPropagator.one_sub_proj_toEuclideanCLM_apply
+
+/-- info: 'Matrix.GappedPath.exists_norm_toEuclideanCLM_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.exists_norm_toEuclideanCLM_sub_le
+
+/-- info: 'Matrix.GappedPath.exists_norm_one_sub_proj_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.exists_norm_one_sub_proj_le
+
+/-- info: 'Matrix.GappedPath.exists_norm_proj_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.exists_norm_proj_le
+
+
 end CSD.Tests.AxiomAudit
