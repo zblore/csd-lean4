@@ -13165,4 +13165,23 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms Matrix.GappedPath.exists_norm_sub_phase_smul_le
 
 
+/-! #165: general lemmas added for the rigid-rotation instance — an eigenvector of `H s` is fixed by `P s` (`Mathlib/Analysis/Matrix/AdiabaticBornFock.lean`), eigenvalues of `A² = r²·1`, a `Fin 2` counting lemma, `|⟪x,v⟫ − c| ≤ ‖v − c x‖` (`Empirical/QM/BerryKatoInstance.lean`). -/
+
+/-- info: 'Matrix.GappedPath.proj_toEuclideanCLM_apply_of_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_toEuclideanCLM_apply_of_eq
+
+/-- info: 'Matrix.IsHermitian.eigenvalues_sq_eq_of_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.eigenvalues_sq_eq_of_mul_self
+
+/-- info: 'Fintype.card_subtype_eq_one_of_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Fintype.card_subtype_eq_one_of_two
+
+/-- info: 'norm_inner_sub_le_norm_sub_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_inner_sub_le_norm_sub_smul
+
+
 end CSD.Tests.AxiomAudit

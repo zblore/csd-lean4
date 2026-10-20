@@ -32,6 +32,7 @@ norm of its action.
 * `Matrix.norm_toEuclideanCLM_apply_sub_le` — `‖ψ‖ − ‖(1 − Q) ψ‖ ≤ ‖Q ψ‖`;
 * `GappedPath.norm_proj_le`, `norm_one_sub_proj_le` — `‖P s‖ ≤ 1`, `‖1 − P s‖ ≤ 1`;
 * `GappedPath.mem_range_proj_iff` — `ψ ∈ range (P s) ↔ P s ψ = ψ`;
+* `GappedPath.proj_toEuclideanCLM_apply_of_eq` — an eigenvector of `H s` for `lam s` is fixed by `P s`;
 * `GappedPath.IsPhysPropagator.norm_toEuclideanCLM_apply` — `‖U_T s ψ‖ = ‖ψ‖`;
 * ★ `GappedPath.IsAdPropagator.toEuclideanCLM_apply_mem_range`,
   `one_sub_proj_toEuclideanCLM_apply` — **`U_A s ψ₀ ∈ range (P s)` exactly**, i.e.
@@ -135,6 +136,17 @@ theorem mem_range_proj_iff (s : ℝ) (x : EuclideanSpace ℂ (Fin N)) :
     rw [← mul_apply_eq_comp, ← map_mul, Γ.proj_mul_self]
   · intro h
     exact ⟨x, h⟩
+
+/-- An eigenvector of `H s` for the branch eigenvalue lies in `range (P s)`:
+`H s v = lam s • v → P s v = v` (through `X (λ − H) = 1 − P`, the reduced resolvent of #162). -/
+theorem proj_toEuclideanCLM_apply_of_eq (s : ℝ) {v : EuclideanSpace ℂ (Fin N)}
+    (hv : toEuclideanCLM (𝕜 := ℂ) (Γ.H s) v = (Γ.lam s : ℂ) • v) :
+    toEuclideanCLM (𝕜 := ℂ) (Γ.proj s) v = v := by
+  have h : toEuclideanCLM (𝕜 := ℂ) (1 - Γ.proj s) v = 0 := by
+    rw [← Γ.redRes_mul_smul_one_sub_H, map_mul, mul_apply_eq_comp, map_sub, map_smul, map_one,
+      _root_.sub_apply, _root_.smul_apply, one_apply_eq_self, hv, sub_self, map_zero]
+  rw [map_sub, map_one, _root_.sub_apply, one_apply_eq_self] at h
+  exact (sub_eq_zero.1 h).symm
 
 namespace IsPhysPropagator
 

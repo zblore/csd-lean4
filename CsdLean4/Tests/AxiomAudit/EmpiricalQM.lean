@@ -1931,4 +1931,115 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_extract_names_single
 
+/-! #165: Berry's rotating field as an instance of Kato's adiabatic theorem (`Empirical/QM/BerryKatoInstance.lean`). -/
+
+/-- info: 'CSD.Empirical.QM.BerryKato.fieldHam_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.fieldHam_mul_self
+
+/-- info: 'CSD.Empirical.QM.BerryKato.fieldHam_trace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.fieldHam_trace
+
+/-- info: 'CSD.Empirical.QM.BerryKato.fieldHam_eigenvalues_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.fieldHam_eigenvalues_sq
+
+/-- info: 'CSD.Empirical.QM.BerryKato.fieldHam_eigenvalues_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.fieldHam_eigenvalues_sum
+
+/-- info: 'CSD.Empirical.QM.BerryKato.card_eigenvalues_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.card_eigenvalues_eq_one
+
+/-- info: 'CSD.Empirical.QM.BerryKato.fieldHam_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.fieldHam_eq
+
+/-- info: 'CSD.Empirical.QM.BerryKato.contDiff_fieldHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.contDiff_fieldHam
+
+/-- info: 'CSD.Empirical.QM.BerryKato.fieldHam_rescale' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.fieldHam_rescale
+
+/-- info: 'CSD.Empirical.QM.BerryKato.fieldHam_one_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.fieldHam_one_eq_zero
+
+/-- info: 'CSD.Empirical.QM.BerryKato.conePath' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.conePath
+
+/-- info: 'CSD.Empirical.QM.BerryKato.conePath_H' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.conePath_H
+
+/-- info: 'CSD.Empirical.QM.BerryKato.conePath_lam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.conePath_lam
+
+/-- info: 'CSD.Empirical.QM.BerryKato.conePath_hex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.conePath_hex
+
+/-- info: 'CSD.Empirical.QM.BerryKato.conePath_mult_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.conePath_mult_eq_one
+
+/-- info: 'CSD.Empirical.QM.BerryKato.conePath_proj_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.conePath_proj_one_eq
+
+/-- info: 'CSD.Empirical.QM.BerryKato.conePath_isPhysPropagator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.conePath_isPhysPropagator
+
+/-- info: 'CSD.Empirical.QM.BerryKato.toEuclideanCLM_fieldHam_coneCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.toEuclideanCLM_fieldHam_coneCurve
+
+/-- info: 'CSD.Empirical.QM.BerryKato.coneSection_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.coneSection_contDiff
+
+/-- info: 'CSD.Empirical.QM.BerryKato.coneSection_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.coneSection_norm
+
+/-- info: 'CSD.Empirical.QM.BerryKato.coneSection_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.coneSection_proj
+
+/-- info: 'CSD.Empirical.QM.BerryKato.coneSection_cyclic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.coneSection_cyclic
+
+/-- info: 'CSD.Empirical.QM.BerryKato.coneSection_geometricPhase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.coneSection_geometricPhase
+
+/-- info: 'CSD.Empirical.QM.BerryKato.conePath_dynPhase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.conePath_dynPhase
+
+/-- info: 'CSD.Empirical.QM.BerryKato.exists_norm_state_sub_phase_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.exists_norm_state_sub_phase_le
+
+/-- info: 'CSD.Empirical.QM.BerryKato.exists_norm_inner_state_sub_exp_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.exists_norm_inner_state_sub_exp_le
+
+/-- info: 'CSD.Empirical.QM.BerryKato.berry_bound_eq_kato_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.berry_bound_eq_kato_form
+
+/-- info: 'CSD.Empirical.QM.BerryKato.berry_bound_le_kato_form' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.BerryKato.berry_bound_le_kato_form
+
+
 end CSD.Tests.AxiomAudit

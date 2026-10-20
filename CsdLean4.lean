@@ -767,6 +767,7 @@ public import CsdLean4.Empirical.QM.Darwinism
 public import CsdLean4.Empirical.QM.BerryPhase
 public import CsdLean4.Empirical.QM.BerryPhaseCurvature
 public import CsdLean4.Empirical.QM.BerryAdiabatic
+public import CsdLean4.Empirical.QM.BerryKatoInstance
 public import CsdLean4.Empirical.QM.AharonovBohm
 public import CsdLean4.Empirical.CSD.Darwinism
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry

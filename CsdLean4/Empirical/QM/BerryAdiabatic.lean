@@ -55,9 +55,11 @@ whose diagonal matrix element is `cos(Ωt/2) − i (k·n₀) sin(Ωt/2)`
 ## Honest scope
 
 ⚠️ One model: a rigid rotation of a fixed `H₀` for spin-½. The general adiabatic theorem
-(Born–Fock, Kato: an arbitrary gapped path `H(R(t))`, error `O(1/T)`) is **not** proved here and is
-not claimed anywhere in this corpus — it is BACKLOG #88. The bounds here are unconditional in `t`
-because this model's rotating frame is exact; a general proof cannot be that cheap.
+(Born–Fock, Kato: an arbitrary gapped path `H(R(t))`, error `O(1/T)`) is **not** proved here; it
+is `CsdLean4/Mathlib/Analysis/Matrix/AdiabaticComparison.lean` and `AdiabaticPhase.lean` (~~#88~~ →
+#158–#164), and `CsdLean4/Empirical/QM/BerryKatoInstance.lean` (#165) shows this model is an instance
+of it. The bounds here are unconditional in `t` because this model's rotating frame is exact; the
+general theorem's constant is not.
 
 References: M. V. Berry, Proc. R. Soc. A 392 (1984) 45, §5; I. I. Rabi, Phys. Rev. 51 (1937) 652;
 L. D. Landau, E. M. Lifshitz, *Quantum Mechanics* §39; `specs/berry-phase-scoping.md`;
