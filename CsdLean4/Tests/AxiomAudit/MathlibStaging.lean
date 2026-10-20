@@ -12480,4 +12480,119 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms MeasureTheory.measurePreserving_glue
 
 
+/-! #158: the Riesz projector of a Hermitian matrix is the spectral projection onto the eigenvalues in the disc (`Mathlib/Analysis/Matrix/RieszProjector.lean`). -/
+
+/-- info: 'Matrix.IsHermitian.star_eigU_mul_eigU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.star_eigU_mul_eigU
+
+/-- info: 'Matrix.IsHermitian.eigU_mul_star_eigU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.eigU_mul_star_eigU
+
+/-- info: 'Matrix.IsHermitian.eq_conjD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.eq_conjD
+
+/-- info: 'Matrix.IsHermitian.conjD_mul_conjD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.conjD_mul_conjD
+
+/-- info: 'Matrix.IsHermitian.conjD_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.conjD_one
+
+/-- info: 'Matrix.IsHermitian.conjD_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.conjD_smul
+
+/-- info: 'Matrix.IsHermitian.conjD_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.conjD_sub
+
+/-- info: 'Matrix.IsHermitian.conjD_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.conjD_conjTranspose
+
+/-- info: 'Matrix.IsHermitian.rank_conjD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.rank_conjD
+
+/-- info: 'Matrix.IsHermitian.conjD_mulVec_eigenvectorBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.conjD_mulVec_eigenvectorBasis
+
+/-- info: 'Matrix.diagonal_eq_sum_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.diagonal_eq_sum_smul
+
+/-- info: 'Matrix.IsHermitian.conjD_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.conjD_eq_sum
+
+/-- info: 'Matrix.IsHermitian.smul_one_sub_eq_conjD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.smul_one_sub_eq_conjD
+
+/-- info: 'Matrix.IsHermitian.inv_smul_one_sub_eq_conjD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.inv_smul_one_sub_eq_conjD
+
+/-- info: 'Matrix.IsHermitian.inv_smul_one_sub_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.inv_smul_one_sub_eq_sum
+
+/-- info: 'circleIntegral_sub_inv_eq_ite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms circleIntegral_sub_inv_eq_ite
+
+/-- info: 'Matrix.IsHermitian.ne_eigC_of_mem_sphere' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.ne_eigC_of_mem_sphere
+
+/-- info: 'Matrix.IsHermitian.circleIntegrable_term' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.circleIntegrable_term
+
+/-- info: 'Matrix.IsHermitian.rieszProj_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.rieszProj_eq_sum
+
+/-- info: 'Matrix.IsHermitian.rieszProj_eq_conjD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.rieszProj_eq_conjD
+
+/-- info: 'Matrix.IsHermitian.discInd_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.discInd_mul_self
+
+/-- info: 'Matrix.IsHermitian.star_discInd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.star_discInd
+
+/-- info: 'Matrix.IsHermitian.rieszProj_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.rieszProj_mul_self
+
+/-- info: 'Matrix.IsHermitian.rieszProj_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.rieszProj_isHermitian
+
+/-- info: 'Matrix.IsHermitian.rieszProj_mul_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.rieszProj_mul_comm
+
+/-- info: 'Matrix.IsHermitian.mul_rieszProj_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.mul_rieszProj_eq_smul
+
+/-- info: 'Matrix.IsHermitian.rank_rieszProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.rank_rieszProj
+
+/-- info: 'Matrix.IsHermitian.rieszProj_mulVec_eigenvectorBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.rieszProj_mulVec_eigenvectorBasis
+
+
 end CSD.Tests.AxiomAudit
