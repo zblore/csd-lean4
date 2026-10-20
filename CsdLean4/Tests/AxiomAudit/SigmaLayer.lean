@@ -5573,4 +5573,39 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.operationalNoSignalling_skew
 
 
+/-! #157: the singlet on the I3 record basins is operationally no-signalling, by the primitive (`RecordLayer/SingletSkewTables.lean`). -/
+
+/-- info: 'CSD.RecordLayer.singletJointRates_rowSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.singletJointRates_rowSum
+
+/-- info: 'CSD.RecordLayer.singletJointRates_colSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.singletJointRates_colSum
+
+/-- info: 'CSD.RecordLayer.singletTables_rowSum_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.singletTables_rowSum_eq
+
+/-- info: 'CSD.RecordLayer.singletTables_colSum_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.singletTables_colSum_eq
+
+/-- info: 'CSD.RecordLayer.volume_skewCell_singlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_skewCell_singlet
+
+/-- info: 'CSD.RecordLayer.skewLocalSettingLocalityBSinglet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.skewLocalSettingLocalityBSinglet
+
+/-- info: 'CSD.RecordLayer.skewLocalSettingLocalityASinglet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.skewLocalSettingLocalityASinglet
+
+/-- info: 'CSD.RecordLayer.operationalNoSignalling_skew_singlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.operationalNoSignalling_skew_singlet
+
+
 end CSD.Tests.AxiomAudit
