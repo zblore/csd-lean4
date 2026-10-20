@@ -12785,4 +12785,123 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms Matrix.GappedPath.IsIntertwiner.unique
 
 
+/-! #161: unitary propagators of an anti-Hermitian generator (`Mathlib/Analysis/Matrix/UnitaryPropagator.lean`, the common core #160's intertwiner now rests on) and the two propagators at speed `T` with `U_A P(0) = e^{-iT∫lam} A P(0)` (`Mathlib/Analysis/Matrix/AdiabaticPropagators.lean`). -/
+
+/-- info: 'Matrix.exists_isPropagator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.exists_isPropagator
+
+/-- info: 'Matrix.IsPropagator.conjTranspose_mul_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsPropagator.conjTranspose_mul_eq
+
+/-- info: 'Matrix.IsPropagator.conjTranspose_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsPropagator.conjTranspose_mul_self
+
+/-- info: 'Matrix.IsPropagator.mul_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsPropagator.mul_conjTranspose
+
+/-- info: 'Matrix.IsPropagator.mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsPropagator.mem_unitaryGroup
+
+/-- info: 'Matrix.IsPropagator.eq_mul_init' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsPropagator.eq_mul_init
+
+/-- info: 'Matrix.IsPropagator.unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsPropagator.unique
+
+/-- info: 'Matrix.IsPropagator.mul_eq_of_hasDerivWithinAt_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsPropagator.mul_eq_of_hasDerivWithinAt_comm
+
+/-- info: 'Matrix.GappedPath.hasDerivWithinAt_proj_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hasDerivWithinAt_proj_comm
+
+/-- info: 'Matrix.GappedPath.continuous_physGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.continuous_physGen
+
+/-- info: 'Matrix.GappedPath.continuous_adGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.continuous_adGen
+
+/-- info: 'Matrix.GappedPath.conjTranspose_physGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.conjTranspose_physGen
+
+/-- info: 'Matrix.GappedPath.conjTranspose_adGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.conjTranspose_adGen
+
+/-- info: 'Matrix.GappedPath.adGen_mul_proj_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.adGen_mul_proj_sub
+
+/-- info: 'Matrix.GappedPath.exists_isPhysPropagator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.exists_isPhysPropagator
+
+/-- info: 'Matrix.GappedPath.exists_isAdPropagator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.exists_isAdPropagator
+
+/-- info: 'Matrix.GappedPath.IsPhysPropagator.conjTranspose_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsPhysPropagator.conjTranspose_mul_self
+
+/-- info: 'Matrix.GappedPath.IsPhysPropagator.mul_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsPhysPropagator.mul_conjTranspose
+
+/-- info: 'Matrix.GappedPath.IsPhysPropagator.mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsPhysPropagator.mem_unitaryGroup
+
+/-- info: 'Matrix.GappedPath.dynPhase_mul_invDynPhase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.dynPhase_mul_invDynPhase
+
+/-- info: 'Matrix.GappedPath.invDynPhase_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.invDynPhase_zero
+
+/-- info: 'Matrix.GappedPath.hasDerivAt_invDynPhase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hasDerivAt_invDynPhase
+
+/-- info: 'Matrix.GappedPath.IsAdPropagator.conjTranspose_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsAdPropagator.conjTranspose_mul_self
+
+/-- info: 'Matrix.GappedPath.IsAdPropagator.mul_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsAdPropagator.mul_conjTranspose
+
+/-- info: 'Matrix.GappedPath.IsAdPropagator.mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsAdPropagator.mem_unitaryGroup
+
+/-- info: 'Matrix.GappedPath.IsAdPropagator.mul_proj_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsAdPropagator.mul_proj_zero
+
+/-- info: 'Matrix.GappedPath.IsAdPropagator.proj_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsAdPropagator.proj_mulVec
+
+/-- info: 'Matrix.GappedPath.IsAdPropagator.H_mul_mul_proj_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsAdPropagator.H_mul_mul_proj_zero
+
+/-- info: 'Matrix.GappedPath.IsAdPropagator.mul_proj_zero_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsAdPropagator.mul_proj_zero_eq
+
+
 end CSD.Tests.AxiomAudit

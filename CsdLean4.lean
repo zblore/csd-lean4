@@ -15,7 +15,9 @@ public import CsdLean4.Mathlib.Analysis.Matrix.SchrodingerUnitary
 public import CsdLean4.Mathlib.Analysis.Matrix.ProjectiveLift
 public import CsdLean4.Mathlib.Analysis.Matrix.RieszProjector
 public import CsdLean4.Mathlib.Analysis.Matrix.RieszProjectorSmooth
+public import CsdLean4.Mathlib.Analysis.Matrix.UnitaryPropagator
 public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticIntertwiner
+public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticPropagators
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.Mathlib.Topology.Algebra.MulAction
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
