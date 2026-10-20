@@ -50,7 +50,9 @@ the Aharonov–Bohm flux is BP-4: `CsdLean4/Mathlib/QuantumInfo/AharonovBohmRing
 `CsdLean4/Empirical/QM/AharonovBohm.lean` (BACKLOG #55). Berry's adiabatic setting is
 BP-5: `CsdLean4/Mathlib/QuantumInfo/RotatingFrame.lean` solves a rigidly rotated Hamiltonian
 exactly and `CsdLean4/Empirical/QM/BerryAdiabatic.lean` reads the phase off it (BACKLOG #56); the
-general Kato–Born–Fock theorem is BACKLOG #88 and is not claimed.
+general Kato–Born–Fock theorem is `CsdLean4/Mathlib/Analysis/Matrix/AdiabaticComparison.lean`
+(#162), and `CsdLean4/Mathlib/Analysis/Matrix/AdiabaticPhase.lean` (#164) identifies the orbit of
+Kato's intertwiner with `horizontalLift`, so `β` here is the phase that survives the adiabatic limit.
 
 References: Y. Aharonov, J. Anandan, PRL 58 (1987) 1593; M. V. Berry, Proc. R. Soc. A 392 (1984) 45;
 B. Simon, PRL 51 (1983) 2167; `specs/berry-phase-scoping.md`; `specs/BACKLOG.md` #10.

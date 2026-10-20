@@ -13066,4 +13066,103 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms Matrix.GappedPath.exists_norm_proj_le
 
 
+/-! #164: the phase — the intertwiner's orbit is BP-1's horizontal lift and `U_T 1 ψ₀ = e^{−iT∫lam} e^{iβ} ψ₀ + O(1/T)` (`Mathlib/Analysis/Matrix/AdiabaticPhase.lean`). -/
+
+/-- info: 'Matrix.toEuclideanCLMᵣ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.toEuclideanCLMᵣ
+
+/-- info: 'Matrix.toEuclideanCLMᵣ_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.toEuclideanCLMᵣ_apply
+
+/-- info: 'HasDerivWithinAt.toEuclideanCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasDerivWithinAt.toEuclideanCLM_apply
+
+/-- info: 'HasDerivAt.toEuclideanCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasDerivAt.toEuclideanCLM_apply
+
+/-- info: 'Matrix.IsPropagator.conjTranspose_apply_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsPropagator.conjTranspose_apply_eq
+
+/-- info: 'Matrix.IsPropagator.eq_apply_init' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsPropagator.eq_apply_init
+
+/-- info: 'Matrix.toEuclideanCLM_apply_eq_inner_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.toEuclideanCLM_apply_eq_inner_smul
+
+/-- info: 'Matrix.eq_inner_smul_of_toEuclideanCLM_apply_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.eq_inner_smul_of_toEuclideanCLM_apply_eq
+
+/-- info: 'inner_deriv_eq_im_mul_I' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms inner_deriv_eq_im_mul_I
+
+/-- info: 'exists_eq_exp_smul_of_norm_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exists_eq_exp_smul_of_norm_eq
+
+/-- info: 'GeometricPhase.horizontalLift_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms GeometricPhase.horizontalLift_zero
+
+/-- info: 'Matrix.GappedPath.rank_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.rank_proj
+
+/-- info: 'Matrix.GappedPath.rank_proj_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.rank_proj_eq_one
+
+/-- info: 'Matrix.GappedPath.proj_one_eq_of_closed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_one_eq_of_closed
+
+/-- info: 'Matrix.GappedPath.exists_cyclic_of_proj_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.exists_cyclic_of_proj_one_eq
+
+/-- info: 'Matrix.GappedPath.K_apply_section' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.K_apply_section
+
+/-- info: 'Matrix.GappedPath.K_apply_unit_section' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.K_apply_unit_section
+
+/-- info: 'Matrix.GappedPath.hasDerivAt_horizontalLift_K' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hasDerivAt_horizontalLift_K
+
+/-- info: 'Matrix.GappedPath.IsIntertwiner.toEuclideanCLM_apply_eq_horizontalLift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsIntertwiner.toEuclideanCLM_apply_eq_horizontalLift
+
+/-- info: 'Matrix.GappedPath.IsIntertwiner.toEuclideanCLM_apply_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsIntertwiner.toEuclideanCLM_apply_one_eq
+
+/-- info: 'Matrix.GappedPath.IsIntertwiner.exists_apply_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsIntertwiner.exists_apply_one_eq
+
+/-- info: 'Matrix.GappedPath.IsAdPropagator.toEuclideanCLM_apply_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.IsAdPropagator.toEuclideanCLM_apply_eq
+
+/-- info: 'Matrix.GappedPath.exists_norm_sub_dynPhase_smul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.exists_norm_sub_dynPhase_smul_le
+
+/-- info: 'Matrix.GappedPath.exists_norm_sub_phase_smul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.exists_norm_sub_phase_smul_le
+
+
 end CSD.Tests.AxiomAudit

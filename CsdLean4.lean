@@ -20,6 +20,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticIntertwiner
 public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticPropagators
 public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticComparison
 public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticBornFock
+public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticPhase
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.Mathlib.Topology.Algebra.MulAction
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
