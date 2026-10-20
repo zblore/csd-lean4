@@ -15,18 +15,22 @@ public import Mathlib.MeasureTheory.Integral.DominatedConvergence
 **Category:** 1-Mathlib (CSD-free; staged as a Mathlib-upstream candidate). BACKLOG #60, the
 regularity the Poincaré primitive needs for Darboux's theorem at order `n`.
 
-If `F : E → ℝ → ℝ` is jointly `C^n` on an open set containing `U × [0, 1]`, with `E`
-finite-dimensional, then `x ↦ ∫₀¹ F x t dt` is `C^n` on `U`. The proof is by induction on `n`:
+If `F : E → ℝ → G` is jointly `C^n` on an open set containing `U × [0, 1]`, with `E`
+finite-dimensional and `G` any normed space, then `x ↦ ∫₀¹ F x t dt` is `C^n` on `U`. The proof is by induction on `n`:
 the derivative of the integral is the integral of the partial derivative
 (`intervalIntegral.hasFDerivAt_integral_of_dominated_of_fderiv_le`, with a bound on a compact
 tube), and that derivative is `C^{n−1}` because, applied to any fixed vector, it is again a
-parametric integral of a jointly `C^{n−1}` scalar integrand (`contDiffOn_clm_apply`, finite
+parametric integral of a jointly `C^{n−1}` integrand (`contDiffOn_clm_apply`, finite
 dimension). Mathlib at the pin has the `C¹` step and the continuity, not the iteration.
 
 * `exists_closedBall_prod_Icc_subset` — the compact tube around a point of `U`;
 * ★ `contDiffOn_intervalIntegral_of_contDiffOn` — the theorem, for `n ≤ ∞`.
 
-References: `Analysis/Calculus/DifferentialForm/Poincare.lean` (the consumer);
+The codomain was generalised from `ℝ` to a normed space `G` for BACKLOG #159 (the Riesz projector
+along a gapped path is a matrix-valued parametric integral); the proof was unchanged.
+
+References: `Analysis/Calculus/DifferentialForm/Poincare.lean`, `Analysis/Matrix/RieszProjectorSmooth.lean`
+(the consumers);
 `specs/BACKLOG.md` #60.
 -/
 
@@ -36,6 +40,7 @@ open Set Metric Filter MeasureTheory intervalIntegral
 open scoped Topology Interval ContDiff
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  {G : Type*} [NormedAddCommGroup G] [NormedSpace ℝ G]
 
 omit [NormedSpace ℝ E] in
 /-- A closed ball around `x ∈ U`, inside `U`, whose product with `[0, 1]` lies in the open `W`. -/
@@ -58,7 +63,7 @@ variable [FiniteDimensional ℝ E]
 
 /-- The induction behind `contDiffOn_intervalIntegral_of_contDiffOn`, on the order. -/
 theorem contDiffOn_intervalIntegral_aux (k : ℕ) :
-    ∀ (F : E → ℝ → ℝ) (U : Set E), IsOpen U → ∀ (W : Set (E × ℝ)), IsOpen W →
+    ∀ (F : E → ℝ → G) (U : Set E), IsOpen U → ∀ (W : Set (E × ℝ)), IsOpen W →
       (∀ x ∈ U, ∀ t ∈ Icc (0 : ℝ) 1, (x, t) ∈ W) →
       ContDiffOn ℝ k (Function.uncurry F) W →
       ContDiffOn ℝ k (fun x => ∫ t in (0 : ℝ)..1, F x t) U := by
@@ -97,7 +102,7 @@ theorem contDiffOn_intervalIntegral_aux (k : ℕ) :
         (hF.differentiableOn (lt_of_lt_of_le zero_lt_one hn).ne').differentiableAt
           (hW.mem_nhds hp)
       exact hd.hasFDerivAt.comp y (hasFDerivAt_prodMk_left (𝕜 := ℝ) y t)
-    set F' : E → ℝ → E →L[ℝ] ℝ :=
+    set F' : E → ℝ → E →L[ℝ] G :=
       fun y t => fderiv ℝ (Function.uncurry F) (y, t) ∘L ContinuousLinearMap.inl ℝ E ℝ with hF'
     have hF'c : ContinuousOn (fun p : E × ℝ => F' p.1 p.2) W :=
       (hF.continuousOn_fderiv_of_isOpen hW hn).clm_comp continuousOn_const
@@ -149,7 +154,7 @@ theorem contDiffOn_intervalIntegral_aux (k : ℕ) :
 /-- ★ **A parametric interval integral of a jointly `C^n` integrand is `C^n` in the parameter**
 (`n ≤ ∞`, finite-dimensional parameter space): if `F` is `C^n` on an open set containing
 `U × [0, 1]`, then `x ↦ ∫₀¹ F x t dt` is `C^n` on the open `U`. -/
-theorem contDiffOn_intervalIntegral_of_contDiffOn {n : ℕ∞} {F : E → ℝ → ℝ} {U : Set E}
+theorem contDiffOn_intervalIntegral_of_contDiffOn {n : ℕ∞} {F : E → ℝ → G} {U : Set E}
     (hU : IsOpen U) {W : Set (E × ℝ)} (hW : IsOpen W)
     (hUW : ∀ x ∈ U, ∀ t ∈ Icc (0 : ℝ) 1, (x, t) ∈ W)
     (hF : ContDiffOn ℝ n (Function.uncurry F) W) :

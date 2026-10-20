@@ -12595,4 +12595,119 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms Matrix.IsHermitian.rieszProj_mulVec_eigenvectorBasis
 
 
+/-! #159: the Riesz projector along a gapped path is as smooth as the path, and `P Ṗ P = 0` (`Mathlib/Analysis/Matrix/RieszProjectorSmooth.lean`). -/
+
+/-- info: 'HasDerivAt.mul_deriv_mul_eq_zero_of_idempotent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasDerivAt.mul_deriv_mul_eq_zero_of_idempotent
+
+/-- info: 'Matrix.contDiff_smul_of_contDiff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.contDiff_smul_of_contDiff
+
+/-- info: 'Matrix.contDiffOn_smul_of_contDiffOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.contDiffOn_smul_of_contDiffOn
+
+/-- info: 'Matrix.traceCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.traceCLM_apply
+
+/-- info: 'Matrix.rieszProj_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.rieszProj_eq_integral
+
+/-- info: 'Matrix.rieszProj_eq_integral_unit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.rieszProj_eq_integral_unit
+
+/-- info: 'Matrix.contDiffOn_rieszProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.contDiffOn_rieszProj
+
+/-- info: 'Matrix.GappedPath.dist_eigC' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.dist_eigC
+
+/-- info: 'Matrix.GappedPath.hcirc_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hcirc_self
+
+/-- info: 'Matrix.GappedPath.hcirc_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hcirc_near
+
+/-- info: 'Matrix.GappedPath.discInd_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.discInd_eq
+
+/-- info: 'Matrix.GappedPath.discInd_eq_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.discInd_eq_near
+
+/-- info: 'Matrix.GappedPath.proj_eq_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_eq_near
+
+/-- info: 'Matrix.GappedPath.isUnit_smul_one_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.isUnit_smul_one_sub
+
+/-- info: 'Matrix.GappedPath.contDiff_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.contDiff_proj
+
+/-- info: 'Matrix.GappedPath.proj_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_mul_self
+
+/-- info: 'Matrix.GappedPath.proj_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_isHermitian
+
+/-- info: 'Matrix.GappedPath.H_mul_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.H_mul_proj
+
+/-- info: 'Matrix.GappedPath.proj_mul_H' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_mul_H
+
+/-- info: 'Matrix.GappedPath.hasDerivAt_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hasDerivAt_proj
+
+/-- info: 'Matrix.GappedPath.proj_mul_deriv_mul_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_mul_deriv_mul_proj
+
+/-- info: 'Matrix.IsHermitian.trace_conjD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.trace_conjD
+
+/-- info: 'Matrix.GappedPath.trace_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.trace_proj
+
+/-- info: 'Nat.eq_of_dist_cast_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Nat.eq_of_dist_cast_lt_one
+
+/-- info: 'Matrix.GappedPath.mult_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.mult_eq
+
+/-- info: 'Matrix.GappedPath.mult_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.mult_pos
+
+/-- info: 'Matrix.GappedPath.ofReal_lam_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.ofReal_lam_eq
+
+/-- info: 'Matrix.GappedPath.contDiff_lam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.contDiff_lam
+
+
 end CSD.Tests.AxiomAudit
