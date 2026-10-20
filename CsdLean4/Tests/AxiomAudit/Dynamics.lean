@@ -1504,4 +1504,11 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #print axioms CSD.LF3.operationalNoSignalling_of_localSettingLocality
 
 
+/-! #156: a blind B-wing reroute equates the counterfactual joint laws (`RecordLayer/SkewRerouteObstruction.lean`, LF3 half). -/
+
+/-- info: 'CSD.LF3.measure_counterfactual_eq_of_remoteSettingLocalityB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.measure_counterfactual_eq_of_remoteSettingLocalityB
+
+
 end CSD.Tests.AxiomAudit

@@ -5671,4 +5671,35 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.operationalNoSignalling_skewBasin_singlet
 
 
+/-! #156: the blind B-wing primitive is unsatisfiable at the I3 record basins for the singlet (`RecordLayer/SkewRerouteObstruction.lean`). -/
+
+/-- info: 'CSD.RecordLayer.counterfactual_eq_iUnion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.counterfactual_eq_iUnion
+
+/-- info: 'CSD.RecordLayer.volume_counterfactual' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_counterfactual
+
+/-- info: 'CSD.RecordLayer.signOfFin_eq_plus_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.signOfFin_eq_plus_iff
+
+/-- info: 'CSD.RecordLayer.singletJointRates_condRate_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.singletJointRates_condRate_zero
+
+/-- info: 'CSD.RecordLayer.circleCell_condRate_zero_inter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.circleCell_condRate_zero_inter
+
+/-- info: 'CSD.RecordLayer.volume_counterfactual_singlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_counterfactual_singlet
+
+/-- info: 'CSD.RecordLayer.not_nonempty_remoteSettingLocalityB_singlet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_nonempty_remoteSettingLocalityB_singlet
+
+
 end CSD.Tests.AxiomAudit

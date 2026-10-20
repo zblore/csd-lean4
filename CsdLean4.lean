@@ -566,6 +566,7 @@ public import CsdLean4.RecordLayer.ArcAffine
 public import CsdLean4.RecordLayer.SkewReroute
 public import CsdLean4.RecordLayer.SingletSkewTables
 public import CsdLean4.RecordLayer.SkewBasinReroute
+public import CsdLean4.RecordLayer.SkewRerouteObstruction
 public import CsdLean4.RecordLayer.CellLawFreedom
 public import CsdLean4.RecordLayer.CellLawForced
 public import CsdLean4.RecordLayer.NStepChain
