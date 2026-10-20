@@ -29,6 +29,9 @@ and the identity `P Ṗ P = 0` that Kato's intertwiner (#160) is built on.
   sandwich. Any normed algebra.
 * `resolventIntegrand`, `rieszProj_eq_integral`, `rieszProj_eq_integral_unit` — the Riesz
   projector as an interval integral over `[0, 1]` of the resolvent on the circle;
+* `contDiffOn_inv_comp`, ★ `contDiffOn_circleIntegral` — the matrix inverse is `C^n` on units, and
+  **a parametric circle integral of a jointly `C^n` integrand is `C^n`** (the general form, used
+  again for the reduced resolvent in #162);
 * ★★ `contDiffOn_rieszProj` — **over a fixed contour the Riesz projector is `C^n` in the
   matrix path**: the integrand is `C^n` jointly (the inverse is `C^n` on units,
   `contDiffAt_ringInverse`; the units form an open set, `Units.isOpen`), and a parametric interval
@@ -145,6 +148,42 @@ theorem rieszProj_eq_integral_unit (A : Matrix (Fin N) (Fin N) ℂ) (c : ℂ) (r
     (by positivity : (2 * π : ℝ) ≠ 0), mul_zero, mul_one, smul_smul,
     mul_inv_cancel₀ (by positivity : (2 * π : ℝ) ≠ 0), one_smul]
 
+/-- Composition with the matrix inverse is `C^n` where the matrix is a unit. -/
+theorem contDiffOn_inv_comp {n : ℕ∞} {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+    {Φ : E → Matrix (Fin N) (Fin N) ℂ} (hΦ : ContDiff ℝ n Φ) {W : Set E}
+    (hW : ∀ p ∈ W, IsUnit (Φ p)) : ContDiffOn ℝ n (fun p => (Φ p)⁻¹) W := by
+  have hinv : ContDiffOn ℝ n (fun p => Ring.inverse (Φ p)) W := by
+    refine ContDiffOn.comp (g := Ring.inverse) (f := Φ)
+      (t := {x : Matrix (Fin N) (Fin N) ℂ | IsUnit x}) ?_ hΦ.contDiffOn fun p hp => hW p hp
+    intro x hx
+    have h := contDiffAt_ringInverse (𝕜 := ℝ) (n := n) hx.unit
+    rw [IsUnit.unit_spec] at h
+    exact h.contDiffWithinAt
+  exact hinv.congr fun p _ => nonsing_inv_eq_ringInverse _
+
+/-- ★ **A parametric circle integral of a jointly `C^n` matrix-valued integrand is `C^n` in the
+parameter**: if `(s, u) ↦ F s (circleMap c r (2πu))` is `C^n` on an open `W ⊇ V × [0, 1]`, then
+`s ↦ ∮_{C(c, r)} F s z dz` is `C^n` on the open `V`. -/
+theorem contDiffOn_circleIntegral {n : ℕ∞} {F : ℝ → ℂ → Matrix (Fin N) (Fin N) ℂ} {V : Set ℝ}
+    (hV : IsOpen V) (c : ℂ) (r : ℝ) {W : Set (ℝ × ℝ)} (hW : IsOpen W)
+    (hVW : ∀ s ∈ V, ∀ u ∈ Icc (0 : ℝ) 1, (s, u) ∈ W)
+    (hF : ContDiffOn ℝ n (fun p : ℝ × ℝ => F p.1 (circleMap c r (2 * π * p.2))) W) :
+    ContDiffOn ℝ n (fun s => ∮ z in C(c, r), F s z) V := by
+  have hsc : ContDiff ℝ n fun p : ℝ × ℝ => circleMap 0 r (2 * π * p.2) * I :=
+    ((contDiff_circleMap 0 r).comp (contDiff_const.mul contDiff_snd)).mul contDiff_const
+  have hint := contDiffOn_intervalIntegral_of_contDiffOn (F := fun s u =>
+    (circleMap 0 r (2 * π * u) * I) • F s (circleMap c r (2 * π * u))) hV hW hVW
+    (contDiffOn_smul_of_contDiffOn hsc.contDiffOn hF)
+  have heq : ∀ s, (∮ z in C(c, r), F s z) = (2 * π : ℝ) •
+      ∫ u in (0 : ℝ)..1, (circleMap 0 r (2 * π * u) * I) • F s (circleMap c r (2 * π * u)) := by
+    intro s
+    simp only [circleIntegral, deriv_circleMap]
+    rw [integral_comp_mul_left (fun θ => (circleMap 0 r θ * I) • F s (circleMap c r θ))
+      (by positivity : (2 * π : ℝ) ≠ 0), mul_zero, mul_one, smul_smul,
+      mul_inv_cancel₀ (by positivity : (2 * π : ℝ) ≠ 0), one_smul]
+  simp only [heq]
+  exact hint.const_smul _
+
 /-- ★★ **Over a fixed contour the Riesz projector is `C^n` in the matrix path.** If `H` is `C^n`
 and, for every parameter in the open set `V`, no point of the circle `C(c, r)` is in the spectrum
 of `H s`, then `s ↦ rieszProj (H s) c r` is `C^n` on `V`. -/
@@ -161,21 +200,9 @@ theorem contDiffOn_rieszProj {n : ℕ∞} {H : ℝ → Matrix (Fin N) (Fin N) �
   have hWo : IsOpen W := Units.isOpen.preimage hΦc.continuous
   have hVW : ∀ s ∈ V, ∀ u ∈ Icc (0 : ℝ) 1, (s, u) ∈ W := fun s hs u _ =>
     hu s hs _ (circleMap_mem_sphere c hr _)
-  have hF : ContDiffOn ℝ n
-      (Function.uncurry fun s u => resolventIntegrand c r (H s) (2 * π * u)) W := by
-    have hinv : ContDiffOn ℝ n (fun p : ℝ × ℝ => Ring.inverse (Φ p)) W := by
-      refine ContDiffOn.comp (g := Ring.inverse) (f := Φ)
-        (t := {x : Matrix (Fin N) (Fin N) ℂ | IsUnit x}) ?_ hΦc.contDiffOn fun p hp => hp
-      intro x hx
-      have h := contDiffAt_ringInverse (𝕜 := ℝ) (n := n) hx.unit
-      rw [IsUnit.unit_spec] at h
-      exact h.contDiffWithinAt
-    have hsc : ContDiff ℝ n fun p : ℝ × ℝ => circleMap 0 r (2 * π * p.2) * I :=
-      ((contDiff_circleMap 0 r).comp (contDiff_const.mul contDiff_snd)).mul contDiff_const
-    exact contDiffOn_smul_of_contDiffOn hsc.contDiffOn hinv
-  have hint := contDiffOn_intervalIntegral_of_contDiffOn hV hWo hVW hF
-  simp only [rieszProj_eq_integral_unit]
-  exact (hint.const_smul _).const_smul _
+  unfold rieszProj
+  exact ContDiffOn.const_smul _
+    (contDiffOn_circleIntegral hV c r hWo hVW (contDiffOn_inv_comp hΦc fun p hp => hp))
 
 /-! ### Gapped paths -/
 
