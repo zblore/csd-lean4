@@ -1489,4 +1489,19 @@ info: 'CSD.LF5.measurement_flow_outcome_frequency_canonical' depends on axioms: 
 #print axioms CSD.LF6.bellClassicalBound_lt_abs_chsh_preparedRecord
 
 
+/-! #137: the setting-locality primitive aware of the local setting (`LF3/SettingLocalityLocal.lean`). -/
+
+/-- info: 'CSD.LF3.remoteMarginalInvariantA_of_localSettingLocality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.remoteMarginalInvariantA_of_localSettingLocality
+
+/-- info: 'CSD.LF3.remoteMarginalInvariantB_of_localSettingLocality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.remoteMarginalInvariantB_of_localSettingLocality
+
+/-- info: 'CSD.LF3.operationalNoSignalling_of_localSettingLocality' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF3.operationalNoSignalling_of_localSettingLocality
+
+
 end CSD.Tests.AxiomAudit

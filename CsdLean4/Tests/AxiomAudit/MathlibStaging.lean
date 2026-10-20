@@ -12461,4 +12461,23 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms SchrodingerGroup.hasDerivAt_schrodinger_orbit
 
 
+/-! #137: gluing measure-preserving pieces along a finite exact partition (`Mathlib/MeasureTheory/GluedMeasurePreserving.lean`). -/
+
+/-- info: 'MeasureTheory.pairwise_disjoint_of_existsUnique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.pairwise_disjoint_of_existsUnique
+
+/-- info: 'MeasureTheory.preimage_glue' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.preimage_glue
+
+/-- info: 'MeasureTheory.measurable_glue' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.measurable_glue
+
+/-- info: 'MeasureTheory.measurePreserving_glue' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.measurePreserving_glue
+
+
 end CSD.Tests.AxiomAudit

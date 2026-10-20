@@ -178,6 +178,7 @@ public import CsdLean4.LF3.Spinor
 public import CsdLean4.LF3.SharedContextMap
 public import CsdLean4.LF3.OperationalNoSignalling
 public import CsdLean4.LF3.SettingLocality
+public import CsdLean4.LF3.SettingLocalityLocal
 public import CsdLean4.LF3.Hamiltonian
 public import CsdLean4.LF3.SectorSeparation
 public import CsdLean4.LF3.Projectors.Core
@@ -561,6 +562,8 @@ public import CsdLean4.RecordLayer.SkewFibrePartition
 public import CsdLean4.RecordLayer.GlobalBasin
 public import CsdLean4.RecordLayer.SkewBasin
 public import CsdLean4.RecordLayer.JointMomentContext
+public import CsdLean4.RecordLayer.ArcAffine
+public import CsdLean4.RecordLayer.SkewReroute
 public import CsdLean4.RecordLayer.CellLawFreedom
 public import CsdLean4.RecordLayer.CellLawForced
 public import CsdLean4.RecordLayer.NStepChain
@@ -597,6 +600,7 @@ public import CsdLean4.RecordLayer.OutcomeBasin
 public import CsdLean4.RecordLayer.DynamicMeasurementClosure
 public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
 public import CsdLean4.Mathlib.MeasureTheory.FibrePreserving
+public import CsdLean4.Mathlib.MeasureTheory.GluedMeasurePreserving
 public import CsdLean4.Mathlib.MeasureTheory.CellPointer
 public import CsdLean4.Mathlib.MeasureTheory.MomentDeterminacy
 public import CsdLean4.Mathlib.Topology.Algebra.CompactRecurrence

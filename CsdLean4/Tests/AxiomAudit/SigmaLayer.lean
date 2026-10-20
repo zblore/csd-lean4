@@ -5494,4 +5494,83 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.measure_drift_wingCode_ne_le_of_blocks
 
 
+/-! #137: affine transport between arcs and rectangles of the fibre (`RecordLayer/ArcAffine.lean`), and the skew rectangle exchange that instantiates the setting-locality primitive at the I3 record basins (`RecordLayer/SkewReroute.lean`). -/
+
+/-- info: 'CSD.RecordLayer.existsUnique_mem_circleCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.existsUnique_mem_circleCell
+
+/-- info: 'CSD.RecordLayer.arcMap_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arcMap_mem
+
+/-- info: 'CSD.RecordLayer.map_restrict_arcMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_restrict_arcMap
+
+/-- info: 'CSD.RecordLayer.map_restrict_rectMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_restrict_rectMap
+
+/-- info: 'CSD.RecordLayer.existsUnique_mem_skewCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.existsUnique_mem_skewCell
+
+/-- info: 'CSD.RecordLayer.existsUnique_mem_normalCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.existsUnique_mem_normalCell
+
+/-- info: 'CSD.RecordLayer.toNormal_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.toNormal_mem
+
+/-- info: 'CSD.RecordLayer.toSkew_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.toSkew_mem
+
+/-- info: 'CSD.RecordLayer.map_restrict_toNormal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_restrict_toNormal
+
+/-- info: 'CSD.RecordLayer.map_restrict_toSkew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_restrict_toSkew
+
+/-- info: 'CSD.RecordLayer.measurePreserving_normalize' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurePreserving_normalize
+
+/-- info: 'CSD.RecordLayer.measurePreserving_denormalize' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurePreserving_denormalize
+
+/-- info: 'CSD.RecordLayer.measurePreserving_reroute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurePreserving_reroute
+
+/-- info: 'CSD.RecordLayer.wingB_reroute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wingB_reroute
+
+/-- info: 'CSD.RecordLayer.wingA_eq_of_rowSum_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wingA_eq_of_rowSum_eq
+
+/-- info: 'CSD.RecordLayer.measurable_skewOutcomeMaps' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_skewOutcomeMaps
+
+/-- info: 'CSD.RecordLayer.skewLocalSettingLocalityA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.skewLocalSettingLocalityA
+
+/-- info: 'CSD.RecordLayer.skewLocalSettingLocalityB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.skewLocalSettingLocalityB
+
+/-- info: 'CSD.RecordLayer.operationalNoSignalling_skew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.operationalNoSignalling_skew
+
+
 end CSD.Tests.AxiomAudit
