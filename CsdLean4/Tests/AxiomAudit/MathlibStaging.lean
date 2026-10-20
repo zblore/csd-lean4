@@ -12347,4 +12347,83 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms SchrodingerGroup.freePositionOp_toLp_ae_deriv
 
 
+/-! #129: the mild solution is classical — the generator of a bounded perturbation (`Mathlib/Analysis/Semigroup/PerturbedGenerator.lean`) and the interacting Schrödinger equation on the domain of `H₀` (`SchrodingerGenerator.lean`). -/
+
+/-- info: 'HasGeneratorAt.unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasGeneratorAt.unique
+
+/-- info: 'Ici_zero_diff_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Ici_zero_diff_zero
+
+/-- info: 'hasGeneratorAt_iff_hasDerivWithinAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasGeneratorAt_iff_hasDerivWithinAt
+
+/-- info: 'HasGeneratorAt.tendsto_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasGeneratorAt.tendsto_right
+
+/-- info: 'HasGeneratorAt.apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasGeneratorAt.apply
+
+/-- info: 'HasGeneratorAt.hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasGeneratorAt.hasDerivAt
+
+/-- info: 'ContractionSemigroup.tendsto_inv_smul_duhamelIntegral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContractionSemigroup.tendsto_inv_smul_duhamelIntegral
+
+/-- info: 'ContractionSemigroup.hasGeneratorAt_perturbed_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContractionSemigroup.hasGeneratorAt_perturbed_iff
+
+/-- info: 'ContractionSemigroup.hasDerivAt_perturbed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContractionSemigroup.hasDerivAt_perturbed
+
+/-- info: 'ContractionSemigroup.hasDerivWithinAt_perturbed_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContractionSemigroup.hasDerivWithinAt_perturbed_zero
+
+/-- info: 'ContractionSemigroup.hasGeneratorAt_perturbed_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContractionSemigroup.hasGeneratorAt_perturbed_apply
+
+/-- info: 'ContractionSemigroup.hasGeneratorAt_of_perturbed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContractionSemigroup.hasGeneratorAt_of_perturbed
+
+/-- info: 'ContractionSemigroup.perturbed_classical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms ContractionSemigroup.perturbed_classical
+
+/-- info: 'SchrodingerGroup.hasGeneratorAt_freeGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasGeneratorAt_freeGroup
+
+/-- info: 'SchrodingerGroup.hasDerivAt_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasDerivAt_schrodinger
+
+/-- info: 'SchrodingerGroup.hasDerivAt_schrodinger_addCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasDerivAt_schrodinger_addCLM
+
+/-- info: 'SchrodingerGroup.hasDerivWithinAt_schrodinger_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasDerivWithinAt_schrodinger_zero
+
+/-- info: 'SchrodingerGroup.hasGeneratorAt_freeGroup_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.hasGeneratorAt_freeGroup_schrodinger
+
+/-- info: 'SchrodingerGroup.schrodinger_classical' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchrodingerGroup.schrodinger_classical
+
+
 end CSD.Tests.AxiomAudit
