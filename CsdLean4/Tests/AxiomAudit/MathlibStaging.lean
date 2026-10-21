@@ -14419,4 +14419,31 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms MeasureTheory.cat_hasReturnGrowth'
 
 
+/-! #179: non-hyperbolic elements of `SL₂(ℤ)` have no return growth; the return criterion on integer matrices is decided by the trace (`Mathlib/Dynamics/ToralReturnsConverse.lean`). -/
+
+/-- info: 'MeasureTheory.exists_kernel_vector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.exists_kernel_vector
+
+/-- info: 'MeasureTheory.realMat_eq_zero_of_toLin'_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.realMat_eq_zero_of_toLin'_eq_zero
+
+/-- info: 'MeasureTheory.infinite_ker_toral_of_det_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.infinite_ker_toral_of_det_eq_zero
+
+/-- info: 'MeasureTheory.exists_det_pow_sub_one_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.exists_det_pow_sub_one_eq_zero
+
+/-- info: 'MeasureTheory.not_hasReturnGrowth_toral_of_abs_trace_le_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.not_hasReturnGrowth_toral_of_abs_trace_le_two
+
+/-- info: 'MeasureTheory.hasReturnGrowth_toral_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.hasReturnGrowth_toral_iff
+
+
 end CSD.Tests.AxiomAudit
