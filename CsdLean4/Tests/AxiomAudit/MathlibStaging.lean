@@ -14034,4 +14034,163 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms MeasureTheory.affineCat_coe
 
 
+/-! #176: the periodic points of the cat map are counted by `L₂ₜ − 2` and grow at the Lyapunov exponent `2 log φ` (`Mathlib/Dynamics/CatMapPeriodicPoints.lean`). -/
+
+/-- info: 'MeasureTheory.lucasEven' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.lucasEven
+
+/-- info: 'MeasureTheory.cassini' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cassini
+
+/-- info: 'MeasureTheory.three_le_lucasEven_succ' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.three_le_lucasEven_succ
+
+/-- info: 'MeasureTheory.lucasEven_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.lucasEven_eq
+
+/-- info: 'MeasureTheory.catLatMat' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catLatMat
+
+/-- info: 'MeasureTheory.det_catLatMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.det_catLatMat
+
+/-- info: 'MeasureTheory.catLat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catLat
+
+/-- info: 'MeasureTheory.catLat_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catLat_apply
+
+/-- info: 'MeasureTheory.det_catLat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.det_catLat
+
+/-- info: 'MeasureTheory.det_catLat_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.det_catLat_ne_zero
+
+/-- info: 'MeasureTheory.catLat_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catLat_injective
+
+/-- info: 'MeasureTheory.cat_iterate_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cat_iterate_coe
+
+/-- info: 'MeasureTheory.catCr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catCr
+
+/-- info: 'MeasureTheory.catAdjR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catAdjR
+
+/-- info: 'MeasureTheory.catDetR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catDetR
+
+/-- info: 'MeasureTheory.catDetR_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catDetR_eq
+
+/-- info: 'MeasureTheory.catDetR_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catDetR_succ
+
+/-- info: 'MeasureTheory.catDetR_succ_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catDetR_succ_ne_zero
+
+/-- info: 'MeasureTheory.catR_pow_eq_catCr_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catR_pow_eq_catCr_add
+
+/-- info: 'MeasureTheory.catCr_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catCr_add
+
+/-- info: 'MeasureTheory.catCr_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catCr_smul
+
+/-- info: 'MeasureTheory.catAdjR_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catAdjR_add
+
+/-- info: 'MeasureTheory.catAdjR_catCr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catAdjR_catCr
+
+/-- info: 'MeasureTheory.catCr_catAdjR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catCr_catAdjR
+
+/-- info: 'MeasureTheory.catCr_intCast' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catCr_intCast
+
+/-- info: 'MeasureTheory.catFixVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catFixVec
+
+/-- info: 'MeasureTheory.catCr_catFixVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catCr_catFixVec
+
+/-- info: 'MeasureTheory.catFixVec_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catFixVec_add
+
+/-- info: 'MeasureTheory.coe_intCast_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.coe_intCast_eq_zero
+
+/-- info: 'MeasureTheory.catFixLift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catFixLift
+
+/-- info: 'MeasureTheory.catFixLift_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catFixLift_apply
+
+/-- info: 'MeasureTheory.catFixLift_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catFixLift_mem
+
+/-- info: 'MeasureTheory.exists_int_of_coe_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.exists_int_of_coe_eq_zero
+
+/-- info: 'MeasureTheory.catFixLift_surjective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catFixLift_surjective
+
+/-- info: 'MeasureTheory.catFixLift_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.catFixLift_eq_zero_iff
+
+/-- info: 'MeasureTheory.card_fixedPoints_cat_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.card_fixedPoints_cat_iterate
+
+/-- info: 'MeasureTheory.card_fixedPoints_cat_iterate_int' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.card_fixedPoints_cat_iterate_int
+
+/-- info: 'MeasureTheory.card_fixedPoints_cat_iterate_real' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.card_fixedPoints_cat_iterate_real
+
+/-- info: 'MeasureTheory.tendsto_log_card_fixedPoints_cat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.tendsto_log_card_fixedPoints_cat
+
+
 end CSD.Tests.AxiomAudit

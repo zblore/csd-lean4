@@ -5757,4 +5757,19 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.fibre_affine_shears
 
 
+/-! #176: returns of fibre configurations under the hyperbolic stroke grow at the Lyapunov exponent — the counting reading of #19's criterion (`SigmaLayer/FibrePeriodicGrowth.lean`). -/
+
+/-- info: 'CSD.SigmaLayer.card_fixedPoints_catStroke' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.card_fixedPoints_catStroke
+
+/-- info: 'CSD.SigmaLayer.tendsto_log_card_fixedPoints_catStroke' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.tendsto_log_card_fixedPoints_catStroke
+
+/-- info: 'CSD.SigmaLayer.fibre_periodic_growth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fibre_periodic_growth
+
+
 end CSD.Tests.AxiomAudit
