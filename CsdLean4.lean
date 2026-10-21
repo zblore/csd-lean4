@@ -804,6 +804,7 @@ public import CsdLean4.Mathlib.Analysis.Fourier.SchwartzPartialIntegral
 public import CsdLean4.Mathlib.Analysis.Fourier.SchwartzSliceContinuous
 public import CsdLean4.Mathlib.Analysis.Fourier.PartialFourier
 public import CsdLean4.Mathlib.Analysis.Fourier.PartialFourierSmooth
+public import CsdLean4.Mathlib.Analysis.Fourier.PartialFourierDeriv
 public import CsdLean4.Mathlib.Analysis.Fourier.WeylSmooth
 public import CsdLean4.Mathlib.Analysis.Fourier.SchwartzTensor
 public import CsdLean4.Mathlib.Analysis.Fourier.WeylComposition
