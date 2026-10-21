@@ -13814,4 +13814,91 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms SchwartzMap.iteratedFDeriv_partialFourier_apply
 
 
+/-! #172: polynomial weights on the partial Fourier transform are partial Fourier transforms, `u 𝓕₂K = 𝓕₂(uK)`, `2πiξ 𝓕₂K = 𝓕₂(∂_w K)` (`Mathlib/Analysis/Fourier/PartialFourierMul.lean`). -/
+
+/-- info: 'SchwartzMap.uMul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.uMul
+
+/-- info: 'SchwartzMap.uMul_eq_clm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.uMul_eq_clm
+
+/-- info: 'SchwartzMap.hasTemperateGrowth_uMul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.hasTemperateGrowth_uMul
+
+/-- info: 'SchwartzMap.mulU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.mulU
+
+/-- info: 'SchwartzMap.mulU_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.mulU_apply
+
+/-- info: 'SchwartzMap.derivW' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.derivW
+
+/-- info: 'SchwartzMap.derivW_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.derivW_apply
+
+/-- info: 'SchwartzMap.partialFourier_mulU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourier_mulU
+
+/-- info: 'SchwartzMap.slice_derivW' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.slice_derivW
+
+/-- info: 'SchwartzMap.partialFourier_derivW' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourier_derivW
+
+/-- info: 'SchwartzMap.mulUPow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.mulUPow
+
+/-- info: 'SchwartzMap.derivWPow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.derivWPow
+
+/-- info: 'SchwartzMap.mulUPow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.mulUPow_zero
+
+/-- info: 'SchwartzMap.mulUPow_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.mulUPow_succ
+
+/-- info: 'SchwartzMap.derivWPow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.derivWPow_zero
+
+/-- info: 'SchwartzMap.derivWPow_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.derivWPow_succ
+
+/-- info: 'SchwartzMap.partialFourier_mulUPow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourier_mulUPow
+
+/-- info: 'SchwartzMap.partialFourier_derivWPow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourier_derivWPow
+
+/-- info: 'SchwartzMap.norm_two_pi_I' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_two_pi_I
+
+/-- info: 'SchwartzMap.max_pow_le_add_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.max_pow_le_add_pow
+
+/-- info: 'SchwartzMap.norm_pow_mul_norm_partialFourier_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_pow_mul_norm_partialFourier_le
+
+
 end CSD.Tests.AxiomAudit
