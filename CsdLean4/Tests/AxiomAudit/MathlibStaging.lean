@@ -13979,4 +13979,59 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms SchwartzMap.wignerSchwartz_apply
 
 
+/-! #175: affine cat maps are translation-conjugate to the cat map, hence strongly mixing with exponent `2 log φ`; strong mixing transports along measure-preserving measurable equivalences (`Mathlib/Dynamics/CatMapAffine.lean`). -/
+
+/-- info: 'Mixing.conj_measurableEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Mixing.conj_measurableEquiv
+
+/-- info: 'MeasureTheory.affineCat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCat
+
+/-- info: 'MeasureTheory.affineCatShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCatShift
+
+/-- info: 'MeasureTheory.affineCat_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCat_apply
+
+/-- info: 'MeasureTheory.affineCatShift_sub_cat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCatShift_sub_cat
+
+/-- info: 'MeasureTheory.affineCat_eq_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCat_eq_conj
+
+/-- info: 'MeasureTheory.affineCat_mixing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCat_mixing
+
+/-- info: 'MeasureTheory.affineCat_ergodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCat_ergodic
+
+/-- info: 'MeasureTheory.measurePreserving_affineCat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.measurePreserving_affineCat
+
+/-- info: 'MeasureTheory.affineCatR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCatR
+
+/-- info: 'MeasureTheory.fderiv_affineCatR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.fderiv_affineCatR
+
+/-- info: 'MeasureTheory.affineCatR_fderiv_hasLyapunovExponent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCatR_fderiv_hasLyapunovExponent
+
+/-- info: 'MeasureTheory.affineCat_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCat_coe
+
+
 end CSD.Tests.AxiomAudit

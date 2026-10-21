@@ -5702,4 +5702,59 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.not_nonempty_remoteSettingLocalityB_singlet
 
 
+/-! #175: two transverse coordinate-reading shears with base-read offsets are the affine cat map — strongly mixing with exponent `2 log φ` for every pair of offsets, the narrowing brick for #19 (`SigmaLayer/FibreAffineShears.lean`). -/
+
+/-- info: 'CSD.SigmaLayer.shearXOff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearXOff
+
+/-- info: 'CSD.SigmaLayer.shearYOff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearYOff
+
+/-- info: 'CSD.SigmaLayer.shearXOff_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearXOff_apply
+
+/-- info: 'CSD.SigmaLayer.shearYOff_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearYOff_apply
+
+/-- info: 'CSD.SigmaLayer.shearXOff_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearXOff_zero
+
+/-- info: 'CSD.SigmaLayer.shearYOff_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearYOff_zero
+
+/-- info: 'CSD.SigmaLayer.shearXOff_comp_shearYOff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearXOff_comp_shearYOff
+
+/-- info: 'CSD.SigmaLayer.mixing_shearXOff_comp_shearYOff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixing_shearXOff_comp_shearYOff
+
+/-- info: 'CSD.SigmaLayer.ergodic_shearXOff_comp_shearYOff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.ergodic_shearXOff_comp_shearYOff
+
+/-- info: 'CSD.SigmaLayer.measurePreserving_shearXOff_comp_shearYOff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.measurePreserving_shearXOff_comp_shearYOff
+
+/-- info: 'CSD.SigmaLayer.shearXOff_comp_shearYOff_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.shearXOff_comp_shearYOff_coe
+
+/-- info: 'CSD.SigmaLayer.lift_fderiv_hasLyapunovExponent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.lift_fderiv_hasLyapunovExponent
+
+/-- info: 'CSD.SigmaLayer.fibre_affine_shears' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fibre_affine_shears
+
+
 end CSD.Tests.AxiomAudit
