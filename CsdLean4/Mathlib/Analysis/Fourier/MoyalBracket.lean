@@ -41,17 +41,19 @@ correction at all. This file does the potential half, where the correction lives
 
 ⚠️ **This is the generator, not the evolution.** `moyalPot` is the potential term of the Wigner
 equation, and the theorems compare it with the Poisson bracket pointwise in `(x, ξ)`. The
-time-dependent statement `∂_t W_{U_V(t)ψ} = − 2πξ ∂_x W + moyalPot V ψ` is **not** proved here. Its
-**free part now is**, in [`WignerEvolution.lean`](WignerEvolution.lean) (★★★ `wigner_liouville`,
-2026-10-01): `∂_x W` exists and equals `W(ψ', ψ) + W(ψ, ψ')`, and `∂_t W_t = − 2πξ ∂_x W_t` for the
-free group. Two corrections to what this paragraph used to say: differentiating `W` in `x` needs only
-**first-order** differentiation under the integral sign, which the pin does have
-(`Mathlib/Analysis/Calculus/ParametricIntegral.lean`) — what it lacks is the all-orders version, which
-is #92(a)'s gap, not this one. What genuinely blocks the **interacting** equation is the propagator:
-the corpus's `H₀ + V` propagator is a Trotter limit on `L²`
-([`Semigroup/BoundedPerturbation.lean`](../Semigroup/BoundedPerturbation.lean)) with no
-differentiability in `t` on Schwartz functions, and the pin has no generator or domain theory for
-`H₀ + V`. `specs/BACKLOG.md` #64 carries that part with this measurement.
+time-dependent statement `∂_t W_{U_V(t)ψ} = − 2πξ ∂_x W + moyalPot V ψ` is not proved here; **it is
+now proved on `L²`**, in [`WignerPotential.lean`](WignerPotential.lean) (★★★
+`hasDerivAt_wignerL2_schrodinger_eq`, 2026-10-21), with the potential term `moyalPotL2 V ψ_t ψ_t`,
+which is this file's `moyalPot V ψ` on Schwartz states (`moyalPotL2_toLp`). The route: the free
+group case on Schwartz states in [`WignerEvolution.lean`](WignerEvolution.lean) (★★★
+`wigner_liouville`, 2026-10-01); the Wigner function moved to `L²` and differentiated along the
+interacting orbit in [`WignerL2.lean`](WignerL2.lean) (#167), the `H₀` half in
+[`WignerFree.lean`](WignerFree.lean) (#168), the `V` half and the assembly in `WignerPotential.lean`
+(#169). Differentiating `W` in `x` needs only **first-order** differentiation under the integral
+sign, which the pin has (`Mathlib/Analysis/Calculus/ParametricIntegral.lean`); what it lacks is the
+all-orders version, which is #92(a)'s gap, not this one. The propagator obstacle this paragraph once
+named (no generator or domain theory for `H₀ + V`) was removed by
+[`Semigroup/PhaseGeneratorDomain.lean`](../Semigroup/PhaseGeneratorDomain.lean) (#154).
 
 ⚠️ **`ℏ` is not a variable here.** The convention is the one of `Wigner.lean`
 (`𝓕 f ξ = ∫ e^{−2πiyξ} f y dy`, momentum `p = 2πξ`, so `ℏ = 1`). The `ℏ²` of the row is the third

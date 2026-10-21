@@ -45,10 +45,11 @@ the integrand is integrable, `|W| ≤ 2‖φ‖‖ψ‖`, and `t ↦ W(ψ_t, ψ_
 
 ## Honest scope
 
-* The two halves of the right-hand side are not yet identified: `W(−iH₀ψ, ψ) + W(ψ, −iH₀ψ)
-  = −2πξ ∂_x W_ψ` for `ψ ∈ dom H₀` is #168, and `W(−iVψ, ψ) + W(ψ, −iVψ) = moyalPot V ψ` (the
-  `Moyal` term of `MoyalBracket.lean`) is #169; together they give
-  `∂_t W = −2πξ ∂_x W + moyalPot`, the equation ~~#64~~ named.
+* The two halves of the right-hand side are identified downstream: `W(−iH₀ψ, ψ) + W(ψ, −iH₀ψ)
+  = −2πξ ∂_x W_ψ` for `ψ ∈ dom H₀` in [`WignerFree.lean`](WignerFree.lean) (#168), and
+  `W(−iVψ, ψ) + W(ψ, −iVψ) = moyalPotL2 V ψ ψ` (the `Moyal` term of `MoyalBracket.lean`, on `L²`) in
+  [`WignerPotential.lean`](WignerPotential.lean) (#169), which assembles
+  `∂_t W = −2πξ ∂_x W + moyalPotL2`, the equation ~~#64~~ named.
 * `V` enters as an `L^∞` class (`potential VL`), as in #129/#154; the orbit is the Dyson/Trotter
   propagator `schrodinger` of `BoundedPerturbation.lean`.
 * One space dimension.

@@ -46,7 +46,8 @@ In the momentum form of #167, `W(φ, ψ)(x, ξ) = 2 ∫ e(2xu) ψ̂(ξ + u) conj
 
 * `dom H₀` is `freePositionOp.domain`, the operator-theoretic domain (`{ψ : (1 + ξ²) ψ̂ ∈ L²}`);
   no identification with `H²(ℝ)` is used or needed.
-* The potential half `W(−iVψ, ψ) + W(ψ, −iVψ) = moyalPot V ψ` and the assembled equation are #169.
+* The potential half `W(−iVψ, ψ) + W(ψ, −iVψ) = moyalPot V ψ` and the assembled equation are #169,
+  [`WignerPotential.lean`](WignerPotential.lean).
 
 References: E. Wigner, Phys. Rev. 40 (1932) 749; `WignerL2.lean` (#167), `PhaseGenerator.lean`
 (`hasDerivAt_phaseGroup_apply`), `FreeHamiltonian.lean` (`freeSymbolOp`, `freePositionOp`),

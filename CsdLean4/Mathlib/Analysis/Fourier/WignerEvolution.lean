@@ -42,13 +42,14 @@ half) writes the **evolution equation itself**, for the free Hamiltonian:
 
 ## Honest scope
 
-⚠️ **Free Hamiltonian only.** The interacting equation
-`∂_t W_{U_V(t)ψ} = − 2πξ ∂_x W + moyalPot V ψ` is still **not** proved, and the obstacle is the
-propagator, not the derivative: the corpus's propagator for `H₀ + V` is a Trotter limit on `L²`
-([`Semigroup/BoundedPerturbation.lean`](../Semigroup/BoundedPerturbation.lean)) with no
-differentiability in `t` on Schwartz functions, and `H₀ + V` has no generator or domain theory at the
-pin (MATHLIB-ABSENT(LinearPMap.generator)). `specs/BACKLOG.md` #64 carries that half with its
-measurement.
+⚠️ **Free Hamiltonian only, in this file.** The interacting equation
+`∂_t W_{U_V(t)ψ} = − 2πξ ∂_x W + moyalPot V ψ` is proved on `L²` in
+[`WignerPotential.lean`](WignerPotential.lean) (★★★ `hasDerivAt_wignerL2_schrodinger_eq`,
+2026-10-21), through [`WignerL2.lean`](WignerL2.lean) (#167) and [`WignerFree.lean`](WignerFree.lean)
+(#168), once [`Semigroup/PhaseGeneratorDomain.lean`](../Semigroup/PhaseGeneratorDomain.lean) (#154)
+had made the `H₀ + V` propagator classical on `dom H₀`. The orbit `U_V(t)ψ` leaves Schwartz space,
+which is why that equation is stated for the `L²` Wigner function `wignerL2`, not for this file's
+`wigner`; the two agree on Schwartz states (`wignerL2_toLp`).
 
 ⚠️ What the pin *does* have, contrary to #64's earlier measurement, is **first-order**
 differentiation under the integral sign (`Mathlib/Analysis/Calculus/ParametricIntegral.lean`), which
