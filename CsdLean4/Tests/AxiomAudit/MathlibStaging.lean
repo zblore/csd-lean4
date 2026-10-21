@@ -13616,4 +13616,103 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms WignerFunction.hasDerivAt_wignerL2_schrodinger_eq
 
 
+/-! #170: the partial Fourier transform of a Schwartz kernel is smooth on the plane with uniformly bounded derivatives (`Mathlib/Analysis/Fourier/PartialFourierSmooth.lean`). -/
+
+/-- info: 'SchwartzMap.partialFourier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourier
+
+/-- info: 'SchwartzMap.partialFourier_eq_sliceFourier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourier_eq_sliceFourier
+
+/-- info: 'SchwartzMap.partialFourierIntegrand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourierIntegrand
+
+/-- info: 'SchwartzMap.partialFourierIntegrand_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourierIntegrand_apply
+
+/-- info: 'SchwartzMap.partialFourier_eq_integral_integrand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourier_eq_integral_integrand
+
+/-- info: 'SchwartzMap.contDiff_partialFourierIntegrand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.contDiff_partialFourierIntegrand
+
+/-- info: 'SchwartzMap.contDiff_partialFourierIntegrand_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.contDiff_partialFourierIntegrand_left
+
+/-- info: 'SchwartzMap.iteratedDeriv_cexp_const_mul_ofReal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.iteratedDeriv_cexp_const_mul_ofReal
+
+/-- info: 'SchwartzMap.contDiff_cexp_const_mul_ofReal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.contDiff_cexp_const_mul_ofReal
+
+/-- info: 'SchwartzMap.phase_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.phase_eq
+
+/-- info: 'SchwartzMap.norm_iteratedFDeriv_phase_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_iteratedFDeriv_phase_le
+
+/-- info: 'SchwartzMap.norm_iteratedFDeriv_slice_fst_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_iteratedFDeriv_slice_fst_le
+
+/-- info: 'SchwartzMap.one_add_abs_pow_mul_norm_iteratedFDeriv_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.one_add_abs_pow_mul_norm_iteratedFDeriv_le
+
+/-- info: 'SchwartzMap.kSup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.kSup
+
+/-- info: 'SchwartzMap.kSup_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.kSup_nonneg
+
+/-- info: 'SchwartzMap.sup_le_kSup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.sup_le_kSup
+
+/-- info: 'SchwartzMap.leibnizConst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.leibnizConst
+
+/-- info: 'SchwartzMap.leibnizConst_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.leibnizConst_nonneg
+
+/-- info: 'SchwartzMap.leibnizConst_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.leibnizConst_zero
+
+/-- info: 'SchwartzMap.norm_iteratedFDeriv_partialFourierIntegrand_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_iteratedFDeriv_partialFourierIntegrand_le
+
+/-- info: 'SchwartzMap.norm_dirDeriv_partialFourierIntegrand_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_dirDeriv_partialFourierIntegrand_le
+
+/-- info: 'SchwartzMap.contDiff_partialFourier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.contDiff_partialFourier
+
+/-- info: 'SchwartzMap.norm_iteratedFDeriv_partialFourier_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_iteratedFDeriv_partialFourier_le
+
+/-- info: 'SchwartzMap.norm_partialFourier_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_partialFourier_le
+
+
 end CSD.Tests.AxiomAudit
