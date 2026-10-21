@@ -5772,4 +5772,27 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.fibre_periodic_growth
 
 
+/-! #177: #19's criterion in record terms — the hyperbolic stroke has return growth, no fibre translation (hence no `shearEvolve` fibre action) does (`SigmaLayer/FibreReturnCriterion.lean`). -/
+
+/-- info: 'CSD.SigmaLayer.infinite_addCircle_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.infinite_addCircle_one
+
+/-- info: 'CSD.SigmaLayer.catStroke_hasReturnGrowth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.catStroke_hasReturnGrowth
+
+/-- info: 'CSD.SigmaLayer.pshift_eq_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.pshift_eq_add
+
+/-- info: 'CSD.SigmaLayer.not_hasReturnGrowth_pshift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.not_hasReturnGrowth_pshift
+
+/-- info: 'CSD.SigmaLayer.fibre_return_criterion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fibre_return_criterion
+
+
 end CSD.Tests.AxiomAudit

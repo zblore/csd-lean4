@@ -14193,4 +14193,31 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms MeasureTheory.tendsto_log_card_fixedPoints_cat
 
 
+/-! #177: the return criterion — growth of the periodic-point count with no derivative; translations of an infinite group fail it, the cat map has it at `2 log φ` (`Mathlib/Dynamics/ReturnCriterion.lean`). -/
+
+/-- info: 'returnCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms returnCount
+
+/-- info: 'HasReturnGrowth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasReturnGrowth
+
+/-- info: 'iterate_add_right' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms iterate_add_right
+
+/-- info: 'add_right_eq_self_iff' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms add_right_eq_self_iff
+
+/-- info: 'not_hasReturnGrowth_add_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms not_hasReturnGrowth_add_right
+
+/-- info: 'cat_hasReturnGrowth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms cat_hasReturnGrowth
+
+
 end CSD.Tests.AxiomAudit
