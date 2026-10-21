@@ -5795,4 +5795,11 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.fibre_return_criterion
 
 
+/-! #181: each shear returns its torsion circles, their composite returns finitely many points — the records-side picture of the parabolic case (`SigmaLayer/FibreShearReturns.lean`). -/
+
+/-- info: 'CSD.SigmaLayer.fibre_shear_returns' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fibre_shear_returns
+
+
 end CSD.Tests.AxiomAudit

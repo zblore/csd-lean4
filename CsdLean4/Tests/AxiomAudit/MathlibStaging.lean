@@ -14513,4 +14513,39 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms MeasureTheory.hasReturnGrowth_toral_iff_of_det
 
 
+/-! #181: what returns under a shear — the torsion circles; a shear fails the return criterion at every stroke (`Mathlib/Dynamics/ShearReturns.lean`). -/
+
+/-- info: 'MeasureTheory.shearX_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.shearX_iterate
+
+/-- info: 'MeasureTheory.shearY_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.shearY_iterate
+
+/-- info: 'MeasureTheory.shearX_iterate_fixed_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.shearX_iterate_fixed_iff
+
+/-- info: 'MeasureTheory.shearY_iterate_fixed_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.shearY_iterate_fixed_iff
+
+/-- info: 'MeasureTheory.infinite_fixedPoints_shearX_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.infinite_fixedPoints_shearX_iterate
+
+/-- info: 'MeasureTheory.infinite_fixedPoints_shearY_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.infinite_fixedPoints_shearY_iterate
+
+/-- info: 'MeasureTheory.not_hasReturnGrowth_shearX' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.not_hasReturnGrowth_shearX
+
+/-- info: 'MeasureTheory.not_hasReturnGrowth_shearY' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.not_hasReturnGrowth_shearY
+
+
 end CSD.Tests.AxiomAudit

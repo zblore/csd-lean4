@@ -547,6 +547,7 @@ public import CsdLean4.SigmaLayer.FibreTwoShears
 public import CsdLean4.SigmaLayer.FibreAffineShears
 public import CsdLean4.SigmaLayer.FibrePeriodicGrowth
 public import CsdLean4.SigmaLayer.FibreReturnCriterion
+public import CsdLean4.SigmaLayer.FibreShearReturns
 public import CsdLean4.SigmaLayer.FibreOtoc
 public import CsdLean4.SigmaLayer.UniqueErgodicity
 public import CsdLean4.SigmaLayer.Interference
@@ -635,6 +636,7 @@ public import CsdLean4.Mathlib.Dynamics.ReturnCriterion
 public import CsdLean4.Mathlib.Dynamics.ToralReturns
 public import CsdLean4.Mathlib.Dynamics.ToralReturnsConverse
 public import CsdLean4.Mathlib.Dynamics.ToralReturnsReversing
+public import CsdLean4.Mathlib.Dynamics.ShearReturns
 public import CsdLean4.Mathlib.Dynamics.ClassicalOtoc
 public import CsdLean4.RecordLayer.SwapWitness
 public import CsdLean4.RecordLayer.SwapLuders
