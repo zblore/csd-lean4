@@ -38,8 +38,9 @@ into `𝓢(F, G)` for the Schwartz topology is a different statement, it needs o
 and a mean-value estimate in the sliced variable, and Mathlib has no curry
 `𝓢(E × F, G) ≃ 𝓢(E, 𝓢(F, G))` to get it from. It is **#123**, and nothing in the corpus needs it.
 
-⚠️ **No partial Fourier transform**, which is #121(ii) and the half a pseudodifferential calculus
-would need.
+⚠️ ~~**No partial Fourier transform**, which is #121(ii) and the half a pseudodifferential calculus
+would need.~~ **Done 2026-10-21**: [`PartialFourierCLM.lean`](PartialFourierCLM.lean) (#170–#174),
+★★★ `SchwartzMap.partialFourierCLM : 𝓢(ℝ × ℝ, ℂ) →L[ℂ] 𝓢(ℝ × ℝ, ℂ)`.
 
 References: [`WeylSymbolClass.lean`](WeylSymbolClass.lean) (#92(a1), `weylOpK`, `weylOpK_eq_weylOp`,
 `exists_integrable_bound`), [`WignerWeyl.lean`](WignerWeyl.lean) (`weylOp`, `weylSymbol`,

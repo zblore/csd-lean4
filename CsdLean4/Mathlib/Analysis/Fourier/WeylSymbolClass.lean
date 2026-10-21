@@ -45,10 +45,12 @@ orders needs differentiation under the integral sign **to all orders with bounds
 in no form for integrals over `ℝ` (the corpus's `ContDiffParametricIntervalIntegral.lean`, from #60,
 is *interval* integrals on a compact interval, where the bounds come free from continuity).
 
-⚠️ **No slicing.** `weylOpK_eq_weylOp` takes a slice family as a *hypothesis*. That a Schwartz
-function on the plane slices into a Schwartz-valued family is precisely the two-variable Schwartz API
-#92 names as absent, and nothing here supplies it — which is why the properties above are proved for
-`weylOpK` directly rather than inherited through `weylOp`.
+⚠️ **No slicing here.** `weylOpK_eq_weylOp` takes a slice family as a *hypothesis*. That a Schwartz
+function on the plane slices into a Schwartz-valued family is the two-variable Schwartz API #92 named
+as absent when this file was written; it is now [`SchwartzSlice.lean`](SchwartzSlice.lean) (#121(i),
+`SchwartzMap.slice`), and the symbol of a sliced kernel is a Schwartz function on the plane by
+[`PartialFourierCLM.lean`](PartialFourierCLM.lean) (#121(ii), `partialFourierCLM_apply_eq_weylSymbol`).
+The properties above are still proved for `weylOpK` directly, as written.
 
 References: [`WignerWeyl.lean`](WignerWeyl.lean) (`weylOp`, `integrable_weylPair`,
 `integral_conj_mul_weylOp`), [`WignerCalculus.lean`](WignerCalculus.lean) (#92(b)(c)),

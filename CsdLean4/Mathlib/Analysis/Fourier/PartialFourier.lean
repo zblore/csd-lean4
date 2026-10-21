@@ -29,9 +29,12 @@ What is delivered here is the **slice-wise** transform, which is the object `wey
 
 ## Honest scope — and a dependency the row did not know about
 
-⚠️ **This does not close #121(ii), and the joint statement is not a corollary of it.** (The joint
-form is split into #170–#174; the smoothness and the uniform derivative bounds of the joint object
-are [`PartialFourierSmooth.lean`](PartialFourierSmooth.lean), #170.) That
+⚠️ **This does not close #121(ii) by itself, and the joint statement is not a corollary of it.**
+**The joint statement is now proved** (2026-10-21, #170–#174): ★★★ `SchwartzMap.partialFourierCLM`
+in [`PartialFourierCLM.lean`](PartialFourierCLM.lean) is the transform as a continuous linear map
+`𝓢(ℝ × ℝ, ℂ) →L[ℂ] 𝓢(ℝ × ℝ, ℂ)`, with `slice_partialFourierCLM` identifying its slices with this
+file's `sliceFourierCLM`. The paragraphs below record why that was not a corollary, as they stood when
+this file was written. That
 `(u, ξ) ↦ weylSymbol (slice K) u ξ` is Schwartz **on the plane** needs decay and smoothness *jointly*,
 and slice-wise Schwartzness gives neither: every constant here may depend on the midpoint `u`.
 

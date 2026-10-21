@@ -13924,4 +13924,59 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms SchwartzMap.exists_bound_partialFourier
 
 
+/-! #174: the partial Fourier transform as a continuous linear map of `𝓢(ℝ × ℝ, ℂ)`, its identification with `weylSymbol`, and the Wigner function of a Schwartz state as a Schwartz function on the plane (`Mathlib/Analysis/Fourier/PartialFourierCLM.lean`). -/
+
+/-- info: 'SchwartzMap.partialFourierCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourierCLM
+
+/-- info: 'SchwartzMap.partialFourierCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourierCLM_apply
+
+/-- info: 'SchwartzMap.slice_partialFourierCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.slice_partialFourierCLM
+
+/-- info: 'SchwartzMap.partialFourierCLM_apply_eq_weylSymbol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.partialFourierCLM_apply_eq_weylSymbol
+
+/-- info: 'SchwartzMap.conjS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.conjS
+
+/-- info: 'SchwartzMap.conjS_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.conjS_apply
+
+/-- info: 'SchwartzMap.wignerL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.wignerL
+
+/-- info: 'SchwartzMap.wignerL_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.wignerL_apply
+
+/-- info: 'SchwartzMap.norm_le_wignerL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.norm_le_wignerL
+
+/-- info: 'SchwartzMap.wignerKernelS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.wignerKernelS
+
+/-- info: 'SchwartzMap.wignerKernelS_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.wignerKernelS_apply
+
+/-- info: 'SchwartzMap.wignerSchwartz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.wignerSchwartz
+
+/-- info: 'SchwartzMap.wignerSchwartz_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.wignerSchwartz_apply
+
+
 end CSD.Tests.AxiomAudit

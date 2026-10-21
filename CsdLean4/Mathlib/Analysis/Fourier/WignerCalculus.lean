@@ -55,11 +55,14 @@ Along the way, three lemmas that are about the Fourier transform rather than abo
 
 ## Honest scope
 
-⚠️ **`W_ψ` is not proved to be Schwartz on `ℝ²`.** BACKLOG #92(c) asked for that, and what is proved
-here is what it was wanted for — joint measurability, square-integrability, and the product-measure
-form of the overlap identity — by a cheaper route: slicewise Plancherel plus a convolution, rather
-than seminorm estimates on the plane. The Schwartz property itself would need the partial Fourier
-transform to act on `𝓢(ℝ², ℂ)`, which the pin has in no form.
+⚠️ **`W_ψ` is not proved to be Schwartz on `ℝ²` here.** BACKLOG #92(c) asked for that, and what is
+proved here is what it was wanted for — joint measurability, square-integrability, and the
+product-measure form of the overlap identity — by a cheaper route: slicewise Plancherel plus a
+convolution, rather than seminorm estimates on the plane. **The Schwartz property itself is now
+proved** (2026-10-21): ★★★ `SchwartzMap.wignerSchwartz ψ : 𝓢(ℝ × ℝ, ℂ)` with
+`wignerSchwartz_apply : wignerSchwartz ψ (x, ξ) = wigner ψ x ξ` in
+[`PartialFourierCLM.lean`](PartialFourierCLM.lean), once the partial Fourier transform acted on
+`𝓢(ℝ², ℂ)` (#170–#174); this file's route stands as the cheaper one for what it proves.
 
 ⚠️ **`Op(a)` is still not an operator on `𝓢(ℝ, ℂ)`** (#92(a)). Nothing here maps Schwartz functions
 to Schwartz functions, composes symbols, or takes adjoints. With `weylOp`'s datum — a family
