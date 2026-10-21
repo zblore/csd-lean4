@@ -13359,4 +13359,91 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms Matrix.GappedPath.norm_sub_le_explicit
 
 
+/-! #167: the Wigner function on `L²` and its time derivative along the interacting Schrödinger orbit (`Mathlib/Analysis/Fourier/WignerL2.lean`). -/
+
+/-- info: 'WignerFunction.reflectAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.reflectAt
+
+/-- info: 'WignerFunction.shiftAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.shiftAt
+
+/-- info: 'WignerFunction.coeFn_reflectAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.coeFn_reflectAt
+
+/-- info: 'WignerFunction.coeFn_shiftAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.coeFn_shiftAt
+
+/-- info: 'WignerFunction.continuous_phase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.continuous_phase
+
+/-- info: 'WignerFunction.memLp_top_phase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.memLp_top_phase
+
+/-- info: 'WignerFunction.phaseLinf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.phaseLinf
+
+/-- info: 'WignerFunction.coeFn_phaseLinf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.coeFn_phaseLinf
+
+/-- info: 'WignerFunction.norm_phaseLinf_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_phaseLinf_le
+
+/-- info: 'WignerFunction.wignerLeft' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wignerLeft
+
+/-- info: 'WignerFunction.wignerRight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wignerRight
+
+/-- info: 'WignerFunction.coeFn_wignerLeft' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.coeFn_wignerLeft
+
+/-- info: 'WignerFunction.coeFn_wignerRight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.coeFn_wignerRight
+
+/-- info: 'WignerFunction.norm_wignerLeft_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_wignerLeft_apply
+
+/-- info: 'WignerFunction.norm_wignerRight_apply_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_wignerRight_apply_le
+
+/-- info: 'WignerFunction.wignerL2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wignerL2
+
+/-- info: 'WignerFunction.wignerL2_eq_integral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wignerL2_eq_integral
+
+/-- info: 'WignerFunction.norm_wignerL2_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.norm_wignerL2_le
+
+/-- info: 'WignerFunction.wignerL2_toLp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.wignerL2_toLp
+
+/-- info: 'WignerFunction.hasDerivAt_wignerL2' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.hasDerivAt_wignerL2
+
+/-- info: 'WignerFunction.hasDerivAt_wignerL2_schrodinger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms WignerFunction.hasDerivAt_wignerL2_schrodinger
+
+
 end CSD.Tests.AxiomAudit
