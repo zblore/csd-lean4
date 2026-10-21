@@ -13901,4 +13901,27 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms SchwartzMap.norm_pow_mul_norm_partialFourier_le
 
 
+/-! #173: the joint Schwartz seminorm bounds of the partial Fourier transform, `‖p‖ᵏ ‖∂ⁿ 𝓕₂K p‖ ≤ C · (s.sup 𝓠) K` (`Mathlib/Analysis/Fourier/PartialFourierBound.lean`). -/
+
+/-- info: 'SchwartzMap.continuous_finset_sup_schwartzSeminorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.continuous_finset_sup_schwartzSeminorm
+
+/-- info: 'SchwartzMap.exists_seminorm_bound_clm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.exists_seminorm_bound_clm
+
+/-- info: 'SchwartzMap.exists_seminorm_bound_Dop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.exists_seminorm_bound_Dop
+
+/-- info: 'SchwartzMap.exists_seminorm_bound_dopFin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.exists_seminorm_bound_dopFin
+
+/-- info: 'SchwartzMap.exists_bound_partialFourier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms SchwartzMap.exists_bound_partialFourier
+
+
 end CSD.Tests.AxiomAudit
