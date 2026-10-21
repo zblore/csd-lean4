@@ -37,7 +37,9 @@ an explicit `O(ω)` error. The general theorem (#158–#164) must specialise to 
   explicit error `πω/(2(B − ω)) + (ω/(B − ω))²` is `π²/((B − ω) T) + 4π²/((B − ω)² T²)` in the
   general theorem's variable `T`, and for `ω ≤ B/2` it is at most `(2π(π + 2)/B) · ω/(2π)` — so in
   this model the general theorem's constant can be taken `C = 2π(π + 2)/g` for the overlap, with
-  `g = B` the gap (a datapoint for BACKLOG #166, not a general formula).
+  `g = B` the gap. The general formula of `AdiabaticConstant.lean` (#166),
+  `8M₁/g² + 4M₂/g² + 80M₁²/g³`, gives for this path (by hand: `‖Ḣ‖ = πB sin θ`, `‖Ḧ‖ = 2π²B sin θ`,
+  not computed in Lean) about `894/B` at `θ = π/2` — larger, as it must be.
 
 ## Honest scope
 

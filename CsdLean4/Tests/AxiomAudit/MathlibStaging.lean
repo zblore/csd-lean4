@@ -13184,4 +13184,179 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms norm_inner_sub_le_norm_sub_smul
 
 
+/-! #166: an explicit adiabatic constant, `C = 8M₁/g² + 4M₂/g² + 80M₁²/g³` (`Mathlib/Analysis/Matrix/AdiabaticConstant.lean`; the first pin is `norm_sub_le_of_bounds`, the estimate of #162 factored out with the suprema as hypotheses). -/
+
+/-- info: 'Matrix.GappedPath.norm_sub_le_of_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_sub_le_of_bounds
+
+/-- info: 'contDiff_one_deriv_of_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms contDiff_one_deriv_of_two
+
+/-- info: 'norm_mul_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_mul_mul_le
+
+/-- info: 'norm_mul_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_mul_mul_le
+
+/-- info: 'norm_mul_add_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_mul_add_mul_le
+
+/-- info: 'norm_add_mul_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_add_mul_mul_le
+
+/-- info: 'Matrix.IsHermitian.norm_conjD_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.norm_conjD_le
+
+/-- info: 'Matrix.one_le_norm_of_mul_self_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.one_le_norm_of_mul_self_eq
+
+/-- info: 'Matrix.GappedPath.norm_rr_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_rr_le
+
+/-- info: 'Matrix.GappedPath.norm_redRes_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_redRes_le
+
+/-- info: 'Matrix.GappedPath.proj_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_ne_zero
+
+/-- info: 'Matrix.GappedPath.one_le_norm_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.one_le_norm_proj
+
+/-- info: 'Matrix.GappedPath.hasDerivAt_H' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hasDerivAt_H
+
+/-- info: 'Matrix.GappedPath.hasDerivAt_lam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hasDerivAt_lam
+
+/-- info: 'Matrix.GappedPath.hasDerivAt_redRes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hasDerivAt_redRes
+
+/-- info: 'Matrix.GappedPath.hasDerivAt_deriv_H' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hasDerivAt_deriv_H
+
+/-- info: 'Matrix.GappedPath.hasDerivAt_deriv_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hasDerivAt_deriv_proj
+
+/-- info: 'Matrix.GappedPath.redRes_mul_H' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.redRes_mul_H
+
+/-- info: 'Matrix.GappedPath.H_mul_redRes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.H_mul_redRes
+
+/-- info: 'Matrix.GappedPath.deriv_H_mul_proj_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.deriv_H_mul_proj_add
+
+/-- info: 'Matrix.GappedPath.proj_mul_H_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_mul_H_mul
+
+/-- info: 'Matrix.GappedPath.redRes_mul_proj_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.redRes_mul_proj_mul
+
+/-- info: 'Matrix.GappedPath.proj_mul_proj_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_mul_proj_mul
+
+/-- info: 'Matrix.GappedPath.proj_mul_deriv_proj_mul_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_mul_deriv_proj_mul_proj
+
+/-- info: 'Matrix.GappedPath.redRes_mul_H_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.redRes_mul_H_mul
+
+/-- info: 'Matrix.GappedPath.deriv_proj_mul_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.deriv_proj_mul_proj
+
+/-- info: 'Matrix.GappedPath.proj_mul_deriv_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_mul_deriv_proj
+
+/-- info: 'Matrix.GappedPath.deriv_proj_eq_redRes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.deriv_proj_eq_redRes
+
+/-- info: 'Matrix.GappedPath.deriv_H_mul_proj_add_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.deriv_H_mul_proj_add_eq
+
+/-- info: 'Matrix.GappedPath.proj_mul_deriv_H_mul_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.proj_mul_deriv_H_mul_proj
+
+/-- info: 'Matrix.GappedPath.norm_deriv_lam_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_deriv_lam_le
+
+/-- info: 'Matrix.GappedPath.deriv_redRes_mul_proj_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.deriv_redRes_mul_proj_add
+
+/-- info: 'Matrix.GappedPath.deriv_redRes_mul_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.deriv_redRes_mul_add
+
+/-- info: 'Matrix.GappedPath.deriv_redRes_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.deriv_redRes_eq
+
+/-- info: 'Matrix.GappedPath.hasDerivAt_deriv_proj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hasDerivAt_deriv_proj_eq
+
+/-- info: 'Matrix.GappedPath.hasDerivAt_Y' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.hasDerivAt_Y
+
+/-- info: 'Matrix.GappedPath.norm_deriv_proj_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_deriv_proj_le
+
+/-- info: 'Matrix.GappedPath.norm_deriv_redRes_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_deriv_redRes_le
+
+/-- info: 'Matrix.GappedPath.norm_deriv_deriv_proj_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_deriv_deriv_proj_le
+
+/-- info: 'Matrix.GappedPath.norm_Y_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_Y_le
+
+/-- info: 'Matrix.GappedPath.norm_K_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_K_le
+
+/-- info: 'Matrix.GappedPath.norm_deriv_Y_add_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_deriv_Y_add_le
+
+/-- info: 'Matrix.GappedPath.norm_sub_le_explicit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.GappedPath.norm_sub_le_explicit
+
+
 end CSD.Tests.AxiomAudit

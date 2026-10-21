@@ -41,13 +41,15 @@ boundary terms are `O(1/T)` because `Y` is bounded and the propagators are unita
 * `norm_one_le_one`, `norm_le_one_of_conjTranspose_mul_self`, `norm_conjTranspose_mul_mul_le` —
   unitaries have operator norm `≤ 1` (the C*-identity), so `‖U† X V‖ ≤ ‖X‖`;
 * `norm_sub_le_of_hasDerivWithinAt_Icc` — the mean-value bound on `[0, T]`;
+* ★★ `GappedPath.norm_sub_le_of_bounds` — the estimate with the two suprema as hypotheses;
 * ★★★ `GappedPath.exists_norm_sub_le` — **Kato's comparison**.
 
 ## Honest scope
 
 * `C` depends on the path only (through `sup ‖Y‖` and `sup ‖Ẏ + Y K‖` on `[0, 1]`, which exist by
-  compactness); it is not made explicit in terms of the gap and the derivatives of `H`. The row's
-  "`C(g, ‖Ḣ‖, ‖Ḧ‖)`" is a statement about *what `C` depends on*, honoured, not a formula.
+  compactness here); `AdiabaticConstant.lean` (#166) makes it the formula
+  `8 M₁/g² + 4 M₂/g² + 80 M₁²/g³` with `M₁ ≥ sup ‖Ḣ‖`, `M₂ ≥ sup ‖Ḧ‖`, through
+  `norm_sub_le_of_bounds`.
 * The path is `C²` (`2 ≤ n`) and the branch is an eigenvalue at every `s` (so `λ` is `C²` too,
   #159's `contDiff_lam`); the gap is uniform.
 * Finite dimensions, `L2Operator` norm scope, one-sided derivatives at the ends.
@@ -426,30 +428,19 @@ theorem contDiff_Y {n : ℕ∞} (hn : 2 ≤ n) (hH : ContDiff ℝ n Γ.H)
 
 /-! ### Kato's comparison -/
 
-/-- ★★★ **Kato's comparison.** Along a gapped `C²` path whose branch is an eigenvalue, there is a
-constant `C` such that, for every speed `T > 0`, the physical and the adiabatic propagators satisfy
-`‖U_T(s) − U_A(s)‖ ≤ C / T` for all `s ∈ [0, 1]`. -/
-theorem exists_norm_sub_le {n : ℕ∞} (hn : 2 ≤ n) (hH : ContDiff ℝ n Γ.H)
-    (hex : ∀ s, ∃ j, (Γ.isHermitian s).eigenvalues j = Γ.lam s) :
-    ∃ C : ℝ, 0 ≤ C ∧ ∀ T : ℝ, 0 < T → ∀ UT UA : ℝ → Matrix (Fin N) (Fin N) ℂ,
-      Γ.IsPhysPropagator T UT → Γ.IsAdPropagator T UA →
-      ∀ s ∈ Icc (0 : ℝ) 1, ‖UT s - UA s‖ ≤ C / T := by
+/-- ★★ **The estimate behind Kato's comparison**, with the two suprema as explicit hypotheses:
+if `‖Y‖ ≤ MY` and `‖Ẏ + Y K‖ ≤ ME` on `[0, 1]`, then `‖U_T(s) − U_A(s)‖ ≤ (2 MY + ME) / T`. -/
+theorem norm_sub_le_of_bounds {n : ℕ∞} (hn : 2 ≤ n) (hH : ContDiff ℝ n Γ.H)
+    (hex : ∀ s, ∃ j, (Γ.isHermitian s).eigenvalues j = Γ.lam s) {MY ME : ℝ}
+    (hMY : ∀ s ∈ Icc (0 : ℝ) 1, ‖Γ.Y s‖ ≤ MY)
+    (hME : ∀ s ∈ Icc (0 : ℝ) 1, ‖deriv Γ.Y s + Γ.Y s * Γ.K s‖ ≤ ME) {T : ℝ} (hT : 0 < T)
+    {UT UA : ℝ → Matrix (Fin N) (Fin N) ℂ} (hUT : Γ.IsPhysPropagator T UT)
+    (hUA : Γ.IsAdPropagator T UA) : ∀ s ∈ Icc (0 : ℝ) 1, ‖UT s - UA s‖ ≤ (2 * MY + ME) / T := by
   have hn1 : 1 ≤ n := le_trans (by norm_num) hn
   have hY : ContDiff ℝ 1 Γ.Y := Γ.contDiff_Y hn hH hex
-  have hYc : Continuous Γ.Y := hY.continuous
-  have hY' : Continuous (deriv Γ.Y) := hY.continuous_deriv le_rfl
-  have hK : Continuous Γ.K := Γ.continuous_K hn1 hH
   set E : ℝ → Matrix (Fin N) (Fin N) ℂ := fun s => deriv Γ.Y s + Γ.Y s * Γ.K s with hE
-  have hEc : Continuous E := hY'.add (hYc.mul hK)
-  obtain ⟨MY, hMY⟩ := isCompact_Icc.exists_bound_of_continuousOn
-    (hYc.continuousOn (s := Icc (0 : ℝ) 1))
-  obtain ⟨ME, hME⟩ := isCompact_Icc.exists_bound_of_continuousOn
-    (hEc.continuousOn (s := Icc (0 : ℝ) 1))
   have h01 : (0 : ℝ) ∈ Icc (0 : ℝ) 1 := ⟨le_rfl, zero_le_one⟩
-  have hMY0 : 0 ≤ MY := (norm_nonneg _).trans (hMY 0 h01)
-  have hME0 : 0 ≤ ME := (norm_nonneg _).trans (hME 0 h01)
-  refine ⟨2 * MY + ME, by positivity, ?_⟩
-  intro T hT UT UA hUT hUA s hs
+  intro s hs
   -- unitarity
   have hUTn : ∀ s ∈ Icc (0 : ℝ) 1, ‖UT s‖ ≤ 1 := fun s hs =>
     norm_le_one_of_conjTranspose_mul_self (hUT.conjTranspose_mul_self s hs)
@@ -514,9 +505,9 @@ theorem exists_norm_sub_le {n : ℕ∞} (hn : 2 ≤ n) (hH : ContDiff ℝ n Γ.H
           gcongr
           exact norm_sub_le _ _
       _ ≤ T⁻¹ * ME * 1 + T⁻¹ * (MY + MY) := by
-          gcongr
-          · exact hs.2
-          · exact hMY 0 h01
+          have hME0 : 0 ≤ ME := (norm_nonneg _).trans (hME 0 h01)
+          exact add_le_add (mul_le_mul_of_nonneg_left hs.2 (mul_nonneg (inv_nonneg.2 hT.le) hME0))
+            (mul_le_mul_of_nonneg_left (add_le_add hGn (hMY 0 h01)) (inv_nonneg.2 hT.le))
       _ = (2 * MY + ME) / T := by ring
   have hdiff : UA s - UT s = UT s * (W s - 1) := by
     rw [Matrix.mul_sub, Matrix.mul_one, hWdef, ← Matrix.mul_assoc, hUT.mul_conjTranspose s hs,
@@ -526,6 +517,30 @@ theorem exists_norm_sub_le {n : ℕ∞} (hn : 2 ≤ n) (hH : ContDiff ℝ n Γ.H
     _ ≤ ‖UT s‖ * ‖W s - 1‖ := norm_mul_le _ _
     _ ≤ 1 * ((2 * MY + ME) / T) := by gcongr; exact hUTn s hs
     _ = (2 * MY + ME) / T := one_mul _
+
+/-- ★★★ **Kato's comparison.** Along a gapped `C²` path whose branch is an eigenvalue, there is a
+constant `C` such that, for every speed `T > 0`, the physical and the adiabatic propagators satisfy
+`‖U_T(s) − U_A(s)‖ ≤ C / T` for all `s ∈ [0, 1]`. (`AdiabaticConstant.lean` makes `C` explicit.) -/
+theorem exists_norm_sub_le {n : ℕ∞} (hn : 2 ≤ n) (hH : ContDiff ℝ n Γ.H)
+    (hex : ∀ s, ∃ j, (Γ.isHermitian s).eigenvalues j = Γ.lam s) :
+    ∃ C : ℝ, 0 ≤ C ∧ ∀ T : ℝ, 0 < T → ∀ UT UA : ℝ → Matrix (Fin N) (Fin N) ℂ,
+      Γ.IsPhysPropagator T UT → Γ.IsAdPropagator T UA →
+      ∀ s ∈ Icc (0 : ℝ) 1, ‖UT s - UA s‖ ≤ C / T := by
+  have hn1 : 1 ≤ n := le_trans (by norm_num) hn
+  have hY : ContDiff ℝ 1 Γ.Y := Γ.contDiff_Y hn hH hex
+  have hYc : Continuous Γ.Y := hY.continuous
+  have hY' : Continuous (deriv Γ.Y) := hY.continuous_deriv le_rfl
+  have hK : Continuous Γ.K := Γ.continuous_K hn1 hH
+  have hEc : Continuous fun s => deriv Γ.Y s + Γ.Y s * Γ.K s := hY'.add (hYc.mul hK)
+  obtain ⟨MY, hMY⟩ := isCompact_Icc.exists_bound_of_continuousOn
+    (hYc.continuousOn (s := Icc (0 : ℝ) 1))
+  obtain ⟨ME, hME⟩ := isCompact_Icc.exists_bound_of_continuousOn
+    (hEc.continuousOn (s := Icc (0 : ℝ) 1))
+  have h01 : (0 : ℝ) ∈ Icc (0 : ℝ) 1 := ⟨le_rfl, zero_le_one⟩
+  have hMY0 : 0 ≤ MY := (norm_nonneg _).trans (hMY 0 h01)
+  have hME0 : 0 ≤ ME := (norm_nonneg _).trans (hME 0 h01)
+  exact ⟨2 * MY + ME, by positivity, fun T hT UT UA hUT hUA =>
+    Γ.norm_sub_le_of_bounds hn hH hex hMY hME hT hUT hUA⟩
 
 end Matrix.GappedPath
 
