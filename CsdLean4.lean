@@ -632,6 +632,7 @@ public import CsdLean4.Mathlib.Dynamics.CatMapShears
 public import CsdLean4.Mathlib.Dynamics.CatMapAffine
 public import CsdLean4.Mathlib.Dynamics.CatMapPeriodicPoints
 public import CsdLean4.Mathlib.Dynamics.ReturnCriterion
+public import CsdLean4.Mathlib.Dynamics.ToralReturns
 public import CsdLean4.Mathlib.Dynamics.ClassicalOtoc
 public import CsdLean4.RecordLayer.SwapWitness
 public import CsdLean4.RecordLayer.SwapLuders

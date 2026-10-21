@@ -14220,4 +14220,203 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms cat_hasReturnGrowth
 
 
+/-! #178: hyperbolic toral automorphisms have return growth `log ρ`, decided by the trace; the kernel of a toral endomorphism has `|det|` points (`Mathlib/Dynamics/ToralReturns.lean`). -/
+
+/-- info: 'MeasureTheory.toral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.toral
+
+/-- info: 'MeasureTheory.toral_one_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.toral_one_apply
+
+/-- info: 'MeasureTheory.toral_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.toral_mul
+
+/-- info: 'MeasureTheory.toral_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.toral_pow
+
+/-- info: 'MeasureTheory.toral_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.toral_sub
+
+/-- info: 'MeasureTheory.toral_fixed_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.toral_fixed_iff
+
+/-- info: 'MeasureTheory.realMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.realMat
+
+/-- info: 'MeasureTheory.adjMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.adjMat
+
+/-- info: 'MeasureTheory.det_cast' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.det_cast
+
+/-- info: 'MeasureTheory.adjMat_realMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.adjMat_realMat
+
+/-- info: 'MeasureTheory.realMat_adjMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.realMat_adjMat
+
+/-- info: 'MeasureTheory.realMat_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.realMat_smul
+
+/-- info: 'MeasureTheory.adjMat_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.adjMat_add
+
+/-- info: 'MeasureTheory.realMat_intCast' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.realMat_intCast
+
+/-- info: 'MeasureTheory.toral_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.toral_coe
+
+/-- info: 'MeasureTheory.toLin'_injective_of_det_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.toLin'_injective_of_det_ne_zero
+
+/-- info: 'MeasureTheory.kerVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.kerVec
+
+/-- info: 'MeasureTheory.realMat_kerVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.realMat_kerVec
+
+/-- info: 'MeasureTheory.kerVec_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.kerVec_add
+
+/-- info: 'MeasureTheory.kerLift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.kerLift
+
+/-- info: 'MeasureTheory.kerLift_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.kerLift_apply
+
+/-- info: 'MeasureTheory.kerLift_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.kerLift_mem
+
+/-- info: 'MeasureTheory.kerLift_surjective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.kerLift_surjective
+
+/-- info: 'MeasureTheory.kerLift_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.kerLift_eq_zero_iff
+
+/-- info: 'MeasureTheory.card_ker_toral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.card_ker_toral
+
+/-- info: 'MeasureTheory.det_sub_one_fin_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.det_sub_one_fin_two
+
+/-- info: 'MeasureTheory.card_fixedPoints_toral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.card_fixedPoints_toral
+
+/-- info: 'MeasureTheory.cayley_hamilton_fin_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cayley_hamilton_fin_two
+
+/-- info: 'MeasureTheory.trace_pow_add_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.trace_pow_add_two
+
+/-- info: 'MeasureTheory.spectralRadius' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.spectralRadius
+
+/-- info: 'MeasureTheory.one_lt_spectralRadius' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.one_lt_spectralRadius
+
+/-- info: 'MeasureTheory.spectralRadius_add_inv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.spectralRadius_add_inv
+
+/-- info: 'MeasureTheory.traceSign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.traceSign
+
+/-- info: 'MeasureTheory.traceSign_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.traceSign_sq
+
+/-- info: 'MeasureTheory.traceSign_mul_abs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.traceSign_mul_abs
+
+/-- info: 'MeasureTheory.abs_traceSign_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.abs_traceSign_pow
+
+/-- info: 'MeasureTheory.trace_pow_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.trace_pow_eq
+
+/-- info: 'MeasureTheory.det_pow_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.det_pow_sub_one
+
+/-- info: 'MeasureTheory.trace_pow_ne_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.trace_pow_ne_two
+
+/-- info: 'MeasureTheory.det_pow_sub_one_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.det_pow_sub_one_ne_zero
+
+/-- info: 'MeasureTheory.card_fixedPoints_toral_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.card_fixedPoints_toral_pow
+
+/-- info: 'MeasureTheory.card_fixedPoints_toral_pow_real' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.card_fixedPoints_toral_pow_real
+
+/-- info: 'MeasureTheory.hasReturnGrowth_toral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.hasReturnGrowth_toral
+
+/-- info: 'MeasureTheory.cat_eq_toral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cat_eq_toral
+
+/-- info: 'MeasureTheory.trace_catMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.trace_catMat
+
+/-- info: 'MeasureTheory.det_catMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.det_catMat
+
+/-- info: 'MeasureTheory.spectralRadius_catMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.spectralRadius_catMat
+
+/-- info: 'MeasureTheory.log_spectralRadius_catMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.log_spectralRadius_catMat
+
+/-- info: 'MeasureTheory.cat_hasReturnGrowth'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.cat_hasReturnGrowth'
+
+
 end CSD.Tests.AxiomAudit
