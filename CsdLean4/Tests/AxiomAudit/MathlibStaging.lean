@@ -14446,4 +14446,71 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms MeasureTheory.hasReturnGrowth_toral_iff
 
 
+/-! #180: the return criterion for `det B = −1` (return growth iff `tr B ≠ 0`, rate `log μ`) and on all of `GL₂(ℤ)` (`Mathlib/Dynamics/ToralReturnsReversing.lean`). -/
+
+/-- info: 'MeasureTheory.tendsto_log_div_of_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.tendsto_log_div_of_bounds
+
+/-- info: 'MeasureTheory.det_pow_sub_one_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.det_pow_sub_one_neg
+
+/-- info: 'MeasureTheory.trace_pow_add_two_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.trace_pow_add_two_neg
+
+/-- info: 'MeasureTheory.spectralRadiusNeg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.spectralRadiusNeg
+
+/-- info: 'MeasureTheory.spectralRadiusNeg_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.spectralRadiusNeg_pos
+
+/-- info: 'MeasureTheory.one_lt_spectralRadiusNeg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.one_lt_spectralRadiusNeg
+
+/-- info: 'MeasureTheory.spectralRadiusNeg_sub_inv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.spectralRadiusNeg_sub_inv
+
+/-- info: 'MeasureTheory.trace_pow_eq_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.trace_pow_eq_neg
+
+/-- info: 'MeasureTheory.traceSign_pow_even' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.traceSign_pow_even
+
+/-- info: 'MeasureTheory.count_bounds_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.count_bounds_neg
+
+/-- info: 'MeasureTheory.det_pow_sub_one_ne_zero_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.det_pow_sub_one_ne_zero_neg
+
+/-- info: 'MeasureTheory.card_fixedPoints_toral_pow_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.card_fixedPoints_toral_pow_neg
+
+/-- info: 'MeasureTheory.hasReturnGrowth_toral_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.hasReturnGrowth_toral_neg
+
+/-- info: 'MeasureTheory.not_hasReturnGrowth_toral_of_trace_eq_zero_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.not_hasReturnGrowth_toral_of_trace_eq_zero_neg
+
+/-- info: 'MeasureTheory.hasReturnGrowth_toral_iff_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.hasReturnGrowth_toral_iff_neg
+
+/-- info: 'MeasureTheory.hasReturnGrowth_toral_iff_of_det' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.hasReturnGrowth_toral_iff_of_det
+
+
 end CSD.Tests.AxiomAudit
