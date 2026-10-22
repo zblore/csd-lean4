@@ -2689,4 +2689,123 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.signal_exchange
 
 
+/-! #184: radar coordinates from two clock readings on the domain `τ₋ ≤ τ₊` — origin shift fixes the separation, unit rescaling is absorbed by the calibration constant, endpoint errors `≤ δ` give coordinate errors `≤ δ` and `≤ c₀ δ` (`CV/RadarCoordinates.lean`). -/
+
+/-- info: 'CSD.CV.RadarReadings' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings
+
+/-- info: 'CSD.CV.RadarReadings.radarTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarTime
+
+/-- info: 'CSD.CV.RadarReadings.radarSep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarSep
+
+/-- info: 'CSD.CV.RadarReadings.radarDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarDist
+
+/-- info: 'CSD.CV.RadarReadings.emit_le_radarTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.emit_le_radarTime
+
+/-- info: 'CSD.CV.RadarReadings.radarTime_le_ret' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarTime_le_ret
+
+/-- info: 'CSD.CV.RadarReadings.radarSep_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarSep_nonneg
+
+/-- info: 'CSD.CV.RadarReadings.radarSep_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarSep_eq_zero_iff
+
+/-- info: 'CSD.CV.RadarReadings.radarDist_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarDist_nonneg
+
+/-- info: 'CSD.CV.RadarReadings.radarTime_sub_radarSep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarTime_sub_radarSep
+
+/-- info: 'CSD.CV.RadarReadings.radarTime_add_radarSep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarTime_add_radarSep
+
+/-- info: 'CSD.CV.RadarReadings.ext_of_radar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.ext_of_radar
+
+/-- info: 'CSD.CV.RadarReadings.shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.shift
+
+/-- info: 'CSD.CV.RadarReadings.radarTime_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarTime_shift
+
+/-- info: 'CSD.CV.RadarReadings.radarSep_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarSep_shift
+
+/-- info: 'CSD.CV.RadarReadings.radarDist_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarDist_shift
+
+/-- info: 'CSD.CV.RadarReadings.rescale' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.rescale
+
+/-- info: 'CSD.CV.RadarReadings.radarTime_rescale' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarTime_rescale
+
+/-- info: 'CSD.CV.RadarReadings.radarSep_rescale' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarSep_rescale
+
+/-- info: 'CSD.CV.RadarReadings.radarDist_rescale' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarDist_rescale
+
+/-- info: 'CSD.CV.RadarReadings.radarDist_rescale_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarDist_rescale_eq
+
+/-- info: 'CSD.CV.RadarReadings.abs_radarTime_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.abs_radarTime_sub_le
+
+/-- info: 'CSD.CV.RadarReadings.abs_radarSep_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.abs_radarSep_sub_le
+
+/-- info: 'CSD.CV.RadarReadings.abs_radarDist_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.abs_radarDist_sub_le
+
+/-- info: 'CSD.CV.RadarReadings.radarSep_eq_of_duration_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarSep_eq_of_duration_eq
+
+/-- info: 'CSD.CV.RadarReadings.ofDuration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.ofDuration
+
+/-- info: 'CSD.CV.RadarReadings.radarSep_ofDuration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarSep_ofDuration
+
+/-- info: 'CSD.CV.RadarReadings.radarSep_roundTrip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radarSep_roundTrip
+
+/-- info: 'CSD.CV.RadarReadings.radar_coordinates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.RadarReadings.radar_coordinates
+
+
 end CSD.Tests.AxiomAudit

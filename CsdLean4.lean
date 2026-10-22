@@ -679,6 +679,7 @@ public import CsdLean4.CV.EntanglementDistance
 public import CsdLean4.CV.DispersionEarned
 public import CsdLean4.CV.TwoCones
 public import CsdLean4.CV.SignalExchange
+public import CsdLean4.CV.RadarCoordinates
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment
 public import CsdLean4.CV.EntangledWeights
