@@ -678,6 +678,7 @@ public import CsdLean4.CV.CausalDistance
 public import CsdLean4.CV.EntanglementDistance
 public import CsdLean4.CV.DispersionEarned
 public import CsdLean4.CV.TwoCones
+public import CsdLean4.CV.SignalExchange
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment
 public import CsdLean4.CV.EntangledWeights
@@ -787,6 +788,7 @@ public import CsdLean4.Empirical.CSD.Darwinism
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
 public import CsdLean4.Mathlib.Analysis.Matrix.TrotterProduct
+public import CsdLean4.Mathlib.Analysis.Normed.Algebra.ExpUnique
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PathSum
 public import CsdLean4.Mathlib.Analysis.Matrix.SumOverPaths
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonSeries

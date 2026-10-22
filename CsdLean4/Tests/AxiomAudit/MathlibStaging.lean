@@ -14599,4 +14599,19 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms MeasureTheory.affineCat_hasReturnGrowth
 
 
+/-! #183: the exponential is the unique solution of `U' = X U`, `U 0 = 1`; the closed form `exp (a • X) = 1 + (cosh a − 1) • P + sinh a • X` for `X² = P`, `X P = X` (`Mathlib/Analysis/Normed/Algebra/ExpUnique.lean`). -/
+
+/-- info: 'exp_smul_mul_exp_neg_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exp_smul_mul_exp_neg_smul
+
+/-- info: 'exp_smul_eq_of_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exp_smul_eq_of_hasDerivAt
+
+/-- info: 'exp_smul_eq_cosh_sinh' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms exp_smul_eq_cosh_sinh
+
+
 end CSD.Tests.AxiomAudit

@@ -2474,4 +2474,219 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.arenaKick_arenaEquiv
 
 
+/-! #183: the signal exchange — a two-site hop as a `FieldStructuredFlow`, exact transfer with phase `−i` at `τ_hop = πħ/2J`, the Rabi return at `2 τ_hop`, the receiver's readout `1` vs `0`, partial transfer before `τ_hop` (`CV/SignalExchange.lean`). -/
+
+/-- info: 'CSD.CV.vacC' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.vacC
+
+/-- info: 'CSD.CV.excA' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.excA
+
+/-- info: 'CSD.CV.excB' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.excB
+
+/-- info: 'CSD.CV.excA_ne_excB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.excA_ne_excB
+
+/-- info: 'CSD.CV.vacC_ne_excA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.vacC_ne_excA
+
+/-- info: 'CSD.CV.vacC_ne_excB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.vacC_ne_excB
+
+/-- info: 'CSD.CV.msgConfig' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.msgConfig
+
+/-- info: 'CSD.CV.msgConfig_zero' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.msgConfig_zero
+
+/-- info: 'CSD.CV.msgConfig_one' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.msgConfig_one
+
+/-- info: 'CSD.CV.msgConfig_siteB' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.msgConfig_siteB
+
+/-- info: 'CSD.CV.hopX' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopX
+
+/-- info: 'CSD.CV.oneExc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.oneExc
+
+/-- info: 'CSD.CV.hopX_mul_hopX' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopX_mul_hopX
+
+/-- info: 'CSD.CV.hopX_mul_oneExc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopX_mul_oneExc
+
+/-- info: 'CSD.CV.single_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.single_conjTranspose
+
+/-- info: 'CSD.CV.hopX_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopX_conjTranspose
+
+/-- info: 'CSD.CV.hopGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopGen
+
+/-- info: 'CSD.CV.hopGen_skew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopGen_skew
+
+/-- info: 'CSD.CV.supportedOn_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.supportedOn_pair
+
+/-- info: 'CSD.CV.hopFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopFlow
+
+/-- info: 'CSD.CV.hopFlow_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopFlow_val
+
+/-- info: 'CSD.CV.hopAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopAngle
+
+/-- info: 'CSD.CV.smul_hopGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.smul_hopGen
+
+/-- info: 'CSD.CV.hopFlow_val_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopFlow_val_eq
+
+/-- info: 'CSD.CV.hopFlow_mulVec_excA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopFlow_mulVec_excA
+
+/-- info: 'CSD.CV.hopFlow_mulVec_vacC' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopFlow_mulVec_vacC
+
+/-- info: 'CSD.CV.basisVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.basisVec
+
+/-- info: 'CSD.CV.basisVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.basisVec_apply
+
+/-- info: 'CSD.CV.basisVec_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.basisVec_ne_zero
+
+/-- info: 'CSD.CV.msgPoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.msgPoint
+
+/-- info: 'CSD.CV.msgPoint_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.msgPoint_zero
+
+/-- info: 'CSD.CV.msgPoint_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.msgPoint_one
+
+/-- info: 'CSD.CV.occB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occB
+
+/-- info: 'CSD.CV.arenaObs_single_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_single_mk
+
+/-- info: 'CSD.CV.toEuclideanLin_hopFlow_excA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.toEuclideanLin_hopFlow_excA
+
+/-- info: 'CSD.CV.toEuclideanLin_hopFlow_vacC' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.toEuclideanLin_hopFlow_vacC
+
+/-- info: 'CSD.CV.norm_transferred' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_transferred
+
+/-- info: 'CSD.CV.receiver_readout_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.receiver_readout_one
+
+/-- info: 'CSD.CV.receiver_readout_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.receiver_readout_zero
+
+/-- info: 'CSD.CV.hopTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopTime
+
+/-- info: 'CSD.CV.roundTrip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.roundTrip
+
+/-- info: 'CSD.CV.hopTime_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopTime_pos
+
+/-- info: 'CSD.CV.roundTrip_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.roundTrip_pos
+
+/-- info: 'CSD.CV.hopAngle_hopTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopAngle_hopTime
+
+/-- info: 'CSD.CV.hopAngle_roundTrip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopAngle_roundTrip
+
+/-- info: 'CSD.CV.transfer_at_hopTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transfer_at_hopTime
+
+/-- info: 'CSD.CV.return_at_roundTrip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.return_at_roundTrip
+
+/-- info: 'CSD.CV.arenaFlow_hopTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaFlow_hopTime
+
+/-- info: 'CSD.CV.arenaFlow_roundTrip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaFlow_roundTrip
+
+/-- info: 'CSD.CV.receiver_distinguishes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.receiver_distinguishes
+
+/-- info: 'CSD.CV.partial_transfer_before_hopTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.partial_transfer_before_hopTime
+
+/-- info: 'CSD.CV.influence_of_message' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.influence_of_message
+
+/-- info: 'CSD.CV.signal_exchange' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.signal_exchange
+
+
 end CSD.Tests.AxiomAudit
