@@ -127,6 +127,16 @@ like which interaction an apparatus realises, a modelling input. It is the autho
   `arenaForm_isSymplectic`). Row 39's "Σ-local" has to be read that way or it is false on the corpus's own
   theorems.
 
+* **Known constants are constraints on the reconstruction, not outputs of it** (added 2026-10-22 with the
+  clock-and-echo rows, BACKLOG #183–#189). A radar separation `R_A = c₀ D_A` introduces `c₀` as a *calibration*
+  constant; nothing in a finite witness makes it a universal signal speed, and on this arena the cone moves one
+  edge per period in a preferred frame (row 98), so a common effective cone across different signal and clock
+  constructions can only be common *relative to the assumed graph and schedule*. Likewise `ħ` enters as the
+  consistency of energy, phase and calibrated-time conventions, not as a derived number; `G` and horizon entropy
+  are reserved for a matter–geometry coupling that no part of this corpus addresses. A numerical SI value is never
+  derived by choosing units. Full Lorentz invariance is a later theorem target; every model on this arena must
+  state its preferred microscopic schedule and network structure.
+
 ## 5. What the existing theorems constrain
 
 Any account of spacetime from records that the corpus would accept has to respect all of the following, and
