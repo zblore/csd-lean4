@@ -6271,4 +6271,63 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.recorded_exchange
 
 
+/-! #187: the capstone of the clock-and-echo programme — on one arena with one evolution, persistent clock and exchange records, radar coordinates from the physical clock's readings reproduced by every cycle, the causal chain, bounded errors, finite memory (`RecordLayer/OperationalGeometry.lean`). -/
+
+/-- info: 'CSD.RecordLayer.arenaFlow_cycles' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaFlow_cycles
+
+/-- info: 'CSD.RecordLayer.arenaFlow_cycle_reception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaFlow_cycle_reception
+
+/-- info: 'CSD.RecordLayer.receiver_cycle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.receiver_cycle
+
+/-- info: 'CSD.RecordLayer.xEvolve_exchange_of_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.xEvolve_exchange_of_nonneg
+
+/-- info: 'CSD.RecordLayer.clockReading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockReading
+
+/-- info: 'CSD.RecordLayer.clockReading_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockReading_eq
+
+/-- info: 'CSD.RecordLayer.clockReading_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockReading_mono
+
+/-- info: 'CSD.RecordLayer.clockReading_at_period' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockReading_at_period
+
+/-- info: 'CSD.RecordLayer.cycleReadings' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cycleReadings
+
+/-- info: 'CSD.RecordLayer.cycleReadings_emit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cycleReadings_emit
+
+/-- info: 'CSD.RecordLayer.cycleReadings_ret' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cycleReadings_ret
+
+/-- info: 'CSD.RecordLayer.radarSep_cycle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarSep_cycle
+
+/-- info: 'CSD.RecordLayer.radarTime_cycle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarTime_cycle
+
+/-- info: 'CSD.RecordLayer.operational_geometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.operational_geometry
+
+
 end CSD.Tests.AxiomAudit
