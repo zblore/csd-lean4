@@ -5802,4 +5802,19 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.fibre_shear_returns
 
 
+/-! #182: the base-read offsets are invisible to the return criterion too — same return count as the cat stroke at every stroke (`SigmaLayer/FibreAffineReturns.lean`). -/
+
+/-- info: 'CSD.SigmaLayer.hasReturnGrowth_shearXOff_comp_shearYOff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.hasReturnGrowth_shearXOff_comp_shearYOff
+
+/-- info: 'CSD.SigmaLayer.returnCount_shearXOff_comp_shearYOff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.returnCount_shearXOff_comp_shearYOff
+
+/-- info: 'CSD.SigmaLayer.fibre_affine_returns' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fibre_affine_returns
+
+
 end CSD.Tests.AxiomAudit

@@ -14548,4 +14548,55 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms MeasureTheory.not_hasReturnGrowth_shearY
 
 
+/-! #182: return growth is conjugation-invariant; every affine cat map has return growth `2 log φ` (`Mathlib/Dynamics/ReturnCriterionConj.lean`). -/
+
+/-- info: 'iterate_conj' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms iterate_conj
+
+/-- info: 'iterate_conj_apply' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms iterate_conj_apply
+
+/-- info: 'fixedPointsEquivConj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms fixedPointsEquivConj
+
+/-- info: 'returnCount_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms returnCount_conj
+
+/-- info: 'HasReturnGrowth.conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasReturnGrowth.conj
+
+/-- info: 'symm_conj_conj' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms symm_conj_conj
+
+/-- info: 'hasReturnGrowth_conj_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms hasReturnGrowth_conj_iff
+
+/-- info: 'HasReturnGrowth.unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms HasReturnGrowth.unique
+
+/-- info: 'MeasureTheory.affineCat_eq_conj_equiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCat_eq_conj_equiv
+
+/-- info: 'MeasureTheory.returnCount_affineCat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.returnCount_affineCat
+
+/-- info: 'MeasureTheory.card_fixedPoints_affineCat_iterate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.card_fixedPoints_affineCat_iterate
+
+/-- info: 'MeasureTheory.affineCat_hasReturnGrowth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.affineCat_hasReturnGrowth
+
+
 end CSD.Tests.AxiomAudit
