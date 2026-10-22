@@ -644,6 +644,7 @@ public import CsdLean4.RecordLayer.SwapWitness
 public import CsdLean4.RecordLayer.RecordClock
 public import CsdLean4.RecordLayer.RecordedExchange
 public import CsdLean4.RecordLayer.OperationalGeometry
+public import CsdLean4.RecordLayer.ClockCalibration
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.TwoTimeLuders
 public import CsdLean4.RecordLayer.EntangledRecord

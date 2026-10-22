@@ -6330,4 +6330,111 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.operational_geometry
 
 
+/-! #188: two clocks — colocated agreement under each clock's own calibration, exact agreement at tick boundaries under equal rates, linear drift under miscalibration, the synchronised clock at `B` reading `A`'s radar time at reception, and clock time (`2` ticks) against the longest chain (`≥ 3`) (`RecordLayer/ClockCalibration.lean`). -/
+
+/-- info: 'CSD.RecordLayer.twoClockEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoClockEvolve
+
+/-- info: 'CSD.RecordLayer.twoClockEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoClockEvolve_self
+
+/-- info: 'CSD.RecordLayer.twoClockEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoClockEvolve_comp
+
+/-- info: 'CSD.RecordLayer.measurable_twoClockEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_twoClockEvolve
+
+/-- info: 'CSD.RecordLayer.twoClockEvolve_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoClockEvolve_measurePreserving
+
+/-- info: 'CSD.RecordLayer.reading₁' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reading₁
+
+/-- info: 'CSD.RecordLayer.reading₂' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reading₂
+
+/-- info: 'CSD.RecordLayer.reading₁_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reading₁_eq
+
+/-- info: 'CSD.RecordLayer.reading₂_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reading₂_eq
+
+/-- info: 'CSD.RecordLayer.colocated_agreement' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.colocated_agreement
+
+/-- info: 'CSD.RecordLayer.equal_rate_agreement_at_period' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.equal_rate_agreement_at_period
+
+/-- info: 'CSD.RecordLayer.miscalibrated_drift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.miscalibrated_drift
+
+/-- info: 'CSD.RecordLayer.reception_reading_eq_radarTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reception_reading_eq_radarTime
+
+/-- info: 'CSD.RecordLayer.delay_eq_graph_separation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.delay_eq_graph_separation
+
+/-- info: 'CSD.RecordLayer.elapsed_ticks_emission_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.elapsed_ticks_emission_return
+
+/-- info: 'CSD.RecordLayer.emission_ne_reception' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emission_ne_reception
+
+/-- info: 'CSD.RecordLayer.reception_ne_return' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reception_ne_return
+
+/-- info: 'CSD.RecordLayer.two_le_causalDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_le_causalDist
+
+/-- info: 'CSD.RecordLayer.bothSitesAtOne' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bothSitesAtOne
+
+/-- info: 'CSD.RecordLayer.emission_precedes_bothSites' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emission_precedes_bothSites
+
+/-- info: 'CSD.RecordLayer.bothSites_precedes_reception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bothSites_precedes_reception
+
+/-- info: 'CSD.RecordLayer.emission_ne_bothSites' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emission_ne_bothSites
+
+/-- info: 'CSD.RecordLayer.bothSites_ne_reception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bothSites_ne_reception
+
+/-- info: 'CSD.RecordLayer.three_le_causalDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.three_le_causalDist
+
+/-- info: 'CSD.RecordLayer.elapsed_ticks_ne_causalDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.elapsed_ticks_ne_causalDist
+
+/-- info: 'CSD.RecordLayer.clock_calibration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clock_calibration
+
+
 end CSD.Tests.AxiomAudit
