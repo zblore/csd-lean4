@@ -5817,4 +5817,187 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.fibre_affine_returns
 
 
+/-! #185: the record clock — a periodic register plus `K` fresh slots on one arena, a measure-preserving two-time propagator, the tick count measurable and nondecreasing, exactly `m` ticks at time `m T`, each tick persistent through `record_persists_on_interval`, and the calibrated reading within one tick of `t_Σ` (`RecordLayer/RecordClock.lean`). -/
+
+/-- info: 'CSD.RecordLayer.winElapsed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.winElapsed
+
+/-- info: 'CSD.RecordLayer.winElapsed_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.winElapsed_nonneg
+
+/-- info: 'CSD.RecordLayer.winElapsed_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.winElapsed_le_one
+
+/-- info: 'CSD.RecordLayer.winElapsed_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.winElapsed_of_le
+
+/-- info: 'CSD.RecordLayer.winElapsed_of_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.winElapsed_of_ge
+
+/-- info: 'CSD.RecordLayer.winElapsed_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.winElapsed_mono
+
+/-- info: 'CSD.RecordLayer.clockEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEvolve
+
+/-- info: 'CSD.RecordLayer.clockEvolve_osc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEvolve_osc
+
+/-- info: 'CSD.RecordLayer.clockEvolve_slot' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEvolve_slot
+
+/-- info: 'CSD.RecordLayer.clockEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEvolve_self
+
+/-- info: 'CSD.RecordLayer.clockEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEvolve_comp
+
+/-- info: 'CSD.RecordLayer.measurable_pshift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_pshift
+
+/-- info: 'CSD.RecordLayer.measurable_clockEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_clockEvolve
+
+/-- info: 'CSD.RecordLayer.clockEvolve_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEvolve_measurePreserving
+
+/-- info: 'CSD.RecordLayer.osc_period' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.osc_period
+
+/-- info: 'CSD.RecordLayer.writtenArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.writtenArc
+
+/-- info: 'CSD.RecordLayer.measurableSet_writtenArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_writtenArc
+
+/-- info: 'CSD.RecordLayer.writtenArc_eq_pointerArc_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.writtenArc_eq_pointerArc_zero
+
+/-- info: 'CSD.RecordLayer.readyArc_disjoint_writtenArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readyArc_disjoint_writtenArc
+
+/-- info: 'CSD.RecordLayer.gap_add_width_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gap_add_width_le_one
+
+/-- info: 'CSD.RecordLayer.rep_pshift_ready' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rep_pshift_ready
+
+/-- info: 'CSD.RecordLayer.written_of_ready' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.written_of_ready
+
+/-- info: 'CSD.RecordLayer.written_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.written_mono
+
+/-- info: 'CSD.RecordLayer.ClockReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ClockReady
+
+/-- info: 'CSD.RecordLayer.measurableSet_clockReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_clockReady
+
+/-- info: 'CSD.RecordLayer.clockEvolve_slot_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEvolve_slot_zero
+
+/-- info: 'CSD.RecordLayer.slot_ready_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.slot_ready_before
+
+/-- info: 'CSD.RecordLayer.slot_written_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.slot_written_after
+
+/-- info: 'CSD.RecordLayer.slot_written_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.slot_written_mono
+
+/-- info: 'CSD.RecordLayer.tickCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickCount
+
+/-- info: 'CSD.RecordLayer.tickCount_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickCount_eq_sum
+
+/-- info: 'CSD.RecordLayer.measurable_tickCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_tickCount
+
+/-- info: 'CSD.RecordLayer.tickCount_le_horizon' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickCount_le_horizon
+
+/-- info: 'CSD.RecordLayer.tickCount_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickCount_mono
+
+/-- info: 'CSD.RecordLayer.tickCount_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickCount_ge
+
+/-- info: 'CSD.RecordLayer.tickCount_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickCount_le
+
+/-- info: 'CSD.RecordLayer.tickCount_at_period' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickCount_at_period
+
+/-- info: 'CSD.RecordLayer.successive_ticks_distinguishable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.successive_ticks_distinguishable
+
+/-- info: 'CSD.RecordLayer.tickProtocol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickProtocol
+
+/-- info: 'CSD.RecordLayer.tickProtocol_pointerInvariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickProtocol_pointerInvariant
+
+/-- info: 'CSD.RecordLayer.tick_persists' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tick_persists
+
+/-- info: 'CSD.RecordLayer.tickReading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickReading
+
+/-- info: 'CSD.RecordLayer.tickReading_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickReading_nonneg
+
+/-- info: 'CSD.RecordLayer.abs_tickReading_sub_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_tickReading_sub_lt
+
+/-- info: 'CSD.RecordLayer.record_clock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.record_clock
+
+
 end CSD.Tests.AxiomAudit

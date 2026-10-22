@@ -641,6 +641,7 @@ public import CsdLean4.Mathlib.Dynamics.ShearReturns
 public import CsdLean4.Mathlib.Dynamics.ReturnCriterionConj
 public import CsdLean4.Mathlib.Dynamics.ClassicalOtoc
 public import CsdLean4.RecordLayer.SwapWitness
+public import CsdLean4.RecordLayer.RecordClock
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.TwoTimeLuders
 public import CsdLean4.RecordLayer.EntangledRecord
