@@ -6437,4 +6437,87 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.clock_calibration
 
 
+/-! #189: failure of the exchange and the retention window — the union bound over the three writes with the two failure sources separated, the exact witness valid, the band bound of #103 on the register torus, the write's absence of tolerance, and `τ_R ≥ 2 τ_hop` sufficient for every record to be alive at the return readout (`RecordLayer/ExchangeFailure.lean`). -/
+
+/-- info: 'CSD.RecordLayer.ExchangeValid' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchangeValid
+
+/-- info: 'CSD.RecordLayer.recordFailure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordFailure
+
+/-- info: 'CSD.RecordLayer.notReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.notReady
+
+/-- info: 'CSD.RecordLayer.messageFailure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.messageFailure
+
+/-- info: 'CSD.RecordLayer.register_at_readout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.register_at_readout
+
+/-- info: 'CSD.RecordLayer.recordFailure_subset_union' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.recordFailure_subset_union
+
+/-- info: 'CSD.RecordLayer.not_exchangeValid_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_exchangeValid_iff
+
+/-- info: 'CSD.RecordLayer.invalid_eq_iUnion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.invalid_eq_iUnion
+
+/-- info: 'CSD.RecordLayer.measurableSet_recordFailure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_recordFailure
+
+/-- info: 'CSD.RecordLayer.measurableSet_invalid' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_invalid
+
+/-- info: 'CSD.RecordLayer.measure_invalid_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_invalid_le
+
+/-- info: 'CSD.RecordLayer.measure_invalid_le'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_invalid_le'
+
+/-- info: 'CSD.RecordLayer.prob_valid_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.prob_valid_ge
+
+/-- info: 'CSD.RecordLayer.exchangeValid_xPrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchangeValid_xPrep
+
+/-- info: 'CSD.RecordLayer.dirac_invalid_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_invalid_eq_zero
+
+/-- info: 'CSD.RecordLayer.volume_band_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_band_le
+
+/-- info: 'CSD.RecordLayer.pshift_shearAmt_notMem_pointerArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pshift_shearAmt_notMem_pointerArc
+
+/-- info: 'CSD.RecordLayer.retention_sufficient' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.retention_sufficient
+
+/-- info: 'CSD.RecordLayer.records_at_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.records_at_return
+
+/-- info: 'CSD.RecordLayer.exchange_failure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchange_failure
+
+
 end CSD.Tests.AxiomAudit
