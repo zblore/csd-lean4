@@ -646,6 +646,7 @@ public import CsdLean4.RecordLayer.RecordedExchange
 public import CsdLean4.RecordLayer.OperationalGeometry
 public import CsdLean4.RecordLayer.ClockCalibration
 public import CsdLean4.RecordLayer.ExchangeFailure
+public import CsdLean4.RecordLayer.ChainClocks
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.TwoTimeLuders
 public import CsdLean4.RecordLayer.EntangledRecord
@@ -685,6 +686,7 @@ public import CsdLean4.CV.DispersionEarned
 public import CsdLean4.CV.TwoCones
 public import CsdLean4.CV.SignalExchange
 public import CsdLean4.CV.RadarCoordinates
+public import CsdLean4.CV.ChainExchange
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment
 public import CsdLean4.CV.EntangledWeights

@@ -6520,4 +6520,127 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.exchange_failure
 
 
+/-! #190: clocks along the chain — the common arena with a clock at every site, its two-time measure-preserving evolution, the clock at site `k` showing `k` ticks at reception = the graph distance, the reception as a `RecordEvent` labelled by the clock, and the chain inflation `causalDist ≥ 2k` against `k` elapsed ticks (`RecordLayer/ChainClocks.lean`). -/
+
+/-- info: 'CSD.RecordLayer.ChainArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ChainArena
+
+/-- info: 'CSD.RecordLayer.chainKick_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainKick_eq_smul
+
+/-- info: 'CSD.RecordLayer.measurable_chainKick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_chainKick
+
+/-- info: 'CSD.RecordLayer.chainEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainEvolve
+
+/-- info: 'CSD.RecordLayer.chainEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainEvolve_self
+
+/-- info: 'CSD.RecordLayer.chainEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainEvolve_comp
+
+/-- info: 'CSD.RecordLayer.measurable_chainEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_chainEvolve
+
+/-- info: 'CSD.RecordLayer.chainEvolve_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainEvolve_measurePreserving
+
+/-- info: 'CSD.RecordLayer.ChainReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ChainReady
+
+/-- info: 'CSD.RecordLayer.chainPrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainPrep
+
+/-- info: 'CSD.RecordLayer.siteReading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteReading
+
+/-- info: 'CSD.RecordLayer.chainEvolve_exchange_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainEvolve_exchange_zero
+
+/-- info: 'CSD.RecordLayer.tickCount_at_reception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickCount_at_reception
+
+/-- info: 'CSD.RecordLayer.reception_reading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reception_reading
+
+/-- info: 'CSD.RecordLayer.clock_delay_eq_graphDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clock_delay_eq_graphDist
+
+/-- info: 'CSD.RecordLayer.reception_readout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reception_readout
+
+/-- info: 'CSD.RecordLayer.eventOfReception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.eventOfReception
+
+/-- info: 'CSD.RecordLayer.siteEvent' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteEvent
+
+/-- info: 'CSD.RecordLayer.pairEvent' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pairEvent
+
+/-- info: 'CSD.RecordLayer.eventOfReception_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.eventOfReception_eq
+
+/-- info: 'CSD.RecordLayer.succ_mem_graphBall_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.succ_mem_graphBall_one
+
+/-- info: 'CSD.RecordLayer.siteEvent_precedes_pairEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteEvent_precedes_pairEvent
+
+/-- info: 'CSD.RecordLayer.pairEvent_precedes_siteEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pairEvent_precedes_siteEvent
+
+/-- info: 'CSD.RecordLayer.siteEvent_precedes_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteEvent_precedes_succ
+
+/-- info: 'CSD.RecordLayer.siteEvent_zero_precedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteEvent_zero_precedes
+
+/-- info: 'CSD.RecordLayer.two_le_causalDist_step' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_le_causalDist_step
+
+/-- info: 'CSD.RecordLayer.le_causalDist_siteEvents' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_causalDist_siteEvents
+
+/-- info: 'CSD.RecordLayer.two_mul_le_causalDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_mul_le_causalDist
+
+/-- info: 'CSD.RecordLayer.clock_time_lt_causalDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clock_time_lt_causalDist
+
+/-- info: 'CSD.RecordLayer.chain_clocks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chain_clocks
+
+
 end CSD.Tests.AxiomAudit

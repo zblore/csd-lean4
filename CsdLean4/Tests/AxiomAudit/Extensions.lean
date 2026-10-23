@@ -2808,4 +2808,203 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.RadarReadings.radar_coordinates
 
 
+/-! #190: the scheduled chain — the local hop on an edge supported on its edge, the edge flow in closed form, a `Schedule` of field-structured flows with its two-time law, the chain's schedule with visible edges, exact transfer with the accumulated phase `(−i)^m`, the receivers' readouts, and the graph distance on the path graph (`CV/ChainExchange.lean`). -/
+
+/-- info: 'CSD.CV.swapHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.swapHop
+
+/-- info: 'CSD.CV.swapProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.swapProj
+
+/-- info: 'CSD.CV.swapHop_mul_swapHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.swapHop_mul_swapHop
+
+/-- info: 'CSD.CV.swapHop_mul_swapProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.swapHop_mul_swapProj
+
+/-- info: 'CSD.CV.swapHop_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.swapHop_conjTranspose
+
+/-- info: 'CSD.CV.swapHop_supportedOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.swapHop_supportedOn
+
+/-- info: 'CSD.CV.chainGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainGen
+
+/-- info: 'CSD.CV.edgeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.edgeFlow
+
+/-- info: 'CSD.CV.edgeFlow_val_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.edgeFlow_val_eq
+
+/-- info: 'CSD.CV.toEuclideanLin_edgeFlow_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.toEuclideanLin_edgeFlow_single
+
+/-- info: 'CSD.CV.toEuclideanLin_edgeFlow_single_of_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.toEuclideanLin_edgeFlow_single_of_eq
+
+/-- info: 'CSD.CV.edgeFlow_transfer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.edgeFlow_transfer
+
+/-- info: 'CSD.CV.FieldStructuredFlow.off' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.FieldStructuredFlow.off
+
+/-- info: 'CSD.CV.FieldStructuredFlow.flow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.FieldStructuredFlow.flow_zero
+
+/-- info: 'CSD.CV.FieldStructuredFlow.off_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.FieldStructuredFlow.off_flow
+
+/-- info: 'CSD.CV.Schedule' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Schedule
+
+/-- info: 'CSD.CV.Schedule.completed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Schedule.completed
+
+/-- info: 'CSD.CV.Schedule.propagator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Schedule.propagator
+
+/-- info: 'CSD.CV.Schedule.evolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Schedule.evolve
+
+/-- info: 'CSD.CV.Schedule.evolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Schedule.evolve_self
+
+/-- info: 'CSD.CV.Schedule.evolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Schedule.evolve_comp
+
+/-- info: 'CSD.CV.Schedule.evolve_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Schedule.evolve_zero
+
+/-- info: 'CSD.CV.Schedule.propagator_of_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Schedule.propagator_of_nonpos
+
+/-- info: 'CSD.CV.Schedule.propagator_at_stage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Schedule.propagator_at_stage
+
+/-- info: 'CSD.CV.chainSchedule' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainSchedule
+
+/-- info: 'CSD.CV.chainSchedule_edges_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainSchedule_edges_of_lt
+
+/-- info: 'CSD.CV.chainSchedule_edges_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainSchedule_edges_of_le
+
+/-- info: 'CSD.CV.chain_transfer_completed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chain_transfer_completed
+
+/-- info: 'CSD.CV.chain_transfer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chain_transfer
+
+/-- info: 'CSD.CV.chain_transfer_last' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chain_transfer_last
+
+/-- info: 'CSD.CV.propagator_vac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.propagator_vac
+
+/-- info: 'CSD.CV.occAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occAt
+
+/-- info: 'CSD.CV.chainMsg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainMsg
+
+/-- info: 'CSD.CV.chainMsgConfig_apply_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainMsgConfig_apply_of_ne
+
+/-- info: 'CSD.CV.chainArenaFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainArenaFlow
+
+/-- info: 'CSD.CV.chainReadout_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainReadout_one
+
+/-- info: 'CSD.CV.chainReadout_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainReadout_zero
+
+/-- info: 'CSD.CV.receiver_distinguishes_chain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.receiver_distinguishes_chain
+
+/-- info: 'CSD.CV.excitation_position' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.excitation_position
+
+/-- info: 'CSD.CV.pathGraph' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pathGraph
+
+/-- info: 'CSD.CV.mem_pathGraph' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mem_pathGraph
+
+/-- info: 'CSD.CV.chainSchedule_edges_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainSchedule_edges_subset
+
+/-- info: 'CSD.CV.pathGraph_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pathGraph_one
+
+/-- info: 'CSD.CV.mem_graphBall_pathGraph' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mem_graphBall_pathGraph
+
+/-- info: 'CSD.CV.graphDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.graphDist
+
+/-- info: 'CSD.CV.graphDist_le_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.graphDist_le_of_mem
+
+/-- info: 'CSD.CV.le_graphDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.le_graphDist
+
+/-- info: 'CSD.CV.graphDist_pathGraph' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.graphDist_pathGraph
+
+/-- info: 'CSD.CV.scheduled_chain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scheduled_chain
+
+
 end CSD.Tests.AxiomAudit
