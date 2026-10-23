@@ -3007,4 +3007,139 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.scheduled_chain
 
 
+/-! #192: chronological precedence — the sub-relation of `CausalPrecedes` whose strict part demands a strictly later period, a partial order; distinct simultaneous events incomparable; the strict part excludes same-period transitions and is irreflexive and transitive; the chrono chain lengths and `chronoDist`, bounded by the elapsed periods and by `causalDist`, with the reverse triangle inequality (`CV/ChronoPrecedes.lean`). -/
+
+/-- info: 'CSD.CV.ChronoPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ChronoPrecedes
+
+/-- info: 'CSD.CV.ChronoPrecedes.causalPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ChronoPrecedes.causalPrecedes
+
+/-- info: 'CSD.CV.chronoPrecedes_refl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoPrecedes_refl
+
+/-- info: 'CSD.CV.chronoPrecedes_of_causalPrecedes_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoPrecedes_of_causalPrecedes_of_lt
+
+/-- info: 'CSD.CV.chronoPrecedes_iff_of_time_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoPrecedes_iff_of_time_ne
+
+/-- info: 'CSD.CV.not_chronoPrecedes_of_time_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.not_chronoPrecedes_of_time_eq
+
+/-- info: 'CSD.CV.chronoPrecedes_trans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoPrecedes_trans
+
+/-- info: 'CSD.CV.chronoPrecedes_antisymm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoPrecedes_antisymm
+
+/-- info: 'CSD.CV.isPartialOrder_chronoPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isPartialOrder_chronoPrecedes
+
+/-- info: 'CSD.CV.strictChrono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.strictChrono
+
+/-- info: 'CSD.CV.mem_strictChrono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mem_strictChrono
+
+/-- info: 'CSD.CV.time_lt_of_strictChrono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.time_lt_of_strictChrono
+
+/-- info: 'CSD.CV.strictChrono_of_causalPrecedes_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.strictChrono_of_causalPrecedes_of_lt
+
+/-- info: 'CSD.CV.strictChrono_le_strictPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.strictChrono_le_strictPrecedes
+
+/-- info: 'CSD.CV.isTrans_strictChrono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isTrans_strictChrono
+
+/-- info: 'CSD.CV.isIrrefl_strictChrono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isIrrefl_strictChrono
+
+/-- info: 'CSD.CV.time_add_le_of_chain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.time_add_le_of_chain
+
+/-- info: 'CSD.CV.time_add_length_le_of_chain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.time_add_length_le_of_chain
+
+/-- info: 'CSD.CV.chronoChainLengths' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoChainLengths
+
+/-- info: 'CSD.CV.chronoChainLengths_le_elapsed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoChainLengths_le_elapsed
+
+/-- info: 'CSD.CV.chronoChainLengths_subset_chainLengths' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoChainLengths_subset_chainLengths
+
+/-- info: 'CSD.CV.bddAbove_chronoChainLengths' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.bddAbove_chronoChainLengths
+
+/-- info: 'CSD.CV.chronoDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoDist
+
+/-- info: 'CSD.CV.chronoDist_le_elapsed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoDist_le_elapsed
+
+/-- info: 'CSD.CV.chronoDist_le_causalDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoDist_le_causalDist
+
+/-- info: 'CSD.CV.zero_mem_chronoChainLengths' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.zero_mem_chronoChainLengths
+
+/-- info: 'CSD.CV.one_mem_chronoChainLengths' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.one_mem_chronoChainLengths
+
+/-- info: 'CSD.CV.nonempty_chronoChainLengths_of_chronoPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.nonempty_chronoChainLengths_of_chronoPrecedes
+
+/-- info: 'CSD.CV.chronoDist_mem_chronoChainLengths' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoDist_mem_chronoChainLengths
+
+/-- info: 'CSD.CV.chronoDist_eq_zero_of_not_chronoPrecedes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoDist_eq_zero_of_not_chronoPrecedes
+
+/-- info: 'CSD.CV.chronoDist_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoDist_self
+
+/-- info: 'CSD.CV.chronoDist_pos_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoDist_pos_iff
+
+/-- info: 'CSD.CV.chronoDist_add_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chronoDist_add_le
+
+
 end CSD.Tests.AxiomAudit

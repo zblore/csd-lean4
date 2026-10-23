@@ -6874,4 +6874,63 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.record_occurrences
 
 
+/-! #192: the chain and the exchange under chronological precedence — the inserted pair step and both-sites step are not chrono steps, `chronoDist` from the emission to site `m` is exactly `m` and to the exchange's return exactly `2`, strictly below `causalDist` in both witnesses (`RecordLayer/ChainChrono.lean`). -/
+
+/-- info: 'CSD.RecordLayer.siteEvent_time_lt_succ' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteEvent_time_lt_succ
+
+/-- info: 'CSD.RecordLayer.siteEvent_chrono_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteEvent_chrono_succ
+
+/-- info: 'CSD.RecordLayer.siteEvent_strictChrono_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteEvent_strictChrono_succ
+
+/-- info: 'CSD.RecordLayer.siteEvent_zero_chrono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteEvent_zero_chrono
+
+/-- info: 'CSD.RecordLayer.not_chronoPrecedes_pairEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_chronoPrecedes_pairEvent
+
+/-- info: 'CSD.RecordLayer.le_chronoDist_siteEvents' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_chronoDist_siteEvents
+
+/-- info: 'CSD.RecordLayer.chronoDist_siteEvents' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chronoDist_siteEvents
+
+/-- info: 'CSD.RecordLayer.chronoDist_lt_causalDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chronoDist_lt_causalDist
+
+/-- info: 'CSD.RecordLayer.exchange_causal_steps' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchange_causal_steps
+
+/-- info: 'CSD.RecordLayer.exchange_chrono_chain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchange_chrono_chain
+
+/-- info: 'CSD.RecordLayer.not_chronoPrecedes_bothSites_reception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_chronoPrecedes_bothSites_reception
+
+/-- info: 'CSD.RecordLayer.chronoDist_exchange' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chronoDist_exchange
+
+/-- info: 'CSD.RecordLayer.chronoDist_exchange_lt_causalDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chronoDist_exchange_lt_causalDist
+
+/-- info: 'CSD.RecordLayer.chain_chrono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chain_chrono
+
+
 end CSD.Tests.AxiomAudit
