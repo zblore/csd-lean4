@@ -3142,4 +3142,423 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.chronoDist_add_le
 
 
+/-! #194: the detuned exchange — the carrier of the first internally activated write: `H(Δ) = J X + Δ n_B = (Δ/2) P + Ω Y` with `Y² = P`, the flow in closed form by two commuting closed-form exponentials, the detuned Rabi readout `(J/Ω)² sin²(Ωt/ħ)` with its loss `(Δ/2)²/Ω²` attained at the detuned hop time, the vacuum fixed, energy conservation on the carrier, the receiver's occupancy history and its time integral with the flow's group law and its derivative, and joint continuity of the arena density, observables and kicks by descent through `mk'` (`CV/DetunedExchange.lean`). -/
+
+/-- info: 'CSD.CV.continuous_arenaDM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_arenaDM
+
+/-- info: 'CSD.CV.continuous_arenaObs_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_arenaObs_prod
+
+/-- info: 'CSD.CV.continuous_arenaObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_arenaObs
+
+/-- info: 'Continuous.arenaObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Continuous.arenaObs
+
+/-- info: 'CSD.CV.continuous_arenaKick_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_arenaKick_prod
+
+/-- info: 'Continuous.arenaKick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Continuous.arenaKick
+
+/-- info: 'CSD.CV.arenaKick_eq_smul'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaKick_eq_smul'
+
+/-- info: 'CSD.CV.arenaKick_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaKick_measurePreserving
+
+/-- info: 'CSD.CV.arenaObs_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_add
+
+/-- info: 'CSD.CV.arenaObs_real_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_real_smul
+
+/-- info: 'CSD.CV.arenaObs_single_eq_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_single_eq_momentMap
+
+/-- info: 'CSD.CV.FieldStructuredFlow.flow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.FieldStructuredFlow.flow_zero
+
+/-- info: 'CSD.CV.FieldStructuredFlow.arenaFlow_zero'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.FieldStructuredFlow.arenaFlow_zero'
+
+/-- info: 'CSD.CV.FieldStructuredFlow.arenaFlow_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.FieldStructuredFlow.arenaFlow_measurePreserving
+
+/-- info: 'CSD.CV.occA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occA
+
+/-- info: 'CSD.CV.zOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.zOp
+
+/-- info: 'CSD.CV.oneExc_eq_occA_add_occB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.oneExc_eq_occA_add_occB
+
+/-- info: 'CSD.CV.occB_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occB_conjTranspose
+
+/-- info: 'CSD.CV.occA_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occA_conjTranspose
+
+/-- info: 'CSD.CV.zOp_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.zOp_conjTranspose
+
+/-- info: 'CSD.CV.single_mul_single_hop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.single_mul_single_hop
+
+/-- info: 'CSD.CV.zOp_mul_zOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.zOp_mul_zOp
+
+/-- info: 'CSD.CV.hopX_mul_zOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopX_mul_zOp
+
+/-- info: 'CSD.CV.zOp_mul_hopX' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.zOp_mul_hopX
+
+/-- info: 'CSD.CV.oneExc_mul_oneExc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.oneExc_mul_oneExc
+
+/-- info: 'CSD.CV.oneExc_mul_hopX' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.oneExc_mul_hopX
+
+/-- info: 'CSD.CV.oneExc_mul_zOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.oneExc_mul_zOp
+
+/-- info: 'CSD.CV.zOp_mul_oneExc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.zOp_mul_oneExc
+
+/-- info: 'CSD.CV.rabiFreq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiFreq
+
+/-- info: 'CSD.CV.rabiFreq_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiFreq_sq
+
+/-- info: 'CSD.CV.rabiFreq_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiFreq_pos
+
+/-- info: 'CSD.CV.le_rabiFreq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.le_rabiFreq
+
+/-- info: 'CSD.CV.rabiFreq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiFreq_zero
+
+/-- info: 'CSD.CV.div_rabiFreq_sq_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.div_rabiFreq_sq_le_one
+
+/-- info: 'CSD.CV.div_rabiFreq_sq_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.div_rabiFreq_sq_pos
+
+/-- info: 'CSD.CV.one_sub_div_rabiFreq_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.one_sub_div_rabiFreq_sq
+
+/-- info: 'CSD.CV.div_rabiFreq_sq_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.div_rabiFreq_sq_lt_one
+
+/-- info: 'CSD.CV.rabiY' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiY
+
+/-- info: 'CSD.CV.rabiY_mul_oneExc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiY_mul_oneExc
+
+/-- info: 'CSD.CV.oneExc_mul_rabiY' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.oneExc_mul_rabiY
+
+/-- info: 'CSD.CV.rabiY_mul_rabiY' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiY_mul_rabiY
+
+/-- info: 'CSD.CV.detunedH' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedH
+
+/-- info: 'CSD.CV.detunedH_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedH_conjTranspose
+
+/-- info: 'CSD.CV.detunedH_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedH_eq
+
+/-- info: 'CSD.CV.detunedGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedGen
+
+/-- info: 'CSD.CV.detunedGen_skew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedGen_skew
+
+/-- info: 'CSD.CV.detunedGen_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedGen_zero
+
+/-- info: 'CSD.CV.continuous_detunedGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_detunedGen
+
+/-- info: 'CSD.CV.detunedFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedFlow
+
+/-- info: 'CSD.CV.detunedFlow_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedFlow_val
+
+/-- info: 'CSD.CV.detunedFlow_val_zero_detuning' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedFlow_val_zero_detuning
+
+/-- info: 'CSD.CV.continuous_detunedFlowVal_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_detunedFlowVal_prod
+
+/-- info: 'CSD.CV.continuous_detunedFlowVal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_detunedFlowVal
+
+/-- info: 'CSD.CV.continuous_detunedFlow_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_detunedFlow_prod
+
+/-- info: 'CSD.CV.continuous_detunedFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_detunedFlow
+
+/-- info: 'CSD.CV.hasDerivAt_detunedFlowVal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_detunedFlowVal
+
+/-- info: 'CSD.CV.dynPhase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dynPhase
+
+/-- info: 'CSD.CV.rabiRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiRate
+
+/-- info: 'CSD.CV.rabiAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiAngle
+
+/-- info: 'CSD.CV.rabiRate_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiRate_pos
+
+/-- info: 'CSD.CV.smul_detunedGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.smul_detunedGen
+
+/-- info: 'CSD.CV.detunedFlow_val_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedFlow_val_eq
+
+/-- info: 'CSD.CV.oneExc_apply_vacC' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.oneExc_apply_vacC
+
+/-- info: 'CSD.CV.rabiY_apply_vacC' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiY_apply_vacC
+
+/-- info: 'CSD.CV.oneExc_apply_excB_excA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.oneExc_apply_excB_excA
+
+/-- info: 'CSD.CV.rabiY_apply_excB_excA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiY_apply_excB_excA
+
+/-- info: 'CSD.CV.detunedFlow_apply_vacC' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedFlow_apply_vacC
+
+/-- info: 'CSD.CV.detunedFlow_apply_excB_excA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedFlow_apply_excB_excA
+
+/-- info: 'CSD.CV.toEuclideanLin_detunedFlow_vacC' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.toEuclideanLin_detunedFlow_vacC
+
+/-- info: 'CSD.CV.detunedFlow_msgPoint_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedFlow_msgPoint_zero
+
+/-- info: 'CSD.CV.norm_basisVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_basisVec
+
+/-- info: 'CSD.CV.detunedFlow_isom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedFlow_isom
+
+/-- info: 'CSD.CV.detuned_readout_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detuned_readout_one
+
+/-- info: 'CSD.CV.detuned_readout_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detuned_readout_zero
+
+/-- info: 'CSD.CV.detuned_readout_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detuned_readout_one_le
+
+/-- info: 'CSD.CV.detunedHopTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedHopTime
+
+/-- info: 'CSD.CV.rabiAngle_detunedHopTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rabiAngle_detunedHopTime
+
+/-- info: 'CSD.CV.detuned_readout_one_peak' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detuned_readout_one_peak
+
+/-- info: 'CSD.CV.detuned_readout_one_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detuned_readout_one_lt_one
+
+/-- info: 'CSD.CV.detunedH_commute_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.detunedH_commute_flow
+
+/-- info: 'CSD.CV.arenaObs_detunedH_arenaFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_detunedH_arenaFlow
+
+/-- info: 'CSD.CV.arenaObs_detunedH' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_detunedH
+
+/-- info: 'CSD.CV.occHist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occHist
+
+/-- info: 'CSD.CV.occHist_eq_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occHist_eq_momentMap
+
+/-- info: 'CSD.CV.occHist_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occHist_nonneg
+
+/-- info: 'CSD.CV.occHist_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occHist_le_one
+
+/-- info: 'CSD.CV.occHist_eq_heis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occHist_eq_heis
+
+/-- info: 'CSD.CV.continuous_occHist_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_occHist_prod
+
+/-- info: 'CSD.CV.continuous_occHist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_occHist
+
+/-- info: 'CSD.CV.occAccum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occAccum
+
+/-- info: 'CSD.CV.occAccum_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occAccum_zero
+
+/-- info: 'CSD.CV.occAccum_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occAccum_nonneg
+
+/-- info: 'CSD.CV.occAccum_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occAccum_le
+
+/-- info: 'CSD.CV.occHist_arenaFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occHist_arenaFlow
+
+/-- info: 'CSD.CV.occAccum_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occAccum_add
+
+/-- info: 'CSD.CV.hasDerivAt_occAccum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_occAccum
+
+/-- info: 'CSD.CV.continuous_occAccum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_occAccum
+
+/-- info: 'CSD.CV.continuous_occAccum_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.continuous_occAccum_prod
+
+/-- info: 'CSD.CV.occHist_msgPoint_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occHist_msgPoint_one
+
+/-- info: 'CSD.CV.occHist_msgPoint_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occHist_msgPoint_zero
+
+/-- info: 'CSD.CV.occHist_msgPoint_one_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occHist_msgPoint_one_zero
+
+/-- info: 'CSD.CV.occHist_msgPoint_one_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occHist_msgPoint_one_pos
+
+/-- info: 'CSD.CV.occAccum_msgPoint_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occAccum_msgPoint_zero
+
+/-- info: 'CSD.CV.occAccum_msgPoint_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.occAccum_msgPoint_one
+
+
 end CSD.Tests.AxiomAudit
