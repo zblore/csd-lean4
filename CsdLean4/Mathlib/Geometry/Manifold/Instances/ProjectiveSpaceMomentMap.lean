@@ -8,7 +8,7 @@ module
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianVectorField
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MomentMap
-public import Mathlib.Analysis.Convex.StdSimplex
+public import Mathlib.Geometry.Convex.ConvexSpace.Defs
 
 /-!
 # The moment map of the torus action on `ℂℙⁿ`, at manifold level
@@ -54,10 +54,13 @@ the invariance of the Fubini–Study volume under the flow it generates.
   ★★★ `eq_torusHamiltonian_of_nonneg_of_sum` — **the normalisation pins the constant**: a
   non-negative family of Hamiltonians for the phase fields summing to `2` is `2 · momentMap`. This
   is the standard symplectic argument, formalised;
-* **G9, the image.** `momentMap_mem_stdSimplex`, `sqrtVec` (the vector `(√t₀, …, √tₙ)`),
-  `momentMap_mk_sqrtVec`, and ★★ `range_momentMap` — **the image of the moment map is exactly the
-  standard simplex** `stdSimplex ℝ (Fin (n + 1))`: `⊆` is the normalisation, `⊇` the ray of
-  `(√t₀, …, √tₙ)`;
+* **G9, the image.** `momentMapSimplex` (the moment map's value as a point of the bundled
+  `StdSimplex ℝ (Fin (n + 1))`), `sqrtVec` (the vector `(√t₀, …, √tₙ)`), `momentMap_mk_sqrtVec`,
+  ★★ `momentMapSimplex_surjective` and ★★ `range_momentMap` — **the image of the moment map is
+  exactly the standard simplex**: the moment map onto the bundled simplex is surjective, and its
+  range as a set of weight vectors is `Set.range StdSimplex.weights` (`range_momentMap_eq_inter`
+  spells that out as non-negativity and the sum-one normalisation). `⊆` is the normalisation,
+  `⊇` the ray of `(√t₀, …, √tₙ)`;
 * **G10, the flow.** `torusUnitary_zero`, `torusUnitary_add`, `torusUnitary_add_smul` (the
   one-parameter group law of `t ↦ diag(e^{itθ})`), and ★ `fsVolume_map_torusUnitary_smul` /
   `measurePreserving_torusUnitary_smul` — **every time-`t` map of the torus flow preserves the
@@ -99,14 +102,14 @@ general Hermitian `H` the flow `exp(-itH) • p` is Hamiltonian with Hamiltonian
 `Instances/ProjectiveSpaceFubiniStudyMass.lean` (`fsModelForm_apply`, `toLpCLM_apply`);
 `Instances/ProjectiveSpaceUnitaryAction.lean` (`chartFun_smul_chartInv`);
 `Instances/ProjectiveSpaceFubiniStudyVolume.lean` (`fsVolume`, `fsVolume_map_smul`);
-`Mathlib/Analysis/Convex/StdSimplex.lean` (`stdSimplex`); the terms register (moment map,
+`Mathlib/Geometry/Convex/ConvexSpace/Defs.lean` (`StdSimplex`); the terms register (moment map,
 Hamiltonian, Liouville); the programme's posits (Posits 1 and 3); the completed-work ledger.
 -/
 
 @[expose] public section
 
 open scoped Manifold ContDiff LinearAlgebra.Projectivization Matrix
-open Kahler DifferentialForm MeasureTheory
+open Kahler DifferentialForm MeasureTheory Convexity
 
 noncomputable section
 
@@ -541,22 +544,33 @@ theorem eq_torusHamiltonian_of_nonneg_of_sum (H : Fin (n + 1) → ℙ ℂ (Ambie
 
 /-! ### The image of the moment map is the standard simplex (G9)
 
-`stdSimplex` (the `Set (iota -> k)`) was deprecated on 2026-08-29 in favour of the bundled
-type `StdSimplex`, which is a different object: its elements carry `.weights`, and the whole
-`Set`-level API below it is deprecated with no `Set`-level successor. Restating these five
-theorems against the new type is a genuine restatement of their statements (and of four axiom
-pins), which is BACKLOG #27's `HY-6` sweep and not part of a toolchain bump, so the
-deprecation is silenced per declaration here rather than file-wide. Nothing below is weakened:
-the statements are the ones the pin at Lean v4.33.0 proved. -/
+The standard simplex is Mathlib's bundled `StdSimplex ℝ (Fin (n + 1))` (namespace `Convexity`): a
+point is a finitely supported family of non-negative weights summing to `1`, read as a function
+through `.weights`. Mathlib deprecated the `Set`-level simplex on 2026-08-29 with
+`StdSimplex.range_toFun_comp_weights` as the successor of its membership predicate, and the
+statements below are written against that successor (BACKLOG #27, HY-6, restated 2026-10-23): the
+moment map factors through the bundled simplex (`momentMapSimplex`), that factorisation is
+surjective, and the image of the moment map as a set of weight vectors is the range of
+`StdSimplex.weights`. Nothing is weakened: the two inclusions are the ones proved at the
+Lean v4.33.0 pin, with the simplex now a type rather than a set. -/
 
-set_option linter.deprecated false in
-/-- Every value of the moment map lies in the standard simplex: `momentMap_nonneg` and
-`momentMap_sum_eq_one`. -/
-theorem momentMap_mem_stdSimplex (p : ℙ ℂ (Ambient n)) :
-    momentMap p ∈ stdSimplex ℝ (Fin (n + 1)) :=
-  ⟨momentMap_nonneg p, momentMap_sum_eq_one p⟩
+/-- The value of the moment map as a point of the bundled standard simplex: `momentMap_nonneg` and
+`momentMap_sum_eq_one` are its two fields. -/
+def momentMapSimplex (p : ℙ ℂ (Ambient n)) : StdSimplex ℝ (Fin (n + 1)) where
+  weights := Finsupp.equivFunOnFinite.symm (momentMap p)
+  nonneg k := by simpa using momentMap_nonneg p k
+  total := by simpa [Finsupp.sum_fintype] using momentMap_sum_eq_one p
 
-/-- The vector `(√t₀, …, √tₙ)`: the representative whose ray realises the simplex point `t`. -/
+@[simp] theorem weights_momentMapSimplex (p : ℙ ℂ (Ambient n)) :
+    ⇑(momentMapSimplex p).weights = momentMap p :=
+  Finsupp.coe_equivFunOnFinite_symm _
+
+/-- Every value of the moment map is a weight vector of the standard simplex. -/
+theorem momentMap_mem_range_weights (p : ℙ ℂ (Ambient n)) :
+    momentMap p ∈ Set.range (fun t : StdSimplex ℝ (Fin (n + 1)) => ⇑t.weights) :=
+  ⟨momentMapSimplex p, weights_momentMapSimplex p⟩
+
+/-- The vector `(√t₀, …, √tₙ)`: the representative whose ray realises the weight vector `t`. -/
 def sqrtVec (t : Fin (n + 1) → ℝ) : Ambient n :=
   WithLp.toLp 2 fun k => ((Real.sqrt (t k) : ℝ) : ℂ)
 
@@ -565,36 +579,49 @@ theorem norm_sqrtVec_apply_sq (t : Fin (n + 1) → ℝ) (k : Fin (n + 1)) (ht : 
   show ‖((Real.sqrt (t k) : ℝ) : ℂ)‖ ^ 2 = t k
   rw [Complex.norm_of_nonneg (Real.sqrt_nonneg _), Real.sq_sqrt ht]
 
-set_option linter.deprecated false in
-theorem norm_sqrtVec_sq (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fin (n + 1))) :
-    ‖sqrtVec t‖ ^ 2 = 1 := by
+theorem norm_sqrtVec_sq (t : StdSimplex ℝ (Fin (n + 1))) : ‖sqrtVec t.weights‖ ^ 2 = 1 := by
   rw [EuclideanSpace.norm_sq_eq,
-    Finset.sum_congr rfl fun k _ => norm_sqrtVec_apply_sq t k (ht.1 k)]
-  exact ht.2
+    Finset.sum_congr rfl fun k _ => norm_sqrtVec_apply_sq t.weights k (t.weights_nonneg k)]
+  exact t.total_of_fintype
 
-set_option linter.deprecated false in
-theorem sqrtVec_ne_zero (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fin (n + 1))) :
-    sqrtVec t ≠ 0 := by
+theorem sqrtVec_ne_zero (t : StdSimplex ℝ (Fin (n + 1))) : sqrtVec t.weights ≠ 0 := by
   intro h
-  have h1 := norm_sqrtVec_sq t ht
+  have h1 := norm_sqrtVec_sq t
   rw [h, norm_zero] at h1
   norm_num at h1
 
-set_option linter.deprecated false in
-/-- The ray of `(√t₀, …, √tₙ)` maps to `t`. -/
-theorem momentMap_mk_sqrtVec (t : Fin (n + 1) → ℝ) (ht : t ∈ stdSimplex ℝ (Fin (n + 1))) :
-    momentMap (Projectivization.mk ℂ (sqrtVec t) (sqrtVec_ne_zero t ht)) = t := by
+/-- The ray of `(√t₀, …, √tₙ)` maps to the weight vector `t`. -/
+theorem momentMap_mk_sqrtVec (t : StdSimplex ℝ (Fin (n + 1))) :
+    momentMap (Projectivization.mk ℂ (sqrtVec t.weights) (sqrtVec_ne_zero t)) = t.weights := by
   funext k
-  rw [momentMap_mk, norm_sqrtVec_sq t ht, norm_sqrtVec_apply_sq t k (ht.1 k), div_one]
+  rw [momentMap_mk, norm_sqrtVec_sq t, norm_sqrtVec_apply_sq t.weights k (t.weights_nonneg k),
+    div_one]
 
-set_option linter.deprecated false in
-/-- ★★ **The image of the moment map is exactly the standard simplex** — the moment polytope of
-the torus action on `ℂℙⁿ`, by direct computation: `⊆` is the normalisation, `⊇` is the ray of
+/-- The ray of `(√t₀, …, √tₙ)` maps to the simplex point `t` itself. -/
+theorem momentMapSimplex_mk_sqrtVec (t : StdSimplex ℝ (Fin (n + 1))) :
+    momentMapSimplex (Projectivization.mk ℂ (sqrtVec t.weights) (sqrtVec_ne_zero t)) = t :=
+  StdSimplex.ext (DFunLike.coe_injective (by rw [weights_momentMapSimplex, momentMap_mk_sqrtVec]))
+
+/-- ★★ **The moment map onto the standard simplex is surjective** — the moment polytope of the
+torus action on `ℂℙⁿ`, by direct computation: every simplex point is the image of the ray of
 `(√t₀, …, √tₙ)`. The Atiyah–Guillemin–Sternberg convexity theorem is neither used nor proved. -/
+theorem momentMapSimplex_surjective : Function.Surjective (momentMapSimplex (n := n)) :=
+  fun t => ⟨_, momentMapSimplex_mk_sqrtVec t⟩
+
+/-- ★★ **The image of the moment map is exactly the standard simplex**, as sets of weight vectors:
+`⊆` is the normalisation, `⊇` is the ray of `(√t₀, …, √tₙ)`. -/
 theorem range_momentMap :
-    Set.range (momentMap (ι := Fin (n + 1))) = stdSimplex ℝ (Fin (n + 1)) :=
-  Set.Subset.antisymm (Set.range_subset_iff.2 momentMap_mem_stdSimplex)
-    fun t ht => ⟨_, momentMap_mk_sqrtVec t ht⟩
+    Set.range (momentMap (ι := Fin (n + 1))) =
+      Set.range (fun t : StdSimplex ℝ (Fin (n + 1)) => ⇑t.weights) :=
+  Set.Subset.antisymm (Set.range_subset_iff.2 momentMap_mem_range_weights)
+    (Set.range_subset_iff.2 fun t => ⟨_, momentMap_mk_sqrtVec t⟩)
+
+/-- The image of the moment map, spelled out: the non-negative weight vectors summing to `1`
+(`StdSimplex.range_toFun_comp_weights`, the successor of the `Set`-level simplex). -/
+theorem range_momentMap_eq_inter :
+    Set.range (momentMap (ι := Fin (n + 1))) =
+      (⋂ i, {s : Fin (n + 1) → ℝ | 0 ≤ s i}) ∩ {s | ∑ i, s i = 1} :=
+  range_momentMap.trans StdSimplex.range_toFun_comp_weights
 
 /-! ### The torus flow preserves the Fubini–Study volume (G10) -/
 

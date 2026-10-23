@@ -155,7 +155,9 @@ absent — and any module invoking **that** part must carry the marker `TERM-SCO
   by a constant) and `eq_torusHamiltonian_of_nonneg_of_sum` (non-negativity and the sum-two
   normalisation pin a family of phase-field Hamiltonians to `2 · momentMap`).
 * **Also backed (2026-09-09, G9):** the image of `momentMap` is exactly the standard simplex — ★★
-  `Projectivization.range_momentMap` (same module): `Set.range momentMap = stdSimplex ℝ (Fin (n + 1))`,
+  `Projectivization.range_momentMap` (same module): `Set.range momentMap = Set.range StdSimplex.weights`
+  on Mathlib's bundled `StdSimplex ℝ (Fin (n + 1))` (restated 2026-10-23 under #27;
+  `momentMapSimplex_surjective` is the bundled form),
   `⊆` the normalisation and `⊇` the ray of `(√t₀, …, √tₙ)` (`sqrtVec`, `momentMap_mk_sqrtVec`). That is
   the moment polytope of *this* action, by direct computation.
 * **Also backed (2026-09-09, G13):** the `U(n+1)` moment map — `Projectivization.expectation H`, the

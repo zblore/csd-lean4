@@ -21,7 +21,8 @@ action IS the Hamiltonian vector field of `2 ∑ θₖ momentMap · k` for the F
 symplectic form, so `momentMap` is a moment map in the textbook sense; ★★★
 `eq_torusHamiltonian_of_nonneg_of_sum` — non-negativity and the sum-one normalisation pin
 any family of phase-field Hamiltonians to `2 · momentMap` (uniqueness); ★★ `range_momentMap` —
-the image is exactly `stdSimplex ℝ (Fin (n + 1))`; ★★★ `isMIntegralCurve_torusUnitary_smul` —
+the image is exactly the standard simplex `StdSimplex ℝ (Fin (n + 1))`;
+★★★ `isMIntegralCurve_torusUnitary_smul` —
 the torus orbits are the integral curves of the field; `torusHamiltonian_torusUnitary_smul` —
 `2 ∑ θₖ μₖ` is conserved along them (which is `momentMap_obsFlow` of `ObservableFlow.lean`,
 read as Noether's theorem). The word "moment map" below names the object; those theorems are

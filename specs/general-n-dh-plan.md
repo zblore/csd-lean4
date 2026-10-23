@@ -37,7 +37,7 @@ sublevel set.
 
 ## Mathlib gaps (confirmed absent)
 
-- **No uniform/Hausdorff measure on `stdSimplex`** (Mathlib has the set, not a measure).
+- **No uniform/Hausdorff measure on the standard simplex** (Mathlib has the simplex, `StdSimplex`, not a measure on it).
 - **No Dirichlet distribution.**
 - Consequence: the *intrinsic* "`Φ∗μ_FS = uniform_Δ`" cannot even be **stated** without
   first building a simplex surface measure — a separate infra tranche on its own.

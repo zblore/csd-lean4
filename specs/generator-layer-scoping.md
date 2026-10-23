@@ -25,7 +25,8 @@ no connectedness lemma — `is_const_of_fderiv_eq_zero` on each whole chart imag
 `mfderiv_comp` with the chart inverse (`mdifferentiableAt_atlas_symm`) and `mfderiv_eq_fderiv`, not
 `MDifferentiableAt.mfderiv`. `POSITS.md` bullet 1's "unformalised" is now formalised; **Posit 1 is
 unchanged.** **G9 + G10 BUILT 2026-09-09 (11 pins)** as §8 priced, in the same module: ★★
-`range_momentMap` — the image of `momentMap` is exactly `stdSimplex ℝ (Fin (n + 1))`, `⊆` the
+`range_momentMap` — the image of `momentMap` is exactly the standard simplex (Mathlib's bundled
+`StdSimplex ℝ (Fin (n + 1))` since the 2026-10-23 restatement, `momentMapSimplex_surjective`), `⊆` the
 normalisation and `⊇` the ray of `(√t₀, …, √tₙ)` (`sqrtVec`, `momentMap_mk_sqrtVec`); the polytope of
 this action by computation, the Atiyah–Guillemin–Sternberg theorem untouched. ★
 `fsVolume_map_torusUnitary_smul` / `measurePreserving_torusUnitary_smul` — every map of the torus

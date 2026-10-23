@@ -5175,9 +5175,11 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-! ### G9 + G10: the image of the moment map is the simplex; the torus flow preserves the Fubini-Study volume (ProjectiveSpaceMomentMap.lean, 2026-09-09) -/
 
 -- Bricks G9 and G10 of specs/generator-layer-scoping.md §8. G9: ★★ range_momentMap — the image
--- of momentMap on CP^n is EXACTLY stdSimplex ℝ (Fin (n+1)): ⊆ is momentMap_nonneg +
--- momentMap_sum_eq_one (momentMap_mem_stdSimplex); ⊇ is the ray of (√t₀, …, √tₙ) (sqrtVec,
--- momentMap_mk_sqrtVec). The image polytope of THIS action by direct computation; the
+-- of momentMap on CP^n is EXACTLY the standard simplex, Mathlib's bundled StdSimplex ℝ (Fin (n+1))
+-- since the #27 restatement of 2026-10-23 (momentMapSimplex_surjective; range_momentMap as
+-- Set.range StdSimplex.weights, range_momentMap_eq_inter spelling the set out): ⊆ is
+-- momentMap_nonneg + momentMap_sum_eq_one (momentMap_mem_range_weights); ⊇ is the ray of
+-- (√t₀, …, √tₙ) (sqrtVec, momentMap_mk_sqrtVec). The image polytope of THIS action by direct computation; the
 -- Atiyah–Guillemin–Sternberg convexity theorem is neither used nor proved. G10: ★
 -- fsVolume_map_torusUnitary_smul — every map p ↦ diag(e^{iθ}) • p, hence every time-t map of the
 -- flow G6 built (torusUnitary_add_smul is its group law), preserves fsVolume n: a one-line
@@ -5185,9 +5187,17 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 -- this ONE flow; no manifold-level flow theory (G5 stays unscheduled), and Posit 3 (the constraint
 -- dynamics preserves μL) is untouched — the measurement pieces are not globally Hamiltonian.
 
-/-- info: 'Projectivization.momentMap_mem_stdSimplex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Projectivization.momentMapSimplex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.momentMap_mem_stdSimplex
+#print axioms Projectivization.momentMapSimplex
+
+/-- info: 'Projectivization.weights_momentMapSimplex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.weights_momentMapSimplex
+
+/-- info: 'Projectivization.momentMap_mem_range_weights' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.momentMap_mem_range_weights
 
 /-- info: 'Projectivization.norm_sqrtVec_apply_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -5208,6 +5218,18 @@ Instances/ProjectiveSpaceHamiltonianFlow.lean, 2026-09-12) -/
 /-- info: 'Projectivization.range_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.range_momentMap
+
+/-- info: 'Projectivization.momentMapSimplex_mk_sqrtVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.momentMapSimplex_mk_sqrtVec
+
+/-- info: 'Projectivization.momentMapSimplex_surjective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.momentMapSimplex_surjective
+
+/-- info: 'Projectivization.range_momentMap_eq_inter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.range_momentMap_eq_inter
 
 /-- info: 'Projectivization.torusUnitary_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

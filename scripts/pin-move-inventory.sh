@@ -96,7 +96,7 @@ hits, _ = tally(r"isQuotientMap_mk'\.secondCountableTopology",
 listing(hits)
 print()
 
-print('(4) The real rework — stdSimplex (a Set) became the structure StdSimplex:')
+print('(4) The real rework — stdSimplex (a Set) became the structure StdSimplex (RESTATED 2026-10-23):')
 hits, _ = tally(r'stdSimplex', 'stdSimplex -> StdSimplex (substring)',
                 'NOT word-boundary: it occurs inside longer identifiers too')
 listing(hits)
@@ -134,9 +134,12 @@ if empty_rows:
     print()
 
 print('Sections (1)(2)(3)(6) were SWEPT at the v4.34.0 pin move (2026-10-12) and now read')
-print('zero, which here is the intended outcome rather than a wrong pattern. What is left is')
-print('(4) the stdSimplex restatement alone, deliberately deferred with the deprecation')
-print('silenced per declaration (BACKLOG #27). Section (5), the MapProbability shim, was')
-print('collapsed and the file deleted on 2026-10-13 (BACKLOG #142).')
+print('zero, which here is the intended outcome rather than a wrong pattern. Section (4), the')
+print('stdSimplex restatement, landed on 2026-10-23 (BACKLOG #27): the G9 theorems of')
+print('Instances/ProjectiveSpaceMomentMap.lean are stated against the bundled StdSimplex and')
+print('no linter.deprecated silencer is left in the corpus, so its zero is by design too.')
+print('Section (5), the MapProbability shim, was collapsed and the file deleted on 2026-10-13')
+print('(BACKLOG #142). Every row of HY-6 is swept; the script stays as the measuring tool for')
+print('the next pin move.')
 print('HY-6 in specs/BACKLOG.md section D carries what to do with each row.')
 PY
