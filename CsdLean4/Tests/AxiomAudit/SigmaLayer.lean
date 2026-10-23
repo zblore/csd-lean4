@@ -6933,4 +6933,79 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.chain_chrono
 
 
+/-! #193: operational duration — the difference of two readings of one clock history: non-negative for ordered readings, additive (telescoping, named as such), invariant under a constant offset and under a switch-on reference before `0`, scaling under unit rescaling, within two ticks of the elapsed ontic parameter when calibrated with the period, zero between two descriptions of one write, edge durations of an occurrence chain summing to the end-to-end duration, and on the chain witness the clock at site `m` measuring `m` ticks = the chrono distance while `causalDist ≥ 2m` (`RecordLayer/OperationalDuration.lean`). -/
+
+/-- info: 'CSD.RecordLayer.clockHistory' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockHistory
+
+/-- info: 'CSD.RecordLayer.clockHistory_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockHistory_eq
+
+/-- info: 'CSD.RecordLayer.duration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.duration
+
+/-- info: 'CSD.RecordLayer.duration_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.duration_self
+
+/-- info: 'CSD.RecordLayer.duration_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.duration_neg
+
+/-- info: 'CSD.RecordLayer.duration_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.duration_nonneg
+
+/-- info: 'CSD.RecordLayer.duration_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.duration_add
+
+/-- info: 'CSD.RecordLayer.tickCount_clockEvolve_of_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickCount_clockEvolve_of_nonpos
+
+/-- info: 'CSD.RecordLayer.offsetHistory' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.offsetHistory
+
+/-- info: 'CSD.RecordLayer.duration_offset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.duration_offset
+
+/-- info: 'CSD.RecordLayer.duration_rescale' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.duration_rescale
+
+/-- info: 'CSD.RecordLayer.abs_duration_sub_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_duration_sub_lt
+
+/-- info: 'CSD.RecordLayer.duration_eq_zero_of_writeEnd_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.duration_eq_zero_of_writeEnd_eq
+
+/-- info: 'CSD.RecordLayer.edgeDuration_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.edgeDuration_nonneg
+
+/-- info: 'CSD.RecordLayer.sum_edgeDuration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_edgeDuration
+
+/-- info: 'CSD.RecordLayer.duration_reception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.duration_reception
+
+/-- info: 'CSD.RecordLayer.duration_eq_chronoDist_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.duration_eq_chronoDist_mul
+
+/-- info: 'CSD.RecordLayer.operational_duration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.operational_duration
+
+
 end CSD.Tests.AxiomAudit

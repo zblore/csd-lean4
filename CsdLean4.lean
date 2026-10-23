@@ -649,6 +649,7 @@ public import CsdLean4.RecordLayer.ExchangeFailure
 public import CsdLean4.RecordLayer.ChainClocks
 public import CsdLean4.RecordLayer.RecordOccurrence
 public import CsdLean4.RecordLayer.ChainChrono
+public import CsdLean4.RecordLayer.OperationalDuration
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.TwoTimeLuders
 public import CsdLean4.RecordLayer.EntangledRecord
