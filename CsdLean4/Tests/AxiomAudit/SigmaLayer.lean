@@ -8254,4 +8254,183 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.returnEvent_time
 
 
+/-! #201: the drift pointer as an autonomous hand clock — #194's pointer read in `K` arcs: the tick count as the arc index (arcs = disjoint intervals), the hand's motion as the drift staircase, monotone (group law of the accumulated occupancy), the derived calibration `τ_tick = 2/(Kκ)`, the horizon one turn, the resolution bound `|handReading − t| ≤ τ_tick + 1/(2ω)`, each tick `1 ≤ n ≤ K − 1` as an `ActualOccurrence` written by the carrier with the window `τ_tick/2 − 1/ω` under `Kκ ≤ ω`, successive ticks distinguishable and spaced by `τ_tick`, persistence, and generation inherited from #195 (`RecordLayer/HandClock.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_handCount_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_handCount_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_handReading_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_handReading_sub_le
+
+/-- info: 'CSD.RecordLayer.band_at_handHorizon' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.band_at_handHorizon
+
+/-- info: 'CSD.RecordLayer.band_at_tickEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.band_at_tickEnd
+
+/-- info: 'CSD.RecordLayer.band_at_tickWindow_end' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.band_at_tickWindow_end
+
+/-- info: 'CSD.RecordLayer.hand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hand
+
+/-- info: 'CSD.RecordLayer.hand_at_tick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hand_at_tick
+
+/-- info: 'CSD.RecordLayer.hand_before_tick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hand_before_tick
+
+/-- info: 'CSD.RecordLayer.hand_clock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hand_clock
+
+/-- info: 'CSD.RecordLayer.hand_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hand_eq
+
+/-- info: 'CSD.RecordLayer.hand_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hand_zero
+
+/-- info: 'CSD.RecordLayer.handArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handArc
+
+/-- info: 'CSD.RecordLayer.handArc_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handArc_disjoint
+
+/-- info: 'CSD.RecordLayer.handClock_generated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handClock_generated
+
+/-- info: 'CSD.RecordLayer.handCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handCount
+
+/-- info: 'CSD.RecordLayer.handCount_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handCount_eq_iff
+
+/-- info: 'CSD.RecordLayer.handCount_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handCount_mono
+
+/-- info: 'CSD.RecordLayer.handFreq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handFreq
+
+/-- info: 'CSD.RecordLayer.handFreq_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handFreq_pos
+
+/-- info: 'CSD.RecordLayer.handHorizon' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handHorizon
+
+/-- info: 'CSD.RecordLayer.handHorizon_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handHorizon_pos
+
+/-- info: 'CSD.RecordLayer.handRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handRate
+
+/-- info: 'CSD.RecordLayer.handReading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handReading
+
+/-- info: 'CSD.RecordLayer.handReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handReady
+
+/-- info: 'CSD.RecordLayer.handTick_persists' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handTick_persists
+
+/-- info: 'CSD.RecordLayer.measurable_handCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_handCount
+
+/-- info: 'CSD.RecordLayer.measurableSet_handReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_handReady
+
+/-- info: 'CSD.RecordLayer.mul_tickTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mul_tickTime
+
+/-- info: 'CSD.RecordLayer.pointerDrift_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerDrift_mono
+
+/-- info: 'CSD.RecordLayer.pointerDrift_tickTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerDrift_tickTime
+
+/-- info: 'CSD.RecordLayer.rateAt_pos_of_handRate_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rateAt_pos_of_handRate_pos
+
+/-- info: 'CSD.RecordLayer.rep_hand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rep_hand
+
+/-- info: 'CSD.RecordLayer.rep_hand_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rep_hand_of_le
+
+/-- info: 'CSD.RecordLayer.tickEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickEnd
+
+/-- info: 'CSD.RecordLayer.tickEnd_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickEnd_succ
+
+/-- info: 'CSD.RecordLayer.tickStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickStart
+
+/-- info: 'CSD.RecordLayer.tickStart_le_tickEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickStart_le_tickEnd
+
+/-- info: 'CSD.RecordLayer.tickStart_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickStart_nonneg
+
+/-- info: 'CSD.RecordLayer.tickTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickTime
+
+/-- info: 'CSD.RecordLayer.tickTime_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickTime_pos
+
+/-- info: 'CSD.RecordLayer.tickWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickWindow
+
+/-- info: 'CSD.RecordLayer.tickWindow_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickWindow_nonneg
+
+/-- info: 'CSD.RecordLayer.tickWrite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickWrite
+
+/-- info: 'CSD.RecordLayer.tickWrite_value_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickWrite_value_ne
+
+
 end CSD.Tests.AxiomAudit

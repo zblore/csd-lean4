@@ -656,6 +656,7 @@ public import CsdLean4.RecordLayer.CoupledReception
 public import CsdLean4.RecordLayer.RadarDetector
 public import CsdLean4.RecordLayer.EchoArena
 public import CsdLean4.RecordLayer.EchoRadar
+public import CsdLean4.RecordLayer.HandClock
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.TwoTimeLuders
 public import CsdLean4.RecordLayer.EntangledRecord
