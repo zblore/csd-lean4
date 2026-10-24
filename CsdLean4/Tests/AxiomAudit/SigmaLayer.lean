@@ -7014,10 +7014,6 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.ActiveArena
 
-/-- info: 'CSD.RecordLayer.periodic_deriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms CSD.RecordLayer.periodic_deriv
-
 /-- info: 'CSD.RecordLayer.detuningAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.detuningAt
@@ -7313,6 +7309,113 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.activated_write' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.activated_write
+
+
+/-! #195: the activated write is a Hamiltonian flow — the two expectation functionals agree, the hop and the receiver occupancy reindexed to `Σ`, the Hamiltonian `−(2/ħ)(J⟨X⟩ + g f(θ₂) n_B)` as `−(2/ħ)` times #194's energy, the reindexed detuned exchange as the Schrödinger unitary of `A + f(θ₂) B` by ODE uniqueness, the pointer displacement identified, `activeFlow` as the Hamiltonian flow through the index bridge, and Liouville on the arena volume (`RecordLayer/ActivatedHamiltonian.lean`). -/
+
+/-- info: 'CSD.RecordLayer.expectation_eq_arenaObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.expectation_eq_arenaObs
+
+/-- info: 'CSD.RecordLayer.hopIdx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hopIdx
+
+/-- info: 'CSD.RecordLayer.hamA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamA
+
+/-- info: 'CSD.RecordLayer.hamB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamB
+
+/-- info: 'CSD.RecordLayer.arenaObs_reindex_hop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_reindex_hop
+
+/-- info: 'CSD.RecordLayer.hopX_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hopX_isHermitian
+
+/-- info: 'CSD.RecordLayer.occB_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.occB_isHermitian
+
+/-- info: 'CSD.RecordLayer.hamA_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamA_isHermitian
+
+/-- info: 'CSD.RecordLayer.hamB_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamB_isHermitian
+
+/-- info: 'CSD.RecordLayer.reindex_smul_hop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reindex_smul_hop
+
+/-- info: 'CSD.RecordLayer.reindex_add_hop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reindex_add_hop
+
+/-- info: 'CSD.RecordLayer.activatedEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.activatedEnergy
+
+/-- info: 'CSD.RecordLayer.contMDiff_activatedEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contMDiff_activatedEnergy
+
+/-- info: 'CSD.RecordLayer.schrodingerHamiltonian_hamA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.schrodingerHamiltonian_hamA
+
+/-- info: 'CSD.RecordLayer.schrodingerHamiltonian_hamB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.schrodingerHamiltonian_hamB
+
+/-- info: 'CSD.RecordLayer.activatedEnergy_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.activatedEnergy_eq
+
+/-- info: 'CSD.RecordLayer.coupledMatrix_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledMatrix_eq
+
+/-- info: 'CSD.RecordLayer.reindexCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reindexCLM
+
+/-- info: 'CSD.RecordLayer.reindex_detunedGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reindex_detunedGen
+
+/-- info: 'CSD.RecordLayer.idxUnitary_detunedFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxUnitary_detunedFlow
+
+/-- info: 'CSD.RecordLayer.arenaEquiv_arenaFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaEquiv_arenaFlow
+
+/-- info: 'CSD.RecordLayer.coupledAccum_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledAccum_eq
+
+/-- info: 'CSD.RecordLayer.pointerAmount_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerAmount_eq
+
+/-- info: 'CSD.RecordLayer.hamiltonianFlow_activeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianFlow_activeFlow
+
+/-- info: 'CSD.RecordLayer.arenaVolume_map_activeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaVolume_map_activeFlow
+
+/-- info: 'CSD.RecordLayer.activated_hamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.activated_hamiltonian
 
 
 end CSD.Tests.AxiomAudit

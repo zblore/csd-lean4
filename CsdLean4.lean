@@ -651,6 +651,7 @@ public import CsdLean4.RecordLayer.RecordOccurrence
 public import CsdLean4.RecordLayer.ChainChrono
 public import CsdLean4.RecordLayer.OperationalDuration
 public import CsdLean4.RecordLayer.ActivatedWrite
+public import CsdLean4.RecordLayer.ActivatedHamiltonian
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.TwoTimeLuders
 public import CsdLean4.RecordLayer.EntangledRecord
@@ -782,6 +783,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeomet
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCircle
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCircleTranslation
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCirclePeriodicLift
 public import CsdLean4.Mathlib.Geometry.Manifold.ProductSelfModel
 public import CsdLean4.Mathlib.Geometry.Manifold.TranslationAtlasForm
 public import CsdLean4.Mathlib.Geometry.Manifold.ProductForm
@@ -790,6 +792,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.HolomorphicVectorField
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyInvariance
 public import CsdLean4.LF4.ProjectiveManifold
 public import CsdLean4.LF4.ArenaSymplectic
+public import CsdLean4.LF4.ArenaCoupledFlow
 public import CsdLean4.LF4.ArenaStrokeFlux
 public import CsdLean4.LF4.ArenaVolume
 public import CsdLean4.Empirical.QM.Darwinism

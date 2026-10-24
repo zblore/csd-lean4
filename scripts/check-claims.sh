@@ -962,6 +962,13 @@ isSymplectic"
 #   kahler_structure_isometry_invariant were deleted — conjunction capstones, the conjuncts stay
 #   declared; contMDiff_omega_schrodingerHamiltonian / contMDiff_omega_torusHamiltonian merged into
 #   the order-generic contMDiff_schrodingerHamiltonian / contMDiff_torusHamiltonian, declared below.)
+#   (2026-10-24, #195: the coupled Hamiltonian flow on the arena. isHamiltonianVectorField_torusPotential /
+#   _coupledTerm / _coupled prove the vector-field equation ι_X ω = d𝓗 for the stated fields on arenaForm —
+#   symplectic-manifold level, the R-016′ arena — EARNED; coupledField_eq_hamiltonianVectorField,
+#   hamiltonianFlow_coupledEnergy, hamiltonianFlow_activeFlow and activated_hamiltonian identify explicit
+#   flows with IsSymplectic.hamiltonianFlow by uniqueness of integral curves — EARNED; the
+#   schrodingerHamiltonian_* / mdifferentiableAt_ / continuous_…_coupledOrbit names are facts about the
+#   already-declared energy function −2⟨H⟩, operator sense.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 kahlerFstSector_projectiveLaw
 kahlerFstSector_epistemicMeasure_projectiveLaw
@@ -1108,7 +1115,20 @@ standardSymplecticBilin_apply
 standardSymplecticBilin_self
 exists_continuousLinearEquiv_eq_standardSymplecticForm_comp
 wigner_liouville
-wigner_liouville_add_eq_zero"
+wigner_liouville_add_eq_zero
+activated_hamiltonian
+continuous_schrodingerHamiltonian_coupledOrbit
+coupledField_eq_hamiltonianVectorField
+hamiltonianFlow_activeFlow
+hamiltonianFlow_coupledEnergy
+isHamiltonianVectorField_coupled
+isHamiltonianVectorField_coupledTerm
+isHamiltonianVectorField_torusPotential
+mdifferentiableAt_schrodingerHamiltonian
+schrodingerHamiltonian_add
+schrodingerHamiltonian_hamA
+schrodingerHamiltonian_hamB
+schrodingerHamiltonian_real_smul"
 
 OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 

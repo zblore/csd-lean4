@@ -14636,4 +14636,35 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms exp_smul_eq_cosh_sinh
 
 
+/-! #195: periodic lifts on the circle in the translation atlas — the derivative of a periodic function is periodic, the lift is continuous, its manifold derivative is `f'` read through the lift of `f'`, and it is `C^n` when `f` is (`Mathlib/Geometry/Manifold/Instances/AddCirclePeriodicLift.lean`). -/
+
+/-- info: 'Function.Periodic.deriv_periodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Function.Periodic.deriv_periodic
+
+/-- info: 'Function.Periodic.continuous_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Function.Periodic.continuous_lift
+
+/-- info: 'Function.Periodic.lift_comp_chart_symm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Function.Periodic.lift_comp_chart_symm
+
+/-- info: 'Function.Periodic.deriv_periodic_lift_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Function.Periodic.deriv_periodic_lift_eq
+
+/-- info: 'Function.Periodic.hasMFDerivAt_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Function.Periodic.hasMFDerivAt_lift
+
+/-- info: 'Function.Periodic.mfderiv_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Function.Periodic.mfderiv_lift
+
+/-- info: 'Function.Periodic.contMDiff_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Function.Periodic.contMDiff_lift
+
+
 end CSD.Tests.AxiomAudit

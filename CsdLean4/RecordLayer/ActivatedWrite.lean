@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.CV.DetunedExchange
 public import CsdLean4.RecordLayer.RecordOccurrence
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCirclePeriodicLift
 public import Mathlib.Analysis.Calculus.LocalExtr.Rolle
 public import Mathlib.Analysis.Calculus.Deriv.Shift
 public import Mathlib.Topology.Order.IntermediateValue
@@ -28,13 +29,14 @@ and the dynamics is the one the **time-independent joint Hamiltonian**
   `𝓗(p, θ) = ⟨p, J X p⟩ + g · n_B(p) · f(θ₂)`,   `f` periodic and `C¹`,
 
 prescribes on the product: at fixed `θ₂` the ray evolves by the detuned exchange `H(Δ) = J X + Δ n_B`
-with `Δ = g f(θ₂)` (`CV/DetunedExchange.lean`), the pointer `θ₁` moves at the rate `g f'(θ₂) · n_B(p)`,
+with `Δ = g f(θ₂)` (`CV/DetunedExchange.lean`), the pointer `θ₁` moves at the rate
+`−(2g/ħ) f'(θ₂) · n_B(p)` (the factor is the arena form's normalisation, fixed by #195),
 and `θ₂` is conserved. The pointer therefore moves **only while the carrier occupies the receiver**:
 the activation is the arriving carrier, and no test of `t_Σ` appears anywhere — the evolution is
 autonomous (`activeEvolve_shift`).
 
-* `detuningAt`, `rateAt` — `g f(θ₂)` and `g f'(θ₂)` on the circle (`Function.Periodic.lift`);
-  `periodic_deriv`; ★ `pointerAmount`, ★ `activeFlow` — **the dynamics as data**;
+* `detuningAt`, `rateAt` — `g f(θ₂)` and `−(2g/ħ) f'(θ₂)` on the circle (`Function.Periodic.lift`);
+  `Function.Periodic.deriv_periodic` (`AddCirclePeriodicLift.lean`); ★ `pointerAmount`, ★ `activeFlow` — **the dynamics as data**;
 * `activeFlow_zero`, ★★ `activeFlow_add` — **a one-parameter group**, by the group law of the
   accumulated occupancy; `activeEvolve`, `activeEvolve_self`, `activeEvolve_comp` — **the two-time
   law**; ★ `activeEvolve_shift` — **autonomy**: only `t − s` enters;
@@ -44,11 +46,11 @@ autonomous (`activeEvolve_shift`).
 * ★★ `activeEnergy_activeFlow` — **the joint energy `J⟨X⟩ + g f(θ₂) n_B` is conserved**;
   `activeFlow_angle` — `θ₂` is conserved;
 * ★★ `hasDerivAt_pointerAmount` — **the pointer's equation of motion**: the lifted angle moves at
-  the rate `g f'(θ₂) · n_B(p(t))`; `occHist_msgPoint_one_zero`, `occHist_msgPoint_one_pos` (in
+  the rate `−(2g/ħ) f'(θ₂) · n_B(p(t))`; `occHist_msgPoint_one_zero`, `occHist_msgPoint_one_pos` (in
   `DetunedExchange.lean`) — the pointer starts at rest and is set in motion by the carrier;
 * ★★★ `pointerAmount_msgPoint_one`, `activeFlow_msgPoint_zero` — **the message-dependent pointer
   displacement**: for message `1` the pointer has turned by `κ (ωt − sin ωt cos ωt)/(2ω)` with
-  `κ = g f'(θ₂) (J/Ω)²`, `ω = Ω/ħ`; for message `0` the whole arena point is fixed;
+  `κ = −(2g/ħ) f'(θ₂) (J/Ω)²`, `ω = Ω/ħ`; for message `0` the whole arena point is fixed;
 * `displayArc`, `displayed`, `writeStart`, `writeEnd`, `retention`; ★★ `message_one_not_displayed`,
   ★★ `message_one_displayed` — **the write interval and the retention window**, under the explicit
   hypotheses `0 < κ` and `3κ ≤ 2ω` (the pointer gains at most two thirds of a turn per Rabi radian);
@@ -108,26 +110,22 @@ section Coupling
 
 variable {f : ℝ → ℝ}
 
-theorem periodic_deriv (hf : Function.Periodic f 1) : Function.Periodic (deriv f) 1 := fun x => by
-  rw [← deriv_comp_add_const (f := f) (a := 1)]
-  congr 1
-  funext y
-  exact hf y
-
 /-- The detuning `g f(θ₂)`. -/
 noncomputable def detuningAt (g : ℝ) (hf : Function.Periodic f 1) (φ : AddCircle (1 : ℝ)) : ℝ :=
   g * hf.lift φ
 
-/-- The pointer rate `g f'(θ₂)`. -/
-noncomputable def rateAt (g : ℝ) (hf : Function.Periodic f 1) (φ : AddCircle (1 : ℝ)) : ℝ :=
-  g * (periodic_deriv hf).lift φ
+/-- The pointer rate `−(2g/ħ) f'(θ₂)`: the rate Hamilton's equations prescribe for the arena form,
+whose Fubini–Study normalisation makes the Schrödinger unitary of `H` the flow of `−2⟨H⟩`
+(`LF4/ArenaCoupledFlow.lean`, #195). -/
+noncomputable def rateAt (g ħ : ℝ) (hf : Function.Periodic f 1) (φ : AddCircle (1 : ℝ)) : ℝ :=
+  -(2 * g / ħ) * hf.deriv_periodic.lift φ
 
 theorem detuningAt_coe (g : ℝ) (hf : Function.Periodic f 1) (x : ℝ) :
     detuningAt g hf (x : AddCircle (1 : ℝ)) = g * f x := by
   rw [detuningAt, Function.Periodic.lift_coe]
 
-theorem rateAt_coe (g : ℝ) (hf : Function.Periodic f 1) (x : ℝ) :
-    rateAt g hf (x : AddCircle (1 : ℝ)) = g * deriv f x := by
+theorem rateAt_coe (g ħ : ℝ) (hf : Function.Periodic f 1) (x : ℝ) :
+    rateAt g ħ hf (x : AddCircle (1 : ℝ)) = -(2 * g / ħ) * deriv f x := by
   rw [rateAt, Function.Periodic.lift_coe]
 
 theorem continuous_periodicLift (hf : Function.Periodic f 1) (hc : Continuous f) :
@@ -139,13 +137,13 @@ theorem continuous_detuningAt (g : ℝ) (hf : Function.Periodic f 1) (hc : Conti
     Continuous (detuningAt g hf) :=
   continuous_const.mul (continuous_periodicLift hf hc)
 
-theorem continuous_rateAt (g : ℝ) (hf : Function.Periodic f 1) (hf1 : ContDiff ℝ 1 f) :
-    Continuous (rateAt g hf) :=
+theorem continuous_rateAt (g ħ : ℝ) (hf : Function.Periodic f 1) (hf1 : ContDiff ℝ 1 f) :
+    Continuous (rateAt g ħ hf) :=
   continuous_const.mul (continuous_periodicLift _ hf1.continuous_deriv_one)
 
 /-- **Rolle**: a periodic `C¹` coupling has a stationary angle, at which the pointer rate vanishes. -/
-theorem exists_rateAt_eq_zero (g : ℝ) (hf : Function.Periodic f 1) (hf1 : ContDiff ℝ 1 f) :
-    ∃ φ : AddCircle (1 : ℝ), rateAt g hf φ = 0 := by
+theorem exists_rateAt_eq_zero (g ħ : ℝ) (hf : Function.Periodic f 1) (hf1 : ContDiff ℝ 1 f) :
+    ∃ φ : AddCircle (1 : ℝ), rateAt g ħ hf φ = 0 := by
   obtain ⟨c, -, hc⟩ := exists_deriv_eq_zero (f := f) zero_lt_one hf1.continuous.continuousOn
     (by simpa using (hf 0).symm)
   exact ⟨(c : AddCircle (1 : ℝ)), by rw [rateAt_coe, hc, mul_zero]⟩
@@ -158,9 +156,9 @@ section Dynamics
 
 variable {f : ℝ → ℝ} (J ħ g : ℝ) (hf : Function.Periodic f 1)
 
-/-- **The lifted pointer displacement** after time `t`: `g f'(θ₂) ∫₀ᵗ n_B(p(s)) ds`. -/
+/-- **The lifted pointer displacement** after time `t`: `−(2g/ħ) f'(θ₂) ∫₀ᵗ n_B(p(s)) ds`. -/
 noncomputable def pointerAmount (t : ℝ) (x : ActiveArena) : ℝ :=
-  rateAt g hf x.2.2 * occAccum J ħ (detuningAt g hf x.2.2) x.1 t
+  rateAt g ħ hf x.2.2 * occAccum J ħ (detuningAt g hf x.2.2) x.1 t
 
 /-- ★ **The activated flow**: at fixed `θ₂` the ray evolves by the detuned exchange with
 `Δ = g f(θ₂)`, and the pointer `θ₁` is translated by the lifted displacement. -/
@@ -236,7 +234,7 @@ theorem continuous_pointerAmount (hf1 : ContDiff ℝ 1 f) (t : ℝ) :
   unfold pointerAmount
   have hΔ : Continuous fun x : ActiveArena => detuningAt g hf x.2.2 :=
     ((continuous_detuningAt g hf hf1.continuous).snd').snd'
-  exact (((continuous_rateAt g hf hf1).snd').snd').mul
+  exact (((continuous_rateAt g ħ hf hf1).snd').snd').mul
     ((continuous_occAccum_prod J ħ t).comp₂ continuous_fst hΔ)
 
 theorem continuous_activeFlow (hf1 : ContDiff ℝ 1 f) (t : ℝ) :
@@ -281,7 +279,7 @@ theorem activeFlow_measurePreserving (hf1 : ContDiff ℝ 1 f) (t : ℝ) (p₀ : 
   let G : AddCircle (1 : ℝ) × (FieldArena 2 2 × AddCircle (1 : ℝ))
       → AddCircle (1 : ℝ) × (FieldArena 2 2 × AddCircle (1 : ℝ)) := fun y =>
     (y.1, ((detunedFlow J ħ (detuningAt g hf y.1)).arenaFlow t y.2.1,
-      cshift (rateAt g hf y.1 * occAccum J ħ (detuningAt g hf y.1) y.2.1 t) y.2.2))
+      cshift (rateAt g ħ hf y.1 * occAccum J ħ (detuningAt g hf y.1) y.2.1 t) y.2.2))
   have hEq : activeFlow J ħ g hf t = eB ∘ G ∘ eF := by
     funext x
     rfl
@@ -301,11 +299,11 @@ theorem activeFlow_measurePreserving (hf1 : ContDiff ℝ 1 f) (t : ℝ) (p₀ : 
   have hfib : ∀ φ : AddCircle (1 : ℝ), MeasurePreserving
       (fun y : FieldArena 2 2 × AddCircle (1 : ℝ) =>
         ((detunedFlow J ħ (detuningAt g hf φ)).arenaFlow t y.1,
-          cshift (rateAt g hf φ * occAccum J ħ (detuningAt g hf φ) y.1 t) y.2))
+          cshift (rateAt g ħ hf φ * occAccum J ħ (detuningAt g hf φ) y.1 t) y.2))
       ((fsMeasure p₀).prod volume) ((fsMeasure p₀).prod volume) := by
     intro φ
     have hgm : Measurable (Function.uncurry fun (p : FieldArena 2 2) (θ : AddCircle (1 : ℝ)) =>
-        cshift (rateAt g hf φ * occAccum J ħ (detuningAt g hf φ) p t) θ) := by
+        cshift (rateAt g ħ hf φ * occAccum J ħ (detuningAt g hf φ) p t) θ) := by
       unfold Function.uncurry
       exact (continuous_cshift_uncurry.comp₂ (continuous_const.mul
         ((continuous_occAccum_prod J ħ t).comp₂ continuous_fst continuous_const))
@@ -317,7 +315,7 @@ theorem activeFlow_measurePreserving (hf1 : ContDiff ℝ 1 f) (t : ℝ) (p₀ : 
     have hgm : Measurable (Function.uncurry fun (φ : AddCircle (1 : ℝ))
         (y : FieldArena 2 2 × AddCircle (1 : ℝ)) =>
         ((detunedFlow J ħ (detuningAt g hf φ)).arenaFlow t y.1,
-          cshift (rateAt g hf φ * occAccum J ħ (detuningAt g hf φ) y.1 t) y.2)) := by
+          cshift (rateAt g ħ hf φ * occAccum J ħ (detuningAt g hf φ) y.1 t) y.2)) := by
       unfold Function.uncurry FieldStructuredFlow.arenaFlow
       have hΔ : Continuous fun z : AddCircle (1 : ℝ) × (FieldArena 2 2 × AddCircle (1 : ℝ)) =>
           detuningAt g hf z.1 := (continuous_detuningAt g hf hf1.continuous).fst'
@@ -326,7 +324,7 @@ theorem activeFlow_measurePreserving (hf1 : ContDiff ℝ 1 f) (t : ℝ) (p₀ : 
         (continuous_detunedFlow_prod J ħ).comp₂ hΔ continuous_const
       refine ((hU.arenaKick (continuous_fst.comp continuous_snd)).prodMk ?_).measurable
       exact continuous_cshift_uncurry.comp₂
-        (((continuous_rateAt g hf hf1).fst').mul
+        (((continuous_rateAt g ħ hf hf1).fst').mul
           ((continuous_occAccum_prod J ħ t).comp₂ (continuous_fst.comp continuous_snd) hΔ))
         (continuous_snd.comp continuous_snd)
     exact (MeasurePreserving.id volume).skew_product hgm (ae_of_all _ fun φ => (hfib φ).map_eq)
@@ -357,10 +355,10 @@ theorem activeEnergy_activeFlow (t : ℝ) (x : ActiveArena) :
     arenaObs_detunedH_arenaFlow]
 
 /-- ★★ **The pointer's equation of motion**: the lifted displacement moves at the rate
-`g f'(θ₂) · n_B(p(t))` — only while the carrier occupies the receiver. -/
+`−(2g/ħ) f'(θ₂) · n_B(p(t))` — only while the carrier occupies the receiver. -/
 theorem hasDerivAt_pointerAmount (x : ActiveArena) (t : ℝ) :
     HasDerivAt (fun t => pointerAmount J ħ g hf t x)
-      (rateAt g hf x.2.2 * arenaObs occB (activeFlow J ħ g hf t x).1) t :=
+      (rateAt g ħ hf x.2.2 * arenaObs occB (activeFlow J ħ g hf t x).1) t :=
   (hasDerivAt_occAccum J ħ _ x.1 t).const_mul _
 
 /-! ### The two messages -/
@@ -375,15 +373,15 @@ theorem activeFlow_msgPoint_zero (hJ : 0 < J) (q : LF4.KTorus) (t : ℝ) :
 noncomputable def pointerDrift (κ ω t : ℝ) : ℝ :=
   κ * (ω * t - Real.sin (ω * t) * Real.cos (ω * t)) / (2 * ω)
 
-/-- The mean pointer rate over a Rabi cycle: `κ = g f'(θ₂) (J/Ω)²`. -/
+/-- The mean pointer rate over a Rabi cycle: `κ = −(2g/ħ) f'(θ₂) (J/Ω)²`. -/
 noncomputable def driftRate (φ : AddCircle (1 : ℝ)) : ℝ :=
-  rateAt g hf φ * (J / rabiFreq J (detuningAt g hf φ)) ^ 2
+  rateAt g ħ hf φ * (J / rabiFreq J (detuningAt g hf φ)) ^ 2
 
 /-- ★★★ **The message-dependent pointer displacement**: for message `1` the lifted pointer has turned
-by `pointerDrift κ ω t` with `κ = g f'(θ₂) (J/Ω)²` and `ω = Ω/ħ`. -/
+by `pointerDrift κ ω t` with `κ = −(2g/ħ) f'(θ₂) (J/Ω)²` and `ω = Ω/ħ`. -/
 theorem pointerAmount_msgPoint_one (hJ : 0 < J) (hħ : 0 < ħ) (q : LF4.KTorus) (t : ℝ) :
     pointerAmount J ħ g hf t (msgPoint 1, q)
-      = pointerDrift (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) t := by
+      = pointerDrift (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) t := by
   unfold pointerAmount pointerDrift driftRate
   dsimp only
   rw [occAccum_msgPoint_one hJ hħ, rabiAngle]
@@ -391,7 +389,7 @@ theorem pointerAmount_msgPoint_one (hJ : 0 < J) (hħ : 0 < ħ) (q : LF4.KTorus) 
 
 theorem activeFlow_msgPoint_one_snd (hJ : 0 < J) (hħ : 0 < ħ) (q : LF4.KTorus) (t : ℝ) :
     (activeFlow J ħ g hf t (msgPoint 1, q)).2
-      = pshift (pointerDrift (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) t) q := by
+      = pshift (pointerDrift (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) t) q := by
   rw [activeFlow_snd, pointerAmount_msgPoint_one J ħ g hf hJ hħ]
 
 end Dynamics
@@ -556,10 +554,10 @@ variable {f : ℝ → ℝ} {J ħ : ℝ} (g : ℝ) (hf : Function.Periodic f 1)
 /-- ★★ **Before the write interval the register is not displayed**: the pointer has turned by less
 than `κ t < 1/6`. -/
 theorem message_one_not_displayed (hJ : 0 < J) (hħ : 0 < ħ) {q : LF4.KTorus} (hq : q ∈ readyArc 2)
-    (hκ : 0 < driftRate J g hf q.2) {t : ℝ} (ht0 : 0 ≤ t)
-    (ht : t < writeStart (driftRate J g hf q.2)) :
+    (hκ : 0 < driftRate J ħ g hf q.2) {t : ℝ} (ht0 : 0 ≤ t)
+    (ht : t < writeStart (driftRate J ħ g hf q.2)) :
     (activeFlow J ħ g hf t (msgPoint 1, q)).2 ∉ displayArc := by
-  set κ := driftRate J g hf q.2 with hκdef
+  set κ := driftRate J ħ g hf q.2 with hκdef
   set ω := rabiRate J ħ (detuningAt g hf q.2) with hωdef
   have hω : 0 < ω := rabiRate_pos hJ hħ _
   have hD0 := pointerDrift_nonneg hκ.le hω ht0
@@ -578,12 +576,12 @@ theorem message_one_not_displayed (hJ : 0 < J) (hħ : 0 < ħ) {q : LF4.KTorus} (
 /-- ★★ **Through the window the register is displayed**: the pointer has turned by between `1/3`
 and `2/3` of a turn. -/
 theorem message_one_displayed (hJ : 0 < J) (hħ : 0 < ħ) {q : LF4.KTorus} (hq : q ∈ readyArc 2)
-    (hκ : 0 < driftRate J g hf q.2) {t : ℝ}
-    (ht₁ : writeEnd (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) ≤ t)
-    (ht₂ : t ≤ writeEnd (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
-      + retention (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))) :
+    (hκ : 0 < driftRate J ħ g hf q.2) {t : ℝ}
+    (ht₁ : writeEnd (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) ≤ t)
+    (ht₂ : t ≤ writeEnd (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
+      + retention (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))) :
     (activeFlow J ħ g hf t (msgPoint 1, q)).2 ∈ displayArc := by
-  set κ := driftRate J g hf q.2 with hκdef
+  set κ := driftRate J ħ g hf q.2 with hκdef
   set ω := rabiRate J ħ (detuningAt g hf q.2) with hωdef
   have hω : 0 < ω := rabiRate_pos hJ hħ _
   have hl := pointerDrift_lower hκ.le hω t
@@ -603,11 +601,11 @@ theorem message_one_displayed (hJ : 0 < J) (hħ : 0 < ħ) {q : LF4.KTorus} (hq :
 
 /-- ★★★ **The activated write as an actual occurrence** (#191): the carrier at `B` (site `{1}`),
 history from `0`, value `true`, write interval `[1/(6κ), 2/(3κ) + 1/(2ω)]`, window `2/(3κ) − 1/ω`.
-The hypotheses are the ready pointer, a positive mean rate `κ = g f'(θ₂) (J/Ω)²`, and the slowness
+The hypotheses are the ready pointer, a positive mean rate `κ = −(2g/ħ) f'(θ₂) (J/Ω)²`, and the slowness
 `3κ ≤ 2ω`. -/
 noncomputable def activatedRegister (hJ : 0 < J) (hħ : 0 < ħ) (hf1 : ContDiff ℝ 1 f)
-    {q : LF4.KTorus} (hq : q ∈ readyArc 2) (hκ : 0 < driftRate J g hf q.2)
-    (hslow : 3 * driftRate J g hf q.2 ≤ 2 * rabiRate J ħ (detuningAt g hf q.2)) :
+    {q : LF4.KTorus} (hq : q ∈ readyArc 2) (hκ : 0 < driftRate J ħ g hf q.2)
+    (hslow : 3 * driftRate J ħ g hf q.2 ≤ 2 * rabiRate J ħ (detuningAt g hf q.2)) :
     ActualOccurrence ActiveArena Bool 2 where
   evolve := activeEvolve J ħ g hf
   evolve_self := activeEvolve_self J ħ g hf
@@ -622,9 +620,9 @@ noncomputable def activatedRegister (hJ : 0 < J) (hħ : 0 < ħ) (hf1 : ContDiff 
   site := {1}
   start := 0
   value := true
-  writeStart := writeStart (driftRate J g hf q.2)
-  writeEnd := writeEnd (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
-  window := retention (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
+  writeStart := writeStart (driftRate J ħ g hf q.2)
+  writeEnd := writeEnd (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
+  window := retention (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
   isWrite :=
     { start_le := writeStart_nonneg hκ
       interval := writeStart_le_writeEnd hκ (rabiRate_pos hJ hħ _)
@@ -639,22 +637,22 @@ noncomputable def activatedRegister (hJ : 0 < J) (hħ : 0 < ħ) (hf1 : ContDiff 
         exact displayed_eq_true (message_one_displayed g hf hJ hħ hq hκ ht₁ ht₂) }
 
 theorem activatedRegister_prep (hJ : 0 < J) (hħ : 0 < ħ) (hf1 : ContDiff ℝ 1 f) {q : LF4.KTorus}
-    (hq : q ∈ readyArc 2) (hκ : 0 < driftRate J g hf q.2)
-    (hslow : 3 * driftRate J g hf q.2 ≤ 2 * rabiRate J ħ (detuningAt g hf q.2)) :
+    (hq : q ∈ readyArc 2) (hκ : 0 < driftRate J ħ g hf q.2)
+    (hslow : 3 * driftRate J ħ g hf q.2 ≤ 2 * rabiRate J ħ (detuningAt g hf q.2)) :
     (activatedRegister g hf hJ hħ hf1 hq hκ hslow).prep = (msgPoint 1, q) := rfl
 
 theorem activatedRegister_site (hJ : 0 < J) (hħ : 0 < ħ) (hf1 : ContDiff ℝ 1 f) {q : LF4.KTorus}
-    (hq : q ∈ readyArc 2) (hκ : 0 < driftRate J g hf q.2)
-    (hslow : 3 * driftRate J g hf q.2 ≤ 2 * rabiRate J ħ (detuningAt g hf q.2)) :
+    (hq : q ∈ readyArc 2) (hκ : 0 < driftRate J ħ g hf q.2)
+    (hslow : 3 * driftRate J ħ g hf q.2 ≤ 2 * rabiRate J ħ (detuningAt g hf q.2)) :
     (activatedRegister g hf hJ hħ hf1 hq hκ hslow).site = {1} := rfl
 
 /-- ★★ **The two messages are distinguishable throughout the window**: message `1` displays, message
 `0` leaves the pointer ready, and the two pointer positions differ. -/
 theorem records_distinguish (hJ : 0 < J) (hħ : 0 < ħ) {q : LF4.KTorus} (hq : q ∈ readyArc 2)
-    (hκ : 0 < driftRate J g hf q.2) {t : ℝ}
-    (ht₁ : writeEnd (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) ≤ t)
-    (ht₂ : t ≤ writeEnd (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
-      + retention (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))) :
+    (hκ : 0 < driftRate J ħ g hf q.2) {t : ℝ}
+    (ht₁ : writeEnd (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) ≤ t)
+    (ht₂ : t ≤ writeEnd (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
+      + retention (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))) :
     (activeFlow J ħ g hf t (msgPoint 1, q)).2 ∈ displayArc
       ∧ (activeFlow J ħ g hf t (msgPoint 0, q)).2 ∈ readyArc 2
       ∧ (activeFlow J ħ g hf t (msgPoint 1, q)).2 ≠ (activeFlow J ħ g hf t (msgPoint 0, q)).2 := by
@@ -668,11 +666,11 @@ theorem records_distinguish (hJ : 0 < J) (hħ : 0 < ħ) {q : LF4.KTorus} (hq : q
 pointer is back exactly where message `0` left it — the carrier oscillates on and the pointer
 completes a turn. -/
 theorem message_one_returns (hJ : 0 < J) (hħ : 0 < ħ) (q : LF4.KTorus)
-    (hκ : 0 < driftRate J g hf q.2) :
-    ∃ t, writeEnd (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
-        + retention (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) < t
+    (hκ : 0 < driftRate J ħ g hf q.2) :
+    ∃ t, writeEnd (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
+        + retention (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) < t
       ∧ (activeFlow J ħ g hf t (msgPoint 1, q)).2 = q := by
-  set κ := driftRate J g hf q.2 with hκdef
+  set κ := driftRate J ħ g hf q.2 with hκdef
   set ω := rabiRate J ħ (detuningAt g hf q.2) with hωdef
   have hω : 0 < ω := rabiRate_pos hJ hħ _
   set a := writeEnd κ ω + retention κ ω with ha
@@ -716,18 +714,18 @@ theorem rep_pshift_of_mem_neg (q : LF4.KTorus) {a : ℝ} (h : rep q.1 + a ∈ Io
   rw [h1, rep_coe_of_mem_Ioc ⟨by linarith [h.1], by linarith [h.2]⟩]
 
 /-- ★★ **The transition region has positive measure for every horizon.** For every `T > 0` the set
-of angles `θ₂` with `|g f'(θ₂)| T < 1/6` is open and nonempty (it contains Rolle's zero of `f'`),
+of angles `θ₂` with `|2g f'(θ₂)/ħ| T < 1/6` is open and nonempty (it contains Rolle's zero of `f'`),
 hence of positive Haar measure, and from every ready pointer at such an angle the message-`1` write
 is not displayed at time `T`. The write is exact only off this region. -/
 theorem transition_region (hf1 : ContDiff ℝ 1 f) {T : ℝ} (hT : 0 < T) :
-    IsOpen {φ : AddCircle (1 : ℝ) | |rateAt g hf φ| * T < shearWidth 2}
-      ∧ 0 < volume {φ : AddCircle (1 : ℝ) | |rateAt g hf φ| * T < shearWidth 2}
-      ∧ ∀ φ ∈ {φ : AddCircle (1 : ℝ) | |rateAt g hf φ| * T < shearWidth 2},
+    IsOpen {φ : AddCircle (1 : ℝ) | |rateAt g ħ hf φ| * T < shearWidth 2}
+      ∧ 0 < volume {φ : AddCircle (1 : ℝ) | |rateAt g ħ hf φ| * T < shearWidth 2}
+      ∧ ∀ φ ∈ {φ : AddCircle (1 : ℝ) | |rateAt g ħ hf φ| * T < shearWidth 2},
           ∀ q ∈ readyArc 2, q.2 = φ → (activeFlow J ħ g hf T (msgPoint 1, q)).2 ∉ displayArc := by
-  have hopen : IsOpen {φ : AddCircle (1 : ℝ) | |rateAt g hf φ| * T < shearWidth 2} :=
-    isOpen_lt ((continuous_rateAt g hf hf1).abs.mul continuous_const) continuous_const
-  obtain ⟨φ₀, hφ₀⟩ := exists_rateAt_eq_zero g hf hf1
-  have hne : ({φ : AddCircle (1 : ℝ) | |rateAt g hf φ| * T < shearWidth 2}).Nonempty :=
+  have hopen : IsOpen {φ : AddCircle (1 : ℝ) | |rateAt g ħ hf φ| * T < shearWidth 2} :=
+    isOpen_lt ((continuous_rateAt g ħ hf hf1).abs.mul continuous_const) continuous_const
+  obtain ⟨φ₀, hφ₀⟩ := exists_rateAt_eq_zero g ħ hf hf1
+  have hne : ({φ : AddCircle (1 : ℝ) | |rateAt g ħ hf φ| * T < shearWidth 2}).Nonempty :=
     ⟨φ₀, by simp [hφ₀, shearWidth_pos]⟩
   refine ⟨hopen, hopen.measure_pos volume hne, ?_⟩
   intro φ hφ q hq hqφ
@@ -737,10 +735,10 @@ theorem transition_region (hf1 : ContDiff ℝ 1 f) {T : ℝ} (hT : 0 < T) :
     rw [hqφ, abs_mul]
     have h0 := occAccum_nonneg J ħ (detuningAt g hf φ) (msgPoint 1) hT.le
     have h1 := occAccum_le J ħ (detuningAt g hf φ) (msgPoint 1) hT.le
-    calc |rateAt g hf φ| * |occAccum J ħ (detuningAt g hf φ) (msgPoint 1) T|
-        = |rateAt g hf φ| * occAccum J ħ (detuningAt g hf φ) (msgPoint 1) T := by
+    calc |rateAt g ħ hf φ| * |occAccum J ħ (detuningAt g hf φ) (msgPoint 1) T|
+        = |rateAt g ħ hf φ| * occAccum J ħ (detuningAt g hf φ) (msgPoint 1) T := by
           rw [abs_of_nonneg h0]
-      _ ≤ |rateAt g hf φ| * T := mul_le_mul_of_nonneg_left h1 (abs_nonneg _)
+      _ ≤ |rateAt g ħ hf φ| * T := mul_le_mul_of_nonneg_left h1 (abs_nonneg _)
       _ < shearWidth 2 := hφ
   rw [activeFlow_snd]
   intro hd
@@ -761,12 +759,12 @@ theorem transition_region (hf1 : ContDiff ℝ 1 f) {T : ℝ} (hT : 0 < T) :
 /-- ★★★ **The activated write.** On `FieldArena 2 2 × T²` with the dynamics of the time-independent
 joint Hamiltonian `⟨p, J X p⟩ + g n_B(p) f(θ₂)`: the two-time law holds and the propagator is
 autonomous; Liouville measure is preserved; the joint energy and `θ₂` are conserved; the pointer's
-lifted angle moves at the rate `g f'(θ₂) n_B(p(t))`; message `0` leaves the whole arena point
+lifted angle moves at the rate `−(2g/ħ) f'(θ₂) n_B(p(t))`; message `0` leaves the whole arena point
 fixed; through the window message `1` displays and the two pointer positions differ; the retention
 is finite; and the write is registered as an `ActualOccurrence` at site `{B}`. -/
 theorem activated_write (hJ : 0 < J) (hħ : 0 < ħ) (hf1 : ContDiff ℝ 1 f) {q : LF4.KTorus}
-    (hq : q ∈ readyArc 2) (hκ : 0 < driftRate J g hf q.2)
-    (hslow : 3 * driftRate J g hf q.2 ≤ 2 * rabiRate J ħ (detuningAt g hf q.2)) :
+    (hq : q ∈ readyArc 2) (hκ : 0 < driftRate J ħ g hf q.2)
+    (hslow : 3 * driftRate J ħ g hf q.2 ≤ 2 * rabiRate J ħ (detuningAt g hf q.2)) :
     (∀ s t u : OnticTime, activeEvolve J ħ g hf t u ∘ activeEvolve J ħ g hf s t
         = activeEvolve J ħ g hf s u)
       ∧ (∀ s t a : OnticTime, activeEvolve J ħ g hf (s + a) (t + a) = activeEvolve J ħ g hf s t)
@@ -776,15 +774,15 @@ theorem activated_write (hJ : 0 < J) (hħ : 0 < ħ) (hf1 : ContDiff ℝ 1 f) {q 
           activeEnergy J g hf (activeFlow J ħ g hf t x) = activeEnergy J g hf x)
       ∧ (∀ (t : ℝ) (x : ActiveArena), (activeFlow J ħ g hf t x).2.2 = x.2.2)
       ∧ (∀ (x : ActiveArena) (t : ℝ), HasDerivAt (fun t => pointerAmount J ħ g hf t x)
-          (rateAt g hf x.2.2 * arenaObs occB (activeFlow J ħ g hf t x).1) t)
+          (rateAt g ħ hf x.2.2 * arenaObs occB (activeFlow J ħ g hf t x).1) t)
       ∧ (∀ t : ℝ, activeFlow J ħ g hf t (msgPoint 0, q) = (msgPoint 0, q))
-      ∧ (∀ t : ℝ, writeEnd (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) ≤ t →
-          t ≤ writeEnd (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
-            + retention (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) →
+      ∧ (∀ t : ℝ, writeEnd (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) ≤ t →
+          t ≤ writeEnd (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
+            + retention (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) →
           (activeFlow J ħ g hf t (msgPoint 1, q)).2 ∈ displayArc
             ∧ (activeFlow J ħ g hf t (msgPoint 1, q)).2 ≠ (activeFlow J ħ g hf t (msgPoint 0, q)).2)
-      ∧ (∃ t, writeEnd (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
-            + retention (driftRate J g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) < t
+      ∧ (∃ t, writeEnd (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2))
+            + retention (driftRate J ħ g hf q.2) (rabiRate J ħ (detuningAt g hf q.2)) < t
           ∧ (activeFlow J ħ g hf t (msgPoint 1, q)).2 = q)
       ∧ (activatedRegister g hf hJ hħ hf1 hq hκ hslow).prep = (msgPoint 1, q)
       ∧ (activatedRegister g hf hJ hħ hf1 hq hκ hslow).site = {1} :=
