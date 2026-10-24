@@ -7525,4 +7525,71 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.coupled_reception
 
 
+/-! #197: radar with a detector — the activated reception read on the arena clock as a one-way radar coordinate: the transfer error `πħΔ²/(16J³)` of the detuned arrival, the detector delay of the witness explicit in `κ` and `ω`, the measured readings with the emission reading exactly `0`, the return reading within clock resolution + retention window + detector delay + transfer error of `τ_hop`, the resulting bound on radar time, separation and distance against the ideal one-way readings, and the interpretation that a detector of response time `d` shifts both coordinates by `d/2` (`RecordLayer/RadarDetector.lean`). -/
+
+/-- info: 'CSD.RecordLayer.transferError' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transferError
+
+/-- info: 'CSD.RecordLayer.transferError_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transferError_nonneg
+
+/-- info: 'CSD.RecordLayer.abs_detunedHopTime_sub_hopTime_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_detunedHopTime_sub_hopTime_le
+
+/-- info: 'CSD.RecordLayer.radarTime_delayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarTime_delayed
+
+/-- info: 'CSD.RecordLayer.radarSep_delayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarSep_delayed
+
+/-- info: 'CSD.RecordLayer.detectorDelay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detectorDelay
+
+/-- info: 'CSD.RecordLayer.detectorDelay_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detectorDelay_eq
+
+/-- info: 'CSD.RecordLayer.detectorReadings' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detectorReadings
+
+/-- info: 'CSD.RecordLayer.detectorReadings_emit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detectorReadings_emit
+
+/-- info: 'CSD.RecordLayer.detectorReadings_ret' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detectorReadings_ret
+
+/-- info: 'CSD.RecordLayer.idealReadings' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idealReadings
+
+/-- info: 'CSD.RecordLayer.idealReadings_emit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idealReadings_emit
+
+/-- info: 'CSD.RecordLayer.idealReadings_ret' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idealReadings_ret
+
+/-- info: 'CSD.RecordLayer.radarBudget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarBudget
+
+/-- info: 'CSD.RecordLayer.abs_detectorReadings_ret_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_detectorReadings_ret_sub_le
+
+/-- info: 'CSD.RecordLayer.radar_with_detector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_with_detector
+
+
 end CSD.Tests.AxiomAudit
