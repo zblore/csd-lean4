@@ -7418,4 +7418,111 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.activated_hamiltonian
 
 
+/-! #196: coupled reception — the activated write against the uncoupled transfer: exact transfer at zero detuning, the occupancy loss quadratic in the detuning (peak loss plus phase drift), the receiver's thresholded bit still distinguishing the messages for `|Δ| ≤ 2J`, the formation interval of the write from the occupancy integral, the arena with the record clock as a two-time measure-preserving dynamics carrying the write as an `ActualOccurrence`, and the emission causally preceding the reception event on the hop graph once the clock has ticked (`RecordLayer/CoupledReception.lean`). -/
+
+/-- info: 'CSD.RecordLayer.detuned_readout_one_zero_detuning' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detuned_readout_one_zero_detuning
+
+/-- info: 'CSD.RecordLayer.abs_sin_sq_sub_sin_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_sin_sq_sub_sin_sq_le
+
+/-- info: 'CSD.RecordLayer.rabiFreq_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rabiFreq_sub_le
+
+/-- info: 'CSD.RecordLayer.one_sub_div_rabiFreq_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_div_rabiFreq_sq_le
+
+/-- info: 'CSD.RecordLayer.abs_rabiAngle_sub_hopAngle_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_rabiAngle_sub_hopAngle_le
+
+/-- info: 'CSD.RecordLayer.occupancy_loss_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.occupancy_loss_le
+
+/-- info: 'CSD.RecordLayer.occupancy_loss_le_of_abs_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.occupancy_loss_le_of_abs_le_one
+
+/-- info: 'CSD.RecordLayer.half_le_div_rabiFreq_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.half_le_div_rabiFreq_sq
+
+/-- info: 'CSD.RecordLayer.readBit_detuned_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readBit_detuned_one
+
+/-- info: 'CSD.RecordLayer.readBit_detuned_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.readBit_detuned_zero
+
+/-- info: 'CSD.RecordLayer.receiver_bit_distinguishes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.receiver_bit_distinguishes
+
+/-- info: 'CSD.RecordLayer.formation_interval' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.formation_interval
+
+/-- info: 'CSD.RecordLayer.ClockedArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ClockedArena
+
+/-- info: 'CSD.RecordLayer.clockedEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockedEvolve
+
+/-- info: 'CSD.RecordLayer.clockedEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockedEvolve_self
+
+/-- info: 'CSD.RecordLayer.clockedEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockedEvolve_comp
+
+/-- info: 'CSD.RecordLayer.measurable_clockedEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_clockedEvolve
+
+/-- info: 'CSD.RecordLayer.clockedEvolve_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockedEvolve_measurePreserving
+
+/-- info: 'CSD.RecordLayer.clockedRegister' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockedRegister
+
+/-- info: 'CSD.RecordLayer.clockedReading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockedReading
+
+/-- info: 'CSD.RecordLayer.emissionEvent' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emissionEvent
+
+/-- info: 'CSD.RecordLayer.receptionEvent_region' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.receptionEvent_region
+
+/-- info: 'CSD.RecordLayer.receptionEvent_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.receptionEvent_time
+
+/-- info: 'CSD.RecordLayer.receptionEvent_time_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.receptionEvent_time_le
+
+/-- info: 'CSD.RecordLayer.emission_causalPrecedes_reception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emission_causalPrecedes_reception
+
+/-- info: 'CSD.RecordLayer.coupled_reception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupled_reception
+
+
 end CSD.Tests.AxiomAudit
