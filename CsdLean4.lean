@@ -657,6 +657,8 @@ public import CsdLean4.RecordLayer.RadarDetector
 public import CsdLean4.RecordLayer.EchoArena
 public import CsdLean4.RecordLayer.EchoRadar
 public import CsdLean4.RecordLayer.HandClock
+public import CsdLean4.RecordLayer.ClockAndEcho
+public import CsdLean4.RecordLayer.EchoHamiltonian
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.TwoTimeLuders
 public import CsdLean4.RecordLayer.EntangledRecord
@@ -799,6 +801,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 public import CsdLean4.LF4.ProjectiveManifold
 public import CsdLean4.LF4.ArenaSymplectic
 public import CsdLean4.LF4.ArenaCoupledFlow
+public import CsdLean4.LF4.EchoCoupledFlow
 public import CsdLean4.LF4.ArenaStrokeFlux
 public import CsdLean4.LF4.ArenaVolume
 public import CsdLean4.Empirical.QM.Darwinism

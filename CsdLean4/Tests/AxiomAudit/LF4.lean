@@ -1692,4 +1692,123 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #print axioms CSD.LF4.arenaVolume_map_coupledFlow
 
 
+/-! #202 (generation half, generic): the flow of a ray coupled to two tori on `ℂℙᴺ × T² × T²` — the product symplectic form `arenaForm ⊕ dψ₁ ∧ dψ₂`, the two-torus energy and its field, the lift of a field from the arena to the product, the outer coupled term, `ι_X ω = d𝓗` for the sum, and the flow in closed form by uniqueness of integral curves (`LF4/EchoCoupledFlow.lean`). -/
+
+/-- info: 'CSD.LF4.continuous_schrodingerHamiltonian_twoCoupledOrbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.continuous_schrodingerHamiltonian_twoCoupledOrbit
+
+/-- info: 'CSD.LF4.continuous_twoCoupledOrbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.continuous_twoCoupledOrbit
+
+/-- info: 'CSD.LF4.contMDiff_outerTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_outerTerm
+
+/-- info: 'CSD.LF4.contMDiff_twoCoupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_twoCoupledEnergy
+
+/-- info: 'CSD.LF4.echoForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.echoForm
+
+/-- info: 'CSD.LF4.echoForm_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.echoForm_apply
+
+/-- info: 'CSD.LF4.echoForm_isSymplectic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.echoForm_isSymplectic
+
+/-- info: 'CSD.LF4.EchoModel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.EchoModel
+
+/-- info: 'CSD.LF4.EchoSigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.EchoSigma
+
+/-- info: 'CSD.LF4.echoSigma_isManifold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.echoSigma_isManifold
+
+/-- info: 'CSD.LF4.hamiltonianFlow_twoCoupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_twoCoupledEnergy
+
+/-- info: 'CSD.LF4.hasDerivAt_twoAccumA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hasDerivAt_twoAccumA
+
+/-- info: 'CSD.LF4.hasDerivAt_twoAccumB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hasDerivAt_twoAccumB
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_fstLift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_fstLift
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_outerTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_outerTerm
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_twoCoupled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_twoCoupled
+
+/-- info: 'CSD.LF4.isMIntegralCurve_twoCoupledCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isMIntegralCurve_twoCoupledCurve
+
+/-- info: 'CSD.LF4.schrodingerField_twoCoupledMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.schrodingerField_twoCoupledMatrix
+
+/-- info: 'CSD.LF4.twoAccumA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoAccumA
+
+/-- info: 'CSD.LF4.twoAccumA_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoAccumA_zero
+
+/-- info: 'CSD.LF4.twoAccumB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoAccumB
+
+/-- info: 'CSD.LF4.twoAccumB_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoAccumB_zero
+
+/-- info: 'CSD.LF4.twoCoupledCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledCurve
+
+/-- info: 'CSD.LF4.twoCoupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledEnergy
+
+/-- info: 'CSD.LF4.twoCoupledEnergy_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledEnergy_eq
+
+/-- info: 'CSD.LF4.twoCoupledField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledField
+
+/-- info: 'CSD.LF4.twoCoupledField_eq_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledField_eq_hamiltonianVectorField
+
+/-- info: 'CSD.LF4.twoCoupledMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledMatrix
+
+/-- info: 'CSD.LF4.twoCoupledMatrix_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledMatrix_isHermitian
+
+
 end CSD.Tests.AxiomAudit

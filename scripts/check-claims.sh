@@ -969,6 +969,13 @@ isSymplectic"
 #   flows with IsSymplectic.hamiltonianFlow by uniqueness of integral curves — EARNED; the
 #   schrodingerHamiltonian_* / mdifferentiableAt_ / continuous_…_coupledOrbit names are facts about the
 #   already-declared energy function −2⟨H⟩, operator sense.)
+#   (2026-10-24, #202: the echo on ℂℙᴺ × T² × T². echoForm_isSymplectic is IsSymplectic.prodForm run once
+#   more — EARNED; isHamiltonianVectorField_fstLift / _outerTerm / _twoCoupled prove ι_X ω = d𝓗 for the
+#   stated fields on echoForm — EARNED; twoCoupledField_eq_hamiltonianVectorField,
+#   hamiltonianFlow_twoCoupledEnergy, hamiltonianFlow_echoFlow, map_hamiltonianFlow_echoFlow and
+#   echo_hamiltonian identify explicit flows with IsSymplectic.hamiltonianFlow by uniqueness of integral
+#   curves — EARNED; schrodingerHamiltonian_hamOccA and continuous_schrodingerHamiltonian_twoCoupledOrbit
+#   are facts about the already-declared energy function −2⟨H⟩, operator sense.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 kahlerFstSector_projectiveLaw
 kahlerFstSector_epistemicMeasure_projectiveLaw
@@ -1128,7 +1135,18 @@ mdifferentiableAt_schrodingerHamiltonian
 schrodingerHamiltonian_add
 schrodingerHamiltonian_hamA
 schrodingerHamiltonian_hamB
-schrodingerHamiltonian_real_smul"
+schrodingerHamiltonian_real_smul
+echoForm_isSymplectic
+isHamiltonianVectorField_fstLift
+isHamiltonianVectorField_outerTerm
+isHamiltonianVectorField_twoCoupled
+twoCoupledField_eq_hamiltonianVectorField
+hamiltonianFlow_twoCoupledEnergy
+hamiltonianFlow_echoFlow
+map_hamiltonianFlow_echoFlow
+echo_hamiltonian
+schrodingerHamiltonian_hamOccA
+continuous_schrodingerHamiltonian_twoCoupledOrbit"
 
 OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 

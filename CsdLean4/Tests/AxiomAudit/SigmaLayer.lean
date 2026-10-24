@@ -8433,4 +8433,186 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.tickWrite_value_ne
 
 
+/-! #202 (dynamics half): the autonomous clock-and-echo model on one arena — the echo arena times the clock's carrier–pointer system with one two-time, autonomous, measure-preserving evolution; the echo's three writes and the clock's ticks as `ActualOccurrence`s on it; the radar timestamps as the hand's readings at `A`'s two records (at the write completions, `τ_tick` times the two hand labels); the derived budget with the clock's resolution in place of the scheduled clock's period; and the bound on radar time, separation and distance against the ideal round trip (`RecordLayer/ClockAndEcho.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_clockEchoReadings_emit_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_clockEchoReadings_emit_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_clockEchoReadings_ret_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_clockEchoReadings_ret_sub_le
+
+/-- info: 'CSD.RecordLayer.autonomous_clock_and_echo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.autonomous_clock_and_echo
+
+/-- info: 'CSD.RecordLayer.ClockEchoArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ClockEchoArena
+
+/-- info: 'CSD.RecordLayer.clockEchoBudget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoBudget
+
+/-- info: 'CSD.RecordLayer.clockEchoEmission' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoEmission
+
+/-- info: 'CSD.RecordLayer.clockEchoEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoEvolve
+
+/-- info: 'CSD.RecordLayer.clockEchoEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoEvolve_comp
+
+/-- info: 'CSD.RecordLayer.clockEchoEvolve_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoEvolve_measurePreserving
+
+/-- info: 'CSD.RecordLayer.clockEchoEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoEvolve_self
+
+/-- info: 'CSD.RecordLayer.clockEchoEvolve_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoEvolve_shift
+
+/-- info: 'CSD.RecordLayer.clockEchoLabel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoLabel
+
+/-- info: 'CSD.RecordLayer.clockEchoReadings' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoReadings
+
+/-- info: 'CSD.RecordLayer.clockEchoReadings_eq_labels' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoReadings_eq_labels
+
+/-- info: 'CSD.RecordLayer.clockEchoReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoReady
+
+/-- info: 'CSD.RecordLayer.clockEchoReception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoReception
+
+/-- info: 'CSD.RecordLayer.clockEchoReturn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoReturn
+
+/-- info: 'CSD.RecordLayer.clockEchoTick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockEchoTick
+
+/-- info: 'CSD.RecordLayer.clockReadingAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockReadingAt
+
+/-- info: 'CSD.RecordLayer.clockReadingAt_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockReadingAt_mono
+
+/-- info: 'CSD.RecordLayer.clockResolution' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockResolution
+
+/-- info: 'CSD.RecordLayer.emissionLabel_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emissionLabel_time
+
+/-- info: 'CSD.RecordLayer.measurable_clockEchoEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_clockEchoEvolve
+
+/-- info: 'CSD.RecordLayer.measurableSet_clockEchoReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_clockEchoReady
+
+/-- info: 'CSD.RecordLayer.returnLabel_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnLabel_time
+
+
+/-! #202 (generation half, the echo on `Σ`): the sender occupancy on `Σ`'s index, the echo's Hamiltonian `−(2/ħ)(J⟨X⟩ + g_A f_A n_A + g_B f_B n_B)` and its identity with `−(2/ħ)` times #199's joint energy, the reindexed two-site exchange as the Schrödinger unitary of the two-angle matrix, both pointer displacements as #199's, the echo as the Hamiltonian flow of its energy read through the index bridge, and Liouville inherited through the identification (`RecordLayer/EchoHamiltonian.lean`). -/
+
+/-- info: 'CSD.RecordLayer.arenaEquiv_twoDetuned_arenaFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaEquiv_twoDetuned_arenaFlow
+
+/-- info: 'CSD.RecordLayer.contMDiff_echoEnergySigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contMDiff_echoEnergySigma
+
+/-- info: 'CSD.RecordLayer.echo_hamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echo_hamiltonian
+
+/-- info: 'CSD.RecordLayer.echoAmountA_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoAmountA_eq
+
+/-- info: 'CSD.RecordLayer.echoAmountB_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoAmountB_eq
+
+/-- info: 'CSD.RecordLayer.echoEnergySigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoEnergySigma
+
+/-- info: 'CSD.RecordLayer.echoEnergySigma_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoEnergySigma_eq
+
+/-- info: 'CSD.RecordLayer.echoToSigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoToSigma
+
+/-- info: 'CSD.RecordLayer.hamiltonianFlow_echoFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianFlow_echoFlow
+
+/-- info: 'CSD.RecordLayer.hamOccA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamOccA
+
+/-- info: 'CSD.RecordLayer.hamOccA_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamOccA_isHermitian
+
+/-- info: 'CSD.RecordLayer.idxUnitary_twoDetunedFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxUnitary_twoDetunedFlow
+
+/-- info: 'CSD.RecordLayer.map_hamiltonianFlow_echoFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_hamiltonianFlow_echoFlow
+
+/-- info: 'CSD.RecordLayer.occA_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.occA_isHermitian
+
+/-- info: 'CSD.RecordLayer.reindex_twoDetunedGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reindex_twoDetunedGen
+
+/-- info: 'CSD.RecordLayer.schrodingerHamiltonian_hamOccA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.schrodingerHamiltonian_hamOccA
+
+/-- info: 'CSD.RecordLayer.twoAccumA_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoAccumA_eq
+
+/-- info: 'CSD.RecordLayer.twoAccumB_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoAccumB_eq
+
+/-- info: 'CSD.RecordLayer.twoCoupledMatrix_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoCoupledMatrix_eq
+
+
 end CSD.Tests.AxiomAudit
