@@ -574,6 +574,23 @@ theorem continuous_occAccumA_prod (J ħ t : ℝ) :
     (f := fun x : FieldArena 2 2 × (ℝ × ℝ) => fun s => occHistA J ħ x.2.1 x.2.2 x.1 s)
     (continuous_occHistA_prod J ħ) 0 t
 
+/-- The accumulated occupancy of `A` along continuous ray and detuning families, in the applied form
+(the uncurried statement is `continuous_occAccumA_prod`; unifying it against an expected type unfolds
+the arena and times out, so consumers take this form). -/
+theorem _root_.Continuous.occAccumA {X : Type*} [TopologicalSpace X] {ΔA ΔB : X → ℝ}
+    {p : X → FieldArena 2 2} (hA : Continuous ΔA) (hB : Continuous ΔB) (hp : Continuous p)
+    (J ħ t : ℝ) : Continuous fun x => occAccumA J ħ (ΔA x) (ΔB x) (p x) t := by
+  have h := (continuous_occAccumA_prod J ħ t).comp₂ hp (hA.prodMk hB)
+  exact h
+
+/-- The accumulated occupancy of `B` along continuous ray and detuning families, in the applied
+form. -/
+theorem _root_.Continuous.occAccum {X : Type*} [TopologicalSpace X] {Δ : X → ℝ}
+    {p : X → FieldArena 2 2} (hΔ : Continuous Δ) (hp : Continuous p) (J ħ t : ℝ) :
+    Continuous fun x => occAccum J ħ (Δ x) (p x) t := by
+  have h := (continuous_occAccum_prod J ħ t).comp₂ hp hΔ
+  exact h
+
 /-- The history of `A` for message `1`: `1 − (J/Ω')² sin²(Ω's/ħ)`. -/
 theorem occHistA_msgPoint_one {J : ℝ} (hJ : 0 < J) (ħ ΔA ΔB s : ℝ) :
     occHistA J ħ ΔA ΔB (msgPoint 1) s
@@ -594,6 +611,81 @@ theorem occAccumA_msgPoint_zero {J : ℝ} (hJ : 0 < J) (ħ ΔA ΔB t : ℝ) :
     occAccumA J ħ ΔA ΔB (msgPoint 0) t = 0 := by
   unfold occAccumA
   simp [occHistA_msgPoint_zero hJ]
+
+/-! ### Group laws along the two-site flow, and the joint energy -/
+
+/-- The history of `A` from the evolved ray is the shifted history. -/
+theorem occHistA_arenaFlow (J ħ ΔA ΔB : ℝ) (p : FieldArena 2 2) (s u : ℝ) :
+    occHistA J ħ ΔA ΔB ((twoDetunedFlow J ħ ΔA ΔB).arenaFlow s p) u
+      = occHistA J ħ ΔA ΔB p (u + s) := by
+  unfold occHistA
+  rw [FieldStructuredFlow.arenaFlow_add]
+
+/-- ★ **The group law of the accumulated occupancy of `A`** along the two-site flow. -/
+theorem occAccumA_add (J ħ ΔA ΔB : ℝ) (p : FieldArena 2 2) (s t : ℝ) :
+    occAccumA J ħ ΔA ΔB p (s + t)
+      = occAccumA J ħ ΔA ΔB p s
+        + occAccumA J ħ ΔA ΔB ((twoDetunedFlow J ħ ΔA ΔB).arenaFlow s p) t := by
+  unfold occAccumA
+  rw [← intervalIntegral.integral_add_adjacent_intervals
+    ((continuous_occHistA J ħ ΔA ΔB p).intervalIntegrable 0 s)
+    ((continuous_occHistA J ħ ΔA ΔB p).intervalIntegrable s (s + t))]
+  congr 1
+  simp_rw [occHistA_arenaFlow]
+  rw [intervalIntegral.integral_comp_add_right (fun u => occHistA J ħ ΔA ΔB p u) s, zero_add,
+    add_comm t s]
+
+/-- The history of `B` from the ray evolved by the **two-site** flow is the shifted history. -/
+theorem occHist_twoDetunedFlow_arenaFlow (J ħ ΔA ΔB : ℝ) (p : FieldArena 2 2) (s u : ℝ) :
+    occHist J ħ (ΔB - ΔA) ((twoDetunedFlow J ħ ΔA ΔB).arenaFlow s p) u
+      = occHist J ħ (ΔB - ΔA) p (u + s) := by
+  rw [← occB_twoDetunedFlow, ← occB_twoDetunedFlow, ← FieldStructuredFlow.arenaFlow_add]
+
+/-- ★ **The group law of the accumulated occupancy of `B` along the two-site flow.** -/
+theorem occAccum_twoDetuned_add (J ħ ΔA ΔB : ℝ) (p : FieldArena 2 2) (s t : ℝ) :
+    occAccum J ħ (ΔB - ΔA) p (s + t)
+      = occAccum J ħ (ΔB - ΔA) p s
+        + occAccum J ħ (ΔB - ΔA) ((twoDetunedFlow J ħ ΔA ΔB).arenaFlow s p) t := by
+  unfold occAccum
+  rw [← intervalIntegral.integral_add_adjacent_intervals
+    ((continuous_occHist J ħ _ p).intervalIntegrable 0 s)
+    ((continuous_occHist J ħ _ p).intervalIntegrable s (s + t))]
+  congr 1
+  simp_rw [occHist_twoDetunedFlow_arenaFlow]
+  rw [intervalIntegral.integral_comp_add_right (fun u => occHist J ħ (ΔB - ΔA) p u) s, zero_add,
+    add_comm t s]
+
+theorem occAccumA_nonneg (J ħ ΔA ΔB : ℝ) (p : FieldArena 2 2) {t : ℝ} (ht : 0 ≤ t) :
+    0 ≤ occAccumA J ħ ΔA ΔB p t :=
+  intervalIntegral.integral_nonneg ht fun s _ => occHistA_nonneg J ħ ΔA ΔB p s
+
+theorem occAccumA_le (J ħ ΔA ΔB : ℝ) (p : FieldArena 2 2) {t : ℝ} (ht : 0 ≤ t) :
+    occAccumA J ħ ΔA ΔB p t ≤ t := by
+  have h := intervalIntegral.integral_mono_on (μ := volume) (f := occHistA J ħ ΔA ΔB p)
+    (g := fun _ => (1 : ℝ)) ht ((continuous_occHistA J ħ ΔA ΔB p).intervalIntegrable 0 t)
+    (continuous_const.intervalIntegrable 0 t) fun s _ => occHistA_le_one J ħ ΔA ΔB p s
+  rw [intervalIntegral.integral_const, sub_zero, smul_eq_mul, mul_one] at h
+  exact h
+
+theorem twoDetunedH_commute_flow (J ħ ΔA ΔB t : ℝ) :
+    Commute (twoDetunedH J ΔA ΔB) ((twoDetunedFlow J ħ ΔA ΔB).flow t).val := by
+  rw [twoDetunedFlow_val, twoDetunedGen]
+  exact (((Commute.refl (twoDetunedH J ΔA ΔB)).smul_right _).smul_right t).exp_right
+
+/-- ★ **Energy conservation on the carrier**: `⟨H⟩` is constant along the two-site flow. -/
+theorem arenaObs_twoDetunedH_arenaFlow (J ħ ΔA ΔB t : ℝ) (p : FieldArena 2 2) :
+    arenaObs (twoDetunedH J ΔA ΔB) ((twoDetunedFlow J ħ ΔA ΔB).arenaFlow t p)
+      = arenaObs (twoDetunedH J ΔA ΔB) p := by
+  rw [FieldStructuredFlow.arenaFlow, arenaObs_kick_conj, Matrix.star_eq_conjTranspose,
+    Matrix.mul_assoc, (twoDetunedH_commute_flow J ħ ΔA ΔB t).eq, ← Matrix.mul_assoc,
+    twoDetunedFlow_isom, Matrix.one_mul]
+
+/-- The energy of the two-site Hamiltonian at a ray: `J⟨X⟩ + Δ_A n_A + Δ_B n_B`. -/
+theorem arenaObs_twoDetunedH (J ΔA ΔB : ℝ) (p : FieldArena 2 2) :
+    arenaObs (twoDetunedH J ΔA ΔB) p
+      = J * arenaObs hopX p + ΔA * momentMap p excA + ΔB * momentMap p excB := by
+  rw [twoDetunedH, arenaObs_add, arenaObs_add, arenaObs_real_smul, arenaObs_real_smul,
+    arenaObs_real_smul, occA, occB, arenaObs_single_eq_momentMap, arenaObs_single_eq_momentMap]
 
 /-- ★ **The two-site exchange with both sites detuned**, in one statement: the flow is the detuned
 exchange in the difference up to the sector phase; the two messages' occupancies at both sites; the
