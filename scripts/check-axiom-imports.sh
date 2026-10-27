@@ -10,10 +10,20 @@
 # build does not compile AxiomAudit, so the resulting "Unknown constant" only
 # surfaces in the slow CsdLeanTests / CI run.
 #
-# This checks, statically (grep only, no Lean build, a few seconds), that every
-# constant pinned in AxiomAudit.lean has a defining file inside AxiomAudit's
-# TRANSITIVE import closure (matching how Lean actually resolves names, so no
-# false positives on transitively-imported modules).
+# This checks, statically (grep only, no Lean build), that every constant pinned in
+# AxiomAudit.lean has a defining file inside AxiomAudit's TRANSITIVE import closure
+# (matching how Lean actually resolves names, so no false positives on
+# transitively-imported modules).
+#
+# Cost: one `git grep` over CsdLean4 builds a definition index (declaration name ->
+# defining files), and each pin is a lookup in it. Until 2026-10-27 the script ran one
+# full-tree `git grep` PER PIN; at 6,865 pins that was ~1,480 s of every CI run
+# (the "a few seconds" this header used to promise had stopped being true). The index
+# reproduces the old per-pin match exactly: the old pattern
+#   ^(theorem|...|instance)[[:space:]]+<leaf>([[:space:](:{]|$)
+# matches a line iff the maximal run of characters after the keyword and its
+# whitespace that contains none of space, `(`, `:`, `{` is exactly <leaf>; that run
+# is the index key. Same output, same exit codes.
 #
 # It is a heuristic (locates the leaf declaration name by grep); it does NOT
 # verify #guard_msgs axiom strings -- CI, or a local `lake build
@@ -49,12 +59,37 @@ while [ "$i" -lt "${#queue[@]}" ]; do
   done < <(grep -E "$imp_re" "$f" | imp_to_file)
 done
 
+# --- The definition index, built once: declaration name -> defining files. ---
+# Keys are restricted to the leaf alphabet [A-Za-z0-9_]: a pin's leaf is drawn from it (the
+# pin regex below), so a token outside it can never be looked up, and the restriction keeps
+# every key safe as a bash associative-array subscript. Files per key are newline-joined in
+# byte order, the order `git grep -l` printed them in.
+kw_re='^(theorem|lemma|def|noncomputable def|abbrev|structure|inductive|instance)[[:space:]]+'
+declare -A deffiles_of
+while IFS=$'\t' read -r tok file; do
+  [ -n "$tok" ] || continue
+  if [ -n "${deffiles_of[$tok]:-}" ]; then
+    deffiles_of["$tok"]+=$'\n'"$file"
+  else
+    deffiles_of["$tok"]="$file"
+  fi
+done < <(git grep -E "${kw_re}[^[:space:](:{]" -- CsdLean4 2>/dev/null \
+  | sed -nE 's/^([^:]*):(theorem|lemma|def|noncomputable def|abbrev|structure|inductive|instance)[[:space:]]+([^[:space:](:{]+).*$/\3\t\1/p' \
+  | grep -E $'^[A-Za-z0-9_]+\t' \
+  | LC_ALL=C sort -u)
+
 # --- Check every pinned constant's defining module is in the closure. ---
 failures=0
 while read -r name; do
   [ -n "$name" ] || continue
   leaf="${name##*.}"
-  deffiles="$(git grep -lE "^(theorem|lemma|def|noncomputable def|abbrev|structure|inductive|instance)[[:space:]]+${leaf}([[:space:](:{]|$)" -- CsdLean4 2>/dev/null || true)"
+  if [ -n "$leaf" ]; then
+    deffiles="${deffiles_of[$leaf]:-}"
+  else
+    # A pin ending in `.` has an empty leaf; the index cannot key it, so fall back to the
+    # original per-pin search for this one name (never taken on the current pins).
+    deffiles="$(git grep -lE "${kw_re}([[:space:](:{]|$)" -- CsdLean4 2>/dev/null || true)"
+  fi
   [ -z "$deffiles" ] && continue          # unlocatable form -> cannot adjudicate
   ok=0
   while read -r f; do

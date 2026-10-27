@@ -3,8 +3,24 @@ name: CI
 on:
   push:
     branches: ["main", "master"]
+    # A push that touches ONLY prose skips CI (2026-10-27 cost fix: 28 of October's 164 pushes to
+    # main changed no .lean, lake or workflow file). A push that also touches anything else runs
+    # the whole job. scripts/** stays in: the guards live there. Caveat: several guards READ
+    # specs/ and docs/ (residues, references, terms baseline, validation ledger, doc promises), so
+    # a prose-only push that breaks one is caught by the next code push or by the PR trigger,
+    # which keeps no filter.
+    paths-ignore:
+      - "specs/**"
+      - "docs/**"
+      - "*.md"
   pull_request:
   workflow_dispatch:
+
+# A newer push to the same ref cancels the run it supersedes (13 of October's 166 push runs were
+# overtaken before they finished).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
