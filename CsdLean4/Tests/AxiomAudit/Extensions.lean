@@ -4318,4 +4318,147 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.three_station_geometry
 
 
+/-! #205 first brick: the two cones compared on the chain — the hop has norm one, a stage's Lieb–Robinson velocity is `4e|J/ħ|`, `v_LR · τ_hop = 2πe` with `17 < 2πe < 18`, the arrival inside the cone and after it opens, one-stage suppression only beyond 18 sites, and the same couplings as one flow on `n` edges with a slope `n/2` to `n` times a stage's (`CV/ConeComparison.lean`). -/
+
+/-- info: 'CSD.CV.norm_swapProj_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_swapProj_le
+
+/-- info: 'CSD.CV.norm_swapHop_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_swapHop_le
+
+/-- info: 'CSD.CV.one_le_norm_swapHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.one_le_norm_swapHop
+
+/-- info: 'CSD.CV.norm_swapHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_swapHop
+
+/-- info: 'CSD.CV.norm_chainGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_chainGen
+
+/-- info: 'CSD.CV.lrVelocity_edgeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lrVelocity_edgeFlow
+
+/-- info: 'CSD.CV.hopVelocity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopVelocity
+
+/-- info: 'CSD.CV.coneRatio' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.coneRatio
+
+/-- info: 'CSD.CV.coneRatio_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.coneRatio_pos
+
+/-- info: 'CSD.CV.lrVelocity_mul_hopTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lrVelocity_mul_hopTime
+
+/-- info: 'CSD.CV.lrVelocity_eq_coneRatio_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lrVelocity_eq_coneRatio_mul
+
+/-- info: 'CSD.CV.seventeen_lt_coneRatio' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.seventeen_lt_coneRatio
+
+/-- info: 'CSD.CV.coneRatio_lt_eighteen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.coneRatio_lt_eighteen
+
+/-- info: 'CSD.CV.arrival_eq_coneRatio_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arrival_eq_coneRatio_mul
+
+/-- info: 'CSD.CV.arrival_mem_lrCone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arrival_mem_lrCone
+
+/-- info: 'CSD.CV.lrTime_lt_arrival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lrTime_lt_arrival
+
+/-- info: 'CSD.CV.lr_bound_one_stage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lr_bound_one_stage
+
+/-- info: 'CSD.CV.pathFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pathFlow
+
+/-- info: 'CSD.CV.pathFlow_edges' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pathFlow_edges
+
+/-- info: 'CSD.CV.card_pathGraph' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.card_pathGraph
+
+/-- info: 'CSD.CV.fst_ne_snd_of_mem_pathGraph' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.fst_ne_snd_of_mem_pathGraph
+
+/-- info: 'CSD.CV.norm_sum_entries_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_sum_entries_le
+
+/-- info: 'CSD.CV.sum_entries_swapHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sum_entries_swapHop
+
+/-- info: 'CSD.CV.flipAt' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.flipAt
+
+/-- info: 'CSD.CV.flipAt_flipAt' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.flipAt_flipAt
+
+/-- info: 'CSD.CV.flipAt_moved_iff' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.flipAt_moved_iff
+
+/-- info: 'CSD.CV.card_moved_mul_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.card_moved_mul_two
+
+/-- info: 'CSD.CV.pathHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pathHop
+
+/-- info: 'CSD.CV.sum_pathFlow_piece' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sum_pathFlow_piece
+
+/-- info: 'CSD.CV.lrVelocity_pathFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lrVelocity_pathFlow
+
+/-- info: 'CSD.CV.norm_pathHop_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_pathHop_le
+
+/-- info: 'CSD.CV.sum_entries_pathHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sum_entries_pathHop
+
+/-- info: 'CSD.CV.half_le_norm_pathHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.half_le_norm_pathHop
+
+/-- info: 'CSD.CV.pathFlow_lrVelocity_mul_hopTime_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pathFlow_lrVelocity_mul_hopTime_bounds
+
+/-- info: 'CSD.CV.cone_comparison' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cone_comparison
+
+
 end CSD.Tests.AxiomAudit
