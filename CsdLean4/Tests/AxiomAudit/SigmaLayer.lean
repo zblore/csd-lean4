@@ -8615,4 +8615,63 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.twoCoupledMatrix_eq
 
 
+/-! #204: detector-class stability — the derived corrections a detector subtracts (the emission write's completion, the return write's response), the corrected budget `T + senderWindow + 2 transferError` with nothing of the detector's response in it, the corrected separation within it of the hop time, what the correction removes (half the net delay), two detectors on one arrangement agreeing up to the sum of their corrected budgets, and the regime for the class `|Δ| ≤ δ`, window `≤ w`, clock `≤ T₀` (`RecordLayer/DetectorClass.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_correctedEmit_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_correctedEmit_le
+
+/-- info: 'CSD.RecordLayer.abs_correctedRet_sub_roundTrip_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_correctedRet_sub_roundTrip_le
+
+/-- info: 'CSD.RecordLayer.abs_correctedSep_sub_hopTime_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_correctedSep_sub_hopTime_le
+
+/-- info: 'CSD.RecordLayer.abs_correctedSep_sub_hopTime_le_of' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_correctedSep_sub_hopTime_le_of
+
+/-- info: 'CSD.RecordLayer.correctedBudget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.correctedBudget
+
+/-- info: 'CSD.RecordLayer.correctedBudget_le_of_class' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.correctedBudget_le_of_class
+
+/-- info: 'CSD.RecordLayer.correctedBudget_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.correctedBudget_nonneg
+
+/-- info: 'CSD.RecordLayer.correctedSep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.correctedSep
+
+/-- info: 'CSD.RecordLayer.detector_class_stability' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detector_class_stability
+
+/-- info: 'CSD.RecordLayer.emitCorrection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emitCorrection
+
+/-- info: 'CSD.RecordLayer.rawSep_eq_correctedSep_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rawSep_eq_correctedSep_add
+
+/-- info: 'CSD.RecordLayer.returnCorrection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnCorrection
+
+/-- info: 'CSD.RecordLayer.stable_regime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.stable_regime
+
+/-- info: 'CSD.RecordLayer.transferError_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transferError_mono
+
+
 end CSD.Tests.AxiomAudit
