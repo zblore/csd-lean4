@@ -67,7 +67,7 @@ instance (ψ : EuclideanSpace ℂ (Fin n)) (hψ0 : ψ ≠ 0) :
 
 /-- The **fibre event** of outcome `i`: the ontic states whose fibre coordinate lies in the Born
 partition cell `i` (any base). The outcome depends only on the fibre. -/
-def fibredEvent (ψ : EuclideanSpace ℂ (Fin n)) (i : Fin n) : Set (FibredSigma n) :=
+noncomputable def fibredEvent (ψ : EuclideanSpace ℂ (Fin n)) (i : Fin n) : Set (FibredSigma n) :=
   Set.univ ×ˢ cdfCell (bornRate ψ) i
 
 theorem mem_fibredEvent_iff (ψ : EuclideanSpace ℂ (Fin n)) (i : Fin n) (ω : FibredSigma n) :

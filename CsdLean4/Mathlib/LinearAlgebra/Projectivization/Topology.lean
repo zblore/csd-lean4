@@ -83,25 +83,28 @@ variable [DivisionRing K] [AddCommGroup V] [Module K V]
 
 /-! ### The upstream text
 
-Everything between here and the end of this section is the Mathlib pull request verbatim.
-It is wrapped in a section of its own so that its `variable` lines stop where the pull
+Everything between here and the end of this section is the Mathlib pull request verbatim, except
+that the two lemmas carry a `_staged` suffix: Mathlib master has merged them under the unsuffixed
+names `mk'_eq_mk'_iff` and `preimage_image_mk'`, which made the unsuffixed copies here a
+redeclaration error against master (Compat canary, 2026-10-26). Drop the suffix, or the copies,
+when the pin reaches a Mathlib containing the merge. It is wrapped in a section of its own so that its `variable` lines stop where the pull
 request file stops, and do not reach the material this repository keeps below. -/
 
 section
 
 /-- Two nonzero vectors have the same image in `ℙ K V` iff one is a unit multiple of the other,
 for the action of `Kˣ` on `{v : V // v ≠ 0}`. -/
-theorem mk'_eq_mk'_iff (v w : {v : V // v ≠ 0}) :
+theorem mk'_eq_mk'_iff_staged (v w : {v : V // v ≠ 0}) :
     mk' K v = mk' K w ↔ ∃ a : Kˣ, a • w = v := by
   rw [mk'_eq_mk, mk'_eq_mk, mk_eq_mk_iff]
   simp only [Subtype.ext_iff, Units.smul_coe]
 
 /-- The saturation of a set of nonzero vectors under `mk'` is the union of its translates by the
 units of `K`. -/
-theorem preimage_image_mk' (U : Set {v : V // v ≠ 0}) :
+theorem preimage_image_mk'_staged (U : Set {v : V // v ≠ 0}) :
     mk' K ⁻¹' (mk' K '' U) = ⋃ a : Kˣ, (a • ·) '' U := by
   ext v
-  simp only [mem_preimage, mem_image, mk'_eq_mk'_iff, mem_iUnion]
+  simp only [mem_preimage, mem_image, mk'_eq_mk'_iff_staged, mem_iUnion]
   exact ⟨fun ⟨w, hw, a, h⟩ ↦ ⟨a⁻¹, w, hw, by rw [← h, inv_smul_smul]⟩,
     fun ⟨a, w, hw, h⟩ ↦ ⟨w, hw, a⁻¹, by rw [← h, inv_smul_smul]⟩⟩
 
@@ -126,7 +129,7 @@ theorem continuous_iff {f : ℙ K V → α} : Continuous f ↔ Continuous (f ∘
 variable [ContinuousConstSMul Kˣ V]
 
 theorem isOpenMap_mk' : IsOpenMap (mk' K : {v : V // v ≠ 0} → ℙ K V) := fun U hU ↦ by
-  rw [← isQuotientMap_mk'.isCoinducing.isOpen_preimage, preimage_image_mk']
+  rw [← isQuotientMap_mk'.isCoinducing.isOpen_preimage, preimage_image_mk'_staged]
   exact isOpen_iUnion fun a ↦ isOpenMap_smul a U hU
 
 theorem isOpenQuotientMap_mk' : IsOpenQuotientMap (mk' K : {v : V // v ≠ 0} → ℙ K V) :=

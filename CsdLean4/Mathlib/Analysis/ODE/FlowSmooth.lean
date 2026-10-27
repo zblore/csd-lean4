@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.Analysis.ODE.FlowDerivative
+public import Mathlib.Analysis.Calculus.Deriv.Prod
 
 /-!
 # Smooth dependence of a flow on its initial point
@@ -344,9 +345,16 @@ theorem contDiffOn_flow_aux (k : ℕ) :
       rw [hα0 x hx, (hY x hx).1, ContinuousLinearMap.one_def, ContinuousLinearMap.id_comp]
     have hβd : ∀ p ∈ S', ∀ s ∈ Icc 0 T, HasDerivWithinAt (β p) (G s (β p s)) (Icc 0 T) s := by
       rintro ⟨x, Z⟩ ⟨hx, -⟩ s hs
-      have h := (hαd x hx s hs).prodMk
-        (((hY x hx).2.1 s hs).clm_comp (hasDerivWithinAt_const s (Icc (0 : ℝ) T) Z))
-      refine h.congr_deriv ?_
+      -- Full names and a stated type: on Mathlib master the dot-notation chain lands on the
+      -- unfolded `HasFDerivAtFilter` form, where `prodMk` produces the wrong shape and no
+      -- `congr_deriv` exists; the stated type keeps the pin's elaboration as cheap as the dot
+      -- form was (Compat canary, 2026-10-26).
+      have h : HasDerivWithinAt (fun s' => (α x s', Y x s' ∘L Z))
+          (f s (α x s), (fderiv ℝ (f s) (α x s) ∘L Y x s) ∘L Z + Y x s ∘L 0) (Icc 0 T) s :=
+        HasDerivWithinAt.prodMk (hαd x hx s hs)
+          (HasDerivWithinAt.clm_comp ((hY x hx).2.1 s hs)
+            (hasDerivWithinAt_const s (Icc (0 : ℝ) T) Z))
+      refine HasDerivWithinAt.congr_deriv h ?_
       show _ = (f s (α x s), fderiv ℝ (f s) (α x s) ∘L (Y x s ∘L Z))
       simp [ContinuousLinearMap.comp_assoc]
     have hβK : ∀ p ∈ S', ∀ s ∈ Icc 0 T, β p s ∈ K' := by

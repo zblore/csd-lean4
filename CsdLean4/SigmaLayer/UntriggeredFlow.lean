@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.SigmaLayer.FrozenBase
+public import Mathlib.Analysis.Calculus.Deriv.Prod
 
 /-!
 # SigmaLayer/UntriggeredFlow: one flow that records and back-reacts, with no trigger

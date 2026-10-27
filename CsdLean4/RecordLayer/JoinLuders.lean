@@ -501,8 +501,14 @@ theorem join_luders_marginal (i : Fin K) (hPi : blockProj b i ψ ≠ 0)
       rw [show ρc = (((volume.prod (ProbabilityTheory.cond volume
           (goodTheta b ψ hψ0 i))).prod volume).prod (readyMeasure K)) from rfl,
         Measure.prod_prod, readyMeasure_compl, mul_zero]
-    filter_upwards [MeasureTheory.mem_ae_iff.mpr hnullG,
-      MeasureTheory.mem_ae_iff.mpr hnullR] with q hqG hqR
+    -- the target sets named explicitly and their complements rewritten by `Set.compl_ofPred`: on
+    -- Mathlib master a set-builder complement no longer unifies with `?sᶜ` (Compat canary,
+    -- 2026-10-26)
+    filter_upwards [(MeasureTheory.mem_ae_iff (s := {q : ((AddCircle (1 : ℝ) × LF4.KTorus) ×
+        LF4.KTorus) × LF4.KTorus | q.1.1.2 ∈ goodTheta b ψ hψ0 i})).mpr
+        (by rw [Set.compl_ofPred]; exact hnullG),
+      (MeasureTheory.mem_ae_iff (s := {q : ((AddCircle (1 : ℝ) × LF4.KTorus) × LF4.KTorus) ×
+        LF4.KTorus | q.2 ∈ readyArc K})).mpr (by rw [Set.compl_ofPred]; exact hnullR)] with q hqG hqR
     have hgood : q.1.1.2 ∈ goodTheta b ψ hψ0 i := hqG
     have hready : q.2 ∈ readyArc K := hqR
     have hsector : jF ψ α hψ0 q ∈ P.outcomeSector i :=

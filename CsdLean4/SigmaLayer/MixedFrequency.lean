@@ -79,7 +79,7 @@ noncomputable def mixtureMeasure (ρ : DensityOperator (M + 1)) :
   (eigenvalueMeasure ρ).prod ((productDynamics H hH p₀).muL)
 
 /-- **The mixed outcome-`i` region:** component `j`'s eigenvector lands in the `i`-th ontic Born region. -/
-def mixtureRegion (ρ : DensityOperator (M + 1)) (i : Fin (M + 1)) :
+noncomputable def mixtureRegion (ρ : DensityOperator (M + 1)) (i : Fin (M + 1)) :
     Set (Fin (M + 1) × KSigma (M + 1)) :=
   ⋃ j, {j} ×ˢ eigRegion H hH p₀ ρ j i
 

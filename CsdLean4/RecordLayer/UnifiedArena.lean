@@ -265,7 +265,7 @@ noncomputable def arenaMixtureMeasure (ρ : DensityOperator (M + 1)) :
 
 /-- The mixed outcome-`i` region on the arena: the system-slot cylinder of the two-stage Born
 region. -/
-def arenaMixtureRegion (ρ : DensityOperator (M + 1)) (i : Fin (M + 1)) :
+noncomputable def arenaMixtureRegion (ρ : DensityOperator (M + 1)) (i : Fin (M + 1)) :
     Set (Fin (M + 1) × UnifiedArena M) :=
   (Prod.map id (fun a : UnifiedArena M => a.1.1)) ⁻¹' mixtureRegion H hH p₀ ρ i
 

@@ -482,25 +482,32 @@ theorem measure_drift_coarseCode_ne_le (c : ContextField N) (u : Fin N → κ) {
 
 /-- Under a monotone block map, the images of the cyclic successors of two distinct boundaries
 differ: strictly increasing values between non-wrapping boundaries, and the wrap boundary's
-successor image `g 0` lies below every other successor image. -/
-theorem nextIdx_image_ne {m : ℕ} {g : Fin N → Fin m} (hg : Monotone g) {k k' : Fin N}
+successor image `g 0` lies below every other successor image.
+
+Monotonicity is stated, and the argument run, on the underlying natural numbers. The content is
+index arithmetic, and on Mathlib master the order instance on `Fin` itself depends on
+`Classical.choice`, so a statement through `Monotone` on `Fin` would lose this lemma's choice-free
+pin there (Compat canary, 2026-10-26); `coarseBoundaryCount_comp_le` passes `Monotone g` in this
+form. -/
+theorem nextIdx_image_ne {m : ℕ} {g : Fin N → Fin m}
+    (hg : ∀ a b : Fin N, a.val ≤ b.val → (g a).val ≤ (g b).val) {k k' : Fin N}
     (hk : g k ≠ g (nextIdx k)) (hk' : g k' ≠ g (nextIdx k')) (hlt : k.val < k'.val) :
     g (nextIdx k) ≠ g (nextIdx k') := by
-  have hkN : k.val + 1 < N := lt_of_le_of_lt hlt k'.isLt
+  have hkN : k.val + 1 < N := Nat.lt_of_le_of_lt hlt k'.isLt
   rw [nextIdx_of_lt hkN] at hk ⊢
-  have hk_lt : g k < g ⟨k.val + 1, hkN⟩ :=
-    lt_of_le_of_ne (hg (Fin.le_iff_val_le_val.2 (Nat.le_succ _))) hk
+  have hk_lt : (g k).val < (g ⟨k.val + 1, hkN⟩).val :=
+    Nat.lt_of_le_of_ne (hg _ _ (Nat.le_succ _)) (fun h => hk (Fin.ext h))
   by_cases hk'N : k'.val + 1 < N
   · rw [nextIdx_of_lt hk'N] at hk' ⊢
-    have h1 : g ⟨k.val + 1, hkN⟩ ≤ g k' := hg (Fin.le_iff_val_le_val.2 hlt)
-    have h2 : g k' < g ⟨k'.val + 1, hk'N⟩ :=
-      lt_of_le_of_ne (hg (Fin.le_iff_val_le_val.2 (Nat.le_succ _))) hk'
-    exact ne_of_lt (lt_of_le_of_lt h1 h2)
+    have h1 : (g ⟨k.val + 1, hkN⟩).val ≤ (g k').val := hg _ _ hlt
+    have h2 : (g k').val < (g ⟨k'.val + 1, hk'N⟩).val :=
+      Nat.lt_of_le_of_ne (hg _ _ (Nat.le_succ _)) (fun h => hk' (Fin.ext h))
+    exact fun h => Nat.ne_of_lt (Nat.lt_of_le_of_lt h1 h2) (congrArg Fin.val h)
   · have hlast : k'.val + 1 = N := by have := k'.isLt; omega
     rw [nextIdx_of_last hlast]
-    have h0 : g ⟨0, lt_of_le_of_lt (Nat.zero_le _) k'.isLt⟩ ≤ g k :=
-      hg (Fin.le_iff_val_le_val.2 (Nat.zero_le _))
-    exact ne_of_gt (lt_of_le_of_lt h0 hk_lt)
+    have h0 : (g ⟨0, Nat.lt_of_le_of_lt (Nat.zero_le _) k'.isLt⟩).val ≤ (g k).val :=
+      hg _ _ (Nat.zero_le _)
+    exact fun h => Nat.ne_of_gt (Nat.lt_of_le_of_lt h0 hk_lt) (congrArg Fin.val h)
 
 /-- ★★ **A decoding that groups adjacent cells into `m` contiguous blocks has at most `m` coarse
 boundaries**, whatever values the blocks carry. The successor image is injective on the
@@ -508,6 +515,8 @@ boundaries. -/
 theorem coarseBoundaryCount_comp_le {m : ℕ} (v : Fin m → κ) (g : Fin N → Fin m)
     (hg : Monotone g) : coarseBoundaryCount (v ∘ g) ≤ m := by
   classical
+  have hgv : ∀ a b : Fin N, a.val ≤ b.val → (g a).val ≤ (g b).val := fun a b h =>
+    Fin.le_iff_val_le_val.1 (hg (Fin.le_iff_val_le_val.2 h))
   have hg_of : ∀ {k : Fin N}, IsCoarseBoundary (v ∘ g) k → g k ≠ g (nextIdx k) :=
     fun hb h => hb (congrArg v h)
   unfold coarseBoundaryCount
@@ -520,8 +529,8 @@ theorem coarseBoundaryCount_comp_le {m : ℕ} (v : Fin m → κ) (g : Fin N → 
         have hbk' := hg_of (mem_coarseBoundaries.1 (Finset.mem_coe.1 hk'))
         by_contra hne
         rcases Nat.lt_or_gt_of_ne (fun h => hne (Fin.ext h)) with h | h
-        · exact nextIdx_image_ne hg hbk hbk' h heq
-        · exact nextIdx_image_ne hg hbk' hbk h heq.symm
+        · exact nextIdx_image_ne hgv hbk hbk' h heq
+        · exact nextIdx_image_ne hgv hbk' hbk h heq.symm
     _ = m := by simp
 
 /-- ★★★ **The two-wing record under a contiguous decoding is stable in proportion to its outcome

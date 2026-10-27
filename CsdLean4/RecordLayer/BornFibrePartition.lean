@@ -56,7 +56,7 @@ noncomputable def loSum (r : Fin n → ℝ) (i : Fin n) : ℝ :=
 
 /-- The cumulative (CDF) outcome cell for outcome `i`: the fibre interval
 `[∑_{j<i} rⱼ, (∑_{j<i} rⱼ) + rᵢ)` on `F = ℝ`. For a probability vector `r` these partition `[0,1)`. -/
-def cdfCell (r : Fin n → ℝ) (i : Fin n) : Set ℝ :=
+noncomputable def cdfCell (r : Fin n → ℝ) (i : Fin n) : Set ℝ :=
   Ico (loSum r i) (loSum r i + r i)
 
 theorem measurableSet_cdfCell (r : Fin n → ℝ) (i : Fin n) :

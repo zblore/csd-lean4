@@ -8,6 +8,7 @@ module
 public import CsdLean4.Mathlib.Probability.CGLMP
 public import CsdLean4.LF6.MaxEntangledDeisolationFlow
 public import Mathlib.Analysis.Real.Pi.Bounds
+public import Mathlib.Analysis.Convex.SpecificFunctions.Deriv
 
 /-!
 # LF6-D (QM side, general `d`): `Ψ_d` violates the CGLMP inequality for every `d ≥ 2`

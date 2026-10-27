@@ -69,6 +69,15 @@ open MeasureTheory SchwartzMap Metric
 
 noncomputable section
 
+/-- Lebesgue measure on the plane is an additive Haar measure, through `volume = volume.prod volume`.
+Mathlib's `Measure.prod.instIsAddHaarMeasure` gives this, and instance search at the pin reaches it
+through `volume` on `ℝ × ℝ`; on Mathlib master it no longer does, so the Schwartz integrability on
+the plane (`HasTemperateGrowth` through `IsAddHaarMeasure`) failed to elaborate there (Compat
+canary, 2026-10-26). Stated once so both trees find it. -/
+instance MeasureTheory.Measure.volume_real_prod_isAddHaarMeasure :
+    (volume : Measure (ℝ × ℝ)).IsAddHaarMeasure := by
+  rw [Measure.volume_eq_prod]; infer_instance
+
 variable {H : Type*} [NormedAddCommGroup H] [NormedSpace ℝ H]
   {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
 

@@ -1342,20 +1342,20 @@ regression and a blocker for the eventual Mathlib PR. -/
 -- pull-request text verbatim. The unit-multiple criterion and the saturation lemma replace
 -- this repository's own scaleNonzero reimplementation; the Kˣ-action on the nonzero vectors
 -- is Mathlib's, and its continuity instance is staged in Topology/Algebra/MulAction.lean.
-/-- info: 'Projectivization.mk'_eq_mk'_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms Projectivization.mk'_eq_mk'_iff
+/-- info: 'Projectivization.mk'_eq_mk'_iff_staged' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.mk'_eq_mk'_iff_staged
 
-/-- info: 'Projectivization.preimage_image_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms Projectivization.preimage_image_mk'
+/-- info: 'Projectivization.preimage_image_mk'_staged' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Projectivization.preimage_image_mk'_staged
 
 /-- info: 'Projectivization.isQuotientMap_mk'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in #print axioms Projectivization.isQuotientMap_mk'
 
-/-- info: 'SubMulAction.continuousConstSMul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms SubMulAction.continuousConstSMul
+/-- info: 'SubMulAction.continuousConstSMul_staged' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms SubMulAction.continuousConstSMul_staged
 
-/-- info: 'Units.continuousConstSMul_nonZero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in #print axioms Units.continuousConstSMul_nonZero
+/-- info: 'Units.continuousConstSMul_nonZero_staged' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in #print axioms Units.continuousConstSMul_nonZero_staged
 
 /-- info: 'Projectivization.instT2Space' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs in #print axioms Projectivization.instT2Space
@@ -14665,6 +14665,28 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 /-- info: 'Function.Periodic.contMDiff_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Function.Periodic.contMDiff_lift
+
+
+/-! Forward compatibility with Mathlib master (Compat canary, 2026-10-26): the two identity lemmas that let
+`Mixing.ergodic` read either form of `PreErgodic.aeconst_set`, the strictly-invariant core of that proof, and
+the plane's additive-Haar instance that master's instance search no longer reaches through `volume`
+(`Mathlib/Dynamics/CatMapStrongMixing.lean`, `Mathlib/Analysis/Fourier/SchwartzPartialIntegral.lean`). -/
+
+/-- info: 'MeasureTheory.NullMeasurableSet.nullMeasurableSet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.NullMeasurableSet.nullMeasurableSet
+
+/-- info: 'Filter.EventuallyEq.eventuallyEq' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms Filter.EventuallyEq.eventuallyEq
+
+/-- info: 'Mixing.eventuallyEmptyOrUniv_of_preimage_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Mixing.eventuallyEmptyOrUniv_of_preimage_eq
+
+/-- info: 'MeasureTheory.Measure.volume_real_prod_isAddHaarMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms MeasureTheory.Measure.volume_real_prod_isAddHaarMeasure
 
 
 end CSD.Tests.AxiomAudit

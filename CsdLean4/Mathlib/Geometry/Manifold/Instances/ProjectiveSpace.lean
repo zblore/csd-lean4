@@ -284,7 +284,7 @@ lemma contDiff_insertOne_coord (i m : Fin (n + 1)) :
     exact contDiff_const
   · intro j
     simp only [insertOne_apply_succAbove]
-    exact contDiff_apply ℂ ℂ j
+    exact contDiff_apply _ _ j
 
 /-- The transition maps are analytic: each component is a ratio of two coordinates of
 `insertNth i 1 w`, and the denominator does not vanish on the overlap. -/

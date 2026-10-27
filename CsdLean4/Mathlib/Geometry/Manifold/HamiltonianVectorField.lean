@@ -10,6 +10,7 @@ public import Mathlib.Analysis.Normed.Module.Alternating.Curry
 public import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
 public import Mathlib.Geometry.Manifold.IntegralCurve.ExistUnique
 public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.LinearAlgebra.Dual.Lemmas
 public import Mathlib.Geometry.Manifold.VectorBundle.Hom
 public import Mathlib.Geometry.Manifold.VectorField.LieBracket
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.GlobalFlow
@@ -687,7 +688,16 @@ theorem trivializationAt_hamiltonianVectorField_snd
         (chartAt E x₀ y) u : E)
         = fderiv ℝ (chartAt E y ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u :=
       congrArg (fun L : E →L[ℝ] E => L u) hsd
-    rw [← mfderiv_eq_fderiv, hcomp]
+    -- `mfderiv_eq_fderiv` is `mfderiv = fderiv` at the pin; Mathlib master wraps the right side in
+    -- the definitional `fromTangentSpace` identifications. Applied to `u` and elaborated without an
+    -- expected type, the instance is then checked against the plain pointwise statement by
+    -- unfolding, so the same text compiles on both (Compat canary, 2026-10-26).
+    have hmf : mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) (H ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u
+        = fderiv ℝ (H ∘ (chartAt E x₀).symm) (chartAt E x₀ y) u := by
+      have h := congrArg (fun L : E →L[ℝ] ℝ => L u)
+        (mfderiv_eq_fderiv (f := H ∘ (chartAt E x₀).symm) (x := chartAt E x₀ y))
+      exact h
+    rw [← hmf, hcomp]
     exact (congrArg (fun v : E => mfderiv (𝓘(ℝ, E)) (𝓘(ℝ, ℝ)) H
       ((chartAt E x₀).symm (chartAt E x₀ y)) v) e2).trans
       (congrArg (fun L : E →L[ℝ] ℝ =>

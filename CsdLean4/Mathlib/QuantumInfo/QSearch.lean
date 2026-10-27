@@ -302,7 +302,8 @@ lemma lintegral_stageCost (l : ℕ) (hM : 0 < M l) :
     intro ω
     have hz : ∀ j, j ≠ R.J l ω →
         (R.J l ⁻¹' {j} ∩ R.reach l).indicator (fun _ => (2 + 2 * j : ℝ≥0∞)) ω = 0 :=
-      fun j hj => Set.indicator_of_notMem (fun h => hj (Set.mem_singleton_iff.mp h.1).symm) _
+      fun j hj => Set.indicator_of_notMem
+        (fun (h : ω ∈ R.J l ⁻¹' {j} ∩ R.reach l) => hj (Set.mem_singleton_iff.mp h.1).symm) _
     rw [tsum_eq_single (R.J l ω) hz]
     unfold stageCost
     by_cases h : ω ∈ R.reach l

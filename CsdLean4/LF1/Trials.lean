@@ -68,7 +68,7 @@ lemma measurable_X (n : ℕ) : Measurable (T.X n) :=
 The event on the external sample space that the `n`-th trial lands in the
 pulled-back outcome region associated with `O`.
 -/
-def trialEvent (O : S.OutcomeRegion) (n : ℕ) : Set Ω :=
+noncomputable def trialEvent (O : S.OutcomeRegion) (n : ℕ) : Set Ω :=
   T.X n ⁻¹' (O.preEvent (S := S))
 
 lemma measurable_trialEvent (O : S.OutcomeRegion) (n : ℕ) :

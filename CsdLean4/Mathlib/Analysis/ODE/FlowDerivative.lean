@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
 public import Mathlib.Analysis.ODE.Gronwall
+public import Mathlib.Analysis.ODE.ExistUnique
 public import Mathlib.Analysis.Calculus.MeanValue
 public import Mathlib.Analysis.Calculus.FDeriv.ContinuousAlternatingMap
 

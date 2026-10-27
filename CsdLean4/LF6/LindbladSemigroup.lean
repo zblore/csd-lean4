@@ -159,18 +159,15 @@ theorem lindbladSemigroup_hasDerivAt (H : Matrix n n ℂ)
     (L : ι → Matrix n n ℂ) (ρ : Matrix n n ℂ) (t : ℝ) :
     HasDerivAt (fun u => lindbladSemigroup H L u ρ)
       (lindbladGenerator H L (lindbladSemigroup H L t ρ)) t := by
-  have h := hasDerivAt_exp_smul_const' (𝕂 := ℝ) (lindbladGeneratorCLM H L) t
-  have h2 := ((ContinuousLinearMap.apply ℝ (Matrix n n ℂ)
-      ρ).hasFDerivAt).comp_hasDerivAt t h
-  have h3 : (ContinuousLinearMap.apply ℝ (Matrix n n ℂ) ρ)
-        (lindbladGeneratorCLM H L * exp (t • lindbladGeneratorCLM H L))
-      = lindbladGenerator H L (lindbladSemigroup H L t ρ) := by
-    show lindbladGeneratorCLM H L
-        (exp (t • lindbladGeneratorCLM H L) ρ) = _
-    rw [lindbladGeneratorCLM_apply]
-    rfl
-  rw [h3] at h2
-  exact h2
+  -- Stated through `HasDerivAt.clm_apply` so the function is syntactically the goal's and the
+  -- derivative closes by rewriting: the earlier `comp_hasDerivAt` + `show` route matched them by
+  -- unfolding continuous-linear-map coercions, which times out on Mathlib master (Compat
+  -- canary, 2026-10-26).
+  have h : HasDerivAt (fun u => lindbladSemigroup H L u)
+      (lindbladGeneratorCLM H L * lindbladSemigroup H L t) t :=
+    hasDerivAt_exp_smul_const' (𝕂 := ℝ) (lindbladGeneratorCLM H L) t
+  refine (h.clm_apply (hasDerivAt_const t ρ)).congr_deriv ?_
+  rw [map_zero, add_zero, mul_apply_eq_comp, lindbladGeneratorCLM_apply]
 
 /-! ### The series form: what the flow does termwise -/
 

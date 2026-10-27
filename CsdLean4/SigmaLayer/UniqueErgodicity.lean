@@ -90,7 +90,11 @@ variable {Sigma : Type*} [MeasurableSpace Sigma]
 theorem isErgodicForOutcomeRegions_of_ergodic
     (D : ConstraintDynamics Sigma) (h : Ergodic (D.flow 1) (D.muL : Measure Sigma)) :
     IsErgodicForOutcomeRegions D :=
-  fun _ hA hInv => h.measure_self_or_compl_eq_zero hA hInv
+  fun _ hA hInv => by
+    -- through `QuasiErgodic.ae_empty_or_univ₀`, the form both the pin and Mathlib master accept
+    rcases h.quasiErgodic.ae_empty_or_univ₀ hA.nullMeasurableSet (by rw [hInv]) with h' | h'
+    · exact Or.inl (ae_eq_empty.1 h')
+    · exact Or.inr (ae_eq_univ.1 h')
 
 /-- **Unique ergodicity of the time-1 flow map discharges the scaffold** (a fortiori, via
 `UniquelyErgodic.ergodic`). This is the exact hypothesis under which `BornFromFlow` would follow

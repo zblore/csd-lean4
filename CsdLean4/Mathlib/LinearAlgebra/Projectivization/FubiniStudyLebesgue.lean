@@ -305,7 +305,7 @@ section BallMeasure
 variable {N : ℕ} [NeZero N]
 
 /-- The punctured unit ball of `ℂᴺ`. -/
-def puncturedBall (N : ℕ) : Set (EuclideanSpace ℂ (Fin N)) :=
+noncomputable def puncturedBall (N : ℕ) : Set (EuclideanSpace ℂ (Fin N)) :=
   ball (0 : EuclideanSpace ℂ (Fin N)) 1 \ {0}
 
 omit [NeZero N] in

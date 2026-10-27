@@ -148,7 +148,7 @@ namespace TorusMeasurement
 variable (m : TorusMeasurement n)
 
 /-- The **basin** of outcome `i`: the cell the context assigns to it. -/
-def basin (i : Fin n) : Set LF4.KTorus :=
+noncomputable def basin (i : Fin n) : Set LF4.KTorus :=
   (torusRecordSemantics n).event ⟨m.context, i, m.time⟩
 
 /-- The **probability** of outcome `i`: the Haar measure of its basin. -/

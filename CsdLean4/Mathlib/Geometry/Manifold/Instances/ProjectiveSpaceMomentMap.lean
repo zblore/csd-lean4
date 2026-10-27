@@ -9,6 +9,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianVectorField
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MomentMap
 public import Mathlib.Geometry.Convex.ConvexSpace.Defs
+public import Mathlib.Analysis.Calculus.Deriv.Prod
 
 /-!
 # The moment map of the torus action on `ℂℙⁿ`, at manifold level
@@ -492,8 +493,20 @@ theorem eq_add_const_of_isHamiltonianVectorField
       rw [hfun, ← mdifferentiableAt_iff_differentiableAt]
       exact (hD _).comp v (hsymm v)
     have hfd : ∀ v, fderiv ℝ (D ∘ chartInv i) v = 0 := fun v => by
-      rw [hfun, ← mfderiv_eq_fderiv, mfderiv_comp v (hD _) (hsymm v), hzero,
-        ContinuousLinearMap.zero_comp]
+      have hm : mfderiv (𝓘(ℝ, Fin n → ℂ)) (𝓘(ℝ, ℝ)) (D ∘ (chartAt (Fin n → ℂ) (origin i)).symm) v
+          = 0 := by
+        rw [mfderiv_comp v (hD _) (hsymm v), hzero, ContinuousLinearMap.zero_comp]
+      rw [hfun]
+      ext u
+      -- pointwise bridge `fderiv = mfderiv`: at the pin `mfderiv_eq_fderiv` is that equation; on
+      -- Mathlib master its right side carries the definitional `fromTangentSpace` identifications,
+      -- which the `exact` below sees through (Compat canary, 2026-10-26)
+      have hb : fderiv ℝ (D ∘ (chartAt (Fin n → ℂ) (origin i)).symm) v u
+          = mfderiv (𝓘(ℝ, Fin n → ℂ)) (𝓘(ℝ, ℝ)) (D ∘ (chartAt (Fin n → ℂ) (origin i)).symm) v u := by
+        have h := congrArg (fun L : (Fin n → ℂ) →L[ℝ] ℝ => L u)
+          (mfderiv_eq_fderiv (f := D ∘ (chartAt (Fin n → ℂ) (origin i)).symm) (x := v))
+        exact h.symm
+      rw [hb, hm]
       rfl
     exact is_const_of_fderiv_eq_zero hcomp hfd w w'
   refine ⟨D (Projectivization.mk ℂ (allOnes n) (allOnes_ne_zero n)), fun p => ?_⟩

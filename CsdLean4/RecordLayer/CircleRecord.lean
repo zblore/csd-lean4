@@ -151,7 +151,7 @@ namespace CircleMeasurement
 variable (m : CircleMeasurement n)
 
 /-- The **basin** of outcome `i`: the arc the context assigns to it. -/
-def basin (i : Fin n) : Set CircleFibre :=
+noncomputable def basin (i : Fin n) : Set CircleFibre :=
   (circleRecordSemantics n).event ⟨m.context, i, m.time⟩
 
 /-- The **probability** of outcome `i`: the Haar measure of its basin. -/

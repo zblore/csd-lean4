@@ -131,7 +131,7 @@ theorem measurable_drivenTwoStage (idx₁ : Xsel → Fin K) {Φ : Xsel → Xsel}
 
 /-- **The driven joint record sector**: the initial states destined to display record `i` at `t₁`
 and, after the drive, record `j` at `t₂`. -/
-def drivenJointRecordSector (idx₁ : Xsel → Fin K) (Φ : Xsel → Xsel) (idx₂ : Xsel → Fin K)
+noncomputable def drivenJointRecordSector (idx₁ : Xsel → Fin K) (Φ : Xsel → Xsel) (idx₂ : Xsel → Fin K)
     (i j : Fin K) : Set (TwoStageArena Xsel K) :=
   drivenTwoStage idx₁ Φ idx₂ ⁻¹' (recordOneEvent i ∩ recordTwoEvent j)
 

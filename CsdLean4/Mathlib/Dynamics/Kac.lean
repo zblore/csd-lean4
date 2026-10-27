@@ -186,7 +186,10 @@ lemma measure_iInter_notYet_eq_zero (hf : MeasurePreserving f μ μ)
     exact hApos (nonpos_iff_eq_zero.mp hle)
   -- ergodicity then makes it conull
   have hVcompl : μ Vᶜ = 0 := by
-    rcases herg.ae_empty_or_univ hVmeas hVinv with h | h
+    -- `QuasiErgodic.ae_empty_or_univ₀` takes the null-measurable, almost-invariant form, the one
+    -- spelling both the pin and Mathlib master accept (master's `PreErgodic` field changed shape).
+    rcases (QuasiErgodic.mk hf.quasiMeasurePreserving herg).ae_empty_or_univ₀
+      hVmeas.nullMeasurableSet (by rw [hVinv]) with h | h
     · exact absurd (measure_congr h |>.trans measure_empty) hVne
     · have : μ V = 1 := by rw [measure_congr h]; exact measure_univ
       rw [prob_compl_eq_one_sub hVmeas, this, tsub_self]

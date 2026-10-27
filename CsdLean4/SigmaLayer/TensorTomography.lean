@@ -184,7 +184,7 @@ variable (ι : Type*) [Fintype ι]
 
 /-- The rank-one projectors `|b i⟩⟨b i|` onto vectors of orthonormal bases of `ℂ^ι` — the effects
 whose Born rates are the basis-measurement record rates. -/
-def onbProjectors : Set (Matrix ι ι ℂ) :=
+noncomputable def onbProjectors : Set (Matrix ι ι ℂ) :=
   Set.range fun p : OrthonormalBasis ι ℂ (EuclideanSpace ℂ ι) × ι => outerProduct (p.1 p.2)
 
 variable [DecidableEq ι]

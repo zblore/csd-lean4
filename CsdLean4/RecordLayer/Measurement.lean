@@ -67,7 +67,7 @@ variable (m : Measurement n)
 
 /-- The **basin** of outcome `i`: the fibre region (record event) the context assigns to `i`. The
 basins are disjoint CDF cells. Normalized rates give full typicality coverage. -/
-def basin (i : Fin n) : Set ℝ := (fibreRecordSemantics n).event ⟨m.context, i, m.time⟩
+noncomputable def basin (i : Fin n) : Set ℝ := (fibreRecordSemantics n).event ⟨m.context, i, m.time⟩
 
 /-- The **outcome** the unknown microstate `ξ` selects: the basin it occupies (`none` off the basins,
 which need not be a `fibreTypicality`-null set for an unnormalized context). -/

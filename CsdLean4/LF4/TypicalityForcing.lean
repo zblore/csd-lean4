@@ -521,7 +521,12 @@ theorem obsFlow_not_ergodic (hN : 1 < N) (p₀ : CPN N) (lam : Fin N → ℝ) (t
     ext p
     simp only [Set.mem_preimage, hS, Set.mem_ofPred_eq, momentMap_obsFlow]
   -- The zero-one law: μFS S ∈ {0, 1}.
-  have h01 := herg.toPreErgodic.prob_eq_zero_or_one hSmeas hSinv
+  -- through `QuasiErgodic.ae_empty_or_univ₀`, the null-measurable, almost-invariant form both the
+  -- pin and Mathlib master accept (master's `PreErgodic` field changed shape).
+  have h01 : fsMeasure p₀ S = 0 ∨ fsMeasure p₀ S = 1 := by
+    rcases herg.quasiErgodic.ae_empty_or_univ₀ hSmeas.nullMeasurableSet (by rw [hSinv]) with h | h
+    · exact Or.inl (by rw [measure_congr h, measure_empty])
+    · exact Or.inr (by rw [measure_congr h, measure_univ])
   -- μFS S ≠ 0: S contains the open nonempty set {m_j < m_i}.
   have hsub : {p : CPN N | momentMap p j < momentMap p i} ⊆ S := by
     rw [hS]; exact Set.ofPred_subset_ofPred.2 (fun p => le_of_lt)

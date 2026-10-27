@@ -109,7 +109,7 @@ theorem outerProduct_toEuclideanLin [DecidableEq ι] {κ : Type*} (U : Matrix κ
     (v : EuclideanSpace ℂ ι) :
     outerProduct (Matrix.toEuclideanLin U v) = U * outerProduct v * Uᴴ := by
   ext j k
-  simp only [outerProduct, vecMulVec_apply, Matrix.toLpLin_apply, mul_apply,
+  simp only [outerProduct, vecMulVec_apply, Matrix.toLpLin_apply, Matrix.mul_apply,
     conjTranspose_apply, mulVec, dotProduct, Finset.sum_mul, Finset.mul_sum, star_sum, star_mul,
     PiLp.toLp_apply]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
@@ -204,7 +204,7 @@ omit [DecidableEq e] in
 theorem embedEnv_conjTranspose_mul (e₀ : EuclideanSpace ℂ e) (he₀ : ‖e₀‖ = 1) :
     (embedEnv n e₀)ᴴ * embedEnv n e₀ = 1 := by
   ext j j'
-  simp only [mul_apply, conjTranspose_apply, embedEnv_apply, Fintype.sum_prod_type, one_apply]
+  simp only [Matrix.mul_apply, conjTranspose_apply, embedEnv_apply, Fintype.sum_prod_type, Matrix.one_apply]
   by_cases h : j = j'
   · subst h
     rw [Finset.sum_eq_single j]
@@ -227,7 +227,7 @@ omit [Fintype e] [DecidableEq e] in
 theorem embedEnv_mul_mul_conjTranspose (e₀ : EuclideanSpace ℂ e) (ρ : Matrix n n ℂ) :
     embedEnv n e₀ * ρ * (embedEnv n e₀)ᴴ = ρ ⊗ₖ outerProduct e₀ := by
   ext ⟨a, i⟩ ⟨b, l⟩
-  simp only [mul_apply, conjTranspose_apply, embedEnv_apply, kronecker_apply, outerProduct,
+  simp only [Matrix.mul_apply, conjTranspose_apply, embedEnv_apply, kronecker_apply, outerProduct,
     vecMulVec_apply]
   rw [Finset.sum_eq_single b]
   · rw [ite_eq_left rfl, Finset.sum_eq_single a]

@@ -9,6 +9,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Topology.Algebra.Order.Floor
 
 /-!
 # The Dyson series of a perturbed unitary group

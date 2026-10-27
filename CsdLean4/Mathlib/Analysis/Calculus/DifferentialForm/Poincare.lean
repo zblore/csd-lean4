@@ -133,7 +133,7 @@ theorem contDiffOn_evalPair {ω : E → E [⋀^Fin 2]→L[ℝ] ℝ} {x₀ : E} {
     (hω : ContDiffOn ℝ 1 ω (ball x₀ R)) (v : E) :
     ContDiffOn ℝ 1 (evalPair ω v) (ball x₀ R ×ˢ univ) := by
   have h1 : ContDiffOn ℝ 1 (fun p : E × E => (ω p.1, p.2)) (ball x₀ R ×ˢ univ) :=
-    (hω.comp contDiffOn_fst fun p hp => hp.1).prodMk contDiffOn_snd
+    (hω.comp contDiffOn_fst fun p (hp : p ∈ ball x₀ R ×ˢ univ) => hp.1).prodMk contDiffOn_snd
   exact (isBoundedBilinearMap_apply_vecCons v).contDiff.comp_contDiffOn h1
 
 /-- `evalPair ω v` is `C^n` where `ω` is. -/
@@ -141,7 +141,7 @@ theorem contDiffOn_evalPair' {ω : E → E [⋀^Fin 2]→L[ℝ] ℝ} {x₀ : E} 
     (hω : ContDiffOn ℝ n ω (ball x₀ R)) (v : E) :
     ContDiffOn ℝ n (evalPair ω v) (ball x₀ R ×ˢ univ) := by
   have h1 : ContDiffOn ℝ n (fun p : E × E => (ω p.1, p.2)) (ball x₀ R ×ˢ univ) :=
-    (hω.comp contDiffOn_fst fun p hp => hp.1).prodMk contDiffOn_snd
+    (hω.comp contDiffOn_fst fun p (hp : p ∈ ball x₀ R ×ˢ univ) => hp.1).prodMk contDiffOn_snd
   exact (isBoundedBilinearMap_apply_vecCons v).contDiff.comp_contDiffOn h1
 
 end Eval

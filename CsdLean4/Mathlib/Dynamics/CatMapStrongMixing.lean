@@ -79,23 +79,50 @@ structure Mixing {α : Type*} [MeasurableSpace α] (f : α → α) (μ : Measure
   tendsto_measure_preimage_iterate_inter ⦃s t : Set α⦄ : MeasurableSet s → MeasurableSet t →
     Tendsto (fun n : ℕ => μ (f^[n] ⁻¹' s ∩ t)) atTop (𝓝 (μ s * μ t))
 
-/-- **A mixing map is ergodic.** A strictly invariant set `s` has `μ (f^[n] ⁻¹' s ∩ sᶜ) = 0` at
-every lag, so the limit `μ s * μ sᶜ` vanishes and one factor is zero. -/
+/-- The identity on a null-measurability proof. With `MeasurableSet.nullMeasurableSet` it makes
+`hs.nullMeasurableSet` read the same whether `hs` proves `MeasurableSet s` or
+`NullMeasurableSet s μ`: Mathlib master's `PreErgodic.aeconst_set` takes the second where the pin
+takes the first, and `Mixing.ergodic` is written once for both (Compat canary, 2026-10-26). -/
+theorem MeasureTheory.NullMeasurableSet.nullMeasurableSet {α : Type*} [MeasurableSpace α]
+    {μ : Measure α} {s : Set α} (h : NullMeasurableSet s μ) : NullMeasurableSet s μ := h
+
+/-- The identity on an eventual equality. With Mathlib's `Eq.eventuallyEq` it makes
+`h.eventuallyEq` read the same whether `h` proves `f = g` or `f =ᶠ[l] g`; the companion of
+`MeasureTheory.NullMeasurableSet.nullMeasurableSet` for the invariance hypothesis. -/
+theorem Filter.EventuallyEq.eventuallyEq {α β : Type*} {l : Filter α} {f g : α → β}
+    (h : f =ᶠ[l] g) : f =ᶠ[l] g := h
+
+/-- **A mixing map is ergodic on strictly invariant measurable sets.** A strictly invariant set
+`s` has `μ (f^[n] ⁻¹' s ∩ sᶜ) = 0` at every lag, so the limit `μ s * μ sᶜ` vanishes and one
+factor is zero. -/
+theorem Mixing.eventuallyEmptyOrUniv_of_preimage_eq {α : Type*} [MeasurableSpace α] {f : α → α}
+    {μ : Measure α} (h : Mixing f μ) {s : Set α} (hs : MeasurableSet s) (hfs : f ⁻¹' s = s) :
+    EventuallyEmptyOrUniv s (ae μ) := by
+  have hlim := h.tendsto_measure_preimage_iterate_inter hs hs.compl
+  have hzero : ∀ n : ℕ, μ (f^[n] ⁻¹' s ∩ sᶜ) = 0 := fun n => by
+    rw [Set.preimage_iterate_eq, Function.iterate_fixed hfs n, Set.inter_compl_self,
+      measure_empty]
+  have hlim' : Tendsto (fun _ : ℕ => (0 : ENNReal)) atTop (𝓝 (μ s * μ sᶜ)) := by
+    simpa only [hzero] using hlim
+  have hprod : μ s * μ sᶜ = 0 := tendsto_nhds_unique hlim' tendsto_const_nhds
+  rw [eventuallyEmptyOrUniv_iff']
+  rcases mul_eq_zero.1 hprod with h0 | h0
+  · exact Or.inl (ae_eq_empty.2 h0)
+  · exact Or.inr (ae_eq_univ.2 h0)
+
+/-- **A mixing map is ergodic.** The ergodicity condition on any set the definition hands over is
+reduced to a strictly invariant measurable set almost equal to it
+(`QuasiMeasurePreserving.exists_preimage_eq_of_preimage_ae`), where
+`Mixing.eventuallyEmptyOrUniv_of_preimage_eq` applies. Written so that it compiles against both
+forms of `PreErgodic.aeconst_set`: measurable and strictly invariant at the pin, null-measurable
+and almost invariant on Mathlib master. -/
 theorem Mixing.ergodic {α : Type*} [MeasurableSpace α] {f : α → α} {μ : Measure α}
-    (h : Mixing f μ) : Ergodic f μ where
-  toMeasurePreserving := h.toMeasurePreserving
-  aeconst_set s hs hfs := by
-    have hlim := h.tendsto_measure_preimage_iterate_inter hs hs.compl
-    have hzero : ∀ n : ℕ, μ (f^[n] ⁻¹' s ∩ sᶜ) = 0 := fun n => by
-      rw [Set.preimage_iterate_eq, Function.iterate_fixed hfs n, Set.inter_compl_self,
-        measure_empty]
-    have hlim' : Tendsto (fun _ : ℕ => (0 : ENNReal)) atTop (𝓝 (μ s * μ sᶜ)) := by
-      simpa only [hzero] using hlim
-    have hprod : μ s * μ sᶜ = 0 := tendsto_nhds_unique hlim' tendsto_const_nhds
-    rw [eventuallyEmptyOrUniv_iff']
-    rcases mul_eq_zero.1 hprod with h0 | h0
-    · exact Or.inl (ae_eq_empty.2 h0)
-    · exact Or.inr (ae_eq_univ.2 h0)
+    (h : Mixing f μ) : Ergodic f μ := by
+  refine ⟨h.toMeasurePreserving, ⟨fun s hs hfs => ?_⟩⟩
+  obtain ⟨t, ht, hts, htf⟩ :=
+    h.toMeasurePreserving.quasiMeasurePreserving.exists_preimage_eq_of_preimage_ae
+      hs.nullMeasurableSet (hfs.eventuallyEq (l := ae μ))
+  exact (h.eventuallyEmptyOrUniv_of_preimage_eq ht htf).congr hts
 
 namespace MeasureTheory
 

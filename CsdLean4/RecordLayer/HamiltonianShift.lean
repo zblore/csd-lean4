@@ -9,6 +9,7 @@ public import CsdLean4.RecordLayer.JointLift
 public import CsdLean4.RecordLayer.PointerGeneration
 public import CsdLean4.RecordLayer.PointerHamiltonianField
 public import CsdLean4.SigmaLayer.ChartIntegralCurve
+public import Mathlib.Analysis.Calculus.Deriv.Prod
 
 /-!
 # RecordLayer/HamiltonianShift: the shift the stroke Hamiltonian generates
@@ -388,10 +389,10 @@ theorem contDiffAt_arcWeights {ε : ℝ} (hε : 0 < ε) {x₀ : Fin (N + 1) → 
   intro k
   have hlin : ContDiff ℝ n fun x : Fin (N + 1) → ℝ =>
       (x (Fin.castSucc k), (cellMidLift (Fin.init x) k, x (Fin.last N))) := by
-    refine (contDiff_apply ℝ ℝ _).prodMk (ContDiff.prodMk ?_ (contDiff_apply ℝ ℝ _))
+    refine (contDiff_apply _ _ _).prodMk (ContDiff.prodMk ?_ (contDiff_apply _ _ _))
     unfold cellMidLift loSum
-    exact (ContDiff.sum fun j _ => contDiff_apply ℝ ℝ (Fin.castSucc j)).add
-      ((contDiff_apply ℝ ℝ (Fin.castSucc k)).div_const 2)
+    exact (ContDiff.sum fun j _ => contDiff_apply _ _ (Fin.castSucc j)).add
+      ((contDiff_apply _ _ (Fin.castSucc k)).div_const 2)
   exact (contDiffAt_smoothArcWeight_lift₃ hε (hreg k).1 (hreg k).2).comp x₀ hlin.contDiffAt
 
 /-- **Off-corridor data**: the register sits strictly inside a plateau of every weight — in the

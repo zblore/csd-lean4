@@ -101,7 +101,7 @@ lemma contDiffAt_transE (i j : Fin (n + 1)) {z : EuclideanSpace ℂ (Fin n)} (hz
     (WithLp.ofLp z) j ≠ 0) :
     ContDiffAt ℂ ⊤ (transE i j) z := by
   have hopen : IsOpen {w : Fin n → ℂ | insertOne i w j ≠ 0} :=
-    isOpen_ne_fun (by fun_prop : Continuous fun w : Fin n → ℂ => insertOne i w j) continuous_const
+    isOpen_ne_fun (contDiff_insertOne_coord i j).continuous continuous_const
   have h1 : ContDiffAt ℂ ⊤ (fun w : Fin n → ℂ => coordRatio j (insertOne i w)) (WithLp.ofLp z) :=
     ((contDiffOn_transition i j).contDiffAt (hopen.mem_nhds hz)).of_le le_top
   exact (PiLp.continuousLinearEquiv 2 ℂ (fun _ : Fin n => ℂ)).symm.contDiff.contDiffAt.comp z
@@ -197,7 +197,7 @@ theorem fsModelForm_transP (i j : Fin (n + 1)) {w : Fin n → ℂ} (hw : insertO
   have hz : insertOne i (WithLp.ofLp (toLpCLM w)) j ≠ 0 := by simpa using hw
   have hinv := fsChartForm_transE i j hz
   have hopen : IsOpen {w : Fin n → ℂ | insertOne i w j ≠ 0} :=
-    isOpen_ne_fun (by fun_prop : Continuous fun w : Fin n → ℂ => insertOne i w j) continuous_const
+    isOpen_ne_fun (contDiff_insertOne_coord i j).continuous continuous_const
   have hP : DifferentiableAt ℝ (transP i j) w := by
     have := ((contDiffOn_transition i j).contDiffAt (hopen.mem_nhds hw)).restrict_scalars ℝ
     exact this.differentiableAt (by simp)

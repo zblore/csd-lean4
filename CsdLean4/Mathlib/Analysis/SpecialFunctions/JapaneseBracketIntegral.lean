@@ -8,6 +8,7 @@ module
 public import Mathlib.Analysis.SpecialFunctions.PolarCoord
 public import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 public import Mathlib.MeasureTheory.Constructions.Pi
+public import Mathlib.Analysis.Calculus.Deriv.Pow
 
 /-!
 # The integral of the Japanese bracket power `(1 + ‖w‖²)^{-(n+1)}` over `ℂⁿ`

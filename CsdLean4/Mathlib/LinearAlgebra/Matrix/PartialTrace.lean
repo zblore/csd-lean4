@@ -169,7 +169,7 @@ variable [CommSemiring R]
 theorem traceRight_kronecker (A : Matrix m m R) (B : Matrix n n R) :
     traceRight (A ⊗ₖ B) = trace B • A := by
   ext i j
-  simp only [traceRight_apply, kronecker_apply, smul_apply, smul_eq_mul, trace,
+  simp only [traceRight_apply, kronecker_apply, Matrix.smul_apply, smul_eq_mul, trace,
     diag_apply, ← Finset.mul_sum, mul_comm]
 
 /-- **Defining property on Kronecker products (left).**
@@ -178,7 +178,7 @@ theorem traceRight_kronecker (A : Matrix m m R) (B : Matrix n n R) :
 theorem traceLeft_kronecker (A : Matrix m m R) (B : Matrix n n R) :
     traceLeft (A ⊗ₖ B) = trace A • B := by
   ext i j
-  simp only [traceLeft_apply, kronecker_apply, smul_apply, smul_eq_mul, trace,
+  simp only [traceLeft_apply, kronecker_apply, Matrix.smul_apply, smul_eq_mul, trace,
     diag_apply, ← Finset.sum_mul]
 
 end CommSemiring
@@ -279,7 +279,7 @@ theorem traceLeft_conjTranspose_kronecker_one
       ((U ⊗ₖ (1 : Matrix n n R)) * M * (U ⊗ₖ (1 : Matrix n n R))ᴴ) (k, i) (k, j)
         = ∑ c : m, ∑ a : m, U k a * star (U k c) * M (a, i) (c, j) := by
     intro k
-    simp only [Matrix.mul_apply, conjTranspose_apply, kronecker_apply, one_apply,
+    simp only [Matrix.mul_apply, conjTranspose_apply, kronecker_apply, Matrix.one_apply,
       Fintype.sum_prod_type, apply_ite star, star_zero, mul_ite, ite_mul,
       mul_zero, zero_mul, mul_one, Finset.sum_ite_eq,
       Finset.mem_univ, ite_true]
@@ -334,7 +334,7 @@ theorem traceLeft_sum_conjTranspose_kronecker_one
       ((K l ⊗ₖ (1 : Matrix n n R)) * M * (K l ⊗ₖ (1 : Matrix n n R))ᴴ) (k, i) (k, j)
         = ∑ c : m, ∑ a : m, K l k a * star (K l k c) * M (a, i) (c, j) := by
     intro l k
-    simp only [Matrix.mul_apply, conjTranspose_apply, kronecker_apply, one_apply,
+    simp only [Matrix.mul_apply, conjTranspose_apply, kronecker_apply, Matrix.one_apply,
       Fintype.sum_prod_type, apply_ite star, star_zero, mul_ite, ite_mul,
       mul_zero, zero_mul, mul_one, Finset.sum_ite_eq, Finset.mem_univ, ite_true]
     refine Finset.sum_congr rfl (fun c _ => ?_)
@@ -379,7 +379,7 @@ theorem traceRight_kronecker_one_mul [DecidableEq n]
   ext i j
   rw [Matrix.mul_apply]
   -- RHS = ∑ a, X i a * (∑ k, M (a,k)(j,k)); LHS collapses the (X⊗I) Bob-delta.
-  simp only [traceRight_apply, Matrix.mul_apply, Matrix.kronecker_apply, one_apply,
+  simp only [traceRight_apply, Matrix.mul_apply, Matrix.kronecker_apply, Matrix.one_apply,
     Fintype.sum_prod_type, Finset.mul_sum]
   -- LHS: ∑ k, ∑ a, ∑ b, (if a=? ...) — collapse the inner Bob-delta `b = k`.
   rw [Finset.sum_comm]
@@ -398,7 +398,7 @@ theorem traceRight_mul_kronecker_one [DecidableEq n]
   ext i j
   rw [Matrix.mul_apply]
   -- RHS = ∑ a, (∑ k, M (i,k)(a,k)) * X a j; LHS collapses the (X⊗I) Bob-delta.
-  simp only [traceRight_apply, Matrix.mul_apply, Matrix.kronecker_apply, one_apply,
+  simp only [traceRight_apply, Matrix.mul_apply, Matrix.kronecker_apply, Matrix.one_apply,
     Fintype.sum_prod_type, mul_ite, mul_zero, mul_one, Finset.sum_mul]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl (fun a _ => ?_)
@@ -418,7 +418,7 @@ theorem traceRight_one_kronecker_mul_comm [DecidableEq m]
     (A : Matrix n n R) (M : Matrix (m × n) (m × n) R) :
     traceRight (((1 : Matrix m m R) ⊗ₖ A) * M) = traceRight (M * ((1 : Matrix m m R) ⊗ₖ A)) := by
   ext i j
-  simp only [traceRight_apply, Matrix.mul_apply, Matrix.kronecker_apply, one_apply,
+  simp only [traceRight_apply, Matrix.mul_apply, Matrix.kronecker_apply, Matrix.one_apply,
     Fintype.sum_prod_type, ite_mul, mul_ite, zero_mul, one_mul, mul_zero]
   -- LHS: ∑ k, ∑ a, ∑ b, if i = a then A k b * M (a, b) (j, k) else 0
   -- RHS: ∑ k, ∑ a, ∑ b, if a = j then M (i, k) (a, b) * A b k else 0
@@ -443,7 +443,7 @@ theorem traceLeft_kronecker_one_mul_comm [DecidableEq n]
     (A : Matrix m m R) (M : Matrix (m × n) (m × n) R) :
     traceLeft ((A ⊗ₖ (1 : Matrix n n R)) * M) = traceLeft (M * (A ⊗ₖ (1 : Matrix n n R))) := by
   ext i j
-  simp only [traceLeft_apply, Matrix.mul_apply, Matrix.kronecker_apply, one_apply,
+  simp only [traceLeft_apply, Matrix.mul_apply, Matrix.kronecker_apply, Matrix.one_apply,
     Fintype.sum_prod_type, ite_mul, mul_ite, zero_mul, mul_zero, mul_one]
   have hl : ∀ k : m, (∑ a : m, ∑ b : n, if i = b then A k a * M (a, b) (k, j) else 0)
       = ∑ a : m, A k a * M (a, i) (k, j) := by

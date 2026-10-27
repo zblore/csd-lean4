@@ -196,7 +196,7 @@ def recordTwoEvent (j : Fin K) : Set (TwoStageArena Xsel K) :=
 
 /-- **The joint two-record sector**: the initial states destined to display record `i` at `t₁`
 and record `j` at `t₂`. -/
-def jointRecordSector (idx₁ idx₂ : Xsel → Fin K) (i j : Fin K) :
+noncomputable def jointRecordSector (idx₁ idx₂ : Xsel → Fin K) (i j : Fin K) :
     Set (TwoStageArena Xsel K) :=
   twoStage idx₁ idx₂ ⁻¹' (recordOneEvent i ∩ recordTwoEvent j)
 

@@ -142,7 +142,7 @@ theorem traceLeft_one_kronecker_mul [DecidableEq m]
     traceLeft (((1 : Matrix m m R) ⊗ₖ X) * M) = X * traceLeft M := by
   ext i j
   rw [Matrix.mul_apply]
-  simp only [traceLeft_apply, Matrix.mul_apply, Matrix.kronecker_apply, one_apply,
+  simp only [traceLeft_apply, Matrix.mul_apply, Matrix.kronecker_apply, Matrix.one_apply,
     Fintype.sum_prod_type, ite_mul, zero_mul, one_mul, Finset.mul_sum]
   have hk : ∀ k : m, (∑ x : m, ∑ y : n, if k = x then X i y * M (x, y) (k, j) else 0)
       = ∑ y : n, X i y * M (k, y) (k, j) := by
@@ -161,7 +161,7 @@ theorem traceLeft_mul_one_kronecker [DecidableEq m]
     traceLeft (M * ((1 : Matrix m m R) ⊗ₖ X)) = traceLeft M * X := by
   ext i j
   rw [Matrix.mul_apply]
-  simp only [traceLeft_apply, Matrix.mul_apply, Matrix.kronecker_apply, one_apply,
+  simp only [traceLeft_apply, Matrix.mul_apply, Matrix.kronecker_apply, Matrix.one_apply,
     Fintype.sum_prod_type, ite_mul, mul_ite, zero_mul, one_mul, mul_zero, Finset.sum_mul]
   have hk : ∀ k : m, (∑ x : m, ∑ y : n, if x = k then M (k, i) (x, y) * X y j else 0)
       = ∑ y : n, M (k, i) (k, y) * X y j := by
