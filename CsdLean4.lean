@@ -702,6 +702,8 @@ public import CsdLean4.CV.RadarCoordinates
 public import CsdLean4.CV.ChainExchange
 public import CsdLean4.CV.ChronoPrecedes
 public import CsdLean4.CV.DetunedExchange
+public import CsdLean4.CV.WalkSchedule
+public import CsdLean4.CV.ThreeStation
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment

@@ -3935,4 +3935,387 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms Continuous.occAccum
 
 
+/-! #203: geometry across several paths — walk schedules (hop-or-wait steps, exact transfer along any legal walk with phase `(−i)^hops`, readouts, composition with a wait between, a repeated closed walk reading the same every cycle, relabelling the stations) and three stations with two routes (travel-time data, raw and corrected radar separation, the corrected one always symmetric, the raw one symmetric iff the net detector delays agree, the triangle inequality up to the relay delay, the metric axioms with free relays, relabelling invariance; the network's routes realised as walks arriving at the operational travel time; round trips closed and reproducible; and three explicit networks where it is not a metric) (`CV/WalkSchedule.lean`, `CV/ThreeStation.lean`). -/
+
+/-- info: 'CSD.CV.Step' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Step
+
+/-- info: 'CSD.CV.Step.next' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Step.next
+
+/-- info: 'CSD.CV.Step.isHop' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Step.isHop
+
+/-- info: 'CSD.CV.Step.flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Step.flow
+
+/-- info: 'CSD.CV.Step.map' depends on axioms: [Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Step.map
+
+/-- info: 'CSD.CV.walkPos' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkPos
+
+/-- info: 'CSD.CV.walkPos_append' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkPos_append
+
+/-- info: 'CSD.CV.hopCount' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopCount
+
+/-- info: 'CSD.CV.hopCount_append' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopCount_append
+
+/-- info: 'CSD.CV.IsWalk' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.IsWalk
+
+/-- info: 'CSD.CV.isWalk_cons_hop' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isWalk_cons_hop
+
+/-- info: 'CSD.CV.isWalk_cons_wait' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isWalk_cons_wait
+
+/-- info: 'CSD.CV.isWalk_append' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isWalk_append
+
+/-- info: 'CSD.CV.isWalk_replicate_wait' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isWalk_replicate_wait
+
+/-- info: 'CSD.CV.walkPos_replicate_wait' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkPos_replicate_wait
+
+/-- info: 'CSD.CV.hopCount_replicate_wait' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopCount_replicate_wait
+
+/-- info: 'CSD.CV.walkSchedule' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkSchedule
+
+/-- info: 'CSD.CV.walkSchedule_τ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkSchedule_τ
+
+/-- info: 'CSD.CV.walkSchedule_stage_cons_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkSchedule_stage_cons_zero
+
+/-- info: 'CSD.CV.walkSchedule_stage_cons_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkSchedule_stage_cons_succ
+
+/-- info: 'CSD.CV.Schedule.completed_succ_of_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Schedule.completed_succ_of_shift
+
+/-- info: 'CSD.CV.walkSchedule_completed_cons' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkSchedule_completed_cons
+
+/-- info: 'CSD.CV.toEuclideanLin_step_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.toEuclideanLin_step_flow
+
+/-- info: 'CSD.CV.walk_transfer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walk_transfer
+
+/-- info: 'CSD.CV.walkArenaFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkArenaFlow
+
+/-- info: 'CSD.CV.excPoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.excPoint
+
+/-- info: 'CSD.CV.walkReadout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkReadout
+
+/-- info: 'CSD.CV.walkReadout_arrival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkReadout_arrival
+
+/-- info: 'CSD.CV.walk_compose' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walk_compose
+
+/-- info: 'CSD.CV.walk_transfer_append' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walk_transfer_append
+
+/-- info: 'CSD.CV.cycles' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cycles
+
+/-- info: 'CSD.CV.cycles_succ' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cycles_succ
+
+/-- info: 'CSD.CV.length_cycles' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.length_cycles
+
+/-- info: 'CSD.CV.isWalk_cycles' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isWalk_cycles
+
+/-- info: 'CSD.CV.take_cycles' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.take_cycles
+
+/-- info: 'CSD.CV.walkPos_take_cycle' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkPos_take_cycle
+
+/-- info: 'CSD.CV.walkReadout_cycle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkReadout_cycle
+
+/-- info: 'CSD.CV.Step.next_map' depends on axioms: [Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.Step.next_map
+
+/-- info: 'CSD.CV.walkPos_map' depends on axioms: [Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walkPos_map
+
+/-- info: 'CSD.CV.hopCount_map' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hopCount_map
+
+/-- info: 'CSD.CV.isWalk_map' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.isWalk_map
+
+/-- info: 'CSD.CV.length_map_step' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.length_map_step
+
+/-- info: 'CSD.CV.walk_schedules' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.walk_schedules
+
+/-- info: 'CSD.CV.TravelData' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData
+
+/-- info: 'CSD.CV.TravelData.rawRoundTrip' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.rawRoundTrip
+
+/-- info: 'CSD.CV.TravelData.rawSep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.rawSep
+
+/-- info: 'CSD.CV.TravelData.correctedSep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.correctedSep
+
+/-- info: 'CSD.CV.TravelData.rawSep_eq_correctedSep_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.rawSep_eq_correctedSep_add
+
+/-- info: 'CSD.CV.TravelData.correctedSep_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.correctedSep_nonneg
+
+/-- info: 'CSD.CV.TravelData.correctedSep_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.correctedSep_comm
+
+/-- info: 'CSD.CV.TravelData.rawSep_comm_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.rawSep_comm_iff
+
+/-- info: 'CSD.CV.TravelData.correctedSep_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.correctedSep_self
+
+/-- info: 'CSD.CV.TravelData.correctedSep_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.correctedSep_pos
+
+/-- info: 'CSD.CV.TravelData.correctedSep_eq_travel_of_reciprocal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.correctedSep_eq_travel_of_reciprocal
+
+/-- info: 'CSD.CV.TravelData.RelayBound' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.RelayBound
+
+/-- info: 'CSD.CV.TravelData.correctedSep_triangle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.correctedSep_triangle
+
+/-- info: 'CSD.CV.TravelData.correctedSep_triangle_of_free' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.correctedSep_triangle_of_free
+
+/-- info: 'CSD.CV.TravelData.correctedSep_metric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.correctedSep_metric
+
+/-- info: 'CSD.CV.TravelData.comap' depends on axioms: [Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.comap
+
+/-- info: 'CSD.CV.TravelData.correctedSep_comap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.correctedSep_comap
+
+/-- info: 'CSD.CV.TravelData.rawSep_comap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.TravelData.rawSep_comap
+
+/-- info: 'CSD.CV.third' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.third
+
+/-- info: 'CSD.CV.third_ne_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.third_ne_left
+
+/-- info: 'CSD.CV.third_ne_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.third_ne_right
+
+/-- info: 'CSD.CV.ThreeStation' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation
+
+/-- info: 'CSD.CV.ThreeStation.directRoute' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.directRoute
+
+/-- info: 'CSD.CV.ThreeStation.directLen' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.directLen
+
+/-- info: 'CSD.CV.ThreeStation.relayRoute' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.relayRoute
+
+/-- info: 'CSD.CV.ThreeStation.relayLen' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.relayLen
+
+/-- info: 'CSD.CV.ThreeStation.travel' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.travel
+
+/-- info: 'CSD.CV.ThreeStation.route' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.route
+
+/-- info: 'CSD.CV.ThreeStation.directRoute_spec' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.directRoute_spec
+
+/-- info: 'CSD.CV.ThreeStation.relayRoute_spec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.relayRoute_spec
+
+/-- info: 'CSD.CV.ThreeStation.route_spec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.route_spec
+
+/-- info: 'CSD.CV.ThreeStation.route_arrival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.route_arrival
+
+/-- info: 'CSD.CV.ThreeStation.toTravelData' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.toTravelData
+
+/-- info: 'CSD.CV.ThreeStation.travel_self' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.travel_self
+
+/-- info: 'CSD.CV.ThreeStation.travel_pos' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.travel_pos
+
+/-- info: 'CSD.CV.ThreeStation.relayBound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.relayBound
+
+/-- info: 'CSD.CV.ThreeStation.triangle_of_free_relays' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.triangle_of_free_relays
+
+/-- info: 'CSD.CV.ThreeStation.metric_of_free_relays' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.metric_of_free_relays
+
+/-- info: 'CSD.CV.ThreeStation.roundTripWalk' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.roundTripWalk
+
+/-- info: 'CSD.CV.ThreeStation.roundTrip_spec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.roundTrip_spec
+
+/-- info: 'CSD.CV.ThreeStation.roundTrip_reception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.roundTrip_reception
+
+/-- info: 'CSD.CV.ThreeStation.roundTrip_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.roundTrip_return
+
+/-- info: 'CSD.CV.ThreeStation.roundTrip_reproducible' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.roundTrip_reproducible
+
+/-- info: 'CSD.CV.slowResponder' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.slowResponder
+
+/-- info: 'CSD.CV.rawSep_not_symmetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rawSep_not_symmetric
+
+/-- info: 'CSD.CV.slowDirect' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.slowDirect
+
+/-- info: 'CSD.CV.ThreeStation.fixedData' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ThreeStation.fixedData
+
+/-- info: 'CSD.CV.fixedRoute_not_triangle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.fixedRoute_not_triangle
+
+/-- info: 'CSD.CV.slowRelay' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.slowRelay
+
+/-- info: 'CSD.CV.relayDelay_breaks_triangle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.relayDelay_breaks_triangle
+
+/-- info: 'CSD.CV.relayDelay_within_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.relayDelay_within_bound
+
+/-- info: 'CSD.CV.three_station_geometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.three_station_geometry
+
+
 end CSD.Tests.AxiomAudit
