@@ -4461,4 +4461,99 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.cone_comparison
 
 
+/-! #213: a local Lieb–Robinson velocity — one step of the iteration through the interaction picture, the bound `2‖A‖‖B‖ max(|Y|,1) (4Δγt)^d/d!` by induction over edge paths, the velocity `8eΔγ`, the arena and record light cones and the separated influence re-derived at the local rate, and on the chain `v_loc · τ_hop = 8πe` for every length (`CV/LocalLiebRobinson.lean`). -/
+
+/-- info: 'CSD.CV.edgesTouching' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.edgesTouching
+
+/-- info: 'CSD.CV.mem_edgesTouching' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mem_edgesTouching
+
+/-- info: 'CSD.CV.DegreeLE' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.DegreeLE
+
+/-- info: 'CSD.CV.card_edgesTouching_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.card_edgesTouching_le
+
+/-- info: 'CSD.CV.disjoint_edge_of_mem_edgesTouching' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.disjoint_edge_of_mem_edgesTouching
+
+/-- info: 'CSD.CV.conjTranspose_sum_eq_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.conjTranspose_sum_eq_neg
+
+/-- info: 'CSD.CV.norm_commutator_step_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_commutator_step_le
+
+/-- info: 'CSD.CV.localRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.localRate
+
+/-- info: 'CSD.CV.localRate_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.localRate_nonneg
+
+/-- info: 'CSD.CV.norm_commutator_local_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_commutator_local_le
+
+/-- info: 'CSD.CV.localLRVelocity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.localLRVelocity
+
+/-- info: 'CSD.CV.localRate_pow_div_factorial_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.localRate_pow_div_factorial_le
+
+/-- info: 'CSD.CV.arenaObs_kick_sub_le_commutator' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_kick_sub_le_commutator
+
+/-- info: 'CSD.CV.lightcone_local' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lightcone_local
+
+/-- info: 'CSD.CV.record_lightcone_local' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.record_lightcone_local
+
+/-- info: 'CSD.CV.record_influence_le_of_separated_local' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.record_influence_le_of_separated_local
+
+/-- info: 'CSD.CV.degreeLE_pathGraph' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.degreeLE_pathGraph
+
+/-- info: 'CSD.CV.pathFlow_piece_skew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pathFlow_piece_skew
+
+/-- info: 'CSD.CV.norm_pathFlow_piece_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_pathFlow_piece_le
+
+/-- info: 'CSD.CV.localLRVelocity_chain_mul_hopTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.localLRVelocity_chain_mul_hopTime
+
+/-- info: 'CSD.CV.localLRVelocity_lt_lrVelocity_pathFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.localLRVelocity_lt_lrVelocity_pathFlow
+
+/-- info: 'CSD.CV.norm_commutator_pathFlow_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_commutator_pathFlow_le
+
+/-- info: 'CSD.CV.local_lieb_robinson' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.local_lieb_robinson
+
+
 end CSD.Tests.AxiomAudit

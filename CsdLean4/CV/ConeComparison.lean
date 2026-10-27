@@ -62,7 +62,8 @@ This file computes the second on the chain and compares it with the first.
    `lrVelocity` is built from the norm of the *whole* generator, so describing the same couplings as
    one flow on `n` edges instead of a schedule of single edges multiplies its slope by between `n/2`
    and `n`. That is a property of the bound as the corpus states it (`norm_commutator_velocity_le`),
-   not of the chain; a velocity built from the local terms and the graph's degree would not grow
+   not of the chain: the velocity built from the local terms and the graph's degree,
+   `localLRVelocity` in [`LocalLiebRobinson.lean`](LocalLiebRobinson.lean), does not grow
    with `n`.
 
 ## Honest scope
