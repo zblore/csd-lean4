@@ -9631,4 +9631,189 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.second_quantisation
 
 
+-- FermionDictionary (BACKLOG #220, 2026-10-28): the normalised first-quantisation map Fock -> ManyParticle,
+-- an isometry on each n-particle sector; Fock basis states are normalised Slater determinants;
+-- a_j^dag is sqrt(n+1) x antisymmetrised e_j tensoring and a_j is sqrt(n+1) x evaluation at (j, .);
+-- the sign bookkeeping (splitPermEquiv, jwSign_image).
+/-- info: 'CSD.SigmaLayer.liftPerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.liftPerm
+
+/-- info: 'CSD.SigmaLayer.liftPerm_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.liftPerm_zero
+
+/-- info: 'CSD.SigmaLayer.liftPerm_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.liftPerm_succ
+
+/-- info: 'CSD.SigmaLayer.permSign_liftPerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.permSign_liftPerm
+
+/-- info: 'CSD.SigmaLayer.permSign_cycleRange_symm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.permSign_cycleRange_symm
+
+/-- info: 'CSD.SigmaLayer.splitPerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.splitPerm
+
+/-- info: 'CSD.SigmaLayer.splitPerm_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.splitPerm_zero
+
+/-- info: 'CSD.SigmaLayer.splitPerm_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.splitPerm_succ
+
+/-- info: 'CSD.SigmaLayer.permSign_splitPerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.permSign_splitPerm
+
+/-- info: 'CSD.SigmaLayer.splitPerm_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.splitPerm_injective
+
+/-- info: 'CSD.SigmaLayer.splitPermEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.splitPermEquiv
+
+/-- info: 'CSD.SigmaLayer.occOfFinset_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.occOfFinset_apply
+
+/-- info: 'CSD.SigmaLayer.occOfFinset_erase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.occOfFinset_erase
+
+/-- info: 'CSD.SigmaLayer.occOfFinset_insert' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.occOfFinset_insert
+
+/-- info: 'CSD.SigmaLayer.occOfFinset_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.occOfFinset_injective
+
+/-- info: 'CSD.SigmaLayer.jwSign_occOfFinset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.jwSign_occOfFinset
+
+/-- info: 'CSD.SigmaLayer.card_filter_image_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.card_filter_image_lt
+
+/-- info: 'CSD.SigmaLayer.jwSign_image' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.jwSign_image
+
+/-- info: 'CSD.SigmaLayer.strictMono_eq_of_image_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.strictMono_eq_of_image_eq
+
+/-- info: 'CSD.SigmaLayer.image_comp_succAbove' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.image_comp_succAbove
+
+/-- info: 'CSD.SigmaLayer.invSqrtFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.invSqrtFact
+
+/-- info: 'CSD.SigmaLayer.conj_invSqrtFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.conj_invSqrtFact
+
+/-- info: 'CSD.SigmaLayer.invSqrtFact_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.invSqrtFact_mul_self
+
+/-- info: 'CSD.SigmaLayer.invSqrtFact_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.invSqrtFact_succ
+
+/-- info: 'CSD.SigmaLayer.fockAmpLin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fockAmpLin
+
+/-- info: 'CSD.SigmaLayer.fermionFirst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fermionFirst
+
+/-- info: 'CSD.SigmaLayer.fermionFirst_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fermionFirst_mem
+
+/-- info: 'CSD.SigmaLayer.nFermionEquiv_symm_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.nFermionEquiv_symm_apply
+
+/-- info: 'CSD.SigmaLayer.fermionFirst_apply_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fermionFirst_apply_strictMono
+
+/-- info: 'CSD.SigmaLayer.eq_of_mem_nFermionSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.eq_of_mem_nFermionSector
+
+/-- info: 'CSD.SigmaLayer.inner_fermionFirst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.inner_fermionFirst
+
+/-- info: 'CSD.SigmaLayer.inner_fermionFirst_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.inner_fermionFirst_of_mem
+
+/-- info: 'CSD.SigmaLayer.fockBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fockBasis
+
+/-- info: 'CSD.SigmaLayer.basisOrbital' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.basisOrbital
+
+/-- info: 'CSD.SigmaLayer.fermionFirst_fockBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fermionFirst_fockBasis
+
+/-- info: 'CSD.SigmaLayer.consLin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.consLin
+
+/-- info: 'CSD.SigmaLayer.fCreate1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fCreate1
+
+/-- info: 'CSD.SigmaLayer.fCreate1_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fCreate1_mem
+
+/-- info: 'CSD.SigmaLayer.fCreate1_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fCreate1_apply
+
+/-- info: 'CSD.SigmaLayer.fermionFirst_fCreate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fermionFirst_fCreate
+
+/-- info: 'CSD.SigmaLayer.fAnnihilate1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fAnnihilate1
+
+/-- info: 'CSD.SigmaLayer.fAnnihilate1_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fAnnihilate1_apply
+
+/-- info: 'CSD.SigmaLayer.fAnnihilate1_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fAnnihilate1_mem
+
+/-- info: 'CSD.SigmaLayer.fermionFirst_fAnnihilate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fermionFirst_fAnnihilate
+
+/-- info: 'CSD.SigmaLayer.fermion_dictionary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fermion_dictionary
+
+
 end CSD.Tests.AxiomAudit

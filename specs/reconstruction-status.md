@@ -408,9 +408,9 @@ repeated-preparation ignorance over `Ω₀` on Σ, not epistemic time-averaging)
   the Slater determinant vanishes exactly for dependent orbitals);
   only `±1` exchange statistics for states whose ray permutations keep (BACKLOG ~~#216~~,
   `SigmaLayer/ExchangeStatistics.lean`, 2026-10-28); second quantisation at finite dimension in the corpus
-  (BACKLOG ~~#215~~, `SigmaLayer/FermionFock.lean`, `SigmaLayer/BosonFock.lean`, 2026-10-28); the operator
-  dictionary between the two pictures, spin–statistics proper and the mixed-symmetry sectors open
-  (BACKLOG #220, #218, #219).
+  (BACKLOG ~~#215~~, `SigmaLayer/FermionFock.lean`, `SigmaLayer/BosonFock.lean`, 2026-10-28) and the fermion
+  operator dictionary (BACKLOG ~~#220~~, `SigmaLayer/FermionDictionary.lean`); the boson dictionary, one-body
+  operators, spin–statistics proper and the mixed-symmetry sectors open (BACKLOG #221, #222, #218, #219).
 
 ### 7a. Settled non-goals — do NOT re-litigate these
 

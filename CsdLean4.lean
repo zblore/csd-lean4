@@ -566,6 +566,7 @@ public import CsdLean4.SigmaLayer.ManyIdenticalParticles
 public import CsdLean4.SigmaLayer.ExchangeStatistics
 public import CsdLean4.SigmaLayer.FermionFock
 public import CsdLean4.SigmaLayer.BosonFock
+public import CsdLean4.SigmaLayer.FermionDictionary
 public import CsdLean4.SigmaLayer.FiniteQMClosure
 public import CsdLean4.SigmaLayer.OnticBornFrequency
 public import CsdLean4.RecordLayer.BornFibrePartition

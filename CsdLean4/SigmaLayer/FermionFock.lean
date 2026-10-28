@@ -44,9 +44,9 @@ per mode, `FieldSpace N 2` (`CV/FieldModes.lean`): amplitudes on occupation conf
 
 ## Honest scope
 
-⚠️ **The identification is by the canonical map, not yet as operators.** That `a_j†` corresponds to
-antisymmetrised tensoring with the orbital `e_j` in first quantisation, and the norm factor `√n!`
-between the two pictures, are BACKLOG #220.
+⚠️ **The identification here is by the canonical map on amplitudes.** The operator dictionary — the
+norm factor `√n!`, `a_j†` as antisymmetrised tensoring with the orbital `e_j`, Fock basis states as
+Slater determinants — is ~~#220~~ (`SigmaLayer/FermionDictionary.lean`).
 
 ⚠️ **The sign convention** is the Jordan–Wigner order of the modes; any other order gives a unitarily
 equivalent set of operators.

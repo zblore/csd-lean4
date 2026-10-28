@@ -49,7 +49,8 @@ lattice `FieldSpace K L` (`CV/FieldModes.lean`). Its ladder operators are the tr
 and `a_j†` correspond to symmetrised and antisymmetrised tensoring with the orbital `e_k`, the
 normalisation factors (`√(n!/∏ P_m!)` for bosons, `√n!` for fermions) that make the maps
 isometric, and the correspondence of one-body operators `dΓ(h) = ∑ h_ij a_i† a_j` with `∑_k h^{(k)}`
-are BACKLOG #220.
+are the operator dictionary: the fermion half is ~~#220~~ (`SigmaLayer/FermionDictionary.lean`), the
+boson half BACKLOG #221, the one-body operators #222.
 
 ⚠️ **The bosonic CCR are exact only below the cutoff.** On the whole truncated space the defect is
 unavoidable (`no_exact_finite_ccr`); the fermionic CAR need no cutoff (`SigmaLayer/FermionFock.lean`).
