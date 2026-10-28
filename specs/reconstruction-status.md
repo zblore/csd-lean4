@@ -409,8 +409,9 @@ repeated-preparation ignorance over `Ω₀` on Σ, not epistemic time-averaging)
   only `±1` exchange statistics for states whose ray permutations keep (BACKLOG ~~#216~~,
   `SigmaLayer/ExchangeStatistics.lean`, 2026-10-28); second quantisation at finite dimension in the corpus
   (BACKLOG ~~#215~~, `SigmaLayer/FermionFock.lean`, `SigmaLayer/BosonFock.lean`, 2026-10-28) and the fermion
-  operator dictionary (BACKLOG ~~#220~~, `SigmaLayer/FermionDictionary.lean`); the boson dictionary, one-body
-  operators, spin–statistics proper and the mixed-symmetry sectors open (BACKLOG #221, #222, #218, #219).
+  operator dictionary for fermions and bosons (BACKLOG ~~#220~~, ~~#221~~, `SigmaLayer/FermionDictionary.lean`,
+  `SigmaLayer/BosonDictionary.lean`); one-body operators, spin–statistics proper and the mixed-symmetry
+  sectors open (BACKLOG #222, #218, #219).
 
 ### 7a. Settled non-goals — do NOT re-litigate these
 

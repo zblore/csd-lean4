@@ -40,9 +40,9 @@ it carries the second-quantised operators to the first-quantised ones.
 
 ## Honest scope
 
-⚠️ **One-body operators** — `dΓ(h) = ∑ h_ij a_i† a_j` corresponding to `∑_k h^{(k)}` — and the
-**boson half** (normalisation `√(n!/∏ P_m!)`, creation as symmetrised tensoring) are not here; they
-are BACKLOG #221 and #222.
+⚠️ **The boson half** (normalisation `√(∏ P_m!/n!)`, creation as symmetrised tensoring) is ~~#221~~
+(`SigmaLayer/BosonDictionary.lean`); **one-body operators** — `dΓ(h) = ∑ h_ij a_i† a_j`
+corresponding to `∑_k h^{(k)}` — are BACKLOG #222.
 
 References: [`future-work.md`](../../specs/future-work.md) IP-1; `SigmaLayer/FermionFock.lean`
 (`fCreate`, `fAnnihilate`, `jwSign`, `occOfFinset`); `SigmaLayer/ManyIdenticalParticles.lean`
