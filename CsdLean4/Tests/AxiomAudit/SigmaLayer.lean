@@ -10112,4 +10112,190 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.two_body
 
 
+-- MixedSymmetry (BACKLOG #219, 2026-10-28): the mixed-symmetry sector = common kernel of the two
+-- (self-adjoint) projectors = orthogonal complement of bosons + fermions, N^n = C(N+n-1,n) + C(N,n) + dim;
+-- kept by every permutation-symmetric operator; no exchange eigenstate; for three particles: the
+-- cyclic average vanishes there, it is two isomorphic halves (even/odd under P01, intertwiner P02 - P12
+-- squaring to 3), dim = 2N(N^2-1)/3, each half N(N^2-1)/3.
+/-- info: 'CSD.SigmaLayer.inner_permOp_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.inner_permOp_left
+
+/-- info: 'CSD.SigmaLayer.inner_symmetrizer_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.inner_symmetrizer_left
+
+/-- info: 'CSD.SigmaLayer.inner_antisymmetrizer_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.inner_antisymmetrizer_left
+
+/-- info: 'CSD.SigmaLayer.ker_symmetrizer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.ker_symmetrizer
+
+/-- info: 'CSD.SigmaLayer.ker_antisymmetrizer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.ker_antisymmetrizer
+
+/-- info: 'CSD.SigmaLayer.mixedSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedSector
+
+/-- info: 'CSD.SigmaLayer.mem_mixedSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mem_mixedSector
+
+/-- info: 'CSD.SigmaLayer.mixedSector_eq_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedSector_eq_orthogonal
+
+/-- info: 'CSD.SigmaLayer.nBosonSector_inf_nFermionSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.nBosonSector_inf_nFermionSector
+
+/-- info: 'CSD.SigmaLayer.finrank_mixedSector_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.finrank_mixedSector_add
+
+/-- info: 'CSD.SigmaLayer.symmetrizer_permOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.symmetrizer_permOp
+
+/-- info: 'CSD.SigmaLayer.antisymmetrizer_permOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.antisymmetrizer_permOp
+
+/-- info: 'CSD.SigmaLayer.permOp_mem_mixedSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.permOp_mem_mixedSector
+
+/-- info: 'CSD.SigmaLayer.map_mem_mixedSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.map_mem_mixedSector
+
+/-- info: 'CSD.SigmaLayer.eq_zero_of_mem_mixedSector_of_isExchangeEigenstate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.eq_zero_of_mem_mixedSector_of_isExchangeEigenstate
+
+/-- info: 'CSD.SigmaLayer.swap01' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.swap01
+
+/-- info: 'CSD.SigmaLayer.swap02' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.swap02
+
+/-- info: 'CSD.SigmaLayer.swap12' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.swap12
+
+/-- info: 'CSD.SigmaLayer.cycle3' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.cycle3
+
+/-- info: 'CSD.SigmaLayer.cycle3'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.cycle3'
+
+/-- info: 'CSD.SigmaLayer.univ_perm_fin_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.univ_perm_fin_three
+
+/-- info: 'CSD.SigmaLayer.sum_perm_fin_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.sum_perm_fin_three
+
+/-- info: 'CSD.SigmaLayer.permSign_swap_fin_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.permSign_swap_fin_three
+
+/-- info: 'CSD.SigmaLayer.symmetrizer_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.symmetrizer_three
+
+/-- info: 'CSD.SigmaLayer.antisymmetrizer_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.antisymmetrizer_three
+
+/-- info: 'CSD.SigmaLayer.mem_mixedSector_three_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mem_mixedSector_three_iff
+
+/-- info: 'CSD.SigmaLayer.sum_swaps_eq_zero_of_mem_mixedSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.sum_swaps_eq_zero_of_mem_mixedSector
+
+/-- info: 'CSD.SigmaLayer.mixedEven' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedEven
+
+/-- info: 'CSD.SigmaLayer.mixedOdd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedOdd
+
+/-- info: 'CSD.SigmaLayer.mem_mixedEven' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mem_mixedEven
+
+/-- info: 'CSD.SigmaLayer.mem_mixedOdd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mem_mixedOdd
+
+/-- info: 'CSD.SigmaLayer.mixedIntertwiner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedIntertwiner
+
+/-- info: 'CSD.SigmaLayer.mixedIntertwiner_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedIntertwiner_apply
+
+/-- info: 'CSD.SigmaLayer.mixedIntertwiner_mem_mixedSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedIntertwiner_mem_mixedSector
+
+/-- info: 'CSD.SigmaLayer.permOp_swap01_mixedIntertwiner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.permOp_swap01_mixedIntertwiner
+
+/-- info: 'CSD.SigmaLayer.mixedIntertwiner_mem_mixedOdd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedIntertwiner_mem_mixedOdd
+
+/-- info: 'CSD.SigmaLayer.mixedIntertwiner_mem_mixedEven' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedIntertwiner_mem_mixedEven
+
+/-- info: 'CSD.SigmaLayer.mixedIntertwiner_mixedIntertwiner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedIntertwiner_mixedIntertwiner
+
+/-- info: 'CSD.SigmaLayer.mixedEvenEquivOdd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedEvenEquivOdd
+
+/-- info: 'CSD.SigmaLayer.mixedEven_sup_mixedOdd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedEven_sup_mixedOdd
+
+/-- info: 'CSD.SigmaLayer.mixedEven_inf_mixedOdd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixedEven_inf_mixedOdd
+
+/-- info: 'CSD.SigmaLayer.finrank_mixedSector_three_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.finrank_mixedSector_three_eq
+
+/-- info: 'CSD.SigmaLayer.three_mul_finrank_mixedSector_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.three_mul_finrank_mixedSector_three
+
+/-- info: 'CSD.SigmaLayer.three_mul_finrank_mixedEven' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.three_mul_finrank_mixedEven
+
+/-- info: 'CSD.SigmaLayer.mixed_symmetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mixed_symmetry
+
+
 end CSD.Tests.AxiomAudit

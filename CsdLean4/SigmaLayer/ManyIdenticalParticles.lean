@@ -66,7 +66,8 @@ is not proved here: the `±1` dichotomy for states whose ray every permutation k
 (`SigmaLayer/ExchangeStatistics.lean`); which sign for which particle is BACKLOG #218.
 
 ⚠️ **The other sectors.** For `n ≥ 3` the permutation action has components of mixed symmetry
-(`sectors_not_exhaustive`); they carry parastatistics and are not studied here (BACKLOG #219).
+(`sectors_not_exhaustive`); they carry parastatistics and are described in ~~#219~~
+(`SigmaLayer/MixedSymmetry.lean`; the general isotypic decomposition is BACKLOG #224).
 
 The `n = 2` case is ~~#206~~ on the pair arena `Fin N × Fin N`; here the arena is `Fin 2 → Fin N`,
 and the two dimension formulas agree (`(N + 1).choose 2`, `N.choose 2`).

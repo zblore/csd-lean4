@@ -45,7 +45,8 @@ third kind of one-dimensional exchange statistics at finite dimension.
 ⚠️ **The premise is the postulate's content.** That a permutation of identical particles keeps the
 physical state (the ray) is assumed, not derived: it is what "identical" means here. Given it, the
 `±1` dichotomy is a theorem. Without it the space also carries the mixed-symmetry components of
-~~#214~~'s `sectors_not_exhaustive` (parastatistics), rowed as BACKLOG #219.
+~~#214~~'s `sectors_not_exhaustive` (parastatistics), described in ~~#219~~
+(`SigmaLayer/MixedSymmetry.lean`).
 
 ⚠️ **Spin–statistics proper** — which particles take which sign — needs Lorentz covariance and is
 not a finite-dimensional statement; it is BACKLOG #218, on the scope ladder's relativistic rung.

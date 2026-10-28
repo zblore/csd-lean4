@@ -411,8 +411,10 @@ repeated-preparation ignorance over `Ω₀` on Σ, not epistemic time-averaging)
   (BACKLOG ~~#215~~, `SigmaLayer/FermionFock.lean`, `SigmaLayer/BosonFock.lean`, 2026-10-28) and the
   operator dictionary for fermions and bosons, one- and two-body operators included (BACKLOG
   ~~#220~~–~~#223~~, `SigmaLayer/FermionDictionary.lean`, `SigmaLayer/BosonDictionary.lean`,
-  `SigmaLayer/OneBody.lean`, `SigmaLayer/TwoBody.lean`); spin–statistics proper and the mixed-symmetry
-  sectors open (BACKLOG #218, #219).
+  `SigmaLayer/OneBody.lean`, `SigmaLayer/TwoBody.lean`); the mixed-symmetry sectors described (BACKLOG
+  ~~#219~~, `SigmaLayer/MixedSymmetry.lean`: orthogonal complement and dimension for every `n`, two isomorphic
+  copies for three particles); spin–statistics proper and the general isotypic decomposition open (BACKLOG
+  #218, #224).
 
 ### 7a. Settled non-goals — do NOT re-litigate these
 
