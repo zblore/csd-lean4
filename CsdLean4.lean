@@ -37,6 +37,7 @@ public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.ReindexTrace
 public import CsdLean4.Mathlib.LinearAlgebra.Matrix.KroneckerAlgHom
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.CauchyBinet
 public import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
 public import CsdLean4.Mathlib.MeasureTheory.MutuallySingularMap
 public import CsdLean4.Mathlib.MeasureTheory.InvariantTwist

@@ -5,7 +5,9 @@ Authors: Zayn Blore
 -/
 module
 
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.CauchyBinet
 public import CsdLean4.SigmaLayer.IdenticalParticles
+public import Mathlib.Analysis.InnerProductSpace.GramMatrix
 public import Mathlib.Data.Fin.Tuple.Sort
 public import Mathlib.Data.Finset.Sort
 public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
@@ -46,7 +48,10 @@ sector is multiplied by the sign.
   beyond two particles the boson and fermion sectors do **not** fill the space;
 * `slater φ`, the Slater determinant of `n` orbitals: ★★ `slater_mem_nFermionSector`, ★★
   `slater_eq_factorial_smul_antisymmetrizer` (**it is the antisymmetrised product**, up to `n!`),
-  ★★ `slater_eq_zero_of_not_linearIndependent` (dependent orbitals give no state);
+  ★★ `slater_eq_zero_of_not_linearIndependent` (dependent orbitals give no state); ★★★
+  `norm_sq_slater` (**`‖slater φ‖² = n! · det (gram φ)`**, by Cauchy–Binet,
+  `Mathlib/LinearAlgebra/Matrix/CauchyBinet.lean`, BACKLOG ~~#217~~), hence ★★ `slater_eq_zero_iff`
+  (**zero exactly for dependent orbitals**) and `norm_sq_slater_of_orthonormal` (`n!`);
 * on the configuration arena: `IsPermSymmetric` (commutes with every permutation matrix), ★
   `isPermSymmetric_tensorPow` (the same unitary on every particle), `IsPermSymmetric.exp_smul`,
   ★★ `IsPermSymmetric.mem_nBosonSector` / `mem_nFermionSector` (**the sectors are invariant**) and
@@ -59,10 +64,6 @@ sector is multiplied by the sign.
 under permutation-symmetric dynamics; that nature uses only these two, and which for which particle,
 is not proved here: the `±1` dichotomy for states whose ray every permutation keeps is ~~#216~~
 (`SigmaLayer/ExchangeStatistics.lean`); which sign for which particle is BACKLOG #218.
-
-⚠️ **The converse of `slater_eq_zero_of_not_linearIndependent`** — independent orbitals give a
-nonzero Slater determinant — needs a nonzero `n × n` minor of an `N × n` matrix of rank `n`
-(Cauchy–Binet); it is BACKLOG #217.
 
 ⚠️ **The other sectors.** For `n ≥ 3` the permutation action has components of mixed symmetry
 (`sectors_not_exhaustive`); they carry parastatistics and are not studied here (BACKLOG #219).
@@ -542,6 +543,81 @@ theorem slater_eq_zero_of_not_linearIndependent {φ : Fin n → EuclideanSpace �
   rw [← this]
   exact Finset.sum_congr rfl fun k _ => mul_comm _ _
 
+/-- The `N × n` matrix of the orbitals: column `k` is the orbital `φ k`. -/
+noncomputable def orbitalMatrix (φ : Fin n → EuclideanSpace ℂ (Fin N)) : Matrix (Fin N) (Fin n) ℂ :=
+  Matrix.of fun m k => φ k m
+
+theorem slaterMatrix_eq_submatrix (φ : Fin n → EuclideanSpace ℂ (Fin N)) (c : ManyConfig n N) :
+    slaterMatrix φ c = (orbitalMatrix φ).submatrix c id := rfl
+
+/-- The Gram matrix of the orbitals is `Φᴴ Φ`. -/
+theorem gram_eq_conjTranspose_mul_orbitalMatrix (φ : Fin n → EuclideanSpace ℂ (Fin N)) :
+    Matrix.gram ℂ φ = (orbitalMatrix φ)ᴴ * orbitalMatrix φ := by
+  ext i j
+  simp only [Matrix.gram_apply, PiLp.inner_apply, RCLike.inner_apply, Matrix.mul_apply,
+    orbitalMatrix, Matrix.conjTranspose_apply, Matrix.of_apply]
+  exact Finset.sum_congr rfl fun _ _ => mul_comm _ _
+
+/-- **The norm of a Slater determinant**: `‖slater φ‖² = n! · det (gram φ)`, by Cauchy–Binet
+(`Matrix.det_conjTranspose_mul_self_eq_sum`): the configurations with a repeated mode contribute
+nothing, and each set of `n` distinct modes contributes `n!` equal terms. -/
+theorem norm_sq_slater (φ : Fin n → EuclideanSpace ℂ (Fin N)) :
+    (‖slater φ‖ : ℂ) ^ 2 = n.factorial * (Matrix.gram ℂ φ).det := by
+  classical
+  let G : ManyConfig n N → ℂ := fun c =>
+    star ((orbitalMatrix φ).submatrix c id).det * ((orbitalMatrix φ).submatrix c id).det
+  have hinner : ⟪slater φ, slater φ⟫_ℂ = ∑ c, G c := by
+    simp only [PiLp.inner_apply, slater_apply, slaterMatrix_eq_submatrix, G]
+    exact Finset.sum_congr rfl fun _ _ => by rw [RCLike.inner_apply, mul_comm]; rfl
+  have hzero : ∀ c : {c : ManyConfig n N // ¬ Function.Injective c}, G c.1 = 0 := fun c => by
+    simp only [G]
+    rw [← Matrix.det_transpose ((orbitalMatrix φ).submatrix c.1 id), Matrix.transpose_submatrix,
+      Matrix.det_submatrix_id_eq_zero_of_not_injective _ c.2, mul_zero]
+  have hperm : ∀ (g : ManyConfig n N) (τ : Equiv.Perm (Fin n)), G (g ∘ τ) = G g := fun g τ => by
+    simp only [G]
+    rw [show (orbitalMatrix φ).submatrix (g ∘ τ) id
+        = ((orbitalMatrix φ).submatrix g id).submatrix τ id from rfl, Matrix.det_permute]
+    change star (permSign τ * _) * (permSign τ * _) = _
+    have hs : star (permSign τ) = permSign τ := by simp [permSign]
+    rw [star_mul', hs]
+    linear_combination (star ((orbitalMatrix φ).submatrix g id).det
+      * ((orbitalMatrix φ).submatrix g id).det) * permSign_mul_self τ
+  have hnorm : (‖slater φ‖ : ℂ) ^ 2 = ⟪slater φ, slater φ⟫_ℂ := by
+    rw [inner_self_eq_norm_sq_to_K]; simp
+  rw [hnorm, hinner, gram_eq_conjTranspose_mul_orbitalMatrix,
+    Matrix.det_conjTranspose_mul_self_eq_sum, Finset.mul_sum,
+    ← Fintype.sum_subtype_add_sum_subtype Function.Injective, Fintype.sum_eq_zero _ hzero, add_zero,
+    Tuple.sum_injective_eq_sum_strictMono_perm G]
+  refine Fintype.sum_congr _ _ fun g => ?_
+  simp only [hperm, Finset.sum_const, Finset.card_univ, Fintype.card_perm, Fintype.card_fin,
+    nsmul_eq_mul]
+  rfl
+
+/-- **Independent orbitals give a state**: the Slater determinant of linearly independent orbitals
+is not zero. -/
+theorem slater_ne_zero_of_linearIndependent {φ : Fin n → EuclideanSpace ℂ (Fin N)}
+    (h : LinearIndependent ℂ φ) : slater φ ≠ 0 := by
+  intro h0
+  have hn := norm_sq_slater φ
+  rw [h0, norm_zero] at hn
+  have hdet : (Matrix.gram ℂ φ).det = 0 := by
+    simpa [Nat.factorial_ne_zero] using hn.symm
+  exact Matrix.det_gram_ne_zero_iff_linearIndependent.2 h hdet
+
+/-- **The Slater determinant vanishes exactly for dependent orbitals.** -/
+theorem slater_eq_zero_iff {φ : Fin n → EuclideanSpace ℂ (Fin N)} :
+    slater φ = 0 ↔ ¬ LinearIndependent ℂ φ :=
+  ⟨fun h0 hli => slater_ne_zero_of_linearIndependent hli h0,
+    slater_eq_zero_of_not_linearIndependent⟩
+
+/-- For orthonormal orbitals `‖slater φ‖² = n!`: the normalised Slater state is
+`slater φ / √n!`. -/
+theorem norm_sq_slater_of_orthonormal {φ : Fin n → EuclideanSpace ℂ (Fin N)}
+    (h : Orthonormal ℂ φ) : ‖slater φ‖ ^ 2 = n.factorial := by
+  have hn := norm_sq_slater φ
+  rw [Matrix.gram_eq_one_iff_orthonormal.2 h, Matrix.det_one, mul_one] at hn
+  exact_mod_cast hn
+
 /-! ### Sector restriction on the configuration arena -/
 
 /-- **An operator of `n` identical particles**: one that commutes with every permutation. -/
@@ -606,8 +682,8 @@ theorem IsPermSymmetric.inner_eq_zero {M : Matrix (ManyConfig n N) (ManyConfig n
    occupation configuration;
 2. the symmetriser and antisymmetriser are the projections onto them;
 3. Pauli exclusion: a fermion amplitude vanishes on every configuration with a repeated mode;
-4. the Slater determinant is a fermion, the antisymmetrised product up to `n!`, and zero for
-   dependent orbitals;
+4. the Slater determinant is a fermion, the antisymmetrised product up to `n!`, of squared norm
+   `n!` times the Gram determinant of the orbitals, and zero exactly for dependent orbitals;
 5. every evolution generated by a permutation-symmetric operator keeps each sector;
 6. for `n ≥ 2`, no permutation-symmetric operator connects a boson to a fermion;
 7. for three particles in two modes the two sectors do not fill the space. -/
@@ -621,7 +697,8 @@ theorem many_identical_particles :
     ∧ (∀ x ∈ nFermionSector n N, ∀ c : ManyConfig n N, ¬ Function.Injective c → x c = 0)
     ∧ (∀ φ : Fin n → EuclideanSpace ℂ (Fin N), slater φ ∈ nFermionSector n N
         ∧ slater φ = (n.factorial : ℂ) • antisymmetrizer n N (prodState φ)
-        ∧ (¬ LinearIndependent ℂ φ → slater φ = 0))
+        ∧ (‖slater φ‖ : ℂ) ^ 2 = n.factorial * (Matrix.gram ℂ φ).det
+        ∧ (slater φ = 0 ↔ ¬ LinearIndependent ℂ φ))
     ∧ (∀ H : Matrix (ManyConfig n N) (ManyConfig n N) ℂ, IsPermSymmetric H → ∀ t : ℂ,
         (∀ x ∈ nBosonSector n N, toEuclideanLin (exp (t • H)) x ∈ nBosonSector n N)
         ∧ ∀ x ∈ nFermionSector n N, toEuclideanLin (exp (t • H)) x ∈ nFermionSector n N)
@@ -634,7 +711,7 @@ theorem many_identical_particles :
     ⟨isProj_symmetrizer, isProj_antisymmetrizer⟩,
     fun _ hx _ hc => apply_eq_zero_of_not_injective hx hc,
     fun φ => ⟨slater_mem_nFermionSector φ, slater_eq_factorial_smul_antisymmetrizer φ,
-      slater_eq_zero_of_not_linearIndependent⟩,
+      norm_sq_slater φ, slater_eq_zero_iff⟩,
     fun _ hH t => ⟨fun _ hx => (hH.exp_smul t).mem_nBosonSector hx,
       fun _ hx => (hH.exp_smul t).mem_nFermionSector hx⟩,
     fun hn _ hM _ hx _ hy => hM.inner_eq_zero hn hx hy,

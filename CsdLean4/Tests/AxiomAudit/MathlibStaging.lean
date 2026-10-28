@@ -14689,4 +14689,40 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #print axioms MeasureTheory.Measure.volume_real_prod_isAddHaarMeasure
 
 
+-- CauchyBinet (BACKLOG #217, 2026-10-28): det (A * B) for rectangular A, B as a sum over all
+-- functions and, regrouped by sorting (an injective tuple = strictly increasing tuple ∘ permutation),
+-- over the strictly increasing tuples (Cauchy–Binet); the Bᴴ * B form.
+/-- info: 'Tuple.sort_comp_perm_of_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Tuple.sort_comp_perm_of_injective
+
+/-- info: 'Tuple.strictMono_comp_sort_of_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Tuple.strictMono_comp_sort_of_injective
+
+/-- info: 'Tuple.injectiveEquivStrictMonoPerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Tuple.injectiveEquivStrictMonoPerm
+
+/-- info: 'Tuple.sum_injective_eq_sum_strictMono_perm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Tuple.sum_injective_eq_sum_strictMono_perm
+
+/-- info: 'Matrix.det_mul_eq_sum_fun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.det_mul_eq_sum_fun
+
+/-- info: 'Matrix.det_submatrix_id_eq_zero_of_not_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.det_submatrix_id_eq_zero_of_not_injective
+
+/-- info: 'Matrix.det_mul_eq_sum_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.det_mul_eq_sum_strictMono
+
+/-- info: 'Matrix.det_conjTranspose_mul_self_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.det_conjTranspose_mul_self_eq_sum
+
+
 end CSD.Tests.AxiomAudit

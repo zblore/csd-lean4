@@ -9229,4 +9229,36 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.exchange_statistics
 
 
+-- ManyIdenticalParticles, Slater converse (BACKLOG #217, 2026-10-28): ‖slater φ‖² = n! · det (gram φ)
+-- by Cauchy–Binet; the Slater determinant vanishes exactly for dependent orbitals; ‖slater φ‖² = n!
+-- for orthonormal orbitals.
+/-- info: 'CSD.SigmaLayer.orbitalMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.orbitalMatrix
+
+/-- info: 'CSD.SigmaLayer.slaterMatrix_eq_submatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.slaterMatrix_eq_submatrix
+
+/-- info: 'CSD.SigmaLayer.gram_eq_conjTranspose_mul_orbitalMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.gram_eq_conjTranspose_mul_orbitalMatrix
+
+/-- info: 'CSD.SigmaLayer.norm_sq_slater' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.norm_sq_slater
+
+/-- info: 'CSD.SigmaLayer.slater_ne_zero_of_linearIndependent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.slater_ne_zero_of_linearIndependent
+
+/-- info: 'CSD.SigmaLayer.slater_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.slater_eq_zero_iff
+
+/-- info: 'CSD.SigmaLayer.norm_sq_slater_of_orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.norm_sq_slater_of_orthonormal
+
+
 end CSD.Tests.AxiomAudit
