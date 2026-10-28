@@ -404,7 +404,8 @@ repeated-preparation ignorance over `Ω₀` on Σ, not epistemic time-averaging)
 * **LF6-9** — the general Lindblad generator + complete positivity (the two bounded dissipators are done).
 * **IP-1** — identical particles / spin-statistics: two particles in the corpus (SL-T8 and BACKLOG ~~#206~~,
   `SigmaLayer/IdenticalParticles.lean`, 2026-10-28; the symmetrisation postulate shown consistent, not derived);
-  `n` particles, second quantisation and spin–statistics open (BACKLOG #214–#216).
+  `n` particles in the corpus (BACKLOG ~~#214~~, `SigmaLayer/ManyIdenticalParticles.lean`, 2026-10-28);
+  second quantisation and spin–statistics open (BACKLOG #215–#217).
 
 ### 7a. Settled non-goals — do NOT re-litigate these
 
