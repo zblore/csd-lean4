@@ -42,7 +42,7 @@ it carries the second-quantised operators to the first-quantised ones.
 
 ⚠️ **The boson half** (normalisation `√(∏ P_m!/n!)`, creation as symmetrised tensoring) is ~~#221~~
 (`SigmaLayer/BosonDictionary.lean`); **one-body operators** — `dΓ(h) = ∑ h_ij a_i† a_j`
-corresponding to `∑_k h^{(k)}` — are BACKLOG #222.
+corresponding to `∑_k h^{(k)}` — are ~~#222~~ (`SigmaLayer/OneBody.lean`).
 
 References: [`future-work.md`](../../specs/future-work.md) IP-1; `SigmaLayer/FermionFock.lean`
 (`fCreate`, `fAnnihilate`, `jwSign`, `occOfFinset`); `SigmaLayer/ManyIdenticalParticles.lean`

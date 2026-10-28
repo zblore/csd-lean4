@@ -43,7 +43,7 @@ BACKLOG #221, the boson half of ~~#220~~ (`SigmaLayer/FermionDictionary.lean`), 
 ⚠️ **Below the cutoff.** Every statement needs `n + 1 < L` (or `n < L`): the truncated ladder
 operators agree with the first-quantised ones only where the truncation does not act.
 
-⚠️ **One-body operators** `dΓ(h)` are BACKLOG #222.
+⚠️ **One-body operators** `dΓ(h)` are ~~#222~~ (`SigmaLayer/OneBody.lean`).
 
 References: [`future-work.md`](../../specs/future-work.md) IP-1; `SigmaLayer/BosonFock.lean`
 (`bCreate`, `bAnnihilate`, `bosonFockSector`, `monoOccEquiv`); `SigmaLayer/FermionDictionary.lean`

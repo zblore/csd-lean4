@@ -976,7 +976,11 @@ isSymplectic"
 #   echo_hamiltonian identify explicit flows with IsSymplectic.hamiltonianFlow by uniqueness of integral
 #   curves — EARNED; schrodingerHamiltonian_hamOccA and continuous_schrodingerHamiltonian_twoCoupledOrbit
 #   are facts about the already-declared energy function −2⟨H⟩, operator sense.)
+#   (2026-10-28, #222: toEuclideanLin_fieldHamiltonian is an operator identity about the already-declared
+#   CV matrix fieldHamiltonian (CV/FieldModes.lean) — it equals dΓ(1) + K/2 on the truncated Fock space,
+#   operator sense; no symplectic or Hamiltonian-flow claim.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
+toEuclideanLin_fieldHamiltonian
 kahlerFstSector_projectiveLaw
 kahlerFstSector_epistemicMeasure_projectiveLaw
 kahler_preparation_density

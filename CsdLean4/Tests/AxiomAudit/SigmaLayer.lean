@@ -9966,4 +9966,69 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.boson_dictionary
 
 
+-- OneBody (BACKLOG #222, 2026-10-28): oneBody h = sum_k h^(k); the first-quantised identities
+-- sum_ij h_ij Create1_i Annihilate1_j = oneBody h on (anti)symmetric states; dGamma(h) carried to
+-- oneBody h by fermionFirst (every n) and bosonFirst (below the cutoff); dGamma(1) = total number;
+-- the CV free-field Hamiltonian is dGamma(1) + K/2.
+/-- info: 'CSD.SigmaLayer.oneBody' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.oneBody
+
+/-- info: 'CSD.SigmaLayer.oneBody_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.oneBody_apply
+
+/-- info: 'CSD.SigmaLayer.cons_comp_succAbove_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.cons_comp_succAbove_eq
+
+/-- info: 'CSD.SigmaLayer.sum_sum_sum_ite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.sum_sum_sum_ite
+
+/-- info: 'CSD.SigmaLayer.sum_fCreate1_fAnnihilate1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.sum_fCreate1_fAnnihilate1
+
+/-- info: 'CSD.SigmaLayer.bAnnihilate1_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bAnnihilate1_mem
+
+/-- info: 'CSD.SigmaLayer.sum_bCreate1_bAnnihilate1' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.sum_bCreate1_bAnnihilate1
+
+/-- info: 'CSD.SigmaLayer.dGammaF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.dGammaF
+
+/-- info: 'CSD.SigmaLayer.dGammaB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.dGammaB
+
+/-- info: 'CSD.SigmaLayer.dGammaF_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.dGammaF_one
+
+/-- info: 'CSD.SigmaLayer.dGammaB_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.dGammaB_one
+
+/-- info: 'CSD.SigmaLayer.fermionFirst_dGammaF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fermionFirst_dGammaF
+
+/-- info: 'CSD.SigmaLayer.bosonFirst_dGammaB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bosonFirst_dGammaB
+
+/-- info: 'CSD.SigmaLayer.toEuclideanLin_fieldHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.toEuclideanLin_fieldHamiltonian
+
+/-- info: 'CSD.SigmaLayer.one_body' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.one_body
+
+
 end CSD.Tests.AxiomAudit
