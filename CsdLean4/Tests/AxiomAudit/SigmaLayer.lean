@@ -10031,4 +10031,85 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.one_body
 
 
+-- TwoBody (BACKLOG #223, 2026-10-28): twoBody V = 1/2 sum_{p != q} V^(pq); the pair operator as a
+-- polynomial in one-body hops on every state; normal ordering a+ a+ a a = a+ a a+ a - delta a+ a (exact
+-- CAR; truncated CCR with the top-level projector); dGamma2 carried to twoBody by fermionFirst (every n)
+-- and bosonFirst (below the cutoff); unit interaction = n choose 2, = 1/2 N(N-1) for fermions.
+/-- info: 'CSD.SigmaLayer.oneBody_single_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.oneBody_single_apply
+
+/-- info: 'CSD.SigmaLayer.oneBody_single_oneBody_single_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.oneBody_single_oneBody_single_apply
+
+/-- info: 'CSD.SigmaLayer.twoBody' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.twoBody
+
+/-- info: 'CSD.SigmaLayer.twoBody_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.twoBody_apply
+
+/-- info: 'CSD.SigmaLayer.twoBody_eq_sum_oneBody' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.twoBody_eq_sum_oneBody
+
+/-- info: 'CSD.SigmaLayer.twoBody_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.twoBody_one
+
+/-- info: 'CSD.SigmaLayer.dGammaF_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.dGammaF_single
+
+/-- info: 'CSD.SigmaLayer.dGammaB_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.dGammaB_single
+
+/-- info: 'CSD.SigmaLayer.fCreate_mul_fCreate_mul_fAnnihilate_mul_fAnnihilate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fCreate_mul_fCreate_mul_fAnnihilate_mul_fAnnihilate
+
+/-- info: 'CSD.SigmaLayer.bCreate_mul_bCreate_mul_bAnnihilate_mul_bAnnihilate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bCreate_mul_bCreate_mul_bAnnihilate_mul_bAnnihilate
+
+/-- info: 'CSD.SigmaLayer.dGamma2F' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.dGamma2F
+
+/-- info: 'CSD.SigmaLayer.dGamma2B' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.dGamma2B
+
+/-- info: 'CSD.SigmaLayer.fermionFirst_dGamma2F' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fermionFirst_dGamma2F
+
+/-- info: 'CSD.SigmaLayer.dGamma2F_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.dGamma2F_one
+
+/-- info: 'CSD.SigmaLayer.bosonFirst_modeOp_topProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bosonFirst_modeOp_topProj
+
+/-- info: 'CSD.SigmaLayer.bosonFirst_bCreate_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bosonFirst_bCreate_zero
+
+/-- info: 'CSD.SigmaLayer.bosonFirst_bCreate_topProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bosonFirst_bCreate_topProj
+
+/-- info: 'CSD.SigmaLayer.bosonFirst_dGamma2B' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bosonFirst_dGamma2B
+
+/-- info: 'CSD.SigmaLayer.two_body' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.two_body
+
+
 end CSD.Tests.AxiomAudit

@@ -569,6 +569,7 @@ public import CsdLean4.SigmaLayer.BosonFock
 public import CsdLean4.SigmaLayer.FermionDictionary
 public import CsdLean4.SigmaLayer.BosonDictionary
 public import CsdLean4.SigmaLayer.OneBody
+public import CsdLean4.SigmaLayer.TwoBody
 public import CsdLean4.SigmaLayer.FiniteQMClosure
 public import CsdLean4.SigmaLayer.OnticBornFrequency
 public import CsdLean4.RecordLayer.BornFibrePartition

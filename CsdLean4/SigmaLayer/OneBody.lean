@@ -34,8 +34,8 @@ particle (`oneBody h`). In second quantisation it is `dΓ(h) = ∑_{ij} h_ij a_i
 
 ## Honest scope
 
-⚠️ **One-body only.** Two-body interactions `½ ∑ V_ijkl a_i† a_j† a_l a_k` are not treated; they are
-BACKLOG #223.
+⚠️ **One-body only.** Two-body interactions `½ ∑ V_ijkl a_i† a_j† a_l a_k` are ~~#223~~
+(`SigmaLayer/TwoBody.lean`).
 
 ⚠️ **Bosons below the cutoff** (`n < L`), as in ~~#221~~.
 
