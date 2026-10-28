@@ -9168,4 +9168,65 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.many_identical_particles
 
 
+-- ExchangeStatistics (BACKLOG #216, 2026-10-28): the characters of a symmetric group are 1 and
+-- the sign; an exchange phase is ±1; a state whose ray every permutation keeps is a boson or a
+-- fermion, and a subspace on which permutations act as scalars lies in one sector; for n = 3,
+-- N = 2 not every state is an exchange eigenstate.
+/-- info: 'CSD.SigmaLayer.map_swap_eq_map_swap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.map_swap_eq_map_swap
+
+/-- info: 'CSD.SigmaLayer.map_swap_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.map_swap_mul_self
+
+/-- info: 'CSD.SigmaLayer.perm_char_eq_one_or_sign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.perm_char_eq_one_or_sign
+
+/-- info: 'CSD.SigmaLayer.perm_char_eq_one_or_permSign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.perm_char_eq_one_or_permSign
+
+/-- info: 'CSD.SigmaLayer.eq_one_or_eq_neg_one_of_permOp_swap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.eq_one_or_eq_neg_one_of_permOp_swap
+
+/-- info: 'CSD.SigmaLayer.IsExchangeEigenstate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.IsExchangeEigenstate
+
+/-- info: 'CSD.SigmaLayer.isExchangeEigenstate_of_mem_nBosonSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.isExchangeEigenstate_of_mem_nBosonSector
+
+/-- info: 'CSD.SigmaLayer.isExchangeEigenstate_of_mem_nFermionSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.isExchangeEigenstate_of_mem_nFermionSector
+
+/-- info: 'CSD.SigmaLayer.IsExchangeEigenstate.mem_or_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.IsExchangeEigenstate.mem_or_mem
+
+/-- info: 'CSD.SigmaLayer.isExchangeEigenstate_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.isExchangeEigenstate_iff
+
+/-- info: 'CSD.SigmaLayer.le_nBosonSector_or_le_nFermionSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.le_nBosonSector_or_le_nFermionSector
+
+/-- info: 'CSD.SigmaLayer.eq_zero_of_mem_nBosonSector_of_mem_nFermionSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.eq_zero_of_mem_nBosonSector_of_mem_nFermionSector
+
+/-- info: 'CSD.SigmaLayer.exists_not_isExchangeEigenstate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.exists_not_isExchangeEigenstate
+
+/-- info: 'CSD.SigmaLayer.exchange_statistics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.exchange_statistics
+
+
 end CSD.Tests.AxiomAudit

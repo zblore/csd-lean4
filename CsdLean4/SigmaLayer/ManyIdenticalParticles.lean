@@ -57,14 +57,15 @@ sector is multiplied by the sign.
 
 ⚠️ **Consistency, not derivation**, as in ~~#206~~: the sectors are invariant and superselected
 under permutation-symmetric dynamics; that nature uses only these two, and which for which particle,
-is not proved here (BACKLOG #216).
+is not proved here: the `±1` dichotomy for states whose ray every permutation keeps is ~~#216~~
+(`SigmaLayer/ExchangeStatistics.lean`); which sign for which particle is BACKLOG #218.
 
 ⚠️ **The converse of `slater_eq_zero_of_not_linearIndependent`** — independent orbitals give a
 nonzero Slater determinant — needs a nonzero `n × n` minor of an `N × n` matrix of rank `n`
 (Cauchy–Binet); it is BACKLOG #217.
 
 ⚠️ **The other sectors.** For `n ≥ 3` the permutation action has components of mixed symmetry
-(`sectors_not_exhaustive`); they carry parastatistics and are not studied here.
+(`sectors_not_exhaustive`); they carry parastatistics and are not studied here (BACKLOG #219).
 
 The `n = 2` case is ~~#206~~ on the pair arena `Fin N × Fin N`; here the arena is `Fin 2 → Fin N`,
 and the two dimension formulas agree (`(N + 1).choose 2`, `N.choose 2`).

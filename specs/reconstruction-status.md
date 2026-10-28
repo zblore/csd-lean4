@@ -405,7 +405,9 @@ repeated-preparation ignorance over `Ω₀` on Σ, not epistemic time-averaging)
 * **IP-1** — identical particles / spin-statistics: two particles in the corpus (SL-T8 and BACKLOG ~~#206~~,
   `SigmaLayer/IdenticalParticles.lean`, 2026-10-28; the symmetrisation postulate shown consistent, not derived);
   `n` particles in the corpus (BACKLOG ~~#214~~, `SigmaLayer/ManyIdenticalParticles.lean`, 2026-10-28);
-  second quantisation and spin–statistics open (BACKLOG #215–#217).
+  only `±1` exchange statistics for states whose ray permutations keep (BACKLOG ~~#216~~,
+  `SigmaLayer/ExchangeStatistics.lean`, 2026-10-28); second quantisation, spin–statistics proper and the
+  mixed-symmetry sectors open (BACKLOG #215, #217–#219).
 
 ### 7a. Settled non-goals — do NOT re-litigate these
 
