@@ -9261,4 +9261,374 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.norm_sq_slater_of_orthonormal
 
 
+-- FermionFock (BACKLOG #215, 2026-10-28): states supported on a set of configurations and the orthogonal
+-- direct sum over fibres; the Jordan-Wigner sign; fermionic creation/annihilation on FieldSpace N 2 with
+-- the CAR exactly, creation the adjoint, Jordan-Wigner a_j = Z_0...Z_{j-1} sigma-_j; number sectors, their
+-- direct sum, and the canonical identification with nFermionSector n N.
+/-- info: 'CSD.SigmaLayer.supportedOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.supportedOn
+
+/-- info: 'CSD.SigmaLayer.mem_supportedOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mem_supportedOn
+
+/-- info: 'CSD.SigmaLayer.supportedOnEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.supportedOnEquiv
+
+/-- info: 'CSD.SigmaLayer.finrank_supportedOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.finrank_supportedOn
+
+/-- info: 'CSD.SigmaLayer.supportedOn_orthogonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.supportedOn_orthogonal
+
+/-- info: 'CSD.SigmaLayer.restrictTo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.restrictTo
+
+/-- info: 'CSD.SigmaLayer.restrictTo_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.restrictTo_mem
+
+/-- info: 'CSD.SigmaLayer.isInternal_supportedOn_fiber' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.isInternal_supportedOn_fiber
+
+/-- info: 'CSD.SigmaLayer.fin_two_cases' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fin_two_cases
+
+/-- info: 'CSD.SigmaLayer.occParity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.occParity
+
+/-- info: 'CSD.SigmaLayer.occParity_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.occParity_mul_self
+
+/-- info: 'CSD.SigmaLayer.star_occParity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.star_occParity
+
+/-- info: 'CSD.SigmaLayer.jwSign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.jwSign
+
+/-- info: 'CSD.SigmaLayer.jwSign_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.jwSign_mul_self
+
+/-- info: 'CSD.SigmaLayer.star_jwSign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.star_jwSign
+
+/-- info: 'CSD.SigmaLayer.conj_jwSign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.conj_jwSign
+
+/-- info: 'CSD.SigmaLayer.jwSign_update_of_not_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.jwSign_update_of_not_lt
+
+/-- info: 'CSD.SigmaLayer.jwSign_update_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.jwSign_update_of_lt
+
+/-- info: 'CSD.SigmaLayer.update_of_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.update_of_eq
+
+/-- info: 'CSD.SigmaLayer.fAnnihilate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fAnnihilate
+
+/-- info: 'CSD.SigmaLayer.fCreate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fCreate
+
+/-- info: 'CSD.SigmaLayer.fAnnihilate_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fAnnihilate_apply
+
+/-- info: 'CSD.SigmaLayer.fCreate_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fCreate_apply
+
+/-- info: 'CSD.SigmaLayer.flipMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.flipMode
+
+/-- info: 'CSD.SigmaLayer.inner_fCreate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.inner_fCreate
+
+/-- info: 'CSD.SigmaLayer.fAnnihilate_mul_fCreate_add_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fAnnihilate_mul_fCreate_add_self
+
+/-- info: 'CSD.SigmaLayer.fAnnihilate_mul_fCreate_add_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fAnnihilate_mul_fCreate_add_of_ne
+
+/-- info: 'CSD.SigmaLayer.fAnnihilate_mul_fCreate_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fAnnihilate_mul_fCreate_add
+
+/-- info: 'CSD.SigmaLayer.fAnnihilate_mul_fAnnihilate_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fAnnihilate_mul_fAnnihilate_add
+
+/-- info: 'CSD.SigmaLayer.fCreate_mul_fCreate_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fCreate_mul_fCreate_add
+
+/-- info: 'CSD.SigmaLayer.qubitZ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.qubitZ
+
+/-- info: 'CSD.SigmaLayer.qubitLower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.qubitLower
+
+/-- info: 'CSD.SigmaLayer.jwString' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.jwString
+
+/-- info: 'CSD.SigmaLayer.list_prod_qubitZ_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.list_prod_qubitZ_apply
+
+/-- info: 'CSD.SigmaLayer.jwString_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.jwString_apply
+
+/-- info: 'CSD.SigmaLayer.fAnnihilate_eq_jwString_mul_qubitLower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fAnnihilate_eq_jwString_mul_qubitLower
+
+/-- info: 'CSD.SigmaLayer.fNumber' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fNumber
+
+/-- info: 'CSD.SigmaLayer.fNumber_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fNumber_apply
+
+/-- info: 'CSD.SigmaLayer.fTotalNumber' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fTotalNumber
+
+/-- info: 'CSD.SigmaLayer.occTotal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.occTotal
+
+/-- info: 'CSD.SigmaLayer.fTotalNumber_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fTotalNumber_apply
+
+/-- info: 'CSD.SigmaLayer.fockSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fockSector
+
+/-- info: 'CSD.SigmaLayer.mem_fockSector_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mem_fockSector_iff
+
+/-- info: 'CSD.SigmaLayer.isInternal_fockSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.isInternal_fockSector
+
+/-- info: 'CSD.SigmaLayer.occOfFinset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.occOfFinset
+
+/-- info: 'CSD.SigmaLayer.card_filter_eq_occTotal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.card_filter_eq_occTotal
+
+/-- info: 'CSD.SigmaLayer.occTotal_occOfFinset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.occTotal_occOfFinset
+
+/-- info: 'CSD.SigmaLayer.finsetEquivOcc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.finsetEquivOcc
+
+/-- info: 'CSD.SigmaLayer.fockFermionEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fockFermionEquiv
+
+/-- info: 'CSD.SigmaLayer.fockFermionEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.fockFermionEquiv_apply
+
+/-- info: 'CSD.SigmaLayer.finrank_fockSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.finrank_fockSector
+
+/-- info: 'CSD.SigmaLayer.finrank_fermionFock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.finrank_fermionFock
+
+-- BosonFock (BACKLOG #215, 2026-10-28): single-mode matrices on mode k (modeOp: products, commutation
+-- across modes, adjoint); truncated ladder operators with [b_k, b_k^dag] = 1 - L|top><top|_k and exact
+-- CCR across modes; exact CCR on number sectors below the cutoff; the canonical identification of the
+-- n-quantum sector with nBosonSector n K for n < L (occupation numbers of sorted configurations);
+-- capstone second_quantisation.
+/-- info: 'CSD.SigmaLayer.modeOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.modeOp
+
+/-- info: 'CSD.SigmaLayer.modeOp_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.modeOp_apply
+
+/-- info: 'CSD.SigmaLayer.modeOp_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.modeOp_mul
+
+/-- info: 'CSD.SigmaLayer.modeOp_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.modeOp_one
+
+/-- info: 'CSD.SigmaLayer.modeOp_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.modeOp_sub
+
+/-- info: 'CSD.SigmaLayer.modeOp_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.modeOp_smul
+
+/-- info: 'CSD.SigmaLayer.modeOp_mul_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.modeOp_mul_comm
+
+/-- info: 'CSD.SigmaLayer.modeSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.modeSwap
+
+/-- info: 'CSD.SigmaLayer.inner_modeOp_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.inner_modeOp_conjTranspose
+
+/-- info: 'CSD.SigmaLayer.bAnnihilate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bAnnihilate
+
+/-- info: 'CSD.SigmaLayer.bCreate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bCreate
+
+/-- info: 'CSD.SigmaLayer.inner_bCreate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.inner_bCreate
+
+/-- info: 'CSD.SigmaLayer.bAnnihilate_mul_bCreate_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bAnnihilate_mul_bCreate_sub
+
+/-- info: 'CSD.SigmaLayer.bAnnihilate_mul_bCreate_sub_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bAnnihilate_mul_bCreate_sub_of_ne
+
+/-- info: 'CSD.SigmaLayer.bAnnihilate_mul_bAnnihilate_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bAnnihilate_mul_bAnnihilate_sub
+
+/-- info: 'CSD.SigmaLayer.modeOp_topProj_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.modeOp_topProj_apply
+
+/-- info: 'CSD.SigmaLayer.bNumber' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bNumber
+
+/-- info: 'CSD.SigmaLayer.bNumber_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bNumber_apply
+
+/-- info: 'CSD.SigmaLayer.bOccTotal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bOccTotal
+
+/-- info: 'CSD.SigmaLayer.bTotalNumber' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bTotalNumber
+
+/-- info: 'CSD.SigmaLayer.bTotalNumber_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bTotalNumber_apply
+
+/-- info: 'CSD.SigmaLayer.bosonFockSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bosonFockSector
+
+/-- info: 'CSD.SigmaLayer.mem_bosonFockSector_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mem_bosonFockSector_iff
+
+/-- info: 'CSD.SigmaLayer.isInternal_bosonFockSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.isInternal_bosonFockSector
+
+/-- info: 'CSD.SigmaLayer.le_bOccTotal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.le_bOccTotal
+
+/-- info: 'CSD.SigmaLayer.ccr_exact_on_bosonFockSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.ccr_exact_on_bosonFockSector
+
+/-- info: 'CSD.SigmaLayer.BosonOcc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.BosonOcc
+
+/-- info: 'CSD.SigmaLayer.count_ofFn_lt' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.count_ofFn_lt
+
+/-- info: 'CSD.SigmaLayer.monoOcc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.monoOcc
+
+/-- info: 'CSD.SigmaLayer.monoOcc_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.monoOcc_injective
+
+/-- info: 'CSD.SigmaLayer.bosonOccEquivNat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bosonOccEquivNat
+
+/-- info: 'CSD.SigmaLayer.card_bosonOcc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.card_bosonOcc
+
+/-- info: 'CSD.SigmaLayer.card_monoConfig' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.card_monoConfig
+
+/-- info: 'CSD.SigmaLayer.monoOccEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.monoOccEquiv
+
+/-- info: 'CSD.SigmaLayer.bosonFockEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bosonFockEquiv
+
+/-- info: 'CSD.SigmaLayer.bosonFockEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.bosonFockEquiv_apply
+
+/-- info: 'CSD.SigmaLayer.finrank_bosonFockSector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.finrank_bosonFockSector
+
+/-- info: 'CSD.SigmaLayer.second_quantisation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.second_quantisation
+
+
 end CSD.Tests.AxiomAudit
