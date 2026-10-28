@@ -560,6 +560,7 @@ public import CsdLean4.SigmaLayer.MixedEnsemble
 public import CsdLean4.SigmaLayer.MixedOntic
 public import CsdLean4.SigmaLayer.MixedFrequency
 public import CsdLean4.SigmaLayer.Symmetrization
+public import CsdLean4.SigmaLayer.IdenticalParticles
 public import CsdLean4.SigmaLayer.FiniteQMClosure
 public import CsdLean4.SigmaLayer.OnticBornFrequency
 public import CsdLean4.RecordLayer.BornFibrePartition

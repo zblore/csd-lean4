@@ -402,7 +402,9 @@ repeated-preparation ignorance over `Ω₀` on Σ, not epistemic time-averaging)
   and `quantum_effective_shadowing` is a statement about **matrices** with no bridge to ontic
   Hamiltonians on `KSigma` — so the `(ε, T)` shadowing bound is *not* claimed for this witness.
 * **LF6-9** — the general Lindblad generator + complete positivity (the two bounded dissipators are done).
-* **IP-1** — identical particles / spin-statistics, not in the corpus.
+* **IP-1** — identical particles / spin-statistics: two particles in the corpus (SL-T8 and BACKLOG ~~#206~~,
+  `SigmaLayer/IdenticalParticles.lean`, 2026-10-28; the symmetrisation postulate shown consistent, not derived);
+  `n` particles, second quantisation and spin–statistics open (BACKLOG #214–#216).
 
 ### 7a. Settled non-goals — do NOT re-litigate these
 
