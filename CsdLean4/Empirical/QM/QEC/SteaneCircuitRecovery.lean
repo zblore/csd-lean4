@@ -61,7 +61,9 @@ it, and the verified (cat) ancilla that makes them harmless, are BACKLOG #229, w
 unblocks.
 
 ⚠️ **One unverified ancilla block per syndrome, one round.** No repetition of the syndrome
-measurement, no ancilla verification.
+measurement, no ancilla verification. ▸ The same channel built through Steane's encoded ancilla, where
+one fault leaves a weight-one error, is `SteaneMethod.lean` (`methodRecovery_apply`,
+`steaneMethod_single_fault`, BACKLOG #229).
 
 ⚠️ **Measurement and feed-forward are branches.** The readout `ancRead` with its classically
 controlled correction is modelled as the Kraus branches of one channel, one per outcome pair: the

@@ -14746,4 +14746,19 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #print axioms QuantumInfo.ancRead_mul_extractMat_mul_ancInit
 
 
+-- SteaneMethod (BACKLOG #229 first brick, 2026-10-29): an ancilla prepared in psi, extracted and read is
+-- the diagonal psi(m + H z); reading after a product operator.
+/-- info: 'QuantumInfo.ancPrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancPrep
+
+/-- info: 'QuantumInfo.ancRead_mul_extractMat_mul_ancPrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancRead_mul_extractMat_mul_ancPrep
+
+/-- info: 'QuantumInfo.ancRead_mul_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancRead_mul_kronecker
+
+
 end CSD.Tests.AxiomAudit
