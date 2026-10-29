@@ -79,7 +79,9 @@ Steane transversal `CNOT` (`cnotT_conj_pairEnc_code`), but no instance is plugge
 ⚠️ **No instance at a concrete code here.** The theorems *produce* `IsCorrectedStep` instances from
 the piecewise hypotheses. ▸ The Steane instance — the weight-one set `weightOne`, `IsRecovery`,
 `PropagatesD` for the transversal `H̄`, `X̄`, `Z̄` and `DeviatesBy` for their faulty versions — is
-`Empirical/QM/QEC/SteaneMachine.lean` (`steane_exRec`, BACKLOG ~~#207~~).
+`Empirical/QM/QEC/SteaneMachine.lean` (`steane_exRec`, BACKLOG ~~#207~~); with every piece a
+circuit and the leading recovery's `DeviatesBy` proved for Steane's method with one fault,
+`Empirical/QM/QEC/SteaneFaultyRecovery.lean` (`steane_exRec_faultyMethod`, BACKLOG ~~#232~~).
 
 ⚠️ **Maps, not channels.** As in #62 (d1), the pieces are arbitrary maps on matrices with no
 positivity or trace condition imposed; nothing below uses or claims complete positivity.

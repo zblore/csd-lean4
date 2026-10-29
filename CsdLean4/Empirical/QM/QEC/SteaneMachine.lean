@@ -58,7 +58,10 @@ recovery enters only through `steane_exRec`, as #96's `DeviatesBy` hypothesis on
 the recovery is not built as a circuit (both check bases, a decoder, a verified ancilla) whose own
 fault locations are counted in the pattern. Those are their own BACKLOG rows. ▸ The recovery
 **as a circuit** (both check bases, a decoder, fault-free) is ~~#228~~, `SteaneCircuitRecovery.lean`,
-with the machine run on it (`steane_machine_circuit`); its fault locations are #229.
+with the machine run on it (`steane_machine_circuit`); its fault locations are #229. ▸ The
+faulty recovery as a circuit inside the rectangle, its `DeviatesBy` proved rather than assumed, is
+`SteaneFaultyRecovery.lean` (`steane_exRec_faultyMethod`, BACKLOG ~~#232~~); the machine with the
+recovery's locations counted is #233.
 
 ⚠️ **One block, three gates.** `H̄`, `X̄`, `Z̄` act on a single block; this is not a universal gate
 set. The two-block `CNOT̄` (`steane_faultyCNOT_recovery`) lives on a different register and is not

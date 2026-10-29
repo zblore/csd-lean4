@@ -14761,4 +14761,40 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #print axioms QuantumInfo.ancRead_mul_kronecker
 
 
+-- SteaneFaultyRecovery (BACKLOG #232, 2026-10-29): monotonicity of DeviatesBy / IsRecovery in the
+-- correctable set, Pauli conjugation, sequential Kraus families, gateOf adjoint, readout completeness,
+-- ancilla preparation as an isometry.
+/-- info: 'QuantumInfo.DeviatesBy.mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.DeviatesBy.mono
+
+/-- info: 'QuantumInfo.IsRecovery.anti' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsRecovery.anti
+
+/-- info: 'QuantumInfo.pauliMat_mul_conjTranspose_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.pauliMat_mul_conjTranspose_self
+
+/-- info: 'QuantumInfo.pauliMat_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.pauliMat_conj
+
+/-- info: 'QuantumInfo.sum_mul_conjTranspose_mul_of_tp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_mul_conjTranspose_mul_of_tp
+
+/-- info: 'QuantumInfo.Controlled.gateOf_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.gateOf_conjTranspose
+
+/-- info: 'QuantumInfo.sum_ancRead_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_ancRead_conjTranspose_mul
+
+/-- info: 'QuantumInfo.ancPrep_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancPrep_conjTranspose_mul
+
+
 end CSD.Tests.AxiomAudit

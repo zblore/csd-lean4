@@ -66,7 +66,8 @@ modelled.
 ⚠️ **Not yet in the machine.** The single-fault output is a mixture of errors on one qubit; turning it
 into #96's `DeviatesBy` for a correctable set that the recovery corrects and the gadgets propagate is
 BACKLOG #232, and counting the recovery's locations in the machine — overlapping extended rectangles —
-is #233.
+is #233. ▸ The first is done: `SteaneFaultyRecovery.lean` (BACKLOG ~~#232~~, `deviatesBy_faultyMethod`,
+`steane_exRec_faultyMethod`), for any unitary fault on the pair of qubits at `q`.
 
 ⚠️ **One round per basis**, as in ~~#228~~: no repetition of the syndrome measurement.
 

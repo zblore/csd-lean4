@@ -375,6 +375,7 @@ public import CsdLean4.Empirical.QM.QEC.SteaneMachine
 public import CsdLean4.Empirical.QM.QEC.SteaneMachineConcat
 public import CsdLean4.Empirical.QM.QEC.SteaneCircuitRecovery
 public import CsdLean4.Empirical.QM.QEC.SteaneMethod
+public import CsdLean4.Empirical.QM.QEC.SteaneFaultyRecovery
 public import CsdLean4.Empirical.QM.QEC.SteaneEncoder
 public import CsdLean4.Empirical.QM.QEC.SteaneConcat
 public import CsdLean4.Mathlib.Probability.CircuitThreshold
