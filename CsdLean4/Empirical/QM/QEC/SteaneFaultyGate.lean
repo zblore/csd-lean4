@@ -70,7 +70,9 @@ a faulty-gadget theorem across *two* blocks, a different statement from (a)'s; t
 
 ⚠️ The Hadamard's logical action is proved in the **Heisenberg** picture (where `X̄` and `Z̄` go) and
 through the projector, which is what fault tolerance needs. That `H^{⊗ 7}|0̄⟩ = (|0̄⟩ + |1̄⟩)/√2` in
-the Schrödinger picture — the MacWilliams/coset computation — is not proved here.
+the Schrödinger picture — the MacWilliams/coset computation — is not proved here. ▸ Up to a
+scalar it is proved without the coset sum in `SteaneMachineConcat.lean`
+(`exists_hadTransversal_mul_steaneEnc`, BACKLOG ~~#227~~), from the Heisenberg facts above.
 
 References: D. Aharonov, M. Ben-Or, SIAM J. Comput. 38 (2008); P. Aliferis, D. Gottesman,
 J. Preskill, Quantum Inf. Comput. 6 (2006); A. Steane, PRL 77 (1996);

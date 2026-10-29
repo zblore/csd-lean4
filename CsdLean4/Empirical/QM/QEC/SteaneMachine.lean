@@ -50,7 +50,8 @@ code". This module plugs in the Steane code and a gadget set, and discharges the
 ⚠️ **Level one.** The pattern is `ConcatPat 7 1`: the seven locations of one transversal gadget.
 The level reduction's recursion (`IsCorrectedAtLevel`) is generic and applies above level `0`, but
 gadgets acting on the **concatenated** code `cProj k` — transversal gates on `7^k` qubits with
-`PatErr`-shaped faults — are not built here; that is its own BACKLOG row.
+`PatErr`-shaped faults — are not built here; they are `SteaneMachineConcat.lean` (BACKLOG ~~#227~~,
+`steane_machine_level`, `steane_machine_threshold`).
 
 ⚠️ **The recovery in `steane_machine` is ideal.** Faults sit at the gadgets' locations. A faulty
 recovery enters only through `steane_exRec`, as #96's `DeviatesBy` hypothesis on the recovery piece:
