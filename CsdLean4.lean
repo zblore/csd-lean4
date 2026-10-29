@@ -537,6 +537,7 @@ public import CsdLean4.SigmaLayer.LocalisedTypicality
 public import CsdLean4.SigmaLayer.SectorPostulateNoGo
 public import CsdLean4.SigmaLayer.Equivariance
 public import CsdLean4.SigmaLayer.MovingFibreWitness
+public import CsdLean4.SigmaLayer.ActivatedRegime
 public import CsdLean4.SigmaLayer.FibreCoarseArrow
 public import CsdLean4.SigmaLayer.FibreFiniteHorizon
 public import CsdLean4.SigmaLayer.FibreHorizonDivergence

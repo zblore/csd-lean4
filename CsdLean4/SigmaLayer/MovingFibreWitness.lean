@@ -54,13 +54,16 @@ for it was working from a wrong premise.** That theorem is about *matrices*
 (`H H₀ : Matrix (Fin N) (Fin N) ℂ`, `‖H − H₀‖ ≤ ε`), whereas `EpsProjectable` is about *ontic
 Hamiltonians on `KSigma N`*. The two are the same idea at different levels and the corpus has no
 bridge between them; supplying one is a separate piece of work, not a corollary. Nothing here
-claims the shadowing bound for this witness.
+claims the shadowing bound for this witness. ▸ That bridge now exists for coupled energies on the
+arena (`coupledFlow_shadowing`, `SigmaLayer/ActivatedRegime.lean`, BACKLOG ~~#208~~), and is
+instantiated at the activated write, not at this witness.
 
 ⚠️ This populates the *predicate*, not the dynamics: no flow is constructed whose generator this is,
 and `catStroke` is offered as an available hyperbolic fibre map rather than wired into a
 `ConstraintDynamics`. What is closed is the "no `ε > 0` instance" gap
-(`specs/reconstruction-status.md` §7); what is not closed is A5's approximate regime as a dynamical
-statement.
+(`specs/reconstruction-status.md` §7). A5's approximate regime as a dynamical statement is
+~~#208~~ (`SigmaLayer/ActivatedRegime.lean`): the activated write's energy is `EpsProjectable` at a
+sharp `ε` in `g`, generates `activeFlow`, and its sector predictions are shadowed at `‖O‖·ε·T`.
 
 ## References
 

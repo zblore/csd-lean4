@@ -24,10 +24,10 @@ now only the exact case `H = h∘π` was formalised (`kSectorDataFlow_projectabl
 unformalised. This module supplies it, in two halves:
 
 * **the ontic predicate** — `EpsProjectable`, in **oscillation form**: the ontic Hamiltonian varies
-  by at most `ε` along each fibre. ⚠️ The *derivative* form `sup‖d(δH)|_V‖ ≤ ε` is the scoped
-  manifold statement (`reconstruction-status.md` §2a — no exterior-calculus API); the oscillation
-  form is its formalisable core, related in the usual way (a derivative bound integrates to an
-  oscillation bound on a compact fibre). Stated so the substitution is visible, not silent.
+  by at most `ε` along each fibre. ▸ The *derivative* form `sup‖d(δH)|_V‖ ≤ ε` is stated on the
+  arena in `SigmaLayer/ActivatedRegime.lean` (`EpsProjectableDeriv`, BACKLOG ~~#208~~), where a
+  vertical derivative bound `ε` is proved to integrate to fibre oscillation `ε/2`
+  (`epsProjectable_of_deriv`); the oscillation form here is the weaker predicate both feed.
 * **the dynamical content** — the **shadowing theorem**: a Hamiltonian `ε`-close in L2 operator
   norm to a sector-projectable one generates Schrödinger dynamics that the sector dynamics tracks
   to within `ε·T` over the window `[−T, T]` (`quantum_effective_shadowing`, from the Duhamel
@@ -49,12 +49,12 @@ unformalised. This module supplies it, in two halves:
 
 ## ⚠️ Scope
 
-* The **derivative-form** predicate is not formalised (manifold API; §2a) — the oscillation form
-  stands in, and the docstrings say so wherever it appears.
-* The shadowing theorems live on the **Hilbert side** (matrix generators), where the corpus's
-  dynamics genuinely runs; the ontic predicate lives on `Σ`. The bridge between them — an ontic
-  Hamiltonian *generating* a flow whose projection is `e^{−itH}` — is A2's open row, not A5's, and
-  is not claimed here.
+* The **derivative-form** predicate is not stated here; it lives on the arena's smooth structure,
+  in `SigmaLayer/ActivatedRegime.lean` (~~#208~~), which also proves it implies this one.
+* The shadowing theorems here live on the **Hilbert side** (matrix generators). The bridge to the
+  arena — for coupled energies `−2⟨A⟩ − 2⟨B⟩ f(θ₂)`, whose Hamiltonian flows project to `e^{−itH}` —
+  is `coupledFlow_shadowing` / `coupledFlow_expectation_shadowing` (~~#208~~); a general ontic
+  Hamiltonian generating such a flow is A2's row, not A5's, and is not claimed here.
 * `H₀`'s witness flow being projectable is the existing exact-case result
   (`productDynamicsBridge`); this module adds the *approximate* layer on top of it, not a new
   dynamics.
@@ -80,8 +80,8 @@ variable {N : ℕ}
 
 /-- **`(ε)`-projectability of an ontic Hamiltonian** (oscillation form): `Hs` varies by at most `ε`
 along each fibre of `π = Prod.fst`. The fibre directions are Paper C's vertical subspace `V`; the
-scoped derivative form `sup‖d(δH)|_V‖ ≤ ε` refines this on a smooth structure the corpus does not
-carry (`reconstruction-status.md` §2a). -/
+derivative form `sup‖d(δH)|_V‖ ≤ ε` is `EpsProjectableDeriv` on the arena
+(`SigmaLayer/ActivatedRegime.lean`), which implies this predicate at `ε/2`. -/
 def EpsProjectable (Hs : LF4.KSigma N → ℝ) (ε : ℝ) : Prop :=
   ∀ (p : LF4.CPN N) (θ θ' : LF4.KTorus), |Hs (p, θ) - Hs (p, θ')| ≤ ε
 

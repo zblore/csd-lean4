@@ -979,6 +979,9 @@ isSymplectic"
 #   (2026-10-28, #222: toEuclideanLin_fieldHamiltonian is an operator identity about the already-declared
 #   CV matrix fieldHamiltonian (CV/FieldModes.lean) — it equals dΓ(1) + K/2 on the truncated Fock space,
 #   operator sense; no symplectic or Hamiltonian-flow claim.)
+#   (2026-10-29, #208: abs_schrodingerHamiltonian_le, abs_schrodingerHamiltonian_hamB_le and
+#   exists_abs_schrodingerHamiltonian_hamB_eq are norm bounds on the already-declared energy function
+#   −2⟨H⟩, operator sense; no symplectic or Hamiltonian-flow claim.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 toEuclideanLin_fieldHamiltonian
 kahlerFstSector_projectiveLaw
@@ -1150,7 +1153,10 @@ hamiltonianFlow_echoFlow
 map_hamiltonianFlow_echoFlow
 echo_hamiltonian
 schrodingerHamiltonian_hamOccA
-continuous_schrodingerHamiltonian_twoCoupledOrbit"
+continuous_schrodingerHamiltonian_twoCoupledOrbit
+abs_schrodingerHamiltonian_le
+abs_schrodingerHamiltonian_hamB_le
+exists_abs_schrodingerHamiltonian_hamB_eq"
 
 OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 

@@ -10298,4 +10298,138 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.mixed_symmetry
 
 
+-- ActivatedRegime (BACKLOG #208, 2026-10-29): A5's approximate regime as a dynamical statement.
+-- The derivative form sup|d(H)|_V| <= eps on the arena and its integration to the oscillation form
+-- (eps/2); the coupled energy's fibre oscillation and vertical derivative; the (eps, T) shadowing
+-- bound carried from matrices to the arena (rays and expectations); the activated write's sharp
+-- eps = (2|g|/|hbar|) osc f, not projectable at 0, its flow = activeFlow.
+/-- info: 'CSD.SigmaLayer.verticalDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.verticalDeriv
+
+/-- info: 'CSD.SigmaLayer.EpsProjectableDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.EpsProjectableDeriv
+
+/-- info: 'CSD.SigmaLayer.exists_coe_add_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.exists_coe_add_eq
+
+/-- info: 'CSD.SigmaLayer.epsProjectable_of_deriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.epsProjectable_of_deriv
+
+/-- info: 'CSD.SigmaLayer.coupledEnergy_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.coupledEnergy_sub
+
+/-- info: 'CSD.SigmaLayer.epsProjectable_coupledEnergy_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.epsProjectable_coupledEnergy_iff
+
+/-- info: 'CSD.SigmaLayer.norm_toEuclideanLin_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.norm_toEuclideanLin_le
+
+/-- info: 'CSD.SigmaLayer.abs_expectation_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.abs_expectation_le
+
+/-- info: 'CSD.SigmaLayer.abs_expectation_mk_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.abs_expectation_mk_sub_le
+
+/-- info: 'CSD.SigmaLayer.exists_unit_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.exists_unit_mk
+
+/-- info: 'CSD.SigmaLayer.abs_schrodingerHamiltonian_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.abs_schrodingerHamiltonian_le
+
+/-- info: 'CSD.SigmaLayer.epsProjectable_coupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.epsProjectable_coupledEnergy
+
+/-- info: 'CSD.SigmaLayer.exists_hasMFDerivAt_coupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.exists_hasMFDerivAt_coupledEnergy
+
+/-- info: 'CSD.SigmaLayer.mdifferentiable_coupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.mdifferentiable_coupledEnergy
+
+/-- info: 'CSD.SigmaLayer.verticalDeriv_coupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.verticalDeriv_coupledEnergy
+
+/-- info: 'CSD.SigmaLayer.norm_verticalDeriv_coupledEnergy_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.norm_verticalDeriv_coupledEnergy_le
+
+/-- info: 'CSD.SigmaLayer.epsProjectableDeriv_coupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.epsProjectableDeriv_coupledEnergy
+
+/-- info: 'CSD.SigmaLayer.schrodingerUnitary_smul_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.schrodingerUnitary_smul_mk
+
+/-- info: 'CSD.SigmaLayer.norm_coupledMatrix_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.norm_coupledMatrix_sub_le
+
+/-- info: 'CSD.SigmaLayer.coupledFlow_shadowing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.coupledFlow_shadowing
+
+/-- info: 'CSD.SigmaLayer.coupledFlow_expectation_shadowing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.coupledFlow_expectation_shadowing
+
+/-- info: 'CSD.SigmaLayer.abs_schrodingerHamiltonian_hamB_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.abs_schrodingerHamiltonian_hamB_le
+
+/-- info: 'CSD.SigmaLayer.exists_abs_schrodingerHamiltonian_hamB_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.exists_abs_schrodingerHamiltonian_hamB_eq
+
+/-- info: 'CSD.SigmaLayer.epsProjectable_activatedEnergy_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.epsProjectable_activatedEnergy_iff
+
+/-- info: 'CSD.SigmaLayer.epsProjectable_activatedEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.epsProjectable_activatedEnergy
+
+/-- info: 'CSD.SigmaLayer.activatedEnergy_not_projectable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.activatedEnergy_not_projectable
+
+/-- info: 'CSD.SigmaLayer.epsProjectableDeriv_activatedEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.epsProjectableDeriv_activatedEnergy
+
+/-- info: 'CSD.SigmaLayer.epsProjectable_activatedEnergy_of_deriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.epsProjectable_activatedEnergy_of_deriv
+
+/-- info: 'CSD.SigmaLayer.norm_hamB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.norm_hamB
+
+/-- info: 'CSD.SigmaLayer.activated_shadowing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.activated_shadowing
+
+/-- info: 'CSD.SigmaLayer.activated_expectation_shadowing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.activated_expectation_shadowing
+
+/-- info: 'CSD.SigmaLayer.activated_regime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.SigmaLayer.activated_regime
+
+
 end CSD.Tests.AxiomAudit
