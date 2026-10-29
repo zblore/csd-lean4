@@ -371,6 +371,7 @@ public import CsdLean4.Empirical.QM.QEC.SteaneSyndromeCircuit
 public import CsdLean4.Empirical.QM.QEC.SteaneArbitrary
 public import CsdLean4.Empirical.QM.QEC.SteaneFaultyGate
 public import CsdLean4.Empirical.QM.QEC.SteaneCircuit
+public import CsdLean4.Empirical.QM.QEC.SteaneMachine
 public import CsdLean4.Empirical.QM.QEC.SteaneEncoder
 public import CsdLean4.Empirical.QM.QEC.SteaneConcat
 public import CsdLean4.Mathlib.Probability.CircuitThreshold

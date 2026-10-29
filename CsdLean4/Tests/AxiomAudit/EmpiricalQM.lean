@@ -2042,4 +2042,133 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms CSD.Empirical.QM.BerryKato.berry_bound_le_kato_form
 
 
+-- SteaneMachine (BACKLOG #207, 2026-10-29): the gadget-set premise discharged for the Steane code —
+-- logical X/Z commute with the code projector; the transversal H/X/Z gadget set; weight-one correctable
+-- set, IsRecovery / PropagatesD / DeviatesBy at the Steane code; every good step an IsCorrectedStep;
+-- the extended rectangle instance; the level-one machine and its threshold bound 1 - 21 N p^2.
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pauliMat_mul_steaneProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pauliMat_mul_steaneProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.bdot_allOnes_rowComb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.bdot_allOnes_rowComb
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.logicalX_mul_steaneProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.logicalX_mul_steaneProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.logicalZ_mul_steaneProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.logicalZ_mul_steaneProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.isCodeState_conj_of_mul_steaneProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.isCodeState_conj_of_mul_steaneProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.gate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.gate
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.ideal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.ideal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.isCodeState_ideal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.isCodeState_ideal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.faulty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.faulty
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.step' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.step
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.locPat' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.locPat
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.isBad_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.isBad_one_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.card_le_one_of_isBad_eq_false' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.card_le_one_of_isBad_eq_false
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_single_of_card_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_single_of_card_le_one
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.weightOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.weightOne
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.id_mem_weightOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.id_mem_weightOne
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.isRecovery_weightOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.isRecovery_weightOne
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.gate_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.gate_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.gate_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.gate_mem_unitaryGroup
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.blockKron_mul_gateOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.blockKron_mul_gateOf
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.propagatesD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.propagatesD
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.deviatesBy_faulty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.deviatesBy_faulty
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_gadgetSet_corrected' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_gadgetSet_corrected
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_gadgetSet_correctedAtLevel_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_gadgetSet_correctedAtLevel_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_exRec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_exRec
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.machineCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.machineCircuit
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.machineIdeal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.machineIdeal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.idealRun_machineCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.idealRun_machineCircuit
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_machine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_machine
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.codeCapacityBound_twentyOne_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.codeCapacityBound_twentyOne_one
+
+
 end CSD.Tests.AxiomAudit

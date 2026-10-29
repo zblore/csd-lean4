@@ -65,7 +65,9 @@ probability".
 pattern with no bad gadget yields the ideal output. For a concrete code that is what #96's rectangles
 plus the level recursion above give — but **no concrete gadget set is plugged in here**, so nothing
 below is a threshold theorem *for the Steane code*. The row's statement is proved with its
-deterministic premise named, not assumed away.
+deterministic premise named, not assumed away. ▸ The premise is discharged for the Steane code's
+transversal `H̄`, `X̄`, `Z̄` at level one in `Empirical/QM/QEC/SteaneMachine.lean`
+(`steane_machine`, BACKLOG ~~#207~~).
 
 ⚠️ **"Bad" is a pattern predicate, not a physical fault model.** `isBad` counts two-or-more bad
 sub-blocks recursively; nothing here derives it from a circuit's fault locations, and the

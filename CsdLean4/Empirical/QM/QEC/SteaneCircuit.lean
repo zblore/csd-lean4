@@ -39,10 +39,11 @@ which is the gadget whose code preservation is proved:
 with a verified ancilla, and the extended rectangle — is BACKLOG #62(c), and until it lands this is a
 circuit-level theorem about faulty *gates*, not about a faulty *computer*.
 
-⚠️ **One gadget family.** The Hadamard is instantiated because its projector-level code
-preservation is proved. The logical `X̄`/`Z̄` need the same preservation statement for the all-ones
-Pauli, which is not proved (their *logical action* is, in #62(a)(b)); the two-block `CNOT` acts on a
-pair of blocks and would need the register view #62(f)'s honest scope already flags. Faults are one
+⚠️ **One gadget family here.** The Hadamard is instantiated because its projector-level code
+preservation was proved first. ▸ The logical `X̄`/`Z̄`'s preservation is now proved
+(`logicalX_mul_steaneProj`, `logicalZ_mul_steaneProj`) and the three gadgets form the gadget set of
+`SteaneMachine.lean` (BACKLOG ~~#207~~); the two-block `CNOT` acts on a pair of blocks and would need
+the register view #62(f)'s honest scope already flags. Faults are one
 per gadget and unitary, as in `steane_faultyHadamard_recovery`.
 
 ⚠️ **One level.** No concatenation, no level reduction, no probability: see #62(d2).

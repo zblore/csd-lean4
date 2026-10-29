@@ -76,9 +76,10 @@ closes — the level-reduction step — is **not** proved here and is #97.
 ⚠️ **Transversality is assumed.** `PropagatesD` is a hypothesis. The corpus has it concretely for the
 Steane transversal `CNOT` (`cnotT_conj_pairEnc_code`), but no instance is plugged in below.
 
-⚠️ **No instance at a concrete code.** The theorems *produce* `IsCorrectedStep` instances from the
-piecewise hypotheses; they do not exhibit one for the Steane code, which would need its recovery map
-and its weight-`≤ 1` error set in this shape.
+⚠️ **No instance at a concrete code here.** The theorems *produce* `IsCorrectedStep` instances from
+the piecewise hypotheses. ▸ The Steane instance — the weight-one set `weightOne`, `IsRecovery`,
+`PropagatesD` for the transversal `H̄`, `X̄`, `Z̄` and `DeviatesBy` for their faulty versions — is
+`Empirical/QM/QEC/SteaneMachine.lean` (`steane_exRec`, BACKLOG ~~#207~~).
 
 ⚠️ **Maps, not channels.** As in #62 (d1), the pieces are arbitrary maps on matrices with no
 positivity or trace condition imposed; nothing below uses or claims complete positivity.
