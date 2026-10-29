@@ -10432,4 +10432,386 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.SigmaLayer.activated_regime
 
 
+-- ClockEchoCoupling (BACKLOG #212, 2026-10-29): the clock's carrier detuned at A by the echo's
+-- pointer. The coupled flow as two commuting echo flows (clock's view), group law, autonomy,
+-- Liouville, energy; generic band windows and drift hands; the writes and ticks with the coupled
+-- windows; the coupled budget with the coupling's term; the clock's constants moved by bounded
+-- amounts; the decoupled limit = #202's budget.
+/-- info: 'CSD.RecordLayer.clockView' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockView
+
+/-- info: 'CSD.RecordLayer.clockUnview' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockUnview
+
+/-- info: 'CSD.RecordLayer.continuous_clockView' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_clockView
+
+/-- info: 'CSD.RecordLayer.echoStep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoStep
+
+/-- info: 'CSD.RecordLayer.clockStep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockStep
+
+/-- info: 'CSD.RecordLayer.coupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledFlow
+
+/-- info: 'CSD.RecordLayer.echoStep_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoStep_zero
+
+/-- info: 'CSD.RecordLayer.clockStep_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockStep_zero
+
+/-- info: 'CSD.RecordLayer.echoStep_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoStep_add
+
+/-- info: 'CSD.RecordLayer.clockStep_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockStep_add
+
+/-- info: 'CSD.RecordLayer.echoStep_comm_clockStep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoStep_comm_clockStep
+
+/-- info: 'CSD.RecordLayer.coupledFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledFlow_zero
+
+/-- info: 'CSD.RecordLayer.coupledFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledFlow_add
+
+/-- info: 'CSD.RecordLayer.coupledFlow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledFlow_apply
+
+/-- info: 'CSD.RecordLayer.coupledFlow_angles' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledFlow_angles
+
+/-- info: 'CSD.RecordLayer.coupledEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledEvolve
+
+/-- info: 'CSD.RecordLayer.coupledEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledEvolve_self
+
+/-- info: 'CSD.RecordLayer.coupledEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledEvolve_comp
+
+/-- info: 'CSD.RecordLayer.coupledEvolve_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledEvolve_shift
+
+/-- info: 'CSD.RecordLayer.continuous_echoStep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_echoStep
+
+/-- info: 'CSD.RecordLayer.continuous_clockStep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_clockStep
+
+/-- info: 'CSD.RecordLayer.measurable_coupledEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_coupledEvolve
+
+/-- info: 'CSD.RecordLayer.clockShuffle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockShuffle
+
+/-- info: 'CSD.RecordLayer.clockShuffle_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockShuffle_apply
+
+/-- info: 'CSD.RecordLayer.clockShuffle_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockShuffle_measurePreserving
+
+/-- info: 'CSD.RecordLayer.clockStep_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockStep_eq
+
+/-- info: 'CSD.RecordLayer.echoStep_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoStep_measurePreserving
+
+/-- info: 'CSD.RecordLayer.clockStep_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockStep_measurePreserving
+
+/-- info: 'CSD.RecordLayer.coupledEvolve_measurePreserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledEvolve_measurePreserving
+
+/-- info: 'CSD.RecordLayer.coupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledEnergy
+
+/-- info: 'CSD.RecordLayer.coupledEnergy_coupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledEnergy_coupledFlow
+
+/-- info: 'CSD.RecordLayer.bandEmitEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandEmitEnd
+
+/-- info: 'CSD.RecordLayer.bandReturnEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandReturnEnd
+
+/-- info: 'CSD.RecordLayer.bandWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandWindow
+
+/-- info: 'CSD.RecordLayer.emitEnd_eq_bandEmitEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emitEnd_eq_bandEmitEnd
+
+/-- info: 'CSD.RecordLayer.returnEnd_eq_bandReturnEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnEnd_eq_bandReturnEnd
+
+/-- info: 'CSD.RecordLayer.senderWindow_eq_bandWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.senderWindow_eq_bandWindow
+
+/-- info: 'CSD.RecordLayer.bandWindow_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandWindow_nonneg
+
+/-- info: 'CSD.RecordLayer.bandEmitEnd_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandEmitEnd_nonneg
+
+/-- info: 'CSD.RecordLayer.bandEmitEnd_add_window_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandEmitEnd_add_window_lt
+
+/-- info: 'CSD.RecordLayer.emitStart_le_bandEmitEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emitStart_le_bandEmitEnd
+
+/-- info: 'CSD.RecordLayer.returnStart_le_bandReturnEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnStart_le_bandReturnEnd
+
+/-- info: 'CSD.RecordLayer.mem_emit_of_band' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_emit_of_band
+
+/-- info: 'CSD.RecordLayer.mem_return_of_band' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_return_of_band
+
+/-- info: 'CSD.RecordLayer.senderDrift_mem_band' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.senderDrift_mem_band
+
+/-- info: 'CSD.RecordLayer.meanRate_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.meanRate_nonneg
+
+/-- info: 'CSD.RecordLayer.pointerDrift_monotone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerDrift_monotone
+
+/-- info: 'CSD.RecordLayer.rep_driftHand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rep_driftHand
+
+/-- info: 'CSD.RecordLayer.driftHand_count_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.driftHand_count_mono
+
+/-- info: 'CSD.RecordLayer.abs_driftHand_reading_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_driftHand_reading_sub_le
+
+/-- info: 'CSD.RecordLayer.driftHand_before_tick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.driftHand_before_tick
+
+/-- info: 'CSD.RecordLayer.driftHand_at_tick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.driftHand_at_tick
+
+/-- info: 'CSD.RecordLayer.coupledRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledRate
+
+/-- info: 'CSD.RecordLayer.coupledMean' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledMean
+
+/-- info: 'CSD.RecordLayer.coupledBand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledBand
+
+/-- info: 'CSD.RecordLayer.clockRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockRate
+
+/-- info: 'CSD.RecordLayer.clockFreq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockFreq
+
+/-- info: 'CSD.RecordLayer.coupledPrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledPrep
+
+/-- info: 'CSD.RecordLayer.coupledFlow_pointerA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledFlow_pointerA
+
+/-- info: 'CSD.RecordLayer.coupledFlow_pointerB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledFlow_pointerB
+
+/-- info: 'CSD.RecordLayer.coupledFlow_hand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledFlow_hand
+
+/-- info: 'CSD.RecordLayer.coupledDrift_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledDrift_bounds
+
+/-- info: 'CSD.RecordLayer.coupledMean_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledMean_pos
+
+/-- info: 'CSD.RecordLayer.coupledMean_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledMean_le
+
+/-- info: 'CSD.RecordLayer.coupledBand_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledBand_nonneg
+
+/-- info: 'CSD.RecordLayer.coupled_before_emit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupled_before_emit
+
+/-- info: 'CSD.RecordLayer.coupled_emitted' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupled_emitted
+
+/-- info: 'CSD.RecordLayer.coupled_before_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupled_before_return
+
+/-- info: 'CSD.RecordLayer.coupled_returned' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupled_returned
+
+/-- info: 'CSD.RecordLayer.coupledRate_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledRate_pos
+
+/-- info: 'CSD.RecordLayer.coupledEmission' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledEmission
+
+/-- info: 'CSD.RecordLayer.coupledReturn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledReturn
+
+/-- info: 'CSD.RecordLayer.coupledReception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledReception
+
+/-- info: 'CSD.RecordLayer.coupledTick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledTick
+
+/-- info: 'CSD.RecordLayer.coupledReadingAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledReadingAt
+
+/-- info: 'CSD.RecordLayer.coupledResolution' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledResolution
+
+/-- info: 'CSD.RecordLayer.coupledHorizon' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledHorizon
+
+/-- info: 'CSD.RecordLayer.coupledReadingAt_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledReadingAt_mono
+
+/-- info: 'CSD.RecordLayer.coupledReadings' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledReadings
+
+/-- info: 'CSD.RecordLayer.couplingTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.couplingTerm
+
+/-- info: 'CSD.RecordLayer.coupledBudget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledBudget
+
+/-- info: 'CSD.RecordLayer.couplingTerm_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.couplingTerm_le
+
+/-- info: 'CSD.RecordLayer.abs_coupledReadings_emit_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_coupledReadings_emit_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_coupledReadings_ret_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_coupledReadings_ret_sub_le
+
+/-- info: 'CSD.RecordLayer.senderRate_eq_zero_of_g' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.senderRate_eq_zero_of_g
+
+/-- info: 'CSD.RecordLayer.detuningAt_eq_zero_of_g' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detuningAt_eq_zero_of_g
+
+/-- info: 'CSD.RecordLayer.clockRate_of_g_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockRate_of_g_eq_zero
+
+/-- info: 'CSD.RecordLayer.clockFreq_of_g_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockFreq_of_g_eq_zero
+
+/-- info: 'CSD.RecordLayer.coupledBudget_of_g_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledBudget_of_g_eq_zero
+
+/-- info: 'CSD.RecordLayer.abs_rabiFreq_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_rabiFreq_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_loss_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_loss_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_clockFreq_sub_handFreq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_clockFreq_sub_handFreq_le
+
+/-- info: 'CSD.RecordLayer.abs_clockRate_sub_handRate_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_clockRate_sub_handRate_le
+
+/-- info: 'CSD.RecordLayer.coupled_clock_and_echo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupled_clock_and_echo
+
+
 end CSD.Tests.AxiomAudit

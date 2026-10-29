@@ -670,6 +670,7 @@ public import CsdLean4.RecordLayer.EchoArena
 public import CsdLean4.RecordLayer.EchoRadar
 public import CsdLean4.RecordLayer.HandClock
 public import CsdLean4.RecordLayer.ClockAndEcho
+public import CsdLean4.RecordLayer.ClockEchoCoupling
 public import CsdLean4.RecordLayer.EchoHamiltonian
 public import CsdLean4.RecordLayer.DetectorClass
 public import CsdLean4.RecordLayer.SwapLuders

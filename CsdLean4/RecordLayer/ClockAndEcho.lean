@@ -51,7 +51,8 @@ own carrier.
 
 * The echo and the clock are two carrier–pointer systems on a product arena; they do not interact.
   The clock is colocated with `A` by fiat of the model — a shared site label — not by a coupling.
-  Coupling the two (the clock's carrier detuned by the echo's) is a further row.
+  Coupling the two (the clock's carrier detuned by the echo's pointer) is ~~#212~~
+  (`RecordLayer/ClockEchoCoupling.lean`, the dynamics; its generation is BACKLOG #225).
 * Hamiltonian generation of the combined arena, `(ℂℙ³ × T² × T²) × (ℂℙ³ × T²)`, is the second half
   of #202 (`RecordLayer/EchoHamiltonian.lean` for the echo factor; the clock factor is #195).
 * The input bounds are the two retention windows and the clock's horizon (one turn of the hand).
