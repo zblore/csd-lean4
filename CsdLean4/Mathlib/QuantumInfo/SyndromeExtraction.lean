@@ -66,10 +66,14 @@ faults is #96's extended rectangle.
 
 ⚠️ **`X`-type only, as a relabelling.** The construction works because the ladder permutes
 computational-basis labels. A `Z`-type check is the same statement in the conjugate basis and is
-**not** derived here; combining both bases for a CSS code is further work.
+**not** derived here; combining both bases for a CSS code is further work. ▸ For the Steane code
+both bases are combined in `Empirical/QM/QEC/SteaneCircuitRecovery.lean` (BACKLOG ~~#228~~), the
+`Z`-checks as this gadget conjugated by the transversal Hadamard.
 
 ⚠️ **No decoder.** The syndrome is produced, not interpreted: nothing here maps a syndrome to a
-correction, and the recovery maps of the corpus are not re-derived or connected.
+correction, and the recovery maps of the corpus are not re-derived or connected. ▸ The readout
+map `ancRead` (prepare, extract, read = `synProj`) and a decoder are in
+`Empirical/QM/QEC/SteaneCircuitRecovery.lean` (BACKLOG ~~#228~~).
 
 ## References
 

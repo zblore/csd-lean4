@@ -49,11 +49,13 @@ no cat state, no verification, and so no bound on a single ancilla fault spreadi
 is #95's subject.
 
 ⚠️ **`X`-checks only.** The Steane code is CSS and its `Z`-checks are the same statement in the
-conjugate basis; that half is **not** done here, and nothing combines the two bases.
+conjugate basis; that half is **not** done here. ▸ The two bases are combined, with a decoder
+and the correction, in `SteaneCircuitRecovery.lean` (`circuitRecovery`, BACKLOG ~~#228~~).
 
 ⚠️ **The syndrome is produced, not decoded.** Nothing here maps a syndrome to a correction: the
 recovery maps of `SteaneRecovery.lean` and `SteaneArbitrary.lean` are neither re-derived nor connected
-to this circuit.
+to this circuit here; `SteaneCircuitRecovery.lean` (BACKLOG ~~#228~~) builds a recovery from it that
+has the same correction property (`circuitRecovery_cross`).
 
 ⚠️ **The register is the error-pattern basis.** The data index is `Fin 7 → Fin 2`, i.e. the
 computational basis of seven qubits; this is the same labelling `Steane.lean` uses, and no claim is

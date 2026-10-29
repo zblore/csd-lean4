@@ -14736,4 +14736,14 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #print axioms DifferentialForm.IsHamiltonianVectorField.prodForm_snd
 
 
+-- SteaneCircuitRecovery (BACKLOG #228, 2026-10-29): prepare, extract, read = the syndrome projector.
+/-- info: 'QuantumInfo.ancRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancRead
+
+/-- info: 'QuantumInfo.ancRead_mul_extractMat_mul_ancInit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancRead_mul_extractMat_mul_ancInit
+
+
 end CSD.Tests.AxiomAudit

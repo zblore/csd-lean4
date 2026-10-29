@@ -56,7 +56,9 @@ gadgets acting on the **concatenated** code `cProj k` — transversal gates on `
 ⚠️ **The recovery in `steane_machine` is ideal.** Faults sit at the gadgets' locations. A faulty
 recovery enters only through `steane_exRec`, as #96's `DeviatesBy` hypothesis on the recovery piece:
 the recovery is not built as a circuit (both check bases, a decoder, a verified ancilla) whose own
-fault locations are counted in the pattern. Those are their own BACKLOG rows.
+fault locations are counted in the pattern. Those are their own BACKLOG rows. ▸ The recovery
+**as a circuit** (both check bases, a decoder, fault-free) is ~~#228~~, `SteaneCircuitRecovery.lean`,
+with the machine run on it (`steane_machine_circuit`); its fault locations are #229.
 
 ⚠️ **One block, three gates.** `H̄`, `X̄`, `Z̄` act on a single block; this is not a universal gate
 set. The two-block `CNOT̄` (`steane_faultyCNOT_recovery`) lives on a different register and is not
@@ -183,7 +185,7 @@ def faulty (G : Gadget) (U : Fin 7 → Matrix (Fin 2) (Fin 2) ℂ) (b : Fin 7 �
     * (blockKron (fun q => if b q then U q * G.gate else G.gate))ᴴ
 
 /-- **The implemented step**: the gadget under its fault pattern, then the recovery channel. -/
-def step (R : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) (Option SingleErr)) (G : Gadget)
+def step {κ : Type*} [Fintype κ] (R : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) κ) (G : Gadget)
     (U : Fin 7 → Matrix (Fin 2) (Fin 2) ℂ) (b : Fin 7 → Bool)
     (ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ) : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
   R.apply (G.faulty U b ρ)
@@ -252,7 +254,7 @@ theorem id_mem_weightOne : id ∈ weightOne :=
 
 /-- ★ **The Steane recovery is a recovery for the weight-one errors**, in the sense of #96's
 `IsRecovery`. -/
-theorem isRecovery_weightOne {R : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) (Option SingleErr)}
+theorem isRecovery_weightOne {κ : Type*} [Fintype κ] {R : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) κ}
     (hR : ∀ ρ, ρ = steaneProj * ρ * steaneProj → ∀ (q : Fin 7) (M : Matrix (Fin 2) (Fin 2) ℂ),
       M ∈ Matrix.unitaryGroup (Fin 2) ℂ → R.apply (gateOf q M * ρ * (gateOf q M)ᴴ) = ρ) :
     IsRecovery steaneProj R.apply weightOne := by
@@ -403,7 +405,7 @@ theorem steane_exRec :
 
 /-- **The machine's circuit**: gadget `j` is `gs j`, its fault unitaries are `U j`, and its fault
 pattern is `ω j`; each gadget is run and then recovered. -/
-def machineCircuit (R : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) (Option SingleErr)) {N : ℕ}
+def machineCircuit {κ : Type*} [Fintype κ] (R : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) κ) {N : ℕ}
     (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ) (ω : CircuitPat N 7 1) :
     Circuit (Fin 7 → Fin 2) :=
   List.ofFn fun j => ((gs j).ideal, (gs j).step R (U j) (locPat (ω j)))
@@ -413,7 +415,7 @@ def machineIdeal {N : ℕ} (gs : Fin N → Gadget) (ρ : Matrix (Fin 7 → Fin 2
     Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
   runMaps (List.ofFn fun j => (gs j).ideal) ρ
 
-theorem idealRun_machineCircuit (R : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) (Option SingleErr))
+theorem idealRun_machineCircuit {κ : Type*} [Fintype κ] (R : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) κ)
     {N : ℕ} (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
     (ω : CircuitPat N 7 1) (ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ) :
     idealRun (machineCircuit R gs U ω) ρ = machineIdeal gs ρ := by
