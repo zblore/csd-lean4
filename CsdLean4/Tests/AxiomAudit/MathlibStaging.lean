@@ -14725,4 +14725,15 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #print axioms Matrix.det_conjTranspose_mul_self_eq_sum
 
 
+-- CrossCoupledFlow (BACKLOG #225, 2026-10-29): a Hamiltonian vector field on either factor lifts
+-- to the product form pi1^* alpha + pi2^* beta.
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.prodForm_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.prodForm_fst
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.prodForm_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.prodForm_snd
+
+
 end CSD.Tests.AxiomAudit

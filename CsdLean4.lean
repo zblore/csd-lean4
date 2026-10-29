@@ -672,6 +672,7 @@ public import CsdLean4.RecordLayer.HandClock
 public import CsdLean4.RecordLayer.ClockAndEcho
 public import CsdLean4.RecordLayer.ClockEchoCoupling
 public import CsdLean4.RecordLayer.EchoHamiltonian
+public import CsdLean4.RecordLayer.ClockEchoHamiltonian
 public import CsdLean4.RecordLayer.DetectorClass
 public import CsdLean4.RecordLayer.SwapLuders
 public import CsdLean4.RecordLayer.TwoTimeLuders
@@ -820,6 +821,7 @@ public import CsdLean4.LF4.ProjectiveManifold
 public import CsdLean4.LF4.ArenaSymplectic
 public import CsdLean4.LF4.ArenaCoupledFlow
 public import CsdLean4.LF4.EchoCoupledFlow
+public import CsdLean4.LF4.CrossCoupledFlow
 public import CsdLean4.LF4.ArenaStrokeFlux
 public import CsdLean4.LF4.ArenaVolume
 public import CsdLean4.Empirical.QM.Darwinism

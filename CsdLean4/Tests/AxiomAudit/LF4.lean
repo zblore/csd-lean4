@@ -1811,4 +1811,87 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #print axioms CSD.LF4.twoCoupledMatrix_isHermitian
 
 
+/-! #225 (generation, generic): a ray coupled to a torus in another factor on `(ℂℙᴺ × T² × T²) × (ℂℙᴹ × T²)` — the product symplectic form `echoForm ⊕ arenaForm`, the cross view, the cross energy, the cross term's field, `ι_X ω = d𝓗` for the sum, and the flow in closed form by uniqueness of integral curves (`LF4/CrossCoupledFlow.lean`). -/
+
+/-- info: 'CSD.LF4.CrossModel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.CrossModel
+
+/-- info: 'CSD.LF4.CrossSigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.CrossSigma
+
+/-- info: 'CSD.LF4.crossSigma_isManifold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.crossSigma_isManifold
+
+/-- info: 'CSD.LF4.crossForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.crossForm
+
+/-- info: 'CSD.LF4.crossForm_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.crossForm_apply
+
+/-- info: 'CSD.LF4.crossForm_isSymplectic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.crossForm_isSymplectic
+
+/-- info: 'CSD.LF4.crossView' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.crossView
+
+/-- info: 'CSD.LF4.contMDiff_crossView' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_crossView
+
+/-- info: 'CSD.LF4.crossEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.crossEnergy
+
+/-- info: 'CSD.LF4.crossCouplingTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.crossCouplingTerm
+
+/-- info: 'CSD.LF4.crossEnergy_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.crossEnergy_eq
+
+/-- info: 'CSD.LF4.contMDiff_crossEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_crossEnergy
+
+/-- info: 'CSD.LF4.contMDiff_crossCouplingTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_crossCouplingTerm
+
+/-- info: 'CSD.LF4.crossField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.crossField
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_crossCouplingTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_crossCouplingTerm
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_cross' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_cross
+
+/-- info: 'CSD.LF4.crossField_eq_hamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.crossField_eq_hamiltonianVectorField
+
+/-- info: 'CSD.LF4.crossCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.crossCurve
+
+/-- info: 'CSD.LF4.isMIntegralCurve_crossCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isMIntegralCurve_crossCurve
+
+/-- info: 'CSD.LF4.hamiltonianFlow_crossEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_crossEnergy
+
+
 end CSD.Tests.AxiomAudit

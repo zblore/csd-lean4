@@ -54,12 +54,11 @@ reading the clock disturbs the echo's register.
 
 ## Honest scope
 
-* **Generation is not here.** #202 generated the echo factor and #195 the clock factor; the coupled
-  device's flow as a Hamiltonian flow on `(ℂℙ³ × T² × T²) × (ℂℙ³ × T²)` needs the cross term's vector
-  field, which couples a ray in one factor to a torus angle in the other — a placement the
-  `EchoCoupledFlow.lean` machinery (ray and tori in one product) does not cover. It is rowed as its
-  own BACKLOG item. This file builds the dynamics that Hamiltonian prescribes and proves it is a
-  two-time, measure-preserving, energy-conserving flow with the stated equations of motion.
+* **Generation is in `RecordLayer/ClockEchoHamiltonian.lean`** (BACKLOG ~~#225~~): read on
+  `(ℂℙ³ × T² × T²) × (ℂℙ³ × T²)`, `coupledFlow` is the Hamiltonian flow of `−(2/ħ)` times
+  `coupledEnergy` (`hamiltonianFlow_coupledFlow`), the cross term's field computed in
+  `LF4/CrossCoupledFlow.lean`. This file builds the dynamics and proves it is a two-time,
+  measure-preserving, energy-conserving flow with the stated equations of motion.
 * The tick windows are #201's formulas evaluated at the coupled constants; the coupling moves those
   constants by the stated bounds, and the clock remains self-calibrated (`τ_tick = 2/(Kκ_c)`), so
   its resolution in the budget is the coupled one.

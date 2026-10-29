@@ -982,6 +982,12 @@ isSymplectic"
 #   (2026-10-29, #208: abs_schrodingerHamiltonian_le, abs_schrodingerHamiltonian_hamB_le and
 #   exists_abs_schrodingerHamiltonian_hamB_eq are norm bounds on the already-declared energy function
 #   −2⟨H⟩, operator sense; no symplectic or Hamiltonian-flow claim.)
+#   (2026-10-29, #225: the clock coupled to the echo on (ℂℙᴺ × T² × T²) × (ℂℙᴹ × T²). crossForm_isSymplectic
+#   is IsSymplectic.prodForm run once more — EARNED; isHamiltonianVectorField_crossCouplingTerm / _cross
+#   (with the namespaced lifts IsHamiltonianVectorField.prodForm_fst / _snd) prove ι_X ω = d𝓗 for the stated fields on crossForm —
+#   EARNED; crossField_eq_hamiltonianVectorField, hamiltonianFlow_crossEnergy, hamiltonianFlow_coupledFlow,
+#   map_hamiltonianFlow_coupledFlow and coupled_hamiltonian identify explicit flows with
+#   IsSymplectic.hamiltonianFlow by uniqueness of integral curves — EARNED.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 toEuclideanLin_fieldHamiltonian
 kahlerFstSector_projectiveLaw
@@ -1156,7 +1162,15 @@ schrodingerHamiltonian_hamOccA
 continuous_schrodingerHamiltonian_twoCoupledOrbit
 abs_schrodingerHamiltonian_le
 abs_schrodingerHamiltonian_hamB_le
-exists_abs_schrodingerHamiltonian_hamB_eq"
+exists_abs_schrodingerHamiltonian_hamB_eq
+crossForm_isSymplectic
+isHamiltonianVectorField_crossCouplingTerm
+isHamiltonianVectorField_cross
+crossField_eq_hamiltonianVectorField
+hamiltonianFlow_crossEnergy
+hamiltonianFlow_coupledFlow
+map_hamiltonianFlow_coupledFlow
+coupled_hamiltonian"
 
 OPEN_SCOPE_PHRASES='remains open|recorded extension|not claimed here'
 

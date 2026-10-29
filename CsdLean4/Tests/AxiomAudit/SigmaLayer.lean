@@ -10814,4 +10814,44 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.coupled_clock_and_echo
 
 
+-- ClockEchoHamiltonian (BACKLOG #225, 2026-10-29): the coupled clock and echo (#212) read on
+-- (CP^3 x T^2 x T^2) x (CP^3 x T^2) is the Hamiltonian flow of -(2/hbar) times its joint energy, cross
+-- term included; Liouville inherited.
+/-- info: 'CSD.RecordLayer.coupledToSigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledToSigma
+
+/-- info: 'CSD.RecordLayer.crossView_coupledToSigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.crossView_coupledToSigma
+
+/-- info: 'CSD.RecordLayer.coupledEnergySigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledEnergySigma
+
+/-- info: 'CSD.RecordLayer.contMDiff_coupledEnergySigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contMDiff_coupledEnergySigma
+
+/-- info: 'CSD.RecordLayer.coupledEnergySigma_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledEnergySigma_eq
+
+/-- info: 'CSD.RecordLayer.hamiltonianFlow_coupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianFlow_coupledFlow
+
+/-- info: 'CSD.RecordLayer.measurable_coupledToSigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_coupledToSigma
+
+/-- info: 'CSD.RecordLayer.map_hamiltonianFlow_coupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_hamiltonianFlow_coupledFlow
+
+/-- info: 'CSD.RecordLayer.coupled_hamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupled_hamiltonian
+
+
 end CSD.Tests.AxiomAudit
