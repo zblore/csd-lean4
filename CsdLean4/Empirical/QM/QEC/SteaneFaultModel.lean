@@ -47,6 +47,16 @@ is the conjugated fault after it.
   **with faults on both sides of the `CNOT`**; ★★ `methodRecovery_channelMethod` — the next recovery
   removes it.
 
+## Faults under a pattern
+
+* `sum_prod_ofFn_conjTranspose_mul` — **any number of channels in sequence is a channel**;
+  `prod_ofFn_eq_one`;
+* `locFam`, `locFam_tp`, `onPair_locFam`, `onPair_locFam_false` — **one location under a pattern as a
+  Kraus family**: the fault's channel if it is faulty, the identity if not;
+* `roundKraus`, `roundKraus_tp`, `roundKraus_none`, `roundKraus_none_of_ne`,
+  `onPair_roundKraus_single` — **seven locations under a pattern**, branch by branch;
+  `faultReadOp_zero`, `bitFaultOp_zero`, `phaseFaultOp_zero`.
+
 `SteaneOverlapMachine.lean` (~~#233~~) runs the machine with this fault model at every extraction
 location.
 
@@ -76,6 +86,33 @@ open QuantumInfo.CliffordT Controlled QuantumInfo.Controlled
 open scoped Kronecker
 
 noncomputable section
+
+namespace QuantumInfo
+
+/-- **Any number of channels in sequence**: the ordered products of one Kraus operator from each of
+`m` trace-preserving families form a trace-preserving family. -/
+theorem sum_prod_ofFn_conjTranspose_mul {n ι : Type*} [Fintype n] [DecidableEq n] [Fintype ι] :
+    ∀ {m : ℕ} (X : Fin m → ι → Matrix n n ℂ), (∀ i, ∑ a, (X i a)ᴴ * X i a = 1) →
+      ∑ s : Fin m → ι, ((List.ofFn fun i => X i (s i)).prod)ᴴ * (List.ofFn fun i => X i (s i)).prod
+        = 1
+  | 0, X, _ => by simp
+  | m + 1, X, hX => by
+    have ih := sum_prod_ofFn_conjTranspose_mul (fun i => X i.succ) fun i => hX i.succ
+    rw [← (Fin.consEquiv fun _ : Fin (m + 1) => ι).sum_comp, Fintype.sum_prod_type]
+    simp only [Fin.consEquiv_apply, List.ofFn_succ, Fin.cons_zero, Fin.cons_succ, List.prod_cons]
+    rw [Finset.sum_comm]
+    calc ∑ t : Fin m → ι, ∑ a, (X 0 a * (List.ofFn fun i => X i.succ (t i)).prod)ᴴ
+          * (X 0 a * (List.ofFn fun i => X i.succ (t i)).prod)
+        = ∑ t : Fin m → ι, ((List.ofFn fun i => X i.succ (t i)).prod)ᴴ * (∑ a, (X 0 a)ᴴ * X 0 a)
+          * (List.ofFn fun i => X i.succ (t i)).prod := by
+          refine Finset.sum_congr rfl fun t _ => ?_
+          rw [Finset.mul_sum, Finset.sum_mul]
+          refine Finset.sum_congr rfl fun a _ => ?_
+          rw [conjTranspose_mul]
+          simp only [Matrix.mul_assoc]
+      _ = 1 := by simp only [hX 0, Matrix.mul_one]; exact ih
+
+end QuantumInfo
 
 namespace CSD
 namespace Empirical
@@ -378,6 +415,84 @@ theorem methodRecovery_channelMethod {q : Fin 7} {κ : Type} [Fintype κ] {K : �
     methodRecovery.apply ((channelMethod K hK r).apply ρ) = ρ := by
   obtain ⟨E, hE, h⟩ := deviatesBy_channelMethod hK hOn r ρ hρ
   rw [h, id, isRecovery_methodRecovery_cssMix E hE ρ hρ]
+
+/-! ### Faults under a pattern -/
+
+/-- An ordered product whose factors are all `1` is `1`. -/
+theorem prod_ofFn_eq_one {M : Type*} [Monoid M] {m : ℕ} (f : Fin m → M) (h : ∀ j, f j = 1) :
+    (List.ofFn f).prod = 1 := by
+  rw [show f = fun _ => 1 from funext h, List.ofFn_const, List.prod_replicate, one_pow]
+
+/-- **One extraction location under the pattern, as a Kraus family on `Option κ`**: the fault's
+operators `K k` at `some k` if the location is faulty, the identity at `none` if it is not. -/
+def locFam {α κ : Type*} [MonoidWithZero α] (K : κ → α) (b : Bool) : Option κ → α
+  | none => if b then 0 else 1
+  | some k => if b then K k else 0
+
+theorem locFam_tp {n κ : Type*} [Fintype n] [DecidableEq n] [Fintype κ] {K : κ → Matrix n n ℂ}
+    (hK : ∑ k, (K k)ᴴ * K k = 1)
+    (b : Bool) : ∑ o, (locFam K b o)ᴴ * locFam K b o = 1 := by
+  rw [Fintype.sum_option]
+  cases b <;> simp [locFam, hK]
+
+theorem onPair_locFam {q : Fin 7} {κ : Type*} {K : κ → PairOp} (hOn : ∀ k, OnPair q (K k))
+    (b : Bool) : ∀ o, OnPair q (locFam K b o)
+  | none => by cases b <;> simp [locFam, OnPair.zero, onPair_one]
+  | some k => by cases b <;> simp [locFam, OnPair.zero, hOn k]
+
+/-- A location without a fault is on every pair. -/
+theorem onPair_locFam_false (q : Fin 7) {κ : Type*} (K : κ → PairOp) :
+    ∀ o, OnPair q (locFam K false o)
+  | none => by simp [locFam, onPair_one]
+  | some _ => by simp [locFam, OnPair.zero]
+
+/-- **The faults of one round under a pattern**, in branch `s`: the ordered product over the seven
+pairs of their locations' Kraus operators. -/
+def roundKraus {α κ : Type*} [MonoidWithZero α] (K : Fin 7 → κ → α) (b : Fin 7 → Bool)
+    (s : Fin 7 → Option κ) : α :=
+  (List.ofFn fun q => locFam (K q) (b q) (s q)).prod
+
+theorem roundKraus_tp {n κ : Type*} [Fintype n] [DecidableEq n] [Fintype κ]
+    {K : Fin 7 → κ → Matrix n n ℂ}
+    (hK : ∀ q, ∑ k, (K q k)ᴴ * K q k = 1) (b : Fin 7 → Bool) :
+    ∑ s, (roundKraus K b s)ᴴ * roundKraus K b s = 1 :=
+  sum_prod_ofFn_conjTranspose_mul (fun q => locFam (K q) (b q)) fun q => locFam_tp (hK q) (b q)
+
+/-- With no faulty pair the round is the identity in the branch `none` everywhere… -/
+theorem roundKraus_none {α κ : Type*} [MonoidWithZero α] (K : Fin 7 → κ → α) :
+    roundKraus K (fun _ => false) (fun _ => none) = 1 := by
+  unfold roundKraus
+  exact prod_ofFn_eq_one _ fun q => by simp [locFam]
+
+/-- …and zero in every other branch. -/
+theorem roundKraus_none_of_ne {α κ : Type*} [MonoidWithZero α] (K : Fin 7 → κ → α)
+    {s : Fin 7 → Option κ}
+    (h : s ≠ fun _ => none) : roundKraus K (fun _ => false) s = 0 := by
+  obtain ⟨q, hq⟩ := Function.ne_iff.1 h
+  obtain ⟨k, hk⟩ := Option.ne_none_iff_exists'.1 hq
+  have h0 : locFam (K q) ((fun _ => false) q) (s q) = 0 := by simp [locFam, hk]
+  unfold roundKraus
+  exact List.prod_eq_zero (List.mem_ofFn.2 ⟨q, h0⟩)
+
+/-- With one faulty pair `q`, every branch of the round is an operator on the pair `q`. -/
+theorem onPair_roundKraus_single {κ : Type*} {K : Fin 7 → κ → PairOp} {q : Fin 7}
+    (hOn : ∀ k, OnPair q (K q k)) (s : Fin 7 → Option κ) :
+    OnPair q (roundKraus K (fun q' => decide (q' = q)) s) := by
+  refine OnPair.list_prod _ fun F hF => ?_
+  obtain ⟨q', rfl⟩ := List.mem_ofFn.1 hF
+  by_cases h : q' = q
+  · subst h
+    simpa only [decide_true] using onPair_locFam hOn true (s q')
+  · simpa only [decide_eq_false h] using onPair_locFam_false q (K q') (s q')
+
+theorem faultReadOp_zero (m : Fin 7 → Fin 2) : faultReadOp 0 m = 0 := by
+  simp [faultReadOp]
+
+theorem bitFaultOp_zero (m : Fin 7 → Fin 2) : bitFaultOp 0 m = 0 := by
+  rw [bitFaultOp, faultReadOp_zero, Matrix.mul_zero]
+
+theorem phaseFaultOp_zero (m : Fin 7 → Fin 2) : phaseFaultOp 0 m = 0 := by
+  rw [phaseFaultOp, faultReadOp_zero, Matrix.mul_zero, Matrix.zero_mul, Matrix.mul_zero]
 
 end Steane
 end QEC
