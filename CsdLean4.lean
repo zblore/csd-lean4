@@ -377,6 +377,7 @@ public import CsdLean4.Empirical.QM.QEC.SteaneMachineConcat
 public import CsdLean4.Empirical.QM.QEC.SteaneCircuitRecovery
 public import CsdLean4.Empirical.QM.QEC.SteaneMethod
 public import CsdLean4.Empirical.QM.QEC.SteaneFaultyRecovery
+public import CsdLean4.Empirical.QM.QEC.SteaneFaultModel
 public import CsdLean4.Empirical.QM.QEC.SteaneOverlapMachine
 public import CsdLean4.Empirical.QM.QEC.SteaneEncoder
 public import CsdLean4.Empirical.QM.QEC.SteaneConcat

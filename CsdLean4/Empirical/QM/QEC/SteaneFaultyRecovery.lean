@@ -63,7 +63,8 @@ trailing run hands on a CSS deviation that the next recovery corrects.
 ⚠️ **Ancilla preparation is ideal.** The faults are at extraction locations: a unitary on data qubit
 `q` and ancilla qubit `q` after the transversal `CNOT` of either round, which covers a faulty `CNOT` and
 a fault on the ancilla qubit before it is read. A fault before the `CNOT` at `q` is the conjugated fault
-after it; that rewriting is not proved here. Faults in preparing `|+̄⟩` are #234.
+after it; that rewriting is not proved here. Faults in preparing `|+̄⟩` are #234. ▸ The rewriting
+is `readAround_eq` in `SteaneFaultModel.lean` (BACKLOG ~~#235~~).
 
 ⚠️ **One rectangle, not the machine.** The trailing-fault case hands on a deviation; chaining
 overlapping rectangles, with the recovery's own locations counted in the fault pattern, is #233.
@@ -72,7 +73,8 @@ with every recovery's extraction locations counted is `SteaneOverlapMachine.lean
 (`steane_machine_overlap`, BACKLOG ~~#233~~).
 
 ⚠️ **Unitary faults.** `faultyMethod` needs `Fᴴ F = 1`, so the faulty method is a channel; a fault that
-is itself a channel (several Kraus operators) is a mixture of such runs and is not restated.
+is itself a channel (several Kraus operators) is a mixture of such runs and is not restated. ▸ It
+is restated in `SteaneFaultModel.lean` (`channelMethod`, `deviatesBy_channelMethod`, BACKLOG ~~#235~~).
 
 ⚠️ **One round per basis**, as in ~~#228~~ and ~~#229~~; no repeated syndrome measurement.
 

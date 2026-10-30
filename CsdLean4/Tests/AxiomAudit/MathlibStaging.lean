@@ -14864,4 +14864,10 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #print axioms QuantumInfo.one_sub_le_measure_output_eq_windows
 
 
+-- SteaneOverlapMachine (BACKLOG #235, 2026-10-30): ordered products of trace-preserving Kraus families.
+/-- info: 'QuantumInfo.sum_prod_ofFn_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_prod_ofFn_conjTranspose_mul
+
+
 end CSD.Tests.AxiomAudit

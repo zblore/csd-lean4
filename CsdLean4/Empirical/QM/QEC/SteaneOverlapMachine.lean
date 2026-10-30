@@ -5,13 +5,14 @@ Authors: Zayn Blore
 -/
 module
 
-public import CsdLean4.Empirical.QM.QEC.SteaneFaultyRecovery
+public import CsdLean4.Empirical.QM.QEC.SteaneFaultModel
 public import CsdLean4.Mathlib.QuantumInfo.OverlappingRectangles
 
 /-!
 # The Steane machine with the recovery's locations counted
 
-**Category:** 3-Local (Empirical, QM twin). BACKLOG #233 (split from ~~#229~~).
+**Category:** 3-Local (Empirical, QM twin). BACKLOG #233 (split from ~~#229~~); fault model
+completed by #235.
 
 `SteaneMachine.lean` (~~#207~~) proved the level-one threshold statement with faults at the gadgets
 and an ideal recovery. `SteaneFaultyRecovery.lean` (~~#232~~) made one faulty recovery a theorem
@@ -21,14 +22,19 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
 
 ## Steane's method under any fault pattern
 
-* `card_methodRound`, `PairOp`; `prod_ofFn_eq_of_ne`, `prod_ofFn_eq_one` — ordered products with one or no factor
-  different from `1`;
-* `roundFault` — **the faults of one round under a pattern**: the product, over the faulty pairs, of
-  their unitaries; `roundFault_mem`, `roundFault_none`, `roundFault_single`;
-* `underKraus`, ★★ `methodUnder` — **Steane's method with a unitary at every faulty extraction
-  location of a pattern**, a channel for every pattern; ★ `methodUnder_none` — with no fault it is
-  `methodRecovery`; ★ `methodUnder_single` — with one fault it is ~~#232~~'s `faultyMethod`;
-  `onPair_one` — the fault model is inhabited.
+* `sum_prod_ofFn_conjTranspose_mul` — **any number of channels in sequence is a channel**: ordered
+  products of Kraus operators, one from each trace-preserving family; `prod_ofFn_eq_one`;
+* `card_methodRound`; `locFam`, `locFam_tp`, `onPair_locFam`, `onPair_locFam_false` — **one
+  extraction location under the pattern as a Kraus family**: the fault's channel if it is faulty, the
+  identity if not;
+* `roundKraus`, `roundKraus_tp`, `roundKraus_none`, `roundKraus_none_of_ne`,
+  `onPair_roundKraus_single` — **the faults of one round under a pattern**, branch by branch;
+  `faultReadOp_zero`, `bitFaultOp_zero`, `phaseFaultOp_zero`;
+* `UnderIdx`, `underKraus`, `underKraus_tp`, ★★ `methodUnder` — **Steane's method with a channel at
+  every faulty extraction location of a pattern** (`SteaneFaultModel.lean`, BACKLOG ~~#235~~: any
+  trace-preserving family on the pair, before or after the `CNOT`), a channel for every pattern;
+  ★ `methodUnder_none` — with no fault it is `methodRecovery`; ★★ `atQubit_underKraus_single`,
+  ★★★ `deviatesBy_methodUnder_single` — with one fault it is a CSS deviation.
 
 ## The machine
 
@@ -42,12 +48,12 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
   `recoveryFlag`, `gadgetFlag` — which pieces are faulty; ★ `ovIdeal_ovGadget` — its ideal run is
   #207's `machineIdeal`;
 * ★★★ `isFaultChain_overlap` — **the machine is an `IsFaultChain` for the CSS class**: a faulty
-  recovery deviates by `cssMix` (`deviatesBy_faultyMethod`), a fault-free one corrects it
+  recovery deviates by `cssMix` (`deviatesBy_methodUnder_single`), a fault-free one corrects it
   (`isRecovery_methodRecovery_cssMix`), a gadget with one fault deviates by it, the ideal gadgets carry
   it; ★★ `exRecGood_of_windowsGood` — a good window pattern makes every extended rectangle good;
 * ★★★ `steane_machine_overlap` — **the level-one machine with the recovery's locations counted**:
-  for every circuit of `N` gadgets, unitary faults at every gadget location and every extraction
-  location, and an encoded input, a pattern with at most one fault in each overlapping extended
+  for every circuit of `N` gadgets, unitary faults at every gadget location, a channel fault on the
+  pair at every extraction location, and an encoded input, a pattern with at most one fault in each overlapping extended
   rectangle leaves the state a CSS deviation of the ideal one, exactly the ideal one if the last
   recovery is fault-free, and the ideal one after a final ideal decoding; under independent faults of
   rate at most `p` at the `21 N` locations, the decoded output is ideal with probability at least
@@ -59,9 +65,10 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
 decoding (#236) and the classical decoding inside each recovery. The extraction locations are the only
 recovery locations counted.
 
-⚠️ **Faults after the transversal `CNOT`, unitary.** A fault at extraction location `(r, q)` is a
-unitary on data qubit `q` and ancilla qubit `q` after the `CNOT` of round `r`; faults before it and
-faults that are channels are #235.
+⚠️ **A fault at an extraction location stays on its pair.** The fault at `(r, q)` is any
+trace-preserving Kraus family on data qubit `q` and ancilla qubit `q`, after the `CNOT` of round `r`;
+a fault before the `CNOT`, or on both sides, is one after it (`readAround_eq`, `aroundFam`,
+BACKLOG ~~#235~~). Faults at the gadgets are still unitary on one qubit (#207's model).
 
 ⚠️ **One round per basis**, as in ~~#228~~; no repeated syndrome measurement.
 
@@ -73,10 +80,10 @@ faults that are channels are #235.
 claimed sharp.
 
 References: P. Aliferis, D. Gottesman, J. Preskill, Quantum Inf. Comput. 6 (2006) 97; A. Steane,
-PRL 78 (1997) 2252; `specs/BACKLOG.md` #233, #232, #229, #207, #96, #97, #234, #235, #236;
+PRL 78 (1997) 2252; `specs/BACKLOG.md` #233, #235, #232, #229, #207, #96, #97, #234, #236;
 `Mathlib/QuantumInfo/OverlappingRectangles.lean`, `Mathlib/QuantumInfo/ExtendedRectangle.lean`,
-`Empirical/QM/QEC/SteaneFaultyRecovery.lean`, `Empirical/QM/QEC/SteaneMethod.lean`,
-`Empirical/QM/QEC/SteaneMachine.lean`; `docs/FROM-POSTULATES-TO-QUANTUM-COMPUTERS.md` link 12;
+`Empirical/QM/QEC/SteaneFaultModel.lean`, `Empirical/QM/QEC/SteaneFaultyRecovery.lean`,
+`Empirical/QM/QEC/SteaneMethod.lean`, `Empirical/QM/QEC/SteaneMachine.lean`; `docs/FROM-POSTULATES-TO-QUANTUM-COMPUTERS.md` link 12;
 `specs/future-work.md`.
 -/
 
@@ -88,32 +95,43 @@ open scoped Kronecker ENNReal
 
 noncomputable section
 
+namespace QuantumInfo
+
+/-- **Any number of channels in sequence**: the ordered products of one Kraus operator from each of
+`m` trace-preserving families form a trace-preserving family. -/
+theorem sum_prod_ofFn_conjTranspose_mul {n ι : Type*} [Fintype n] [DecidableEq n] [Fintype ι] :
+    ∀ {m : ℕ} (X : Fin m → ι → Matrix n n ℂ), (∀ i, ∑ a, (X i a)ᴴ * X i a = 1) →
+      ∑ s : Fin m → ι, ((List.ofFn fun i => X i (s i)).prod)ᴴ * (List.ofFn fun i => X i (s i)).prod
+        = 1
+  | 0, X, _ => by simp
+  | m + 1, X, hX => by
+    have ih := sum_prod_ofFn_conjTranspose_mul (fun i => X i.succ) fun i => hX i.succ
+    rw [← (Fin.consEquiv fun _ : Fin (m + 1) => ι).sum_comp, Fintype.sum_prod_type]
+    simp only [Fin.consEquiv_apply, List.ofFn_succ, Fin.cons_zero, Fin.cons_succ, List.prod_cons]
+    rw [Finset.sum_comm]
+    calc ∑ t : Fin m → ι, ∑ a, (X 0 a * (List.ofFn fun i => X i.succ (t i)).prod)ᴴ
+          * (X 0 a * (List.ofFn fun i => X i.succ (t i)).prod)
+        = ∑ t : Fin m → ι, ((List.ofFn fun i => X i.succ (t i)).prod)ᴴ * (∑ a, (X 0 a)ᴴ * X 0 a)
+          * (List.ofFn fun i => X i.succ (t i)).prod := by
+          refine Finset.sum_congr rfl fun t _ => ?_
+          rw [Finset.mul_sum, Finset.sum_mul]
+          refine Finset.sum_congr rfl fun a _ => ?_
+          rw [conjTranspose_mul]
+          simp only [Matrix.mul_assoc]
+      _ = 1 := by simp only [hX 0, Matrix.mul_one]; exact ih
+
+end QuantumInfo
+
 namespace CSD
 namespace Empirical
 namespace QM
 namespace QEC
 namespace Steane
 
-/-! ### Ordered products with at most one factor different from `1` -/
-
 /-- An ordered product whose factors are all `1` is `1`. -/
 theorem prod_ofFn_eq_one {M : Type*} [Monoid M] {m : ℕ} (f : Fin m → M) (h : ∀ j, f j = 1) :
     (List.ofFn f).prod = 1 := by
   rw [show f = fun _ => 1 from funext h, List.ofFn_const, List.prod_replicate, one_pow]
-
-/-- An ordered product whose factors are all `1` except at `i` is the factor at `i`. -/
-theorem prod_ofFn_eq_of_ne {M : Type*} [Monoid M] :
-    ∀ {m : ℕ} (f : Fin m → M) (i : Fin m), (∀ j, j ≠ i → f j = 1) → (List.ofFn f).prod = f i
-  | 0, _, i, _ => i.elim0
-  | m + 1, f, i, h => by
-    rw [List.ofFn_succ, List.prod_cons]
-    cases i using Fin.cases with
-    | zero =>
-      rw [prod_ofFn_eq_one _ fun j => h _ (Fin.succ_ne_zero j), mul_one]
-    | succ i =>
-      rw [h 0 (Fin.succ_ne_zero i).symm, one_mul]
-      exact prod_ofFn_eq_of_ne (fun j => f j.succ) i fun j hj =>
-        h _ fun h' => hj (Fin.succ_injective _ h')
 
 /-! ### Steane's method under any fault pattern -/
 
@@ -122,95 +140,177 @@ instance : Fintype MethodRound :=
 
 theorem card_methodRound : Fintype.card MethodRound = 2 := rfl
 
-/-- Operators on the data block and the ancilla block together. -/
-abbrev PairOp : Type :=
-  Matrix ((Fin 7 → Fin 2) × (Fin 7 → Fin 2)) ((Fin 7 → Fin 2) × (Fin 7 → Fin 2)) ℂ
+variable {κ : Type}
 
-/-- **The faults of one round under a pattern**: the ordered product, over the pairs `q` the pattern
-marks faulty, of their faults `F q`. Stated in any monoid; at the pair register it is a `PairOp`. -/
-def roundFault {α : Type*} [Monoid α] (F : Fin 7 → α) (b : Fin 7 → Bool) : α :=
-  (List.ofFn fun q => if b q then F q else 1).prod
+/-- **One extraction location under the pattern, as a Kraus family on `Option κ`**: the fault's
+operators `K k` at `some k` if the location is faulty, the identity at `none` if it is not. -/
+def locFam {α κ : Type*} [MonoidWithZero α] (K : κ → α) (b : Bool) : Option κ → α
+  | none => if b then 0 else 1
+  | some k => if b then K k else 0
 
-/-- A round's fault stays in any submonoid holding the pair faults — the unitary group in particular. -/
-theorem roundFault_mem {α : Type*} [Monoid α] {S : Submonoid α} {F : Fin 7 → α} (hF : ∀ q, F q ∈ S)
-    (b : Fin 7 → Bool) : roundFault F b ∈ S := by
-  refine list_prod_mem fun x hx => ?_
-  obtain ⟨q, rfl⟩ := List.mem_ofFn.1 hx
-  split_ifs
-  exacts [hF q, one_mem _]
+theorem locFam_tp {n κ : Type*} [Fintype n] [DecidableEq n] [Fintype κ] {K : κ → Matrix n n ℂ}
+    (hK : ∑ k, (K k)ᴴ * K k = 1)
+    (b : Bool) : ∑ o, (locFam K b o)ᴴ * locFam K b o = 1 := by
+  rw [Fintype.sum_option]
+  cases b <;> simp [locFam, hK]
 
-theorem roundFault_conjTranspose_mul {F : Fin 7 → PairOp}
-    (hF : ∀ q, F q ∈ Matrix.unitaryGroup ((Fin 7 → Fin 2) × (Fin 7 → Fin 2)) ℂ) (b : Fin 7 → Bool) :
-    (roundFault F b)ᴴ * roundFault F b = 1 := by
-  have h := Matrix.mem_unitaryGroup_iff'.1 (roundFault_mem hF b)
-  rwa [Matrix.star_eq_conjTranspose] at h
+theorem onPair_locFam {q : Fin 7} {κ : Type*} {K : κ → PairOp} (hOn : ∀ k, OnPair q (K k))
+    (b : Bool) : ∀ o, OnPair q (locFam K b o)
+  | none => by cases b <;> simp [locFam, OnPair.zero, onPair_one]
+  | some k => by cases b <;> simp [locFam, OnPair.zero, hOn k]
 
-/-- With no faulty pair the round is fault-free. -/
-theorem roundFault_none {α : Type*} [Monoid α] (F : Fin 7 → α) :
-    roundFault F (fun _ => false) = 1 :=
-  prod_ofFn_eq_one _ fun _ => by simp only [Bool.false_eq_true, ↓reduceIte]
+/-- A location without a fault is on every pair. -/
+theorem onPair_locFam_false (q : Fin 7) {κ : Type*} (K : κ → PairOp) :
+    ∀ o, OnPair q (locFam K false o)
+  | none => by simp [locFam, onPair_one]
+  | some _ => by simp [locFam, OnPair.zero]
 
-/-- With one faulty pair `q` the round's fault is `F q`. -/
-theorem roundFault_single {α : Type*} [Monoid α] (F : Fin 7 → α) (q : Fin 7) :
-    roundFault F (fun q' => decide (q' = q)) = F q := by
-  rw [roundFault, prod_ofFn_eq_of_ne _ q fun j hj => by simp [hj]]
-  simp
+/-- **The faults of one round under a pattern**, in branch `s`: the ordered product over the seven
+pairs of their locations' Kraus operators. -/
+def roundKraus {α κ : Type*} [MonoidWithZero α] (K : Fin 7 → κ → α) (b : Fin 7 → Bool)
+    (s : Fin 7 → Option κ) : α :=
+  (List.ofFn fun q => locFam (K q) (b q) (s q)).prod
 
-/-- A branch of Steane's method with the faults `F r q` at the faulty extraction locations of `b`. -/
-def underKraus (F : MethodRound → Fin 7 → PairOp) (b : MethodRound × Fin 7 → Bool) (mm : OutPair) :
-    Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
-  phaseFaultOp (roundFault (F .phase) fun q => b (.phase, q)) mm.2
-    * bitFaultOp (roundFault (F .bit) fun q => b (.bit, q)) mm.1
+theorem roundKraus_tp {n κ : Type*} [Fintype n] [DecidableEq n] [Fintype κ]
+    {K : Fin 7 → κ → Matrix n n ℂ}
+    (hK : ∀ q, ∑ k, (K q k)ᴴ * K q k = 1) (b : Fin 7 → Bool) :
+    ∑ s, (roundKraus K b s)ᴴ * roundKraus K b s = 1 :=
+  sum_prod_ofFn_conjTranspose_mul (fun q => locFam (K q) (b q)) fun q => locFam_tp (hK q) (b q)
 
-/-- ★★ **Steane's method under a fault pattern**: a unitary `F r q` on data qubit `q` and ancilla
-qubit `q` after the transversal `CNOT` of round `r`, at every location the pattern marks faulty. A
-channel for every pattern. -/
-def methodUnder (F : MethodRound → Fin 7 → PairOp)
-    (hF : ∀ r q, F r q ∈ Matrix.unitaryGroup ((Fin 7 → Fin 2) × (Fin 7 → Fin 2)) ℂ)
-    (b : MethodRound × Fin 7 → Bool) : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) OutPair where
+/-- With no faulty pair the round is the identity in the branch `none` everywhere… -/
+theorem roundKraus_none {α κ : Type*} [MonoidWithZero α] (K : Fin 7 → κ → α) :
+    roundKraus K (fun _ => false) (fun _ => none) = 1 := by
+  unfold roundKraus
+  exact prod_ofFn_eq_one _ fun q => by simp [locFam]
+
+/-- …and zero in every other branch. -/
+theorem roundKraus_none_of_ne {α κ : Type*} [MonoidWithZero α] (K : Fin 7 → κ → α)
+    {s : Fin 7 → Option κ}
+    (h : s ≠ fun _ => none) : roundKraus K (fun _ => false) s = 0 := by
+  obtain ⟨q, hq⟩ := Function.ne_iff.1 h
+  obtain ⟨k, hk⟩ := Option.ne_none_iff_exists'.1 hq
+  have h0 : locFam (K q) ((fun _ => false) q) (s q) = 0 := by simp [locFam, hk]
+  unfold roundKraus
+  exact List.prod_eq_zero (List.mem_ofFn.2 ⟨q, h0⟩)
+
+/-- With one faulty pair `q`, every branch of the round is an operator on the pair `q`. -/
+theorem onPair_roundKraus_single {κ : Type*} {K : Fin 7 → κ → PairOp} {q : Fin 7}
+    (hOn : ∀ k, OnPair q (K q k)) (s : Fin 7 → Option κ) :
+    OnPair q (roundKraus K (fun q' => decide (q' = q)) s) := by
+  refine OnPair.list_prod _ fun F hF => ?_
+  obtain ⟨q', rfl⟩ := List.mem_ofFn.1 hF
+  by_cases h : q' = q
+  · subst h
+    simpa only [decide_true] using onPair_locFam hOn true (s q')
+  · simpa only [decide_eq_false h] using onPair_locFam_false q (K q') (s q')
+
+theorem faultReadOp_zero (m : Fin 7 → Fin 2) : faultReadOp 0 m = 0 := by
+  simp [faultReadOp]
+
+theorem bitFaultOp_zero (m : Fin 7 → Fin 2) : bitFaultOp 0 m = 0 := by
+  rw [bitFaultOp, faultReadOp_zero, Matrix.mul_zero]
+
+theorem phaseFaultOp_zero (m : Fin 7 → Fin 2) : phaseFaultOp 0 m = 0 := by
+  rw [phaseFaultOp, faultReadOp_zero, Matrix.mul_zero, Matrix.zero_mul, Matrix.mul_zero]
+
+/-- The branches of Steane's method under a pattern: each round's fault branch and read word. -/
+abbrev UnderIdx (κ : Type) : Type :=
+  ((Fin 7 → Option κ) × (Fin 7 → Fin 2)) × ((Fin 7 → Option κ) × (Fin 7 → Fin 2))
+
+/-- A branch of Steane's method with the fault channels `F r q` at the faulty extraction locations of
+`b`. -/
+def underKraus (F : MethodRound → Fin 7 → κ → PairOp) (b : MethodRound × Fin 7 → Bool)
+    (p : UnderIdx κ) : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
+  phaseFaultOp (roundKraus (F .phase) (fun q => b (.phase, q)) p.2.1) p.2.2
+    * bitFaultOp (roundKraus (F .bit) (fun q => b (.bit, q)) p.1.1) p.1.2
+
+theorem underKraus_tp [Fintype κ] {F : MethodRound → Fin 7 → κ → PairOp}
+    (hF : ∀ r q, ∑ k, (F r q k)ᴴ * F r q k = 1) (b : MethodRound × Fin 7 → Bool) :
+    ∑ p, (underKraus F b p)ᴴ * underKraus F b p = 1 := by
+  have h := sum_mul_conjTranspose_mul_of_tp
+    (sum_bitFaultOp_family (roundKraus_tp (hF .bit) fun q => b (.bit, q)))
+    (sum_phaseFaultOp_family (roundKraus_tp (hF .phase) fun q => b (.phase, q)))
+  simpa only [underKraus] using h
+
+/-- ★★ **Steane's method under a fault pattern**: at every extraction location `(r, q)` the pattern
+marks faulty, the channel `F r q` — any trace-preserving Kraus family on data qubit `q` and ancilla
+qubit `q` after the transversal `CNOT` of round `r`, which by `readAround_eq` and `aroundFam` covers a
+fault before the `CNOT` too. A channel for every pattern. -/
+def methodUnder [Fintype κ] (F : MethodRound → Fin 7 → κ → PairOp)
+    (hF : ∀ r q, ∑ k, (F r q k)ᴴ * F r q k = 1) (b : MethodRound × Fin 7 → Bool) :
+    Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) (UnderIdx κ) where
   kraus := underKraus F b
-  tp := sum_mul_conjTranspose_mul_of_tp
-    (sum_bitFaultOp_conjTranspose_mul (roundFault_conjTranspose_mul (hF .bit) _))
-    (sum_phaseFaultOp_conjTranspose_mul (roundFault_conjTranspose_mul (hF .phase) _))
+  tp := underKraus_tp hF b
 
 /-- ★ **With no fault, Steane's method under the pattern is `methodRecovery`.** -/
-theorem methodUnder_none (F : MethodRound → Fin 7 → PairOp)
-    (hF : ∀ r q, F r q ∈ Matrix.unitaryGroup ((Fin 7 → Fin 2) × (Fin 7 → Fin 2)) ℂ) :
+theorem methodUnder_none [Fintype κ] (F : MethodRound → Fin 7 → κ → PairOp)
+    (hF : ∀ r q, ∑ k, (F r q k)ᴴ * F r q k = 1) :
     (methodUnder F hF fun _ => false).apply = methodRecovery.apply := by
-  have hk : (methodUnder F hF fun _ => false).kraus = methodRecovery.kraus := by
-    funext mm
-    show underKraus F (fun _ => false) mm = methodKraus mm
-    rw [underKraus, roundFault_none, roundFault_none, phaseFaultOp_one, bitFaultOp_one, methodKraus]
+  set z : Fin 7 → Option κ := fun _ => none
+  have hz : ∀ mm : OutPair, underKraus F (fun _ => false) ((z, mm.1), (z, mm.2)) = methodKraus mm := by
+    intro mm
+    rw [underKraus, roundKraus_none, roundKraus_none, phaseFaultOp_one, bitFaultOp_one, methodKraus]
+  have hne : ∀ p : UnderIdx κ, ¬(p.1.1 = z ∧ p.2.1 = z) → underKraus F (fun _ => false) p = 0 := by
+    rintro ⟨⟨s₁, m₁⟩, ⟨s₂, m₂⟩⟩ h
+    rw [underKraus]
+    by_cases h₁ : s₁ = z
+    · rw [roundKraus_none_of_ne _ fun h₂ => h ⟨h₁, h₂⟩, phaseFaultOp_zero, Matrix.zero_mul]
+    · rw [roundKraus_none_of_ne _ h₁, bitFaultOp_zero, Matrix.mul_zero]
   funext ρ
-  rw [Channel.apply_def, Channel.apply_def, hk]
+  rw [Channel.apply_def, Channel.apply_def]
+  refine (Fintype.sum_of_injective (fun mm : OutPair => ((z, mm.1), (z, mm.2)))
+    (fun a b h => by simp only [Prod.mk.injEq] at h; exact Prod.ext h.1.2 h.2.2) _ _ ?_ ?_).symm
+  · rintro ⟨⟨s₁, m₁⟩, ⟨s₂, m₂⟩⟩ hp
+    have h : ¬(s₁ = z ∧ s₂ = z) := by
+      rintro ⟨rfl, rfl⟩
+      exact hp ⟨(m₁, m₂), rfl⟩
+    show underKraus F (fun _ => false) _ * ρ * (underKraus F (fun _ => false) _)ᴴ = 0
+    rw [hne _ h, Matrix.zero_mul, Matrix.zero_mul]
+  · intro mm
+    show methodKraus mm * ρ * (methodKraus mm)ᴴ
+      = underKraus F (fun _ => false) _ * ρ * (underKraus F (fun _ => false) _)ᴴ
+    rw [hz]
 
-/-- ★ **With one fault, at `(r, q)`, it is ~~#232~~'s `faultyMethod`.** -/
-theorem methodUnder_single (F : MethodRound → Fin 7 → PairOp)
-    (hF : ∀ r q, F r q ∈ Matrix.unitaryGroup ((Fin 7 → Fin 2) × (Fin 7 → Fin 2)) ℂ)
-    (r : MethodRound) (q : Fin 7) (hFu : (F r q)ᴴ * F r q = 1) :
-    (methodUnder F hF fun l => decide (l = (r, q))).apply = (faultyMethod (F r q) hFu r).apply := by
-  have hk : (methodUnder F hF fun l => decide (l = (r, q))).kraus = (faultyMethod (F r q) hFu r).kraus := by
-    funext mm
-    show underKraus F (fun l => decide (l = (r, q))) mm = faultyKraus (F r q) r mm
-    cases r with
-    | bit =>
-      have h1 : (fun q' => decide (((MethodRound.phase, q') : MethodRound × Fin 7) = (.bit, q)))
-          = fun _ => false := funext fun q' => by simp
-      have h2 : (fun q' => decide (((MethodRound.bit, q') : MethodRound × Fin 7) = (.bit, q)))
-          = fun q' => decide (q' = q) := funext fun q' => by simp
-      rw [underKraus, h1, h2, roundFault_none, roundFault_single, phaseFaultOp_one, faultyKraus]
-    | phase =>
-      have h1 : (fun q' => decide (((MethodRound.bit, q') : MethodRound × Fin 7) = (.phase, q)))
-          = fun _ => false := funext fun q' => by simp
-      have h2 : (fun q' => decide (((MethodRound.phase, q') : MethodRound × Fin 7) = (.phase, q)))
-          = fun q' => decide (q' = q) := funext fun q' => by simp
-      rw [underKraus, h1, h2, roundFault_none, roundFault_single, bitFaultOp_one, faultyKraus]
-  funext ρ
-  rw [Channel.apply_def, Channel.apply_def, hk]
+/-- ★★ **With one fault, at `(r, q)`, every branch acts on the code as an operator on qubit `q`.** -/
+theorem atQubit_underKraus_single {F : MethodRound → Fin 7 → κ → PairOp}
+    (hOn : ∀ r q k, OnPair q (F r q k)) (r : MethodRound) (q : Fin 7) (p : UnderIdx κ) :
+    AtQubit q (underKraus F (fun l => decide (l = (r, q))) p) := by
+  obtain ⟨⟨s₁, m₁⟩, ⟨s₂, m₂⟩⟩ := p
+  cases r with
+  | bit =>
+    have h1 : (fun q' => decide (((MethodRound.phase, q') : MethodRound × Fin 7) = (.bit, q)))
+        = fun _ => false := funext fun q' => by simp
+    have h2 : (fun q' => decide (((MethodRound.bit, q') : MethodRound × Fin 7) = (.bit, q)))
+        = fun q' => decide (q' = q) := funext fun q' => by simp
+    have hG := onPair_roundKraus_single (hOn .bit q) s₁
+    rw [underKraus, h1, h2]
+    by_cases h : s₂ = fun _ => none
+    · rw [h, roundKraus_none, phaseFaultOp_one]
+      exact (atQubit_bitFaultOp hG m₁).phaseRound_mul m₂
+    · rw [roundKraus_none_of_ne _ h, phaseFaultOp_zero, Matrix.zero_mul]
+      exact AtQubit.zero
+  | phase =>
+    have h1 : (fun q' => decide (((MethodRound.bit, q') : MethodRound × Fin 7) = (.phase, q)))
+        = fun _ => false := funext fun q' => by simp
+    have h2 : (fun q' => decide (((MethodRound.phase, q') : MethodRound × Fin 7) = (.phase, q)))
+        = fun q' => decide (q' = q) := funext fun q' => by simp
+    have hG := onPair_roundKraus_single (hOn .phase q) s₂
+    rw [underKraus, h1, h2]
+    by_cases h : s₁ = fun _ => none
+    · rw [h, roundKraus_none, bitFaultOp_one]
+      have h' := atQubit_faultyKraus hG .phase (m₁, m₂)
+      simp only [faultyKraus] at h'
+      exact h'
+    · rw [roundKraus_none_of_ne _ h, bitFaultOp_zero, Matrix.mul_zero]
+      exact AtQubit.zero
 
-/-- The fault model is inhabited: the identity on the pair is an operator on the pair. -/
-theorem onPair_one (q : Fin 7) : OnPair q 1 :=
-  ⟨1, fun _ => 1, fun _ => 1, by simp [gateOf_one]⟩
+/-- ★★★ **Steane's method with one faulty location, whatever its channel on the pair, is a CSS
+deviation of the identity.** -/
+theorem deviatesBy_methodUnder_single [Fintype κ] {F : MethodRound → Fin 7 → κ → PairOp}
+    (hF : ∀ r q, ∑ k, (F r q k)ᴴ * F r q k = 1) (hOn : ∀ r q k, OnPair q (F r q k))
+    (r : MethodRound) (q : Fin 7) :
+    DeviatesBy steaneProj cssMix id (methodUnder F hF fun l => decide (l = (r, q))).apply :=
+  deviatesBy_cssMix_of_atQubit _ (atQubit_underKraus_single hOn r q)
 
 /-! ### One location space -/
 
@@ -300,8 +400,8 @@ def ovFaultyGadget (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 
   fun k => if h : k < N then (gs ⟨k, h⟩).faulty (U ⟨k, h⟩) (gatePat ω ⟨k, h⟩) else id
 
 /-- The recoveries under the pattern: Steane's method with the pattern's faults. -/
-def ovRecovery (F : Fin N → MethodRound → Fin 7 → PairOp)
-    (hF : ∀ j r q, F j r q ∈ Matrix.unitaryGroup ((Fin 7 → Fin 2) × (Fin 7 → Fin 2)) ℂ)
+def ovRecovery [Fintype κ] (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
+    (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
     (ω : OvLoc N → Bool) : ℕ →
     Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ → Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
   fun k => if h : k < N then (methodUnder (F ⟨k, h⟩) (hF ⟨k, h⟩) (recPat ω ⟨k, h⟩)).apply else id
@@ -317,8 +417,8 @@ def gadgetFlag (ω : OvLoc N → Bool) : ℕ → Bool :=
 /-- **The machine under a pattern**: gadget, Steane's method, gadget, Steane's method, …, every piece
 with the pattern's faults. -/
 def overlapRun (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
-    (F : Fin N → MethodRound → Fin 7 → PairOp)
-    (hF : ∀ j r q, F j r q ∈ Matrix.unitaryGroup ((Fin 7 → Fin 2) × (Fin 7 → Fin 2)) ℂ)
+    [Fintype κ] (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
+    (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
     (ω : OvLoc N → Bool) (ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ) :
     Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
   ovRun (ovRecovery F hF ω) (ovFaultyGadget gs U ω) N ρ
@@ -341,12 +441,13 @@ theorem Gadget.faulty_none (G : Gadget) (U : Fin 7 → Matrix (Fin 2) (Fin 2) �
 
 /-- ★★★ **The Steane machine with counted recoveries is an `IsFaultChain` for the CSS class**: a
 fault-free Steane's method corrects `cssMix` (`isRecovery_methodRecovery_cssMix`), one with a fault
-deviates by it (`deviatesBy_faultyMethod`), a gadget with one faulty location deviates by it
+deviates by it (`deviatesBy_methodUnder_single`), a gadget with one faulty location deviates by it
 (`Gadget.deviatesBy_faulty`), and the ideal gadgets carry it (`Gadget.propagatesD_cssMix`). -/
 theorem isFaultChain_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
-    (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) (F : Fin N → MethodRound → Fin 7 → PairOp)
-    (hF : ∀ j r q, F j r q ∈ Matrix.unitaryGroup ((Fin 7 → Fin 2) × (Fin 7 → Fin 2)) ℂ)
-    (hOn : ∀ j r q, OnPair q (F j r q)) {ω : OvLoc N → Bool} (hω : WindowsGood ω) :
+    (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
+    (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
+    (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
+    (hOn : ∀ j r q k, OnPair q (F j r q k)) {ω : OvLoc N → Bool} (hω : WindowsGood ω) :
     IsFaultChain steaneProj cssMix N (ovGadget gs) (ovRecovery F hF ω) (ovFaultyGadget gs U ω)
       (recoveryFlag ω) (gadgetFlag ω) where
   id_mem := id_mem_cssMix
@@ -359,11 +460,8 @@ theorem isFaultChain_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Ma
   recovery_fault k hk hf := by
     rcases hω.recPat_cases ⟨k, hk⟩ with hnone | ⟨⟨r, q⟩, hone⟩
     · simp [recoveryFlag, hk, hnone] at hf
-    · have hFu : (F ⟨k, hk⟩ r q)ᴴ * F ⟨k, hk⟩ r q = 1 := by
-        have h := Matrix.mem_unitaryGroup_iff'.1 (hF ⟨k, hk⟩ r q)
-        rwa [Matrix.star_eq_conjTranspose] at h
-      simp only [ovRecovery, hk, ↓reduceDIte, hone, methodUnder_single _ _ r q hFu]
-      exact deviatesBy_faultyMethod hFu (hOn ⟨k, hk⟩ r q) r
+    · simp only [ovRecovery, hk, ↓reduceDIte, hone]
+      exact deviatesBy_methodUnder_single (hF ⟨k, hk⟩) (hOn ⟨k, hk⟩) r q
   gadget k hk hf := by
     have hnone : gatePat ω ⟨k, hk⟩ = fun _ => false := by
       simp only [gadgetFlag, hk, ↓reduceDIte, decide_eq_false_iff_not, not_exists] at hf
@@ -428,8 +526,9 @@ theorem exRecGood_of_windowsGood {ω : OvLoc N → Bool} (hω : WindowsGood ω) 
 /-! ### The machine -/
 
 /-- ★★★ **The level-one Steane machine with the recovery's locations counted.** For every circuit of
-`N` gadgets from the set, unitary faults `U` at the gadgets' locations, unitary faults `F` on the
-pairs at Steane's method's extraction locations, and every encoded input:
+`N` gadgets from the set, unitary faults `U` at the gadgets' locations, channel faults `F` — any
+trace-preserving Kraus families on the pairs, before or after the `CNOT` (`aroundFam`) — at Steane's
+method's extraction locations, and every encoded input:
 
 * **a pattern with at most one fault in each overlapping extended rectangle** leaves the state a CSS
   deviation of the ideal one — exactly the ideal one when the last recovery is fault-free — and a
@@ -439,9 +538,10 @@ pairs at Steane's method's extraction locations, and every encoded input:
   ideal with probability at least `1 − 595 N p²`, by the union bound over the `N` windows of at most
   `35` locations (`one_sub_le_measure_output_eq_windows`). -/
 theorem steane_machine_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
-    (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) (F : Fin N → MethodRound → Fin 7 → PairOp)
-    (hF : ∀ j r q, F j r q ∈ Matrix.unitaryGroup ((Fin 7 → Fin 2) × (Fin 7 → Fin 2)) ℂ)
-    (hOn : ∀ j r q, OnPair q (F j r q)) {ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ}
+    (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
+    (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
+    (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
+    (hOn : ∀ j r q k, OnPair q (F j r q k)) {ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ}
     (hρ : IsCodeState steaneProj ρ) :
     (∀ ω : OvLoc N → Bool, WindowsGood ω →
         (∃ E ∈ cssMix, overlapRun gs U F hF ω ρ = E (machineIdeal gs ρ))
