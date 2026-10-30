@@ -10854,4 +10854,83 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.coupled_hamiltonian
 
 
+-- MovingClock (BACKLOG #241, 2026-10-30): the control candidate for a moving clock - a device moving by
+-- its own momentum, carrying the hand clock and a memory, recorded by stationary detectors.
+/-- info: 'CSD.RecordLayer.siteInd_comp_intervalIntegrable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteInd_comp_intervalIntegrable
+
+/-- info: 'CSD.RecordLayer.occTime_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.occTime_add
+
+/-- info: 'CSD.RecordLayer.occTime_eq_zero_of_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.occTime_eq_zero_of_before
+
+/-- info: 'CSD.RecordLayer.occTime_eq_inv_of_crossed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.occTime_eq_inv_of_crossed
+
+/-- info: 'CSD.RecordLayer.MovingState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.MovingState
+
+/-- info: 'CSD.RecordLayer.movingFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.movingFlow_zero
+
+/-- info: 'CSD.RecordLayer.movingFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.movingFlow_add
+
+/-- info: 'CSD.RecordLayer.pos_movingFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pos_movingFlow
+
+/-- info: 'CSD.RecordLayer.mom_movingFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mom_movingFlow
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_pos_movingFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_pos_movingFlow
+
+/-- info: 'CSD.RecordLayer.siteOf_movingFlow_eq_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteOf_movingFlow_eq_iff
+
+/-- info: 'CSD.RecordLayer.siteOf_movingFlow_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteOf_movingFlow_mono
+
+/-- info: 'CSD.RecordLayer.mem_movingFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_movingFlow
+
+/-- info: 'CSD.RecordLayer.clock_movingFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clock_movingFlow
+
+/-- info: 'CSD.RecordLayer.clock_movingFlow_indep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clock_movingFlow_indep
+
+/-- info: 'CSD.RecordLayer.abs_movingReading_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_movingReading_sub_le
+
+/-- info: 'CSD.RecordLayer.det_movingFlow_passage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.det_movingFlow_passage
+
+/-- info: 'CSD.RecordLayer.movingFlow_instance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.movingFlow_instance
+
+/-- info: 'CSD.RecordLayer.moving_clock_control' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.moving_clock_control
+
+
 end CSD.Tests.AxiomAudit
