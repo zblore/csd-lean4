@@ -70,8 +70,10 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
 
 ## Honest scope
 
-⚠️ **The encoded input and the final decoding are ideal** (#236), and so is the classical decoding
-inside each recovery. Every quantum location of the recovery is counted (BACKLOG ~~#238~~).
+⚠️ **The encoded input and the final decoding are ideal here**, and so is the classical decoding
+inside each recovery. Every quantum location of the recovery is counted (BACKLOG ~~#238~~). ▸ The
+input prepared by a factory and the transversal read-out, both in the fault pattern, are
+`SteaneLogicalIO.lean` (`steane_machine_io`, BACKLOG ~~#236~~).
 
 ⚠️ **A rejected ancilla is replaced fault-free.** On a failing checker word the factory prepares a
 fresh `|+̄⟩` without locations of its own; counting the retry's locations is #240.

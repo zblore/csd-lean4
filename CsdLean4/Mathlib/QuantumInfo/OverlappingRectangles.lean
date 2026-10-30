@@ -42,7 +42,10 @@ the first extended rectangle is the two-piece `rect` of #96 and the `k`-th, for 
 * ★★★ `IsFaultChain.ovRun_spec` — **the invariant along the whole chain**: after `k` steps the
   state is `E (ovIdeal g k ρ)` with `E ∈ D`, and exactly `ovIdeal g k ρ` unless recovery `k − 1` was
   the flagged piece;
-* ★★★ `IsFaultChain.decode_ovRun` — **with a final ideal decoding the output is the ideal one**.
+* ★★★ `IsFaultChain.decode_ovRun` — **with a final ideal decoding the output is the ideal one**;
+* `lastFaultFrom`, `IsFaultChain.step_of_flag`, ★★★ `IsFaultChain.ovRun_spec_from` — **the chain from
+  a faulty preparation**: an input that is a `D`-deviation of a code state, exact unless the
+  preparation is flagged, counted in the first extended rectangle (BACKLOG ~~#236~~).
 
 ## Counting faults in overlapping windows
 
@@ -138,6 +141,11 @@ gadget `k`, and recovery `k`. -/
 def ExRecGood (fR fG : ℕ → Bool) (k : ℕ) : Prop :=
   (lastFault fR k).toNat + (fG k).toNat + (fR k).toNat ≤ 1
 
+/-- Whether the piece before gadget `k` was flagged, a faulty preparation `f₀` counting at `k = 0`. -/
+def lastFaultFrom (f₀ : Bool) (fR : ℕ → Bool) : ℕ → Bool
+  | 0 => f₀
+  | k + 1 => fR k
+
 /-- **The pieces of an overlapping chain of `N` extended rectangles, each with a fault flag** — #96's
 three piecewise properties, one per piece. An unflagged recovery corrects `D`, a flagged one deviates
 by `D`; an unflagged gadget is ideal, a flagged one deviates by `D` from it; the ideal gadgets carry
@@ -223,6 +231,49 @@ theorem decode_ovRun (h : IsFaultChain P D N g R G fR fG) (hgood : ∀ k < N, Ex
     (hρ : IsCodeState P ρ) : Rd (ovRun R G N ρ) = ovIdeal g N ρ := by
   obtain ⟨⟨E, hE, hEq⟩, -⟩ := h.ovRun_spec hgood hρ N le_rfl
   rw [hEq, hRd E hE _ (h.isCodeState_ovIdeal hρ N le_rfl)]
+
+/-- **One overlapping rectangle, with the incoming flag given as a Boolean**: `step` with the flag of
+the piece before gadget `k` — the previous recovery, or a faulty preparation at `k = 0` — passed in. -/
+theorem step_of_flag (h : IsFaultChain P D N g R G fR fG) {k : ℕ} (hk : k < N) (b : Bool)
+    (hgood : b.toNat + (fG k).toNat + (fR k).toNat ≤ 1) {ψ σ : Matrix n n ℂ}
+    (hψ : IsCodeState P ψ) (hσ : ∃ E ∈ D, σ = E ψ) (hσ' : b = false → σ = ψ) :
+    (∃ E ∈ D, R k (G k σ) = E (g k ψ)) ∧ (fR k = false → R k (G k σ) = g k ψ) := by
+  have hgψ := h.preserves k hk ψ hψ
+  have exact : ∀ b : Bool, R k (G k σ) = g k ψ →
+      (∃ E ∈ D, R k (G k σ) = E (g k ψ)) ∧ (b = false → R k (G k σ) = g k ψ) :=
+    fun _ he => ⟨⟨id, h.id_mem, he⟩, fun _ => he⟩
+  cases hl : b <;> cases hg : fG k <;> cases hr : fR k <;>
+    simp only [hl, hg, hr, Bool.toNat_true, Bool.toNat_false] at hgood <;> try omega
+  · refine exact _ ?_
+    rw [hσ' hl, h.gadget k hk hg]
+    exact (h.recovery k hk hr).apply_of_isCodeState h.id_mem hgψ
+  · rw [hσ' hl, h.gadget k hk hg]
+    obtain ⟨E, hE, hEq⟩ := h.recovery_fault k hk hr (g k ψ) hgψ
+    exact ⟨⟨E, hE, hEq⟩, fun h' => absurd h' (by simp)⟩
+  · refine exact _ ?_
+    rw [hσ' hl]
+    obtain ⟨E, hE, hEq⟩ := h.gadget_fault k hk hg ψ hψ
+    rw [hEq, h.recovery k hk hr E hE _ hgψ]
+  · refine exact _ ?_
+    obtain ⟨E, hE, rfl⟩ := hσ
+    obtain ⟨E', hE', hEq⟩ := h.propagates k hk E hE ψ hψ
+    rw [h.gadget k hk hg, hEq, h.recovery k hk hr E' hE' _ hgψ]
+
+/-- ★★★ **The invariant from a faulty preparation**: if the input `σ₀` is a `D`-deviation of the code
+state `ρ`, exact unless the preparation is flagged, and every extended rectangle — the first one
+counting the preparation — holds at most one flagged piece, then after `k ≤ N` steps the state is a
+`D`-deviation of the ideal run from `ρ`, exact unless the piece before was flagged. -/
+theorem ovRun_spec_from (h : IsFaultChain P D N g R G fR fG) {f₀ : Bool}
+    (hgood : ∀ k < N, (lastFaultFrom f₀ fR k).toNat + (fG k).toNat + (fR k).toNat ≤ 1)
+    {ρ σ₀ : Matrix n n ℂ} (hρ : IsCodeState P ρ) (hσ₀ : ∃ E ∈ D, σ₀ = E ρ)
+    (hσ₀' : f₀ = false → σ₀ = ρ) :
+    ∀ k ≤ N, (∃ E ∈ D, ovRun R G k σ₀ = E (ovIdeal g k ρ))
+      ∧ (lastFaultFrom f₀ fR k = false → ovRun R G k σ₀ = ovIdeal g k ρ)
+  | 0, _ => ⟨hσ₀, hσ₀'⟩
+  | k + 1, hk => by
+    obtain ⟨hdev, hex⟩ := ovRun_spec_from h hgood hρ hσ₀ hσ₀' k (by omega)
+    exact h.step_of_flag (by omega) _ (hgood k (by omega)) (h.isCodeState_ovIdeal hρ k (by omega))
+      hdev hex
 
 end IsFaultChain
 

@@ -380,6 +380,7 @@ public import CsdLean4.Empirical.QM.QEC.SteaneFaultyRecovery
 public import CsdLean4.Empirical.QM.QEC.SteaneFaultModel
 public import CsdLean4.Empirical.QM.QEC.SteaneVerifiedAncilla
 public import CsdLean4.Empirical.QM.QEC.SteaneOverlapMachine
+public import CsdLean4.Empirical.QM.QEC.SteaneLogicalIO
 public import CsdLean4.Empirical.QM.QEC.SteaneEncoder
 public import CsdLean4.Empirical.QM.QEC.SteaneConcat
 public import CsdLean4.Mathlib.Probability.CircuitThreshold

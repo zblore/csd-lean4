@@ -14913,4 +14913,18 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #print axioms QuantumInfo.hadTransversal_apply
 
 
+-- OverlappingRectangles (BACKLOG #236, 2026-10-30): the chain from a faulty preparation.
+/-- info: 'QuantumInfo.lastFaultFrom' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.lastFaultFrom
+
+/-- info: 'QuantumInfo.IsFaultChain.step_of_flag' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsFaultChain.step_of_flag
+
+/-- info: 'QuantumInfo.IsFaultChain.ovRun_spec_from' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsFaultChain.ovRun_spec_from
+
+
 end CSD.Tests.AxiomAudit
