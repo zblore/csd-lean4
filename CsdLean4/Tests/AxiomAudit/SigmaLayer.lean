@@ -11497,4 +11497,87 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.moving_radar
 
 
+-- MovingRadarPair (BACKLOG #257, 2026-10-30): both observers' radar charts in one evolution - mirror
+-- view, generic occurrence pullback, reciprocal charts.
+/-- info: 'CSD.RecordLayer.ActualOccurrence.pullback' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ActualOccurrence.pullback
+
+/-- info: 'CSD.RecordLayer.BiArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.BiArena
+
+/-- info: 'CSD.RecordLayer.mirrorView' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mirrorView
+
+/-- info: 'CSD.RecordLayer.measurable_mirrorView' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_mirrorView
+
+/-- info: 'CSD.RecordLayer.mirror_window' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mirror_window
+
+/-- info: 'CSD.RecordLayer.biFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.biFlow
+
+/-- info: 'CSD.RecordLayer.mirrorView_biFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mirrorView_biFlow
+
+/-- info: 'CSD.RecordLayer.fst_biFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fst_biFlow
+
+/-- info: 'CSD.RecordLayer.biFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.biFlow_add
+
+/-- info: 'CSD.RecordLayer.biFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.biFlow_zero
+
+/-- info: 'CSD.RecordLayer.biEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.biEvolve
+
+/-- info: 'CSD.RecordLayer.biEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.biEvolve_self
+
+/-- info: 'CSD.RecordLayer.biEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.biEvolve_comp
+
+/-- info: 'CSD.RecordLayer.measurable_biFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_biFlow
+
+/-- info: 'CSD.RecordLayer.liftFirst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.liftFirst
+
+/-- info: 'CSD.RecordLayer.liftSecond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.liftSecond
+
+/-- info: 'CSD.RecordLayer.radar_reciprocity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_reciprocity
+
+/-- info: 'CSD.RecordLayer.biTrainState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.biTrainState
+
+/-- info: 'CSD.RecordLayer.biTrain_charts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.biTrain_charts
+
+/-- info: 'CSD.RecordLayer.two_radar_charts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_radar_charts
+
+
 end CSD.Tests.AxiomAudit
