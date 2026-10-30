@@ -10933,4 +10933,83 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.moving_clock_control
 
 
+-- TransportedClock (BACKLOG #242, 2026-10-30): one transported clock - its ticks and passages as record
+-- writes of one measurable evolution, with a concrete instance in motion.
+/-- info: 'CSD.RecordLayer.measurable_occTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_occTime
+
+/-- info: 'CSD.RecordLayer.TransportArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TransportArena
+
+/-- info: 'CSD.RecordLayer.toArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.toArena
+
+/-- info: 'CSD.RecordLayer.ofArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ofArena
+
+/-- info: 'CSD.RecordLayer.toArena_ofArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.toArena_ofArena
+
+/-- info: 'CSD.RecordLayer.ofArena_toArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ofArena_toArena
+
+/-- info: 'CSD.RecordLayer.transportFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transportFlow
+
+/-- info: 'CSD.RecordLayer.transportEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transportEvolve
+
+/-- info: 'CSD.RecordLayer.transportEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transportEvolve_self
+
+/-- info: 'CSD.RecordLayer.transportEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transportEvolve_comp
+
+/-- info: 'CSD.RecordLayer.measurable_transportFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_transportFlow
+
+/-- info: 'CSD.RecordLayer.clock_transportFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clock_transportFlow
+
+/-- info: 'CSD.RecordLayer.pos_transportFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pos_transportFlow
+
+/-- info: 'CSD.RecordLayer.det_transportFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.det_transportFlow
+
+/-- info: 'CSD.RecordLayer.movingTick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.movingTick
+
+/-- info: 'CSD.RecordLayer.passageRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.passageRead
+
+/-- info: 'CSD.RecordLayer.measurable_passageRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_passageRead
+
+/-- info: 'CSD.RecordLayer.passageWrite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.passageWrite
+
+/-- info: 'CSD.RecordLayer.transported_clock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transported_clock
+
+
 end CSD.Tests.AxiomAudit

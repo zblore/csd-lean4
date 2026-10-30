@@ -67,7 +67,8 @@ cell, which is microscopic input, as the brief requires.
 
 ⚠️ **The detectors read without back-reaction.** A Hamiltonian detector term `g_d χ_k(x) η_k` would
 push the device by `−g_d χ_k'(x) η_k`; here the detectors are test detectors and their indicator
-profile is not smooth. Their generation, with back-reaction, belongs to #242's disturbance bound.
+profile is not smooth. Their generation, with back-reaction, is #251 (~~#242~~ shows the disturbance
+is zero for test detectors).
 
 ⚠️ **The ticks during transport are #201's**, inherited through `clock_movingFlow`; their statement as
 `ActualOccurrence`s of the joint evolution is #242.
