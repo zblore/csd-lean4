@@ -14870,4 +14870,47 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #print axioms QuantumInfo.sum_prod_ofFn_conjTranspose_mul
 
 
+-- SteaneVerifiedAncilla (BACKLOG #234, 2026-10-30): permutation and product operators on vectors,
+-- preparing M psi, trace-preserving families keep the norm, the transversal Hadamard's entries.
+/-- info: 'QuantumInfo.permMat_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.permMat_mulVec_apply
+
+/-- info: 'QuantumInfo.kronecker_mulVec_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.kronecker_mulVec_prod
+
+/-- info: 'QuantumInfo.kronecker_one_mulVec_apply_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.kronecker_one_mulVec_apply_eq_sum
+
+/-- info: 'QuantumInfo.ancPrep_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancPrep_mulVec
+
+/-- info: 'QuantumInfo.ancPrep_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancPrep_smul
+
+/-- info: 'QuantumInfo.sum_star_mulVec_mul_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_star_mulVec_mul_mulVec
+
+/-- info: 'QuantumInfo.sum_one_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_one_kronecker
+
+/-- info: 'QuantumInfo.sum_kronecker_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_kronecker_one_eq
+
+/-- info: 'QuantumInfo.sum_unitary_mul_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_unitary_mul_conjTranspose_mul
+
+/-- info: 'QuantumInfo.hadTransversal_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.hadTransversal_apply
+
+
 end CSD.Tests.AxiomAudit

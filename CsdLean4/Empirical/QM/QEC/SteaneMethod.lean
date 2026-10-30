@@ -57,7 +57,8 @@ operator `A ⊗ B` on those two qubits.
 
 ⚠️ **Ancilla preparation is ideal here.** A fault while preparing `|+̄⟩` can leave the ancilla with a
 `Z` error of weight two or more, which the transversal `CNOT` copies onto the data. The verification
-that rejects such ancillas, and the prep-fault case of the theorem, are BACKLOG #234.
+that rejects such ancillas, and the prep-fault case of the theorem, are BACKLOG #234. ▸ Done:
+`SteaneVerifiedAncilla.lean` (`steane_verified_ancilla`, BACKLOG ~~#234~~).
 
 ⚠️ **Extraction locations only.** Faults on the data between rounds or after the correction are
 operators on one qubit by definition and are not restated; faults in the classical decoding are not

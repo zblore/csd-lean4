@@ -56,7 +56,8 @@ location.
 qubit `q`; a fault spreading to a second pair is two locations, as in every location count.
 
 ⚠️ **Ancilla preparation is ideal** (#234): a fault inside the encoding circuit of `|+̄⟩` can act on
-several ancilla qubits at once and is not a fault on one pair.
+several ancilla qubits at once and is not a fault on one pair. ▸ The verified preparation is
+`SteaneVerifiedAncilla.lean` (BACKLOG ~~#234~~).
 
 ⚠️ **One round per basis**, as in ~~#228~~ and ~~#229~~.
 

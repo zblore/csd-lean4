@@ -63,7 +63,8 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
 
 ⚠️ **Ancilla preparation is ideal** (#234), and so are the encoding of the input and the final
 decoding (#236) and the classical decoding inside each recovery. The extraction locations are the only
-recovery locations counted.
+recovery locations counted. ▸ One verified ancilla is `SteaneVerifiedAncilla.lean` (BACKLOG ~~#234~~);
+its locations in this machine are #238.
 
 ⚠️ **A fault at an extraction location stays on its pair.** The fault at `(r, q)` is any
 trace-preserving Kraus family on data qubit `q` and ancilla qubit `q`, after the `CNOT` of round `r`;
