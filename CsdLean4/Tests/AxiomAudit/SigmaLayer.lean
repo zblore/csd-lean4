@@ -11159,4 +11159,283 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.two_observers_instance
 
 
+-- MovingExchange (BACKLOG #244, 2026-10-30): two-way exchanges with the moving observer - messengers
+-- reflecting off it, emission/reception/return as record writes, repeated exchanges, recoil bound.
+/-- info: 'CSD.RecordLayer.siteInd_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteInd_nonneg
+
+/-- info: 'CSD.RecordLayer.siteInd_comp_intervalIntegrable'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteInd_comp_intervalIntegrable'
+
+/-- info: 'CSD.RecordLayer.occTime_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.occTime_mono
+
+/-- info: 'CSD.RecordLayer.occTime_eq_zero_of_before_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.occTime_eq_zero_of_before_neg
+
+/-- info: 'CSD.RecordLayer.occTime_eq_inv_of_crossed_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.occTime_eq_inv_of_crossed_neg
+
+/-- info: 'CSD.RecordLayer.msgRel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.msgRel
+
+/-- info: 'CSD.RecordLayer.continuous_msgRel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_msgRel
+
+/-- info: 'CSD.RecordLayer.bounceOcc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bounceOcc
+
+/-- info: 'CSD.RecordLayer.msgRel_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.msgRel_shift
+
+/-- info: 'CSD.RecordLayer.bounceOcc_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bounceOcc_add
+
+/-- info: 'CSD.RecordLayer.bounceOcc_eq_occTime_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bounceOcc_eq_occTime_of_le
+
+/-- info: 'CSD.RecordLayer.bounceOcc_zero_eq_occTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bounceOcc_zero_eq_occTime
+
+/-- info: 'CSD.RecordLayer.measurable_bounceOcc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_bounceOcc
+
+/-- info: 'CSD.RecordLayer.outSpeed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.outSpeed
+
+/-- info: 'CSD.RecordLayer.retSpeed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.retSpeed
+
+/-- info: 'CSD.RecordLayer.bounceTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bounceTime
+
+/-- info: 'CSD.RecordLayer.bounceSep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bounceSep
+
+/-- info: 'CSD.RecordLayer.exchEmitStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchEmitStart
+
+/-- info: 'CSD.RecordLayer.exchEmitEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchEmitEnd
+
+/-- info: 'CSD.RecordLayer.exchReturnStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchReturnStart
+
+/-- info: 'CSD.RecordLayer.exchReturnEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchReturnEnd
+
+/-- info: 'CSD.RecordLayer.ExchGeom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom
+
+/-- info: 'CSD.RecordLayer.ExchGeom.bounceTime_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.bounceTime_nonneg
+
+/-- info: 'CSD.RecordLayer.ExchGeom.rho_add_bounce' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.rho_add_bounce
+
+/-- info: 'CSD.RecordLayer.ExchGeom.start_add_bounce' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.start_add_bounce
+
+/-- info: 'CSD.RecordLayer.ExchGeom.emitStart_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.emitStart_nonneg
+
+/-- info: 'CSD.RecordLayer.ExchGeom.emitStart_le_emitEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.emitStart_le_emitEnd
+
+/-- info: 'CSD.RecordLayer.ExchGeom.emitEnd_le_bounceTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.emitEnd_le_bounceTime
+
+/-- info: 'CSD.RecordLayer.ExchGeom.bounceTime_le_returnStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.bounceTime_le_returnStart
+
+/-- info: 'CSD.RecordLayer.ExchGeom.returnStart_le_returnEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.returnStart_le_returnEnd
+
+/-- info: 'CSD.RecordLayer.ExchGeom.bounceOcc_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.bounceOcc_of_le
+
+/-- info: 'CSD.RecordLayer.ExchGeom.bounceOcc_of_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.bounceOcc_of_ge
+
+/-- info: 'CSD.RecordLayer.ExchGeom.bounceOcc_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.bounceOcc_before
+
+/-- info: 'CSD.RecordLayer.ExchGeom.bounceOcc_between' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.bounceOcc_between
+
+/-- info: 'CSD.RecordLayer.ExchGeom.bounceOcc_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.bounceOcc_le
+
+/-- info: 'CSD.RecordLayer.ExchGeom.bounceOcc_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.bounceOcc_after
+
+/-- info: 'CSD.RecordLayer.ExchArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchArena
+
+/-- info: 'CSD.RecordLayer.exchSep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchSep
+
+/-- info: 'CSD.RecordLayer.exchSepVel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchSepVel
+
+/-- info: 'CSD.RecordLayer.exchFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchFlow
+
+/-- info: 'CSD.RecordLayer.exchSep_exchFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchSep_exchFlow
+
+/-- info: 'CSD.RecordLayer.exchFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchFlow_zero
+
+/-- info: 'CSD.RecordLayer.exchFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchFlow_add
+
+/-- info: 'CSD.RecordLayer.exchEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchEvolve
+
+/-- info: 'CSD.RecordLayer.exchEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchEvolve_self
+
+/-- info: 'CSD.RecordLayer.exchEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchEvolve_comp
+
+/-- info: 'CSD.RecordLayer.measurable_msg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_msg
+
+/-- info: 'CSD.RecordLayer.measurable_regS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_regS
+
+/-- info: 'CSD.RecordLayer.measurable_regM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_regM
+
+/-- info: 'CSD.RecordLayer.measurable_exchFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_exchFlow
+
+/-- info: 'CSD.RecordLayer.regS_exchFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regS_exchFlow
+
+/-- info: 'CSD.RecordLayer.regM_exchFlow_received' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regM_exchFlow_received
+
+/-- info: 'CSD.RecordLayer.passCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.passCount
+
+/-- info: 'CSD.RecordLayer.measurable_passCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_passCount
+
+/-- info: 'CSD.RecordLayer.emitLevel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emitLevel
+
+/-- info: 'CSD.RecordLayer.returnLevel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnLevel
+
+/-- info: 'CSD.RecordLayer.emitLevel_lt_returnLevel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emitLevel_lt_returnLevel
+
+/-- info: 'CSD.RecordLayer.emissionWrite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emissionWrite
+
+/-- info: 'CSD.RecordLayer.returnWrite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnWrite
+
+/-- info: 'CSD.RecordLayer.receiveRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.receiveRead
+
+/-- info: 'CSD.RecordLayer.measurable_receiveRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_receiveRead
+
+/-- info: 'CSD.RecordLayer.receptionWrite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.receptionWrite
+
+/-- info: 'CSD.RecordLayer.abs_restReading_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_restReading_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_movingObsReading_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_movingObsReading_sub_le
+
+/-- info: 'CSD.RecordLayer.elastic_exchange' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.elastic_exchange
+
+/-- info: 'CSD.RecordLayer.exchange_train' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchange_train
+
+/-- info: 'CSD.RecordLayer.trainState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trainState
+
+/-- info: 'CSD.RecordLayer.trainState_geom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trainState_geom
+
+/-- info: 'CSD.RecordLayer.moving_exchange' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.moving_exchange
+
+
 end CSD.Tests.AxiomAudit

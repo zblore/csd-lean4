@@ -682,6 +682,7 @@ public import CsdLean4.RecordLayer.HandClock
 public import CsdLean4.RecordLayer.MovingClock
 public import CsdLean4.RecordLayer.TransportedClock
 public import CsdLean4.RecordLayer.TwoObservers
+public import CsdLean4.RecordLayer.MovingExchange
 public import CsdLean4.RecordLayer.ClockAndEcho
 public import CsdLean4.RecordLayer.ClockEchoCoupling
 public import CsdLean4.RecordLayer.EchoHamiltonian
