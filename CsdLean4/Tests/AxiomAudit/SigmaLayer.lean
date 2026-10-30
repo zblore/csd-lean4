@@ -11438,4 +11438,63 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.RecordLayer.moving_exchange
 
 
+-- MovingRadar (BACKLOG #245, 2026-10-30): radar coordinates of the moving observer's reflections -
+-- matched to record writes, exact at rest, preparation-dependent in motion (the control's negative).
+/-- info: 'CSD.RecordLayer.radarOffset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarOffset
+
+/-- info: 'CSD.RecordLayer.ExchGeom.radar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.radar
+
+/-- info: 'CSD.RecordLayer.ExchGeom.bounceTime_sub_emitEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.bounceTime_sub_emitEnd
+
+/-- info: 'CSD.RecordLayer.ExchGeom.radarTime_radar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.radarTime_radar
+
+/-- info: 'CSD.RecordLayer.ExchGeom.radarSep_radar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.radarSep_radar
+
+/-- info: 'CSD.RecordLayer.receptionEnd_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.receptionEnd_eq
+
+/-- info: 'CSD.RecordLayer.radar_at_rest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_at_rest
+
+/-- info: 'CSD.RecordLayer.radarOffset_strictAnti' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarOffset_strictAnti
+
+/-- info: 'CSD.RecordLayer.radarTime_ne_of_speed_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarTime_ne_of_speed_ne
+
+/-- info: 'CSD.RecordLayer.handReading_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handReading_mono
+
+/-- info: 'CSD.RecordLayer.clockRadar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockRadar
+
+/-- info: 'CSD.RecordLayer.abs_clockRadar_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_clockRadar_sub_le
+
+/-- info: 'CSD.RecordLayer.train_radar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.train_radar
+
+/-- info: 'CSD.RecordLayer.moving_radar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.moving_radar
+
+
 end CSD.Tests.AxiomAudit
