@@ -71,7 +71,8 @@ concrete recovery, and neither is built here.
 
 ⚠️ **A trailing-recovery fault is not corrected.** `deviatesBy_exRec_trailing` is the honest statement:
 the rectangle hands on a correctable deviation. That the resulting *chain* of overlapping rectangles
-closes — the level-reduction step — is **not** proved here and is #97.
+closes — the level-reduction step — is **not** proved here and is #97. ▸ The chain of overlapping
+rectangles is `OverlappingRectangles.lean` (`IsFaultChain.ovRun_spec`, BACKLOG ~~#233~~).
 
 ⚠️ **Transversality is assumed.** `PropagatesD` is a hypothesis. The corpus has it concretely for the
 Steane transversal `CNOT` (`cnotT_conj_pairEnc_code`), but no instance is plugged in below.

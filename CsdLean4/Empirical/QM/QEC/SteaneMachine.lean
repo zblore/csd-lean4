@@ -61,7 +61,7 @@ fault locations are counted in the pattern. Those are their own BACKLOG rows. �
 with the machine run on it (`steane_machine_circuit`); its fault locations are #229. ▸ The
 faulty recovery as a circuit inside the rectangle, its `DeviatesBy` proved rather than assumed, is
 `SteaneFaultyRecovery.lean` (`steane_exRec_faultyMethod`, BACKLOG ~~#232~~); the machine with the
-recovery's locations counted is #233.
+recovery's locations counted is `SteaneOverlapMachine.lean` (`steane_machine_overlap`, BACKLOG ~~#233~~).
 
 ⚠️ **One block, three gates.** `H̄`, `X̄`, `Z̄` act on a single block; this is not a universal gate
 set. The two-block `CNOT̄` (`steane_faultyCNOT_recovery`) lives on a different register and is not

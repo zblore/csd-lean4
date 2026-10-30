@@ -67,7 +67,8 @@ modelled.
 into #96's `DeviatesBy` for a correctable set that the recovery corrects and the gadgets propagate is
 BACKLOG #232, and counting the recovery's locations in the machine — overlapping extended rectangles —
 is #233. ▸ The first is done: `SteaneFaultyRecovery.lean` (BACKLOG ~~#232~~, `deviatesBy_faultyMethod`,
-`steane_exRec_faultyMethod`), for any unitary fault on the pair of qubits at `q`.
+`steane_exRec_faultyMethod`), for any unitary fault on the pair of qubits at `q`; the second too:
+`SteaneOverlapMachine.lean` (BACKLOG ~~#233~~, `steane_machine_overlap`).
 
 ⚠️ **One round per basis**, as in ~~#228~~: no repetition of the syndrome measurement.
 

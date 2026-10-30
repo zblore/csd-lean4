@@ -108,6 +108,7 @@ public import CsdLean4.Mathlib.QuantumInfo.BlockKron
 public import CsdLean4.Mathlib.QuantumInfo.FaultTolerantComposition
 public import CsdLean4.Mathlib.QuantumInfo.ExtendedRectangle
 public import CsdLean4.Mathlib.QuantumInfo.LevelReduction
+public import CsdLean4.Mathlib.QuantumInfo.OverlappingRectangles
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 public import CsdLean4.Mathlib.QuantumInfo.QSearch
 public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
@@ -376,6 +377,7 @@ public import CsdLean4.Empirical.QM.QEC.SteaneMachineConcat
 public import CsdLean4.Empirical.QM.QEC.SteaneCircuitRecovery
 public import CsdLean4.Empirical.QM.QEC.SteaneMethod
 public import CsdLean4.Empirical.QM.QEC.SteaneFaultyRecovery
+public import CsdLean4.Empirical.QM.QEC.SteaneOverlapMachine
 public import CsdLean4.Empirical.QM.QEC.SteaneEncoder
 public import CsdLean4.Empirical.QM.QEC.SteaneConcat
 public import CsdLean4.Mathlib.Probability.CircuitThreshold

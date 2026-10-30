@@ -14797,4 +14797,71 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #print axioms QuantumInfo.ancPrep_conjTranspose_mul
 
 
+-- OverlappingRectangles (BACKLOG #233, 2026-10-29): the chain of overlapping extended rectangles
+-- (IsFaultChain, the invariant, the final decoding) and the union bound over overlapping windows.
+/-- info: 'QuantumInfo.ovRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ovRun
+
+/-- info: 'QuantumInfo.ovIdeal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ovIdeal
+
+/-- info: 'QuantumInfo.ovRun_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ovRun_zero
+
+/-- info: 'QuantumInfo.ovRun_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ovRun_succ
+
+/-- info: 'QuantumInfo.ovIdeal_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ovIdeal_zero
+
+/-- info: 'QuantumInfo.ovIdeal_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ovIdeal_succ
+
+/-- info: 'QuantumInfo.runMaps_ofFn_eq_ovIdeal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.runMaps_ofFn_eq_ovIdeal
+
+/-- info: 'QuantumInfo.lastFault' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.lastFault
+
+/-- info: 'QuantumInfo.ExRecGood' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ExRecGood
+
+/-- info: 'QuantumInfo.IsFaultChain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsFaultChain
+
+/-- info: 'QuantumInfo.IsFaultChain.isCodeState_ovIdeal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsFaultChain.isCodeState_ovIdeal
+
+/-- info: 'QuantumInfo.IsFaultChain.step' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsFaultChain.step
+
+/-- info: 'QuantumInfo.IsFaultChain.ovRun_spec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsFaultChain.ovRun_spec
+
+/-- info: 'QuantumInfo.IsFaultChain.decode_ovRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsFaultChain.decode_ovRun
+
+/-- info: 'QuantumInfo.measure_two_le_card_filter_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.measure_two_le_card_filter_le
+
+/-- info: 'QuantumInfo.one_sub_le_measure_output_eq_windows' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.one_sub_le_measure_output_eq_windows
+
+
 end CSD.Tests.AxiomAudit

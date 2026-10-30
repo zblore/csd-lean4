@@ -2829,4 +2829,168 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_exRec_faultyMethod
 
 
+-- SteaneOverlapMachine (BACKLOG #233, 2026-10-29): Steane's method under any fault pattern, one
+-- location space for gadgets and recoveries, the windows of the overlapping extended rectangles, the
+-- machine as an IsFaultChain for the CSS class, the bound 1 - 595 N p^2.
+/-- info: 'CSD.Empirical.QM.QEC.Steane.instFintypeMethodRound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.instFintypeMethodRound
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.card_methodRound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.card_methodRound
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.prod_ofFn_eq_one' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.prod_ofFn_eq_one
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.prod_ofFn_eq_of_ne' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.prod_ofFn_eq_of_ne
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairOp
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.roundFault' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.roundFault
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.roundFault_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.roundFault_mem
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.roundFault_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.roundFault_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.roundFault_none' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.roundFault_none
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.roundFault_single' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.roundFault_single
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.underKraus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.underKraus
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.methodUnder' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.methodUnder
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.methodUnder_none' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.methodUnder_none
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.methodUnder_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.methodUnder_single
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.onPair_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.onPair_one
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.StepLoc' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.StepLoc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.OvLoc' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.OvLoc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.gatePat' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.gatePat
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.recPat' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.recPat
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.prevStep' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.prevStep
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.winLoc' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.winLoc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.window' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.window
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.card_window_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.card_window_le
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.mem_window_step' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.mem_window_step
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.mem_window_prev' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.mem_window_prev
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.WindowsGood' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.WindowsGood
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.WindowsGood.eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.WindowsGood.eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.WindowsGood.card_gatePat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.WindowsGood.card_gatePat
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.WindowsGood.recPat_cases' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.WindowsGood.recPat_cases
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ovGadget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ovGadget
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ovFaultyGadget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ovFaultyGadget
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ovRecovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ovRecovery
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.recoveryFlag' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.recoveryFlag
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.gadgetFlag' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.gadgetFlag
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.overlapRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.overlapRun
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ovIdeal_ovGadget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ovIdeal_ovGadget
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.faulty_none' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.faulty_none
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.isFaultChain_overlap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.isFaultChain_overlap
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exRecGood_of_windowsGood' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exRecGood_of_windowsGood
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_machine_overlap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_machine_overlap
+
+
 end CSD.Tests.AxiomAudit

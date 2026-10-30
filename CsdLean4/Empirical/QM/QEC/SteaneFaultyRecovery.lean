@@ -67,7 +67,9 @@ after it; that rewriting is not proved here. Faults in preparing `|+̄⟩` are #
 
 ⚠️ **One rectangle, not the machine.** The trailing-fault case hands on a deviation; chaining
 overlapping rectangles, with the recovery's own locations counted in the fault pattern, is #233.
-`steane_machine` and `steane_machine_circuit` still put faults at the gadgets only.
+`steane_machine` and `steane_machine_circuit` still put faults at the gadgets only. ▸ The machine
+with every recovery's extraction locations counted is `SteaneOverlapMachine.lean`
+(`steane_machine_overlap`, BACKLOG ~~#233~~).
 
 ⚠️ **Unitary faults.** `faultyMethod` needs `Fᴴ F = 1`, so the faulty method is a channel; a fault that
 is itself a channel (several Kraus operators) is a mixture of such runs and is not restated.
