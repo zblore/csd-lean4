@@ -4556,4 +4556,143 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #print axioms CSD.CV.local_lieb_robinson
 
 
+-- DiracClockChain (BACKLOG #249, 2026-10-30): a lattice Dirac chain carrying a two-level internal clock -
+-- exact modes, time dilation with its error, the group velocity and the lattice's preferred frame.
+/-- info: 'CSD.CV.dispE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dispE
+
+/-- info: 'CSD.CV.vRel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.vRel
+
+/-- info: 'CSD.CV.levelClockRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelClockRate
+
+/-- info: 'CSD.CV.dispE_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dispE_sq
+
+/-- info: 'CSD.CV.dispE_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dispE_pos
+
+/-- info: 'CSD.CV.le_dispE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.le_dispE
+
+/-- info: 'CSD.CV.abs_le_dispE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_le_dispE
+
+/-- info: 'CSD.CV.clockRate_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.clockRate_zero
+
+/-- info: 'CSD.CV.div_dispE_eq_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.div_dispE_eq_sqrt
+
+/-- info: 'CSD.CV.vRel_div_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.vRel_div_eq
+
+/-- info: 'CSD.CV.sq_vRel_div_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sq_vRel_div_le_one
+
+/-- info: 'CSD.CV.abs_vRel_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_vRel_lt
+
+/-- info: 'CSD.CV.div_dispE_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.div_dispE_mono
+
+/-- info: 'CSD.CV.clockRate_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.clockRate_mem
+
+/-- info: 'CSD.CV.abs_clockRate_div_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_clockRate_div_sub_le
+
+/-- info: 'CSD.CV.hasDerivAt_dispE_lattice' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_dispE_lattice
+
+/-- info: 'CSD.CV.lattice_dilation_defect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lattice_dilation_defect
+
+/-- info: 'CSD.CV.abs_groupVel_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_groupVel_le
+
+/-- info: 'CSD.CV.diracSx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.diracSx
+
+/-- info: 'CSD.CV.diracSz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.diracSz
+
+/-- info: 'CSD.CV.diracHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.diracHam
+
+/-- info: 'CSD.CV.diracHam_apply_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.diracHam_apply_eq_zero
+
+/-- info: 'CSD.CV.diracHam_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.diracHam_isHermitian
+
+/-- info: 'CSD.CV.latticeAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.latticeAngle
+
+/-- info: 'CSD.CV.planeWave' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.planeWave
+
+/-- info: 'CSD.CV.planeWave_add_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.planeWave_add_one
+
+/-- info: 'CSD.CV.planeWave_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.planeWave_sub_one
+
+/-- info: 'CSD.CV.hop_factor' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hop_factor
+
+/-- info: 'CSD.CV.modeS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeS
+
+/-- info: 'CSD.CV.diracMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.diracMode
+
+/-- info: 'CSD.CV.diracHam_mulVec_diracMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.diracHam_mulVec_diracMode
+
+/-- info: 'CSD.CV.hasDerivAt_diracMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_diracMode
+
+/-- info: 'CSD.CV.clock_phase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.clock_phase
+
+/-- info: 'CSD.CV.dirac_clock_chain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dirac_clock_chain
+
+
 end CSD.Tests.AxiomAudit
