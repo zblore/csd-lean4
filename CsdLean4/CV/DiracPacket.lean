@@ -26,7 +26,10 @@ argument is the circular position and whose modulus is the localisation.
   times the weighted spread;
 * `bandE`, `groupVel`, `hasDerivAt_bandE`, `abs_groupVel_le'`, `groupVel_eq`
   (`v_g = 2J² sin 2θ / E`), `le_bandE`; ★ `abs_bandE_sub_le` — the band energy is `2|J|`-Lipschitz;
-  ★★ `abs_groupVel_sub_le` — **the group velocity is Lipschitz** with `C = 4J²/μ + 4|J|³/μ²`;
+  `groupVelDeriv`, ★★ `hasDerivAt_groupVel` (`v_g' = (4J² cos 2θ − v_g²)/E`), `groupVel_sq_le`
+  (`v_g² ≤ 4J² cos² θ`), ★★★ `abs_groupVelDeriv_le` — **the band's curvature is at most `4J²/μ`**;
+  ★★★ `abs_groupVel_sub_le` — **the group velocity is `4J²/μ`-Lipschitz** (sharpened 2026-10-31,
+  #261, from `4J²/μ + 4|J|³/μ²`, whose cubic term grew like `a⁻³` under the scaling `J = c/(2a)`);
   ★★ `abs_bandE_step_sub_le` — the energy step between neighbouring momenta is `h v_g(θ₀)` within
   `C h (|θ − θ₀| + h)`.
 
@@ -145,68 +148,79 @@ theorem groupVel_eq {J μ : ℝ} (hμ : 0 < μ) (θ : ℝ) :
 
 theorem le_bandE (J μ θ : ℝ) : μ ≤ bandE J μ θ := le_dispE μ _
 
-/-- ★★ **The group velocity is Lipschitz** in the angle, with constant
-`C = 4J²/μ + 4|J|³/μ²`: the curvature of the band is bounded by the rest energy. -/
+/-- The band's curvature: `v_g'(θ) = (4J² cos 2θ − v_g(θ)²)/E(θ)`, from `E E'' + E'² = 4J² cos 2θ`. -/
+def groupVelDeriv (J μ θ : ℝ) : ℝ := (4 * J ^ 2 * Real.cos (2 * θ) - groupVel J μ θ ^ 2) / bandE J μ θ
+
+/-- ★★ **The derivative of the group velocity.** -/
+theorem hasDerivAt_groupVel {J μ : ℝ} (hμ : 0 < μ) (θ : ℝ) :
+    HasDerivAt (groupVel J μ) (groupVelDeriv J μ θ) θ := by
+  have hE : 0 < bandE J μ θ := dispE_pos hμ _
+  have hfun : groupVel J μ = fun θ => 2 * J ^ 2 * Real.sin (2 * θ) / bandE J μ θ :=
+    funext (groupVel_eq hμ)
+  have h1 : HasDerivAt (fun θ : ℝ => 2 * θ) 2 θ := by
+    simpa using (hasDerivAt_id θ).const_mul (2 : ℝ)
+  have hnum : HasDerivAt (fun θ => 2 * J ^ 2 * Real.sin (2 * θ))
+      (2 * J ^ 2 * (Real.cos (2 * θ) * 2)) θ := h1.sin.const_mul (2 * J ^ 2)
+  rw [hfun]
+  convert hnum.div (hasDerivAt_bandE hμ θ) hE.ne' using 1
+  rw [groupVelDeriv, groupVel_eq hμ]
+  field_simp
+  ring
+
+/-- `v_g² ≤ 4J² cos² θ`: the relativistic velocity is at most `2|J|`. -/
+theorem groupVel_sq_le {J μ : ℝ} (hμ : 0 < μ) (θ : ℝ) :
+    groupVel J μ θ ^ 2 ≤ 4 * J ^ 2 * Real.cos θ ^ 2 := by
+  have hE := dispE_pos hμ (2 * J * Real.sin θ)
+  have hE2 := dispE_sq μ (2 * J * Real.sin θ)
+  rw [groupVel, vRel, div_mul_eq_mul_div, div_pow, div_le_iff₀ (by positivity), hE2]
+  nlinarith [mul_nonneg (mul_nonneg (sq_nonneg J) (sq_nonneg (Real.cos θ))) (sq_nonneg μ)]
+
+/-- ★★★ **The band's curvature is at most `4J²/μ`** — no `|J|³/μ²` term. -/
+theorem abs_groupVelDeriv_le {J μ : ℝ} (hμ : 0 < μ) (θ : ℝ) :
+    |groupVelDeriv J μ θ| ≤ 4 * J ^ 2 / μ := by
+  have hE : 0 < bandE J μ θ := dispE_pos hμ _
+  have hμE := le_bandE J μ θ
+  have hv := groupVel_sq_le (J := J) hμ θ
+  have hv0 := sq_nonneg (groupVel J μ θ)
+  have hc2 := Real.cos_two_mul θ
+  have hc1 := Real.cos_le_one (2 * θ)
+  have hcs := sq_nonneg (Real.cos θ)
+  have hJ := sq_nonneg J
+  have hN : |4 * J ^ 2 * Real.cos (2 * θ) - groupVel J μ θ ^ 2| ≤ 4 * J ^ 2 := by
+    rw [abs_le]
+    constructor
+    · rw [hc2]
+      nlinarith [mul_nonneg hJ hcs]
+    · nlinarith [mul_nonneg hJ (by linarith : 0 ≤ 1 - Real.cos (2 * θ))]
+  rw [groupVelDeriv, abs_div, abs_of_pos hE]
+  calc |4 * J ^ 2 * Real.cos (2 * θ) - groupVel J μ θ ^ 2| / bandE J μ θ
+      ≤ 4 * J ^ 2 / bandE J μ θ := div_le_div_of_nonneg_right hN hE.le
+    _ ≤ 4 * J ^ 2 / μ := div_le_div_of_nonneg_left (by positivity) hμ hμE
+
+/-- ★★★ **The group velocity is `4J²/μ`-Lipschitz** in the angle: the curvature of the band is
+bounded by the rest energy. (Sharpened 2026-10-31, BACKLOG #261, from `4J²/μ + 4|J|³/μ²`.) -/
 theorem abs_groupVel_sub_le {J μ : ℝ} (hμ : 0 < μ) (a b : ℝ) :
-    |groupVel J μ a - groupVel J μ b|
-      ≤ (4 * J ^ 2 / μ + 4 * |J| ^ 3 / μ ^ 2) * |a - b| := by
-  have hEa := (dispE_pos hμ (2 * J * Real.sin a))
-  have hEb := (dispE_pos hμ (2 * J * Real.sin b))
-  set Ea := bandE J μ a
-  set Eb := bandE J μ b
-  have hμa : μ ≤ Ea := le_bandE J μ a
-  have hμb : μ ≤ Eb := le_bandE J μ b
-  set A := 2 * J ^ 2 * Real.sin (2 * a)
-  set B := 2 * J ^ 2 * Real.sin (2 * b)
-  have hAB : |A - B| ≤ 4 * J ^ 2 * |a - b| := by
-    have h := Real.abs_sin_sub_sin_le (2 * a) (2 * b)
-    have : A - B = 2 * J ^ 2 * (Real.sin (2 * a) - Real.sin (2 * b)) := by ring
-    rw [this, abs_mul, abs_of_nonneg (by positivity)]
-    calc 2 * J ^ 2 * |Real.sin (2 * a) - Real.sin (2 * b)| ≤ 2 * J ^ 2 * |2 * a - 2 * b| :=
-          mul_le_mul_of_nonneg_left h (by positivity)
-      _ = 4 * J ^ 2 * |a - b| := by
-          rw [show 2 * a - 2 * b = 2 * (a - b) by ring, abs_mul, abs_two]; ring
-  have hB : |B| ≤ 2 * J ^ 2 := by
-    rw [abs_mul, abs_of_nonneg (by positivity)]
-    exact mul_le_of_le_one_right (by positivity) (Real.abs_sin_le_one _)
-  have hE := abs_bandE_sub_le (J := J) hμ b a
-  rw [abs_mul, abs_two] at hE
-  rw [groupVel_eq hμ, groupVel_eq hμ]
-  have hEa0 : 0 < Ea := hEa
-  have hEb0 : 0 < Eb := hEb
-  have key : A / Ea - B / Eb = (A - B) / Ea + B * (Eb - Ea) / (Ea * Eb) := by
-    field_simp
-    ring
-  rw [key]
-  have h1 : |(A - B) / Ea| ≤ 4 * J ^ 2 / μ * |a - b| := by
-    rw [abs_div, abs_of_pos hEa0, div_le_iff₀ hEa0]
-    calc |A - B| ≤ 4 * J ^ 2 * |a - b| := hAB
-      _ ≤ 4 * J ^ 2 / μ * |a - b| * Ea := by
-          rw [div_mul_eq_mul_div, div_mul_eq_mul_div, le_div_iff₀ hμ]
-          have : 4 * J ^ 2 * |a - b| * μ ≤ 4 * J ^ 2 * |a - b| * Ea :=
-            mul_le_mul_of_nonneg_left hμa (by positivity)
-          linarith
-  have h2 : |B * (Eb - Ea) / (Ea * Eb)| ≤ 4 * |J| ^ 3 / μ ^ 2 * |a - b| := by
-    rw [abs_div, abs_mul, abs_of_pos (mul_pos hEa0 hEb0), div_le_iff₀ (mul_pos hEa0 hEb0)]
-    have hJ2 : J ^ 2 = |J| ^ 2 := (sq_abs J).symm
-    calc |B| * |Eb - Ea| ≤ 2 * J ^ 2 * (2 * |J| * |b - a|) :=
-          mul_le_mul hB hE (abs_nonneg _) (by positivity)
-      _ = 4 * |J| ^ 3 * |a - b| := by rw [hJ2, abs_sub_comm b a]; ring
-      _ ≤ 4 * |J| ^ 3 / μ ^ 2 * |a - b| * (Ea * Eb) := by
-          rw [div_mul_eq_mul_div, div_mul_eq_mul_div, le_div_iff₀ (by positivity)]
-          have hEE : μ ^ 2 ≤ Ea * Eb := by nlinarith
-          nlinarith [abs_nonneg (a - b), pow_nonneg (abs_nonneg J) 3,
-            mul_le_mul_of_nonneg_left hEE (mul_nonneg (pow_nonneg (abs_nonneg J) 3)
-              (abs_nonneg (a - b)))]
-  calc |(A - B) / Ea + B * (Eb - Ea) / (Ea * Eb)| ≤ |(A - B) / Ea| + |B * (Eb - Ea) / (Ea * Eb)| :=
-        abs_add_le _ _
-    _ ≤ _ := by linarith
+    |groupVel J μ a - groupVel J μ b| ≤ 4 * J ^ 2 / μ * |a - b| := by
+  have key : ∀ x y : ℝ, x < y → |groupVel J μ y - groupVel J μ x| ≤ 4 * J ^ 2 / μ * |y - x| := by
+    intro x y hxy
+    obtain ⟨ξ, _, hξ⟩ := exists_hasDerivAt_eq_slope (groupVel J μ) (groupVelDeriv J μ) hxy
+      (fun z _ => (hasDerivAt_groupVel hμ z).continuousAt.continuousWithinAt)
+      (fun z _ => hasDerivAt_groupVel hμ z)
+    have hne : y - x ≠ 0 := by linarith
+    rw [eq_div_iff hne] at hξ
+    rw [← hξ, abs_mul]
+    exact mul_le_mul_of_nonneg_right (abs_groupVelDeriv_le hμ ξ) (abs_nonneg _)
+  rcases lt_trichotomy a b with h | rfl | h
+  · rw [abs_sub_comm, abs_sub_comm a b]
+    exact key a b h
+  · simp
+  · exact key b a h
 
 /-- ★★ **The energy step between neighbouring momenta is the group velocity times the step**, within
 `C · h · (|θ − θ₀| + h)`. -/
 theorem abs_bandE_step_sub_le {J μ : ℝ} (hμ : 0 < μ) {h : ℝ} (hh : 0 < h) (θ θ₀ : ℝ) :
     |(bandE J μ (θ + h) - bandE J μ θ) - h * groupVel J μ θ₀|
-      ≤ (4 * J ^ 2 / μ + 4 * |J| ^ 3 / μ ^ 2) * h * (|θ - θ₀| + h) := by
+      ≤ 4 * J ^ 2 / μ * h * (|θ - θ₀| + h) := by
   obtain ⟨ξ, hξ, hc⟩ := exists_hasDerivAt_eq_slope (bandE J μ) (groupVel J μ)
     (show θ < θ + h by linarith)
     (fun x _ => (hasDerivAt_bandE hμ x).continuousAt.continuousWithinAt)
@@ -222,11 +236,11 @@ theorem abs_bandE_step_sub_le {J μ : ℝ} (hμ : 0 < μ) {h : ℝ} (hh : 0 < h)
           rw [abs_of_pos (by linarith [hξ.1])]
           linarith [hξ.2]
       _ = |θ - θ₀| + h := by ring
-  have hC : 0 ≤ 4 * J ^ 2 / μ + 4 * |J| ^ 3 / μ ^ 2 := by positivity
+  have hC : 0 ≤ 4 * J ^ 2 / μ := by positivity
   calc h * |groupVel J μ ξ - groupVel J μ θ₀|
-      ≤ h * ((4 * J ^ 2 / μ + 4 * |J| ^ 3 / μ ^ 2) * |ξ - θ₀|) :=
+      ≤ h * (4 * J ^ 2 / μ * |ξ - θ₀|) :=
         mul_le_mul_of_nonneg_left hl hh.le
-    _ ≤ h * ((4 * J ^ 2 / μ + 4 * |J| ^ 3 / μ ^ 2) * (|θ - θ₀| + h)) := by gcongr
+    _ ≤ h * (4 * J ^ 2 / μ * (|θ - θ₀| + h)) := by gcongr
     _ = _ := by ring
 
 /-! ### Modes on the ring, and their overlaps -/
@@ -473,8 +487,8 @@ theorem transPhase_packet (J μ : ℝ) {W : Finset ℤ} (hW : NoWrap L W) (a : �
 
 /-! ### The packet moves at the group velocity -/
 
-/-- The Lipschitz constant of the group velocity, `C = 4J²/μ + 4|J|³/μ²`. -/
-def vgLip (J μ : ℝ) : ℝ := 4 * J ^ 2 / μ + 4 * |J| ^ 3 / μ ^ 2
+/-- The Lipschitz constant of the group velocity, `C = 4J²/μ` (`abs_groupVel_sub_le`). -/
+def vgLip (J μ : ℝ) : ℝ := 4 * J ^ 2 / μ
 
 omit [NeZero L] in
 theorem angleZ_succ (m : ℤ) : angleZ L (m + 1) = angleZ L m + 2 * Real.pi / L := by

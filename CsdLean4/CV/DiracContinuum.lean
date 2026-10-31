@@ -39,6 +39,21 @@ limiting speed `c > 0` and the rest energy `μ > 0` **held fixed**, and
 * ★★★ `scaled_limit` — **uniform convergence as `a → 0⁺`**, with the residue `2Δ/μ` kept; ★★
   `scaled_clock_limit` — the clock error tends to zero only when `Δ → 0` as well.
 
+## The packet's drift in physical units (#261, first brick)
+
+* ★★★ `sq_mul_vgLip_scaledHop` — **`a² · vgLip (J(a), μ) = c²/μ`**: with ~~#250~~'s Lipschitz constant
+  sharpened to `4J²/μ` (`abs_groupVelDeriv_le`, `DiracPacket.lean`), the band's curvature in physical
+  units does not depend on the spacing, and equals the curvature of `√(μ² + c²p²)` at `p = 0`;
+* ★★★ `abs_scaledV_sub_scaledV_le` — **`V_a` is `c²/μ`-Lipschitz in the physical momentum, for every
+  `a > 0`**;
+* ★★★ `abs_scaledE_step_sub_le` — the neighbouring-energy-step estimate behind `transPhase_drift` in
+  physical units: `|E_a(p + k) − E_a(p) − k V_a(p₀)| ≤ (c²/μ) k (|p − p₀| + k)`;
+* `vgLip_scaledHop_step`, ★★ `driftError_scaled` — each term of `driftError` is
+  `‖w_m‖ (c²/μ) k (|p_m − p₀| + k)` with `k = 2π/(La)` and `p_m = θ_m/a`; ★★★
+  `transPhase_drift_scaled` — **the packet's translation phase rotates at `k V_a(p₀)` within
+  `|t| Σ_m ‖w_m‖ (c²/μ) k (|p_m − p₀| + k)`**, the ring size `L`, the window `W` and the time `t`
+  explicit.
+
 ## The findings
 
 1. **The Dirac chain has a controlled relativistic limit for its modes and its clock, at nonzero
@@ -51,10 +66,10 @@ limiting speed `c > 0` and the rest energy `μ > 0` **held fixed**, and
 
 ## Honest scope
 
-⚠️ **Modes and the window centre only.** `V_a` is the drift velocity ~~#250~~ proves for a packet's
-centre. ~~#250~~'s packet errors are bounded by `vgLip = 4J²/μ + 4|J|³/μ²`, whose second term grows
-like `a⁻³` under `J = c/(2a)`. So packet convergence does not follow from the present bounds; it
-needs a sharper curvature bound, priced as #261.
+⚠️ **The drift bound is uniform in its curvature constant, not yet a packet limit.** The cubic term
+`4|J|³/μ²` that grew like `a⁻³` is gone, so the curvature `c²/μ` is spacing-independent. What remains
+of #261: a bound on `Σ_m ‖w_m‖` for normalised amplitudes, a packet of fixed physical width on a ring
+of fixed physical length `La`, and its localisation `|T(0)|` bounded below, over a stated horizon.
 
 ⚠️ **Not one device.** `dirac_packet` lets the transport mass `μ` differ from the clock levels `μ₀`,
 `μ₁`, and its clock estimate bounds the complex coherence, which gives the clock's phase only while
@@ -317,6 +332,95 @@ theorem scaled_clock_dilation_sq_error_le {c μ Δ a p P : ℝ} (hc : 0 < c) (h�
       ≤ |scaledClock c μ Δ a p ^ 2 - (μ / dispE μ s) ^ 2|
         + |(μ / dispE μ s) ^ 2 - (1 - (scaledV c μ a p / c) ^ 2)| := abs_sub_le _ _ _
     _ ≤ 2 * Δ / μ + a ^ 2 * P ^ 2 := add_le_add hfin hlat
+
+/-! ### The band's curvature in physical units, and the packet's drift -/
+
+/-- ★★★ **The band's curvature in physical units does not depend on the spacing**:
+`a² · vgLip (J(a), μ) = c²/μ`, the curvature of `√(μ² + c²p²)` at `p = 0`. -/
+theorem sq_mul_vgLip_scaledHop {c a : ℝ} (ha : a ≠ 0) (μ : ℝ) :
+    a ^ 2 * vgLip (scaledHop c a) μ = c ^ 2 / μ := by
+  rw [vgLip, scaledHop]
+  field_simp
+  ring
+
+/-- ★★★ **The drift velocity is `c²/μ`-Lipschitz in the physical momentum, for every spacing.** -/
+theorem abs_scaledV_sub_scaledV_le {c μ a : ℝ} (hμ : 0 < μ) (ha : 0 < a) (p q : ℝ) :
+    |scaledV c μ a p - scaledV c μ a q| ≤ c ^ 2 / μ * |p - q| := by
+  have h := abs_groupVel_sub_le (J := scaledHop c a) hμ (a * p) (a * q)
+  rw [← mul_sub, abs_mul, abs_of_pos ha] at h
+  rw [scaledV, scaledV, ← mul_sub, abs_mul, abs_of_pos ha, ← sq_mul_vgLip_scaledHop ha.ne' μ, vgLip]
+  calc a * |groupVel (scaledHop c a) μ (a * p) - groupVel (scaledHop c a) μ (a * q)|
+      ≤ a * (4 * scaledHop c a ^ 2 / μ * (a * |p - q|)) := mul_le_mul_of_nonneg_left h ha.le
+    _ = a ^ 2 * (4 * scaledHop c a ^ 2 / μ) * |p - q| := by ring
+
+/-- ★★★ **The energy step between neighbouring physical momenta, uniformly in the spacing**: for a
+momentum step `k > 0` (on a ring of `L` sites, `k = 2π/(La)`),
+`|E_a(p + k) − E_a(p) − k V_a(p₀)| ≤ (c²/μ) k (|p − p₀| + k)` — `abs_bandE_step_sub_le` in physical
+units. -/
+theorem abs_scaledE_step_sub_le {c μ a k : ℝ} (hμ : 0 < μ) (ha : 0 < a) (hk : 0 < k) (p p₀ : ℝ) :
+    |(scaledE c μ a (p + k) - scaledE c μ a p) - k * scaledV c μ a p₀|
+      ≤ c ^ 2 / μ * k * (|p - p₀| + k) := by
+  have h := abs_bandE_step_sub_le (J := scaledHop c a) hμ (mul_pos ha hk) (a * p) (a * p₀)
+  have e1 : scaledE c μ a (p + k) = bandE (scaledHop c a) μ (a * p + a * k) := by
+    rw [scaledE, mul_add]
+  rw [e1, scaledE, scaledV,
+    show k * (a * groupVel (scaledHop c a) μ (a * p₀)) = a * k * groupVel (scaledHop c a) μ (a * p₀) by
+      ring]
+  refine h.trans (le_of_eq ?_)
+  rw [← mul_sub, abs_mul, abs_of_pos ha, ← sq_mul_vgLip_scaledHop ha.ne' μ, vgLip]
+  ring
+
+/-- ★★ **Each term of `driftError` in physical units**: with the angle step `a k` and distance `a d`
+from the window's centre, `vgLip · (a k) · (a d + a k) = (c²/μ) k (d + k)`, whatever `a`. -/
+theorem vgLip_scaledHop_step {c a : ℝ} (ha : a ≠ 0) (μ k d : ℝ) :
+    vgLip (scaledHop c a) μ * (a * k) * (a * d + a * k) = c ^ 2 / μ * k * (d + k) := by
+  rw [← sq_mul_vgLip_scaledHop ha μ]
+  ring
+
+section Ring
+
+variable {L : ℕ} [NeZero L]
+
+/-- **The drift error in physical units**: the ring of `L` sites has momentum step `k = 2π/(La)`,
+mode `m` the physical momentum `θ_m / a`; each term is `‖w_m‖ (c²/μ) k (|θ_m/a − p₀| + k)`. -/
+theorem driftError_scaled {c μ a : ℝ} (ha : 0 < a) (W : Finset ℤ) (amp : ℤ → ℂ) (p₀ : ℝ) :
+    driftError (L := L) (scaledHop c a) μ W amp (a * p₀)
+      = ∑ m ∈ W.filter (fun m => m + 1 ∈ W), ‖transWeight (L := L) (scaledHop c a) μ amp m‖
+          * (c ^ 2 / μ * (2 * Real.pi / (L * a))
+            * (|angleZ L m / a - p₀| + 2 * Real.pi / (L * a))) := by
+  have hL : (L : ℝ) ≠ 0 := by exact_mod_cast NeZero.ne L
+  rw [driftError]
+  refine Finset.sum_congr rfl fun m _ => ?_
+  congr 1
+  have hk : 2 * Real.pi / L = a * (2 * Real.pi / (L * a)) := by
+    field_simp
+  have hd : |angleZ L m - a * p₀| = a * |angleZ L m / a - p₀| := by
+    rw [← abs_of_pos ha, ← abs_mul, abs_of_pos ha, mul_sub, mul_div_cancel₀ _ ha.ne']
+  rw [hd, hk]
+  exact vgLip_scaledHop_step ha.ne' μ _ _
+
+/-- ★★★ **The packet's drift in physical units (#261, first brick).** On a ring of `L` sites at
+spacing `a`, a packet on the window `W` has translation phase rotating at `k · V_a(p₀)`,
+`k = 2π/(La)`, within `|t| Σ_m ‖w_m‖ (c²/μ) k (|p_m − p₀| + k)`, `p_m = θ_m/a`: the curvature
+constant `c²/μ` does not depend on `a`. The ring size, the window and the time horizon stay
+explicit. -/
+theorem transPhase_drift_scaled {c μ a : ℝ} (hμ : 0 < μ) (ha : 0 < a) {W : Finset ℤ}
+    (hW : NoWrap L W) (amp : ℤ → ℂ) (p₀ t : ℝ) :
+    ‖transPhase (packet (L := L) (scaledHop c a) μ W amp t)
+        - Complex.exp (Complex.I * (((2 * Real.pi / (L * a) * scaledV c μ a p₀ : ℝ) : ℂ) * t))
+          * transPhase (packet (L := L) (scaledHop c a) μ W amp 0)‖
+      ≤ |t| * ∑ m ∈ W.filter (fun m => m + 1 ∈ W), ‖transWeight (L := L) (scaledHop c a) μ amp m‖
+          * (c ^ 2 / μ * (2 * Real.pi / (L * a))
+            * (|angleZ L m / a - p₀| + 2 * Real.pi / (L * a))) := by
+  have hL : (L : ℝ) ≠ 0 := by exact_mod_cast NeZero.ne L
+  have hrate : 2 * Real.pi / (L * a) * scaledV c μ a p₀
+      = 2 * Real.pi / L * groupVel (scaledHop c a) μ (a * p₀) := by
+    rw [scaledV]
+    field_simp
+  rw [hrate, ← driftError_scaled ha]
+  exact transPhase_drift hμ hW amp (a * p₀) t
+
+end Ring
 
 /-! ### The limit -/
 

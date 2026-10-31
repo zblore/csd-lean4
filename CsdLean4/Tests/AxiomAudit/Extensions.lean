@@ -4955,4 +4955,46 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.scaled_clock_limit
 
+-- #261 first brick (2026-10-31): the band's curvature 4J^2/mu (cubic term removed) and the packet's
+-- drift in physical units with the spacing-independent constant c^2/mu.
+/-- info: 'CSD.CV.groupVelDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.groupVelDeriv
+
+/-- info: 'CSD.CV.hasDerivAt_groupVel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_groupVel
+
+/-- info: 'CSD.CV.groupVel_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.groupVel_sq_le
+
+/-- info: 'CSD.CV.abs_groupVelDeriv_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_groupVelDeriv_le
+
+/-- info: 'CSD.CV.sq_mul_vgLip_scaledHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sq_mul_vgLip_scaledHop
+
+/-- info: 'CSD.CV.abs_scaledV_sub_scaledV_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_scaledV_sub_scaledV_le
+
+/-- info: 'CSD.CV.abs_scaledE_step_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_scaledE_step_sub_le
+
+/-- info: 'CSD.CV.vgLip_scaledHop_step' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.vgLip_scaledHop_step
+
+/-- info: 'CSD.CV.driftError_scaled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.driftError_scaled
+
+/-- info: 'CSD.CV.transPhase_drift_scaled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transPhase_drift_scaled
+
 end CSD.Tests.AxiomAudit
