@@ -740,6 +740,7 @@ public import CsdLean4.CV.ConeComparison
 public import CsdLean4.CV.LocalLiebRobinson
 public import CsdLean4.CV.DiracClockChain
 public import CsdLean4.CV.DiracPacket
+public import CsdLean4.CV.DiracContinuum
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment

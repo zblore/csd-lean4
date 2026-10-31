@@ -48,8 +48,10 @@ argument is the circular position and whose modulus is the localisation.
   velocity**: `T(t)` rotates at `(2π/L) v_g(θ₀)` within `|t|` times the drift error;
   ★★ `norm_transPhase_ge` — **it stays localised**, `|T(t)| ≥ |T(0)| − |t| · error`;
 * `clockOverlap` (the coherence between the two internal levels; its phase is the clock's reading),
-  `clockWeight`, ★★ `clockOverlap_eq`, `clockError`; ★★★ `clockOverlap_rate` — **the moving clock ticks
-  at the window centre's dilated rate** within `|t|` times the window's spread;
+  `clockWeight`, ★★ `clockOverlap_eq`, `clockError`; ★★★ `clockOverlap_rate` — **the clock coherence
+  rotates at the window centre's level splitting** `E_{μ₁}(θ₀) − E_{μ₀}(θ₀)` within `|t|` times the
+  window's spread (a bound on the complex coherence; by ~~#249~~ that splitting is within
+  `(μ₁ − μ₀)/E₀` of `(μ₁ − μ₀)√(1 − (v_rel/c)²)`, with `v_rel` the defined velocity, not the drift);
 * ★★★ `dirac_packet` — the package.
 
 ## Honest scope
@@ -569,9 +571,12 @@ theorem clockOverlap_eq (J μ₀ μ₁ : ℝ) {W : Finset ℤ} (hD : Distinct L 
 def clockError (J μ₀ μ₁ : ℝ) (W : Finset ℤ) (a : ℤ → ℂ) (θ₀ : ℝ) : ℝ :=
   ∑ m ∈ W, ‖clockWeight (L := L) J μ₀ μ₁ a m‖ * (4 * |J| * |angleZ L m - θ₀|)
 
-/-- ★★★ **The moving clock ticks at its dilated rate**: the packet's clock coherence rotates at the
-clock rate of the window's centre, `E¹(θ₀) − E⁰(θ₀)` — which ~~#249~~ shows is the rest rate times
-`√(1 − (v/c)²)` — within `|t|` times the window's spread. -/
+/-- ★★★ **The moving clock's coherence rotates at the centre's level splitting**: the packet's
+clock coherence rotates at `E¹(θ₀) − E⁰(θ₀)` within `|t|` times the window's spread. The bound is on
+the complex coherence; it fixes the clock's phase only while the coherence stays away from zero. By
+~~#249~~ (`abs_clockRate_div_sub_le`) the splitting over `μ₁ − μ₀` is within `(μ₁ − μ₀)/E₀` of
+`√(1 − (v_rel/c)²)`, `v_rel` the defined relativistic velocity; against the packet's drift velocity
+the lattice defect of `lattice_dilation_defect` enters too (`DiracContinuum.lean`). -/
 theorem clockOverlap_rate {J μ₀ μ₁ : ℝ} (h0 : 0 < μ₀) (h1 : 0 < μ₁) {W : Finset ℤ}
     (hD : Distinct L W) (a : ℤ → ℂ) (θ₀ t : ℝ) :
     ‖clockOverlap (L := L) J μ₀ μ₁ W a t
@@ -601,8 +606,9 @@ theorem clockOverlap_rate {J μ₀ μ₁ : ℝ} (h0 : 0 < μ₀) (h1 : 0 < μ₁
 momenta shorter than the ring: it solves Schrödinger's equation; its translation phase is an exact
 finite sum of phases; it moves at the group velocity of the window's centre within `|t|` times the
 drift error; it stays localised within the same error; and the clock it carries in two internal
-levels ticks at the centre's clock rate — `√(1 − (v/c)²)` times its rest rate, by ~~#249~~ —
-within `|t|` times the window's spread. -/
+levels has its coherence rotating at the centre's level splitting — within `(μ₁ − μ₀)/E₀` of
+`(μ₁ − μ₀)√(1 − (v_rel/c)²)` by ~~#249~~ — within `|t|` times the window's spread. The transport mass
+`μ` is not tied to `μ₀`, `μ₁`: one device carrying both levels is #262. -/
 theorem dirac_packet {J μ μ₀ μ₁ : ℝ} (hμ : 0 < μ) (h0 : 0 < μ₀) (h1 : 0 < μ₁) {W : Finset ℤ}
     {lo : ℤ} (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + L) (a : ℤ → ℂ) (θ₀ : ℝ) :
     (∀ t, HasDerivAt (packet (L := L) J μ W a)

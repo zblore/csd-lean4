@@ -59,11 +59,13 @@ beat `E_{μ₁}(k) − E_{μ₀}(k)` is slowed by `1/γ`. That is what is proved
 
 ## The finding
 
-On this lattice the internal clock **is** dilated by the relativistic factor of the mode's
-relativistic velocity, to within the level splitting over the energy — the brief's relativistic
-behaviour, derived from the dispersion, not assumed. Measured against the **group velocity**, the
-velocity an observer would actually read, it is dilated by more: the factor of `v cos k` instead of
-`v`, a preferred-frame effect of order `k²` that vanishes in the continuum regime `k → 0`.
+On this lattice the internal clock's rate, normalised by its rest rate, lies within
+`(μ₁ − μ₀)/E₀` of `√(1 − (v_rel/c)²)`, where `v_rel = cs/E` is the mode's **defined** relativistic
+velocity — derived from the dispersion, not assumed, but not one exact dilation factor. Measured
+against the **group velocity**, the velocity an observer would actually read, the squared factors
+differ by `(v_rel/c)² sin² k ≤ sin² k`, a preferred-frame effect. At fixed `J` and `μ` it vanishes as
+`k → 0` only together with the velocity; the controlled limit at nonzero physical momentum
+(`J = c/(2a)`, `k = ap`, `a → 0`) is [`DiracContinuum.lean`](DiracContinuum.lean).
 
 ## Honest scope
 

@@ -4873,5 +4873,86 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.dirac_packet
 
+-- DiracContinuum (BACKLOG #260, 2026-10-31): the controlled continuum limit J = c/(2a), theta = ap -
+-- band energy, drift velocity and the clock against the drift velocity, uniform O(a^2).
+/-- info: 'CSD.CV.scaledHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaledHop
+
+/-- info: 'CSD.CV.scaledMom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaledMom
+
+/-- info: 'CSD.CV.scaledE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaledE
+
+/-- info: 'CSD.CV.scaledV' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaledV
+
+/-- info: 'CSD.CV.scaledClock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaledClock
+
+/-- info: 'CSD.CV.scaledE_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaledE_eq
+
+/-- info: 'CSD.CV.two_mul_scaledHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.two_mul_scaledHop
+
+/-- info: 'CSD.CV.abs_dispE_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_dispE_sub_le
+
+/-- info: 'CSD.CV.hasDerivAt_dispE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_dispE
+
+/-- info: 'CSD.CV.hasDerivAt_div_dispE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_div_dispE
+
+/-- info: 'CSD.CV.abs_div_dispE_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_div_dispE_sub_le
+
+/-- info: 'CSD.CV.abs_cos_sub_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_cos_sub_one_le
+
+/-- info: 'CSD.CV.abs_scaledMom_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_scaledMom_sub_le
+
+/-- info: 'CSD.CV.abs_scaledE_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_scaledE_sub_le
+
+/-- info: 'CSD.CV.scaledV_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaledV_eq
+
+/-- info: 'CSD.CV.abs_scaledV_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_scaledV_sub_le
+
+/-- info: 'CSD.CV.scaledClock_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaledClock_mem
+
+/-- info: 'CSD.CV.scaled_clock_dilation_sq_error_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaled_clock_dilation_sq_error_le
+
+/-- info: 'CSD.CV.scaled_limit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaled_limit
+
+/-- info: 'CSD.CV.scaled_clock_limit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaled_clock_limit
 
 end CSD.Tests.AxiomAudit
