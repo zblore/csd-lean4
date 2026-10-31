@@ -67,8 +67,9 @@ not defined. For a packet narrow in space on a long ring the two agree.
 window in momentum is a wide packet in space, so the horizon over which a packet is both localised and
 on course is finite, as the brief allows. No explicit Gaussian instance is computed.
 
-⚠️ **No records yet.** The position and the clock are read as expectation values; reading them by
-detectors on the sites, as `ActualOccurrence`s, is #242's remaining work for this candidate.
+⚠️ **No records here.** The position and the clock are read as expectation values; reading them by
+detectors on the sites, as `ActualOccurrence`s, is #252. Its smallest part, one packet writing one
+site detector, is `RecordLayer/DiracDetector.lean` (`packetDetector`, `dirac_detector`).
 
 References: `specs/BACKLOG.md` #250, #249, #241, #242, #39; `CV/DiracClockChain.lean`
 (`diracHam`, `diracMode`, `diracHam_mulVec_diracMode`, `hasDerivAt_dispE_lattice`,

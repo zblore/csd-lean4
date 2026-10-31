@@ -50,7 +50,8 @@ device, is #251.
 `siteOf` (#241) computes it from the position, which is exact here.
 
 ⚠️ **This is the control (A).** The test candidate (B), the Dirac packet (~~#249~~, ~~#250~~), has its
-detector readout in #252.
+detector readout in #252; its smallest part, one packet writing one site detector, is
+`RecordLayer/DiracDetector.lean` (`packetDetector`, `dirac_detector`).
 
 References: `specs/BACKLOG.md` #242, #241, #251, #252, #243, #191, #201, #39;
 `RecordLayer/MovingClock.lean` (`movingFlow`, `det_movingFlow_passage`, `abs_handReading_sub_le`);

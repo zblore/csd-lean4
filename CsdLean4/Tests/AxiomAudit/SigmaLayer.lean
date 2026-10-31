@@ -11945,4 +11945,202 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.galilean_transformation_clocks
 
+-- DiracDetector (BACKLOG #252, its smallest part, 2026-10-31): one Dirac packet writes one
+-- site detector as an ActualOccurrence of one arena, with a moving two-mode instance.
+/-- info: 'CSD.RecordLayer.siteWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteWeight
+
+/-- info: 'CSD.RecordLayer.siteWeight_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteWeight_nonneg
+
+/-- info: 'CSD.RecordLayer.re_chainInner_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.re_chainInner_self
+
+/-- info: 'CSD.RecordLayer.siteWeight_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteWeight_le
+
+/-- info: 'CSD.RecordLayer.continuous_siteWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_siteWeight
+
+/-- info: 'CSD.RecordLayer.siteWeight_packet_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteWeight_packet_le
+
+/-- info: 'CSD.RecordLayer.phaseAmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.phaseAmp
+
+/-- info: 'CSD.RecordLayer.phaseAmp_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.phaseAmp_zero
+
+/-- info: 'CSD.RecordLayer.phaseAmp_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.phaseAmp_add
+
+/-- info: 'CSD.RecordLayer.packet_phaseAmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.packet_phaseAmp
+
+/-- info: 'CSD.RecordLayer.continuous_packet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_packet
+
+/-- info: 'CSD.RecordLayer.continuous_siteWeight_packet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_siteWeight_packet
+
+/-- info: 'CSD.RecordLayer.DetArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.DetArena
+
+/-- info: 'CSD.RecordLayer.detFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detFlow
+
+/-- info: 'CSD.RecordLayer.amp_detFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.amp_detFlow
+
+/-- info: 'CSD.RecordLayer.register_detFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.register_detFlow
+
+/-- info: 'CSD.RecordLayer.detFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detFlow_zero
+
+/-- info: 'CSD.RecordLayer.detFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detFlow_add
+
+/-- info: 'CSD.RecordLayer.continuous_detFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_detFlow
+
+/-- info: 'CSD.RecordLayer.measurable_detFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_detFlow
+
+/-- info: 'CSD.RecordLayer.detEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detEvolve
+
+/-- info: 'CSD.RecordLayer.detEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detEvolve_self
+
+/-- info: 'CSD.RecordLayer.detEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detEvolve_comp
+
+/-- info: 'CSD.RecordLayer.integral_siteWeight_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_siteWeight_mono
+
+/-- info: 'CSD.RecordLayer.integral_siteWeight_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_siteWeight_le
+
+/-- info: 'CSD.RecordLayer.register_lt_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.register_lt_of_lt
+
+/-- info: 'CSD.RecordLayer.detRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detRead
+
+/-- info: 'CSD.RecordLayer.measurable_detRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_detRead
+
+/-- info: 'CSD.RecordLayer.siteFin' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteFin
+
+/-- info: 'CSD.RecordLayer.packetDetector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.packetDetector
+
+/-- info: 'CSD.RecordLayer.twoMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoMode
+
+/-- info: 'CSD.RecordLayer.beat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.beat
+
+/-- info: 'CSD.RecordLayer.modeS_intCast' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.modeS_intCast
+
+/-- info: 'CSD.RecordLayer.angleZ_twelve_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.angleZ_twelve_one
+
+/-- info: 'CSD.RecordLayer.bandE_twoMode_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandE_twoMode_zero
+
+/-- info: 'CSD.RecordLayer.bandE_twoMode_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandE_twoMode_one
+
+/-- info: 'CSD.RecordLayer.twoMode_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoMode_apply
+
+/-- info: 'CSD.RecordLayer.norm_beat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_beat
+
+/-- info: 'CSD.RecordLayer.siteWeight_twoMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteWeight_twoMode
+
+/-- info: 'CSD.RecordLayer.siteWeight_twoMode_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteWeight_twoMode_succ
+
+/-- info: 'CSD.RecordLayer.beat_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.beat_zero
+
+/-- info: 'CSD.RecordLayer.beat_six' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.beat_six
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_register' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_register
+
+/-- info: 'CSD.RecordLayer.integral_twoMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_twoMode
+
+/-- info: 'CSD.RecordLayer.register_twoMode_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.register_twoMode_zero
+
+/-- info: 'CSD.RecordLayer.register_twoMode_six' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.register_twoMode_six
+
+/-- info: 'CSD.RecordLayer.twoModeDetector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoModeDetector
+
+/-- info: 'CSD.RecordLayer.chainInner_twoMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainInner_twoMode
+
+/-- info: 'CSD.RecordLayer.dirac_detector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_detector
+
 end CSD.Tests.AxiomAudit
