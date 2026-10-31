@@ -11689,4 +11689,110 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.signal_cone
 
+-- GalileanTransformation (BACKLOG #247, 2026-10-31): the control's transformation derived from the
+-- records - transit chart, Galilean map on both families, Lorentz refuted, no shared interval.
+/-- info: 'CSD.RecordLayer.transitChart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transitChart
+
+/-- info: 'CSD.RecordLayer.ownChart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ownChart
+
+/-- info: 'CSD.RecordLayer.flipChart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flipChart
+
+/-- info: 'CSD.RecordLayer.ExchGeom.transitChart_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.transitChart_eq
+
+/-- info: 'CSD.RecordLayer.ExchGeom.transitChart_indep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.transitChart_indep
+
+/-- info: 'CSD.RecordLayer.ExchGeom.sep_of_chart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.sep_of_chart
+
+/-- info: 'CSD.RecordLayer.relVel_of_writes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relVel_of_writes
+
+/-- info: 'CSD.RecordLayer.ownChart_reception' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ownChart_reception
+
+/-- info: 'CSD.RecordLayer.galileo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.galileo
+
+/-- info: 'CSD.RecordLayer.galileo_first' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.galileo_first
+
+/-- info: 'CSD.RecordLayer.galileo_second' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.galileo_second
+
+/-- info: 'CSD.RecordLayer.galileo_fst_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.galileo_fst_sub
+
+/-- info: 'CSD.RecordLayer.galileo_snd_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.galileo_snd_sub
+
+/-- info: 'CSD.RecordLayer.lorentzBoost' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lorentzBoost
+
+/-- info: 'CSD.RecordLayer.sqrt_one_sub_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqrt_one_sub_pos
+
+/-- info: 'CSD.RecordLayer.lorentzBoost_worldline' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lorentzBoost_worldline
+
+/-- info: 'CSD.RecordLayer.sqrt_one_sub_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqrt_one_sub_lt_one
+
+/-- info: 'CSD.RecordLayer.lorentzBoost_worldline_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lorentzBoost_worldline_lt
+
+/-- info: 'CSD.RecordLayer.lorentz_refuted' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lorentz_refuted
+
+/-- info: 'CSD.RecordLayer.minkowski' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.minkowski
+
+/-- info: 'CSD.RecordLayer.minkowski_galileo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.minkowski_galileo
+
+/-- info: 'CSD.RecordLayer.minkowski_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.minkowski_ne
+
+/-- info: 'CSD.RecordLayer.transitChart_writes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transitChart_writes
+
+/-- info: 'CSD.RecordLayer.ownChart_writes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ownChart_writes
+
+/-- info: 'CSD.RecordLayer.train_galilean' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.train_galilean
+
+/-- info: 'CSD.RecordLayer.galilean_transformation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.galilean_transformation
+
 end CSD.Tests.AxiomAudit

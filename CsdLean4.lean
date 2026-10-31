@@ -686,6 +686,7 @@ public import CsdLean4.RecordLayer.MovingExchange
 public import CsdLean4.RecordLayer.MovingRadar
 public import CsdLean4.RecordLayer.MovingRadarPair
 public import CsdLean4.RecordLayer.SignalCone
+public import CsdLean4.RecordLayer.GalileanTransformation
 public import CsdLean4.RecordLayer.ClockAndEcho
 public import CsdLean4.RecordLayer.ClockEchoCoupling
 public import CsdLean4.RecordLayer.EchoHamiltonian
