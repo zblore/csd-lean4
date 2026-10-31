@@ -11795,4 +11795,154 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.galilean_transformation
 
+-- GalileanTransformation, finite clock readings (BACKLOG #248 (a) for the control, 2026-10-31):
+-- the transit chart, the estimates and the Galilean map's discrepancy under readings within ε.
+/-- info: 'CSD.RecordLayer.relVelEst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relVelEst
+
+/-- info: 'CSD.RecordLayer.sepEst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sepEst
+
+/-- info: 'CSD.RecordLayer.ExchGeom.relVelEst_sepEst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.relVelEst_sepEst
+
+/-- info: 'CSD.RecordLayer.chartTimeErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chartTimeErr
+
+/-- info: 'CSD.RecordLayer.chartSepErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chartSepErr
+
+/-- info: 'CSD.RecordLayer.relVelErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relVelErr
+
+/-- info: 'CSD.RecordLayer.sepEstErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sepEstErr
+
+/-- info: 'CSD.RecordLayer.abs_div_add_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_div_add_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_div_sub_div_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_div_sub_div_le
+
+/-- info: 'CSD.RecordLayer.abs_one_div_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_one_div_sub_le
+
+/-- info: 'CSD.RecordLayer.transitChart_fst_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transitChart_fst_eq
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.eps_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.eps_nonneg
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.H_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.H_nonneg
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.emit_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.emit_near
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.ret_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.ret_near
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.emit'_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.emit'_ge
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.ret'_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.ret'_ge
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.abs_chartTime_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.abs_chartTime_le
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.abs_chartTime_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.abs_chartTime_sub_le
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.abs_chartSep_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.abs_chartSep_sub_le
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.abs_relVelEst_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.abs_relVelEst_le
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.abs_relVelEst_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.abs_relVelEst_sub_le
+
+/-- info: 'CSD.RecordLayer.ReadingsNear.abs_sepEst_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ReadingsNear.abs_sepEst_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_galileo_snd_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_galileo_snd_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_ownChart_fst_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_ownChart_fst_sub_le
+
+/-- info: 'CSD.RecordLayer.galileo_first_stable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.galileo_first_stable
+
+/-- info: 'CSD.RecordLayer.galileo_second_stable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.galileo_second_stable
+
+/-- info: 'CSD.RecordLayer.train_stable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.train_stable
+
+/-- info: 'CSD.RecordLayer.handTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handTime
+
+/-- info: 'CSD.RecordLayer.abs_handTime_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_handTime_sub_le
+
+/-- info: 'CSD.RecordLayer.clockTransit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockTransit
+
+/-- info: 'CSD.RecordLayer.clockRelVel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockRelVel
+
+/-- info: 'CSD.RecordLayer.clockSep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockSep
+
+/-- info: 'CSD.RecordLayer.clockOwn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockOwn
+
+/-- info: 'CSD.RecordLayer.ExchGeom.readingsNear_hand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ExchGeom.readingsNear_hand
+
+/-- info: 'CSD.RecordLayer.abs_handTime_reception_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_handTime_reception_le
+
+/-- info: 'CSD.RecordLayer.galilean_transformation_clocks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.galilean_transformation_clocks
+
 end CSD.Tests.AxiomAudit
