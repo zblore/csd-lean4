@@ -66,10 +66,10 @@ limiting speed `c > 0` and the rest energy `μ > 0` **held fixed**, and
 
 ## Honest scope
 
-⚠️ **The drift bound is uniform in its curvature constant, not yet a packet limit.** The cubic term
-`4|J|³/μ²` that grew like `a⁻³` is gone, so the curvature `c²/μ` is spacing-independent. What remains
-of #261: a bound on `Σ_m ‖w_m‖` for normalised amplitudes, a packet of fixed physical width on a ring
-of fixed physical length `La`, and its localisation `|T(0)|` bounded below, over a stated horizon.
+⚠️ **The drift bound here is uniform in its curvature constant; the packet limit is in
+`DiracPacketLimit.lean`.** The cubic term `4|J|³/μ²` that grew like `a⁻³` is gone, so the curvature
+`c²/μ` is spacing-independent. The weight sum, normalisation, fixed physical length and initial
+localisation are ~~#261~~'s `dirac_packet_limit`, `ringPacket_localised`, `flat_packet_localised`.
 
 ⚠️ **Not one device.** `dirac_packet` lets the transport mass `μ` differ from the clock levels `μ₀`,
 `μ₁`, and its clock estimate bounds the complex coherence, which gives the clock's phase only while
@@ -84,6 +84,7 @@ separate model.
 sharpness is not proved.
 
 References: `specs/BACKLOG.md` #260, #249, #250, #261, #262, #252, #259, #39;
+`CV/DiracPacketLimit.lean` (`dirac_packet_limit`);
 `CV/DiracClockChain.lean` (`dispE`, `vRel`, `levelClockRate`, `div_dispE_eq_sqrt`,
 `abs_clockRate_div_sub_le`, `lattice_dilation_defect`); `CV/DiracPacket.lean` (`bandE`, `groupVel`,
 `vgLip`, `dirac_packet`).

@@ -4997,4 +4997,146 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.transPhase_drift_scaled
 
+-- DiracPacketLimit (BACKLOG #261, 2026-10-31): the weight sum bounded by the norm, normalised
+-- packets, the initial localisation, and the drift on a ring of fixed physical length.
+/-- info: 'CSD.CV.spinSlope' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinSlope
+
+/-- info: 'CSD.CV.hasDerivAt_spinSlope' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_spinSlope
+
+/-- info: 'CSD.CV.abs_spinSlope_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_spinSlope_sub_le
+
+/-- info: 'CSD.CV.spin_align' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spin_align
+
+/-- info: 'CSD.CV.spinOverlap_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinOverlap_eq
+
+/-- info: 'CSD.CV.spinNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinNorm
+
+/-- info: 'CSD.CV.sq_spinNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sq_spinNorm
+
+/-- info: 'CSD.CV.spinNorm_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinNorm_pos
+
+/-- info: 'CSD.CV.modeNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeNorm
+
+/-- info: 'CSD.CV.modeNorm_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeNorm_pos
+
+/-- info: 'CSD.CV.clockWeight_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.clockWeight_self
+
+/-- info: 'CSD.CV.chainInner_packet_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainInner_packet_self
+
+/-- info: 'CSD.CV.norm_transWeight_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_transWeight_le
+
+/-- info: 'CSD.CV.sum_filter_succ_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sum_filter_succ_mul_le
+
+/-- info: 'CSD.CV.sum_norm_transWeight_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sum_norm_transWeight_le
+
+/-- info: 'CSD.CV.norm_exp_I_mul_ofReal_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_exp_I_mul_ofReal_mul
+
+/-- info: 'CSD.CV.norm_transPhase_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_transPhase_le
+
+/-- info: 'CSD.CV.driftError_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.driftError_le
+
+/-- info: 'CSD.CV.unitAmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.unitAmp
+
+/-- info: 'CSD.CV.norm_unitAmp_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_unitAmp_mul
+
+/-- info: 'CSD.CV.chainInner_packet_unitAmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainInner_packet_unitAmp
+
+/-- info: 'CSD.CV.spinCos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinCos
+
+/-- info: 'CSD.CV.one_sub_le_spinCos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.one_sub_le_spinCos
+
+/-- info: 'CSD.CV.transWeight_unitAmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transWeight_unitAmp
+
+/-- info: 'CSD.CV.re_transPhase_unitAmp_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.re_transPhase_unitAmp_ge
+
+/-- info: 'CSD.CV.filter_succ_Ico' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.filter_succ_Ico
+
+/-- info: 'CSD.CV.flat_sums' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.flat_sums
+
+/-- info: 'CSD.CV.norm_mul_norm_div_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_mul_norm_div_sub_le
+
+/-- info: 'CSD.CV.ringPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ringPacket
+
+/-- info: 'CSD.CV.limitErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.limitErr
+
+/-- info: 'CSD.CV.tendsto_limitErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.tendsto_limitErr
+
+/-- info: 'CSD.CV.angleZ_div_spacing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.angleZ_div_spacing
+
+/-- info: 'CSD.CV.dirac_packet_limit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dirac_packet_limit
+
+/-- info: 'CSD.CV.ringPacket_localised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.ringPacket_localised
+
+/-- info: 'CSD.CV.flat_packet_localised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.flat_packet_localised
+
 end CSD.Tests.AxiomAudit
