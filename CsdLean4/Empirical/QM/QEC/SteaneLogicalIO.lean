@@ -56,10 +56,19 @@ decoded classically. Nothing quantum is ideal.
 * ★★★ `logicalProb_ioRun` — **with one fault per window the read-out's distribution is the ideal
   one**, through `IsFaultChain.ovRun_spec_from` (`OverlappingRectangles.lean`: the chain from a
   deviated input);
+* `ioEmb`, `ioPrune` (the harmless faults removed, at the input's factory and every recovery's),
+  `eq_true_of_ioPrune`, ★★ `ioRun_ioPrune`; `prepPrim`, `prepFac`, `lastPrim`, `lastFac`, `ioPrim`,
+  `ioFac`, ★ `ioMalign` (**the malignant pairs of each window**), `IONoMalignant`,
+  `card_eq_two_of_mem_ioMalign`, `prevStep_zero`, `card_primWin_zero_le`, `card_facPair_zero_le`,
+  `card_powersetCard_two_le`, ★ `card_ioMalign_le` (**at most `32335`**: the first window has `159`
+  primary locations, the last `113`), `prepPrim_subset_ioPrim_zero`, `prepFac_subset_ioFac_zero`,
+  `image_primWin_subset_ioPrim`, `image_facPair_subset_ioFac`, `noMalignant_of_io`,
+  `ioPrune_prep_second`, `mem_prepPrim_of_ioPrune`, `mem_ioPrim_of_ioPrune`,
+  ★★ `ioWindowsGood_ioPrune` (BACKLOG #239);
 * ★★★ `steane_machine_io` — **the level-one Steane machine from preparation to read-out**: under
   independent faults of rate at most `p` at every location, the decoded logical read-out has its
-  ideal distribution with probability at least `1 − 81003 (N + 1) p²`. Nothing is ideal but the
-  classical decoding.
+  ideal distribution with probability at least `1 − 32335 (N + 1) p²`; any pattern with no malignant
+  pair faulty reads it ideally. Nothing is ideal but the classical decoding.
 
 ## Honest scope
 
@@ -71,7 +80,8 @@ at the input as in every recovery (`retryOut`, BACKLOG ~~#240~~); a rejection ca
 and the expected number of attempts, are not treated.
 
 ⚠️ **Gadget faults are unitary on one qubit** (#207's model, #237); one block, three gates (#226);
-level one (#231); the constant is `C(403, 2)` (#239).
+level one (#231); the constant is `32335`, every pair of a window's primary locations counted
+(#239).
 
 ⚠️ **The read-out is one basis.** An `X̄` read-out is `H̄` and then this one.
 
@@ -805,6 +815,340 @@ theorem logicalProb_ioRun (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matri
         simp at hfin
     rw [hm, hex hl, logicalProb_cssMix (measChannel_single_mem Nm hNm j₀) hideal]
 
+/-! ### Benign pairs from preparation to read-out (BACKLOG #239) -/
+
+/-- The machine's locations inside `IOLoc`. -/
+def ioEmb (x : OvLoc N) : IOLoc N := .inr (.inl x)
+
+theorem ioEmb_injective : Function.Injective (ioEmb (N := N)) := fun x y h => by
+  simpa [ioEmb] using h
+
+/-- **The pattern with its harmless faults removed**, at the input's factory and at every recovery's:
+a second-attempt fault whose first attempt is fault-free is dropped. -/
+def ioPrune (ω : IOLoc N → Bool) : IOLoc N → Bool
+  | .inl ℓ => pruneSecond (fun ℓ => ω (.inl ℓ)) ℓ
+  | .inr (.inl x) => pruneRetry (fun x => ω (.inr (.inl x))) x
+  | .inr (.inr j) => ω (.inr (.inr j))
+
+theorem eq_true_of_ioPrune {ω : IOLoc N → Bool} {x : IOLoc N} (h : ioPrune ω x = true) :
+    ω x = true := by
+  rcases x with ℓ | x | j
+  · rcases ℓ with ℓ | ℓ
+    · exact h
+    · simp only [ioPrune, pruneSecond, Bool.and_eq_true] at h
+      exact h.1
+  · simp only [ioPrune, pruneRetry] at h
+    split at h <;> simp_all
+  · exact h
+
+/-- ★★ **Pruning does not change the machine from preparation to read-out.** -/
+theorem ioRun_ioPrune (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
+    [Fintype κ] (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
+    (Φ : Fin N → MethodRound → RetryFaults κ) (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
+    (hΦ : ∀ j r, (Φ j r).Valid) (Φ₀ : RetryFaults κ) (Nm : Fin 7 → κ → Matrix (Fin 2) (Fin 2) ℂ)
+    (hNm : ∀ j, ∑ k, (Nm j k)ᴴ * Nm j k = 1) (ω : IOLoc N → Bool) :
+    ioRun gs U F Φ hF hΦ Φ₀ Nm hNm (ioPrune ω) = ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω := by
+  have hP : prepState Φ₀ (fun ℓ => ioPrune ω (.inl ℓ)) = prepState Φ₀ fun ℓ => ω (.inl ℓ) := by
+    show prepState Φ₀ (pruneSecond fun ℓ => ω (.inl ℓ)) = _
+    simp only [prepState, retryOut_pruneSecond]
+  have hO : ∀ σ, overlapRun gs U F Φ hF hΦ (fun x => ioPrune ω (.inr (.inl x))) σ
+      = overlapRun gs U F Φ hF hΦ (fun x => ω (.inr (.inl x))) σ :=
+    fun σ => overlapRun_pruneRetry gs U F Φ hF hΦ (fun x => ω (.inr (.inl x))) σ
+  rw [ioRun, ioRun, hP, hO]
+  rfl
+
+/-- The input factory's first attempt. -/
+def prepPrim : Finset (IOLoc N) := Finset.univ.image fun ℓ : FacLoc => .inl (.inl ℓ)
+
+/-- The input factory's pairs of a first-attempt and a second-attempt location. -/
+def prepFac : Finset (Finset (IOLoc N)) :=
+  Finset.univ.image fun x : FacLoc × FacLoc => {.inl (.inl x.1), .inl (.inr x.2)}
+
+/-- The last recovery's primary locations. -/
+def lastPrim (h : 0 < N) : Finset (IOLoc N) :=
+  Finset.univ.image fun p : MethodRound × (Fin 7 ⊕ FacLoc) =>
+    ioEmb ((⟨N - 1, by omega⟩ : Fin N), .inr (primRec p))
+
+/-- The last recovery's factory pairs. -/
+def lastFac (h : 0 < N) : Finset (Finset (IOLoc N)) :=
+  Finset.univ.image fun x : MethodRound × FacLoc × FacLoc =>
+    {ioEmb ((⟨N - 1, by omega⟩ : Fin N), .inr (x.1, .inr (.inl x.2.1))),
+      ioEmb ((⟨N - 1, by omega⟩ : Fin N), .inr (x.1, .inr (.inr x.2.2)))}
+
+/-- **The primary locations of window `k`** from preparation to read-out. -/
+def ioPrim (k : Fin (N + 1)) : Finset (IOLoc N) :=
+  if h : (k : ℕ) < N then
+    (Finset.univ.image (primWin (⟨k, h⟩ : Fin N))).image ioEmb
+      ∪ (if (k : ℕ) = 0 then prepPrim else ∅)
+  else (if h' : 0 < N then lastPrim h' else prepPrim) ∪ measLocs
+
+/-- **The factory pairs of window `k`** from preparation to read-out. -/
+def ioFac (k : Fin (N + 1)) : Finset (Finset (IOLoc N)) :=
+  if h : (k : ℕ) < N then
+    (Finset.univ.image (facPair (⟨k, h⟩ : Fin N))).image (Finset.image ioEmb)
+      ∪ (if (k : ℕ) = 0 then prepFac else ∅)
+  else if h' : 0 < N then lastFac h' else prepFac
+
+/-- ★ **The malignant pairs of window `k` from preparation to read-out**, over-approximated: any two
+primary locations of the window, or a first-attempt and a second-attempt location of one factory. -/
+def ioMalign (k : Fin (N + 1)) : Finset (Finset (IOLoc N)) := (ioPrim k).powersetCard 2 ∪ ioFac k
+
+/-- **No malignant pair of any window from preparation to read-out is faulty.** -/
+def IONoMalignant (ω : IOLoc N → Bool) : Prop :=
+  ∀ k : Fin (N + 1), ∀ s ∈ ioMalign k, ∃ x ∈ s, ω x = false
+
+theorem card_eq_two_of_mem_ioMalign {k : Fin (N + 1)} {s : Finset (IOLoc N)}
+    (hs : s ∈ ioMalign k) : s.card = 2 := by
+  rcases Finset.mem_union.1 hs with hs | hs
+  · exact (Finset.mem_powersetCard.1 hs).2
+  · unfold ioFac at hs
+    split_ifs at hs with h h0 h'
+    · rw [Finset.mem_union] at hs
+      rcases hs with hs | hs
+      · obtain ⟨t, ht, rfl⟩ := Finset.mem_image.1 hs
+        rw [Finset.card_image_of_injective _ ioEmb_injective]
+        exact card_eq_two_of_mem_malign (Finset.mem_union_right _ ht)
+      · obtain ⟨x, _, rfl⟩ := Finset.mem_image.1 hs
+        exact Finset.card_pair (by simp)
+    · rw [Finset.mem_union] at hs
+      rcases hs with hs | hs
+      · obtain ⟨t, ht, rfl⟩ := Finset.mem_image.1 hs
+        rw [Finset.card_image_of_injective _ ioEmb_injective]
+        exact card_eq_two_of_mem_malign (Finset.mem_union_right _ ht)
+      · simp at hs
+    · obtain ⟨x, _, rfl⟩ := Finset.mem_image.1 hs
+      exact Finset.card_pair (by simp [ioEmb])
+    · obtain ⟨x, _, rfl⟩ := Finset.mem_image.1 hs
+      exact Finset.card_pair (by simp)
+
+theorem prevStep_zero (h : 0 < N) : prevStep (⟨0, h⟩ : Fin N) = ⟨0, h⟩ :=
+  Fin.ext (by simp [prevStep])
+
+/-- Window `0` names recovery `0` twice: it has at most `113` distinct primary locations. -/
+theorem card_primWin_zero_le (h : 0 < N) :
+    (Finset.univ.image (primWin (⟨0, h⟩ : Fin N))).card ≤ 113 := by
+  have hsub : Finset.univ.image (primWin (⟨0, h⟩ : Fin N))
+      ⊆ Finset.univ.image (Sum.elim (fun q : Fin 7 => ((⟨0, h⟩ : Fin N), (.inl q : StepLoc)))
+          fun p : MethodRound × (Fin 7 ⊕ FacLoc) => ((⟨0, h⟩ : Fin N), (.inr (primRec p) : StepLoc))) := by
+    intro x hx
+    obtain ⟨a, _, rfl⟩ := Finset.mem_image.1 hx
+    rcases a with q | p | p
+    · exact Finset.mem_image.2 ⟨.inl q, Finset.mem_univ _, rfl⟩
+    · exact Finset.mem_image.2 ⟨.inr p, Finset.mem_univ _, rfl⟩
+    · exact Finset.mem_image.2 ⟨.inr p, Finset.mem_univ _, by simp [primWin, prevStep_zero h]⟩
+  refine (Finset.card_le_card hsub).trans (Finset.card_image_le.trans ?_)
+  simp [Finset.card_univ, Fintype.card_sum, Fintype.card_prod, card_methodRound]
+
+/-- Window `0` has at most `4232` factory pairs. -/
+theorem card_facPair_zero_le (h : 0 < N) :
+    (Finset.univ.image (facPair (⟨0, h⟩ : Fin N))).card ≤ 4232 := by
+  have hsub : Finset.univ.image (facPair (⟨0, h⟩ : Fin N))
+      ⊆ Finset.univ.image fun x : MethodRound × FacLoc × FacLoc => facPair ⟨0, h⟩ (true, x) := by
+    intro s hs
+    obtain ⟨⟨b, x⟩, _, rfl⟩ := Finset.mem_image.1 hs
+    refine Finset.mem_image.2 ⟨x, Finset.mem_univ _, ?_⟩
+    cases b <;> simp [facPair, prevStep_zero h]
+  refine (Finset.card_le_card hsub).trans (Finset.card_image_le.trans ?_)
+  simp [Finset.card_univ, Fintype.card_prod, card_methodRound]
+
+theorem card_powersetCard_two_le {α : Type*} {A : Finset α} {n : ℕ} (h : A.card ≤ n) :
+    (A.powersetCard 2).card ≤ n.choose 2 := by
+  rw [Finset.card_powersetCard]
+  exact Nat.choose_le_choose 2 h
+
+/-- ★ **Every window from preparation to read-out has at most `32335` malignant pairs**: as many as
+a machine window in the middle; fewer in the first (`159` primary locations, `6348` factory pairs) and
+the last (`113`, `4232`). -/
+theorem card_ioMalign_le (k : Fin (N + 1)) : (ioMalign k).card ≤ 32335 := by
+  have hpp : (prepPrim : Finset (IOLoc N)).card ≤ 46 :=
+    Finset.card_image_le.trans (by simp [Finset.card_univ, Fintype.card_sum])
+  have hpf : (prepFac : Finset (Finset (IOLoc N))).card ≤ 2116 :=
+    Finset.card_image_le.trans (by simp [Finset.card_univ, Fintype.card_prod, Fintype.card_sum])
+  have hm : (measLocs : Finset (IOLoc N)).card ≤ 7 := Finset.card_image_le.trans (by simp)
+  refine (Finset.card_union_le _ _).trans ?_
+  unfold ioPrim ioFac
+  split_ifs with h h0 h'
+  · -- the first window
+    have hk : (⟨k, h⟩ : Fin N) = ⟨0, by omega⟩ := Fin.ext h0
+    rw [hk]
+    have h1 : ((Finset.univ.image (primWin (⟨0, by omega⟩ : Fin N))).image ioEmb ∪ prepPrim).card
+        ≤ 159 := (Finset.card_union_le _ _).trans (by
+          have := Finset.card_image_le (s := Finset.univ.image (primWin (⟨0, by omega⟩ : Fin N)))
+            (f := ioEmb)
+          have := card_primWin_zero_le (N := N) (by omega)
+          omega)
+    have h2 : ((Finset.univ.image (facPair (⟨0, by omega⟩ : Fin N))).image (Finset.image ioEmb)
+        ∪ prepFac).card ≤ 6348 := (Finset.card_union_le _ _).trans (by
+          have := Finset.card_image_le (s := Finset.univ.image (facPair (⟨0, by omega⟩ : Fin N)))
+            (f := Finset.image ioEmb)
+          have := card_facPair_zero_le (N := N) (by omega)
+          omega)
+    have h3 := card_powersetCard_two_le h1
+    have h4 : Nat.choose 159 2 = 12561 := by norm_num [Nat.choose_two_right]
+    omega
+  · -- a middle window
+    have h1 : ((Finset.univ.image (primWin (⟨k, h⟩ : Fin N))).image ioEmb ∪ ∅).card ≤ 219 := by
+      rw [Finset.union_empty]
+      refine Finset.card_image_le.trans (Finset.card_image_le.trans ?_)
+      simp [Finset.card_univ, Fintype.card_sum, Fintype.card_prod, card_methodRound]
+    have h2 : ((Finset.univ.image (facPair (⟨k, h⟩ : Fin N))).image (Finset.image ioEmb)
+        ∪ ∅).card ≤ 8464 := by
+      rw [Finset.union_empty]
+      refine Finset.card_image_le.trans (Finset.card_image_le.trans ?_)
+      simp [Finset.card_univ, Fintype.card_prod, card_methodRound]
+    have h3 := card_powersetCard_two_le h1
+    have h4 : Nat.choose 219 2 = 23871 := by norm_num [Nat.choose_two_right]
+    omega
+  · -- the last window, after at least one step
+    have h1 : (lastPrim h' ∪ measLocs : Finset (IOLoc N)).card ≤ 113 :=
+      (Finset.card_union_le _ _).trans (by
+        have : (lastPrim h' : Finset (IOLoc N)).card ≤ 106 := Finset.card_image_le.trans (by
+          simp [Finset.card_univ, Fintype.card_sum, Fintype.card_prod, card_methodRound])
+        omega)
+    have h2 : (lastFac h' : Finset (Finset (IOLoc N))).card ≤ 4232 := Finset.card_image_le.trans (by
+      simp [Finset.card_univ, Fintype.card_prod, card_methodRound])
+    have h3 := card_powersetCard_two_le h1
+    have h4 : Nat.choose 113 2 = 6328 := by norm_num [Nat.choose_two_right]
+    omega
+  · -- the last window, with no step
+    have h1 : (prepPrim ∪ measLocs : Finset (IOLoc N)).card ≤ 53 :=
+      (Finset.card_union_le _ _).trans (by omega)
+    have h3 := card_powersetCard_two_le h1
+    have h4 : Nat.choose 53 2 = 1378 := by norm_num [Nat.choose_two_right]
+    omega
+
+theorem prepPrim_subset_ioPrim_zero : (prepPrim : Finset (IOLoc N)) ⊆ ioPrim 0 := by
+  unfold ioPrim
+  split_ifs with h h0 h'
+  · exact Finset.subset_union_right
+  · exact absurd rfl h0
+  · exact absurd (by simpa using h') h
+  · exact Finset.subset_union_left
+
+theorem prepFac_subset_ioFac_zero : (prepFac : Finset (Finset (IOLoc N))) ⊆ ioFac 0 := by
+  unfold ioFac
+  split_ifs with h h0 h'
+  · exact Finset.subset_union_right
+  · exact absurd rfl h0
+  · exact absurd (by simpa using h') h
+  · exact subset_rfl
+
+theorem image_primWin_subset_ioPrim (k : Fin N) :
+    (Finset.univ.image (primWin k)).image ioEmb ⊆ ioPrim k.castSucc := by
+  unfold ioPrim
+  simp only [Fin.val_castSucc, k.isLt, ↓reduceDIte, Fin.eta]
+  exact Finset.subset_union_left
+
+theorem image_facPair_subset_ioFac (k : Fin N) :
+    (Finset.univ.image (facPair k)).image (Finset.image ioEmb) ⊆ ioFac k.castSucc := by
+  unfold ioFac
+  simp only [Fin.val_castSucc, k.isLt, ↓reduceDIte, Fin.eta]
+  exact Finset.subset_union_left
+
+/-- **The machine's windows sit inside the windows from preparation to read-out**, malignant pairs
+included. -/
+theorem noMalignant_of_io {ω : IOLoc N → Bool} (hω : IONoMalignant ω) :
+    NoMalignant fun x => ω (.inr (.inl x)) := by
+  intro k s hs
+  have hmem : s.image ioEmb ∈ ioMalign k.castSucc := by
+    unfold malign at hs
+    unfold ioMalign
+    rw [Finset.mem_union] at hs
+    rcases hs with hs | hs
+    · obtain ⟨hsub, hcard⟩ := Finset.mem_powersetCard.1 hs
+      refine Finset.mem_union_left _ (Finset.mem_powersetCard.2 ⟨?_, ?_⟩)
+      · exact (Finset.image_subset_image hsub).trans (image_primWin_subset_ioPrim k)
+      · rw [Finset.card_image_of_injective _ ioEmb_injective, hcard]
+    · refine Finset.mem_union_right _ (image_facPair_subset_ioFac k ?_)
+      rw [Finset.mem_image]
+      exact ⟨s, hs, rfl⟩
+  obtain ⟨y, hy, hωy⟩ := hω _ _ hmem
+  obtain ⟨x, hx, rfl⟩ := Finset.mem_image.1 hy
+  exact ⟨x, hx, hωy⟩
+
+/-- A second-attempt fault of the input's factory does not survive pruning. -/
+theorem ioPrune_prep_second {ω : IOLoc N → Bool} (hω : IONoMalignant ω) (ℓ : FacLoc) :
+    ioPrune ω (.inl (.inr ℓ)) = false := by
+  show (ω (.inl (.inr ℓ)) && !decide (∀ ℓ₁, ω (.inl (.inl ℓ₁)) = false)) = false
+  by_cases hc : ∀ ℓ₁ : FacLoc, ω (.inl (.inl ℓ₁)) = false
+  · rw [decide_eq_true hc, Bool.not_true, Bool.and_false]
+  · simp only [not_forall, Bool.not_eq_false] at hc
+    obtain ⟨ℓ₁, hω1⟩ := hc
+    have hmem : ({.inl (.inl ℓ₁), .inl (.inr ℓ)} : Finset (IOLoc N)) ∈ ioMalign 0 :=
+      Finset.mem_union_right _ (prepFac_subset_ioFac_zero
+        (Finset.mem_image.2 ⟨(ℓ₁, ℓ), Finset.mem_univ _, rfl⟩))
+    obtain ⟨y, hy, hωy⟩ := hω 0 _ hmem
+    simp only [Finset.mem_insert, Finset.mem_singleton] at hy
+    rcases hy with h | h
+    · rw [h, hω1] at hωy
+      exact Bool.noConfusion hωy
+    · rw [h] at hωy
+      rw [hωy, Bool.false_and]
+
+/-- An input-factory location that survives pruning is primary. -/
+theorem mem_prepPrim_of_ioPrune {ω : IOLoc N → Bool} (hω : IONoMalignant ω) {ℓ : RetryLoc}
+    (hp : ioPrune ω (.inl ℓ) = true) : (.inl ℓ : IOLoc N) ∈ prepPrim := by
+  rcases ℓ with ℓ | ℓ
+  · exact Finset.mem_image.2 ⟨ℓ, Finset.mem_univ _, rfl⟩
+  · rw [ioPrune_prep_second hω] at hp
+    exact Bool.noConfusion hp
+
+/-- A location of a window from preparation to read-out that survives pruning is primary. -/
+theorem mem_ioPrim_of_ioPrune {ω : IOLoc N → Bool} (hω : IONoMalignant ω) {k : Fin (N + 1)}
+    {x : IOLoc N} (hx : x ∈ ioWindow k) (hp : ioPrune ω x = true) : x ∈ ioPrim k := by
+  have hm := noMalignant_of_io hω
+  unfold ioWindow at hx
+  unfold ioPrim
+  split_ifs at hx ⊢ with h h0 h'
+  · rcases Finset.mem_union.1 hx with hx | hx
+    · obtain ⟨y, hy, rfl⟩ := Finset.mem_image.1 hx
+      exact Finset.mem_union_left _ (Finset.mem_image_of_mem _
+        (mem_primWin_of_pruneRetry hm hy hp))
+    · obtain ⟨ℓ, _, rfl⟩ := Finset.mem_image.1 hx
+      exact Finset.mem_union_right _ (mem_prepPrim_of_ioPrune hω hp)
+  · rw [Finset.union_empty] at hx
+    obtain ⟨y, hy, rfl⟩ := Finset.mem_image.1 hx
+    exact Finset.mem_union_left _ (Finset.mem_image_of_mem _ (mem_primWin_of_pruneRetry hm hy hp))
+  · rcases Finset.mem_union.1 hx with hx | hx
+    · unfold lastLocs at hx
+      simp only [h', ↓reduceDIte] at hx
+      obtain ⟨⟨r, e⟩, _, rfl⟩ := Finset.mem_image.1 hx
+      refine Finset.mem_union_left _ ?_
+      rcases e with q | a | a
+      · exact Finset.mem_image.2 ⟨(r, .inl q), Finset.mem_univ _, rfl⟩
+      · exact Finset.mem_image.2 ⟨(r, .inr a), Finset.mem_univ _, rfl⟩
+      · have h2 := pruneRetry_second_eq_false hm ⟨N - 1, by omega⟩ true r a
+        simp only [↓reduceIte] at h2
+        exact absurd (h2.symm.trans hp) Bool.false_ne_true
+    · exact Finset.mem_union_right _ hx
+  · rcases Finset.mem_union.1 hx with hx | hx
+    · unfold lastLocs at hx
+      simp only [h', ↓reduceDIte] at hx
+      obtain ⟨ℓ, _, rfl⟩ := Finset.mem_image.1 hx
+      exact Finset.mem_union_left _ (mem_prepPrim_of_ioPrune hω hp)
+    · exact Finset.mem_union_right _ hx
+
+/-- ★★ **With no malignant pair faulty, the pruned pattern holds at most one fault per window from
+preparation to read-out.** -/
+theorem ioWindowsGood_ioPrune {ω : IOLoc N → Bool} (hω : IONoMalignant ω) :
+    IOWindowsGood (ioPrune ω) := by
+  intro k
+  refine Finset.card_le_one.2 fun x hx y hy => ?_
+  obtain ⟨hxw, hpx⟩ := Finset.mem_filter.1 hx
+  obtain ⟨hyw, hpy⟩ := Finset.mem_filter.1 hy
+  by_contra hne
+  have hmem : ({x, y} : Finset (IOLoc N)) ∈ ioMalign k :=
+    Finset.mem_union_left _ (Finset.mem_powersetCard.2
+      ⟨Finset.insert_subset (mem_ioPrim_of_ioPrune hω hxw hpx)
+        (Finset.singleton_subset_iff.2 (mem_ioPrim_of_ioPrune hω hyw hpy)), Finset.card_pair hne⟩)
+  obtain ⟨z, hz, hωz⟩ := hω k _ hmem
+  simp only [Finset.mem_insert, Finset.mem_singleton] at hz
+  rcases hz with rfl | rfl
+  · rw [eq_true_of_ioPrune hpx] at hωz
+    exact Bool.noConfusion hωz
+  · rw [eq_true_of_ioPrune hpy] at hωz
+    exact Bool.noConfusion hωz
+
 /-- ★★★ **The level-one Steane machine from preparation to read-out.** For every circuit of `N`
 gadgets, unitary faults at the gadgets, channel faults on the pairs at every extraction location,
 faults at every location of every ancilla factory — the input's included — and at every readout of
@@ -813,8 +1157,13 @@ the final transversal measurement:
 * **a pattern with at most one fault in each window** — the first extended rectangle with the input's
   factory, every later one, and the last recovery with the measurement — reads every logical value
   with its ideal probability (`logicalProb_ioRun`);
+* **a pattern with no malignant pair faulty in any window** reads every logical value with its ideal
+  probability too: the second attempts' faults where the first attempt is fault-free change nothing
+  (`ioRun_ioPrune`), and what remains holds one fault per window (`ioWindowsGood_ioPrune`), BACKLOG
+  #239;
 * **under independent faults of rate at most `p`** at all `92 + 205 N + 7` locations, it does so with
-  probability at least `1 − 81003 (N + 1) p²`. Nothing is ideal but the classical decoding. -/
+  probability at least `1 − 32335 (N + 1) p²`, by the union bound over the at most `32335` malignant
+  pairs of each of the `N + 1` windows. Nothing is ideal but the classical decoding. -/
 theorem steane_machine_io (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
     (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
     (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
@@ -824,21 +1173,28 @@ theorem steane_machine_io (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matri
     (Nm : Fin 7 → κ → Matrix (Fin 2) (Fin 2) ℂ) (hNm : ∀ j, ∑ k, (Nm j k)ᴴ * Nm j k = 1) :
     (∀ ω : IOLoc N → Bool, IOWindowsGood ω →
         logicalProb (ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω) = logicalProb (machineIdeal gs plusState))
+    ∧ (∀ ω : IOLoc N → Bool, IONoMalignant ω →
+        logicalProb (ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω) = logicalProb (machineIdeal gs plusState))
     ∧ ∀ (ν : Measure Bool) [IsProbabilityMeasure ν] {p : ℝ}, 0 ≤ p →
         ν {c | c = true} ≤ ENNReal.ofReal p →
-        1 - ((N + 1 : ℕ) : ℝ≥0∞) * ENNReal.ofReal (81003 * p ^ 2)
+        1 - ((N + 1 : ℕ) : ℝ≥0∞) * ENNReal.ofReal (32335 * p ^ 2)
           ≤ Measure.pi (fun _ : IOLoc N => ν)
               {ω | logicalProb (ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω)
                 = logicalProb (machineIdeal gs plusState)} := by
   have hdet : ∀ ω : IOLoc N → Bool, IOWindowsGood ω →
       logicalProb (ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω) = logicalProb (machineIdeal gs plusState) :=
     fun ω hω => funext fun v => logicalProb_ioRun gs U hU F hF hOn Φ hΦ hΦ₀ Nm hNm hω v
-  refine ⟨hdet, fun ν _ p hp hν => ?_⟩
-  have hch : ((Nat.choose 403 2 : ℕ) : ℝ) = 81003 := by norm_num [Nat.choose_two_right]
-  have h := one_sub_le_measure_output_eq_windows ν hp hν (w := 403) ioWindow card_ioWindow_le
+  have hben : ∀ ω : IOLoc N → Bool, IONoMalignant ω →
+      logicalProb (ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω) = logicalProb (machineIdeal gs plusState) :=
+    fun ω hω => by
+      rw [← ioRun_ioPrune gs U F Φ hF hΦ Φ₀ Nm hNm ω]
+      exact hdet _ (ioWindowsGood_ioPrune hω)
+  refine ⟨hdet, hben, fun ν _ p hp hν => ?_⟩
+  have h := one_sub_le_measure_output_eq_pairs ν hp hν (m := 32335) ioMalign
+    (fun _ _ hs => card_eq_two_of_mem_ioMalign hs) card_ioMalign_le
     (out := fun ω => logicalProb (ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω))
-    (ideal := logicalProb (machineIdeal gs plusState)) fun ω hω => hdet ω hω
-  rwa [hch] at h
+    (ideal := logicalProb (machineIdeal gs plusState)) fun ω hω => hben ω hω
+  simpa using h
 
 end Steane
 end QEC

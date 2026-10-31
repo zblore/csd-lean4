@@ -4077,4 +4077,222 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.goodAnc_retryOut_single
 
+-- SteaneVerifiedAncilla + SteaneOverlapMachine + SteaneLogicalIO (BACKLOG #239, 2026-10-31): the
+-- retry's harmless faults pruned, malignant pairs counted (1 - 32335 N p^2, 1 - 32335 (N+1) p^2).
+/-- info: 'CSD.Empirical.QM.QEC.Steane.retryOut_eq_of_first_clean' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.retryOut_eq_of_first_clean
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pruneSecond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pruneSecond
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.retryOut_pruneSecond' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.retryOut_pruneSecond
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.retryOf' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.retryOf
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.FirstClean' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.FirstClean
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pruneRetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pruneRetry
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pruneRetry_second' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pruneRetry_second
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pruneRetry_first' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pruneRetry_first
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pruneRetry_extract' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pruneRetry_extract
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.gatePat_pruneRetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.gatePat_pruneRetry
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.retryOut_pruneRetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.retryOut_pruneRetry
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.recKraus'_pruneRetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.recKraus'_pruneRetry
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.overlapRun_pruneRetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.overlapRun_pruneRetry
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.primRec' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.primRec
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PrimLoc' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PrimLoc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.primWin' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.primWin
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.facPair' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.facPair
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.malign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.malign
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.facPair_mem_malign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.facPair_mem_malign
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pair_mem_malign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pair_mem_malign
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.card_eq_two_of_mem_malign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.card_eq_two_of_mem_malign
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.card_malign_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.card_malign_le
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.NoMalignant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.NoMalignant
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pruneRetry_second_eq_false' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pruneRetry_second_eq_false
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.mem_primWin_of_pruneRetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.mem_primWin_of_pruneRetry
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.windowsGood_pruneRetry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.windowsGood_pruneRetry
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ioEmb' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ioEmb
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ioEmb_injective' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ioEmb_injective
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ioPrune' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ioPrune
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.eq_true_of_ioPrune' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.eq_true_of_ioPrune
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ioRun_ioPrune' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ioRun_ioPrune
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.prepPrim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.prepPrim
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.prepFac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.prepFac
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lastPrim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lastPrim
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lastFac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lastFac
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ioPrim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ioPrim
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ioFac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ioFac
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ioMalign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ioMalign
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.IONoMalignant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.IONoMalignant
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.card_eq_two_of_mem_ioMalign' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.card_eq_two_of_mem_ioMalign
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.prevStep_zero' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.prevStep_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.card_primWin_zero_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.card_primWin_zero_le
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.card_facPair_zero_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.card_facPair_zero_le
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.card_powersetCard_two_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.card_powersetCard_two_le
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.card_ioMalign_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.card_ioMalign_le
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.prepPrim_subset_ioPrim_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.prepPrim_subset_ioPrim_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.prepFac_subset_ioFac_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.prepFac_subset_ioFac_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.image_primWin_subset_ioPrim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.image_primWin_subset_ioPrim
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.image_facPair_subset_ioFac' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.image_facPair_subset_ioFac
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.noMalignant_of_io' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.noMalignant_of_io
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ioPrune_prep_second' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ioPrune_prep_second
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.mem_prepPrim_of_ioPrune' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.mem_prepPrim_of_ioPrune
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.mem_ioPrim_of_ioPrune' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.mem_ioPrim_of_ioPrune
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ioWindowsGood_ioPrune' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ioWindowsGood_ioPrune
+
 end CSD.Tests.AxiomAudit

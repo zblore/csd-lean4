@@ -59,6 +59,15 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
   recovery deviates by `cssMix` (`deviatesBy_recUnder_single`), a fault-free one corrects it
   (`recUnder_none`, `isRecovery_methodRecovery_cssMix`), a gadget with one fault deviates by it, the
   ideal gadgets carry it; ★★ `exRecGood_of_windowsGood`;
+* `retryOf`, `FirstClean`, `pruneRetry` (**the pattern with its harmless faults removed**: a fault in
+  a factory's second attempt whose first attempt is fault-free), ★ `retryOut_pruneRetry`,
+  `recKraus'_pruneRetry`, ★★ `overlapRun_pruneRetry` — **pruning does not change the machine**;
+  `primRec`, `PrimLoc`, `primWin` (**the `219` primary locations of a window**), `facPair`,
+  ★ `malign` (**the window's malignant pairs, over-approximated**: two primary locations, or the two
+  attempts of one factory), `card_eq_two_of_mem_malign`, ★ `card_malign_le` (**at most `32335`**,
+  against `C(403, 2) = 81003`), `NoMalignant`, `pruneRetry_second_eq_false`,
+  `mem_primWin_of_pruneRetry`, ★★ `windowsGood_pruneRetry` — **with no malignant pair faulty, the
+  pruned pattern holds at most one fault per window** (BACKLOG #239);
 * ★★★ `steane_machine_overlap` — **the level-one machine with nothing ideal in the recovery but its
   classical decoding**: for every circuit of `N` gadgets, unitary faults at every gadget location,
   channel faults on the pairs at every extraction location, faults at every location of every ancilla
@@ -66,7 +75,8 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
   rectangle leaves the state a CSS deviation of the ideal one, exactly the ideal one if the last
   recovery is fault-free, and the ideal one after a final ideal decoding; under independent faults of
   rate at most `p` at the `205 N` locations, the decoded output is ideal with probability at least
-  `1 − 81003 N p²` (`81003 = C(403, 2)`).
+  `1 − 32335 N p²` — any pattern with no malignant pair faulty decodes ideally, and a window has at
+  most `32335` malignant pairs.
 
 ## Honest scope
 
@@ -90,8 +100,11 @@ on one qubit (#207's model, #237).
 
 ⚠️ **Level one.** The concatenated machine with counted recoveries is #231.
 
-⚠️ **The constant is `C(403, 2) = 81003`** from the union bound over each window's pairs; most pairs
-are benign, and counting only the malignant ones is #239.
+⚠️ **The constant is `32335`**, the malignant pairs of a window as over-approximated by `malign`: a
+pair holding a second attempt's location and anything but that factory's first attempt is benign
+(`overlapRun_pruneRetry`), so `C(403, 2) = 81003` falls to `C(219, 2) + 4 · 46² = 32335`. Every pair
+of the `219` primary locations is still counted; an `X`-type and a `Z`-type fault, which the two
+rounds correct separately, are benign in Aliferis–Gottesman–Preskill's count and not here (#239).
 
 References: P. Aliferis, D. Gottesman, J. Preskill, Quantum Inf. Comput. 6 (2006) 97; A. Steane,
 PRL 78 (1997) 2252; `specs/BACKLOG.md` #233, #235, #238, #232, #229, #207, #96, #97, #234, #236,
@@ -786,6 +799,198 @@ theorem exRecGood_of_windowsGood {ω : OvLoc N → Bool} (hω : WindowsGood ω) 
       cases h2 : recoveryFlag ω (k + 1) <;> simp
     exacts [hGR h1 h2, hLR h0 h2, hLG h0 h1, hLG h0 h1]
 
+/-! ### Benign pairs: the retry's faults (BACKLOG #239) -/
+
+/-- **The recovery round a second-attempt location belongs to**, if it is one. -/
+def retryOf : OvLoc N → Option (Fin N × MethodRound)
+  | (j, .inr (r, .inr (.inr _))) => some (j, r)
+  | _ => none
+
+/-- **The first attempt of recovery `j`'s factory in round `r` is fault-free under `ω`.** -/
+def FirstClean (ω : OvLoc N → Bool) (j : Fin N) (r : MethodRound) : Prop :=
+  ∀ ℓ : FacLoc, ω (j, .inr (r, .inr (.inl ℓ))) = false
+
+instance (ω : OvLoc N → Bool) (j : Fin N) (r : MethodRound) : Decidable (FirstClean ω j r) :=
+  inferInstanceAs (Decidable (∀ ℓ : FacLoc, ω (j, .inr (r, .inr (.inl ℓ))) = false))
+
+/-- **The pattern with its harmless faults removed**: a fault at a second-attempt location whose
+first attempt is fault-free is dropped. -/
+def pruneRetry (ω : OvLoc N → Bool) (x : OvLoc N) : Bool :=
+  match retryOf x with
+  | some (j, r) => ω x && !decide (FirstClean ω j r)
+  | none => ω x
+
+theorem pruneRetry_second (ω : OvLoc N → Bool) (j : Fin N) (r : MethodRound) (ℓ : FacLoc) :
+    pruneRetry ω (j, .inr (r, .inr (.inr ℓ)))
+      = (ω (j, .inr (r, .inr (.inr ℓ))) && !decide (FirstClean ω j r)) := rfl
+
+theorem pruneRetry_first (ω : OvLoc N → Bool) (j : Fin N) (r : MethodRound) (ℓ : FacLoc) :
+    pruneRetry ω (j, .inr (r, .inr (.inl ℓ))) = ω (j, .inr (r, .inr (.inl ℓ))) := rfl
+
+theorem pruneRetry_extract (ω : OvLoc N → Bool) (j : Fin N) (r : MethodRound) (q : Fin 7) :
+    pruneRetry ω (j, .inr (r, .inl q)) = ω (j, .inr (r, .inl q)) := rfl
+
+theorem gatePat_pruneRetry (ω : OvLoc N → Bool) : gatePat (pruneRetry ω) = gatePat ω := rfl
+
+/-- **Pruning leaves every factory unchanged**: where the first attempt is fault-free, the second
+attempt's faults change nothing (`retryOut_eq_of_first_clean`); elsewhere nothing is pruned. -/
+theorem retryOut_pruneRetry (Φ : RetryFaults κ) (ω : OvLoc N → Bool) (j : Fin N)
+    (r : MethodRound) :
+    retryOut Φ (fun ℓ => pruneRetry ω (j, .inr (r, .inr ℓ)))
+      = retryOut Φ (fun ℓ => ω (j, .inr (r, .inr ℓ))) := by
+  by_cases hc : FirstClean ω j r
+  · exact retryOut_eq_of_first_clean Φ (fun ℓ => by rw [pruneRetry_first]; exact hc ℓ)
+      fun ℓ => hc ℓ
+  · congr 1
+    funext ℓ
+    rcases ℓ with ℓ | ℓ
+    · rfl
+    · rw [pruneRetry_second, decide_eq_false hc, Bool.not_false, Bool.and_true]
+
+theorem recKraus'_pruneRetry (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
+    (Φ : Fin N → MethodRound → RetryFaults κ) (ω : OvLoc N → Bool) (j : Fin N) :
+    recKraus' (F j) (Φ j) (recPat (pruneRetry ω) j) = recKraus' (F j) (Φ j) (recPat ω j) := by
+  funext i
+  simp only [recKraus', roundOp, recPat, pruneRetry_extract, retryOut_pruneRetry]
+
+/-- ★★ **Pruning does not change the machine**: the harmless faults are harmless. -/
+theorem overlapRun_pruneRetry (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
+    [Fintype κ] (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
+    (Φ : Fin N → MethodRound → RetryFaults κ) (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
+    (hΦ : ∀ j r, (Φ j r).Valid) (ω : OvLoc N → Bool) (ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ) :
+    overlapRun gs U F Φ hF hΦ (pruneRetry ω) ρ = overlapRun gs U F Φ hF hΦ ω ρ := by
+  have hR : ovRecovery F Φ hF hΦ (pruneRetry ω) = ovRecovery F Φ hF hΦ ω := by
+    funext k σ
+    unfold ovRecovery
+    split_ifs with hk
+    · simp only [Channel.apply, recUnder, recKraus'_pruneRetry]
+    · rfl
+  have hG : ovFaultyGadget gs U (pruneRetry ω) = ovFaultyGadget gs U ω := by
+    unfold ovFaultyGadget
+    rw [gatePat_pruneRetry]
+  rw [overlapRun, overlapRun, hR, hG]
+
+/-- A recovery location other than a second attempt, as a location of the recovery. -/
+def primRec (p : MethodRound × (Fin 7 ⊕ FacLoc)) : RecLoc := (p.1, p.2.map id Sum.inl)
+
+/-- **The primary locations of a window**: the gadget's, and every location of the window's two
+recoveries but the second attempts' — `7 + 2 × 106 = 219`. -/
+abbrev PrimLoc : Type := Fin 7 ⊕ (MethodRound × (Fin 7 ⊕ FacLoc)) ⊕ (MethodRound × (Fin 7 ⊕ FacLoc))
+
+/-- The primary locations of window `k`. -/
+def primWin (k : Fin N) : PrimLoc → OvLoc N :=
+  Sum.elim (fun q => (k, .inl q))
+    (Sum.elim (fun p => (k, .inr (primRec p))) fun p => (prevStep k, .inr (primRec p)))
+
+/-- **A first-attempt and a second-attempt location of one factory** of window `k`'s recoveries
+(`true`: recovery `k`; `false`: the one before). -/
+def facPair (k : Fin N) (x : Bool × MethodRound × FacLoc × FacLoc) : Finset (OvLoc N) :=
+  {((if x.1 then k else prevStep k), .inr (x.2.1, .inr (.inl x.2.2.1))),
+    ((if x.1 then k else prevStep k), .inr (x.2.1, .inr (.inr x.2.2.2)))}
+
+/-- ★ **The malignant pairs of window `k`**, over-approximated: any two primary locations, or a
+first-attempt and a second-attempt location of the same factory. A pair holding a second-attempt
+location and anything outside that factory's first attempt is benign (`overlapRun_pruneRetry`). -/
+def malign (k : Fin N) : Finset (Finset (OvLoc N)) :=
+  (Finset.univ.image (primWin k)).powersetCard 2 ∪ Finset.univ.image (facPair k)
+
+theorem facPair_mem_malign (k : Fin N) (x : Bool × MethodRound × FacLoc × FacLoc) :
+    facPair k x ∈ malign k := by
+  unfold malign
+  exact Finset.mem_union_right _ (Finset.mem_image_of_mem _ (Finset.mem_univ _))
+
+theorem pair_mem_malign {k : Fin N} {x y : OvLoc N} (hx : x ∈ Finset.univ.image (primWin k))
+    (hy : y ∈ Finset.univ.image (primWin k)) (hne : x ≠ y) : ({x, y} : Finset (OvLoc N)) ∈ malign k := by
+  unfold malign
+  exact Finset.mem_union_left _ (Finset.mem_powersetCard.2
+    ⟨Finset.insert_subset hx (Finset.singleton_subset_iff.2 hy), Finset.card_pair hne⟩)
+
+theorem card_eq_two_of_mem_malign {k : Fin N} {s : Finset (OvLoc N)} (hs : s ∈ malign k) :
+    s.card = 2 := by
+  rcases Finset.mem_union.1 hs with hs | hs
+  · exact (Finset.mem_powersetCard.1 hs).2
+  · obtain ⟨x, _, rfl⟩ := Finset.mem_image.1 hs
+    exact Finset.card_pair (by simp)
+
+/-- ★ **A window has at most `32335` malignant pairs**: `C(219, 2) = 23871` among its primary
+locations and `4 × 46² = 8464` across its four factories' two attempts — against the `C(403, 2) =
+81003` pairs of the window. -/
+theorem card_malign_le (k : Fin N) : (malign k).card ≤ 32335 := by
+  have h1 : ((Finset.univ.image (primWin k)).powersetCard 2).card ≤ 23871 := by
+    rw [Finset.card_powersetCard]
+    have h : (Finset.univ.image (primWin k)).card ≤ 219 := by
+      refine Finset.card_image_le.trans ?_
+      simp [Finset.card_univ, Fintype.card_sum, Fintype.card_prod, card_methodRound]
+    calc ((Finset.univ.image (primWin k)).card).choose 2 ≤ Nat.choose 219 2 :=
+          Nat.choose_le_choose 2 h
+      _ = 23871 := by norm_num [Nat.choose_two_right]
+  have h2 : (Finset.univ.image (facPair k)).card ≤ 8464 := by
+    refine Finset.card_image_le.trans ?_
+    simp [Finset.card_univ, Fintype.card_prod, card_methodRound]
+  exact (Finset.card_union_le _ _).trans (by omega)
+
+/-- **No malignant pair of any window is faulty.** -/
+def NoMalignant (ω : OvLoc N → Bool) : Prop :=
+  ∀ k : Fin N, ∀ s ∈ malign k, ∃ x ∈ s, ω x = false
+
+/-- **A second-attempt fault of window `k` does not survive pruning**: if its factory's first attempt
+held a fault too, the two would be a malignant pair. -/
+theorem pruneRetry_second_eq_false {ω : OvLoc N → Bool} (hω : NoMalignant ω) (k : Fin N) (b : Bool)
+    (r : MethodRound) (ℓ : FacLoc) :
+    pruneRetry ω ((if b then k else prevStep k), .inr (r, .inr (.inr ℓ))) = false := by
+  rw [pruneRetry_second]
+  by_cases hc : FirstClean ω (if b then k else prevStep k) r
+  · rw [decide_eq_true hc, Bool.not_true, Bool.and_false]
+  · simp only [FirstClean, not_forall, Bool.not_eq_false] at hc
+    obtain ⟨ℓ₁, hω1⟩ := hc
+    obtain ⟨y, hy, hωy⟩ := hω k _ (facPair_mem_malign k (b, r, ℓ₁, ℓ))
+    simp only [facPair, Finset.mem_insert, Finset.mem_singleton] at hy
+    rcases hy with h | h
+    · rw [h, hω1] at hωy
+      exact Bool.noConfusion hωy
+    · rw [h] at hωy
+      rw [hωy, Bool.false_and]
+
+/-- A location of window `k` that survives pruning is primary. -/
+theorem mem_primWin_of_pruneRetry {ω : OvLoc N → Bool} (hω : NoMalignant ω) {k : Fin N}
+    {x : OvLoc N} (hx : x ∈ window k) (hpx : pruneRetry ω x = true) :
+    x ∈ Finset.univ.image (primWin k) := by
+  obtain ⟨a, _, rfl⟩ := Finset.mem_image.1 hx
+  have hsec : ∀ (b : Bool) (r : MethodRound) (ℓ : FacLoc),
+      pruneRetry ω ((if b then k else prevStep k), .inr (r, .inr (.inr ℓ))) = true → False :=
+    fun b r ℓ hp => by rw [pruneRetry_second_eq_false hω k b r ℓ] at hp; exact Bool.noConfusion hp
+  rcases a with (q | ⟨r, (q | ℓ | ℓ)⟩) | ⟨r, (q | ℓ | ℓ)⟩
+  · exact Finset.mem_image.2 ⟨.inl q, Finset.mem_univ _, rfl⟩
+  · exact Finset.mem_image.2 ⟨.inr (.inl (r, .inl q)), Finset.mem_univ _, rfl⟩
+  · exact Finset.mem_image.2 ⟨.inr (.inl (r, .inr ℓ)), Finset.mem_univ _, rfl⟩
+  · exact (hsec true r ℓ hpx).elim
+  · exact Finset.mem_image.2 ⟨.inr (.inr (r, .inl q)), Finset.mem_univ _, rfl⟩
+  · exact Finset.mem_image.2 ⟨.inr (.inr (r, .inr ℓ)), Finset.mem_univ _, rfl⟩
+  · exact (hsec false r ℓ hpx).elim
+
+/-- ★★ **With no malignant pair faulty, the pruned pattern holds at most one fault per window.** -/
+theorem windowsGood_pruneRetry {ω : OvLoc N → Bool} (hω : NoMalignant ω) :
+    WindowsGood (pruneRetry ω) := by
+  intro k
+  refine Finset.card_le_one.2 fun x hx y hy => ?_
+  obtain ⟨hxw, hpx⟩ := Finset.mem_filter.1 hx
+  obtain ⟨hyw, hpy⟩ := Finset.mem_filter.1 hy
+  by_contra hne
+  have hωx : ω x = true := by
+    unfold pruneRetry at hpx
+    split at hpx <;> simp_all
+  have hωy : ω y = true := by
+    unfold pruneRetry at hpy
+    split at hpy <;> simp_all
+  obtain ⟨z, hz, hωz⟩ := hω k {x, y} (pair_mem_malign (mem_primWin_of_pruneRetry hω hxw hpx)
+    (mem_primWin_of_pruneRetry hω hyw hpy) hne)
+  simp only [Finset.mem_insert, Finset.mem_singleton] at hz
+  rcases hz with rfl | rfl
+  · rw [hωx] at hωz
+    exact Bool.noConfusion hωz
+  · rw [hωy] at hωz
+    exact Bool.noConfusion hωz
+
 /-! ### The machine -/
 
 /-- ★★★ **The level-one Steane machine with the recovery's locations counted.** For every circuit of
@@ -797,10 +1002,16 @@ method's extraction locations, and every encoded input:
   deviation of the ideal one — exactly the ideal one when the last recovery is fault-free — and a
   final ideal decoding returns the ideal output (`IsFaultChain.ovRun_spec`,
   `IsFaultChain.decode_ovRun`, fed by `isFaultChain_overlap` and `exRecGood_of_windowsGood`);
+* **a pattern with no malignant pair faulty in any window** — any number of faults, so long as no two
+  primary locations of a window are faulty and no factory's two attempts both hold one — still gives
+  the ideal decoded output: the second attempts' faults where the first attempt is fault-free change
+  nothing (`overlapRun_pruneRetry`), and what remains holds one fault per window
+  (`windowsGood_pruneRetry`), BACKLOG #239;
 * **under independent faults of rate at most `p` at all `205 N` locations** — the gadgets', the
   extraction locations', and both attempts of every round's ancilla factory (`retryOut`) — the decoded
-  output is ideal with probability at least `1 − 81003 N p²`, by the union bound over the `N` windows
-  of at most `403` locations (`one_sub_le_measure_output_eq_windows`). -/
+  output is ideal with probability at least `1 − 32335 N p²`, by the union bound over the at most
+  `32335` malignant pairs of each of the `N` windows (`one_sub_le_measure_output_eq_pairs`), against
+  the `C(403, 2) = 81003` pairs of a window. -/
 theorem steane_machine_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
     (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
     (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
@@ -812,9 +1023,11 @@ theorem steane_machine_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → 
         (∃ E ∈ cssMix, overlapRun gs U F Φ hF hΦ ω ρ = E (machineIdeal gs ρ))
         ∧ (lastFault (recoveryFlag ω) N = false → overlapRun gs U F Φ hF hΦ ω ρ = machineIdeal gs ρ)
         ∧ methodRecovery.apply (overlapRun gs U F Φ hF hΦ ω ρ) = machineIdeal gs ρ)
+    ∧ (∀ ω : OvLoc N → Bool, NoMalignant ω →
+        methodRecovery.apply (overlapRun gs U F Φ hF hΦ ω ρ) = machineIdeal gs ρ)
     ∧ ∀ (ν : Measure Bool) [IsProbabilityMeasure ν] {p : ℝ}, 0 ≤ p →
         ν {c | c = true} ≤ ENNReal.ofReal p →
-        1 - (N : ℝ≥0∞) * ENNReal.ofReal (81003 * p ^ 2)
+        1 - (N : ℝ≥0∞) * ENNReal.ofReal (32335 * p ^ 2)
           ≤ Measure.pi (fun _ : OvLoc N => ν)
               {ω | methodRecovery.apply (overlapRun gs U F Φ hF hΦ ω ρ) = machineIdeal gs ρ} := by
   have hdet : ∀ ω : OvLoc N → Bool, WindowsGood ω →
@@ -828,12 +1041,16 @@ theorem steane_machine_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → 
     rw [ovIdeal_ovGadget] at hdev hex
     refine ⟨hdev, hex, ?_⟩
     rw [overlapRun, hc.decode_ovRun hg isRecovery_methodRecovery_cssMix hρ, ovIdeal_ovGadget]
-  refine ⟨hdet, fun ν _ p hp hν => ?_⟩
-  have hch : ((Nat.choose 403 2 : ℕ) : ℝ) = 81003 := by norm_num [Nat.choose_two_right]
-  have h := one_sub_le_measure_output_eq_windows ν hp hν (w := 403) window card_window_le
+  have hben : ∀ ω : OvLoc N → Bool, NoMalignant ω →
+      methodRecovery.apply (overlapRun gs U F Φ hF hΦ ω ρ) = machineIdeal gs ρ := fun ω hω => by
+    rw [← overlapRun_pruneRetry gs U F Φ hF hΦ ω ρ]
+    exact (hdet _ (windowsGood_pruneRetry hω)).2.2
+  refine ⟨hdet, hben, fun ν _ p hp hν => ?_⟩
+  have h := one_sub_le_measure_output_eq_pairs ν hp hν (m := 32335) malign
+    (fun _ _ hs => card_eq_two_of_mem_malign hs) card_malign_le
     (out := fun ω => methodRecovery.apply (overlapRun gs U F Φ hF hΦ ω ρ)) (ideal := machineIdeal gs ρ)
-    fun ω hω => (hdet ω hω).2.2
-  rwa [hch] at h
+    fun ω hω => hben ω hω
+  simpa using h
 
 end Steane
 end QEC

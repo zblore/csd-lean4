@@ -14926,5 +14926,18 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.IsFaultChain.ovRun_spec_from
 
+-- OverlappingRectangles (BACKLOG #239, 2026-10-31): the union bound over a family of malignant
+-- pairs, and the join over windows with it.
+/-- info: 'QuantumInfo.measure_pair_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.measure_pair_eq
+
+/-- info: 'QuantumInfo.measure_exists_pair_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.measure_exists_pair_le
+
+/-- info: 'QuantumInfo.one_sub_le_measure_output_eq_pairs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.one_sub_le_measure_output_eq_pairs
 
 end CSD.Tests.AxiomAudit

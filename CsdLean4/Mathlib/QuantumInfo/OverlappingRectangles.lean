@@ -55,7 +55,11 @@ the first extended rectangle is the two-piece `rect` of #96 and the `k`-th, for 
 * ★★★ `one_sub_le_measure_output_eq_windows` — **the join for overlapping windows**: if the output
   is ideal whenever every one of `N` windows of at most `w` locations holds at most one fault, the
   output is ideal with probability at least `1 − N · C(w, 2) · p²`. The windows may overlap; the union
-  bound does not care.
+  bound does not care;
+* `measure_pair_eq`, ★★ `measure_exists_pair_le`, ★★★ `one_sub_le_measure_output_eq_pairs` — **the
+  join over malignant pairs**: if the output is ideal whenever no pair of each window's malignant
+  family is faulty, the bound is `1 − N · m · p²` with `m` the size of the largest family, not
+  `C(w, 2)` (BACKLOG #239).
 
 ## Honest scope
 
@@ -338,6 +342,67 @@ theorem one_sub_le_measure_output_eq_windows {ι β : Type*} [Fintype ι] [Decid
     rw [ENNReal.ofReal_mul (by positivity), ENNReal.ofReal_pow hp, ENNReal.ofReal_natCast]
     gcongr
     exact hW j
+
+/-! ### Malignant pairs -/
+
+/-- **Two named locations both faulty**: a box event, of probability `ν {true}²`. -/
+theorem measure_pair_eq {ι : Type*} [Fintype ι] [DecidableEq ι] (ν : Measure Bool)
+    [IsProbabilityMeasure ν] {s : Finset ι} (hs : s.card = 2) :
+    Measure.pi (fun _ : ι => ν) {ω | ∀ i ∈ s, ω i = true} = ν {b | b = true} ^ 2 := by
+  have hset : {ω : ι → Bool | ∀ i ∈ s, ω i = true}
+      = Set.univ.pi fun i => if i ∈ s then {b | b = true} else Set.univ := by
+    ext ω
+    simp only [Set.mem_ofPred_eq, Set.mem_univ_pi]
+    refine ⟨fun h i => ?_, fun h i hi => by simpa [hi] using h i⟩
+    by_cases hi : i ∈ s
+    · simpa [hi] using h i hi
+    · simp [hi]
+  rw [hset, Measure.pi_pi]
+  simp only [apply_ite (ν ·), measure_univ]
+  rw [Finset.prod_ite_mem, Finset.univ_inter, Finset.prod_const, hs]
+
+/-- ★★ **Some pair of a named family both faulty**: probability at most the number of pairs times
+`ν {true}²`. With the family all pairs of a window this is `measure_two_le_card_filter_le`; a family
+of the **malignant** pairs only gives a sharper bound. -/
+theorem measure_exists_pair_le {ι : Type*} [Fintype ι] [DecidableEq ι] (ν : Measure Bool)
+    [IsProbabilityMeasure ν] (M : Finset (Finset ι)) (hM : ∀ s ∈ M, s.card = 2) :
+    Measure.pi (fun _ : ι => ν) {ω | ∃ s ∈ M, ∀ i ∈ s, ω i = true}
+      ≤ (M.card : ℝ≥0∞) * ν {b | b = true} ^ 2 := by
+  have hset : {ω : ι → Bool | ∃ s ∈ M, ∀ i ∈ s, ω i = true}
+      = ⋃ s ∈ M, {ω | ∀ i ∈ s, ω i = true} := by
+    ext ω
+    simp
+  calc Measure.pi (fun _ : ι => ν) {ω | ∃ s ∈ M, ∀ i ∈ s, ω i = true}
+      ≤ ∑ s ∈ M, Measure.pi (fun _ : ι => ν) {ω | ∀ i ∈ s, ω i = true} := by
+        rw [hset]
+        exact measure_biUnion_finset_le _ _
+    _ = ∑ _s ∈ M, ν {b | b = true} ^ 2 := Finset.sum_congr rfl fun s hs => measure_pair_eq ν (hM s hs)
+    _ = (M.card : ℝ≥0∞) * ν {b | b = true} ^ 2 := by rw [Finset.sum_const, nsmul_eq_mul]
+
+/-- ★★★ **The join over malignant pairs.** If the output is the ideal one whenever, in each of `N`
+windows, no pair of the window's malignant family is faulty — the family holding at most `m` pairs —
+then under independent faults of rate at most `p` the output is ideal with probability at least
+`1 − N · m · p²`. With every pair of a window counted as malignant, `m = C(w, 2)` and this is
+`one_sub_le_measure_output_eq_windows`. -/
+theorem one_sub_le_measure_output_eq_pairs {ι β : Type*} [Fintype ι] [DecidableEq ι]
+    (ν : Measure Bool) [IsProbabilityMeasure ν] {p : ℝ} (hp : 0 ≤ p)
+    (hν : ν {b | b = true} ≤ ENNReal.ofReal p) {N m : ℕ} (M : Fin N → Finset (Finset ι))
+    (hM : ∀ j, ∀ s ∈ M j, s.card = 2) (hcard : ∀ j, (M j).card ≤ m) {out : (ι → Bool) → β}
+    {ideal : β} (hgood : ∀ ω, (∀ j, ∀ s ∈ M j, ∃ i ∈ s, ω i = false) → out ω = ideal) :
+    1 - (N : ℝ≥0∞) * ENNReal.ofReal ((m : ℝ) * p ^ 2)
+      ≤ Measure.pi (fun _ : ι => ν) {ω | out ω = ideal} := by
+  refine one_sub_le_measure_output_eq (Measure.pi fun _ : ι => ν)
+    (fun j => {ω | ∃ s ∈ M j, ∀ i ∈ s, ω i = true})
+    (fun ω hω => hgood ω fun j s hs => ?_) (fun j => ?_)
+  · by_contra h
+    refine hω j ⟨s, hs, fun i hi => ?_⟩
+    cases hωi : ω i
+    · exact absurd ⟨i, hi, hωi⟩ h
+    · rfl
+  · refine (measure_exists_pair_le ν (M j) (hM j)).trans ?_
+    rw [ENNReal.ofReal_mul (by positivity), ENNReal.ofReal_pow hp, ENNReal.ofReal_natCast]
+    gcongr
+    exact hcard j
 
 end QuantumInfo
 

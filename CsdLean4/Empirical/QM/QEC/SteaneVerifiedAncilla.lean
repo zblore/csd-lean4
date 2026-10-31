@@ -86,7 +86,10 @@ preparation still leaves Steane's method a correctable deviation.
   whatever its checker reads**; ★★ `retryOut_norm`, ★★ `retryOut_none`, ★★★ `goodAnc_retryOut_single`
   — **one fault anywhere in either attempt leaves a good ancilla in every branch**: two attempts
   suffice at one fault per window. This is the factory `SteaneOverlapMachine.lean` and
-  `SteaneLogicalIO.lean` count.
+  `SteaneLogicalIO.lean` count;
+* ★★ `retryOut_eq_of_first_clean` — **with the first attempt fault-free, the second attempt's faults
+  change nothing**; `pruneSecond`, ★ `retryOut_pruneSecond` — the malignant-pair count of BACKLOG
+  #239 rests on these.
 
 ## Honest scope
 
@@ -1650,6 +1653,40 @@ theorem goodAnc_retryOut_single {κ : Type} [Fintype κ] {Φ : RetryFaults κ} (
     obtain ⟨c, hc⟩ := facVec_none_eq_smul Φ.first s w
     rw [hc]
     exact Or.inl (isPeriodic_plusAnc.smul c)
+
+/-- ★★ **With the first attempt fault-free, the second attempt's faults change nothing** (BACKLOG
+#239): every branch of the retrying factory is the same under any two patterns that agree on a
+fault-free first attempt. The second attempt runs only on a rejection, and a fault-free first attempt
+is never rejected. -/
+theorem retryOut_eq_of_first_clean {κ : Type} (Φ : RetryFaults κ) {b b' : RetryLoc → Bool}
+    (hb : ∀ ℓ, b (.inl ℓ) = false) (hb' : ∀ ℓ, b' (.inl ℓ) = false) :
+    retryOut Φ b = retryOut Φ b' := by
+  have e : (fun ℓ => b (.inl ℓ)) = fun _ => false := funext hb
+  have e' : (fun ℓ => b' (.inl ℓ)) = fun _ => false := funext hb'
+  funext p
+  rcases p with p | ⟨⟨i, w, a'⟩, q⟩
+  · simp only [retryOut, retryOutV, e, e']
+  · simp only [retryOut, retryOutV, e, e']
+    split_ifs with hw
+    · rfl
+    · rw [facVec_none_of_not_accepts _ _ hw, zero_smul, zero_smul]
+
+/-- **A retry pattern with its harmless faults removed**: the second attempt's faults are dropped
+when the first attempt is fault-free. -/
+def pruneSecond (b : RetryLoc → Bool) : RetryLoc → Bool
+  | .inl ℓ => b (.inl ℓ)
+  | .inr ℓ => b (.inr ℓ) && !decide (∀ ℓ₁, b (.inl ℓ₁) = false)
+
+/-- ★ **Pruning leaves the retrying factory unchanged.** -/
+theorem retryOut_pruneSecond {κ : Type} (Φ : RetryFaults κ) (b : RetryLoc → Bool) :
+    retryOut Φ (pruneSecond b) = retryOut Φ b := by
+  by_cases hc : ∀ ℓ₁, b (.inl ℓ₁) = false
+  · exact retryOut_eq_of_first_clean Φ (fun ℓ => hc ℓ) hc
+  · congr 1
+    funext ℓ
+    rcases ℓ with ℓ | ℓ
+    · rfl
+    · simp only [pruneSecond, decide_eq_false hc, Bool.not_false, Bool.and_true]
 
 end Steane
 end QEC
