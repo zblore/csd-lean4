@@ -72,8 +72,9 @@ control's passages as record occurrences (#191). Here the candidate's packet and
 
 ⚠️ **The arena is the window, not the whole chain.** It carries the amplitudes of the window's
 upper-band modes, an invariant subspace of the chain on which `packet_phaseAmp` and
-`hasDerivAt_packet` make the flow the Dirac evolution. The projective state of the whole chain, with
-`e^{−iHt}` on all of `ℂ^{2L}`, is not built.
+`hasDerivAt_packet` make the flow the Dirac evolution. The whole chain, with `e^{−iHt}` on all of
+`ℂ^{2L}`, and a distant detector written on the packet's arrival are
+`RecordLayer/DiracArrival.lean` (`chainProp_packet`, `dirac_arrival`, BACKLOG #265).
 
 ⚠️ **The detector law is stated, not generated.** The register integrates the site weight `‖ψ_k‖²`
 with a gain; there is no coupling Hamiltonian and no back-reaction on the packet (#251). These are

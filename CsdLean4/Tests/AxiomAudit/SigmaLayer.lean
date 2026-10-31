@@ -12143,4 +12143,218 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_detector
 
+-- DiracArrival (BACKLOG #265, 2026-10-31): the whole chain's evolution as an arena, region
+-- detectors, weight located by the translation phase, a detector written on the packet's arrival.
+/-- info: 'CSD.RecordLayer.exp_mulVec_of_mulVec_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_mulVec_of_mulVec_eq_smul
+
+/-- info: 'CSD.RecordLayer.chainProp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp
+
+/-- info: 'CSD.RecordLayer.chainProp_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_zero
+
+/-- info: 'CSD.RecordLayer.chainProp_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_add
+
+/-- info: 'CSD.RecordLayer.continuous_chainProp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_chainProp
+
+/-- info: 'CSD.RecordLayer.chainProp_mulVec_mode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_mulVec_mode
+
+/-- info: 'CSD.RecordLayer.chainProp_packet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_packet
+
+/-- info: 'CSD.RecordLayer.regionWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight
+
+/-- info: 'CSD.RecordLayer.regionWeight_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_nonneg
+
+/-- info: 'CSD.RecordLayer.sum_siteWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_siteWeight
+
+/-- info: 'CSD.RecordLayer.regionWeight_add_compl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_add_compl
+
+/-- info: 'CSD.RecordLayer.WholeArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.WholeArena
+
+/-- info: 'CSD.RecordLayer.continuous_chainProp_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_chainProp_mulVec
+
+/-- info: 'CSD.RecordLayer.continuous_regionWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_regionWeight
+
+/-- info: 'CSD.RecordLayer.wholeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wholeFlow
+
+/-- info: 'CSD.RecordLayer.state_wholeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.state_wholeFlow
+
+/-- info: 'CSD.RecordLayer.register_wholeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.register_wholeFlow
+
+/-- info: 'CSD.RecordLayer.continuous_regionWeight_chainProp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_regionWeight_chainProp
+
+/-- info: 'CSD.RecordLayer.wholeFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wholeFlow_zero
+
+/-- info: 'CSD.RecordLayer.wholeFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wholeFlow_add
+
+/-- info: 'CSD.RecordLayer.continuous_wholeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_wholeFlow
+
+/-- info: 'CSD.RecordLayer.measurable_wholeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_wholeFlow
+
+/-- info: 'CSD.RecordLayer.wholeEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wholeEvolve
+
+/-- info: 'CSD.RecordLayer.wholeEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wholeEvolve_self
+
+/-- info: 'CSD.RecordLayer.wholeEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wholeEvolve_comp
+
+/-- info: 'CSD.RecordLayer.integral_regionWeight_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_regionWeight_mono
+
+/-- info: 'CSD.RecordLayer.regionRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionRead
+
+/-- info: 'CSD.RecordLayer.measurable_regionRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_regionRead
+
+/-- info: 'CSD.RecordLayer.regionDetector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionDetector
+
+/-- info: 'CSD.RecordLayer.transPhase_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transPhase_eq_sum
+
+/-- info: 'CSD.RecordLayer.regionWeight_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_mul_le
+
+/-- info: 'CSD.RecordLayer.re_star_exp_mul_toCircle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.re_star_exp_mul_toCircle
+
+/-- info: 'CSD.RecordLayer.regionWeight_ringPacket_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_ringPacket_le
+
+/-- info: 'CSD.RecordLayer.le_regionWeight_ringPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_regionWeight_ringPacket
+
+/-- info: 'CSD.RecordLayer.re_transPhase_ringPacket_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.re_transPhase_ringPacket_ge
+
+/-- info: 'CSD.RecordLayer.cos_le_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_le_half
+
+/-- info: 'CSD.RecordLayer.farHalf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.farHalf
+
+/-- info: 'CSD.RecordLayer.crossPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.crossPacket
+
+/-- info: 'CSD.RecordLayer.crossHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.crossHop
+
+/-- info: 'CSD.RecordLayer.vRel_cross' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.vRel_cross
+
+/-- info: 'CSD.RecordLayer.omega_cross' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.omega_cross
+
+/-- info: 'CSD.RecordLayer.cross_spread' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cross_spread
+
+/-- info: 'CSD.RecordLayer.cross_win' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cross_win
+
+/-- info: 'CSD.RecordLayer.cross_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cross_norm
+
+/-- info: 'CSD.RecordLayer.cross_budget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cross_budget
+
+/-- info: 'CSD.RecordLayer.angle_farHalf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.angle_farHalf
+
+/-- info: 'CSD.RecordLayer.regionWeight_cross_far' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_cross_far
+
+/-- info: 'CSD.RecordLayer.regionWeight_cross_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_cross_near
+
+/-- info: 'CSD.RecordLayer.chainProp_crossPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_crossPacket
+
+/-- info: 'CSD.RecordLayer.cross_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cross_before
+
+/-- info: 'CSD.RecordLayer.cross_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cross_after
+
+/-- info: 'CSD.RecordLayer.crossDetector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.crossDetector
+
+/-- info: 'CSD.RecordLayer.dirac_arrival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_arrival
+
 end CSD.Tests.AxiomAudit
