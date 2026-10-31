@@ -31,8 +31,8 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
 ## Steane's method with its factories under a fault pattern (BACKLOG ~~#238~~)
 
 * `RecLoc` — **the recovery's locations**: in each round the seven extraction locations and the
-  forty-six locations of the round's ancilla factory (`FacLoc`, `SteaneVerifiedAncilla.lean`), `106`
-  in all; `RoundIdx`;
+  ninety-two locations of the round's ancilla factory with its retry (`RetryLoc`, both attempts'
+  `FacLoc`, `SteaneVerifiedAncilla.lean`, BACKLOG #240), `198` in all; `RoundIdx`;
 * `extractOp`, `extractOp_smul`, `extractOp_one`, `extractOp_zero`,
   `sum_extractOp_conjTranspose_mul_eq`, ★ `sum_extractOp_family` — the extraction with an ancilla
   family and a fault family is a complete measurement; `roundOp`, `sum_roundOp_tp`;
@@ -42,15 +42,15 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
   ★★ `recUnder_none` — **with no fault in the recovery it is `methodRecovery`**;
 * ★★★ `exists_atQubit_recKraus'_single`, ★★★ `deviatesBy_recUnder_single` — **with one fault
   anywhere in the recovery — an extraction location, either encoder, a verification pair, a checker
-  readout — it is a CSS deviation of the identity** (`goodAnc_facOut_single`, `exists_atQubit_ancKraus`,
+  readout — it is a CSS deviation of the identity** (`goodAnc_retryOut_single`, `exists_atQubit_ancKraus`,
   `atQubit_underKraus_single`).
 
 ## The machine
 
 * `StepLoc`, `OvLoc N` — **one location space**: step `j` has its gadget's seven locations and its
-  recovery's `106`, `113 N` in all; `gatePat`, `recPat` — a pattern read on one piece;
-* `window k` — **the `k`-th extended rectangle's locations**: step `k`'s `113` and the recovery of
-  step `k − 1` (for `k ≥ 1`), ★ `card_window_le` — at most `219`; `WindowsGood ω` — every window
+  recovery's `198`, `205 N` in all; `gatePat`, `recPat` — a pattern read on one piece;
+* `window k` — **the `k`-th extended rectangle's locations**: step `k`'s `205` and the recovery of
+  step `k − 1` (for `k ≥ 1`), ★ `card_window_le` — at most `403`; `WindowsGood ω` — every window
   holds at most one fault;
 * `ovGadget`, `ovFaultyGadget`, `ovRecovery`, `overlapRun` — the machine under a pattern;
   `recoveryFlag`, `gadgetFlag` — which pieces are faulty; ★ `ovIdeal_ovGadget` — its ideal run is
@@ -65,8 +65,8 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
   factory, and an encoded input, a pattern with at most one fault in each overlapping extended
   rectangle leaves the state a CSS deviation of the ideal one, exactly the ideal one if the last
   recovery is fault-free, and the ideal one after a final ideal decoding; under independent faults of
-  rate at most `p` at the `113 N` locations, the decoded output is ideal with probability at least
-  `1 − 23871 N p²` (`23871 = C(219, 2)`).
+  rate at most `p` at the `205 N` locations, the decoded output is ideal with probability at least
+  `1 − 81003 N p²` (`81003 = C(403, 2)`).
 
 ## Honest scope
 
@@ -75,8 +75,10 @@ inside each recovery. Every quantum location of the recovery is counted (BACKLOG
 input prepared by a factory and the transversal read-out, both in the fault pattern, are
 `SteaneLogicalIO.lean` (`steane_machine_io`, BACKLOG ~~#236~~).
 
-⚠️ **A rejected ancilla is replaced fault-free.** On a failing checker word the factory prepares a
-fresh `|+̄⟩` without locations of its own; counting the retry's locations is #240.
+⚠️ **One retry.** On a failing checker word the factory runs a second attempt with its own
+forty-six locations and uses its ancilla whatever its checker reads (`retryOut`, BACKLOG ~~#240~~):
+at one fault per window two attempts suffice, since a fault-free first attempt is never rejected.
+A rejection caused by two faults, and the expected number of attempts, are not treated.
 
 ⚠️ **A fault at an extraction location stays on its pair** (BACKLOG ~~#235~~); a fault in an encoder
 or at a checker readout is any channel on the seven qubits; faults at the gadgets are still unitary
@@ -88,7 +90,7 @@ on one qubit (#207's model, #237).
 
 ⚠️ **Level one.** The concatenated machine with counted recoveries is #231.
 
-⚠️ **The constant is `C(219, 2) = 23871`** from the union bound over each window's pairs; most pairs
+⚠️ **The constant is `C(403, 2) = 81003`** from the union bound over each window's pairs; most pairs
 are benign, and counting only the malignant ones is #239.
 
 References: P. Aliferis, D. Gottesman, J. Preskill, Quantum Inf. Comput. 6 (2006) 97; A. Steane,
@@ -225,8 +227,8 @@ theorem deviatesBy_methodUnder_single [Fintype κ] {F : MethodRound → Fin 7 �
 /-! ### Steane's method with its factories under a fault pattern -/
 
 /-- **The recovery's locations**: in each round, an extraction location or a location of the round's
-ancilla factory — `2 × (7 + 46) = 106`. -/
-abbrev RecLoc : Type := MethodRound × (Fin 7 ⊕ FacLoc)
+ancilla factory with its retry — `2 × (7 + 92) = 198`. -/
+abbrev RecLoc : Type := MethodRound × (Fin 7 ⊕ RetryLoc)
 
 instance instDecidableEqFacLoc : DecidableEq FacLoc :=
   inferInstanceAs (DecidableEq ((Fin 7 ⊕ Fin 9) ⊕ (Fin 7 ⊕ Fin 9) ⊕ Fin 7 ⊕ Fin 7))
@@ -234,17 +236,22 @@ instance instDecidableEqFacLoc : DecidableEq FacLoc :=
 instance instFintypeFacLoc : Fintype FacLoc :=
   inferInstanceAs (Fintype ((Fin 7 ⊕ Fin 9) ⊕ (Fin 7 ⊕ Fin 9) ⊕ Fin 7 ⊕ Fin 7))
 
+instance instDecidableEqRetryLoc : DecidableEq RetryLoc :=
+  inferInstanceAs (DecidableEq (FacLoc ⊕ FacLoc))
+
+instance instFintypeRetryLoc : Fintype RetryLoc := inferInstanceAs (Fintype (FacLoc ⊕ FacLoc))
+
 instance instDecidableEqRecLoc : DecidableEq RecLoc :=
-  inferInstanceAs (DecidableEq (MethodRound × (Fin 7 ⊕ FacLoc)))
+  inferInstanceAs (DecidableEq (MethodRound × (Fin 7 ⊕ RetryLoc)))
 
 instance instFintypeRecLoc : Fintype RecLoc :=
-  inferInstanceAs (Fintype (MethodRound × (Fin 7 ⊕ FacLoc)))
+  inferInstanceAs (Fintype (MethodRound × (Fin 7 ⊕ RetryLoc)))
 
 /-- A round's branches: the extraction faults' and the factory's, then the read word. -/
-abbrev RoundIdx (κ : Type) : Type := ((Fin 7 → Option κ) × FacIdx (FacBranch κ)) × (Fin 7 → Fin 2)
+abbrev RoundIdx (κ : Type) : Type := ((Fin 7 → Option κ) × RetryIdx (FacBranch κ)) × (Fin 7 → Fin 2)
 
 instance instFintypeRoundIdx {κ : Type} [Fintype κ] : Fintype (RoundIdx κ) := by
-  unfold RoundIdx FacIdx FacBranch
+  unfold RoundIdx
   infer_instance
 
 /-- **Steane's extraction with the ancilla `f` and the fault `G` after the `CNOT`**, read as `m`. -/
@@ -315,26 +322,26 @@ theorem sum_extractOp_family {ι σ : Type*} [Fintype ι] [Fintype σ] {out : ι
 
 /-- **One round of Steane's method under the pattern `b`**: the ancilla from its factory, the
 extraction with its faults, read in branch `i`. -/
-def roundOp (F : Fin 7 → κ → PairOp) (Φ : FacFaults κ) (b : Fin 7 ⊕ FacLoc → Bool) (i : RoundIdx κ) :
+def roundOp (F : Fin 7 → κ → PairOp) (Φ : RetryFaults κ) (b : Fin 7 ⊕ RetryLoc → Bool) (i : RoundIdx κ) :
     Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
-  extractOp (facOut Φ (fun ℓ => b (.inr ℓ)) i.1.2) (roundKraus F (fun q => b (.inl q)) i.1.1) i.2
+  extractOp (retryOut Φ (fun ℓ => b (.inr ℓ)) i.1.2) (roundKraus F (fun q => b (.inl q)) i.1.1) i.2
 
-theorem sum_roundOp_tp [Fintype κ] {F : Fin 7 → κ → PairOp} {Φ : FacFaults κ}
-    (hF : ∀ q, ∑ k, (F q k)ᴴ * F q k = 1) (hΦ : Φ.Valid) (b : Fin 7 ⊕ FacLoc → Bool) :
+theorem sum_roundOp_tp [Fintype κ] {F : Fin 7 → κ → PairOp} {Φ : RetryFaults κ}
+    (hF : ∀ q, ∑ k, (F q k)ᴴ * F q k = 1) (hΦ : Φ.Valid) (b : Fin 7 ⊕ RetryLoc → Bool) :
     ∑ i, (roundOp F Φ b i)ᴴ * roundOp F Φ b i = 1 := by
-  have h := sum_extractOp_family (facOut_norm hΦ fun ℓ => b (.inr ℓ))
+  have h := sum_extractOp_family (retryOut_norm hΦ fun ℓ => b (.inr ℓ))
     (roundKraus_tp hF fun q => b (.inl q))
   simp only [roundOp]
   exact h
 
 /-- **A branch of Steane's method under the pattern `b`**, factories and extractions included. -/
-def recKraus' (F : MethodRound → Fin 7 → κ → PairOp) (Φ : MethodRound → FacFaults κ)
+def recKraus' (F : MethodRound → Fin 7 → κ → PairOp) (Φ : MethodRound → RetryFaults κ)
     (b : RecLoc → Bool) (i : RoundIdx κ × RoundIdx κ) : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
   (pauliMat 0 (decode (syndrome i.2.2))
       * (hadTransversal 7 * roundOp (F .phase) (Φ .phase) (fun l => b (.phase, l)) i.2 * hadTransversal 7))
     * (pauliMat (decode (syndrome i.1.2)) 0 * roundOp (F .bit) (Φ .bit) (fun l => b (.bit, l)) i.1)
 
-theorem recKraus'_tp [Fintype κ] {F : MethodRound → Fin 7 → κ → PairOp} {Φ : MethodRound → FacFaults κ}
+theorem recKraus'_tp [Fintype κ] {F : MethodRound → Fin 7 → κ → PairOp} {Φ : MethodRound → RetryFaults κ}
     (hF : ∀ r q, ∑ k, (F r q k)ᴴ * F r q k = 1) (hΦ : ∀ r, (Φ r).Valid) (b : RecLoc → Bool) :
     ∑ i, (recKraus' F Φ b i)ᴴ * recKraus' F Φ b i = 1 := by
   have hX : ∑ i : RoundIdx κ, (pauliMat (decode (syndrome i.2)) 0
@@ -378,7 +385,7 @@ theorem recKraus'_tp [Fintype κ] {F : MethodRound → Fin 7 → κ → PairOp} 
 
 /-- ★★ **Steane's method with its factories, under a fault pattern**: a channel for every pattern of
 faults at the extraction locations and the factory locations of both rounds. -/
-def recUnder [Fintype κ] (F : MethodRound → Fin 7 → κ → PairOp) (Φ : MethodRound → FacFaults κ)
+def recUnder [Fintype κ] (F : MethodRound → Fin 7 → κ → PairOp) (Φ : MethodRound → RetryFaults κ)
     (hF : ∀ r q, ∑ k, (F r q k)ᴴ * F r q k = 1) (hΦ : ∀ r, (Φ r).Valid) (b : RecLoc → Bool) :
     Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) (RoundIdx κ × RoundIdx κ) where
   kraus := recKraus' F Φ b
@@ -413,10 +420,10 @@ theorem eq_one_of_smul_one_eq_one {n : Type*} [DecidableEq n] [Nonempty n] {c : 
   simpa using this
 
 /-- **A fault-free round reads with a scalar multiple of `|+̄⟩`, independently of the word.** -/
-theorem roundOp_none {F : Fin 7 → κ → PairOp} (Φ : FacFaults κ)
-    (rest : (Fin 7 → Option κ) × FacIdx (FacBranch κ)) :
+theorem roundOp_none {F : Fin 7 → κ → PairOp} (Φ : RetryFaults κ)
+    (rest : (Fin 7 → Option κ) × RetryIdx (FacBranch κ)) :
     ∃ c : ℂ, ∀ m, roundOp F Φ (fun _ => false) (rest, m) = c • steaneRead m := by
-  obtain ⟨c, hc⟩ := facOut_none Φ rest.2
+  obtain ⟨c, hc⟩ := retryOut_none Φ rest.2
   rcases roundKraus_false_cases F rest.1 with h | h
   · refine ⟨c, fun m => ?_⟩
     simp only [roundOp]
@@ -433,9 +440,9 @@ theorem sum_steaneRead_conjTranspose_mul : ∑ m, (steaneRead m)ᴴ * steaneRead
 
 /-- ★★ **With no fault in the recovery, Steane's method with its factories is `methodRecovery`.** -/
 theorem recUnder_none [Fintype κ] {F : MethodRound → Fin 7 → κ → PairOp}
-    {Φ : MethodRound → FacFaults κ} (hF : ∀ r q, ∑ k, (F r q k)ᴴ * F r q k = 1)
+    {Φ : MethodRound → RetryFaults κ} (hF : ∀ r q, ∑ k, (F r q k)ᴴ * F r q k = 1)
     (hΦ : ∀ r, (Φ r).Valid) : (recUnder F Φ hF hΦ fun _ => false).apply = methodRecovery.apply := by
-  choose a ha using fun r (rest : (Fin 7 → Option κ) × FacIdx (FacBranch κ)) =>
+  choose a ha using fun r (rest : (Fin 7 → Option κ) × RetryIdx (FacBranch κ)) =>
     roundOp_none (F := F r) (Φ r) rest
   have hw : ∀ r, ∑ rest, star (a r rest) * a r rest = 1 := by
     intro r
@@ -487,14 +494,14 @@ theorem ancReadOp_smul (c : ℂ) (f : (Fin 7 → Fin 2) → ℂ) (m : Fin 7 → 
 /-- ★★★ **With one fault in the recovery — at an extraction location, or anywhere in either round's
 ancilla factory — every branch acts on the code on one data qubit.** -/
 theorem exists_atQubit_recKraus'_single [Fintype κ] {F : MethodRound → Fin 7 → κ → PairOp}
-    {Φ : MethodRound → FacFaults κ} (hOn : ∀ r q k, OnPair q (F r q k)) (hΦ : ∀ r, (Φ r).Valid)
+    {Φ : MethodRound → RetryFaults κ} (hOn : ∀ r q k, OnPair q (F r q k)) (hΦ : ∀ r, (Φ r).Valid)
     (l : RecLoc) (i : RoundIdx κ × RoundIdx κ) :
     ∃ q, AtQubit q (recKraus' F Φ (fun l' => decide (l' = l)) i) := by
   obtain ⟨⟨⟨s₁, p₁⟩, m₁⟩, ⟨⟨s₂, p₂⟩, m₂⟩⟩ := i
   obtain ⟨r, q | ℓ⟩ := l
   · -- a fault at an extraction location
-    obtain ⟨c₁, hc₁⟩ := facOut_none (Φ .bit) p₁
-    obtain ⟨c₂, hc₂⟩ := facOut_none (Φ .phase) p₂
+    obtain ⟨c₁, hc₁⟩ := retryOut_none (Φ .bit) p₁
+    obtain ⟨c₂, hc₂⟩ := retryOut_none (Φ .phase) p₂
     have hb : (fun l' : MethodRound × Fin 7 => decide (((l'.1, .inl l'.2) : RecLoc) = (r, .inl q)))
         = fun l' => decide (l' = (r, q)) := funext fun l' => by
       obtain ⟨r', q'⟩ := l'
@@ -510,15 +517,15 @@ theorem exists_atQubit_recKraus'_single [Fintype κ] {F : MethodRound → Fin 7 
   · -- a fault in a factory
     cases r with
     | bit =>
-      have hg := goodAnc_facOut_single (hΦ .bit) ℓ p₁
-      obtain ⟨c₂, hc₂⟩ := facOut_none (Φ .phase) p₂
+      have hg := goodAnc_retryOut_single (hΦ .bit) ℓ p₁
+      obtain ⟨c₂, hc₂⟩ := retryOut_none (Φ .phase) p₂
       rcases roundKraus_false_cases (F .bit) s₁ with h₁ | h₁ <;>
         rcases roundKraus_false_cases (F .phase) s₂ with h₂ | h₂
       · obtain ⟨q, hq⟩ := exists_atQubit_ancKraus
-          (out := fun _ : Unit => facOut (Φ .bit) (fun ℓ' => decide (ℓ' = ℓ)) p₁)
+          (out := fun _ : Unit => retryOut (Φ .bit) (fun ℓ' => decide (ℓ' = ℓ)) p₁)
           (fun _ => hg) .bit ((), (m₁, m₂))
         have hK : recKraus' F Φ (fun l' => decide (l' = (.bit, .inr ℓ))) (((s₁, p₁), m₁), ((s₂, p₂), m₂))
-            = c₂ • ancKraus (fun _ : Unit => facOut (Φ .bit) (fun ℓ' => decide (ℓ' = ℓ)) p₁) .bit
+            = c₂ • ancKraus (fun _ : Unit => retryOut (Φ .bit) (fun ℓ' => decide (ℓ' = ℓ)) p₁) .bit
                 ((), (m₁, m₂)) := by
           simp only [recKraus', roundOp, ancKraus, ancBitOp, phaseRound, Prod.mk.injEq,
             reduceCtorEq, and_false, false_and, decide_false, true_and, Sum.inr.injEq, h₁, h₂, hc₂,
@@ -531,15 +538,15 @@ theorem exists_atQubit_recKraus'_single [Fintype κ] {F : MethodRound → Fin 7 
           decide_false, h₁, h₂, extractOp_zero, Matrix.mul_zero, Matrix.zero_mul]
         exact AtQubit.zero
     | phase =>
-      have hg := goodAnc_facOut_single (hΦ .phase) ℓ p₂
-      obtain ⟨c₁, hc₁⟩ := facOut_none (Φ .bit) p₁
+      have hg := goodAnc_retryOut_single (hΦ .phase) ℓ p₂
+      obtain ⟨c₁, hc₁⟩ := retryOut_none (Φ .bit) p₁
       rcases roundKraus_false_cases (F .bit) s₁ with h₁ | h₁ <;>
         rcases roundKraus_false_cases (F .phase) s₂ with h₂ | h₂
       · obtain ⟨q, hq⟩ := exists_atQubit_ancKraus
-          (out := fun _ : Unit => facOut (Φ .phase) (fun ℓ' => decide (ℓ' = ℓ)) p₂)
+          (out := fun _ : Unit => retryOut (Φ .phase) (fun ℓ' => decide (ℓ' = ℓ)) p₂)
           (fun _ => hg) .phase ((), (m₁, m₂))
         have hK : recKraus' F Φ (fun l' => decide (l' = (.phase, .inr ℓ))) (((s₁, p₁), m₁), ((s₂, p₂), m₂))
-            = c₁ • ancKraus (fun _ : Unit => facOut (Φ .phase) (fun ℓ' => decide (ℓ' = ℓ)) p₂) .phase
+            = c₁ • ancKraus (fun _ : Unit => retryOut (Φ .phase) (fun ℓ' => decide (ℓ' = ℓ)) p₂) .phase
                 ((), (m₁, m₂)) := by
           simp only [recKraus', roundOp, ancKraus, ancPhaseOp, bitRound, Prod.mk.injEq,
             reduceCtorEq, and_false, false_and, decide_false, true_and, Sum.inr.injEq, h₁, h₂, hc₁,
@@ -555,7 +562,7 @@ theorem exists_atQubit_recKraus'_single [Fintype κ] {F : MethodRound → Fin 7 
 /-- ★★★ **Steane's method with its factories and one fault anywhere in it is a CSS deviation of the
 identity.** -/
 theorem deviatesBy_recUnder_single [Fintype κ] {F : MethodRound → Fin 7 → κ → PairOp}
-    {Φ : MethodRound → FacFaults κ} (hF : ∀ r q, ∑ k, (F r q k)ᴴ * F r q k = 1)
+    {Φ : MethodRound → RetryFaults κ} (hF : ∀ r q, ∑ k, (F r q k)ᴴ * F r q k = 1)
     (hOn : ∀ r q k, OnPair q (F r q k)) (hΦ : ∀ r, (Φ r).Valid) (l : RecLoc) :
     DeviatesBy steaneProj cssMix id (recUnder F Φ hF hΦ fun l' => decide (l' = l)).apply :=
   deviatesBy_cssMix_of_exists_atQubit _ (exists_atQubit_recKraus'_single hOn hΦ l)
@@ -570,7 +577,7 @@ instance instDecidableEqStepLoc : DecidableEq StepLoc := inferInstanceAs (Decida
 
 instance instFintypeStepLoc : Fintype StepLoc := inferInstanceAs (Fintype (Fin 7 ⊕ RecLoc))
 
-/-- **The machine's locations**: `N` steps of `113` (`7` at the gadget, `106` in the recovery). -/
+/-- **The machine's locations**: `N` steps of `205` (`7` at the gadget, `198` in the recovery). -/
 abbrev OvLoc (N : ℕ) : Type := Fin N × StepLoc
 
 variable {N : ℕ}
@@ -594,8 +601,8 @@ def winLoc (k : Fin N) : StepLoc ⊕ RecLoc → OvLoc N
 `k ≥ 1`. Windows `k` and `k + 1` share recovery `k`. -/
 def window (k : Fin N) : Finset (OvLoc N) := Finset.univ.image (winLoc k)
 
-/-- ★ **A window has at most `219` locations**: a step's `113` and the previous recovery's `106`. -/
-theorem card_window_le (k : Fin N) : (window k).card ≤ 219 := by
+/-- ★ **A window has at most `403` locations**: a step's `205` and the previous recovery's `198`. -/
+theorem card_window_le (k : Fin N) : (window k).card ≤ 403 := by
   refine Finset.card_image_le.trans ?_
   simp [Finset.card_univ, Fintype.card_sum, Fintype.card_prod, card_methodRound]
 
@@ -653,7 +660,7 @@ def ovFaultyGadget (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 
 
 /-- The recoveries under the pattern: Steane's method with its factories and the pattern's faults. -/
 def ovRecovery [Fintype κ] (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
-    (Φ : Fin N → MethodRound → FacFaults κ)
+    (Φ : Fin N → MethodRound → RetryFaults κ)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1) (hΦ : ∀ j r, (Φ j r).Valid)
     (ω : OvLoc N → Bool) : ℕ →
     Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ → Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
@@ -672,7 +679,7 @@ def gadgetFlag (ω : OvLoc N → Bool) : ℕ → Bool :=
 with the pattern's faults. -/
 def overlapRun (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
     [Fintype κ] (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
-    (Φ : Fin N → MethodRound → FacFaults κ)
+    (Φ : Fin N → MethodRound → RetryFaults κ)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1) (hΦ : ∀ j r, (Φ j r).Valid)
     (ω : OvLoc N → Bool) (ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ) :
     Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
@@ -702,7 +709,7 @@ theorem isFaultChain_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Ma
     (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
     (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
-    (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → FacFaults κ)
+    (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → RetryFaults κ)
     (hΦ : ∀ j r, (Φ j r).Valid) {ω : OvLoc N → Bool} (hω : WindowsGood ω) :
     IsFaultChain steaneProj cssMix N (ovGadget gs) (ovRecovery F Φ hF hΦ ω) (ovFaultyGadget gs U ω)
       (recoveryFlag ω) (gadgetFlag ω) where
@@ -790,14 +797,15 @@ method's extraction locations, and every encoded input:
   deviation of the ideal one — exactly the ideal one when the last recovery is fault-free — and a
   final ideal decoding returns the ideal output (`IsFaultChain.ovRun_spec`,
   `IsFaultChain.decode_ovRun`, fed by `isFaultChain_overlap` and `exRecGood_of_windowsGood`);
-* **under independent faults of rate at most `p` at all `21 N` locations**, the decoded output is
-  ideal with probability at least `1 − 595 N p²`, by the union bound over the `N` windows of at most
-  `35` locations (`one_sub_le_measure_output_eq_windows`). -/
+* **under independent faults of rate at most `p` at all `205 N` locations** — the gadgets', the
+  extraction locations', and both attempts of every round's ancilla factory (`retryOut`) — the decoded
+  output is ideal with probability at least `1 − 81003 N p²`, by the union bound over the `N` windows
+  of at most `403` locations (`one_sub_le_measure_output_eq_windows`). -/
 theorem steane_machine_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
     (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
     (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
-    (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → FacFaults κ)
+    (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → RetryFaults κ)
     (hΦ : ∀ j r, (Φ j r).Valid) {ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ}
     (hρ : IsCodeState steaneProj ρ) :
     (∀ ω : OvLoc N → Bool, WindowsGood ω →
@@ -806,7 +814,7 @@ theorem steane_machine_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → 
         ∧ methodRecovery.apply (overlapRun gs U F Φ hF hΦ ω ρ) = machineIdeal gs ρ)
     ∧ ∀ (ν : Measure Bool) [IsProbabilityMeasure ν] {p : ℝ}, 0 ≤ p →
         ν {c | c = true} ≤ ENNReal.ofReal p →
-        1 - (N : ℝ≥0∞) * ENNReal.ofReal (23871 * p ^ 2)
+        1 - (N : ℝ≥0∞) * ENNReal.ofReal (81003 * p ^ 2)
           ≤ Measure.pi (fun _ : OvLoc N => ν)
               {ω | methodRecovery.apply (overlapRun gs U F Φ hF hΦ ω ρ) = machineIdeal gs ρ} := by
   have hdet : ∀ ω : OvLoc N → Bool, WindowsGood ω →
@@ -821,11 +829,11 @@ theorem steane_machine_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → 
     refine ⟨hdev, hex, ?_⟩
     rw [overlapRun, hc.decode_ovRun hg isRecovery_methodRecovery_cssMix hρ, ovIdeal_ovGadget]
   refine ⟨hdet, fun ν _ p hp hν => ?_⟩
-  have h595 : ((Nat.choose 219 2 : ℕ) : ℝ) = 23871 := by norm_num [Nat.choose_two_right]
-  have h := one_sub_le_measure_output_eq_windows ν hp hν (w := 219) window card_window_le
+  have hch : ((Nat.choose 403 2 : ℕ) : ℝ) = 81003 := by norm_num [Nat.choose_two_right]
+  have h := one_sub_le_measure_output_eq_windows ν hp hν (w := 403) window card_window_le
     (out := fun ω => methodRecovery.apply (overlapRun gs U F Φ hF hΦ ω ρ)) (ideal := machineIdeal gs ρ)
     fun ω hω => (hdet ω hω).2.2
-  rwa [h595] at h
+  rwa [hch] at h
 
 end Steane
 end QEC

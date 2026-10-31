@@ -3466,7 +3466,7 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 
 -- SteaneVerifiedAncilla + SteaneOverlapMachine (BACKLOG #238, 2026-10-30): the ancilla factory under
 -- any fault pattern, Steane's method with its factories under a pattern, the machine with every
--- recovery location counted (1 - 23871 N p^2).
+-- recovery location counted (1 - 23871 N p^2; 1 - 81003 N p^2 since #240).
 /-- info: 'CSD.Empirical.QM.QEC.Steane.BlockOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.BlockOp
@@ -3757,7 +3757,8 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 
 
 -- SteaneLogicalIO (BACKLOG #236, 2026-10-30): the input prepared by a verified factory, the
--- transversal read-out decoded, the machine from preparation to read-out (1 - 23871 (N+1) p^2).
+-- transversal read-out decoded, the machine from preparation to read-out (1 - 23871 (N+1) p^2;
+-- 1 - 81003 (N+1) p^2 since #240).
 /-- info: 'CSD.Empirical.QM.QEC.Steane.plusAnc_eq_steaneEnc_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.plusAnc_eq_steaneEnc_mulVec
@@ -4006,5 +4007,74 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_machine_io
 
+-- SteaneVerifiedAncilla (BACKLOG #240, 2026-10-31): the factory with one retry, both attempts'
+-- locations in the pattern; the machine and its input re-priced (1 - 81003 N p^2).
+/-- info: 'CSD.Empirical.QM.QEC.Steane.goodAnc_facVec_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.goodAnc_facVec_single
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.hadTransversal_mulVec_plusAnc_of_not_accepts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.hadTransversal_mulVec_plusAnc_of_not_accepts
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.facVec_none_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.facVec_none_apply
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.facVec_none_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.facVec_none_eq_smul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.facVec_none_of_not_accepts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.facVec_none_of_not_accepts
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.RetryFaults' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.RetryFaults
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.RetryFaults.Valid' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.RetryFaults.Valid
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.RetryLoc' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.RetryLoc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.RetryIdx' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.RetryIdx
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.retryOutV' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.retryOutV
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.retryOutV_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.retryOutV_norm
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.goodAnc_retryOutV' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.goodAnc_retryOutV
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.retryOutV_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.retryOutV_eq_smul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.retryOut' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.retryOut
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.retryOut_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.retryOut_norm
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.retryOut_none' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.retryOut_none
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.goodAnc_retryOut_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.goodAnc_retryOut_single
 
 end CSD.Tests.AxiomAudit

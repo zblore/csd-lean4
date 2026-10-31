@@ -45,10 +45,11 @@ decoded classically. Nothing quantum is ideal.
 
 ## The machine from preparation to read-out
 
-* `IOLoc N` — **`46 + 113 N + 7` locations**: the input's factory, the steps, the readouts;
+* `IOLoc N` — **`92 + 205 N + 7` locations**: the input's factory with its retry, the steps, the
+  readouts;
   `ioRun`; `prepLocs`, `measLocs`, `lastLocs`, `ioWindow` — the first extended rectangle with the
   input's factory, every later one, and a last window, the last recovery with the measurement;
-  `card_window_zero_le`, ★ `card_ioWindow_le` (`≤ 219`); `IOWindowsGood`, `IOWindowsGood.eq`,
+  `card_window_zero_le`, ★ `card_ioWindow_le` (`≤ 403`); `IOWindowsGood`, `IOWindowsGood.eq`,
   `IOWindowsGood.windowsGood`, `pattern_cases`, the `mem_ioWindow_*` lemmas, `prepFlag`, `measFlag`,
   `IOWindowsGood.prep_cases`, `IOWindowsGood.meas_cases`, `IOWindowsGood.good_from`,
   `IOWindowsGood.good_last`;
@@ -57,7 +58,7 @@ decoded classically. Nothing quantum is ideal.
   deviated input);
 * ★★★ `steane_machine_io` — **the level-one Steane machine from preparation to read-out**: under
   independent faults of rate at most `p` at every location, the decoded logical read-out has its
-  ideal distribution with probability at least `1 − 23871 (N + 1) p²`. Nothing is ideal but the
+  ideal distribution with probability at least `1 − 81003 (N + 1) p²`. Nothing is ideal but the
   classical decoding.
 
 ## Honest scope
@@ -65,10 +66,12 @@ decoded classically. Nothing quantum is ideal.
 ⚠️ **The input is `|+̄⟩`.** `|0̄⟩` is `H̄ |+̄⟩`, the first gadget of the circuit; an arbitrary logical
 input, a magic state in particular, is the logical `T̄`'s row (#230).
 
-⚠️ **A rejected ancilla is replaced fault-free**, here at the input as in every recovery (#240).
+⚠️ **One retry.** A rejected ancilla is replaced by a second attempt with its own locations, here
+at the input as in every recovery (`retryOut`, BACKLOG ~~#240~~); a rejection caused by two faults,
+and the expected number of attempts, are not treated.
 
 ⚠️ **Gadget faults are unitary on one qubit** (#207's model, #237); one block, three gates (#226);
-level one (#231); the constant is `C(219, 2)` (#239).
+level one (#231); the constant is `C(403, 2)` (#239).
 
 ⚠️ **The read-out is one basis.** An `X̄` read-out is `H̄` and then this one.
 
@@ -249,9 +252,9 @@ theorem GoodAnc.exists_mem_cssSpan {f : (Fin 7 → Fin 2) → ℂ} (hf : GoodAnc
   · exact ⟨gateOf j N, gateOf_mem_cssSpan j N, rfl⟩
 
 /-- **The factory's output as the input state**: the mixture of its branches. -/
-def prepState {κ : Type} [Fintype κ] (Φ : FacFaults κ) (b : FacLoc → Bool) :
+def prepState {κ : Type} [Fintype κ] (Φ : RetryFaults κ) (b : RetryLoc → Bool) :
     Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
-  ∑ p, vecMulVec (facOut Φ b p) (star (facOut Φ b p))
+  ∑ p, vecMulVec (retryOut Φ b p) (star (retryOut Φ b p))
 
 theorem vecMulVec_smul_star (c : ℂ) (u : (Fin 7 → Fin 2) → ℂ) :
     vecMulVec (c • u) (star (c • u)) = (c * star c) • vecMulVec u (star u) := by
@@ -260,10 +263,10 @@ theorem vecMulVec_smul_star (c : ℂ) (u : (Fin 7 → Fin 2) → ℂ) :
   ring
 
 /-- ★★ **A fault-free factory prepares `|+̄⟩⟨+̄|`.** -/
-theorem prepState_none {κ : Type} [Fintype κ] {Φ : FacFaults κ} (hΦ : Φ.Valid) :
+theorem prepState_none {κ : Type} [Fintype κ] {Φ : RetryFaults κ} (hΦ : Φ.Valid) :
     prepState Φ (fun _ => false) = plusState := by
-  choose c hc using facOut_none Φ
-  have hn := facOut_norm hΦ (fun _ => false)
+  choose c hc using retryOut_none Φ
+  have hn := retryOut_norm hΦ (fun _ => false)
   simp only [hc, Pi.smul_apply, smul_eq_mul, star_mul'] at hn
   have hcc : ∑ p, c p * star (c p) = 1 := by
     rw [← hn]
@@ -279,12 +282,12 @@ theorem prepState_none {κ : Type} [Fintype κ] {Φ : FacFaults κ} (hΦ : Φ.Va
 /-- ★★★ **One fault anywhere in the factory prepares a CSS deviation of `|+̄⟩⟨+̄|`**: every branch is
 `M |+̄⟩` with `M` in the CSS span, and the branches' weights make the mixture trace preserving on the
 code (`exists_steaneProj_conj_eq_smul`). -/
-theorem exists_prepState_single {κ : Type} [Fintype κ] {Φ : FacFaults κ} (hΦ : Φ.Valid)
-    (ℓ : FacLoc) : ∃ E ∈ cssMix, prepState Φ (fun ℓ' => decide (ℓ' = ℓ)) = E plusState := by
-  choose M hM hf using fun p => (goodAnc_facOut_single hΦ ℓ p).exists_mem_cssSpan
+theorem exists_prepState_single {κ : Type} [Fintype κ] {Φ : RetryFaults κ} (hΦ : Φ.Valid)
+    (ℓ : RetryLoc) : ∃ E ∈ cssMix, prepState Φ (fun ℓ' => decide (ℓ' = ℓ)) = E plusState := by
+  choose M hM hf using fun p => (goodAnc_retryOut_single hΦ ℓ p).exists_mem_cssSpan
   choose c hc using fun p => exists_steaneProj_conj_eq_smul (hM p)
   have hsum : ∑ p, c p = 1 := by
-    rw [← facOut_norm hΦ (fun ℓ' => decide (ℓ' = ℓ))]
+    rw [← retryOut_norm hΦ (fun ℓ' => decide (ℓ' = ℓ))]
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [hf p]
     exact (steaneProj_conj_scalar_eq (hc p)).symm
@@ -506,22 +509,22 @@ theorem measChannel_single_mem {κ : Type} [Fintype κ] (Nm : Fin 7 → κ → M
 
 /-- **The locations from preparation to read-out**: the input's factory, the `N` steps, the seven
 readouts. -/
-abbrev IOLoc (N : ℕ) : Type := FacLoc ⊕ OvLoc N ⊕ Fin 7
+abbrev IOLoc (N : ℕ) : Type := RetryLoc ⊕ OvLoc N ⊕ Fin 7
 
 instance instDecidableEqIOLoc (N : ℕ) : DecidableEq (IOLoc N) :=
-  inferInstanceAs (DecidableEq (FacLoc ⊕ OvLoc N ⊕ Fin 7))
+  inferInstanceAs (DecidableEq (RetryLoc ⊕ OvLoc N ⊕ Fin 7))
 
 instance instFintypeIOLoc (N : ℕ) : Fintype (IOLoc N) :=
-  inferInstanceAs (Fintype (FacLoc ⊕ OvLoc N ⊕ Fin 7))
+  inferInstanceAs (Fintype (RetryLoc ⊕ OvLoc N ⊕ Fin 7))
 
 variable {N : ℕ} {κ : Type}
 
 /-- **The machine from preparation to read-out under a pattern**: the input prepared by a factory,
 the `N` steps, the measurement with its faults; the state whose transversal read-out is decoded. -/
 def ioRun (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ) [Fintype κ]
-    (F : Fin N → MethodRound → Fin 7 → κ → PairOp) (Φ : Fin N → MethodRound → FacFaults κ)
+    (F : Fin N → MethodRound → Fin 7 → κ → PairOp) (Φ : Fin N → MethodRound → RetryFaults κ)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1) (hΦ : ∀ j r, (Φ j r).Valid)
-    (Φ₀ : FacFaults κ) (Nm : Fin 7 → κ → Matrix (Fin 2) (Fin 2) ℂ)
+    (Φ₀ : RetryFaults κ) (Nm : Fin 7 → κ → Matrix (Fin 2) (Fin 2) ℂ)
     (hNm : ∀ j, ∑ k, (Nm j k)ᴴ * Nm j k = 1) (ω : IOLoc N → Bool) :
     Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
   (measChannel Nm hNm fun j => ω (.inr (.inr j))).apply
@@ -545,7 +548,7 @@ def ioWindow (k : Fin (N + 1)) : Finset (IOLoc N) :=
     (window ⟨k, h⟩).image (fun x => Sum.inr (Sum.inl x)) ∪ (if (k : ℕ) = 0 then prepLocs else ∅)
   else lastLocs ∪ measLocs
 
-theorem card_window_zero_le (h : 0 < N) : (window (⟨0, h⟩ : Fin N)).card ≤ 113 := by
+theorem card_window_zero_le (h : 0 < N) : (window (⟨0, h⟩ : Fin N)).card ≤ 205 := by
   have hsub : window (⟨0, h⟩ : Fin N) ⊆ Finset.univ.image fun s : StepLoc => ((⟨0, h⟩ : Fin N), s) := by
     intro x hx
     obtain ⟨a, _, rfl⟩ := Finset.mem_image.1 hx
@@ -556,9 +559,9 @@ theorem card_window_zero_le (h : 0 < N) : (window (⟨0, h⟩ : Fin N)).card ≤
   refine (Finset.card_le_card hsub).trans (Finset.card_image_le.trans ?_)
   simp [Finset.card_univ, Fintype.card_sum, Fintype.card_prod, card_methodRound]
 
-/-- ★ **Every window from preparation to read-out has at most `219` locations.** -/
-theorem card_ioWindow_le (k : Fin (N + 1)) : (ioWindow k).card ≤ 219 := by
-  have hp : (prepLocs : Finset (IOLoc N)).card ≤ 46 := by
+/-- ★ **Every window from preparation to read-out has at most `403` locations.** -/
+theorem card_ioWindow_le (k : Fin (N + 1)) : (ioWindow k).card ≤ 403 := by
+  have hp : (prepLocs : Finset (IOLoc N)).card ≤ 92 := by
     refine Finset.card_image_le.trans ?_
     simp [Finset.card_univ, Fintype.card_sum]
   have hm : (measLocs : Finset (IOLoc N)).card ≤ 7 := Finset.card_image_le.trans (by simp)
@@ -568,13 +571,13 @@ theorem card_ioWindow_le (k : Fin (N + 1)) : (ioWindow k).card ≤ 219 := by
     rw [h0']
     refine (Finset.card_union_le _ _).trans ?_
     have h1 : ((window (⟨0, by omega⟩ : Fin N)).image
-        (fun x => (Sum.inr (Sum.inl x) : IOLoc N))).card ≤ 113 :=
+        (fun x => (Sum.inr (Sum.inl x) : IOLoc N))).card ≤ 205 :=
       Finset.card_image_le.trans (card_window_zero_le _)
     omega
   · rw [Finset.union_empty]
     exact Finset.card_image_le.trans (card_window_le _)
   · refine (Finset.card_union_le _ _).trans ?_
-    have hl : (lastLocs : Finset (IOLoc N)).card ≤ 106 := by
+    have hl : (lastLocs : Finset (IOLoc N)).card ≤ 198 := by
       rw [lastLocs]
       split_ifs
       · refine Finset.card_image_le.trans ?_
@@ -622,7 +625,7 @@ theorem pattern_cases {α : Type*} [DecidableEq α] (b : α → Bool)
   · refine Or.inl (funext fun x => ?_)
     simpa using fun h' => hb ⟨x, h'⟩
 
-theorem mem_ioWindow_prep (h : 0 < N) (ℓ : FacLoc) : (Sum.inl ℓ : IOLoc N) ∈ ioWindow 0 := by
+theorem mem_ioWindow_prep (h : 0 < N) (ℓ : RetryLoc) : (Sum.inl ℓ : IOLoc N) ∈ ioWindow 0 := by
   simp [ioWindow, h, prepLocs]
 
 theorem mem_ioWindow_step (h : 0 < N) (s : StepLoc) :
@@ -641,7 +644,7 @@ theorem mem_ioWindow_last {k : ℕ} (hk : N = k + 1) (l : RecLoc) :
   congr
   omega
 
-theorem mem_ioWindow_last_prep (hN : N = 0) (ℓ : FacLoc) :
+theorem mem_ioWindow_last_prep (hN : N = 0) (ℓ : RetryLoc) :
     (Sum.inl ℓ : IOLoc N) ∈ ioWindow (Fin.last N) := by
   have hN' : ¬0 < N := by omega
   simp only [ioWindow, Fin.val_last, lt_irrefl, ↓reduceDIte, lastLocs, hN']
@@ -757,8 +760,8 @@ theorem logicalProb_ioRun (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matri
     (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
     (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
-    (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → FacFaults κ)
-    (hΦ : ∀ j r, (Φ j r).Valid) {Φ₀ : FacFaults κ} (hΦ₀ : Φ₀.Valid)
+    (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → RetryFaults κ)
+    (hΦ : ∀ j r, (Φ j r).Valid) {Φ₀ : RetryFaults κ} (hΦ₀ : Φ₀.Valid)
     (Nm : Fin 7 → κ → Matrix (Fin 2) (Fin 2) ℂ) (hNm : ∀ j, ∑ k, (Nm j k)ᴴ * Nm j k = 1)
     {ω : IOLoc N → Bool} (hω : IOWindowsGood ω) (v : Fin 2) :
     logicalProb (ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω) v = logicalProb (machineIdeal gs plusState) v := by
@@ -810,20 +813,20 @@ the final transversal measurement:
 * **a pattern with at most one fault in each window** — the first extended rectangle with the input's
   factory, every later one, and the last recovery with the measurement — reads every logical value
   with its ideal probability (`logicalProb_ioRun`);
-* **under independent faults of rate at most `p`** at all `46 + 113 N + 7` locations, it does so with
-  probability at least `1 − 23871 (N + 1) p²`. Nothing is ideal but the classical decoding. -/
+* **under independent faults of rate at most `p`** at all `92 + 205 N + 7` locations, it does so with
+  probability at least `1 − 81003 (N + 1) p²`. Nothing is ideal but the classical decoding. -/
 theorem steane_machine_io (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
     (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
     (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
-    (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → FacFaults κ)
-    (hΦ : ∀ j r, (Φ j r).Valid) {Φ₀ : FacFaults κ} (hΦ₀ : Φ₀.Valid)
+    (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → RetryFaults κ)
+    (hΦ : ∀ j r, (Φ j r).Valid) {Φ₀ : RetryFaults κ} (hΦ₀ : Φ₀.Valid)
     (Nm : Fin 7 → κ → Matrix (Fin 2) (Fin 2) ℂ) (hNm : ∀ j, ∑ k, (Nm j k)ᴴ * Nm j k = 1) :
     (∀ ω : IOLoc N → Bool, IOWindowsGood ω →
         logicalProb (ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω) = logicalProb (machineIdeal gs plusState))
     ∧ ∀ (ν : Measure Bool) [IsProbabilityMeasure ν] {p : ℝ}, 0 ≤ p →
         ν {c | c = true} ≤ ENNReal.ofReal p →
-        1 - ((N + 1 : ℕ) : ℝ≥0∞) * ENNReal.ofReal (23871 * p ^ 2)
+        1 - ((N + 1 : ℕ) : ℝ≥0∞) * ENNReal.ofReal (81003 * p ^ 2)
           ≤ Measure.pi (fun _ : IOLoc N => ν)
               {ω | logicalProb (ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω)
                 = logicalProb (machineIdeal gs plusState)} := by
@@ -831,8 +834,8 @@ theorem steane_machine_io (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matri
       logicalProb (ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω) = logicalProb (machineIdeal gs plusState) :=
     fun ω hω => funext fun v => logicalProb_ioRun gs U hU F hF hOn Φ hΦ hΦ₀ Nm hNm hω v
   refine ⟨hdet, fun ν _ p hp hν => ?_⟩
-  have hch : ((Nat.choose 219 2 : ℕ) : ℝ) = 23871 := by norm_num [Nat.choose_two_right]
-  have h := one_sub_le_measure_output_eq_windows ν hp hν (w := 219) ioWindow card_ioWindow_le
+  have hch : ((Nat.choose 403 2 : ℕ) : ℝ) = 81003 := by norm_num [Nat.choose_two_right]
+  have h := one_sub_le_measure_output_eq_windows ν hp hν (w := 403) ioWindow card_ioWindow_le
     (out := fun ω => logicalProb (ioRun gs U F Φ hF hΦ Φ₀ Nm hNm ω))
     (ideal := logicalProb (machineIdeal gs plusState)) fun ω hω => hdet ω hω
   rwa [hch] at h

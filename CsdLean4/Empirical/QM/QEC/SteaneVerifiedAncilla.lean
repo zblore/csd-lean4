@@ -71,8 +71,22 @@ preparation still leaves Steane's method a correctable deviation.
   `verUnder_none`, `verUnder_pair`, `verUnder_read`, `facIn_noneA`, `facIn_noneB`, `facIn_none`;
 * `FacFaults`, `FacFaults.Valid`, `FacLoc` (**forty-six locations**), `FacBranch`, `facVec`,
   `sum_facVec_sq`, `factoryOutV`, `factoryOutV_norm`, `goodAnc_factoryOutV`, `factoryOutV_eq_smul`;
-  ★★ `facOut`, ★★ `facOut_norm`, ★★ `facOut_none`, ★★★ `goodAnc_facOut_single` — **one fault anywhere
-  in the factory leaves a good ancilla in every branch; none leaves `|+̄⟩`**.
+  ★★ `facOut`, ★★ `facOut_norm`, ★★ `facOut_none`, ★★ `goodAnc_facVec_single` (one fault in an
+  attempt, a passing word), ★★★ `goodAnc_facOut_single` — **one fault anywhere in the factory leaves a
+  good ancilla in every branch; none leaves `|+̄⟩`**.
+
+## The factory with a retry (BACKLOG ~~#240~~)
+
+* ★ `hadTransversal_mulVec_plusAnc_of_not_accepts`, `facVec_none_apply`, `facVec_none_eq_smul`,
+  ★★ `facVec_none_of_not_accepts` — **a fault-free attempt is never rejected**: `H^{⊗7} |+̄⟩` vanishes
+  on every word not orthogonal to the code;
+* `RetryFaults`, `RetryFaults.Valid`, `RetryLoc` (**ninety-two locations**, both attempts'),
+  `RetryIdx`, `retryOutV`, `retryOutV_norm`, `goodAnc_retryOutV`, `retryOutV_eq_smul`;
+  ★★ `retryOut` — **on a pass the first attempt's ancilla, on a rejection the second attempt's,
+  whatever its checker reads**; ★★ `retryOut_norm`, ★★ `retryOut_none`, ★★★ `goodAnc_retryOut_single`
+  — **one fault anywhere in either attempt leaves a good ancilla in every branch**: two attempts
+  suffice at one fault per window. This is the factory `SteaneOverlapMachine.lean` and
+  `SteaneLogicalIO.lean` count.
 
 ## Honest scope
 
@@ -80,9 +94,11 @@ preparation still leaves Steane's method a correctable deviation.
 run of Steane's method; the factory under any fault pattern (below) is what `SteaneOverlapMachine.lean`
 counts in every recovery (BACKLOG ~~#238~~).
 
-⚠️ **Repeat until success, with the one fault spent.** On a rejection the factory prepares a fresh
-`|+̄⟩` fault-free: under one fault per extended rectangle, a second attempt is ideal. Rejection with
-two faults, and the expected number of attempts, are not treated.
+⚠️ **One retry.** `facOut` replaces a rejected ancilla by a fresh `|+̄⟩` without locations of its
+own; `retryOut` runs a second attempt with its own forty-six locations and uses its ancilla whatever
+it reads, so nothing in the factory is prepared fault-free. Two attempts suffice at one fault per
+window; a rejection caused by two faults, more attempts, and the expected number of attempts are not
+treated.
 
 ⚠️ **The checker reads one basis.** It catches `Z` errors on the ancilla, the dangerous ones; `X`
 errors pass and only mis-read the syndrome. A fault in the encoder is any trace-preserving family on
@@ -1343,12 +1359,12 @@ theorem facOut_none {κ : Type} (Φ : FacFaults κ) (p : FacIdx (FacBranch κ)) 
   simp only [facVec, hc, hc', Matrix.smul_mulVec, Matrix.mulVec_smul, Pi.smul_apply, smul_eq_mul, h]
   ring
 
-/-- ★★★ **One fault anywhere in the factory leaves a good ancilla in every branch**: a fault in the
-ancilla's encoder is caught by the checker up to `X` errors, a fault in the checker's encoder or at
+/-- ★★ **One fault anywhere in an attempt leaves a good ancilla on every passing word**: a fault in
+the ancilla's encoder is caught by the checker up to `X` errors, a fault in the checker's encoder or at
 its readout leaves `X` errors only, a fault on a verification pair leaves an error on one qubit. -/
-theorem goodAnc_facOut_single {κ : Type} [Fintype κ] {Φ : FacFaults κ} (hΦ : Φ.Valid) (ℓ : FacLoc)
-    (p : FacIdx (FacBranch κ)) : GoodAnc (facOut Φ (fun ℓ' => decide (ℓ' = ℓ)) p) := by
-  refine goodAnc_factoryOutV (fun s w hw => ?_) p
+theorem goodAnc_facVec_single {κ : Type} [Fintype κ] {Φ : FacFaults κ} (hΦ : Φ.Valid) (ℓ : FacLoc)
+    (s : FacBranch κ) {w : Fin 7 → Fin 2} (hw : Accepts w) :
+    GoodAnc fun a => facVec Φ (fun ℓ' => decide (ℓ' = ℓ)) s (w, a) := by
   rcases ℓ with e | e | j | j
   · -- the ancilla's encoder
     have hB : (fun l => decide ((Sum.inr (Sum.inl l) : FacLoc) = Sum.inl e)) = fun _ => false :=
@@ -1425,6 +1441,215 @@ theorem goodAnc_facOut_single {κ : Type} [Fintype κ] {Φ : FacFaults κ} (hΦ 
     simp only [facVec, hA, hB, hP, hc, hc', Matrix.smul_mulVec, Matrix.mulVec_smul, Pi.smul_apply,
       smul_eq_mul, readVec_apply]
     ring
+
+/-- ★★★ **One fault anywhere in the factory leaves a good ancilla in every branch**: a fault in the
+ancilla's encoder is caught by the checker up to `X` errors, a fault in the checker's encoder or at
+its readout leaves `X` errors only, a fault on a verification pair leaves an error on one qubit. -/
+theorem goodAnc_facOut_single {κ : Type} [Fintype κ] {Φ : FacFaults κ} (hΦ : Φ.Valid) (ℓ : FacLoc)
+    (p : FacIdx (FacBranch κ)) : GoodAnc (facOut Φ (fun ℓ' => decide (ℓ' = ℓ)) p) :=
+  goodAnc_factoryOutV (fun s _ hw => goodAnc_facVec_single hΦ ℓ s hw) p
+
+/-! ### The factory with a retry (BACKLOG #240) -/
+
+/-- ★ **A fault-free checker never rejects**: `H^{⊗7} |+̄⟩` vanishes on every word that is not
+orthogonal to the code. -/
+theorem hadTransversal_mulVec_plusAnc_of_not_accepts {w : Fin 7 → Fin 2} (hw : ¬ Accepts w) :
+    (hadTransversal 7 *ᵥ plusAnc) w = 0 := by
+  obtain ⟨c, hc, hwc⟩ : ∃ c, syndrome c = 0 ∧ bdot w c ≠ 0 := by
+    simpa [Accepts] using hw
+  have hwc1 : bdot w c = 1 := by
+    revert hwc
+    generalize bdot w c = x
+    fin_cases x <;> simp
+  have hshift : (hadTransversal 7 *ᵥ plusAnc) w = -(hadTransversal 7 *ᵥ plusAnc) w := by
+    simp only [Matrix.mulVec, dotProduct]
+    conv_lhs => rw [← Fintype.sum_equiv (Equiv.addRight c)
+      (fun b => hadTransversal 7 w (b + c) * plusAnc (b + c))
+      (fun b => hadTransversal 7 w b * plusAnc b) fun _ => rfl]
+    rw [← Finset.sum_neg_distrib]
+    refine Finset.sum_congr rfl fun b _ => ?_
+    have h1 : signChar 1 = -1 := by simp [signChar]
+    rw [plusAnc_add b c hc, hadTransversal_apply, hadTransversal_apply,
+      bdot_add_right, hwc1, signChar_add, h1]
+    ring
+  have h2 : 2 * (hadTransversal 7 *ᵥ plusAnc) w = 0 := by linear_combination hshift
+  exact (mul_eq_zero.1 h2).resolve_left two_ne_zero
+
+/-- **A fault-free attempt, before its checker is read**: the checker's word times `|+̄⟩`. -/
+theorem facVec_none_apply {κ : Type} (Φ : FacFaults κ) (s : FacBranch κ) :
+    ∃ c : ℂ, ∀ w a, facVec Φ (fun _ => false) s (w, a)
+      = c * (hadTransversal 7 *ᵥ plusAnc) w * plusAnc a := by
+  obtain ⟨c, hc⟩ := verUnder_none Φ.pair Φ.read s.2
+  obtain ⟨c', hc'⟩ := facIn_none Φ.encA Φ.encB s.1
+  refine ⟨c * c', fun w a => ?_⟩
+  have h := readVec_apply 1 w a
+  rw [one_kronecker_one, Matrix.one_mul, Matrix.one_mul] at h
+  simp only [facVec, hc, hc', Matrix.smul_mulVec, Matrix.mulVec_smul, Pi.smul_apply, smul_eq_mul, h]
+  ring
+
+theorem facVec_none_eq_smul {κ : Type} (Φ : FacFaults κ) (s : FacBranch κ) (w : Fin 7 → Fin 2) :
+    ∃ c : ℂ, (fun a => facVec Φ (fun _ => false) s (w, a)) = c • plusAnc := by
+  obtain ⟨c, hc⟩ := facVec_none_apply Φ s
+  exact ⟨c * (hadTransversal 7 *ᵥ plusAnc) w, funext fun a => by
+    rw [hc, Pi.smul_apply, smul_eq_mul]⟩
+
+/-- ★★ **A fault-free attempt is never rejected**: its rejected words carry amplitude zero. -/
+theorem facVec_none_of_not_accepts {κ : Type} (Φ : FacFaults κ) (s : FacBranch κ)
+    {w : Fin 7 → Fin 2} (hw : ¬ Accepts w) (a : Fin 7 → Fin 2) :
+    facVec Φ (fun _ => false) s (w, a) = 0 := by
+  obtain ⟨c, hc⟩ := facVec_none_apply Φ s
+  rw [hc, hadTransversal_mulVec_plusAnc_of_not_accepts hw, mul_zero, zero_mul]
+
+/-- **The faults of a factory with one retry**: the first attempt's, and the second's. -/
+structure RetryFaults (κ : Type) where
+  /-- The first attempt. -/
+  first : FacFaults κ
+  /-- The second attempt, run when the first is rejected. -/
+  second : FacFaults κ
+
+/-- Both attempts' faults are valid. -/
+structure RetryFaults.Valid {κ : Type} [Fintype κ] (Φ : RetryFaults κ) : Prop where
+  first : Φ.first.Valid
+  second : Φ.second.Valid
+
+/-- **The retrying factory's locations**: both attempts' forty-six, ninety-two in all. -/
+abbrev RetryLoc : Type := FacLoc ⊕ FacLoc
+
+/-- The retrying factory's branches: a first attempt that is read, or a first attempt that is read
+and then the second attempt with its own checker word. -/
+abbrev RetryIdx (ι : Type) : Type := FacIdx ι ⊕ FacIdx ι × (ι × (Fin 7 → Fin 2))
+
+instance instFintypeRetryIdx {ι : Type} [Fintype ι] : Fintype (RetryIdx ι) :=
+  inferInstanceAs (Fintype (FacIdx ι ⊕ FacIdx ι × (ι × (Fin 7 → Fin 2))))
+
+/-- **The retrying factory's output from two families of pre-readout states**: a passing first word
+keeps the first ancilla; a failing one discards it — its readout `a'` weights the branch — and the
+second attempt's ancilla is used whatever its own checker reads. -/
+def retryOutV {ι : Type} (V V' : ι → (Fin 7 → Fin 2) × (Fin 7 → Fin 2) → ℂ) :
+    RetryIdx ι → (Fin 7 → Fin 2) → ℂ
+  | .inl p => if Accepts p.2.1 ∧ p.2.2 = 0 then fun a => V p.1 (p.2.1, a) else 0
+  | .inr (p, q) => if Accepts p.2.1 then 0 else V p.1 (p.2.1, p.2.2) • fun a => V' q.1 (q.2, a)
+
+theorem retryOutV_norm {ι : Type} [Fintype ι] {V V' : ι → (Fin 7 → Fin 2) × (Fin 7 → Fin 2) → ℂ}
+    (hV : ∑ i, ∑ q, star (V i q) * V i q = 1) (hV' : ∑ i, ∑ q, star (V' i q) * V' i q = 1) :
+    ∑ p, ∑ a, star (retryOutV V V' p a) * retryOutV V V' p a = 1 := by
+  simp only [Fintype.sum_prod_type] at hV hV'
+  have hrow : ∀ i w,
+      (∑ a' : Fin 7 → Fin 2, ∑ a, star (retryOutV V V' (.inl (i, w, a')) a)
+          * retryOutV V V' (.inl (i, w, a')) a)
+        + ∑ a' : Fin 7 → Fin 2, ∑ j, ∑ w' : Fin 7 → Fin 2, ∑ a,
+          star (retryOutV V V' (.inr ((i, w, a'), (j, w'))) a)
+            * retryOutV V V' (.inr ((i, w, a'), (j, w'))) a
+      = ∑ a, star (V i (w, a)) * V i (w, a) := by
+    intro i w
+    by_cases hw : Accepts w
+    · have hz : ∀ a' j w' a, retryOutV V V' (.inr ((i, w, a'), (j, w'))) a = 0 :=
+        fun a' j w' a => by simp [retryOutV, hw]
+      simp only [hz, star_zero, mul_zero, Finset.sum_const_zero, add_zero]
+      rw [Finset.sum_eq_single 0 (fun a' _ h => by simp [retryOutV, h])
+        (fun h => absurd (Finset.mem_univ _) h)]
+      simp [retryOutV, hw]
+    · have hz : ∀ a' a, retryOutV V V' (.inl (i, w, a')) a = 0 := fun a' a => by
+        simp [retryOutV, hw]
+      have hr : ∀ a' j w' a, retryOutV V V' (.inr ((i, w, a'), (j, w'))) a
+          = V i (w, a') * V' j (w', a) := fun a' j w' a => by
+        simp [retryOutV, hw]
+      simp only [hz, hr, star_zero, mul_zero, Finset.sum_const_zero, zero_add, star_mul']
+      calc ∑ a', ∑ j, ∑ w', ∑ a, star (V i (w, a')) * star (V' j (w', a))
+            * (V i (w, a') * V' j (w', a))
+          = ∑ a', star (V i (w, a')) * V i (w, a')
+              * ∑ j, ∑ w', ∑ a, star (V' j (w', a)) * V' j (w', a) := by
+            refine Finset.sum_congr rfl fun a' _ => ?_
+            simp only [Finset.mul_sum]
+            exact Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun w' _ =>
+              Finset.sum_congr rfl fun a _ => by ring
+        _ = _ := by rw [hV']; simp only [mul_one]
+  rw [Fintype.sum_sum_type]
+  simp only [Fintype.sum_prod_type]
+  rw [← Finset.sum_add_distrib, ← hV]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  rw [← Finset.sum_add_distrib]
+  exact Finset.sum_congr rfl fun w _ => hrow i w
+
+theorem goodAnc_retryOutV {ι : Type} {V V' : ι → (Fin 7 → Fin 2) × (Fin 7 → Fin 2) → ℂ}
+    (h : ∀ i w, Accepts w → GoodAnc fun a => V i (w, a))
+    (h' : (∀ i w a, ¬ Accepts w → V i (w, a) = 0) ∨ ∀ j w, GoodAnc fun a => V' j (w, a))
+    (p : RetryIdx ι) : GoodAnc (retryOutV V V' p) := by
+  rcases p with ⟨i, w, a'⟩ | ⟨⟨i, w, a'⟩, ⟨j, w'⟩⟩
+  · simp only [retryOutV]
+    split_ifs with hw
+    · exact h i w hw.1
+    · exact Or.inl isPeriodic_zero
+  · simp only [retryOutV]
+    split_ifs with hw
+    · exact Or.inl isPeriodic_zero
+    · rcases h' with h' | h'
+      · rw [h' i w a' hw, zero_smul]
+        exact Or.inl isPeriodic_zero
+      · exact (h' j w').smul _
+
+theorem retryOutV_eq_smul {ι : Type} {V V' : ι → (Fin 7 → Fin 2) × (Fin 7 → Fin 2) → ℂ}
+    (h : ∀ i w, ∃ c : ℂ, (fun a => V i (w, a)) = c • plusAnc)
+    (h' : ∀ j w, ∃ c : ℂ, (fun a => V' j (w, a)) = c • plusAnc) (p : RetryIdx ι) :
+    ∃ c : ℂ, retryOutV V V' p = c • plusAnc := by
+  rcases p with ⟨i, w, a'⟩ | ⟨⟨i, w, a'⟩, ⟨j, w'⟩⟩
+  · simp only [retryOutV]
+    split_ifs with hw
+    · exact h i w
+    · exact ⟨0, (zero_smul ℂ plusAnc).symm⟩
+  · simp only [retryOutV]
+    split_ifs with hw
+    · exact ⟨0, (zero_smul ℂ plusAnc).symm⟩
+    · obtain ⟨c, hc⟩ := h' j w'
+      exact ⟨V i (w, a') * c, by rw [hc, smul_smul]⟩
+
+/-- ★★ **The retrying factory under a fault pattern**: on a pass the first attempt's ancilla; on a
+rejection the second attempt's, whatever its checker reads. Every location of both attempts is in the
+pattern; nothing is prepared fault-free. -/
+def retryOut {κ : Type} (Φ : RetryFaults κ) (b : RetryLoc → Bool) :
+    RetryIdx (FacBranch κ) → (Fin 7 → Fin 2) → ℂ :=
+  retryOutV (facVec Φ.first fun ℓ => b (.inl ℓ)) (facVec Φ.second fun ℓ => b (.inr ℓ))
+
+/-- ★★ **The retrying factory's branches carry weight one, under every pattern.** -/
+theorem retryOut_norm {κ : Type} [Fintype κ] {Φ : RetryFaults κ} (hΦ : Φ.Valid)
+    (b : RetryLoc → Bool) : ∑ p, ∑ a, star (retryOut Φ b p a) * retryOut Φ b p a = 1 :=
+  retryOutV_norm (sum_facVec_sq hΦ.first _) (sum_facVec_sq hΦ.second _)
+
+/-- ★★ **A fault-free retrying factory prepares `|+̄⟩`**, up to a scalar in each branch. -/
+theorem retryOut_none {κ : Type} (Φ : RetryFaults κ) (p : RetryIdx (FacBranch κ)) :
+    ∃ c : ℂ, retryOut Φ (fun _ => false) p = c • plusAnc :=
+  retryOutV_eq_smul (fun s w => facVec_none_eq_smul Φ.first s w)
+    (fun s w => facVec_none_eq_smul Φ.second s w) p
+
+/-- ★★★ **One fault anywhere in the retrying factory leaves a good ancilla in every branch.** A
+fault in the first attempt is handled by the checker as in `goodAnc_facVec_single`, and the second
+attempt, run on a rejection, is then fault-free; a fault in the second attempt leaves the first
+fault-free, and a fault-free first attempt is never rejected, so the second attempt's output carries
+weight zero. Two attempts suffice at one fault per window. -/
+theorem goodAnc_retryOut_single {κ : Type} [Fintype κ] {Φ : RetryFaults κ} (hΦ : Φ.Valid)
+    (ℓ : RetryLoc) (p : RetryIdx (FacBranch κ)) :
+    GoodAnc (retryOut Φ (fun ℓ' => decide (ℓ' = ℓ)) p) := by
+  rcases ℓ with ℓ | ℓ
+  · have e1 : (fun ℓ' : FacLoc => decide ((Sum.inl ℓ' : RetryLoc) = Sum.inl ℓ))
+        = fun ℓ' => decide (ℓ' = ℓ) := funext fun _ => by simp
+    have e2 : (fun ℓ' : FacLoc => decide ((Sum.inr ℓ' : RetryLoc) = Sum.inl ℓ))
+        = fun _ => false := funext fun _ => by simp
+    rw [retryOut, e1, e2]
+    refine goodAnc_retryOutV (fun s _ hw => goodAnc_facVec_single hΦ.first ℓ s hw)
+      (Or.inr fun s w => ?_) p
+    obtain ⟨c, hc⟩ := facVec_none_eq_smul Φ.second s w
+    rw [hc]
+    exact Or.inl (isPeriodic_plusAnc.smul c)
+  · have e1 : (fun ℓ' : FacLoc => decide ((Sum.inl ℓ' : RetryLoc) = Sum.inr ℓ))
+        = fun _ => false := funext fun _ => by simp
+    have e2 : (fun ℓ' : FacLoc => decide ((Sum.inr ℓ' : RetryLoc) = Sum.inr ℓ))
+        = fun ℓ' => decide (ℓ' = ℓ) := funext fun _ => by simp
+    rw [retryOut, e1, e2]
+    refine goodAnc_retryOutV (fun s w _ => ?_)
+      (Or.inl fun s w a hw => facVec_none_of_not_accepts Φ.first s hw a) p
+    obtain ⟨c, hc⟩ := facVec_none_eq_smul Φ.first s w
+    rw [hc]
+    exact Or.inl (isPeriodic_plusAnc.smul c)
 
 end Steane
 end QEC
