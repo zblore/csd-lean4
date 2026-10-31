@@ -12357,4 +12357,122 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_arrival
 
+-- DiracTiming (BACKLOG #268, 2026-10-31): a detector of width l/20 written within 1/8 of the
+-- arrival time; the causal bound from the exponential series and the Hamiltonian's locality.
+/-- info: 'CSD.RecordLayer.cos_le_cos_of_abs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_le_cos_of_abs
+
+/-- info: 'CSD.RecordLayer.cos_le_taylor' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_le_taylor
+
+/-- info: 'CSD.RecordLayer.cos_pi_div_twenty_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_pi_div_twenty_le
+
+/-- info: 'CSD.RecordLayer.cos_pi_div_forty_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_pi_div_forty_le
+
+/-- info: 'CSD.RecordLayer.farArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.farArc
+
+/-- info: 'CSD.RecordLayer.sharpPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sharpPacket
+
+/-- info: 'CSD.RecordLayer.sharpHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sharpHop
+
+/-- info: 'CSD.RecordLayer.omega_sharp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.omega_sharp
+
+/-- info: 'CSD.RecordLayer.sharp_spread' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sharp_spread
+
+/-- info: 'CSD.RecordLayer.chainProp_sharpPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_sharpPacket
+
+/-- info: 'CSD.RecordLayer.sharp_win' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sharp_win
+
+/-- info: 'CSD.RecordLayer.sharp_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sharp_norm
+
+/-- info: 'CSD.RecordLayer.sharp_budget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sharp_budget
+
+/-- info: 'CSD.RecordLayer.angle_farArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.angle_farArc
+
+/-- info: 'CSD.RecordLayer.regionWeight_sharp_far' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_sharp_far
+
+/-- info: 'CSD.RecordLayer.regionWeight_sharp_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_sharp_near
+
+/-- info: 'CSD.RecordLayer.sharp_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sharp_before
+
+/-- info: 'CSD.RecordLayer.sharp_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sharp_after
+
+/-- info: 'CSD.RecordLayer.sharpDetector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sharpDetector
+
+/-- info: 'CSD.RecordLayer.diracHam_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracHam_mulVec_apply
+
+/-- info: 'CSD.RecordLayer.VanishesNear' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.VanishesNear
+
+/-- info: 'CSD.RecordLayer.VanishesNear.diracHam_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.VanishesNear.diracHam_mulVec
+
+/-- info: 'CSD.RecordLayer.pow_mulVec_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pow_mulVec_eq_zero
+
+/-- info: 'CSD.RecordLayer.norm_diracHam_mulVec_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_diracHam_mulVec_le
+
+/-- info: 'CSD.RecordLayer.norm_pow_mulVec_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_pow_mulVec_le
+
+/-- info: 'CSD.RecordLayer.norm_chainProp_mulVec_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_chainProp_mulVec_le
+
+/-- info: 'CSD.RecordLayer.siteWeight_chainProp_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteWeight_chainProp_le
+
+/-- info: 'CSD.RecordLayer.register_cone_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.register_cone_le
+
+/-- info: 'CSD.RecordLayer.dirac_timing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_timing
+
 end CSD.Tests.AxiomAudit

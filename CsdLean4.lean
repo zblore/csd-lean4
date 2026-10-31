@@ -689,6 +689,7 @@ public import CsdLean4.RecordLayer.SignalCone
 public import CsdLean4.RecordLayer.GalileanTransformation
 public import CsdLean4.RecordLayer.DiracDetector
 public import CsdLean4.RecordLayer.DiracArrival
+public import CsdLean4.RecordLayer.DiracTiming
 public import CsdLean4.RecordLayer.ClockAndEcho
 public import CsdLean4.RecordLayer.ClockEchoCoupling
 public import CsdLean4.RecordLayer.EchoHamiltonian
