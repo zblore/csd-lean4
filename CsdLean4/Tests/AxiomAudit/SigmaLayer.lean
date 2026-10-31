@@ -11579,5 +11579,114 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.two_radar_charts
 
+-- SignalCone (BACKLOG #246, 2026-10-31): no cone in the control, messenger-dependent charts, the
+-- relative velocity read off any messenger; the Dirac chain's fastest packet against the bound.
+/-- info: 'CSD.RecordLayer.bounceTime_neg_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bounceTime_neg_mul
+
+/-- info: 'CSD.RecordLayer.exchGeom_through' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchGeom_through
+
+/-- info: 'CSD.RecordLayer.admissible_speed_unbounded' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.admissible_speed_unbounded
+
+/-- info: 'CSD.RecordLayer.radarOffset_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarOffset_eq
+
+/-- info: 'CSD.RecordLayer.tendsto_radarOffset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tendsto_radarOffset
+
+/-- info: 'CSD.RecordLayer.radarOffset_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarOffset_pos
+
+/-- info: 'CSD.RecordLayer.radarTime_through' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarTime_through
+
+/-- info: 'CSD.RecordLayer.exchEmit_duration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchEmit_duration
+
+/-- info: 'CSD.RecordLayer.exchReturn_duration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exchReturn_duration
+
+/-- info: 'CSD.RecordLayer.reception_duration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reception_duration
+
+/-- info: 'CSD.RecordLayer.half_anisotropy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.half_anisotropy
+
+/-- info: 'CSD.RecordLayer.mean_speed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mean_speed
+
+/-- info: 'CSD.RecordLayer.outSpeed_ne_retSpeed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.outSpeed_ne_retSpeed
+
+/-- info: 'CSD.RecordLayer.emissionWrite_duration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emissionWrite_duration
+
+/-- info: 'CSD.RecordLayer.returnWrite_duration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.returnWrite_duration
+
+/-- info: 'CSD.RecordLayer.receptionWrite_duration' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.receptionWrite_duration
+
+/-- info: 'CSD.RecordLayer.maxGroupVel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.maxGroupVel
+
+/-- info: 'CSD.RecordLayer.maxGroupVel_eq_bandwidth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.maxGroupVel_eq_bandwidth
+
+/-- info: 'CSD.RecordLayer.abs_groupVel_le_maxGroupVel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_groupVel_le_maxGroupVel
+
+/-- info: 'CSD.RecordLayer.exists_groupVel_eq_maxGroupVel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_groupVel_eq_maxGroupVel
+
+/-- info: 'CSD.RecordLayer.abs_two_mul_sub_le_maxGroupVel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_two_mul_sub_le_maxGroupVel
+
+/-- info: 'CSD.RecordLayer.maxGroupVel_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.maxGroupVel_le
+
+/-- info: 'CSD.RecordLayer.maxGroupVel_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.maxGroupVel_lt
+
+/-- info: 'CSD.RecordLayer.exists_maxGroupVel_gt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_maxGroupVel_gt
+
+/-- info: 'CSD.RecordLayer.localLRVelocity_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.localLRVelocity_two
+
+/-- info: 'CSD.RecordLayer.twentyOne_mul_maxGroupVel_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twentyOne_mul_maxGroupVel_lt
+
+/-- info: 'CSD.RecordLayer.signal_cone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.signal_cone
 
 end CSD.Tests.AxiomAudit
