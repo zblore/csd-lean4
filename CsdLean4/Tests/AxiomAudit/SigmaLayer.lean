@@ -12475,4 +12475,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_timing
 
+-- DiracSignal (BACKLOG #269, 2026-10-31): a one-way signal on the Dirac chain, departure and
+-- arrival records matched and ordered, the speed read off them below c.
+/-- info: 'CSD.RecordLayer.nearArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nearArc
+
+/-- info: 'CSD.RecordLayer.angle_nearArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.angle_nearArc
+
+/-- info: 'CSD.RecordLayer.separation_arcs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.separation_arcs
+
+/-- info: 'CSD.RecordLayer.regionWeight_sharp_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_sharp_le_one
+
+/-- info: 'CSD.RecordLayer.regionWeight_sharp_start' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_sharp_start
+
+/-- info: 'CSD.RecordLayer.start_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.start_before
+
+/-- info: 'CSD.RecordLayer.start_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.start_after
+
+/-- info: 'CSD.RecordLayer.startDetector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.startDetector
+
+/-- info: 'CSD.RecordLayer.dirac_signal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_signal
+
 end CSD.Tests.AxiomAudit
