@@ -5225,4 +5225,17 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.dirac_device
 
+-- DiracDevice sharp rate (BACKLOG #272, 2026-11-01): the splitting moves as |s² − s₀²|(μ₁ − μ₀)/(2μ₀²).
+/-- info: 'CSD.CV.abs_levelClockRate_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_levelClockRate_sub_le
+
+/-- info: 'CSD.CV.abs_sq_sub_sq_scaled_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_sq_sub_sq_scaled_le
+
+/-- info: 'CSD.CV.levelCoherence_rate_sharp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelCoherence_rate_sharp
+
 end CSD.Tests.AxiomAudit

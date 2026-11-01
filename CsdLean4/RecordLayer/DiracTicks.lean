@@ -39,8 +39,8 @@ device's **ticks**.
   `tickRead`;
 * ★★ `integral_max_cos` (**`∫₀^{2πn/R} max(κ cos(Rs), 0) ds = 2nκ/R`**),
   ★ `integral_max_cos_lt` (strictly below before the mark), `integral_max_cos_mono`;
-* `tickMark`, ★ `tickWeight_tickMark` (a reading turning at rate `R` gives the weight
-  `max(|C₀| cos(Rs), 0)`); ★★★ `tickDetector` — **tick `n` as an actual occurrence, written at
+* `tickMark`, `re_star_tickMark_mul`, `norm_tickMark`, ★ `tickWeight_tickMark` (a reading turning at
+  rate `R` gives the weight `max(|C₀| cos(Rs), 0)`); ★★★ `tickDetector` — **tick `n` as an actual occurrence, written at
   exactly `2πn/R`**.
 
 ## The device in one mode
@@ -76,8 +76,8 @@ device's **ticks**.
 ## Honest scope
 
 ⚠️ **The device is in one mode.** It is exact (no spread, no drift), and it is spread over its own
-ring: it has no position. A localized device (#262's window) turns only within `|t| c D`, which this
-detector does not yet absorb.
+ring: it has no position. A localized device (#262's window) turns only within an error linear in `t`;
+`DiracDeviceTicks.lean` (#272) absorbs it.
 
 ⚠️ **The detector is calibrated.** Its mark is the device's starting reading, and its thresholds are
 set in units of one turn's integral `2g|C₀|/R`, which needs `R` and `|C₀|`. The rectified readout is
@@ -435,13 +435,12 @@ theorem integral_max_cos_mono {κ R : ℝ} (hκ : 0 ≤ κ) {t₁ t : ℝ} (h : 
 noncomputable def tickMark (Ψ₀ : (ZMod L × Fin 2) × Fin 2 → ℂ) : ℂ :=
   deviceCoherence Ψ₀ / (‖deviceCoherence Ψ₀‖ : ℂ)
 
-/-- ★ **A rotating reading, read against its mark**: if the coherence has turned through `−Rs` from
-`C₀`, the tick weight is `max(|C₀| cos(Rs), 0)`. -/
-theorem tickWeight_tickMark {Ψ₀ Ψ : (ZMod L × Fin 2) × Fin 2 → ℂ} (hC : deviceCoherence Ψ₀ ≠ 0)
-    {R s : ℝ} (h : deviceCoherence Ψ = exp (I * (((-R : ℝ) : ℂ) * s)) * deviceCoherence Ψ₀) :
-    tickWeight (tickMark Ψ₀) Ψ = max (‖deviceCoherence Ψ₀‖ * Real.cos (R * s)) 0 := by
-  rw [tickWeight_eq, h, tickMark]
-  congr 1
+/-- **The exact turn read against the mark**: `Re(ū e^{−iRs} C₀) = |C₀| cos(Rs)`. -/
+theorem re_star_tickMark_mul {Ψ₀ : (ZMod L × Fin 2) × Fin 2 → ℂ} (hC : deviceCoherence Ψ₀ ≠ 0)
+    (R s : ℝ) :
+    (star (tickMark Ψ₀) * (exp (I * (((-R : ℝ) : ℂ) * s)) * deviceCoherence Ψ₀)).re
+      = ‖deviceCoherence Ψ₀‖ * Real.cos (R * s) := by
+  rw [tickMark]
   set C₀ := deviceCoherence Ψ₀
   have hn : ((‖C₀‖ : ℝ) : ℂ) ≠ 0 := by exact_mod_cast norm_ne_zero_iff.2 hC
   have hstar : star C₀ * C₀ = ((‖C₀‖ : ℝ) : ℂ) * ((‖C₀‖ : ℝ) : ℂ) := by
@@ -458,6 +457,18 @@ theorem tickWeight_tickMark {Ψ₀ Ψ : (ZMod L × Fin 2) × Fin 2 → ℂ} (hC 
         push_cast
         ring
   rw [e, Complex.re_ofReal_mul, Complex.exp_ofReal_mul_I_re, neg_mul, Real.cos_neg]
+
+/-- The mark is a phase. -/
+theorem norm_tickMark {Ψ₀ : (ZMod L × Fin 2) × Fin 2 → ℂ} (hC : deviceCoherence Ψ₀ ≠ 0) :
+    ‖tickMark Ψ₀‖ = 1 := by
+  rw [tickMark, norm_div, Complex.norm_real, norm_norm, div_self (norm_ne_zero_iff.2 hC)]
+
+/-- ★ **A rotating reading, read against its mark**: if the coherence has turned through `−Rs` from
+`C₀`, the tick weight is `max(|C₀| cos(Rs), 0)`. -/
+theorem tickWeight_tickMark {Ψ₀ Ψ : (ZMod L × Fin 2) × Fin 2 → ℂ} (hC : deviceCoherence Ψ₀ ≠ 0)
+    {R s : ℝ} (h : deviceCoherence Ψ = exp (I * (((-R : ℝ) : ℂ) * s)) * deviceCoherence Ψ₀) :
+    tickWeight (tickMark Ψ₀) Ψ = max (‖deviceCoherence Ψ₀‖ * Real.cos (R * s)) 0 := by
+  rw [tickWeight_eq, h, re_star_tickMark_mul hC]
 
 /-- ★★★ **A tick of the device as an actual occurrence**: for a device whose coherence turns
 exactly at rate `R` from `C₀ ≠ 0`, the register integrating the tick weight against the mark

@@ -748,6 +748,7 @@ public import CsdLean4.CV.DiracContinuum
 public import CsdLean4.CV.DiracPacketLimit
 public import CsdLean4.CV.DiracDevice
 public import CsdLean4.RecordLayer.DiracTicks
+public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment

@@ -12747,4 +12747,98 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_timed_signal
 
+-- DiracDeviceTicks (BACKLOG #272, 2026-11-01): ticks of a device with a position, written within
+-- a window around each mark; #269's signal timed by #262's device at rest.
+/-- info: 'CSD.RecordLayer.re_star_tickMark_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.re_star_tickMark_mul
+
+/-- info: 'CSD.RecordLayer.norm_tickMark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_tickMark
+
+/-- info: 'CSD.RecordLayer.half_le_max_cos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.half_le_max_cos
+
+/-- info: 'CSD.RecordLayer.le_integral_max_cos_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_integral_max_cos_near
+
+/-- info: 'CSD.RecordLayer.abs_tickWeight_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_tickWeight_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_integral_tickWeight_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_integral_tickWeight_sub_le
+
+/-- info: 'CSD.RecordLayer.integral_tickWeight_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_tickWeight_mono
+
+/-- info: 'CSD.RecordLayer.driftTickDetector' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.driftTickDetector
+
+/-- info: 'CSD.RecordLayer.deviceDrift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceDrift
+
+/-- info: 'CSD.RecordLayer.deviceTick_facts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceTick_facts
+
+/-- info: 'CSD.RecordLayer.deviceTick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceTick
+
+/-- info: 'CSD.RecordLayer.dirac_device_ticks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_device_ticks
+
+/-- info: 'CSD.RecordLayer.pairAmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pairAmp
+
+/-- info: 'CSD.RecordLayer.pair_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pair_norm
+
+/-- info: 'CSD.RecordLayer.pair_win' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pair_win
+
+/-- info: 'CSD.RecordLayer.pair_spread' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pair_spread
+
+/-- info: 'CSD.RecordLayer.located_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.located_rate
+
+/-- info: 'CSD.RecordLayer.located_margin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.located_margin
+
+/-- info: 'CSD.RecordLayer.locatedTick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.locatedTick
+
+/-- info: 'CSD.RecordLayer.locatedStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.locatedStart
+
+/-- info: 'CSD.RecordLayer.locatedArrival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.locatedArrival
+
+/-- info: 'CSD.RecordLayer.locatedTimedTick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.locatedTimedTick
+
+/-- info: 'CSD.RecordLayer.dirac_located_signal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_located_signal
+
 end CSD.Tests.AxiomAudit

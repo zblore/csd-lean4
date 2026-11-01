@@ -29,7 +29,11 @@ scaled limit of ~~#260~~ and ~~#261~~, and the clock is **read** as a phase.
 * `levelWeight_unitAmp` (each level normalised in its own basis: the weight is `|β_m|²` times the
   spinors' cosine), ★ `levelWeight_unitAmp_bounds`; ★ `abs_vRel_sub_le` — **the levels' velocities
   differ by at most `c (μ₁ − μ₀)/μ₀`**; ★ `levelError_scaled_le` — **the clock's error rate in
-  physical units is at most `2cD`**, spacing-independent.
+  physical units is at most `2cD`**, spacing-independent;
+* ★★ `abs_levelClockRate_sub_le` — **the splitting moves slowly with the momentum**:
+  `|R(s) − R(s₀)| ≤ |s² − s₀²|(μ₁ − μ₀)/(2μ₀²)`; `abs_sq_sub_sq_scaled_le`;
+  ★★★ `levelCoherence_rate_sharp` — **the sharp error rate** `c D (2c|p₀| + c D)(μ₁ − μ₀)/(2μ₀²)`:
+  quadratic in the spread at rest and proportional to the splitting (#272).
 
 ## The device
 
@@ -473,6 +477,156 @@ theorem levelError_scaled_le {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 :
           _ ≤ ‖β m‖ ^ 2 * (2 * c * D) := mul_le_mul_of_nonneg_left hang (sq_nonneg _)
     _ = 2 * c * D := by rw [← Finset.sum_mul, hβ, one_mul]
 
+/-- ★★ **The clock rate moves slowly with the momentum**:
+`|R(s) − R(s₀)| ≤ |s² − s₀²| (μ₁ − μ₀)/(2μ₀²)`. The splitting is stationary at rest, and its slope is
+proportional to the splitting itself. -/
+theorem abs_levelClockRate_sub_le {μ₀ μ₁ : ℝ} (h0 : 0 < μ₀) (h01 : μ₀ ≤ μ₁) (s s₀ : ℝ) :
+    |levelClockRate μ₀ μ₁ s - levelClockRate μ₀ μ₁ s₀|
+      ≤ |s ^ 2 - s₀ ^ 2| * (μ₁ - μ₀) / (2 * μ₀ ^ 2) := by
+  have h1 : 0 < μ₁ := h0.trans_le h01
+  have hr := clockRate_mem h0 h01 s
+  have hr₀ := clockRate_mem h0 h01 s₀
+  have q1 : μ₁ / dispE μ₁ s ≤ 1 := (div_le_one (dispE_pos h1 s)).2 (le_dispE μ₁ s)
+  have q1₀ : μ₁ / dispE μ₁ s₀ ≤ 1 := (div_le_one (dispE_pos h1 s₀)).2 (le_dispE μ₁ s₀)
+  have q0 : 0 ≤ μ₀ / dispE μ₀ s := div_nonneg h0.le (dispE_pos h0 s).le
+  have q0₀ : 0 ≤ μ₀ / dispE μ₀ s₀ := div_nonneg h0.le (dispE_pos h0 s₀).le
+  have hΔ : 0 ≤ μ₁ - μ₀ := by linarith
+  have g1 : levelClockRate μ₀ μ₁ s ≤ μ₁ - μ₀ := hr.2.trans (mul_le_of_le_one_right hΔ q1)
+  have g1₀ : levelClockRate μ₀ μ₁ s₀ ≤ μ₁ - μ₀ := hr₀.2.trans (mul_le_of_le_one_right hΔ q1₀)
+  have g0 : 0 ≤ levelClockRate μ₀ μ₁ s := le_trans (mul_nonneg hΔ q0) hr.1
+  have g0₀ : 0 ≤ levelClockRate μ₀ μ₁ s₀ := le_trans (mul_nonneg hΔ q0₀) hr₀.1
+  unfold levelClockRate at g1 g1₀ g0 g0₀ ⊢
+  have sa0 := dispE_sq μ₀ s
+  have sb0 := dispE_sq μ₀ s₀
+  have sa1 := dispE_sq μ₁ s
+  have sb1 := dispE_sq μ₁ s₀
+  have la0 := le_dispE μ₀ s
+  have lb0 := le_dispE μ₀ s₀
+  set a0 := dispE μ₀ s
+  set b0 := dispE μ₀ s₀
+  set a1 := dispE μ₁ s
+  set b1 := dispE μ₁ s₀
+  set X := s ^ 2 - s₀ ^ 2
+  have hA : 0 < a0 + b0 := by linarith
+  have hB : 0 < a1 + b1 := by linarith
+  have e0 : a0 - b0 = X / (a0 + b0) := by
+    rw [eq_div_iff hA.ne']
+    simp only [X]
+    linear_combination sa0 - sb0
+  have e1 : a1 - b1 = X / (a1 + b1) := by
+    rw [eq_div_iff hB.ne']
+    simp only [X]
+    linear_combination sa1 - sb1
+  have hdiff : a1 - a0 - (b1 - b0) = X * ((a0 + b0) - (a1 + b1)) / ((a0 + b0) * (a1 + b1)) := by
+    rw [show a1 - a0 - (b1 - b0) = (a1 - b1) - (a0 - b0) by ring, e1, e0]
+    field_simp
+  have hBA : 0 ≤ (a1 + b1) - (a0 + b0) := by linarith
+  have hBA' : (a1 + b1) - (a0 + b0) ≤ 2 * (μ₁ - μ₀) := by linarith
+  have hA2 : 2 * μ₀ ≤ a0 + b0 := by linarith
+  have hB2 : 2 * μ₀ ≤ a1 + b1 := by linarith
+  have h4 : 4 * μ₀ ^ 2 ≤ (a0 + b0) * (a1 + b1) := by
+    calc 4 * μ₀ ^ 2 = (2 * μ₀) * (2 * μ₀) := by ring
+      _ ≤ (a0 + b0) * (a1 + b1) := mul_le_mul hA2 hB2 (by positivity) hA.le
+  rw [hdiff, abs_div, abs_mul, abs_of_pos (mul_pos hA hB),
+    abs_of_nonpos (by linarith : (a0 + b0) - (a1 + b1) ≤ 0),
+    div_le_div_iff₀ (mul_pos hA hB) (by positivity)]
+  have hP : 0 ≤ |X| := abs_nonneg X
+  have k1 : |X| * -((a0 + b0) - (a1 + b1)) * (2 * μ₀ ^ 2) ≤ |X| * (2 * (μ₁ - μ₀)) * (2 * μ₀ ^ 2) :=
+    mul_le_mul_of_nonneg_right (mul_le_mul_of_nonneg_left (by linarith) hP) (by positivity)
+  have k2 : |X| * (μ₁ - μ₀) * (4 * μ₀ ^ 2) ≤ |X| * (μ₁ - μ₀) * ((a0 + b0) * (a1 + b1)) :=
+    mul_le_mul_of_nonneg_left h4 (mul_nonneg hP hΔ)
+  linarith [k1, k2, show |X| * (2 * (μ₁ - μ₀)) * (2 * μ₀ ^ 2) = |X| * (μ₁ - μ₀) * (4 * μ₀ ^ 2) by ring]
+
+/-- **The momentum terms of the scaled window**: with `J = c/(2a)`, `a = ℓ/L`, a mode within `D` of
+`p₀` has `|s_m² − s₀²| ≤ c D (2c|p₀| + c D)`. -/
+theorem abs_sq_sub_sq_scaled_le {c ℓ D p₀ : ℝ} (hc : 0 < c) (hℓ : 0 < ℓ) {m : ℤ}
+    (hm : |2 * Real.pi * m / ℓ - p₀| ≤ D) :
+    |(2 * scaledHop c (ℓ / L) * Real.sin (angleZ L m)) ^ 2
+        - (2 * scaledHop c (ℓ / L) * Real.sin (ℓ / L * p₀)) ^ 2|
+      ≤ c * D * (2 * c * |p₀| + c * D) := by
+  have hL : (0 : ℝ) < L := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne L)
+  have ha : 0 < ℓ / L := div_pos hℓ hL
+  have hJ : 2 * scaledHop c (ℓ / L) = c / (ℓ / L) := by
+    rw [scaledHop]
+    field_simp
+  set x := 2 * scaledHop c (ℓ / L) * Real.sin (angleZ L m)
+  set y := 2 * scaledHop c (ℓ / L) * Real.sin (ℓ / L * p₀)
+  have hD0 : 0 ≤ D := (abs_nonneg _).trans hm
+  have hxy : |x - y| ≤ c * D := by
+    simp only [x, y]
+    rw [← mul_sub, abs_mul, hJ, abs_of_pos (div_pos hc ha)]
+    calc c / (ℓ / L) * |Real.sin (angleZ L m) - Real.sin (ℓ / L * p₀)|
+        ≤ c / (ℓ / L) * |angleZ L m - ℓ / L * p₀| :=
+          mul_le_mul_of_nonneg_left (Real.abs_sin_sub_sin_le _ _) (div_pos hc ha).le
+      _ = c * |2 * Real.pi * m / ℓ - p₀| := by
+          rw [angleZ_div_spacing hℓ.ne' hL.ne', ← mul_sub, abs_mul, abs_of_pos ha]
+          field_simp
+      _ ≤ c * D := mul_le_mul_of_nonneg_left hm hc.le
+  have hy : |y| ≤ c * |p₀| := by
+    simp only [y]
+    rw [abs_mul, hJ, abs_of_pos (div_pos hc ha)]
+    have hs : |Real.sin (ℓ / L * p₀)| ≤ |ℓ / L * p₀| := by
+      simpa using Real.abs_sin_sub_sin_le (ℓ / L * p₀) 0
+    calc c / (ℓ / L) * |Real.sin (ℓ / L * p₀)| ≤ c / (ℓ / L) * |ℓ / L * p₀| :=
+          mul_le_mul_of_nonneg_left hs (div_pos hc ha).le
+      _ = c * |p₀| := by
+          rw [abs_mul, abs_of_pos ha]
+          field_simp
+  have hsum : |x + y| ≤ 2 * c * |p₀| + c * D := by
+    calc |x + y| = |(x - y) + 2 * y| := by ring_nf
+      _ ≤ |x - y| + |2 * y| := abs_add_le _ _
+      _ ≤ c * D + 2 * (c * |p₀|) := by
+          rw [abs_mul, abs_two]
+          linarith
+      _ = 2 * c * |p₀| + c * D := by ring
+  rw [show x ^ 2 - y ^ 2 = (x - y) * (x + y) by ring, abs_mul]
+  exact mul_le_mul hxy hsum (abs_nonneg _) (by positivity)
+
+/-- ★★★ **The coherence's sharp rate**: in the scaled window, the coherence turns at the centre's
+splitting within `|t| c D (2c|p₀| + c D)(μ₁ − μ₀)/(2μ₀²)` — quadratic in the spread at rest, and
+proportional to the splitting. -/
+theorem levelCoherence_rate_sharp {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 : 0 < μ₀) (h01 : μ₀ ≤ μ₁)
+    (hℓ : 0 < ℓ) {W : Finset ℤ} (hD : Distinct L W)
+    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D) (β : ℤ → ℂ)
+    (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) (t : ℝ) :
+    ‖levelCoherence (L := L) (scaledHop c (ℓ / L)) μ₀ μ₁ W
+          (unitAmp L (scaledHop c (ℓ / L)) μ₀ β) (unitAmp L (scaledHop c (ℓ / L)) μ₁ β) t
+        - exp (I * (((-levelClockRate μ₀ μ₁ (2 * scaledHop c (ℓ / L) * Real.sin (ℓ / L * p₀)) : ℝ)
+            : ℂ) * t))
+          * levelCoherence (L := L) (scaledHop c (ℓ / L)) μ₀ μ₁ W
+            (unitAmp L (scaledHop c (ℓ / L)) μ₀ β) (unitAmp L (scaledHop c (ℓ / L)) μ₁ β) 0‖
+      ≤ |t| * (c * D * (2 * c * |p₀| + c * D) * (μ₁ - μ₀) / (2 * μ₀ ^ 2)) := by
+  set J := scaledHop c (ℓ / L)
+  rw [levelCoherence_eq J μ₀ μ₁ hD _ _ t, levelCoherence_eq J μ₀ μ₁ hD _ _ 0]
+  simp only [mul_zero, Complex.ofReal_zero, mul_zero, Complex.exp_zero, mul_one]
+  refine (norm_sum_phase_sub_le _ _ _ _ t).trans ?_
+  refine mul_le_mul_of_nonneg_left ?_ (abs_nonneg t)
+  set K := c * D * (2 * c * |p₀| + c * D) * (μ₁ - μ₀) / (2 * μ₀ ^ 2)
+  calc ∑ m ∈ W, ‖levelWeight (L := L) J μ₀ μ₁ (unitAmp L J μ₀ β) (unitAmp L J μ₁ β) m‖
+        * |(bandE J μ₀ (angleZ L m) - bandE J μ₁ (angleZ L m))
+          - -levelClockRate μ₀ μ₁ (2 * J * Real.sin (ℓ / L * p₀))|
+      ≤ ∑ m ∈ W, ‖β m‖ ^ 2 * K := by
+        refine Finset.sum_le_sum fun m hm => ?_
+        have hw := (levelWeight_unitAmp_bounds (L := L) (J := J) h0 h01 β m).2
+        have hR : |(bandE J μ₀ (angleZ L m) - bandE J μ₁ (angleZ L m))
+            - -levelClockRate μ₀ μ₁ (2 * J * Real.sin (ℓ / L * p₀))|
+            = |levelClockRate μ₀ μ₁ (2 * J * Real.sin (angleZ L m))
+              - levelClockRate μ₀ μ₁ (2 * J * Real.sin (ℓ / L * p₀))| := by
+          rw [← abs_neg]
+          congr 1
+          rw [levelClockRate, levelClockRate, bandE, bandE]
+          ring
+        have hK : |levelClockRate μ₀ μ₁ (2 * J * Real.sin (angleZ L m))
+            - levelClockRate μ₀ μ₁ (2 * J * Real.sin (ℓ / L * p₀))| ≤ K := by
+          refine (abs_levelClockRate_sub_le h0 h01 _ _).trans ?_
+          have hΔ : 0 ≤ μ₁ - μ₀ := by linarith
+          have hX := abs_sq_sub_sq_scaled_le (L := L) hc hℓ (hWD m hm)
+          simp only [K]
+          gcongr
+        rw [hR]
+        exact mul_le_mul hw hK (abs_nonneg _) (sq_nonneg _)
+    _ = K := by rw [← Finset.sum_mul, hβ, one_mul]
+
 /-- ★★★ **One clock device on the Dirac chain, read as a phase** (BACKLOG #262). On a ring of
 physical length `ℓ` with `L` sites (`J = c/(2a)`, `a = ℓ/L`, `k = 2π/ℓ`), a device with internal
 levels of rest energies `0 < μ₀ ≤ μ₁`, carried by one normalised packet of momenta within `D` of `p₀`
@@ -483,7 +637,9 @@ on a window shorter than the ring:
 * **its position**: its translation phase turns at `k v₀`, `v_i = c²p₀/√(μ_i² + c²p₀²)`, within
   `|t|` times the two levels' `limitErr` and `k |v₁ − v₀|`, both halved; and `|v₁ − v₀| ≤ c (μ₁ − μ₀)/μ₀`;
 * **its clock**: the coherence `C` between its levels turns at `−R`, `R` the level splitting at the
-  window's centre, within `|t| c D`; it starts at `|C(0)| ≥ (1 − ((μ₁ − μ₀)/μ₀)²)/2`;
+  window's centre, within `|t| c D`, and within the sharper `|t| c D (2c|p₀| + c D)(μ₁ − μ₀)/(4μ₀²)`
+  (#272: quadratic in `D` at rest, proportional to the splitting); it starts at
+  `|C(0)| ≥ (1 − ((μ₁ − μ₀)/μ₀)²)/2`;
 * **its reading**: the phase `C(t)/|C(t)|` is within `2|t| c D / |C(0)|` of `e^{−iRt} C(0)/|C(0)|`;
 * **the reading's rate is dilated**: `R/(μ₁ − μ₀)` is within `(μ₁ − μ₀)/E₀` of
   `√(1 − (v/c)²)` at the lattice momentum (~~#249~~). -/
@@ -503,6 +659,8 @@ theorem dirac_device {c μ₀ μ₁ ℓ P D p₀ : ℝ} (hc : 0 < c) (h0 : 0 < �
     ∧ |vRel c μ₁ (c * p₀) - vRel c μ₀ (c * p₀)| ≤ c * (μ₁ - μ₀) / μ₀
     ∧ (∀ t, ‖deviceCoherence (Ψ t) - exp (I * (((-R : ℝ) : ℂ) * t)) * deviceCoherence (Ψ 0)‖
         ≤ |t| * (c * D))
+    ∧ (∀ t, ‖deviceCoherence (Ψ t) - exp (I * (((-R : ℝ) : ℂ) * t)) * deviceCoherence (Ψ 0)‖
+        ≤ |t| * (c * D * (2 * c * |p₀| + c * D) * (μ₁ - μ₀) / (4 * μ₀ ^ 2)))
     ∧ (1 - ((μ₁ - μ₀) / μ₀) ^ 2) / 2 ≤ ‖deviceCoherence (Ψ 0)‖
     ∧ (∀ t, ‖deviceCoherence (Ψ 0)‖
         * ‖deviceCoherence (Ψ t) / (‖deviceCoherence (Ψ t)‖ : ℂ)
@@ -539,6 +697,25 @@ theorem dirac_device {c μ₀ μ₁ ℓ P D p₀ : ℝ} (hc : 0 < c) (h0 : 0 < �
           gcongr
           exact h.trans (mul_le_mul_of_nonneg_left he (abs_nonneg t))
       _ = |t| * (c * D) := by ring
+  -- the sharp rate
+  have hsharp : ∀ t, ‖deviceCoherence (Ψ t) - exp (I * (((-R : ℝ) : ℂ) * t))
+      * deviceCoherence (Ψ 0)‖
+      ≤ |t| * (c * D * (2 * c * |p₀| + c * D) * (μ₁ - μ₀) / (4 * μ₀ ^ 2)) := fun t => by
+    rw [(hobs t).2.2, (hobs 0).2.2]
+    have h := levelCoherence_rate_sharp (L := L) hc h0 h01 hℓ hDst hWD β hβ t
+    rw [show (1 / 2 : ℂ) * levelCoherence (L := L) J μ₀ μ₁ W (unitAmp L J μ₀ β) (unitAmp L J μ₁ β) t
+        - exp (I * (((-R : ℝ) : ℂ) * t)) * ((1 / 2 : ℂ)
+          * levelCoherence (L := L) J μ₀ μ₁ W (unitAmp L J μ₀ β) (unitAmp L J μ₁ β) 0)
+        = (1 / 2 : ℂ) * (levelCoherence (L := L) J μ₀ μ₁ W (unitAmp L J μ₀ β) (unitAmp L J μ₁ β) t
+          - exp (I * (((-R : ℝ) : ℂ) * t))
+            * levelCoherence (L := L) J μ₀ μ₁ W (unitAmp L J μ₀ β) (unitAmp L J μ₁ β) 0) by ring,
+      norm_mul]
+    have hhalf : ‖(1 / 2 : ℂ)‖ = 1 / 2 := by norm_num
+    rw [hhalf]
+    calc 1 / 2 * ‖levelCoherence (L := L) J μ₀ μ₁ W _ _ t - _‖
+        ≤ 1 / 2 * (|t| * (c * D * (2 * c * |p₀| + c * D) * (μ₁ - μ₀) / (2 * μ₀ ^ 2))) := by
+          gcongr
+      _ = |t| * (c * D * (2 * c * |p₀| + c * D) * (μ₁ - μ₀) / (4 * μ₀ ^ 2)) := by ring
   -- the coherence at the start
   have hC0 : (1 - ((μ₁ - μ₀) / μ₀) ^ 2) / 2 ≤ ‖deviceCoherence (Ψ 0)‖ := by
     rw [(hobs 0).2.2, levelCoherence_eq J μ₀ μ₁ hDst _ _ 0]
@@ -553,7 +730,7 @@ theorem dirac_device {c μ₀ μ₁ ℓ P D p₀ : ℝ} (hc : 0 < c) (h0 : 0 < �
     rw [hβ, mul_one] at hsum
     linarith
   refine ⟨fun t => hasDerivAt_devicePacket J μ₀ μ₁ W β t, fun t => ?_, fun t => ?_,
-    abs_vRel_sub_le hc.le h0 h01 _, hrate, hC0, fun t => ?_, fun hlt => ?_⟩
+    abs_vRel_sub_le hc.le h0 h01 _, hrate, hsharp, hC0, fun t => ?_, fun hlt => ?_⟩
   · -- normalisation
     rw [(hobs t).1]
     have e0 : chainInner (packet (L := L) J μ₀ W (unitAmp L J μ₀ β) t)
