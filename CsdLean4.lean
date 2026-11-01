@@ -755,6 +755,7 @@ public import CsdLean4.RecordLayer.DiracTwin
 public import CsdLean4.RecordLayer.DiracReturn
 public import CsdLean4.RecordLayer.DiracDoppler
 public import CsdLean4.RecordLayer.GatedFlow
+public import CsdLean4.RecordLayer.GatePulse
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment

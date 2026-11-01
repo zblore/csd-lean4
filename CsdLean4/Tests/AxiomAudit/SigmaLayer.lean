@@ -14072,4 +14072,131 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.gated_register_flow
 
+-- GatePulse (BACKLOG #274 second landing, 2026-11-01): the gated pulse for an anticommuting
+-- involution -- ‖HΨ‖ conserved, the rotation unitary, ‖Ψ(T) − e^{−iC V}Ψ₀‖ ≤ T‖HΨ₀‖ -- and σ_y on
+-- the Dirac chain: the band flip that sends a packet backward.
+/-- info: 'CSD.RecordLayer.sqNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm
+
+/-- info: 'CSD.RecordLayer.sqNorm_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_nonneg
+
+/-- info: 'CSD.RecordLayer.sqNorm_eq_re' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_eq_re
+
+/-- info: 'CSD.RecordLayer.sqNorm_eq_norm_toLp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_eq_norm_toLp
+
+/-- info: 'CSD.RecordLayer.sqNorm_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_smul
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_mulVec
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_star_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_star_dotProduct
+
+/-- info: 'CSD.RecordLayer.star_mulVec_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.star_mulVec_dotProduct
+
+/-- info: 'CSD.RecordLayer.im_star_dotProduct_mulVec_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.im_star_dotProduct_mulVec_self
+
+/-- info: 'CSD.RecordLayer.sqNorm_mulVec_const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_mulVec_const
+
+/-- info: 'CSD.RecordLayer.gateRot' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateRot
+
+/-- info: 'CSD.RecordLayer.gateRot_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateRot_mulVec
+
+/-- info: 'CSD.RecordLayer.gateRot_zero_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateRot_zero_mulVec
+
+/-- info: 'CSD.RecordLayer.gateRot_mulVec_gateRot_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateRot_mulVec_gateRot_neg
+
+/-- info: 'CSD.RecordLayer.star_dotProduct_mulVec_self_real' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.star_dotProduct_mulVec_self_real
+
+/-- info: 'CSD.RecordLayer.sqNorm_gateRot_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_gateRot_mulVec
+
+/-- info: 'CSD.RecordLayer.sqNorm_sub_gateRot_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_sub_gateRot_le
+
+/-- info: 'CSD.RecordLayer.integral_gate_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_gate_eq
+
+/-- info: 'CSD.RecordLayer.gate_pulse' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gate_pulse
+
+/-- info: 'CSD.RecordLayer.diracSy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracSy
+
+/-- info: 'CSD.RecordLayer.spinY' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.spinY
+
+/-- info: 'CSD.RecordLayer.spinY_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.spinY_mulVec_apply
+
+/-- info: 'CSD.RecordLayer.spinY_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.spinY_isHermitian
+
+/-- info: 'CSD.RecordLayer.spinY_mulVec_spinY' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.spinY_mulVec_spinY
+
+/-- info: 'CSD.RecordLayer.diracHam_mulVec_apply_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracHam_mulVec_apply_two
+
+/-- info: 'CSD.RecordLayer.spinY_mulVec_diracHam_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.spinY_mulVec_diracHam_mulVec
+
+/-- info: 'CSD.RecordLayer.diracHam_mulVec_spinY_diracMode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracHam_mulVec_spinY_diracMode
+
+/-- info: 'CSD.RecordLayer.chainProp_mulVec_spinY_mode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_mulVec_spinY_mode
+
+/-- info: 'CSD.RecordLayer.chainProp_spinY_packet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_spinY_packet
+
+/-- info: 'CSD.RecordLayer.siteWeight_spinY' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteWeight_spinY
+
+/-- info: 'CSD.RecordLayer.dirac_band_flip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_band_flip
+
 end CSD.Tests.AxiomAudit
