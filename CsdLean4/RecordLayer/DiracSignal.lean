@@ -42,7 +42,7 @@ packet's velocity `4/5` and stays **below `c = 1`**.
 in the chain's time; no clock is involved here — `DiracTicks.lean` (`dirac_timed_signal`, #271)
 times the same records in a device's ticks — and both detectors are at rest in the chain's frame.
 
-⚠️ **One way, no return.** The exchange of #256 needs the messenger back (#270), and its Doppler
+⚠️ **One way, no return.** The exchange of #256 needs the messenger back (`DiracReturn.lean`, #270), and its Doppler
 factor needs moving observers (`DiracTwin.lean`, #253, and signals between them).
 
 ⚠️ **The bracket is wide** (`0.72` to `0.91`): the arcs are `ℓ/20` wide and the arrival is timed to
