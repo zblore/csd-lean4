@@ -13957,4 +13957,119 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.approach_rate_drift
 
+-- GatedFlow (BACKLOG #274 first landing, 2026-11-01): a Hamiltonian gated by a register generates
+-- a reversible flow -- the two-time law an ActualOccurrence needs, norm conserving, free while
+-- the gate is closed.
+/-- info: 'CSD.RecordLayer.GateArena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.GateArena
+
+/-- info: 'CSD.RecordLayer.gatedField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedField
+
+/-- info: 'CSD.RecordLayer.gatedField_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedField_fst
+
+/-- info: 'CSD.RecordLayer.gatedField_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedField_snd
+
+/-- info: 'CSD.RecordLayer.gatedField_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedField_eq
+
+/-- info: 'CSD.RecordLayer.exists_lipschitzWith_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_lipschitzWith_mulVec
+
+/-- info: 'CSD.RecordLayer.lipschitzWith_gateScale' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lipschitzWith_gateScale
+
+/-- info: 'CSD.RecordLayer.exists_lipschitzWith_gatedField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_lipschitzWith_gatedField
+
+/-- info: 'CSD.RecordLayer.gatedFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedFlow
+
+/-- info: 'CSD.RecordLayer.gatedFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedFlow_zero
+
+/-- info: 'CSD.RecordLayer.gatedFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedFlow_add
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_gatedFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_gatedFlow
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_gatedFlow_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_gatedFlow_fst
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_gatedFlow_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_gatedFlow_snd
+
+/-- info: 'CSD.RecordLayer.continuous_gatedFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_gatedFlow
+
+/-- info: 'CSD.RecordLayer.continuous_gatedFlow_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_gatedFlow_time
+
+/-- info: 'CSD.RecordLayer.measurable_gatedFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_gatedFlow
+
+/-- info: 'CSD.RecordLayer.gatedEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedEvolve
+
+/-- info: 'CSD.RecordLayer.gatedEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedEvolve_self
+
+/-- info: 'CSD.RecordLayer.gatedEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedEvolve_comp
+
+/-- info: 'CSD.RecordLayer.measurable_gatedEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_gatedEvolve
+
+/-- info: 'CSD.RecordLayer.isHermitian_gateHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isHermitian_gateHam
+
+/-- info: 'CSD.RecordLayer.star_dotProduct_self_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.star_dotProduct_self_eq
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_gatedFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_gatedFlow
+
+/-- info: 'CSD.RecordLayer.register_gatedFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.register_gatedFlow
+
+/-- info: 'CSD.RecordLayer.register_mono_gatedFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.register_mono_gatedFlow
+
+/-- info: 'CSD.RecordLayer.gatedFlow_fst_eq_of_gate_closed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedFlow_fst_eq_of_gate_closed
+
+/-- info: 'CSD.RecordLayer.gated_register_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gated_register_flow
+
 end CSD.Tests.AxiomAudit

@@ -754,6 +754,7 @@ public import CsdLean4.RecordLayer.DiracObservers
 public import CsdLean4.RecordLayer.DiracTwin
 public import CsdLean4.RecordLayer.DiracReturn
 public import CsdLean4.RecordLayer.DiracDoppler
+public import CsdLean4.RecordLayer.GatedFlow
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment
@@ -791,6 +792,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.GlobalFlow
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
 public import CsdLean4.Mathlib.Analysis.ODE.FlowDerivative
 public import CsdLean4.Mathlib.Analysis.ODE.FlowSmooth
+public import CsdLean4.Mathlib.Analysis.ODE.LipschitzFlow
 public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianLieDerivative
 public import CsdLean4.Mathlib.Analysis.Calculus.ContDiffParametricIntervalIntegral
 public import CsdLean4.Mathlib.Analysis.Calculus.ContDiffParametricIntegral

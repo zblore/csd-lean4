@@ -14940,4 +14940,95 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.one_sub_le_measure_output_eq_pairs
 
+-- BACKLOG #274 first landing (2026-11-01), Analysis/ODE/LipschitzFlow.lean: the global flow of a
+-- globally Lipschitz vector field (uniform Picard-Lindelof step, concatenation, uniqueness, the
+-- group law, Gronwall dependence on the initial point, joint continuity, Mathlib's `Flow`).
+/-- info: 'LipschitzWith.exists_hasDerivWithinAt_Icc_step' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.exists_hasDerivWithinAt_Icc_step
+
+/-- info: 'LipschitzWith.hasDerivWithinAt_Icc_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.hasDerivWithinAt_Icc_shift
+
+/-- info: 'LipschitzWith.exists_hasDerivWithinAt_Icc_forward' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.exists_hasDerivWithinAt_Icc_forward
+
+/-- info: 'LipschitzWith.exists_hasDerivWithinAt_Icc_symm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.exists_hasDerivWithinAt_Icc_symm
+
+/-- info: 'LipschitzWith.eqOn_Icc_of_hasDerivWithinAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.eqOn_Icc_of_hasDerivWithinAt
+
+/-- info: 'LipschitzWith.exists_global_solution' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.exists_global_solution
+
+/-- info: 'LipschitzWith.odeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.odeFlow
+
+/-- info: 'LipschitzWith.odeFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.odeFlow_zero
+
+/-- info: 'LipschitzWith.hasDerivAt_odeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.hasDerivAt_odeFlow
+
+/-- info: 'LipschitzWith.odeFlow_eq_of_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.odeFlow_eq_of_hasDerivAt
+
+/-- info: 'LipschitzWith.odeFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.odeFlow_add
+
+/-- info: 'LipschitzWith.odeFlow_neg_odeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.odeFlow_neg_odeFlow
+
+/-- info: 'LipschitzWith.odeFlow_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.odeFlow_neg
+
+/-- info: 'LipschitzWith.dist_odeFlow_le_of_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.dist_odeFlow_le_of_nonneg
+
+/-- info: 'LipschitzWith.dist_odeFlow_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.dist_odeFlow_le
+
+/-- info: 'LipschitzWith.lipschitzWith_odeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.lipschitzWith_odeFlow
+
+/-- info: 'LipschitzWith.continuous_odeFlow_point' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.continuous_odeFlow_point
+
+/-- info: 'LipschitzWith.measurable_odeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.measurable_odeFlow
+
+/-- info: 'LipschitzWith.continuous_odeFlow_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.continuous_odeFlow_time
+
+/-- info: 'LipschitzWith.continuous_odeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.continuous_odeFlow
+
+/-- info: 'LipschitzWith.toFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.toFlow
+
+/-- info: 'LipschitzWith.toFlow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms LipschitzWith.toFlow_apply
+
 end CSD.Tests.AxiomAudit
