@@ -623,7 +623,8 @@ finite sum of phases; it moves at the group velocity of the window's centre with
 drift error; it stays localised within the same error; and the clock it carries in two internal
 levels has its coherence rotating at the centre's level splitting — within `(μ₁ − μ₀)/E₀` of
 `(μ₁ − μ₀)√(1 − (v_rel/c)²)` by ~~#249~~ — within `|t|` times the window's spread. The transport mass
-`μ` is not tied to `μ₀`, `μ₁`: one device carrying both levels is #262. -/
+`μ` is not tied to `μ₀`, `μ₁`: one device carrying both levels is `DiracDevice.lean`
+(`dirac_device`, BACKLOG #262). -/
 theorem dirac_packet {J μ μ₀ μ₁ : ℝ} (hμ : 0 < μ) (h0 : 0 < μ₀) (h1 : 0 < μ₁) {W : Finset ℤ}
     {lo : ℤ} (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + L) (a : ℤ → ℂ) (θ₀ : ℝ) :
     (∀ t, HasDerivAt (packet (L := L) J μ W a)

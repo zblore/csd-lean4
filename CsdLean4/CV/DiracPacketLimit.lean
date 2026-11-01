@@ -93,7 +93,7 @@ trade-off are not.
 Compton lengths `c/μ`.
 
 ⚠️ **One mass, no clock, no records.** The packet carries one rest energy `μ`; the two-level clock
-transported as the same device and read as a phase is #262; the detector readout is #252. The
+transported as the same device and read as a phase is `DiracDevice.lean` (#262); the detector readout is #252. The
 finite-level residue `2Δ/μ` of ~~#260~~ is untouched.
 
 References: `specs/BACKLOG.md` #261, #260, #250, #262, #252, #39; `CV/DiracPacket.lean` (`packet`,

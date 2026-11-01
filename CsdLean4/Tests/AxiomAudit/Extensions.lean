@@ -5139,4 +5139,90 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.flat_packet_localised
 
+-- DiracDevice (BACKLOG #262, 2026-11-01): one device carrying both clock levels under one
+-- Hamiltonian, its position and its clock reading bounded together in the scaled limit.
+/-- info: 'CSD.CV.level_align' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.level_align
+
+/-- info: 'CSD.CV.levelCoherence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelCoherence
+
+/-- info: 'CSD.CV.levelWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelWeight
+
+/-- info: 'CSD.CV.levelCoherence_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelCoherence_eq
+
+/-- info: 'CSD.CV.levelError' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelError
+
+/-- info: 'CSD.CV.levelCoherence_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelCoherence_rate
+
+/-- info: 'CSD.CV.levelWeight_unitAmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelWeight_unitAmp
+
+/-- info: 'CSD.CV.levelMass' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelMass
+
+/-- info: 'CSD.CV.deviceHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.deviceHam
+
+/-- info: 'CSD.CV.devicePacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.devicePacket
+
+/-- info: 'CSD.CV.deviceHam_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.deviceHam_mulVec_apply
+
+/-- info: 'CSD.CV.hasDerivAt_devicePacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_devicePacket
+
+/-- info: 'CSD.CV.deviceNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.deviceNorm
+
+/-- info: 'CSD.CV.deviceTrans' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.deviceTrans
+
+/-- info: 'CSD.CV.deviceCoherence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.deviceCoherence
+
+/-- info: 'CSD.CV.star_sqrt_two_inv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.star_sqrt_two_inv
+
+/-- info: 'CSD.CV.device_observables' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.device_observables
+
+/-- info: 'CSD.CV.levelWeight_unitAmp_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelWeight_unitAmp_bounds
+
+/-- info: 'CSD.CV.abs_vRel_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_vRel_sub_le
+
+/-- info: 'CSD.CV.levelError_scaled_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelError_scaled_le
+
+/-- info: 'CSD.CV.dirac_device' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dirac_device
+
 end CSD.Tests.AxiomAudit

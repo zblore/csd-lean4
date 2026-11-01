@@ -746,6 +746,7 @@ public import CsdLean4.CV.DiracClockChain
 public import CsdLean4.CV.DiracPacket
 public import CsdLean4.CV.DiracContinuum
 public import CsdLean4.CV.DiracPacketLimit
+public import CsdLean4.CV.DiracDevice
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment
