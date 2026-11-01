@@ -39,8 +39,8 @@ packet's velocity `4/5` and stays **below `c = 1`**.
 ## Honest scope
 
 ⚠️ **The speed is read off the records' timing, not measured by a clock.** The write intervals are
-in the chain's time; a clock carried by an observer (#262, #253) is not involved, and both detectors
-are at rest in the chain's frame.
+in the chain's time; no clock is involved here — `DiracTicks.lean` (`dirac_timed_signal`, #271)
+times the same records in a device's ticks — and both detectors are at rest in the chain's frame.
 
 ⚠️ **One way, no return.** The exchange of #256 needs the messenger back (#270), and its Doppler
 factor needs moving observers (#253).

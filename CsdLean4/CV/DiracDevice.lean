@@ -62,9 +62,8 @@ the position over one `≪ 1/(limitErr + k|v₁ − v₀|)`. Both are upper boun
 ⚠️ **The dilation is against the lattice momentum** `2J sin(a p₀)`, which tends to `c p₀` as
 `a → 0` (~~#260~~); the residue `(μ₁ − μ₀)/E₀` of ~~#249~~ is the finite level splitting.
 
-⚠️ **No records.** The reading is a phase of the state; a detector writing it as a record is the
-analogue of #252's detectors for the clock, and an observer timing #269's signal with this clock is
-#253's.
+⚠️ **No records here.** The reading is a phase of the state; its ticks written as records, and
+#269's signal timed by them, are `RecordLayer/DiracTicks.lean` (#271); moving observers are #253.
 
 References: `specs/BACKLOG.md` #262, #260, #261, #250, #249, #252, #253, #269, #39;
 `CV/DiracPacket.lean` (`packet`, `clockOverlap_eq`, `clockOverlap_rate`, `norm_sum_phase_sub_le`);
