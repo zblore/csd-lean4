@@ -63,7 +63,7 @@ timed by a device with a position, on a ring a hundred times shorter than the ch
 ⚠️ **The device's position is a translation phase of two modes**: it is spread over its own ring,
 a hundred times shorter than the chain's, not at the start arc. It sits beside the chain,
 uncoupled, and is compared with the records by the one evolution they share; a single local
-observer needs the signal back (#270), and moving observers are #253.
+observer needs the signal back (#270), and moving observers are `DiracTwin.lean` (#253).
 
 ⚠️ **The horizon is finite**: tick `n` exists for `n ≤ 641` in the instance, and in general while the
 margin holds — the drift bound is linear in time.

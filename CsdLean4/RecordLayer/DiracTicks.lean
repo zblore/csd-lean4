@@ -85,7 +85,7 @@ a stated detector law (#251, #266).
 
 ⚠️ **The device sits beside the chain, uncoupled**, and is compared with the records by the one
 evolution they share. An observer at the start arc learns of the arrival only by a signal back
-(#270), and moving observers are #253; the device timing #269's signal is at rest.
+(#270), and moving observers are `DiracTwin.lean` (#253); the device timing #269's signal is at rest.
 
 ⚠️ **The speed needs `c T` in the chain's units**: the arcs' separation is converted to light-ticks
 with the device's rest splitting `10⁻⁶`.

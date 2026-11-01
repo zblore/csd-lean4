@@ -43,7 +43,7 @@ in the chain's time; no clock is involved here — `DiracTicks.lean` (`dirac_tim
 times the same records in a device's ticks — and both detectors are at rest in the chain's frame.
 
 ⚠️ **One way, no return.** The exchange of #256 needs the messenger back (#270), and its Doppler
-factor needs moving observers (#253).
+factor needs moving observers (`DiracTwin.lean`, #253, and signals between them).
 
 ⚠️ **The bracket is wide** (`0.72` to `0.91`): the arcs are `ℓ/20` wide and the arrival is timed to
 `1/8` (~~#268~~). Its upper end below `1` is what the records show: this messenger is slower than
