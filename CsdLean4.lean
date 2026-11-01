@@ -752,6 +752,7 @@ public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracObservers
 public import CsdLean4.RecordLayer.DiracTwin
 public import CsdLean4.RecordLayer.DiracReturn
+public import CsdLean4.RecordLayer.DiracDoppler
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment
