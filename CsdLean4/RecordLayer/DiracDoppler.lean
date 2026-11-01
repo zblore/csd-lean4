@@ -22,7 +22,7 @@ compression times `B`'s slow clock — and excludes the Galilean `v/(v + β) = 4
 
 ## Generic pieces
 
-* `chainProp_ringPacket`, `deviceProp_devicePacket_shift` (evolving from any time);
+* `chainProp_ringPacket` (evolving from any time);
   `norm_sum_shift_le`, ★★ `levelCoherence_shift_sharp` — **the device's clock drifts from any start
   at the sharp rate**;
 * `devSiteWeight_levelLift`, `devRegionWeight_levelLift` (a messenger as a one-level device);
@@ -34,8 +34,9 @@ compression times `B`'s slow clock — and excludes the Galilean `v/(v + β) = 4
   `omega_approach`, `approach_win`; ★★ `approach_tail`, `image_tail_any` (each within chord `1/50` of its
   prediction at any time `|s| ≤ 8·10¹³`, but for `6·10⁻³`); `approach_total`, `image_total`;
 * ★★ `approach_rate` — **its splitting is in `[8·10⁻¹², 8.002·10⁻¹²]`**, four fifths of the rest
-  splitting; `approach_drift`, `approach_coherence_ge`, `approachTick` — **its ticks, counted from its
-  preparation `5·10¹³` before it reaches `A`**.
+  splitting; `approach_drift`, `approach_rate_drift` (its rate, for the rate counter of ~~#273~~),
+  `approach_coherence_ge`, `approachTick` — **its ticks, counted from its preparation `5·10¹³`
+  before it reaches `A`**.
 
 ## The weights along the way
 
@@ -81,13 +82,15 @@ passage, as in ~~#244~~ (launching is #254).
 ⚠️ **The messengers move at `4/5`, below the chain's `c`**, so the factor measured is
 `v√(1 − β²)/(v + β)`; its `v → c` limit is `√((1 − β)/(1 + β))`, not reached on the chain (~~#246~~).
 
-⚠️ **The detectors are calibrated test detectors** of a stated law (#251, #266, #273); the clocks
-are #262's devices with #272's drifting ticks.
+⚠️ **The detectors are test detectors** of a stated law (#251, #266); the clocks are #262's devices
+counted by ~~#273~~'s rate counter, whose thresholds hold no rate.
 
-References: `specs/BACKLOG.md` #256, #253, #272, #270, #274, #244, #246, #254, #251, #266, #273, #39;
+References: `specs/BACKLOG.md` #256, #253, #272, #273, #270, #274, #244, #246, #254, #251, #266, #39;
 `RecordLayer/DiracTwin.lean` (`restObserver`, `twinRestTick`, `twin_budget`, `twin_rest_rate`);
 `RecordLayer/DiracReturn.lean` (`imagePacket`, `chordArc_subset`, `integral_le_three`);
-`RecordLayer/DiracDeviceTicks.lean` (`driftTickDetector`, `deviceTick_facts`, `deviceDrift`);
+`RecordLayer/DiracRateTicks.lean` (`rateDriftDetector`, `splitCoherence_shift_sharp`,
+`deviceProp_devicePacket_shift`); `RecordLayer/DiracDeviceTicks.lean` (`deviceTick_facts`,
+`deviceDrift`);
 `RecordLayer/DiracObservers.lean` (`relWeight`, `regDetector`); `CV/DiracDevice.lean`
 (`levelCoherence_rate_sharp`, `abs_levelClockRate_sub_le`).
 -/
@@ -110,11 +113,6 @@ theorem chainProp_ringPacket (c μ ℓ : ℝ) (W : Finset ℤ) (β : ℤ → ℂ
       = ringPacket c μ ℓ W β (s + t) := by
   rw [ringPacket, ringPacket, ← chainProp_packet _ _ _ _ s, ← chainProp_packet _ _ _ _ (s + t),
     Matrix.mulVec_mulVec, chainProp_add]
-
-theorem deviceProp_devicePacket_shift (J μ₀ μ₁ : ℝ) (W : Finset ℤ) (β : ℤ → ℂ) (s t : ℝ) :
-    deviceProp (L := L) J μ₀ μ₁ t *ᵥ devicePacket J μ₀ μ₁ W β s = devicePacket J μ₀ μ₁ W β (s + t) := by
-  rw [← deviceProp_devicePacket _ _ _ _ _ s, ← deviceProp_devicePacket _ _ _ _ _ (s + t),
-    Matrix.mulVec_mulVec, deviceProp_add]
 
 /-- **Phases from any start**: `‖Σ w_m e^{iΔ_m(t₁+s)} − e^{iΩs} Σ w_m e^{iΔ_m t₁}‖ ≤ |s| Σ |w_m| |Δ_m − Ω|`. -/
 theorem norm_sum_shift_le (W : Finset ℤ) (w : ℤ → ℂ) (Δ : ℤ → ℝ) (Ω t₁ s : ℝ) :
@@ -428,6 +426,27 @@ theorem approach_drift (s : ℝ) :
         rw [deviceDrift]
         ring
 
+/-- **The rate of the approaching clock** turns with its reading, from its preparation: within
+`(1 + R|s|)` times the sharp drift. -/
+theorem approach_rate_drift (s : ℝ) :
+    ‖splitCoherence (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11)
+          (deviceProp (L := L) (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) s
+            *ᵥ approachObserver (-(5 * 10 ^ 13)))
+        - ((levelClockRate 3 (3 + 1 / 10 ^ 11) (2 * scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)
+            * Real.sin (2 * Real.pi * 10 ^ 13 / L * (9 / 4))) : ℝ) : ℂ)
+          * (exp (I * (((-levelClockRate 3 (3 + 1 / 10 ^ 11) (2 * scaledHop 1
+              (2 * Real.pi * 10 ^ 13 / L) * Real.sin (2 * Real.pi * 10 ^ 13 / L * (9 / 4))) : ℝ)
+              : ℂ) * s))
+            * deviceCoherence (approachObserver (L := L) (-(5 * 10 ^ 13))))‖
+      ≤ (1 + levelClockRate 3 (3 + 1 / 10 ^ 11) (2 * scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)
+          * Real.sin (2 * Real.pi * 10 ^ 13 / L * (9 / 4))) * |s|)
+        * deviceDrift 1 3 (3 + 1 / 10 ^ 11) (2 / 10 ^ 7) (9 / 4) := by
+  obtain ⟨-, hD⟩ := noWrap_distinct_of_window (L := L) (approach_win hL)
+  unfold approachObserver
+  exact splitCoherence_shift_sharp (L := L) (c := 1) (μ₀ := 3) (μ₁ := 3 + 1 / 10 ^ 11)
+    (ℓ := 2 * Real.pi * 10 ^ 13) (D := 2 / 10 ^ 7) (p₀ := 9 / 4) one_pos (by norm_num) (by norm_num)
+    (by positivity) hD approach_spread twinAmp (twin_norm hL _) (-(5 * 10 ^ 13)) s
+
 end Approach
 
 /-! ### The approaching clock's ticks -/
@@ -491,9 +510,9 @@ noncomputable def approachTick (n : ℕ) (hn : n ≤ 60) {w : ℝ} (hw : 0 ≤ w
       = 2 / 10 ^ 7 * (2 * 1 * (9 / 4) + 1 * (2 / 10 ^ 7)) * (1 / 10 ^ 11) / 36 := by
     simp only [deviceDrift, abs_of_pos (by norm_num : (0 : ℝ) < 9 / 4)]
     norm_num
-  driftTickDetector (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) 1 _
+  rateDriftDetector (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) 1 _
     (deviceDrift 1 3 (3 + 1 / 10 ^ 11) (2 / 10 ^ 7) (9 / 4)) one_pos (by linarith [hR.1])
-    (approachObserver (-(5 * 10 ^ 13))) (approach_drift hL)
+    (approachObserver (-(5 * 10 ^ 13))) (approach_rate_drift hL)
     (norm_pos_iff.1 (lt_of_lt_of_le (by rw [hd]; norm_num) hC)) n (δ := 12 * 10 ^ 10)
     (by positivity)
     (by
@@ -517,10 +536,12 @@ noncomputable def approachTick (n : ℕ) (hn : n ≤ 60) {w : ℝ} (hw : 0 ≤ w
       have hC' : (49 / 100 : ℝ) ≤ ‖deviceCoherence (approachObserver (L := L) (-(5 * 10 ^ 13)))‖ :=
         le_trans (by rw [hd]; norm_num) hC
       rw [hd]
+      have hR1 : 8 / 10 ^ 12 ≤ R := hR.1
       calc 2 / 10 ^ 7 * (2 * 1 * (9 / 4) + 1 * (2 / 10 ^ 7)) * (1 / 10 ^ 11) / 36
-            * (2 * Real.pi * n / R + 12 * 10 ^ 10) ^ 2
+            * ((2 * Real.pi * n / R + 12 * 10 ^ 10) ^ 2
+              + 2 * (2 * Real.pi * n / R + 12 * 10 ^ 10) / R)
           ≤ 2 / 10 ^ 7 * (2 * 1 * (9 / 4) + 1 * (2 / 10 ^ 7)) * (1 / 10 ^ 11) / 36
-            * (5 * 10 ^ 13) ^ 2 := by gcongr
+            * ((5 * 10 ^ 13) ^ 2 + 2 * (5 * 10 ^ 13) / (8 / 10 ^ 12)) := by gcongr
         _ < 49 / 100 * (12 * 10 ^ 10) := by norm_num
         _ ≤ _ := mul_le_mul_of_nonneg_right hC' (by positivity))
     hw
@@ -650,10 +671,12 @@ abbrev DopArena (L : ℕ) : Type :=
 
 /-- **Its flow**: each clock by `e^{−itH_dev}` with its tick register, each messenger by `e^{−itH}`. -/
 noncomputable def dopFlow (t : ℝ) (x : DopArena L) : DopArena L :=
-  (tickFlow (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) 1
-      (tickMark (restObserver (L := L) 0)) t x.1,
-    tickFlow (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) 1
-      (tickMark (approachObserver (L := L) (-(5 * 10 ^ 13)))) t x.2.1,
+  (weightFlow (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) 1
+      (rateWeight (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11)
+        (tickMark (restObserver (L := L) 0))) t x.1,
+    weightFlow (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) 1
+      (rateWeight (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11)
+        (tickMark (approachObserver (L := L) (-(5 * 10 ^ 13))))) t x.2.1,
     chainProp (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 t *ᵥ x.2.2.1,
     chainProp (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 t *ᵥ x.2.2.2)
 
@@ -674,23 +697,26 @@ observer. -/
 noncomputable def dopWeight : Fin 4 → DopArena L → ℝ := ![dopEm₁, dopEm₂, dopRc₁, dopRc₂]
 
 theorem dopFlow_zero (x : DopArena L) : dopFlow 0 x = x := by
-  refine Prod.ext (tickFlow_zero _ _ _ _ _ _) (Prod.ext (tickFlow_zero _ _ _ _ _ _) (Prod.ext ?_ ?_))
+  refine Prod.ext (weightFlow_zero _ _ _ _ _ _)
+    (Prod.ext (weightFlow_zero _ _ _ _ _ _) (Prod.ext ?_ ?_))
   · show chainProp _ _ 0 *ᵥ x.2.2.1 = x.2.2.1
     rw [chainProp_zero, Matrix.one_mulVec]
   · show chainProp _ _ 0 *ᵥ x.2.2.2 = x.2.2.2
     rw [chainProp_zero, Matrix.one_mulVec]
 
 theorem dopFlow_add (s t : ℝ) (x : DopArena L) : dopFlow (s + t) x = dopFlow t (dopFlow s x) := by
-  refine Prod.ext (tickFlow_add _ _ _ _ _ _ _ _)
-    (Prod.ext (tickFlow_add _ _ _ _ _ _ _ _) (Prod.ext ?_ ?_))
+  refine Prod.ext (weightFlow_add _ _ _ _ (continuous_rateWeight _ _ _ _) _ _ _)
+    (Prod.ext (weightFlow_add _ _ _ _ (continuous_rateWeight _ _ _ _) _ _ _) (Prod.ext ?_ ?_))
   · show chainProp _ _ (s + t) *ᵥ x.2.2.1 = chainProp _ _ t *ᵥ (chainProp _ _ s *ᵥ x.2.2.1)
     rw [Matrix.mulVec_mulVec, chainProp_add]
   · show chainProp _ _ (s + t) *ᵥ x.2.2.2 = chainProp _ _ t *ᵥ (chainProp _ _ s *ᵥ x.2.2.2)
     rw [Matrix.mulVec_mulVec, chainProp_add]
 
 theorem measurable_dopFlow (t : ℝ) : Measurable (dopFlow (L := L) t) := by
-  refine ((measurable_tickFlow _ _ _ _ _ t).comp measurable_fst).prodMk
-    (((measurable_tickFlow _ _ _ _ _ t).comp measurable_snd.fst).prodMk ?_)
+  refine ((measurable_weightFlow _ _ _ _ (continuous_rateWeight _ _ _ _) t).comp
+    measurable_fst).prodMk
+    (((measurable_weightFlow _ _ _ _ (continuous_rateWeight _ _ _ _) t).comp
+      measurable_snd.fst).prodMk ?_)
   have hc := (continuous_chainProp_mulVec (L := L) (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3)
   refine (hc.comp (continuous_id.prodMk continuous_const)).measurable.comp measurable_snd.snd.fst
     |>.prodMk ?_
@@ -747,14 +773,14 @@ theorem dopFlow_prep_messenger₂ (s : ℝ) :
 
 theorem dopFlow_prep_approach (s : ℝ) :
     (dopFlow s (dopPrep (L := L))).2.1.1 = approachObserver (s - 5 * 10 ^ 13) := by
-  simp only [dopFlow, dopPrep, state_tickFlow]
+  simp only [dopFlow, dopPrep, state_weightFlow]
   rw [approachObserver, deviceProp_devicePacket_shift, approachObserver]
   congr 1
   ring
 
 theorem dopFlow_prep_rest (s : ℝ) :
     (dopFlow s (dopPrep (L := L))).1.1 = restObserver s := by
-  simp only [dopFlow, dopPrep, state_tickFlow]
+  simp only [dopFlow, dopPrep, state_weightFlow]
   rw [restObserver, deviceProp_devicePacket, restObserver]
 
 theorem continuous_dopWeight_prep (i : Fin 4) :

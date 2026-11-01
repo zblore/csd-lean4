@@ -68,7 +68,8 @@ observer needs the signal back (#270), and moving observers are `DiracTwin.lean`
 ⚠️ **The horizon is finite**: tick `n` exists for `n ≤ 641` in the instance, and in general while the
 margin holds — the drift bound is linear in time.
 
-⚠️ **The detector is calibrated** as in ~~#271~~ (#273).
+⚠️ **The detector is calibrated** as in ~~#271~~; the rate counter of `DiracRateTicks.lean`
+(~~#273~~, `deviceRateTick`) needs no rate.
 
 References: `specs/BACKLOG.md` #272, #271, #262, #269, #273, #270, #253, #39;
 `RecordLayer/DiracTicks.lean` (`tickDetector`, `tickWeight`, `re_star_tickMark_mul`,

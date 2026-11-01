@@ -81,7 +81,8 @@ ring: it has no position. A localized device (#262's window) turns only within a
 
 ⚠️ **The detector is calibrated.** Its mark is the device's starting reading, and its thresholds are
 set in units of one turn's integral `2g|C₀|/R`, which needs `R` and `|C₀|`. The rectified readout is
-a stated detector law (#251, #266).
+a stated detector law (#251, #266). A counter that needs no `R` integrates the reading's rate
+instead: `DiracRateTicks.lean` (~~#273~~, `singleRateTick`).
 
 ⚠️ **The device sits beside the chain, uncoupled**, and is compared with the records by the one
 evolution they share. An observer at the start arc learns of the arrival only by a signal back

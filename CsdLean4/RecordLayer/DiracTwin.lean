@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.RecordLayer.DiracObservers
+public import CsdLean4.RecordLayer.DiracRateTicks
 
 /-!
 # Two observers on the Dirac chain, and their clocks compared
@@ -15,7 +16,7 @@ candidate (B).
 
 ~~#243~~ put two observers in one arena for the control (A), where the clocks agree whatever the
 relative motion. Here two of #262's devices share **one Dirac chain**: one at rest, one moving at
-`4/5`, each with its tick detector (~~#272~~), and the two record each other through **relational
+`4/5`, each with its rate counter (~~#273~~), and the two record each other through **relational
 encounter registers**. The moving observer goes once round the ring and comes back. Between the
 records of its departure and its return the moving clock counts **69 to 73** ticks and the clock at
 rest **116 to 122**: the ratio lies in `[69/122, 73/116]`, which contains `3/5 = √(1 − (4/5)²)` and
@@ -48,7 +49,7 @@ excludes `1`. **The dilation shows in the records.**
 
 * `twin_rest_rate` (`10⁻¹¹`); ★★ `twin_moving_rate` — **the moving clock's splitting is in
   `[6·10⁻¹², 6.01·10⁻¹²]`**, three fifths of the rest splitting to the lattice's precision;
-* `twinRestTick`, `twinMovingTick` (from `deviceTick`), `restTickBoth`, `movingTickBoth` — **both
+* `twinRestTick`, `twinMovingTick` (from `deviceRateTick`), `restTickBoth`, `movingTickBoth` — **both
   clocks' ticks in the arena of both**.
 
 ## The comparison
@@ -82,14 +83,15 @@ each other (#251).
 propagated into the bracket.
 
 ⚠️ **The moving clock's period is computed from its splitting `R`**, bracketed in
-`twin_moving_rate`; the detectors are calibrated as in ~~#271~~ (#273).
+`twin_moving_rate` and used only in the tick windows: the counters' thresholds `2gn|C₀|` hold no
+rate (~~#273~~).
 
 ⚠️ **Reciprocity is not shown**: each observer seeing the other's clock slow needs signals exchanged
 between moving observers (#256, #270).
 
 References: `specs/BACKLOG.md` #253, #243, #262, #271, #272, #249, #251, #256, #270, #273, #39;
-`RecordLayer/DiracObservers.lean`; `RecordLayer/DiracDeviceTicks.lean` (`deviceTick`,
-`dirac_device_ticks`); `RecordLayer/DiracTicks.lean` (`tickFlow`, `tickMark`); `CV/DiracDevice.lean`
+`RecordLayer/DiracObservers.lean`; `RecordLayer/DiracRateTicks.lean` (`deviceRateTick`,
+`weightFlow`, `rateWeight`); `RecordLayer/DiracTicks.lean` (`tickMark`); `CV/DiracDevice.lean`
 (`devicePacket`, `dirac_device`); `CV/DiracClockChain.lean` (`levelClockRate`, `clockRate_mem`);
 `RecordLayer/TwoObservers.lean` (#243's control).
 -/
@@ -427,10 +429,12 @@ theorem return_near {t : ℝ} (ht1 : (2 * Real.pi - 11 / 50) * (125 * 10 ^ 11) �
 /-- **The two observers, each with its tick register, side by side**: each device by
 `e^{−itH_dev}` on the same chain, each register by its own tick weight. -/
 noncomputable def twinFlow (t : ℝ) (x : TickArena L × TickArena L) : TickArena L × TickArena L :=
-  (tickFlow (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) 1
-      (tickMark (restObserver (L := L) 0)) t x.1,
-    tickFlow (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) 1
-      (tickMark (movingObserver (L := L) 0)) t x.2)
+  (weightFlow (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) 1
+      (rateWeight (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11)
+        (tickMark (restObserver (L := L) 0))) t x.1,
+    weightFlow (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) 1
+      (rateWeight (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11)
+        (tickMark (movingObserver (L := L) 0))) t x.2)
 
 /-- **The encounter weights**: `false` the departure window (offset `1`), `true` the return window
 (offset `e^{−i/5}`), each of chord `1/10`. -/
@@ -439,17 +443,18 @@ noncomputable def twinWeight (b : Bool) (x : TickArena L × TickArena L) : ℝ :
 
 omit hL in
 theorem twinFlow_zero (x : TickArena L × TickArena L) : twinFlow 0 x = x :=
-  Prod.ext (tickFlow_zero _ _ _ _ _ _) (tickFlow_zero _ _ _ _ _ _)
+  Prod.ext (weightFlow_zero _ _ _ _ _ _) (weightFlow_zero _ _ _ _ _ _)
 
 omit hL in
 theorem twinFlow_add (s t : ℝ) (x : TickArena L × TickArena L) :
     twinFlow (s + t) x = twinFlow t (twinFlow s x) :=
-  Prod.ext (tickFlow_add _ _ _ _ _ _ _ _) (tickFlow_add _ _ _ _ _ _ _ _)
+  Prod.ext (weightFlow_add _ _ _ _ (continuous_rateWeight _ _ _ _) _ _ _)
+    (weightFlow_add _ _ _ _ (continuous_rateWeight _ _ _ _) _ _ _)
 
 omit hL in
 theorem measurable_twinFlow (t : ℝ) : Measurable (twinFlow (L := L) t) :=
-  ((measurable_tickFlow _ _ _ _ _ t).comp measurable_fst).prodMk
-    ((measurable_tickFlow _ _ _ _ _ t).comp measurable_snd)
+  ((measurable_weightFlow _ _ _ _ (continuous_rateWeight _ _ _ _) t).comp measurable_fst).prodMk
+    ((measurable_weightFlow _ _ _ _ (continuous_rateWeight _ _ _ _) t).comp measurable_snd)
 
 omit hL in
 theorem continuous_twinWeight_twinFlow (b : Bool) :
@@ -469,7 +474,7 @@ theorem continuous_twinWeight_twinFlow (b : Bool) :
         (deviceProp (L := L) (scaledHop 1 (2 * Real.pi * 10 ^ 13 / L)) 3 (3 + 1 / 10 ^ 11) p.2
           *ᵥ p.1.2.1) := by
     funext p
-    simp only [twinWeight, twinFlow, state_tickFlow]
+    simp only [twinWeight, twinFlow, state_weightFlow]
   rw [e]
   have h := continuous_relWeight_comp hA hB (if b then returnMark else 1) (1 / 10)
   exact h
@@ -669,7 +674,7 @@ theorem twin_moving_rate :
 /-- **Tick `n` of the observer at rest** (`n ≤ 130`): written within `10¹¹` of `n · 2π·10¹¹`. -/
 noncomputable def twinRestTick (n : ℕ) (hn : n ≤ 130) {w : ℝ} (hw : 0 ≤ w) :
     ActualOccurrence (TickArena L) ℕ L :=
-  deviceTick (L := L) (c := 1) (μ₀ := 3) (μ₁ := 3 + 1 / 10 ^ 11) (ℓ := 2 * Real.pi * 10 ^ 13)
+  deviceRateTick (L := L) (c := 1) (μ₀ := 3) (μ₁ := 3 + 1 / 10 ^ 11) (ℓ := 2 * Real.pi * 10 ^ 13)
     (P := 0) (D := 1 / 10 ^ 7) (p₀ := 0) (W := Finset.Ico (-1000000 : ℤ) (-1000000 + (2000000 : ℕ)))
     (lo := -1000000) (g := 1) one_pos one_pos (by norm_num) (by norm_num) (by norm_num)
     (by positivity) (by simp) (by positivity) (rest_win hL) rest_spread twinAmp (twin_norm hL _) n
@@ -691,8 +696,9 @@ noncomputable def twinRestTick (n : ℕ) (hn : n ≤ 130) {w : ℝ} (hw : 0 ≤ 
         simp only [deviceDrift, abs_zero]
         norm_num
       rw [hd]
-      calc 1 / (36 * 10 ^ 25) * (2 * Real.pi * n / (1 / 10 ^ 11) + 10 ^ 11) ^ 2
-          ≤ 1 / (36 * 10 ^ 25) * (10 ^ 14) ^ 2 := by gcongr
+      calc 1 / (36 * 10 ^ 25) * ((2 * Real.pi * n / (1 / 10 ^ 11) + 10 ^ 11) ^ 2
+            + 2 * (2 * Real.pi * n / (1 / 10 ^ 11) + 10 ^ 11) / (1 / 10 ^ 11))
+          ≤ 1 / (36 * 10 ^ 25) * ((10 ^ 14) ^ 2 + 2 * 10 ^ 14 / (1 / 10 ^ 11)) := by gcongr
         _ < _ := by norm_num)
     hw
 
@@ -701,7 +707,7 @@ splitting `R ∈ [6·10⁻¹², 6.01·10⁻¹²]`. -/
 noncomputable def twinMovingTick (n : ℕ) (hn : n ≤ 80) {w : ℝ} (hw : 0 ≤ w) :
     ActualOccurrence (TickArena L) ℕ L :=
   have hR := twin_moving_rate (L := L) hL
-  deviceTick (L := L) (c := 1) (μ₀ := 3) (μ₁ := 3 + 1 / 10 ^ 11) (ℓ := 2 * Real.pi * 10 ^ 13)
+  deviceRateTick (L := L) (c := 1) (μ₀ := 3) (μ₁ := 3 + 1 / 10 ^ 11) (ℓ := 2 * Real.pi * 10 ^ 13)
     (P := 4) (D := 2 / 10 ^ 7) (p₀ := 4)
     (W := Finset.Ico (4 * 10 ^ 13 : ℤ) (4 * 10 ^ 13 + (2000000 : ℕ))) (lo := 4 * 10 ^ 13) (g := 1)
     one_pos one_pos (by norm_num) (by norm_num) (by norm_num) (by positivity) (by norm_num)
@@ -733,10 +739,11 @@ noncomputable def twinMovingTick (n : ℕ) (hn : n ≤ 80) {w : ℝ} (hw : 0 ≤
         simp only [deviceDrift, abs_of_pos (by norm_num : (0 : ℝ) < 4)]
         norm_num
       rw [hd]
+      have hR1 : 6 / 10 ^ 12 ≤ R := hR.1
       calc 2 / 10 ^ 7 * (2 * 1 * 4 + 1 * (2 / 10 ^ 7)) * (1 / 10 ^ 11) / 36
-            * (2 * Real.pi * n / R + 16 * 10 ^ 10) ^ 2
+            * ((2 * Real.pi * n / R + 16 * 10 ^ 10) ^ 2 + 2 * (2 * Real.pi * n / R + 16 * 10 ^ 10) / R)
           ≤ 2 / 10 ^ 7 * (2 * 1 * 4 + 1 * (2 / 10 ^ 7)) * (1 / 10 ^ 11) / 36
-            * (9 * 10 ^ 13) ^ 2 := by gcongr
+            * ((9 * 10 ^ 13) ^ 2 + 2 * (9 * 10 ^ 13) / (6 / 10 ^ 12)) := by gcongr
         _ < _ := by norm_num)
     hw
 
@@ -764,7 +771,7 @@ noncomputable def movingTickBoth (n : ℕ) (hn : n ≤ 80) {w : ℝ} (hw : 0 ≤
 
 /-- ★★★ **Two observers on the Dirac chain, and their clocks compared** (BACKLOG #253). On a ring of
 length `2π·10¹³` (`c = 1`), #262's device at rest and the same device moving at `4/5`, each with its
-tick detector, and the encounter registers of a departure window (offset within chord `1/10` of `1`)
+rate counter, and the encounter registers of a departure window (offset within chord `1/10` of `1`)
 and a return window (within chord `1/10` of `e^{−i/5}`):
 
 * **one evolution**: the departure record, the return record and the ticks of both clocks are actual

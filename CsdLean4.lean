@@ -749,6 +749,7 @@ public import CsdLean4.CV.DiracPacketLimit
 public import CsdLean4.CV.DiracDevice
 public import CsdLean4.RecordLayer.DiracTicks
 public import CsdLean4.RecordLayer.DiracDeviceTicks
+public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers
 public import CsdLean4.RecordLayer.DiracTwin
 public import CsdLean4.RecordLayer.DiracReturn
