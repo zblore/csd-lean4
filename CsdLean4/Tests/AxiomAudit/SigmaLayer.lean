@@ -12475,6 +12475,28 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_timing
 
+-- DiracTiming, the cone against the packets (BACKLOG #258, 2026-11-02): the chain's cone exceeds the
+-- fastest packet more than ten (and, for light species, less than eleven) times.
+/-- info: 'CSD.RecordLayer.chainConeVel_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainConeVel_nonneg
+
+/-- info: 'CSD.RecordLayer.siteWeight_chainProp_le_of_cone' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteWeight_chainProp_le_of_cone
+
+/-- info: 'CSD.RecordLayer.ten_mul_maxGroupVel_lt_chainConeVel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ten_mul_maxGroupVel_lt_chainConeVel
+
+/-- info: 'CSD.RecordLayer.exists_chainConeVel_lt_eleven_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_chainConeVel_lt_eleven_mul
+
+/-- info: 'CSD.RecordLayer.chainConeVel_le_localLRVelocity_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainConeVel_le_localLRVelocity_iff
+
 -- DiracSignal (BACKLOG #269, 2026-10-31): a one-way signal on the Dirac chain, departure and
 -- arrival records matched and ordered, the speed read off them below c.
 /-- info: 'CSD.RecordLayer.nearArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/

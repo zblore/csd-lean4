@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.RecordLayer.DiracArrival
+public import CsdLean4.RecordLayer.SignalCone
 
 /-!
 # A sharp arrival on the Dirac chain
@@ -45,6 +46,16 @@ in `D` until a time linear in `D`.
 * ★★ `siteWeight_chainProp_le` — **while `4e h |t| ≤ D` the weight at `k` is below `2B² 8^{−D}`**;
   ★★ `register_cone_le` — the detector at `k` has gathered at most `g t · 2B² 8^{−D}`.
 
+## The cone against the packets (BACKLOG #258)
+
+* `chainConeVel` (`4e(2|J| + |μ|)`, the cone's speed in sites per unit time),
+  `siteWeight_chainProp_le_of_cone` (the causal bound restated with it);
+  ★★ `ten_mul_maxGroupVel_lt_chainConeVel` — **the cone is more than ten times the fastest packet**
+  (`maxGroupVel`, ~~#246~~), and ★ `exists_chainConeVel_lt_eleven_mul` — for a light species, less
+  than eleven times: the factor `4e ≈ 10.87` is the cone's slack;
+  ★ `chainConeVel_le_localLRVelocity_iff` — **sharper than #213's local Lieb–Robinson velocity at the
+  same edge strength exactly when `|μ| ≤ 2|J|`**.
+
 ## The capstone
 
 * ★★★ `dirac_timing` — the narrow arc's detector written within `[9π·10⁹/8, 41π·10⁹/32]` around the
@@ -58,7 +69,9 @@ in `D` until a time linear in `D`.
    against each other, and the ring must be long for both to be small.
 2. **The lattice has a cone, of `4e(2|J| + |μ|)` sites per unit time** — in physical units
    `4e(c + aμ)`, about `11c`: a strict, if generous, causal bound. The packets themselves move below
-   `c` (~~#246~~); the cone is what the dynamics guarantees for every state.
+   `c` (~~#246~~); the cone is what the dynamics guarantees for every state. As a theorem
+   (#258): the cone exceeds the fastest packet more than ten times, and for light species less than
+   eleven times.
 
 ## Honest scope
 
@@ -72,11 +85,12 @@ exponential series' bound, not a Lieb–Robinson velocity optimised for this cha
 ⚠️ **The instance is one set of numbers**, and the detector law is stated (test detectors, an
 intensity — #251, #266).
 
-References: `specs/BACKLOG.md` #268, #265, #256, #263, #246, #251, #266, #39;
+References: `specs/BACKLOG.md` #268, #258, #265, #256, #263, #246, #251, #266, #39;
 `RecordLayer/DiracArrival.lean` (`regionDetector`, `regionWeight_ringPacket_le`,
 `le_regionWeight_ringPacket`, `chainProp`, `exp_mulVec_of_mulVec_eq_smul`);
 `CV/DiracPacketLimit.lean` (`dirac_packet_limit`, `flat_sums`); `CV/DiracClockChain.lean`
-(`diracHam`, `diracHam_apply_eq_zero`); E. H. Lieb, D. W. Robinson, Commun. Math. Phys. 28 (1972) 251.
+(`diracHam`, `diracHam_apply_eq_zero`); `RecordLayer/SignalCone.lean` (`maxGroupVel`,
+`maxGroupVel_le`, `abs_two_mul_sub_le_maxGroupVel`, `localLRVelocity_two`); E. H. Lieb, D. W. Robinson, Commun. Math. Phys. 28 (1972) 251.
 -/
 
 @[expose] public section
@@ -596,6 +610,61 @@ theorem register_cone_le (J μ : ℝ) {g : ℝ} (hg : 0 ≤ g) {ψ : ZMod L × F
       nlinarith [Real.exp_pos 1]
   rwa [intervalIntegral.integral_const, smul_eq_mul, sub_zero] at h
 
+/-! ### The cone against the packets -/
+
+/-- **The speed of the chain's cone** in sites per unit time: `4e(2|J| + |μ|)`, the rate at which
+`siteWeight_chainProp_le` lets weight reach distance `D`. -/
+noncomputable def chainConeVel (J μ : ℝ) : ℝ := 4 * Real.exp 1 * (2 * |J| + |μ|)
+
+theorem chainConeVel_nonneg (J μ : ℝ) : 0 ≤ chainConeVel J μ := by
+  unfold chainConeVel
+  positivity
+
+/-- **The causal bound in terms of the cone's speed**: while `chainConeVel J μ · |t| ≤ D` the weight
+at a site a state vanishes near stays below `2B² 8^{−D}`. -/
+theorem siteWeight_chainProp_le_of_cone (J μ : ℝ) {ψ : ZMod L × Fin 2 → ℂ} {k : ZMod L} {D : ℕ}
+    (hv : VanishesNear ψ k D) {B : ℝ} (hB : ∀ q, ‖ψ q‖ ≤ B) {t : ℝ}
+    (ht : chainConeVel J μ * |t| ≤ D) :
+    siteWeight (chainProp (L := L) J μ t *ᵥ ψ) k ≤ 2 * B ^ 2 * (1 / 8) ^ D :=
+  siteWeight_chainProp_le J μ hv hB (by unfold chainConeVel at ht; linarith)
+
+/-- ★★ **The cone is more than ten times the fastest packet** (#258): no packet of any species
+outruns a tenth of the chain's guaranteed cone. -/
+theorem ten_mul_maxGroupVel_lt_chainConeVel {J μ : ℝ} (hJ : J ≠ 0) (hμ : 0 ≤ μ) :
+    10 * maxGroupVel J μ < chainConeVel J μ := by
+  have he := Real.exp_one_gt_d9
+  have hv := maxGroupVel_le J hμ
+  rw [abs_mul, abs_two] at hv
+  have hJ' : 0 < |J| := abs_pos.2 hJ
+  unfold chainConeVel
+  nlinarith [abs_nonneg μ, mul_pos hJ' (by linarith : (0 : ℝ) < 8 * Real.exp 1 - 20)]
+
+/-- ★ **For a light species the factor is below eleven**: the slack between the cone and the
+fastest packet is the factor `4e`, not more. -/
+theorem exists_chainConeVel_lt_eleven_mul {J : ℝ} (hJ : J ≠ 0) :
+    ∃ μ, 0 < μ ∧ chainConeVel J μ < 11 * maxGroupVel J μ := by
+  have hJ' : 0 < |J| := abs_pos.2 hJ
+  refine ⟨|J| / 100, by positivity, ?_⟩
+  have he := Real.exp_one_lt_d9
+  have hv := abs_two_mul_sub_le_maxGroupVel J (|J| / 100)
+  rw [abs_mul, abs_two] at hv
+  unfold chainConeVel
+  rw [abs_of_pos (by positivity : (0 : ℝ) < |J| / 100)]
+  nlinarith
+
+/-- ★ **Sharper than #213's local Lieb–Robinson velocity exactly when `|μ| ≤ 2|J|`** (same edge
+strength `|J|`, degree `2`). -/
+theorem chainConeVel_le_localLRVelocity_iff (J μ : ℝ) :
+    chainConeVel J μ ≤ localLRVelocity 2 |J| ↔ |μ| ≤ 2 * |J| := by
+  rw [localLRVelocity_two, abs_mul, abs_two]
+  unfold chainConeVel
+  have he : 0 < 4 * Real.exp 1 := by positivity
+  constructor
+  · intro h
+    nlinarith
+  · intro h
+    nlinarith
+
 /-- ★★★ **A sharp arrival and a causal bound** (BACKLOG #268). On a ring of physical length
 `ℓ = 2π·10⁹` with at least `10¹³` sites, the packet of `10⁴` momenta about `p₀ = 4` (`c = 1`,
 `μ = 3`, `v = 4/5`), carried by the whole chain:
@@ -607,7 +676,10 @@ theorem register_cone_le (J μ : ℝ) {g : ℝ} (hg : 0 ≤ g) {ψ : ZMod L × F
   the predicted arrival `(ℓ/2)/v = 5π·10⁹/4` and has width `1/8` of it;
 * **the causal bound**: for any hop `J`, rest energy `μ` and state vanishing within distance `D` of a
   site, of size at most `B`, the weight at that site stays below `2B² 8^{−D}` while
-  `4e(2|J| + |μ|)|t| ≤ D` — a cone of `4e(2|J| + |μ|)` sites per unit time. -/
+  `4e(2|J| + |μ|)|t| ≤ D` — a cone of `4e(2|J| + |μ|)` sites per unit time;
+* **the cone against the packets** (#258): for `J ≠ 0`, `μ ≥ 0` the cone exceeds ten times the
+  fastest packet's speed `maxGroupVel J μ`, and it is at most #213's local Lieb–Robinson velocity at
+  the same edge strength exactly when `|μ| ≤ 2|J|`. -/
 theorem dirac_timing (hL : 10 ^ 13 ≤ L) {w : ℝ} (hw : 0 ≤ w) :
     let o := sharpDetector hL hw
     o.writeStart = 9 * Real.pi * 10 ^ 9 / 8 ∧ o.writeEnd = 41 * Real.pi * 10 ^ 9 / 32
@@ -622,11 +694,15 @@ theorem dirac_timing (hL : 10 ^ 13 ≤ L) {w : ℝ} (hw : 0 ≤ w) :
         9 / 10 ≤ regionWeight (sharpPacket (L := L) t) (farArc L))
     ∧ (∀ (J μ : ℝ) (ψ : ZMod L × Fin 2 → ℂ) (k : ZMod L) (D : ℕ), VanishesNear ψ k D →
         ∀ B : ℝ, (∀ q, ‖ψ q‖ ≤ B) → ∀ t : ℝ, 4 * Real.exp 1 * ((2 * |J| + |μ|) * |t|) ≤ D →
-          siteWeight (chainProp (L := L) J μ t *ᵥ ψ) k ≤ 2 * B ^ 2 * (1 / 8) ^ D) := by
+          siteWeight (chainProp (L := L) J μ t *ᵥ ψ) k ≤ 2 * B ^ 2 * (1 / 8) ^ D)
+    ∧ (∀ J μ : ℝ, J ≠ 0 → 0 ≤ μ → 10 * maxGroupVel J μ < chainConeVel J μ
+        ∧ (chainConeVel J μ ≤ localLRVelocity 2 |J| ↔ |μ| ≤ 2 * |J|)) := by
   have hπ := Real.pi_pos
   exact ⟨rfl, rfl, rfl, rfl, chainProp_sharpPacket, omega_sharp, ⟨by nlinarith, by nlinarith⟩,
     fun _ h0 h1 => regionWeight_sharp_far hL h0 h1, fun _ h0 h1 => regionWeight_sharp_near hL h0 h1,
-    fun J μ _ _ _ hv _ hB _ ht => siteWeight_chainProp_le J μ hv hB ht⟩
+    fun J μ _ _ _ hv _ hB _ ht => siteWeight_chainProp_le J μ hv hB ht,
+    fun J μ hJ hμ => ⟨ten_mul_maxGroupVel_lt_chainConeVel hJ hμ,
+      chainConeVel_le_localLRVelocity_iff J μ⟩⟩
 
 end CSD.RecordLayer
 
