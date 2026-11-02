@@ -15043,4 +15043,35 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_relay_at_rest
 
+
+-- DiracBRadar stage 1 (BACKLOG #278 landing 2, third part, 2026-11-02): the devices of the relay
+-- at A from every start; B's sharp tail; B's encounter with the messenger, free or echoed, near/far.
+/-- info: 'CSD.RecordLayer.devA_aRelayFlow_any' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.devA_aRelayFlow_any
+
+/-- info: 'CSD.RecordLayer.devB_aRelayFlow_any' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.devB_aRelayFlow_any
+
+/-- info: 'CSD.RecordLayer.relWeight_levelLift_echo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relWeight_levelLift_echo
+
+/-- info: 'CSD.RecordLayer.approach_tail_fine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.approach_tail_fine
+
+/-- info: 'CSD.RecordLayer.bMess_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bMess_univ
+
+/-- info: 'CSD.RecordLayer.bEncounter_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bEncounter_near
+
+/-- info: 'CSD.RecordLayer.bEncounter_far' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bEncounter_far
+
 end CSD.Tests.AxiomAudit

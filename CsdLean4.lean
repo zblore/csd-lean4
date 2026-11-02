@@ -763,6 +763,7 @@ public import CsdLean4.RecordLayer.DiracRadar
 public import CsdLean4.RecordLayer.DiracHalfTicks
 public import CsdLean4.RecordLayer.DiracMasslessTails
 public import CsdLean4.RecordLayer.DiracRelayA
+public import CsdLean4.RecordLayer.DiracBRadar
 public import CsdLean4.RecordLayer.DiracSegment
 public import CsdLean4.RecordLayer.DiracWorldline
 public import CsdLean4.RecordLayer.DiracLatticeCorrections
