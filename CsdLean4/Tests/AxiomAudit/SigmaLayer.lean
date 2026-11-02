@@ -14388,4 +14388,176 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_relay
 
+
+-- DiracRadar (BACKLOG #274 fourth landing, 2026-11-02): emission, reception, return and meeting as
+-- records of the relay arena's one evolution; the clocks' ticks pulled back; the round trip and the
+-- two-way factor read off the ticks (k1 relativistic, excluding the Galilean 4/7).
+/-- info: 'CSD.RecordLayer.integral_le_integral_of_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_le_integral_of_nonneg
+
+/-- info: 'CSD.RecordLayer.integral_le_two_bumps' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_le_two_bumps
+
+/-- info: 'CSD.RecordLayer.le_integral_two_windows' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_integral_two_windows
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_expProp_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_expProp_mulVec
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_deviceProp_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_deviceProp_mulVec
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_deviceProp_level' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_deviceProp_level
+
+/-- info: 'CSD.RecordLayer.devA_relayFlow_any' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.devA_relayFlow_any
+
+/-- info: 'CSD.RecordLayer.devB_relayFlow_any' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.devB_relayFlow_any
+
+/-- info: 'CSD.RecordLayer.radarEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarEvolve_comp
+
+/-- info: 'CSD.RecordLayer.measurable_radarEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_radarEvolve
+
+/-- info: 'CSD.RecordLayer.radarEvolve_prep_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarEvolve_prep_fst
+
+/-- info: 'CSD.RecordLayer.radarEvolve_prep_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarEvolve_prep_snd
+
+/-- info: 'CSD.RecordLayer.regionWeight_le_sqNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_le_sqNorm
+
+/-- info: 'CSD.RecordLayer.atA_le_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.atA_le_half
+
+/-- info: 'CSD.RecordLayer.meetRaw_le_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.meetRaw_le_half
+
+/-- info: 'CSD.RecordLayer.regionWeight_echo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_echo
+
+/-- info: 'CSD.RecordLayer.sqNorm_echo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_echo
+
+/-- info: 'CSD.RecordLayer.abs_regionWeight_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_regionWeight_sub_le
+
+/-- info: 'CSD.RecordLayer.angle_far_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.angle_far_of_le
+
+/-- info: 'CSD.RecordLayer.angle_le_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.angle_le_of_le
+
+/-- info: 'CSD.RecordLayer.atA_free_far' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.atA_free_far
+
+/-- info: 'CSD.RecordLayer.atA_free_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.atA_free_near
+
+/-- info: 'CSD.RecordLayer.abs_regionWeight_mess_sub_echo_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_regionWeight_mess_sub_echo_le
+
+/-- info: 'CSD.RecordLayer.atA_after_far' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.atA_after_far
+
+/-- info: 'CSD.RecordLayer.atA_after_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.atA_after_near
+
+/-- info: 'CSD.RecordLayer.meeting_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.meeting_near
+
+/-- info: 'CSD.RecordLayer.meeting_far' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.meeting_far
+
+/-- info: 'CSD.RecordLayer.meetRaw_orbit_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.meetRaw_orbit_near
+
+/-- info: 'CSD.RecordLayer.meetRaw_orbit_far' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.meetRaw_orbit_far
+
+/-- info: 'CSD.RecordLayer.radar_emission_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_emission_before
+
+/-- info: 'CSD.RecordLayer.radar_emission_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_emission_after
+
+/-- info: 'CSD.RecordLayer.radar_return_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_return_before
+
+/-- info: 'CSD.RecordLayer.radar_return_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_return_after
+
+/-- info: 'CSD.RecordLayer.radar_meeting_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_meeting_before
+
+/-- info: 'CSD.RecordLayer.radar_meeting_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_meeting_after
+
+/-- info: 'CSD.RecordLayer.radarEmission_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarEmission_fields
+
+/-- info: 'CSD.RecordLayer.radarReception_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarReception_fields
+
+/-- info: 'CSD.RecordLayer.radarReturn_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarReturn_fields
+
+/-- info: 'CSD.RecordLayer.radarMeeting_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarMeeting_fields
+
+/-- info: 'CSD.RecordLayer.restTickRadar_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.restTickRadar_fields
+
+/-- info: 'CSD.RecordLayer.approachTickRadar_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.approachTickRadar_fields
+
+/-- info: 'CSD.RecordLayer.dirac_radar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_radar
+
 end CSD.Tests.AxiomAudit

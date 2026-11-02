@@ -500,9 +500,9 @@ theorem approach_coherence_ge :
   unfold approachObserver at tri ⊢
   linarith
 
-/-- **Tick `n` of the approaching clock** (`n ≤ 60`): written within `1.2·10¹¹` of `2πn/R`, its
+/-- **Tick `n` of the approaching clock** (`n ≤ 100`): written within `1.2·10¹¹` of `2πn/R`, its
 splitting `R ∈ [8·10⁻¹², 8.002·10⁻¹²]`, counted from the preparation. -/
-noncomputable def approachTick (n : ℕ) (hn : n ≤ 60) {w : ℝ} (hw : 0 ≤ w) :
+noncomputable def approachTick (n : ℕ) (hn : n ≤ 100) {w : ℝ} (hw : 0 ≤ w) :
     ActualOccurrence (TickArena L) ℕ L :=
   have hR := approach_rate (L := L) hL
   have hC := approach_coherence_ge (L := L) hL
@@ -524,11 +524,11 @@ noncomputable def approachTick (n : ℕ) (hn : n ≤ 60) {w : ℝ} (hw : 0 ≤ w
       have hR0 : 0 < R := lt_of_lt_of_le (by norm_num) hR.1
       have hπ2 := pi_lt_sixty_three_div_twenty
       have hπ := Real.pi_pos
-      have hn' : (n : ℝ) ≤ 60 := by exact_mod_cast hn
+      have hn' : (n : ℝ) ≤ 100 := by exact_mod_cast hn
       have hx0 : 0 ≤ 2 * Real.pi * n / R + 12 * 10 ^ 10 := by positivity
       have hdiv : 2 * Real.pi * n / R ≤ 2 * Real.pi * n / (8 / 10 ^ 12) :=
         div_le_div_of_nonneg_left (by positivity) (by norm_num) hR.1
-      have hx1 : 2 * Real.pi * n / R + 12 * 10 ^ 10 ≤ 5 * 10 ^ 13 := by
+      have hx1 : 2 * Real.pi * n / R + 12 * 10 ^ 10 ≤ 8 * 10 ^ 13 := by
         rw [show 2 * Real.pi * n / (8 / 10 ^ 12) = 2 * Real.pi * n * (10 ^ 12 / 8) by
           field_simp] at hdiv
         nlinarith [mul_le_mul hπ2.le hn' (Nat.cast_nonneg n) (by norm_num : (0 : ℝ) ≤ 63 / 20)]
@@ -541,7 +541,7 @@ noncomputable def approachTick (n : ℕ) (hn : n ≤ 60) {w : ℝ} (hw : 0 ≤ w
             * ((2 * Real.pi * n / R + 12 * 10 ^ 10) ^ 2
               + 2 * (2 * Real.pi * n / R + 12 * 10 ^ 10) / R)
           ≤ 2 / 10 ^ 7 * (2 * 1 * (9 / 4) + 1 * (2 / 10 ^ 7)) * (1 / 10 ^ 11) / 36
-            * ((5 * 10 ^ 13) ^ 2 + 2 * (5 * 10 ^ 13) / (8 / 10 ^ 12)) := by gcongr
+            * ((8 * 10 ^ 13) ^ 2 + 2 * (8 * 10 ^ 13) / (8 / 10 ^ 12)) := by gcongr
         _ < 49 / 100 * (12 * 10 ^ 10) := by norm_num
         _ ≤ _ := mul_le_mul_of_nonneg_right hC' (by positivity))
     hw
@@ -974,7 +974,7 @@ noncomputable def restTickDop (n : ℕ) (hn : n ≤ 130) {w : ℝ} (hw : 0 ≤ w
     (fun y => y.1.1) measurable_fst.fst (fun _ _ _ => rfl) (dopPrep, 0) rfl
 
 /-- **Tick `n` of the approaching clock, in the arena.** -/
-noncomputable def approachTickDop (n : ℕ) (hn : n ≤ 60) {w : ℝ} (hw : 0 ≤ w) :
+noncomputable def approachTickDop (n : ℕ) (hn : n ≤ 100) {w : ℝ} (hw : 0 ≤ w) :
     ActualOccurrence (DopArena L × (Fin 4 → ℝ)) ℕ L :=
   (approachTick hL n hn hw).pullback (regEvolve dopFlow dopWeight)
     (regEvolve_self dopFlow dopWeight dopFlow_zero)
@@ -1035,7 +1035,7 @@ theorem restTickDop_fields (n : ℕ) (hn : n ≤ 130) {w : ℝ} (hw : 0 ≤ w) :
         + 10 ^ 11 = _
     rw [twin_rest_rate, e]
 
-theorem approachTickDop_fields (n : ℕ) (hn : n ≤ 60) {w : ℝ} (hw : 0 ≤ w) :
+theorem approachTickDop_fields (n : ℕ) (hn : n ≤ 100) {w : ℝ} (hw : 0 ≤ w) :
     (approachTickDop (L := L) hL n hn hw).evolve = regEvolve dopFlow dopWeight
     ∧ (approachTickDop (L := L) hL n hn hw).prep = (dopPrep, 0)
     ∧ (approachTickDop (L := L) hL n hn hw).writeStart
@@ -1070,7 +1070,7 @@ theorem dirac_doppler {w : ℝ} (hw : 0 ≤ w) :
     let rc₁ := dopReception₁ (L := L) hL hw
     let rc₂ := dopReception₂ (L := L) hL hw
     let a := fun (n : ℕ) (hn : n ≤ 130) => restTickDop (L := L) hL n hn hw
-    let b := fun (n : ℕ) (hn : n ≤ 60) => approachTickDop (L := L) hL n hn hw
+    let b := fun (n : ℕ) (hn : n ≤ 100) => approachTickDop (L := L) hL n hn hw
     let R := levelClockRate 3 (3 + 1 / 10 ^ 11)
       (2 * scaledHop 1 (2 * Real.pi * 10 ^ 13 / L) * Real.sin (2 * Real.pi * 10 ^ 13 / L * (9 / 4)))
     let T : ℝ := 2 * Real.pi * 10 ^ 11
