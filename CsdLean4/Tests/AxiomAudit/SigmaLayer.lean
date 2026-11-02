@@ -14940,4 +14940,107 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.bMess_near
 
+
+-- DiracRelayA (BACKLOG #278 landing 2, second part, 2026-11-02): the relay at rest -- B's massless
+-- messenger, A's relay register and gate, one gated flow; crossing, pulse and the massless echo.
+/-- info: 'CSD.RecordLayer.rest_tail_fine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rest_tail_fine
+
+/-- info: 'CSD.RecordLayer.bMess_tail_fine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bMess_tail_fine
+
+/-- info: 'CSD.RecordLayer.aEncounter_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aEncounter_near
+
+/-- info: 'CSD.RecordLayer.aEncounter_far' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aEncounter_far
+
+/-- info: 'CSD.RecordLayer.exists_lipschitzWith_aRelayWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_lipschitzWith_aRelayWeight
+
+/-- info: 'CSD.RecordLayer.aRelayLipschitz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aRelayLipschitz
+
+/-- info: 'CSD.RecordLayer.aRelayFlow_block_free' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aRelayFlow_block_free
+
+/-- info: 'CSD.RecordLayer.devA_aRelayFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.devA_aRelayFlow
+
+/-- info: 'CSD.RecordLayer.devB_aRelayFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.devB_aRelayFlow
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_aRelayState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_aRelayState
+
+/-- info: 'CSD.RecordLayer.sqNorm_aRelayFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_aRelayFlow
+
+/-- info: 'CSD.RecordLayer.aRelayWeight_aRelayFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aRelayWeight_aRelayFlow
+
+/-- info: 'CSD.RecordLayer.sqNorm_diracHam_bMess_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_diracHam_bMess_le
+
+/-- info: 'CSD.RecordLayer.sqNorm_bMess_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_bMess_sub_le
+
+/-- info: 'CSD.RecordLayer.aRelayRate_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aRelayRate_eq_zero
+
+/-- info: 'CSD.RecordLayer.aRelayRate_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aRelayRate_ge
+
+/-- info: 'CSD.RecordLayer.aRelayReg_start_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aRelayReg_start_le
+
+/-- info: 'CSD.RecordLayer.aRelayReg_end_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aRelayReg_end_ge
+
+/-- info: 'CSD.RecordLayer.exists_aRelayCross' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_aRelayCross
+
+/-- info: 'CSD.RecordLayer.aRelayFlow_eq_free' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aRelayFlow_eq_free
+
+/-- info: 'CSD.RecordLayer.aRelayRaw_aRelayFlow_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aRelayRaw_aRelayFlow_ge
+
+/-- info: 'CSD.RecordLayer.aRelayReg_after_pulse' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aRelayReg_after_pulse
+
+/-- info: 'CSD.RecordLayer.sqNorm_mess_aFlip_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_mess_aFlip_le
+
+/-- info: 'CSD.RecordLayer.sqNorm_mess_aReturn_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_mess_aReturn_le
+
+/-- info: 'CSD.RecordLayer.dirac_relay_at_rest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_relay_at_rest
+
 end CSD.Tests.AxiomAudit
