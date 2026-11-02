@@ -14806,4 +14806,95 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_lattice_corrections
 
+
+-- DiracHalfTicks + DiracWorldline (BACKLOG #277, 2026-11-02): half-ticks of the rate counter
+-- (read against the opposite mark), A's half-ticks in the radar arena, the strict Galilean exclusion.
+/-- info: 'CSD.RecordLayer.hasDerivAt_deviceCoherence_prop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_deviceCoherence_prop
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_quarterReading_prop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_quarterReading_prop
+
+/-- info: 'CSD.RecordLayer.integral_rate_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_rate_eq
+
+/-- info: 'CSD.RecordLayer.rateWeight_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rateWeight_neg
+
+/-- info: 'CSD.RecordLayer.integral_shift_neg_cos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_shift_neg_cos
+
+/-- info: 'CSD.RecordLayer.integral_max_cos_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_max_cos_half
+
+/-- info: 'CSD.RecordLayer.integral_max_neg_cos_half_tick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_max_neg_cos_half_tick
+
+/-- info: 'CSD.RecordLayer.integral_max_neg_cos_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_max_neg_cos_mono
+
+/-- info: 'CSD.RecordLayer.le_integral_max_neg_cos_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_integral_max_neg_cos_near
+
+/-- info: 'CSD.RecordLayer.abs_rateWeight_neg_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_rateWeight_neg_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_integral_rateWeight_neg_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_integral_rateWeight_neg_sub_le
+
+/-- info: 'CSD.RecordLayer.integral_rateWeight_neg_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_rateWeight_neg_mono
+
+/-- info: 'CSD.RecordLayer.half_margin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.half_margin
+
+/-- info: 'CSD.RecordLayer.drift_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.drift_nonneg
+
+/-- info: 'CSD.RecordLayer.half_register_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.half_register_lt
+
+/-- info: 'CSD.RecordLayer.half_register_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.half_register_ge
+
+/-- info: 'CSD.RecordLayer.continuous_quarterReading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_quarterReading
+
+/-- info: 'CSD.RecordLayer.rest_rate_radar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rest_rate_radar
+
+/-- info: 'CSD.RecordLayer.rest_half_facts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rest_half_facts
+
+/-- info: 'CSD.RecordLayer.half_reading_orbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.half_reading_orbit
+
+/-- info: 'CSD.RecordLayer.restHalfTickRadar_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.restHalfTickRadar_fields
+
+/-- info: 'CSD.RecordLayer.radar_interval_bounds_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_interval_bounds_half
+
 end CSD.Tests.AxiomAudit
