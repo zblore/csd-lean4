@@ -14199,4 +14199,193 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_band_flip
 
+
+-- DiracRelay (BACKLOG #274 third landing, 2026-11-02): the relay arena -- A, B, the messenger and
+-- B's relay register as one gated flow; the saturated weight is Lipschitz, the untouched blocks run
+-- free, the register crosses inside the sure window, the pulse delivers π/2 and the messenger returns
+-- as the band flip of its own past.
+/-- info: 'CSD.RecordLayer.lipschitzWith_mul_of_bounded' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lipschitzWith_mul_of_bounded
+
+/-- info: 'CSD.RecordLayer.lipschitzWith_gateCut' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lipschitzWith_gateCut
+
+/-- info: 'CSD.RecordLayer.lipschitzWith_satCut' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lipschitzWith_satCut
+
+/-- info: 'CSD.RecordLayer.satCut_eq_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.satCut_eq_of_le
+
+/-- info: 'CSD.RecordLayer.hatMass_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hatMass_pos
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_pulseStep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_pulseStep
+
+/-- info: 'CSD.RecordLayer.lipschitzWith_pulseRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lipschitzWith_pulseRate
+
+/-- info: 'CSD.RecordLayer.pulseStep_eq_zero_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pulseStep_eq_zero_of_le
+
+/-- info: 'CSD.RecordLayer.pulseStep_eq_of_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pulseStep_eq_of_ge
+
+/-- info: 'CSD.RecordLayer.exists_lipschitzWith_relayGate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_lipschitzWith_relayGate
+
+/-- info: 'CSD.RecordLayer.exists_lipschitzWith_relayField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_lipschitzWith_relayField
+
+/-- info: 'CSD.RecordLayer.integral_relayGate_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_relayGate_eq
+
+/-- info: 'CSD.RecordLayer.gatedFlow_eq_of_hasDerivAt_Icc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedFlow_eq_of_hasDerivAt_Icc
+
+/-- info: 'CSD.RecordLayer.sqNorm_eq_of_hasDerivAt_Icc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_eq_of_hasDerivAt_Icc
+
+/-- info: 'CSD.RecordLayer.blockDiagonal_mulVec_block' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.blockDiagonal_mulVec_block
+
+/-- info: 'CSD.RecordLayer.isHermitian_blockDiagonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isHermitian_blockDiagonal
+
+/-- info: 'CSD.RecordLayer.sqNorm_eq_sum_blocks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_eq_sum_blocks
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_gatedFlow_block' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_gatedFlow_block
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_gatedFlow_gateBlock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_gatedFlow_gateBlock
+
+/-- info: 'CSD.RecordLayer.gatedFlow_block_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedFlow_block_eq
+
+/-- info: 'CSD.RecordLayer.sqNorm_gateBlock_sub_gateRot_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_gateBlock_sub_gateRot_le
+
+/-- info: 'CSD.RecordLayer.diracHam_mulVec_packet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracHam_mulVec_packet
+
+/-- info: 'CSD.RecordLayer.sqNorm_diracHam_mulVec_packet_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_diracHam_mulVec_packet_le
+
+/-- info: 'CSD.RecordLayer.bandE_sq_le_scaled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandE_sq_le_scaled
+
+/-- info: 'CSD.RecordLayer.siteWeight_gateRot_spinY' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteWeight_gateRot_spinY
+
+/-- info: 'CSD.RecordLayer.relWeight_levelLift_gateRot_spinY' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relWeight_levelLift_gateRot_spinY
+
+/-- info: 'CSD.RecordLayer.abs_relWeight_levelLift_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_relWeight_levelLift_sub_le
+
+/-- info: 'CSD.RecordLayer.sum_abs_norm_sq_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_abs_norm_sq_sub_le
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_relayState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_relayState
+
+/-- info: 'CSD.RecordLayer.relayLipschitz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relayLipschitz
+
+/-- info: 'CSD.RecordLayer.relayFlow_block_free' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relayFlow_block_free
+
+/-- info: 'CSD.RecordLayer.devB_relayFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.devB_relayFlow
+
+/-- info: 'CSD.RecordLayer.sqNorm_relayFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_relayFlow
+
+/-- info: 'CSD.RecordLayer.relayWeight_relayFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relayWeight_relayFlow
+
+/-- info: 'CSD.RecordLayer.sqNorm_mess_relayFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_mess_relayFlow
+
+/-- info: 'CSD.RecordLayer.sqNorm_diracHam_imagePacket_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_diracHam_imagePacket_le
+
+/-- info: 'CSD.RecordLayer.sqNorm_imagePacket_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_imagePacket_sub_le
+
+/-- info: 'CSD.RecordLayer.relayRate_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relayRate_eq_zero
+
+/-- info: 'CSD.RecordLayer.relayRate_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relayRate_ge
+
+/-- info: 'CSD.RecordLayer.exists_relayCross' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_relayCross
+
+/-- info: 'CSD.RecordLayer.relayFlow_eq_free' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relayFlow_eq_free
+
+/-- info: 'CSD.RecordLayer.relayRaw_relayFlow_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relayRaw_relayFlow_ge
+
+/-- info: 'CSD.RecordLayer.relayReg_after_pulse' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relayReg_after_pulse
+
+/-- info: 'CSD.RecordLayer.sqNorm_mess_flip_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_mess_flip_le
+
+/-- info: 'CSD.RecordLayer.sqNorm_mess_return_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqNorm_mess_return_le
+
+/-- info: 'CSD.RecordLayer.dirac_relay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_relay
+
 end CSD.Tests.AxiomAudit
