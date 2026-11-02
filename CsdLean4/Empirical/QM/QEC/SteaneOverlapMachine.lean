@@ -52,6 +52,11 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
 * `window k` — **the `k`-th extended rectangle's locations**: step `k`'s `205` and the recovery of
   step `k − 1` (for `k ≥ 1`), ★ `card_window_le` — at most `403`; `WindowsGood ω` — every window
   holds at most one fault;
+* `gateOf_family_tp`, `locFam_gateOf`, `roundKraus_gateOf`; `Gadget.faultyMap`,
+  `Gadget.faultyChannel`, `Gadget.faultyChannel_apply` — **a gadget with a channel at each faulty
+  location** (any trace-preserving Kraus family on its qubit, BACKLOG #237); `Gadget.faultyMap_eq`,
+  `Gadget.faultyMap_none`, ★★ `Gadget.deviatesBy_faultyMap` — **with at most one faulty location
+  it is the ideal gadget followed by a CSS mixture**;
 * `ovGadget`, `ovFaultyGadget`, `ovRecovery`, `overlapRun` — the machine under a pattern;
   `recoveryFlag`, `gadgetFlag` — which pieces are faulty; ★ `ovIdeal_ovGadget` — its ideal run is
   #207's `machineIdeal`;
@@ -69,7 +74,7 @@ all of them, and the extended rectangles overlapping as in Aliferis–Gottesman�
   `mem_primWin_of_pruneRetry`, ★★ `windowsGood_pruneRetry` — **with no malignant pair faulty, the
   pruned pattern holds at most one fault per window** (BACKLOG #239);
 * ★★★ `steane_machine_overlap` — **the level-one machine with nothing ideal in the recovery but its
-  classical decoding**: for every circuit of `N` gadgets, unitary faults at every gadget location,
+  classical decoding**: for every circuit of `N` gadgets, channel faults at every gadget location,
   channel faults on the pairs at every extraction location, faults at every location of every ancilla
   factory, and an encoded input, a pattern with at most one fault in each overlapping extended
   rectangle leaves the state a CSS deviation of the ideal one, exactly the ideal one if the last
@@ -91,8 +96,9 @@ at one fault per window two attempts suffice, since a fault-free first attempt i
 A rejection caused by two faults, and the expected number of attempts, are not treated.
 
 ⚠️ **A fault at an extraction location stays on its pair** (BACKLOG ~~#235~~); a fault in an encoder
-or at a checker readout is any channel on the seven qubits; faults at the gadgets are still unitary
-on one qubit (#207's model, #237).
+or at a checker readout is any channel on the seven qubits; a fault at a gadget location is any
+trace-preserving Kraus family on its qubit (BACKLOG #237; #207's unitary fault `U` is the family
+`{U}`).
 
 ⚠️ **One round per basis**, as in ~~#228~~; no repeated syndrome measurement.
 
@@ -593,7 +599,7 @@ instance instFintypeStepLoc : Fintype StepLoc := inferInstanceAs (Fintype (Fin 7
 /-- **The machine's locations**: `N` steps of `205` (`7` at the gadget, `198` in the recovery). -/
 abbrev OvLoc (N : ℕ) : Type := Fin N × StepLoc
 
-variable {N : ℕ}
+variable {N : ℕ} {γ : Type} [Fintype γ]
 
 /-- The pattern read on gadget `j`. -/
 def gatePat (ω : OvLoc N → Bool) (j : Fin N) : Fin 7 → Bool := fun q => ω (j, .inl q)
@@ -658,6 +664,123 @@ theorem WindowsGood.recPat_cases {ω : OvLoc N → Bool} (hω : WindowsGood ω) 
   · refine Or.inl (funext fun l => ?_)
     simpa using fun h' => h ⟨l, h'⟩
 
+/-! ### Channel faults at the gadget locations (BACKLOG #237) -/
+
+/-- A trace-preserving family on one qubit, read on the block, is trace preserving. -/
+theorem gateOf_family_tp {κ : Type*} [Fintype κ] {N : κ → Matrix (Fin 2) (Fin 2) ℂ} (j : Fin 7)
+    (hN : ∑ k, (N k)ᴴ * N k = 1) : ∑ k, (gateOf j (N k))ᴴ * gateOf j (N k) = 1 := by
+  simp only [gateOf_conjTranspose, ← Controlled.gateOf_mul]
+  rw [← gateOf_sum, hN, gateOf_one]
+
+/-- A location's family read on a qubit: on the faulty qubit `q₀` it is `gateOf q₀` of the
+location's family; elsewhere, fault-free, it is `0` or `1`, which `gateOf q₀` also gives. -/
+theorem locFam_gateOf {γ : Type*} (q₀ q : Fin 7) (U : γ → Matrix (Fin 2) (Fin 2) ℂ) {b : Bool}
+    (hb : q ≠ q₀ → b = false) (o : Option γ) :
+    locFam (fun k => gateOf q (U k)) b o = gateOf q₀ (locFam U b o) := by
+  by_cases h : q = q₀
+  · subst h
+    cases o <;> cases b <;> simp [locFam, gateOf_one, gateOf_zero]
+  · obtain rfl := hb h
+    cases o <;> simp [locFam, gateOf_one, gateOf_zero]
+
+/-- With every location but `q₀` fault-free, each branch of the gadget's faults is an operator on
+qubit `q₀`. -/
+theorem roundKraus_gateOf {γ : Type*} (U : Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ) {b : Fin 7 → Bool}
+    (q₀ : Fin 7) (hb : ∀ q, q ≠ q₀ → b q = false) (s : Fin 7 → Option γ) :
+    roundKraus (fun q k => gateOf q (U q k)) b s = gateOf q₀ (roundKraus U b s) := by
+  let φ : Matrix (Fin 2) (Fin 2) ℂ →* Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
+    { toFun := gateOf q₀, map_one' := gateOf_one q₀, map_mul' := Controlled.gateOf_mul q₀ }
+  have h := map_list_prod φ (List.ofFn fun q => locFam (U q) (b q) (s q))
+  rw [List.map_ofFn] at h
+  unfold roundKraus
+  rw [show (fun q => locFam (fun k => gateOf q (U q k)) (b q) (s q))
+      = (φ ∘ fun q => locFam (U q) (b q) (s q)) from
+    funext fun q => locFam_gateOf q₀ q (U q) (hb q) (s q)]
+  exact h.symm
+
+namespace Gadget
+
+/-- **The gadget with a channel at each faulty location**: in branch `s`, the ordered product of
+the locations' Kraus operators (`gateOf q (U q k)` at a faulty location, the identity at a
+fault-free one), after the transversal gate. -/
+noncomputable def faultyMap {γ : Type} [Fintype γ] (G : Gadget)
+    (U : Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ) (b : Fin 7 → Bool)
+    (ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ) : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
+  ∑ s : Fin 7 → Option γ,
+    (roundKraus (fun q k => gateOf q (U q k)) b s * blockKron (fun _ : Fin 7 => G.gate)) * ρ
+      * (roundKraus (fun q k => gateOf q (U q k)) b s * blockKron (fun _ : Fin 7 => G.gate))ᴴ
+
+/-- **The faulty gadget is a channel**: trace preserving whenever every location's family is. -/
+noncomputable def faultyChannel {γ : Type} [Fintype γ] (G : Gadget)
+    (U : Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ) (hU : ∀ q, ∑ k, (U q k)ᴴ * U q k = 1)
+    (b : Fin 7 → Bool) : Channel (Fin 7 → Fin 2) (Fin 7 → Fin 2) (Fin 7 → Option γ) where
+  kraus s := roundKraus (fun q k => gateOf q (U q k)) b s * blockKron (fun _ : Fin 7 => G.gate)
+  tp := by
+    have h := roundKraus_tp (fun q => gateOf_family_tp q (hU q)) b
+    simp only [conjTranspose_mul]
+    calc ∑ s, (blockKron fun _ : Fin 7 => G.gate)ᴴ * (roundKraus (fun q k => gateOf q (U q k)) b s)ᴴ
+          * (roundKraus (fun q k => gateOf q (U q k)) b s * blockKron fun _ : Fin 7 => G.gate)
+        = (blockKron fun _ : Fin 7 => G.gate)ᴴ
+          * (∑ s, (roundKraus (fun q k => gateOf q (U q k)) b s)ᴴ
+          * roundKraus (fun q k => gateOf q (U q k)) b s) * blockKron fun _ : Fin 7 => G.gate := by
+          rw [Finset.mul_sum, Finset.sum_mul]
+          refine Finset.sum_congr rfl fun s _ => ?_
+          noncomm_ring
+      _ = 1 := by rw [h, Matrix.mul_one, G.conjTranspose_blockKron_mul]
+
+theorem faultyChannel_apply {γ : Type} [Fintype γ] (G : Gadget)
+    (U : Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ) (hU : ∀ q, ∑ k, (U q k)ᴴ * U q k = 1)
+    (b : Fin 7 → Bool) : (G.faultyChannel U hU b).apply = G.faultyMap U b := rfl
+
+/-- The faulty gadget is the ideal one followed by the locations' faults. -/
+theorem faultyMap_eq {γ : Type} [Fintype γ] (G : Gadget)
+    (U : Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ) (b : Fin 7 → Bool)
+    (ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ) :
+    G.faultyMap U b ρ = ∑ s : Fin 7 → Option γ, roundKraus (fun q k => gateOf q (U q k)) b s
+      * G.ideal ρ * (roundKraus (fun q k => gateOf q (U q k)) b s)ᴴ := by
+  unfold faultyMap ideal
+  refine Finset.sum_congr rfl fun s _ => ?_
+  rw [conjTranspose_mul]
+  noncomm_ring
+
+/-- A gadget with no faulty location is the ideal gadget. -/
+theorem faultyMap_none {γ : Type} [Fintype γ] (G : Gadget)
+    (U : Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ) : G.faultyMap U (fun _ => false) = G.ideal := by
+  funext ρ
+  rw [faultyMap_eq, Finset.sum_eq_single (fun _ => none)]
+  · rw [roundKraus_none, Matrix.one_mul, conjTranspose_one, Matrix.mul_one]
+  · intro s _ hs
+    rw [roundKraus_none_of_ne _ hs, Matrix.zero_mul, Matrix.zero_mul]
+  · intro h
+    exact absurd (Finset.mem_univ _) h
+
+/-- ★★ **The one-fault bound with channels**: a gadget whose pattern has at most one faulty
+location, the fault there any trace-preserving family on its qubit, is the ideal gadget followed
+by a CSS mixture. -/
+theorem deviatesBy_faultyMap {γ : Type} [Fintype γ] (G : Gadget)
+    {U : Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ} (hU : ∀ q, ∑ k, (U q k)ᴴ * U q k = 1)
+    {b : Fin 7 → Bool} (hb : (Finset.univ.filter fun q : Fin 7 => b q = true).card ≤ 1) :
+    DeviatesBy steaneProj cssMix G.ideal (G.faultyMap U b) := by
+  obtain ⟨q₀, hq₀⟩ : ∃ q₀, ∀ q, q ≠ q₀ → b q = false := by
+    by_cases h : ∃ q, b q = true
+    · obtain ⟨q₁, h₁⟩ := h
+      refine ⟨q₁, fun q hq => ?_⟩
+      by_contra hbq
+      rw [Bool.not_eq_false] at hbq
+      exact hq (Finset.card_le_one.1 hb q (by simp [hbq]) q₁ (by simp [h₁]))
+    · exact ⟨0, fun q _ => by simpa using not_exists.1 h q⟩
+  intro ρ _
+  refine ⟨fun σ => ∑ s : Fin 7 → Option γ, roundKraus (fun q k => gateOf q (U q k)) b s * σ
+      * (roundKraus (fun q k => gateOf q (U q k)) b s)ᴴ,
+    ⟨Fin 7 → Option γ, inferInstance, roundKraus (fun q k => gateOf q (U q k)) b,
+      fun s => ?_, ?_, rfl⟩, G.faultyMap_eq U b ρ⟩
+  · rw [roundKraus_gateOf U q₀ hq₀ s]
+    exact gateOf_mem_cssSpan q₀ _
+  · rw [roundKraus_tp (fun q => gateOf_family_tp q (hU q)) b, Matrix.mul_one,
+      isCodeProjector_steaneProj.mul_self]
+
+end Gadget
+
 /-! ### The machine under a pattern -/
 
 /-- The ideal gadgets, indexed by step. -/
@@ -666,10 +789,10 @@ def ovGadget (gs : Fin N → Gadget) : ℕ →
   fun k => if h : k < N then (gs ⟨k, h⟩).ideal else id
 
 /-- The gadgets under the pattern. -/
-def ovFaultyGadget (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
+def ovFaultyGadget (gs : Fin N → Gadget) (U : Fin N → Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ)
     (ω : OvLoc N → Bool) : ℕ →
     Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ → Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ :=
-  fun k => if h : k < N then (gs ⟨k, h⟩).faulty (U ⟨k, h⟩) (gatePat ω ⟨k, h⟩) else id
+  fun k => if h : k < N then (gs ⟨k, h⟩).faultyMap (U ⟨k, h⟩) (gatePat ω ⟨k, h⟩) else id
 
 /-- The recoveries under the pattern: Steane's method with its factories and the pattern's faults. -/
 def ovRecovery [Fintype κ] (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
@@ -690,7 +813,7 @@ def gadgetFlag (ω : OvLoc N → Bool) : ℕ → Bool :=
 
 /-- **The machine under a pattern**: gadget, Steane's method, gadget, Steane's method, …, every piece
 with the pattern's faults. -/
-def overlapRun (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
+def overlapRun (gs : Fin N → Gadget) (U : Fin N → Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ)
     [Fintype κ] (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
     (Φ : Fin N → MethodRound → RetryFaults κ)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1) (hΦ : ∀ j r, (Φ j r).Valid)
@@ -716,10 +839,12 @@ theorem Gadget.faulty_none (G : Gadget) (U : Fin 7 → Matrix (Fin 2) (Fin 2) �
 
 /-- ★★★ **The Steane machine with counted recoveries is an `IsFaultChain` for the CSS class**: a
 fault-free Steane's method corrects `cssMix` (`isRecovery_methodRecovery_cssMix`), one with a fault
-deviates by it (`deviatesBy_methodUnder_single`), a gadget with one faulty location deviates by it
-(`Gadget.deviatesBy_faulty`), and the ideal gadgets carry it (`Gadget.propagatesD_cssMix`). -/
-theorem isFaultChain_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
-    (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
+deviates by it (`deviatesBy_methodUnder_single`), a gadget with one faulty location — a channel
+there — deviates by it (`Gadget.deviatesBy_faultyMap`), and the ideal gadgets carry it
+(`Gadget.propagatesD_cssMix`). -/
+theorem isFaultChain_overlap (gs : Fin N → Gadget)
+    (U : Fin N → Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ)
+    (hU : ∀ j q, ∑ k, (U j q k)ᴴ * U j q k = 1) [Fintype κ]
     (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
     (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → RetryFaults κ)
@@ -742,11 +867,10 @@ theorem isFaultChain_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Ma
     have hnone : gatePat ω ⟨k, hk⟩ = fun _ => false := by
       simp only [gadgetFlag, hk, ↓reduceDIte, decide_eq_false_iff_not, not_exists] at hf
       exact funext fun q => by simpa using hf q
-    simp only [ovFaultyGadget, ovGadget, hk, ↓reduceDIte, hnone, Gadget.faulty_none]
+    simp only [ovFaultyGadget, ovGadget, hk, ↓reduceDIte, hnone, Gadget.faultyMap_none]
   gadget_fault k hk _ := by
     simp only [ovFaultyGadget, ovGadget, hk, ↓reduceDIte]
-    exact ((gs ⟨k, hk⟩).deviatesBy_faulty (hU ⟨k, hk⟩) (hω.card_gatePat ⟨k, hk⟩)).mono
-      weightOne_subset_cssMix
+    exact (gs ⟨k, hk⟩).deviatesBy_faultyMap (hU ⟨k, hk⟩) (hω.card_gatePat ⟨k, hk⟩)
   propagates k hk := by
     simp only [ovGadget, hk, ↓reduceDIte]
     exact (gs ⟨k, hk⟩).propagatesD_cssMix
@@ -854,7 +978,8 @@ theorem recKraus'_pruneRetry (F : Fin N → MethodRound → Fin 7 → κ → Pai
   simp only [recKraus', roundOp, recPat, pruneRetry_extract, retryOut_pruneRetry]
 
 /-- ★★ **Pruning does not change the machine**: the harmless faults are harmless. -/
-theorem overlapRun_pruneRetry (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
+theorem overlapRun_pruneRetry (gs : Fin N → Gadget)
+    (U : Fin N → Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ)
     [Fintype κ] (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
     (Φ : Fin N → MethodRound → RetryFaults κ) (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
     (hΦ : ∀ j r, (Φ j r).Valid) (ω : OvLoc N → Bool) (ρ : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ) :
@@ -994,7 +1119,8 @@ theorem windowsGood_pruneRetry {ω : OvLoc N → Bool} (hω : NoMalignant ω) :
 /-! ### The machine -/
 
 /-- ★★★ **The level-one Steane machine with the recovery's locations counted.** For every circuit of
-`N` gadgets from the set, unitary faults `U` at the gadgets' locations, channel faults `F` — any
+`N` gadgets from the set, channel faults `U` — trace-preserving Kraus families on one qubit — at the
+gadgets' locations, channel faults `F` — any
 trace-preserving Kraus families on the pairs, before or after the `CNOT` (`aroundFam`) — at Steane's
 method's extraction locations, and every encoded input:
 
@@ -1012,8 +1138,9 @@ method's extraction locations, and every encoded input:
   output is ideal with probability at least `1 − 32335 N p²`, by the union bound over the at most
   `32335` malignant pairs of each of the `N` windows (`one_sub_le_measure_output_eq_pairs`), against
   the `C(403, 2) = 81003` pairs of a window. -/
-theorem steane_machine_overlap (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
-    (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
+theorem steane_machine_overlap (gs : Fin N → Gadget)
+    (U : Fin N → Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ)
+    (hU : ∀ j q, ∑ k, (U j q k)ᴴ * U j q k = 1) [Fintype κ]
     (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
     (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → RetryFaults κ)

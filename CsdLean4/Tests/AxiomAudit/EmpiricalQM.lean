@@ -2964,6 +2964,32 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_machine_overlap
 
+-- Channel faults at the gadget locations (BACKLOG #237, 2026-11-02): a gadget with any
+-- trace-preserving family at each faulty location; one fault deviates by cssMix.
+/-- info: 'CSD.Empirical.QM.QEC.Steane.locFam_gateOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.locFam_gateOf
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.roundKraus_gateOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.roundKraus_gateOf
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.faultyChannel_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.faultyChannel_apply
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.faultyMap_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.faultyMap_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.faultyMap_none' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.faultyMap_none
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.deviatesBy_faultyMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.deviatesBy_faultyMap
+
 
 -- SteaneFaultModel + SteaneOverlapMachine (BACKLOG #235, 2026-10-30): operators on one pair form a
 -- subalgebra kept by the transversal CNOT, a fault before the CNOT is the conjugated fault after it,

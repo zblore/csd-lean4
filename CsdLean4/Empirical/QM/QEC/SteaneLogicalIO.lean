@@ -79,7 +79,7 @@ input, a magic state in particular, is the logical `T̄`'s row (#230).
 at the input as in every recovery (`retryOut`, BACKLOG ~~#240~~); a rejection caused by two faults,
 and the expected number of attempts, are not treated.
 
-⚠️ **Gadget faults are unitary on one qubit** (#207's model, #237); one block, three gates (#226);
+⚠️ **Gadget faults are channels on one qubit** (BACKLOG #237); one block, three gates (#226);
 level one (#231); the constant is `32335`, every pair of a window's primary locations counted
 (#239).
 
@@ -454,11 +454,6 @@ theorem logicalProb_cssMix {E : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ �
 
 /-! ### Faults at the transversal measurement -/
 
-theorem gateOf_family_tp {κ : Type*} [Fintype κ] {N : κ → Matrix (Fin 2) (Fin 2) ℂ} (j : Fin 7)
-    (hN : ∑ k, (N k)ᴴ * N k = 1) : ∑ k, (gateOf j (N k))ᴴ * gateOf j (N k) = 1 := by
-  simp only [gateOf_conjTranspose, ← Controlled.gateOf_mul]
-  rw [← gateOf_sum, hN, gateOf_one]
-
 /-- **The measurement's faults under a pattern**: a Kraus family on qubit `j` before it is read, at
 each faulty readout — a flipped outcome is the family `{X}`. -/
 def measChannel {κ : Type} [Fintype κ] (Nm : Fin 7 → κ → Matrix (Fin 2) (Fin 2) ℂ)
@@ -527,11 +522,11 @@ instance instDecidableEqIOLoc (N : ℕ) : DecidableEq (IOLoc N) :=
 instance instFintypeIOLoc (N : ℕ) : Fintype (IOLoc N) :=
   inferInstanceAs (Fintype (RetryLoc ⊕ OvLoc N ⊕ Fin 7))
 
-variable {N : ℕ} {κ : Type}
+variable {N : ℕ} {κ : Type} {γ : Type} [Fintype γ]
 
 /-- **The machine from preparation to read-out under a pattern**: the input prepared by a factory,
 the `N` steps, the measurement with its faults; the state whose transversal read-out is decoded. -/
-def ioRun (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ) [Fintype κ]
+def ioRun (gs : Fin N → Gadget) (U : Fin N → Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ) [Fintype κ]
     (F : Fin N → MethodRound → Fin 7 → κ → PairOp) (Φ : Fin N → MethodRound → RetryFaults κ)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1) (hΦ : ∀ j r, (Φ j r).Valid)
     (Φ₀ : RetryFaults κ) (Nm : Fin 7 → κ → Matrix (Fin 2) (Fin 2) ℂ)
@@ -766,8 +761,8 @@ theorem IOWindowsGood.good_last {ω : IOLoc N → Bool} (hω : IOWindowsGood ω)
 
 /-- ★★★ **The machine from preparation to read-out, with one fault per window, reads the ideal
 logical outcome distribution.** -/
-theorem logicalProb_ioRun (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
-    (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
+theorem logicalProb_ioRun (gs : Fin N → Gadget) (U : Fin N → Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ)
+    (hU : ∀ j q, ∑ k, (U j q k)ᴴ * U j q k = 1) [Fintype κ]
     (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
     (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → RetryFaults κ)
@@ -842,7 +837,7 @@ theorem eq_true_of_ioPrune {ω : IOLoc N → Bool} {x : IOLoc N} (h : ioPrune ω
   · exact h
 
 /-- ★★ **Pruning does not change the machine from preparation to read-out.** -/
-theorem ioRun_ioPrune (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
+theorem ioRun_ioPrune (gs : Fin N → Gadget) (U : Fin N → Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ)
     [Fintype κ] (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
     (Φ : Fin N → MethodRound → RetryFaults κ) (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
     (hΦ : ∀ j r, (Φ j r).Valid) (Φ₀ : RetryFaults κ) (Nm : Fin 7 → κ → Matrix (Fin 2) (Fin 2) ℂ)
@@ -1150,7 +1145,7 @@ theorem ioWindowsGood_ioPrune {ω : IOLoc N → Bool} (hω : IONoMalignant ω) :
     exact Bool.noConfusion hωz
 
 /-- ★★★ **The level-one Steane machine from preparation to read-out.** For every circuit of `N`
-gadgets, unitary faults at the gadgets, channel faults on the pairs at every extraction location,
+gadgets, channel faults at the gadgets, channel faults on the pairs at every extraction location,
 faults at every location of every ancilla factory — the input's included — and at every readout of
 the final transversal measurement:
 
@@ -1164,8 +1159,8 @@ the final transversal measurement:
 * **under independent faults of rate at most `p`** at all `92 + 205 N + 7` locations, it does so with
   probability at least `1 − 32335 (N + 1) p²`, by the union bound over the at most `32335` malignant
   pairs of each of the `N + 1` windows. Nothing is ideal but the classical decoding. -/
-theorem steane_machine_io (gs : Fin N → Gadget) (U : Fin N → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ)
-    (hU : ∀ j q, U j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) [Fintype κ]
+theorem steane_machine_io (gs : Fin N → Gadget) (U : Fin N → Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ)
+    (hU : ∀ j q, ∑ k, (U j q k)ᴴ * U j q k = 1) [Fintype κ]
     (F : Fin N → MethodRound → Fin 7 → κ → PairOp)
     (hF : ∀ j r q, ∑ k, (F j r q k)ᴴ * F j r q k = 1)
     (hOn : ∀ j r q k, OnPair q (F j r q k)) (Φ : Fin N → MethodRound → RetryFaults κ)
