@@ -40,6 +40,19 @@ uncertainty.
   **beyond `0.23` it is at most `3.4·10⁻²`** (for the free messenger `t' = t`; for the echo
   `t' = 2s₀ + 3·10⁻³ − t`).
 
+## `B`'s register along the flow
+
+* `bEnc` (`B`'s clipped encounter weight, window chord `1/5`), `continuous_bEnc`, `bEnc_nonneg`,
+  `bRate` (its value along the relay flow at `A`), `continuous_bRate`, `bRate_nonneg`, `bRate_eq`,
+  `bRate_le_half`, `abs_relWeight_B_sub_le` (close messengers, close encounter weights);
+* for the crossing time `s₀` of `dirac_relay_at_rest`: `s₀_bounds`, `bRate_eq_free`,
+  ★ `bRate_ge_depart` (**at departure, `t ≤ 4.5·10¹²`, the rate is at least `0.4662`**),
+  ★ `bRate_eq_zero_depart` (zero from `5.75·10¹²` to `s₀`), ★ `bRate_eq_zero_pulse` (zero during
+  the pulse — the rotation is invisible), `echo_eq`, `abs_relWeight_return_sub_le` (the echo's
+  encounter weight to `0.0252`), ★ `bRate_eq_zero_return` (zero until
+  `(2s₀ + 3·10⁻³)/1.6 − 1.4375·10¹²`), ★★ `bRate_ge_return` (**within `1.125·10¹²` of
+  `(2s₀ + 3·10⁻³)/1.6` the rate is at least `0.441`**).
+
 References: `specs/BACKLOG.md` #278, #274; `RecordLayer/DiracRelayA.lean` (`aRelayFlow`,
 `bMess_tail_fine`, `rest_tail_fine`, `dirac_relay_at_rest`); `RecordLayer/DiracRadar.lean`
 (`devA_relayFlow_any`, `regionWeight_echo`, `siteWeight_neg_I_smul`);
@@ -234,6 +247,195 @@ theorem bEncounter_far {t t' : ℝ} (ht0 : 0 ≤ t) (ht8 : t ≤ 8 * 10 ^ 13) (h
   rw [devRegionWeight_levelLift, devRegionWeight_levelLift, approach_total hL,
     bMess_univ hL, mul_one, one_mul] at hle
   linarith
+
+/-! ### `B`'s register along the flow -/
+
+/-- **`B`'s clipped encounter weight with the messenger** (window chord `1/5`). -/
+noncomputable def bEnc (Ψ : RelayIdx L → ℂ) : ℝ :=
+  max (relWeight 1 (1 / 5) (devB Ψ) (levelLift 0 (mess Ψ)) - 1 / 2) 0
+
+omit hL in
+theorem continuous_bEnc : Continuous (bEnc (L := L)) :=
+  ((continuous_relWeight_comp continuous_devB (continuous_levelLift_zero.comp continuous_mess) 1
+    (1 / 5)).sub continuous_const).max continuous_const
+
+omit hL in
+theorem bEnc_nonneg (Ψ : RelayIdx L → ℂ) : 0 ≤ bEnc Ψ := le_max_right _ _
+
+/-- **`B`'s register rate along the flow.** -/
+noncomputable def bRate (L : ℕ) [NeZero L] (t : ℝ) : ℝ := bEnc (aRelayFlow t (aRelayPrep L)).1
+
+omit hL in
+theorem continuous_bRate : Continuous (bRate L) :=
+  continuous_bEnc.comp (continuous_fst.comp (continuous_gatedFlow_time _ _))
+
+omit hL in
+theorem bRate_nonneg (t : ℝ) : 0 ≤ bRate L t := bEnc_nonneg _
+
+omit hL in
+theorem bRate_eq (t : ℝ) :
+    bRate L t = max (relWeight 1 (1 / 5) (approachObserver (L := L) (t - 5 * 10 ^ 13))
+      (levelLift 0 (mess (aRelayFlow t (aRelayPrep L)).1)) - 1 / 2) 0 := by
+  rw [bRate, bEnc, devB_aRelayFlow]
+
+/-- The rate never exceeds `1/2`. -/
+theorem bRate_le_half (t : ℝ) : bRate L t ≤ 1 / 2 := by
+  rw [bRate_eq]
+  have h := relWeight_le_mul 1 (1 / 5) (approachObserver (L := L) (t - 5 * 10 ^ 13))
+    (levelLift 0 (mess (aRelayFlow t (aRelayPrep L)).1))
+  have hm : devRegionWeight (levelLift 0 (mess (aRelayFlow t (aRelayPrep L)).1)) Finset.univ
+      = 1 := by
+    rw [devRegionWeight_levelLift, regionWeight, ← sqNorm_eq_sum_siteWeight]
+    exact sqNorm_mess_aRelayFlow hL t
+  rw [approach_total hL, hm, one_mul] at h
+  exact max_le (by linarith) (by norm_num)
+
+/-- **Two close messengers have close encounter weights with `B`.** -/
+theorem abs_relWeight_B_sub_le (t : ℝ) {ψ χ : ZMod L × Fin 2 → ℂ} (hψ : sqNorm ψ = 1)
+    (hχ : sqNorm χ = 1) {d : ℝ} (hd : sqNorm (ψ - χ) ≤ d) {ε : ℝ} (hε : Real.sqrt d ≤ ε) :
+    |relWeight 1 (1 / 5) (approachObserver (L := L) (t - 5 * 10 ^ 13)) (levelLift 0 ψ)
+      - relWeight 1 (1 / 5) (approachObserver (L := L) (t - 5 * 10 ^ 13)) (levelLift 0 χ)|
+      ≤ 2 * ε := by
+  have e1 := abs_relWeight_levelLift_sub_le 1 (1 / 5) (approachObserver (L := L) (t - 5 * 10 ^ 13))
+    ψ χ
+  have e1' := sum_abs_norm_sq_sub_le ψ χ
+  have hsqrt4 : Real.sqrt (2 * 1 + 2 * 1) = 2 := by
+    rw [show (2 : ℝ) * 1 + 2 * 1 = 2 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]
+  rw [hψ, hχ, hsqrt4] at e1'
+  rw [approach_total hL, one_mul] at e1
+  have hs : Real.sqrt (sqNorm (ψ - χ)) ≤ ε := (Real.sqrt_le_sqrt hd).trans hε
+  linarith
+
+variable {s₀ : ℝ} (hs₀ : s₀ ∈ Icc (aRelayTk - 8 * 10 ^ 11) aRelayTk)
+  (hfreeOn : ∀ t ∈ Icc (0 : ℝ) s₀, aRelayFlow t (aRelayPrep L) = (aRelayState t, aRelayReg L t))
+include hs₀ hfreeOn
+
+omit [NeZero L] hL hfreeOn in
+theorem s₀_bounds : 29 * 10 ^ 12 ≤ s₀ ∧ s₀ ≤ 3 * 10 ^ 13 := by
+  have htk : aRelayTk = 3 * 10 ^ 13 := rfl
+  obtain ⟨h1, h2⟩ := hs₀
+  rw [htk] at h1 h2
+  constructor <;> linarith
+
+omit hL hs₀ in
+/-- **Before the flip the messenger is the free one.** -/
+theorem bRate_eq_free {t : ℝ} (ht0 : 0 ≤ t) (ht : t ≤ s₀) :
+    bRate L t = max (relWeight 1 (1 / 5) (approachObserver (L := L) (t - 5 * 10 ^ 13))
+      (levelLift 0 (bMess (L := L) t)) - 1 / 2) 0 := by
+  rw [bRate_eq, hfreeOn t ⟨ht0, ht⟩, mess_aRelayState]
+
+/-- **At departure the rate is at least `0.977 · 0.989 − 1/2`.** -/
+theorem bRate_ge_depart {t : ℝ} (ht0 : 0 ≤ t) (ht : t ≤ 45 * 10 ^ 11) :
+    (1 - 23 / 1000) * (1 - 11 / 1000) - 1 / 2 ≤ bRate L t := by
+  have hb := s₀_bounds hs₀
+  rw [bRate_eq_free hfreeOn ht0 (by linarith)]
+  have hnear := bEncounter_near hL (t := t) (t' := t) ht0 (by linarith) ht0 (by linarith)
+    (by rw [abs_le]; constructor <;> nlinarith)
+  exact le_max_of_le_left (by linarith)
+
+/-- **After departure, until the flip, the rate is zero.** -/
+theorem bRate_eq_zero_depart {t : ℝ} (ht0 : 575 * 10 ^ 10 ≤ t) (ht : t ≤ s₀) : bRate L t = 0 := by
+  have hb := s₀_bounds hs₀
+  have hπ := pi_gt_314
+  rw [bRate_eq_free hfreeOn (by linarith) ht]
+  have e : 1 / 10 ^ 13 * (t - 3 * 10 ^ 13) - 6 / 10 ^ 14 * (t - 5 * 10 ^ 13) = 4 / 10 ^ 14 * t := by
+    ring
+  have hfar := bEncounter_far hL (t := t) (t' := t) (by linarith) (by linarith) (by linarith)
+    (by linarith) (by rw [e, abs_of_nonneg (by positivity)]; linarith)
+    (by rw [e, abs_of_nonneg (by positivity)]; nlinarith)
+  exact max_eq_right (by linarith)
+
+omit hfreeOn in
+/-- **During the pulse the rate is zero**: the messenger is at `A`, and the rotation is
+invisible. -/
+theorem bRate_eq_zero_pulse (hfree' : aRelayFlow s₀ (aRelayPrep L) = (aRelayState s₀, relayLo))
+    {u : ℝ} (hu0 : 0 ≤ u) (hu : u ≤ 3 / 1000) : bRate L (s₀ + u) = 0 := by
+  have hb := s₀_bounds hs₀
+  have hπ := pi_gt_314
+  set θ := ∫ s in (0 : ℝ)..u, relayGate relayLo relayHi aRelayWeight
+    (aRelayFlow (s₀ + s) (aRelayPrep L)).1 (aRelayFlow (s₀ + s) (aRelayPrep L)).2
+  have h1 := sqNorm_mess_aRelayFlow_sub_le hL hfree' hu0
+  have hrot : sqNorm (gateRot spinY θ *ᵥ bMess (L := L) s₀) = 1 := by
+    rw [sqNorm_gateRot_mulVec spinY_isHermitian spinY_mulVec_spinY, sqNorm_bMess hL]
+  have hd := abs_relWeight_B_sub_le hL (s₀ + u) (sqNorm_mess_aRelayFlow hL _) hrot h1
+    (ε := 3 / 1000 * (42 / 10)) (by
+      rw [Real.sqrt_le_left (by norm_num)]
+      calc u ^ 2 * 17 ≤ (3 / 1000) ^ 2 * 17 := by gcongr
+        _ ≤ (3 / 1000 * (42 / 10)) ^ 2 := by norm_num)
+  rw [relWeight_levelLift_gateRot_spinY] at hd
+  have e : 1 / 10 ^ 13 * (s₀ - 3 * 10 ^ 13) - 6 / 10 ^ 14 * (s₀ + u - 5 * 10 ^ 13)
+      = 4 / 10 ^ 14 * s₀ - 6 / 10 ^ 14 * u := by ring
+  have hfar := bEncounter_far hL (t := s₀ + u) (t' := s₀) (by linarith) (by linarith)
+    (by linarith) (by linarith)
+    (by rw [e, abs_of_nonneg (by nlinarith)]; nlinarith)
+    (by rw [e, abs_of_nonneg (by nlinarith)]; nlinarith)
+  rw [bRate_eq]
+  exact max_eq_right (by linarith [(abs_le.1 hd).2])
+
+omit hL hs₀ hfreeOn in
+/-- The echo at time `t`, as the free messenger at its reflected time. -/
+theorem echo_eq (t : ℝ) :
+    ringPacket (L := L) 1 0 (2 * Real.pi * 10 ^ 13) bMessWin twinAmp
+        (2 * s₀ + 3 / 1000 - 3 * 10 ^ 13 - t)
+      = bMess (2 * s₀ + 3 / 1000 - t) := by
+  rw [bMess]
+  congr 1
+  ring
+
+omit hfreeOn in
+/-- **After the pulse the encounter weight is the echo's to `0.0252`.** -/
+theorem abs_relWeight_return_sub_le
+    (hfree' : aRelayFlow s₀ (aRelayPrep L) = (aRelayState s₀, relayLo))
+    {t : ℝ} (ht : s₀ + 3 / 1000 ≤ t) :
+    |relWeight 1 (1 / 5) (approachObserver (L := L) (t - 5 * 10 ^ 13))
+        (levelLift 0 (mess (aRelayFlow t (aRelayPrep L)).1))
+      - relWeight 1 (1 / 5) (approachObserver (L := L) (t - 5 * 10 ^ 13))
+        (levelLift 0 (bMess (L := L) (2 * s₀ + 3 / 1000 - t)))| ≤ 2 * (3 / 1000 * (42 / 10)) := by
+  have h := sqNorm_mess_aReturn_le hL hs₀ hfree' ht
+  rw [echo_eq] at h
+  have hecho : sqNorm ((-I) • (spinY *ᵥ bMess (L := L) (2 * s₀ + 3 / 1000 - t))) = 1 := by
+    rw [sqNorm_echo, sqNorm_bMess hL]
+  have hd := abs_relWeight_B_sub_le hL t (sqNorm_mess_aRelayFlow hL _) hecho h
+    (ε := 3 / 1000 * (42 / 10)) (by
+      rw [Real.sqrt_le_left (by norm_num)]
+      norm_num)
+  rwa [relWeight_levelLift_echo] at hd
+
+omit hfreeOn in
+/-- **On the way back, while the echo is far from `B`, the rate is zero.** -/
+theorem bRate_eq_zero_return (hfree' : aRelayFlow s₀ (aRelayPrep L) = (aRelayState s₀, relayLo))
+    {t : ℝ} (ht : s₀ + 3 / 1000 ≤ t)
+    (hfar : t ≤ (2 * s₀ + 3 / 1000) / (16 / 10) - 14375 * 10 ^ 8) : bRate L t = 0 := by
+  have hb := s₀_bounds hs₀
+  have hπ := pi_gt_314
+  have hd := abs_relWeight_return_sub_le hL hs₀ hfree' ht
+  have e : 1 / 10 ^ 13 * ((2 * s₀ + 3 / 1000 - t) - 3 * 10 ^ 13) - 6 / 10 ^ 14 * (t - 5 * 10 ^ 13)
+      = 1 / 10 ^ 13 * (2 * s₀ + 3 / 1000) - 16 / 10 ^ 14 * t := by ring
+  have hpos : 0 ≤ 1 / 10 ^ 13 * (2 * s₀ + 3 / 1000) - 16 / 10 ^ 14 * t := by
+    have := hfar
+    nlinarith
+  have hfarB := bEncounter_far hL (t := t) (t' := 2 * s₀ + 3 / 1000 - t) (by linarith)
+    (by nlinarith) (by nlinarith) (by linarith)
+    (by rw [e, abs_of_nonneg hpos]; nlinarith) (by rw [e, abs_of_nonneg hpos]; nlinarith)
+  rw [bRate_eq]
+  exact max_eq_right (by linarith [(abs_le.1 hd).1, (abs_le.1 hd).2])
+
+omit hfreeOn in
+/-- **When the echo reaches `B` the rate is at least `0.977 · 0.989 − 0.0252 − 1/2`.** -/
+theorem bRate_ge_return (hfree' : aRelayFlow s₀ (aRelayPrep L) = (aRelayState s₀, relayLo))
+    {t : ℝ} (hnear : |t - (2 * s₀ + 3 / 1000) / (16 / 10)| ≤ 1125 * 10 ^ 9) :
+    (1 - 23 / 1000) * (1 - 11 / 1000) - 2 * (3 / 1000 * (42 / 10)) - 1 / 2 ≤ bRate L t := by
+  have hb := s₀_bounds hs₀
+  rw [abs_le] at hnear
+  have ht : s₀ + 3 / 1000 ≤ t := by nlinarith
+  have hd := abs_relWeight_return_sub_le hL hs₀ hfree' ht
+  have e : 1 / 10 ^ 13 * ((2 * s₀ + 3 / 1000 - t) - 3 * 10 ^ 13) - 6 / 10 ^ 14 * (t - 5 * 10 ^ 13)
+      = 1 / 10 ^ 13 * (2 * s₀ + 3 / 1000) - 16 / 10 ^ 14 * t := by ring
+  have hnearB := bEncounter_near hL (t := t) (t' := 2 * s₀ + 3 / 1000 - t) (by linarith)
+    (by nlinarith) (by nlinarith) (by linarith)
+    (by rw [e, abs_le]; constructor <;> nlinarith)
+  rw [bRate_eq]
+  exact le_max_of_le_left (by linarith [(abs_le.1 hd).1, (abs_le.1 hd).2])
 
 end WithL
 

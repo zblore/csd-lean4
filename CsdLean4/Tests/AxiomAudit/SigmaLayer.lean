@@ -15074,4 +15074,71 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.bEncounter_far
 
+
+-- DiracBRadar stage 2a (BACKLOG #278, 2026-11-02): B's register rate along the relay flow at A,
+-- phase by phase -- departure, pulse, echo far, echo near.
+/-- info: 'CSD.RecordLayer.continuous_bEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_bEnc
+
+/-- info: 'CSD.RecordLayer.bEnc_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bEnc_nonneg
+
+/-- info: 'CSD.RecordLayer.continuous_bRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_bRate
+
+/-- info: 'CSD.RecordLayer.bRate_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRate_nonneg
+
+/-- info: 'CSD.RecordLayer.bRate_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRate_eq
+
+/-- info: 'CSD.RecordLayer.bRate_le_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRate_le_half
+
+/-- info: 'CSD.RecordLayer.abs_relWeight_B_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_relWeight_B_sub_le
+
+/-- info: 'CSD.RecordLayer.s₀_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.s₀_bounds
+
+/-- info: 'CSD.RecordLayer.bRate_eq_free' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRate_eq_free
+
+/-- info: 'CSD.RecordLayer.bRate_ge_depart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRate_ge_depart
+
+/-- info: 'CSD.RecordLayer.bRate_eq_zero_depart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRate_eq_zero_depart
+
+/-- info: 'CSD.RecordLayer.bRate_eq_zero_pulse' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRate_eq_zero_pulse
+
+/-- info: 'CSD.RecordLayer.echo_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echo_eq
+
+/-- info: 'CSD.RecordLayer.abs_relWeight_return_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_relWeight_return_sub_le
+
+/-- info: 'CSD.RecordLayer.bRate_eq_zero_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRate_eq_zero_return
+
+/-- info: 'CSD.RecordLayer.bRate_ge_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRate_ge_return
+
 end CSD.Tests.AxiomAudit
