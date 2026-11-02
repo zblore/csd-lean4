@@ -14771,4 +14771,39 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_lorentz_worldline
 
+
+-- DiracLatticeCorrections (BACKLOG #279, 2026-11-02): the lattice's dilation defect, speed cap
+-- and cone at the radar arena's parameters.
+/-- info: 'CSD.RecordLayer.arenaSpacing_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaSpacing_pos
+
+/-- info: 'CSD.RecordLayer.arenaSpacing_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaSpacing_le
+
+/-- info: 'CSD.RecordLayer.two_mul_scaledHop_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_mul_scaledHop_mul
+
+/-- info: 'CSD.RecordLayer.latticeDefect_le_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.latticeDefect_le_sq
+
+/-- info: 'CSD.RecordLayer.defect_arena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.defect_arena
+
+/-- info: 'CSD.RecordLayer.speed_cap_arena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.speed_cap_arena
+
+/-- info: 'CSD.RecordLayer.cone_arena' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cone_arena
+
+/-- info: 'CSD.RecordLayer.dirac_lattice_corrections' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_lattice_corrections
+
 end CSD.Tests.AxiomAudit
