@@ -14756,4 +14756,19 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_segment_return
 
+
+-- DiracWorldline (BACKLOG #259 first brick, 2026-11-02): the transformation on the moving
+-- observer's worldline -- A's radar chart and B's clock against Lorentz and Galilean.
+/-- info: 'CSD.RecordLayer.radar_interval_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_interval_bounds
+
+/-- info: 'CSD.RecordLayer.clock_rate_lorentz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clock_rate_lorentz
+
+/-- info: 'CSD.RecordLayer.dirac_lorentz_worldline' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_lorentz_worldline
+
 end CSD.Tests.AxiomAudit

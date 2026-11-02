@@ -760,6 +760,7 @@ public import CsdLean4.RecordLayer.GatePulse
 public import CsdLean4.RecordLayer.DiracRelay
 public import CsdLean4.RecordLayer.DiracRadar
 public import CsdLean4.RecordLayer.DiracSegment
+public import CsdLean4.RecordLayer.DiracWorldline
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena
 public import CsdLean4.CV.PriceAttainment
