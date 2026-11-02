@@ -14620,4 +14620,140 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_radar
 
+
+-- DiracSegment (BACKLOG #275, 2026-11-02): the parity-even sector of the Dirac ring as the segment
+-- {0, ..., M} with reflecting ends -- isometry, onto, segment Hamiltonian and propagator intertwined,
+-- dirac_return's records read on the segment.
+/-- info: 'CSD.RecordLayer.sum_zmod_eq_sum_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_zmod_eq_sum_range
+
+/-- info: 'CSD.RecordLayer.sum_zmod_even' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_zmod_even
+
+/-- info: 'CSD.RecordLayer.segWt_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segWt_ne_zero
+
+/-- info: 'CSD.RecordLayer.star_segWt_mul_segWt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.star_segWt_mul_segWt
+
+/-- info: 'CSD.RecordLayer.segOfₗ_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segOfₗ_apply
+
+/-- info: 'CSD.RecordLayer.IsEvenState.neg_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsEvenState.neg_zero
+
+/-- info: 'CSD.RecordLayer.IsEvenState.neg_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsEvenState.neg_one
+
+/-- info: 'CSD.RecordLayer.neg_segSite_end' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.neg_segSite_end
+
+/-- info: 'CSD.RecordLayer.IsEvenState.end_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsEvenState.end_one
+
+/-- info: 'CSD.RecordLayer.IsEvenState.diracHam_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsEvenState.diracHam_mulVec
+
+/-- info: 'CSD.RecordLayer.IsEvenState.add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsEvenState.add
+
+/-- info: 'CSD.RecordLayer.IsEvenState.smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsEvenState.smul
+
+/-- info: 'CSD.RecordLayer.chainInner_eq_segInner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainInner_eq_segInner
+
+/-- info: 'CSD.RecordLayer.segSiteWeight_segOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segSiteWeight_segOf
+
+/-- info: 'CSD.RecordLayer.regionWeight_eq_segRegionWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_eq_segRegionWeight
+
+/-- info: 'CSD.RecordLayer.chordArc_neg_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chordArc_neg_mem
+
+/-- info: 'CSD.RecordLayer.segSite_val' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segSite_val
+
+/-- info: 'CSD.RecordLayer.segOf_segUnfold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segOf_segUnfold
+
+/-- info: 'CSD.RecordLayer.isEvenState_segUnfold' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isEvenState_segUnfold
+
+/-- info: 'CSD.RecordLayer.sum_fin_ite_val_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_fin_ite_val_eq
+
+/-- info: 'CSD.RecordLayer.sum_fin_ite_succ_val_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_fin_ite_succ_val_eq
+
+/-- info: 'CSD.RecordLayer.segSite_succ' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segSite_succ
+
+/-- info: 'CSD.RecordLayer.segSite_pred' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segSite_pred
+
+/-- info: 'CSD.RecordLayer.segWt_mul_eq_nb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segWt_mul_eq_nb
+
+/-- info: 'CSD.RecordLayer.segSite_zero_sub_one' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segSite_zero_sub_one
+
+/-- info: 'CSD.RecordLayer.segSite_top_add_one' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segSite_top_add_one
+
+/-- info: 'CSD.RecordLayer.segHam_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segHam_mulVec_apply
+
+/-- info: 'CSD.RecordLayer.segMask_of_not_end' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segMask_of_not_end
+
+/-- info: 'CSD.RecordLayer.segOf_diracHam_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segOf_diracHam_mulVec
+
+/-- info: 'CSD.RecordLayer.IsEvenState.pow_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsEvenState.pow_mulVec
+
+/-- info: 'CSD.RecordLayer.segOf_pow_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segOf_pow_mulVec
+
+/-- info: 'CSD.RecordLayer.segOf_chainProp_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.segOf_chainProp_mulVec
+
+/-- info: 'CSD.RecordLayer.dirac_segment_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_segment_return
+
 end CSD.Tests.AxiomAudit

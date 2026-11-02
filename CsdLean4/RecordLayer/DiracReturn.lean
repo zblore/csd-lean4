@@ -71,7 +71,8 @@ the parity-even sector.
 ## Honest scope
 
 ⚠️ **The reflector is a symmetry wall, at rest.** The even sector is invariant, and is the segment
-with reflecting ends; the segment Hamiltonian is not written out (#275). A moving reflector — or a
+with reflecting ends; the segment Hamiltonian is written out in `RecordLayer/DiracSegment.lean`
+(#275, `segOf_diracHam_mulVec`, `dirac_segment_return`). A moving reflector — or a
 relay at a moving observer — is what #256's Doppler factor needs, and images do not give it (#274).
 
 ⚠️ **`A` sits at one end and `B` at the other**, each with a region detector of a stated law
