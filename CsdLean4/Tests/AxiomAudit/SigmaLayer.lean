@@ -14897,4 +14897,47 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.radar_interval_bounds_half
 
+
+-- DiracMasslessTails (BACKLOG #278 landing 2, first part, 2026-11-02): where a massless messenger
+-- is; B's messenger on the moving window, delayed to reach A at 3e13, located to 1e-3.
+/-- info: 'CSD.RecordLayer.regionWeight_massless_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_massless_le
+
+/-- info: 'CSD.RecordLayer.le_regionWeight_massless' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_regionWeight_massless
+
+/-- info: 'CSD.RecordLayer.regionWeight_compl_chordArc_massless_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_compl_chordArc_massless_le
+
+/-- info: 'CSD.RecordLayer.rightWindow_bMessWin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rightWindow_bMessWin
+
+/-- info: 'CSD.RecordLayer.bMess_win' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bMess_win
+
+/-- info: 'CSD.RecordLayer.bMess_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bMess_norm
+
+/-- info: 'CSD.RecordLayer.abs_bMessRate_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_bMessRate_sub_le
+
+/-- info: 'CSD.RecordLayer.bMess_re_transPhase_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bMess_re_transPhase_zero
+
+/-- info: 'CSD.RecordLayer.bMess_tail' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bMess_tail
+
+/-- info: 'CSD.RecordLayer.bMess_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bMess_near
+
 end CSD.Tests.AxiomAudit
