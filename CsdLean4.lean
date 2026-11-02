@@ -379,6 +379,7 @@ public import CsdLean4.Empirical.QM.QEC.SteaneMethod
 public import CsdLean4.Empirical.QM.QEC.SteaneFaultyRecovery
 public import CsdLean4.Empirical.QM.QEC.SteaneFaultModel
 public import CsdLean4.Empirical.QM.QEC.SteaneVerifiedAncilla
+public import CsdLean4.Empirical.QM.QEC.SteaneFactoryRate
 public import CsdLean4.Empirical.QM.QEC.SteaneOverlapMachine
 public import CsdLean4.Empirical.QM.QEC.SteaneLogicalIO
 public import CsdLean4.Empirical.QM.QEC.SteaneEncoder

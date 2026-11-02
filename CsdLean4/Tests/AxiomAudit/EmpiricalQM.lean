@@ -4295,4 +4295,52 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.ioWindowsGood_ioPrune
 
+
+-- SteaneFactoryRate (BACKLOG #267, 2026-11-02): the factory's rejection rate under independent
+-- Bernoulli faults (at most 46 p, a Measure.pi statement), k attempts all rejected with probability
+-- at most (46 p)^k, and at most 1/(1 - 46 p) attempts on average.
+/-- info: 'CSD.Empirical.QM.QEC.Steane.rejProb_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.rejProb_nonneg
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.norm_sq_eq_re_star_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.norm_sq_eq_re_star_mul_self
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.rejProb_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.rejProb_le_one
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.rejProb_none' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.rejProb_none
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.card_facLoc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.card_facLoc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.faultySet_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.faultySet_subset
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.faultLaw_faultySet_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.faultLaw_faultySet_le
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.integral_rejProb_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.integral_rejProb_le
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.integral_prod_rejProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.integral_prod_rejProb
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.integral_prod_rejProb_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.integral_prod_rejProb_le
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.attemptsMean_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.attemptsMean_le
+
 end CSD.Tests.AxiomAudit
