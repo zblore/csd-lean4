@@ -5238,4 +5238,87 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.levelCoherence_rate_sharp
 
+
+-- DiracMassless (BACKLOG #278 first landing, 2026-11-02): massless messengers on the Dirac chain --
+-- exactly parallel spinors, drift at c cos(ap0), an error rate c k a (D + k) vanishing with the spacing.
+/-- info: 'CSD.CV.bandE_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.bandE_zero
+
+/-- info: 'CSD.CV.abs_bandE_zero_step_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_bandE_zero_step_sub_le
+
+/-- info: 'CSD.CV.spinNorm_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinNorm_zero
+
+/-- info: 'CSD.CV.spinNorm_zero_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinNorm_zero_pos
+
+/-- info: 'CSD.CV.modeNorm_zero_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeNorm_zero_pos
+
+/-- info: 'CSD.CV.spinOverlap_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinOverlap_zero
+
+/-- info: 'CSD.CV.spinCos_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinCos_zero
+
+/-- info: 'CSD.CV.norm_transWeight_zero_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_transWeight_zero_le
+
+/-- info: 'CSD.CV.sum_norm_transWeight_zero_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sum_norm_transWeight_zero_le
+
+/-- info: 'CSD.CV.norm_transPhase_zero_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_transPhase_zero_le
+
+/-- info: 'CSD.CV.transPhase_drift_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transPhase_drift_zero
+
+/-- info: 'CSD.CV.driftErrorZero_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.driftErrorZero_le
+
+/-- info: 'CSD.CV.norm_unitAmp_mul_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_unitAmp_mul_zero
+
+/-- info: 'CSD.CV.chainInner_packet_unitAmp_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainInner_packet_unitAmp_zero
+
+/-- info: 'CSD.CV.transWeight_unitAmp_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transWeight_unitAmp_zero
+
+/-- info: 'CSD.CV.re_transPhase_unitAmp_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.re_transPhase_unitAmp_zero
+
+/-- info: 'CSD.CV.tendsto_masslessErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.tendsto_masslessErr
+
+/-- info: 'CSD.CV.c_mul_cos_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.c_mul_cos_mem
+
+/-- info: 'CSD.CV.dirac_massless_limit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dirac_massless_limit
+
+/-- info: 'CSD.CV.flat_massless_localised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.flat_massless_localised
+
 end CSD.Tests.AxiomAudit

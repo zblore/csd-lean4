@@ -747,6 +747,7 @@ public import CsdLean4.CV.DiracClockChain
 public import CsdLean4.CV.DiracPacket
 public import CsdLean4.CV.DiracContinuum
 public import CsdLean4.CV.DiracPacketLimit
+public import CsdLean4.CV.DiracMassless
 public import CsdLean4.CV.DiracDevice
 public import CsdLean4.RecordLayer.DiracTicks
 public import CsdLean4.RecordLayer.DiracDeviceTicks
