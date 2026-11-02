@@ -11945,6 +11945,44 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.galilean_transformation_clocks
 
+-- GalileanTransformation, concrete clocks for the train (BACKLOG #264, 2026-11-02): clock error
+-- exactly 1/16, horizon covering n + 1 messengers, galilean_transformation_clocks discharged.
+/-- info: 'CSD.RecordLayer.trainF_periodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trainF_periodic
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_trainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_trainF
+
+/-- info: 'CSD.RecordLayer.trainK_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trainK_pos
+
+/-- info: 'CSD.RecordLayer.trainClock_mem_handReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trainClock_mem_handReady
+
+/-- info: 'CSD.RecordLayer.handRate_trainClock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handRate_trainClock
+
+/-- info: 'CSD.RecordLayer.handFreq_trainClock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handFreq_trainClock
+
+/-- info: 'CSD.RecordLayer.handClockErr_trainClock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.handClockErr_trainClock
+
+/-- info: 'CSD.RecordLayer.le_handHorizon_trainClock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_handHorizon_trainClock
+
+/-- info: 'CSD.RecordLayer.train_clocks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.train_clocks
+
 -- DiracDetector (BACKLOG #252, its smallest part, 2026-10-31): one Dirac packet writes one
 -- site detector as an ActualOccurrence of one arena, with a moving two-mode instance.
 /-- info: 'CSD.RecordLayer.siteWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/

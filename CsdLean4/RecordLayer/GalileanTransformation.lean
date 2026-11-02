@@ -83,7 +83,13 @@ propagated explicitly.
   `ExchGeom.readingsNear_hand` (a hand clock's readings of an exchange inside its horizon are near,
   with `ε = handClockErr`), `abs_handTime_reception_le`; ★★★ `galilean_transformation_clocks` —
   **the common chart from the observers' own clocks**: estimates, charts and both families' map
-  discrepancies within explicit multiples of `handClockErr q₀` and `handClockErr q₁`.
+  discrepancies within explicit multiples of `handClockErr q₀` and `handClockErr q₁`;
+* `trainF` (`−sin(2πx)/(2π)`), `trainG` (`1/(4n + 12)`), `trainK` (`32(4n + 12)`), `trainClock`;
+  ★ `handClockErr_trainClock` (**the clock error is exactly `1/16`**: `κ = 2g`, `ω = 16`),
+  ★ `le_handHorizon_trainClock` (the horizon is at least `2n + 6 − 1/32`); ★★★ `train_clocks` —
+  **`galilean_transformation_clocks` on `exchange_train` with every hypothesis discharged** (#264):
+  two such clocks, calibration on messenger `0`, messengers `a, b ≤ n` charted, `δ = 1/4`,
+  `H = 17/4 + 2n`, `ε = 1/16`.
 
 ## The findings
 
@@ -126,13 +132,13 @@ family (~~#257~~'s `mirrorView_biFlow`, a symmetry of the control's dynamics), a
 readings beyond their errors. Calibration (the unit cell), matching (the label) and free propagation
 enter them exactly as they enter the exact chart: assumed, not perturbed.
 
-⚠️ **No concrete clock is exhibited meeting `4 · handClockErr ≤ δ` over the horizon.**
-`handClockErr = 2/(Kκ) + 1/(2ω)` against a horizon of about `2/κ` asks for many ticks per turn and a
-fast Rabi rate; choosing parameters that satisfy `galilean_transformation_clocks` for the train is
-#264.
+⚠️ **The concrete clocks are one parameter family** (`train_clocks`, #264): `J = 16`, `ħ = 1`,
+`g = 1/(4n + 12)`, `K = 32(4n + 12)`, the carrier angle at `0` (no detuning). The coupling weakens and
+the dial refines as the train lengthens — a horizon of `~2/κ` must cover `2n` time units while the
+tick `2/(Kκ)` stays at `1/32`. Both observers carry identical clocks.
 
-⚠️ **This is the control (A).** The test chain's transformation is #259, behind #256; varying the
-detector and clock construction (#248 (b)) is not treated.
+⚠️ **This is the control (A).** The test chain's transformation is #259 (its blockers done
+2026-11-02); varying the detector and clock construction (#248 (b)) is not treated.
 
 References: `specs/BACKLOG.md` #247, #248, #264, #259, #246, #245, #244, #243, #257, #256, #39;
 `RecordLayer/SignalCone.lean` (`exchEmit_duration`, `exchReturn_duration`, `half_anisotropy`);
@@ -1058,6 +1064,153 @@ theorem galilean_transformation_clocks (hJ : 0 < J) (hħ : 0 < ħ) {K : ℕ} (hK
   exact ⟨v1, v2, c1, c2, f1.1, f1.2, f2.1, f2.2⟩
 
 end Clocks
+
+/-! ### A concrete pair of clocks for the train (#264) -/
+
+section TrainClocks
+
+open CSD.CV
+
+/-- The coupling profile of the train's clocks: `f(x) = −sin(2πx)/(2π)`, so `f(0) = 0` (no detuning
+at the clock's carrier angle `0`) and `f'(0) = −1`. -/
+noncomputable def trainF (x : ℝ) : ℝ := -Real.sin (2 * Real.pi * x) / (2 * Real.pi)
+
+theorem trainF_periodic : Function.Periodic trainF 1 := by
+  intro x
+  simp only [trainF, mul_add, mul_one, Real.sin_add_two_pi]
+
+theorem hasDerivAt_trainF (x : ℝ) : HasDerivAt trainF (-Real.cos (2 * Real.pi * x)) x := by
+  have hπ : (2 * Real.pi) ≠ 0 := by positivity
+  have h := ((hasDerivAt_id x).const_mul (2 * Real.pi)).sin.neg.div_const (2 * Real.pi)
+  convert h using 1
+  · ext y
+    simp [trainF]
+  · field_simp
+    simp
+
+/-- The coupling strength for a train of `n + 1` exchanges: `g = 1/(4n + 12)`. -/
+noncomputable def trainG (n : ℕ) : ℝ := 1 / (4 * n + 12)
+
+/-- The number of arcs of the dial: `K = 32(4n + 12)`. -/
+def trainK (n : ℕ) : ℕ := 32 * (4 * n + 12)
+
+/-- The prepared clock: the hand at the start of its first half-arc, the carrier angle at `0`. -/
+noncomputable def trainClock (n : ℕ) : LF4.KTorus :=
+  (((1 / (2 * (trainK n : ℝ)) : ℝ) : AddCircle (1 : ℝ)), 0)
+
+theorem trainK_pos (n : ℕ) : 0 < trainK n := by
+  unfold trainK
+  positivity
+
+theorem trainClock_mem_handReady (n : ℕ) : trainClock n ∈ handReady (trainK n) := by
+  have hK : (1 : ℝ) ≤ trainK n := by exact_mod_cast trainK_pos n
+  have h0 : (0 : ℝ) < 1 / (2 * (trainK n : ℝ)) := by positivity
+  have h1 : 1 / (2 * (trainK n : ℝ)) ≤ 1 := by
+    rw [div_le_one (by positivity)]
+    linarith
+  simp only [trainClock, handReady, Set.mem_ofPred_eq]
+  rw [rep_coe_of_mem_Ioc ⟨h0, h1⟩]
+  exact ⟨h0, le_rfl⟩
+
+/-- The clock's mean rate: `κ = 2g`. -/
+theorem handRate_trainClock (n : ℕ) :
+    handRate 16 1 (trainG n) trainF_periodic (trainClock n) = 2 * trainG n := by
+  have h0 : (trainClock n).2 = ((0 : ℝ) : AddCircle (1 : ℝ)) := by simp [trainClock]
+  rw [handRate, driftRate, h0, rateAt_coe, detuningAt_coe, (hasDerivAt_trainF 0).deriv]
+  simp [trainF, rabiFreq_zero]
+
+/-- The clock's Rabi rate: `ω = 16`. -/
+theorem handFreq_trainClock (n : ℕ) :
+    handFreq 16 1 (trainG n) trainF_periodic (trainClock n) = 16 := by
+  have h0 : (trainClock n).2 = ((0 : ℝ) : AddCircle (1 : ℝ)) := by simp [trainClock]
+  rw [handFreq, h0, detuningAt_coe]
+  simp [trainF, rabiRate, rabiFreq_zero]
+
+/-- ★ **The clock error is `1/16`**: `τ_tick + 1/(2ω) = 1/(Kg) + 1/32`, with `Kg = 32`. -/
+theorem handClockErr_trainClock (n : ℕ) :
+    handClockErr 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) = 1 / 16 := by
+  rw [handClockErr, handRate_trainClock, handFreq_trainClock, tickTime, trainG, trainK]
+  push_cast
+  field_simp
+  ring
+
+/-- ★ **The horizon covers the train's first `n + 1` exchanges**: at least `2n + 6 − 1/32`. -/
+theorem le_handHorizon_trainClock (n : ℕ) :
+    2 * (n : ℝ) + 6 - 1 / 32 ≤ handHorizon (trainK n)
+      (handRate 16 1 (trainG n) trainF_periodic (trainClock n))
+      (handFreq 16 1 (trainG n) trainF_periodic (trainClock n)) := by
+  rw [handRate_trainClock, handFreq_trainClock, handHorizon, trainG, trainK]
+  have hn : (0 : ℝ) ≤ n := Nat.cast_nonneg n
+  push_cast
+  rw [show 2 / (2 * (1 / (4 * (n : ℝ) + 12))) = 4 * n + 12 by field_simp]
+  have hK : (1 : ℝ) / (32 * (4 * n + 12)) ≤ 1 / 2 := by
+    rw [div_le_div_iff₀ (by positivity) (by norm_num)]
+    nlinarith
+  nlinarith
+
+/-- ★★★ **The common chart from two concrete clocks (#264).** Two identical hand clocks
+(`J = 16`, `ħ = 1`, `g = 1/(4n + 12)`, `K = 32(4n + 12)` arcs, profile `trainF`), each with clock
+error exactly `1/16` and a horizon covering the first `n + 1` messengers of `exchange_train`:
+calibrated on messenger `0`, the observer at rest charts messenger `a`'s reflection and the moving
+observer messenger `b`'s (`0 ≤ a, b ≤ n`); every hypothesis of `galilean_transformation_clocks` is
+discharged with `δ = 1/4` (the train's shortest write) and `H = 17/4 + 2n`, and its bounds hold with
+`ε = 1/16`. -/
+theorem train_clocks (n : ℕ) {a b : ℝ} (ha : 0 ≤ a) (han : a ≤ n) (hb : 0 ≤ b) (hbn : b ≤ n) :
+    handClockErr 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) = 1 / 16
+    ∧ |clockRelVel 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5) 3 - 1| ≤
+        relVelErr (1 / 16) (1 / 4)
+    ∧ |clockSep 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5) 3 - 4| ≤
+        sepEstErr (1 / 16) (1 / 4) (17 / 4 + 2 * n)
+    ∧ |(clockTransit 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5 - 4 * a) 3).1
+        - bounceTime (-5 - 4 * a) 3| ≤ chartTimeErr (1 / 16) (1 / 4) (17 / 4 + 2 * n)
+    ∧ |(clockTransit 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5 - 4 * a) 3).2
+        - bounceSep 4 1 (-5 - 4 * a) 3| ≤ chartSepErr (1 / 16) (1 / 4) (17 / 4 + 2 * n)
+    ∧ |(galileo (clockSep 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5) 3)
+        (clockRelVel 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5) 3)
+        (clockTransit 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5 - 4 * a)
+        3)).1 - (clockOwn 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) (-5 - 4 * a)
+        3).1| ≤ chartTimeErr (1 / 16) (1 / 4) (17 / 4 + 2 * n) + (1 / 16)
+    ∧ |(galileo (clockSep 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5) 3)
+        (clockRelVel 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5) 3)
+        (clockTransit 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5 - 4 * a)
+        3)).2 - (clockOwn 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) (-5 - 4 * a)
+        3).2| ≤ chartSepErr (1 / 16) (1 / 4) (17 / 4 + 2 * n) + sepEstErr (1 / 16) (1 / 4)
+        (17 / 4 + 2 * n) + (|(1 : ℝ)| + relVelErr (1 / 16) (1 / 4)) * chartTimeErr (1 / 16) (1 / 4)
+        (17 / 4 + 2 * n) + relVelErr (1 / 16) (1 / 4) * (17 / 4 + 2 * n)
+    ∧ |(galileo (clockSep 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5) 3)
+        (clockRelVel 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5) 3) (clockOwn
+        16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) (-5 - 4 * b) 3)).1 - (flipChart
+        (clockTransit 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5 - 4 * b)
+        3)).1| ≤ (1 / 16) + chartTimeErr (1 / 16) (1 / 4) (17 / 4 + 2 * n)
+    ∧ |(galileo (clockSep 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5) 3)
+        (clockRelVel 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5) 3) (clockOwn
+        16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) (-5 - 4 * b) 3)).2 - (flipChart
+        (clockTransit 16 1 (trainG n) trainF_periodic (trainK n) (trainClock n) 4 1 (-5 - 4 * b)
+        3)).2| ≤ sepEstErr (1 / 16) (1 / 4) (17 / 4 + 2 * n) + (|(1 : ℝ)| + relVelErr (1 / 16)
+        (1 / 4)) * (1 / 16) + relVelErr (1 / 16) (1 / 4) * (17 / 4 + 2 * n) + chartSepErr (1 / 16)
+        (1 / 4) (17 / 4 + 2 * n) := by
+  have hE := handClockErr_trainClock n
+  have hHz := le_handHorizon_trainClock n
+  have hn : (0 : ℝ) ≤ n := Nat.cast_nonneg n
+  have hκ : 0 < handRate 16 1 (trainG n) trainF_periodic (trainClock n) := by
+    rw [handRate_trainClock, trainG]
+    positivity
+  obtain ⟨hC, -, -, hCs, hCe⟩ := exchange_train 0 le_rfl
+  obtain ⟨hA, -, -, hAs, hAe⟩ := exchange_train a ha
+  obtain ⟨hB, -, -, hBs, hBe⟩ := exchange_train b hb
+  simp only [mul_zero, sub_zero, add_zero] at hC hCs hCe
+  have h := galilean_transformation_clocks 16 1 (trainG n) trainF_periodic (δ := 1 / 4)
+    (H := 17 / 4 + 2 * n) (by norm_num) one_pos
+    (trainK_pos n) (trainClock_mem_handReady n) (trainClock_mem_handReady n) hκ hκ hC hA hB
+    (by rw [hCe]; linarith) (by rw [hAe]; linarith) (by linarith) (by rw [hBe]; linarith)
+    (by linarith) (by norm_num : (0 : ℝ) < 1 / 4) (by rw [hE]; norm_num) (by rw [hE]; norm_num)
+    (by norm_num [outSpeed, retSpeed]) (by norm_num [outSpeed, retSpeed])
+    (by norm_num [outSpeed, retSpeed]) (by rw [hCs]; linarith) (by rw [hAs]; linarith)
+    (by rw [hBs]; linarith)
+  rw [hE] at h
+  exact ⟨hE, h⟩
+
+end TrainClocks
 
 end CSD.RecordLayer
 
