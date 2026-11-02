@@ -12,13 +12,13 @@ public import CsdLean4.RecordLayer.DiracWorldline
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #279 (residue of ~~#259~~).
 
-~~#259~~ read the moving clock's rate as the Lorentz dilation `√(1 − β²)` to `2.5·10⁻⁴`. The
-Dirac chain is a lattice with a rest frame, and three bounds in the corpus say how it departs from
+~~#259~~ read the moving clock's rate as the Lorentz dilation `√(1 − β²)` to `2.5·10⁻⁴`. The Dirac
+chain is a lattice with a rest frame, and three bounds in the corpus say how it departs from
 Lorentz: the moving clock's dilation defect (~~#249~~'s `lattice_dilation_defect`), the speed cap
 below `c` of every massive species (~~#246~~'s `maxGroupVel`), and the chain's guaranteed cone
-(~~#258~~'s `chainConeVel`). Here all three are evaluated at the radar arena's parameters — a ring of physical
-length `2π·10¹³` with `L ≥ 10¹⁹` sites, spacing `a = 2π·10¹³/L ≤ 2π·10⁻⁶`, hop `J = 1/(2a)`
-(`c = 2Ja = 1`), rest energy `μ = 3` — in physical units.
+(~~#258~~'s `chainConeVel`). Here all three are evaluated at the radar arena's parameters — a ring
+of physical length `2π·10¹³` with `L ≥ 10¹⁹` sites, spacing `a = 2π·10¹³/L ≤ 2π·10⁻⁶`, hop `J =
+1/(2a)` (`c = 2Ja = 1`), rest energy `μ = 3` — in physical units.
 
 ## The arena
 
