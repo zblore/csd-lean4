@@ -15396,4 +15396,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.radar_apparatus_indep
 
+
+-- DiracResolution, the localisation floor (BACKLOG #284, 2026-11-03).
+/-- info: 'CSD.RecordLayer.sine_floor_lower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sine_floor_lower
+
+/-- info: 'CSD.RecordLayer.exists_sine_floor_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_sine_floor_le
+
+/-- info: 'CSD.RecordLayer.sine_packet_floor' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sine_packet_floor
+
+/-- info: 'CSD.RecordLayer.vgLip_scaledHop_mul_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.vgLip_scaledHop_mul_sq
+
 end CSD.Tests.AxiomAudit

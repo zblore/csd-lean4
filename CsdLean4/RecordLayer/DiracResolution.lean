@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.DiracMasslessTails
 # The records' resolution: tails and encounters at any number of modes and any chord
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #280, lever (b), first four bricks;
-lever (a), first three bricks.
+lever (a), first three bricks; #284, the localisation floor.
 
 #278's Lorentz map holds to `≈ 23%`, and #280's diagnosis traces that error to the localisation
 bound: the only fact about where a massless packet is that the record chain uses is the mean of
@@ -105,7 +105,24 @@ record's timing error therefore scales as `√F / Ω`**, and `F` is minimised wh
 `√(T/μ)`. The absolute numbers depend on the arenas' arbitrary `μ`, splitting, ring size and
 speeds; the scaling does not.
 
+## The localisation floor (#284)
+
+* ★★ `sine_floor_lower` (**the floor's two terms are at least `π q` for every number of modes**);
+* ★★★ `exists_sine_floor_le` (**`⌈√(π/q)⌉` modes bring them to at most `(5/2) π q`**,
+  `0 < q < π`);
+* ★★★ `sine_packet_floor` (**the sine packet at that optimum: weight off the arc times
+  `(ρ − η)²/2` at most `κ + (5/2) π q`, `q = vgLip · (2π/L)² · |t|`**);
+* ★★ `vgLip_scaledHop_mul_sq` (**in physical units `q = c² k² |t|/μ`**, `k = 2π/ℓ`): the bound's
+  floor lies between `π q` and `(5/2) π q` (plus the spin loss), so it scales as `|t|/μ` — **the
+  standard-quantum-limit scaling**: a chord at a fixed tail `∝ c k √(|t|/μ)`, a position resolution
+  `∝ c √(|t|/μ)` (`ħ = 1`).
+
 ## Honest scope
+
+⚠️ **The bound's floor, not nature's**: `sine_floor_lower` is a lower bound on this bound (a
+sine profile, Chebyshev on the angle, the quadratic drift), not on what any measurement can
+resolve; that the physical limit has the same `√(|t|/μ)` scaling is the standard quantum limit,
+not proved here.
 
 ⚠️ **Chebyshev only**: the bound uses the second moment of the angle; the flat profile's true
 tail decays like `1/(Nρ)` (Dirichlet kernel, estimate), so this is lever (b) of #280, not (a).
@@ -850,5 +867,118 @@ theorem sine_massless_tail {J : ℝ} (hJ : 0 < J) {n : ℕ} (hn : 1 ≤ n)
   have hc1 := Real.cos_le_one (Real.pi / (n + 1))
   have hx : 0 ≤ (δ'' * t) ^ 2 / 2 := by positivity
   nlinarith
+
+/-! ### The localisation floor (#284) -/
+
+/-- ★★ **The floor's lower bound.** For any `m > 0`, the sine floor's two terms satisfy
+`π²/(2m²) + q²m²/2 ≥ π q`: the bound cannot beat `π q`, however the number of modes is chosen. -/
+theorem sine_floor_lower {m : ℝ} (hm : 0 < m) (q : ℝ) :
+    Real.pi * q ≤ Real.pi ^ 2 / (2 * m ^ 2) + q ^ 2 * m ^ 2 / 2 := by
+  have h := sq_nonneg (Real.pi / m - q * m)
+  have e : (Real.pi / m - q * m) ^ 2 = Real.pi ^ 2 / m ^ 2 - 2 * Real.pi * q + q ^ 2 * m ^ 2 := by
+    field_simp
+    ring
+  rw [e] at h
+  have e2 : Real.pi ^ 2 / (2 * m ^ 2) = Real.pi ^ 2 / m ^ 2 / 2 := by
+    field_simp
+  rw [e2]
+  linarith
+
+/-- ★★★ **The floor's upper bound at the optimum.** For `0 < q < π`, `m = ⌈√(π/q)⌉` modes plus one
+(`m ≥ 2`) bring the floor's two terms to at most `(5/2) π q`. -/
+theorem exists_sine_floor_le {q : ℝ} (hq0 : 0 < q) (hq : q < Real.pi) :
+    2 ≤ ⌈Real.sqrt (Real.pi / q)⌉₊
+    ∧ Real.pi ^ 2 / (2 * (⌈Real.sqrt (Real.pi / q)⌉₊ : ℝ) ^ 2)
+        + q ^ 2 * (⌈Real.sqrt (Real.pi / q)⌉₊ : ℝ) ^ 2 / 2 ≤ 5 / 2 * Real.pi * q := by
+  set s := Real.sqrt (Real.pi / q) with hs
+  set m := ⌈s⌉₊ with hm
+  have hπq : 1 < Real.pi / q := by rw [lt_div_iff₀ hq0]; linarith
+  have hs2 : s ^ 2 = Real.pi / q := Real.sq_sqrt (by positivity)
+  have hs1 : 1 < s := by
+    rw [hs, show (1 : ℝ) = Real.sqrt 1 from Real.sqrt_one.symm]
+    exact Real.sqrt_lt_sqrt (by norm_num) hπq
+  have hsm : s ≤ m := Nat.le_ceil s
+  have hms : (m : ℝ) < s + 1 := Nat.ceil_lt_add_one (by linarith)
+  have hm1 : (1 : ℝ) < m := hs1.trans_le hsm
+  refine ⟨by exact_mod_cast hm1, ?_⟩
+  have hm0 : (0 : ℝ) < m := by linarith
+  have h1 : Real.pi ^ 2 / (2 * (m : ℝ) ^ 2) ≤ Real.pi * q / 2 := by
+    have hmsq : Real.pi / q ≤ (m : ℝ) ^ 2 := by
+      rw [← hs2]
+      exact pow_le_pow_left₀ (by linarith) hsm 2
+    rw [div_le_iff₀ (by positivity)]
+    rw [div_le_iff₀ hq0] at hmsq
+    nlinarith [Real.pi_pos]
+  have h2 : q ^ 2 * (m : ℝ) ^ 2 / 2 ≤ 2 * Real.pi * q := by
+    have hm2 : (m : ℝ) ^ 2 ≤ 4 * (Real.pi / q) := by
+      rw [← hs2]
+      have : (m : ℝ) ≤ 2 * s := by linarith
+      nlinarith
+    have : q ^ 2 * (m : ℝ) ^ 2 ≤ q ^ 2 * (4 * (Real.pi / q)) :=
+      mul_le_mul_of_nonneg_left hm2 (sq_nonneg q)
+    rw [show q ^ 2 * (4 * (Real.pi / q)) = 4 * Real.pi * q by field_simp] at this
+    linarith
+  linarith
+
+/-- ★★★ **The sine packet at its optimum.** With the window's angles within `n · 2π/L` of `θ₀`
+and `n = ⌈√(π/q)⌉ − 1` modes, `q = vgLip · (2π/L)² · |t|` (`0 < q < π`), the sine packet's weight
+off the chord-`ρ` arc times `(ρ − η)²/2` is at most `κ + (5/2) π q`. -/
+theorem sine_packet_floor {J μ t : ℝ} (hμ : 0 < μ)
+    (hq0 : 0 < vgLip J μ * (2 * Real.pi / L) ^ 2 * |t|)
+    (hq : vgLip J μ * (2 * Real.pi / L) ^ 2 * |t| < Real.pi)
+    (hWin : ∀ m ∈ Finset.Ico lo (lo + (⌈Real.sqrt (Real.pi /
+      (vgLip J μ * (2 * Real.pi / L) ^ 2 * |t|))⌉₊ - 1 : ℕ)), lo ≤ m ∧ m + 1 < lo + L)
+    (hκ : (2 * Real.pi * J / (L * μ)) ^ 2 ≤ 1) {θ₀ : ℝ}
+    (hδ : ∀ m ∈ Finset.Ico lo (lo + (⌈Real.sqrt (Real.pi /
+      (vgLip J μ * (2 * Real.pi / L) ^ 2 * |t|))⌉₊ - 1 : ℕ)),
+      |angleZ L m - θ₀| ≤ ((⌈Real.sqrt (Real.pi /
+        (vgLip J μ * (2 * Real.pi / L) ^ 2 * |t|))⌉₊ - 1 : ℕ) : ℝ) * (2 * Real.pi / L))
+    {z : ℂ} {ρ η : ℝ} (hηρ : η ≤ ρ)
+    (hz : ‖exp (I * ((2 * Real.pi / L * groupVel J μ θ₀ * t : ℝ) : ℂ)) - z‖ ≤ η) :
+    regionWeight (packet (L := L) J μ (Finset.Ico lo (lo + (⌈Real.sqrt (Real.pi /
+        (vgLip J μ * (2 * Real.pi / L) ^ 2 * |t|))⌉₊ - 1 : ℕ)))
+        (unitAmp L J μ fun m => (sineAmp (⌈Real.sqrt (Real.pi /
+          (vgLip J μ * (2 * Real.pi / L) ^ 2 * |t|))⌉₊ - 1) lo m : ℂ)) t)
+        (chordArc z ρ)ᶜ * ((ρ - η) ^ 2 / 2)
+      ≤ (2 * Real.pi * J / (L * μ)) ^ 2
+        + 5 / 2 * Real.pi * (vgLip J μ * (2 * Real.pi / L) ^ 2 * |t|) := by
+  set q := vgLip J μ * (2 * Real.pi / L) ^ 2 * |t| with hqdef
+  obtain ⟨hm2, hfl⟩ := exists_sine_floor_le hq0 hq
+  set m := ⌈Real.sqrt (Real.pi / q)⌉₊ with hm
+  have hn : 1 ≤ m - 1 := by omega
+  have hcast : ((m - 1 : ℕ) : ℝ) + 1 = m := by
+    rw [Nat.cast_sub (by omega : 1 ≤ m)]
+    push_cast
+    ring
+  have h := sine_packet_tail (L := L) hμ hn hWin hκ hδ hηρ t hz
+  have e : (vgLip J μ * (2 * Real.pi / L) * (((m - 1 : ℕ) : ℝ) * (2 * Real.pi / L)
+      + 2 * Real.pi / L) * t) ^ 2 / 2 = q ^ 2 * (m : ℝ) ^ 2 / 2 := by
+    rw [hqdef, show vgLip J μ * (2 * Real.pi / L) * (((m - 1 : ℕ) : ℝ) * (2 * Real.pi / L)
+      + 2 * Real.pi / L) * t = vgLip J μ * (2 * Real.pi / L) ^ 2 * (((m - 1 : ℕ) : ℝ) + 1) * t
+      by ring, hcast]
+    have h2 : |t| ^ 2 = t ^ 2 := sq_abs t
+    calc (vgLip J μ * (2 * Real.pi / L) ^ 2 * (m : ℝ) * t) ^ 2 / 2
+        = (vgLip J μ * (2 * Real.pi / L) ^ 2) ^ 2 * (m : ℝ) ^ 2 * t ^ 2 / 2 := by ring
+      _ = (vgLip J μ * (2 * Real.pi / L) ^ 2) ^ 2 * (m : ℝ) ^ 2 * |t| ^ 2 / 2 := by rw [h2]
+      _ = _ := by ring
+  rw [e, hcast] at h
+  have hm0 : (0 : ℝ) < m := by exact_mod_cast (by omega : 0 < m)
+  have e3 : (Real.pi / (m : ℝ)) ^ 2 / 2 = Real.pi ^ 2 / (2 * (m : ℝ) ^ 2) := by
+    field_simp
+  linarith
+
+/-- ★★ **The floor in physical units: the standard-quantum-limit scaling.** On the ring of length
+`ℓ` with spacing `ℓ/L` and speed of light `c`, `vgLip · (2π/L)² = c² k²/μ`, `k = 2π/ℓ`: the
+optimum floor `κ + (5/2) π q` has `q = c² k² |t|/μ` — linear in `|t|/μ`, so the chord at a fixed
+tail scales as `c k √(|t|/μ)` and the position resolution as `c √(|t|/μ)` (`ħ = 1`). -/
+theorem vgLip_scaledHop_mul_sq {c ℓ : ℝ} (hℓ : 0 < ℓ) (μ : ℝ) :
+    vgLip (scaledHop c (ℓ / L)) μ * (2 * Real.pi / L) ^ 2 = c ^ 2 * (2 * Real.pi / ℓ) ^ 2 / μ := by
+  have hL : (0 : ℝ) < L := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne L)
+  have ha : ℓ / L ≠ 0 := (div_pos hℓ hL).ne'
+  have h := vgLip_scaledHop_step (c := c) ha μ (2 * Real.pi / ℓ) 0
+  have e : ℓ / L * (2 * Real.pi / ℓ) = 2 * Real.pi / L := by field_simp
+  rw [e, mul_zero, zero_add] at h
+  rw [sq, ← mul_assoc, h]
+  ring
 
 end CSD.RecordLayer
