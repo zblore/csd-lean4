@@ -5321,4 +5321,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.flat_massless_localised
 
+
+-- SigmaSlicing (BACKLOG #285 (ii), Σ records, 2026-11-03): the ontic order of spacelike writes.
+/-- info: 'CSD.CV.fibredFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.fibredFlow_add
+
+/-- info: 'CSD.CV.base_flow_strokeSnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.base_flow_strokeSnd
+
+/-- info: 'CSD.CV.sigma_record_write_order_indep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sigma_record_write_order_indep
+
+/-- info: 'CSD.CV.sigma_record_kick_order' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sigma_record_kick_order
+
 end CSD.Tests.AxiomAudit

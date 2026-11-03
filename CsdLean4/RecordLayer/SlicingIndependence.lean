@@ -35,10 +35,11 @@ Kraus operator) — and the ontic time interleaves the two sequences in some ord
 * ★★ `joint_weight_order_indep` (the two-record case: `A` writes then `B`, or `B` then `A`, with
   any local evolutions before each write, give the same joint weight).
 
-## The two-record law, with the Born weights given
+## The two-record law of isolated QM
 
-The corpus has derived the Born rule; here it is used, not rebuilt: a record's weight is the Born
-weight of its branch (`composite_local_record_born` for one wing, the Lüders branch for two).
+This section is a statement about **quantum statistics** — the Born rule of the isolated composite
+system — not about Σ's records, which are definite facts of the one trajectory (their ontic-order
+independence is `CV/SigmaSlicing.lean`). The Born rule is taken as the corpus has it, not rebuilt.
 
 * `swapV`, `norm_swapV`, `swapV_actB`, `norm_actB` (the `B`-side read off the `A`-side by swapping
   the factors), `sum_norm_sq_actA_single`, `sum_norm_sq_actB_single` (the basis projectors resolve
@@ -52,9 +53,9 @@ weight of its branch (`composite_local_record_born` for one wing, the Lüders br
 
 ## Honest scope
 
-⚠️ **The Born weights are given**: the record law is the Born weight of the branch, as the corpus
-establishes it; no measurement protocol is rebuilt here (the dynamical two-record composition of
-join protocols is not needed for this statement and is not attempted).
+⚠️ **QM statistics, not Σ records**: `twoRecordLaw` is the Born law of the isolated composite;
+Σ records and their ontic-order independence are `CV/SigmaSlicing.lean`. No measurement protocol is
+rebuilt here.
 
 ⚠️ **Spacelike as tensor locality**: no coupling across the cut during the writes. On the Dirac
 chain wings interact through the Hamiltonian; there spacelike separation gives only approximate
@@ -64,7 +65,8 @@ that bound's error.
 References: `specs/BACKLOG.md` #285, #39, Q27, #246; `RecordLayer/OnticMarginals.lean` (`actA`,
 `actA_actA`, `actA_one`); `RecordLayer/LocalLuders.lean` (`localProjB`);
 `RecordLayer/CompositeRecord.lean` (`composite_local_record_born`);
-`CV/CompositeArena.lean` (`composite_no_signalling`).
+`CV/CompositeArena.lean` (`composite_no_signalling`); `CV/SigmaSlicing.lean`
+(`sigma_record_write_order_indep`, `sigma_record_kick_order`).
 -/
 
 @[expose] public section
