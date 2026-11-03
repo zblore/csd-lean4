@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.DiracTwoCharts
 /-!
 # The effective geometry does not depend on the apparatus
 
-**Category:** 7-SigmaLayer (the record layer). BACKLOG #248, part (b).
+**Category:** 7-SigmaLayer (the record layer). BACKLOG #248, part (b); #283, first brick.
 
 #248 (b) asks to vary the detector and clock construction within a stated class and prove that the
 same effective geometry survives. **The class:** every apparatus — detector and clock — whose
@@ -37,13 +37,24 @@ errors `d₁` and `d₂`, are then compared through the events they both read.
   own `radar_lorentz_error` bound of the Lorentz boost of `A`'s chart at the true `v`** — the
   effective geometry, velocity and map, is the events', not the apparatus').
 
+## Clocks in the class (#283)
+
+* ★★ `register_reads_time` (**a register within `E` of a response rising at slope `≥ g` reads the
+  time of any threshold within `E/g`**);
+* ★★★ `clock_reading_error` (**the clock-reading law**: read by thresholds spaced `Δ`, an event is
+  read within `(Δ + 3E)/g` — the spacing (the tick size) enters only as `Δ/g` and can be made as
+  fine as wanted; the floor is the tracking error `E/g`; a clock belongs to the class with
+  `d = (Δ + 3E)/g`).
+
 ## Honest scope
 
 ⚠️ **The class is defined by reading errors**: an apparatus belongs once its readings are within
 `d` of the events' ideal times; the theorems say nothing about apparatus outside it (a detector
 with an unbounded lag, a clock with an unknown rate). Membership of the record layer's threshold
-detectors is `abs_record_sub_le`; a clock's membership is its own reading error (#283 for the
-continuous reading).
+detectors is `abs_record_sub_le`; a clock's membership is `clock_reading_error`, given its
+response `F`, slope `g` and tracking error `E` — for the chain's clock devices these are #283's
+second brick (a single rectified register stalls twice a period, `g = 0`; two quarter-phase
+registers do not).
 
 ⚠️ **Two events on (B)**: the relay event and the meeting; `v̂` uses the meeting as the second
 event. The Dirac-chain statements are kinematic, as `radar_lorentz_exact` is.
@@ -160,5 +171,54 @@ theorem radar_apparatus_indep {v tE tR tRet tM : ℝ} {e₁ r₁ μ₁ ρ₁ m�
   refine ⟨(abs_sub_le _ v _).trans (add_le_add v₁ (by rw [abs_sub_comm]; exact v₂)),
     (radar_lorentz_error hv0 hv hE hRet he₁ hr₁ hμ₁ hρ₁ hm₁).1,
     (radar_lorentz_error hv0 hv hE hRet he₂ hr₂ hμ₂ hρ₂ hm₂).1⟩
+
+/-! ### Clocks in the class (#283) -/
+
+/-- ★★ **A register that tracks a rising response reads time.** If `F` rises at slope at least
+`g > 0` on `[0, T]` and the register `G` stays within `E` of it, then a time `τ` at which `G`
+reads `θ` is within `E/g` of the time `t*` at which `F` reads `θ`. -/
+theorem register_reads_time {G F : ℝ → ℝ} {g E θ τ tstar T : ℝ} (hg : 0 < g)
+    (hF : ∀ t t', 0 ≤ t → t ≤ t' → t' ≤ T → g * (t' - t) ≤ F t' - F t)
+    (htrack : ∀ t, 0 ≤ t → t ≤ T → |G t - F t| ≤ E) (hτ0 : 0 ≤ τ) (hτT : τ ≤ T)
+    (hcross : G τ = θ) (hs0 : 0 ≤ tstar) (hsT : tstar ≤ T) (hstar : F tstar = θ) :
+    |τ - tstar| ≤ E / g := by
+  have hE : |F τ - F tstar| ≤ E := by
+    rw [hstar, ← hcross, abs_sub_comm]
+    exact htrack τ hτ0 hτT
+  rw [le_div_iff₀ hg]
+  obtain ⟨hE1, hE2⟩ := abs_le.1 hE
+  rcases le_total τ tstar with h | h
+  · have := hF τ tstar hτ0 h hsT
+    rw [abs_of_nonpos (by linarith : τ - tstar ≤ 0)]
+    nlinarith
+  · have := hF tstar τ hs0 h hτT
+    rw [abs_of_nonneg (by linarith : 0 ≤ τ - tstar)]
+    nlinarith
+
+/-- ★★★ **The clock-reading law.** A clock register `G` tracking a response `F` within `E`, `F`
+rising at slope at least `g`, read by thresholds `θ_k`, `θ_{k+1} = θ_k + Δ`: an event at time `t`
+between the two records (`τ_k ≤ t ≤ τ_{k+1}`) is read as `t*_k` (where `F` reaches `θ_k`) within
+`(Δ + 3E)/g`. The threshold spacing enters only as `Δ/g` and can be made as fine as wanted; the
+floor is the tracking error `E/g` — so a clock belongs to `#248`'s class with
+`d = (Δ + 3E)/g`, and the tick period leaves `radar_lorentz_error`. -/
+theorem clock_reading_error {G F : ℝ → ℝ} {g E θ Δ τ₀ τ₁ t₀ t₁ t T : ℝ} (hg : 0 < g)
+    (hF : ∀ t t', 0 ≤ t → t ≤ t' → t' ≤ T → g * (t' - t) ≤ F t' - F t)
+    (htrack : ∀ t, 0 ≤ t → t ≤ T → |G t - F t| ≤ E)
+    (h₀ : 0 ≤ τ₀) (h₁ : τ₁ ≤ T) (hc₀ : G τ₀ = θ) (hc₁ : G τ₁ = θ + Δ)
+    (ht₀0 : 0 ≤ t₀) (ht₁T : t₁ ≤ T) (hF₀ : F t₀ = θ) (hF₁ : F t₁ = θ + Δ) (ht₀₁ : t₀ ≤ t₁)
+    (hτ : τ₀ ≤ t) (hτ' : t ≤ τ₁) :
+    |t - t₀| ≤ (Δ + 3 * E) / g := by
+  have hτ₀₁ : τ₀ ≤ τ₁ := hτ.trans hτ'
+  have r₀ := register_reads_time hg hF htrack h₀ (hτ₀₁.trans h₁) hc₀ ht₀0 (ht₀₁.trans ht₁T) hF₀
+  have r₁ := register_reads_time hg hF htrack (h₀.trans hτ₀₁) h₁ hc₁ (ht₀0.trans ht₀₁) ht₁T hF₁
+  have hsp : t₁ - t₀ ≤ Δ / g := by
+    have := hF t₀ t₁ ht₀0 ht₀₁ ht₁T
+    rw [hF₀, hF₁, show θ + Δ - θ = Δ by ring] at this
+    rw [le_div_iff₀ hg]
+    linarith
+  rw [abs_le] at r₀ r₁
+  have e : (Δ + 3 * E) / g = Δ / g + 3 * (E / g) := by ring
+  rw [e, abs_le]
+  constructor <;> linarith [r₀.1, r₀.2, r₁.1, r₁.2]
 
 end CSD.RecordLayer

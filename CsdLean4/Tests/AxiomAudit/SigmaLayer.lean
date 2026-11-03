@@ -15414,4 +15414,14 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.vgLip_scaledHop_mul_sq
 
+
+-- ApparatusIndependence, clocks (BACKLOG #283 first brick, 2026-11-03): the clock-reading law.
+/-- info: 'CSD.RecordLayer.register_reads_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.register_reads_time
+
+/-- info: 'CSD.RecordLayer.clock_reading_error' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clock_reading_error
+
 end CSD.Tests.AxiomAudit
