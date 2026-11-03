@@ -767,6 +767,7 @@ public import CsdLean4.RecordLayer.DiracBRadar
 public import CsdLean4.RecordLayer.DiracSegment
 public import CsdLean4.RecordLayer.DiracWorldline
 public import CsdLean4.RecordLayer.DiracTwoCharts
+public import CsdLean4.RecordLayer.DiracResolution
 public import CsdLean4.RecordLayer.DiracLatticeCorrections
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena

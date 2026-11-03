@@ -15254,4 +15254,18 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.lorentz_chart_bounds
 
+
+-- DiracResolution (BACKLOG #280 lever (b), 2026-11-03): the flat massless tail at any N.
+/-- info: 'CSD.RecordLayer.re_transPhase_flat_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.re_transPhase_flat_zero
+
+/-- info: 'CSD.RecordLayer.flat_massless_tail' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_massless_tail
+
+/-- info: 'CSD.RecordLayer.flat_massless_tail_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_massless_tail_le
+
 end CSD.Tests.AxiomAudit
