@@ -15522,4 +15522,30 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.joint_weight_order_indep
 
+
+-- SlicingIndependence, the two-record law (BACKLOG #285 (ii), 2026-11-03): Born weights given.
+/-- info: 'CSD.RecordLayer.norm_swapV' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_swapV
+
+/-- info: 'CSD.RecordLayer.swapV_actB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.swapV_actB
+
+/-- info: 'CSD.RecordLayer.norm_actB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_actB
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_actA_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_actA_single
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_actB_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_actB_single
+
+/-- info: 'CSD.RecordLayer.twoRecordLaw_props' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoRecordLaw_props
+
 end CSD.Tests.AxiomAudit
