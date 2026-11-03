@@ -58,8 +58,9 @@ uncertainty.
 * `integral_bRate_le_half`, ★ `integral_bRate_flight` (**flat at `≤ 2.875·10¹²` through the
   flight**), ★★ `integral_bRate_return` (**`≥ 3·10¹²` once the echo has passed `B`**: departure plus
   the return's window);
-* `bRadarWeight` (three registers: `B`'s encounter, `A`'s and `B`'s clocks' rates),
-  `bRadarWeight_zero`, `bRadarWeight_one`, `bRadarWeight_two`, `continuous_bRadarWeight`,
+* `bRadarWeight` (four registers: `B`'s encounter with the messenger, `A`'s and `B`'s clocks'
+  rates, `B`'s encounter with `A`), `bRadarWeight_zero`, `bRadarWeight_one`, `bRadarWeight_two`,
+  `bRadarWeight_three`, `continuous_bRadarWeight`,
   `bRadarEvolve`, `bRadarEvolve_self`, `bRadarEvolve_comp`, `measurable_bRadarEvolve`, `bRadarPrep`,
   `bRadarEvolve_prep_fst`;
 * ★★★ `bEmission` (**`B`'s register reaches `10¹²` within `[2·10¹², 2.15·10¹²]`**), `aRelayRead`,
@@ -69,12 +70,16 @@ uncertainty.
 
 ## The clocks and the bundle
 
+* `meetRaw_aRelayFlow` (the encounter of `A` and `B` reads only the devices, alike in both relay
+  arenas), `integral_bRadarWeight_three`, ★★★ `bMeeting` (**the meeting, `dirac_radar`'s window**),
+  `bMeeting_fields`;
 * `bRestTick`, `bApproachTick` (both clocks' ticks, pulled back into `B`'s radar arena along the
   devices and the tick registers it carries); `bEmission_fields`, `aReception_fields`,
   `bReturn_fields`, `bRestTick_fields`, `bApproachTick_fields`;
 * ★★★ `dirac_b_radar` (**`B`'s radar, one evolution**: emission, `A`'s relay firing, return and
   both clocks' ticks; the record windows in order; `B`'s emission between its ticks `2`–`3`, its
-  return between `44`–`50`, `A`'s reception between `A`'s ticks `46`–`48`).
+  return between `44`–`50`, the meeting between `61`–`65`; `A`'s reception between `A`'s ticks
+  `46`–`48`, the meeting between `76`–`81`).
 
 References: `specs/BACKLOG.md` #278, #274; `RecordLayer/DiracRelayA.lean` (`aRelayFlow`,
 `bMess_tail_fine`, `rest_tail_fine`, `dirac_relay_at_rest`); `RecordLayer/DiracRadar.lean`
@@ -526,14 +531,15 @@ theorem integral_bRate_return
 /-! ### The record arena -/
 
 omit hL hs₀ hfreeOn in
-/-- **The rates of `B`'s radar arena's three registers**: `B`'s clipped encounter weight with the
-messenger, `A`'s clock's rate, `B`'s clock's rate. -/
-noncomputable def bRadarWeight : Fin 3 → GateArena (RelayIdx L) → ℝ :=
+/-- **The rates of `B`'s radar arena's four registers**: `B`'s clipped encounter weight with the
+messenger, `A`'s clock's rate, `B`'s clock's rate, `B`'s clipped encounter weight with `A`. -/
+noncomputable def bRadarWeight : Fin 4 → GateArena (RelayIdx L) → ℝ :=
   ![fun x => bEnc x.1,
     fun x => rateWeight (relayHop L) 3 (3 + 1 / 10 ^ 11) (tickMark (restObserver (L := L) 0))
       (devA x.1),
     fun x => rateWeight (relayHop L) 3 (3 + 1 / 10 ^ 11)
-      (tickMark (approachObserver (L := L) (-(5 * 10 ^ 13)))) (devB x.1)]
+      (tickMark (approachObserver (L := L) (-(5 * 10 ^ 13)))) (devB x.1),
+    fun x => meetRaw x.1]
 
 omit hL hs₀ hfreeOn in
 theorem bRadarWeight_zero : bRadarWeight (L := L) 0 = fun x => bEnc x.1 := by
@@ -552,7 +558,11 @@ theorem bRadarWeight_two : bRadarWeight (L := L) 2 = fun x =>
   simp [bRadarWeight]
 
 omit hL hs₀ hfreeOn in
-theorem continuous_bRadarWeight (i : Fin 3) :
+theorem bRadarWeight_three : bRadarWeight (L := L) 3 = fun x => meetRaw x.1 := by
+  simp [bRadarWeight]
+
+omit hL hs₀ hfreeOn in
+theorem continuous_bRadarWeight (i : Fin 4) :
     Continuous fun p : GateArena (RelayIdx L) × ℝ => bRadarWeight i (aRelayFlow p.2 p.1) := by
   have hflow : Continuous fun p : GateArena (RelayIdx L) × ℝ => (aRelayFlow p.2 p.1).1 :=
     continuous_fst.comp
@@ -567,12 +577,15 @@ theorem continuous_bRadarWeight (i : Fin 3) :
   · show Continuous fun p : GateArena (RelayIdx L) × ℝ => bRadarWeight 2 (aRelayFlow p.2 p.1)
     rw [bRadarWeight_two]
     exact (continuous_rateWeight _ _ _ _).comp (continuous_devB.comp hflow)
+  · show Continuous fun p : GateArena (RelayIdx L) × ℝ => bRadarWeight 3 (aRelayFlow p.2 p.1)
+    rw [bRadarWeight_three]
+    exact continuous_meetRaw.comp hflow
 
 omit hL hs₀ hfreeOn in
-/-- **`B`'s radar arena**: the relay flow at `A` with three registers. -/
+/-- **`B`'s radar arena**: the relay flow at `A` with four registers. -/
 noncomputable def bRadarEvolve :
-    OnticTime → OnticTime → GateArena (RelayIdx L) × (Fin 3 → ℝ)
-      → GateArena (RelayIdx L) × (Fin 3 → ℝ) :=
+    OnticTime → OnticTime → GateArena (RelayIdx L) × (Fin 4 → ℝ)
+      → GateArena (RelayIdx L) × (Fin 4 → ℝ) :=
   regEvolve aRelayFlow bRadarWeight
 
 omit hL hs₀ hfreeOn in
@@ -592,7 +605,7 @@ theorem measurable_bRadarEvolve (s t : OnticTime) : Measurable (bRadarEvolve (L 
 
 omit hL hs₀ hfreeOn in
 /-- **The preparation**: the relay flow's, every register at `0`. -/
-noncomputable def bRadarPrep (L : ℕ) [NeZero L] : GateArena (RelayIdx L) × (Fin 3 → ℝ) :=
+noncomputable def bRadarPrep (L : ℕ) [NeZero L] : GateArena (RelayIdx L) × (Fin 4 → ℝ) :=
   (aRelayPrep L, 0)
 
 omit hL hs₀ hfreeOn in
@@ -613,7 +626,7 @@ include hL
 /-- ★★★ **`B`'s emission**: `B`'s register reaches `10¹²` within `[2·10¹², 2.15·10¹²]` — the
 messenger leaving `B`. -/
 noncomputable def bEmission {w : ℝ} (hw : 0 ≤ w) :
-    ActualOccurrence (GateArena (RelayIdx L) × (Fin 3 → ℝ)) ℕ L :=
+    ActualOccurrence (GateArena (RelayIdx L) × (Fin 4 → ℝ)) ℕ L :=
   regDetector aRelayFlow bRadarWeight (fun x => gatedFlow_zero aRelayLipschitz x)
     (fun s t x => gatedFlow_add aRelayLipschitz s t x) continuous_bRadarWeight
     (fun t => measurable_gatedFlow aRelayLipschitz t) 0 (10 ^ 12) (aRelayPrep L) Finset.univ
@@ -633,7 +646,7 @@ noncomputable def bEmission {w : ℝ} (hw : 0 ≤ w) :
       exact le_trans (by norm_num) h)
 
 /-- **`A`'s relay register, read.** -/
-noncomputable def aRelayRead (y : GateArena (RelayIdx L) × (Fin 3 → ℝ)) : ℕ :=
+noncomputable def aRelayRead (y : GateArena (RelayIdx L) × (Fin 4 → ℝ)) : ℕ :=
   if relayLo ≤ y.1.2 then 1 else 0
 
 omit hL [NeZero L] in
@@ -644,7 +657,7 @@ theorem measurable_aRelayRead : Measurable (aRelayRead (L := L)) :=
 /-- ★★★ **`A`'s relay firing — the reception**: `A`'s relay register reaches `3·10¹¹` within
 `[3·10¹³ − 8·10¹¹, 3·10¹³]`. -/
 noncomputable def aReception {w : ℝ} (hw : 0 ≤ w) :
-    ActualOccurrence (GateArena (RelayIdx L) × (Fin 3 → ℝ)) ℕ L where
+    ActualOccurrence (GateArena (RelayIdx L) × (Fin 4 → ℝ)) ℕ L where
   evolve := bRadarEvolve
   evolve_self := bRadarEvolve_self
   evolve_comp := bRadarEvolve_comp
@@ -695,7 +708,7 @@ noncomputable def aReception {w : ℝ} (hw : 0 ≤ w) :
 /-- ★★★ **`B`'s return**: the same register reaches `3·10¹²` within `[3.5·10¹³, 3.87·10¹³]` —
 the echo back at `B`. -/
 noncomputable def bReturn {w : ℝ} (hw : 0 ≤ w) :
-    ActualOccurrence (GateArena (RelayIdx L) × (Fin 3 → ℝ)) ℕ L :=
+    ActualOccurrence (GateArena (RelayIdx L) × (Fin 4 → ℝ)) ℕ L :=
   regDetector aRelayFlow bRadarWeight (fun x => gatedFlow_zero aRelayLipschitz x)
     (fun s t x => gatedFlow_add aRelayLipschitz s t x) continuous_bRadarWeight
     (fun t => measurable_gatedFlow aRelayLipschitz t) 0 (3 * 10 ^ 12) (aRelayPrep L) Finset.univ
@@ -725,10 +738,37 @@ noncomputable def bReturn {w : ℝ} (hw : 0 ≤ w) :
       have hb := s₀_bounds hs₀
       exact integral_bRate_return hL hs₀ hfree hfreeOn (by nlinarith))
 
+omit hL in
+/-- **The encounter of `A` and `B` is the same in both relay arenas**: it reads only the two
+devices, which run alike in both. -/
+theorem meetRaw_aRelayFlow (t : ℝ) :
+    meetRaw (aRelayFlow t (aRelayPrep L)).1 = meetRaw (relayFlow t (relayPrep L)).1 := by
+  simp only [meetRaw, devA_aRelayFlow, devB_aRelayFlow, devA_relayFlow, devB_relayFlow]
+
+omit hL in
+theorem integral_bRadarWeight_three (t : ℝ) :
+    ∫ s in (0 : ℝ)..t, bRadarWeight 3 (aRelayFlow s (aRelayPrep L))
+      = ∫ s in (0 : ℝ)..t, radarWeight 3 (relayFlow s (relayPrep L)) := by
+  refine intervalIntegral.integral_congr fun s _ => ?_
+  simp only [bRadarWeight_three, radarWeight_three, meetRaw_aRelayFlow]
+
+/-- ★★★ **The meeting, recorded by `B`** in its radar arena: the clipped encounter register of `B`
+with `A` reaches `6·10¹¹` within `[5·10¹³ − 1.65·10¹², 5·10¹³ + 5.7·10¹¹]` — `dirac_radar`'s
+meeting window, since the register reads only the devices. -/
+noncomputable def bMeeting {w : ℝ} (hw : 0 ≤ w) :
+    ActualOccurrence (GateArena (RelayIdx L) × (Fin 4 → ℝ)) ℕ L :=
+  regDetector aRelayFlow bRadarWeight (fun x => gatedFlow_zero aRelayLipschitz x)
+    (fun s t x => gatedFlow_add aRelayLipschitz s t x) continuous_bRadarWeight
+    (fun t => measurable_gatedFlow aRelayLipschitz t) 3 (6 * 10 ^ 11) (aRelayPrep L) Finset.univ
+    (τ₀ := 5 * 10 ^ 13 - 165 * 10 ^ 10) (τ₁ := 5 * 10 ^ 13 + 57 * 10 ^ 10) (by norm_num)
+    (by norm_num) hw (fun s _ => by rw [bRadarWeight_three]; exact meetRaw_nonneg _)
+    (fun t ht0 ht => by rw [integral_bRadarWeight_three]; exact radar_meeting_before hL ht0 ht)
+    (by rw [integral_bRadarWeight_three]; exact radar_meeting_after hL)
+
 /-- **Tick `n` of `A`'s clock, in `B`'s radar arena** (pulled back along `A`'s device and its tick
 register, which the arena carries). -/
 noncomputable def bRestTick (n : ℕ) (hn : n ≤ 130) {w : ℝ} (hw : 0 ≤ w) :
-    ActualOccurrence (GateArena (RelayIdx L) × (Fin 3 → ℝ)) ℕ L :=
+    ActualOccurrence (GateArena (RelayIdx L) × (Fin 4 → ℝ)) ℕ L :=
   (twinRestTick hL n hn hw).pullback bRadarEvolve bRadarEvolve_self bRadarEvolve_comp
     measurable_bRadarEvolve (fun y => (devA y.1.1, y.2 1))
     ((continuous_devA.measurable.comp measurable_fst.fst).prodMk
@@ -747,13 +787,13 @@ noncomputable def bRestTick (n : ℕ) (hn : n ≤ 130) {w : ℝ} (hw : 0 ≤ w) 
         refine intervalIntegral.integral_congr fun u _ => ?_
         simp only [bRadarWeight_one, devA_aRelayFlow_any])
     (bRadarPrep L) (by
-      show (devA (aRelayState 0), (0 : Fin 3 → ℝ) 1) = (restObserver 0, 0)
+      show (devA (aRelayState 0), (0 : Fin 4 → ℝ) 1) = (restObserver 0, 0)
       rw [devA_aRelayState]
       rfl)
 
 /-- **Tick `n` of `B`'s clock, in `B`'s radar arena.** -/
 noncomputable def bApproachTick (n : ℕ) (hn : n ≤ 100) {w : ℝ} (hw : 0 ≤ w) :
-    ActualOccurrence (GateArena (RelayIdx L) × (Fin 3 → ℝ)) ℕ L :=
+    ActualOccurrence (GateArena (RelayIdx L) × (Fin 4 → ℝ)) ℕ L :=
   (approachTick hL n hn hw).pullback bRadarEvolve bRadarEvolve_self bRadarEvolve_comp
     measurable_bRadarEvolve (fun y => (devB y.1.1, y.2 2))
     ((continuous_devB.measurable.comp measurable_fst.fst).prodMk
@@ -772,7 +812,7 @@ noncomputable def bApproachTick (n : ℕ) (hn : n ≤ 100) {w : ℝ} (hw : 0 ≤
         refine intervalIntegral.integral_congr fun u _ => ?_
         simp only [bRadarWeight_two, devB_aRelayFlow_any])
     (bRadarPrep L) (by
-      show (devB (aRelayState 0), (0 : Fin 3 → ℝ) 2) = (approachObserver (-(5 * 10 ^ 13)), 0)
+      show (devB (aRelayState 0), (0 : Fin 4 → ℝ) 2) = (approachObserver (-(5 * 10 ^ 13)), 0)
       rw [devB_aRelayState, zero_sub]
       rfl)
 
@@ -797,6 +837,13 @@ theorem bReturn_fields {w : ℝ} (hw : 0 ≤ w) :
     ∧ (bReturn (L := L) hL hw).prep = bRadarPrep L
     ∧ (bReturn (L := L) hL hw).writeStart = 35 * 10 ^ 12
     ∧ (bReturn (L := L) hL hw).writeEnd = 387 * 10 ^ 11 :=
+  ⟨rfl, rfl, rfl, rfl⟩
+
+theorem bMeeting_fields {w : ℝ} (hw : 0 ≤ w) :
+    (bMeeting (L := L) hL hw).evolve = bRadarEvolve
+    ∧ (bMeeting (L := L) hL hw).prep = bRadarPrep L
+    ∧ (bMeeting (L := L) hL hw).writeStart = 5 * 10 ^ 13 - 165 * 10 ^ 10
+    ∧ (bMeeting (L := L) hL hw).writeEnd = 5 * 10 ^ 13 + 57 * 10 ^ 10 :=
   ⟨rfl, rfl, rfl, rfl⟩
 
 theorem bRestTick_fields (n : ℕ) (hn : n ≤ 130) {w : ℝ} (hw : 0 ≤ w) :
@@ -854,12 +901,14 @@ theorem dirac_b_radar {w : ℝ} (hw : 0 ≤ w) :
     let em := bEmission (L := L) hL hw
     let rc := aReception (L := L) hL hw
     let ret := bReturn (L := L) hL hw
+    let meet := bMeeting (L := L) hL hw
     let a := fun (n : ℕ) (hn : n ≤ 130) => bRestTick (L := L) hL n hn hw
     let b := fun (n : ℕ) (hn : n ≤ 100) => bApproachTick (L := L) hL n hn hw
     let R := levelClockRate 3 (3 + 1 / 10 ^ 11)
       (2 * scaledHop 1 (2 * Real.pi * 10 ^ 13 / L) * Real.sin (2 * Real.pi * 10 ^ 13 / L * (9 / 4)))
     let T : ℝ := 2 * Real.pi * 10 ^ 11
     (rc.evolve = em.evolve ∧ rc.prep = em.prep ∧ ret.evolve = em.evolve ∧ ret.prep = em.prep
+      ∧ meet.evolve = em.evolve ∧ meet.prep = em.prep
       ∧ (∀ n hn, (a n hn).evolve = em.evolve ∧ (a n hn).prep = em.prep)
       ∧ (∀ n hn, (b n hn).evolve = em.evolve ∧ (b n hn).prep = em.prep))
     ∧ (∀ t, devA (em.evolve 0 t em.prep).1.1 = restObserver t
@@ -873,19 +922,25 @@ theorem dirac_b_radar {w : ℝ} (hw : 0 ≤ w) :
             ≤ (3 / 1000) ^ 2 * 17)
     ∧ (em.writeStart = 2 * 10 ^ 12 ∧ em.writeEnd = 215 * 10 ^ 10
       ∧ rc.writeStart = 3 * 10 ^ 13 - 8 * 10 ^ 11 ∧ rc.writeEnd = 3 * 10 ^ 13
-      ∧ ret.writeStart = 35 * 10 ^ 12 ∧ ret.writeEnd = 387 * 10 ^ 11)
+      ∧ ret.writeStart = 35 * 10 ^ 12 ∧ ret.writeEnd = 387 * 10 ^ 11
+      ∧ meet.writeStart = 5 * 10 ^ 13 - 165 * 10 ^ 10 ∧ meet.writeEnd = 5 * 10 ^ 13 + 57 * 10 ^ 10)
     ∧ (∀ n hn, (a n hn).writeStart = max 0 ((n : ℝ) * T - 10 ^ 11)
       ∧ (a n hn).writeEnd = (n : ℝ) * T + 10 ^ 11)
     ∧ (8 / 10 ^ 12 ≤ R ∧ R ≤ 8002 / 10 ^ 15
       ∧ ∀ n hn, (b n hn).writeStart = max 0 (2 * Real.pi * (n : ℝ) / R - 12 * 10 ^ 10)
         ∧ (b n hn).writeEnd = 2 * Real.pi * (n : ℝ) / R + 12 * 10 ^ 10)
-    ∧ (em.writeEnd < rc.writeStart ∧ rc.writeEnd < ret.writeStart)
+    ∧ (em.writeEnd < rc.writeStart ∧ rc.writeEnd < ret.writeStart
+      ∧ ret.writeEnd < meet.writeStart)
     ∧ ((b 2 (by norm_num)).writeEnd ≤ em.writeStart ∧ em.writeEnd ≤ (b 3 (by norm_num)).writeStart
       ∧ (b 44 (by norm_num)).writeEnd ≤ ret.writeStart
-      ∧ ret.writeEnd ≤ (b 50 (by norm_num)).writeStart)
+      ∧ ret.writeEnd ≤ (b 50 (by norm_num)).writeStart
+      ∧ (b 61 (by norm_num)).writeEnd ≤ meet.writeStart
+      ∧ meet.writeEnd ≤ (b 65 (by norm_num)).writeStart)
     ∧ ((a 46 (by norm_num)).writeEnd ≤ rc.writeStart
-      ∧ rc.writeEnd ≤ (a 48 (by norm_num)).writeStart) := by
-  intro em rc ret a b R T
+      ∧ rc.writeEnd ≤ (a 48 (by norm_num)).writeStart
+      ∧ (a 76 (by norm_num)).writeEnd ≤ meet.writeStart
+      ∧ meet.writeEnd ≤ (a 81 (by norm_num)).writeStart) := by
+  intro em rc ret meet a b R T
   have hπ := Real.pi_pos
   have hπ1 := pi_gt_314
   have hπ2 := pi_lt_31416
@@ -894,6 +949,7 @@ theorem dirac_b_radar {w : ℝ} (hw : 0 ≤ w) :
   obtain ⟨e1e, e1p, e1s, e1t⟩ := bEmission_fields (L := L) hL hw
   obtain ⟨r1e, r1p, r1s, r1t⟩ := aReception_fields (L := L) hL hw
   obtain ⟨t1e, t1p, t1s, t1t⟩ := bReturn_fields (L := L) hL hw
+  obtain ⟨m1e, m1p, m1s, m1t⟩ := bMeeting_fields (L := L) hL hw
   have hA := fun n hn => bRestTick_fields (L := L) hL n hn hw
   have hB := fun n hn => bApproachTick_fields (L := L) hL n hn hw
   have hdivlo : ∀ k : ℝ, 0 ≤ k → 2 * Real.pi * k / levelClockRate 3 (3 + 1 / 10 ^ 11)
@@ -906,12 +962,13 @@ theorem dirac_b_radar {w : ℝ} (hw : 0 ≤ w) :
           * Real.sin (2 * Real.pi * 10 ^ 13 / L * (9 / 4))) :=
     fun k hk => div_le_div_of_nonneg_left (by positivity) hR0 hR2
   refine ⟨⟨r1e.trans e1e.symm, r1p.trans e1p.symm, t1e.trans e1e.symm, t1p.trans e1p.symm,
+      m1e.trans e1e.symm, m1p.trans e1p.symm,
       fun n hn => ⟨(hA n hn).1.trans e1e.symm, (hA n hn).2.1.trans e1p.symm⟩,
       fun n hn => ⟨(hB n hn).1.trans e1e.symm, (hB n hn).2.1.trans e1p.symm⟩⟩,
-    fun t => ?_, ?_, ⟨e1s, e1t, r1s, r1t, t1s, t1t⟩,
+    fun t => ?_, ?_, ⟨e1s, e1t, r1s, r1t, t1s, t1t, m1s, m1t⟩,
     fun n hn => ⟨(hA n hn).2.2.1, (hA n hn).2.2.2⟩,
-    ⟨hR1, hR2, fun n hn => ⟨(hB n hn).2.2.1, (hB n hn).2.2.2⟩⟩, ⟨?_, ?_⟩,
-    ⟨?_, ?_, ?_, ?_⟩, ⟨?_, ?_⟩⟩
+    ⟨hR1, hR2, fun n hn => ⟨(hB n hn).2.2.1, (hB n hn).2.2.2⟩⟩, ⟨?_, ?_, ?_⟩,
+    ⟨?_, ?_, ?_, ?_, ?_, ?_⟩, ⟨?_, ?_, ?_, ?_⟩⟩
   · rw [e1e, e1p, bRadarEvolve_prep_fst]
     exact ⟨devA_aRelayFlow t, devB_aRelayFlow t, sqNorm_aRelayFlow hL t⟩
   · obtain ⟨-, -, -, -, -, s₀, hs₀, -, hreg, -, hret⟩ := dirac_relay_at_rest (L := L) hL
@@ -923,6 +980,8 @@ theorem dirac_b_radar {w : ℝ} (hw : 0 ≤ w) :
   · rw [e1t, r1s]
     norm_num
   · rw [r1t, t1s]
+    norm_num
+  · rw [t1t, m1s]
     norm_num
   · rw [(hB 2 (by norm_num)).2.2.2, e1s]
     have h := hdivlo ((2 : ℕ) : ℝ) (by norm_num)
@@ -950,10 +1009,30 @@ theorem dirac_b_radar {w : ℝ} (hw : 0 ≤ w) :
     rw [show 2 * Real.pi * 50 / (8002 / 10 ^ 15) = Real.pi * (100 * 10 ^ 15 / 8002) by ring] at h
     push_cast
     nlinarith
+  · rw [(hB 61 (by norm_num)).2.2.2, m1s]
+    have h := hdivlo ((61 : ℕ) : ℝ) (by norm_num)
+    push_cast at h
+    rw [show 2 * Real.pi * 61 / (8 / 10 ^ 12) = Real.pi * (122 * 10 ^ 12 / 8) by ring] at h
+    push_cast
+    nlinarith
+  · rw [(hB 65 (by norm_num)).2.2.1, m1t]
+    refine le_max_of_le_right ?_
+    have h := hdivhi ((65 : ℕ) : ℝ) (by norm_num)
+    push_cast at h
+    rw [show 2 * Real.pi * 65 / (8002 / 10 ^ 15) = Real.pi * (130 * 10 ^ 15 / 8002) by ring] at h
+    push_cast
+    nlinarith
   · rw [(hA 46 (by norm_num)).2.2.2, r1s]
     push_cast
     nlinarith
   · rw [(hA 48 (by norm_num)).2.2.1, r1t]
+    refine le_max_of_le_right ?_
+    push_cast
+    nlinarith
+  · rw [(hA 76 (by norm_num)).2.2.2, m1s]
+    push_cast
+    nlinarith
+  · rw [(hA 81 (by norm_num)).2.2.1, m1t]
     refine le_max_of_le_right ?_
     push_cast
     nlinarith

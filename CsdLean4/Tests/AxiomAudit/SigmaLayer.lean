@@ -15217,4 +15217,31 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_b_radar
 
+
+-- DiracBRadar meeting + DiracTwoCharts (BACKLOG #278 landing 3, 2026-11-03): the meeting in
+-- B's arena; both observers' charts of the relay firing and the meeting.
+/-- info: 'CSD.RecordLayer.bRadarWeight_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRadarWeight_three
+
+/-- info: 'CSD.RecordLayer.meetRaw_aRelayFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.meetRaw_aRelayFlow
+
+/-- info: 'CSD.RecordLayer.integral_bRadarWeight_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_bRadarWeight_three
+
+/-- info: 'CSD.RecordLayer.bMeeting_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bMeeting_fields
+
+/-- info: 'CSD.RecordLayer.two_chart_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_chart_bounds
+
+/-- info: 'CSD.RecordLayer.dirac_two_charts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_two_charts
+
 end CSD.Tests.AxiomAudit
