@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.DiracMasslessTails
 /-!
 # The records' resolution: tails and encounters at any number of modes and any chord
 
-**Category:** 7-SigmaLayer (the record layer). BACKLOG #280, lever (b), first and second bricks.
+**Category:** 7-SigmaLayer (the record layer). BACKLOG #280, lever (b), first three bricks.
 
 #278's Lorentz map holds to `≈ 23%`, and #280's diagnosis traces that error to the localisation
 bound: the only fact about where a massless packet is that the record chain uses is the mean of
@@ -29,6 +29,16 @@ resolution as a parameter.
   `|t| · masslessErr` is at most `1/N`, the weight off the arc is at most `ε` — at a fixed tail `ε`
   the chord shrinks as `N^{−1/2}`).
 
+## The devices' tails at any number of modes
+
+* ★ `re_transPhase_flat_massive_ge` (**a flat massive packet over `N` modes has
+  `Re transPhase ≥ 1 − 1/N − (π/(ℓμ))²`**, the second term the spin overlap's loss, `~10⁻²⁷` at the
+  arenas' `ℓ`, `μ`);
+* ★★ `flat_device_tail` (**a two-level device over `N` flat modes has weight off the chord-`ρ` arc
+  at most `Σᵢ (1/N + (π/(ℓμᵢ))² + |t|·limitErrᵢ)/(ρ − η)²`**), ★★ `flat_device_tail_le` (**the
+  devices' chord law**: `(ρ − η)² ≥ 4/(Nε)` and each level's loss plus drift `≤ 1/N` give tail
+  `≤ ε`).
+
 ## The encounter law at any chord
 
 * `exp_I_mul_star_exp_I` (the relative phase of two points on the circle);
@@ -46,8 +56,8 @@ resolution as a parameter.
 ⚠️ **Chebyshev only**: the bound uses the second moment of the angle; the flat profile's true
 tail decays like `1/(Nρ)` (Dirichlet kernel, estimate), so this is lever (b) of #280, not (a).
 
-⚠️ **Tails and encounters only**: the devices' (massive) tails at any `N`, the registers and the
-records at a symbolic chord are the next bricks of lever (b); the drift term grows with `|t|`, and
+⚠️ **Tails and encounters only**: the registers and the records at a symbolic chord are the next
+bricks of lever (b); the drift term grows with `|t|`, and
 keeping it below `1/N` bounds the time span at a given lattice spacing.
 
 References: `specs/BACKLOG.md` #280, #278, #248; `RecordLayer/DiracMasslessTails.lean`
@@ -56,7 +66,9 @@ References: `specs/BACKLOG.md` #280, #278, #248; `RecordLayer/DiracMasslessTails
 (`flat_sums`, `flat_packet_localised`); `RecordLayer/DiracTwoCharts.lean` (`lorentz_chart_bounds`);
 `RecordLayer/DiracObservers.lean` (`le_relWeight`, `relWeight_le`, `two_sin_le_norm_exp_sub_one`);
 `RecordLayer/DiracDoppler.lean` (`offset_mem_of_near_at`, `offset_not_mem_of_far_at`);
-`RecordLayer/DiracRelayA.lean` (`aEncounter_near`, `aEncounter_far`).
+`RecordLayer/DiracRelayA.lean` (`aEncounter_near`, `aEncounter_far`, `rest_tail_fine`);
+`RecordLayer/DiracArrival.lean` (`re_transPhase_ringPacket_ge`);
+`RecordLayer/DiracObservers.lean` (`devRegionWeight_compl_chordArc_le`).
 -/
 
 @[expose] public section
@@ -127,6 +139,78 @@ theorem flat_massless_tail_le (hN : 0 < N) (hNL : N < L) (hℓ : 0 < ℓ) (hD0 :
     rwa [show ε * (4 / (N * ε)) = 4 / N by field_simp] at this
   have : 2 * (1 / N + |t| * masslessErr 1 ℓ D (ℓ / L)) ≤ 4 / N := by
     rw [show (4 : ℝ) / N = 2 * (1 / N + 1 / N) by ring]
+    linarith
+  linarith
+
+/-! ### The devices' tails at any number of modes -/
+
+/-- ★ **A flat massive packet's angle at time `0`**: over `N` consecutive modes inside one period
+of the ring, `Re transPhase ≥ 1 − 1/N − (π/(ℓμ))²` — the second term the spin overlap's loss. -/
+theorem re_transPhase_flat_massive_ge {μ : ℝ} (hN : 0 < N) (hμ : 0 < μ) (hℓ : 0 < ℓ)
+    (hWin : ∀ m ∈ Finset.Ico lo (lo + N), lo ≤ m ∧ m + 1 < lo + L) :
+    1 - 1 / N - (Real.pi / (ℓ * μ)) ^ 2
+      ≤ (transPhase (ringPacket (L := L) 1 μ ℓ (Finset.Ico lo (lo + N))
+        (fun _ => ((1 / Real.sqrt N : ℝ) : ℂ)) 0)).re := by
+  obtain ⟨hW, -⟩ := noWrap_distinct_of_window (L := L) hWin
+  have hRe := re_transPhase_ringPacket_ge (L := L) (c := 1) (μ := μ) (ℓ := ℓ) hμ hℓ hW
+    (fun _ => 1 / Real.sqrt N) (fun _ => by positivity)
+  rw [(flat_sums lo hN).2, mul_one] at hRe
+  have hN' : (0 : ℝ) < N := by exact_mod_cast hN
+  have hκ : 0 ≤ (Real.pi / (ℓ * μ)) ^ 2 / N := by positivity
+  have e : (1 - (Real.pi / (ℓ * μ)) ^ 2) * (1 - 1 / N)
+      = 1 - 1 / N - (Real.pi / (ℓ * μ)) ^ 2 + (Real.pi / (ℓ * μ)) ^ 2 / N := by ring
+  linarith
+
+/-- ★★ **A flat device's tail at any number of modes.** Off the chord-`ρ` arc about a point within
+`η` of both levels' predicted angles, a device over `N` flat modes (rest energies `μ₀ ≤ μ₁`, spread
+`D` about `p₀`, `|p₀| ≤ P`) has weight at most
+`Σᵢ (1/N + (π/(ℓμᵢ))² + |t| · limitErrᵢ) / (ρ − η)²`. -/
+theorem flat_device_tail {μ₀ μ₁ P : ℝ} (hN : 0 < N) (hNL : N < L) (h0 : 0 < μ₀) (h01 : μ₀ ≤ μ₁)
+    (hℓ : 0 < ℓ) (hp₀ : |p₀| ≤ P) (hD0 : 0 ≤ D)
+    (hWin : ∀ m ∈ Finset.Ico lo (lo + N), lo ≤ m ∧ m + 1 < lo + L)
+    (hWD : ∀ m ∈ Finset.Ico lo (lo + N), |2 * Real.pi * m / ℓ - p₀| ≤ D)
+    {z : ℂ} {ρ η : ℝ} (hηρ : η < ρ) (t : ℝ)
+    (hz₀ : ‖exp (I * ((2 * Real.pi / ℓ * vRel 1 μ₀ (1 * p₀) * t : ℝ) : ℂ)) - z‖ ≤ η)
+    (hz₁ : ‖exp (I * ((2 * Real.pi / ℓ * vRel 1 μ₁ (1 * p₀) * t : ℝ) : ℂ)) - z‖ ≤ η) :
+    devRegionWeight (devicePacket (L := L) (scaledHop 1 (ℓ / L)) μ₀ μ₁ (Finset.Ico lo (lo + N))
+        (fun _ => ((1 / Real.sqrt N : ℝ) : ℂ)) t) (chordArc z ρ)ᶜ
+      ≤ ((1 / N + (Real.pi / (ℓ * μ₀)) ^ 2 + |t| * limitErr 1 μ₀ ℓ D P (ℓ / L))
+        + (1 / N + (Real.pi / (ℓ * μ₁)) ^ 2 + |t| * limitErr 1 μ₁ ℓ D P (ℓ / L)))
+        / (ρ - η) ^ 2 := by
+  have hβ := (flat_packet_localised (L := L) (c := 1) (μ := 1) (ℓ := ℓ) one_pos hℓ lo hN hNL).1
+  have h := devRegionWeight_compl_chordArc_le (L := L) (c := 1) one_pos h0 h01 hℓ hp₀ hD0 hWin hWD
+    (fun _ => ((1 / Real.sqrt N : ℝ) : ℂ)) hβ hηρ.le t hz₀ hz₁
+  have r0 := re_transPhase_flat_massive_ge (L := L) hN h0 hℓ hWin
+  have r1 := re_transPhase_flat_massive_ge (L := L) hN (h0.trans_le h01) hℓ hWin
+  have hpos : 0 < (ρ - η) ^ 2 := pow_pos (by linarith) 2
+  rw [le_div_iff₀ hpos]
+  linarith
+
+/-- ★★ **The devices' chord law.** If the chord clears `η` by `√(4/(N ε))` and, for each level,
+the spin-overlap loss plus the drift is at most `1/N`, the device's weight off the arc is at most
+`ε`. -/
+theorem flat_device_tail_le {μ₀ μ₁ P : ℝ} (hN : 0 < N) (hNL : N < L) (h0 : 0 < μ₀)
+    (h01 : μ₀ ≤ μ₁) (hℓ : 0 < ℓ) (hp₀ : |p₀| ≤ P) (hD0 : 0 ≤ D)
+    (hWin : ∀ m ∈ Finset.Ico lo (lo + N), lo ≤ m ∧ m + 1 < lo + L)
+    (hWD : ∀ m ∈ Finset.Ico lo (lo + N), |2 * Real.pi * m / ℓ - p₀| ≤ D)
+    {z : ℂ} {ρ η ε : ℝ} (hε : 0 < ε) (hηρ : η < ρ) (hchord : 4 / (N * ε) ≤ (ρ - η) ^ 2) (t : ℝ)
+    (hb₀ : (Real.pi / (ℓ * μ₀)) ^ 2 + |t| * limitErr 1 μ₀ ℓ D P (ℓ / L) ≤ 1 / N)
+    (hb₁ : (Real.pi / (ℓ * μ₁)) ^ 2 + |t| * limitErr 1 μ₁ ℓ D P (ℓ / L) ≤ 1 / N)
+    (hz₀ : ‖exp (I * ((2 * Real.pi / ℓ * vRel 1 μ₀ (1 * p₀) * t : ℝ) : ℂ)) - z‖ ≤ η)
+    (hz₁ : ‖exp (I * ((2 * Real.pi / ℓ * vRel 1 μ₁ (1 * p₀) * t : ℝ) : ℂ)) - z‖ ≤ η) :
+    devRegionWeight (devicePacket (L := L) (scaledHop 1 (ℓ / L)) μ₀ μ₁ (Finset.Ico lo (lo + N))
+        (fun _ => ((1 / Real.sqrt N : ℝ) : ℂ)) t) (chordArc z ρ)ᶜ ≤ ε := by
+  have h := flat_device_tail hN hNL h0 h01 hℓ hp₀ hD0 hWin hWD hηρ t hz₀ hz₁
+  have hN' : (0 : ℝ) < N := by exact_mod_cast hN
+  have hpos : 0 < (ρ - η) ^ 2 := pow_pos (by linarith) 2
+  refine h.trans ?_
+  rw [div_le_iff₀ hpos]
+  have h4 : 4 / N ≤ ε * (ρ - η) ^ 2 := by
+    have := mul_le_mul_of_nonneg_left hchord hε.le
+    rwa [show ε * (4 / (N * ε)) = 4 / N by field_simp] at this
+  have : (1 / N + (Real.pi / (ℓ * μ₀)) ^ 2 + |t| * limitErr 1 μ₀ ℓ D P (ℓ / L))
+      + (1 / N + (Real.pi / (ℓ * μ₁)) ^ 2 + |t| * limitErr 1 μ₁ ℓ D P (ℓ / L)) ≤ 4 / N := by
+    rw [show (4 : ℝ) / N = 1 / N + 1 / N + 1 / N + 1 / N by ring]
     linarith
   linarith
 
