@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.DiracMasslessTails
 /-!
 # The records' resolution: tails and encounters at any number of modes and any chord
 
-**Category:** 7-SigmaLayer (the record layer). BACKLOG #280, lever (b), first three bricks.
+**Category:** 7-SigmaLayer (the record layer). BACKLOG #280, lever (b), first four bricks.
 
 #278's Lorentz map holds to `≈ 23%`, and #280's diagnosis traces that error to the localisation
 bound: the only fact about where a massless packet is that the record chain uses is the mean of
@@ -51,13 +51,27 @@ resolution as a parameter.
   encounter's window in time is the chord over the relative angular speed, and with the chord law
   every chord in it can shrink as `N^{−1/2}`).
 
+## The record window law
+
+* ★★★ `record_window` (**a threshold register whose rate is in `[0, M]`, which holds `P'`–`P` at
+  `t₀`, whose rate vanishes until `a` and is at least `κ` from `c`: it is below `θ` before
+  `a + (θ − P)/M` and has reached `θ` by `c + (θ − P')/κ`** — the record's window, its width the
+  gap `c − a` plus the two fill times);
+* ★★★ `encounter_record_window` (**the encounter record at any chord**: for two trajectories with
+  tails `ε_A`, `ε_B` off chord-`ρ_A`, `ρ_B` arcs, relative angle `Ω (s − t_c)`, and a register at
+  rate `max(relWeight 1 ρ − 1/2, 0)`, the record falls in
+  `[t_c − y/Ω + 2θ, t_c − (ρ − ρ_A − ρ_B)/Ω + θ/κ]`, `κ = (1 − ε_A)(1 − ε_B) − 1/2`, `y` a far
+  angle with `ρ + ρ_A + ρ_B < 2 sin(y/2)` — **the record's error is the chords over the relative
+  angular speed plus the threshold's fill time**, every term of which the chord law shrinks).
+
 ## Honest scope
 
 ⚠️ **Chebyshev only**: the bound uses the second moment of the angle; the flat profile's true
 tail decays like `1/(Nρ)` (Dirichlet kernel, estimate), so this is lever (b) of #280, not (a).
 
-⚠️ **Tails and encounters only**: the registers and the records at a symbolic chord are the next
-bricks of lever (b); the drift term grows with `|t|`, and
+⚠️ **Single encounters from an empty register**: the relay's pulse and echo, and `B`'s return
+after its departure plateau (`record_window` with `P' ≤ P`), are applied in the next brick, an
+instance at large `N`; the drift term grows with `|t|`, and
 keeping it below `1/N` bounds the time span at a given lattice spacing.
 
 References: `specs/BACKLOG.md` #280, #278, #248; `RecordLayer/DiracMasslessTails.lean`
@@ -68,7 +82,8 @@ References: `specs/BACKLOG.md` #280, #278, #248; `RecordLayer/DiracMasslessTails
 `RecordLayer/DiracDoppler.lean` (`offset_mem_of_near_at`, `offset_not_mem_of_far_at`);
 `RecordLayer/DiracRelayA.lean` (`aEncounter_near`, `aEncounter_far`, `rest_tail_fine`);
 `RecordLayer/DiracArrival.lean` (`re_transPhase_ringPacket_ge`);
-`RecordLayer/DiracObservers.lean` (`devRegionWeight_compl_chordArc_le`).
+`RecordLayer/DiracObservers.lean` (`devRegionWeight_compl_chordArc_le`, `regDetector`,
+`relWeight_le_mul`); `RecordLayer/DiracBRadar.lean` (`bEmission`, `bReturn`).
 -/
 
 @[expose] public section
@@ -298,5 +313,140 @@ theorem encounter_far_angle {α β y : ℝ} (hA1 : devRegionWeight ΨA Finset.un
 
 end Encounter
 
+
+/-! ### The record window law -/
+
+/-- ★★★ **The record window law.** A register whose rate `F` is continuous, nonnegative from `0`
+on and at most `M`, which holds between `P'` and `P` at time `t₀`, whose rate vanishes from `t₀`
+to `a` and is at least `κ` from `c` on: it stays below the threshold `θ > P` before
+`a + (θ − P)/M`, and has reached it by `c + (θ − P')/κ`. These are the two hypotheses of a threshold
+record (`regDetector`), so the record's window is `[a + (θ − P)/M, c + (θ − P')/κ]` — its width is
+the gap `c − a` between the last zero and the first near time plus the two fill times. -/
+theorem record_window {F : ℝ → ℝ} (hF : Continuous F) {M κ θ P P' t₀ a c : ℝ} (hM : 0 < M)
+    (hκ : 0 < κ) (ht₀ : 0 ≤ t₀) (hta : t₀ ≤ a) (hac : a ≤ c)
+    (hpos : ∀ s, 0 ≤ s → 0 ≤ F s) (hle : ∀ s, F s ≤ M)
+    (hP : ∫ s in (0 : ℝ)..t₀, F s ≤ P) (hP' : P' ≤ ∫ s in (0 : ℝ)..t₀, F s) (hPθ : P < θ)
+    (hzero : ∀ s, t₀ ≤ s → s ≤ a → F s = 0)
+    (hnear : ∀ s, c ≤ s → s ≤ c + (θ - P') / κ → κ ≤ F s) :
+    (∀ t, 0 ≤ t → t < a + (θ - P) / M → ∫ s in (0 : ℝ)..t, F s < θ)
+    ∧ θ ≤ ∫ s in (0 : ℝ)..(c + (θ - P') / κ), F s := by
+  have hi : ∀ x y : ℝ, IntervalIntegrable F MeasureTheory.volume x y :=
+    fun x y => hF.intervalIntegrable x y
+  have hnn : ∀ x y : ℝ, 0 ≤ x → x ≤ y → 0 ≤ ∫ s in x..y, F s := fun x y hx hxy =>
+    intervalIntegral.integral_nonneg hxy fun s hs => hpos s (hx.trans hs.1)
+  have hz : ∀ y, t₀ ≤ y → y ≤ a → ∫ s in t₀..y, F s = 0 := fun y h1 h2 => by
+    rw [intervalIntegral.integral_congr (g := fun _ => (0 : ℝ)) fun s hs => ?_]
+    · exact intervalIntegral.integral_zero
+    · rw [Set.uIcc_of_le h1] at hs
+      exact hzero s hs.1 (hs.2.trans h2)
+  have hup : ∀ x y : ℝ, x ≤ y → ∫ s in x..y, F s ≤ M * (y - x) := fun x y hxy => by
+    have h := intervalIntegral.integral_mono_on hxy (hi x y)
+      (intervalIntegrable_const (μ := MeasureTheory.volume) (c := M)) fun s _ => hle s
+    rw [intervalIntegral.integral_const, smul_eq_mul] at h
+    linarith
+  have hfill : 0 ≤ (θ - P') / κ := div_nonneg (by linarith) hκ.le
+  refine ⟨fun t ht0 ht => ?_, ?_⟩
+  · rcases le_total t t₀ with h1 | h1
+    · have e := intervalIntegral.integral_add_adjacent_intervals (hi 0 t) (hi t t₀)
+      have := hnn t t₀ ht0 h1
+      linarith
+    rcases le_total t a with h2 | h2
+    · rw [← intervalIntegral.integral_add_adjacent_intervals (hi 0 t₀) (hi t₀ t), hz t h1 h2]
+      linarith
+    · rw [← intervalIntegral.integral_add_adjacent_intervals (hi 0 t₀) (hi t₀ t),
+        ← intervalIntegral.integral_add_adjacent_intervals (hi t₀ a) (hi a t), hz a hta le_rfl]
+      have := hup a t h2
+      have hlt : M * (t - a) < θ - P := by
+        have h3 : t - a < (θ - P) / M := by linarith
+        rw [lt_div_iff₀ hM] at h3
+        linarith
+      linarith
+  · have hlow : κ * (c + (θ - P') / κ - c) ≤ ∫ s in c..(c + (θ - P') / κ), F s := by
+      have h := intervalIntegral.integral_mono_on (by linarith) (intervalIntegrable_const
+        (μ := MeasureTheory.volume) (c := κ)) (hi c (c + (θ - P') / κ))
+        fun s hs => hnear s hs.1 hs.2
+      rw [intervalIntegral.integral_const, smul_eq_mul] at h
+      linarith
+    rw [← intervalIntegral.integral_add_adjacent_intervals (hi 0 t₀) (hi t₀ (c + (θ - P') / κ)),
+      ← intervalIntegral.integral_add_adjacent_intervals (hi t₀ c) (hi c (c + (θ - P') / κ))]
+    have h1 := hnn t₀ c ht₀ (hta.trans hac)
+    have e : κ * (c + (θ - P') / κ - c) = θ - P' := by field_simp; ring
+    linarith
+
+/-- ★★★ **The encounter record's window, at any chord.** Two normalised trajectories `ΨA s`,
+`ΨB s` with tails `ε_A`, `ε_B` off chord-`ρ_A`, `ρ_B` arcs about predicted angles whose difference
+is `Ω (s − t_c)`, `Ω > 0`, feed a register at rate `max(relWeight 1 ρ − 1/2, 0)`, from `0` at time
+`0`. With `κ = (1 − ε_A)(1 − ε_B) − 1/2 > 0`, `ε_A + ε_B ≤ 1/2`, near half-width
+`(ρ − ρ_A − ρ_B)/Ω` and a far angle `y` (`ρ + ρ_A + ρ_B < 2 sin(y/2)`, `Ω t_c ≤ 2π − y`): the
+register stays below the threshold `θ > 0` before `t_c − y/Ω + 2θ` and has reached it by
+`t_c − (ρ − ρ_A − ρ_B)/Ω + θ/κ`, provided `θ/κ ≤ 2(ρ − ρ_A − ρ_B)/Ω`. The record's window is set
+by the chords over the relative angular speed and by the threshold. -/
+theorem encounter_record_window {ΨA ΨB : ℝ → (ZMod L × Fin 2) × Fin 2 → ℂ} {α β : ℝ → ℝ}
+    {ρA ρB ρ εA εB Ω t_c y θ T : ℝ}
+    (hF : Continuous fun s => max (relWeight 1 ρ (ΨA s) (ΨB s) - 1 / 2) 0)
+    (hA1 : ∀ s, devRegionWeight (ΨA s) Finset.univ = 1)
+    (hB1 : ∀ s, devRegionWeight (ΨB s) Finset.univ = 1)
+    (htA : ∀ s, 0 ≤ s → s ≤ T →
+      devRegionWeight (ΨA s) (chordArc (exp (I * (α s : ℂ))) ρA)ᶜ ≤ εA)
+    (htB : ∀ s, 0 ≤ s → s ≤ T →
+      devRegionWeight (ΨB s) (chordArc (exp (I * (β s : ℂ))) ρB)ᶜ ≤ εB)
+    (hrel : ∀ s, β s - α s = Ω * (s - t_c)) (hΩ : 0 < Ω) (hρA : 0 ≤ ρA) (hρB : 0 ≤ ρB)
+    (hκ : 0 < (1 - εA) * (1 - εB) - 1 / 2) (hεB : εB ≤ 1) (hε : εA + εB ≤ 1 / 2)
+    (hy : 0 ≤ y) (hsin : ρ + ρA + ρB < 2 * Real.sin (y / 2)) (hyc : Ω * t_c ≤ 2 * Real.pi - y)
+    (hθ : 0 < θ) (hfar0 : 0 ≤ t_c - y / Ω)
+    (hfill : θ / ((1 - εA) * (1 - εB) - 1 / 2) ≤ 2 * ((ρ - ρA - ρB) / Ω))
+    (hT : t_c + (ρ - ρA - ρB) / Ω ≤ T) :
+    (∀ t, 0 ≤ t → t < t_c - y / Ω + 2 * θ →
+      ∫ s in (0 : ℝ)..t, max (relWeight 1 ρ (ΨA s) (ΨB s) - 1 / 2) 0 < θ)
+    ∧ θ ≤ ∫ s in (0 : ℝ)..(t_c - (ρ - ρA - ρB) / Ω + θ / ((1 - εA) * (1 - εB) - 1 / 2)),
+        max (relWeight 1 ρ (ΨA s) (ΨB s) - 1 / 2) 0 := by
+  set κ := (1 - εA) * (1 - εB) - 1 / 2 with hκdef
+  set hn := (ρ - ρA - ρB) / Ω with hhn
+  have hfk : 0 ≤ θ / κ := div_nonneg hθ.le hκ.le
+  have hn0 : 0 ≤ hn := by linarith
+  have hyΩ : 0 ≤ y / Ω := div_nonneg hy hΩ.le
+  have hsy : ρ - ρA - ρB ≤ y := by
+    have := Real.sin_le (by linarith : (0 : ℝ) ≤ y / 2)
+    linarith
+  have hac : t_c - y / Ω ≤ t_c - hn := by
+    have : hn ≤ y / Ω := div_le_div_of_nonneg_right hsy hΩ.le
+    linarith
+  have e0 : (θ - 0) / κ = θ / κ := by rw [sub_zero]
+  have e1 : (θ - 0) / (1 / 2 : ℝ) = 2 * θ := by ring
+  have hlim := record_window (F := fun s => max (relWeight 1 ρ (ΨA s) (ΨB s) - 1 / 2) 0) hF
+    (M := 1 / 2) (κ := κ) (θ := θ) (P := 0) (P' := 0) (t₀ := 0) (a := t_c - y / Ω)
+    (c := t_c - hn) (by norm_num) hκ le_rfl hfar0 hac (fun s _ => le_max_right _ _)
+    (fun s => by
+      have := relWeight_le_mul 1 ρ (ΨA s) (ΨB s)
+      rw [hA1, hB1, one_mul] at this
+      exact max_le (by linarith) (by norm_num))
+    (by simp) (by simp) hθ
+    (fun s hs1 hs2 => by
+      refine max_eq_right ?_
+      have hst : y ≤ Ω * (t_c - s) := by
+        have : y / Ω ≤ t_c - s := by linarith
+        rwa [div_le_iff₀' hΩ] at this
+      have hfar := encounter_far_angle (ΨA := ΨA s) (ΨB := ΨB s) (ρ := ρ) (y := y) (hA1 s)
+        (hB1 s) (htA s hs1 (by linarith)) (htB s hs1 (by linarith)) hy
+        (by rw [hrel, abs_mul, abs_of_pos hΩ, abs_of_nonpos (by linarith)]; linarith)
+        (by
+          rw [hrel, abs_mul, abs_of_pos hΩ, abs_of_nonpos (by linarith)]
+          nlinarith [mul_nonneg hΩ.le hs1])
+        hsin
+      linarith)
+    (fun s hs1 hs2 => by
+      rw [e0] at hs2
+      have hnear := encounter_near_angle (ΨA := ΨA s) (ΨB := ΨB s) (ρ := ρ) (hA1 s) (hB1 s)
+        (htA s (by linarith) (by linarith)) (htB s (by linarith) (by linarith)) hεB (by
+          rw [hrel, abs_mul, abs_of_pos hΩ]
+          have h1 : |s - t_c| ≤ hn := by
+            rw [abs_le]
+            constructor <;> linarith
+          calc Ω * |s - t_c| ≤ Ω * hn := mul_le_mul_of_nonneg_left h1 hΩ.le
+            _ = ρ - ρA - ρB := by rw [hhn]; field_simp)
+      exact le_max_of_le_left (by linarith))
+  obtain ⟨h1, h2⟩ := hlim
+  rw [e0] at h2
+  exact ⟨fun t ht0 ht => h1 t ht0 (by rw [e1]; exact ht), h2⟩
 
 end CSD.RecordLayer
