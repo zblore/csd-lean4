@@ -15462,4 +15462,38 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.quad_clock_reading_error
 
+
+-- FrameCovariance (BACKLOG #285 (i), 2026-11-03): the radar records do not single out the frame.
+/-- info: 'CSD.RecordLayer.abs_velAdd_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_velAdd_lt
+
+/-- info: 'CSD.RecordLayer.one_add_mul_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_add_mul_pos
+
+/-- info: 'CSD.RecordLayer.one_sub_mul_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_mul_pos
+
+/-- info: 'CSD.RecordLayer.one_sub_lorentzRelVel_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_lorentzRelVel_sq
+
+/-- info: 'CSD.RecordLayer.radar_frame_covariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_frame_covariant
+
+/-- info: 'CSD.RecordLayer.radar_lorentz_covariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_lorentz_covariant
+
+/-- info: 'CSD.RecordLayer.lorentzRelVel_velAdd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lorentzRelVel_velAdd
+
+/-- info: 'CSD.RecordLayer.vRel_boost' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.vRel_boost
+
 end CSD.Tests.AxiomAudit
