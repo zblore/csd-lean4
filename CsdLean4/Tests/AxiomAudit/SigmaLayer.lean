@@ -15378,4 +15378,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.radar_lorentz_scaling
 
+
+-- ApparatusIndependence (BACKLOG #248 (b), 2026-11-03): the effective geometry is the events'.
+/-- info: 'CSD.RecordLayer.galilean_apparatus_indep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.galilean_apparatus_indep
+
+/-- info: 'CSD.RecordLayer.radar_velocity_exact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_velocity_exact
+
+/-- info: 'CSD.RecordLayer.radar_velocity_error' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_velocity_error
+
+/-- info: 'CSD.RecordLayer.radar_apparatus_indep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_apparatus_indep
+
 end CSD.Tests.AxiomAudit
