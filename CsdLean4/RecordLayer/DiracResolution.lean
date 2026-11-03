@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.DiracMasslessTails
 # The records' resolution: tails and encounters at any number of modes and any chord
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #280, lever (b), first four bricks;
-lever (a), first two bricks.
+lever (a), first three bricks.
 
 #278's Lorentz map holds to `≈ 23%`, and #280's diagnosis traces that error to the localisation
 bound: the only fact about where a massless packet is that the record chain uses is the mean of
@@ -90,7 +90,20 @@ resolution as a parameter.
   `× (ρ − η)²/2 ≤ (π/(n + 1))²/2 + κ + (δ' t)²/2`** — the profile's floor `~π²/(2n²)` against the
   flat profile's `1/n`, the drift quadratic; at `μ = 3`, `T ≈ 8·10¹³` the optimum is near
   `n ≈ 1.5·10⁷` with floor `≈ 4·10⁻¹³` and a chord at a 1% tail of `≈ 10⁻⁵`, against `1.75·10⁻²`
-  for the arenas' observers — estimates, the instance is not built).
+  for the arenas' observers — estimates, the instance is not built);
+* ★★★ `sine_massless_tail` (**the massless messenger with the sine profile: tail
+  `× (ρ − η)²/2 ≤ (π/(n + 1))²/2 + (δ'' t)²/2`** — no spin loss, the drift quadratic).
+
+## The resolution law, assembled
+
+The chain is now generic end to end: a packet's tail (`sine_packet_tail`, `sine_massless_tail`:
+floor `F ≈ (π/n)²/2 + (δ t)²/2`) gives a chord `ρ ≈ √(2F/ε)` at tail `ε`; two chords give an
+encounter (`encounter_near_angle`, `encounter_far_angle`); an encounter gives a record whose
+window is `≈ 2(ρ_A + ρ_B)/Ω` plus the threshold's fill time (`encounter_record_window`). **A
+record's timing error therefore scales as `√F / Ω`**, and `F` is minimised where the profile's
+`1/n²` meets the spreading `(δ t)²`, `δ ∝ n/μ` — the trade-off of the standard quantum limit
+`√(T/μ)`. The absolute numbers depend on the arenas' arbitrary `μ`, splitting, ring size and
+speeds; the scaling does not.
 
 ## Honest scope
 
@@ -759,6 +772,83 @@ theorem sine_packet_tail {J μ : ℝ} (hμ : 0 < μ) {n : ℕ} (hn : 1 ≤ n)
   have hcos := Real.one_sub_sq_div_two_le_cos (x := Real.pi / (n + 1))
   have hc1 := Real.cos_le_one (Real.pi / (n + 1))
   have hκ0 : 0 ≤ (2 * Real.pi * J / (L * μ)) ^ 2 := sq_nonneg _
+  nlinarith
+
+/-- ★★★ **The massless sine packet's tail.** A massless packet with the sine profile over `n`
+right-moving modes, angles within `δ` of `θ₀`: off the chord-`ρ` arc about a point within `η` of
+its angle `(2π/L)(2J cos θ₀) t`, its weight times `(ρ − η)²/2` is at most
+`(π/(n + 1))²/2 + (δ'' t)²/2`, `δ'' = 2J (2π/L)(δ + 2π/L)` — no spin loss (right-moving massless
+spinors are parallel), the drift quadratic. -/
+theorem sine_massless_tail {J : ℝ} (hJ : 0 < J) {n : ℕ} (hn : 1 ≤ n)
+    (hWin : ∀ m ∈ Finset.Ico lo (lo + n), lo ≤ m ∧ m + 1 < lo + L)
+    (hR : RightWindow L (Finset.Ico lo (lo + n)))
+    {θ₀ δ : ℝ} (hδ : ∀ m ∈ Finset.Ico lo (lo + n), |angleZ L m - θ₀| ≤ δ)
+    {z : ℂ} {ρ η : ℝ} (hηρ : η ≤ ρ) (t : ℝ)
+    (hz : ‖exp (I * ((2 * Real.pi / L * (2 * J * Real.cos θ₀) * t : ℝ) : ℂ)) - z‖ ≤ η) :
+    regionWeight (packet (L := L) J 0 (Finset.Ico lo (lo + n))
+        (unitAmp L J 0 fun m => (sineAmp n lo m : ℂ)) t) (chordArc z ρ)ᶜ * ((ρ - η) ^ 2 / 2)
+      ≤ (Real.pi / (n + 1)) ^ 2 / 2
+        + (2 * J * (2 * Real.pi / L) * (δ + 2 * Real.pi / L) * t) ^ 2 / 2 := by
+  set W := Finset.Ico lo (lo + n) with hWdef
+  obtain ⟨hsum1, hsum2⟩ := sineAmp_sums hn lo
+  obtain ⟨hW, hDst⟩ := noWrap_distinct_of_window (L := L) hWin
+  have hLpos : (0 : ℝ) < L := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne L)
+  have hh : (0 : ℝ) < 2 * Real.pi / L := by positivity
+  set β := sineAmp n lo with hβdef
+  set ψ := fun s => packet (L := L) J 0 W (unitAmp L J 0 fun m => (β m : ℂ)) s with hψ
+  set φ := 2 * Real.pi / L * (2 * J * Real.cos θ₀) * t with hφ
+  set δ'' := 2 * J * (2 * Real.pi / L) * (δ + 2 * Real.pi / L) with hδ''
+  have hn1 : ∀ s, chainInner (ψ s) (ψ s) = 1 := fun s => by
+    rw [hψ, chainInner_packet_unitAmp_zero hJ hR hDst]
+    have : ∑ m ∈ W, ‖(β m : ℂ)‖ ^ 2 = ∑ m ∈ W, β m ^ 2 :=
+      Finset.sum_congr rfl fun m _ => by rw [Complex.norm_real, Real.norm_eq_abs, sq_abs]
+    rw [this, hsum1, Complex.ofReal_one]
+  set w : ℤ → ℝ := fun m => β (m + 1) * β m with hw
+  have hw0 : ∀ m, 0 ≤ w m := fun m => mul_nonneg (sineAmp_nonneg _ _ _) (sineAmp_nonneg _ _ _)
+  have hTP : ∀ s, transPhase (ψ s) = ∑ m ∈ W.filter (fun m => m + 1 ∈ W),
+      (w m : ℂ) * exp (I * (((bandE J 0 (angleZ L (m + 1)) - bandE J 0 (angleZ L m)) * s : ℝ)
+        : ℂ)) := fun s => by
+    rw [hψ, transPhase_packet J 0 hW _ s]
+    refine Finset.sum_congr rfl fun m hm => ?_
+    obtain ⟨hmW, hm1W⟩ := Finset.mem_filter.1 hm
+    obtain ⟨a0, aπ⟩ := hR m hmW
+    obtain ⟨b0, bπ⟩ := hR (m + 1) hm1W
+    rw [transWeight_unitAmp_zero hJ _ b0 bπ a0 aπ, Complex.star_def, Complex.conj_ofReal, hw]
+    push_cast
+    ring
+  have hS : ∑ m ∈ W.filter (fun m => m + 1 ∈ W), w m = Real.cos (Real.pi / (n + 1)) := hsum2
+  have hq := le_re_sum_phase (W.filter (fun m => m + 1 ∈ W)) w
+    (fun m => bandE J 0 (angleZ L (m + 1)) - bandE J 0 (angleZ L m))
+    (fun m _ => hw0 m) (2 * Real.pi / L * (2 * J * Real.cos θ₀)) t δ'' fun m hm => by
+      obtain ⟨hmW, hm1W⟩ := Finset.mem_filter.1 hm
+      obtain ⟨a0, -⟩ := hR m hmW
+      obtain ⟨-, bπ⟩ := hR (m + 1) hm1W
+      rw [angleZ_succ] at bπ ⊢
+      have h := abs_bandE_zero_step_sub_le (J := J) (θ₀ := θ₀) hJ.le hh a0.le bπ.le
+      refine h.trans ?_
+      rw [hδ'']
+      have := hδ m hmW
+      have hJ2 : 0 ≤ 2 * J * (2 * Real.pi / L) := by positivity
+      calc 2 * J * (2 * Real.pi / L) * (|angleZ L m - θ₀| + 2 * Real.pi / L)
+          ≤ 2 * J * (2 * Real.pi / L) * (δ + 2 * Real.pi / L) := by gcongr
+        _ = _ := rfl
+  rw [← hTP t, hS] at hq
+  have hu : ‖exp (I * (φ : ℂ))‖ = 1 := norm_exp_I_mul_ofReal_eq_one φ
+  have hreg := regionWeight_mul_le (ψ t) hu (B := (chordArc z ρ)ᶜ) (γ := 1 - (ρ - η) ^ 2 / 2)
+    fun k hk => by
+      rw [Finset.mem_compl, mem_chordArc, not_le] at hk
+      rw [re_star_mul_eq_chord (Circle.norm_coe _) hu]
+      have hd : ρ - η ≤ ‖(ZMod.toCircle k : ℂ) - exp (I * (φ : ℂ))‖ := by
+        have := norm_sub_le_norm_sub_add_norm_sub (ZMod.toCircle k : ℂ) (exp (I * (φ : ℂ))) z
+        linarith
+      have hsq := pow_le_pow_left₀ (by linarith) hd 2
+      linarith
+  rw [show 1 - (1 - (ρ - η) ^ 2 / 2) = (ρ - η) ^ 2 / 2 by ring, hn1 t, Complex.one_re] at hreg
+  have hφe : (φ : ℂ) = ((2 * Real.pi / L * (2 * J * Real.cos θ₀) * t : ℝ) : ℂ) := rfl
+  rw [hφe] at hreg
+  have hcos := Real.one_sub_sq_div_two_le_cos (x := Real.pi / (n + 1))
+  have hc1 := Real.cos_le_one (Real.pi / (n + 1))
+  have hx : 0 ≤ (δ'' * t) ^ 2 / 2 := by positivity
   nlinarith
 
 end CSD.RecordLayer

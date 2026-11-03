@@ -15354,4 +15354,10 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.sine_packet_tail
 
+
+-- DiracResolution, lever (a) third brick (BACKLOG #280, 2026-11-03): the massless sine tail.
+/-- info: 'CSD.RecordLayer.sine_massless_tail' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sine_massless_tail
+
 end CSD.Tests.AxiomAudit
