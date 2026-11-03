@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.DiracTwoCharts
 /-!
 # Frame covariance of the radar records
 
-**Category:** 7-SigmaLayer (the record layer). BACKLOG #285, part (i).
+**Category:** 7-SigmaLayer (the record layer). BACKLOG #285, parts (i) and (iii).
 
 #285 asks whether the ontic time's frame is hidden from records. Part (i): a preparation and its
 boost should give record laws related by the Lorentz map. On the radar exchange this splits into
@@ -27,7 +27,8 @@ three facts, none of which needs a boost operator on the lattice.
 
 ## A common boost changes nothing
 
-* ★★ `lorentzRelVel_velAdd` (**boosting both observers by `u` leaves their relative velocity unchanged**);
+* ★★ `lorentzRelVel_velAdd` (**boosting both observers by `u` leaves their relative velocity
+  unchanged**);
 * ★★★ `radar_frame_covariant` (**a preparation and its boost give the same radar record relation:
   the Lorentz boost at the same `w`**).
 
@@ -38,13 +39,23 @@ three facts, none of which needs a boost operator on the lattice.
   momentum, and `dirac_packet_limit`, which holds at every centre momentum, moves it at the boosted
   velocity within its error at the boosted momentum bound.
 
+## The lattice residue (#285 (iii))
+
+* ★★ `abs_lorentzRelVel_sub_le` (**the relative velocity is Lipschitz**: `2(|Δa| + |Δb|)/(1 − V²)²`
+  on velocities bounded by `V < 1`), `latticeVelErr` (`a²(P²/2 + P³/(6μ))`, the lattice's
+  departure from the relativistic velocity, `abs_scaledV_sub_le`);
+* ★★★ `lattice_frame_residue` (**how far the lattice frame shows up**: the lattice's relative
+  velocity in a boosted frame differs from that in the original frame by at most
+  `4 (latticeVelErr P + latticeVelErr P')/(1 − V²)²` — order `a²`, growing with the boosted momentum
+  bound `P'`, vanishing as `a → 0`; the exact relative velocity is the same in both frames).
+
 ## Honest scope
 
 ⚠️ **Kinematic records**: the covariance is of the radar relation — light at speed `1`, clocks at
 `√(1 − v²)`, which hold on the chain to `dirac_massless_limit`'s `O((ap)²)` and
 `clock_rate_lorentz`'s error. A boost raises the momenta, so its lattice error grows with the
-boosted momentum bound (`limitErr`'s `a² P³` term): exact covariance is a continuum-limit statement
-(#285 (iii), ~~#279~~).
+boosted momentum bound: `lattice_frame_residue` states it, and exact covariance is a continuum-limit
+statement (~~#279~~).
 
 ⚠️ **The radar relation, not every record statistic**: slicing independence of spacelike joint
 record laws is #285 (ii).
@@ -220,6 +231,110 @@ theorem vRel_boost {μ s u : ℝ} (hμ : 0 < μ) (hu : |u| < 1) :
         nlinarith [hE2]]
     exact Real.sqrt_sq (by positivity)
   rw [vRel, hE', vRel, velAdd, ← hEdef]
+  field_simp
+  ring
+
+/-! ### The lattice residue (#285 (iii)) -/
+
+/-- **The relative velocity is Lipschitz** on velocities bounded by `V < 1`:
+`|w(a, b) − w(a', b')| ≤ 2 (|a − a'| + |b − b'|)/(1 − V²)²`. -/
+theorem abs_lorentzRelVel_sub_le {a b a' b' V : ℝ} (hV : V < 1) (ha : |a| ≤ V) (hb : |b| ≤ V)
+    (ha' : |a'| ≤ V) (hb' : |b'| ≤ V) :
+    |lorentzRelVel a b - lorentzRelVel a' b'| ≤ 2 * (|a - a'| + |b - b'|) / (1 - V ^ 2) ^ 2 := by
+  have hV0 : 0 ≤ V := (abs_nonneg a).trans ha
+  have hV2 : 0 < 1 - V ^ 2 := by nlinarith
+  have hab : |a * b| ≤ V ^ 2 := by
+    rw [abs_mul, sq]; exact mul_le_mul ha hb (abs_nonneg _) hV0
+  have hab' : |a' * b'| ≤ V ^ 2 := by
+    rw [abs_mul, sq]; exact mul_le_mul ha' hb' (abs_nonneg _) hV0
+  have hd1 : 1 - V ^ 2 ≤ 1 - a * b := by linarith [le_abs_self (a * b)]
+  have hd2 : 1 - V ^ 2 ≤ 1 - a' * b' := by linarith [le_abs_self (a' * b')]
+  have hD : (1 - V ^ 2) ^ 2 ≤ (1 - a * b) * (1 - a' * b') := by
+    rw [sq]; exact mul_le_mul hd1 hd2 hV2.le (by linarith)
+  have hDpos : 0 < (1 - a * b) * (1 - a' * b') := lt_of_lt_of_le (by positivity) hD
+  have hnum : lorentzRelVel a b - lorentzRelVel a' b'
+      = ((a - a') * (1 - b * b') - (b - b') * (1 - a * a')) / ((1 - a * b) * (1 - a' * b')) := by
+    rw [lorentzRelVel, lorentzRelVel, div_sub_div _ _ (by linarith) (by linarith)]
+    congr 1
+    ring
+  have hbb : |1 - b * b'| ≤ 2 := by
+    have : |b * b'| ≤ 1 := by
+      rw [abs_mul]; nlinarith [abs_nonneg b, abs_nonneg b']
+    calc |1 - b * b'| ≤ |1| + |b * b'| := abs_sub _ _
+      _ ≤ 2 := by rw [abs_one]; linarith
+  have haa : |1 - a * a'| ≤ 2 := by
+    have : |a * a'| ≤ 1 := by
+      rw [abs_mul]; nlinarith [abs_nonneg a, abs_nonneg a']
+    calc |1 - a * a'| ≤ |1| + |a * a'| := abs_sub _ _
+      _ ≤ 2 := by rw [abs_one]; linarith
+  have hN : |(a - a') * (1 - b * b') - (b - b') * (1 - a * a')| ≤ 2 * (|a - a'| + |b - b'|) := by
+    calc |(a - a') * (1 - b * b') - (b - b') * (1 - a * a')|
+        ≤ |(a - a') * (1 - b * b')| + |(b - b') * (1 - a * a')| := abs_sub _ _
+      _ = |a - a'| * |1 - b * b'| + |b - b'| * |1 - a * a'| := by rw [abs_mul, abs_mul]
+      _ ≤ |a - a'| * 2 + |b - b'| * 2 :=
+          add_le_add (mul_le_mul_of_nonneg_left hbb (abs_nonneg _))
+            (mul_le_mul_of_nonneg_left haa (abs_nonneg _))
+      _ = 2 * (|a - a'| + |b - b'|) := by ring
+  rw [hnum, abs_div, abs_of_pos hDpos]
+  calc |(a - a') * (1 - b * b') - (b - b') * (1 - a * a')| / ((1 - a * b) * (1 - a' * b'))
+      ≤ 2 * (|a - a'| + |b - b'|) / ((1 - a * b) * (1 - a' * b')) :=
+        div_le_div_of_nonneg_right hN hDpos.le
+    _ ≤ 2 * (|a - a'| + |b - b'|) / (1 - V ^ 2) ^ 2 :=
+        div_le_div_of_nonneg_left (by positivity) (by positivity) hD
+
+/-- The lattice's departure from the relativistic velocity at momenta up to `P`:
+`a² (P²/2 + P³/(6μ))` (`abs_scaledV_sub_le` at `c = 1`). -/
+noncomputable def latticeVelErr (μ a P : ℝ) : ℝ := a ^ 2 * (P ^ 2 / 2 + P ^ 3 / (6 * μ))
+
+/-- ★★★ **The lattice residue: how far the lattice frame shows up.** Two packets at momenta
+`p_A`, `p_B` (`|p| ≤ P`) and their boosts by `u` (`|p'| ≤ P'`), on a lattice of spacing `a`, with
+all velocities bounded by `V < 1`. The exact relative velocity is the same in both frames
+(`lorentzRelVel_velAdd`, `vRel_boost`); the lattice's relative velocity in the boosted frame differs
+from that in the original frame by at most `4 (latticeVelErr P + latticeVelErr P')/(1 − V²)²` —
+order `a²`, growing with the boosted momentum bound `P'`, vanishing as `a → 0`. -/
+theorem lattice_frame_residue {μ a P P' u V pA pB : ℝ} (hμ : 0 < μ) (ha : 0 < a) (hu : |u| < 1)
+    (hV : V < 1) (hpA : |pA| ≤ P) (hpB : |pB| ≤ P)
+    (hpA' : |(pA + u * dispE μ pA) / Real.sqrt (1 - u ^ 2)| ≤ P')
+    (hpB' : |(pB + u * dispE μ pB) / Real.sqrt (1 - u ^ 2)| ≤ P')
+    (hvA : |vRel 1 μ pA| ≤ V) (hvB : |vRel 1 μ pB| ≤ V)
+    (hvA' : |velAdd u (vRel 1 μ pA)| ≤ V) (hvB' : |velAdd u (vRel 1 μ pB)| ≤ V)
+    (hlA : |scaledV 1 μ a pA| ≤ V) (hlB : |scaledV 1 μ a pB| ≤ V)
+    (hlA' : |scaledV 1 μ a ((pA + u * dispE μ pA) / Real.sqrt (1 - u ^ 2))| ≤ V)
+    (hlB' : |scaledV 1 μ a ((pB + u * dispE μ pB) / Real.sqrt (1 - u ^ 2))| ≤ V) :
+    |lorentzRelVel (scaledV 1 μ a ((pA + u * dispE μ pA) / Real.sqrt (1 - u ^ 2)))
+        (scaledV 1 μ a ((pB + u * dispE μ pB) / Real.sqrt (1 - u ^ 2)))
+      - lorentzRelVel (scaledV 1 μ a pA) (scaledV 1 μ a pB)|
+      ≤ 4 * (latticeVelErr μ a P + latticeVelErr μ a P') / (1 - V ^ 2) ^ 2 := by
+  have hV0 : 0 ≤ V := (abs_nonneg _).trans hvA
+  have hV2 : 0 < 1 - V ^ 2 := by nlinarith
+  have hvAlt : |vRel 1 μ pA| < 1 := lt_of_le_of_lt hvA hV
+  have hvBlt : |vRel 1 μ pB| < 1 := lt_of_le_of_lt hvB hV
+  -- the lattice velocities against the exact ones
+  have eA := abs_scaledV_sub_le (c := 1) one_pos hμ ha hpA
+  have eB := abs_scaledV_sub_le (c := 1) one_pos hμ ha hpB
+  have eA' := abs_scaledV_sub_le (c := 1) one_pos hμ ha hpA'
+  have eB' := abs_scaledV_sub_le (c := 1) one_pos hμ ha hpB'
+  simp only [one_mul, one_pow] at eA eB eA' eB'
+  rw [vRel_boost hμ hu] at eA' eB'
+  have hE : ∀ Q, a ^ 2 * (Q ^ 2 / 2 + Q ^ 3 / (6 * μ)) = latticeVelErr μ a Q := fun Q => rfl
+  rw [hE] at eA eB eA' eB'
+  -- the exact relative velocity is the same in both frames
+  have hw := lorentzRelVel_velAdd hu hvAlt hvBlt
+  have l1 := abs_lorentzRelVel_sub_le hV hlA' hlB' hvA' hvB'
+  have l2 := abs_lorentzRelVel_sub_le hV hvA hvB hlA hlB
+  rw [hw] at l1
+  have hsum : |lorentzRelVel (scaledV 1 μ a ((pA + u * dispE μ pA) / Real.sqrt (1 - u ^ 2)))
+        (scaledV 1 μ a ((pB + u * dispE μ pB) / Real.sqrt (1 - u ^ 2)))
+      - lorentzRelVel (scaledV 1 μ a pA) (scaledV 1 μ a pB)|
+      ≤ 2 * (latticeVelErr μ a P' + latticeVelErr μ a P') / (1 - V ^ 2) ^ 2
+        + 2 * (latticeVelErr μ a P + latticeVelErr μ a P) / (1 - V ^ 2) ^ 2 := by
+    refine (abs_sub_le _ (lorentzRelVel (vRel 1 μ pA) (vRel 1 μ pB)) _).trans (add_le_add ?_ ?_)
+    · refine l1.trans (div_le_div_of_nonneg_right ?_ (by positivity))
+      linarith
+    · refine l2.trans (div_le_div_of_nonneg_right ?_ (by positivity))
+      rw [abs_sub_comm (vRel 1 μ pA), abs_sub_comm (vRel 1 μ pB)]
+      linarith
+  refine hsum.trans (le_of_eq ?_)
   field_simp
   ring
 
