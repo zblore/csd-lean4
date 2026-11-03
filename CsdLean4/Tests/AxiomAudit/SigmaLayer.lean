@@ -15141,4 +15141,54 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.bRate_ge_return
 
+
+-- DiracBRadar stage 2b (BACKLOG #278, 2026-11-02): B's register integral, the record arena.
+/-- info: 'CSD.RecordLayer.integral_bRate_le_half' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_bRate_le_half
+
+/-- info: 'CSD.RecordLayer.integral_bRate_flight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_bRate_flight
+
+/-- info: 'CSD.RecordLayer.integral_bRate_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_bRate_return
+
+/-- info: 'CSD.RecordLayer.bRadarWeight_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRadarWeight_zero
+
+/-- info: 'CSD.RecordLayer.bRadarWeight_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRadarWeight_one
+
+/-- info: 'CSD.RecordLayer.bRadarWeight_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRadarWeight_two
+
+/-- info: 'CSD.RecordLayer.continuous_bRadarWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_bRadarWeight
+
+/-- info: 'CSD.RecordLayer.bRadarEvolve_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRadarEvolve_self
+
+/-- info: 'CSD.RecordLayer.bRadarEvolve_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRadarEvolve_comp
+
+/-- info: 'CSD.RecordLayer.measurable_bRadarEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_bRadarEvolve
+
+/-- info: 'CSD.RecordLayer.bRadarEvolve_prep_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRadarEvolve_prep_fst
+
+/-- info: 'CSD.RecordLayer.measurable_aRelayRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_aRelayRead
+
 end CSD.Tests.AxiomAudit

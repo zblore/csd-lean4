@@ -29,7 +29,7 @@ uncertainty.
 
 ## Where `B` is, sharply
 
-* ★ `approach_tail_fine` (`B` off its chord-`1/100` arc: `≤ 2.3·10⁻²`).
+* ★ `approach_tail_fine` (`B` off its chord-`1/100` arc: `≤ 2.3·10⁻²`), `bMess_univ`.
 
 ## `B` and the messenger
 
@@ -52,6 +52,20 @@ uncertainty.
   encounter weight to `0.0252`), ★ `bRate_eq_zero_return` (zero until
   `(2s₀ + 3·10⁻³)/1.6 − 1.4375·10¹²`), ★★ `bRate_ge_return` (**within `1.125·10¹²` of
   `(2s₀ + 3·10⁻³)/1.6` the rate is at least `0.441`**).
+
+## The register and the records
+
+* `integral_bRate_le_half`, ★ `integral_bRate_flight` (**flat at `≤ 2.875·10¹²` through the
+  flight**), ★★ `integral_bRate_return` (**`≥ 3·10¹²` once the echo has passed `B`**: departure plus
+  the return's window);
+* `bRadarWeight` (three registers: `B`'s encounter, `A`'s and `B`'s clocks' rates),
+  `bRadarWeight_zero`, `bRadarWeight_one`, `bRadarWeight_two`, `continuous_bRadarWeight`,
+  `bRadarEvolve`, `bRadarEvolve_self`, `bRadarEvolve_comp`, `measurable_bRadarEvolve`, `bRadarPrep`,
+  `bRadarEvolve_prep_fst`;
+* ★★★ `bEmission` (**`B`'s register reaches `10¹²` within `[2·10¹², 2.15·10¹²]`**), `aRelayRead`,
+  `measurable_aRelayRead`, ★★★ `aReception` (**`A`'s relay register reaches `3·10¹¹` within
+  `[3·10¹³ − 8·10¹¹, 3·10¹³]`** — the relay's firing is the record), ★★★ `bReturn` (**the same
+  register of `B` reaches `3·10¹²` within `[3.5·10¹³, 3.87·10¹³]`** — the echo back at `B`).
 
 References: `specs/BACKLOG.md` #278, #274; `RecordLayer/DiracRelayA.lean` (`aRelayFlow`,
 `bMess_tail_fine`, `rest_tail_fine`, `dirac_relay_at_rest`); `RecordLayer/DiracRadar.lean`
@@ -437,7 +451,273 @@ theorem bRate_ge_return (hfree' : aRelayFlow s₀ (aRelayPrep L) = (aRelayState 
   rw [bRate_eq]
   exact le_max_of_le_left (by linarith [(abs_le.1 hd).1, (abs_le.1 hd).2])
 
+/-! ### `B`'s register: the integral -/
+
+omit hs₀ hfreeOn in
+/-- The register never exceeds half the elapsed time. -/
+theorem integral_bRate_le_half {t : ℝ} (ht : 0 ≤ t) :
+    ∫ s in (0 : ℝ)..t, bRate L s ≤ t / 2 := by
+  have h := intervalIntegral.integral_mono_on ht
+    ((continuous_bRate (L := L)).intervalIntegrable 0 t)
+    (intervalIntegrable_const (μ := volume) (c := (1 / 2 : ℝ))) fun s _ => bRate_le_half hL s
+  rw [intervalIntegral.integral_const, smul_eq_mul] at h
+  linarith
+
+omit hfreeOn in
+/-- **Through the flight the register is flat**: from `5.75·10¹²` until the echo approaches, the
+rate is zero, so the register stays at most `2.875·10¹²`. -/
+theorem integral_bRate_flight
+    (hfree' : aRelayFlow s₀ (aRelayPrep L) = (aRelayState s₀, relayLo))
+    (hfreeOn' : ∀ t ∈ Icc (0 : ℝ) s₀,
+      aRelayFlow t (aRelayPrep L) = (aRelayState t, aRelayReg L t))
+    {t : ℝ} (ht0 : 0 ≤ t) (ht : t ≤ (2 * s₀ + 3 / 1000) / (16 / 10) - 14375 * 10 ^ 8) :
+    ∫ s in (0 : ℝ)..t, bRate L s ≤ 2875 * 10 ^ 9 := by
+  have hb := s₀_bounds hs₀
+  rcases le_total t (575 * 10 ^ 10) with h | h
+  · exact (integral_bRate_le_half hL ht0).trans (by linarith)
+  have hi : ∀ x y : ℝ, IntervalIntegrable (bRate L) volume x y :=
+    fun x y => (continuous_bRate (L := L)).intervalIntegrable x y
+  rw [← intervalIntegral.integral_add_adjacent_intervals (hi 0 (575 * 10 ^ 10))
+    (hi (575 * 10 ^ 10) t)]
+  have hzero : ∫ s in (575 * 10 ^ 10 : ℝ)..t, bRate L s = 0 := by
+    rw [intervalIntegral.integral_congr (g := fun _ => (0 : ℝ)) fun s hs => ?_]
+    · exact intervalIntegral.integral_zero
+    · rw [Set.uIcc_of_le h] at hs
+      show bRate L s = 0
+      rcases le_total s s₀ with h1 | h1
+      · exact bRate_eq_zero_depart hL hs₀ hfreeOn' hs.1 h1
+      rcases le_total s (s₀ + 3 / 1000) with h2 | h2
+      · have := bRate_eq_zero_pulse hL hs₀ hfree' (u := s - s₀) (by linarith) (by linarith)
+        rwa [add_sub_cancel] at this
+      · exact bRate_eq_zero_return hL hs₀ hfree' h2 (hs.2.trans ht)
+  rw [hzero, add_zero]
+  exact (integral_bRate_le_half hL (by norm_num)).trans (by norm_num)
+
+omit hfreeOn in
+/-- **After the echo has passed `B` the register is at least `3·10¹²`.** -/
+theorem integral_bRate_return
+    (hfree' : aRelayFlow s₀ (aRelayPrep L) = (aRelayState s₀, relayLo))
+    (hfreeOn' : ∀ t ∈ Icc (0 : ℝ) s₀,
+      aRelayFlow t (aRelayPrep L) = (aRelayState t, aRelayReg L t))
+    {t : ℝ} (ht : (2 * s₀ + 3 / 1000) / (16 / 10) + 1125 * 10 ^ 9 ≤ t) :
+    3 * 10 ^ 12 ≤ ∫ s in (0 : ℝ)..t, bRate L s := by
+  have hb := s₀_bounds hs₀
+  set c := (2 * s₀ + 3 / 1000) / (16 / 10) with hc
+  have hc1 : 45 * 10 ^ 11 ≤ c - 1125 * 10 ^ 9 := by rw [hc]; nlinarith
+  have h := le_integral_two_windows (continuous_bRate (L := L))
+    (κ₁ := (1 - 23 / 1000) * (1 - 11 / 1000) - 1 / 2)
+    (κ₂ := (1 - 23 / 1000) * (1 - 11 / 1000) - 2 * (3 / 1000 * (42 / 10)) - 1 / 2)
+    (a := 0) (b := 45 * 10 ^ 11) (c := c - 1125 * 10 ^ 9) (d := c + 1125 * 10 ^ 9) (t := t)
+    le_rfl (by norm_num) hc1 (by linarith) ht (fun s _ => bRate_nonneg s)
+    (fun s hs1 hs2 => bRate_ge_depart hL hs₀ hfreeOn' hs1.le hs2.le)
+    (fun s hs1 hs2 => bRate_ge_return hL hs₀ hfree' (by rw [abs_le]; constructor <;> linarith))
+  refine le_trans ?_ h
+  norm_num
+
+/-! ### The record arena -/
+
+omit hL hs₀ hfreeOn in
+/-- **The rates of `B`'s radar arena's three registers**: `B`'s clipped encounter weight with the
+messenger, `A`'s clock's rate, `B`'s clock's rate. -/
+noncomputable def bRadarWeight : Fin 3 → GateArena (RelayIdx L) → ℝ :=
+  ![fun x => bEnc x.1,
+    fun x => rateWeight (relayHop L) 3 (3 + 1 / 10 ^ 11) (tickMark (restObserver (L := L) 0))
+      (devA x.1),
+    fun x => rateWeight (relayHop L) 3 (3 + 1 / 10 ^ 11)
+      (tickMark (approachObserver (L := L) (-(5 * 10 ^ 13)))) (devB x.1)]
+
+omit hL hs₀ hfreeOn in
+theorem bRadarWeight_zero : bRadarWeight (L := L) 0 = fun x => bEnc x.1 := by
+  simp [bRadarWeight]
+
+omit hL hs₀ hfreeOn in
+theorem bRadarWeight_one : bRadarWeight (L := L) 1 = fun x =>
+    rateWeight (relayHop L) 3 (3 + 1 / 10 ^ 11) (tickMark (restObserver (L := L) 0))
+      (devA x.1) := by
+  simp [bRadarWeight]
+
+omit hL hs₀ hfreeOn in
+theorem bRadarWeight_two : bRadarWeight (L := L) 2 = fun x =>
+    rateWeight (relayHop L) 3 (3 + 1 / 10 ^ 11)
+      (tickMark (approachObserver (L := L) (-(5 * 10 ^ 13)))) (devB x.1) := by
+  simp [bRadarWeight]
+
+omit hL hs₀ hfreeOn in
+theorem continuous_bRadarWeight (i : Fin 3) :
+    Continuous fun p : GateArena (RelayIdx L) × ℝ => bRadarWeight i (aRelayFlow p.2 p.1) := by
+  have hflow : Continuous fun p : GateArena (RelayIdx L) × ℝ => (aRelayFlow p.2 p.1).1 :=
+    continuous_fst.comp
+      ((continuous_gatedFlow aRelayLipschitz).comp (continuous_snd.prodMk continuous_fst))
+  fin_cases i
+  · show Continuous fun p : GateArena (RelayIdx L) × ℝ => bRadarWeight 0 (aRelayFlow p.2 p.1)
+    rw [bRadarWeight_zero]
+    exact continuous_bEnc.comp hflow
+  · show Continuous fun p : GateArena (RelayIdx L) × ℝ => bRadarWeight 1 (aRelayFlow p.2 p.1)
+    rw [bRadarWeight_one]
+    exact (continuous_rateWeight _ _ _ _).comp (continuous_devA.comp hflow)
+  · show Continuous fun p : GateArena (RelayIdx L) × ℝ => bRadarWeight 2 (aRelayFlow p.2 p.1)
+    rw [bRadarWeight_two]
+    exact (continuous_rateWeight _ _ _ _).comp (continuous_devB.comp hflow)
+
+omit hL hs₀ hfreeOn in
+/-- **`B`'s radar arena**: the relay flow at `A` with three registers. -/
+noncomputable def bRadarEvolve :
+    OnticTime → OnticTime → GateArena (RelayIdx L) × (Fin 3 → ℝ)
+      → GateArena (RelayIdx L) × (Fin 3 → ℝ) :=
+  regEvolve aRelayFlow bRadarWeight
+
+omit hL hs₀ hfreeOn in
+theorem bRadarEvolve_self (t : OnticTime) : bRadarEvolve (L := L) t t = id :=
+  regEvolve_self aRelayFlow bRadarWeight (fun x => gatedFlow_zero aRelayLipschitz x) t
+
+omit hL hs₀ hfreeOn in
+theorem bRadarEvolve_comp (s t u : OnticTime) :
+    bRadarEvolve t u ∘ bRadarEvolve s t = bRadarEvolve (L := L) s u :=
+  regEvolve_comp aRelayFlow bRadarWeight (fun s t x => gatedFlow_add aRelayLipschitz s t x)
+    continuous_bRadarWeight s t u
+
+omit hL hs₀ hfreeOn in
+theorem measurable_bRadarEvolve (s t : OnticTime) : Measurable (bRadarEvolve (L := L) s t) :=
+  measurable_regFlow aRelayFlow bRadarWeight (fun t => measurable_gatedFlow aRelayLipschitz t)
+    continuous_bRadarWeight (t - s)
+
+omit hL hs₀ hfreeOn in
+/-- **The preparation**: the relay flow's, every register at `0`. -/
+noncomputable def bRadarPrep (L : ℕ) [NeZero L] : GateArena (RelayIdx L) × (Fin 3 → ℝ) :=
+  (aRelayPrep L, 0)
+
+omit hL hs₀ hfreeOn in
+theorem bRadarEvolve_prep_fst (t : ℝ) :
+    (bRadarEvolve (L := L) 0 t (bRadarPrep L)).1 = aRelayFlow t (aRelayPrep L) := by
+  show aRelayFlow (t - 0) (aRelayPrep L) = _
+  rw [sub_zero]
+
 end WithL
+
+/-! ### The records -/
+
+section Records
+
+variable (hL : 10 ^ 19 ≤ L)
+include hL
+
+/-- ★★★ **`B`'s emission**: `B`'s register reaches `10¹²` within `[2·10¹², 2.15·10¹²]` — the
+messenger leaving `B`. -/
+noncomputable def bEmission {w : ℝ} (hw : 0 ≤ w) :
+    ActualOccurrence (GateArena (RelayIdx L) × (Fin 3 → ℝ)) ℕ L :=
+  regDetector aRelayFlow bRadarWeight (fun x => gatedFlow_zero aRelayLipschitz x)
+    (fun s t x => gatedFlow_add aRelayLipschitz s t x) continuous_bRadarWeight
+    (fun t => measurable_gatedFlow aRelayLipschitz t) 0 (10 ^ 12) (aRelayPrep L) Finset.univ
+    (τ₀ := 2 * 10 ^ 12) (τ₁ := 215 * 10 ^ 10) (by norm_num) (by norm_num) hw
+    (fun s _ => by rw [bRadarWeight_zero]; exact bEnc_nonneg _)
+    (fun t ht0 ht => by
+      rw [bRadarWeight_zero]
+      exact (integral_bRate_le_half hL ht0).trans_lt (by linarith))
+    (by
+      rw [bRadarWeight_zero]
+      obtain ⟨s₀, hs₀, h₀⟩ := exists_aRelayCross hL
+      have hfreeOn := aRelayFlow_eq_free hL h₀.le
+      have h := le_integral_of_ge_on (continuous_bRate (L := L))
+        (κ := (1 - 23 / 1000) * (1 - 11 / 1000) - 1 / 2) (tn := 0) (te := 45 * 10 ^ 11)
+        (t := 215 * 10 ^ 10) le_rfl (by norm_num) (by norm_num) (fun s _ => bRate_nonneg s)
+        fun s hs1 hs2 => bRate_ge_depart hL hs₀ hfreeOn hs1 hs2
+      exact le_trans (by norm_num) h)
+
+/-- **`A`'s relay register, read.** -/
+noncomputable def aRelayRead (y : GateArena (RelayIdx L) × (Fin 3 → ℝ)) : ℕ :=
+  if relayLo ≤ y.1.2 then 1 else 0
+
+omit hL [NeZero L] in
+theorem measurable_aRelayRead : Measurable (aRelayRead (L := L)) :=
+  Measurable.ite (measurableSet_le measurable_const (measurable_snd.comp measurable_fst))
+    measurable_const measurable_const
+
+/-- ★★★ **`A`'s relay firing — the reception**: `A`'s relay register reaches `3·10¹¹` within
+`[3·10¹³ − 8·10¹¹, 3·10¹³]`. -/
+noncomputable def aReception {w : ℝ} (hw : 0 ≤ w) :
+    ActualOccurrence (GateArena (RelayIdx L) × (Fin 3 → ℝ)) ℕ L where
+  evolve := bRadarEvolve
+  evolve_self := bRadarEvolve_self
+  evolve_comp := bRadarEvolve_comp
+  measurable_evolve := measurable_bRadarEvolve
+  readout := aRelayRead
+  measurable_readout := measurable_aRelayRead
+  ready := {y | y.1.2 = 0}
+  measurableSet_ready := measurableSet_eq_fun (measurable_snd.comp measurable_fst) measurable_const
+  prep := bRadarPrep L
+  prep_mem := rfl
+  site := Finset.univ
+  start := 0
+  value := 1
+  writeStart := aRelayTk - 8 * 10 ^ 11
+  writeEnd := aRelayTk
+  window := w
+  isWrite :=
+    have htk : aRelayTk = 3 * 10 ^ 13 := rfl
+    { start_le := by rw [htk]; norm_num
+      interval := by linarith
+      window_nonneg := hw
+      before := fun t ht0 ht => by
+        show aRelayRead (bRadarEvolve 0 t (bRadarPrep L)) ≠ 1
+        rw [aRelayRead, bRadarEvolve_prep_fst]
+        have hr : aRelayReg L (aRelayTk - 8 * 10 ^ 11) ≤ relayLo :=
+          (aRelayReg_start_le hL).trans (by unfold relayLo; norm_num)
+        rw [aRelayFlow_eq_free hL hr t ⟨ht0, ht.le⟩]
+        have hmono : aRelayReg L t ≤ aRelayReg L (aRelayTk - 8 * 10 ^ 11) := aRelayReg_mono ht.le
+        have hlt : aRelayReg L t < relayLo := by
+          have := aRelayReg_start_le hL
+          have h25 : (25 * 10 ^ 10 : ℝ) < relayLo := by unfold relayLo; norm_num
+          linarith
+        show (if relayLo ≤ aRelayReg L t then (1 : ℕ) else 0) ≠ 1
+        split_ifs with h
+        · exact absurd h (not_le.2 hlt)
+        · decide
+      holds := fun t ht _ => by
+        show aRelayRead (bRadarEvolve 0 t (bRadarPrep L)) = 1
+        rw [aRelayRead, bRadarEvolve_prep_fst]
+        obtain ⟨s₀, hs₀, h₀⟩ := exists_aRelayCross hL
+        have hs₀0 : 0 ≤ s₀ := by rw [htk] at hs₀; linarith [hs₀.1]
+        have hfree := aRelayFlow_eq_free hL h₀.le s₀ ⟨hs₀0, le_rfl⟩
+        have h1 : relayLo ≤ (aRelayFlow t (aRelayPrep L)).2 := by
+          calc relayLo = (aRelayFlow s₀ (aRelayPrep L)).2 := by rw [hfree, h₀]
+            _ ≤ _ := aRelayFlow_register_mono (hs₀.2.trans ht)
+        simp [h1] }
+
+/-- ★★★ **`B`'s return**: the same register reaches `3·10¹²` within `[3.5·10¹³, 3.87·10¹³]` —
+the echo back at `B`. -/
+noncomputable def bReturn {w : ℝ} (hw : 0 ≤ w) :
+    ActualOccurrence (GateArena (RelayIdx L) × (Fin 3 → ℝ)) ℕ L :=
+  regDetector aRelayFlow bRadarWeight (fun x => gatedFlow_zero aRelayLipschitz x)
+    (fun s t x => gatedFlow_add aRelayLipschitz s t x) continuous_bRadarWeight
+    (fun t => measurable_gatedFlow aRelayLipschitz t) 0 (3 * 10 ^ 12) (aRelayPrep L) Finset.univ
+    (τ₀ := 35 * 10 ^ 12) (τ₁ := 387 * 10 ^ 11) (by norm_num) (by norm_num) hw
+    (fun s _ => by rw [bRadarWeight_zero]; exact bEnc_nonneg _)
+    (fun t ht0 ht => by
+      rw [bRadarWeight_zero]
+      obtain ⟨s₀, hs₀, h₀⟩ := exists_aRelayCross hL
+      have hfreeOn := aRelayFlow_eq_free hL h₀.le
+      have hs₀0 : 0 ≤ s₀ := by
+        have htk : aRelayTk = 3 * 10 ^ 13 := rfl
+        rw [htk] at hs₀; linarith [hs₀.1]
+      have hfree : aRelayFlow s₀ (aRelayPrep L) = (aRelayState s₀, relayLo) := by
+        rw [hfreeOn s₀ ⟨hs₀0, le_rfl⟩, h₀]
+      have h1 : 3 * 10 ^ 13 - 8 * 10 ^ 11 ≤ s₀ := hs₀.1
+      exact (integral_bRate_flight hL hs₀ hfree hfreeOn ht0 (by linarith)).trans_lt
+        (by norm_num))
+    (by
+      rw [bRadarWeight_zero]
+      obtain ⟨s₀, hs₀, h₀⟩ := exists_aRelayCross hL
+      have hfreeOn := aRelayFlow_eq_free hL h₀.le
+      have hs₀0 : 0 ≤ s₀ := by
+        have htk : aRelayTk = 3 * 10 ^ 13 := rfl
+        rw [htk] at hs₀; linarith [hs₀.1]
+      have hfree : aRelayFlow s₀ (aRelayPrep L) = (aRelayState s₀, relayLo) := by
+        rw [hfreeOn s₀ ⟨hs₀0, le_rfl⟩, h₀]
+      have hb := s₀_bounds hs₀
+      exact integral_bRate_return hL hs₀ hfree hfreeOn (by nlinarith))
+
+end Records
+
 
 end CSD.RecordLayer
 
