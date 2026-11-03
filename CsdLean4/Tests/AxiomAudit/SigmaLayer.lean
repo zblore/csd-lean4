@@ -15268,4 +15268,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.flat_massless_tail_le
 
+
+-- DiracResolution, second brick (BACKLOG #280 lever (b), 2026-11-03): the encounter law at any chord.
+/-- info: 'CSD.RecordLayer.exp_I_mul_star_exp_I' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_I_mul_star_exp_I
+
+/-- info: 'CSD.RecordLayer.encounter_near_of_tails' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.encounter_near_of_tails
+
+/-- info: 'CSD.RecordLayer.encounter_far_of_tails' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.encounter_far_of_tails
+
+/-- info: 'CSD.RecordLayer.encounter_near_angle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.encounter_near_angle
+
+/-- info: 'CSD.RecordLayer.encounter_far_angle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.encounter_far_angle
+
 end CSD.Tests.AxiomAudit

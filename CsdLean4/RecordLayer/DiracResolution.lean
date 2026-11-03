@@ -8,9 +8,9 @@ module
 public import CsdLean4.RecordLayer.DiracMasslessTails
 
 /-!
-# The records' resolution: the flat massless packet's tail at any number of modes
+# The records' resolution: tails and encounters at any number of modes and any chord
 
-**Category:** 7-SigmaLayer (the record layer). BACKLOG #280, lever (b), first brick.
+**Category:** 7-SigmaLayer (the record layer). BACKLOG #280, lever (b), first and second bricks.
 
 #278's Lorentz map holds to `≈ 23%`, and #280's diagnosis traces that error to the localisation
 bound: the only fact about where a massless packet is that the record chain uses is the mean of
@@ -29,19 +29,34 @@ resolution as a parameter.
   `|t| · masslessErr` is at most `1/N`, the weight off the arc is at most `ε` — at a fixed tail `ε`
   the chord shrinks as `N^{−1/2}`).
 
+## The encounter law at any chord
+
+* `exp_I_mul_star_exp_I` (the relative phase of two points on the circle);
+* ★★ `encounter_near_of_tails`, ★★ `encounter_far_of_tails` (**two normalised states with tails
+  `ε_A`, `ε_B` off chord-`ρ_A`, `ρ_B` arcs: if their predicted relative position is within
+  `ρ − ρ_A − ρ_B` of `w`, the encounter weight with window chord `ρ` is at least
+  `(1 − ε_A)(1 − ε_B)`; beyond `ρ + ρ_A + ρ_B`, at most `ε_A + ε_B`**);
+* ★★ `encounter_near_angle`, ★★ `encounter_far_angle` (the same by the predicted angles: near for
+  `|β − α| ≤ ρ − ρ_A − ρ_B`, far once `ρ + ρ_A + ρ_B < 2 sin(y/2)` for `y ≤ |β − α| ≤ 2π − y` — the
+  encounter's window in time is the chord over the relative angular speed, and with the chord law
+  every chord in it can shrink as `N^{−1/2}`).
+
 ## Honest scope
 
 ⚠️ **Chebyshev only**: the bound uses the second moment of the angle; the flat profile's true
 tail decays like `1/(Nρ)` (Dirichlet kernel, estimate), so this is lever (b) of #280, not (a).
 
-⚠️ **The tail only**: the encounter windows, the registers and the records at a symbolic chord are
-the next bricks of lever (b); the drift term grows with `|t|`, and keeping it below `1/N` bounds
-the time span at a given lattice spacing.
+⚠️ **Tails and encounters only**: the devices' (massive) tails at any `N`, the registers and the
+records at a symbolic chord are the next bricks of lever (b); the drift term grows with `|t|`, and
+keeping it below `1/N` bounds the time span at a given lattice spacing.
 
 References: `specs/BACKLOG.md` #280, #278, #248; `RecordLayer/DiracMasslessTails.lean`
 (`regionWeight_compl_chordArc_massless_le`, `bMess_re_transPhase_zero`, `bMess_tail`);
 `CV/DiracMassless.lean` (`re_transPhase_unitAmp_zero`, `masslessErr`); `CV/DiracPacketLimit.lean`
-(`flat_sums`, `flat_packet_localised`); `RecordLayer/DiracTwoCharts.lean` (`lorentz_chart_bounds`).
+(`flat_sums`, `flat_packet_localised`); `RecordLayer/DiracTwoCharts.lean` (`lorentz_chart_bounds`);
+`RecordLayer/DiracObservers.lean` (`le_relWeight`, `relWeight_le`, `two_sin_le_norm_exp_sub_one`);
+`RecordLayer/DiracDoppler.lean` (`offset_mem_of_near_at`, `offset_not_mem_of_far_at`);
+`RecordLayer/DiracRelayA.lean` (`aEncounter_near`, `aEncounter_far`).
 -/
 
 @[expose] public section
@@ -114,5 +129,90 @@ theorem flat_massless_tail_le (hN : 0 < N) (hNL : N < L) (hℓ : 0 < ℓ) (hD0 :
     rw [show (4 : ℝ) / N = 2 * (1 / N + 1 / N) by ring]
     linarith
   linarith
+
+/-! ### The encounter law at any chord -/
+
+section Encounter
+
+variable {ΨA ΨB : (ZMod L × Fin 2) × Fin 2 → ℂ} {uA uB w : ℂ} {ρA ρB ρ εA εB : ℝ}
+
+/-- The relative phase of two points on the unit circle. -/
+theorem exp_I_mul_star_exp_I (α β : ℝ) :
+    exp (I * (β : ℂ)) * star (exp (I * (α : ℂ))) = exp (I * ((β - α : ℝ) : ℂ)) := by
+  show exp (I * (β : ℂ)) * (starRingEnd ℂ) (exp (I * (α : ℂ))) = _
+  rw [← Complex.exp_conj, map_mul, Complex.conj_I, Complex.conj_ofReal, ← Complex.exp_add]
+  congr 1
+  push_cast
+  ring
+
+/-- ★★ **Near, at any chord.** Two normalised states, each with weight at most `ε` off its
+chord-`ρ_•` arc about a predicted point: if the predicted relative position is within
+`ρ − ρ_A − ρ_B` of `w`, the encounter weight with window chord `ρ` is at least
+`(1 − ε_A)(1 − ε_B)`. -/
+theorem encounter_near_of_tails (huB : ‖uB‖ = 1) (hA1 : devRegionWeight ΨA Finset.univ = 1)
+    (hB1 : devRegionWeight ΨB Finset.univ = 1)
+    (htA : devRegionWeight ΨA (chordArc uA ρA)ᶜ ≤ εA)
+    (htB : devRegionWeight ΨB (chordArc uB ρB)ᶜ ≤ εB) (hεB : εB ≤ 1)
+    (h : ‖uB * star uA - w‖ + ρA + ρB ≤ ρ) :
+    (1 - εA) * (1 - εB) ≤ relWeight w ρ ΨA ΨB := by
+  have hX := devRegionWeight_add_compl ΨA (chordArc uA ρA)
+  have hY := devRegionWeight_add_compl ΨB (chordArc uB ρB)
+  rw [hA1] at hX
+  rw [hB1] at hY
+  have hle := le_relWeight (w := w) (ρ := ρ) (ΨA := ΨA) (ΨB := ΨB) (X := chordArc uA ρA)
+    (Y := chordArc uB ρB) fun j hj k hk =>
+      offset_mem_of_near_at huB (mem_chordArc.1 hj) (mem_chordArc.1 hk) h
+  calc (1 - εA) * (1 - εB)
+      ≤ devRegionWeight ΨA (chordArc uA ρA) * devRegionWeight ΨB (chordArc uB ρB) :=
+        mul_le_mul (by linarith) (by linarith) (by linarith) (devRegionWeight_nonneg _ _)
+    _ ≤ _ := hle
+
+/-- ★★ **Far, at any chord.** With the same tails, if the predicted relative position is more
+than `ρ + ρ_A + ρ_B` from `w`, the encounter weight is at most `ε_A + ε_B`. -/
+theorem encounter_far_of_tails (huB : ‖uB‖ = 1) (hA1 : devRegionWeight ΨA Finset.univ = 1)
+    (hB1 : devRegionWeight ΨB Finset.univ = 1)
+    (htA : devRegionWeight ΨA (chordArc uA ρA)ᶜ ≤ εA)
+    (htB : devRegionWeight ΨB (chordArc uB ρB)ᶜ ≤ εB)
+    (h : ρ + ρA + ρB < ‖uB * star uA - w‖) :
+    relWeight w ρ ΨA ΨB ≤ εA + εB := by
+  have hle := relWeight_le (w := w) (ρ := ρ) (ΨA := ΨA) (ΨB := ΨB) (X := chordArc uA ρA)
+    (Y := chordArc uB ρB) fun j hj k hk =>
+      offset_not_mem_of_far_at huB (mem_chordArc.1 hj) (mem_chordArc.1 hk) h
+  rw [hA1, hB1, mul_one, one_mul] at hle
+  linarith
+
+/-- ★★ **Near, by the angle.** For predicted angles `α`, `β` of the two states, if
+`|β − α| ≤ ρ − ρ_A − ρ_B` the encounter weight (window about `1`) is at least
+`(1 − ε_A)(1 − ε_B)`: the near window in time is the chord margin over the relative angular
+speed. -/
+theorem encounter_near_angle {α β : ℝ} (hA1 : devRegionWeight ΨA Finset.univ = 1)
+    (hB1 : devRegionWeight ΨB Finset.univ = 1)
+    (htA : devRegionWeight ΨA (chordArc (exp (I * (α : ℂ))) ρA)ᶜ ≤ εA)
+    (htB : devRegionWeight ΨB (chordArc (exp (I * (β : ℂ))) ρB)ᶜ ≤ εB) (hεB : εB ≤ 1)
+    (h : |β - α| ≤ ρ - ρA - ρB) :
+    (1 - εA) * (1 - εB) ≤ relWeight 1 ρ ΨA ΨB := by
+  refine encounter_near_of_tails (norm_exp_I_mul_ofReal_eq_one β) hA1 hB1 htA htB hεB ?_
+  have e := exp_I_mul_star_exp_I α β
+  have h0 := norm_exp_sub_exp_le (β - α) 0
+  rw [Complex.ofReal_zero, mul_zero, Complex.exp_zero, sub_zero] at h0
+  rw [e]
+  linarith
+
+/-- ★★ **Far, by the angle.** If the relative angle `β − α` is at least `y` from every multiple of
+`2π` and `ρ + ρ_A + ρ_B < 2 sin(y/2)`, the encounter weight is at most `ε_A + ε_B`. -/
+theorem encounter_far_angle {α β y : ℝ} (hA1 : devRegionWeight ΨA Finset.univ = 1)
+    (hB1 : devRegionWeight ΨB Finset.univ = 1)
+    (htA : devRegionWeight ΨA (chordArc (exp (I * (α : ℂ))) ρA)ᶜ ≤ εA)
+    (htB : devRegionWeight ΨB (chordArc (exp (I * (β : ℂ))) ρB)ᶜ ≤ εB) (hy : 0 ≤ y)
+    (h1 : y ≤ |β - α|) (h2 : |β - α| ≤ 2 * Real.pi - y)
+    (hsin : ρ + ρA + ρB < 2 * Real.sin (y / 2)) :
+    relWeight 1 ρ ΨA ΨB ≤ εA + εB := by
+  refine encounter_far_of_tails (norm_exp_I_mul_ofReal_eq_one β) hA1 hB1 htA htB ?_
+  have e := exp_I_mul_star_exp_I α β
+  rw [e]
+  exact hsin.trans_le (two_sin_le_norm_exp_sub_one hy h1 h2)
+
+end Encounter
+
 
 end CSD.RecordLayer
