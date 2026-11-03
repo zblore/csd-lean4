@@ -15424,4 +15424,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.clock_reading_error
 
+
+-- ApparatusIndependence, the quadrature clock (BACKLOG #283, 2026-11-03).
+/-- info: 'CSD.RecordLayer.star_tickMark_mul_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.star_tickMark_mul_eq
+
+/-- info: 'CSD.RecordLayer.re_star_I_tickMark_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.re_star_I_tickMark_mul
+
+/-- info: 'CSD.RecordLayer.abs_rateWeight_sub_le_of_mark' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_rateWeight_sub_le_of_mark
+
+/-- info: 'CSD.RecordLayer.abs_quadRate_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_quadRate_sub_le
+
+/-- info: 'CSD.RecordLayer.continuous_quadRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_quadRate
+
+/-- info: 'CSD.RecordLayer.one_le_abs_cos_add_abs_sin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_le_abs_cos_add_abs_sin
+
+/-- info: 'CSD.RecordLayer.quadResponse_slope' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.quadResponse_slope
+
+/-- info: 'CSD.RecordLayer.abs_integral_quadRate_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_integral_quadRate_sub_le
+
+/-- info: 'CSD.RecordLayer.quad_clock_reading_error' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.quad_clock_reading_error
+
 end CSD.Tests.AxiomAudit
