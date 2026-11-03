@@ -15191,4 +15191,30 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.measurable_aRelayRead
 
+
+-- DiracBRadar stage 2c (BACKLOG #278, 2026-11-03): the clocks' fields and B's radar bundle.
+/-- info: 'CSD.RecordLayer.bEmission_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bEmission_fields
+
+/-- info: 'CSD.RecordLayer.aReception_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.aReception_fields
+
+/-- info: 'CSD.RecordLayer.bReturn_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bReturn_fields
+
+/-- info: 'CSD.RecordLayer.bRestTick_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bRestTick_fields
+
+/-- info: 'CSD.RecordLayer.bApproachTick_fields' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bApproachTick_fields
+
+/-- info: 'CSD.RecordLayer.dirac_b_radar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_b_radar
+
 end CSD.Tests.AxiomAudit
