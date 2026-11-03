@@ -15244,4 +15244,14 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_two_charts
 
+
+-- DiracTwoCharts landing 4 (BACKLOG #278, 2026-11-03): the Lorentz map between the charts.
+/-- info: 'CSD.RecordLayer.lorentzBoost_approach' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lorentzBoost_approach
+
+/-- info: 'CSD.RecordLayer.lorentz_chart_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lorentz_chart_bounds
+
 end CSD.Tests.AxiomAudit
