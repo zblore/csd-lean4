@@ -10,7 +10,8 @@ public import CsdLean4.RecordLayer.DiracMasslessTails
 /-!
 # The records' resolution: tails and encounters at any number of modes and any chord
 
-**Category:** 7-SigmaLayer (the record layer). BACKLOG #280, lever (b), first four bricks.
+**Category:** 7-SigmaLayer (the record layer). BACKLOG #280, lever (b), first four bricks;
+lever (a), first brick.
 
 #278's Lorentz map holds to `≈ 23%`, and #280's diagnosis traces that error to the localisation
 bound: the only fact about where a massless packet is that the record chain uses is the mean of
@@ -64,6 +65,18 @@ resolution as a parameter.
   angle with `ρ + ρ_A + ρ_B < 2 sin(y/2)` — **the record's error is the chords over the relative
   angular speed plus the threshold's fill time**, every term of which the chord law shrinks).
 
+## Lever (a): the quadratic drift
+
+* ★★ `le_re_sum_phase` (**`Σ w_i e^{iΔ_i t}` with `w_i ≥ 0` and `|Δ_i − Ω| ≤ δ`, read against
+  `e^{iΩt}`, keeps `(1 − (δt)²/2) Σ w_i` of its real part** — `cos x ≥ 1 − x²/2` where
+  `norm_sum_phase_sub_le` uses `|e^{ix} − 1| ≤ |x|`);
+* ★★★ `regionWeight_compl_chordArc_quad` (**a massive packet with real nonnegative amplitudes and
+  nonnegative neighbour spin overlaps has weight off the chord-`ρ` arc about its group-velocity
+  angle, times `(ρ − η)²/2`, at most `1 − Re transPhase(0) + (δ' t)²/2`** — the drift quadratic in
+  `δ' t`, `δ' = vgLip · (2π/L)(δ + 2π/L)`; at the arenas' `δ' t ≈ 2.7·10⁻⁷` it is `~4·10⁻¹⁴`
+  against the linear `2.7·10⁻⁷`, so the optimum number of modes moves up and the localisation
+  floor is set by the profile's `1 − Re transPhase(0)`).
+
 ## Honest scope
 
 ⚠️ **Chebyshev only**: the bound uses the second moment of the angle; the flat profile's true
@@ -74,8 +87,10 @@ after its departure plateau (`record_window` with `P' ≤ P`), are applied in th
 instance at large `N`; the drift term grows with `|t|`, and
 keeping it below `1/N` bounds the time span at a given lattice spacing.
 
-References: `specs/BACKLOG.md` #280, #278, #248; `RecordLayer/DiracMasslessTails.lean`
-(`regionWeight_compl_chordArc_massless_le`, `bMess_re_transPhase_zero`, `bMess_tail`);
+References: `specs/BACKLOG.md` #280, #278, #248; `CV/DiracPacket.lean` (`transPhase_packet`,
+`transPhase_drift`, `abs_bandE_step_sub_le`, `norm_sum_phase_sub_le`);
+`RecordLayer/DiracMasslessTails.lean` (`regionWeight_compl_chordArc_massless_le`,
+`bMess_re_transPhase_zero`, `bMess_tail`);
 `CV/DiracMassless.lean` (`re_transPhase_unitAmp_zero`, `masslessErr`); `CV/DiracPacketLimit.lean`
 (`flat_sums`, `flat_packet_localised`); `RecordLayer/DiracTwoCharts.lean` (`lorentz_chart_bounds`);
 `RecordLayer/DiracObservers.lean` (`le_relWeight`, `relWeight_le`, `two_sin_le_norm_exp_sub_one`);
@@ -448,5 +463,118 @@ theorem encounter_record_window {ΨA ΨB : ℝ → (ZMod L × Fin 2) × Fin 2 �
   obtain ⟨h1, h2⟩ := hlim
   rw [e0] at h2
   exact ⟨fun t ht0 ht => h1 t ht0 (by rw [e1]; exact ht), h2⟩
+
+/-! ### Lever (a): the quadratic drift -/
+
+/-- ★★ **The quadratic phase bound.** For nonnegative weights `w_i` and frequencies within `δ` of
+`Ω`, the sum `Σ w_i e^{iΔ_i t}` read against `e^{iΩt}` keeps at least `(1 − (δt)²/2) Σ w_i` of its
+real part: the drift is quadratic in `δt`, where `|e^{ix} − 1| ≤ |x|` gives only linear. -/
+theorem le_re_sum_phase {ι : Type*} (s : Finset ι) (w Δ : ι → ℝ) (hw : ∀ i ∈ s, 0 ≤ w i)
+    (Ω t δ : ℝ) (hδ : ∀ i ∈ s, |Δ i - Ω| ≤ δ) :
+    (1 - (δ * t) ^ 2 / 2) * ∑ i ∈ s, w i
+      ≤ (star (exp (I * ((Ω * t : ℝ) : ℂ)))
+          * ∑ i ∈ s, (w i : ℂ) * exp (I * ((Δ i * t : ℝ) : ℂ))).re := by
+  rw [Finset.mul_sum, Finset.mul_sum, Complex.re_sum]
+  refine Finset.sum_le_sum fun i hi => ?_
+  have e : star (exp (I * ((Ω * t : ℝ) : ℂ))) * ((w i : ℂ) * exp (I * ((Δ i * t : ℝ) : ℂ)))
+      = (w i : ℂ) * exp (I * ((Δ i * t - Ω * t : ℝ) : ℂ)) := by
+    rw [← exp_I_mul_star_exp_I (Ω * t) (Δ i * t)]
+    ring
+  rw [e, Complex.re_ofReal_mul, show I * ((Δ i * t - Ω * t : ℝ) : ℂ)
+    = ((Δ i * t - Ω * t : ℝ) : ℂ) * I by ring, Complex.exp_ofReal_mul_I_re]
+  have hc := Real.one_sub_sq_div_two_le_cos (x := Δ i * t - Ω * t)
+  have hsq : (Δ i * t - Ω * t) ^ 2 ≤ (δ * t) ^ 2 := by
+    rw [show Δ i * t - Ω * t = (Δ i - Ω) * t by ring, mul_pow, mul_pow]
+    have h1 : (Δ i - Ω) ^ 2 ≤ δ ^ 2 := by
+      rw [← sq_abs (Δ i - Ω)]
+      exact pow_le_pow_left₀ (abs_nonneg _) (hδ i hi) 2
+    exact mul_le_mul_of_nonneg_right h1 (sq_nonneg t)
+  have hwi := hw i hi
+  nlinarith
+
+/-- ★★★ **A packet's tail with quadratic drift.** A massive packet with real nonnegative
+amplitudes `β` (normalised), nonnegative spin overlaps between neighbours, and angles within `δ`
+of `θ₀`: off the chord-`ρ` arc about a point within `η` of its group-velocity angle at time `t`,
+its weight times `(ρ − η)²/2` is at most `1 − Re transPhase(0) + (δ' t)²/2`, with
+`δ' = vgLip · (2π/L) · (δ + 2π/L)` the per-step frequency spread. The linear drift
+`|t| · δ'` of `transPhase_drift` becomes quadratic. -/
+theorem regionWeight_compl_chordArc_quad {J μ : ℝ} (hμ : 0 < μ) {W : Finset ℤ}
+    (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + L) (β : ℤ → ℝ) (hβ0 : ∀ m, 0 ≤ β m)
+    (hβ : ∑ m ∈ W, β m ^ 2 = 1)
+    (hspin : ∀ m, 0 ≤ spinCos J μ (angleZ L (m + 1)) (angleZ L m))
+    {θ₀ δ : ℝ} (hδ : ∀ m ∈ W, |angleZ L m - θ₀| ≤ δ)
+    {z : ℂ} {ρ η : ℝ} (hηρ : η ≤ ρ) (t : ℝ)
+    (hz : ‖exp (I * ((2 * Real.pi / L * groupVel J μ θ₀ * t : ℝ) : ℂ)) - z‖ ≤ η) :
+    regionWeight (packet (L := L) J μ W (unitAmp L J μ fun m => (β m : ℂ)) t) (chordArc z ρ)ᶜ
+        * ((ρ - η) ^ 2 / 2)
+      ≤ 1 - (transPhase (packet (L := L) J μ W (unitAmp L J μ fun m => (β m : ℂ)) 0)).re
+        + (vgLip J μ * (2 * Real.pi / L) * (δ + 2 * Real.pi / L) * t) ^ 2 / 2 := by
+  obtain ⟨hW, hDst⟩ := noWrap_distinct_of_window (L := L) hWin
+  have hLpos : (0 : ℝ) < L := by exact_mod_cast Nat.pos_of_ne_zero (NeZero.ne L)
+  have hh : (0 : ℝ) < 2 * Real.pi / L := by positivity
+  set ψ := fun t => packet (L := L) J μ W (unitAmp L J μ fun m => (β m : ℂ)) t with hψ
+  set φ := 2 * Real.pi / L * groupVel J μ θ₀ * t with hφ
+  set δ' := vgLip J μ * (2 * Real.pi / L) * (δ + 2 * Real.pi / L) with hδ'
+  -- the normalisation
+  have hn : ∀ s, chainInner (ψ s) (ψ s) = 1 := fun s => by
+    rw [hψ, chainInner_packet_unitAmp hμ hDst]
+    have : ∑ m ∈ W, ‖(β m : ℂ)‖ ^ 2 = ∑ m ∈ W, β m ^ 2 :=
+      Finset.sum_congr rfl fun m _ => by rw [Complex.norm_real, Real.norm_eq_abs, sq_abs]
+    rw [this, hβ, Complex.ofReal_one]
+  -- the weights
+  set w : ℤ → ℝ := fun m => β (m + 1) * β m * spinCos J μ (angleZ L (m + 1)) (angleZ L m)
+    with hw
+  have hw0 : ∀ m, 0 ≤ w m := fun m => mul_nonneg (mul_nonneg (hβ0 _) (hβ0 _)) (hspin m)
+  have hTP : ∀ s, transPhase (ψ s) = ∑ m ∈ W.filter (fun m => m + 1 ∈ W),
+      (w m : ℂ) * exp (I * (((bandE J μ (angleZ L (m + 1)) - bandE J μ (angleZ L m)) * s : ℝ)
+        : ℂ)) := fun s => by
+    rw [hψ, transPhase_packet J μ hW _ s]
+    refine Finset.sum_congr rfl fun m _ => ?_
+    rw [transWeight_unitAmp hμ, Complex.star_def, Complex.conj_ofReal, hw]
+    push_cast
+    ring
+  -- `Re T(0)` is the total weight, between `0` and `1`
+  have hS : (transPhase (ψ 0)).re = ∑ m ∈ W.filter (fun m => m + 1 ∈ W), w m := by
+    rw [hTP 0, Complex.re_sum]
+    refine Finset.sum_congr rfl fun m _ => ?_
+    rw [mul_zero, Complex.ofReal_zero, mul_zero, Complex.exp_zero, mul_one, Complex.ofReal_re]
+  have hS0 : 0 ≤ ∑ m ∈ W.filter (fun m => m + 1 ∈ W), w m := Finset.sum_nonneg fun m _ => hw0 m
+  have hS1 : ∑ m ∈ W.filter (fun m => m + 1 ∈ W), w m ≤ 1 := by
+    rw [← hS]
+    have h := norm_transPhase_le (L := L) (J := J) hμ hW hDst
+      (unitAmp L J μ fun m => (β m : ℂ)) 0
+    rw [hn 0, norm_one] at h
+    exact (Complex.re_le_norm _).trans h
+  -- the quadratic drift
+  have hq := le_re_sum_phase (W.filter (fun m => m + 1 ∈ W)) w
+    (fun m => bandE J μ (angleZ L (m + 1)) - bandE J μ (angleZ L m))
+    (fun m _ => hw0 m) (2 * Real.pi / L * groupVel J μ θ₀) t δ' fun m hm => by
+      have hmW := (Finset.mem_filter.1 hm).1
+      have h := abs_bandE_step_sub_le (J := J) hμ hh (angleZ L m) θ₀
+      rw [← angleZ_succ] at h
+      refine h.trans ?_
+      rw [hδ', vgLip]
+      have := hδ m hmW
+      gcongr
+  rw [← hTP t] at hq
+  -- the tail
+  have hu : ‖exp (I * (φ : ℂ))‖ = 1 := norm_exp_I_mul_ofReal_eq_one φ
+  have hreg := regionWeight_mul_le (ψ t) hu (B := (chordArc z ρ)ᶜ) (γ := 1 - (ρ - η) ^ 2 / 2)
+    fun k hk => by
+      rw [Finset.mem_compl, mem_chordArc, not_le] at hk
+      rw [re_star_mul_eq_chord (Circle.norm_coe _) hu]
+      have hd : ρ - η ≤ ‖(ZMod.toCircle k : ℂ) - exp (I * (φ : ℂ))‖ := by
+        have := norm_sub_le_norm_sub_add_norm_sub (ZMod.toCircle k : ℂ) (exp (I * (φ : ℂ))) z
+        linarith
+      have hsq := pow_le_pow_left₀ (by linarith) hd 2
+      linarith
+  rw [show 1 - (1 - (ρ - η) ^ 2 / 2) = (ρ - η) ^ 2 / 2 by ring, hn t, Complex.one_re] at hreg
+  have hφe : (φ : ℂ) = ((2 * Real.pi / L * groupVel J μ θ₀ * t : ℝ) : ℂ) := rfl
+  rw [hφe] at hreg
+  have hdq : (δ' * t) ^ 2 / 2 * ∑ m ∈ W.filter (fun m => m + 1 ∈ W), w m ≤ (δ' * t) ^ 2 / 2 := by
+    have : 0 ≤ (δ' * t) ^ 2 / 2 := by positivity
+    nlinarith
+  rw [hS]
+  nlinarith
 
 end CSD.RecordLayer
