@@ -15496,4 +15496,30 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.vRel_boost
 
+
+-- SlicingIndependence (BACKLOG #285 (ii), 2026-11-03): the ontic order of spacelike writes is invisible.
+/-- info: 'CSD.RecordLayer.actB_actB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.actB_actB
+
+/-- info: 'CSD.RecordLayer.actB_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.actB_one
+
+/-- info: 'CSD.RecordLayer.actA_actB_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.actA_actB_comm
+
+/-- info: 'CSD.RecordLayer.applyOps_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.applyOps_eq
+
+/-- info: 'CSD.RecordLayer.slicing_independent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.slicing_independent
+
+/-- info: 'CSD.RecordLayer.joint_weight_order_indep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.joint_weight_order_indep
+
 end CSD.Tests.AxiomAudit
