@@ -15324,4 +15324,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.regionWeight_compl_chordArc_quad
 
+
+-- DiracResolution, lever (a) second brick (BACKLOG #280, 2026-11-03): the sine profile.
+/-- info: 'CSD.RecordLayer.sum_Ico_int_eq_sum_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_Ico_int_eq_sum_range
+
+/-- info: 'CSD.RecordLayer.sine_neighbour_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sine_neighbour_sum
+
+/-- info: 'CSD.RecordLayer.sineNorm_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sineNorm_pos
+
+/-- info: 'CSD.RecordLayer.sineAmp_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sineAmp_nonneg
+
+/-- info: 'CSD.RecordLayer.sineAmp_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sineAmp_of_lt
+
+/-- info: 'CSD.RecordLayer.sineAmp_sums' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sineAmp_sums
+
+/-- info: 'CSD.RecordLayer.sine_packet_tail' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sine_packet_tail
+
 end CSD.Tests.AxiomAudit

@@ -11,7 +11,7 @@ public import CsdLean4.RecordLayer.DiracMasslessTails
 # The records' resolution: tails and encounters at any number of modes and any chord
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #280, lever (b), first four bricks;
-lever (a), first brick.
+lever (a), first two bricks.
 
 #278's Lorentz map holds to `≈ 23%`, and #280's diagnosis traces that error to the localisation
 bound: the only fact about where a massless packet is that the record chain uses is the mean of
@@ -77,6 +77,21 @@ resolution as a parameter.
   against the linear `2.7·10⁻⁷`, so the optimum number of modes moves up and the localisation
   floor is set by the profile's `1 − Re transPhase(0)`).
 
+## Lever (a): the sine profile
+
+* `sum_Ico_int_eq_sum_range` (an integer window's sum as a shifted `range` sum);
+* ★★ `sine_neighbour_sum` (**the discrete box's ground state `g i = sin(π(i + 1)/(n + 1))`:
+  `Σ g(i+1) g(i) = cos(π/(n + 1)) · Σ g(i)²`**, from `sin(x − h) + sin(x + h) = 2 sin x cos h` and
+  the zero ends);
+* `sineNorm`, `sineNorm_pos`, ★ `sineAmp` (the normalised sine profile on `[lo, lo + n)`),
+  `sineAmp_nonneg`, `sineAmp_of_lt`, ★★ `sineAmp_sums` (**`Σ β² = 1`, `Σ β_{m+1} β_m =
+  cos(π/(n + 1))`**);
+* ★★★ `sine_packet_tail` (**a massive packet with the sine profile over `n` modes: tail
+  `× (ρ − η)²/2 ≤ (π/(n + 1))²/2 + κ + (δ' t)²/2`** — the profile's floor `~π²/(2n²)` against the
+  flat profile's `1/n`, the drift quadratic; at `μ = 3`, `T ≈ 8·10¹³` the optimum is near
+  `n ≈ 1.5·10⁷` with floor `≈ 4·10⁻¹³` and a chord at a 1% tail of `≈ 10⁻⁵`, against `1.75·10⁻²`
+  for the arenas' observers — estimates, the instance is not built).
+
 ## Honest scope
 
 ⚠️ **Chebyshev only**: the bound uses the second moment of the angle; the flat profile's true
@@ -87,7 +102,8 @@ after its departure plateau (`record_window` with `P' ≤ P`), are applied in th
 instance at large `N`; the drift term grows with `|t|`, and
 keeping it below `1/N` bounds the time span at a given lattice spacing.
 
-References: `specs/BACKLOG.md` #280, #278, #248; `CV/DiracPacket.lean` (`transPhase_packet`,
+References: `specs/BACKLOG.md` #280, #278, #248; `CV/DiracPacketLimit.lean` (`one_sub_le_spinCos`,
+`re_transPhase_unitAmp_ge`, `filter_succ_Ico`); `CV/DiracPacket.lean` (`transPhase_packet`,
 `transPhase_drift`, `abs_bandE_step_sub_le`, `norm_sum_phase_sub_le`);
 `RecordLayer/DiracMasslessTails.lean` (`regionWeight_compl_chordArc_massless_le`,
 `bMess_re_transPhase_zero`, `bMess_tail`);
@@ -575,6 +591,174 @@ theorem regionWeight_compl_chordArc_quad {J μ : ℝ} (hμ : 0 < μ) {W : Finset
     have : 0 ≤ (δ' * t) ^ 2 / 2 := by positivity
     nlinarith
   rw [hS]
+  nlinarith
+
+/-! ### Lever (a): the sine profile -/
+
+/-- A sum over the integer window `[lo, lo + n)` is the sum over `range n` shifted by `lo`. -/
+theorem sum_Ico_int_eq_sum_range (F : ℤ → ℝ) (lo : ℤ) (n : ℕ) :
+    ∑ m ∈ Finset.Ico lo (lo + n), F m = ∑ i ∈ Finset.range n, F (lo + i) := by
+  have e : Finset.Ico lo (lo + n) = (Finset.range n).image fun i : ℕ => lo + i := by
+    ext m
+    simp only [Finset.mem_Ico, Finset.mem_image, Finset.mem_range]
+    constructor
+    · intro h
+      exact ⟨(m - lo).toNat, by omega, by omega⟩
+    · rintro ⟨i, hi, rfl⟩
+      omega
+  rw [e, Finset.sum_image fun a _ b _ h => by exact_mod_cast add_left_cancel h]
+
+/-- ★★ **The discrete box's ground state.** With `g i = sin(h (i + 1))`, `h = π/(n + 1)`, the
+neighbour sum is `cos h` times the squared sum: `Σ_{i < n−1} g(i+1) g(i) = cos h · Σ_{i < n} g(i)²`
+— from `sin(x − h) + sin(x + h) = 2 sin x cos h` and the zero ends `sin 0 = sin π = 0`. -/
+theorem sine_neighbour_sum (n : ℕ) (hn : 1 ≤ n) :
+    ∑ i ∈ Finset.range (n - 1), Real.sin (Real.pi / (n + 1) * ((i : ℝ) + 2))
+        * Real.sin (Real.pi / (n + 1) * ((i : ℝ) + 1))
+      = Real.cos (Real.pi / (n + 1))
+        * ∑ i ∈ Finset.range n, Real.sin (Real.pi / (n + 1) * ((i : ℝ) + 1)) ^ 2 := by
+  set h := Real.pi / (n + 1) with hh
+  set g : ℕ → ℝ := fun i => Real.sin (h * ((i : ℝ) + 1)) with hg
+  set P := ∑ i ∈ Finset.range (n - 1), Real.sin (h * ((i : ℝ) + 2)) * g i with hP
+  have hend : g (n - 1 + 1) = 0 := by
+    rw [hg]
+    simp only
+    rw [show ((n - 1 + 1 : ℕ) : ℝ) + 1 = n + 1 by rw [Nat.sub_add_cancel hn]]
+    rw [hh, div_mul_cancel₀ _ (by positivity : (n : ℝ) + 1 ≠ 0), Real.sin_pi]
+  -- the recurrence
+  have hrec : ∀ i : ℕ, g i * (Real.sin (h * i) + Real.sin (h * ((i : ℝ) + 2)))
+      = 2 * Real.cos h * g i ^ 2 := fun i => by
+    rw [hg]
+    simp only
+    rw [show h * (i : ℝ) = h * ((i : ℝ) + 1) - h by ring,
+      show h * ((i : ℝ) + 2) = h * ((i : ℝ) + 1) + h by ring, Real.sin_sub, Real.sin_add]
+    ring
+  have hsum : ∑ i ∈ Finset.range n, g i * Real.sin (h * i)
+      + ∑ i ∈ Finset.range n, g i * Real.sin (h * ((i : ℝ) + 2))
+      = 2 * Real.cos h * ∑ i ∈ Finset.range n, g i ^ 2 := by
+    rw [← Finset.sum_add_distrib, Finset.mul_sum]
+    exact Finset.sum_congr rfl fun i _ => by rw [← mul_add]; exact hrec i
+  -- the two halves are both `P`
+  obtain ⟨k, rfl⟩ : ∃ k, n = k + 1 := ⟨n - 1, (Nat.sub_add_cancel hn).symm⟩
+  simp only [Nat.add_sub_cancel] at hP hend
+  have h1 : ∑ i ∈ Finset.range (k + 1), g i * Real.sin (h * i) = P := by
+    rw [Finset.sum_range_succ', hP]
+    simp only [Nat.cast_zero, mul_zero, Real.sin_zero, add_zero]
+    refine Finset.sum_congr rfl fun i _ => ?_
+    rw [hg]
+    simp only
+    push_cast
+    ring_nf
+  have h2 : ∑ i ∈ Finset.range (k + 1), g i * Real.sin (h * ((i : ℝ) + 2)) = P := by
+    rw [Finset.sum_range_succ, hP]
+    have : Real.sin (h * ((k : ℝ) + 2)) = 0 := by
+      have := hend
+      rw [hg] at this
+      simp only at this
+      rw [← this]
+      push_cast
+      ring_nf
+    rw [this, mul_zero, add_zero]
+    exact Finset.sum_congr rfl fun i _ => mul_comm _ _
+  rw [h1, h2] at hsum
+  have hgs : ∑ i ∈ Finset.range (k + 1), g i ^ 2
+      = ∑ i ∈ Finset.range (k + 1), Real.sin (h * ((i : ℝ) + 1)) ^ 2 := rfl
+  linarith
+
+/-- The sine profile's normalisation: `Σ_{i < n} sin²(π(i + 1)/(n + 1))`. -/
+noncomputable def sineNorm (n : ℕ) : ℝ :=
+  ∑ i ∈ Finset.range n, Real.sin (Real.pi / (n + 1) * ((i : ℝ) + 1)) ^ 2
+
+theorem sineNorm_pos {n : ℕ} (hn : 1 ≤ n) : 0 < sineNorm n := by
+  have hn1 : (1 : ℝ) < n + 1 := by
+    have : (1 : ℝ) ≤ n := by exact_mod_cast hn
+    linarith
+  have hs : 0 < Real.sin (Real.pi / (n + 1) * (((0 : ℕ) : ℝ) + 1)) := by
+    rw [Nat.cast_zero, zero_add, mul_one]
+    exact Real.sin_pos_of_pos_of_lt_pi (by positivity) (div_lt_self Real.pi_pos hn1)
+  calc (0 : ℝ) < Real.sin (Real.pi / (n + 1) * (((0 : ℕ) : ℝ) + 1)) ^ 2 := by positivity
+    _ ≤ sineNorm n :=
+      Finset.single_le_sum (f := fun i : ℕ => Real.sin (Real.pi / (n + 1) * ((i : ℝ) + 1)) ^ 2)
+        (fun i _ => sq_nonneg _) (Finset.mem_range.2 (by omega))
+
+/-- ★ **The sine profile** on the window `[lo, lo + n)`: `β_m ∝ sin(π(m − lo + 1)/(n + 1))`, the
+ground state of the discrete box (clipped at `0` outside the window, where it is not used). -/
+noncomputable def sineAmp (n : ℕ) (lo m : ℤ) : ℝ :=
+  max (Real.sin (Real.pi / (n + 1) * (((m - lo : ℤ) : ℝ) + 1))) 0 / Real.sqrt (sineNorm n)
+
+theorem sineAmp_nonneg (n : ℕ) (lo m : ℤ) : 0 ≤ sineAmp n lo m :=
+  div_nonneg (le_max_right _ _) (Real.sqrt_nonneg _)
+
+/-- Inside the window the clip is inactive. -/
+theorem sineAmp_of_lt {n : ℕ} (lo : ℤ) {i : ℕ} (hi : i < n) :
+    sineAmp n lo (lo + i)
+      = Real.sin (Real.pi / (n + 1) * ((i : ℝ) + 1)) / Real.sqrt (sineNorm n) := by
+  rw [sineAmp, show ((lo + i - lo : ℤ) : ℝ) = i by push_cast; ring]
+  congr 1
+  refine max_eq_left (Real.sin_nonneg_of_nonneg_of_le_pi (by positivity) ?_)
+  rw [div_mul_eq_mul_div, div_le_iff₀ (by positivity)]
+  have : (i : ℝ) + 1 ≤ n := by exact_mod_cast hi
+  nlinarith [Real.pi_pos]
+
+/-- ★★ **The sine profile's sums**: `Σ β² = 1` and `Σ β_{m+1} β_m = cos(π/(n + 1))` on the
+window. -/
+theorem sineAmp_sums {n : ℕ} (hn : 1 ≤ n) (lo : ℤ) :
+    ∑ m ∈ Finset.Ico lo (lo + n), sineAmp n lo m ^ 2 = 1
+    ∧ ∑ m ∈ (Finset.Ico lo (lo + n)).filter (fun m => m + 1 ∈ Finset.Ico lo (lo + n)),
+        sineAmp n lo (m + 1) * sineAmp n lo m = Real.cos (Real.pi / (n + 1)) := by
+  have hS := sineNorm_pos hn
+  have hsq : Real.sqrt (sineNorm n) ^ 2 = sineNorm n := Real.sq_sqrt hS.le
+  have hsq0 : Real.sqrt (sineNorm n) ≠ 0 := (Real.sqrt_pos.2 hS).ne'
+  constructor
+  · rw [sum_Ico_int_eq_sum_range]
+    have e : ∀ i ∈ Finset.range n, sineAmp n lo (lo + i) ^ 2
+        = Real.sin (Real.pi / (n + 1) * ((i : ℝ) + 1)) ^ 2 / sineNorm n := fun i hi => by
+      rw [sineAmp_of_lt lo (Finset.mem_range.1 hi), div_pow, hsq]
+    rw [Finset.sum_congr rfl e, ← Finset.sum_div, ← sineNorm, div_self hS.ne']
+  · rw [filter_succ_Ico, show lo + (n : ℤ) - 1 = lo + ((n - 1 : ℕ) : ℤ) by push_cast [hn]; ring,
+      sum_Ico_int_eq_sum_range]
+    have e : ∀ i ∈ Finset.range (n - 1), sineAmp n lo (lo + i + 1) * sineAmp n lo (lo + i)
+        = Real.sin (Real.pi / (n + 1) * ((i : ℝ) + 2))
+          * Real.sin (Real.pi / (n + 1) * ((i : ℝ) + 1)) / sineNorm n := fun i hi => by
+      have hi' : i < n - 1 := Finset.mem_range.1 hi
+      rw [show lo + (i : ℤ) + 1 = lo + ((i + 1 : ℕ) : ℤ) by push_cast; ring,
+        sineAmp_of_lt lo (by omega : i + 1 < n), sineAmp_of_lt lo (by omega : i < n)]
+      push_cast
+      rw [div_mul_div_comm, ← sq, hsq]
+      ring_nf
+    rw [Finset.sum_congr rfl e, ← Finset.sum_div, sine_neighbour_sum n hn, ← sineNorm,
+      mul_div_assoc, div_self hS.ne', mul_one]
+
+/-- ★★★ **The sine packet's tail.** A massive packet with the sine profile over `n` modes, angles
+within `δ` of `θ₀` and spin loss `κ = (2πJ/(Lμ))² ≤ 1`: off the chord-`ρ` arc about a point within
+`η` of its group-velocity angle at time `t`, its weight times `(ρ − η)²/2` is at most
+`(π/(n + 1))²/2 + κ + (δ' t)²/2` — the profile's floor `~π²/(2n²)` where the flat profile's is
+`1/n`, and the drift quadratic. -/
+theorem sine_packet_tail {J μ : ℝ} (hμ : 0 < μ) {n : ℕ} (hn : 1 ≤ n)
+    (hWin : ∀ m ∈ Finset.Ico lo (lo + n), lo ≤ m ∧ m + 1 < lo + L)
+    (hκ : (2 * Real.pi * J / (L * μ)) ^ 2 ≤ 1)
+    {θ₀ δ : ℝ} (hδ : ∀ m ∈ Finset.Ico lo (lo + n), |angleZ L m - θ₀| ≤ δ)
+    {z : ℂ} {ρ η : ℝ} (hηρ : η ≤ ρ) (t : ℝ)
+    (hz : ‖exp (I * ((2 * Real.pi / L * groupVel J μ θ₀ * t : ℝ) : ℂ)) - z‖ ≤ η) :
+    regionWeight (packet (L := L) J μ (Finset.Ico lo (lo + n))
+        (unitAmp L J μ fun m => (sineAmp n lo m : ℂ)) t) (chordArc z ρ)ᶜ * ((ρ - η) ^ 2 / 2)
+      ≤ (Real.pi / (n + 1)) ^ 2 / 2 + (2 * Real.pi * J / (L * μ)) ^ 2
+        + (vgLip J μ * (2 * Real.pi / L) * (δ + 2 * Real.pi / L) * t) ^ 2 / 2 := by
+  obtain ⟨hsum1, hsum2⟩ := sineAmp_sums hn lo
+  obtain ⟨hW, -⟩ := noWrap_distinct_of_window (L := L) hWin
+  have hspin : ∀ m, 0 ≤ spinCos J μ (angleZ L (m + 1)) (angleZ L m) := fun m => by
+    have h := one_sub_le_spinCos (J := J) hμ (angleZ L (m + 1)) (angleZ L m)
+    rw [angleZ_succ, show angleZ L m + 2 * Real.pi / L - angleZ L m = 2 * Real.pi / L by ring,
+      show J * (2 * Real.pi / L) / μ = 2 * Real.pi * J / (L * μ) by ring] at h
+    rw [angleZ_succ]
+    linarith
+  have h := regionWeight_compl_chordArc_quad (L := L) hμ hWin (sineAmp n lo)
+    (sineAmp_nonneg n lo) hsum1 hspin hδ hηρ t hz
+  have hRe := re_transPhase_unitAmp_ge (L := L) (J := J) hμ hW (sineAmp n lo)
+    (sineAmp_nonneg n lo)
+  rw [hsum2] at hRe
+  have hcos := Real.one_sub_sq_div_two_le_cos (x := Real.pi / (n + 1))
+  have hc1 := Real.cos_le_one (Real.pi / (n + 1))
+  have hκ0 : 0 ≤ (2 * Real.pi * J / (L * μ)) ^ 2 := sq_nonneg _
   nlinarith
 
 end CSD.RecordLayer
