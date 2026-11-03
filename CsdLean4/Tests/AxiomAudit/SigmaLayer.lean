@@ -15558,4 +15558,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.lattice_frame_residue
 
+
+-- ChainCone (BACKLOG #286, 2026-11-03): the Dirac chain's cone and the ontic order of its records.
+/-- info: 'CSD.RecordLayer.subset_grow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.subset_grow
+
+/-- info: 'CSD.RecordLayer.growIter_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.growIter_mono
+
+/-- info: 'CSD.RecordLayer.mem_grow_of_diracHam_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_grow_of_diracHam_ne
+
+/-- info: 'CSD.RecordLayer.siteSupp_adOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSupp_adOne
+
+/-- info: 'CSD.RecordLayer.siteSupp_adIter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSupp_adIter
+
+/-- info: 'CSD.RecordLayer.commute_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.commute_of_disjoint
+
+/-- info: 'CSD.RecordLayer.norm_commutator_chain_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_commutator_chain_le
+
+/-- info: 'CSD.RecordLayer.kick_expectation_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.kick_expectation_le
+
+/-- info: 'CSD.RecordLayer.chain_record_kick_order' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chain_record_kick_order
+
 end CSD.Tests.AxiomAudit
