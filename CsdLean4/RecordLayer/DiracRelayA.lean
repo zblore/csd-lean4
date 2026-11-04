@@ -204,9 +204,9 @@ theorem contDiff_relWeight_devA_mess :
     refine ContDiff.mul ?_ ?_
     · simp only [devSiteWeight, siteWeight, devA]
       exact ContDiff.sum fun i _ => ContDiff.sum fun c _ =>
-        ContDiff.norm_sq ℂ (contDiff_apply ℝ ℂ _)
+        ContDiff.norm_sq ℂ (contDiff_apply _ _ _)
     · simp only [siteWeight, mess, blockOf]
-      exact ContDiff.sum fun c _ => ContDiff.norm_sq ℂ (contDiff_apply ℝ ℂ _)
+      exact ContDiff.sum fun c _ => ContDiff.norm_sq ℂ (contDiff_apply _ _ _)
   · simp only [h, ↓reduceIte]
     exact contDiff_const
 
