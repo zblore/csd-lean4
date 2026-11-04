@@ -44,7 +44,9 @@ item is `sorry`-free and pinned to the foundational triple. Everything is in 1+1
 
 ## What is open
 
-* **The one large gap: beyond 1+1** (#289, XL): fermion doubling, rotations, a spatial radar chart.
+* **The one large gap: beyond 1+1** (#289, split 2026-11-04 into #292–#301;
+  [`beyond-1p1-scoping.md`](beyond-1p1-scoping.md)): Lorentz kinematics, a spatial radar chart,
+  the lattice's preferred directions at `O((ap)²)`, packets and records in `d` dimensions.
 * **Polish in 1+1**: #263 (packet shape, M), #281 (moving observer's speed calibration, M–L), #276
   (sharp return window, L), #254 (self-launched signals, M–L), #255 (recoil, L), #282 (parked).
 * **Generation**: the click clock from a coupling on the Dirac chain (not yet a row); `H_int` (R-016).
