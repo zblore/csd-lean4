@@ -15742,4 +15742,130 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.volume_torusClick_clickCell
 
+
+-- CoupledDetector (BACKLOG #251, 2026-11-04): detectors generated, with back-reaction.
+/-- info: 'CSD.RecordLayer.Coupled.DetProfile.continuous' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.DetProfile.continuous
+
+/-- info: 'CSD.RecordLayer.Coupled.DetProfile.Kχ_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.DetProfile.Kχ_nonneg
+
+/-- info: 'CSD.RecordLayer.Coupled.DetProfile.Kd_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.DetProfile.Kd_nonneg
+
+/-- info: 'CSD.RecordLayer.Coupled.DetProfile.abs_sub_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.DetProfile.abs_sub_le_one
+
+/-- info: 'CSD.RecordLayer.Coupled.hasDerivAt_detHam_mom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.hasDerivAt_detHam_mom
+
+/-- info: 'CSD.RecordLayer.Coupled.hasDerivAt_detHam_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.hasDerivAt_detHam_pos
+
+/-- info: 'CSD.RecordLayer.Coupled.lipschitz_detField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.lipschitz_detField
+
+/-- info: 'CSD.RecordLayer.Coupled.measurable_detFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.measurable_detFlow
+
+/-- info: 'CSD.RecordLayer.Coupled.detFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.detFlow_zero
+
+/-- info: 'CSD.RecordLayer.Coupled.detFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.detFlow_add
+
+/-- info: 'CSD.RecordLayer.Coupled.hasDerivAt_detFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.hasDerivAt_detFlow
+
+/-- info: 'CSD.RecordLayer.Coupled.hasDerivAt_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.hasDerivAt_pos
+
+/-- info: 'CSD.RecordLayer.Coupled.hasDerivAt_mom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.hasDerivAt_mom
+
+/-- info: 'CSD.RecordLayer.Coupled.hasDerivAt_reg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.hasDerivAt_reg
+
+/-- info: 'CSD.RecordLayer.Coupled.continuous_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.continuous_pos
+
+/-- info: 'CSD.RecordLayer.Coupled.continuous_mom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.continuous_mom
+
+/-- info: 'CSD.RecordLayer.Coupled.detHam_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.detHam_flow
+
+/-- info: 'CSD.RecordLayer.Coupled.etaSpread_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.etaSpread_nonneg
+
+/-- info: 'CSD.RecordLayer.Coupled.abs_mom_sq_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.abs_mom_sq_sub_le
+
+/-- info: 'CSD.RecordLayer.Coupled.mom_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.mom_pos
+
+/-- info: 'CSD.RecordLayer.Coupled.mom_mem_Icc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.mom_mem_Icc
+
+/-- info: 'CSD.RecordLayer.Coupled.pos_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.pos_ge
+
+/-- info: 'CSD.RecordLayer.Coupled.pos_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.pos_le
+
+/-- info: 'CSD.RecordLayer.Coupled.momHi_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.momHi_pos
+
+/-- info: 'CSD.RecordLayer.Coupled.momLo_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.momLo_pos
+
+/-- info: 'CSD.RecordLayer.Coupled.momLo_le_momHi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.momLo_le_momHi
+
+/-- info: 'CSD.RecordLayer.Coupled.continuous_regRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.continuous_regRate
+
+/-- info: 'CSD.RecordLayer.Coupled.reg_eq_of_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.reg_eq_of_before
+
+/-- info: 'CSD.RecordLayer.Coupled.reg_ge_of_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.reg_ge_of_after
+
+/-- info: 'CSD.RecordLayer.Coupled.measurable_coupledRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.measurable_coupledRead
+
+/-- info: 'CSD.RecordLayer.Coupled.coupledPassageWrite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.coupledPassageWrite
+
 end CSD.Tests.AxiomAudit
