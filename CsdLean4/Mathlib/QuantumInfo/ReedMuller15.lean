@@ -109,7 +109,7 @@ theorem syndrome_add (e f : Fin 15 → ZMod 2) : syndrome (e + f) = syndrome e +
 
 theorem syndrome_ind (S : Finset (Fin 15)) : syndrome (ind S) = ∑ j ∈ S, col j := by
   funext i
-  rw [syndrome, sum_apply]
+  rw [syndrome, Finset.sum_apply]
   simp only [ind, ite_mul, one_mul, zero_mul]
   rw [sum_ite_mem, univ_inter]
 

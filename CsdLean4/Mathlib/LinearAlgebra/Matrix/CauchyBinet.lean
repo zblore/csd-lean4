@@ -107,7 +107,7 @@ variable {R : Type*} [CommRing R] {n m : Type*} [Fintype n] [DecidableEq n]
 `det (A * B) = ∑ f : n → m, (∏ i, B (f i) i) * det (A.submatrix id f)`. -/
 theorem det_mul_eq_sum_fun [Fintype m] (A : Matrix n m R) (B : Matrix m n R) :
     det (A * B) = ∑ f : n → m, (∏ i, B (f i) i) * det (A.submatrix id f) := by
-  simp only [det_apply', mul_apply, prod_univ_sum, Finset.mul_sum, Fintype.piFinset_univ,
+  simp only [det_apply', Matrix.mul_apply, prod_univ_sum, Finset.mul_sum, Fintype.piFinset_univ,
     submatrix_apply, id]
   rw [Finset.sum_comm]
   refine Finset.sum_congr rfl fun f _ => Finset.sum_congr rfl fun σ _ => ?_

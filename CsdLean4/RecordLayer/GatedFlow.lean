@@ -10,6 +10,7 @@ public import CsdLean4.RecordLayer.RecordOccurrence
 public import Mathlib.LinearAlgebra.Matrix.Hermitian
 public import Mathlib.Topology.Algebra.Module.FiniteDimension
 public import Mathlib.Topology.Instances.Matrix
+public import Mathlib.Analysis.Calculus.Deriv.Prod
 public import Mathlib.Analysis.Calculus.Deriv.Star
 public import Mathlib.Analysis.Calculus.Deriv.Mul
 public import Mathlib.Analysis.Calculus.MeanValue
