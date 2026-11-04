@@ -1,5 +1,8 @@
 # From the record layer to spacetime: scoping note (BACKLOG #38 and #39)
 
+> **2026-11-04:** much of this is now in Lean, in 1+1 dimensions. Current state:
+> [`records-to-spacetime-status.md`](records-to-spacetime-status.md).
+
 **Status:** SCOPED 2026-09-19, after a survey of `CsdLean4/RecordLayer/` (81 modules), the composite and
 multi-time record modules, the CV locality modules (`CV/ModeLocality`, `DynamicalLocality`,
 `SupportSpreading`, `LiebRobinson`), and the two papers' own statements (Paper D §5.2 and §7.12). Every
