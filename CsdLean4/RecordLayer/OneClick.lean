@@ -20,7 +20,7 @@ public import Mathlib.Probability.Distributions.Exponential
 
 #252's detectors (`DiracDetector.lean`) integrate the packet's site weight on every site, so every
 register rises. The threshold fixes *when* a register is written, not that only *one* is. A detector
-array on a single trajectory must write exactly one site, and the corpus's Born theorems select an
+array on a single trajectory must write exactly one site, and the corpus's selections pick an
 outcome of a *fixed* measurement, while here the weights move with the packet.
 
 ⚠️ **The row's acceptance, as worded, is ill-posed, and is corrected here.** It asked for the
@@ -33,7 +33,7 @@ absorb the weight they read. The law below is the normalised one. Its first-orde
 ## The construction
 
 The ontic fibre is `ℝ × T¹`, carrying `clickLaw κ = expMeasure κ ⊗ Haar`. An ontic point `(τ, η)`
-clicks at time `τ`, at the site whose Born arc at that moment contains `η`:
+clicks at time `τ`, at the site whose arc at that moment contains `η`:
 `clickSite r (τ, η) = circleOutcome (r τ) η`, with `r τ k = w_k(τ)/N`. **The detail sets the
 outcome**: the point fixes both when and where. The selection is non-anticipating. The site depends
 only on the weights at the click time, never on later ones.
@@ -46,14 +46,22 @@ only on the weights at the click time, never on later ones.
 * ★★★ `existsUnique_clickSite` (**every ontic point clicks at exactly one site**), ★★
   `clickCell_disjoint` (**no ontic point writes two sites, at any pair of times**);
 * ★★★ `clickLaw_clickCell` (**the probability of site `k` by `t` is `∫_{s ≤ t} w_k(s)/N` against
-  the click-time law**: given a click at `s`, the site is distributed by the Born weights at `s`);
+  the click-time law**: given a click at `s`, the site frequency over preparations is the packet's
+  site weights at `s`);
 * ★★★ `clickLaw_clicked_by` (**the probability of a click by `t ≥ 0` is `1 − e^{−κt}`**, whatever
   the packet);
-* `siteRate`, `siteRate_nonneg`, `sum_siteRate`, `measurable_siteRate` (the Born weights of a
+* `siteRate`, `siteRate_nonneg`, `sum_siteRate`, `measurable_siteRate` (the site weights of a
   norm-conserving chain trajectory); ★★★ `chain_one_click` (**for any continuous trajectory of
   the chain with conserved norm, one click, its law and its total**);
   ★★★ `dirac_packet_one_click` (**the Dirac packet of `dirac_detector`, and every packet of the
   chain**, through `chainInner_packet_self`).
+
+## What is the record, and where QM enters
+
+The record is a **definite fact of the one trajectory**: the ontic point `(τ, η)` writes one site at
+one time, with no probability in it. QM's statistics enter only as the packet's site weights
+`‖ψ_k‖²/N`, which size the arcs; they are **input, not derived**, and the measures above say that
+the frequency of records over preparations reproduces them. Nothing here constructs the Born rule.
 
 ## Honest scope
 
@@ -63,7 +71,7 @@ only on the weights at the click time, never on later ones.
 * **The fibre is `ℝ × T¹` with `expMeasure κ ⊗ Haar`**, not the corpus's compact `T²`. The
   exponential coordinate is the click time directly; transporting it to a circle coordinate is a
   change of variables, not done here.
-* The site arcs are the corpus's Born cells (`circleCell`, `circleOutcome`), read at the weights of
+* The site arcs are the corpus's arc cells (`circleCell`, `circleOutcome`), read at the weights of
   the click time. The click-time law does not depend on the packet, because the norm is conserved.
 
 ## References
@@ -95,7 +103,7 @@ abbrev ClickFibre : Type := ℝ × CircleFibre
 /-- **The click law**: the click time exponential at rate `κ`, the circle point uniform. -/
 def clickLaw (κ : ℝ) : Measure ClickFibre := (expMeasure κ).prod volume
 
-/-- **The site an ontic point writes**: the Born arc, at the weights of its click time, that
+/-- **The site an ontic point writes**: the arc, sized by the site weights at its click time, that
 contains its circle point. -/
 def clickSite (r : ℝ → Fin n → ℝ) (x : ClickFibre) : Option (Fin n) := circleOutcome (r x.1) x.2
 
@@ -144,7 +152,7 @@ theorem clickCell_disjoint (hnn : ∀ s k, 0 ≤ r s k) {k k' : Fin n} (h : k �
 
 /-! ### The law of the click -/
 
-/-- ★★★ **The probability of site `k` by `t`.** It is the Born weight of `k` at the click time,
+/-- ★★★ **The probability of site `k` by `t`.** It is the site weight of `k` at the click time,
 integrated against the click-time law up to `t`: given a click at `s`, the site is distributed by
 the weights at `s`. -/
 theorem clickLaw_clickCell (κ : ℝ) (hr : ∀ k, Measurable fun s => r s k)
@@ -178,9 +186,9 @@ theorem clickLaw_clicked_by {κ : ℝ} (hκ : 0 < κ) (hr : ∀ k, Measurable fu
   rw [setLIntegral_const, one_mul, ← ofReal_cdf, cdf_expMeasure_eq hκ]
   simp only [ht, ↓reduceIte]
 
-/-! ### The chain's Born weights -/
+/-! ### The chain's site weights -/
 
-/-- **The Born weights of a chain trajectory**: the weight on each site over the norm. -/
+/-- **The site weights of a chain trajectory**: the weight `‖ψ_k‖²` on each site over the norm. -/
 def siteRate (ψ : ℝ → ZMod (n + 1) × Fin 2 → ℂ) (N : ℝ) (s : ℝ) (k : Fin (n + 1)) : ℝ :=
   siteWeight (ψ s) k / N
 
@@ -201,7 +209,7 @@ theorem measurable_siteRate {ψ : ℝ → ZMod (n + 1) × Fin 2 → ℂ} (hψ : 
   ((continuous_siteWeight (L := n + 1) k).comp hψ).measurable.div_const N
 
 /-- ★★★ **One click for any norm-conserving chain trajectory.** Every ontic point clicks at
-exactly one site; no ontic point writes two sites; the probability of site `k` by `t` is the Born
+exactly one site; no ontic point writes two sites; the probability of site `k` by `t` is the site
 weight `w_k(s)/N` integrated against the click-time law; and a click has occurred by `t ≥ 0` with
 probability `1 − e^{−κt}`. -/
 theorem chain_one_click {ψ : ℝ → ZMod (n + 1) × Fin 2 → ℂ} (hψ : Continuous ψ) {N : ℝ}

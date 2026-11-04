@@ -29,7 +29,8 @@ file tests that claim. The joint *law* is the same; the individual *outcomes* ar
 ## What is proved
 
 * `JointRates.transpose`, `skewCellRev` (**the mirror selection**: B reads its arc first, A
-  conditional on B's cell); ★★ `volume_skewCellRev` (**same Born weights** as the A-first cell).
+  conditional on B's cell); ★★ `volume_skewCellRev` (**the same cell volumes**, the QM joint table,
+  as the A-first cell).
   So no statistic of the joint outcomes tells the two orders apart.
 * ★★★ `rate_eq_mul_of_selection_order_indep` (**if the two orders give the same joint outcome at
   almost every ontic point, the table is a product of its marginals**);
@@ -68,11 +69,12 @@ proves that the choice is **not** physically empty: it fixes the individual outc
 The author's decision (2026-11-04): **the wing written first in ontic time is selected first.** "It
 all comes back to QM and the actual microstate being unknown until measured. But the detail sets the
 outcome." The individual outcome is a deterministic function of the ontic point and the ontic write
-order (`onticCell`). Records do not reveal the point, and they see only its Born volumes, which do
-not depend on the order. So the ontic slicing is hidden in exactly the way the microstate is.
+order (`onticCell`). Records do not reveal the point. Their frequencies over preparations are
+the cell volumes, which do not depend on the order. So the ontic slicing is hidden in exactly the
+way the microstate is.
 
-* `onticCell` (**the selection by ontic write order**; ties go to A), ★★ `volume_onticCell` (**Born
-  weights, whatever the order and the frame**);
+* `onticCell` (**the selection by ontic write order**; ties go to A), ★★ `volume_onticCell` (**cell
+  volumes, whatever the order and the frame**);
 * ★ `lorentzBoost_time_sub` (the boosted time difference of two writes);
 * ★★★ `timelike_order_boost_invariant`, ★★★ `timelike_onticCell_boost` (**writes at timelike or null
   separation keep their order under every boost of the preparation, so their individual outcomes are
@@ -154,7 +156,7 @@ theorem measurableSet_skewCellRev (q : JointRates m n) (s : Fin m) (t : Fin n) :
     MeasurableSet (skewCellRev q s t) :=
   measurable_swap (measurableSet_skewCell _ t s)
 
-/-- ★★ **The mirror selection has the same Born weights.** The B-first cell of the outcome pair has
+/-- ★★ **The mirror selection has the same cell volumes.** The B-first cell of the outcome pair has
 area the joint probability, as the A-first cell does (`volume_skewCell`). So no statistic of the
 joint outcomes distinguishes the orders. -/
 theorem volume_skewCellRev (q : JointRates m n) (s : Fin m) (t : Fin n) :
@@ -295,7 +297,7 @@ The individual outcome at an ontic point is the cell containing it. -/
 def onticCell (q : JointRates m n) (eA eB : ℝ × ℝ) (s : Fin m) (t : Fin n) : Set LF4.KTorus :=
   if eA.1 ≤ eB.1 then skewCell q s t else skewCellRev q s t
 
-/-- ★★ **Born weights, whatever the order and the frame.** -/
+/-- ★★ **The cell volumes (the QM joint table), whatever the order and the frame.** -/
 theorem volume_onticCell (q : JointRates m n) (eA eB : ℝ × ℝ) (s : Fin m) (t : Fin n) :
     (volume : Measure LF4.KTorus) (onticCell q eA eB s t) = ENNReal.ofReal (q.rate s t) := by
   unfold onticCell
