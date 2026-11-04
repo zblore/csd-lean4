@@ -15614,4 +15614,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.record_statistic_covariant
 
+
+-- SelectionOrder (BACKLOG #288, 2026-11-04): selection order and entangled outcomes.
+/-- info: 'CSD.RecordLayer.JointRates.transpose_rowSum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.JointRates.transpose_rowSum
+
+/-- info: 'CSD.RecordLayer.measurableSet_skewCellRev' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_skewCellRev
+
+/-- info: 'CSD.RecordLayer.volume_skewCellRev' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_skewCellRev
+
+/-- info: 'CSD.RecordLayer.rate_eq_mul_of_selection_order_indep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rate_eq_mul_of_selection_order_indep
+
+/-- info: 'CSD.RecordLayer.selection_order_dependent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.selection_order_dependent
+
+/-- info: 'CSD.RecordLayer.singlet_selection_order_dependent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.singlet_selection_order_dependent
+
+/-- info: 'CSD.RecordLayer.no_order_indep_local_first_selection' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.no_order_indep_local_first_selection
+
 end CSD.Tests.AxiomAudit

@@ -67,8 +67,11 @@ and **I3** (a non-product partition of `T²`) as two alternatives. They are not 
 the joint law as marginal-times-conditional is then the chain rule, and `condRate` *is* that
 conditional. So the construction below is simultaneously I2 and I3, and the author's choice is
 **binary** — I1's single coarsened selector, or this — not ternary. The order (A first, B
-conditional) is the chain rule's arbitrary choice and carries no physical content; the mirror
-construction with the roles swapped realises the same joint law.
+conditional) is the chain rule's choice; the mirror construction with the roles swapped realises the
+same joint law (`volume_skewCellRev`). ⚠️ **Corrected 2026-11-04 (#288): the order is not
+physically empty.** It fixes the individual outcomes: for any correlated table the two orders
+disagree on a set of ontic points of positive measure (`selection_order_dependent`,
+`SelectionOrder.lean`).
 
 ## Honest scope
 
