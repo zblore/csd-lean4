@@ -15596,4 +15596,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.chain_record_kick_order
 
+
+-- FrameCovariance, every encounter record (BACKLOG #287, 2026-11-03).
+/-- info: 'CSD.RecordLayer.lorentzBoost_worldline_vel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lorentzBoost_worldline_vel
+
+/-- info: 'CSD.RecordLayer.proper_time_boost' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.proper_time_boost
+
+/-- info: 'CSD.RecordLayer.encounter_reading_covariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.encounter_reading_covariant
+
+/-- info: 'CSD.RecordLayer.record_statistic_covariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.record_statistic_covariant
+
 end CSD.Tests.AxiomAudit

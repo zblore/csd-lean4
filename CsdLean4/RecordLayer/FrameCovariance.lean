@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.DiracTwoCharts
 /-!
 # Frame covariance of the radar records
 
-**Category:** 7-SigmaLayer (the record layer). BACKLOG #285, parts (i) and (iii).
+**Category:** 7-SigmaLayer (the record layer). BACKLOG #285, parts (i) and (iii); #287.
 
 #285 asks whether the ontic time's frame is hidden from records. Part (i): a preparation and its
 boost should give record laws related by the Lorentz map. On the radar exchange this splits into
@@ -48,6 +48,27 @@ three facts, none of which needs a boost operator on the lattice.
   velocity in a boosted frame differs from that in the original frame by at most
   `4 (latticeVelErr P + latticeVelErr P')/(1 − V²)²` — order `a²`, growing with the boosted momentum
   bound `P'`, vanishing as `a → 0`; the exact relative velocity is the same in both frames).
+
+## Every encounter record (#287)
+
+* ★★ `lorentzBoost_worldline_vel` (a worldline segment of velocity `v`, boosted by `u`, has velocity
+  `(v − u)/(1 − v u)`);
+* ★★★ `proper_time_boost` (**proper time along a worldline is the same in every frame**);
+* ★★★ `encounter_reading_covariant` (**a reading of an encounter, within `ε` of its ideal reading in
+  one frame and `ε'` in the boosted preparation, is frame independent to `ε + ε'`**);
+* ★★★ `record_statistic_covariant` (**every statistic of encounter readings with
+  `|F a − F b| ≤ K Σ |a_k − b_k|` is frame independent to `K Σ (ε_k + ε'_k)`**). The reading errors
+  are each record's window (`abs_record_sub_le`, `encounter_record_window`) and its clock's reading
+  error (`clock_reading_error`), in each frame.
+
+## What is by construction, and what is earned
+
+The Dirac chain was chosen with a relativistic continuum limit, so light speed and clock dilation
+are inputs, and the kinematic theorems here (`radar_lorentz_exact`, `radar_lorentz_covariant`,
+`proper_time_boost`) are special relativity checked in Lean. What the corpus earns is that the
+chain's own matter realises those kinematics in its records with explicit errors (#274, #278,
+#280, #283, #284). The untested case is entangled spacelike records under Σ's ontic selection, where
+individual outcomes may depend on the ontic slicing while their statistics provably do not (#288).
 
 ## Honest scope
 
@@ -337,5 +358,64 @@ theorem lattice_frame_residue {μ a P P' u V pA pB : ℝ} (hμ : 0 < μ) (ha : 0
   refine hsum.trans (le_of_eq ?_)
   field_simp
   ring
+
+/-! ### Every encounter record is frame independent -/
+
+/-- ★★ **A worldline in a boosted frame.** A segment `(Δt, v Δt)` of a worldline of velocity `v`,
+boosted by `u`, is a segment of a worldline of velocity `lorentzRelVel v u = (v − u)/(1 − v u)`. -/
+theorem lorentzBoost_worldline_vel {u v : ℝ} (hu : |u| < 1) (hv : |v| < 1) (Δt : ℝ) :
+    (lorentzBoost 1 u (Δt, v * Δt)).2 = lorentzRelVel v u * (lorentzBoost 1 u (Δt, v * Δt)).1 := by
+  have h := (one_sub_mul_pos hv hu).ne'
+  simp only [lorentzBoost, lorentzRelVel]
+  field_simp
+
+/-- ★★★ **Proper time is the same in every frame.** The proper time along a segment `(Δt, v Δt)`
+of a worldline, `√(1 − v²) Δt`, equals the proper time computed in the frame boosted by `u` —
+`√(1 − w²) Δt'` with the boosted velocity `w` and the boosted duration `Δt'`. -/
+theorem proper_time_boost {u v : ℝ} (hu : |u| < 1) (hv : |v| < 1) (Δt : ℝ) :
+    Real.sqrt (1 - lorentzRelVel v u ^ 2) * (lorentzBoost 1 u (Δt, v * Δt)).1
+      = Real.sqrt (1 - v ^ 2) * Δt := by
+  have hu2 : 0 < 1 - u ^ 2 := by nlinarith [sq_abs u, abs_nonneg u]
+  have hv2 : 0 < 1 - v ^ 2 := by nlinarith [sq_abs v, abs_nonneg v]
+  have hvu := one_sub_mul_pos hv hu
+  have hsu0 : 0 < Real.sqrt (1 - u ^ 2) := Real.sqrt_pos.2 hu2
+  have hsq : Real.sqrt (1 - lorentzRelVel v u ^ 2)
+      = Real.sqrt (1 - v ^ 2) * Real.sqrt (1 - u ^ 2) / (1 - v * u) := by
+    rw [one_sub_lorentzRelVel_sq hv hu, Real.sqrt_div' _ (sq_nonneg _),
+      Real.sqrt_sq hvu.le, Real.sqrt_mul hv2.le]
+  have hs : Real.sqrt (1 - u ^ 2 / 1 ^ 2) = Real.sqrt (1 - u ^ 2) := by
+    rw [one_pow, div_one]
+  rw [hsq]
+  simp only [lorentzBoost, hs]
+  field_simp
+
+/-- ★★★ **A reading of an encounter is frame independent, within the records' errors.** The ideal
+reading of an encounter is the observer's proper time from its clock's origin to the encounter,
+`√(1 − v²) Δt` in one frame; by `proper_time_boost` it is the same number in the boosted frame. A
+record read within `ε` of the ideal reading in the first frame, and within `ε'` in the boosted
+preparation, gives readings within `ε + ε'` of each other. -/
+theorem encounter_reading_covariant {u v Δt r r' ε ε' : ℝ} (hu : |u| < 1) (hv : |v| < 1)
+    (hr : |r - Real.sqrt (1 - v ^ 2) * Δt| ≤ ε)
+    (hr' : |r' - Real.sqrt (1 - lorentzRelVel v u ^ 2) * (lorentzBoost 1 u (Δt, v * Δt)).1| ≤ ε') :
+    |r - r'| ≤ ε + ε' := by
+  rw [proper_time_boost hu hv] at hr'
+  calc |r - r'| ≤ |r - Real.sqrt (1 - v ^ 2) * Δt| + |r' - Real.sqrt (1 - v ^ 2) * Δt| := by
+        rw [abs_sub_comm r' _]; exact abs_sub_le _ _ _
+    _ ≤ ε + ε' := add_le_add hr hr'
+
+/-- ★★★ **Every statistic of encounter records is frame independent, within the records' errors.**
+`n` encounter readings, each read within `ε_k` of its ideal reading in one preparation and within
+`ε'_k` in the boosted preparation, and any statistic `F` with `|F a − F b| ≤ K Σ |a_k − b_k|`: the
+statistic differs between the two frames by at most `K Σ (ε_k + ε'_k)`. -/
+theorem record_statistic_covariant {n : ℕ} {u : ℝ} (hu : |u| < 1) {v Δt r r' ε ε' : Fin n → ℝ}
+    (hv : ∀ k, |v k| < 1)
+    (hr : ∀ k, |r k - Real.sqrt (1 - v k ^ 2) * Δt k| ≤ ε k)
+    (hr' : ∀ k, |r' k - Real.sqrt (1 - lorentzRelVel (v k) u ^ 2)
+      * (lorentzBoost 1 u (Δt k, v k * Δt k)).1| ≤ ε' k)
+    {F : (Fin n → ℝ) → ℝ} {K : ℝ} (hK : 0 ≤ K)
+    (hF : ∀ a b : Fin n → ℝ, |F a - F b| ≤ K * ∑ k, |a k - b k|) :
+    |F r - F r'| ≤ K * ∑ k, (ε k + ε' k) :=
+  (hF r r').trans (mul_le_mul_of_nonneg_left
+    (Finset.sum_le_sum fun k _ => encounter_reading_covariant hu (hv k) (hr k) (hr' k)) hK)
 
 end CSD.RecordLayer
