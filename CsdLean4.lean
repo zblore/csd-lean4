@@ -774,6 +774,7 @@ public import CsdLean4.RecordLayer.FrameCovariance
 public import CsdLean4.RecordLayer.SlicingIndependence
 public import CsdLean4.RecordLayer.ChainCone
 public import CsdLean4.RecordLayer.SelectionOrder
+public import CsdLean4.RecordLayer.OneClick
 public import CsdLean4.RecordLayer.DiracLatticeCorrections
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena

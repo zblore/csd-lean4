@@ -15678,4 +15678,50 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.singlet_spacelike_boost_changes_outcomes
 
+
+-- OneClick (BACKLOG #266, 2026-11-04): one click selected by the ontic point.
+/-- info: 'CSD.RecordLayer.measurableSet_clickCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_clickCell
+
+/-- info: 'CSD.RecordLayer.mem_clickCell_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_clickCell_iff
+
+/-- info: 'CSD.RecordLayer.existsUnique_clickSite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.existsUnique_clickSite
+
+/-- info: 'CSD.RecordLayer.clickCell_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clickCell_disjoint
+
+/-- info: 'CSD.RecordLayer.clickLaw_clickCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clickLaw_clickCell
+
+/-- info: 'CSD.RecordLayer.clickLaw_clicked_by' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clickLaw_clicked_by
+
+/-- info: 'CSD.RecordLayer.siteRate_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteRate_nonneg
+
+/-- info: 'CSD.RecordLayer.sum_siteRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_siteRate
+
+/-- info: 'CSD.RecordLayer.measurable_siteRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_siteRate
+
+/-- info: 'CSD.RecordLayer.chain_one_click' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chain_one_click
+
+/-- info: 'CSD.RecordLayer.dirac_packet_one_click' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_packet_one_click
+
 end CSD.Tests.AxiomAudit
