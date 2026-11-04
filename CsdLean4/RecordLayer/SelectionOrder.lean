@@ -7,11 +7,12 @@ module
 
 public import CsdLean4.RecordLayer.SingletSkewTables
 public import CsdLean4.LF6.C1BellConsistency
+public import CsdLean4.RecordLayer.GalileanTransformation
 
 /-!
 # Which wing Σ selects first decides the individual outcomes of an entangled pair
 
-**Category:** 7-SigmaLayer (the record layer). BACKLOG #288.
+**Category:** 7-SigmaLayer (the record layer). BACKLOG #288; #290.
 
 ## The question
 
@@ -62,15 +63,44 @@ not in the corpus.** The record layer is kinematic (no `H_int` generates the cel
 the first wing to the ontic time. That is a foundations decision, recorded as a row. This file
 proves that the choice is **not** physically empty: it fixes the individual outcomes.
 
+## The ontic time decides (#290, the author's choice (a))
+
+The author's decision (2026-11-04): **the wing written first in ontic time is selected first.** "It
+all comes back to QM and the actual microstate being unknown until measured. But the detail sets the
+outcome." The individual outcome is a deterministic function of the ontic point and the ontic write
+order (`onticCell`). Records do not reveal the point, and they see only its Born volumes, which do
+not depend on the order. So the ontic slicing is hidden in exactly the way the microstate is.
+
+* `onticCell` (**the selection by ontic write order**; ties go to A), ★★ `volume_onticCell` (**Born
+  weights, whatever the order and the frame**);
+* ★ `lorentzBoost_time_sub` (the boosted time difference of two writes);
+* ★★★ `timelike_order_boost_invariant`, ★★★ `timelike_onticCell_boost` (**writes at timelike or null
+  separation keep their order under every boost of the preparation, so their individual outcomes are
+  the same in every frame**);
+* ★★ `exists_boost_reverses_spacelike` (**for writes at spacelike separation, some boost of the
+  preparation, with `u = (Δt + |Δx|)/(2Δx)`, reverses their ontic order**);
+* ★★★ `spacelike_boost_changes_outcomes` (**for a correlated table and spacelike writes, some boost
+  of the preparation changes the individual outcomes on a set of ontic points of positive measure,
+  while every outcome's probability is unchanged**); ★★★ `singlet_spacelike_boost_changes_outcomes`.
+
+So CSD carries a hidden preferred slicing in the sense of Bohmian mechanics. It touches only the
+individual outcomes of spacelike-separated entangled writes, and no record statistic shows it (#285,
+#287, and `volume_onticCell` here).
+
 ## Honest scope
 
+* "Boost" is a boost of the **preparation** relative to the ontic frame, the frame whose time is the
+  ontic time, as in #287's "a preparation and its boost". Re-describing a fixed experiment in
+  another frame changes nothing, because the ontic order is the ontic frame's.
 * The I3 theorems are on the fibre `T²` with the tables as data (as `SkewFibrePartition.lean`).
 * "Agree" is almost-everywhere agreement under the measure the statistics use; disagreement is on a
   set of positive measure, so it is not a null-set artefact.
 * The general theorem is Bell's theorem read as a statement about selection order. Its premises are
   the locality of the first write (in each order) and the reproduction of the singlet's CHSH
   correlations. It uses no I3 structure.
-* Nothing here says which branch CSD takes or what fixes the first wing.
+* Which branch CSD takes is the author's decision, branch 1 with the ontic order (#290); the
+  theorems prove its consequences and do not derive it. The record layer stays kinematic: no `H_int`
+  generates the cells.
 
 ## References
 
@@ -191,14 +221,11 @@ theorem selection_order_dependent (q : JointRates m n) {s₀ : Fin m} {t₀ : Fi
   refine hne (rate_eq_mul_of_selection_order_indep q (fun s t => ?_) s₀ t₀)
   exact measure_symmDiff_eq_zero_iff.1 (nonpos_iff_eq_zero.1 (hc s t))
 
-/-- ★★★ **The singlet: the order decides the individual outcomes.** At any context with
-`a · b ≠ 0`, the singlet's table is correlated (`P₊₊ = (1 − a·b)/4`, marginals `1/2`), so the
-A-first and B-first selections disagree on a set of ontic points of positive measure. -/
-theorem singlet_selection_order_dependent (a b : DetectorSetting) (hab : dotR a b ≠ 0) :
-    ∃ s t, 0 < (volume : Measure LF4.KTorus)
-      (symmDiff (skewCell (singletJointRates a b) s t)
-        (skewCellRev (singletJointRates a b) s t)) := by
-  refine selection_order_dependent (singletJointRates a b) (s₀ := 0) (t₀ := 0) ?_
+/-- **The singlet's table is correlated** at any context with `a · b ≠ 0`:
+`P₊₊ = (1 − a·b)/4`, while the marginals are `1/2`. -/
+theorem singletJointRates_correlated (a b : DetectorSetting) (hab : dotR a b ≠ 0) :
+    (singletJointRates a b).rate 0 0
+      ≠ (singletJointRates a b).rowSum 0 * (singletJointRates a b).colSum 0 := by
   rw [singletJointRates_rowSum, singletJointRates_colSum, singletJointRates_rate, signOfFin_zero,
     P_st]
   intro h
@@ -206,6 +233,15 @@ theorem singlet_selection_order_dependent (a b : DetectorSetting) (hab : dotR a 
   have : (Sign.plus.val : ℝ) = 1 := rfl
   rw [this] at h
   linarith
+
+/-- ★★★ **The singlet: the order decides the individual outcomes.** At any context with
+`a · b ≠ 0`, the singlet's table is correlated (`P₊₊ = (1 − a·b)/4`, marginals `1/2`), so the
+A-first and B-first selections disagree on a set of ontic points of positive measure. -/
+theorem singlet_selection_order_dependent (a b : DetectorSetting) (hab : dotR a b ≠ 0) :
+    ∃ s t, 0 < (volume : Measure LF4.KTorus)
+      (symmDiff (skewCell (singletJointRates a b) s t)
+        (skewCellRev (singletJointRates a b) s t)) :=
+  selection_order_dependent (singletJointRates a b) (singletJointRates_correlated a b hab)
 
 /-! ### The general form: local first writes cannot be order independent -/
 
@@ -250,5 +286,110 @@ theorem no_order_indep_local_first_selection {Λ : Type*} [MeasurableSpace Λ]
       = ((SA.wingA (chshContext i j) l).val : ℝ) * ((SA.wingB (chshContext i j) l).val : ℝ)
     simp only [SharedContextOutcomeMaps.wingB, hl]
   exact no_compatible_global_chsh_assignment_realises_singlet μ S G hS hcomp hrepS
+
+/-! ### The ontic time decides: the selection by ontic write order (#290) -/
+
+/-- **The selection by ontic write order.** `eA` and `eB` are A's and B's record writes as events
+`(t, x)` in the ontic frame. The wing written first in ontic time is read first (ties go to A).
+The individual outcome at an ontic point is the cell containing it. -/
+def onticCell (q : JointRates m n) (eA eB : ℝ × ℝ) (s : Fin m) (t : Fin n) : Set LF4.KTorus :=
+  if eA.1 ≤ eB.1 then skewCell q s t else skewCellRev q s t
+
+/-- ★★ **Born weights, whatever the order and the frame.** -/
+theorem volume_onticCell (q : JointRates m n) (eA eB : ℝ × ℝ) (s : Fin m) (t : Fin n) :
+    (volume : Measure LF4.KTorus) (onticCell q eA eB s t) = ENNReal.ofReal (q.rate s t) := by
+  unfold onticCell
+  split_ifs
+  · exact volume_skewCell q s t
+  · exact volume_skewCellRev q s t
+
+/-- ★ **The boosted time difference of two writes.** -/
+theorem lorentzBoost_time_sub (u : ℝ) (eA eB : ℝ × ℝ) :
+    (lorentzBoost 1 u eB).1 - (lorentzBoost 1 u eA).1
+      = ((eB.1 - eA.1) - u * (eB.2 - eA.2)) / Real.sqrt (1 - u ^ 2 / 1 ^ 2) := by
+  simp only [lorentzBoost]
+  ring
+
+/-- ★★★ **Timelike or null writes keep their order under every boost.** If B's write is later than
+A's by at least their spatial separation, it is later in every boosted preparation. -/
+theorem timelike_order_boost_invariant {u : ℝ} (hu : |u| < 1) {eA eB : ℝ × ℝ}
+    (hpos : 0 < eB.1 - eA.1) (h : |eB.2 - eA.2| ≤ eB.1 - eA.1) :
+    (lorentzBoost 1 u eA).1 < (lorentzBoost 1 u eB).1 := by
+  have hs := sqrt_one_sub_pos (c := 1) (v := u) hu
+  have hux : u * (eB.2 - eA.2) < eB.1 - eA.1 := by
+    calc u * (eB.2 - eA.2) ≤ |u * (eB.2 - eA.2)| := le_abs_self _
+      _ = |u| * |eB.2 - eA.2| := abs_mul _ _
+      _ ≤ |u| * (eB.1 - eA.1) := mul_le_mul_of_nonneg_left h (abs_nonneg u)
+      _ < 1 * (eB.1 - eA.1) := mul_lt_mul_of_pos_right hu hpos
+      _ = eB.1 - eA.1 := one_mul _
+  have := lorentzBoost_time_sub u eA eB
+  have hd : 0 < ((eB.1 - eA.1) - u * (eB.2 - eA.2)) / Real.sqrt (1 - u ^ 2 / 1 ^ 2) :=
+    div_pos (by linarith) hs
+  linarith
+
+/-- ★★★ **Timelike or null writes: the individual outcomes are the same in every frame.** -/
+theorem timelike_onticCell_boost (q : JointRates m n) {u : ℝ} (hu : |u| < 1) {eA eB : ℝ × ℝ}
+    (hpos : 0 < eB.1 - eA.1) (h : |eB.2 - eA.2| ≤ eB.1 - eA.1) (s : Fin m) (t : Fin n) :
+    onticCell q (lorentzBoost 1 u eA) (lorentzBoost 1 u eB) s t = onticCell q eA eB s t := by
+  have h1 := timelike_order_boost_invariant hu hpos h
+  have h2 : eA.1 ≤ eB.1 := by linarith
+  simp [onticCell, h1.le, h2]
+
+/-- ★★ **Spacelike writes: some boost of the preparation reverses their ontic order.** With
+`Δt = t_B − t_A`, `Δx = x_B − x_A` and `|Δt| < |Δx|`, the boost `u = (Δt + |Δx|)/(2Δx)` has
+`|u| < 1` and puts B's write first. -/
+theorem exists_boost_reverses_spacelike {eA eB : ℝ × ℝ}
+    (h : |eB.1 - eA.1| < |eB.2 - eA.2|) :
+    ∃ u, |u| < 1 ∧ (lorentzBoost 1 u eB).1 < (lorentzBoost 1 u eA).1 := by
+  set a := eB.1 - eA.1
+  set b := eB.2 - eA.2
+  have hb : 0 < |b| := lt_of_le_of_lt (abs_nonneg a) h
+  have hb0 : b ≠ 0 := abs_pos.1 hb
+  obtain ⟨ha1, ha2⟩ := abs_lt.1 h
+  have hu : |(a + |b|) / (2 * b)| < 1 := by
+    rw [abs_div, abs_mul, abs_two, abs_of_pos (by linarith : 0 < a + |b|),
+      div_lt_one (by positivity)]
+    linarith
+  refine ⟨_, hu, ?_⟩
+  have hs := sqrt_one_sub_pos (c := 1) hu
+  have hub : (a + |b|) / (2 * b) * b = (a + |b|) / 2 := by field_simp
+  have hd : (a - (a + |b|) / (2 * b) * b) / Real.sqrt (1 - ((a + |b|) / (2 * b)) ^ 2 / 1 ^ 2)
+      < 0 := div_neg_of_neg_of_pos (by rw [hub]; linarith) hs
+  have := lorentzBoost_time_sub ((a + |b|) / (2 * b)) eA eB
+  linarith
+
+/-- ★★★ **Spacelike writes: a boost of the preparation changes the individual outcomes, and no
+statistic.** For a correlated table and two writes at spacelike separation, there is a boost of the
+preparation under which every outcome keeps its probability, while for some outcome pair the ontic
+points whose outcome changes carry positive measure. -/
+theorem spacelike_boost_changes_outcomes (q : JointRates m n) {s₀ : Fin m} {t₀ : Fin n}
+    (hne : q.rate s₀ t₀ ≠ q.rowSum s₀ * q.colSum t₀) {eA eB : ℝ × ℝ} (hle : eA.1 ≤ eB.1)
+    (h : |eB.1 - eA.1| < |eB.2 - eA.2|) :
+    ∃ u, |u| < 1 ∧
+      (∀ s t, (volume : Measure LF4.KTorus)
+          (onticCell q (lorentzBoost 1 u eA) (lorentzBoost 1 u eB) s t)
+        = volume (onticCell q eA eB s t)) ∧
+      ∃ s t, 0 < (volume : Measure LF4.KTorus) (symmDiff (onticCell q eA eB s t)
+        (onticCell q (lorentzBoost 1 u eA) (lorentzBoost 1 u eB) s t)) := by
+  obtain ⟨u, hu, hrev⟩ := exists_boost_reverses_spacelike h
+  refine ⟨u, hu, fun s t => by rw [volume_onticCell, volume_onticCell], ?_⟩
+  have h1 : ∀ s t, onticCell q eA eB s t = skewCell q s t := fun s t => by simp [onticCell, hle]
+  have h2 : ∀ s t, onticCell q (lorentzBoost 1 u eA) (lorentzBoost 1 u eB) s t
+      = skewCellRev q s t := fun s t => by simp [onticCell, not_le.2 hrev]
+  simp only [h1, h2]
+  exact selection_order_dependent q hne
+
+/-- ★★★ **The singlet: spacelike writes, a boost changes the individual outcomes and no
+statistic**, at any context with `a · b ≠ 0`. -/
+theorem singlet_spacelike_boost_changes_outcomes (a b : DetectorSetting) (hab : dotR a b ≠ 0)
+    {eA eB : ℝ × ℝ} (hle : eA.1 ≤ eB.1) (h : |eB.1 - eA.1| < |eB.2 - eA.2|) :
+    ∃ u, |u| < 1 ∧
+      (∀ s t, (volume : Measure LF4.KTorus)
+          (onticCell (singletJointRates a b) (lorentzBoost 1 u eA) (lorentzBoost 1 u eB) s t)
+        = volume (onticCell (singletJointRates a b) eA eB s t)) ∧
+      ∃ s t, 0 < (volume : Measure LF4.KTorus) (symmDiff
+        (onticCell (singletJointRates a b) eA eB s t)
+        (onticCell (singletJointRates a b) (lorentzBoost 1 u eA) (lorentzBoost 1 u eB) s t)) :=
+  spacelike_boost_changes_outcomes _ (singletJointRates_correlated a b hab) hle h
 
 end CSD.RecordLayer

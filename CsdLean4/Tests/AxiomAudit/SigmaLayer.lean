@@ -15644,4 +15644,38 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.no_order_indep_local_first_selection
 
+
+-- SelectionOrder, the ontic time decides (BACKLOG #290, 2026-11-04).
+/-- info: 'CSD.RecordLayer.singletJointRates_correlated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.singletJointRates_correlated
+
+/-- info: 'CSD.RecordLayer.volume_onticCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_onticCell
+
+/-- info: 'CSD.RecordLayer.lorentzBoost_time_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lorentzBoost_time_sub
+
+/-- info: 'CSD.RecordLayer.timelike_order_boost_invariant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.timelike_order_boost_invariant
+
+/-- info: 'CSD.RecordLayer.timelike_onticCell_boost' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.timelike_onticCell_boost
+
+/-- info: 'CSD.RecordLayer.exists_boost_reverses_spacelike' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_boost_reverses_spacelike
+
+/-- info: 'CSD.RecordLayer.spacelike_boost_changes_outcomes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.spacelike_boost_changes_outcomes
+
+/-- info: 'CSD.RecordLayer.singlet_spacelike_boost_changes_outcomes' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.singlet_spacelike_boost_changes_outcomes
+
 end CSD.Tests.AxiomAudit
