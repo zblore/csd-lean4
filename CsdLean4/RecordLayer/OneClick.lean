@@ -50,6 +50,10 @@ only on the weights at the click time, never on later ones.
   site weights at `s`);
 * ★★★ `clickLaw_clicked_by` (**the probability of a click by `t ≥ 0` is `1 − e^{−κt}`**, whatever
   the packet);
+* `clickTime` (`τ(ξ) = −log(rep ξ)/κ`), ★★ `map_clickTime` (**the uniform circle carries the
+  exponential click-time law**), `torusClick`, ★★★ `measurePreserving_torusClick` (**the torus `T²`
+  with its Haar measure carries the click law**), ★★★ `volume_torusClick_clickCell` (the law on
+  `T²`);
 * `siteRate`, `siteRate_nonneg`, `sum_siteRate`, `measurable_siteRate` (the site weights of a
   norm-conserving chain trajectory); ★★★ `chain_one_click` (**for any continuous trajectory of
   the chain with conserved norm, one click, its law and its total**);
@@ -68,9 +72,9 @@ the frequency of records over preparations reproduces them. Nothing here constru
 * **The click clock is a stated detector law**: exponential at rate `κ`, a parameter, as #252's
   gain `g` is. Nothing generates it from a coupling Hamiltonian (#251), and the packet is not
   depleted by the click (no back-reaction).
-* **The fibre is `ℝ × T¹` with `expMeasure κ ⊗ Haar`**, not the corpus's compact `T²`. The
-  exponential coordinate is the click time directly; transporting it to a circle coordinate is a
-  change of variables, not done here.
+* **The fibre is the corpus's compact `T²` with Haar measure** (`measurePreserving_torusClick`):
+  the first circle coordinate is read as the click time through `clickTime κ`. `ℝ × T¹` with
+  `expMeasure κ ⊗ Haar` is the working chart.
 * The site arcs are the corpus's arc cells (`circleCell`, `circleOutcome`), read at the weights of
   the click time. The click-time law does not depend on the packet, because the norm is conserved.
 
@@ -186,6 +190,68 @@ theorem clickLaw_clicked_by {κ : ℝ} (hκ : 0 < κ) (hr : ∀ k, Measurable fu
   rw [setLIntegral_const, one_mul, ← ofReal_cdf, cdf_expMeasure_eq hκ]
   simp only [ht, ↓reduceIte]
 
+/-! ### The click fibre on the torus -/
+
+/-- **The click time read off a circle point**: `τ(ξ) = −log(rep ξ)/κ`. -/
+def clickTime (κ : ℝ) (ξ : CircleFibre) : ℝ := -Real.log (rep ξ) / κ
+
+theorem measurable_clickTime (κ : ℝ) : Measurable (clickTime κ) :=
+  (Real.measurable_log.comp measurable_rep).neg.div_const κ
+
+/-- ★★ **The uniform circle carries the exponential click-time law** under `clickTime κ`. -/
+theorem map_clickTime {κ : ℝ} (hκ : 0 < κ) :
+    (volume : Measure CircleFibre).map (clickTime κ) = expMeasure κ := by
+  have := isProbabilityMeasure_expMeasure hκ
+  refine (Measure.ext_of_Iic _ _ fun t => ?_)
+  rw [Measure.map_apply (measurable_clickTime κ) measurableSet_Iic, ← ofReal_cdf,
+    cdf_expMeasure_eq hκ]
+  have hpre : clickTime κ ⁻¹' Iic t = rep ⁻¹' Ici (Real.exp (-(κ * t))) := by
+    ext ξ
+    simp only [mem_preimage, mem_Iic, mem_Ici, clickTime]
+    rw [div_le_iff₀ hκ, ← Real.log_le_log_iff (Real.exp_pos _) (rep_pos ξ), Real.log_exp]
+    constructor <;> intro h <;> linarith
+  rw [hpre, volume_rep_preimage measurableSet_Ici]
+  by_cases ht : 0 ≤ t
+  · have hc1 : Real.exp (-(κ * t)) ≤ 1 := Real.exp_le_one_iff.2 (by nlinarith)
+    have he : Ici (Real.exp (-(κ * t))) ∩ Ioc (0 : ℝ) 1 = Icc (Real.exp (-(κ * t))) 1 := by
+      ext x
+      simp only [mem_inter_iff, mem_Ici, mem_Ioc, mem_Icc]
+      constructor
+      · rintro ⟨h1, -, h3⟩
+        exact ⟨h1, h3⟩
+      · rintro ⟨h1, h3⟩
+        exact ⟨h1, lt_of_lt_of_le (Real.exp_pos _) h1, h3⟩
+    rw [he, Real.volume_Icc]
+    simp only [ht, ↓reduceIte]
+  · have hc1 : 1 < Real.exp (-(κ * t)) := Real.one_lt_exp_iff.2 (by nlinarith)
+    have he : Ici (Real.exp (-(κ * t))) ∩ Ioc (0 : ℝ) 1 = ∅ := by
+      ext x
+      simp only [mem_inter_iff, mem_Ici, mem_Ioc, mem_empty_iff_false, iff_false]
+      rintro ⟨h1, -, h3⟩
+      linarith
+    rw [he, measure_empty]
+    simp only [ht, ↓reduceIte, ENNReal.ofReal_zero]
+
+/-- **The torus point's click**: its first coordinate read as the click time, its second as the
+circle point. -/
+def torusClick (κ : ℝ) (x : LF4.KTorus) : ClickFibre := (clickTime κ x.1, x.2)
+
+/-- ★★★ **The torus with its Haar measure carries the click law.** So every statement about
+`clickLaw κ` holds on the corpus's compact fibre `T²`, through `torusClick κ`. -/
+theorem measurePreserving_torusClick {κ : ℝ} (hκ : 0 < κ) :
+    MeasurePreserving (torusClick κ) (volume : Measure LF4.KTorus) (clickLaw κ) := by
+  rw [Measure.volume_eq_prod]
+  exact (MeasurePreserving.prod ⟨measurable_clickTime κ, map_clickTime hκ⟩
+    (MeasurePreserving.id (volume : Measure CircleFibre)) : _)
+
+/-- ★★★ **On the torus: the probability of site `k` by `t`**, the same as on `ℝ × T¹`. -/
+theorem volume_torusClick_clickCell {κ : ℝ} (hκ : 0 < κ) (hr : ∀ k, Measurable fun s => r s k)
+    (hnn : ∀ s k, 0 ≤ r s k) (hsum : ∀ s, ∑ k, r s k = 1) (k : Fin n) (t : ℝ) :
+    (volume : Measure LF4.KTorus) (torusClick κ ⁻¹' clickCell r k t)
+      = ∫⁻ s in Iic t, ENNReal.ofReal (r s k) ∂(expMeasure κ) := by
+  rw [(measurePreserving_torusClick hκ).measure_preimage
+    (measurableSet_clickCell hr k t).nullMeasurableSet, clickLaw_clickCell κ hr hnn hsum]
+
 /-! ### The chain's site weights -/
 
 /-- **The site weights of a chain trajectory**: the weight `‖ψ_k‖²` on each site over the norm. -/
@@ -220,13 +286,17 @@ theorem chain_one_click {ψ : ℝ → ZMod (n + 1) × Fin 2 → ℂ} (hψ : Cont
     (∀ k t, clickLaw κ (clickCell (siteRate ψ N) k t)
       = ∫⁻ s in Iic t, ENNReal.ofReal (siteWeight (ψ s) k / N) ∂(expMeasure κ)) ∧
     (∀ t, 0 ≤ t → ∑ k, clickLaw κ (clickCell (siteRate ψ N) k t)
-      = ENNReal.ofReal (1 - Real.exp (-(κ * t)))) :=
+      = ENNReal.ofReal (1 - Real.exp (-(κ * t)))) ∧
+    (∀ k t, (volume : Measure LF4.KTorus) (torusClick κ ⁻¹' clickCell (siteRate ψ N) k t)
+      = ∫⁻ s in Iic t, ENNReal.ofReal (siteWeight (ψ s) k / N) ∂(expMeasure κ)) :=
   ⟨existsUnique_clickSite (siteRate_nonneg ψ hN) (sum_siteRate ψ hN hnorm),
     fun _ _ h t t' => clickCell_disjoint (siteRate_nonneg ψ hN) h t t',
     clickLaw_clickCell κ (measurable_siteRate hψ N) (siteRate_nonneg ψ hN)
       (sum_siteRate ψ hN hnorm),
     fun _ ht => clickLaw_clicked_by hκ (measurable_siteRate hψ N) (siteRate_nonneg ψ hN)
-      (sum_siteRate ψ hN hnorm) ht⟩
+      (sum_siteRate ψ hN hnorm) ht,
+    volume_torusClick_clickCell hκ (measurable_siteRate hψ N) (siteRate_nonneg ψ hN)
+      (sum_siteRate ψ hN hnorm)⟩
 
 /-- ★★★ **One click for every Dirac packet of the chain** — the packet of `dirac_detector`
 included (`twoMode` is `packet 4 3 {0, 1} 1` on `12 = 11 + 1` sites). The norm is the packet's
@@ -241,7 +311,9 @@ theorem dirac_packet_one_click (J μ : ℝ) {W : Finset ℤ} (hD : Distinct (n +
     (∀ k t, clickLaw κ (clickCell (siteRate ψ N) k t)
       = ∫⁻ s in Iic t, ENNReal.ofReal (siteWeight (ψ s) k / N) ∂(expMeasure κ)) ∧
     (∀ t, 0 ≤ t → ∑ k, clickLaw κ (clickCell (siteRate ψ N) k t)
-      = ENNReal.ofReal (1 - Real.exp (-(κ * t)))) := by
+      = ENNReal.ofReal (1 - Real.exp (-(κ * t)))) ∧
+    (∀ k t, (volume : Measure LF4.KTorus) (torusClick κ ⁻¹' clickCell (siteRate ψ N) k t)
+      = ∫⁻ s in Iic t, ENNReal.ofReal (siteWeight (ψ s) k / N) ∂(expMeasure κ)) := by
   intro ψ N
   refine chain_one_click ((continuous_packet J μ W).comp
     (continuous_const.prodMk continuous_id)) hN (fun s => ?_) hκ

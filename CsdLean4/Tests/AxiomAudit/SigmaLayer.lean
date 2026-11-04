@@ -15724,4 +15724,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.dirac_packet_one_click
 
+
+-- OneClick on the torus T^2 (BACKLOG #266 residue, 2026-11-04).
+/-- info: 'CSD.RecordLayer.measurable_clickTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_clickTime
+
+/-- info: 'CSD.RecordLayer.map_clickTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_clickTime
+
+/-- info: 'CSD.RecordLayer.measurePreserving_torusClick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurePreserving_torusClick
+
+/-- info: 'CSD.RecordLayer.volume_torusClick_clickCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_torusClick_clickCell
+
 end CSD.Tests.AxiomAudit
