@@ -69,8 +69,17 @@ jobs:
       - name: Build CsdLean4 (production)
         run: lake build CsdLean4
 
-      - name: Build CsdLeanTests (regression suite)
-        run: lake build CsdLeanTests
+      # Axiom-pin drift is reported, not fatal (author's decision, 2026-11-04): the AxiomAudit pins
+      # record each constant's EXACT axiom set at the pinned Mathlib, and a newer Mathlib can add
+      # axioms through upstream lemmas (seven SigmaLayer constants became classical on master), so
+      # no pin string fits both. The classifier passes the step only when every error is such a
+      # `#guard_msgs` axiom mismatch, annotating one warning per drifted constant; any other error
+      # fails it. The pinned CI (ci.yml) keeps the exact pins.
+      - name: Build CsdLeanTests (regression suite; axiom-pin drift reported, not fatal)
+        run: |
+          set -o pipefail
+          lake build CsdLeanTests 2>&1 | tee tests-build.log \
+            || python3 scripts/compat-axiom-drift.py tests-build.log
 
       - name: Core static controls on the forward build
         run: |
