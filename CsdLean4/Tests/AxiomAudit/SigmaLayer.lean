@@ -15868,4 +15868,98 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.Coupled.coupledPassageWrite
 
+
+-- CoupledLiouville (BACKLOG #291, 2026-11-04): the coupled detector flow preserves measure.
+/-- info: 'CSD.RecordLayer.Coupled.detFlow_eq_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.detFlow_eq_shift
+
+/-- info: 'CSD.RecordLayer.Coupled.detFlow_eq_skew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.detFlow_eq_skew
+
+/-- info: 'CSD.RecordLayer.Coupled.planarFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.planarFlow_zero
+
+/-- info: 'CSD.RecordLayer.Coupled.planarFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.planarFlow_add
+
+/-- info: 'CSD.RecordLayer.Coupled.planarFlow_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.planarFlow_neg
+
+/-- info: 'CSD.RecordLayer.Coupled.hasDerivAt_planarFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.hasDerivAt_planarFlow
+
+/-- info: 'CSD.RecordLayer.Coupled.continuous_planarFlow_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.continuous_planarFlow_time
+
+/-- info: 'CSD.RecordLayer.Coupled.lipschitz_planarFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.lipschitz_planarFlow
+
+/-- info: 'CSD.RecordLayer.Coupled.continuous_planarFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.continuous_planarFlow
+
+/-- info: 'CSD.RecordLayer.Coupled.hasDerivAt_force' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.hasDerivAt_force
+
+/-- info: 'CSD.RecordLayer.Coupled.continuous_forceDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.continuous_forceDeriv
+
+/-- info: 'CSD.RecordLayer.Coupled.planarDeriv_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.planarDeriv_apply
+
+/-- info: 'CSD.RecordLayer.Coupled.hasFDerivAt_planarField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.hasFDerivAt_planarField
+
+/-- info: 'CSD.RecordLayer.Coupled.continuous_planarDeriv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.continuous_planarDeriv
+
+/-- info: 'CSD.RecordLayer.Coupled.contDiff_planarField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.contDiff_planarField
+
+/-- info: 'CSD.RecordLayer.Coupled.det_eq_entries' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.det_eq_entries
+
+/-- info: 'CSD.RecordLayer.Coupled.exists_hasFDerivAt_planarFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.exists_hasFDerivAt_planarFlow
+
+/-- info: 'CSD.RecordLayer.Coupled.planarFlow_neg_inv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.planarFlow_neg_inv
+
+/-- info: 'CSD.RecordLayer.Coupled.volume_image_planarFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.volume_image_planarFlow
+
+/-- info: 'CSD.RecordLayer.Coupled.measurePreserving_planarFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.measurePreserving_planarFlow
+
+/-- info: 'CSD.RecordLayer.Coupled.continuous_regShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.continuous_regShift
+
+/-- info: 'CSD.RecordLayer.Coupled.measurePreserving_detFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.measurePreserving_detFlow
+
+/-- info: 'CSD.RecordLayer.Coupled.measurePreserving_coupledEvolve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.Coupled.measurePreserving_coupledEvolve
+
 end CSD.Tests.AxiomAudit
