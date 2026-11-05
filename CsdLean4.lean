@@ -778,6 +778,7 @@ public import CsdLean4.RecordLayer.OneClick
 public import CsdLean4.RecordLayer.CoupledDetector
 public import CsdLean4.RecordLayer.CoupledLiouville
 public import CsdLean4.RecordLayer.LorentzKinematics
+public import CsdLean4.RecordLayer.RadarTrilateration
 public import CsdLean4.RecordLayer.DiracLatticeCorrections
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena

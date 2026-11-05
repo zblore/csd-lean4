@@ -16024,4 +16024,54 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.exists_boostD_reverses_spacelike
 
+
+-- RadarTrilateration (BACKLOG #293, 2026-11-05): the spatial radar chart.
+/-- info: 'CSD.RecordLayer.two_inner_sub_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_inner_sub_eq
+
+/-- info: 'CSD.RecordLayer.eq_zero_of_inner_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.eq_zero_of_inner_eq_zero
+
+/-- info: 'CSD.RecordLayer.trilateration_unique' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trilateration_unique
+
+/-- info: 'CSD.RecordLayer.exists_trilateration_const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_trilateration_const
+
+/-- info: 'CSD.RecordLayer.abs_sq_sub_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_sq_sub_sq_le
+
+/-- info: 'CSD.RecordLayer.trilateration_stable' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trilateration_stable
+
+/-- info: 'CSD.RecordLayer.trilateration_scaling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trilateration_scaling
+
+/-- info: 'CSD.RecordLayer.null_future_time_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.null_future_time_eq
+
+/-- info: 'CSD.RecordLayer.null_future_boostD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.null_future_boostD
+
+/-- info: 'CSD.RecordLayer.boostD_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.boostD_zero
+
+/-- info: 'CSD.RecordLayer.radar_boostD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_boostD
+
+/-- info: 'CSD.RecordLayer.trilateration_chart_boostD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trilateration_chart_boostD
+
 end CSD.Tests.AxiomAudit
