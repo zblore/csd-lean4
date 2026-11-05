@@ -5105,4 +5105,109 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 /-- info: 'CSD.Empirical.QM.QEC.Steane.xBar_pow_mul_gateOf_mul_xBar_pow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.xBar_pow_mul_gateOf_mul_xBar_pow
+-- SteaneUniversalMachine (BACKLOG #305, 2026-11-05): the machine over H, S, X, Z, CNOT and T
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pX_mul_mul_pX_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pX_mul_mul_pX_apply
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.projL_apply_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.projL_apply_self
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.one_mul_gateOf_add_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.one_mul_gateOf_add_apply
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cnotT_mul_blockKron_gateOf_mul_cnotT' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cnotT_mul_blockKron_gateOf_mul_cnotT
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.colKraus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.colKraus
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.colFaultE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.colFaultE
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.colKraus_mul_pairEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.colKraus_mul_pairEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockKron_two_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockKron_two_mem_unitaryGroup
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pX_pow_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pX_pow_conjTranspose
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.colFaultE_eq_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.colFaultE_eq_conj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.colFaultE_mem_pairSpan' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.colFaultE_mem_pairSpan
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.colOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.colOp
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.injFaultyKraus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.injFaultyKraus
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.injFaulty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.injFaulty
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ite_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ite_mem_unitaryGroup
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.deviatesBy_injFaulty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.deviatesBy_injFaulty
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.UGadget.ideal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.UGadget.ideal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.UGadget.faulty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.UGadget.faulty
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.UGadget.step' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.UGadget.step
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.UGadget.isCodeState_ideal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.UGadget.isCodeState_ideal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.UGadget.deviatesBy_faulty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.UGadget.deviatesBy_faulty
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_universalGadgetSet_corrected' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_universalGadgetSet_corrected
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.uMachineCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.uMachineCircuit
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.uMachineIdeal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.uMachineIdeal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.idealRun_uMachineCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.idealRun_uMachineCircuit
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_universal_machine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_universal_machine
 end CSD.Tests.AxiomAudit
