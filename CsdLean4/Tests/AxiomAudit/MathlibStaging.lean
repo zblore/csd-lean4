@@ -5,7 +5,325 @@ Authors: Zayn Blore
 -/
 module
 
-public import CsdLean4
+public import CsdLean4.Mathlib.Analysis.CStarAlgebra.GroupCommutator
+public import CsdLean4.Mathlib.Analysis.CStarAlgebra.OperatorConvexCFC
+public import CsdLean4.Mathlib.Analysis.Calculus.ContDiffParametricIntegral
+public import CsdLean4.Mathlib.Analysis.Calculus.ContDiffParametricIntegralFDeriv
+public import CsdLean4.Mathlib.Analysis.Calculus.ContDiffParametricIntervalIntegral
+public import CsdLean4.Mathlib.Analysis.Calculus.DifferentialForm.Poincare
+public import CsdLean4.Mathlib.Analysis.Calculus.FDeriv.Quotient
+public import CsdLean4.Mathlib.Analysis.Calculus.SchrodingerCurrent
+public import CsdLean4.Mathlib.Analysis.Fourier.CircleSobolev
+public import CsdLean4.Mathlib.Analysis.Fourier.MoyalBracket
+public import CsdLean4.Mathlib.Analysis.Fourier.PartialFourier
+public import CsdLean4.Mathlib.Analysis.Fourier.PartialFourierBound
+public import CsdLean4.Mathlib.Analysis.Fourier.PartialFourierCLM
+public import CsdLean4.Mathlib.Analysis.Fourier.PartialFourierDeriv
+public import CsdLean4.Mathlib.Analysis.Fourier.PartialFourierMul
+public import CsdLean4.Mathlib.Analysis.Fourier.PartialFourierSmooth
+public import CsdLean4.Mathlib.Analysis.Fourier.SchwartzPartialIntegral
+public import CsdLean4.Mathlib.Analysis.Fourier.SchwartzSlice
+public import CsdLean4.Mathlib.Analysis.Fourier.SchwartzSliceContinuous
+public import CsdLean4.Mathlib.Analysis.Fourier.SchwartzTensor
+public import CsdLean4.Mathlib.Analysis.Fourier.WeylAlgebra
+public import CsdLean4.Mathlib.Analysis.Fourier.WeylComposition
+public import CsdLean4.Mathlib.Analysis.Fourier.WeylSmooth
+public import CsdLean4.Mathlib.Analysis.Fourier.WeylSymbolClass
+public import CsdLean4.Mathlib.Analysis.Fourier.Wigner
+public import CsdLean4.Mathlib.Analysis.Fourier.WignerCalculus
+public import CsdLean4.Mathlib.Analysis.Fourier.WignerEvolution
+public import CsdLean4.Mathlib.Analysis.Fourier.WignerFree
+public import CsdLean4.Mathlib.Analysis.Fourier.WignerL2
+public import CsdLean4.Mathlib.Analysis.Fourier.WignerPotential
+public import CsdLean4.Mathlib.Analysis.Fourier.WignerWeyl
+public import CsdLean4.Mathlib.Analysis.InformationGeometry.BraunsteinCaves
+public import CsdLean4.Mathlib.Analysis.InformationGeometry.FisherRao
+public import CsdLean4.Mathlib.Analysis.InformationGeometry.FubiniStudyFisherRao
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.DiagonalOperator
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.EuclideanLin
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhase
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.GeometricPhaseCurvature
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Core
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Descent
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Extremal
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.FrameFunction
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.General
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Piron
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Polarization
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.ProjectionPackage
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Real
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.RealFrame
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Reduction
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.SimpleFrame
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Sphere
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.Gleason.Warmup
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.HamiltonianVectorField
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerClosed
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerForm
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPluriharmonic
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerPotential
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.KahlerWedge
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.LinearPMapConj
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.LinearPMapPerturb
+public import CsdLean4.Mathlib.Analysis.InnerProductSpace.MultiplicationOperator
+public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticBornFock
+public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticComparison
+public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticConstant
+public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticIntertwiner
+public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticPhase
+public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticPropagators
+public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
+public import CsdLean4.Mathlib.Analysis.Matrix.DysonSeries
+public import CsdLean4.Mathlib.Analysis.Matrix.DysonVertex
+public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
+public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormEntry
+public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvex
+public import CsdLean4.Mathlib.Analysis.Matrix.OperatorConvexBridge
+public import CsdLean4.Mathlib.Analysis.Matrix.ProjectiveLift
+public import CsdLean4.Mathlib.Analysis.Matrix.RieszProjector
+public import CsdLean4.Mathlib.Analysis.Matrix.RieszProjectorSmooth
+public import CsdLean4.Mathlib.Analysis.Matrix.SchrodingerUnitary
+public import CsdLean4.Mathlib.Analysis.Matrix.StoneC1
+public import CsdLean4.Mathlib.Analysis.Matrix.SumOverPaths
+public import CsdLean4.Mathlib.Analysis.Matrix.TrotterProduct
+public import CsdLean4.Mathlib.Analysis.Matrix.UnitaryPropagator
+public import CsdLean4.Mathlib.Analysis.Normed.Algebra.ExpUnique
+public import CsdLean4.Mathlib.Analysis.Normed.Lp.Matrix
+public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.Pullback
+public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.TopForm
+public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.Wedge
+public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.WedgeCLM
+public import CsdLean4.Mathlib.Analysis.Normed.Module.Alternating.WedgeShuffle
+public import CsdLean4.Mathlib.Analysis.NormedSpace.TrotterGeneral
+public import CsdLean4.Mathlib.Analysis.ODE.FlowDerivative
+public import CsdLean4.Mathlib.Analysis.ODE.FlowSmooth
+public import CsdLean4.Mathlib.Analysis.ODE.LipschitzFlow
+public import CsdLean4.Mathlib.Analysis.Semigroup.BoundedPerturbation
+public import CsdLean4.Mathlib.Analysis.Semigroup.FreeHamiltonian
+public import CsdLean4.Mathlib.Analysis.Semigroup.FreeHamiltonianSchwartz
+public import CsdLean4.Mathlib.Analysis.Semigroup.FresnelKernel
+public import CsdLean4.Mathlib.Analysis.Semigroup.GaussianPacket
+public import CsdLean4.Mathlib.Analysis.Semigroup.HeatSemigroup
+public import CsdLean4.Mathlib.Analysis.Semigroup.MatrixInstance
+public import CsdLean4.Mathlib.Analysis.Semigroup.PerturbedGenerator
+public import CsdLean4.Mathlib.Analysis.Semigroup.PhaseGenerator
+public import CsdLean4.Mathlib.Analysis.Semigroup.PhaseGeneratorDomain
+public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerGenerator
+public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerGroup
+public import CsdLean4.Mathlib.Analysis.Semigroup.SchrodingerSchwartz
+public import CsdLean4.Mathlib.Analysis.SpecialFunctions.JapaneseBracketEuclidean
+public import CsdLean4.Mathlib.Analysis.SpecialFunctions.JapaneseBracketIntegral
+public import CsdLean4.Mathlib.Combinatorics.PairingSum
+public import CsdLean4.Mathlib.Dynamics.CatMapAffine
+public import CsdLean4.Mathlib.Dynamics.CatMapMixing
+public import CsdLean4.Mathlib.Dynamics.CatMapPeriodicPoints
+public import CsdLean4.Mathlib.Dynamics.CatMapShears
+public import CsdLean4.Mathlib.Dynamics.CatMapStrongMixing
+public import CsdLean4.Mathlib.Dynamics.CatMapWitness
+public import CsdLean4.Mathlib.Dynamics.ClassicalOtoc
+public import CsdLean4.Mathlib.Dynamics.CoarseMarkov
+public import CsdLean4.Mathlib.Dynamics.CompactGroupNoMixing
+public import CsdLean4.Mathlib.Dynamics.CorrelationDecay
+public import CsdLean4.Mathlib.Dynamics.CorrelationDecayWitness
+public import CsdLean4.Mathlib.Dynamics.Kac
+public import CsdLean4.Mathlib.Dynamics.Koopman
+public import CsdLean4.Mathlib.Dynamics.LyapunovExponent
+public import CsdLean4.Mathlib.Dynamics.ReturnCriterion
+public import CsdLean4.Mathlib.Dynamics.ReturnCriterionConj
+public import CsdLean4.Mathlib.Dynamics.ShearReturns
+public import CsdLean4.Mathlib.Dynamics.ToralReturns
+public import CsdLean4.Mathlib.Dynamics.ToralReturnsConverse
+public import CsdLean4.Mathlib.Dynamics.ToralReturnsReversing
+public import CsdLean4.Mathlib.Geometry.Manifold.Darboux
+public import CsdLean4.Mathlib.Geometry.Manifold.DarbouxStandardForm
+public import CsdLean4.Mathlib.Geometry.Manifold.DifferentialForm
+public import CsdLean4.Mathlib.Geometry.Manifold.ExteriorDerivative
+public import CsdLean4.Mathlib.Geometry.Manifold.FormInvariance
+public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianFlowVolume
+public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianLieDerivative
+public import CsdLean4.Mathlib.Geometry.Manifold.HamiltonianVectorField
+public import CsdLean4.Mathlib.Geometry.Manifold.HolomorphicVectorField
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCircle
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCirclePeriodicLift
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.AddCircleTranslation
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceChartCover
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFisherRao
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudy
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyForm
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyInvariance
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyMass
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyRiemannian
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudySymplectic
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyVolume
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricPhase
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceHamiltonianFlow
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerFlow
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerHolomorphic
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
+public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
+public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.GlobalFlow
+public import CsdLean4.Mathlib.Geometry.Manifold.ProductForm
+public import CsdLean4.Mathlib.Geometry.Manifold.ProductSelfModel
+public import CsdLean4.Mathlib.Geometry.Manifold.RiemannianVolume
+public import CsdLean4.Mathlib.Geometry.Manifold.SymplecticForm
+public import CsdLean4.Mathlib.Geometry.Manifold.TopFormMeasure
+public import CsdLean4.Mathlib.Geometry.Manifold.TranslationAtlasForm
+public import CsdLean4.Mathlib.Geometry.Manifold.VectorBundle.AlternatingMap
+public import CsdLean4.Mathlib.Geometry.Manifold.WedgeForm
+public import CsdLean4.Mathlib.Geometry.Manifold.WedgePowPairs
+public import CsdLean4.Mathlib.InformationTheory.ChiSquare
+public import CsdLean4.Mathlib.InformationTheory.CoarseGrainArrow
+public import CsdLean4.Mathlib.InformationTheory.FiniteEntropy
+public import CsdLean4.Mathlib.InformationTheory.KlDivArrow
+public import CsdLean4.Mathlib.LinearAlgebra.BilinearForm.SymplecticBasis
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.CauchyBinet
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.KroneckerAlgHom
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PartialTrace
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.PathSum
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.ReindexTrace
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.TwoLevel
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryCompact
+public import CsdLean4.Mathlib.LinearAlgebra.Matrix.UnitaryHaar
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Bargmann
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.BargmannContinuity
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Congr
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudy
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyLebesgue
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.FubiniStudyUnique
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MeasureSpace
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Metric
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.MomentMap
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.PhaseRigidity
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.TransitionProbability
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitSection
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Unitary
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.UnitaryTransitive
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerRigidity
+public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.WignerUniqueness
+public import CsdLean4.Mathlib.MeasureTheory.CellPointer
+public import CsdLean4.Mathlib.MeasureTheory.FibrePreserving
+public import CsdLean4.Mathlib.MeasureTheory.GluedMeasurePreserving
+public import CsdLean4.Mathlib.MeasureTheory.IidTrials
+public import CsdLean4.Mathlib.MeasureTheory.InvariantTwist
+public import CsdLean4.Mathlib.MeasureTheory.LintegralFintypeProd
+public import CsdLean4.Mathlib.MeasureTheory.Measure.Haar.PiComplex
+public import CsdLean4.Mathlib.MeasureTheory.MomentDeterminacy
+public import CsdLean4.Mathlib.MeasureTheory.MutuallySingularMap
+public import CsdLean4.Mathlib.MeasureTheory.PiCurry
+public import CsdLean4.Mathlib.MeasureTheory.PiecewisePreserving
+public import CsdLean4.Mathlib.Probability.BrownianVec
+public import CsdLean4.Mathlib.Probability.CGLMP
+public import CsdLean4.Mathlib.Probability.ChainedBell
+public import CsdLean4.Mathlib.Probability.CircuitThreshold
+public import CsdLean4.Mathlib.Probability.CodeCapacityThreshold
+public import CsdLean4.Mathlib.Probability.CompetingExponentials
+public import CsdLean4.Mathlib.Probability.ConditionalProbability
+public import CsdLean4.Mathlib.Probability.FeynmanKac
+public import CsdLean4.Mathlib.Probability.FeynmanKacL2
+public import CsdLean4.Mathlib.Probability.IIDCoordinateProcess
+public import CsdLean4.Mathlib.Probability.IidClockRace
+public import CsdLean4.Mathlib.Probability.TimeSlicedWiener
+public import CsdLean4.Mathlib.QuantumInfo.AharonovBohmCircle
+public import CsdLean4.Mathlib.QuantumInfo.AharonovBohmRing
+public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
+public import CsdLean4.Mathlib.QuantumInfo.AmplitudeEstimation
+public import CsdLean4.Mathlib.QuantumInfo.AncillaLadder
+public import CsdLean4.Mathlib.QuantumInfo.BlockKron
+public import CsdLean4.Mathlib.QuantumInfo.Broadcasting
+public import CsdLean4.Mathlib.QuantumInfo.CanonicalChannels
+public import CsdLean4.Mathlib.QuantumInfo.Channel
+public import CsdLean4.Mathlib.QuantumInfo.ChannelComp
+public import CsdLean4.Mathlib.QuantumInfo.Clifford
+public import CsdLean4.Mathlib.QuantumInfo.CliffordTAngle
+public import CsdLean4.Mathlib.QuantumInfo.CliffordTDensity
+public import CsdLean4.Mathlib.QuantumInfo.CliffordTNet
+public import CsdLean4.Mathlib.QuantumInfo.CliffordTUniversal
+public import CsdLean4.Mathlib.QuantumInfo.CliffordTWords
+public import CsdLean4.Mathlib.QuantumInfo.CommutatorDecomposition
+public import CsdLean4.Mathlib.QuantumInfo.Concavity
+public import CsdLean4.Mathlib.QuantumInfo.ConcavityFull
+public import CsdLean4.Mathlib.QuantumInfo.ControlRecursion
+public import CsdLean4.Mathlib.QuantumInfo.ControlledGate
+public import CsdLean4.Mathlib.QuantumInfo.ControlledSingle
+public import CsdLean4.Mathlib.QuantumInfo.DataProcessing
+public import CsdLean4.Mathlib.QuantumInfo.Entropy
+public import CsdLean4.Mathlib.QuantumInfo.EulerDecomposition
+public import CsdLean4.Mathlib.QuantumInfo.ExtendedRectangle
+public import CsdLean4.Mathlib.QuantumInfo.FaultTolerantComposition
+public import CsdLean4.Mathlib.QuantumInfo.Fidelity
+public import CsdLean4.Mathlib.QuantumInfo.Fourier
+public import CsdLean4.Mathlib.QuantumInfo.Hadamard
+public import CsdLean4.Mathlib.QuantumInfo.Helstrom
+public import CsdLean4.Mathlib.QuantumInfo.HolevoBound
+public import CsdLean4.Mathlib.QuantumInfo.JointRegister
+public import CsdLean4.Mathlib.QuantumInfo.KnillLaflamme
+public import CsdLean4.Mathlib.QuantumInfo.LevelReduction
+public import CsdLean4.Mathlib.QuantumInfo.Magic
+public import CsdLean4.Mathlib.QuantumInfo.MagicInjection
+public import CsdLean4.Mathlib.QuantumInfo.MultiControlled
+public import CsdLean4.Mathlib.QuantumInfo.OverlappingRectangles
+public import CsdLean4.Mathlib.QuantumInfo.PartialTrace
+public import CsdLean4.Mathlib.QuantumInfo.Pauli
+public import CsdLean4.Mathlib.QuantumInfo.PhaseEstimation
+public import CsdLean4.Mathlib.QuantumInfo.PureState
+public import CsdLean4.Mathlib.QuantumInfo.QSearch
+public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15
+public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Code
+public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Decoder
+public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Distill
+public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Errors
+public import CsdLean4.Mathlib.QuantumInfo.Register
+public import CsdLean4.Mathlib.QuantumInfo.RegisterTensor
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.AndAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Circuit
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ConstProp
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Cost
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CtrlMul
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.CuccaroModMul
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Depth
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Eval
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.GidneyAdder
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.HybridLift
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.Lift
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModInv
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModMul
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduce
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModReduceCtrl
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAdd
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularAddCtrl
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularConst
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularDouble
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMul
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularMulLoop
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.ModularSub
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdder
+public import CsdLean4.Mathlib.QuantumInfo.Reversible.VerifiedAdderCarryClean
+public import CsdLean4.Mathlib.QuantumInfo.RotatingFrame
+public import CsdLean4.Mathlib.QuantumInfo.SU2Rotation
+public import CsdLean4.Mathlib.QuantumInfo.SolovayKitaevCount
+public import CsdLean4.Mathlib.QuantumInfo.SolovayKitaevStep
+public import CsdLean4.Mathlib.QuantumInfo.Stabilizer
+public import CsdLean4.Mathlib.QuantumInfo.StabilizerRecovery
+public import CsdLean4.Mathlib.QuantumInfo.Stinespring
+public import CsdLean4.Mathlib.QuantumInfo.StrongSubadditivity
+public import CsdLean4.Mathlib.QuantumInfo.Subadditivity
+public import CsdLean4.Mathlib.QuantumInfo.SyndromeExtraction
+public import CsdLean4.Mathlib.QuantumInfo.TraceDistance
+public import CsdLean4.Mathlib.QuantumInfo.TransversalClifford
+public import CsdLean4.Mathlib.QuantumInfo.UnitaryPerturbation
+public import CsdLean4.Mathlib.Topology.Algebra.CompactRecurrence
+public import CsdLean4.Mathlib.Topology.Algebra.Module.LinearMap
+public import CsdLean4.Mathlib.Topology.Algebra.MulAction
+public import CsdLean4.Mathlib.Topology.Homotopy.CircleFundamentalGroup
+public import CsdLean4.Mathlib.Topology.Homotopy.FactorExchangeObstruction
 
 /-!
 # AxiomAudit part: MathlibStaging
@@ -15,10 +333,15 @@ public import CsdLean4
 Cat-1 Mathlib-staged pins (Projectivization/Wigner, UnitaryGroup/FS measure, QuantumInfo incl. Reversible arithmetic, probability/measure support).
 
 Split from the monolithic `Tests/AxiomAudit.lean` 2026-08-06 (BACKLOG G9):
-blocks retain their original relative order; a pin lives here because its
-constant's namespace classifies to this part. All parts share the umbrella's
-resolution context (root import + the LF1-LF3 opens), so placement never
-affects whether a pin compiles. Layer-local gate: `lake build
+blocks retain their original relative order.
+
+**This part imports only the Category-1 modules (`CsdLean4/Mathlib/`), not the root**
+(2026-11-05). A pin lives here iff its constant is DEFINED under `CsdLean4/Mathlib/`, whatever
+its namespace; a Mathlib-style name defined in a CSD layer goes in that layer's part. The
+narrow import means landings outside `CsdLean4/Mathlib/` never rebuild these ~3,050 pins. A
+new Category-1 module whose constants are pinned here needs an import line above;
+`check-axiom-imports.sh` checks each part against its own import closure and names any
+missing one. Layer-local gate: `lake build
 CsdLean4.Tests.AxiomAudit.MathlibStaging`. Update discipline unchanged — see the
 umbrella `Tests/AxiomAudit.lean` docstring and `AXIOMS.md §5`.
 -/
@@ -27,7 +350,6 @@ umbrella `Tests/AxiomAudit.lean` docstring and `AXIOMS.md §5`.
 
 namespace CSD.Tests.AxiomAudit
 
-open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 
 
 -- Partial trace (Cat-1 Mathlib staging) + the reduced density operator (LF2).
@@ -2032,30 +2354,10 @@ the antiunitary branch is genuinely present, so no branch elimination is needed.
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.wigner_rigidity_unitaryGroup
 
--- LF4-todo §13.2 discharge via Wigner (2026-07-02). The `CSDUnitaryBundle.U_isometry`
--- obligation is derived (not posited) from the intrinsic transition-probability
--- condition. `conjProj_ne_projMap`: coordinatewise conjugation is not a unitary
--- projective map (N ≥ 2). `transProbPreserving_isometry_dichotomy`: the honest
--- Hilbert-level dichotomy (unitary isometry ∨ antiunitary anti-isometry; the
--- antiunitary branch is exposed, not dropped). `smul_action_not_antiunitary`: the
--- sector action `g • ·` is not time-reversal (the no-time-reversal selection holds).
--- `u_isometry_of_transProbPreserving` / `ofTransProbPreserving`: Wigner OUTPUTS the
--- isometry `U`, discharging `U_isometry`. `cpSectorActionBundle`: non-vacuous
--- instantiation on the concrete Kähler instance via the sector action. All
--- foundational-triple only; no `busch`, no `sorry`, no `native_decide`. §13.2
--- discharges modulo the posited sector symmetry (SO-1); the measure-⟹-metric route is false
--- and not used.
-/-- info: 'Projectivization.conjProj_ne_projMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms Projectivization.conjProj_ne_projMap
-
-/-- info: 'Projectivization.transProbPreserving_isometry_dichotomy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms Projectivization.transProbPreserving_isometry_dichotomy
-
-/-- info: 'Projectivization.smul_action_not_antiunitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms Projectivization.smul_action_not_antiunitary
+-- The LF4-todo §13.2 Wigner-discharge pins (`conjProj_ne_projMap`,
+-- `transProbPreserving_isometry_dichotomy`, `smul_action_not_antiunitary`) moved to the
+-- EmpiricalCSD part on 2026-11-05 with their explanatory comment: they are defined in
+-- `Empirical/CSD/Gates/WignerDischarge.lean`, outside CsdLean4/Mathlib/.
 
 -- W5-S1: the projective-to-vector phase lift. Phase rigidity (the kernel of
 -- U(N) → PU(N) is the circle: unitaries acting identically on every ray differ
@@ -13193,18 +13495,6 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.GappedPath.proj_toEuclideanCLM_apply_of_eq
 
-/-- info: 'Matrix.IsHermitian.eigenvalues_sq_eq_of_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms Matrix.IsHermitian.eigenvalues_sq_eq_of_mul_self
-
-/-- info: 'Fintype.card_subtype_eq_one_of_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms Fintype.card_subtype_eq_one_of_two
-
-/-- info: 'norm_inner_sub_le_norm_sub_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms norm_inner_sub_le_norm_sub_smul
-
 
 /-! #166: an explicit adiabatic constant, `C = 8M₁/g² + 4M₂/g² + 80M₁²/g³` (`Mathlib/Analysis/Matrix/AdiabaticConstant.lean`; the first pin is `norm_sub_le_of_bounds`, the estimate of #162 factored out with the suprema as hypotheses). -/
 
@@ -14724,78 +15014,9 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.det_conjTranspose_mul_self_eq_sum
 
-
--- CrossCoupledFlow (BACKLOG #225, 2026-10-29): a Hamiltonian vector field on either factor lifts
--- to the product form pi1^* alpha + pi2^* beta.
-/-- info: 'DifferentialForm.IsHamiltonianVectorField.prodForm_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms DifferentialForm.IsHamiltonianVectorField.prodForm_fst
-
-/-- info: 'DifferentialForm.IsHamiltonianVectorField.prodForm_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms DifferentialForm.IsHamiltonianVectorField.prodForm_snd
-
-
--- SteaneCircuitRecovery (BACKLOG #228, 2026-10-29): prepare, extract, read = the syndrome projector.
-/-- info: 'QuantumInfo.ancRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.ancRead
-
-/-- info: 'QuantumInfo.ancRead_mul_extractMat_mul_ancInit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.ancRead_mul_extractMat_mul_ancInit
-
-
--- SteaneMethod (BACKLOG #229 first brick, 2026-10-29): an ancilla prepared in psi, extracted and read is
--- the diagonal psi(m + H z); reading after a product operator.
-/-- info: 'QuantumInfo.ancPrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.ancPrep
-
-/-- info: 'QuantumInfo.ancRead_mul_extractMat_mul_ancPrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.ancRead_mul_extractMat_mul_ancPrep
-
-/-- info: 'QuantumInfo.ancRead_mul_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.ancRead_mul_kronecker
-
-
--- SteaneFaultyRecovery (BACKLOG #232, 2026-10-29): monotonicity of DeviatesBy / IsRecovery in the
--- correctable set, Pauli conjugation, sequential Kraus families, gateOf adjoint, readout completeness,
--- ancilla preparation as an isometry.
-/-- info: 'QuantumInfo.DeviatesBy.mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.DeviatesBy.mono
-
-/-- info: 'QuantumInfo.IsRecovery.anti' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.IsRecovery.anti
-
-/-- info: 'QuantumInfo.pauliMat_mul_conjTranspose_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.pauliMat_mul_conjTranspose_self
-
-/-- info: 'QuantumInfo.pauliMat_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.pauliMat_conj
-
-/-- info: 'QuantumInfo.sum_mul_conjTranspose_mul_of_tp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.sum_mul_conjTranspose_mul_of_tp
-
-/-- info: 'QuantumInfo.Controlled.gateOf_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.Controlled.gateOf_conjTranspose
-
-/-- info: 'QuantumInfo.sum_ancRead_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.sum_ancRead_conjTranspose_mul
-
-/-- info: 'QuantumInfo.ancPrep_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.ancPrep_conjTranspose_mul
-
+-- The pins for CrossCoupledFlow (#225), SteaneCircuitRecovery (#228), SteaneMethod (#229) and
+-- SteaneFaultyRecovery (#232) moved to the LF4 and EmpiricalQM parts on 2026-11-05: those
+-- modules sit outside CsdLean4/Mathlib/, which is all this part imports.
 
 -- OverlappingRectangles (BACKLOG #233, 2026-10-29): the chain of overlapping extended rectangles
 -- (IsFaultChain, the invariant, the final decoding) and the union bound over overlapping windows.
@@ -14863,55 +15084,8 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.one_sub_le_measure_output_eq_windows
 
-
--- SteaneOverlapMachine (BACKLOG #235, 2026-10-30): ordered products of trace-preserving Kraus families.
-/-- info: 'QuantumInfo.sum_prod_ofFn_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.sum_prod_ofFn_conjTranspose_mul
-
-
--- SteaneVerifiedAncilla (BACKLOG #234, 2026-10-30): permutation and product operators on vectors,
--- preparing M psi, trace-preserving families keep the norm, the transversal Hadamard's entries.
-/-- info: 'QuantumInfo.permMat_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.permMat_mulVec_apply
-
-/-- info: 'QuantumInfo.kronecker_mulVec_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.kronecker_mulVec_prod
-
-/-- info: 'QuantumInfo.kronecker_one_mulVec_apply_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.kronecker_one_mulVec_apply_eq_sum
-
-/-- info: 'QuantumInfo.ancPrep_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.ancPrep_mulVec
-
-/-- info: 'QuantumInfo.ancPrep_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.ancPrep_smul
-
-/-- info: 'QuantumInfo.sum_star_mulVec_mul_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.sum_star_mulVec_mul_mulVec
-
-/-- info: 'QuantumInfo.sum_one_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.sum_one_kronecker
-
-/-- info: 'QuantumInfo.sum_kronecker_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.sum_kronecker_one_eq
-
-/-- info: 'QuantumInfo.sum_unitary_mul_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.sum_unitary_mul_conjTranspose_mul
-
-/-- info: 'QuantumInfo.hadTransversal_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
-#guard_msgs (whitespace := lax) in
-#print axioms QuantumInfo.hadTransversal_apply
-
+-- The pins for SteaneOverlapMachine (#235) and SteaneVerifiedAncilla (#234) moved to the
+-- EmpiricalQM part on 2026-11-05 (modules outside CsdLean4/Mathlib/).
 
 -- OverlappingRectangles (BACKLOG #236, 2026-10-30): the chain from a faulty preparation.
 /-- info: 'QuantumInfo.lastFaultFrom' does not depend on any axioms -/

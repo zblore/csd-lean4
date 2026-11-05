@@ -4369,4 +4369,116 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.attemptsMean_le
 
+-- Moved from the MathlibStaging part 2026-11-05: these constants carry Mathlib-style
+-- namespaces but are defined outside CsdLean4/Mathlib/, and that part now imports
+-- only the Category-1 modules.
+
+/-- info: 'Matrix.IsHermitian.eigenvalues_sq_eq_of_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.IsHermitian.eigenvalues_sq_eq_of_mul_self
+
+/-- info: 'Fintype.card_subtype_eq_one_of_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Fintype.card_subtype_eq_one_of_two
+
+/-- info: 'norm_inner_sub_le_norm_sub_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms norm_inner_sub_le_norm_sub_smul
+
+/-- info: 'QuantumInfo.ancRead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancRead
+
+/-- info: 'QuantumInfo.ancRead_mul_extractMat_mul_ancInit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancRead_mul_extractMat_mul_ancInit
+
+/-- info: 'QuantumInfo.ancPrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancPrep
+
+/-- info: 'QuantumInfo.ancRead_mul_extractMat_mul_ancPrep' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancRead_mul_extractMat_mul_ancPrep
+
+/-- info: 'QuantumInfo.ancRead_mul_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancRead_mul_kronecker
+
+/-- info: 'QuantumInfo.DeviatesBy.mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.DeviatesBy.mono
+
+/-- info: 'QuantumInfo.IsRecovery.anti' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsRecovery.anti
+
+/-- info: 'QuantumInfo.pauliMat_mul_conjTranspose_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.pauliMat_mul_conjTranspose_self
+
+/-- info: 'QuantumInfo.pauliMat_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.pauliMat_conj
+
+/-- info: 'QuantumInfo.sum_mul_conjTranspose_mul_of_tp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_mul_conjTranspose_mul_of_tp
+
+/-- info: 'QuantumInfo.Controlled.gateOf_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.gateOf_conjTranspose
+
+/-- info: 'QuantumInfo.sum_ancRead_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_ancRead_conjTranspose_mul
+
+/-- info: 'QuantumInfo.ancPrep_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancPrep_conjTranspose_mul
+
+/-- info: 'QuantumInfo.sum_prod_ofFn_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_prod_ofFn_conjTranspose_mul
+
+/-- info: 'QuantumInfo.permMat_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.permMat_mulVec_apply
+
+/-- info: 'QuantumInfo.kronecker_mulVec_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.kronecker_mulVec_prod
+
+/-- info: 'QuantumInfo.kronecker_one_mulVec_apply_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.kronecker_one_mulVec_apply_eq_sum
+
+/-- info: 'QuantumInfo.ancPrep_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancPrep_mulVec
+
+/-- info: 'QuantumInfo.ancPrep_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ancPrep_smul
+
+/-- info: 'QuantumInfo.sum_star_mulVec_mul_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_star_mulVec_mul_mulVec
+
+/-- info: 'QuantumInfo.sum_one_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_one_kronecker
+
+/-- info: 'QuantumInfo.sum_kronecker_one_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_kronecker_one_eq
+
+/-- info: 'QuantumInfo.sum_unitary_mul_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.sum_unitary_mul_conjTranspose_mul
+
+/-- info: 'QuantumInfo.hadTransversal_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.hadTransversal_apply
+
 end CSD.Tests.AxiomAudit

@@ -2255,4 +2255,30 @@ info: 'CSD.Empirical.CSDBridge.KochenSpecker.no_csd_ks_assignment_bundle' depend
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.CSDBridge.QEC.exists_steaneFlow_recovery
 
+-- Moved from the MathlibStaging part 2026-11-05: these constants carry Mathlib-style
+-- namespaces but are defined outside CsdLean4/Mathlib/, and that part now imports
+-- only the Category-1 modules.
+--
+-- LF4-todo §13.2 discharge via Wigner (2026-07-02). The `CSDUnitaryBundle.U_isometry`
+-- obligation is derived (not posited) from the intrinsic transition-probability
+-- condition. `conjProj_ne_projMap`: coordinatewise conjugation is not a unitary
+-- projective map (N ≥ 2). `transProbPreserving_isometry_dichotomy`: the honest
+-- Hilbert-level dichotomy (unitary isometry ∨ antiunitary anti-isometry; the
+-- antiunitary branch is exposed, not dropped). `smul_action_not_antiunitary`: the
+-- sector action `g • ·` is not time-reversal (the no-time-reversal selection holds).
+-- All foundational-triple only. §13.2 discharges modulo the posited sector symmetry
+-- (SO-1); the measure-⟹-metric route is false and not used.
+
+/-- info: 'Projectivization.conjProj_ne_projMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.conjProj_ne_projMap
+
+/-- info: 'Projectivization.transProbPreserving_isometry_dichotomy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.transProbPreserving_isometry_dichotomy
+
+/-- info: 'Projectivization.smul_action_not_antiunitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.smul_action_not_antiunitary
+
 end CSD.Tests.AxiomAudit

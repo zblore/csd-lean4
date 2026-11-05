@@ -1894,4 +1894,16 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #print axioms CSD.LF4.hamiltonianFlow_crossEnergy
 
 
+-- Moved from the MathlibStaging part 2026-11-05: these constants carry Mathlib-style
+-- namespaces but are defined outside CsdLean4/Mathlib/, and that part now imports
+-- only the Category-1 modules.
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.prodForm_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.prodForm_fst
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.prodForm_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.prodForm_snd
+
 end CSD.Tests.AxiomAudit

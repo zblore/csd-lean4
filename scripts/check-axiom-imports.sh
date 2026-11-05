@@ -4,9 +4,9 @@
 # Fast pre-commit safeguard against the recurring CI failure where an AxiomAudit
 # file gains a `#print axioms Foo.bar` pin for a module that is NOT in the audit's
 # import closure (the "pins added, import forgotten" bug). Since the G9 split
-# (2026-08-06) pins live in the per-part files under Tests/AxiomAudit/; the
-# closure starts at the umbrella (which imports every part; parts import the
-# CsdLean4 root), and pins are collected from umbrella + parts. The library fast-path
+# (2026-08-06) pins live in the per-part files under Tests/AxiomAudit/. Since 2026-11-05
+# each pin file (umbrella and every part) is checked against ITS OWN import closure:
+# most parts import the CsdLean4 root, but MathlibStaging imports only CsdLean4/Mathlib/. The library fast-path
 # build does not compile AxiomAudit, so the resulting "Unknown constant" only
 # surfaces in the slow CsdLeanTests / CI run.
 #
@@ -54,23 +54,27 @@ done < <(git ls-files 'CsdLean4.lean' 'CsdLean4/**/*.lean' 'CsdLean4/*.lean' "$A
   | awk -F'\t' '{ gsub(/\./, "/", $2); print $1 "\t" $2 ".lean" }')
 
 nl=$'\n'
-queue=()
-rest="${imports_of[$AA]:-}"
-while [ -n "$rest" ]; do
-  f="${rest%%"$nl"*}"; rest="${rest#*"$nl"}"
-  [ -n "$f" ] && [ -z "${inclosure[$f]:-}" ] && { inclosure["$f"]=1; queue+=("$f"); }
-done
-
-i=0
-while [ "$i" -lt "${#queue[@]}" ]; do
-  f="${queue[$i]}"; i=$((i+1))
-  [ -f "$f" ] || continue
-  rest="${imports_of[$f]:-}"
+# Closure of ONE file into `inclosure`. Each pin file is checked against its OWN closure
+# (2026-11-05): the MathlibStaging part imports only the Category-1 modules, so a pin there on a
+# CSD-layer constant fails to compile even though the umbrella's closure contains the constant.
+closure_of() {
+  inclosure=()
+  local queue=() i=0 f g rest
+  rest="${imports_of[$1]:-}"
   while [ -n "$rest" ]; do
-    g="${rest%%"$nl"*}"; rest="${rest#*"$nl"}"
-    if [ -n "$g" ] && [ -z "${inclosure[$g]:-}" ]; then inclosure["$g"]=1; queue+=("$g"); fi
+    f="${rest%%"$nl"*}"; rest="${rest#*"$nl"}"
+    [ -n "$f" ] && [ -z "${inclosure[$f]:-}" ] && { inclosure["$f"]=1; queue+=("$f"); }
   done
-done
+  while [ "$i" -lt "${#queue[@]}" ]; do
+    f="${queue[$i]}"; i=$((i+1))
+    [ -f "$f" ] || continue
+    rest="${imports_of[$f]:-}"
+    while [ -n "$rest" ]; do
+      g="${rest%%"$nl"*}"; rest="${rest#*"$nl"}"
+      if [ -n "$g" ] && [ -z "${inclosure[$g]:-}" ]; then inclosure["$g"]=1; queue+=("$g"); fi
+    done
+  done
+}
 
 # --- The definition index, built once: declaration name -> defining files. ---
 # Keys are restricted to the leaf alphabet [A-Za-z0-9_]: a pin's leaf is drawn from it (the
@@ -86,13 +90,18 @@ while IFS=$'\t' read -r tok file; do
   else
     deffiles_of["$tok"]="$file"
   fi
+# `LC_ALL=C` on the sed is load-bearing (2026-11-05): in a UTF-8 locale `.*$` fails on a line
+# whose bytes it cannot decode, so every declaration line carrying `𝕜`, `ℙ`, `𝓘`, ... was
+# silently dropped from the index and its pins could never be located.
 done < <(git grep -E "${kw_re}[^[:space:](:{]" -- CsdLean4 2>/dev/null \
-  | sed -nE 's/^([^:]*):(theorem|lemma|def|noncomputable def|abbrev|structure|inductive|instance)[[:space:]]+([^[:space:](:{]+).*$/\3\t\1/p' \
+  | LC_ALL=C sed -nE 's/^([^:]*):(theorem|lemma|def|noncomputable def|abbrev|structure|inductive|instance)[[:space:]]+([^[:space:](:{]+).*$/\3\t\1/p' \
   | grep -E $'^[A-Za-z0-9_]+\t' \
   | LC_ALL=C sort -u)
 
-# --- Check every pinned constant's defining module is in the closure. ---
+# --- Check every pinned constant's defining module is in its pin file's closure. ---
 failures=0
+for pinfile in "$AA" CsdLean4/Tests/AxiomAudit/*.lean; do
+closure_of "$pinfile"
 while read -r name; do
   [ -n "$name" ] || continue
   leaf="${name##*.}"
@@ -115,13 +124,17 @@ while read -r name; do
   done
   if [ "$ok" -eq 0 ]; then
     printf 'MISSING IMPORT: pinned constant %s\n   defined in: %s\n   -> add its module (or a module importing it) to %s\n' \
-      "$name" "$(echo "$deffiles" | tr '\n' ' ')" "$AA"
+      "$name" "$(echo "$deffiles" | tr '\n' ' ')" "$pinfile"
     failures=$((failures+1))
   fi
-done < <(grep -ohE '#print axioms[[:space:]]+[A-Za-z0-9_.]+' "$AA" CsdLean4/Tests/AxiomAudit/*.lean | awk '{print $NF}' | sort -u)
+# The whole name up to whitespace, kept only if it is in the index alphabet: a name like
+# `IsKahler.J₀_J₀` used to be cut at the `₀` and looked up as the unrelated leaf `J`.
+done < <(LC_ALL=C grep -ohE '#print axioms[[:space:]]+[^[:space:]]+' "$pinfile" | awk '{print $NF}' \
+  | LC_ALL=C grep -E '^[A-Za-z0-9_.]+$' | sort -u)
+done
 
 if [ "$failures" -gt 0 ]; then
-  echo "check-axiom-imports: FAIL ($failures pinned constant(s) not in AxiomAudit's import closure)"
+  echo "check-axiom-imports: FAIL ($failures pinned constant(s) not in their pin file's import closure)"
   exit 1
 fi
-echo "check-axiom-imports: OK (every locatable pinned constant is in AxiomAudit's import closure)"
+echo "check-axiom-imports: OK (every locatable pinned constant is in its pin file's import closure)"
