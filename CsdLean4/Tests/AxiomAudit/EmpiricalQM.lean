@@ -5411,4 +5411,101 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 /-- info: 'CSD.Empirical.QM.QEC.Steane.steane_triple_machine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_triple_machine
+-- SteaneMachineDensity (BACKLOG #308, 2026-11-05): the machine is universal on two logical qubits
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.dataEmb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.dataEmb
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.dataEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.dataEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3_conj_dataEmb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3_conj_dataEmb
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3_zero_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3_zero_right
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3_zero_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3_zero_left
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.TGadget.ideal_clifford_tripleEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.TGadget.ideal_clifford_tripleEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.swapQ' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.swapQ
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cnotL_submatrix_swapQ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cnotL_submatrix_swapQ
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3_swap01' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3_swap01
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockKron_two_eq_gateOf_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockKron_two_eq_gateOf_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockKron_two_eq_gateOf_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockKron_two_eq_gateOf_one
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.realised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.realised
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.mem_realised_of_gadget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.mem_realised_of_gadget
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.smul_conj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.smul_conj_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_had_mul_steaneEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_had_mul_steaneEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.gateOf_hGateM_mem_realised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.gateOf_hGateM_mem_realised
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ket0_conj_ket0' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ket0_conj_ket0
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sum_lift3_injIdealKraus_dataEmb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sum_lift3_injIdealKraus_dataEmb
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.gateOf_tGateM_mem_realised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.gateOf_tGateM_mem_realised
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cliffordTm_le_realised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cliffordTm_le_realised
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_triple_machine_universal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_triple_machine_universal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tMachineIdeal_get' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tMachineIdeal_get
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cnotL_eq_cnotGate'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cnotL_eq_cnotGate'
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cnotGate'_mem_realised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cnotGate'_mem_realised
+
 end CSD.Tests.AxiomAudit
