@@ -39,24 +39,37 @@ AA="CsdLean4/Tests/AxiomAudit.lean"
 
 # --- Transitive import closure of AxiomAudit, as repo-relative file paths. ---
 declare -A inclosure
-queue=()
 # Match legacy `import`, and the Lean 4 module-system forms `public import` / `meta import`
 # / `public meta import`, stripping the modifier prefix before turning the module path into a file.
 imp_re='^(public )?(meta )?import CsdLean4'
-imp_to_file() { sed -E 's/^(public )?(meta )?import //; s/\./\//g; s/$/.lean/'; }
-while read -r f; do
-  [ -n "$f" ] || continue
-  inclosure["$f"]=1; queue+=("$f")
-done < <(grep -E "$imp_re" "$AA" | imp_to_file)
+# Every file's CsdLean4 imports, read in ONE pass ("file<TAB>imported/file.lean"). The walk used
+# to spawn `grep | sed` per module: 313 s of the guard's 320 s at ~1,000 modules on Windows Git
+# Bash (2026-11-05). Same import regex, same closure.
+declare -A imports_of
+while IFS=$'\t' read -r f g; do
+  imports_of["$f"]+="$g"$'\n'
+done < <(git ls-files 'CsdLean4.lean' 'CsdLean4/**/*.lean' 'CsdLean4/*.lean' "$AA" | sort -u \
+  | xargs -d '\n' grep -HE "$imp_re" 2>/dev/null \
+  | sed -nE 's/^([^:]*):(public )?(meta )?import (CsdLean4(\.[A-Za-z0-9_]+)*).*$/\1\t\4/p' \
+  | awk -F'\t' '{ gsub(/\./, "/", $2); print $1 "\t" $2 ".lean" }')
+
+nl=$'\n'
+queue=()
+rest="${imports_of[$AA]:-}"
+while [ -n "$rest" ]; do
+  f="${rest%%"$nl"*}"; rest="${rest#*"$nl"}"
+  [ -n "$f" ] && [ -z "${inclosure[$f]:-}" ] && { inclosure["$f"]=1; queue+=("$f"); }
+done
 
 i=0
 while [ "$i" -lt "${#queue[@]}" ]; do
   f="${queue[$i]}"; i=$((i+1))
   [ -f "$f" ] || continue
-  while read -r g; do
-    [ -n "$g" ] || continue
-    if [ -z "${inclosure[$g]:-}" ]; then inclosure["$g"]=1; queue+=("$g"); fi
-  done < <(grep -E "$imp_re" "$f" | imp_to_file)
+  rest="${imports_of[$f]:-}"
+  while [ -n "$rest" ]; do
+    g="${rest%%"$nl"*}"; rest="${rest#*"$nl"}"
+    if [ -n "$g" ] && [ -z "${inclosure[$g]:-}" ]; then inclosure["$g"]=1; queue+=("$g"); fi
+  done
 done
 
 # --- The definition index, built once: declaration name -> defining files. ---
@@ -91,10 +104,15 @@ while read -r name; do
     deffiles="$(git grep -lE "${kw_re}([[:space:](:{]|$)" -- CsdLean4 2>/dev/null || true)"
   fi
   [ -z "$deffiles" ] && continue          # unlocatable form -> cannot adjudicate
+  # Walk the newline-joined files by parameter expansion (no here-string temp file per pin).
   ok=0
-  while read -r f; do
+  rest="$deffiles"
+  while :; do
+    f="${rest%%$'\n'*}"
     [ -n "${inclosure[$f]:-}" ] && { ok=1; break; }
-  done <<< "$deffiles"
+    [ "$rest" = "$f" ] && break
+    rest="${rest#*$'\n'}"
+  done
   if [ "$ok" -eq 0 ]; then
     printf 'MISSING IMPORT: pinned constant %s\n   defined in: %s\n   -> add its module (or a module importing it) to %s\n' \
       "$name" "$(echo "$deffiles" | tr '\n' ' ')" "$AA"

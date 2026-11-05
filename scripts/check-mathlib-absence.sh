@@ -84,6 +84,15 @@ pin_blob = '\n'.join(pin_text)
 pin_paths = {f.as_posix() for f in pin_files}
 
 DECL = r'(?:theorem|lemma|def|abbrev|instance|structure|class|opaque|inductive)'
+DECL_HEAD = (r'^[ ]*(?:@\[[^\]]*\][ ]*)?(?:private |protected |noncomputable |public |scoped )*'
+             + DECL + r'[ ]+')
+
+# Declaration-name index, built in ONE pass over the pin (2026-11-05: the per-token regex scan
+# of the whole blob was most of the guard's 107 s). For a token made of `[\w']` characters the
+# old pattern `DECL_HEAD + tok + (?![\w'])` matches iff the maximal `[\w']` run after the head is
+# exactly `tok`, so a set lookup is the same test; any other token falls back to the regex.
+decl_names = {m.group(1) for m in re.finditer(DECL_HEAD + r"([\w']+)", pin_blob, re.M)}
+WORD_TOK = re.compile(r"[\w']+")
 
 def token_found(tok):
     """Return a short reason string if the token IS present upstream, else None."""
@@ -95,8 +104,9 @@ def token_found(tok):
     if '.' in tok:
         n = pin_blob.count(tok)
         return f'{n} textual occurrence(s)' if n else None
-    pat = re.compile(r'^[ ]*(?:@\[[^\]]*\][ ]*)?(?:private |protected |noncomputable |public |scoped )*'
-                     + DECL + r'[ ]+' + re.escape(tok) + r"(?![\w'])", re.M)
+    if WORD_TOK.fullmatch(tok):
+        return '1+ declaration site(s)' if tok in decl_names else None
+    pat = re.compile(DECL_HEAD + re.escape(tok) + r"(?![\w'])", re.M)
     n = len(pat.findall(pin_blob))
     return f'{n} declaration site(s)' if n else None
 
