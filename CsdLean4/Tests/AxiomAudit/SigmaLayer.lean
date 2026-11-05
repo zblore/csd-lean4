@@ -15962,4 +15962,66 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.Coupled.measurePreserving_coupledEvolve
 
+
+-- LorentzKinematics (BACKLOG #292, 2026-11-04): Lorentz boosts in any number of space dimensions.
+/-- info: 'CSD.RecordLayer.minkowskiSqD_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.minkowskiSqD_eq
+
+/-- info: 'CSD.RecordLayer.one_sub_sq_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_sq_pos
+
+/-- info: 'CSD.RecordLayer.boostGamma_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.boostGamma_pos
+
+/-- info: 'CSD.RecordLayer.boostGamma_sq_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.boostGamma_sq_mul
+
+/-- info: 'CSD.RecordLayer.boostD_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.boostD_sub
+
+/-- info: 'CSD.RecordLayer.boostD_time_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.boostD_time_sub
+
+/-- info: 'CSD.RecordLayer.minkowskiInner_boostD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.minkowskiInner_boostD
+
+/-- info: 'CSD.RecordLayer.minkowskiSqD_boostD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.minkowskiSqD_boostD
+
+/-- info: 'CSD.RecordLayer.boostD_real_eq_lorentzBoost' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.boostD_real_eq_lorentzBoost
+
+/-- info: 'CSD.RecordLayer.properTime_boostD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.properTime_boostD
+
+/-- info: 'CSD.RecordLayer.properTime_worldline' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.properTime_worldline
+
+/-- info: 'CSD.RecordLayer.relGamma_boostD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relGamma_boostD
+
+/-- info: 'CSD.RecordLayer.relGamma_vel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.relGamma_vel
+
+/-- info: 'CSD.RecordLayer.timelike_order_boostD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.timelike_order_boostD
+
+/-- info: 'CSD.RecordLayer.exists_boostD_reverses_spacelike' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_boostD_reverses_spacelike
+
 end CSD.Tests.AxiomAudit
