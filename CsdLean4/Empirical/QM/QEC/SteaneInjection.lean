@@ -13,7 +13,7 @@ public import CsdLean4.Mathlib.QuantumInfo.Magic
 # The logical `T̄` on the Steane code, by magic-state injection
 
 **Category:** 3-Local (Empirical, QM twin). BACKLOG #230, second brick (the injection; the first
-brick was the logical `S̄`, `SteaneLogicalS.lean`).
+brick was the logical `S̄`, `SteaneLogicalS.lean`), and #304 (a faulty magic state).
 
 The two-block register holds the data in block `0` and the ancilla in block `1`. The injection
 gadget, written as one channel on the physical register (`injChannel`), is
@@ -48,17 +48,35 @@ on code states, is **the logical `T` on the data with the ancilla left in `|0̄�
 * ★★★ `steane_injection_corrected` — **injection is a corrected step**: with any recovery for a
   correctable set `D`, a magic state whose error leaves the gadget within `D` of the ideal (the
   `DeviatesBy` hypothesis) gives #96's `IsCorrectedStep`; ★★ `deviatesBy_injChannel_magicEnc`
-  discharges the hypothesis for the exact magic state, and ★★★ `steane_injection` packages it with
-  the two-block recovery of `SteanePairMachine.lean`.
+  discharges the hypothesis for the exact magic state.
+
+**A faulty magic state (#304).** A fault `A` on qubit `q` of `|Ā⟩` is carried by `CNOT̄` to a
+*pair* error — its `Z` part is copied to the data block — and the reset `X̄^m` signs its `Y`, `Z`
+parts by the outcome, so the gadget is not one conjugation but an even mixture of two.
+
+* `pairSpan` — unitary combinations of the pair's Pauli family, **non-product pair errors
+  included**; `pairMix` — **mixtures of conjugations by them**; ★★ `exists_isRecovery_pairMix` —
+  **the pair recovery undoes every such mixture** (Knill–Laflamme gives a scalar, unitarity makes it
+  `1`, linearity handles the mixture); `pairWeightOne_subset_pairMix`;
+* ★ `cnotT_mul_blockKron_pauliMat_mul_cnotT` — `CNOT̄ (1 ⊗ X^a Z^b) CNOT̄ = Z^b ⊗ X^a Z^b`;
+  ★ `logProj_mul_pauliMat_mul_steaneEnc` — the decoded read-out does not see a single-qubit Pauli on
+  the code; `xBar_pow_mul_pauliMat` — the reset's sign;
+* ★ `readOp_mul_cnotConj_gateOf` — the fault passes the read-out and the feed-forward on the code,
+  for an arbitrary operator by linearity from the Paulis; `faultE q A m` — the outcome-`m` pair
+  error, ★ `faultE_mem_pairSpan` (unitary, and a combination of the family);
+* ★★ `injKraus_fault_mul_pairEnc` — **each faulty Kraus operator is the exact one followed by
+  `faultE q A m`**; ★★★ `injChannel_fault_eq` — **the faulty gadget is the ideal one followed by
+  the even mixture `faultMix q A` of the two pair errors**; ★★ `deviatesBy_injChannel_fault`;
+* ★★★ `steane_injection` — **one recovery, and the corrected step for the exact magic state, for a
+  magic state with an arbitrary unitary fault on any one qubit, and for any prepared state within
+  the mixtures**.
 
 ## Honest scope
 
-⚠️ Level one, and the magic state's error is a **hypothesis** (`DeviatesBy`), as the row asks: no
-theorem here says that a faulty magic-state preparation, or a fault inside the `CNOT̄` or the
-read-out, stays within the weight-one set (a single Pauli on the magic state propagates through
-`CNOT̄` and the outcome-dependent `X̄^m` into an outcome-dependent pair error). The injection is not
-a member of `SteanePairMachine.lean`'s gadget set, so `steane_pair_machine`'s count does not cover
-it. Both are rowed.
+⚠️ Level one. The fault discharged is one arbitrary unitary on one qubit of the prepared magic
+state; a fault inside the `CNOT̄` or the read-out, or a faulty recovery, is not treated, and
+`pairMix` is shown correctable by the ideal recovery only. The injection is not a member of
+`SteanePairMachine.lean`'s gadget set, so `steane_pair_machine`'s count does not cover it (#305).
 
 References: S. Bravyi, A. Kitaev, *Phys. Rev. A* **71**, 022316 (2005); X. Zhou, D. Leung,
 I. Chuang, *Phys. Rev. A* **62**, 052316 (2000); M. Nielsen, I. Chuang, *Quantum Computation and
@@ -73,6 +91,7 @@ Quantum Information* §10.6.2; `specs/BACKLOG.md` #230; `Empirical/QM/QEC/Steane
 @[expose] public section
 
 open Matrix QuantumInfo
+open QuantumInfo.Controlled
 
 noncomputable section
 
@@ -121,6 +140,17 @@ theorem magicL_mul_star_sum : ∑ m, magicL m * star (magicL m) = 1 := by
   calc invSqrtTwo * invSqrtTwo + invSqrtTwo * tPhase * (invSqrtTwo * tPhaseInv)
       = invSqrtTwo * invSqrtTwo * (1 + tPhase * tPhaseInv) := by ring
     _ = 1 := by rw [invSqrtTwo_mul_self, tPhase_mul_inv]; norm_num
+
+/-- Each outcome of the magic state's read-out has weight `1/2`. -/
+theorem magicL_mul_star (m : Fin 2) : magicL m * star (magicL m) = 2⁻¹ := by
+  fin_cases m
+  · show invSqrtTwo * star invSqrtTwo = 2⁻¹
+    rw [star_invSqrtTwo, invSqrtTwo_mul_self]
+  · show invSqrtTwo * tPhase * star (invSqrtTwo * tPhase) = 2⁻¹
+    rw [star_mul', star_invSqrtTwo, star_tPhase]
+    calc invSqrtTwo * tPhase * (invSqrtTwo * tPhaseInv)
+        = invSqrtTwo * invSqrtTwo * (tPhase * tPhaseInv) := by ring
+      _ = 2⁻¹ := by rw [invSqrtTwo_mul_self, tPhase_mul_inv, mul_one]
 
 theorem magicL_star_mul_sum : ∑ m, star (magicL m) * magicL m = 1 := by
   simp_rw [mul_comm (star _)]
@@ -276,19 +306,20 @@ theorem krausL_eq (k : Fin 7 → Fin 2) (m : Fin 2) :
     rw [blockKron_two_mul, Matrix.one_mul, vecMulVec_mul_ket0], ← Matrix.mul_assoc, injCore,
     smul_mul_assoc]
 
-/-- ★★ **The logical channel of the injection gadget is `logicalInj`.** Summed over the read-out
-outcome (weights `1/2`, `1/2`) and over the discarded block, every branch applies `T`. -/
-theorem sum_krausL (σ : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ) :
-    ∑ k, ∑ m, krausL k m * σ * (krausL k m)ᴴ = logicalInj σ := by
+/-- ★★ **One read-out outcome of the logical gadget is half the logical channel**: summed over the
+discarded block, outcome `m` applies `T` with weight `|magicL m|² = 1/2`. -/
+theorem sum_krausL_branch (m : Fin 2) (σ : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ) :
+    ∑ k, krausL k m * σ * (krausL k m)ᴴ = (2⁻¹ : ℂ) • logicalInj σ := by
   set TE := blockKron ![tGateM, vecMulVec ket0 ket0]
-  have hm : ∀ k, ∑ m, krausL k m * σ * (krausL k m)ᴴ
-      = TE * (blockKron ![1, vecMulVec ket0 (steaneEnc k)] * σ
-          * (blockKron ![1, vecMulVec ket0 (steaneEnc k)])ᴴ) * TEᴴ := by
+  have hk : ∀ k, krausL k m * σ * (krausL k m)ᴴ
+      = (2⁻¹ : ℂ) • (TE * (blockKron ![1, vecMulVec ket0 (steaneEnc k)] * σ
+          * (blockKron ![1, vecMulVec ket0 (steaneEnc k)])ᴴ) * TEᴴ) := by
     intro k
-    simp only [krausL_eq, conjTranspose_smul, smul_mul_assoc, mul_smul_comm, smul_smul,
-      ← Finset.sum_smul, magicL_star_mul_sum, one_smul, conjTranspose_mul, Matrix.mul_assoc]
-    rfl
-  simp only [hm]
+    rw [krausL_eq, conjTranspose_smul, conjTranspose_mul]
+    simp only [smul_mul_assoc, mul_smul_comm, smul_smul, Matrix.mul_assoc]
+    rw [mul_comm (star (magicL m)), magicL_mul_star]
+  simp only [hk, ← Finset.smul_sum]
+  congr 1
   rw [← Finset.sum_mul, ← Finset.mul_sum,
     sum_blockKron_isometry steaneEnc steaneEnc_conjTranspose_mul, Finset.mul_sum, Finset.sum_mul]
   refine Finset.sum_congr rfl fun j _ => ?_
@@ -297,6 +328,13 @@ theorem sum_krausL (σ : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ) :
     rfl
   rw [← hTE, conjTranspose_mul]
   simp only [Matrix.mul_assoc]
+
+/-- ★★ **The logical channel of the injection gadget is `logicalInj`.** Summed over the read-out
+outcome (weights `1/2`, `1/2`) and over the discarded block, every branch applies `T`. -/
+theorem sum_krausL (σ : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ) :
+    ∑ k, ∑ m, krausL k m * σ * (krausL k m)ᴴ = logicalInj σ := by
+  rw [Finset.sum_comm, Fin.sum_univ_two, sum_krausL_branch, sum_krausL_branch, ← add_smul]
+  norm_num
 
 /-! ### The physical gadget -/
 
@@ -342,15 +380,19 @@ theorem vecMulVec_single_mul_steaneEnc (v : Fin 2 → ℂ) (k : Fin 7 → Fin 2)
   funext j
   simp [vecMul, dotProduct, Pi.single_apply]
 
+/-- The prepared encoded magic state, through the pair encoder. -/
+theorem blockKron_magicEnc_mul_pairEnc (k : Fin 7 → Fin 2) :
+    blockKron ![1, vecMulVec magicEnc (Pi.single k 1)] * pairEnc
+      = pairEnc * blockKron ![1, vecMulVec magicL (steaneEnc k)] :=
+  blockKron_two_mul_pairEnc (by rw [Matrix.one_mul, Matrix.mul_one])
+    (vecMulVec_single_mul_steaneEnc magicL k)
+
 /-- ★ **Every physical Kraus operator of the gadget is the logical one**: through the encoder,
 `CNOT̄` is `CNOT`, the decoded read-out is `|m⟩⟨m|`, `X̄` is `X`, the transversal `S†` is `S`, and
 the prepared `|Ā⟩` is `|A⟩`. -/
 theorem injKraus_mul_pairEnc (k : Fin 7 → Fin 2) (m : Fin 2) :
     injKraus magicEnc k m * pairEnc = pairEnc * krausL k m := by
-  have hY : blockKron ![1, vecMulVec magicEnc (Pi.single k 1)] * pairEnc
-      = pairEnc * blockKron ![1, vecMulVec magicL (steaneEnc k)] :=
-    blockKron_two_mul_pairEnc (by rw [Matrix.one_mul, Matrix.mul_one])
-      (vecMulVec_single_mul_steaneEnc magicL k)
+  have hY := blockKron_magicEnc_mul_pairEnc k
   have hX : blockKron ![sTransversalᴴ ^ (m : ℕ), pauliMat allOnes 0 ^ (m : ℕ) * logProj m]
         * pairEnc = pairEnc * blockKron ![sGateM ^ (m : ℕ), pX ^ (m : ℕ) * projL m] := by
     refine blockKron_two_mul_pairEnc
@@ -370,27 +412,36 @@ theorem injKraus_mul_pairEnc (k : Fin 7 → Fin 2) (m : Fin 2) :
         rw [hX, krausL]
         simp only [Matrix.mul_assoc]
 
+theorem injKraus_conj_pairEnc (k : Fin 7 → Fin 2) (m : Fin 2)
+    (σ : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ) :
+    injKraus magicEnc k m * (pairEnc * σ * pairEncᴴ) * (injKraus magicEnc k m)ᴴ
+      = pairEnc * (krausL k m * σ * (krausL k m)ᴴ) * pairEncᴴ := by
+  have h := injKraus_mul_pairEnc k m
+  have h' : pairEncᴴ * (injKraus magicEnc k m)ᴴ = (krausL k m)ᴴ * pairEncᴴ := by
+    rw [← conjTranspose_mul, h, conjTranspose_mul]
+  calc injKraus magicEnc k m * (pairEnc * σ * pairEncᴴ) * (injKraus magicEnc k m)ᴴ
+      = (injKraus magicEnc k m * pairEnc) * σ * (pairEncᴴ * (injKraus magicEnc k m)ᴴ) := by
+        simp only [Matrix.mul_assoc]
+    _ = _ := by
+        rw [h, h']
+        simp only [Matrix.mul_assoc]
+
+/-- ★★ **One read-out outcome of the physical gadget is half the logical `T`**, on every encoded
+input. -/
+theorem sum_injKraus_branch (m : Fin 2) (σ : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ) :
+    ∑ k, injKraus magicEnc k m * (pairEnc * σ * pairEncᴴ) * (injKraus magicEnc k m)ᴴ
+      = (2⁻¹ : ℂ) • (pairEnc * logicalInj σ * pairEncᴴ) := by
+  simp only [injKraus_conj_pairEnc]
+  rw [← Matrix.sum_mul, ← Matrix.mul_sum, sum_krausL_branch, Matrix.mul_smul, Matrix.smul_mul]
+
 /-- ★★★ **The injection gadget is the logical `T`.** On every encoded two-qubit input `σ`, the
 physical channel — magic state, `CNOT̄`, decoded read-out, `X̄^m`, `S̄^m` — returns the encoding of
 `logicalInj σ`: `T` on the data, the ancilla reset to `|0̄⟩`. -/
 theorem injChannel_pairEnc (σ : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ) :
     injChannel magicEnc (pairEnc * σ * pairEncᴴ) = pairEnc * logicalInj σ * pairEncᴴ := by
-  have hterm : ∀ k m, injKraus magicEnc k m * (pairEnc * σ * pairEncᴴ) * (injKraus magicEnc k m)ᴴ
-      = pairEnc * (krausL k m * σ * (krausL k m)ᴴ) * pairEncᴴ := by
-    intro k m
-    have h := injKraus_mul_pairEnc k m
-    have h' : pairEncᴴ * (injKraus magicEnc k m)ᴴ = (krausL k m)ᴴ * pairEncᴴ := by
-      rw [← conjTranspose_mul, h, conjTranspose_mul]
-    calc injKraus magicEnc k m * (pairEnc * σ * pairEncᴴ) * (injKraus magicEnc k m)ᴴ
-        = (injKraus magicEnc k m * pairEnc) * σ * (pairEncᴴ * (injKraus magicEnc k m)ᴴ) := by
-          simp only [Matrix.mul_assoc]
-      _ = _ := by
-          rw [h, h']
-          simp only [Matrix.mul_assoc]
-  rw [injChannel, ← sum_krausL, Matrix.mul_sum, Matrix.sum_mul]
-  refine Finset.sum_congr rfl fun k _ => ?_
-  rw [Matrix.mul_sum, Matrix.sum_mul]
-  exact Finset.sum_congr rfl fun m _ => hterm k m
+  rw [injChannel, Finset.sum_comm, Fin.sum_univ_two, sum_injKraus_branch, sum_injKraus_branch,
+    ← add_smul]
+  norm_num
 
 /-! ### The corrected step -/
 
@@ -441,18 +492,350 @@ theorem deviatesBy_injChannel_magicEnc :
     DeviatesBy pairProj pairWeightOne idealInj (injChannel magicEnc) :=
   fun _ hρ => ⟨id, id_mem_pairWeightOne, injChannel_eq_idealInj hρ⟩
 
-/-- ★★★ **The logical `T̄` on the two-block Steane register.** There is a recovery `R` (the pair
-recovery of `SteanePairMachine.lean`) such that the injection gadget with the encoded magic state,
-followed by `R`, is a corrected step for the logical `T` on block `0` — and the same holds, with the
-same `R`, for any prepared state whose error leaves the gadget within the weight-one set. -/
+/-! ### A faulty magic state: the correctable set of pair errors and their mixtures -/
+
+/-- **The span set**: unitary combinations of the pair's error family (one single-qubit Pauli in
+each block) — non-product pair errors included. -/
+def pairSpan : Set (Matrix PairReg PairReg ℂ) :=
+  {E | Eᴴ * E = 1 ∧ ∃ a : (Fin 2 → SingleErr) → ℂ, E = ∑ g, a g • pairFam g}
+
+/-- **The correctable set of the injection**: mixtures (convex combinations) of conjugations by
+members of `pairSpan`. -/
+def pairMix : Set (Matrix PairReg PairReg ℂ → Matrix PairReg PairReg ℂ) :=
+  {f | ∃ (r : ℕ) (w : Fin r → ℝ) (E : Fin r → Matrix PairReg PairReg ℂ),
+    (∀ i, 0 ≤ w i) ∧ ∑ i, w i = 1 ∧ (∀ i, E i ∈ pairSpan)
+      ∧ f = fun ρ => ∑ i, (w i : ℂ) • (E i * ρ * (E i)ᴴ)}
+
+theorem blockFault_mem_pairSpan {q : Fin 2 → Fin 7} {A : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ}
+    (hA : ∀ b, A b ∈ Matrix.unitaryGroup (Fin 2) ℂ) : blockFault q A ∈ pairSpan :=
+  ⟨blockFault_conjTranspose_mul hA, _, blockFault_eq_sum q A⟩
+
+/-- The weight-one set is inside the mixtures: a single conjugation is a mixture of one. -/
+theorem pairWeightOne_subset_pairMix : pairWeightOne ⊆ pairMix := by
+  rintro _ ⟨q, A, hA, rfl⟩
+  refine ⟨1, fun _ => 1, fun _ => blockFault q A, fun _ => zero_le_one, by simp,
+    fun _ => blockFault_mem_pairSpan hA, ?_⟩
+  funext ρ
+  simp
+
+/-- ★★ **One recovery for every mixture of correctable pair errors.** The pair recovery returns a
+scalar multiple of the code state for every combination of the family (Knill–Laflamme), the scalar
+is `1` for a unitary combination, and a recovery is linear, so it undoes a mixture of such
+errors. -/
+theorem exists_isRecovery_pairMix :
+    ∃ R : Channel PairReg PairReg (Option (Fin 2 → SingleErr)),
+      IsRecovery pairProj R.apply pairMix := by
+  obtain ⟨c, R, hR⟩ := exists_pair_recovery
+  have hspan : ∀ E ∈ pairSpan, ∀ ρ, IsCodeState pairProj ρ → R.apply (E * ρ * Eᴴ) = ρ := by
+    rintro E ⟨hE, a, rfl⟩ ρ hρ
+    have hs : ∀ σ, IsCodeState pairProj σ →
+        R.apply ((∑ g, a g • pairFam g) * σ * (∑ g, a g • pairFam g)ᴴ)
+          = (∑ g, ∑ h, star (a g) * a h * c g h) • σ := fun σ hσ =>
+      recovery_apply_lin_comb (P := pairEnc * pairEncᴴ) hR a (by rw [← pairProj_eq]; exact hσ)
+    rw [hs ρ hρ, smul_eq_one_of_unitary R hE (hs pairProj isCodeState_pairProj)
+      trace_pairProj_ne_zero, one_smul]
+  refine ⟨R, ?_⟩
+  rintro _ ⟨r, w, E, -, hw, hE, rfl⟩ ρ hρ
+  simp only [Channel.apply_sum, Channel.apply_smul, hspan _ (hE _) ρ hρ, ← Finset.sum_smul]
+  rw [show (∑ i, (w i : ℂ)) = 1 by exact_mod_cast hw, one_smul]
+
+/-! ### A faulty magic state: propagation through the gadget -/
+
+/-- ★ **`CNOT̄` carries a Pauli on the target block to a pair Pauli**: its `Z` part is copied to the
+control block, its `X` part stays. -/
+theorem cnotT_mul_blockKron_pauliMat_mul_cnotT (a b : Fin 7 → Fin 2) :
+    cnotT * blockKron ![1, pauliMat a b] * cnotT = blockKron ![pauliMat 0 b, pauliMat a b] := by
+  ext z w
+  rw [cnotT, mul_permMat_apply, permMat_mul_apply cnotPerm_involutive, blockKron_two_apply,
+    blockKron_two_apply]
+  simp only [cnotPerm, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.one_apply, pauliMat,
+    add_zero]
+  by_cases h : z 0 = w 0
+  · simp only [h, ite_true, one_mul, pauliSign_add_right, add_assoc, add_right_inj]
+    split_ifs <;> simp
+  · simp [h, Ne.symm h]
+
+/-- `X̄` squares to the identity. -/
+theorem xBar_mul_self : pauliMat allOnes 0 * pauliMat allOnes 0 = 1 := by
+  rw [pauliMat_mul, show allOnes + allOnes = 0 from funext fun _ => fin2_add_self _, add_zero,
+    pauliMat_zero]
+  simp [pauliSign, bdot, signChar]
+
+theorem xBar_pow_mul_self (m : Fin 2) :
+    pauliMat allOnes 0 ^ (m : ℕ) * pauliMat allOnes 0 ^ (m : ℕ) = 1 := by
+  fin_cases m
+  · simp
+  · simpa using xBar_mul_self
+
+/-- **`X̄` signs a Pauli by its `Z` part's parity**. -/
+theorem xBar_pow_mul_pauliMat (m : Fin 2) (a b : Fin 7 → Fin 2) :
+    pauliMat allOnes 0 ^ (m : ℕ) * pauliMat a b
+      = signChar (bdot allOnes b) ^ (m : ℕ) • (pauliMat a b * pauliMat allOnes 0 ^ (m : ℕ)) := by
+  fin_cases m
+  · simp
+  · simp only [pow_one]
+    rw [pauliMat_comm, show bdot 0 a = 0 by simp [bdot], add_zero]
+
+theorem xBar_pow_conj_pauliMat (m : Fin 2) (a b : Fin 7 → Fin 2) :
+    pauliMat allOnes 0 ^ (m : ℕ) * pauliMat a b * pauliMat allOnes 0 ^ (m : ℕ)
+      = signChar (bdot allOnes b) ^ (m : ℕ) • pauliMat a b := by
+  rw [xBar_pow_mul_pauliMat, smul_mul_assoc, Matrix.mul_assoc, xBar_pow_mul_self, Matrix.mul_one]
+
+theorem pauliMat_zero_left_eq_diagonal (b : Fin 7 → Fin 2) :
+    pauliMat 0 b = diagonal (pauliSign b) := by
+  ext z w
+  by_cases h : z = w
+  · subst h
+    simp [pauliMat]
+  · simp [pauliMat, diagonal_apply_ne _ h, Ne.symm h]
+
+theorem sTransversal_eq_diagonal : sTransversal = diagonal fun z => Complex.I ^ hamWt z := by
+  ext z w
+  rw [sTransversal_apply, diagonal_apply]
+
+/-- The transversal `S†` commutes with a `Z`-type Pauli (both are diagonal). -/
+theorem commute_sTransversal_conjTranspose_pauliMat (b : Fin 7 → Fin 2) :
+    Commute sTransversalᴴ (pauliMat 0 b) := by
+  rw [sTransversal_eq_diagonal, pauliMat_zero_left_eq_diagonal, diagonal_conjTranspose]
+  show _ * _ = _ * _
+  rw [diagonal_mul_diagonal, diagonal_mul_diagonal]
+  congr 1
+  funext z
+  ring
+
+/-- The CSS label of a single-qubit Pauli. -/
+def errCss : SingleErr → CssErr
+  | none => (none, none)
+  | some (j, t) => (if t = 1 then none else some j, if t = 0 then none else some j)
+
+theorem cssPauli_errCss (i : SingleErr) : cssPauli (errCss i) = pauliMat (errA i) (errB i) := by
+  rcases i with _ | ⟨j, t⟩
+  · rfl
+  · simp only [errCss, cssPauli, errA, errB]
+    congr 1 <;> split_ifs <;> rfl
+
+/-- **The decoded read-out commutes with a single-qubit Pauli on the code.** -/
+theorem logProj_mul_pauliMat_mul_steaneEnc (v : Fin 2) (i : SingleErr) :
+    logProj v * pauliMat (errA i) (errB i) * steaneEnc
+      = pauliMat (errA i) (errB i) * logProj v * steaneEnc := by
+  have h := congrArg (· * steaneEnc) (logProj_cssPauli_mul_steaneProj v (errCss i))
+  simp only [Matrix.mul_assoc, steaneProj_mul_steaneEnc, cssPauli_errCss] at h
+  simpa only [Matrix.mul_assoc] using h
+
+theorem pairEnc_eq_two : pairEnc = blockKron ![steaneEnc, steaneEnc] := by
+  rw [pairEnc]
+  congr 1
+  funext b
+  fin_cases b <;> rfl
+
+/-- The feed-forward and read-out operator of outcome `m`. -/
+def readOp (m : Fin 2) : Matrix PairReg PairReg ℂ :=
+  blockKron ![sTransversalᴴ ^ (m : ℕ), pauliMat allOnes 0 ^ (m : ℕ) * logProj m]
+
+/-- ★ **A Pauli fault on the ancilla passes the read-out and the feed-forward, on the code**: after
+`CNOT̄` it is a pair Pauli, the decoded read-out does not see it, the reset `X̄^m` signs it. -/
+theorem readOp_mul_cnotConj_pauliMat (m : Fin 2) (i : SingleErr) :
+    readOp m * (cnotT * blockKron ![1, pauliMat (errA i) (errB i)] * cnotT) * pairEnc
+      = (cnotT * blockKron ![1, pauliMat allOnes 0 ^ (m : ℕ) * pauliMat (errA i) (errB i)
+          * pauliMat allOnes 0 ^ (m : ℕ)] * cnotT) * readOp m * pairEnc := by
+  rw [xBar_pow_conj_pauliMat, blockKron_two_smul_right, Matrix.mul_smul, Matrix.smul_mul,
+    cnotT_mul_blockKron_pauliMat_mul_cnotT, Matrix.smul_mul, Matrix.smul_mul, readOp,
+    pairEnc_eq_two, blockKron_two_mul, blockKron_two_mul, blockKron_two_mul, blockKron_two_mul,
+    ← blockKron_two_smul_right]
+  have h0 : sTransversalᴴ ^ (m : ℕ) * pauliMat 0 (errB i) * steaneEnc
+      = pauliMat 0 (errB i) * sTransversalᴴ ^ (m : ℕ) * steaneEnc := by
+    rw [((commute_sTransversal_conjTranspose_pauliMat (errB i)).pow_left (m : ℕ)).eq]
+  have h1 : pauliMat allOnes 0 ^ (m : ℕ) * logProj m * pauliMat (errA i) (errB i) * steaneEnc
+      = signChar (bdot allOnes (errB i)) ^ (m : ℕ)
+        • (pauliMat (errA i) (errB i) * (pauliMat allOnes 0 ^ (m : ℕ) * logProj m)
+          * steaneEnc) := by
+    rw [Matrix.mul_assoc _ (logProj m), Matrix.mul_assoc, logProj_mul_pauliMat_mul_steaneEnc,
+      ← Matrix.mul_assoc, ← Matrix.mul_assoc, xBar_pow_mul_pauliMat, smul_mul_assoc,
+      Matrix.smul_mul]
+    simp only [Matrix.mul_assoc]
+  rw [h0, h1]
+
+theorem blockKron_two_sum_right {ι L L' : Type*} [Fintype ι] (A : Matrix L L' ℂ) (c : ι → ℂ)
+    (B : ι → Matrix L L' ℂ) :
+    blockKron ![A, ∑ i, c i • B i] = ∑ i, c i • blockKron ![A, B i] := by
+  ext k l
+  simp only [blockKron_two_apply, Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Finset.mul_sum]
+  exact Finset.sum_congr rfl fun i _ => by ring
+
+/-- **The pair error of a fault `A` on qubit `q` of the magic state, on read-out outcome `m`**: the
+fault carried through `CNOT̄` and signed by the reset `X̄^m`. -/
+def faultE (q : Fin 7) (A : Matrix (Fin 2) (Fin 2) ℂ) (m : Fin 2) : Matrix PairReg PairReg ℂ :=
+  cnotT * blockKron ![1, pauliMat allOnes 0 ^ (m : ℕ) * gateOf q A * pauliMat allOnes 0 ^ (m : ℕ)]
+    * cnotT
+
+/-- ★ **An arbitrary single-qubit fault on the ancilla passes the read-out and the feed-forward,
+on the code**, by linearity from the Paulis. -/
+theorem readOp_mul_cnotConj_gateOf (m : Fin 2) (q : Fin 7) (A : Matrix (Fin 2) (Fin 2) ℂ) :
+    readOp m * (cnotT * blockKron ![1, gateOf q A] * cnotT) * pairEnc
+      = faultE q A m * readOp m * pairEnc := by
+  rw [faultE, gateOf_eq_sum_pauliMat]
+  simp only [Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_smul, Matrix.smul_mul,
+    blockKron_two_sum_right]
+  exact Finset.sum_congr rfl fun i _ => by rw [readOp_mul_cnotConj_pauliMat]
+
+/-- ★★ **A faulty magic state's Kraus operator is the exact one followed by the pair error**, on the
+code: `K_{k,m}(A|Ā⟩) E = faultE q A m · K_{k,m}(|Ā⟩) E`. -/
+theorem injKraus_fault_mul_pairEnc (q : Fin 7) (A : Matrix (Fin 2) (Fin 2) ℂ)
+    (k : Fin 7 → Fin 2) (m : Fin 2) :
+    injKraus (gateOf q A *ᵥ magicEnc) k m * pairEnc
+      = faultE q A m * (injKraus magicEnc k m * pairEnc) := by
+  have hG : blockKron ![1, vecMulVec (gateOf q A *ᵥ magicEnc) (Pi.single k 1)]
+      = blockKron ![1, gateOf q A] * blockKron ![1, vecMulVec magicEnc (Pi.single k 1)] := by
+    rw [blockKron_two_mul, Matrix.one_mul, mul_vecMulVec]
+  have hY := blockKron_magicEnc_mul_pairEnc k
+  calc injKraus (gateOf q A *ᵥ magicEnc) k m * pairEnc
+      = readOp m * (cnotT * blockKron ![1, gateOf q A] * cnotT) * pairEnc
+          * (cnotL * blockKron ![1, vecMulVec magicL (steaneEnc k)]) := by
+        rw [injKraus, hG, ← readOp]
+        simp only [Matrix.mul_assoc]
+        rw [hY, ← Matrix.mul_assoc cnotT pairEnc, cnotT_mul_pairEnc, Matrix.mul_assoc pairEnc cnotL,
+          ← Matrix.mul_assoc cnotL cnotL, cnotL_mul_self, Matrix.one_mul]
+    _ = faultE q A m * (injKraus magicEnc k m * pairEnc) := by
+        rw [readOp_mul_cnotConj_gateOf, injKraus, ← readOp]
+        simp only [Matrix.mul_assoc]
+        rw [hY, ← Matrix.mul_assoc cnotT pairEnc, cnotT_mul_pairEnc]
+        simp only [Matrix.mul_assoc]
+
+theorem xBar_pow_mem_unitaryGroup (m : Fin 2) :
+    pauliMat allOnes 0 ^ (m : ℕ) ∈ Matrix.unitaryGroup (Fin 7 → Fin 2) ℂ :=
+  pow_mem (Matrix.mem_unitaryGroup_iff'.2 (by
+    rw [Matrix.star_eq_conjTranspose]; exact pauliMat_conjTranspose_mul_self _ _)) _
+
+/-- The pair error is unitary. -/
+theorem faultE_conjTranspose_mul {A : Matrix (Fin 2) (Fin 2) ℂ}
+    (hA : A ∈ Matrix.unitaryGroup (Fin 2) ℂ) (q : Fin 7) (m : Fin 2) :
+    (faultE q A m)ᴴ * faultE q A m = 1 := by
+  set U := pauliMat allOnes 0 ^ (m : ℕ) * gateOf q A * pauliMat allOnes 0 ^ (m : ℕ)
+  have hU : Uᴴ * U = 1 := by
+    have hmem : U ∈ Matrix.unitaryGroup (Fin 7 → Fin 2) ℂ :=
+      mul_mem (mul_mem (xBar_pow_mem_unitaryGroup m) (gateOf_mem_unitaryGroup q hA))
+        (xBar_pow_mem_unitaryGroup m)
+    rw [← Matrix.star_eq_conjTranspose]
+    exact Matrix.mem_unitaryGroup_iff'.mp hmem
+  have hB : (blockKron ![1, U])ᴴ * blockKron ![1, U] = 1 := by
+    rw [blockKron_two_conjTranspose, blockKron_two_mul, conjTranspose_one, Matrix.one_mul, hU,
+      show ![(1 : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ), 1] = fun _ => 1 from
+        funext fun b => by fin_cases b <;> rfl, blockKron_one]
+  rw [faultE, conjTranspose_mul, conjTranspose_mul, cnotT_conjTranspose]
+  calc cnotT * ((blockKron ![1, U])ᴴ * cnotT) * (cnotT * blockKron ![1, U] * cnotT)
+      = cnotT * ((blockKron ![1, U])ᴴ * (cnotT * cnotT) * blockKron ![1, U]) * cnotT := by
+        simp only [Matrix.mul_assoc]
+    _ = 1 := by rw [cnotT_mul_self, Matrix.mul_one, hB, Matrix.mul_one, cnotT_mul_self]
+
+/-- The `Z` part of a single-qubit Pauli: what `CNOT̄` copies to the control block. -/
+def zPart : SingleErr → SingleErr
+  | none => none
+  | some (j, t) => if t = 0 then none else some (j, 1)
+
+theorem pairFam_zPart (i : SingleErr) :
+    pairFam ![zPart i, i] = blockKron ![pauliMat 0 (errB i), pauliMat (errA i) (errB i)] := by
+  rw [pairFam]
+  congr 1
+  funext b
+  fin_cases b
+  · rcases i with _ | ⟨j, t⟩
+    · rfl
+    · show pauliMat (errA (zPart (some (j, t)))) (errB (zPart (some (j, t))))
+        = pauliMat 0 (errB (some (j, t)))
+      by_cases ht : t = 0
+      · simp [zPart, errA, errB, ht]
+      · simp [zPart, errA, errB, ht]
+  · rfl
+
+/-- **The pair error is a combination of the pair's error family** — not a product in general. -/
+theorem faultE_mem_pairSpan {A : Matrix (Fin 2) (Fin 2) ℂ}
+    (hA : A ∈ Matrix.unitaryGroup (Fin 2) ℂ) (q : Fin 7) (m : Fin 2) :
+    faultE q A m ∈ pairSpan := by
+  refine ⟨faultE_conjTranspose_mul hA q m,
+    fun g => ∑ i, if ![zPart i, i] = g then
+      singleCoeff q A i * signChar (bdot allOnes (errB i)) ^ (m : ℕ) else 0, ?_⟩
+  have hsum : faultE q A m = ∑ i, (singleCoeff q A i * signChar (bdot allOnes (errB i)) ^ (m : ℕ))
+      • pairFam ![zPart i, i] := by
+    rw [faultE, gateOf_eq_sum_pauliMat]
+    simp only [Matrix.mul_sum, Matrix.sum_mul, Matrix.mul_smul, Matrix.smul_mul,
+      xBar_pow_conj_pauliMat, smul_smul, blockKron_two_sum_right,
+      cnotT_mul_blockKron_pauliMat_mul_cnotT, pairFam_zPart]
+  rw [hsum]
+  simp only [Finset.sum_smul, ite_smul, zero_smul]
+  rw [Finset.sum_comm]
+  simp
+
+/-- **The faulty gadget's deviation**: the even mixture, over the read-out outcome, of the two pair
+errors. -/
+def faultMix (q : Fin 7) (A : Matrix (Fin 2) (Fin 2) ℂ) :
+    Matrix PairReg PairReg ℂ → Matrix PairReg PairReg ℂ :=
+  fun ρ => ∑ m : Fin 2, ((2⁻¹ : ℝ) : ℂ) • (faultE q A m * ρ * (faultE q A m)ᴴ)
+
+theorem faultMix_mem_pairMix {A : Matrix (Fin 2) (Fin 2) ℂ}
+    (hA : A ∈ Matrix.unitaryGroup (Fin 2) ℂ) (q : Fin 7) : faultMix q A ∈ pairMix :=
+  ⟨2, fun _ => 2⁻¹, faultE q A, fun _ => by norm_num, by norm_num,
+    fun m => faultE_mem_pairSpan hA q m, rfl⟩
+
+/-- ★★★ **A faulty magic state is the ideal gadget followed by a mixture of correctable pair
+errors.** With an arbitrary operator `A` on any one qubit `q` of the prepared `|Ā⟩`, the gadget on a
+code state is the ideal output, conjugated by the outcome-`m` pair error with weight `1/2` each. -/
+theorem injChannel_fault_eq (q : Fin 7) (A : Matrix (Fin 2) (Fin 2) ℂ)
+    {ρ : Matrix PairReg PairReg ℂ} (hρ : IsCodeState pairProj ρ) :
+    injChannel (gateOf q A *ᵥ magicEnc) ρ = faultMix q A (idealInj ρ) := by
+  have hterm : ∀ (σ : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ) k m,
+      injKraus (gateOf q A *ᵥ magicEnc) k m * (pairEnc * σ * pairEncᴴ)
+          * (injKraus (gateOf q A *ᵥ magicEnc) k m)ᴴ
+        = faultE q A m * (injKraus magicEnc k m * (pairEnc * σ * pairEncᴴ)
+          * (injKraus magicEnc k m)ᴴ) * (faultE q A m)ᴴ := by
+    intro σ k m
+    have h := injKraus_fault_mul_pairEnc q A k m
+    have h' : pairEncᴴ * (injKraus (gateOf q A *ᵥ magicEnc) k m)ᴴ
+        = (injKraus magicEnc k m * pairEnc)ᴴ * (faultE q A m)ᴴ := by
+      rw [← conjTranspose_mul, h, conjTranspose_mul]
+    calc injKraus (gateOf q A *ᵥ magicEnc) k m * (pairEnc * σ * pairEncᴴ)
+          * (injKraus (gateOf q A *ᵥ magicEnc) k m)ᴴ
+        = (injKraus (gateOf q A *ᵥ magicEnc) k m * pairEnc) * σ
+          * (pairEncᴴ * (injKraus (gateOf q A *ᵥ magicEnc) k m)ᴴ) := by
+          simp only [Matrix.mul_assoc]
+      _ = _ := by
+          rw [h, h', conjTranspose_mul]
+          simp only [Matrix.mul_assoc]
+  conv_lhs => rw [eq_pairEnc_of_isCodeState hρ]
+  rw [injChannel, Finset.sum_comm]
+  simp only [hterm]
+  refine Finset.sum_congr rfl fun m _ => ?_
+  rw [← Matrix.sum_mul, ← Matrix.mul_sum, sum_injKraus_branch, Matrix.mul_smul, Matrix.smul_mul,
+    show ((2⁻¹ : ℝ) : ℂ) = 2⁻¹ by push_cast; rfl]
+  rfl
+
+/-- ★★ **A single fault on the magic state stays within the correctable set**: #96's `DeviatesBy`
+for the mixtures of pair errors, for an arbitrary unitary fault on any one qubit. -/
+theorem deviatesBy_injChannel_fault {A : Matrix (Fin 2) (Fin 2) ℂ}
+    (hA : A ∈ Matrix.unitaryGroup (Fin 2) ℂ) (q : Fin 7) :
+    DeviatesBy pairProj pairMix idealInj (injChannel (gateOf q A *ᵥ magicEnc)) :=
+  fun _ hρ => ⟨faultMix q A, faultMix_mem_pairMix hA q, injChannel_fault_eq q A hρ⟩
+
+/-- ★★★ **The logical `T̄` on the two-block Steane register, with a faulty magic state.** There is
+one recovery `R` (the pair recovery) for the mixtures of correctable pair errors such that the
+injection gadget followed by `R` is a corrected step for the logical `T` on block `0`: with the
+exact encoded magic state; with the magic state carrying an arbitrary unitary fault on any one of
+its qubits; and, generally, with any prepared state whose error leaves the gadget within that
+set. -/
 theorem steane_injection :
     ∃ R : Channel PairReg PairReg (Option (Fin 2 → SingleErr)),
-      IsCorrectedStep pairProj idealInj (rect R.apply (injChannel magicEnc))
-        ∧ ∀ a : (Fin 7 → Fin 2) → ℂ, DeviatesBy pairProj pairWeightOne idealInj (injChannel a) →
+      IsRecovery pairProj R.apply pairMix
+        ∧ IsCorrectedStep pairProj idealInj (rect R.apply (injChannel magicEnc))
+        ∧ (∀ (q : Fin 7) (A : Matrix (Fin 2) (Fin 2) ℂ), A ∈ Matrix.unitaryGroup (Fin 2) ℂ →
+          IsCorrectedStep pairProj idealInj (rect R.apply (injChannel (gateOf q A *ᵥ magicEnc))))
+        ∧ ∀ a : (Fin 7 → Fin 2) → ℂ, DeviatesBy pairProj pairMix idealInj (injChannel a) →
           IsCorrectedStep pairProj idealInj (rect R.apply (injChannel a)) := by
-  obtain ⟨R, hR⟩ := exists_isRecovery_pairWeightOne
-  exact ⟨R, steane_injection_corrected hR deviatesBy_injChannel_magicEnc,
+  obtain ⟨R, hR⟩ := exists_isRecovery_pairMix
+  refine ⟨R, hR, steane_injection_corrected hR fun ρ hρ => ?_,
+    fun q A hA => steane_injection_corrected hR (deviatesBy_injChannel_fault hA q),
     fun _ ha => steane_injection_corrected hR ha⟩
+  obtain ⟨E, hE, hEq⟩ := deviatesBy_injChannel_magicEnc ρ hρ
+  exact ⟨E, pairWeightOne_subset_pairMix hE, hEq⟩
 
 end Steane
 end QEC
