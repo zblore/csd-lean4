@@ -5210,4 +5210,205 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 /-- info: 'CSD.Empirical.QM.QEC.Steane.steane_universal_machine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_universal_machine
+-- SteaneTripleMachine (BACKLOG #307, 2026-11-05): three blocks, two logical qubits
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.split3' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.split3
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3_conjTranspose
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3_one
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3_sum_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3_sum_left
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3_sum_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3_sum_right
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3_smul_left
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lift3_blockKron' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lift3_blockKron
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.kronecker_one_conj_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.kronecker_one_conj_apply
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sum_kronecker_one_conj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sum_kronecker_one_conj_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sum_kronecker_conj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sum_kronecker_conj_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sum_lift3_conj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sum_lift3_conj_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tripleEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tripleEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tripleProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tripleProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.lastCases_const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.lastCases_const
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tripleEnc_eq_lift3' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tripleEnc_eq_lift3
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tripleProj_eq_lift3' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tripleProj_eq_lift3
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tripleEnc_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tripleEnc_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tripleProj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tripleProj_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tripleProj_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tripleProj_conjTranspose
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tripleProj_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tripleProj_mul_self
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.isCodeState_tripleProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.isCodeState_tripleProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.trace_tripleProj_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.trace_tripleProj_ne_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.eq_tripleEnc_of_isCodeState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.eq_tripleEnc_of_isCodeState
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tripleFam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tripleFam
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.encoderKL_tripleFam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.encoderKL_tripleFam
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tripleKrausMix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tripleKrausMix
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_isRecovery_tripleKrausMix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_isRecovery_tripleKrausMix
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.UGadget.idealK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.UGadget.idealK
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.UGadget.faultyK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.UGadget.faultyK
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.UGadget.ideal_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.UGadget.ideal_eq_sum
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.UGadget.faulty_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.UGadget.faulty_eq_sum
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.UGadget.pairProj_mul_idealK_mul_pairProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.UGadget.pairProj_mul_idealK_mul_pairProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.UGadget.exists_uniform_deviation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.UGadget.exists_uniform_deviation
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.TGadget.ideal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.TGadget.ideal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.TGadget.faulty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.TGadget.faulty
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.TGadget.step' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.TGadget.step
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.TGadget.tripleProj_mul_lift3_mul_tripleProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.TGadget.tripleProj_mul_lift3_mul_tripleProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.TGadget.isCodeState_ideal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.TGadget.isCodeState_ideal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.TGadget.colOp_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.TGadget.colOp_mem_unitaryGroup
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.TGadget.lift3_pairFam_pauliMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.TGadget.lift3_pairFam_pauliMat
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.TGadget.lift3_mem_tripleSpan' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.TGadget.lift3_mem_tripleSpan
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.TGadget.deviatesBy_faulty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.TGadget.deviatesBy_faulty
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.TGadget.ideal_tGate_tripleEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.TGadget.ideal_tGate_tripleEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_tripleGadgetSet_corrected' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_tripleGadgetSet_corrected
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tMachineCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tMachineCircuit
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.tMachineIdeal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.tMachineIdeal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.idealRun_tMachineCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.idealRun_tMachineCircuit
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_triple_machine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_triple_machine
 end CSD.Tests.AxiomAudit
