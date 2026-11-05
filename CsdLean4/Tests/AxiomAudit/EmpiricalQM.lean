@@ -4481,4 +4481,109 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.hadTransversal_apply
 
+-- SteanePairMachine (BACKLOG #226, 2026-11-05): the two-block register, the pair recovery for
+-- weight one per block, the four-gadget set H, X, Z (either block) and CNOT, the one-fault
+-- bound and code preservation for all four, transversality for the single-block gadgets, the
+-- corrected steps and the two-block machine with its 21 N p^2 bound.
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.isCodeState_conj_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.isCodeState_conj_of_commute
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pairProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pairProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pairProj_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pairProj_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.isCodeState_pairProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.isCodeState_pairProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.trace_pairProj_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.trace_pairProj_ne_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockFault' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockFault
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockFault_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockFault_eq_sum
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockFault_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockFault_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_pairRecovery' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_pairRecovery
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pairWeightOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pairWeightOne
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_isRecovery_pairWeightOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_isRecovery_pairWeightOne
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.transversal_mul_steaneProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.transversal_mul_steaneProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairGadget.op_mul_pairProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairGadget.op_mul_pairProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairGadget.isCodeState_ideal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairGadget.isCodeState_ideal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.faultOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.faultOp
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_eq_of_card_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_eq_of_card_le_one
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockKron_ite_eq_gateOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockKron_ite_eq_gateOf
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_faultOp_eq_blockFault' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_faultOp_eq_blockFault
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairGadget.deviatesBy_faulty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairGadget.deviatesBy_faulty
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairGadget.single_mul_blockFault' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairGadget.single_mul_blockFault
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairGadget.propagatesD_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairGadget.propagatesD_single
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_pairGadgetSet_corrected' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_pairGadgetSet_corrected
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pairMachineCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pairMachineCircuit
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.idealRun_pairMachineCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.idealRun_pairMachineCircuit
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_pair_machine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_pair_machine
+
 end CSD.Tests.AxiomAudit
