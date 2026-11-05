@@ -4586,4 +4586,96 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_pair_machine
 
+-- SteaneLogicalS (BACKLOG #230 first brick, 2026-11-05): the transversal S is the logical S-dagger
+-- (codeword weights 0/4 and 3/7 mod 4), the transversal S-dagger the logical S, both keep the
+-- code; S joins the two-block gadget set (PairGadget.phase) with generic one-block transversality.
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sGateM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sGateM
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sDagM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sDagM
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sGateM_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sGateM_conjTranspose
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sDagM_mul_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sDagM_mul_conjTranspose
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sTransversal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sTransversal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sTransversal_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sTransversal_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.hamWt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.hamWt
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.hamWt_coset_mod_four' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.hamWt_coset_mod_four
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.I_pow_eq_pow_mod_four' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.I_pow_eq_pow_mod_four
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sTransversal_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sTransversal_apply
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.I_pow_hamWt_mul_steaneEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.I_pow_hamWt_mul_steaneEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sTransversal_mul_steaneEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sTransversal_mul_steaneEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sTransversal_conjTranspose_mul_steaneEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sTransversal_conjTranspose_mul_steaneEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sTransversal_mul_steaneProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sTransversal_mul_steaneProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sTransversal_conjTranspose_mul_steaneProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sTransversal_conjTranspose_mul_steaneProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockKron_sDagM_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockKron_sDagM_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.onBlock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.onBlock
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.onBlock_mul_pairProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.onBlock_mul_pairProj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairGadget.blockKron_mul_gateOf_of_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairGadget.blockKron_mul_gateOf_of_unitary
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairGadget.onBlock_mul_blockFault' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairGadget.onBlock_mul_blockFault
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairGadget.propagatesD_onBlock' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairGadget.propagatesD_onBlock
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairGadget.propagatesD_phase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairGadget.propagatesD_phase
+
 end CSD.Tests.AxiomAudit

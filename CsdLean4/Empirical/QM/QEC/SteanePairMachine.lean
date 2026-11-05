@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Empirical.QM.QEC.SteaneMachineConcat
 public import CsdLean4.Empirical.QM.QEC.SteaneTransversalCNOT
+public import CsdLean4.Empirical.QM.QEC.SteaneLogicalS
 
 /-!
 # The two-block Steane machine: `CNOT̄` in the gadget set
@@ -16,7 +17,8 @@ public import CsdLean4.Empirical.QM.QEC.SteaneTransversalCNOT
 `SteaneMachine.lean` (#207) discharged the gadget-set premise for `H̄`, `X̄`, `Z̄` on one block.
 The remaining Clifford generator, the transversal `CNOT̄`, acts on two blocks
 (`SteaneTransversalCNOT.lean`), so it could not sit in that machine. This module moves the machine
-to the two-block register `Fin 2 → Fin 7 → Fin 2` and puts all four gates in one gadget set.
+to the two-block register `Fin 2 → Fin 7 → Fin 2` and puts all four gates — with the logical `S̄`
+(`SteaneLogicalS.lean`), five — in one gadget set.
 
 * `isCodeState_conj_of_commute` — conjugation by a matrix commuting with a Hermitian projector keeps
   code states in the code;
@@ -27,27 +29,29 @@ to the two-block register `Fin 2 → Fin 7 → Fin 2` and puts all four gates in
   per block** (the scalar of Knill–Laflamme is fixed to `1` on the projector itself, a code state of
   nonzero trace); `pairWeightOne`, ★ `exists_isRecovery_pairWeightOne` — the second correctable set
   and the pair recovery as #96's `IsRecovery`;
-* `PairGadget` — **the gadget set**: `H̄`, `X̄`, `Z̄` on either block (`single`) and `CNOT̄`
+* `PairGadget` — **the gadget set**: `H̄`, `X̄`, `Z̄` (`single`) and `S̄` (`phase`) on either
+  block, and `CNOT̄`
   (`cnot`); `PairGadget.op_mul_pairProj`, ★★ `PairGadget.isCodeState_ideal` — every gadget keeps the
   code (for `CNOT̄` from `cnotT_mul_pairEnc`);
 * `faultOp`, `PairGadget.faulty`, `PairGadget.step` — a fault pattern over the seven locations;
   `exists_eq_of_card_le_one`, `exists_faultOp_eq_blockFault` — a good pattern is one location's
-  fault; ★★ `PairGadget.deviatesBy_faulty` — **the one-fault bound for all four gadgets**;
-* `PairGadget.single_mul_blockFault`, ★★ `PairGadget.propagatesD_single` — **transversality** for
+  fault; ★★ `PairGadget.deviatesBy_faulty` — **the one-fault bound for every gadget**;
+* `PairGadget.onBlock_mul_blockFault`, `PairGadget.propagatesD_onBlock`,
+  ★★ `PairGadget.propagatesD_single`, ★★ `PairGadget.propagatesD_phase` — **transversality** for
   the single-block gadgets on the two-block register;
-* ★★★ `steane_pairGadgetSet_corrected` — **every good step of the four-gadget set is an
+* ★★★ `steane_pairGadgetSet_corrected` — **every good step of the gadget set is an
   `IsCorrectedStep`**, one recovery for all; ★★★ `steane_pair_machine` — **the Steane machine over
-  `H̄`, `X̄`, `Z̄`, `CNOT̄`**: a pattern with no bad gadget gives exactly the ideal output, and
-  under independent location faults of rate at most `p` the output is ideal with probability at least
-  `1 − 21 N p²`.
+  `H̄`, `S̄`, `X̄`, `Z̄`, `CNOT̄`**, generators of the two-qubit Clifford group: a pattern with no
+  bad gadget gives exactly the ideal output, and under independent location faults of rate at
+  most `p` the output is ideal with probability at least `1 − 21 N p²`.
 
 ## Honest scope
 
 ⚠️ **The fault model at a location.** Location `q` of every gadget is the pair of qubits `q` of the
 two blocks, and a fault there is an arbitrary unitary on each of those qubits, in product form
 (`faultOp`). For `CNOT̄` that is the gate's own pair; for a single-block gadget it is the gate's
-qubit together with the idle qubit `q` of the other block, so a fault on the gate alone is the case where
-the second factor is `1`. Non-product faults on a `CNOT` location are not stated (as in
+qubit together with the idle qubit `q` of the other block, so a fault on the gate alone is the
+case where the second factor is `1`. Non-product faults on a `CNOT` location are not stated (as in
 `SteaneTransversalCNOT.lean`). The count of locations per gadget stays `7`, so the threshold bound
 is #207's `21 N p²` unchanged.
 
@@ -62,7 +66,8 @@ output weight one per block. The machine does not use it: `steane_pair_machine` 
 ⚠️ **As in #207:** level one, an ideal recovery (faulty recoveries are `SteaneFaultyRecovery` and
 `SteaneOverlapMachine`, on one block), independent unitary faults, ideal gadgets as maps and the
 recovery as a `Channel`. The recovery is the Knill–Laflamme channel of the two-block code, not two
-per-block recoveries. `S̄` and a fault-tolerant `T̄` are not in the set (#230).
+per-block recoveries. A fault-tolerant `T̄` is not in the set (#230); `S̄` joined it with
+#230's first brick (`SteaneLogicalS.lean`).
 
 References: D. Aharonov, M. Ben-Or, SIAM J. Comput. 38 (2008) 1207; P. Aliferis, D. Gottesman,
 J. Preskill, Quantum Inf. Comput. 6 (2006) 97; M. Nielsen, I. Chuang, *Quantum Computation and
@@ -219,11 +224,37 @@ theorem Gadget.transversal_mul_steaneProj (G : Gadget) :
     rw [blockKron_pZ_eq_pauliMat]
     exact logicalZ_mul_steaneProj
 
-/-- **The two-block gadget set**: a single-block gadget (`H̄`, `X̄`, `Z̄`) on block `b`, or the
-transversal `CNOT̄` from block `0` to block `1`. -/
+/-- The transversal `S†` on a block is `blockKron` of `S†`: the logical `S`. -/
+theorem blockKron_sDagM_eq : blockKron (fun _ : Fin 7 => sDagM) = sTransversalᴴ := by
+  rw [sTransversal, blockKron_conjTranspose, sGateM_conjTranspose]
+
+theorem sDagM_mem_unitaryGroup : sDagM ∈ Matrix.unitaryGroup (Fin 2) ℂ :=
+  Matrix.mem_unitaryGroup_iff.2 (by
+    rw [Matrix.star_eq_conjTranspose]; exact sDagM_mul_conjTranspose)
+
+/-- An operator `T` on block `b`, the identity on the other block. -/
+def onBlock (b : Fin 2) (T : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ) : Matrix PairReg PairReg ℂ :=
+  blockKron fun b' => if b' = b then T else 1
+
+/-- A block operator commuting with the Steane projector commutes with the two-block projector. -/
+theorem onBlock_mul_pairProj (b : Fin 2) {T : Matrix (Fin 7 → Fin 2) (Fin 7 → Fin 2) ℂ}
+    (hT : T * steaneProj = steaneProj * T) : onBlock b T * pairProj = pairProj * onBlock b T := by
+  rw [onBlock, pairProj, blockKron_mul, blockKron_mul]
+  refine congrArg blockKron (funext fun b' => ?_)
+  by_cases h : b' = b
+  · simp only [ite_eq_left h]
+    exact hT
+  · simp only [ite_eq_right h, Matrix.one_mul, Matrix.mul_one]
+
+/-- **The two-block gadget set**: a single-block gadget (`H̄`, `X̄`, `Z̄`) on block `b`, the logical
+phase gate `S̄` on block `b`, or the transversal `CNOT̄` from block `0` to block `1` — the Clifford
+group's generators on two encoded qubits. -/
 inductive PairGadget
   /-- The single-block gadget `G` on block `b`, the identity on the other block. -/
   | single (b : Fin 2) (G : Gadget)
+  /-- The logical `S̄` on block `b`: the transversal `S†`
+  (`sTransversal_conjTranspose_mul_steaneEnc`). -/
+  | phase (b : Fin 2)
   /-- The transversal `CNOT̄`, control block `0`, target block `1`. -/
   | cnot
 
@@ -231,7 +262,8 @@ namespace PairGadget
 
 /-- The ideal gadget's operator on the two-block register. -/
 def op : PairGadget → Matrix PairReg PairReg ℂ
-  | single b G => blockKron fun b' => if b' = b then G.transversal else 1
+  | single b G => onBlock b G.transversal
+  | phase b => onBlock b (blockKron fun _ : Fin 7 => sDagM)
   | cnot => cnotT
 
 /-- The ideal gadget, as a map on density operators. -/
@@ -241,17 +273,12 @@ def ideal (G : PairGadget) (ρ : Matrix PairReg PairReg ℂ) : Matrix PairReg Pa
 /-- Every gadget of the set commutes with the two-block code projector. -/
 theorem op_mul_pairProj (G : PairGadget) : G.op * pairProj = pairProj * G.op := by
   cases G with
-  | single b G =>
-    show blockKron (fun b' => if b' = b then G.transversal else 1)
-        * blockKron (fun _ : Fin 2 => steaneProj)
-      = blockKron (fun _ : Fin 2 => steaneProj)
-        * blockKron (fun b' => if b' = b then G.transversal else 1)
-    rw [blockKron_mul, blockKron_mul]
-    refine congrArg blockKron (funext fun b' => ?_)
-    by_cases h : b' = b
-    · simp only [ite_eq_left h]
-      exact G.transversal_mul_steaneProj
-    · simp only [ite_eq_right h, Matrix.one_mul, Matrix.mul_one]
+  | single b G => exact onBlock_mul_pairProj b G.transversal_mul_steaneProj
+  | phase b =>
+    show onBlock b (blockKron fun _ : Fin 7 => sDagM) * pairProj
+      = pairProj * onBlock b (blockKron fun _ : Fin 7 => sDagM)
+    rw [blockKron_sDagM_eq]
+    exact onBlock_mul_pairProj b sTransversal_conjTranspose_mul_steaneProj
   | cnot =>
     show cnotT * pairProj = pairProj * cnotT
     have h1 : pairEncᴴ * cnotT = cnotL * pairEncᴴ := by
@@ -347,7 +374,7 @@ theorem exists_faultOp_eq_blockFault {U : Fin 7 → Fin 2 → Matrix (Fin 2) (Fi
 
 namespace PairGadget
 
-/-- ★★ **The one-fault bound for all four gadgets**: a gadget whose pattern has at most one faulty
+/-- ★★ **The one-fault bound for every gadget**: a gadget whose pattern has at most one faulty
 location, each fault unitary, is the ideal gadget followed by a fault of weight at most one per
 block — #96's `DeviatesBy` on the two-block register. -/
 theorem deviatesBy_faulty (G : PairGadget) {U : Fin 7 → Fin 2 → Matrix (Fin 2) (Fin 2) ℂ}
@@ -362,63 +389,93 @@ theorem deviatesBy_faulty (G : PairGadget) {U : Fin 7 → Fin 2 → Matrix (Fin 
   rw [hF, conjTranspose_mul]
   simp only [Matrix.mul_assoc]
 
+/-- A transversal single-qubit unitary carries a single-qubit gate through itself, conjugated:
+`g^{⊗7} M_q = (g M g†)_q g^{⊗7}`. -/
+theorem blockKron_mul_gateOf_of_unitary {g : Matrix (Fin 2) (Fin 2) ℂ} (hg : gᴴ * g = 1)
+    (q : Fin 7) (M : Matrix (Fin 2) (Fin 2) ℂ) :
+    blockKron (fun _ : Fin 7 => g) * gateOf q M
+      = gateOf q (g * M * gᴴ) * blockKron (fun _ : Fin 7 => g) := by
+  rw [← blockKron_single_eq_gateOf, blockKron_mul,
+    ← blockKron_replace_eq_gateOf_mul (fun _ : Fin 7 => g) q (g * M * gᴴ)]
+  congr 1
+  funext b
+  by_cases h : b = q
+  · rw [ite_eq_left h, ite_eq_left h, mul_assoc (g * M), hg, mul_one]
+  · rw [ite_eq_right h, ite_eq_right h, mul_one]
+
+/-- A transversal gate on one block carries a fault on that block through itself, conjugated by its
+gate, and leaves the other block's fault alone. -/
+theorem onBlock_mul_blockFault (b : Fin 2) {g : Matrix (Fin 2) (Fin 2) ℂ} (hg : gᴴ * g = 1)
+    (q : Fin 2 → Fin 7) (A : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) :
+    onBlock b (blockKron fun _ : Fin 7 => g) * blockFault q A
+      = blockFault q (fun b' => if b' = b then g * A b' * gᴴ else A b')
+        * onBlock b (blockKron fun _ : Fin 7 => g) := by
+  rw [onBlock, blockFault, blockFault, blockKron_mul, blockKron_mul]
+  refine congrArg blockKron (funext fun b' => ?_)
+  by_cases h : b' = b
+  · simp only [ite_eq_left h]
+    exact blockKron_mul_gateOf_of_unitary hg (q b') (A b')
+  · simp only [ite_eq_right h, Matrix.one_mul, Matrix.mul_one]
+
+/-- **Transversality for a transversal gate on one block**: #96's `PropagatesD` for the correctable
+set of weight one per block. -/
+theorem propagatesD_onBlock (b : Fin 2) {g : Matrix (Fin 2) (Fin 2) ℂ}
+    (hg : g ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    PropagatesD pairProj pairWeightOne fun ρ => onBlock b (blockKron fun _ : Fin 7 => g) * ρ
+      * (onBlock b (blockKron fun _ : Fin 7 => g))ᴴ := by
+  have hgg : gᴴ * g = 1 := by
+    rw [← Matrix.star_eq_conjTranspose]
+    exact Matrix.mem_unitaryGroup_iff'.mp hg
+  rintro _ ⟨q, A, hA, rfl⟩ ρ _
+  set O := onBlock b (blockKron fun _ : Fin 7 => g)
+  set A' : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ := fun b' => if b' = b then g * A b' * gᴴ else A b'
+  have hA' : ∀ b', A' b' ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+    intro b'
+    simp only [A']
+    split_ifs
+    · refine mul_mem (mul_mem hg (hA b')) ?_
+      rw [← Matrix.star_eq_conjTranspose]
+      exact Unitary.star_mem hg
+    · exact hA b'
+  refine ⟨fun σ => blockFault q A' * σ * (blockFault q A')ᴴ, ⟨q, A', hA', rfl⟩, ?_⟩
+  show O * (blockFault q A * ρ * (blockFault q A)ᴴ) * Oᴴ
+    = blockFault q A' * (O * ρ * Oᴴ) * (blockFault q A')ᴴ
+  calc O * (blockFault q A * ρ * (blockFault q A)ᴴ) * Oᴴ
+      = (O * blockFault q A) * ρ * (O * blockFault q A)ᴴ := by
+        rw [conjTranspose_mul]
+        simp only [Matrix.mul_assoc]
+    _ = (blockFault q A' * O) * ρ * (blockFault q A' * O)ᴴ := by
+        rw [onBlock_mul_blockFault b hgg]
+    _ = _ := by
+        rw [conjTranspose_mul]
+        simp only [Matrix.mul_assoc]
+
 /-- A single-block gadget carries a fault on its block through itself, conjugated by its gate, and
 leaves the other block's fault alone. -/
 theorem single_mul_blockFault (b : Fin 2) (G : Gadget) (q : Fin 2 → Fin 7)
     (A : Fin 2 → Matrix (Fin 2) (Fin 2) ℂ) :
     (single b G).op * blockFault q A
       = blockFault q (fun b' => if b' = b then G.gate * A b' * G.gateᴴ else A b')
-        * (single b G).op := by
-  show blockKron (fun b' => if b' = b then G.transversal else 1)
-      * blockKron (fun b' => gateOf (q b') (A b'))
-    = blockKron (fun b' => gateOf (q b') (if b' = b then G.gate * A b' * G.gateᴴ else A b'))
-      * blockKron (fun b' => if b' = b then G.transversal else 1)
-  rw [blockKron_mul, blockKron_mul]
-  refine congrArg blockKron (funext fun b' => ?_)
-  by_cases h : b' = b
-  · simp only [ite_eq_left h]
-    exact G.blockKron_mul_gateOf (q b') (A b')
-  · simp only [ite_eq_right h, Matrix.one_mul, Matrix.mul_one]
+        * (single b G).op :=
+  onBlock_mul_blockFault b G.gate_conjTranspose_mul q A
 
 /-- ★★ **Transversality for the single-block gadgets** on the two-block register: #96's
 `PropagatesD` for the correctable set of weight one per block. -/
 theorem propagatesD_single (b : Fin 2) (G : Gadget) :
-    PropagatesD pairProj pairWeightOne (single b G).ideal := by
-  rintro _ ⟨q, A, hA, rfl⟩ ρ _
-  have hA' : ∀ b', (if b' = b then G.gate * A b' * G.gateᴴ else A b')
-      ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
-    intro b'
-    split_ifs
-    · refine mul_mem (mul_mem G.gate_mem_unitaryGroup (hA b')) ?_
-      rw [← Matrix.star_eq_conjTranspose]
-      exact Unitary.star_mem G.gate_mem_unitaryGroup
-    · exact hA b'
-  refine ⟨fun σ => blockFault q (fun b' => if b' = b then G.gate * A b' * G.gateᴴ else A b') * σ
-      * (blockFault q (fun b' => if b' = b then G.gate * A b' * G.gateᴴ else A b'))ᴴ,
-    ⟨q, _, hA', rfl⟩, ?_⟩
-  show (single b G).op * (blockFault q A * ρ * (blockFault q A)ᴴ) * ((single b G).op)ᴴ
-    = blockFault q (fun b' => if b' = b then G.gate * A b' * G.gateᴴ else A b')
-      * ((single b G).op * ρ * ((single b G).op)ᴴ)
-      * (blockFault q (fun b' => if b' = b then G.gate * A b' * G.gateᴴ else A b'))ᴴ
-  calc (single b G).op * (blockFault q A * ρ * (blockFault q A)ᴴ) * ((single b G).op)ᴴ
-      = ((single b G).op * blockFault q A) * ρ * ((single b G).op * blockFault q A)ᴴ := by
-        rw [conjTranspose_mul]
-        simp only [Matrix.mul_assoc]
-    _ = (blockFault q (fun b' => if b' = b then G.gate * A b' * G.gateᴴ else A b')
-          * (single b G).op) * ρ
-        * (blockFault q (fun b' => if b' = b then G.gate * A b' * G.gateᴴ else A b')
-          * (single b G).op)ᴴ := by rw [single_mul_blockFault]
-    _ = _ := by
-        rw [conjTranspose_mul]
-        simp only [Matrix.mul_assoc]
+    PropagatesD pairProj pairWeightOne (single b G).ideal :=
+  propagatesD_onBlock b G.gate_mem_unitaryGroup
+
+/-- ★★ **Transversality for the logical `S̄`** on the two-block register. -/
+theorem propagatesD_phase (b : Fin 2) : PropagatesD pairProj pairWeightOne (phase b).ideal :=
+  propagatesD_onBlock b sDagM_mem_unitaryGroup
 
 end PairGadget
 
 /-! ### The gadget set discharges the premise -/
 
-/-- ★★★ **The four-gadget set is a set of corrected steps.** One recovery channel `R` on the
-two-block register serves `H̄`, `X̄`, `Z̄` on either block and `CNOT̄`: for every assignment of
-unitary faults to the seven locations and every pattern that is **not bad** (`isBad 7 1`, at most
+/-- ★★★ **The two-block gadget set is a set of corrected steps.** One recovery channel `R` on the
+two-block register serves `H̄`, `X̄`, `Z̄`, `S̄` on either block and `CNOT̄`: for every assignment
+of unitary faults to the seven locations and every pattern that is **not bad** (`isBad 7 1`, at most
 one faulty location), the faulty gadget followed by `R` is an `IsCorrectedStep` for the ideal gadget
 — #96's `isCorrectedStep_rect` with `exists_isRecovery_pairWeightOne`,
 `PairGadget.deviatesBy_faulty` and `PairGadget.isCodeState_ideal`. -/
@@ -454,8 +511,8 @@ theorem idealRun_pairMachineCircuit {κ : Type*} [Fintype κ] (R : Channel PairR
   rw [idealRun, pairMachineCircuit, pairMachineIdeal, List.map_ofFn]
   rfl
 
-/-- ★★★ **The Steane machine over `H̄`, `X̄`, `Z̄`, `CNOT̄`, at level one.** One recovery channel
-`R` on two blocks such that, for every circuit of `N` gadgets from the four-gadget set, every
+/-- ★★★ **The Steane machine over `H̄`, `S̄`, `X̄`, `Z̄`, `CNOT̄`, at level one.** One recovery
+channel `R` on two blocks such that, for every circuit of `N` gadgets from the set, every
 assignment of unitary faults to their locations and every encoded input:
 
 * **the deterministic premise holds**: a pattern that makes no gadget bad gives exactly the ideal

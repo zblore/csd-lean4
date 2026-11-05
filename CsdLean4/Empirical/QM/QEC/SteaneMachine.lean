@@ -66,8 +66,8 @@ recovery's locations counted is `SteaneOverlapMachine.lean` (`steane_machine_ove
 ⚠️ **One block, three gates.** `H̄`, `X̄`, `Z̄` act on a single block; this is not a universal gate
 set. The two-block `CNOT̄` (`steane_faultyCNOT_recovery`) lives on a different register and is not
 in the machine; nor are `S̄` or a fault-tolerant `T̄`. Each is its own BACKLOG row. ▸ The
-two-block machine with `CNOT̄` in the set is `SteanePairMachine.lean` (`steane_pair_machine`,
-BACKLOG ~~#226~~).
+two-block machine with `CNOT̄` and `S̄` in the set is `SteanePairMachine.lean`
+(`steane_pair_machine`, BACKLOG ~~#226~~; `S̄` from `SteaneLogicalS.lean`, #230).
 
 ⚠️ **Independent noise and unitary faults**, as in #97: `circuitMeasure` is a product across gadgets
 and locations, and each fault is a unitary single-qubit gate applied after the ideal one.
