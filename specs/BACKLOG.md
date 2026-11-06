@@ -48,6 +48,34 @@
 > | ~~**Q35**~~ **DONE 2026-09-29** | **Every glossary page now has an onward path, and the new ones have faces.** (i) `site_link` added to all 127 entries that lacked one, read off the site's own sitemap and each destination opened first: `/papers` (Paper C the reconstruction, Paper D geometric QM, C1 the Bell formalisation, C2 the PBR paper), `/primer-1`–`/primer-5`, `/position` (§6 places the programme against the standard impossibility theorems), `/roadmap` (stage 3 reconstruction, stage 5 continuum limits, stage 7 field theory), `/current-claims`, `/current-limits` (§3 finite-dimensional), `/technical-notes` (TN0 notation, TN4 mixed states and POVMs, TN6 sequential measurement). **check-glossary is at 0 warnings for the first time** (152 entries, 0 hard findings, 0 warnings). (ii) Images: the fetch tool's candidate map extended to the new tranche and every candidate LOOKED AT — ten accepted (Laflamme, Dorit Aharonov, Clifford, Berry with the Lorentz medal, Yakir Aharonov, the cat-state Wigner plot with its negative fringes, Darboux, Kac, Araki, Renner), ten with no usable free image and left without one; the three the 2026-09-14 pass had deliberately rejected (Bayes, Stone's letter, Wick's diagram) stay rejected. 77 of 152 pages now carry an image. | **M** | — | — | `docs/glossary.yaml`, `docs/img/`, `scripts/lib/glossary_images.py` |
 > | ~~*(push)*~~ **DONE 2026-09-12** | ~~Fourteen local commits (G9+G10 … G17) are unpushed; CI has not seen the manifold layer past `46be6c6`.~~ Pushed 2026-09-12; CI green at `0dc62c1` (17 m 08 s). | — | — | — | — |
 >
+> ### ▶ FINISH LINES, THE ACTIVE PATHS AND THE SHELF (author decision, 2026-11-06)
+>
+> **Why.** In the ten days to 2026-11-06, 102 rows were opened and 95 of them were residues or
+> splits of the row just worked, so the open queue stayed at about 33 however fast rows closed.
+> Each end goal now has one theorem that finishes it, and the queue offered for picking is the
+> path to those theorems. Nothing is unscheduled: every row below keeps its price and its
+> canonical text, and the author can promote any shelved row by number.
+>
+> **Finish lines.**
+>
+> | End goal | Finish line | Active path, in order |
+> |---|---|---|
+> | QC chain (link 12) | #315 — the Steane threshold with every recovery location counted at every level; #231 closes with it | #302 → #312 → #314 → #313 → #315 |
+> | Records→spacetime | #298 — the `d+1` capstone (Lorentz within the records' resolution in `d+1`; closes #289) | #294 → #295 → #296 → #297 → #298 |
+> | Reconstruction frontier, Statistical-mechanics layer, Reviewer-proofing, Library owed | none set yet — the author sets one | #19, #20, #21, #22, #150 · #24, #218, #224 · #211 (offered as they stand) |
+>
+> **The shelf** (open, priced, not offered in the menu unless the author asks): QC chain — #310
+> (explicit constants), #239 (sharper malignant-pair constant); Records→spacetime — #254, #255,
+> #263, #276, #281, #282 (1+1 refinements: none moves the scaling theorem), #299, #300, #301
+> (`d+1` options), #205 (the common cone, research after its first brick); #39 is the end goal's
+> umbrella row.
+>
+> **The residue rule (replaces "every residue becomes a row").** What a landing does not do is
+> recorded, with its price, as a **Remainder** line in the landing's own row. It becomes a new
+> numbered row only when (a) a finish line's path cannot be completed without it, or (b) the
+> author promotes it. A remainder is never called "unscheduled" or "too big" (the 2026-09-10
+> rule stands); it is simply not a row until it is needed.
+>
 > ### ▶ OPEN QUEUE, by category (recorded 2026-09-13) — the single index
 >
 > **State.** HEAD `0dc62c1`, pushed, CI green. Row **BC** (the BCFJS `iff`, six bricks, 82 pins) and
