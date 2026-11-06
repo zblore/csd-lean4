@@ -7,6 +7,7 @@ module
 
 public import CsdLean4.Empirical.QM.QEC.SteaneMachine
 public import CsdLean4.Empirical.QM.QEC.SteaneConcat
+public import CsdLean4.Empirical.QM.QEC.SteaneLogicalS
 
 /-!
 # The Steane machine at every level, and its threshold
@@ -31,9 +32,18 @@ the encoder: a gate `T` with `T E_k = E_k W` keeps level-`k` code states in the 
   Schrödinger picture, up to a scalar**: it commutes with `P`, so it acts as a `2 × 2` matrix `V`, and
   exchanging `X̄` with `Z̄` forces `V X = Z V`, `V Z = X V`, whose solutions are the multiples of `H`.
   No coset sum is computed — `SteaneFaultyGate.lean` had this as open;
-* `Gadget.exists_blockKron_mul_steaneEnc`, `cTrans` (the gate on all `7^k` qubits), ★★★
-  `Gadget.exists_cTrans_mul_cEnc` — **every gadget of the set is a logical gate at every level**, by
-  induction one Steane layer at a time.
+* `Gadget.exists_blockKron_mul_steaneEnc`, `cTrans` (the gate on all `7^k` qubits);
+* `sTransversal_mul_steaneProj`, `sTransversal_conjTranspose_mul_steaneProj` — the transversal `S`
+  and `S†` keep the Steane code (`SteaneLogicalS.lean` has their action on the encoder);
+* `ConcatGadget` — **the level-`k` gate set**: `H̄`, `X̄`, `Z̄` and the transversal `S`, `S†`;
+  `ConcatGadget.gate`; `ConcatGadget.logical` — **the logical gate one Steane layer up** (`S ↦ S†`,
+  `S† ↦ S`, the rest fixed); `logical_logical`, `logical_iterate_logical_iterate`,
+  `logical_iterate_s` (the `k`-fold logical gate of `S` is `S` or `S†` by the parity of `k`);
+  `ConcatGadget.exists_blockKron_mul_steaneEnc`; ★★★ `ConcatGadget.exists_cTrans_mul_cEnc` —
+  **`g^{⊗7^k} E_k = E_k (μ · logicalᵏ(g))`**, by induction one Steane layer at a time; ★★
+  `exists_cTrans_mul_cEnc_sGate` — **the logical `S̄` at every level**, from the transversal
+  `logicalᵏ(S)`; `Gadget.exists_cTrans_mul_cEnc` — **every gadget of the level-one set is a logical
+  gate at every level**, the fixed points of `logical` (#303).
 
 ## Faults at the leaves, and the recovery
 
@@ -45,9 +55,9 @@ the encoder: a gate `T` with `T E_k = E_k W` keeps level-`k` code states in the 
 
 ## The machine
 
-* `Gadget.idealK`, `Gadget.stepK`, `Gadget.isCodeState_idealK`; ★★★
-  `steane_gadgetSet_corrected_level` — **at every level, every good step of the gadget set is an
-  `IsCorrectedStep` for the level-`k` code**, one recovery for all gadgets;
+* `ConcatGadget.idealK`, `ConcatGadget.stepK`, `ConcatGadget.isCodeState_idealK`; ★★★
+  `steane_gadgetSet_corrected_level` — **at every level, every good step of the gate set (`S`, `S†`
+  included) is an `IsCorrectedStep` for the level-`k` code**, one recovery for all gates;
 * `machineCircuitK`, `machineIdealK`, `idealRun_machineCircuitK`; ★★★ `steane_machine_level` — **the
   premise discharged at level `k`, and the bound** `1 − N (21p)^{2^k}/21`;
 * ★★★ `steane_machine_threshold` — **below `p < 1/21` that bound tends to `1` as `k → ∞`**, for every
@@ -61,15 +71,19 @@ recursive simulation — a level-`(k−1)` circuit of gadgets with interleaved l
 so recovery faults at any level are not modelled; the noise sits on the gates. Those are their own
 BACKLOG rows.
 
-⚠️ **One block, three gates** (`H̄`, `X̄`, `Z̄`), as in #207: not universal.
+⚠️ **One block, the Clifford generators** `H̄`, `X̄`, `Z̄`, and `S̄` (at level `k` from the
+transversal `S` or `S†` by the parity of `k`, `exists_cTrans_mul_cEnc_sGate`): no two-block gate and
+no `T̄`, so not universal.
 
 ⚠️ **Independent unitary faults** at the leaves, after the ideal gate, as in #207 and #97.
 
 ⚠️ **The scalars are existential.** The logical Hadamard is `c H` for some `c` (a unit-modulus
-phase, not computed); the code-preservation and correction statements do not need its value.
+phase, not computed); the code-preservation and correction statements do not need its value. The
+machine's ideal map is the transversal gate's conjugation; which logical gate that is (`S` or `S†`
+at a given level) is `ConcatGadget.exists_cTrans_mul_cEnc`'s statement, not the machine's.
 
 References: E. Knill, R. Laflamme, W. Zurek, *Science* 279 (1998) 342; D. Aharonov, M. Ben-Or,
-SIAM J. Comput. 38 (2008) 1207; `specs/BACKLOG.md` #227, #207, #97, #86, #62;
+SIAM J. Comput. 38 (2008) 1207; `specs/BACKLOG.md` #227, #303, #207, #97, #86, #62;
 `Empirical/QM/QEC/SteaneMachine.lean`, `Empirical/QM/QEC/SteaneConcat.lean`,
 `Empirical/QM/QEC/SteaneEncoder.lean`, `Mathlib/QuantumInfo/LevelReduction.lean`;
 `docs/FROM-POSTULATES-TO-QUANTUM-COMPUTERS.md` link 12; `specs/future-work.md`.
@@ -254,6 +268,27 @@ theorem cProj_one : cProj 1 = steaneProj := by
       * (blockKron (fun _ : Fin 7 => (1 : Matrix (Fin 2) (Fin 2) ℂ)) * steaneEnc)ᴴ = _
   rw [blockKron_one, Matrix.one_mul]
 
+/-- ★ **The transversal `S` keeps the Steane code**: it commutes with the code projector. -/
+theorem sTransversal_mul_steaneProj : sTransversal * steaneProj = steaneProj * sTransversal := by
+  have h : steaneEncᴴ * sTransversal = sDagM * steaneEncᴴ := by
+    have h' := congrArg conjTranspose sTransversal_conjTranspose_mul_steaneEnc
+    rwa [conjTranspose_mul, conjTranspose_mul, conjTranspose_conjTranspose,
+      sGateM_conjTranspose] at h'
+  rw [steaneProj_eq]
+  calc sTransversal * (steaneEnc * steaneEncᴴ) = sTransversal * steaneEnc * steaneEncᴴ :=
+        (Matrix.mul_assoc _ _ _).symm
+    _ = steaneEnc * sDagM * steaneEncᴴ := by rw [sTransversal_mul_steaneEnc]
+    _ = steaneEnc * (steaneEncᴴ * sTransversal) := by rw [h, Matrix.mul_assoc]
+    _ = steaneEnc * steaneEncᴴ * sTransversal := (Matrix.mul_assoc _ _ _).symm
+
+/-- ★ **The transversal `S†` keeps the Steane code** too. -/
+theorem sTransversal_conjTranspose_mul_steaneProj :
+    sTransversalᴴ * steaneProj = steaneProj * sTransversalᴴ := by
+  have hP : steaneProjᴴ = steaneProj := isCodeProjector_steaneProj.conjTranspose_eq
+  have h := congrArg conjTranspose sTransversal_mul_steaneProj
+  rw [conjTranspose_mul, conjTranspose_mul, hP] at h
+  exact h.symm
+
 /-! ### The transversal gate at level `k` -/
 
 /-- **The transversal gate at level `k`**: the single-qubit gate `g` on every one of the `7^k`
@@ -262,29 +297,120 @@ def cTrans (g : Matrix (Fin 2) (Fin 2) ℂ) : ∀ k, Matrix (cLabel k) (cLabel k
   | 0 => g
   | k + 1 => blockKron fun _ : Fin 7 => cTrans g k
 
-/-- ★★★ **Every gadget is a logical gate at every level**: `g^{⊗7^k} E_k = E_k (μ g)` for the
-level-`k` encoder, by induction — one Steane layer at a time, the scalar raised to the seventh power
-and multiplied by the level-one scalar. -/
-theorem Gadget.exists_cTrans_mul_cEnc (G : Gadget) :
-    ∀ k, ∃ μ : ℂ, cTrans G.gate k * cEnc k = cEnc k * (μ • G.gate)
+/-! ### The level-`k` gate set, with the phase gate -/
+
+/-- **The level-`k` gate set**: the three gadgets of the level-one set and the transversal phase
+gates `S` and `S†`. -/
+inductive ConcatGadget
+  /-- A gadget of the level-one set: `H̄`, `X̄` or `Z̄`. -/
+  | of (G : Gadget)
+  /-- The transversal `S`. -/
+  | s
+  /-- The transversal `S†`. -/
+  | sDag
+  deriving DecidableEq
+
+namespace ConcatGadget
+
+/-- The single-qubit gate applied at every leaf. -/
+def gate : ConcatGadget → Matrix (Fin 2) (Fin 2) ℂ
+  | of G => G.gate
+  | s => sGateM
+  | sDag => sDagM
+
+/-- **The logical gate one Steane layer up**: the transversal `S` is the logical `S†` and the
+transversal `S†` the logical `S` (`sTransversal_mul_steaneEnc`); `H̄`, `X̄`, `Z̄` are themselves. -/
+def logical : ConcatGadget → ConcatGadget
+  | of G => of G
+  | s => sDag
+  | sDag => s
+
+theorem logical_logical (G : ConcatGadget) : G.logical.logical = G := by
+  cases G <;> rfl
+
+theorem logical_iterate_logical_iterate :
+    ∀ (k : ℕ) (G : ConcatGadget), logical^[k] (logical^[k] G) = G
+  | 0, _ => rfl
+  | k + 1, G => by
+      rw [Function.iterate_succ_apply, Function.iterate_succ_apply', logical_logical,
+        logical_iterate_logical_iterate k G]
+
+/-- **`S` at level `k` is `S` or `S†` by the parity of `k`.** -/
+theorem logical_iterate_s : ∀ k, logical^[k] s = if Even k then s else sDag
+  | 0 => by simp
+  | k + 1 => by
+      rw [Function.iterate_succ_apply', logical_iterate_s k]
+      by_cases h : Even k <;> simp [h, Nat.even_add_one, logical]
+
+theorem logical_iterate_of (G : Gadget) (k : ℕ) : logical^[k] (of G) = of G :=
+  Function.iterate_fixed rfl k
+
+/-- ★★ **Every gate of the set is a logical gate one layer up, at level one**:
+`g^{⊗7} E = E (c · logical(g))`. -/
+theorem exists_blockKron_mul_steaneEnc (G : ConcatGadget) :
+    ∃ c : ℂ,
+      blockKron (fun _ : Fin 7 => G.gate) * steaneEnc = steaneEnc * (c • G.logical.gate) := by
+  cases G with
+  | of G => exact G.exists_blockKron_mul_steaneEnc
+  | s =>
+    refine ⟨1, ?_⟩
+    rw [one_smul]
+    exact sTransversal_mul_steaneEnc
+  | sDag =>
+    refine ⟨1, ?_⟩
+    rw [one_smul]
+    have h : blockKron (fun _ : Fin 7 => sDagM) = sTransversalᴴ := by
+      rw [sTransversal, blockKron_conjTranspose, sGateM_conjTranspose]
+    show blockKron (fun _ : Fin 7 => sDagM) * steaneEnc = steaneEnc * sGateM
+    rw [h]
+    exact sTransversal_conjTranspose_mul_steaneEnc
+
+/-- ★★★ **Every gate is a logical gate at every level**: `g^{⊗7^k} E_k = E_k (μ · logicalᵏ(g))` for
+the level-`k` encoder, by induction — one Steane layer at a time, the scalar raised to the seventh
+power and multiplied by the level-one scalar. -/
+theorem exists_cTrans_mul_cEnc (G : ConcatGadget) :
+    ∀ k, ∃ μ : ℂ, cTrans G.gate k * cEnc k = cEnc k * (μ • (logical^[k] G).gate)
   | 0 => ⟨1, by
-      show G.gate * (1 : Matrix (Fin 2) (Fin 2) ℂ) = (1 : Matrix (Fin 2) (Fin 2) ℂ) * ((1 : ℂ) • G.gate)
+      show G.gate * (1 : Matrix (Fin 2) (Fin 2) ℂ)
+        = (1 : Matrix (Fin 2) (Fin 2) ℂ) * ((1 : ℂ) • G.gate)
       rw [Matrix.mul_one, Matrix.one_mul, one_smul]⟩
   | k + 1 => by
       obtain ⟨μ, hμ⟩ := G.exists_cTrans_mul_cEnc k
-      obtain ⟨c, hc⟩ := G.exists_blockKron_mul_steaneEnc
+      set H := logical^[k] G with hH
+      obtain ⟨c, hc⟩ := H.exists_blockKron_mul_steaneEnc
       refine ⟨μ ^ 7 * c, ?_⟩
-      have hs : blockKron (fun _ : Fin 7 => μ • G.gate) = μ ^ 7 • blockKron (fun _ : Fin 7 => G.gate) := by
-        rw [blockKron_smul (fun _ : Fin 7 => μ) (fun _ : Fin 7 => G.gate)]
+      have hs : blockKron (fun _ : Fin 7 => μ • H.gate)
+          = μ ^ 7 • blockKron (fun _ : Fin 7 => H.gate) := by
+        rw [blockKron_smul (fun _ : Fin 7 => μ) (fun _ : Fin 7 => H.gate)]
         simp
+      rw [Function.iterate_succ_apply', ← hH]
       show blockKron (fun _ : Fin 7 => cTrans G.gate k)
           * (blockKron (fun _ : Fin 7 => cEnc k) * steaneEnc)
-        = blockKron (fun _ : Fin 7 => cEnc k) * steaneEnc * ((μ ^ 7 * c) • G.gate)
+        = blockKron (fun _ : Fin 7 => cEnc k) * steaneEnc * ((μ ^ 7 * c) • H.logical.gate)
       rw [← Matrix.mul_assoc, blockKron_mul,
-        show (fun _ : Fin 7 => cTrans G.gate k * cEnc k) = fun _ => cEnc k * (μ • G.gate) from
+        show (fun _ : Fin 7 => cTrans G.gate k * cEnc k) = fun _ => cEnc k * (μ • H.gate) from
           funext fun _ => hμ,
         ← blockKron_mul, hs, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_assoc, hc]
       simp only [Matrix.mul_smul, smul_smul, Matrix.mul_assoc]
+
+end ConcatGadget
+
+/-- ★★ **The logical `S̄` at every level**: the transversal `logicalᵏ(S)` — `S` at even levels,
+`S†` at odd ones (`ConcatGadget.logical_iterate_s`) — is the logical `S` on the level-`k` code,
+up to a scalar. -/
+theorem exists_cTrans_mul_cEnc_sGate (k : ℕ) :
+    ∃ μ : ℂ, cTrans (ConcatGadget.logical^[k] .s).gate k * cEnc k = cEnc k * (μ • sGateM) := by
+  obtain ⟨μ, h⟩ := (ConcatGadget.logical^[k] .s).exists_cTrans_mul_cEnc k
+  rw [ConcatGadget.logical_iterate_logical_iterate] at h
+  exact ⟨μ, h⟩
+
+/-- ★★★ **Every gadget of the level-one set is a logical gate at every level**:
+`g^{⊗7^k} E_k = E_k (μ g)` — the fixed points of `ConcatGadget.logical`. -/
+theorem Gadget.exists_cTrans_mul_cEnc (G : Gadget) (k : ℕ) :
+    ∃ μ : ℂ, cTrans G.gate k * cEnc k = cEnc k * (μ • G.gate) := by
+  obtain ⟨μ, h⟩ := (ConcatGadget.of G).exists_cTrans_mul_cEnc k
+  rw [ConcatGadget.logical_iterate_of] at h
+  exact ⟨μ, h⟩
 
 /-- **A level-`k` gate that acts on the encoder keeps level-`k` code states in the code.** -/
 theorem isCodeState_cProj_conj {k : ℕ} {T : Matrix (cLabel k) (cLabel k) ℂ}
@@ -396,34 +522,35 @@ theorem exists_concat_recovery_exact (k : ℕ) :
 
 /-! ### The level-`k` gadget set -/
 
-namespace Gadget
+namespace ConcatGadget
 
 /-- The ideal level-`k` gadget. -/
-def idealK (G : Gadget) (k : ℕ) (ρ : Matrix (cLabel k) (cLabel k) ℂ) :
+def idealK (G : ConcatGadget) (k : ℕ) (ρ : Matrix (cLabel k) (cLabel k) ℂ) :
     Matrix (cLabel k) (cLabel k) ℂ :=
   cTrans G.gate k * ρ * (cTrans G.gate k)ᴴ
 
 /-- The implemented level-`k` step: the gadget under its fault pattern, then the recovery. -/
-def stepK (G : Gadget) (k : ℕ) (R : Channel (cLabel k) (cLabel k) (Option (cFam k)))
+def stepK (G : ConcatGadget) (k : ℕ) (R : Channel (cLabel k) (cLabel k) (Option (cFam k)))
     (x : ConcatPat 7 k) (U : (Fin k → Fin 7) → Matrix (Fin 2) (Fin 2) ℂ)
     (ρ : Matrix (cLabel k) (cLabel k) ℂ) : Matrix (cLabel k) (cLabel k) ℂ :=
   R.apply (cFaulty G.gate k x U * ρ * (cFaulty G.gate k x U)ᴴ)
 
-theorem isCodeState_idealK (G : Gadget) (k : ℕ) {ρ : Matrix (cLabel k) (cLabel k) ℂ}
+theorem isCodeState_idealK (G : ConcatGadget) (k : ℕ) {ρ : Matrix (cLabel k) (cLabel k) ℂ}
     (hρ : IsCodeState (cProj k) ρ) : IsCodeState (cProj k) (G.idealK k ρ) := by
   obtain ⟨μ, hμ⟩ := G.exists_cTrans_mul_cEnc k
   exact isCodeState_cProj_conj hμ hρ
 
-end Gadget
+end ConcatGadget
 
 /-- ★★★ **The gadget set is a set of corrected steps at every level.** For each `k` one recovery
-channel serves every gadget: for each of `H̄`, `X̄`, `Z̄` on the level-`k` code, every unitary fault
+channel serves every gadget: for each of `H̄`, `X̄`, `Z̄`, `S`, `S†` on the level-`k` code (`S̄` is
+`S` or `S†` by the parity of `k`, `exists_cTrans_mul_cEnc_sGate`), every unitary fault
 at every one of its `7^k` leaves, and every pattern that is **not bad at level `k`** (at most one bad
 sub-block at every level of the tree), the faulty transversal gadget followed by the recovery is an
 `IsCorrectedStep` for the level-`k` code. -/
 theorem steane_gadgetSet_corrected_level (k : ℕ) :
     ∃ R : Channel (cLabel k) (cLabel k) (Option (cFam k)),
-      ∀ (G : Gadget) (U : (Fin k → Fin 7) → Matrix (Fin 2) (Fin 2) ℂ),
+      ∀ (G : ConcatGadget) (U : (Fin k → Fin 7) → Matrix (Fin 2) (Fin 2) ℂ),
         (∀ a, U a ∈ Matrix.unitaryGroup (Fin 2) ℂ) →
         ∀ x : ConcatPat 7 k, isBad 7 k x = false →
           IsCorrectedStep (cProj k) (G.idealK k) (G.stepK k R x U) := by
@@ -436,7 +563,7 @@ theorem steane_gadgetSet_corrected_level (k : ℕ) :
   have hrw : G.stepK k R x U ρ
       = R.apply (cFaultErr k x U * G.idealK k ρ * (cFaultErr k x U)ᴴ) := by
     show R.apply (cFaulty G.gate k x U * ρ * (cFaulty G.gate k x U)ᴴ) = _
-    rw [cFaulty_eq, Gadget.idealK, conjTranspose_mul]
+    rw [cFaulty_eq, ConcatGadget.idealK, conjTranspose_mul]
     congr 1
     noncomm_ring
   rw [hrw]
@@ -446,31 +573,34 @@ theorem steane_gadgetSet_corrected_level (k : ℕ) :
 
 /-- The machine's circuit at level `k`. -/
 def machineCircuitK (k : ℕ) (R : Channel (cLabel k) (cLabel k) (Option (cFam k))) {N : ℕ}
-    (gs : Fin N → Gadget) (U : Fin N → (Fin k → Fin 7) → Matrix (Fin 2) (Fin 2) ℂ)
+    (gs : Fin N → ConcatGadget) (U : Fin N → (Fin k → Fin 7) → Matrix (Fin 2) (Fin 2) ℂ)
     (ω : CircuitPat N 7 k) : Circuit (cLabel k) :=
   List.ofFn fun j => ((gs j).idealK k, (gs j).stepK k R (ω j) (U j))
 
 /-- The ideal output of the level-`k` machine. -/
-def machineIdealK (k : ℕ) {N : ℕ} (gs : Fin N → Gadget) (ρ : Matrix (cLabel k) (cLabel k) ℂ) :
+def machineIdealK (k : ℕ) {N : ℕ} (gs : Fin N → ConcatGadget)
+    (ρ : Matrix (cLabel k) (cLabel k) ℂ) :
     Matrix (cLabel k) (cLabel k) ℂ :=
   runMaps (List.ofFn fun j => (gs j).idealK k) ρ
 
 theorem idealRun_machineCircuitK (k : ℕ) (R : Channel (cLabel k) (cLabel k) (Option (cFam k)))
-    {N : ℕ} (gs : Fin N → Gadget) (U : Fin N → (Fin k → Fin 7) → Matrix (Fin 2) (Fin 2) ℂ)
-    (ω : CircuitPat N 7 k) (ρ : Matrix (cLabel k) (cLabel k) ℂ) :
+    {N : ℕ} (gs : Fin N → ConcatGadget)
+    (U : Fin N → (Fin k → Fin 7) → Matrix (Fin 2) (Fin 2) ℂ) (ω : CircuitPat N 7 k)
+    (ρ : Matrix (cLabel k) (cLabel k) ℂ) :
     idealRun (machineCircuitK k R gs U ω) ρ = machineIdealK k gs ρ := by
   rw [idealRun, machineCircuitK, machineIdealK, List.map_ofFn]
   rfl
 
 /-- ★★★ **The Steane machine at level `k`.** For each level one recovery channel such that, for every
-circuit of `N` gadgets on the level-`k` code, every assignment of unitary faults to their `7^k`
-leaves and every encoded input, a pattern that makes no gadget bad gives exactly the ideal output
-(the level reduction's `correctedRun_eq_idealRun_of_level`, fed the level-`k` corrected steps), and
+circuit of `N` gates of the set (`H̄`, `X̄`, `Z̄`, and `S̄` as `S` or `S†`) on the level-`k` code,
+every assignment of unitary faults to their `7^k` leaves and every encoded input, a pattern that
+makes no gadget bad gives exactly the ideal output (the level reduction's `correctedRun_eq_idealRun_of_level`, fed the level-`k` corrected steps), and
 under independent leaf faults of rate at most `p` the output is ideal with probability at least
 `1 − N · codeCapacityBound 21 p k = 1 − N (21 p)^{2^k} / 21`. -/
 theorem steane_machine_level (k : ℕ) :
     ∃ R : Channel (cLabel k) (cLabel k) (Option (cFam k)),
-      ∀ (N : ℕ) (gs : Fin N → Gadget) (U : Fin N → (Fin k → Fin 7) → Matrix (Fin 2) (Fin 2) ℂ),
+      ∀ (N : ℕ) (gs : Fin N → ConcatGadget)
+        (U : Fin N → (Fin k → Fin 7) → Matrix (Fin 2) (Fin 2) ℂ),
         (∀ j a, U j a ∈ Matrix.unitaryGroup (Fin 2) ℂ) →
         ∀ ρ : Matrix (cLabel k) (cLabel k) ℂ, IsCodeState (cProj k) ρ →
           (∀ ω : CircuitPat N 7 k, (∀ j, isBad 7 k (ω j) = false) →

@@ -2251,17 +2251,17 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.exists_concat_recovery_exact
 
-/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.idealK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.idealK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.idealK
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.idealK
 
-/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.stepK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.stepK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.stepK
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.stepK
 
-/-- info: 'CSD.Empirical.QM.QEC.Steane.Gadget.isCodeState_idealK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.isCodeState_idealK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.Empirical.QM.QEC.Steane.Gadget.isCodeState_idealK
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.isCodeState_idealK
 
 /-- info: 'CSD.Empirical.QM.QEC.Steane.steane_gadgetSet_corrected_level' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -5574,4 +5574,45 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 /-- info: 'CSD.Empirical.QM.QEC.Steane.traceDist_dataEnc_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.traceDist_dataEnc_le
+/-! #303: S-bar at every concatenation level (SteaneMachineConcat.lean) -/
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.gate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.gate
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.logical' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.logical
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.logical_logical' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.logical_logical
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.logical_iterate_logical_iterate' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.logical_iterate_logical_iterate
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.logical_iterate_s' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.logical_iterate_s
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.logical_iterate_of' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.logical_iterate_of
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.exists_blockKron_mul_steaneEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.exists_blockKron_mul_steaneEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.exists_cTrans_mul_cEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.exists_cTrans_mul_cEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_cTrans_mul_cEnc_sGate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_cTrans_mul_cEnc_sGate
 end CSD.Tests.AxiomAudit

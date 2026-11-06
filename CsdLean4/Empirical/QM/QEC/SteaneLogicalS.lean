@@ -5,7 +5,6 @@ Authors: Zayn Blore
 -/
 module
 
-public import CsdLean4.Empirical.QM.QEC.SteaneMachineConcat
 public import CsdLean4.Empirical.QM.QEC.SteaneTransversalCNOT
 
 /-!
@@ -27,21 +26,21 @@ logical `S†`**, exactly, with no global phase, and the transversal `S†` is t
 * ★★ `sTransversal_mul_steaneEnc` — **`S^{⊗7} E = E S†`**, the Schrödinger-picture statement;
   ★★ `sTransversal_conjTranspose_mul_steaneEnc` — **`(S^{⊗7})† E = E S`**: the transversal `S†` is
   the logical `S`;
-* ★ `sTransversal_mul_steaneProj` / `sTransversal_conjTranspose_mul_steaneProj` — **both keep the
-  code**: they commute with the code projector (`SteaneMachine.lean`'s honest scope listed `S̄` as
-  missing, and #230 was stuck on it).
+* `sTransversal_mul_steaneProj` / `sTransversal_conjTranspose_mul_steaneProj` — **both keep the
+  code** — are in `SteaneMachineConcat.lean`, next to `steaneProj_eq`, which this module now
+  precedes (#303).
 
 ## Honest scope
 
 ⚠️ Level one. At the concatenated level the transversal gate alternates between `S` and `S†` from
-one level to the next, which `SteaneMachineConcat.lean`'s `Gadget.exists_cTrans_mul_cEnc` (a gate
-that is *itself* at every level) does not cover, so `S̄` is not added to the one-block `Gadget`
-type; it joins the two-block gadget set in `SteanePairMachine.lean`.
+one level to the next; `SteaneMachineConcat.lean` handles that with its `ConcatGadget.logical` map
+and puts both in the level-`k` machine (#303). `S̄` is not in the one-block level-one `Gadget` type;
+it is in the two-block gadget set of `SteanePairMachine.lean`.
 
 References: D. Gottesman, PhD thesis (Caltech 1997) §5; M. Nielsen, I. Chuang, *Quantum Computation
-and Quantum Information* §10.6.2; `specs/BACKLOG.md` #230;
-`Empirical/QM/QEC/SteaneMachineConcat.lean`
-(`steaneProj_eq`), `Empirical/QM/QEC/SteaneTransversalCNOT.lean` (`steaneEnc_eq_cosetAmp`);
+and Quantum Information* §10.6.2; `specs/BACKLOG.md` #230, #303;
+`Empirical/QM/QEC/SteaneMachineConcat.lean`, `Empirical/QM/QEC/SteaneTransversalCNOT.lean`
+(`steaneEnc_eq_cosetAmp`);
 `specs/future-work.md`.
 -/
 
@@ -155,27 +154,6 @@ theorem sTransversal_conjTranspose_mul_steaneEnc :
         rw [← Matrix.mul_assoc, sTransversal_conjTranspose_mul, Matrix.one_mul]
     _ = steaneEnc * sGateM := by
         rw [← sGateM_conjTranspose, conjTranspose_conjTranspose]
-
-/-- ★ **The transversal `S` keeps the Steane code**: it commutes with the code projector. -/
-theorem sTransversal_mul_steaneProj : sTransversal * steaneProj = steaneProj * sTransversal := by
-  have h : steaneEncᴴ * sTransversal = sDagM * steaneEncᴴ := by
-    have h' := congrArg conjTranspose sTransversal_conjTranspose_mul_steaneEnc
-    rwa [conjTranspose_mul, conjTranspose_mul, conjTranspose_conjTranspose,
-      sGateM_conjTranspose] at h'
-  rw [steaneProj_eq]
-  calc sTransversal * (steaneEnc * steaneEncᴴ) = sTransversal * steaneEnc * steaneEncᴴ :=
-        (Matrix.mul_assoc _ _ _).symm
-    _ = steaneEnc * sDagM * steaneEncᴴ := by rw [sTransversal_mul_steaneEnc]
-    _ = steaneEnc * (steaneEncᴴ * sTransversal) := by rw [h, Matrix.mul_assoc]
-    _ = steaneEnc * steaneEncᴴ * sTransversal := (Matrix.mul_assoc _ _ _).symm
-
-/-- ★ **The transversal `S†` keeps the Steane code** too. -/
-theorem sTransversal_conjTranspose_mul_steaneProj :
-    sTransversalᴴ * steaneProj = steaneProj * sTransversalᴴ := by
-  have hP : steaneProjᴴ = steaneProj := isCodeProjector_steaneProj.conjTranspose_eq
-  have h := congrArg conjTranspose sTransversal_mul_steaneProj
-  rw [conjTranspose_mul, conjTranspose_mul, hP] at h
-  exact h.symm
 
 end Steane
 end QEC
