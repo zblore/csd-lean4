@@ -242,6 +242,7 @@ public import CsdLean4.Mathlib.QuantumInfo.CliffordTAngle
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTDensity
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTNet
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTUniversal
+public import CsdLean4.Mathlib.QuantumInfo.CliffordTCount
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTWords
 public import CsdLean4.Mathlib.QuantumInfo.CommutatorDecomposition
 public import CsdLean4.Mathlib.QuantumInfo.Concavity
@@ -15205,4 +15206,150 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #guard_msgs (whitespace := lax) in
 #print axioms LipschitzWith.toFlow_apply
 
+-- CliffordTCount and the counted exact product (BACKLOG #309, 2026-11-06): Clifford+T
+-- synthesis with a gate count
+
+/-- info: 'QuantumInfo.Controlled.prodLe' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.prodLe
+
+/-- info: 'QuantumInfo.Controlled.one_mem_prodLe' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.one_mem_prodLe
+
+/-- info: 'QuantumInfo.Controlled.mem_prodLe_one' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.mem_prodLe_one
+
+/-- info: 'QuantumInfo.Controlled.prodLe_mono' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.prodLe_mono
+
+/-- info: 'QuantumInfo.Controlled.mul_mem_prodLe' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.mul_mem_prodLe
+
+/-- info: 'QuantumInfo.Controlled.list_prod_mem_prodLe' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.list_prod_mem_prodLe
+
+/-- info: 'QuantumInfo.Controlled.prodLe_subset_closure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.prodLe_subset_closure
+
+/-- info: 'QuantumInfo.Controlled.ctrlOf_mem_prodLe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlOf_mem_prodLe
+
+/-- info: 'QuantumInfo.Controlled.ctrlCount' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlCount
+
+/-- info: 'QuantumInfo.Controlled.ctrlSetOf_mem_prodLe_aux' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlSetOf_mem_prodLe_aux
+
+/-- info: 'QuantumInfo.Controlled.ctrlSetOf_mem_prodLe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlSetOf_mem_prodLe
+
+/-- info: 'QuantumInfo.Controlled.ctrlGateOf_mem_prodLe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctrlGateOf_mem_prodLe
+
+/-- info: 'QuantumInfo.Controlled.isMultiCtrlX_mem_prodLe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.isMultiCtrlX_mem_prodLe
+
+/-- info: 'QuantumInfo.Controlled.isMultiCtrlGate_mem_prodLe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.isMultiCtrlGate_mem_prodLe
+
+/-- info: 'QuantumInfo.Controlled.twoLevel_mem_prodLe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.twoLevel_mem_prodLe
+
+/-- info: 'QuantumInfo.Controlled.elemCount' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.elemCount
+
+/-- info: 'QuantumInfo.Controlled.mem_prodLe_elementary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.mem_prodLe_elementary
+
+/-- info: 'QuantumInfo.Controlled.gateOf_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.gateOf_sub
+
+/-- info: 'QuantumInfo.Controlled.gateOfLin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.gateOfLin
+
+/-- info: 'QuantumInfo.Controlled.gateOfLin_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.gateOfLin_apply
+
+/-- info: 'QuantumInfo.Controlled.exists_norm_gateOf_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.exists_norm_gateOf_sub_le
+
+/-- info: 'QuantumInfo.Controlled.norm_mul_sub_mul_le_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.norm_mul_sub_mul_le_add
+
+/-- info: 'QuantumInfo.Controlled.norm_le_one_of_mem_unitaryGroup' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.norm_le_one_of_mem_unitaryGroup
+
+/-- info: 'QuantumInfo.Controlled.norm_expI_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.norm_expI_smul
+
+/-- info: 'QuantumInfo.Controlled.mem_unitaryGroup_of_mem_elementary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.mem_unitaryGroup_of_mem_elementary
+
+/-- info: 'QuantumInfo.Controlled.mem_unitaryGroup_of_mem_cliffordTGates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.mem_unitaryGroup_of_mem_cliffordTGates
+
+/-- info: 'QuantumInfo.Controlled.ctLetterCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctLetterCircuit
+
+/-- info: 'QuantumInfo.Controlled.ctCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.ctCircuit
+
+/-- info: 'QuantumInfo.Controlled.mem_cliffordTGates_of_mem_ctCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.mem_cliffordTGates_of_mem_ctCircuit
+
+/-- info: 'QuantumInfo.Controlled.prod_ctLetterCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.prod_ctLetterCircuit
+
+/-- info: 'QuantumInfo.Controlled.length_ctLetterCircuit_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.length_ctLetterCircuit_le
+
+/-- info: 'QuantumInfo.Controlled.prod_ctCircuit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.prod_ctCircuit
+
+/-- info: 'QuantumInfo.Controlled.length_ctCircuit_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.length_ctCircuit_le
+
+/-- info: 'QuantumInfo.Controlled.exists_circuit_near_elementary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.exists_circuit_near_elementary
+
+/-- info: 'QuantumInfo.Controlled.exists_circuit_near_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.exists_circuit_near_prod
+
+/-- info: 'QuantumInfo.Controlled.exists_cliffordT_circuit_polylog' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.Controlled.exists_cliffordT_circuit_polylog
 end CSD.Tests.AxiomAudit

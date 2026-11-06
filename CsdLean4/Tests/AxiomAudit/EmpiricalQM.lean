@@ -5508,4 +5508,33 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.cnotGate'_mem_realised
 
+-- SteaneMachineDensity (BACKLOG #309, 2026-11-06): the machine's gate count
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_gadget_hGateM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_gadget_hGateM
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_gadget_cnotGate'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_gadget_cnotGate'
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_gadget_tGateM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_gadget_tGateM
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_gadget_of_mem_cliffordTGates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_gadget_of_mem_cliffordTGates
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_gadgets_of_cliffordT' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_gadgets_of_cliffordT
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.isCodeState_dataEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.isCodeState_dataEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_triple_machine_count' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_triple_machine_count
 end CSD.Tests.AxiomAudit

@@ -49,12 +49,18 @@ the identity. The square root `V` comes from `Euler.exists_sqrt`.
 * `ctrlSetOf`, `pairSet_eq_ctrlOf`, `pairSet_eq_ctrlSetOf_fst`, `pairSet_eq_ctrlSetOf_snd`,
   `pairSet_eq_ctrlSetOf_insert`, ★★ `ctrlSetOf_insert`;
 * `elementary`, `xGate_mem_elementary`, `ctrlOf_mem_closure`, ★★ `ctrlSetOf_mem_closure`,
-  ★★ `ctrlGateOf_mem_closure`.
+  ★★ `ctrlGateOf_mem_closure`;
+* `prodLe` (the products of at most `n` factors from a set), `one_mem_prodLe`, `mem_prodLe_one`,
+  `prodLe_mono`, `mul_mem_prodLe`, `list_prod_mem_prodLe`, `prodLe_subset_closure`; `ctrlCount`;
+  ★ `ctrlOf_mem_prodLe`, ★★ `ctrlSetOf_mem_prodLe`, ★★ `ctrlGateOf_mem_prodLe` — the same
+  products with their factor count (BACKLOG #309): six for one control, and `3c + 14` for one
+  control more than a gate costing `c`.
 
 ## Honest scope
 
-⚠️ This is an exact product identity, not a gate count: the recursion is proved, and the number of
-elementary gates it produces is not claimed (that is BACKLOG #74, deliberately not claimed).
+⚠️ This is an exact product identity. The number of elementary gates it produces is counted
+(`ctrlCount`, exponential in the number of controls) but not optimised: the count is the
+recursion's own, a sufficient one for BACKLOG #309, not the best known.
 ⚠️ Nothing here *approximates* a gate; the single-qubit gates in the product are exact. Approximating
 them by Clifford+T words is BACKLOG #81.
 
@@ -626,19 +632,69 @@ theorem singleGate_phase_eq_gateOf (a : Fin m) (α : ℝ) :
   rw [gateOf]
   norm_num
 
-/-- A one-control gate is a product of elementary gates: #84's circuit. -/
-theorem ctrlOf_mem_closure {a j : Fin m} (haj : a ≠ j) {U : Matrix (Fin 2) (Fin 2) ℂ}
+/-! ### Products with a factor count -/
+
+/-- The products of at most `n` factors from `s`. -/
+def prodLe {M : Type*} [Monoid M] (s : Set M) (n : ℕ) : Set M :=
+  {g | ∃ l : List M, l.length ≤ n ∧ (∀ x ∈ l, x ∈ s) ∧ l.prod = g}
+
+section prodLe
+
+variable {M : Type*} [Monoid M] {s : Set M}
+
+theorem one_mem_prodLe (n : ℕ) : (1 : M) ∈ prodLe s n :=
+  ⟨[], Nat.zero_le n, by simp, rfl⟩
+
+theorem mem_prodLe_one {x : M} (hx : x ∈ s) : x ∈ prodLe s 1 :=
+  ⟨[x], le_rfl, by simpa using hx, by simp⟩
+
+theorem prodLe_mono {n k : ℕ} (h : n ≤ k) : prodLe s n ⊆ prodLe s k := by
+  rintro g ⟨l, hl, hs, rfl⟩
+  exact ⟨l, hl.trans h, hs, rfl⟩
+
+theorem mul_mem_prodLe {a b : M} {n k : ℕ} (ha : a ∈ prodLe s n) (hb : b ∈ prodLe s k) :
+    a * b ∈ prodLe s (n + k) := by
+  obtain ⟨l, hl, hs, rfl⟩ := ha
+  obtain ⟨l', hl', hs', rfl⟩ := hb
+  refine ⟨l ++ l', by rw [List.length_append]; omega, fun x hx => ?_, List.prod_append⟩
+  rcases List.mem_append.mp hx with hx | hx
+  · exact hs x hx
+  · exact hs' x hx
+
+theorem list_prod_mem_prodLe {L : List M} {n : ℕ} (h : ∀ x ∈ L, x ∈ prodLe s n) :
+    L.prod ∈ prodLe s (L.length * n) := by
+  induction L with
+  | nil => simpa using one_mem_prodLe (s := s) 0
+  | cons x L ih =>
+    rw [List.prod_cons, List.length_cons, Nat.succ_mul, add_comm]
+    exact mul_mem_prodLe (h x (List.mem_cons_self ..))
+      (ih fun y hy => h y (List.mem_cons_of_mem _ hy))
+
+theorem prodLe_subset_closure (n : ℕ) : prodLe s n ⊆ Submonoid.closure s := by
+  rintro g ⟨l, -, hs, rfl⟩
+  exact Submonoid.list_prod_mem _ fun x hx => Submonoid.subset_closure (hs x hx)
+
+end prodLe
+
+/-- ★ **A one-control gate is a product of six elementary gates**: #84's circuit. -/
+theorem ctrlOf_mem_prodLe {a j : Fin m} (haj : a ≠ j) {U : Matrix (Fin 2) (Fin 2) ℂ}
     (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
-    ctrlOf a j U ∈ Submonoid.closure (elementary m) := by
+    ctrlOf a j U ∈ prodLe (elementary m) 6 := by
   obtain ⟨α, A, B, C, hA, hB, hC, -, heq⟩ := ctrlOf_eq_circuit haj hU
   rw [heq, singleGate_phase_eq_gateOf]
-  refine mul_mem (mul_mem (mul_mem (mul_mem (mul_mem ?_ ?_) ?_) ?_) ?_) ?_
-  · exact Submonoid.subset_closure (gateOf_mem_elementary a (phaseMat_mem_unitaryGroup α))
-  · exact Submonoid.subset_closure (gateOf_mem_elementary j hA)
-  · exact Submonoid.subset_closure (cnotGate'_mem_elementary haj)
-  · exact Submonoid.subset_closure (gateOf_mem_elementary j hB)
-  · exact Submonoid.subset_closure (cnotGate'_mem_elementary haj)
-  · exact Submonoid.subset_closure (gateOf_mem_elementary j hC)
+  exact mul_mem_prodLe (mul_mem_prodLe (mul_mem_prodLe (mul_mem_prodLe (mul_mem_prodLe
+    (mem_prodLe_one (gateOf_mem_elementary a (phaseMat_mem_unitaryGroup α)))
+    (mem_prodLe_one (gateOf_mem_elementary j hA)))
+    (mem_prodLe_one (cnotGate'_mem_elementary haj)))
+    (mem_prodLe_one (gateOf_mem_elementary j hB)))
+    (mem_prodLe_one (cnotGate'_mem_elementary haj)))
+    (mem_prodLe_one (gateOf_mem_elementary j hC))
+
+/-- A one-control gate is a product of elementary gates. -/
+theorem ctrlOf_mem_closure {a j : Fin m} (haj : a ≠ j) {U : Matrix (Fin 2) (Fin 2) ℂ}
+    (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    ctrlOf a j U ∈ Submonoid.closure (elementary m) :=
+  prodLe_subset_closure 6 (ctrlOf_mem_prodLe haj hU)
 
 theorem ctrlSetOf_empty (j : Fin m) (pat : Fin m → Fin 2) (U : Matrix (Fin 2) (Fin 2) ℂ) :
     ctrlSetOf ∅ j pat U = gateOf j U := by
@@ -649,18 +705,26 @@ theorem ctrlSetOf_empty (j : Fin m) (pat : Fin m → Fin 2) (U : Matrix (Fin 2) 
   · rw [ctrlSetOf, gateOf, singleGate, ctrlSet_apply_of_not_agree hag,
       ctrlSet_apply_of_not_agree hag]
 
-/-- The induction behind `ctrlSetOf_mem_closure`, on the number of controls. -/
-theorem ctrlSetOf_mem_closure_aux (n : ℕ) : ∀ (S : Finset (Fin m)) (j : Fin m) (pat : Fin m → Fin 2)
-    (U : Matrix (Fin 2) (Fin 2) ℂ), S.card = n → j ∉ S →
+/-- The number of elementary gates the recursion spends on `n` controls: one gate with none, and
+`3c + 14` with one more — two one-control gates, three gates with one control fewer, and the two
+`X`s that fix the pattern. -/
+def ctrlCount : ℕ → ℕ
+  | 0 => 1
+  | n + 1 => 3 * ctrlCount n + 14
+
+/-- The induction behind `ctrlSetOf_mem_prodLe`, on the number of controls. -/
+theorem ctrlSetOf_mem_prodLe_aux (n : ℕ) : ∀ (S : Finset (Fin m)) (j : Fin m)
+    (pat : Fin m → Fin 2) (U : Matrix (Fin 2) (Fin 2) ℂ), S.card = n → j ∉ S →
     U ∈ Matrix.unitaryGroup (Fin 2) ℂ →
-    ctrlSetOf S j pat U ∈ Submonoid.closure (elementary m) := by
+    ctrlSetOf S j pat U ∈ prodLe (elementary m) (ctrlCount n) := by
   induction n with
   | zero =>
     intro S j pat U hcard _ hU
     rw [Finset.card_eq_zero.mp hcard, ctrlSetOf_empty]
-    exact Submonoid.subset_closure (gateOf_mem_elementary j hU)
+    exact mem_prodLe_one (gateOf_mem_elementary j hU)
   | succ n ih =>
     intro S j pat U hcard hjS hU
+    rw [ctrlCount]
     obtain ⟨u, huS⟩ : S.Nonempty := Finset.card_pos.mp (by omega)
     have hcard' : (S.erase u).card = n := by
       rw [Finset.card_erase_of_mem huS, hcard]
@@ -669,19 +733,19 @@ theorem ctrlSetOf_mem_closure_aux (n : ℕ) : ∀ (S : Finset (Fin m)) (j : Fin 
     have hjS' : j ∉ S.erase u := fun h => hjS (Finset.mem_of_mem_erase h)
     have huj : u ≠ j := fun h => hjS (h ▸ huS)
     have main : ∀ p : Fin m → Fin 2, p u = 1 →
-        ctrlSetOf S j p U ∈ Submonoid.closure (elementary m) := by
+        ctrlSetOf S j p U ∈ prodLe (elementary m) (3 * ctrlCount n + 12) := by
       intro p hpu
       obtain ⟨V, hV, hVV⟩ := exists_sqrt hU
       rw [← Finset.insert_erase huS,
         ctrlSetOf_insert huj huS' hjS' hpu hV hVV]
-      refine mul_mem (mul_mem (mul_mem (mul_mem ?_ ?_) ?_) ?_) ?_
-      · exact ctrlOf_mem_closure huj hV
-      · exact ih (S.erase u) u p xMat hcard' huS' xMat_mem_unitaryGroup
-      · exact ctrlOf_mem_closure huj (Unitary.star_mem hV)
-      · exact ih (S.erase u) u p xMat hcard' huS' xMat_mem_unitaryGroup
-      · exact ih (S.erase u) j p V hcard' hjS' hV
+      exact prodLe_mono (by omega) (mul_mem_prodLe (mul_mem_prodLe (mul_mem_prodLe
+        (mul_mem_prodLe (ctrlOf_mem_prodLe huj hV)
+          (ih (S.erase u) u p xMat hcard' huS' xMat_mem_unitaryGroup))
+        (ctrlOf_mem_prodLe huj (Unitary.star_mem hV)))
+        (ih (S.erase u) u p xMat hcard' huS' xMat_mem_unitaryGroup))
+        (ih (S.erase u) j p V hcard' hjS' hV))
     by_cases hpu : pat u = 1
-    · exact main pat hpu
+    · exact prodLe_mono (by omega) (main pat hpu)
     · have hpu0 : pat u = 0 := by
         rcases (by decide : ∀ x : Fin 2, x = 0 ∨ x = 1) (pat u) with h | h
         · exact h
@@ -693,23 +757,40 @@ theorem ctrlSetOf_mem_closure_aux (n : ℕ) : ∀ (S : Finset (Fin m)) (j : Fin 
           hupd, show flipBit 1 = 0 from rfl, Function.update_idem, ← hpu0,
           Function.update_eq_self]
       rw [key]
-      exact mul_mem (mul_mem (Submonoid.subset_closure (xGate_mem_elementary u))
-        (main _ hupd)) (Submonoid.subset_closure (xGate_mem_elementary u))
+      exact prodLe_mono (by omega) (mul_mem_prodLe (mul_mem_prodLe
+        (mem_prodLe_one (xGate_mem_elementary u)) (main _ hupd))
+        (mem_prodLe_one (xGate_mem_elementary u)))
+
+/-- ★★ **A gate with `k` controls, on any control pattern, is a product of at most
+`ctrlCount k` `CNOT`s and single-qubit gates.** -/
+theorem ctrlSetOf_mem_prodLe (S : Finset (Fin m)) (j : Fin m) (pat : Fin m → Fin 2)
+    {U : Matrix (Fin 2) (Fin 2) ℂ} (hjS : j ∉ S) (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    ctrlSetOf S j pat U ∈ prodLe (elementary m) (ctrlCount S.card) :=
+  ctrlSetOf_mem_prodLe_aux S.card S j pat U rfl hjS hU
 
 /-- ★★ **A gate with any number of controls, on any control pattern, is a product of `CNOT`s and
 single-qubit gates.** -/
 theorem ctrlSetOf_mem_closure (S : Finset (Fin m)) (j : Fin m) (pat : Fin m → Fin 2)
     {U : Matrix (Fin 2) (Fin 2) ℂ} (hjS : j ∉ S) (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
     ctrlSetOf S j pat U ∈ Submonoid.closure (elementary m) :=
-  ctrlSetOf_mem_closure_aux S.card S j pat U rfl hjS hU
+  prodLe_subset_closure _ (ctrlSetOf_mem_prodLe S j pat hjS hU)
 
-/-- ★★ **#71's multiply-controlled gate is a product of `CNOT`s and single-qubit gates** — the form
-#73 consumes, since the two-level theory of #70 and #71 produces exactly these. -/
+/-- ★★ **#71's multiply-controlled gate is a product of at most `ctrlCount (m − 1)` `CNOT`s and
+single-qubit gates** — the form #73 consumes, since the two-level theory of #70 and #71 produces
+exactly these. -/
+theorem ctrlGateOf_mem_prodLe (j : Fin m) (pat : Fin m → Fin 2)
+    {U : Matrix (Fin 2) (Fin 2) ℂ} (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    ctrlGate j pat (U 0 0) (U 0 1) (U 1 0) (U 1 1)
+      ∈ prodLe (elementary m) (ctrlCount (m - 1)) := by
+  rw [← ctrlSet_erase_eq_ctrlGate]
+  have h := ctrlSetOf_mem_prodLe (Finset.univ.erase j) j pat
+    (Finset.notMem_erase j Finset.univ) hU
+  rwa [Finset.card_erase_of_mem (Finset.mem_univ j), Finset.card_univ, Fintype.card_fin] at h
+
 theorem ctrlGateOf_mem_closure (j : Fin m) (pat : Fin m → Fin 2)
     {U : Matrix (Fin 2) (Fin 2) ℂ} (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
-    ctrlGate j pat (U 0 0) (U 0 1) (U 1 0) (U 1 1) ∈ Submonoid.closure (elementary m) := by
-  rw [← ctrlSet_erase_eq_ctrlGate]
-  exact ctrlSetOf_mem_closure (Finset.univ.erase j) j pat (Finset.notMem_erase j Finset.univ) hU
+    ctrlGate j pat (U 0 0) (U 0 1) (U 1 0) (U 1 1) ∈ Submonoid.closure (elementary m) :=
+  prodLe_subset_closure _ (ctrlGateOf_mem_prodLe j pat hU)
 
 end Controlled
 

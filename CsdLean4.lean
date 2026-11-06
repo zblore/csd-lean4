@@ -99,6 +99,7 @@ public import CsdLean4.Mathlib.QuantumInfo.SolovayKitaevStep
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTWords
 public import CsdLean4.Mathlib.QuantumInfo.SolovayKitaevCount
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTUniversal
+public import CsdLean4.Mathlib.QuantumInfo.CliffordTCount
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Code
 public import CsdLean4.Mathlib.QuantumInfo.ReedMuller15Errors

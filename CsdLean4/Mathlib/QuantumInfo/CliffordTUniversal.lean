@@ -44,7 +44,9 @@ factors' phases, without any bookkeeping over lists.
 * ★ `ctrlSetOf_eq_of_block`, ★ `block_mem_unitaryGroup_of_ctrlSetOf`,
   `block_mem_unitaryGroup_of_ctrlGate`;
 * `isMultiCtrlX_mem_closure`, `isMultiCtrlGate_mem_closure`, ★ `twoLevel_mem_closure`,
-  ★★ `mem_closure_elementary`;
+  ★★ `mem_closure_elementary`; with their factor counts (BACKLOG #309) `isMultiCtrlX_mem_prodLe`,
+  `isMultiCtrlGate_mem_prodLe`, ★ `twoLevel_mem_prodLe`, `elemCount`, ★★ `mem_prodLe_elementary`
+  (**at most `elemCount m` factors**; `306` on two qubits);
 * `gateOf_eq_ctrlSetOf`, `gateOf_apply_of_agree`, `gateOf_apply_of_not_agree`, `gateOf_one`,
   `gateOf_mul`, `gateOf_add`, `gateOf_smul`, `gateOfHom`, `continuous_gateOf`;
 * `cliffordTGates`, `cliffordTm`, `cliffordTmLim`, `cliffordTm_le_lim`, `isClosed_cliffordTmLim`,
@@ -54,10 +56,11 @@ factors' phases, without any bookkeeping over lists.
 
 ## Honest scope
 
-⚠️ Density, not exactness, and no gate counts. The statement is membership in a *topological
-closure*: for every unitary and every accuracy there is a Clifford+T circuit that close, which is
-what gate synthesis needs, and all that is true of a countable gate set. How the circuit's length
-grows as the accuracy tightens is Solovay–Kitaev, BACKLOG #74, deliberately **not claimed**.
+⚠️ Density, not exactness. The statement is membership in a *topological closure*: for every
+unitary and every accuracy there is a Clifford+T circuit that close, which is what gate synthesis
+needs, and all that is true of a countable gate set. How the circuit's length grows as the accuracy
+tightens is `CliffordTCount.lean`'s (#309, from Solovay–Kitaev #116), not this file's; the exact
+product's factor count `elemCount m` is recorded here for it.
 ⚠️ `m ≥ 1`. The `m = 0` case is the scalars and carries no gates.
 ⚠️ The single-qubit factors of the exact product are genuine `U(2)` elements; it is only after the
 approximation step that everything is Clifford+T. The two statements are kept separate on purpose.
@@ -146,48 +149,83 @@ theorem block_mem_unitaryGroup_of_ctrlGate {j : Fin m} {pat : Fin m → Fin 2} {
 
 /-! ### Every unitary is an exact product of `CNOT`s and single-qubit gates -/
 
-theorem isMultiCtrlX_mem_closure {X : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ}
-    (hX : IsMultiCtrlX X) : X ∈ Submonoid.closure (elementary m) := by
+theorem isMultiCtrlX_mem_prodLe {X : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ}
+    (hX : IsMultiCtrlX X) : X ∈ prodLe (elementary m) (ctrlCount (m - 1)) := by
   obtain ⟨j, pat, rfl⟩ := hX
-  have h := ctrlGateOf_mem_closure j pat (U := xMat) xMat_mem_unitaryGroup
+  have h := ctrlGateOf_mem_prodLe j pat (U := xMat) xMat_mem_unitaryGroup
   rw [show xMat 0 0 = 0 from by norm_num [xMat], show xMat 0 1 = 1 from by norm_num [xMat],
     show xMat 1 0 = 1 from by norm_num [xMat], show xMat 1 1 = 0 from by norm_num [xMat]] at h
   exact h
 
-theorem isMultiCtrlGate_mem_closure {W : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ}
+theorem isMultiCtrlX_mem_closure {X : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ}
+    (hX : IsMultiCtrlX X) : X ∈ Submonoid.closure (elementary m) :=
+  prodLe_subset_closure _ (isMultiCtrlX_mem_prodLe hX)
+
+theorem isMultiCtrlGate_mem_prodLe {W : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ}
     (hW : IsMultiCtrlGate W) (hWu : W ∈ Matrix.unitaryGroup (Fin m → Fin 2) ℂ) :
-    W ∈ Submonoid.closure (elementary m) := by
+    W ∈ prodLe (elementary m) (ctrlCount (m - 1)) := by
   obtain ⟨j, pat, a, b, c, d, rfl⟩ := hW
   have hblock := block_mem_unitaryGroup_of_ctrlGate hWu
-  have h := ctrlGateOf_mem_closure j pat (U := !![a, b; c, d]) hblock
+  have h := ctrlGateOf_mem_prodLe j pat (U := !![a, b; c, d]) hblock
   norm_num at h
   exact h
 
-/-- ★ A two-level unitary is a product of `CNOT`s and single-qubit gates: #71's Gray-code sandwich
-fed into #85. -/
+theorem isMultiCtrlGate_mem_closure {W : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ}
+    (hW : IsMultiCtrlGate W) (hWu : W ∈ Matrix.unitaryGroup (Fin m → Fin 2) ℂ) :
+    W ∈ Submonoid.closure (elementary m) :=
+  prodLe_subset_closure _ (isMultiCtrlGate_mem_prodLe hW hWu)
+
+/-- ★ **A two-level unitary is a product of at most `(2m − 1) · ctrlCount (m − 1)` `CNOT`s and
+single-qubit gates**: #71's Gray-code sandwich fed into #85. -/
+theorem twoLevel_mem_prodLe {V : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ}
+    (hV : IsTwoLevel V) (hVu : V ∈ Matrix.unitaryGroup (Fin m → Fin 2) ℂ) :
+    V ∈ prodLe (elementary m) ((2 * m - 1) * ctrlCount (m - 1)) := by
+  obtain ⟨u, v, huv, hid⟩ := hV
+  obtain ⟨L, W, hL, hW, hVeq, hLm, hWu⟩ := exists_multiCtrl_sandwich huv hid
+  rw [hVeq]
+  have h1 := list_prod_mem_prodLe (s := elementary m) (L := L)
+    fun X hX => isMultiCtrlX_mem_prodLe (hL X hX).1
+  have h2 := list_prod_mem_prodLe (s := elementary m) (L := L.reverse)
+    fun X hX => isMultiCtrlX_mem_prodLe (hL X (List.mem_reverse.mp hX)).1
+  rw [List.length_reverse] at h2
+  refine prodLe_mono ?_ (mul_mem_prodLe (mul_mem_prodLe h1 (isMultiCtrlGate_mem_prodLe hW
+    (hWu hVu))) h2)
+  have hsum : L.length * ctrlCount (m - 1) + ctrlCount (m - 1) + L.length * ctrlCount (m - 1)
+      = (2 * L.length + 1) * ctrlCount (m - 1) := by ring
+  rw [hsum]
+  exact Nat.mul_le_mul_right _ (by omega)
+
+/-- A two-level unitary is a product of `CNOT`s and single-qubit gates. -/
 theorem twoLevel_mem_closure {V : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ}
     (hV : IsTwoLevel V) (hVu : V ∈ Matrix.unitaryGroup (Fin m → Fin 2) ℂ) :
-    V ∈ Submonoid.closure (elementary m) := by
-  obtain ⟨u, v, huv, hid⟩ := hV
-  obtain ⟨L, W, hL, hW, hVeq, hWu⟩ := exists_multiCtrl_sandwich huv hid
-  rw [hVeq]
-  refine mul_mem (mul_mem ?_ (isMultiCtrlGate_mem_closure hW (hWu hVu))) ?_
-  · exact Submonoid.list_prod_mem _ fun X hX => isMultiCtrlX_mem_closure (hL X hX).1
-  · refine Submonoid.list_prod_mem _ fun X hX => ?_
-    exact isMultiCtrlX_mem_closure (hL X (List.mem_reverse.mp hX)).1
+    V ∈ Submonoid.closure (elementary m) :=
+  prodLe_subset_closure _ (twoLevel_mem_prodLe hV hVu)
 
-/-- ★★ **Every unitary on `m` qubits is an exact product of `CNOT`s and single-qubit gates** —
-the two-level decomposition of #70, the Gray-code sandwich of #71 and the control-count recursion
-of #85, composed. -/
-theorem mem_closure_elementary (hm : 0 < m) {U : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ}
+/-- The number of elementary gates the exact product spends on `m` qubits: `2ᵐ(2ᵐ − 1)/2`
+two-level factors (#82), each a Gray-code sandwich of at most `2m − 1` multiply-controlled gates,
+each of those `ctrlCount (m − 1)` gates. -/
+def elemCount (m : ℕ) : ℕ := 2 ^ m * (2 ^ m - 1) / 2 * ((2 * m - 1) * ctrlCount (m - 1))
+
+/-- ★★ **Every unitary on `m` qubits is an exact product of at most `elemCount m` `CNOT`s and
+single-qubit gates** — the two-level decomposition of #70 with #82's count, the Gray-code sandwich
+of #71 and the control-count recursion of #85, composed. -/
+theorem mem_prodLe_elementary (hm : 0 < m) {U : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ}
     (hU : U ∈ Matrix.unitaryGroup (Fin m → Fin 2) ℂ) :
-    U ∈ Submonoid.closure (elementary m) := by
+    U ∈ prodLe (elementary m) (elemCount m) := by
   have hcard : 1 < Fintype.card (Fin m → Fin 2) := by
     rw [Fintype.card_fun, Fintype.card_fin, Fintype.card_fin]
     exact Nat.one_lt_two_pow_iff.mpr (Nat.pos_iff_ne_zero.mp hm)
-  obtain ⟨L, hL, hLprod⟩ := exists_twoLevel_prod hcard U hU
+  obtain ⟨L, hL, hLprod, hlen⟩ := exists_twoLevel_prod_length hcard U hU
   rw [← hLprod]
-  exact Submonoid.list_prod_mem _ fun V hV => twoLevel_mem_closure (hL V hV).1 (hL V hV).2
+  rw [Fintype.card_fun, Fintype.card_fin, Fintype.card_fin] at hlen
+  exact prodLe_mono (Nat.mul_le_mul_right _ hlen)
+    (list_prod_mem_prodLe fun V hV => twoLevel_mem_prodLe (hL V hV).1 (hL V hV).2)
+
+/-- ★★ **Every unitary on `m` qubits is an exact product of `CNOT`s and single-qubit gates.** -/
+theorem mem_closure_elementary (hm : 0 < m) {U : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ}
+    (hU : U ∈ Matrix.unitaryGroup (Fin m → Fin 2) ℂ) :
+    U ∈ Submonoid.closure (elementary m) :=
+  prodLe_subset_closure _ (mem_prodLe_elementary hm hU)
 
 /-! ### Lifting a single-qubit gate to `m` qubits -/
 

@@ -6,11 +6,12 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Empirical.QM.QEC.SteaneTripleMachine
+public import CsdLean4.Mathlib.QuantumInfo.CliffordTCount
 
 /-!
 # The three-block Steane machine is universal on its two logical qubits
 
-**Category:** 3-Local (Empirical, QM twin). BACKLOG #308.
+**Category:** 3-Local (Empirical, QM twin). BACKLOG #308; the gate count #309.
 
 `SteaneTripleMachine.lean`'s gadget set holds Clifford+T on two logical qubits, and
 `Mathlib/QuantumInfo/CliffordTUniversal.lean` proves Clifford+T circuits dense in `U(2ᵐ)` modulo
@@ -29,32 +30,43 @@ unitary is a limit of them up to a phase.
 * `realised` — **the logical gates the machine realises exactly**: the two-qubit unitaries `W` for
   which some list of three-block gadgets, run ideally on every encoded data state, applies `W` to
   the data and leaves the ancilla in `|0⟩` — a submonoid, since circuits compose;
-* ★ `gateOf_hGateM_mem_realised`, ★ `cnotGate'_mem_realised`, ★ `gateOf_tGateM_mem_realised` (the
-  injection through ancilla block `2`, on either data block); ★★ `cliffordTm_le_realised` —
+* ★ `exists_gadget_hGateM`, ★ `exists_gadget_cnotGate'`, ★ `exists_gadget_tGateM` — each
+  Clifford+T gate is **one gadget** (the injection through ancilla block `2`, on either data
+  block); `gateOf_hGateM_mem_realised`, `cnotGate'_mem_realised`, `gateOf_tGateM_mem_realised`;
+  ★★ `cliffordTm_le_realised` —
   **every Clifford+T circuit on two qubits is realised by the machine, exactly**;
 * ★★★ `steane_triple_machine_universal` — **every two-qubit unitary is, up to a global phase, a
   limit of logical gates the machine realises**; `tMachineIdeal_get` — a realising list is a
-  circuit of `steane_triple_machine`, whose fault-tolerance theorem covers it.
+  circuit of `steane_triple_machine`, whose fault-tolerance theorem covers it;
+* `exists_gadget_of_mem_cliffordTGates`, ★ `exists_gadgets_of_cliffordT` (**a Clifford+T circuit
+  of `N` gates is `N` gadgets**), `isCodeState_dataEnc`; ★★★ `steane_triple_machine_count` — **the
+  gate count**: for every two-qubit unitary and every `ε ≤ e`, at most `K · log(1/ε)^c` gadgets
+  realise exactly a logical gate within `ε` of it up to a phase, and run as a circuit of the
+  machine they give that gate's output with probability at least `1 − 21 N p²`
+  (`CliffordTCount.lean`'s `exists_cliffordT_circuit_polylog`, #309).
 
 ## Honest scope
 
 ⚠️ The realisation is of the **ideal** runs on encoded data states; the faulty runs are covered by
 `steane_triple_machine` (level one, an ideal recovery, unitary faults, `1 − 21 N p²` per circuit of
-`N` gadgets). The density is topological (a closure in the matrix topology) with no rate: the
-Solovay–Kitaev counts of `SolovayKitaevCount.lean` are not composed here, so no bound on `N` for a
-given accuracy is stated.
+`N` gadgets). `steane_triple_machine_universal` is topological; the rate is
+`steane_triple_machine_count`'s, whose `K` and `e` are existential (inherited from #116's net and
+an uncomputed lift constant) and whose `c = skExponent` is #116's three-letter exponent. Its two
+errors are kept apart: the logical gate `W` is within `ε` of the target in the operator norm, and
+the run gives `W`'s output exactly with probability at least `1 − 21 N p²`; no state-level bound
+combining them is stated.
 
 References: A. Kitaev, *Russ. Math. Surv.* **52**, 1191 (1997); M. Nielsen, I. Chuang, *Quantum
-Computation and Quantum Information* §4.5 and §10.6; `specs/BACKLOG.md` #308;
+Computation and Quantum Information* §4.5 and §10.6; `specs/BACKLOG.md` #308, #309;
 `Empirical/QM/QEC/SteaneTripleMachine.lean`, `Mathlib/QuantumInfo/CliffordTUniversal.lean`
 (`exists_phase_mem_cliffordTmLim`); `specs/future-work.md`.
 -/
 
 @[expose] public section
 
-open Matrix QuantumInfo
+open Matrix QuantumInfo MeasureTheory
 open Controlled QuantumInfo.Controlled
-open scoped Kronecker
+open scoped ENNReal Kronecker
 
 noncomputable section
 
@@ -226,9 +238,10 @@ theorem exists_had_mul_steaneEnc :
   rw [mul_comm]
   exact h00
 
-/-- ★ **`H̄` on either data qubit is realised.** -/
-theorem gateOf_hGateM_mem_realised (b : Fin 2) :
-    gateOf b CliffordT.hGateM ∈ realised := by
+/-- ★ **`H̄` on either data qubit is realised, by one gadget.** -/
+theorem exists_gadget_hGateM (b : Fin 2) :
+    ∃ T : TGadget, ∀ X, T.ideal (dataEnc X)
+      = dataEnc (gateOf b CliffordT.hGateM * X * (gateOf b CliffordT.hGateM)ᴴ) := by
   obtain ⟨c, hc, hH⟩ := exists_had_mul_steaneEnc
   set Gl : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ :=
     blockKron fun b' => if b' = b then c • Gadget.had.gate else 1
@@ -245,27 +258,32 @@ theorem gateOf_hGateM_mem_realised (b : Fin 2) :
     ext z w
     simp only [Gl, blockKron_apply, Fin.prod_univ_two, Matrix.smul_apply, smul_eq_mul]
     fin_cases b <;> simp [Gadget.gate] <;> ring
-  refine mem_realised_of_gadget (TGadget.mk 1 (UGadget.clifford (PairGadget.single b Gadget.had)))
-    fun X => ?_
+  refine ⟨TGadget.mk 1 (UGadget.clifford (PairGadget.single b Gadget.had)), fun X => ?_⟩
   rw [dataEnc, dataEnc, TGadget.ideal_clifford_tripleEnc 1 hG, lift3_conj_dataEmb, hGl,
     smul_conj_eq hc]
 
-/-- ★ **`CNOT̄` in both directions between the data qubits is realised.** -/
-theorem cnotGate'_mem_realised {a b : Fin 2} (hab : a ≠ b) : cnotGate' a b ∈ realised := by
+theorem gateOf_hGateM_mem_realised (b : Fin 2) : gateOf b CliffordT.hGateM ∈ realised :=
+  (exists_gadget_hGateM b).elim fun T hT => mem_realised_of_gadget T hT
+
+/-- ★ **`CNOT̄` in both directions between the data qubits is realised, by one gadget.** -/
+theorem exists_gadget_cnotGate' {a b : Fin 2} (hab : a ≠ b) :
+    ∃ T : TGadget, ∀ X, T.ideal (dataEnc X) = dataEnc (cnotGate' a b * X * (cnotGate' a b)ᴴ) := by
   have hG : PairGadget.cnot.op * pairEnc = pairEnc * cnotL := cnotT_mul_pairEnc
   fin_cases a <;> fin_cases b
   · exact absurd rfl hab
-  · refine mem_realised_of_gadget (TGadget.mk 1 (UGadget.clifford PairGadget.cnot)) fun X => ?_
+  · refine ⟨TGadget.mk 1 (UGadget.clifford PairGadget.cnot), fun X => ?_⟩
     rw [dataEnc, dataEnc, TGadget.ideal_clifford_tripleEnc 1 hG, lift3_conj_dataEmb,
       cnotL_eq_cnotGate']
     rfl
-  · refine mem_realised_of_gadget (TGadget.mk (Equiv.swap 0 1) (UGadget.clifford PairGadget.cnot))
-      fun X => ?_
+  · refine ⟨TGadget.mk (Equiv.swap 0 1) (UGadget.clifford PairGadget.cnot), fun X => ?_⟩
     rw [dataEnc, dataEnc, TGadget.ideal_clifford_tripleEnc _ hG, lift3_swap01,
       show cnotL.submatrix (fun c : Fin 2 → Fin 2 => ![c 1, c 0]) (fun c => ![c 1, c 0])
         = cnotGate' (1 : Fin 2) 0 from cnotL_submatrix_swapQ, lift3_conj_dataEmb]
     rfl
   · exact absurd rfl hab
+
+theorem cnotGate'_mem_realised {a b : Fin 2} (hab : a ≠ b) : cnotGate' a b ∈ realised :=
+  (exists_gadget_cnotGate' hab).elim fun T hT => mem_realised_of_gadget T hT
 
 theorem ket0_conj_ket0 (j : Fin 2) :
     vecMulVec ket0 (Pi.single j 1) * vecMulVec ket0 ket0 * (vecMulVec ket0 (Pi.single j 1))ᴴ
@@ -285,13 +303,14 @@ theorem sum_lift3_injIdealKraus_dataEmb {σ : Equiv.Perm (Fin 3)}
   rw [Fin.sum_univ_two]
   simp only [ite_true, one_ne_zero, ite_false, lift3_zero_right, add_zero]
 
-/-- ★ **`T̄` on either data qubit is realised**, by injection through the ancilla block `2`. -/
-theorem gateOf_tGateM_mem_realised (d : Fin 2) :
-    gateOf d CliffordT.tGateM ∈ realised := by
+/-- ★ **`T̄` on either data qubit is realised**, by one injection through the ancilla block `2`. -/
+theorem exists_gadget_tGateM (d : Fin 2) :
+    ∃ T : TGadget, ∀ X, T.ideal (dataEnc X)
+      = dataEnc (gateOf d CliffordT.tGateM * X * (gateOf d CliffordT.tGateM)ᴴ) := by
   have hT : CliffordT.tGateM = Steane.tGateM := rfl
   fin_cases d
   · -- data block 0 with ancilla block 2: `σ = (1 2)`
-    refine mem_realised_of_gadget (TGadget.mk (Equiv.swap 1 2) UGadget.tGate) fun X => ?_
+    refine ⟨TGadget.mk (Equiv.swap 1 2) UGadget.tGate, fun X => ?_⟩
     have hσ : ∀ j : Fin 2, lift3 (Equiv.swap 1 2) (injIdealKraus j) 1
         = lift3 1 (blockKron ![Steane.tGateM, 1]) (vecMulVec ket0 (Pi.single j 1)) := by
       intro j
@@ -303,8 +322,7 @@ theorem gateOf_tGateM_mem_realised (d : Fin 2) :
       sum_lift3_injIdealKraus_dataEmb hσ, blockKron_two_eq_gateOf_zero, hT]
     rfl
   · -- data block 1 with ancilla block 2: `σ = (0 1)(1 2)`
-    refine mem_realised_of_gadget (TGadget.mk (Equiv.swap 0 1 * Equiv.swap 1 2) UGadget.tGate)
-      fun X => ?_
+    refine ⟨TGadget.mk (Equiv.swap 0 1 * Equiv.swap 1 2) UGadget.tGate, fun X => ?_⟩
     have hσ : ∀ j : Fin 2, lift3 (Equiv.swap 0 1 * Equiv.swap 1 2) (injIdealKraus j) 1
         = lift3 1 (blockKron ![1, Steane.tGateM]) (vecMulVec ket0 (Pi.single j 1)) := by
       intro j
@@ -315,6 +333,9 @@ theorem gateOf_tGateM_mem_realised (d : Fin 2) :
     rw [dataEnc, dataEnc, dataEmb, ← dataEmb, TGadget.ideal_tGate_tripleEnc,
       sum_lift3_injIdealKraus_dataEmb hσ, blockKron_two_eq_gateOf_one, hT]
     rfl
+
+theorem gateOf_tGateM_mem_realised (d : Fin 2) : gateOf d CliffordT.tGateM ∈ realised :=
+  (exists_gadget_tGateM d).elim fun T hT => mem_realised_of_gadget T hT
 
 /-- ★★ **Every Clifford+T circuit on two qubits is realised by the machine, exactly.** -/
 theorem cliffordTm_le_realised : cliffordTm 2 ≤ realised := by
@@ -341,6 +362,88 @@ theorem tMachineIdeal_get (l : List TGadget) (X : Matrix TripleReg TripleReg ℂ
   rw [tMachineIdeal,
     show (fun j : Fin l.length => (l.get j).ideal) = TGadget.ideal ∘ l.get from rfl,
     ← List.map_ofFn, List.ofFn_get]
+
+/-! ### The machine's gate count -/
+
+/-- **Every Clifford+T gate is one gadget.** -/
+theorem exists_gadget_of_mem_cliffordTGates {g : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ}
+    (hg : g ∈ cliffordTGates 2) :
+    ∃ T : TGadget, ∀ X, T.ideal (dataEnc X) = dataEnc (g * X * gᴴ) := by
+  rcases hg with ⟨j, rfl⟩ | ⟨j, rfl⟩ | ⟨a, b, hab, rfl⟩
+  · exact exists_gadget_hGateM j
+  · exact exists_gadget_tGateM j
+  · exact exists_gadget_cnotGate' hab
+
+/-- ★ **A Clifford+T circuit of `N` gates is a list of `N` gadgets**, realising it exactly on every
+encoded data state. -/
+theorem exists_gadgets_of_cliffordT (l : List (Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ))
+    (hl : ∀ g ∈ l, g ∈ cliffordTGates 2) :
+    ∃ gs : List TGadget, gs.length = l.length ∧
+      ∀ X, runMaps (gs.map TGadget.ideal) (dataEnc X) = dataEnc (l.prod * X * (l.prod)ᴴ) := by
+  induction l with
+  | nil => exact ⟨[], rfl, fun X => by simp [runMaps]⟩
+  | cons g l ih =>
+    obtain ⟨T, hT⟩ := exists_gadget_of_mem_cliffordTGates (hl g (List.mem_cons_self ..))
+    obtain ⟨gs, hlen, hgs⟩ := ih fun x hx => hl x (List.mem_cons_of_mem _ hx)
+    refine ⟨gs ++ [T], by simp [hlen], fun X => ?_⟩
+    have h1 : ∀ Y, runMaps ([T].map TGadget.ideal) Y = T.ideal Y := fun Y => rfl
+    rw [List.map_append, runMaps, List.foldl_append, ← runMaps, ← runMaps, hgs, h1, hT,
+      List.prod_cons, conjTranspose_mul]
+    simp only [Matrix.mul_assoc]
+
+/-- An encoded data state is a code state. -/
+theorem isCodeState_dataEnc (X : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ) :
+    IsCodeState tripleProj (dataEnc X) := by
+  show dataEnc X = tripleProj * dataEnc X * tripleProj
+  rw [tripleProj_eq, dataEnc]
+  symm
+  calc tripleEnc * tripleEncᴴ * (tripleEnc * dataEmb X * tripleEncᴴ) * (tripleEnc * tripleEncᴴ)
+      = tripleEnc * (tripleEncᴴ * tripleEnc) * dataEmb X * (tripleEncᴴ * tripleEnc)
+          * tripleEncᴴ := by simp only [Matrix.mul_assoc]
+    _ = _ := by rw [tripleEnc_conjTranspose_mul, Matrix.mul_one, Matrix.mul_one]
+
+open scoped Matrix.Norms.L2Operator in
+/-- ★★★ **The machine's gate count.** There are a recovery `R` and constants `K`, `e` such that for
+every two-qubit unitary `V` and every accuracy `ε ≤ e` some list of at most `K · log(1/ε)^c` gadgets
+(`c = skExponent ∈ (3, 4)`) realises, exactly on every encoded data state, a logical gate `W` within
+`ε` of `V` up to a global phase (operator norm); and that list, run as a circuit of
+`steane_triple_machine` with any unitary faults, gives exactly `W`'s output whenever no gadget is
+bad, so with probability at least `1 − 21 N p²`, `N ≤ K · log(1/ε)^c`. -/
+theorem steane_triple_machine_count :
+    ∃ R : Channel TripleReg TripleReg (Option (Fin 3 → SingleErr)), ∃ K e : ℝ, 0 < K ∧ 0 < e ∧
+      ∀ ε : ℝ, 0 < ε → ε ≤ e → ∀ V ∈ Matrix.unitaryGroup (Fin 2 → Fin 2) ℂ,
+        ∃ (φ : ℝ) (gs : List TGadget) (W : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ),
+          ‖Euler.expI φ • V - W‖ ≤ ε ∧
+          (gs.length : ℝ) ≤ K * (Real.log ε⁻¹) ^ SU2.skExponent ∧
+          ∀ (Uf : Fin gs.length → Fin 7 → Fin 2 → Matrix (Fin 2) (Fin 2) ℂ)
+            (Vf Wf Yf : Fin gs.length → Fin 7 → Matrix (Fin 2) (Fin 2) ℂ),
+            (∀ j q b, Uf j q b ∈ Matrix.unitaryGroup (Fin 2) ℂ) →
+            (∀ j q, Vf j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) →
+            (∀ j q, Wf j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) →
+            (∀ j q, Yf j q ∈ Matrix.unitaryGroup (Fin 2) ℂ) →
+            ∀ X : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ,
+              (∀ ω : CircuitPat gs.length 7 1, (∀ j, isBad 7 1 (ω j) = false) →
+                  correctedRun (tMachineCircuit R (fun j => gs.get j) Uf Vf Wf Yf ω) (dataEnc X)
+                    = dataEnc (W * X * Wᴴ))
+              ∧ ∀ (ν : Measure Bool) [IsProbabilityMeasure ν] {p : ℝ}, 0 ≤ p →
+                  ν {c | c = true} ≤ ENNReal.ofReal p →
+                  1 - (gs.length : ℝ≥0∞) * ENNReal.ofReal (codeCapacityBound 21 p 1)
+                    ≤ QuantumInfo.circuitMeasure gs.length 7 ν 1
+                        {ω | correctedRun (tMachineCircuit R (fun j => gs.get j) Uf Vf Wf Yf ω)
+                          (dataEnc X) = dataEnc (W * X * Wᴴ)} := by
+  obtain ⟨R, hR⟩ := steane_triple_machine
+  obtain ⟨K, e, hK, he, hcount⟩ := exists_cliffordT_circuit_polylog (m := 2) (by norm_num)
+  refine ⟨R, K, e, hK, he, fun ε hε hεe V hV => ?_⟩
+  obtain ⟨φ, l, hl, hlen, hnorm⟩ := hcount ε hε hεe V hV
+  obtain ⟨gs, hgs_len, hgs⟩ := exists_gadgets_of_cliffordT l hl
+  refine ⟨φ, gs, l.prod, hnorm, by rw [hgs_len]; exact hlen,
+    fun Uf Vf Wf Yf hU hV' hW hY X => ?_⟩
+  have hideal : tMachineIdeal (fun j : Fin gs.length => gs.get j) (dataEnc X)
+      = dataEnc (l.prod * X * (l.prod)ᴴ) := by
+    rw [tMachineIdeal_get, hgs X]
+  rw [← hideal]
+  exact hR gs.length (fun j => gs.get j) Uf Vf Wf Yf hU hV' hW hY (dataEnc X)
+    (isCodeState_dataEnc X)
 
 end Steane
 end QEC

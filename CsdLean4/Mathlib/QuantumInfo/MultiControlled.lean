@@ -40,11 +40,11 @@ differing set shrinks by one.
 
 ## Honest scope
 
-⚠️ Existence and structure, no gate counts: the Gray walk here flips the differing bits in the
-order the recursion picks them, and `L.length` is the Hamming distance minus one, but no optimality
-or circuit-size claim is made (the two-level count of #70 is #82, landed 2026-09-28 as
-`exists_twoLevel_prod_length`, and says nothing about this file's Gray walk; efficiency overall is
-#74, kept not claimed). Decomposing a multiply-controlled gate into `CNOT`s and single-qubit gates is #72.
+⚠️ Existence and structure, and one count: the Gray walk here flips the differing bits in the
+order the recursion picks them, so `L.length` is the Hamming distance minus one, and
+`exists_multiCtrl_sandwich` records the bound `L.length < m` that BACKLOG #309's gate count
+consumes. No optimality claim is made (the two-level count of #70 is #82,
+`exists_twoLevel_prod_length`). Decomposing a multiply-controlled gate into `CNOT`s and single-qubit gates is #72.
 
 References: M. A. Nielsen, I. L. Chuang, *Quantum Computation and Quantum Information* §4.5.2;
 `specs/magic-plan.md`; `specs/BACKLOG.md` #71; `specs/future-work.md`.
@@ -333,7 +333,7 @@ theorem exists_multiCtrl_sandwich_aux (N : ℕ) : ∀ (u v : Fin m → Fin 2)
     ∃ (L : List (Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ))
       (W : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ),
       (∀ X ∈ L, IsMultiCtrlX X ∧ X * X = 1) ∧ IsMultiCtrlGate W ∧
-        V = L.prod * W * L.reverse.prod := by
+        V = L.prod * W * L.reverse.prod ∧ L.length < N := by
   induction N with
   | zero =>
     intro u v V hcard huv _
@@ -344,7 +344,7 @@ theorem exists_multiCtrl_sandwich_aux (N : ℕ) : ∀ (u v : Fin m → Fin 2)
     intro u v V hcard huv hid
     by_cases hone : (diffSet u v).card = 1
     · -- already adjacent: `V` is itself a multiply-controlled gate
-      refine ⟨[], V, by simp, ?_, by simp⟩
+      refine ⟨[], V, by simp, ?_, by simp, by simp⟩
       have hVeq : V = twoLevelMat u v (V u u) (V u v) (V v u) (V v v) := by
         ext k l
         by_cases hk : k = u
@@ -400,8 +400,8 @@ theorem exists_multiCtrl_sandwich_aux (N : ℕ) : ∀ (u v : Fin m → Fin 2)
         omega
       have hidc : IdOutside {u', v} (swapMat u u' * V * swapMat u u') :=
         idOutside_swapMat_conj huu' (Ne.symm hu'v) hid
-      obtain ⟨L, W, hL, hW, hVc⟩ := ih u' v _ hcard' hu'v hidc
-      refine ⟨swapMat u u' :: L, W, ?_, hW, ?_⟩
+      obtain ⟨L, W, hL, hW, hVc, hLN⟩ := ih u' v _ hcard' hu'v hidc
+      refine ⟨swapMat u u' :: L, W, ?_, hW, ?_, by rw [List.length_cons]; omega⟩
       · intro X hX
         rcases List.mem_cons.mp hX with rfl | hX'
         · exact ⟨isMultiCtrlX_swapMat hadj, swapMat_mul_self huu'⟩
@@ -415,18 +415,20 @@ theorem exists_multiCtrl_sandwich_aux (N : ℕ) : ∀ (u v : Fin m → Fin 2)
 
 /-- ★★ **Every two-level matrix on qubits is a Gray-code sandwich**: a list of
 multiply-controlled `X`s, one multiply-controlled single-qubit gate, and the list again (each
-factor being its own inverse). If the matrix is unitary so is the gate. -/
+factor being its own inverse), the list shorter than the number of qubits. If the matrix is
+unitary so is the gate. -/
 theorem exists_multiCtrl_sandwich {u v : Fin m → Fin 2} (huv : u ≠ v)
     {V : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ} (hid : IdOutside {u, v} V) :
     ∃ (L : List (Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ))
       (W : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ),
       (∀ X ∈ L, IsMultiCtrlX X ∧ X * X = 1) ∧ IsMultiCtrlGate W ∧
-        V = L.prod * W * L.reverse.prod ∧
+        V = L.prod * W * L.reverse.prod ∧ L.length < m ∧
         (V ∈ Matrix.unitaryGroup (Fin m → Fin 2) ℂ →
           W ∈ Matrix.unitaryGroup (Fin m → Fin 2) ℂ) := by
-  obtain ⟨L, W, hL, hW, hV⟩ :=
+  obtain ⟨L, W, hL, hW, hV, hLN⟩ :=
     exists_multiCtrl_sandwich_aux (diffSet u v).card u v V le_rfl huv hid
-  refine ⟨L, W, hL, hW, hV, fun hVu => ?_⟩
+  refine ⟨L, W, hL, hW, hV,
+    hLN.trans_le (by simpa using Finset.card_le_univ (diffSet u v)), fun hVu => ?_⟩
   have hinv : L.reverse.prod * L.prod = 1 :=
     reverse_prod_mul_prod_of_self_inverse L fun X hX => (hL X hX).2
   have hLu : L.prod ∈ Matrix.unitaryGroup (Fin m → Fin 2) ℂ :=
@@ -448,7 +450,7 @@ theorem exists_multiCtrl_list {u v : Fin m → Fin 2} (huv : u ≠ v)
     {V : Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ} (hid : IdOutside {u, v} V) :
     ∃ L : List (Matrix (Fin m → Fin 2) (Fin m → Fin 2) ℂ),
       (∀ X ∈ L, IsMultiCtrlX X ∨ IsMultiCtrlGate X) ∧ L.prod = V := by
-  obtain ⟨L, W, hL, hW, hV, _⟩ := exists_multiCtrl_sandwich huv hid
+  obtain ⟨L, W, hL, hW, hV, -, -⟩ := exists_multiCtrl_sandwich huv hid
   refine ⟨L ++ (W :: L.reverse), ?_, ?_⟩
   · intro X hX
     rcases List.mem_append.mp hX with h | h
