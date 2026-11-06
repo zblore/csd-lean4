@@ -396,9 +396,9 @@ argument of #81 both need: a determinant-one unitary is a rotation about *some* 
 -/
 
 /-- A unimodular scalar multiple of a unitary is unitary. -/
-theorem expI_smul_mem_unitaryGroup (t : ℝ) {U : Matrix (Fin 2) (Fin 2) ℂ}
-    (hU : U ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
-    expI t • U ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+theorem expI_smul_mem_unitaryGroup (t : ℝ) {n : Type*} [Fintype n] [DecidableEq n]
+    {U : Matrix n n ℂ} (hU : U ∈ Matrix.unitaryGroup n ℂ) :
+    expI t • U ∈ Matrix.unitaryGroup n ℂ := by
   rw [Matrix.mem_unitaryGroup_iff, star_smul, Matrix.smul_mul, Matrix.mul_smul, smul_smul,
     Matrix.mem_unitaryGroup_iff.mp hU, star_expI, ← expI_add]
   simp

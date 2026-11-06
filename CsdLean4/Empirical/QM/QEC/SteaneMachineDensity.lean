@@ -7,11 +7,13 @@ module
 
 public import CsdLean4.Empirical.QM.QEC.SteaneTripleMachine
 public import CsdLean4.Mathlib.QuantumInfo.CliffordTCount
+public import CsdLean4.Mathlib.QuantumInfo.DataProcessing
+public import CsdLean4.Mathlib.QuantumInfo.UnitaryPerturbation
 
 /-!
 # The three-block Steane machine is universal on its two logical qubits
 
-**Category:** 3-Local (Empirical, QM twin). BACKLOG #308; the gate count #309.
+**Category:** 3-Local (Empirical, QM twin). BACKLOG #308; the gate count #309, one error #311.
 
 `SteaneTripleMachine.lean`'s gadget set holds Clifford+T on two logical qubits, and
 `Mathlib/QuantumInfo/CliffordTUniversal.lean` proves Clifford+T circuits dense in `U(2ᵐ)` modulo
@@ -43,7 +45,12 @@ unitary is a limit of them up to a phase.
   gate count**: for every two-qubit unitary and every `ε ≤ e`, at most `K · log(1/ε)^c` gadgets
   realise exactly a logical gate within `ε` of it up to a phase, and run as a circuit of the
   machine they give that gate's output with probability at least `1 − 21 N p²`
-  (`CliffordTCount.lean`'s `exists_cliffordT_circuit_polylog`, #309).
+  (`CliffordTCount.lean`'s `exists_cliffordT_circuit_polylog`, #309);
+* `dataIsom`, `dataIsom_mul_conj`, `dataIsom_isometry`, `dataEncCh` (**the encoding of data states
+  is a channel**), `dataEncCh_apply`, `trace_conj_unitary`; ★★ `traceDist_dataEnc_le` — **two
+  nearby logical gates give encoded outputs within twice their distance in trace distance**, which
+  `steane_triple_machine_count` uses for its third conjunct: the run's output is within trace
+  distance `2ε` of the target's with probability at least `1 − 21 N p²` (#311).
 
 ## Honest scope
 
@@ -52,12 +59,13 @@ unitary is a limit of them up to a phase.
 `N` gadgets). `steane_triple_machine_universal` is topological; the rate is
 `steane_triple_machine_count`'s, whose `K` and `e` are existential (inherited from #116's net and
 an uncomputed lift constant) and whose `c = skExponent` is #116's three-letter exponent. Its two
-errors are kept apart: the logical gate `W` is within `ε` of the target in the operator norm, and
-the run gives `W`'s output exactly with probability at least `1 − 21 N p²`; no state-level bound
-combining them is stated.
+errors are stated apart (the logical gate `W` within `ε` of the target in the operator norm; `W`'s
+output exactly with probability at least `1 − 21 N p²`) and combined: the output is within trace
+distance `2ε` of the target's with that probability, for every encoded data state (a density
+operator on the data qubits, the ancilla in `|0⟩`).
 
 References: A. Kitaev, *Russ. Math. Surv.* **52**, 1191 (1997); M. Nielsen, I. Chuang, *Quantum
-Computation and Quantum Information* §4.5 and §10.6; `specs/BACKLOG.md` #308, #309;
+Computation and Quantum Information* §4.5 and §10.6; `specs/BACKLOG.md` #308, #309, #311;
 `Empirical/QM/QEC/SteaneTripleMachine.lean`, `Mathlib/QuantumInfo/CliffordTUniversal.lean`
 (`exists_phase_mem_cliffordTmLim`); `specs/future-work.md`.
 -/
@@ -66,7 +74,7 @@ Computation and Quantum Information* §4.5 and §10.6; `specs/BACKLOG.md` #308, 
 
 open Matrix QuantumInfo MeasureTheory
 open Controlled QuantumInfo.Controlled
-open scoped ENNReal Kronecker
+open scoped ENNReal Kronecker ComplexOrder
 
 noncomputable section
 
@@ -402,13 +410,93 @@ theorem isCodeState_dataEnc (X : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ)
           * tripleEncᴴ := by simp only [Matrix.mul_assoc]
     _ = _ := by rw [tripleEnc_conjTranspose_mul, Matrix.mul_one, Matrix.mul_one]
 
+/-! ### The encoding as a channel -/
+
+theorem star_ket0 (i : Fin 2) : star (ket0 i) = ket0 i := by
+  fin_cases i <;> simp [ket0]
+
+theorem star_ite_zero (c : Prop) [Decidable c] (a : ℂ) :
+    star (if c then a else 0) = if c then star a else 0 := by
+  split_ifs <;> simp
+
+/-- **The data embedding as a matrix**: a data label `y` goes to the three-qubit label with `y` on
+qubits `0`, `1` and the ancilla qubit `2` in `|0⟩`. -/
+def dataIsom : Matrix (Fin 3 → Fin 2) (Fin 2 → Fin 2) ℂ :=
+  Matrix.of fun z y => if (split3 1 z).1 = y then ket0 (split3 1 z).2 else 0
+
+theorem dataIsom_mul_conj (X : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ) :
+    dataIsom * X * dataIsomᴴ = dataEmb X := by
+  ext z w
+  simp only [Matrix.mul_apply, conjTranspose_apply, dataIsom, Matrix.of_apply, dataEmb, lift3,
+    Matrix.submatrix_apply, Matrix.kroneckerMap_apply, vecMulVec_apply]
+  simp only [ite_mul, zero_mul, Finset.sum_ite_eq, Finset.mem_univ, ite_true, star_ite_zero,
+    mul_ite, mul_zero, star_ket0]
+  ring
+
+/-- `dataIsom` is an isometry. -/
+theorem dataIsom_isometry : dataIsomᴴ * dataIsom = 1 := by
+  ext y y'
+  rw [Matrix.mul_apply, ← Equiv.sum_comp (split3 (α := Fin 2) 1).symm]
+  simp only [conjTranspose_apply, dataIsom, Matrix.of_apply, Equiv.apply_symm_apply]
+  rw [Fintype.sum_prod_type]
+  simp only [star_ite_zero, ite_mul, zero_mul, mul_ite, mul_zero, star_ket0, Matrix.one_apply]
+  by_cases h : y = y'
+  · subst h
+    simp [Fin.sum_univ_two, ket0]
+  · simp [h, Ne.symm h]
+
+/-- **The encoding of data states is a channel**: one Kraus operator, the isometry
+`tripleEnc · dataIsom`. -/
+def dataEncCh : Channel (Fin 2 → Fin 2) TripleReg Unit where
+  kraus _ := tripleEnc * dataIsom
+  tp := by
+    simp only [Finset.univ_unique, Finset.sum_singleton]
+    rw [conjTranspose_mul, Matrix.mul_assoc, ← Matrix.mul_assoc tripleEncᴴ,
+      tripleEnc_conjTranspose_mul, Matrix.one_mul, dataIsom_isometry]
+
+theorem dataEncCh_apply (X : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ) :
+    dataEncCh.apply X = dataEnc X := by
+  rw [Channel.apply_def]
+  simp only [Finset.univ_unique, Finset.sum_singleton]
+  show tripleEnc * dataIsom * X * (tripleEnc * dataIsom)ᴴ = tripleEnc * dataEmb X * tripleEncᴴ
+  rw [← dataIsom_mul_conj, conjTranspose_mul]
+  simp only [Matrix.mul_assoc]
+
+theorem trace_conj_unitary {n : Type*} [Fintype n] [DecidableEq n] {W X : Matrix n n ℂ}
+    (hW : W ∈ Matrix.unitaryGroup n ℂ) : (W * X * Wᴴ).trace = X.trace := by
+  have hWW : Wᴴ * W = 1 := by
+    rw [← Matrix.star_eq_conjTranspose]
+    exact Matrix.mem_unitaryGroup_iff'.mp hW
+  rw [Matrix.trace_mul_cycle, hWW, Matrix.one_mul]
+
+open scoped Matrix.Norms.L2Operator in
+/-- ★★ **Two nearby logical gates give nearby encoded outputs**: on every encoded data state, the
+trace distance of the two outputs is at most twice the gates' operator-norm distance — the
+encoding is a channel (`channel_traceDist_le`) and the logical bound is
+`traceDist_conj_sub_le`. -/
+theorem traceDist_dataEnc_le {X : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ} (hX : X.PosSemidef)
+    (htr : X.trace = 1) {W V : Matrix (Fin 2 → Fin 2) (Fin 2 → Fin 2) ℂ}
+    (hW : W ∈ Matrix.unitaryGroup (Fin 2 → Fin 2) ℂ)
+    (hV : V ∈ Matrix.unitaryGroup (Fin 2 → Fin 2) ℂ)
+    (h : (dataEnc (W * X * Wᴴ) - dataEnc (V * X * Vᴴ)).IsHermitian) :
+    traceDist h ≤ 2 * ‖W - V‖ := by
+  have hA : (W * X * Wᴴ).IsHermitian := (hX.mul_mul_conjTranspose_same W).isHermitian
+  have hB : (V * X * Vᴴ).IsHermitian := (hX.mul_mul_conjTranspose_same V).isHermitian
+  have h1 := channel_traceDist_le dataEncCh hA hB (by rw [trace_conj_unitary hW,
+    trace_conj_unitary hV])
+  rw [traceDist_congr h ((dataEncCh.apply_isHermitian hA).sub (dataEncCh.apply_isHermitian hB))
+    (by rw [dataEncCh_apply, dataEncCh_apply])]
+  exact h1.trans (traceDist_conj_sub_le hW hV hX htr (hA.sub hB))
+
 open scoped Matrix.Norms.L2Operator in
 /-- ★★★ **The machine's gate count.** There are a recovery `R` and constants `K`, `e` such that for
 every two-qubit unitary `V` and every accuracy `ε ≤ e` some list of at most `K · log(1/ε)^c` gadgets
 (`c = skExponent ∈ (3, 4)`) realises, exactly on every encoded data state, a logical gate `W` within
 `ε` of `V` up to a global phase (operator norm); and that list, run as a circuit of
 `steane_triple_machine` with any unitary faults, gives exactly `W`'s output whenever no gadget is
-bad, so with probability at least `1 − 21 N p²`, `N ≤ K · log(1/ε)^c`. -/
+bad, so with probability at least `1 − 21 N p²`, `N ≤ K · log(1/ε)^c`. **One error**: on every
+encoded data state the run's output is then within trace distance `2ε` of `V`'s, with probability
+at least `1 − 21 N p²` (`traceDist_dataEnc_le`). -/
 theorem steane_triple_machine_count :
     ∃ R : Channel TripleReg TripleReg (Option (Fin 3 → SingleErr)), ∃ K e : ℝ, 0 < K ∧ 0 < e ∧
       ∀ ε : ℝ, 0 < ε → ε ≤ e → ∀ V ∈ Matrix.unitaryGroup (Fin 2 → Fin 2) ℂ,
@@ -425,12 +513,20 @@ theorem steane_triple_machine_count :
               (∀ ω : CircuitPat gs.length 7 1, (∀ j, isBad 7 1 (ω j) = false) →
                   correctedRun (tMachineCircuit R (fun j => gs.get j) Uf Vf Wf Yf ω) (dataEnc X)
                     = dataEnc (W * X * Wᴴ))
-              ∧ ∀ (ν : Measure Bool) [IsProbabilityMeasure ν] {p : ℝ}, 0 ≤ p →
+              ∧ (∀ (ν : Measure Bool) [IsProbabilityMeasure ν] {p : ℝ}, 0 ≤ p →
                   ν {c | c = true} ≤ ENNReal.ofReal p →
                   1 - (gs.length : ℝ≥0∞) * ENNReal.ofReal (codeCapacityBound 21 p 1)
                     ≤ QuantumInfo.circuitMeasure gs.length 7 ν 1
                         {ω | correctedRun (tMachineCircuit R (fun j => gs.get j) Uf Vf Wf Yf ω)
-                          (dataEnc X) = dataEnc (W * X * Wᴴ)} := by
+                          (dataEnc X) = dataEnc (W * X * Wᴴ)})
+              ∧ (X.PosSemidef → X.trace = 1 →
+                ∀ (ν : Measure Bool) [IsProbabilityMeasure ν] {p : ℝ}, 0 ≤ p →
+                  ν {c | c = true} ≤ ENNReal.ofReal p →
+                  1 - (gs.length : ℝ≥0∞) * ENNReal.ofReal (codeCapacityBound 21 p 1)
+                    ≤ QuantumInfo.circuitMeasure gs.length 7 ν 1
+                        {ω | ∀ h : (correctedRun
+                            (tMachineCircuit R (fun j => gs.get j) Uf Vf Wf Yf ω) (dataEnc X)
+                            - dataEnc (V * X * Vᴴ)).IsHermitian, traceDist h ≤ 2 * ε}) := by
   obtain ⟨R, hR⟩ := steane_triple_machine
   obtain ⟨K, e, hK, he, hcount⟩ := exists_cliffordT_circuit_polylog (m := 2) (by norm_num)
   refine ⟨R, K, e, hK, he, fun ε hε hεe V hV => ?_⟩
@@ -441,9 +537,27 @@ theorem steane_triple_machine_count :
   have hideal : tMachineIdeal (fun j : Fin gs.length => gs.get j) (dataEnc X)
       = dataEnc (l.prod * X * (l.prod)ᴴ) := by
     rw [tMachineIdeal_get, hgs X]
-  rw [← hideal]
-  exact hR gs.length (fun j => gs.get j) Uf Vf Wf Yf hU hV' hW hY (dataEnc X)
+  obtain ⟨hgood, hprob⟩ := hR gs.length (fun j => gs.get j) Uf Vf Wf Yf hU hV' hW hY (dataEnc X)
     (isCodeState_dataEnc X)
+  rw [hideal] at hgood hprob
+  refine ⟨hgood, hprob, fun hXp htr ν _ p hp hν =>
+    (hprob ν hp hν).trans (measure_mono fun ω hω h => ?_)⟩
+  have hω' : correctedRun (tMachineCircuit R (fun j => gs.get j) Uf Vf Wf Yf ω) (dataEnc X)
+      = dataEnc (l.prod * X * (l.prod)ᴴ) := hω
+  have hWu : l.prod ∈ Matrix.unitaryGroup (Fin 2 → Fin 2) ℂ :=
+    TwoLevel.unitaryGroup_list_prod_mem fun g hg =>
+      mem_unitaryGroup_of_mem_cliffordTGates (hl g hg)
+  have hphase : Euler.expI φ * star (Euler.expI φ) = 1 := by
+    rw [Euler.star_expI, ← Euler.expI_add, add_neg_cancel, Euler.expI_zero]
+  have hconj := smul_conj_eq hphase V X
+  have hh : (dataEnc (l.prod * X * (l.prod)ᴴ)
+      - dataEnc (Euler.expI φ • V * X * (Euler.expI φ • V)ᴴ)).IsHermitian := by
+    have h' := h
+    rwa [hω', ← hconj] at h'
+  calc traceDist h = traceDist hh := traceDist_congr h hh (by rw [hω', hconj])
+    _ ≤ 2 * ‖l.prod - Euler.expI φ • V‖ :=
+        traceDist_dataEnc_le hXp htr hWu (Euler.expI_smul_mem_unitaryGroup φ hV) hh
+    _ ≤ 2 * ε := by rw [norm_sub_rev]; linarith
 
 end Steane
 end QEC

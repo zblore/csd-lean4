@@ -5537,4 +5537,41 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 /-- info: 'CSD.Empirical.QM.QEC.Steane.steane_triple_machine_count' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_triple_machine_count
+-- SteaneMachineDensity (BACKLOG #311, 2026-11-06): one error for the machine's output
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.star_ket0' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.star_ket0
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.star_ite_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.star_ite_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.dataIsom' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.dataIsom
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.dataIsom_mul_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.dataIsom_mul_conj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.dataIsom_isometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.dataIsom_isometry
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.dataEncCh' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.dataEncCh
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.dataEncCh_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.dataEncCh_apply
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.trace_conj_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.trace_conj_unitary
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.traceDist_dataEnc_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.traceDist_dataEnc_le
 end CSD.Tests.AxiomAudit
