@@ -417,7 +417,7 @@ magic-state injection (row 230, `steane_injection`), exact on code states, with 
 error as a hypothesis — discharged for one fault at any of its locations (rows 304, 306);
 since 2026-11-05 the machine over `H̄`, `S̄`, `X̄`, `Z̄`, `CNOT̄`, `T̄` is in it at level one
 (rows 305 and 307, on two logical qubits with a third block, universal there by row 308);
-the rest is rows 228, 229, 231, 302 and 310.
+the rest is rows 228, 229, 231 (split into 312–315), 302 and 310.
 
 Three residues remain open in the whole registry — `R-012` (Posit 2’s, a design posit constrained from
 above), `R-016` (open mathematics, with a Lean shape) and `R-019` (the prediction programme, not this
