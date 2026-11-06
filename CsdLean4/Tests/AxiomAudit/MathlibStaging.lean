@@ -15352,4 +15352,9 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'QuantumInfo.Controlled.exists_cliffordT_circuit_polylog' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.Controlled.exists_cliffordT_circuit_polylog
+-- BACKLOG #231 brick 1, QuantumInfo/KnillLaflamme.lean: Kraus-level recovery lemma.
+
+/-- info: 'QuantumInfo.exists_kraus_mul_mul_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exists_kraus_mul_mul_eq_smul
 end CSD.Tests.AxiomAudit

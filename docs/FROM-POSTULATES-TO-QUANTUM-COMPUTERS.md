@@ -410,7 +410,9 @@ row 97 states, and since 2026-10-29 its gadget-set premise is discharged for the
 one (row 207) and at every level with its threshold (row 227) — for gate faults, an ideal recovery
 and the gates `H̄`, `X̄`, `Z̄`, joined at level one by the two-block `CNOT̄` and the logical `S̄`
 on 2026-11-05 (rows 226 and 230, `steane_pair_machine`), and `S̄` at every level on 2026-11-06
-(row 303, the transversal `S` or `S†` by the level's parity). The logical `T̄` is there too, by
+(row 303, the transversal `S` or `S†` by the level's parity); since 2026-11-06 the level-`k` machine
+also runs as the recursive simulation, each block's gadget ending in its own recovery at every level
+(row 231's first brick, `steane_machine_recursive`, recoveries still ideal). The logical `T̄` is there too, by
 magic-state injection (row 230, `steane_injection`), exact on code states, with the magic state's
 error as a hypothesis — discharged for one fault at any of its locations (rows 304, 306);
 since 2026-11-05 the machine over `H̄`, `S̄`, `X̄`, `Z̄`, `CNOT̄`, `T̄` is in it at level one

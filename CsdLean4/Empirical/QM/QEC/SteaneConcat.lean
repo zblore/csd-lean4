@@ -47,7 +47,11 @@ sub-block at every level — is the good event of the code-capacity recursion, a
 * ★★ `patErr_mem_span`: **every good pattern's errors lie in the span of the family.** The good
   blocks are spans by induction, the one bad block is a combination of matrix units
   (`Matrix.matrix_eq_sum_single`), and `blockKron` is multilinear (`blockKron_sum_smul`), so the
-  tensor expands over exactly `cErr (k + 1)`;
+  tensor expands over exactly `cErr (k + 1)`. Its step is ★★ `blockKron_mem_span_cErr`: **a
+  tensor whose blocks lie in the level-`k` span at all but one block, which is arbitrary, lies in
+  the level-`(k + 1)` span**, used on its own by the recursive simulation (#231), with
+  `exists_forall_ne_isBad_eq_false` (a good pattern names its one possibly bad block) and
+  `cErr_cIdOne`;
 * ★★★ `exists_concat_recovery`: the recovery returns the code state up to a scalar for every good
   pattern, through #61's span step (`exists_smul_recovery_apply_of_eq_lin_comb`);
 * ★★★ `exists_concat_recovery_unitary`: for a **unitary** error the scalar is `1`
@@ -318,6 +322,109 @@ noncomputable def cSpanCoef (k : ℕ) (b₀ : Fin 7) (a : Fin 7 → cFam k → �
     cFam k ⊕ (cLabel k × cLabel k) → ℂ :=
   Sum.elim (fun i => if b = b₀ then 0 else a b i) fun p => if b = b₀ then X p.1 p.2 else 0
 
+/-- The identity filler of the family is the identity. -/
+theorem cErr_cIdOne : ∀ k, cErr k (cIdOne k) = 1
+  | 0 => rfl
+  | k + 1 => by
+      show blockKron (fun _ : Fin 7 => cErr k (cIdOne k)) = 1
+      rw [cErr_cIdOne k]
+      exact blockKron_one
+
+/-- **A good pattern has at most one bad block**: every block but one named `b₀` is good. -/
+theorem exists_forall_ne_isBad_eq_false {k : ℕ} {x : ConcatPat 7 (k + 1)}
+    (hx : isBad 7 (k + 1) x = false) : ∃ b₀ : Fin 7, ∀ b, b ≠ b₀ → isBad 7 k (x b) = false := by
+  have hcard : (Finset.univ.filter fun b : Fin 7 => isBad 7 k (x b) = true).card ≤ 1 := by
+    by_contra hc
+    rw [show isBad 7 (k + 1) x
+        = decide (2 ≤ (Finset.univ.filter fun b : Fin 7 => isBad 7 k (x b) = true).card)
+        from rfl, decide_eq_false_iff_not] at hx
+    exact hx (by omega)
+  obtain ⟨b₀, hb₀⟩ := Finset.card_le_one_iff_subset_singleton.mp hcard
+  refine ⟨b₀, fun b hb => ?_⟩
+  rcases Bool.eq_false_or_eq_true (isBad 7 k (x b)) with h | h
+  · exact absurd (Finset.mem_singleton.mp
+      (hb₀ (Finset.mem_filter.mpr ⟨Finset.mem_univ b, h⟩))) hb
+  · exact h
+
+/-- ★★ **One arbitrary block over the span**: a tensor whose blocks lie in the span of the level-`k`
+family at every block but one, which is arbitrary, lies in the span of the level-`(k + 1)` family.
+The good blocks keep their coefficients, the arbitrary one is a combination of matrix units, and
+`blockKron` is multilinear. -/
+theorem blockKron_mem_span_cErr {k : ℕ} (b₀ : Fin 7) (N : Fin 7 → Matrix (cLabel k) (cLabel k) ℂ)
+    (hN : ∀ b, b ≠ b₀ → N b ∈ Submodule.span ℂ (Set.range (cErr k)))
+    {E : Matrix (cLabel (k + 1)) (cLabel (k + 1)) ℂ} (hEN : E = blockKron N) :
+    E ∈ Submodule.span ℂ (Set.range (cErr (k + 1))) := by
+  classical
+  have hIH : ∀ b, ∃ a : cFam k → ℂ, b ≠ b₀ → ∑ i, a i • cErr k i = N b := by
+    intro b
+    by_cases hb : b = b₀
+    · exact ⟨0, fun hc => absurd hb hc⟩
+    · obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).mp (hN b hb)
+      exact ⟨a, fun _ => ha⟩
+  choose a ha using hIH
+  have hbad : ∑ p : cLabel k × cLabel k,
+      N b₀ p.1 p.2 • Matrix.single p.1 p.2 (1 : ℂ) = N b₀ := by
+    conv_rhs => rw [Matrix.matrix_eq_sum_single (N b₀)]
+    rw [Fintype.sum_prod_type]
+    exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by
+      rw [Matrix.smul_single, smul_eq_mul, mul_one]
+  have hblock : ∀ b : Fin 7,
+      (∑ t, cSpanCoef k b₀ a (N b₀) b t • cSpanFam k t) = N b := by
+    intro b
+    rw [Fintype.sum_sum_type]
+    simp only [cSpanCoef, cSpanFam, Sum.elim_inl, Sum.elim_inr]
+    by_cases hb : b = b₀
+    · simp only [ite_eq_left hb, zero_smul, Finset.sum_const_zero, zero_add]
+      rw [hb]
+      exact hbad
+    · simp only [ite_eq_right hb, zero_smul, Finset.sum_const_zero, add_zero]
+      exact ha b hb
+  have hexp : E = ∑ g : Fin 7 → (cFam k ⊕ (cLabel k × cLabel k)),
+      (∏ b, cSpanCoef k b₀ a (N b₀) b (g b)) • blockKron (fun b => cSpanFam k (g b)) := by
+    rw [hEN]
+    conv_lhs =>
+      rw [show N = (fun b => ∑ t, cSpanCoef k b₀ a (N b₀) b t • cSpanFam k t) from
+        funext fun b => (hblock b).symm]
+    exact blockKron_sum_smul _ fun _ => cSpanFam k
+  rw [hexp]
+  refine Submodule.sum_mem _ fun g _ => ?_
+  by_cases hzero : (∏ b, cSpanCoef k b₀ a (N b₀) b (g b)) = 0
+  · rw [hzero, zero_smul]
+    exact Submodule.zero_mem _
+  refine Submodule.smul_mem _ _ ?_
+  have hne : ∀ b, cSpanCoef k b₀ a (N b₀) b (g b) ≠ 0 := fun b hb0 =>
+    hzero (Finset.prod_eq_zero (Finset.mem_univ b) hb0)
+  obtain ⟨p, hp⟩ : ∃ p, g b₀ = Sum.inr p := by
+    cases hg : g b₀ with
+    | inl i =>
+        refine absurd ?_ (hne b₀)
+        rw [hg]
+        show (if b₀ = b₀ then (0 : ℂ) else a b₀ i) = 0
+        rw [ite_eq_left rfl]
+    | inr q => exact ⟨q, rfl⟩
+  have hinl : ∀ b, b ≠ b₀ → ∃ i, g b = Sum.inl i := by
+    intro b hb
+    cases hg : g b with
+    | inl i => exact ⟨i, rfl⟩
+    | inr q =>
+        refine absurd ?_ (hne b)
+        rw [hg]
+        show (if b = b₀ then N b₀ q.1 q.2 else (0 : ℂ)) = 0
+        rw [ite_eq_right hb]
+  refine Submodule.subset_span
+    ⟨((fun b => Sum.elim id (fun _ => cIdOne k) (g b), some (b₀, p.1, p.2)) : cFam (k + 1)), ?_⟩
+  show blockKron (fun b => if b = b₀ then Matrix.single p.1 p.2 (1 : ℂ)
+      else cErr k (Sum.elim id (fun _ => cIdOne k) (g b)))
+    = blockKron (fun b => cSpanFam k (g b))
+  refine congrArg blockKron (funext fun b => ?_)
+  by_cases hb : b = b₀
+  · subst hb
+    rw [ite_eq_left rfl, hp]
+    rfl
+  · obtain ⟨i, hi⟩ := hinl b hb
+    rw [ite_eq_right hb, hi]
+    rfl
+
 /-- ★★ **Every good pattern's errors lie in the span of the family.** A pattern with at most one bad
 sub-block at every level: the good blocks are in the span of the level-`k` family by induction, the
 one bad block carries an arbitrary operator and so a combination of matrix units, and `blockKron` is
@@ -329,91 +436,10 @@ theorem patErr_mem_span : ∀ (k : ℕ) (x : ConcatPat 7 k), isBad 7 k x = false
       refine Submodule.subset_span ⟨cIdOne 0, ?_⟩
       rw [cErr_zero, patErr_zero.mp hE hx]
   | k + 1, x, hx, E, hE => by
-      classical
       obtain ⟨N, hEN, hN⟩ := patErr_succ.mp hE
-      have hcard : (Finset.univ.filter fun b : Fin 7 => isBad 7 k (x b) = true).card ≤ 1 := by
-        by_contra hc
-        rw [show isBad 7 (k + 1) x
-            = decide (2 ≤ (Finset.univ.filter fun b : Fin 7 => isBad 7 k (x b) = true).card)
-            from rfl, decide_eq_false_iff_not] at hx
-        exact hx (by omega)
-      obtain ⟨b₀, hb₀⟩ := Finset.card_le_one_iff_subset_singleton.mp hcard
-      have hgood : ∀ b, b ≠ b₀ → isBad 7 k (x b) = false := by
-        intro b hb
-        rcases Bool.eq_false_or_eq_true (isBad 7 k (x b)) with h | h
-        · exact absurd (Finset.mem_singleton.mp
-            (hb₀ (Finset.mem_filter.mpr ⟨Finset.mem_univ b, h⟩))) hb
-        · exact h
-      have hIH : ∀ b, ∃ a : cFam k → ℂ, b ≠ b₀ → ∑ i, a i • cErr k i = N b := by
-        intro b
-        by_cases hb : b = b₀
-        · exact ⟨0, fun hc => absurd hb hc⟩
-        · obtain ⟨a, ha⟩ := (Submodule.mem_span_range_iff_exists_fun ℂ).mp
-            (patErr_mem_span k (x b) (hgood b hb) (N b) (hN b))
-          exact ⟨a, fun _ => ha⟩
-      choose a ha using hIH
-      have hbad : ∑ p : cLabel k × cLabel k,
-          N b₀ p.1 p.2 • Matrix.single p.1 p.2 (1 : ℂ) = N b₀ := by
-        conv_rhs => rw [Matrix.matrix_eq_sum_single (N b₀)]
-        rw [Fintype.sum_prod_type]
-        exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by
-          rw [Matrix.smul_single, smul_eq_mul, mul_one]
-      have hblock : ∀ b : Fin 7,
-          (∑ t, cSpanCoef k b₀ a (N b₀) b t • cSpanFam k t) = N b := by
-        intro b
-        rw [Fintype.sum_sum_type]
-        simp only [cSpanCoef, cSpanFam, Sum.elim_inl, Sum.elim_inr]
-        by_cases hb : b = b₀
-        · simp only [ite_eq_left hb, zero_smul, Finset.sum_const_zero, zero_add]
-          rw [hb]
-          exact hbad
-        · simp only [ite_eq_right hb, zero_smul, Finset.sum_const_zero, add_zero]
-          exact ha b hb
-      have hexp : E = ∑ g : Fin 7 → (cFam k ⊕ (cLabel k × cLabel k)),
-          (∏ b, cSpanCoef k b₀ a (N b₀) b (g b)) • blockKron (fun b => cSpanFam k (g b)) := by
-        rw [hEN]
-        conv_lhs =>
-          rw [show N = (fun b => ∑ t, cSpanCoef k b₀ a (N b₀) b t • cSpanFam k t) from
-            funext fun b => (hblock b).symm]
-        exact blockKron_sum_smul _ fun _ => cSpanFam k
-      rw [hexp]
-      refine Submodule.sum_mem _ fun g _ => ?_
-      by_cases hzero : (∏ b, cSpanCoef k b₀ a (N b₀) b (g b)) = 0
-      · rw [hzero, zero_smul]
-        exact Submodule.zero_mem _
-      refine Submodule.smul_mem _ _ ?_
-      have hne : ∀ b, cSpanCoef k b₀ a (N b₀) b (g b) ≠ 0 := fun b hb0 =>
-        hzero (Finset.prod_eq_zero (Finset.mem_univ b) hb0)
-      obtain ⟨p, hp⟩ : ∃ p, g b₀ = Sum.inr p := by
-        cases hg : g b₀ with
-        | inl i =>
-            refine absurd ?_ (hne b₀)
-            rw [hg]
-            show (if b₀ = b₀ then (0 : ℂ) else a b₀ i) = 0
-            rw [ite_eq_left rfl]
-        | inr q => exact ⟨q, rfl⟩
-      have hinl : ∀ b, b ≠ b₀ → ∃ i, g b = Sum.inl i := by
-        intro b hb
-        cases hg : g b with
-        | inl i => exact ⟨i, rfl⟩
-        | inr q =>
-            refine absurd ?_ (hne b)
-            rw [hg]
-            show (if b = b₀ then N b₀ q.1 q.2 else (0 : ℂ)) = 0
-            rw [ite_eq_right hb]
-      refine Submodule.subset_span
-        ⟨((fun b => Sum.elim id (fun _ => cIdOne k) (g b), some (b₀, p.1, p.2)) : cFam (k + 1)), ?_⟩
-      show blockKron (fun b => if b = b₀ then Matrix.single p.1 p.2 (1 : ℂ)
-          else cErr k (Sum.elim id (fun _ => cIdOne k) (g b)))
-        = blockKron (fun b => cSpanFam k (g b))
-      refine congrArg blockKron (funext fun b => ?_)
-      by_cases hb : b = b₀
-      · subst hb
-        rw [ite_eq_left rfl, hp]
-        rfl
-      · obtain ⟨i, hi⟩ := hinl b hb
-        rw [ite_eq_right hb, hi]
-        rfl
+      obtain ⟨b₀, hgood⟩ := exists_forall_ne_isBad_eq_false hx
+      exact blockKron_mem_span_cErr b₀ N
+        (fun b hb => patErr_mem_span k (x b) (hgood b hb) (N b) (hN b)) hEN
 
 /-! ### The concatenated quantum recovery -/
 

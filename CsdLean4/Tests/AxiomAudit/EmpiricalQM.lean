@@ -5615,4 +5615,77 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 /-- info: 'CSD.Empirical.QM.QEC.Steane.exists_cTrans_mul_cEnc_sGate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.exists_cTrans_mul_cEnc_sGate
+/-! #231 brick 1: the recursive simulation (SteaneRecursiveSim.lean, SteaneConcat.lean) -/
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cErr_cIdOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cErr_cIdOne
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_forall_ne_isBad_eq_false' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_forall_ne_isBad_eq_false
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockKron_mem_span_cErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockKron_mem_span_cErr
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.simFam' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.simFam
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.instFintypeSimFam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.instFintypeSimFam
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.SimTower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.SimTower
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.blockView' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.blockView
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.simKraus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.simKraus
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.simApply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.simApply
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cTrans_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cTrans_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.simKraus_tp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.simKraus_tp
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_simTower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_simTower
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.simKraus_mul_cEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.simKraus_mul_cEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.simApply_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.simApply_eq
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.gate_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.gate_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.machineCircuitSim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.machineCircuitSim
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.idealRun_machineCircuitSim' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.idealRun_machineCircuitSim
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_machine_recursive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_machine_recursive
 end CSD.Tests.AxiomAudit

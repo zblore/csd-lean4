@@ -46,7 +46,8 @@ and the theorem is that the two are equivalent (Knill–Laflamme 1997; Nielsen�
   (`exists_smul_of_sum_conj_eq`: the sandwiched identity `∑ₖ |⟨u, R k E i v⟩|² = λ |⟨u, v⟩|²`
   with `u` the component of `R k E i v` orthogonal to `v`), hence is a scalar on the code
   (`exists_smul_of_forall_smul`), and `P E iᴴ E j P = ∑ₖ (R k E i P)ᴴ (R k E j P)` by trace
-  preservation;
+  preservation; ★ `exists_kraus_mul_mul_eq_smul` — the first half on its own, for one error: **a
+  recovery that undoes `F` up to a scalar does so Kraus operator by Kraus operator** (BACKLOG #231);
 * `knillLaflamme_iff` — the equivalence;
 * ★★ `recovery_apply_lin_comb` — **discretization**: the correction property is bilinear in the
   two error slots and a channel is linear, so a recovery corrects every linear combination of
@@ -668,6 +669,25 @@ theorem exists_smul_of_sum_conj_eq {κ : Type*} [Fintype κ] (hP : IsCodeProject
   exact sub_eq_zero.mp hu0
 
 omit [Fintype ι] [DecidableEq ι] in
+/-- ★ **A recovery that undoes an error up to a scalar does so Kraus operator by Kraus operator**:
+if `R (F ρ Fᴴ) = λ • ρ` on code states, every `R.kraus k * F` acts on the code as a scalar. -/
+theorem exists_kraus_mul_mul_eq_smul (hP : IsCodeProjector P) {κ : Type*} [Fintype κ]
+    (R : Channel n n κ) {F : Matrix n n ℂ} {lam : ℂ}
+    (h : ∀ ρ : Matrix n n ℂ, ρ = P * ρ * P → R.apply (F * ρ * Fᴴ) = lam • ρ) (k : κ) :
+    ∃ μ : ℂ, R.kraus k * F * P = μ • P := by
+  refine exists_smul_of_sum_conj_eq hP (fun k => R.kraus k * F * P) lam
+    (fun k => by rw [Matrix.mul_assoc, hP.mul_self]) (fun X => ?_) k
+  have hX : P * X * P = P * (P * X * P) * P := by
+    conv_rhs => rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hP.mul_self,
+      Matrix.mul_assoc (P * X), hP.mul_self]
+  have h1 := h (P * X * P) hX
+  rw [Channel.apply_def] at h1
+  rw [← h1]
+  refine Finset.sum_congr rfl fun k _ => ?_
+  rw [conjTranspose_mul, conjTranspose_mul, hP.conjTranspose_eq]
+  simp only [Matrix.mul_assoc]
+
+omit [Fintype ι] [DecidableEq ι] in
 /-- ★★ **The Knill–Laflamme theorem (the condition is necessary).** If a channel `R` corrects the
 errors `E` on the code `P` up to scalars — `R (E i ρ E iᴴ) = λ i • ρ` on code states — then the
 errors satisfy the Knill–Laflamme condition. -/
@@ -675,19 +695,8 @@ theorem knillLaflamme_of_recovery (hP : IsCodeProjector P) {κ : Type*} [Fintype
     (R : Channel n n κ) (lam : ι → ℂ)
     (h : ∀ i, ∀ ρ : Matrix n n ℂ, ρ = P * ρ * P → R.apply (E i * ρ * (E i)ᴴ) = lam i • ρ) :
     ∃ c : Matrix ι ι ℂ, KnillLaflamme P E c := by
-  have hscal : ∀ i k, ∃ μ : ℂ, R.kraus k * E i * P = μ • P := by
-    intro i k
-    refine exists_smul_of_sum_conj_eq hP (fun k => R.kraus k * E i * P) (lam i)
-      (fun k => by rw [Matrix.mul_assoc, hP.mul_self]) (fun X => ?_) k
-    have hX : P * X * P = P * (P * X * P) * P := by
-      conv_rhs => rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hP.mul_self,
-        Matrix.mul_assoc (P * X), hP.mul_self]
-    have h1 := h i (P * X * P) hX
-    rw [Channel.apply_def] at h1
-    rw [← h1]
-    refine Finset.sum_congr rfl fun k _ => ?_
-    rw [conjTranspose_mul, conjTranspose_mul, hP.conjTranspose_eq]
-    simp only [Matrix.mul_assoc]
+  have hscal : ∀ i k, ∃ μ : ℂ, R.kraus k * E i * P = μ • P := fun i k =>
+    exists_kraus_mul_mul_eq_smul hP R (h i) k
   choose μ hμ using hscal
   refine ⟨fun i j => ∑ k, star (μ i k) * μ j k, fun i j => ?_⟩
   calc P * (E i)ᴴ * E j * P

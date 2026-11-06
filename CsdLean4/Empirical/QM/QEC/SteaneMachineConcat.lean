@@ -68,8 +68,8 @@ the encoder: a gate `T` with `T E_k = E_k W` keeps level-`k` code states in the 
 ⚠️ **One recovery per gadget, applied at level `k`, and ideal.** Each level-`k` gadget is the
 transversal gate on `7^k` qubits followed by #86's level-`k` recovery. It is **not** built as the
 recursive simulation — a level-`(k−1)` circuit of gadgets with interleaved level-`(k−1)` recoveries —
-so recovery faults at any level are not modelled; the noise sits on the gates. Those are their own
-BACKLOG rows.
+here; that is `SteaneRecursiveSim.lean` (`steane_machine_recursive`, BACKLOG #231). Recovery faults
+at any level are not modelled in either; the noise sits on the gates.
 
 ⚠️ **One block, the Clifford generators** `H̄`, `X̄`, `Z̄`, and `S̄` (at level `k` from the
 transversal `S` or `S†` by the parity of `k`, `exists_cTrans_mul_cEnc_sGate`): no two-block gate and
