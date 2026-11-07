@@ -419,8 +419,10 @@ since 2026-11-05 the machine over `H̄`, `S̄`, `X̄`, `Z̄`, `CNOT̄`, `T̄` is
 (rows 305 and 307, on two logical qubits with a third block, universal there by row 308);
 the `CNOT̄` extended rectangle, a faulty leading recovery included, landed on 2026-11-07
 (row 302, `steane_pair_exRec`), and one correct rectangle under an ideal decoder the same
-day (row 312, `steane_rect_correct`); the rest is rows 228, 229, 231 (split into 312–315,
-313–315 open) and 310.
+day (row 312, `steane_rect_correct`); the fault-free recovery is decode-then-encode on every
+input, so a rectangle after it is a channel on the decoded qubit (row 313, `steane_badRect`;
+with a faulty leading recovery that form is false, and the syndrome-keeping form is its
+remainder); the rest is rows 228, 229, 231 (split into 312–315, 314–315 open) and 310.
 
 Three residues remain open in the whole registry — `R-012` (Posit 2’s, a design posit constrained from
 above), `R-016` (open mathematics, with a Lean shape) and `R-019` (the prediction programme, not this
