@@ -15530,4 +15530,31 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.one_sub_le_measure_synDecode_eq
 
+-- SyndromeDecoder (BACKLOG #317's amendment to #316, 2026-11-07): goodness relative to the
+-- leading recovery, the run with its recoveries, the relative join.
+
+/-- info: 'QuantumInfo.IsGoodAfter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsGoodAfter
+
+/-- info: 'QuantumInfo.IsGoodRect.isGoodAfter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsGoodRect.isGoodAfter
+
+/-- info: 'QuantumInfo.recRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.recRun
+
+/-- info: 'QuantumInfo.recRun_eq_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.recRun_eq_apply
+
+/-- info: 'QuantumInfo.decode_recRun_of_isGoodAfter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.decode_recRun_of_isGoodAfter
+
+/-- info: 'QuantumInfo.one_sub_le_measure_decode_recRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.one_sub_le_measure_decode_recRun
+
 end CSD.Tests.AxiomAudit

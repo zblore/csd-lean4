@@ -6031,4 +6031,95 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_rect_correct_clean
 
+/-! #317: Steane's decoder that keeps the syndrome; transversal S and the decoder
+(SteaneSyndromeDecoder.lean) -/
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.synCorr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.synCorr
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneW' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneW
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneW_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneW_conjTranspose
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.phaseProj_zero_mul_steaneEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.phaseProj_zero_mul_steaneEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneEnc_conjTranspose_mul_bitProj_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneEnc_conjTranspose_mul_bitProj_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneEnc_conjTranspose_mul_phaseProj_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneEnc_conjTranspose_mul_phaseProj_zero
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneEnc_conjTranspose_mul_pauliMat_mul_steaneEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneEnc_conjTranspose_mul_pauliMat_mul_steaneEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.synCorr_steaneEnc_orthonormal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.synCorr_steaneEnc_orthonormal
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneW_mul_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneW_mul_conjTranspose
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneW_conjTranspose_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneW_conjTranspose_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.synDecode_steaneW' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.synDecode_steaneW
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.recKraus_conjTranspose_mul_steaneEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.recKraus_conjTranspose_mul_steaneEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneDecode_eq_synDecode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneDecode_eq_synDecode
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sGateM_apply_eq_ite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sGateM_apply_eq_ite
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sGateM_conj_onePauli' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sGateM_conj_onePauli
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sTransversal_conj_pauliMat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sTransversal_conj_pauliMat
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sTransversal_conj_pauliMat_unitErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sTransversal_conj_pauliMat_unitErr
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneDecode_pauliMat_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneDecode_pauliMat_conj
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pauliMat_zero_rowComb_mul_steaneEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pauliMat_zero_rowComb_mul_steaneEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneEnc_conjTranspose_mul_logicalZ_stab' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneEnc_conjTranspose_mul_logicalZ_stab
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.plusDensity' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.plusDensity
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.exists_steaneDecode_sTransversal_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.exists_steaneDecode_sTransversal_ne
+
 end CSD.Tests.AxiomAudit

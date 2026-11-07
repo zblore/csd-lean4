@@ -50,6 +50,20 @@ it does to the syndrome. A bad rectangle's `Φ̃` is an arbitrary map on the log
   badness) is good, the decoded run of `N` rectangles is the ideal logical run on every input with
   probability at least `1 − N A p²`**.
 
+## Goodness relative to the leading recovery (BACKLOG #317's amendment, 2026-11-07)
+
+`IsGoodRect` asks `D ∘ Rect = 𝒰 ∘ D` of **every** input; at the Steane code the transversal `S`
+fails it (`exists_steaneDecode_sTransversal_ne`, BACKLOG #317). Aliferis–Gottesman–Preskill ask it
+only of what the leading recovery outputs:
+
+* `IsGoodAfter D U T G T'` — `D(T'(G(T ρ))) = U D(T ρ) U†` for every `ρ`;
+  `IsGoodRect.isGoodAfter`;
+* `recRun`, `recRun_eq_apply` — the run with its recoveries, rectangle `j` being `T j`, `G j`,
+  `T (j + 1)`;
+* ★★★ `decode_recRun_of_isGoodAfter` — **rectangles good after their leading recovery compose**:
+  each leading recovery is the previous trailing one;
+* ★★★ `one_sub_le_measure_decode_recRun` — the join with #318 in the relative form, `1 − N A p²`.
+
 ## Honest scope
 
 ⚠️ **Maps, not channels**, as in #62 (d1), #96 and #233: nothing here imposes positivity or trace
@@ -229,6 +243,82 @@ theorem one_sub_le_measure_synDecode_eq [DecidableEq m] [DecidableEq s] {ι : Ty
     intro j' hj'
     rw [Finset.mem_singleton.1 hj']
     exact hω
+
+/-! ### Goodness relative to the leading recovery (BACKLOG #317's amendment) -/
+
+/-- **A rectangle good after its leading recovery** — Aliferis–Gottesman–Preskill's correctness:
+`D(T'(G(T ρ))) = U D(T ρ) U†` for every input `ρ`, with `T` the leading recovery, `G` the gadget and
+`T'` the trailing recovery. Weaker than `IsGoodRect` for `T' ∘ G` (which asks it of every input of
+the gadget, not only of what a recovery outputs): at the Steane code the transversal `S` is good in
+this sense and not in that one. -/
+def IsGoodAfter {n m : Type*} [Fintype m] (D : Matrix n n ℂ → Matrix m m ℂ) (U : Matrix m m ℂ)
+    (T G T' : Matrix n n ℂ → Matrix n n ℂ) : Prop :=
+  ∀ ρ, D (T' (G (T ρ))) = U * D (T ρ) * Uᴴ
+
+omit [DecidableEq n] in
+/-- An every-input good rectangle is good after any leading recovery. -/
+theorem IsGoodRect.isGoodAfter {W : Matrix (m × s) n ℂ} {U : Matrix m m ℂ}
+    {T G T' : Matrix n n ℂ → Matrix n n ℂ} (h : IsGoodRect W U (T' ∘ G)) :
+    IsGoodAfter (synDecode W) U T G T' :=
+  fun ρ => h (T ρ)
+
+/-- **The run with its recoveries**: the leading recovery `T 0`, then gadget `j` and recovery
+`T (j + 1)` for each `j`. Rectangle `j` is `T j`, `G j`, `T (j + 1)`; neighbours share a
+recovery. -/
+def recRun {n : Type*} (T G : ℕ → Matrix n n ℂ → Matrix n n ℂ) :
+    ℕ → Matrix n n ℂ → Matrix n n ℂ
+  | 0, ρ => T 0 ρ
+  | k + 1, ρ => T (k + 1) (G k (recRun T G k ρ))
+
+/-- The run after `k` steps is the output of recovery `k`. -/
+theorem recRun_eq_apply {n : Type*} (T G : ℕ → Matrix n n ℂ → Matrix n n ℂ) :
+    ∀ (k : ℕ) (ρ : Matrix n n ℂ), ∃ Y, recRun T G k ρ = T k Y
+  | 0, ρ => ⟨ρ, rfl⟩
+  | k + 1, ρ => ⟨G k (recRun T G k ρ), rfl⟩
+
+/-- ★★★ **Rectangles good after their leading recovery compose**: the decoded run is the ideal
+logical run applied to the decoded output of the first recovery, on every input. Each rectangle's
+leading recovery is the previous one's trailing recovery, so the relative form is all the chain
+needs. -/
+theorem decode_recRun_of_isGoodAfter {n m : Type*} [Fintype m] {D : Matrix n n ℂ → Matrix m m ℂ}
+    {U : ℕ → Matrix m m ℂ} {T G : ℕ → Matrix n n ℂ → Matrix n n ℂ} {N : ℕ}
+    (h : ∀ j < N, IsGoodAfter D (U j) (T j) (G j) (T (j + 1))) :
+    ∀ k ≤ N, ∀ ρ, D (recRun T G k ρ) = ovIdeal (fun j Y => U j * Y * (U j)ᴴ) k (D (T 0 ρ))
+  | 0, _, _ => rfl
+  | k + 1, hk, ρ => by
+    obtain ⟨Y, hY⟩ := recRun_eq_apply T G k ρ
+    show D (T (k + 1) (G k (recRun T G k ρ))) = _
+    rw [hY, h k (by omega) Y, ← hY, decode_recRun_of_isGoodAfter h k (by omega) ρ]
+    rfl
+
+/-- ★★★ **The join in the relative form**: under local stochastic noise of parameter `p` with at
+most `A` malignant pairs per rectangle, if every rectangle that is not bad is good after its leading
+recovery, the decoded run of `N` rectangles is the ideal logical run on every input with
+probability at least `1 − N A p²`. -/
+theorem one_sub_le_measure_decode_recRun {n m : Type*} [Fintype m] {ι : Type*} [DecidableEq ι]
+    {D : Matrix n n ℂ → Matrix m m ℂ} {U : ℕ → Matrix m m ℂ}
+    (T G : (ι → Bool) → ℕ → Matrix n n ℂ → Matrix n n ℂ) (C : RectChain ι)
+    {μ : Measure (ι → Bool)} [IsProbabilityMeasure μ] {p : ℝ≥0∞} (hμ : IsLocalStochastic μ p)
+    {A : ℕ} (hA : ∀ j, (C.M j).card ≤ A) {N : ℕ}
+    (hgood : ∀ ω, ∀ j < N, C.badSeq ω j = false →
+      IsGoodAfter D (U j) (T ω j) (G ω j) (T ω (j + 1))) :
+    1 - (N : ℝ≥0∞) * ((A : ℝ≥0∞) * p ^ 2)
+      ≤ μ {ω | ∀ ρ, D (recRun (T ω) (G ω) N ρ)
+          = ovIdeal (fun j Y => U j * Y * (U j)ᴴ) N (D (T ω 0 ρ))} := by
+  have h := one_sub_le_measure_output_eq μ (fun j : Fin N => {ω | C.badSeq ω j = true})
+    (out := fun ω => ∀ ρ, D (recRun (T ω) (G ω) N ρ)
+      = ovIdeal (fun j Y => U j * Y * (U j)ᴴ) N (D (T ω 0 ρ))) (ideal := True)
+    (fun ω hω => eq_true fun ρ =>
+      decode_recRun_of_isGoodAfter (fun j hj => hgood ω j hj (by simpa using hω ⟨j, hj⟩))
+        N le_rfl ρ)
+    (fun j => by
+      have h := C.measure_forall_badSeq_le hμ hA {(j : ℕ)}
+      rw [Finset.card_singleton, pow_one] at h
+      refine (measure_mono fun ω hω => ?_).trans h
+      intro j' hj'
+      rw [Finset.mem_singleton.1 hj']
+      exact hω)
+  simpa only [eq_iff_iff, iff_true] using h
 
 end QuantumInfo
 
