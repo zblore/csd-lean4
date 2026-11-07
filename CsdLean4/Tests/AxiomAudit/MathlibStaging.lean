@@ -263,6 +263,7 @@ public import CsdLean4.Mathlib.QuantumInfo.HolevoBound
 public import CsdLean4.Mathlib.QuantumInfo.JointRegister
 public import CsdLean4.Mathlib.QuantumInfo.KnillLaflamme
 public import CsdLean4.Mathlib.QuantumInfo.LevelReduction
+public import CsdLean4.Mathlib.QuantumInfo.LocalStochastic
 public import CsdLean4.Mathlib.QuantumInfo.Magic
 public import CsdLean4.Mathlib.QuantumInfo.MagicInjection
 public import CsdLean4.Mathlib.QuantumInfo.MultiControlled
@@ -15374,4 +15375,103 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'QuantumInfo.exists_kraus_mul_mul_eq_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.exists_kraus_mul_mul_eq_smul
+-- LocalStochastic (BACKLOG #318, split from #314, 2026-11-07): local stochastic noise, one
+-- level of reduction (p -> A p^2), the recursion and the threshold.
+
+/-- info: 'QuantumInfo.IsLocalStochastic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsLocalStochastic
+
+/-- info: 'QuantumInfo.IsLocalStochastic.mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsLocalStochastic.mono
+
+/-- info: 'QuantumInfo.isLocalStochastic_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isLocalStochastic_pi
+
+/-- info: 'QuantumInfo.IsLocalStochastic.measure_exists_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsLocalStochastic.measure_exists_le
+
+/-- info: 'QuantumInfo.RectChain' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain
+
+/-- info: 'QuantumInfo.RectChain.malignant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.malignant
+
+/-- info: 'QuantumInfo.RectChain.badSeq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.badSeq
+
+/-- info: 'QuantumInfo.RectChain.witFam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.witFam
+
+/-- info: 'QuantumInfo.RectChain.witFam_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.witFam_subset
+
+/-- info: 'QuantumInfo.RectChain.exists_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.exists_witness
+
+/-- info: 'QuantumInfo.RectChain.disjoint_of_witFam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.disjoint_of_witFam
+
+/-- info: 'QuantumInfo.RectChain.measure_forall_badSeq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.measure_forall_badSeq_le
+
+/-- info: 'QuantumInfo.RectChain.reducePat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.reducePat
+
+/-- info: 'QuantumInfo.RectChain.measurable_reducePat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.measurable_reducePat
+
+/-- info: 'QuantumInfo.RectChain.isLocalStochastic_map_reducePat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.isLocalStochastic_map_reducePat
+
+/-- info: 'QuantumInfo.lsBound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.lsBound
+
+/-- info: 'QuantumInfo.lsBound_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.lsBound_zero
+
+/-- info: 'QuantumInfo.lsBound_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.lsBound_succ
+
+/-- info: 'QuantumInfo.lsBound_induction' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.lsBound_induction
+
+/-- info: 'QuantumInfo.ofReal_codeCapacityBound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ofReal_codeCapacityBound
+
+/-- info: 'QuantumInfo.tendsto_lsBound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.tendsto_lsBound
+
+/-- info: 'QuantumInfo.RectChain.prevRec' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.prevRec
+
+/-- info: 'QuantumInfo.RectChain.ofSteps' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.ofSteps
+
+/-- info: 'QuantumInfo.RectChain.ofSteps_card_M_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectChain.ofSteps_card_M_le
+
 end CSD.Tests.AxiomAudit

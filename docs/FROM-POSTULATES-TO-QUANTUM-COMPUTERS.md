@@ -422,7 +422,10 @@ the `CNOT̄` extended rectangle, a faulty leading recovery included, landed on 2
 day (row 312, `steane_rect_correct`); the fault-free recovery is decode-then-encode on every
 input, so a rectangle after it is a channel on the decoded qubit (row 313, `steane_badRect`;
 with a faulty leading recovery that form is false, and the syndrome-keeping form is its
-remainder); the rest is rows 228, 229, 231 (split into 312–315, 314–315 open) and 310.
+remainder); local stochastic noise survives one level of reduction with `p ↦ A p²`, and below
+`p < 1/A` the recursion tends to `0` (row 318, `isLocalStochastic_map_reducePat`,
+`tendsto_lsBound`); the rest is rows 228, 229, 231 (split into 312–315; 314 split into
+316–319, with 316, 317, 319 and 315 open) and 310.
 
 Three residues remain open in the whole registry — `R-012` (Posit 2’s, a design posit constrained from
 above), `R-016` (open mathematics, with a Lean shape) and `R-019` (the prediction programme, not this
