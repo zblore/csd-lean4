@@ -424,8 +424,11 @@ input, so a rectangle after it is a channel on the decoded qubit (row 313, `stea
 with a faulty leading recovery that form is false, and the syndrome-keeping form is its
 remainder); local stochastic noise survives one level of reduction with `p ↦ A p²`, and below
 `p < 1/A` the recursion tends to `0` (row 318, `isLocalStochastic_map_reducePat`,
-`tendsto_lsBound`); the rest is rows 228, 229, 231 (split into 312–315; 314 split into
-316–319, with 316, 317, 319 and 315 open) and 310.
+`tendsto_lsBound`); a decoder that keeps the syndrome makes the decoded run exact, good
+rectangles are exactly the ones ideal on the logical register, and joined with that noise the
+decoded run is ideal with probability at least `1 − N A p²` (row 316,
+`one_sub_le_measure_synDecode_eq`); the rest is rows 228, 229, 231 (split into 312–315; 314
+split into 316–319, with 317, 319 and 315 open) and 310.
 
 Three residues remain open in the whole registry — `R-012` (Posit 2’s, a design posit constrained from
 above), `R-016` (open mathematics, with a Lean shape) and `R-019` (the prediction programme, not this

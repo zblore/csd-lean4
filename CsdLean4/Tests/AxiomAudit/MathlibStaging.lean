@@ -264,6 +264,7 @@ public import CsdLean4.Mathlib.QuantumInfo.JointRegister
 public import CsdLean4.Mathlib.QuantumInfo.KnillLaflamme
 public import CsdLean4.Mathlib.QuantumInfo.LevelReduction
 public import CsdLean4.Mathlib.QuantumInfo.LocalStochastic
+public import CsdLean4.Mathlib.QuantumInfo.SyndromeDecoder
 public import CsdLean4.Mathlib.QuantumInfo.Magic
 public import CsdLean4.Mathlib.QuantumInfo.MagicInjection
 public import CsdLean4.Mathlib.QuantumInfo.MultiControlled
@@ -15473,5 +15474,60 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'QuantumInfo.RectChain.ofSteps_card_M_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.RectChain.ofSteps_card_M_le
+
+-- SyndromeDecoder (BACKLOG #316, split from #314, 2026-11-07): the decoder between
+-- rectangles keeping the syndrome; good rectangles; the join with local stochastic noise.
+
+/-- info: 'QuantumInfo.synDecode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.synDecode
+
+/-- info: 'QuantumInfo.liftRect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.liftRect
+
+/-- info: 'QuantumInfo.liftRect_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.liftRect_comp
+
+/-- info: 'QuantumInfo.conj_ovIdeal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.conj_ovIdeal
+
+/-- info: 'QuantumInfo.synDecode_ovIdeal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.synDecode_ovIdeal
+
+/-- info: 'QuantumInfo.IsGoodRect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsGoodRect
+
+/-- info: 'QuantumInfo.IsLogicalIdeal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsLogicalIdeal
+
+/-- info: 'QuantumInfo.isGoodRect_iff_isLogicalIdeal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isGoodRect_iff_isLogicalIdeal
+
+/-- info: 'QuantumInfo.IsLogicalIdeal.comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsLogicalIdeal.comp
+
+/-- info: 'QuantumInfo.isLogicalIdeal_kron_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isLogicalIdeal_kron_one
+
+/-- info: 'QuantumInfo.partialTraceRight_ovIdeal_of_isLogicalIdeal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.partialTraceRight_ovIdeal_of_isLogicalIdeal
+
+/-- info: 'QuantumInfo.synDecode_ovIdeal_of_good' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.synDecode_ovIdeal_of_good
+
+/-- info: 'QuantumInfo.one_sub_le_measure_synDecode_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.one_sub_le_measure_synDecode_eq
 
 end CSD.Tests.AxiomAudit
