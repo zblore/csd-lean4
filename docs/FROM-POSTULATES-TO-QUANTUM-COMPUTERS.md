@@ -418,7 +418,9 @@ error as a hypothesis — discharged for one fault at any of its locations (rows
 since 2026-11-05 the machine over `H̄`, `S̄`, `X̄`, `Z̄`, `CNOT̄`, `T̄` is in it at level one
 (rows 305 and 307, on two logical qubits with a third block, universal there by row 308);
 the `CNOT̄` extended rectangle, a faulty leading recovery included, landed on 2026-11-07
-(row 302, `steane_pair_exRec`); the rest is rows 228, 229, 231 (split into 312–315) and 310.
+(row 302, `steane_pair_exRec`), and one correct rectangle under an ideal decoder the same
+day (row 312, `steane_rect_correct`); the rest is rows 228, 229, 231 (split into 312–315,
+313–315 open) and 310.
 
 Three residues remain open in the whole registry — `R-012` (Posit 2’s, a design posit constrained from
 above), `R-016` (open mathematics, with a Lean shape) and `R-019` (the prediction programme, not this
