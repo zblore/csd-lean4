@@ -6122,4 +6122,79 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.exists_steaneDecode_sTransversal_ne
 
+/-! #320: the decoder commutes with the gates on single-type syndromes; rectangles good
+after their leading recovery (SteaneSingleType.lean) -/
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.SingleType' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.SingleType
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.decode_add_decode_of_singleType' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.decode_add_decode_of_singleType
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.IsSingleTypeOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.IsSingleTypeOp
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.isSingleTypeOp_of_steaneProj_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.isSingleTypeOp_of_steaneProj_mul
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.isSingleTypeOp_recKraus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.isSingleTypeOp_recKraus
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.sum_synCorr_steaneEnc_mul_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.sum_synCorr_steaneEnc_mul_conjTranspose
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steaneDecode_apply_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steaneDecode_apply_eq_sum
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.synPerm' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.synPerm
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.synPerm_synPerm' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.synPerm_synPerm
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.synPerm_injective' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.synPerm_injective
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.star_mul_self_prod_I' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.star_mul_self_prod_I
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.star_mul_self_signChar' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.star_mul_self_signChar
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.exists_conj_synCorr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.exists_conj_synCorr
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.exists_unit_blockKron_mul_steaneEnc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.exists_unit_blockKron_mul_steaneEnc
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.steaneDecode_conj_of_isSingleTypeOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.steaneDecode_conj_of_isSingleTypeOp
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.ConcatGadget.steaneDecode_conj_channel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.ConcatGadget.steaneDecode_conj_channel
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.RecNoise.SingleTypeOut' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.RecNoise.SingleTypeOut
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_rect_isGoodAfter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_rect_isGoodAfter
+
 end CSD.Tests.AxiomAudit
