@@ -378,6 +378,7 @@ public import CsdLean4.Empirical.QM.QEC.SteaneMachineConcat
 public import CsdLean4.Empirical.QM.QEC.SteaneLogicalS
 public import CsdLean4.Empirical.QM.QEC.SteaneRecursiveSim
 public import CsdLean4.Empirical.QM.QEC.SteanePairMachine
+public import CsdLean4.Empirical.QM.QEC.SteanePairExRec
 public import CsdLean4.Empirical.QM.QEC.SteaneInjection
 public import CsdLean4.Empirical.QM.QEC.SteaneUniversalMachine
 public import CsdLean4.Empirical.QM.QEC.SteaneTripleMachine

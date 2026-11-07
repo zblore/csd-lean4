@@ -10835,6 +10835,23 @@ KnillLaflamme.lean, 2026-09-27, BACKLOG #86) -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.isCorrectedStep_exRec_leading
 
+-- #302: the two-set form (input deviations in D1, output in D2)
+/-- info: 'QuantumInfo.PropagatesInto' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.PropagatesInto
+
+/-- info: 'QuantumInfo.PropagatesD.propagatesInto' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.PropagatesD.propagatesInto
+
+/-- info: 'QuantumInfo.IsRecovery.mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.IsRecovery.mono
+
+/-- info: 'QuantumInfo.isCorrectedStep_exRec_leading_of_propagatesInto' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.isCorrectedStep_exRec_leading_of_propagatesInto
+
 /-- info: 'QuantumInfo.isCorrectedStep_exRec_gadget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.isCorrectedStep_exRec_gadget

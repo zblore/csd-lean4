@@ -5688,4 +5688,71 @@ SteaneConcat.lean, 2026-09-27, BACKLOG #86) -/
 /-- info: 'CSD.Empirical.QM.QEC.Steane.steane_machine_recursive' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.Empirical.QM.QEC.Steane.steane_machine_recursive
+
+/-! #302: the CNOT-bar extended rectangle (SteanePairExRec.lean) -/
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cnotT_mul_pairPauli_mul_cnotT' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cnotT_mul_pairPauli_mul_cnotT
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.bitOn' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.bitOn
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.bitOn_add' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.bitOn_add
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.errAt' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.errAt
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.errA_errAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.errA_errAt
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.errB_errAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.errB_errAt
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.singleCoeff_eq_zero_of_forall_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.singleCoeff_eq_zero_of_forall_ne
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cnotT_mul_pairFam_errAt_mul_cnotT' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cnotT_mul_pairFam_errAt_mul_cnotT
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cnotT_mul_blockFault_mul_cnotT_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cnotT_mul_blockFault_mul_cnotT_mem
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pairLocWeightOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pairLocWeightOne
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.pairLocWeightOne_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.pairLocWeightOne_subset
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.conj_mem_pairMix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.conj_mem_pairMix
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.cnotT_mul_blockFault_mul_cnotT_mem_pairSpan' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.cnotT_mul_blockFault_mul_cnotT_mem_pairSpan
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairGadget.propagatesInto_cnot' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairGadget.propagatesInto_cnot
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.PairGadget.propagatesInto_pairMix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.PairGadget.propagatesInto_pairMix
+
+/-- info: 'CSD.Empirical.QM.QEC.Steane.steane_pair_exRec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.Empirical.QM.QEC.Steane.steane_pair_exRec
+
 end CSD.Tests.AxiomAudit

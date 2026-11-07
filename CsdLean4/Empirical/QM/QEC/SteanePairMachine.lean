@@ -61,7 +61,8 @@ block's qubit `q₀`, so with a target-block error already on `q₁ ≠ q₀` th
 `PropagatesD pairProj pairWeightOne` is expected to fail. The extended rectangle for `CNOT̄`
 (#96's `isCorrectedStep_exRec_leading`) needs a two-set form: input errors in at most one block,
 output weight one per block. The machine does not use it: `steane_pair_machine` runs on
-`isCorrectedStep_rect` with an ideal recovery, as #207 does. Residue rowed.
+`isCorrectedStep_rect` with an ideal recovery, as #207 does. ▸ The two-set form and the `CNOT̄`
+extended rectangle are `SteanePairExRec.lean` (`steane_pair_exRec`, BACKLOG #302).
 
 ⚠️ **As in #207:** level one, an ideal recovery (faulty recoveries are `SteaneFaultyRecovery` and
 `SteaneOverlapMachine`, on one block), independent unitary faults, ideal gadgets as maps and the

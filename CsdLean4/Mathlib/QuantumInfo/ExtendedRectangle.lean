@@ -45,6 +45,12 @@ correct in order to prove it.
   recovery is the faulty piece, the gadget and the trailing recovery act ideally, and the rectangle is
   still a corrected step. Transversality is what makes this work: the gadget carries the leading
   recovery's error along as another correctable error, and the trailing recovery removes it;
+* `PropagatesInto P D₁ D₂`, `PropagatesD.propagatesInto`, `IsRecovery.mono` — **the two-set form**:
+  a gadget may carry a deviation from one correctable set `D₁` into a larger one `D₂` (a transversal
+  two-block gate copies an error from one block onto the other); ★★★
+  `isCorrectedStep_exRec_leading_of_propagatesInto` — the leading-recovery instance with the
+  recovery's deviation in `D₁` and the trailing recovery correcting `D₂`;
+  `isCorrectedStep_exRec_leading` is its one-set case;
 * ★★★ `isCorrectedStep_exRec_gadget` — the same when the **gadget** is the faulty piece;
 * ★★★ `isCorrectedStep_exRec_of_good` — the two together: **a good extended rectangle, whose single
   fault is anywhere but the trailing recovery, is a corrected step**;
@@ -74,7 +80,7 @@ the rectangle hands on a correctable deviation. That the resulting *chain* of ov
 closes — the level-reduction step — is **not** proved here and is #97. ▸ The chain of overlapping
 rectangles is `OverlappingRectangles.lean` (`IsFaultChain.ovRun_spec`, BACKLOG ~~#233~~).
 
-⚠️ **Transversality is assumed.** `PropagatesD` is a hypothesis. The corpus has it concretely for the
+⚠️ **Transversality is assumed.** `PropagatesD` (and `PropagatesInto`) is a hypothesis. The corpus has it concretely for the
 Steane transversal `CNOT` (`cnotT_conj_pairEnc_code`), but no instance is plugged in below.
 
 ⚠️ **No instance at a concrete code here.** The theorems *produce* `IsCorrectedStep` instances from
@@ -128,6 +134,26 @@ def PropagatesD (P : Matrix n n ℂ) (D : Set (Matrix n n ℂ → Matrix n n ℂ
     (ideal : Matrix n n ℂ → Matrix n n ℂ) : Prop :=
   ∀ E ∈ D, ∀ ρ, IsCodeState P ρ → ∃ E' ∈ D, ideal (E ρ) = E' (ideal ρ)
 
+/-- **Transversality into a second set**: the gadget carries a deviation in `D₁` of a code state to a
+deviation in `D₂` of its own output. `PropagatesD P D` is the case `D₁ = D₂ = D`. -/
+def PropagatesInto (P : Matrix n n ℂ) (D₁ D₂ : Set (Matrix n n ℂ → Matrix n n ℂ))
+    (ideal : Matrix n n ℂ → Matrix n n ℂ) : Prop :=
+  ∀ E ∈ D₁, ∀ ρ, IsCodeState P ρ → ∃ E' ∈ D₂, ideal (E ρ) = E' (ideal ρ)
+
+/-- One-set transversality gives the two-set form for any smaller input set and larger output set. -/
+theorem PropagatesD.propagatesInto {P : Matrix n n ℂ} {D D₁ D₂ : Set (Matrix n n ℂ → Matrix n n ℂ)}
+    {ideal : Matrix n n ℂ → Matrix n n ℂ} (h : PropagatesD P D ideal) (h₁ : D₁ ⊆ D)
+    (h₂ : D ⊆ D₂) : PropagatesInto P D₁ D₂ ideal := by
+  intro E hE ρ hρ
+  obtain ⟨E', hE', hEq⟩ := h E (h₁ hE) ρ hρ
+  exact ⟨E', h₂ hE', hEq⟩
+
+/-- A recovery for a set is a recovery for every smaller set. -/
+theorem IsRecovery.mono {P : Matrix n n ℂ} {R : Matrix n n ℂ → Matrix n n ℂ}
+    {D D' : Set (Matrix n n ℂ → Matrix n n ℂ)} (hR : IsRecovery P R D) (h : D' ⊆ D) :
+    IsRecovery P R D' :=
+  fun E hE => hR E (h hE)
+
 /-! ### Rectangles -/
 
 /-- **The rectangle**: a gadget followed by its recovery. -/
@@ -167,11 +193,13 @@ correctable deviation instead of a clean code state — while the gadget and the
 ideally. The rectangle is still a corrected step: transversality carries the leading fault through the
 gadget as another correctable error, and the trailing recovery removes it.
 
-This is the step #62 (d1)'s `correctedRun_eq_idealRun` was left abstract for. -/
-theorem isCorrectedStep_exRec_leading {P : Matrix n n ℂ} {D : Set (Matrix n n ℂ → Matrix n n ℂ)}
-    {R₁ R₂ ideal : Matrix n n ℂ → Matrix n n ℂ}
-    (hR₁ : DeviatesBy P D id R₁) (hprop : PropagatesD P D ideal) (hR₂ : IsRecovery P R₂ D)
-    (hpres : ∀ ρ, IsCodeState P ρ → IsCodeState P (ideal ρ)) :
+This is the step #62 (d1)'s `correctedRun_eq_idealRun` was left abstract for. Stated with two
+sets: the leading recovery's deviation lies in `D₁`, the gadget carries it into `D₂`, and the
+trailing recovery corrects `D₂`. -/
+theorem isCorrectedStep_exRec_leading_of_propagatesInto {P : Matrix n n ℂ}
+    {D₁ D₂ : Set (Matrix n n ℂ → Matrix n n ℂ)} {R₁ R₂ ideal : Matrix n n ℂ → Matrix n n ℂ}
+    (hR₁ : DeviatesBy P D₁ id R₁) (hprop : PropagatesInto P D₁ D₂ ideal)
+    (hR₂ : IsRecovery P R₂ D₂) (hpres : ∀ ρ, IsCodeState P ρ → IsCodeState P (ideal ρ)) :
     IsCorrectedStep P ideal (exRec R₁ ideal R₂) where
   recovers ρ hρ := by
     obtain ⟨E, hED, hEq⟩ := hR₁ ρ hρ
@@ -179,6 +207,16 @@ theorem isCorrectedStep_exRec_leading {P : Matrix n n ℂ} {D : Set (Matrix n n 
     obtain ⟨E', hE'D, hEq'⟩ := hprop E hED ρ hρ
     rw [exRec_apply, hEq, hEq', hR₂ E' hE'D (ideal ρ) (hpres ρ hρ)]
   preserves := hpres
+
+/-- ★★★ **The one-set case**: one correctable set `D` for the leading recovery's deviation, the
+gadget's transversality and the trailing recovery. -/
+theorem isCorrectedStep_exRec_leading {P : Matrix n n ℂ} {D : Set (Matrix n n ℂ → Matrix n n ℂ)}
+    {R₁ R₂ ideal : Matrix n n ℂ → Matrix n n ℂ}
+    (hR₁ : DeviatesBy P D id R₁) (hprop : PropagatesD P D ideal) (hR₂ : IsRecovery P R₂ D)
+    (hpres : ∀ ρ, IsCodeState P ρ → IsCodeState P (ideal ρ)) :
+    IsCorrectedStep P ideal (exRec R₁ ideal R₂) :=
+  isCorrectedStep_exRec_leading_of_propagatesInto hR₁
+    (hprop.propagatesInto subset_rfl subset_rfl) hR₂ hpres
 
 /-- ★★★ **The instance when the gadget is the faulty piece.** The leading recovery sees a clean code
 state and does nothing; the gadget's fault is removed by the trailing recovery. -/
