@@ -166,6 +166,9 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceCritic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricTensor
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryMomentMap
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUncertainty
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFSLength
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFSDistance
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSpeedLimit
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -15985,5 +15988,192 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.fsMetric_velocity_schrodingerUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.fsMetric_velocity_schrodingerUnitary_smul
+-- ProjectiveSpaceFSLength (BACKLOG #330 first part, geometric QM item 5, 2026-11-08): the homogeneous metric does not see the lift; the speed of a projected curve; (dP)^2 <= P(1-P) g.
+
+/-- info: 'Projectivization.fsInnerHom_add_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsInnerHom_add_smul_left
+
+/-- info: 'Projectivization.fsInnerHom_add_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsInnerHom_add_smul_right
+
+/-- info: 'Projectivization.fsInnerHom_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsInnerHom_smul
+
+/-- info: 'Projectivization.fsInnerHom_lift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsInnerHom_lift
+
+/-- info: 'Projectivization.fsInnerHom_chartVelCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsInnerHom_chartVelCLM
+
+/-- info: 'Projectivization.fsMetric_mfderiv_projCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric_mfderiv_projCurve
+
+/-- info: 'Projectivization.perpTo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.perpTo
+
+/-- info: 'Projectivization.ofReal_norm_sq_ne_zero'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.ofReal_norm_sq_ne_zero'
+
+/-- info: 'Projectivization.inner_self_eq_ofReal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_self_eq_ofReal
+
+/-- info: 'Projectivization.inner_perpTo_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_perpTo_self
+
+/-- info: 'Projectivization.norm_perpTo_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_perpTo_sq
+
+/-- info: 'Projectivization.dTransProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.dTransProb
+
+/-- info: 'Projectivization.hasDerivAt_transProbVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasDerivAt_transProbVec
+
+/-- info: 'Projectivization.dTransProb_eq_perp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.dTransProb_eq_perp
+
+/-- info: 'Projectivization.sq_dTransProb_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.sq_dTransProb_le
+-- ProjectiveSpaceFSDistance (BACKLOG #330, geometric QM item 5, 2026-11-08): Mathlib's riemannianEDist for the Fubini-Study norm is 2 arccos sqrt P; great circles attain it.
+
+/-- info: 'Projectivization.fsENorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsENorm
+
+/-- info: 'Projectivization.fsENorm_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsENorm_apply
+
+/-- info: 'Projectivization.fsPathLength' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsPathLength
+
+/-- info: 'Projectivization.fsEDist' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsEDist
+
+/-- info: 'Projectivization.fsPathLength_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsPathLength_eq
+
+/-- info: 'Projectivization.continuous_transProb_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.continuous_transProb_right
+
+/-- info: 'Projectivization.fsAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsAngle
+
+/-- info: 'Projectivization.fsAngle_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsAngle_self
+
+/-- info: 'Projectivization.fsAngle_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsAngle_nonneg
+
+/-- info: 'Projectivization.fsAngle_le_pi_div_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsAngle_le_pi_div_two
+
+/-- info: 'Projectivization.continuous_fsAngle_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.continuous_fsAngle_right
+
+/-- info: 'Projectivization.hasDerivAt_chartFun_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasDerivAt_chartFun_comp
+
+/-- info: 'Projectivization.hasDerivAt_fsAngle_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasDerivAt_fsAngle_comp
+
+/-- info: 'Projectivization.ofReal_two_mul_sub_le_fsPathLength' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.ofReal_two_mul_sub_le_fsPathLength
+
+/-- info: 'Projectivization.ofReal_two_mul_fsAngle_le_fsPathLength_of' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.ofReal_two_mul_fsAngle_le_fsPathLength_of
+
+/-- info: 'Projectivization.ofReal_two_mul_fsAngle_le_fsPathLength' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.ofReal_two_mul_fsAngle_le_fsPathLength
+
+/-- info: 'Projectivization.fsModelMetric_smul_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelMetric_smul_smul
+
+/-- info: 'Projectivization.fsMetric_smul_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric_smul_smul
+
+/-- info: 'Projectivization.fsENormSMulClass' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsENormSMulClass
+
+/-- info: 'Projectivization.contMDiff_projCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_projCurve
+
+/-- info: 'Projectivization.inner_orthonormal_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_orthonormal_pair
+
+/-- info: 'Projectivization.fsPathLength_greatCircle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsPathLength_greatCircle
+
+/-- info: 'Projectivization.transProb_eq_norm_inner_normalize_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.transProb_eq_norm_inner_normalize_sq
+
+/-- info: 'Projectivization.exists_fsPathLength_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_fsPathLength_eq
+
+/-- info: 'Projectivization.fsEDist_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsEDist_eq
+
+/-- info: 'Projectivization.fsEDist_le_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsEDist_le_pi
+
+/-- info: 'Projectivization.fsEDist_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsEDist_eq_zero_iff
+-- ProjectiveSpaceSpeedLimit (BACKLOG #331, geometric QM item 4 second half, 2026-11-08): arccos sqrt P(p, exp(-iTH) p) <= T Delta H.
+
+/-- info: 'Projectivization.hasMFDerivAt_schrodingerUnitary_smul_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasMFDerivAt_schrodingerUnitary_smul_mul
+
+/-- info: 'Projectivization.fsPathLength_schrodingerUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsPathLength_schrodingerUnitary_smul
+
+/-- info: 'Projectivization.fsAngle_schrodingerUnitary_smul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsAngle_schrodingerUnitary_smul_le
+
+/-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.arccos_div_le_time
 
 end CSD.Tests.AxiomAudit
