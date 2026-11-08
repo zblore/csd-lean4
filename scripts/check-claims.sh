@@ -988,7 +988,13 @@ isSymplectic"
 #   EARNED; crossField_eq_hamiltonianVectorField, hamiltonianFlow_crossEnergy, hamiltonianFlow_coupledFlow,
 #   map_hamiltonianFlow_coupledFlow and coupled_hamiltonian identify explicit flows with
 #   IsSymplectic.hamiltonianFlow by uniqueness of integral curves — EARNED.)
+#   (2026-11-08, #325: expectation_isHamiltonianVectorField proves ι_X ω = d⟨B⟩ for X = -½ X_B on
+#   fsForm, from schrodingerField_isHamiltonianVectorField by linearity — EARNED;
+#   poissonBracket_schrodingerHamiltonian is the bracket ω(X_A, X_B) of the already-declared energy
+#   functions −2⟨A⟩, −2⟨B⟩, computed as −2⟨−i[A, B]⟩ — EARNED.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
+expectation_isHamiltonianVectorField
+poissonBracket_schrodingerHamiltonian
 toEuclideanLin_fieldHamiltonian
 kahlerFstSector_projectiveLaw
 kahlerFstSector_epistemicMeasure_projectiveLaw

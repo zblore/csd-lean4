@@ -161,6 +161,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceHamilt
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMomentMap
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerFlow
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerHolomorphic
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonBracket
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -15651,5 +15652,102 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'QuantumInfo.RectFamily.isLocalStochastic_map_reducePat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.RectFamily.isLocalStochastic_map_reducePat
+-- ProjectiveSpacePoissonBracket (BACKLOG #325, geometric QM item 2, 2026-11-08): the Poisson bracket of observables on CP^n is the commutator; Ehrenfest; conservation iff commuting.
+
+/-- info: 'DifferentialForm.IsSymplectic.poissonBracket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.poissonBracket
+
+/-- info: 'DifferentialForm.IsSymplectic.poissonBracket_eq_mfderiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.poissonBracket_eq_mfderiv
+
+/-- info: 'DifferentialForm.IsSymplectic.poissonBracket_eq_of_isHamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.poissonBracket_eq_of_isHamiltonianVectorField
+
+/-- info: 'DifferentialForm.IsSymplectic.poissonBracket_antisymm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.poissonBracket_antisymm
+
+/-- info: 'DifferentialForm.IsSymplectic.poissonBracket_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.poissonBracket_self
+
+/-- info: 'DifferentialForm.hasDerivAt_comp_of_isMIntegralCurve'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.hasDerivAt_comp_of_isMIntegralCurve'
+
+/-- info: 'DifferentialForm.IsSymplectic.hasDerivAt_comp_poissonBracket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.hasDerivAt_comp_poissonBracket
+
+/-- info: 'DifferentialForm.mfderiv_apply_eq_of_hasDerivAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.mfderiv_apply_eq_of_hasDerivAt
+
+/-- info: 'Projectivization.commObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.commObs
+
+/-- info: 'Projectivization.commObs_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.commObs_isHermitian
+
+/-- info: 'Projectivization.toEuclideanLinApplyCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.toEuclideanLinApplyCLM
+
+/-- info: 'Projectivization.toEuclideanLinApplyCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.toEuclideanLinApplyCLM_apply
+
+/-- info: 'Projectivization.inner_commObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_commObs
+
+/-- info: 'Projectivization.hasDerivAt_expectation_schrodingerUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasDerivAt_expectation_schrodingerUnitary_smul
+
+/-- info: 'Projectivization.contMDiff_expectation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contMDiff_expectation
+
+/-- info: 'Projectivization.mdifferentiableAt_expectation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mdifferentiableAt_expectation
+
+/-- info: 'Projectivization.schrodingerUnitary_zero_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerUnitary_zero_smul
+
+/-- info: 'Projectivization.mfderiv_expectation_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_expectation_schrodingerField
+
+/-- info: 'Projectivization.expectation_isHamiltonianVectorField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_isHamiltonianVectorField
+
+/-- info: 'Projectivization.poissonBracket_expectation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.poissonBracket_expectation
+
+/-- info: 'Projectivization.poissonBracket_schrodingerHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.poissonBracket_schrodingerHamiltonian
+
+/-- info: 'Projectivization.expectation_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_eq_zero_iff
+
+/-- info: 'Projectivization.hasDerivAt_expectation_schrodingerUnitary_smul_at' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hasDerivAt_expectation_schrodingerUnitary_smul_at
+
+/-- info: 'Projectivization.expectation_conserved_iff_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_conserved_iff_commute
 
 end CSD.Tests.AxiomAudit
