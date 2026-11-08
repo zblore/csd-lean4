@@ -385,6 +385,7 @@ public import CsdLean4.Empirical.QM.QEC.SteaneRectangle
 public import CsdLean4.Empirical.QM.QEC.SteaneBadRectangle
 public import CsdLean4.Empirical.QM.QEC.SteaneSyndromeDecoder
 public import CsdLean4.Empirical.QM.QEC.SteaneSingleType
+public import CsdLean4.Empirical.QM.QEC.SteaneSingleTypeOut
 public import CsdLean4.Empirical.QM.QEC.SteaneInjection
 public import CsdLean4.Empirical.QM.QEC.SteaneUniversalMachine
 public import CsdLean4.Empirical.QM.QEC.SteaneTripleMachine

@@ -45,16 +45,19 @@ A syndrome pair `(s, t)` is **single-type** when `s = 0`, `t = 0` or `s = t` —
 
 * `RecNoise.SingleTypeOut` — **the hypothesis**: Steane's method with its factories and one fault
   anywhere has single-type branches (BACKLOG #321);
-* ★★★ `steane_rect_isGoodAfter` — **for each of `H̄`, `X̄`, `Z̄`, `S`, `S†`, every rectangle with at
-  most one fault among its `403` locations is good after its leading recovery** (#316's
-  `IsGoodAfter`, `D = steaneDecode`), on **every** input, given `SingleTypeOut` for the leading
-  recovery's noise. A fault-free leading recovery needs nothing (~~#313~~); a faulty one hands on a
-  single-type output, which the ideal gadget and trailing recovery carry to its decoded image.
+* ★★★ `steane_rect_isGoodAfter_of_singleTypeOut` — **for each of `H̄`, `X̄`, `Z̄`, `S`, `S†`,
+  every rectangle with at most one fault among its `403` locations is good after its leading
+  recovery** (#316's `IsGoodAfter`, `D = steaneDecode`), on **every** input, given
+  `SingleTypeOut` for the leading recovery's noise (discharged by #321's
+  `steane_rect_isGoodAfter`, `SteaneSingleTypeOut.lean`). A fault-free leading recovery needs
+  nothing (~~#313~~); a faulty one hands on a single-type output, which the ideal gadget and
+  trailing recovery carry to its decoded image.
 
 ## Honest scope
 
-⚠️ **`SingleTypeOut` is a hypothesis here**, discharged by #321 (the output side of Steane's method
-with one fault: pair channels at the extraction locations, both kinds of good ancilla, the retry).
+⚠️ **`SingleTypeOut` is a hypothesis here**, discharged by #321 in `SteaneSingleTypeOut.lean` (the
+output side of Steane's method with one fault: pair channels at the extraction locations, both
+kinds of good ancilla, the retry).
 
 ⚠️ **One block, one rectangle.** Joining the rectangles of #233's machine into
 `one_sub_le_measure_decode_recRun` is #319.
@@ -368,7 +371,8 @@ def RecNoise.SingleTypeOut {κ : Type} [Fintype κ] (N : RecNoise κ) : Prop :=
 either recovery, and any pattern with at most one fault among the `403` locations: on **every**
 input, `D(T'(G'(T ρ))) = L D(T ρ) L†` (#316's `IsGoodAfter` with `D = steaneDecode`), given that
 the leading recovery's noise has single-type branches when faulty. -/
-theorem steane_rect_isGoodAfter {κ γ : Type} [Fintype κ] [Fintype γ] (G : ConcatGadget)
+theorem steane_rect_isGoodAfter_of_singleTypeOut {κ γ : Type} [Fintype κ] [Fintype γ]
+    (G : ConcatGadget)
     {U : Fin 7 → γ → Matrix (Fin 2) (Fin 2) ℂ} (hU : ∀ q, ∑ k, (U q k)ᴴ * U q k = 1)
     (N₁ N₂ : RecNoise κ) (hN₁ : N₁.SingleTypeOut) {ω : RectLoc → Bool} (hω : RectGood ω) :
     IsGoodAfter steaneDecode.apply G.logical.gate (N₁.run (leadPat ω))
