@@ -171,6 +171,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFSDist
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSpeedLimit
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceRobertson
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonJacobi
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMorse
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -16178,6 +16179,63 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.arccos_div_le_time
+-- ProjectiveSpaceMorse (BACKLOG #337, geometric QM completion item 6, 2026-11-08): Hessian of <A> along projective lines at an eigenline; index 2 #{mu_j < lambda}.
+
+/-- info: 'Projectivization.toEuclideanLin_eigenvectorBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.toEuclideanLin_eigenvectorBasis
+
+/-- info: 'Projectivization.re_inner_toEuclideanLin_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.re_inner_toEuclideanLin_eq_sum
+
+/-- info: 'Projectivization.norm_sq_eq_sum_norm_inner_eigenvectorBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_sq_eq_sum_norm_inner_eigenvectorBasis
+
+/-- info: 'Projectivization.hessForm_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hessForm_eq_sum
+
+/-- info: 'Projectivization.add_smul_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.add_smul_ne_zero
+
+/-- info: 'Projectivization.expectation_mk_add_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_mk_add_smul
+
+/-- info: 'Projectivization.belowSpan' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.belowSpan
+
+/-- info: 'Projectivization.inner_eigenvectorBasis_eq_zero_of_mem_belowSpan' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_eigenvectorBasis_eq_zero_of_mem_belowSpan
+
+/-- info: 'Projectivization.inner_eq_zero_of_mem_belowSpan' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_eq_zero_of_mem_belowSpan
+
+/-- info: 'Projectivization.finrank_real_belowSpan' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.finrank_real_belowSpan
+
+/-- info: 'Projectivization.hessForm_neg_of_mem_belowSpan' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hessForm_neg_of_mem_belowSpan
+
+/-- info: 'Projectivization.hessForm_nonneg_of_inner_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.hessForm_nonneg_of_inner_eq_zero
+
+/-- info: 'Projectivization.expectation_mk_add_smul_lt_of_mem_belowSpan' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_mk_add_smul_lt_of_mem_belowSpan
+
+/-- info: 'Projectivization.expectation_mk_add_smul_ge_of_inner_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_mk_add_smul_ge_of_inner_eq_zero
 -- ProjectiveSpacePoissonJacobi (BACKLOG #336, geometric QM completion item 5, 2026-11-08): Jacobi identity for smooth functions on a symplectic manifold, from d omega = 0.
 
 /-- info: 'DifferentialForm.extDeriv_apply_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/

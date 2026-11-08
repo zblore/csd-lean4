@@ -894,6 +894,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFSDist
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSpeedLimit
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceRobertson
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonJacobi
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMorse
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFisherRao
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricPhase
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace

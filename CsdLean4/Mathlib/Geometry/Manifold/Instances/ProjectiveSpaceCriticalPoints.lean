@@ -67,8 +67,9 @@ and smallest eigenvalues.
 (#334) identifies the set with `Set.range hA.eigenvalues`, Mathlib's eigenvalues. A set does not
 see multiplicities.
 
-⚠️ **Critical points, not their indices.** Morse theory of `⟨A⟩` (the Hessian at an eigenline and
-its index, the count of eigenvalues below) is not here.
+⚠️ **Critical points here; their indices in #337.** The second order of `⟨A⟩` at an eigenline (the
+Hessian along projective lines, negative on a span of real dimension twice the count of eigenvalues
+below) is `Instances/ProjectiveSpaceMorse.lean`.
 
 ## References
 
