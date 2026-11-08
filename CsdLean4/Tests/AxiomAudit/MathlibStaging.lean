@@ -16177,6 +16177,19 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.arccos_div_le_time
+-- ProjectiveSpaceSpeedLimit, time-dependent H (BACKLOG #335, geometric QM completion item 4, 2026-11-08): arccos sqrt P(gamma 0, gamma T) <= int_0^T Delta H(t) dt.
+
+/-- info: 'Projectivization.fsPathLength_eq_lintegral_sqrt_variance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsPathLength_eq_lintegral_sqrt_variance
+
+/-- info: 'Projectivization.ofReal_fsAngle_le_lintegral_sqrt_variance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.ofReal_fsAngle_le_lintegral_sqrt_variance
+
+/-- info: 'Projectivization.fsAngle_le_integral_sqrt_variance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsAngle_le_integral_sqrt_variance
 -- ProjectiveSpaceCriticalPoints, Mathlib eigenvalues (BACKLOG #334, geometric QM completion item 3, 2026-11-08): eigenline eigenvalues = Set.range hA.eigenvalues.
 
 /-- info: 'Projectivization.setOf_eigenline_eq_range_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound] -/
