@@ -169,6 +169,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUncert
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFSLength
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFSDistance
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSpeedLimit
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceRobertson
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -16176,6 +16177,79 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.arccos_div_le_time
+-- ProjectiveSpaceRobertson (BACKLOG #333, geometric QM completion item 2, 2026-11-08): Cauchy-Schwarz for g - i omega; Cov^2 + (<-i[A,B]>/2)^2 <= Var A Var B.
+
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_add_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.metric_add_right
+
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_smul_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.metric_smul_right
+
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_add_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.metric_add_left
+
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_smul_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.metric_smul_left
+
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_zero_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.metric_zero_right
+
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_self_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.metric_self_nonneg
+
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.metric_sq_le
+
+/-- info: 'DifferentialForm.IsAlmostKahler.metric_sq_add_apply_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsAlmostKahler.metric_sq_add_apply_sq_le
+
+/-- info: 'Projectivization.schrodingerChartField_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerChartField_add
+
+/-- info: 'Projectivization.schrodingerField_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerField_add
+
+/-- info: 'Projectivization.expectation_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_add
+
+/-- info: 'Projectivization.covariance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.covariance
+
+/-- info: 'Projectivization.covariance_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.covariance_self
+
+/-- info: 'Projectivization.fsMetric_schrodingerField_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric_schrodingerField_schrodingerField
+
+/-- info: 'Projectivization.fsForm_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsForm_schrodingerField
+
+/-- info: 'Projectivization.covariance_sq_add_sq_le_variance_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.covariance_sq_add_sq_le_variance_mul
+
+/-- info: 'Projectivization.expectation_commObs_div_two_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_commObs_div_two_sq_le
+
+/-- info: 'Projectivization.abs_expectation_commObs_div_two_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.abs_expectation_commObs_div_two_le
 -- ExactReduction (BACKLOG #323, split from #319, 2026-11-08): the decoded run is the reduced run of the stages on logical x syndrome; good locations ideal on their inputs; joined with #322.
 
 /-- info: 'QuantumInfo.inRec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
