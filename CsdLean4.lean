@@ -886,6 +886,8 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrod
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonBracket
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceCriticalPoints
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricTensor
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryMomentMap
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUncertainty
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFisherRao
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricPhase
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace

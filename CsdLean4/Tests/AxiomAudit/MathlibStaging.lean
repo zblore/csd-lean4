@@ -164,6 +164,8 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrod
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonBracket
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceCriticalPoints
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricTensor
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryMomentMap
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUncertainty
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -15853,5 +15855,135 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.qgt_self_re_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.qgt_self_re_pos
+-- ProjectiveSpaceUnitaryMomentMap (BACKLOG #328, geometric QM item 7, 2026-11-08): mu(p) = |psi><psi|/<psi|psi>; equivariant, tr(mu A) = <A>, injective, image = rank-one projectors, hull = density matrices.
+
+/-- info: 'Projectivization.rankOneMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.rankOneMatrix
+
+/-- info: 'Projectivization.star_dotProduct_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.star_dotProduct_self
+
+/-- info: 'Projectivization.ofReal_norm_sq_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.ofReal_norm_sq_ne_zero
+
+/-- info: 'Projectivization.rankOneMatrix_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.rankOneMatrix_smul
+
+/-- info: 'Projectivization.isHermitian_rankOneMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isHermitian_rankOneMatrix
+
+/-- info: 'Projectivization.trace_rankOneMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.trace_rankOneMatrix
+
+/-- info: 'Projectivization.rankOneMatrix_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.rankOneMatrix_mulVec
+
+/-- info: 'Projectivization.rankOneMatrix_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.rankOneMatrix_mul_self
+
+/-- info: 'Projectivization.posSemidef_rankOneMatrix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.posSemidef_rankOneMatrix
+
+/-- info: 'Projectivization.trace_rankOneMatrix_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.trace_rankOneMatrix_mul
+
+/-- info: 'Projectivization.rankOneMatrix_toEuclideanLin_unitary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.rankOneMatrix_toEuclideanLin_unitary
+
+/-- info: 'Projectivization.unitaryMomentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.unitaryMomentMap
+
+/-- info: 'Projectivization.unitaryMomentMap_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.unitaryMomentMap_mk
+
+/-- info: 'Projectivization.unitaryMomentMap_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.unitaryMomentMap_smul
+
+/-- info: 'Projectivization.trace_unitaryMomentMap_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.trace_unitaryMomentMap_mul
+
+/-- info: 'Projectivization.re_trace_unitaryMomentMap_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.re_trace_unitaryMomentMap_mul
+
+/-- info: 'Projectivization.trace_unitaryMomentMap_mul_of_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.trace_unitaryMomentMap_mul_of_isHermitian
+
+/-- info: 'Projectivization.isHamiltonianVectorField_trace_unitaryMomentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isHamiltonianVectorField_trace_unitaryMomentMap
+
+/-- info: 'Projectivization.unitaryMomentMap_diag' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.unitaryMomentMap_diag
+
+/-- info: 'Projectivization.unitaryMomentMap_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.unitaryMomentMap_injective
+
+/-- info: 'Projectivization.eq_zero_of_isHermitian_idempotent_trace_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.eq_zero_of_isHermitian_idempotent_trace_eq_zero
+
+/-- info: 'Projectivization.range_unitaryMomentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.range_unitaryMomentMap
+
+/-- info: 'Projectivization.mul_diagonal_mul_conjTranspose_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mul_diagonal_mul_conjTranspose_eq_sum
+
+/-- info: 'Projectivization.convexHull_range_unitaryMomentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.convexHull_range_unitaryMomentMap
+-- ProjectiveSpaceUncertainty (BACKLOG #329, geometric QM item 4 first half, 2026-11-08): g(X_A, X_A) = 4 (Delta A)^2; Delta A = 0 iff eigenline; Schrodinger curves at constant squared speed 4 (Delta H)^2.
+
+/-- info: 'Projectivization.variance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.variance
+
+/-- info: 'Projectivization.expectation_eq_insertOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_eq_insertOne
+
+/-- info: 'Projectivization.fsMetric_schrodingerField_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric_schrodingerField_self
+
+/-- info: 'Projectivization.fsMetric_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric_zero
+
+/-- info: 'Projectivization.variance_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.variance_nonneg
+
+/-- info: 'Projectivization.variance_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.variance_eq_zero_iff
+
+/-- info: 'Projectivization.variance_schrodingerUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.variance_schrodingerUnitary_smul
+
+/-- info: 'Projectivization.fsMetric_velocity_schrodingerUnitary_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric_velocity_schrodingerUnitary_smul
 
 end CSD.Tests.AxiomAudit

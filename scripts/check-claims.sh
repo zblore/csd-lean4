@@ -994,7 +994,10 @@ isSymplectic"
 #   functions −2⟨A⟩, −2⟨B⟩, computed as −2⟨−i[A, B]⟩ — EARNED.)
 #   (2026-11-08, #326: mfderiv_schrodingerHamiltonian_eq_zero_of_isLocalExtr is Fermat's rule for
 #   the already-declared energy function −2⟨A⟩ read in a chart — no new symplectic claim.)
+#   (2026-11-08, #328: isHamiltonianVectorField_trace_unitaryMomentMap proves ι_X ω = d f for
+#   f = tr(μ A) = ⟨A⟩ and X = -½ X_A on fsForm, by rewriting f to ⟨A⟩ (#325) — EARNED.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
+isHamiltonianVectorField_trace_unitaryMomentMap
 mfderiv_schrodingerHamiltonian_eq_zero_of_isLocalExtr
 expectation_isHamiltonianVectorField
 poissonBracket_schrodingerHamiltonian
