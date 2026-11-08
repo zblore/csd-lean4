@@ -264,6 +264,7 @@ public import CsdLean4.Mathlib.QuantumInfo.JointRegister
 public import CsdLean4.Mathlib.QuantumInfo.KnillLaflamme
 public import CsdLean4.Mathlib.QuantumInfo.LevelReduction
 public import CsdLean4.Mathlib.QuantumInfo.LocalStochastic
+public import CsdLean4.Mathlib.QuantumInfo.RectGeometry
 public import CsdLean4.Mathlib.QuantumInfo.SyndromeDecoder
 public import CsdLean4.Mathlib.QuantumInfo.Magic
 public import CsdLean4.Mathlib.QuantumInfo.MagicInjection
@@ -15556,5 +15557,99 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'QuantumInfo.one_sub_le_measure_decode_recRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.one_sub_le_measure_decode_recRun
+-- RectGeometry (BACKLOG #322, split from #319, 2026-11-08): badness for any family of
+-- rectangles in decoding order; (A p^2)^|T| with no hypothesis on the overlaps.
+
+/-- info: 'QuantumInfo.RectFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily
+
+/-- info: 'QuantumInfo.RectFamily.ofWindows' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.ofWindows
+
+/-- info: 'QuantumInfo.RectFamily.ofWindows_card_M_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.ofWindows_card_M_le
+
+/-- info: 'QuantumInfo.RectFamily.malignantOff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.malignantOff
+
+/-- info: 'QuantumInfo.RectFamily.claimed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.claimed
+
+/-- info: 'QuantumInfo.RectFamily.bad' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.bad
+
+/-- info: 'QuantumInfo.RectFamily.trunc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.trunc
+
+/-- info: 'QuantumInfo.RectFamily.claimed_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.claimed_zero
+
+/-- info: 'QuantumInfo.RectFamily.claimed_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.claimed_succ
+
+/-- info: 'QuantumInfo.RectFamily.claimed_subset_succ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.claimed_subset_succ
+
+/-- info: 'QuantumInfo.RectFamily.claimed_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.claimed_mono
+
+/-- info: 'QuantumInfo.RectFamily.W_subset_claimed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.W_subset_claimed
+
+/-- info: 'QuantumInfo.RectFamily.claimed_subset_biUnion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.claimed_subset_biUnion
+
+/-- info: 'QuantumInfo.RectFamily.trunc_eq_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.trunc_eq_of_disjoint
+
+/-- info: 'QuantumInfo.RectFamily.bad_eq_true_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.bad_eq_true_iff
+
+/-- info: 'QuantumInfo.RectFamily.exists_witness' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.exists_witness
+
+/-- info: 'QuantumInfo.RectFamily.disjoint_of_bad' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.disjoint_of_bad
+
+/-- info: 'QuantumInfo.RectFamily.measure_forall_bad_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.measure_forall_bad_le
+
+/-- info: 'QuantumInfo.RectFamily.measure_bad_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.measure_bad_le
+
+/-- info: 'QuantumInfo.RectFamily.measure_exists_bad_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.measure_exists_bad_le
+
+/-- info: 'QuantumInfo.RectFamily.reducePat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.reducePat
+
+/-- info: 'QuantumInfo.RectFamily.measurable_reducePat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.measurable_reducePat
+
+/-- info: 'QuantumInfo.RectFamily.isLocalStochastic_map_reducePat' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.RectFamily.isLocalStochastic_map_reducePat
 
 end CSD.Tests.AxiomAudit
