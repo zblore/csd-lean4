@@ -173,6 +173,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceRobert
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonJacobi
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMorse
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyRiemannianBundle
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerKilling
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -16180,6 +16181,35 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.arccos_div_le_time
+-- ProjectiveSpaceSchrodingerKilling (BACKLOG #341, split from #340, 2026-11-08): d<X_H, Z>(X_H) = <X_H, [X_H, Z]> from Q29 + holomorphy in charts.
+
+/-- info: 'Projectivization.localHamiltonianVector_schrodingerHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.localHamiltonianVector_schrodingerHamiltonian
+
+/-- info: 'Projectivization.flatKilling_schrodingerChartField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.flatKilling_schrodingerChartField
+
+/-- info: 'Projectivization.fderiv_fsModelMetricCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fderiv_fsModelMetricCLM_apply
+
+/-- info: 'Projectivization.flatKilling_metric_schrodingerChartField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.flatKilling_metric_schrodingerChartField
+
+/-- info: 'Projectivization.mpullback_extChartAt_symm_eq_chartField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mpullback_extChartAt_symm_eq_chartField
+
+/-- info: 'Projectivization.fsMetric_eq_chartField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric_eq_chartField
+
+/-- info: 'Projectivization.mfderiv_fsMetric_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_fsMetric_schrodingerField
 -- ProjectiveSpaceFubiniStudyRiemannianBundle (BACKLOG #338, geometric QM item 8a, 2026-11-08): FS as a Mathlib ContMDiffRiemannianMetric; Levi-Civita connection on CP^n.
 
 /-- info: 'Projectivization.fsModelMetricCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/

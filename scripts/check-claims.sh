@@ -996,7 +996,11 @@ isSymplectic"
 #   the already-declared energy function −2⟨A⟩ read in a chart — no new symplectic claim.)
 #   (2026-11-08, #328: isHamiltonianVectorField_trace_unitaryMomentMap proves ι_X ω = d f for
 #   f = tr(μ A) = ⟨A⟩ and X = -½ X_A on fsForm, by rewriting f to ⟨A⟩ (#325) — EARNED.)
+#   (2026-11-08, #341: localHamiltonianVector_schrodingerHamiltonian identifies the chart-level
+#   Hamiltonian vector of the already-declared energy −2⟨H⟩ with schrodingerChartField, by
+#   uniqueness (chartField_hamiltonianVectorField) — no new symplectic claim.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
+localHamiltonianVector_schrodingerHamiltonian
 isHamiltonianVectorField_trace_unitaryMomentMap
 mfderiv_schrodingerHamiltonian_eq_zero_of_isLocalExtr
 expectation_isHamiltonianVectorField
