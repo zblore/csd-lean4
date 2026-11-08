@@ -162,6 +162,8 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMoment
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerFlow
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerHolomorphic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonBracket
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceCriticalPoints
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricTensor
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -15749,5 +15751,107 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.expectation_conserved_iff_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.expectation_conserved_iff_commute
+-- ProjectiveSpaceCriticalPoints (BACKLOG #326, geometric QM item 3, 2026-11-08): eigenstates are the critical points of <A>; max/min are the extreme eigenvalues.
+
+/-- info: 'DifferentialForm.IsHamiltonianVectorField.eq_zero_iff_mfderiv_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsHamiltonianVectorField.eq_zero_iff_mfderiv_eq_zero
+
+/-- info: 'Projectivization.insertZeroCLM_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.insertZeroCLM_injective
+
+/-- info: 'Projectivization.schrodingerChartField_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerChartField_eq_zero_iff
+
+/-- info: 'Projectivization.schrodingerField_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerField_eq_zero_iff
+
+/-- info: 'Projectivization.expectation_eq_of_eigen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.expectation_eq_of_eigen
+
+/-- info: 'Projectivization.eigen_eq_expectation_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.eigen_eq_expectation_smul
+
+/-- info: 'Projectivization.mfderiv_expectation_eq_zero_iff_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_expectation_eq_zero_iff_schrodingerField
+
+/-- info: 'Projectivization.mfderiv_expectation_eq_zero_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_expectation_eq_zero_iff
+
+/-- info: 'Projectivization.criticalValues_eq_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.criticalValues_eq_eigenvalues
+
+/-- info: 'Projectivization.mfderiv_schrodingerHamiltonian_eq_zero_of_isLocalExtr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_schrodingerHamiltonian_eq_zero_of_isLocalExtr
+
+/-- info: 'Projectivization.schrodingerChartHam_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.schrodingerChartHam_eq
+
+/-- info: 'Projectivization.chartInv_idx_chartFun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartInv_idx_chartFun
+
+/-- info: 'Projectivization.mfderiv_expectation_eq_zero_of_isMaxOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_expectation_eq_zero_of_isMaxOn
+
+/-- info: 'Projectivization.mfderiv_expectation_eq_zero_of_isMinOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_expectation_eq_zero_of_isMinOn
+
+/-- info: 'Projectivization.exists_isGreatest_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_isGreatest_eigenvalues
+
+/-- info: 'Projectivization.exists_isLeast_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_isLeast_eigenvalues
+-- ProjectiveSpaceGeometricTensor (BACKLOG #327, geometric QM item 6, 2026-11-08): the quantum geometric tensor g - i omega; Provost-Vallee; Hermitian, positive definite.
+
+/-- info: 'Projectivization.qgt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.qgt
+
+/-- info: 'Projectivization.qgt_re' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.qgt_re
+
+/-- info: 'Projectivization.qgt_im' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.qgt_im
+
+/-- info: 'Projectivization.fsModelForm_qgt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelForm_qgt
+
+/-- info: 'Projectivization.qgt_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.qgt_eq
+
+/-- info: 'Projectivization.qgt_eq_inner_proj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.qgt_eq_inner_proj
+
+/-- info: 'Projectivization.qgt_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.qgt_conj
+
+/-- info: 'Projectivization.qgt_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.qgt_self
+
+/-- info: 'Projectivization.qgt_self_re_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.qgt_self_re_pos
 
 end CSD.Tests.AxiomAudit
