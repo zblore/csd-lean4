@@ -8,6 +8,7 @@ module
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerGeodesic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFSDistance
 public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import CsdLean4.Mathlib.Geometry.Manifold.CovariantDerivativeAlongCurve
 
 /-!
 # Great circles are geodesics of the Fubini–Study metric
@@ -34,8 +35,10 @@ everywhere (Bessel) with equality at `[φ]`. By #342 the orbit is a geodesic:
 
 ## Honest scope
 
-⚠️ **Geodesic, in the field sense** of #342: `∇_{γ'} γ' = 0` with `γ' = X_H(γ)`; the general
-derivative along a curve is #339. Unit speed is not normalised (the speed is `2ΔH = 2` in the
+⚠️ **Geodesic in both senses.** `greatCircle_isGeodesic` is the field sense of #342
+(`∇_{X_H} X_H = 0` along the integral curve); `isGeodesic_greatCircle` /
+`isGeodesic_schrodingerUnitary_smul_of_isMaxOn` are #339's `IsGeodesic` (`D_t γ' = 0` with the
+covariant derivative along a curve), via `isGeodesic_of_isMIntegralCurve`. Unit speed is not normalised (the speed is `2ΔH = 2` in the
 corpus's metric, #329).
 
 ## References
@@ -240,5 +243,28 @@ theorem greatCircle_isGeodesic (hφ : ‖φ‖ = 1) (hχ : ‖χ‖ = 1) (h0 : i
   refine ⟨horb, hcurve ▸ hint, fun t => ?_⟩
   rw [← horb t]
   exact hgeo t
+
+/-- ★★★ **The Schrödinger orbit of a maximiser of `(ΔH)²` is a geodesic** in the sense of the
+covariant derivative along a curve (#339): `D_t γ' = 0`. -/
+theorem isGeodesic_schrodingerUnitary_smul_of_isMaxOn
+    {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ} (hH : H.IsHermitian) {q : ℙ ℂ (Ambient n)}
+    (hmax : ∀ p, variance H p ≤ variance H q) :
+    CovariantDerivative.IsGeodesic
+      (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n)))
+      (fun t : ℝ => Matrix.schrodingerUnitary hH t • q) := by
+  obtain ⟨hint, hgeo⟩ := leviCivita_schrodingerField_self_orbit_eq_zero hH hmax
+  exact CovariantDerivative.isGeodesic_of_isMIntegralCurve _ hint
+    (fun t => mdifferentiableAt_schrodingerField hH _) hgeo
+
+/-- ★★★ **Great circles are geodesics of the Fubini–Study metric**, in the sense of the covariant
+derivative along a curve (#339): `D_t γ' = 0` for `γ t = [cos t φ + sin t χ]`. -/
+theorem isGeodesic_greatCircle (hφ : ‖φ‖ = 1) (hχ : ‖χ‖ = 1) (h0 : inner ℂ φ χ = 0)
+    (hne : ∀ t : ℝ, (Real.cos t : ℂ) • φ + (Real.sin t : ℂ) • χ ≠ 0) :
+    CovariantDerivative.IsGeodesic
+      (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n)))
+      (fun t : ℝ => mk ℂ _ (hne t)) := by
+  obtain ⟨-, hint, hgeo⟩ := greatCircle_isGeodesic hφ hχ h0 hne
+  exact CovariantDerivative.isGeodesic_of_isMIntegralCurve _ hint
+    (fun t => mdifferentiableAt_schrodingerField (circleHam_isHermitian φ χ) _) hgeo
 
 end Projectivization

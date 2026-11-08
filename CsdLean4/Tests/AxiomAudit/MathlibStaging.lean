@@ -175,6 +175,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMorse
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyRiemannianBundle
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerKilling
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerGeodesic
+public import CsdLean4.Mathlib.Geometry.Manifold.CovariantDerivativeAlongCurve
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGreatCircleGeodesic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
@@ -16183,6 +16184,59 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.arccos_div_le_time
+-- CovariantDerivativeAlongCurve (BACKLOG #339, 2026-11-08): chart connection, Christoffel tensor, D_t along curves, D_t (X o gamma) = nabla_{gamma'} X; great circles IsGeodesic.
+
+/-- info: 'CovariantDerivative.chartCov' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.chartCov
+
+/-- info: 'CovariantDerivative.chartField_chartAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.chartField_chartAt
+
+/-- info: 'CovariantDerivative.differentiableAt_chartField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.differentiableAt_chartField
+
+/-- info: 'CovariantDerivative.chartField_add_eventually' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.chartField_add_eventually
+
+/-- info: 'CovariantDerivative.chartField_smul_eventually' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.chartField_smul_eventually
+
+/-- info: 'CovariantDerivative.isCovariantDerivativeOn_chartCov' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.isCovariantDerivativeOn_chartCov
+
+/-- info: 'CovariantDerivative.christoffel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.christoffel
+
+/-- info: 'CovariantDerivative.covAlong' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.covAlong
+
+/-- info: 'CovariantDerivative.covAlong_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.covAlong_comp
+
+/-- info: 'CovariantDerivative.IsGeodesic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.IsGeodesic
+
+/-- info: 'CovariantDerivative.isGeodesic_of_isMIntegralCurve' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.isGeodesic_of_isMIntegralCurve
+
+/-- info: 'Projectivization.isGeodesic_schrodingerUnitary_smul_of_isMaxOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isGeodesic_schrodingerUnitary_smul_of_isMaxOn
+
+/-- info: 'Projectivization.isGeodesic_greatCircle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isGeodesic_greatCircle
 -- ProjectiveSpaceGreatCircleGeodesic (BACKLOG #340, 2026-11-08): exp(-itH) phi = cos t phi + sin t chi; great circles are FS geodesics.
 
 /-- info: 'Projectivization.circleHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
