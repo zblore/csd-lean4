@@ -174,6 +174,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoisso
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMorse
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyRiemannianBundle
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerKilling
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerGeodesic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -16181,6 +16182,31 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.arccos_div_le_time
+-- ProjectiveSpaceSchrodingerGeodesic (BACKLOG #342, split from #340, 2026-11-08): <nabla_X X, Z> = -1/2 Z|X|^2; orbits through maximisers of Delta H are geodesics.
+
+/-- info: 'Projectivization.mfderiv_apply_eq_zero_of_isLocalMax' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_apply_eq_zero_of_isLocalMax
+
+/-- info: 'Projectivization.mdifferentiableAt_schrodingerField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mdifferentiableAt_schrodingerField
+
+/-- info: 'Projectivization.inner_leviCivita_schrodingerField_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_leviCivita_schrodingerField_self
+
+/-- info: 'Projectivization.mdifferentiableAt_variance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mdifferentiableAt_variance
+
+/-- info: 'Projectivization.leviCivita_schrodingerField_self_eq_zero_of_isMaxOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.leviCivita_schrodingerField_self_eq_zero_of_isMaxOn
+
+/-- info: 'Projectivization.leviCivita_schrodingerField_self_orbit_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.leviCivita_schrodingerField_self_orbit_eq_zero
 -- ProjectiveSpaceSchrodingerKilling (BACKLOG #341, split from #340, 2026-11-08): d<X_H, Z>(X_H) = <X_H, [X_H, Z]> from Q29 + holomorphy in charts.
 
 /-- info: 'Projectivization.localHamiltonianVector_schrodingerHamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
