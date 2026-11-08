@@ -175,6 +175,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMorse
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyRiemannianBundle
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerKilling
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerGeodesic
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGreatCircleGeodesic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -16182,6 +16183,51 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.arccos_div_le_time
+-- ProjectiveSpaceGreatCircleGeodesic (BACKLOG #340, 2026-11-08): exp(-itH) phi = cos t phi + sin t chi; great circles are FS geodesics.
+
+/-- info: 'Projectivization.circleHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.circleHam
+
+/-- info: 'Projectivization.toEuclideanLin_circleHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.toEuclideanLin_circleHam
+
+/-- info: 'Projectivization.circleHam_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.circleHam_isHermitian
+
+/-- info: 'Projectivization.toEuclideanCLML' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.toEuclideanCLML
+
+/-- info: 'Projectivization.toEuclideanCLML_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.toEuclideanCLML_apply
+
+/-- info: 'Projectivization.toEuclideanLin_negI_circleHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.toEuclideanLin_negI_circleHam
+
+/-- info: 'Projectivization.toEuclideanLin_schrodingerUnitary_circleHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.toEuclideanLin_schrodingerUnitary_circleHam
+
+/-- info: 'Projectivization.norm_sq_toEuclideanLin_circleHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_sq_toEuclideanLin_circleHam
+
+/-- info: 'Projectivization.variance_circleHam_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.variance_circleHam_le_one
+
+/-- info: 'Projectivization.variance_circleHam_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.variance_circleHam_mk
+
+/-- info: 'Projectivization.greatCircle_isGeodesic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.greatCircle_isGeodesic
 -- ProjectiveSpaceSchrodingerGeodesic (BACKLOG #342, split from #340, 2026-11-08): <nabla_X X, Z> = -1/2 Z|X|^2; orbits through maximisers of Delta H are geodesics.
 
 /-- info: 'Projectivization.mfderiv_apply_eq_zero_of_isLocalMax' depends on axioms: [propext, Classical.choice, Quot.sound] -/
