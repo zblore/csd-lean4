@@ -172,6 +172,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSpeedL
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceRobertson
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonJacobi
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceMorse
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyRiemannianBundle
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -16179,6 +16180,55 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.arccos_div_le_time
+-- ProjectiveSpaceFubiniStudyRiemannianBundle (BACKLOG #338, geometric QM item 8a, 2026-11-08): FS as a Mathlib ContMDiffRiemannianMetric; Levi-Civita connection on CP^n.
+
+/-- info: 'Projectivization.fsModelMetricCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelMetricCLM
+
+/-- info: 'Projectivization.contDiff_fsModelMetricCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_fsModelMetricCLM
+
+/-- info: 'Projectivization.fsModelMetric_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelMetric_self
+
+/-- info: 'Projectivization.fsModelMetric_self_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelMetric_self_ge
+
+/-- info: 'Projectivization.norm_le_norm_toLpCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.norm_le_norm_toLpCLM
+
+/-- info: 'Projectivization.fsMetric_eq_fsModelMetricCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric_eq_fsModelMetricCLM
+
+/-- info: 'Projectivization.isVonNBounded_fsModelMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isVonNBounded_fsModelMetric
+
+/-- info: 'Projectivization.fsMetric_symmL_symmL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric_symmL_symmL
+
+/-- info: 'Projectivization.fsRiemannianMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsRiemannianMetric
+
+/-- info: 'Projectivization.FubiniStudy.instRiemannianBundle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.FubiniStudy.instRiemannianBundle
+
+/-- info: 'Projectivization.inner_eq_fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.inner_eq_fsMetric
+
+/-- info: 'Projectivization.isLeviCivitaConnection_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isLeviCivitaConnection_fs
 -- ProjectiveSpaceMorse (BACKLOG #337, geometric QM completion item 6, 2026-11-08): Hessian of <A> along projective lines at an eigenline; index 2 #{mu_j < lambda}.
 
 /-- info: 'Projectivization.toEuclideanLin_eigenvectorBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
