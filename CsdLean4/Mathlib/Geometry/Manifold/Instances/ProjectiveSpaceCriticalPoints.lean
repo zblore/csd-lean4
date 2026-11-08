@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonBracket
+public import Mathlib.Analysis.Matrix.Spectrum
 
 /-!
 # Eigenstates are the critical points of an expectation value on `ℂℙⁿ`
@@ -43,6 +44,15 @@ and smallest eigenvalues.
 * ★★★ `criticalValues_eq_eigenvalues` — **the critical values of `⟨A⟩` are exactly the real
   eigenvalues of `A` with an eigenline**.
 
+## Mathlib's eigenvalues (#334)
+
+* ★★ `setOf_eigenline_eq_range_eigenvalues` — **the eigenvalues with an eigenline are
+  `Set.range hA.eigenvalues`** (through `spectrum_eq_image_range` one way, the orthonormal
+  eigenvector basis the other);
+* ★★ `criticalValues_eq_range_eigenvalues`, ★★ `exists_isGreatest_range_eigenvalues`,
+  ★★ `exists_isLeast_range_eigenvalues` — the critical values, maximum and minimum of `⟨A⟩` in
+  Mathlib's terms.
+
 ## Maximum and minimum
 
 * ★ `mfderiv_expectation_eq_zero_of_isMaxOn`, `mfderiv_expectation_eq_zero_of_isMinOn` — Fermat's
@@ -53,8 +63,9 @@ and smallest eigenvalues.
 ## Honest scope
 
 ⚠️ **Eigenvalues with an eigenline.** The eigenvalue sets here are
-`{μ : ℝ | ∃ p, A p.rep = μ p.rep}`; for Hermitian `A` these are its eigenvalues, but no theorem
-here identifies the set with Mathlib's `Matrix.IsHermitian.eigenvalues`.
+`{μ : ℝ | ∃ p, A p.rep = μ p.rep}`; for Hermitian `A`, `setOf_eigenline_eq_range_eigenvalues`
+(#334) identifies the set with `Set.range hA.eigenvalues`, Mathlib's eigenvalues. A set does not
+see multiplicities.
 
 ⚠️ **Critical points, not their indices.** Morse theory of `⟨A⟩` (the Hessian at an eigenline and
 its index, the count of eigenvalues below) is not here.
@@ -206,6 +217,38 @@ theorem criticalValues_eq_eigenvalues {A : Matrix (Fin (n + 1)) (Fin (n + 1)) �
     rw [he]
     exact hp
 
+/-- ★★ **The eigenvalues with an eigenline are Mathlib's eigenvalues**: for Hermitian `A`,
+`{μ | ∃ p, A p = μ p} = Set.range hA.eigenvalues`. -/
+theorem setOf_eigenline_eq_range_eigenvalues {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hA : A.IsHermitian) :
+    {μ : ℝ | ∃ p : ℙ ℂ (Ambient n), Matrix.toEuclideanLin A p.rep = (μ : ℂ) • p.rep}
+      = Set.range hA.eigenvalues := by
+  ext μ
+  constructor
+  · rintro ⟨p, hp⟩
+    have hev : Module.End.HasEigenvalue (Matrix.toEuclideanLin A) (μ : ℂ) :=
+      Module.End.hasEigenvalue_of_hasEigenvector
+        ⟨Module.End.mem_eigenspace_iff.2 hp, rep_nonzero p⟩
+    have hs := Module.End.hasEigenvalue_iff_mem_spectrum.1 hev
+    rw [Matrix.spectrum_toLpLin, hA.spectrum_eq_image_range] at hs
+    obtain ⟨μ', hμ', he⟩ := hs
+    rwa [← Complex.ofReal_injective he]
+  · rintro ⟨j, rfl⟩
+    have hv : hA.eigenvectorBasis j ≠ 0 := hA.eigenvectorBasis.orthonormal.ne_zero j
+    have hAv : Matrix.toEuclideanLin A (hA.eigenvectorBasis j)
+        = ((hA.eigenvalues j : ℝ) : ℂ) • hA.eigenvectorBasis j := by
+      have hk := hA.mulVec_eigenvectorBasis j
+      ext k
+      have h := congrFun hk k
+      simp only [Pi.smul_apply] at h
+      rw [Matrix.toLpLin_apply]
+      simp only [PiLp.smul_apply]
+      rw [h, Complex.real_smul]
+      rfl
+    refine ⟨mk ℂ _ hv, ?_⟩
+    obtain ⟨c, hc⟩ := (mk_eq_mk_iff ℂ (mk ℂ _ hv).rep _ (rep_nonzero _) hv).mp (mk_rep _)
+    rw [← hc, Units.smul_def, map_smul, hAv, smul_comm]
+
 /-! ### Maximum and minimum -/
 
 /-- `dH_A = 0` at a point where the chart Hamiltonian has a local extremum. -/
@@ -283,5 +326,31 @@ theorem exists_isLeast_eigenvalues {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
   rintro μ ⟨q, hq⟩
   rw [← expectation_eq_of_eigen hq]
   exact hmin q
+
+/-! ### The same statements against Mathlib's eigenvalues -/
+
+/-- ★★ **The critical values of `⟨A⟩` are Mathlib's eigenvalues of `A`.** -/
+theorem criticalValues_eq_range_eigenvalues {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hA : A.IsHermitian) :
+    {μ : ℝ | ∃ p : ℙ ℂ (Ambient n), mfderiv (modelWithCornersSelf ℝ (Fin n → ℂ))
+        (modelWithCornersSelf ℝ ℝ) (expectation A) p = 0 ∧ expectation A p = μ}
+      = Set.range hA.eigenvalues := by
+  rw [criticalValues_eq_eigenvalues hA, setOf_eigenline_eq_range_eigenvalues hA]
+
+/-- ★★ **The maximum of `⟨A⟩` is the largest of Mathlib's eigenvalues of `A`.** -/
+theorem exists_isGreatest_range_eigenvalues {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hA : A.IsHermitian) :
+    ∃ p : ℙ ℂ (Ambient n), (∀ q, expectation A q ≤ expectation A p) ∧
+      IsGreatest (Set.range hA.eigenvalues) (expectation A p) := by
+  rw [← setOf_eigenline_eq_range_eigenvalues hA]
+  exact exists_isGreatest_eigenvalues hA
+
+/-- ★★ **The minimum of `⟨A⟩` is the smallest of Mathlib's eigenvalues of `A`.** -/
+theorem exists_isLeast_range_eigenvalues {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hA : A.IsHermitian) :
+    ∃ p : ℙ ℂ (Ambient n), (∀ q, expectation A p ≤ expectation A q) ∧
+      IsLeast (Set.range hA.eigenvalues) (expectation A p) := by
+  rw [← setOf_eigenline_eq_range_eigenvalues hA]
+  exact exists_isLeast_eigenvalues hA
 
 end Projectivization

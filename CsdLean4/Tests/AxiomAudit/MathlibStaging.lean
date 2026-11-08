@@ -16177,6 +16177,23 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.arccos_div_le_time
+-- ProjectiveSpaceCriticalPoints, Mathlib eigenvalues (BACKLOG #334, geometric QM completion item 3, 2026-11-08): eigenline eigenvalues = Set.range hA.eigenvalues.
+
+/-- info: 'Projectivization.setOf_eigenline_eq_range_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.setOf_eigenline_eq_range_eigenvalues
+
+/-- info: 'Projectivization.criticalValues_eq_range_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.criticalValues_eq_range_eigenvalues
+
+/-- info: 'Projectivization.exists_isGreatest_range_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_isGreatest_range_eigenvalues
+
+/-- info: 'Projectivization.exists_isLeast_range_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_isLeast_range_eigenvalues
 -- ProjectiveSpaceRobertson (BACKLOG #333, geometric QM completion item 2, 2026-11-08): Cauchy-Schwarz for g - i omega; Cov^2 + (<-i[A,B]>/2)^2 <= Var A Var B.
 
 /-- info: 'DifferentialForm.IsAlmostKahler.metric_add_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
