@@ -893,6 +893,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFSLeng
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFSDistance
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSpeedLimit
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceRobertson
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonJacobi
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFisherRao
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricPhase
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpace

@@ -67,9 +67,9 @@ need `B` Hermitian (it generates the flow) and hold for every matrix `A`, with `
 real part `⟪z, Az⟫.re / ‖z‖²`; the conservation theorem assumes both Hermitian, since it needs
 `-i[A, H]` Hermitian to conclude from `⟨-i[A, H]⟩ = 0` that `[A, H] = 0`.
 
-⚠️ **No Jacobi identity.** The bracket's Jacobi identity on `ℂℙⁿ` follows from the Lie hom
-`poissonBracket_schrodingerHamiltonian` on the functions `-2⟨A⟩`, but it is not stated for general
-smooth functions (that needs `dω = 0` in bracket form, which is not here).
+⚠️ **The Jacobi identity is elsewhere.** For general smooth functions on any symplectic manifold
+it is `IsSymplectic.poissonBracket_jacobi` (#336, `Instances/ProjectiveSpacePoissonJacobi.lean`,
+from `dω = 0` through Cartan's formula); this module proves only the Lie hom on `-2⟨A⟩`.
 
 ## References
 

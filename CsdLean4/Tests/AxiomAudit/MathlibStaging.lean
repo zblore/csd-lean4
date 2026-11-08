@@ -170,6 +170,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFSLeng
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFSDistance
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSpeedLimit
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceRobertson
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoissonJacobi
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -16177,6 +16178,39 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.arccos_div_le_time
+-- ProjectiveSpacePoissonJacobi (BACKLOG #336, geometric QM completion item 5, 2026-11-08): Jacobi identity for smooth functions on a symplectic manifold, from d omega = 0.
+
+/-- info: 'DifferentialForm.extDeriv_apply_three' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.extDeriv_apply_three
+
+/-- info: 'DifferentialForm.flat_apply_lieBracket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.flat_apply_lieBracket
+
+/-- info: 'DifferentialForm.flat_jacobi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.flat_jacobi
+
+/-- info: 'DifferentialForm.fderiv_transition_trivializationAt_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.fderiv_transition_trivializationAt_snd
+
+/-- info: 'DifferentialForm.fderiv_comp_chartAt_symm_trivializationAt_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.fderiv_comp_chartAt_symm_trivializationAt_snd
+
+/-- info: 'DifferentialForm.IsSymplectic.poissonBracket_poissonBracket_cyclic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.poissonBracket_poissonBracket_cyclic
+
+/-- info: 'DifferentialForm.IsSymplectic.poissonBracket_jacobi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms DifferentialForm.IsSymplectic.poissonBracket_jacobi
+
+/-- info: 'Projectivization.poissonBracket_jacobi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.poissonBracket_jacobi
 -- ProjectiveSpaceSpeedLimit, time-dependent H (BACKLOG #335, geometric QM completion item 4, 2026-11-08): arccos sqrt P(gamma 0, gamma T) <= int_0^T Delta H(t) dt.
 
 /-- info: 'Projectivization.fsPathLength_eq_lintegral_sqrt_variance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
