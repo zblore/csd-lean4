@@ -428,10 +428,13 @@ remainder); local stochastic noise survives one level of reduction with `p ↦ A
 rectangles are exactly the ones ideal on the logical register, and joined with that noise the
 decoded run is ideal with probability at least `1 − N A p²` (row 316,
 `one_sub_le_measure_synDecode_eq`); the rest is rows 228, 229, 231 (split into 312–315; 314
-split into 316–321, with 319 and 315 open; 319 split into 322–324, with 323 and 324 open)
+split into 316–321, with 319 and 315 open; 319 split into 322–324 and 332, with 324 and 332 open)
 and 310. Bad rectangles are counted for any family of windows, so rectangles on two blocks
-cost nothing extra (row 322, `RectFamily.measure_forall_bad_le`). At the Steane code the
-decoder that keeps the syndrome is unitary and traces to the decoder used so far (row 317,
+cost nothing extra (row 322, `RectFamily.measure_forall_bad_le`). Moving the decoder through
+a serialised run is exact: the decoded run is the run of its stages on logical ⊗ syndrome,
+good rectangles act as their ideal gates on the inputs the run feeds them, and a bad one
+absorbs the recovery it shares with its predecessor (row 323, `conj_recRun_eq`). At the Steane
+code the decoder that keeps the syndrome is unitary and traces to the decoder used so far (row 317,
 `steaneDecode_eq_synDecode`); the transversal `S` does not commute with the decoder on arbitrary
 inputs (`exists_steaneDecode_sTransversal_ne`), so the chain uses correctness relative to the
 leading recovery, as Aliferis–Gottesman–Preskill do (`decode_recRun_of_isGoodAfter`). The

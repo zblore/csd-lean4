@@ -273,6 +273,7 @@ public import CsdLean4.Mathlib.QuantumInfo.KnillLaflamme
 public import CsdLean4.Mathlib.QuantumInfo.LevelReduction
 public import CsdLean4.Mathlib.QuantumInfo.LocalStochastic
 public import CsdLean4.Mathlib.QuantumInfo.RectGeometry
+public import CsdLean4.Mathlib.QuantumInfo.ExactReduction
 public import CsdLean4.Mathlib.QuantumInfo.SyndromeDecoder
 public import CsdLean4.Mathlib.QuantumInfo.Magic
 public import CsdLean4.Mathlib.QuantumInfo.MagicInjection
@@ -16175,5 +16176,66 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.arccos_div_le_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.arccos_div_le_time
+-- ExactReduction (BACKLOG #323, split from #319, 2026-11-08): the decoded run is the reduced run of the stages on logical x syndrome; good locations ideal on their inputs; joined with #322.
+
+/-- info: 'QuantumInfo.inRec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.inRec
+
+/-- info: 'QuantumInfo.outRec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.outRec
+
+/-- info: 'QuantumInfo.stage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.stage
+
+/-- info: 'QuantumInfo.runInit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.runInit
+
+/-- info: 'QuantumInfo.inRec_of_good' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.inRec_of_good
+
+/-- info: 'QuantumInfo.recRun_eq_stage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.recRun_eq_stage
+
+/-- info: 'QuantumInfo.recRun_eq_ovIdeal_stage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.recRun_eq_ovIdeal_stage
+
+/-- info: 'QuantumInfo.ovIdeal_stage_of_good' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.ovIdeal_stage_of_good
+
+/-- info: 'QuantumInfo.liftRect_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.liftRect_conj
+
+/-- info: 'QuantumInfo.conj_recRun_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.conj_recRun_eq
+
+/-- info: 'QuantumInfo.partialTraceRight_liftRect_stage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.partialTraceRight_liftRect_stage
+
+/-- info: 'QuantumInfo.timeBad' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.timeBad
+
+/-- info: 'QuantumInfo.exact_reduction_of_rectFamily' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.exact_reduction_of_rectFamily
+
+/-- info: 'QuantumInfo.one_sub_le_measure_forall_timeBad_eq_false' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.one_sub_le_measure_forall_timeBad_eq_false
+
+/-- info: 'QuantumInfo.decode_recRun_of_forall_timeBad_eq_false' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms QuantumInfo.decode_recRun_of_forall_timeBad_eq_false
 
 end CSD.Tests.AxiomAudit

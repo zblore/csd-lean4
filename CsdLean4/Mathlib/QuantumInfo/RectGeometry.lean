@@ -57,7 +57,7 @@ trailing recovery**, which the truncation removes — is #323 (the exact one-lev
 ⚠️ **Truncation is by the decoding order.** Which windows are claimed depends on the order in which
 the family is indexed; for a circuit the order is a reverse time order, so a rectangle loses the
 trailing recoveries it shares with bad successors. The circuit model that fixes the windows and the
-order is #323.
+order is #323 (serialised) and #332 (two blocks).
 
 ⚠️ **Not proved equal to #318's `badSeq`.** For a chain indexed in decoding order the two notions
 truncate the same shared recovery, but `RectChain.badSeq` uses an explicit truncated family `M'`

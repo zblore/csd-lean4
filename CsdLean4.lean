@@ -112,6 +112,7 @@ public import CsdLean4.Mathlib.QuantumInfo.LevelReduction
 public import CsdLean4.Mathlib.QuantumInfo.OverlappingRectangles
 public import CsdLean4.Mathlib.QuantumInfo.LocalStochastic
 public import CsdLean4.Mathlib.QuantumInfo.RectGeometry
+public import CsdLean4.Mathlib.QuantumInfo.ExactReduction
 public import CsdLean4.Mathlib.QuantumInfo.SyndromeDecoder
 public import CsdLean4.Mathlib.QuantumInfo.AmplitudeAmplification
 public import CsdLean4.Mathlib.QuantumInfo.QSearch

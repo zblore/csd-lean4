@@ -68,7 +68,7 @@ parameter, which is what the recursion consumes.
 
 ⚠️ **A chain.** The rectangles form a sequence, neighbours sharing one recovery, as in #233's
 machine. Rectangles on several blocks at once (`CNOT̄`) share recoveries with two predecessors; that
-geometry is #322 (`RectGeometry.lean`, any family of windows) and #323's circuit model.
+geometry is #322 (`RectGeometry.lean`, any family of windows), #323 and #332.
 
 ⚠️ **Malignant pairs.** A rectangle is bad when a pair of its window is faulty; three faults that
 no pair of the family covers are not counted bad, so the family must be a cover in the sense the
