@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 # The Fubini–Study geodesic spray
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold.Instances`).
-BACKLOG #343, #344 (geometric QM: the local geodesic ODE of `ℂℙⁿ`, local existence and
+BACKLOG #343, #344, #345 (geometric QM: the local geodesic ODE of `ℂℙⁿ`, local existence and
 uniqueness).
 
 The geodesic equation of `ℂℙⁿ` with the Fubini–Study metric, as a first-order ODE in an affine
@@ -41,13 +41,17 @@ chart, with smooth right-hand side.
   Picard–Lindelöf on the spray);
 * ★★★ `eventuallyEq_of_isGeodesicOn_fs` — **local uniqueness**: two geodesics on an open set of
   times containing `t₀` with the same position and velocity at `t₀` agree near `t₀` (Mathlib's
-  `ODE_solution_unique_of_eventually`, the spray being Lipschitz near the initial point).
+  `ODE_solution_unique_of_eventually`, the spray being Lipschitz near the initial point);
+* ★★★ `eqOn_of_isGeodesicOn_fs` — **uniqueness on a whole interval**: two geodesics on an open
+  preconnected `I` with the same position and velocity at one `t₀ ∈ I` agree on all of `I`, across
+  any number of charts (the agreement set is open, and closed in `I` by continuity of positions
+  and of chart velocities).
 
 ## Honest scope
 
-⚠️ **Local only.** Existence is on some `(-ε, ε)` with `ε` not estimated; uniqueness is near `t₀`
-(`=ᶠ[𝓝 t₀]`), not on the whole common interval of two geodesics (that needs a connectedness
-argument across charts). Maximal geodesics, completeness and the exponential map are not stated.
+⚠️ **Existence is local.** It is on some `(-ε, ε)` with `ε` not estimated. Uniqueness holds on any
+open interval where both curves are geodesics. Maximal geodesics, completeness and the exponential
+map are not stated.
 
 ⚠️ **One chart per statement.** `isGeodesic_iff_fsGeodesicSpray` assumes `γ t` is in the chart's
 source for every `t ∈ ℝ`; `isGeodesicOn_iff_fsGeodesicSpray` only on the open set `I`, which is
@@ -67,7 +71,7 @@ the geodesic equation in coordinates) and Ch. 5 (the Koszul formula);
 `CovariantDerivativeAlongCurve.lean` (#339: `isGeodesic_iff_chartSpray`,
 `mlieBracket_chartConstField`), `Instances/ProjectiveSpaceFubiniStudyRiemannianBundle.lean` (#338:
 `fsRiemannianMetric`, `fsMetric_symmL_symmL`); Mathlib's `leviCivitaConnection_apply_inner`;
-Mathlib's `Analysis/ODE/ExistUnique.lean`; `specs/BACKLOG.md` #338, #339, #343, #344;
+Mathlib's `Analysis/ODE/ExistUnique.lean`; `specs/BACKLOG.md` #338, #339, #343, #344, #345;
 `specs/future-work.md`.
 -/
 
@@ -424,5 +428,73 @@ theorem eventuallyEq_of_isGeodesicOn_fs {γ₁ γ₂ : ℝ → ℙ ℂ (Ambient 
   have h' := congrArg Prod.fst h
   simp only at h'
   rw [← φ.left_inv ht.1.2, ← φ.left_inv ht.2.2, h']
+
+/-- ★★★ **Uniqueness of Fubini–Study geodesics on a whole interval**: two geodesics on an open
+preconnected set of times `I` (an open interval) with the same position and velocity at one
+`t₀ ∈ I` agree on all of `I`. Local uniqueness spreads by connectedness: the set where they agree
+near `t` is open, and closed in `I` because positions and chart velocities are continuous. -/
+theorem eqOn_of_isGeodesicOn_fs {γ₁ γ₂ : ℝ → ℙ ℂ (Ambient n)} {I : Set ℝ} {t₀ : ℝ}
+    (hI : IsOpen I) (hIc : IsPreconnected I) (ht₀ : t₀ ∈ I)
+    (h₁ : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ₁ I)
+    (h₂ : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ₂ I)
+    (hpos : γ₁ t₀ = γ₂ t₀)
+    (hvel : mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₁ t₀ (1 : ℝ)
+      = mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ t₀ (1 : ℝ)) :
+    Set.EqOn γ₁ γ₂ I := by
+  set u : Set ℝ := {t | γ₁ =ᶠ[𝓝 t] γ₂} with hu
+  have hUo : IsOpen u := isOpen_setOfPred_eventually_nhds
+  have hsub : I ⊆ u := by
+    refine hIc.subset_of_closure_inter_subset hUo
+      ⟨t₀, ht₀, eventuallyEq_of_isGeodesicOn_fs hI ht₀ h₁ h₂ hpos hvel⟩ ?_
+    rintro t ⟨htc, ht⟩
+    have hne : (𝓝[u] t).NeBot := mem_closure_iff_nhdsWithin_neBot.1 htc
+    have hd₁ : MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₁ t :=
+      ((mdifferentiableAt_totalSpace _ _).1 (h₁ t ht).1).1
+    have hd₂ : MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ t :=
+      ((mdifferentiableAt_totalSpace _ _).1 (h₂ t ht).1).1
+    -- positions agree at `t`
+    have hpt : γ₁ t = γ₂ t := by
+      have l₁ : Tendsto γ₁ (𝓝[u] t) (𝓝 (γ₁ t)) := hd₁.continuousAt.tendsto.mono_left
+        nhdsWithin_le_nhds
+      have l₂ : Tendsto γ₁ (𝓝[u] t) (𝓝 (γ₂ t)) :=
+        (hd₂.continuousAt.tendsto.mono_left nhdsWithin_le_nhds).congr'
+          (eventually_nhdsWithin_of_forall fun s hs => (hs.self_of_nhds).symm)
+      exact tendsto_nhds_unique l₁ l₂
+    -- chart velocities agree at `t`
+    set x := γ₁ t with hx
+    set e := trivializationAt (Fin n → ℂ) (TangentSpace 𝓘(ℝ, Fin n → ℂ)) x with he
+    have hs₁ : γ₁ t ∈ (chartAt (Fin n → ℂ) x).source := mem_chart_source _ x
+    have hs₂ : γ₂ t ∈ (chartAt (Fin n → ℂ) x).source := by rw [← hpt]; exact hs₁
+    set f₁ := fun s => (e ⟨γ₁ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₁ s (1 : ℝ)⟩).2 with hf₁
+    set f₂ := fun s => (e ⟨γ₂ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ s (1 : ℝ)⟩).2 with hf₂
+    have hc₁ : ContinuousAt f₁ t :=
+      (differentiableAt_trivializationAt_comp x hs₁ (h₁ t ht).1).continuousAt
+    have hc₂ : ContinuousAt f₂ t :=
+      (differentiableAt_trivializationAt_comp x hs₂ (h₂ t ht).1).continuousAt
+    have heqf : ∀ s ∈ u, f₁ s = f₂ s := fun s hs => by
+      have hp : γ₁ s = γ₂ s := hs.self_of_nhds
+      have hv : mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₁ s (1 : ℝ)
+          = mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ s (1 : ℝ) := by
+        rw [hs.mfderiv_eq]
+        rfl
+      show (e ⟨γ₁ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₁ s (1 : ℝ)⟩).2
+        = (e ⟨γ₂ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ s (1 : ℝ)⟩).2
+      rw [hv]
+      exact congrArg (fun y => (e ⟨y, (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ s (1 : ℝ) :
+        Fin n → ℂ)⟩).2) hp
+    have hft : f₁ t = f₂ t := by
+      have l₁ : Tendsto f₁ (𝓝[u] t) (𝓝 (f₁ t)) := hc₁.tendsto.mono_left nhdsWithin_le_nhds
+      have l₂ : Tendsto f₁ (𝓝[u] t) (𝓝 (f₂ t)) :=
+        (hc₂.tendsto.mono_left nhdsWithin_le_nhds).congr'
+          (eventually_nhdsWithin_of_forall fun s hs => (heqf s hs).symm)
+      exact tendsto_nhds_unique l₁ l₂
+    have hvt : mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₁ t (1 : ℝ)
+        = mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ t (1 : ℝ) := by
+      rw [← e.symm_apply_apply_mk hs₁ (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₁ t (1 : ℝ)),
+        ← e.symm_apply_apply_mk hs₂ (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ t (1 : ℝ))]
+      exact (congrArg (fun y => (e.symm y (f₁ t) : Fin n → ℂ)) hpt).trans
+        (congrArg (fun z => (e.symm (γ₂ t) z : Fin n → ℂ)) hft)
+    exact eventuallyEq_of_isGeodesicOn_fs hI ht h₁ h₂ hpt hvt
+  exact fun t ht => (hsub ht).self_of_nhds
 
 end Projectivization
