@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 # The Fubini–Study geodesic spray
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold.Instances`).
-BACKLOG #343–#347 (geometric QM: the local geodesic ODE of `ℂℙⁿ`, local existence and
+BACKLOG #343–#348 (geometric QM: the local geodesic ODE of `ℂℙⁿ`, local existence and
 uniqueness).
 
 The geodesic equation of `ℂℙⁿ` with the Fubini–Study metric, as a first-order ODE in an affine
@@ -63,13 +63,24 @@ chart, with smooth right-hand side.
 * `eq_univ_of_maximal_fs` — the maximal interval is `ℝ` (escape argument); ★★★
   `exists_isGeodesic_fs` — **`ℂℙⁿ` is geodesically complete**: every initial datum `(x₀, v₀)` has a
   geodesic defined on all of `ℝ` (an `IsGeodesic`), agreeing with every geodesic with the same
-  data on an open interval containing `0`.
+  data on an open interval containing `0`;
+* `fsKoszul_smul_smul`, `fsChristoffel_smul` (`Γ_w(cv, cv) = c² Γ_w(v, v)`), ★★
+  `isGeodesic_comp_mul_fs` (**`t ↦ γ (c t)` is a geodesic**), `mfderiv_comp_mul_zero`;
+* `fsGeodesic x v` — the complete geodesic with initial data `(x, v)` (`fsGeodesic_zero`,
+  `mfderiv_fsGeodesic_zero`, `isGeodesic_fsGeodesic`, `eqOn_fsGeodesic`), ★★ `fsGeodesic_smul`
+  (`γ_{x, cv}(t) = γ_{x, v}(c t)`);
+* `fsExp x v = γ_{x, v}(1)` — **the exponential map**; ★★★ `fsExp_smul`
+  (**`exp_x(t v) = γ_{x, v}(t)`**), `fsExp_zero`.
 
 ## Honest scope
 
 ⚠️ **Completeness by the escape argument, not Hopf–Rinow.** Geodesics exist for all time; no
-metric-space completeness, distance-minimisation or Hopf–Rinow statement is made, and the
-exponential map `exp_x(v) = γ_{x,v}(1)` is not defined. `ε` is never estimated.
+metric-space completeness, distance-minimisation or Hopf–Rinow statement is made. `ε` is never
+estimated.
+
+⚠️ **The exponential map is defined, not analysed.** `fsExp` is `γ_{x,v}(1)` with the identities
+above; its smoothness, `d(exp_x)_0 = id`, the local diffeomorphism property, injectivity radius
+and cut locus are not stated.
 
 ⚠️ **One chart per statement.** `isGeodesic_iff_fsGeodesicSpray` assumes `γ t` is in the chart's
 source for every `t ∈ ℝ`; `isGeodesicOn_iff_fsGeodesicSpray` only on the open set `I`, which is
@@ -89,7 +100,7 @@ the geodesic equation in coordinates) and Ch. 5 (the Koszul formula);
 `CovariantDerivativeAlongCurve.lean` (#339: `isGeodesic_iff_chartSpray`,
 `mlieBracket_chartConstField`), `Instances/ProjectiveSpaceFubiniStudyRiemannianBundle.lean` (#338:
 `fsRiemannianMetric`, `fsMetric_symmL_symmL`); Mathlib's `leviCivitaConnection_apply_inner`;
-Mathlib's `Analysis/ODE/ExistUnique.lean`; `specs/BACKLOG.md` #338, #339, #343–#347;
+Mathlib's `Analysis/ODE/ExistUnique.lean`; `specs/BACKLOG.md` #338, #339, #343–#348;
 `specs/future-work.md`.
 -/
 
@@ -898,5 +909,137 @@ theorem exists_isGeodesic_fs (x₀ : ℙ ℂ (Ambient n)) (v₀ : TangentSpace �
   obtain ⟨-, -, -, hγ0, hγv, hgeo⟩ := hγ
   rw [hJ, isGeodesicOn_univ] at hgeo
   exact ⟨γ, hγ0, hγv, hgeo, fun I η h => (hmax I η h).2⟩
+
+/-! ### The exponential map -/
+
+/-- The Koszul functional is bilinear: scaling both slots by `c` scales it by `c²`. -/
+theorem fsKoszul_smul_smul (w u v : Fin n → ℂ) (c : ℝ) :
+    fsKoszul w (c • u) (c • v) = (c * c) • fsKoszul w u v := by
+  ext z
+  simp only [fsKoszul_apply, map_smul, FunLike.coe_smul, Pi.smul_apply, smul_eq_mul]
+  ring
+
+/-- **The Christoffel symbols are quadratic**: `Γ_w(cv, cv) = c² Γ_w(v, v)`. -/
+theorem fsChristoffel_smul (w v : Fin n → ℂ) (c : ℝ) :
+    fsChristoffel w (c • v) (c • v) = (c * c) • fsChristoffel w v v := by
+  rw [fsChristoffel, fsChristoffel, fsKoszul_smul_smul, map_smul]
+
+/-- ★★ **Rescaling a geodesic**: if `γ` is a Fubini–Study geodesic, so is `t ↦ γ (c t)`. -/
+theorem isGeodesic_comp_mul_fs {γ : ℝ → ℙ ℂ (Ambient n)}
+    (h : IsGeodesic (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ) (c : ℝ) :
+    IsGeodesic (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) (fun t => γ (c * t)) := by
+  intro t
+  set x₁ := γ (c * t) with hx₁
+  set φ := chartAt (Fin n → ℂ) x₁ with hφ
+  have hd : ∀ s, MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ s := fun s =>
+    ((mdifferentiableAt_totalSpace _ _).1 (h s).1).1
+  have hγc : Continuous γ := continuous_iff_continuousAt.2 fun s => (hd s).continuousAt
+  have hK : IsOpen (γ ⁻¹' φ.source) := φ.open_source.preimage hγc
+  obtain ⟨v, hv⟩ := (isGeodesicOn_iff_fsGeodesicSpray x₁ hK fun s hs => hs).1
+    ((h.isGeodesicOn _))
+  have hK' : IsOpen ((fun s => c * s) ⁻¹' (γ ⁻¹' φ.source)) :=
+    hK.preimage (continuous_const.mul continuous_id)
+  have htK' : t ∈ (fun s => c * s) ⁻¹' (γ ⁻¹' φ.source) :=
+    show γ (c * t) ∈ φ.source from mem_chart_source _ _
+  have hgeo : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n)))
+      (fun t => γ (c * t)) ((fun s => c * s) ⁻¹' (γ ⁻¹' φ.source)) := by
+    rw [isGeodesicOn_iff_fsGeodesicSpray x₁ hK' fun s hs => hs]
+    refine ⟨fun s => c • v (c * s), fun s hs => ?_⟩
+    have hvs := hv (c * s) hs
+    have hfst : HasDerivAt (fun r => φ (γ r)) (v (c * s)) (c * s) := by
+      have := (ContinuousLinearMap.fst ℝ _ _).hasFDerivAt.comp_hasDerivAt (c * s) hvs
+      simpa [Function.comp_def, fsGeodesicSpray] using this
+    have hsnd : HasDerivAt v (-fsChristoffel (φ (γ (c * s))) (v (c * s)) (v (c * s))) (c * s) := by
+      have := (ContinuousLinearMap.snd ℝ _ _).hasFDerivAt.comp_hasDerivAt (c * s) hvs
+      simpa [Function.comp_def, fsGeodesicSpray] using this
+    have hlin : HasDerivAt (fun r => c * r) c s := by
+      simpa using (hasDerivAt_id s).const_mul c
+    have hW : HasDerivAt (fun r => φ (γ (c * r))) (c • v (c * s)) s := hfst.scomp s hlin
+    have hV : HasDerivAt (fun r => c • v (c * r))
+        (c • (c • -fsChristoffel (φ (γ (c * s))) (v (c * s)) (v (c * s)))) s :=
+      (hsnd.scomp s hlin).const_smul c
+    convert hW.prodMk hV using 1
+    simp only [fsGeodesicSpray, fsChristoffel_smul, smul_neg, smul_smul]
+    rfl
+  exact hgeo t htK'
+
+/-- The velocity of `t ↦ γ (c t)` at `0` is `c γ'(0)`. -/
+theorem mfderiv_comp_mul_zero {γ : ℝ → ℙ ℂ (Ambient n)}
+    (hγ : MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0) (c : ℝ) :
+    mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) (fun t => γ (c * t)) 0 (1 : ℝ)
+      = c • mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 (1 : ℝ) := by
+  have hγ' : MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ (c * 0) := by
+    rw [mul_zero]; exact hγ
+  have hl' := ((hasDerivAt_id' (0 : ℝ)).const_mul c).hasFDerivAt.hasMFDerivAt
+  have h1 := mfderiv_comp_apply (I := 𝓘(ℝ, ℝ)) (g := γ) (f := fun t : ℝ => c * t) (x := 0)
+    hγ' hl'.mdifferentiableAt (show TangentSpace 𝓘(ℝ, ℝ) (0 : ℝ) from (1 : ℝ))
+  rw [hl'.mfderiv] at h1
+  have key : ∀ y : ℝ, y = 0 → ∀ a : ℝ,
+      mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ y a = a • mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 (1 : ℝ) := by
+    intro y hy a
+    subst hy
+    have helper : ∀ (L : ℝ →L[ℝ] (Fin n → ℂ)) (b : ℝ), L b = b • L 1 := fun L b => by
+      rw [← L.map_smul, smul_eq_mul, mul_one]
+    exact helper (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0) a
+  refine h1.trans ((key _ (mul_zero c) _).trans ?_)
+  simp only [mul_one]
+  have hX : (ContinuousLinearMap.toSpanSingleton ℝ c) (1 : ℝ) = c := by simp
+  exact congrArg (fun r : ℝ =>
+    r • (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 (1 : ℝ) : Fin n → ℂ)) hX
+
+/-- **The geodesic with initial data `(x, v)`**, defined for all time
+(`exists_isGeodesic_fs`). -/
+noncomputable def fsGeodesic (x : ℙ ℂ (Ambient n)) (v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x) :
+    ℝ → ℙ ℂ (Ambient n) :=
+  Classical.choose (exists_isGeodesic_fs x v)
+
+theorem fsGeodesic_zero (x : ℙ ℂ (Ambient n)) (v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x) :
+    fsGeodesic x v 0 = x :=
+  (Classical.choose_spec (exists_isGeodesic_fs x v)).1
+
+theorem mfderiv_fsGeodesic_zero (x : ℙ ℂ (Ambient n)) (v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x) :
+    mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) (fsGeodesic x v) 0 (1 : ℝ) = v :=
+  (Classical.choose_spec (exists_isGeodesic_fs x v)).2.1
+
+theorem isGeodesic_fsGeodesic (x : ℙ ℂ (Ambient n)) (v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x) :
+    IsGeodesic (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) (fsGeodesic x v) :=
+  (Classical.choose_spec (exists_isGeodesic_fs x v)).2.2.1
+
+/-- Every geodesic with initial data `(x, v)` on an open interval containing `0` is
+`fsGeodesic x v` there. -/
+theorem eqOn_fsGeodesic {x : ℙ ℂ (Ambient n)} {v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x}
+    {I : Set ℝ} {η : ℝ → ℙ ℂ (Ambient n)} (h : IsFSGeodesicData x v I η) :
+    Set.EqOn η (fsGeodesic x v) I :=
+  (Classical.choose_spec (exists_isGeodesic_fs x v)).2.2.2 I η h
+
+/-- ★★ **Rescaling initial velocities rescales time**: `γ_{x, c v}(t) = γ_{x, v}(c t)`. -/
+theorem fsGeodesic_smul (x : ℙ ℂ (Ambient n)) (v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x) (c t : ℝ) :
+    fsGeodesic x (c • v) t = fsGeodesic x v (c * t) := by
+  have hg := isGeodesic_fsGeodesic x v
+  have hd : MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) (fsGeodesic x v) 0 :=
+    ((mdifferentiableAt_totalSpace _ _).1 (hg 0).1).1
+  have hdata : IsFSGeodesicData x (c • v) Set.univ (fun s => fsGeodesic x v (c * s)) := by
+    refine ⟨isOpen_univ, isPreconnected_univ, Set.mem_univ _, ?_, ?_,
+      (isGeodesicOn_univ _ _).2 (isGeodesic_comp_mul_fs hg c)⟩
+    · simp only [mul_zero, fsGeodesic_zero]
+    · rw [mfderiv_comp_mul_zero hd c, mfderiv_fsGeodesic_zero]
+      rfl
+  exact (eqOn_fsGeodesic hdata (Set.mem_univ t)).symm
+
+/-- **The Fubini–Study exponential map**: `exp_x(v) = γ_{x, v}(1)`. -/
+noncomputable def fsExp (x : ℙ ℂ (Ambient n)) (v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x) :
+    ℙ ℂ (Ambient n) :=
+  fsGeodesic x v 1
+
+/-- ★★★ **The exponential map traces the geodesics**: `exp_x(t v) = γ_{x, v}(t)`. -/
+theorem fsExp_smul (x : ℙ ℂ (Ambient n)) (v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x) (t : ℝ) :
+    fsExp x (t • v) = fsGeodesic x v t := by
+  rw [fsExp, fsGeodesic_smul, mul_one]
+
+/-- `exp_x(0) = x`. -/
+theorem fsExp_zero (x : ℙ ℂ (Ambient n)) : fsExp x 0 = x := by
+  have h := fsExp_smul x (0 : TangentSpace 𝓘(ℝ, Fin n → ℂ) x) 0
+  rw [zero_smul, fsGeodesic_zero] at h
+  exact h
 
 end Projectivization

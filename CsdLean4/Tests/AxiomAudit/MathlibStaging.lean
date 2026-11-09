@@ -16630,6 +16630,58 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.exists_isGeodesic_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.exists_isGeodesic_fs
+
+/-- info: 'Projectivization.fsKoszul_smul_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsKoszul_smul_smul
+
+/-- info: 'Projectivization.fsChristoffel_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsChristoffel_smul
+
+/-- info: 'Projectivization.isGeodesic_comp_mul_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isGeodesic_comp_mul_fs
+
+/-- info: 'Projectivization.mfderiv_comp_mul_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_comp_mul_zero
+
+/-- info: 'Projectivization.fsGeodesic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsGeodesic
+
+/-- info: 'Projectivization.fsGeodesic_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsGeodesic_zero
+
+/-- info: 'Projectivization.mfderiv_fsGeodesic_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_fsGeodesic_zero
+
+/-- info: 'Projectivization.isGeodesic_fsGeodesic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isGeodesic_fsGeodesic
+
+/-- info: 'Projectivization.eqOn_fsGeodesic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.eqOn_fsGeodesic
+
+/-- info: 'Projectivization.fsGeodesic_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsGeodesic_smul
+
+/-- info: 'Projectivization.fsExp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsExp
+
+/-- info: 'Projectivization.fsExp_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsExp_smul
+
+/-- info: 'Projectivization.fsExp_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsExp_zero
 -- ProjectiveSpaceMorse (BACKLOG #337, geometric QM completion item 6, 2026-11-08): Hessian of <A> along projective lines at an eigenline; index 2 #{mu_j < lambda}.
 
 /-- info: 'Projectivization.toEuclideanLin_eigenvectorBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
