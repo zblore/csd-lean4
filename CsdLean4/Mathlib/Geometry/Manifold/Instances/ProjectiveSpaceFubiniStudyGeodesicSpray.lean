@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 # The Fubini–Study geodesic spray
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold.Instances`).
-BACKLOG #343–#346 (geometric QM: the local geodesic ODE of `ℂℙⁿ`, local existence and
+BACKLOG #343–#347 (geometric QM: the local geodesic ODE of `ℂℙⁿ`, local existence and
 uniqueness).
 
 The geodesic equation of `ℂℙⁿ` with the Fubini–Study metric, as a first-order ODE in an affine
@@ -52,13 +52,24 @@ chart, with smooth right-hand side.
 * ★★★ `exists_maximal_isGeodesicOn_fs` — **maximal geodesics**: for every `(x₀, v₀)` there is a
   geodesic on an open interval `J ∋ 0` containing every other such interval, agreeing with every
   geodesic with the same initial data (`J` is the union of all of them, the curve glued from them
-  by uniqueness).
+  by uniqueness);
+* `isGeodesicOn_of_chartSolution` — a solution of the spray in any affine chart is a geodesic with
+  the corresponding initial data; `fsModelMetricCLM_comm`;
+* ★★ `fsMetric_velocity_eq_of_isGeodesicOn` — **constant speed**: `g(γ', γ')` is constant along a
+  geodesic on an open preconnected set (`d/dt g_w(v, v) = Dg(v)(v, v) − 2 g_w(Γ_w(v, v), v) = 0`);
+* `exists_uniform_fsGeodesicSpray`, ★★ `exists_uniform_isGeodesicOn_fs` — **a uniform existence
+  time** for all initial data of speed `g(v, v) ≤ C` (compactness of `ℂℙⁿ`, coercivity of the
+  metric, finitely many Picard–Lindelöf balls per chart);
+* `eq_univ_of_maximal_fs` — the maximal interval is `ℝ` (escape argument); ★★★
+  `exists_isGeodesic_fs` — **`ℂℙⁿ` is geodesically complete**: every initial datum `(x₀, v₀)` has a
+  geodesic defined on all of `ℝ` (an `IsGeodesic`), agreeing with every geodesic with the same
+  data on an open interval containing `0`.
 
 ## Honest scope
 
-⚠️ **Existence is local; maximality is not completeness.** Existence is on some `(-ε, ε)` with `ε`
-not estimated. The maximal interval `J` is not shown to be `ℝ`: completeness of `ℂℙⁿ` (compact,
-so Hopf–Rinow would give it) and the exponential map are not stated.
+⚠️ **Completeness by the escape argument, not Hopf–Rinow.** Geodesics exist for all time; no
+metric-space completeness, distance-minimisation or Hopf–Rinow statement is made, and the
+exponential map `exp_x(v) = γ_{x,v}(1)` is not defined. `ε` is never estimated.
 
 ⚠️ **One chart per statement.** `isGeodesic_iff_fsGeodesicSpray` assumes `γ t` is in the chart's
 source for every `t ∈ ℝ`; `isGeodesicOn_iff_fsGeodesicSpray` only on the open set `I`, which is
@@ -78,7 +89,7 @@ the geodesic equation in coordinates) and Ch. 5 (the Koszul formula);
 `CovariantDerivativeAlongCurve.lean` (#339: `isGeodesic_iff_chartSpray`,
 `mlieBracket_chartConstField`), `Instances/ProjectiveSpaceFubiniStudyRiemannianBundle.lean` (#338:
 `fsRiemannianMetric`, `fsMetric_symmL_symmL`); Mathlib's `leviCivitaConnection_apply_inner`;
-Mathlib's `Analysis/ODE/ExistUnique.lean`; `specs/BACKLOG.md` #338, #339, #343–#346;
+Mathlib's `Analysis/ODE/ExistUnique.lean`; `specs/BACKLOG.md` #338, #339, #343–#347;
 `specs/future-work.md`.
 -/
 
@@ -316,6 +327,53 @@ theorem isGeodesicOn_iff_fsGeodesicSpray (x₀ : ℙ ℂ (Ambient n)) {γ : ℝ 
           (fsGeodesicSpray (chartAt (Fin n → ℂ) x₀ (γ t), v t)) t := by
   rw [isGeodesicOn_iff_chartSpray _ x₀ hI hγ, chartSpray_leviCivita]
 
+/-- **A chart solution of the spray is a geodesic**: if `α` solves `α' = fsGeodesicSpray α` on an
+open `I ∋ t₀`, starting at the chart data of `(x, v)` in the chart at `x₁`, then
+`t ↦ φ⁻¹ (α t).1` is a geodesic on `I` through `x` with velocity `v` at `t₀`. -/
+theorem isGeodesicOn_of_chartSolution (x₁ : ℙ ℂ (Ambient n)) {x : ℙ ℂ (Ambient n)}
+    (hx : x ∈ (chartAt (Fin n → ℂ) x₁).source) (v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x)
+    {I : Set ℝ} (hI : IsOpen I) {t₀ : ℝ} (ht₀ : t₀ ∈ I)
+    {α : ℝ → (Fin n → ℂ) × (Fin n → ℂ)}
+    (hα0 : α t₀ = (chartAt (Fin n → ℂ) x₁ x,
+      (trivializationAt (Fin n → ℂ) (TangentSpace 𝓘(ℝ, Fin n → ℂ)) x₁ ⟨x, v⟩).2))
+    (hα : ∀ t ∈ I, HasDerivAt α (fsGeodesicSpray (α t)) t) :
+    (chartAt (Fin n → ℂ) x₁).symm (α t₀).1 = x ∧
+      mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) (fun t => (chartAt (Fin n → ℂ) x₁).symm (α t).1) t₀
+        (1 : ℝ) = v ∧
+      IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n)))
+        (fun t => (chartAt (Fin n → ℂ) x₁).symm (α t).1) I := by
+  set φ := chartAt (Fin n → ℂ) x₁ with hφ
+  set e₁ := trivializationAt (Fin n → ℂ) (TangentSpace 𝓘(ℝ, Fin n → ℂ)) x₁ with he₁
+  set γ : ℝ → ℙ ℂ (Ambient n) := fun t => φ.symm (α t).1 with hγdef
+  have htgt : ∀ t, (α t).1 ∈ φ.target := fun t => by
+    rw [hφ, chartAt_target_eq_univ]; exact Set.mem_univ _
+  have hsrc : ∀ t, γ t ∈ φ.source := fun t => φ.map_target (htgt t)
+  have hw : ∀ t, φ (γ t) = (α t).1 := fun t => φ.right_inv (htgt t)
+  have hfun : (fun s => (φ (γ s), (α s).2)) = α := funext fun s => by rw [hw s]
+  have hgeo : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ I := by
+    rw [isGeodesicOn_iff_fsGeodesicSpray x₁ hI fun t _ => hsrc t]
+    refine ⟨fun t => (α t).2, fun t ht => ?_⟩
+    rw [hfun, hw t]
+    exact hα t ht
+  have hγ0 : γ t₀ = x := by
+    show φ.symm (α t₀).1 = x
+    rw [hα0]
+    exact φ.left_inv hx
+  refine ⟨hγ0, ?_, hgeo⟩
+  have hγd : MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ t₀ :=
+    ((mdifferentiableAt_totalSpace _ _).1 (hgeo t₀ ht₀).1).1
+  have h1 := hasDerivAt_chartAt_comp x₁ (hsrc t₀) hγd
+  have h2 : HasDerivAt (fun s => φ (γ s)) (α t₀).2 t₀ := by
+    have := (ContinuousLinearMap.fst ℝ _ _).hasFDerivAt.comp_hasDerivAt t₀ (hα t₀ ht₀)
+    simp only [Function.comp_def, ContinuousLinearMap.coe_fst', fsGeodesicSpray] at this
+    simpa only [hw] using this
+  have hc : (e₁ ⟨γ t₀, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ t₀ (1 : ℝ)⟩).2 = (e₁ ⟨x, v⟩).2 := by
+    rw [h1.unique h2, hα0]
+  have hb : γ t₀ ∈ e₁.baseSet := hsrc t₀
+  show mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ t₀ (1 : ℝ) = v
+  rw [← e₁.symm_apply_apply_mk hb (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ t₀ (1 : ℝ)), hc, hγ0]
+  exact e₁.symm_apply_apply_mk hx v
+
 /-- ★★★ **Local existence of Fubini–Study geodesics**: through every point `x₀ ∈ ℂℙⁿ` with every
 initial velocity `v₀ ∈ T_{x₀}ℂℙⁿ` there is a geodesic of the Levi-Civita connection on some
 interval `(-ε, ε)` (Picard–Lindelöf on the smooth spray, in the chart at `x₀`). -/
@@ -325,45 +383,16 @@ theorem exists_isGeodesicOn_fs (x₀ : ℙ ℂ (Ambient n))
       mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 (1 : ℝ) = v₀ ∧
       IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ
         (Set.Ioo (-ε) ε) := by
-  set φ := chartAt (Fin n → ℂ) x₀ with hφ
-  set e₀ := trivializationAt (Fin n → ℂ) (TangentSpace 𝓘(ℝ, Fin n → ℂ)) x₀ with he₀
-  set p₀ : (Fin n → ℂ) × (Fin n → ℂ) := (φ x₀, (e₀ ⟨x₀, v₀⟩).2) with hp₀
-  have hC1 : ContDiffAt ℝ 1 (fsGeodesicSpray (n := n)) p₀ :=
+  have hC1 : ContDiffAt ℝ 1 (fsGeodesicSpray (n := n))
+      (chartAt (Fin n → ℂ) x₀ x₀,
+        (trivializationAt (Fin n → ℂ) (TangentSpace 𝓘(ℝ, Fin n → ℂ)) x₀ ⟨x₀, v₀⟩).2) :=
     contDiff_fsGeodesicSpray.contDiffAt.of_le (by simp)
   obtain ⟨α, hα0, ε, hε, hα⟩ :=
     hC1.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt₀ 0
   simp only [zero_sub, zero_add] at hα
-  set γ : ℝ → ℙ ℂ (Ambient n) := fun t => φ.symm (α t).1 with hγdef
-  have htgt : ∀ t, (α t).1 ∈ φ.target := fun t => by
-    rw [hφ, chartAt_target_eq_univ]; exact Set.mem_univ _
-  have hsrc : ∀ t, γ t ∈ φ.source := fun t => φ.map_target (htgt t)
-  have hw : ∀ t, φ (γ t) = (α t).1 := fun t => φ.right_inv (htgt t)
-  have hfun : (fun s => (φ (γ s), (α s).2)) = α := funext fun s => by rw [hw s]
-  have hgeo : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ
-      (Set.Ioo (-ε) ε) := by
-    rw [isGeodesicOn_iff_fsGeodesicSpray x₀ isOpen_Ioo fun t _ => hsrc t]
-    refine ⟨fun t => (α t).2, fun t ht => ?_⟩
-    rw [hfun, hw t]
-    exact hα t ht
-  have h0mem : (0 : ℝ) ∈ Set.Ioo (-ε) ε := ⟨by linarith, hε⟩
-  have hγ0 : γ 0 = x₀ := by
-    show φ.symm (α 0).1 = x₀
-    rw [hα0]
-    exact φ.left_inv (mem_chart_source _ x₀)
-  refine ⟨ε, hε, γ, hγ0, ?_, hgeo⟩
-  -- the velocity at `0`, read in the chart at `x₀`
-  have hγd : MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 :=
-    ((mdifferentiableAt_totalSpace _ _).1 (hgeo 0 h0mem).1).1
-  have h1 := hasDerivAt_chartAt_comp x₀ (hsrc 0) hγd
-  have h2 : HasDerivAt (fun s => φ (γ s)) (α 0).2 0 := by
-    have := (ContinuousLinearMap.fst ℝ _ _).hasFDerivAt.comp_hasDerivAt 0 (hα 0 h0mem)
-    simp only [Function.comp_def, ContinuousLinearMap.coe_fst', fsGeodesicSpray] at this
-    simpa only [hw] using this
-  have hc : (e₀ ⟨γ 0, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 (1 : ℝ)⟩).2 = (e₀ ⟨x₀, v₀⟩).2 := by
-    rw [h1.unique h2, hα0]
-  have hb : γ 0 ∈ e₀.baseSet := hsrc 0
-  rw [← e₀.symm_apply_apply_mk hb (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 (1 : ℝ)), hc, hγ0]
-  exact e₀.symm_apply_apply_mk (mem_chart_source _ x₀) v₀
+  obtain ⟨h1, h2, h3⟩ := isGeodesicOn_of_chartSolution x₀ (mem_chart_source _ x₀) v₀ isOpen_Ioo
+    ⟨by linarith, hε⟩ hα0 hα
+  exact ⟨ε, hε, _, h1, h2, h3⟩
 
 /-- ★★★ **Local uniqueness of Fubini–Study geodesics**: two geodesics on an open set of times
 containing `t₀`, with the same position and velocity at `t₀`, agree near `t₀` (Picard–Lindelöf
@@ -591,5 +620,283 @@ theorem exists_maximal_isGeodesicOn_fs (x₀ : ℙ ℂ (Ambient n))
   refine ⟨J, γ, ⟨hJo, hJc, hJ0, hγ0, hγv, hgeo⟩, fun I η h => ⟨?_, ?_⟩⟩
   · exact Set.subset_sUnion_of_mem ⟨η, h⟩
   · exact fun t ht => (hagree I η h ht).symm
+
+/-! ### Geodesic completeness -/
+
+/-- The model metric is symmetric. -/
+theorem fsModelMetricCLM_comm (x₀ : ℙ ℂ (Ambient n)) {y : ℙ ℂ (Ambient n)}
+    (hy : y ∈ (chartAt (Fin n → ℂ) x₀).source) (a b : Fin n → ℂ) :
+    fsModelMetricCLM (chartAt (Fin n → ℂ) x₀ y) a b
+      = fsModelMetricCLM (chartAt (Fin n → ℂ) x₀ y) b a := by
+  rw [← fsMetric_symmL_symmL x₀ y hy, ← fsMetric_symmL_symmL x₀ y hy]
+  exact (fsForm_isAlmostKahler n).metric_comm y _ _
+
+set_option synthInstance.maxHeartbeats 200000 in
+/-- ★★ **The speed of a Fubini–Study geodesic is constant**: `g(γ', γ')` takes the same value at
+any two times of an open preconnected set on which `γ` is a geodesic. In a chart,
+`d/dt g_w(v, v) = Dg(v)(v, v) − 2 g_w(Γ_w(v, v), v) = 0` by the Koszul formula. -/
+theorem fsMetric_velocity_eq_of_isGeodesicOn {γ : ℝ → ℙ ℂ (Ambient n)} {J : Set ℝ}
+    (hJ : IsOpen J) (hJc : IsPreconnected J)
+    (h : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ J)
+    {s t : ℝ} (hs : s ∈ J) (ht : t ∈ J) :
+    fsMetric (γ s) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ s (1 : ℝ))
+        (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ s (1 : ℝ))
+      = fsMetric (γ t) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ t (1 : ℝ))
+        (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ t (1 : ℝ)) := by
+  set f : ℝ → ℝ := fun r => fsMetric (γ r) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ r (1 : ℝ))
+    (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ r (1 : ℝ)) with hf
+  have hd : ∀ r ∈ J, HasDerivAt f 0 r := by
+    intro r hr
+    set x₁ := γ r with hx₁
+    set φ := chartAt (Fin n → ℂ) x₁ with hφ
+    set e := trivializationAt (Fin n → ℂ) (TangentSpace 𝓘(ℝ, Fin n → ℂ)) x₁ with he
+    have hdγ : ∀ q ∈ J, MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ q := fun q hq =>
+      ((mdifferentiableAt_totalSpace _ _).1 (h q hq).1).1
+    have hK : IsOpen (J ∩ γ ⁻¹' φ.source) :=
+      ContinuousOn.isOpen_inter_preimage
+        (fun q hq => (hdγ q hq).continuousAt.continuousWithinAt) hJ φ.open_source
+    have hrK : r ∈ J ∩ γ ⁻¹' φ.source := ⟨hr, show γ r ∈ φ.source from mem_chart_source _ _⟩
+    obtain ⟨v, hv⟩ := (isGeodesicOn_iff_fsGeodesicSpray x₁ hK fun q hq => hq.2).1
+      (h.mono Set.inter_subset_left)
+    have hfst : ∀ q ∈ J ∩ γ ⁻¹' φ.source, HasDerivAt (fun p => φ (γ p)) (v q) q := fun q hq => by
+      have := (ContinuousLinearMap.fst ℝ _ _).hasFDerivAt.comp_hasDerivAt q (hv q hq)
+      simpa [Function.comp_def, fsGeodesicSpray] using this
+    have hsnd : HasDerivAt v (-fsChristoffel (φ (γ r)) (v r) (v r)) r := by
+      have := (ContinuousLinearMap.snd ℝ _ _).hasFDerivAt.comp_hasDerivAt r (hv r hrK)
+      simpa [Function.comp_def, fsGeodesicSpray] using this
+    have hvel : ∀ q ∈ J ∩ γ ⁻¹' φ.source,
+        v q = (e ⟨γ q, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ q (1 : ℝ)⟩).2 := fun q hq =>
+      (hfst q hq).unique (hasDerivAt_chartAt_comp x₁ hq.2 (hdγ q hq.1))
+    -- in the chart, `f = g_w(v, v)`
+    set F : ℝ → ℝ := fun q => fsModelMetricCLM (φ (γ q)) (v q) (v q) with hF
+    have hev : f =ᶠ[𝓝 r] F := by
+      filter_upwards [hK.mem_nhds hrK] with q hq
+      have hb : γ q ∈ e.baseSet := hq.2
+      have hσ : e.symmL ℝ (γ q) (v q) = mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ q (1 : ℝ) := by
+        rw [hvel q hq, ← Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ) _ hb]
+        exact e.symmL_continuousLinearMapAt hb _
+      show fsMetric (γ q) _ _ = _
+      rw [← hσ]
+      exact fsMetric_symmL_symmL x₁ (γ q) hq.2 (v q) (v q)
+    have hw : HasDerivAt (fun q => φ (γ q)) (v r) r := hfst r hrK
+    have hG : HasDerivAt (fun q => fsModelMetricCLM (φ (γ q)))
+        (fderiv ℝ fsModelMetricCLM (φ (γ r)) (v r)) r :=
+      (contDiff_fsModelMetricCLM.differentiable (by simp)).differentiableAt.hasFDerivAt
+        |>.comp_hasDerivAt r hw
+    have hFd := (hG.clm_apply hsnd).clm_apply hsnd
+    -- the derivative vanishes
+    set w := φ (γ r) with hwdef
+    set Γ := fsChristoffel w (v r) (v r) with hΓ
+    have hinv := isInvertible_fsModelMetricCLM w
+    have hKΓ : fsKoszul w (v r) (v r) = fsModelMetricCLM w Γ :=
+      hinv.inverse_apply_eq.1 rfl
+    have hKv : fsModelMetricCLM w Γ (v r)
+        = fderiv ℝ fsModelMetricCLM w (v r) (v r) (v r) / 2 := by
+      rw [← hKΓ, fsKoszul_apply]
+      ring
+    have hcomm : fsModelMetricCLM w (v r) Γ = fsModelMetricCLM w Γ (v r) :=
+      fsModelMetricCLM_comm x₁ (mem_chart_source _ x₁) (v r) Γ
+    refine (hFd.congr_deriv ?_).congr_of_eventuallyEq hev
+    simp only [map_neg, FunLike.coe_neg, Pi.neg_apply, FunLike.coe_add, Pi.add_apply]
+    rw [hcomm, hKv]
+    ring
+  exact hJ.is_const_of_deriv_eq_zero hJc
+    (fun r hr => (hd r hr).differentiableAt.differentiableWithinAt)
+    (fun r hr => (hd r hr).deriv) hs ht
+
+/-- **Uniform existence time for the spray on a ball**: solutions of `α' = fsGeodesicSpray α`
+from every initial point of `closedBall 0 R` exist on one common interval `(-ε, ε)`. -/
+theorem exists_uniform_fsGeodesicSpray (R : ℝ) :
+    ∃ ε > (0 : ℝ), ∀ p ∈ Metric.closedBall (0 : (Fin n → ℂ) × (Fin n → ℂ)) R,
+      ∃ α : ℝ → (Fin n → ℂ) × (Fin n → ℂ), α 0 = p ∧
+        ∀ t ∈ Set.Ioo (-ε) ε, HasDerivAt α (fsGeodesicSpray (α t)) t := by
+  have hC1 : ∀ q, ContDiffAt ℝ 1 (fsGeodesicSpray (n := n)) q := fun q =>
+    contDiff_fsGeodesicSpray.contDiffAt.of_le (by simp)
+  have hloc := fun q : (Fin n → ℂ) × (Fin n → ℂ) =>
+    (hC1 q).exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt (0 : ℝ)
+  choose r hr ε hε H using hloc
+  obtain ⟨T, -, hcover⟩ :=
+    (isCompact_closedBall (0 : (Fin n → ℂ) × (Fin n → ℂ)) R).elim_nhds_subcover
+      (fun q => Metric.ball q (r q)) fun q _ => Metric.ball_mem_nhds q (hr q)
+  by_cases hT : T.Nonempty
+  · refine ⟨T.inf' hT ε, (Finset.lt_inf'_iff hT).2 fun i _ => hε i, fun p hp => ?_⟩
+    obtain ⟨q, hqT, hpq⟩ := Set.mem_iUnion₂.1 (hcover hp)
+    obtain ⟨α, hα0, hα⟩ := H q p (Metric.ball_subset_closedBall hpq)
+    refine ⟨α, hα0, fun t ht => hα t ?_⟩
+    have hle : T.inf' hT ε ≤ ε q := Finset.inf'_le ε hqT
+    simp only [zero_sub, zero_add, Set.mem_Ioo] at ht ⊢
+    constructor <;> linarith [ht.1, ht.2]
+  · refine ⟨1, one_pos, fun p hp => ?_⟩
+    obtain ⟨q, hqT, -⟩ := Set.mem_iUnion₂.1 (hcover hp)
+    exact absurd ⟨q, hqT⟩ hT
+
+/-- ★★ **Uniform existence time for Fubini–Study geodesics of bounded speed**: there is `ε > 0`
+such that for every `t₀`, every `x ∈ ℂℙⁿ` and every `v ∈ T_xℂℙⁿ` with `g(v, v) ≤ C` there is a
+geodesic on `(t₀ − ε, t₀ + ε)` with `γ t₀ = x`, `γ'(t₀) = v` (compactness of `ℂℙⁿ`, coercivity
+of the metric, finitely many Picard–Lindelöf balls in each chart). -/
+theorem exists_uniform_isGeodesicOn_fs (C : ℝ) :
+    ∃ ε > (0 : ℝ), ∀ (t₀ : ℝ) (x : ℙ ℂ (Ambient n)) (v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x),
+      fsMetric x v v ≤ C → ∃ η : ℝ → ℙ ℂ (Ambient n), η t₀ = x ∧
+        mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) η t₀ (1 : ℝ) = v ∧
+        IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) η
+          (Set.Ioo (t₀ - ε) (t₀ + ε)) := by
+  -- the neighbourhood of `y` where the chart coordinate stays within `‖φ_y y‖ + 1`
+  set U : ℙ ℂ (Ambient n) → Set (ℙ ℂ (Ambient n)) := fun y =>
+    (chartAt (Fin n → ℂ) y).source ∩
+      chartAt (Fin n → ℂ) y ⁻¹' Metric.ball 0 (‖chartAt (Fin n → ℂ) y y‖ + 1) with hU
+  have hUn : ∀ y, U y ∈ 𝓝 y := fun y =>
+    ((chartAt (Fin n → ℂ) y).continuousOn.isOpen_inter_preimage
+      (chartAt (Fin n → ℂ) y).open_source Metric.isOpen_ball).mem_nhds
+      ⟨mem_chart_source _ y, by simp⟩
+  -- the coercivity bound on chart velocities
+  set M := ‖(toLpCLM : (Fin n → ℂ) →L[ℝ] EuclideanSpace ℂ (Fin n))‖ with hM
+  set B : ℝ → ℝ := fun ρ => (|C| + 1) * (1 + (M * ρ) ^ 2) with hB
+  have hcoer : ∀ (y x : ℙ ℂ (Ambient n)) (v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x),
+      x ∈ U y → fsMetric x v v ≤ C →
+      ‖(trivializationAt (Fin n → ℂ) (TangentSpace 𝓘(ℝ, Fin n → ℂ)) y ⟨x, v⟩).2‖
+        ≤ B (‖chartAt (Fin n → ℂ) y y‖ + 1) := by
+    intro y x v hx hC
+    set e := trivializationAt (Fin n → ℂ) (TangentSpace 𝓘(ℝ, Fin n → ℂ)) y
+    set u := (e ⟨x, v⟩).2 with hu
+    set w := chartAt (Fin n → ℂ) y x with hw
+    set ρ := ‖chartAt (Fin n → ℂ) y y‖ + 1 with hρ
+    have hb : x ∈ e.baseSet := hx.1
+    have hmet : fsModelMetric w u u = fsMetric x v v := by
+      rw [← fsModelMetricCLM_apply, ← fsMetric_symmL_symmL y x hx.1,
+        Trivialization.symmL_apply _ hb, e.symm_apply_apply_mk hb]
+    have hge := fsModelMetric_self_ge w u
+    have hwρ : ‖w‖ ≤ ρ := (mem_ball_zero_iff.1 hx.2).le
+    have hρ0 : 0 ≤ ρ := by positivity
+    have hLw : ‖toLpCLM w‖ ≤ M * ρ :=
+      (toLpCLM.le_opNorm w).trans (mul_le_mul_of_nonneg_left hwρ (norm_nonneg _))
+    have hM0 : 0 ≤ M * ρ := mul_nonneg (norm_nonneg _) hρ0
+    have hN : (1 + ‖toLpCLM w‖ ^ 2) ^ 2 ≤ (1 + (M * ρ) ^ 2) ^ 2 := by
+      have : ‖toLpCLM w‖ ^ 2 ≤ (M * ρ) ^ 2 :=
+        pow_le_pow_left₀ (norm_nonneg _) hLw 2
+      have h1 : 0 ≤ 1 + ‖toLpCLM w‖ ^ 2 := by positivity
+      exact pow_le_pow_left₀ h1 (by linarith) 2
+    have hN0 : (0 : ℝ) < (1 + ‖toLpCLM w‖ ^ 2) ^ 2 := by positivity
+    have h4 : 4 * ‖toLpCLM u‖ ^ 2 ≤ C * (1 + (M * ρ) ^ 2) ^ 2 := by
+      have := (div_le_iff₀ hN0).1 (hge.trans (hmet.trans_le hC))
+      have hC0 : 0 ≤ C := le_trans (by positivity) (hge.trans (hmet.trans_le hC))
+      nlinarith
+    have hu2 : ‖u‖ ^ 2 ≤ B ρ ^ 2 := by
+      have hlp : ‖u‖ ^ 2 ≤ ‖toLpCLM u‖ ^ 2 :=
+        pow_le_pow_left₀ (norm_nonneg _) (norm_le_norm_toLpCLM u) 2
+      have hC4 : ‖toLpCLM u‖ ^ 2 ≤ |C| * (1 + (M * ρ) ^ 2) ^ 2 := by
+        nlinarith [le_abs_self C, sq_nonneg (1 + (M * ρ) ^ 2), sq_nonneg ‖toLpCLM u‖]
+      have hCB : |C| * (1 + (M * ρ) ^ 2) ^ 2 ≤ ((|C| + 1) * (1 + (M * ρ) ^ 2)) ^ 2 := by
+        nlinarith [abs_nonneg C, sq_nonneg (1 + (M * ρ) ^ 2)]
+      show ‖u‖ ^ 2 ≤ ((|C| + 1) * (1 + (M * ρ) ^ 2)) ^ 2
+      linarith
+    have hB0 : 0 ≤ B ρ := by simp only [hB]; positivity
+    exact (pow_le_pow_iff_left₀ (norm_nonneg _) hB0 two_ne_zero).1 hu2
+  -- finitely many charts cover `ℂℙⁿ`
+  obtain ⟨Y, -, hY⟩ := (isCompact_univ (X := ℙ ℂ (Ambient n))).elim_nhds_subcover U
+    fun y _ => hUn y
+  have hrad := fun y : ℙ ℂ (Ambient n) =>
+    exists_uniform_fsGeodesicSpray (n := n)
+      (max (‖chartAt (Fin n → ℂ) y y‖ + 1) (B (‖chartAt (Fin n → ℂ) y y‖ + 1)))
+  choose ε hε H using hrad
+  by_cases hYn : Y.Nonempty
+  · refine ⟨Y.inf' hYn ε, (Finset.lt_inf'_iff hYn).2 fun i _ => hε i, ?_⟩
+    intro t₀ x v hC
+    obtain ⟨y, hyY, hxy⟩ := Set.mem_iUnion₂.1 (hY (Set.mem_univ x))
+    set e := trivializationAt (Fin n → ℂ) (TangentSpace 𝓘(ℝ, Fin n → ℂ)) y
+    set p : (Fin n → ℂ) × (Fin n → ℂ) := (chartAt (Fin n → ℂ) y x, (e ⟨x, v⟩).2) with hp
+    have hpR : p ∈ Metric.closedBall (0 : (Fin n → ℂ) × (Fin n → ℂ))
+        (max (‖chartAt (Fin n → ℂ) y y‖ + 1) (B (‖chartAt (Fin n → ℂ) y y‖ + 1))) := by
+      rw [mem_closedBall_zero_iff, norm_prod_le_iff]
+      exact ⟨(le_max_left _ _).trans' (mem_ball_zero_iff.1 hxy.2).le,
+        (le_max_right _ _).trans' (hcoer y x v hxy hC)⟩
+    obtain ⟨β, hβ0, hβ⟩ := H y p hpR
+    have hle : Y.inf' hYn ε ≤ ε y := Finset.inf'_le ε hyY
+    have hα : ∀ t ∈ Set.Ioo (t₀ - Y.inf' hYn ε) (t₀ + Y.inf' hYn ε),
+        HasDerivAt (fun s => β (s - t₀)) (fsGeodesicSpray ((fun s => β (s - t₀)) t)) t := by
+      intro t ht
+      have ht' : t - t₀ ∈ Set.Ioo (-ε y) (ε y) := by
+        simp only [Set.mem_Ioo] at ht ⊢
+        constructor <;> linarith [ht.1, ht.2]
+      exact (hβ (t - t₀) ht').comp_sub_const t t₀
+    have ht₀ : t₀ ∈ Set.Ioo (t₀ - Y.inf' hYn ε) (t₀ + Y.inf' hYn ε) := by
+      have := (Finset.lt_inf'_iff hYn).2 fun i _ => hε i
+      constructor <;> linarith
+    obtain ⟨h1, h2, h3⟩ := isGeodesicOn_of_chartSolution y hxy.1 v isOpen_Ioo ht₀
+      (α := fun s => β (s - t₀)) (by show β (t₀ - t₀) = _; rw [sub_self, hβ0]) hα
+    exact ⟨_, h1, h2, h3⟩
+  · refine ⟨1, one_pos, fun t₀ x v _ => ?_⟩
+    obtain ⟨y, hyY, -⟩ := Set.mem_iUnion₂.1 (hY (Set.mem_univ x))
+    exact absurd ⟨y, hyY⟩ hYn
+
+/-- **The maximal interval is all of `ℝ`**: a maximal Fubini–Study geodesic (every geodesic with
+the same initial data lives inside its interval) is defined for all time. -/
+theorem eq_univ_of_maximal_fs {x₀ : ℙ ℂ (Ambient n)} {v₀ : TangentSpace 𝓘(ℝ, Fin n → ℂ) x₀}
+    {J : Set ℝ} {γ : ℝ → ℙ ℂ (Ambient n)} (hγ : IsFSGeodesicData x₀ v₀ J γ)
+    (hmax : ∀ I η, IsFSGeodesicData x₀ v₀ I η → I ⊆ J) : J = Set.univ := by
+  classical
+  obtain ⟨hJ, hJc, hJ0, hγ0, hγv, hgeo⟩ := hγ
+  set c := fsMetric x₀ v₀ v₀ with hc
+  obtain ⟨ε, hε, H⟩ := exists_uniform_isGeodesicOn_fs (n := n) c
+  -- every point of `J` carries an `ε`-neighbourhood inside `J`
+  have hstep : ∀ t₁ ∈ J, Set.Ioo (t₁ - ε) (t₁ + ε) ⊆ J := by
+    intro t₁ ht₁
+    have hspeed : fsMetric (γ t₁) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ t₁ (1 : ℝ))
+        (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ t₁ (1 : ℝ)) ≤ c := by
+      rw [fsMetric_velocity_eq_of_isGeodesicOn hJ hJc hgeo ht₁ hJ0, hc]
+      rw [hγ0] at hγv ⊢
+      rw [hγv]
+    obtain ⟨η, hη0, hηv, hη⟩ := H t₁ (γ t₁) _ hspeed
+    set I' := Set.Ioo (t₁ - ε) (t₁ + ε) with hI'
+    have ht₁I' : t₁ ∈ I' := ⟨by linarith, by linarith⟩
+    -- `γ` and `η` agree on `J ∩ I'`
+    have hagree : Set.EqOn γ η (J ∩ I') :=
+      eqOn_of_isGeodesicOn_fs (hJ.inter isOpen_Ioo)
+        (hJc.ordConnected.inter (Set.ordConnected_Ioo)).isPreconnected ⟨ht₁, ht₁I'⟩
+        (hgeo.mono Set.inter_subset_left) (hη.mono Set.inter_subset_right) hη0.symm hηv.symm
+    set ζ : ℝ → ℙ ℂ (Ambient n) := fun t => if t ∈ J then γ t else η t with hζ
+    have hζJ : Set.EqOn ζ γ J := fun t ht => by simp [hζ, ht]
+    have hζI : Set.EqOn ζ η I' := fun t ht => by
+      by_cases htJ : t ∈ J
+      · simp [hζ, htJ, hagree ⟨htJ, ht⟩]
+      · simp [hζ, htJ]
+    have hζgeo : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) ζ
+        (J ∪ I') := by
+      rintro t (htJ | htI)
+      · exact isGeodesicOn_congr_fs hJ hgeo hζJ t htJ
+      · exact isGeodesicOn_congr_fs isOpen_Ioo hη hζI t htI
+    have hev : ζ =ᶠ[𝓝 0] γ := Filter.mem_of_superset (hJ.mem_nhds hJ0) fun t ht => hζJ ht
+    have hdata : IsFSGeodesicData x₀ v₀ (J ∪ I') ζ := by
+      refine ⟨hJ.union isOpen_Ioo, IsPreconnected.union t₁ ht₁ ht₁I' hJc isPreconnected_Ioo,
+        Or.inl hJ0, (hζJ hJ0).trans hγ0, ?_, hζgeo⟩
+      rw [hev.mfderiv_eq]
+      exact hγv
+    exact fun t ht => hmax _ _ hdata (Or.inr ht)
+  -- hence `J` contains `± k ε / 2` for every `k`, and is an interval
+  have hpos : ∀ k : ℕ, (k : ℝ) * (ε / 2) ∈ J ∧ -((k : ℝ) * (ε / 2)) ∈ J := by
+    intro k
+    induction k with
+    | zero => simpa using hJ0
+    | succ k ih =>
+      refine ⟨hstep _ ih.1 ⟨?_, ?_⟩, hstep _ ih.2 ⟨?_, ?_⟩⟩ <;> push_cast <;> linarith
+  refine Set.eq_univ_of_forall fun s => ?_
+  obtain ⟨k, hk⟩ := exists_nat_gt (|s| / (ε / 2))
+  have hk' : |s| < k * (ε / 2) := by
+    rwa [div_lt_iff₀ (by positivity)] at hk
+  exact hJc.ordConnected.out (hpos k).2 (hpos k).1
+    ⟨by linarith [neg_abs_le s], by linarith [le_abs_self s]⟩
+
+/-- ★★★ **`ℂℙⁿ` with the Fubini–Study metric is geodesically complete**: for every `x₀ ∈ ℂℙⁿ` and
+`v₀ ∈ T_{x₀}ℂℙⁿ` there is a geodesic `γ : ℝ → ℂℙⁿ` (an `IsGeodesic`, defined for all time)
+with `γ 0 = x₀` and `γ'(0) = v₀`, and every geodesic with these initial data on an open interval
+containing `0` agrees with it there. -/
+theorem exists_isGeodesic_fs (x₀ : ℙ ℂ (Ambient n)) (v₀ : TangentSpace 𝓘(ℝ, Fin n → ℂ) x₀) :
+    ∃ γ : ℝ → ℙ ℂ (Ambient n), γ 0 = x₀ ∧ mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 (1 : ℝ) = v₀ ∧
+      IsGeodesic (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ ∧
+      ∀ I η, IsFSGeodesicData x₀ v₀ I η → Set.EqOn η γ I := by
+  obtain ⟨J, γ, hγ, hmax⟩ := exists_maximal_isGeodesicOn_fs x₀ v₀
+  have hJ : J = Set.univ := eq_univ_of_maximal_fs hγ fun I η h => (hmax I η h).1
+  obtain ⟨-, -, -, hγ0, hγv, hgeo⟩ := hγ
+  rw [hJ, isGeodesicOn_univ] at hgeo
+  exact ⟨γ, hγ0, hγv, hgeo, fun I η h => (hmax I η h).2⟩
 
 end Projectivization

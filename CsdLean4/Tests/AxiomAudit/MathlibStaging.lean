@@ -16602,6 +16602,34 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.exists_maximal_isGeodesicOn_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.exists_maximal_isGeodesicOn_fs
+
+/-- info: 'Projectivization.isGeodesicOn_of_chartSolution' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isGeodesicOn_of_chartSolution
+
+/-- info: 'Projectivization.fsModelMetricCLM_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelMetricCLM_comm
+
+/-- info: 'Projectivization.fsMetric_velocity_eq_of_isGeodesicOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsMetric_velocity_eq_of_isGeodesicOn
+
+/-- info: 'Projectivization.exists_uniform_fsGeodesicSpray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_uniform_fsGeodesicSpray
+
+/-- info: 'Projectivization.exists_uniform_isGeodesicOn_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_uniform_isGeodesicOn_fs
+
+/-- info: 'Projectivization.eq_univ_of_maximal_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.eq_univ_of_maximal_fs
+
+/-- info: 'Projectivization.exists_isGeodesic_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_isGeodesic_fs
 -- ProjectiveSpaceMorse (BACKLOG #337, geometric QM completion item 6, 2026-11-08): Hessian of <A> along projective lines at an eigenline; index 2 #{mu_j < lambda}.
 
 /-- info: 'Projectivization.toEuclideanLin_eigenvectorBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
