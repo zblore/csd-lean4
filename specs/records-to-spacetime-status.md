@@ -42,6 +42,9 @@ item is `sorry`-free and pinned to the foundational triple. Everything is in 1+1
 * **Which wing is selected first** for an entangled pair: the author's choice (a), not derived.
 * **Every record layer here is kinematic**: no `H_int` generates the cells (R-016).
 
+The programme that takes these results to one shared Hamiltonian arena, with its registers of what is
+assumed, derived and owed, is [`unified-record-spacetime-plan.md`](unified-record-spacetime-plan.md).
+
 ## What is open
 
 * **The one large gap: beyond 1+1** (#289, split 2026-11-04 into #292–#301;

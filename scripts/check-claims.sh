@@ -174,7 +174,8 @@ EPISTEMIC_DOCS=("README.md" "EMPIRICAL.md" "AXIOMS.md" "specs/BACKLOG.md" \
                 "specs/INDEX.md" "specs/sigma-fibre-contextuality.md"
                 "docs/FROM-POSTULATES-TO-QUANTUM-COMPUTERS.md"
                 "specs/records-to-spacetime-scoping.md"
-                "specs/feynman-continuum-scoping.md")
+                "specs/feynman-continuum-scoping.md"
+                "specs/unified-record-spacetime-plan.md")
 
 # Words asserting that something is SETTLED.
 EPISTEMIC_STRONG='provably|proves|proved|proven|no-go|[Dd]issolved|DISSOLVED|discharged|is complete|are complete|fully solved|settled|refuted|NOT A TARGET|confirmed dead'

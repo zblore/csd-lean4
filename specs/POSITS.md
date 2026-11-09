@@ -314,6 +314,7 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   reaches the level I1 was already at, and the decision is no longer merely recorded.
   **What is still true:** `globalBasin`, `outcomeCode`, `recordString`, `LF6`'s capstone and everything #131 has landed read `θ₁` alone. Nothing was migrated and no theorem there was retired, so the corpus *computes* with I1 while its posited answer is I3.
   **And the two are not yet at parity.** I1 has a rate field that comes from the base (`momentContext`); the only I3 field exhibited is the base-independent `constJointContext`, because `JointRates.rowPos` demands a strictly positive A-marginal at every base point and a `momentMap`-derived block marginal vanishes on some rays. That is BACKLOG #136, with the route recorded. Until it lands, do not describe I3 as a drop-in replacement for `momentContext`.
+  ⚠️ *Updated 2026-11-09 (found stale by the audit for `specs/unified-record-spacetime-plan.md`):* **#136 landed on 2026-10-13 and the paragraph above is history.** `RecordLayer/JointMomentContext.lean`: `jointMomentContext b`, the moment map coarse-grained by a degeneracy map `b`, with ★★★ `skewBasin_prob_jointMomentContext`; ★★★ `jointMomentContext_rowSum` and `jointMomentContext_rowSum_single` make I1 the degenerate case of that field. So I3 has a rate field from the base. What is unchanged: nothing was migrated (the corpus still computes with I1), and the degeneracy map `b` is itself posited.
 * **What would discharge it.** Derive which fibre coordinates carry record content **from the
   de-isolation dynamics**: show that the interaction creating the record writes the second channel,
   rather than choosing that it does. That is the `H_int` frontier again (Posit 1's discharge
@@ -454,7 +455,9 @@ Keep these in step with this file, or the register stops being a register:
 `AXIOMS.md` §3 (the postulate ledger — the cell law is §3.10), `specs/INDEX.md`'s AXIOMS row,
 `specs/CSD-CHARTER.md` "The picture", `specs/reconstruction-status.md` §7a, and the glossary entry
 `is-the-born-rule-derived`. The external review that prompted the register is tracked in
-`specs/cr-queue.md`.
+`specs/cr-queue.md`. `specs/unified-record-spacetime-plan.md` (the contract of the programme "From
+`Σ` to physical spacetime") lists the posits again as its Register 1, by this file's numbers, with
+what each means on the shared arena; it adds no posit and changes none.
 
 ⚠️ **`AXIOMS.md` §3 currently registers Posits 1–5 only.** Posits 6–9 arrived 2026-09-05 from the
 review's Part II, and Posit 10 on 2026-10-11; none has a §3 section yet, and `CR-6` covers the
