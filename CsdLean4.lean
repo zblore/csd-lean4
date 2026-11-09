@@ -899,6 +899,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerKilling
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerGeodesic
 public import CsdLean4.Mathlib.Geometry.Manifold.CovariantDerivativeAlongCurve
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyGeodesicSpray
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGreatCircleGeodesic
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFisherRao
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGeometricPhase

@@ -177,6 +177,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrod
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceSchrodingerGeodesic
 public import CsdLean4.Mathlib.Geometry.Manifold.CovariantDerivativeAlongCurve
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceGreatCircleGeodesic
+public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubiniStudyGeodesicSpray
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceTorusVolume
 public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUnitaryAction
 public import CsdLean4.Mathlib.Geometry.Manifold.IntegralCurve.FlowContinuity
@@ -16230,6 +16231,94 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #guard_msgs (whitespace := lax) in
 #print axioms CovariantDerivative.isGeodesic_of_isMIntegralCurve
 
+/-- info: 'CovariantDerivative.chartConstField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.chartConstField
+
+/-- info: 'CovariantDerivative.trivializationAt_chartConstField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.trivializationAt_chartConstField
+
+/-- info: 'CovariantDerivative.chartField_chartConstField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.chartField_chartConstField
+
+/-- info: 'CovariantDerivative.mdifferentiableAt_chartConstField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.mdifferentiableAt_chartConstField
+
+/-- info: 'CovariantDerivative.chartCov_chartConstField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.chartCov_chartConstField
+
+/-- info: 'CovariantDerivative.differentiableAt_trivializationAt_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.differentiableAt_trivializationAt_comp
+
+/-- info: 'CovariantDerivative.hasDerivAt_trivializationAt_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.hasDerivAt_trivializationAt_comp
+
+/-- info: 'CovariantDerivative.hasDerivAt_chartAt_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.hasDerivAt_chartAt_comp
+
+/-- info: 'CovariantDerivative.mdifferentiableAt_of_chartAt_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.mdifferentiableAt_of_chartAt_comp
+
+/-- info: 'CovariantDerivative.mfderiv_extChartAt_symm_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.mfderiv_extChartAt_symm_eq
+
+/-- info: 'CovariantDerivative.mpullback_chartConstField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.mpullback_chartConstField
+
+/-- info: 'CovariantDerivative.christoffel_chartConstField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.christoffel_chartConstField
+
+/-- info: 'CovariantDerivative.mlieBracket_chartConstField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.mlieBracket_chartConstField
+
+/-- info: 'CovariantDerivative.covAlongAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.covAlongAt
+
+/-- info: 'CovariantDerivative.covAlong_eq_covAlongAt_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.covAlong_eq_covAlongAt_self
+
+/-- info: 'CovariantDerivative.covAlongAt_comp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.covAlongAt_comp
+
+/-- info: 'CovariantDerivative.covAlongAt_eq_chartConst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.covAlongAt_eq_chartConst
+
+/-- info: 'CovariantDerivative.covAlong_eq_covAlongAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.covAlong_eq_covAlongAt
+
+/-- info: 'CovariantDerivative.chartChristoffel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.chartChristoffel
+
+/-- info: 'CovariantDerivative.chartChristoffel_chartAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.chartChristoffel_chartAt
+
+/-- info: 'CovariantDerivative.chartSpray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.chartSpray
+
+/-- info: 'CovariantDerivative.isGeodesic_iff_chartSpray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.isGeodesic_iff_chartSpray
+
 /-- info: 'Projectivization.isGeodesic_schrodingerUnitary_smul_of_isMaxOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.isGeodesic_schrodingerUnitary_smul_of_isMaxOn
@@ -16397,6 +16486,62 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.isLeviCivitaConnection_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.isLeviCivitaConnection_fs
+
+/-- info: 'Projectivization.fsKoszul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsKoszul
+
+/-- info: 'Projectivization.fsKoszul_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsKoszul_apply
+
+/-- info: 'Projectivization.fsModelMetricCLM_injective' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsModelMetricCLM_injective
+
+/-- info: 'Projectivization.isInvertible_fsModelMetricCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isInvertible_fsModelMetricCLM
+
+/-- info: 'Projectivization.contDiff_inverse_fsModelMetricCLM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_inverse_fsModelMetricCLM
+
+/-- info: 'Projectivization.contDiff_fderiv_fsModelMetricCLM_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_fderiv_fsModelMetricCLM_apply
+
+/-- info: 'Projectivization.fsChristoffel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsChristoffel
+
+/-- info: 'Projectivization.contDiff_fsChristoffel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_fsChristoffel
+
+/-- info: 'Projectivization.fsGeodesicSpray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.fsGeodesicSpray
+
+/-- info: 'Projectivization.contDiff_fsGeodesicSpray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiff_fsGeodesicSpray
+
+/-- info: 'Projectivization.mfderiv_inner_chartConstField' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.mfderiv_inner_chartConstField
+
+/-- info: 'Projectivization.chartChristoffel_leviCivita' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartChristoffel_leviCivita
+
+/-- info: 'Projectivization.contDiffOn_chartChristoffel_leviCivita' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.contDiffOn_chartChristoffel_leviCivita
+
+/-- info: 'Projectivization.isGeodesic_iff_fsGeodesicSpray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isGeodesic_iff_fsGeodesicSpray
 -- ProjectiveSpaceMorse (BACKLOG #337, geometric QM completion item 6, 2026-11-08): Hessian of <A> along projective lines at an eigenline; index 2 #{mu_j < lambda}.
 
 /-- info: 'Projectivization.toEuclideanLin_eigenvectorBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/

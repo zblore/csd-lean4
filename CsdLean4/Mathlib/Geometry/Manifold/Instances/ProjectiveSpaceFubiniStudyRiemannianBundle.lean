@@ -48,20 +48,23 @@ in the scope `Projectivization.FubiniStudy` (open it to use Mathlib's Riemannian
 would be a choice made for every user of `ℂℙⁿ`.
 
 ⚠️ **The Levi-Civita statement is Mathlib's.** `isLeviCivitaConnection_fs` is Mathlib's existence
-theorem at this instance: its content is that the instances resolve on `ℂℙⁿ`. Christoffel symbols,
-an explicit formula for `∇`, and the agreement of the instance's norm with #330's `fsENorm` (so
-that Mathlib's `riemannianEDist` is `fsEDist`) are not stated.
+theorem at this instance: its content is that the instances resolve on `ℂℙⁿ`. The Christoffel
+symbols in an affine chart are identified, by the Koszul formula, in
+`ProjectiveSpaceFubiniStudyGeodesicSpray.lean` (#343: `chartChristoffel_leviCivita`, smooth); a
+closed formula for `∇`, and the agreement of the instance's norm with #330's `fsENorm` (so that
+Mathlib's `riemannianEDist` is `fsEDist`), are not stated.
 
 ⚠️ **Geodesics are elsewhere.** Mathlib has no covariant derivative along a curve; it is built in
-`CovariantDerivativeAlongCurve.lean` (#339), and great circles are geodesics in
-`ProjectiveSpaceGreatCircleGeodesic.lean` (#340).
+`CovariantDerivativeAlongCurve.lean` (#339), great circles are geodesics in
+`ProjectiveSpaceGreatCircleGeodesic.lean` (#340), and the local geodesic equation with a smooth
+spray is `isGeodesic_iff_fsGeodesicSpray` (#343).
 
 ## References
 
 `Mathlib/Geometry/Manifold/VectorBundle/Riemannian.lean`,
 `Mathlib/Geometry/Manifold/VectorBundle/CovariantDerivative/LeviCivita.lean`;
 `Instances/ProjectiveSpaceFubiniStudyRiemannian.lean` (G17, `fsMetric`, `fsModelMetric`),
-`Instances/ProjectiveSpaceGeometricTensor.lean` (#327); `specs/BACKLOG.md` #338, #339, #340;
+`Instances/ProjectiveSpaceGeometricTensor.lean` (#327); `specs/BACKLOG.md` #338, #339, #340, #343;
 `specs/future-work.md`.
 -/
 
