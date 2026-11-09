@@ -37,9 +37,9 @@ everywhere (Bessel) with equality at `[φ]`. By #342 the orbit is a geodesic:
 
 ⚠️ **Geodesic in both senses.** `greatCircle_isGeodesic` is the field sense of #342
 (`∇_{X_H} X_H = 0` along the integral curve); `isGeodesic_greatCircle` /
-`isGeodesic_schrodingerUnitary_smul_of_isMaxOn` are #339's `IsGeodesic` (`D_t γ' = 0` with the
-covariant derivative along a curve), via `isGeodesic_of_isMIntegralCurve`. Unit speed is not normalised (the speed is `2ΔH = 2` in the
-corpus's metric, #329).
+`isGeodesic_schrodingerUnitary_smul_of_isMaxOn` are #339's `IsGeodesic` (a differentiable velocity
+with `D_t γ' = 0` for the covariant derivative along a curve), via `isGeodesic_of_isMIntegralCurve`.
+Unit speed is not normalised (the speed is `2ΔH = 2` in the corpus's metric, #329).
 
 ## References
 
@@ -212,21 +212,37 @@ theorem variance_circleHam_mk (hφ : ‖φ‖ = 1) (hχ : ‖χ‖ = 1) (h0 : in
   rw [expectation_mk, expectation_mk, Matrix.toEuclideanLin_mul_apply, hHφ, map_smul, hHχ, hφ]
   simp [inner_neg_right, inner_smul_right, h0, hφ]
 
+/-- The great-circle vector `cos t φ + sin t χ` of an orthonormal pair is never zero. -/
+theorem greatCircleVec_ne_zero (hφ : ‖φ‖ = 1) (hχ : ‖χ‖ = 1) (h0 : inner ℂ φ χ = 0) (t : ℝ) :
+    (Real.cos t : ℂ) • φ + (Real.sin t : ℂ) • χ ≠ 0 := by
+  intro h
+  have hφφ : inner ℂ φ φ = (1 : ℂ) := by rw [inner_self_eq_norm_sq_to_K, hφ]; norm_num
+  have hχχ : inner ℂ χ χ = (1 : ℂ) := by rw [inner_self_eq_norm_sq_to_K, hχ]; norm_num
+  have hχφ : inner ℂ χ φ = (0 : ℂ) := by rw [← inner_conj_symm, h0, map_zero]
+  have h1 := congrArg (inner ℂ φ) h
+  have h2 := congrArg (inner ℂ χ) h
+  simp only [inner_add_right, inner_smul_right, hφφ, h0, hχφ, hχχ, mul_one, mul_zero, add_zero,
+    zero_add, inner_zero_right, Complex.ofReal_eq_zero] at h1 h2
+  have := Real.cos_sq_add_sin_sq t
+  rw [h1, h2] at this
+  norm_num at this
+
 /-- ★★★ **Great circles are geodesics of the Fubini–Study metric**: for orthonormal `φ, χ`, the
 great circle `t ↦ [cos t φ + sin t χ]` is the Schrödinger orbit of `[φ]` for
 `H = i(|χ⟩⟨φ| − |φ⟩⟨χ|)` (an integral curve of `X_H`), and `∇_{X_H} X_H = 0` at every point of
 it. -/
-theorem greatCircle_isGeodesic (hφ : ‖φ‖ = 1) (hχ : ‖χ‖ = 1) (h0 : inner ℂ φ χ = 0)
-    (hne : ∀ t : ℝ, (Real.cos t : ℂ) • φ + (Real.sin t : ℂ) • χ ≠ 0) :
+theorem greatCircle_isGeodesic (hφ : ‖φ‖ = 1) (hχ : ‖χ‖ = 1) (h0 : inner ℂ φ χ = 0) :
     (∀ t : ℝ, Matrix.schrodingerUnitary (circleHam_isHermitian φ χ) t
-        • mk ℂ φ (by simpa using hne 0) = mk ℂ _ (hne t)) ∧
-      IsMIntegralCurve (fun t : ℝ => mk ℂ _ (hne t)) (schrodingerField (circleHam φ χ)) ∧
+        • mk ℂ φ (norm_ne_zero_iff.1 (hφ ▸ one_ne_zero))
+        = mk ℂ _ (greatCircleVec_ne_zero hφ hχ h0 t)) ∧
+      IsMIntegralCurve (fun t : ℝ => mk ℂ _ (greatCircleVec_ne_zero hφ hχ h0 t))
+        (schrodingerField (circleHam φ χ)) ∧
       ∀ t : ℝ, CovariantDerivative.leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))
-        (schrodingerField (circleHam φ χ)) (mk ℂ _ (hne t))
-        (schrodingerField (circleHam φ χ) (mk ℂ _ (hne t))) = 0 := by
-  have hφ0 : φ ≠ 0 := by simpa using hne 0
+        (schrodingerField (circleHam φ χ)) (mk ℂ _ (greatCircleVec_ne_zero hφ hχ h0 t))
+        (schrodingerField (circleHam φ χ) (mk ℂ _ (greatCircleVec_ne_zero hφ hχ h0 t))) = 0 := by
+  have hφ0 : φ ≠ 0 := norm_ne_zero_iff.1 (hφ ▸ one_ne_zero)
   have horb : ∀ t : ℝ, Matrix.schrodingerUnitary (circleHam_isHermitian φ χ) t • mk ℂ φ hφ0
-      = mk ℂ _ (hne t) := by
+      = mk ℂ _ (greatCircleVec_ne_zero hφ hχ h0 t) := by
     intro t
     show mapEquiv (Matrix.UnitaryGroup.toEuclideanLinearEquivHom _) (mk ℂ φ hφ0) = _
     rw [mapEquiv, Projectivization.map_mk]
@@ -239,12 +255,12 @@ theorem greatCircle_isGeodesic (hφ : ‖φ‖ = 1) (hχ : ‖χ‖ = 1) (h0 : i
   obtain ⟨hint, hgeo⟩ :=
     leviCivita_schrodingerField_self_orbit_eq_zero (circleHam_isHermitian φ χ) hmax
   have hcurve : (fun t : ℝ => Matrix.schrodingerUnitary (circleHam_isHermitian φ χ) t
-      • mk ℂ φ hφ0) = fun t : ℝ => mk ℂ _ (hne t) := funext horb
+      • mk ℂ φ hφ0) = fun t : ℝ => mk ℂ _ (greatCircleVec_ne_zero hφ hχ h0 t) := funext horb
   refine ⟨horb, hcurve ▸ hint, fun t => ?_⟩
   rw [← horb t]
   exact hgeo t
 
-/-- ★★★ **The Schrödinger orbit of a maximiser of `(ΔH)²` is a geodesic** in the sense of the
+/-- ★★★ **The Schrödinger orbit of a global maximiser of `(ΔH)²` is a geodesic** in the sense of the
 covariant derivative along a curve (#339): `D_t γ' = 0`. -/
 theorem isGeodesic_schrodingerUnitary_smul_of_isMaxOn
     {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ} (hH : H.IsHermitian) {q : ℙ ℂ (Ambient n)}
@@ -258,12 +274,11 @@ theorem isGeodesic_schrodingerUnitary_smul_of_isMaxOn
 
 /-- ★★★ **Great circles are geodesics of the Fubini–Study metric**, in the sense of the covariant
 derivative along a curve (#339): `D_t γ' = 0` for `γ t = [cos t φ + sin t χ]`. -/
-theorem isGeodesic_greatCircle (hφ : ‖φ‖ = 1) (hχ : ‖χ‖ = 1) (h0 : inner ℂ φ χ = 0)
-    (hne : ∀ t : ℝ, (Real.cos t : ℂ) • φ + (Real.sin t : ℂ) • χ ≠ 0) :
+theorem isGeodesic_greatCircle (hφ : ‖φ‖ = 1) (hχ : ‖χ‖ = 1) (h0 : inner ℂ φ χ = 0) :
     CovariantDerivative.IsGeodesic
       (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n)))
-      (fun t : ℝ => mk ℂ _ (hne t)) := by
-  obtain ⟨-, hint, hgeo⟩ := greatCircle_isGeodesic hφ hχ h0 hne
+      (fun t : ℝ => mk ℂ _ (greatCircleVec_ne_zero hφ hχ h0 t)) := by
+  obtain ⟨-, hint, hgeo⟩ := greatCircle_isGeodesic hφ hχ h0
   exact CovariantDerivative.isGeodesic_of_isMIntegralCurve _ hint
     (fun t => mdifferentiableAt_schrodingerField (circleHam_isHermitian φ χ) _) hgeo
 

@@ -35,14 +35,16 @@ transition probability to a fixed ray changes along a lift at most at the rate t
 
 ## Honest scope
 
-⚠️ **Lifts, not the manifold curve.** These are statements about a curve of representatives
-`ψ : ℝ → ℂⁿ⁺¹ \ {0}`; reading a curve on `ℂℙⁿ` through a lift is the next module's work.
+⚠️ **Projected curves only.** The statements start from a curve of representatives
+`ψ : ℝ → ℂⁿ⁺¹ \ {0}`; `fsMetric_mfderiv_projCurve` reads the manifold curve `t ↦ [ψ t]`, but
+the converse (lifting an arbitrary curve on `ℂℙⁿ`) is not stated here.
 
 ## References
 
 J. Anandan, Y. Aharonov, Phys. Rev. Lett. 65 (1990) 1697;
 `Instances/ProjectiveSpaceGeometricPhase.lean` (`studyForm_lift`, `chartVelCLM`,
-`hasMFDerivAt_projCurve`), `Instances/ProjectiveSpaceFisherRao.lean` (`fsMetric_eq_fsInnerHom`); `specs/BACKLOG.md` #330, #331; `specs/future-work.md`.
+`hasMFDerivAt_projCurve`), `Instances/ProjectiveSpaceFisherRao.lean` (`fsMetric_eq_fsInnerHom`);
+`specs/BACKLOG.md` #330, #331; `specs/future-work.md`.
 -/
 
 @[expose] public section
@@ -121,14 +123,14 @@ variable {n : ℕ}
 
 /-- ★ **The chart metric on the chart velocities is the homogeneous metric on the
 representative.** -/
-theorem fsInnerHom_chartVelCLM (i : Fin (n + 1)) {v : Ambient n} (hv0 : v ≠ 0) (hvi : v i ≠ 0)
+theorem fsInnerHom_chartVelCLM (i : Fin (n + 1)) {v : Ambient n} (hvi : v i ≠ 0)
     (d e : Ambient n) :
     fsInnerHom (insertOne i (coordRatio i v)) (insertZero i (chartVelCLM i v d))
         (insertZero i (chartVelCLM i v e)) = fsInnerHom v d e := by
   rw [insertOne_coordRatio i hvi, insertZero_chartVelCLM i hvi, insertZero_chartVelCLM i hvi,
     add_comm ((-(d i) / v i ^ 2) • v) ((v i)⁻¹ • d),
     add_comm ((-(e i) / v i ^ 2) • v) ((v i)⁻¹ • e)]
-  exact fsInnerHom_lift hv0 (inv_ne_zero hvi) d e _ _
+  exact fsInnerHom_lift (fun h => hvi (by simp [h])) (inv_ne_zero hvi) d e _ _
 
 /-- ★★ **The squared Fubini–Study speed of a projected curve** `t ↦ [ψ t]` is
 `fsInnerHom (ψ t) ψ' ψ'`, whatever lift is used. -/
@@ -147,7 +149,7 @@ theorem fsMetric_mfderiv_projCurve {γ : ℝ → Ambient n} (h : ∀ y, γ y ≠
   have hc : chartFun (idx (projFamily γ h x)) (projFamily γ h x)
       = coordRatio (idx (projFamily γ h x)) (γ x) := chartFun_mk _ _ _
   rw [hc]
-  exact fsInnerHom_chartVelCLM _ (h x) (idx_ne_zero h x) D D
+  exact fsInnerHom_chartVelCLM _ (idx_ne_zero h x) D D
 
 /-! ### How fast the transition probability can change -/
 

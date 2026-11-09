@@ -41,8 +41,9 @@ and smallest eigenvalues.
 * ★★ `mfderiv_expectation_eq_zero_iff_schrodingerField` — `d⟨A⟩_p = 0 ⟺ X_A(p) = 0`;
 * ★★★ `mfderiv_expectation_eq_zero_iff` — **`d⟨A⟩_p = 0 ⟺ A ψ = ⟨A⟩_p ψ`** for a representative
   `ψ` of `p`: the critical points are the eigenlines, with the eigenvalue as critical value;
-* ★★★ `criticalValues_eq_eigenvalues` — **the critical values of `⟨A⟩` are exactly the real
-  eigenvalues of `A` with an eigenline**.
+* ★★★ `criticalValues_eq_eigenvalues` — **the critical values of `⟨A⟩` are exactly the
+  eigenvalues of `A`** (stated as the reals `μ` with an eigenline; for Hermitian `A` that is every
+  eigenvalue, #334).
 
 ## Mathlib's eigenvalues (#334)
 
@@ -55,8 +56,8 @@ and smallest eigenvalues.
 
 ## Maximum and minimum
 
-* ★ `mfderiv_expectation_eq_zero_of_isMaxOn`, `mfderiv_expectation_eq_zero_of_isMinOn` — Fermat's
-  rule on `ℂℙⁿ`, through the chart Hamiltonian;
+* ★ `mfderiv_expectation_eq_zero_of_isLocalMax`, `mfderiv_expectation_eq_zero_of_isLocalMin` —
+  Fermat's rule on `ℂℙⁿ` at a local extremum, through the chart Hamiltonian;
 * ★★★ `exists_isGreatest_eigenvalues`, ★★★ `exists_isLeast_eigenvalues` — **`⟨A⟩` attains its
   maximum (minimum) at an eigenline, and the value is the largest (smallest) eigenvalue**.
 
@@ -270,31 +271,37 @@ theorem schrodingerChartHam_eq (A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) (p :
 theorem chartInv_idx_chartFun (p : ℙ ℂ (Ambient n)) : chartInv (idx p) (chartFun (idx p) p) = p :=
   chartInv_chartFun _ _ (idx_spec p)
 
-/-- ★ **Fermat's rule at a maximum of `⟨A⟩`.** -/
-theorem mfderiv_expectation_eq_zero_of_isMaxOn {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
-    (hA : A.IsHermitian) {p : ℙ ℂ (Ambient n)} (h : ∀ q, expectation A q ≤ expectation A p) :
+/-- ★ **Fermat's rule at a local maximum of `⟨A⟩`.** -/
+theorem mfderiv_expectation_eq_zero_of_isLocalMax {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hA : A.IsHermitian) {p : ℙ ℂ (Ambient n)} (h : IsLocalMax (expectation A) p) :
     mfderiv (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ ℝ) (expectation A) p
       = 0 := by
   rw [mfderiv_expectation_eq_zero_iff_schrodingerField hA,
     (schrodingerField_isHamiltonianVectorField hA).eq_zero_iff_mfderiv_eq_zero
       (fsForm_isSymplectic n) p]
   refine mfderiv_schrodingerHamiltonian_eq_zero_of_isLocalExtr A (Or.inl ?_)
-  refine Filter.Eventually.of_forall fun w => ?_
+  have ht : Filter.Tendsto (chartInv (idx p)) (nhds (chartFun (idx p) p)) (nhds p) := by
+    have h' := (continuous_chartInv (n := n) (idx p)).tendsto (chartFun (idx p) p)
+    rwa [chartInv_idx_chartFun] at h'
+  filter_upwards [ht.eventually h] with w hw
   rw [schrodingerChartHam_eq, schrodingerChartHam_eq, chartInv_idx_chartFun]
-  linarith [h (chartInv (idx p) w)]
+  linarith [hw]
 
-/-- ★ **Fermat's rule at a minimum of `⟨A⟩`.** -/
-theorem mfderiv_expectation_eq_zero_of_isMinOn {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
-    (hA : A.IsHermitian) {p : ℙ ℂ (Ambient n)} (h : ∀ q, expectation A p ≤ expectation A q) :
+/-- ★ **Fermat's rule at a local minimum of `⟨A⟩`.** -/
+theorem mfderiv_expectation_eq_zero_of_isLocalMin {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
+    (hA : A.IsHermitian) {p : ℙ ℂ (Ambient n)} (h : IsLocalMin (expectation A) p) :
     mfderiv (modelWithCornersSelf ℝ (Fin n → ℂ)) (modelWithCornersSelf ℝ ℝ) (expectation A) p
       = 0 := by
   rw [mfderiv_expectation_eq_zero_iff_schrodingerField hA,
     (schrodingerField_isHamiltonianVectorField hA).eq_zero_iff_mfderiv_eq_zero
       (fsForm_isSymplectic n) p]
   refine mfderiv_schrodingerHamiltonian_eq_zero_of_isLocalExtr A (Or.inr ?_)
-  refine Filter.Eventually.of_forall fun w => ?_
+  have ht : Filter.Tendsto (chartInv (idx p)) (nhds (chartFun (idx p) p)) (nhds p) := by
+    have h' := (continuous_chartInv (n := n) (idx p)).tendsto (chartFun (idx p) p)
+    rwa [chartInv_idx_chartFun] at h'
+  filter_upwards [ht.eventually h] with w hw
   rw [schrodingerChartHam_eq, schrodingerChartHam_eq, chartInv_idx_chartFun]
-  linarith [h (chartInv (idx p) w)]
+  linarith [hw]
 
 /-- ★★★ **`⟨A⟩` attains its maximum at an eigenline, and the maximum is the largest
 eigenvalue.** -/
@@ -307,7 +314,8 @@ theorem exists_isGreatest_eigenvalues {A : Matrix (Fin (n + 1)) (Fin (n + 1)) �
     (continuous_expectation (n := n) A).continuousOn
   have hmax : ∀ q, expectation A q ≤ expectation A p := fun q => hp (Set.mem_univ q)
   refine ⟨p, hmax, ⟨p, (mfderiv_expectation_eq_zero_iff hA p).1
-    (mfderiv_expectation_eq_zero_of_isMaxOn hA hmax)⟩, ?_⟩
+    (mfderiv_expectation_eq_zero_of_isLocalMax hA
+      (IsMaxOn.isLocalMax (s := Set.univ) (fun q _ => hmax q) Filter.univ_mem))⟩, ?_⟩
   rintro μ ⟨q, hq⟩
   rw [← expectation_eq_of_eigen hq]
   exact hmax q
@@ -323,7 +331,8 @@ theorem exists_isLeast_eigenvalues {A : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (continuous_expectation (n := n) A).continuousOn
   have hmin : ∀ q, expectation A p ≤ expectation A q := fun q => hp (Set.mem_univ q)
   refine ⟨p, hmin, ⟨p, (mfderiv_expectation_eq_zero_iff hA p).1
-    (mfderiv_expectation_eq_zero_of_isMinOn hA hmin)⟩, ?_⟩
+    (mfderiv_expectation_eq_zero_of_isLocalMin hA
+      (IsMinOn.isLocalMin (s := Set.univ) (fun q _ => hmin q) Filter.univ_mem))⟩, ?_⟩
   rintro μ ⟨q, hq⟩
   rw [← expectation_eq_of_eigen hq]
   exact hmin q

@@ -18,7 +18,8 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpacePoisso
 BACKLOG #333 (geometric QM, completion item 2 of 2026-11-08).
 
 The quantum geometric tensor `Q = g − i ω` is a positive Hermitian form, so it obeys
-Cauchy–Schwarz: `g(u, v)² + ω(u, v)² ≤ g(u, u) g(v, v)`. On the Hamiltonian fields of two
+Cauchy–Schwarz: `g(u, v)² + ω(u, v)² ≤ g(u, u) g(v, v)` (proved below directly from the real
+metric, for any almost Kähler structure). On the Hamiltonian fields of two
 observables, `g(X_A, X_A) = 4 (ΔA)²` (#329), `g(X_A, X_B) = 4 Cov(A, B)` (polarisation) and
 `ω(X_A, X_B) = -2 ⟨-i[A, B]⟩` (#325), and the inequality is the Robertson–Schrödinger relation
 

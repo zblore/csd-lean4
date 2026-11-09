@@ -30,8 +30,9 @@ finite-dimensional real normed space.
   `D_t V = (d/dt V_loc) + Γ(V, γ')` in the chart at `γ t`;
 * ★★★ `covAlong_comp` — **`D_t (X ∘ γ) = ∇_{γ'} X`** for a vector field `X` differentiable along
   a differentiable curve: the definition is the right one;
-* `IsGeodesic cov γ` — `D_t γ' = 0` for all `t`; ★★ `isGeodesic_of_isMIntegralCurve` — an integral
-  curve of `X` with `∇_X X = 0` along it is a geodesic.
+* `IsGeodesic cov γ` — the velocity `t ↦ (γ t, γ' t)` is differentiable in `TM` and
+  `D_t γ' = 0` for all `t`; ★★ `isGeodesic_of_isMIntegralCurve` — an integral curve of a
+  differentiable `X` with `∇_X X = 0` along it is a geodesic.
 
 ## Honest scope
 
@@ -39,6 +40,10 @@ finite-dimensional real normed space.
 `covAlong_comp` identifies it with `∇_{γ'} X` whenever `V = X ∘ γ`, but chart independence for a
 general field along `γ` (not a restriction) is not stated, nor are existence/uniqueness of
 geodesics, parallel transport, or the exponential map.
+
+⚠️ **Differentiability is part of `IsGeodesic`.** Mathlib's `mfderiv` and `deriv` are `0` where no
+derivative exists, so `D_t γ' = 0` alone would hold for every nowhere-differentiable curve and at
+the corner of a broken geodesic; the velocity lift is therefore required to be differentiable.
 
 ## References
 
@@ -222,10 +227,14 @@ theorem covAlong_comp (cov : CovariantDerivative 𝓘(ℝ, E) E (TangentSpace �
   show chartCov (γ t) X (γ t) v + (cov X (γ t) v - chartCov (γ t) X (γ t) v) = _
   abel
 
-/-- **A geodesic of `cov`**: a curve whose velocity is parallel along it, `D_t γ' = 0`. -/
+/-- **A geodesic of `cov`**: a curve whose velocity is differentiable as a curve in the tangent
+bundle (so `γ` and its velocity are genuinely differentiable, not junk-`0` derivatives) and is
+parallel along it, `D_t γ' = 0`. -/
 def IsGeodesic (cov : CovariantDerivative 𝓘(ℝ, E) E (TangentSpace 𝓘(ℝ, E) : M → Type _))
     (γ : ℝ → M) : Prop :=
-  ∀ t, covAlong cov γ (fun s => mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)) t = 0
+  ∀ t, MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, E).tangent
+      (fun s => TotalSpace.mk' E (γ s) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ))) t ∧
+    covAlong cov γ (fun s => mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)) t = 0
 
 /-- ★★ **An integral curve of a vector field `X` with `∇_X X = 0` along it is a geodesic.** -/
 theorem isGeodesic_of_isMIntegralCurve
@@ -239,7 +248,14 @@ theorem isGeodesic_of_isMIntegralCurve
     have h1 := congrArg (fun L : TangentSpace 𝓘(ℝ, ℝ) s →L[ℝ] TangentSpace 𝓘(ℝ, E) (γ s) =>
       L (1 : ℝ)) (hγ s).mfderiv
     exact h1.trans (one_smul ℝ (X (γ s)))
+  have hlift : (fun s => TotalSpace.mk' E (γ s) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)))
+      = fun s => TotalSpace.mk' E (γ s) (X (γ s)) := by
+    funext s
+    rw [congrFun hvel s]
   intro t
+  refine ⟨?_, ?_⟩
+  · rw [hlift]
+    exact (hX t).comp t (hγ t).mdifferentiableAt
   rw [hvel, covAlong_comp cov (hX t) (hγ t).mdifferentiableAt]
   have : mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t (1 : ℝ) = X (γ t) := congrFun hvel t
   rw [this]

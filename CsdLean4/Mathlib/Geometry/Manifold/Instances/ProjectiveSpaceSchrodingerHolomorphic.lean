@@ -20,8 +20,9 @@ KG-3′ (`specs/BACKLOG.md` #30). `ProjectiveSpaceFubiniStudySymplectic.lean` ma
 manifold with `J = i·` in every chart (`fsForm_isKahler`), and `ProjectiveSpaceSchrodingerFlow.lean`
 made the Schrödinger flow `p ↦ exp(-itH) • p` the Hamiltonian flow of `−2⟨H⟩` for the Fubini–Study
 form. The one step of the Ashtekar–Schilling route that the flow's unitarity carries but no
-theorem yet stated is that this Hamiltonian vector field is *holomorphic*, equivalently (by the
-Kähler compatibility) *Killing*. Both are here:
+theorem yet stated is that this Hamiltonian vector field is *holomorphic* and its flow is
+*isometric*. Both are here, proved separately (the equivalence of the two for Hamiltonian fields
+on a Kähler manifold is not stated):
 
 * ★ `hasMFDerivAt_smul`, `isHolomorphicMap_smul` — **the unitary action on `ℂℙⁿ` is a
   holomorphic map**: in charts it is `uTrans U`, `ℂ`-differentiable, so its manifold derivative
@@ -44,7 +45,8 @@ Kähler compatibility) *Killing*. Both are here:
 
 ⚠️ **Holomorphic in the atlas sense** (`IsHolomorphicVectorField`, `HolomorphicVectorField.lean`):
 the chart-by-chart statement, which on the holomorphic atlas of `ℂℙⁿ` is the standard notion. No
-Lie derivative `L_X J` is built; the flow-level statements need none.
+Lie derivative `L_X J` is built; the flow-level statements need none. "Killing" here is the
+flow-level isometry; the infinitesimal `L_X g = 0` is #341 (`ProjectiveSpaceSchrodingerKilling`).
 
 ⚠️ **Hermitian `H` only**, as everywhere in the Schrödinger module (`hH : H.IsHermitian`); the
 chart-field lemmas hold for any `H`.

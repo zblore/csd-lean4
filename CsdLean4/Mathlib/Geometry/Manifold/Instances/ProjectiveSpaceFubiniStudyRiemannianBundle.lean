@@ -34,16 +34,16 @@ the inner product on each tangent space, and the Levi-Civita connection of
   (`fsForm_symmL_symmL`, `fsJ_symmL`);
 * `fsMetric_eq_fsModelMetricCLM`, `fsMetric_symmL_symmL`, `isVonNBounded_fsModelMetric`,
   `norm_le_norm_toLpCLM`, `fsModelMetric_self`;
-* `FubiniStudy.instRiemannianBundle` (scoped): the `RiemannianBundle` instance, and the
-  `IsContMDiffRiemannianBundle … ∞` instance; `inner_eq_fsMetric` — the inner product it puts on
-  `T_xℂℙⁿ` is `fsMetric x` (by `rfl`);
-* ★★★ `isLeviCivitaConnection_fs` — **Mathlib's Levi-Civita connection of `ℂℙⁿ` with the
+* `FubiniStudy.instRiemannianBundle`, `FubiniStudy.instIsContMDiffRiemannianBundle` (both
+  scoped): the `RiemannianBundle` instance and its `IsContMDiffRiemannianBundle … ∞` instance;
+  `inner_eq_fsMetric` — the inner product it puts on `T_xℂℙⁿ` is `fsMetric x` (by `rfl`);
+* ★ `isLeviCivitaConnection_fs` — **Mathlib's Levi-Civita connection of `ℂℙⁿ` with the
   Fubini–Study metric is compatible with the metric and torsion-free.**
 
 ## Honest scope
 
-⚠️ **The instance is scoped.** The `RiemannianBundle` instance lives in the scope
-`Projectivization.FubiniStudy` (open it to use Mathlib's Riemannian API on `ℂℙⁿ`), like
+⚠️ **The instances are scoped.** The `RiemannianBundle` instance and its smoothness instance live
+in the scope `Projectivization.FubiniStudy` (open it to use Mathlib's Riemannian API on `ℂℙⁿ`), like
 `fsENorm` of #330, because the tangent spaces of `ℂℙⁿ` carry no other norm and a global instance
 would be a choice made for every user of `ℂℙⁿ`.
 
@@ -52,8 +52,9 @@ theorem at this instance: its content is that the instances resolve on `ℂℙ�
 an explicit formula for `∇`, and the agreement of the instance's norm with #330's `fsENorm` (so
 that Mathlib's `riemannianEDist` is `fsEDist`) are not stated.
 
-⚠️ **No geodesics yet.** Mathlib has no covariant derivative along a curve, so the geodesic
-equation is #339 and "great circles are geodesics" #340.
+⚠️ **Geodesics are elsewhere.** Mathlib has no covariant derivative along a curve; it is built in
+`CovariantDerivativeAlongCurve.lean` (#339), and great circles are geodesics in
+`ProjectiveSpaceGreatCircleGeodesic.lean` (#340).
 
 ## References
 
@@ -211,6 +212,12 @@ scoped instance instRiemannianBundle :
     RiemannianBundle (fun x : ℙ ℂ (Ambient n) => TangentSpace 𝓘(ℝ, Fin n → ℂ) x) :=
   ⟨fsRiemannianMetric.toRiemannianMetric⟩
 
+/-- The instance is a `C^∞` Riemannian bundle (scoped with it). -/
+scoped instance instIsContMDiffRiemannianBundle :
+    IsContMDiffRiemannianBundle 𝓘(ℝ, Fin n → ℂ) ∞ (Fin n → ℂ)
+      (fun x : ℙ ℂ (Ambient n) => TangentSpace 𝓘(ℝ, Fin n → ℂ) x) :=
+  ⟨fsRiemannianMetric.inner, fsRiemannianMetric.contMDiff, fun _ _ _ => rfl⟩
+
 end FubiniStudy
 
 open FubiniStudy
@@ -220,12 +227,7 @@ open scoped RealInnerProductSpace in
 theorem inner_eq_fsMetric (x : ℙ ℂ (Ambient n)) (u v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x) :
     ⟪u, v⟫ = fsMetric x u v := rfl
 
-/-- The instance is a `C^∞` Riemannian bundle. -/
-instance : IsContMDiffRiemannianBundle 𝓘(ℝ, Fin n → ℂ) ∞ (Fin n → ℂ)
-    (fun x : ℙ ℂ (Ambient n) => TangentSpace 𝓘(ℝ, Fin n → ℂ) x) :=
-  ⟨fsRiemannianMetric.inner, fsRiemannianMetric.contMDiff, fun _ _ _ => rfl⟩
-
-/-- ★★★ **Mathlib's Levi-Civita connection of `ℂℙⁿ` with the Fubini–Study metric is compatible
+/-- ★ **Mathlib's Levi-Civita connection of `ℂℙⁿ` with the Fubini–Study metric is compatible
 with the metric and torsion-free.** -/
 theorem isLeviCivitaConnection_fs :
     (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, Fin n → ℂ)

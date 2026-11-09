@@ -21,10 +21,12 @@ the *restricted* senses of these words; `specs/TERMS.md` records what is backed 
 `Matrix.schrodingerUnitary` (the unitary `exp(-itH)`) and its derivative
 `Matrix.schrodingerUnitary_hasDerivAt` as the flow whose generator it identifies.
 
-Brick **G13** of `specs/generator-layer-scoping.md` (with the G2, G3, G4, G16 and G19 corollaries): the `U(n+1)` moment map. For a Hermitian
+Brick **G13** of `specs/generator-layer-scoping.md` (with the G2, G3, G4, G16 and G19
+corollaries): the components of the `U(n+1)` moment map (no map to `𝔲(n+1)*` is
+assembled). For a Hermitian
 `H`, the unitary flow `p ↦ exp(-itH) • p` on `ℂℙⁿ` — the corpus's projected Schrödinger flow — is
 Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, the expectation value
-`⟪z, Hz⟫ / ‖z‖²` up to the form's convention. Brick G6 (the torus) is the diagonal case.
+`Re⟪z, Hz⟫ / ‖z‖²` up to the form's convention. Brick G6 (the torus) is the diagonal case.
 
 * `expectation H p = ⟪z, Hz⟫.re / ‖z‖²` — the expectation value on rays (`expectation_mk`,
   `continuous_expectation`); `schrodingerHamiltonian H = -2 • expectation H`;
@@ -85,7 +87,9 @@ Hamiltonian for the Fubini–Study form, and its Hamiltonian is `-2 ⟨H⟩`, th
 ⚠️ **The sign and the factor are conventions.** `fsChartForm` carries the `-4` of its potential,
 which makes the generator of the torus `2 · momentMap` (G6); the corpus's Schrödinger flow is
 `exp(-itH)`, so its Hamiltonian is `-2 ⟨H⟩`. Nothing here rescales either; the statement shows
-both.
+both. `fsForm` at the chart origin is `-4 Im⟪u, v⟫`, which is `-2` times the standard
+`i∂∂̄ log(1 + ‖w‖²)` (equal to `2 Im⟪u, v⟫` there); with `g(u, v) = ω(Ju, v)` this gives
+`ω(u, v) = -g(Ju, v)`, the opposite sign to the convention `ω = g(J·, ·)`.
 
 ⚠️ **The flow is consumed, not built.** `Matrix.schrodingerUnitary` and its derivative come from
 `Analysis/Matrix/SchrodingerUnitary.lean`, under the `L2Operator` matrix norm (the one under which

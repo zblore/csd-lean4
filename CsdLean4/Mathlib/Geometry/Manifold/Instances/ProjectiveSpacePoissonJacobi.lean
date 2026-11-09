@@ -17,7 +17,10 @@ public import Mathlib.Analysis.Calculus.FDeriv.Symmetric
 `specs/TERMS.md` records what is backed.
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold`).
-BACKLOG #336 (geometric QM, completion item 5 of 2026-11-08).
+BACKLOG #336 (geometric QM, completion item 5 of 2026-11-08). The general theorems need nothing
+from `ℂℙⁿ`, but `IsSymplectic.poissonBracket` is defined in `ProjectiveSpacePoissonBracket.lean`,
+which this module imports; upstreaming means moving the bracket and these theorems to a
+`ℂℙⁿ`-free module first.
 
 The Poisson bracket `{f, g} = ω(X_f, X_g)` of a symplectic form satisfies the Jacobi identity
 for all smooth functions, because `ω` is closed: Cartan's formula writes `dω(X_f, X_g, X_h)` as

@@ -58,9 +58,13 @@ by the corpus's `-2` convention (`schrodingerHamiltonian H = -2 ⟨H⟩`).
 
 ## Honest scope
 
-⚠️ **The constants are conventions.** `fsForm` carries the corpus's normalisation, which makes the
-generator of `exp(-itH)` the function `-2⟨H⟩`; with it the bracket of expectations is `-½` times the
-expectation of `-i[A, B]`. Nothing is rescaled.
+⚠️ **The constants are conventions, sign included.** `fsForm` at the chart origin is
+`-4 Im⟪u, v⟫`, which is `-2` times the standard `i∂∂̄ log(1 + ‖w‖²)` (equal to
+`2 Im⟪u, v⟫` there); with `g(u, v) = ω(Ju, v)` this gives
+`ω(u, v) = -g(Ju, v)`, the opposite sign to the convention `ω = g(J·, ·)`.
+That is why the generator of `exp(-itH)` is `-2⟨H⟩` and the bracket of expectations is `-½` times
+the expectation of `-i[A, B]` (Kibble's `{⟨A⟩, ⟨B⟩} = ⟨-i[A, B]⟩` in the standard convention).
+Nothing is rescaled.
 
 ⚠️ **Only the generator is assumed Hermitian.** The bracket identities and Ehrenfest's equation
 need `B` Hermitian (it generates the flow) and hold for every matrix `A`, with `expectation` the

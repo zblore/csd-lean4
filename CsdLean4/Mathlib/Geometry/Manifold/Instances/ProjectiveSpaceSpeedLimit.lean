@@ -46,9 +46,10 @@ For a family `H(t)` of Hermitian matrices and any curve `γ` with `γ'(t) = X_{H
 
 ## Honest scope
 
-⚠️ **`ħ = 1`, and the corpus's metric.** The length is `2 T ΔH` because the corpus's metric is
-four times the textbook one (#327, #329) and the distance is `2 arccos √P` (#330); the factors of
-`2` cancel in the bound, which is the textbook statement.
+⚠️ **`ħ = 1`, Anandan–Aharonov's normalisation.** The length is `2 T ΔH` because the metric is
+Anandan–Aharonov's `ds² = 4(1 − |⟨ψ|ψ + dψ⟩|²)` (#327, #329), four times
+`⟨dψ, dψ⟩ − |⟨ψ, dψ⟩|²`, and the distance is `2 arccos √P` (#330); the factors of `2` cancel in
+the bound, which is the textbook statement.
 
 ⚠️ **Time-dependent `H` assumes the solution.** The `H(t)` bounds (#335) hold for any curve
 solving `γ'(t) = X_{H(t)}(γ t)` on `[0, T]` (a two-sided derivative at each `t` of `[0, T]`);

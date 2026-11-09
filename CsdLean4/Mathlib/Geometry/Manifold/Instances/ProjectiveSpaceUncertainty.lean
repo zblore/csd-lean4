@@ -20,8 +20,8 @@ BACKLOG #329 (geometric QM, item 4 of the 2026-11-08 plan, first half).
 The variance of an observable is the squared length, in the Fubini–Study metric, of the vector
 field the observable generates: `g(X_A, X_A) = 4 (ΔA)²`, with `(ΔA)² = ⟨A²⟩ − ⟨A⟩²`. So a state
 is an eigenstate exactly when `ΔA = 0`, and a Schrödinger curve `t ↦ exp(-itH) • p` moves at the
-constant squared speed `4 (ΔH)²` — speed `ΔH` in the normalisation `g / 4` of the textbook
-Fubini–Study metric (`ħ = 1`).
+constant squared speed `4 (ΔH)²` — speed `2ΔH`, Anandan–Aharonov's `ds = 2ΔE dt/ħ`, or `ΔH` in
+the normalisation `g / 4` (`ħ = 1`).
 
 * `variance A p = ⟨A²⟩_p − ⟨A⟩_p²`; `expectation_eq_insertOne` (`⟨A⟩` in the chart of the point);
 * ★★★ `fsMetric_schrodingerField_self` — **`g(X_A, X_A) = 4 (ΔA)²`** for Hermitian `A`, from the
@@ -30,14 +30,15 @@ Fubini–Study metric (`ħ = 1`).
 * ★ `variance_nonneg`; ★★ `variance_eq_zero_iff` — **`ΔA = 0` exactly on the eigenlines of `A`**
   (#326's `schrodingerField_eq_zero_iff`);
 * `variance_schrodingerUnitary_smul` — `ΔH` is conserved by the flow of `H`;
-* ★★★ `fsMetric_velocity_schrodingerUnitary_smul` — **the Schrödinger curve through `p` has
+* ★ `fsMetric_velocity_schrodingerUnitary_smul` — **the Schrödinger curve through `p` has
   velocity `X_H` (G4) of squared length `4 (ΔH)²_p` at every time**.
 
 ## Honest scope
 
-⚠️ **The factor is the corpus's normalisation.** `fsForm` carries the `-4` of its potential, so the
-metric is `4 Re h` (#327) and the identity reads `g(X_A, X_A) = 4 (ΔA)²`; for the textbook metric
-`g / 4` it is `(ΔA)²`. Nothing is rescaled.
+⚠️ **The factor is the Anandan–Aharonov normalisation.** `fsForm` carries the `-4` of its
+potential, so the metric is `4 Re h` (#327), `ds² = 4(1 − |⟨ψ|ψ + dψ⟩|²)` as in Anandan–Aharonov
+(PRL 65, 1697), and the identity reads `g(X_A, X_A) = 4 (ΔA)²`; for the metric `g / 4` it is
+`(ΔA)²`. Nothing is rescaled.
 
 ⚠️ **The speed limit is not here.** `t ≥ arccos |⟨ψ₀|ψₜ⟩| / ΔH` needs the Fubini–Study distance
 (#330); it is #331.
@@ -160,7 +161,7 @@ theorem variance_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 1))
   unfold variance
   rw [h2, expectation_schrodingerUnitary_smul hH]
 
-/-- ★★★ **A Schrödinger curve moves at constant squared speed `4 (ΔH)²`**: the curve
+/-- ★ **A Schrödinger curve moves at constant squared speed `4 (ΔH)²`**: the curve
 `t ↦ exp(-itH) • p` has velocity `X_H` (G4), of squared length `4 (ΔH)²_p` at every time. -/
 theorem fsMetric_velocity_schrodingerUnitary_smul {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) (p : ℙ ℂ (Ambient n)) :

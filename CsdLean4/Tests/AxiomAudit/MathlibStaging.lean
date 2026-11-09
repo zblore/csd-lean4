@@ -15815,13 +15815,13 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.chartInv_idx_chartFun
 
-/-- info: 'Projectivization.mfderiv_expectation_eq_zero_of_isMaxOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Projectivization.mfderiv_expectation_eq_zero_of_isLocalMax' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.mfderiv_expectation_eq_zero_of_isMaxOn
+#print axioms Projectivization.mfderiv_expectation_eq_zero_of_isLocalMax
 
-/-- info: 'Projectivization.mfderiv_expectation_eq_zero_of_isMinOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Projectivization.mfderiv_expectation_eq_zero_of_isLocalMin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.mfderiv_expectation_eq_zero_of_isMinOn
+#print axioms Projectivization.mfderiv_expectation_eq_zero_of_isLocalMin
 
 /-- info: 'Projectivization.exists_isGreatest_eigenvalues' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -16279,6 +16279,10 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.variance_circleHam_mk
 
+/-- info: 'Projectivization.greatCircleVec_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.greatCircleVec_ne_zero
+
 /-- info: 'Projectivization.greatCircle_isGeodesic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.greatCircle_isGeodesic
@@ -16300,9 +16304,13 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.mdifferentiableAt_variance
 
-/-- info: 'Projectivization.leviCivita_schrodingerField_self_eq_zero_of_isMaxOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'Projectivization.leviCivita_schrodingerField_self_eq_zero_of_mfderiv_variance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms Projectivization.leviCivita_schrodingerField_self_eq_zero_of_isMaxOn
+#print axioms Projectivization.leviCivita_schrodingerField_self_eq_zero_of_mfderiv_variance
+
+/-- info: 'Projectivization.leviCivita_schrodingerField_self_eq_zero_of_isLocalMax' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.leviCivita_schrodingerField_self_eq_zero_of_isLocalMax
 
 /-- info: 'Projectivization.leviCivita_schrodingerField_self_orbit_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -16381,6 +16389,10 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.inner_eq_fsMetric' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.inner_eq_fsMetric
+
+/-- info: 'Projectivization.FubiniStudy.instIsContMDiffRiemannianBundle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.FubiniStudy.instIsContMDiffRiemannianBundle
 
 /-- info: 'Projectivization.isLeviCivitaConnection_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

@@ -33,20 +33,24 @@ the metric is the Lie derivative of the form evaluated on `(i u, v)`.
 
 * `localHamiltonianVector_schrodingerHamiltonian` — the local Hamiltonian vector is the chart
   field;
-* ★★ `flatKilling_schrodingerChartField` — **the flat Killing equation**:
+* ★★ `flatKilling_schrodingerChartField` — **the flat Killing equation, form version**:
   `Dω(F)(i u, v) + ω(i DF u, v) + ω(i u, DF v) = 0` for the chart field `F` of `X_H`;
-  `fderiv_fsModelMetricCLM_apply`; ★★ `flatKilling_metric_schrodingerChartField` — the same for
-  the model metric, `Dg(F)(u, v) + g(DF u, v) + g(u, DF v) = 0`;
+  `fderiv_fsModelMetricCLM_apply`; ★★★ `flatKilling_metric_schrodingerChartField` — **the full
+  Killing equation `L_F g = 0` in every affine chart**,
+  `Dg(F)(u, v) + g(DF u, v) + g(u, DF v) = 0` for all `u, v`;
 * `mpullback_extChartAt_symm_eq_chartField`, `fsMetric_eq_chartField` — the chart reads fields
   and the metric;
-* ★★★ `mfderiv_fsMetric_schrodingerField` — **`d⟨X_H, Z⟩(X_H) = ⟨X_H, [X_H, Z]⟩`** for every `Z`
-  differentiable at the point: the Killing identity `X⟨Y, Z⟩ = ⟨[X, Y], Z⟩ + ⟨Y, [X, Z]⟩` at `Y = X`,
-  the form the Koszul formula of #342 consumes.
+* ★★ `mfderiv_fsMetric_schrodingerField` — **`d⟨X_H, Z⟩(X_H) = ⟨X_H, [X_H, Z]⟩`** for every `Z`
+  differentiable at the point: on the manifold, the contraction `(L_X g)(X, Z) = 0` of the
+  Killing identity `X⟨Y, Z⟩ = ⟨[X, Y], Z⟩ + ⟨Y, [X, Z]⟩` at `Y = X`, the form the Koszul formula
+  of #342 consumes.
 
 ## Honest scope
 
-⚠️ **The `Y = X` case.** The polarised identity for general `Y` follows the same way (the flat
-equation holds for all `u, v`) but is not stated; #342 needs only `Y = X`.
+⚠️ **Full Killing in charts, the `Y = X` contraction on the manifold.** `L_X g = 0` is stated
+chart by chart (`flatKilling_metric_schrodingerChartField`); on the manifold only
+`(L_X g)(X, Z) = 0` is stated. The polarised identity for general `Y` follows the same way but is
+not stated; #342 needs only `Y = X`.
 
 ## References
 
@@ -149,7 +153,7 @@ theorem fderiv_fsModelMetricCLM_apply (w d u v : Fin n → ℂ) :
   rw [← e1, ← e2]
   exact e3
 
-/-- ★★ **The flat Killing equation, metric form**:
+/-- ★★★ **The Schrödinger field is Killing, in every affine chart**:
 `Dg(F)(u, v) + g(DF u, v) + g(u, DF v) = 0` for the model metric `g` and the chart field `F` of
 `X_H`. -/
 theorem flatKilling_metric_schrodingerChartField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
@@ -199,9 +203,9 @@ theorem fsMetric_eq_chartField (x₀ : ℙ ℂ (Ambient n))
   rw [hcf V, hcf W]
   exact fsMetric_symmL_symmL x₀ y hy _ _
 
-/-- ★★★ **The Schrödinger field is Killing**: `d⟨X_H, Z⟩(X_H) = ⟨X_H, [X_H, Z]⟩` for every vector
-field `Z` differentiable at the point (the Killing identity `X⟨Y, Z⟩ = ⟨[X, Y], Z⟩ + ⟨Y, [X, Z]⟩` at
-`Y = X`). -/
+/-- ★★ **The Killing identity of the Schrödinger field at `Y = X`**:
+`d⟨X_H, Z⟩(X_H) = ⟨X_H, [X_H, Z]⟩` for every vector field `Z` differentiable at the point, i.e.
+`(L_X g)(X, Z) = 0` (the identity `X⟨Y, Z⟩ = ⟨[X, Y], Z⟩ + ⟨Y, [X, Z]⟩` at `Y = X`). -/
 theorem mfderiv_fsMetric_schrodingerField {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ}
     (hH : H.IsHermitian) (x₀ : ℙ ℂ (Ambient n))
     {Z : ∀ x : ℙ ℂ (Ambient n), TangentSpace 𝓘(ℝ, Fin n → ℂ) x}

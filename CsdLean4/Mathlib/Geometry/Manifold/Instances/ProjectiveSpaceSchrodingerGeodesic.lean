@@ -18,9 +18,10 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceUncert
 BACKLOG #342 (geometric QM, completion item 8c, second half; split from #340).
 
 For a Killing field `X`, the Koszul formula gives `⟨∇_X X, Z⟩ = −½ Z(‖X‖²)`. The Schrödinger field
-`X_H` is Killing (#341) and `‖X_H‖² = 4 (ΔH)²` (#329), so `∇_{X_H} X_H` vanishes exactly where
-`(ΔH)²` is stationary. At a state of maximal uncertainty it is; the variance is conserved along
-the flow, so the whole orbit `t ↦ exp(-itH) • q` consists of maximisers, and **its velocity field
+`X_H` is Killing (#341) and `‖X_H‖² = 4 (ΔH)²` (#329), so `∇_{X_H} X_H` vanishes wherever
+`(ΔH)²` is stationary (the converse also follows from the formula, but is not stated). At a state
+of maximal uncertainty it is; the variance is conserved along the flow, so the whole orbit
+`t ↦ exp(-itH) • q` consists of maximisers, and **its velocity field
 is parallel along itself: the orbit is a geodesic of the Levi-Civita connection of the
 Fubini–Study metric.** (For `H = i(|χ⟩⟨φ| − |φ⟩⟨χ|)` the orbit of `[φ]` is the great circle
 through `φ` and `χ`.)
@@ -30,11 +31,13 @@ through `φ` and `χ`.)
   `mdifferentiableAt_variance`;
 * ★★ `inner_leviCivita_schrodingerField_self` — **`⟨∇_{X_H} X_H, Z⟩ = −½ d(‖X_H‖²)(Z)`**, from
   Mathlib's Koszul formula `leviCivitaConnection_apply_inner` and #341;
-* ★★★ `leviCivita_schrodingerField_self_eq_zero_of_isMaxOn` — **at a maximiser of `(ΔH)²`,
-  `∇_{X_H} X_H = 0`**;
+* ★★★ `leviCivita_schrodingerField_self_eq_zero_of_mfderiv_variance` — **wherever `(ΔH)²` is
+  stationary, `∇_{X_H} X_H = 0`**; ★★★ `leviCivita_schrodingerField_self_eq_zero_of_isLocalMax` —
+  in particular at a local maximum;
 * ★★★ `leviCivita_schrodingerField_self_orbit_eq_zero` — **along the Schrödinger orbit of a
-  maximiser, `∇_{X_H} X_H = 0` at every time**: with `isMIntegralCurve_schrodingerUnitary_smul`,
-  the orbit is a geodesic in the sense that its velocity field is parallel along it.
+  global maximiser, `∇_{X_H} X_H = 0` at every time**: with
+  `isMIntegralCurve_schrodingerUnitary_smul`, the orbit is a geodesic in the sense that its
+  velocity field is parallel along it.
 
 ## Honest scope
 
@@ -130,10 +133,11 @@ theorem mdifferentiableAt_variance (H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ)
   have h2 := mdifferentiableAt_expectation H x
   exact h1.sub (h2.pow 2)
 
-/-- ★★★ **At a maximiser of `(ΔH)²`, `∇_{X_H} X_H = 0`.** -/
-theorem leviCivita_schrodingerField_self_eq_zero_of_isMaxOn
+/-- ★★★ **Wherever `(ΔH)²` is stationary, `∇_{X_H} X_H = 0`.** -/
+theorem leviCivita_schrodingerField_self_eq_zero_of_mfderiv_variance
     {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ} (hH : H.IsHermitian) {x : ℙ ℂ (Ambient n)}
-    (hmax : ∀ q, variance H q ≤ variance H x) :
+    (hcrit : ∀ v : TangentSpace 𝓘(ℝ, Fin n → ℂ) x,
+      mfderiv 𝓘(ℝ, Fin n → ℂ) 𝓘(ℝ, ℝ) (variance H) x v = 0) :
     CovariantDerivative.leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))
       (schrodingerField H) x (schrodingerField H x) = 0 := by
   apply injective_inner_mdifferentiableAt_section 𝓘(ℝ, Fin n → ℂ) (Fin n → ℂ)
@@ -142,22 +146,28 @@ theorem leviCivita_schrodingerField_self_eq_zero_of_isMaxOn
   beta_reduce
   rw [inner_leviCivita_schrodingerField_self hH x hZ, inner_zero_left]
   have hf : (fun q => fsMetric q (schrodingerField H q) (schrodingerField H q))
-      = fun q => 4 * variance H q := funext fun q => fsMetric_schrodingerField_self hH q
-  have hfd : MDifferentiableAt 𝓘(ℝ, Fin n → ℂ) 𝓘(ℝ, ℝ)
-      (fun q => fsMetric q (schrodingerField H q) (schrodingerField H q)) x := by
-    rw [hf]
-    exact mdifferentiableAt_const.mul (mdifferentiableAt_variance H x)
-  have hloc : IsLocalMax
-      (fun q => fsMetric q (schrodingerField H q) (schrodingerField H q)) x :=
-    IsMaxOn.isLocalMax (s := Set.univ) (fun q _ => by
-      show fsMetric q _ _ ≤ fsMetric x _ _
-      rw [fsMetric_schrodingerField_self hH, fsMetric_schrodingerField_self hH]
-      linarith [hmax q]) Filter.univ_mem
-  rw [mfderiv_apply_eq_zero_of_isLocalMax hfd hloc]
-  exact mul_zero _
+      = (4 : ℝ) • variance H := funext fun q => by
+    rw [fsMetric_schrodingerField_self hH q]
+    rfl
+  have hd := (mdifferentiableAt_variance H x).hasMFDerivAt.const_smul (4 : ℝ)
+  rw [hf, hd.mfderiv]
+  have h0 := hcrit (Z x)
+  change -(1 / 2) * ((4 : ℝ) * @id ℝ (mfderiv 𝓘(ℝ, Fin n → ℂ) 𝓘(ℝ, ℝ) (variance H) x (Z x))) = 0
+  rw [show @id ℝ (mfderiv 𝓘(ℝ, Fin n → ℂ) 𝓘(ℝ, ℝ) (variance H) x (Z x)) = 0 from h0]
+  norm_num
 
-/-- ★★★ **The Schrödinger orbit of a maximiser of `(ΔH)²` is a geodesic**: it is an integral
-curve of `X_H`, and `∇_{X_H} X_H = 0` at every point of it. -/
+/-- ★★★ **At a local maximum of `(ΔH)²`, `∇_{X_H} X_H = 0`.** -/
+theorem leviCivita_schrodingerField_self_eq_zero_of_isLocalMax
+    {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ} (hH : H.IsHermitian) {x : ℙ ℂ (Ambient n)}
+    (hmax : IsLocalMax (variance H) x) :
+    CovariantDerivative.leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))
+      (schrodingerField H) x (schrodingerField H x) = 0 :=
+  leviCivita_schrodingerField_self_eq_zero_of_mfderiv_variance hH
+    (mfderiv_apply_eq_zero_of_isLocalMax (mdifferentiableAt_variance H x) hmax)
+
+/-- ★★★ **The Schrödinger orbit of a global maximiser of `(ΔH)²` is a geodesic**: it is an
+integral curve of `X_H`, and `∇_{X_H} X_H = 0` at every point of it. (Global, so that conservation
+of `(ΔH)²` makes every point of the orbit a maximiser.) -/
 theorem leviCivita_schrodingerField_self_orbit_eq_zero
     {H : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ} (hH : H.IsHermitian) {q : ℙ ℂ (Ambient n)}
     (hmax : ∀ p, variance H p ≤ variance H q) :
@@ -166,8 +176,9 @@ theorem leviCivita_schrodingerField_self_orbit_eq_zero
         (schrodingerField H) (Matrix.schrodingerUnitary hH t • q)
         (schrodingerField H (Matrix.schrodingerUnitary hH t • q)) = 0 :=
   ⟨isMIntegralCurve_schrodingerUnitary_smul hH q, fun t =>
-    leviCivita_schrodingerField_self_eq_zero_of_isMaxOn hH fun p => by
-      rw [variance_schrodingerUnitary_smul hH]
-      exact hmax p⟩
+    leviCivita_schrodingerField_self_eq_zero_of_isLocalMax hH <|
+      IsMaxOn.isLocalMax (s := Set.univ) (fun p _ => by
+        rw [Set.mem_ofPred_eq, variance_schrodingerUnitary_smul hH]
+        exact hmax p) Filter.univ_mem⟩
 
 end Projectivization
