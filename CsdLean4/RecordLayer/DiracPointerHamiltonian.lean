@@ -100,9 +100,11 @@ Profile `trainF` (`−sin(2πx)/(2π)`, `f(0) = 0`, `f'(0) = −1`), carrier on 
   made. The pointer rate reads `⟨P_j⟩`, the occupancy of the *state*, which is not a detection
   probability claim.
 * The nontriviality is checked at one point (`t = 0`, the carrier on site `j`) and as an
-  existence statement; the time at which the pointer has moved is not estimated.
-* The link to `DiracDetector.lean` is `arenaObs_siteProj_mk` only: that module's `detFlow` is not
-  identified with this flow here.
+  existence statement; the time at which the pointer has moved is not estimated here.
+  `RecordLayer/DiracPointerWrite.lean` (#351) bounds the displacement over an interval.
+* The link to `DiracDetector.lean` here is `arenaObs_siteProj_mk` only. That module's `detFlow`
+  registers are identified with this flow's pointer in `RecordLayer/DiracPointerWrite.lean`
+  (`diracPointerShift_eq_register`, on the fibres with `f(θ₂) = 0`).
 
 References: `specs/BACKLOG.md` #349, #252, #251, #249, #195, #39; `specs/future-work.md`;
 `LF4/ArenaCoupledFlow.lean` (`coupledEnergy`, `hamiltonianFlow_coupledEnergy`,

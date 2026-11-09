@@ -223,7 +223,9 @@ what would discharge or constrain it.
 
 ### 4.1 On the shared arena `Σ_*`
 
-All in `RecordLayer/DiracPointerHamiltonian.lean`; package `diracPointer_hamiltonian`. All exact.
+UD-1 to UD-7 are in `RecordLayer/DiracPointerHamiltonian.lean` (package `diracPointer_hamiltonian`)
+and are all exact. UD-31 to UD-34 are in `RecordLayer/DiracPointerWrite.lean` (BACKLOG ~~#351~~, M2
+part A) and are marked exact or bound.
 
 | ID | Property | Lean |
 |---|---|---|
@@ -237,9 +239,29 @@ All in `RecordLayer/DiracPointerHamiltonian.lean`; package `diracPointer_hamilto
 
 Exact scope of this block. UD-5's Liouville statement is a theorem about this flow (through
 `kMuL_map_hamiltonianFlow` and `arenaVolume_map_hamiltonianFlow`), so Posit 3 is not an assumption on
-`Σ_*`. UD-6 is a rate at one point and an existence statement, with no time estimate and no size.
+`Σ_*`. UD-6 is a rate at one point and an existence statement, with no time estimate and no size;
+the size over an interval is UD-32 and UD-34.
 UD-7 is a deterministic drift coefficient. None of UD-1 to UD-7 is a record, a statistic or a
 geometric statement.
+
+| ID | Property | Lean | Kind |
+|---|---|---|---|
+| UD-31 | The carrier that feels the site potential `g f(θ₂) P_j` stays near the free chain: propagator within `\|t\| \|g f(θ₂)\|` in operator norm, occupancy of site `j` within `2 \|s\| \|g f(θ₂)\|`, accumulated occupancy within `\|g f(θ₂)\| t²`. Where `f(θ₂) = 0` the two propagators are equal | `norm_diracCarrierU_sub_le`, `abs_diracOccupancy_sub_le`, `abs_integral_diracOccupancy_sub_le`; `diracCarrierU_of_lift_eq_zero`, `diracCarrierU_zero_coupling_val` | bound; exact where `f(θ₂) = 0` |
+| UD-32 | **The displacement created.** On every fibre `diracPointerShift` is within `2 \|g\| \|f'(θ₂)\| · \|g f(θ₂)\| t²` of `−2 g f'(θ₂)` times the free chain's accumulated occupancy; equal to it where `f(θ₂) = 0`; at most `2 \|g\| \|f'(θ₂)\| t`; zero where `f'(θ₂) = 0`. The pointer coordinate of `diracPointerFlow` is the starting value plus this displacement | `abs_diracPointerShift_sub_le`, `le_abs_diracPointerShift`, `diracPointerShift_of_lift_eq_zero`, `abs_diracPointerShift_le`, `diracPointerShift_of_deriv_eq_zero`, `diracPointerFlow_snd_fst` | bound; exact where `f(θ₂) = 0` |
+| UD-33 | **The registers of `detFlow` are this flow's pointer**, one coordinate at a time: for a packet's ray the lifted displacement at site `j` is `−2 f'(θ₂)/⟨ψ, ψ⟩` times the register of gain `g` at `j`, prepared at zero — equal where `f(θ₂) = 0`, within the UD-32 error elsewhere | `diracPointerShift_eq_register`, `abs_diracPointerShift_sub_register_le`, `diracOccupancy_zero_coupling_packet` | exact where `f(θ₂) = 0`; bound elsewhere |
+| UD-34 | **An instance with numbers**: the two-mode packet on the 12-site ring (`Σ_* = ℂℙ²³ × T²`). Profile `trainF`, `θ₂ = 0`: the displacement is `g (116 t + 48 sin 2t)/696` at site `0` and `g (116 t − 48 sin 2t)/696` at site `6`, and the first is the pointer coordinate of `diracPointerFlow`. Every profile and fibre: within `2 \|g\| \|f'(θ₂)\| · \|g f(θ₂)\| t²` of `−2 g f'(θ₂) (116 t + 48 sin 2t)/1392`; at `t = π/4` with `\|g f(θ₂)\| ≤ 1/10`, at least `\|g\| \|f'(θ₂)\|/14` | `diracPointerShift_twoMode_zero`, `diracPointerShift_twoMode_six`, `diracPointerFlow_twoMode`, `abs_diracPointerShift_twoMode_sub_le`, `le_abs_diracPointerShift_twoMode`, `le_abs_diracPointerShift_twoMode_quarter` | exact (first three); bound |
+
+Exact scope of UD-31 to UD-34. They are statements about a displacement. None is a record: no
+readout region, ready state, threshold, outcome or retention interval appears, and no measure. The
+comparison with the free chain is a theorem (UD-31) and not a premise: the free chain enters only
+through a bound on its distance from the coupled carrier, and on the fibres with `f(θ₂) = 0` through
+an equality of generators. The error term is the first-order Duhamel estimate. It is quadratic in
+`t` where the signal is linear, so the lower bounds are informative only up to a time of order the
+mean occupancy over `|g f(θ₂)|`. No lower bound is uniform in `θ₂`: at a zero of `f'` the pointer
+does not move. The fibre on which a statement holds is preparation input (UA-4, item 3); no law for
+`θ₂` is used. UD-33 identifies one lifted coordinate; the `ActualOccurrence` structures on the
+detector arena (UD-12) are not transported. UD-34's carrier is a beating two-mode state with between
+`20/1392` and `212/1392` of its weight on each site, not a carrier that arrives from elsewhere.
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -279,7 +301,8 @@ geometric statement.
 ## 5. Register 3 — open obligations
 
 Each entry: the obligation, why the assumptions do not guarantee it, and the repackaging test.
-Proposed module names are the programme's and none exists yet.
+Proposed module names are the programme's. `DiracPointerWrite.lean` exists since BACKLOG
+~~#351~~ (M2 part A); the others do not.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
 
@@ -295,6 +318,13 @@ The programme separates four statements. They stay separate here.
   The static potential can reflect the packet, and there is no closed form on the ring (UD-8 had one
   only because the two-site exchange is solvable). *Test:* a bound that assumes the occupancy
   integral, or assumes the free packet's trajectory, has not used the flow.
+  ▸ **Met 2026-11-09 (BACKLOG ~~#351~~) → UD-31, UD-32, UD-34, with two conditions that stay
+  here.** How the test is passed: the bound is on the coupled carrier; the free chain enters as a
+  comparison whose error is a theorem (UD-31), and on the fibres with `f(θ₂) = 0` the two carriers
+  have the same generator. *Still owed under this identifier:* (a) a carrier with no initial weight
+  at the detector that then arrives — the instance of UD-34 has weight on every site at every time;
+  (b) an error that does not grow as `t²`, without which there is no lower bound past a time of
+  order the mean occupancy over `|g f(θ₂)|` off the exact fibres.
 * **UO-3 — threshold crossed, and the two cases distinguished.** The displaced pointer lies in the
   readout region and the pointer of a run with no packet at the detector does not. The control is
   itself owed: `hasDerivAt_diracPointerShift_siteRay_of_ne` gives only an initial rate of `0` for a
@@ -315,6 +345,11 @@ The programme separates four statements. They stay separate here.
 * **UO-6 — the existing detector registers.** Whether the registers of
   `RecordLayer/DiracDetector.lean` (`detFlow`) are this flow's pointer, or a statement of how they
   differ. Until then UD-12 is a result on a separate arena.
+  ▸ **Met 2026-11-09 (BACKLOG ~~#351~~) → UD-33.** They are this flow's pointer on the fibres with
+  `f(θ₂) = 0`, coordinate by coordinate and up to the constant `−2 f'(θ₂)/⟨ψ, ψ⟩`; on the other
+  fibres they differ by at most `2 |g| |f'(θ₂)| · |g f(θ₂)| t²`, because the register integrates
+  the free packet and the pointer the carrier that feels the site potential. What is identified is
+  a displacement. UD-12's `ActualOccurrence` remains a result on the detector arena until UO-4.
 
 ### M3 — outcome statistics, or the obstruction (`DiracPointerBorn.lean`; gate A)
 
@@ -534,7 +569,8 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#38~~, #39, ~~#136~~, ~~#152~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#38~~,
+#39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);
 [`records-to-spacetime-scoping.md`](records-to-spacetime-scoping.md);
