@@ -12,7 +12,7 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 # The Fubini–Study geodesic spray
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold.Instances`).
-BACKLOG #343, #344, #345 (geometric QM: the local geodesic ODE of `ℂℙⁿ`, local existence and
+BACKLOG #343–#346 (geometric QM: the local geodesic ODE of `ℂℙⁿ`, local existence and
 uniqueness).
 
 The geodesic equation of `ℂℙⁿ` with the Fubini–Study metric, as a first-order ODE in an affine
@@ -45,13 +45,20 @@ chart, with smooth right-hand side.
 * ★★★ `eqOn_of_isGeodesicOn_fs` — **uniqueness on a whole interval**: two geodesics on an open
   preconnected `I` with the same position and velocity at one `t₀ ∈ I` agree on all of `I`, across
   any number of charts (the agreement set is open, and closed in `I` by continuity of positions
-  and of chart velocities).
+  and of chart velocities);
+* `isGeodesicOn_congr_fs` — being a geodesic on an open set depends only on the curve there;
+  `IsFSGeodesicData x₀ v₀ I η` (a geodesic on an open preconnected `I ∋ 0` with initial data
+  `(x₀, v₀)`), `IsFSGeodesicData.eqOn`;
+* ★★★ `exists_maximal_isGeodesicOn_fs` — **maximal geodesics**: for every `(x₀, v₀)` there is a
+  geodesic on an open interval `J ∋ 0` containing every other such interval, agreeing with every
+  geodesic with the same initial data (`J` is the union of all of them, the curve glued from them
+  by uniqueness).
 
 ## Honest scope
 
-⚠️ **Existence is local.** It is on some `(-ε, ε)` with `ε` not estimated. Uniqueness holds on any
-open interval where both curves are geodesics. Maximal geodesics, completeness and the exponential
-map are not stated.
+⚠️ **Existence is local; maximality is not completeness.** Existence is on some `(-ε, ε)` with `ε`
+not estimated. The maximal interval `J` is not shown to be `ℝ`: completeness of `ℂℙⁿ` (compact,
+so Hopf–Rinow would give it) and the exponential map are not stated.
 
 ⚠️ **One chart per statement.** `isGeodesic_iff_fsGeodesicSpray` assumes `γ t` is in the chart's
 source for every `t ∈ ℝ`; `isGeodesicOn_iff_fsGeodesicSpray` only on the open set `I`, which is
@@ -71,7 +78,7 @@ the geodesic equation in coordinates) and Ch. 5 (the Koszul formula);
 `CovariantDerivativeAlongCurve.lean` (#339: `isGeodesic_iff_chartSpray`,
 `mlieBracket_chartConstField`), `Instances/ProjectiveSpaceFubiniStudyRiemannianBundle.lean` (#338:
 `fsRiemannianMetric`, `fsMetric_symmL_symmL`); Mathlib's `leviCivitaConnection_apply_inner`;
-Mathlib's `Analysis/ODE/ExistUnique.lean`; `specs/BACKLOG.md` #338, #339, #343, #344, #345;
+Mathlib's `Analysis/ODE/ExistUnique.lean`; `specs/BACKLOG.md` #338, #339, #343–#346;
 `specs/future-work.md`.
 -/
 
@@ -496,5 +503,93 @@ theorem eqOn_of_isGeodesicOn_fs {γ₁ γ₂ : ℝ → ℙ ℂ (Ambient n)} {I :
         (congrArg (fun z => (e.symm (γ₂ t) z : Fin n → ℂ)) hft)
     exact eventuallyEq_of_isGeodesicOn_fs hI ht h₁ h₂ hpt hvt
   exact fun t ht => (hsub ht).self_of_nhds
+
+/-- **Being a geodesic is local in time**: a curve that agrees with a geodesic on an open set of
+times is a geodesic there (read through the chart equation, so only `ℂⁿ`-valued data move). -/
+theorem isGeodesicOn_congr_fs {γ η : ℝ → ℙ ℂ (Ambient n)} {I : Set ℝ} (hI : IsOpen I)
+    (h : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) η I)
+    (heq : Set.EqOn γ η I) :
+    IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ I := by
+  intro t ht
+  set φ := chartAt (Fin n → ℂ) (η t) with hφ
+  have hd : ∀ s ∈ I, MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) η s := fun s hs =>
+    ((mdifferentiableAt_totalSpace _ _).1 (h s hs).1).1
+  have hK : IsOpen (I ∩ η ⁻¹' φ.source) :=
+    ContinuousOn.isOpen_inter_preimage (fun s hs => (hd s hs).continuousAt.continuousWithinAt)
+      hI φ.open_source
+  have htK : t ∈ I ∩ η ⁻¹' φ.source := ⟨ht, show η t ∈ φ.source from mem_chart_source _ (η t)⟩
+  obtain ⟨v, hv⟩ := (isGeodesicOn_iff_fsGeodesicSpray (η t) hK fun s hs => hs.2).1
+    (h.mono Set.inter_subset_left)
+  have hγ : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ
+      (I ∩ η ⁻¹' φ.source) := by
+    rw [isGeodesicOn_iff_fsGeodesicSpray (η t) hK fun s hs => by
+      rw [heq hs.1]; exact hs.2]
+    refine ⟨v, fun s hs => ?_⟩
+    have hev : (fun r => (φ (γ r), v r)) =ᶠ[𝓝 s] fun r => (φ (η r), v r) :=
+      Filter.mem_of_superset (hI.mem_nhds hs.1) fun r hr => by
+        simp only [Set.mem_ofPred_eq, heq hr]
+    rw [heq hs.1]
+    exact (hv s hs).congr_of_eventuallyEq hev
+  exact hγ t htK
+
+/-- `IsFSGeodesicData x₀ v₀ I η`: `η` is a Fubini–Study geodesic on the open interval-like set `I`
+(open, preconnected, containing `0`) with `η 0 = x₀` and `η'(0) = v₀`. -/
+def IsFSGeodesicData (x₀ : ℙ ℂ (Ambient n)) (v₀ : TangentSpace 𝓘(ℝ, Fin n → ℂ) x₀)
+    (I : Set ℝ) (η : ℝ → ℙ ℂ (Ambient n)) : Prop :=
+  IsOpen I ∧ IsPreconnected I ∧ (0 : ℝ) ∈ I ∧ η 0 = x₀ ∧
+    mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) η 0 (1 : ℝ) = v₀ ∧
+    IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) η I
+
+/-- Two geodesics with the same initial data agree where both are defined. -/
+theorem IsFSGeodesicData.eqOn {x₀ : ℙ ℂ (Ambient n)} {v₀ : TangentSpace 𝓘(ℝ, Fin n → ℂ) x₀}
+    {I I' : Set ℝ} {η η' : ℝ → ℙ ℂ (Ambient n)} (h : IsFSGeodesicData x₀ v₀ I η)
+    (h' : IsFSGeodesicData x₀ v₀ I' η') : Set.EqOn η η' (I ∩ I') := by
+  obtain ⟨hI, hIc, h0, hp, hv, hg⟩ := h
+  obtain ⟨hI', hIc', h0', hp', hv', hg'⟩ := h'
+  have hc : IsPreconnected (I ∩ I') :=
+    (hIc.ordConnected.inter hIc'.ordConnected).isPreconnected
+  exact eqOn_of_isGeodesicOn_fs (hI.inter hI') hc ⟨h0, h0'⟩ (hg.mono Set.inter_subset_left)
+    (hg'.mono Set.inter_subset_right) (hp.trans hp'.symm) (hv.trans hv'.symm)
+
+/-- ★★★ **Maximal Fubini–Study geodesics**: for every `x₀ ∈ ℂℙⁿ` and `v₀ ∈ T_{x₀}ℂℙⁿ` there is a
+geodesic `γ` with `γ 0 = x₀`, `γ'(0) = v₀` on an open interval `J ∋ 0` such that every geodesic
+with the same initial data on an open interval `I ∋ 0` has `I ⊆ J` and agrees with `γ` on `I`. -/
+theorem exists_maximal_isGeodesicOn_fs (x₀ : ℙ ℂ (Ambient n))
+    (v₀ : TangentSpace 𝓘(ℝ, Fin n → ℂ) x₀) :
+    ∃ J : Set ℝ, ∃ γ : ℝ → ℙ ℂ (Ambient n), IsFSGeodesicData x₀ v₀ J γ ∧
+      ∀ I η, IsFSGeodesicData x₀ v₀ I η → I ⊆ J ∧ Set.EqOn η γ I := by
+  classical
+  set c : Set (Set ℝ) := {I | ∃ η, IsFSGeodesicData x₀ v₀ I η} with hc
+  set J := ⋃₀ c with hJ
+  set γ : ℝ → ℙ ℂ (Ambient n) := fun t =>
+    if h : ∃ p : Set ℝ × (ℝ → ℙ ℂ (Ambient n)), IsFSGeodesicData x₀ v₀ p.1 p.2 ∧ t ∈ p.1
+    then h.choose.2 t else x₀ with hγ
+  -- `γ` agrees with every geodesic with these initial data
+  have hagree : ∀ I η, IsFSGeodesicData x₀ v₀ I η → Set.EqOn γ η I := by
+    intro I η h t ht
+    have hex : ∃ p : Set ℝ × (ℝ → ℙ ℂ (Ambient n)), IsFSGeodesicData x₀ v₀ p.1 p.2 ∧ t ∈ p.1 :=
+      ⟨(I, η), h, ht⟩
+    simp only [hγ, hex, ↓reduceDIte]
+    exact hex.choose_spec.1.eqOn h ⟨hex.choose_spec.2, ht⟩
+  -- a geodesic through `x₀` with velocity `v₀` exists
+  obtain ⟨ε, hε, γ₀, hγ₀0, hγ₀v, hγ₀⟩ := exists_isGeodesicOn_fs x₀ v₀
+  have h₀ : IsFSGeodesicData x₀ v₀ (Set.Ioo (-ε) ε) γ₀ :=
+    ⟨isOpen_Ioo, isPreconnected_Ioo, ⟨by linarith, hε⟩, hγ₀0, hγ₀v, hγ₀⟩
+  have hJo : IsOpen J := isOpen_sUnion fun I ⟨_, h⟩ => h.1
+  have hJc : IsPreconnected J :=
+    isPreconnected_sUnion 0 c (fun I ⟨_, h⟩ => h.2.2.1) fun I ⟨_, h⟩ => h.2.1
+  have hJ0 : (0 : ℝ) ∈ J := ⟨_, ⟨γ₀, h₀⟩, h₀.2.2.1⟩
+  have hgeo : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ J := by
+    rintro t ⟨I, ⟨η, h⟩, ht⟩
+    exact isGeodesicOn_congr_fs h.1 h.2.2.2.2.2 (hagree I η h) t ht
+  have hev : γ =ᶠ[𝓝 0] γ₀ :=
+    Filter.mem_of_superset (h₀.1.mem_nhds h₀.2.2.1) fun t ht => hagree _ _ h₀ ht
+  have hγ0 : γ 0 = x₀ := (hagree _ _ h₀ h₀.2.2.1).trans hγ₀0
+  have hγv : mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 (1 : ℝ) = v₀ := by
+    rw [hev.mfderiv_eq]
+    exact hγ₀v
+  refine ⟨J, γ, ⟨hJo, hJc, hJ0, hγ0, hγv, hgeo⟩, fun I η h => ⟨?_, ?_⟩⟩
+  · exact Set.subset_sUnion_of_mem ⟨η, h⟩
+  · exact fun t ht => (hagree I η h ht).symm
 
 end Projectivization

@@ -16586,6 +16586,22 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.eqOn_of_isGeodesicOn_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.eqOn_of_isGeodesicOn_fs
+
+/-- info: 'Projectivization.isGeodesicOn_congr_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isGeodesicOn_congr_fs
+
+/-- info: 'Projectivization.IsFSGeodesicData' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.IsFSGeodesicData
+
+/-- info: 'Projectivization.IsFSGeodesicData.eqOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.IsFSGeodesicData.eqOn
+
+/-- info: 'Projectivization.exists_maximal_isGeodesicOn_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_maximal_isGeodesicOn_fs
 -- ProjectiveSpaceMorse (BACKLOG #337, geometric QM completion item 6, 2026-11-08): Hessian of <A> along projective lines at an eigenline; index 2 #{mu_j < lambda}.
 
 /-- info: 'Projectivization.toEuclideanLin_eigenvectorBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
