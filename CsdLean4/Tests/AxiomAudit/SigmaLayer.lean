@@ -16074,4 +16074,238 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.trilateration_chart_boostD
 
+/-! #349 (programme milestone M1A): a Dirac carrier and a pointer in one Hamiltonian arena — the index bridge `ZMod (M + 1) × Fin 2 ≃ Fin (2M + 2)`, reindexing commuting with `exp (t • ·)`, the Hermitian site-occupancy projector and its expectation as the two moment coordinates of the site, the joint energy `−2⟨H_D⟩ − 2 g f(θ₂) ⟨P_j⟩` as a `coupledEnergy`, the carrier's propagator equation and the pointer's equation `θ̇₁ = −2 g f'(θ₂) ⟨P_j⟩`, the Hamiltonian flow in closed form, the pointer component of the Hamiltonian vector field, energy conservation, Liouville for both measures, and the checked special case (profile `trainF`, carrier on site `j`): rate `2g` from the flow and from the vector field, and the pointer moving for `g ≠ 0` (`RecordLayer/DiracPointerHamiltonian.lean`). -/
+
+/-- info: 'CSD.RecordLayer.reindex_exp_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.reindex_exp_smul
+
+/-- info: 'CSD.RecordLayer.diracIdx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracIdx
+
+/-- info: 'CSD.RecordLayer.diracIdx_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracIdx_val
+
+/-- info: 'CSD.RecordLayer.diracArenaEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracArenaEquiv
+
+/-- info: 'CSD.RecordLayer.siteProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteProj
+
+/-- info: 'CSD.RecordLayer.siteProj_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteProj_isHermitian
+
+/-- info: 'CSD.RecordLayer.siteProj_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteProj_mul_self
+
+/-- info: 'CSD.RecordLayer.siteProj_eq_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteProj_eq_single
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteProj
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteProj_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteProj_nonneg
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteProj_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteProj_le_one
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteProj_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteProj_mk
+
+/-- info: 'CSD.RecordLayer.diracA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracA
+
+/-- info: 'CSD.RecordLayer.diracB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracB
+
+/-- info: 'CSD.RecordLayer.diracA_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracA_isHermitian
+
+/-- info: 'CSD.RecordLayer.diracB_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracB_isHermitian
+
+/-- info: 'CSD.RecordLayer.schrodingerHamiltonian_diracA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.schrodingerHamiltonian_diracA
+
+/-- info: 'CSD.RecordLayer.schrodingerHamiltonian_diracB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.schrodingerHamiltonian_diracB
+
+/-- info: 'CSD.RecordLayer.diracPointerEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerEnergy
+
+/-- info: 'CSD.RecordLayer.contMDiff_diracPointerEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contMDiff_diracPointerEnergy
+
+/-- info: 'CSD.RecordLayer.diracPointerEnergy_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerEnergy_eq
+
+/-- info: 'CSD.RecordLayer.diracPointerH' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerH
+
+/-- info: 'CSD.RecordLayer.diracPointerH_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerH_isHermitian
+
+/-- info: 'CSD.RecordLayer.coupledMatrix_diracPointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledMatrix_diracPointer
+
+/-- info: 'CSD.RecordLayer.diracPointerGen_skew' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerGen_skew
+
+/-- info: 'CSD.RecordLayer.diracCarrierU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracCarrierU
+
+/-- info: 'CSD.RecordLayer.diracCarrierU_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracCarrierU_val
+
+/-- info: 'CSD.RecordLayer.diracCarrierU_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracCarrierU_zero
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_diracCarrierU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_diracCarrierU
+
+/-- info: 'CSD.RecordLayer.idxUnitary_diracCarrierU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxUnitary_diracCarrierU
+
+/-- info: 'CSD.RecordLayer.diracArenaEquiv_kick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracArenaEquiv_kick
+
+/-- info: 'CSD.RecordLayer.diracPointerShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerShift
+
+/-- info: 'CSD.RecordLayer.diracPointerShift_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerShift_zero
+
+/-- info: 'CSD.RecordLayer.diracPointerShift_zero_coupling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerShift_zero_coupling
+
+/-- info: 'CSD.RecordLayer.coupledAccum_diracPointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coupledAccum_diracPointer
+
+/-- info: 'CSD.RecordLayer.diracPointerShift_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerShift_eq
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_diracPointerShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_diracPointerShift
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_zero
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_add
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_apply
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_snd_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_snd_snd
+
+/-- info: 'CSD.RecordLayer.hamiltonianVectorField_diracPointer_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianVectorField_diracPointer_snd
+
+/-- info: 'CSD.RecordLayer.diracPointerEnergy_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerEnergy_flow
+
+/-- info: 'CSD.RecordLayer.arenaVolume_map_diracPointerFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaVolume_map_diracPointerFlow
+
+/-- info: 'CSD.RecordLayer.kMuL_map_diracPointerFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.kMuL_map_diracPointerFlow
+
+/-- info: 'CSD.RecordLayer.contDiff_trainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contDiff_trainF
+
+/-- info: 'CSD.RecordLayer.trainF_lift_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trainF_lift_zero
+
+/-- info: 'CSD.RecordLayer.trainF_deriv_lift_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trainF_deriv_lift_zero
+
+/-- info: 'CSD.RecordLayer.siteRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteRay
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteProj_siteRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteProj_siteRay
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteProj_siteRay_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteProj_siteRay_of_ne
+
+/-- info: 'CSD.RecordLayer.diracPointerH_trainF_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerH_trainF_zero
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_diracPointerShift_siteRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_diracPointerShift_siteRay
+
+/-- info: 'CSD.RecordLayer.hasDerivAt_diracPointerShift_siteRay_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasDerivAt_diracPointerShift_siteRay_of_ne
+
+/-- info: 'CSD.RecordLayer.hamiltonianVectorField_diracPointer_siteRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hamiltonianVectorField_diracPointer_siteRay
+
+/-- info: 'CSD.RecordLayer.exists_diracPointerFlow_pointer_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_diracPointerFlow_pointer_ne
+
+/-- info: 'CSD.RecordLayer.diracPointer_hamiltonian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointer_hamiltonian
+
 end CSD.Tests.AxiomAudit

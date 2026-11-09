@@ -999,7 +999,19 @@ isSymplectic"
 #   (2026-11-08, #341: localHamiltonianVector_schrodingerHamiltonian identifies the chart-level
 #   Hamiltonian vector of the already-declared energy −2⟨H⟩ with schrodingerChartField, by
 #   uniqueness (chartField_hamiltonianVectorField) — no new symplectic claim.)
+#   (2026-11-09, #349: the Dirac ring and a pointer on the R-016′ arena. diracPointer_hamiltonian
+#   identifies an explicit flow with IsSymplectic.hamiltonianFlow of diracPointerEnergy on arenaForm,
+#   through hamiltonianFlow_coupledEnergy (uniqueness of integral curves) — EARNED;
+#   hamiltonianVectorField_diracPointer_snd / _siteRay read the torus component of
+#   IsSymplectic.hamiltonianVectorField of that energy off coupledField_eq_hamiltonianVectorField
+#   (ι_X ω = d𝓗 on arenaForm) — EARNED; schrodingerHamiltonian_diracA / _diracB are values of the
+#   already-declared energy function −2⟨H⟩ at reindexed matrices, operator sense.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
+diracPointer_hamiltonian
+hamiltonianVectorField_diracPointer_siteRay
+hamiltonianVectorField_diracPointer_snd
+schrodingerHamiltonian_diracA
+schrodingerHamiltonian_diracB
 localHamiltonianVector_schrodingerHamiltonian
 isHamiltonianVectorField_trace_unitaryMomentMap
 mfderiv_schrodingerHamiltonian_eq_zero_of_isLocalExtr
