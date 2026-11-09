@@ -12,7 +12,8 @@ public import CsdLean4.Mathlib.Geometry.Manifold.Instances.ProjectiveSpaceFubini
 # The Fubini–Study geodesic spray
 
 **Category:** 1-Mathlib (CSD-free; upstream target `Mathlib.Geometry.Manifold.Instances`).
-BACKLOG #343 (geometric QM: the local ODE bridge for geodesics of `ℂℙⁿ`).
+BACKLOG #343, #344 (geometric QM: the local geodesic ODE of `ℂℙⁿ`, local existence and
+uniqueness).
 
 The geodesic equation of `ℂℙⁿ` with the Fubini–Study metric, as a first-order ODE in an affine
 chart, with smooth right-hand side.
@@ -32,16 +33,25 @@ chart, with smooth right-hand side.
   `contDiffOn_chartChristoffel_leviCivita` — they are `C^∞` there;
 * ★★★ `isGeodesic_iff_fsGeodesicSpray` — **the local geodesic equation**: a curve that stays in
   the source of the chart at `x₀` is an `IsGeodesic` of the Levi-Civita connection iff its chart
-  coordinate `w` and some `v : ℝ → ℂⁿ` solve `(w', v') = fsGeodesicSpray (w, v)`.
+  coordinate `w` and some `v : ℝ → ℂⁿ` solve `(w', v') = fsGeodesicSpray (w, v)`;
+  `chartAt_target_eq_univ`, `chartSpray_leviCivita` (the chart spray is `fsGeodesicSpray` in every
+  affine chart), ★★★ `isGeodesicOn_iff_fsGeodesicSpray` — the same on an open set of times;
+* ★★★ `exists_isGeodesicOn_fs` — **local existence**: for every `x₀ ∈ ℂℙⁿ` and `v₀ ∈ T_{x₀}ℂℙⁿ`
+  there are `ε > 0` and `γ` with `γ 0 = x₀`, `γ'(0) = v₀`, geodesic on `(-ε, ε)` (Mathlib's
+  Picard–Lindelöf on the spray);
+* ★★★ `eventuallyEq_of_isGeodesicOn_fs` — **local uniqueness**: two geodesics on an open set of
+  times containing `t₀` with the same position and velocity at `t₀` agree near `t₀` (Mathlib's
+  `ODE_solution_unique_of_eventually`, the spray being Lipschitz near the initial point).
 
 ## Honest scope
 
-⚠️ **The bridge only.** No existence, uniqueness, completeness or exponential map is stated; the
-spray's smoothness is what a Picard–Lindelöf step would consume.
+⚠️ **Local only.** Existence is on some `(-ε, ε)` with `ε` not estimated; uniqueness is near `t₀`
+(`=ᶠ[𝓝 t₀]`), not on the whole common interval of two geodesics (that needs a connectedness
+argument across charts). Maximal geodesics, completeness and the exponential map are not stated.
 
-⚠️ **Whole curve in one chart.** `isGeodesic_iff_fsGeodesicSpray` assumes `γ t` is in the chart's
-source for every `t ∈ ℝ` (`IsGeodesic` quantifies over all of `ℝ`); a geodesic leaving the chart is
-not covered.
+⚠️ **One chart per statement.** `isGeodesic_iff_fsGeodesicSpray` assumes `γ t` is in the chart's
+source for every `t ∈ ℝ`; `isGeodesicOn_iff_fsGeodesicSpray` only on the open set `I`, which is
+what the local existence and uniqueness theorems use.
 
 ⚠️ **The Christoffel symbols are `g⁻¹` of the Koszul form, not a closed formula.** No explicit
 rational expression for `Γ_w` in terms of `w` (the Kähler form of the symbols) is derived.
@@ -57,7 +67,8 @@ the geodesic equation in coordinates) and Ch. 5 (the Koszul formula);
 `CovariantDerivativeAlongCurve.lean` (#339: `isGeodesic_iff_chartSpray`,
 `mlieBracket_chartConstField`), `Instances/ProjectiveSpaceFubiniStudyRiemannianBundle.lean` (#338:
 `fsRiemannianMetric`, `fsMetric_symmL_symmL`); Mathlib's `leviCivitaConnection_apply_inner`;
-`specs/BACKLOG.md` #338, #339, #343; `specs/future-work.md`.
+Mathlib's `Analysis/ODE/ExistUnique.lean`; `specs/BACKLOG.md` #338, #339, #343, #344;
+`specs/future-work.md`.
 -/
 
 @[expose] public section
@@ -270,5 +281,148 @@ theorem isGeodesic_iff_fsGeodesicSpray (x₀ : ℙ ℂ (Ambient n)) {γ : ℝ �
       simp only [chartSpray, fsGeodesicSpray]
       rw [chartChristoffel_leviCivita x₀ ((chartAt _ x₀).map_source (hγ t))]
   simp only [h]
+
+/-- The affine charts of `ℂℙⁿ` are onto `ℂⁿ`. -/
+theorem chartAt_target_eq_univ (x₀ : ℙ ℂ (Ambient n)) :
+    (chartAt (Fin n → ℂ) x₀).target = Set.univ := rfl
+
+/-- In every affine chart, the geodesic spray of the Levi-Civita connection is
+`fsGeodesicSpray`. -/
+theorem chartSpray_leviCivita (x₀ : ℙ ℂ (Ambient n)) :
+    chartSpray (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) x₀ = fsGeodesicSpray := by
+  funext p
+  simp only [chartSpray, fsGeodesicSpray]
+  rw [chartChristoffel_leviCivita x₀ (by rw [chartAt_target_eq_univ]; exact Set.mem_univ _)]
+
+/-- ★★★ **The Fubini–Study geodesic equation on an open set of times**: a curve in the source of
+the chart at `x₀` for `t ∈ I` (`I` open) is a geodesic on `I` iff its chart coordinate `w` and
+some `v` solve `(w', v') = fsGeodesicSpray (w, v)` on `I`. -/
+theorem isGeodesicOn_iff_fsGeodesicSpray (x₀ : ℙ ℂ (Ambient n)) {γ : ℝ → ℙ ℂ (Ambient n)}
+    {I : Set ℝ} (hI : IsOpen I) (hγ : ∀ t ∈ I, γ t ∈ (chartAt (Fin n → ℂ) x₀).source) :
+    IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ I ↔
+      ∃ v : ℝ → Fin n → ℂ, ∀ t ∈ I,
+        HasDerivAt (fun s => (chartAt (Fin n → ℂ) x₀ (γ s), v s))
+          (fsGeodesicSpray (chartAt (Fin n → ℂ) x₀ (γ t), v t)) t := by
+  rw [isGeodesicOn_iff_chartSpray _ x₀ hI hγ, chartSpray_leviCivita]
+
+/-- ★★★ **Local existence of Fubini–Study geodesics**: through every point `x₀ ∈ ℂℙⁿ` with every
+initial velocity `v₀ ∈ T_{x₀}ℂℙⁿ` there is a geodesic of the Levi-Civita connection on some
+interval `(-ε, ε)` (Picard–Lindelöf on the smooth spray, in the chart at `x₀`). -/
+theorem exists_isGeodesicOn_fs (x₀ : ℙ ℂ (Ambient n))
+    (v₀ : TangentSpace 𝓘(ℝ, Fin n → ℂ) x₀) :
+    ∃ ε > (0 : ℝ), ∃ γ : ℝ → ℙ ℂ (Ambient n), γ 0 = x₀ ∧
+      mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 (1 : ℝ) = v₀ ∧
+      IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ
+        (Set.Ioo (-ε) ε) := by
+  set φ := chartAt (Fin n → ℂ) x₀ with hφ
+  set e₀ := trivializationAt (Fin n → ℂ) (TangentSpace 𝓘(ℝ, Fin n → ℂ)) x₀ with he₀
+  set p₀ : (Fin n → ℂ) × (Fin n → ℂ) := (φ x₀, (e₀ ⟨x₀, v₀⟩).2) with hp₀
+  have hC1 : ContDiffAt ℝ 1 (fsGeodesicSpray (n := n)) p₀ :=
+    contDiff_fsGeodesicSpray.contDiffAt.of_le (by simp)
+  obtain ⟨α, hα0, ε, hε, hα⟩ :=
+    hC1.exists_forall_mem_closedBall_exists_eq_forall_mem_Ioo_hasDerivAt₀ 0
+  simp only [zero_sub, zero_add] at hα
+  set γ : ℝ → ℙ ℂ (Ambient n) := fun t => φ.symm (α t).1 with hγdef
+  have htgt : ∀ t, (α t).1 ∈ φ.target := fun t => by
+    rw [hφ, chartAt_target_eq_univ]; exact Set.mem_univ _
+  have hsrc : ∀ t, γ t ∈ φ.source := fun t => φ.map_target (htgt t)
+  have hw : ∀ t, φ (γ t) = (α t).1 := fun t => φ.right_inv (htgt t)
+  have hfun : (fun s => (φ (γ s), (α s).2)) = α := funext fun s => by rw [hw s]
+  have hgeo : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ
+      (Set.Ioo (-ε) ε) := by
+    rw [isGeodesicOn_iff_fsGeodesicSpray x₀ isOpen_Ioo fun t _ => hsrc t]
+    refine ⟨fun t => (α t).2, fun t ht => ?_⟩
+    rw [hfun, hw t]
+    exact hα t ht
+  have h0mem : (0 : ℝ) ∈ Set.Ioo (-ε) ε := ⟨by linarith, hε⟩
+  have hγ0 : γ 0 = x₀ := by
+    show φ.symm (α 0).1 = x₀
+    rw [hα0]
+    exact φ.left_inv (mem_chart_source _ x₀)
+  refine ⟨ε, hε, γ, hγ0, ?_, hgeo⟩
+  -- the velocity at `0`, read in the chart at `x₀`
+  have hγd : MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 :=
+    ((mdifferentiableAt_totalSpace _ _).1 (hgeo 0 h0mem).1).1
+  have h1 := hasDerivAt_chartAt_comp x₀ (hsrc 0) hγd
+  have h2 : HasDerivAt (fun s => φ (γ s)) (α 0).2 0 := by
+    have := (ContinuousLinearMap.fst ℝ _ _).hasFDerivAt.comp_hasDerivAt 0 (hα 0 h0mem)
+    simp only [Function.comp_def, ContinuousLinearMap.coe_fst', fsGeodesicSpray] at this
+    simpa only [hw] using this
+  have hc : (e₀ ⟨γ 0, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 (1 : ℝ)⟩).2 = (e₀ ⟨x₀, v₀⟩).2 := by
+    rw [h1.unique h2, hα0]
+  have hb : γ 0 ∈ e₀.baseSet := hsrc 0
+  rw [← e₀.symm_apply_apply_mk hb (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ 0 (1 : ℝ)), hc, hγ0]
+  exact e₀.symm_apply_apply_mk (mem_chart_source _ x₀) v₀
+
+/-- ★★★ **Local uniqueness of Fubini–Study geodesics**: two geodesics on an open set of times
+containing `t₀`, with the same position and velocity at `t₀`, agree near `t₀` (Picard–Lindelöf
+uniqueness for the locally Lipschitz spray, in the chart at `γ₁ t₀`). -/
+theorem eventuallyEq_of_isGeodesicOn_fs {γ₁ γ₂ : ℝ → ℙ ℂ (Ambient n)} {I : Set ℝ} {t₀ : ℝ}
+    (hI : IsOpen I) (ht₀ : t₀ ∈ I)
+    (h₁ : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ₁ I)
+    (h₂ : IsGeodesicOn (leviCivitaConnection 𝓘(ℝ, Fin n → ℂ) (ℙ ℂ (Ambient n))) γ₂ I)
+    (hpos : γ₁ t₀ = γ₂ t₀)
+    (hvel : mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₁ t₀ (1 : ℝ)
+      = mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ t₀ (1 : ℝ)) :
+    γ₁ =ᶠ[𝓝 t₀] γ₂ := by
+  set x₀ := γ₁ t₀ with hx₀
+  set φ := chartAt (Fin n → ℂ) x₀ with hφ
+  set e₀ := trivializationAt (Fin n → ℂ) (TangentSpace 𝓘(ℝ, Fin n → ℂ)) x₀ with he₀
+  have hd₁ : ∀ t ∈ I, MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₁ t := fun t ht =>
+    ((mdifferentiableAt_totalSpace _ _).1 (h₁ t ht).1).1
+  have hd₂ : ∀ t ∈ I, MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ t := fun t ht =>
+    ((mdifferentiableAt_totalSpace _ _).1 (h₂ t ht).1).1
+  have hJ₁ : IsOpen (I ∩ γ₁ ⁻¹' φ.source) :=
+    ContinuousOn.isOpen_inter_preimage (fun t ht => (hd₁ t ht).continuousAt.continuousWithinAt)
+      hI φ.open_source
+  have hJ₂ : IsOpen (I ∩ γ₂ ⁻¹' φ.source) :=
+    ContinuousOn.isOpen_inter_preimage (fun t ht => (hd₂ t ht).continuousAt.continuousWithinAt)
+      hI φ.open_source
+  set J := (I ∩ γ₁ ⁻¹' φ.source) ∩ (I ∩ γ₂ ⁻¹' φ.source) with hJdef
+  have hJ : IsOpen J := hJ₁.inter hJ₂
+  have hsrc₀ : x₀ ∈ φ.source := mem_chart_source _ x₀
+  have ht₀J : t₀ ∈ J := ⟨⟨ht₀, hsrc₀⟩, ⟨ht₀, by rw [Set.mem_preimage, ← hpos]; exact hsrc₀⟩⟩
+  obtain ⟨v₁, hv₁⟩ := (isGeodesicOn_iff_fsGeodesicSpray x₀ hJ fun t ht => ht.1.2).1
+    ((h₁.mono fun t ht => ht.1.1))
+  obtain ⟨v₂, hv₂⟩ := (isGeodesicOn_iff_fsGeodesicSpray x₀ hJ fun t ht => ht.2.2).1
+    ((h₂.mono fun t ht => ht.2.1))
+  -- the two chart solutions start at the same point of `ℂⁿ × ℂⁿ`
+  have hfst : ∀ (γ : ℝ → ℙ ℂ (Ambient n)) (v : ℝ → Fin n → ℂ),
+      HasDerivAt (fun s => (φ (γ s), v s)) (fsGeodesicSpray (φ (γ t₀), v t₀)) t₀ →
+      HasDerivAt (fun s => φ (γ s)) (v t₀) t₀ := fun γ v h => by
+    have := (ContinuousLinearMap.fst ℝ _ _).hasFDerivAt.comp_hasDerivAt t₀ h
+    simpa [Function.comp_def, fsGeodesicSpray] using this
+  have hv₁0 : v₁ t₀ = (e₀ ⟨γ₁ t₀, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₁ t₀ (1 : ℝ)⟩).2 :=
+    (hfst γ₁ v₁ (hv₁ t₀ ht₀J)).unique (hasDerivAt_chartAt_comp x₀ hsrc₀ (hd₁ t₀ ht₀))
+  have hsrc₂ : γ₂ t₀ ∈ φ.source := ht₀J.2.2
+  have hv₂0 : v₂ t₀ = (e₀ ⟨γ₂ t₀, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ t₀ (1 : ℝ)⟩).2 :=
+    (hfst γ₂ v₂ (hv₂ t₀ ht₀J)).unique (hasDerivAt_chartAt_comp x₀ hsrc₂ (hd₂ t₀ ht₀))
+  have hinit : (φ (γ₁ t₀), v₁ t₀) = (φ (γ₂ t₀), v₂ t₀) := by
+    rw [hv₁0, hv₂0, ← Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ) _ hsrc₀,
+      ← Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ) _ hsrc₂, hvel]
+    exact congrArg (fun y => (φ y, e₀.continuousLinearMapAt ℝ y
+      (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, Fin n → ℂ) γ₂ t₀ (1 : ℝ) : Fin n → ℂ))) hpos
+  -- the spray is Lipschitz near the common initial point
+  set p₀ := (φ (γ₁ t₀), v₁ t₀) with hp₀
+  obtain ⟨K, U, hU, hL⟩ :=
+    (contDiff_fsGeodesicSpray.contDiffAt (x := p₀)).of_le (by simp) |>.exists_lipschitzOnWith
+  have hev : ∀ (γ : ℝ → ℙ ℂ (Ambient n)) (v : ℝ → Fin n → ℂ),
+      (∀ t ∈ J, HasDerivAt (fun s => (φ (γ s), v s)) (fsGeodesicSpray (φ (γ t), v t)) t) →
+      (φ (γ t₀), v t₀) = p₀ →
+      ∀ᶠ t in 𝓝 t₀, HasDerivAt (fun s => (φ (γ s), v s))
+        (fsGeodesicSpray (φ (γ t), v t)) t ∧ (φ (γ t), v t) ∈ U := fun γ v h h0 => by
+    have hcont : ContinuousAt (fun s => (φ (γ s), v s)) t₀ := (h t₀ ht₀J).continuousAt
+    have hU' : U ∈ 𝓝 ((fun s => (φ (γ s), v s)) t₀) := by
+      show U ∈ 𝓝 (φ (γ t₀), v t₀)
+      rw [h0]; exact hU
+    filter_upwards [hJ.mem_nhds ht₀J, hcont.preimage_mem_nhds hU'] with t ht htU
+    exact ⟨h t ht, htU⟩
+  have heq := ODE_solution_unique_of_eventually (K := K) (s := fun _ => U)
+    (v := fun _ => fsGeodesicSpray) (Eventually.of_forall fun _ => hL)
+    (hev γ₁ v₁ hv₁ rfl) (hev γ₂ v₂ hv₂ hinit.symm) hinit
+  filter_upwards [heq, hJ.mem_nhds ht₀J] with t h ht
+  have h' := congrArg Prod.fst h
+  simp only at h'
+  rw [← φ.left_inv ht.1.2, ← φ.left_inv ht.2.2, h']
 
 end Projectivization

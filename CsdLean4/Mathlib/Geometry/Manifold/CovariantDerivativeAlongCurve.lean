@@ -40,11 +40,14 @@ finite-dimensional real normed space.
   (`covAlongAt_eq_chartConst`: both are `∇_{γ'} σ_c + (V_loc)'` with `σ_c` chart-constant);
 * `IsGeodesic cov γ` — the velocity `t ↦ (γ t, γ' t)` is differentiable in `TM` and
   `D_t γ' = 0` for all `t`; ★★ `isGeodesic_of_isMIntegralCurve` — an integral curve of a
-  differentiable `X` with `∇_X X = 0` along it is a geodesic;
+  differentiable `X` with `∇_X X = 0` along it is a geodesic; `IsGeodesicOn cov γ I` — the same
+  for `t ∈ I` only (`isGeodesicOn_univ`, `IsGeodesicOn.mono`, `IsGeodesic.isGeodesicOn`);
 * `chartChristoffel cov x₀ w v u` — the Christoffel tensor in the coordinates of the chart at
   `x₀`; `chartSpray cov x₀ (w, v) = (v, -Γ_w(v, v))`; ★★★ `isGeodesic_iff_chartSpray` — **the
   geodesic equation in a chart**: a curve in the chart's source is a geodesic iff its chart
-  coordinate `w` and some `v` solve `(w', v') = chartSpray (w, v)`.
+  coordinate `w` and some `v` solve `(w', v') = chartSpray (w, v)`; ★★★
+  `isGeodesicOn_iff_chartSpray` — the same on an open set of times `I`, for a curve in the chart's
+  source for `t ∈ I`.
 
 ## Honest scope
 
@@ -53,9 +56,9 @@ finite-dimensional real normed space.
 differentiable at `t` (otherwise both sides are junk-`0` derivatives and are not compared).
 Existence and uniqueness of geodesics, parallel transport and the exponential map are not stated.
 
-⚠️ **One chart for all time.** `isGeodesic_iff_chartSpray` assumes `γ t` lies in the chart's
-source for every `t ∈ ℝ`, as `IsGeodesic` quantifies over all of `ℝ`; a curve that leaves the
-chart needs a time-restricted geodesic notion, not stated. Smoothness of `chartChristoffel` depends
+⚠️ **One chart per statement.** `isGeodesic_iff_chartSpray` assumes `γ t` lies in the chart's
+source for every `t ∈ ℝ`; `isGeodesicOn_iff_chartSpray` needs it only on the open set `I`. A
+geodesic crossing several charts is handled chart by chart. Smoothness of `chartChristoffel` depends
 on `cov` and is not stated here; for Fubini–Study it is in
 `Instances/ProjectiveSpaceFubiniStudyGeodesicSpray.lean`.
 
@@ -69,7 +72,7 @@ Mathlib's `Geometry/Manifold/VectorBundle/CovariantDerivative/Basic.lean` (`diff
 J. M. Lee, *Introduction to Riemannian Manifolds* (2nd ed., 2018), Thm. 4.24 (the covariant
 derivative along a curve), Ch. 4 (Christoffel symbols, the geodesic equation in coordinates);
 `Mathlib/Geometry/Manifold/VectorField/LieBracket.lean` (`mpullback_mlieBracket`);
-`specs/BACKLOG.md` #339, #340, #343; `specs/future-work.md`.
+`specs/BACKLOG.md` #339, #340, #343, #344; `specs/future-work.md`.
 -/
 
 @[expose] public section
@@ -294,14 +297,14 @@ theorem hasDerivAt_chartAt_comp {γ : ℝ → M} {t : ℝ} (x₀ : M) (hx : γ t
 
 /-- A curve whose chart coordinate is differentiable, inside the chart, is differentiable. -/
 theorem mdifferentiableAt_of_chartAt_comp {γ : ℝ → M} {t : ℝ} (x₀ : M)
-    (hγ : ∀ s, γ s ∈ (chartAt E x₀).source)
+    (hγ : ∀ᶠ s in 𝓝 t, γ s ∈ (chartAt E x₀).source)
     (hw : DifferentiableAt ℝ (fun s => chartAt E x₀ (γ s)) t) :
     MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t := by
   have hs : MDifferentiableAt 𝓘(ℝ, E) 𝓘(ℝ, E) (chartAt E x₀).symm (chartAt E x₀ (γ t)) :=
-    mdifferentiableAt_atlas_symm (chart_mem_atlas E x₀) ((chartAt E x₀).map_source (hγ t))
-  refine (hs.comp t hw.mdifferentiableAt).congr_of_eventuallyEq
-    (Eventually.of_forall fun s => ?_)
-  exact ((chartAt E x₀).left_inv (hγ s)).symm
+    mdifferentiableAt_atlas_symm (chart_mem_atlas E x₀)
+      ((chartAt E x₀).map_source hγ.self_of_nhds)
+  exact (hs.comp t hw.mdifferentiableAt).congr_of_eventuallyEq
+    (hγ.mono fun s hs => ((chartAt E x₀).left_inv hs).symm)
 
 /-- The derivative of the inverse chart is the inverse tangent trivialisation. -/
 theorem mfderiv_extChartAt_symm_eq (x₀ : M) {w : E}
@@ -584,6 +587,32 @@ theorem isGeodesic_of_isMIntegralCurve
   rw [this]
   exact h t
 
+/-- **A geodesic of `cov` on a set of times `I`**: at every `t ∈ I` the velocity lift is
+differentiable in `TM` and `D_t γ' = 0`. -/
+def IsGeodesicOn (cov : CovariantDerivative 𝓘(ℝ, E) E (TangentSpace 𝓘(ℝ, E) : M → Type _))
+    (γ : ℝ → M) (I : Set ℝ) : Prop :=
+  ∀ t ∈ I, MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, E).tangent
+      (fun s => TotalSpace.mk' E (γ s) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ))) t ∧
+    covAlong cov γ (fun s => mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)) t = 0
+
+/-- A geodesic on all of `ℝ` is an `IsGeodesic`. -/
+theorem isGeodesicOn_univ
+    (cov : CovariantDerivative 𝓘(ℝ, E) E (TangentSpace 𝓘(ℝ, E) : M → Type _)) (γ : ℝ → M) :
+    IsGeodesicOn cov γ Set.univ ↔ IsGeodesic cov γ := by
+  simp [IsGeodesicOn, IsGeodesic]
+
+/-- A geodesic on `I` is a geodesic on every subset. -/
+theorem IsGeodesicOn.mono
+    {cov : CovariantDerivative 𝓘(ℝ, E) E (TangentSpace 𝓘(ℝ, E) : M → Type _)} {γ : ℝ → M}
+    {I J : Set ℝ} (h : IsGeodesicOn cov γ I) (hJ : J ⊆ I) : IsGeodesicOn cov γ J :=
+  fun t ht => h t (hJ ht)
+
+/-- A geodesic is a geodesic on every set of times. -/
+theorem IsGeodesic.isGeodesicOn
+    {cov : CovariantDerivative 𝓘(ℝ, E) E (TangentSpace 𝓘(ℝ, E) : M → Type _)} {γ : ℝ → M}
+    (h : IsGeodesic cov γ) (I : Set ℝ) : IsGeodesicOn cov γ I :=
+  fun t _ => h t
+
 /-- **The Christoffel tensor in the coordinates of the chart at `x₀`**:
 `Γ_w(v, u) = e(Γ(e⁻¹ v, e⁻¹ u))` at the point with coordinate `w`, `e` the tangent trivialisation
 of the chart (`v` the field slot, `u` the direction). -/
@@ -611,6 +640,74 @@ def chartSpray (cov : CovariantDerivative 𝓘(ℝ, E) E (TangentSpace 𝓘(ℝ,
     (x₀ : M) (p : E × E) : E × E :=
   (p.2, -chartChristoffel cov x₀ p.1 p.2 p.2)
 
+/-- ★★★ **The geodesic equation in a chart, on an open set of times**: a curve that stays in the
+source of the chart at `x₀` for `t ∈ I` (`I` open) is a geodesic on `I` iff its chart coordinate
+`w` and some `v` solve `(w', v') = (v, -Γ_w(v, v))` at every `t ∈ I`. -/
+theorem isGeodesicOn_iff_chartSpray
+    (cov : CovariantDerivative 𝓘(ℝ, E) E (TangentSpace 𝓘(ℝ, E) : M → Type _))
+    (x₀ : M) {γ : ℝ → M} {I : Set ℝ} (hI : IsOpen I)
+    (hγ : ∀ t ∈ I, γ t ∈ (chartAt E x₀).source) :
+    IsGeodesicOn cov γ I ↔ ∃ v : ℝ → E, ∀ t ∈ I,
+      HasDerivAt (fun s => (chartAt E x₀ (γ s), v s))
+        (chartSpray cov x₀ (chartAt E x₀ (γ t), v t)) t := by
+  set e₀ := trivializationAt E (TangentSpace 𝓘(ℝ, E)) x₀ with he₀
+  have hsymm : ∀ t ∈ I, e₀.symmL ℝ (γ t)
+      ((e₀ ⟨γ t, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t (1 : ℝ)⟩).2)
+      = mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t (1 : ℝ) := fun t ht => by
+    rw [← Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ) _ (hγ t ht)]
+    exact e₀.symmL_continuousLinearMapAt (hγ t ht) _
+  constructor
+  · intro h
+    refine ⟨fun s => (e₀ ⟨γ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)⟩).2, fun t ht => ?_⟩
+    have hγd : MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t :=
+      ((mdifferentiableAt_totalSpace _ _).1 (h t ht).1).1
+    have hw := hasDerivAt_chartAt_comp x₀ (hγ t ht) hγd
+    have hv := (differentiableAt_trivializationAt_comp x₀ (hγ t ht) (h t ht).1).hasDerivAt
+    have hcov := (h t ht).2
+    rw [covAlong_eq_covAlongAt cov x₀ (hγ t ht) (h t ht).1, covAlongAt] at hcov
+    have key : deriv (fun s => (e₀ ⟨γ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)⟩).2) t
+        = -chartChristoffel cov x₀ (chartAt E x₀ (γ t))
+            ((e₀ ⟨γ t, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t (1 : ℝ)⟩).2)
+            ((e₀ ⟨γ t, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t (1 : ℝ)⟩).2) := by
+      rw [chartChristoffel_chartAt cov x₀ (hγ t ht), hsymm t ht]
+      have := congrArg (e₀.continuousLinearMapAt ℝ (γ t)) hcov
+      rw [map_add, e₀.continuousLinearMapAt_symmL (hγ t ht), map_zero] at this
+      exact eq_neg_of_add_eq_zero_left this
+    rw [key] at hv
+    exact hw.prodMk hv
+  · rintro ⟨v, hv⟩ t ht
+    have hfst : ∀ s ∈ I, HasDerivAt (fun r => chartAt E x₀ (γ r)) (v s) s := fun s hs => by
+      simpa [chartSpray, Function.comp_def] using
+        (ContinuousLinearMap.fst ℝ E E).hasFDerivAt.comp_hasDerivAt s (hv s hs)
+    have hsnd : ∀ s ∈ I,
+        HasDerivAt v (-chartChristoffel cov x₀ (chartAt E x₀ (γ s)) (v s) (v s)) s :=
+      fun s hs => by
+        simpa [chartSpray, Function.comp_def] using
+          (ContinuousLinearMap.snd ℝ E E).hasFDerivAt.comp_hasDerivAt s (hv s hs)
+    have hγd : ∀ s ∈ I, MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s := fun s hs =>
+      mdifferentiableAt_of_chartAt_comp x₀
+        (Filter.mem_of_superset (hI.mem_nhds hs) fun r hr => hγ r hr)
+        (hfst s hs).differentiableAt
+    have hvel : ∀ s ∈ I, (e₀ ⟨γ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)⟩).2 = v s := fun s hs =>
+      (hasDerivAt_chartAt_comp x₀ (hγ s hs) (hγd s hs)).unique (hfst s hs)
+    have hvelev : (fun s => (e₀ ⟨γ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)⟩).2) =ᶠ[𝓝 t] v :=
+      Filter.mem_of_superset (hI.mem_nhds ht) fun r hr => hvel r hr
+    have hmem : TotalSpace.mk' E (γ t) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t (1 : ℝ)) ∈ e₀.source :=
+      e₀.mem_source.2 (hγ t ht)
+    have hlift : MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, E).tangent
+        (fun s => TotalSpace.mk' E (γ s) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ))) t := by
+      refine (e₀.mdifferentiableAt_totalSpace_iff (IB := 𝓘(ℝ, E))
+        (fun s => TotalSpace.mk' E (γ s) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)))
+        (x₀ := t) hmem).2 ⟨hγd t ht, ?_⟩
+      show MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, E)
+        (fun s => (e₀ ⟨γ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)⟩).2) t
+      exact (hsnd t ht).differentiableAt.mdifferentiableAt.congr_of_eventuallyEq hvelev
+    refine ⟨hlift, ?_⟩
+    rw [covAlong_eq_covAlongAt cov x₀ (hγ t ht) hlift, covAlongAt, hvelev.deriv_eq,
+      (hsnd t ht).deriv, chartChristoffel_chartAt cov x₀ (hγ t ht), ← hvel t ht, hsymm t ht,
+      map_neg, e₀.symmL_continuousLinearMapAt (hγ t ht)]
+    exact neg_add_cancel _
+
 /-- ★★★ **The geodesic equation in a chart**: a curve that stays in the source of the chart at
 `x₀` is a geodesic iff its chart coordinate `w` and some `v` solve the first-order system
 `(w', v') = (v, -Γ_w(v, v))`. -/
@@ -620,57 +717,7 @@ theorem isGeodesic_iff_chartSpray
     IsGeodesic cov γ ↔ ∃ v : ℝ → E, ∀ t,
       HasDerivAt (fun s => (chartAt E x₀ (γ s), v s))
         (chartSpray cov x₀ (chartAt E x₀ (γ t), v t)) t := by
-  set e₀ := trivializationAt E (TangentSpace 𝓘(ℝ, E)) x₀ with he₀
-  have hsymm : ∀ t, e₀.symmL ℝ (γ t) ((e₀ ⟨γ t, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t (1 : ℝ)⟩).2)
-      = mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t (1 : ℝ) := fun t => by
-    rw [← Trivialization.continuousLinearMapAt_apply_of_mem (R := ℝ) _ (hγ t)]
-    exact e₀.symmL_continuousLinearMapAt (hγ t) _
-  constructor
-  · intro h
-    have hγd : ∀ t, MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t := fun t =>
-      ((mdifferentiableAt_totalSpace _ _).1 (h t).1).1
-    refine ⟨fun s => (e₀ ⟨γ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)⟩).2, fun t => ?_⟩
-    have hw := hasDerivAt_chartAt_comp x₀ (hγ t) (hγd t)
-    have hv := (differentiableAt_trivializationAt_comp x₀ (hγ t) (h t).1).hasDerivAt
-    have hcov := (h t).2
-    rw [covAlong_eq_covAlongAt cov x₀ (hγ t) (h t).1, covAlongAt] at hcov
-    have key : deriv (fun s => (e₀ ⟨γ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)⟩).2) t
-        = -chartChristoffel cov x₀ (chartAt E x₀ (γ t))
-            ((e₀ ⟨γ t, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t (1 : ℝ)⟩).2)
-            ((e₀ ⟨γ t, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t (1 : ℝ)⟩).2) := by
-      rw [chartChristoffel_chartAt cov x₀ (hγ t), hsymm t]
-      have := congrArg (e₀.continuousLinearMapAt ℝ (γ t)) hcov
-      rw [map_add, e₀.continuousLinearMapAt_symmL (hγ t), map_zero] at this
-      exact eq_neg_of_add_eq_zero_left this
-    rw [key] at hv
-    exact hw.prodMk hv
-  · rintro ⟨v, hv⟩ t
-    have hfst : ∀ s, HasDerivAt (fun r => chartAt E x₀ (γ r)) (v s) s := fun s => by
-      simpa [chartSpray, Function.comp_def] using
-        (ContinuousLinearMap.fst ℝ E E).hasFDerivAt.comp_hasDerivAt s (hv s)
-    have hsnd : ∀ s, HasDerivAt v (-chartChristoffel cov x₀ (chartAt E x₀ (γ s)) (v s) (v s)) s :=
-      fun s => by
-        simpa [chartSpray, Function.comp_def] using
-          (ContinuousLinearMap.snd ℝ E E).hasFDerivAt.comp_hasDerivAt s (hv s)
-    have hγd : ∀ s, MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s := fun s =>
-      mdifferentiableAt_of_chartAt_comp x₀ hγ (hfst s).differentiableAt
-    have hvel : (fun s => (e₀ ⟨γ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)⟩).2) = v := funext fun s =>
-      (hasDerivAt_chartAt_comp x₀ (hγ s) (hγd s)).unique (hfst s)
-    have hmem : TotalSpace.mk' E (γ t) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ t (1 : ℝ)) ∈ e₀.source :=
-      e₀.mem_source.2 (hγ t)
-    have hlift : MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, E).tangent
-        (fun s => TotalSpace.mk' E (γ s) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ))) t := by
-      refine (e₀.mdifferentiableAt_totalSpace_iff (IB := 𝓘(ℝ, E))
-        (fun s => TotalSpace.mk' E (γ s) (mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)))
-        (x₀ := t) hmem).2 ⟨hγd t, ?_⟩
-      show MDifferentiableAt 𝓘(ℝ, ℝ) 𝓘(ℝ, E)
-        (fun s => (e₀ ⟨γ s, mfderiv 𝓘(ℝ, ℝ) 𝓘(ℝ, E) γ s (1 : ℝ)⟩).2) t
-      rw [hvel]
-      exact (hsnd t).differentiableAt.mdifferentiableAt
-    refine ⟨hlift, ?_⟩
-    rw [covAlong_eq_covAlongAt cov x₀ (hγ t) hlift, covAlongAt, hvel, (hsnd t).deriv,
-      chartChristoffel_chartAt cov x₀ (hγ t), ← congrFun hvel t, hsymm t, map_neg,
-      e₀.symmL_continuousLinearMapAt (hγ t)]
-    exact neg_add_cancel _
+  rw [← isGeodesicOn_univ, isGeodesicOn_iff_chartSpray cov x₀ isOpen_univ fun t _ => hγ t]
+  simp only [Set.mem_univ, true_imp_iff]
 
 end CovariantDerivative

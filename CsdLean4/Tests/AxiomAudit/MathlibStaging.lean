@@ -16319,6 +16319,26 @@ the plane's additive-Haar instance that master's instance search no longer reach
 #guard_msgs (whitespace := lax) in
 #print axioms CovariantDerivative.isGeodesic_iff_chartSpray
 
+/-- info: 'CovariantDerivative.IsGeodesicOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.IsGeodesicOn
+
+/-- info: 'CovariantDerivative.isGeodesicOn_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.isGeodesicOn_univ
+
+/-- info: 'CovariantDerivative.IsGeodesicOn.mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.IsGeodesicOn.mono
+
+/-- info: 'CovariantDerivative.IsGeodesic.isGeodesicOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.IsGeodesic.isGeodesicOn
+
+/-- info: 'CovariantDerivative.isGeodesicOn_iff_chartSpray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CovariantDerivative.isGeodesicOn_iff_chartSpray
+
 /-- info: 'Projectivization.isGeodesic_schrodingerUnitary_smul_of_isMaxOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.isGeodesic_schrodingerUnitary_smul_of_isMaxOn
@@ -16542,6 +16562,26 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Projectivization.isGeodesic_iff_fsGeodesicSpray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Projectivization.isGeodesic_iff_fsGeodesicSpray
+
+/-- info: 'Projectivization.chartAt_target_eq_univ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartAt_target_eq_univ
+
+/-- info: 'Projectivization.chartSpray_leviCivita' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.chartSpray_leviCivita
+
+/-- info: 'Projectivization.isGeodesicOn_iff_fsGeodesicSpray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.isGeodesicOn_iff_fsGeodesicSpray
+
+/-- info: 'Projectivization.exists_isGeodesicOn_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.exists_isGeodesicOn_fs
+
+/-- info: 'Projectivization.eventuallyEq_of_isGeodesicOn_fs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Projectivization.eventuallyEq_of_isGeodesicOn_fs
 -- ProjectiveSpaceMorse (BACKLOG #337, geometric QM completion item 6, 2026-11-08): Hessian of <A> along projective lines at an eigenline; index 2 #{mu_j < lambda}.
 
 /-- info: 'Projectivization.toEuclideanLin_eigenvectorBasis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
