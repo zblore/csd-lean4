@@ -80,6 +80,9 @@ measure, with the carrier's index doubled by a two-level internal mass. The carr
 with `X = levelSwap` the exchange of the two levels at every site. Its Hamiltonian flow is
 `clockPointerFlow` (`clockPointerFlow_apply`). This is not `Σ_*`. The pointer of `Σ_*` is coupled
 to a site projector and this one to the level swap, and no arena yet carries both.
+Since ~~#358~~ the clock extension has a readout (`tickReady`, `tickDisplay`, `tickShown`), and each
+tick of its pointer is an occurrence of `clockPointerFlow` (`clockTickRecord`). It has no register
+for the count of ticks.
 
 ---
 
@@ -148,6 +151,9 @@ what would discharge or constrain it.
      M2) the readout region and threshold. They are the measurement context `M`. Since BACKLOG
      ~~#352~~ the regions are `diracReady` (pointer angle in `(0, 1/6]`) and `diracDisplayed`
      (pointer angle in `(1/3, 5/6]`), and the readout time `T` is a parameter of the same kind.
+     Since BACKLOG ~~#358~~ the clock extension has the same two arcs (`tickReady`, `tickDisplay`).
+     The pointer's start in the ready arc and the device's prepared phase, a quarter turn before the
+     pointer's rest, are parameters of the same kind.
   3. *The law of the conserved angle.* The distribution of `θ₂` over trials.
   4. *Measurement independence* (Posit 8): the choice of `M` is not correlated with the ontic point.
      Settings are not represented in `Σ`, and nothing backs this entry.
@@ -164,6 +170,8 @@ what would discharge or constrain it.
   UD-55 to UD-57 use the uniform law for `θ₁` throughout, as UD-48 does.
   UD-58 to UD-60 use no fibre law. They hold at each point, and the measure enters only as
   invariance under the flow.
+  UD-61 to UD-64 use no fibre law. UD-65 uses `kMuL` as a finite measure the flow preserves, and
+  states no probability of a tick.
 * **Discharge.** Posit 5's line (the same `H_int` family as Posit 1). For item 3, a dynamics that
   moves `θ₂`, which the `coupledEnergy` form excludes.
 
@@ -207,6 +215,12 @@ what would discharge or constrain it.
   time is a function of clock records only (UO-14).
 * **Since BACKLOG ~~#357~~.** Every time in UD-58 to UD-60 is this parameter. The turning points
   and the period of the clock's pointer are flow times. No theorem recovers a time from records.
+* **Since BACKLOG ~~#358~~.** `clockOpTime` is a function of the number of tick records and of the
+  two rest energies, and the count is unchanged by an increasing relabelling of `t`
+  (`isTickCount_comp_orderIso`). That is the sense in which UD-61 to UD-64 recover a time from
+  records. The parameter still does three things there: it locates each tick record (start, write
+  interval, window), it gives the horizon the count is taken at, and it is the quantity operational
+  time is compared with.
 
 ### UA-8 — the microscopic propagation law
 
@@ -261,8 +275,13 @@ what would discharge or constrain it.
   rectified, so the pointer swings and returns. It gives no count, no threshold event and no record.
   A pointer coupled to the identity instead advances uniformly in `t` (`idxPointerShift_one`). That
   pointer reads UA-7 and no clock, and it is the case to exclude.
+* **Since BACKLOG ~~#358~~.** Read through two arcs, the swing gives a threshold event and a record
+  once a turn, with this coupling unchanged (UD-62, UD-64). The count is the number of those
+  records. No degree of freedom holds it (UD-65).
 * **Discharge.** None for the choice (a boundary). Owed under UO-14: a coupling whose record counts
   turns, and a readout at a site.
+  Since ~~#358~~ the tick records of UD-64 count turns with the coupling as it is. What is owed is a
+  register for the count, and a readout at a site.
 
 ---
 
@@ -416,13 +435,20 @@ to UA-5 and UA-8, and UA-6 as a named hypothesis.
 ### 4.1b On the clock extension of `Σ_*`
 
 UD-58 to UD-60 are in `RecordLayer/UnifiedDiracClock.lean` (BACKLOG ~~#357~~, M4 part A). The arena
-is `ℂℙ^{4M+3} × T²` of §2, with the coupling of UA-12. Every time is the flow parameter (UA-7).
+is `ℂℙ^{4M+3} × T²` of §2, with the coupling of UA-12. Every time in them is the flow parameter
+(UA-7). UD-61 to UD-65 are in `RecordLayer/UnifiedDiracClockTicks.lean` (BACKLOG ~~#358~~, M4
+part B), on the same arena with the same coupling.
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
 | UD-58 | **The clock in the joint energy.** The energy `−2⟨H_dev⟩ − 2 g f(θ₂)⟨X⟩` has a global Hamiltonian flow in closed form: `θ₂` is constant, the device is moved by `exp(−it(H_dev + g f(θ₂) X))`, and `θ₁` advances at the rate `−2 g f'(θ₂)⟨X⟩`. The flow preserves the arena volume and `kMuL`. The construction is generic: any Hermitian pair, any index equivalence. `⟨X⟩` at a ray is twice the real part of the coherence between the levels, over the norm squared | `idxCoupledH`, `idxCoupledH_isHermitian`, `coupledMatrix_reindex`, `idxCoupledGen_skew`, `idxFreeGen_skew`, `idxCarrierU`, `idxFreeU`, `idxCarrierU_val`, `idxFreeU_val`, `hasDerivAt_idxCarrierU`, `continuous_idxCarrierU`, `continuous_idxFreeU`, `idxCarrierU_of_lift_eq_zero`, `idxUnitary_idxCarrierU`, `idxArenaEquiv_kick`, `schrodingerHamiltonian_reindex`, `coupledEnergy_reindex`, `idxPointerShift`, `idxPointerShift_zero`, `coupledAccum_reindex`, `idxPointerShift_eq`, `hasDerivAt_idxPointerShift`, `hamiltonianFlow_coupledEnergy_reindex`, `idxPointerShift_of_lift_eq_zero`, `levelSwap`, `levelSwap_isHermitian`, `levelSwap_mulVec_zero`, `levelSwap_mulVec_one`, `levelSwap_mul_self`, `norm_levelSwap_le`, `arenaObs_levelSwap_mk`, `arenaObs_levelSwap_kick_mk`, `deviceHam_isHermitian`, `clockIdx`, `clockArenaEquiv`, `clockB`, `clockB_isHermitian`, `norm_clockB_le`, `clockPointerEnergy`, `contMDiff_clockPointerEnergy`, `clockPointerEnergy_eq`, `idxCoupledH_clock`, `clockCarrierU`, `clockCarrierU_val`, `hasDerivAt_clockCarrierU`, `clockRead`, `continuous_clockRead`, `arenaObs_clockB`, `clockPointerShift`, `clockPointerShift_zero`, `idxPointerShift_clock`, `hasDerivAt_clockPointerShift`, `clockPointerFlow`, `clockPointerFlow_zero`, `clockPointerFlow_add`, `clockPointerFlow_apply`, `clockPointerFlow_snd_snd`, `arenaVolume_map_clockPointerFlow`, `kMuL_map_clockPointerFlow` | exact |
 | UD-59 | **The pointer against the uncoupled device.** Along the uncoupled orbit the pointer's rate is `−4 g f'(θ₂) Re C / ‖Ψ‖²` with `C` the device's coherence. Under the coupling the reading is within `2 \|s\| \|g f(θ₂)\|` of the uncoupled one, and the displacement within `2 \|f'(θ₂)\| g² \|f(θ₂)\| t²` of the integral of the uncoupled reading; on a fibre with `f(θ₂) = 0` they agree. Controls: with `g = 0` the pointer does not move; a pointer coupled to the identity advances at `−2 f'(θ₂)` whatever the carrier does | `arenaObs_one`, `idxPointerShift_one`, `clockPointerShift_zero_coupling`, `norm_idxCarrierU_sub_le`, `abs_arenaObs_idxCarrierU_sub_le`, `abs_integral_arenaObs_idxCarrierU_sub_le`, `abs_idxPointerShift_sub_le`, `deviceRay`, `norm_sq_toLp_device`, `deviceNorm_re_pos`, `idxFreeU_deviceHam_val`, `clockFreeRead`, `continuous_clockFreeRead`, `clockFreeRead_deviceRay`, `clockRead_of_lift_eq_zero`, `abs_clockRead_sub_free_le`, `abs_clockPointerShift_sub_free_le` | exact identification; upper bounds |
 | UD-60 | **The clock law for the pointer.** If the device's coherence is within `\|s\| ε` of `e^{−iRs} C₀`, the displacement is within `2 \|f'(θ₂)\| (g² \|f(θ₂)\| + \|g\| ε / ‖Ψ₀‖²) t²` of `−4 g f'(θ₂) clockHand R C₀ t / ‖Ψ₀‖²`. The hand is periodic and bounded. For one mode `ε = 0`, and on a fibre with `f(θ₂) = 0` the law is exact, the pointer turns where the coherence has turned to an odd multiple of `π/2`, and it returns after `2π/R`. For the packet of `dirac_device`, `ε = c D` and `R/(μ₁ − μ₀)` is within `(μ₁ − μ₀)/E₀` of `√(1 − (v/c)²)` | `clockQuad`, `re_exp_mul_eq_clockQuad`, `clockQuad_eq_norm_mul_cos`, `continuous_clockQuad`, `abs_clockQuad_le`, `clockQuad_eq_zero_iff`, `clockHand`, `clockHand_zero`, `hasDerivAt_clockHand`, `integral_clockQuad`, `clockHand_add_period`, `abs_clockHand_le`, `abs_integral_clockFreeRead_sub_le`, `ne_zero_of_deviceNorm_eq_one`, `clockFreeRead_single`, `abs_clockPointerShift_sub_hand_le`, `clockRead_single_eq_zero_iff`, `clockPointerShift_single_eq_hand`, `clockPointerShift_single_add_period`, `clock_pointer_device` | exact for one mode at `f(θ₂) = 0`; upper bounds otherwise; the dilation clause is UD-14's |
+| UD-61 | **Ticks, the count, a swing, and operational time.** A tick is a passage of a readout history from a resting set to a displaying set. `HasTicks` says there are `n` successive passages by `T`, and `IsTickCount` that `n` is the largest such number. The count is unchanged by an increasing relabelling of the parameter that carries the terminal event along. For a swing (a history resting at whole turns of a phase `R t` and displaying around the half turns) the count satisfies `\|2πN − R T\| ≤ 2π`, each tick is a record write, and each record is erased by the next whole turn. `clockOpTime` is `2πN/(μ₁ − μ₀)`. For a swing at the level splitting it is within `2π/(μ₁ − μ₀) + ((μ₁ − μ₀)/E₀) T` of `√(1 − (v/c)²) T` | `HasTicks`, `hasTicks_zero`, `HasTicks.mono_count`, `HasTicks.mono_time`, `hasTicks_comp_orderIso`, `IsTickCount`, `IsTickCount.unique`, `isTickCount_comp_orderIso`, `cos_le_max_cos`, `IsSwing`, `IsSwing.hasTicks`, `IsSwing.sub_one_mul_le`, `IsSwing.abs_tickCount_sub_le`, `IsSwing.exists_tickCount`, `IsSwing.notMem_disp_of_mem_rest`, `IsSwing.isRecordWrite`, `IsSwing.notMem_disp_of_cos_eq_one`, `clockOpTime`, `IsSwing.abs_clockOpTime_sub_le`, `IsSwing.abs_clockOpTime_sub_dilated_le`, `IsSwing.mem_rest_turn` | exact combinatorics; upper bounds for the count and the time; **holds for any history, the flow is not used (§6, test 3)** |
+| UD-62 | **The tick law for the joint flow.** The readout is `tickReady`, `tickDisplay` (the two arcs of UA-4 on the clock extension) and `tickShown`, functions of `θ₁` alone. The pointer of `clockPointerFlow` is within `clockSwingErr` of `A (1 − cos R t)`, with `A = clockSwingAmp`. If the start is inside the ready arc by more than the error, and the swing reaches the displayed arc and stays in it (four inequalities), the readout history is a swing at the rate `R`. For one mode prepared a quarter turn early, on a fibre with `f(θ₂) = 0`, there is no error term and the history is a swing for every horizon. Instance: `trainF`, `θ₂ = 0`, half amplitude `1/4`, start `1/12`, displaying exactly while `cos R t < 0` | `tickReady`, `measurableSet_tickReady`, `tickDisplay`, `measurableSet_tickDisplay`, `tickShown`, `measurable_tickShown`, `tickShown_eq_true_iff`, `pshift_mem_readyArc_iff`, `pshift_mem_displayArc_iff`, `isSwing_of_abs_shift_sub_le`, `clockPointerFlow_snd`, `clockSwingAmp`, `clockSwingErr`, `clockSwingErr_nonneg`, `abs_clockPointerShift_sub_swing_le`, `isSwing_clockPointerFlow`, `deviceNorm_devicePacket`, `devicePacket_single_ne_zero`, `deviceCoherence_devicePacket_zero_im`, `le_deviceCoherence_devicePacket_zero_re`, `deviceCoherence_single_im`, `deviceCoherence_single_re_pos`, `exp_I_neg_mul_quarter`, `deviceCoherence_single_quarter`, `isSwing_clockPointerFlow_single`, `isSwing_clockPointerFlow_train` | exact for one mode at `f(θ₂) = 0`, a null set of fibres; elsewhere a sufficient condition whose error grows as `T²`, with no instance |
+| UD-63 | **Operational time for a localised device.** The packet of `dirac_device` (momenta within `D` of `p₀`, normalised amplitudes), prepared a quarter turn early. Its coherence from any start is within `\|s\| ε` of a uniform turn at the central rate `R`, with `ε = deviceDrift`. The prepared coherence has `\|Re C₀\| ≤ (π/(2R)) ε` and `Im C₀ ≥ (1 − ((μ₁ − μ₀)/μ₀)²)/2 − (π/(2R)) ε`. Under the four inequalities of UD-62 the history is a swing, and its count `N` at `T` gives `\|2πN/(μ₁ − μ₀) − √(1 − (v/c)²) T\| ≤ 2π/(μ₁ − μ₀) + ((μ₁ − μ₀)/E₀) T` | `norm_deviceCoherence_shift_sub_le`, `clock_tick_device` | upper bounds; the four inequalities are hypotheses, and no packet with `D > 0` is shown to meet them |
+| UD-64 | **Each tick an occurrence of the joint flow.** For a swing history of `clockPointerFlow`, tick `k` is an `ActualOccurrence` on the clock extension. Its `evolve` is the flow over the elapsed time, its readout is `tickShown`, its preparation is the flow's own state at the whole turn `2πk/R`, and its write is UD-61's. The readout history of every tick record is `tickShown` along the one orbit | `continuous_clockPointerFlow`, `measurable_clockPointerFlow`, `clockPointerEvolve`, `clockPointerEvolve_self`, `clockPointerEvolve_comp`, `measurable_clockPointerEvolve`, `clockTickRecord`, `clockTickRecord_history` | exact, given the swing; every field but the write and the ready preparation is a definition; start, write interval and window are flow times |
+| UD-65 | **No real function of the state holds the count.** For a map preserving a finite measure, a measurable real function that does not fall along the map almost everywhere does not rise almost everywhere. So none gains at least one almost everywhere. Instance: `clockPointerFlow` at any step, with the measure `kMuL` | `ae_comp_eq_of_ae_le_comp`, `not_ae_add_one_le_comp`, `not_ae_count_advances_clockPointerFlow` | exact; **holds for every map preserving a finite measure, the Hamiltonian is not used (§6, test 4); conditional on UA-2; passes no gate** |
 
 Exact scope of UD-58 to UD-60. The pointer's motion is a component of the Hamiltonian flow of
 one energy, and nothing else moves it. That is the part of M4's acceptance these entries meet.
@@ -438,6 +464,25 @@ period and not as its size. The dilation clause is that of the uncoupled device 
 reused. The readout acts at every site and is not a detector at a place. The detector-resolution
 error M4 names is not a term, because there is no readout of the pointer. UD-58 to UD-60 use
 UA-1, UA-4, UA-7, UA-8 and UA-12; UA-2 enters only as invariance, and UA-6 not at all.
+
+Exact scope of UD-61 to UD-65. They add no dynamics to UD-58: the pointer, the flow and the coupling
+are those of part A, and the readout is two arcs of the pointer circle. What they give. Each tick is
+a record of the joint flow, an `ActualOccurrence` in the sense of UD-41. The count of ticks is a
+fact about the order of events in the readout history and uses no value of `t`. Operational time is
+the count times the rest period `2π/(μ₁ − μ₀)`, one unit for each full turn. Against the dilated
+flow time it is off by at most one unit, the detector's resolution, plus the finite-splitting term.
+The localisation term M4 names enters the hypotheses under which the history is a swing, through
+`clockSwingErr` and the phase of the prepared coherence, and not the final inequality. What they do
+not give. The swing is proved outright only for one mode on the fibres with `f(θ₂) = 0`, a null set
+for a generic profile. Elsewhere it is four inequalities whose error grows as `T²`, with no
+instance. The horizon `T`, and each record's start, write interval and window, are flow times
+(UA-7), and nothing in the model selects the event at which the count is taken. The count is not
+held by a degree of freedom: each record is erased within its turn, and by UD-65 no real function of
+the state gains one a step. UD-65 does not exclude a register that holds the count modulo a fixed
+number, and none is built. The readout acts at every site. No arena carries this pointer and the
+site pointer of `Σ_*`, so no theorem has a tick record and a position record in one run. UD-61 to
+UD-64 use UA-1, UA-4, UA-7, UA-8 and UA-12. UD-65 uses UA-2 and the flow's invariance (UD-58). UA-6
+is not used.
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -483,7 +528,8 @@ Proposed module names are the programme's. `DiracPointerWrite.lean` exists since
 `DiracPointerBorn.lean` exists since ~~#354~~ (M3 part A). M3 part B is in
 `DiracPointerClick.lean` (~~#355~~), a module the programme did not name, and M3 part C in
 `DiracPointerBasin.lean` (~~#356~~), another. `UnifiedDiracClock.lean` exists since ~~#357~~
-(M4 part A). The others do not exist.
+(M4 part A). M4 part B is in `UnifiedDiracClockTicks.lean` (~~#358~~), a module the programme did
+not name. The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
 
@@ -718,6 +764,26 @@ time. It is not a statement about every dynamics on `Σ`.
   count); operational time from records alone (every time in UD-58 to UD-60 is `t`, and by the
   test above a turning point read off at a flow time is access to UA-7); the detector-resolution
   error; a clock reading and a position record in one run.
+  ▸ **Part B, 2026-11-10 (BACKLOG ~~#358~~) → UD-61 to UD-65. Met, with five conditions that stay
+  here.** The reading is a record: each tick of the pointer is an `ActualOccurrence` whose `evolve`
+  field is `clockPointerFlow` (`clockTickRecord`), and every tick record of a run reads the one
+  history (`clockTickRecord_history`). Operational time is a function of clock records:
+  `clockOpTime` is the number of tick records times the rest period, the count holds no value of `t`
+  (`isTickCount_comp_orderIso`), and for the device of `dirac_device` it is within
+  `2π/(μ₁ − μ₀) + ((μ₁ − μ₀)/E₀) T` of `√(1 − (v/c)²) T` (`clock_tick_device`). The
+  detector-resolution error is the first term, one tick. By the test above: a tick is a threshold
+  passage of the readout history and not a reading scheduled at a flow time, no window is read as
+  the clock's own, and in the inequality `T` is the quantity the count is compared with. The
+  horizon at which the count is taken is still a flow time, which is condition (c).
+  *Still owed under this identifier:* (a) the swing beyond one mode on a fibre with
+  `f(θ₂) = 0`: an instance of the four inequalities of UD-62 for a packet of positive width or a
+  fibre with `f(θ₂) ≠ 0`, up to a stated horizon; (b) a holder of the count: it is a function of the
+  record history, no real function of the state holds it (UD-65), and a register for the count
+  modulo a fixed number is not built; (c) the event at which the count is taken is given by a flow
+  time, and M6 needs it given by a record (an emission, a reception); (d) a tick record and a
+  position record in one run, which needs both pointers on one arena. Until then M4's acceptance,
+  clock readings and measurement records from the same dynamics, is met for the clock alone; (e) a
+  readout at a site.
 
 ### M5 — causal order from interventions (`UnifiedCausalOrder.lean`)
 
@@ -836,6 +902,7 @@ Posit 1 and may not be reported as dynamical:
 | the pointer starts ready | UA-4 | a reset dynamics is on the arena |
 | observers recover Lorentz kinematics | UA-8, UA-11 | messenger speed and clock rate are derived from records of the flow, with their errors (and then it is still §1's first distinction) |
 | a record is written | UO-4's test | its `evolve` is `diracPointerFlow` |
+| a clock reads the elapsed time | UA-7 (a time stated in `t` and read as the clock's own) | the time is a function of tick records of the flow, and the rate they follow is derived with its errors (UD-61 to UD-63) |
 | the causal order is the coupling graph | UA-5 | influence is demonstrated by a response |
 | the result holds on "the Dirac chain" | §1's second distinction | it is on `Σ_*`, or an identification theorem is cited |
 
@@ -882,7 +949,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

@@ -54,6 +54,12 @@ A two-level clock is in the joint energy of an extension of that arena, and the 
 it follows the clock's hand at the dilated rate within stated errors (BACKLOG ~~#357~~,
 `RecordLayer/UnifiedDiracClock.lean`, `clock_pointer_device`). Those statements are in the flow
 parameter. A time recovered from clock records is not derived there.
+Read through a threshold, each swing of that pointer is a tick record of the same flow. The count of
+ticks uses no value of the flow parameter, and the count times the rest period is within one tick
+plus the finite-splitting term of the dilated flow time (BACKLOG ~~#358~~,
+`RecordLayer/UnifiedDiracClockTicks.lean`, `clock_tick_device`). The swing is proved outright for
+one mode on a null set of fibres and is a hypothesis elsewhere. No degree of freedom holds the count
+(`not_ae_count_advances_clockPointerFlow`). No arena has this clock and a position detector.
 
 ## What is open
 
