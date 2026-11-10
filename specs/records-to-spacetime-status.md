@@ -47,6 +47,9 @@ assumed, derived and owed, is [`unified-record-spacetime-plan.md`](unified-recor
 Its gate A is answered (BACKLOG ~~#355~~): on that arena the click probability of the pointer is
 fixed by the flow and is not the expectation of an operator (`RecordLayer/DiracPointerClick.lean`,
 `diracPointer_clickLaw`). The entry *QM's weights are input* above stands.
+Given that input, the basin statistic along the coupled flow is within a stated back-reaction term
+of QM's weight (BACKLOG ~~#356~~, `RecordLayer/DiracPointerBasin.lean`,
+`abs_diracBasinProb_sub_zero_coupling_le`).
 
 ## What is open
 

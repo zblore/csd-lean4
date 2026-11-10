@@ -17050,4 +17050,78 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.diracPointer_clickLaw
 
+/-! #356 (programme milestone M3, part C): the conditional error bound on `Σ_*` — for a torus-generated rate field (UA-6, a named hypothesis) the probability of the basin of a basis state at time `t` along the coupled flow is the `θ₂`-average of the weight of that state at the coupled carrier (exact), it is the free weight with the coupling off (exact), and for a profile bounded by `F` it is within `2 |t| |g| F` of the free weight and within `2 |t| (‖H_D‖ + |g| F)` of the weight in the carrier as prepared (upper bounds); the check for the profile `trainF` at the coupling of the click law, `1/12` (`RecordLayer/DiracPointerBasin.lean`). -/
+
+/-- info: 'CSD.RecordLayer.norm_single_self_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_single_self_le
+
+/-- info: 'CSD.RecordLayer.momentMap_idxArenaEquiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.momentMap_idxArenaEquiv
+
+/-- info: 'CSD.RecordLayer.abs_toReal_lintegral_ofReal_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_toReal_lintegral_ofReal_sub_le
+
+/-- info: 'CSD.RecordLayer.diracWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracWeight
+
+/-- info: 'CSD.RecordLayer.diracWeight_eq_momentMap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracWeight_eq_momentMap
+
+/-- info: 'CSD.RecordLayer.diracWeight_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracWeight_nonneg
+
+/-- info: 'CSD.RecordLayer.diracWeight_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracWeight_zero
+
+/-- info: 'CSD.RecordLayer.diracWeight_zero_coupling_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracWeight_zero_coupling_congr
+
+/-- info: 'CSD.RecordLayer.diracWeight_zero_coupling_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracWeight_zero_coupling_mk
+
+/-- info: 'CSD.RecordLayer.abs_diracWeight_sub_zero_coupling_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_diracWeight_sub_zero_coupling_le
+
+/-- info: 'CSD.RecordLayer.abs_diracWeight_sub_init_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_diracWeight_sub_init_le
+
+/-- info: 'CSD.RecordLayer.diracBasinProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracBasinProb
+
+/-- info: 'CSD.RecordLayer.rate_diracArenaEquiv_of_isTorusGenerated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rate_diracArenaEquiv_of_isTorusGenerated
+
+/-- info: 'CSD.RecordLayer.diracBasinProb_eq_lintegral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracBasinProb_eq_lintegral
+
+/-- info: 'CSD.RecordLayer.diracBasinProb_zero_coupling' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracBasinProb_zero_coupling
+
+/-- info: 'CSD.RecordLayer.abs_diracBasinProb_sub_zero_coupling_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_diracBasinProb_sub_zero_coupling_le
+
+/-- info: 'CSD.RecordLayer.abs_diracBasinProb_sub_init_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_diracBasinProb_sub_init_le
+
+/-- info: 'CSD.RecordLayer.abs_diracBasinProb_trainF_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_diracBasinProb_trainF_sub_le
+
 end CSD.Tests.AxiomAudit

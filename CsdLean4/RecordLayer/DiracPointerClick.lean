@@ -99,7 +99,8 @@ probability is not the quantum one.
 * **What it means for the rate field.** The corpus obtains the quantum weights from the rate field
   of UA-6 (Posit 1), and `epistemicMeasure_diracPointerFlow_globalBasin` of part A carries that
   field along the coupled flow. Nothing here derives the field. The reconstruction of the quantum
-  statistics stays conditional on UA-6.
+  statistics stays conditional on UA-6. The size of the detector's effect on that conditional
+  statistic is bounded in `RecordLayer/DiracPointerBasin.lean` (#356).
 * **Every matrix.** `E` is not asked to be Hermitian or positive. So the comparison covers an
   effect, an effect times an efficiency, and an effect carried back along a linear evolution of
   the carrier, averaged over `θ₂` or not.

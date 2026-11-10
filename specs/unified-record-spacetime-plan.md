@@ -151,6 +151,7 @@ what would discharge or constrain it.
   UD-45 to UD-48 use the uniform law for `θ₁` throughout. UD-49 conditions that same law on the
   ready region at time `0`, as an event; it does not replace the law.
   UD-50 to UD-54 do as UD-49 does.
+  UD-55 to UD-57 use the uniform law for `θ₁` throughout, as UD-48 does.
 * **Discharge.** Posit 5's line (the same `H_int` family as Posit 1). For item 3, a dynamics that
   moves `θ₂`, which the `coupledEnergy` form excludes.
 
@@ -244,6 +245,7 @@ part B) and UD-40 to UD-44 in `RecordLayer/DiracPointerRecord.lean` (BACKLOG ~~#
 part C); they are marked exact or bound. UD-45 to UD-49 are in
 `RecordLayer/DiracPointerBorn.lean` (BACKLOG ~~#354~~, M3 part A).
 UD-50 to UD-54 are in `RecordLayer/DiracPointerClick.lean` (BACKLOG ~~#355~~, M3 part B).
+UD-55 to UD-57 are in `RecordLayer/DiracPointerBasin.lean` (BACKLOG ~~#356~~, M3 part C).
 
 | ID | Property | Lean |
 |---|---|---|
@@ -338,7 +340,8 @@ measure-preserving flow. UD-48 is conditional on UA-6: its dependence on the car
 field's own, and by §6 it does not pass a gate. UD-49 is the check that the restriction to one time
 is needed. It bounds the two-time probability below for the carrier on the detector's site and says
 nothing about a carrier with weight on both sites. No error bound of the form UO-8 asks for is
-proved. The map `diracPointerHeld` is a comparison map and not a dynamics of `Σ_*`.
+proved by UD-45 to UD-49; UD-57 is the conditional one.
+The map `diracPointerHeld` is a comparison map and not a dynamics of `Σ_*`.
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -357,6 +360,26 @@ back along a linear evolution of the carrier. UD-54 is one coupling and one read
 UD-52 are proved. The fibre law is uniform. UD-50 to UD-54 use UA-1 to UA-5 and UA-8, and not UA-6.
 They are about the coupling of UA-5, in which the pointer is driven by the expectation of `P_j`;
 they do not say that no dynamics on `Σ` gives the quantum weights.
+
+| ID | Property | Lean | Kind |
+|---|---|---|---|
+| UD-55 | **The weight of a basis state along the carrier's orbit.** `diracWeight` is the expectation of the basis projector at the ray moved by the coupled propagator on the fibre `θ₂`; it is the moment coordinate there. With the coupling off it is `\|(e^{−itH_D} ψ)_a\|² / ‖ψ‖²` on every fibre. With the coupling on it is within `2 \|t\| \|g f(θ₂)\|` of that, and within `2 \|t\| (‖H_D‖ + \|g f(θ₂)\|)` of the weight at time `0` | `norm_single_self_le`, `diracWeight`, `diracWeight_eq_momentMap`, `diracWeight_nonneg`, `diracWeight_zero`, `diracWeight_zero_coupling_congr`, `diracWeight_zero_coupling_mk`, `abs_diracWeight_sub_zero_coupling_le`, `abs_diracWeight_sub_init_le` | exact with the coupling off; upper bounds otherwise |
+| UD-56 | **The basin probability of a torus-generated field.** For a torus-generated rate field, the probability of the basin of the basis state `a` at time `t` is the `θ₂`-average of the weight of UD-55. With the coupling off it is the free weight | `momentMap_idxArenaEquiv`, `diracBasinProb`, `rate_diracArenaEquiv_of_isTorusGenerated`, `diracBasinProb_eq_lintegral`, `diracBasinProb_zero_coupling` | exact; **conditional on UA-6**, does not pass a gate (§6) |
+| UD-57 | **The conditional error bound.** For a profile with `\|f\| ≤ F` the basin probability of UD-56 is within `2 \|t\| \|g\| F` of the free weight at time `t`, and within `2 \|t\| (‖H_D‖ + \|g\| F)` of the weight in the carrier as prepared. For the profile `trainF` at `g = 1/(4T)` and time `T` the first is at most `1/12` | `abs_toReal_lintegral_ofReal_sub_le`, `abs_diracBasinProb_sub_zero_coupling_le`, `abs_diracBasinProb_sub_init_le`, `abs_diracBasinProb_trainF_sub_le` | upper bounds; **conditional on UA-6** |
+
+Exact scope of UD-55 to UD-57. The statements about the basin have `IsTorusGenerated` as a
+hypothesis, and that hypothesis is UA-6: it puts the quantum weights into the rate field. So
+these entries derive no weight, and gate A's answer stands. What they add is the size of the
+detector's effect on a statistic that already has the quantum form. The basin event is a region
+of the angle `θ₁` cut by the rate field at the carrier's ray at time `t`. The pointer's
+displacement does not enter it, it is not the click event of UD-50, and no relation between the
+two is proved. The terms of `ε_meas` present are the back-reaction on the carrier and, against
+the prepared state, the finite time. A transition region and a retention time are not terms,
+because the event is read at one time and is not a threshold on the pointer. The bounds are
+upper bounds, not shown to be attained, and they say something only where the right-hand side is
+below `1`. The outcome is a basis index (site and spin). The basin of a site is covered with
+twice the error and not with the same error. The fibre law is uniform. UD-55 to UD-57 use UA-1
+to UA-5 and UA-8, and UA-6 as a named hypothesis.
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -400,7 +423,8 @@ Proposed module names are the programme's. `DiracPointerWrite.lean` exists since
 ~~#351~~ (M2 part A); M2 part B is in `DiracPointerThreshold.lean` (~~#352~~) and M2 part C in
 `DiracPointerRecord.lean` (~~#353~~), two modules the programme did not name.
 `DiracPointerBorn.lean` exists since ~~#354~~ (M3 part A). M3 part B is in
-`DiracPointerClick.lean` (~~#355~~), a module the programme did not name. The others do not exist.
+`DiracPointerClick.lean` (~~#355~~), a module the programme did not name, and M3 part C in
+`DiracPointerBasin.lean` (~~#356~~), another. The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
 
@@ -514,8 +538,19 @@ detector law?
   coupling and the time of UD-54, for every matrix `E` some carrier has a click probability
   differing from the expectation of `E` by at least `P(siteRay j) / 20` (`diracPointer_clickLaw`).
   So for this event the bound holds against no operator with a smaller `ε_meas`, and there is no
-  upper bound to prove. *Still owed under this identifier:* the conditional bound, for the basin of
-  the moment-map field along the coupled flow, with UA-6 named (UD-48).
+  upper bound to prove.
+  ▸ **The conditional bound, met 2026-11-10 (BACKLOG ~~#356~~) → UD-55 to UD-57.** For a
+  torus-generated rate field (UA-6, a named hypothesis) and a profile with `|f| ≤ F`, the
+  probability of the basin of a basis state at time `t` along the coupled flow is within
+  `2 |t| |g| F` of the weight of that state at the free carrier
+  (`abs_diracBasinProb_sub_zero_coupling_le`), and within `2 |t| (‖H_D‖ + |g| F)` of its weight in
+  the carrier as prepared (`abs_diracBasinProb_sub_init_le`). The terms of `ε_meas` are the
+  back-reaction on the carrier and, in the second form, the finite time. A transition region and
+  a retention time are not terms: the basin event is read at one time and is not a threshold on
+  the pointer. With the coupling off the error is `0` (`diracBasinProb_zero_coupling`). By §6 this
+  does not pass a gate: the weights are in the rate field. *Not proved:* that either bound is
+  attained; a bound for a site with the same error; an upper bound for a region that passes
+  UO-7's test (for the click event there is none to prove).
 * **UO-9 — or the obstruction.** If the rate field cannot be derived: the precise missing condition,
   or a no-go theorem. Not a new hypothesis inside a definition.
   ▸ **Part met 2026-11-10 (BACKLOG ~~#354~~) → UD-45 to UD-47: a no-go theorem for statistics read
@@ -544,8 +579,13 @@ detector law?
   term of `ε_meas`.
   ▸ **Visible in one conditional statement, 2026-11-10 (BACKLOG ~~#354~~) → UD-48.** The basin
   probability at time `t` is the rate field at the coupled carrier, whose generator has the
-  detector's term, averaged over `θ₂`. The disturbance is not bounded there as a term of `ε_meas`;
-  that is still owed.
+  detector's term, averaged over `θ₂`. The disturbance is not bounded there as a term of `ε_meas`.
+  ▸ **Bounded, 2026-11-10 (BACKLOG ~~#356~~) → UD-55, UD-57.** On the fibre `θ₂` the detector's
+  term moves the weight of a basis state by at most `2 |t| |g f(θ₂)|`
+  (`abs_diracWeight_sub_zero_coupling_le`), and the basin probability of a torus-generated field
+  by at most `2 |t| |g| F`. At the coupling and the readout time of UD-54 that is at most `1/12`
+  (`abs_diracBasinProb_trainF_sub_le`). The bound is stated in the apparatus input (UA-4): the
+  profile's bound `F`, the coupling `g` and the time. Conditional on UA-6. An upper bound only.
 * **UO-13 — no-signalling and sequential update.** On a shared arena carrying two detectors. *Test:*
   citing UD-22 is citing the sector level.
 
@@ -599,7 +639,8 @@ rate field (UD-50). That probability is not the quantum one: it has a cut-off in
 it is at a stated distance from the expectation of every operator (UD-51, UD-53, UD-54). The corpus
 obtains the quantum weights only through the rate field of UA-6, and this dynamics does not supply
 that field. So the reconstruction of the quantum statistics is kept as a conditional one, on UA-6
-(UD-48 is its form on `Σ_*`), and the obstruction is the result of M3. Its scope is the coupling of
+(UD-48 is its form on `Σ_*`, and UD-57 its error bound since BACKLOG ~~#356~~), and the
+obstruction is the result of M3. Its scope is the coupling of
 UA-5 with one pointer, the two arcs, the uniform fibre law and, in the instance, a short readout
 time. It is not a statement about every dynamics on `Σ`.
 
@@ -774,7 +815,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);
