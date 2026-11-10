@@ -16936,4 +16936,118 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.exists_epistemicMeasure_ready_displayed_pos
 
+/-! #355 (programme milestone M3, part B): the click law of the pointer of `Σ_*` — the probability of *ready at `0` and displayed at `T`* under the preparation law is the `θ₂`-average of a fixed window of the pointer's displacement, with no rate field; it is `0` for every carrier whose occupancy of the detector's site is below a cut-off, it is below the probability `1/6` of a ready pointer for every carrier, and a function on rays with three such zeros is at a stated distance from the expectation of every matrix; the check for the profile `trainF` and the package `diracPointer_clickLaw`, the statement gate A of the programme asks for (`RecordLayer/DiracPointerClick.lean`). -/
+
+/-- info: 'CSD.RecordLayer.arenaObs_mk_eq_inner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_mk_eq_inner
+
+/-- info: 'CSD.RecordLayer.pairVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pairVec
+
+/-- info: 'CSD.RecordLayer.pairVec_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pairVec_ne_zero
+
+/-- info: 'CSD.RecordLayer.norm_pairVec_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_pairVec_sq
+
+/-- info: 'CSD.RecordLayer.pairRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pairRay
+
+/-- info: 'CSD.RecordLayer.arenaObs_pairRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_pairRay
+
+/-- info: 'CSD.RecordLayer.exists_mul_le_abs_sub_arenaObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_mul_le_abs_sub_arenaObs
+
+/-- info: 'CSD.RecordLayer.diracClick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracClick
+
+/-- info: 'CSD.RecordLayer.measurableSet_diracClick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_diracClick
+
+/-- info: 'CSD.RecordLayer.diracClickProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracClickProb
+
+/-- info: 'CSD.RecordLayer.diracClickProb_eq_volume' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracClickProb_eq_volume
+
+/-- info: 'CSD.RecordLayer.clickWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clickWindow
+
+/-- info: 'CSD.RecordLayer.clickWindow_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clickWindow_le
+
+/-- info: 'CSD.RecordLayer.clickWindow_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clickWindow_eq_zero
+
+/-- info: 'CSD.RecordLayer.clickWindow_eq_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clickWindow_eq_of_mem
+
+/-- info: 'CSD.RecordLayer.diracClickProb_eq_lintegral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracClickProb_eq_lintegral
+
+/-- info: 'CSD.RecordLayer.abs_diracPointerShift_le_weight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_diracPointerShift_le_weight
+
+/-- info: 'CSD.RecordLayer.diracClickProb_eq_zero_of_weight_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracClickProb_eq_zero_of_weight_le
+
+/-- info: 'CSD.RecordLayer.diracClickProb_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracClickProb_le
+
+/-- info: 'CSD.RecordLayer.diracClickProb_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracClickProb_lt
+
+/-- info: 'CSD.RecordLayer.ofReal_mul_volume_writeFibres_le_diracClickProb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ofReal_mul_volume_writeFibres_le_diracClickProb
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteProj_pairRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteProj_pairRay
+
+/-- info: 'CSD.RecordLayer.exists_mul_le_abs_diracClickProb_sub_arenaObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_mul_le_abs_diracClickProb_sub_arenaObs
+
+/-- info: 'CSD.RecordLayer.not_exists_diracClickProb_eq_arenaObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_exists_diracClickProb_eq_arenaObs
+
+/-- info: 'CSD.RecordLayer.abs_trainF_deriv_lift_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_trainF_deriv_lift_le
+
+/-- info: 'CSD.RecordLayer.abs_trainF_lift_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_trainF_lift_le
+
+/-- info: 'CSD.RecordLayer.trainF_weight_cutoff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.trainF_weight_cutoff
+
+/-- info: 'CSD.RecordLayer.diracPointer_clickLaw' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointer_clickLaw
+
 end CSD.Tests.AxiomAudit

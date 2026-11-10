@@ -150,6 +150,7 @@ what would discharge or constrain it.
   which fibre law it uses for `θ₁` and which for `θ₂`, and may not switch between a proof's steps.
   UD-45 to UD-48 use the uniform law for `θ₁` throughout. UD-49 conditions that same law on the
   ready region at time `0`, as an event; it does not replace the law.
+  UD-50 to UD-54 do as UD-49 does.
 * **Discharge.** Posit 5's line (the same `H_int` family as Posit 1). For item 3, a dynamics that
   moves `θ₂`, which the `coupledEnergy` form excludes.
 
@@ -165,6 +166,9 @@ what would discharge or constrain it.
 * **What the coupling gives and does not give.** It gives a deterministic drift of the pointer
   proportional to the site occupancy (UD-4, UD-7). It gives no rate field, no outcome cell and no
   probability. The corpus's rate field is Posit 1 (UA-6).
+  Since BACKLOG ~~#355~~ the last clause is sharper. With the readout of UA-4 the coupling does fix
+  a probability, that of the click event (UD-50). It is not the expectation of an operator (UD-53),
+  and it is still no rate field.
 * **Discharge.** None for the choice (a boundary). M8 compares alternatives.
 
 ### UA-6 — the cell law (Posit 1)
@@ -174,6 +178,9 @@ what would discharge or constrain it.
   (`RecordLayer/CellLawForced.lean`). The corpus's field `momentContext` is a definition.
 * **Standing.** Posit. §6 states exactly why it stays one.
 * **Discharge.** Derive `IsTorusGenerated` from the dynamics that writes the record. Not done.
+  Since BACKLOG ~~#355~~: the write of `Σ_*` does not supply it. The click probability that write
+  produces is not the expectation of any operator (UD-53), so it is not the rate of the moment map.
+  The discharge needs a pointer dynamics other than the one of UA-5.
 
 ### UA-7 — the external flow parameter
 
@@ -236,6 +243,7 @@ part A), UD-35 to UD-39 in `RecordLayer/DiracPointerThreshold.lean` (BACKLOG ~~#
 part B) and UD-40 to UD-44 in `RecordLayer/DiracPointerRecord.lean` (BACKLOG ~~#353~~, M2
 part C); they are marked exact or bound. UD-45 to UD-49 are in
 `RecordLayer/DiracPointerBorn.lean` (BACKLOG ~~#354~~, M3 part A).
+UD-50 to UD-54 are in `RecordLayer/DiracPointerClick.lean` (BACKLOG ~~#355~~, M3 part B).
 
 | ID | Property | Lean |
 |---|---|---|
@@ -332,6 +340,24 @@ is needed. It bounds the two-time probability below for the carrier on the detec
 nothing about a carrier with weight on both sites. No error bound of the form UO-8 asks for is
 proved. The map `diracPointerHeld` is a comparison map and not a dynamics of `Σ_*`.
 
+| ID | Property | Lean | Kind |
+|---|---|---|---|
+| UD-50 | **The click law.** The click event is *ready at `0` and displayed at `T`*, built from the two arcs, the readout time and the flow. Its probability under `epistemicMeasure` is the average over `θ₂` of a fixed window of the pointer's displacement. The window is `0` for a displacement below `1/6`, is `1/6` on `[1/3, 2/3]`, and is at most `1/6` | `diracClick`, `measurableSet_diracClick`, `diracClickProb`, `diracClickProb_eq_volume`, `clickWindow`, `clickWindow_le`, `clickWindow_eq_zero`, `clickWindow_eq_of_mem`, `diracClickProb_eq_lintegral` | exact; the window is not computed on its two ramps |
+| UD-51 | **The weight cut-off.** Over a time `T` the pointer turns by at most `|κ| (T w + (‖H_D‖ + |g f(θ₂)|) T²)`, `w` the occupancy of the detector's site at time `0`. Where that bound at `w₀` is below `1/6` on every fibre, every carrier with occupancy at most `w₀` has click probability `0` | `abs_diracPointerShift_le_weight`, `diracClickProb_eq_zero_of_weight_le` | bound; a sufficient condition, not the threshold |
+| UD-52 | **Below a ready pointer.** The click probability is at most `1/6` times the measure of the fibres that are not slow, and so strictly below `1/6`, for every carrier, smooth profile, coupling and readout time. For the carrier on the detector's site it is at least `1/6` times the measure of `writeFibres` | `diracClickProb_le`, `diracClickProb_lt`, `ofReal_mul_volume_writeFibres_le_diracClickProb` | bounds |
+| UD-53 | **Not the expectation of an operator.** A function on rays that vanishes at the rays of `e_a`, `e_a + s e_b`, `e_a − s e_b` differs from the expectation of any matrix `E` somewhere by at least its value at the ray of `e_b` times `s² / (2 (1 + s²))`. With a cut-off at occupancy `s² / (1 + s²)` and a second site, the click probability is such a function | `arenaObs_mk_eq_inner`, `pairVec`, `pairVec_ne_zero`, `norm_pairVec_sq`, `pairRay`, `arenaObs_pairRay`, `exists_mul_le_abs_sub_arenaObs`, `arenaObs_siteProj_pairRay`, `exists_mul_le_abs_diracClickProb_sub_arenaObs`, `not_exists_diracClickProb_eq_arenaObs` | lower bound; the cut-off is a hypothesis; an obstruction |
+| UD-54 | **The check, and the package.** For the profile `trainF`, with `T = 1/(8(‖H_D‖+1))` and `g = 1/(4T)`: the cut-off holds at occupancy `1/8`, the carrier on the detector's site clicks with positive probability, and every matrix is at distance at least `P(siteRay j) / 20` from the click probability | `abs_trainF_deriv_lift_le`, `abs_trainF_lift_le`, `trainF_weight_cutoff`, `diracPointer_clickLaw` | one coupling, one readout time |
+
+Exact scope of UD-50 to UD-54. UD-50 is an equality; the others are bounds. The probability is that
+of the joint event. The probability conditional on a ready pointer is six times it, and since the
+expectation is linear in the matrix the comparison of UD-53 is the same for both. `E` in UD-53 is
+any matrix, so the comparison covers an effect, an effect times an efficiency, and an effect carried
+back along a linear evolution of the carrier. UD-54 is one coupling and one readout time, with
+`‖H_D‖ T ≤ 1/8`. For a long readout time the hypothesis of UD-51 can fail, and then only UD-50 and
+UD-52 are proved. The fibre law is uniform. UD-50 to UD-54 use UA-1 to UA-5 and UA-8, and not UA-6.
+They are about the coupling of UA-5, in which the pointer is driven by the expectation of `P_j`;
+they do not say that no dynamics on `Σ` gives the quantum weights.
+
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
 | ID | Property | Lean | Kind | Arena |
@@ -373,7 +399,8 @@ Each entry: the obligation, why the assumptions do not guarantee it, and the rep
 Proposed module names are the programme's. `DiracPointerWrite.lean` exists since BACKLOG
 ~~#351~~ (M2 part A); M2 part B is in `DiracPointerThreshold.lean` (~~#352~~) and M2 part C in
 `DiracPointerRecord.lean` (~~#353~~), two modules the programme did not name.
-`DiracPointerBorn.lean` exists since ~~#354~~ (M3 part A). The others do not exist.
+`DiracPointerBorn.lean` exists since ~~#354~~ (M3 part A). M3 part B is in
+`DiracPointerClick.lean` (~~#355~~), a module the programme did not name. The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
 
@@ -430,7 +457,8 @@ The programme separates four statements. They stay separate here.
   allows: the history is fixed by the ontic initial point, and on a record fibre the carrier on
   the detector's site reads `true` through the window while the carrier on another site reads
   `false` (`diracPointer_record`). *Still owed under this identifier:* (a) a carrier with weight on
-  both sites, for which no outcome statement is made: that is M3 (gate A); (b) a carrier that
+  both sites: its click probability is M3's (gate A; UD-50 to UD-54 since BACKLOG ~~#355~~),
+  and no statement is made about its history on one fibre; (b) a carrier that
   arrives, which is UO-2's condition (a); (c) the fibres with a negative rate and the fibres in
   none of the named sets. UD-12's occurrences are not transported: this is a new occurrence, on
   `Σ_*`.
@@ -456,7 +484,7 @@ The programme separates four statements. They stay separate here.
   the free packet and the pointer the carrier that feels the site potential. What is identified is
   a displacement. UD-12's `ActualOccurrence` remains a result on the detector arena until UO-4.
 
-### M3 — outcome statistics, or the obstruction (`DiracPointerBorn.lean`; gate A)
+### M3 — outcome statistics, or the obstruction (`DiracPointerBorn.lean`, `DiracPointerClick.lean`; gate A)
 
 The question is the programme's: can the Hamiltonian and the apparatus determine the measures of the
 outcome regions without stipulating the moment-map rate field or importing the Born weights as the
@@ -471,6 +499,10 @@ detector law?
   field, which depends on the base point, and it is recorded as conditional on UA-6. The two-time
   event of UD-49 is built from `diracReady`, `diracDisplayed`, the readout time and the flow, and
   passes this test. *Still owed under this identifier:* an outcome statement for that event.
+  ▸ **Met 2026-11-10 (BACKLOG ~~#355~~) → UD-50.** The click event `diracClick` is that event, and
+  its probability is the `θ₂`-average of a fixed window of the displacement
+  (`diracClickProb_eq_lintegral`). The region is fixed by the arcs, the readout time and the flow.
+  Nothing in it is sized by a weight.
 * **UO-8 — the error bound.** `|P_{Σ_*}(i | ψ, M) − ⟨ψ, P_i ψ⟩| ≤ ε_meas`, with every contribution to
   `ε_meas` an explicit term: transition region (UO-3), finite coupling time, back-reaction on the
   carrier, finite retention. *Not guaranteed.* See the two calculations below.
@@ -478,6 +510,12 @@ detector law?
   read at one time under the law of UA-2, the bound holds for all carriers only with `ε_meas ≥ 1/2`
   (`exists_half_le_abs_fibreRegion_sub_siteWeight`). No upper bound is proved for any region that
   passes UO-7's test.
+  ▸ **A lower bound for the click event, 2026-11-10 (BACKLOG ~~#355~~) → UD-53, UD-54.** At the
+  coupling and the time of UD-54, for every matrix `E` some carrier has a click probability
+  differing from the expectation of `E` by at least `P(siteRay j) / 20` (`diracPointer_clickLaw`).
+  So for this event the bound holds against no operator with a smaller `ε_meas`, and there is no
+  upper bound to prove. *Still owed under this identifier:* the conditional bound, for the basin of
+  the moment-map field along the coupled flow, with UA-6 named (UD-48).
 * **UO-9 — or the obstruction.** If the rate field cannot be derived: the precise missing condition,
   or a no-go theorem. Not a new hypothesis inside a definition.
   ▸ **Part met 2026-11-10 (BACKLOG ~~#354~~) → UD-45 to UD-47: a no-go theorem for statistics read
@@ -488,6 +526,12 @@ detector law?
   refer to the pointer at two times. *Still owed under this identifier:* the event *ready at `0` and
   displayed at `T`*, which is calculation 2 below. UD-49 shows the no-go does not hold for it, and
   nothing else about it is proved.
+  ▸ **Met 2026-11-10 (BACKLOG ~~#355~~) → UD-50 to UD-54: the obstruction for the event about two
+  times.** The click probability is determined by the flow (UD-50). It vanishes below a cut-off in
+  the occupancy (UD-51), it stays below the probability of a ready pointer (UD-52), and it is at a
+  stated distance from the expectation of every matrix (UD-53, with the instance UD-54). The missing
+  condition, stated: a base-dependent cell law (UA-6), or a pointer dynamics in which the record is
+  not a threshold on a drift driven by the expectation of `P_j` (UO-24 names one).
 * **UO-10 — one trial, one outcome.** With several detectors. *Not available on `Σ_*` as built:* the
   arena has one pointer torus and one detector site. An arena with several pointers, or one pointer
   with a partitioned readout, is an extension of M1 that has not been made.
@@ -505,8 +549,9 @@ detector law?
 * **UO-13 — no-signalling and sequential update.** On a shared arena carrying two detectors. *Test:*
   citing UD-22 is citing the sector level.
 
-**Two calculations bearing on gate A. Neither is in Lean; both are to be proved or corrected, not
-cited.**
+**Two calculations bearing on gate A.** They were written before either was in Lean, to be proved or
+corrected and not cited. Both are in Lean since BACKLOG ~~#355~~, and the note under each says what
+survived.
 
 1. *A base-independent fibre region cannot see the state.* At a fixed base trajectory the flow acts
    on the fibre by `(θ₁, θ₂) ↦ (θ₁ + s(θ₂), θ₂)` (UD-2), which preserves Haar measure on `T²`. So
@@ -529,13 +574,34 @@ cited.**
    Haar measure of `{θ₂ : |f'(θ₂)| ≥ τ / (2 g w T)}`. Since `f'` is bounded, this is zero for all
    `w` below a cut-off, and it is linear in `w` only if `|f'|` has an unbounded tail, which no smooth
    periodic profile has. Choosing `f` to shape the law would place the target in the apparatus.
+   ▸ **Proved 2026-11-10 (BACKLOG ~~#355~~, UD-50 to UD-54), corrected in two ways and sharpened in
+   one.** Corrected: (i) the displacement is not `f'(θ₂)` times `2 g w T`. It is within `|κ| (‖H_D‖
+   + |g f(θ₂)|) T²` of `κ T w`, with `κ = −2 g f'(θ₂)` and `w` the occupancy at time `0`, and the
+   cut-off is proved with that term in it (`abs_diracPointerShift_le_weight`,
+   `diracClickProb_eq_zero_of_weight_le`). (ii) The click probability is not the measure of a set of
+   `θ₂` alone. It is the `θ₂`-average of a window that rises from `0` to `1/6`
+   (`diracClickProb_eq_lintegral`), because the pointer is ready on an arc and not at a point.
+   Sharpened: the conclusion is more than a law that is not linear in `w`. The click probability is
+   not the expectation of any operator, and the distance is stated
+   (`exists_mul_le_abs_diracClickProb_sub_arenaObs`). Not formalised: the remark on an unbounded
+   tail. The theorem needs the cut-off only.
 
 If these survive formalisation, the direct route from `Σ_*`'s threshold write to Born weights is
 closed, and gate A's answer is an obstruction with a stated missing condition: the base-dependent
 cell law (UA-6), or a different pointer dynamics.
 
-Calculation 1 has survived (BACKLOG ~~#354~~). Calculation 2 is not in Lean, and gate A is not
-answered until it is proved or corrected.
+Both have survived, with the corrections noted (BACKLOG ~~#354~~, ~~#355~~).
+
+**Gate A, answered (BACKLOG ~~#355~~).** The programme's question: does the selected dynamics
+determine measurement probabilities, or does it require the Born-shaped rate premise? On `Σ_*` both
+halves have an answer. The dynamics does determine a probability for its own click event, with no
+rate field (UD-50). That probability is not the quantum one: it has a cut-off in the occupancy, and
+it is at a stated distance from the expectation of every operator (UD-51, UD-53, UD-54). The corpus
+obtains the quantum weights only through the rate field of UA-6, and this dynamics does not supply
+that field. So the reconstruction of the quantum statistics is kept as a conditional one, on UA-6
+(UD-48 is its form on `Σ_*`), and the obstruction is the result of M3. Its scope is the coupling of
+UA-5 with one pointer, the two arcs, the uniform fibre law and, in the instance, a short readout
+time. It is not a statement about every dynamics on `Σ`.
 
 ### M4 — a clock inside the common Hamiltonian (`UnifiedDiracClock.lean`)
 
@@ -677,6 +743,8 @@ Posit 1 and may not be reported as dynamical:
   landing:** Posit 10 still said I3 had no rate field from the base "until BACKLOG #136 lands";
   that row closed on 2026-10-13 (`jointMomentContext`, `jointMomentContext_rowSum`). A pointer to
   this note is added to the register's cross-listing section.
+  Since BACKLOG ~~#355~~ Posit 1's discharge line records the answer to gate A. Its standing and the
+  count are unchanged.
 * **[`records-to-spacetime-status.md`](records-to-spacetime-status.md).** Its "what is assumed" list
   is carried into UA-7, UA-8, UA-10 and UA-11 unchanged. Its sentence "every record layer here is
   kinematic: no `H_int` generates the cells" is not changed by M1A, which is a Hamiltonian system
@@ -706,7 +774,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

@@ -44,6 +44,9 @@ item is `sorry`-free and pinned to the foundational triple. Everything is in 1+1
 
 The programme that takes these results to one shared Hamiltonian arena, with its registers of what is
 assumed, derived and owed, is [`unified-record-spacetime-plan.md`](unified-record-spacetime-plan.md).
+Its gate A is answered (BACKLOG ~~#355~~): on that arena the click probability of the pointer is
+fixed by the flow and is not the expectation of an operator (`RecordLayer/DiracPointerClick.lean`,
+`diracPointer_clickLaw`). The entry *QM's weights are input* above stands.
 
 ## What is open
 

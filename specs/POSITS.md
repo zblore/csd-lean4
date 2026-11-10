@@ -78,6 +78,20 @@ argument, or agreement with a target. *What would discharge it* is the concrete 
   That is the `H_int` frontier, with `SigmaLayer/ChartIntegralCurve.lean` (chart-level Hamiltonian
   generation) the nearest precedent and `R-016` the adjacent open item. No cheap brick is expected
   there; recorded so the boundary stays visible, not as queued work.
+  ⚠️ *Updated 2026-11-10 (BACKLOG ~~#355~~; gate A of the programme in
+  `specs/unified-record-spacetime-plan.md`):* **the first dynamics examined does not discharge it,
+  and the result is an obstruction.** On the shared arena `Σ_*` the interaction `−2 g f(θ₂) ⟨P_j⟩`
+  writes a record (`RecordLayer/DiracPointerRecord.lean`). The probability of its click event
+  (pointer ready at `0`, displayed at `T`, under `epistemicMeasure`) is fixed by the flow with no
+  rate field (`diracClickProb_eq_lintegral`, `RecordLayer/DiracPointerClick.lean`). That probability
+  is `0` for every carrier whose occupancy of the detector's site is below a cut-off
+  (`diracClickProb_eq_zero_of_weight_le`), and it is at a stated distance from the expectation of
+  every matrix (`exists_mul_le_abs_diracClickProb_sub_arenaObs`, `diracPointer_clickLaw`). So the
+  statistics this interaction produces are not those of the rate field: the pointer is driven by the
+  expectation `⟨P_j⟩`, and a threshold on such a drift is a cut-off. **The posit stands as written
+  and the count is unchanged.** What the theorem narrows is the discharge route: it needs a dynamics
+  in which the record is not a threshold on a drift driven by an expectation. Scope: one coupling
+  form, one pointer, the uniform fibre law, and a short readout time in the instance.
 
 ## Posit 2 — the sector (`μ_FS` as the typicality measure)
 

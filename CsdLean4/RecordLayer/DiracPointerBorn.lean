@@ -38,7 +38,7 @@ state is the dependence the rate field was given, and the pointer's motion adds 
 
 The statement is about one time. An event that refers to two times, *ready at `0` and displayed at
 `T`*, does see the displacement, and the last section proves it. That event is the subject of the
-second half of M3.
+second half of M3, `RecordLayer/DiracPointerClick.lean` (#355).
 
 ## The fibre over a carrier ray
 
@@ -100,7 +100,8 @@ second half of M3.
 * **What it does not say.** A pointer prepared in the ready arc is the same law conditioned on
   `diracReady`, an event at time `0`. *Ready at `0` and displayed at `T`* is an event about two
   times; the theorem does not apply to it and the last section shows it is false there. Whether
-  that event's probability follows the occupancy of the detector's site is not decided here.
+  that event's probability follows the occupancy of the detector's site is not decided here;
+  `RecordLayer/DiracPointerClick.lean` (#355) decides it, and it does not.
 * **Two features of the flow are used:** `θ₂` is conserved, and the carrier's evolution does not
   depend on `θ₁`. A dynamics in which the pointer angle acts back on the carrier is not covered.
 * **The basin statement is conditional.** `epistemicMeasure_diracPointerFlow_globalBasin` holds for
