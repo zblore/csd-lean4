@@ -1007,7 +1007,13 @@ isSymplectic"
 #   IsSymplectic.hamiltonianVectorField of that energy off coupledField_eq_hamiltonianVectorField
 #   (ι_X ω = d𝓗 on arenaForm) — EARNED; schrodingerHamiltonian_diracA / _diracB are values of the
 #   already-declared energy function −2⟨H⟩ at reindexed matrices, operator sense.)
+#   (2026-11-10, #357: the generic form of #349's identification, for any Hermitian pair and any
+#   index equivalence. hamiltonianFlow_coupledEnergy_reindex is hamiltonianFlow_coupledEnergy
+#   read in the carrier's own index — EARNED through it; schrodingerHamiltonian_reindex is the
+#   value of the already-declared energy function −2⟨C⟩ at a reindexed matrix, operator sense.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
+hamiltonianFlow_coupledEnergy_reindex
+schrodingerHamiltonian_reindex
 diracPointer_hamiltonian
 hamiltonianVectorField_diracPointer_siteRay
 hamiltonianVectorField_diracPointer_snd

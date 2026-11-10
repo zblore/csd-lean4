@@ -50,6 +50,10 @@ fixed by the flow and is not the expectation of an operator (`RecordLayer/DiracP
 Given that input, the basin statistic along the coupled flow is within a stated back-reaction term
 of QM's weight (BACKLOG ~~#356~~, `RecordLayer/DiracPointerBasin.lean`,
 `abs_diracBasinProb_sub_zero_coupling_le`).
+A two-level clock is in the joint energy of an extension of that arena, and the pointer coupled to
+it follows the clock's hand at the dilated rate within stated errors (BACKLOG ~~#357~~,
+`RecordLayer/UnifiedDiracClock.lean`, `clock_pointer_device`). Those statements are in the flow
+parameter. A time recovered from clock records is not derived there.
 
 ## What is open
 
