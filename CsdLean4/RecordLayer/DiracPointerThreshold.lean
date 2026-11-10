@@ -114,7 +114,8 @@ chain is not used as a comparison: the bound is on the carrier that feels the si
   without a statement.
 * **A threshold, not a record.** No outcome is said to be selected, no `ActualOccurrence` is built,
   and the time the pointer stays in the displayed arc is not bounded. The signal theorems are
-  statements at the one time `T`.
+  statements at the one time `T`. The record, with its window, is in
+  `RecordLayer/DiracPointerRecord.lean` (#353).
 * **The regions are definitions.** The two arcs are apparatus parameters, chosen, and
   `diracDisplayed_congr` and `mem_diracReady_congr` check that they read the pointer angle alone.
   What is derived is that the flow carries one into the other.

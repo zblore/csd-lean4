@@ -91,7 +91,8 @@ On a fibre with `f(θ₂) = 0` the potential is absent and the displacement is e
   of order the mean occupancy over `|g f(θ₂)|`, and nothing after it.
 * **A displacement, not a record.** No readout region, ready state, threshold, outcome,
   persistence or `ActualOccurrence` is stated here. They are the other three statements of M2;
-  the regions and the threshold are in `RecordLayer/DiracPointerThreshold.lean` (#352).
+  the regions and the threshold are in `RecordLayer/DiracPointerThreshold.lean` (#352), the
+  record and its window in `RecordLayer/DiracPointerRecord.lean` (#353).
 * **The pointer does not always move.** Every periodic `C¹` profile has a zero of `f'`
   (`exists_rateAt_eq_zero`); there `diracPointerShift_of_deriv_eq_zero` gives no displacement, and
   near it `abs_diracPointerShift_le` makes the pointer slow. No lower bound here is uniform in

@@ -227,8 +227,9 @@ what would discharge or constrain it.
 
 UD-1 to UD-7 are in `RecordLayer/DiracPointerHamiltonian.lean` (package `diracPointer_hamiltonian`)
 and are all exact. UD-31 to UD-34 are in `RecordLayer/DiracPointerWrite.lean` (BACKLOG ~~#351~~, M2
-part A) and UD-35 to UD-39 in `RecordLayer/DiracPointerThreshold.lean` (BACKLOG ~~#352~~, M2
-part B); they are marked exact or bound.
+part A), UD-35 to UD-39 in `RecordLayer/DiracPointerThreshold.lean` (BACKLOG ~~#352~~, M2
+part B) and UD-40 to UD-44 in `RecordLayer/DiracPointerRecord.lean` (BACKLOG ~~#353~~, M2
+part C); they are marked exact or bound.
 
 | ID | Property | Lean |
 |---|---|---|
@@ -285,6 +286,27 @@ The fibres in neither set, and every fibre with `κ < 0`, carry no statement. Ha
 `θ₂` circle is used to say that two sets are not null and for nothing else: no law for `θ₂` is
 used (UA-4, item 3) and no probability of a write is stated.
 
+| ID | Property | Lean | Kind |
+|---|---|---|---|
+| UD-40 | **The pointer does not turn back; the flow as a two-time evolution.** On a fibre with `κ ≥ 0` the displacement is monotone in time, for every carrier. The flow at each time is continuous and measurable, and the propagator from `s` to `t`, the flow over `t − s`, satisfies the two-time law | `diracPointerShift_mono`, `continuous_diracPointerShift`, `continuous_diracPointerFlow`, `measurable_diracPointerFlow`, `diracPointerEvolve`, `diracPointerEvolve_self`, `diracPointerEvolve_comp`, `diracPointerEvolve_shift`, `measurable_diracPointerEvolve` | exact |
+| UD-41 | **The record along the flow.** On a fibre with `κ ≥ 0`, from a ready pointer and any carrier: if the displacement is at most `1/6` at `τ₀`, at least `1/3` at `τ₁` and at most `2/3` at `τ₂`, the readout history of `diracPointerFlow` is not `true` on `[0, τ₀)` and is `true` on `[τ₁, τ₂]`. That write is an `ActualOccurrence` whose evolution is the flow | `diracPointerFlow_not_displayed_of_mono`, `diracPointerFlow_displayed_of_mono`, `isRecordWrite_diracPointerFlow`, `diracPointerRecord`, `diracPointerRecord_evolve`, `diracPointerRecord_readout`, `diracPointerRecord_prep`, `diracPointerRecord_window` | exact, given the three values; every field but the write is a definition |
+| UD-42 | **The record fibres.** The set `8 (‖H_D‖ + \|g f(θ₂)\|) < 3 κ` is open. On it the carrier on the detector's site writes `true`: not displayed before `1/(6κ)`, displayed throughout `[1/(2κ), 2/(3κ)]`, window `1/(6κ) > 0`; the carrier on another site reads `false` throughout `[0, 2/(3κ)]` and completes no write in that time. Profile `trainF`, `4 ‖H_D‖ < 3 g`: it contains `θ₂ = 0` and has positive measure; such `g` exists for every ring, `J`, `μ`. Package `diracPointer_record` | `recordFibres`, `isOpen_recordFibres`, `rateAt_pos_of_mem_recordFibres`, `norm_diracPointerH_lt_of_mem_recordFibres`, `third_le_diracPointerShift_siteRay`, `diracPointerShift_div_rateAt_le`, `isRecordWrite_siteRay`, `siteRayRecord`, `siteRayRecord_evolve`, `siteRayRecord_prep`, `siteRayRecord_window`, `siteRayRecord_window_pos`, `diracPointerFlow_not_displayed_of_mem_recordFibres`, `not_isRecordWrite_siteRay_of_ne`, `zero_mem_recordFibres_trainF`, `volume_recordFibres_trainF_pos`, `exists_volume_recordFibres_pos`, `diracPointer_record` | sufficient condition from a bound; the measure is positive, not computed |
+| UD-43 | **Where there is no record.** A history that does not show `v` up to `T` has no write of `v` completed by `T`. On a slow fibre of horizon `T` no record is completed by `T`, for any carrier; on a fibre with `κ = 0` none is written at any time. A ready pointer reads `false`, and so does one turned forward by at most `1/6` | `not_isRecordWrite_of_forall_ne`, `not_isRecordWrite_of_mem_slowFibres`, `not_isRecordWrite_of_rateAt_eq_zero`, `diracDisplayed_eq_false_of_ready`, `pshift_notMem_displayArc_of_le` | exact |
+| UD-44 | **The two-mode record and its end.** `M = 11`, `J = 4`, `μ = 3`, site `0`, profile `trainF`, fibre `θ₂ = 0`, `0 < g ≤ 29/12`, any ready pointer: the two-mode packet of UD-34 writes `true` with write interval `[(29 − 12g)/(29g), (58 + 12g)/(29g)]` and window `(58 − 24g)/(29g)`. Once a displacement has reached a full turn the pointer pair has been exactly its starting value; for this packet that happens after the window and no later than `7/g`, and the readout there is `false` | `rateAt_trainF_zero`, `diracPointerShift_twoMode_zero_le`, `le_diracPointerShift_twoMode_zero`, `isRecordWrite_twoMode`, `twoModeRecord`, `twoModeRecord_evolve`, `twoModeRecord_window`, `pshift_one`, `diracPointerFlow_snd_of_shift_eq_one`, `exists_diracPointerFlow_snd_eq`, `twoMode_record_erased` | times from the bound `\|sin\| ≤ 1`; the return is exact; one fibre |
+
+Exact scope of UD-40 to UD-44. The record is a statement about the readout history of the
+flow of UD-1, and the occurrence's evolution is that flow by definition: this is UO-4's test,
+and it is a check on a definition, not a derivation. What is derived is the write. The window
+is an interval with stated ends and is where a proof ends: for UD-42 nothing is proved after
+`2/(3κ)`, in either direction, and for UD-44 the record is proved to have gone by `7/g`. The
+times of UD-42 come from the first-order estimate of UD-36 and those of UD-44 from the closed
+form of UD-34 with the sine bounded by one; none is sharp. "Selected" means fixed by the ontic
+initial point of a deterministic flow: two carriers are compared, on the detector's site and
+on another site, and a carrier with weight on both carries no statement. No probability is
+stated and no Born weight appears; that is M3. The write is not universal (UD-43, UD-38), the
+monotonicity of UD-40 is used with `κ ≥ 0` only, the carrier of UD-42 starts on the detector's
+site and does not arrive, and UD-44 holds on one fibre, a null set of fibres.
+
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
 | ID | Property | Lean | Kind | Arena |
@@ -324,8 +346,9 @@ used (UA-4, item 3) and no probability of a write is stated.
 
 Each entry: the obligation, why the assumptions do not guarantee it, and the repackaging test.
 Proposed module names are the programme's. `DiracPointerWrite.lean` exists since BACKLOG
-~~#351~~ (M2 part A); M2 part B is in `DiracPointerThreshold.lean` (~~#352~~), a module the
-programme did not name. The others do not exist.
+~~#351~~ (M2 part A); M2 part B is in `DiracPointerThreshold.lean` (~~#352~~) and M2 part C in
+`DiracPointerRecord.lean` (~~#353~~), two modules the programme did not name. The others do not
+exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
 
@@ -374,9 +397,31 @@ The programme separates four statements. They stay separate here.
   `diracPointerFlow`. *Test:* `ActualOccurrence` carries its evolution as a field; instantiating it
   with any map other than the M1 flow adds a record process to the dynamics, which the milestone's
   acceptance forbids.
+  ▸ **Met 2026-11-10 (BACKLOG ~~#353~~) → UD-40 to UD-43, with three conditions that stay
+  here.** `diracPointerRecord` is an `ActualOccurrence` on `Σ_*` whose `evolve` field is
+  `diracPointerEvolve`, the flow `diracPointerFlow` over the elapsed time, by definition
+  (`diracPointerRecord_evolve`). Its write field is `isRecordWrite_diracPointerFlow`, a theorem
+  about the readout history of that flow. "Selected" has the one meaning a deterministic flow
+  allows: the history is fixed by the ontic initial point, and on a record fibre the carrier on
+  the detector's site reads `true` through the window while the carrier on another site reads
+  `false` (`diracPointer_record`). *Still owed under this identifier:* (a) a carrier with weight on
+  both sites, for which no outcome statement is made: that is M3 (gate A); (b) a carrier that
+  arrives, which is UO-2's condition (a); (c) the fibres with a negative rate and the fibres in
+  none of the named sets. UD-12's occurrences are not transported: this is a new occurrence, on
+  `Σ_*`.
 * **UO-5 — persistence and readability.** A nonzero retention interval. *Not guaranteed, and
   expected to be finite:* on a finite ring the carrier returns (`message_one_returns` is the
   two-site case). The claim is an interval with stated ends, never permanence.
+  ▸ **Met 2026-11-10 (BACKLOG ~~#353~~) → UD-41, UD-42, UD-44, with two conditions that stay
+  here.** The window is `τ₂ − τ₁` for any three times at which the displacement is at most `1/6`,
+  at least `1/3` and at most `2/3`. On a record fibre it is `1/(6κ)` (`siteRayRecord_window`); for
+  the two-mode packet on `θ₂ = 0` it is `(58 − 24g)/(29g)` (`twoModeRecord_window`). Readability
+  is the measurable readout of UD-35, a function of `θ₁` alone, constant through the window.
+  Finiteness is proved in one case, and not by the route expected above: the two-mode record has
+  gone by `7/g` because the pointer has turned once round (`twoMode_record_erased`), not because
+  the carrier returned. *Still owed under this identifier:* (a) the end of retention for the
+  record of UD-42, where nothing is proved after `2/(3κ)`; (b) sharp ends: each window is where
+  a proof ends, and none is shown to be the longest.
 * **UO-6 — the existing detector registers.** Whether the registers of
   `RecordLayer/DiracDetector.lean` (`detFlow`) are this flow's pointer, or a statement of how they
   differ. Until then UD-12 is a result on a separate arena.
@@ -604,7 +649,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);
