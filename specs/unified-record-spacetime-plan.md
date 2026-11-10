@@ -116,6 +116,9 @@ what would discharge or constrain it.
   (`not_hasCorrelationDecay_kFlow`). The fibre action on `Σ_*` is a translation of `θ₁` at a rate
   depending on `θ₂` and the carrier, not a hyperbolic map, so those relaxation theorems do not
   apply to it. Whether that shear relaxes the `θ₁` marginal has not been examined.
+  Since BACKLOG ~~#354~~ one fact is known: the uniform law of `θ₁` is stationary under the flow,
+  for every law of `θ₂` and every carrier (UD-45, UD-46). Relaxation of a non-uniform law is still
+  unexamined.
 * **Discharge.** Posit 2's and Posit 9's lines in `POSITS.md`.
 
 ### UA-3 — the typicality interpretation
@@ -145,6 +148,8 @@ what would discharge or constrain it.
 * **A tension to keep visible.** A ready pointer is a concentrated law for `θ₁`; Posit 9's fibre
   factor is uniform. Both are in the corpus, in different modules. A statement on `Σ_*` must say
   which fibre law it uses for `θ₁` and which for `θ₂`, and may not switch between a proof's steps.
+  UD-45 to UD-48 use the uniform law for `θ₁` throughout. UD-49 conditions that same law on the
+  ready region at time `0`, as an event; it does not replace the law.
 * **Discharge.** Posit 5's line (the same `H_int` family as Posit 1). For item 3, a dynamics that
   moves `θ₂`, which the `coupledEnergy` form excludes.
 
@@ -229,7 +234,8 @@ UD-1 to UD-7 are in `RecordLayer/DiracPointerHamiltonian.lean` (package `diracPo
 and are all exact. UD-31 to UD-34 are in `RecordLayer/DiracPointerWrite.lean` (BACKLOG ~~#351~~, M2
 part A), UD-35 to UD-39 in `RecordLayer/DiracPointerThreshold.lean` (BACKLOG ~~#352~~, M2
 part B) and UD-40 to UD-44 in `RecordLayer/DiracPointerRecord.lean` (BACKLOG ~~#353~~, M2
-part C); they are marked exact or bound.
+part C); they are marked exact or bound. UD-45 to UD-49 are in
+`RecordLayer/DiracPointerBorn.lean` (BACKLOG ~~#354~~, M3 part A).
 
 | ID | Property | Lean |
 |---|---|---|
@@ -307,6 +313,25 @@ stated and no Born weight appears; that is M3. The write is not universal (UD-43
 monotonicity of UD-40 is used with `κ ≥ 0` only, the carrier of UD-42 starts on the detector's
 site and does not arrive, and UD-44 holds on one fibre, a null set of fibres.
 
+| ID | Property | Lean | Kind |
+|---|---|---|---|
+| UD-45 | **The fibre over a carrier ray.** The carrier's ray at time `t` depends on the fibre point through `θ₂` alone. Over a fixed carrier ray the pointer pair at time `t` is a turn of `θ₁` by an amount depending on `θ₂` alone, and that map preserves `Haar ⊗ ν` for every s-finite law `ν` of `θ₂` | `diracPointerFlow_fst`, `diracPointerFlow_fst_congr`, `measurePreserving_diracPointerFlow_fibre` | exact |
+| UD-46 | **The law at one time is the law with the pointer held.** For the preparation `δ_{x₀} ⊗ (Haar ⊗ ν)`, and so for `epistemicMeasure x₀`, the push-forward under `diracPointerFlow` at time `t` equals the push-forward under the map that moves the carrier as the flow does and leaves the fibre point where it was. The fibre point at time `t` has the law it started with | `diracPointerHeld`, `diracPointerHeld_fst`, `diracPointerHeld_snd`, `measurable_diracPointerHeld`, `diracPointerFlow_eq_held`, `epistemicMeasure_eq_map`, `map_diracPointerFlow_dirac_prod`, `map_diracPointerFlow_epistemicMeasure`, `epistemicMeasure_preimage_diracPointerFlow`, `map_snd_diracPointerFlow_dirac_prod`, `map_snd_diracPointerFlow_epistemicMeasure` | exact; the held map is a comparison, not a dynamics |
+| UD-47 | **A region of the fibre cannot see the carrier.** The probability that the fibre point is in a measurable region `F` at time `t` is the measure of `F`, for every carrier, time, coupling, site and profile. The readout shows `true` with probability `1/2` and the pointer is ready with probability `1/6`. On a ring with a second site, for every `F` and `t` some carrier has a probability differing from the occupancy of the detector's site by at least `1/2` | `dirac_prod_diracPointerFlow_fibreRegion`, `epistemicMeasure_diracPointerFlow_fibreRegion`, `volume_displayArc`, `epistemicMeasure_diracDisplayed`, `epistemicMeasure_diracReady`, `exists_half_le_abs_fibreRegion_sub_siteWeight` | exact; an obstruction, at one time |
+| UD-48 | **The basin of a rate field at time `t`.** For any rate field `c`, the probability of `globalBasin c i` at time `t` is the integral over `θ₂` of the rate of `i` at the coupled carrier. The pointer's displacement does not enter | `epistemicMeasure_diracPointerFlow_globalBasin` | exact; **conditional on UA-6**, does not pass a gate (§6) |
+| UD-49 | **The check: an event about two times.** *Ready at `0` and displayed at `T`* is empty with the pointer held. Under the flow, for the carrier on the detector's site, it has probability at least `(1/6)` times the measure of `writeFibres`; for the profile `trainF` there are a coupling and a time at which that is positive | `ready_diracPointerHeld_displayed_eq_empty`, `ofReal_mul_volume_writeFibres_le`, `epistemicMeasure_ready_displayed_pos`, `exists_epistemicMeasure_ready_displayed_pos` | lower bound; one carrier |
+
+Exact scope of UD-45 to UD-49. All are equalities of measures, except the lower bound of UD-49. The
+preparation is the law of UA-2 with `θ₁` uniform; UD-45 to UD-47 also hold with any law for `θ₂`.
+UD-45 to UD-47 are statements about one time, and they are an obstruction, not a derivation: they
+say what such statistics cannot depend on. They use two features of the flow of UD-1, that `θ₂` is
+conserved and that the carrier's evolution does not depend on `θ₁`, and they do not hold for every
+measure-preserving flow. UD-48 is conditional on UA-6: its dependence on the carrier is the rate
+field's own, and by §6 it does not pass a gate. UD-49 is the check that the restriction to one time
+is needed. It bounds the two-time probability below for the carrier on the detector's site and says
+nothing about a carrier with weight on both sites. No error bound of the form UO-8 asks for is
+proved. The map `diracPointerHeld` is a comparison map and not a dynamics of `Σ_*`.
+
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
 | ID | Property | Lean | Kind | Arena |
@@ -347,8 +372,8 @@ site and does not arrive, and UD-44 holds on one fibre, a null set of fibres.
 Each entry: the obligation, why the assumptions do not guarantee it, and the repackaging test.
 Proposed module names are the programme's. `DiracPointerWrite.lean` exists since BACKLOG
 ~~#351~~ (M2 part A); M2 part B is in `DiracPointerThreshold.lean` (~~#352~~) and M2 part C in
-`DiracPointerRecord.lean` (~~#353~~), two modules the programme did not name. The others do not
-exist.
+`DiracPointerRecord.lean` (~~#353~~), two modules the programme did not name.
+`DiracPointerBorn.lean` exists since ~~#354~~ (M3 part A). The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
 
@@ -441,11 +466,28 @@ detector law?
   parameters (UA-4) and the flow alone. *Test:* see §6 — a region built from `momentContext`,
   `circleCell` sized by `momentMap`, or arcs sized by site weights has the conclusion in its
   definition.
+  ▸ **Applied 2026-11-10 (BACKLOG ~~#354~~).** UD-47 quantifies over every measurable region of the
+  fibre: those are the regions fixed by the apparatus alone. UD-48's region is the basin of a rate
+  field, which depends on the base point, and it is recorded as conditional on UA-6. The two-time
+  event of UD-49 is built from `diracReady`, `diracDisplayed`, the readout time and the flow, and
+  passes this test. *Still owed under this identifier:* an outcome statement for that event.
 * **UO-8 — the error bound.** `|P_{Σ_*}(i | ψ, M) − ⟨ψ, P_i ψ⟩| ≤ ε_meas`, with every contribution to
   `ε_meas` an explicit term: transition region (UO-3), finite coupling time, back-reaction on the
   carrier, finite retention. *Not guaranteed.* See the two calculations below.
+  ▸ **A lower bound on `ε_meas`, 2026-11-10 (BACKLOG ~~#354~~) → UD-47.** For a region of the fibre
+  read at one time under the law of UA-2, the bound holds for all carriers only with `ε_meas ≥ 1/2`
+  (`exists_half_le_abs_fibreRegion_sub_siteWeight`). No upper bound is proved for any region that
+  passes UO-7's test.
 * **UO-9 — or the obstruction.** If the rate field cannot be derived: the precise missing condition,
   or a no-go theorem. Not a new hypothesis inside a definition.
+  ▸ **Part met 2026-11-10 (BACKLOG ~~#354~~) → UD-45 to UD-47: a no-go theorem for statistics read
+  at one time.** Under `δ_{x₀} ⊗ (Haar ⊗ ν)`, with any law `ν` of `θ₂`, the law of the arena point
+  at time `t` equals its law with the pointer held (`map_diracPointerFlow_dirac_prod`). So the
+  probability of an apparatus-fixed region of the fibre is its measure, for every carrier. The
+  missing condition, stated: the region must depend on the base point (UA-6), or the event must
+  refer to the pointer at two times. *Still owed under this identifier:* the event *ready at `0` and
+  displayed at `T`*, which is calculation 2 below. UD-49 shows the no-go does not hold for it, and
+  nothing else about it is proved.
 * **UO-10 — one trial, one outcome.** With several detectors. *Not available on `Σ_*` as built:* the
   arena has one pointer torus and one detector site. An arena with several pointers, or one pointer
   with a partitioned readout, is an extension of M1 that has not been made.
@@ -456,6 +498,10 @@ detector law?
 * **UO-12 — back-reaction and calibration visible.** The carrier's generator contains the detector
   term (UD-3). The statistics statement must be about the coupled carrier, with the disturbance as a
   term of `ε_meas`.
+  ▸ **Visible in one conditional statement, 2026-11-10 (BACKLOG ~~#354~~) → UD-48.** The basin
+  probability at time `t` is the rate field at the coupled carrier, whose generator has the
+  detector's term, averaged over `θ₂`. The disturbance is not bounded there as a term of `ε_meas`;
+  that is still owed.
 * **UO-13 — no-signalling and sequential update.** On a shared arena carrying two detectors. *Test:*
   citing UD-22 is citing the sector level.
 
@@ -469,6 +515,14 @@ cited.**
    statistics that depend on `ψ` therefore need one of two things: a region that depends on the base
    point (which is what `globalBasin` does, through the rate field of UA-6), or a non-uniform law for
    `θ₁` (a ready state, UA-4).
+   ▸ **Proved 2026-11-10 (BACKLOG ~~#354~~, UD-45 to UD-47), sharpened in two ways and corrected in
+   one.** Sharpened: (i) the conclusion holds for the whole law at one time and not only for regions
+   of the fibre, since the push-forward of the preparation under the flow equals its push-forward
+   with the pointer held (`map_diracPointerFlow_dirac_prod`); (ii) the law of `θ₂` is arbitrary, and
+   only `θ₁` need be uniform. Corrected: the second alternative above, a ready state, is not a
+   different fibre law. It is the same law conditioned on the pointer being ready at time `0`, and
+   the event then refers to two times. The theorem is about one time, and for that event it fails
+   (UD-49).
 2. *A threshold on a ready pointer does not give a linear law.* With `θ₁` ready and `θ₂` uniform,
    the pointer's displacement is `f'(θ₂)` times a quantity that grows with the occupancy. In the
    idealised case where that quantity is `2 g w T` for a weight `w`, the click probability is the
@@ -479,6 +533,9 @@ cited.**
 If these survive formalisation, the direct route from `Σ_*`'s threshold write to Born weights is
 closed, and gate A's answer is an obstruction with a stated missing condition: the base-dependent
 cell law (UA-6), or a different pointer dynamics.
+
+Calculation 1 has survived (BACKLOG ~~#354~~). Calculation 2 is not in Lean, and gate A is not
+answered until it is proved or corrected.
 
 ### M4 — a clock inside the common Hamiltonian (`UnifiedDiracClock.lean`)
 
@@ -649,7 +706,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

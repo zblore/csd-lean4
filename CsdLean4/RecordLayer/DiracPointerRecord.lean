@@ -118,7 +118,8 @@ intervals: at most `1/6` at `τ₀` (not displayed up to `τ₀`), at least `1/3
   history is a function of the carrier's ray and the angles, and two carriers are compared: on the
   detector's site (`true` through the window) and on another site (`false` through it). No
   probability is stated, no Born weight appears, and a carrier with weight on both sites is
-  without a statement here. That question is milestone M3.
+  without a statement here. That question is milestone M3; the statistics read at one time are
+  in `RecordLayer/DiracPointerBorn.lean` (#354).
 * **Not universal.** On a slow fibre no record is completed by `T`, and those have positive measure
   for every `C¹` profile and every `T` (`volume_slowFibres_pos`). On a fibre with `f'(θ₂) = 0`
   there is never one. Fibres with a negative rate carry no statement: the monotonicity is used with

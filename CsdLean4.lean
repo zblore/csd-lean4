@@ -707,6 +707,7 @@ public import CsdLean4.RecordLayer.MovingRadarPair
 public import CsdLean4.RecordLayer.SignalCone
 public import CsdLean4.RecordLayer.GalileanTransformation
 public import CsdLean4.RecordLayer.DiracDetector
+public import CsdLean4.RecordLayer.DiracPointerBorn
 public import CsdLean4.RecordLayer.DiracPointerHamiltonian
 public import CsdLean4.RecordLayer.DiracPointerRecord
 public import CsdLean4.RecordLayer.DiracPointerThreshold

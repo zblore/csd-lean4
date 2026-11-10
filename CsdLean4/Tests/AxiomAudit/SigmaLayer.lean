@@ -16834,4 +16834,106 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.twoMode_record_erased
 
+/-! #354 (programme milestone M3, part A): the statistics of the pointer at one time — over a fixed carrier ray the pointer pair moves by a map preserving `Haar ⊗ ν`, the push-forward of the preparation `δ ⊗ Haar` under `diracPointerFlow` equals its push-forward with the pointer held, so a region of the fibre has at every time a probability equal to its measure for every carrier (the readout shows `true` with probability `1/2`) and none is within `1/2` of the occupancy of the detector's site for all carriers; the basin of a rate field at time `t` (conditional on the rate field); and the check that an event about two times, ready at `0` and displayed at `T`, is outside the theorem (`RecordLayer/DiracPointerBorn.lean`). -/
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_eq_map' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_eq_map
+
+/-- info: 'CSD.RecordLayer.volume_displayArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_displayArc
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_fst
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_fst_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_fst_congr
+
+/-- info: 'CSD.RecordLayer.measurePreserving_diracPointerFlow_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurePreserving_diracPointerFlow_fibre
+
+/-- info: 'CSD.RecordLayer.diracPointerHeld' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerHeld
+
+/-- info: 'CSD.RecordLayer.diracPointerHeld_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerHeld_fst
+
+/-- info: 'CSD.RecordLayer.diracPointerHeld_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerHeld_snd
+
+/-- info: 'CSD.RecordLayer.measurable_diracPointerHeld' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_diracPointerHeld
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_eq_held' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_eq_held
+
+/-- info: 'CSD.RecordLayer.map_diracPointerFlow_dirac_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_diracPointerFlow_dirac_prod
+
+/-- info: 'CSD.RecordLayer.map_diracPointerFlow_epistemicMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_diracPointerFlow_epistemicMeasure
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_preimage_diracPointerFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_preimage_diracPointerFlow
+
+/-- info: 'CSD.RecordLayer.map_snd_diracPointerFlow_dirac_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_snd_diracPointerFlow_dirac_prod
+
+/-- info: 'CSD.RecordLayer.map_snd_diracPointerFlow_epistemicMeasure' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_snd_diracPointerFlow_epistemicMeasure
+
+/-- info: 'CSD.RecordLayer.dirac_prod_diracPointerFlow_fibreRegion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dirac_prod_diracPointerFlow_fibreRegion
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_diracPointerFlow_fibreRegion' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_diracPointerFlow_fibreRegion
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_diracDisplayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_diracDisplayed
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_diracReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_diracReady
+
+/-- info: 'CSD.RecordLayer.exists_half_le_abs_fibreRegion_sub_siteWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_half_le_abs_fibreRegion_sub_siteWeight
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_diracPointerFlow_globalBasin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_diracPointerFlow_globalBasin
+
+/-- info: 'CSD.RecordLayer.ready_diracPointerHeld_displayed_eq_empty' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ready_diracPointerHeld_displayed_eq_empty
+
+/-- info: 'CSD.RecordLayer.ofReal_mul_volume_writeFibres_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ofReal_mul_volume_writeFibres_le
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_ready_displayed_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_ready_displayed_pos
+
+/-- info: 'CSD.RecordLayer.exists_epistemicMeasure_ready_displayed_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_epistemicMeasure_ready_displayed_pos
+
 end CSD.Tests.AxiomAudit
