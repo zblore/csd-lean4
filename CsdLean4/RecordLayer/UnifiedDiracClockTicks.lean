@@ -157,7 +157,8 @@ For any history read against a phase `R t`. Nothing here uses a flow.
   its site. It is not a detector at a place.
 * **One pointer.** The pointer of #349 is coupled to a site projector on another arena. No
   theorem has a position record and a tick record in one run. One flow carries both pointers in
-  `RecordLayer/UnifiedTwoPointer.lean` (#359), and no record is read there.
+  `RecordLayer/UnifiedTwoPointer.lean` (#359), and no record is read there. Both records are
+  read off that flow in `RecordLayer/UnifiedClockSiteRecords.lean` (#360).
 * **The dilation is the free device's.** The clause on `√(1 − (v/c)²)` is
   `abs_clockRate_div_sub_le`, for the level splitting of the uncoupled device. It is reused.
 * **What is assumed** (`specs/unified-record-spacetime-plan.md`, Register 1): the arena (UA-1),

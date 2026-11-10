@@ -64,8 +64,15 @@ One arena now carries this clock's pointer and a site pointer under one flow, an
 two site pointers on the Dirac ring (BACKLOG ~~#359~~, `RecordLayer/UnifiedTwoPointer.lean`,
 `clockSiteFlow_apply`, `diracTwoPointerFlow_apply`). Each restricts exactly to the one-pointer flow
 on the fibres where the other profile vanishes, and elsewhere the departure is bounded and grows as
-the square of the time. No record is read on either arena. No theorem has a tick record and a
-position record in one run, and no propagation bound is proved for the coupled generators.
+the square of the time.
+On the first of these a tick record of the clock's pointer and a position record of the site pointer
+are occurrences of the one flow from one start state (BACKLOG ~~#360~~,
+`RecordLayer/UnifiedClockSiteRecords.lean`, `clockSite_records_train`). That holds outright for one
+momentum mode on the fibres where both profiles vanish, a null set, where the device moves freely
+and the record does not single out its site. Elsewhere the swing and the write are conditional on
+stated inequalities, with the cross-talk as one more error term. All record times are flow times. No
+record is read on the arena of two site pointers, and no propagation bound is proved for the coupled
+generators.
 
 ## What is open
 
