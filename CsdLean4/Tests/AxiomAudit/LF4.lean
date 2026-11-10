@@ -1893,6 +1893,80 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.hamiltonianFlow_crossEnergy
 
+/-! #359: the flow of a ray coupled to two tori (#202's arena) — its group law, its two one-torus slices (exact), and the product measure it preserves, read off the closed form (`LF4/EchoVolume.lean`). -/
+
+/-- info: 'CSD.LF4.twoCoupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledFlow
+
+/-- info: 'CSD.LF4.continuous_twoCoupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.continuous_twoCoupledFlow
+
+/-- info: 'CSD.LF4.measurable_twoCoupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.measurable_twoCoupledFlow
+
+/-- info: 'CSD.LF4.twoCoupledFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledFlow_zero
+
+/-- info: 'CSD.LF4.twoCoupledFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledFlow_add
+
+/-- info: 'CSD.LF4.twoCoupledFlow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledFlow_apply
+
+/-- info: 'CSD.LF4.schrodingerUnitary_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.schrodingerUnitary_congr
+
+/-- info: 'CSD.LF4.twoCoupledMatrix_eq_coupledMatrix_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledMatrix_eq_coupledMatrix_fst
+
+/-- info: 'CSD.LF4.twoCoupledMatrix_eq_coupledMatrix_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledMatrix_eq_coupledMatrix_snd
+
+/-- info: 'CSD.LF4.twoAccumA_eq_coupledAccum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoAccumA_eq_coupledAccum
+
+/-- info: 'CSD.LF4.twoAccumB_eq_coupledAccum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoAccumB_eq_coupledAccum
+
+/-- info: 'CSD.LF4.twoCoupledFlow_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledFlow_fst
+
+/-- info: 'CSD.LF4.twoCoupledFlow_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledFlow_snd
+
+/-- info: 'CSD.LF4.twoCoupledFlow_fst_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledFlow_fst_of_lift_eq_zero
+
+/-- info: 'CSD.LF4.twoCoupledFlow_snd_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledFlow_snd_of_lift_eq_zero
+
+/-- info: 'CSD.LF4.measurePreserving_addShear' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.measurePreserving_addShear
+
+/-- info: 'CSD.LF4.echoMuL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.echoMuL
+
+/-- info: 'CSD.LF4.echoMuL_map_twoCoupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.echoMuL_map_twoCoupledFlow
+
 
 -- Moved from the MathlibStaging part 2026-11-05: these constants carry Mathlib-style
 -- namespaces but are defined outside CsdLean4/Mathlib/, and that part now imports

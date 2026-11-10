@@ -778,6 +778,7 @@ public import CsdLean4.CV.DiracDevice
 public import CsdLean4.RecordLayer.DiracTicks
 public import CsdLean4.RecordLayer.UnifiedDiracClock
 public import CsdLean4.RecordLayer.UnifiedDiracClockTicks
+public import CsdLean4.RecordLayer.UnifiedTwoPointer
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers
@@ -929,6 +930,7 @@ public import CsdLean4.LF4.EchoCoupledFlow
 public import CsdLean4.LF4.CrossCoupledFlow
 public import CsdLean4.LF4.ArenaStrokeFlux
 public import CsdLean4.LF4.ArenaVolume
+public import CsdLean4.LF4.EchoVolume
 public import CsdLean4.Empirical.QM.Darwinism
 public import CsdLean4.Empirical.QM.BerryPhase
 public import CsdLean4.Empirical.QM.BerryPhaseCurvature

@@ -59,7 +59,13 @@ ticks uses no value of the flow parameter, and the count times the rest period i
 plus the finite-splitting term of the dilated flow time (BACKLOG ~~#358~~,
 `RecordLayer/UnifiedDiracClockTicks.lean`, `clock_tick_device`). The swing is proved outright for
 one mode on a null set of fibres and is a hypothesis elsewhere. No degree of freedom holds the count
-(`not_ae_count_advances_clockPointerFlow`). No arena has this clock and a position detector.
+(`not_ae_count_advances_clockPointerFlow`).
+One arena now carries this clock's pointer and a site pointer under one flow, and another carries
+two site pointers on the Dirac ring (BACKLOG ~~#359~~, `RecordLayer/UnifiedTwoPointer.lean`,
+`clockSiteFlow_apply`, `diracTwoPointerFlow_apply`). Each restricts exactly to the one-pointer flow
+on the fibres where the other profile vanishes, and elsewhere the departure is bounded and grows as
+the square of the time. No record is read on either arena. No theorem has a tick record and a
+position record in one run, and no propagation bound is proved for the coupled generators.
 
 ## What is open
 
