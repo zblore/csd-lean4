@@ -16466,4 +16466,166 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.le_abs_diracPointerShift_twoMode_quarter
 
+/-! #352 (programme milestone M2, part B): the pointer crossing an outcome threshold — the ready state and the readout on `Σ_*` as functions of the pointer angle alone, the short-time bound on the coupled carrier (propagator within `|t| ‖H‖` of the identity, accumulated occupancy within `‖H‖ t²` of `t` times the starting occupancy), the signal from a carrier on the detector's site and the control from a carrier on another site, the two crossing criteria for `diracPointerFlow`, the slow fibres (open, positive measure for every `C¹` profile, nothing displayed up to the horizon whatever the carrier) and the write fibres (open, disjoint from the slow ones, signal displayed and control not, positive measure for the profile `trainF`) (`RecordLayer/DiracPointerThreshold.lean`). -/
+
+/-- info: 'CSD.RecordLayer.pshift_mem_displayArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pshift_mem_displayArc
+
+/-- info: 'CSD.RecordLayer.pshift_notMem_displayArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pshift_notMem_displayArc
+
+/-- info: 'CSD.RecordLayer.diracReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracReady
+
+/-- info: 'CSD.RecordLayer.measurableSet_diracReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_diracReady
+
+/-- info: 'CSD.RecordLayer.diracDisplayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracDisplayed
+
+/-- info: 'CSD.RecordLayer.measurable_diracDisplayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_diracDisplayed
+
+/-- info: 'CSD.RecordLayer.diracDisplayed_eq_true_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracDisplayed_eq_true_iff
+
+/-- info: 'CSD.RecordLayer.diracDisplayed_eq_false_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracDisplayed_eq_false_iff
+
+/-- info: 'CSD.RecordLayer.diracDisplayed_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracDisplayed_congr
+
+/-- info: 'CSD.RecordLayer.mem_diracReady_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_diracReady_congr
+
+/-- info: 'CSD.RecordLayer.diracOccupancy_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracOccupancy_zero
+
+/-- info: 'CSD.RecordLayer.norm_diracCarrierU_sub_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_diracCarrierU_sub_one_le
+
+/-- info: 'CSD.RecordLayer.norm_diracPointerH_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_diracPointerH_le
+
+/-- info: 'CSD.RecordLayer.abs_diracOccupancy_sub_zero_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_diracOccupancy_sub_zero_le
+
+/-- info: 'CSD.RecordLayer.abs_integral_diracOccupancy_sub_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_integral_diracOccupancy_sub_mul_le
+
+/-- info: 'CSD.RecordLayer.rateAt_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rateAt_one
+
+/-- info: 'CSD.RecordLayer.diracPointerShift_eq_rateAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerShift_eq_rateAt
+
+/-- info: 'CSD.RecordLayer.diracPointerShift_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerShift_nonneg
+
+/-- info: 'CSD.RecordLayer.diracPointerShift_le_rateAt_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerShift_le_rateAt_mul
+
+/-- info: 'CSD.RecordLayer.abs_diracPointerShift_le_rateAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_diracPointerShift_le_rateAt
+
+/-- info: 'CSD.RecordLayer.abs_diracPointerShift_sub_init_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_diracPointerShift_sub_init_le
+
+/-- info: 'CSD.RecordLayer.le_diracPointerShift_siteRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_diracPointerShift_siteRay
+
+/-- info: 'CSD.RecordLayer.abs_diracPointerShift_siteRay_of_ne_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_diracPointerShift_siteRay_of_ne_le
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_snd
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_displayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_displayed
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_not_displayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_not_displayed
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_siteRay_displayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_siteRay_displayed
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_siteRay_of_ne_not_displayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_siteRay_of_ne_not_displayed
+
+/-- info: 'CSD.RecordLayer.slowFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.slowFibres
+
+/-- info: 'CSD.RecordLayer.isOpen_slowFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpen_slowFibres
+
+/-- info: 'CSD.RecordLayer.volume_slowFibres_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_slowFibres_pos
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_not_displayed_of_mem_slowFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_not_displayed_of_mem_slowFibres
+
+/-- info: 'CSD.RecordLayer.writeFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.writeFibres
+
+/-- info: 'CSD.RecordLayer.isOpen_writeFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpen_writeFibres
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_displayed_of_mem_writeFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_displayed_of_mem_writeFibres
+
+/-- info: 'CSD.RecordLayer.diracPointerFlow_not_displayed_of_mem_writeFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracPointerFlow_not_displayed_of_mem_writeFibres
+
+/-- info: 'CSD.RecordLayer.disjoint_writeFibres_slowFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.disjoint_writeFibres_slowFibres
+
+/-- info: 'CSD.RecordLayer.zero_mem_writeFibres_trainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.zero_mem_writeFibres_trainF
+
+/-- info: 'CSD.RecordLayer.volume_writeFibres_trainF_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_writeFibres_trainF_pos
+
+/-- info: 'CSD.RecordLayer.exists_volume_writeFibres_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_volume_writeFibres_pos
+
 end CSD.Tests.AxiomAudit

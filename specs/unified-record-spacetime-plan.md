@@ -132,7 +132,9 @@ what would discharge or constrain it.
   1. *The ready state.* The pointer starts at a ready value and is renewed for each measurement
      (Posit 5: `calibratedBank`, one measurement, one bank).
   2. *The apparatus parameters.* The detector's site `j`, the profile `f`, the coupling `g`, and (from
-     M2) the readout region and threshold. They are the measurement context `M`.
+     M2) the readout region and threshold. They are the measurement context `M`. Since BACKLOG
+     ~~#352~~ the regions are `diracReady` (pointer angle in `(0, 1/6]`) and `diracDisplayed`
+     (pointer angle in `(1/3, 5/6]`), and the readout time `T` is a parameter of the same kind.
   3. *The law of the conserved angle.* The distribution of `θ₂` over trials.
   4. *Measurement independence* (Posit 8): the choice of `M` is not correlated with the ontic point.
      Settings are not represented in `Σ`, and nothing backs this entry.
@@ -225,7 +227,8 @@ what would discharge or constrain it.
 
 UD-1 to UD-7 are in `RecordLayer/DiracPointerHamiltonian.lean` (package `diracPointer_hamiltonian`)
 and are all exact. UD-31 to UD-34 are in `RecordLayer/DiracPointerWrite.lean` (BACKLOG ~~#351~~, M2
-part A) and are marked exact or bound.
+part A) and UD-35 to UD-39 in `RecordLayer/DiracPointerThreshold.lean` (BACKLOG ~~#352~~, M2
+part B); they are marked exact or bound.
 
 | ID | Property | Lean |
 |---|---|---|
@@ -262,6 +265,25 @@ does not move. The fibre on which a statement holds is preparation input (UA-4, 
 `θ₂` is used. UD-33 identifies one lifted coordinate; the `ActualOccurrence` structures on the
 detector arena (UD-12) are not transported. UD-34's carrier is a beating two-mode state with between
 `20/1392` and `212/1392` of its weight on each site, not a carrier that arrives from elsewhere.
+
+| ID | Property | Lean | Kind |
+|---|---|---|---|
+| UD-35 | **The regions on `Σ_*`.** The ready state and the readout are measurable and depend on the pointer angle `θ₁` alone | `diracReady`, `diracDisplayed`, `measurableSet_diracReady`, `measurable_diracDisplayed`, `mem_diracReady_congr`, `diracDisplayed_congr` | definitions; the check is exact |
+| UD-36 | **The coupled carrier over a short time.** Propagator within `\|t\| ‖H‖` of the identity, `H = H_D + g f(θ₂) P_j`, `‖H‖ ≤ ‖H_D‖ + \|g f(θ₂)\|`; occupancy of site `j` within `2 \|s\| ‖H‖` of its starting value; accumulated occupancy within `‖H‖ t²` of `t` times it; displacement within `\|κ\| ‖H‖ t²` of `κ t` times it, `κ = −2 g f'(θ₂)` | `norm_diracCarrierU_sub_one_le`, `norm_diracPointerH_le`, `abs_diracOccupancy_sub_zero_le`, `abs_integral_diracOccupancy_sub_mul_le`, `abs_diracPointerShift_sub_init_le`, `diracPointerShift_eq_rateAt` | bound |
+| UD-37 | **The threshold.** From a ready pointer the flow is in the displayed region when the displacement is in `[1/3, 2/3]` and outside it when the displacement is below `1/6` in size. A carrier on the detector's site is displayed at `T` when `κ ≥ 0`, `1/3 ≤ κ (T − ‖H‖ T²)` and `κ T ≤ 2/3`; a carrier on another site is not displayed at any time up to `T` when `\|κ\| ‖H‖ T² < 1/6` | `diracPointerFlow_displayed`, `diracPointerFlow_not_displayed`, `le_diracPointerShift_siteRay`, `abs_diracPointerShift_siteRay_of_ne_le`, `diracPointerFlow_siteRay_displayed`, `diracPointerFlow_siteRay_of_ne_not_displayed` | exact (the two criteria); sufficient conditions from a bound |
+| UD-38 | **The slow fibres.** The set `\|κ(θ₂)\| T < 1/6` is open and has positive Haar measure for every `C¹` profile and every `T`; on it, from a ready pointer, nothing is displayed at any time up to `T`, for any carrier | `slowFibres`, `isOpen_slowFibres`, `volume_slowFibres_pos`, `diracPointerFlow_not_displayed_of_mem_slowFibres` | exact; the measure is positive, not computed |
+| UD-39 | **The write fibres.** The set `κ > 0`, `1/3 < κ (T − h T²)`, `κ T < 2/3`, `κ h T² < 1/6` with `h = ‖H_D‖ + \|g f(θ₂)\|` is open and disjoint from the slow fibres; on it the carrier on the detector's site is displayed at `T` and a carrier on another site is not, up to `T`. Profile `trainF`, `g = 1/(4T)`, `‖H_D‖ T ≤ 1/4`: it contains `θ₂ = 0` and has positive measure; such `g`, `T` exist for every ring, `J`, `μ` | `writeFibres`, `isOpen_writeFibres`, `disjoint_writeFibres_slowFibres`, `diracPointerFlow_displayed_of_mem_writeFibres`, `diracPointerFlow_not_displayed_of_mem_writeFibres`, `zero_mem_writeFibres_trainF`, `volume_writeFibres_trainF_pos`, `exists_volume_writeFibres_pos` | sufficient condition; the measure is positive, not computed |
+
+Exact scope of UD-35 to UD-39. They are statements about a threshold. None is a record: no
+outcome is selected, no `ActualOccurrence` is built, and the signal statements hold at the one
+time `T`, with no bound on how long the pointer stays in the displayed arc. The sizes come from
+the first-order estimate `‖H‖ t²` on the coupled carrier, so `writeFibres` is a set on which the
+write is proved; the set of fibres on which the carrier is displayed at `T` contains it and is
+not determined. The signal carrier is prepared on the detector's site and the write is complete
+in a time short on the scale `1/‖H‖`: nothing arrives. The control is bounded up to `T` only.
+The fibres in neither set, and every fibre with `κ < 0`, carry no statement. Haar measure on the
+`θ₂` circle is used to say that two sets are not null and for nothing else: no law for `θ₂` is
+used (UA-4, item 3) and no probability of a write is stated.
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -302,7 +324,8 @@ detector arena (UD-12) are not transported. UD-34's carrier is a beating two-mod
 
 Each entry: the obligation, why the assumptions do not guarantee it, and the repackaging test.
 Proposed module names are the programme's. `DiracPointerWrite.lean` exists since BACKLOG
-~~#351~~ (M2 part A); the others do not.
+~~#351~~ (M2 part A); M2 part B is in `DiracPointerThreshold.lean` (~~#352~~), a module the
+programme did not name. The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
 
@@ -312,6 +335,10 @@ The programme separates four statements. They stay separate here.
   value of `θ₁` for the pointer of `Σ_*`. *Not a result:* these are apparatus parameters (UA-4).
   *Test:* a region whose definition mentions the carrier's prepared state, or its weights, is not
   an apparatus parameter.
+  ▸ **Met 2026-11-09 (BACKLOG ~~#352~~) → UA-4 item 2 and UD-35.** `diracReady` and
+  `diracDisplayed` are conditions on the pointer angle `θ₁` and on nothing else, which is what
+  `mem_diracReady_congr` and `diracDisplayed_congr` check. They remain chosen: the arcs `(0, 1/6]`
+  and `(1/3, 5/6]` are not derived from anything.
 * **UO-2 — displacement created.** A lower bound on `|diracPointerShift|` over a stated interval for
   an incident packet. *Not guaranteed:* the shift is `−2 g f'(θ₂)` times the accumulated occupancy
   `∫ ⟨P_j⟩` along the **coupled** carrier, generated by `H_D + g f(θ₂) P_j`, not along the free one.
@@ -335,6 +362,14 @@ The programme separates four statements. They stay separate here.
   near which the pointer does not move. On the two-site arena that set is `transition_region`. The
   statement on `Σ_*` must name its exceptional set and bound its measure, or prove the write only
   for the stated `θ₂`. *Test:* a universal exact write is false for this model.
+  ▸ **Met 2026-11-09 (BACKLOG ~~#352~~) → UD-36 to UD-39, by the second alternative and with
+  three conditions that stay here.** The write is proved for the stated fibres, `writeFibres`, and
+  the fibres on which it is proved to fail by `T`, `slowFibres`, are named and shown to have positive
+  measure for every `C¹` profile. The control is a carrier prepared on another site, bounded by the
+  same occupancy estimate as the signal. *Still owed under this identifier:* (a) the measures of the
+  two sets, which are shown positive and not computed, and any statement on the fibres in neither;
+  (b) the control past `T`, when the chain has carried it to the detector's site; (c) a signal that
+  arrives — the carrier of UD-37 starts on the detector's site, which is UO-2's condition (a) again.
 * **UO-4 — a definite outcome selected.** The write as an `ActualOccurrence` whose `evolve` field is
   `diracPointerFlow`. *Test:* `ActualOccurrence` carries its evolution as a field; instantiating it
   with any map other than the M1 flow adds a record process to the dynamics, which the milestone's
@@ -569,7 +604,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);
