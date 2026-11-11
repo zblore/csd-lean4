@@ -121,7 +121,14 @@ That arena now exists (BACKLOG ~~#368~~, `LF4/PointerStep.lean`, `LF4/TriCoupled
 theorem adds a pointer torus to any compact symplectic arena, with the flow a skew product over
 the base's flows (`hamiltonianFlow_stepEnergy`), and `ℂℙᴺ × T² × T² × T²` is that theorem applied
 to the two-torus arena, with its flow in closed form and its measure preserved
-(`threeCoupledFlow_closed`, `triMuL_map_threeCoupledFlow`). No record is read on it yet.
+(`threeCoupledFlow_closed`, `triMuL_map_threeCoupledFlow`).
+A clock and two site detectors are read on it in one run (BACKLOG ~~#369~~,
+`RecordLayer/UnifiedClockTwoSites.lean`, `clockTwoSite_records_train`). The clock ticks, each
+detector's readout switches at an explicit flow time, the clock's count is taken at both, and the
+interval between the two records in ticks is within two tick periods of its flow value. The
+carrier is one momentum mode on a null set of fibres. No signal travels: the interval is set by
+the detectors' strengths and is not a transit time. A travelling carrier with a clock in the same
+run is not proved.
 
 ## What is open
 

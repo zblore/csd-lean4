@@ -51,7 +51,7 @@ one orbit, and the three second angles are fixed (`threeCoupledFlow_closed`).
 * **The measure statement is read off the closed form.** The top-form measure of `triForm` is
   not identified with `triMuL`.
 * **No physics here.** Which operators the three tori are coupled to, and what is read on them,
-  is in `RecordLayer`.
+  is in `RecordLayer` (`RecordLayer/UnifiedClockTwoSites.lean`, #369).
 
 ## References
 

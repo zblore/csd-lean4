@@ -19102,4 +19102,94 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.regionTwoFlow_departure_arrival
 
+/-! #369 (the author's programme, towards milestone M6): a clock and two site detectors under one flow — a readout and a ready arc on the third torus (apparatus input); the slice of the three-torus flow on a fibre where the third profile vanishes; the flow of the two-level device with the clock's pointer and two site pointers, a one-parameter group that preserves the product measure, reducing exactly to `clockSiteFlow` on such a fibre, with the third pointer turned by its rate times the accumulated occupancy of its site; and one run from the start of #360 with a third ready pointer: the clock's pointer a swing on every horizon, each detector's readout switching at an explicit flow time, the tick history with a count at each of those times within one tick period, and the interval between the two records in ticks within two periods of its flow value. One momentum mode on a null set of fibres: no signal travels, and the interval is set by the detectors' strengths; the counts are taken at flow times (`RecordLayer/UnifiedClockTwoSites.lean`). -/
+
+/-- info: 'CSD.RecordLayer.triThdReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triThdReady
+
+/-- info: 'CSD.RecordLayer.measurableSet_triThdReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_triThdReady
+
+/-- info: 'CSD.RecordLayer.triThdDisplay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triThdDisplay
+
+/-- info: 'CSD.RecordLayer.measurableSet_triThdDisplay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_triThdDisplay
+
+/-- info: 'CSD.RecordLayer.triThdShown' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triThdShown
+
+/-- info: 'CSD.RecordLayer.measurable_triThdShown' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_triThdShown
+
+/-- info: 'CSD.RecordLayer.triThdShown_eq_true_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triThdShown_eq_true_iff
+
+/-- info: 'CSD.RecordLayer.threeCoupledFlow_fst_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeCoupledFlow_fst_of_lift_eq_zero
+
+/-- info: 'CSD.RecordLayer.threeCoupledFlow_snd_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeCoupledFlow_snd_of_lift_eq_zero
+
+/-- info: 'CSD.RecordLayer.clockTwoSiteFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockTwoSiteFlow
+
+/-- info: 'CSD.RecordLayer.clockTwoSiteFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockTwoSiteFlow_zero
+
+/-- info: 'CSD.RecordLayer.clockTwoSiteFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockTwoSiteFlow_add
+
+/-- info: 'CSD.RecordLayer.triMuL_map_clockTwoSiteFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triMuL_map_clockTwoSiteFlow
+
+/-- info: 'CSD.RecordLayer.clockTwoSiteFlow_fst_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockTwoSiteFlow_fst_of_lift_eq_zero
+
+/-- info: 'CSD.RecordLayer.clockTwoSiteFlow_thd_pointer_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockTwoSiteFlow_thd_pointer_of_lift_eq_zero
+
+/-- info: 'CSD.RecordLayer.pshift_twelfth_mem_displayArc_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pshift_twelfth_mem_displayArc_iff
+
+/-- info: 'CSD.RecordLayer.clockTwoSiteTrainStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockTwoSiteTrainStart
+
+/-- info: 'CSD.RecordLayer.clockTwoSiteFlow_train_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockTwoSiteFlow_train_fst
+
+/-- info: 'CSD.RecordLayer.isSwing_clockTwoSiteFlow_train' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isSwing_clockTwoSiteFlow_train
+
+/-- info: 'CSD.RecordLayer.echoSiteShown_clockTwoSiteFlow_train_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoSiteShown_clockTwoSiteFlow_train_iff
+
+/-- info: 'CSD.RecordLayer.triThdShown_clockTwoSiteFlow_train_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triThdShown_clockTwoSiteFlow_train_iff
+
+/-- info: 'CSD.RecordLayer.clockTwoSite_records_train' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockTwoSite_records_train
+
 end CSD.Tests.AxiomAudit

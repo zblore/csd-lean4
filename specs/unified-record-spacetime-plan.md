@@ -195,6 +195,9 @@ what would discharge or constrain it.
      Since BACKLOG ~~#364~~ the arena of two site detectors has the same two arcs on each torus
      (`echoFstReady`, `echoFstDisplay`, `echoSiteReady`, `echoSiteDisplay`), placed by hand. Both
      pointers start in their ready arcs.
+     Since BACKLOG ~~#369~~ the third torus of the arena of UA-15 has the same two arcs
+     (`triThdReady`, `triThdDisplay`). The third profile, the third strength and the second
+     detector's site are parameters of the same kind.
   3. *The law of the conserved angle.* The distribution of `θ₂` over trials.
   4. *Measurement independence* (Posit 8): the choice of `M` is not correlated with the ontic point.
      Settings are not represented in `Σ`, and nothing backs this entry.
@@ -391,7 +394,9 @@ what would discharge or constrain it.
   three pointers are uniform and independent of each other and of the base. (c) The joint energy
   is a sum: the carrier's energy and one product term for each pointer. There is no term between
   the pointers, and no moving angle enters the energy. (d) Which operator each pointer is coupled
-  to is chosen where the arena is used.
+  to is chosen where the arena is used. Since BACKLOG ~~#369~~ one choice is in use: the level
+  swap for the clock's pointer (UA-12) and the site projector on both levels for each of two
+  detectors (`clockTwoSiteFlow`).
 * **Where.** `TriSigma`, `triForm`, `triForm_isSymplectic`, `triMuL`, `threeCoupledEnergy`
   (`LF4/TriCoupledFlow.lean`, BACKLOG ~~#368~~). The construction that adds a torus to an arena is
   `stepForm`, `stepEnergy` (`LF4/PointerStep.lean`): the form of (c) is its hypothesis, for any
@@ -873,12 +878,17 @@ enters only through the measure on the pair of conserved angles. UA-6 is not use
 
 UD-95 is in `LF4/PointerStep.lean` and UD-96 in `LF4/TriCoupledFlow.lean` (BACKLOG ~~#368~~). UD-95
 is about any compact symplectic arena and has no carrier in it. UD-96 is the arena of UA-15. No
-record is read in either, and they meet no obligation of §5.
+record is read in either, and they meet no obligation of §5. UD-97 and UD-98 are in
+`RecordLayer/UnifiedClockTwoSites.lean` (BACKLOG ~~#369~~): the device, the clock's pointer and
+two site detectors on that arena, `ℂℙ^{4M+3} × T² × T² × T²`, with the flow `clockTwoSiteFlow`.
+They are what UO-16 is annotated with; they do not meet it.
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
 | UD-95 | **Adding a pointer torus to a symplectic arena.** For a `C^∞` manifold `S` modelled on a finite-dimensional space, with a symplectic form `β`: `stepForm β = β ⊕ dψ₁ ∧ dψ₂` on `S × T²` is symplectic. For smooth `H`, `G` on `S` and a smooth periodic `g`, the energy `stepEnergy H G = H(s) + G(s) g(ψ₂)` is smooth, and if `X_H`, `X_G` are Hamiltonian vector fields of `H`, `G` for `β` then `(X_H + g(ψ₂) X_G, (G g'(ψ₂), 0))` is one of the step energy for `stepForm β`. For compact `S` the Hamiltonian flow of the step energy is `(s, ψ) ↦ (φ_t(s), (ψ₁ + g'(ψ₂) ∫₀ᵗ G(φ_u(s)) du, ψ₂))`, with `φ` the Hamiltonian flow on `S` of `H + g(ψ₂) G`; in particular its first component is that base flow. If for every `c` the base flow of `H + c G` at time `t` preserves a measure `μ`, the flow at time `t` preserves `μ ⊗ vol_{T²}`. The form `echoForm` is `stepForm arenaForm` and `twoCoupledEnergy` is a `stepEnergy` | `stepForm`, `stepForm_isSymplectic`, `stepEnergy`, `stepEnergy_eq`, `contMDiff_stepTerm`, `contMDiff_stepEnergy`, `contMDiff_add_const_smul`, `isHamiltonianVectorField_stepLift`, `isHamiltonianVectorField_stepTerm`, `isHamiltonianVectorField_step`, `hamiltonianFlow_stepEnergy`, `hamiltonianFlow_congr`, `hamiltonianFlow_stepEnergy_fst`, `map_hamiltonianFlow_stepEnergy`, `echoForm_eq_stepForm`, `twoCoupledEnergy_eq_stepEnergy` | exact; for any compact symplectic arena, with no carrier, detector or record in it; the measure statement is conditional on the base flows |
 | UD-96 | **The flow of a ray coupled to three tori.** `triForm = stepForm echoForm` on `ℂℙᴺ × T² × T² × T²` is symplectic. `threeCoupledEnergy` is the step over `twoCoupledEnergy` with the ray observable `−2⟨B_C⟩`: `−2⟨A⟩ − 2⟨B_A⟩ f(θ₂) − 2⟨B_B⟩ g(ψ₂) − 2⟨B_C⟩ k(χ₂)`, smooth. Adding `c` times `−2⟨B_C⟩` to the two-torus energy is replacing `A` by `A + c B_C`. `threeCoupledFlow` is its Hamiltonian flow: continuous and measurable at each time, a one-parameter group. With `χ₂` held, the ray and the first two tori move by `twoCoupledFlow` of UD-66 with uncoupled matrix `A + k(χ₂) B_C`, `χ₁` advances by `k'(χ₂)` times the accumulated `−2⟨B_C⟩` along that orbit, and `χ₂` is fixed. In closed form, for Hermitian matrices: the ray moves by the Schrödinger unitary of `A + f(θ₂) B_A + g(ψ₂) B_B + k(χ₂) B_C`, and `θ₁`, `ψ₁`, `χ₁` advance by `f'(θ₂)`, `g'(ψ₂)`, `k'(χ₂)` times the accumulated `−2⟨B_A⟩`, `−2⟨B_B⟩`, `−2⟨B_C⟩` along that one orbit. The flow preserves `triMuL = μ_FS ⊗ vol_{T²} ⊗ vol_{T²} ⊗ vol_{T²}` | `TriModel`, `TriSigma`, `triForm`, `triForm_isSymplectic`, `echoRayEnergy`, `contMDiff_echoRayEnergy`, `threeCoupledEnergy`, `threeCoupledEnergy_apply`, `contMDiff_threeCoupledEnergy`, `twoCoupledEnergy_add_smul_echoRayEnergy`, `threeCoupledFlow`, `continuous_threeCoupledFlow`, `measurable_threeCoupledFlow`, `threeCoupledFlow_zero`, `threeCoupledFlow_add`, `threeCoupledFlow_apply`, `threeCoupledFlow_closed`, `triMuL`, `triMuL_map_threeCoupledFlow` | exact; for any Hermitian quadruple, not about detectors; the measure read off the closed form — the top-form measure of `triForm` is not identified with `triMuL` |
+| UD-97 | **The device, the clock's pointer and two site detectors.** On the third torus the ready set `triThdReady`, the displayed set `triThdDisplay` and the readout `triThdShown` are the arcs `readyArc` and `displayArc` on the third pointer; all are measurable. On a fibre where the third profile vanishes, the first component of `threeCoupledFlow` is `twoCoupledFlow` and the third pointer is turned by `k'(χ₂)` times the accumulated `−2⟨B_C⟩` along that orbit. `clockTwoSiteFlow` is `threeCoupledFlow` for the device's Hamiltonian, the level swap and two site projectors: a one-parameter group that preserves `triMuL`. On a fibre with `k(χ₂) = 0` its first component is `clockSiteFlow` of UD-71, and its third pointer is its start translated by the rate `−2 g₃ k'(χ₂)` times the accumulated occupancy of site `k₃` along the orbit of `clockSiteFlow` | `triThdReady`, `measurableSet_triThdReady`, `triThdDisplay`, `measurableSet_triThdDisplay`, `triThdShown`, `measurable_triThdShown`, `triThdShown_eq_true_iff`, `threeCoupledFlow_fst_of_lift_eq_zero`, `threeCoupledFlow_snd_of_lift_eq_zero`, `clockTwoSiteFlow`, `clockTwoSiteFlow_zero`, `clockTwoSiteFlow_add`, `triMuL_map_clockTwoSiteFlow`, `clockTwoSiteFlow_fst_of_lift_eq_zero`, `clockTwoSiteFlow_thd_pointer_of_lift_eq_zero` | the readout and the ready set are definitions (apparatus input, UA-4); the rest exact; the reductions hold on the fibres where the third profile vanishes, a null set for a generic profile |
+| UD-98 | **Three records in one run, and the clock's count at each detector's record.** A pointer at `1/12` turned by `t c`, `c > 0`, is in the displayed arc exactly for `1/(4c) < t`, on `0 ≤ t ≤ 3/(4c)`. The start `clockTwoSiteTrainStart` is that of UD-76 with a third pointer at `1/12` and `χ₂ = 0`; all three profiles are `trainF`. Along the orbit of `clockTwoSiteFlow` from it the first component is the orbit of UD-76, so the clock's pointer is a swing at the level splitting `R` on every horizon, for all strengths of the detectors. With `g₂, g₃ > 0`: the first detector's readout is `true` exactly for `(M+1)/(8 g₂) < t` on `0 ≤ t ≤ 3(M+1)/(8 g₂)`, and the second detector's exactly for `(M+1)/(8 g₃) < t` on `0 ≤ t ≤ 3(M+1)/(8 g₃)`. The tick history has counts `N₂` at `t₂ = (M+1)/(8 g₂)` and `N₃` at `t₃ = (M+1)/(8 g₃)`, with `\|N_i · 2π/R − t_i\| ≤ 2π/R` and `\|(N₃ − N₂) · 2π/R − (t₃ − t₂)\| ≤ 4π/R` | `pshift_twelfth_mem_displayArc_iff`, `clockTwoSiteTrainStart`, `clockTwoSiteFlow_train_fst`, `isSwing_clockTwoSiteFlow_train`, `echoSiteShown_clockTwoSiteFlow_train_iff`, `triThdShown_clockTwoSiteFlow_train_iff`, `clockTwoSite_records_train` | exact switching instants; count bounds of one and two periods; on a null set of fibres; one mode — the same occupancy at every site, so no signal travels |
 
 Exact scope of UD-95 and UD-96. What they give. The flows of §2 for one and two pointer tori were
 each proved for their own arena. UD-95 is the construction they share, for any compact symplectic
@@ -895,6 +905,30 @@ two modules, and no statement about a clock or a detector. By the test of §6: n
 statement about records, so the test does not apply; the entries are the dynamics that later
 records must come from. UD-95 and UD-96 use UA-15, and through the two-torus arena UA-13. UA-2
 enters only as invariance. UA-6 is not used.
+
+Exact scope of UD-97 and UD-98. What they give. One flow now carries a clock's pointer and two
+detectors' pointers, and one run has a record on each. The clock ticks, each detector's readout
+switches at an instant its own history fixes, and the clock's count is taken at both instants. The
+interval between the two detector records, read in ticks, is the flow interval within two tick
+periods. Those are the ingredients of a radar reading: two records and a clock's count at each,
+from one start state under one dynamics. What they do not give. No signal travels. The carrier is
+one momentum mode, with the same occupancy at every site at all times. Each detector's pointer
+turns at its own rate, and the two records are apart in time because the strengths `g₂` and `g₃`
+differ. The interval is `(M+1)(1/g₃ − 1/g₂)/8`. It is not a transit time, it does not depend on
+the two sites, and no distance or speed is read off it. So this is not a radar exchange, and by
+the test of UO-16 nothing here is evidence about Lorentz kinematics. The instance is on the
+fibres where all three profiles vanish, a null set, where the device moves freely and drives the
+three pointers. Off those fibres only the reduction on the zeros of the third profile is proved,
+and there is no cross-talk bound for three pointers. The counts are of the tick history up to
+flow times (UA-7), held by no degree of freedom. The records are definite facts of the one
+trajectory, and no weight of quantum mechanics is derived. What separates this from a one-way
+signal is named: a travelling carrier in this arena needs the crossing bounds of UD-12's module
+for the two-level device, whose levels have different rest energies and speeds, and the clock's
+swing for a packet over the transit, which is condition (a) of UO-14. By the test of §6: no
+hypothesis of UD-98 is a Register 1 entry other than the parameters, the arcs and the couplings;
+no definition contains a write; the object is the flow of the joint energy; and the statements
+fail for pointers that do not move. UD-97 and UD-98 use UA-15, UA-12, UA-8, UA-7 and the arcs,
+profiles and strengths of UA-4. UA-2 enters only as invariance. UA-6 is not used.
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -953,7 +987,8 @@ of two site detectors, and UO-10 for a carrier on one detector's site.
 `UnifiedCountAtWrite.lean` (~~#366~~) is another: the clock's count at a position write.
 `UnifiedDepartureArrival.lean` (~~#367~~) is another: a departure and an arrival record in one run.
 `LF4/PointerStep.lean` and `LF4/TriCoupledFlow.lean` (~~#368~~) are two more: the arena with three
-pointer tori. They meet no obligation.
+pointer tori. They meet no obligation. `UnifiedClockTwoSites.lean` (~~#369~~) is another: a clock
+and two site detectors on that arena, with three records in one run.
 The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
@@ -1370,6 +1405,16 @@ time. It is not a statement about every dynamics on `Σ`.
   BACKLOG ~~#368~~, UD-96; nothing is read on it yet); the count of that clock at each record (UD-92 has it for a position write on
   another arena); the two times located; an emission in place of a prepared departure; a second
   observer; detectors on less than half the ring; and a family along which the errors shrink.
+  ▸ **A clock and two detectors in one run, 2026-11-11 (BACKLOG ~~#369~~) → UD-97, UD-98. The
+  ingredients are in one run. No signal travels. Not met.** On the three-pointer arena of UD-96,
+  one orbit has the clock's ticks, a record on each of two site detectors, and the clock's count
+  at each of the two records, with the interval between them in ticks within two tick periods of
+  its flow value (`clockTwoSite_records_train`). The carrier is one momentum mode: the interval is
+  set by the detectors' strengths and is not a transit time. *What is still missing:* a
+  travelling carrier in this arena (the crossing bounds of UD-12's module for the two-level
+  device, and region projectors on it); the clock's swing for a packet over the transit, UO-14
+  (a); a return leg; a second observer; a family along which the errors shrink. By the test
+  above, nothing so far is evidence about the speed of a messenger or the rate of a moving clock.
 
 ### M7 — `3 + 1`
 
@@ -1516,7 +1561,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);
