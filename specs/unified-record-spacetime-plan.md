@@ -584,7 +584,8 @@ UA-13. Every time in them is the flow parameter (UA-7). UD-66 to UD-71 meet no o
 UD-72 to UD-76 are what condition (d) of UO-14 is annotated with. UD-77 to UD-81 are in
 `RecordLayer/UnifiedCausalOrder.lean` (BACKLOG ~~#361~~) and are what UO-15 is annotated with.
 UD-82 and UD-83 are in `RecordLayer/UnifiedCausalArrival.lean` (BACKLOG ~~#362~~) and bear on
-condition (e2) of UO-15.
+condition (e2) of UO-15. UD-84 and UD-85 are in `RecordLayer/UnifiedSiteRecord.lean` (BACKLOG
+~~#363~~) and bear on conditions (d1) and (d2) of UO-14.
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -606,6 +607,8 @@ condition (e2) of UO-15.
 | UD-81 | **The clock and a site detector: the site pointer's response to a kick, and its record.** On the arena of UD-71, with `H` the coupled Hamiltonian `clockSiteH`, the clock's coupling in it. For a kick that is the identity off `Y`, with `d` steps of growth from `k` missing `Y`, the site pointer's displacement moves by at most `4 \|g₂\| \|h'(ψ₂)\| (2‖H‖t)^d/d! · t`, and that response is the difference of its moving angle between two runs of `clockSiteFlow`. From a ready pointer on a fibre of nonnegative rate (as UD-74), if the displacement in the unkicked run clears the three thresholds of UD-74 by that bound at the three times, the kicked run writes the position record on the same write interval with the same window | `continuous_clockSiteCarrierU`, `abs_clockSiteKickResponseSnd_le`, `clockSiteFlow_kick_snd`, `isRecordWrite_clockSiteFlow_site_of_kick` | upper bound, not shown attained; the write is conditional on the three margins, and no instance in which they hold is exhibited; `d` is at most about half the ring; no bound of this kind for the clock's pointer, whose coupled operator is supported on no proper set of sites (UD-77) |
 | UD-82 | **The leading term of the response to a kick.** An observable that commutes with a kick has the same expectation after it. If the first `d` iterated commutators of `D` with a skew-Hermitian `S` commute with the kick `W` — which holds by support when fewer than `d` steps of growth from the support of `D` do not reach the kick's set — then for `s ≥ 0` the response of `⟨D⟩` along `exp(sS)` is `(−1)^d s^d/d!` times `Δ_d`, the change the kick makes in the expectation of `ad_S^d D` at time `0`, up to `2 (2‖S‖s)^(d+1)/(d+1)! · ‖D‖`. A displacement `−2 g c ∫₀ᵗ⟨D⟩` with `‖D‖ ≤ 1` responds by `−2 g c (−1)^d t^(d+1)/(d+1)! · Δ_d` up to `4 \|g\| \|c\| (2‖S‖t)^(d+1)/(d+1)! · t`. The sign kick at a site `y` multiplies the amplitudes over `y` by `−1`; it is unitary and the identity off `{y}` | `arenaObs_kick_of_commute`, `arenaObs_smul_real`, `abs_arenaObs_le`, `commute_adIter_of_disjoint_growIter`, `abs_arenaObs_flow_kick_sub_sub_le`, `integral_flowCoef`, `abs_displacement_kick_sub_sub_le`, `siteSignKick`, `siteSignKick_val`, `idOffOn_siteSignKick` | an expansion with an error bound; `Δ_d` is not evaluated here and may be zero; the error constant is not sharp; for any finite index, not only the two arenas |
 | UD-83 | **Two site pointers: a kick at the neighbouring site is felt.** On the arena of UD-70, on a ring with `k − 1 ≠ k + 1`. The carrier is the ray of `e_(k,1) + e_(k−1,0)`, and the sign kick at the site `k − 1` carries it to the ray of `e_(k,1) − e_(k−1,0)`. The coupled generator `−i·diracTwoH` between those two indices is `J` and `−J` at every pair of pointer angles, so the kick changes the expectation of `[S, P_k]` by `2 J`. For `t ≥ 0` the second pointer's response is `2 g₂ h'(ψ₂) J t²` up to `8 \|g₂\| \|h'(ψ₂)\| ‖H‖² t³`. Its size is at least `2 \|g₂\| \|h'(ψ₂)\| t² (\|J\| − 4‖H‖²t)`. For `g₂ h'(ψ₂) ≠ 0`, `0 < t` and `4‖H‖²t < \|J\|` it is not zero | `arrival_ne`, `arrivalRay`, `arenaKick_siteSignKick_arrivalRay`, `inner_single_toEuclideanLin_single`, `adOne_diagonal_apply`, `diracTwoGen_apply_arrival`, `diracTwoGen_apply_arrival'`, `arenaObs_adOne_diracTwoGen_arrivalRay_sub`, `abs_diracTwoKickResponseSnd_sub_le`, `le_abs_diracTwoKickResponseSnd`, `diracTwoKickResponseSnd_ne_zero` | the current's change exact; the response an expansion with an error bound; a lower bound, positive for short times only; distance one, one carrier, one kick; about a displacement — no record is read on this arena |
+| UD-84 | **The device over a short time, and the record fibres.** On the arena of UD-71, with `H = clockSiteH`. The coupled propagator is within `\|t\| ‖H‖` of the identity, and `‖H‖ ≤ ‖H_dev‖ + \|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|`. The occupancy of the detector's site stays within `2 \|s\| ‖H‖` of its starting value `q`, the accumulated occupancy within `‖H‖ t²` of `t q`, and the site pointer's displacement within `\|κ\| ‖H‖ t²` of `κ t q`, `κ` the rate on its fibre. The record fibres `siteRecordFibres` are the pairs `(θ₂, ψ₂)` with `κ > 0` and `16 (‖H_dev‖ + \|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|) < 3 κ`; the set is the same for every site of the detector, and on it `16 ‖H‖ ≤ 3 κ`. It is open for a continuous clock profile and a `C¹` detector profile. For the detector profile `trainF` and `16 (‖H_dev‖ + \|g₁ f(φ₀)\|) < 6 g₂` at one angle `φ₀` it contains `(φ₀, 0)` and has positive measure, and such a `g₂` exists | `norm_clockSiteCarrierU_sub_one_le`, `norm_clockSiteH_le`, `abs_clockSiteOccupancy_sub_le`, `abs_integral_clockSiteOccupancy_sub_mul_le`, `abs_clockSiteShiftSnd_sub_init_le`, `siteRecordFibres`, `isOpen_siteRecordFibres`, `siteRecordFibres_bounds`, `mem_siteRecordFibres_trainF`, `volume_siteRecordFibres_trainF_pos`, `exists_volume_siteRecordFibres_pos` | upper bounds, not shown attained; the fibre set is a definition; its positive measure is for one profile and a strong detector; the measure is Haar on the pair of conserved angles |
+| UD-85 | **A position record that singles out its site.** On a record fibre, from a ready site pointer, for any state of the clock's pointer. A carrier with at least `7/8` of its occupancy on the detector's site: the readout history along `clockSiteFlow` is an `IsRecordWrite` of `true` from time `0` with write interval `[1/(6κ), 1/(2κ)]` and window `1/(6κ)`, and the readout shows `true` through `[1/(2κ), 2/(3κ)]`. A carrier with at most `1/8` of its occupancy on the detector's site: the readout does not show `true` at any time up to `2/(3κ)`. The occupancies of two sites sum to at most one. So for a carrier with at least `7/8` on a site `x` and the detector placed at any site `k`, the readout at the flow time `1/(2κ)` is `true` exactly when `k = x`. The device on one site is such a carrier | `third_le_clockSiteShiftSnd`, `clockSiteShiftSnd_le_sixth`, `isRecordWrite_clockSiteFlow_site_of_occupancy`, `clockSiteFlow_site_shown_of_occupancy`, `clockSiteFlow_site_not_shown_of_occupancy`, `arenaObs_deviceSiteProj_le_one_sub`, `deviceSiteRay`, `arenaObs_deviceSiteProj_deviceSiteRay`, `clockSiteFlow_site_shown_iff` | exact given the fibre and the occupancy; the two placements of the detector are two flows, not one run; sufficient thresholds, not sharp; nothing for occupancies between `1/8` and `7/8` |
 
 Exact scope of UD-66 to UD-71. What they give. One joint energy, hence one flow, carries a clock
 pointer and a detector pointer, or two detector pointers. The flow is solved, and the generator the
@@ -692,6 +695,30 @@ the flow of the joint energy; and it is zero for `J = 0`, a carrier that does no
 UD-83 use UA-14, UA-13, UA-8, UA-7, UA-5 and the profiles and strengths of UA-4. UA-2 and UA-6 are
 not used.
 
+Exact scope of UD-84 and UD-85. What they give. In the instance of UD-76 the carrier is one
+momentum mode and the position record is written at the same times wherever the detector is.
+Here the record depends on where the carrier is. A carrier mostly on a site `x` writes when the
+detector is at `x` and is not displayed through the same window when the detector is elsewhere.
+That holds for every state of the clock's pointer and on a set of pairs `(θ₂, ψ₂)` of positive
+measure, so the position write no longer needs a null set of fibres. What they do not give. The
+arena has one site detector. A detector at another site is another arena with the site projector
+moved, so UD-85 compares two flows. One trial in which one of two detectors writes and the other
+does not is not shown. That needs the arena of UD-70 with a readout on each torus (UO-10). The
+detector is fast: `16‖H‖ < 3κ` puts the write at `1/(2κ)`, a time short against `1/‖H‖`, and the
+record is written before the carrier has moved. No moving packet is followed, and nothing is
+said for a detector slower than the carrier. The carrier is a class of rays and not an evolved
+packet. Carriers with occupancy between `1/8` and `7/8` are not covered. The clock's swing is not
+treated: on the record fibres its four inequalities of UD-62 stay hypotheses, and the tick record
+with them, so the two records together are still outright only in UD-76. The record is a definite
+fact of the one trajectory and not a statistic, and no weight of quantum mechanics is derived:
+the thresholds are on an occupancy, and what they decide is whether the accumulated occupancy
+crossed an arc. The constants are sufficient and not sharp. Every time is a flow time (UA-7). By
+the test of §6: no hypothesis of UD-85 is a Register 1 entry other than the parameters and the
+ready arc of UA-4; no definition contains the write; the object is the flow of the joint energy;
+and the statement fails for a pointer that does not move. UD-84 and UD-85 use UA-13, UA-12, UA-8,
+UA-7, UA-5 and the arcs, profiles and strengths of UA-4. UA-2 enters only through the measure on
+the pair of conserved angles. UA-6 is not used.
+
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
 | ID | Property | Lean | Kind | Arena |
@@ -742,6 +769,8 @@ arena that UO-10, UO-13, UO-14 (d) and UO-15 are about. `UnifiedClockSiteRecords
 is another: it reads the two records of UO-14 (d) off that arena. `UnifiedCausalOrder.lean` exists
 since ~~#361~~ (M5's bound; UO-15 stays, with conditions). `UnifiedCausalArrival.lean`
 (~~#362~~) is a module the programme did not name: a response that is not zero, at distance one.
+`UnifiedSiteRecord.lean` (~~#363~~) is another: the position record of UO-14 (d) made to depend
+on the carrier's site.
 The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
@@ -1042,6 +1071,21 @@ time. It is not a statement about every dynamics on `Σ`.
   measurement records from the same dynamics, is met in that instance and conditionally elsewhere.
   Conditions (a), (b), (c) and (e) are unchanged. The count of ticks at the position write is not
   taken: that write as an event is condition (c).
+  ▸ **A record that singles out its site, 2026-11-11 (BACKLOG ~~#363~~) → UD-84, UD-85. Condition
+  (d2) is met, with three conditions that stay. The write half of (d1) is met.** On the record
+  fibres, a set of pairs `(θ₂, ψ₂)` of positive measure for the detector profile `trainF` and a
+  strong enough detector (`volume_siteRecordFibres_trainF_pos`), a carrier with at least `7/8` of
+  its occupancy on the detector's site writes the position record
+  (`isRecordWrite_clockSiteFlow_site_of_occupancy`) and one with at most `1/8` is not displayed
+  through the window (`clockSiteFlow_site_not_shown_of_occupancy`). For a carrier with at least
+  `7/8` on a site `x` the readout at `1/(2κ)` is `true` exactly when the detector is at `x`
+  (`clockSiteFlow_site_shown_iff`). *The conditions:* (d2a) the two placements of the detector are
+  two flows and not one run; one trial with two detectors is UO-10; (d2b) the detector is fast,
+  the write is complete in a time short against `1/‖H‖`, and no moving packet is followed; (d2c)
+  the carrier is a class of rays by occupancy, with nothing between `1/8` and `7/8`. *What stays
+  of (d1):* the clock's swing on these fibres is still conditional on the four inequalities of
+  UD-62, so the tick record and the position record are outright together only in the instance
+  of UD-76. (d3) is unchanged.
 
 ### M5 — causal order from interventions (`UnifiedCausalOrder.lean`)
 
@@ -1248,7 +1292,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

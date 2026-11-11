@@ -18708,4 +18708,86 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.diracTwoKickResponseSnd_ne_zero
 
+/-! #363 (the author's programme, milestone M4, condition (d2) of UO-14): a position record that singles out its site — on the arena of the clock's pointer and a site detector the coupled propagator is within `|t| ‖H‖` of the identity, so the site pointer's displacement is within `|κ| ‖H‖ t²` of `κ t q`, `q` the carrier's starting occupancy of the detector's site (upper bounds); the record fibres, the pairs of conserved angles with `16 (‖H_dev‖ + |g₁ f(θ₂)| + |g₂ h(ψ₂)|) < 3 κ`, open and of positive measure for the detector profile `trainF` and a strong enough detector; on a record fibre a carrier with at least `7/8` of its occupancy on the detector's site writes the record on `[1/(6κ), 1/(2κ)]` with window `1/(6κ)`, and one with at most `1/8` is not displayed up to `2/(3κ)`; for a carrier with at least `7/8` on a site `x` the readout at `1/(2κ)` is `true` exactly when the detector is at `x`. Two placements of the detector are two flows, not one run; a fast detector; the clock's swing is not treated; flow times (`RecordLayer/UnifiedSiteRecord.lean`). -/
+
+/-- info: 'CSD.RecordLayer.norm_clockSiteCarrierU_sub_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_clockSiteCarrierU_sub_one_le
+
+/-- info: 'CSD.RecordLayer.norm_clockSiteH_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_clockSiteH_le
+
+/-- info: 'CSD.RecordLayer.abs_clockSiteOccupancy_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_clockSiteOccupancy_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_integral_clockSiteOccupancy_sub_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_integral_clockSiteOccupancy_sub_mul_le
+
+/-- info: 'CSD.RecordLayer.abs_clockSiteShiftSnd_sub_init_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_clockSiteShiftSnd_sub_init_le
+
+/-- info: 'CSD.RecordLayer.siteRecordFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteRecordFibres
+
+/-- info: 'CSD.RecordLayer.isOpen_siteRecordFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpen_siteRecordFibres
+
+/-- info: 'CSD.RecordLayer.siteRecordFibres_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteRecordFibres_bounds
+
+/-- info: 'CSD.RecordLayer.mem_siteRecordFibres_trainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_siteRecordFibres_trainF
+
+/-- info: 'CSD.RecordLayer.volume_siteRecordFibres_trainF_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_siteRecordFibres_trainF_pos
+
+/-- info: 'CSD.RecordLayer.exists_volume_siteRecordFibres_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_volume_siteRecordFibres_pos
+
+/-- info: 'CSD.RecordLayer.third_le_clockSiteShiftSnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.third_le_clockSiteShiftSnd
+
+/-- info: 'CSD.RecordLayer.clockSiteShiftSnd_le_sixth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockSiteShiftSnd_le_sixth
+
+/-- info: 'CSD.RecordLayer.isRecordWrite_clockSiteFlow_site_of_occupancy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isRecordWrite_clockSiteFlow_site_of_occupancy
+
+/-- info: 'CSD.RecordLayer.clockSiteFlow_site_shown_of_occupancy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockSiteFlow_site_shown_of_occupancy
+
+/-- info: 'CSD.RecordLayer.clockSiteFlow_site_not_shown_of_occupancy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockSiteFlow_site_not_shown_of_occupancy
+
+/-- info: 'CSD.RecordLayer.arenaObs_deviceSiteProj_le_one_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_deviceSiteProj_le_one_sub
+
+/-- info: 'CSD.RecordLayer.deviceSiteRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceSiteRay
+
+/-- info: 'CSD.RecordLayer.arenaObs_deviceSiteProj_deviceSiteRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_deviceSiteProj_deviceSiteRay
+
+/-- info: 'CSD.RecordLayer.clockSiteFlow_site_shown_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockSiteFlow_site_shown_iff
+
 end CSD.Tests.AxiomAudit
