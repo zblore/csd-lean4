@@ -60,20 +60,28 @@ not `true` at any time before `625π/3`. The arrival fibres are open
 ## Exact scope
 
 * **A half ring, not a site.** The detector is coupled to the projector on half the ring. The
-  record says the carrier has reached that half. It does not locate it within the half.
+  record says the accumulated weight on that half has crossed the threshold. It locates nothing
+  within the half.
 * **A coarse time.** The write is complete at some `τ` in `[625π/3, 4375π/3]`, an interval that
   contains the predicted arrival `625π` and is seven times longer at its end than at its start.
   `τ` is not computed. No speed is read off the record.
-* **Not before, and by.** What is proved is that the record is not written before `625π/3`, when
-  the far half holds at most a quarter of the weight, and is written by `4375π/3`. The quarter
-  is the packet's tail on the far half: the readout is silent because the accumulated weight is
-  small, not because the far half is empty.
+* **Not before, and by.** What is proved is that the readout is not `true` before `625π/3`, when
+  along the uncoupled chain the far half holds at most a quarter of the weight, and that the
+  write is complete by `4375π/3`. The quarter is the packet's tail on the far half: the readout
+  is silent because the accumulated weight is small, not because the far half is empty.
+* **Arrival is not certified.** Nothing proves the write is complete after the predicted arrival
+  `625π`, or that the far half holds the packet when it is. The threshold reads accumulated
+  weight. A carrier holding a constant weight between `1/7` and `1/2` on the far half would
+  satisfy the same conclusion at `θ₂ = 0` (a calculation, not in Lean), so the statement does
+  not by itself certify a crossing. "Arrival" in the names is the reading the weight bounds of
+  #265 suggest, not a conclusion of the theorem.
 * **One packet, one ring.** The numbers are those of #265: `ℓ = 2000π`, at least `640000` sites,
   `16` modes. No family is given, and no scaling.
 * **A weak detector.** The strength is of order `1/(1250π)`: the pointer takes the whole transit
   to turn by a third. The back-reaction on the carrier is bounded through `|g f(θ₂)| t²`, and the
   arrival fibres are those where that bound is small. For the profile `trainF` they are a
-  neighbourhood of `θ₂ = 0` of positive Haar measure; its size is not computed.
+  neighbourhood of `θ₂ = 0` of positive Haar measure; its size is not computed. The carrier is
+  one ray, so no measure of the set of start points is stated.
 * **One pointer.** There is no emission record, no second detector and no clock on this arena.
   A radar exchange needs all three (M6). A second pointer on the near half, with a departure
   record in the same run, is in `RecordLayer/UnifiedDepartureArrival.lean` (#367).

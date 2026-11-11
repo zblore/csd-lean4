@@ -16,8 +16,8 @@ physical spacetime", towards milestone M6; Remainder (a) of #365.
 writes when a travelling packet arrives. A radar exchange needs a record where the packet leaves
 as well, in the same run. This module puts two pointers on the arena of two pointers of #359, one
 coupled to the near half of the ring and one to the far half, and reads both records along one
-orbit: the near pointer writes while the packet is still there, and the far pointer writes after
-it has arrived.
+orbit: the near pointer writes by `625π/3`, and the far pointer does not show before `625π/3`
+and writes by `4375π/3`.
 
 **Two families of unitaries** (any finite index). If two continuous families satisfy
 `‖U s − V s‖ ≤ |s| N` and `‖D‖ ≤ 1`, the accumulated expectations of `D` along them differ by at
@@ -58,17 +58,24 @@ strengths `g₁ = 1/(625π)`, `g₂ = 1/(1250π)` they contain `(0, 0)` and have
 ## Exact scope
 
 * **Departure, not emission.** The packet is prepared on the near half. The near pointer
-  records that it is there. Nothing emits it, and no event of emission is singled out: the
-  write is complete at some `τ_d` in `[0, 625π/3]`.
+  records that accumulated weight on that half crossed the threshold. Nothing emits it, and no
+  event of emission is singled out: the write is complete at some `τ_d` in `[0, 625π/3]`. With
+  write interval `[0, τ_d]` the not-displayed-before clause of `IsRecordWrite` is empty: the
+  statement is that the near readout is `true` through `[τ_d, τ_d + 1/(3κ₁)]`. That it is not
+  `true` at the start follows from the ready arc and is not part of the theorem.
 * **The order is through one time.** The departure write is complete by `625π/3`, and the
-  arrival readout does not show before `625π/3`. The two could meet at that time. `τ_d` and
+  arrival readout does not show before `625π/3`. The two could meet at that time. Both
+  thresholds read accumulated weight: with a constant far-half weight between `1/7` and `1/4`
+  both conclusions would still hold (a calculation, not in Lean), so the order does not certify
+  a transit. `τ_d` and
   `τ_a` are found by the intermediate value theorem and are not computed, so no transit time
   and no speed are read off the two records.
-* **Half rings.** Each detector is on half the ring. The records say which half holds the
-  packet. They locate nothing within a half.
+* **Half rings.** Each detector is on half the ring. Each record says that the accumulated
+  weight on its half crossed the threshold. It locates nothing within the half.
 * **One packet, one ring, weak detectors**, as in #365. The back-reaction of both detectors is
   inside the statement through `b t²`, and the fibres are where it is small: a neighbourhood of
-  `(0, 0)` for `trainF`, of positive Haar measure, whose size is not computed.
+  `(0, 0)` for `trainF`, of positive Haar measure, whose size is not computed. The carrier is
+  one ray, so no measure of the set of start points is stated.
 * **No clock.** The arena has two pointers and both are detectors. A time read by a clock at
   either record needs a third pointer (M6). The arena with three pointer tori is
   `LF4/TriCoupledFlow.lean` (#368).

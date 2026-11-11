@@ -1012,7 +1012,7 @@ isSymplectic"
 #   read in the carrier's own index — EARNED through it; schrodingerHamiltonian_reindex is the
 #   value of the already-declared energy function −2⟨C⟩ at a reindexed matrix, operator sense.)
 #   (2026-11-11, #368: the pointer step and the three-torus arena. stepForm_isSymplectic is
-#   IsSymplectic.prodForm with the torus area form, for any base form, and triForm_isSymplectic is it
+#   IsSymplectic.prodForm with the torus area form, for any symplectic base form, and triForm_isSymplectic is it
 #   applied to echoForm — EARNED; isHamiltonianVectorField_stepLift / _stepTerm / _step prove
 #   i_X (stepForm b) = dH for the stated fields, given Hamiltonian vector fields of H and G on the base —
 #   EARNED, and they are the general form of _fstLift / _outerTerm / _twoCoupled above;

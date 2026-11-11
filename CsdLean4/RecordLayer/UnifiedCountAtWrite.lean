@@ -14,7 +14,8 @@ public import CsdLean4.RecordLayer.UnifiedClockSiteRecords
 physical spacetime", milestone M4, condition (c) of obligation UO-14 and Remainder (c) of #360.
 `RecordLayer/UnifiedClockSiteRecords.lean` has a tick record and a position record in one run
 and does not take the count of ticks at the position write. A radar coordinate is such a count:
-the reading of a clock at an emission or a reception. This module takes it.
+the reading of a clock at an emission or a reception. This module takes the count at a position
+write. It is not a radar coordinate: no signal is emitted or received.
 
 **The count at a time** (any history). A swing at the rate `R` has a count `N` at every time
 `T ≥ 0`, and `|2πN − R T| ≤ 2π` (`IsSwing.exists_tickCount_abs_sub_le`, from #358). In the
@@ -46,8 +47,9 @@ tick history has a count `N` at `t*`, with `N · 2π/R` within one tick period o
 * **The count is taken at a flow time.** "The count at the write" is the count of the tick
   history up to the flow time at which the site readout's write is complete. The two histories
   are compared at equal values of the flow parameter (UA-7). Nothing in the arena compares
-  them: no degree of freedom holds the count (#358, `not_ae_count_advances_clockPointerFlow`),
-  and no register is stamped by the write.
+  them: no register for the count is built on this arena, and no register is stamped by the
+  write. On the one-pointer clock arena no real function of the state holds the count (#358,
+  `not_ae_count_advances_clockPointerFlow`); that statement is not restated for `clockSiteFlow`.
 * **Within one tick.** The count fixes the write's flow time up to one period `2π/R`, and an
   interval up to two. It is a clock of finite resolution, and the bound is not improved here.
 * **The instance of #360.** One momentum mode on the fibres where both profiles vanish, a null
@@ -126,7 +128,7 @@ one orbit of `clockSiteFlow` from `clockSiteTrainStart`: the site readout's hist
 `true` begun at `τ₀ = (M+1)/(12 g₂)` and complete at `τ₁ = (M+1)/(6 g₂)`; the tick history has a
 count `N₀` at `τ₀` and a count `N₁` at `τ₁`; `N₁ · 2π/R` is within one tick period of `τ₁`; and
 the write interval in ticks, `(N₁ − N₀) · 2π/R`, is within two tick periods of `τ₁ − τ₀`. The
-counts are taken at flow times (UA-7), and no degree of freedom of the arena holds them. -/
+counts are taken at flow times (UA-7), and no register for them is built on this arena. -/
 theorem clockSite_count_at_write_train (J : ℝ) {μ₀ μ₁ : ℝ} (h0 : 0 < μ₀) (h01 : μ₀ < μ₁)
     (h10 : μ₁ < 2 * μ₀) (k : ZMod (M + 1)) (m : ℤ) {β : ℤ → ℂ} (hβ : β m ≠ 0) {R : ℝ}
     (hRe : R = levelClockRate μ₀ μ₁ (2 * J * Real.sin (angleZ (M + 1) m))) {g₁ : ℝ}

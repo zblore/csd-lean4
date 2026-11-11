@@ -14,8 +14,9 @@ public import CsdLean4.LF4.PointerStep
 `specs/TERMS.md` records what is backed and what is not.
 
 **Category:** 3-Local (the Kähler arena). BACKLOG #368 — the author's programme "From `Σ` to
-physical spacetime", the arena M6 needs: a clock's pointer and two detectors' pointers under one
-flow. Remainder (a) of #367.
+physical spacetime", a prerequisite for M6: an arena on which a clock's pointer and two
+detectors' pointers can be under one flow. Remainder (a) of #367. UO-16's second observer needs
+further pointers, and a clock that is not the carrier's own level.
 
 The arena is `ℂℙᴺ × T² × T² × T²`, with the energy
 

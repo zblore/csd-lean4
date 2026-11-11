@@ -30,16 +30,19 @@ accumulated occupancy of its site along that orbit
 (`clockTwoSiteFlow_thd_pointer_of_lift_eq_zero`). The third torus has the readout `triThdShown`
 and the ready and displayed arcs of the other two (apparatus input, UA-4).
 
-**Three records in one run** (`clockTwoSite_records_train`). The start is that of #360 with a
-third ready pointer: the device in one momentum mode, the three pointers at `1/12`, all three
-profiles `trainF`, the three conserved angles `0`, `g₂, g₃ > 0`. Along the one orbit:
+**Three readout histories in one run** (`clockTwoSite_records_train`). The start is that of #360
+with a third ready pointer: the device in one momentum mode, the three pointers at `1/12`, all three
+profiles `trainF`, the three conserved angles `0`, `g₂, g₃ > 0`, with `μ₀ < μ₁ < 2μ₀`, `R` the
+mode's level splitting and the clock strength `g₁` fixed as in #360. Along the one orbit:
 
 * the clock's pointer is a swing at the level splitting `R` on every horizon
-  (`isSwing_clockTwoSiteFlow_train`), so its ticks are records and it has a count at every time;
-* the first detector's readout is `true` exactly after `t₂ = (M+1)/(8 g₂)`
+  (`isSwing_clockTwoSiteFlow_train`), so by `IsSwing.isRecordWrite` (#358) each tick is a record
+  write, and by `IsSwing.exists_tickCount` it has a count at every flow time `T ≥ 0`;
+* the first detector's readout is `true` exactly after `t₂ = (M+1)/(8 g₂)`, on `0 ≤ t ≤ 3 t₂`
   (`echoSiteShown_clockTwoSiteFlow_train_iff`);
-* the second detector's readout is `true` exactly after `t₃ = (M+1)/(8 g₃)`
-  (`triThdShown_clockTwoSiteFlow_train_iff`);
+* the second detector's readout is `true` exactly after `t₃ = (M+1)/(8 g₃)`, on `0 ≤ t ≤ 3 t₃`
+  (`triThdShown_clockTwoSiteFlow_train_iff`); nothing is stated later, and the two windows need
+  not overlap;
 * the tick history has counts `N₂` at `t₂` and `N₃` at `t₃`, each within one tick period
   `2π/R` of its time, and the interval between the two records read in ticks,
   `(N₃ − N₂) · 2π/R`, is within two periods of `t₃ − t₂`.
@@ -56,10 +59,19 @@ profiles `trainF`, the three conserved angles `0`, `g₂, g₃ > 0`. Along the o
   `clockSiteFlow` on the fibres of the third profile's zeros is proved.
 * **The counts are taken at flow times.** Each count is the count of the tick history up to the
   flow time at which a detector's readout switches (UA-7). No degree of freedom holds a count.
-* **What is still missing for a radar exchange in this arena:** the clock's swing for a
+* **"Record" here means a readout's switching instant**: `false` on `[0, t_i]`, `true` on
+  `(t_i, 3 t_i]`. No `IsRecordWrite` or `ActualOccurrence` with propagator `clockTwoSiteFlow` is
+  constructed, and no lemma places the start in `triThdReady`. The clock's ticks are records by
+  `IsSwing.isRecordWrite` (#358) applied to this swing, which is not instantiated here.
+* **The clock is the carrier's own.** The clock's pointer is coupled to the level swap of the
+  device, and the device is the one particle on the ring. If that carrier travelled, its count
+  between two detections would be the messenger's own tick count, not an observer's clock
+  reading at emission and reception.
+* **What is still missing for a one-way signal in this arena:** the clock's swing for a
   travelling packet in place of one mode (UO-14 (a)); the crossing bounds of #265 for the
   two-level device, whose levels have different rest energies and so different speeds; and
-  with them the records of #367 with the clock's count at each.
+  with them the records of #367 with the clock's count at each. A radar exchange needs more:
+  see UO-16 in the contract.
 * **Definite facts, not statistics.** No weight of quantum mechanics is derived.
 * **All times are flow times** (UA-7).
 

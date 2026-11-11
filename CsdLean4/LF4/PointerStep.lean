@@ -14,7 +14,7 @@ public import CsdLean4.LF4.EchoVolume
 `specs/TERMS.md` records what is backed and what is not.
 
 **Category:** 3-Local (the Kähler arena). BACKLOG #368 — the author's programme "From `Σ` to
-physical spacetime", the arena M6 needs; Remainder (a) of #367. The author's choice of route: a
+physical spacetime", a prerequisite for M6; Remainder (a) of #367. The author's choice of route: a
 tower of pointer tori, in place of a third arena built by hand.
 
 `ArenaCoupledFlow.lean` generated the flow of a ray coupled to one torus, and
@@ -56,10 +56,15 @@ two-torus arena (`LF4/TriCoupledFlow.lean`).
 
 ## Exact scope
 
+* **Instances as form and energy only.** The two identities for the two-torus arena are `rfl`.
+  The two-torus flow and measure theorems of #202 and #359 remain their own proofs. The
+  one-torus arena is not exhibited as a step over the ray, and `hamiltonianFlow_coupledEnergy`
+  is not an instance.
 * **One step, for any base.** The theorem adds one torus. A family of `n` tori is `n`
   applications, each with its own statement. No arena indexed by `n` is defined.
 * **Compact base.** Existence and uniqueness of the flow use compactness
-  (`integralFlow`). The base must be a `C^∞` manifold modelled on a finite-dimensional space.
+  (`integralFlow`). The base must be a Hausdorff `C^∞` manifold modelled on a finite-dimensional
+  space. The measure statement is for an s-finite Borel measure.
 * **The coupling's form is assumed**: a function of the base times a function of the new torus's
   second angle. The moving angle `ψ₁` does not enter the energy, so `ψ₂` is conserved and the
   pointer does not act back on its own rate.

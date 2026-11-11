@@ -115,17 +115,22 @@ by the flow parameter, and no degree of freedom holds the count.
 A departure record and an arrival record are written in one run (BACKLOG ~~#367~~,
 `RecordLayer/UnifiedDepartureArrival.lean`, `regionTwoFlow_departure_arrival`): two pointers of
 one joint flow, on the near and the far half of the ring, the first complete by `625π/3` and the
-second not showing before it. The two times are not computed and the arena has no clock, so no
+second not showing before it. The first statement has no not-displayed-before clause, and the
+thresholds read accumulated weight: the order through `625π/3` does not certify a transit. The two times are not computed and the arena has no clock, so no
 time is read at either record. A clock in the same run needs an arena with three pointer tori.
 That arena now exists (BACKLOG ~~#368~~, `LF4/PointerStep.lean`, `LF4/TriCoupledFlow.lean`): one
 theorem adds a pointer torus to any compact symplectic arena, with the flow a skew product over
 the base's flows (`hamiltonianFlow_stepEnergy`), and `ℂℙᴺ × T² × T² × T²` is that theorem applied
-to the two-torus arena, with its flow in closed form and its measure preserved
-(`threeCoupledFlow_closed`, `triMuL_map_threeCoupledFlow`).
+to the two-torus arena, with its flow in closed form and the product measure `μ_FS ⊗ vol³`
+preserved (`threeCoupledFlow_closed`, `triMuL_map_threeCoupledFlow`; that measure is not
+identified with the form's volume).
 A clock and two site detectors are read on it in one run (BACKLOG ~~#369~~,
 `RecordLayer/UnifiedClockTwoSites.lean`, `clockTwoSite_records_train`). The clock ticks, each
-detector's readout switches at an explicit flow time, the clock's count is taken at both, and the
-interval between the two records in ticks is within two tick periods of its flow value. The
+detector's readout switches at an explicit flow time, the clock's count is taken at both, at flow
+times (no degree of freedom holds it), and the interval between the two switching instants in
+ticks is within two tick periods of its flow value. No `IsRecordWrite` is built on this arena.
+The only clock is the carrier's own internal level, so a travelling carrier would carry the
+messenger's count and not an observer's. The
 carrier is one momentum mode on a null set of fibres. No signal travels: the interval is set by
 the detectors' strengths and is not a transit time. A travelling carrier with a clock in the same
 run is not proved.

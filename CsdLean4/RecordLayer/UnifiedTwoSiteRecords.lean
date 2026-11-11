@@ -8,7 +8,7 @@ module
 public import CsdLean4.RecordLayer.UnifiedSiteRecord
 
 /-!
-# Two site detectors in one run: one writes and the other does not
+# Two site detectors in one run: one writes, the other is not displayed until then
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #364 — the author's programme "From `Σ` to
 physical spacetime", obligation UO-10 on the arena of two site pointers; Remainder (a) of #363,
@@ -498,9 +498,10 @@ theorem echoSiteShown_diracTwoPointerFlow_iff (hc : ContDiff ℝ ∞ f) (hch : C
     ← diracTwoPointerFlow_snd_pointer J μ g₁ g₂ j k hf hh hc hch t p θ ψ]
   rfl
 
-/-- ★★★ **One run, two detectors: the detector at the carrier's site writes and the other does
-not.** On a record fibre, from two ready pointers, for detectors at two different sites and a
-carrier with at least `7/8` of its occupancy on the first detector's site `j`: the first
+/-- ★★★ **One run, two detectors: the detector at the carrier's site writes, and the other is
+not displayed until that write is complete.** On a record fibre, from two ready pointers, for
+detectors at two different sites and a carrier with at least `7/8` of its occupancy on the first
+detector's site `j`: the first
 readout's history along `diracTwoPointerFlow` is an `IsRecordWrite` of `true` from time `0`,
 with write interval `[1/(6κ₁), 1/(2κ₁)]` and window `1/(6κ₁)`; and the second readout, along the
 same orbit, is not `true` at any flow time up to `1/(2κ₁)`, when the first write is complete.
