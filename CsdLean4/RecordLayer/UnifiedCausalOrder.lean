@@ -58,16 +58,19 @@ norm in it is the coupled generator's norm.
 **The response of a pointer.** A pointer's displacement is a multiple of the time integral of an
 occupancy, so both bounds integrate (`abs_displacement_kick_sub_le`,
 `abs_displacement_flow_sub_le`). On the arena of two site pointers, with `T_d(t)` the tail
-`(2 ‖H‖ t)^d / d!` and `d` steps of growth from one pointer's site missing the other's:
+`(2 ‖H‖ t)^d / d!`:
 
 * the second pointer's response to a kick is at most `4 |g₂| |h'(χ)| T_d(t) t`
   (`abs_diracTwoKickResponseSnd_le`), and the first pointer's likewise
-  (`abs_diracTwoKickResponseFst_le`);
+  (`abs_diracTwoKickResponseFst_le`), with `d` steps of growth from that pointer's site missing
+  the kick's set `Y`;
 * the second pointer's response to the first pointer's angle is at most
   `4 |g₂| |h'(χ)| |g₁| |f(φ) − f(φ')| T_d(t) t²` (`abs_diracTwoAngleResponseSnd_le`), and the
-  first pointer's response to the second's angle likewise (`abs_diracTwoAngleResponseFst_le`).
+  first pointer's response to the second's angle likewise (`abs_diracTwoAngleResponseFst_le`),
+  with `d` steps of growth from that pointer's site missing the other pointer's site, and `H`
+  taken at the changed angle.
 
-Each response is the difference of the pointer's moving angle between two runs of
+Each response is the difference, on the circle, of the pointer's moving angle between two runs of
 `diracTwoPointerFlow` from the two initial points (`diracTwoPointerFlow_kick_snd`,
 `diracTwoPointerFlow_angle_snd`, and the two for the first pointer). The second of these
 stands beside the cross-talk bound of #359 (`abs_diracTwoShiftSnd_sub_le`), which does not depend
@@ -90,9 +93,10 @@ sets are more than `d` apart on the ring (`disjoint_growIter_of_forall_ne`,
 ## Exact scope
 
 * **Suppressed, not excluded.** For `t > 0` every bound is a factorial tail. It is small when
-  `2 ‖H‖ t` is small against `d`, and it is never zero. Nothing here says a remote intervention
-  has no effect at a positive time. The one exact statement is at `t = 0`
-  (`arenaObs_kick_of_idOffOn`). A lattice with a continuous flow parameter gives no exact cone.
+  `2 ‖H‖ t` is small against `d`, and it is not zero unless a prefactor vanishes. Nothing here
+  says a remote intervention has no effect at a positive time. The one exact statement is at
+  `t = 0` (`arenaObs_kick_of_idOffOn`). This argument gives no exact cone for a lattice with a
+  continuous flow parameter; that none exists is not proved here.
 * **Upper bounds.** No response is shown to be attained, and no lower bound inside the cone is
   given. The speed in the tail is `2 ‖H‖`, the norm of the whole generator with both couplings
   in it. It is not optimised and it is not the group velocity of the chain.
@@ -104,17 +108,19 @@ sets are more than `d` apart on the ring (`disjoint_growIter_of_forall_ne`,
   further argument. The relation `CausalPrecedes` of `CV/RecordCausalOrder.lean` stays induced by
   an assumed graph.
 * **Records.** One statement here is about a record: the position write of #360 on the
-  clock-and-site arena survives a remote kick within stated margins. On the arena of two site
+  clock-and-site arena survives a remote kick within stated margins. No instance in which the
+  margins hold is exhibited, and `d` is at most about half the ring. On the arena of two site
   pointers no record is read, so the statements there are about displacements.
-* **The clock's pointer is not local.** See above. On the clock-and-site arena a tick record
-  can respond to a kick anywhere on the ring with no delay from this argument.
+* **The clock's coupled operator is not local.** See above. On the clock-and-site arena this
+  argument gives no delay for a tick record's response to a kick anywhere on the ring. That it
+  responds is not shown.
 * **All times are flow times** (UA-7). The angles `φ`, `χ` are conserved, so each coupling is a
   constant along a run.
 
 ## References
 
-`specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md` (UA-5,
-UA-7, UA-8, UA-13, UA-14, UO-15, UD-77 onward); `RecordLayer/ChainCone.lean` (`SiteSupp`,
+`specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md`
+(UA-4, UA-5, UA-7, UA-8, UA-12, UA-13, UA-14, UO-15, UD-77 onward); `RecordLayer/ChainCone.lean` (`SiteSupp`,
 `IdOff`, `grow`, `growIter`, `norm_commutator_chain_le`); `CV/LiebRobinson.lean`
 (`heisenbergFlow`, `adOne`, `adIter`, `flowRemainder`, `norm_flowRemainder_le_factorial`,
 `hasDerivAt_heisenbergFlow`); `CV/ArenaBridge.lean` (`arenaObs_kick_conj`, `arenaObs_sub_le`,
@@ -756,7 +762,7 @@ theorem diracTwoH_sub_snd (φ χ χ' : AddCircle (1 : ℝ)) :
 /-- ★★ **The second pointer's response to a kick.** A kick `W`, the identity off `Y`, is applied
 to the carrier's initial ray. With `d` steps of growth from the site `k` missing `Y`, the second
 pointer's displacement at `t ≥ 0` moves by at most `4 |g₂| |h'(χ)| (2 ‖H‖ t)^d / d! · t`, `H` the
-coupled Hamiltonian. -/
+coupled Hamiltonian. The kick is an intervention of UA-14, and `t` is a flow time (UA-7). -/
 theorem abs_diracTwoKickResponseSnd_le {Y : Finset (ZMod (M + 1))}
     {W : Matrix.unitaryGroup (ZMod (M + 1) × Fin 2) ℂ} (hW : IdOffOn Prod.fst Y W.val) {d : ℕ}
     (hcone : Disjoint (growIter {k} d) Y) (φ χ : AddCircle (1 : ℝ))
@@ -994,7 +1000,9 @@ arena, let the site pointer's displacement in the unkicked run clear the three t
 `isRecordWrite_clockSiteFlow_site` by the kick bound `4 |g₂| |h'(ψ₂)| (2 ‖H‖ τ)^d / d! · τ` at
 each of the three times. Then the run from the kicked initial point writes the same position
 record over the same flow times. The kick is the identity off `Y`, and `d` steps of growth from
-the site `k` miss `Y`. -/
+the site `k` miss `Y`. The site pointer starts ready, on a fibre of nonnegative rate. The kick is
+an intervention of UA-14, and the times are flow times (UA-7). No instance in which the three
+margins hold is given. -/
 theorem isRecordWrite_clockSiteFlow_site_of_kick (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     {ψ : KTorus} (hψ : ψ ∈ readyArc 2) (θ : KTorus) (hκ : 0 ≤ rateAt g₂ 1 hh ψ.2)
     {Y : Finset (ZMod (M + 1))} {W : Matrix.unitaryGroup ((ZMod (M + 1) × Fin 2) × Fin 2) ℂ}

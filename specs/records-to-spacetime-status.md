@@ -79,7 +79,9 @@ conserved angle, by at most a factorial tail in the distance (`abs_diracTwoKickR
 `abs_diracTwoAngleResponseSnd_le`), and the position record of ~~#360~~ survives a remote kick
 within margins (`isRecordWrite_clockSiteFlow_site_of_kick`). These are upper bounds: suppression
 and not exclusion, exact only at time `0`, with no response shown to arrive. No order between record
-events is built. The clock's pointer has no such bound, because the level swap acts at every site.
+events is built. No such bound is proved for the clock's pointer: the level swap is supported on no
+proper set of sites, so the argument does not apply to it. No instance in which the record's
+margins hold is exhibited.
 The interventions are changes of the initial point and are assumed.
 
 ## What is open
