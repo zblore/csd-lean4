@@ -19010,4 +19010,30 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.regionPointerFlow_arrival_write
 
+/-! #366 (the author's programme, milestone M4, condition (c) of UO-14): the clock's count at a position write — a swing has a count at every time, and the count times the period is within one period of that time, two for an interval (from #358); in the exact instance of #360 the tick history has counts at the start and at the completion of the position write, the later one within one tick period of the completion time and their difference within two periods of the write interval; the site readout is `true` exactly after `(M+1)/(8 g₂)`, an instant fixed by the record's own history, and the tick history has a count there within one period. The counts are taken at flow times, and no degree of freedom of the arena holds them; one momentum mode on a null set of fibres (`RecordLayer/UnifiedCountAtWrite.lean`). -/
+
+/-- info: 'CSD.RecordLayer.IsSwing.exists_tickCount_abs_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsSwing.exists_tickCount_abs_sub_le
+
+/-- info: 'CSD.RecordLayer.IsSwing.abs_tickTime_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsSwing.abs_tickTime_sub_le
+
+/-- info: 'CSD.RecordLayer.IsSwing.abs_tickTime_sub_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsSwing.abs_tickTime_sub_sub_le
+
+/-- info: 'CSD.RecordLayer.clockSite_count_at_write_train' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockSite_count_at_write_train
+
+/-- info: 'CSD.RecordLayer.echoSiteShown_clockSiteFlow_train_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoSiteShown_clockSiteFlow_train_iff
+
+/-- info: 'CSD.RecordLayer.clockSite_count_at_display_train' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockSite_count_at_display_train
+
 end CSD.Tests.AxiomAudit

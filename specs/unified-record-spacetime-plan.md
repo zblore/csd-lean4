@@ -595,7 +595,8 @@ UD-72 to UD-76 are what condition (d) of UO-14 is annotated with. UD-77 to UD-81
 UD-82 and UD-83 are in `RecordLayer/UnifiedCausalArrival.lean` (BACKLOG ~~#362~~) and bear on
 condition (e2) of UO-15. UD-84 and UD-85 are in `RecordLayer/UnifiedSiteRecord.lean` (BACKLOG
 ~~#363~~) and bear on conditions (d1) and (d2) of UO-14. UD-86 to UD-88 are in
-`RecordLayer/UnifiedTwoSiteRecords.lean` (BACKLOG ~~#364~~) and bear on UO-10.
+`RecordLayer/UnifiedTwoSiteRecords.lean` (BACKLOG ~~#364~~) and bear on UO-10. UD-92 is in
+`RecordLayer/UnifiedCountAtWrite.lean` (BACKLOG ~~#366~~) and bears on condition (c) of UO-14.
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -622,6 +623,7 @@ condition (e2) of UO-15. UD-84 and UD-85 are in `RecordLayer/UnifiedSiteRecord.l
 | UD-86 | **A pointer driven by an occupancy.** For any finite index. An expectation moves by at most `2 ‖D‖ ε` under a unitary within `ε` of the identity. Let `U` be a continuous family of unitaries with `‖U s − 1‖ ≤ \|s\| N` and `D` an observable with `‖D‖ ≤ 1`. The accumulated expectation `∫₀ᵗ⟨D⟩` along `U` is monotone in `t` when `⟨D⟩ ≥ 0`, at most `t` for `t ≥ 0` when `⟨D⟩ ≤ 1`, and within `N t²` of `t` times the starting expectation `q`. For a pointer that starts in the ready arc and sits at `pshift (κ ∫₀ᵗ⟨D⟩)`, with `κ > 0` and `16 N ≤ 3 κ`: if `q ≥ 7/8` its readout history is an `IsRecordWrite` of `true` from time `0` with write interval `[1/(6κ), 1/(2κ)]` and window `1/(6κ)`; if `q ≤ 1/8` its readout is not `true` at any time in `[0, 2/(3κ)]` | `abs_arenaObs_arenaKick_sub_self_le`, `integral_arenaObs_mono`, `integral_arenaObs_le`, `abs_integral_arenaObs_sub_mul_le`, `isRecordWrite_of_occupancy`, `not_shown_of_occupancy` | upper bounds, and two conditional statements with sufficient constants, not sharp; no arena in them — the readout is any history that is `true` exactly when the shifted pointer is in the displayed arc |
 | UD-87 | **Readouts and record fibres on the arena of two site detectors.** On the arena of UD-70. On the first torus the ready set `echoFstReady`, the displayed set `echoFstDisplay` and the readout `echoFstShown` are the arcs `readyArc` and `displayArc` on the first pointer; all are measurable. The second torus has `echoSiteReady`, `echoSiteDisplay`, `echoSiteShown` of UD-73. Under `diracTwoPointerFlow` each pointer is its start translated by its displacement, and each displacement is its rate times the accumulated occupancy of its site. The carrier's propagator is within `\|t\| ‖H‖` of the identity, `H = diracTwoH`, and `‖H‖ ≤ ‖H_D‖ + \|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|`. The occupancies of two different sites sum to at most one. The record fibres `twoSiteRecordFibres` are the pairs `(θ₂, ψ₂)` with `16 B < 3 κ₁`, `16 B < 3 κ₂`, `3 κ₂ < 4 κ₁` and `3 κ₁ < 4 κ₂`, `B` that bound on `‖H‖` and `κ₁`, `κ₂` the two rates; on them both rates are positive and `16 ‖H‖ ≤ 3 κ` for each. The set is open for `C¹` profiles. For both profiles `trainF` and equal strengths `g` with `16 ‖H_D‖ < 6 g` it contains `(0, 0)` and has positive measure, and such a `g` exists | `echoFstReady`, `measurableSet_echoFstReady`, `echoFstDisplay`, `measurableSet_echoFstDisplay`, `echoFstShown`, `measurable_echoFstShown`, `echoFstShown_eq_true_iff`, `diracTwoPointerFlow_fst_pointer`, `diracTwoPointerFlow_snd_pointer`, `diracTwoShiftFst_eq_rateAt`, `diracTwoShiftSnd_eq_rateAt`, `norm_diracTwoCarrierU_sub_one_le`, `norm_diracTwoH_le`, `arenaObs_siteProj_le_one_sub`, `twoSiteRecordFibres`, `isOpen_twoSiteRecordFibres`, `twoSiteRecordFibres_bounds`, `zero_mem_twoSiteRecordFibres_trainF`, `volume_twoSiteRecordFibres_trainF_pos`, `exists_volume_twoSiteRecordFibres_pos` | the readout, the ready set and the fibre set are definitions (apparatus input, UA-4, for the first two); the rest exact or upper bounds; the measure is Haar on the pair of conserved angles, for one pair of profiles and equal strengths |
 | UD-88 | **One run, two detectors.** Detectors at two different sites `j ≠ k`, both pointers in their ready arcs, a record fibre, smooth profiles. For a carrier with at least `7/8` of its occupancy on `j`: the first readout's history along `diracTwoPointerFlow` is an `IsRecordWrite` of `true` from time `0` with write interval `[1/(6κ₁), 1/(2κ₁)]` and window `1/(6κ₁)`, and the second readout along the same orbit is not `true` at any flow time in `[0, 1/(2κ₁)]`. For a carrier with at least `7/8` on `k` the same holds with the detectors exchanged and `κ₂` in place of `κ₁`. Each readout is `true` exactly when its pointer, turned by its rate times the accumulated occupancy of its site, is in the displayed arc | `echoFstShown_diracTwoPointerFlow_iff`, `echoSiteShown_diracTwoPointerFlow_iff`, `diracTwoPointerFlow_record_fst_only`, `diracTwoPointerFlow_record_snd_only` | exact given the fibre and the occupancy; the other detector is covered only up to the completion of the write; nothing for a carrier split between the sites |
+| UD-92 | **The clock's count at a position write.** For any swing at the rate `R` and any time `T ≥ 0` there is a count `N`, with `\|2πN − R T\| ≤ 2π`; so `\|N · 2π/R − T\| ≤ 2π/R`, and for two times `\|(N₁ − N₀) · 2π/R − (T₁ − T₀)\| ≤ 4π/R`. In the instance of UD-76, along the one orbit: the site readout's history is a write begun at `τ₀ = (M+1)/(12 g₂)` and complete at `τ₁ = (M+1)/(6 g₂)`; the tick history has counts `N₀` at `τ₀` and `N₁` at `τ₁`, with `N₁ · 2π/R` within one tick period of `τ₁` and `(N₁ − N₀) · 2π/R` within two of `τ₁ − τ₀`. The site readout is `true` exactly for `(M+1)/(8 g₂) < t`, on `0 ≤ t ≤ 3(M+1)/(8 g₂)`, and the tick history has a count `N` at `t* = (M+1)/(8 g₂)` with `N · 2π/R` within one period of `t*` | `IsSwing.exists_tickCount_abs_sub_le`, `IsSwing.abs_tickTime_sub_le`, `IsSwing.abs_tickTime_sub_sub_le`, `clockSite_count_at_write_train`, `echoSiteShown_clockSiteFlow_train_iff`, `clockSite_count_at_display_train` | the count bounds are upper bounds of one or two periods; the switching instant exact; on a null set of fibres, one mode; the counts are of a history up to a flow time, held by no degree of freedom |
 
 Exact scope of UD-66 to UD-71. What they give. One joint energy, hence one flow, carries a clock
 pointer and a detector pointer, or two detector pointers. The flow is solved, and the generator the
@@ -761,6 +763,23 @@ write; the object is the flow of the joint energy; and the statement fails for p
 not move. UD-86 to UD-88 use UA-13, UA-8, UA-7, UA-5 and the arcs, profiles and strengths of
 UA-4. UA-2 enters only through the measure on the pair of conserved angles. UA-6 is not used.
 
+Exact scope of UD-92. What it gives. A radar coordinate is the reading of a clock at an emission or
+a reception. UD-92 is the first reading of the clock of UD-58 at an event that a record supplies:
+the instant the position readout switches, which the record's own history fixes. The count there,
+times the tick period, is that instant up to one period, and an interval between two such
+instants up to two. What it does not give. The count at the event is the count of the tick
+history up to the flow time of the event. The two histories are compared at equal values of the
+flow parameter (UA-7), and nothing in the arena makes the comparison: no degree of freedom holds
+the count (UD-65), and no register is stamped by the write. The instance is UD-76's: one momentum
+mode on a null set of fibres, where the device moves freely and the position record does not
+single out its site. Tick records are erased within their turn, so the count is a property of the
+history and not of the state at the event. The resolution is one tick and is not improved. `R` is
+the level splitting of the mode; the dilation clause of UD-59 is not used. By the test under
+UO-14: the instant is not a readout scheduled at a flow time, since it is where the site
+readout's history turns; but reading the tick history "up to" it uses the flow parameter to
+align the two histories, and that use is access to UA-7. UD-92 uses UA-13, UA-12, UA-7 and the
+arcs, profiles and strengths of UA-4. UA-2 and UA-6 are not used.
+
 ### 4.1d On the region-detector arena
 
 UD-89 to UD-91 are in `RecordLayer/UnifiedArrivalRecord.lean` (BACKLOG ~~#365~~). The arena is
@@ -854,6 +873,7 @@ since ~~#361~~ (M5's bound; UO-15 stays, with conditions). `UnifiedCausalArrival
 on the carrier's site. `UnifiedTwoSiteRecords.lean` (~~#364~~) is another: readouts on the arena
 of two site detectors, and UO-10 for a carrier on one detector's site.
 `UnifiedArrivalRecord.lean` (~~#365~~) is another: a reception record, one ingredient of UO-16.
+`UnifiedCountAtWrite.lean` (~~#366~~) is another: the clock's count at a position write.
 The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
@@ -1183,6 +1203,16 @@ time. It is not a statement about every dynamics on `Σ`.
   hypotheses; the clock's swing on these fibres is still conditional on the four inequalities of
   UD-62, so the tick record and the position record are outright together only in the instance
   of UD-76. (d3) is unchanged.
+  ▸ **The count at a position write, 2026-11-11 (BACKLOG ~~#366~~) → UD-92. Condition (c) is met in
+  the instance of UD-76, with two conditions that stay.** The site readout switches at an instant
+  its own history fixes (`echoSiteShown_clockSiteFlow_train_iff`), the tick history has a count
+  there, and the count times the tick period is within one period of it
+  (`clockSite_count_at_display_train`); likewise at the start and the completion of the write
+  (`clockSite_count_at_write_train`). *The conditions:* (c1) the two histories are aligned by the
+  flow parameter: the count is of the tick history up to the flow time of the event, and by the
+  test above that alignment is access to UA-7; an event that stamps a register would remove it,
+  and that is condition (b); (c2) one momentum mode on a null set of fibres. Conditions (a), (b)
+  and (e) are unchanged.
 
 ### M5 — causal order from interventions (`UnifiedCausalOrder.lean`)
 
@@ -1398,7 +1428,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

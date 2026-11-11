@@ -86,7 +86,8 @@ between the flow times `(M+1)/(12 g₂)` and `(M+1)/(6 g₂)` and holds it for `
   for all later times.
 * **All times are flow times** (UA-7). The start, the write interval and the window of each
   record are values of the flow parameter. The count of ticks at the position write is not taken:
-  that needs the event of the write as a record, which is condition (c) of UO-14.
+  that needs the event of the write as a record, which is condition (c) of UO-14. It is taken in
+  `RecordLayer/UnifiedCountAtWrite.lean` (#366).
 * **No register holds the count** (condition (b) of UO-14), **and the clock's coupling is not at
   a site** (condition (e)). Neither is changed here.
 * **Exact and approximate.** The occupancy formula, the monotonicity, the reduction on the

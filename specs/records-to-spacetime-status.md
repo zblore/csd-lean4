@@ -107,6 +107,11 @@ crosses a ring of at least `640000` sites, and a pointer coupled to the far half
 flow time in `[625π/3, 4375π/3]` and not before, on fibres of positive measure. The predicted
 arrival is `625π`. The detector is on half the ring, the time of the write is not computed, and
 the arena has one pointer: no emission record and no clock.
+The clock's count is taken at a position write (BACKLOG ~~#366~~,
+`RecordLayer/UnifiedCountAtWrite.lean`, `clockSite_count_at_display_train`). In the instance of
+~~#360~~ the site readout switches at an instant its own history fixes, and the number of ticks up
+to it, times the tick period, is within one period of that instant. The two histories are aligned
+by the flow parameter, and no degree of freedom holds the count.
 
 ## What is open
 

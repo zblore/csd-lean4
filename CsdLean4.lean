@@ -785,6 +785,7 @@ public import CsdLean4.RecordLayer.UnifiedCausalArrival
 public import CsdLean4.RecordLayer.UnifiedSiteRecord
 public import CsdLean4.RecordLayer.UnifiedTwoSiteRecords
 public import CsdLean4.RecordLayer.UnifiedArrivalRecord
+public import CsdLean4.RecordLayer.UnifiedCountAtWrite
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers
