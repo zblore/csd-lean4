@@ -120,8 +120,9 @@ sets are more than `d` apart on the ring (`disjoint_growIter_of_forall_ne`,
 ## References
 
 `specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md`
-(UA-4, UA-5, UA-7, UA-8, UA-12, UA-13, UA-14, UO-15, UD-77 onward); `RecordLayer/ChainCone.lean` (`SiteSupp`,
-`IdOff`, `grow`, `growIter`, `norm_commutator_chain_le`); `CV/LiebRobinson.lean`
+(UA-4, UA-5, UA-7, UA-8, UA-12, UA-13, UA-14, UO-15, UD-77 onward);
+`RecordLayer/ChainCone.lean` (`SiteSupp`, `IdOff`, `grow`, `growIter`,
+`norm_commutator_chain_le`); `CV/LiebRobinson.lean`
 (`heisenbergFlow`, `adOne`, `adIter`, `flowRemainder`, `norm_flowRemainder_le_factorial`,
 `hasDerivAt_heisenbergFlow`); `CV/ArenaBridge.lean` (`arenaObs_kick_conj`, `arenaObs_sub_le`,
 `arena_lightcone`); `RecordLayer/UnifiedTwoPointer.lean` (`diracTwoH`, `clockSiteH`,
