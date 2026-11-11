@@ -789,6 +789,7 @@ public import CsdLean4.RecordLayer.UnifiedCountAtWrite
 public import CsdLean4.RecordLayer.UnifiedDepartureArrival
 public import CsdLean4.RecordLayer.UnifiedClockTwoSites
 public import CsdLean4.RecordLayer.UnifiedSplitCarrier
+public import CsdLean4.RecordLayer.UnifiedCellSelection
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers

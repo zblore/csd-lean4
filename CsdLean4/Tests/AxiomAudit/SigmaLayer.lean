@@ -19250,4 +19250,46 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.diracTwoPointerFlow_splitRay_double_display
 
+/-! #371 (the author's programme, obligation UO-10): site cells — the region of the arena where the fibre angle lies in the arc a rate field gives to a site; the cells of two different sites are disjoint for every arena point and every carrier; conditional on a torus-generated rate field (UA-6) the probability of a site's cell under the preparation law is the occupancy of the site, some site is selected with probability one, and for the split carrier each of its two sites has probability one half; and on a chain with three different sites no family of readout regions that depends on the carrier only through the occupancy of its own site has one outcome almost surely with the weights of the carrier, so the site cells are not local to their sites. Kinematic: no flow writes a cell and the weights are assumed (`RecordLayer/UnifiedCellSelection.lean`). -/
+
+/-- info: 'CSD.RecordLayer.measure_add_add_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measure_add_add_le_one
+
+/-- info: 'CSD.RecordLayer.siteCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteCell
+
+/-- info: 'CSD.RecordLayer.measurableSet_siteCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_siteCell
+
+/-- info: 'CSD.RecordLayer.siteCell_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteCell_disjoint
+
+/-- info: 'CSD.RecordLayer.globalBasin_subset_iUnion_siteCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.globalBasin_subset_iUnion_siteCell
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_siteCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_siteCell
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_iUnion_siteCell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_iUnion_siteCell
+
+/-- info: 'CSD.RecordLayer.epistemicMeasure_siteCell_splitRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.epistemicMeasure_siteCell_splitRay
+
+/-- info: 'CSD.RecordLayer.not_siteLocal_of_one_outcome' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_siteLocal_of_one_outcome
+
+/-- info: 'CSD.RecordLayer.siteCell_not_siteLocal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteCell_not_siteLocal
+
 end CSD.Tests.AxiomAudit

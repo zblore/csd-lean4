@@ -51,7 +51,9 @@ on each (`splitRay`, `arenaObs_siteProj_splitRay_fst`, `arenaObs_siteProj_splitR
   the split fibres. The weights of quantum mechanics for one click or the other are not derived
   here and are not contradicted here: in the contract they stay conditional on the cell law
   (UA-6, Posit 1), which this arena does not use. A selection of one outcome would need a
-  mechanism that is not in this joint energy.
+  mechanism that is not in this joint energy. The selection by the cell of the ontic point,
+  and why no readout local to its site can replace it, is `RecordLayer/UnifiedCellSelection.lean`
+  (#371).
 * **Fast detectors, comparable rates.** `96 ‖H‖ < κ` for both, and the rates within about
   thirteen per cent of each other, so that one flow time serves both. Nothing is said for slow
   detectors or for very different rates.

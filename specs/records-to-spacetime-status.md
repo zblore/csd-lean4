@@ -104,7 +104,12 @@ write. For a carrier split between the two sites both detectors display (BACKLOG
 of the occupancy on each site, both readouts are `true` at one flow time. Each pointer is driven
 by the occupancy of its site, and no step of the flow selects one. So with this coupling one run
 does not have one outcome: an obstruction of the same kind as gate A's. It says nothing about the
-weights of quantum mechanics, which stay conditional on the cell law.
+weights of quantum mechanics, which stay conditional on the cell law. The other half is BACKLOG
+~~#371~~ (`RecordLayer/UnifiedCellSelection.lean`): if the outcome is read from the cell of the
+one ontic point, at most one site is selected for every carrier (`siteCell_disjoint`), and with
+the weights assumed the split carrier selects each site with probability `1/2` and never both. On
+three sites no readout that depends on the carrier only through the occupancy of its own site can
+do that (`not_siteLocal_of_one_outcome`). This is kinematic: no flow writes a cell.
 A record is written on arrival by a pointer of the joint flow (BACKLOG ~~#365~~,
 `RecordLayer/UnifiedArrivalRecord.lean`, `regionPointerFlow_arrival_write`). The packet of ~~#265~~
 crosses a ring of at least `640000` sites, and a pointer coupled to the far half writes at some
