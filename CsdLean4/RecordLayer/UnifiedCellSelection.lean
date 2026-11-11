@@ -14,9 +14,10 @@ public import CsdLean4.RecordLayer.DiracPointerBasin
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #371 — the author's programme "From `Σ` to
 physical spacetime", obligation UO-10; Remainder (a) of #370.
 `RecordLayer/UnifiedSplitCarrier.lean` showed that two pointers driven by the occupancy of their
-sites both display for a split carrier. This module is the other half. If the outcome is read
-from the cell of the one ontic point, exactly one site is selected for every carrier; and no
-readout that is local to its site can do that with the weights of the carrier.
+sites both display for a split carrier. This module is the conditional alternative, on `Σ_*`
+with one fibre angle. If the outcome is read from the cell of the arena point, at most one site
+is selected at every arena point, and some site with probability `1` under every preparation
+law; and no family of readouts local to their sites can do that with the weights of the carrier.
 
 **The site cells** (`siteCell`): the region of `Σ_* = ℂℙ × T²` where the fibre angle `θ₁` lies in
 the arc that a rate field `c` gives, at the point's own base point, to one of the two basis
@@ -40,9 +41,11 @@ carrier: no family that is local to its site has both one outcome almost surely
 (`not_siteLocal_of_one_outcome`). The proof uses the three carriers split over the three pairs
 of sites. Locality gives each site one region at occupancy `1/2`. The three regions are pairwise
 almost disjoint and each has probability `1/2`, which is `3/2` in a space of probability `1`
-(`measure_add_add_le_one`). So the site cells are not local to their sites
-(`siteCell_not_siteLocal`): whether the cell of `k` holds the point depends on the carrier away
-from `k`.
+(`measure_add_add_le_one`). So the site cells are not all local to their sites
+(`siteCell_not_siteLocal`): for at least one site the fibre region of its cell is not a function
+of that site's occupancy alone. For the cells as ordered here the regions of the first and the
+last site are such functions, and a site in between has its arc placed by the occupancies before
+it in the order of the index (a calculation, not in Lean).
 
 ## Exact scope
 
@@ -52,18 +55,23 @@ from `k`.
 * **The weights are assumed.** `epistemicMeasure_siteCell` is conditional on `IsTorusGenerated c`
   (UA-6, Posit 1): the weights are in the rate field. The disjointness is not conditional.
 * **What "local" means here.** The readout region of `j` is a function of the occupancy of `j`
-  and of the fibre point. The fibre point is shared by all sites; it is at no site. The law of
+  and of the fibre point. The fibre point is shared by all sites; it is at no site. In this
+  reading the torus is not a detector's pointer, and the coupling of UA-5 is not used. The law of
   the fibre does not depend on the carrier (UA-2: the preparation law is `δ_p ⊗ Haar`). A model in
   which the hidden variable is a position whose law is the carrier's weights is outside this
   hypothesis: it is local and gives one outcome. The theorem is about `Σ_*`, where the ontic
   state is the ray and a fibre point.
 * **Exact equality** of regions is asked in the definition of locality, not equality up to null
-  sets.
+  sets. The regions are null-measurable, and the exclusion and the weights are assumed for all
+  carriers; the proof uses three.
 * **Three sites are needed.** With two sites the theorem says nothing.
+* **Not vacuous.** The moment-map field is torus-generated (`isTorusGenerated_momentContext`),
+  so the hypothesis of `siteCell_not_siteLocal` holds for it on any chain with three sites.
 * **One carrier, no settings.** This is not Bell's theorem. It is the exclusion of two clicks for
   one carrier.
 * **The order of the arcs** in a cell is the order of the index, a convention. The theorem says
-  that some dependence on the carrier away from the site is unavoidable; it does not say which.
+  that some dependence on the carrier beyond the site's own occupancy is unavoidable; it does not
+  say which. A dependence on other data of the same site is not excluded by the statement.
 * **Definite facts.** Which cell holds the arena point is a fact of the point. The measures are
   the preparation law over the unknown fibre point.
 
@@ -231,9 +239,10 @@ theorem not_siteLocal_of_one_outcome {Ω : Type*} [MeasurableSpace Ω] (μ : Mea
     ← ENNReal.ofReal_add (by norm_num) (by norm_num), ENNReal.ofReal_le_one] at hsum
   norm_num at hsum
 
-/-- ★★★ **The site cells are not local to their sites.** For a torus-generated rate field on a
-chain with three different sites, the fibre points at which the cell of `j` holds the carrier
-`p` are not a function of the occupancy of `j` alone. -/
+/-- ★★★ **The site cells are not all local to their sites.** For a torus-generated rate field
+on a chain with three different sites there is no family `r` such that, for every site `j` and
+carrier `p`, the fibre points at which the cell of `j` holds `p` are `r j` at the occupancy of
+`j`. So for at least one site the region is not a function of its own occupancy alone. -/
 theorem siteCell_not_siteLocal {c : ContextField (2 * M + 1 + 1)} (h : IsTorusGenerated c)
     {a b d : ZMod (M + 1)} (hab : a ≠ b) (had : a ≠ d) (hbd : b ≠ d) :
     ¬ ∃ r : ZMod (M + 1) → ℝ → Set KTorus, ∀ j p,

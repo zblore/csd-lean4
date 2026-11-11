@@ -43,19 +43,20 @@ on each (`splitRay`, `arenaObs_siteProj_splitRay_fst`, `arenaObs_siteProj_splitR
 
 * **This is a statement about this coupling.** Each pointer is driven by the occupancy of its
   site (UA-5): its displacement is the rate times the accumulated occupancy. A carrier with half
-  its occupancy on each site turns both pointers at half rate, and both cross the threshold. No
-  step of the flow selects one site. So on this arena, with this coupling and these readouts,
-  "one trial, one outcome" does not hold for a split carrier. It is the same obstruction as
-  gate A's (#355): the pointer reads an occupancy, not an outcome.
+  its occupancy on each site turns both pointers at half rate, and both cross the threshold. In
+  this regime the flow does not select one site. So on this arena, with this coupling and these
+  readouts, on the split fibres, "one trial, one outcome" does not hold for these split
+  carriers. It is an obstruction of the same kind as gate A's (#355): the pointer reads an
+  occupancy, not an outcome.
 * **Not a prediction about detectors.** The statement is about the model of UA-5 and UA-13 on
   the split fibres. The weights of quantum mechanics for one click or the other are not derived
   here and are not contradicted here: in the contract they stay conditional on the cell law
   (UA-6, Posit 1), which this arena does not use. A selection of one outcome would need a
-  mechanism that is not in this joint energy. The selection by the cell of the ontic point,
-  and why no readout local to its site can replace it, is `RecordLayer/UnifiedCellSelection.lean`
-  (#371).
-* **Fast detectors, comparable rates.** `96 ‖H‖ < κ` for both, and the rates within about
-  thirteen per cent of each other, so that one flow time serves both. Nothing is said for slow
+  mechanism that is not in this joint energy. A selection by the cell of the arena point, on
+  `Σ_*` with one fibre angle and kinematic, and a no-go for families of readouts local to their
+  sites, are in `RecordLayer/UnifiedCellSelection.lean` (#371).
+* **Fast detectors, comparable rates.** `96 ‖H‖ < κ` for both, and `κ₂` between
+  `0.92 κ₁` and `1.04 κ₁`, so that one flow time serves both. Nothing is said for slow
   detectors or for very different rates.
 * **A class of carriers**: at least `3/8` of the occupancy on each of the two sites. The equal
   superposition is exhibited. Carriers between this class and that of #364 (occupancy between
@@ -149,7 +150,7 @@ theorem shown_of_half_occupancy (hUc : Continuous U) {N : ℝ}
     linarith
 
 omit [Nonempty ι] in
-/-- ★ **No pointer displays before a sixth of a turn at full rate.** For an observable with
+/-- ★ **No ready pointer displays before a sixth of a turn at full rate.** For an observable with
 expectation in `[0, 1]` and `κ > 0`, the readout is not `true` at any time in `[0, 1/(6κ)]`. -/
 theorem not_shown_of_le_sixth (hUc : Continuous U) (hpos : ∀ q, 0 ≤ arenaObs D q)
     (hle : ∀ q, arenaObs D q ≤ 1) {κ : ℝ} (hκ : 0 < κ) (p : GenArena ι) {a : KTorus}

@@ -247,6 +247,9 @@ what would discharge or constrain it.
   the phase rotations of its pointer torus: `IsTorusGenerated c`
   (`RecordLayer/CellLawForced.lean`). The corpus's field `momentContext` is a definition.
 * **Standing.** Posit. §6 states exactly why it stays one.
+* **Extended, since BACKLOG ~~#371~~.** A site's outcome cell is the union of the two basins of
+  the (site, component) context (`siteCell`). The fine basis within a site and the order of the
+  arcs are apparatus input.
 * **Discharge.** Derive `IsTorusGenerated` from the dynamics that writes the record. Not done.
   Since BACKLOG ~~#355~~: the write of `Σ_*` does not supply it. The click probability that write
   produces is not the expectation of any operator (UD-53), so it is not the rate of the moment map.
@@ -631,8 +634,9 @@ condition (e2) of UO-15. UD-84 and UD-85 are in `RecordLayer/UnifiedSiteRecord.l
 `RecordLayer/UnifiedCountAtWrite.lean` (BACKLOG ~~#366~~) and bears on condition (c) of UO-14.
 UD-99 and UD-100 are in `RecordLayer/UnifiedSplitCarrier.lean` (BACKLOG ~~#370~~) and answer
 UO-10 for a split carrier, as an obstruction. UD-101 and UD-102 are in
-`RecordLayer/UnifiedCellSelection.lean` (BACKLOG ~~#371~~): the selection by site cells, and why
-it cannot be local to a site.
+`RecordLayer/UnifiedCellSelection.lean` (BACKLOG ~~#371~~), on `Σ_*` with one torus and listed here
+because they bear on UO-10: the selection by site cells, and a no-go for readouts local to their
+sites.
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -663,7 +667,7 @@ it cannot be local to a site.
 | UD-99 | **A pointer driven by a half-occupied site, and the split fibres.** In the setting of UD-86: with `κ > 0`, `96 N ≤ κ` and a starting expectation in `[3/8, 5/8]`, the readout of a ready pointer at `pshift (κ ∫₀ᵗ⟨D⟩)` is `true` at every time in `[23/(25κ), 26/(25κ)]`. For an observable with expectation in `[0, 1]` and `κ > 0` the readout is not `true` at any time in `[0, 1/(6κ)]`. The split fibres `splitFibres` are the pairs `(θ₂, ψ₂)` with `96 B < κ₁`, `96 B < κ₂`, `23 κ₁ < 25 κ₂` and `25 κ₂ < 26 κ₁`, `B = ‖H_D‖ + \|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|`; on them both rates are positive and `96 ‖H‖ ≤ κ` for each. The set is open for `C¹` profiles. For both profiles `trainF` and equal strengths `g` with `96 ‖H_D‖ < 2 g` it contains `(0, 0)` and has positive measure | `shown_of_half_occupancy`, `not_shown_of_le_sixth`, `splitFibres`, `isOpen_splitFibres`, `splitFibres_bounds`, `zero_mem_splitFibres_trainF`, `volume_splitFibres_trainF_pos` | conditional statements with sufficient constants, not sharp; the fibre set is a definition; the measure is Haar on the pair of conserved angles, for one pair of profiles and equal strengths |
 | UD-100 | **A split carrier makes both detectors display.** On the arena of UD-70, detectors at two different sites `j ≠ k`, both pointers in their ready arcs, a split fibre, smooth profiles. For a carrier with at least `3/8` of its occupancy on each of `j` and `k`: at the flow time `1/κ₁` the first readout and the second readout are both `true`, along the one orbit of `diracTwoPointerFlow`. For every carrier the first readout is not `true` up to `1/(6κ₁)` and the second not up to `1/(6κ₂)`. The ray of `e_(k,0) + e_(j,0)` has occupancy `1/2` on each of the two sites, so it is such a carrier | `diracTwoPointerFlow_double_display`, `diracTwoPointerFlow_split_not_shown_early`, `split_ne`, `splitRay`, `arenaObs_siteProj_splitRay_fst`, `arenaObs_siteProj_splitRay_snd`, `diracTwoPointerFlow_splitRay_double_display` | exact given the fibre and the occupancies; one flow time, with no window; about the coupling of UA-5 — an obstruction, not a statement about the weights of quantum mechanics |
 | UD-101 | **Site cells.** `siteCell c j` is the region of `Σ_*` where the fibre angle `θ₁` lies in the arc that the rate field `c` gives, at the point's own base point, to one of the two basis states of the site `j`: a union of two basins of UD-21. The cells of two different sites are disjoint. Every basin lies in a site cell, and under the preparation law at any base point the union of the site cells has probability `1`. For a torus-generated rate field the probability of the cell of `j` under the preparation law at the carrier `p` is the occupancy of `j`. For the split carrier of UD-100 each of its two sites has probability `1/2` and the two cells share no arena point | `siteCell`, `measurableSet_siteCell`, `siteCell_disjoint`, `globalBasin_subset_iUnion_siteCell`, `epistemicMeasure_iUnion_siteCell`, `epistemicMeasure_siteCell`, `epistemicMeasure_siteCell_splitRay` | the disjointness and the total are exact and use no hypothesis on `c`; the weights are **conditional on UA-6**; kinematic, as UD-21 is: no flow writes a cell; does not pass a gate (§6) |
-| UD-102 | **No readout local to its site has one outcome with the weights.** Three pairwise almost disjoint events have total probability at most `1`. On a chain with three different sites, for any probability law `μ` on a fibre and readout regions `S j p` with `μ (S j p ∩ S k p) = 0` for `j ≠ k` and `μ (S j p)` the occupancy of `j`: there is no `r` with `S j p = r j (occupancy of j at p)` for all `j`, `p`. So the fibre regions of the site cells of a torus-generated field are not a function of the site's own occupancy | `measure_add_add_le_one`, `not_siteLocal_of_one_outcome`, `siteCell_not_siteLocal` | exact; a no-go for a stated sense of "local" (dependence on the carrier through the own occupancy only, a shared fibre point with a law independent of the carrier, equality of regions); three sites; one carrier, no settings |
+| UD-102 | **No readout local to its site has one outcome with the weights.** Three pairwise almost disjoint events have total probability at most `1`. On a chain with three different sites, for any probability law `μ` on a fibre and null-measurable readout regions `S j p` with `μ (S j p ∩ S k p) = 0` for `j ≠ k` and `μ (S j p)` the occupancy of `j`: there is no `r` with `S j p = r j (occupancy of j at p)` for all `j`, `p`. So for the site cells of a torus-generated field there is no such `r`: for at least one site the fibre region is not a function of that site's own occupancy | `measure_add_add_le_one`, `not_siteLocal_of_one_outcome`, `siteCell_not_siteLocal` | exact; a no-go for a stated sense of "local" (dependence on the carrier through the own occupancy only, a shared fibre point with a law independent of the carrier, equality of regions); three sites; one carrier, no settings |
 
 Exact scope of UD-66 to UD-71. What they give. One joint energy, hence one flow, carries a clock
 pointer and a detector pointer, or two detector pointers. The flow is solved, and the generator the
@@ -827,15 +831,15 @@ Exact scope of UD-99 and UD-100. What they give. UD-88 left open the carrier tha
 the two detectors' sites, which is the case "one trial, one outcome" is about. UD-100 settles it
 for this arena: both detectors display. Each pointer is driven by the occupancy of its site, so a
 carrier with half its occupancy on each site turns both pointers at half rate, and both cross the
-threshold at about `1/κ`. No step of the flow selects one site. So with the coupling of UA-5 and
-these readouts, one run does not have one outcome. That is an obstruction, of the same kind as
+threshold at about `1/κ`. In this regime the flow does not select one site. So with the coupling of
+UA-5 and these readouts, on these fibres and for these carriers, one run does not have one
+outcome. That is an obstruction, of the same kind as
 gate A's (UD-50 to UD-53): the pointer reads an occupancy and not an outcome. It holds on a set of
 pairs `(θ₂, ψ₂)` of positive Haar measure. What they do not give. Nothing here is a prediction
 about detectors. The weights of quantum mechanics for one click or the other are not derived and
 are not contradicted: in this contract they are conditional on the cell law (UA-6, Posit 1), and
 this arena does not use it. What would select one outcome is not in this joint energy. The
-detectors are fast, `96‖H‖ < κ` for both, and their rates are within about thirteen per cent of
-each other, so that one flow time serves both. The carriers are a class, at least `3/8` of the
+detectors are fast, `96‖H‖ < κ` for both, and `κ₂` is between `0.92 κ₁` and `1.04 κ₁`, so that one flow time serves both. The carriers are a class, at least `3/8` of the
 occupancy on each of the two sites, with the equal superposition exhibited. Between that class
 and the class of UD-88 nothing is proved. Both readouts are shown `true` at one flow time; no
 `IsRecordWrite` with a window is built. No `echoMuL` measure of the set of start points is
@@ -846,16 +850,21 @@ outcome. UD-99 and UD-100 use UA-13, UA-8, UA-7, UA-5 and the arcs, profiles and
 UA-4. UA-2 enters only through the measure on the pair of conserved angles. UA-6 is not used, and
 that is the point.
 
-Exact scope of UD-101 and UD-102. What they give. UD-100 is one half of "one trial, one outcome"
-on this arena: pointers driven by the occupancy of their sites both display. These are the other
-half. If the outcome is read from the cell of the one ontic point, then at most one site is
+Exact scope of UD-101 and UD-102. What they give. UD-100 is on the two-pointer arena: pointers
+coupled through their own site projectors both display, for the carriers and fibres stated there.
+UD-101 and UD-102 are on `Σ_*`, with one fibre angle and no detector's pointer; they are listed
+here because they bear on UO-10. If the outcome is read from the cell of the arena point, then at
+most one site is
 selected, for every arena point and every carrier, with no hypothesis on the rate field. With the
 weights assumed (UA-6), the split carrier selects each of its two sites with probability `1/2`
 and never both. And UD-102 says this cannot be had locally: on three sites, a family of readout
 regions that depends on the carrier only through the occupancy of its own site cannot have one
 outcome almost surely together with the weights. The proof uses the three carriers split over the
-three pairs of sites. So whether the cell of `k` holds the point depends on the carrier away from
-`k`. The selection is a fact of the one ontic point, which no site holds. What they do not give.
+three pairs of sites. So the site cells are not all local to their sites: for at least one
+site the fibre region of its cell is not a function of that site's occupancy alone. For the cells
+as ordered here the regions of the first and the last site are such functions, and a site in
+between has its arc placed by the occupancies before it in the index order (a calculation, not in
+Lean). Which cell holds the arena point is a fact of the ray and the fibre angle. What they do not give.
 The statements are kinematic. A site cell is a region. No flow of this corpus writes it, no
 pointer displays it, and no `IsRecordWrite` is built; UD-50 to UD-53 show that the coupling of
 UA-5 does not supply it. The weights are assumed and not derived. The sense of "local" is the
@@ -865,11 +874,15 @@ outside the hypothesis; it is local and gives one outcome. So UD-102 is a statem
 where the ontic state is the ray and a fibre point. It asks equality of regions, not equality up
 to null sets. It needs three sites and says nothing for two. It has one carrier and no settings,
 so it is not Bell's theorem. The order of the arcs in a cell is the order of the index, which is
-a convention; the theorem says that some dependence on the carrier away from the site is
-unavoidable, and does not say which. By the test of §6: UD-101's weights are the rate field's,
-so it passes no gate; UD-102 has no Register 1 entry among its hypotheses except the law of the
-fibre being independent of the carrier, and it is a no-go. UD-101 uses UA-1, UA-2, UA-8 and UA-6
-as a named hypothesis. UD-102 uses UA-8 and, in its application to the cells, UA-2 and UA-6.
+a convention; the theorem says that some dependence on the carrier beyond the site's own occupancy is
+unavoidable, and does not say which; a dependence on other data of the same site is not excluded
+by the statement. The exclusion and the weights are assumed for all carriers, and the regions are
+null-measurable. The hypothesis is met by `momentContext` on any chain with three sites. By the test of §6: UD-101's weights are the rate field's, and
+its disjointness is a property of the definition (arcs at running sums), so it passes no gate; UD-102 has no Register 1 entry among its hypotheses except the law of the
+fibre being independent of the carrier, and it is a no-go. UD-101 uses UA-1, UA-2, UA-3 (every probability here is the
+typicality reading of the preparation law), the site index of UA-8 (`diracHam` is not used) and
+UA-6 as a named hypothesis, extended as stated under UA-6. UD-102 uses the site index of UA-8
+and, in its application to the cells, UA-2, UA-3 and UA-6.
 
 ### 4.1d On the region-detector arena
 
@@ -1241,23 +1254,30 @@ detector law?
   `3/8` of its occupancy on each of the two detectors' sites makes both readouts `true` at the
   flow time `1/κ₁` (`diracTwoPointerFlow_double_display`), neither having been `true` early
   (`diracTwoPointerFlow_split_not_shown_early`). The equal superposition over the two sites is
-  such a carrier (`diracTwoPointerFlow_splitRay_double_display`). So (o1) is closed: with the
-  coupling of UA-5, in which a pointer is driven by the occupancy of its site, one run does not
-  have one outcome for a split carrier. By §8 rule 4 an obstruction closes the obligation as
+  such a carrier (`diracTwoPointerFlow_splitRay_double_display`). So (o1) is answered in the negative for
+  the coupling of UA-5, in which a pointer is driven by the occupancy of its site: there are
+  split carriers (at least `3/8` on each site) and fibres of positive Haar measure on which both
+  readouts are `true` at one flow time. By §8 rule 4 an obstruction closes the obligation as
   firmly as the positive statement would, for this coupling. *What it does not say:* nothing
   about the weights of quantum mechanics, which are conditional on the cell law (UA-6) and are
   neither derived nor contradicted here; and nothing for a coupling other than UA-5's. *What
-  stays:* (o2) and (o3) for the localised carrier; the carriers between the two classes; and
+  stays:* (o2) and (o3) for both kinds of carrier, with nothing for slow detectors or for rates
+  outside the split fibres; the carriers between the two classes; and
   what would select one outcome, which is not in this joint energy.
-  ▸ **The selection by cells, 2026-11-11 (BACKLOG ~~#371~~) → UD-101, UD-102. (o1) as a kinematic
-  statement, with the weights assumed, and a no-go for locality.** The site cells `siteCell c j`
+  ▸ **The selection by cells, 2026-11-11 (BACKLOG ~~#371~~) → UD-101, UD-102. Not a
+  second answer to (o1), which stays answered for UA-5: the conditional alternative, one fibre
+  angle with a partitioned readout on `Σ_*`, kinematic, with the weights assumed; and a no-go for
+  locality. UO-10 is not met by it.** The site cells `siteCell c j`
   are disjoint for every arena point and every carrier (`siteCell_disjoint`). Conditional on
   UA-6 the split carrier selects each of its two sites with probability `1/2` and never both
   (`epistemicMeasure_siteCell_splitRay`). On three sites no readout that depends on the carrier
   only through the occupancy of its own site has one outcome almost surely with the weights
-  (`not_siteLocal_of_one_outcome`), so the cells are not local to their sites
-  (`siteCell_not_siteLocal`). With UD-100: a readout local to its site either displays twice or
-  misses the weights, and the selection that gives one outcome is a fact of the one ontic point.
+  (`not_siteLocal_of_one_outcome`), so the cells are not all local to their sites
+  (`siteCell_not_siteLocal`). By UD-102: a family local in the stated sense either selects two
+  sites with positive probability for some carrier or misses the weights. UD-100's pointers are
+  coupled through their own site projectors and both display; their readouts are not shown to be
+  local in that sense, and they are on the two-pointer arena, while the cells are on `Σ_*` with
+  one fibre angle.
   *Conditions:* kinematic, no flow writes a cell; the weights are UA-6; "local" is the stated
   sense, and a position-valued hidden variable with the carrier's weights as its law is outside
   it; three sites. *What stays:* a dynamics that writes the cell (the discharge of UA-6).
