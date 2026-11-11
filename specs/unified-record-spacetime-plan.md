@@ -354,7 +354,9 @@ what would discharge or constrain it.
 * **What it does not cover.** A third pointer. A coupling between the pointers. Since BACKLOG
   ~~#360~~ UA-4 is extended to the arena of the clock's pointer and a site detector: a readout
   region and a ready arc on each torus, as apparatus input. Since BACKLOG ~~#364~~ the same holds
-  for the arena of two site detectors.
+  for the arena of two site detectors. Since BACKLOG ~~#367~~ a third instance of (d) is in use:
+  two pointers coupled to the projectors on two regions of sites, the two halves of the ring
+  (`regionTwoFlow`), with the same readouts and ready arcs.
 * **Discharge.** None for the choice. M8 compares alternatives. The interaction topology M5 must
   record (UO-15) is read off (c) and (d): the carrier's hopping and the two on-site operators.
   Since BACKLOG ~~#361~~ it is stated as a property of the coupled generators and proved for them
@@ -786,13 +788,18 @@ UD-89 to UD-91 are in `RecordLayer/UnifiedArrivalRecord.lean` (BACKLOG ~~#365~~)
 `ℂℙ^{2M+1} × T²` with the joint energy `−2⟨H_D⟩ − 2 g f(θ₂)⟨P_A⟩`: `Σ_*` of §2 with the site
 projector replaced by the projector on a region `A` of sites (UA-5, extended). Its flow is
 `regionPointerFlow`. It is not `Σ_*`. Every time is the flow parameter (UA-7). UD-89 to UD-91 are
-what UO-16 is annotated with; they do not meet it.
+what UO-16 is annotated with; they do not meet it. UD-93 and UD-94 are in
+`RecordLayer/UnifiedDepartureArrival.lean` (BACKLOG ~~#367~~), on the two-pointer arena of UA-13
+with two region projectors, `ℂℙ^{2M+1} × T² × T²` with the joint energy
+`−2⟨H_D⟩ − 2 g₁ f(θ₂)⟨P_A⟩ − 2 g₂ h(ψ₂)⟨P_B⟩` and the flow `regionTwoFlow`.
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
 | UD-89 | **A crossing of the threshold, and a detector on a region.** A pointer starts in the ready arc and sits at `pshift (κ ∫₀ᵗ F)`, `F` continuous with values in `[0, 1]`, `κ > 0`. If the displacement is at most `1/6` at `T₁ ≥ 0` and at least `1/3` at `T₃ ≥ T₁`, there is `τ ∈ [T₁, T₃]` such that the readout history is an `IsRecordWrite` of `true` from time `0` with write interval `[T₁, τ]` and window `1/(3κ)`. The projector `regionProj A` on a region of sites is Hermitian, of norm at most one, and its expectation is the sum of the occupancies of the sites of `A`, in `[0, 1]`; the occupancies of all sites sum to one. At the ray of `v` it is the weight of `v` on `A` over the squared norm. The uncoupled propagator `idxFreeU` of the generic layer is `chainProp`, so along it the expectation at the ray of `ψ` is the weight of `e^{−isH_D}ψ` on `A` over the norm of `ψ` | `isRecordWrite_of_integral_crossing`, `regionProj`, `regionProj_isHermitian`, `norm_regionProj_le`, `sum_arenaObs_siteProj`, `arenaObs_regionProj`, `arenaObs_regionProj_nonneg`, `arenaObs_regionProj_le_one`, `arenaObs_regionProj_mk`, `idxFreeU_diracHam_val`, `arenaObs_regionProj_free_chainRay` | exact; the first is an existence statement — `τ` comes from the intermediate value theorem and is not computed; `regionProj` is a definition |
 | UD-90 | **The flow of a carrier and a pointer coupled to a region.** `regionPointerFlow` is the Hamiltonian flow of `−2⟨H_D⟩ − 2 g f(θ₂)⟨P_A⟩` for the form of the arena. It moves the carrier by `exp(−it(H_D + g f(θ₂) P_A))`, advances `θ₁` by the displacement `idxPointerShift` of UD-58's generic layer, and fixes `θ₂`. The readout `diracDisplayed` of UD-31 along it is `true` exactly when the pointer, turned by `κ ∫₀ᵗ⟨P_A⟩` with `κ = −2 g f'(θ₂)`, is in the displayed arc. For `t ≥ 0` the accumulated expectation of `P_A` along the coupled carrier is within `\|g f(θ₂)\| t²` of its value along the uncoupled one | `regionProj_smul_isHermitian`, `regionPointerFlow`, `regionPointerFlow_apply`, `diracDisplayed_regionPointerFlow_iff`, `abs_integral_regionProj_sub_free_le` | exact closed form; an upper bound for the back-reaction, not shown attained |
 | UD-91 | **A record written on arrival.** The ring has at least `640000` sites, hop `crossHop` and rest energy `3`. The carrier is the ray of the crossing packet of UD-12's module (`16` momenta, velocity `4/5`), and `A` is the far half of the ring. Along the uncoupled carrier the expectation of `P_A` is the packet's weight on the far half. The arrival fibres `arrivalFibres` are the `θ₂` with `κ > 0`, `6κ(625π/12 + \|g f(θ₂)\|(625π/3)²) < 1` and `1 < 3κ(625π/2 − \|g f(θ₂)\|(4375π/3)²)`. They are open for a `C¹` profile, and for the profile `trainF` and `g = 1/(1250π)` they contain `θ₂ = 0` and have positive measure. On an arrival fibre, from a pointer in the ready arc, for a smooth profile: there is a flow time `τ ∈ [625π/3, 4375π/3]` such that the readout history along `regionPointerFlow` is an `IsRecordWrite` of `true` from time `0` with write interval `[625π/3, τ]` and window `1/(3κ)` | `arrivalFibres`, `isOpen_arrivalFibres`, `zero_mem_arrivalFibres_trainF`, `volume_arrivalFibres_trainF_pos`, `crossPacket_ne_zero`, `arenaObs_farHalf_free_crossPacket`, `regionPointerFlow_arrival_write` | exact given the fibre; `τ` exists and is not computed; one packet and one ring; the measure is Haar on `θ₂`, for one profile and one strength |
+| UD-93 | **Two pointers coupled to two regions.** If two continuous families of unitaries satisfy `‖U s − V s‖ ≤ \|s\| N` and `‖D‖ ≤ 1`, the accumulated expectations of `D` along them differ by at most `N t²` for `t ≥ 0`. The carrier with two pointers is within `\|s\| (\|f(θ₂)\| ‖B₀‖ + \|h(ψ₂)\| ‖C₀‖)` of the uncoupled carrier. `regionTwoFlow` is `twoCoupledFlow` of UD-66 for the Dirac chain and two region projectors: it moves the carrier by the one propagator with both region terms, advances each pointer by its displacement along that orbit, and fixes both conserved angles. The first readout `echoFstShown` of UD-87 and the second `echoSiteShown` of UD-73 are `true` exactly when their pointer, turned by its rate times the accumulated weight on its region, is in the displayed arc. For any region the accumulated weight along the coupled carrier is within `(\|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|) t²` of its value along the uncoupled one | `abs_integral_arenaObs_sub_integral_le`, `norm_idxTwoCarrierU_sub_idxFreeU_le`, `regionTwoFlow`, `regionTwoFlow_apply`, `echoFstShown_regionTwoFlow_iff`, `echoSiteShown_regionTwoFlow_iff`, `abs_integral_regionProj_two_sub_free_le` | exact closed form; upper bounds for the back-reaction, not shown attained |
+| UD-94 | **A departure record and an arrival record in one run.** The ring, the packet and the far half of UD-91; the first pointer on the near half, the complement of the far half, and the second on the far half. The packet's weight on the far half is continuous in time, at most `625π/12` accumulated by `625π/3` and at least `625π/2` by `4375π/3`; along the uncoupled carrier the near half holds one minus the far half's weight. The fibres `departureArrivalFibres` are the pairs `(θ₂, ψ₂)` with both rates positive and, with `b = \|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|`: `1 < 3κ₁(625π/4 − b(625π/3)²)`, `6κ₂(625π/12 + b(625π/3)²) < 1`, `1 < 3κ₂(625π/2 − b(4375π/3)²)`. They are open for `C¹` profiles, and for both profiles `trainF` and strengths `1/(625π)`, `1/(1250π)` they contain `(0, 0)` and have positive measure. On such a fibre, from two pointers in their ready arcs, for smooth profiles: there are flow times `0 ≤ τ_d ≤ 625π/3 ≤ τ_a ≤ 4375π/3` such that, along the one orbit of `regionTwoFlow`, the near readout's history is an `IsRecordWrite` of `true` from time `0` with write interval `[0, τ_d]` and window `1/(3κ₁)`, and the far readout's history is one with write interval `[625π/3, τ_a]` and window `1/(3κ₂)` | `departureArrivalFibres`, `isOpen_departureArrivalFibres`, `zero_mem_departureArrivalFibres_trainF`, `volume_departureArrivalFibres_trainF_pos`, `continuous_regionWeight_crossPacket`, `integral_regionWeight_crossPacket_le`, `le_integral_regionWeight_crossPacket`, `arenaObs_nearHalf_free_crossPacket`, `regionTwoFlow_departure_arrival` | exact given the fibre; the two times exist and are not computed; one packet and one ring; the measure is Haar on the pair of conserved angles, for one pair of profiles and strengths |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -818,6 +825,26 @@ the write; the carrier's motion is UA-8's, and the statement about the pointer f
 carrier that does not move, whose weight on the far half would stay below a quarter. UD-89 to
 UD-91 use UA-8, UA-7, UA-5 and the arc, profile and strength of UA-4. UA-2 enters only through
 the measure on `θ₂`. UA-6 is not used.
+
+Exact scope of UD-93 and UD-94. What they give. UD-91 has the arrival record alone. Here the same
+run has a second pointer, on the half of the ring the packet starts in, and both records are read
+along one orbit of one joint flow: the near pointer writes while the packet is still on its half,
+by `625π/3`, and the far pointer does not show before `625π/3` and writes by `4375π/3`. The
+back-reaction of both detectors on the carrier is inside the statement, and the fibres on which
+it holds have positive measure. What they do not give. The first record is a departure and not an
+emission. The packet is prepared on the near half and the pointer records that it is there;
+nothing emits it and no instant of emission is singled out. The order of the two records is
+through the one time `625π/3`: the first write is complete by it and the second readout does not
+show before it, and the two could meet there. `τ_d` and `τ_a` come from the intermediate value
+theorem and are not computed, so no transit time and no speed are read off the pair. Each
+detector is on half the ring. There is one packet and one ring, and the detectors are weak. There
+is no clock on the arena: no time is read by a clock at either record, so no radar coordinate is
+formed. A clock in the same run is a third pointer, and no arena has three pointer tori. The
+records are definite facts of the one trajectory, each held for its window, and no weight of
+quantum mechanics is derived. By the test of §6: as for UD-91, with two pointers; the statement
+about the order fails for a carrier that does not move, whose weight would stay on the near half.
+UD-93 and UD-94 use UA-13, UA-8, UA-7, UA-5 and the arcs, profiles and strengths of UA-4. UA-2
+enters only through the measure on the pair of conserved angles. UA-6 is not used.
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -874,6 +901,7 @@ on the carrier's site. `UnifiedTwoSiteRecords.lean` (~~#364~~) is another: reado
 of two site detectors, and UO-10 for a carrier on one detector's site.
 `UnifiedArrivalRecord.lean` (~~#365~~) is another: a reception record, one ingredient of UO-16.
 `UnifiedCountAtWrite.lean` (~~#366~~) is another: the clock's count at a position write.
+`UnifiedDepartureArrival.lean` (~~#367~~) is another: a departure and an arrival record in one run.
 The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
@@ -1282,6 +1310,14 @@ time. It is not a statement about every dynamics on `Σ`.
   a clock in the same run, and its count at each record (UO-14 (c)); a second observer; the time
   of the write located, which here is only somewhere in `[625π/3, 4375π/3]`; a detector on less
   than half the ring; and a family along which the errors shrink.
+  ▸ **Departure and arrival in one run, 2026-11-11 (BACKLOG ~~#367~~) → UD-93, UD-94. Two
+  ingredients. Not met.** Two pointers of one joint flow, on the near and the far half of the
+  ring, write a departure record and an arrival record along one orbit, the first complete by
+  `625π/3` and the second not showing before it (`regionTwoFlow_departure_arrival`). *What is
+  still missing:* a clock in the same run, which is a third pointer on an arena that has not
+  been built; the count of that clock at each record (UD-92 has it for a position write on
+  another arena); the two times located; an emission in place of a prepared departure; a second
+  observer; detectors on less than half the ring; and a family along which the errors shrink.
 
 ### M7 — `3 + 1`
 
@@ -1428,7 +1464,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

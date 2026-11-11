@@ -19036,4 +19036,70 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.clockSite_count_at_display_train
 
+/-! #367 (the author's programme, towards milestone M6): a departure record and an arrival record in one run — accumulated expectations along two families of unitaries within `|s| N` of each other differ by at most `N t²`; the flow of a Dirac carrier and two pointers coupled to two regions of sites, in closed form, with the back-reaction of both detectors at most `(|g₁ f(θ₂)| + |g₂ h(ψ₂)|) t²` (upper bound); and for the crossing packet of #265, the first pointer on the near half of the ring and the second on the far half: on the departure-and-arrival fibres, open and of positive measure for two `trainF` profiles at strengths `1/(625π)` and `1/(1250π)`, the near readout's history is a write complete by `625π/3` and the far readout's history is a write that does not show before `625π/3` and is complete by `4375π/3`, along the one orbit. Departure, not emission; the two times exist and are not computed; half rings; no clock; flow times (`RecordLayer/UnifiedDepartureArrival.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_integral_arenaObs_sub_integral_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_integral_arenaObs_sub_integral_le
+
+/-- info: 'CSD.RecordLayer.norm_idxTwoCarrierU_sub_idxFreeU_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_idxTwoCarrierU_sub_idxFreeU_le
+
+/-- info: 'CSD.RecordLayer.regionTwoFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionTwoFlow
+
+/-- info: 'CSD.RecordLayer.regionTwoFlow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionTwoFlow_apply
+
+/-- info: 'CSD.RecordLayer.echoFstShown_regionTwoFlow_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoFstShown_regionTwoFlow_iff
+
+/-- info: 'CSD.RecordLayer.echoSiteShown_regionTwoFlow_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoSiteShown_regionTwoFlow_iff
+
+/-- info: 'CSD.RecordLayer.abs_integral_regionProj_two_sub_free_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_integral_regionProj_two_sub_free_le
+
+/-- info: 'CSD.RecordLayer.departureArrivalFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.departureArrivalFibres
+
+/-- info: 'CSD.RecordLayer.isOpen_departureArrivalFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpen_departureArrivalFibres
+
+/-- info: 'CSD.RecordLayer.zero_mem_departureArrivalFibres_trainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.zero_mem_departureArrivalFibres_trainF
+
+/-- info: 'CSD.RecordLayer.volume_departureArrivalFibres_trainF_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_departureArrivalFibres_trainF_pos
+
+/-- info: 'CSD.RecordLayer.continuous_regionWeight_crossPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_regionWeight_crossPacket
+
+/-- info: 'CSD.RecordLayer.integral_regionWeight_crossPacket_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_regionWeight_crossPacket_le
+
+/-- info: 'CSD.RecordLayer.le_integral_regionWeight_crossPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_integral_regionWeight_crossPacket
+
+/-- info: 'CSD.RecordLayer.arenaObs_nearHalf_free_crossPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_nearHalf_free_crossPacket
+
+/-- info: 'CSD.RecordLayer.regionTwoFlow_departure_arrival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionTwoFlow_departure_arrival
+
 end CSD.Tests.AxiomAudit

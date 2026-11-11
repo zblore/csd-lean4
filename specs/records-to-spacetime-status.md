@@ -112,6 +112,12 @@ The clock's count is taken at a position write (BACKLOG ~~#366~~,
 ~~#360~~ the site readout switches at an instant its own history fixes, and the number of ticks up
 to it, times the tick period, is within one period of that instant. The two histories are aligned
 by the flow parameter, and no degree of freedom holds the count.
+A departure record and an arrival record are written in one run (BACKLOG ~~#367~~,
+`RecordLayer/UnifiedDepartureArrival.lean`, `regionTwoFlow_departure_arrival`): two pointers of
+one joint flow, on the near and the far half of the ring, the first complete by `625π/3` and the
+second not showing before it. The two times are not computed and the arena has no clock, so no
+time is read at either record. A clock in the same run needs an arena with three pointer tori,
+which does not exist.
 
 ## What is open
 

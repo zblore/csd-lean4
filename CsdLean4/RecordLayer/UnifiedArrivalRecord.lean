@@ -75,7 +75,8 @@ not `true` at any time before `625π/3`. The arrival fibres are open
   arrival fibres are those where that bound is small. For the profile `trainF` they are a
   neighbourhood of `θ₂ = 0` of positive Haar measure; its size is not computed.
 * **One pointer.** There is no emission record, no second detector and no clock on this arena.
-  A radar exchange needs all three (M6).
+  A radar exchange needs all three (M6). A second pointer on the near half, with a departure
+  record in the same run, is in `RecordLayer/UnifiedDepartureArrival.lean` (#367).
 * **A definite fact, not a statistic.** The record is that the accumulated weight on the far
   half crossed the threshold along the one trajectory. No weight of quantum mechanics is derived.
 * **The record is held for a window** `1/(3κ)` and then the pointer turns on. All times are flow
