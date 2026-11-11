@@ -99,8 +99,12 @@ The arena of two site pointers now has a readout on each torus, and one run with
 read (BACKLOG ~~#364~~, `RecordLayer/UnifiedTwoSiteRecords.lean`,
 `diracTwoPointerFlow_record_fst_only`). For a carrier with at least `7/8` of its occupancy on one
 detector's site, that detector writes and the other is not displayed up to the completion of the
-write. For a carrier split between the two sites nothing is proved, and exactly one outcome is
-not shown.
+write. For a carrier split between the two sites both detectors display (BACKLOG ~~#370~~,
+`RecordLayer/UnifiedSplitCarrier.lean`, `diracTwoPointerFlow_double_display`): with at least `3/8`
+of the occupancy on each site, both readouts are `true` at one flow time. Each pointer is driven
+by the occupancy of its site, and no step of the flow selects one. So with this coupling one run
+does not have one outcome: an obstruction of the same kind as gate A's. It says nothing about the
+weights of quantum mechanics, which stay conditional on the cell law.
 A record is written on arrival by a pointer of the joint flow (BACKLOG ~~#365~~,
 `RecordLayer/UnifiedArrivalRecord.lean`, `regionPointerFlow_arrival_write`). The packet of ~~#265~~
 crosses a ring of at least `640000` sites, and a pointer coupled to the far half writes at some

@@ -19192,4 +19192,62 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.clockTwoSite_records_train
 
+/-! #370 (the author's programme, obligation UO-10): a carrier split between two detectors — a fast ready pointer driven by an observable whose starting expectation is in `[3/8, 5/8]` displays through `[23/(25κ), 26/(25κ)]`, and no pointer displays before `1/(6κ)` (conditional statements with sufficient constants); the split fibres, open and of positive Haar measure for two `trainF` detectors of equal strength; and on a split fibre, for detectors at two different sites and a carrier with at least `3/8` of its occupancy on each, both readouts are `true` at one flow time along the one orbit, neither having been `true` early. The equal superposition over the two sites is such a carrier. A statement about this coupling, in which each pointer is driven by the occupancy of its site: one run does not have one outcome. No weight of quantum mechanics is derived or contradicted (`RecordLayer/UnifiedSplitCarrier.lean`). -/
+
+/-- info: 'CSD.RecordLayer.shown_of_half_occupancy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shown_of_half_occupancy
+
+/-- info: 'CSD.RecordLayer.not_shown_of_le_sixth' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_shown_of_le_sixth
+
+/-- info: 'CSD.RecordLayer.splitFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.splitFibres
+
+/-- info: 'CSD.RecordLayer.isOpen_splitFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpen_splitFibres
+
+/-- info: 'CSD.RecordLayer.splitFibres_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.splitFibres_bounds
+
+/-- info: 'CSD.RecordLayer.zero_mem_splitFibres_trainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.zero_mem_splitFibres_trainF
+
+/-- info: 'CSD.RecordLayer.volume_splitFibres_trainF_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_splitFibres_trainF_pos
+
+/-- info: 'CSD.RecordLayer.diracTwoPointerFlow_double_display' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoPointerFlow_double_display
+
+/-- info: 'CSD.RecordLayer.diracTwoPointerFlow_split_not_shown_early' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoPointerFlow_split_not_shown_early
+
+/-- info: 'CSD.RecordLayer.split_ne' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.split_ne
+
+/-- info: 'CSD.RecordLayer.splitRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.splitRay
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteProj_splitRay_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteProj_splitRay_fst
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteProj_splitRay_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteProj_splitRay_snd
+
+/-- info: 'CSD.RecordLayer.diracTwoPointerFlow_splitRay_double_display' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoPointerFlow_splitRay_double_display
+
 end CSD.Tests.AxiomAudit

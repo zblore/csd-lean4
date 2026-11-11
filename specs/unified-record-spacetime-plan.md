@@ -629,6 +629,8 @@ condition (e2) of UO-15. UD-84 and UD-85 are in `RecordLayer/UnifiedSiteRecord.l
 ~~#363~~) and bear on conditions (d1) and (d2) of UO-14. UD-86 to UD-88 are in
 `RecordLayer/UnifiedTwoSiteRecords.lean` (BACKLOG ~~#364~~) and bear on UO-10. UD-92 is in
 `RecordLayer/UnifiedCountAtWrite.lean` (BACKLOG ~~#366~~) and bears on condition (c) of UO-14.
+UD-99 and UD-100 are in `RecordLayer/UnifiedSplitCarrier.lean` (BACKLOG ~~#370~~) and answer
+UO-10 for a split carrier, as an obstruction.
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -656,6 +658,8 @@ condition (e2) of UO-15. UD-84 and UD-85 are in `RecordLayer/UnifiedSiteRecord.l
 | UD-87 | **Readouts and record fibres on the arena of two site detectors.** On the arena of UD-70. On the first torus the ready set `echoFstReady`, the displayed set `echoFstDisplay` and the readout `echoFstShown` are the arcs `readyArc` and `displayArc` on the first pointer; all are measurable. The second torus has `echoSiteReady`, `echoSiteDisplay`, `echoSiteShown` of UD-73. Under `diracTwoPointerFlow` each pointer is its start translated by its displacement, and each displacement is its rate times the accumulated occupancy of its site. The carrier's propagator is within `\|t\| ‖H‖` of the identity, `H = diracTwoH`, and `‖H‖ ≤ ‖H_D‖ + \|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|`. The occupancies of two different sites sum to at most one. The record fibres `twoSiteRecordFibres` are the pairs `(θ₂, ψ₂)` with `16 B < 3 κ₁`, `16 B < 3 κ₂`, `3 κ₂ < 4 κ₁` and `3 κ₁ < 4 κ₂`, `B` that bound on `‖H‖` and `κ₁`, `κ₂` the two rates; on them both rates are positive and `16 ‖H‖ ≤ 3 κ` for each. The set is open for `C¹` profiles. For both profiles `trainF` and equal strengths `g` with `16 ‖H_D‖ < 6 g` it contains `(0, 0)` and has positive measure, and such a `g` exists | `echoFstReady`, `measurableSet_echoFstReady`, `echoFstDisplay`, `measurableSet_echoFstDisplay`, `echoFstShown`, `measurable_echoFstShown`, `echoFstShown_eq_true_iff`, `diracTwoPointerFlow_fst_pointer`, `diracTwoPointerFlow_snd_pointer`, `diracTwoShiftFst_eq_rateAt`, `diracTwoShiftSnd_eq_rateAt`, `norm_diracTwoCarrierU_sub_one_le`, `norm_diracTwoH_le`, `arenaObs_siteProj_le_one_sub`, `twoSiteRecordFibres`, `isOpen_twoSiteRecordFibres`, `twoSiteRecordFibres_bounds`, `zero_mem_twoSiteRecordFibres_trainF`, `volume_twoSiteRecordFibres_trainF_pos`, `exists_volume_twoSiteRecordFibres_pos` | the readout, the ready set and the fibre set are definitions (apparatus input, UA-4, for the first two); the rest exact or upper bounds; the measure is Haar on the pair of conserved angles, for one pair of profiles and equal strengths |
 | UD-88 | **One run, two detectors.** Detectors at two different sites `j ≠ k`, both pointers in their ready arcs, a record fibre, smooth profiles. For a carrier with at least `7/8` of its occupancy on `j`: the first readout's history along `diracTwoPointerFlow` is an `IsRecordWrite` of `true` from time `0` with write interval `[1/(6κ₁), 1/(2κ₁)]` and window `1/(6κ₁)`, and the second readout along the same orbit is not `true` at any flow time in `[0, 1/(2κ₁)]`. For a carrier with at least `7/8` on `k` the same holds with the detectors exchanged and `κ₂` in place of `κ₁`. Each readout is `true` exactly when its pointer, turned by its rate times the accumulated occupancy of its site, is in the displayed arc | `echoFstShown_diracTwoPointerFlow_iff`, `echoSiteShown_diracTwoPointerFlow_iff`, `diracTwoPointerFlow_record_fst_only`, `diracTwoPointerFlow_record_snd_only` | exact given the fibre and the occupancy; the other detector is covered only up to the completion of the write; nothing for a carrier split between the sites |
 | UD-92 | **The clock's count at a position write.** For any swing at the rate `R` and any time `T ≥ 0` there is a count `N`, with `\|2πN − R T\| ≤ 2π`; so `\|N · 2π/R − T\| ≤ 2π/R`, and for two times `\|(N₁ − N₀) · 2π/R − (T₁ − T₀)\| ≤ 4π/R`. In the instance of UD-76, along the one orbit: the site readout's history is a write begun at `τ₀ = (M+1)/(12 g₂)` and complete at `τ₁ = (M+1)/(6 g₂)`; the tick history has counts `N₀` at `τ₀` and `N₁` at `τ₁`, with `N₁ · 2π/R` within one tick period of `τ₁` and `(N₁ − N₀) · 2π/R` within two of `τ₁ − τ₀`. The site readout is `true` exactly for `(M+1)/(8 g₂) < t`, on `0 ≤ t ≤ 3(M+1)/(8 g₂)`, and the tick history has a count `N` at `t* = (M+1)/(8 g₂)` with `N · 2π/R` within one period of `t*` | `IsSwing.exists_tickCount_abs_sub_le`, `IsSwing.abs_tickTime_sub_le`, `IsSwing.abs_tickTime_sub_sub_le`, `clockSite_count_at_write_train`, `echoSiteShown_clockSiteFlow_train_iff`, `clockSite_count_at_display_train` | the count bounds are upper bounds of one or two periods; the switching instant exact; on a null set of fibres, one mode; the counts are of a history up to a flow time, held by no degree of freedom |
+| UD-99 | **A pointer driven by a half-occupied site, and the split fibres.** In the setting of UD-86: with `κ > 0`, `96 N ≤ κ` and a starting expectation in `[3/8, 5/8]`, the readout of a ready pointer at `pshift (κ ∫₀ᵗ⟨D⟩)` is `true` at every time in `[23/(25κ), 26/(25κ)]`. For an observable with expectation in `[0, 1]` and `κ > 0` the readout is not `true` at any time in `[0, 1/(6κ)]`. The split fibres `splitFibres` are the pairs `(θ₂, ψ₂)` with `96 B < κ₁`, `96 B < κ₂`, `23 κ₁ < 25 κ₂` and `25 κ₂ < 26 κ₁`, `B = ‖H_D‖ + \|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|`; on them both rates are positive and `96 ‖H‖ ≤ κ` for each. The set is open for `C¹` profiles. For both profiles `trainF` and equal strengths `g` with `96 ‖H_D‖ < 2 g` it contains `(0, 0)` and has positive measure | `shown_of_half_occupancy`, `not_shown_of_le_sixth`, `splitFibres`, `isOpen_splitFibres`, `splitFibres_bounds`, `zero_mem_splitFibres_trainF`, `volume_splitFibres_trainF_pos` | conditional statements with sufficient constants, not sharp; the fibre set is a definition; the measure is Haar on the pair of conserved angles, for one pair of profiles and equal strengths |
+| UD-100 | **A split carrier makes both detectors display.** On the arena of UD-70, detectors at two different sites `j ≠ k`, both pointers in their ready arcs, a split fibre, smooth profiles. For a carrier with at least `3/8` of its occupancy on each of `j` and `k`: at the flow time `1/κ₁` the first readout and the second readout are both `true`, along the one orbit of `diracTwoPointerFlow`. For every carrier the first readout is not `true` up to `1/(6κ₁)` and the second not up to `1/(6κ₂)`. The ray of `e_(k,0) + e_(j,0)` has occupancy `1/2` on each of the two sites, so it is such a carrier | `diracTwoPointerFlow_double_display`, `diracTwoPointerFlow_split_not_shown_early`, `split_ne`, `splitRay`, `arenaObs_siteProj_splitRay_fst`, `arenaObs_siteProj_splitRay_snd`, `diracTwoPointerFlow_splitRay_double_display` | exact given the fibre and the occupancies; one flow time, with no window; about the coupling of UA-5 — an obstruction, not a statement about the weights of quantum mechanics |
 
 Exact scope of UD-66 to UD-71. What they give. One joint energy, hence one flow, carries a clock
 pointer and a detector pointer, or two detector pointers. The flow is solved, and the generator the
@@ -814,6 +818,29 @@ UO-14: the instant is not a readout scheduled at a flow time, since it is where 
 readout's history turns; but reading the tick history "up to" it uses the flow parameter to
 align the two histories, and that use is access to UA-7. UD-92 uses UA-13, UA-12, UA-7 and the
 arcs, profiles and strengths of UA-4. UA-2 and UA-6 are not used.
+
+Exact scope of UD-99 and UD-100. What they give. UD-88 left open the carrier that is split between
+the two detectors' sites, which is the case "one trial, one outcome" is about. UD-100 settles it
+for this arena: both detectors display. Each pointer is driven by the occupancy of its site, so a
+carrier with half its occupancy on each site turns both pointers at half rate, and both cross the
+threshold at about `1/κ`. No step of the flow selects one site. So with the coupling of UA-5 and
+these readouts, one run does not have one outcome. That is an obstruction, of the same kind as
+gate A's (UD-50 to UD-53): the pointer reads an occupancy and not an outcome. It holds on a set of
+pairs `(θ₂, ψ₂)` of positive Haar measure. What they do not give. Nothing here is a prediction
+about detectors. The weights of quantum mechanics for one click or the other are not derived and
+are not contradicted: in this contract they are conditional on the cell law (UA-6, Posit 1), and
+this arena does not use it. What would select one outcome is not in this joint energy. The
+detectors are fast, `96‖H‖ < κ` for both, and their rates are within about thirteen per cent of
+each other, so that one flow time serves both. The carriers are a class, at least `3/8` of the
+occupancy on each of the two sites, with the equal superposition exhibited. Between that class
+and the class of UD-88 nothing is proved. Both readouts are shown `true` at one flow time; no
+`IsRecordWrite` with a window is built. No `echoMuL` measure of the set of start points is
+stated. By the test of §6: the hypotheses of UD-100 that are Register 1 entries are the ready
+arcs, the parameters and the coupling; the occupancies and the fibre membership are conditions on
+the start point; and the statement is about the flow of the joint energy, which fails to give one
+outcome. UD-99 and UD-100 use UA-13, UA-8, UA-7, UA-5 and the arcs, profiles and strengths of
+UA-4. UA-2 enters only through the measure on the pair of conserved angles. UA-6 is not used, and
+that is the point.
 
 ### 4.1d On the region-detector arena
 
@@ -1011,7 +1038,9 @@ of two site detectors, and UO-10 with conditions for a carrier on one detector's
 `UnifiedDepartureArrival.lean` (~~#367~~) is another: a departure and an arrival record in one run.
 `LF4/PointerStep.lean` and `LF4/TriCoupledFlow.lean` (~~#368~~) are two more: the arena with three
 pointer tori. They meet no obligation. `UnifiedClockTwoSites.lean` (~~#369~~) is another: a clock
-and two site detectors on that arena, with three records in one run.
+and two site detectors on that arena, with a swing and two readout switching instants in one
+run. `UnifiedSplitCarrier.lean` (~~#370~~) is another: UO-10 for a split carrier, answered as an
+obstruction.
 The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
@@ -1176,6 +1205,20 @@ detector law?
   which the first record is held; (o3) the detectors are fast and their rates
   comparable; (o4) the outcome shown is a definite fact fixed by where the carrier is, with no
   probability in it.
+  ▸ **The split carrier, 2026-11-11 (BACKLOG ~~#370~~) → UD-99, UD-100. Answered for this coupling,
+  as an obstruction: both detectors display.** On the split fibres, a set of pairs `(θ₂, ψ₂)` of
+  positive Haar measure for two `trainF` detectors of equal strength, a carrier with at least
+  `3/8` of its occupancy on each of the two detectors' sites makes both readouts `true` at the
+  flow time `1/κ₁` (`diracTwoPointerFlow_double_display`), neither having been `true` early
+  (`diracTwoPointerFlow_split_not_shown_early`). The equal superposition over the two sites is
+  such a carrier (`diracTwoPointerFlow_splitRay_double_display`). So (o1) is closed: with the
+  coupling of UA-5, in which a pointer is driven by the occupancy of its site, one run does not
+  have one outcome for a split carrier. By §8 rule 4 an obstruction closes the obligation as
+  firmly as the positive statement would, for this coupling. *What it does not say:* nothing
+  about the weights of quantum mechanics, which are conditional on the cell law (UA-6) and are
+  neither derived nor contradicted here; and nothing for a coupling other than UA-5's. *What
+  stays:* (o2) and (o3) for the localised carrier; the carriers between the two classes; and
+  what would select one outcome, which is not in this joint energy.
 * **UO-11 — repeated trials.** Convergence of frequencies. *Test:* a law of large numbers under the
   product of preparation measures restates UA-2, UA-3 and UA-4 (it is UD-22's
   `born_frequency_convergence_N` again). It is a result about the dynamics only if the sequence of
@@ -1601,7 +1644,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

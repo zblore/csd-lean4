@@ -68,8 +68,9 @@ window `1/(6κ₁)`, and the second detector's readout is not `true` at any flow
   fibre. Without that the slower detector's bound does not reach the faster one's write.
 * **The carrier is a class of rays**: at least `7/8` of the occupancy on one detector's site.
   The carrier on that site (`siteRay`) is a member, and no other is exhibited. A carrier split
-  between the two sites, or mostly on a third, is not covered. One trial, one
-  outcome is shown for that class only.
+  between the two sites, or mostly on a third, is not covered here. For a carrier split between
+  the two sites both detectors display (`RecordLayer/UnifiedSplitCarrier.lean`, #370). One
+  trial, one outcome is shown for that class only.
 * **A definite fact, not a statistic.** Which detector writes is decided by where the carrier
   is. No probability is stated and no weight of quantum mechanics is derived (UO-11 is not
   touched). The cross-talk between the detectors is inside the bound through `‖H‖`.
