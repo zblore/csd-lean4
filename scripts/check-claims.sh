@@ -1011,6 +1011,16 @@ isSymplectic"
 #   index equivalence. hamiltonianFlow_coupledEnergy_reindex is hamiltonianFlow_coupledEnergy
 #   read in the carrier's own index — EARNED through it; schrodingerHamiltonian_reindex is the
 #   value of the already-declared energy function −2⟨C⟩ at a reindexed matrix, operator sense.)
+#   (2026-11-11, #368: the pointer step and the three-torus arena. stepForm_isSymplectic is
+#   IsSymplectic.prodForm with the torus area form, for any base form, and triForm_isSymplectic is it
+#   applied to echoForm — EARNED; isHamiltonianVectorField_stepLift / _stepTerm / _step prove
+#   i_X (stepForm b) = dH for the stated fields, given Hamiltonian vector fields of H and G on the base —
+#   EARNED, and they are the general form of _fstLift / _outerTerm / _twoCoupled above;
+#   hamiltonianFlow_stepEnergy and hamiltonianFlow_stepEnergy_fst identify an explicit skew product with
+#   IsSymplectic.hamiltonianFlow by uniqueness of integral curves on a compact base — EARNED;
+#   hamiltonianFlow_congr says the flow depends on the energy and not on its smoothness proof;
+#   map_hamiltonianFlow_stepEnergy is a measure statement about that flow, conditional on the base
+#   flows, read off the closed form — no claim about the top-form measure of the product form.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 hamiltonianFlow_coupledEnergy_reindex
 schrodingerHamiltonian_reindex
@@ -1193,6 +1203,15 @@ hamiltonianFlow_twoCoupledEnergy
 hamiltonianFlow_echoFlow
 map_hamiltonianFlow_echoFlow
 echo_hamiltonian
+stepForm_isSymplectic
+triForm_isSymplectic
+isHamiltonianVectorField_stepLift
+isHamiltonianVectorField_stepTerm
+isHamiltonianVectorField_step
+hamiltonianFlow_stepEnergy
+hamiltonianFlow_stepEnergy_fst
+hamiltonianFlow_congr
+map_hamiltonianFlow_stepEnergy
 schrodingerHamiltonian_hamOccA
 continuous_schrodingerHamiltonian_twoCoupledOrbit
 abs_schrodingerHamiltonian_le

@@ -1980,4 +1980,146 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms DifferentialForm.IsHamiltonianVectorField.prodForm_snd
 
+/-! #368 (the author's programme, the arena M6 needs; the author's route: a tower of pointer tori): adding a pointer torus to a symplectic arena — for any compact symplectic manifold `S`, the form `β ⊕ dψ₁ ∧ dψ₂` on `S × T²`, the energy `H(s) + G(s) g(ψ₂)`, the field that generates it from those of `H` and `G`, and its flow as a skew product over the conserved angle: the base moved by the base's flow of `H + g(ψ₂) G`, the new angle advanced by `g'(ψ₂) ∫ G` along that orbit (exact, by uniqueness of integral curves); if every base flow preserves `μ` the flow preserves `μ ⊗ vol_{T²}`; the two-torus arena is one step over the one-torus arena (`LF4/PointerStep.lean`). The three-torus arena `ℂℙᴺ × T² × T² × T²` as one more step: its form, its energy, its flow as a skew product over the two-torus flows and in closed form, and the product measure it preserves (`LF4/TriCoupledFlow.lean`). One step at a time: no arena with a variable number of tori is defined. -/
+
+/-- info: 'CSD.LF4.stepForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.stepForm
+
+/-- info: 'CSD.LF4.stepForm_isSymplectic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.stepForm_isSymplectic
+
+/-- info: 'CSD.LF4.stepEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.stepEnergy
+
+/-- info: 'CSD.LF4.stepEnergy_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.stepEnergy_eq
+
+/-- info: 'CSD.LF4.contMDiff_stepTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_stepTerm
+
+/-- info: 'CSD.LF4.contMDiff_stepEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_stepEnergy
+
+/-- info: 'CSD.LF4.contMDiff_add_const_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_add_const_smul
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_stepLift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_stepLift
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_stepTerm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_stepTerm
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_step' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_step
+
+/-- info: 'CSD.LF4.hamiltonianFlow_stepEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_stepEnergy
+
+/-- info: 'CSD.LF4.hamiltonianFlow_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_congr
+
+/-- info: 'CSD.LF4.hamiltonianFlow_stepEnergy_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_stepEnergy_fst
+
+/-- info: 'CSD.LF4.map_hamiltonianFlow_stepEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.map_hamiltonianFlow_stepEnergy
+
+/-- info: 'CSD.LF4.echoForm_eq_stepForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.echoForm_eq_stepForm
+
+/-- info: 'CSD.LF4.twoCoupledEnergy_eq_stepEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledEnergy_eq_stepEnergy
+
+/-- info: 'CSD.LF4.TriModel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.TriModel
+
+/-- info: 'CSD.LF4.TriSigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.TriSigma
+
+/-- info: 'CSD.LF4.triForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.triForm
+
+/-- info: 'CSD.LF4.triForm_isSymplectic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.triForm_isSymplectic
+
+/-- info: 'CSD.LF4.echoRayEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.echoRayEnergy
+
+/-- info: 'CSD.LF4.contMDiff_echoRayEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_echoRayEnergy
+
+/-- info: 'CSD.LF4.threeCoupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.threeCoupledEnergy
+
+/-- info: 'CSD.LF4.threeCoupledEnergy_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.threeCoupledEnergy_apply
+
+/-- info: 'CSD.LF4.contMDiff_threeCoupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_threeCoupledEnergy
+
+/-- info: 'CSD.LF4.twoCoupledEnergy_add_smul_echoRayEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledEnergy_add_smul_echoRayEnergy
+
+/-- info: 'CSD.LF4.threeCoupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.threeCoupledFlow
+
+/-- info: 'CSD.LF4.continuous_threeCoupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.continuous_threeCoupledFlow
+
+/-- info: 'CSD.LF4.measurable_threeCoupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.measurable_threeCoupledFlow
+
+/-- info: 'CSD.LF4.threeCoupledFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.threeCoupledFlow_zero
+
+/-- info: 'CSD.LF4.threeCoupledFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.threeCoupledFlow_add
+
+/-- info: 'CSD.LF4.threeCoupledFlow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.threeCoupledFlow_apply
+
+/-- info: 'CSD.LF4.threeCoupledFlow_closed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.threeCoupledFlow_closed
+
+/-- info: 'CSD.LF4.triMuL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.triMuL
+
+/-- info: 'CSD.LF4.triMuL_map_threeCoupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.triMuL_map_threeCoupledFlow
+
 end CSD.Tests.AxiomAudit

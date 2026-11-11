@@ -70,7 +70,8 @@ strengths `g₁ = 1/(625π)`, `g₂ = 1/(1250π)` they contain `(0, 0)` and have
   inside the statement through `b t²`, and the fibres are where it is small: a neighbourhood of
   `(0, 0)` for `trainF`, of positive Haar measure, whose size is not computed.
 * **No clock.** The arena has two pointers and both are detectors. A time read by a clock at
-  either record needs a third pointer (M6).
+  either record needs a third pointer (M6). The arena with three pointer tori is
+  `LF4/TriCoupledFlow.lean` (#368).
 * **Definite facts, not statistics.** No weight of quantum mechanics is derived. Each record is
   held for its window and then its pointer turns on.
 * **All times are flow times** (UA-7). The readouts and ready arcs are apparatus input (UA-4),

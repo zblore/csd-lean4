@@ -383,6 +383,29 @@ what would discharge or constrain it.
 * **Discharge.** None for the choice. An intervention made by a third apparatus inside the joint
   energy would replace it. That needs a larger arena.
 
+### UA-15 — the three-pointer arena
+
+* **Assumed.** As UA-13 with one more torus. (a) The arena: a projective base times three pointer
+  tori with the product form, each torus with one moving angle and its conserved partner. (b) The
+  measure `triMuL`: `μ_FS` times Haar on each torus, so at the start the fibre coordinates of the
+  three pointers are uniform and independent of each other and of the base. (c) The joint energy
+  is a sum: the carrier's energy and one product term for each pointer. There is no term between
+  the pointers, and no moving angle enters the energy. (d) Which operator each pointer is coupled
+  to is chosen where the arena is used.
+* **Where.** `TriSigma`, `triForm`, `triForm_isSymplectic`, `triMuL`, `threeCoupledEnergy`
+  (`LF4/TriCoupledFlow.lean`, BACKLOG ~~#368~~). The construction that adds a torus to an arena is
+  `stepForm`, `stepEnergy` (`LF4/PointerStep.lean`): the form of (c) is its hypothesis, for any
+  number of pointers.
+* **Standing.** Choice for the arena, as UA-1 and UA-13. Boundary R-015 for the couplings. For the
+  measure, UA-2 and UA-3 on the larger fibre: the flow preserves `triMuL` (UD-96), which is
+  necessary for the measure to be usable and says nothing about why it is this one.
+* **What is derived from it, not assumed.** That the flow is a skew product over the conserved
+  angles, and the closed form (UD-95, UD-96). The pointers act on each other only through the
+  carrier.
+* **What it does not cover.** A fourth pointer (one more application of UD-95, not yet made). A
+  coupling between pointers. A pointer whose moving angle enters the energy (UO-24).
+* **Discharge.** None for the choice. M8 compares alternatives.
+
 ---
 
 ## 4. Register 2 — derived properties
@@ -839,12 +862,39 @@ show before it, and the two could meet there. `τ_d` and `τ_a` come from the in
 theorem and are not computed, so no transit time and no speed are read off the pair. Each
 detector is on half the ring. There is one packet and one ring, and the detectors are weak. There
 is no clock on the arena: no time is read by a clock at either record, so no radar coordinate is
-formed. A clock in the same run is a third pointer, and no arena has three pointer tori. The
+formed. A clock in the same run is a third pointer. (The arena for it is UD-96.) The
 records are definite facts of the one trajectory, each held for its window, and no weight of
 quantum mechanics is derived. By the test of §6: as for UD-91, with two pointers; the statement
 about the order fails for a carrier that does not move, whose weight would stay on the near half.
 UD-93 and UD-94 use UA-13, UA-8, UA-7, UA-5 and the arcs, profiles and strengths of UA-4. UA-2
 enters only through the measure on the pair of conserved angles. UA-6 is not used.
+
+### 4.1e The pointer step and the three-pointer arena
+
+UD-95 is in `LF4/PointerStep.lean` and UD-96 in `LF4/TriCoupledFlow.lean` (BACKLOG ~~#368~~). UD-95
+is about any compact symplectic arena and has no carrier in it. UD-96 is the arena of UA-15. No
+record is read in either, and they meet no obligation of §5.
+
+| ID | Property | Lean | Kind |
+|---|---|---|---|
+| UD-95 | **Adding a pointer torus to a symplectic arena.** For a `C^∞` manifold `S` modelled on a finite-dimensional space, with a symplectic form `β`: `stepForm β = β ⊕ dψ₁ ∧ dψ₂` on `S × T²` is symplectic. For smooth `H`, `G` on `S` and a smooth periodic `g`, the energy `stepEnergy H G = H(s) + G(s) g(ψ₂)` is smooth, and if `X_H`, `X_G` are Hamiltonian vector fields of `H`, `G` for `β` then `(X_H + g(ψ₂) X_G, (G g'(ψ₂), 0))` is one of the step energy for `stepForm β`. For compact `S` the Hamiltonian flow of the step energy is `(s, ψ) ↦ (φ_t(s), (ψ₁ + g'(ψ₂) ∫₀ᵗ G(φ_u(s)) du, ψ₂))`, with `φ` the Hamiltonian flow on `S` of `H + g(ψ₂) G`; in particular its first component is that base flow. If for every `c` the base flow of `H + c G` at time `t` preserves a measure `μ`, the flow at time `t` preserves `μ ⊗ vol_{T²}`. The form `echoForm` is `stepForm arenaForm` and `twoCoupledEnergy` is a `stepEnergy` | `stepForm`, `stepForm_isSymplectic`, `stepEnergy`, `stepEnergy_eq`, `contMDiff_stepTerm`, `contMDiff_stepEnergy`, `contMDiff_add_const_smul`, `isHamiltonianVectorField_stepLift`, `isHamiltonianVectorField_stepTerm`, `isHamiltonianVectorField_step`, `hamiltonianFlow_stepEnergy`, `hamiltonianFlow_congr`, `hamiltonianFlow_stepEnergy_fst`, `map_hamiltonianFlow_stepEnergy`, `echoForm_eq_stepForm`, `twoCoupledEnergy_eq_stepEnergy` | exact; for any compact symplectic arena, with no carrier, detector or record in it; the measure statement is conditional on the base flows |
+| UD-96 | **The flow of a ray coupled to three tori.** `triForm = stepForm echoForm` on `ℂℙᴺ × T² × T² × T²` is symplectic. `threeCoupledEnergy` is the step over `twoCoupledEnergy` with the ray observable `−2⟨B_C⟩`: `−2⟨A⟩ − 2⟨B_A⟩ f(θ₂) − 2⟨B_B⟩ g(ψ₂) − 2⟨B_C⟩ k(χ₂)`, smooth. Adding `c` times `−2⟨B_C⟩` to the two-torus energy is replacing `A` by `A + c B_C`. `threeCoupledFlow` is its Hamiltonian flow: continuous and measurable at each time, a one-parameter group. With `χ₂` held, the ray and the first two tori move by `twoCoupledFlow` of UD-66 with uncoupled matrix `A + k(χ₂) B_C`, `χ₁` advances by `k'(χ₂)` times the accumulated `−2⟨B_C⟩` along that orbit, and `χ₂` is fixed. In closed form, for Hermitian matrices: the ray moves by the Schrödinger unitary of `A + f(θ₂) B_A + g(ψ₂) B_B + k(χ₂) B_C`, and `θ₁`, `ψ₁`, `χ₁` advance by `f'(θ₂)`, `g'(ψ₂)`, `k'(χ₂)` times the accumulated `−2⟨B_A⟩`, `−2⟨B_B⟩`, `−2⟨B_C⟩` along that one orbit. The flow preserves `triMuL = μ_FS ⊗ vol_{T²} ⊗ vol_{T²} ⊗ vol_{T²}` | `TriModel`, `TriSigma`, `triForm`, `triForm_isSymplectic`, `echoRayEnergy`, `contMDiff_echoRayEnergy`, `threeCoupledEnergy`, `threeCoupledEnergy_apply`, `contMDiff_threeCoupledEnergy`, `twoCoupledEnergy_add_smul_echoRayEnergy`, `threeCoupledFlow`, `continuous_threeCoupledFlow`, `measurable_threeCoupledFlow`, `threeCoupledFlow_zero`, `threeCoupledFlow_add`, `threeCoupledFlow_apply`, `threeCoupledFlow_closed`, `triMuL`, `triMuL_map_threeCoupledFlow` | exact; for any Hermitian quadruple, not about detectors; the measure read off the closed form — the top-form measure of `triForm` is not identified with `triMuL` |
+
+Exact scope of UD-95 and UD-96. What they give. The flows of §2 for one and two pointer tori were
+each proved for their own arena. UD-95 is the construction they share, for any compact symplectic
+arena: add a torus, couple it to a function of the base through its conserved angle, and the flow
+is a skew product over the base's flows. UD-96 is that theorem applied to the two-torus arena.
+So an arena exists on which a clock's pointer and two detectors' pointers can be under one
+Hamiltonian flow, with the flow in closed form and its measure preserved, and a fourth pointer
+would be one more application. What they do not give. The step adds one torus at a time. No arena
+with a variable number of tori is defined, and each level has its own statement. The one-torus
+flow of UD-1 is still its own proof and not an instance of UD-95. The coupling's form is UA-15's:
+it is the hypothesis of the step, not a consequence. The measure statement at each level is read
+off the closed form. There is no carrier, no coupled operator, no readout and no record in these
+two modules, and no statement about a clock or a detector. By the test of §6: nothing here is a
+statement about records, so the test does not apply; the entries are the dynamics that later
+records must come from. UD-95 and UD-96 use UA-15, and through the two-torus arena UA-13. UA-2
+enters only as invariance. UA-6 is not used.
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -902,6 +952,8 @@ of two site detectors, and UO-10 for a carrier on one detector's site.
 `UnifiedArrivalRecord.lean` (~~#365~~) is another: a reception record, one ingredient of UO-16.
 `UnifiedCountAtWrite.lean` (~~#366~~) is another: the clock's count at a position write.
 `UnifiedDepartureArrival.lean` (~~#367~~) is another: a departure and an arrival record in one run.
+`LF4/PointerStep.lean` and `LF4/TriCoupledFlow.lean` (~~#368~~) are two more: the arena with three
+pointer tori. They meet no obligation.
 The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
@@ -1314,8 +1366,8 @@ time. It is not a statement about every dynamics on `Σ`.
   ingredients. Not met.** Two pointers of one joint flow, on the near and the far half of the
   ring, write a departure record and an arrival record along one orbit, the first complete by
   `625π/3` and the second not showing before it (`regionTwoFlow_departure_arrival`). *What is
-  still missing:* a clock in the same run, which is a third pointer on an arena that has not
-  been built; the count of that clock at each record (UD-92 has it for a position write on
+  still missing:* a clock in the same run, which is a third pointer (the arena for it exists since
+  BACKLOG ~~#368~~, UD-96; nothing is read on it yet); the count of that clock at each record (UD-92 has it for a position write on
   another arena); the two times located; an emission in place of a prepared departure; a second
   observer; detectors on less than half the ring; and a family along which the errors shrink.
 
@@ -1464,7 +1516,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

@@ -116,8 +116,12 @@ A departure record and an arrival record are written in one run (BACKLOG ~~#367~
 `RecordLayer/UnifiedDepartureArrival.lean`, `regionTwoFlow_departure_arrival`): two pointers of
 one joint flow, on the near and the far half of the ring, the first complete by `625π/3` and the
 second not showing before it. The two times are not computed and the arena has no clock, so no
-time is read at either record. A clock in the same run needs an arena with three pointer tori,
-which does not exist.
+time is read at either record. A clock in the same run needs an arena with three pointer tori.
+That arena now exists (BACKLOG ~~#368~~, `LF4/PointerStep.lean`, `LF4/TriCoupledFlow.lean`): one
+theorem adds a pointer torus to any compact symplectic arena, with the flow a skew product over
+the base's flows (`hamiltonianFlow_stepEnergy`), and `ℂℙᴺ × T² × T² × T²` is that theorem applied
+to the two-torus arena, with its flow in closed form and its measure preserved
+(`threeCoupledFlow_closed`, `triMuL_map_threeCoupledFlow`). No record is read on it yet.
 
 ## What is open
 
