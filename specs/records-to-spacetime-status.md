@@ -83,6 +83,10 @@ events is built. No such bound is proved for the clock's pointer: the level swap
 proper set of sites, so the argument does not apply to it. No instance in which the record's
 margins hold is exhibited.
 The interventions are changes of the initial point and are assumed.
+One response is shown to be not zero (BACKLOG ~~#362~~, `RecordLayer/UnifiedCausalArrival.lean`,
+`diracTwoKickResponseSnd_ne_zero`): for one carrier on the arena of two site pointers, a sign kick
+at the site next to the second detector moves that pointer by `2 g₂ h' J t²` to leading order, for
+short times. That is distance one. No response is shown to arrive from a farther site.
 
 ## What is open
 

@@ -18622,4 +18622,90 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.isRecordWrite_clockSiteFlow_site_of_kick
 
+/-! #362 (the author's programme, milestone M5, condition (e2) of UO-15): a response that arrives — the response of an occupancy to a kick is its first Taylor term that the kick does not commute with, up to the next factorial tail (an expansion with an error bound, for any skew-Hermitian generator); the same for a pointer's displacement; the sign kick at a site; and one instance on the arena of two site pointers: from the carrier `e_(k,1) + e_(k−1,0)` the sign kick at the site next to the second detector changes the current into the detector's site by `2 J`, so the second pointer's response is `2 g₂ h'(χ) J t²` up to `8 |g₂| |h'(χ)| ‖H‖² t³` and is not zero for short times. Distance one, one carrier and one kick; a displacement and not a record; the kick is assumed (`RecordLayer/UnifiedCausalArrival.lean`). -/
+
+/-- info: 'CSD.RecordLayer.arenaObs_kick_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_kick_of_commute
+
+/-- info: 'CSD.RecordLayer.arenaObs_smul_real' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_smul_real
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_le
+
+/-- info: 'CSD.RecordLayer.commute_adIter_of_disjoint_growIter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.commute_adIter_of_disjoint_growIter
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_flow_kick_sub_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_flow_kick_sub_sub_le
+
+/-- info: 'CSD.RecordLayer.integral_flowCoef' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_flowCoef
+
+/-- info: 'CSD.RecordLayer.abs_displacement_kick_sub_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_displacement_kick_sub_sub_le
+
+/-- info: 'CSD.RecordLayer.siteSignKick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSignKick
+
+/-- info: 'CSD.RecordLayer.siteSignKick_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSignKick_val
+
+/-- info: 'CSD.RecordLayer.idOffOn_siteSignKick' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idOffOn_siteSignKick
+
+/-- info: 'CSD.RecordLayer.arrival_ne' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrival_ne
+
+/-- info: 'CSD.RecordLayer.arrivalRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalRay
+
+/-- info: 'CSD.RecordLayer.arenaKick_siteSignKick_arrivalRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaKick_siteSignKick_arrivalRay
+
+/-- info: 'CSD.RecordLayer.inner_single_toEuclideanLin_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.inner_single_toEuclideanLin_single
+
+/-- info: 'CSD.RecordLayer.adOne_diagonal_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.adOne_diagonal_apply
+
+/-- info: 'CSD.RecordLayer.diracTwoGen_apply_arrival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoGen_apply_arrival
+
+/-- info: 'CSD.RecordLayer.diracTwoGen_apply_arrival'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoGen_apply_arrival'
+
+/-- info: 'CSD.RecordLayer.arenaObs_adOne_diracTwoGen_arrivalRay_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_adOne_diracTwoGen_arrivalRay_sub
+
+/-- info: 'CSD.RecordLayer.abs_diracTwoKickResponseSnd_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_diracTwoKickResponseSnd_sub_le
+
+/-- info: 'CSD.RecordLayer.le_abs_diracTwoKickResponseSnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_abs_diracTwoKickResponseSnd
+
+/-- info: 'CSD.RecordLayer.diracTwoKickResponseSnd_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoKickResponseSnd_ne_zero
+
 end CSD.Tests.AxiomAudit

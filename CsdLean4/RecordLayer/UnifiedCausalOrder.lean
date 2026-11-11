@@ -98,8 +98,10 @@ sets are more than `d` apart on the ring (`disjoint_growIter_of_forall_ne`,
   `t = 0` (`arenaObs_kick_of_idOffOn`). This argument gives no exact cone for a lattice with a
   continuous flow parameter; that none exists is not proved here.
 * **Upper bounds.** No response is shown to be attained, and no lower bound inside the cone is
-  given. The speed in the tail is `2 ‖H‖`, the norm of the whole generator with both couplings
-  in it. It is not optimised and it is not the group velocity of the chain.
+  given. A response that is not zero, for a kick one site away, is in
+  `RecordLayer/UnifiedCausalArrival.lean` (#362). The speed in the tail is `2 ‖H‖`, the norm of
+  the whole generator with both couplings in it. It is not optimised and it is not the group
+  velocity of the chain.
 * **An intervention is a change of the initial point.** The kick and the change of angle are
   not terms of the joint energy and no flow on the arena performs them. Which interventions are
   allowed is assumed (UA-14).

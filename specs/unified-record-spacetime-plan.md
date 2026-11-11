@@ -583,6 +583,8 @@ UD-66 and UD-67 are in `LF4/EchoVolume.lean` and UD-68 to UD-71 in
 UA-13. Every time in them is the flow parameter (UA-7). UD-66 to UD-71 meet no obligation of §5.
 UD-72 to UD-76 are what condition (d) of UO-14 is annotated with. UD-77 to UD-81 are in
 `RecordLayer/UnifiedCausalOrder.lean` (BACKLOG ~~#361~~) and are what UO-15 is annotated with.
+UD-82 and UD-83 are in `RecordLayer/UnifiedCausalArrival.lean` (BACKLOG ~~#362~~) and bear on
+condition (e2) of UO-15.
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -602,6 +604,8 @@ UD-72 to UD-76 are what condition (d) of UO-14 is annotated with. UD-77 to UD-81
 | UD-79 | **The response of an occupancy, and of a displacement, to the two interventions of UA-14.** An observable on `X` is unchanged at time `0` by a kick that is the identity off a disjoint `Y`. Read at `t ≥ 0` along `exp(tS)` it moves by at most `2 (2‖S‖t)^d/d! · ‖D‖` under the kick, and it differs between the generators `S` and `S'` by at most `2 (2‖S'‖t)^d/d! · ‖D‖ ‖S − S'‖ t`. Integrated over `[0, t]` these give one more factor `t`. A displacement `−2 g c ∫₀ᵗ⟨D⟩` with `‖D‖ ≤ 1` moves by at most `4 \|g\| \|c\| (2‖S‖t)^d/d! · t` under the kick and by at most `4 \|g\| \|c\| δ (2‖S'‖t)^d/d! · t²` between generators with `‖S − S'‖ ≤ δ` | `star_exp_smul_mul_exp_smul`, `arenaObs_kick_of_idOffOn`, `abs_arenaObs_flow_kick_sub_le`, `abs_arenaObs_flow_sub_flow_le`, `abs_integral_sub_integral_le_of_abs_sub_le`, `abs_neg_two_mul_mul_mul_sub`, `abs_integral_arenaObs_flow_kick_sub_le`, `abs_integral_arenaObs_flow_sub_flow_le`, `abs_displacement_kick_sub_le`, `abs_displacement_flow_sub_le` | exact at time `0` only; upper bounds otherwise, not shown attained; statements about a carrier's ray, with no pointer in them |
 | UD-80 | **Two site pointers: each pointer's response to a kick and to the other pointer's angle.** On the arena of UD-70, with `T_d(t) = (2‖H‖t)^d/d!` and `H` the coupled Hamiltonian `diracTwoH`. For a kick that is the identity off `Y`, with `d` steps of growth from `k` missing `Y`, the second pointer's displacement moves by at most `4 \|g₂\| \|h'(ψ₂)\| T_d(t) t`. Between two runs that differ in the first pointer's conserved angle, `φ` against `φ'`, with `d` steps of growth from `k` missing `j`, the second pointer's displacements differ by at most `4 \|g₂\| \|h'(ψ₂)\| \|g₁\| \|f(φ) − f(φ')\| T_d(t) t²`, `H` taken at `φ'`. The same with the pointers exchanged. Each response is the difference, on the circle, of that pointer's moving angle between two runs of `diracTwoPointerFlow` | `continuous_diracTwoCarrierU`, `diracTwoH_sub_fst`, `diracTwoH_sub_snd`, `abs_diracTwoKickResponseSnd_le`, `abs_diracTwoKickResponseFst_le`, `abs_diracTwoAngleResponseSnd_le`, `abs_diracTwoAngleResponseFst_le`, `diracTwoPointerFlow_kick_snd`, `diracTwoPointerFlow_kick_fst`, `diracTwoPointerFlow_angle_snd`, `diracTwoPointerFlow_angle_fst` | upper bounds, not shown attained, with no lower bound inside the cone; the four flow identities exact; about displacements — no record is read on this arena |
 | UD-81 | **The clock and a site detector: the site pointer's response to a kick, and its record.** On the arena of UD-71, with `H` the coupled Hamiltonian `clockSiteH`, the clock's coupling in it. For a kick that is the identity off `Y`, with `d` steps of growth from `k` missing `Y`, the site pointer's displacement moves by at most `4 \|g₂\| \|h'(ψ₂)\| (2‖H‖t)^d/d! · t`, and that response is the difference of its moving angle between two runs of `clockSiteFlow`. From a ready pointer on a fibre of nonnegative rate (as UD-74), if the displacement in the unkicked run clears the three thresholds of UD-74 by that bound at the three times, the kicked run writes the position record on the same write interval with the same window | `continuous_clockSiteCarrierU`, `abs_clockSiteKickResponseSnd_le`, `clockSiteFlow_kick_snd`, `isRecordWrite_clockSiteFlow_site_of_kick` | upper bound, not shown attained; the write is conditional on the three margins, and no instance in which they hold is exhibited; `d` is at most about half the ring; no bound of this kind for the clock's pointer, whose coupled operator is supported on no proper set of sites (UD-77) |
+| UD-82 | **The leading term of the response to a kick.** An observable that commutes with a kick has the same expectation after it. If the first `d` iterated commutators of `D` with a skew-Hermitian `S` commute with the kick `W` — which holds by support when fewer than `d` steps of growth from the support of `D` do not reach the kick's set — then for `s ≥ 0` the response of `⟨D⟩` along `exp(sS)` is `(−1)^d s^d/d!` times `Δ_d`, the change the kick makes in the expectation of `ad_S^d D` at time `0`, up to `2 (2‖S‖s)^(d+1)/(d+1)! · ‖D‖`. A displacement `−2 g c ∫₀ᵗ⟨D⟩` with `‖D‖ ≤ 1` responds by `−2 g c (−1)^d t^(d+1)/(d+1)! · Δ_d` up to `4 \|g\| \|c\| (2‖S‖t)^(d+1)/(d+1)! · t`. The sign kick at a site `y` multiplies the amplitudes over `y` by `−1`; it is unitary and the identity off `{y}` | `arenaObs_kick_of_commute`, `arenaObs_smul_real`, `abs_arenaObs_le`, `commute_adIter_of_disjoint_growIter`, `abs_arenaObs_flow_kick_sub_sub_le`, `integral_flowCoef`, `abs_displacement_kick_sub_sub_le`, `siteSignKick`, `siteSignKick_val`, `idOffOn_siteSignKick` | an expansion with an error bound; `Δ_d` is not evaluated here and may be zero; the error constant is not sharp; for any finite index, not only the two arenas |
+| UD-83 | **Two site pointers: a kick at the neighbouring site is felt.** On the arena of UD-70, on a ring with `k − 1 ≠ k + 1`. The carrier is the ray of `e_(k,1) + e_(k−1,0)`, and the sign kick at the site `k − 1` carries it to the ray of `e_(k,1) − e_(k−1,0)`. The coupled generator `−i·diracTwoH` between those two indices is `J` and `−J` at every pair of pointer angles, so the kick changes the expectation of `[S, P_k]` by `2 J`. For `t ≥ 0` the second pointer's response is `2 g₂ h'(ψ₂) J t²` up to `8 \|g₂\| \|h'(ψ₂)\| ‖H‖² t³`. Its size is at least `2 \|g₂\| \|h'(ψ₂)\| t² (\|J\| − 4‖H‖²t)`. For `g₂ h'(ψ₂) ≠ 0`, `0 < t` and `4‖H‖²t < \|J\|` it is not zero | `arrival_ne`, `arrivalRay`, `arenaKick_siteSignKick_arrivalRay`, `inner_single_toEuclideanLin_single`, `adOne_diagonal_apply`, `diracTwoGen_apply_arrival`, `diracTwoGen_apply_arrival'`, `arenaObs_adOne_diracTwoGen_arrivalRay_sub`, `abs_diracTwoKickResponseSnd_sub_le`, `le_abs_diracTwoKickResponseSnd`, `diracTwoKickResponseSnd_ne_zero` | the current's change exact; the response an expansion with an error bound; a lower bound, positive for short times only; distance one, one carrier, one kick; about a displacement — no record is read on this arena |
 
 Exact scope of UD-66 to UD-71. What they give. One joint energy, hence one flow, carries a clock
 pointer and a detector pointer, or two detector pointers. The flow is solved, and the generator the
@@ -668,6 +672,26 @@ factorial; the statements do not apply to a generator with a term joining distan
 does not satisfy `HopsOne`. UD-77 to UD-81 use UA-14, UA-13, UA-12, UA-8, UA-7, UA-5 and the arcs,
 profiles and strengths of UA-4. UA-2 and UA-6 are not used.
 
+Exact scope of UD-82 and UD-83. What they give. The bounds of UD-78 to UD-81 are from above, and
+none of them shows a response that is not zero. UD-82 gives the response its leading term: the
+first Taylor term the kick does not commute with, with the next tail as the error. UD-83 evaluates
+it once. For one carrier, a kick at the site next to the second detector changes the current into
+the detector's site, and the second pointer's moving angle then differs between the kicked and
+the unkicked run by `2 g₂ h'(ψ₂) J t²` to leading order. That holds at every pair of pointer
+angles, because the couplings are diagonal and drop out of the commutator with `P_k`. What they
+do not give. The instance is at distance one. There the cone bound of UD-78 holds with `d = 0`
+only, and the response found is of order `t²`, below that bound. For a kick `d` sites away UD-82
+gives the order `t^(d+1)` with the coefficient `Δ_d`, and `Δ_d` is not computed for `d ≥ 2`: no
+response is shown to arrive from a farther site. The carrier is one stated superposition over two
+sites and the kick one stated sign. For a carrier on one site the kick is a phase of the whole ray
+and changes nothing. The lower bound is positive for `t < |J|/(4‖H‖²)` and says nothing later. The
+error constant is not sharp. The statement is about a displacement and not a record. The kick is
+an intervention of UA-14. No relation between record events is defined. By the test of §6: no
+hypothesis of UD-83 is a Register 1 entry other than the parameters; the response is computed from
+the flow of the joint energy; and it is zero for `J = 0`, a carrier that does not hop. UD-82 and
+UD-83 use UA-14, UA-13, UA-8, UA-7, UA-5 and the profiles and strengths of UA-4. UA-2 and UA-6 are
+not used.
+
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
 | ID | Property | Lean | Kind | Arena |
@@ -716,7 +740,9 @@ Proposed module names are the programme's. `DiracPointerWrite.lean` exists since
 not name. `UnifiedTwoPointer.lean` (~~#359~~) is another: it meets no obligation below and builds the
 arena that UO-10, UO-13, UO-14 (d) and UO-15 are about. `UnifiedClockSiteRecords.lean` (~~#360~~)
 is another: it reads the two records of UO-14 (d) off that arena. `UnifiedCausalOrder.lean` exists
-since ~~#361~~ (M5's bound; UO-15 stays, with conditions). The others do not exist.
+since ~~#361~~ (M5's bound; UO-15 stays, with conditions). `UnifiedCausalArrival.lean`
+(~~#362~~) is a module the programme did not name: a response that is not zero, at distance one.
+The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
 
@@ -1055,6 +1081,18 @@ time. It is not a statement about every dynamics on `Σ`.
   supported on no proper set of sites (`mem_of_siteSuppOn_levelSwap`): a tick record may respond to
   a kick anywhere on the ring with no delay from this argument. The interventions are assumed
   (UA-14) and are no part of the dynamics. Every time is a flow time (UA-7).
+  ▸ **A response that arrives, 2026-11-11 (BACKLOG ~~#362~~) → UD-82, UD-83. Condition (e2) is met
+  at distance one, for one carrier and one kick. It stays for larger distances.** The response to
+  a kick is its first Taylor term that the kick does not commute with, up to the next tail
+  (`abs_arenaObs_flow_kick_sub_sub_le`, `abs_displacement_kick_sub_sub_le`). On the arena of two
+  site pointers, from the carrier `arrivalRay k` and for the sign kick at the site `k − 1`, the
+  second pointer's response is `2 g₂ h'(ψ₂) J t²` up to `8 |g₂| |h'(ψ₂)| ‖H‖² t³`
+  (`abs_diracTwoKickResponseSnd_sub_le`), and it is not zero for `0 < t` with `4‖H‖²t < |J|`
+  when `g₂ h'(ψ₂) ≠ 0` (`diracTwoKickResponseSnd_ne_zero`). *What stays of (e2):* the leading
+  coefficient for a kick two or more sites away is not computed, so no response is shown to
+  arrive from farther than the neighbouring site; the first pointer's response and the response
+  to an angle have no leading term here; nothing is exhibited on the clock-and-site arena.
+  Conditions (e1), (e3), (e4) and (e5) are unchanged: the response found is a displacement's.
 
 ### M6 — radar geometry from records (`UnifiedRadarGeometry.lean`; gate B)
 
@@ -1210,7 +1248,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);
