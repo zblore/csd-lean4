@@ -101,6 +101,12 @@ read (BACKLOG ~~#364~~, `RecordLayer/UnifiedTwoSiteRecords.lean`,
 detector's site, that detector writes and the other is not displayed up to the completion of the
 write. For a carrier split between the two sites nothing is proved, and exactly one outcome is
 not shown.
+A record is written on arrival by a pointer of the joint flow (BACKLOG ~~#365~~,
+`RecordLayer/UnifiedArrivalRecord.lean`, `regionPointerFlow_arrival_write`). The packet of ~~#265~~
+crosses a ring of at least `640000` sites, and a pointer coupled to the far half writes at some
+flow time in `[625π/3, 4375π/3]` and not before, on fibres of positive measure. The predicted
+arrival is `625π`. The detector is on half the ring, the time of the write is not computed, and
+the arena has one pointer: no emission record and no clock.
 
 ## What is open
 

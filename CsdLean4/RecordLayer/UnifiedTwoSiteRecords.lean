@@ -62,7 +62,8 @@ window `1/(6κ₁)`, and the second detector's readout is not `true` at any flow
   the scale `1/‖H‖`, and a later write by the other detector is not excluded.
 * **Fast detectors.** `16 ‖H‖ < 3 κ` for both: each write is complete in a time short against
   `1/‖H‖`, by which the occupancy of a detector's site has changed by at most `3/16`. No moving
-  packet is followed.
+  packet is followed. A packet followed to a distant detector, with the write on arrival, is in
+  `RecordLayer/UnifiedArrivalRecord.lean` (#365), on an arena with one pointer.
 * **Comparable rates.** The two rates are within a factor `4/3` of each other on a record
   fibre. Without that the slower detector's bound does not reach the faster one's write.
 * **The carrier is a class of rays**: at least `7/8` of the occupancy on one detector's site.

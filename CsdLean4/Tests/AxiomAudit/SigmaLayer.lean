@@ -18916,4 +18916,98 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.diracTwoPointerFlow_record_snd_only
 
+/-! #365 (the author's programme, towards milestone M6: a reception record): a record written on arrival — a pointer driven by `∫₀ᵗ F`, `F` in `[0, 1]`, that is below `1/6` at `T₁` and above `1/3` at `T₃` writes with write interval `[T₁, τ]` for some `τ` in `[T₁, T₃]` (intermediate value); the projector on a region of sites and its expectation; the uncoupled carrier of the generic layer is the whole chain's evolution; the Hamiltonian flow of `−2⟨H_D⟩ − 2 g f(θ₂)⟨P_A⟩` in closed form; the detector's term moves the accumulated weight by at most `|g f(θ₂)| t²` (upper bound); and for the crossing packet of #265 on a ring of at least `640000` sites, with the pointer coupled to the far half: on the arrival fibres, open and of positive measure for the profile `trainF` at strength `1/(1250π)`, the readout history along the joint flow is a write of `true` that is not complete before `625π/3` and is complete by `4375π/3`. A half ring, not a site; a coarse time, `τ` not computed; one packet; one pointer, no emission record and no clock; flow times (`RecordLayer/UnifiedArrivalRecord.lean`). -/
+
+/-- info: 'CSD.RecordLayer.isRecordWrite_of_integral_crossing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isRecordWrite_of_integral_crossing
+
+/-- info: 'CSD.RecordLayer.regionProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionProj
+
+/-- info: 'CSD.RecordLayer.regionProj_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionProj_isHermitian
+
+/-- info: 'CSD.RecordLayer.norm_regionProj_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_regionProj_le
+
+/-- info: 'CSD.RecordLayer.sum_arenaObs_siteProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_arenaObs_siteProj
+
+/-- info: 'CSD.RecordLayer.arenaObs_regionProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_regionProj
+
+/-- info: 'CSD.RecordLayer.arenaObs_regionProj_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_regionProj_nonneg
+
+/-- info: 'CSD.RecordLayer.arenaObs_regionProj_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_regionProj_le_one
+
+/-- info: 'CSD.RecordLayer.arenaObs_regionProj_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_regionProj_mk
+
+/-- info: 'CSD.RecordLayer.idxFreeU_diracHam_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxFreeU_diracHam_val
+
+/-- info: 'CSD.RecordLayer.arenaObs_regionProj_free_chainRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_regionProj_free_chainRay
+
+/-- info: 'CSD.RecordLayer.regionProj_smul_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionProj_smul_isHermitian
+
+/-- info: 'CSD.RecordLayer.regionPointerFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionPointerFlow
+
+/-- info: 'CSD.RecordLayer.regionPointerFlow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionPointerFlow_apply
+
+/-- info: 'CSD.RecordLayer.diracDisplayed_regionPointerFlow_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracDisplayed_regionPointerFlow_iff
+
+/-- info: 'CSD.RecordLayer.abs_integral_regionProj_sub_free_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_integral_regionProj_sub_free_le
+
+/-- info: 'CSD.RecordLayer.arrivalFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalFibres
+
+/-- info: 'CSD.RecordLayer.isOpen_arrivalFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpen_arrivalFibres
+
+/-- info: 'CSD.RecordLayer.zero_mem_arrivalFibres_trainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.zero_mem_arrivalFibres_trainF
+
+/-- info: 'CSD.RecordLayer.volume_arrivalFibres_trainF_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_arrivalFibres_trainF_pos
+
+/-- info: 'CSD.RecordLayer.crossPacket_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.crossPacket_ne_zero
+
+/-- info: 'CSD.RecordLayer.arenaObs_farHalf_free_crossPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_farHalf_free_crossPacket
+
+/-- info: 'CSD.RecordLayer.regionPointerFlow_arrival_write' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionPointerFlow_arrival_write
+
 end CSD.Tests.AxiomAudit

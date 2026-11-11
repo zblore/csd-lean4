@@ -233,6 +233,9 @@ what would discharge or constrain it.
   Since BACKLOG ~~#355~~ the last clause is sharper. With the readout of UA-4 the coupling does fix
   a probability, that of the click event (UD-50). It is not the expectation of an operator (UD-53),
   and it is still no rate field.
+  Since BACKLOG ~~#365~~ one arena couples the pointer to the projector on a region of sites, half
+  the ring, in place of one site: `−2 g f(θ₂) ⟨P_A⟩` (`regionProj`, `regionPointerFlow`). The form
+  is the same and the locality is a region. That too is chosen.
 * **Discharge.** None for the choice (a boundary). M8 compares alternatives.
 
 ### UA-6 — the cell law (Posit 1)
@@ -758,6 +761,45 @@ write; the object is the flow of the joint energy; and the statement fails for p
 not move. UD-86 to UD-88 use UA-13, UA-8, UA-7, UA-5 and the arcs, profiles and strengths of
 UA-4. UA-2 enters only through the measure on the pair of conserved angles. UA-6 is not used.
 
+### 4.1d On the region-detector arena
+
+UD-89 to UD-91 are in `RecordLayer/UnifiedArrivalRecord.lean` (BACKLOG ~~#365~~). The arena is
+`ℂℙ^{2M+1} × T²` with the joint energy `−2⟨H_D⟩ − 2 g f(θ₂)⟨P_A⟩`: `Σ_*` of §2 with the site
+projector replaced by the projector on a region `A` of sites (UA-5, extended). Its flow is
+`regionPointerFlow`. It is not `Σ_*`. Every time is the flow parameter (UA-7). UD-89 to UD-91 are
+what UO-16 is annotated with; they do not meet it.
+
+| ID | Property | Lean | Kind |
+|---|---|---|---|
+| UD-89 | **A crossing of the threshold, and a detector on a region.** A pointer starts in the ready arc and sits at `pshift (κ ∫₀ᵗ F)`, `F` continuous with values in `[0, 1]`, `κ > 0`. If the displacement is at most `1/6` at `T₁ ≥ 0` and at least `1/3` at `T₃ ≥ T₁`, there is `τ ∈ [T₁, T₃]` such that the readout history is an `IsRecordWrite` of `true` from time `0` with write interval `[T₁, τ]` and window `1/(3κ)`. The projector `regionProj A` on a region of sites is Hermitian, of norm at most one, and its expectation is the sum of the occupancies of the sites of `A`, in `[0, 1]`; the occupancies of all sites sum to one. At the ray of `v` it is the weight of `v` on `A` over the squared norm. The uncoupled propagator `idxFreeU` of the generic layer is `chainProp`, so along it the expectation at the ray of `ψ` is the weight of `e^{−isH_D}ψ` on `A` over the norm of `ψ` | `isRecordWrite_of_integral_crossing`, `regionProj`, `regionProj_isHermitian`, `norm_regionProj_le`, `sum_arenaObs_siteProj`, `arenaObs_regionProj`, `arenaObs_regionProj_nonneg`, `arenaObs_regionProj_le_one`, `arenaObs_regionProj_mk`, `idxFreeU_diracHam_val`, `arenaObs_regionProj_free_chainRay` | exact; the first is an existence statement — `τ` comes from the intermediate value theorem and is not computed; `regionProj` is a definition |
+| UD-90 | **The flow of a carrier and a pointer coupled to a region.** `regionPointerFlow` is the Hamiltonian flow of `−2⟨H_D⟩ − 2 g f(θ₂)⟨P_A⟩` for the form of the arena. It moves the carrier by `exp(−it(H_D + g f(θ₂) P_A))`, advances `θ₁` by the displacement `idxPointerShift` of UD-58's generic layer, and fixes `θ₂`. The readout `diracDisplayed` of UD-31 along it is `true` exactly when the pointer, turned by `κ ∫₀ᵗ⟨P_A⟩` with `κ = −2 g f'(θ₂)`, is in the displayed arc. For `t ≥ 0` the accumulated expectation of `P_A` along the coupled carrier is within `\|g f(θ₂)\| t²` of its value along the uncoupled one | `regionProj_smul_isHermitian`, `regionPointerFlow`, `regionPointerFlow_apply`, `diracDisplayed_regionPointerFlow_iff`, `abs_integral_regionProj_sub_free_le` | exact closed form; an upper bound for the back-reaction, not shown attained |
+| UD-91 | **A record written on arrival.** The ring has at least `640000` sites, hop `crossHop` and rest energy `3`. The carrier is the ray of the crossing packet of UD-12's module (`16` momenta, velocity `4/5`), and `A` is the far half of the ring. Along the uncoupled carrier the expectation of `P_A` is the packet's weight on the far half. The arrival fibres `arrivalFibres` are the `θ₂` with `κ > 0`, `6κ(625π/12 + \|g f(θ₂)\|(625π/3)²) < 1` and `1 < 3κ(625π/2 − \|g f(θ₂)\|(4375π/3)²)`. They are open for a `C¹` profile, and for the profile `trainF` and `g = 1/(1250π)` they contain `θ₂ = 0` and have positive measure. On an arrival fibre, from a pointer in the ready arc, for a smooth profile: there is a flow time `τ ∈ [625π/3, 4375π/3]` such that the readout history along `regionPointerFlow` is an `IsRecordWrite` of `true` from time `0` with write interval `[625π/3, τ]` and window `1/(3κ)` | `arrivalFibres`, `isOpen_arrivalFibres`, `zero_mem_arrivalFibres_trainF`, `volume_arrivalFibres_trainF_pos`, `crossPacket_ne_zero`, `arenaObs_farHalf_free_crossPacket`, `regionPointerFlow_arrival_write` | exact given the fibre; `τ` exists and is not computed; one packet and one ring; the measure is Haar on `θ₂`, for one profile and one strength |
+
+Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
+detectors on a carrier that is at the detector from the start. Here the carrier starts away from
+the detector. The packet travels, and the far half's pointer writes after it has arrived: not
+before `625π/3`, while the far half holds at most a quarter of the weight, and by `4375π/3`. The
+pointer is a pointer of the joint Hamiltonian flow, with its back-reaction on the carrier inside
+the statement, and the fibres on which it holds have positive measure. The weight bounds are
+UD-12's module's, for the free chain; what is new is that the detector is generated. What they do
+not give. The detector is on half the ring: the record says the carrier has reached that half and
+does not locate it there. The write is complete at some `τ` in `[625π/3, 4375π/3]`. That interval
+contains the predicted arrival `625π` and is seven times longer at its end than at its start, and
+`τ` is not computed, so no speed is read off the record. Before `625π/3` the readout is silent
+because the accumulated weight is small. The far half is not empty then: it holds the packet's
+tail. There is one packet and one ring, and no family along which the interval shrinks. The
+detector is weak, of strength about `1/(1250π)`, and the arrival fibres are where
+`|g f(θ₂)| t²` is small over the transit: a neighbourhood of `θ₂ = 0` whose size is not computed.
+There is one pointer. The arena has no emission record, no second detector and no clock, so no
+radar coordinate can be formed on it. The record is a definite fact of the one trajectory, held
+for `1/(3κ)`, and no weight of quantum mechanics is derived. By the test of §6: the hypotheses of
+UD-91 that are Register 1 entries are the ready arc, the profile and the strength of UA-4 and the
+coupling of UA-5; the fibre membership is a condition on the start point; no definition contains
+the write; the carrier's motion is UA-8's, and the statement about the pointer fails for a
+carrier that does not move, whose weight on the far half would stay below a quarter. UD-89 to
+UD-91 use UA-8, UA-7, UA-5 and the arc, profile and strength of UA-4. UA-2 enters only through
+the measure on `θ₂`. UA-6 is not used.
+
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
 | ID | Property | Lean | Kind | Arena |
@@ -811,6 +853,7 @@ since ~~#361~~ (M5's bound; UO-15 stays, with conditions). `UnifiedCausalArrival
 `UnifiedSiteRecord.lean` (~~#363~~) is another: the position record of UO-14 (d) made to depend
 on the carrier's site. `UnifiedTwoSiteRecords.lean` (~~#364~~) is another: readouts on the arena
 of two site detectors, and UO-10 for a carrier on one detector's site.
+`UnifiedArrivalRecord.lean` (~~#365~~) is another: a reception record, one ingredient of UO-16.
 The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
@@ -1202,6 +1245,13 @@ time. It is not a statement about every dynamics on `Σ`.
   scaling law is kinematic (UA-11), and the family is not instantiated. *Test:* a theorem whose
   hypotheses include a messenger at speed exactly `1`, or a clock at exactly `√(1 − v²)`, is UD-17
   again. And by §1, a pass at gate B is an operational reconstruction from UA-8.
+  ▸ **A reception record, 2026-11-11 (BACKLOG ~~#365~~) → UD-89 to UD-91. One ingredient. Not
+  met.** A pointer of the joint flow, coupled to the far half of the ring, writes when a
+  travelling packet has arrived and not before (`regionPointerFlow_arrival_write`), on fibres of
+  positive measure. *What is missing for a radar coordinate:* an emission record in the same run;
+  a clock in the same run, and its count at each record (UO-14 (c)); a second observer; the time
+  of the write located, which here is only somewhere in `[625π/3, 4375π/3]`; a detector on less
+  than half the ring; and a family along which the errors shrink.
 
 ### M7 — `3 + 1`
 
@@ -1348,7 +1398,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);
