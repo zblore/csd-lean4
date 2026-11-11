@@ -107,7 +107,10 @@ Neither is `Σ_*`. On the fibres where one profile vanishes each restricts exact
 flow of the other pointer (UD-70, UD-71). Since BACKLOG ~~#360~~ the second has a readout and a
 ready arc on each torus (`echoTickShown`, `echoTickReady`, `echoSiteShown`, `echoSiteReady`; UA-4),
 and a tick record and a position record are read off its flow in one run (UD-74 to UD-76). The first
-has no readout, ready state or record. The assumptions they add are UA-13.
+has no readout, ready state or record. The assumptions they add are UA-13. Since BACKLOG ~~#361~~
+the generators of both hop at most one site of the ring, as a property of the matrices (UD-77), and
+the response of a pointer to an intervention made elsewhere on the ring is bounded by a factorial
+tail in the distance (UD-78 to UD-81). The interventions are those of UA-14.
 
 ---
 
@@ -343,6 +346,28 @@ what would discharge or constrain it.
   readout region and no ready state.
 * **Discharge.** None for the choice. M8 compares alternatives. The interaction topology M5 must
   record (UO-15) is read off (c) and (d): the carrier's hopping and the two on-site operators.
+  Since BACKLOG ~~#361~~ it is stated as a property of the coupled generators and proved for them
+  (UD-77). That is the assumption written on the matrix. It is not derived from anything else.
+
+### UA-14 — the interventions
+
+* **Assumed.** What counts as a local intervention on a two-pointer arena. Two are admitted, and
+  each is a change of the initial point of a run. (a) A kick: a unitary with the entries of the
+  identity at every index over a site outside a set `Y` is applied to the carrier's initial ray.
+  (b) A change of one pointer's conserved angle, with the carrier's ray and the other torus left as
+  they were. No term of the joint energy performs either one, and no flow on the arena carries one
+  initial point to the other.
+* **Where.** `IdOffOn`, `arenaKick`, and the pairs of initial points in
+  `diracTwoPointerFlow_kick_snd`, `diracTwoPointerFlow_angle_snd` and `clockSiteFlow_kick_snd`
+  (`RecordLayer/UnifiedCausalOrder.lean`, BACKLOG ~~#361~~).
+* **Standing.** Choice. An influence defined as the response to an intervention is relative to the
+  class of interventions admitted. A kick of a pointer's moving angle, a change of a strength or a
+  profile, and an operation applied during the run are outside the class.
+* **What is derived from it, not assumed.** The size of the response (UD-79 to UD-81). The locality
+  those bounds use is the generator's: the hopping of UA-8 and the on-site operators of UA-13 (d),
+  as UD-77 states them.
+* **Discharge.** None for the choice. An intervention made by a third apparatus inside the joint
+  energy would replace it. That needs a larger arena.
 
 ---
 
@@ -553,7 +578,8 @@ UD-66 and UD-67 are in `LF4/EchoVolume.lean` and UD-68 to UD-71 in
 `RecordLayer/UnifiedTwoPointer.lean` (BACKLOG ~~#359~~). UD-72 to UD-76 are in
 `RecordLayer/UnifiedClockSiteRecords.lean` (BACKLOG ~~#360~~). The arenas are those of §2 under
 UA-13. Every time in them is the flow parameter (UA-7). UD-66 to UD-71 meet no obligation of §5.
-UD-72 to UD-76 are what condition (d) of UO-14 is annotated with.
+UD-72 to UD-76 are what condition (d) of UO-14 is annotated with. UD-77 to UD-81 are in
+`RecordLayer/UnifiedCausalOrder.lean` (BACKLOG ~~#361~~) and are what UO-15 is annotated with.
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -568,6 +594,11 @@ UD-72 to UD-76 are what condition (d) of UO-14 is annotated with.
 | UD-74 | **The site pointer's write, with the clock coupled.** The site pointer's displacement is the rate at its conserved angle times the time integral of the occupancy of site `k` along the device's orbit. On a fibre of nonnegative rate it is therefore monotone in time, nonnegative, and at most the rate times the time, for every device state and every clock coupling. From a ready pointer, if the displacement is at most `1/6` at `τ₀`, at least `1/3` at `τ₁` and at most `2/3` at `τ₂`, the readout history is an `IsRecordWrite` of `true` from time `0` with write interval `[τ₀, τ₁]` and window `τ₂ − τ₁`. The three values can be taken from the displacement with the site pointer alone, with the cross-talk of UD-71 as a margin. The write is an `ActualOccurrence` whose `evolve` is `clockSiteEvolve`, and its history is the site readout along the flow | `continuous_clockSiteOccupancy`, `clockSiteShiftSnd_eq_rateAt`, `clockSiteShiftSnd_mono`, `clockSiteShiftSnd_zero`, `clockSiteShiftSnd_nonneg`, `clockSiteShiftSnd_le`, `isRecordWrite_clockSiteFlow_site`, `isRecordWrite_clockSiteFlow_site_of_alone`, `clockSitePositionRecord`, `clockSitePositionRecord_history`, `clockSitePositionRecord_evolve` | exact monotonicity, with no cross-talk term; the write is conditional on the three displacement values; `site` is the detector's site by definition |
 | UD-75 | **The clock's swing and tick record, with the detector coupled.** A swing of a projected history is a swing of the history for the preimages of the two sets. Up to the horizon `T` the clock pointer's displacement under `clockSiteFlow` is within `clockSwingErr` plus `clockSiteCrossErr`, that is `2 \|f'(θ₂)\| \|g₁\| \|h(ψ₂)\| \|g₂\| T²`, of the swing of UD-62. Under the four inequalities of UD-62 with that larger error the history is an `IsSwing` for `echoTickReady` and `echoTickDisplay`, so UD-63 and UD-64 apply to it. On a fibre where the detector's profile vanishes every swing of `clockPointerFlow` is a swing of the joint flow with nothing added. Given a swing, tick `n` is an `ActualOccurrence` whose `evolve` is `clockSiteEvolve`; its history is the tick readout along the flow, and its preparation is the start state carried by `clockSiteEvolve` from time `0` to the start of turn `n` | `IsSwing.preimage`, `clockSiteCrossErr`, `clockSiteCrossErr_nonneg`, `abs_clockSiteShiftFst_sub_swing_le`, `isSwing_clockSiteFlow`, `isSwing_clockSiteFlow_of_lift_eq_zero`, `clockSiteTickRecord`, `clockSiteTickRecord_history`, `clockSiteTickRecord_evolve`, `clockSiteTickRecord_prep` | upper bound for the displacement, not shown attained; the swing is conditional on the four inequalities, whose error grows as `T²`; exact on the fibres with `h(ψ₂) = 0` |
 | UD-76 | **An exact instance: both records in one run.** On the fibres where both profiles vanish the device moves freely, and a packet is carried to the packet at the later time. For one momentum mode the site pointer's displacement is then the rate times `t/(M+1)`, and with rate `κ > 0` its readout writes `true` on `[(M+1)/(6κ), (M+1)/(3κ)]` and holds it for `(M+1)/(3κ)`. With both profiles `trainF`, the start `clockSiteTrainStart` (the mode prepared a quarter turn ahead, both pointers at `1/12`, `θ₂ = ψ₂ = 0`), the coupling `g₁` of UD-62's instance and `g₂ > 0`: the clock's pointer is a swing at the level splitting on every horizon, and for every `n` the tick readout's history and the site readout's history are both writes of `true` along the one orbit, the second on `[(M+1)/(12 g₂), (M+1)/(6 g₂)]` with window `(M+1)/(6 g₂)` | `arenaKick_clockSiteCarrierU_devicePacket`, `clockSiteShiftSnd_single`, `isRecordWrite_clockSiteFlow_site_single`, `clockSiteTrainStart`, `isSwing_clockSiteFlow_train`, `isRecordWrite_clockSiteFlow_site_train`, `clockSite_records_train` | exact; on a null set of fibres; one mode; the same write times for every site `k` |
+| UD-77 | **The interaction topology, as a property of the generators.** Over a site map `σ` from the carrier's index to the ring, a matrix *hops at most one site* when every nonzero entry joins indices whose sites are equal or adjacent, it is *supported on* a set `X` of sites when every nonzero entry has both indices over `X`, and it is *the identity off* `Y` when it has the identity's entries at every index over a site outside `Y`. On the Dirac ring's index these are `SiteSupp` and `IdOff` of UD-15. The free generators `diracHam` and `deviceHam` hop at most one site. The site projectors, the level swap and the device's site projector move nothing between sites. So `−i·diracTwoH` and `−i·clockSiteH` hop at most one site at every pair of pointer angles. `P_j` is supported on `{j}` and `Q_k` on `{k}`. Any set of sites that supports the level swap contains every site | `SiteSuppOn`, `HopsOne`, `IdOffOn`, `siteSuppOn_fst_iff`, `idOffOn_fst_iff`, `SiteSuppOn.smul`, `siteSuppOn_diagonal`, `HopsOne.add`, `HopsOne.smul`, `hopsOne_of_site_eq`, `hopsOne_diagonal`, `IdOffOn.siteSuppOn_sub_one`, `deviceSite`, `hopsOne_diracHam`, `hopsOne_siteProj`, `siteSuppOn_siteProj`, `hopsOne_deviceHam`, `hopsOne_levelSwap`, `mem_of_siteSuppOn_levelSwap`, `hopsOne_deviceSiteProj`, `siteSuppOn_deviceSiteProj`, `diracTwoH_isHermitian`, `hopsOne_diracTwoGen`, `clockSiteH_isHermitian`, `hopsOne_clockSiteGen` | exact; the predicates are definitions, and the statements are UA-8 and UA-13 (d) read on the matrix entries, not a derivation of them |
+| UD-78 | **The cone bound for a generator that hops at most one site.** One commutator with such a generator grows a support by one site, and `j` commutators by `j`. A site reached by `d` steps of growth from `X` is `y + i` with `y ∈ X` and `\|i\| ≤ d`, so sets more than `d` apart on the ring are missed. For a skew-Hermitian `S` that hops at most one site, `A` on `X`, `B` on `Y` (or `B` the identity off `Y`), and `d` steps of growth from `X` missing `Y`: `‖[A(t), B]‖ ≤ 2 (2‖S‖t)^d/d! · ‖A‖ ‖B‖` for `t ≥ 0`. For two such generators with `S − S'` supported on `Y`: `‖τ_t^S D − τ_t^{S'} D‖ ≤ 2 (2‖S'‖t)^d/d! · ‖D‖ ‖S − S'‖ t`, by a mean-value estimate along `r ↦ τ_r^S (τ_{t−r}^{S'} D)` | `mem_grow_of_step`, `exists_int_of_mem_growIter`, `disjoint_growIter_of_forall_ne`, `disjoint_growIter_singleton`, `siteSuppOn_adOne`, `siteSuppOn_adIter`, `mul_eq_zero_of_siteSuppOn_disjoint`, `commute_of_siteSuppOn_disjoint`, `commute_of_siteSuppOn_idOffOn`, `norm_commutator_heisenbergFlow_le_of_adIter_commute`, `norm_commutator_hopsOne_le`, `norm_commutator_hopsOne_idOffOn_le`, `norm_heisenbergFlow_sub_le_of_commutator_le`, `norm_heisenbergFlow_sub_hopsOne_le`, `norm_neg_I_smul` | upper bounds: a factorial tail, never zero for `t > 0`, so suppression and not exclusion; for any finite index with a site map, not only the two arenas; the norm is the coupled generator's, not optimised |
+| UD-79 | **The response of an occupancy, and of a displacement, to the two interventions of UA-14.** An observable on `X` is unchanged at time `0` by a kick that is the identity off a disjoint `Y`. Read at `t ≥ 0` along `exp(tS)` it moves by at most `2 (2‖S‖t)^d/d! · ‖D‖` under the kick, and it differs between the generators `S` and `S'` by at most `2 (2‖S'‖t)^d/d! · ‖D‖ ‖S − S'‖ t`. Integrated over `[0, t]` these give one more factor `t`. A displacement `−2 g c ∫₀ᵗ⟨D⟩` with `‖D‖ ≤ 1` moves by at most `4 \|g\| \|c\| (2‖S‖t)^d/d! · t` under the kick and by at most `4 \|g\| \|c\| δ (2‖S'‖t)^d/d! · t²` between generators with `‖S − S'‖ ≤ δ` | `star_exp_smul_mul_exp_smul`, `arenaObs_kick_of_idOffOn`, `abs_arenaObs_flow_kick_sub_le`, `abs_arenaObs_flow_sub_flow_le`, `abs_integral_sub_integral_le_of_abs_sub_le`, `abs_neg_two_mul_mul_mul_sub`, `abs_integral_arenaObs_flow_kick_sub_le`, `abs_integral_arenaObs_flow_sub_flow_le`, `abs_displacement_kick_sub_le`, `abs_displacement_flow_sub_le` | exact at time `0` only; upper bounds otherwise, not shown attained; statements about a carrier's ray, with no pointer in them |
+| UD-80 | **Two site pointers: each pointer's response to a kick and to the other pointer's angle.** On the arena of UD-70, with `T_d(t) = (2‖H‖t)^d/d!` and `H` the coupled Hamiltonian `diracTwoH`. For a kick that is the identity off `Y`, with `d` steps of growth from `k` missing `Y`, the second pointer's displacement moves by at most `4 \|g₂\| \|h'(ψ₂)\| T_d(t) t`. Between two runs that differ in the first pointer's conserved angle, `φ` against `φ'`, with `d` steps of growth from `k` missing `j`, the second pointer's displacements differ by at most `4 \|g₂\| \|h'(ψ₂)\| \|g₁\| \|f(φ) − f(φ')\| T_d(t) t²`, `H` taken at `φ'`. The same with the pointers exchanged. Each response is the difference of that pointer's moving angle between two runs of `diracTwoPointerFlow` | `continuous_diracTwoCarrierU`, `diracTwoH_sub_fst`, `diracTwoH_sub_snd`, `abs_diracTwoKickResponseSnd_le`, `abs_diracTwoKickResponseFst_le`, `abs_diracTwoAngleResponseSnd_le`, `abs_diracTwoAngleResponseFst_le`, `diracTwoPointerFlow_kick_snd`, `diracTwoPointerFlow_kick_fst`, `diracTwoPointerFlow_angle_snd`, `diracTwoPointerFlow_angle_fst` | upper bounds, not shown attained, with no lower bound inside the cone; the four flow identities exact; about displacements — no record is read on this arena |
+| UD-81 | **The clock and a site detector: the site pointer's response to a kick, and its record.** On the arena of UD-71, with `H` the coupled Hamiltonian `clockSiteH`, the clock's coupling in it. For a kick that is the identity off `Y`, with `d` steps of growth from `k` missing `Y`, the site pointer's displacement moves by at most `4 \|g₂\| \|h'(ψ₂)\| (2‖H‖t)^d/d! · t`, and that response is the difference of its moving angle between two runs of `clockSiteFlow`. If the displacement in the unkicked run clears the three thresholds of UD-74 by that bound at the three times, the kicked run writes the position record on the same write interval with the same window | `continuous_clockSiteCarrierU`, `abs_clockSiteKickResponseSnd_le`, `clockSiteFlow_kick_snd`, `isRecordWrite_clockSiteFlow_site_of_kick` | upper bound, not shown attained; the write is conditional on the three margins; no bound of this kind for the clock's pointer, whose coupled operator is supported on no proper set of sites (UD-77) |
 
 Exact scope of UD-66 to UD-71. What they give. One joint energy, hence one flow, carries a clock
 pointer and a detector pointer, or two detector pointers. The flow is solved, and the generator the
@@ -577,7 +608,8 @@ departure is bounded. What they do not give. UD-66 to UD-71 put no readout, read
 or `ActualOccurrence` on these arenas and read no record. UD-72 to UD-76 do that for the clock and
 the site detector. The entries of §4.1 and §4.1b are not proved again here: they transfer
 verbatim on a null set of fibres and elsewhere only within the bounds of UD-69, which grow as `t²`.
-The bounds of UD-69 do not see the distance between the sites and are no propagation bound. There
+The bounds of UD-69 do not see the distance between the sites and are no propagation bound. (The
+bounds that do are UD-78 to UD-81.) There
 are two tori and not a family. On a fibre where a pointer's profile vanishes and its derivative does
 not, that pointer still moves while the carrier's generator has no term from it. UD-66 to UD-71 use
 UA-13, UA-5, UA-8 and UA-12, and the profiles and strengths of UA-4. UA-2 enters only as invariance,
@@ -603,6 +635,32 @@ sets are definitions. By the test of §6: no hypothesis of UD-76 is a Register 1
 parameters of UA-4 and UA-12; no definition contains the write; the object is the flow of the joint
 energy; and the statements fail for a flow that does not move the pointers. UD-72 to UD-76 use
 UA-13, UA-12, UA-7, UA-8 and the arcs, profiles and strengths of UA-4. UA-2 and UA-6 are not used.
+
+Exact scope of UD-77 to UD-81. What they give. The cone bound of UD-15 was for the free chain. It
+now holds for the generators the two-pointer arenas have, with both couplings in them, because the
+proof uses only that the generator hops at most one site. A pointer's displacement responds to a
+kick of the carrier far away, or to the other site pointer's conserved angle, by at most a factorial
+tail in the distance. The cross-talk bound of UD-69 between two site pointers is thereby joined by
+one that falls with the distance between their sites. One statement is about a record: the position
+write of UD-74 is still written after a remote kick, within margins. What they do not give. Every
+bound at `t > 0` is a tail that is small when `2‖H‖t` is small against `d`, and it is never zero.
+Nothing says a remote intervention has no effect at a positive time, and the lattice with a
+continuous flow parameter has no exact cone. The one exact statement is at time `0`. Every bound is
+an upper bound. No response is shown to be attained and none is bounded below, so no influence is
+shown to arrive. The speed in the tail is `2‖H‖`, the norm of the whole generator. It is not
+optimised and is not the chain's group velocity. No relation between record events is defined. A
+relation defined by a threshold on a bound would not be an order without further argument, and
+`CausalPrecedes` of UD-16 stays induced by an assumed graph. On the arena of two site pointers no
+record is read, so the statements there are about displacements. The clock's pointer is coupled to
+the level swap, which acts at every site. So its response to a kick anywhere, and the response of
+either pointer of that arena to the other's angle, are not bounded by distance here, and UD-69's
+bounds stay the only ones for them. The interventions are changes of the initial point and are no
+part of the dynamics (UA-14). By the test of §6: the hypothesis that a generator hops at most one
+site is UA-8 and UA-13 (d) restated, and it is proved for the two generators and not assumed of
+them; the bounds are not that hypothesis restated, since they carry the norm, the time and the
+factorial; the statements do not apply to a generator with a term joining distant sites, which
+does not satisfy `HopsOne`. UD-77 to UD-81 use UA-14, UA-13, UA-8, UA-7 and the profiles and
+strengths of UA-4. UA-2 and UA-6 are not used.
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -651,7 +709,8 @@ Proposed module names are the programme's. `DiracPointerWrite.lean` exists since
 (M4 part A). M4 part B is in `UnifiedDiracClockTicks.lean` (~~#358~~), a module the programme did
 not name. `UnifiedTwoPointer.lean` (~~#359~~) is another: it meets no obligation below and builds the
 arena that UO-10, UO-13, UO-14 (d) and UO-15 are about. `UnifiedClockSiteRecords.lean` (~~#360~~)
-is another: it reads the two records of UO-14 (d) off that arena. The others do not exist.
+is another: it reads the two records of UO-14 (d) off that arena. `UnifiedCausalOrder.lean` exists
+since ~~#361~~ (M5's bound; UO-15 stays, with conditions). The others do not exist.
 
 ### M2 — a record generated by the flow (`DiracPointerWrite.lean`)
 
@@ -968,6 +1027,27 @@ time. It is not a statement about every dynamics on `Σ`.
   `clockSiteH` the level swap exchanges the two levels at each site and moves nothing between sites,
   so the support-growth argument should go through. The cross-talk bounds of UD-69 are not that
   bound: they do not depend on the distance between the sites.
+  ▸ **The bound, 2026-11-11 (BACKLOG ~~#361~~) → UD-77 to UD-81. The propagation bound is proved for
+  both coupled generators. The obligation stays, with five conditions.** Both generators hop at
+  most one site at every pair of pointer angles (`hopsOne_diracTwoGen`, `hopsOne_clockSiteGen`),
+  and the support-growth argument goes through for any such generator
+  (`norm_commutator_hopsOne_le`). The response of a pointer to an intervention is bounded on the
+  arena of two site pointers for both pointers and both interventions
+  (`abs_diracTwoKickResponseSnd_le`, `abs_diracTwoAngleResponseSnd_le`, and the two for the first
+  pointer), and on the clock-and-site arena for the site pointer under a kick
+  (`abs_clockSiteKickResponseSnd_le`). There the position record of UD-74 survives a remote kick
+  within margins (`isRecordWrite_clockSiteFlow_site_of_kick`). *The conditions:* (e1) the bounds are
+  factorial tails, suppression and not exclusion, exact only at time `0`
+  (`arenaObs_kick_of_idOffOn`); (e2) they are upper bounds: no response is shown to be attained or
+  bounded below, so influence is limited and never exhibited; (e3) no relation between two record
+  events is built, and `CausalPrecedes` stays induced by an assumed graph, so the title's causal
+  order is not reached. By the test above, the predicates `HopsOne` and `SiteSuppOn` are the
+  interaction topology restated, and what is added to it is the bound; (e4) on the arena of two
+  site pointers the response is a displacement's and not a record's, since no record is read there
+  (UO-10); (e5) the clock's pointer has no bound in the distance, because the level swap is
+  supported on no proper set of sites (`mem_of_siteSuppOn_levelSwap`): a tick record may respond to
+  a kick anywhere on the ring with no delay from this argument. The interventions are assumed
+  (UA-14) and are no part of the dynamics. Every time is a flow time (UA-7).
 
 ### M6 — radar geometry from records (`UnifiedRadarGeometry.lean`; gate B)
 
@@ -1123,7 +1203,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

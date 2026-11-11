@@ -71,8 +71,16 @@ are occurrences of the one flow from one start state (BACKLOG ~~#360~~,
 momentum mode on the fibres where both profiles vanish, a null set, where the device moves freely
 and the record does not single out its site. Elsewhere the swing and the write are conditional on
 stated inequalities, with the cross-talk as one more error term. All record times are flow times. No
-record is read on the arena of two site pointers, and no propagation bound is proved for the coupled
-generators.
+record is read on the arena of two site pointers.
+The coupled generators of both arenas hop at most one site of the ring, and the cone bound holds for
+them (BACKLOG ~~#361~~, `RecordLayer/UnifiedCausalOrder.lean`, `norm_commutator_hopsOne_le`). A site
+pointer's displacement responds to a kick of the carrier far away, or to the other site pointer's
+conserved angle, by at most a factorial tail in the distance (`abs_diracTwoKickResponseSnd_le`,
+`abs_diracTwoAngleResponseSnd_le`), and the position record of ~~#360~~ survives a remote kick
+within margins (`isRecordWrite_clockSiteFlow_site_of_kick`). These are upper bounds: suppression
+and not exclusion, exact only at time `0`, with no response shown to arrive. No order between record
+events is built. The clock's pointer has no such bound, because the level swap acts at every site.
+The interventions are changes of the initial point and are assumed.
 
 ## What is open
 

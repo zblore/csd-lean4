@@ -780,6 +780,7 @@ public import CsdLean4.RecordLayer.UnifiedDiracClock
 public import CsdLean4.RecordLayer.UnifiedDiracClockTicks
 public import CsdLean4.RecordLayer.UnifiedTwoPointer
 public import CsdLean4.RecordLayer.UnifiedClockSiteRecords
+public import CsdLean4.RecordLayer.UnifiedCausalOrder
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers

@@ -129,7 +129,7 @@ For any finite index type and any Hermitian triple.
 * **No propagation bound.** The cross-talk bounds do not depend on the distance between the two
   sites. They are not a cone bound, and they say nothing about when the second detector's
   influence can reach the first. M5's bound is for the generators `diracTwoH` and `clockSiteH`,
-  and it is not proved here.
+  and it is not proved here. It is in `RecordLayer/UnifiedCausalOrder.lean` (#361).
 * **What is exact and what is bounded.** The closed forms, the two reductions and the measure
   statement are exact. The cross-talk statements are upper bounds that grow as `t²`. They are not
   shown to be attained.
