@@ -95,6 +95,12 @@ detector, a carrier with at least `7/8` of its occupancy on a site writes the re
 the detector is at that site and is not displayed through the same window when the detector is
 elsewhere. The two placements of the detector are two flows and not one run, the detector is fast
 against the carrier, and the clock's swing on those fibres is still conditional.
+The arena of two site pointers now has a readout on each torus, and one run with two detectors is
+read (BACKLOG ~~#364~~, `RecordLayer/UnifiedTwoSiteRecords.lean`,
+`diracTwoPointerFlow_record_fst_only`). For a carrier with at least `7/8` of its occupancy on one
+detector's site, that detector writes and the other is not displayed up to the completion of the
+write. For a carrier split between the two sites nothing is proved, and exactly one outcome is
+not shown.
 
 ## What is open
 

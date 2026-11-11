@@ -18794,4 +18794,126 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.clockSiteFlow_site_shown_iff
 
+/-! #364 (the author's programme, obligation UO-10 on the arena of two site pointers): two site detectors in one run — a pointer driven by the accumulated expectation of an observable along a family of unitaries within `|s| N` of the identity (monotone, at most the elapsed time, within `N t²` of `t` times the starting expectation; with `κ > 0` and `16 N ≤ 3 κ` it writes from a starting expectation of at least `7/8` and does not display up to `2/(3κ)` from one of at most `1/8`); a readout and a ready arc on the first torus (apparatus input); on `diracTwoPointerFlow` each pointer turned by its rate times the accumulated occupancy of its site; the record fibres, open and of positive Haar measure for two `trainF` detectors of equal strength; and on a record fibre, for a carrier with at least `7/8` of its occupancy on one detector's site, that detector's readout history is a write and the other detector's readout is not `true` up to the completion of that write, along the one orbit. Fast detectors, comparable rates, carriers on one detector's site only; a carrier split between the sites is not covered; no clock; flow times (`RecordLayer/UnifiedTwoSiteRecords.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_arenaKick_sub_self_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_arenaKick_sub_self_le
+
+/-- info: 'CSD.RecordLayer.integral_arenaObs_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_arenaObs_mono
+
+/-- info: 'CSD.RecordLayer.integral_arenaObs_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_arenaObs_le
+
+/-- info: 'CSD.RecordLayer.abs_integral_arenaObs_sub_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_integral_arenaObs_sub_mul_le
+
+/-- info: 'CSD.RecordLayer.isRecordWrite_of_occupancy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isRecordWrite_of_occupancy
+
+/-- info: 'CSD.RecordLayer.not_shown_of_occupancy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_shown_of_occupancy
+
+/-- info: 'CSD.RecordLayer.echoFstReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoFstReady
+
+/-- info: 'CSD.RecordLayer.measurableSet_echoFstReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_echoFstReady
+
+/-- info: 'CSD.RecordLayer.echoFstDisplay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoFstDisplay
+
+/-- info: 'CSD.RecordLayer.measurableSet_echoFstDisplay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_echoFstDisplay
+
+/-- info: 'CSD.RecordLayer.echoFstShown' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoFstShown
+
+/-- info: 'CSD.RecordLayer.measurable_echoFstShown' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurable_echoFstShown
+
+/-- info: 'CSD.RecordLayer.echoFstShown_eq_true_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoFstShown_eq_true_iff
+
+/-- info: 'CSD.RecordLayer.diracTwoPointerFlow_fst_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoPointerFlow_fst_pointer
+
+/-- info: 'CSD.RecordLayer.diracTwoPointerFlow_snd_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoPointerFlow_snd_pointer
+
+/-- info: 'CSD.RecordLayer.diracTwoShiftFst_eq_rateAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoShiftFst_eq_rateAt
+
+/-- info: 'CSD.RecordLayer.diracTwoShiftSnd_eq_rateAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoShiftSnd_eq_rateAt
+
+/-- info: 'CSD.RecordLayer.norm_diracTwoCarrierU_sub_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_diracTwoCarrierU_sub_one_le
+
+/-- info: 'CSD.RecordLayer.norm_diracTwoH_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_diracTwoH_le
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteProj_le_one_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteProj_le_one_sub
+
+/-- info: 'CSD.RecordLayer.twoSiteRecordFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoSiteRecordFibres
+
+/-- info: 'CSD.RecordLayer.isOpen_twoSiteRecordFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpen_twoSiteRecordFibres
+
+/-- info: 'CSD.RecordLayer.twoSiteRecordFibres_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoSiteRecordFibres_bounds
+
+/-- info: 'CSD.RecordLayer.zero_mem_twoSiteRecordFibres_trainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.zero_mem_twoSiteRecordFibres_trainF
+
+/-- info: 'CSD.RecordLayer.volume_twoSiteRecordFibres_trainF_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_twoSiteRecordFibres_trainF_pos
+
+/-- info: 'CSD.RecordLayer.exists_volume_twoSiteRecordFibres_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_volume_twoSiteRecordFibres_pos
+
+/-- info: 'CSD.RecordLayer.echoFstShown_diracTwoPointerFlow_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoFstShown_diracTwoPointerFlow_iff
+
+/-- info: 'CSD.RecordLayer.echoSiteShown_diracTwoPointerFlow_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoSiteShown_diracTwoPointerFlow_iff
+
+/-- info: 'CSD.RecordLayer.diracTwoPointerFlow_record_fst_only' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoPointerFlow_record_fst_only
+
+/-- info: 'CSD.RecordLayer.diracTwoPointerFlow_record_snd_only' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoPointerFlow_record_snd_only
+
 end CSD.Tests.AxiomAudit

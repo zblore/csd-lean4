@@ -56,8 +56,8 @@ at least `7/8` on a site `x` has at most `1/8` on every other
 * **One detector in each run.** The arena has one site detector. "A detector at another site"
   is another arena, with the same device, clock and pointers and the site projector moved. The
   two readouts compared in `clockSiteFlow_site_shown_iff` are of two flows, not of one run. A
-  run with two site detectors is the arena of `diracTwoPointerFlow`, which has no readout
-  (#361 Remainder (c)).
+  run with two site detectors is the arena of `diracTwoPointerFlow`. It is read in
+  `RecordLayer/UnifiedTwoSiteRecords.lean` (#364).
 * **A fast detector.** The condition `16 ‖H‖ < 3 κ` makes the write complete at `1/(2κ)`, a
   time short against `1/‖H‖`. By then the occupancy of the detector's site has changed by at
   most `3/16`, and by at most `1/4` at the end of the window. Nothing here follows a moving

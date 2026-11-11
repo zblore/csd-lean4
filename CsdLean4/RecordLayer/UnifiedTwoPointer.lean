@@ -125,7 +125,8 @@ For any finite index type and any Hermitian triple.
   particular no theorem here has a tick record and a position record in one run. M4's acceptance
   sentence is met no further than #358 met it. What this module supplies is the one dynamics those
   two records would both have to come from. Both are read off `clockSiteFlow` in
-  `RecordLayer/UnifiedClockSiteRecords.lean` (#360).
+  `RecordLayer/UnifiedClockSiteRecords.lean` (#360). The arena of two site detectors gets a
+  readout on each torus in `RecordLayer/UnifiedTwoSiteRecords.lean` (#364).
 * **No propagation bound.** The cross-talk bounds do not depend on the distance between the two
   sites. They are not a cone bound, and they say nothing about when the second detector's
   influence can reach the first. M5's bound is for the generators `diracTwoH` and `clockSiteH`,
