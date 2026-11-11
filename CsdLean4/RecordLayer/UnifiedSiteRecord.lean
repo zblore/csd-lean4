@@ -15,8 +15,8 @@ physical spacetime", milestone M4, condition (d2) of obligation UO-14 and Remain
 In the exact instance of `RecordLayer/UnifiedClockSiteRecords.lean` the carrier is one momentum
 mode. It occupies every site equally, so the position record is written at the same times
 wherever the detector is placed. This module takes a carrier that sits mostly on one site and
-shows that the record is written when the detector is at that site and is not written when the
-detector is anywhere else.
+shows that the record is written when the detector is at that site, and is not displayed at any
+flow time up to the end of that record's window when the detector is placed anywhere else.
 
 **The carrier over a short time.** On the arena of the clock's pointer and a site detector the
 device moves by `exp (−i t H)` with `H = clockSiteH`, both couplings in it. The propagator is
@@ -59,15 +59,20 @@ at least `7/8` on a site `x` has at most `1/8` on every other
   run with two site detectors is the arena of `diracTwoPointerFlow`, which has no readout
   (#361 Remainder (c)).
 * **A fast detector.** The condition `16 ‖H‖ < 3 κ` makes the write complete at `1/(2κ)`, a
-  time short against `1/‖H‖`. The record is written before the carrier has moved. Nothing here
-  follows a moving packet, and nothing is said for a detector slower than the carrier.
+  time short against `1/‖H‖`. By then the occupancy of the detector's site has changed by at
+  most `3/16`, and by at most `1/4` at the end of the window. Nothing here follows a moving
+  packet, and nothing is said for a detector slower than the carrier.
+* **Up to the end of the window.** The carrier off the detector's site is not displayed up to
+  `2/(3κ)`. Nothing is said after that time, for either placement of the detector.
 * **The carrier is a class, not a packet.** The statements hold for every ray with at least
-  `7/8` (or at most `1/8`) of its occupancy on the site. That class has rays of positive width
-  in it. No particular packet is evolved.
-* **Positive measure for the write only.** The record fibres have positive measure in
-  `(θ₂, ψ₂)`, so the position write no longer needs the null set of #360. The clock's swing is
-  not treated here: on these fibres its four inequalities of #358 stay hypotheses, and the
-  tick record with them (#360 Remainder (a)).
+  `7/8` (or at most `1/8`) of its occupancy on the site. The class is not confined to rays on
+  one site, but the only member exhibited is `deviceSiteRay`. No particular packet is evolved.
+* **Positive measure for the write only.** The record fibres have positive Haar measure in
+  `(θ₂, ψ₂)`, for the detector profile `trainF` and a strong enough detector. So for carriers
+  in the class the position write no longer needs the null set of #360. The clock pointer's
+  conserved angle `θ₂` is in the fibre condition; only its moving angle is free. The clock's
+  swing is not treated here: on these fibres its four inequalities of #358 stay hypotheses, and
+  the tick record with them (#360 Remainder (a)).
 * **A definite fact, not a statistic.** The record is that the accumulated occupancy of the
   detector's site crossed the threshold along the one trajectory. Carriers with occupancy
   between `1/8` and `7/8` are not covered. No weight of quantum mechanics is derived.
@@ -310,9 +315,10 @@ theorem clockSiteShiftSnd_le_sixth {φ χ : AddCircle (1 : ℝ)} {κ : ℝ}
 
 /-- ★★★ **A carrier mostly on the detector's site writes the position record.** On a record
 fibre, from a ready site pointer, for a carrier with at least `7/8` of its occupancy on the
-detector's site and any state of the clock's pointer: the readout history along `clockSiteFlow`
-is an `IsRecordWrite` of `true` from time `0`, with write interval `[1/(6κ), 1/(2κ)]` and window
-`1/(6κ)`, `κ` the site pointer's rate. The times are flow times (UA-7). -/
+detector's site and any moving angle of the clock's pointer: the readout history along
+`clockSiteFlow` is an `IsRecordWrite` of `true` from time `0`, with write interval
+`[1/(6κ), 1/(2κ)]` and window `1/(6κ)`, `κ` the site pointer's rate. The times are flow times
+(UA-7). -/
 theorem isRecordWrite_clockSiteFlow_site_of_occupancy (hc : ContDiff ℝ ∞ f)
     (hch : ContDiff ℝ ∞ h) {θ ψ : KTorus} (hψ : ψ ∈ readyArc 2)
     (hx : (θ.2, ψ.2) ∈ siteRecordFibres M J μ₀ μ₁ g₁ g₂ hf hh) {κ : ℝ}

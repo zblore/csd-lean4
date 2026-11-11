@@ -18708,6 +18708,10 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.diracTwoKickResponseSnd_ne_zero
 
+/-- info: 'CSD.RecordLayer.diracTwoPointerFlow_kick_snd_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracTwoPointerFlow_kick_snd_ne
+
 /-! #363 (the author's programme, milestone M4, condition (d2) of UO-14): a position record that singles out its site — on the arena of the clock's pointer and a site detector the coupled propagator is within `|t| ‖H‖` of the identity, so the site pointer's displacement is within `|κ| ‖H‖ t²` of `κ t q`, `q` the carrier's starting occupancy of the detector's site (upper bounds); the record fibres, the pairs of conserved angles with `16 (‖H_dev‖ + |g₁ f(θ₂)| + |g₂ h(ψ₂)|) < 3 κ`, open and of positive measure for the detector profile `trainF` and a strong enough detector; on a record fibre a carrier with at least `7/8` of its occupancy on the detector's site writes the record on `[1/(6κ), 1/(2κ)]` with window `1/(6κ)`, and one with at most `1/8` is not displayed up to `2/(3κ)`; for a carrier with at least `7/8` on a site `x` the readout at `1/(2κ)` is `true` exactly when the detector is at `x`. Two placements of the detector are two flows, not one run; a fast detector; the clock's swing is not treated; flow times (`RecordLayer/UnifiedSiteRecord.lean`). -/
 
 /-- info: 'CSD.RecordLayer.norm_clockSiteCarrierU_sub_one_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/

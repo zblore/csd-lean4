@@ -85,11 +85,13 @@ margins hold is exhibited.
 The interventions are changes of the initial point and are assumed.
 One response is shown to be not zero (BACKLOG ~~#362~~, `RecordLayer/UnifiedCausalArrival.lean`,
 `diracTwoKickResponseSnd_ne_zero`): for one carrier on the arena of two site pointers, a sign kick
-at the site next to the second detector moves that pointer by `2 g₂ h' J t²` to leading order, for
-short times. That is distance one. No response is shown to arrive from a farther site.
+at the site next to the second detector changes that pointer's displacement, between the kicked
+and the unkicked run, by `2 g₂ h' J t²` to leading order. It is not zero for
+`0 < t < |J|/(4‖H‖²)` when `g₂ h' ≠ 0`. That is distance one. No response is shown to arrive from a farther site.
 The position record now depends on where the carrier is (BACKLOG ~~#363~~,
-`RecordLayer/UnifiedSiteRecord.lean`, `clockSiteFlow_site_shown_iff`). On a set of fibres of
-positive measure, a carrier with at least `7/8` of its occupancy on a site writes the record when
+`RecordLayer/UnifiedSiteRecord.lean`, `clockSiteFlow_site_shown_iff`). On a set of pairs
+`(θ₂, ψ₂)` of positive Haar measure, for the detector profile `trainF` and a strong enough
+detector, a carrier with at least `7/8` of its occupancy on a site writes the record when
 the detector is at that site and is not displayed through the same window when the detector is
 elsewhere. The two placements of the detector are two flows and not one run, the detector is fast
 against the carrier, and the clock's swing on those fibres is still conditional.

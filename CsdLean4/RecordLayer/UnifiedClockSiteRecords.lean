@@ -78,7 +78,8 @@ between the flow times `(M+1)/(12 g₂)` and `(M+1)/(6 g₂)` and holds it for `
   in the instance is the same for every `k`. The record says that the accumulated occupancy of
   site `k` crossed the threshold. It is a definite fact of the one trajectory. It is not a
   statistical statement, and no weight of quantum mechanics is derived from it. A carrier mostly
-  on one site, whose record is written only by a detector at that site, is in
+  on one site, whose record is written by a detector at that site and is not displayed within
+  the same window by a detector placed elsewhere (two flows, not one run), is in
   `RecordLayer/UnifiedSiteRecord.lean` (#363).
 * **Tick records are erased, the position record is held for a window.** Each tick is held for
   less than a turn (#358). The position write is held for `τ₂ − τ₁`. Nothing here holds either

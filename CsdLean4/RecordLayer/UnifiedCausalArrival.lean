@@ -25,10 +25,10 @@ time `s ≥ 0` is its `d`-th Taylor term up to the next tail:
   `|(⟨D⟩ kicked − ⟨D⟩ unkicked)(s) − c_d(s) · Δ_d| ≤ 2 (2 ‖S‖ s)^(d+1) / (d+1)! · ‖D‖`,
 
 with `c_d(s) = (−1)^d s^d / d!` (`flowCoef`) and `Δ_d` the change the kick makes in the
-expectation of `ad_S^d D` at time `0` (`abs_arenaObs_flow_kick_sub_sub_le`). When `d` steps of
-growth from the support of `D` reach the kick's set and `d − 1` do not, the hypothesis holds by
-support (`commute_adIter_of_disjoint_growIter`). Integrated in time, a displacement
-`−2 g c ∫₀ᵗ ⟨D⟩` with `‖D‖ ≤ 1` responds by
+expectation of `ad_S^d D` at time `0` (`abs_arenaObs_flow_kick_sub_sub_le`). For a generator
+that hops at most one site, the hypothesis holds by support when no `j < d` steps of growth from
+the support of `D` reach the kick's set (`commute_adIter_of_disjoint_growIter`). Integrated in
+time, a displacement `−2 g c ∫₀ᵗ ⟨D⟩` with `‖D‖ ≤ 1` responds by
 
   `−2 g c · (−1)^d t^(d+1) / (d+1)! · Δ_d`
 
@@ -48,7 +48,10 @@ every pair of pointer angles and every `t ≥ 0`:
 
 (`abs_diracTwoKickResponseSnd_sub_le`), and the response is at least
 `2 |g₂| |h'(χ)| t² (|J| − 4 ‖H‖² t)` in size (`le_abs_diracTwoKickResponseSnd`). It is not zero
-for `0 < t` with `4 ‖H‖² t < |J|` when `g₂ h'(χ) ≠ 0` (`diracTwoKickResponseSnd_ne_zero`).
+for `0 < t` with `4 ‖H‖² t < |J|` when `g₂ h'(χ) ≠ 0` (`diracTwoKickResponseSnd_ne_zero`). These
+are statements about the displacement, a real number of turns. For smooth profiles and
+`4 |g₂| |h'(χ)| t < 1` as well, the response is less than a turn and the second pointer's angles
+on the circle differ between the two runs (`diracTwoPointerFlow_kick_snd_ne`).
 
 ## Exact scope
 
@@ -57,18 +60,22 @@ for `0 < t` with `4 ‖H‖² t < |J|` when `g₂ h'(χ) ≠ 0` (`diracTwoKickRe
   is of order `t²`, below it. For a kick `d` sites away the expansion gives the order `t^(d+1)`
   with coefficient `Δ_d`, and `Δ_d` is not computed here for `d ≥ 2`.
 * **One carrier and one kick.** The carrier is a stated superposition over two sites and the
-  kick a stated sign. No statement is made about other carriers or kicks. For a carrier on one
-  site this kick changes nothing: it is a phase of the whole ray.
+  kick a stated sign. The carrier has half its weight on the detector's own site, and the kick
+  changes the relative sign of its two amplitudes. A carrier off the detector's site is not
+  treated, and no statement is made about other carriers or kicks. For a carrier on one site
+  this kick changes nothing: it is a phase of the whole ray (not in Lean).
 * **Short times.** The lower bound is positive for `t < |J| / (4 ‖H‖²)`. Nothing is said about
   later times.
 * **A displacement, not a record.** No readout is on this arena (#361 Remainder (c)). The
-  statement is that the pointer's moving angle differs between the two runs.
+  statement is that the pointer's displacement differs between the two runs, and its angle on
+  the circle with it when the response is also less than a turn
+  (`diracTwoPointerFlow_kick_snd_ne`).
 * **The intervention is assumed** (UA-14): a change of the initial ray, not a term of the joint
   energy. All times are flow times (UA-7).
 * **No order is built.** A response that arrives from the neighbouring site does not define a
   relation between record events.
 * **The ring has at least three sites**, stated as `k − 1 ≠ k + 1`. On a ring of two sites the
-  two hops cancel in `diracHam`.
+  two hops cancel in `diracHam` (not in Lean).
 
 ## References
 
@@ -457,8 +464,9 @@ theorem le_abs_diracTwoKickResponseSnd (hk : k - 1 ≠ k + 1)
   nlinarith [htri, key]
 
 /-- ★★★ **The response is not zero.** For `g₂ h'(χ) ≠ 0`, `0 < t` and `4 ‖H‖² t < |J|`, the
-second pointer's moving angle differs between the kicked and the unkicked run: the kick at the
-neighbouring site is felt. -/
+second pointer's displacement (the real lift, in turns) differs between the kicked and the
+unkicked run. The angles on the circle are compared in `diracTwoPointerFlow_kick_snd_ne`. The
+kick is an intervention of UA-14, and `t` is a flow time (UA-7). -/
 theorem diracTwoKickResponseSnd_ne_zero (hk : k - 1 ≠ k + 1)
     (hg : g₂ ≠ 0) (φ χ : AddCircle (1 : ℝ)) (hχ : hh.deriv_periodic.lift χ ≠ 0) {t : ℝ}
     (ht : 0 < t) (hsmall : 4 * ‖diracTwoH J μ g₁ g₂ j k hf hh φ χ‖ ^ 2 * t < |J|) :
@@ -473,6 +481,45 @@ theorem diracTwoKickResponseSnd_ne_zero (hk : k - 1 ≠ k + 1)
     have h3 : 0 < |J| - 4 * ‖diracTwoH J μ g₁ g₂ j k hf hh φ χ‖ ^ 2 * t := sub_pos.2 hsmall
     positivity
   exact abs_pos.1 (hpos.trans_le key)
+
+/-- ★★ **The moving angles differ.** For smooth profiles, under the hypotheses of
+`diracTwoKickResponseSnd_ne_zero` and `4 |g₂| |h'(ψ₂)| t < 1`, the second pointer's angle on the
+circle differs between the kicked and the unkicked run of `diracTwoPointerFlow`: the response is
+not zero and is less than a turn. The kick is an intervention of UA-14, and `t` is a flow time
+(UA-7). -/
+theorem diracTwoPointerFlow_kick_snd_ne (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
+    (hk : k - 1 ≠ k + 1) (hg : g₂ ≠ 0) (θ ψ : KTorus) (hχ : hh.deriv_periodic.lift ψ.2 ≠ 0)
+    {t : ℝ} (ht : 0 < t)
+    (hsmall : 4 * ‖diracTwoH J μ g₁ g₂ j k hf hh θ.2 ψ.2‖ ^ 2 * t < |J|)
+    (hturn : 4 * |g₂| * |hh.deriv_periodic.lift ψ.2| * t < 1) :
+    (diracTwoPointerFlow J μ g₁ g₂ j k hf hh hc hch t
+        ((diracArenaEquiv M (arenaKick (siteSignKick Prod.fst (k - 1)) (arrivalRay k)), θ),
+          ψ)).2.1
+      ≠ (diracTwoPointerFlow J μ g₁ g₂ j k hf hh hc hch t
+          ((diracArenaEquiv M (arrivalRay k), θ), ψ)).2.1 := by
+  have hne := diracTwoKickResponseSnd_ne_zero J μ g₁ g₂ j k hf hh hk hg θ.2 ψ.2 hχ ht hsmall
+  have hcone : Disjoint (growIter ({k} : Finset (ZMod (M + 1))) 0) {k - 1} := by
+    refine Finset.disjoint_singleton.2 fun e => hk ?_
+    have h0 : (1 : ZMod (M + 1)) = 0 := by
+      have := congrArg (fun z => k - z) e
+      simpa using this.symm
+    rw [sub_eq_add_neg, h0, neg_zero, add_zero]
+  have hle := abs_diracTwoKickResponseSnd_le J μ g₁ g₂ j k hf hh
+    (idOffOn_siteSignKick Prod.fst (k - 1)) hcone θ.2 ψ.2 (arrivalRay k) ht.le
+  rw [pow_zero, Nat.factorial_zero, Nat.cast_one, div_one, mul_one] at hle
+  rw [diracTwoPointerFlow_kick_snd]
+  intro heq
+  have hzero := left_eq_add.1 heq.symm
+  obtain ⟨n, hn⟩ := (AddCircle.coe_eq_zero_iff (1 : ℝ)).1 hzero
+  rw [zsmul_eq_mul, mul_one] at hn
+  have hlt : |(n : ℝ)| < 1 := by
+    rw [hn]
+    exact hle.trans_lt hturn
+  have hn0 : n = 0 := by
+    have : |n| < 1 := by exact_mod_cast hlt
+    exact Int.abs_lt_one_iff.1 this
+  rw [hn0, Int.cast_zero] at hn
+  exact hne hn.symm
 
 end DiracTwo
 
