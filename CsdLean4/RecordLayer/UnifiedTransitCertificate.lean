@@ -81,8 +81,9 @@ there so that a displacement divided by its rate is the accumulated occupancy.
 * **Definite facts, not statistics.**
 * **A different fibre condition from #367's.** No theorem states the records of #367 and this
   certificate on a common fibre.
-* **Sharpened in #375** (`RecordLayer/UnifiedFineTransit.lean`): a family of packets, with the
-  coupled carrier's far-half occupancy bounded at each flow time.
+* **Pointwise form on another packet in #375** (`RecordLayer/UnifiedFineTransit.lean`): for a
+  family of larger packets, the coupled carrier's far-half occupancy is bounded at each flow
+  time of two stated intervals. The certificate here is not restated on that family.
 * **No distance, no speed, no clock.** Nothing here is evidence about Lorentz kinematics.
 
 ## References

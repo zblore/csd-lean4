@@ -933,7 +933,7 @@ UD-94.
 | UD-93 | **Two pointers coupled to two regions.** If two continuous families of unitaries satisfy `‖U s − V s‖ ≤ \|s\| N` and `‖D‖ ≤ 1`, the accumulated expectations of `D` along them differ by at most `N t²` for `t ≥ 0`. The carrier with two pointers is within `\|s\| (\|f(θ₂)\| ‖B₀‖ + \|h(ψ₂)\| ‖C₀‖)` of the uncoupled carrier. `regionTwoFlow` is `twoCoupledFlow` of UD-66 for the Dirac chain and two region projectors: it moves the carrier by the one propagator with both region terms, advances each pointer by its displacement along that orbit, and fixes both conserved angles. The first readout `echoFstShown` of UD-87 and the second `echoSiteShown` of UD-73 are `true` exactly when their pointer, turned by its rate times the accumulated weight on its region, is in the displayed arc. For any region the accumulated weight along the coupled carrier is within `(\|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|) t²` of its value along the uncoupled one | `abs_integral_arenaObs_sub_integral_le`, `norm_idxTwoCarrierU_sub_idxFreeU_le`, `regionTwoFlow`, `regionTwoFlow_apply`, `echoFstShown_regionTwoFlow_iff`, `echoSiteShown_regionTwoFlow_iff`, `abs_integral_regionProj_two_sub_free_le` | exact closed form; upper bounds for the back-reaction, not shown attained |
 | UD-94 | **A departure record and an arrival record in one run.** The ring, the packet and the far half of UD-91; the first pointer on the near half, the complement of the far half, and the second on the far half. The packet's weight on the far half is continuous in time, at most `625π/12` accumulated by `625π/3` and at least `625π/2` by `4375π/3`; along the uncoupled carrier the near half holds one minus the far half's weight. The fibres `departureArrivalFibres` are the pairs `(θ₂, ψ₂)` with both rates positive and, with `b = \|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|`: `1 < 3κ₁(625π/4 − b(625π/3)²)`, `6κ₂(625π/12 + b(625π/3)²) < 1`, `1 < 3κ₂(625π/2 − b(4375π/3)²)`. They are open for `C¹` profiles, and for both profiles `trainF` and strengths `1/(625π)`, `1/(1250π)` they contain `(0, 0)` and have positive measure. On such a fibre, from two pointers in their ready arcs, for smooth profiles: there are flow times `0 ≤ τ_d ≤ 625π/3 ≤ τ_a ≤ 4375π/3` such that, along the one orbit of `regionTwoFlow`, the near readout's history is an `IsRecordWrite` of `true` from time `0` with write interval `[0, τ_d]` and window `1/(3κ₁)`, and the far readout's history is one with write interval `[625π/3, τ_a]` and window `1/(3κ₂)` | `departureArrivalFibres`, `isOpen_departureArrivalFibres`, `zero_mem_departureArrivalFibres_trainF`, `volume_departureArrivalFibres_trainF_pos`, `continuous_regionWeight_crossPacket`, `integral_regionWeight_crossPacket_le`, `le_integral_regionWeight_crossPacket`, `arenaObs_nearHalf_free_crossPacket`, `regionTwoFlow_departure_arrival` | exact given the fibre; the two times exist and are not computed; with write interval `[0, τ_d]` the not-displayed-before clause of `IsRecordWrite` is empty, so the first statement is that the near readout is `true` through `[τ_d, τ_d + 1/(3κ₁)]` for some `τ_d ≤ 625π/3`; one packet and one ring; the measure is Haar on the pair of conserved angles, for one pair of profiles and strengths |
 | UD-105 | **A transit in the accumulated occupancies that drive the two pointers.** On the arena of UD-93, started on the crossing packet: each pointer's moving angle at the flow time `t` is its start plus its rate times the accumulated occupancy `crossAccum` of its half of the ring (an identity of angles). With `T₁ = 625π/3`, `T₂ = 3125π/3`, `T₃ = 4375π/3`, on the transit fibres (both rates positive and `92500 π (\|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|) < 1`): over `[0, T₁]` the far half accumulates at most `(1/3) T₁` and the near half at least `(2/3) T₁`; over `[T₂, T₃]` the far half accumulates at least `(2/3)(T₃ − T₂)` and the near half at most `(1/3)(T₃ − T₂)`. A function `F t = w t` does not satisfy the far half's two inequalities, and a carrier with a constant expectation `w` accumulates `w t`; so the far half's occupancy along this run is not constant. The transit fibres are open, and for both profiles `trainF` and any positive strengths they contain `(0, 0)` and have positive measure | `integral_arenaObs_of_const`, `not_transit_of_linear`, `transitFibres`, `isOpen_transitFibres`, `zero_mem_transitFibres_trainF`, `volume_transitFibres_trainF_pos`, `crossAccum`, `regionTwoFlow_cross_pointers`, `le_integral_regionWeight_crossPacket_late`, `abs_crossAccum_far_sub_le`, `abs_crossAccum_near_sub_le`, `cross_transit_certificate`, `cross_far_occupancy_not_constant` (`RecordLayer/UnifiedTransitCertificate.lean`) | inequalities with sufficient constants; on accumulated occupancies at four flow times, which the pointers carry only modulo one turn; no pointer inequality, no readout and no record; the measure is Haar on the pair of conserved angles |
-| UD-108 | **A family of packets with far-half weight as small, then as large, as wanted.** `finePacket n`: `8n` flat modes about `p₀ = 4` on a ring of length `2000π n²` with at least `640000 n³` sites; predicted angle `t/(1250 n²)`. While that angle is at least `δ` short of the far half, the far half's weight times `1 − cos δ` is at most `1/(6n)`; while it is at least `δ` inside, the weight outside the far half times `1 − cos δ` is at most `1/(6n)`. For every `ε > 0` and margin `0 < δ ≤ π/2` there is an `n` with weight at most `ε` before and at least `1 − ε` after | `finePacket`, `fineHop`, `omega_fine`, `fine_spread`, `fine_modes_lt`, `fine_sites`, `fine_win`, `fine_norm`, `fine_budget`, `regionWeight_fine_far`, `regionWeight_fine_near`, `regionWeight_fine_far_third`, `regionWeight_fine_near_third`, `exists_fine_transit` (`RecordLayer/UnifiedFineTransit.lean`) | exact bounds; the free packet under the generator of UA-8; flow times |
+| UD-108 | **A family of packets with far-half weight as small, then as large, as wanted; located as finely as wanted in angle only.** `finePacket n`: `8n` flat modes from `p₀ = 4` upward (spread `1/(125 n)`) on a ring of length `2000π n²` with at least `640000 n³` sites; predicted angle `t/(1250 n²)`. While that angle is at least `δ` short of the far half, the far half's weight times `1 − cos δ` is at most `1/(6n)`; while it is at least `δ` inside, the weight outside the far half times `1 − cos δ` is at most `1/(6n)`. For every `ε > 0` and margin `0 < δ ≤ π/2` there is an `n` with weight at most `ε` before and at least `1 − ε` after | `finePacket`, `fineHop`, `omega_fine`, `fine_spread`, `fine_modes_lt`, `fine_sites`, `fine_win`, `fine_norm`, `fine_budget`, `regionWeight_fine_far`, `regionWeight_fine_near`, `regionWeight_fine_far_third`, `regionWeight_fine_near_third`, `exists_fine_transit` (`RecordLayer/UnifiedFineTransit.lean`) | exact bounds; the free packet under the generator of UA-8; flow times |
 | UD-109 | **The coupled carrier's far-half occupancy at each flow time.** Along `regionTwoFlow` started on `finePacket n`, on a fibre with `17500 π n³ (|g₁ f(θ₂)| + |g₂ h(ψ₂)|) < 1`: the carrier's expectation of the far half's projector is at most `1/(2n)` at every flow time in `[0, (625π/3) n²]` and at least `1 − 1/(2n)` at every flow time in `[(3125π/3) n², (4375π/3) n²]`. The fibres are open and of positive measure for `trainF` | `abs_arenaObs_regionProj_two_sub_free_le`, `fine_chainInner`, `chainProp_finePacket`, `finePacket_ne_zero`, `arenaObs_farHalf_free_finePacket`, `fineCarrier`, `regionTwoFlow_fineCarrier`, `fineFibres`, `isOpen_fineFibres`, `zero_mem_fineFibres_trainF`, `volume_fineFibres_trainF_pos`, `abs_arenaObs_fineCarrier_sub_le`, `fine_backReaction_le`, `fineCarrier_far_before`, `fineCarrier_far_after` (`RecordLayer/UnifiedFineTransit.lean`) | exact bounds on a positive-measure set of fibres that shrinks as `n⁻³`; occupancies, not records; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
@@ -1172,24 +1172,31 @@ UD-106 uses no assumption beyond its hypotheses; where it is applied, the form i
 UA-15 (c). UD-107 uses UA-16, UA-13, UA-12 and UA-5 (UA-8 through the carriers' generators).
 Reading UD-107 as a statement about readouts uses UA-4. No measure enters. UA-6 is not used.
 
-Exact scope of UD-108 and UD-109 (BACKLOG ~~#375~~). What they give. UD-105 left a quarter of
-the packet's weight unaccounted for and bounded only accumulated occupancies. UD-108 replaces
+Exact scope of UD-108 and UD-109 (BACKLOG ~~#375~~). What they give. UD-105 bounded only
+accumulated occupancies, from a packet whose pointwise bounds are `1/4` and `3/4`. UD-108 replaces
 the packet by a family indexed by `n`, with the bound of BACKLOG ~~#265~~ (the translation phase
 locates the weight) made as small as wanted. UD-109 states the result at each flow time for the
-carrier coupled to the two region pointers of UA-13: below `1/(2n)` before, above `1 − 1/(2n)`
-after. What they do not give. (i) It is not the first sharpened packet: BACKLOG ~~#268~~ has one
+carrier coupled to the two region pointers of UA-13: at most `1/(2n)` on `[0, (625π/3) n²]`,
+at least `1 − 1/(2n)` on `[(3125π/3) n², (4375π/3) n²]`, and nothing between the two intervals
+or after the second (the packet goes on round the ring). For `n ≤ 2` these are no sharper than
+the `1/4` and `3/4` of BACKLOG ~~#265~~. What they do not give. (i) It is not the first sharpened packet: BACKLOG ~~#268~~ has one
 instance, for the free packet and a test detector. (ii) The bound is bought with a larger
 system: the ring's length grows as `n²`, the number of sites as `n³`, the number of modes as
-`n`, the flow times as `n²`. (iii) The allowed back-reaction shrinks as `n⁻³`; nothing is
+`n`, the flow times as `n²`; the hop changes with `n` as well, so it is a family of generators.
+(iii) The allowed back-reaction shrinks as `n⁻³`; nothing is
 proved off the fine fibres. (iv) For the coupled carrier the window between "before" and
-"after" is the old one scaled by `n²`; the margin `δ` is narrowed for the free packet only.
+"after" is the old one scaled by `n²`; the margin `δ` is narrowed for the free packet only,
+and in angle only: the unlocated window in flow time is `2500 n² δ`, which grows as `δ → 0`
+with the `n` the proof supplies. No window in flow time is shown to shrink.
 (v) They are statements about the carrier's occupancy. No pointer inequality and no
 `IsRecordWrite` is stated, and the write times of UD-94 are not relocated. (vi) Every time is
 a flow time (UA-7). (vii) Little weight, not none: no bound vanishes outside a cone. By the
 test of §6: the hypotheses that carry the conclusion are the generator (UA-8), the drift
 coupling (UA-5) and the two-pointer energy (UA-13); the entries are estimates for that
-dynamics and pass no gate. UD-108 uses UA-8. UD-109 uses UA-5, UA-8, UA-13 and UA-7. UA-6 is
-not used.
+dynamics and pass no gate. The back-reaction estimate is that of BACKLOG ~~#357~~ and
+~~#367~~, composed. UD-108 uses UA-8 and UA-7. UD-109 uses UA-5, UA-8, UA-13, UA-7
+and the profiles and strengths of UA-4; UA-2 enters only through the measure on the pair of
+conserved angles (UA-13 (b)). UA-6 is not used.
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
@@ -1783,10 +1790,11 @@ time. It is not a statement about every dynamics on `Σ`.
   ▸ **The packet estimate sharpened, 2026-11-12 (BACKLOG ~~#375~~) → UD-108, UD-109. An
   ingredient; no condition of this obligation is met by it.** Along a family of packets indexed
   by `n`, on fibres of small back-reaction, the coupled carrier's far-half occupancy is at most
-  `1/(2n)` at every flow time before the transit and at least `1 − 1/(2n)` at every flow time
-  after it (`fineCarrier_far_before`, `fineCarrier_far_after`). *What is still missing:* the
-  write times of UD-94 on this family; a narrower window for the coupled carrier; and
-  everything in the two annotations above.
+  `1/(2n)` at every flow time in `[0, (625π/3) n²]` and at least `1 − 1/(2n)` at every flow
+  time in `[(3125π/3) n², (4375π/3) n²]` (`fineCarrier_far_before`, `fineCarrier_far_after`);
+  nothing is stated between the two intervals or after the second. *What is still missing:*
+  the write times of UD-94 on this family; a narrower window for the coupled carrier; and what
+  the annotations for ~~#373~~ and ~~#374~~ list as missing.
 
 ### M7 — `3 + 1`
 

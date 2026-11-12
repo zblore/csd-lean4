@@ -8,27 +8,28 @@ module
 public import CsdLean4.RecordLayer.UnifiedTransitCertificate
 
 /-!
-# A sharper packet: the far half's occupancy below `1/(2n)` before and above `1 − 1/(2n)` after
+# A family of packets: far-half occupancy at most `1/(2n)` before, at least `1 − 1/(2n)` after
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #375 — the author's programme "From `Σ` to
 physical spacetime", obligation UO-16; Remainder (b) of #373.
 
-The crossing packet of #265 has `16` modes. Its weight on the far half of the ring is bounded by
-`1/4` before the transit and by `3/4` after, and a quarter of the weight is unaccounted for.
+The crossing packet of #265 has `16` modes. Its weight on the far half of the ring is at most
+`1/4` before the transit and at least `3/4` after.
 #268 (`RecordLayer/DiracTiming.lean`) sharpened that for one packet of `10⁴` modes and a narrow
 arc, with bounds `1/60` and `9/10`, for the free packet and a test detector. This module has a
-family of packets indexed by `n ≥ 1` with bounds that tend to `0` and `1`, and states them at
-each flow time for the carrier coupled to the two region pointers.
+family of packets indexed by `n ≥ 1` with bounds that tend to `0` and `1`, and states them, at
+each flow time of two stated intervals, for the carrier coupled to the two region pointers.
 
 ## The family
 
-`finePacket n` has `8n` neighbouring momenta about `p₀ = 4` with flat amplitudes, on a ring of
+`finePacket n` has `8n` neighbouring momenta from `p₀ = 4` upward (spread `1/(125 n)`) with
+flat amplitudes, on a ring of
 physical length `2000π n²` with at least `640000 n³` sites; `c = 1`, rest energy `3`, velocity
 `4/5`. Its predicted angular position on the ring at flow time `t` is `t/(1250 n²)`.
 
-* `finePacket`, `fineHop`, `omega_fine`, `fine_spread`, `fine_win`,
-  `fine_norm`; ★ `fine_budget` — **the error budget is at most `1/(6n)`** up to the flow time
-  `1875π n²`;
+* `finePacket`, `fineHop`, `omega_fine`, `fine_spread`, `fine_modes_lt`, `fine_sites`,
+  `fine_win`, `fine_norm`; ★ `fine_budget` — **the error budget is at most `1/(6n)`** up to
+  the flow time `1875π n²`;
 * ★★ `regionWeight_fine_far` — **while the predicted position is at an angle at least `δ`
   short of the far half, the far half's weight times `1 − cos δ` is at most `1/(6n)`**;
 * ★★ `regionWeight_fine_near` — **while it is at least `δ` inside the far half, the weight
@@ -36,22 +37,23 @@ physical length `2000π n²` with at least `640000 n³` sites; `c = 1`, rest ene
 * `regionWeight_fine_far_third`, `regionWeight_fine_near_third` — at `δ = π/3`: at most
   `1/(3n)` for `t ≤ (625π/3) n²`, at least `1 − 1/(3n)` for
   `(3125π/3) n² ≤ t ≤ (4375π/3) n²`;
-* ★★★ `exists_fine_transit` — **for every `ε > 0` and every margin `0 < δ ≤ π/2` there is an
+* ★★ `exists_fine_transit` — **for every `ε > 0` and every margin `0 < δ ≤ π/2` there is an
   `n` with far-half weight at most `ε` before the angle `π/2 − δ` and at least `1 − ε` between
   the angles `π/2 + δ` and `3π/2 − δ`**, on every ring of at least `640000 n³` sites.
 
 ## The coupled carrier, at each flow time
 
-* ★ `abs_arenaObs_regionProj_two_sub_free_le` — at each flow time `s` the two detectors move
+* `abs_arenaObs_regionProj_two_sub_free_le` — at each flow time `s` the two detectors move
   the expectation of a region projector by at most `2|s|(|g₁ f(θ₂)| + |g₂ h(ψ₂)|)`;
 * `fine_chainInner`, `chainProp_finePacket`, `finePacket_ne_zero`,
   `arenaObs_farHalf_free_finePacket`; `fineCarrier` (the carrier of `regionTwoFlow` started
   on `finePacket n`), `regionTwoFlow_fineCarrier`;
 * `fineFibres` (`17500 π n³ (|g₁ f(θ₂)| + |g₂ h(ψ₂)|) < 1`), `isOpen_fineFibres`,
   `zero_mem_fineFibres_trainF`, `volume_fineFibres_trainF_pos`;
-* ★★ `abs_arenaObs_fineCarrier_sub_le` — the coupled carrier's far-half occupancy is within
+* ★ `abs_arenaObs_fineCarrier_sub_le` — the coupled carrier's far-half occupancy is within
   `2|t|(|g₁ f| + |g₂ h|)` of the free packet's weight, at each flow time;
-* ★★★ `fineCarrier_far_before`, `fineCarrier_far_after` — **on a fine fibre the coupled
+  `fine_backReaction_le`;
+* ★★ `fineCarrier_far_before`, `fineCarrier_far_after` — **on a fine fibre the coupled
   carrier's far-half occupancy is at most `1/(2n)` at every flow time in `[0, (625π/3) n²]` and
   at least `1 − 1/(2n)` at every flow time in `[(3125π/3) n², (4375π/3) n²]`**.
 
@@ -59,31 +61,45 @@ physical length `2000π n²` with at least `640000 n³` sites; `c = 1`, rest ene
 
 * **A larger system for a sharper bound.** The ring's length grows as `n²`, the number of sites
   as `n³`, the number of modes as `n` and the flow times as `n²`. The bound `1/(2n)` is bought
-  with all four.
+  with all four. The hop `fineHop n L` changes with `n` as well, so this is a family of
+  generators and not one system with different starts. For `n ≤ 2` the coupled bounds are no
+  sharper than #265's `1/4` and `3/4`.
+* **Two intervals.** The coupled bounds hold on `[0, (625π/3) n²]` and on
+  `[(3125π/3) n², (4375π/3) n²]`. Nothing is stated between them or after the second: the
+  packet goes on round the ring and leaves the far half.
 * **The allowed back-reaction shrinks as `n⁻³`.** The fine fibres are open and of positive
   measure for the profile `trainF` and any strengths, and they shrink with `n`. Nothing is
   proved off them.
-* **The transit window is not narrowed relative to the transit.** In angle the change is
-  placed between `π/2 − δ` and `π/2 + δ` for any margin `δ`, at the price `1/(6n(1 − cos δ))`.
-  In flow time the window `[(625π/3) n², (3125π/3) n²]` at `δ = π/3` is the old one scaled by
-  `n²`. `exists_fine_transit` narrows `δ` for the free packet only.
+* **For the coupled carrier the window is not narrowed; for the free packet it is narrowed in
+  angle only.** In angle the change is placed between `π/2 − δ` and `π/2 + δ` for any margin
+  `δ`, at the price `1/(6n(1 − cos δ))`. In flow time the window
+  `[(625π/3) n², (3125π/3) n²]` at `δ = π/3` is the old one scaled by `n²`.
+  `exists_fine_transit` narrows `δ` for the free packet only, and there the unlocated window
+  in flow time is `2500 n² δ`; with the `n` its proof supplies, that grows as `δ → 0`. No
+  theorem here shows a window in flow time shrinking.
 * **Occupancies, not records.** The statements are about the carrier's expectation of the far
   half's projector. No pointer inequality and no `IsRecordWrite` is stated here; the write times
   of #367 are not relocated.
 * **Flow times.** Every time is a value of the flow parameter (UA-7).
 * **The detector law is the drift coupling of UA-5**, the two region pointers are those of
-  UA-13 and the carrier's generator is UA-8. No new assumption.
+  UA-13 and the carrier's generator is UA-8. The profiles and strengths are apparatus input
+  (UA-4); the measure of the fine fibres is Haar on the pair of conserved angles (UA-2, through
+  UA-13 (b)). No new assumption.
+* **The back-reaction estimate is not new.** `abs_arenaObs_regionProj_two_sub_free_le` composes
+  `abs_arenaObs_arenaKick_sub_le` with `norm_idxTwoCarrierU_sub_idxFreeU_le` (#367), as #357 did
+  for one pointer.
 * **Not a light-cone statement.** Little weight, not none: no bound vanishes outside a cone.
 
 ## References
 
-`specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md` (UA-5,
-UA-7, UA-8, UA-13, UO-16, UD-108, UD-109); `RecordLayer/DiracArrival.lean`
+`specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md` (UA-2,
+UA-4, UA-5, UA-7, UA-8, UA-13, UO-16, UD-108, UD-109); `RecordLayer/DiracArrival.lean`
 (`regionWeight_ringPacket_le`, `farHalf`, `angle_farHalf`, `chainProp_packet`);
 `CV/DiracPacketLimit.lean` (`dirac_packet_limit`, `ringPacket`, `limitErr`,
 `flat_packet_localised`, `flat_sums`); `RecordLayer/UnifiedDepartureArrival.lean`
 (`regionTwoFlow`, `regionTwoFlow_apply`, `norm_idxTwoCarrierU_sub_idxFreeU_le`);
 `RecordLayer/UnifiedArrivalRecord.lean` (`arenaObs_regionProj_free_chainRay`);
+`RecordLayer/DiracPointerWrite.lean` (`abs_arenaObs_arenaKick_sub_le`);
 `RecordLayer/UnifiedTransitCertificate.lean` (#373); `RecordLayer/DiracTiming.lean`
 (#268: `cos_le_cos_of_abs`, the one-instance sharp packet); R. Resta, PRL 80 (1998) 1800 (the
 position on a ring as a phase).
@@ -371,9 +387,9 @@ theorem regionWeight_fine_near_third {t : ℝ} (ht0 : 3125 * Real.pi / 3 * (n : 
 
 end Packet
 
-/-- ★★★ **A transit as fine as wanted, for the free packet.** For every `ε > 0` and every
-margin `0 < δ ≤ π/2` there is an index `n ≥ 1` such that, on every ring of at least
-`640000 n³` sites, the far half holds at most `ε` of the fine packet's weight while the
+/-- ★★ **A transit located as finely as wanted in angle, for the free packet.** For every
+`ε > 0` and every margin `0 < δ ≤ π/2` there is an index `n ≥ 1` such that, on every ring of at
+least `640000 n³` sites, the far half holds at most `ε` of the fine packet's weight while the
 predicted angle is at most `π/2 − δ`, and at least `1 − ε` while it is between `π/2 + δ` and
 `3π/2 − δ`. The predicted angle at flow time `t` is `t/(1250 n²)`. -/
 theorem exists_fine_transit {ε δ : ℝ} (hε : 0 < ε) (hδ0 : 0 < δ) (hδ : δ ≤ Real.pi / 2) :
@@ -409,7 +425,7 @@ section Pointwise
 variable {M : ℕ} {f h : ℝ → ℝ} (J μ g₁ g₂ : ℝ) (A B : Finset (ZMod (M + 1)))
   (hf : Function.Periodic f 1) (hh : Function.Periodic h 1)
 
-/-- ★ **At each flow time the two detectors move the expectation of a region projector by at
+/-- **At each flow time the two detectors move the expectation of a region projector by at
 most `2|s|(|g₁ f(θ₂)| + |g₂ h(ψ₂)|)`.** -/
 theorem abs_arenaObs_regionProj_two_sub_free_le (C : Finset (ZMod (M + 1)))
     (φ χ : AddCircle (1 : ℝ)) (p : GenArena (ZMod (M + 1) × Fin 2)) (s : ℝ) :
@@ -537,7 +553,7 @@ theorem regionTwoFlow_fineCarrier (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ 
   rw [regionTwoFlow_apply]
   rfl
 
-/-- ★★ **The coupled carrier's far-half occupancy is within the back-reaction of the free
+/-- ★ **The coupled carrier's far-half occupancy is within the back-reaction of the free
 packet's weight, at each flow time.** -/
 theorem abs_arenaObs_fineCarrier_sub_le (φ χ : AddCircle (1 : ℝ)) (t : ℝ) :
     |arenaObs (regionProj (farHalf (M + 1))) (fineCarrier g₁ g₂ hf hh hn hL φ χ t)
@@ -563,7 +579,7 @@ theorem fine_backReaction_le {φ χ : AddCircle (1 : ℝ)}
   have h1 := mul_le_mul_of_nonneg_right ht (mul_nonneg hb0 hr.le)
   nlinarith
 
-/-- ★★★ **Before the transit the coupled carrier's far-half occupancy is at most `1/(2n)`**, at
+/-- ★★ **Before the transit the coupled carrier's far-half occupancy is at most `1/(2n)`**, at
 every flow time in `[0, (625π/3) n²]`, on a fine fibre. -/
 theorem fineCarrier_far_before {φ χ : AddCircle (1 : ℝ)}
     (hx : (φ, χ) ∈ fineFibres g₁ g₂ hf hh n) {t : ℝ} (ht0 : 0 ≤ t)
@@ -583,7 +599,7 @@ theorem fineCarrier_far_before {φ χ : AddCircle (1 : ℝ)}
   rw [e]
   linarith
 
-/-- ★★★ **After the transit the coupled carrier's far-half occupancy is at least
+/-- ★★ **After the transit the coupled carrier's far-half occupancy is at least
 `1 − 1/(2n)`**, at every flow time in `[(3125π/3) n², (4375π/3) n²]`, on a fine fibre. -/
 theorem fineCarrier_far_after {φ χ : AddCircle (1 : ℝ)}
     (hx : (φ, χ) ∈ fineFibres g₁ g₂ hf hh n) {t : ℝ}
