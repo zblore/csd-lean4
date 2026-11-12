@@ -794,6 +794,7 @@ public import CsdLean4.RecordLayer.UnifiedClockMessenger
 public import CsdLean4.RecordLayer.UnifiedTransitCertificate
 public import CsdLean4.RecordLayer.UnifiedRecordInert
 public import CsdLean4.RecordLayer.UnifiedFineTransit
+public import CsdLean4.RecordLayer.UnifiedCompositeCarrier
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers
@@ -825,6 +826,7 @@ public import CsdLean4.RecordLayer.RadarTrilateration
 public import CsdLean4.RecordLayer.DiracLatticeCorrections
 public import CsdLean4.CV.TwoSiteDetuned
 public import CsdLean4.CV.CompositeArena
+public import CsdLean4.CV.ProductRay
 public import CsdLean4.CV.PriceAttainment
 public import CsdLean4.CV.EntangledWeights
 public import CsdLean4.RecordLayer.EntangledMeasure

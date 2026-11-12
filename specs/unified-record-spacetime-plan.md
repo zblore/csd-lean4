@@ -294,7 +294,8 @@ what would discharge or constrain it.
 * **Where it will enter.** M3's no-signalling and sequential-update checks, and M5's interaction
   topology. `Σ_*` as built is a one-particle arena with one detector; no composite is on it.
   The two-pointer arenas of UA-13 have two detectors and still one particle. No composite carrier is
-  on them.
+  on them. Since BACKLOG ~~#376~~ a composite carrier is on the arena of UA-17, taken as the
+  tensor product by definition.
 
 ### UA-10 — stated detector laws and input weights on the existing arenas
 
@@ -428,7 +429,8 @@ what would discharge or constrain it.
   one point of the clock's arena, so the independence in (b) is not used as a law. (c) Since
   BACKLOG ~~#372~~ the joint energy is the sum of the two energies with no term between the
   factors. A term that couples the clock to a detector is a later choice and will be recorded
-  here. (d) The clock's ring and the messenger's ring are two rings. No distance between a site
+  here. Since BACKLOG ~~#376~~ a term between the clock and the messenger is on another arena,
+  that of UA-17, and not on this one. (d) The clock's ring and the messenger's ring are two rings. No distance between a site
   of one and a site of the other is defined, so "the clock is at the departure region" is not a
   statement of this arena.
 * **Where.** `clockMessengerEnergy`, `clockMessengerFlow` (`RecordLayer/UnifiedClockMessenger.lean`)
@@ -442,6 +444,48 @@ what would discharge or constrain it.
 * **What it does not cover.** A term between the factors. A distance between the rings. A clock
   localised at a region.
 * **Discharge.** None for the choice.
+
+### UA-17 — the composite carrier of the messenger and the clock
+
+* **Assumed.** The author decided (2026-11-12, under UO-16) that the messenger and the clock are
+  one composite carrier and that the clock's pointer is driven by a product observable. The
+  following realisation is this brick's choice and not part of that decision. (a) The base is the
+  projective space of the tensor product of the two carriers' state spaces, `ℙ(ℂ^ι ⊗ ℂ^κ)`, with
+  the product of the two indices as its index. The carriers are distinguishable: there is no
+  symmetrisation. The base contains entangled rays; the product rays are a proper subset.
+  (b) The arena is that base times three pointer tori with the product form, the arena of UA-15
+  on a larger base, with its measure `triMuL`. Product rays are a null set of the base for
+  `μ_FS` (a calculation, not in Lean), so a run that starts on a product ray starts on a null
+  set. No theorem on this arena states a probability. (c) The carrier's own energy matrix is
+  `A₀ ⊗ 1 + 1 ⊗ C₀`: no term between the messenger and the clock. Two pointers are coupled to
+  messenger observables `B₁ ⊗ 1`, `B₂ ⊗ 1` (the two regions of UA-13, third instance of (d)).
+  The third pointer is coupled to the product `P ⊗ X`: `P` the messenger's projector on the
+  departure region, `X` the clock's level swap times a strength `g_c` (the operator of UA-12).
+  No moving angle enters the energy. (d) The clock's ring is not placed. `X` acts at every site
+  of the clock's ring, and the gate is a region of the messenger's ring. No distance between a
+  site of one ring and a site of the other is defined.
+* **Where.** `prodIdx`, `compositeH`, `gateFlow`, `gateClockFlow`
+  (`RecordLayer/UnifiedCompositeCarrier.lean`, BACKLOG ~~#376~~), on `TriSigma` with `triForm`
+  (`LF4/TriCoupledFlow.lean`); product rays are `prodRay` (`CV/ProductRay.lean`).
+* **Standing.** Choice for the arena, as UA-1, UA-13, UA-15 and UA-16. Boundary R-015 for the
+  couplings. That the composite of two carriers is the tensor product is UA-9's subject;
+  `compositeAlgReconstruction` is not invoked here and the tensor product is taken as the
+  definition. For the measure, UA-2 and UA-3 on the larger base: the flow preserves `triMuL`
+  (UD-111), which is necessary for the measure to be usable and says nothing about why it is
+  this one.
+* **What is derived from it, not assumed.** On a fibre where the third pointer's profile
+  vanishes, a product ray stays a product ray, the messenger with its two pointers moves as on
+  its own arena, the clock moves freely, and the third pointer's rate is the product of the
+  messenger's `⟨P⟩` and the clock's `⟨X⟩` (UD-111). The third pointer moves only while the
+  messenger is in the region, within stated bounds (UD-112).
+* **What it does not cover.** The fibres where the third profile does not vanish: there the
+  product term entangles the messenger with the clock. An entangled start. A gate by a record:
+  the third pointer responds to an occupancy, which is an expectation, and by UD-106 it is a
+  cyclic coordinate. A tick record or a count on this arena. A clock localised at a region.
+  Identical carriers. The interaction topology of UO-15 for this generator: the product term
+  joins a region of the messenger's ring to every site of the clock's ring, and UD-77 is not
+  proved for it.
+* **Discharge.** None for the choice. M8 compares alternatives.
 
 ---
 
@@ -935,6 +979,9 @@ UD-94.
 | UD-105 | **A transit in the accumulated occupancies that drive the two pointers.** On the arena of UD-93, started on the crossing packet: each pointer's moving angle at the flow time `t` is its start plus its rate times the accumulated occupancy `crossAccum` of its half of the ring (an identity of angles). With `T₁ = 625π/3`, `T₂ = 3125π/3`, `T₃ = 4375π/3`, on the transit fibres (both rates positive and `92500 π (\|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|) < 1`): over `[0, T₁]` the far half accumulates at most `(1/3) T₁` and the near half at least `(2/3) T₁`; over `[T₂, T₃]` the far half accumulates at least `(2/3)(T₃ − T₂)` and the near half at most `(1/3)(T₃ − T₂)`. A function `F t = w t` does not satisfy the far half's two inequalities, and a carrier with a constant expectation `w` accumulates `w t`; so the far half's occupancy along this run is not constant. The transit fibres are open, and for both profiles `trainF` and any positive strengths they contain `(0, 0)` and have positive measure | `integral_arenaObs_of_const`, `not_transit_of_linear`, `transitFibres`, `isOpen_transitFibres`, `zero_mem_transitFibres_trainF`, `volume_transitFibres_trainF_pos`, `crossAccum`, `regionTwoFlow_cross_pointers`, `le_integral_regionWeight_crossPacket_late`, `abs_crossAccum_far_sub_le`, `abs_crossAccum_near_sub_le`, `cross_transit_certificate`, `cross_far_occupancy_not_constant` (`RecordLayer/UnifiedTransitCertificate.lean`) | inequalities with sufficient constants; on accumulated occupancies at four flow times, which the pointers carry only modulo one turn; no pointer inequality, no readout and no record; the measure is Haar on the pair of conserved angles |
 | UD-108 | **A family of packets with far-half weight as small, then as large, as wanted; located as finely as wanted in angle only.** `finePacket n`: `8n` flat modes from `p₀ = 4` upward (spread `1/(125 n)`) on a ring of length `2000π n²` with at least `640000 n³` sites; predicted angle `t/(1250 n²)`. While that angle is at least `δ` short of the far half, the far half's weight times `1 − cos δ` is at most `1/(6n)`; while it is at least `δ` inside, the weight outside the far half times `1 − cos δ` is at most `1/(6n)`. For every `ε > 0` and margin `0 < δ ≤ π/2` there is an `n` with weight at most `ε` before and at least `1 − ε` after | `finePacket`, `fineHop`, `omega_fine`, `fine_spread`, `fine_modes_lt`, `fine_sites`, `fine_win`, `fine_norm`, `fine_budget`, `regionWeight_fine_far`, `regionWeight_fine_near`, `regionWeight_fine_far_third`, `regionWeight_fine_near_third`, `exists_fine_transit` (`RecordLayer/UnifiedFineTransit.lean`) | exact bounds; the free packet under the generator of UA-8; flow times |
 | UD-109 | **The coupled carrier's far-half occupancy at each flow time.** Along `regionTwoFlow` started on `finePacket n`, on a fibre with `17500 π n³ (|g₁ f(θ₂)| + |g₂ h(ψ₂)|) < 1`: the carrier's expectation of the far half's projector is at most `1/(2n)` at every flow time in `[0, (625π/3) n²]` and at least `1 − 1/(2n)` at every flow time in `[(3125π/3) n², (4375π/3) n²]`. The fibres are open and of positive measure for `trainF` | `abs_arenaObs_regionProj_two_sub_free_le`, `fine_chainInner`, `chainProp_finePacket`, `finePacket_ne_zero`, `arenaObs_farHalf_free_finePacket`, `fineCarrier`, `regionTwoFlow_fineCarrier`, `fineFibres`, `isOpen_fineFibres`, `zero_mem_fineFibres_trainF`, `volume_fineFibres_trainF_pos`, `abs_arenaObs_fineCarrier_sub_le`, `fine_backReaction_le`, `fineCarrier_far_before`, `fineCarrier_far_after` (`RecordLayer/UnifiedFineTransit.lean`) | exact bounds on a positive-measure set of fibres that shrinks as `n⁻³`; occupancies, not records; flow times |
+| UD-110 | **Product rays of two carriers with different index types.** The density of a product ray is the Kronecker product of the densities; the expectation of `A ⊗ B` in a product ray is the product of the expectations (`A` Hermitian); a product unitary carries a product ray to the product of the kicked rays; `exp (t (X ⊗ 1 + 1 ⊗ Y)) = exp (t X) ⊗ exp (t Y)` | `prodVec`, `prodVec_apply`, `prodVec_smul_smul`, `norm_prodVec`, `prodVec_ne_zero`, `prodRay`, `prodRay_mk`, `arenaDM_prodRay`, `im_trace_arenaDM_mul`, `arenaObs_kronecker`, `arenaObs_kronecker_one`, `arenaObs_one_kronecker`, `kronecker_isHermitian`, `kronU`, `kronU_val`, `toEuclideanLin_kronU`, `arenaKick_kronU`, `exp_smul_kronecker_one`, `exp_smul_one_kronecker`, `exp_smul_kronecker_add` (`CV/ProductRay.lean`) | exact identities; product rays only; no dynamics chosen |
+| UD-111 | **The composite carrier from a product ray, where the gated pointer does not act back.** On the arena of UA-17, from a product ray, on a fibre where the third pointer's profile vanishes: the carrier stays a product ray; the messenger moves by its propagator with its two pointers' terms and the clock by its free propagator; the two messenger pointers advance as on the messenger's arena (for the ring and two regions, exactly as in `regionTwoFlow`); the third pointer advances by `−2 k'(χ₂) ∫₀ᵗ ⟨P⟩_messenger ⟨X⟩_clock`. The flow preserves `triMuL` | `prodIdx`, `compositeH`, `compositeH_isHermitian`, `idxTwoH_composite`, `idxTwoCarrierU_composite`, `arenaKick_idxTwoCarrierU_composite`, `idxTwoShiftFst_composite`, `idxTwoShiftSnd_composite`, `gateShift`, `gateFlow`, `triMuL_map_gateFlow`, `gateFlow_prodRay`, `gateClockFlow`, `triMuL_map_gateClockFlow`, `gateClockShift`, `gateClockFlow_apply`, `gateClockFlow_fst_pointer`, `gateClockFlow_snd_pointer` (`RecordLayer/UnifiedCompositeCarrier.lean`) | exact; on a set of fibres that is null for `trainF`, from product rays only; flow times |
+| UD-112 | **The gated pointer moves only while the messenger is in the region.** With `0 ≤ ⟨P⟩ ≤ 1` and `‖X‖ ≤ c`: between two flow times the gated pointer's displacement changes by at most `2|k'(χ₂)| c` times the messenger's accumulated `⟨P⟩`, and up to a flow time it is within `2|k'(χ₂)| c` times the accumulated `1 − ⟨P⟩` of the displacement of a pointer coupled to `X` alone. On the packet family of UD-108, with the gate on the near half and the two-level clock of UA-12, on fine fibres: within `|k'||g_c| t/n` of the pointer of UD-58 for `t ≤ (625π/3) n²`, and a change of at most `|k'||g_c| (t₂ − t₁)/n` between two flow times of `[(3125π/3) n², (4375π/3) n²]` | `continuous_arenaObs_idxTwoCarrierU`, `continuous_arenaObs_idxFreeU`, `abs_gateShift_sub_le`, `abs_gateShift_sub_le_of_le`, `abs_gateShift_sub_free_le`, `abs_gateShift_sub_free_le_of_le`, `arenaObs_regionProj_compl`, `idxPointerShift_eq_free`, `fine_gateClock_before`, `fine_gateClock_after` (`RecordLayer/UnifiedCompositeCarrier.lean`) | exact bounds on real displacements; the same fibres and starts as UD-111; no readout, no record; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -1197,6 +1244,32 @@ dynamics and pass no gate. The back-reaction estimate is that of BACKLOG ~~#357~
 ~~#367~~, composed. UD-108 uses UA-8 and UA-7. UD-109 uses UA-5, UA-8, UA-13, UA-7
 and the profiles and strengths of UA-4; UA-2 enters only through the measure on the pair of
 conserved angles (UA-13 (b)). UA-6 is not used.
+
+Exact scope of UD-110 to UD-112 (BACKLOG ~~#376~~). What they give. The arena of UA-17 and its
+flow in closed form where that is exact, and the first pointer on the unified arenas whose rate
+depends on the messenger and the clock together: it is the product of the messenger's occupancy
+of a region and the clock's reading. So the pointer follows the clock's pointer while the
+messenger is in the region and stops when the messenger has left, within the bounds of UD-112.
+What they do not give. (i) Only the fibres where the gated pointer's profile vanishes, a null
+set for `trainF`, and only product starts, a null set of the base. Off them the product term
+entangles the messenger with the clock and nothing is proved. (ii) The gate is the messenger's
+occupancy, an expectation. No readout of the departure pointer enters, and by UD-106 the gated
+pointer is a cyclic coordinate: nothing else depends on where it started. The obstruction of
+UD-106 and UD-107 stands. (iii) No ready arc, threshold, `IsSwing`, `IsTickCount` or
+`IsRecordWrite` is stated on this arena. That the gated pointer's swings are tick records
+whose count stops at departure is not proved. (iv) The bounds on the family of UD-108 grow
+with the system: `|k'||g_c| t/n` with `t` up to `(625π/3) n²`. Against the swing of the free
+pointer, of order `|k'||g_c|/R` for a clock of rate `R`, that is small only when `n R` is
+small; many swings before departure with a small error needs `1/n² ≪ R ≪ 1/n`. That is a
+calculation and not in Lean. (v) Nothing is stated between the two intervals or after the
+second. (vi) The clock is not placed: UA-17 (d). (vii) Every time is a flow time (UA-7). By
+the test of §6: UD-110 is matrix algebra with no assumption in it. For UD-111 and UD-112 the
+hypotheses that carry the conclusion are the product term of UA-17 (c) and the vanishing of
+the third profile; the form of the pointer's rate is read off the energy, and what is derived
+is that the product structure persists on those fibres and the size of the two errors. They
+pass no gate: there is no record in them. UD-111 and UD-112 use UA-17, UA-15, UA-13, UA-12,
+UA-8, UA-7 and UA-5, with the profiles and strengths of UA-4; UA-2 enters through `triMuL`
+and through the measure on the pair of conserved angles. UA-6 is not used.
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
@@ -1795,6 +1868,21 @@ time. It is not a statement about every dynamics on `Σ`.
   nothing is stated between the two intervals or after the second. *What is still missing:*
   the write times of UD-94 on this family; a narrower window for the coupled carrier; and what
   the annotations for ~~#373~~ and ~~#374~~ list as missing.
+  ▸ **The composite carrier, first brick, 2026-11-12 (BACKLOG ~~#376~~) → UA-17, UD-110 to
+  UD-112. Not met.** On the arena of UA-17 the clock's pointer is coupled to the product of the
+  messenger's projector on the departure region and the clock's level swap. From a product ray,
+  on a fibre where that pointer's profile vanishes, the flow is solved (`gateFlow_prodRay`):
+  the pointer's rate is the product of the messenger's occupancy and the clock's reading. On
+  the packet family of UD-108 it is within `|k'||g_c| t/n` of the clock's own pointer up to
+  `(625π/3) n²` and changes by at most `|k'||g_c| (t₂ − t₁)/n` between two flow times of
+  `[(3125π/3) n², (4375π/3) n²]` (`fine_gateClock_before`, `fine_gateClock_after`). This is
+  the first degree of freedom on these arenas whose history depends on the clock and on where
+  the messenger is. *Conditions:* a null set of fibres and of starts; a gate by an occupancy
+  and not by a record; real displacements, with no readout, no tick and no count; errors that
+  grow with `n` unless the clock is slow. *What is still missing:* the gated pointer's swings
+  as tick records with a count that stops at departure; fibres of positive measure for the
+  gated pointer; a clock placed at a region; and everything the annotation for ~~#372~~ lists
+  after its first item.
 
 ### M7 — `3 + 1`
 
@@ -1951,7 +2039,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

@@ -19536,4 +19536,118 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.fineCarrier_far_after
 
+/-! #376 (the author's programme, obligation UO-16; assumption UA-17): the composite carrier of a messenger and a clock with three pointers, the third coupled to a product observable P ⊗ X — from a product ray on a fibre where the third profile vanishes the carrier stays a product ray and the third pointer advances by −2 k' ∫ ⟨P⟩⟨X⟩; it moves by at most 2|k'| c times the accumulated ⟨P⟩ and is within 2|k'| c times the accumulated 1 − ⟨P⟩ of the pointer coupled to X alone; on the packet family of #375 those are |k'||g_c| t/n and |k'||g_c| (t₂ − t₁)/n. No tick, no count, no record; flow times (`RecordLayer/UnifiedCompositeCarrier.lean`). -/
+
+/-- info: 'CSD.RecordLayer.prodIdx' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.prodIdx
+
+/-- info: 'CSD.RecordLayer.compositeH' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compositeH
+
+/-- info: 'CSD.RecordLayer.compositeH_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compositeH_isHermitian
+
+/-- info: 'CSD.RecordLayer.idxTwoH_composite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxTwoH_composite
+
+/-- info: 'CSD.RecordLayer.idxTwoCarrierU_composite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxTwoCarrierU_composite
+
+/-- info: 'CSD.RecordLayer.arenaKick_idxTwoCarrierU_composite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaKick_idxTwoCarrierU_composite
+
+/-- info: 'CSD.RecordLayer.idxTwoShiftFst_composite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxTwoShiftFst_composite
+
+/-- info: 'CSD.RecordLayer.idxTwoShiftSnd_composite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxTwoShiftSnd_composite
+
+/-- info: 'CSD.RecordLayer.gateShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateShift
+
+/-- info: 'CSD.RecordLayer.gateFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateFlow
+
+/-- info: 'CSD.RecordLayer.triMuL_map_gateFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triMuL_map_gateFlow
+
+/-- info: 'CSD.RecordLayer.gateFlow_prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateFlow_prodRay
+
+/-- info: 'CSD.RecordLayer.continuous_arenaObs_idxTwoCarrierU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_arenaObs_idxTwoCarrierU
+
+/-- info: 'CSD.RecordLayer.continuous_arenaObs_idxFreeU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_arenaObs_idxFreeU
+
+/-- info: 'CSD.RecordLayer.abs_gateShift_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_gateShift_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_gateShift_sub_le_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_gateShift_sub_le_of_le
+
+/-- info: 'CSD.RecordLayer.abs_gateShift_sub_free_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_gateShift_sub_free_le
+
+/-- info: 'CSD.RecordLayer.abs_gateShift_sub_free_le_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_gateShift_sub_free_le_of_le
+
+/-- info: 'CSD.RecordLayer.arenaObs_regionProj_compl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_regionProj_compl
+
+/-- info: 'CSD.RecordLayer.gateClockFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClockFlow
+
+/-- info: 'CSD.RecordLayer.triMuL_map_gateClockFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triMuL_map_gateClockFlow
+
+/-- info: 'CSD.RecordLayer.gateClockShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClockShift
+
+/-- info: 'CSD.RecordLayer.gateClockFlow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClockFlow_apply
+
+/-- info: 'CSD.RecordLayer.gateClockFlow_fst_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClockFlow_fst_pointer
+
+/-- info: 'CSD.RecordLayer.gateClockFlow_snd_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClockFlow_snd_pointer
+
+/-- info: 'CSD.RecordLayer.idxPointerShift_eq_free' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxPointerShift_eq_free
+
+/-- info: 'CSD.RecordLayer.fine_gateClock_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fine_gateClock_before
+
+/-- info: 'CSD.RecordLayer.fine_gateClock_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fine_gateClock_after
+
 end CSD.Tests.AxiomAudit

@@ -5339,4 +5339,86 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.sigma_record_kick_order
 
+/-! #376 (the author's programme, obligation UO-16): product rays of two carriers over arbitrary index types — the density of a product ray is the Kronecker product, the expectation of A ⊗ B factors, a product unitary acts factor by factor, and exp (t (X ⊗ 1 + 1 ⊗ Y)) = exp (t X) ⊗ exp (t Y). Product rays only (`CV/ProductRay.lean`). -/
+
+/-- info: 'CSD.CV.prodVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.prodVec
+
+/-- info: 'CSD.CV.prodVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.prodVec_apply
+
+/-- info: 'CSD.CV.prodVec_smul_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.prodVec_smul_smul
+
+/-- info: 'CSD.CV.norm_prodVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_prodVec
+
+/-- info: 'CSD.CV.prodVec_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.prodVec_ne_zero
+
+/-- info: 'CSD.CV.prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.prodRay
+
+/-- info: 'CSD.CV.prodRay_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.prodRay_mk
+
+/-- info: 'CSD.CV.arenaDM_prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaDM_prodRay
+
+/-- info: 'CSD.CV.im_trace_arenaDM_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.im_trace_arenaDM_mul
+
+/-- info: 'CSD.CV.arenaObs_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_kronecker
+
+/-- info: 'CSD.CV.arenaObs_kronecker_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_kronecker_one
+
+/-- info: 'CSD.CV.arenaObs_one_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaObs_one_kronecker
+
+/-- info: 'CSD.CV.kronecker_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.kronecker_isHermitian
+
+/-- info: 'CSD.CV.kronU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.kronU
+
+/-- info: 'CSD.CV.kronU_val' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.kronU_val
+
+/-- info: 'CSD.CV.toEuclideanLin_kronU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.toEuclideanLin_kronU
+
+/-- info: 'CSD.CV.arenaKick_kronU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arenaKick_kronU
+
+/-- info: 'CSD.CV.exp_smul_kronecker_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.exp_smul_kronecker_one
+
+/-- info: 'CSD.CV.exp_smul_one_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.exp_smul_one_kronecker
+
+/-- info: 'CSD.CV.exp_smul_kronecker_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.exp_smul_kronecker_add
+
 end CSD.Tests.AxiomAudit

@@ -181,6 +181,15 @@ in `[(3125π/3) n², (4375π/3) n²]`, on fibres whose allowed back-reaction shr
 Nothing is stated between the two intervals or after the second. These are occupancies and not
 records; the write times are not relocated, and the window between the two is not narrowed for
 the coupled carrier.
+The composite carrier is built as a first brick (BACKLOG ~~#376~~,
+`RecordLayer/UnifiedCompositeCarrier.lean`, assumption UA-17): the messenger and the clock are
+one ray of the tensor product, and the clock's pointer is coupled to the product of the
+messenger's projector on the departure region and the clock's level swap. From a product ray,
+on the fibres where that pointer does not act back, its rate is the messenger's occupancy of
+the region times the clock's reading, so it follows the clock's own pointer while the messenger
+is in the region and stops after the messenger has left, within stated bounds. The gate is an
+occupancy and not a record, the fibres and the starts are null sets, and no tick, count or
+record is stated on this arena.
 
 ## What is open
 
