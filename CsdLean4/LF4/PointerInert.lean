@@ -22,18 +22,23 @@ spacetime".
 any angle `c` at the start turns it by `c` at every later time and changes nothing else.
 
 * `shiftMoving` — turn the new torus's moving angle by `c`;
-* ★★★ `hamiltonianFlow_stepEnergy_shiftMoving` — **the flow of the step energy commutes with
+* ★★ `hamiltonianFlow_stepEnergy_shiftMoving` — **the flow of the step energy commutes with
   `shiftMoving c`**;
-* ★ `hamiltonianFlow_stepEnergy_shiftMoving_fst` — the base at time `t` is the same for every
+* `hamiltonianFlow_stepEnergy_shiftMoving_fst` — the base at time `t` is the same for every
   starting position of the pointer.
 
 ## Exact scope
 
-* **A consequence of the energy's form**, which is assumed (UA-13, UA-15): the coupling is a
-  function of the base times a function of the conserved angle. Nothing is said for an energy in
-  which the moving angle appears (UO-24).
-* **One step.** For a tower of pointer tori the statement is applied at each level, with the
-  lower levels as the base.
+* **A consequence of the energy's form**, which is a hypothesis here: the coupling is a function
+  of the base times a function of the conserved angle. Where the step is applied in the corpus
+  that form is assumed (UA-13 (c), UA-15 (c)). Nothing is said for an energy in which the moving
+  angle appears (UO-24).
+* **One step, and the pointer that the step adds.** `G` is any function of the base. If the
+  base already holds a pointer torus and `G` reads that pointer's moving angle, the energy is
+  still of the step form and the earlier pointer is not cyclic. For an earlier pointer of a
+  tower the statement needs every later `G` to be independent of its moving angle; that
+  induction is not in Lean.
+* **Mathematically small.** Read off the closed form `hamiltonianFlow_stepEnergy`.
 
 ## References
 
@@ -62,7 +67,7 @@ def shiftMoving (c : AddCircle (1 : ℝ)) (p : S × KTorus) : S × KTorus :=
 
 variable [FiniteDimensional ℝ E] [CompactSpace S] [T2Space S]
 
-/-- ★★★ **The flow commutes with turning the pointer.** For the energy `H(s) + G(s) g(ψ₂)`,
+/-- ★★ **The flow commutes with turning the pointer.** For the energy `H(s) + G(s) g(ψ₂)`,
 starting the new pointer `c` further round leaves it `c` further round at every time, and leaves
 the base and the conserved angle as they were. -/
 theorem hamiltonianFlow_stepEnergy_shiftMoving (hβ : β.IsSymplectic) {H G : S → ℝ}
@@ -79,7 +84,7 @@ theorem hamiltonianFlow_stepEnergy_shiftMoving (hβ : β.IsSymplectic) {H G : S 
   rw [hamiltonianFlow_stepEnergy hβ hH hG hg hcg t s (ψ.1 + c, ψ.2)]
   simp only [add_right_comm]
 
-/-- ★ **The base does not see where the pointer is.** -/
+/-- **The base does not see where the pointer is.** -/
 theorem hamiltonianFlow_stepEnergy_shiftMoving_fst (hβ : β.IsSymplectic) {H G : S → ℝ}
     (hH : ContMDiff 𝓘(ℝ, E) 𝓘(ℝ, ℝ) ∞ H) (hG : ContMDiff 𝓘(ℝ, E) 𝓘(ℝ, ℝ) ∞ G)
     (hg : Function.Periodic g 1) (hcg : ContDiff ℝ ∞ g) (t : ℝ) (c : AddCircle (1 : ℝ))

@@ -9,7 +9,7 @@ public import CsdLean4.LF4.PointerInert
 public import CsdLean4.RecordLayer.UnifiedClockMessenger
 
 /-!
-# The flow commutes with turning the pointers: nothing else depends on where a pointer is
+# The flow commutes with turning the pointers: nothing else depends on where one started
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #374 — the author's programme "From `Σ` to
 physical spacetime", obligations UO-14 (b), UO-16 and UO-24; Remainder (a) of #372.
@@ -17,48 +17,57 @@ physical spacetime", obligations UO-14 (b), UO-16 and UO-24; Remainder (a) of #3
 #372 put a clock on its own carrier beside the messenger and left the clock's count aligned with
 the messenger's records only by the flow parameter. The next brick was to be a coupling of the
 clock to the departure detector, so that a count belongs to a record. That coupling is not
-built. This module gives the reason no coupling of the kind used so far can do that: on this
-arena, and (`LF4/PointerInert.lean`) for any energy of the step form. The statements are
-mathematically small. A moving angle is a cyclic coordinate.
+built. This module gives what is proved in its place, on this arena, from the closed forms of
+the two factors. `LF4/PointerInert.lean` has the same statement for one step and the pointer
+that the step adds; this module does not use it, and the two halves are independent. The
+statements are mathematically small. A moving angle is a cyclic coordinate.
 
-A readout is a region of a pointer's **moving angle**. The joint energies of UA-13, UA-15 and
-UA-16 do not contain any moving angle. So the flow commutes with turning the pointers:
+A readout is a region of a pointer's **moving angle** (UA-4). The joint energy of this arena
+(UA-16 (c), with UA-13 (c) for the messenger's two pointers and UA-12 / UA-5 for the clock's)
+does not contain any moving angle. So the flow commutes with turning the pointers:
 
 * `shiftPointers a b c` — turn the departure pointer by `a`, the arrival pointer by `b` and the
   clock's tick pointer by `c`;
-* ★★★ `clockMessengerFlow_shiftPointers` — **the joint flow commutes with `shiftPointers`**;
+* ★★ `clockMessengerFlow_shiftPointers` — **the joint flow commutes with `shiftPointers`**;
 * `forgetMoving` — the arena state with the three moving angles left out: the two carriers and
   the three conserved angles;
-* ★★★ `forgetMoving_clockMessengerFlow_congr` — **two starts that differ only in the moving
+* ★ `forgetMoving_clockMessengerFlow_congr` — **two starts that differ only in the moving
   angles have the same carriers and conserved angles at every time**;
-* ★★ `clockMessengerFlow_shiftFst_snd`, `clockMessengerFlow_shiftFst_arrival` — **turning the
-  departure pointer changes neither the clock's state nor the arrival pointer's**, at any time.
+* `clockMessengerFlow_shiftFst_snd`, `clockMessengerFlow_shiftFst_arrival` — turning the
+  departure pointer (`shiftPointers a 0 0`) changes neither the clock's state nor the arrival
+  pointer's, at any time. The first is weaker than #372's `clockMessengerFlow_snd`.
 
-So two starts that differ only in where the departure pointer begins have the same clock
-history, the same carriers and the same arrival pointer. The only thing that depends on a
-pointer's starting angle is that pointer's own angle. A register whose later value depended on
-whether a readout had been displayed would be a dependence of that kind. Two such starts with
-different readout histories are not exhibited in Lean.
+So, with the carriers and conserved angles held fixed, two starts that differ only in where the
+departure pointer begins have the same clock history, the same carriers and the same arrival
+pointer. Nothing but a pointer's own angle depends on where that pointer started. No other
+degree of freedom tells two such runs apart, whether or not the readout comes to be displayed
+in one and not in the other. Such a pair is not exhibited in Lean.
 
 ## Exact scope
 
 * **About the energy's form.** The statement is a consequence of the moving angles being absent
-  from the joint energy, which is assumed (UA-13, UA-15, UA-16). It is an obstruction for that
-  form, not for `Σ`.
+  from the joint energy, which is assumed. It is an obstruction for that form, not for `Σ`.
+* **This arena only.** It is proved for `clockMessengerFlow`. The same commutation is expected
+  on the other arenas of UA-13 and on the arena of UA-15; it is not stated in Lean for them.
 * **What it rules out**: a degree of freedom, other than the pointer itself, whose later value
-  depends on where a pointer started, and so on whether a readout was displayed. In particular
-  a register that holds the clock's count at a record (UO-14 (b)), and a count that belongs to
-  a record otherwise than through the flow parameter.
-* **What it does not rule out.** (i) A pointer whose moving angle acts back (UO-24): not in the
-  corpus. (ii) A pointer whose *rate* depends on the messenger and the clock together, such as
-  the expectation of a product observable on a composite carrier: its displacement is a joint
-  functional of both histories. It still responds to the carriers and not to a record.
+  depends on where a pointer started, the carriers and conserved angles being the same.
+* **What it does not rule out.** (i) A dependence through the occupancy that drives a pointer:
+  a second degree of freedom driven by the same accumulated occupancy varies with the readout
+  through that common cause. So "no register can hold the count at a record" does not follow
+  from this module; nor does it follow with #358's `not_ae_count_advances_clockPointerFlow`,
+  which is for measurable real functions and leaves an angle-valued register open. (ii) A
+  pointer whose moving angle acts back (UO-24): not in the corpus. (iii) A pointer whose *rate*
+  depends on the messenger and the clock together, such as the expectation of a product
+  observable on a composite carrier: its displacement is a joint functional of both histories.
+  That does not remove the obstruction. Its pointer is again cyclic, and it responds to the
+  carriers and not to a record.
 * **A term between the clock and a detector** of the kind of #212 (the clock's carrier detuned
-  by a detector's conserved angle, and driving that detector's pointer) keeps the energy in this
-  form, so the same statement would hold for it. That is why it is not built here.
-* **The record-level statement is for the uncoupled energy of #372**, where the clock's
-  independence of the messenger is already #372's. The statement that survives a coupling of the
-  step form is the generic one.
+  by a detector's conserved angle, and driving that detector's pointer) leaves every moving
+  angle out of the energy, so the same commutation is expected. That is a calculation and not
+  in Lean: the energy of #212 has two terms in one conserved angle and is not a `stepEnergy`,
+  so `hamiltonianFlow_stepEnergy_shiftMoving` does not apply to it as stated. It is not built.
+* **The statement is for the uncoupled energy of #372**, where the clock's independence of the
+  messenger is already #372's.
 * **No measure and no probability.** The statements are pointwise.
 
 ## References
@@ -117,7 +126,8 @@ variable {M Mc : ℕ} {f h fc : ℝ → ℝ} (J μ g₁ g₂ : ℝ) (A B : Finse
   (Jc μ₀ μ₁ gc : ℝ) (hf : Function.Periodic f 1) (hh : Function.Periodic h 1)
   (hfc : Function.Periodic fc 1)
 
-/-- ★★★ **The joint flow commutes with turning the pointers.** On the arena of a messenger with
+/-- ★★ **The joint flow commutes with turning the pointers** (UA-16 (c), UA-13 (c)). On the
+arena of a messenger with
 two region pointers beside a clock device with its tick pointer: starting the three pointers
 `a`, `b`, `c` further round leaves them `a`, `b`, `c` further round at every time and changes
 nothing else. -/
@@ -142,8 +152,8 @@ theorem clockMessengerFlow_shiftPointers (hc : ContDiff ℝ ∞ f) (hch : ContDi
     clockPointerFlow_apply Jc μ₀ μ₁ gc hfc hcc t q χ]
   simp only [shiftPointers, add_right_comm]
 
-/-- ★★★ **Two starts that differ only in the moving angles have the same carriers and conserved
-angles at every time.** -/
+/-- ★ **Two starts that differ only in the moving angles have the same carriers and conserved
+angles at every time** (UA-16 (c), UA-13 (c)). -/
 theorem forgetMoving_clockMessengerFlow_congr (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     (hcc : ContDiff ℝ ∞ fc) (t : ℝ) {z z' : CrossSigma (2 * M + 1) (4 * Mc + 3)}
     (hz : forgetMoving z = forgetMoving z') :
@@ -153,8 +163,9 @@ theorem forgetMoving_clockMessengerFlow_congr (hc : ContDiff ℝ ∞ f) (hch : C
   obtain ⟨a, b, c, rfl⟩ := exists_shiftPointers_of_forgetMoving_eq hz
   rw [clockMessengerFlow_shiftPointers, forgetMoving_shiftPointers]
 
-/-- ★★ **The clock does not see where the departure pointer is**: turning the departure pointer
-leaves the clock's whole state, tick pointer included, as it was at every time. -/
+/-- **The clock does not see where the departure pointer is**: turning the departure pointer
+leaves the clock's whole state, tick pointer included, as it was at every time. Weaker than
+`clockMessengerFlow_snd`. -/
 theorem clockMessengerFlow_shiftFst_snd (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     (hcc : ContDiff ℝ ∞ fc) (t : ℝ) (a : AddCircle (1 : ℝ))
     (z : CrossSigma (2 * M + 1) (4 * Mc + 3)) :
@@ -164,7 +175,7 @@ theorem clockMessengerFlow_shiftFst_snd (hc : ContDiff ℝ ∞ f) (hch : ContDif
   rw [clockMessengerFlow_shiftPointers]
   simp [shiftPointers]
 
-/-- ★★ **The arrival pointer does not see where the departure pointer is.** -/
+/-- **The arrival pointer does not see where the departure pointer is.** -/
 theorem clockMessengerFlow_shiftFst_arrival (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     (hcc : ContDiff ℝ ∞ fc) (t : ℝ) (a : AddCircle (1 : ℝ))
     (z : CrossSigma (2 * M + 1) (4 * Mc + 3)) :

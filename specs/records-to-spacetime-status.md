@@ -161,13 +161,18 @@ of ~~#367~~ the far half's mean occupancy is at most `1/3` over `[0, 625π/3]` a
 over `[3125π/3, 4375π/3]`, which no carrier with a constant occupancy satisfies. The pointers'
 angles carry those numbers only modulo one turn. It is not a record, and the change is located
 only within `[0, 4375π/3]`.
-No coupling of the present kind can attach a clock's count to a record (BACKLOG ~~#374~~,
-`LF4/PointerInert.lean`, `RecordLayer/UnifiedRecordInert.lean`): a readout is a region of a
-pointer's moving angle, no moving angle is in the joint energy, and so the flow commutes with
-turning the pointers (`clockMessengerFlow_shiftPointers`). Nothing but a pointer's own angle
-depends on where that pointer started, so nothing else later depends on whether a readout was
-displayed. The two ways on are an energy in which a moving angle appears,
-or a pointer driven by a product observable of a composite carrier. Neither is built.
+The coupling of the clock to the departure detector is not built (BACKLOG ~~#374~~,
+`LF4/PointerInert.lean`, `RecordLayer/UnifiedRecordInert.lean`). What is proved in its place: a
+readout is a region of a pointer's moving angle, no moving angle is in the joint energy of the
+clock-and-messenger arena, and so its flow commutes with turning the pointers
+(`clockMessengerFlow_shiftPointers`). With the carriers and conserved angles held fixed, nothing
+but a pointer's own angle depends on where that pointer started. So no other degree of freedom
+tells apart two runs that differ only in that start, whether or not the readout comes to be
+displayed in one and not the other (such a pair is not exhibited in Lean). A dependence through
+the occupancy that drives the pointer is not excluded. The two ways on are an energy in which
+a moving angle appears, or a pointer driven by a product observable of a composite carrier;
+the second does not remove the obstruction, since its pointer is again cyclic and responds to
+the carriers and not to a record. Neither is built. The author has chosen the second.
 
 ## What is open
 

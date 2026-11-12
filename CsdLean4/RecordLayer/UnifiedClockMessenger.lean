@@ -50,8 +50,8 @@ the Hamiltonian flow of one energy on one arena; the run itself is a conjunction
 * **No coupling between the clock and the messenger.** The clock's history does not depend on
   the messenger's state, and the messenger's does not depend on the clock's
   (`clockMessengerFlow_fst`, `clockMessengerFlow_snd`). The clock is beside the messenger's
-  departure region only in the sense that both are in one arena. Nothing places it there. No
-  coupling of the present kind can attach a count to a record: the pointers are inert
+  departure region only in the sense that both are in one arena. Nothing places it there. On
+  this arena the moving angles are cyclic, so nothing else depends on where a pointer started
   (`RecordLayer/UnifiedRecordInert.lean`, #374).
 * **The counts are aligned by the flow parameter.** `N_d` is the clock's count at a flow time
   `τ_d` by which the departure write is complete. No degree of freedom holds the pair (record,
