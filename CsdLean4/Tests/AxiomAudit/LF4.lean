@@ -2148,4 +2148,18 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.measurePreserving_hamiltonianFlow_prodEnergy
 
+/-! #374 (the generic half): a pointer's moving angle is a cyclic coordinate — for the step energy on a compact symplectic base the flow commutes with turning the new pointer by any angle, and the base at any time is the same for every starting position of the pointer. A consequence of the form of the energy (`LF4/PointerInert.lean`). -/
+
+/-- info: 'CSD.LF4.shiftMoving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.shiftMoving
+
+/-- info: 'CSD.LF4.hamiltonianFlow_stepEnergy_shiftMoving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_stepEnergy_shiftMoving
+
+/-- info: 'CSD.LF4.hamiltonianFlow_stepEnergy_shiftMoving_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_stepEnergy_shiftMoving_fst
+
 end CSD.Tests.AxiomAudit

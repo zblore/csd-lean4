@@ -1026,7 +1026,10 @@ isSymplectic"
 #   hamiltonianFlow_prodEnergy identifies the pair of the two factor flows with
 #   IsSymplectic.hamiltonianFlow by uniqueness of integral curves on compact factors — EARNED;
 #   measurePreserving_hamiltonianFlow_prodEnergy is a measure statement about that flow, conditional
-#   on each factor flow being measure preserving — no claim about the product form's top-form measure.)
+#   on each factor flow being measure preserving — no claim about the product form's top-form measure;
+#   #374 LF4/PointerInert.lean: hamiltonianFlow_stepEnergy_shiftMoving and _shiftMoving_fst are read
+#   off the closed form hamiltonianFlow_stepEnergy (the flow commutes with translating the new
+#   torus's moving angle) — EARNED, and no stronger than that closed form.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 hamiltonianFlow_coupledEnergy_reindex
 schrodingerHamiltonian_reindex
@@ -1221,6 +1224,8 @@ map_hamiltonianFlow_stepEnergy
 isHamiltonianVectorField_prodEnergy
 hamiltonianFlow_prodEnergy
 measurePreserving_hamiltonianFlow_prodEnergy
+hamiltonianFlow_stepEnergy_shiftMoving
+hamiltonianFlow_stepEnergy_shiftMoving_fst
 schrodingerHamiltonian_hamOccA
 continuous_schrodingerHamiltonian_twoCoupledOrbit
 abs_schrodingerHamiltonian_le

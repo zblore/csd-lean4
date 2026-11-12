@@ -1045,6 +1045,8 @@ They are what UO-16 is annotated with; they do not meet it.
 | UD-98 | **Three records in one run, and the clock's count at each detector's record.** A pointer at `1/12` turned by `t c`, `c > 0`, is in the displayed arc exactly for `1/(4c) < t`, on `0 ≤ t ≤ 3/(4c)`. The start `clockTwoSiteTrainStart` is that of UD-76 with a third pointer at `1/12` and `χ₂ = 0`; all three profiles are `trainF`. Along the orbit of `clockTwoSiteFlow` from it the first component is the orbit of UD-76, so the clock's pointer is a swing at the level splitting `R` on every horizon, for all strengths of the detectors. With `g₂, g₃ > 0`, `μ₀ < μ₁ < 2μ₀`, `R` the mode's level splitting and the clock strength `g₁` fixed as in UD-76: the first detector's readout is `true` exactly for `(M+1)/(8 g₂) < t` on `0 ≤ t ≤ 3(M+1)/(8 g₂)`, and the second detector's exactly for `(M+1)/(8 g₃) < t` on `0 ≤ t ≤ 3(M+1)/(8 g₃)`. The tick history has counts `N₂` at `t₂ = (M+1)/(8 g₂)` and `N₃` at `t₃ = (M+1)/(8 g₃)`, with `\|N_i · 2π/R − t_i\| ≤ 2π/R` and `\|(N₃ − N₂) · 2π/R − (t₃ − t₂)\| ≤ 4π/R` | `pshift_twelfth_mem_displayArc_iff`, `clockTwoSiteTrainStart`, `clockTwoSiteFlow_train_fst`, `isSwing_clockTwoSiteFlow_train`, `echoSiteShown_clockTwoSiteFlow_train_iff`, `triThdShown_clockTwoSiteFlow_train_iff`, `clockTwoSite_records_train` | exact switching instants; count bounds of one and two periods; on a null set of fibres; one mode — the same occupancy at every site, so no signal travels |
 | UD-103 | **Two symplectic arenas side by side.** For compact symplectic arenas `S`, `S'` and smooth `H`, `K`: the energy `H(a) + K(b)` on `S × S'` is smooth, its Hamiltonian vector field for `π₁^* α + π₂^* β` is the pair of the two fields, and its Hamiltonian flow is `(Φ_H^t a, Φ_K^t b)`. If each flow is measure preserving for `μ` and `ν`, the joint flow is for `μ ⊗ ν` | `prodEnergy`, `prodEnergy_eq`, `contMDiff_prodEnergy`, `isHamiltonianVectorField_prodEnergy`, `hamiltonianFlow_prodEnergy`, `measurePreserving_hamiltonianFlow_prodEnergy` (`LF4/ProductFlow.lean`) | exact; generic, no carrier and no record; the measure statement is conditional on each factor's |
 | UD-104 | **A clock on its own carrier beside a messenger: one flow, two records, two counts.** On `(ℂℙ^{2M+1} × T² × T²) × (ℂℙ^{4M_c+3} × T²)` the flow of the sum of the messenger's energy with two region pointers (UD-93) and the clock device's energy with its tick pointer (UD-58) is the pair of `regionTwoFlow` and `clockPointerFlow`, and it preserves `echoMuL ⊗ kMuL`. From the messenger's start of UD-94 and the clock's train start of UD-62: there are flow times `τ_d ≤ 625π/3 ≤ τ_a ≤ 4375π/3` with the departure readout and the arrival readout, read on the messenger's factor along the joint orbit, each an `IsRecordWrite`, tick counts `N_d` at `τ_d` and `N_a` at `τ_a` of the clock's history read on the joint orbit, and `\|(N_a − N_d)(2π/R) − (τ_a − τ_d)\| ≤ 4π/R` | `IsSwing.prodMk_snd`, `clockMessengerEnergy`, `contMDiff_clockMessengerEnergy`, `clockMessengerFlow`, `clockMessengerFlow_apply`, `clockMessengerFlow_fst`, `clockMessengerFlow_snd`, `map_clockMessengerFlow`, `clockMessenger_departure_arrival_counts` (`RecordLayer/UnifiedClockMessenger.lean`) | the flow and the measure are exact; the run is an existence statement with the bounds of UD-94 and a two-tick bound; no coupling between clock and messenger; counts aligned by the flow parameter |
+| UD-106 | **A pointer's moving angle is a cyclic coordinate.** For the step energy `H(s) + G(s) g(ψ₂)` of UD-95 on a compact symplectic base: the Hamiltonian flow commutes with turning the new torus's moving angle by any `c`, and the base at time `t` is the same for every starting position of the pointer | `shiftMoving`, `hamiltonianFlow_stepEnergy_shiftMoving`, `hamiltonianFlow_stepEnergy_shiftMoving_fst` (`LF4/PointerInert.lean`) | exact; generic; a consequence of the energy's form (UA-13, UA-15), which is assumed |
+| UD-107 | **The flow commutes with turning the pointers, on the arena of UA-16.** The flow `clockMessengerFlow` commutes with turning the departure pointer, the arrival pointer and the clock's tick pointer by any `a`, `b`, `c`. Two starts with the same carriers and the same three conserved angles have the same carriers and conserved angles at every time. Turning the departure pointer changes neither the clock's state nor the arrival pointer's at any time | `shiftPointers`, `forgetMoving`, `exists_shiftPointers_of_forgetMoving_eq`, `forgetMoving_shiftPointers`, `clockMessengerFlow_shiftPointers`, `forgetMoving_clockMessengerFlow_congr`, `clockMessengerFlow_shiftFst_snd`, `clockMessengerFlow_shiftFst_arrival` (`RecordLayer/UnifiedRecordInert.lean`) | exact; pointwise, no measure; an obstruction for the energy form of UA-13, UA-15 and UA-16, not for `Σ` |
 
 Exact scope of UD-95 and UD-96. What they give. The flows of §2 for one and two pointer tori were
 each proved for their own arena. UD-95 is the construction they share, for any compact symplectic
@@ -1124,6 +1126,33 @@ UA-16, UA-13, UA-12, UA-8, UA-7, UA-5 and the arcs, profiles and strengths of UA
 as invariance only (`map_clockMessengerFlow`); the positive measure of the messenger's fibres is
 UD-94's, and the joint start set of the run is null for `echoMuL ⊗ kMuL`, since the clock starts
 at one point. UA-6 is not used.
+
+Exact scope of UD-106 and UD-107 (BACKLOG ~~#374~~). What they give. The next brick of M6 was to be
+a coupling of the clock to the departure detector, so that a count belongs to a record otherwise
+than through the flow parameter. These two entries show that no coupling of the kind used so far
+can do that. A readout is a region of a pointer's moving angle, and the joint energies of UA-13,
+UA-15 and UA-16 contain no moving angle. So the flow commutes with turning the pointers. Two
+starts that differ only in where the departure pointer begins have the same clock history, the
+same carriers and the same arrival pointer; the only thing that depends on a pointer's starting
+angle is that pointer's own angle. A register whose later value depended on whether a readout
+had been displayed would be a dependence of that kind, so there is none. Two such starts, one
+from which a readout comes to be displayed and one from which it does not, are not exhibited in
+Lean. The statements are mathematically small: a moving angle is a cyclic coordinate.
+With UD-65 (no function of the clock arena's state holds the count) this is the stated reason
+that conditions (b) of UO-14 and the corresponding item of UO-16 are not met on these arenas.
+What they do not give. It is an obstruction for the form of the energy and not for `Σ`. It does
+not rule out a pointer whose moving angle acts back (UO-24), which the corpus does not have. It
+does not rule out a pointer whose rate depends on the messenger and the clock together, such as
+the expectation of a product observable on a composite carrier; the displacement of such a
+pointer is a joint functional of both histories. That pointer would still respond to the
+carriers and not to a record. A term of the kind of BACKLOG ~~#212~~ between the clock's carrier
+and a detector's conserved angle keeps the energy in this form, so the same statement would hold
+for it; it is not built. UD-107 is stated for the uncoupled energy of UD-104, where the clock's
+independence of the messenger is already UD-104's; the generic statement that survives a
+coupling of the step form is UD-106. By the test of §6: the hypothesis that carries the
+conclusion is the form of the energy, a Register 1 entry, and the entries say so; they are an
+obstruction and pass no gate. UD-106 uses UA-13 and UA-15 as the form of the step. UD-107 uses
+UA-16. No measure enters. UA-6 is not used.
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
@@ -1692,6 +1721,16 @@ time. It is not a statement about every dynamics on `Σ`.
   located only within `[0, 4375π/3]`. *What is still missing here:* the same as a record, which
   needs a pointer read finely enough to recover its displacement; and a sharper packet estimate
   with a pointwise statement for the coupled carrier, to locate the change and the write times.
+  ▸ **Why a coupling of the present kind cannot attach a count to a record, 2026-11-12 (BACKLOG
+  ~~#374~~) → UD-106, UD-107. An obstruction.** The flow of the arena of UA-16 commutes with
+  turning the three pointers (`clockMessengerFlow_shiftPointers`), and the same holds for any
+  energy of the step form (`hamiltonianFlow_stepEnergy_shiftMoving`). Nothing but a
+  pointer's own angle depends on where it started. So "a coupling that places the clock at a detector, so that a count belongs to a
+  record" is not available within UA-13, UA-15 and UA-16. *The missing condition, stated:* an
+  energy in which a moving angle appears (UO-24), or a pointer whose rate is the expectation of a
+  product observable on a composite of the messenger and the clock, so that its displacement is a
+  joint functional of both histories. Which of the two, and whether a composite carrier is
+  admitted, is the author's decision.
 
 ### M7 — `3 + 1`
 
@@ -1727,6 +1766,13 @@ time. It is not a statement about every dynamics on `Σ`.
 * **UO-24.** A pointer whose moving angle acts back on the carrier. The `coupledEnergy` form excludes
   it (`𝓗` is independent of `θ₁`). The corpus has a device that is kicked by its detectors only for
   the classical control device of UD-13.
+  ▸ **What its absence costs, 2026-11-12 (BACKLOG ~~#374~~) → UD-106, UD-107. Not met.** Because no
+  moving angle is in the energy, the flow commutes with turning any pointer
+  (`hamiltonianFlow_stepEnergy_shiftMoving`, `clockMessengerFlow_shiftPointers`). So nothing
+  but a pointer's own angle depends on where that pointer started, and no other degree of
+  freedom's later value can depend on whether a readout was displayed. This is the missing condition behind UO-14 (b) and behind "a count that
+  belongs to a record" in UO-16. Two ways on are named and neither is built: this obligation,
+  or a pointer driven by a product observable of a composite carrier.
 
 ---
 
@@ -1838,7 +1884,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

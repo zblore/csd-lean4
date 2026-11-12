@@ -19384,4 +19384,38 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.cross_far_occupancy_not_constant
 
+/-! #374 (the author's programme, obligations UO-14 (b), UO-16, UO-24): on the arena of a messenger beside a clock the joint flow commutes with turning the departure pointer, the arrival pointer and the clock's tick pointer; two starts that differ only in the moving angles have the same carriers and conserved angles at every time; turning the departure pointer changes neither the clock's state nor the arrival pointer's. A consequence of the moving angles being absent from the joint energy, which is assumed: an obstruction for that form of energy. No measure (`RecordLayer/UnifiedRecordInert.lean`). -/
+
+/-- info: 'CSD.RecordLayer.shiftPointers' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.shiftPointers
+
+/-- info: 'CSD.RecordLayer.forgetMoving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.forgetMoving
+
+/-- info: 'CSD.RecordLayer.exists_shiftPointers_of_forgetMoving_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_shiftPointers_of_forgetMoving_eq
+
+/-- info: 'CSD.RecordLayer.forgetMoving_shiftPointers' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.forgetMoving_shiftPointers
+
+/-- info: 'CSD.RecordLayer.clockMessengerFlow_shiftPointers' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockMessengerFlow_shiftPointers
+
+/-- info: 'CSD.RecordLayer.forgetMoving_clockMessengerFlow_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.forgetMoving_clockMessengerFlow_congr
+
+/-- info: 'CSD.RecordLayer.clockMessengerFlow_shiftFst_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockMessengerFlow_shiftFst_snd
+
+/-- info: 'CSD.RecordLayer.clockMessengerFlow_shiftFst_arrival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockMessengerFlow_shiftFst_arrival
+
 end CSD.Tests.AxiomAudit
