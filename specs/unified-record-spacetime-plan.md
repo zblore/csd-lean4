@@ -982,6 +982,8 @@ UD-94.
 | UD-110 | **Product rays of two carriers with different index types.** The density of a product ray is the Kronecker product of the densities; the expectation of `A ⊗ B` in a product ray is the product of the expectations (`A` Hermitian); a product unitary carries a product ray to the product of the kicked rays; `exp (t (X ⊗ 1 + 1 ⊗ Y)) = exp (t X) ⊗ exp (t Y)` | `prodVec`, `prodVec_apply`, `prodVec_smul_smul`, `norm_prodVec`, `prodVec_ne_zero`, `prodRay`, `prodRay_mk`, `arenaDM_prodRay`, `im_trace_arenaDM_mul`, `arenaObs_kronecker`, `arenaObs_kronecker_one`, `arenaObs_one_kronecker`, `kronecker_isHermitian`, `kronU`, `kronU_val`, `toEuclideanLin_kronU`, `arenaKick_kronU`, `exp_smul_kronecker_one`, `exp_smul_one_kronecker`, `exp_smul_kronecker_add` (`CV/ProductRay.lean`) | exact identities; product rays only; no dynamics chosen |
 | UD-111 | **The composite carrier from a product ray, where the gated pointer does not act back.** On the arena of UA-17, from a product ray, on a fibre where the third pointer's profile vanishes: the carrier stays a product ray; the messenger moves by its propagator with its two pointers' terms and the clock by its free propagator; the two messenger pointers advance as on the messenger's arena (for the ring and two regions, exactly as in `regionTwoFlow`); the third pointer advances by `−2 k'(χ₂) ∫₀ᵗ ⟨P⟩_messenger ⟨X⟩_clock`. The flow preserves `triMuL` | `prodIdx`, `compositeH`, `compositeH_isHermitian`, `idxTwoH_composite`, `idxTwoCarrierU_composite`, `arenaKick_idxTwoCarrierU_composite`, `idxTwoShiftFst_composite`, `idxTwoShiftSnd_composite`, `gateShift`, `gateFlow`, `triMuL_map_gateFlow`, `gateFlow_prodRay`, `gateClockFlow`, `triMuL_map_gateClockFlow`, `gateClockShift`, `gateClockFlow_apply`, `gateClockFlow_fst_pointer`, `gateClockFlow_snd_pointer` (`RecordLayer/UnifiedCompositeCarrier.lean`) | exact; on a set of fibres that is null for `trainF`, from product rays only; flow times |
 | UD-112 | **The gated pointer moves only while the messenger is in the region.** With `0 ≤ ⟨P⟩ ≤ 1` and `‖X‖ ≤ c`: between two flow times the gated pointer's displacement changes by at most `2|k'(χ₂)| c` times the messenger's accumulated `⟨P⟩`, and up to a flow time it is within `2|k'(χ₂)| c` times the accumulated `1 − ⟨P⟩` of the displacement of a pointer coupled to `X` alone. On the packet family of UD-108, with the gate on the near half and the two-level clock of UA-12, on fine fibres: within `|k'||g_c| t/n` of the pointer of UD-58 for `t ≤ (625π/3) n²`, and a change of at most `|k'||g_c| (t₂ − t₁)/n` between two flow times of `[(3125π/3) n², (4375π/3) n²]` | `continuous_arenaObs_idxTwoCarrierU`, `continuous_arenaObs_idxFreeU`, `abs_gateShift_sub_le`, `abs_gateShift_sub_le_of_le`, `abs_gateShift_sub_free_le`, `abs_gateShift_sub_free_le_of_le`, `arenaObs_regionProj_compl`, `idxPointerShift_eq_free`, `fine_gateClock_before`, `fine_gateClock_after` (`RecordLayer/UnifiedCompositeCarrier.lean`) | exact bounds on real displacements; the same fibres and starts as UD-111; no readout, no record; flow times |
+| UD-113 | **The gated pointer is a swing, with tick records and a count, while the messenger is in the region.** On the arena of UA-17, from the fine packet of index `n` (UD-108) and the one-mode clock of UD-62 as one product ray, the gated pointer at `1/12` on the fibre `χ₂ = 0`, on a fine fibre of the two region pointers: up to a flow time `T ≤ (625π/3) n²` with `|g_c| T/n < 1/12` the history read through the third pointer's arcs is a swing at the clock's rate `R` with thresholds `±4|g_c| T/n`; it has a tick count `N` at `T` with `|N · 2π/R − T| ≤ 2π/R`; each tick is a record write | `isSwing_thd_of_abs_shift_sub_le`, `clockPointerShift_train`, `gateTrainStart`, `gateClockFlow_train_thd`, `abs_gateClockShift_train_sub_le`, `isSwing_gateClock_before`, `gateClock_tickCount_before`, `gateClock_tick_isRecordWrite` (`RecordLayer/UnifiedGateTicks.lean`) | exact statements under a hypothesis that bounds the clock's rate from above; one clock start; the fibres and starts of UD-111; flow times |
+| UD-114 | **After the transit no tick is begun and completed.** On the arena of UA-17, from a product ray of the fine packet and any clock ray, on a fine fibre and a fibre where the gated pointer's profile vanishes: for flow times `a ≤ b` of `[(3125π/3) n², (4375π/3) n²]` with `|k'(χ₂)||g_c| (b − a)/n ≤ 1/6`, a gated pointer in its ready arc at `a` is not in its displayed arc at `b` | `pshift_notMem_displayArc_of_mem_readyArc`, `gateClock_no_tick_after` (`RecordLayer/UnifiedGateTicks.lean`) | exact, on the stated interval only; not a statement about the count; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -1270,6 +1272,27 @@ is that the product structure persists on those fibres and the size of the two e
 pass no gate: there is no record in them. UD-111 and UD-112 use UA-17, UA-15, UA-13, UA-12,
 UA-8, UA-7 and UA-5, with the profiles and strengths of UA-4; UA-2 enters through `triMuL`
 and through the measure on the pair of conserved angles. UA-6 is not used.
+
+Exact scope of UD-113 and UD-114 (BACKLOG ~~#377~~). What they give. The first tick records and
+the first tick count on the arena of UA-17, from a pointer whose swing depends on where the
+messenger is: while the messenger's occupancy of the near half is within `1/(2n)` of `1`, the
+gated pointer swings as the clock's own pointer of UD-62 does, within `|g_c| T/n`, and the
+count and record statements of UD-62 and UD-64 apply to it. After the transit, on the stated
+interval, no passage from ready to displayed lies inside an interval short enough for the
+hypothesis. What they do not give. (i) That the count stops at departure. Nothing is stated
+between `(625π/3) n²` and `(3125π/3) n²`, where the pointer may tick, or after
+`(4375π/3) n²`; a tick begun before `(3125π/3) n²` may complete inside the interval; and no
+theorem gives the count at a time after departure. (ii) A register: no degree of freedom
+holds the count (UO-14 (b)). (iii) Many ticks. The hypothesis `|g_c| T/n < 1/12` bounds the
+rate from above, and the count is within one of `R T/2π`. That both hold with at least one
+tick for some clock is a calculation and not in Lean; for small `T` the statements hold with
+count zero. (iv) A gate by a record: UD-112 (ii) stands. (v) A positive measure of fibres or
+starts: UD-111. (vi) The clock's own pointer on this arena: that it goes on ticking is UD-62
+on the clock's arena. (vii) Every time is a flow time (UA-7). By the test of §6: the swing is
+UD-62's with the error of UD-112, and the arcs are apparatus input (UA-4); what is derived is
+that the error stays inside the arcs' margins up to `T`. They pass no gate: the count is not
+tied to a departure record. UD-113 and UD-114 use the assumptions of UD-111 and UD-112, and
+UA-4 for the arcs. UA-6 is not used.
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
@@ -1883,6 +1906,15 @@ time. It is not a statement about every dynamics on `Σ`.
   as tick records with a count that stops at departure; fibres of positive measure for the
   gated pointer; a clock placed at a region; and everything the annotation for ~~#372~~ lists
   after its first item.
+  ▸ **Tick records on the composite carrier, 2026-11-12 (BACKLOG ~~#377~~) → UD-113, UD-114.
+  Not met.** While the messenger is in the near half the gated pointer is a swing at the
+  clock's rate (`isSwing_gateClock_before`), with a tick count that reads the flow time within
+  one period and with each tick a record write. On the stated interval after the transit no
+  tick is begun and completed (`gateClock_no_tick_after`). *Conditions:* those of UD-111; one
+  clock start; a rate bounded above by `|g_c| T/n < 1/12`. *What is still missing:* the count
+  at a time after departure, which needs a bound on the ticks in the transit window; a clock
+  for which many ticks precede departure, in Lean; a register for the count; and the rest of
+  the list above.
 
 ### M7 — `3 + 1`
 
@@ -2039,7 +2071,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

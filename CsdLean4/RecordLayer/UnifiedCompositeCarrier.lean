@@ -80,7 +80,9 @@ on `ℂℙ^N × T² × T² × T²`, an instance of the three-pointer energy of #
   commutes with turning it, and nothing else depends on where it started.
 * **No tick, no count, no record.** No ready arc, no threshold, no `IsSwing`, no `IsTickCount`
   and no `IsRecordWrite` is stated on this arena. That the gated pointer's swings are tick
-  records whose count stops at departure is not proved.
+  records whose count stops at departure is not proved. The swing, its tick records and a count
+  before departure are in `RecordLayer/UnifiedGateTicks.lean` (#377); the count is not shown
+  to stop there either.
 * **The errors grow with the system.** On the family of #375 the two bounds are
   `|k'||g_c| t/n` with `t` up to `(625π/3) n²`, so the first is at most `(625π/3)|k'||g_c| n`
   at the end of its interval. Against the swing of the free pointer, of order `|k'||g_c|/R` for

@@ -19650,4 +19650,46 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.fine_gateClock_after
 
+/-! #377 (the author's programme, obligation UO-16; Remainder (a) of #376): on the composite carrier of UA-17 the gated pointer, read through the arcs of #358, is a swing at the clock's rate up to a flow time T ≤ (625π/3) n² with |g_c| T/n < 1/12, with a tick count within one period of T and each tick a record write; on [(3125π/3) n², (4375π/3) n²] a gated pointer that is ready at a is not displayed at b when |k'||g_c| (b − a)/n ≤ 1/6. The count is not shown to stop; flow times (`RecordLayer/UnifiedGateTicks.lean`). -/
+
+/-- info: 'CSD.RecordLayer.pshift_notMem_displayArc_of_mem_readyArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pshift_notMem_displayArc_of_mem_readyArc
+
+/-- info: 'CSD.RecordLayer.isSwing_thd_of_abs_shift_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isSwing_thd_of_abs_shift_sub_le
+
+/-- info: 'CSD.RecordLayer.clockPointerShift_train' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockPointerShift_train
+
+/-- info: 'CSD.RecordLayer.gateTrainStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateTrainStart
+
+/-- info: 'CSD.RecordLayer.gateClockFlow_train_thd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClockFlow_train_thd
+
+/-- info: 'CSD.RecordLayer.abs_gateClockShift_train_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_gateClockShift_train_sub_le
+
+/-- info: 'CSD.RecordLayer.isSwing_gateClock_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isSwing_gateClock_before
+
+/-- info: 'CSD.RecordLayer.gateClock_tickCount_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClock_tickCount_before
+
+/-- info: 'CSD.RecordLayer.gateClock_tick_isRecordWrite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClock_tick_isRecordWrite
+
+/-- info: 'CSD.RecordLayer.gateClock_no_tick_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClock_no_tick_after
+
 end CSD.Tests.AxiomAudit

@@ -188,8 +188,13 @@ messenger's projector on the departure region and the clock's level swap. From a
 on the fibres where that pointer does not act back, its rate is the messenger's occupancy of
 the region times the clock's reading, so it follows the clock's own pointer while the messenger
 is in the region and stops after the messenger has left, within stated bounds. The gate is an
-occupancy and not a record, the fibres and the starts are null sets, and no tick, count or
-record is stated on this arena.
+occupancy and not a record, and the fibres and the starts are null sets.
+Read through the arcs of ~~#358~~ (BACKLOG ~~#377~~, `RecordLayer/UnifiedGateTicks.lean`), the
+gated pointer is a swing while the messenger is in the near half, up to a flow time `T` with
+`|g_c| T/n < 1/12`: it has tick records and a count within one period of `T`. On the stated
+interval after the transit no tick is begun and completed. That the count stops at departure
+is not proved: nothing is stated for the transit window, and no theorem gives the count at a
+later time.
 
 ## What is open
 
