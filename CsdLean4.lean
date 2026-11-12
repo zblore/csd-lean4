@@ -793,6 +793,7 @@ public import CsdLean4.RecordLayer.UnifiedCellSelection
 public import CsdLean4.RecordLayer.UnifiedClockMessenger
 public import CsdLean4.RecordLayer.UnifiedTransitCertificate
 public import CsdLean4.RecordLayer.UnifiedRecordInert
+public import CsdLean4.RecordLayer.UnifiedFineTransit
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers

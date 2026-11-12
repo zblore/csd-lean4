@@ -173,6 +173,13 @@ the occupancy that drives the pointer is not excluded. The two ways on are an en
 a moving angle appears, or a pointer driven by a product observable of a composite carrier;
 the second does not remove the obstruction, since its pointer is again cyclic and responds to
 the carriers and not to a record. Neither is built. The author has chosen the second.
+The packet estimate is sharpened along a family (BACKLOG ~~#375~~,
+`RecordLayer/UnifiedFineTransit.lean`): for the packet of index `n`, on a ring whose length
+grows as `n²`, the carrier coupled to the two region pointers has far-half occupancy at most
+`1/(2n)` at every flow time before the transit and at least `1 − 1/(2n)` at every flow time
+after it, on fibres whose allowed back-reaction shrinks as `n⁻³`. These are occupancies and not
+records; the write times are not relocated, and the window between the two is not narrowed for
+the coupled carrier.
 
 ## What is open
 

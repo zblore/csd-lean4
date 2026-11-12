@@ -19418,4 +19418,122 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.clockMessengerFlow_shiftFst_arrival
 
+/-! #375 (the author's programme, obligation UO-16; Remainder (b) of #373): a family of packets indexed by n on rings of length 2000π n² — the far half's weight times (1 − cos δ) is at most 1/(6n) while the predicted angle is δ short of the far half, and the same for the weight outside it while the angle is δ inside; for every ε and margin δ there is an n; and at each flow time, on fibres of small back-reaction, the carrier coupled to the two region pointers has far-half occupancy at most 1/(2n) before and at least 1 − 1/(2n) after. Occupancies, not records; flow times; no new assumption (`RecordLayer/UnifiedFineTransit.lean`). -/
+
+/-- info: 'CSD.RecordLayer.finePacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.finePacket
+
+/-- info: 'CSD.RecordLayer.fineHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineHop
+
+/-- info: 'CSD.RecordLayer.omega_fine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.omega_fine
+
+/-- info: 'CSD.RecordLayer.fine_spread' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fine_spread
+
+/-- info: 'CSD.RecordLayer.fine_modes_lt' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fine_modes_lt
+
+/-- info: 'CSD.RecordLayer.fine_sites' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fine_sites
+
+/-- info: 'CSD.RecordLayer.fine_win' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fine_win
+
+/-- info: 'CSD.RecordLayer.fine_norm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fine_norm
+
+/-- info: 'CSD.RecordLayer.fine_budget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fine_budget
+
+/-- info: 'CSD.RecordLayer.regionWeight_fine_far' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_fine_far
+
+/-- info: 'CSD.RecordLayer.regionWeight_fine_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_fine_near
+
+/-- info: 'CSD.RecordLayer.regionWeight_fine_far_third' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_fine_far_third
+
+/-- info: 'CSD.RecordLayer.regionWeight_fine_near_third' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_fine_near_third
+
+/-- info: 'CSD.RecordLayer.exists_fine_transit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_fine_transit
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_regionProj_two_sub_free_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_regionProj_two_sub_free_le
+
+/-- info: 'CSD.RecordLayer.fineFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineFibres
+
+/-- info: 'CSD.RecordLayer.isOpen_fineFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpen_fineFibres
+
+/-- info: 'CSD.RecordLayer.zero_mem_fineFibres_trainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.zero_mem_fineFibres_trainF
+
+/-- info: 'CSD.RecordLayer.volume_fineFibres_trainF_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_fineFibres_trainF_pos
+
+/-- info: 'CSD.RecordLayer.fine_chainInner' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fine_chainInner
+
+/-- info: 'CSD.RecordLayer.chainProp_finePacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_finePacket
+
+/-- info: 'CSD.RecordLayer.finePacket_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.finePacket_ne_zero
+
+/-- info: 'CSD.RecordLayer.arenaObs_farHalf_free_finePacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_farHalf_free_finePacket
+
+/-- info: 'CSD.RecordLayer.fineCarrier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineCarrier
+
+/-- info: 'CSD.RecordLayer.regionTwoFlow_fineCarrier' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionTwoFlow_fineCarrier
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_fineCarrier_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_fineCarrier_sub_le
+
+/-- info: 'CSD.RecordLayer.fine_backReaction_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fine_backReaction_le
+
+/-- info: 'CSD.RecordLayer.fineCarrier_far_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineCarrier_far_before
+
+/-- info: 'CSD.RecordLayer.fineCarrier_far_after' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineCarrier_far_after
+
 end CSD.Tests.AxiomAudit
