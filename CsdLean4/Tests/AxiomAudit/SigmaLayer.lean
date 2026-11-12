@@ -19292,4 +19292,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.siteCell_not_siteLocal
 
+/-! #372 (the author's programme, milestone M6, first brick; obligation UO-16): a clock on its own carrier beside a messenger — the joint energy of a messenger with two region pointers and a clock device with its tick pointer is the sum of the two energies; its flow for the product form is the pair of the two flows and preserves the product of the two arena measures; and from the messenger's start and the clock's train start one orbit has a departure write, an arrival write and the clock's tick count at each, with the count difference times the clock's period within two periods of the flow interval. No coupling between the clock and the messenger; the counts are aligned by the flow parameter; the writes do not certify a transit; the clock is one exact instance (`RecordLayer/UnifiedClockMessenger.lean`). -/
+
+/-- info: 'CSD.RecordLayer.IsSwing.prodMk_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsSwing.prodMk_snd
+
+/-- info: 'CSD.RecordLayer.clockMessengerEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockMessengerEnergy
+
+/-- info: 'CSD.RecordLayer.contMDiff_clockMessengerEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contMDiff_clockMessengerEnergy
+
+/-- info: 'CSD.RecordLayer.clockMessengerFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockMessengerFlow
+
+/-- info: 'CSD.RecordLayer.clockMessengerFlow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockMessengerFlow_apply
+
+/-- info: 'CSD.RecordLayer.clockMessengerFlow_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockMessengerFlow_fst
+
+/-- info: 'CSD.RecordLayer.clockMessengerFlow_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockMessengerFlow_snd
+
+/-- info: 'CSD.RecordLayer.map_clockMessengerFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.map_clockMessengerFlow
+
+/-- info: 'CSD.RecordLayer.clockMessenger_departure_arrival_counts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockMessenger_departure_arrival_counts
+
 end CSD.Tests.AxiomAudit

@@ -2122,4 +2122,30 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.triMuL_map_threeCoupledFlow
 
+/-! #372 (the generic half): two compact symplectic arenas side by side — the energy `H(a) + K(b)` is smooth, its field for the product form is the pair of the two fields, its flow is the pair of the two flows, and the joint flow preserves the product measure when each flow preserves its own. No coupling, no carrier and no record (`LF4/ProductFlow.lean`). -/
+
+/-- info: 'CSD.LF4.prodEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.prodEnergy
+
+/-- info: 'CSD.LF4.prodEnergy_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.prodEnergy_eq
+
+/-- info: 'CSD.LF4.contMDiff_prodEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_prodEnergy
+
+/-- info: 'CSD.LF4.isHamiltonianVectorField_prodEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHamiltonianVectorField_prodEnergy
+
+/-- info: 'CSD.LF4.hamiltonianFlow_prodEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_prodEnergy
+
+/-- info: 'CSD.LF4.measurePreserving_hamiltonianFlow_prodEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.measurePreserving_hamiltonianFlow_prodEnergy
+
 end CSD.Tests.AxiomAudit

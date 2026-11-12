@@ -1020,7 +1020,13 @@ isSymplectic"
 #   IsSymplectic.hamiltonianFlow by uniqueness of integral curves on a compact base — EARNED;
 #   hamiltonianFlow_congr says the flow depends on the energy and not on its smoothness proof;
 #   map_hamiltonianFlow_stepEnergy is a measure statement about that flow, conditional on the base
-#   flows, read off the closed form — no claim about the top-form measure of the product form.)
+#   flows, read off the closed form — no claim about the top-form measure of the product form;
+#   #372 LF4/ProductFlow.lean: isHamiltonianVectorField_prodEnergy proves i_(X,Y) (prodForm a b) =
+#   d(H o fst + K o snd) from the two factor fields via prodForm_fst / prodForm_snd — EARNED;
+#   hamiltonianFlow_prodEnergy identifies the pair of the two factor flows with
+#   IsSymplectic.hamiltonianFlow by uniqueness of integral curves on compact factors — EARNED;
+#   measurePreserving_hamiltonianFlow_prodEnergy is a measure statement about that flow, conditional
+#   on each factor flow being measure preserving — no claim about the product form's top-form measure.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 hamiltonianFlow_coupledEnergy_reindex
 schrodingerHamiltonian_reindex
@@ -1212,6 +1218,9 @@ hamiltonianFlow_stepEnergy
 hamiltonianFlow_stepEnergy_fst
 hamiltonianFlow_congr
 map_hamiltonianFlow_stepEnergy
+isHamiltonianVectorField_prodEnergy
+hamiltonianFlow_prodEnergy
+measurePreserving_hamiltonianFlow_prodEnergy
 schrodingerHamiltonian_hamOccA
 continuous_schrodingerHamiltonian_twoCoupledOrbit
 abs_schrodingerHamiltonian_le

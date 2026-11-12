@@ -144,6 +144,15 @@ messenger's count and not an observer's. The
 carrier is one momentum mode on a null set of fibres. No signal travels: the interval is set by
 the detectors' strengths and is not a transit time. A travelling carrier with a clock in the same
 run is not proved.
+The author decided (2026-11-11) that M6's clock is a second carrier and not a level of the
+messenger. Its first brick is BACKLOG ~~#372~~ (`LF4/ProductFlow.lean`,
+`RecordLayer/UnifiedClockMessenger.lean`): on the product of the messenger's arena and the clock
+device's arena, with the sum of the two energies, the flow is the pair of the two flows and
+preserves the product measure; one orbit has the departure and arrival writes of ~~#367~~ and the
+clock's tick count at each, and the count difference is within two ticks of the flow interval
+(`clockMessenger_departure_arrival_counts`). There is no coupling between the clock and the
+messenger, the counts are aligned with the writes by the flow parameter, the writes do not
+certify a transit, and the clock is one exact instance. No distance or speed is read.
 
 ## What is open
 
