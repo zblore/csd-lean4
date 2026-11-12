@@ -19330,4 +19330,58 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.clockMessenger_departure_arrival_counts
 
+/-! #373 (the author's programme, obligation UO-16): a transit certified by the two pointers' displacements — on the run of #367, each pointer's moving angle is its start plus its rate times the accumulated occupancy of its half of the ring; on the transit fibres (open, of positive Haar measure for two `trainF` detectors of any positive strengths) the far half accumulates at most a third of `[0, 625π/3]` and at least two thirds of `[3125π/3, 4375π/3]`, and the near half the other way round; a function `w t` does not satisfy the far half's two inequalities, so the far half's occupancy along the run is not constant. About lifted displacements at four flow times; no readout and no record (`RecordLayer/UnifiedTransitCertificate.lean`). -/
+
+/-- info: 'CSD.RecordLayer.integral_arenaObs_of_const' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_arenaObs_of_const
+
+/-- info: 'CSD.RecordLayer.not_transit_of_linear' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_transit_of_linear
+
+/-- info: 'CSD.RecordLayer.transitFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transitFibres
+
+/-- info: 'CSD.RecordLayer.isOpen_transitFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpen_transitFibres
+
+/-- info: 'CSD.RecordLayer.zero_mem_transitFibres_trainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.zero_mem_transitFibres_trainF
+
+/-- info: 'CSD.RecordLayer.volume_transitFibres_trainF_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_transitFibres_trainF_pos
+
+/-- info: 'CSD.RecordLayer.crossAccum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.crossAccum
+
+/-- info: 'CSD.RecordLayer.regionTwoFlow_cross_pointers' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionTwoFlow_cross_pointers
+
+/-- info: 'CSD.RecordLayer.le_integral_regionWeight_crossPacket_late' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_integral_regionWeight_crossPacket_late
+
+/-- info: 'CSD.RecordLayer.abs_crossAccum_far_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_crossAccum_far_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_crossAccum_near_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_crossAccum_near_sub_le
+
+/-- info: 'CSD.RecordLayer.cross_transit_certificate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cross_transit_certificate
+
+/-- info: 'CSD.RecordLayer.cross_far_occupancy_not_constant' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cross_far_occupancy_not_constant
+
 end CSD.Tests.AxiomAudit
