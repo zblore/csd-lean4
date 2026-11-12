@@ -20,9 +20,10 @@ of the author's programme "From `Σ` to physical spacetime", after the author's 
 2026-11-11 under UO-16: the clock is a second carrier, not a level of the messenger, and it is
 the tick clock of #358.
 
-Until now the only clock in a run with a position record was the carrier's own level (#360,
-#366, #369): a messenger that travels would carry the count with it. Here the clock is a
-separate device. The arena is
+Until now, on the unified arenas, the only clock in a run with a position record was the
+carrier's own level (#360, #366, #369): a messenger that travels would carry the count with it.
+Here the clock is a separate device. (On arenas with stated detector laws #271,
+`dirac_timed_signal`, already has a separate device with located ticks.) The arena is
 
   `(ℂℙ^{2M+1} × T² × T²) × (ℂℙ^{4M_c+3} × T²)`,
 
@@ -35,13 +36,14 @@ arena measures (`map_clockMessengerFlow`).
 
 **One run.** From the messenger's start of #367 and the clock's train start of #358
 (`clockMessenger_departure_arrival_counts`): along the one orbit of `clockMessengerFlow` there
-are flow times `τ_d ≤ 625π/3 ≤ τ_a` at which the departure readout and the arrival readout are
-written, each a record write of the joint flow; the clock's history is a swing, so it has a tick
-count `N_d` at `τ_d` and `N_a` at `τ_a`; and
+are flow times `τ_d ≤ 625π/3 ≤ τ_a` by which the departure readout and the arrival readout are
+written, each a record write read on the messenger's factor; the clock's history is a swing, so
+it has a tick count `N_d` at `τ_d` and `N_a` at `τ_a`; and
 
   `|(N_a − N_d) (2π/R) − (τ_a − τ_d)| ≤ 4π/R`.
 
-The count difference is a number of tick records of a device that is not the messenger.
+The counts are of a device that is not the messenger. What is new is that the pair of flows is
+the Hamiltonian flow of one energy on one arena; the run itself is a conjunction on a product.
 
 ## Exact scope
 
@@ -50,9 +52,16 @@ The count difference is a number of tick records of a device that is not the mes
   (`clockMessengerFlow_fst`, `clockMessengerFlow_snd`). The clock is beside the messenger's
   departure region only in the sense that both are in one arena. Nothing places it there. The
   coupling of the clock to a detector is the next brick.
-* **The counts are aligned by the flow parameter.** `N_d` is the clock's count at the flow time
-  `τ_d` at which the departure write completes. No degree of freedom holds the pair (record,
+* **The counts are aligned by the flow parameter.** `N_d` is the clock's count at a flow time
+  `τ_d` by which the departure write is complete. No degree of freedom holds the pair (record,
   count), and no record reads the count. That is access to UA-7, as in #366.
+* **The two times are not located.** They are existential witnesses with
+  `0 ≤ τ_d ≤ 625π/3 ≤ τ_a ≤ 4375π/3`, so `τ_a − τ_d ≥ 0` is all that is stated.
+* **The interval bound is the clock's alone.** It holds for any two non-negative flow times of
+  the swing (`IsSwing.abs_tickTime_sub_sub_le`); the messenger only names the two times. No
+  hypothesis relates the tick period `2π/R` to the interval, so both counts may be zero.
+* **Ticks are counted, not instantiated as records here.** The theorem gives `IsTickCount`.
+  `IsSwing.isRecordWrite` is not applied on this arena.
 * **The two writes do not certify a transit.** They are the writes of #367: each readout crosses
   a threshold of accumulated weight in its region. The departure statement has an empty "before"
   clause. See the scope of `RecordLayer/UnifiedDepartureArrival.lean`.
@@ -77,7 +86,9 @@ UA-12, UA-13, UA-16, UO-14, UO-16, UD-103, UD-104); `LF4/ProductFlow.lean`
 (`IsSwing`, `IsTickCount`, `isSwing_clockPointerFlow_train`, `tickReady`, `tickDisplay`);
 `RecordLayer/UnifiedCountAtWrite.lean` (`IsSwing.abs_tickTime_sub_sub_le`);
 `LF4/CrossCoupledFlow.lean` (`CrossSigma`, `crossForm`: the same arena with a coupling);
-`RecordLayer/ClockAndEcho.lean` (#202: an earlier clock beside an echo, on two-site arenas).
+`RecordLayer/ClockAndEcho.lean` (#202: an earlier clock beside an echo, on two-site arenas);
+`RecordLayer/DiracTicks.lean` (#271, `dirac_timed_signal`: a separate device with located ticks,
+under stated detector laws).
 -/
 
 @[expose] public section
@@ -106,7 +117,7 @@ variable {M Mc : ℕ} {f h fc : ℝ → ℝ} (J μ g₁ g₂ : ℝ) (A B : Finse
 
 variable (Mc) in
 /-- **The joint energy of a messenger with two region pointers and a clock device with its tick
-pointer**: the sum of the two energies. No term joins the two factors. -/
+pointer**: the sum of the two energies. No term joins the two factors (UA-16). -/
 noncomputable def clockMessengerEnergy : CrossSigma (2 * M + 1) (4 * Mc + 3) → ℝ :=
   prodEnergy
     (twoCoupledEnergy (Matrix.reindex (diracIdx M) (diracIdx M) (diracHam J μ))
@@ -194,7 +205,7 @@ one run.** On the arena of a messenger beside a clock device, from the messenger
 `clockMessengerFlow` the departure readout is written by a flow time `τ_d ≤ 625π/3` and the
 arrival readout by a flow time `τ_a` with `625π/3 ≤ τ_a ≤ 4375π/3`; the clock has a tick count
 `N_d` at `τ_d` and `N_a` at `τ_a`; and the count difference times the clock's period is within
-two periods of `τ_a − τ_d`. The times are flow times (UA-7). -/
+two periods of `τ_a − τ_d`. The times are flow times (UA-7), on the arena of UA-16. -/
 theorem clockMessenger_departure_arrival_counts (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     {θ ψ : KTorus} (hθ : θ ∈ readyArc 2) (hψ : ψ ∈ readyArc 2)
     (hx : (θ.2, ψ.2) ∈ departureArrivalFibres g₁ g₂ hf hh)

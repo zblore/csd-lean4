@@ -149,8 +149,10 @@ messenger. Its first brick is BACKLOG ~~#372~~ (`LF4/ProductFlow.lean`,
 `RecordLayer/UnifiedClockMessenger.lean`): on the product of the messenger's arena and the clock
 device's arena, with the sum of the two energies, the flow is the pair of the two flows and
 preserves the product measure; one orbit has the departure and arrival writes of ~~#367~~ and the
-clock's tick count at each, and the count difference is within two ticks of the flow interval
-(`clockMessenger_departure_arrival_counts`). There is no coupling between the clock and the
+clock's tick count at a flow time by which each is complete, and the count difference is within
+two tick periods of the difference of those two unlocated flow times
+(`clockMessenger_departure_arrival_counts`). That bound holds for any two flow times of the
+clock's swing, and nothing relates the tick period to the interval. There is no coupling between the clock and the
 messenger, the counts are aligned with the writes by the flow parameter, the writes do not
 certify a transit, and the clock is one exact instance. No distance or speed is read.
 
