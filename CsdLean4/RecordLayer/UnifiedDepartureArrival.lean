@@ -84,8 +84,9 @@ strengths `g₁ = 1/(625π)`, `g₂ = 1/(1250π)` they contain `(0, 0)` and have
 * **All times are flow times** (UA-7). The readouts and ready arcs are apparatus input (UA-4),
   and the couplings to region projectors are choices (UA-5, UA-13).
 
-A statement on this run that a carrier at rest does not satisfy, at the level of the two
-pointers' displacements, is `RecordLayer/UnifiedTransitCertificate.lean` (#373).
+A statement on this flow and start that no carrier with a constant far-half occupancy
+satisfies, at the level of accumulated occupancies, is
+`RecordLayer/UnifiedTransitCertificate.lean` (#373).
 
 ## References
 

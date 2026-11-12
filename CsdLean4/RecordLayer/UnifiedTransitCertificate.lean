@@ -8,16 +8,18 @@ module
 public import CsdLean4.RecordLayer.UnifiedDepartureArrival
 
 /-!
-# A transit, certified by the two pointers' displacements
+# A transit in the accumulated occupancies that drive the two pointers
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #373 — the author's programme "From `Σ` to
 physical spacetime", obligation UO-16; Remainder (b) of #372 and the Remainder of #365 and #367.
 
 `RecordLayer/UnifiedArrivalRecord.lean` (#365) and `RecordLayer/UnifiedDepartureArrival.lean`
 (#367) write a departure record and an arrival record along one orbit. Each is a threshold
-crossing of accumulated weight, and a carrier that does not move, with a constant weight in each
-half of the ring, satisfies the same conclusions. So those records do not certify a transit. This
-module adds a statement, on the same run, that no such carrier satisfies.
+crossing of accumulated weight, and a carrier whose far-half weight is a constant between `1/7`
+and `1/4` would satisfy the conclusions of both (a calculation, not in Lean). So those records
+do not certify a transit. This module adds a statement, on the same flow and start, that no
+carrier with a constant far-half occupancy satisfies. The estimates are those of #367 and
+`dirac_arrival`, integrated over a second window; what is new is the form of the statement.
 
 **The accumulated occupancy** `crossAccum C φ χ t` is `∫₀ᵗ ⟨P_C⟩` along the carrier of
 `regionTwoFlow` started on the crossing packet, on the fibre `(φ, χ)`. The near pointer's moving
@@ -34,8 +36,9 @@ displacements over their rates.
 * over `[T₂, T₃]` the far half accumulates at least `(2/3)(T₃ − T₂)` and the near half at most
   `(1/3)(T₃ − T₂)`.
 
-The mean occupancy of the far half is at most `1/3` before `T₁` and at least `2/3` after `T₂`,
-and the near half's the other way round. The predicted arrival `625π` is between `T₁` and `T₂`.
+The mean occupancy of the far half is at most `1/3` over `[0, T₁]` and at least `2/3` over
+`[T₂, T₃]`. The near half's statements are the same two, since the two occupancies add to one.
+The predicted arrival `625π` is between `T₁` and `T₂`.
 
 **No carrier at rest does this.** A function `F t = w t`, which is the accumulated occupancy of
 a carrier whose occupancy of the region is the constant `w` (`integral_arenaObs_of_const`),
@@ -46,29 +49,39 @@ particular the far half's occupancy along this run is not constant
 **The transit fibres** (`transitFibres`): both rates positive and
 `92500 π (|g₁ f(θ₂)| + |g₂ h(ψ₂)|) < 1`. No condition relates the rates to the transit time. The
 set is open, and for both profiles `trainF` and any positive strengths it contains `(0, 0)` and
-has positive Haar measure (`volume_transitFibres_trainF_pos`).
+has positive Haar measure (`volume_transitFibres_trainF_pos`). The two rate conditions are used
+by no theorem of the module: the certificate needs only the back-reaction condition. They are
+there so that a displacement divided by its rate is the accumulated occupancy.
 
 ## Exact scope
 
-* **Displacements, not readouts.** The certificate is about the lifted displacement of each
-  pointer: a real number, the rate times the accumulated occupancy. The pointer's angle is that
-  number modulo one turn, and for the strengths of #367 the far pointer turns more than once by
-  `T₃`. No readout region, no threshold and no `IsRecordWrite` is in this module. A pointer read
-  in arcs fine enough to recover the displacement is not built here.
+* **Accumulated occupancies, not readouts.** The certificate is four inequalities on the
+  carrier's accumulated occupancy. No pointer, rate or angle is in it. The pointers enter through
+  `regionTwoFlow_cross_pointers`, an identity of angles, so they carry the accumulated
+  occupancies only modulo one turn: for the strengths of #367 the proved bounds allow the far
+  pointer up to `7/3` turns by `T₃` (and at least `1/2`). No readout region, no threshold and no
+  `IsRecordWrite` is in this module. A pointer read in arcs fine enough to recover the
+  displacement is not built here.
 * **Four flow times.** The displacements are compared at `0`, `T₁`, `T₂`, `T₃`, which are values
   of the flow parameter (UA-7). No record holds them.
 * **What is excluded** is a carrier whose occupancy of the far half is constant in time. A
   carrier that moves in some other way and gives the same four numbers is not excluded. "Transit"
-  here means: the occupancy went from mostly near to mostly far between `T₁` and `T₂`.
-* **The time is located only to `[T₁, T₂]`**, a factor of five. That is the resolution of the
-  packet estimate of `dirac_arrival`: at most a quarter of the weight in the far half up to `T₁`
-  and at least three quarters from `T₂`. The write times of #365 and #367 are not located any
-  better by this module.
+  here means: the far half's mean occupancy is at most `1/3` over `[0, T₁]` and at least `2/3`
+  over `[T₂, T₃]`. It has no direction, path or speed.
+* **The change is located only within `[0, T₃]`.** The four numbers give a time in `[0, T₁]` at
+  which the far occupancy is at most `1/3` and a time in `[T₂, T₃]` at which it is at least
+  `2/3`. The free packet's pointwise bounds (`regionWeight_cross_far`,
+  `regionWeight_cross_near`) locate it to `[T₁, T₂]`, a factor of five; that pointwise statement
+  is not proved here for the coupled carrier. The write times of #365 and #367 are not located
+  by this module.
 * **Back-reaction is bounded, not removed**: the detectors move each accumulated occupancy by at
   most `(|g₁ f| + |g₂ h|) t²`, and the fibre condition makes that a twelfth of the interval.
 * **Positive measure is Haar measure on the pair of conserved angles.** The carrier is one ray,
   so no measure of start points is stated.
 * **Definite facts, not statistics.**
+* **A different fibre condition from #367's.** No theorem states the records of #367 and this
+  certificate on a common fibre.
+* **No distance, no speed, no clock.** Nothing here is evidence about Lorentz kinematics.
 
 ## References
 
@@ -272,11 +285,11 @@ theorem abs_crossAccum_near_sub_le (φ χ : AddCircle (1 : ℝ)) {t : ℝ} (ht :
 
 /-! ### The certificate -/
 
-/-- ★★★ **A transit, certified.** On a transit fibre, along the carrier of `regionTwoFlow`
-started on the crossing packet: over `[0, 625π/3]` the far half accumulates at most a third of
-the interval and the near half at least two thirds; over `[3125π/3, 4375π/3]` the far half
-accumulates at least two thirds of the interval and the near half at most a third. The times are
-flow times (UA-7). -/
+/-- ★★★ **A transit in the accumulated occupancies.** On a transit fibre, along the carrier of
+`regionTwoFlow` started on the crossing packet: over `[0, 625π/3]` the far half accumulates at
+most a third of the interval and the near half at least two thirds; over `[3125π/3, 4375π/3]`
+the far half accumulates at least two thirds of the interval and the near half at most a third.
+The times are flow times (UA-7). -/
 theorem cross_transit_certificate {φ χ : AddCircle (1 : ℝ)}
     (hx : (φ, χ) ∈ transitFibres g₁ g₂ hf hh) :
     crossAccum g₁ g₂ hf hh hL (farHalf (M + 1)) φ χ (625 * Real.pi / 3)
@@ -330,8 +343,9 @@ theorem cross_transit_certificate {φ χ : AddCircle (1 : ℝ)}
   refine ⟨by linarith, by linarith, by linarith, by linarith⟩
 
 /-- ★★★ **The far half's occupancy along this run is not constant.** On a transit fibre no real
-`w` is the occupancy of the far half at every flow time. With `not_transit_of_linear`: a carrier
-at rest in the two halves does not pass `cross_transit_certificate`. -/
+`w` is the occupancy of the far half at every flow time. With `integral_arenaObs_of_const` and
+`not_transit_of_linear`: no carrier with a constant far-half occupancy satisfies the far half's
+two inequalities of `cross_transit_certificate`. -/
 theorem cross_far_occupancy_not_constant {φ χ : AddCircle (1 : ℝ)}
     (hx : (φ, χ) ∈ transitFibres g₁ g₂ hf hh) :
     ¬ ∃ w : ℝ, ∀ s, arenaObs (regionProj (farHalf (M + 1)))

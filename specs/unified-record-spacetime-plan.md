@@ -921,7 +921,9 @@ projector replaced by the projector on a region `A` of sites (UA-5, extended). I
 what UO-16 is annotated with; they do not meet it. UD-93 and UD-94 are in
 `RecordLayer/UnifiedDepartureArrival.lean` (BACKLOG ~~#367~~), on the two-pointer arena of UA-13
 with two region projectors, `ℂℙ^{2M+1} × T² × T²` with the joint energy
-`−2⟨H_D⟩ − 2 g₁ f(θ₂)⟨P_A⟩ − 2 g₂ h(ψ₂)⟨P_B⟩` and the flow `regionTwoFlow`.
+`−2⟨H_D⟩ − 2 g₁ f(θ₂)⟨P_A⟩ − 2 g₂ h(ψ₂)⟨P_B⟩` and the flow `regionTwoFlow`. UD-105 is in
+`RecordLayer/UnifiedTransitCertificate.lean` (BACKLOG ~~#373~~), on the same arena and start as
+UD-94.
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -930,6 +932,7 @@ with two region projectors, `ℂℙ^{2M+1} × T² × T²` with the joint energy
 | UD-91 | **A record written on arrival.** The ring has at least `640000` sites, hop `crossHop` and rest energy `3`. The carrier is the ray of the crossing packet of UD-12's module (`16` momenta, velocity `4/5`), and `A` is the far half of the ring. Along the uncoupled carrier the expectation of `P_A` is the packet's weight on the far half. The arrival fibres `arrivalFibres` are the `θ₂` with `κ > 0`, `6κ(625π/12 + \|g f(θ₂)\|(625π/3)²) < 1` and `1 < 3κ(625π/2 − \|g f(θ₂)\|(4375π/3)²)`. They are open for a `C¹` profile, and for the profile `trainF` and `g = 1/(1250π)` they contain `θ₂ = 0` and have positive measure. On an arrival fibre, from a pointer in the ready arc, for a smooth profile: there is a flow time `τ ∈ [625π/3, 4375π/3]` such that the readout history along `regionPointerFlow` is an `IsRecordWrite` of `true` from time `0` with write interval `[625π/3, τ]` and window `1/(3κ)` | `arrivalFibres`, `isOpen_arrivalFibres`, `zero_mem_arrivalFibres_trainF`, `volume_arrivalFibres_trainF_pos`, `crossPacket_ne_zero`, `arenaObs_farHalf_free_crossPacket`, `regionPointerFlow_arrival_write` | exact given the fibre; `τ` exists and is not computed; one packet and one ring; the measure is Haar on `θ₂`, for one profile and one strength |
 | UD-93 | **Two pointers coupled to two regions.** If two continuous families of unitaries satisfy `‖U s − V s‖ ≤ \|s\| N` and `‖D‖ ≤ 1`, the accumulated expectations of `D` along them differ by at most `N t²` for `t ≥ 0`. The carrier with two pointers is within `\|s\| (\|f(θ₂)\| ‖B₀‖ + \|h(ψ₂)\| ‖C₀‖)` of the uncoupled carrier. `regionTwoFlow` is `twoCoupledFlow` of UD-66 for the Dirac chain and two region projectors: it moves the carrier by the one propagator with both region terms, advances each pointer by its displacement along that orbit, and fixes both conserved angles. The first readout `echoFstShown` of UD-87 and the second `echoSiteShown` of UD-73 are `true` exactly when their pointer, turned by its rate times the accumulated weight on its region, is in the displayed arc. For any region the accumulated weight along the coupled carrier is within `(\|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|) t²` of its value along the uncoupled one | `abs_integral_arenaObs_sub_integral_le`, `norm_idxTwoCarrierU_sub_idxFreeU_le`, `regionTwoFlow`, `regionTwoFlow_apply`, `echoFstShown_regionTwoFlow_iff`, `echoSiteShown_regionTwoFlow_iff`, `abs_integral_regionProj_two_sub_free_le` | exact closed form; upper bounds for the back-reaction, not shown attained |
 | UD-94 | **A departure record and an arrival record in one run.** The ring, the packet and the far half of UD-91; the first pointer on the near half, the complement of the far half, and the second on the far half. The packet's weight on the far half is continuous in time, at most `625π/12` accumulated by `625π/3` and at least `625π/2` by `4375π/3`; along the uncoupled carrier the near half holds one minus the far half's weight. The fibres `departureArrivalFibres` are the pairs `(θ₂, ψ₂)` with both rates positive and, with `b = \|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|`: `1 < 3κ₁(625π/4 − b(625π/3)²)`, `6κ₂(625π/12 + b(625π/3)²) < 1`, `1 < 3κ₂(625π/2 − b(4375π/3)²)`. They are open for `C¹` profiles, and for both profiles `trainF` and strengths `1/(625π)`, `1/(1250π)` they contain `(0, 0)` and have positive measure. On such a fibre, from two pointers in their ready arcs, for smooth profiles: there are flow times `0 ≤ τ_d ≤ 625π/3 ≤ τ_a ≤ 4375π/3` such that, along the one orbit of `regionTwoFlow`, the near readout's history is an `IsRecordWrite` of `true` from time `0` with write interval `[0, τ_d]` and window `1/(3κ₁)`, and the far readout's history is one with write interval `[625π/3, τ_a]` and window `1/(3κ₂)` | `departureArrivalFibres`, `isOpen_departureArrivalFibres`, `zero_mem_departureArrivalFibres_trainF`, `volume_departureArrivalFibres_trainF_pos`, `continuous_regionWeight_crossPacket`, `integral_regionWeight_crossPacket_le`, `le_integral_regionWeight_crossPacket`, `arenaObs_nearHalf_free_crossPacket`, `regionTwoFlow_departure_arrival` | exact given the fibre; the two times exist and are not computed; with write interval `[0, τ_d]` the not-displayed-before clause of `IsRecordWrite` is empty, so the first statement is that the near readout is `true` through `[τ_d, τ_d + 1/(3κ₁)]` for some `τ_d ≤ 625π/3`; one packet and one ring; the measure is Haar on the pair of conserved angles, for one pair of profiles and strengths |
+| UD-105 | **A transit in the accumulated occupancies that drive the two pointers.** On the arena of UD-93, started on the crossing packet: each pointer's moving angle at the flow time `t` is its start plus its rate times the accumulated occupancy `crossAccum` of its half of the ring (an identity of angles). With `T₁ = 625π/3`, `T₂ = 3125π/3`, `T₃ = 4375π/3`, on the transit fibres (both rates positive and `92500 π (\|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|) < 1`): over `[0, T₁]` the far half accumulates at most `(1/3) T₁` and the near half at least `(2/3) T₁`; over `[T₂, T₃]` the far half accumulates at least `(2/3)(T₃ − T₂)` and the near half at most `(1/3)(T₃ − T₂)`. A function `F t = w t` does not satisfy the far half's two inequalities, and a carrier with a constant expectation `w` accumulates `w t`; so the far half's occupancy along this run is not constant. The transit fibres are open, and for both profiles `trainF` and any positive strengths they contain `(0, 0)` and have positive measure | `integral_arenaObs_of_const`, `not_transit_of_linear`, `transitFibres`, `isOpen_transitFibres`, `zero_mem_transitFibres_trainF`, `volume_transitFibres_trainF_pos`, `crossAccum`, `regionTwoFlow_cross_pointers`, `le_integral_regionWeight_crossPacket_late`, `abs_crossAccum_far_sub_le`, `abs_crossAccum_near_sub_le`, `cross_transit_certificate`, `cross_far_occupancy_not_constant` (`RecordLayer/UnifiedTransitCertificate.lean`) | inequalities with sufficient constants; on accumulated occupancies at four flow times, which the pointers carry only modulo one turn; no pointer inequality, no readout and no record; the measure is Haar on the pair of conserved angles |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -990,6 +993,41 @@ the order through `625π/3` does not certify a transit.
 UD-93 and UD-94 use UA-13, UA-8, UA-7, UA-5 and the arcs, profiles and strengths of UA-4. UA-2
 enters only through the measure on the pair of conserved angles. UA-6 is not used.
 
+Exact scope of UD-105 (BACKLOG ~~#373~~). What it gives. The records of UD-91 and UD-94 are threshold
+crossings of accumulated weight, and a carrier whose far-half weight is a constant between `1/7`
+and `1/4` would satisfy their conclusions (a calculation, not in Lean). UD-105 is a statement on
+the same flow and start that no carrier with a constant far-half occupancy satisfies: the mean
+occupancy of the far half is at most `1/3` over `[0, T₁]` and at least `2/3` over `[T₂, T₃]`, and
+a constant `w` would have to be at most `1/3` and at least `2/3` (`integral_arenaObs_of_const`
+with `not_transit_of_linear`). The estimates are those of UD-94 and `dirac_arrival`, integrated
+over a second window; what is new is the form of the statement, an upper bound early and a
+lower bound on a late increment for the same half, and a fibre condition with no relation
+between a detector's rate and the transit time. It holds on a set of positive Haar measure for
+both profiles `trainF` and any positive strengths, a neighbourhood of `(0, 0)` whose size is not
+computed. What it does not give. The certificate is four inequalities on the carrier's
+accumulated occupancy. No pointer, rate or angle is in it; the pointers enter through an identity
+of angles (`regionTwoFlow_cross_pointers`) and carry the accumulated occupancies only modulo one
+turn. For the strengths of UD-94 the proved bounds allow the far pointer up to `7/3` turns by
+`T₃`, and at least `1/2`. There is no readout region, no threshold and no `IsRecordWrite`, so
+this is not a record and it certifies nothing to an observer who has only the records of UD-94.
+The near half's two inequalities restate the far half's, since the two occupancies add to one.
+The two rate conditions of `transitFibres` are used by no theorem; the certificate needs only
+the back-reaction condition. The four times are values of the flow parameter (UA-7). What is
+excluded is a carrier whose occupancy of the far half is constant in time; a carrier that moves
+in some other way and gives the same numbers is not excluded, and "transit" has no direction,
+path or speed in it. The change is located only within `[0, T₃]`: the four numbers give a time
+in `[0, T₁]` with far occupancy at most `1/3` and a time in `[T₂, T₃]` with at least `2/3`. The
+location to `[T₁, T₂]`, a factor of five, belongs to the free packet's pointwise bounds and is
+not proved for the coupled carrier. The write times of UD-91 and UD-94 are not located. The
+fibre condition is not that of UD-94, and no theorem states the records and the certificate on
+a common fibre. No distance, no speed and no clock appear, and nothing here is evidence about
+Lorentz kinematics. By the test of §6: the hypotheses that are Register 1 entries are the
+couplings and the parameters; no definition contains the conclusion; the object is the flow of
+the joint energy; and the statement fails for a carrier with a constant occupancy, which is what
+was asked. It passes no gate: it has no record in it. UD-105 uses UA-13, UA-8, UA-7, UA-5 and the
+profiles and strengths of UA-4. UA-2 enters only through the measure on the pair of conserved
+angles. UA-6 is not used.
+
 ### 4.1e The pointer step and the three-pointer arena
 
 UD-95 is in `LF4/PointerStep.lean` and UD-96 in `LF4/TriCoupledFlow.lean` (BACKLOG ~~#368~~). UD-95
@@ -1007,7 +1045,6 @@ They are what UO-16 is annotated with; they do not meet it.
 | UD-98 | **Three records in one run, and the clock's count at each detector's record.** A pointer at `1/12` turned by `t c`, `c > 0`, is in the displayed arc exactly for `1/(4c) < t`, on `0 ≤ t ≤ 3/(4c)`. The start `clockTwoSiteTrainStart` is that of UD-76 with a third pointer at `1/12` and `χ₂ = 0`; all three profiles are `trainF`. Along the orbit of `clockTwoSiteFlow` from it the first component is the orbit of UD-76, so the clock's pointer is a swing at the level splitting `R` on every horizon, for all strengths of the detectors. With `g₂, g₃ > 0`, `μ₀ < μ₁ < 2μ₀`, `R` the mode's level splitting and the clock strength `g₁` fixed as in UD-76: the first detector's readout is `true` exactly for `(M+1)/(8 g₂) < t` on `0 ≤ t ≤ 3(M+1)/(8 g₂)`, and the second detector's exactly for `(M+1)/(8 g₃) < t` on `0 ≤ t ≤ 3(M+1)/(8 g₃)`. The tick history has counts `N₂` at `t₂ = (M+1)/(8 g₂)` and `N₃` at `t₃ = (M+1)/(8 g₃)`, with `\|N_i · 2π/R − t_i\| ≤ 2π/R` and `\|(N₃ − N₂) · 2π/R − (t₃ − t₂)\| ≤ 4π/R` | `pshift_twelfth_mem_displayArc_iff`, `clockTwoSiteTrainStart`, `clockTwoSiteFlow_train_fst`, `isSwing_clockTwoSiteFlow_train`, `echoSiteShown_clockTwoSiteFlow_train_iff`, `triThdShown_clockTwoSiteFlow_train_iff`, `clockTwoSite_records_train` | exact switching instants; count bounds of one and two periods; on a null set of fibres; one mode — the same occupancy at every site, so no signal travels |
 | UD-103 | **Two symplectic arenas side by side.** For compact symplectic arenas `S`, `S'` and smooth `H`, `K`: the energy `H(a) + K(b)` on `S × S'` is smooth, its Hamiltonian vector field for `π₁^* α + π₂^* β` is the pair of the two fields, and its Hamiltonian flow is `(Φ_H^t a, Φ_K^t b)`. If each flow is measure preserving for `μ` and `ν`, the joint flow is for `μ ⊗ ν` | `prodEnergy`, `prodEnergy_eq`, `contMDiff_prodEnergy`, `isHamiltonianVectorField_prodEnergy`, `hamiltonianFlow_prodEnergy`, `measurePreserving_hamiltonianFlow_prodEnergy` (`LF4/ProductFlow.lean`) | exact; generic, no carrier and no record; the measure statement is conditional on each factor's |
 | UD-104 | **A clock on its own carrier beside a messenger: one flow, two records, two counts.** On `(ℂℙ^{2M+1} × T² × T²) × (ℂℙ^{4M_c+3} × T²)` the flow of the sum of the messenger's energy with two region pointers (UD-93) and the clock device's energy with its tick pointer (UD-58) is the pair of `regionTwoFlow` and `clockPointerFlow`, and it preserves `echoMuL ⊗ kMuL`. From the messenger's start of UD-94 and the clock's train start of UD-62: there are flow times `τ_d ≤ 625π/3 ≤ τ_a ≤ 4375π/3` with the departure readout and the arrival readout, read on the messenger's factor along the joint orbit, each an `IsRecordWrite`, tick counts `N_d` at `τ_d` and `N_a` at `τ_a` of the clock's history read on the joint orbit, and `\|(N_a − N_d)(2π/R) − (τ_a − τ_d)\| ≤ 4π/R` | `IsSwing.prodMk_snd`, `clockMessengerEnergy`, `contMDiff_clockMessengerEnergy`, `clockMessengerFlow`, `clockMessengerFlow_apply`, `clockMessengerFlow_fst`, `clockMessengerFlow_snd`, `map_clockMessengerFlow`, `clockMessenger_departure_arrival_counts` (`RecordLayer/UnifiedClockMessenger.lean`) | the flow and the measure are exact; the run is an existence statement with the bounds of UD-94 and a two-tick bound; no coupling between clock and messenger; counts aligned by the flow parameter |
-| UD-105 | **A transit, certified by the two pointers' displacements.** On the arena of UD-93, started on the crossing packet: each pointer's moving angle at the flow time `t` is its start plus its rate times the accumulated occupancy `crossAccum` of its half of the ring. With `T₁ = 625π/3`, `T₂ = 3125π/3`, `T₃ = 4375π/3`, on the transit fibres (both rates positive and `92500 π (\|g₁ f(θ₂)\| + \|g₂ h(ψ₂)\|) < 1`): over `[0, T₁]` the far half accumulates at most `(1/3) T₁` and the near half at least `(2/3) T₁`; over `[T₂, T₃]` the far half accumulates at least `(2/3)(T₃ − T₂)` and the near half at most `(1/3)(T₃ − T₂)`. A function `F t = w t` does not satisfy the far half's two inequalities, and a carrier with a constant expectation `w` accumulates `w t`; so the far half's occupancy along this run is not constant. The transit fibres are open, and for both profiles `trainF` and any positive strengths they contain `(0, 0)` and have positive measure | `integral_arenaObs_of_const`, `not_transit_of_linear`, `transitFibres`, `isOpen_transitFibres`, `zero_mem_transitFibres_trainF`, `volume_transitFibres_trainF_pos`, `crossAccum`, `regionTwoFlow_cross_pointers`, `le_integral_regionWeight_crossPacket_late`, `abs_crossAccum_far_sub_le`, `abs_crossAccum_near_sub_le`, `cross_transit_certificate`, `cross_far_occupancy_not_constant` (`RecordLayer/UnifiedTransitCertificate.lean`) | inequalities with sufficient constants; about lifted displacements at four flow times, with no readout and no record; the measure is Haar on the pair of conserved angles |
 
 Exact scope of UD-95 and UD-96. What they give. The flows of §2 for one and two pointer tori were
 each proved for their own arena. UD-95 is the construction they share, for any compact symplectic
@@ -1088,29 +1125,6 @@ as invariance only (`map_clockMessengerFlow`); the positive measure of the messe
 UD-94's, and the joint start set of the run is null for `echoMuL ⊗ kMuL`, since the clock starts
 at one point. UA-6 is not used.
 
-Exact scope of UD-105 (BACKLOG ~~#373~~). What it gives. The records of UD-89 to UD-94 are threshold
-crossings of accumulated weight, and a carrier at rest with a constant weight in each half of the
-ring satisfies their conclusions. UD-105 is a statement on the same run that no such carrier
-satisfies. The mean occupancy of the far half is at most `1/3` over `[0, T₁]` and at least `2/3`
-over `[T₂, T₃]`, and the near half's the other way round; the predicted arrival `625π` lies
-between `T₁` and `T₂`. A constant occupancy `w` would have to be at most `1/3` and at least
-`2/3`. The fibre condition has no relation between a detector's rate and the transit time, and
-it holds on a set of positive Haar measure for any positive strengths. What it does not give. It
-is about the lifted displacement of each pointer, a real number; the pointer's angle is that
-number modulo one turn, and for the strengths of UD-94 the far pointer turns more than once by
-`T₃`. There is no readout region, no threshold and no `IsRecordWrite`, so this is not a record
-and it certifies nothing to an observer who has only the records of UD-94. A pointer read in arcs
-fine enough to recover the displacement is not built. The four times are values of the flow
-parameter (UA-7). What is excluded is a carrier whose occupancy of the far half is constant in
-time; a carrier that moves in some other way and gives the same four numbers is not excluded.
-The time of the transit is located only to `[T₁, T₂]`, a factor of five, which is the resolution
-of the packet estimate behind UD-12's module (a quarter of the weight before, three quarters
-after). The write times of UD-91 and UD-94 are not located any better. By the test of §6: the
-hypotheses that are Register 1 entries are the couplings and the parameters; no definition
-contains the conclusion; the object is the flow of the joint energy; and the statement fails for
-a carrier at rest, which is what was asked. It passes no gate: it has no record in it. UD-105
-uses UA-13, UA-8, UA-7, UA-5 and the profiles and strengths of UA-4. UA-2 enters only through
-the measure on the pair of conserved angles. UA-6 is not used.
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -1666,16 +1680,18 @@ time. It is not a statement about every dynamics on `Σ`.
   prepared departure; detectors on less than half the ring; the ticks as `IsRecordWrite`s on
   this arena; a tick period shown shorter than the interval; and a family along which the errors
   shrink.
-  ▸ **A transit certified at the level of displacements, 2026-11-12 (BACKLOG ~~#373~~) → UD-105.
-  Not met.** On the run of UD-94 the far pointer's displacement over its rate is at most a third
-  of `[0, 625π/3]` and gains at least two thirds of `[3125π/3, 4375π/3]`, and the near pointer's
-  the other way round (`cross_transit_certificate`). No carrier with a constant occupancy of the
-  far half does that (`not_transit_of_linear`, `cross_far_occupancy_not_constant`). So the
-  standing objection to UD-89 to UD-94, that a carrier at rest satisfies them, does not apply to
-  this statement. *Conditions:* it is about lifted displacements at four flow times, not about
-  readouts, and no record is built; the transit is located only to a factor of five. *What is
-  still missing here:* the same as a record, which needs a pointer read finely enough to recover
-  its displacement; and a sharper packet estimate, to locate the write times.
+  ▸ **A transit in the accumulated occupancies, 2026-11-12 (BACKLOG ~~#373~~) → UD-105. Not met.**
+  On the flow and start of UD-94 the far half's accumulated occupancy is at most a third of
+  `[0, 625π/3]` and gains at least two thirds of `[3125π/3, 4375π/3]`
+  (`cross_transit_certificate`). No carrier with a constant occupancy of the far half does that
+  (`integral_arenaObs_of_const` with `not_transit_of_linear`; for this run's own carrier,
+  `cross_far_occupancy_not_constant`). So the objection to UD-91 and UD-94, that a carrier whose
+  far-half weight is a suitable constant would satisfy them, does not apply to this statement.
+  *Conditions:* four inequalities on accumulated occupancies at flow times, which the pointers
+  carry only modulo one turn; no pointer inequality, no readout and no record; the change is
+  located only within `[0, 4375π/3]`. *What is still missing here:* the same as a record, which
+  needs a pointer read finely enough to recover its displacement; and a sharper packet estimate
+  with a pointwise statement for the coupled carrier, to locate the change and the write times.
 
 ### M7 — `3 + 1`
 
@@ -1822,7 +1838,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit certified by displacements), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

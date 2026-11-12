@@ -155,12 +155,12 @@ two tick periods of the difference of those two unlocated flow times
 clock's swing, and nothing relates the tick period to the interval. There is no coupling between the clock and the
 messenger, the counts are aligned with the writes by the flow parameter, the writes do not
 certify a transit, and the clock is one exact instance. No distance or speed is read.
-A transit is certified at the level of the pointers' displacements (BACKLOG ~~#373~~,
-`RecordLayer/UnifiedTransitCertificate.lean`, `cross_transit_certificate`): on the run of ~~#367~~
-the far half's mean occupancy is at most `1/3` over `[0, 625π/3]` and at least `2/3` over
-`[3125π/3, 4375π/3]`, and the near half's the other way round, which no carrier with a constant
-occupancy satisfies. This is about lifted displacements at four flow times. It is not a record,
-and the transit is located only to a factor of five.
+The accumulated occupancies that turn the two pointers show a transit (BACKLOG ~~#373~~,
+`RecordLayer/UnifiedTransitCertificate.lean`, `cross_transit_certificate`): on the flow and start
+of ~~#367~~ the far half's mean occupancy is at most `1/3` over `[0, 625π/3]` and at least `2/3`
+over `[3125π/3, 4375π/3]`, which no carrier with a constant occupancy satisfies. The pointers'
+angles carry those numbers only modulo one turn. It is not a record, and the change is located
+only within `[0, 4375π/3]`.
 
 ## What is open
 
