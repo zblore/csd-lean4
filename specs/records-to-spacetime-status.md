@@ -231,11 +231,12 @@ strength is free here, so it is not shown to tick. `a` and `b` are flow times, n
 and a return marked by records. In the same run the first pointer, coupled to the near half
 with a strength in a stated window, writes on the return leg (BACKLOG ~~#382~~,
 `RecordLayer/UnifiedRoundTrip.lean`): its readout does not display before the return leg begins
-and displays after a flow time `τ` on it, and the clock's own pointer has a count at `τ` within
-one period of `τ`. That is one record from a prepared start, a threshold of accumulated
+and displays through a window after a flow time `τ` on it, the end of the stated write
+interval, and the clock's own pointer has a count at `τ` within one period of `τ` (it may be
+zero). That is one record from a prepared start, a threshold of accumulated
 occupancy that does not certify a return, located only within the return leg; the count is
-read at a flow time and not by the record. No record is stated on the return leg, and no
-radar time is formed from counts.
+read at a flow time and not by the record. No emission or departure record is stated in that
+run, the count is not read by a record, and no radar time is formed from counts.
 
 ## What is open
 

@@ -8,22 +8,24 @@ module
 public import CsdLean4.RecordLayer.UnifiedTwoCounts
 
 /-!
-# A return record, with the running clock's count at it
+# A record written on the return leg, with the running clock's count
 
 **TERM-SCOPE(Hamiltonian)** — this module uses the *restricted* sense of "Hamiltonian";
 `specs/TERMS.md` records what is backed and what is not.
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #382 — milestone **M6** of the author's
-programme "From `Σ` to physical spacetime", obligation UO-16; Remainders (a) and (b) of #381.
+programme "From `Σ` to physical spacetime", obligation UO-16; towards Remainder (b) of #381
+(Remainder (a) stays open).
 
 On the composite carrier with its four pointers (UA-17 with (e)) the first pointer is coupled
 to the near half of the messenger's ring. It advances by its rate times the messenger's
 accumulated occupancy of the near half. The messenger of #379 is in the near half, leaves,
-and comes back. If the pointer's rate is small enough that the first presence does not carry
-it out of its ready arc, and large enough that the first presence and the return together
-carry it into its displayed arc, its readout is written on the return leg: a record that the
-messenger is back. The clock's own pointer of #381 runs throughout, so it has a count at that
-write.
+and comes back. If the pointer's rate is small enough that everything accumulated before the
+return leg begins does not carry it into its displayed arc, and large enough that the first
+presence and the return together do, its readout is written on the return leg. The write is a
+threshold of accumulated near-half occupancy; it does not certify that the messenger is back.
+The clock's own pointer of #381 runs throughout, so it has a count at a flow time on the
+return leg by which the write is complete.
 
 * `integral_le_of_forall_le`, `le_integral_of_forall_le`;
 * `nearOcc`, `continuous_nearOcc`, `nearOcc_nonneg`, `nearOcc_le_one`, `nearOcc_eq`;
@@ -31,9 +33,11 @@ write.
   fibre the accumulated near-half occupancy is at most `roundUpper n δ` at the start of the
   return leg and at least `roundLower n δ` at its end;
 * `two_roundUpper_le_roundLower` — for `δ ≤ π/48` and `fineEta n δ ≤ 1/48` the two bounds are a
-  factor two apart, so a rate between them exists;
+  factor two apart, so for `n > 0` any `κ` with `1/(3·roundLower) ≤ κ ≤ 1/(6·roundUpper)`
+  satisfies both rate conditions (that last step is not stated in Lean);
 * `echoFstShown_twoCount_iff` — the first pointer's readout along the run of #381;
-* ★ `return_record_with_count` — **a return record and the clock's count at it**: there is a
+* ★ `return_record_with_count` — **a record written on the return leg and the clock's count at
+  the end of its write interval**: there is a
   flow time `τ` on the return leg such that the first pointer's readout is an `IsRecordWrite`
   of `true` with write interval `[roundBack n δ, τ]`, the clock's own pointer has a tick count
   `N` at `τ`, and `|N · 2π/R − τ| ≤ 2π/R`.
@@ -46,10 +50,14 @@ write.
   the first presence. So the reading is "the clock's count at the return record, counted from
   the prepared start", not a difference of two records.
 * **The write is located only within the return leg.** `τ` lies between the flow times of the
-  predicted angles `3π/2 + δ` and `5π/2 − δ`. With the two arcs of #358 the pointer must go
-  from at most `1/6` to `1/3`, which takes at least as much accumulated occupancy as the first
-  presence gave, so the write interval is long. The count locates `τ` within one period; it
-  does not sharpen where `τ` is.
+  predicted angles `3π/2 + δ` and `5π/2 − δ`. It is the end of the stated write interval, not
+  the instant the readout turns. The `τ` the crossing lemma gives is where the
+  displacement reaches `1/3`; under the rate hypotheses that is at least `roundUpper n δ` after
+  the start of the return leg, more than
+  half the leg (a calculation, not in Lean; the theorem states only
+  `roundBack ≤ τ ≤ roundEnd`). The readout itself may turn earlier within the interval.
+  `N · 2π/R` is within one period of `τ`; no hypothesis relates the period to the length of
+  the return leg, and `N` may be zero.
 * **The write does not certify a return.** It is a threshold of accumulated occupancy, as in
   #367. A carrier whose near-half occupancy is a suitable constant would give a readout with
   the same two clauses (a calculation, not in Lean). What shows the round trip is the
@@ -75,11 +83,13 @@ write.
   flow time of the return is fixed by the ring's length and the packet's velocity (UA-8). No
   distance is measured, there is no reflector and no second observer, and nothing here is
   evidence about Lorentz kinematics.
-* **Earlier readings.** #372 has a separate clock's counts at a departure write and an arrival
-  write, on the uncoupled product arena. #200 and #202 (echo arena), #270 (reflection, stated
-  detector law) and #274 and #278 (relay, stated hybrid law) have emission and return records
-  with a clock reading. What is new here is the place: the write is on the return leg of the
-  free round trip of #379, and the clock is a tensor factor of the same composite carrier. It
+* **Earlier readings.** #360 and #366 have a clock's count at a position write, with the flow
+  time shown to be the switching instant; #369 a clock and two detectors with counts at two
+  readout switches in one run. #372 has a separate clock's counts at a departure write and an
+  arrival write, on the uncoupled product arena. #200 and #202 (echo arena), #270 (reflection,
+  stated detector law) and #274 and #278 (relay, stated hybrid law) have emission and return
+  records with a clock reading. What is new here is the place: the write is on the return leg of
+  the free round trip of #379, and the clock is a tensor factor of the same composite carrier. It
   has one record, not two.
 
 ## References
@@ -303,9 +313,12 @@ variable (hRe : R = levelClockRate μ₀ μ₁ (2 * Jc * Real.sin (angleZ (Mc + 
     / (16 * (deviceCoherence (devicePacket (L := Mc + 1) Jc μ₀ μ₁ {m} β 0)).re))
 include h10 hRe hg
 
-/-- ★ **A return record, with the running clock's count at it.** On the composite carrier with
+/-- ★ **A record written on the return leg, with the running clock's count at the end of its
+write interval.** The write is a threshold of accumulated occupancy and does not certify a
+return. On the composite carrier with
 four pointers, from `twoCountStart` with the first pointer ready, on a round fibre of the two
-region pointers, with `0 ≤ δ ≤ π/2`: if the first pointer's rate `κ` satisfies
+region pointers, with `0 < δ ≤ π/2` (in Lean `0 ≤ δ`, `δ ≤ π/2`, `cos δ < 1`): if the first
+pointer's rate `κ` is positive and satisfies
 `κ · roundUpper n δ ≤ 1/6` and `1/3 ≤ κ · roundLower n δ`, there are a flow time `τ` on the
 return leg and a number `N` such that
 
