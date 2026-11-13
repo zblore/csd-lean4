@@ -76,8 +76,8 @@ configuration into its two mode blocks, and everything is read through it:
 count `N` and compose mode-disjointly, the field-native case the CV chain and
 P1's arenas are built from. Heterogeneous composites (`N₁ ≠ N₂`, non-field
 sectors) are not claimed here; they need the arena API generalised over its
-index type (rule-of-two note: generalise `ArenaBridge` when next touched). The
-product-state half is now stated over arbitrary index types in `CV/ProductRay.lean`
+index type (rule-of-two note: generalise `ArenaBridge` when next touched).
+The product-state half is now stated over arbitrary index types in `CV/ProductRay.lean`
 (#376). The
 fibre side of the composite is the product of record media, with per-sector
 strokes covered by P1's generic machinery through `leftOp_supportedOn`; and

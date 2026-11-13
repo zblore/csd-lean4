@@ -186,13 +186,20 @@ The composite carrier is built as a first brick (BACKLOG ~~#376~~,
 one ray of the tensor product, and the clock's pointer is coupled to the product of the
 messenger's projector on the departure region and the clock's level swap. From a product ray,
 on the fibres where that pointer does not act back, its rate is the messenger's occupancy of
-the region times the clock's reading, so it follows the clock's own pointer while the messenger
-is in the region and stops after the messenger has left, within stated bounds. The gate is an
-occupancy and not a record, and the fibres and the starts are null sets.
+the region times the clock's reading. On the packet family of ~~#375~~ its displacement is
+within `|k'||g_c| t/n` of the displacement the pointer of ~~#357~~ has on the clock's own arena
+from the same clock start, for `0 ≤ t ≤ (625π/3) n²`, and on
+`[(3125π/3) n², (4375π/3) n²]` it moves at a rate at most `|k'||g_c|/n`. The gate is an
+occupancy and not a record, and the fibres and the starts are null sets (calculations, not in
+Lean).
 Read through the arcs of ~~#358~~ (BACKLOG ~~#377~~, `RecordLayer/UnifiedGateTicks.lean`), the
 gated pointer is a swing while the messenger is in the near half, up to a flow time `T` with
-`|g_c| T/n < 1/12`: it has tick records and a count within one period of `T`. On the stated
-interval after the transit no tick is begun and completed. That the count stops at departure
+`|g_c| T/n < 1/12`: it has tick records and a count whose product with the period `2π/R` is
+within one period of `T`; the count may be zero. After the transit, for flow times `a ≤ b` of
+`[(3125π/3) n², (4375π/3) n²]` with `|k'(χ₂)||g_c| (b − a)/n ≤ 1/6`, a gated pointer ready at
+`a` is not displayed at `b`: no tick is begun and completed inside such a sub-interval. For the
+whole interval that needs `|k'||g_c| n ≤ 1/(2500π)`, which no theorem assumes. That the count
+stops at departure
 is not proved: nothing is stated for the transit window, and no theorem gives the count at a
 later time.
 

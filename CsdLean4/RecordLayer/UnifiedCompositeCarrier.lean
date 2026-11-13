@@ -41,7 +41,7 @@ on `ℂℙ^N × T² × T² × T²`, an instance of the three-pointer energy of #
   the clock's free propagator**; `arenaKick_idxTwoCarrierU_composite`,
   `idxTwoShiftFst_composite`, `idxTwoShiftSnd_composite`;
 * `gateShift`, `gateFlow`, `triMuL_map_gateFlow`;
-* ★★★ `gateFlow_prodRay` — **the flow from a product ray, on a fibre where the third profile
+* ★★ `gateFlow_prodRay` — **the flow from a product ray, on a fibre where the third profile
   vanishes**: the carrier stays a product ray, the messenger and its two pointers move as on
   their own arena, the clock moves freely, and the third pointer advances by
   `−2 k'(χ₂) ∫₀ᵗ ⟨P⟩_messenger(s) ⟨X⟩_clock(s) ds`;
@@ -49,7 +49,9 @@ on `ℂℙ^N × T² × T² × T²`, an instance of the three-pointer energy of #
   `2|k'(χ₂)| c` times the accumulated `⟨P⟩`** (for `0 ≤ ⟨P⟩`, `‖X‖ ≤ c`);
   `abs_gateShift_sub_le_of_le`;
 * ★★ `abs_gateShift_sub_free_le` — **the third pointer is within `2|k'(χ₂)| c` times the
-  accumulated `1 − ⟨P⟩` of the pointer coupled to `X` alone** (for `⟨P⟩ ≤ 1`);
+  accumulated `1 − ⟨P⟩` of `−2 k'(χ₂)` times the clock's accumulated free reading of `X`**
+  (for `⟨P⟩ ≤ 1`); on a fibre where the profile vanishes that is the displacement of a pointer
+  coupled to `X` alone;
   `abs_gateShift_sub_free_le_of_le`, `idxPointerShift_eq_free`.
 
 ## The messenger on the ring, the two-level clock
@@ -57,10 +59,10 @@ on `ℂℙ^N × T² × T² × T²`, an instance of the three-pointer energy of #
 * `arenaObs_regionProj_compl`;
 * `gateClockFlow` — the Dirac messenger with pointers on two regions `A` and `B`, the
   two-level device of #357, and the device's pointer coupled to `P_A ⊗ g_c X`;
-  `triMuL_map_gateClockFlow`, ★★ `gateClockFlow_apply`, `gateClockShift`;
-* ★★ `gateClockFlow_fst_pointer`, `gateClockFlow_snd_pointer` — **the two region pointers
+  `triMuL_map_gateClockFlow`, ★ `gateClockFlow_apply`, `gateClockShift`;
+* ★ `gateClockFlow_fst_pointer`, `gateClockFlow_snd_pointer` — **the two region pointers
   move exactly as in `regionTwoFlow`** (#367);
-* ★★ `fine_gateClock_before`, `fine_gateClock_after` — **on the packet family of #375, with
+* ★ `fine_gateClock_before`, `fine_gateClock_after` — **on the packet family of #375, with
   the gate on the near half: up to `(625π/3) n²` the clock's pointer is within
   `|k'(χ₂)||g_c| t/n` of the pointer of #357 on the same clock, and between any two flow times
   of `[(3125π/3) n², (4375π/3) n²]` it moves by at most `|k'(χ₂)||g_c| (t₂ − t₁)/n`**.
@@ -71,21 +73,32 @@ on `ℂℙ^N × T² × T² × T²`, an instance of the three-pointer energy of #
   product observable and its strength are chosen. Nothing here derives them.
 * **Only the fibres where the third profile vanishes, and only product starts.** There the
   third pointer does not act on the carrier, so a product ray stays a product ray. For the
-  profile `trainF` that is a null set of fibres. Off it the term `k(χ₂) P ⊗ X` entangles the
-  messenger with the clock, and nothing is proved. Product rays are a null set for the measure
-  of the arena, so no statement here is about a set of starts of positive measure in the base.
+  profile `trainF` that is a null set of fibres, and product rays are a null set of the base
+  for `μ_FS` (two calculations, not in Lean). Off those fibres the product structure is not
+  shown to persist: the term `k(χ₂) P ⊗ X` is not a Kronecker sum, and that it entangles the
+  messenger with the clock is expected and not in Lean. Nothing is proved there.
 * **The pointer is gated by an occupancy, not by a record.** Its rate is the product of the
   messenger's occupancy of the region and the clock's reading, both expectations. No readout of
-  the departure pointer enters. By #374 the pointer is again a cyclic coordinate: the flow
-  commutes with turning it, and nothing else depends on where it started.
+  the departure pointer enters. The pointer is again a cyclic coordinate: it is the pointer
+  that the last step of #368 adds, so the generic statement of #374
+  (`hamiltonianFlow_stepEnergy_shiftMoving`) covers it. That is not instantiated for `gateFlow`
+  here, and the record-level statement of #374 is for the arena of #372 only.
+* **The comparison with the clock's pointer is across arenas.** The clock has no pointer of
+  its own on this arena. `idxPointerShift … (clockB g_c)` is the displacement the pointer of
+  #357 has on the clock's own arena from the same clock start. Two real functions are
+  compared; they are not two pointers in one run.
+* **Dependence on the messenger is shown along one run.** No theorem compares two messenger
+  starts.
 * **No tick, no count, no record.** No ready arc, no threshold, no `IsSwing`, no `IsTickCount`
   and no `IsRecordWrite` is stated on this arena. That the gated pointer's swings are tick
   records whose count stops at departure is not proved. The swing, its tick records and a count
   before departure are in `RecordLayer/UnifiedGateTicks.lean` (#377); the count is not shown
   to stop there either.
-* **The errors grow with the system.** On the family of #375 the two bounds are
-  `|k'||g_c| t/n` with `t` up to `(625π/3) n²`, so the first is at most `(625π/3)|k'||g_c| n`
-  at the end of its interval. Against the swing of the free pointer, of order `|k'||g_c|/R` for
+* **The errors grow with the system, and the second bound is a rate.** On the family of #375
+  the two bounds are `|k'||g_c| t/n` with `0 ≤ t ≤ (625π/3) n²`, so the first is at most
+  `(625π/3)|k'||g_c| n` at the end of its interval, and the second says that on
+  `[(3125π/3) n², (4375π/3) n²]` the pointer moves at a rate at most `|k'||g_c|/n`, not that it
+  is at rest. Against the swing of the free pointer, of order `|k'||g_c|/R` for
   a clock of rate `R`, that is small only when `n R` is small, and then the number of swings
   before departure is of order `n² R`. A regime with many swings and a small error needs
   `1/n² ≪ R ≪ 1/n`. That is a calculation and not a theorem of this module.
@@ -97,6 +110,10 @@ on `ℂℙ^N × T² × T² × T²`, an instance of the three-pointer energy of #
 * **Flow times throughout (UA-7).**
 * **Definite facts, not statistics.** The measure statement is invariance only. UA-6 is not
   used.
+* **Earlier gates.** `RecordLayer/GatedFlow.lean` (#274) has a Hamiltonian gated by a register
+  under a stated hybrid law, and #212 a clock detuned by a detector's angle. Here the gate is a
+  term of one joint energy on the arena.
+* **Nothing here is evidence about Lorentz kinematics.**
 
 ## References
 
@@ -112,7 +129,8 @@ UA-7, UA-8, UA-9, UA-12, UA-13, UA-15, UA-17, UO-16, UO-24, UD-110 to UD-112);
 (`regionTwoFlow`, #367); `RecordLayer/UnifiedFineTransit.lean` (`fineCarrier`,
 `fineCarrier_far_before`, `fineCarrier_far_after`, #375); `RecordLayer/UnifiedRecordInert.lean`
 (#374); `RecordLayer/UnifiedClockMessenger.lean` (#372: the two carriers side by side);
-`CV/CompositeArena.lean` (`bell_not_join`: product rays are not all rays).
+`CV/CompositeArena.lean` (`bell_not_join`: for field sectors product rays are not all rays);
+`RecordLayer/GatedFlow.lean` (#274: a gate by a register under a stated law).
 -/
 
 @[expose] public section
@@ -252,7 +270,7 @@ theorem triMuL_map_gateFlow (hA : A₀.IsHermitian) (hB₁ : B₁.IsHermitian)
     ((kronecker_isHermitian hB₂ Matrix.isHermitian_one).reindex (prodIdx e₁ e₂))
     ((kronecker_isHermitian hP hX).reindex (prodIdx e₁ e₂)) hf hh hk hc hch hck p₀ t
 
-/-- ★★★ **The flow of the composite carrier from a product ray, on a fibre where the third
+/-- ★★ **The flow of the composite carrier from a product ray, on a fibre where the third
 profile vanishes.** The carrier stays a product ray: the messenger moves by its own propagator
 with its two pointers' terms and the clock moves freely. The two messenger pointers advance as
 on the messenger's arena. The third pointer advances by `gateShift`: `−2 k'(χ₂)` times the
@@ -375,7 +393,9 @@ theorem abs_gateShift_sub_le_of_le (hA : A₀.IsHermitian) (hB₁ : B₁.IsHermi
   rw [intervalIntegral.integral_const, smul_eq_mul, mul_comm]
 
 /-- ★★ **The gated pointer is within `2|k'(ζ)| c` times the accumulated `1 − ⟨P⟩` of the
-pointer coupled to `X` alone**, when `⟨P⟩ ≤ 1` at every ray and `‖X‖ ≤ c`. While the messenger
+clock's free reading of `X` times `−2 k'(ζ)`**, when `⟨P⟩ ≤ 1` at every ray and `‖X‖ ≤ c`. On a
+fibre where the profile vanishes that is the displacement of a pointer coupled to `X` alone
+(`idxPointerShift_eq_free`). While the messenger
 is in the region the gated pointer is the clock's pointer. -/
 theorem abs_gateShift_sub_free_le (hA : A₀.IsHermitian) (hB₁ : B₁.IsHermitian)
     (hB₂ : B₂.IsHermitian) (hC : C₀.IsHermitian) (hf : Function.Periodic f 1)
@@ -501,7 +521,7 @@ noncomputable def gateClockShift (φ χ ζ : AddCircle (1 : ℝ))
     (regionProj_smul_isHermitian g₂ B) (deviceHam_isHermitian Jc μ₀ μ₁) (regionProj A)
     (clockB Mc gc) hf hh hk φ χ ζ p q t
 
-/-- ★★ **The messenger-and-clock composite from a product ray, on a fibre where the clock
+/-- ★ **The messenger-and-clock composite from a product ray, on a fibre where the clock
 pointer's profile vanishes.** -/
 theorem gateClockFlow_apply (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     (hck : ContDiff ℝ ∞ k) (t : ℝ) (p : GenArena (ZMod (M + 1) × Fin 2))
@@ -526,7 +546,7 @@ theorem gateClockFlow_apply (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     (regionProj_isHermitian A) (deviceHam_isHermitian Jc μ₀ μ₁) hf hh hk hc hch hck t p q θ ψ
     hz
 
-/-- ★★ **The departure pointer moves exactly as in `regionTwoFlow`** (#367), from a product
+/-- ★ **The departure pointer moves exactly as in `regionTwoFlow`** (#367), from a product
 ray on a fibre where the clock pointer's profile vanishes. -/
 theorem gateClockFlow_fst_pointer (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     (hck : ContDiff ℝ ∞ k) (t : ℝ) (p : GenArena (ZMod (M + 1) × Fin 2))
@@ -539,7 +559,7 @@ theorem gateClockFlow_fst_pointer (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ 
   rw [gateClockFlow_apply J μ g₁ g₂ A B Jc μ₀ μ₁ gc hf hh hk hc hch hck t p q θ ψ hz,
     regionTwoFlow_apply]
 
-/-- ★★ **The arrival pointer moves exactly as in `regionTwoFlow`** (#367), from a product ray
+/-- ★ **The arrival pointer moves exactly as in `regionTwoFlow`** (#367), from a product ray
 on a fibre where the clock pointer's profile vanishes. -/
 theorem gateClockFlow_snd_pointer (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     (hck : ContDiff ℝ ∞ k) (t : ℝ) (p : GenArena (ZMod (M + 1) × Fin 2))
@@ -573,7 +593,7 @@ variable {M Mc : ℕ} {f h k : ℝ → ℝ} (g₁ g₂ : ℝ) (Jc μ₀ μ₁ gc
   {n : ℕ} (hn : 0 < n) (hL : 640000 * n ^ 3 ≤ M + 1)
 include hn hL
 
-/-- ★★ **Before the transit the gated pointer is the clock's pointer, within
+/-- ★ **Before the transit the gated pointer is the clock's pointer, within
 `|k'(χ₂)||g_c| t/n`.** The messenger starts on the fine packet of index `n`, the gate is the
 near half of its ring, and the fibre of the two region pointers is fine. At every flow time
 `t ≤ (625π/3) n²` the gated pointer's displacement is within `|k'(ζ)||g_c| t/n` of the
@@ -599,8 +619,8 @@ theorem fine_gateClock_before {φ χ : AddCircle (1 : ℝ)}
     exact fineCarrier_far_before g₁ g₂ hf hh hn hL hx hs.1 (hs.2.trans ht)
   · field_simp
 
-/-- ★★ **After the transit the gated pointer has stopped, within
-`|k'(χ₂)||g_c| (t₂ − t₁)/n`.** With the same start and fibres, between any two flow times
+/-- ★ **After the transit the gated pointer moves at a rate at most `|k'(χ₂)||g_c|/n`.**
+With the same start and fibres, between any two flow times
 `t₁ ≤ t₂` of `[(3125π/3) n², (4375π/3) n²]` the gated pointer's displacement changes by at
 most `|k'(ζ)||g_c| (t₂ − t₁)/n`. -/
 theorem fine_gateClock_after {φ χ : AddCircle (1 : ℝ)}

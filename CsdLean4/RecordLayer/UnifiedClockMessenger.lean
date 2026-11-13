@@ -52,8 +52,9 @@ the Hamiltonian flow of one energy on one arena; the run itself is a conjunction
   (`clockMessengerFlow_fst`, `clockMessengerFlow_snd`). The clock is beside the messenger's
   departure region only in the sense that both are in one arena. Nothing places it there. On
   this arena the moving angles are cyclic, so nothing else depends on where a pointer started
-  (`RecordLayer/UnifiedRecordInert.lean`, #374). A term between the clock and the messenger is on
-  another arena, the composite carrier of `RecordLayer/UnifiedCompositeCarrier.lean` (#376).
+  (`RecordLayer/UnifiedRecordInert.lean`, #374). A pointer coupled to a product observable of
+  the clock and the messenger is on another arena, the composite carrier of
+  `RecordLayer/UnifiedCompositeCarrier.lean` (#376).
 * **The counts are aligned by the flow parameter.** `N_d` is the clock's count at a flow time
   `τ_d` by which the departure write is complete. No degree of freedom holds the pair (record,
   count), and no record reads the count. That is access to UA-7, as in #366.

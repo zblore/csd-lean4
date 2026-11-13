@@ -8,7 +8,7 @@ module
 public import CsdLean4.RecordLayer.UnifiedCompositeCarrier
 
 /-!
-# The gated pointer ticks while the messenger is in the region, and completes no tick after
+# The gated pointer ticks while the messenger is in the region; no tick in a short interval after
 
 **TERM-SCOPE(Hamiltonian)** — this module uses the *restricted* sense of "Hamiltonian";
 `specs/TERMS.md` records what is backed and what is not.
@@ -30,13 +30,14 @@ and the displayed arc of #358.
 * `gateTrainStart`, `gateClockFlow_train_thd`, ★ `abs_gateClockShift_train_sub_le` — from that
   clock and the packet of index `n` of #375, the gated pointer's displacement is within
   `|g_c| t/n` of `(1/4)(1 − cos R t)` up to `(625π/3) n²`;
-* ★★★ `isSwing_gateClock_before` — **up to a flow time `T ≤ (625π/3) n²` with
+* ★★ `isSwing_gateClock_before` — **up to a flow time `0 ≤ T ≤ (625π/3) n²` with
   `|g_c| T/n < 1/12` the gated pointer is a swing at the clock's rate `R`**, with thresholds
   `±4|g_c| T/n`;
-* ★★ `gateClock_tickCount_before` — **it has a tick count at `T`, and the count times the
-  period `2π/R` is within one period of `T`**; ★★ `gateClock_tick_isRecordWrite` — **each of
-  its ticks is a record write**;
-* ★★★ `gateClock_no_tick_after` — **between two flow times `a ≤ b` of
+* ★ `gateClock_tickCount_before` — **it has a tick count at `T`, and the count times the
+  period `2π/R` is within one period of `T`** (the count may be zero);
+  ★ `gateClock_tick_isRecordWrite` — **each tick whose displayed window ends by `T` is a
+  record write** of the third pointer's readout;
+* ★★ `gateClock_no_tick_after` — **between two flow times `a ≤ b` of
   `[(3125π/3) n², (4375π/3) n²]` with `|k'(χ₂)||g_c| (b − a)/n ≤ 1/6`, a gated pointer that is
   ready at `a` is not displayed at `b`**: no tick is begun and completed in that interval.
 
@@ -44,36 +45,41 @@ and the displayed arc of #358.
 
 * **The arena and its limits are those of #376 (UA-17).** A fibre where the gated pointer's
   profile vanishes; a product start; the fine fibres of #375 for the two region pointers. The
-  first is a null set of fibres and the second a null set of the base.
+  first is a null set of fibres and the second a null set of the base (two calculations, not in
+  Lean).
 * **The clock is the exact instance of #358**: one momentum mode, a quarter turn early, the
   profile `trainF` on the fibre `χ₂ = 0`, the pointer at `1/12`, the strength `g_c` fixed by
   the rate `R`. That is one point of the clock's state space. `gateClock_no_tick_after` does not
   need it: it holds for every clock ray and every profile on a fibre where the profile
   vanishes.
-* **The hypothesis `|g_c| T/n < 1/12` bounds the rate from above.** `g_c` is proportional to
-  `R`, so at `T = (625π/3) n²` it asks for `n R` small. The count is within one of
-  `R T/2π`, which is large only when `n² R` is large. That both hold, with at least one tick,
+* **The hypothesis `|g_c| T/n < 1/12` bounds the rate from above.** `g_c` is `R` times a
+  factor fixed by the clock's parameters (`hg`; the amplitude `1/4` is tuned by it, as in
+  #358), so at `T = (625π/3) n²` it asks for `n R` small. The clock needs `μ₀ < μ₁ < 2μ₀`.
+  The count is within one of `R T/2π`, which is large only when `n² R` is large. That both hold, with at least one tick,
   for some clock is a calculation and not a theorem of this module. For `T` small the swing
   theorem holds with a count of zero.
 * **Gated by an occupancy, not by a record.** The pointer swings because the messenger's
   expectation of the near half's projector is close to `1`. No readout of the departure pointer
-  enters. By #374 the gated pointer is a cyclic coordinate.
+  enters. The gated pointer is a cyclic coordinate (the generic statement of #374; not
+  instantiated for `gateFlow`).
 * **"The count stops" is not proved.** What is proved after the transit is that no passage from
-  ready to displayed lies inside the interval, when the interval is short enough for the
-  hypothesis. Nothing is stated for the flow times between `(625π/3) n²` and `(3125π/3) n²`,
-  where the pointer may tick, or after `(4375π/3) n²`. A tick begun before `(3125π/3) n²` may
+  ready to displayed lies inside a sub-interval `[a, b]` short enough for the hypothesis
+  `|k'||g_c| (b − a)/n ≤ 1/6`. For the whole interval that needs `|k'||g_c| n ≤ 1/(2500π)`,
+  which no theorem here assumes. Nothing is stated for the flow times between
+  `(625π/3) n²` and `(3125π/3) n²`, where the pointer may tick, or after `(4375π/3) n²`. A tick begun before `(3125π/3) n²` may
   complete inside the interval. No theorem gives the count at a time after departure, and no
   degree of freedom holds the count (UO-14 (b)).
 * **The clock's own pointer is not on this arena.** That it goes on ticking is #358's
   statement on the clock's arena (`isSwing_clockPointerFlow_train`), not a statement here.
 * **The tick records last less than one turn** (`IsSwing.notMem_disp_of_cos_eq_one`), as in
-  #358.
+  #358. They are `IsRecordWrite`s of the readout history; they are not packaged as
+  `ActualOccurrence`s of `gateClockFlow`.
 * **Flow times throughout (UA-7).** No distance, no speed, no second observer.
 
 ## References
 
 `specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md` (UA-4,
-UA-7, UA-12, UA-17, UO-14, UO-16, UD-62 to UD-64, UD-113, UD-114);
+UA-7, UA-12, UA-17, UO-14, UO-16, UD-61, UD-62, UD-92, UD-113, UD-114);
 `RecordLayer/UnifiedCompositeCarrier.lean` (#376: `gateClockFlow`, `gateClockFlow_apply`,
 `gateClockShift`, `fine_gateClock_before`, `fine_gateClock_after`);
 `RecordLayer/UnifiedDiracClockTicks.lean` (#358: `IsSwing`, `IsTickCount`,
@@ -252,7 +258,7 @@ theorem abs_gateClockShift_train_sub_le {φ χ : AddCircle (1 : ℝ)}
     trainF_deriv_lift_zero, abs_neg, abs_one, one_mul] at key
   exact key
 
-/-- ★★★ **While the messenger is in the near half the gated pointer is a swing at the clock's
+/-- ★★ **While the messenger is in the near half the gated pointer is a swing at the clock's
 rate.** On the composite carrier, from `gateTrainStart`, on a fine fibre of the two region
 pointers: up to any flow time `T ≤ (625π/3) n²` with `|g_c| T/n < 1/12` the history of
 `gateClockFlow`, read through the third pointer's ready and displayed arcs, is a swing at the
@@ -295,8 +301,9 @@ theorem isSwing_gateClock_before (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ �
   rw [e₁, e₂] at hsw
   exact hsw
 
-/-- ★★ **The gated pointer has a tick count while the messenger is in the near half, and the
-count reads the flow time within one period.** Under the hypotheses of
+/-- ★ **The gated pointer has a tick count while the messenger is in the near half, and the
+count times the period is within one period of the flow time.** The count may be zero. Under
+the hypotheses of
 `isSwing_gateClock_before` there is `N` with `N` ticks by `T` and not `N + 1`, and
 `|N · 2π/R − T| ≤ 2π/R`. -/
 theorem gateClock_tickCount_before (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
@@ -313,7 +320,8 @@ theorem gateClock_tickCount_before (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ
   obtain ⟨N, hN⟩ := hsw.exists_tickCount hT0
   exact ⟨N, hN, hsw.abs_tickTime_sub_le hT0 hN⟩
 
-/-- ★★ **Each tick of the gated pointer is a record write.** Under the hypotheses of
+/-- ★ **Each tick of the gated pointer whose displayed window ends by `T` is a record
+write.** Under the hypotheses of
 `isSwing_gateClock_before`, in turn `k` the third pointer's readout does not display from the
 whole turn until the phase `arccos (4|g_c| T/n)`, and displays through the window of phases
 `[arccos d', 2π − arccos d']` for every `d' < −4|g_c| T/n`, when that window ends by `T`. -/
@@ -344,7 +352,8 @@ variable {M Mc : ℕ} {f h k : ℝ → ℝ} (g₁ g₂ : ℝ) (Jc μ₀ μ₁ gc
   (hf : Function.Periodic f 1) (hh : Function.Periodic h 1) (hk : Function.Periodic k 1)
   {n : ℕ} (hn : 0 < n) (hL : 640000 * n ^ 3 ≤ M + 1)
 
-/-- ★★★ **After the transit no tick is begun and completed.** On the composite carrier, from a
+/-- ★★ **After the transit no tick is begun and completed inside a short interval.** On the
+composite carrier, from a
 product ray of the fine packet of index `n` and any clock ray, on a fine fibre of the two
 region pointers and a fibre where the gated pointer's profile vanishes: for flow times
 `a ≤ b` of `[(3125π/3) n², (4375π/3) n²]` with `|k'(χ₂)||g_c| (b − a)/n ≤ 1/6`, if the gated

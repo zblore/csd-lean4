@@ -36,9 +36,10 @@ the exponential of a Kronecker sum.
 ## Exact scope
 
 * **Product rays only.** Every statement about a ray is about a ray in the image of `prodRay`.
-  That image is a proper closed subset of `GenArena (ι × κ)` when both index types have at
-  least two elements (`CompositeArena.lean`, `bell_not_join`, for field sectors). Nothing here
-  is about an entangled ray.
+  That image is expected to be a proper closed subset of `GenArena (ι × κ)` when both index
+  types have at least two elements; that is not proved here (`bell_not_join` of
+  `CompositeArena.lean` is the analogue for field sectors). Nothing here is about an entangled
+  ray.
 * **Distinguishable carriers.** The index is the product `ι × κ`. No symmetrisation.
 * **No dynamics is chosen here.** `exp_smul_kronecker_add` is a matrix identity.
 
