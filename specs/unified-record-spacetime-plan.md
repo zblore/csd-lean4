@@ -1036,7 +1036,7 @@ and UD-128 on the composite carrier with its fourth pointer
 | UD-124 | **Two counts while the messenger is away.** If no passage from the resting set to the displaying set lies inside `[s, T]`, a count advances by at most one there; a history with a bounded number of ticks has a count (both for any history; the flow is not used); the gated pointer has a count at every flow time `T ≥ 0`. In the run of UD-123 on a fine fibre (UD-109), for flow times `a ≤ b` of `[(3125π/3) n², (4375π/3) n²]` with `|g_c| (b − a)/n ≤ 1/6`: the gated count advances by at most one, and the difference between the advance of the clock's count and the advance of the gated count, times `2π/R`, is within `6π/R` of `b − a` | `hasTicks_le_succ_of_no_passage`, `exists_tickCount_of_bdd`, `IsTickCount.le_succ_of_no_passage`, `exists_gate_tickCount`, `twoCounts_away` (`RecordLayer/UnifiedTwoCounts.lean`) | exact; a sub-interval of the absence between two flow times, not a departure and a return; the limits of UD-123; flow times |
 | UD-125 | **The accumulated near-half occupancy through one round trip.** On a round fibre (UD-118), `0 < δ ≤ π/2` (Lean: `0 ≤ δ`, `δ ≤ π/2`, `cos δ < 1`): the coupled carrier's accumulated occupancy of the near half is at most `roundUpper n δ = 1250 n² (π/2 + 3δ + fineEta n δ (π − 2δ))` at the flow time of the predicted angle `3π/2 + δ`, and at least `roundLower n δ = (1 − fineEta n δ) · 1250 n² (3π/2 − 3δ)` at that of `5π/2 − δ`. For `δ ≤ π/48` and `fineEta n δ ≤ 1/48`, `2 · roundUpper ≤ roundLower` | `integral_le_of_forall_le`, `le_integral_of_forall_le`, `nearOcc`, `continuous_nearOcc`, `nearOcc_nonneg`, `nearOcc_le_one`, `nearOcc_eq`, `roundUpper`, `roundLower`, `integral_nearOcc_le`, `le_integral_nearOcc`, `two_roundUpper_le_roundLower` (`RecordLayer/UnifiedRoundTrip.lean`) | exact bounds; accumulated occupancies, not records; flow times |
 | UD-126 | **A record written on the return leg, with the running clock's count at a flow time by which it is complete.** In the run of UD-123, with the first pointer ready, on a round fibre: if its rate `κ` is positive and has `κ · roundUpper n δ ≤ 1/6` and `1/3 ≤ κ · roundLower n δ`, there are a flow time `τ` between those of the predicted angles `3π/2 + δ` and `5π/2 − δ` and a number `N` such that the first pointer's readout history is an `IsRecordWrite` of `true` from the start with write interval ending at `τ` and beginning at the start of the return leg, the clock's own pointer has exactly `N` ticks by `τ`, and `|N · 2π/R − τ| ≤ 2π/R` | `echoFstShown_twoCount_iff`, `return_record_with_count` (`RecordLayer/UnifiedRoundTrip.lean`) | exact under two rate hypotheses; one record, from a prepared start; a threshold of accumulated occupancy, which does not certify a return; the count read at a flow time (the end of the write interval, not the instant the readout turns) and possibly zero; the limits of UD-123 |
-| UD-127 | **The accumulated far-half occupancy up to the absence.** On a round fibre (UD-118), `0 < δ ≤ π/2`: the coupled carrier's accumulated occupancy of the far half is at most `farUpper n δ = 1250 n² (fineEta n δ (π/2 − δ) + 2δ)` at the flow time of the predicted angle `π/2 + δ`, and at least `farLower n δ = (1 − fineEta n δ) · 1250 n² (π − 2δ)` at that of `3π/2 − δ`. For `δ ≤ π/48` and `fineEta n δ ≤ 1/48`, `2 · farUpper ≤ farLower` | `roundAway`, `roundAwayEnd`, `farOcc`, `continuous_farOcc`, `farOcc_nonneg`, `farOcc_le_one`, `farUpper`, `farLower`, `integral_farOcc_le`, `le_integral_farOcc`, `two_farUpper_le_farLower` (`RecordLayer/UnifiedArrivalReturn.lean`) | exact bounds; accumulated occupancies, not records; flow times |
+| UD-127 | **The accumulated far-half occupancy up to and through the absence.** On a round fibre (UD-118), `0 < δ ≤ π/2` (Lean: `0 ≤ δ`, `δ ≤ π/2`, `cos δ < 1`): the coupled carrier's accumulated occupancy of the far half is at most `farUpper n δ = 1250 n² (fineEta n δ (π/2 − δ) + 2δ)` at the flow time of the predicted angle `π/2 + δ`, and at least `farLower n δ = (1 − fineEta n δ) · 1250 n² (π − 2δ)` at that of `3π/2 − δ`. For `δ ≤ π/48` and `fineEta n δ ≤ 1/48`, `2 · farUpper ≤ farLower` | `roundAway`, `roundAwayEnd`, `farOcc`, `continuous_farOcc`, `farOcc_nonneg`, `farOcc_le_one`, `farUpper`, `farLower`, `integral_farOcc_le`, `le_integral_farOcc`, `two_farUpper_le_farLower` (`RecordLayer/UnifiedArrivalReturn.lean`) | exact bounds; accumulated occupancies, not records; flow times |
 | UD-128 | **Two records and two counts in one run.** In the run of UD-123, with both region pointers ready, on a round fibre, both rates positive: if the far pointer's rate `κ₂` has `κ₂ · farUpper ≤ 1/6` and `1/3 ≤ κ₂ · farLower`, and the near pointer's rate satisfies the hypotheses of UD-126, there are flow times `τ_a ≤ τ_r`, with `τ_a` between those of the predicted angles `π/2 + δ` and `3π/2 − δ` and `τ_r` between those of `3π/2 + δ` and `5π/2 − δ`, such that the far pointer's readout is an `IsRecordWrite` whose write interval ends at `τ_a`, the near pointer's readout is an `IsRecordWrite` whose write interval ends at `τ_r`, the clock's own pointer has exactly `N_a` ticks by `τ_a` and `N_r` by `τ_r`, and `|(N_r − N_a) · 2π/R − (τ_r − τ_a)| ≤ 4π/R` | `echoSiteShown_twoCount_iff`, `arrival_and_return_records_with_counts` (`RecordLayer/UnifiedArrivalReturn.lean`) | exact under four rate hypotheses; two thresholds of accumulated occupancy, which certify neither an arrival nor a return; the counts read at flow times (the ends of the write intervals) and possibly zero; the limits of UD-123 |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
@@ -1506,7 +1506,7 @@ UD-123's. They pass no gate: the count is not tied to the record. UD-125 uses th
 of UD-118. UD-126 uses in addition those of UD-123. UA-6 is not used.
 
 Exact scope of UD-127 and UD-128 (BACKLOG ~~#383~~). What they give. A second record in the run
-of UD-126, from the far pointer already on the arena: with its strength in a stated window its
+of UD-126, from the far pointer already on the arena: with its rate in a stated window its
 readout is written during the interval of UD-118 on which the far half's occupancy is high.
 So one run has two records in order, and the clock's own pointer has a count at a flow time
 by which each is complete. The difference of the counts, times the period, is within two
@@ -1517,17 +1517,23 @@ thresholds of accumulated occupancy; carriers with suitable constant occupancies
 readouts with the same clauses (a calculation, not in Lean; not exhibited on this arena).
 (iii) Sharp times. `τ_a` and `τ_r` are the ends of the stated write intervals, not the
 instants the readouts turn, and each is located only within its interval; so `τ_r − τ_a` is
-known only to lie between `2500 n² δ` and `1250 n² (2π − 2δ)`. (iv) Time content beyond the
+known only to lie between `2500 n² δ` and `1250 n² (2π − 2δ)`. The far readout is shown to
+display only through its window `1/(3κ₂)` after `τ_a`; it is not shown to display still when
+the near readout is written. (iv) Time content beyond the
 clock's. The two-time bound is UD-92 and holds for any two non-negative flow times; no
 hypothesis relates the period to `τ_r − τ_a`, and both counts may be zero. (v) Counts read by
 the records, or held by a degree of freedom: UO-14 (b). (vi) The limits of UD-123 and UD-126,
 with the gated pointer free and not shown to tick; the writes and counts are `IsRecordWrite`
 and `IsTickCount` statements about readout histories, not `ActualOccurrence`s. (vii) That
 the four rate hypotheses hold for some `n` in Lean: each pair is compatible for `δ ≤ π/48`
-and `fineEta n δ ≤ 1/48`. Earlier: BACKLOG ~~#360~~, ~~#366~~ and ~~#369~~ have counts at
-readout switches in one run; UD-94 (~~#367~~) has a departure and an arrival record in one
-run and UD-104 (~~#372~~) a separate clock's counts at both, for the crossing packet on other
-arenas. What is new is the pair on the free round trip, with the clock a tensor factor of the
+and `fineEta n δ ≤ 1/48`. Each rate is `−2 g f'` at its fibre and must be positive; the round
+fibres bound `|g₁ f(θ₂)| + |g₂ h(ψ₂)|` on the same fibres. That one fibre pair meets both
+windows, both signs and the round-fibre bound is not stated in Lean. Earlier: BACKLOG
+~~#360~~, ~~#366~~ and ~~#369~~ have counts at readout switches in one run; UD-94 (~~#367~~)
+has a departure write and an arrival write in one run (thresholds of accumulated weight) and
+UD-104 (~~#372~~) a separate clock's counts at both, for the crossing packet on other
+arenas. ~~#200~~ and ~~#202~~ (echo arena), ~~#270~~ (reflection, stated detector law) and ~~#274~~ and ~~#278~~ (relay, stated hybrid law) have emission and return records with a clock
+reading, under their own laws. What is new is the pair on the free round trip, with the clock a tensor factor of the
 same carrier. By the test of §6: the two rate windows are chosen (UA-4); the writes follow
 from the occupancy bounds of UD-118 and the crossing lemma of UD-89; the counts are UD-123's
 and the bound is UD-92. They pass no gate: neither count is tied to a record. UD-127 uses the
@@ -2216,12 +2222,12 @@ time. It is not a statement about every dynamics on `Σ`.
   and starts of positive measure; a second observer; and a family along which every error
   shrinks.
   ▸ **Two records and two counts in one run, 2026-11-13 (BACKLOG ~~#383~~) → UD-127, UD-128.
-  Not met.** In the run of UD-126 the far pointer, with a strength in a stated window, is
+  Not met.** In the run of UD-126 the far pointer, with a rate in a stated window, is
   written during the absence, and the near pointer on the return leg
   (`arrival_and_return_records_with_counts`). The clock's own pointer has a count at a flow
   time by which each write is complete, and the difference of the counts times the period is
   within two periods of the difference of those flow times. *Conditions:* those of UD-126;
-  four rate hypotheses. *What this is not:* a radar time (no emission record, no reflector,
+  the far pointer ready; four rate hypotheses. *What this is not:* a radar time (no emission record, no reflector,
   one ring); certified events (two thresholds of accumulated occupancy); sharp times; counts
   read by the records. *What is still missing:* the same list as above, and a certificate of
   the round trip as a record.

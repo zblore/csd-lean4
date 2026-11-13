@@ -19,7 +19,7 @@ second pointer already on the arena, and part of Remainder (a) of #381.
 
 #382 has one record, written on the return leg, from a prepared start. The arena already
 carries a second region pointer, coupled to the far half of the messenger's ring. With its
-strength in a stated window its readout is written during the interval of #379 on which the
+rate in a stated window its readout is written during the interval of #379 on which the
 far half's occupancy is high. So one run has two records, in order, and the clock's own
 pointer of #381 has a count at a flow time by which each is complete. Both writes are
 thresholds of accumulated occupancy; neither certifies an arrival or a return.
@@ -45,7 +45,8 @@ thresholds of accumulated occupancy; neither certifies an arrival or a return.
   The records contribute where `τ_a` and `τ_r` lie. No hypothesis relates the period `2π/R` to
   `τ_r − τ_a`, and both counts may be zero. `τ_a` and `τ_r` are the ends of the stated write
   intervals, not the instants the readouts turn; each readout displays through its window
-  after its `τ`.
+  after its `τ`. The far readout is shown to display only through its window `1/(3κ₂)` after
+  `τ_a`; it is not shown to display still when the near readout is written.
 * **Neither write certifies a transit or a return.** Both are thresholds of accumulated
   occupancy, as in #367. A carrier with suitable constant occupancies would give readouts with
   the same clauses (a calculation, not in Lean; not exhibited on this arena). What shows the
@@ -57,12 +58,16 @@ thresholds of accumulated occupancy; neither certifies an arrival or a return.
 * **The counts are read at flow times** (UA-7). No record reads a count and no degree of
   freedom holds a pair (UO-14 (b)).
 * **Not a radar time.** There is no emission record: the start is prepared. The two records
-  are an arrival at the far half and a return, both read on the one messenger's ring. There is
+  are a write during the absence and a write on the return leg, both read on the one
+  messenger's ring. There is
   no reflector, no distance, and no second observer.
 * **Four rate conditions are hypotheses.** `two_roundUpper_le_roundLower` and
   `two_farUpper_le_farLower` show each pair compatible for `δ ≤ π/48` and
   `fineEta n δ ≤ 1/48`; that some `n` gives the latter, and that rates in the two windows then
-  exist, is not stated in Lean. The margin must be positive (`cos δ < 1`).
+  exist, is not stated in Lean. The margin must be positive (`cos δ < 1`). Each rate is
+  `−2 g f'` at its fibre and must be positive; the round fibres bound
+  `|g₁ f(θ₂)| + |g₂ h(ψ₂)|` on the same fibres. That one fibre pair meets both windows, both
+  signs and the round-fibre bound is not stated in Lean.
 * **The arena and its limits are those of #381 and #382**: both clock pointers' profiles vanish
   on the fibre and the start is a product ray (null sets by calculations not in Lean); the
   round fibres of #379; one clock start; the gated pointer is present with a free strength, is
@@ -70,9 +75,12 @@ thresholds of accumulated occupancy; neither certifies an arrival or a return.
   `ActualOccurrence`s.
 * **Earlier.** #360 and #366 have a clock's count at a position write, with the flow time shown
   to be the switching instant; #369 a clock and two detectors with counts at two readout switches
-  in one run. #367 has a departure and an arrival record in one run, and #372 a separate clock's
-  counts at both, on other arenas and for the crossing packet. What is new here is the pair
-  (arrival, return) on the free round trip, with the clock a tensor factor of the same carrier.
+  in one run. #367 has a departure write and an arrival write in one run (thresholds of
+  accumulated weight), and #372 a separate clock's counts at both, for the crossing packet on
+  other arenas. #200 and #202 (echo arena), #270 (reflection, stated detector law) and #274
+  and #278 (relay, stated hybrid law) have emission and return records with a clock reading,
+  under their own laws. What is new here is the pair (a write during the absence, a write on
+  the return leg) on the free round trip, with the clock a tensor factor of the same carrier.
   Nothing here is evidence about Lorentz kinematics.
 
 ## References
@@ -321,10 +329,10 @@ theorem arrival_and_return_records_with_counts (hc : ContDiff ℝ ∞ f) (hch : 
   have hr2 : (0 : ℝ) < 1250 * (n : ℝ) ^ 2 := by
     have : (0 : ℝ) < n := by exact_mod_cast hn
     positivity
-  -- the return record of #382
+  -- the record written on the return leg (#382)
   obtain ⟨τr, Nr, hr1, hr2', hwr, hNr, -⟩ := return_record_with_count g₁ g₂ hf hh hn hL Jc h0
     h01 h10 m hβ hRe hg hc hch gc hθ hx hδ0 hδ hcos hκ₁ hlo₁ hhi₁
-  -- the arrival record
+  -- the write during the absence
   have hTa0 : 0 ≤ roundAway n δ := by
     unfold roundAway
     positivity
