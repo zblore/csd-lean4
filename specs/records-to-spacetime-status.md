@@ -228,7 +228,13 @@ advance of the clock's count and the advance of the gated count reads `b − a` 
 periods. The time content is the clock's alone (its two-time bound holds for any two flow
 times); the gated count contributes only that its advance is 0 or 1, and the gated pointer's
 strength is free here, so it is not shown to tick. `a` and `b` are flow times, not a departure
-and a return marked by records. No record is stated on the return leg, and no
+and a return marked by records. In the same run the first pointer, coupled to the near half
+with a strength in a stated window, writes on the return leg (BACKLOG ~~#382~~,
+`RecordLayer/UnifiedRoundTrip.lean`): its readout does not display before the return leg begins
+and displays after a flow time `τ` on it, and the clock's own pointer has a count at `τ` within
+one period of `τ`. That is one record from a prepared start, a threshold of accumulated
+occupancy that does not certify a return, located only within the return leg; the count is
+read at a flow time and not by the record. No record is stated on the return leg, and no
 radar time is formed from counts.
 
 ## What is open

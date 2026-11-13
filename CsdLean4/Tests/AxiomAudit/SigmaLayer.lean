@@ -19900,4 +19900,62 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.twoCounts_away
 
+/-! #382 (the author's programme, obligation UO-16; Remainders (a) and (b) of #381): on a round fibre the coupled carrier's accumulated near-half occupancy is at most roundUpper at the start of the return leg and at least roundLower at its end; with a rate κ such that κ · roundUpper ≤ 1/6 and 1/3 ≤ κ · roundLower the first pointer's readout is an IsRecordWrite with write interval ending at a flow time τ on the return leg, and the clock's own pointer has a count N at τ with |N · 2π/R − τ| ≤ 2π/R. One record from a prepared start, a threshold of accumulated occupancy; the count is read at a flow time (`RecordLayer/UnifiedRoundTrip.lean`). -/
+
+/-- info: 'CSD.RecordLayer.integral_le_of_forall_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_le_of_forall_le
+
+/-- info: 'CSD.RecordLayer.le_integral_of_forall_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_integral_of_forall_le
+
+/-- info: 'CSD.RecordLayer.nearOcc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nearOcc
+
+/-- info: 'CSD.RecordLayer.continuous_nearOcc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_nearOcc
+
+/-- info: 'CSD.RecordLayer.nearOcc_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nearOcc_nonneg
+
+/-- info: 'CSD.RecordLayer.nearOcc_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nearOcc_le_one
+
+/-- info: 'CSD.RecordLayer.nearOcc_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nearOcc_eq
+
+/-- info: 'CSD.RecordLayer.roundUpper' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.roundUpper
+
+/-- info: 'CSD.RecordLayer.roundLower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.roundLower
+
+/-- info: 'CSD.RecordLayer.integral_nearOcc_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_nearOcc_le
+
+/-- info: 'CSD.RecordLayer.le_integral_nearOcc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_integral_nearOcc
+
+/-- info: 'CSD.RecordLayer.two_roundUpper_le_roundLower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_roundUpper_le_roundLower
+
+/-- info: 'CSD.RecordLayer.echoFstShown_twoCount_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoFstShown_twoCount_iff
+
+/-- info: 'CSD.RecordLayer.return_record_with_count' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.return_record_with_count
+
 end CSD.Tests.AxiomAudit

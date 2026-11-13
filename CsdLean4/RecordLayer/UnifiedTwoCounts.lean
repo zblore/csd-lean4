@@ -47,6 +47,8 @@ of one history.
 
 ## Exact scope
 
+* **A return record with the clock's count at it** is in `RecordLayer/UnifiedRoundTrip.lean`
+  (#382).
 * **A sub-interval of the absence, between two flow times.** `a` and `b` are flow times inside
   the interval on which the messenger is in the far half. They are not a departure and a
   return, and no record marks them. Over the two transit windows the gated count is bounded
