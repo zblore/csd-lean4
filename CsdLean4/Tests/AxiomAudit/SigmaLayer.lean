@@ -20012,4 +20012,94 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.arrival_and_return_records_with_counts
 
+/-! #384 (the author's programme, obligation UO-16; Remainder (a) of #383; UA-17 (f)): on the four-pointer arena with the third pointer's clock factor g₃ · 1 (a second near-half pointer in place of the gated pointer) the flow preserves quadMuL and, from a product ray where the third and fourth profiles vanish, all three region pointers move as region pointers of the messenger's own arena; with the three rates in their stated windows one run has three IsRecordWrites, with write intervals ending at flow times τ_d in the first presence, τ_a in the absence and τ_r on the return leg, the clock's own pointer has counts at the three, the count differences from the first times the period are within two periods of the flow-time differences, and the midpoint (τ_d + τ_r)/2 lies in the absence within one period of (N_d + N_r)/2 periods. Thresholds of accumulated occupancy; the first is not an emission record; the midpoint clause is interval arithmetic; counts read at flow times (`RecordLayer/UnifiedThreeRecords.lean`). -/
+
+/-- info: 'CSD.RecordLayer.clockOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockOne
+
+/-- info: 'CSD.RecordLayer.clockOne_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockOne_isHermitian
+
+/-- info: 'CSD.RecordLayer.arenaObs_clockOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_clockOne
+
+/-- info: 'CSD.RecordLayer.threeRecordFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecordFlow
+
+/-- info: 'CSD.RecordLayer.quadMuL_map_threeRecordFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.quadMuL_map_threeRecordFlow
+
+/-- info: 'CSD.RecordLayer.gateShift_clockOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateShift_clockOne
+
+/-- info: 'CSD.RecordLayer.threeRecordFlow_fst_prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecordFlow_fst_prodRay
+
+/-- info: 'CSD.RecordLayer.integral_nearOcc_le_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_nearOcc_le_self
+
+/-- info: 'CSD.RecordLayer.le_integral_nearOcc_out' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_integral_nearOcc_out
+
+/-- info: 'CSD.RecordLayer.roundAway_le_midpoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.roundAway_le_midpoint
+
+/-- info: 'CSD.RecordLayer.midpoint_le_roundAwayEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.midpoint_le_roundAwayEnd
+
+/-- info: 'CSD.RecordLayer.threeRecordStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecordStart
+
+/-- info: 'CSD.RecordLayer.threeRecordRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecordRun
+
+/-- info: 'CSD.RecordLayer.threeRecordRun_fst_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecordRun_fst_pointer
+
+/-- info: 'CSD.RecordLayer.threeRecordRun_snd_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecordRun_snd_pointer
+
+/-- info: 'CSD.RecordLayer.threeRecordRun_thd_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecordRun_thd_pointer
+
+/-- info: 'CSD.RecordLayer.threeRecordRun_clock_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecordRun_clock_pointer
+
+/-- info: 'CSD.RecordLayer.echoFstShown_threeRecord_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoFstShown_threeRecord_iff
+
+/-- info: 'CSD.RecordLayer.echoSiteShown_threeRecord_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoSiteShown_threeRecord_iff
+
+/-- info: 'CSD.RecordLayer.triThdShown_threeRecord_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triThdShown_threeRecord_iff
+
+/-- info: 'CSD.RecordLayer.isSwing_threeRecord' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isSwing_threeRecord
+
+/-- info: 'CSD.RecordLayer.three_records_with_counts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.three_records_with_counts
+
 end CSD.Tests.AxiomAudit

@@ -240,8 +240,13 @@ read at a flow time and not by the record. With the far pointer's rate in a seco
 order, one written during the absence and one on the return leg, with the clock's count at a
 flow time by which each is complete; the difference of the counts times the period is within
 two periods of the difference of those flow times. Both writes are thresholds of accumulated
-occupancy and certify neither an arrival nor a return. No emission or departure record is stated in that
-run, the count is not read by a record, and no radar time is formed from counts.
+occupancy and certify neither an arrival nor a return. With a second near-half pointer in
+place of the gated pointer (BACKLOG ~~#384~~, `RecordLayer/UnifiedThreeRecords.lean`; UA-17
+(f), not yet read by the author) one run has a third write, during the first presence, and
+the clock's count at all three. The midpoint of the first and last flow times lies in the
+absence, by arithmetic on the three intervals and only to within the absence's whole length.
+The first write is not an emission record: the start is prepared. No count is read by a
+record, there is no reflector, and no radar time is formed.
 
 ## What is open
 

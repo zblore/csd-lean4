@@ -82,6 +82,8 @@ thresholds of accumulated occupancy; neither certifies an arrival or a return.
   under their own laws. What is new here is the pair (a write during the absence, a write on
   the return leg) on the free round trip, with the clock a tensor factor of the same carrier.
   Nothing here is evidence about Lorentz kinematics.
+* **Later.** #384 (`RecordLayer/UnifiedThreeRecords.lean`) adds a write during the first
+  presence, with a second near-half pointer in place of the gated pointer.
 
 ## References
 

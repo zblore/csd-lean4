@@ -802,6 +802,7 @@ public import CsdLean4.RecordLayer.UnifiedGateReturn
 public import CsdLean4.RecordLayer.UnifiedTwoCounts
 public import CsdLean4.RecordLayer.UnifiedRoundTrip
 public import CsdLean4.RecordLayer.UnifiedArrivalReturn
+public import CsdLean4.RecordLayer.UnifiedThreeRecords
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers
