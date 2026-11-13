@@ -21,13 +21,15 @@ is assumption UA-17 with its amendment (e): the clock keeps a pointer of its own
 #380 showed that the gated pointer's swing comes back from an absence with an offset, and
 gave no count across the absence. Here the composite carrier has a fourth pointer, coupled to
 `1 ⊗ X`: the clock's level swap alone. On the fibres where neither the gated pointer nor this
-one acts back, from a product ray, its displacement is exactly that of the tick pointer of
-#358, for every horizon, in the same run as the gated pointer and the two region pointers. The
-clock's count and the gated count are then two counts of one history.
+one acts back, from a product ray, its displacement is exactly that of the pointer of #357
+on the clock's own arena (an equality of real displacement functions, `clockPointerShift`,
+across arenas), so it is the swing of #358 for every horizon, in the same run as the gated
+pointer and the two region pointers. The clock's count and the gated count are then two counts
+of one history.
 
 * `isSwing_snd_of_abs_shift_sub_le` — the swing criterion of #358 for the last pointer of any
   arena with a last torus;
-* `gateFreeFlow`, `quadMuL_map_gateFreeFlow`, ★ `gateFreeFlow_fst` (**on a fibre where the
+* `gateFreeFlow`, `quadMuL_map_gateFreeFlow`, `gateFreeFlow_fst` (**on a fibre where the
   fourth profile vanishes the first three pointers and the carrier move by `gateFlow`**),
   ★ `gateFreeFlow_snd_prodRay` (**from a product ray, where neither profile acts back, the
   fourth pointer advances by the displacement of a pointer coupled to the clock alone**);
@@ -37,8 +39,9 @@ clock's count and the gated count are then two counts of one history.
   horizon**, in the run that also carries the gated pointer;
 * `hasTicks_le_succ_of_no_passage`, `exists_tickCount_of_bdd`, `exists_gate_tickCount`,
   `IsTickCount.le_succ_of_no_passage`;
-* ★★ `twoCounts_away` — **while the messenger is away, the clock's count advances with the
-  flow time and the gated count by at most one**: for flow times `a ≤ b` of
+* ★ `twoCounts_away` — **on the interval of #375 on which the far half's occupancy is at
+  least `1 − 1/(2n)`, the clock's count advances with the flow time and the gated count by at
+  most one**: for flow times `a ≤ b` of
   `[(3125π/3) n², (4375π/3) n²]` with `|g_c| (b − a)/n ≤ 1/6`, the difference of the two
   advances, times the period `2π/R`, is within `6π/R` of `b − a`.
 
@@ -49,11 +52,22 @@ clock's count and the gated count are then two counts of one history.
   return, and no record marks them. Over the two transit windows the gated count is bounded
   only by #378, too weakly. So this is not a radar time: on a stretch of the absence the
   clock's count advances with the flow time and the gated count by at most one.
-* **The stretch is short for the gate and can be long for the clock.** The hypothesis
-  `|g_c| (b − a)/n ≤ 1/6` is on the gated pointer's strength `g_c`. The clock's own pointer
-  has its own strength `g₀`, fixed by the rate `R`. So `b − a` can hold many periods `2π/R`
-  when `g_c` is small. That some `g_c`, `n` and clock give many periods is a calculation and
-  not in Lean.
+* **The time content is the clock's alone.**
+  `|(N_b^f − N_a^f)·2π/R − (b − a)| ≤ 4π/R` holds for any two non-negative flow times (#366).
+  The gated count contributes only that its advance is 0 or 1 on the stretch, which is why the
+  difference is within three periods and not two. No hypothesis relates `2π/R` to `b − a`; the
+  advances of all four counts may be zero. The clock's two counts exist
+  (`IsSwing.exists_tickCount`); the gated ones by `exists_gate_tickCount`.
+* **`g_c` is free here; only `g₀` is tuned.** The gated pointer is the swing of #377 only when
+  `g_c` also has the tuned value, and that swing is not restated on this arena. For `g_c` far
+  below the tuned value the gated pointer is not shown to tick at all, and the gated count may
+  be zero throughout. With `g_c` tuned, `|g_c| (b − a)/n ≤ 1/6` allows a number of periods of
+  order `n`. A calculation, not in Lean.
+* **Not new on other arenas.** A clock pointer that swings at every horizon beside other
+  pointers in one run is #369 (the same clock carrier with two site detectors) and #372 (the
+  uncoupled product arena, with the same two-time bound). What is new here is the arena: the
+  clock is a tensor factor of the composite carrier, in the run that also carries the pointer
+  coupled to `P ⊗ X`.
 * **A new pointer is an amendment of UA-17.** The fourth pointer, its coupling to `1 ⊗ g₀ X`
   and its profile are chosen. On this arena the clock again has a pointer of its own.
 * **Only where neither clock pointer acts back, and only product starts.** Both profiles must
@@ -75,12 +89,13 @@ UA-7, UA-12, UA-15, UA-17, UO-14, UO-16, UD-113, UD-114, UD-115, UD-122 to UD-12
 `fourCoupledFlow_snd_of_lift_eq_zero`, `quadMuL_map_fourCoupledFlow`);
 `RecordLayer/UnifiedCompositeCarrier.lean` (#376: `gateFlow`, `gateFlow_prodRay`,
 `gateClockFlow`); `RecordLayer/UnifiedGateTicks.lean` (#377: `gateTrainStart`,
-`clockPointerShift_train`, `gateClock_no_tick_after`); `RecordLayer/UnifiedGateCount.lean`
-(#378: `gateClock_hasTicks_le`); `RecordLayer/UnifiedGateReturn.lean` (#380: the obstruction);
+`clockPointerShift_train`, `gateClock_no_tick_after`); `RecordLayer/UnifiedGateCount.lean` (#378:
+`gateClock_hasTicks_le`); `RecordLayer/UnifiedGateReturn.lean` (#380: the obstruction);
 `RecordLayer/UnifiedDiracClockTicks.lean` (#358: `IsSwing`, `HasTicks`, `IsTickCount`,
-`isSwing_of_abs_shift_sub_le`); `RecordLayer/UnifiedCountAtWrite.lean`
-(`IsSwing.abs_tickTime_sub_sub_le`); `RecordLayer/UnifiedClockSiteRecords.lean`
-(`IsSwing.preimage`).
+`isSwing_of_abs_shift_sub_le`); `RecordLayer/UnifiedClockTwoSites.lean` (#369:
+`isSwing_clockTwoSiteFlow_train`); `RecordLayer/UnifiedClockMessenger.lean` (#372);
+`RecordLayer/UnifiedCountAtWrite.lean` (`IsSwing.abs_tickTime_sub_sub_le`);
+`RecordLayer/UnifiedClockSiteRecords.lean` (`IsSwing.preimage`).
 -/
 
 @[expose] public section
@@ -213,7 +228,7 @@ theorem quadMuL_map_gateFreeFlow (hA : A₀.IsHermitian) (hB₁ : B₁.IsHermiti
     hch hck hcl p₀ t
 
 omit [Fintype ι] [Fintype κ] in
-/-- ★ **On a fibre where the fourth profile vanishes, the carrier and the first three pointers
+/-- **On a fibre where the fourth profile vanishes, the carrier and the first three pointers
 move by `gateFlow`.** -/
 theorem gateFreeFlow_fst (hf : Function.Periodic f 1) (hh : Function.Periodic h 1)
     (hk : Function.Periodic k 1) (hl : Function.Periodic l 1) (hc : ContDiff ℝ ∞ f)
@@ -349,9 +364,11 @@ variable (hRe : R = levelClockRate μ₀ μ₁ (2 * Jc * Real.sin (angleZ (Mc + 
 
 include h10 hRe hg in
 /-- ★ **The clock's own pointer is a swing at the rate `R`, for every horizon, in the run that
-also carries the gated pointer.** From `twoCountStart`, for every strength `g_c` of the gated
-pointer and every pair of region pointers: the history of `gateFreeClockFlow`, read through the
-fourth pointer's arcs, rests where `cos R t ≥ 0` and displays where `cos R t < 0`. -/
+also carries the gated pointer.** From `twoCountStart` (both clock pointers' profiles `trainF`
+on the fibre `0`, a product ray), for every strength `g_c` of the gated pointer and every pair
+of region pointers: the history of `gateFreeClockFlow`, read through the fourth pointer's
+arcs, rests only where `cos R t ≥ 0` (and at every whole turn) and displays exactly where
+`cos R t < 0`. -/
 theorem isSwing_free_twoCount (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h) (gc : ℝ)
     (θ ψ : KTorus) (T : ℝ) :
     IsSwing (quadFreeReady ((2 * M + 1) * (4 * Mc + 3 + 1) + (4 * Mc + 3)))
@@ -433,7 +450,7 @@ theorem exists_gate_tickCount (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ 
   exact_mod_cast key.trans hB
 
 include h10 hRe hg in
-/-- ★★ **Two counts while the messenger is away.** From `twoCountStart`, on a fine fibre of the
+/-- ★ **Two counts on a stretch of the absence.** From `twoCountStart`, on a fine fibre of the
 two region pointers, for flow times `a ≤ b` of `[(3125π/3) n², (4375π/3) n²]` with
 `|g_c| (b − a)/n ≤ 1/6`: for the counts `N_a^f`, `N_b^f` of the clock's own pointer and
 `N_a^g`, `N_b^g` of the gated pointer at `a` and `b`, the gated count advances by at most one,

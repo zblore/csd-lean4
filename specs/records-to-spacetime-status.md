@@ -220,10 +220,15 @@ it is a swing again with a tick count, read from a chosen flow time, and the cou
 zero. Neither case is shown satisfiable in Lean, and no theorem gives a count across the
 absence. With a fourth pointer coupled to the clock alone (BACKLOG ~~#381~~,
 `RecordLayer/UnifiedTwoCounts.lean`, UA-17 (e)) the clock has a pointer that runs throughout:
-it is a swing at the clock's rate for every horizon, in the same run as the gated pointer. On
+where neither clock pointer acts back and from a product ray (null sets by calculations, not
+in Lean), for the one-mode clock start of ~~#358~~, it is a swing at the clock's rate for
+every horizon, in the same run as the gated pointer. On
 a stretch `[a, b]` of the absence with `|g_c| (b − a)/n ≤ 1/6`, the difference between the
 advance of the clock's count and the advance of the gated count reads `b − a` within three
-periods. `a` and `b` are flow times, not a departure and a return marked by records. No record is stated on the return leg, and no
+periods. The time content is the clock's alone (its two-time bound holds for any two flow
+times); the gated count contributes only that its advance is 0 or 1, and the gated pointer's
+strength is free here, so it is not shown to tick. `a` and `b` are flow times, not a departure
+and a return marked by records. No record is stated on the return leg, and no
 radar time is formed from counts.
 
 ## What is open

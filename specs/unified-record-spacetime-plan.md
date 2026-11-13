@@ -196,7 +196,9 @@ what would discharge or constrain it.
      (`echoFstReady`, `echoFstDisplay`, `echoSiteReady`, `echoSiteDisplay`), placed by hand. Both
      pointers start in their ready arcs.
      Since BACKLOG ~~#369~~ the third torus of the arena of UA-15 has the same two arcs
-     (`triThdReady`, `triThdDisplay`). The third profile, the third strength and the second
+     (`triThdReady`, `triThdDisplay`). Since BACKLOG ~~#381~~ the fourth torus of UA-17 (e) has
+     a readout too (`quadFreeReady`, `quadFreeDisplay`), with the start `1/12` on the fibre
+     `ξ₂ = 0` and the profile `trainF`, as apparatus input. The third profile, the third strength and the second
      detector's site are parameters of the same kind.
   3. *The law of the conserved angle.* The distribution of `θ₂` over trials.
   4. *Measurement independence* (Posit 8): the choice of `M` is not correlated with the ontic point.
@@ -401,7 +403,9 @@ what would discharge or constrain it.
   to is chosen where the arena is used. Since BACKLOG ~~#369~~ one choice is in use: the level
   swap for the clock's pointer (UA-12) and the site projector on both levels for each of two
   detectors (`clockTwoSiteFlow`). Since BACKLOG ~~#376~~ a second is in use, on a composite
-  base: UA-17.
+  base: UA-17. Since BACKLOG ~~#381~~ a fourth torus is added by one more step (`QuadSigma`,
+  `quadForm`, `fourCoupledEnergy`, `quadMuL` in `LF4/QuadCoupledFlow.lean`; UD-122), with the
+  same form of energy and the same product measure, for UA-17 (e).
 * **Where.** `TriSigma`, `triForm`, `triForm_isSymplectic`, `triMuL`, `threeCoupledEnergy`
   (`LF4/TriCoupledFlow.lean`, BACKLOG ~~#368~~). The construction that adds a torus to an arena is
   `stepForm`, `stepEnergy` (`LF4/PointerStep.lean`): the form of (c) is its hypothesis at each
@@ -414,10 +418,7 @@ what would discharge or constrain it.
   carrier (read off `threeCoupledFlow_closed`; there is no bound on the size of that action for
   three pointers). No theorem on this arena states a probability, so the independence in (b) is
   not yet used as a law.
-* **What it does not cover.** A fifth pointer. Since BACKLOG ~~#381~~ a fourth is in use
-  (`QuadSigma`, `quadForm`, `fourCoupledEnergy`, `quadMuL` in `LF4/QuadCoupledFlow.lean`: one
-  more application of UD-95, with the same form of energy and the same product measure), for
-  UA-17 (e). A
+* **What it does not cover.** A fifth pointer. A
   coupling between pointers. A pointer whose moving angle enters the energy (UO-24).
 * **Discharge.** None for the choice. M8 compares alternatives.
 
@@ -467,15 +468,21 @@ what would discharge or constrain it.
   size and hop. Two pointers are coupled to messenger observables `B₁ ⊗ 1`, `B₂ ⊗ 1` (the two
   regions of UA-13, third instance of (d)). The third pointer is coupled to the product
   `P ⊗ X`: `P` the messenger's projector on the departure region, the same region as the first
-  pointer's, and `X` the clock's level swap times a strength `g_c` (the operator of UA-12). The
-  clock has no pointer of its own on this arena: the tick pointer of UA-12 and UA-16 is
-  replaced by this one. No moving angle enters the energy. (d) The clock's ring is not placed. `X` acts at every site
+  pointer's, and `X` the clock's level swap times a strength `g_c` (the operator of UA-12). On
+  the three-pointer arena the clock has no pointer of its own: the tick pointer of UA-12 and
+  UA-16 is replaced by this one (see (e) for the four-pointer arena). No moving angle enters
+  the energy. (d) The clock's ring is not placed. `X` acts at every site
   of the clock's ring, and the gate is a region of the messenger's ring. No distance between a
-  site of one ring and a site of the other is defined. (e) Since BACKLOG ~~#381~~ the arena has
-  a fourth pointer torus, and the clock has a pointer of its own again: it is coupled to
-  `1 ⊗ g₀ X`, the clock's level swap alone, with its own strength and profile. The gated
-  pointer of (c) stays. This amendment was made on the author's instruction to continue by the
-  route of a clock pointer that runs throughout (2026-11-13).
+  site of one ring and a site of the other is defined. (e) Amendment, BACKLOG ~~#381~~: a second
+  arena, the base of (a) times four pointer tori (`QuadSigma`, `quadForm`, measure `quadMuL`:
+  Haar on the fourth torus, independent of the rest at the start). The fourth pointer is
+  coupled to `1 ⊗ g₀ X` (`clockB Mc g₀`, at every site of the clock's ring, so (d) applies),
+  through its own profile of its conserved angle; no moving angle enters the energy and there
+  is no term between pointers. On this arena the clock has a pointer of its own. The gated
+  pointer of (c) stays. Its arcs and start are in UA-4. The route (a clock pointer that runs
+  throughout) is on the author's instruction to continue (2026-11-13). The realisation above
+  and the wording of this clause are this brick's choice. ⚠️ The author has not yet read this
+  amendment.
 * **Where.** `prodIdx`, `compositeH`, `gateFlow`, `gateClockFlow`
   (`RecordLayer/UnifiedCompositeCarrier.lean`, BACKLOG ~~#376~~), on `TriSigma` with `triForm`
   (`LF4/TriCoupledFlow.lean`); product rays are `prodRay` (`CV/ProductRay.lean`). For (e):
@@ -485,18 +492,22 @@ what would discharge or constrain it.
   `compositeAlgReconstruction` is not invoked here and the tensor product is taken as the
   definition. The third coupling is to a joint observable of the two carriers, so UA-9's
   "locality of de-isolation is built in" is not claimed for it. For the measure, UA-2 and UA-3 on the larger base: the flow preserves `triMuL`
-  (UD-111), which is necessary for the measure to be usable and says nothing about why it is
+  (UD-111) and, on the arena of (e), `quadMuL` (UD-123), which is necessary for the measure to be usable and says nothing about why it is
   this one.
 * **What is derived from it, not assumed.** On a fibre where the third pointer's profile
   vanishes, a product ray stays a product ray, the messenger with its two pointers moves as on
   its own arena, the clock moves freely, and the third pointer's rate is the product of the
   messenger's `⟨P⟩` and the clock's `⟨X⟩` (UD-111). The third pointer moves only while the
-  messenger is in the region, within stated bounds (UD-112).
+  messenger is in the region, within stated bounds (UD-112). On the arena of (e), where
+  neither clock pointer acts back, the fourth pointer's displacement is that of the pointer of
+  UD-58 on the clock's own arena (UD-123).
 * **What it does not cover.** The fibres where the third profile does not vanish: there the
   product structure is not shown to persist (that the product term entangles the messenger
   with the clock is expected, not in Lean). An entangled start. A gate by a record: the third
   pointer responds to an occupancy, which is an expectation, and it is a cyclic coordinate by
-  UD-106 (generic: it is the pointer the last step adds; not instantiated for `gateFlow`). A tick record or a count on this arena. A clock localised at a region.
+  UD-106 (generic: it is the pointer the last step adds; not instantiated for `gateFlow`). A
+  count held by a degree of freedom or read by a record (ticks and counts of readout histories
+  are in UD-113 and UD-123). A clock localised at a region.
   Identical carriers. The interaction topology of UO-15 for this generator: the product term
   joins a region of the messenger's ring to every site of the clock's ring, and UD-77 is not
   proved for it.
@@ -1018,8 +1029,8 @@ on the composite carrier with its fourth pointer (`RecordLayer/UnifiedTwoCounts.
 | UD-120 | **The gated pointer's displacement on the return leg.** In the instance of UD-113 on a round fibre (UD-118), with `0 ≤ δ ≤ π/2`, `T_a = 1250 n² (π/2 − δ)`, `T_b = 1250 n² (3π/2 + δ)`: at every flow time `t` with `T_b ≤ t ≤ 1250 n² (5π/2 − δ)` the gated pointer's displacement is within `2|g_c| (fineEta n δ · t + 5000 n² δ)` of `(1/4)(1 − cos R t) + (1/4)(cos R T_b − cos R T_a)`. Between two flow times it changes by at most `2|g_c| (b − a)` | `roundOut`, `roundBack`, `roundEnd`, `gatePhaseShift`, `gateReturnErr`, `fineEta_nonneg`, `abs_gateClockShift_train_sub_le'`, `abs_gateClockShift_return_sub_le` (`RecordLayer/UnifiedGateReturn.lean`) | exact bound on a real displacement; the three bounds of UD-119 joined across the two gaps; flow times |
 | UD-121 | **Whether the gated pointer ticks on the return leg depends on the clock's phases.** With `s = (1/4)(cos R T_b − cos R T_a)` and `e` the bound of UD-120 at the end of the return leg: if `1/12 + e < s` and `s + e ≤ 5/12`, the gated pointer is in its ready arc at no flow time of the return leg. If `|s| + e < 1/12`, the history read from a whole turn `2πj/R` of the clock on the return leg is a swing at the rate `R` with thresholds `±4(|s| + e)`, and has a tick count `N` at `T` (it may be zero) with `|N · 2π/R − T| ≤ 2π/R` | `gateClock_return_not_ready`, `isSwing_gateClock_return`, `gateClock_tickCount_return` (`RecordLayer/UnifiedGateReturn.lean`) | exact, in two cases that are not shown to be satisfiable; the other values of the offset are not treated; for the fixed arcs and start of UD-113; flow times |
 | UD-122 | **The four-pointer arena.** `ℂℙᴺ × T²` four times with the step form over `triForm` is symplectic; the flow of `−2⟨A⟩ − 2⟨B_A⟩ f(θ₂) − 2⟨B_B⟩ g(ψ₂) − 2⟨B_C⟩ k(χ₂) − 2⟨B_D⟩ l(ξ₂)` is a skew product over the fourth conserved angle, with the three-pointer flow of `A + l(ξ₂) B_D` on the base; it preserves `μ_FS ⊗ vol ⊗ vol ⊗ vol ⊗ vol` for Hermitian matrices | `QuadModel`, `QuadSigma`, `quadForm`, `quadForm_isSymplectic`, `triRayEnergy`, `contMDiff_triRayEnergy`, `fourCoupledEnergy`, `fourCoupledEnergy_apply`, `contMDiff_fourCoupledEnergy`, `threeCoupledEnergy_add_smul_triRayEnergy`, `fourCoupledFlow`, `fourCoupledFlow_apply`, `fourCoupledFlow_fst_of_lift_eq_zero`, `fourCoupledFlow_snd_of_lift_eq_zero`, `quadMuL`, `quadMuL_map_fourCoupledFlow` (`LF4/QuadCoupledFlow.lean`) | exact; one more application of UD-95; invariance only |
-| UD-123 | **The clock's own pointer beside the gated one.** On the arena of UA-17 (e): on a fibre where the fourth profile vanishes the carrier and the first three pointers move by `gateFlow`; from a product ray, where neither clock pointer acts back, the fourth pointer advances by `−2 l'(ξ₂)` times the clock's accumulated free reading; the flow preserves `quadMuL`. In the instance of UD-113 with the fourth pointer at `1/12`, the profile `trainF` on `ξ₂ = 0` and the strength tuned as in UD-62: its displacement is exactly that of the pointer of UD-58 on the clock's own arena, and the history read through its arcs is a swing at the rate `R` for every horizon | `isSwing_snd_of_abs_shift_sub_le`, `gateFreeFlow`, `quadMuL_map_gateFreeFlow`, `gateFreeFlow_fst`, `gateFreeFlow_snd_prodRay`, `gateFreeClockFlow`, `quadFreeReady`, `quadFreeDisplay`, `twoCountStart`, `gateFreeClockFlow_twoCount_fst`, `gateFreeClockFlow_twoCount_snd`, `isSwing_free_twoCount` (`RecordLayer/UnifiedTwoCounts.lean`) | exact; on fibres where both clock pointers' profiles vanish and from product rays (null sets by calculations not in Lean); one clock start; flow times |
-| UD-124 | **Two counts while the messenger is away.** If no passage from the resting set to the displaying set lies inside `[s, T]`, a count advances by at most one there; a history with a bounded number of ticks has a count; the gated pointer has a count at every flow time. In the run of UD-123 on a fine fibre (UD-109), for flow times `a ≤ b` of `[(3125π/3) n², (4375π/3) n²]` with `|g_c| (b − a)/n ≤ 1/6`: the gated count advances by at most one, and the difference between the advance of the clock's count and the advance of the gated count, times `2π/R`, is within `6π/R` of `b − a` | `hasTicks_le_succ_of_no_passage`, `exists_tickCount_of_bdd`, `IsTickCount.le_succ_of_no_passage`, `exists_gate_tickCount`, `twoCounts_away` (`RecordLayer/UnifiedTwoCounts.lean`) | exact; a sub-interval of the absence between two flow times, not a departure and a return; the limits of UD-123; flow times |
+| UD-123 | **The clock's own pointer beside the gated one.** On the arena of UA-17 (e): on a fibre where the fourth profile vanishes the carrier and the first three pointers move by `gateFlow`; from a product ray, where neither clock pointer acts back, the fourth pointer advances by `−2 l'(ξ₂)` times the clock's accumulated free reading; the flow preserves `quadMuL`. From the start of UD-113 (`gateTrainStart`), with `g_c` free (not tuned as in UD-113), the fourth pointer at `1/12`, the profile `trainF` on `ξ₂ = 0` and its strength `g₀` tuned as in UD-62: its displacement is exactly that of the pointer of UD-58 on the clock's own arena (an equality of real displacement functions across arenas), and the history read through its arcs is a swing at the rate `R` for every horizon | `isSwing_snd_of_abs_shift_sub_le`, `gateFreeFlow`, `quadMuL_map_gateFreeFlow`, `gateFreeFlow_fst`, `gateFreeFlow_snd_prodRay`, `gateFreeClockFlow`, `quadFreeReady`, `quadFreeDisplay`, `twoCountStart`, `gateFreeClockFlow_twoCount_fst`, `gateFreeClockFlow_twoCount_snd`, `isSwing_free_twoCount` (`RecordLayer/UnifiedTwoCounts.lean`) | exact; on fibres where both clock pointers' profiles vanish and from product rays (null sets by calculations not in Lean); one clock start; flow times |
+| UD-124 | **Two counts while the messenger is away.** If no passage from the resting set to the displaying set lies inside `[s, T]`, a count advances by at most one there; a history with a bounded number of ticks has a count (both for any history; the flow is not used); the gated pointer has a count at every flow time `T ≥ 0`. In the run of UD-123 on a fine fibre (UD-109), for flow times `a ≤ b` of `[(3125π/3) n², (4375π/3) n²]` with `|g_c| (b − a)/n ≤ 1/6`: the gated count advances by at most one, and the difference between the advance of the clock's count and the advance of the gated count, times `2π/R`, is within `6π/R` of `b − a` | `hasTicks_le_succ_of_no_passage`, `exists_tickCount_of_bdd`, `IsTickCount.le_succ_of_no_passage`, `exists_gate_tickCount`, `twoCounts_away` (`RecordLayer/UnifiedTwoCounts.lean`) | exact; a sub-interval of the absence between two flow times, not a departure and a return; the limits of UD-123; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -1417,25 +1428,34 @@ UD-120 and UD-121 use the assumptions of UD-113 and UD-119. UA-6 is not used.
 Exact scope of UD-122 to UD-124 (BACKLOG ~~#381~~). What they give. A clock pointer that runs
 throughout, on the same arena and in the same run as the gated pointer and the two region
 pointers: by the amendment (e) of UA-17 the clock has a pointer of its own, and where neither
-clock pointer acts back its displacement is exactly that of UD-58's pointer, so the swing,
-the ticks and the count of UD-61 and UD-62 hold for it at every horizon. So one history has
-two counts. On a stretch `[a, b]` of the interval on which the messenger is in the far half,
-the clock's count advances with the flow time (within two periods) and the gated count by at
-most one, so the difference of the two advances reads `b − a` within three periods. What they
+clock pointer acts back its displacement is exactly that of UD-58's pointer (an equality of
+real displacement functions across arenas), so the swing, the ticks and the count of UD-61 and
+UD-62 hold for it at every horizon. So one history has two counts. On a stretch `[a, b]` of
+the interval of UD-109 on which the far half's occupancy is at least `1 − 1/(2n)`, the
+clock's count advances with the flow time within two periods (UD-92, which holds for any two
+non-negative flow times) and the gated count by 0 or 1, so the difference of the two advances
+is within three periods of `b − a`. The time content is the clock's alone; no hypothesis
+relates `2π/R` to `b − a`, and all four advances may be zero. Not new on other arenas: a
+clock pointer that swings at every horizon beside other pointers in one run is UD-98 (BACKLOG
+~~#369~~, the same clock carrier) and UD-104 (~~#372~~, the uncoupled product arena); what is
+new here is that the clock is a tensor factor of the composite carrier, in the run that also
+carries the pointer coupled to `P ⊗ X`. What they
 do not give. (i) A radar time. `a` and `b` are flow times inside the absence, not a departure
 and a return, and no record marks them. Over the two transit windows the gated count is
 bounded only by UD-115, too weakly, and on the return leg it depends on the offset of UD-120.
-(ii) A long stretch for free. The hypothesis `|g_c| (b − a)/n ≤ 1/6` bounds `b − a` by
-`n/(6|g_c|)`; that it holds many periods `2π/R` for some `g_c`, `n` and clock is a
-calculation and not in Lean. The strength `g_c` of the gated pointer is free here; the clock's
-own pointer has its own strength. (iii) A count held by a degree of freedom, or read by a
+(ii) A ticking gated pointer. `g_c` is a free real in these entries; only `g₀` is tuned. The
+gated pointer is the swing of UD-113 only when `g_c` also has the tuned value, and that swing
+is not restated on this arena; for `g_c` far below it the gated pointer is not shown to tick
+at all and the gated count may be zero throughout. With `g_c` tuned, the hypothesis
+`|g_c| (b − a)/n ≤ 1/6` allows a number of periods of order `n`. A calculation, not in Lean. (iii) A count held by a degree of freedom, or read by a
 record: UO-14 (b). Both counts are read at flow times. (iv) Fibres or starts of positive
 measure: both clock pointers' profiles must vanish on the fibre, and the start is a product
 ray (null sets by calculations not in Lean). (v) A gate by a record. (vi) Every time is a
 flow time (UA-7). By the test of §6: the fourth pointer is added by assumption (UA-17 (e)),
 and that it is a swing is UD-62 carried to this arena by the product structure of UD-111;
 the gated bound is UD-114. What is derived is that the two hold in one run and what their
-difference reads. They pass no gate: neither count is tied to a record. UD-122 uses UA-15.
+difference reads. They pass no gate: neither count is tied to a record. UD-122 uses UA-15
+and, through the lower arenas, UA-13; UA-2 enters only as invariance.
 UD-123 and UD-124 use UA-17, UA-15, UA-13, UA-12, UA-8, UA-7, UA-5 and UA-4; UA-2 enters
 through `quadMuL` and, for the fine fibres, through the measure on the pair of conserved
 angles. UA-6 is not used.
@@ -2101,10 +2121,12 @@ time. It is not a statement about every dynamics on `Σ`.
   rate for every horizon (`isSwing_free_twoCount`), in the same run as the gated pointer. On a
   stretch `[a, b]` of the absence with `|g_c| (b − a)/n ≤ 1/6` the gated count advances by at
   most one, and the difference of the two advances reads `b − a` within three periods
-  (`twoCounts_away`). *Conditions:* those of UD-111 with both profiles vanishing; one clock
-  start; flow times. *What is still missing for a radar time:* records that mark the departure
+  (`twoCounts_away`). *Conditions:* those of UD-111 with both profiles vanishing; a fine fibre
+  of the two region pointers (UD-109) for `twoCounts_away`; `g₀` tuned, `g_c` not; one clock
+  start; flow times. The time content is the clock's alone (UD-92). *What is still missing for a radar time:* records that mark the departure
   and the return at which the clock's count is read (the two region pointers' writes of UD-94
-  are candidates; they are not located on this arena); the count read by a record and not at a
+  are candidates: they are thresholds of accumulated weight and do not certify a transit, and
+  they are stated for the packet of UD-91, not for the fine packet or on this arena); the count read by a record and not at a
   flow time (UO-14 (b)); fibres and starts of positive measure; a second observer; and a family
   along which every error shrinks.
 
