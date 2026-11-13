@@ -198,7 +198,9 @@ what would discharge or constrain it.
      Since BACKLOG ~~#369~~ the third torus of the arena of UA-15 has the same two arcs
      (`triThdReady`, `triThdDisplay`). Since BACKLOG ~~#381~~ the fourth torus of UA-17 (e) has
      a readout too (`quadFreeReady`, `quadFreeDisplay`), with the start `1/12` on the fibre
-     `ξ₂ = 0` and the profile `trainF`, as apparatus input. The third profile, the third strength and the second
+     `ξ₂ = 0` and the profile `trainF`, as apparatus input. In the variant UA-17 (f) (BACKLOG
+     ~~#384~~) the third pointer starts anywhere in its ready arc on a fibre where its profile
+     vanishes, and its rate `κ₃` and the flow time `T₁` are apparatus input. The third profile, the third strength and the second
      detector's site are parameters of the same kind.
   3. *The law of the conserved angle.* The distribution of `θ₂` over trials.
   4. *Measurement independence* (Posit 8): the choice of `M` is not correlated with the ontic point.
@@ -365,7 +367,9 @@ what would discharge or constrain it.
   region and a ready arc on each torus, as apparatus input. Since BACKLOG ~~#364~~ the same holds
   for the arena of two site detectors. Since BACKLOG ~~#367~~ a third instance of (d) is in use:
   two pointers coupled to the projectors on two regions of sites, the two halves of the ring
-  (`regionTwoFlow`), with the same readouts and ready arcs.
+  (`regionTwoFlow`), with the same readouts and ready arcs. Since BACKLOG ~~#384~~ a fourth:
+  two pointers coupled to the same region projector with different strengths, beside one on
+  the other half (UA-17 (f)).
 * **Discharge.** None for the choice. M8 compares alternatives. The interaction topology M5 must
   record (UO-15) is read off (c) and (d): the carrier's hopping and the two on-site operators.
   Since BACKLOG ~~#361~~ it is stated as a property of the coupled generators and proved for them
@@ -405,7 +409,8 @@ what would discharge or constrain it.
   detectors (`clockTwoSiteFlow`). Since BACKLOG ~~#376~~ a second is in use, on a composite
   base: UA-17. Since BACKLOG ~~#381~~ a fourth torus is added by one more step (`QuadSigma`,
   `quadForm`, `fourCoupledEnergy`, `quadMuL` in `LF4/QuadCoupledFlow.lean`; UD-122), with the
-  same form of energy and the same product measure, for UA-17 (e).
+  same form of energy and the same product measure, for UA-17 (e). Since BACKLOG ~~#384~~ the
+  same four-torus arena is used with another choice of operators, UA-17 (f).
 * **Where.** `TriSigma`, `triForm`, `triForm_isSymplectic`, `triMuL`, `threeCoupledEnergy`
   (`LF4/TriCoupledFlow.lean`, BACKLOG ~~#368~~). The construction that adds a torus to an arena is
   `stepForm`, `stepEnergy` (`LF4/PointerStep.lean`): the form of (c) is its hypothesis at each
@@ -479,13 +484,16 @@ what would discharge or constrain it.
   coupled to `1 ⊗ g₀ X` (`clockB Mc g₀`, at every site of the clock's ring, so (d) applies),
   through its own profile of its conserved angle; no moving angle enters the energy and there
   is no term between pointers. On this arena the clock has a pointer of its own. The gated
-  pointer of (c) stays. Its arcs and start are in UA-4. The route (a clock pointer that runs
+  pointer of (c) stays (not in the variant (f)). Its arcs and start are in UA-4. The route (a clock pointer that runs
   throughout) is on the author's instruction to continue (2026-11-13). The realisation above
   and the wording of this clause are this brick's choice. ⚠️ The author has not yet read this
   amendment. (f) Amendment, BACKLOG ~~#384~~: a variant of the arena of (e) in which the third
   pointer's clock factor is `g₃ · 1` (`clockOne Mc g₃`) and not the level swap. Its operator
-  is then `P ⊗ g₃ 1`, a messenger observable: a second pointer on the departure region, with
-  its own strength and profile (a fourth instance of UA-13 (d)). The gated pointer of (c) is
+  is then `P ⊗ g₃ 1`, a messenger observable: a second pointer on the near half (the region
+  of the first pointer), with its own strength and profile (a fourth instance of UA-13 (d)).
+  In this variant no term of the energy joins the two factors: the composite base is kept but
+  neither half of the author's decision of 2026-11-12 is exercised. From a product ray it is
+  the arena of UA-16 with one more region pointer (a calculation, not in Lean). The gated pointer of (c) is
   absent from this variant, so the author's product coupling is not exercised on it; the
   clock keeps the pointer of (e). Form, measure and the fourth pointer are those of (e). The
   variant is this brick's choice, made to add a record without a fifth torus. ⚠️ The author
@@ -498,9 +506,9 @@ what would discharge or constrain it.
 * **Standing.** Choice for the arena, as UA-1, UA-13, UA-15 and UA-16. Boundary R-015 for the
   couplings. That the composite of two carriers is the tensor product is UA-9's subject;
   `compositeAlgReconstruction` is not invoked here and the tensor product is taken as the
-  definition. The third coupling is to a joint observable of the two carriers, so UA-9's
+  definition. In (c) and (e) the third coupling is to a joint observable of the two carriers (in (f) it is a messenger observable), so UA-9's
   "locality of de-isolation is built in" is not claimed for it. For the measure, UA-2 and UA-3 on the larger base: the flow preserves `triMuL`
-  (UD-111) and, on the arena of (e), `quadMuL` (UD-123), which is necessary for the measure to be usable and says nothing about why it is
+  (UD-111) and, on the arena of (e), `quadMuL` (UD-123), and for (f), `quadMuL` (UD-129), which is necessary for the measure to be usable and says nothing about why it is
   this one.
 * **What is derived from it, not assumed.** On a fibre where the third pointer's profile
   vanishes, a product ray stays a product ray, the messenger with its two pointers moves as on
@@ -508,17 +516,20 @@ what would discharge or constrain it.
   messenger's `⟨P⟩` and the clock's `⟨X⟩` (UD-111). The third pointer moves only while the
   messenger is in the region, within stated bounds (UD-112). On the arena of (e), where
   neither clock pointer acts back, the fourth pointer's displacement is that of the pointer of
-  UD-58 on the clock's own arena (UD-123).
+  UD-58 on the clock's own arena (UD-123). In the variant (f) the third pointer's rate is
+  `g₃` times the messenger's `⟨P⟩`, and from a product ray where the third and fourth profiles
+  vanish all three region pointers move as on the messenger's own arena (UD-129).
 * **What it does not cover.** The fibres where the third profile does not vanish: there the
   product structure is not shown to persist (that the product term entangles the messenger
-  with the clock is expected, not in Lean). An entangled start. A gate by a record: the third
+  with the clock is expected, not in Lean; in (f) there is no product term and the opposite is
+  expected, also not in Lean). An entangled start. A gate by a record: the third
   pointer responds to an occupancy, which is an expectation, and it is a cyclic coordinate by
   UD-106 (generic: it is the pointer the last step adds; not instantiated for `gateFlow`). A
   count held by a degree of freedom or read by a record (ticks and counts of readout histories
   are in UD-113 and UD-123). A clock localised at a region.
   Identical carriers. The interaction topology of UO-15 for this generator: the product term
-  joins a region of the messenger's ring to every site of the clock's ring, and UD-77 is not
-  proved for it.
+  joins a region of the messenger's ring to every site of the clock's ring (not in (f)), and
+  UD-77 is not proved for it.
 * **Discharge.** None for the choice. M8 compares alternatives.
 
 ---
@@ -1049,7 +1060,7 @@ variant of UA-17 (f), with a second near-half pointer in place of the gated poin
 | UD-127 | **The accumulated far-half occupancy up to and through the absence.** On a round fibre (UD-118), `0 < δ ≤ π/2` (Lean: `0 ≤ δ`, `δ ≤ π/2`, `cos δ < 1`): the coupled carrier's accumulated occupancy of the far half is at most `farUpper n δ = 1250 n² (fineEta n δ (π/2 − δ) + 2δ)` at the flow time of the predicted angle `π/2 + δ`, and at least `farLower n δ = (1 − fineEta n δ) · 1250 n² (π − 2δ)` at that of `3π/2 − δ`. For `δ ≤ π/48` and `fineEta n δ ≤ 1/48`, `2 · farUpper ≤ farLower` | `roundAway`, `roundAwayEnd`, `farOcc`, `continuous_farOcc`, `farOcc_nonneg`, `farOcc_le_one`, `farUpper`, `farLower`, `integral_farOcc_le`, `le_integral_farOcc`, `two_farUpper_le_farLower` (`RecordLayer/UnifiedArrivalReturn.lean`) | exact bounds; accumulated occupancies, not records; flow times |
 | UD-128 | **Two records and two counts in one run.** In the run of UD-123, with both region pointers ready, on a round fibre, both rates positive: if the far pointer's rate `κ₂` has `κ₂ · farUpper ≤ 1/6` and `1/3 ≤ κ₂ · farLower`, and the near pointer's rate satisfies the hypotheses of UD-126, there are flow times `τ_a ≤ τ_r`, with `τ_a` between those of the predicted angles `π/2 + δ` and `3π/2 − δ` and `τ_r` between those of `3π/2 + δ` and `5π/2 − δ`, such that the far pointer's readout is an `IsRecordWrite` whose write interval ends at `τ_a`, the near pointer's readout is an `IsRecordWrite` whose write interval ends at `τ_r`, the clock's own pointer has exactly `N_a` ticks by `τ_a` and `N_r` by `τ_r`, and `|(N_r − N_a) · 2π/R − (τ_r − τ_a)| ≤ 4π/R` | `echoSiteShown_twoCount_iff`, `arrival_and_return_records_with_counts` (`RecordLayer/UnifiedArrivalReturn.lean`) | exact under four rate hypotheses; two thresholds of accumulated occupancy, which certify neither an arrival nor a return; the counts read at flow times (the ends of the write intervals) and possibly zero; the limits of UD-123 |
 | UD-129 | **The composite carrier with three region pointers and the clock's own pointer.** The flow of UA-17 (f) preserves `quadMuL`. From a product ray, on a fibre where the third and fourth profiles vanish, the carrier stays a product ray, the first two pointers move as in UD-93, and the third advances by its rate times the accumulated occupancy of the first pointer's region along the same messenger orbit. On a round fibre (UD-118), `0 < δ ≤ π/2` (Lean: `0 ≤ δ`, `δ ≤ π/2`, `cos δ < 1`), the near half has accumulated at least `(1 − fineEta n δ) · roundOut n δ` by the flow time `roundOut n δ` of the predicted angle `π/2 − δ`, and at most `T` by any flow time `T ≥ 0` | `clockOne`, `clockOne_isHermitian`, `arenaObs_clockOne`, `threeRecordFlow`, `quadMuL_map_threeRecordFlow`, `gateShift_clockOne`, `threeRecordFlow_fst_prodRay`, `integral_nearOcc_le_self`, `le_integral_nearOcc_out` (`RecordLayer/UnifiedThreeRecords.lean`) | exact; invariance only for the measure; null sets of fibres and starts; accumulated occupancies, not records; flow times |
-| UD-130 | **Three records and three counts in one run, and the midpoint of the first and last.** In the run of UA-17 (f) from `threeRecordStart`, the three region pointers ready, on a round fibre, the third profile vanishing on its fibre, all three rates positive: if the near and far rates are in the windows of UD-128 and the third rate `κ₃` has `κ₃ T₁ ≤ 1/6` for a chosen `0 ≤ T₁ ≤ roundOut n δ` and `1/3 ≤ κ₃ (1 − fineEta n δ) roundOut n δ`, there are flow times `τ_d ∈ [T₁, roundOut]`, `τ_a ∈ [roundAway, roundAwayEnd]`, `τ_r ∈ [roundBack, roundEnd]` such that the third, far and near readouts are `IsRecordWrite`s with write intervals `[T₁, τ_d]`, `[roundAway, τ_a]`, `[roundBack, τ_r]`; the clock's own pointer has exactly `N_d`, `N_a`, `N_r` ticks by them; `|(N_a − N_d) · 2π/R − (τ_a − τ_d)| ≤ 4π/R` and `|(N_r − N_d) · 2π/R − (τ_r − τ_d)| ≤ 4π/R`; `(τ_d + τ_r)/2 ∈ [roundAway, roundAwayEnd]`; and `|(N_d + N_r)/2 · 2π/R − (τ_d + τ_r)/2| ≤ 2π/R` | `roundAway_le_midpoint`, `midpoint_le_roundAwayEnd`, `threeRecordStart`, `threeRecordRun`, `threeRecordRun_fst_pointer`, `threeRecordRun_snd_pointer`, `threeRecordRun_thd_pointer`, `threeRecordRun_clock_pointer`, `echoFstShown_threeRecord_iff`, `echoSiteShown_threeRecord_iff`, `triThdShown_threeRecord_iff`, `isSwing_threeRecord`, `three_records_with_counts` (`RecordLayer/UnifiedThreeRecords.lean`) | existence of flow times in stated intervals; thresholds of accumulated occupancy, the first not an emission record; the midpoint clause is interval arithmetic; counts read at flow times; null sets of fibres and starts; rate windows are hypotheses |
+| UD-130 | **Three records and three counts in one run, and the midpoint of the first and last.** In the run of UA-17 (f) from `threeRecordStart`, the three region pointers ready, on a round fibre, the third profile vanishing on its fibre, all three rates positive: if the near and far rates are in the windows of UD-128 and the third rate `κ₃` has `κ₃ T₁ ≤ 1/6` for a chosen `0 ≤ T₁ ≤ roundOut n δ` and `1/3 ≤ κ₃ (1 − fineEta n δ) roundOut n δ`, there are flow times `τ_d ∈ [T₁, roundOut]`, `τ_a ∈ [roundAway, roundAwayEnd]`, `τ_r ∈ [roundBack, roundEnd]`, `τ_d ≤ τ_a ≤ τ_r`, such that the third, far and near readouts are `IsRecordWrite`s with write intervals `[T₁, τ_d]`, `[roundAway, τ_a]`, `[roundBack, τ_r]`; the clock's own pointer has exactly `N_d`, `N_a`, `N_r` ticks by them; `|(N_a − N_d) · 2π/R − (τ_a − τ_d)| ≤ 4π/R` and `|(N_r − N_d) · 2π/R − (τ_r − τ_d)| ≤ 4π/R`; `(τ_d + τ_r)/2 ∈ [roundAway, roundAwayEnd]`; and `|(N_d + N_r)/2 · 2π/R − (τ_d + τ_r)/2| ≤ 2π/R` | `roundAway_le_midpoint`, `midpoint_le_roundAwayEnd`, `threeRecordStart`, `threeRecordRun`, `threeRecordRun_fst_pointer`, `threeRecordRun_snd_pointer`, `threeRecordRun_thd_pointer`, `threeRecordRun_clock_pointer`, `echoFstShown_threeRecord_iff`, `echoSiteShown_threeRecord_iff`, `triThdShown_threeRecord_iff`, `isSwing_threeRecord`, `three_records_with_counts` (`RecordLayer/UnifiedThreeRecords.lean`) | existence of flow times in stated intervals; thresholds of accumulated occupancy, the first not an emission record; the midpoint clause is interval arithmetic; counts read at flow times; null sets of fibres and starts; rate windows are hypotheses |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -1551,9 +1562,10 @@ from the occupancy bounds of UD-118 and the crossing lemma of UD-89; the counts 
 and the bound is UD-92. They pass no gate: neither count is tied to a record. UD-127 uses the
 assumptions of UD-118. UD-128 uses in addition those of UD-123. UA-6 is not used.
 
-Exact scope of UD-129 and UD-130 (BACKLOG ~~#384~~). What they give. A third record in the run
-of UD-128, written during the first presence, from a second pointer on the near half with a
-larger rate. So one run has three records in order, before, during and after the absence, and
+Exact scope of UD-129 and UD-130 (BACKLOG ~~#384~~). What they give. A third record in a run
+like that of UD-128 on the variant arena of UA-17 (f), written during the first presence, from a second pointer on the near half with a
+larger rate. So one run has three records in order (`τ_d ≤ τ_a ≤ τ_r`), before, during and
+after the absence, and
 the clock's own pointer has a count at a flow time by which each is complete. The count
 differences from the first, times the period, are within two periods of the differences of
 the flow times. The midpoint of the first and last flow times lies in the absence, and half
@@ -1567,19 +1579,29 @@ the stated write intervals, not the instants the readouts turn, and each is loca
 within its interval. Each readout is shown to display only through its window after its `τ`;
 the three are not shown to display at one flow time, and the third pointer keeps turning
 whenever the messenger is in the near half. (iv) A radar time. The midpoint clause is
-arithmetic on the three intervals: the first presence and the return leg are placed
-symmetrically about the absence. It locates the midpoint only to within the absence's whole
+arithmetic on the three intervals. The first presence ends before the absence and the return leg begins after it, and for
+`δ ≤ π/2` the midpoint of any non-negative time up to `roundOut` and any time of the return
+leg lies in the absence. The two intervals are not symmetric about it: the return leg is
+twice as long as the first presence. Interval arithmetic puts the midpoint in
+`[1250 n² (3π/4 + δ/2), 1250 n² (3π/2 − δ)]`; the theorem states only the absence's whole
+interval. It locates the midpoint only to within the absence's whole
 length `1250 n² (π − 2δ)`, the interval that also holds `τ_a`. It is formed from flow times;
 no degree of freedom holds it. There is no reflector and no distance, the messenger returns
 because the ring closes, and there is no second observer. (v) Time content beyond the
 clock's. The bounds are UD-92's and hold at any non-negative flow times; no hypothesis
 relates the period to any interval, and all three counts may be zero. (vi) Counts read by the
 records, or held by a degree of freedom: UO-14 (b). (vii) The gated pointer. It is absent
-from this variant (UA-17 (f)), so UD-111 to UD-116 and UD-119 to UD-121 say nothing about this
-run, and the product coupling is not exercised. (viii) That the hypotheses hold together in
+from this variant (UA-17 (f)), so UD-113 to UD-116, UD-119 to UD-121 and the gated-count
+statements of UD-124, which are for the level swap, say nothing about this run. The generic
+lemmas of UD-111 (`gateFlow_prodRay`, `gateShift`) are used here with `X = g₃ · 1`. No term
+couples the messenger and the clock: neither the product coupling nor the composite carrier
+is exercised, and from a product ray the run is that of UD-104's uncoupled arena with a third
+region pointer (a calculation, not in Lean). (viii) That the hypotheses hold together in
 Lean: six rate windows and three signs. The first two pairs are those of UD-128; the third is
-satisfiable with `T₁ = 0` by any large enough rate, and a positive `T₁` only up to about half
-the first presence (a calculation, not in Lean). That one start meets all of them with the
+satisfiable with `T₁ = 0` by any large enough rate once `δ < π/2` and `fineEta n δ < 1`, which
+the first two windows force, and a positive `T₁` only up to
+`(1 − fineEta n δ)/2 · roundOut n δ` (calculations, not in Lean); at `δ = π/2` the theorem is
+vacuous. That one start meets all of them with the
 round-fibre bound is not stated. (ix) More than null sets: the third and fourth profiles
 vanish on their fibres and the start is a product ray (calculations, not in Lean). The writes
 and counts are `IsRecordWrite` and `IsTickCount` statements about readout histories, not
@@ -1588,8 +1610,8 @@ one run (thresholds of accumulated weight); BACKLOG ~~#369~~ three records and t
 one run, for one momentum mode; UD-104 (~~#372~~) a separate clock's counts at two writes;
 ~~#200~~ and ~~#202~~ (echo arena), ~~#270~~ (reflection, stated detector law) and ~~#274~~
 and ~~#278~~ (relay, stated hybrid law) have emission and return records with a clock
-reading, under their own laws. What is new is three writes on the free round trip with the
-clock a tensor factor of the same carrier, and the placed midpoint. By the test of §6: the
+reading, under their own laws. What is new is the third write, during the first presence, in a
+round-trip run like that of UD-128, and the midpoint clause. By the test of §6: the
 third pointer, its operator and the three rate windows are chosen (UA-17 (f), UA-4); the
 writes follow from the occupancy bounds of UD-118 and the crossing lemma of UD-89; the counts
 are the swing of UD-123 on this variant and the bounds are UD-92's; the midpoint is

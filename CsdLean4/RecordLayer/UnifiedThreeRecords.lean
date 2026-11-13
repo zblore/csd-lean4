@@ -10,27 +10,32 @@ public import CsdLean4.RecordLayer.UnifiedArrivalReturn
 /-!
 # Three records and three counts in one run: before, during and after the absence
 
-**Category:** 7-SigmaLayer (the record layer). BACKLOG #384 — the author's programme "From
-`Σ` to physical spacetime", obligation UO-16; Remainder (a) of #383. It amends UA-17 with
-clause (f); the author has not yet read that amendment.
+**Category:** 7-SigmaLayer (the record layer). BACKLOG #384 — milestone **M6** of the author's
+programme "From `Σ` to physical spacetime", obligation UO-16; Remainder (a) of #383. It amends
+UA-17 with clause (f); the author has not yet read that amendment.
 
-#383 has two records in one run, one written during the absence and one on the return leg,
-from a prepared start. Here a third pointer is coupled to the near half with a larger rate, so
-its readout is written during the first presence. One run then has three records in order,
-before, during and after the absence, and the clock's own pointer of #381 has a count at a
-flow time by which each is complete. All three writes are thresholds of accumulated occupancy.
+#383 has two records in one run, one written during the absence and one on the return leg, from a
+prepared start. Here a third pointer is coupled to the near half with a larger rate, so its
+readout is written during the first presence. One run then has three records in order (`τ_d ≤ τ_a
+≤ τ_r`), before, during and after the absence, and the clock's own pointer of #381 has a count at
+a flow time by which each is complete. All three writes are thresholds of accumulated occupancy.
 The first is not an emission record and nothing is certified.
 
 The third pointer takes the place of the gated pointer of #376: on the four-pointer arena the
-third pointer's operator is `P ⊗ X`, and here `X` is `g₃ · 1`. No new arena is built.
+third pointer's operator is `P ⊗ X`, and here `X` is `g₃ · 1`. No new arena is built. **In
+this variant no term of the energy couples the messenger and the clock**: every pointer is
+coupled to an observable of one factor. From a product ray the run is that of the uncoupled
+arena of #372 with a third region pointer, written on the composite base (a calculation;
+Lean has it only on the fibre where the third and fourth profiles vanish).
 
 * `clockOne`, `clockOne_isHermitian`, `arenaObs_clockOne` — the clock factor `g₃ · 1`;
 * `threeRecordFlow`, `quadMuL_map_threeRecordFlow` — the flow and its preserved measure;
 * `gateShift_clockOne`, `threeRecordFlow_fst_prodRay` — from a product ray, on a fibre where
   the third and fourth profiles vanish, the carrier stays a product ray and all three region
   pointers move as region pointers of the messenger's own arena;
-* `integral_nearOcc_le_self`, `le_integral_nearOcc_out` — on a round fibre the near half has
-  accumulated at least `(1 − fineEta n δ) · roundOut n δ` by the end of the first presence;
+* `integral_nearOcc_le_self` (on any fibre the near half has accumulated at most the elapsed
+  flow time), `le_integral_nearOcc_out` — on a round fibre the near half has accumulated at
+  least `(1 − fineEta n δ) · roundOut n δ` by the end of the first presence;
 * `roundAway_le_midpoint`, `midpoint_le_roundAwayEnd` — arithmetic on the intervals of #379;
 * `threeRecordStart`, `threeRecordRun`, `threeRecordRun_fst_pointer`,
   `threeRecordRun_snd_pointer`, `threeRecordRun_thd_pointer`, `threeRecordRun_clock_pointer`;
@@ -49,8 +54,9 @@ third pointer's operator is `P ⊗ X`, and here `X` is `g₃ · 1`. No new arena
   The third pointer accumulates its presence there and its readout turns once enough has
   accumulated. Nothing is emitted and nothing records a departure. With `T₁ = 0` the theorem
   allows the write at any flow time of the first presence; a positive `T₁` needs
-  `κ₃ T₁ ≤ 1/6`, which with the other condition holds only for `T₁` up to about half the
-  first presence (a calculation, not in Lean).
+  `κ₃ T₁ ≤ 1/6`, which with the other condition holds only for
+  `T₁ ≤ (1 − fineEta n δ)/2 · roundOut n δ`, about half the first presence (a calculation,
+  not in Lean).
 * **No write certifies a departure, an arrival or a return.** All three are thresholds of
   accumulated occupancy, as in #367. Carriers with suitable constant occupancies would give
   readouts with the same clauses (a calculation, not in Lean; not exhibited on this arena).
@@ -60,11 +66,14 @@ third pointer's operator is `P ⊗ X`, and here `X` is `g₃ · 1`. No new arena
   after its `τ`. The three are not shown to display at one flow time: the third pointer keeps
   turning whenever the messenger is in the near half, and may leave its displayed arc before
   the later writes.
-* **The midpoint statement is arithmetic on three intervals.** The first presence and the
-  return leg are placed symmetrically about the absence, so the midpoint of any time in the
-  one and any time in the other lies in the absence. It locates the midpoint only to within
-  the absence's whole length `1250 n² (π − 2δ)`, the same interval that holds `τ_a`. It is
-  formed from flow times; no degree of freedom holds it and no record reads it.
+* **The midpoint statement is arithmetic on three intervals.** The first presence ends before the
+  absence and the return leg begins after it, and for `δ ≤ π/2` the midpoint of any non-negative
+  time up to `roundOut` and any time of the return leg lies in the absence. The two intervals are
+  not symmetric about it: the return leg is twice as long as the first presence. Interval
+  arithmetic puts the midpoint in `[1250 n² (3π/4 + δ/2), 1250 n² (3π/2 − δ)]`; the theorem
+  states only the absence's whole interval. It locates the midpoint only to within the absence's
+  whole length `1250 n² (π − 2δ)`, the same interval that holds `τ_a`. It is formed from flow
+  times; no degree of freedom holds it and no record reads it.
 * **Not a radar time.** There is no reflector and no distance. The messenger returns because
   the ring closes, and all three records are read on the one messenger's ring. There is no
   second observer.
@@ -73,15 +82,18 @@ third pointer's operator is `P ⊗ X`, and here `X` is `g₃ · 1`. No new arena
   intervals, and all three counts may be zero.
 * **The counts are read at flow times** (UA-7). No record reads a count and no degree of
   freedom holds a pair (UO-14 (b)).
-* **The gated pointer is absent.** The author's product coupling `P ⊗ X` with `X` the clock's
-  level swap is not exercised in this run; the clock is read by its own pointer, as since
-  #381. With `X = g₃ · 1` the third coupling is a messenger observable and does not entangle
-  the carrier; the lemma used still asks that its profile vanish on the fibre, so the third
-  pointer does not act back on the messenger here.
+* **The gated pointer is absent, and nothing couples the two carriers.** Neither half of the
+  author's decision of 2026-11-12 is exercised in this run: the product coupling `P ⊗ X` with
+  `X` the clock's level swap is not there, and the composite base carries no joint term. The
+  clock is read by its own pointer, as since #381. With `X = g₃ · 1` the third coupling is a
+  messenger observable, so it is expected not to entangle the carrier on any fibre (a
+  calculation, not in Lean); the lemma used asks that its profile vanish on the fibre, where
+  the third pointer does not act back on the messenger.
 * **Six rate windows and three signs are hypotheses.** The first two pairs are those of #383.
-  The third is satisfiable with `T₁ = 0` by any large enough rate. That one start meets all of
-  them together with the round-fibre bound is not stated in Lean. The margin must be positive
-  (`cos δ < 1`).
+  The third is satisfiable with `T₁ = 0` by any large enough rate once `δ < π/2` and
+  `fineEta n δ < 1`, which the first two windows force (a calculation, not in Lean); at
+  `δ = π/2` the theorem is vacuous. That one start meets all of them together with the
+  round-fibre bound is not stated in Lean. The margin must be positive (`cos δ < 1`).
 * **Null sets.** The third and fourth profiles vanish on their fibres and the start is a
   product ray (null sets by calculations not in Lean); the round fibres of #379; one clock
   start. The writes and counts are `IsRecordWrite` and `IsTickCount` statements about readout
@@ -90,9 +102,12 @@ third pointer's operator is `P ⊗ X`, and here `X` is `g₃ · 1`. No new arena
   accumulated weight); #369 three records and two counts in one run, for one momentum mode;
   #372 a separate clock's counts at two writes, on the uncoupled product arena. #200 and #202
   (echo arena), #270 (reflection, stated detector law) and #274 and #278 (relay, stated hybrid
-  law) have emission and return records with a clock reading, under their own laws. What is
-  new here is three writes on the free round trip with the clock a tensor factor of the same
-  carrier, and the placed midpoint. Nothing here is evidence about Lorentz kinematics.
+  law) have emission and return records with a clock reading, under their own laws.
+  What is new here is the third write, during the first presence, in a round-trip run like
+  that of #383, and the midpoint clause. In this variant no term couples the messenger and the
+  clock, so from a product ray the run is that of #372's uncoupled arena with a third region
+  pointer (a calculation; Lean has it only on the fibre where the third and fourth profiles
+  vanish). Nothing here is evidence about Lorentz kinematics.
 
 ## References
 
@@ -486,7 +501,7 @@ near rate `κ₁` and the far rate `κ₂` are in the windows of #383, and the t
 numbers `N_d`, `N_a`, `N_r` such that
 
 * `T₁ ≤ τ_d ≤ roundOut n δ`, `roundAway n δ ≤ τ_a ≤ roundAwayEnd n δ` and
-  `roundBack n δ ≤ τ_r ≤ roundEnd n δ`;
+  `roundBack n δ ≤ τ_r ≤ roundEnd n δ`, so `τ_d ≤ τ_a ≤ τ_r`;
 * the third, the far and the near readout histories are `IsRecordWrite`s of `true` from the
   start, with write intervals `[T₁, τ_d]`, `[roundAway n δ, τ_a]`, `[roundBack n δ, τ_r]`;
 * the clock's own pointer has exactly `N_d`, `N_a`, `N_r` ticks by `τ_d`, `τ_a`, `τ_r`;
@@ -511,7 +526,7 @@ theorem three_records_with_counts (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ 
     (hhi₃ : 1 / 3 ≤ rateAt g₃ 1 hk χ.2 * ((1 - fineEta n δ) * roundOut n δ)) :
     ∃ (τd τa τr : ℝ) (Nd Na Nr : ℕ), T₁ ≤ τd ∧ τd ≤ roundOut n δ
       ∧ roundAway n δ ≤ τa ∧ τa ≤ roundAwayEnd n δ
-      ∧ roundBack n δ ≤ τr ∧ τr ≤ roundEnd n δ
+      ∧ roundBack n δ ≤ τr ∧ τr ≤ roundEnd n δ ∧ τd ≤ τa ∧ τa ≤ τr
       ∧ IsRecordWrite
           (fun t => triThdShown ((2 * M + 1) * (4 * Mc + 3 + 1) + (4 * Mc + 3))
             (threeRecordRun Mc g₁ g₂ g₃ hf hh hk hn hL Jc h0 h01 m hβ g₀ hc hch hck R θ ψ χ
@@ -614,7 +629,8 @@ theorem three_records_with_counts (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ 
   obtain ⟨Nr, hNr⟩ := (hsw τr).exists_tickCount hτr0
   have kd := abs_le.1 ((hsw τd).abs_tickTime_sub_le hτd0 hNd)
   have kr := abs_le.1 ((hsw τr).abs_tickTime_sub_le hτr0 hNr)
-  refine ⟨τd, τa, τr, Nd, Na, Nr, hd1, hd2, ha1, ha2, hr1, hr2', hwd, hwa, hwr, hNd, hNa, hNr,
+  refine ⟨τd, τa, τr, Nd, Na, Nr, hd1, hd2, ha1, ha2, hr1, hr2', (hd2.trans hToa).trans ha1,
+    (ha2.trans hTeb).trans hr1, hwd, hwa, hwr, hNd, hNa, hNr,
     (hsw τd).abs_tickTime_sub_sub_le (hsw τa) hτd0 hτa0 hNd hNa,
     (hsw τd).abs_tickTime_sub_sub_le (hsw τr) hτd0 hτr0 hNd hNr,
     roundAway_le_midpoint hδ hτd0 hr1, midpoint_le_roundAwayEnd hd2 hr2', ?_⟩
