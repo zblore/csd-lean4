@@ -235,7 +235,12 @@ and displays through a window after a flow time `τ` on it, the end of the state
 interval, and the clock's own pointer has a count at `τ` within one period of `τ` (it may be
 zero). That is one record from a prepared start, a threshold of accumulated
 occupancy that does not certify a return, located only within the return leg; the count is
-read at a flow time and not by the record. No emission or departure record is stated in that
+read at a flow time and not by the record. With the far pointer's strength in a second stated window
+(BACKLOG ~~#383~~, `RecordLayer/UnifiedArrivalReturn.lean`) the same run has two records in
+order, one written during the absence and one on the return leg, with the clock's count at a
+flow time by which each is complete; the difference of the counts times the period is within
+two periods of the difference of those flow times. Both writes are thresholds of accumulated
+occupancy and certify neither an arrival nor a return, and there is no emission record. No emission or departure record is stated in that
 run, the count is not read by a record, and no radar time is formed from counts.
 
 ## What is open
