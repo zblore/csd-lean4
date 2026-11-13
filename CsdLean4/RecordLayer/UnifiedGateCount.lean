@@ -30,7 +30,7 @@ statement about the count at a later time.
   where the gated pointer's profile vanishes;
 * `gateClock_coupling_le` — in the exact instance of #358 the strength satisfies
   `8 κ g_c ≤ R` with `κ = 1 − ((μ₁ − μ₀)/μ₀)²`, and `g_c > 0`;
-* ★★ `gateClock_hasTicks_before` — **as many ticks before departure as wanted**: for every
+* ★ `gateClock_hasTicks_before` — **as many ticks before departure as wanted**: for every
   `K`, every index `n` with `3πK < κ n` and `6K ≤ 625 n² R`, the gated pointer has `K` ticks
   by the flow time `2πK/R`, which is at most `(625π/3) n²`.
 
@@ -43,9 +43,14 @@ statement about the count at a later time.
 * **`gateClock_hasTicks_before` removes the vacuity left open in #377.** Its two hypotheses
   are lower bounds on `n` for a given clock and a given `K`, so they hold for every large `n`.
   The system grows with `n` as in #375.
+* **At least `K`, early.** `HasTicks` is a lower bound, not a count. `K < κ n/(3π)`, so more
+  ticks need a larger ring. For a given clock the flow time `2πK/R` is a vanishing fraction of
+  `[0, (625π/3) n²]` as `n` grows, and no theorem gives the count at `(625π/3) n²` unless
+  `|g_c| n < 1/(2500π)` (#377).
 * **The bound at a later time is weak.** It is the bound for a pointer moving at its largest
-  rate `2|k'||g_c|` the whole time. With `8 κ g_c ≤ R` and `|k'| = 1` it allows up to
-  `3R(T − s)/(4κ) + 3/2` ticks, where the clock itself makes about `R(T − s)/(2π)`. Over the
+  rate `2|k'||g_c|` the whole time. With `8 κ g_c ≤ R` and `|k'| = 1` it is at most
+  `3R(T − s)/(4κ) + 3/2` ticks, where the clock itself makes about `R(T − s)/(2π)`; that it
+  is not much smaller needs a lower bound on `g_c`, which is a calculation and not in Lean. Over the
   transit window of #375, which is four times as long as the interval before it, it does not
   give the count at arrival to within the count at departure. A sharper statement needs the
   transit window narrowed for the coupled carrier (Remainder (a) of #375).
@@ -57,9 +62,9 @@ statement about the count at a later time.
 
 ## References
 
-`specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md` (UA-7,
-UA-17, UO-14, UO-16, UD-113 to UD-116); `RecordLayer/UnifiedGateTicks.lean` (#377:
-`isSwing_gateClock_before`, `pshift_notMem_displayArc_of_mem_readyArc`, `gateTrainStart`);
+`specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md` (UA-4,
+UA-7, UA-12, UA-15, UA-17, UO-14, UO-16, UD-113 to UD-116); `RecordLayer/UnifiedGateTicks.lean`
+(#377: `isSwing_gateClock_before`, `pshift_notMem_displayArc_of_mem_readyArc`, `gateTrainStart`);
 `RecordLayer/UnifiedCompositeCarrier.lean` (#376: `gateClockFlow_apply`,
 `abs_gateShift_sub_le_of_le`); `RecordLayer/UnifiedDiracClockTicks.lean` (#358: `HasTicks`,
 `IsSwing.hasTicks`, `le_deviceCoherence_devicePacket_zero_re`);
@@ -273,7 +278,7 @@ theorem gateClock_coupling_le (hR : 0 < R) :
   exact le_of_mul_le_mul_right h1 hb
 
 include h10 hRe hg in
-/-- ★★ **As many ticks before departure as wanted.** On the composite carrier, from
+/-- ★ **As many ticks before departure as wanted.** On the composite carrier, from
 `gateTrainStart`, on a fine fibre of the two region pointers: for every `K` and every index
 `n` with `3πK < κ n` and `6K ≤ 625 n² R`, where `κ = 1 − ((μ₁ − μ₀)/μ₀)²`, the gated pointer
 has `K` ticks by the flow time `2πK/R`, and that time is at most `(625π/3) n²`. For a given

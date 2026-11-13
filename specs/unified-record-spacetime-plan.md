@@ -999,10 +999,10 @@ BACKLOG ~~#378~~, ~~#379~~); UD-117 is for the free packet and UD-118 for the ar
 | UD-113 | **The gated pointer is a swing, with tick records and a count, while the messenger is in the region.** On the arena of UA-17, from the fine packet of index `n` (UD-108) and the one-mode clock of UD-62 as one product ray, the gated pointer at `1/12` on the fibre `χ₂ = 0`, on a fine fibre of the two region pointers: up to a flow time `0 ≤ T ≤ (625π/3) n²` with `|g_c| T/n < 1/12` the history read through the third pointer's arcs is a swing at the clock's rate `R` with thresholds `±4|g_c| T/n`; it has a tick count `N` at `T` with `|N · 2π/R − T| ≤ 2π/R` (`N` may be zero); each tick whose displayed window ends by `T` is a record write of the third pointer's readout | `isSwing_thd_of_abs_shift_sub_le`, `clockPointerShift_train`, `gateTrainStart`, `gateClockFlow_train_thd`, `abs_gateClockShift_train_sub_le`, `isSwing_gateClock_before`, `gateClock_tickCount_before`, `gateClock_tick_isRecordWrite` (`RecordLayer/UnifiedGateTicks.lean`) | exact statements under a hypothesis that bounds the clock's rate from above; one clock start; the fibres and starts of UD-111; flow times |
 | UD-114 | **After the transit no tick is begun and completed inside a short interval.** On the arena of UA-17, from a product ray of the fine packet and any clock ray, on a fine fibre and a fibre where the gated pointer's profile vanishes: for flow times `a ≤ b` of `[(3125π/3) n², (4375π/3) n²]` with `|k'(χ₂)||g_c| (b − a)/n ≤ 1/6`, a gated pointer in its ready arc at `a` is not in its displayed arc at `b` | `pshift_notMem_displayArc_of_mem_readyArc`, `gateClock_no_tick_after` (`RecordLayer/UnifiedGateTicks.lean`) | exact, on the stated interval only; not a statement about the count; flow times |
 | UD-115 | **Ticks need travel; the gated count at a later time.** For a history on a three-pointer arena whose third pointer is a start turned by `D t` on `[s, T]` with `|D b − D a| ≤ W b − W a`: if it does not have `N₀ + 1` ticks by `s`, it has at most `N₀ + 3 (W T − W s) + 3/2` ticks by `T`. On the arena of UA-17, from any product ray on a fibre where the gated pointer's profile vanishes: at most `N₀ + 6|k'(χ₂)||g_c| (T − s) + 3/2` | `pshift_notMem_readyArc_of_mem_displayArc`, `hasTicks_le_of_travel`, `gateClock_hasTicks_le` (`RecordLayer/UnifiedGateCount.lean`) | exact upper bound; the bound of a pointer moving at its largest rate; flow times |
-| UD-116 | **As many ticks before departure as wanted.** In the instance of UD-113, with `κ = 1 − ((μ₁ − μ₀)/μ₀)²`: `g_c > 0` and `8 κ g_c ≤ R`; and for every `K` and every index `n` with `3πK < κ n` and `6K ≤ 625 n² R`, the gated pointer has `K` ticks by the flow time `2πK/R ≤ (625π/3) n²` | `gateClock_coupling_le`, `gateClock_hasTicks_before` (`RecordLayer/UnifiedGateCount.lean`) | exact; both hypotheses are lower bounds on `n`; the fibres and starts of UD-111; flow times |
+| UD-116 | **As many ticks before departure as wanted.** In the instance of UD-113, with `κ = 1 − ((μ₁ − μ₀)/μ₀)²`: `g_c > 0` and `8 κ g_c ≤ R`; and for every `K` and every index `n` with `3πK < κ n` and `6K ≤ 625 n² R`, the gated pointer has at least `K` ticks by the flow time `2πK/R ≤ (625π/3) n²` (`HasTicks`, a lower bound; `K < κ n/(3π)`) | `gateClock_coupling_le`, `gateClock_hasTicks_before` (`RecordLayer/UnifiedGateCount.lean`) | exact; both hypotheses are lower bounds on `n`; the fibres and starts of UD-111; flow times |
 | UD-117 | **The free packet once round the ring.** The error budget of UD-108 is at most `1/(6n)` up to the flow time `3125π n²` (predicted angle `5π/2`). While the predicted angle is between `3π/2 + δ` and `5π/2 − δ`, the far half's weight times `1 − cos δ` is at most `1/(6n)` | `fine_budget_round`, `regionWeight_fine_back` (`RecordLayer/UnifiedFineReturn.lean`) | exact bounds; the free packet under the generator of UA-8; flow times |
 | UD-118 | **The coupled carrier at a general margin, once round.** With `fineEta n δ = (1/(6n))(1 + 1/(1 − cos δ))`, on a round fibre (`37500 π n³ (|g₁ f(θ₂)| + |g₂ h(ψ₂)|) < 1`; open, of positive measure for `trainF`): the carrier of `regionTwoFlow` started on `finePacket n` has far-half occupancy at most `fineEta n δ` while the predicted angle is in `[0, π/2 − δ]` and in `[3π/2 + δ, 5π/2 − δ]`, and at least `1 − fineEta n δ` in `[π/2 + δ, 3π/2 − δ]` | `roundFibres`, `isOpen_roundFibres`, `zero_mem_roundFibres_trainF`, `volume_roundFibres_trainF_pos`, `round_backReaction_le`, `fineEta`, `le_fineEta`, `fineCarrier_far_le_before`, `fineCarrier_near_le_away`, `fineCarrier_far_le_back` (`RecordLayer/UnifiedFineReturn.lean`) | exact bounds on three intervals with gaps of angle `2δ`; `fineEta` is of order `1/(n δ²)`; occupancies, not records; flow times |
-| UD-119 | **The gated pointer through one round trip.** On the arena of UA-17, from the fine packet and any clock ray as a product ray, on a round fibre, with `E = 2|k'(χ₂)||g_c| fineEta n δ`: while the predicted angle is at most `π/2 − δ` the gated pointer's displacement is within `E t` of that of the pointer of UD-58 on the clock's own arena; between two flow times with angles in `[π/2 + δ, 3π/2 − δ]` it changes by at most `E (t₂ − t₁)`; between two flow times with angles in `[3π/2 + δ, 5π/2 − δ]` its advance is within `E (t₂ − t₁)` of the advance of the pointer of UD-58. The first and third need a fibre where the gated pointer's profile vanishes | `abs_gateShift_sub_sub_free_le`, `abs_gateShift_sub_sub_free_le_of_le`, `round_gateClock_before`, `round_gateClock_away`, `round_gateClock_back` (`RecordLayer/UnifiedFineReturn.lean`) | exact bounds on real displacements; a comparison across arenas; no tick, count or record on the return; flow times |
+| UD-119 | **The gated pointer through one round trip.** On the arena of UA-17, from the fine packet and any clock ray as a product ray, on a round fibre, with `E = 2|k'(χ₂)||g_c| fineEta n δ`: while the predicted angle is at most `π/2 − δ` the gated pointer's displacement is within `E t` of that of the pointer of UD-58 on the clock's own arena; between two flow times with angles in `[π/2 + δ, 3π/2 − δ]` it changes by at most `E (t₂ − t₁)`; between two flow times with angles in `[3π/2 + δ, 5π/2 − δ]` its advance is within `E (t₂ − t₁)` of the advance of the pointer of UD-58. All three are statements about the gated pointer only on a fibre where its profile vanishes (UD-111); the first and third also use that fibre for the comparison pointer | `abs_gateShift_sub_sub_free_le`, `abs_gateShift_sub_sub_free_le_of_le`, `round_gateClock_before`, `round_gateClock_away`, `round_gateClock_back` (`RecordLayer/UnifiedFineReturn.lean`) | exact bounds on real displacements; a comparison across arenas; no tick, count or record on the return; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -1329,22 +1329,36 @@ Exact scope of UD-115 to UD-119 (BACKLOG ~~#378~~, ~~#379~~). What they give. UD
 vacuity left in UD-113: for a given clock and a given `K` its two hypotheses are lower bounds
 on `n`, so the gated pointer has `K` ticks before the messenger leaves for every large `n`.
 UD-115 bounds the count at any later time from above. UD-117 to UD-119 follow the messenger
-once round its ring at any margin `δ`: out of the far half, inside it, and out of it again,
-with the gated pointer's displacement close to the clock's, then nearly constant, then
-advancing with the clock's again. That is a return of the messenger to the gate. What they do
+once round its ring at any margin `δ`: out of the far half, inside it, and out of it again.
+With `E = 2|k'||g_c| fineEta n δ`: on the first interval the gated pointer's displacement is
+within `E t` of that of the pointer of UD-58 on the clock's own arena; on the second it
+changes at a rate at most `E`; on the third its advance is within `E (t₂ − t₁)` of that
+pointer's advance. That is a return of the messenger to the gate of UA-17. Earlier returns:
+BACKLOG ~~#200~~ and ~~#202~~ (the echo arena, with records and a radar reading), ~~#270~~ (a
+reflection on the Dirac chain, under the stated detector law of UA-10), ~~#274~~ and ~~#278~~
+(a relay under a stated hybrid law); none is on a joint flow with the clock, and this one has
+no record. What they do
 not give. (i) A count at arrival or at return. The bound of UD-115 is that of a pointer moving
 at its largest rate, about `3R(T − s)/(4κ)` ticks where the clock makes about `R(T − s)/(2π)`;
 it does not fix the count through a gap. (ii) Ticks on the return. The swing of UD-113 is read
-from the flow time `0`; after the return the gated pointer starts from wherever it stopped,
-and no swing, tick, count or record is stated there. So no radar time is formed from counts.
-(iii) A count that stops: as for UD-113 and UD-114. (iv) Small errors for free: `fineEta n δ`
-is of order `1/(n δ²)`, and the gaps have length `2500 n² δ` in flow time. (v) A second
+from the flow time `0`; after the return the gated pointer starts from an angle that no
+theorem of these entries locates, and no swing, tick, count or record is stated there. So no radar time is formed from counts.
+(iii) A count that stops, or a count at departure: `HasTicks` in UD-116 is a lower bound, at
+a flow time `2πK/R` that is a vanishing fraction of `[0, (625π/3) n²]` for a given clock as `n`
+grows; the count at `(625π/3) n²` is given by no theorem unless `|g_c| n < 1/(2500π)`.
+(iv) Small errors: `fineEta n δ` is of order `1/(n δ²)`, but each bound is `E` times the
+length of its interval, and the intervals have length of order `n²`. Over a whole interval
+the bound is of order `|g_c| n/δ²`: as in item (iv) of the scope of UD-110 to UD-112, small
+against the swing only when `|g_c| n/δ²` is small, that is for a clock whose rate falls with
+`n`. A calculation, not in Lean. The gaps have length `2500 n² δ` in flow time. (v) A second
 observer, a distance or a speed. One messenger, one clock, one round of one ring; the angle
 `t/(1250 n²)` is the predicted one of UD-108. (vi) The limits of UD-111: a null set of fibres
 for the gated pointer and product starts (calculations, not in Lean); the comparison with the
 pointer of UD-58 is across arenas. (vii) Every time is a flow time (UA-7). By the test of §6:
-these are estimates for the dynamics of UA-8, UA-5, UA-13 and UA-17 and counts under the arcs
-of UA-4; no hypothesis contains a conclusion, and they pass no gate. UD-117 uses UA-8 and
+the hypotheses that carry the conclusions are those of UD-111 to UD-113 (the product term of
+UA-17 (c), the vanishing third profile, the strength tuned by `hg`, the arcs of UA-4). What
+is derived is that the two lower bounds on `n` suffice, the travel bound, and the sizes of the
+errors over the longer horizon. They pass no gate. UD-117 uses UA-8 and
 UA-7. UD-118 uses in addition UA-5, UA-13 and UA-4, and UA-2 through the measure on the pair
 of conserved angles. UD-115, UD-116 and UD-119 use in addition UA-17, UA-15 and UA-12. UA-6
 is not used.
@@ -1976,13 +1990,17 @@ time. It is not a statement about every dynamics on `Σ`.
   for which many ticks precede departure, in Lean; a register for the count; and the rest of
   the list above.
   ▸ **Many ticks, a bound at later times, and the return leg, 2026-11-13 (BACKLOG ~~#378~~,
-  ~~#379~~) → UD-115 to UD-119. Not met.** For every `K` the gated pointer has `K` ticks before
-  the messenger leaves, for every large index `n` (`gateClock_hasTicks_before`). Its count at
+  ~~#379~~) → UD-115 to UD-119. Not met.** For every `K` the gated pointer has at least `K`
+  ticks by the flow time `2πK/R`, before the messenger leaves, for every large index `n`
+  (`gateClock_hasTicks_before`; the ring grows with `n`, and the count at departure is not
+  fixed for a given clock). Its count at
   any later time is bounded above (`gateClock_hasTicks_le`), by a bound too weak to fix the
   count through the transit. The messenger is followed once round its ring at any margin `δ`,
   and after its return the gated pointer's advance is again within a stated bound of the
   advance of the clock's pointer on its own arena (`round_gateClock_back`). *Conditions:* those
-  of UD-111; bounds of order `1/(n δ²)`; gaps of angle `2δ`. *What is still missing for a
+  of UD-111, the round fibres of UD-118 and, for the ticks, the one-point clock start of
+  UD-113; rate bounds with the factor `fineEta n δ ~ 1/(n δ²)`, of order `|g_c| n/δ²` over a
+  whole interval; gaps of angle `2δ`. *What is still missing for a
   radar time:* ticks and a count on the return leg, which need a swing read from a start other
   than the flow time `0`; a count through the gaps; a register; a second observer; a clock
   placed at a region; fibres and starts of positive measure; and a family along which every

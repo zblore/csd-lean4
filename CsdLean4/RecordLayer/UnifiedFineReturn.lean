@@ -37,7 +37,7 @@ pointer of #376 on the three intervals.
   between `π/2 + δ` and `3π/2 − δ`;
 * `abs_gateShift_sub_sub_free_le`, `abs_gateShift_sub_sub_free_le_of_le` — the gating bound of
   #376 between two flow times;
-* ★★ `round_gateClock_before`, `round_gateClock_away`, `round_gateClock_back` — **the gated
+* ★ `round_gateClock_before`, `round_gateClock_away`, `round_gateClock_back` — **the gated
   pointer through one round trip**: while the messenger is in the near half its displacement
   is close to that of the pointer of #357 on the clock's own arena; while the messenger is in
   the far half it moves at a rate at most `2|k'(χ₂)||g_c| fineEta n δ`; and after the messenger
@@ -47,17 +47,26 @@ pointer of #376 on the three intervals.
 ## Exact scope
 
 * **Displacements, not ticks.** The three statements are about the real displacement of the
-  gated pointer and of the clock's own pointer of #357. On the return interval the gated
-  pointer starts from wherever it stopped, so the swing of #377, which is read from the flow
+  gated pointer and of the pointer of #357 on the clock's own arena. On the return interval the
+  gated pointer starts from an angle that no theorem here locates (a rate bound while the
+  messenger is away, nothing in the gaps), so the swing of #377, which is read from the flow
   time `0`, does not apply there. No tick, count or record is stated on the return leg, and
   no radar time is formed from counts.
 * **Three intervals, with gaps.** Nothing is stated while the predicted angle is within `δ` of
   `π/2` or of `3π/2`, or after `5π/2 − δ`. The gaps have length `2500 n² δ` in flow time.
-* **The price of a small margin.** `fineEta n δ` is of order `1/(n δ²)` for small `δ`. For the
-  bounds to be small against the swing, `n` must grow faster than `1/δ²`; the system grows with
-  `n` as in #375.
-* **The fibres shrink.** The round fibres are a subset of the fine fibres of #375, open and of
-  positive measure for `trainF`, with the allowed back-reaction smaller by the factor `7/15`.
+* **The bounds are rates times lengths.** `fineEta n δ` is of order `1/(n δ²)` for small `δ`,
+  but each bound is `2|k'||g_c| fineEta n δ` times the length of its interval, and the
+  intervals have length of order `n²`. Over a whole interval the bound is of order
+  `|g_c| n/δ²`. It is small against the swing only when `|g_c| n/δ²` is small, that is for a
+  clock whose rate falls with `n`; for a given clock and large `n` it is small only on
+  sub-intervals of length much less than `n δ²/|g_c|`. A calculation, not in Lean.
+* **The fibres shrink.** The round fibres are a subset of the fine fibres of #375 (by
+  comparing the constants; no lemma), open and of positive measure for `trainF`, with the
+  allowed back-reaction smaller by the factor `7/15`.
+* **Earlier returns.** #200 and #202 have a round trip with emission and return records and a
+  radar reading on the two-site echo arena; #270 a return by reflection on the Dirac chain
+  under a stated detector law; #274 and #278 a relay under a stated hybrid law. None is on a
+  joint flow with the clock. This one is a free round of the ring, with no record.
 * **The arena and its limits are those of #376 (UA-17)** for the gated pointer: a fibre where
   its profile vanishes and a product start (null sets by calculations not in Lean). The gate is
   the messenger's occupancy, not a record. The comparison with the pointer of #357 is across
@@ -71,15 +80,14 @@ pointer of #376 on the three intervals.
 ## References
 
 `specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md` (UA-2,
-UA-4, UA-5, UA-7, UA-8, UA-13, UA-17, UO-16, UD-108, UD-109, UD-112, UD-117 to UD-119);
-`RecordLayer/UnifiedFineTransit.lean` (#375: `finePacket`, `fine_budget`,
+UA-4, UA-5, UA-7, UA-8, UA-12, UA-13, UA-15, UA-17, UO-16, UD-108, UD-109, UD-112, UD-117 to
+UD-119); `RecordLayer/UnifiedFineTransit.lean` (#375: `finePacket`, `fine_budget`,
 `regionWeight_fine_far`, `regionWeight_fine_near`, `fineCarrier`,
 `abs_arenaObs_fineCarrier_sub_le`); `RecordLayer/UnifiedCompositeCarrier.lean` (#376:
-`gateShift`, `gateClockShift`, `abs_gateShift_sub_le_of_le`,
-`abs_gateShift_sub_free_le_of_le`, `idxPointerShift_eq_free`);
-`RecordLayer/DiracArrival.lean` (`regionWeight_ringPacket_le`, `angle_farHalf`);
-`RecordLayer/DiracTiming.lean` (`cos_le_cos_of_abs`); `RecordLayer/UnifiedGateTicks.lean`
-(#377: the swing before departure).
+`gateShift`, `gateClockShift`, `abs_gateShift_sub_le_of_le`, `abs_gateShift_sub_free_le_of_le`,
+`idxPointerShift_eq_free`); `RecordLayer/DiracArrival.lean` (`regionWeight_ringPacket_le`,
+`angle_farHalf`); `RecordLayer/DiracTiming.lean` (`cos_le_cos_of_abs`);
+`RecordLayer/UnifiedGateTicks.lean` (#377: the swing before departure).
 -/
 
 @[expose] public section
@@ -430,7 +438,7 @@ variable {M Mc : ℕ} {f h k : ℝ → ℝ} (g₁ g₂ : ℝ) (Jc μ₀ μ₁ gc
   {n : ℕ} (hn : 0 < n) (hL : 640000 * n ^ 3 ≤ M + 1)
 include hn hL
 
-/-- ★★ **Before the messenger leaves, at any margin, the gated pointer's displacement is close to
+/-- ★ **Before the messenger leaves, at any margin, the gated pointer's displacement is close to
 that of the clock's pointer on its own arena.** On a round fibre, on a fibre `ζ` where the gated
 pointer's profile vanishes: at every flow time `t` with predicted angle at most `π/2 − δ` the
 gated pointer's displacement is within `2|k'(ζ)||g_c| fineEta n δ · t` of that of the pointer of
@@ -454,9 +462,11 @@ theorem round_gateClock_before {φ χ : AddCircle (1 : ℝ)}
   rw [arenaObs_regionProj_compl, sub_sub_cancel]
   exact fineCarrier_far_le_before g₁ g₂ hf hh hn hL hx hδ0 hcos hs.1 (hs.2.trans ht)
 
-/-- ★★ **While the messenger is away the gated pointer moves at a rate at most
-`2|k'(ζ)||g_c| fineEta n δ`.** With the same fibres,
-for every clock ray and every fibre `ζ` of the gated pointer: between two flow times
+/-- ★ **While the messenger is away the gated pointer moves at a rate at most
+`2|k'(ζ)||g_c| fineEta n δ`.** The inequality holds for
+`gateClockShift` at every `ζ` and every clock ray; `gateClockShift` is the gated pointer's
+displacement only on a fibre where the profile vanishes (`gateClockFlow_apply`). With the same
+fibres: between two flow times
 `t₁ ≤ t₂` with predicted angles between `π/2 + δ` and `3π/2 − δ` the gated pointer's
 displacement changes by at most `2|k'(ζ)||g_c| fineEta n δ (t₂ − t₁)`. -/
 theorem round_gateClock_away {φ χ : AddCircle (1 : ℝ)}
@@ -481,7 +491,7 @@ theorem round_gateClock_away {φ χ : AddCircle (1 : ℝ)}
   exact fineCarrier_near_le_away g₁ g₂ hf hh hn hL hx hδ0 hcos (ht0.trans hs.1)
     (hs.2.trans ht2)
 
-/-- ★★ **After the messenger is back the gated pointer's advance is again close to that of
+/-- ★ **After the messenger is back the gated pointer's advance is again close to that of
 the clock's pointer on its own arena.**
 With the same fibres, on a fibre `ζ` where the gated pointer's profile vanishes: between two
 flow times `t₁ ≤ t₂` with predicted angles between `3π/2 + δ` and `5π/2 − δ` the advance of
