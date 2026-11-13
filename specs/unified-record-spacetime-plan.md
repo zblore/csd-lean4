@@ -982,6 +982,8 @@ the composite carrier of UA-17 (`RecordLayer/UnifiedCompositeCarrier.lean`,
 use the region projectors and the packets of this section. UD-115, UD-116 and UD-119 are on
 the same composite carrier (`RecordLayer/UnifiedGateCount.lean`, `RecordLayer/UnifiedFineReturn.lean`;
 BACKLOG ~~#378~~, ~~#379~~); UD-117 is for the free packet and UD-118 for the arena of UD-93.
+UD-120 and UD-121 are on the composite carrier (`RecordLayer/UnifiedGateReturn.lean`, BACKLOG
+~~#380~~).
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -1003,6 +1005,8 @@ BACKLOG ~~#378~~, ~~#379~~); UD-117 is for the free packet and UD-118 for the ar
 | UD-117 | **The free packet once round the ring.** The error budget of UD-108 is at most `1/(6n)` up to the flow time `3125π n²` (predicted angle `5π/2`). While the predicted angle is between `3π/2 + δ` and `5π/2 − δ`, the far half's weight times `1 − cos δ` is at most `1/(6n)` | `fine_budget_round`, `regionWeight_fine_back` (`RecordLayer/UnifiedFineReturn.lean`) | exact bounds; the free packet under the generator of UA-8; flow times |
 | UD-118 | **The coupled carrier at a general margin, once round.** With `fineEta n δ = (1/(6n))(1 + 1/(1 − cos δ))`, on a round fibre (`37500 π n³ (|g₁ f(θ₂)| + |g₂ h(ψ₂)|) < 1`; open, of positive measure for `trainF`): the carrier of `regionTwoFlow` started on `finePacket n` has far-half occupancy at most `fineEta n δ` while the predicted angle is in `[0, π/2 − δ]` and in `[3π/2 + δ, 5π/2 − δ]`, and at least `1 − fineEta n δ` in `[π/2 + δ, 3π/2 − δ]` | `roundFibres`, `isOpen_roundFibres`, `zero_mem_roundFibres_trainF`, `volume_roundFibres_trainF_pos`, `round_backReaction_le`, `fineEta`, `le_fineEta`, `fineCarrier_far_le_before`, `fineCarrier_near_le_away`, `fineCarrier_far_le_back` (`RecordLayer/UnifiedFineReturn.lean`) | exact bounds on three intervals with gaps of angle `2δ`; `fineEta` is of order `1/(n δ²)`; occupancies, not records; flow times |
 | UD-119 | **The gated pointer through one round trip.** On the arena of UA-17, from the fine packet and any clock ray as a product ray, on a round fibre, with `E = 2|k'(χ₂)||g_c| fineEta n δ`: while the predicted angle is at most `π/2 − δ` the gated pointer's displacement is within `E t` of that of the pointer of UD-58 on the clock's own arena; between two flow times with angles in `[π/2 + δ, 3π/2 − δ]` it changes by at most `E (t₂ − t₁)`; between two flow times with angles in `[3π/2 + δ, 5π/2 − δ]` its advance is within `E (t₂ − t₁)` of the advance of the pointer of UD-58. All three are statements about the gated pointer only on a fibre where its profile vanishes (UD-111); the first and third also use that fibre for the comparison pointer | `abs_gateShift_sub_sub_free_le`, `abs_gateShift_sub_sub_free_le_of_le`, `round_gateClock_before`, `round_gateClock_away`, `round_gateClock_back` (`RecordLayer/UnifiedFineReturn.lean`) | exact bounds on real displacements; a comparison across arenas; no tick, count or record on the return; flow times |
+| UD-120 | **The gated pointer's displacement on the return leg.** In the instance of UD-113 on a round fibre (UD-118), with `0 ≤ δ ≤ π/2`, `T_a = 1250 n² (π/2 − δ)`, `T_b = 1250 n² (3π/2 + δ)`: at every flow time `t` with `T_b ≤ t ≤ 1250 n² (5π/2 − δ)` the gated pointer's displacement is within `2|g_c| (fineEta n δ · t + 5000 n² δ)` of `(1/4)(1 − cos R t) + (1/4)(cos R T_b − cos R T_a)`. Between two flow times it changes by at most `2|g_c| (b − a)` | `roundOut`, `roundBack`, `roundEnd`, `gatePhaseShift`, `gateReturnErr`, `fineEta_nonneg`, `abs_gateClockShift_train_sub_le'`, `abs_gateClockShift_return_sub_le` (`RecordLayer/UnifiedGateReturn.lean`) | exact bound on a real displacement; the three bounds of UD-119 joined across the two gaps; flow times |
+| UD-121 | **Whether the gated pointer ticks on the return leg depends on the clock's phases.** With `s = (1/4)(cos R T_b − cos R T_a)` and `e` the bound of UD-120 at the end of the return leg: if `1/12 + e < s` and `s + e ≤ 5/12`, the gated pointer is in its ready arc at no flow time of the return leg. If `|s| + e < 1/12`, the history read from a whole turn `2πj/R` of the clock on the return leg is a swing at the rate `R` with thresholds `±4(|s| + e)`, and has a tick count `N` at `T` with `|N · 2π/R − T| ≤ 2π/R` | `gateClock_return_not_ready`, `isSwing_gateClock_return`, `gateClock_tickCount_return` (`RecordLayer/UnifiedGateReturn.lean`) | exact, in two cases that are not shown to be satisfiable; the cases in between are not treated; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -1362,6 +1366,31 @@ errors over the longer horizon. They pass no gate. UD-117 uses UA-8 and
 UA-7. UD-118 uses in addition UA-5, UA-13 and UA-4, and UA-2 through the measure on the pair
 of conserved angles. UD-115, UD-116 and UD-119 use in addition UA-17, UA-15 and UA-12. UA-6
 is not used.
+
+Exact scope of UD-120 and UD-121 (BACKLOG ~~#380~~). What they give. The three bounds of UD-119
+joined across the two gaps, for the clock of UD-113: on the return leg the gated pointer's
+displacement is the swing of UD-113 plus an offset, a quarter of the difference of the cosines
+of the clock's phase at the two flow times `T_b` and `T_a`. The offset is there because the
+gated pointer's rate is the product of the messenger's occupancy and the clock's reading:
+while the messenger is away the pointer moves little and the clock's phase moves on. So the
+gated pointer of UA-17 is not a tick counter across an absence. In one range of the offset it
+is never ready on the return leg and no tick begins there (`gateClock_return_not_ready`); when
+the offset is small it is a swing again (`isSwing_gateClock_return`). What they do not give.
+(i) A radar time. Where the gated pointer ticks it counts turns of the clock while the
+messenger is present; the time away is not held by it. (ii) Satisfiability of either case.
+The error is of order `|g_c| (n/δ² + n² δ)`; that it is below `1/12` with an offset in the
+stated range, for some clock, index and margin, is a calculation and not in Lean, and needs a
+clock whose rate falls with `n`. (iii) The cases in between. (iv) A statement about `Σ`. The
+obstruction is for the product coupling of UA-17 (c) with the drift law of UA-5; another
+coupling may behave otherwise. (v) A record that marks the start of the return swing: the
+flow time `2πj/R` is chosen, not given by a record. (vi) The limits of UD-111, UD-113 and
+UD-118 stand: a fibre where the gated pointer's profile vanishes and a product start (null
+sets by calculations not in Lean), the round fibres, one clock start; the gate is an
+occupancy; the ticks are `IsSwing` and `IsTickCount` statements about a readout history, not
+`ActualOccurrence`s. (vii) Every time is a flow time (UA-7). By the test of §6: the
+hypotheses that carry the conclusions are those of UD-111 to UD-113 and the two conditions on
+the offset; what is derived is the offset's form and the two consequences. They pass no gate.
+UD-120 and UD-121 use the assumptions of UD-113 and UD-119. UA-6 is not used.
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
@@ -2005,6 +2034,17 @@ time. It is not a statement about every dynamics on `Σ`.
   than the flow time `0`; a count through the gaps; a register; a second observer; a clock
   placed at a region; fibres and starts of positive measure; and a family along which every
   error shrinks.
+  ▸ **The return leg in ticks: an obstruction for the gated pointer, 2026-11-13 (BACKLOG
+  ~~#380~~) → UD-120, UD-121. Not met.** On the return leg the gated pointer's displacement is
+  the swing of UD-113 plus an offset fixed by the clock's phases at departure and at return
+  (`abs_gateClockShift_return_sub_le`). In one range of the offset the pointer is never ready
+  on the return leg (`gateClock_return_not_ready`); for a small offset it is a swing again with
+  a count (`isSwing_gateClock_return`). So the gated pointer of UA-17 does not count across an
+  absence, and no radar time is formed from its counts. That is a property of the product
+  coupling with the drift law, not of `Σ`. *Conditions:* neither case is shown satisfiable;
+  the limits of UD-111, UD-113 and UD-118. *What this changes:* a radar time on this arena
+  needs a clock pointer that runs throughout and records that mark when to read it, or a
+  coupling other than the product term.
 
 ### M7 — `3 + 1`
 
@@ -2161,7 +2201,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

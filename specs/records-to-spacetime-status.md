@@ -211,7 +211,12 @@ its ring at any margin `δ` (BACKLOG ~~#379~~, `RecordLayer/UnifiedFineReturn.le
 return to the near half the gated pointer's advance is again within a stated bound of the
 advance of the clock's pointer on its own arena. The bounds are rates times interval lengths,
 of order `|g_c| n/δ²` over a whole interval, so they are small only for a clock whose rate
-falls with `n`. No tick, count or record is stated on the
+falls with `n`. Joined across the gaps (BACKLOG ~~#380~~,
+`RecordLayer/UnifiedGateReturn.lean`), they show that on the return leg the gated pointer's
+swing comes back offset by a quarter of the difference of the cosines of the clock's phase at
+return and at departure. In one range of the offset the pointer is never ready and no tick
+begins; for a small offset it ticks again. The gated pointer of this coupling does not count
+across an absence. Neither case is shown satisfiable in Lean. No tick, count or record is stated on the
 return leg, so no radar time is formed from counts.
 
 ## What is open

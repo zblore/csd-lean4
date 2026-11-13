@@ -19784,4 +19784,50 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.round_gateClock_back
 
+/-! #380 (the author's programme, obligation UO-16; Remainders (a) and (b) of #379): on the return leg the gated pointer's displacement is within 2|g_c| (fineEta n δ · t + 5000 n² δ) of (1/4)(1 − cos R t) + (1/4)(cos R T_b − cos R T_a); if that offset is between 1/12 and 5/12 with the error as margin the pointer is never ready on the return leg, and if offset and error are together below 1/12 the history read from a whole turn of the clock is a swing again with a tick count. The gated pointer does not count across an absence; neither case is shown satisfiable; flow times (`RecordLayer/UnifiedGateReturn.lean`). -/
+
+/-- info: 'CSD.RecordLayer.roundOut' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.roundOut
+
+/-- info: 'CSD.RecordLayer.roundBack' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.roundBack
+
+/-- info: 'CSD.RecordLayer.roundEnd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.roundEnd
+
+/-- info: 'CSD.RecordLayer.gatePhaseShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatePhaseShift
+
+/-- info: 'CSD.RecordLayer.gateReturnErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateReturnErr
+
+/-- info: 'CSD.RecordLayer.fineEta_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineEta_nonneg
+
+/-- info: 'CSD.RecordLayer.abs_gateClockShift_train_sub_le'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_gateClockShift_train_sub_le'
+
+/-- info: 'CSD.RecordLayer.abs_gateClockShift_return_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_gateClockShift_return_sub_le
+
+/-- info: 'CSD.RecordLayer.gateClock_return_not_ready' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClock_return_not_ready
+
+/-- info: 'CSD.RecordLayer.isSwing_gateClock_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isSwing_gateClock_return
+
+/-- info: 'CSD.RecordLayer.gateClock_tickCount_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClock_tickCount_return
+
 end CSD.Tests.AxiomAudit
