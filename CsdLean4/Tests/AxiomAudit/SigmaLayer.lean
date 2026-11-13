@@ -19830,4 +19830,74 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.gateClock_tickCount_return
 
+/-! #381 (the author's programme, obligation UO-16; UA-17 (e)): the composite carrier with a fourth pointer coupled to the clock alone — from a product ray where neither clock pointer acts back it is a swing at the clock's rate for every horizon, in the run that carries the gated pointer; for flow times a ≤ b of [(3125π/3) n², (4375π/3) n²] with |g_c| (b − a)/n ≤ 1/6 the gated count advances by at most one and the difference of the two advances times 2π/R is within 6π/R of b − a. A stretch of the absence between two flow times, not a radar time (`RecordLayer/UnifiedTwoCounts.lean`). -/
+
+/-- info: 'CSD.RecordLayer.isSwing_snd_of_abs_shift_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isSwing_snd_of_abs_shift_sub_le
+
+/-- info: 'CSD.RecordLayer.hasTicks_le_succ_of_no_passage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasTicks_le_succ_of_no_passage
+
+/-- info: 'CSD.RecordLayer.exists_tickCount_of_bdd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_tickCount_of_bdd
+
+/-- info: 'CSD.RecordLayer.IsTickCount.le_succ_of_no_passage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsTickCount.le_succ_of_no_passage
+
+/-- info: 'CSD.RecordLayer.gateFreeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateFreeFlow
+
+/-- info: 'CSD.RecordLayer.quadMuL_map_gateFreeFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.quadMuL_map_gateFreeFlow
+
+/-- info: 'CSD.RecordLayer.gateFreeFlow_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateFreeFlow_fst
+
+/-- info: 'CSD.RecordLayer.gateFreeFlow_snd_prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateFreeFlow_snd_prodRay
+
+/-- info: 'CSD.RecordLayer.gateFreeClockFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateFreeClockFlow
+
+/-- info: 'CSD.RecordLayer.quadFreeReady' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.quadFreeReady
+
+/-- info: 'CSD.RecordLayer.quadFreeDisplay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.quadFreeDisplay
+
+/-- info: 'CSD.RecordLayer.twoCountStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoCountStart
+
+/-- info: 'CSD.RecordLayer.gateFreeClockFlow_twoCount_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateFreeClockFlow_twoCount_fst
+
+/-- info: 'CSD.RecordLayer.gateFreeClockFlow_twoCount_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateFreeClockFlow_twoCount_snd
+
+/-- info: 'CSD.RecordLayer.isSwing_free_twoCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isSwing_free_twoCount
+
+/-- info: 'CSD.RecordLayer.exists_gate_tickCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_gate_tickCount
+
+/-- info: 'CSD.RecordLayer.twoCounts_away' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoCounts_away
+
 end CSD.Tests.AxiomAudit

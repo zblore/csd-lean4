@@ -799,6 +799,7 @@ public import CsdLean4.RecordLayer.UnifiedGateTicks
 public import CsdLean4.RecordLayer.UnifiedGateCount
 public import CsdLean4.RecordLayer.UnifiedFineReturn
 public import CsdLean4.RecordLayer.UnifiedGateReturn
+public import CsdLean4.RecordLayer.UnifiedTwoCounts
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers
@@ -954,6 +955,7 @@ public import CsdLean4.LF4.ArenaVolume
 public import CsdLean4.LF4.EchoVolume
 public import CsdLean4.LF4.PointerStep
 public import CsdLean4.LF4.TriCoupledFlow
+public import CsdLean4.LF4.QuadCoupledFlow
 public import CsdLean4.LF4.ProductFlow
 public import CsdLean4.LF4.PointerInert
 public import CsdLean4.Empirical.QM.Darwinism

@@ -218,7 +218,12 @@ the flow times `T_b` and `T_a` (predicted angles; no record locates them). Read 
 fixed arcs: in one stated range of the offset the pointer is never ready; for a small offset
 it is a swing again with a tick count, read from a chosen flow time, and the count may be
 zero. Neither case is shown satisfiable in Lean, and no theorem gives a count across the
-absence. No record is stated on the return leg, and no
+absence. With a fourth pointer coupled to the clock alone (BACKLOG ~~#381~~,
+`RecordLayer/UnifiedTwoCounts.lean`, UA-17 (e)) the clock has a pointer that runs throughout:
+it is a swing at the clock's rate for every horizon, in the same run as the gated pointer. On
+a stretch `[a, b]` of the absence with `|g_c| (b − a)/n ≤ 1/6`, the difference between the
+advance of the clock's count and the advance of the gated count reads `b − a` within three
+periods. `a` and `b` are flow times, not a departure and a return marked by records. No record is stated on the return leg, and no
 radar time is formed from counts.
 
 ## What is open

@@ -58,7 +58,8 @@ cosines of the clock's phase at return and at departure.
   coupling, or arcs placed by the offset, may behave otherwise; and no theorem here shows that
   no fixed arcs work for every absence.
 * **No radar time is formed.** No theorem here gives a count through the absence or through
-  the gaps, and the return count is read from a chosen flow time.
+  the gaps, and the return count is read from a chosen flow time. A clock pointer that runs
+  throughout is added in `RecordLayer/UnifiedTwoCounts.lean` (#381).
 * **The hypotheses are not shown to be jointly satisfiable for either case.** The error
   `gateReturnErr` contains the two gaps, `2|g_c| · 5000 n² δ`, and the three intervals, `2|g_c|
   fineEta n δ · t` with `t` of order `n²`, so it is of order `|g_c| (n/δ² + n² δ)`. That it can

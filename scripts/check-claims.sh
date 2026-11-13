@@ -1011,6 +1011,8 @@ isSymplectic"
 #   index equivalence. hamiltonianFlow_coupledEnergy_reindex is hamiltonianFlow_coupledEnergy
 #   read in the carrier's own index — EARNED through it; schrodingerHamiltonian_reindex is the
 #   value of the already-declared energy function −2⟨C⟩ at a reindexed matrix, operator sense.)
+#   (2026-11-13, #381: quadForm_isSymplectic is stepForm_isSymplectic applied to triForm, the
+#   four-torus arena — EARNED through it.)
 #   (2026-11-11, #368: the pointer step and the three-torus arena. stepForm_isSymplectic is
 #   IsSymplectic.prodForm with the torus area form, for any symplectic base form, and triForm_isSymplectic is it
 #   applied to echoForm — EARNED; isHamiltonianVectorField_stepLift / _stepTerm / _step prove
@@ -1214,6 +1216,7 @@ map_hamiltonianFlow_echoFlow
 echo_hamiltonian
 stepForm_isSymplectic
 triForm_isSymplectic
+quadForm_isSymplectic
 isHamiltonianVectorField_stepLift
 isHamiltonianVectorField_stepTerm
 isHamiltonianVectorField_step
