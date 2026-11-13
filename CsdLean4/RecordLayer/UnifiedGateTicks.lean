@@ -52,11 +52,12 @@ and the displayed arc of #358.
   the rate `R`. That is one point of the clock's state space. `gateClock_no_tick_after` does not
   need it: it holds for every clock ray and every profile on a fibre where the profile
   vanishes.
-* **The hypothesis `|g_c| T/n < 1/12` bounds the rate from above.** `g_c` is `R` times a
-  factor fixed by the clock's parameters (`hg`; the amplitude `1/4` is tuned by it, as in
-  #358), so at `T = (625π/3) n²` it asks for `n R` small. The clock needs `μ₀ < μ₁ < 2μ₀`.
-  The count is within one of `R T/2π`, which is large only when `n² R` is large. That both hold, with at least one tick,
-  for some clock is a calculation and not a theorem of this module. For `T` small the swing
+* **The hypothesis `|g_c| T/n < 1/12` bounds the rate from above.** `g_c` is `R` times a factor
+  fixed by the clock's parameters (`hg`; the amplitude `1/4` is tuned by it, as in #358), so at
+  `T = (625π/3) n²` it asks for `n R` small. The clock needs `μ₀ < μ₁ < 2μ₀`. The count is within
+  one of `R T/2π`, which is large only when `n² R` is large. That both hold, with at least one
+  tick, for some clock is not a theorem of this module; it is `gateClock_hasTicks_before` of
+  `RecordLayer/UnifiedGateCount.lean` (#378), for every large `n`. For `T` small the swing
   theorem holds with a count of zero.
 * **Gated by an occupancy, not by a record.** The pointer swings because the messenger's
   expectation of the near half's projector is close to `1`. No readout of the departure pointer
@@ -64,11 +65,11 @@ and the displayed arc of #358.
   instantiated for `gateFlow`).
 * **"The count stops" is not proved.** What is proved after the transit is that no passage from
   ready to displayed lies inside a sub-interval `[a, b]` short enough for the hypothesis
-  `|k'||g_c| (b − a)/n ≤ 1/6`. For the whole interval that needs `|k'||g_c| n ≤ 1/(2500π)`,
-  which no theorem here assumes. Nothing is stated for the flow times between
-  `(625π/3) n²` and `(3125π/3) n²`, where the pointer may tick, or after `(4375π/3) n²`. A tick begun before `(3125π/3) n²` may
-  complete inside the interval. No theorem gives the count at a time after departure, and no
-  degree of freedom holds the count (UO-14 (b)).
+  `|k'||g_c| (b − a)/n ≤ 1/6`. For the whole interval that needs `|k'||g_c| n ≤ 1/(2500π)`, which
+  no theorem here assumes. Nothing is stated for the flow times between `(625π/3) n²` and
+  `(3125π/3) n²`, where the pointer may tick, or after `(4375π/3) n²`. A tick begun before
+  `(3125π/3) n²` may complete inside the interval. No theorem gives the count at a time after
+  departure, and no degree of freedom holds the count (UO-14 (b)).
 * **The clock's own pointer is not on this arena.** That it goes on ticking is #358's
   statement on the clock's arena (`isSwing_clockPointerFlow_train`), not a statement here.
 * **The tick records last less than one turn** (`IsSwing.notMem_disp_of_cos_eq_one`), as in

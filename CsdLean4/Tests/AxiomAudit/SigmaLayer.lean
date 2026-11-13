@@ -19692,4 +19692,96 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.gateClock_no_tick_after
 
+/-! #378 (the author's programme, obligation UO-16; Remainders (a) and (b) of #377): ticks need travel — a third pointer without N₀ + 1 ticks by s has at most N₀ + 3 (W T − W s) + 3/2 by T, on the composite carrier N₀ + 6|k'||g_c| (T − s) + 3/2; and for every K and every index n with 3πK < κ n and 6K ≤ 625 n² R the gated pointer has K ticks by the flow time 2πK/R ≤ (625π/3) n². The later-time bound is too weak to fix the count; flow times (`RecordLayer/UnifiedGateCount.lean`). -/
+
+/-- info: 'CSD.RecordLayer.pshift_notMem_readyArc_of_mem_displayArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pshift_notMem_readyArc_of_mem_displayArc
+
+/-- info: 'CSD.RecordLayer.hasTicks_le_of_travel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasTicks_le_of_travel
+
+/-- info: 'CSD.RecordLayer.gateClock_hasTicks_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClock_hasTicks_le
+
+/-- info: 'CSD.RecordLayer.gateClock_coupling_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClock_coupling_le
+
+/-- info: 'CSD.RecordLayer.gateClock_hasTicks_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateClock_hasTicks_before
+
+/-! #379 (the author's programme, obligation UO-16; Remainder (a) of #375 and the return leg): the fine packet once round the ring at any margin δ — the budget holds to 3125π n², the far half's weight times (1 − cos δ) is at most 1/(6n) while the predicted angle is between 3π/2 + δ and 5π/2 − δ; on round fibres the coupled carrier's far-half occupancy is at most fineEta n δ before and after the round and at least 1 − fineEta n δ in between; the gated pointer's displacement is within 2|k'||g_c| fineEta times the interval of the clock's pointer on its own arena before, nearly constant while the messenger is away, and advances with the clock's again after the return. Displacements, not ticks; no radar time; flow times (`RecordLayer/UnifiedFineReturn.lean`). -/
+
+/-- info: 'CSD.RecordLayer.fine_budget_round' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fine_budget_round
+
+/-- info: 'CSD.RecordLayer.regionWeight_fine_back' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_fine_back
+
+/-- info: 'CSD.RecordLayer.roundFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.roundFibres
+
+/-- info: 'CSD.RecordLayer.isOpen_roundFibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpen_roundFibres
+
+/-- info: 'CSD.RecordLayer.zero_mem_roundFibres_trainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.zero_mem_roundFibres_trainF
+
+/-- info: 'CSD.RecordLayer.volume_roundFibres_trainF_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.volume_roundFibres_trainF_pos
+
+/-- info: 'CSD.RecordLayer.round_backReaction_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.round_backReaction_le
+
+/-- info: 'CSD.RecordLayer.fineEta' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineEta
+
+/-- info: 'CSD.RecordLayer.le_fineEta' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_fineEta
+
+/-- info: 'CSD.RecordLayer.fineCarrier_far_le_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineCarrier_far_le_before
+
+/-- info: 'CSD.RecordLayer.fineCarrier_near_le_away' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineCarrier_near_le_away
+
+/-- info: 'CSD.RecordLayer.fineCarrier_far_le_back' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineCarrier_far_le_back
+
+/-- info: 'CSD.RecordLayer.abs_gateShift_sub_sub_free_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_gateShift_sub_sub_free_le
+
+/-- info: 'CSD.RecordLayer.abs_gateShift_sub_sub_free_le_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_gateShift_sub_sub_free_le_of_le
+
+/-- info: 'CSD.RecordLayer.round_gateClock_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.round_gateClock_before
+
+/-- info: 'CSD.RecordLayer.round_gateClock_away' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.round_gateClock_away
+
+/-- info: 'CSD.RecordLayer.round_gateClock_back' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.round_gateClock_back
+
 end CSD.Tests.AxiomAudit

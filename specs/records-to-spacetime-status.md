@@ -202,6 +202,13 @@ whole interval that needs `|k'||g_c| n ≤ 1/(2500π)`, which no theorem assumes
 stops at departure
 is not proved: nothing is stated for the transit window, and no theorem gives the count at a
 later time.
+For every `K` the gated pointer has `K` ticks before the messenger leaves, for every large
+index `n` (BACKLOG ~~#378~~, `RecordLayer/UnifiedGateCount.lean`); its count at a later time is
+bounded above, too weakly to fix it through the transit. The messenger is followed once round
+its ring at any margin `δ` (BACKLOG ~~#379~~, `RecordLayer/UnifiedFineReturn.lean`): after its
+return to the near half the gated pointer's advance is again within a stated bound of the
+advance of the clock's pointer on its own arena. No tick, count or record is stated on the
+return leg, so no radar time is formed from counts.
 
 ## What is open
 

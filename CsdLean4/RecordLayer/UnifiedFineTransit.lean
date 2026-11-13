@@ -66,7 +66,8 @@ physical length `2000π n²` with at least `640000 n³` sites; `c = 1`, rest ene
   sharper than #265's `1/4` and `3/4`.
 * **Two intervals.** The coupled bounds hold on `[0, (625π/3) n²]` and on
   `[(3125π/3) n², (4375π/3) n²]`. Nothing is stated between them or after the second: the
-  packet goes on round the ring and leaves the far half.
+  packet goes on round the ring and leaves the far half. It is followed once round, at any
+  margin, in `RecordLayer/UnifiedFineReturn.lean` (#379).
 * **The allowed back-reaction shrinks as `n⁻³`.** The fine fibres are open and of positive
   measure for the profile `trainF` and any strengths, and they shrink with `n`. Nothing is
   proved off them.

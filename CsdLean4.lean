@@ -796,6 +796,8 @@ public import CsdLean4.RecordLayer.UnifiedRecordInert
 public import CsdLean4.RecordLayer.UnifiedFineTransit
 public import CsdLean4.RecordLayer.UnifiedCompositeCarrier
 public import CsdLean4.RecordLayer.UnifiedGateTicks
+public import CsdLean4.RecordLayer.UnifiedGateCount
+public import CsdLean4.RecordLayer.UnifiedFineReturn
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers
