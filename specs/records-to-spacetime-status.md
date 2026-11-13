@@ -214,10 +214,12 @@ of order `|g_c| n/δ²` over a whole interval, so they are small only for a cloc
 falls with `n`. Joined across the gaps (BACKLOG ~~#380~~,
 `RecordLayer/UnifiedGateReturn.lean`), they show that on the return leg the gated pointer's
 swing comes back offset by a quarter of the difference of the cosines of the clock's phase at
-return and at departure. In one range of the offset the pointer is never ready and no tick
-begins; for a small offset it ticks again. The gated pointer of this coupling does not count
-across an absence. Neither case is shown satisfiable in Lean. No tick, count or record is stated on the
-return leg, so no radar time is formed from counts.
+the flow times `T_b` and `T_a` (predicted angles; no record locates them). Read through the
+fixed arcs: in one stated range of the offset the pointer is never ready; for a small offset
+it is a swing again with a tick count, read from a chosen flow time, and the count may be
+zero. Neither case is shown satisfiable in Lean, and no theorem gives a count across the
+absence. No record is stated on the return leg, and no
+radar time is formed from counts.
 
 ## What is open
 

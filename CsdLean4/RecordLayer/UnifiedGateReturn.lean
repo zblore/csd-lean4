@@ -15,7 +15,7 @@ public import CsdLean4.RecordLayer.UnifiedFineReturn
 `specs/TERMS.md` records what is backed and what is not.
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #380 — milestone **M6** of the author's
-programme "From `Σ` to physical spacetime", obligation UO-16; Remainder (a) of #379.
+programme "From `Σ` to physical spacetime", obligation UO-16; Remainders (a) and (b) of #379.
 
 #379 bounded the gated pointer's displacement on three intervals of one round trip. Here the
 three bounds are joined, with the two gaps, for the one-mode clock of #358. While the messenger
@@ -40,27 +40,34 @@ cosines of the clock's phase at return and at departure.
   arc on the return leg, so no tick begins there;
 * ★ `isSwing_gateClock_return` — **when the shift and the error are together below `1/12`,
   the gated pointer is a swing again on the return leg**, read from a whole turn of the clock
-  after the return; `gateClock_tickCount_return` — it has a tick count there, and the count
-  times the period is within one period of the time since that turn.
+  after the return; `gateClock_tickCount_return` — it has a tick count there (it may be
+  zero), and the count times the period is within one period of the time since that turn.
 
 ## Exact scope
 
-* **The gated pointer of UA-17 is not a tick counter across an absence.** Its rate is the
-  product of the messenger's occupancy and the clock's reading, so an absence leaves it with an
-  offset fixed by the clock's phases at departure and at return. Whether it ticks on the return
-  leg depends on those two phases. `gateClock_return_not_ready` and `isSwing_gateClock_return`
-  are the two cases; the cases in between are not treated. This is a statement about the
-  product coupling of UA-17 (c) with the drift law of UA-5. It is not a statement about `Σ`,
-  and another coupling may behave otherwise.
-* **No radar time from the gated counts.** Where the gated pointer ticks, it counts turns of
-  the clock while the messenger is present. The time the messenger is away is not held by it.
+* **Whether the gated pointer ticks on the return leg depends on the offset.** Its rate is
+  the product of the messenger's occupancy and the clock's reading, so an absence leaves it
+  with an offset fixed by the clock's phases at the flow times `T_a` and `T_b` (predicted
+  angles; no record locates them). Read through the fixed ready and display arcs and the start
+  `1/12` of #377: in one stated range of the offset it is never ready
+  (`gateClock_return_not_ready`), and for a small offset it is a swing again
+  (`isSwing_gateClock_return`). The other values of the offset are not treated. In the
+  never-ready case the pointer still swings; arcs placed by the offset would read ticks. So the
+  obstruction is for the product coupling of UA-17 (c) with the drift law of UA-5 **read
+  through fixed arcs and a fixed start (UA-4)**. It is not a statement about `Σ`; another
+  coupling, or arcs placed by the offset, may behave otherwise; and no theorem here shows that
+  no fixed arcs work for every absence.
+* **No radar time is formed.** No theorem here gives a count through the absence or through
+  the gaps, and the return count is read from a chosen flow time.
 * **The hypotheses are not shown to be jointly satisfiable for either case.** The error
-  `gateReturnErr` contains the two gaps, `2|g_c| · 5000 n² δ`, and the three intervals,
-  `2|g_c| fineEta n δ · t` with `t` of order `n²`, so it is of order `|g_c| (n/δ² + n² δ)`.
-  That it can be made smaller than `1/12` together with a shift in the stated range, for some
-  clock, index and margin, is a calculation and not in Lean; it needs a clock whose rate falls
-  with `n`. With the lower bounds of #378 for many ticks before departure it asks for
-  `δ ≪ 1/K` and `n ≫ K/δ²` (the same calculation).
+  `gateReturnErr` contains the two gaps, `2|g_c| · 5000 n² δ`, and the three intervals, `2|g_c|
+  fineEta n δ · t` with `t` of order `n²`, so it is of order `|g_c| (n/δ² + n² δ)`. That it can
+  be made smaller than `1/12` together with a shift in the stated range, for some clock, index
+  and margin, is a calculation and not in Lean. It needs a clock whose rate is of order `1/n²`:
+  large enough for a whole turn to lie on the return leg or for the offset to reach `1/12`, and
+  small against `δ²/n` and `1/(n² δ)` for the error. Nor is a whole number `j` of turns with
+  `2πj/R` on the return leg shown to exist. With the lower bounds of #378 for many ticks before
+  departure it asks for `δ ≪ 1/K` and `n ≫ K/δ²` (the same calculation).
 * **The arena and its limits are those of #376, #377 and #379**: a fibre where the gated
   pointer's profile vanishes and a product start (null sets by calculations not in Lean), the
   round fibres of #379, the one-point clock start of #358. The gate is the messenger's
@@ -73,8 +80,8 @@ cosines of the clock's phase at return and at departure.
 
 ## References
 
-`specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md` (UA-4,
-UA-5, UA-7, UA-12, UA-17, UO-14, UO-16, UD-113, UD-119, UD-120, UD-121);
+`specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md` (UA-2,
+UA-4, UA-5, UA-7, UA-8, UA-12, UA-13, UA-15, UA-17, UO-14, UO-16, UD-113, UD-119, UD-120, UD-121);
 `RecordLayer/UnifiedFineReturn.lean` (#379: `round_gateClock_before`, `round_gateClock_away`,
 `round_gateClock_back`, `roundFibres`, `fineEta`); `RecordLayer/UnifiedGateTicks.lean` (#377:
 `gateTrainStart`, `gateClockFlow_train_thd`, `clockPointerShift_train`,
@@ -228,7 +235,8 @@ theorem abs_gateClockShift_return_sub_le {φ χ : AddCircle (1 : ℝ)}
 /-- ★ **An obstruction for the product coupling: a shifted return swing never rests.** With
 the start of `gateTrainStart` on a round fibre, if the shift is above `1/12` and at most `5/12`
 by more than the error at the end of the return leg, then at no flow time of the return leg is
-the gated pointer in its ready arc. No tick begins there, whatever the clock does. -/
+the gated pointer in its ready arc: no ready time lies there, at whatever phase `R t` the
+clock is. A tick begun before `roundBack` may still complete there. -/
 theorem gateClock_return_not_ready (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     {θ ψ : KTorus} (hx : (θ.2, ψ.2) ∈ roundFibres g₁ g₂ hf hh n) {δ : ℝ} (hδ0 : 0 ≤ δ)
     (hδ : δ ≤ Real.pi / 2) (hcos : Real.cos δ < 1)

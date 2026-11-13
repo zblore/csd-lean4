@@ -52,7 +52,7 @@ pointer of #376 on the three intervals.
   away, nothing in the gaps), so the swing of #377, which is read from the flow time `0`, does
   not apply there. The three bounds are joined, and the return leg read in ticks, in
   `RecordLayer/UnifiedGateReturn.lean` (#380). No tick, count or record is stated on the return
-  leg, and no radar time is formed from counts.
+  leg in this module, and no radar time is formed from counts.
 * **Three intervals, with gaps.** Nothing is stated while the predicted angle is within `δ` of
   `π/2` or of `3π/2`, or after `5π/2 − δ`. The gaps have length `2500 n² δ` in flow time.
 * **The bounds are rates times lengths.** `fineEta n δ` is of order `1/(n δ²)` for small `δ`,
