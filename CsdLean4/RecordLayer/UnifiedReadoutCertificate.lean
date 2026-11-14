@@ -82,6 +82,9 @@ occupancy is one such `F` (`threeRecord_nearOcc_drop`).
 * **Earlier.** #373 has a transit certificate in accumulated occupancies, with no pointer in
   it. #365, #367, #382, #383 and #384 have threshold writes that certify nothing singly.
   Nothing here is evidence about Lorentz kinematics.
+* **Later.** #386 (`RecordLayer/UnifiedReadoutRise.lean`): the first pointer, read on its
+  ready arc at the start of the return leg and on its displayed arc after, certifies a rise;
+  with the drop here, a dip of the mean.
 
 ## References
 

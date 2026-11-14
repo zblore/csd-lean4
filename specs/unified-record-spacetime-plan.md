@@ -1030,7 +1030,9 @@ and UD-128 on the composite carrier with its fourth pointer
 variant of UA-17 (f), with a second near-half pointer in place of the gated pointer
 (`RecordLayer/UnifiedThreeRecords.lean`, BACKLOG ~~#384~~). UD-131 is a statement about two
 readout histories and the function that drives them, and UD-132 is its instance in the run
-of UD-130 (`RecordLayer/UnifiedReadoutCertificate.lean`, BACKLOG ~~#385~~).
+of UD-130 (`RecordLayer/UnifiedReadoutCertificate.lean`, BACKLOG ~~#385~~). UD-133 is the
+companion statement for a rise, from one pointer read on two arcs, and UD-134 its instance
+in the same run, with the dip (`RecordLayer/UnifiedReadoutRise.lean`, BACKLOG ~~#386~~).
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -1065,6 +1067,8 @@ of UD-130 (`RecordLayer/UnifiedReadoutCertificate.lean`, BACKLOG ~~#385~~).
 | UD-130 | **Three records and three counts in one run, and the midpoint of the first and last.** In the run of UA-17 (f) from `threeRecordStart`, the three region pointers ready, on a round fibre, the third profile vanishing on its fibre, all three rates positive: if the near and far rates are in the windows of UD-128 and the third rate `κ₃` has `κ₃ T₁ ≤ 1/6` for a chosen `0 ≤ T₁ ≤ roundOut n δ` and `1/3 ≤ κ₃ (1 − fineEta n δ) roundOut n δ`, there are flow times `τ_d ∈ [T₁, roundOut]`, `τ_a ∈ [roundAway, roundAwayEnd]`, `τ_r ∈ [roundBack, roundEnd]`, `τ_d ≤ τ_a ≤ τ_r`, such that the third, far and near readouts are `IsRecordWrite`s with write intervals `[T₁, τ_d]`, `[roundAway, τ_a]`, `[roundBack, τ_r]`; the clock's own pointer has exactly `N_d`, `N_a`, `N_r` ticks by them; `|(N_a − N_d) · 2π/R − (τ_a − τ_d)| ≤ 4π/R` and `|(N_r − N_d) · 2π/R − (τ_r − τ_d)| ≤ 4π/R`; `(τ_d + τ_r)/2 ∈ [roundAway, roundAwayEnd]`; and `|(N_d + N_r)/2 · 2π/R − (τ_d + τ_r)/2| ≤ 2π/R` | `roundAway_le_midpoint`, `midpoint_le_roundAwayEnd`, `threeRecordStart`, `threeRecordRun`, `threeRecordRun_fst_pointer`, `threeRecordRun_snd_pointer`, `threeRecordRun_thd_pointer`, `threeRecordRun_clock_pointer`, `echoFstShown_threeRecord_iff`, `echoSiteShown_threeRecord_iff`, `triThdShown_threeRecord_iff`, `isSwing_threeRecord`, `three_records_with_counts` (`RecordLayer/UnifiedThreeRecords.lean`) | existence of flow times in stated intervals; thresholds of accumulated occupancy, the first not an emission record; the midpoint clause is interval arithmetic; counts read at flow times; null sets of fibres and starts; rate windows are hypotheses |
 | UD-131 | **Two readouts that certify a drop of the function that drives them.** Two ready pointers turned by `κ_f ∫₀ᵗ F` and `κ_s ∫₀ᵗ F` for one continuous non-negative `F`, read on the arcs of UA-4, with start angles `a_f`, `a_s`. If the fast readout displays at some flow time in `[0, T_o]`, `T_o > 0`, the slow readout does not display at any flow time in `[0, T_b)`, `T_o ≤ T_b`, and `(1/3 − a_s)/κ_s · T_o ≤ (1/3 − a_f)/κ_f · T_b`, then `T_o ∫_{T_o}^{T_b} F < (T_b − T_o) ∫₀^{T_o} F`. A continuous function with that inequality is not non-decreasing | `lt_of_pshift_mem_displayArc`, `le_of_forall_pshift_notMem_displayArc`, `drop_of_two_readouts`, `not_monotone_of_drop` (`RecordLayer/UnifiedReadoutCertificate.lean`) | exact; a statement about real functions and two readout histories; premises are over intervals of flow time, and the histories are asked to match only on `[0, T_b]`; the form of the drive, the rates, the start angles and the rate condition are inputs |
 | UD-132 | **The third and the first readouts of the three-record run certify a drop.** In the run of UD-130 with `T₁ = 0`, `0 < δ < π/2` (Lean: `0 ≤ δ`, `δ < π/2`, `cos δ < 1`) and `(1/3 − a_θ)/κ₁ · roundOut n δ ≤ (1/3 − a_χ)/κ₃ · roundBack n δ`: every continuous non-negative `F` that reproduces the third and the first readout histories at the flow times in `[0, roundBack]`, through pointers of the rates `κ₃`, `κ₁` and the starts `χ`, `θ`, has `roundOut ∫_{roundOut}^{roundBack} F < (roundBack − roundOut) ∫₀^{roundOut} F` and is not non-decreasing. The run's own near-half occupancy is one such `F`. For `δ ≤ π/48` and `fineEta n δ ≤ 1/48`, `2 · roundUpper ≤ (1 − fineEta) · roundBack` (a corollary of `two_roundUpper_le_roundLower`, UD-126) | `two_roundUpper_le_roundBack`, `threeRecord_readouts_certify_drop`, `threeRecord_nearOcc_drop` (`RecordLayer/UnifiedReadoutCertificate.lean`) | exact, for every `F` consistent with the two histories; a drop of a mean, not a departure and not a return; the rate condition is a hypothesis; null sets of fibres and starts as UD-130 |
+| UD-133 | **A pointer still ready at one flow time and displayed by a later one certifies a rise of the function that drives it.** A ready pointer turned by `κ ∫₀ᵗ F` for one continuous non-negative `F`, read on the arcs of UA-4. If the readout does not display at any flow time in `[0, T_b)`, the pointer is in the ready arc at `T_b`, and the readout displays at some flow time in `[0, T_e]`, `T_b ≤ T_e`, then `∫₀^{T_b} F < ∫_{T_b}^{T_e} F`. If also `0 ≤ T_o < T_b` and `T_e − T_b ≤ T_b − T_o`, then `(T_e − T_b) ∫_{T_o}^{T_b} F < (T_b − T_o) ∫_{T_b}^{T_e} F`, and a continuous function with that inequality is not non-increasing | `rise_of_ready_then_display`, `mean_rise_of_integral_lt`, `not_antitone_of_rise` (`RecordLayer/UnifiedReadoutRise.lean`) | exact; a statement about real functions, one display history on `[0, T_e]` and one arc membership at `T_b`; the form of the drive, the rate and the start angle are inputs |
+| UD-134 | **The readouts of the three-record run certify a rise, and with UD-132 a dip.** In the run of UD-130 with `T₁ = 0`, `0 < δ < π/2` (Lean: `0 ≤ δ`, `δ < π/2`, `cos δ < 1`) and the first window tightened to `κ₁ · roundUpper ≤ 1/6 − a_θ`: every continuous non-negative `F` that reproduces the first readout history on `[0, roundEnd]` and the first pointer's ready arc at `roundBack` has `∫₀^{roundBack} F < ∫_{roundBack}^{roundEnd} F`, `(roundEnd − roundBack) ∫_{roundOut}^{roundBack} F < (roundBack − roundOut) ∫_{roundBack}^{roundEnd} F`, and is not non-increasing. With the rate condition of UD-132 and the third readout history on `[0, roundBack]` in addition, the mean of `F` over `[roundOut, roundBack]` is strictly less than its mean over `[0, roundOut]` and than its mean over `[roundBack, roundEnd]`, and `F` is neither non-decreasing nor non-increasing. The run's own near-half occupancy is one such `F`. For `δ ≤ π/96` and `fineEta n δ ≤ 1/96`, `5/2 · roundUpper ≤ roundLower`. The first pointer is in its ready arc along the run exactly when `pshift (κ₁ ∫₀ᵗ nearOcc) θ` is | `five_halves_roundUpper_le_roundLower`, `echoFstReady_regionTwoFlow_iff`, `echoFstReady_threeRecord_iff`, `threeRecord_readouts_certify_rise`, `threeRecord_readouts_certify_dip`, `threeRecord_nearOcc_dip` (`RecordLayer/UnifiedReadoutRise.lean`) | exact, for every `F` consistent with the stated readouts; a rise and a dip of means, not a return and not a round trip; the tightened window and (for the dip) the rate condition are hypotheses; null sets of fibres and starts as UD-130 |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -1665,6 +1669,43 @@ pointer in it. By the test of §6: the two rates, the start angles and the rate 
 chosen (UA-4); the drop follows from the two histories by the intermediate value theorem and
 the arcs. They pass no gate: nothing here is a record of a departure, and UO-16 is not met.
 UD-131 uses UA-4 only, as the arcs. UD-132 uses in addition the assumptions of UD-130. UA-6
+is not used.
+
+Exact scope of UD-133 and UD-134 (BACKLOG ~~#386~~). What they give. UD-131 and UD-132 read a
+drop and said nothing about the return leg. UD-133 reads a rise from one pointer on two arcs:
+if a ready pointer turned by one function at a known rate does not display before `T_b`, is
+still in the ready arc at `T_b`, and displays by `T_e`, the function accumulates more over
+`[T_b, T_e]` than over `[0, T_b]`; when `[T_b, T_e]` is no longer than `[T_o, T_b]` its mean
+over the later interval is strictly greater, so it is not non-increasing and not constant.
+UD-134 is that statement for the first pointer of the run of UD-130, and with UD-132 a dip:
+the mean over `[roundOut, roundBack]` is strictly less than the mean before and the mean
+after. What they do not give. (i) A return. The conclusions compare accumulated values and
+means over stated intervals of flow time; they have no direction, path or speed, do not
+locate the rise within the return leg, and do not say that what the pointer registers there
+is what was there before. The dip is three means, not a departure and a return, and no radar
+time is formed from it. (ii) A record of the conclusion. The premises are a display history
+over an interval and an arc membership at one flow time (UA-7); no record holds them and no
+degree of freedom holds the conclusion. (iii) A certificate from one display history: the
+rise uses one more premise about the same pointer, its ready arc at the flow time `T_b`.
+Records so far read only the displayed arc after the start; the ready arc at a later flow
+time is a further apparatus input on the arcs of UA-4. (iv) The form of the drive: assumed
+(UA-5, UA-13), as in UD-131; `F` is not identified with an occupancy. In the run the coupled
+carrier's near-half occupancy is one such `F` (`threeRecord_nearOcc_dip`); for it the rise
+also follows from the occupancy bounds of UD-126 by a calculation not stated in Lean. (v)
+That the hypotheses can be met. The rise needs `κ₁ · roundUpper ≤ 1/6 − a_θ` in place of
+UD-130's `κ₁ · roundUpper ≤ 1/6`; with `1/3 ≤ κ₁ · roundLower` that asks
+`roundLower / roundUpper ≥ 2/(1 − 6 a_θ)`, and the proved ratio `5/2` (for `δ ≤ π/96`,
+`fineEta n δ ≤ 1/96`) is enough for `a_θ ≤ 1/30` (a calculation). The dip needs in addition
+the rate condition of UD-132, which the rate windows do not imply. That one start meets all
+of them is not stated in Lean; `threeRecord_nearOcc_dip` shows only that the class of
+functions is not empty when they are met. (vi) More than the run of UD-130, with its limits:
+no term couples the messenger and the clock there, the clock plays no part in UD-134, null
+sets of fibres and starts. That the generic statement applies off those null sets is
+expected, not in Lean. Earlier: UD-131 and UD-132 (the drop, from two pointers); UD-105
+(~~#373~~). By the test of §6: the rate, the start angle, the arcs and the tightened window
+are chosen (UA-4); the rise follows from the readouts by the intermediate value theorem and
+the arcs. They pass no gate: nothing here is a record of a return, and UO-16 is not met.
+UD-133 uses UA-4 only, as the arcs. UD-134 uses in addition the assumptions of UD-130. UA-6
 is not used.
 
 
@@ -2387,6 +2428,20 @@ time. It is not a statement about every dynamics on `Σ`.
   record of the conclusion (the premises are histories over intervals of flow time); a
   certificate from one readout. *What is still missing:* the same list as above; the rise on
   the return leg from readouts.
+  ▸ **Readouts that certify a rise, and a dip, 2026-11-14 (BACKLOG ~~#386~~) → UD-133,
+  UD-134. Not met.** One pointer read on two arcs: if it does not display before `T_b`, is
+  still in its ready arc at `T_b`, and displays by `T_e`, the function driving it accumulates
+  more over `[T_b, T_e]` than over `[0, T_b]` (`rise_of_ready_then_display`). In the run of
+  UD-130 this holds for the first pointer between `roundBack` and `roundEnd`
+  (`threeRecord_readouts_certify_rise`), and with the drop of UD-132 the mean over
+  `[roundOut, roundBack]` is strictly less than the mean before and the mean after
+  (`threeRecord_readouts_certify_dip`); the run's near-half occupancy is one such function
+  (`threeRecord_nearOcc_dip`). *Conditions:* those of UD-130 with `T₁ = 0`, `δ < π/2` and
+  the first window tightened to `κ₁ · roundUpper ≤ 1/6 − a_θ`; for the dip, the rate
+  condition of UD-132. *What this is not:* a return or a round trip (three means, with no
+  direction and no instant); a record of the conclusion (the premises are a history over an
+  interval of flow time and an arc membership at one flow time); a radar time. *What is still
+  missing:* the same list as above.
 
 ### M7 — `3 + 1`
 
@@ -2543,7 +2598,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

@@ -20132,4 +20132,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.threeRecord_nearOcc_drop
 
+/-! #386 (the author's programme, obligation UO-16; Remainder (a) of #385): a ready pointer turned by κ ∫F for one continuous non-negative F — if its readout displays at no flow time before T_b, the pointer is in the ready arc at T_b, and the readout displays by T_e, then ∫₀^{T_b} F < ∫_{T_b}^{T_e} F, and F is not non-increasing when [T_b, T_e] is no longer than [T_o, T_b]; in the run of #384, with the first window tightened to κ₁ · roundUpper ≤ 1/6 − a_θ, this holds for every F that reproduces the first readout history and the first pointer's ready arc at roundBack, and with the drop of #385 the mean over [roundOut, roundBack] is below the mean before and the mean after. A rise and a dip of means, not a return; premises are readouts at flow times (`RecordLayer/UnifiedReadoutRise.lean`). -/
+
+/-- info: 'CSD.RecordLayer.rise_of_ready_then_display' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rise_of_ready_then_display
+
+/-- info: 'CSD.RecordLayer.mean_rise_of_integral_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mean_rise_of_integral_lt
+
+/-- info: 'CSD.RecordLayer.not_antitone_of_rise' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_antitone_of_rise
+
+/-- info: 'CSD.RecordLayer.five_halves_roundUpper_le_roundLower' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.five_halves_roundUpper_le_roundLower
+
+/-- info: 'CSD.RecordLayer.echoFstReady_regionTwoFlow_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoFstReady_regionTwoFlow_iff
+
+/-- info: 'CSD.RecordLayer.echoFstReady_threeRecord_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.echoFstReady_threeRecord_iff
+
+/-- info: 'CSD.RecordLayer.threeRecord_readouts_certify_rise' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecord_readouts_certify_rise
+
+/-- info: 'CSD.RecordLayer.threeRecord_readouts_certify_dip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecord_readouts_certify_dip
+
+/-- info: 'CSD.RecordLayer.threeRecord_nearOcc_dip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecord_nearOcc_dip
+
 end CSD.Tests.AxiomAudit
