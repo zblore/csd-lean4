@@ -246,7 +246,12 @@ place of the gated pointer (BACKLOG ~~#384~~, `RecordLayer/UnifiedThreeRecords.l
 the clock's count at all three. The midpoint of the first and last flow times lies in the
 absence, by arithmetic on the three intervals and only to within the absence's whole length.
 The first write is not an emission record: the start is prepared. In that variant no
-term couples the messenger and the clock, so the composite carrier is not exercised. No count is read by a
+term couples the messenger and the clock, so the composite carrier is not exercised. Two of those readouts, taken together with
+their rates and start angles, certify that the function driving them dropped in the mean
+between the first presence and the start of the return leg (BACKLOG ~~#385~~,
+`RecordLayer/UnifiedReadoutCertificate.lean`): no constant occupancy reproduces both. That is
+a drop of a mean read from two readout histories, not a record of a departure, and nothing
+there shows the return. No count is read by a
 record, there is no reflector, and no radar time is formed.
 
 ## What is open

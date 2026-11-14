@@ -108,6 +108,9 @@ Lean has it only on the fibre where the third and fourth profiles vanish).
   clock, so from a product ray the run is that of #372's uncoupled arena with a third region
   pointer (a calculation; Lean has it only on the fibre where the third and fourth profiles
   vanish). Nothing here is evidence about Lorentz kinematics.
+* **Later.** #385 (`RecordLayer/UnifiedReadoutCertificate.lean`): the third and the first
+  readouts of this run, taken together with their rates and start angles, certify a drop of
+  the function that drives them.
 
 ## References
 
