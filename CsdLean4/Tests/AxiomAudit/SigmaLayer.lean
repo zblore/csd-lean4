@@ -20504,4 +20504,54 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.flat_clock_packet_localised_flow_time
 
+/-! #393 (the author's programme, obligation UO-16; step (4) of the plan of 2026-11-14, third brick): two pointers coupled to observables of a composite of two carriers, in one flow on the two-pointer arena — from a product ray on a fibre where both profiles vanish the carrier stays a product ray, each carrier moves freely, and each pointer advances by the accumulated expectation of its observable; a gate and its complement add up to 1 ⊗ Y, so the two gated displacements add up to the ungated one at every flow time. Displacements, not records; null sets of fibres and starts (`RecordLayer/UnifiedCoincidenceFlow.lean`). -/
+
+/-- info: 'CSD.RecordLayer.idxFreeU_composite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxFreeU_composite
+
+/-- info: 'CSD.RecordLayer.idxTwoCarrierU_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxTwoCarrierU_of_lift_eq_zero
+
+/-- info: 'CSD.RecordLayer.coincShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift
+
+/-- info: 'CSD.RecordLayer.coincFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincFlow
+
+/-- info: 'CSD.RecordLayer.arenaKick_idxFreeU_composite' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaKick_idxFreeU_composite
+
+/-- info: 'CSD.RecordLayer.coincFlow_prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincFlow_prodRay
+
+/-- info: 'CSD.RecordLayer.continuous_arenaObs_prodRay_free' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_arenaObs_prodRay_free
+
+/-- info: 'CSD.RecordLayer.coincShift_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_add
+
+/-- info: 'CSD.RecordLayer.coincShift_one_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_one_kronecker
+
+/-- info: 'CSD.RecordLayer.gateOp_add_gateOp_not' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateOp_add_gateOp_not
+
+/-- info: 'CSD.RecordLayer.coincShift_gateOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_gateOp
+
+/-- info: 'CSD.RecordLayer.coincShift_gateOp_add_not' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_gateOp_add_not
+
 end CSD.Tests.AxiomAudit
