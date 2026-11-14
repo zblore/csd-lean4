@@ -252,11 +252,12 @@ hypothesis (the rate windows of that run do not imply it), certify that the func
 dropped in the mean between the first presence and the start of the return leg (BACKLOG ~~#385~~,
 `RecordLayer/UnifiedReadoutCertificate.lean`): under that condition no constant occupancy
 reproduces both. That is a drop of a mean read from two readout histories, not a record of a
-departure. The first pointer alone, read on its ready arc at the start of the return leg and
-on its displayed arc after, certifies that the same function accumulated more over the return
-leg than in all the time before it (BACKLOG ~~#386~~, `RecordLayer/UnifiedReadoutRise.lean`),
-under a tightened rate window; with the drop, the mean over the middle interval is below the
-mean before and the mean after. That is a dip of a mean read from readouts at flow times, not
+departure. One pointer read on two arcs, its ready arc at the start of the return leg (a
+further apparatus input) and its displayed arc after, certifies that the same function
+accumulated more over the return leg than in all the time before it (BACKLOG ~~#386~~,
+`RecordLayer/UnifiedReadoutRise.lean`), under a tightened rate window; with the drop, the mean
+over the middle interval is below the mean before and the mean after. That one start meets
+all the conditions of these statements is not shown in Lean in that row. That is a dip of a mean read from readouts at flow times, not
 a record of a return. No count is read by a record, there is no reflector, and no radar time
 is formed.
 

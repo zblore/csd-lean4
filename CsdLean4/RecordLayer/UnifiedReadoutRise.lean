@@ -12,12 +12,13 @@ public import CsdLean4.RecordLayer.UnifiedReadoutCertificate
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #386 — milestone **M6** of the author's
 programme "From `Σ` to physical spacetime", obligation UO-16; Remainder (a) of #385.
-No new assumption.
+No new dynamical assumption; one more readout on the arcs of UA-4 (the first region pointer's
+ready arc at the flow time `roundBack`), recorded there.
 
 #385 read a drop of the near-half occupancy from two readouts and said nothing about the
-return leg. This module reads the rise. It needs one pointer only, read on two arcs: the
-first pointer of #384's run is still in its ready arc when the return leg begins, and it
-displays by the end of that leg.
+return leg. This module reads the rise. It needs one pointer only, read on two arcs: under a
+tightened rate window the first pointer of #384's run is still in its ready arc when the
+return leg begins, and it displays by the end of that leg.
 
 **The generic statement** (`rise_of_ready_then_display`). A ready pointer is turned by
 `κ ∫₀ᵗ F` for one continuous non-negative `F`. If its readout does not display at any flow
@@ -27,7 +28,7 @@ than in all the time before it. If `[T_b, T_e]` is no longer than `[T_o, T_b]`, 
 `F` over `[T_b, T_e]` is strictly greater than its mean over `[T_o, T_b]`
 (`mean_rise_of_integral_lt`), and `F` is not non-increasing (`not_antitone_of_rise`).
 
-**In the run of #384** (`threeRecord_readouts_certify_rise`): with the first pointer's lower
+**In the run of #384** (`threeRecord_readouts_certify_rise`): with the first pointer's first
 window tightened to `κ₁ · roundUpper ≤ 1/6 − a_θ`, every continuous non-negative `F` that
 reproduces the first readout history on `[0, roundEnd]`, and the first pointer's ready arc at
 `roundBack`, accumulates more over `[roundBack, roundEnd]` than over `[0, roundBack]`, and has
@@ -52,9 +53,11 @@ run's own near-half occupancy is one such `F` (`threeRecord_nearOcc_dip`).
   three means. It is not a departure and a return, and no radar time is formed from it.
 * **One pointer, read on two arcs.** Each single display history still certifies nothing, as
   stated since #365. The rise uses one more premise about the same pointer: that it is in the
-  ready arc at the one flow time `T_b`. Records so far have read only the displayed arc after
-  the start; the ready arc at a later flow time is a further apparatus input on the arcs of
-  UA-4. "Does not display before `T_b`" is used only to exclude a full turn.
+  ready arc at the one flow time `T_b`. The threshold writes (`IsRecordWrite`) of the region
+  pointers have read only the displayed arc after the start. Tick records have read a ready
+  arc at later flow times since #358 (`HasTicks`), but not this pointer's. Reading the first
+  region pointer's ready arc at `roundBack` is a further apparatus input on the arcs of UA-4,
+  recorded there. "Does not display before `T_b`" is used only to exclude a full turn.
 * **The premises are readouts at flow times** (UA-7): a display history over an interval and
   an arc membership at one flow time. No record holds them, and no degree of freedom holds
   the conclusion.
@@ -62,22 +65,30 @@ run's own near-half occupancy is one such `F` (`threeRecord_nearOcc_dip`).
   value of one function at a known rate from a known start angle. The theorems do not
   identify `F` with an occupancy. In the run the coupled carrier's near-half occupancy is one
   such `F` (`threeRecord_nearOcc_dip`); for it the rise also follows from the occupancy
-  bounds of #382, by a calculation not stated in Lean.
+  bounds of #382 for a small margin and a small `fineEta`, by a calculation not stated in
+  Lean.
 * **No rate condition between pointers for the rise, but a tighter window.** The rise needs
   `κ₁ · roundUpper ≤ 1/6 − a_θ` in place of #384's `κ₁ · roundUpper ≤ 1/6`: the first pointer
   must still be ready when the return leg begins. With `1/3 ≤ κ₁ · roundLower` this asks
   `roundLower / roundUpper ≥ 2/(1 − 6 a_θ)`. `five_halves_roundUpper_le_roundLower` gives the
   ratio `5/2` for `δ ≤ π/96` and `fineEta n δ ≤ 1/96`, which is enough for `a_θ ≤ 1/30` (a
-  calculation, not in Lean). The comparison of means also uses that the return leg is no
-  longer than `[roundOut, roundBack]`, which holds in the run for `δ ≥ 0`.
+  calculation, not in Lean). The ratio is below `3` for every `n > 0` and `δ > 0`, so the two
+  conditions cannot both hold for a start angle `a_θ ≥ 1/18`: on that part of the ready arc
+  `(0, 1/6]` the run theorems here are vacuous (a calculation, not in Lean). The comparison
+  of means also uses that the return leg is no longer than `[roundOut, roundBack]`, which
+  holds in the run for `δ ≥ 0`.
 * **The dip needs the rate condition of #385**, a hypothesis that the rate windows of #384 do
-  not imply. That rates and start angles meeting all the conditions exist is not stated in
-  Lean. `threeRecord_nearOcc_dip` shows the class of functions is not empty when they are
-  met; it does not show that they can be met.
+  not imply. The tightened window works against it: with equal start angles `a` the corner
+  most favourable to the rate condition is `2 · roundUpper ≤ (1 − fineEta)(1 − 6a) · roundBack`,
+  which `two_roundUpper_le_roundBack` (#385) does not cover (a calculation, not in Lean).
+  That rates and start angles meeting all the conditions exist is not stated in this module.
+  `threeRecord_nearOcc_dip` shows the class of functions is not empty when they are met; it
+  does not show that they can be met.
 * **The run is that of #384**, with its limits: no term couples the messenger and the clock in
   that variant, the third and fourth profiles vanish on their fibres, the start is a product
   ray (null sets by calculations not in Lean), the round fibres of #379. The clock plays no
-  part in this module; its hypotheses are carried only because the writes are taken from
+  part in this module, and the far pointer and the third pointer play none in the rise;
+  their hypotheses are carried only because the writes are taken from
   `three_records_with_counts`. The margin is `0 < δ < π/2`.
 * **Not instantiated elsewhere.** That the generic statement applies off the null sets is
   expected, not stated in Lean.
@@ -114,7 +125,9 @@ namespace CSD.RecordLayer
 rise.** Let a ready pointer be turned by `κ ∫₀ᵗ F` for one continuous non-negative `F`. If its
 readout does not display at any flow time before `T_b`, the pointer is still in the ready arc
 at `T_b`, and the readout displays at some flow time up to `T_e`, then `F` accumulates strictly
-more over `[T_b, T_e]` than over `[0, T_b]`: `∫₀^{T_b} F < ∫_{T_b}^{T_e} F`. -/
+more over `[T_b, T_e]` than over `[0, T_b]`: `∫₀^{T_b} F < ∫_{T_b}^{T_e} F`. The rate `κ` is
+positive. The ready arc at `T_b` is a second readout of the same pointer, an apparatus input
+(UA-4). -/
 theorem rise_of_ready_then_display {F : ℝ → ℝ} (hF : Continuous F) (h0 : ∀ s, 0 ≤ F s)
     {κ : ℝ} (hκ : 0 < κ) {q : KTorus} (hq : q ∈ readyArc 2) {hist : ℝ → Bool}
     {Tb t₁ Te : ℝ}
@@ -186,9 +199,10 @@ theorem not_antitone_of_rise {F : ℝ → ℝ} (hF : Continuous F) {To Tb Te : �
   nlinarith
 
 /-- The rate window of the near-half pointer leaves room for a positive start angle: for a
-small margin and a small `fineEta`, `roundLower` is at least `5/2` of `roundUpper`, so a rate
-`κ` with `κ · roundUpper ≤ 1/6 − a` and `1/3 ≤ κ · roundLower` exists for every start angle
-`a ≤ 1/30`. -/
+small margin and a small `fineEta`, `roundLower` is at least `5/2` of `roundUpper`. For
+`n > 0` a rate `κ` with `κ · roundUpper ≤ 1/6 − a` and `1/3 ≤ κ · roundLower` then exists for
+every start angle `a ≤ 1/30` (a calculation, not stated here; at `n = 0` both bounds are
+zero and no rate exists). -/
 theorem five_halves_roundUpper_le_roundLower (n : ℕ) {δ : ℝ} (hδ0 : 0 ≤ δ)
     (hδ : δ ≤ Real.pi / 96) (hη : fineEta n δ ≤ 1 / 96) :
     5 / 2 * roundUpper n δ ≤ roundLower n δ := by
@@ -285,7 +299,7 @@ include h10 hRe hg
 
 /-- ★ **The near-half pointer of the three-record run, read on two arcs, certifies a rise.**
 In the run of #384, under its hypotheses with `T₁ = 0`, `0 < δ < π/2` (in Lean `0 ≤ δ`,
-`δ < π/2`, `cos δ < 1`) and the first pointer's lower window tightened to
+`δ < π/2`, `cos δ < 1`) and the first pointer's first window tightened to
 `κ₁ · roundUpper n δ ≤ 1/6 − a_θ`: every continuous non-negative `F` such that the first
 readout displays exactly where `pshift (κ₁ ∫₀ᵗ F) θ` is in the displayed arc, and the first
 pointer is in the ready arc at `roundBack n δ` exactly if `pshift (κ₁ ∫₀^{roundBack} F) θ` is,
@@ -296,7 +310,11 @@ satisfies
     < (roundBack − roundOut) ∫_{roundBack}^{roundEnd} F`;
 * `F` is not non-increasing.
 
-The times are flow times (UA-7). A rise of a mean, not a return. -/
+The times are flow times (UA-7). A rise of a mean, not a return. The ready arc at
+`roundBack n δ` is a second readout of the first pointer, an apparatus input (UA-4). The
+hypotheses on the far pointer, the third pointer and the clock are carried only to take the
+write from `three_records_with_counts`. That the hypotheses hold together for some start is
+not stated here. -/
 theorem threeRecord_readouts_certify_rise (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     (hck : ContDiff ℝ ∞ k) {θ ψ χ : KTorus} (hθ : θ ∈ readyArc 2) (hψ : ψ ∈ readyArc 2)
     (hχ : χ ∈ readyArc 2) (hzk : hk.lift χ.2 = 0)
@@ -366,7 +384,9 @@ together: every continuous non-negative `F` that reproduces the third and the fi
 histories, and the first pointer's ready arc at `roundBack n δ`, has a mean over
 `[roundOut, roundBack]` strictly less than its mean over `[0, roundOut]` and strictly less
 than its mean over `[roundBack, roundEnd]`. It is neither non-decreasing nor non-increasing.
-The times are flow times (UA-7). A dip of a mean, not a departure and a return. -/
+The times are flow times (UA-7). A dip of a mean, not a departure and a return. The ready
+arc at `roundBack n δ` is an apparatus input (UA-4). That the hypotheses hold together for
+some start is not stated here. -/
 theorem threeRecord_readouts_certify_dip (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
     (hck : ContDiff ℝ ∞ k) {θ ψ χ : KTorus} (hθ : θ ∈ readyArc 2) (hψ : ψ ∈ readyArc 2)
     (hχ : χ ∈ readyArc 2) (hzk : hk.lift χ.2 = 0)
