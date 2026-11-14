@@ -9,7 +9,7 @@ public import CsdLean4.RecordLayer.UnifiedClockPacketInstance
 public import CsdLean4.RecordLayer.UnifiedFineTransit
 
 /-!
-# A clock packet that ticks stays where it is predicted to be
+# A clock packet that ticks: where it is, and its dilation resolved
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #392 — milestone **M6** of the author's
 programme "From `Σ` to physical spacetime", obligation UO-16; step (2) of the plan of
@@ -17,10 +17,11 @@ programme "From `Σ` to physical spacetime", obligation UO-16; step (2) of the p
 
 #391 shows that a clock packet narrow in momentum writes at least `n` ticks, and says nothing
 about where the clock carrier is. This module bounds the clock carrier's weight away from its
-predicted position, for one family of packets that also tick.
+predicted position, for one family of packets that also tick, and shows for that family that
+the count falls short of the undilated count.
 
 **How.** The device's packet carries each internal level as a Dirac packet of its own rest
-energy with weight `1/2` (`deviceRegionWeight_devicePacket`). #264's bound
+energy with weight `1/2` (`deviceRegionWeight_devicePacket`). #265's bound
 (`regionWeight_ringPacket_le`) applies to each level.
 
 * `deviceRegionWeight`, `deviceRegionWeight_nonneg`, `regionWeight_const_mul`,
@@ -30,47 +31,56 @@ energy with weight `1/2` (`deviceRegionWeight_devicePacket`). #264's bound
   levels' budgets `1 − Re T_i(0) + |t| · limitErr_i`;
 * `flatWindow`, `flatAmpN`, `sum_norm_flatAmpN`, `flatWindow_mem_range`, `flatWindow_width`,
   ★★ `flat_clock_packet_ticks` — the `N` flat modes from `600 n N` upward on the ring of
-  length `2π · 1200 n N` meet `narrow_clock_packet_ticks`: count at least `n` at `2π n/R`;
+  length `2π · 1200 n N` meet `narrow_clock_packet_ticks`;
 * `flat_packet_start_le`, `flat_packet_limitErr_le`, ★★ `flat_packet_budget` — for that
   window, a level `μ ≥ 1` and `|t| ≤ 4π n/Δ`: the budget is at most `1/N + 1/(20000 Δ n N)`;
-* ★★★ `flat_clock_packet_localised` — the same packet, at every packet time `|t| ≤ 4π n/Δ`:
-  (weight of the clock on `B`) `· (1 − γ) ≤ 1/N + 1/(20000 Δ n N)` for every region `B` at
-  `cos ≤ γ` from both levels' predicted directions;
-* `abs_sub_quarter_turn_le` — a flow time in `[0, 2π n/R]` is a packet time in that range.
+* ★★★ `flat_clock_packet_localised` — the uncoupled packet, at every packet time
+  `|t| ≤ 4π n/Δ`: (weight of the clock on `B`) `· (1 − γ) ≤ 1/N + 1/(20000 Δ n N)` for every
+  region `B` at `cos ≤ γ` from both levels' predicted directions;
+* `abs_sub_quarter_turn_le`, ★★ `flat_clock_packet_localised_flow_time` — the same bound at
+  the packet time `−π/(2R) + s` for every flow time `s` of the horizon `[0, 2π n/R]`;
+* `sqrt_one_sub_sq_le`, ★★★ `flat_clock_packet_rate_lt` — for `n ≥ 400` and `Δ ≤ 1/400` the
+  count `N' ≥ n` at `T = 2π n/R` has `2π N'/Δ ≤ (1 − 1/400) T`.
 
 ## Exact scope
 
 * **A weight of the state vector, not a record and not yet an arena observable.** The bound
-  is on `deviceRegionWeight` of `devicePacket` at a packet time `t`. That the ray of
+  is on `deviceRegionWeight` of `devicePacket` at a packet time. That the ray of
   `clockPointerFlow` at flow time `s`, on the fibre where the profile vanishes, is that
-  packet at `t = s − π/(2R)` is used inside #388 and is not restated here; no expectation of
-  a region projector on the clock arena is stated.
-* **The resolution is coarse.** The bound is `(1/N + …)/(1 − γ)`. For an arc of half-angle
-  `δ` about the predicted position `1 − γ = 1 − cos δ`, so the weight outside is small only
-  for `δ` large against `1/√N`. The packet's own angular width is of order `1/N` (a
-  calculation, not in Lean). The bound does not resolve the packet's width.
-* **Two predicted positions.** The levels move at `v₀ = vRel 1 1 (1/2)` and
-  `v₁ = vRel 1 (1 + Δ) (1/2)`; the region must be away from both. Over the horizon they
-  separate by an angle of at most `π/(300 N)` (a calculation, not in Lean).
-* **How far the clock travels is not stated.** Over the horizon the predicted angle is of
-  order `v/(Δ N)`; whether that exceeds the resolved arc depends on the choice of `Δ`, `n`,
-  `N`. A calculation suggests it can (take `Δ` small against `1/√N` and `n` large); nothing
-  in Lean says so.
-* **The predicted velocity is the continuum one** at momentum `1/2`; the lattice's correction
-  is in the budget and needs `M ≥ 210000 n² N` sites.
-* **A clock, not an observer; one fibre and one start for the ticks**, as #391. The
-  localisation bound itself is about the uncoupled packet.
+  packet at `−π/(2R) + s` is used inside #388 at the level of the coherence and is not a
+  named theorem; no expectation of a region projector on the clock arena is stated.
+* **No region is exhibited.** The hypotheses on `B` hold for the empty region. A non-empty
+  `B` with `γ < 1` exists by a calculation, not in Lean. The bound says something only when
+  `1 − γ` exceeds the budget.
+* **The resolution is coarse.** For an arc of half-angle `δ` about the predicted position
+  `1 − γ = 1 − cos δ`, so the weight outside is small only for `δ` large against the square
+  root of the budget: `1/√N` when `20000 Δ n ≥ 1`, larger otherwise. The packet's own
+  angular width is of order `1/N` (a calculation, not in Lean).
+* **Two predicted positions.** The levels move at `vRel 1 1 (1/2)` and
+  `vRel 1 (1 + Δ) (1/2)`; the region must be away from both. Over the horizon they separate
+  by an angle of at most `π/(300 N)` (a calculation, not in Lean).
+* **How far the clock travels is not stated.** Over the horizon the predicted angle is
+  `π v/(600 R N)`, about `0.003/(Δ N)` and independent of `n` (a calculation, not in Lean).
+  It exceeds the resolved arc when `Δ √N` is small against `0.002` and `n` is large against
+  `1/Δ`; nothing in Lean says so.
+* **The dilation resolved is a statement about one count at one flow time.** The count is
+  compared with the flow time (UA-7), and `T` is chosen with the rate known. `v` there is
+  `σ/E₀ ≥ 1/(2π)`; that the packet moves at that velocity is not shown.
+* **The predicted velocity in the localisation bound is the continuum one** at momentum
+  `1/2`; the lattice's correction is in the budget and needs `M ≥ 210000 n² N` sites.
+* **A clock, not an observer; one fibre and one start for the ticks**, as #391.
 * **Units and constants.** Speed `1`, lower level `1`, reference momentum `1/2`; the
   constants are not sharp.
 
 ## References
 
-`specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md` (UA-12,
-UO-16, UD-141, UD-142, UD-143, UD-144); `RecordLayer/UnifiedClockPacketInstance.lean` (#391:
-`narrow_clock_packet_ticks`, `ringLen`, `ringHop`, `ringRate`);
-`RecordLayer/DiracArrival.lean` (#264: `regionWeight`, `regionWeight_ringPacket_le`,
-`re_transPhase_ringPacket_ge`); `CV/DiracPacketLimit.lean` (#261: `limitErr`, `flat_sums`,
-`ringPacket`); `CV/DiracDevice.lean` (#262: `devicePacket`, `levelMass`);
+`specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md` (UA-7,
+UA-12, UO-16, UD-141, UD-142, UD-143, UD-144); `RecordLayer/UnifiedClockPacketInstance.lean`
+(#391: `narrow_clock_packet_ticks`, `ringLen`, `ringHop`, `ringRate`,
+`half_le_levelClockRate`); `RecordLayer/DiracArrival.lean` (#265: `regionWeight`,
+`regionWeight_ringPacket_le`, `re_transPhase_ringPacket_ge`); `CV/DiracPacketLimit.lean`
+(#261: `limitErr`, `flat_sums`, `ringPacket`); `CV/DiracDevice.lean` (#262: `devicePacket`,
+`levelMass`); `CV/DiracClockChain.lean` (`sq_vRel_div_le_one`);
 `RecordLayer/UnifiedFineTransit.lean` (#375: the same budget for the messenger).
 -/
 
@@ -224,7 +234,7 @@ theorem flatWindow_width {n N : ℕ} (hn : 0 < n) (hN : 0 < N) :
 `narrow_clock_packet_ticks` on the flat window of `N` modes, reference momentum `1/2`. -/
 theorem flat_clock_packet_ticks {n N M : ℕ} (hn : 0 < n) (hN : 0 < N)
     (hM : 210000 * n ^ 2 * N ≤ M) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) :
-    0 < vRel 1 1 (ringSigma (1200 * n * N) M (1 / 2))
+    1 / 2 / Real.pi ≤ vRel 1 1 (ringSigma (1200 * n * N) M (1 / 2))
     ∧ ∃ (g : ℝ) (hΨ : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
           (flatWindow n N) (flatAmpN N)
           (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ))) ≠ 0) (N' : ℕ),
@@ -240,7 +250,10 @@ theorem flat_clock_packet_ticks {n N M : ℕ} (hn : 0 < n) (hN : 0 < N)
               * (2 * Real.pi * n / ringRate (1200 * n * N) M (1 / 2) Δ)|
           ≤ 2 * Real.pi / Δ
             + Δ / dispE 1 (ringSigma (1200 * n * N) M (1 / 2))
-              * (2 * Real.pi * n / ringRate (1200 * n * N) M (1 / 2) Δ) := by
+              * (2 * Real.pi * n / ringRate (1200 * n * N) M (1 / 2) Δ)
+      ∧ |clockOpTime 1 (1 + Δ) N' / (2 * Real.pi * n / ringRate (1200 * n * N) M (1 / 2) Δ)
+            - Real.sqrt (1 - (vRel 1 1 (ringSigma (1200 * n * N) M (1 / 2)) / 1) ^ 2)|
+          ≤ 1 / n + Δ := by
   have hn' : (1 : ℝ) ≤ n := by exact_mod_cast hn
   have hN' : (0 : ℝ) < N := by exact_mod_cast hN
   have hK : 0 < 1200 * n * N := by positivity
@@ -434,9 +447,10 @@ theorem flat_packet_budget {n N M : ℕ} (hn : 0 < n) (hN : 0 < N)
   rw [e3]
   linarith
 
-/-- ★★★ **The flat clock packet stays where it is predicted to be while it ticks.** For the
-packet of `flat_clock_packet_ticks`, at every packet time `t` with `|t| ≤ 4π n/Δ` (which
-covers the whole horizon of `n` ticks) and every region `B` whose sites lie at
+/-- ★★★ **The flat clock packet's weight away from its predicted position.** For the
+uncoupled packet of `flat_clock_packet_ticks`, at every packet time `t` with `|t| ≤ 4π n/Δ`
+(the flow times of the horizon are among them, `flat_clock_packet_localised_flow_time`) and
+every region `B` whose sites lie at
 `cos(2πk/L − Ω_i t) ≤ γ` from the predicted direction of each level, `Ω_i = v_i(1/2)/K`:
 
 `(weight of the clock on B) · (1 − γ) ≤ 1/N + 1/(20000 Δ n N)`. -/
@@ -478,6 +492,56 @@ theorem flat_clock_packet_localised {n N M : ℕ} (hn : 0 < n) (hN : 0 < N)
   rw [hgoal]
   linarith
 
+/-- `√(1 − v²) ≤ 1 − v²/2`. -/
+theorem sqrt_one_sub_sq_le {v : ℝ} (hv : v ^ 2 ≤ 1) :
+    Real.sqrt (1 - v ^ 2) ≤ 1 - v ^ 2 / 2 := by
+  rw [Real.sqrt_le_left (by linarith)]
+  nlinarith [sq_nonneg (v ^ 2)]
+
+/-- ★★★ **The dilation is resolved: the flat clock packet's count falls short of the
+undilated count.** For `n ≥ 400` and a gap `0 < Δ ≤ 1/400`, the packet of
+`flat_clock_packet_ticks` has at `T = 2π n/R` a count `N' ≥ n` whose operational time
+`2π N'/Δ` is at most `(1 − 1/400) T`. A clock that ticked at its rest rate would give `T`
+within one tick. -/
+theorem flat_clock_packet_rate_lt {n N M : ℕ} (hn : 400 ≤ n) (hN : 0 < N)
+    (hM : 210000 * n ^ 2 * N ≤ M) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 400) :
+    ∃ (g : ℝ) (hΨ : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
+          (flatWindow n N) (flatAmpN N)
+          (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ))) ≠ 0) (N' : ℕ),
+      n ≤ N'
+      ∧ IsTickCount (tickReady M) (tickDisplay M)
+          (fun t => clockPointerFlow M (ringHop (1200 * n * N) M) 1 (1 + Δ) g
+            trainF_periodic contDiff_trainF t
+            (clockArenaEquiv M (deviceRay _ hΨ),
+              ((((1 / 12 : ℝ) : CircleFibre)), (0 : AddCircle (1 : ℝ)))))
+          (2 * Real.pi * n / ringRate (1200 * n * N) M (1 / 2) Δ) N'
+      ∧ clockOpTime 1 (1 + Δ) N' / (2 * Real.pi * n / ringRate (1200 * n * N) M (1 / 2) Δ)
+          ≤ 1 - 1 / 400 := by
+  have hn0 : 0 < n := by omega
+  have hnr : (400 : ℝ) ≤ n := by exact_mod_cast hn
+  have hπ := Real.pi_pos
+  have hπu : Real.pi < 3.15 := Real.pi_lt_d2
+  obtain ⟨hv, g, hΨ, N', hnN, hN', -, hrate⟩ :=
+    flat_clock_packet_ticks hn0 hN hM hΔ0 (by linarith)
+  refine ⟨g, hΨ, N', hnN, hN', ?_⟩
+  set v := vRel 1 1 (ringSigma (1200 * n * N) M (1 / 2)) with hvd
+  have hv1 : (v / 1) ^ 2 ≤ 1 := sq_vRel_div_le_one one_ne_zero one_pos _
+  have hsq := sqrt_one_sub_sq_le hv1
+  have hvlo : 1 / 7 ≤ v := by
+    refine le_trans ?_ hv
+    rw [div_div, le_div_iff₀ (by positivity)]
+    norm_num at hπu
+    linarith
+  have hv0 : 0 ≤ v := by linarith
+  have hvsq : 1 / 49 ≤ (v / 1) ^ 2 := by
+    rw [div_one]
+    nlinarith
+  have h1n : 1 / (n : ℝ) ≤ 1 / 400 := by
+    rw [div_le_div_iff₀ (by linarith) (by norm_num)]
+    linarith
+  have h := (abs_le.1 hrate).2
+  linarith
+
 /-- The horizon of `n` ticks lies inside the range of `flat_clock_packet_localised`: a flow
 time `s` in `[0, 2π n/R]` is the packet time `s − π/(2R)`, of size at most `4π n/Δ`. -/
 theorem abs_sub_quarter_turn_le {n : ℕ} (hn : 0 < n) {R Δ s : ℝ} (hΔ0 : 0 < Δ)
@@ -495,6 +559,31 @@ theorem abs_sub_quarter_turn_le {n : ℕ} (hn : 0 < n) {R Δ s : ℝ} (hΔ0 : 0 
   have h3 : 0 ≤ Real.pi / (2 * R) := by positivity
   rw [abs_le]
   constructor <;> linarith
+
+/-- ★★ **The flat clock packet's weight at a flow time of the horizon.** The bound of
+`flat_clock_packet_localised` at the packet time `−π/(2R) + s`, for every flow time `s` in
+`[0, 2π n/R]`. -/
+theorem flat_clock_packet_localised_flow_time {n N M : ℕ} (hn : 0 < n) (hN : 0 < N)
+    (hM : 210000 * n ^ 2 * N ≤ M) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2)
+    {B : Finset (ZMod (M + 1))} {γ s : ℝ} (hs0 : 0 ≤ s)
+    (hs : s ≤ 2 * Real.pi * n / ringRate (1200 * n * N) M (1 / 2) Δ)
+    (hB0 : ∀ k ∈ B, Real.cos (2 * Real.pi * k.val / (M + 1 : ℕ)
+      - 2 * Real.pi / ringLen (1200 * n * N) * vRel 1 1 (1 / 2)
+        * (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ)) + s)) ≤ γ)
+    (hB1 : ∀ k ∈ B, Real.cos (2 * Real.pi * k.val / (M + 1 : ℕ)
+      - 2 * Real.pi / ringLen (1200 * n * N) * vRel 1 (1 + Δ) (1 / 2)
+        * (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ)) + s)) ≤ γ) :
+    deviceRegionWeight (devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
+        (flatWindow n N) (flatAmpN N)
+        (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ)) + s)) B * (1 - γ)
+      ≤ 1 / N + 1 / (20000 * Δ * n * N) := by
+  have hK : 0 < 1200 * n * N := by positivity
+  have hR : Δ / 2 ≤ ringRate (1200 * n * N) M (1 / 2) Δ :=
+    half_le_levelClockRate hΔ0.le
+      (ringSigma_sq_le hK M (by rw [abs_of_pos (by norm_num)]; norm_num))
+  refine flat_clock_packet_localised hn hN hM hΔ0 hΔ ?_ hB0 hB1
+  rw [neg_add_eq_sub]
+  exact abs_sub_quarter_turn_le hn hΔ0 hR hs0 hs
 
 end CSD.RecordLayer
 

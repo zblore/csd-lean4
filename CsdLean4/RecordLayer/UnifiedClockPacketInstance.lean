@@ -24,11 +24,15 @@ that the count is at least any wanted number.
 * `half_le_levelClockRate`, `levelClockRate_le_gap` — the clock with levels `1` and `1 + Δ`
   runs at a rate in `[Δ/2, Δ]` wherever the momentum term has `s² ≤ 3`;
 * `ringLen`, `ringHop`, `ringSigma`, `ringRate`, `ringLen_pos`, `two_ringHop`,
-  `abs_ringSigma_le`, `ringSigma_pos`, `ringSigma_sq_le`, `two_ringHop_mul_sin_angleZ`;
+  `abs_ringSigma_le`, `ringSigma_pos`, `ringSigma_sq_le`, `two_ringHop_mul_sin_angleZ`,
+  `dispE_one_le_two`, `two_div_pi_mul_le_ringSigma`, ★ `div_pi_le_vRel_ringSigma` (in the
+  lower half of the band `p/π ≤ σ/E₀`), `abs_div_horizon_sub_le`;
 * ★★★ `narrow_clock_packet_ticks` — on a ring of length `2π K`: reference momentum
-  `0 < p₀ ≤ 9/10` below the band's edge, any window of modes within `1/(600 n)` of `p₀`, any
-  normalised amplitudes, any gap `0 < Δ ≤ 1/2`. At `T = 2π n/R` the count `N` exists,
-  `N ≥ n`, and `|2π N/Δ − √(1 − v²) T| ≤ 2π/Δ + (Δ/E₀) T`, with `v ≠ 0`;
+  `0 < p₀ ≤ 9/10` with `6 K p₀ ≤ M + 1`, any window of modes within `1/(600 n)` of `p₀`, any
+  normalised amplitudes, any gap `0 < Δ ≤ 1/2`. For some strength of the coupling, at
+  `T = 2π n/R` the count `N` exists, `N ≥ n`,
+  `|2π N/Δ − √(1 − v²) T| ≤ 2π/Δ + (Δ/E₀) T`, the same as a rate
+  `|2π N/(Δ T) − √(1 − v²)| ≤ 1/n + Δ`, and `v ≥ p₀/π`;
 * `modeWindow`, `flatAmp`, `sum_norm_flatAmp`, ★★ `exists_clock_packet_ticks` — the `2 w + 1`
   modes centred on `600 n (w + 1)` of the ring of length `2π · 1200 n (w + 1)`, with equal
   amplitudes, meet those hypotheses, for every `n ≥ 1` and every `w`.
@@ -36,25 +40,31 @@ that the count is at least any wanted number.
 ## Exact scope
 
 * **A clock, not an observer.** As #388: the clock carrier and its own pointer. No messenger,
-  no detector, no meeting, no second observer.
+  no detector, no meeting, no second observer. What a moving observer is in `Σ` is not
+  settled by this module.
+* **One flow time.** The count is taken at the single flow time `T = 2π n/R`. The rate form
+  divides that one count by that one time.
 * **More ticks need a narrower packet.** `n` ticks are shown for momentum width at most
   `1/(600 n)`. For a fixed window the number of ticks shown is bounded; nothing here says
-  what happens after the horizon `2π n/R`.
+  what happens after the horizon.
 * **Localisation in space is not shown.** A window of `2 w + 1` modes is a statement about
   momenta. That such a packet occupies about a fraction `1/(2 w + 1)` of the ring is a
   calculation, not in Lean; no occupancy of the clock carrier is bounded here. `w = 0` is
   one mode and is allowed. #392 (`RecordLayer/UnifiedClockPacketLocalised.lean`) bounds the
   weight away from the predicted position for a flat window.
-* **The relative error.** Dividing the bound by `T = 2π n/R` and using `R ≤ Δ`, `E₀ ≥ 1`
-  gives at most `1/n + Δ` (a calculation, not in Lean). So the dilation factor is resolved
-  only when both `1/n` and `Δ` are small against `1 − √(1 − v²)`. The theorem allows that
-  choice and does not make it.
-* **The velocity is a function of the momentum.** `v = vRel 1 1 σ > 0` is shown; no lower
-  bound of `v` is stated, that the packet moves at `v` is not shown, and no position of the
-  clock is recorded.
+* **Whether the dilation is resolved depends on the choice of `n` and `Δ`.** The error
+  `1/n + Δ` is to be compared with `1 − √(1 − v²) ≥ v²/2`. No instance in this module makes
+  that comparison; #392 does (`flat_clock_packet_rate_lt`).
+* **`v` is `σ/E₀`, not a velocity shown of the packet.** `σ` is the lattice momentum term at
+  the reference momentum. The band's group velocity is `v cos(a p₀)` with
+  `a p₀ ≤ π/3` under the hypothesis, so at least `v/2` (a calculation, not in Lean). That
+  the packet moves at any velocity is not shown here, and no position is recorded.
+* **The strength is not in the statement.** The three main theorems say "for some strength";
+  the proof uses `R/(16 Im C₀)`, tuned to the packet (UA-4). `clock_packet_count_ge` keeps
+  the equation as a hypothesis.
 * **One fibre and one start**, as #388: profile `trainF` on the fibre `0`, where the pointer
   does not act back on the clock; pointer starting at `1/12`; packet prepared a quarter turn
-  early; strength `R/(16 Im C₀)`, tuned to the packet (UA-4). A null set of starts.
+  early. A null set of starts.
 * **The count is compared with the flow time** (UA-7). No record holds `T`, and `T` is chosen
   as `2π n/R`, which uses the rate.
 * **Units.** Speed `1` and lower level `1`; the numbers `600`, `9/10`, `1/2` are not sharp.
@@ -193,8 +203,7 @@ theorem abs_ringSigma_le {K : ℕ} (hK : 0 < K) (M : ℕ) (x : ℝ) : |ringSigma
         rw [abs_mul, abs_of_pos (div_pos hL hM)]
         field_simp
 
-/-- The momentum term is positive at a positive momentum below the band's edge: the clock's
-relativistic velocity is not zero. -/
+/-- The momentum term is positive at a positive momentum below the band's edge. -/
 theorem ringSigma_pos {K M : ℕ} (hK : 0 < K) {p : ℝ} (hp : 0 < p)
     (hM : 2 * K * p < ((M + 1 : ℕ) : ℝ)) : 0 < ringSigma K M p := by
   have hK' : (0 : ℝ) < K := by exact_mod_cast hK
@@ -228,26 +237,94 @@ theorem two_ringHop_mul_sin_angleZ {K : ℕ} (hK : 0 < K) (M : ℕ) (m : ℤ) :
     field_simp
   rw [ringSigma, harg]
 
+/-- The band energy at rest energy `1` is at most `2` where the momentum term has `s² ≤ 3`. -/
+theorem dispE_one_le_two {s : ℝ} (hs : s ^ 2 ≤ 3) : dispE 1 s ≤ 2 := by
+  rw [dispE, show (2 : ℝ) = Real.sqrt 4 by
+    rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]]
+  exact Real.sqrt_le_sqrt (by linarith)
+
+/-- **The momentum term is at least `2/π` of the momentum** in the lower half of the band
+(`4 K p ≤ M + 1`). -/
+theorem two_div_pi_mul_le_ringSigma {K M : ℕ} (hK : 0 < K) {p : ℝ} (hp : 0 ≤ p)
+    (hM : 4 * K * p ≤ ((M + 1 : ℕ) : ℝ)) : 2 / Real.pi * p ≤ ringSigma K M p := by
+  have hK' : (0 : ℝ) < K := by exact_mod_cast hK
+  have hM1 : (0 : ℝ) < ((M + 1 : ℕ) : ℝ) := by positivity
+  have hπ := Real.pi_pos
+  have hL := ringLen_pos hK
+  have hx0 : 0 ≤ ringLen K / (M + 1 : ℕ) * p := mul_nonneg (div_pos hL hM1).le hp
+  have hx1 : ringLen K / (M + 1 : ℕ) * p ≤ Real.pi / 2 := by
+    rw [ringLen, div_mul_eq_mul_div, div_le_div_iff₀ hM1 (by norm_num)]
+    nlinarith
+  have h := Real.mul_le_sin hx0 hx1
+  rw [ringSigma, two_ringHop hK]
+  calc 2 / Real.pi * p
+      = ((M + 1 : ℕ) : ℝ) / ringLen K * (2 / Real.pi * (ringLen K / (M + 1 : ℕ) * p)) := by
+        field_simp
+    _ ≤ ((M + 1 : ℕ) : ℝ) / ringLen K * Real.sin (ringLen K / (M + 1 : ℕ) * p) :=
+        mul_le_mul_of_nonneg_left h (div_pos hM1 hL).le
+
+/-- ★ **A lower bound of the velocity that goes with the momentum term**: `p/π ≤ σ/E₀` in
+the lower half of the band, for `0 ≤ p ≤ 1`. -/
+theorem div_pi_le_vRel_ringSigma {K M : ℕ} (hK : 0 < K) {p : ℝ} (hp : 0 ≤ p) (hp1 : p ≤ 1)
+    (hM : 4 * K * p ≤ ((M + 1 : ℕ) : ℝ)) : p / Real.pi ≤ vRel 1 1 (ringSigma K M p) := by
+  have hπ := Real.pi_pos
+  have hσ := two_div_pi_mul_le_ringSigma hK hp hM
+  have hσ0 : 0 ≤ ringSigma K M p := le_trans (by positivity) hσ
+  have hE := dispE_pos (μ := 1) one_pos (ringSigma K M p)
+  have hE2 := dispE_one_le_two (ringSigma_sq_le hK M (by rw [abs_of_nonneg hp]; exact hp1))
+  rw [vRel, one_mul, le_div_iff₀ hE]
+  have e : p / Real.pi = 2 / Real.pi * p / 2 := by ring
+  have h1 : p / Real.pi * dispE 1 (ringSigma K M p) ≤ p / Real.pi * 2 :=
+    mul_le_mul_of_nonneg_left hE2 (by positivity)
+  rw [e] at h1 ⊢
+  linarith
+
+/-- **The count bound as a rate.** If `|A − s T| ≤ 2π/Δ + (Δ/E) T` at the horizon
+`T = 2π n/R`, with `R ≤ Δ` and `E ≥ 1`, then `|A/T − s| ≤ 1/n + Δ`. -/
+theorem abs_div_horizon_sub_le {A s Δ E R n : ℝ} (hn : 0 < n) (hΔ0 : 0 < Δ) (hR0 : 0 < R)
+    (hRΔ : R ≤ Δ) (hE : 1 ≤ E)
+    (h : |A - s * (2 * Real.pi * n / R)| ≤ 2 * Real.pi / Δ + Δ / E * (2 * Real.pi * n / R)) :
+    |A / (2 * Real.pi * n / R) - s| ≤ 1 / n + Δ := by
+  have hπ := Real.pi_pos
+  have hTpos : 0 < 2 * Real.pi * n / R := by positivity
+  have e : A / (2 * Real.pi * n / R) - s
+      = (A - s * (2 * Real.pi * n / R)) / (2 * Real.pi * n / R) := by
+    field_simp
+  rw [e, abs_div, abs_of_pos hTpos, div_le_iff₀ hTpos]
+  have e2 : 1 / n * (2 * Real.pi * n / R) = 2 * Real.pi / R := by
+    field_simp
+  have h1 : 2 * Real.pi / Δ ≤ 1 / n * (2 * Real.pi * n / R) := by
+    rw [e2]
+    exact div_le_div_of_nonneg_left (by positivity) hR0 hRΔ
+  have h2 : Δ / E * (2 * Real.pi * n / R) ≤ Δ * (2 * Real.pi * n / R) := by
+    refine mul_le_mul_of_nonneg_right ?_ hTpos.le
+    rw [div_le_iff₀ (by linarith)]
+    nlinarith
+  have e3 : (1 / n + Δ) * (2 * Real.pi * n / R)
+      = 1 / n * (2 * Real.pi * n / R) + Δ * (2 * Real.pi * n / R) := by ring
+  rw [e3]
+  linarith
+
 /-- ★★★ **Every narrow clock packet ticks at least `n` times inside its horizon.** On a ring
-of length `2π K` with `M + 1` sites, take a reference momentum `0 < p₀ ≤ 9/10` below the
-band's edge (`2 K p₀ < M + 1`), any window of modes whose momenta `m/K` lie within
-`1/(600 n)` of `p₀`, any normalised amplitudes on it, and a level gap `0 < Δ ≤ 1/2`. The
-clock with levels `1` and `1 + Δ`, prepared as the device's packet and coupled with the
-strength `R/(16 Im C₀)` to a pointer of profile `trainF` starting at `1/12` on the fibre `0`,
-has at the flow time `T = 2π n/R` a tick count `N ≥ n`, and
+of length `2π K` with `M + 1` sites, take a reference momentum `0 < p₀ ≤ 9/10` in the lower
+part of the band (`6 K p₀ ≤ M + 1`), any window of modes whose momenta `m/K` lie within
+`1/(600 n)` of `p₀`, any normalised amplitudes on it, and a level gap `0 < Δ ≤ 1/2`. For the
+clock with levels `1` and `1 + Δ`, prepared as the device's packet, there is a strength of
+the coupling to a pointer of profile `trainF` starting at `1/12` on the fibre `0` for which
+the pointer's history has at the flow time `T = 2π n/R` a tick count `N ≥ n`, with
 
-`|2π N/Δ − √(1 − v²) T| ≤ 2π/Δ + (Δ/E₀) T`
+`|2π N/Δ − √(1 − v²) T| ≤ 2π/Δ + (Δ/E₀) T` and `|2π N/(Δ T) − √(1 − v²)| ≤ 1/n + Δ`.
 
-with `v = vRel 1 1 σ` the relativistic velocity at the reference momentum, which is not
-zero, and `E₀ = dispE 1 σ`. Here `σ = ringSigma K M p₀` and `R = ringRate K M p₀ Δ` is the
-level splitting at `σ`. Every hypothesis of `clock_packet_ticks` is discharged; what is left
-is the choice of the ring, the momentum, the window, the amplitudes and the gap. -/
+Here `σ = ringSigma K M p₀`, `E₀ = dispE 1 σ`, `v = vRel 1 1 σ = σ/E₀ ≥ p₀/π`, and
+`R = ringRate K M p₀ Δ` is the level splitting at `σ`. Every hypothesis of
+`clock_packet_ticks` is discharged. The proof uses the strength `R/(16 Im C₀)`; the
+statement does not record it. -/
 theorem narrow_clock_packet_ticks {n K M : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ : ℝ}
-    (hp0 : 0 < p₀) (hp1 : p₀ ≤ 9 / 10) (hM : 2 * K * p₀ < ((M + 1 : ℕ) : ℝ))
+    (hp0 : 0 < p₀) (hp1 : p₀ ≤ 9 / 10) (hM : 6 * K * p₀ ≤ ((M + 1 : ℕ) : ℝ))
     {W : Finset ℤ} {lo : ℤ} (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + (M + 1 : ℕ))
     (hWD : ∀ m ∈ W, |(m : ℝ) / K - p₀| ≤ 1 / (600 * n)) (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) :
-    0 < vRel 1 1 (ringSigma K M p₀)
+    p₀ / Real.pi ≤ vRel 1 1 (ringSigma K M p₀)
     ∧ ∃ (g : ℝ) (hΨ : devicePacket (L := M + 1) (ringHop K M) 1 (1 + Δ) W β
           (-(Real.pi / (2 * ringRate K M p₀ Δ))) ≠ 0) (N : ℕ),
       n ≤ N
@@ -261,7 +338,9 @@ theorem narrow_clock_packet_ticks {n K M : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ 
             - Real.sqrt (1 - (vRel 1 1 (ringSigma K M p₀) / 1) ^ 2)
               * (2 * Real.pi * n / ringRate K M p₀ Δ)|
           ≤ 2 * Real.pi / Δ
-            + Δ / dispE 1 (ringSigma K M p₀) * (2 * Real.pi * n / ringRate K M p₀ Δ) := by
+            + Δ / dispE 1 (ringSigma K M p₀) * (2 * Real.pi * n / ringRate K M p₀ Δ)
+      ∧ |clockOpTime 1 (1 + Δ) N / (2 * Real.pi * n / ringRate K M p₀ Δ)
+            - Real.sqrt (1 - (vRel 1 1 (ringSigma K M p₀) / 1) ^ 2)| ≤ 1 / n + Δ := by
   have hn' : (0 : ℝ) < n := by exact_mod_cast hn
   have h1n : (1 : ℝ) ≤ n := by exact_mod_cast hn
   have hK' : (0 : ℝ) < K := by exact_mod_cast hK
@@ -349,15 +428,17 @@ theorem narrow_clock_packet_ticks {n K M : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ 
     rw [hRT]
     linarith
   refine ⟨?_, ?_⟩
-  · rw [vRel]
-    exact div_pos (by linarith [ringSigma_pos hK hp0 hM]) (dispE_pos one_pos _)
+  · refine div_pi_le_vRel_ringSigma hK hp0.le (by linarith) ?_
+    nlinarith [mul_pos hK' hp0]
   · obtain ⟨hΨ, N, hnN, hN, hbound⟩ := clock_packet_count_ge (M := M) (c := 1) (μ₀ := 1)
       (μ₁ := 1 + Δ) (ℓ := ringLen K) (D := 1 / (600 * n)) (p₀ := p₀) one_pos one_pos
       (by linarith) (ringLen_pos hK) hWin hWD' β hβ (J := ringHop K M)
       (σ := ringSigma K M p₀) (R := R) (ε := Δ * u) rfl rfl rfl hεeq.symm (ρ := Δ / 2)
       (by positivity) hRlo hρm rfl hκ hT0 hsmall hticks
     rw [add_sub_cancel_left] at hbound
-    exact ⟨_, hΨ, N, hnN, hN, hbound⟩
+    have hrate := abs_div_horizon_sub_le hn' hΔ0 hR0 hRhi (le_dispE 1 (ringSigma K M p₀))
+      hbound
+    exact ⟨_, hΨ, N, hnN, hN, hbound, hrate⟩
 
 /-! ### A window that meets the hypotheses -/
 
@@ -384,12 +465,13 @@ theorem sum_norm_flatAmp (c : ℤ) (w : ℕ) : ∑ m ∈ modeWindow c w, ‖flat
 /-- ★★ **A clock packet of `2 w + 1` modes that ticks at least `n` times.** For every
 `n ≥ 1` and every `w`: on the ring of length `2π · 1200 n (w + 1)`, the `2 w + 1` modes
 centred on the mode `600 n (w + 1)` (reference momentum `1/2`, each within `1/(600 n)` of
-it), with equal amplitudes, any ring of more than `1200 n (w + 1) + w + 1` sites and any gap
+it), with equal amplitudes, any ring of more than `3600 n (w + 1) + w + 1` sites and any gap
 `0 < Δ ≤ 1/2`, satisfy `narrow_clock_packet_ticks`: the count at `T = 2π n/R` is at least
-`n` and obeys the dilated clock bound. No hypothesis is left but the sizes. -/
+`n` and obeys the dilated clock bound, with `v ≥ 1/(2π)`. No hypothesis is left but the
+sizes. -/
 theorem exists_clock_packet_ticks {n : ℕ} (hn : 0 < n) (w : ℕ) {M : ℕ}
-    (hM : 1200 * n * (w + 1) + w + 1 ≤ M) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) :
-    0 < vRel 1 1 (ringSigma (1200 * n * (w + 1)) M (1 / 2))
+    (hM : 3600 * n * (w + 1) + w + 1 ≤ M) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) :
+    1 / 2 / Real.pi ≤ vRel 1 1 (ringSigma (1200 * n * (w + 1)) M (1 / 2))
     ∧ ∃ (g : ℝ) (hΨ : devicePacket (L := M + 1) (ringHop (1200 * n * (w + 1)) M) 1 (1 + Δ)
           (modeWindow (600 * n * (w + 1)) w) (flatAmp w)
           (-(Real.pi / (2 * ringRate (1200 * n * (w + 1)) M (1 / 2) Δ))) ≠ 0) (N : ℕ),
@@ -405,11 +487,14 @@ theorem exists_clock_packet_ticks {n : ℕ} (hn : 0 < n) (w : ℕ) {M : ℕ}
               * (2 * Real.pi * n / ringRate (1200 * n * (w + 1)) M (1 / 2) Δ)|
           ≤ 2 * Real.pi / Δ
             + Δ / dispE 1 (ringSigma (1200 * n * (w + 1)) M (1 / 2))
-              * (2 * Real.pi * n / ringRate (1200 * n * (w + 1)) M (1 / 2) Δ) := by
+              * (2 * Real.pi * n / ringRate (1200 * n * (w + 1)) M (1 / 2) Δ)
+      ∧ |clockOpTime 1 (1 + Δ) N / (2 * Real.pi * n / ringRate (1200 * n * (w + 1)) M (1 / 2) Δ)
+            - Real.sqrt (1 - (vRel 1 1 (ringSigma (1200 * n * (w + 1)) M (1 / 2)) / 1) ^ 2)|
+          ≤ 1 / n + Δ := by
   have hn' : (0 : ℝ) < n := by exact_mod_cast hn
   have hK : 0 < 1200 * n * (w + 1) := by positivity
   have hKr : ((1200 * n * (w + 1) : ℕ) : ℝ) = 1200 * n * (w + 1) := by push_cast; ring
-  have hMr : (1200 : ℝ) * n * (w + 1) + w + 1 ≤ M := by exact_mod_cast hM
+  have hMr : (3600 : ℝ) * n * (w + 1) + w + 1 ≤ M := by exact_mod_cast hM
   refine narrow_clock_packet_ticks (lo := 0) hn hK (by norm_num) (by norm_num) ?_ ?_ ?_
     (flatAmp w) (sum_norm_flatAmp _ w) hΔ0 hΔ
   · rw [hKr]
@@ -421,7 +506,7 @@ theorem exists_clock_packet_ticks {n : ℕ} (hn : 0 < n) (w : ℕ) {M : ℕ}
     constructor
     · nlinarith [hm.1, mul_pos (show (0 : ℤ) < 600 * n by positivity)
         (show (0 : ℤ) < (w : ℤ) + 1 by positivity)]
-    · have hMz : (1200 : ℤ) * n * (w + 1) + w + 1 ≤ M := by exact_mod_cast hM
+    · have hMz : (3600 : ℤ) * n * (w + 1) + w + 1 ≤ M := by exact_mod_cast hM
       push_cast
       nlinarith [hm.2]
   · intro m hm

@@ -20336,7 +20336,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.arenaObs_gateOp_prodRay
 
-/-! #391 (the author's programme, obligation UO-16; step (2) of the plan of 2026-11-14, Remainder (a) of #388): narrow clock packets tick as often as wanted — under the hypotheses of clock_packet_ticks a phase of 2π(n−1)+π gives a count of at least n; for speed 1 and levels 1 and 1+Δ, every window of modes within 1/(600 n) of a reference momentum meets those hypotheses at the horizon 2πn/R, so the count there is at least n and obeys the dilated clock bound, with v > 0; windows of any odd number of modes are exhibited. A clock, not an observer; one fibre and one start; localisation in space not shown (`RecordLayer/UnifiedClockPacketInstance.lean`). -/
+/-! #391 (the author's programme, obligation UO-16; step (2) of the plan of 2026-11-14, Remainder (a) of #388): narrow clock packets tick as often as wanted — under the hypotheses of clock_packet_ticks a phase of 2π(n−1)+π gives a count of at least n; for speed 1 and levels 1 and 1+Δ, a reference momentum 0 < p₀ ≤ 9/10 with 6Kp₀ ≤ M+1 and every window of modes within 1/(600 n) of it, those hypotheses hold at the horizon 2πn/R for some strength, so the count there is at least n, obeys the dilated clock bound, and as a rate is within 1/n + Δ of √(1−v²), with v = σ/E₀ ≥ p₀/π; windows of any odd number of modes are exhibited. A clock, not an observer; one flow time, one fibre and one start; localisation in space and motion not shown (`RecordLayer/UnifiedClockPacketInstance.lean`). -/
 
 /-- info: 'CSD.RecordLayer.clock_packet_count_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -20390,6 +20390,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.two_ringHop_mul_sin_angleZ
 
+/-- info: 'CSD.RecordLayer.dispE_one_le_two' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dispE_one_le_two
+
+/-- info: 'CSD.RecordLayer.two_div_pi_mul_le_ringSigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_div_pi_mul_le_ringSigma
+
+/-- info: 'CSD.RecordLayer.div_pi_le_vRel_ringSigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.div_pi_le_vRel_ringSigma
+
+/-- info: 'CSD.RecordLayer.abs_div_horizon_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_div_horizon_sub_le
+
 /-- info: 'CSD.RecordLayer.narrow_clock_packet_ticks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.narrow_clock_packet_ticks
@@ -20410,7 +20426,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.exists_clock_packet_ticks
 
-/-! #392 (the author's programme, obligation UO-16; step (2) of the plan of 2026-11-14, Remainder (a) of #391): a clock packet that ticks stays where it is predicted to be — the device's weight on a region is the mean of its two levels' weights, so the messenger's bound applies level by level; for N flat modes on the ring of length 2π·1200nN the count at the horizon is at least n and, at every packet time |t| ≤ 4πn/Δ, the weight on a region at cos ≤ γ from both levels' predicted directions, times 1 − γ, is at most 1/N + 1/(20000ΔnN). A weight of the state vector at a coarse resolution; not a record (`RecordLayer/UnifiedClockPacketLocalised.lean`). -/
+/-! #392 (the author's programme, obligation UO-16; step (2) of the plan of 2026-11-14, Remainder (a) of #391): a clock packet that ticks, where it is and its dilation resolved — the device's weight on a region is the mean of its two levels' weights, so the messenger's bound applies level by level; for N flat modes on the ring of length 2π·1200nN the count at the horizon is at least n, at every packet time |t| ≤ 4πn/Δ (among them the flow times of the horizon) the uncoupled packet's weight on a region at cos ≤ γ from both levels' predicted directions, times 1 − γ, is at most 1/N + 1/(20000ΔnN), and for n ≥ 400, Δ ≤ 1/400 the count has 2πN'/Δ ≤ (1 − 1/400)T. A weight of the state vector at a coarse resolution, no region exhibited; not a record of position (`RecordLayer/UnifiedClockPacketLocalised.lean`). -/
 
 /-- info: 'CSD.RecordLayer.deviceRegionWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -20472,8 +20488,20 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.flat_clock_packet_localised
 
+/-- info: 'CSD.RecordLayer.sqrt_one_sub_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqrt_one_sub_sq_le
+
+/-- info: 'CSD.RecordLayer.flat_clock_packet_rate_lt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_clock_packet_rate_lt
+
 /-- info: 'CSD.RecordLayer.abs_sub_quarter_turn_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.abs_sub_quarter_turn_le
+
+/-- info: 'CSD.RecordLayer.flat_clock_packet_localised_flow_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_clock_packet_localised_flow_time
 
 end CSD.Tests.AxiomAudit

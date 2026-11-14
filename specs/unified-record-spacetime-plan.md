@@ -1161,9 +1161,9 @@ conditions for narrow packets (`RecordLayer/UnifiedClockPacketInstance.lean`, BA
 | UD-139 | **The five-pointer arena.** `ℂℙᴺ × T²` five times with the step form over `quadForm` is symplectic; the flow of `−2⟨A⟩ − 2⟨B_A⟩ f(θ₂) − 2⟨B_B⟩ g(ψ₂) − 2⟨B_C⟩ k(χ₂) − 2⟨B_D⟩ l(ξ₂) − 2⟨B_E⟩ r(ζ₂)` is a skew product over the fifth conserved angle (the four-torus flow with `A + r(ζ₂) B_E`, the fifth moving angle advanced by `r'(ζ₂)` times the accumulated `−2⟨B_E⟩`), and it preserves `μ_FS ⊗ vol⁵` for all Hermitian matrices | `pentaForm_isSymplectic`, `fiveCoupledEnergy_apply`, `contMDiff_fiveCoupledEnergy`, `fourCoupledEnergy_add_smul_quadRayEnergy`, `fiveCoupledFlow_apply`, `fiveCoupledFlow_fst_of_lift_eq_zero`, `fiveCoupledFlow_snd_of_lift_eq_zero`, `pentaMuL_map_fiveCoupledFlow` (`LF4/PentaCoupledFlow.lean`) | exact; the bare arena of UA-18 (d): arbitrary Hermitian matrices, no carriers, no coincidence projectors, no record read |
 | UD-140 | **Coincidence projectors and gated operators.** For two carriers whose indices sit at sites and a relation `r` between sites: the coincidence projector is Hermitian and idempotent, its complement is the coincidence projector of the negated relation, and it is the sum over related pairs of sites of the products of the two site projectors. It commutes with every operator of the second carrier that does not move it between sites, so the gated operator `coincProj · (1 ⊗ Y)` is Hermitian for such a Hermitian `Y`, and is the sum over related pairs of `P_s ⊗ (P_{s'} Y)`. On a product ray the projector reads `Σ_{r s s'} ⟨P_s⟩ ⟨P_{s'}⟩` and the gated operator `Σ_{r s s'} ⟨P_s⟩ ⟨P_{s'} Y⟩` | `siteSel_isHermitian`, `coincProj_isHermitian`, `coincProj_mul_self`, `one_sub_coincProj`, `coincProj_eq_sum`, `arenaObs_coincProj_prodRay`, `coincProj_mul_one_kronecker`, `gateOp_isHermitian`, `gateOp_eq_sum`, `arenaObs_gateOp_prodRay`, `arenaObs_finset_sum` (`RecordLayer/UnifiedCoincidence.lean`) | exact; operators and their expectations on product rays; any decidable relation; no flow, pointer or record |
 | UD-141 | **A clock packet whose horizon holds `n` half-completed turns has a count of at least `n`.** Under the hypotheses of UD-138's count law, if `R T ≥ 2π (n − 1) + π` the pointer's history has a tick count `N` at `T`, `N ≥ n`, and `N` obeys the dilated clock bound | `clock_packet_count_ge` (`RecordLayer/UnifiedClockPacketInstance.lean`) | exact; conditional on UD-138's three conditions; one fibre, one start |
-| UD-142 | **Every narrow clock packet ticks at least `n` times inside its horizon.** Speed `1`, levels `1` and `1 + Δ` with `0 < Δ ≤ 1/2`, a ring of length `2π K` with `M + 1` sites, a reference momentum `0 < p₀ ≤ 9/10` with `2 K p₀ < M + 1`, any window of modes whose momenta `m/K` lie within `1/(600 n)` of `p₀`, any normalised amplitudes: with the strength `R/(16 Im C₀)`, profile `trainF`, fibre `0`, start `1/12`, at `T = 2π n/R` the count `N` exists, `N ≥ n`, `|2π N/Δ − √(1 − v²) T| ≤ 2π/Δ + (Δ/E₀) T`, and `v = vRel 1 1 σ > 0`. The `2 w + 1` modes centred on `600 n (w + 1)` of the ring of length `2π · 1200 n (w + 1)` with equal amplitudes meet the hypotheses for every `n ≥ 1`, `w` | `half_le_levelClockRate`, `levelClockRate_le_gap`, `abs_ringSigma_le`, `ringSigma_pos`, `narrow_clock_packet_ticks`, `sum_norm_flatAmp`, `exists_clock_packet_ticks` (`RecordLayer/UnifiedClockPacketInstance.lean`) | exact; the clock arena; one fibre (a null set), one start, strength tuned to the packet; momentum width `≤ 1/(600 n)` for `n` ticks; localisation in space not shown |
+| UD-142 | **Every narrow clock packet ticks at least `n` times inside its horizon.** Speed `1`, levels `1` and `1 + Δ` with `0 < Δ ≤ 1/2`, a ring of length `2π K` with `M + 1` sites, a reference momentum `0 < p₀ ≤ 9/10` with `6 K p₀ ≤ M + 1`, any window of modes whose momenta `m/K` lie within `1/(600 n)` of `p₀`, any normalised amplitudes: for some strength, with profile `trainF`, fibre `0`, start `1/12`, at `T = 2π n/R` the count `N` exists, `N ≥ n`, `\|2π N/Δ − √(1 − v²) T\| ≤ 2π/Δ + (Δ/E₀) T`, `\|2π N/(Δ T) − √(1 − v²)\| ≤ 1/n + Δ`, and `v = σ/E₀ ≥ p₀/π`. The `2 w + 1` modes centred on `600 n (w + 1)` of the ring of length `2π · 1200 n (w + 1)` with equal amplitudes meet the hypotheses for every `n ≥ 1`, `w` | `half_le_levelClockRate`, `levelClockRate_le_gap`, `abs_ringSigma_le`, `two_div_pi_mul_le_ringSigma`, `div_pi_le_vRel_ringSigma`, `abs_div_horizon_sub_le`, `narrow_clock_packet_ticks`, `sum_norm_flatAmp`, `exists_clock_packet_ticks` (`RecordLayer/UnifiedClockPacketInstance.lean`) | exact; the clock arena; one fibre (a null set), one start; one flow time; the strength exists and is not recorded in the statement; `v` is `σ/E₀`, not a velocity shown of the packet; localisation in space not shown |
 | UD-143 | **Far from where both levels are predicted to be, the clock device has little weight.** The device's weight on a region of sites is the mean of its two levels' weights. For a device packet of momenta within `D` of `p₀` and a region `B` whose sites lie at `cos(2πk/L − Ω_i t) ≤ γ` from each level's predicted direction, `Ω_i = (2π/ℓ) v_i(p₀)`: the weight on `B` times `1 − γ` is at most the mean of `1 − Re T_i(0) + \|t\| · limitErr_i` | `deviceRegionWeight`, `regionWeight_const_mul`, `deviceRegionWeight_devicePacket`, `deviceRegionWeight_devicePacket_le` (`RecordLayer/UnifiedClockPacketLocalised.lean`) | exact; the uncoupled device packet; a weight of the state vector |
-| UD-144 | **A flat clock packet ticks at least `n` times and stays within its budget.** Speed `1`, levels `1` and `1 + Δ` (`0 < Δ ≤ 1/2`), ring of length `2π · 1200 n N` with `M + 1 > 210000 n² N` sites, the `N` flat modes from `600 n N` upward (reference momentum `1/2`): the conclusion of UD-142 holds; and at every packet time `\|t\| ≤ 4π n/Δ`, which covers the horizon, the clock's weight on a region at `cos ≤ γ` from both levels' predicted directions, times `1 − γ`, is at most `1/N + 1/(20000 Δ n N)` | `flatWindow`, `flatAmpN`, `flat_clock_packet_ticks`, `flat_packet_start_le`, `flat_packet_limitErr_le`, `flat_packet_budget`, `flat_clock_packet_localised`, `abs_sub_quarter_turn_le` (`RecordLayer/UnifiedClockPacketLocalised.lean`) | exact; one family; the bound resolves arcs large against `1/√N` only; the travel is not stated; not an arena observable, not a record |
+| UD-144 | **A flat clock packet: its ticks, its budget, its dilation resolved.** Speed `1`, levels `1` and `1 + Δ` (`0 < Δ ≤ 1/2`), ring of length `2π · 1200 n N` with `M + 1 > 210000 n² N` sites, the `N` flat modes from `600 n N` upward (reference momentum `1/2`): the conclusion of UD-142 holds with `v ≥ 1/(2π)`; at every packet time `\|t\| ≤ 4π n/Δ`, among them `−π/(2R) + s` for every flow time `s` of the horizon, the uncoupled packet's weight on a region at `cos ≤ γ` from both levels' predicted directions, times `1 − γ`, is at most `1/N + 1/(20000 Δ n N)`; and for `n ≥ 400`, `Δ ≤ 1/400` the count at `T` has `2π N'/Δ ≤ (1 − 1/400) T` | `flatWindow`, `flatAmpN`, `flat_clock_packet_ticks`, `flat_packet_start_le`, `flat_packet_limitErr_le`, `flat_packet_budget`, `flat_clock_packet_localised`, `abs_sub_quarter_turn_le`, `flat_clock_packet_localised_flow_time`, `sqrt_one_sub_sq_le`, `flat_clock_packet_rate_lt` (`RecordLayer/UnifiedClockPacketLocalised.lean`) | exact; one family; no region exhibited; the bound resolves arcs large against the square root of the budget only; the travel is not stated; not an arena observable, not a record |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -1869,37 +1869,45 @@ packet under three conditions that were hypotheses, and showed neither a packet 
 modes meeting them nor a tick. UD-141 adds that the count exists and is at least `n` once the
 phase has reached `2π (n − 1) + π`. UD-142 discharges the three conditions, for speed `1`
 and levels `1` and `1 + Δ`, for every window of modes within `1/(600 n)` of a reference
-momentum, at the horizon `T = 2π n/R`; and exhibits such windows of any odd number of modes.
-So the clock of the moving observer of the author's decision of 2026-11-14 writes at least
-`n` tick records, and their number obeys the dilated clock bound. What they do not give. (i)
-An observer: as UD-138, the clock carrier and its own pointer only. (ii) Ticks beyond the
-horizon: `n` ticks are shown for momentum width at most `1/(600 n)`; for a fixed packet the
-number shown is bounded. (iii) Localisation in space: the window is a statement about
-momenta; that `2 w + 1` modes occupy about `1/(2 w + 1)` of the ring is a calculation, not
-in Lean, and no occupancy of the clock carrier is bounded. (iv) A resolved dilation unless
-the parameters are chosen for it: the bound divided by `T` is at most `1/n + Δ` (a
-calculation, not in Lean), to be compared with `1 − √(1 − v²)`. (v) A lower bound of `v`, a
-recorded speed, or a recorded position. (vi) More than one fibre and one start; the strength
-is tuned to the packet (UA-4). (vii) A count held against anything but the flow time (UA-7);
-`T` is chosen with the rate known. By the test of §6: the dilation comes from the level
-splitting's dependence on momentum (UD-58); no hypothesis states the clock's rate. They pass
-no gate, and UO-16 is not met. Assumptions used: UA-4, UA-5, UA-7, UA-12. UA-6 is not used.
+momentum in the lower part of the band, at the horizon `T = 2π n/R`; gives the bound as a
+rate with error `1/n + Δ`; bounds `v = σ/E₀` below by `p₀/π`; and exhibits such windows of
+any odd number of modes. Each tick is a passage of the pointer's history from its resting
+set to its displaying set, a record in the sense of UD-62. What they do not give. (i) An
+observer: as UD-138, the clock carrier and its own pointer only; what a moving observer is
+in `Σ` is not settled here. (ii) More than one flow time: one count at `T`. (iii) Ticks
+beyond the horizon: `n` ticks are shown for momentum width at most `1/(600 n)`; for a fixed
+packet the number shown is bounded. (iv) Localisation in space: the window is a statement
+about momenta. (v) A resolved dilation in these rows: `1/n + Δ` is to be compared with
+`1 − √(1 − v²)`; UD-144 has an instance. (vi) Motion: `v` is `σ/E₀` at the reference
+momentum; the band's group velocity is `v cos(a p₀) ≥ v/2` (a calculation, not in Lean);
+that the packet moves is not shown, and no speed or position is recorded. (vii) The
+strength: it exists; the statement does not record it; it is tuned to the packet (UA-4).
+(viii) More than one fibre and one start. (ix) A count held against anything but the flow
+time (UA-7); `T` is chosen with the rate known. By the test of §6: the dilation comes from
+the level splitting's dependence on momentum (UD-58); no hypothesis states the clock's rate.
+They pass no gate, and UO-16 is not met. Assumptions used: UA-4, UA-5, UA-7, UA-12. UA-6 is
+not used.
 
 Exact scope of UD-143 and UD-144. What they give. UD-142 said nothing about where the clock
-carrier is. UD-143 carries the messenger's bound (UD-107's kind: weight far from the
-predicted direction is bounded by the translation phase) to the two-level device, level by
-level. UD-144 evaluates it for one family that also ticks: `N` flat modes, with the budget
-`1/N + 1/(20000 Δ n N)` over the whole horizon of `n` ticks. So one packet both writes at
-least `n` tick records and keeps its weight near its predicted position. What they do not
-give. (i) A sharp position: the bound is the budget divided by `1 − cos δ`, small only for
-arcs of half-angle `δ` large against `1/√N`, while the packet's own width is of order `1/N`
-(a calculation). (ii) The travel: the predicted angle over the horizon is of order
-`v/(Δ N)`; that it can exceed the resolved arc, for `Δ` small against `1/√N`, is a
-calculation, not in Lean. (iii) An arena observable or a record: the statement is about the
-state vector at a packet time; the expectation of a region projector along
-`clockPointerFlow` is not stated. (iv) Anything off the fibre where the profile vanishes, or
-with a second coupling present. (v) An observer. They pass no gate, and UO-16 is not met.
-Assumptions used: UA-12 (the device's energy); for the ticks, as UD-142.
+carrier is. UD-143 carries the messenger's bound (`regionWeight_ringPacket_le`, BACKLOG
+~~#265~~: weight far from the predicted direction is bounded by the translation phase) to
+the two-level device, level by level. UD-144 evaluates it for one family that also ticks,
+`N` flat modes, with the budget `1/N + 1/(20000 Δ n N)` at every packet time of the horizon
+of `n` ticks; and shows for `n ≥ 400`, `Δ ≤ 1/400` that the count at the horizon is short of
+the undilated count by more than its error: `2π N'/Δ ≤ (1 − 1/400) T`. What they do not
+give. (i) A region: none is exhibited, the hypotheses hold for the empty one, and the bound
+says something only when `1 − γ` exceeds the budget. (ii) A sharp position: arcs of
+half-angle large against the square root of the budget only (`1/√N` when `20000 Δ n ≥ 1`),
+while the packet's own width is of order `1/N` (a calculation). (iii) The travel: the
+predicted angle over the horizon is `π v/(600 R N)`, about `0.003/(Δ N)`; that it exceeds
+the resolved arc for `Δ √N` small against `0.002` and `n` large against `1/Δ` is a
+calculation, not in Lean. (iv) An arena observable or a record of position: the statement is
+about the uncoupled state vector at a packet time; that the flow's ray on the fibre where
+the profile vanishes is that packet is not a named theorem. (v) Motion: in the resolved
+dilation `v` is `σ/E₀ ≥ 1/(2π)`; that the packet moves at it is not shown. (vi) More than
+one count at one flow time (UA-7). (vii) Anything off the fibre where the profile vanishes,
+or with a second coupling present. (viii) An observer. They pass no gate, and UO-16 is not
+met. Assumptions used: UA-12 (the device's energy); for the ticks, as UD-142.
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
@@ -2713,31 +2721,26 @@ time. It is not a statement about every dynamics on `Σ`.
   a recorded speed. *What the probe leaves open:* the coincidence detector, which is a new
   term in the energy (step (3)); the packet's position as a record; a horizon shown long
   enough for an exchange.
-  ▸ **Step (2) closed for the clock, 2026-11-14 (BACKLOG ~~#391~~) → UD-141, UD-142. Not
-  met; the probe passes for the clock.** The review of ~~#388~~ found that no tick and no
-  packet of several modes had been shown. Now: for speed `1`, levels `1` and `1 + Δ`
-  (`0 < Δ ≤ 1/2`), a reference momentum below the band's edge and every window of modes
-  within `1/(600 n)` of it, the three conditions of UD-138 hold at the horizon `2π n/R`, the
-  count there is at least `n`, and it obeys the dilated clock bound with `v ≠ 0`
-  (`narrow_clock_packet_ticks`); windows of any odd number of modes are exhibited
-  (`exists_clock_packet_ticks`). So the lemma step (2) asked for holds: the clock's records
-  exist, with a rate within a stated error of the dilated rate. *Conditions:* one fibre, one
-  start, a strength tuned to the packet; `n` ticks for momentum width at most `1/(600 n)`.
-  *What this is not:* an observer; a packet shown localised in space; a resolved dilation
-  unless `1/n + Δ` is chosen small (a calculation); a recorded speed or position. *Risk
-  carried to step (6):* the number of ticks a fixed packet is shown to write is bounded by
-  the inverse of its momentum width, while a narrower packet is wider in space; whether a
-  radar exchange fits is not shown.
-  ▸ **The clock packet's position bounded, 2026-11-14 (BACKLOG ~~#392~~) → UD-143, UD-144.
-  Not met.** For `N` flat modes on the ring of length `2π · 1200 n N`: the count at the
-  horizon is at least `n` (`flat_clock_packet_ticks`), and over that horizon the clock's
-  weight away from both levels' predicted positions, times `1 − cos δ`, is at most
-  `1/N + 1/(20000 Δ n N)` (`flat_clock_packet_localised`). *What this is not:* a sharp
-  position (arcs large against `1/√N` only); a statement of how far the clock travels; an
-  arena observable or a record. *The risk of step (6), after this:* by calculation, not in
-  Lean, the clock can travel many resolved arcs within its horizon if `Δ` is small against
-  `1/√N` and `n` is large, and the relative dilation error `1/n + Δ` is then small as well.
-  No obstruction is visible; none of this is a theorem.
+  ▸ **Step (2), the clock's records shown to exist, 2026-11-14 (BACKLOG ~~#391~~, ~~#392~~)
+  → UD-141 to UD-144. Not met.** The review of ~~#388~~ found that no tick and no packet of
+  several modes had been shown. Now, for speed `1`, levels `1` and `1 + Δ`, a reference
+  momentum in the lower part of the band and every window of modes within `1/(600 n)` of it:
+  the three conditions of UD-138 hold at the horizon `T = 2π n/R`; the count there is at
+  least `n`; `|2π N/(Δ T) − √(1 − v²)| ≤ 1/n + Δ` with `v = σ/E₀ ≥ p₀/π`
+  (`narrow_clock_packet_ticks`); windows of any number of modes are exhibited. For the flat
+  family with `n ≥ 400` and `Δ ≤ 1/400` the count is short of the undilated count by more
+  than its error (`flat_clock_packet_rate_lt`), and the uncoupled packet's weight away from
+  its two levels' predicted positions is bounded over the horizon
+  (`flat_clock_packet_localised_flow_time`). So the lemma step (2) asked for holds in this
+  form: at one flow time on one fibre, the clock has written at least `n` tick records and
+  their number per unit of flow time is within a stated error, smaller than the dilation, of
+  `√(1 − v²)` times the rest rate. *What is still short of step (2):* what a moving observer
+  is in `Σ` (these are statements about a clock); that the packet moves (`v` is `σ/E₀`; no
+  position is recorded, and the localisation bound exhibits no region); more than one flow
+  time; more than one fibre and one start. *Risk carried to step (6):* by calculation, not
+  in Lean, the clock's predicted position crosses many resolved arcs within the horizon when
+  `Δ √N` is small against `0.002` and `n` is large against `1/Δ`, and `1/n + Δ` is then
+  small as well. No obstruction is visible; none of that is a theorem.
   ▸ **Step (3), the arena frozen, 2026-11-14 → UA-18. Nothing built.** One arena for steps
   (4) to (7): a chain with two walls; a messenger and one clock carrier for each observer;
   couplings that are coincidence projectors (two carriers' sites within a fixed width; the
