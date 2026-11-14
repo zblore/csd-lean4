@@ -109,8 +109,8 @@ Lean has it only on the fibre where the third and fourth profiles vanish).
   pointer (a calculation; Lean has it only on the fibre where the third and fourth profiles
   vanish). Nothing here is evidence about Lorentz kinematics.
 * **Later.** #385 (`RecordLayer/UnifiedReadoutCertificate.lean`): the third and the first
-  readouts of this run, taken together with their rates and start angles, certify a drop of
-  the function that drives them.
+  readouts of this run, taken together with their rates and start angles and under a rate
+  condition, certify a drop of the function that drives them.
 
 ## References
 

@@ -14,10 +14,12 @@ public import CsdLean4.RecordLayer.UnifiedThreeRecords
 programme "From `Σ` to physical spacetime", obligation UO-16; part of Remainder (b) of #384.
 No new assumption.
 
-Every write since #365 is a threshold of accumulated occupancy, and each scope has said that
-a carrier whose occupancy is a suitable constant would give a readout with the same clauses.
-That is true of one readout. This module shows it is not true of two readouts taken together,
-when the two pointers are driven by the same function at known rates from known start angles.
+Every write since #365 is a threshold of accumulated occupancy, and each scope has said that a
+carrier whose occupancy is a suitable constant would give a readout with the same clauses. That
+is true of one readout. This module shows it is not true of two readouts taken together, when the
+two pointers are driven by the same function at known rates from known start angles and those
+rates and angles satisfy a rate condition. Where the condition fails the caveat stands (a
+calculation, not in Lean).
 
 **The generic statement** (`drop_of_two_readouts`). Two ready pointers are turned by
 `κ_f ∫₀ᵗ F` and `κ_s ∫₀ᵗ F` for one continuous non-negative `F`. If the fast readout displays
@@ -27,16 +29,18 @@ at some flow time up to `T_o`, the slow readout does not display at any flow tim
 less than its mean over `[0, T_o]`. So `F` is not non-decreasing, and in particular not
 constant (`not_monotone_of_drop`).
 
-**In the run of #384** (`threeRecord_readouts_certify_drop`): every continuous non-negative
-`F` that reproduces the third and the first readout histories of that run, through pointers
-of those rates and start angles, has a smaller mean over `[roundOut, roundBack]` than over
-`[0, roundOut]`.
+**In the run of #384** (`threeRecord_readouts_certify_drop`): under the rate condition, every
+continuous non-negative `F` that reproduces the third and the first readout histories of that run
+at the flow times in `[0, roundBack]`, through pointers of those rates and start angles, has a
+smaller mean over `[roundOut, roundBack]` than over `[0, roundOut]`. The run's own near-half
+occupancy is one such `F` (`threeRecord_nearOcc_drop`).
 
 * `lt_of_pshift_mem_displayArc`, `le_of_forall_pshift_notMem_displayArc` — what a display, and
   the absence of one, say about the displacement behind a ready pointer;
 * ★ `drop_of_two_readouts`, `not_monotone_of_drop`;
-* `two_roundUpper_le_roundBack` — room for the rate condition within the windows of #384;
-* ★ `threeRecord_readouts_certify_drop`.
+* `two_roundUpper_le_roundBack` — the rate condition at its most favourable corner, a
+  corollary of `two_roundUpper_le_roundLower` (#382);
+* ★ `threeRecord_readouts_certify_drop`, `threeRecord_nearOcc_drop`.
 
 ## Exact scope
 
@@ -46,19 +50,27 @@ of those rates and start angles, has a smaller mean over `[roundOut, roundBack]`
 * **The premises are readout histories over intervals of flow time** (UA-7). "The slow
   readout does not display at any flow time before `T_b`" is a statement about every flow
   time of an interval. No record holds it, and no degree of freedom holds the conclusion.
-* **The form of the drive is assumed.** Both pointers are turned by the accumulated value of
-  one function, at known rates, from known start angles in the ready arc, read on the arcs of
-  UA-4. The theorem does not identify `F` with an occupancy. In the run, the coupled
-  carrier's near-half occupancy is one such `F` (#384), and for it the drop was already known
-  from the occupancy bounds of #379. What is new is that the drop follows from the two
-  readout histories for every `F` that could have produced them, the constant ones included.
-* **Two readouts, taken together.** Each single write still certifies nothing, as stated
-  since #365. The certificate needs two pointers on the same region with different rates.
-* **The rate condition is a hypothesis.** With equal start angles, the third rate at the
-  least value its window of #384 allows and the first rate at the greatest, it reads
-  `2 · roundUpper ≤ (1 − fineEta) · roundBack`, which `two_roundUpper_le_roundBack` proves for
-  `δ ≤ π/48` and `fineEta n δ ≤ 1/48`. That rates and start angles meeting all the conditions
-  exist is otherwise not stated in Lean.
+* **The form of the drive is assumed.** Both pointers are turned by the accumulated value of one
+  function, at known rates, from known start angles in the ready arc, read on the arcs of UA-4.
+  The theorem does not identify `F` with an occupancy. In the run, the coupled carrier's
+  near-half occupancy is one such `F` (`threeRecord_nearOcc_drop`). For it the drop also follows
+  from the occupancy bounds of #382 and #384 (built on #379) without the rate condition, for a
+  small margin and a small `fineEta`, by a calculation not stated in Lean. What is new is that
+  the drop follows from the two readout histories, the rates, the start angles and the rate
+  condition, for every continuous non-negative `F` that reproduces both histories on
+  `[0, T_b]`. In particular no constant `F` reproduces them.
+* **Two readouts, taken together.** Each single write still certifies nothing, as stated since
+  #365. The certificate needs two pointers on the same region with different thresholds
+  `(1/3 − a)/κ`.
+* **The rate condition is a hypothesis**, and the rate windows of #384 do not imply it: it bounds
+  the third rate from above, and with `T₁ = 0` those windows bound it only from below. With equal
+  start angles, the third rate at the least value its window allows and the first rate at the
+  greatest (the corner most favourable to the condition; elsewhere it is stronger, and it fails
+  for a large third rate), it reads `2 · roundUpper ≤ (1 − fineEta) · roundBack`. That is weaker
+  than the compatibility `2 · roundUpper ≤ roundLower` of the first pointer's window (#382), and
+  `two_roundUpper_le_roundBack` has it for `δ ≤ π/48` and `fineEta n δ ≤ 1/48` as a corollary of
+  that. That rates and start angles meeting all the conditions exist is otherwise not stated in
+  Lean.
 * **The run is that of #384**, with its limits: no term couples the messenger and the clock in
   that variant, the third and fourth profiles vanish on their fibres, the start is a product
   ray (null sets by calculations not in Lean), the round fibres of #379. The clock plays no
@@ -140,13 +152,16 @@ fast readout displays at some flow time up to `T_o`, the slow readout does not d
 flow time before `T_b ≥ T_o`, and the rates and start angles satisfy
 `(1/3 − a_s)/κ_s · T_o ≤ (1/3 − a_f)/κ_f · T_b`, then the mean of `F` over `[T_o, T_b]` is
 strictly less than its mean over `[0, T_o]`:
-`T_o ∫_{T_o}^{T_b} F < (T_b − T_o) ∫₀^{T_o} F`. -/
+`T_o ∫_{T_o}^{T_b} F < (T_b − T_o) ∫₀^{T_o} F`. The histories are asked to match the pointers
+only at the flow times in `[0, T_b]`. -/
 theorem drop_of_two_readouts {F : ℝ → ℝ} (hF : Continuous F) (h0 : ∀ s, 0 ≤ F s)
     {κf κs : ℝ} (hκf : 0 < κf) (hκs : 0 < κs) {qf qs : KTorus} (hqf : qf ∈ readyArc 2)
-    (hqs : qs ∈ readyArc 2) {histf hists : ℝ → Bool}
-    (hhf : ∀ t, histf t = true ↔ pshift (κf * ∫ s in (0 : ℝ)..t, F s) qf ∈ displayArc)
-    (hhs : ∀ t, hists t = true ↔ pshift (κs * ∫ s in (0 : ℝ)..t, F s) qs ∈ displayArc)
-    {t₀ To Tb : ℝ} (ht₀ : 0 ≤ t₀) (ht₀o : t₀ ≤ To) (hTo : 0 < To) (hTob : To ≤ Tb)
+    (hqs : qs ∈ readyArc 2) {histf hists : ℝ → Bool} {t₀ To Tb : ℝ}
+    (hhf : ∀ t, 0 ≤ t → t ≤ Tb →
+      (histf t = true ↔ pshift (κf * ∫ s in (0 : ℝ)..t, F s) qf ∈ displayArc))
+    (hhs : ∀ t, 0 ≤ t → t ≤ Tb →
+      (hists t = true ↔ pshift (κs * ∫ s in (0 : ℝ)..t, F s) qs ∈ displayArc))
+    (ht₀ : 0 ≤ t₀) (ht₀o : t₀ ≤ To) (hTo : 0 < To) (hTob : To ≤ Tb)
     (hshown : histf t₀ = true) (hnot : ∀ t, 0 ≤ t → t < Tb → hists t ≠ true)
     (H : (1 / 3 - rep qs.1) / κs * To ≤ (1 / 3 - rep qf.1) / κf * Tb) :
     To * ∫ s in To..Tb, F s < (Tb - To) * ∫ s in (0 : ℝ)..To, F s := by
@@ -155,7 +170,8 @@ theorem drop_of_two_readouts {F : ℝ → ℝ} (hF : Continuous F) (h0 : ∀ s, 
     intervalIntegral.integral_nonneg hab fun u _ => h0 u
   have hTb : 0 < Tb := hTo.trans_le hTob
   -- the fast pointer
-  have h1 := lt_of_pshift_mem_displayArc hqf (mul_nonneg hκf.le (hnn ht₀)) ((hhf t₀).1 hshown)
+  have h1 := lt_of_pshift_mem_displayArc hqf (mul_nonneg hκf.le (hnn ht₀))
+    ((hhf t₀ ht₀ (ht₀o.trans hTob)).1 hshown)
   have h1' : (1 / 3 - rep qf.1) / κf < ∫ s in (0 : ℝ)..To, F s := by
     have e := intervalIntegral.integral_add_adjacent_intervals (hi 0 t₀) (hi t₀ To)
     have h3 := mul_nonneg hκf.le (hnn ht₀o)
@@ -165,7 +181,7 @@ theorem drop_of_two_readouts {F : ℝ → ℝ} (hF : Continuous F) (h0 : ∀ s, 
   have h2 : κs * ∫ s in (0 : ℝ)..Tb, F s ≤ 1 / 3 - rep qs.1 :=
     le_of_forall_pshift_notMem_displayArc hqs (I := fun t => κs * ∫ s in (0 : ℝ)..t, F s)
       hTb.le (continuous_const.mul (intervalIntegral.continuous_primitive hi 0)).continuousOn
-      (by simp) (fun t ht0 htT hd => hnot t ht0 htT ((hhs t).2 hd))
+      (by simp) (fun t ht0 htT hd => hnot t ht0 htT ((hhs t ht0 htT.le).2 hd))
   have h2' : (∫ s in (0 : ℝ)..Tb, F s) ≤ (1 / 3 - rep qs.1) / κs := by
     rw [le_div_iff₀ hκs]
     linarith
@@ -186,25 +202,18 @@ theorem not_monotone_of_drop {F : ℝ → ℝ} (hF : Continuous F) {To Tb : ℝ}
   have b' := mul_le_mul_of_nonneg_left b hTo
   nlinarith
 
-/-- The rate windows of #384 leave room for the rate condition of the certificate: for a small
-margin and a small `fineEta`, twice `roundUpper` is at most the fraction `1 − fineEta` of the
-flow time at which the return leg begins. -/
+/-- The rate condition of the certificate at its most favourable corner of the rate windows of
+#384: for a small margin and a small `fineEta`, twice `roundUpper` is at most the fraction
+`1 − fineEta` of the flow time at which the return leg begins. A corollary of
+`two_roundUpper_le_roundLower` (#382). -/
 theorem two_roundUpper_le_roundBack (n : ℕ) {δ : ℝ} (hδ0 : 0 ≤ δ) (hδ : δ ≤ Real.pi / 48)
     (hη : fineEta n δ ≤ 1 / 48) :
     2 * roundUpper n δ ≤ (1 - fineEta n δ) * roundBack n δ := by
   have hπ := Real.pi_pos
   have hr2 : (0 : ℝ) ≤ 1250 * (n : ℝ) ^ 2 := by positivity
-  unfold roundUpper roundBack
-  have h1 : fineEta n δ * (Real.pi - 2 * δ) ≤ 1 / 48 * Real.pi :=
-    mul_le_mul hη (by linarith) (by linarith) (by norm_num)
-  have h2 : (47 / 48 : ℝ) * (3 * Real.pi / 2)
-      ≤ (1 - fineEta n δ) * (3 * Real.pi / 2 + δ) :=
-    mul_le_mul (by linarith) (by linarith) (by positivity) (by linarith)
-  have h3 : 2 * (Real.pi / 2 + 3 * δ + fineEta n δ * (Real.pi - 2 * δ))
-      ≤ (1 - fineEta n δ) * (3 * Real.pi / 2 + δ) := by
-    nlinarith
-  have h4 := mul_le_mul_of_nonneg_left h3 hr2
-  nlinarith
+  refine (two_roundUpper_le_roundLower n hδ0 hδ hη).trans ?_
+  unfold roundLower roundBack
+  exact mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left (by linarith) hr2) (by linarith)
 
 /-! ### The certificate in the three-record run -/
 
@@ -224,7 +233,8 @@ under its hypotheses with `T₁ = 0` and `0 < δ < π/2` (in Lean `0 ≤ δ`, `�
 and with the rate condition `(1/3 − a_θ)/κ₁ · roundOut n δ ≤ (1/3 − a_χ)/κ₃ · roundBack n δ`:
 every continuous non-negative `F` such that the third readout displays exactly where `pshift (κ₃
 ∫₀ᵗ F) χ` is in the displayed arc and the first readout exactly where `pshift (κ₁ ∫₀ᵗ F) θ` is,
-satisfies `roundOut ∫_{roundOut}^{roundBack} F < (roundBack − roundOut) ∫₀^{roundOut} F`, and is
+at the flow times in `[0, roundBack n δ]`, satisfies
+`roundOut ∫_{roundOut}^{roundBack} F < (roundBack − roundOut) ∫₀^{roundOut} F`, and is
 not non-decreasing. The times are flow times (UA-7). A drop of a mean, not a departure; nothing
 is said about a return. -/
 theorem threeRecord_readouts_certify_drop (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
@@ -241,14 +251,16 @@ theorem threeRecord_readouts_certify_drop (hc : ContDiff ℝ ∞ f) (hch : ContD
     (H : (1 / 3 - rep θ.1) / rateAt g₁ 1 hf θ.2 * roundOut n δ
       ≤ (1 / 3 - rep χ.1) / rateAt g₃ 1 hk χ.2 * roundBack n δ)
     {F : ℝ → ℝ} (hF : Continuous F) (hF0 : ∀ s, 0 ≤ F s)
-    (hFf : ∀ t, triThdShown ((2 * M + 1) * (4 * Mc + 3 + 1) + (4 * Mc + 3))
+    (hFf : ∀ t, 0 ≤ t → t ≤ roundBack n δ →
+      (triThdShown ((2 * M + 1) * (4 * Mc + 3 + 1) + (4 * Mc + 3))
         (threeRecordRun Mc g₁ g₂ g₃ hf hh hk hn hL Jc h0 h01 m hβ g₀ hc hch hck R θ ψ χ
           t).1 = true
-      ↔ pshift (rateAt g₃ 1 hk χ.2 * ∫ s in (0 : ℝ)..t, F s) χ ∈ displayArc)
-    (hFs : ∀ t, echoFstShown ((2 * M + 1) * (4 * Mc + 3 + 1) + (4 * Mc + 3))
+      ↔ pshift (rateAt g₃ 1 hk χ.2 * ∫ s in (0 : ℝ)..t, F s) χ ∈ displayArc))
+    (hFs : ∀ t, 0 ≤ t → t ≤ roundBack n δ →
+      (echoFstShown ((2 * M + 1) * (4 * Mc + 3 + 1) + (4 * Mc + 3))
         (threeRecordRun Mc g₁ g₂ g₃ hf hh hk hn hL Jc h0 h01 m hβ g₀ hc hch hck R θ ψ χ
           t).1.1 = true
-      ↔ pshift (rateAt g₁ 1 hf θ.2 * ∫ s in (0 : ℝ)..t, F s) θ ∈ displayArc) :
+      ↔ pshift (rateAt g₁ 1 hf θ.2 * ∫ s in (0 : ℝ)..t, F s) θ ∈ displayArc)) :
     roundOut n δ * ∫ s in roundOut n δ..roundBack n δ, F s
         < (roundBack n δ - roundOut n δ) * ∫ s in (0 : ℝ)..roundOut n δ, F s
       ∧ ¬ Monotone F := by
@@ -270,6 +282,36 @@ theorem threeRecord_readouts_certify_drop (hc : ContDiff ℝ ∞ f) (hch : ContD
     (hwd.holds τd le_rfl (le_add_of_nonneg_right hwd.window_nonneg))
     (fun t ht0 ht => hwr.before t ht0 ht) H
   exact ⟨hdrop, not_monotone_of_drop hF hTo.le hTob hdrop⟩
+
+include h0 h01 hβ in
+/-- **The run's own near-half occupancy is one such function.** Under the same hypotheses the
+coupled carrier's near-half occupancy `nearOcc` on the fibre `(θ₂, ψ₂)` satisfies the drop
+inequality and is not non-decreasing. So the class of functions in
+`threeRecord_readouts_certify_drop` is not empty. -/
+theorem threeRecord_nearOcc_drop (hc : ContDiff ℝ ∞ f) (hch : ContDiff ℝ ∞ h)
+    (hck : ContDiff ℝ ∞ k) {θ ψ χ : KTorus} (hθ : θ ∈ readyArc 2) (hψ : ψ ∈ readyArc 2)
+    (hχ : χ ∈ readyArc 2) (hzk : hk.lift χ.2 = 0)
+    (hx : (θ.2, ψ.2) ∈ roundFibres g₁ g₂ hf hh n) {δ : ℝ} (hδ0 : 0 ≤ δ)
+    (hδ : δ < Real.pi / 2) (hcos : Real.cos δ < 1)
+    (hκ₁ : 0 < rateAt g₁ 1 hf θ.2) (hlo₁ : rateAt g₁ 1 hf θ.2 * roundUpper n δ ≤ 1 / 6)
+    (hhi₁ : 1 / 3 ≤ rateAt g₁ 1 hf θ.2 * roundLower n δ)
+    (hκ₂ : 0 < rateAt g₂ 1 hh ψ.2) (hlo₂ : rateAt g₂ 1 hh ψ.2 * farUpper n δ ≤ 1 / 6)
+    (hhi₂ : 1 / 3 ≤ rateAt g₂ 1 hh ψ.2 * farLower n δ)
+    (hκ₃ : 0 < rateAt g₃ 1 hk χ.2)
+    (hhi₃ : 1 / 3 ≤ rateAt g₃ 1 hk χ.2 * ((1 - fineEta n δ) * roundOut n δ))
+    (H : (1 / 3 - rep θ.1) / rateAt g₁ 1 hf θ.2 * roundOut n δ
+      ≤ (1 / 3 - rep χ.1) / rateAt g₃ 1 hk χ.2 * roundBack n δ) :
+    roundOut n δ * ∫ s in roundOut n δ..roundBack n δ, nearOcc g₁ g₂ hf hh hn hL θ.2 ψ.2 s
+        < (roundBack n δ - roundOut n δ)
+          * ∫ s in (0 : ℝ)..roundOut n δ, nearOcc g₁ g₂ hf hh hn hL θ.2 ψ.2 s
+      ∧ ¬ Monotone (nearOcc g₁ g₂ hf hh hn hL θ.2 ψ.2) :=
+  threeRecord_readouts_certify_drop g₁ g₂ g₃ hf hh hk hn hL Jc h0 h01 h10 m hβ hRe hg hc hch
+    hck hθ hψ hχ hzk hx hδ0 hδ hcos hκ₁ hlo₁ hhi₁ hκ₂ hlo₂ hhi₂ hκ₃ hhi₃ H
+    (continuous_nearOcc g₁ g₂ hf hh hn hL θ.2 ψ.2) (nearOcc_nonneg g₁ g₂ hf hh hn hL θ.2 ψ.2)
+    (fun t _ _ => triThdShown_threeRecord_iff (Mc := Mc) (R := R) g₁ g₂ g₃ hf hh hk hn hL Jc
+      h0 h01 m hβ g₀ hc hch hck θ ψ hzk t)
+    (fun t _ _ => echoFstShown_threeRecord_iff (Mc := Mc) (R := R) g₁ g₂ g₃ hf hh hk hn hL Jc
+      h0 h01 m hβ g₀ hc hch hck θ ψ hzk t)
 
 end Run
 

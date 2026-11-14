@@ -20102,7 +20102,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.three_records_with_counts
 
-/-! #385 (the author's programme, obligation UO-16; part of Remainder (b) of #384): two ready pointers turned by κ_f ∫F and κ_s ∫F for one continuous non-negative F — if the fast readout displays by T_o, the slow one not before T_b, and (1/3 − a_s)/κ_s · T_o ≤ (1/3 − a_f)/κ_f · T_b, then the mean of F over [T_o, T_b] is strictly less than over [0, T_o], so F is not non-decreasing; in the run of #384 this holds for every F that reproduces the third and the first readout histories. A drop of a mean, not a departure and not a return; premises are histories over intervals of flow time (`RecordLayer/UnifiedReadoutCertificate.lean`). -/
+/-! #385 (the author's programme, obligation UO-16; part of Remainder (b) of #384): two ready pointers turned by κ_f ∫F and κ_s ∫F for one continuous non-negative F — if the fast readout displays by T_o, the slow one not before T_b, and (1/3 − a_s)/κ_s · T_o ≤ (1/3 − a_f)/κ_f · T_b, then the mean of F over [T_o, T_b] is strictly less than over [0, T_o], so F is not non-decreasing; in the run of #384 this holds, under the rate condition, for every F that reproduces the third and the first readout histories on [0, roundBack], and the run's near-half occupancy is one such F. A drop of a mean, not a departure and not a return; premises are histories over intervals of flow time (`RecordLayer/UnifiedReadoutCertificate.lean`). -/
 
 /-- info: 'CSD.RecordLayer.lt_of_pshift_mem_displayArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -20127,5 +20127,9 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.threeRecord_readouts_certify_drop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.threeRecord_readouts_certify_drop
+
+/-- info: 'CSD.RecordLayer.threeRecord_nearOcc_drop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeRecord_nearOcc_drop
 
 end CSD.Tests.AxiomAudit
