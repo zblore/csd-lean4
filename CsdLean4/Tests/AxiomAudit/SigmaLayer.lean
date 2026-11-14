@@ -20554,4 +20554,58 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.coincShift_gateOp_add_not
 
+/-! #394 (the author's programme, obligation UO-16; step (4) of the plan of 2026-11-14, fourth brick): the reading of a gated pointer under hypotheses on where the two carriers are — a count while the gate is open, a bounded advance while it closes, and a count fixed up to one while it is closed; the level swap is bounded site by site; apart regions give a small weight inside the relation. Conditional: no carriers are put in; null sets of fibres and starts (`RecordLayer/UnifiedGatedReading.lean`). -/
+
+/-- info: 'CSD.RecordLayer.hasTicks_snd_le_of_travel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasTicks_snd_le_of_travel
+
+/-- info: 'CSD.RecordLayer.gated_pointer_count' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gated_pointer_count
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteSel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteSel
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteSel_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteSel_nonneg
+
+/-- info: 'CSD.RecordLayer.sum_arenaObs_siteSel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_arenaObs_siteSel
+
+/-- info: 'CSD.RecordLayer.arenaObs_coincProj_prodRay_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_coincProj_prodRay_nonneg
+
+/-- info: 'CSD.RecordLayer.arenaObs_coincProj_add_not' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_coincProj_add_not
+
+/-- info: 'CSD.RecordLayer.arenaObs_coincProj_prodRay_le_of_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_coincProj_prodRay_le_of_disjoint
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_siteSel_mul_levelSwap_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_siteSel_mul_levelSwap_le
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_gateOp_prodRay_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_gateOp_prodRay_le
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_gateOp_prodRay_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_gateOp_prodRay_sub_le
+
+/-- info: 'CSD.RecordLayer.abs_coincShift_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_coincShift_sub_le
+
+/-- info: 'CSD.RecordLayer.coincFlow_gated_reading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincFlow_gated_reading
+
 end CSD.Tests.AxiomAudit
