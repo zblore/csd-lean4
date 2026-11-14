@@ -84,7 +84,9 @@ occupancy is one such `F` (`threeRecord_nearOcc_drop`).
   Nothing here is evidence about Lorentz kinematics.
 * **Later.** #386 (`RecordLayer/UnifiedReadoutRise.lean`): the first pointer, read on its
   ready arc at the start of the return leg and on its displayed arc after, certifies a rise;
-  with the drop here, a dip of the mean.
+  with the drop here, a dip of the mean. #387
+  (`RecordLayer/UnifiedDipInstance.lean`) exhibits one start, on the fibres where the profiles
+  vanish, that meets every hypothesis here.
 
 ## References
 

@@ -20170,4 +20170,54 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.threeRecord_nearOcc_dip
 
+/-! #387 (the author's programme, obligation UO-16; the satisfiability caveat of #382–#386): one start meets every hypothesis of the three records (#384), the drop (#385) and the rise and dip (#386) — profile trainF, the three region pointers at moving angle 1/30 on the fibre 0, strengths the reciprocals of six times the occupancy bounds, margin 0 < δ ≤ π/96 and an index with fineEta n δ ≤ 1/96 (every n ≥ 73744 at δ = π/96). Satisfiability at one point, on fibres where no region pointer acts back on the messenger; the conclusions and their limits are unchanged (`RecordLayer/UnifiedDipInstance.lean`). -/
+
+/-- info: 'CSD.RecordLayer.one_sub_cos_pi_div_ninetySix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_cos_pi_div_ninetySix
+
+/-- info: 'CSD.RecordLayer.fineEta_le_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fineEta_le_of_le
+
+/-- info: 'CSD.RecordLayer.dipAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dipAngle
+
+/-- info: 'CSD.RecordLayer.dipAngle_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dipAngle_snd
+
+/-- info: 'CSD.RecordLayer.rep_dipAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rep_dipAngle
+
+/-- info: 'CSD.RecordLayer.dipAngle_mem_readyArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dipAngle_mem_readyArc
+
+/-- info: 'CSD.RecordLayer.rateAt_trainF_dipAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rateAt_trainF_dipAngle
+
+/-- info: 'CSD.RecordLayer.dipInstance_windows' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dipInstance_windows
+
+/-- info: 'CSD.RecordLayer.dipInstance_three_records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dipInstance_three_records
+
+/-- info: 'CSD.RecordLayer.dipInstance_readouts_certify_dip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dipInstance_readouts_certify_dip
+
+/-- info: 'CSD.RecordLayer.dipInstance_nearOcc_dip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dipInstance_nearOcc_dip
+
+/-- info: 'CSD.RecordLayer.exists_nearOcc_dip' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_nearOcc_dip
+
 end CSD.Tests.AxiomAudit

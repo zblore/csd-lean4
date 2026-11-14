@@ -110,7 +110,9 @@ Lean has it only on the fibre where the third and fourth profiles vanish).
   vanish). Nothing here is evidence about Lorentz kinematics.
 * **Later.** #385 (`RecordLayer/UnifiedReadoutCertificate.lean`): the third and the first
   readouts of this run, taken together with their rates and start angles and under a rate
-  condition, certify a drop of the function that drives them.
+  condition, certify a drop of the function that drives them. #387
+  (`RecordLayer/UnifiedDipInstance.lean`) exhibits one start, on the fibres where the profiles
+  vanish, that meets every hypothesis of `three_records_with_counts` at `T₁ = 0`.
 
 ## References
 
