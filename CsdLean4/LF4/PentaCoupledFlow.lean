@@ -40,7 +40,7 @@ observable `−2⟨B_E⟩` (`fiveCoupledEnergy`).
 * **One more application of the step theorem.** Nothing here is new mathematics beyond
   `LF4/PointerStep.lean`. No arena indexed by the number of tori is defined.
 * **Only the bare arena of UA-18.** The matrices are arbitrary Hermitian matrices on the ray's
-  space. The three carriers, the walls, the relation projectors, the clock packets and the
+  space. The three carriers, the walls, the coincidence projectors, the clock packets and the
   five readings of UA-18 are not defined here, and no record is read.
 * **The coupling's form is assumed**, as in #368: each pointer's term is a ray observable times
   a function of that pointer's conserved angle. No moving angle enters the energy and there is

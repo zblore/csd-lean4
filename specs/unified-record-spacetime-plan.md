@@ -555,28 +555,30 @@ what would discharge or constrain it.
   (b) *An observer is a clock packet.* Observer `A` is a packet of its clock carrier at rest
   beside the right wall. Observer `B` is a packet of its clock carrier moving toward `A`. The
   messenger starts with `B`. All three are prepared states (UA-4); they are not varied over.
-  (c) *The couplings are relation projectors times a clock's level swap.* A relation
-  projector is diagonal in the site basis of two carriers and reads a relation between their
-  sites: coincidence (the two are within a fixed width of each other) or order (one is
-  nearer the left wall than the other). Each pointer is coupled, through a profile on its own
-  torus as in UA-13 (d), to `G · X_c`, with `G` a relation projector or its complement and
-  `X_c` the level swap of one observer's clock. This extends the product coupling `P ⊗ X` of
-  UA-17 (c), which the author admitted on 2026-11-12, from one region projector to sums of
-  products of site projectors. No other kind of term is admitted on this arena.
+  (c) *The couplings are coincidence projectors times a clock's level swap.* A coincidence
+  projector is diagonal in the site basis of two carriers and is one exactly where their
+  sites are within a fixed width of each other. Each pointer is coupled, through a profile on
+  its own torus as in UA-13 (d), to `G · X_c`, with `G` a coincidence projector or its
+  complement and `X_c` the level swap of one observer's clock. This extends the product
+  coupling `P ⊗ X` of UA-17 (c), which the author admitted on 2026-11-12, from one region
+  projector to sums of products of site projectors. No other kind of term is admitted on
+  this arena. The author decided (2026-11-14): coincidence only. Order projectors (one
+  carrier nearer a wall than another, at any distance), which the first draft of this clause
+  used, are not local interactions and are not admitted.
   (d) *Five pointers, one for each reading.* For `B`: its ticks while the messenger is with
-  it (the emission reading), its ticks while the messenger has not passed back to its left
-  (the return reading), its ticks while it is to the left of `A` (the meeting reading). For
-  `A`: its ticks while the messenger has not reached it (the relay reading), and its ticks
-  while `B` is to its left (the meeting reading). The arena is `ℂℙ^N × (T²)⁵` with the
+  it (the emission reading); its ticks while the messenger is not with it (added to the
+  emission reading, the return reading); its ticks while `A` is not with it (the meeting
+  reading). For `A`: its ticks while the messenger is not with it (the relay reading), and its
+  ticks while `B` is not with it (the meeting reading). The arena is `ℂℙ^N × (T²)⁵` with the
   product form and the product measure, as UA-13 (a), (b) and UA-15.
   (e) *A reading is a number of tick records.* The author decided (2026-11-14): the reading
   of a clock at an event is the number of tick records that a gated pointer wrote while its
   gate was open. No coordinate stores the number. It is a fact about the run because the
-  pointer stops ticking when the gate closes. Four of the five gates stay closed for the rest
-  of the horizon once closed. The relay gate does not: the messenger leaves `A` again after
-  the reflection, so `A`'s relay reading is fixed only while the messenger is with `A`, and
-  the emission gate reopens for the short time the returning messenger passes `B`. Both are
-  to be carried as stated error terms or stated windows, not hidden.
+  pointer stops ticking when the gate closes. With coincidence gates no gate stays closed: it
+  reopens when the two carriers separate again, or meet again. So each reading is the number
+  of tick records in the pointer's first open period, and it is fixed only from the event
+  that closes the gate until the gate reopens. Each theorem is to state that window; ticks
+  written after it belong to no reading.
   (f) *What may not be assumed on it.* By the test of UO-16: the messenger's speed and the
   moving clock's rate. The messenger's speed is to come from the band velocity of its packet
   and the clock's rate from UD-138.
@@ -590,16 +592,16 @@ what would discharge or constrain it.
   coupling; `clock_packet_ticks` (`RecordLayer/UnifiedClockPacket.lean`, ~~#388~~) for an
   observer's clock; the packet bounds of ~~#375~~ and ~~#379~~ for the messenger.
 * **Standing.** Choice for the arena, as UA-1, UA-13, UA-15, UA-16 and UA-17. Boundary R-015
-  for the couplings. The relation projectors join two carriers, so UA-9's locality is not
-  claimed for them: a coincidence projector acts only where the two carriers are at
-  neighbouring sites, an order projector does not. ⚠️ Written from the author's five
-  decisions of 2026-11-14 and the two answers of the same day (the moving observer; what a
-  reading is). The choices this clause adds on its own are: the boundary condition at the
-  walls; `A` beside the right wall; order projectors for four of the gates; five pointers and
-  no separate detector pointers. The author has not yet read the clause.
-* **Known risks, stated so that a failure is recognised as one.** (i) An order projector is
-  not a local term. If only coincidence projectors are acceptable, the return and meeting
-  readings need another construction. (ii) Three carriers and five back-reacting pointers
+  for the couplings. A coincidence projector joins two carriers and acts only where they are
+  at neighbouring sites. That this meets UA-9's locality is not claimed here; UA-9 is about
+  the tensor structure and is not invoked. ⚠️ Written from the author's five decisions of 2026-11-14 and the
+  three answers of the same day (the moving observer; what a reading is; coincidence gates
+  only). The choices this clause adds on its own are: the boundary condition at the walls;
+  `A` beside the right wall; five pointers and no separate detector pointers. The author has
+  not yet read the clause.
+* **Known risks, stated so that a failure is recognised as one.** (i) A reading is fixed
+  only during a window; if a window is shorter than one tick the reading is not determined.
+  (ii) Three carriers and five back-reacting pointers
   make the bounds of step (7) long; nothing shows they close. (iii) A clock packet at rest
   beside a wall is not orthogonal to its mirror image, so the mirror route needs a separate
   normalisation for `A`. (iv) The horizon of UD-138 has not been shown long enough for the
@@ -1149,7 +1151,7 @@ arena of UA-18 (`LF4/PentaCoupledFlow.lean`, BACKLOG ~~#389~~).
 | UD-136 | **One start meets every hypothesis of the three records and of the dip.** For the strengths and the start of UD-135, any ring with `640000 n³ ≤ M + 1` and any clock of UD-130: the conclusion of UD-130 at `T₁ = 0` holds; the conclusion of the dip of UD-134 holds for every continuous non-negative `F` that reproduces the stated readouts; the coupled carrier's near-half occupancy on the fibre `(0, 0)` has the dip. There exist a ring, an index and two strengths for which that occupancy has the dip at `δ = π/96`, with no hypothesis | `dipInstance_three_records`, `dipInstance_readouts_certify_dip`, `dipInstance_nearOcc_dip`, `exists_nearOcc_dip` (`RecordLayer/UnifiedDipInstance.lean`) | exact; satisfiability of the hypotheses of UD-130, UD-132, UD-134 at one start; one point of the pointers' angles (a null set), on fibres where no region pointer acts back on the messenger; the conclusions and their limits are unchanged |
 | UD-137 | **The accumulated reading of a clock packet is the sum of its modes' hands, and hands at nearby rates stay close linearly in the flow time.** For the device's packet on a window of distinct modes with non-zero rates, prepared at any time: the coherence at any later flow time is the sum over the modes of each mode's coherence turned at its own rate, and `∫₀ᵗ` of the uncoupled reading is `2/‖Ψ₀‖²` times the sum of the modes' hands. For rates `R₁, R₂ ≥ ρ > 0` and `t ≥ 0`, `|clockHand R₁ C t − clockHand R₂ C t| ≤ ‖C‖ |R₁ − R₂| (2t/ρ + 3/ρ²)` | `clockHand_sum`, `abs_clockHand_sub_le`, `modeRate`, `modeCoh`, `bandE_sub_eq_neg_modeRate`, `deviceCoherence_packet_shift`, `deviceCoherence_packet_eq_sum`, `integral_clockFreeRead_packet` (`RecordLayer/UnifiedClockPacket.lean`) | exact; the uncoupled device, any window of distinct modes |
 | UD-138 | **A clock packet is a swing up to a horizon, with an error linear in the horizon; its count obeys the dilated clock law.** Under `clockPointerFlow`, on a fibre where the profile vanishes, for a packet whose modes' rates and reference rate `R` are at least `ρ > 0` and `ε ≥ Σ ‖C_m‖ |R_m − R|`: up to `T` the pointer's displacement is within `4|g f'| ε (2T/ρ + 3/ρ²)/n + 4|g f'| |Re C₀|/(R n)` of the swing, and under the four threshold conditions the readout history is an `IsSwing` at the rate `R`. For the localised packet of UD-64's device, profile `trainF` on the fibre `0`, start `1/12`, strength `R/(16 Im C₀)`, `ε` the sharp drift and `κ = (1 − ((μ₁ − μ₀)/μ₀)²)/2 − (π/(2R)) ε`: if `κ > 0` and `R ε (2T/ρ + 3/ρ² + π/(2R²)) < κ/3`, the history is a swing up to `T` with error below `1/12`, and every tick count `N` at `T` has `\|2π N/(μ₁ − μ₀) − √(1 − (v/c)²) T\| ≤ 2π/(μ₁ − μ₀) + ((μ₁ − μ₀)/E₀) T` | `packetSwingErr`, `abs_clockPointerShift_packet_sub_swing_le`, `isSwing_clockPointerFlow_packet`, `sum_norm_modeCoh_mul_le`, `clock_packet_ticks` (`RecordLayer/UnifiedClockPacket.lean`) | exact under the stated conditions, which are hypotheses, explicit and linear in `T`; one fibre (a null set); a clock only, no observer; `v` is a function of the momentum, not a recorded speed |
-| UD-139 | **The five-pointer arena.** `ℂℙᴺ × T²` five times with the step form over `quadForm` is symplectic; the flow of `−2⟨A⟩ − 2⟨B_A⟩ f(θ₂) − 2⟨B_B⟩ g(ψ₂) − 2⟨B_C⟩ k(χ₂) − 2⟨B_D⟩ l(ξ₂) − 2⟨B_E⟩ r(ζ₂)` is a skew product over the fifth conserved angle (the four-torus flow with `A + r(ζ₂) B_E`, the fifth moving angle advanced by `r'(ζ₂)` times the accumulated `−2⟨B_E⟩`), and it preserves `μ_FS ⊗ vol⁵` for all Hermitian matrices | `pentaForm_isSymplectic`, `fiveCoupledEnergy_apply`, `contMDiff_fiveCoupledEnergy`, `fourCoupledEnergy_add_smul_quadRayEnergy`, `fiveCoupledFlow_apply`, `fiveCoupledFlow_fst_of_lift_eq_zero`, `fiveCoupledFlow_snd_of_lift_eq_zero`, `pentaMuL_map_fiveCoupledFlow` (`LF4/PentaCoupledFlow.lean`) | exact; the bare arena of UA-18 (d): arbitrary Hermitian matrices, no carriers, no relation projectors, no record read |
+| UD-139 | **The five-pointer arena.** `ℂℙᴺ × T²` five times with the step form over `quadForm` is symplectic; the flow of `−2⟨A⟩ − 2⟨B_A⟩ f(θ₂) − 2⟨B_B⟩ g(ψ₂) − 2⟨B_C⟩ k(χ₂) − 2⟨B_D⟩ l(ξ₂) − 2⟨B_E⟩ r(ζ₂)` is a skew product over the fifth conserved angle (the four-torus flow with `A + r(ζ₂) B_E`, the fifth moving angle advanced by `r'(ζ₂)` times the accumulated `−2⟨B_E⟩`), and it preserves `μ_FS ⊗ vol⁵` for all Hermitian matrices | `pentaForm_isSymplectic`, `fiveCoupledEnergy_apply`, `contMDiff_fiveCoupledEnergy`, `fourCoupledEnergy_add_smul_quadRayEnergy`, `fiveCoupledFlow_apply`, `fiveCoupledFlow_fst_of_lift_eq_zero`, `fiveCoupledFlow_snd_of_lift_eq_zero`, `pentaMuL_map_fiveCoupledFlow` (`LF4/PentaCoupledFlow.lean`) | exact; the bare arena of UA-18 (d): arbitrary Hermitian matrices, no carriers, no coincidence projectors, no record read |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2659,8 +2661,8 @@ time. It is not a statement about every dynamics on `Σ`.
   enough for an exchange.
   ▸ **Step (3), the arena frozen, 2026-11-14 → UA-18. Nothing built.** One arena for steps
   (4) to (7): a chain with two walls; a messenger and one clock carrier for each observer;
-  couplings that are relation projectors (coincidence or order of two carriers' sites) times
-  a clock's level swap; five gated tick pointers, one for each reading of
+  couplings that are coincidence projectors (two carriers' sites within a fixed width; the
+  author's decision, order projectors are not admitted) times a clock's level swap; five gated tick pointers, one for each reading of
   `radar_lorentz_error`; a reading is the number of tick records written while a gate is
   open (the author's decision of 2026-11-14, after the correction that no coordinate stores
   a count). UA-18 lists what it adds on its own and four known risks. *Next:* step (4), one
@@ -2669,7 +2671,7 @@ time. It is not a statement about every dynamics on `Σ`.
   met.** The manifold `ℂℙᴺ × (T²)⁵`, its symplectic form, the energy with five pointer
   terms, its Hamiltonian flow in skew-product form and the invariant measure
   (`fiveCoupledFlow_apply`, `pentaMuL_map_fiveCoupledFlow`). *What this is not:* UA-18's
-  carriers, walls, relation projectors or readings; those are the next bricks of step (4).
+  carriers, walls, coincidence projectors or readings; those are the next bricks of step (4).
 
 ### M7 — `3 + 1`
 
