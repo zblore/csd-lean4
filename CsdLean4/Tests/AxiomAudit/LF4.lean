@@ -2228,4 +2228,62 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.quadMuL_map_fourCoupledFlow
 
+/-! #389 (the author's programme, obligation UO-16; step (4) of the plan of 2026-11-14, first brick): the five-pointer arena ℂℙᴺ × (T²)⁵ of UA-18 — symplectic form, energy with five pointer terms, Hamiltonian flow as a skew product over the fifth conserved angle, and invariance of μ_FS ⊗ vol⁵. The bare arena only (`LF4/PentaCoupledFlow.lean`). -/
+
+/-- info: 'CSD.LF4.pentaForm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.pentaForm
+
+/-- info: 'CSD.LF4.pentaForm_isSymplectic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.pentaForm_isSymplectic
+
+/-- info: 'CSD.LF4.quadRayEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.quadRayEnergy
+
+/-- info: 'CSD.LF4.contMDiff_quadRayEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_quadRayEnergy
+
+/-- info: 'CSD.LF4.fiveCoupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fiveCoupledEnergy
+
+/-- info: 'CSD.LF4.fiveCoupledEnergy_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fiveCoupledEnergy_apply
+
+/-- info: 'CSD.LF4.contMDiff_fiveCoupledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_fiveCoupledEnergy
+
+/-- info: 'CSD.LF4.fourCoupledEnergy_add_smul_quadRayEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fourCoupledEnergy_add_smul_quadRayEnergy
+
+/-- info: 'CSD.LF4.fiveCoupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fiveCoupledFlow
+
+/-- info: 'CSD.LF4.fiveCoupledFlow_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fiveCoupledFlow_apply
+
+/-- info: 'CSD.LF4.fiveCoupledFlow_fst_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fiveCoupledFlow_fst_of_lift_eq_zero
+
+/-- info: 'CSD.LF4.fiveCoupledFlow_snd_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fiveCoupledFlow_snd_of_lift_eq_zero
+
+/-- info: 'CSD.LF4.pentaMuL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.pentaMuL
+
+/-- info: 'CSD.LF4.pentaMuL_map_fiveCoupledFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.pentaMuL_map_fiveCoupledFlow
+
 end CSD.Tests.AxiomAudit
