@@ -268,8 +268,10 @@ carrier, a swing and a bound on every tick count by the dilated clock law, up to
 limited linearly by its dephasing, under explicit conditions that are hypotheses and on one
 fibre. Those conditions are then discharged for every window of modes within `1/(600 n)` of
 the reference momentum, and the count at the horizon is shown to be at least `n` (BACKLOG
-~~#391~~, `RecordLayer/UnifiedClockPacketInstance.lean`); the packet is not shown localised
-in space. That is a clock and not yet an observer. No count is read by a record, there is no
+~~#391~~, `RecordLayer/UnifiedClockPacketInstance.lean`). For a family of flat packets the
+clock's weight away from its predicted position is bounded over that horizon (BACKLOG
+~~#392~~, `RecordLayer/UnifiedClockPacketLocalised.lean`), at a resolution coarser than the
+packet's width. That is a clock and not yet an observer. No count is read by a record, there is no
 reflector, and no radar time is formed.
 
 ## What is open

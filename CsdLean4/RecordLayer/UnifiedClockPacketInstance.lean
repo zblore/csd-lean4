@@ -43,7 +43,8 @@ that the count is at least any wanted number.
 * **Localisation in space is not shown.** A window of `2 w + 1` modes is a statement about
   momenta. That such a packet occupies about a fraction `1/(2 w + 1)` of the ring is a
   calculation, not in Lean; no occupancy of the clock carrier is bounded here. `w = 0` is
-  one mode and is allowed.
+  one mode and is allowed. #392 (`RecordLayer/UnifiedClockPacketLocalised.lean`) bounds the
+  weight away from the predicted position for a flat window.
 * **The relative error.** Dividing the bound by `T = 2π n/R` and using `R ≤ Δ`, `E₀ ≥ 1`
   gives at most `1/n + Δ` (a calculation, not in Lean). So the dilation factor is resolved
   only when both `1/n` and `Δ` are small against `1 − √(1 − v²)`. The theorem allows that

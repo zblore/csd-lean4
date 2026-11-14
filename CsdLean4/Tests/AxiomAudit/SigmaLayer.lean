@@ -20410,4 +20410,70 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.exists_clock_packet_ticks
 
+/-! #392 (the author's programme, obligation UO-16; step (2) of the plan of 2026-11-14, Remainder (a) of #391): a clock packet that ticks stays where it is predicted to be — the device's weight on a region is the mean of its two levels' weights, so the messenger's bound applies level by level; for N flat modes on the ring of length 2π·1200nN the count at the horizon is at least n and, at every packet time |t| ≤ 4πn/Δ, the weight on a region at cos ≤ γ from both levels' predicted directions, times 1 − γ, is at most 1/N + 1/(20000ΔnN). A weight of the state vector at a coarse resolution; not a record (`RecordLayer/UnifiedClockPacketLocalised.lean`). -/
+
+/-- info: 'CSD.RecordLayer.deviceRegionWeight' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceRegionWeight
+
+/-- info: 'CSD.RecordLayer.deviceRegionWeight_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceRegionWeight_nonneg
+
+/-- info: 'CSD.RecordLayer.regionWeight_const_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_const_mul
+
+/-- info: 'CSD.RecordLayer.deviceRegionWeight_devicePacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceRegionWeight_devicePacket
+
+/-- info: 'CSD.RecordLayer.deviceRegionWeight_devicePacket_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceRegionWeight_devicePacket_le
+
+/-- info: 'CSD.RecordLayer.flatWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatWindow
+
+/-- info: 'CSD.RecordLayer.flatAmpN' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatAmpN
+
+/-- info: 'CSD.RecordLayer.sum_norm_flatAmpN' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_flatAmpN
+
+/-- info: 'CSD.RecordLayer.flatWindow_mem_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatWindow_mem_range
+
+/-- info: 'CSD.RecordLayer.flatWindow_width' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatWindow_width
+
+/-- info: 'CSD.RecordLayer.flat_clock_packet_ticks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_clock_packet_ticks
+
+/-- info: 'CSD.RecordLayer.flat_packet_start_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_packet_start_le
+
+/-- info: 'CSD.RecordLayer.flat_packet_limitErr_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_packet_limitErr_le
+
+/-- info: 'CSD.RecordLayer.flat_packet_budget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_packet_budget
+
+/-- info: 'CSD.RecordLayer.flat_clock_packet_localised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_clock_packet_localised
+
+/-- info: 'CSD.RecordLayer.abs_sub_quarter_turn_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_sub_quarter_turn_le
+
 end CSD.Tests.AxiomAudit

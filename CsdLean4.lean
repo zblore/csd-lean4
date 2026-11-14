@@ -808,6 +808,7 @@ public import CsdLean4.RecordLayer.UnifiedReadoutRise
 public import CsdLean4.RecordLayer.UnifiedDipInstance
 public import CsdLean4.RecordLayer.UnifiedClockPacket
 public import CsdLean4.RecordLayer.UnifiedClockPacketInstance
+public import CsdLean4.RecordLayer.UnifiedClockPacketLocalised
 public import CsdLean4.RecordLayer.UnifiedCoincidence
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
