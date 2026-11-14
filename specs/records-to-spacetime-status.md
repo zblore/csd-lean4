@@ -261,7 +261,12 @@ read from readouts at flow times, not a record of a return. One start is shown i
 meet every hypothesis of these statements and of the three records (BACKLOG ~~#387~~,
 `RecordLayer/UnifiedDipInstance.lean`): one point, on fibres where no region pointer acts
 back on the messenger, with strengths tuned to the round trip's schedule. That shows the
-statements are not vacuous and nothing more. No count is read by a record, there is no reflector, and no radar time
+statements are not vacuous and nothing more. A plan to M6 was agreed on 2026-11-14 and is
+in the contract under UO-16; its second step, a probe of the moving observer's clock, is
+done (BACKLOG ~~#388~~, `RecordLayer/UnifiedClockPacket.lean`): a localised packet of the
+clock carrier ticks, and its count obeys the dilated clock law, up to a horizon limited
+linearly by its dephasing, under explicit conditions that are hypotheses and on one fibre.
+That is a clock and not yet an observer. No count is read by a record, there is no reflector, and no radar time
 is formed.
 
 ## What is open

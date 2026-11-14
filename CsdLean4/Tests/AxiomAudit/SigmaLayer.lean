@@ -20220,4 +20220,58 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.exists_nearOcc_dip
 
+/-! #388 (the author's programme, obligation UO-16; step (2) of the plan of 2026-11-14): a moving clock packet — the accumulated reading is exactly the sum of its modes' hands, two hands at nearby rates differ linearly in the flow time, so on a fibre where the profile vanishes the pointer is a swing up to a horizon with an error linear in the horizon, and for the localised packet of #262's device the count obeys the dilated clock law under one explicit inequality linear in T. A clock, not an observer; the conditions are hypotheses (`RecordLayer/UnifiedClockPacket.lean`). -/
+
+/-- info: 'CSD.RecordLayer.clockHand_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockHand_sum
+
+/-- info: 'CSD.RecordLayer.abs_clockHand_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_clockHand_sub_le
+
+/-- info: 'CSD.RecordLayer.modeRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.modeRate
+
+/-- info: 'CSD.RecordLayer.modeCoh' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.modeCoh
+
+/-- info: 'CSD.RecordLayer.bandE_sub_eq_neg_modeRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.bandE_sub_eq_neg_modeRate
+
+/-- info: 'CSD.RecordLayer.deviceCoherence_packet_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceCoherence_packet_shift
+
+/-- info: 'CSD.RecordLayer.deviceCoherence_packet_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceCoherence_packet_eq_sum
+
+/-- info: 'CSD.RecordLayer.integral_clockFreeRead_packet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_clockFreeRead_packet
+
+/-- info: 'CSD.RecordLayer.packetSwingErr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.packetSwingErr
+
+/-- info: 'CSD.RecordLayer.abs_clockPointerShift_packet_sub_swing_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_clockPointerShift_packet_sub_swing_le
+
+/-- info: 'CSD.RecordLayer.isSwing_clockPointerFlow_packet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isSwing_clockPointerFlow_packet
+
+/-- info: 'CSD.RecordLayer.sum_norm_modeCoh_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_modeCoh_mul_le
+
+/-- info: 'CSD.RecordLayer.clock_packet_ticks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clock_packet_ticks
+
 end CSD.Tests.AxiomAudit
