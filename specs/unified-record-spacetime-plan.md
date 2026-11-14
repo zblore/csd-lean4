@@ -537,6 +537,73 @@ what would discharge or constrain it.
 
 ---
 
+### UA-18 — the radar arena (frozen 2026-11-14; nothing on it is built)
+
+* **Assumed.** Step (3) of the plan under UO-16. This clause fixes the one arena on which
+  steps (4) to (7) are to be carried out. It collects the author's decisions of 2026-11-14.
+  No Lean object exists for it yet; every item below is a commitment about what will be
+  defined, not a description of something defined.
+  (a) *Three carriers on one chain with two walls.* A messenger and two clock carriers, one
+  for each observer, each a two-component lattice Dirac field on the same chain of sites
+  `0, …, K` with a hard wall at each end; the clocks carry the two-level structure of UA-12.
+  The wall is a term of the energy: the chain's hop simply ends there. It is to be obtained as
+  the mirror-odd sector of the ring of UA-8 (reflect the sites, change the sign of the lower
+  component), which fixes the boundary condition: the upper component vanishes at each wall
+  and the hop at the end sites is `√2` times the bulk hop. That boundary condition is this
+  clause's choice among the self-adjoint ones. The composite of the three carriers is the
+  tensor product, as in UA-17 (b).
+  (b) *An observer is a clock packet.* Observer `A` is a packet of its clock carrier at rest
+  beside the right wall. Observer `B` is a packet of its clock carrier moving toward `A`. The
+  messenger starts with `B`. All three are prepared states (UA-4); they are not varied over.
+  (c) *The couplings are relation projectors times a clock's level swap.* A relation
+  projector is diagonal in the site basis of two carriers and reads a relation between their
+  sites: coincidence (the two are within a fixed width of each other) or order (one is
+  nearer the left wall than the other). Each pointer is coupled, through a profile on its own
+  torus as in UA-13 (d), to `G · X_c`, with `G` a relation projector or its complement and
+  `X_c` the level swap of one observer's clock. This extends the product coupling `P ⊗ X` of
+  UA-17 (c), which the author admitted on 2026-11-12, from one region projector to sums of
+  products of site projectors. No other kind of term is admitted on this arena.
+  (d) *Five pointers, one for each reading.* For `B`: its ticks while the messenger is with
+  it (the emission reading), its ticks while the messenger has not passed back to its left
+  (the return reading), its ticks while it is to the left of `A` (the meeting reading). For
+  `A`: its ticks while the messenger has not reached it (the relay reading), and its ticks
+  while `B` is to its left (the meeting reading). The arena is `ℂℙ^N × (T²)⁵` with the
+  product form and the product measure, as UA-13 (a), (b) and UA-15.
+  (e) *A reading is a number of tick records.* The author decided (2026-11-14): the reading
+  of a clock at an event is the number of tick records that a gated pointer wrote while its
+  gate was open. No coordinate stores the number. It is a fact about the run because the
+  pointer stops ticking when the gate closes. Four of the five gates stay closed for the rest
+  of the horizon once closed. The relay gate does not: the messenger leaves `A` again after
+  the reflection, so `A`'s relay reading is fixed only while the messenger is with `A`, and
+  the emission gate reopens for the short time the returning messenger passes `B`. Both are
+  to be carried as stated error terms or stated windows, not hidden.
+  (f) *What may not be assumed on it.* By the test of UO-16: the messenger's speed and the
+  moving clock's rate. The messenger's speed is to come from the band velocity of its packet
+  and the clock's rate from UD-138.
+  (g) *Measure.* The M6 statements must hold on an open set of the five pointers' conserved
+  angles (the author's decision (5)), where the pointers act back on the carriers. Statements
+  on the fibres where the profiles vanish are steps.
+* **Where.** Nothing yet. Existing pieces it is to be built from: the pointer step
+  (`LF4/PointerStep.lean`, BACKLOG ~~#368~~) for the fifth torus; `prodIdx` and `gateFlow`
+  (`RecordLayer/UnifiedCompositeCarrier.lean`, ~~#376~~) for the composite and the product
+  coupling; `clock_packet_ticks` (`RecordLayer/UnifiedClockPacket.lean`, ~~#388~~) for an
+  observer's clock; the packet bounds of ~~#375~~ and ~~#379~~ for the messenger.
+* **Standing.** Choice for the arena, as UA-1, UA-13, UA-15, UA-16 and UA-17. Boundary R-015
+  for the couplings. The relation projectors join two carriers, so UA-9's locality is not
+  claimed for them: a coincidence projector acts only where the two carriers are at
+  neighbouring sites, an order projector does not. ⚠️ Written from the author's five
+  decisions of 2026-11-14 and the two answers of the same day (the moving observer; what a
+  reading is). The choices this clause adds on its own are: the boundary condition at the
+  walls; `A` beside the right wall; order projectors for four of the gates; five pointers and
+  no separate detector pointers. The author has not yet read the clause.
+* **Known risks, stated so that a failure is recognised as one.** (i) An order projector is
+  not a local term. If only coincidence projectors are acceptable, the return and meeting
+  readings need another construction. (ii) Three carriers and five back-reacting pointers
+  make the bounds of step (7) long; nothing shows they close. (iii) A clock packet at rest
+  beside a wall is not orthogonal to its mirror image, so the mirror route needs a separate
+  normalisation for `A`. (iv) The horizon of UD-138 has not been shown long enough for the
+  exchange.
+
 ## 4. Register 2 — derived properties
 
 
@@ -2587,6 +2654,14 @@ time. It is not a statement about every dynamics on `Σ`.
   a recorded speed. *What the probe leaves open:* the coincidence detector, which is a new
   term in the energy (step (3)); the packet's position as a record; a horizon shown long
   enough for an exchange.
+  ▸ **Step (3), the arena frozen, 2026-11-14 → UA-18. Nothing built.** One arena for steps
+  (4) to (7): a chain with two walls; a messenger and one clock carrier for each observer;
+  couplings that are relation projectors (coincidence or order of two carriers' sites) times
+  a clock's level swap; five gated tick pointers, one for each reading of
+  `radar_lorentz_error`; a reading is the number of tick records written while a gate is
+  open (the author's decision of 2026-11-14, after the correction that no coordinate stores
+  a count). UA-18 lists what it adds on its own and four known risks. *Next:* step (4), one
+  observer's radar on this arena.
 
 ### M7 — `3 + 1`
 
