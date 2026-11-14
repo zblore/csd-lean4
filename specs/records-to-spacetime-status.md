@@ -266,8 +266,10 @@ is in the contract under UO-16; its second step, a probe of the moving observer'
 (BACKLOG ~~#388~~, `RecordLayer/UnifiedClockPacket.lean`): for a localised packet of the clock
 carrier, a swing and a bound on every tick count by the dilated clock law, up to a horizon
 limited linearly by its dephasing, under explicit conditions that are hypotheses and on one
-fibre. No packet of positive width is shown to meet the conditions, and no tick is shown to
-exist. That is a clock and not yet an observer. No count is read by a record, there is no
+fibre. Those conditions are then discharged for every window of modes within `1/(600 n)` of
+the reference momentum, and the count at the horizon is shown to be at least `n` (BACKLOG
+~~#391~~, `RecordLayer/UnifiedClockPacketInstance.lean`); the packet is not shown localised
+in space. That is a clock and not yet an observer. No count is read by a record, there is no
 reflector, and no radar time is formed.
 
 ## What is open

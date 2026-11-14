@@ -63,6 +63,9 @@ differ by at most `‖C‖ |R₁ − R₂| (2t/ρ + 3/ρ²)` (`abs_clockHand_sub
   not show that the count is positive. The horizon the condition allows is not shown to be
   longer than one period `2π/R`, and for a shorter one the count is zero and the bound is
   its own slack term.
+* **Later.** #391 (`RecordLayer/UnifiedClockPacketInstance.lean`) discharges the conditions
+  for every window of modes within `1/(600 n)` of the reference momentum and shows a count
+  of at least `n`.
 * **Not shown: that the horizon is long enough for a radar exchange.** An estimate (a
   calculation, not in Lean): the horizon allowed is of order `1/ε`, within which the packet
   travels of order `E/(μ₁ − μ₀)` of its own widths.

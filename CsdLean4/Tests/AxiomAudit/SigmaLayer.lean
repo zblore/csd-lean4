@@ -20336,4 +20336,78 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.arenaObs_gateOp_prodRay
 
+/-! #391 (the author's programme, obligation UO-16; step (2) of the plan of 2026-11-14, Remainder (a) of #388): narrow clock packets tick as often as wanted — under the hypotheses of clock_packet_ticks a phase of 2π(n−1)+π gives a count of at least n; for speed 1 and levels 1 and 1+Δ, every window of modes within 1/(600 n) of a reference momentum meets those hypotheses at the horizon 2πn/R, so the count there is at least n and obeys the dilated clock bound, with v > 0; windows of any odd number of modes are exhibited. A clock, not an observer; one fibre and one start; localisation in space not shown (`RecordLayer/UnifiedClockPacketInstance.lean`). -/
+
+/-- info: 'CSD.RecordLayer.clock_packet_count_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clock_packet_count_ge
+
+/-- info: 'CSD.RecordLayer.half_le_levelClockRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.half_le_levelClockRate
+
+/-- info: 'CSD.RecordLayer.levelClockRate_le_gap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelClockRate_le_gap
+
+/-- info: 'CSD.RecordLayer.ringLen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringLen
+
+/-- info: 'CSD.RecordLayer.ringHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringHop
+
+/-- info: 'CSD.RecordLayer.ringSigma' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringSigma
+
+/-- info: 'CSD.RecordLayer.ringRate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringRate
+
+/-- info: 'CSD.RecordLayer.ringLen_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringLen_pos
+
+/-- info: 'CSD.RecordLayer.two_ringHop' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_ringHop
+
+/-- info: 'CSD.RecordLayer.abs_ringSigma_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_ringSigma_le
+
+/-- info: 'CSD.RecordLayer.ringSigma_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringSigma_pos
+
+/-- info: 'CSD.RecordLayer.ringSigma_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringSigma_sq_le
+
+/-- info: 'CSD.RecordLayer.two_ringHop_mul_sin_angleZ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_ringHop_mul_sin_angleZ
+
+/-- info: 'CSD.RecordLayer.narrow_clock_packet_ticks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.narrow_clock_packet_ticks
+
+/-- info: 'CSD.RecordLayer.modeWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.modeWindow
+
+/-- info: 'CSD.RecordLayer.flatAmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatAmp
+
+/-- info: 'CSD.RecordLayer.sum_norm_flatAmp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_flatAmp
+
+/-- info: 'CSD.RecordLayer.exists_clock_packet_ticks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_clock_packet_ticks
+
 end CSD.Tests.AxiomAudit
