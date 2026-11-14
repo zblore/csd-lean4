@@ -2519,6 +2519,32 @@ time. It is not a statement about every dynamics on `Σ`.
   the pointers' conserved angles (UA-4 item 3, the typicality reading UA-3). The
   messenger's packet and the clock's start remain prepared states, as apparatus input.
   Statements on pinned fibres are steps and do not count towards M6.
+  ▸ **The target and the plan, 2026-11-14 (agreed with the author). Nothing here is built.**
+  *The target.* `radar_lorentz_error` (`RecordLayer/DiracTwoCharts.lean`, ~~#280~~) already
+  turns seven hypotheses into the Lorentz residual: two kinematic relations (the messenger
+  covers the separation at speed `1`, out and back) and five reading bounds (the moving
+  observer `B`'s readings of its emission, its return and the meeting, within `d_E`, `d_Ret`,
+  `d_MB` of `√(1 − v²)` times their flow times; the rest observer `A`'s readings of the relay
+  event and the meeting, within `d_R`, `d_MA` of theirs). There they are hypotheses, which is
+  the kinematic law UD-17. M6 is met when, on one arena and for one flow, each of the seven is
+  a theorem about records of that flow with an explicit error, the readings are counts held
+  by pointers, and all the errors tend to zero along a family instantiated on the arena. By
+  the test above, no hypothesis may state the messenger's speed or the clock's rate; both
+  must come from the energy within stated errors (the messenger from the band velocity of a
+  packet, the moving clock from the dependence of its level splitting on its momentum).
+  *The plan, in order.* (1) This statement. (2) A probe of the moving observer: say what a
+  moving observer is in `Σ` and prove the one lemma showing its clock records exist with a
+  rate within a stated error of `√(1 − v²)` times the rest rate; if that fails, M6 fails on
+  these arenas and is reported as such. (3) Freeze the arena: the chain with walls, the
+  messenger, one clock carrier per observer, the pointers; one assumption clause. (4) One
+  observer's radar: departure record, return record from the wall, the gated count at each,
+  radar time and distance formed from the counts. (5) Two observers at rest: agreement up to
+  a shift, within stated errors. (6) The moving observer: the seven items above, and the
+  residual along the family; M6 is met here and not before. (7) The same on an open set of
+  the pointers' angles. *Rules.* No row outside this list; what is found on the way goes to
+  a Remainder line. One review per step. If a step's lemma fails, work stops and the failure
+  is reported. *Parked for step (4):* UD-135, UD-136 (~~#387~~) and the mirror lemma for the
+  wall.
 
 ### M7 — `3 + 1`
 
