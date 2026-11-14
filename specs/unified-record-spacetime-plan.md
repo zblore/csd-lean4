@@ -2499,6 +2499,26 @@ time. It is not a statement about every dynamics on `Σ`.
   beyond satisfiability; a set of starts of positive measure (one point, at the edge of each
   window); a run with back-reaction (on these fibres no region pointer acts back on the
   messenger). *What is still missing:* the same list as above.
+  ▸ **The author's decisions, 2026-11-14.** Five decisions, each taken with the charter as
+  the guide. They fix what M6 must contain; none is built yet.
+  (1) *The gated pointer returns, on a fifth torus.* A record is an ontic fact held by a
+  degree of freedom, and in the variant UA-17 (f) no degree of freedom holds a count. The
+  run is to be rebuilt with the three region pointers, the clock's own pointer and the gated
+  pointer of UA-17 together. This needs a further clause of UA-17, not yet written.
+  (2) *The emission record is a departure record.* `Σ` is closed and has no outside source.
+  The emission is a record at the observer's home region that the messenger has left it,
+  with the gated pointer's count attached. No trap and no clock-triggered release.
+  (3) *The reflector is a wall on an open chain.* The ring is replaced by a line with a hard
+  end, a term of the energy; the return is then the wall's and its distance is a parameter.
+  The packet bounds of UD-107 to UD-116 are to be redone for a chain with an end.
+  (4) *The second observer: at rest first, moving to pass.* An observer is a home detector
+  with its own clock carrier. Agreement of two observers at rest (up to a shift) is a step;
+  M6 is met only with an observer in relative motion, since only that tests Lorentz
+  kinematics.
+  (5) *Positive measure in the pointers' angles.* The M6 records must hold on an open set of
+  the pointers' conserved angles (UA-4 item 3, the typicality reading UA-3). The
+  messenger's packet and the clock's start remain prepared states, as apparatus input.
+  Statements on pinned fibres are steps and do not count towards M6.
 
 ### M7 — `3 + 1`
 
