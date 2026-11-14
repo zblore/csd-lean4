@@ -537,12 +537,13 @@ what would discharge or constrain it.
 
 ---
 
-### UA-18 — the radar arena (frozen 2026-11-14; nothing on it is built)
+### UA-18 — the radar arena (frozen 2026-11-14; only the bare arena and the gate operators exist)
 
 * **Assumed.** Step (3) of the plan under UO-16. This clause fixes the one arena on which
   steps (4) to (7) are to be carried out. It collects the author's decisions of 2026-11-14.
-  No Lean object exists for it yet; every item below is a commitment about what will be
-  defined, not a description of something defined.
+  In Lean only the bare five-pointer arena (~~#389~~) and the two-carrier gate operators
+  (~~#390~~) exist; no carrier, wall, flow with a gate or reading. Every item below is a
+  commitment about what will be defined, not a description of something defined.
   (a) *Three carriers on one chain with two walls.* A messenger and two clock carriers, one
   for each observer, each a two-component lattice Dirac field on the same chain of sites
   `0, …, K` with a hard wall at each end; the clocks carry the two-level structure of UA-12.
@@ -594,7 +595,8 @@ what would discharge or constrain it.
   observer's clock; the packet bounds of ~~#375~~ and ~~#379~~ for the messenger.
 * **Standing.** Choice for the arena, as UA-1, UA-13, UA-15, UA-16 and UA-17. Boundary R-015
   for the couplings. A coincidence projector joins two carriers and acts only where they are
-  at neighbouring sites. That this meets UA-9's locality is not claimed here; UA-9 is about
+  within the fixed width; its complement is `X_c` minus such a term and acts at every greater
+  separation. That this meets UA-9's locality is not claimed here; UA-9 is about
   the tensor structure and is not invoked. ⚠️ Written from the author's five decisions of 2026-11-14 and the
   three answers of the same day (the moving observer; what a reading is; coincidence gates
   only). The choices this clause adds on its own are: the boundary condition at the walls;
@@ -1150,7 +1152,7 @@ arena of UA-18 (`LF4/PentaCoupledFlow.lean`, BACKLOG ~~#389~~), and UD-140 its c
 | UD-133 | **A pointer still ready at one flow time and displayed by a later one certifies a rise of the function that drives it.** A ready pointer turned by `κ ∫₀ᵗ F` for one continuous non-negative `F`, read on the arcs of UA-4. If the readout does not display at any flow time in `[0, T_b)`, the pointer is in the ready arc at `T_b`, and the readout displays at some flow time in `[0, T_e]`, `T_b ≤ T_e`, then `∫₀^{T_b} F < ∫_{T_b}^{T_e} F`. If also `0 ≤ T_o < T_b` and `T_e − T_b ≤ T_b − T_o`, then `(T_e − T_b) ∫_{T_o}^{T_b} F < (T_b − T_o) ∫_{T_b}^{T_e} F`, and a continuous function with that inequality is not non-increasing | `rise_of_ready_then_display`, `mean_rise_of_integral_lt`, `not_antitone_of_rise` (`RecordLayer/UnifiedReadoutRise.lean`) | exact; a statement about real functions, one display history on `[0, T_e]` and one arc membership at `T_b`; the form of the drive, the rate `κ > 0` and the start angle are inputs; the ready arc read at the later flow time `T_b` is a further apparatus input (UA-4) |
 | UD-134 | **The readouts of the three-record run certify a rise, and with UD-132 a dip.** In the run of UD-130 with `T₁ = 0`, `0 < δ < π/2` (Lean: `0 ≤ δ`, `δ < π/2`, `cos δ < 1`) and the first window tightened to `κ₁ · roundUpper ≤ 1/6 − a_θ`: every continuous non-negative `F` that reproduces the first readout history on `[0, roundEnd]` and the first pointer's ready arc at `roundBack` has `∫₀^{roundBack} F < ∫_{roundBack}^{roundEnd} F`, `(roundEnd − roundBack) ∫_{roundOut}^{roundBack} F < (roundBack − roundOut) ∫_{roundBack}^{roundEnd} F`, and is not non-increasing. With the rate condition of UD-132 and the third readout history on `[0, roundBack]` in addition, the mean of `F` over `[roundOut, roundBack]` is strictly less than its mean over `[0, roundOut]` and than its mean over `[roundBack, roundEnd]`, and `F` is neither non-decreasing nor non-increasing. The run's own near-half occupancy is one such `F`. For `δ ≤ π/96` and `fineEta n δ ≤ 1/96`, `5/2 · roundUpper ≤ roundLower`. The first pointer is in its ready arc along the run exactly when `pshift (κ₁ ∫₀ᵗ nearOcc) θ` is | `five_halves_roundUpper_le_roundLower`, `echoFstReady_regionTwoFlow_iff`, `echoFstReady_threeRecord_iff`, `threeRecord_readouts_certify_rise`, `threeRecord_readouts_certify_dip`, `threeRecord_nearOcc_dip` (`RecordLayer/UnifiedReadoutRise.lean`) | exact, for every `F` consistent with the stated readouts; a rise and a dip of means, not a return and not a round trip; the tightened window and (for the dip) the rate condition are hypotheses; null sets of fibres and starts as UD-130 |
 | UD-135 | **The rate windows, the tightened window and the rate condition hold together for one choice of strengths.** With the profile `trainF`, the three region pointers at moving angle `1/30` on the fibre `0`, a margin `0 < δ ≤ π/96`, an index `n > 0` with `fineEta n δ ≤ 1/96`, and the strengths `1/(6 · roundLower)`, `1/(6 · farLower)`, `1/(6 (1 − fineEta) roundOut)`: `cos δ < 1`, the three rates are positive, and every rate hypothesis of UD-130 (at `T₁ = 0`), UD-132 and UD-134 holds. At `δ = π/96` every `n ≥ 73744` has `fineEta n δ ≤ 1/96` | `one_sub_cos_pi_div_ninetySix`, `fineEta_le_of_le`, `dipAngle`, `dipAngle_snd`, `rep_dipAngle`, `dipAngle_mem_readyArc`, `rateAt_trainF_dipAngle`, `dipInstance_windows` (`RecordLayer/UnifiedDipInstance.lean`) | exact; inequalities between real numbers; the windows are met with equality at their lower ends; the index bound is not sharp |
-| UD-136 | **One start meets every hypothesis of the three records and of the dip.** For the strengths and the start of UD-135, any ring with `640000 n³ ≤ M + 1` and any clock of UD-130: the conclusion of UD-130 at `T₁ = 0` holds; the conclusion of the dip of UD-134 holds for every continuous non-negative `F` that reproduces the stated readouts; the coupled carrier's near-half occupancy on the fibre `(0, 0)` has the dip. There exist a ring, an index and two strengths for which that occupancy has the dip at `δ = π/96`, with no hypothesis | `dipInstance_three_records`, `dipInstance_readouts_certify_dip`, `dipInstance_nearOcc_dip`, `exists_nearOcc_dip` (`RecordLayer/UnifiedDipInstance.lean`) | exact; satisfiability of the hypotheses of UD-130, UD-132, UD-134 at one start; one point of the pointers' angles (a null set), on fibres where no region pointer acts back on the messenger; the conclusions and their limits are unchanged |
+| UD-136 | **One start meets every hypothesis of the three records and of the dip.** For the strengths and the start of UD-135, any ring with `640000 n³ ≤ M + 1` and any clock of UD-130: the conclusion of UD-130 at `T₁ = 0` holds; the conclusion of the dip of UD-134 holds for every continuous non-negative `F` that reproduces the stated readouts; the coupled carrier's near-half occupancy on the fibre `(0, 0)` has the dip (on that fibre the profiles vanish and the carrier moves as the free packet). There exist a ring, an index and two strengths for which that occupancy has the dip at `δ = π/96`, with no hypothesis | `dipInstance_three_records`, `dipInstance_readouts_certify_dip`, `dipInstance_nearOcc_dip`, `exists_nearOcc_dip` (`RecordLayer/UnifiedDipInstance.lean`) | exact; satisfiability of the hypotheses of UD-130, UD-132, UD-134 at one start; one point of the pointers' angles (a null set), on fibres where no region pointer acts back on the messenger; the conclusions and their limits are unchanged |
 | UD-137 | **The accumulated reading of a clock packet is the sum of its modes' hands, and hands at nearby rates stay close linearly in the flow time.** For the device's packet on a window of distinct modes with non-zero rates, prepared at any time: the coherence at any later flow time is the sum over the modes of each mode's coherence turned at its own rate, and `∫₀ᵗ` of the uncoupled reading is `2/‖Ψ₀‖²` times the sum of the modes' hands. For rates `R₁, R₂ ≥ ρ > 0` and `t ≥ 0`, `|clockHand R₁ C t − clockHand R₂ C t| ≤ ‖C‖ |R₁ − R₂| (2t/ρ + 3/ρ²)` | `clockHand_sum`, `abs_clockHand_sub_le`, `modeRate`, `modeCoh`, `bandE_sub_eq_neg_modeRate`, `deviceCoherence_packet_shift`, `deviceCoherence_packet_eq_sum`, `integral_clockFreeRead_packet` (`RecordLayer/UnifiedClockPacket.lean`) | exact; the uncoupled device, any window of distinct modes |
 | UD-138 | **A clock packet is a swing up to a horizon, with an error linear in the horizon; its count obeys the dilated clock law.** Under `clockPointerFlow`, on a fibre where the profile vanishes, for a packet whose modes' rates and reference rate `R` are at least `ρ > 0` and `ε ≥ Σ ‖C_m‖ |R_m − R|`: up to `T` the pointer's displacement is within `4|g f'| ε (2T/ρ + 3/ρ²)/n + 4|g f'| |Re C₀|/(R n)` of the swing, and under the four threshold conditions the readout history is an `IsSwing` at the rate `R`. For the localised packet of UD-64's device, profile `trainF` on the fibre `0`, start `1/12`, strength `R/(16 Im C₀)`, `ε` the sharp drift and `κ = (1 − ((μ₁ − μ₀)/μ₀)²)/2 − (π/(2R)) ε`: if `κ > 0` and `R ε (2T/ρ + 3/ρ² + π/(2R²)) < κ/3`, the history is a swing up to `T` with error below `1/12`, and every tick count `N` at `T` has `\|2π N/(μ₁ − μ₀) − √(1 − (v/c)²) T\| ≤ 2π/(μ₁ − μ₀) + ((μ₁ − μ₀)/E₀) T` | `packetSwingErr`, `abs_clockPointerShift_packet_sub_swing_le`, `isSwing_clockPointerFlow_packet`, `sum_norm_modeCoh_mul_le`, `clock_packet_ticks` (`RecordLayer/UnifiedClockPacket.lean`) | exact under the stated conditions, which are hypotheses, explicit and linear in `T`; one fibre (a null set); a clock only, no observer; `v` is a function of the momentum, not a recorded speed |
 | UD-139 | **The five-pointer arena.** `ℂℙᴺ × T²` five times with the step form over `quadForm` is symplectic; the flow of `−2⟨A⟩ − 2⟨B_A⟩ f(θ₂) − 2⟨B_B⟩ g(ψ₂) − 2⟨B_C⟩ k(χ₂) − 2⟨B_D⟩ l(ξ₂) − 2⟨B_E⟩ r(ζ₂)` is a skew product over the fifth conserved angle (the four-torus flow with `A + r(ζ₂) B_E`, the fifth moving angle advanced by `r'(ζ₂)` times the accumulated `−2⟨B_E⟩`), and it preserves `μ_FS ⊗ vol⁵` for all Hermitian matrices | `pentaForm_isSymplectic`, `fiveCoupledEnergy_apply`, `contMDiff_fiveCoupledEnergy`, `fourCoupledEnergy_add_smul_quadRayEnergy`, `fiveCoupledFlow_apply`, `fiveCoupledFlow_fst_of_lift_eq_zero`, `fiveCoupledFlow_snd_of_lift_eq_zero`, `pentaMuL_map_fiveCoupledFlow` (`LF4/PentaCoupledFlow.lean`) | exact; the bare arena of UA-18 (d): arbitrary Hermitian matrices, no carriers, no coincidence projectors, no record read |
@@ -2593,11 +2595,11 @@ time. It is not a statement about every dynamics on `Σ`.
   direction and no instant); a record of the conclusion (the premises are a history over an
   interval of flow time and an arc membership at one flow time); a radar time. *What is still
   missing:* the same list as above.
-  ▸ **One start that meets every hypothesis, 2026-11-14 (BACKLOG ~~#387~~) → UD-135,
+  ▸ **One start that meets every rate hypothesis, 2026-11-14 (BACKLOG ~~#387~~) → UD-135,
   UD-136. Not met.** With the profile `trainF`, the three region pointers at moving angle
   `1/30` on the fibre `0`, and strengths that are reciprocals of the occupancy bounds, every
-  hypothesis of UD-130 (at `T₁ = 0`), UD-132 and UD-134 holds for `0 < δ ≤ π/96` and an index
-  with `fineEta n δ ≤ 1/96` (`dipInstance_windows`), and such an index exists
+  rate hypothesis of UD-130 (at `T₁ = 0`), UD-132 and UD-134 holds for `0 < δ ≤ π/96` and an index
+  with `fineEta n δ ≤ 1/96` (`dipInstance_windows`), and such an index exists at `δ = π/96`
   (`fineEta_le_of_le`). So those statements are not vacuous (`dipInstance_three_records`,
   `dipInstance_readouts_certify_dip`, `exists_nearOcc_dip`). *What this is not:* anything
   beyond satisfiability; a set of starts of positive measure (one point, at the edge of each
@@ -2609,9 +2611,10 @@ time. It is not a statement about every dynamics on `Σ`.
   degree of freedom, and in the variant UA-17 (f) no degree of freedom holds a count. The
   run is to be rebuilt with the three region pointers, the clock's own pointer and the gated
   pointer of UA-17 together. This needs a further clause of UA-17, not yet written.
-  (2) *The emission record is a departure record.* `Σ` is closed and has no outside source.
-  The emission is a record at the observer's home region that the messenger has left it,
-  with the gated pointer's count attached. No trap and no clock-triggered release.
+  (2) *The emission record is a departure record.* `Σ` is closed and has no outside source. The
+  emission is a record at the observer's home region that the messenger has left it, with the
+  number of tick records the gated pointer has written by then. No trap and no clock-triggered
+  release.
   (3) *The reflector is a wall on an open chain.* The ring is replaced by a line with a hard
   end, a term of the energy; the return is then the wall's and its distance is a parameter.
   The packet bounds of UD-107 to UD-116 are to be redone for a chain with an end.
@@ -2626,38 +2629,43 @@ time. It is not a statement about every dynamics on `Σ`.
   ▸ **The target and the plan, 2026-11-14 (agreed with the author). Nothing here is built.**
   *The target.* `radar_lorentz_error` (`RecordLayer/DiracTwoCharts.lean`, ~~#280~~) already
   turns seven hypotheses into the Lorentz residual: two kinematic relations (the messenger
-  covers the separation at speed `1`, out and back) and five reading bounds (the moving
-  observer `B`'s readings of its emission, its return and the meeting, within `d_E`, `d_Ret`,
-  `d_MB` of `√(1 − v²)` times their flow times; the rest observer `A`'s readings of the relay
-  event and the meeting, within `d_R`, `d_MA` of theirs). There they are hypotheses, which is
-  the kinematic law UD-17. M6 is met when, on one arena and for one flow, each of the seven is
-  a theorem about records of that flow with an explicit error, the readings are counts held
-  by pointers, and all the errors tend to zero along a family instantiated on the arena. By
-  the test above, no hypothesis may state the messenger's speed or the clock's rate; both
-  must come from the energy within stated errors (the messenger from the band velocity of a
-  packet, the moving clock from the dependence of its level splitting on its momentum).
-  *The plan, in order.* (1) This statement. (2) A probe of the moving observer: say what a
-  moving observer is in `Σ` and prove the one lemma showing its clock records exist with a
-  rate within a stated error of `√(1 − v²)` times the rest rate; if that fails, M6 fails on
-  these arenas and is reported as such. (3) Freeze the arena: the chain with walls, the
-  messenger, one clock carrier per observer, the pointers; one assumption clause. (4) One
-  observer's radar: departure record, return record from the wall, the gated count at each,
-  radar time and distance formed from the counts. (5) Two observers at rest: agreement up to
-  a shift, within stated errors. (6) The moving observer: the seven items above, and the
-  residual along the family; M6 is met here and not before. (7) The same on an open set of
-  the pointers' angles. *Rules.* No row outside this list; what is found on the way goes to
-  a Remainder line. One review per step. If a step's lemma fails, work stops and the failure
-  is reported. *Parked for step (4):* UD-135, UD-136 (~~#387~~) and the mirror lemma for the
-  wall.
+  covers the separation at speed `1`, out and back) and five reading bounds (the moving observer
+  `B`'s readings of its emission, its return and the meeting, within `d_E`, `d_Ret`, `d_MB` of
+  `√(1 − v²)` times their flow times; the rest observer `A`'s readings of the relay event and
+  the meeting, within `d_R`, `d_MA` of theirs). There they are hypotheses, which is the
+  kinematic law UD-17. M6 is met when, on one arena and for one flow, each of the seven is a
+  theorem about records of that flow with an explicit error, each reading is the number of tick
+  records a gated pointer wrote in its first open period (UA-18 (e); no coordinate holds that
+  number), and all the errors tend to zero along a family instantiated on the arena. By the test
+  above, no hypothesis may state the messenger's speed or the clock's rate; both must come from
+  the energy within stated errors (the messenger from the band velocity of a packet, the moving
+  clock from the dependence of its level splitting on its momentum). *The plan, in order.* (1)
+  This statement. (2) A probe of the moving observer: say what a moving observer is in `Σ` and
+  prove the one lemma showing its clock records exist with a rate within a stated error of
+  `√(1 − v²)` times the rest rate; if that fails, M6 fails on these arenas and is reported as such.
+  (3) Freeze the arena: the chain with walls, the messenger, one clock carrier per observer, the
+  pointers; one assumption clause. (4) One observer's radar: departure record, return record
+  from the wall, the number of gated tick records at each, radar time and distance formed from
+  the counts. (5) Two observers at rest: agreement up to a shift, within stated errors. (6) The
+  moving observer: the seven items above, and the residual along the family; M6 is met here and
+  not before. (7) The same on an open set of the pointers' angles. *Rules.* No row outside this
+  list; what is found on the way goes to a Remainder line. One review per step. If a step's
+  lemma fails, work stops and the failure is reported. *Parked for step (4):* UD-135, UD-136
+  (~~#387~~) and the mirror lemma for the wall.
   ▸ **Step (2), the probe of the moving observer, 2026-11-14 (BACKLOG ~~#388~~) → UD-137,
-  UD-138. Not met; the probe does not fail.** The author decided: the moving observer is a
-  localised packet of the clock carrier with a coincidence detector (a pointer turned when
-  the messenger and the clock carrier are at the same site). Its clock: on a fibre where the
-  pointer's profile vanishes, a clock packet's pointer is a swing up to a horizon with an
-  error linear in the horizon (`isSwing_clockPointerFlow_packet`), and for the localised
-  packet of UD-64's device the count obeys the dilated clock law under one explicit
-  inequality linear in `T` (`clock_packet_ticks`). *Conditions:* that inequality, `κ > 0` and
-  a lower bound of the rates, all hypotheses; one fibre; one start. *What this is not:* an
+  UD-138. Not met; the probe found no obstruction and is not decided.** The author decided: the
+  moving observer is a localised packet of the clock carrier with a coincidence detector (a
+  pointer turned when the messenger and the clock carrier are within a fixed width of each
+  other). Its clock: on a fibre where the pointer's profile vanishes, a clock packet's pointer
+  is a swing up to a horizon with an error bound linear in the horizon
+  (`isSwing_clockPointerFlow_packet`), and for the localised packet of UD-64's device the count
+  obeys the dilated clock law under one explicit inequality linear in `T`
+  (`clock_packet_ticks`). *Conditions:* that inequality, `κ > 0` and a lower bound of the rates,
+  all hypotheses; one fibre; one start. *Not shown:* that any packet of positive width meets the
+  conditions; that the horizon they allow contains one tick (the conclusion bounds every count
+  at `T` and does not show the count positive). The plan's step (2) asked for a lemma showing
+  that the clock records exist; this is a conditional bound and falls short of that.
+  *What this is not:* an
   observer (no messenger, no detector, no meeting); an exhibited packet of positive width;
   a recorded speed. *What the probe leaves open:* the coincidence detector, which is a new
   term in the energy (step (3)); the packet's position as a record; a horizon shown long

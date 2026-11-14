@@ -8,7 +8,7 @@ module
 public import CsdLean4.RecordLayer.UnifiedDiracClockTicks
 
 /-!
-# A moving clock packet: dephasing linear in the horizon
+# A clock packet at a reference momentum: a dephasing bound linear in the horizon
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #388 — milestone **M6** of the author's
 programme "From `Σ` to physical spacetime", obligation UO-16; step (2) of the plan of
@@ -18,8 +18,8 @@ The author decided (2026-11-14) that the moving observer is a localised packet o
 carrier with a coincidence detector. This module is about that observer's clock only. #358
 (`clock_tick_device`) has the tick law for a localised clock packet, but its localisation
 error grows as the square of the horizon and no packet of positive width was shown to meet
-its conditions. Here, on a fibre where the pointer's profile vanishes, the error is linear in
-the horizon.
+its conditions. Here, on a fibre where the pointer's profile vanishes, the error bound is
+linear in the horizon.
 
 **How.** On such a fibre the pointer is turned by the uncoupled reading. For a packet on a
 window of distinct modes that reading is a sum over the modes, each turning at its own rate,
@@ -45,9 +45,10 @@ differ by at most `‖C‖ |R₁ − R₂| (2t/ρ + 3/ρ²)` (`abs_clockHand_sub
   The coincidence detector of the author's decision is not built.
 * **The conditions are hypotheses, explicit and linear in `T`.** They are `κ > 0`,
   `R ε (2T/ρ + 3/ρ² + π/(2R²)) < κ/3`, and a lower bound `ρ > 0` of the modes' rates and of
-  the reference rate. A single mode has `ε = 0` and meets them at every horizon. No packet of
-  positive width is exhibited with numbers. That a lower bound `ρ` follows from the window
-  (through `clockRate_mem`) is a calculation, not in Lean.
+  the reference rate. A single mode on the lattice (`D = 0`, `μ₁ < 2μ₀`, `ρ = R`) has
+  `ε = 0` and meets them at every horizon; that is a calculation, not in Lean, and is the
+  case #358 already has. No packet of positive width is shown to meet them. That a lower
+  bound `ρ` follows from the window (through `clockRate_mem`) is a calculation, not in Lean.
 * **One fibre and one start.** The pointer's profile is `trainF` on the fibre `0`, where it
   vanishes and the pointer does not act back on the clock; the pointer starts at `1/12`; the
   packet is prepared a quarter turn early. A null set. Off that fibre the back-reaction term
@@ -58,6 +59,10 @@ differ by at most `‖C‖ |R₁ − R₂| (2t/ρ + 3/ρ²)` (`abs_clockHand_sub
 * **The count is compared with the flow time** (UA-7). No record holds `T`.
 * **The dilation error is the finite splitting**, `((μ₁ − μ₀)/E₀) T`, as in #358; it does not
   shrink with the packet's width.
+* **Not shown: that a tick exists.** The conclusion bounds every tick count at `T`; it does
+  not show that the count is positive. The horizon the condition allows is not shown to be
+  longer than one period `2π/R`, and for a shorter one the count is zero and the bound is
+  its own slack term.
 * **Not shown: that the horizon is long enough for a radar exchange.** An estimate (a
   calculation, not in Lean): the horizon allowed is of order `1/ε`, within which the packet
   travels of order `E/(μ₁ − μ₀)` of its own widths.

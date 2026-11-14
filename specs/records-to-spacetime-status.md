@@ -242,32 +242,33 @@ flow time by which each is complete; the difference of the counts times the peri
 two periods of the difference of those flow times. Both writes are thresholds of accumulated
 occupancy and certify neither an arrival nor a return. With a second near-half pointer in
 place of the gated pointer (BACKLOG ~~#384~~, `RecordLayer/UnifiedThreeRecords.lean`; UA-17
-(f), not yet read by the author) one run has a third write, during the first presence, and
-the clock's count at all three. The midpoint of the first and last flow times lies in the
-absence, by arithmetic on the three intervals and only to within the absence's whole length.
-The first write is not an emission record: the start is prepared. In that variant no
-term couples the messenger and the clock, so the composite carrier is not exercised. Two of those
-readouts, taken together with their rates and start angles, and under a rate condition that is a
-hypothesis (the rate windows of that run do not imply it), certify that the function driving them
-dropped in the mean between the first presence and the start of the return leg (BACKLOG ~~#385~~,
+(f), not yet read by the author) one run has a third write, during the first presence, and the
+clock's count at all three. The midpoint of the first and last flow times lies in the absence,
+by arithmetic on the three intervals and only to within the absence's whole length. The first
+write is not an emission record: the start is prepared. In that variant no term couples the
+messenger and the clock, so the composite carrier is not exercised. Two of those readouts, taken
+together with their rates and start angles, and under a rate condition that is a hypothesis (the
+rate windows of that run do not imply it), certify that the function driving them dropped in the
+mean between the first presence and the start of the return leg (BACKLOG ~~#385~~,
 `RecordLayer/UnifiedReadoutCertificate.lean`): under that condition no constant occupancy
 reproduces both. That is a drop of a mean read from two readout histories, not a record of a
-departure. One pointer read on two arcs, its ready arc at the start of the return leg (a
-further apparatus input) and its displayed arc after, certifies that the same function
-accumulated more over the return leg than in all the time before it (BACKLOG ~~#386~~,
+departure. One pointer read on two arcs, its ready arc at the start of the return leg (a further
+apparatus input) and its displayed arc after, certifies that the same function accumulated more
+over the return leg than in all the time before it (BACKLOG ~~#386~~,
 `RecordLayer/UnifiedReadoutRise.lean`), under a tightened rate window; with the drop, the mean
 over the middle interval is below the mean before and the mean after. That is a dip of a mean
-read from readouts at flow times, not a record of a return. One start is shown in Lean to
-meet every hypothesis of these statements and of the three records (BACKLOG ~~#387~~,
-`RecordLayer/UnifiedDipInstance.lean`): one point, on fibres where no region pointer acts
-back on the messenger, with strengths tuned to the round trip's schedule. That shows the
-statements are not vacuous and nothing more. A plan to M6 was agreed on 2026-11-14 and is
-in the contract under UO-16; its second step, a probe of the moving observer's clock, is
-done (BACKLOG ~~#388~~, `RecordLayer/UnifiedClockPacket.lean`): a localised packet of the
-clock carrier ticks, and its count obeys the dilated clock law, up to a horizon limited
-linearly by its dephasing, under explicit conditions that are hypotheses and on one fibre.
-That is a clock and not yet an observer. No count is read by a record, there is no reflector, and no radar time
-is formed.
+read from readouts at flow times, not a record of a return. One start is shown in Lean to meet
+every rate hypothesis and the round-fibre bound of these statements and of the three records
+(BACKLOG ~~#387~~, `RecordLayer/UnifiedDipInstance.lean`): one point, on fibres where no region
+pointer acts back on the messenger, with strengths tuned to the round trip's schedule. That
+shows the statements are not vacuous and nothing more. A plan to M6 was agreed on 2026-11-14 and
+is in the contract under UO-16; its second step, a probe of the moving observer's clock, is done
+(BACKLOG ~~#388~~, `RecordLayer/UnifiedClockPacket.lean`): for a localised packet of the clock
+carrier, a swing and a bound on every tick count by the dilated clock law, up to a horizon
+limited linearly by its dephasing, under explicit conditions that are hypotheses and on one
+fibre. No packet of positive width is shown to meet the conditions, and no tick is shown to
+exist. That is a clock and not yet an observer. No count is read by a record, there is no
+reflector, and no radar time is formed.
 
 ## What is open
 

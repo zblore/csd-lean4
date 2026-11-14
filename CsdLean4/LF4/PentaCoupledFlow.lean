@@ -15,7 +15,7 @@ public import CsdLean4.LF4.QuadCoupledFlow
 
 **Category:** 3-Local (the Kähler arena). BACKLOG #389 — the author's programme "From `Σ` to
 physical spacetime", milestone M6, step (4) of the plan of 2026-11-14: the manifold, form,
-energy, flow and invariant measure of the radar arena of UA-18, which has five pointers.
+energy, flow and invariant measure of the bare five-pointer arena that UA-18 (d) names.
 
 The arena is `ℂℙᴺ × (T²)⁵`, with the energy
 

@@ -86,7 +86,8 @@ occupancy is one such `F` (`threeRecord_nearOcc_drop`).
   ready arc at the start of the return leg and on its displayed arc after, certifies a rise;
   with the drop here, a dip of the mean. #387
   (`RecordLayer/UnifiedDipInstance.lean`) exhibits one start, on the fibres where the profiles
-  vanish, that meets every hypothesis here.
+  vanish, that meets every rate hypothesis and the round-fibre bound here; the readout
+  premises on `F` remain hypotheses.
 
 ## References
 

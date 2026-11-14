@@ -42,9 +42,10 @@ the two sites are related. `gateOp σ τ r Y` is that projector times `1 ⊗ Y`.
 * **Two carriers.** UA-18 has three. A gate between two of them on the composite of three is
   to be obtained by taking one factor here to be a product; that is not done here.
 * **The product-ray formulas are about product rays.** A gated term in the energy joins the
-  two carriers. Under its flow a product ray does not in general stay a product ray; it does
-  on a fibre where the pointer's profile vanishes (as in #376). The formulas say nothing
-  about an entangled ray.
+  two carriers. No such flow is defined here. Under one a product ray is not expected to
+  stay a product ray, except on a fibre where the pointer's profile vanishes (as in #376)
+  when the uncoupled energy does not join the carriers; neither is shown. The formulas say
+  nothing about an entangled ray.
 * **Earlier.** #376 has the product coupling `P ⊗ X` for one region projector `P`
   (`gateFlow`, UA-17 (c)); `arenaObs_kronecker` (`CV/ProductRay.lean`) is the factorisation
   used here term by term.
@@ -218,7 +219,10 @@ theorem gateOp_eq_sum (Y : Matrix κ κ ℂ) :
   · rw [zero_mul]
 
 /-- ★★ **On a product ray the gated operator reads, for each related pair of sites, the first
-carrier's occupancy of its site times the second carrier's reading of `Y` at its site.** -/
+carrier's occupancy of its site times `arenaObs (siteSel τ s' * Y)` of the second carrier.**
+That factor is the real part of the expectation of `P_{s'} Y`; it is the reading of an
+observable when `Y` does not move the carrier between sites
+(`coincProj_mul_one_kronecker`). -/
 theorem arenaObs_gateOp_prodRay (Y : Matrix κ κ ℂ) (p : GenArena ι) (q : GenArena κ) :
     arenaObs (gateOp σ τ r Y) (prodRay p q)
       = ∑ s, ∑ s', if r s s'

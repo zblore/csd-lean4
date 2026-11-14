@@ -96,7 +96,8 @@ run's own near-half occupancy is one such `F` (`threeRecord_nearOcc_dip`).
   accumulated occupancies, with no pointer in it. `echoFstReady` is #364's set, used there
   for the start only. Nothing here is evidence about Lorentz kinematics.
 * **Later.** #387 (`RecordLayer/UnifiedDipInstance.lean`) exhibits one start, on the fibres where the
-  profiles vanish, that meets every hypothesis here.
+  profiles vanish, that meets every rate hypothesis and the round-fibre bound here; the
+  readout premises on `F` remain hypotheses.
 
 ## References
 

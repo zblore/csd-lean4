@@ -20170,7 +20170,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.threeRecord_nearOcc_dip
 
-/-! #387 (the author's programme, obligation UO-16; the satisfiability caveat of #382–#386): one start meets every hypothesis of the three records (#384), the drop (#385) and the rise and dip (#386) — profile trainF, the three region pointers at moving angle 1/30 on the fibre 0, strengths the reciprocals of six times the occupancy bounds, margin 0 < δ ≤ π/96 and an index with fineEta n δ ≤ 1/96 (every n ≥ 73744 at δ = π/96). Satisfiability at one point, on fibres where no region pointer acts back on the messenger; the conclusions and their limits are unchanged (`RecordLayer/UnifiedDipInstance.lean`). -/
+/-! #387 (the author's programme, obligation UO-16; the satisfiability caveat of #384–#386): one start meets every rate hypothesis and the round-fibre bound of the three records (#384), the drop (#385) and the rise and dip (#386) — profile trainF, the three region pointers at moving angle 1/30 on the fibre 0, strengths the reciprocals of six times the occupancy bounds, margin 0 < δ ≤ π/96 and an index with fineEta n δ ≤ 1/96 (every n ≥ 73744 at δ = π/96). Satisfiability at one point, on fibres where no region pointer acts back on the messenger; the conclusions and their limits are unchanged (`RecordLayer/UnifiedDipInstance.lean`). -/
 
 /-- info: 'CSD.RecordLayer.one_sub_cos_pi_div_ninetySix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
@@ -20220,7 +20220,7 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.exists_nearOcc_dip
 
-/-! #388 (the author's programme, obligation UO-16; step (2) of the plan of 2026-11-14): a moving clock packet — the accumulated reading is exactly the sum of its modes' hands, two hands at nearby rates differ linearly in the flow time, so on a fibre where the profile vanishes the pointer is a swing up to a horizon with an error linear in the horizon, and for the localised packet of #262's device the count obeys the dilated clock law under one explicit inequality linear in T. A clock, not an observer; the conditions are hypotheses (`RecordLayer/UnifiedClockPacket.lean`). -/
+/-! #388 (the author's programme, obligation UO-16; step (2) of the plan of 2026-11-14): a clock packet at a reference momentum — the accumulated reading is exactly the sum of its modes' hands, two hands at nearby rates differ linearly in the flow time, so on a fibre where the profile vanishes the pointer is a swing up to a horizon with an error linear in the horizon, and for the localised packet of #262's device every tick count obeys the dilated clock bound under one explicit inequality linear in T. A clock, not an observer; the conditions are hypotheses, no packet of positive width is shown to meet them, and no tick is shown to exist (`RecordLayer/UnifiedClockPacket.lean`). -/
 
 /-- info: 'CSD.RecordLayer.clockHand_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in

@@ -15,7 +15,8 @@ programme "From `Σ` to physical spacetime", obligation UO-16. No new assumption
 
 #382 to #386 each carried the caveat that the rate windows, the round-fibre bound and (for
 #385 and #386) the rate condition and the tightened window are hypotheses, and that no start
-was shown in Lean to meet them together. This module exhibits one.
+was shown in Lean to meet them together. This module exhibits one for #384, #385 and #386.
+The theorems of #382 and #383 are stated on other flows and are not instantiated here.
 
 **The instance.** All three region pointers have the profile `trainF` and start at
 `dipAngle`: moving angle `1/30`, conserved angle `0`. On that fibre the profile vanishes and
@@ -342,7 +343,9 @@ include h0 h01 hβ in
 /-- ★ **The run's own near-half occupancy has the dip, with no rate hypothesis left.** For
 the strengths of `dipInstance_windows`, the near-half occupancy of the coupled carrier on the
 fibre `(0, 0)` satisfies both inequalities of the dip and is neither non-decreasing nor
-non-increasing. -/
+non-increasing. On this fibre both profiles vanish, so the carrier moves as the free packet
+(module header). The clock's hypotheses are carried from `threeRecord_nearOcc_dip`; the
+statement mentions no clock. -/
 theorem dipInstance_nearOcc_dip :
     roundOut n δ * ∫ s in roundOut n δ..roundBack n δ,
           nearOcc g₁ g₂ trainF_periodic trainF_periodic hn hL dipAngle.2 dipAngle.2 s
@@ -369,7 +372,8 @@ end Instance
 /-- ★ **The dip exists, with no hypothesis left.** There are a ring, a packet index and two
 strengths for which the coupled carrier's near-half occupancy on the fibre `(0, 0)` has the
 dip at the margin `π/96`. The witness is the packet index `73744`, a ring of
-`640000 · 73744³ + 1` sites and the strengths of `dipInstance_windows`. -/
+`640000 · 73744³ + 1` sites and the strengths of `dipInstance_windows`. On this fibre both
+profiles vanish, so the carrier moves as the free packet (module header). -/
 theorem exists_nearOcc_dip :
     ∃ (M n : ℕ) (hn : 0 < n) (hL : 640000 * n ^ 3 ≤ M + 1) (g₁ g₂ : ℝ),
       roundOut n (Real.pi / 96) * ∫ s in roundOut n (Real.pi / 96)..roundBack n (Real.pi / 96),
