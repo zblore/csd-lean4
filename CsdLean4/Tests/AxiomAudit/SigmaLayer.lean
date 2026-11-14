@@ -20274,4 +20274,66 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.clock_packet_ticks
 
+/-! #390 (the author's programme, obligation UO-16; step (4) of the plan of 2026-11-14, second brick): the couplings of UA-18 (c) as operators — the coincidence projector of two carriers (diagonal, 1 where the two sites are related), its complement, its decomposition into products of site projectors, the gated operator coincProj · (1 ⊗ Y), Hermitian when Y does not move the carrier between sites, and the expectations of both on product rays. Operators only (`RecordLayer/UnifiedCoincidence.lean`). -/
+
+/-- info: 'CSD.RecordLayer.arenaObs_zero'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_zero'
+
+/-- info: 'CSD.RecordLayer.arenaObs_finset_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_finset_sum
+
+/-- info: 'CSD.RecordLayer.siteSel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSel
+
+/-- info: 'CSD.RecordLayer.siteSel_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSel_isHermitian
+
+/-- info: 'CSD.RecordLayer.coincProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincProj
+
+/-- info: 'CSD.RecordLayer.coincProj_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincProj_isHermitian
+
+/-- info: 'CSD.RecordLayer.coincProj_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincProj_mul_self
+
+/-- info: 'CSD.RecordLayer.one_sub_coincProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_coincProj
+
+/-- info: 'CSD.RecordLayer.coincProj_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincProj_eq_sum
+
+/-- info: 'CSD.RecordLayer.arenaObs_coincProj_prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_coincProj_prodRay
+
+/-- info: 'CSD.RecordLayer.gateOp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateOp
+
+/-- info: 'CSD.RecordLayer.coincProj_mul_one_kronecker' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincProj_mul_one_kronecker
+
+/-- info: 'CSD.RecordLayer.gateOp_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateOp_isHermitian
+
+/-- info: 'CSD.RecordLayer.gateOp_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateOp_eq_sum
+
+/-- info: 'CSD.RecordLayer.arenaObs_gateOp_prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_gateOp_prodRay
+
 end CSD.Tests.AxiomAudit
