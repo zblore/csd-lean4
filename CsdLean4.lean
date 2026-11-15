@@ -817,6 +817,7 @@ public import CsdLean4.RecordLayer.UnifiedEmissionReading
 public import CsdLean4.RecordLayer.UnifiedEmissionValues
 public import CsdLean4.RecordLayer.UnifiedWindowSwing
 public import CsdLean4.RecordLayer.UnifiedReturnReading
+public import CsdLean4.RecordLayer.UnifiedStopBand
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers

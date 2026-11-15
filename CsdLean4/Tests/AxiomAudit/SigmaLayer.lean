@@ -20914,4 +20914,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.flat_clock_return_reading
 
+/-! #400 (the author's programme, obligation UO-16; step (4) of the plan of 2026-11-14, tenth brick): where the emission pointer stops — within a stated bound of the clock's swing at the flow time its gate begins to close; for a gate that closes within a small part of a tick the band of #398 is replaced by a condition on the clock's phase. The band is not removed; no values exhibited (`RecordLayer/UnifiedStopBand.lean`). -/
+
+/-- info: 'CSD.RecordLayer.narrow_clock_packet_swing_fine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.narrow_clock_packet_swing_fine
+
+/-- info: 'CSD.RecordLayer.flat_clock_swing_fine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_clock_swing_fine
+
+/-- info: 'CSD.RecordLayer.coincShift_stop_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_stop_le
+
+/-- info: 'CSD.RecordLayer.coincFlow_return_reading_of_phase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincFlow_return_reading_of_phase
+
+/-- info: 'CSD.RecordLayer.flat_clock_return_reading_of_phase' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_clock_return_reading_of_phase
+
 end CSD.Tests.AxiomAudit
