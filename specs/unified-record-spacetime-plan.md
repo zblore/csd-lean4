@@ -2101,7 +2101,10 @@ UD-158. They pass no gate, and UO-16 is not met. Assumptions used: as UD-152. �
 author:* the note under UD-155 and UD-156 stands, in this sharper form: the return reading
 is now conditional on the clock's phase at closing and on a fast closing, not on where a
 pointer stopped; whether a run that fails the phase condition is to be excluded, or the
-arrangement changed so that no such condition is needed, is the author's decision.
+arrangement changed so that no such condition is needed, is the author's decision. *Settled
+2026-11-15 by the charter, see the note under UO-16: the condition is an inequality on the
+prepared parameters (UA-18 (b), UA-4); M6 must exhibit values meeting it and say that
+outside it this arrangement gives no reading.*
 
 Exact scope of UD-161 and UD-162 (BACKLOG ~~#401~~; step (4) of the plan under UO-16). What
 they give. Both pointers of the run with both gates are read: the first pointer's count `N_e`
@@ -3085,6 +3088,22 @@ time. It is not a statement about every dynamics on `Σ`.
   *What step (4) still needs:* a family of values with a return and a quickly closing gate;
   the author's decisions on the phase condition and on the first pointer ticking on after
   the return.
+  ▸ **Two points settled by the charter, 2026-11-15 (the author's instruction: follow the
+  charter's guidance).** (i) *The first pointer ticking on after the return.* UA-18 (e)
+  already decides it: a reading is the number of tick records of the pointer's first open
+  period, a fact about the run, fixed from the event that closes the gate until the gate
+  reopens; ticks written after it belong to no reading, and no coordinate stores the number.
+  The charter's record is an actual occurrence of the flow, not a value some pointer shows
+  later. So UD-161 and UD-162 are in the required form (each states its window), and M6 is
+  not asked for a pointer that shows two readings together. (ii) *The phase condition
+  `1/6 < |cos R t_a|` and the quickly closing gate.* By UA-18 (b) and UA-4 the three carriers
+  are prepared states and are not varied over. The clock's phase when the gate closes is
+  fixed by the preparation, so the condition is one more inequality on the prepared
+  parameters, of the same kind as the budgets. It is admitted on that footing, with two
+  consequences that bind M6: the statement must exhibit values that meet it, and its scope
+  must say that for preparations outside it (and UD-156 shows such preparations exist) this
+  arrangement of pointers gives no reading. No preparation is excluded silently, and no new
+  kind of term is added to the arena to avoid the condition (UA-18 (c)).
 
 ### M7 — `3 + 1`
 
