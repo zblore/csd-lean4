@@ -26,14 +26,16 @@ statement with explicit errors. Everything not proved here is a named hypothesis
   `|2π N − R t_a| ≤ 2π (3 v (t_b − t_a) + 7/2)`, for a pointer read through any projection;
 * `IsAwayHistory`, `IsAwayHistory.exists_count` — the same for a pointer whose gate is closed,
   open and closed again (#399), with the band of #398 as a field;
+* `gatedErr`, `awayErr` — the two error terms, in ticks times `2π`;
 * `abs_div_sub_le_of_rate` — a count compared with a rate times a time, in the unit of the
-  rest rate;
+  rest rate, when the rate is within `κ R₀` of `s R₀` and the time within `τ` of another;
 * ★★★ `radar_lorentz_of_histories` — one run `γ` with five pointers. If `B`'s emission,
-  return and meeting pointers and `A`'s relay and meeting pointers have these histories, with
-  `B`'s rate `√(1 − v²)` times `A`'s rate `R₀`, and the four flow times satisfy the two
-  relations of a light signal and an observer of velocity `v`, then the five counts, in the
-  unit `2π/R₀`, satisfy the Lorentz statement of `radar_lorentz_error` with errors read off
-  the histories.
+  return and meeting pointers and `A`'s relay and meeting pointers have these histories;
+  `B`'s rate is within `κ R₀` of `√(1 − v²) R₀`, `A`'s rate is `R₀`; the flow times at which
+  the five gates close are within tolerances `τ` of four times `T_E`, `T_R`, `T_Ret`, `T_M`;
+  and those four satisfy the two relations of a light signal and an observer of velocity
+  `v`: then the five counts, in the unit `2π/R₀`, satisfy the Lorentz statement of
+  `radar_lorentz_error` with errors read off the histories, `κ` and the tolerances.
 
 ## Exact scope: what is assumed here and is still to be proved
 
@@ -47,12 +49,15 @@ of one flow on the arena of UA-18, with values exhibited. None is, on that arena
 2. **Where the carriers are.** That the messenger, `A`'s clock and `B`'s clock are together
    and apart at the stated flow times: packets on the chain with two walls, the reflection
    at the wall, `A` at rest, `B` moving. Not built.
-3. **The two relations between the flow times**, `t_R − t_E = v (t_M − t_E)` and
-   `t_Ret − t_R = v (t_M − t_Ret)`. They state the messenger's speed (one) and `B`'s velocity
-   (`v`). By the test of UO-16 they may not stay hypotheses: they are to come from the band
-   velocities of the packets.
-4. **The moving clock's rate**, `R_B = √(1 − v²) R₀`. By the same test it may not stay a
-   hypothesis: it is to come from UD-138.
+3. **The four times and their two relations**, `T_R − T_E = v (T_M − T_E)` and
+   `T_Ret − T_R = v (T_M − T_Ret)`, and the tolerances between them and the flow times at
+   which the gates close. The relations state the messenger's speed (one) and `B`'s velocity
+   (`v`). By the test of UO-16 they may not stay hypotheses: the four times are to be
+   defined from the packets' band velocities, and the tolerances proved. A messenger slower
+   than one enters here, as a tolerance.
+4. **The moving clock's rate**, `|R_B − √(1 − v²) R₀| ≤ κ R₀`. By the same test it may not
+   stay a hypothesis: it is to come from the dispersion of the two levels (UD-142 has the
+   count law of one moving clock in this form, with `κ` of the order of the level gap).
 5. **The band** of the return pointer (a field of `IsAwayHistory`), or the conditions of #400
    that imply it.
 6. **Values** meeting all the inequalities together.
@@ -166,34 +171,58 @@ theorem IsAwayHistory.exists_count {X : Type*} {π : X → KTorus} {γ : ℝ →
 
 /-! ### M6 from five histories -/
 
+/-- **The error of a gated count**, in ticks times `2π`: `2π (3 v (t_b − t_a) + 7/2)`. -/
+def gatedErr (v ta tb : ℝ) : ℝ := 2 * Real.pi * (3 * v * (tb - ta) + 7 / 2)
+
+/-- **The error of an away count**, in ticks times `2π`:
+`2π (3 v ((t_b − t_a) + (t₄ − t₃)) + 7)`. -/
+def awayErr (v ta tb t3 t4 : ℝ) : ℝ := 2 * Real.pi * (3 * v * ((tb - ta) + (t4 - t3)) + 7)
+
 /-- A count compared with a rate times a flow time, in the unit of the rest rate: if
-`|x − R t| ≤ E` and `R = s R₀`, then `|x/R₀ − s t| ≤ E/R₀`. -/
-theorem abs_div_sub_le_of_rate {x R R₀ s t E : ℝ} (hR₀ : 0 < R₀) (hR : R = s * R₀)
-    (h : |x - R * t| ≤ E) : |x / R₀ - s * t| ≤ E / R₀ := by
-  have e : x / R₀ - s * t = (x - R * t) / R₀ := by
-    rw [hR]
+`|x − R t| ≤ E`, the rate `R` is within `κ R₀` of `s R₀` with `0 ≤ s ≤ 1`, and `t ≥ 0` is
+within `τ` of `T`, then `|x/R₀ − s T| ≤ E/R₀ + κ t + τ`. -/
+theorem abs_div_sub_le_of_rate {x R R₀ s t T E κ τ : ℝ} (hR₀ : 0 < R₀) (hs0 : 0 ≤ s)
+    (hs1 : s ≤ 1) (hκ : |R - s * R₀| ≤ κ * R₀) (ht : 0 ≤ t) (hτ : |t - T| ≤ τ)
+    (h : |x - R * t| ≤ E) : |x / R₀ - s * T| ≤ E / R₀ + κ * t + τ := by
+  have e : x / R₀ - s * T = (x - R * t) / R₀ + (R - s * R₀) * t / R₀ + s * (t - T) := by
     field_simp
-  rw [e, abs_div, abs_of_pos hR₀]
-  exact div_le_div_of_nonneg_right h hR₀.le
+    ring
+  have h1 : |(x - R * t) / R₀| ≤ E / R₀ := by
+    rw [abs_div, abs_of_pos hR₀]
+    exact div_le_div_of_nonneg_right h hR₀.le
+  have h2 : |(R - s * R₀) * t / R₀| ≤ κ * t := by
+    rw [abs_div, abs_mul, abs_of_pos hR₀, abs_of_nonneg ht, div_le_iff₀ hR₀]
+    calc |R - s * R₀| * t ≤ κ * R₀ * t := mul_le_mul_of_nonneg_right hκ ht
+      _ = κ * t * R₀ := by ring
+  have h3 : |s * (t - T)| ≤ τ := by
+    rw [abs_mul, abs_of_nonneg hs0]
+    calc s * |t - T| ≤ 1 * τ := mul_le_mul hs1 hτ (abs_nonneg _) zero_le_one
+      _ = τ := one_mul τ
+  rw [e]
+  exact (abs_add_three _ _ _).trans (add_le_add (add_le_add h1 h2) h3)
 
 /-- ★★★ **M6 from the top: the Lorentz statement from five pointer histories of one run.**
 One run `γ` with five pointers, read through the projections `πe`, `πr`, `πμ` (observer `B`:
 emission, return, meeting) and `πρ`, `πm` (observer `A`: relay, meeting), each started at
 `1/12`. Suppose `B`'s emission and meeting pointers and `A`'s relay and meeting pointers have
-gated histories, closing at the flow times `t_E`, `t_M`, `t_R`, `t_M`; `B`'s return pointer
+gated histories, closing at the flow times `t_E`, `t_MB`, `t_R`, `t_MA`; `B`'s return pointer
 has an away history, open from the end of the emission's closing to `t_Ret`; `B`'s rate is
-`√(1 − v²) R₀` and `A`'s is `R₀`; and `t_R − t_E = v (t_M − t_E)`,
-`t_Ret − t_R = v (t_M − t_Ret)`. Then at every choice of flow times in the five reading
-windows the pointers have counts `N_e`, `N_r`, `N_μ`, `N_ρ`, `N_m`, and with
-`e = 2π N_e/R₀`, `r = 2π (N_e + N_r)/R₀`, `μ = 2π N_μ/R₀`, `ρ = 2π N_ρ/R₀`, `m = 2π N_m/R₀`
-the Lorentz boost of `A`'s chart `(ρ − m, 0)` is within the stated errors of `B`'s radar
-chart `((e + r)/2 − μ, −(r − e)/2)`. -/
+within `κ R₀` of `√(1 − v²) R₀` and `A`'s is `R₀`; those five flow times are within `τ_E`,
+`τ_MB`, `τ_R`, `τ_MA`, `τ_Ret` of times `T_E`, `T_M`, `T_R`, `T_M`, `T_Ret`; and
+`T_R − T_E = v (T_M − T_E)`, `T_Ret − T_R = v (T_M − T_Ret)`. Then at every choice of flow
+times in the five reading windows the pointers have counts `N_e`, `N_r`, `N_μ`, `N_ρ`, `N_m`,
+and with `e = 2π N_e/R₀`, `r = 2π (N_e + N_r)/R₀`, `μ = 2π N_μ/R₀`, `ρ = 2π N_ρ/R₀`,
+`m = 2π N_m/R₀` the Lorentz boost of `A`'s chart `(ρ − m, 0)` is within the stated errors of
+`B`'s radar chart `((e + r)/2 − μ, −(r − e)/2)`. -/
 theorem radar_lorentz_of_histories {X : Type*} {πe πr πμ πρ πm : X → KTorus} {γ : ℝ → X}
     {qe qr qμ qρ qm : KTorus} {De Dr Dμ Dρ Dm : ℝ → ℝ}
-    {v R₀ RB tE tR tRet tM : ℝ} {δe ve tbe tce c vr η₀ η t4 t5 δμ vμ tbμ tcμ δρ vρ tbρ tcρ
-      δm vm tbm tcm : ℝ}
-    (hv0 : 0 ≤ v) (hv : v < 1) (hR₀ : 0 < R₀) (hRB : RB = Real.sqrt (1 - v ^ 2) * R₀)
-    (hE : tR - tE = v * (tM - tE)) (hRet : tRet - tR = v * (tM - tRet))
+    {v R₀ RB κ TE TR TRet TM tE tR tRet tMB tMA τE τR τRet τMB τMA : ℝ}
+    {δe ve tbe tce c vr η₀ η t4 t5 δμ vμ tbμ tcμ δρ vρ tbρ tcρ δm vm tbm tcm : ℝ}
+    (hv0 : 0 ≤ v) (hv : v < 1) (hR₀ : 0 < R₀)
+    (hκ : |RB - Real.sqrt (1 - v ^ 2) * R₀| ≤ κ * R₀)
+    (hE : TR - TE = v * (TM - TE)) (hRet : TRet - TR = v * (TM - TRet))
+    (hτE : |tE - TE| ≤ τE) (hτRet : |tRet - TRet| ≤ τRet) (hτMB : |tMB - TM| ≤ τMB)
+    (hτR : |tR - TR| ≤ τR) (hτMA : |tMA - TM| ≤ τMA)
     (hqe : rep qe.1 = 1 / 12) (hqr : rep qr.1 = 1 / 12) (hqμ : rep qμ.1 = 1 / 12)
     (hqρ : rep qρ.1 = 1 / 12) (hqm : rep qm.1 = 1 / 12)
     (hγe : ∀ t, 0 ≤ t → t ≤ tce → πe (γ t) = pshift (De t) qe)
@@ -203,9 +232,9 @@ theorem radar_lorentz_of_histories {X : Type*} {πe πr πμ πρ πm : X → KT
     (hγm : ∀ t, 0 ≤ t → t ≤ tcm → πm (γ t) = pshift (Dm t) qm)
     (He : IsGatedHistory De RB δe ve tE tbe tce)
     (Hr : IsAwayHistory Dr RB c vr η₀ η tE tbe tRet t4 t5)
-    (Hμ : IsGatedHistory Dμ RB δμ vμ tM tbμ tcμ)
+    (Hμ : IsGatedHistory Dμ RB δμ vμ tMB tbμ tcμ)
     (Hρ : IsGatedHistory Dρ R₀ δρ vρ tR tbρ tcρ)
-    (Hm : IsGatedHistory Dm R₀ δm vm tM tbm tcm) :
+    (Hm : IsGatedHistory Dm R₀ δm vm tMA tbm tcm) :
     ∀ se, tbe ≤ se → se ≤ tce → ∀ sr, t4 ≤ sr → sr ≤ t5 → ∀ sμ, tbμ ≤ sμ → sμ ≤ tcμ →
       ∀ sρ, tbρ ≤ sρ → sρ ≤ tcρ → ∀ sm, tbm ≤ sm → sm ≤ tcm →
       ∃ Ne Nr Nμ Nρ Nm : ℕ,
@@ -219,24 +248,20 @@ theorem radar_lorentz_of_histories {X : Type*} {πe πr πμ πρ πm : X → KT
               - (((Ne : ℝ) * (2 * Real.pi) / R₀
                     + ((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) / R₀) / 2
                   - (Nμ : ℝ) * (2 * Real.pi) / R₀)|
-            ≤ (2 * Real.pi * (3 * ve * (tbe - tE) + 7 / 2) / R₀
-                + (2 * Real.pi * (3 * ve * (tbe - tE) + 7 / 2)
-                    + 2 * Real.pi * (3 * vr * ((tbe - tE) + (t4 - tRet)) + 7)
-                    + RB * (tbe - tE)) / R₀) / 2
-              + 2 * Real.pi * (3 * vμ * (tbμ - tM) + 7 / 2) / R₀
-              + (2 * Real.pi * (3 * vρ * (tbρ - tR) + 7 / 2) / R₀
-                  + 2 * Real.pi * (3 * vm * (tbm - tM) + 7 / 2) / R₀)
+            ≤ ((gatedErr ve tE tbe / R₀ + κ * tE + τE)
+                + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
+                    + κ * tRet + τRet)) / 2
+              + (gatedErr vμ tMB tbμ / R₀ + κ * tMB + τMB)
+              + ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
                 / Real.sqrt (1 - v ^ 2)
         ∧ |(lorentzBoost 1 (-v)
                 ((Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀, 0)).2
               - (-((((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) / R₀
                     - (Ne : ℝ) * (2 * Real.pi) / R₀) / 2))|
-            ≤ (2 * Real.pi * (3 * ve * (tbe - tE) + 7 / 2) / R₀
-                + (2 * Real.pi * (3 * ve * (tbe - tE) + 7 / 2)
-                    + 2 * Real.pi * (3 * vr * ((tbe - tE) + (t4 - tRet)) + 7)
-                    + RB * (tbe - tE)) / R₀) / 2
-              + v * (2 * Real.pi * (3 * vρ * (tbρ - tR) + 7 / 2) / R₀
-                  + 2 * Real.pi * (3 * vm * (tbm - tM) + 7 / 2) / R₀)
+            ≤ ((gatedErr ve tE tbe / R₀ + κ * tE + τE)
+                + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
+                    + κ * tRet + τRet)) / 2
+              + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
                 / Real.sqrt (1 - v ^ 2) := by
   intro se hse1 hse2 sr hsr1 hsr2 sμ hsμ1 hsμ2 sρ hsρ1 hsρ2 sm hsm1 hsm2
   obtain ⟨Ne, hNe, be⟩ := He.exists_count hqe hγe se hse1 hse2
@@ -245,22 +270,27 @@ theorem radar_lorentz_of_histories {X : Type*} {πe πr πμ πρ πm : X → KT
   obtain ⟨Nρ, hNρ, bρ⟩ := Hρ.exists_count hqρ hγρ sρ hsρ1 hsρ2
   obtain ⟨Nm, hNm, bm⟩ := Hm.exists_count hqm hγm sm hsm1 hsm2
   refine ⟨Ne, Nr, Nμ, Nρ, Nm, hNe, hNr, hNμ, hNρ, hNm, ?_⟩
+  have hs0 : 0 ≤ Real.sqrt (1 - v ^ 2) := Real.sqrt_nonneg _
+  have hs1 : Real.sqrt (1 - v ^ 2) ≤ 1 := by
+    have h := Real.sqrt_le_sqrt (by nlinarith [sq_nonneg v] : 1 - v ^ 2 ≤ 1)
+    rwa [Real.sqrt_one] at h
   have hRB0 : 0 ≤ RB * (tbe - tE) :=
     mul_nonneg He.rate_pos.le (sub_nonneg.2 He.ta_le)
+  have htRet0 : 0 ≤ tRet := (He.ta_nonneg.trans He.ta_le).trans Hr.tb_le
   -- the return reading against `R_B t_Ret`
   have bret : |((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) - RB * tRet|
-      ≤ 2 * Real.pi * (3 * ve * (tbe - tE) + 7 / 2)
-        + 2 * Real.pi * (3 * vr * ((tbe - tE) + (t4 - tRet)) + 7) + RB * (tbe - tE) := by
+      ≤ gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE) := by
     have b1 := abs_le.1 be
     have b2 := abs_le.1 br
-    rw [abs_le]
+    rw [gatedErr, awayErr, abs_le]
     constructor <;> linarith [b1.1, b1.2, b2.1, b2.2, hRB0]
-  have he := abs_div_sub_le_of_rate hR₀ hRB be
-  have hr := abs_div_sub_le_of_rate hR₀ hRB bret
-  have hμ := abs_div_sub_le_of_rate hR₀ hRB bμ
-  have hρ := abs_div_sub_le_of_rate hR₀ (one_mul R₀).symm bρ
-  have hm := abs_div_sub_le_of_rate hR₀ (one_mul R₀).symm bm
-  rw [one_mul] at hρ hm
+  have hκA : |R₀ - 1 * R₀| ≤ 0 * R₀ := by simp
+  have he := abs_div_sub_le_of_rate hR₀ hs0 hs1 hκ He.ta_nonneg hτE be
+  have hr := abs_div_sub_le_of_rate hR₀ hs0 hs1 hκ htRet0 hτRet bret
+  have hμ := abs_div_sub_le_of_rate hR₀ hs0 hs1 hκ Hμ.ta_nonneg hτMB bμ
+  have hρ := abs_div_sub_le_of_rate hR₀ zero_le_one le_rfl hκA Hρ.ta_nonneg hτR bρ
+  have hm := abs_div_sub_le_of_rate hR₀ zero_le_one le_rfl hκA Hm.ta_nonneg hτMA bm
+  rw [one_mul, zero_mul, add_zero] at hρ hm
   exact radar_lorentz_error hv0 hv hE hRet he hr hμ hρ hm
 
 end CSD.RecordLayer

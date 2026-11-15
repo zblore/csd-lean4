@@ -1219,7 +1219,7 @@ the top as one conditional theorem and fix the list of what remains
 | UD-161 | **The emission count of the first pointer, and both counts of one run.** For the flow of UD-145 with its *first* pointer coupled to `gateOp r Y`, under the hypotheses of UD-148 read for that pointer: at every flow time of `[t_b, t_c]` it has a count `N` with `|2π N − R t_a| ≤ 2π (6|z| (t_b − t_a) + 7/2)`. With the last pointer coupled to the complementary gate, both started at `1/12` with the same profile derivative, under the hypotheses of UD-159: at every flow time `s` of `[t_b, t₃]` the first pointer has a count `N_e` and at every flow time `t` of `[t₄, t₅]` the last has a count `N_r`, with that bound, the bound of UD-157, and for `e = N_e`, `r = N_e + N_r`: `|2π (e + r)/2 − R (t_a + (t₃ − t_b)/2)| ≤ 2π (9|z| (t_b − t_a) + 3|z| (t₄ − t₃) + 7)` and `|2π (r − e)/2 − R (t₃ − t_b)/2| ≤ 2π (3|z| ((t_b − t_a) + (t₄ − t₃)) + 7/2)` | `coincFlow_first_gated_reading`, `coincFlow_radar_reading` (`RecordLayer/UnifiedRadarReading.lean`) | bound; two counts at two flow times of one run; `(e + r)/2` and `(r − e)/2` formed in the statement, by no pointer; conditional as UD-159 |
 | UD-162 | **The radar reading on the ring.** For any messenger packet and the flat clock packet with `n ≥ 4` in the run with both gates (`ringReturnRun`), under the hypotheses of UD-160: for some `0 < g ≤ R/5` the statement of UD-161 with `|z| = g`. The weight outside, and inside, "within the angle `w`" at one flow time follows from the two budgets and the predicted angles | `flat_ring_not_near_le`, `flat_ring_near_le`, `flat_clock_radar_reading` (`RecordLayer/UnifiedRadarReading.lean`) | bound; conditional as UD-160; no values exhibited; one observer |
 | UD-163 | **Two pointer histories and their counts, for a pointer read through any projection.** A gated history: the displacement is within `δ < 1/12` of `(1/4)(1 − cos R t)` up to `t_a`, has speed at most `v` on `[t_a, t_b]` and changes by at most a sixth of a turn inside `[t_b, t_c]`; then at every flow time of `[t_b, t_c]` the pointer, started at `1/12`, has a count `N` with `|2π N − R t_a| ≤ 2π (3 v (t_b − t_a) + 7/2)`. An away history (UD-157, with the band of UD-156 as a field); then at every flow time of `[t₄, t₅]` a count `N` with `|2π N − R (t₃ − t_b)| ≤ 2π (3 v ((t_b − t_a) + (t₄ − t₃)) + 7)` | `IsGatedHistory`, `IsGatedHistory.exists_count`, `IsAwayHistory`, `IsAwayHistory.exists_count` (`RecordLayer/UnifiedRadarSkeleton.lean`) | bound; restatements of UD-147 and UD-157 for any projection; the histories are hypotheses |
-| UD-164 | **M6 from the top: the Lorentz statement from five pointer histories of one run.** One run with five pointers started at `1/12`. If `B`'s emission and meeting pointers and `A`'s relay and meeting pointers have gated histories closing at `t_E`, `t_M`, `t_R`, `t_M`; `B`'s return pointer has an away history open until `t_Ret`; `B`'s rate is `√(1 − v²) R₀` and `A`'s is `R₀`; and `t_R − t_E = v (t_M − t_E)`, `t_Ret − t_R = v (t_M − t_Ret)`: then at every choice of flow times in the five reading windows the pointers have counts `N_e`, `N_r`, `N_μ`, `N_ρ`, `N_m`, and with `e = 2π N_e/R₀`, `r = 2π (N_e + N_r)/R₀`, `μ = 2π N_μ/R₀`, `ρ = 2π N_ρ/R₀`, `m = 2π N_m/R₀` the Lorentz boost of `(ρ − m, 0)` is within explicit errors of `((e + r)/2 − μ, −(r − e)/2)` | `abs_div_sub_le_of_rate`, `radar_lorentz_of_histories` (`RecordLayer/UnifiedRadarSkeleton.lean`) | conditional; the five histories, the two relations between the flow times and the rate of the moving clock are hypotheses, and by the test of UO-16 the last two may not stay hypotheses; on no arena |
+| UD-164 | **M6 from the top: the Lorentz statement from five pointer histories of one run.** One run with five pointers started at `1/12`. If `B`'s emission and meeting pointers and `A`'s relay and meeting pointers have gated histories closing at `t_E`, `t_M`, `t_R`, `t_M`; `B`'s return pointer has an away history open until `t_Ret`; `B`'s rate is within `κ R₀` of `√(1 − v²) R₀` and `A`'s is `R₀`; the flow times at which the five gates close are within tolerances `τ` of times `T_E`, `T_R`, `T_Ret`, `T_M`; and `T_R − T_E = v (T_M − T_E)`, `T_Ret − T_R = v (T_M − T_Ret)`: then at every choice of flow times in the five reading windows the pointers have counts `N_e`, `N_r`, `N_μ`, `N_ρ`, `N_m`, and with `e = 2π N_e/R₀`, `r = 2π (N_e + N_r)/R₀`, `μ = 2π N_μ/R₀`, `ρ = 2π N_ρ/R₀`, `m = 2π N_m/R₀` the Lorentz boost of `(ρ − m, 0)` is within explicit errors of `((e + r)/2 − μ, −(r − e)/2)` | `gatedErr`, `awayErr`, `abs_div_sub_le_of_rate`, `radar_lorentz_of_histories` (`RecordLayer/UnifiedRadarSkeleton.lean`) | conditional; the errors carry `κ` times the flow times and the tolerances; the five histories, the four times with their two relations and tolerances, and the rate of the moving clock are hypotheses, and by the test of UO-16 the last two may not stay hypotheses; on no arena |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2145,6 +2145,43 @@ from UD-138. (R5) The band of the return pointer, or the conditions of UD-159 th
 (R6) Values meeting all the inequalities together. (R7) An open set of the pointers'
 conserved angles (UA-18 (g)). They pass no gate, and UO-16 is not met. Assumptions used:
 none beyond the definition of the tick count (UD-62); the theorem is on no arena.
+
+Scoping of R2 to R4 against what exists (2026-11-15; reading, no new Lean). The theorem was
+first written with the two relations between the gates' closing times and with the rate
+exactly `√(1 − v²) R₀`; neither can hold of packets, and it now carries the tolerances `τ`
+and `κ`. (R4) *Mostly there.* UD-142 gives, for one moving clock packet at momentum `p₀` on
+the ring, a count `N` at the horizon with `|2π N/(Δ T) − √(1 − v²)| ≤ 1/n + Δ`, `v = σ/E₀`
+the band velocity of the lower level. What is missing is the same as a statement about the
+rate: `|R − √(1 − v²) Δ| ≤ κ Δ` with `κ` of the order of `Δ`, an inequality between two
+real functions of `p₀` and `Δ`. Small. It makes `R₀ = Δ`, the gap, which is `A`'s rate only
+if `A` is at rest. (R2, `A` at rest.) *Not covered.* Every clock-packet theorem asks
+`0 < p₀` (UD-142, UD-151), and the flat packet has `p₀ = 1/2`: the "clock at rest" of UD-149
+to UD-162 moves at about `0.45`. The hypothesis is used through `|p₀| = p₀`; whether the
+proofs survive `p₀ = 0` has not been checked. (R2, the wall.) *One lemma exists, parked.*
+`arenaObs_sub_mirror_le` (untracked `RecordLayer/UnifiedMirror.lean`): a state minus its
+mirror image occupies a mirror-symmetric projection at most twice as much as the state. The
+chain with two walls is the mirror-odd sector of the ring (UA-18 (a)); by
+`arenaObs_coincProj_prodRay` the weight of a coincidence projector on a product ray is a sum
+of products of single-carrier site weights, so what is needed is single-carrier site weights
+of "packet minus mirror packet", from UD-143 and BACKLOG ~~#265~~. Not built: the chain's
+energy as that sector, and that a coincidence projector of the chain is the restriction of a
+mirror-symmetric one. (R2, two levels.) A clock packet's two levels move at different band
+velocities; UD-143 already tracks both. (R3) *Not started, and it constrains the design.*
+The four times are to be defined from band velocities: `B` at `v`, the messenger at its own
+velocity, which is below one for a messenger with rest energy (`1 − 1/(2k²)` in UD-154); the
+shortfall goes into the tolerances `τ`. The gates close when packets of finite width
+separate, so each `τ` is at least a packet width over a relative velocity. The errors of
+UD-164 are absolute, so M6 with errors that are small relative to the readings needs a
+family in which the readings grow faster than the widths, as UD-154 did for one reading.
+(R5) The family of UD-154 closes its gate over many ticks and fails the conditions of
+UD-159. A hand estimate (not Lean) says a family with a slower clock meets them: on the ring
+of length `2π K`, a closing lasts about `4 δ K` over the relative velocity, so UD-160 asks
+roughly `Δ δ K ≤ 1/150`, while a reading of `k` ticks asks `Δ K` of the order of `k`, hence
+`δ` of the order of `1/(150 k)`, and the budgets then ask `N` of the order of `10⁹ k³`. The
+errors stay a fixed number of ticks, so they are of relative size `1/k`. **This estimate is
+the cheapest test of whether the arrangement can meet M6 at all, and it is to be made a
+theorem, for two carriers on the ring where the tools exist, before R2 is built on the
+chain.** If it fails, the pointer arrangement has to change and R2 would have been wasted.
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
