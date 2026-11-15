@@ -21038,4 +21038,50 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.lap_radar_family
 
+/-! #404 (the author's programme, obligation UO-16; item R1 of the list under UD-164, first half): the five-pointer run — the flow of UA-18's arena solved on the fibres where all five profiles vanish, and M6 from the top stated for the counts of its five pointers. The five histories are hypotheses; any carrier and observables (`RecordLayer/UnifiedPentaRun.lean`). -/
+
+/-- info: 'CSD.RecordLayer.freeTurn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeTurn
+
+/-- info: 'CSD.RecordLayer.twoCoupledMatrix_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoCoupledMatrix_of_lift_eq_zero
+
+/-- info: 'CSD.RecordLayer.twoCoupledFlow_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoCoupledFlow_of_lift_eq_zero
+
+/-- info: 'CSD.RecordLayer.threeCoupledFlow_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeCoupledFlow_of_lift_eq_zero
+
+/-- info: 'CSD.RecordLayer.fourCoupledFlow_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fourCoupledFlow_of_lift_eq_zero
+
+/-- info: 'CSD.RecordLayer.fiveCoupledFlow_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fiveCoupledFlow_of_lift_eq_zero
+
+/-- info: 'CSD.RecordLayer.idxArenaEquiv_kick_free' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxArenaEquiv_kick_free
+
+/-- info: 'CSD.RecordLayer.freeShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeShift
+
+/-- info: 'CSD.RecordLayer.freeTurn_reindex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeTurn_reindex
+
+/-- info: 'CSD.RecordLayer.pentaRun_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pentaRun_eq
+
+/-- info: 'CSD.RecordLayer.penta_radar_lorentz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.penta_radar_lorentz
+
 end CSD.Tests.AxiomAudit
