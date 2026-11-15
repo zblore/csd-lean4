@@ -20694,4 +20694,54 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.flat_gate_closed
 
+/-! #396 (the author's programme, obligation UO-16; step (4) of the plan of 2026-11-14, sixth brick): the clock packet's own displacement within `1/24` of its swing, for a strength `0 < g ≤ R/5`; `coincFlow_gated_reading` applied to any messenger packet and the flat clock packet on one ring, the gated pointer's count fixed up to one while the two are apart. The conditions are inequalities between real numbers and no values are exhibited; null sets of fibres and starts (`RecordLayer/UnifiedEmissionReading.lean`). -/
+
+/-- info: 'CSD.RecordLayer.scaledTrainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.scaledTrainF
+
+/-- info: 'CSD.RecordLayer.scaledTrainF_periodic' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.scaledTrainF_periodic
+
+/-- info: 'CSD.RecordLayer.contDiff_scaledTrainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contDiff_scaledTrainF
+
+/-- info: 'CSD.RecordLayer.scaledTrainF_lift_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.scaledTrainF_lift_zero
+
+/-- info: 'CSD.RecordLayer.scaledTrainF_deriv_lift_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.scaledTrainF_deriv_lift_zero
+
+/-- info: 'CSD.RecordLayer.clock_packet_shift_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clock_packet_shift_le
+
+/-- info: 'CSD.RecordLayer.narrow_clock_packet_swing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.narrow_clock_packet_swing
+
+/-- info: 'CSD.RecordLayer.flat_clock_swing' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_clock_swing
+
+/-- info: 'CSD.RecordLayer.clockPointerShift_trainF_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockPointerShift_trainF_eq
+
+/-- info: 'CSD.RecordLayer.outside_arcs_flat_clock_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.outside_arcs_flat_clock_le
+
+/-- info: 'CSD.RecordLayer.ringGateRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringGateRun
+
+/-- info: 'CSD.RecordLayer.flat_clock_emission_reading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_clock_emission_reading
+
 end CSD.Tests.AxiomAudit
