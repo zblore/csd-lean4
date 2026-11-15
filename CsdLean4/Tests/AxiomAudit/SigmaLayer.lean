@@ -20936,4 +20936,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.flat_clock_return_reading_of_phase
 
+/-! #401 (the author's programme, obligation UO-16; step (4) of the plan of 2026-11-14, eleventh brick): the radar reading of one observer — in the run with both gates the first pointer's count while the messenger is away and the last pointer's count after it is back, and the radar time and distance in ticks formed from them. Two counts at two flow times; conditional as #400; no values exhibited (`RecordLayer/UnifiedRadarReading.lean`). -/
+
+/-- info: 'CSD.RecordLayer.coincFlow_first_gated_reading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincFlow_first_gated_reading
+
+/-- info: 'CSD.RecordLayer.coincFlow_radar_reading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincFlow_radar_reading
+
+/-- info: 'CSD.RecordLayer.flat_ring_not_near_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_ring_not_near_le
+
+/-- info: 'CSD.RecordLayer.flat_ring_near_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_ring_near_le
+
+/-- info: 'CSD.RecordLayer.flat_clock_radar_reading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_clock_radar_reading
+
 end CSD.Tests.AxiomAudit
