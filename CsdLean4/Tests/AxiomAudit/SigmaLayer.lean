@@ -20608,4 +20608,90 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.coincFlow_gated_reading
 
+/-! #395 (the author's programme, obligation UO-16; step (4) of the plan of 2026-11-14, fifth brick): the relation "within the angle `w`" on the ring; near arcs hold only related pairs and apart arcs none; a messenger packet and a clock packet stay in the arcs about their predicted angles up to their budgets; for the flat clock packet and a flat messenger on the same ring the gate is open while the predicted angles are near and closed while they are apart, with an explicit bound. Weights along uncoupled orbits; #394 is not applied (`RecordLayer/UnifiedGateRegions.lean`). -/
+
+/-- info: 'CSD.RecordLayer.cos_add_le_cos_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_add_le_cos_add
+
+/-- info: 'CSD.RecordLayer.ringNear' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringNear
+
+/-- info: 'CSD.RecordLayer.ringArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringArc
+
+/-- info: 'CSD.RecordLayer.mem_ringArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_ringArc
+
+/-- info: 'CSD.RecordLayer.ringNear_of_mem_ringArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringNear_of_mem_ringArc
+
+/-- info: 'CSD.RecordLayer.not_ringNear_of_mem_ringArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_ringNear_of_mem_ringArc
+
+/-- info: 'CSD.RecordLayer.one_sub_sum_arenaObs_siteSel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_sum_arenaObs_siteSel
+
+/-- info: 'CSD.RecordLayer.sum_arenaObs_siteSel_free_chainRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_arenaObs_siteSel_free_chainRay
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteSel_device' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteSel_device
+
+/-- info: 'CSD.RecordLayer.sum_arenaObs_siteSel_device_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_arenaObs_siteSel_device_mk
+
+/-- info: 'CSD.RecordLayer.sum_arenaObs_siteSel_free_deviceRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_arenaObs_siteSel_free_deviceRay
+
+/-- info: 'CSD.RecordLayer.ringGate_not_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringGate_not_le
+
+/-- info: 'CSD.RecordLayer.ringGate_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringGate_le
+
+/-- info: 'CSD.RecordLayer.ringPacket_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringPacket_ne_zero
+
+/-- info: 'CSD.RecordLayer.one_sub_sum_arenaObs_ringArc_ringPacket_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_sum_arenaObs_ringArc_ringPacket_le
+
+/-- info: 'CSD.RecordLayer.one_sub_sum_arenaObs_ringArc_devicePacket_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_sum_arenaObs_ringArc_devicePacket_le
+
+/-- info: 'CSD.RecordLayer.flatBudget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatBudget
+
+/-- info: 'CSD.RecordLayer.flat_packet_budget_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_packet_budget_time
+
+/-- info: 'CSD.RecordLayer.flat_outside_arcs_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_outside_arcs_le
+
+/-- info: 'CSD.RecordLayer.flat_gate_open' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_gate_open
+
+/-- info: 'CSD.RecordLayer.flat_gate_closed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_gate_closed
+
 end CSD.Tests.AxiomAudit

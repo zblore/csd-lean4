@@ -592,7 +592,10 @@ what would discharge or constrain it.
   in one flow, for two carriers and from product rays only: `coincFlow`
   (`RecordLayer/UnifiedCoincidenceFlow.lean`, BACKLOG ~~#393~~). The reading of (e), under
   hypotheses on where the carriers are: `coincFlow_gated_reading`
-  (`RecordLayer/UnifiedGatedReading.lean`, BACKLOG ~~#394~~). Nothing else yet. Existing pieces the rest is to be built from: the pointer step
+  (`RecordLayer/UnifiedGatedReading.lean`, BACKLOG ~~#394~~). The relation "within a width" on a
+  ring and the two weight hypotheses for a messenger packet and a clock packet: `ringNear`,
+  `flat_gate_open`, `flat_gate_closed` (`RecordLayer/UnifiedGateRegions.lean`, BACKLOG
+  ~~#395~~). Nothing else yet. Existing pieces the rest is to be built from: the pointer step
   (`LF4/PointerStep.lean`, BACKLOG ~~#368~~) for the fifth torus; `prodIdx` and `gateFlow`
   (`RecordLayer/UnifiedCompositeCarrier.lean`, ~~#376~~) for the composite and the product
   coupling; `clock_packet_ticks` (`RecordLayer/UnifiedClockPacket.lean`, ~~#388~~) for an
@@ -1124,7 +1127,9 @@ conditions for narrow packets (`RecordLayer/UnifiedClockPacketInstance.lean`, BA
 (`RecordLayer/UnifiedClockPacketLocalised.lean`, BACKLOG ~~#392~~). UD-145 and UD-146 are the
 flow with two gated pointers from a product ray (`RecordLayer/UnifiedCoincidenceFlow.lean`,
 BACKLOG ~~#393~~). UD-147 and UD-148 are the reading of a gated pointer under hypotheses on
-where the carriers are (`RecordLayer/UnifiedGatedReading.lean`, BACKLOG ~~#394~~).
+where the carriers are (`RecordLayer/UnifiedGatedReading.lean`, BACKLOG ~~#394~~). UD-149 and
+UD-150 are the two weight hypotheses for a messenger packet and a clock packet on one ring
+(`RecordLayer/UnifiedGateRegions.lean`, BACKLOG ~~#395~~).
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -1175,6 +1180,8 @@ where the carriers are (`RecordLayer/UnifiedGatedReading.lean`, BACKLOG ~~#394~~
 | UD-146 | **The displacement while together plus the displacement while apart is the ungated displacement.** `gateOp r Y + gateOp (¬r) Y = 1 ⊗ Y`. On the fibres and starts of UD-145 the pointer coupled to `gateOp r Y` advances by `−2 z` times the accumulated sum over related pairs of sites of `⟨P_s⟩ ⟨P_{s'} Y⟩`; and for two pointers with one profile derivative `z`, coupled to a gate and to its complement, the two displacements add up at every flow time to `−2 z ∫₀ᵗ ⟨Y⟩` along the second carrier's uncoupled orbit | `gateOp_add_gateOp_not`, `coincShift_add`, `coincShift_one_kronecker`, `coincShift_gateOp`, `coincShift_gateOp_add_not` (`RecordLayer/UnifiedCoincidenceFlow.lean`) | exact; as UD-145; an identity of lifted displacements, not of tick counts |
 | UD-147 | **The count of a pointer whose drive is a swing and then stops.** A last pointer whose displacement is within `δ` of `A (1 − cos R t)` up to `t_a`, moves at speed at most `v` on `[t_a, t_b]` and by at most a sixth of a turn inside `[t_b, t_c]`, has a count `N_a` at `t_a` with `|2π N_a − R t_a| ≤ 2π`, a count `N_b` at `t_b` with `N_a ≤ N_b ≤ N_a + 3 v (t_b − t_a) + 3/2`, and at every flow time of `[t_b, t_c]` a count that is `N_b` or `N_b + 1` | `hasTicks_snd_le_of_travel`, `gated_pointer_count` (`RecordLayer/UnifiedGatedReading.lean`) | bound; a statement about one pointer's history, on no particular arena; flow times |
 | UD-148 | **The reading of a gated pointer, from where the carriers are.** On a product ray a gated reading is at most the weight inside the relation and differs from the ungated reading by at most the weight outside it, for an operator bounded site by site; the level swap is one. If no site of `I` is related to a site of `J`, the weight inside the relation is at most the first carrier's weight outside `I` plus the second's outside `J`. For the flow of UD-145 with its last pointer coupled to `gateOp r Y`: if up to `t_a` the carriers have weight at most `ε` outside the relation, on `[t_b, t_c]` weight at most `ε` inside it, and up to `t_a` the second carrier's ungated displacement is within `δ₀` of a swing at the rate `R`, then the pointer has the counts of UD-147 with `v = 2|z|`, and every count `N` in `[t_b, t_c]` has `|2π N − R t_a| ≤ 2π (6|z| (t_b − t_a) + 7/2)` | `arenaObs_siteSel`, `arenaObs_siteSel_nonneg`, `sum_arenaObs_siteSel`, `arenaObs_coincProj_prodRay_nonneg`, `arenaObs_coincProj_add_not`, `arenaObs_coincProj_prodRay_le_of_disjoint`, `abs_arenaObs_siteSel_mul_levelSwap_le`, `abs_arenaObs_gateOp_prodRay_le`, `abs_arenaObs_gateOp_prodRay_sub_le`, `abs_coincShift_sub_le`, `coincFlow_gated_reading` (`RecordLayer/UnifiedGatedReading.lean`) | bound; conditional on three hypotheses not shown to hold for any carriers; as UD-145 (a null set of fibres and of starts) |
+| UD-149 | **The gate from arcs of the ring.** On the ring of `L` sites, with "near" meaning that the cosine of the difference of two sites' angles is at least `cos w`: two arcs of half-angle `δ` whose centres are within `w − 2δ` hold only near pairs, and if the centres are more than `w + 2δ` apart they hold no near pair. So, for any messenger ray and any clock ray, the weight outside (inside) the relation is at most the messenger's weight outside its arc plus the clock's weight outside its two arcs, when the arcs are near (apart). Along the uncoupled orbits the occupancies of UD-148 are the region weights of BACKLOG ~~#265~~ and UD-143 | `cos_add_le_cos_add`, `ringNear`, `ringArc`, `mem_ringArc`, `ringNear_of_mem_ringArc`, `not_ringNear_of_mem_ringArc`, `one_sub_sum_arenaObs_siteSel`, `sum_arenaObs_siteSel_free_chainRay`, `arenaObs_siteSel_device`, `sum_arenaObs_siteSel_device_mk`, `sum_arenaObs_siteSel_free_deviceRay`, `ringGate_not_le`, `ringGate_le` (`RecordLayer/UnifiedGateRegions.lean`) | bound; expectations of diagonal projectors at any product ray; a ring, two carriers |
+| UD-150 | **A messenger packet and a clock packet stay in their arcs; the gate of an exhibited pair.** Along the uncoupled orbit from a packet time, a ring packet's weight outside the arc of half-angle `δ` about its predicted angle, times `1 − cos δ`, is at most `1 − Re T(0) + |t| · limitErr`; a device packet's weight outside the two arcs about its two levels' predicted angles is at most the mean of the two levels' budgets. For the flat clock packet of UD-143 and a flat messenger packet of rest energy `μ ≥ 1` on the same ring and window, at every flow time: (weight outside "within `w`") `· (1 − cos δ)` is at most the sum of the two packets' budgets `flatBudget n N t = 1/N + 1/(4 (1200 n N)²) + |t|/(360000 n² N)` at their packet times while the messenger's predicted angle is within `w − 2δ` of both levels' predicted angles, and the same bound for the weight inside while it is more than `w + 2δ` from both | `ringPacket_ne_zero`, `one_sub_sum_arenaObs_ringArc_ringPacket_le`, `one_sub_sum_arenaObs_ringArc_devicePacket_le`, `flatBudget`, `flat_packet_budget_time`, `flat_outside_arcs_le`, `flat_gate_open`, `flat_gate_closed` (`RecordLayer/UnifiedGateRegions.lean`) | bound; weights along uncoupled orbits (the carriers of UD-145 on its fibres and starts); conditions on predicted angles at one flow time; the flat messenger is slow |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -1950,6 +1957,25 @@ not restated. (v) A speed, a distance or a second observer: `t_a`, `t_b`, `t_c` 
 in flow time. (vi) Three carriers, walls, or fibres where a pointer acts back. They pass no
 gate, and UO-16 is not met. Assumptions used: UA-13, UA-17 (c), UA-18 (c) and (e); UA-12 for
 the level swap.
+
+Exact scope of UD-149 and UD-150 (BACKLOG ~~#395~~; step (4) of the plan under UO-16). What
+they give. UD-148 reads a gated pointer under two hypotheses on where the carriers are. UD-149
+and UD-150 prove both for a messenger packet and a clock packet on one ring, with the relation
+"within the angle `w`" and an explicit bound: while the predicted angles are within `w − 2δ`
+the weight outside the relation is small (the gate is open), and while they are more than
+`w + 2δ` apart the weight inside it is small (the gate is closed). The bound is the two
+packets' budgets over `1 − cos δ`. A pair is exhibited: the flat clock packet of UD-143 and a
+flat messenger packet on the same ring. What they do not give. (i) A reading: UD-148 is not
+applied. Its third hypothesis, the clock's swing with a margin, and the conditions that tie the
+bound to the number of ticks are not discharged. (ii) Flow times: the conditions are on the
+predicted angles at one flow time; no `t_a`, `t_b` is exhibited, and the interval between
+"open" and "closed" is not bounded. By a calculation, not in Lean, it is `4δ` over the
+difference of the angular velocities. (iii) The messenger of M6: the flat messenger has a rest
+energy at least `1` at the clock's momentum, so it is no faster than the clock; the general
+lemmas take any ring packet. (iv) A fine resolution: `δ` must be large against `1/√N`. (v)
+Records: these are expectations along uncoupled orbits. (vi) Walls, a third carrier, or fibres
+where a pointer acts back. They pass no gate, and UO-16 is not met. Assumptions used: UA-8
+(the propagation law), UA-12, UA-18 (c).
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
@@ -2824,6 +2850,26 @@ time. It is not a statement about every dynamics on `Σ`.
   step (4) still needs:* a messenger packet and a clock packet with regions exhibited, so
   that the hypotheses hold; the wall; the two readings of one observer and the radar time and
   distance formed from them.
+  ▸ **Step (4), fifth brick: the gate opens and closes for two packets on a ring, 2026-11-15
+  (BACKLOG ~~#395~~) → UD-149, UD-150. Not met.** With the relation "within the angle `w`" on
+  the ring: a messenger packet stays in the arc about its predicted angle and a clock packet
+  in the arcs about its two levels' predicted angles, each up to its budget over
+  `1 − cos δ`; near arcs give little weight outside the relation and apart arcs little weight
+  inside it (`ringGate_not_le`, `ringGate_le`). For the flat clock packet of UD-143 and a
+  flat messenger on the same ring the two weight hypotheses of UD-148 hold with `ε` the sum
+  of the two packets' budgets `1/N + 1/(4 (1200 n N)²) + |t|/(360000 n² N)` over
+  `1 − cos δ` (`flat_gate_open`, `flat_gate_closed`).
+  *What this is not:* a reading (UD-148 is not applied; the clock's swing with a margin and
+  the size conditions are not discharged); flow times at which the gate is open or closed;
+  the messenger of M6 (the flat messenger is no faster than the clock); walls; three
+  carriers. *Estimate, a calculation and not in Lean, constants not computed:* with
+  `Δ = τ/(n N)` the open period holds of order `τ` ticks times a constant, and UD-148's
+  conditions allow a resolved half-angle with `δ²` of order `τ/N + τ/n` times a constant; so
+  along a family with `n, N → ∞` at fixed `τ` the closing of the gate is short against the
+  open period. Nothing in Lean says so.
+  *What step (4) still needs:* the emission reading assembled from UD-148 with these
+  carriers; a messenger at a speed within a stated error of `1`; the wall; the return
+  reading; the radar time and distance.
 
 ### M7 — `3 + 1`
 
@@ -2980,7 +3026,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);
