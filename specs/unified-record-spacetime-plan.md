@@ -609,7 +609,9 @@ what would discharge or constrain it.
   (`RecordLayer/UnifiedReturnValues.lean`, BACKLOG ~~#403~~). The five-pointer flow from
   a ray on the fibres where the profiles vanish, and M6 from the top for it:
   `pentaRun_eq`, `penta_radar_lorentz` (`RecordLayer/UnifiedPentaRun.lean`, BACKLOG
-  ~~#404~~). Nothing else yet. Existing pieces the rest is to be built from: the pointer step
+  ~~#404~~). Three carriers with the five gates, each pointer's displacement a
+  two-carrier one: `triRun`, `tri_radar_lorentz` (`RecordLayer/UnifiedTriCarrier.lean`,
+  BACKLOG ~~#405~~). Nothing else yet. Existing pieces the rest is to be built from: the pointer step
   (`LF4/PointerStep.lean`, BACKLOG ~~#368~~) for the fifth torus; `prodIdx` and `gateFlow`
   (`RecordLayer/UnifiedCompositeCarrier.lean`, ~~#376~~) for the composite and the product
   coupling; `clock_packet_ticks` (`RecordLayer/UnifiedClockPacket.lean`, ~~#388~~) for an
@@ -1161,7 +1163,9 @@ the top as one conditional theorem and fix the list of what remains
 values for a run with a return and a quickly closing gate, on the ring
 (`RecordLayer/UnifiedReturnValues.lean`, BACKLOG ~~#403~~). UD-167 and UD-168 solve the
 five-pointer flow on the fibres where the profiles vanish and state M6 from the top for it
-(`RecordLayer/UnifiedPentaRun.lean`, BACKLOG ~~#404~~).
+(`RecordLayer/UnifiedPentaRun.lean`, BACKLOG ~~#404~~). UD-169 and UD-170 take the carrier to
+be a messenger and two clocks and reduce each pointer's history to a two-carrier one
+(`RecordLayer/UnifiedTriCarrier.lean`, BACKLOG ~~#405~~).
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -1232,6 +1236,8 @@ five-pointer flow on the fibres where the profiles vanish and state M6 from the 
 | UD-166 | **A family of runs with a return and a quickly closing gate.** For every `k ≥ 1`, with `n = N = 10¹¹ k³`, gap `k/K`, `δ = ε = 1/(1000 k)`, `μ = 1/2`, on any ring with `M ≥ 210000 n² N` sites: the seven conditions of UD-165 hold, the time away is at least `(5/2) k` in the clock's phase, and `\|2π N_r − R (lapT3 − lapTb)\| ≤ (21/k) · R (lapT3 − lapTb)` | `lapn`, `lapGap`, `lap_family_conditions`, `lap_radar_family` (`RecordLayer/UnifiedReturnValues.lean`) | bound; no condition left but the size of the ring; two carriers on a ring; the messenger at about `0.7`, the clock at about `0.45`; as UD-165 |
 | UD-167 | **The five-pointer flow on the fibre where all five profiles vanish.** For the two-, three-, four- and five-pointer flows (UD-139 for the last) from a ray on the fibre where all the profiles vanish: the ray moves by the uncoupled Schrödinger unitary of `A`, and each pointer is turned by its profile's derivative times the accumulated `−2⟨B⟩` of its own observable along that orbit. For a carrier with any finite index type and five Hermitian observables `G_i`: the carrier moves by its uncoupled propagator and pointer `i` is at `pshift (freeShift G_i z_i p t)` of its start, `freeShift = −2 z ∫₀ᵗ ⟨G⟩` along the uncoupled orbit | `freeTurn`, `twoCoupledMatrix_of_lift_eq_zero`, `twoCoupledFlow_of_lift_eq_zero`, `threeCoupledFlow_of_lift_eq_zero`, `fourCoupledFlow_of_lift_eq_zero`, `fiveCoupledFlow_of_lift_eq_zero`, `idxArenaEquiv_kick_free`, `freeShift`, `freeTurn_reindex`, `pentaRun_eq` (`RecordLayer/UnifiedPentaRun.lean`) | exact; one fibre of each pointer (a null set); any carrier and any Hermitian observables; no record read |
 | UD-168 | **M6 from the top, for the flow of the five-pointer arena.** The statement of UD-164 with the run the flow of UD-139 for a carrier with any index type and five Hermitian observables, from a ray on the fibre where all five profiles vanish, the pointers started at `1/12`, and the five displacements the `freeShift`s of UD-167: if they have the five histories, with the rate and the times as in UD-164, the five counts of the five pointers satisfy the Lorentz statement with the errors of UD-164 | `penta_radar_lorentz` (`RecordLayer/UnifiedPentaRun.lean`) | conditional as UD-164; on the arena of UA-18 (d) but with arbitrary carrier and observables; the histories are hypotheses about five integrals along the uncoupled orbit |
+| UD-169 | **Gates between two of three carriers.** For a messenger and a composite of two clocks with Hermitian uncoupled energies, from a product ray: `freeShift` of UD-167 along the uncoupled orbit is the `coincShift` of UD-145; a gate between the messenger and one clock (the composite's site read off that clock, the operator acting on that clock) has the displacement of the two-carrier gate of UD-140 for the messenger and that clock, the other clock dropping out; an observable of the two clocks alone has their two-carrier displacement, the messenger dropping out; and a gate of the two clocks whose operator acts on the first has the displacement of the gate of UD-140 with the two clocks exchanged and the relation reversed | `freeShift_prodRay`, `arenaObs_kronecker_right`, `siteSel_snd`, `siteSel_fst`, `arenaObs_gateOp_snd`, `arenaObs_gateOp_fst`, `gateOpL`, `arenaObs_gateOpL_prodRay`, `gateOp_snd_isHermitian`, `coincShift_gate_snd`, `coincShift_gate_fst`, `coincShift_one_kronecker_pair`, `coincShift_gateOpL` (`RecordLayer/UnifiedTriCarrier.lean`) | exact; product rays only (a null set); displacements along uncoupled orbits, no record read; any carriers, sites and relations |
+| UD-170 | **M6 from the top, for three carriers and five gates.** The statement of UD-168 with the carrier a messenger times a composite of two clocks started in a product ray, and the five observables the five gates of UA-18 (c): the messenger with `B` twice (relations `r₁`, `r₂`, operator `Yb` on `B`), `A` with `B` (`r₃`, `Yb`), the messenger with `A` (`r₄`, operator `Ya` on `A`), `A` with `B` (`r₅`, `Ya`). The five histories are hypotheses about five two-carrier displacements `coincShift (gateOp …)` | `triRun`, `tri_radar_lorentz` (`RecordLayer/UnifiedTriCarrier.lean`) | conditional as UD-164; `Yb` Hermitian and not moving `B` between sites; any carriers, sites and relations: no chain, wall, packet or clock instantiated; the histories are hypotheses |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2227,6 +2233,20 @@ identification and those five applications are not made here. (ii) Anything abou
 carriers, the chain, the walls or coincidence gates: the carrier and the five observables
 are arbitrary. (iii) R2 to R7. They pass no gate, and UO-16 is not met. Assumptions used:
 UA-13 (a), (b), UA-15 (the arena), UA-18 (d).
+
+Exact scope of UD-169 and UD-170 (BACKLOG ~~#405~~; item R1 of the list under UD-164, second
+half). What they give. The run of UD-164 is now the five-pointer flow of three carriers, a
+messenger and two clocks, with the five gates of UA-18 (c), from a product ray; and each of
+the five histories it asks for is a history of a two-carrier gate displacement, the object
+that UD-148, UD-157 and UD-159 are about. So R1 is reduced to five two-carrier statements.
+What they do not give. (i) The five histories. UD-148, UD-157 and UD-159 give histories from
+where two carriers are; they have been applied only on the ring, to a flat messenger and a
+flat clock packet (UD-162, UD-165), and three of the five gates here have a clock, not the
+messenger, as the carrier whose site opens the gate. Whether those theorems apply with a
+clock in that role has not been checked. On the chain with walls the histories need R2.
+(ii) Any instance: the carriers, their energies, the site maps, the five relations and the
+two operators are arbitrary. (iii) R2 to R7. They pass no gate, and UO-16 is not met.
+Assumptions used: UA-13 (a), (b), UA-15 (the arena), UA-18 (c), (d).
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
@@ -3234,6 +3254,13 @@ time. It is not a statement about every dynamics on `Σ`.
   *What R1 still needs:* the carrier as messenger times a composite of the two clocks, the
   five observables as gates between two of the three, each `freeShift` as a `coincShift`,
   and the five histories from where the carriers are (UD-148, UD-157, UD-159).
+  ▸ **R1, second half, 2026-11-15 (BACKLOG ~~#405~~) → UD-169, UD-170. Reduced, not
+  discharged. Not met.** `tri_radar_lorentz`: for the carrier messenger × (clock `A` × clock
+  `B`) from a product ray, with the five gates of UA-18 (c), the hypotheses of UD-164 about
+  the pointers are five histories of two-carrier gate displacements `coincShift (gateOp …)`.
+  *What R1 still needs:* those five histories from where the carriers are, which is R2 for
+  the chain; and a check that UD-148, UD-157 and UD-159 apply when the carrier whose site
+  opens the gate is a clock (three of the five gates).
 
 ### M7 — `3 + 1`
 
@@ -3390,7 +3417,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#399~~ (the return reading), ~~#400~~ (where the emission pointer stops), ~~#401~~ (the radar reading of one observer), ~~#402~~ (M6 from the top), ~~#403~~ (values for a run with a return), ~~#404~~ (the five-pointer run), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#399~~ (the return reading), ~~#400~~ (where the emission pointer stops), ~~#401~~ (the radar reading of one observer), ~~#402~~ (M6 from the top), ~~#403~~ (values for a run with a return), ~~#404~~ (the five-pointer run), ~~#405~~ (three carriers, five gates), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

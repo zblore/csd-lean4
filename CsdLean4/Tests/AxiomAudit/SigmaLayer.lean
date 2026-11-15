@@ -21084,4 +21084,66 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.penta_radar_lorentz
 
+/-! #405 (the author's programme, obligation UO-16; item R1 of the list under UD-164, second half): three carriers and five gates — for the carrier messenger x (clock A x clock B) from a product ray each pointer's displacement is a two-carrier gate displacement, and M6 from the top is stated for that run. The five histories are hypotheses; nothing instantiated (`RecordLayer/UnifiedTriCarrier.lean`). -/
+
+/-- info: 'CSD.RecordLayer.freeShift_prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeShift_prodRay
+
+/-- info: 'CSD.RecordLayer.arenaObs_kronecker_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_kronecker_right
+
+/-- info: 'CSD.RecordLayer.siteSel_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSel_snd
+
+/-- info: 'CSD.RecordLayer.siteSel_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSel_fst
+
+/-- info: 'CSD.RecordLayer.arenaObs_gateOp_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_gateOp_snd
+
+/-- info: 'CSD.RecordLayer.arenaObs_gateOp_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_gateOp_fst
+
+/-- info: 'CSD.RecordLayer.gateOpL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateOpL
+
+/-- info: 'CSD.RecordLayer.arenaObs_gateOpL_prodRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_gateOpL_prodRay
+
+/-- info: 'CSD.RecordLayer.gateOp_snd_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateOp_snd_isHermitian
+
+/-- info: 'CSD.RecordLayer.coincShift_gate_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_gate_snd
+
+/-- info: 'CSD.RecordLayer.coincShift_gate_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_gate_fst
+
+/-- info: 'CSD.RecordLayer.coincShift_one_kronecker_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_one_kronecker_pair
+
+/-- info: 'CSD.RecordLayer.coincShift_gateOpL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_gateOpL
+
+/-- info: 'CSD.RecordLayer.triRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triRun
+
+/-- info: 'CSD.RecordLayer.tri_radar_lorentz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tri_radar_lorentz
+
 end CSD.Tests.AxiomAudit
