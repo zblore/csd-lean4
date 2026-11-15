@@ -21274,4 +21274,54 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.arenaObs_regionProj_oddWall
 
+/-! #408 (the author's programme, obligation UO-16; of item R2 of the list under UD-164): the carriers on the walled chain — the messenger's wall state through the reflection as a bound on weights, the wall state as one packet with odd amplitudes, the two-level clock's wall state, and a clock at rest beside a wall that ticks. Budgets not evaluated (`RecordLayer/UnifiedWallObservers.lean`). -/
+
+/-- info: 'CSD.RecordLayer.regionWeight_oddWall_away_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_oddWall_away_le
+
+/-- info: 'CSD.RecordLayer.oddExt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.oddExt
+
+/-- info: 'CSD.RecordLayer.ringPacket_oddExt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringPacket_oddExt
+
+/-- info: 'CSD.RecordLayer.sum_norm_oddExt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_oddExt
+
+/-- info: 'CSD.RecordLayer.devicePacket_oddExt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.devicePacket_oddExt
+
+/-- info: 'CSD.RecordLayer.chainParity_devicePacket_wall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainParity_devicePacket_wall
+
+/-- info: 'CSD.RecordLayer.deviceRegionWeight_wall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceRegionWeight_wall
+
+/-- info: 'CSD.RecordLayer.deviceRegionWeight_wall_away_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceRegionWeight_wall_away_le
+
+/-- info: 'CSD.RecordLayer.wallWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallWindow
+
+/-- info: 'CSD.RecordLayer.wallWindow_neg_notMem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallWindow_neg_notMem
+
+/-- info: 'CSD.RecordLayer.sum_norm_flatAmpN_wall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_flatAmpN_wall
+
+/-- info: 'CSD.RecordLayer.wall_clock_ticks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_clock_ticks
+
 end CSD.Tests.AxiomAudit

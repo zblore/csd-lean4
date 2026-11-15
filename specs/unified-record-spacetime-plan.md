@@ -614,7 +614,9 @@ what would discharge or constrain it.
   BACKLOG ~~#405~~). A clock packet at rest on the ring and the rate inequality:
   `rest_clock_packet_ticks`, `abs_movingRate_sub_le` (`RecordLayer/UnifiedClockAtRest.lean`,
   BACKLOG ~~#406~~). The wall state of one Dirac carrier: `oddWall`
-  (`RecordLayer/UnifiedOddWall.lean`, BACKLOG ~~#407~~). Nothing else yet. Existing pieces the rest is to be built from: the pointer step
+  (`RecordLayer/UnifiedOddWall.lean`, BACKLOG ~~#407~~). Where it is, and a clock at
+  rest beside a wall: `regionWeight_oddWall_away_le`, `wall_clock_ticks`
+  (`RecordLayer/UnifiedWallObservers.lean`, BACKLOG ~~#408~~). Nothing else yet. Existing pieces the rest is to be built from: the pointer step
   (`LF4/PointerStep.lean`, BACKLOG ~~#368~~) for the fifth torus; `prodIdx` and `gateFlow`
   (`RecordLayer/UnifiedCompositeCarrier.lean`, ~~#376~~) for the composite and the product
   coupling; `clock_packet_ticks` (`RecordLayer/UnifiedClockPacket.lean`, ~~#388~~) for an
@@ -1171,7 +1173,9 @@ be a messenger and two clocks and reduce each pointer's history to a two-carrier
 (`RecordLayer/UnifiedTriCarrier.lean`, BACKLOG ~~#405~~). UD-171 and UD-172 give the rate
 inequality and a flat clock packet at rest (`RecordLayer/UnifiedClockAtRest.lean`, BACKLOG
 ~~#406~~); UD-173 the mirror-odd state of a packet, the wall of UA-18 (a)
-(`RecordLayer/UnifiedOddWall.lean`, BACKLOG ~~#407~~).
+(`RecordLayer/UnifiedOddWall.lean`, BACKLOG ~~#407~~). UD-174 and UD-175 place the messenger's
+wall state through the reflection and give a clock at rest beside a wall that ticks
+(`RecordLayer/UnifiedWallObservers.lean`, BACKLOG ~~#408~~).
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -1247,6 +1251,8 @@ inequality and a flat clock packet at rest (`RecordLayer/UnifiedClockAtRest.lean
 | UD-171 | **The moving clock's rate against the resting clock's.** For the clock with levels `1` and `1 + Δ`, `Δ > 0`, at any momentum term `s`: `\|R(s) − √(1 − v²) R(0)\| ≤ Δ · R(0)`, with `R` the level splitting, `v = s/E₀(s)` and `R(0) = Δ`. The same for the ring's reference rates `ringRate K M p Δ` against `ringRate K M 0 Δ = Δ`. This is the hypothesis `hκ` of UD-164 with `κ = Δ` | `abs_movingRate_sub_le`, `ringRate_zero`, `abs_ringRate_sub_le` (`RecordLayer/UnifiedClockAtRest.lean`) | exact bound; an inequality between level splittings at a momentum term; `v` is the relativistic velocity of the lower level at that term, not a velocity shown of a packet and not the lattice band velocity |
 | UD-172 | **A flat clock packet at rest: its ticks and where it is.** Speed `1`, levels `1` and `1 + Δ` with `0 < Δ ≤ 1/2`, the ring of length `2π · 1200 n N` with `M ≥ 210000 n² N` sites, the `N` modes `0, …, N − 1` with equal amplitudes (momenta in `[0, 1/(1200 n))`, reference momentum `0`). For some strength the count at `T = 2π n/Δ` is at least `n` and the operational time per flow time is within `1/n + Δ` of `1`. At every packet time `\|t\| ≤ 4π n/Δ` and every region `B` of sites with `cos(2π k/L) ≤ γ`: (weight of the clock on `B`) `· (1 − γ) ≤ 1/N + 1/(20000 Δ n N)` | `restWindow`, `sum_norm_flatAmpN_rest`, `restWindow_mem_range`, `restWindow_width`, `rest_clock_packet_ticks`, `rest_packet_start_le`, `rest_packet_budget`, `rest_clock_packet_localised` (`RecordLayer/UnifiedClockAtRest.lean`) | bound; on the ring, no wall; one clock and its own pointer, one fibre and one start for the ticks (as UD-142); the localisation is a weight of the state vector at packet times, no region exhibited (as UD-143) |
 | UD-173 | **The wall: a packet minus its mirror image.** For any ring packet of one Dirac carrier, the state (packet − mirror packet)/√2, the mirror packet being the packet of the reflected window: it is mirror-odd at every packet time (reflect the sites, change the sign of the lower component); a mirror-odd state has no upper component at a site that is its own mirror image; the ring's evolution carries the state at `0` to the state at `s`; on a region where the packet and the mirror packet each have weight at most `τ` it has at most `2τ`; if they are orthogonal and normalised and each has weight at most `τ` off a region, it has at least `1 − 2τ` on it; and along the uncoupled orbit of its ray the expectation of a region projector at the flow time `s` is its weight on the region at the packet time `s` | `negWin`, `mem_negWin`, `mirrorPacket`, `chainParity_ringPacket_negWin`, `chainParity_mirrorPacket`, `chainParity_neg`, `oddWall`, `chainParity_oddWall`, `odd_apply_eq_zero`, `oddWall_apply_eq_zero`, `chainProp_oddWall`, `regionWeight_neg`, `chainInner_neg_right`, `chainInner_neg_neg`, `chainInner_ringPacket_mirrorPacket`, `chainInner_oddWall`, `regionWeight_oddWall_le`, `le_regionWeight_oddWall`, `ne_zero_of_chainInner_eq_one`, `arenaObs_regionProj_oddWall` (`RecordLayer/UnifiedOddWall.lean`) | exact / bound; the odd sector of the ring, not shown to be a chain with hard ends; one Dirac carrier, not a two-level clock; weights from hypotheses on weights: no window, region or time instantiated, so no reflection exhibited; uncoupled |
+| UD-174 | **Where the messenger's wall state is, and the wall state as one packet.** For a ring packet under the hypotheses of BACKLOG ~~#265~~'s localisation bound, at every packet time: the weight of its wall state (UD-173) on a region at `cos ≤ γ < 1` from the packet's predicted direction and from the mirror direction, times `1 − γ`, is at most twice the sum of the packet's and the mirror packet's budgets `1 − Re T(0) + \|t\| · limitErr`. When no momentum of the window `W` is the opposite of another, the wall state is the ring packet on `W ∪ −W` with the odd extension of the amplitudes over `√2`, and that extension of normalised amplitudes is normalised | `regionWeight_oddWall_away_le`, `oddExt`, `ringPacket_oddExt`, `sum_norm_oddExt` (`RecordLayer/UnifiedWallObservers.lean`) | bound / exact; the odd sector of the ring; the budgets are not evaluated for any window, no number exhibited; uncoupled |
+| UD-175 | **The two-level clock's wall state, and a clock at rest beside a wall that ticks.** The clock's packet on `W ∪ −W` with the odd extension of the amplitudes: each level is `1/√2` times the wall state of that level's packet; it is mirror-odd at each level; its weight on a region is the mean of the two levels' wall-state weights, so on a region at `cos ≤ γ < 1` from the four predicted directions its weight times `1 − γ` is at most the sum of the four budgets. For the modes `±1, …, ±N` with odd flat amplitudes on the ring of length `2π · 1200 n N`, `M ≥ 210000 n² N`, `0 < Δ ≤ 1/2`: for some strength the count at `T = 2π n/Δ` is at least `n` and the operational time per flow time is within `1/n + Δ` of `1` | `devicePacket_oddExt`, `chainParity_devicePacket_wall`, `deviceRegionWeight_wall`, `deviceRegionWeight_wall_away_le`, `wallWindow`, `wallWindow_neg_notMem`, `sum_norm_flatAmpN_wall`, `wall_clock_ticks` (`RecordLayer/UnifiedWallObservers.lean`) | exact / bound; the ticks have no hypothesis but the sizes; the place of that clock rests on four budgets not evaluated for its window; a moving clock's wall state is not shown to tick; one clock and its own pointer, one fibre and one start (as UD-142) |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2285,6 +2291,41 @@ no window, region or time is instantiated in UD-173. (vi) Any gate, pointer or h
 all three are about uncoupled carriers. They pass no gate, and UO-16 is not met. Assumptions
 used: UA-8, UA-12, UA-18 (a).
 
+Exact scope of UD-174 and UD-175 (BACKLOG ~~#408~~; item R2 of the list under UD-164). What
+they give. The hypotheses of UD-173's upper bound are discharged from BACKLOG ~~#265~~: the
+messenger's wall state is, up to budgets, within the two arcs about its packet's predicted
+direction and the mirror direction at every packet time, including while the arcs cross at a
+wall; on the folded chain the two arcs are one place, so this is the reflection as a bound
+on weights. A two-level clock has a wall state, with the same bound from four budgets. A
+clock at rest beside a wall exists and ticks, with every hypothesis discharged: the modes
+`±1, …, ±N` with odd amplitudes are a device packet at reference momentum `0`, which UD-142
+covers since 2026-11-15. This answers risk (iii) of UA-18: the window without the mode `0`
+is orthogonal to its mirror image. What they do not give. (i) Numbers: the budgets are not
+evaluated for the wall window, for a moving window or for a mirror window, so no region,
+time or width is exhibited. (ii) A moving clock that ticks as a wall state: its window
+`W ∪ −W` is not narrow about one momentum, so UD-142 does not apply; the rates at `m` and
+`−m` are equal, and the version of UD-142 in the modulus of the momentum is owed. (iii) Any
+coincidence weight, gate, pointer or history: the carriers are uncoupled and apart. (iv)
+The odd sector as a chain with hard ends. They pass no gate, and UO-16 is not met.
+Assumptions used: UA-8, UA-12, UA-18 (a), (b).
+
+Scoping of R7 (2026-11-15; reading, no new Lean). R7 asks for the statements on an open set
+of the five pointers' conserved angles, where the pointers act back (UA-18 (g)). What exists.
+The five-pointer flow is solved at every fibre (`fiveCoupledFlow_apply`, UD-139): the carrier
+moves by the propagator of the energy with the five profile values in it, and each pointer
+turns by its profile's derivative times the accumulated reading along that orbit. For two
+pointers the distance of that orbit's readings from the uncoupled ones is bounded by the
+profile values times the horizon (`abs_arenaObs_regionProj_two_sub_free_le`, UD-109), and the
+fibres where that is small are open and of positive measure for `trainF` (`fineFibres`,
+`roundFibres`, UD-109, UD-118). What R7 needs. (a) That bound for five pointers and gated
+operators: a displacement off the fibres differs from `freeShift` by a term of the order of
+the horizon squared times the sum of the profile values, plus the change of the profile's
+derivative times the horizon. (b) That the histories of UD-163 survive a small change of the
+displacement: `swing` and `closed` have slack by their strict inequalities, and `mid` is a
+speed bound that holds for any orbit. (c) The fibre set, open and of positive measure. No
+obstruction is known; none of (a) to (c) is built. The set shrinks as the horizon grows, so
+R7 is a statement for fixed values (R6), not uniform along a family.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -3312,6 +3353,17 @@ time. It is not a statement about every dynamics on `Σ`.
   the wall or `A`, and come back; and from those the five histories of UD-170. *What R4
   still needs:* nothing as an inequality; the velocity in it is `σ/E₀`, to be matched to
   R3's band velocities within a tolerance.
+  ▸ **More of R2, and R7 scoped, 2026-11-15 (BACKLOG ~~#408~~) → UD-174, UD-175. Not
+  met.** `regionWeight_oddWall_away_le`: the messenger's wall state stays within the two
+  mirror arcs up to the budgets of ~~#265~~, through the reflection. `ringPacket_oddExt`:
+  a wall state is a packet on `W ∪ −W` with odd amplitudes. `wall_clock_ticks`: a clock at
+  rest beside a wall, the modes `±1, …, ±N`, ticks, with no hypothesis but the sizes; risk
+  (iii) of UA-18 is answered. R7 is scoped in the paragraph after the scope of UD-175: a
+  route by the existing back-reaction bounds, no obstruction known, nothing built. *What R2
+  still needs:* the budgets evaluated (numbers) for the wall window, the moving window and
+  their mirrors; a moving clock's wall state that ticks (UD-142 in the modulus of the
+  momentum); then coincidence weights between the wall states and the five histories of
+  UD-170.
 
 ### M7 — `3 + 1`
 
@@ -3468,7 +3520,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#399~~ (the return reading), ~~#400~~ (where the emission pointer stops), ~~#401~~ (the radar reading of one observer), ~~#402~~ (M6 from the top), ~~#403~~ (values for a run with a return), ~~#404~~ (the five-pointer run), ~~#405~~ (three carriers, five gates), ~~#406~~ (a clock at rest; the rate inequality), ~~#407~~ (the wall), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#399~~ (the return reading), ~~#400~~ (where the emission pointer stops), ~~#401~~ (the radar reading of one observer), ~~#402~~ (M6 from the top), ~~#403~~ (values for a run with a return), ~~#404~~ (the five-pointer run), ~~#405~~ (three carriers, five gates), ~~#406~~ (a clock at rest; the rate inequality), ~~#407~~ (the wall), ~~#408~~ (the carriers on the walled chain), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);
