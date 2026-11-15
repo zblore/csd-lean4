@@ -20838,4 +20838,46 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.emission_reading_family
 
+/-! #398 (the author's programme, obligation UO-16; step (4) of the plan of 2026-11-14, eighth brick): the count of a swing over a window with a phase and a resting phase; a pointer whose swing is offset by `c` ticks once a turn for `c` in two bands and never rests for `c` in a third. The pointer side of the return reading, on no arena; where `c` lies is not shown (`RecordLayer/UnifiedWindowSwing.lean`). -/
+
+/-- info: 'CSD.RecordLayer.IsWindowSwing.hasTicks_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsWindowSwing.hasTicks_le
+
+/-- info: 'CSD.RecordLayer.IsWindowSwing.hasTicks_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsWindowSwing.hasTicks_add
+
+/-- info: 'CSD.RecordLayer.IsWindowSwing.abs_count_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsWindowSwing.abs_count_sub_le
+
+/-- info: 'CSD.RecordLayer.IsWindowSwing.exists_tickCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsWindowSwing.exists_tickCount
+
+/-- info: 'CSD.RecordLayer.pshift_notMem_readyArc_of_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pshift_notMem_readyArc_of_nonpos
+
+/-- info: 'CSD.RecordLayer.pshift_mem_displayArc_iff_of_nonpos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pshift_mem_displayArc_iff_of_nonpos
+
+/-- info: 'CSD.RecordLayer.isWindowSwing_snd_high' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isWindowSwing_snd_high
+
+/-- info: 'CSD.RecordLayer.isWindowSwing_snd_low' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isWindowSwing_snd_low
+
+/-- info: 'CSD.RecordLayer.offset_swing_count' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.offset_swing_count
+
+/-- info: 'CSD.RecordLayer.offset_swing_dead' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.offset_swing_dead
+
 end CSD.Tests.AxiomAudit
