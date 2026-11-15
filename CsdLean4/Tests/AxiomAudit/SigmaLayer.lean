@@ -20880,4 +20880,38 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.offset_swing_dead
 
+/-! #399 (the author's programme, obligation UO-16; step (4) of the plan of 2026-11-14, ninth brick): the return reading — the count of the pointer coupled to the complementary gate, closed while the messenger is with the clock, open while it is away, closed again when it is back; for any messenger packet and the flat clock packet on one ring. Conditional on a band of #398 and on inequalities between real numbers; no values exhibited (`RecordLayer/UnifiedReturnReading.lean`). -/
+
+/-- info: 'CSD.RecordLayer.count_after_transition' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.count_after_transition
+
+/-- info: 'CSD.RecordLayer.away_pointer_count' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.away_pointer_count
+
+/-- info: 'CSD.RecordLayer.coincFlow_return_reading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincFlow_return_reading
+
+/-- info: 'CSD.RecordLayer.packetAngleGap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.packetAngleGap
+
+/-- info: 'CSD.RecordLayer.ringEmissionShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringEmissionShift
+
+/-- info: 'CSD.RecordLayer.ringReturnRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringReturnRun
+
+/-- info: 'CSD.RecordLayer.levelSwap_apply_eq_zero_of_site_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelSwap_apply_eq_zero_of_site_ne
+
+/-- info: 'CSD.RecordLayer.flat_clock_return_reading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_clock_return_reading
+
 end CSD.Tests.AxiomAudit

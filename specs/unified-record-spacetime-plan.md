@@ -599,7 +599,9 @@ what would discharge or constrain it.
   `ringGateRun`, `flat_clock_emission_reading` (`RecordLayer/UnifiedEmissionReading.lean`,
   BACKLOG ~~#396~~). Values meeting those inequalities, along a family:
   `emission_reading_family` (`RecordLayer/UnifiedEmissionValues.lean`, BACKLOG ~~#397~~).
-  Nothing else yet. Existing pieces the rest is to be built from: the pointer step
+  The run with both gates and the return reading, conditional on a band:
+  `ringReturnRun`, `flat_clock_return_reading` (`RecordLayer/UnifiedReturnReading.lean`,
+  BACKLOG ~~#399~~). Nothing else yet. Existing pieces the rest is to be built from: the pointer step
   (`LF4/PointerStep.lean`, BACKLOG ~~#368~~) for the fifth torus; `prodIdx` and `gateFlow`
   (`RecordLayer/UnifiedCompositeCarrier.lean`, ~~#376~~) for the composite and the product
   coupling; `clock_packet_ticks` (`RecordLayer/UnifiedClockPacket.lean`, ~~#388~~) for an
@@ -1139,7 +1141,9 @@ margin and the gated pointer's count for a messenger packet and the flat clock p
 scalar conditions and a family with a relative error at most `15/k`
 (`RecordLayer/UnifiedEmissionValues.lean`, BACKLOG ~~#397~~). UD-155 and UD-156 are the count of a swing
 over a window and of a pointer whose swing is offset, the pointer side of the return reading
-(`RecordLayer/UnifiedWindowSwing.lean`, BACKLOG ~~#398~~).
+(`RecordLayer/UnifiedWindowSwing.lean`, BACKLOG ~~#398~~). UD-157 and UD-158 are the return
+reading: the count of the complementary gate, conditional on a band
+(`RecordLayer/UnifiedReturnReading.lean`, BACKLOG ~~#399~~).
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -1198,6 +1202,8 @@ over a window and of a pointer whose swing is offset, the pointer side of the re
 | UD-154 | **A family of runs whose emission reading has a relative error at most `15/k`.** For every `k ≥ 1`, with `n = 10⁷ k⁴`, `N = 2 · 10⁸ k³`, `Δ = k/(n N)`, the messenger's rest energy `1/(2k)`, the resolution `1/(10k)` and any ring of more than `210000 n² N` sites: the messenger's velocity is within `1/(2k²)` of `1`; `R t_a ≥ 300 k`; and at every flow time of `[t_b, (3/2) t_b]` the gated pointer's count `N'` has `|2π N' − R t_a| ≤ (15/k) R t_a` | `emn`, `emN`, `emGap`, `emBudget_family_le`, `emission_family_error`, `emission_reading_family` (`RecordLayer/UnifiedEmissionValues.lean`) | bound; as UD-153; each `k` is a different generator (ring, gap and flow times grow with `k`) |
 | UD-155 | **The count of a swing over a window.** A history that on `[s, T]` rests wherever the cosine of the phase `R t + φ` equals `κ`, displays wherever it is below `d`, rests only where it is at least `c` and displays only where it is below `c`: a history without `N₀ + 1` ticks by `s` has at most `N₀ + R (T − s)/(2π) + 3` ticks by `T`; a history with `m` ticks by `s` has `m + n` by `T` once the phase has advanced through `2π n + π`; so counts `N_s`, `N_T` have `|2π (N_T − N_s) − R (T − s)| ≤ 6π` | `IsWindowSwing`, `IsWindowSwing.hasTicks_le`, `IsWindowSwing.hasTicks_add`, `IsWindowSwing.abs_count_sub_le`, `IsWindowSwing.exists_tickCount` (`RecordLayer/UnifiedWindowSwing.lean`) | bound; a statement about a history, on no arena; flow times |
 | UD-156 | **A pointer whose swing is offset: two bands in which it ticks once a turn, and a band in which it does not tick.** A last pointer whose displacement on `[s, T]` is within `η < 1/12` of `(1/4)(1 − cos R t) − c`, with lower turning point `p = θ₁ − c`: for `p` in `(−1/6 + η, 1/6 − η]` or in `(−1/2 + η, −1/6 − η)` it is a window swing and `|2π (N_T − N_s) − R (T − s)| ≤ 6π`; for `p` in `(1/6 + η, 1/2 − η]` it is never in the ready arc on the window and its count advances by at most one | `pshift_notMem_readyArc_of_nonpos`, `pshift_mem_displayArc_iff_of_nonpos`, `isWindowSwing_snd_high`, `isWindowSwing_snd_low`, `offset_swing_count`, `offset_swing_dead` (`RecordLayer/UnifiedWindowSwing.lean`) | bound; one pointer's history, on no arena; nothing within `η` of the three edges; where `c` lies is not shown |
+| UD-157 | **The return reading: the count of the complementary gate, from where the carriers are.** A last pointer started at `1/12` that stays within `η₀ < 1/12` of its start up to `t_a`, moves at speed at most `v` on `[t_a, t_b]` and `[t₃, t₄]`, is an offset swing in a band of UD-156 on `[t_b, t₃]` and moves by at most a sixth of a turn inside `[t₄, t₅]` has at every flow time of `[t₄, t₅]` a count `N` with `|2π N − R (t₃ − t_b)| ≤ 2π (3 v ((t_b − t_a) + (t₄ − t₃)) + 7)`. For the flow of UD-145 with its last pointer coupled to `gateOp (¬r) Y`: if the carriers have weight at most `ε` outside the relation up to `t_a` and on `[t₄, t₅]`, at most `ε` inside it on `[t_b, t₃]`, the second carrier's own displacement is within `δ₀` of `(1/4)(1 − cos R t)` up to `t₃`, and the displacement `c` at `t_b` of a pointer coupled to the gate `r` is in a band with `η = δ₀ + 2|z| ε (t₃ − t_b)`, the count has that bound with `v = 2|z|` | `count_after_transition`, `away_pointer_count`, `coincFlow_return_reading` (`RecordLayer/UnifiedReturnReading.lean`) | bound; conditional on the band of UD-156 and on hypotheses about where the carriers are; as UD-145 (a null set of fibres and of starts) |
+| UD-158 | **The return reading for a messenger packet and the flat clock packet on one ring.** Both gates of "within the angle `w`" in one run, both pointers of profile `g · trainF` started at `1/12`. If the two budgets add up to at most `ε (1 − cos δ)` up to `t₅`; the messenger's predicted angle is within `w − 2δ` of both levels' up to `t_a` and on `[t₄, t₅]` and more than `w + 2δ` from both on `[t_b, t₃]`, `t₃ ≤ 2π n/R`; and `2 (R/5) ε t_a < 1/12`, `2 (R/5) ε (t₃ − t_b) < 1/24`, `2 (R/5) ε (t₅ − t₄) ≤ 1/6`: then for some `0 < g ≤ R/5`, if the emission pointer's displacement at `t_b` is in a band with `η = 1/24 + 2 g ε (t₃ − t_b)`, the complementary pointer has at every flow time of `[t₄, t₅]` a count `N'` with `|2π N' − R (t₃ − t_b)| ≤ 2π (6 g ((t_b − t_a) + (t₄ − t₃)) + 7)` | `packetAngleGap`, `ringEmissionShift`, `ringReturnRun`, `levelSwap_apply_eq_zero_of_site_ne`, `flat_clock_return_reading` (`RecordLayer/UnifiedReturnReading.lean`) | bound; conditional on the band; inequalities between real numbers with no values exhibited; as UD-152 |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2047,6 +2053,23 @@ UA-18 (e) says each reading is the number of tick records in the pointer's first
 For the return reading that number follows the clock only for runs in which the emission
 pointer stopped inside one of the two bands. The return reading, and with it M6, will carry
 that as a hypothesis about the run unless the author decides otherwise.
+
+Exact scope of UD-157 and UD-158 (BACKLOG ~~#399~~; step (4) of the plan under UO-16). What
+they give. The return reading of UA-18 (d): the number of ticks of the pointer coupled to the
+complementary gate, which is closed while the messenger is with the clock, open while it is
+away and closed again when it is back. At every flow time of an interval after the return the
+count is within a stated bound of `R (t₃ − t_b)/2π`, the time away in ticks; the bound has a
+term for the closing of the emission gate and one for its reopening. UD-158 is the statement
+for any messenger packet and the flat clock packet on one ring, with both gates in one run.
+What they do not give. (i) An unconditional reading: the conclusion is for runs in which the
+emission pointer's displacement at `t_b` is in one of the two bands of UD-156, and where that
+displacement lies is not shown. (ii) Values: the conditions are inequalities between real
+numbers; no run in which the messenger comes back is exhibited, and `t₃ ≤ 2π n/R` asks the
+clock's horizon to cover the time away. (iii) How the messenger comes back: the hypotheses
+are on predicted angles; on the ring a faster messenger laps the clock, with a wall it would
+be reflected, and neither is used. (iv) The radar time and distance: the two counts are not
+added or halved here. (v) Records at `t_a`, `t_b`, `t₃`, `t₄`, which are flow times. They pass
+no gate, and UO-16 is not met. Assumptions used: as UD-152.
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
@@ -2979,6 +3002,19 @@ time. It is not a statement about every dynamics on `Σ`.
   readings do not need. *What step (4) still needs:* the return reading assembled (on the
   ring the messenger comes round again, so no wall is needed to test it); the wall; the
   radar time and distance.
+  ▸ **Step (4), ninth brick: the return reading assembled, 2026-11-15 (BACKLOG ~~#399~~) →
+  UD-157, UD-158. Not met.** The pointer coupled to the complementary gate, in one run with
+  the emission pointer: its gate is closed up to `t_a`, open on `[t_b, t₃]` and closed again
+  on `[t₄, t₅]`. For any messenger packet and the flat clock packet on one ring, under
+  inequalities between the parameters and for runs in which the emission pointer stopped in
+  a band of UD-156, at every flow time of `[t₄, t₅]` its count `N'` has
+  `|2π N' − R (t₃ − t_b)| ≤ 2π (6 g ((t_b − t_a) + (t₄ − t₃)) + 7)`
+  (`flat_clock_return_reading`). *What this is not:* unconditional (the band); an instance
+  with values (no run in which the messenger comes back is exhibited); a statement of how it
+  comes back (lap or wall); the radar time and distance; a record at any of the flow times.
+  *What step (4) still needs:* the radar time and distance formed from the two counts;
+  values for a run with a return, which on the chain of UA-18 needs the wall; and the
+  author's reading of the band condition.
 
 ### M7 — `3 + 1`
 
@@ -3135,7 +3171,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#399~~ (the return reading), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);
