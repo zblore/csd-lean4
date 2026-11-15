@@ -814,6 +814,7 @@ public import CsdLean4.RecordLayer.UnifiedCoincidenceFlow
 public import CsdLean4.RecordLayer.UnifiedGatedReading
 public import CsdLean4.RecordLayer.UnifiedGateRegions
 public import CsdLean4.RecordLayer.UnifiedEmissionReading
+public import CsdLean4.RecordLayer.UnifiedEmissionValues
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers

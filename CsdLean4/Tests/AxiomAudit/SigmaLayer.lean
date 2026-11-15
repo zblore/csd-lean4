@@ -20744,4 +20744,98 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.flat_clock_emission_reading
 
+/-! #397 (the author's programme, obligation UO-16; step (4) of the plan of 2026-11-14, seventh brick): values for the emission reading of #396 — a light flat messenger whose velocity is within `2μ²` of `1`, the reading under four scalar conditions, and a family indexed by `k` along which the gated pointer's count has a relative error at most `15/k`. A ring with two carriers; null sets of fibres and starts; each `k` a different generator (`RecordLayer/UnifiedEmissionValues.lean`). -/
+
+/-- info: 'CSD.RecordLayer.sq_div_five_le_one_sub_cos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sq_div_five_le_one_sub_cos
+
+/-- info: 'CSD.RecordLayer.cos_le_cos_of_abs_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_le_cos_of_abs_le
+
+/-- info: 'CSD.RecordLayer.cos_lt_cos_of_between' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_lt_cos_of_between
+
+/-- info: 'CSD.RecordLayer.vRel_half_light' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.vRel_half_light
+
+/-- info: 'CSD.RecordLayer.vRel_half_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.vRel_half_one
+
+/-- info: 'CSD.RecordLayer.emission_times' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emission_times
+
+/-- info: 'CSD.RecordLayer.emission_angles' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emission_angles
+
+/-- info: 'CSD.RecordLayer.emission_angles_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emission_angles_near
+
+/-- info: 'CSD.RecordLayer.emission_angles_apart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emission_angles_apart
+
+/-- info: 'CSD.RecordLayer.limitErr_le_inv_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.limitErr_le_inv_mul
+
+/-- info: 'CSD.RecordLayer.flat_messenger_budget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flat_messenger_budget
+
+/-- info: 'CSD.RecordLayer.emT0' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emT0
+
+/-- info: 'CSD.RecordLayer.emTa' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emTa
+
+/-- info: 'CSD.RecordLayer.emTb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emTb
+
+/-- info: 'CSD.RecordLayer.emBudget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emBudget
+
+/-- info: 'CSD.RecordLayer.emission_budget_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emission_budget_le
+
+/-- info: 'CSD.RecordLayer.light_messenger_emission_reading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.light_messenger_emission_reading
+
+/-- info: 'CSD.RecordLayer.emn' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emn
+
+/-- info: 'CSD.RecordLayer.emN' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emN
+
+/-- info: 'CSD.RecordLayer.emGap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emGap
+
+/-- info: 'CSD.RecordLayer.emBudget_family_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emBudget_family_le
+
+/-- info: 'CSD.RecordLayer.emission_family_error' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emission_family_error
+
+/-- info: 'CSD.RecordLayer.emission_reading_family' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.emission_reading_family
+
 end CSD.Tests.AxiomAudit
