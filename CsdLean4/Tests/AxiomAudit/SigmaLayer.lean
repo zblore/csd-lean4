@@ -20958,4 +20958,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.flat_clock_radar_reading
 
+/-! #402 (the author's programme, obligation UO-16): M6 from the top — the Lorentz statement of `radar_lorentz_error` from five pointer histories of one run, the two relations between the flow times and the moving clock's rate. Conditional; on no arena; it fixes the list R1–R7 of what remains (`RecordLayer/UnifiedRadarSkeleton.lean`). -/
+
+/-- info: 'CSD.RecordLayer.IsGatedHistory.exists_count' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsGatedHistory.exists_count
+
+/-- info: 'CSD.RecordLayer.IsAwayHistory.exists_count' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsAwayHistory.exists_count
+
+/-- info: 'CSD.RecordLayer.abs_div_sub_le_of_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_div_sub_le_of_rate
+
+/-- info: 'CSD.RecordLayer.radar_lorentz_of_histories' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_lorentz_of_histories
+
 end CSD.Tests.AxiomAudit
