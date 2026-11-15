@@ -28,7 +28,7 @@ that the count is at least any wanted number.
   `dispE_one_le_two`, `two_div_pi_mul_le_ringSigma`, ★ `div_pi_le_vRel_ringSigma` (in the
   lower half of the band `p/π ≤ σ/E₀`), `abs_div_horizon_sub_le`;
 * ★★★ `narrow_clock_packet_ticks` — on a ring of length `2π K`: reference momentum
-  `0 < p₀ ≤ 9/10` with `6 K p₀ ≤ M + 1`, any window of modes within `1/(600 n)` of `p₀`, any
+  `0 ≤ p₀ ≤ 9/10` with `6 K p₀ ≤ M + 1`, any window of modes within `1/(600 n)` of `p₀`, any
   normalised amplitudes, any gap `0 < Δ ≤ 1/2`. For some strength of the coupling, at
   `T = 2π n/R` the count `N` exists, `N ≥ n`,
   `|2π N/Δ − √(1 − v²) T| ≤ 2π/Δ + (Δ/E₀) T`, the same as a rate
@@ -306,7 +306,7 @@ theorem abs_div_horizon_sub_le {A s Δ E R n : ℝ} (hn : 0 < n) (hΔ0 : 0 < Δ)
   linarith
 
 /-- ★★★ **Every narrow clock packet ticks at least `n` times inside its horizon.** On a ring
-of length `2π K` with `M + 1` sites, take a reference momentum `0 < p₀ ≤ 9/10` in the lower
+of length `2π K` with `M + 1` sites, take a reference momentum `0 ≤ p₀ ≤ 9/10` in the lower
 part of the band (`6 K p₀ ≤ M + 1`), any window of modes whose momenta `m/K` lie within
 `1/(600 n)` of `p₀`, any normalised amplitudes on it, and a level gap `0 < Δ ≤ 1/2`. For the
 clock with levels `1` and `1 + Δ`, prepared as the device's packet, there is a strength of
@@ -320,7 +320,7 @@ Here `σ = ringSigma K M p₀`, `E₀ = dispE 1 σ`, `v = vRel 1 1 σ = σ/E₀ 
 `clock_packet_ticks` is discharged. The proof uses the strength `R/(16 Im C₀)`; the
 statement does not record it. -/
 theorem narrow_clock_packet_ticks {n K M : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ : ℝ}
-    (hp0 : 0 < p₀) (hp1 : p₀ ≤ 9 / 10) (hM : 6 * K * p₀ ≤ ((M + 1 : ℕ) : ℝ))
+    (hp0 : 0 ≤ p₀) (hp1 : p₀ ≤ 9 / 10) (hM : 6 * K * p₀ ≤ ((M + 1 : ℕ) : ℝ))
     {W : Finset ℤ} {lo : ℤ} (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + (M + 1 : ℕ))
     (hWD : ∀ m ∈ W, |(m : ℝ) / K - p₀| ≤ 1 / (600 * n)) (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) :
@@ -351,7 +351,7 @@ theorem narrow_clock_packet_ticks {n K M : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ 
     linarith
   have hD0 : (0 : ℝ) < 1 / (600 * n) := by positivity
   have hσsq : ringSigma K M p₀ ^ 2 ≤ 3 :=
-    ringSigma_sq_le hK M (by rw [abs_of_pos hp0]; linarith)
+    ringSigma_sq_le hK M (by rw [abs_of_nonneg hp0]; linarith)
   have hRlo : Δ / 2 ≤ ringRate K M p₀ Δ := half_le_levelClockRate hΔ0.le hσsq
   have hRhi : ringRate K M p₀ Δ ≤ Δ := levelClockRate_le_gap hΔ0.le _
   have hR0 : 0 < ringRate K M p₀ Δ := by linarith
@@ -375,7 +375,7 @@ theorem narrow_clock_packet_ticks {n K M : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ 
   -- the drift is `Δ u`
   set u := 1 / (600 * (n : ℝ)) * (2 * p₀ + 1 / (600 * n)) / 4 with hud
   have hεeq : deviceDrift 1 1 (1 + Δ) (1 / (600 * n)) p₀ = Δ * u := by
-    rw [hud, deviceDrift, abs_of_pos hp0]
+    rw [hud, deviceDrift, abs_of_nonneg hp0]
     ring
   have hu0 : 0 ≤ u := by
     rw [hud]
@@ -428,8 +428,8 @@ theorem narrow_clock_packet_ticks {n K M : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ 
     rw [hRT]
     linarith
   refine ⟨?_, ?_⟩
-  · refine div_pi_le_vRel_ringSigma hK hp0.le (by linarith) ?_
-    nlinarith [mul_pos hK' hp0]
+  · refine div_pi_le_vRel_ringSigma hK hp0 (by linarith) ?_
+    nlinarith [mul_nonneg hK'.le hp0]
   · obtain ⟨hΨ, N, hnN, hN, hbound⟩ := clock_packet_count_ge (M := M) (c := 1) (μ₀ := 1)
       (μ₁ := 1 + Δ) (ℓ := ringLen K) (D := 1 / (600 * n)) (p₀ := p₀) one_pos one_pos
       (by linarith) (ringLen_pos hK) hWin hWD' β hβ (J := ringHop K M)

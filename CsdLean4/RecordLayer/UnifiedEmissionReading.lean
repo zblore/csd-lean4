@@ -227,7 +227,7 @@ theorem clock_packet_shift_le {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 
 `narrow_clock_packet_ticks` (#391): for some strength `0 < g ≤ R/5`, up to `T = 2π n/R` the
 clock pointer's displacement is within `1/24` of `(1/4)(1 − cos R t)`. -/
 theorem narrow_clock_packet_swing {n K : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ : ℝ}
-    (hp0 : 0 < p₀) (hp1 : p₀ ≤ 9 / 10)
+    (hp0 : 0 ≤ p₀) (hp1 : p₀ ≤ 9 / 10)
     {W : Finset ℤ} {lo : ℤ} (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + (M + 1 : ℕ))
     (hWD : ∀ m ∈ W, |(m : ℝ) / K - p₀| ≤ 1 / (600 * n)) (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) :
@@ -244,7 +244,7 @@ theorem narrow_clock_packet_swing {n K : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ : 
   have hπ := Real.pi_pos
   have hπu : Real.pi < 3.15 := Real.pi_lt_d2
   have hσsq : ringSigma K M p₀ ^ 2 ≤ 3 :=
-    ringSigma_sq_le hK M (by rw [abs_of_pos hp0]; linarith)
+    ringSigma_sq_le hK M (by rw [abs_of_nonneg hp0]; linarith)
   have hRlo : Δ / 2 ≤ ringRate K M p₀ Δ := half_le_levelClockRate hΔ0.le hσsq
   have hRhi : ringRate K M p₀ Δ ≤ Δ := levelClockRate_le_gap hΔ0.le _
   have hR0 : 0 < ringRate K M p₀ Δ := by linarith
@@ -270,7 +270,7 @@ theorem narrow_clock_packet_swing {n K : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ : 
     exact half_le_levelClockRate hΔ0.le (ringSigma_sq_le hK M hm1)
   set u := 1 / (600 * (n : ℝ)) * (2 * p₀ + 1 / (600 * n)) / 4 with hud
   have hεeq : deviceDrift 1 1 (1 + Δ) (1 / (600 * n)) p₀ = Δ * u := by
-    rw [hud, deviceDrift, abs_of_pos hp0]
+    rw [hud, deviceDrift, abs_of_nonneg hp0]
     ring
   have hu0 : 0 ≤ u := by
     rw [hud]
