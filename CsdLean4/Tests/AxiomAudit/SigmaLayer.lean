@@ -21146,4 +21146,132 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.tri_radar_lorentz
 
+/-! #406 (the author's programme, obligation UO-16; item R4 of the list under UD-164, and of R2 the clock at rest): the rate inequality of #402 with kappa = Delta for the level splittings of one clock, and a flat clock packet at reference momentum 0 that ticks and stays where it starts, on the ring (`RecordLayer/UnifiedClockAtRest.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_movingRate_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_movingRate_sub_le
+
+/-- info: 'CSD.RecordLayer.ringRate_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringRate_zero
+
+/-- info: 'CSD.RecordLayer.abs_ringRate_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_ringRate_sub_le
+
+/-- info: 'CSD.RecordLayer.restWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.restWindow
+
+/-- info: 'CSD.RecordLayer.sum_norm_flatAmpN_rest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_flatAmpN_rest
+
+/-- info: 'CSD.RecordLayer.restWindow_mem_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.restWindow_mem_range
+
+/-- info: 'CSD.RecordLayer.restWindow_width' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.restWindow_width
+
+/-- info: 'CSD.RecordLayer.rest_clock_packet_ticks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rest_clock_packet_ticks
+
+/-- info: 'CSD.RecordLayer.rest_packet_start_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rest_packet_start_le
+
+/-- info: 'CSD.RecordLayer.rest_packet_budget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rest_packet_budget
+
+/-- info: 'CSD.RecordLayer.rest_clock_packet_localised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rest_clock_packet_localised
+
+/-! #407 (the author's programme, obligation UO-16; of item R2 of the list under UD-164, the wall for one Dirac carrier): the mirror-odd state of a ring packet — odd at every time, the boundary condition of UA-18 (a), its weight from the packet's and the mirror packet's. No instance (`RecordLayer/UnifiedOddWall.lean`). -/
+
+/-- info: 'CSD.RecordLayer.negWin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.negWin
+
+/-- info: 'CSD.RecordLayer.mem_negWin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_negWin
+
+/-- info: 'CSD.RecordLayer.mirrorPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mirrorPacket
+
+/-- info: 'CSD.RecordLayer.chainParity_ringPacket_negWin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainParity_ringPacket_negWin
+
+/-- info: 'CSD.RecordLayer.chainParity_mirrorPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainParity_mirrorPacket
+
+/-- info: 'CSD.RecordLayer.chainParity_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainParity_neg
+
+/-- info: 'CSD.RecordLayer.oddWall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.oddWall
+
+/-- info: 'CSD.RecordLayer.chainParity_oddWall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainParity_oddWall
+
+/-- info: 'CSD.RecordLayer.odd_apply_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.odd_apply_eq_zero
+
+/-- info: 'CSD.RecordLayer.oddWall_apply_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.oddWall_apply_eq_zero
+
+/-- info: 'CSD.RecordLayer.chainProp_oddWall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_oddWall
+
+/-- info: 'CSD.RecordLayer.regionWeight_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_neg
+
+/-- info: 'CSD.RecordLayer.chainInner_neg_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainInner_neg_right
+
+/-- info: 'CSD.RecordLayer.chainInner_neg_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainInner_neg_neg
+
+/-- info: 'CSD.RecordLayer.chainInner_ringPacket_mirrorPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainInner_ringPacket_mirrorPacket
+
+/-- info: 'CSD.RecordLayer.chainInner_oddWall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainInner_oddWall
+
+/-- info: 'CSD.RecordLayer.regionWeight_oddWall_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_oddWall_le
+
+/-- info: 'CSD.RecordLayer.le_regionWeight_oddWall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_regionWeight_oddWall
+
+/-- info: 'CSD.RecordLayer.ne_zero_of_chainInner_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ne_zero_of_chainInner_eq_one
+
+/-- info: 'CSD.RecordLayer.arenaObs_regionProj_oddWall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_regionProj_oddWall
+
 end CSD.Tests.AxiomAudit
