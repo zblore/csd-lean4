@@ -605,7 +605,8 @@ what would discharge or constrain it.
   closes quickly: `flat_clock_return_reading_of_phase` (`RecordLayer/UnifiedStopBand.lean`,
   BACKLOG ~~#400~~). Both pointers read in one run, one observer:
   `flat_clock_radar_reading` (`RecordLayer/UnifiedRadarReading.lean`, BACKLOG ~~#401~~).
-  Nothing else yet. Existing pieces the rest is to be built from: the pointer step
+  Values for it, a lap of the ring: `lap_radar_family`
+  (`RecordLayer/UnifiedReturnValues.lean`, BACKLOG ~~#403~~). Nothing else yet. Existing pieces the rest is to be built from: the pointer step
   (`LF4/PointerStep.lean`, BACKLOG ~~#368~~) for the fifth torus; `prodIdx` and `gateFlow`
   (`RecordLayer/UnifiedCompositeCarrier.lean`, ~~#376~~) for the composite and the product
   coupling; `clock_packet_ticks` (`RecordLayer/UnifiedClockPacket.lean`, ~~#388~~) for an
@@ -1153,7 +1154,9 @@ that closes quickly (`RecordLayer/UnifiedStopBand.lean`, BACKLOG ~~#400~~). UD-1
 pointers of one run and form the radar time and distance in ticks
 (`RecordLayer/UnifiedRadarReading.lean`, BACKLOG ~~#401~~). UD-163 and UD-164 state M6 from
 the top as one conditional theorem and fix the list of what remains
-(`RecordLayer/UnifiedRadarSkeleton.lean`, BACKLOG ~~#402~~).
+(`RecordLayer/UnifiedRadarSkeleton.lean`, BACKLOG ~~#402~~). UD-165 and UD-166 exhibit
+values for a run with a return and a quickly closing gate, on the ring
+(`RecordLayer/UnifiedReturnValues.lean`, BACKLOG ~~#403~~).
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -1220,6 +1223,8 @@ the top as one conditional theorem and fix the list of what remains
 | UD-162 | **The radar reading on the ring.** For any messenger packet and the flat clock packet with `n ≥ 4` in the run with both gates (`ringReturnRun`), under the hypotheses of UD-160: for some `0 < g ≤ R/5` the statement of UD-161 with `|z| = g`. The weight outside, and inside, "within the angle `w`" at one flow time follows from the two budgets and the predicted angles | `flat_ring_not_near_le`, `flat_ring_near_le`, `flat_clock_radar_reading` (`RecordLayer/UnifiedRadarReading.lean`) | bound; conditional as UD-160; no values exhibited; one observer |
 | UD-163 | **Two pointer histories and their counts, for a pointer read through any projection.** A gated history: the displacement is within `δ < 1/12` of `(1/4)(1 − cos R t)` up to `t_a`, has speed at most `v` on `[t_a, t_b]` and changes by at most a sixth of a turn inside `[t_b, t_c]`; then at every flow time of `[t_b, t_c]` the pointer, started at `1/12`, has a count `N` with `|2π N − R t_a| ≤ 2π (3 v (t_b − t_a) + 7/2)`. An away history (UD-157, with the band of UD-156 as a field); then at every flow time of `[t₄, t₅]` a count `N` with `|2π N − R (t₃ − t_b)| ≤ 2π (3 v ((t_b − t_a) + (t₄ − t₃)) + 7)` | `IsGatedHistory`, `IsGatedHistory.exists_count`, `IsAwayHistory`, `IsAwayHistory.exists_count` (`RecordLayer/UnifiedRadarSkeleton.lean`) | bound; restatements of UD-147 and UD-157 for any projection; the histories are hypotheses |
 | UD-164 | **M6 from the top: the Lorentz statement from five pointer histories of one run.** One run with five pointers started at `1/12`. If `B`'s emission and meeting pointers and `A`'s relay and meeting pointers have gated histories closing at `t_E`, `t_M`, `t_R`, `t_M`; `B`'s return pointer has an away history open until `t_Ret`; `B`'s rate is within `κ R₀` of `√(1 − v²) R₀` and `A`'s is `R₀`; the flow times at which the five gates close are within tolerances `τ` of times `T_E`, `T_R`, `T_Ret`, `T_M`; and `T_R − T_E = v (T_M − T_E)`, `T_Ret − T_R = v (T_M − T_Ret)`: then at every choice of flow times in the five reading windows the pointers have counts `N_e`, `N_r`, `N_μ`, `N_ρ`, `N_m`, and with `e = 2π N_e/R₀`, `r = 2π (N_e + N_r)/R₀`, `μ = 2π N_μ/R₀`, `ρ = 2π N_ρ/R₀`, `m = 2π N_m/R₀` the Lorentz boost of `(ρ − m, 0)` is within explicit errors of `((e + r)/2 − μ, −(r − e)/2)` | `gatedErr`, `awayErr`, `abs_div_sub_le_of_rate`, `radar_lorentz_of_histories` (`RecordLayer/UnifiedRadarSkeleton.lean`) | conditional; the errors carry `κ` times the flow times and the tolerances; the five histories, the four times with their two relations and tolerances, and the rate of the moving clock are hypotheses, and by the test of UO-16 the last two may not stay hypotheses; on no arena |
+| UD-165 | **The radar reading of a lap, under seven scalar conditions.** A flat messenger of rest energy `0 < μ ≤ 1/2` starting where the clock's lower level is, the flat clock packet with gap `Δ`, both gates of "within the angle `3δ`" in one run, `K = 1200 n N`, `n ≥ 4`. If `1 ≤ Δ K`, `8 ≤ δ K`, `52 Δ ≤ δ ≤ 1/100`, `lapBudget ≤ ε δ²/5`, `Δ δ K ≤ 1/1000`, `Δ K ε ≤ 1/1000` and `18 Δ K ≤ n`: for some `0 < g ≤ R/5` the three flow times `lapTb ≤ lapT3 ≤ lapT4` are ordered, `R (lapT3 − lapTb) ≥ (5/2) Δ K`, at every flow time of `[lapTb, lapT3]` the first pointer has a count `N_e` with `2π N_e ≤ 8π`, and at `lapT4` the last pointer has a count `N_r` with `\|2π N_r − R (lapT3 − lapTb)\| ≤ 16π` | `lap_times`, `lap_angles`, `lapBudget`, `lap_budget_le`, `lap_error_le`, `lapTb`, `lapT3`, `lapT4`, `lap_radar_reading` (`RecordLayer/UnifiedReturnValues.lean`) | bound; the hypotheses of UD-162 discharged except these seven inequalities; emission at the start; the return read at one flow time; as UD-162 otherwise |
+| UD-166 | **A family of runs with a return and a quickly closing gate.** For every `k ≥ 1`, with `n = N = 10¹¹ k³`, gap `k/K`, `δ = ε = 1/(1000 k)`, `μ = 1/2`, on any ring with `M ≥ 210000 n² N` sites: the seven conditions of UD-165 hold, the time away is at least `(5/2) k` in the clock's phase, and `\|2π N_r − R (lapT3 − lapTb)\| ≤ (21/k) · R (lapT3 − lapTb)` | `lapn`, `lapGap`, `lap_family_conditions`, `lap_radar_family` (`RecordLayer/UnifiedReturnValues.lean`) | bound; no condition left but the size of the ring; two carriers on a ring; the messenger at about `0.7`, the clock at about `0.45`; as UD-165 |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2182,6 +2187,24 @@ errors stay a fixed number of ticks, so they are of relative size `1/k`. **This 
 the cheapest test of whether the arrangement can meet M6 at all, and it is to be made a
 theorem, for two carriers on the ring where the tools exist, before R2 is built on the
 chain.** If it fails, the pointer arrangement has to change and R2 would have been wasted.
+
+Exact scope of UD-165 and UD-166 (BACKLOG ~~#403~~; the test named in the scoping above).
+What they give. Values, along a family, that meet every hypothesis of UD-162 together: a run
+in which the messenger leaves the clock, goes once round the ring and comes back, the
+emission gate closes within a small part of a tick, the conditions of UD-159 hold, and the
+return count is within eight ticks of the time away, which is at least `(5/2) k` in the
+clock's phase. So the pointer arrangement of UA-18 can give a return reading with an error
+that is a fixed number of ticks: the test is passed. What they do not give. (i) Any item of
+the list under UD-164 on the arena of UA-18: this is two carriers on a ring, a lap stands in
+for the reflection at a wall, the clock moves at about `0.45`, and there is no second
+observer. (ii) A late emission: the messenger starts with the clock and the gate begins to
+close at the flow time `0`, so the phase condition of UD-159 holds because `cos 0 = 1`; a run
+whose emission comes later in the clock's phase is not exhibited. For M6 this is enough only
+if `B` emits at its start, which `radar_lorentz_error` allows. (iii) A window for the return:
+it is read at the one flow time `lapT4`. (iv) A fast messenger: its rest energy is `1/2` and
+its velocity about `0.7`; with the tolerances of UD-164 a slower messenger costs accuracy,
+and a family with the velocity near one and a quickly closing gate together is not
+exhibited. They pass no gate, and UO-16 is not met. Assumptions used: as UD-152.
 
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
@@ -3174,6 +3197,14 @@ time. It is not a statement about every dynamics on `Σ`.
   the test of UO-16 forbids in the final statement. The ring statements of UD-149 to UD-162
   are kept as proved; those of them that are general in the carriers (UD-148, UD-157, UD-159,
   UD-161) are the intended tools for R1, the rest are not on the path.
+  ▸ **The test of the arrangement, 2026-11-15 (BACKLOG ~~#403~~) → UD-165, UD-166. Passed,
+  for two carriers on the ring. Not met.** `lap_radar_family`: for every `k ≥ 1` a run in
+  which the messenger leaves the clock, goes round the ring and comes back, the emission
+  gate closes within a small part of a tick, and the return count is within `21/k` of the
+  time away in relative size, with no condition left but the size of the ring. So R5 can be
+  met together with R6 by this arrangement, for an emission at the start of the run. It
+  discharges no item of the list on the arena of UA-18. *Next on the list:* R1, then R2 on
+  the chain with two walls, with the emission at `B`'s start.
 
 ### M7 — `3 + 1`
 
@@ -3330,7 +3361,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#399~~ (the return reading), ~~#400~~ (where the emission pointer stops), ~~#401~~ (the radar reading of one observer), ~~#402~~ (M6 from the top), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#399~~ (the return reading), ~~#400~~ (where the emission pointer stops), ~~#401~~ (the radar reading of one observer), ~~#402~~ (M6 from the top), ~~#403~~ (values for a run with a return), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);

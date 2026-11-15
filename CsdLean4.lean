@@ -820,6 +820,7 @@ public import CsdLean4.RecordLayer.UnifiedReturnReading
 public import CsdLean4.RecordLayer.UnifiedStopBand
 public import CsdLean4.RecordLayer.UnifiedRadarReading
 public import CsdLean4.RecordLayer.UnifiedRadarSkeleton
+public import CsdLean4.RecordLayer.UnifiedReturnValues
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers

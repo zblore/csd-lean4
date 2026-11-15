@@ -20984,4 +20984,58 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.radar_lorentz_of_histories
 
+/-! #403 (the author's programme, obligation UO-16; items R5 and R6 of the list under UD-164, for two carriers on the ring): values for a run with a return — a lap of the ring with a quickly closing gate, along a family; the return count within eight ticks of the time away. The test of the pointer arrangement; nothing on the arena of UA-18 (`RecordLayer/UnifiedReturnValues.lean`). -/
+
+/-- info: 'CSD.RecordLayer.lap_times' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lap_times
+
+/-- info: 'CSD.RecordLayer.lap_angles' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lap_angles
+
+/-- info: 'CSD.RecordLayer.lapBudget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lapBudget
+
+/-- info: 'CSD.RecordLayer.lap_budget_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lap_budget_le
+
+/-- info: 'CSD.RecordLayer.lap_error_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lap_error_le
+
+/-- info: 'CSD.RecordLayer.lapTb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lapTb
+
+/-- info: 'CSD.RecordLayer.lapT3' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lapT3
+
+/-- info: 'CSD.RecordLayer.lapT4' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lapT4
+
+/-- info: 'CSD.RecordLayer.lap_radar_reading' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lap_radar_reading
+
+/-- info: 'CSD.RecordLayer.lapn' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lapn
+
+/-- info: 'CSD.RecordLayer.lapGap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lapGap
+
+/-- info: 'CSD.RecordLayer.lap_family_conditions' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lap_family_conditions
+
+/-- info: 'CSD.RecordLayer.lap_radar_family' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lap_radar_family
+
 end CSD.Tests.AxiomAudit
