@@ -21404,4 +21404,128 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.wallGate_le
 
+/-! #411 (the author's programme, obligation UO-16; of items R1 and R2 of the list under UD-164): the wall gate shown open and closed for a messenger's and a clock's wall states along their uncoupled orbits, and the swing with a margin for both wall clocks. Not combined; the messenger is slow (`RecordLayer/UnifiedWallOrbits.lean`). -/
+
+/-- info: 'CSD.RecordLayer.vRel_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.vRel_neg
+
+/-- info: 'CSD.RecordLayer.chainProp_oddWall_shift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_oddWall_shift
+
+/-- info: 'CSD.RecordLayer.negWin_mem_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.negWin_mem_range
+
+/-- info: 'CSD.RecordLayer.negWin_width' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.negWin_width
+
+/-- info: 'CSD.RecordLayer.sum_norm_negWin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_negWin
+
+/-- info: 'CSD.RecordLayer.icoWindow_ne_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.icoWindow_ne_neg
+
+/-- info: 'CSD.RecordLayer.icoWindow_mem_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.icoWindow_mem_range
+
+/-- info: 'CSD.RecordLayer.chainInner_icoWall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainInner_icoWall
+
+/-- info: 'CSD.RecordLayer.one_sub_sum_arenaObs_wallArc_icoWall_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_sum_arenaObs_wallArc_icoWall_le
+
+/-- info: 'CSD.RecordLayer.one_sub_sum_arenaObs_wallArcs_icoDevice_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_sum_arenaObs_wallArcs_icoDevice_le
+
+/-- info: 'CSD.RecordLayer.wall_gate_open' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_gate_open
+
+/-- info: 'CSD.RecordLayer.wall_gate_closed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_gate_closed
+
+/-- info: 'CSD.RecordLayer.wallSym_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallSym_range
+
+/-- info: 'CSD.RecordLayer.wallSym_width' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallSym_width
+
+/-- info: 'CSD.RecordLayer.wall_clock_swing_fine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_clock_swing_fine
+
+/-- info: 'CSD.RecordLayer.flatSym_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatSym_range
+
+/-- info: 'CSD.RecordLayer.flatSym_width' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatSym_width
+
+/-- info: 'CSD.RecordLayer.wall_moving_clock_swing_fine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_moving_clock_swing_fine
+
+/-! #412 (the author's programme, obligation UO-16; item R3 of the list under UD-164, first part): the four times of the radar run with the two relations of #402 proved, and the tolerances a messenger of speed u < 1 forces. Arithmetic of straight motion (`RecordLayer/UnifiedRadarTimes.lean`). -/
+
+/-- info: 'CSD.RecordLayer.radarTR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarTR
+
+/-- info: 'CSD.RecordLayer.radarTRet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarTRet
+
+/-- info: 'CSD.RecordLayer.radarTM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarTM
+
+/-- info: 'CSD.RecordLayer.radar_times_relay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_times_relay
+
+/-- info: 'CSD.RecordLayer.radar_times_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_times_return
+
+/-- info: 'CSD.RecordLayer.crossRelay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.crossRelay
+
+/-- info: 'CSD.RecordLayer.crossReturn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.crossReturn
+
+/-- info: 'CSD.RecordLayer.crossRelay_spec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.crossRelay_spec
+
+/-- info: 'CSD.RecordLayer.crossReturn_spec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.crossReturn_spec
+
+/-- info: 'CSD.RecordLayer.abs_crossRelay_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_crossRelay_sub
+
+/-- info: 'CSD.RecordLayer.abs_crossReturn_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_crossReturn_sub_le
+
+/-- info: 'CSD.RecordLayer.one_sub_vRel_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_vRel_le
+
 end CSD.Tests.AxiomAudit

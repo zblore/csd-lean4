@@ -146,7 +146,8 @@ most `R/(16κ)`, and up to `T` the pointer's displacement is within
 theorem clock_packet_shift_le {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 : 0 < μ₀) (h01 : μ₀ < μ₁)
     (hℓ : 0 < ℓ) {W : Finset ℤ} {lo : ℤ}
     (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + (M + 1 : ℕ))
-    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D) (β : ℤ → ℂ)
+    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D ∨ |2 * Real.pi * m / ℓ + p₀| ≤ D)
+    (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) {J σ R ε : ℝ} (hJ : J = scaledHop c (ℓ / (M + 1 : ℕ)))
     (hσ : σ = 2 * J * Real.sin (ℓ / (M + 1 : ℕ) * p₀)) (hR : R = levelClockRate μ₀ μ₁ σ)
     (hε : ε = deviceDrift c μ₀ μ₁ D p₀) {ρ : ℝ} (hρ : 0 < ρ) (hρR : ρ ≤ R)
@@ -165,8 +166,8 @@ theorem clock_packet_shift_le {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 
   have h1 : 0 < μ₁ := h0.trans h01
   have hR0 : 0 < R := hρ.trans_le hρR
   have hD := (noWrap_distinct_of_window (L := M + 1) hWin).2
-  have hdev := clock_tick_device (M := M) trainF_periodic contDiff_trainF hc h0 h01 hℓ hWin
-    (fun m hm => Or.inl (hWD m hm)) β hβ (0 : ℝ)
+  have hdev := clock_tick_device (M := M) trainF_periodic contDiff_trainF hc h0 h01 hℓ hWin hWD
+    β hβ (0 : ℝ)
   simp only [← hJ, ← hσ, ← hR, ← hε] at hdev
   obtain ⟨hΨ, hre, him, -⟩ := hdev
   set C₀ := deviceCoherence (devicePacket (L := M + 1) J μ₀ μ₁ W β (-(Real.pi / (2 * R)))) with hC₀
@@ -184,7 +185,7 @@ theorem clock_packet_shift_le {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 
   have hsum : ∑ m ∈ W, ‖modeCoh M J μ₀ μ₁ β (-(Real.pi / (2 * R))) m‖
       * |modeRate M J μ₀ μ₁ m - R| ≤ ε := by
     rw [hε, hR, hσ, hJ]
-    exact sum_norm_modeCoh_mul_le hc h0 h01.le hℓ (fun m hm => Or.inl (hWD m hm)) β hβ _
+    exact sum_norm_modeCoh_mul_le hc h0 h01.le hℓ hWD β hβ _
   have hfac : 0 ≤ 2 * T / ρ + 3 / ρ ^ 2 := by positivity
   have hfac' : 0 ≤ 2 * T / ρ + 3 / ρ ^ 2 + Real.pi / (2 * R ^ 2) := by positivity
   refine ⟨hΨ, hg0, ?_, fun t ht htT => ?_⟩
@@ -229,7 +230,8 @@ clock pointer's displacement is within `1/24` of `(1/4)(1 − cos R t)`. -/
 theorem narrow_clock_packet_swing {n K : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ : ℝ}
     (hp0 : 0 ≤ p₀) (hp1 : p₀ ≤ 9 / 10)
     {W : Finset ℤ} {lo : ℤ} (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + (M + 1 : ℕ))
-    (hWD : ∀ m ∈ W, |(m : ℝ) / K - p₀| ≤ 1 / (600 * n)) (β : ℤ → ℂ)
+    (hWD : ∀ m ∈ W, |(m : ℝ) / K - p₀| ≤ 1 / (600 * n) ∨ |(m : ℝ) / K + p₀| ≤ 1 / (600 * n))
+    (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) :
     ∃ (g : ℝ) (hΨ : devicePacket (L := M + 1) (ringHop K M) 1 (1 + Δ) W β
           (-(Real.pi / (2 * ringRate K M p₀ Δ))) ≠ 0),
@@ -249,7 +251,8 @@ theorem narrow_clock_packet_swing {n K : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ : 
   have hRhi : ringRate K M p₀ Δ ≤ Δ := levelClockRate_le_gap hΔ0.le _
   have hR0 : 0 < ringRate K M p₀ Δ := by linarith
   set R := ringRate K M p₀ Δ with hRd
-  have hWD' : ∀ m ∈ W, |2 * Real.pi * m / ringLen K - p₀| ≤ 1 / (600 * n) := by
+  have hWD' : ∀ m ∈ W, |2 * Real.pi * m / ringLen K - p₀| ≤ 1 / (600 * n)
+      ∨ |2 * Real.pi * m / ringLen K + p₀| ≤ 1 / (600 * n) := by
     intro m hm
     have e : 2 * Real.pi * (m : ℝ) / ringLen K = (m : ℝ) / K := by
       rw [ringLen]
@@ -263,9 +266,13 @@ theorem narrow_clock_packet_swing {n K : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ : 
   have hρm : ∀ m ∈ W, Δ / 2 ≤ modeRate M (ringHop K M) 1 (1 + Δ) m := by
     intro m hm
     have hm1 : |(m : ℝ) / K| ≤ 1 := by
-      have h := abs_le.1 (hWD m hm)
-      rw [abs_le]
-      constructor <;> linarith [h.1, h.2]
+      rcases hWD m hm with h | h
+      · have h := abs_le.1 h
+        rw [abs_le]
+        constructor <;> linarith [h.1, h.2]
+      · have h := abs_le.1 h
+        rw [abs_le]
+        constructor <;> linarith [h.1, h.2]
     rw [modeRate, two_ringHop_mul_sin_angleZ hK]
     exact half_le_levelClockRate hΔ0.le (ringSigma_sq_le hK M hm1)
   set u := 1 / (600 * (n : ℝ)) * (2 * p₀ + 1 / (600 * n)) / 4 with hud
@@ -340,8 +347,8 @@ theorem flat_clock_swing {n N : ℕ} (hn : 0 < n) (hN : 0 < N)
             - 1 / 4 * (1 - Real.cos (ringRate (1200 * n * N) M (1 / 2) Δ * t))|
           ≤ 1 / 24 :=
   narrow_clock_packet_swing (lo := 0) hn (by positivity) (by norm_num) (by norm_num)
-    (flatWindow_mem_range hn hM) (flatWindow_width hn hN) (flatAmpN N)
-    (sum_norm_flatAmpN n hN) hΔ0 hΔ
+    (flatWindow_mem_range hn hM) (fun m hm => Or.inl (flatWindow_width hn hN m hm))
+    (flatAmpN N) (sum_norm_flatAmpN n hN) hΔ0 hΔ
 
 /-- **The clock pointer's displacement of #357 is the ungated displacement of #394** for the
 profile `g · trainF` on the fibre `0`. -/

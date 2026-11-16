@@ -93,7 +93,8 @@ variable {M : ℕ}
 theorem narrow_clock_packet_swing_fine {n K j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hK : 0 < K)
     {p₀ : ℝ} (hp0 : 0 ≤ p₀) (hp1 : p₀ ≤ 9 / 10)
     {W : Finset ℤ} {lo : ℤ} (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + (M + 1 : ℕ))
-    (hWD : ∀ m ∈ W, |(m : ℝ) / K - p₀| ≤ 1 / (600 * n)) (β : ℤ → ℂ)
+    (hWD : ∀ m ∈ W, |(m : ℝ) / K - p₀| ≤ 1 / (600 * n) ∨ |(m : ℝ) / K + p₀| ≤ 1 / (600 * n))
+    (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) :
     ∃ (g : ℝ) (hΨ : devicePacket (L := M + 1) (ringHop K M) 1 (1 + Δ) W β
           (-(Real.pi / (2 * ringRate K M p₀ Δ))) ≠ 0),
@@ -115,7 +116,8 @@ theorem narrow_clock_packet_swing_fine {n K j : ℕ} (hj : 0 < j) (hjn : j ≤ n
   have hRhi : ringRate K M p₀ Δ ≤ Δ := levelClockRate_le_gap hΔ0.le _
   have hR0 : 0 < ringRate K M p₀ Δ := by linarith
   set R := ringRate K M p₀ Δ with hRd
-  have hWD' : ∀ m ∈ W, |2 * Real.pi * m / ringLen K - p₀| ≤ 1 / (600 * n) := by
+  have hWD' : ∀ m ∈ W, |2 * Real.pi * m / ringLen K - p₀| ≤ 1 / (600 * n)
+      ∨ |2 * Real.pi * m / ringLen K + p₀| ≤ 1 / (600 * n) := by
     intro m hm
     have e : 2 * Real.pi * (m : ℝ) / ringLen K = (m : ℝ) / K := by
       rw [ringLen]
@@ -129,9 +131,13 @@ theorem narrow_clock_packet_swing_fine {n K j : ℕ} (hj : 0 < j) (hjn : j ≤ n
   have hρm : ∀ m ∈ W, Δ / 2 ≤ modeRate M (ringHop K M) 1 (1 + Δ) m := by
     intro m hm
     have hm1 : |(m : ℝ) / K| ≤ 1 := by
-      have h := abs_le.1 (hWD m hm)
-      rw [abs_le]
-      constructor <;> linarith [h.1, h.2]
+      rcases hWD m hm with h | h
+      · have h := abs_le.1 h
+        rw [abs_le]
+        constructor <;> linarith [h.1, h.2]
+      · have h := abs_le.1 h
+        rw [abs_le]
+        constructor <;> linarith [h.1, h.2]
     rw [modeRate, two_ringHop_mul_sin_angleZ hK]
     exact half_le_levelClockRate hΔ0.le (ringSigma_sq_le hK M hm1)
   set u := 1 / (600 * (n : ℝ)) * (2 * p₀ + 1 / (600 * n)) / 4 with hud
@@ -216,7 +222,8 @@ theorem flat_clock_swing_fine {n N j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0
           ≤ 1 / (24 * j) := by
   have hn : 0 < n := hj.trans_le hjn
   exact narrow_clock_packet_swing_fine (lo := 0) hj hjn (by positivity) (by norm_num)
-    (by norm_num) (flatWindow_mem_range hn hM) (flatWindow_width hn hN) (flatAmpN N)
+    (by norm_num) (flatWindow_mem_range hn hM)
+    (fun m hm => Or.inl (flatWindow_width hn hN m hm)) (flatAmpN N)
     (sum_norm_flatAmpN n hN) hΔ0 hΔ
 
 end Swing
