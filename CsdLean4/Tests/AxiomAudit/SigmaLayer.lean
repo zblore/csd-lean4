@@ -21744,4 +21744,152 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.oddSegOf_oddWall_flow
 
+/-! #417 (the author's programme, obligation UO-16; Task 5 of the research delivery plan, first part): translating a carrier round the ring — translation commutes with the energy and the evolution, a translated clock reads the same and its place moves with it; the clock at rest at any place, the far wall included (`RecordLayer/UnifiedRingShift.lean`). -/
+
+/-- info: 'CSD.RecordLayer.exp_smul_mulVec_intertwine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_smul_mulVec_intertwine
+
+/-- info: 'CSD.RecordLayer.chainShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainShift
+
+/-- info: 'CSD.RecordLayer.chainShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainShift
+
+/-- info: 'CSD.RecordLayer.chainShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainShift
+
+/-- info: 'CSD.RecordLayer.regionWeight_chainShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_chainShift
+
+/-- info: 'CSD.RecordLayer.diracHam_mulVec_chainShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracHam_mulVec_chainShift
+
+/-- info: 'CSD.RecordLayer.chainProp_mulVec_chainShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainProp_mulVec_chainShift
+
+/-- info: 'CSD.RecordLayer.chainInner_chainShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainInner_chainShift
+
+/-- info: 'CSD.RecordLayer.chainParity_chainShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainParity_chainShift
+
+/-- info: 'CSD.RecordLayer.deviceShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceShift
+
+/-- info: 'CSD.RecordLayer.deviceShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceShift
+
+/-- info: 'CSD.RecordLayer.deviceShift_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceShift_ne_zero
+
+/-- info: 'CSD.RecordLayer.deviceRegionWeight_deviceShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceRegionWeight_deviceShift
+
+/-- info: 'CSD.RecordLayer.deviceCoherence_deviceShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceCoherence_deviceShift
+
+/-- info: 'CSD.RecordLayer.deviceNorm_deviceShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceNorm_deviceShift
+
+/-- info: 'CSD.RecordLayer.deviceHam_mulVec_deviceShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceHam_mulVec_deviceShift
+
+/-- info: 'CSD.RecordLayer.deviceProp_mulVec_deviceShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceProp_mulVec_deviceShift
+
+/-- info: 'CSD.RecordLayer.clockFreeRead_deviceShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockFreeRead_deviceShift
+
+/-- info: 'CSD.RecordLayer.clockPointerShift_deviceShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.clockPointerShift_deviceShift
+
+/-- info: 'CSD.RecordLayer.sum_arenaObs_siteSel_deviceShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_arenaObs_siteSel_deviceShift
+
+/-- info: 'CSD.RecordLayer.cos_site_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_site_sub
+
+/-- info: 'CSD.RecordLayer.mem_ringArc_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_ringArc_sub
+
+/-- info: 'CSD.RecordLayer.image_sub_ringArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.image_sub_ringArc
+
+/-- info: 'CSD.RecordLayer.far_wall_clock_swing_fine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.far_wall_clock_swing_fine
+
+/-- info: 'CSD.RecordLayer.far_wall_clock_outside_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.far_wall_clock_outside_le
+
+/-! #418 (the author's programme, obligation UO-16; Tasks 4 and 5 of the research delivery plan): the clocks' rate relation with the packets' velocity, gate windows for the whole chain and at an observer at a wall, and the timing tolerances of #402 from a gate window (`RecordLayer/UnifiedEventTimes.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_ringSigma_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_ringSigma_sub_le
+
+/-- info: 'CSD.RecordLayer.sqrt_one_sub_vRel_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sqrt_one_sub_vRel_sq
+
+/-- info: 'CSD.RecordLayer.abs_inv_dispE_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_inv_dispE_sub_le
+
+/-- info: 'CSD.RecordLayer.wall_observer_clock_rate_relation' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_observer_clock_rate_relation
+
+/-- info: 'CSD.RecordLayer.abs_vRel_level_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_vRel_level_sub_le
+
+/-- info: 'CSD.RecordLayer.gate_closed_away_turn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gate_closed_away_turn
+
+/-- info: 'CSD.RecordLayer.wall_gate_apart_before' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_gate_apart_before
+
+/-- info: 'CSD.RecordLayer.wall_gate_near_at' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_gate_near_at
+
+/-- info: 'CSD.RecordLayer.wall_packet_relay_time_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_packet_relay_time_bound
+
+/-- info: 'CSD.RecordLayer.wall_packet_return_time_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_packet_return_time_bound
+
+/-- info: 'CSD.RecordLayer.wall_observer_meeting_time_bound' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_observer_meeting_time_bound
+
 end CSD.Tests.AxiomAudit

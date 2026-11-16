@@ -214,8 +214,8 @@ to be one.
 | 1. Feasibility and error budget | this note |
 | 2. Fast messenger on the wall | done as UD-182, UD-183 (`regionWeight_lightWall_away_le`, `one_sub_vRel_half_le`, `light_wall_gate_open_return`); the plan's three proposed names are these, and no aliases are added |
 | 3. The odd sector as a chain | done the same day as UD-186 (`odd_sector_chain_flow_equiv`, BACKLOG ~~#416~~): the boundary condition of UA-18 (a) is confirmed, the `√2` end hop included |
-| 4. Event times from propagation | the kinematic times and two relations (UD-181); gate intervals for `2d ≤ π` (UD-183). Owed: `d = π`, the two levels, `σ` against `p₀`, one bound for the five `τ` |
-| 5. Both clocks' readings | `B`: ticks, swing, place (UD-177, UD-180, UD-184). `A`: at the wall at `0` only; the far wall owed. Rate relation: UD-171, with the velocity bridge owed |
+| 4. Event times from propagation | the kinematic times and two relations (UD-181); gate intervals (UD-183) and, since UD-188, for the whole chain and at an observer at a wall, with the tolerances `τ_R`, `τ_Ret`, `τ_M` from a gate window. Owed: the two levels' intervals intersected, for the actual wall states (with Task 6) |
+| 5. Both clocks' readings | `B`: ticks, swing, place (UD-177, UD-180, UD-184). `A`: swing and place at any translate, the far wall included (UD-187); its count not restated. Rate relation with the packets' velocity: `wall_observer_clock_rate_relation` (UD-188) |
 | 6. Five histories | the reduction (UD-170), the gates for a messenger and a clock (UD-179, UD-182, UD-183), the two clocks' gate for any rays (UD-185). The histories are owed |
 | 7. The return reading's band | emission at the start; to be proved with the histories |
 | 8. A family meeting every inequality | `wall_values` for the bounds of one gate; the rest owed |
