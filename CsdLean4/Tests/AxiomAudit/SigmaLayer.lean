@@ -21914,4 +21914,18 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.isAwayHistory_coincShift
 
+/-! #420 (the author's programme, obligation UO-16; Tasks 6 and 7 of the research delivery plan, for the moving observer): the emission and return histories of the light messenger and the moving clock on the walled chain, with the return pointer's band derived from sizes (`RecordLayer/UnifiedWallObserver.lean`). -/
+
+/-- info: 'CSD.RecordLayer.wallAngle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallAngle
+
+/-- info: 'CSD.RecordLayer.wall_observer_gate_weights' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_observer_gate_weights
+
+/-- info: 'CSD.RecordLayer.wall_observer_radar_histories' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_observer_radar_histories
+
 end CSD.Tests.AxiomAudit
