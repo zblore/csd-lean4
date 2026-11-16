@@ -3530,6 +3530,16 @@ time. It is not a statement about every dynamics on `Σ`.
   walled chain from these values (UD-148, UD-157, UD-159 with their own size conditions),
   as UD-165 did on the ring; then the two clocks' gate for their wall states, the five
   histories (R1), the two levels and the band velocity (R3), and R7.
+  ▸ **Feasibility and error budget, 2026-11-16 → `specs/unified-m6-feasibility.md`. Reading,
+  no Lean.** The author's research delivery plan of 2026-11-16 makes a feasibility check of
+  the whole construction its first task. Result: no obstruction found; a family in `k`
+  with total relative error about `16/k`, from the ticks lost in reading five counts, on a
+  comparison scale that does not shrink. Three findings change what has to be built: the
+  swing theorems pin `B` and the messenger beside one wall at the start, so `A` sits at the
+  other and the distance is the whole chain; `A` at that wall is the translate by half the
+  ring of the clock of UD-175 and is not built; and UD-183's arithmetic is for half that
+  distance. The unproved steps that could still fail are R7 and the walled chain's reading
+  theorem with its own constants.
 
 ### M7 — `3 + 1`
 
