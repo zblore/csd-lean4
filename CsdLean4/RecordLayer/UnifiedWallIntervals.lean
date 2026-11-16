@@ -32,7 +32,9 @@ A messenger started at the clock's own angle and moving with it would overtake i
 reflected, and meet it a second time at once.
 
 * `cos_le_cos_of_abs_sub_two_pi_le` — the cosine near a whole turn;
-* ★★★ `radar_gate_intervals` — the seven conditions.
+* ★★★ `radar_gate_intervals` — the seven conditions;
+* ★★★ `radar_gate_times` — explicit gate times that satisfy the thirteen inequalities, under
+  six conditions on the rates, the start and the half-angle.
 
 ## Exact scope
 
@@ -234,6 +236,135 @@ theorem radar_gate_intervals {a b₁ b₂ t₀ τ w δ : ℝ} (hb₂ : 0 < b₂)
     exact ⟨cos_le_cos_of_abs_le
         (abs_le.2 ⟨by linarith only [k2], by linarith only [k1]⟩) hσπ,
       cos_le_cos_of_abs_le (abs_le.2 ⟨by linarith only [k4], by linarith only [k3]⟩) hσπ⟩
+
+/-- ★★★ **Explicit gate times.** Rates `0 < b₂ ≤ b₁`, `2 b₁ ≤ a ≤ 3 b₁ + 4 b₂`, a small
+half-angle (`24 δ ≤ π`), a start not far from the wall (`4 b₁ τ ≤ π − 24 δ`), and two levels
+that stay together (`(b₁ − b₂) τ ≤ δ/2`, `2π (b₁ − b₂) ≤ δ b₂`). With the gate width
+`w = 3δ`, the times
+
+* `t_E = δ/(2 (a + b₁))`, `t_b = 6δ/(a − b₁)`, `t₃ = (2π − 6δ)/(a + b₁)`,
+  `t₄ = (2π − δ)/(a + b₂)`, `t₅ = (2π + δ/2)/(a + b₁)`;
+* `t_R = (π − 6δ − b₁ τ)/a`, `t_bR = (π − δ − b₁ τ)/a`, `t_cR = (π + δ − b₁ τ)/a`;
+* `t_M = τ + (π − 6δ)/b₁`, `t_bM = τ + (π − δ)/b₂`, `t_cM = τ + (π + δ)/b₁`
+
+are in order and satisfy the thirteen inequalities of `radar_gate_intervals`. -/
+theorem radar_gate_times {a b₁ b₂ τ δ : ℝ} (hb₂ : 0 < b₂) (h21 : b₂ ≤ b₁)
+    (h2a : 2 * b₁ ≤ a) (hfast : a ≤ 3 * b₁ + 4 * b₂) (hτ : 0 ≤ τ) (hδ : 0 < δ)
+    (hδπ : 24 * δ ≤ Real.pi) (hstart : 4 * (b₁ * τ) ≤ Real.pi - 24 * δ)
+    (hη : (b₁ - b₂) * τ ≤ δ / 2) (hlev : 2 * Real.pi * (b₁ - b₂) ≤ δ * b₂) :
+    (0 ≤ δ / (2 * (a + b₁)) ∧ δ / (2 * (a + b₁)) ≤ 6 * δ / (a - b₁)
+      ∧ 6 * δ / (a - b₁) ≤ (2 * Real.pi - 6 * δ) / (a + b₁)
+      ∧ (2 * Real.pi - 6 * δ) / (a + b₁) ≤ (2 * Real.pi - δ) / (a + b₂)
+      ∧ (2 * Real.pi - δ) / (a + b₂) ≤ (2 * Real.pi + δ / 2) / (a + b₁))
+    ∧ (0 ≤ (Real.pi - 6 * δ - b₁ * τ) / a
+      ∧ (Real.pi - 6 * δ - b₁ * τ) / a ≤ (Real.pi - δ - b₁ * τ) / a
+      ∧ (Real.pi - δ - b₁ * τ) / a ≤ (Real.pi + δ - b₁ * τ) / a)
+    ∧ (τ ≤ τ + (Real.pi - 6 * δ) / b₁
+      ∧ τ + (Real.pi - 6 * δ) / b₁ ≤ τ + (Real.pi - δ) / b₂
+      ∧ τ + (Real.pi - δ) / b₂ ≤ τ + (Real.pi + δ) / b₁)
+    ∧ (a + b₁) * (δ / (2 * (a + b₁))) + (b₁ - b₂) * τ ≤ 3 * δ - 2 * δ
+    ∧ 3 * δ + 2 * δ < (a - b₁) * (6 * δ / (a - b₁))
+    ∧ (a + b₁) * ((2 * Real.pi - 6 * δ) / (a + b₁)) + (b₁ - b₂) * τ
+        < 2 * Real.pi - (3 * δ + 2 * δ)
+    ∧ (a - b₂) * ((2 * Real.pi - 6 * δ) / (a + b₁)) + 2 * b₁ * τ
+        < 2 * Real.pi - (3 * δ + 2 * δ)
+    ∧ 2 * Real.pi - (3 * δ - 2 * δ) ≤ (a + b₂) * ((2 * Real.pi - δ) / (a + b₂))
+    ∧ (a + b₁) * ((2 * Real.pi + δ / 2) / (a + b₁)) + (b₁ - b₂) * τ
+        ≤ 2 * Real.pi + (3 * δ - 2 * δ)
+    ∧ a * ((Real.pi - 6 * δ - b₁ * τ) / a) + b₁ * τ < Real.pi - (3 * δ + 2 * δ)
+    ∧ Real.pi - (3 * δ - 2 * δ) ≤ a * ((Real.pi - δ - b₁ * τ) / a) + b₁ * τ
+    ∧ a * ((Real.pi + δ - b₁ * τ) / a) + b₁ * τ ≤ Real.pi + (3 * δ - 2 * δ)
+    ∧ b₁ * τ < Real.pi - (3 * δ + 2 * δ)
+    ∧ b₁ * (τ + (Real.pi - 6 * δ) / b₁ - τ) < Real.pi - (3 * δ + 2 * δ)
+    ∧ Real.pi - (3 * δ - 2 * δ) ≤ b₂ * (τ + (Real.pi - δ) / b₂ - τ)
+    ∧ b₁ * (τ + (Real.pi + δ) / b₁ - τ) ≤ Real.pi + (3 * δ - 2 * δ) := by
+  have hb₁ : 0 < b₁ := hb₂.trans_le h21
+  have ha : 0 < a := by linarith only [hb₁, h2a]
+  have hab : 0 < a - b₁ := by linarith only [hb₁, h2a]
+  have hp1 : 0 < a + b₁ := by linarith only [hb₁, ha]
+  have hp2 : 0 < a + b₂ := by linarith only [hb₂, ha]
+  have hπ := Real.pi_pos
+  have hτ1 : 0 ≤ b₁ * τ := mul_nonneg hb₁.le hτ
+  have da : 0 < δ * a := mul_pos hδ ha
+  have db₁ : 0 < δ * b₁ := mul_pos hδ hb₁
+  have db₂ : 0 < δ * b₂ := mul_pos hδ hb₂
+  have db21 : δ * b₂ ≤ δ * b₁ := mul_le_mul_of_nonneg_left h21 hδ.le
+  have da2 : 2 * (δ * b₁) ≤ δ * a := by
+    have := mul_le_mul_of_nonneg_left h2a hδ.le
+    linarith only [this]
+  have πb₂ : 0 < Real.pi * b₂ := mul_pos hπ hb₂
+  have πb21 : Real.pi * b₂ ≤ Real.pi * b₁ := mul_le_mul_of_nonneg_left h21 hπ.le
+  have δπb : 24 * (δ * b₂) ≤ Real.pi * b₂ := by
+    have := mul_le_mul_of_nonneg_right hδπ hb₂.le
+    linarith only [this]
+  have e1 : (a + b₁) * (δ / (2 * (a + b₁))) = δ / 2 := by field_simp
+  have e2 : (a - b₁) * (6 * δ / (a - b₁)) = 6 * δ := mul_div_cancel₀ _ hab.ne'
+  have e3 : (a + b₁) * ((2 * Real.pi - 6 * δ) / (a + b₁)) = 2 * Real.pi - 6 * δ :=
+    mul_div_cancel₀ _ hp1.ne'
+  have e4 : (a + b₂) * ((2 * Real.pi - δ) / (a + b₂)) = 2 * Real.pi - δ :=
+    mul_div_cancel₀ _ hp2.ne'
+  have e5 : (a + b₁) * ((2 * Real.pi + δ / 2) / (a + b₁)) = 2 * Real.pi + δ / 2 :=
+    mul_div_cancel₀ _ hp1.ne'
+  have e6 : a * ((Real.pi - 6 * δ - b₁ * τ) / a) = Real.pi - 6 * δ - b₁ * τ :=
+    mul_div_cancel₀ _ ha.ne'
+  have e7 : a * ((Real.pi - δ - b₁ * τ) / a) = Real.pi - δ - b₁ * τ :=
+    mul_div_cancel₀ _ ha.ne'
+  have e8 : a * ((Real.pi + δ - b₁ * τ) / a) = Real.pi + δ - b₁ * τ :=
+    mul_div_cancel₀ _ ha.ne'
+  have e9 : b₁ * (τ + (Real.pi - 6 * δ) / b₁ - τ) = Real.pi - 6 * δ := by
+    rw [add_sub_cancel_left]
+    exact mul_div_cancel₀ _ hb₁.ne'
+  have e10 : b₂ * (τ + (Real.pi - δ) / b₂ - τ) = Real.pi - δ := by
+    rw [add_sub_cancel_left]
+    exact mul_div_cancel₀ _ hb₂.ne'
+  have e11 : b₁ * (τ + (Real.pi + δ) / b₁ - τ) = Real.pi + δ := by
+    rw [add_sub_cancel_left]
+    exact mul_div_cancel₀ _ hb₁.ne'
+  have x3 : 0 ≤ (2 * Real.pi - 6 * δ) / (a + b₁) :=
+    div_nonneg (by linarith only [hδπ, hδ, hπ]) hp1.le
+  have e3' : (a - b₂) * ((2 * Real.pi - 6 * δ) / (a + b₁)) ≤ 3 / 4 * (2 * Real.pi - 6 * δ) := by
+    have h1 := mul_le_mul_of_nonneg_right
+      (by linarith only [hfast] : a - b₂ ≤ 3 / 4 * (a + b₁)) x3
+    rw [mul_assoc, e3] at h1
+    exact h1
+  refine ⟨⟨div_nonneg hδ.le (by linarith only [hp1]), ?_, ?_, ?_, ?_⟩,
+    ⟨div_nonneg (by linarith only [hstart, hτ1, hδ]) ha.le, ?_, ?_⟩, ⟨?_, ?_, ?_⟩, ?_, ?_, ?_,
+    ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · rw [div_le_div_iff₀ (by linarith only [hp1]) hab]
+    linarith only [da, db₁]
+  · rw [div_le_div_iff₀ hab hp1]
+    have h1 : 0 ≤ (2 * Real.pi - 24 * δ) * (a - b₁) :=
+      mul_nonneg (by linarith only [hδπ, hπ]) hab.le
+    linarith only [h1, da2]
+  · rw [div_le_div_iff₀ hp1 hp2]
+    linarith only [πb21, da2, db₂, db₁]
+  · rw [div_le_div_iff₀ hp2 hp1]
+    linarith only [hlev, da, db21, db₂]
+  · exact (div_le_div_iff_of_pos_right ha).2 (by linarith only [hδ])
+  · exact (div_le_div_iff_of_pos_right ha).2 (by linarith only [hδ])
+  · linarith only [div_nonneg (by linarith only [hδπ, hδ] : (0 : ℝ) ≤ Real.pi - 6 * δ) hb₁.le]
+  · have h1 : (Real.pi - 6 * δ) / b₁ ≤ (Real.pi - δ) / b₂ := by
+      rw [div_le_div_iff₀ hb₁ hb₂]
+      have h2 := mul_le_mul_of_nonneg_right hδπ (sub_nonneg.2 h21)
+      linarith only [h2, db₂, db21]
+    linarith only [h1]
+  · have h1 : (Real.pi - δ) / b₂ ≤ (Real.pi + δ) / b₁ := by
+      rw [div_le_div_iff₀ hb₂ hb₁]
+      linarith only [hlev, db₂, db₁]
+    linarith only [h1]
+  · linarith only [e1, hη]
+  · linarith only [e2, hδ]
+  · linarith only [e3, hη, hδ]
+  · linarith only [e3', hstart, hδ]
+  · linarith only [e4]
+  · linarith only [e5, hη]
+  · linarith only [e6, hδ]
+  · linarith only [e7]
+  · linarith only [e8]
+  · linarith only [hstart, hπ, hδ, hτ1]
+  · linarith only [e9, hδ]
+  · linarith only [e10]
+  · linarith only [e11]
 
 end CSD.RecordLayer
 
