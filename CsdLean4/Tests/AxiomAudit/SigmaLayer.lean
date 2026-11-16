@@ -22182,4 +22182,14 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.freeShift_drift
 
+/-! #429 (the author's programme, obligation UO-16; Task 9 of the research delivery plan, fourth part): M6 from the top for the five-pointer flow from any pointer angles (`RecordLayer/UnifiedFibreRadar.lean`). -/
+
+/-- info: 'CSD.RecordLayer.pshift_eq_of_start' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pshift_eq_of_start
+
+/-- info: 'CSD.RecordLayer.penta_radar_lorentz_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.penta_radar_lorentz_fibre
+
 end CSD.Tests.AxiomAudit
