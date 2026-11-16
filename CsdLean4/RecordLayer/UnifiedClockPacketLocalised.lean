@@ -259,8 +259,8 @@ theorem flat_clock_packet_ticks {n N M : ℕ} (hn : 0 < n) (hN : 0 < N)
   have hK : 0 < 1200 * n * N := by positivity
   have hMr : (210000 : ℝ) * n ^ 2 * N ≤ M := by exact_mod_cast hM
   refine narrow_clock_packet_ticks (lo := 0) hn hK (by norm_num) (by norm_num) ?_
-    (flatWindow_mem_range hn hM) (flatWindow_width hn hN) (flatAmpN N)
-    (sum_norm_flatAmpN n hN) hΔ0 hΔ
+    (flatWindow_mem_range hn hM) (fun m hm => Or.inl (flatWindow_width hn hN m hm))
+    (flatAmpN N) (sum_norm_flatAmpN n hN) hΔ0 hΔ
   push_cast
   have hnsq : (n : ℝ) ≤ n ^ 2 := by nlinarith
   have : (n : ℝ) * N ≤ n ^ 2 * N := mul_le_mul_of_nonneg_right hnsq hN'.le

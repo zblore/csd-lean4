@@ -370,7 +370,8 @@ variable {M : ℕ}
 /-- The sum over the modes of `‖C_m‖ |R_m − R|` is at most the sharp drift `deviceDrift`. -/
 theorem sum_norm_modeCoh_mul_le {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 : 0 < μ₀)
     (h01 : μ₀ ≤ μ₁) (hℓ : 0 < ℓ) {W : Finset ℤ}
-    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D) (β : ℤ → ℂ)
+    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D ∨ |2 * Real.pi * m / ℓ + p₀| ≤ D)
+    (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) (t₁ : ℝ) :
     ∑ m ∈ W, ‖modeCoh M (scaledHop c (ℓ / (M + 1 : ℕ))) μ₀ μ₁ β t₁ m‖
         * |modeRate M (scaledHop c (ℓ / (M + 1 : ℕ))) μ₀ μ₁ m
@@ -412,7 +413,8 @@ it. -/
 theorem clock_packet_ticks {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 : 0 < μ₀) (h01 : μ₀ < μ₁)
     (hℓ : 0 < ℓ) {W : Finset ℤ} {lo : ℤ}
     (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + (M + 1 : ℕ))
-    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D) (β : ℤ → ℂ)
+    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D ∨ |2 * Real.pi * m / ℓ + p₀| ≤ D)
+    (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) {J σ R ε : ℝ} (hJ : J = scaledHop c (ℓ / (M + 1 : ℕ)))
     (hσ : σ = 2 * J * Real.sin (ℓ / (M + 1 : ℕ) * p₀)) (hR : R = levelClockRate μ₀ μ₁ σ)
     (hε : ε = deviceDrift c μ₀ μ₁ D p₀) {ρ : ℝ} (hρ : 0 < ρ) (hρR : ρ ≤ R)

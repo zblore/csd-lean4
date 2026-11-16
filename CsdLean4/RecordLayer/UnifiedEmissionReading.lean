@@ -165,8 +165,8 @@ theorem clock_packet_shift_le {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 
   have h1 : 0 < μ₁ := h0.trans h01
   have hR0 : 0 < R := hρ.trans_le hρR
   have hD := (noWrap_distinct_of_window (L := M + 1) hWin).2
-  have hdev := clock_tick_device (M := M) trainF_periodic contDiff_trainF hc h0 h01 hℓ hWin hWD
-    β hβ (0 : ℝ)
+  have hdev := clock_tick_device (M := M) trainF_periodic contDiff_trainF hc h0 h01 hℓ hWin
+    (fun m hm => Or.inl (hWD m hm)) β hβ (0 : ℝ)
   simp only [← hJ, ← hσ, ← hR, ← hε] at hdev
   obtain ⟨hΨ, hre, him, -⟩ := hdev
   set C₀ := deviceCoherence (devicePacket (L := M + 1) J μ₀ μ₁ W β (-(Real.pi / (2 * R)))) with hC₀
@@ -184,7 +184,7 @@ theorem clock_packet_shift_le {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 
   have hsum : ∑ m ∈ W, ‖modeCoh M J μ₀ μ₁ β (-(Real.pi / (2 * R))) m‖
       * |modeRate M J μ₀ μ₁ m - R| ≤ ε := by
     rw [hε, hR, hσ, hJ]
-    exact sum_norm_modeCoh_mul_le hc h0 h01.le hℓ hWD β hβ _
+    exact sum_norm_modeCoh_mul_le hc h0 h01.le hℓ (fun m hm => Or.inl (hWD m hm)) β hβ _
   have hfac : 0 ≤ 2 * T / ρ + 3 / ρ ^ 2 := by positivity
   have hfac' : 0 ≤ 2 * T / ρ + 3 / ρ ^ 2 + Real.pi / (2 * R ^ 2) := by positivity
   refine ⟨hΨ, hg0, ?_, fun t ht htT => ?_⟩

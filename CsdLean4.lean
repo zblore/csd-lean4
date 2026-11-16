@@ -826,6 +826,8 @@ public import CsdLean4.RecordLayer.UnifiedTriCarrier
 public import CsdLean4.RecordLayer.UnifiedClockAtRest
 public import CsdLean4.RecordLayer.UnifiedOddWall
 public import CsdLean4.RecordLayer.UnifiedWallObservers
+public import CsdLean4.RecordLayer.UnifiedWallBudgets
+public import CsdLean4.RecordLayer.UnifiedWallGate
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers

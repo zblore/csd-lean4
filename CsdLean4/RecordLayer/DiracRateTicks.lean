@@ -219,7 +219,8 @@ theorem deviceProp_devicePacket_shift (J μ₀ μ₁ : ℝ) (W : Finset ℤ) (β
 /-- **One momentum's weight times its splitting's offset**: at most `‖β_m‖²` times the sharp rate
 `c D (2c|p₀| + c D)(μ₁ − μ₀)/(2μ₀²)`. -/
 theorem levelWeight_mul_rate_le {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 : 0 < μ₀) (h01 : μ₀ ≤ μ₁)
-    (hℓ : 0 < ℓ) {m : ℤ} (hm : |2 * Real.pi * m / ℓ - p₀| ≤ D) (β : ℤ → ℂ) :
+    (hℓ : 0 < ℓ) {m : ℤ}
+    (hm : |2 * Real.pi * m / ℓ - p₀| ≤ D ∨ |2 * Real.pi * m / ℓ + p₀| ≤ D) (β : ℤ → ℂ) :
     ‖levelWeight (L := L) (scaledHop c (ℓ / L)) μ₀ μ₁ (unitAmp L (scaledHop c (ℓ / L)) μ₀ β)
         (unitAmp L (scaledHop c (ℓ / L)) μ₁ β) m‖
       * |levelClockRate μ₀ μ₁ (2 * scaledHop c (ℓ / L) * Real.sin (angleZ L m))
@@ -231,7 +232,7 @@ theorem levelWeight_mul_rate_le {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h
       ≤ c * D * (2 * c * |p₀| + c * D) * (μ₁ - μ₀) / (2 * μ₀ ^ 2) := by
     refine (abs_levelClockRate_sub_le h0 h01 _ _).trans ?_
     have hΔ : 0 ≤ μ₁ - μ₀ := by linarith
-    have hX := abs_sq_sub_sq_scaled_le (L := L) hc hℓ hm
+    have hX := abs_sq_sub_sq_scaled_le_or (L := L) hc hℓ hm
     gcongr
   exact mul_le_mul hw hK (abs_nonneg _) (sq_nonneg _)
 
@@ -286,7 +287,7 @@ theorem splitCoherence_shift_sharp {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c)
         - (R : ℂ) * exp (I * (((-R : ℝ) : ℂ) * (s : ℂ))))‖
       ≤ (1 + R * |s|) * (‖β m‖ ^ 2 * (c * D * (2 * c * |p₀| + c * D) * (μ₁ - μ₀) / (2 * μ₀ ^ 2))) := by
     intro m hm
-    have hb := levelWeight_mul_rate_le (L := L) hc h0 h01.le hℓ (hWD m hm) β
+    have hb := levelWeight_mul_rate_le (L := L) hc h0 h01.le hℓ (Or.inl (hWD m hm)) β
     rw [norm_mul, norm_mul, norm_exp_I_mul_ofReal_mul, mul_one]
     have hsplit : (Rm m : ℂ) * exp (I * (((-Rm m : ℝ) : ℂ) * (s : ℂ)))
         - (R : ℂ) * exp (I * (((-R : ℝ) : ℂ) * (s : ℂ)))

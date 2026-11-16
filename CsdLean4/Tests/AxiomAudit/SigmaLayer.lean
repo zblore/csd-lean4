@@ -21324,4 +21324,84 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.wall_clock_ticks
 
+/-! #409 (the author's programme, obligation UO-16; of item R2 of the list under UD-164): the walled chain with numbers — the budgets of #408 evaluated for every flat window and its mirror, the clock at rest beside the wall staying there, and the moving clock's wall state ticking (`RecordLayer/UnifiedWallBudgets.lean`). -/
+
+/-- info: 'CSD.RecordLayer.negWin_Ico' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.negWin_Ico
+
+/-- info: 'CSD.RecordLayer.sum_norm_flatAmpN_Ico' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_flatAmpN_Ico
+
+/-- info: 'CSD.RecordLayer.ico_packet_start_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ico_packet_start_le
+
+/-- info: 'CSD.RecordLayer.ico_packet_budget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ico_packet_budget
+
+/-- info: 'CSD.RecordLayer.mirror_ico_mem_range' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mirror_ico_mem_range
+
+/-- info: 'CSD.RecordLayer.regionWeight_icoWall_away_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_icoWall_away_le
+
+/-- info: 'CSD.RecordLayer.deviceRegionWeight_icoWall_away_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceRegionWeight_icoWall_away_le
+
+/-- info: 'CSD.RecordLayer.wall_clock_localised' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_clock_localised
+
+/-- info: 'CSD.RecordLayer.flatWindow_neg_notMem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatWindow_neg_notMem
+
+/-- info: 'CSD.RecordLayer.wall_moving_clock_ticks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_moving_clock_ticks
+
+/-! #410 (the author's programme, obligation UO-16; of items R1 and R2 of the list under UD-164): the coincidence relation of the walled chain — within w of a site or of its mirror image — and its two gate bounds from double arcs, for any rays. No state put in (`RecordLayer/UnifiedWallGate.lean`). -/
+
+/-- info: 'CSD.RecordLayer.cos_site_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_site_neg
+
+/-- info: 'CSD.RecordLayer.neg_mem_ringArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.neg_mem_ringArc
+
+/-- info: 'CSD.RecordLayer.wallNear' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallNear
+
+/-- info: 'CSD.RecordLayer.wallArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallArc
+
+/-- info: 'CSD.RecordLayer.mem_wallArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_wallArc
+
+/-- info: 'CSD.RecordLayer.wallNear_of_mem_wallArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallNear_of_mem_wallArc
+
+/-- info: 'CSD.RecordLayer.not_wallNear_of_mem_wallArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_wallNear_of_mem_wallArc
+
+/-- info: 'CSD.RecordLayer.wallGate_not_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallGate_not_le
+
+/-- info: 'CSD.RecordLayer.wallGate_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallGate_le
+
 end CSD.Tests.AxiomAudit

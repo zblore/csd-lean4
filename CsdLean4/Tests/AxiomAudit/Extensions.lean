@@ -5234,6 +5234,10 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.abs_sq_sub_sq_scaled_le
 
+/-- info: 'CSD.CV.abs_sq_sub_sq_scaled_le_or' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_sq_sub_sq_scaled_le_or
+
 /-- info: 'CSD.CV.levelCoherence_rate_sharp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.levelCoherence_rate_sharp

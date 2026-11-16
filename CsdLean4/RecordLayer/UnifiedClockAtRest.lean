@@ -175,8 +175,8 @@ theorem rest_clock_packet_ticks {n N M : ℕ} (hn : 0 < n) (hN : 0 < N)
   have hK : 0 < 1200 * n * N := by positivity
   obtain ⟨-, g, hΨ, N', h1, h2, -, h4⟩ := narrow_clock_packet_ticks (lo := 0) (p₀ := 0)
     (M := M) hn hK le_rfl (by norm_num) (by rw [mul_zero]; positivity)
-    (restWindow_mem_range hn hM) (restWindow_width hn hN) (flatAmpN N)
-    (sum_norm_flatAmpN_rest hN) hΔ0 hΔ
+    (restWindow_mem_range hn hM) (fun m hm => Or.inl (restWindow_width hn hN m hm))
+    (flatAmpN N) (sum_norm_flatAmpN_rest hN) hΔ0 hΔ
   exact ⟨g, hΨ, N', h1, h2, h4⟩
 
 /-- **The rest packet starts localised**: `1 − Re T(0) ≤ 1/N + 1/(4 K²)`, `K = 1200 n N`. -/

@@ -28,7 +28,8 @@ that the count is at least any wanted number.
   `dispE_one_le_two`, `two_div_pi_mul_le_ringSigma`, ★ `div_pi_le_vRel_ringSigma` (in the
   lower half of the band `p/π ≤ σ/E₀`), `abs_div_horizon_sub_le`;
 * ★★★ `narrow_clock_packet_ticks` — on a ring of length `2π K`: reference momentum
-  `0 ≤ p₀ ≤ 9/10` with `6 K p₀ ≤ M + 1`, any window of modes within `1/(600 n)` of `p₀`, any
+  `0 ≤ p₀ ≤ 9/10` with `6 K p₀ ≤ M + 1`, any window of modes within `1/(600 n)` of `p₀` or
+  of `−p₀` (#409), any
   normalised amplitudes, any gap `0 < Δ ≤ 1/2`. For some strength of the coupling, at
   `T = 2π n/R` the count `N` exists, `N ≥ n`,
   `|2π N/Δ − √(1 − v²) T| ≤ 2π/Δ + (Δ/E₀) T`, the same as a rate
@@ -102,7 +103,8 @@ the dilated clock bound. -/
 theorem clock_packet_count_ge {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 : 0 < μ₀) (h01 : μ₀ < μ₁)
     (hℓ : 0 < ℓ) {W : Finset ℤ} {lo : ℤ}
     (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + (M + 1 : ℕ))
-    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D) (β : ℤ → ℂ)
+    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D ∨ |2 * Real.pi * m / ℓ + p₀| ≤ D)
+    (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) {J σ R ε : ℝ} (hJ : J = scaledHop c (ℓ / (M + 1 : ℕ)))
     (hσ : σ = 2 * J * Real.sin (ℓ / (M + 1 : ℕ) * p₀)) (hR : R = levelClockRate μ₀ μ₁ σ)
     (hε : ε = deviceDrift c μ₀ μ₁ D p₀) {ρ : ℝ} (hρ : 0 < ρ) (hρR : ρ ≤ R)
@@ -308,7 +310,7 @@ theorem abs_div_horizon_sub_le {A s Δ E R n : ℝ} (hn : 0 < n) (hΔ0 : 0 < Δ)
 /-- ★★★ **Every narrow clock packet ticks at least `n` times inside its horizon.** On a ring
 of length `2π K` with `M + 1` sites, take a reference momentum `0 ≤ p₀ ≤ 9/10` in the lower
 part of the band (`6 K p₀ ≤ M + 1`), any window of modes whose momenta `m/K` lie within
-`1/(600 n)` of `p₀`, any normalised amplitudes on it, and a level gap `0 < Δ ≤ 1/2`. For the
+`1/(600 n)` of `p₀` or of `−p₀`, any normalised amplitudes on it, and a level gap `0 < Δ ≤ 1/2`. For the
 clock with levels `1` and `1 + Δ`, prepared as the device's packet, there is a strength of
 the coupling to a pointer of profile `trainF` starting at `1/12` on the fibre `0` for which
 the pointer's history has at the flow time `T = 2π n/R` a tick count `N ≥ n`, with
@@ -322,7 +324,8 @@ statement does not record it. -/
 theorem narrow_clock_packet_ticks {n K M : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ : ℝ}
     (hp0 : 0 ≤ p₀) (hp1 : p₀ ≤ 9 / 10) (hM : 6 * K * p₀ ≤ ((M + 1 : ℕ) : ℝ))
     {W : Finset ℤ} {lo : ℤ} (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + (M + 1 : ℕ))
-    (hWD : ∀ m ∈ W, |(m : ℝ) / K - p₀| ≤ 1 / (600 * n)) (β : ℤ → ℂ)
+    (hWD : ∀ m ∈ W, |(m : ℝ) / K - p₀| ≤ 1 / (600 * n) ∨ |(m : ℝ) / K + p₀| ≤ 1 / (600 * n))
+    (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) :
     p₀ / Real.pi ≤ vRel 1 1 (ringSigma K M p₀)
     ∧ ∃ (g : ℝ) (hΨ : devicePacket (L := M + 1) (ringHop K M) 1 (1 + Δ) W β
@@ -357,7 +360,8 @@ theorem narrow_clock_packet_ticks {n K M : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ 
   have hR0 : 0 < ringRate K M p₀ Δ := by linarith
   set R := ringRate K M p₀ Δ with hRd
   -- the modes
-  have hWD' : ∀ m ∈ W, |2 * Real.pi * m / ringLen K - p₀| ≤ 1 / (600 * n) := by
+  have hWD' : ∀ m ∈ W, |2 * Real.pi * m / ringLen K - p₀| ≤ 1 / (600 * n)
+      ∨ |2 * Real.pi * m / ringLen K + p₀| ≤ 1 / (600 * n) := by
     intro m hm
     have e : 2 * Real.pi * (m : ℝ) / ringLen K = (m : ℝ) / K := by
       rw [ringLen]
@@ -367,9 +371,13 @@ theorem narrow_clock_packet_ticks {n K M : ℕ} (hn : 0 < n) (hK : 0 < K) {p₀ 
   have hρm : ∀ m ∈ W, Δ / 2 ≤ modeRate M (ringHop K M) 1 (1 + Δ) m := by
     intro m hm
     have hm1 : |(m : ℝ) / K| ≤ 1 := by
-      have h := abs_le.1 (hWD m hm)
-      rw [abs_le]
-      constructor <;> linarith [h.1, h.2]
+      rcases hWD m hm with h | h
+      · have h := abs_le.1 h
+        rw [abs_le]
+        constructor <;> linarith [h.1, h.2]
+      · have h := abs_le.1 h
+        rw [abs_le]
+        constructor <;> linarith [h.1, h.2]
     rw [modeRate, two_ringHop_mul_sin_angleZ hK]
     exact half_le_levelClockRate hΔ0.le (ringSigma_sq_le hK M hm1)
   -- the drift is `Δ u`
@@ -510,6 +518,7 @@ theorem exists_clock_packet_ticks {n : ℕ} (hn : 0 < n) (w : ℕ) {M : ℕ}
       push_cast
       nlinarith [hm.2]
   · intro m hm
+    left
     rw [modeWindow, Finset.mem_Icc] at hm
     have h1 : ((600 * n * (w + 1) : ℤ) : ℝ) - w ≤ m := by exact_mod_cast hm.1
     have h2 : (m : ℝ) ≤ ((600 * n * (w + 1) : ℤ) : ℝ) + w := by exact_mod_cast hm.2

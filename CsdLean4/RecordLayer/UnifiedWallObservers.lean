@@ -340,7 +340,7 @@ theorem wall_clock_ticks {n N M : ℕ} (hn : 0 < n) (hN : 0 < N)
     rw [sub_zero, abs_div, abs_of_pos hden, div_le_div_iff₀ hden (by positivity)]
     nlinarith [abs_nonneg (m : ℝ)]
   obtain ⟨-, g, hΨ, N', a1, a2, -, a4⟩ := narrow_clock_packet_ticks (lo := -N) (p₀ := 0)
-    (M := M) hn hK le_rfl (by norm_num) (by rw [mul_zero]; positivity) hWin hWD
+    (M := M) hn hK le_rfl (by norm_num) (by rw [mul_zero]; positivity) hWin (fun m hm => Or.inl (hWD m hm))
     (oddExt (wallWindow N) (flatAmpN N))
     (sum_norm_oddExt (wallWindow_neg_notMem N) (sum_norm_flatAmpN_wall hN)) hΔ0 hΔ
   exact ⟨g, hΨ, N', a1, a2, a4⟩

@@ -1009,7 +1009,8 @@ bound of `dirac_device` is the case `t₁ = 0`; a device prepared a quarter turn
 from `t₁ = −π/(2R)`. -/
 theorem norm_deviceCoherence_shift_sub_le {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 : 0 < μ₀)
     (h01 : μ₀ ≤ μ₁) (hℓ : 0 < ℓ) {W : Finset ℤ} (hD : Distinct L W)
-    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D) (β : ℤ → ℂ)
+    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D ∨ |2 * Real.pi * m / ℓ + p₀| ≤ D)
+    (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) (t₁ s : ℝ) :
     ‖deviceCoherence (deviceProp (L := L) (scaledHop c (ℓ / L)) μ₀ μ₁ s
           *ᵥ devicePacket (scaledHop c (ℓ / L)) μ₀ μ₁ W β t₁)
@@ -1097,7 +1098,8 @@ it. -/
 theorem clock_tick_device (hf : Function.Periodic f 1) (hcf : ContDiff ℝ ∞ f)
     {c μ₀ μ₁ ℓ D p₀ : ℝ} (hc : 0 < c) (h0 : 0 < μ₀) (h01 : μ₀ < μ₁) (hℓ : 0 < ℓ)
     {W : Finset ℤ} {lo : ℤ} (hWin : ∀ m ∈ W, lo ≤ m ∧ m + 1 < lo + (M + 1 : ℕ))
-    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D) (β : ℤ → ℂ)
+    (hWD : ∀ m ∈ W, |2 * Real.pi * m / ℓ - p₀| ≤ D ∨ |2 * Real.pi * m / ℓ + p₀| ≤ D)
+    (β : ℤ → ℂ)
     (hβ : ∑ m ∈ W, ‖β m‖ ^ 2 = 1) (g : ℝ) :
     let J := scaledHop c (ℓ / (M + 1 : ℕ))
     let σ := 2 * J * Real.sin (ℓ / (M + 1 : ℕ) * p₀)

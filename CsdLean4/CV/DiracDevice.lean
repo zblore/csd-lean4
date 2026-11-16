@@ -583,6 +583,26 @@ theorem abs_sq_sub_sq_scaled_le {c ℓ D p₀ : ℝ} (hc : 0 < c) (hℓ : 0 < �
   rw [show x ^ 2 - y ^ 2 = (x - y) * (x + y) by ring, abs_mul]
   exact mul_le_mul hxy hsum (abs_nonneg _) (by positivity)
 
+/-- The same bound for a momentum within `D` of `p₀` or of `−p₀`: the squared lattice momentum
+term is even. -/
+theorem abs_sq_sub_sq_scaled_le_or {c ℓ D p₀ : ℝ} (hc : 0 < c) (hℓ : 0 < ℓ) {m : ℤ}
+    (hm : |2 * Real.pi * m / ℓ - p₀| ≤ D ∨ |2 * Real.pi * m / ℓ + p₀| ≤ D) :
+    |(2 * scaledHop c (ℓ / L) * Real.sin (angleZ L m)) ^ 2
+        - (2 * scaledHop c (ℓ / L) * Real.sin (ℓ / L * p₀)) ^ 2|
+      ≤ c * D * (2 * c * |p₀| + c * D) := by
+  rcases hm with h | h
+  · exact abs_sq_sub_sq_scaled_le hc hℓ h
+  · have h' : |2 * Real.pi * ((-m : ℤ) : ℝ) / ℓ - p₀| ≤ D := by
+      rw [show 2 * Real.pi * ((-m : ℤ) : ℝ) / ℓ - p₀ = -(2 * Real.pi * m / ℓ + p₀) by
+        push_cast; ring, abs_neg]
+      exact h
+    have h2 := abs_sq_sub_sq_scaled_le (L := L) hc hℓ h'
+    have e : angleZ L (-m) = -angleZ L m := by
+      simp only [angleZ]
+      push_cast
+      ring
+    rwa [e, Real.sin_neg, mul_neg, neg_sq] at h2
+
 /-- ★★★ **The coherence's sharp rate**: in the scaled window, the coherence turns at the centre's
 splitting within `|t| c D (2c|p₀| + c D)(μ₁ − μ₀)/(2μ₀²)` — quadratic in the spread at rest, and
 proportional to the splitting. -/
