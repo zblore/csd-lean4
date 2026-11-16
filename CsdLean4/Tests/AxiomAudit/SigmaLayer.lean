@@ -21528,4 +21528,72 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.one_sub_vRel_le
 
+/-! #413 (the author's programme, obligation UO-16; of item R2 of the list under UD-164): a fast messenger on the walled chain — budgets for a rest energy in (0, 1], its wall state and its wall gate with a clock's wall state. No values (`RecordLayer/UnifiedFastMessenger.lean`). -/
+
+/-- info: 'CSD.RecordLayer.light_packet_start_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.light_packet_start_le
+
+/-- info: 'CSD.RecordLayer.lightBudget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lightBudget
+
+/-- info: 'CSD.RecordLayer.light_packet_budget' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.light_packet_budget
+
+/-- info: 'CSD.RecordLayer.regionWeight_lightWall_away_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_lightWall_away_le
+
+/-- info: 'CSD.RecordLayer.one_sub_sum_arenaObs_wallArc_lightWall_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_sum_arenaObs_wallArc_lightWall_le
+
+/-- info: 'CSD.RecordLayer.light_wall_gate_open' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.light_wall_gate_open
+
+/-- info: 'CSD.RecordLayer.light_wall_gate_closed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.light_wall_gate_closed
+
+/-- info: 'CSD.RecordLayer.one_sub_vRel_half_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_vRel_half_le
+
+/-! #414 (the author's programme, obligation UO-16; item R3 of the list under UD-164, second part): the flow times at which the wall gate is open at the emission, closed during the absence and open again at the return, for straight motion; and the wall gate at the return for wall states (`RecordLayer/UnifiedGateTimes.lean`). -/
+
+/-- info: 'CSD.RecordLayer.cos_lt_cos_of_lt_abs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_lt_cos_of_lt_abs
+
+/-- info: 'CSD.RecordLayer.gate_open_at_emission' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gate_open_at_emission
+
+/-- info: 'CSD.RecordLayer.gate_closed_away' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gate_closed_away
+
+/-- info: 'CSD.RecordLayer.add_mul_sub_crossReturn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.add_mul_sub_crossReturn
+
+/-- info: 'CSD.RecordLayer.gate_open_at_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gate_open_at_return
+
+/-- info: 'CSD.RecordLayer.wallArc_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallArc_neg
+
+/-- info: 'CSD.RecordLayer.wallGate_not_le_mirror' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallGate_not_le_mirror
+
+/-- info: 'CSD.RecordLayer.light_wall_gate_open_return' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.light_wall_gate_open_return
+
 end CSD.Tests.AxiomAudit
