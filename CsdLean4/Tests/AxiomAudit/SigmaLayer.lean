@@ -21892,4 +21892,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.wall_observer_meeting_time_bound
 
+/-! #419 (the author's programme, obligation UO-16; Task 6 of the research delivery plan, first part): histories of gate displacements from where the carriers are — the gated and the away history of #402 for a two-carrier coincShift, from weights, the clock's own displacement and sizes (`RecordLayer/UnifiedWallHistories.lean`). -/
+
+/-- info: 'CSD.RecordLayer.coincProj_not_not' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincProj_not_not
+
+/-- info: 'CSD.RecordLayer.arenaObs_coincProj_prodRay_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_coincProj_prodRay_le_one
+
+/-- info: 'CSD.RecordLayer.arenaObs_coincProj_not_prodRay_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_coincProj_not_prodRay_le_one
+
+/-- info: 'CSD.RecordLayer.isGatedHistory_coincShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isGatedHistory_coincShift
+
+/-- info: 'CSD.RecordLayer.isAwayHistory_coincShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isAwayHistory_coincShift
+
 end CSD.Tests.AxiomAudit

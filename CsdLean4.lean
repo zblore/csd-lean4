@@ -836,6 +836,7 @@ public import CsdLean4.RecordLayer.UnifiedWallValues
 public import CsdLean4.RecordLayer.UnifiedOddChain
 public import CsdLean4.RecordLayer.UnifiedRingShift
 public import CsdLean4.RecordLayer.UnifiedEventTimes
+public import CsdLean4.RecordLayer.UnifiedWallHistories
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers
