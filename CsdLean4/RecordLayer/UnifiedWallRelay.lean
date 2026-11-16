@@ -24,7 +24,7 @@ the clock at rest of #408 translated to its place by #417.
   double arc about its place;
 * ★★ `wall_relay_gate_weights` — the weight inside `wallNear w` is at most `ε` while the
   messenger is away from `A`, and the weight outside it at most `ε` while it is there;
-* ★★★ `wall_relay_history` — for some strength `0 < g ≤ R₀/5` the relay displacement is a
+* ★★★ `wall_relay_history` — for each strength `0 < g ≤ R₀/5` the relay displacement is a
   gated history at the rest rate `R₀`, with error `1/(24 j) + 2 g ε t_a`.
 
 ## Exact scope
@@ -37,6 +37,8 @@ the clock at rest of #408 translated to its place by #417.
   the profiles vanish; a displacement, not a count.
 * **The relay window is short.** The gate is closed only while the messenger is beside `A`;
   the reading window `[t_b, t_c]` lies inside that passage.
+* **The strength and the clock's swing bound are hypotheses** (since #423); the swing
+  theorem of the clock provides a strength for which the bound holds.
 
 ## References
 
@@ -168,12 +170,12 @@ theorem wall_relay_gate_weights (hn : 0 < n) (hN : 0 < N) (hM : 210000 * n ^ 2 *
 /-- ★★★ **The relay history on the walled chain.** A light messenger wall state and the clock
 at rest translated by `h`, prepared a quarter turn early. Under the hypotheses of
 `wall_relay_gate_weights`, with `t_a ≤ 2π n/(j R₀)`, `1/(24 j) + 2 (R₀/5) ε t_a < 1/12` and
-`2 (R₀/5) ε (t_c − t_b) ≤ 1/6`: for some strength `0 < g ≤ R₀/5` the displacement of the
+`2 (R₀/5) ε (t_c − t_b) ≤ 1/6`: for each strength `0 < g ≤ R₀/5` the displacement of the
 pointer coupled to `A`'s clock through "the messenger is not near `A`" is a gated history at
 the rest rate `R₀`, with error `1/(24 j) + 2 g ε t_a` and speed `2 g`. -/
-theorem wall_relay_history {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0 < N)
+theorem wall_relay_history {j : ℕ} (hn : 0 < n) (hN : 0 < N)
     (hM : 210000 * n ^ 2 * N ≤ M) {μ : ℝ} (hμ0 : 0 < μ) (hμ1 : μ ≤ 1) {Δ : ℝ}
-    (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) {lo : ℤ} (hlo : 0 < lo) (hhi : 2 * (lo + N) ≤ M)
+    (hΔ0 : 0 < Δ) {lo : ℤ} (hlo : 0 < lo) (hhi : 2 * (lo + N) ≤ M)
     {p₀ : ℝ} (hp₀ : |p₀| ≤ 1 / 2)
     (hWD : ∀ m ∈ Finset.Ico lo (lo + N),
       |2 * Real.pi * m / ringLen (1200 * n * N) - p₀| ≤ 1 / (600 * n)) (t₀ : ℝ)
@@ -196,12 +198,18 @@ theorem wall_relay_history {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0 < N)
       Real.cos (w - 2 * δ)
         ≤ Real.cos (wallAngle n N μ p₀ (t₀ + s) - (0 + 2 * Real.pi * h.val / (M + 1 : ℕ))))
     (hE : 1 / (24 * (j : ℝ)) + 2 * (ringRate (1200 * n * N) M 0 Δ / 5) * ε * ta < 1 / 12)
-    (hcl : 2 * (ringRate (1200 * n * N) M 0 Δ / 5) * ε * (tc - tb) ≤ 1 / 6) :
-    ∃ (g : ℝ) (hΨ : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
+    (hcl : 2 * (ringRate (1200 * n * N) M 0 Δ / 5) * ε * (tc - tb) ≤ 1 / 6) {g : ℝ} (hg0 : 0 < g)
+    (hg5 : g ≤ ringRate (1200 * n * N) M 0 Δ / 5)
+    (hΨ : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
           (wallWindow N ∪ negWin (wallWindow N)) (oddExt (wallWindow N) (flatAmpN N))
-          (-(Real.pi / (2 * ringRate (1200 * n * N) M 0 Δ))) ≠ 0),
-      0 < g ∧ g ≤ ringRate (1200 * n * N) M 0 Δ / 5
-      ∧ IsGatedHistory
+          (-(Real.pi / (2 * ringRate (1200 * n * N) M 0 Δ))) ≠ 0)
+    (hsw : ∀ t, 0 ≤ t → t ≤ 2 * Real.pi * n / (j * ringRate (1200 * n * N) M 0 Δ) →
+      |clockPointerShift (ringHop (1200 * n * N) M) 1 (1 + Δ) g trainF_periodic
+            (0 : AddCircle (1 : ℝ))
+            (deviceRay (deviceShift h _) (deviceShift_ne_zero h hΨ)) t
+          - 1 / 4 * (1 - Real.cos (ringRate (1200 * n * N) M 0 Δ * t))|
+        ≤ 1 / (24 * j)) :
+    IsGatedHistory
           (coincShift (diracHam_isHermitian (L := M + 1) (ringHop (1200 * n * N) M) μ)
             (deviceHam_isHermitian (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ))
             (gateOp (Prod.fst : ZMod (M + 1) × Fin 2 → ZMod (M + 1))
@@ -211,11 +219,9 @@ theorem wall_relay_history {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0 < N)
             (deviceRay (deviceShift h _) (deviceShift_ne_zero h hΨ)))
           (ringRate (1200 * n * N) M 0 Δ) (1 / (24 * (j : ℝ)) + 2 * g * ε * ta) (2 * g)
           ta tb tc := by
-  have hn : 0 < n := hj.trans_le hjn
   have hR0 : 0 < ringRate (1200 * n * N) M 0 Δ := by
     rw [ringRate_zero _ _ hΔ0.le]
     exact hΔ0
-  obtain ⟨g, hΨ, hg0, hg5, hsw⟩ := far_wall_clock_swing_fine (M := M) hj hjn hN hM hΔ0 hΔ h
   set R := ringRate (1200 * n * N) M 0 Δ with hRd
   have hz : (scaledTrainF_periodic g).deriv_periodic.lift (0 : AddCircle (1 : ℝ)) = -g :=
     scaledTrainF_deriv_lift_zero g
@@ -259,7 +265,7 @@ theorem wall_relay_history {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0 < N)
       exact h1)
     key_near (by rw [hzabs]; linarith only [hcl, m2]) (by rw [hzabs]; linarith only [hE, m1])
   rw [hzabs] at H
-  exact ⟨g, hΨ, hg0, hg5, H⟩
+  exact H
 
 end Relay
 

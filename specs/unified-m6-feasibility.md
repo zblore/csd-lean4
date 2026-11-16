@@ -33,6 +33,14 @@ be built:
    the wall at `0`, and the messenger with it. The stationary observer `A` must therefore
    sit at the *other* wall, the angle `π`. This agrees with UA-18 (b). It means the
    distance is the whole chain (`d = π` in angle), not a free parameter.
+   *Correction, 2026-11-16 (UD-194).* "The messenger with it" was wrong in one respect.
+   The clock is prepared before the wall and moving into it. A messenger started at the
+   clock's own angle and moving with it would be reflected and meet the clock a second time
+   at once. The messenger has to start at the mirror place, moving away from the wall, and
+   the emission is a coincidence with the clock's mirror image. The clock is reflected at
+   the flow time `τ = π/(2 R_B)` and only then sets out, so against the times of §2 the
+   relay is early by `b τ/a` and the meeting late by `τ`, a quarter of a tick: of relative
+   size `O(1/k)`, the order of the tick discretisation. This is arithmetic on paper.
 2. **`A` at the far wall is not built.** The clock at rest of UD-175 sits at the wall at
    `0`. A packet at the angle `π` is its translate by half the ring. No translation lemma
    exists in the repository. This is a new, necessary brick.
@@ -214,13 +222,14 @@ to be one.
 | 1. Feasibility and error budget | this note |
 | 2. Fast messenger on the wall | done as UD-182, UD-183 (`regionWeight_lightWall_away_le`, `one_sub_vRel_half_le`, `light_wall_gate_open_return`); the plan's three proposed names are these, and no aliases are added |
 | 3. The odd sector as a chain | done the same day as UD-186 (`odd_sector_chain_flow_equiv`, BACKLOG ~~#416~~): the boundary condition of UA-18 (a) is confirmed, the `√2` end hop included |
-| 4. Event times from propagation | the kinematic times and two relations (UD-181); gate intervals (UD-183) and, since UD-188, for the whole chain and at an observer at a wall, with the tolerances `τ_R`, `τ_Ret`, `τ_M` from a gate window. Owed: the two levels' intervals intersected, for the actual wall states (with Task 6) |
+| 4. Event times from propagation | the kinematic times and two relations (UD-181); gate intervals (UD-183) and, since UD-188, for the whole chain and at an observer at a wall, with the tolerances `τ_R`, `τ_Ret`, `τ_M` from a gate window. The seven conditions for the wall states' angles, both levels, from thirteen inequalities: `radar_gate_intervals` (UD-194). Owed: those inequalities for the family (Task 8) |
 | 5. Both clocks' readings | `B`: ticks, swing, place (UD-177, UD-180, UD-184). `A`: swing and place at any translate, the far wall included (UD-187); its count not restated. Rate relation with the packets' velocity: `wall_observer_clock_rate_relation` (UD-188) |
-| 6. Five histories | the reduction (UD-170), the gates for a messenger and a clock (UD-179, UD-182, UD-183), the two clocks' gate for any rays (UD-185). The two kinds of history from where two carriers are: `isGatedHistory_coincShift`, `isAwayHistory_coincShift` (UD-189). Two of the five applied: the moving observer's emission and return histories (`wall_observer_radar_histories`, UD-190). The other three: `wall_relay_history`, `wall_meeting_history_moving`, `wall_meeting_history_rest` (UD-191, UD-192). All five are theorems for the wall states, separately; one statement for one prepared state, the intervals and the sizes are owed |
+| 6. Five histories | the reduction (UD-170), the gates for a messenger and a clock (UD-179, UD-182, UD-183), the two clocks' gate for any rays (UD-185). The two kinds of history from where two carriers are: `isGatedHistory_coincShift`, `isAwayHistory_coincShift` (UD-189). Two of the five applied: the moving observer's emission and return histories (`wall_observer_radar_histories`, UD-190). The other three: `wall_relay_history`, `wall_meeting_history_moving`, `wall_meeting_history_rest` (UD-191, UD-192). All five are theorems for the wall states, and are joined for one prepared state with one strength per clock in `tri_wall_radar_lorentz` (UD-193). The sizes are owed |
 | 7. The return reading's band | derived from sizes for an emission at the start, inside `wall_observer_radar_histories` (UD-190); the inequality is not yet checked for the family |
 | 8. A family meeting every inequality | `wall_values` for the bounds of one gate; the rest owed |
 | 9. An open set of interacting starts | scoped only (the paragraph after the scope of UD-175) |
-| 10 to 12 | not started |
+| 10. Capstone | a first form on the fibres where the profiles vanish, conditional on the angle conditions and the sizes: `tri_wall_radar_lorentz` (UD-193). The errors are not shown small |
+| 11 to 12 | not started |
 
 ## 8. What would count as failure
 

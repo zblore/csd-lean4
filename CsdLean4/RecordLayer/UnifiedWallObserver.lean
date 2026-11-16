@@ -27,13 +27,15 @@ is at the start, so the emission pointer stops near `0`.
 * `wallAngle` — the predicted angle of a packet at a packet time;
 * ★★ `wall_observer_gate_weights` — the wall gate between the light messenger and the moving
   clock on three intervals: open, closed, open again;
-* ★★★ `wall_observer_radar_histories` — for some strength `0 < g ≤ R/5` of the coupling:
+* ★★★ `wall_observer_radar_histories` — for each strength `0 < g ≤ R/5` of the coupling:
   the emission displacement is a gated history with error `1/(24 j) + 2 g ε t_a`, and the
   return displacement is an away history whose offset is the emission displacement at
   `t_b`, with error `1/(24 j) + 2 g ε (t₃ − t_b)`. The band holds.
 
 ## Exact scope
 
+* **The strength and the clock's swing bound are hypotheses** (since #423); the swing
+  theorem of the clock provides a strength for which the bound holds.
 * **Conditions on predicted angles over intervals are hypotheses** (`hnear`, `hapart`,
   `hback`), with the size conditions. #414 and #418 turn them into intervals of the flow
   time for straight motion; they are not discharged here, and no values are put in.
@@ -87,7 +89,8 @@ variable {n N M : ℕ}
 
 /-- ★★ **The wall gate between the light messenger and the moving clock, on three
 intervals.** If the gate's bound is at most `ε (1 − cos δ)` up to `t₅`, and the messenger's
-predicted angle is within `w − 2δ` of both levels' on `[0, t_a]`, more than `w + 2δ` from
+predicted angle is within `w − 2δ` of both levels' mirror images on `[0, t_a]` (the clock
+is prepared before the wall and moving into it), more than `w + 2δ` from
 them and from their mirror images on `[t_b, t₃]`, and within `w − 2δ` of their mirror images
 on `[t₄, t₅]`: the weight outside `wallNear w` is at most `ε` on the first and the third
 interval, and the weight inside it is at most `ε` on the second. -/
@@ -109,9 +112,9 @@ theorem wall_observer_gate_weights (hn : 0 < n) (hN : 0 < N)
         ≤ ε * (1 - Real.cos δ))
     (hnear : ∀ s, 0 ≤ s → s ≤ ta →
       Real.cos (w - 2 * δ) ≤ Real.cos (wallAngle n N μ p₀ (t₀ + s)
-          - wallAngle n N 1 (1 / 2) (t₁ + s))
+          + wallAngle n N 1 (1 / 2) (t₁ + s))
         ∧ Real.cos (w - 2 * δ) ≤ Real.cos (wallAngle n N μ p₀ (t₀ + s)
-          - wallAngle n N (1 + Δ) (1 / 2) (t₁ + s)))
+          + wallAngle n N (1 + Δ) (1 / 2) (t₁ + s)))
     (hapart : ∀ s, tb ≤ s → s ≤ t3 →
       Real.cos (wallAngle n N μ p₀ (t₀ + s) - wallAngle n N 1 (1 / 2) (t₁ + s))
           < Real.cos (w + 2 * δ)
@@ -212,7 +215,7 @@ theorem wall_observer_gate_weights (hn : 0 < n) (hN : 0 < N)
   refine ⟨fun s hs0 hs => ?_, fun s hbs hs => ?_, fun s h4s hs => ?_⟩
   · exact le_of_mul_le_mul_right
       ((mul_le_mul_of_nonneg_right
-        (wallGate_not_le hδ0 hw (by linarith only [hw, hwπ, hδ0]) (hnear s hs0 hs).1
+        (wallGate_not_le_mirror hδ0 hw (by linarith only [hw, hwπ, hδ0]) (hnear s hs0 hs).1
           (hnear s hs0 hs).2 _ _) hcos.le).trans
         (hout s hs0 (hs.trans (hab.trans (hb3.trans (h34.trans h45)))))) hcos
   · exact le_of_mul_le_mul_right
@@ -231,15 +234,16 @@ theorem wall_observer_gate_weights (hn : 0 < n) (hN : 0 < N)
 messenger wall state (rest energy `0 < μ ≤ 1`, `N` positive modes near `p₀`, packet time
 `t₀`) and the moving clock's wall state (levels `1`, `1 + Δ`, momentum `1/2`, prepared a
 quarter turn early). Suppose the gate's bound is at most `ε (1 − cos δ)` up to `t₅`; the
-messenger's predicted angle is within `w − 2δ` of both levels' on `[0, t_a]`, more than
+messenger's predicted angle is within `w − 2δ` of both levels' mirror images on `[0, t_a]`,
+more than
 `w + 2δ` from them and from their mirror images on `[t_b, t₃]`, and within `w − 2δ` of their
-mirror images on `[t₄, t₅]`; and the sizes hold. Then for some strength `0 < g ≤ R/5` the
+mirror images on `[t₄, t₅]`; and the sizes hold. Then for each strength `0 < g ≤ R/5` the
 displacement of the pointer gated by `wallNear w` is a gated history, and the displacement
 of the pointer gated by its complement is an away history with offset the first
 displacement at `t_b`. -/
-theorem wall_observer_radar_histories {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0 < N)
+theorem wall_observer_radar_histories {j : ℕ} (hn : 0 < n) (hN : 0 < N)
     (hM : 210000 * n ^ 2 * N ≤ M) {μ : ℝ} (hμ0 : 0 < μ) (hμ1 : μ ≤ 1) {Δ : ℝ}
-    (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) {lo : ℤ} (hlo : 0 < lo) (hhi : 2 * (lo + N) ≤ M)
+    (hΔ0 : 0 < Δ) {lo : ℤ} (hlo : 0 < lo) (hhi : 2 * (lo + N) ≤ M)
     {p₀ : ℝ} (hp₀ : |p₀| ≤ 1 / 2)
     (hWD : ∀ m ∈ Finset.Ico lo (lo + N),
       |2 * Real.pi * m / ringLen (1200 * n * N) - p₀| ≤ 1 / (600 * n)) (t₀ : ℝ)
@@ -255,10 +259,10 @@ theorem wall_observer_radar_histories {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN
         ≤ ε * (1 - Real.cos δ))
     (hnear : ∀ s, 0 ≤ s → s ≤ ta →
       Real.cos (w - 2 * δ) ≤ Real.cos (wallAngle n N μ p₀ (t₀ + s)
-          - wallAngle n N 1 (1 / 2)
+          + wallAngle n N 1 (1 / 2)
             (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ)) + s))
         ∧ Real.cos (w - 2 * δ) ≤ Real.cos (wallAngle n N μ p₀ (t₀ + s)
-          - wallAngle n N (1 + Δ) (1 / 2)
+          + wallAngle n N (1 + Δ) (1 / 2)
             (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ)) + s)))
     (hapart : ∀ s, tb ≤ s → s ≤ t3 →
       Real.cos (wallAngle n N μ p₀ (t₀ + s) - wallAngle n N 1 (1 / 2)
@@ -286,12 +290,18 @@ theorem wall_observer_radar_histories {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN
         + 1 / (24 * (j : ℝ)) + 2 * (ringRate (1200 * n * N) M (1 / 2) Δ / 5) * ε * ta
         + 2 * (ringRate (1200 * n * N) M (1 / 2) Δ / 5) * (tb - ta)
         + (1 / (24 * (j : ℝ)) + 2 * (ringRate (1200 * n * N) M (1 / 2) Δ / 5) * ε * (t3 - tb))
-      < 1 / 12) :
-    ∃ (g : ℝ) (hΨ : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
+      < 1 / 12) {g : ℝ} (hg0 : 0 < g)
+    (hg5 : g ≤ ringRate (1200 * n * N) M (1 / 2) Δ / 5)
+    (hΨ : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
           (flatWindow n N ∪ negWin (flatWindow n N)) (oddExt (flatWindow n N) (flatAmpN N))
-          (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ))) ≠ 0),
-      0 < g ∧ g ≤ ringRate (1200 * n * N) M (1 / 2) Δ / 5
-      ∧ IsGatedHistory
+          (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ))) ≠ 0)
+    (hsw : ∀ t, 0 ≤ t → t ≤ 2 * Real.pi * n / (j * ringRate (1200 * n * N) M (1 / 2) Δ) →
+      |clockPointerShift (ringHop (1200 * n * N) M) 1 (1 + Δ) g trainF_periodic
+            (0 : AddCircle (1 : ℝ))
+            (deviceRay _ hΨ) t
+          - 1 / 4 * (1 - Real.cos (ringRate (1200 * n * N) M (1 / 2) Δ * t))|
+        ≤ 1 / (24 * j)) :
+    IsGatedHistory
           (coincShift (diracHam_isHermitian (L := M + 1) (ringHop (1200 * n * N) M) μ)
             (deviceHam_isHermitian (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ))
             (gateOp (Prod.fst : ZMod (M + 1) × Fin 2 → ZMod (M + 1))
@@ -314,17 +324,14 @@ theorem wall_observer_radar_histories {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN
               (levelSwap (ZMod (M + 1) × Fin 2))) (-g) (chainRay _ hψ) (deviceRay _ hΨ) tb)
           (2 * g) (2 * g * ε * ta) (1 / (24 * (j : ℝ)) + 2 * g * ε * (t3 - tb))
           ta tb t3 t4 t5 := by
-  have hn : 0 < n := hj.trans_le hjn
   have hn' : (0 : ℝ) < n := by exact_mod_cast hn
   have hN' : (0 : ℝ) < N := by exact_mod_cast hN
-  have hj' : (0 : ℝ) < j := by exact_mod_cast hj
   have hπ := Real.pi_pos
   have hK : 0 < 1200 * n * N := by positivity
   have hR : Δ / 2 ≤ ringRate (1200 * n * N) M (1 / 2) Δ :=
     half_le_levelClockRate hΔ0.le
       (ringSigma_sq_le hK M (by rw [abs_of_pos (by norm_num)]; norm_num))
   have hR0 : 0 < ringRate (1200 * n * N) M (1 / 2) Δ := by linarith
-  obtain ⟨g, hΨ, hg0, hg5, hsw⟩ := wall_moving_clock_swing_fine (M := M) hj hjn hN hM hΔ0 hΔ
   set R := ringRate (1200 * n * N) M (1 / 2) Δ with hRd
   have hcos : 0 < 1 - Real.cos δ := by linarith only [hδ]
   have hz : (scaledTrainF_periodic g).deriv_periodic.lift (0 : AddCircle (1 : ℝ)) = -g :=
@@ -406,7 +413,7 @@ theorem wall_observer_radar_histories {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN
         linarith only [hsa.1, hsa.2, hmid.1, hmid.2, hband, m1, m2, m4, hcosR, hga, hg3,
           hgab, he0])
   rw [hzabs] at Hr
-  exact ⟨g, hΨ, hg0, hg5, He, Hr⟩
+  exact ⟨He, Hr⟩
 
 end Observer
 

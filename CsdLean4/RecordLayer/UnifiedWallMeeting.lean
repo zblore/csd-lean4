@@ -27,18 +27,17 @@ observers meet. This module proves both histories for the wall states: the movin
   at most `ε` while they are apart, and the weight outside it at most `ε` while they are
   together;
 * ★★★ `wall_meeting_history_moving` — the meeting pointer on the moving clock: a gated
-  history at the moving rate, for some strength `0 < g ≤ R_B/5`;
+  history at the moving rate, for each strength `0 < g ≤ R_B/5`;
 * ★★★ `wall_meeting_history_rest` — the meeting pointer on the clock at rest: a gated history
-  at the rest rate, for some strength `0 < g ≤ R₀/5`.
+  at the rest rate, for each strength `0 < g ≤ R₀/5`.
 
 ## Exact scope
 
 * **Conditions on predicted angles over two intervals are hypotheses**, with the sizes, as
   #420 and #421.
-* **Each history has its own strength.** The moving clock's two other pointers (#420) and
-  this one are coupled to the same clock; that the three strengths can be taken equal is
-  true (each is the strength the swing theorem provides for that clock and index `j`) but
-  is not stated: each theorem asserts the existence of a strength.
+* **The strength and the clock's swing bound are hypotheses** (since #423), so that one
+  strength serves every pointer on a clock; `wall_moving_clock_swing_fine` (#411) and
+  `far_wall_clock_swing_fine` (#417) provide a strength for which the bound holds.
 * **The other clock's wall state must be non-zero** at its packet time; a hypothesis here,
   supplied by the other clock's swing theorem.
 * **Two clocks, uncoupled orbits from a product start**, on the fibres where the profiles
@@ -199,11 +198,11 @@ theorem wall_meeting_gate_weights (hn : 0 < n) (hN : 0 < N) (hM : 210000 * n ^ 2
 /-- ★★★ **The meeting history on the moving clock.** The clock at rest translated by `h`
 (packet time `t_A`) and the moving clock prepared a quarter turn early. Under the hypotheses
 of `wall_meeting_gate_weights`, with `t_a ≤ 2π n/(j R_B)`,
-`1/(24 j) + 2 (R_B/5) ε t_a < 1/12` and `2 (R_B/5) ε (t_c − t_b) ≤ 1/6`: for some strength
+`1/(24 j) + 2 (R_B/5) ε t_a < 1/12` and `2 (R_B/5) ε (t_c − t_b) ≤ 1/6`: for each strength
 `0 < g ≤ R_B/5` the displacement of the pointer coupled to the moving clock through "the two
 are not near" is a gated history at the moving rate `R_B`. -/
-theorem wall_meeting_history_moving {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0 < N)
-    (hM : 210000 * n ^ 2 * N ≤ M) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2)
+theorem wall_meeting_history_moving {j : ℕ} (hn : 0 < n) (hN : 0 < N)
+    (hM : 210000 * n ^ 2 * N ≤ M) {Δ : ℝ} (hΔ0 : 0 < Δ)
     (h : ZMod (M + 1)) (tA : ℝ)
     (hΨA : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
       (wallWindow N ∪ negWin (wallWindow N)) (oddExt (wallWindow N) (flatAmpN N)) tA ≠ 0)
@@ -237,12 +236,19 @@ theorem wall_meeting_history_moving {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN :
             (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ)) + s)))
     (hE : 1 / (24 * (j : ℝ)) + 2 * (ringRate (1200 * n * N) M (1 / 2) Δ / 5) * ε * ta
       < 1 / 12)
-    (hcl : 2 * (ringRate (1200 * n * N) M (1 / 2) Δ / 5) * ε * (tc - tb) ≤ 1 / 6) :
-    ∃ (g : ℝ) (hΨB : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
+    (hcl : 2 * (ringRate (1200 * n * N) M (1 / 2) Δ / 5) * ε * (tc - tb) ≤ 1 / 6)
+    {g : ℝ} (hg0 : 0 < g)
+    (hg5 : g ≤ ringRate (1200 * n * N) M (1 / 2) Δ / 5)
+    (hΨB : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
           (flatWindow n N ∪ negWin (flatWindow n N)) (oddExt (flatWindow n N) (flatAmpN N))
-          (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ))) ≠ 0),
-      0 < g ∧ g ≤ ringRate (1200 * n * N) M (1 / 2) Δ / 5
-      ∧ IsGatedHistory
+          (-(Real.pi / (2 * ringRate (1200 * n * N) M (1 / 2) Δ))) ≠ 0)
+    (hsw : ∀ t, 0 ≤ t → t ≤ 2 * Real.pi * n / (j * ringRate (1200 * n * N) M (1 / 2) Δ) →
+      |clockPointerShift (ringHop (1200 * n * N) M) 1 (1 + Δ) g trainF_periodic
+            (0 : AddCircle (1 : ℝ))
+            (deviceRay _ hΨB) t
+          - 1 / 4 * (1 - Real.cos (ringRate (1200 * n * N) M (1 / 2) Δ * t))|
+        ≤ 1 / (24 * j)) :
+    IsGatedHistory
           (coincShift
             (deviceHam_isHermitian (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ))
             (deviceHam_isHermitian (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ))
@@ -253,13 +259,11 @@ theorem wall_meeting_history_moving {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN :
             (deviceRay (deviceShift h _) (deviceShift_ne_zero h hΨA)) (deviceRay _ hΨB))
           (ringRate (1200 * n * N) M (1 / 2) Δ) (1 / (24 * (j : ℝ)) + 2 * g * ε * ta)
           (2 * g) ta tb tc := by
-  have hn : 0 < n := hj.trans_le hjn
   have hK : 0 < 1200 * n * N := by positivity
   have hR : Δ / 2 ≤ ringRate (1200 * n * N) M (1 / 2) Δ :=
     half_le_levelClockRate hΔ0.le
       (ringSigma_sq_le hK M (by rw [abs_of_pos (by norm_num)]; norm_num))
   have hR0 : 0 < ringRate (1200 * n * N) M (1 / 2) Δ := by linarith only [hR, hΔ0]
-  obtain ⟨g, hΨB, hg0, hg5, hsw⟩ := wall_moving_clock_swing_fine (M := M) hj hjn hN hM hΔ0 hΔ
   set R := ringRate (1200 * n * N) M (1 / 2) Δ with hRd
   have hz : (scaledTrainF_periodic g).deriv_periodic.lift (0 : AddCircle (1 : ℝ)) = -g :=
     scaledTrainF_deriv_lift_zero g
@@ -303,17 +307,17 @@ theorem wall_meeting_history_moving {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN :
       exact h1)
     key_near (by rw [hzabs]; linarith only [hcl, m2]) (by rw [hzabs]; linarith only [hE, m1])
   rw [hzabs] at H
-  exact ⟨g, hΨB, hg0, hg5, H⟩
+  exact H
 
 /-- ★★★ **The meeting history on the clock at rest.** The moving clock (packet time `t_B`)
 and the clock at rest translated by `h`, prepared a quarter turn early. Under the hypotheses
 of `wall_meeting_gate_weights`, with `t_a ≤ 2π n/(j R₀)`,
-`1/(24 j) + 2 (R₀/5) ε t_a < 1/12` and `2 (R₀/5) ε (t_c − t_b) ≤ 1/6`: for some strength
+`1/(24 j) + 2 (R₀/5) ε t_a < 1/12` and `2 (R₀/5) ε (t_c − t_b) ≤ 1/6`: for each strength
 `0 < g ≤ R₀/5` the displacement of the pointer coupled to the clock at rest through "the two
 are not near" is a gated history at the rest rate `R₀`. The moving clock is the first
 carrier here and the relation is reversed, as `tri_radar_lorentz` (#405) has it. -/
-theorem wall_meeting_history_rest {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0 < N)
-    (hM : 210000 * n ^ 2 * N ≤ M) {Δ : ℝ} (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2)
+theorem wall_meeting_history_rest {j : ℕ} (hn : 0 < n) (hN : 0 < N)
+    (hM : 210000 * n ^ 2 * N ≤ M) {Δ : ℝ} (hΔ0 : 0 < Δ)
     (h : ZMod (M + 1)) (tB : ℝ)
     (hΨB : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
       (flatWindow n N ∪ negWin (flatWindow n N)) (oddExt (flatWindow n N) (flatAmpN N))
@@ -341,12 +345,18 @@ theorem wall_meeting_history_rest {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0
           ≤ Real.cos ((0 + 2 * Real.pi * h.val / (M + 1 : ℕ))
             - wallAngle n N (1 + Δ) (1 / 2) (tB + s)))
     (hE : 1 / (24 * (j : ℝ)) + 2 * (ringRate (1200 * n * N) M 0 Δ / 5) * ε * ta < 1 / 12)
-    (hcl : 2 * (ringRate (1200 * n * N) M 0 Δ / 5) * ε * (tc - tb) ≤ 1 / 6) :
-    ∃ (g : ℝ) (hΨA : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
+    (hcl : 2 * (ringRate (1200 * n * N) M 0 Δ / 5) * ε * (tc - tb) ≤ 1 / 6) {g : ℝ} (hg0 : 0 < g)
+    (hg5 : g ≤ ringRate (1200 * n * N) M 0 Δ / 5)
+    (hΨA : devicePacket (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ)
           (wallWindow N ∪ negWin (wallWindow N)) (oddExt (wallWindow N) (flatAmpN N))
-          (-(Real.pi / (2 * ringRate (1200 * n * N) M 0 Δ))) ≠ 0),
-      0 < g ∧ g ≤ ringRate (1200 * n * N) M 0 Δ / 5
-      ∧ IsGatedHistory
+          (-(Real.pi / (2 * ringRate (1200 * n * N) M 0 Δ))) ≠ 0)
+    (hsw : ∀ t, 0 ≤ t → t ≤ 2 * Real.pi * n / (j * ringRate (1200 * n * N) M 0 Δ) →
+      |clockPointerShift (ringHop (1200 * n * N) M) 1 (1 + Δ) g trainF_periodic
+            (0 : AddCircle (1 : ℝ))
+            (deviceRay (deviceShift h _) (deviceShift_ne_zero h hΨA)) t
+          - 1 / 4 * (1 - Real.cos (ringRate (1200 * n * N) M 0 Δ * t))|
+        ≤ 1 / (24 * j)) :
+    IsGatedHistory
           (coincShift
             (deviceHam_isHermitian (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ))
             (deviceHam_isHermitian (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ))
@@ -357,11 +367,9 @@ theorem wall_meeting_history_rest {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0
             (deviceRay _ hΨB) (deviceRay (deviceShift h _) (deviceShift_ne_zero h hΨA)))
           (ringRate (1200 * n * N) M 0 Δ) (1 / (24 * (j : ℝ)) + 2 * g * ε * ta) (2 * g)
           ta tb tc := by
-  have hn : 0 < n := hj.trans_le hjn
   have hR0 : 0 < ringRate (1200 * n * N) M 0 Δ := by
     rw [ringRate_zero _ _ hΔ0.le]
     exact hΔ0
-  obtain ⟨g, hΨA, hg0, hg5, hsw⟩ := far_wall_clock_swing_fine (M := M) hj hjn hN hM hΔ0 hΔ h
   set R := ringRate (1200 * n * N) M 0 Δ with hRd
   have hz : (scaledTrainF_periodic g).deriv_periodic.lift (0 : AddCircle (1 : ℝ)) = -g :=
     scaledTrainF_deriv_lift_zero g
@@ -417,7 +425,7 @@ theorem wall_meeting_history_rest {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0
       exact h1)
     (by rw [hzabs]; linarith only [hcl, m2]) (by rw [hzabs]; linarith only [hE, m1])
   rw [hzabs] at H
-  exact ⟨g, hΨA, hg0, hg5, H⟩
+  exact H
 
 end Meeting
 

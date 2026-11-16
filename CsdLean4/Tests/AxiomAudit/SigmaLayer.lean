@@ -21968,4 +21968,28 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.wall_meeting_history_rest
 
+/-! #423 (the author's programme, obligation UO-16; Tasks 6 and 10 of the research delivery plan): the walled chain's run — one prepared state of three wall states, five counts and the Lorentz statement, conditional on angle conditions and sizes (`RecordLayer/UnifiedWallRadar.lean`). -/
+
+/-- info: 'CSD.RecordLayer.wallRun' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallRun
+
+/-- info: 'CSD.RecordLayer.tri_wall_radar_lorentz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tri_wall_radar_lorentz
+
+/-! #424 (the author's programme, obligation UO-16; Task 4 of the research delivery plan): the seven gate intervals of the walled chain from straight motion, real arithmetic (`RecordLayer/UnifiedWallIntervals.lean`). -/
+
+/-- info: 'CSD.RecordLayer.cos_le_cos_of_abs_sub_two_pi_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_le_cos_of_abs_sub_two_pi_le
+
+/-- info: 'CSD.RecordLayer.mul_mem_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mul_mem_of_mem
+
+/-- info: 'CSD.RecordLayer.radar_gate_intervals' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_gate_intervals
+
 end CSD.Tests.AxiomAudit
