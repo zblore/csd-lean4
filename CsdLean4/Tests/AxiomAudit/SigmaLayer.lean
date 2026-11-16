@@ -21978,6 +21978,14 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.tri_wall_radar_lorentz
 
+/-- info: 'CSD.RecordLayer.WallRadarLorentz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.WallRadarLorentz
+
+/-- info: 'CSD.RecordLayer.WallRadarLorentz.mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.WallRadarLorentz.mono
+
 /-! #424 (the author's programme, obligation UO-16; Task 4 of the research delivery plan): the seven gate intervals of the walled chain from straight motion, real arithmetic (`RecordLayer/UnifiedWallIntervals.lean`). -/
 
 /-- info: 'CSD.RecordLayer.cos_le_cos_of_abs_sub_two_pi_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
@@ -22085,5 +22093,23 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.radar_family_all_conditions' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.radar_family_all_conditions
+
+/-! #426 (the author's programme, obligation UO-16; Tasks 8 and 10 of the research delivery plan, on the fibres where the profiles vanish): the family's run — five counts and the Lorentz statement within 150 K/k, with no hypothesis about angles, sizes or histories (`RecordLayer/UnifiedRadarRun.lean`). -/
+
+/-- info: 'CSD.RecordLayer.radar_error_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_error_le
+
+/-- info: 'CSD.RecordLayer.radar_error_pieces' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_error_pieces
+
+/-- info: 'CSD.RecordLayer.radarRateB_mul_wallK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarRateB_mul_wallK
+
+/-- info: 'CSD.RecordLayer.radar_family_lorentz' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_family_lorentz
 
 end CSD.Tests.AxiomAudit

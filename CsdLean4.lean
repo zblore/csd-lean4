@@ -843,6 +843,7 @@ public import CsdLean4.RecordLayer.UnifiedWallMeeting
 public import CsdLean4.RecordLayer.UnifiedWallRadar
 public import CsdLean4.RecordLayer.UnifiedWallIntervals
 public import CsdLean4.RecordLayer.UnifiedRadarFamily
+public import CsdLean4.RecordLayer.UnifiedRadarRun
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers
