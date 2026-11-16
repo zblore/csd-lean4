@@ -22126,4 +22126,60 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.IsAwayHistory.of_drift
 
+/-! #428 (the author's programme, obligation UO-16; Task 9 of the research delivery plan, second part): the five-pointer run on any fibre (`RecordLayer/UnifiedFibreRun.lean`). -/
+
+/-- info: 'CSD.RecordLayer.freeTurn_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeTurn_congr
+
+/-- info: 'CSD.RecordLayer.twoCoupledFlow_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.twoCoupledFlow_fibre
+
+/-- info: 'CSD.RecordLayer.threeCoupledFlow_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.threeCoupledFlow_fibre
+
+/-- info: 'CSD.RecordLayer.fourCoupledFlow_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fourCoupledFlow_fibre
+
+/-- info: 'CSD.RecordLayer.fiveCoupledFlow_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fiveCoupledFlow_fibre
+
+/-- info: 'CSD.RecordLayer.fibreH' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fibreH
+
+/-- info: 'CSD.RecordLayer.fibreH_reindex' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fibreH_reindex
+
+/-- info: 'CSD.RecordLayer.pentaRun_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pentaRun_fibre
+
+/-! #428 (the author's programme, obligation UO-16; Task 9 of the research delivery plan, third part): the drift of a pointer's displacement when the carrier's matrix changes (`RecordLayer/UnifiedFibreDrift.lean`). -/
+
+/-- info: 'CSD.RecordLayer.periodic_const_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.periodic_const_one
+
+/-- info: 'CSD.RecordLayer.idxCarrierU_const_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxCarrierU_const_eq
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_idxFreeU_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_idxFreeU_sub_le
+
+/-- info: 'CSD.RecordLayer.freeShift_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeShift_zero
+
+/-- info: 'CSD.RecordLayer.freeShift_drift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeShift_drift
+
 end CSD.Tests.AxiomAudit

@@ -845,6 +845,8 @@ public import CsdLean4.RecordLayer.UnifiedWallIntervals
 public import CsdLean4.RecordLayer.UnifiedRadarFamily
 public import CsdLean4.RecordLayer.UnifiedRadarRun
 public import CsdLean4.RecordLayer.UnifiedRadarStability
+public import CsdLean4.RecordLayer.UnifiedFibreRun
+public import CsdLean4.RecordLayer.UnifiedFibreDrift
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers
