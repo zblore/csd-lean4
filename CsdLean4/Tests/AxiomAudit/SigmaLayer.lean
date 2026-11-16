@@ -21646,4 +21646,102 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.wallGate_clocks_le
 
+/-! #416 (the author's programme, obligation UO-16; Task 3 of the research delivery plan): the mirror-odd sector of the ring is the chain with hard ends — an isometry onto the segment that intertwines the energies and the evolutions; the boundary condition of UA-18 (a) confirmed (`RecordLayer/UnifiedOddChain.lean`). -/
+
+/-- info: 'CSD.RecordLayer.compSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compSwap
+
+/-- info: 'CSD.RecordLayer.compSwap_compSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compSwap_compSwap
+
+/-- info: 'CSD.RecordLayer.compSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compSwap
+
+/-- info: 'CSD.RecordLayer.compSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compSwap
+
+/-- info: 'CSD.RecordLayer.compSwap_neg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compSwap_neg
+
+/-- info: 'CSD.RecordLayer.chainParity_compSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainParity_compSwap
+
+/-- info: 'CSD.RecordLayer.regionWeight_compSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_compSwap
+
+/-- info: 'CSD.RecordLayer.chainInner_compSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainInner_compSwap
+
+/-- info: 'CSD.RecordLayer.diracHam_mulVec_compSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diracHam_mulVec_compSwap
+
+/-- info: 'CSD.RecordLayer.compSwap_pow_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compSwap_pow_mulVec
+
+/-- info: 'CSD.RecordLayer.compSwap_chainProp_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.compSwap_chainProp_mulVec
+
+/-- info: 'CSD.RecordLayer.chainInner_mulVec_hermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainInner_mulVec_hermitian
+
+/-- info: 'CSD.RecordLayer.IsOddState' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsOddState
+
+/-- info: 'CSD.RecordLayer.IsOddState.diracHam_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsOddState.diracHam_mulVec
+
+/-- info: 'CSD.RecordLayer.isOddState_oddWall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOddState_oddWall
+
+/-- info: 'CSD.RecordLayer.IsOddState.isEvenState_compSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsOddState.isEvenState_compSwap
+
+/-- info: 'CSD.RecordLayer.oddSegOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.oddSegOf
+
+/-- info: 'CSD.RecordLayer.chainInner_eq_segInner_oddSegOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.chainInner_eq_segInner_oddSegOf
+
+/-- info: 'CSD.RecordLayer.oddSegOf_end' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.oddSegOf_end
+
+/-- info: 'CSD.RecordLayer.oddSegOf_diracHam_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.oddSegOf_diracHam_mulVec
+
+/-- info: 'CSD.RecordLayer.odd_sector_chain_flow_equiv' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.odd_sector_chain_flow_equiv
+
+/-- info: 'CSD.RecordLayer.oddSeg_generator_symm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.oddSeg_generator_symm
+
+/-- info: 'CSD.RecordLayer.regionWeight_eq_segRegionWeight_oddSegOf' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_eq_segRegionWeight_oddSegOf
+
+/-- info: 'CSD.RecordLayer.oddSegOf_oddWall_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.oddSegOf_oddWall_flow
+
 end CSD.Tests.AxiomAudit
