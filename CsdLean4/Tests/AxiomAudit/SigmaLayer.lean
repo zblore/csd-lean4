@@ -21928,4 +21928,44 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.wall_observer_radar_histories
 
+/-! #421 (the author's programme, obligation UO-16; Task 6 of the research delivery plan, the third of the five histories): the relay history — the light messenger and the clock at rest translated to its place; a gated history at the rest rate (`RecordLayer/UnifiedWallRelay.lean`). -/
+
+/-- info: 'CSD.RecordLayer.gate_weight_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gate_weight_le
+
+/-- info: 'CSD.RecordLayer.far_wall_clock_outside_wallArcs_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.far_wall_clock_outside_wallArcs_le
+
+/-- info: 'CSD.RecordLayer.wall_relay_gate_weights' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_relay_gate_weights
+
+/-- info: 'CSD.RecordLayer.wall_relay_history' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_relay_history
+
+/-! #422 (the author's programme, obligation UO-16; Task 6 of the research delivery plan, the fourth and fifth of the five histories): the two meeting histories — the moving clock and the clock at rest translated to its place, the pointer on each clock gated by 'the two are not near' (`RecordLayer/UnifiedWallMeeting.lean`). -/
+
+/-- info: 'CSD.RecordLayer.arenaObs_coincProj_prodRay_swap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_coincProj_prodRay_swap
+
+/-- info: 'CSD.RecordLayer.moving_clock_outside_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.moving_clock_outside_le
+
+/-- info: 'CSD.RecordLayer.wall_meeting_gate_weights' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_meeting_gate_weights
+
+/-- info: 'CSD.RecordLayer.wall_meeting_history_moving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_meeting_history_moving
+
+/-- info: 'CSD.RecordLayer.wall_meeting_history_rest' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_meeting_history_rest
+
 end CSD.Tests.AxiomAudit
