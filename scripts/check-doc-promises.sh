@@ -208,6 +208,15 @@ doc_files = [p for p in subprocess.run(
     ["git", "ls-files", "*.md", "specs/*.md", "docs/*.md", "specs/**/*.md", "docs/**/*.md"],
     capture_output=True, text=True).stdout.split() if p]
 
+# Existence means TRACKED, not "on this disk" (2026-11-16). The contract named a parked,
+# untracked module for two weeks: the check passed on the author's machine, where the file
+# sits in the working tree, and failed on every CI run, which sees only what is committed.
+tracked = set(p for p in subprocess.run(["git", "ls-files", "CsdLean4"],
+    capture_output=True, text=True).stdout.split() if p)
+
+def module_exists(path):
+    return (path in tracked) if tracked else os.path.exists(path)
+
 path_findings = []
 for f in files + sorted(set(doc_files)):
     with open(f, encoding="utf-8", errors="replace") as fh:
@@ -218,7 +227,7 @@ for f in files + sorted(set(doc_files)):
             continue
         if (f, rel) in PATH_EXCEPT:
             continue
-        if not os.path.exists(os.path.join("CsdLean4", rel)):
+        if not module_exists("CsdLean4/" + rel):
             path_findings.append((f, m))
 
 # ---------------------------------------------------------------------------

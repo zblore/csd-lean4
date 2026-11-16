@@ -21996,4 +21996,94 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.radar_gate_times
 
+/-! #425 (the author's programme, obligation UO-16; Task 8 of the research delivery plan): the family — the rates of the three carriers, the six conditions of the gate times and the sizes of #423, for every k ≥ 100 (`RecordLayer/UnifiedRadarFamily.lean`). -/
+
+/-- info: 'CSD.RecordLayer.radarRateA' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarRateA
+
+/-- info: 'CSD.RecordLayer.radarRateB' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarRateB
+
+/-- info: 'CSD.RecordLayer.radarRateB'' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarRateB'
+
+/-- info: 'CSD.RecordLayer.radarTau' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarTau
+
+/-- info: 'CSD.RecordLayer.two_fifths_le_vRel_half_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.two_fifths_le_vRel_half_one
+
+/-- info: 'CSD.RecordLayer.vRel_level_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.vRel_level_le
+
+/-- info: 'CSD.RecordLayer.radar_family_rates' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_family_rates
+
+/-- info: 'CSD.RecordLayer.radar_six_of_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_six_of_bounds
+
+/-- info: 'CSD.RecordLayer.radar_family_gate_conditions' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_family_gate_conditions
+
+/-- info: 'CSD.RecordLayer.famTE' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.famTE
+
+/-- info: 'CSD.RecordLayer.famTb' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.famTb
+
+/-- info: 'CSD.RecordLayer.famT3' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.famT3
+
+/-- info: 'CSD.RecordLayer.famT4' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.famT4
+
+/-- info: 'CSD.RecordLayer.famT5' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.famT5
+
+/-- info: 'CSD.RecordLayer.famTR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.famTR
+
+/-- info: 'CSD.RecordLayer.famTbR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.famTbR
+
+/-- info: 'CSD.RecordLayer.famTcR' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.famTcR
+
+/-- info: 'CSD.RecordLayer.famTM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.famTM
+
+/-- info: 'CSD.RecordLayer.famTbM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.famTbM
+
+/-- info: 'CSD.RecordLayer.famTcM' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.famTcM
+
+/-- info: 'CSD.RecordLayer.radar_sizes_of_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_sizes_of_bounds
+
+/-- info: 'CSD.RecordLayer.radar_family_all_conditions' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_family_all_conditions
+
 end CSD.Tests.AxiomAudit
