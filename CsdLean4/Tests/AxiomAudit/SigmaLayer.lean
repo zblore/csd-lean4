@@ -21596,4 +21596,54 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.light_wall_gate_open_return
 
+/-! #415 (the author's programme, obligation UO-16; item R6 of the list under UD-164 for one gate, and of R1 the two clocks' gate): the tolerance test for the bounds of one messenger-clock gate on the walled chain, passed along a family; the clock's wall state at each packet time; the wall gate between two clock rays (`RecordLayer/UnifiedWallValues.lean`). -/
+
+/-- info: 'CSD.RecordLayer.heavy_packet_budget_time' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.heavy_packet_budget_time
+
+/-- info: 'CSD.RecordLayer.regionWeight_heavyWall_away_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.regionWeight_heavyWall_away_le
+
+/-- info: 'CSD.RecordLayer.deviceRegionWeight_icoWall_time_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.deviceRegionWeight_icoWall_time_le
+
+/-- info: 'CSD.RecordLayer.one_sub_sum_arenaObs_wallArcs_icoDevice_time_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sub_sum_arenaObs_wallArcs_icoDevice_time_le
+
+/-- info: 'CSD.RecordLayer.wallN' depends on axioms: [propext] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallN
+
+/-- info: 'CSD.RecordLayer.wallK' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallK
+
+/-- info: 'CSD.RecordLayer.wallGap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallGap
+
+/-- info: 'CSD.RecordLayer.wallDelta' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallDelta
+
+/-- info: 'CSD.RecordLayer.wallMu' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallMu
+
+/-- info: 'CSD.RecordLayer.wall_values' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_values
+
+/-- info: 'CSD.RecordLayer.wallGate_clocks_not_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallGate_clocks_not_le
+
+/-- info: 'CSD.RecordLayer.wallGate_clocks_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallGate_clocks_le
+
 end CSD.Tests.AxiomAudit

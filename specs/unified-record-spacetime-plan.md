@@ -628,7 +628,9 @@ what would discharge or constrain it.
   `light_wall_gate_open`, `light_wall_gate_closed`
   (`RecordLayer/UnifiedFastMessenger.lean`, BACKLOG ~~#413~~). The gates' flow times and
   the return: `gate_open_at_return`, `light_wall_gate_open_return`
-  (`RecordLayer/UnifiedGateTimes.lean`, BACKLOG ~~#414~~). Nothing else yet.
+  (`RecordLayer/UnifiedGateTimes.lean`, BACKLOG ~~#414~~). Values for the bounds of one
+  gate, and the two clocks' gate: `wall_values`, `wallGate_clocks_not_le`
+  (`RecordLayer/UnifiedWallValues.lean`, BACKLOG ~~#415~~). Nothing else yet.
   Existing pieces the rest is to be built from: the pointer step
   (`LF4/PointerStep.lean`, BACKLOG ~~#368~~) for the fifth torus; `prodIdx` and `gateFlow`
   (`RecordLayer/UnifiedCompositeCarrier.lean`, ~~#376~~) for the composite and the product
@@ -1197,7 +1199,8 @@ states and give the wall clocks' swing (`RecordLayer/UnifiedWallOrbits.lean`, BA
 costs (`RecordLayer/UnifiedRadarTimes.lean`, BACKLOG ~~#412~~). UD-182 gives a fast messenger its budgets and
 wall gate (`RecordLayer/UnifiedFastMessenger.lean`, BACKLOG ~~#413~~); UD-183 the flow
 times at which the wall gate is open and closed (`RecordLayer/UnifiedGateTimes.lean`,
-BACKLOG ~~#414~~).
+BACKLOG ~~#414~~). UD-184 passes the tolerance test for the bounds of one gate, and UD-185
+gives the two clocks' gate (`RecordLayer/UnifiedWallValues.lean`, BACKLOG ~~#415~~).
 
 | ID | Property | Lean | Kind |
 |---|---|---|---|
@@ -1283,6 +1286,8 @@ BACKLOG ~~#414~~).
 | UD-181 | **The four times of the radar run, and what a slower messenger costs.** With the emission at `0`, the moving observer at the distance `d` and velocity `0 < v`: the times `T_R = d`, `T_Ret = 2d/(1 + v)`, `T_M = d/v` satisfy `T_R − 0 = v (T_M − 0)` and `T_Ret − T_R = v (T_M − T_Ret)`, the two relations of UD-164. A messenger of speed `0 < u ≤ 1` reaches the wall at `d/u` and, reflected, meets the observer at `2d/(u + v)`; these differ from `T_R` and `T_Ret` by `d (1 − u)/u` and by at most `2d (1 − u)/u`. For a packet of rest energy `μ > 0` at the momentum term `p > 0`: `1 − v ≤ μ²/(2 p²)` | `radarTR`, `radarTRet`, `radarTM`, `radar_times_relay`, `radar_times_return`, `crossRelay`, `crossReturn`, `crossRelay_spec`, `crossReturn_spec`, `abs_crossRelay_sub`, `abs_crossReturn_sub_le`, `one_sub_vRel_le` (`RecordLayer/UnifiedRadarTimes.lean`) | exact / bound; arithmetic of straight motion at constant speeds, on no arena; not the flow times at which the gates close |
 | UD-182 | **A fast messenger on the walled chain.** On the ring of length `2π · 1200 n N`, `M ≥ 210000 n² N`, for a flat packet on any `N` neighbouring modes within `1/(600 n)` of `\|p₀\| ≤ 1/2` and rest energy `0 < μ ≤ 1`: the budget of BACKLOG ~~#265~~ at the packet time `t` is at most `lightBudget n N μ t = 1/N + (1/(2 K μ))² + \|t\| (1/μ)/(300 n K)`, `K = 1200 n N`; its wall state's weight away from the two mirror directions, times `1 − γ`, is at most `4 · lightBudget`; the same as an occupancy along the uncoupled orbit; and the weight outside (inside) `wallNear w` between it and a flat clock wall state, times `1 − cos δ`, is at most `4 · lightBudget n N μ (t₀ + s) + 4 (1/N + 1/(20000 Δ n N))` while the angles are near (apart both ways round). At the momentum `1/2` its velocity is within `2μ²` of `1` | `light_packet_start_le`, `lightBudget`, `light_packet_budget`, `regionWeight_lightWall_away_le`, `one_sub_sum_arenaObs_wallArc_lightWall_le`, `light_wall_gate_open`, `light_wall_gate_closed`, `one_sub_vRel_half_le` (`RecordLayer/UnifiedFastMessenger.lean`) | bound; no values exhibited: whether one choice makes the budget, the closing time and `μ²` small together is not shown; momentum at most `1/2`; uncoupled orbits, angles, a messenger and one clock (as UD-179) |
 | UD-183 | **When the wall gate is open: the flow times of the emission, the absence and the return.** Two carriers that start together at the angle `−d` with angular speeds `0 ≤ v ≤ u`, predicted angles `u s − d` and `v s − d`: they are within `w − 2δ` of each other while `(u − v) s ≤ w − 2δ`; more than `w + 2δ` apart, and the first more than `w + 2δ` from the second's mirror image, while `w + 2δ < (u − v) s ≤ π` and `(u + v) s + (w + 2δ) < 2d ≤ π`; and the first is within `w − 2δ` of the second's mirror image while `\|s − 2d/(u + v)\| ≤ (w − 2δ)/(u + v)`. For any rays the wall gate bound of UD-178 holds when the messenger's angle is near the mirror images of the clock's two angles; so the wall gate between the light messenger's wall state and a flat clock wall state is open at the return, with the bound of UD-182 | `cos_lt_cos_of_lt_abs`, `gate_open_at_emission`, `gate_closed_away`, `add_mul_sub_crossReturn`, `gate_open_at_return`, `wallArc_neg`, `wallGate_not_le_mirror`, `light_wall_gate_open_return` (`RecordLayer/UnifiedGateTimes.lean`) | exact / bound; arithmetic of straight motion for one pair of speeds: the clock's two levels are not intersected; not joined to the tolerances of UD-181; the return gate for a messenger and one clock, uncoupled orbits |
+| UD-184 | **The tolerance test for one gate of the walled chain, passed for the bounds.** A flat clock wall state (rest energies `1`, `1 + Δ`, any `Δ > 0`) at each packet time `t`: the occupancy outside its two double arcs, times `1 − cos δ`, is at most `4 · lightBudget n N 1 t` (no horizon). For every `k ≥ 1`, with `n = N = 10¹⁶ k⁴`, `K = 1200 N²`, gap `Δ = k/K`, `δ = 1/(10⁵ k)`, messenger rest energy `1/k`, at all packet times within `10 K`: `4 · lightBudget n N (1/k) t + 4 · lightBudget n N 1 t' ≤ (1/(1000 k)) (1 − cos δ)`; `Δ · (4δ K · 20) ≤ 1/1000`; `Δ · (10 K) · (1/(1000 k)) = 1/100`; the messenger's velocity at the momentum `1/2` is within `2/k²` of `1`; `0 < 1/k ≤ 1` and `0 < Δ ≤ 1/2` | `heavy_packet_budget_time`, `regionWeight_heavyWall_away_le`, `deviceRegionWeight_icoWall_time_le`, `one_sub_sum_arenaObs_wallArcs_icoDevice_time_le`, `wallN`, `wallK`, `wallGap`, `wallDelta`, `wallMu`, `wall_values` (`RecordLayer/UnifiedWallValues.lean`) | bound; a test of the bounds of UD-182 and UD-183, not of readings: the size conditions of UD-148, UD-157, UD-159 are not checked; the relative angular speed `1/(20 K)` and the run length `10 K` are taken, not derived |
+| UD-185 | **The wall gate between the two clocks.** For any two clock rays: the weight outside `wallNear` is at most the two clocks' weights outside their two double arcs each, when each angle of the first is within `w − 2δ` of each angle of the second; the weight inside it has the same bound when each is more than `w + 2δ` from each of the second's and from its mirror image | `wallGate_clocks_not_le`, `wallGate_clocks_le` (`RecordLayer/UnifiedWallValues.lean`) | bound; any two clock rays, not combined with the clocks' wall states |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2421,6 +2426,26 @@ the tolerances `τ` of UD-164. (iv) The gate between the two clocks; the five hi
 UD-170. (v) The lattice's band velocity. (vi) R7. They pass no gate, and UO-16 is not met.
 Assumptions used: UA-18 (a), (b), (c).
 
+Exact scope of UD-184 and UD-185 (BACKLOG ~~#415~~; items R6 and R1 of the list under
+UD-164). What they give. An answer to the question left by UD-182: along a family in `k`
+the messenger's and the clock's bounds, the gate's closing interval and the messenger's
+slowness are small together, with the gate's weight at most `1/(1000 k)`, the closing at
+most `1/1000` of a phase, and `1 − u ≤ 2/k²`. The clock's bound had to be restated at each
+packet time: at the end of the horizon of UD-176 it is too coarse. And the gate between the
+two clocks for any two clock rays. What they do not give. (i) Readings. The test is of the
+bounds that the gate theorems give; UD-148, UD-157 and UD-159 have size conditions of their
+own on the swing's margin, on `|z| ε t` and on the band, and those are not checked for this
+family. UD-165 and UD-166 checked the analogous conditions on the ring and they held; that
+is evidence, not a proof, for the walled chain. (ii) That the relative angular speed is at
+least `1/(20 K)` and the run at most `10 K`: taken as given; for `k ≥ 2` the messenger is
+at least at `1/2` and the clock's lower level at about `0.447` (a calculation, not in
+Lean), a small margin. A larger margin needs a slower clock or `k` larger. (iii) The
+comparison with the dilation: the family has `Δ → 0` and about `k` ticks in a run, so the
+count's own error of a fixed number of ticks is `O(1/k)` of the run; that this and `2/k²`
+are small against `v²/2` is not stated. (iv) The five histories of UD-170; the clock's two
+levels; the band velocity; R7. They pass no gate, and UO-16 is not met. Assumptions used:
+UA-18 (a), (b), (c).
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -3495,6 +3520,16 @@ time. It is not a statement about every dynamics on `Σ`.
   for one messenger–clock gate — this is the tolerance test and decides whether the
   arrangement can meet M6; then the two clocks' gate and the five histories (R1), the
   clock's two levels and the band velocity (R3), and R7.
+  ▸ **The tolerance test for one gate, 2026-11-16 (BACKLOG ~~#415~~) → UD-184, UD-185.
+  Passed for the bounds. Not met.** `wall_values`: for every `k ≥ 1`, with
+  `n = N = 10¹⁶ k⁴`, gap `k/K`, `δ = 1/(10⁵ k)` and messenger rest energy `1/k`, the gate's
+  bound is at most `1/(1000 k)`, the closing interval at most `1/1000` of a phase, and the
+  messenger within `2/k²` of speed `1`, together. So the arrangement of UA-18 is not ruled
+  out by the tolerances of one gate. `wallGate_clocks_not_le`, `wallGate_clocks_le`: the
+  two clocks' gate for any rays. *Next on the list:* the reading of one observer on the
+  walled chain from these values (UD-148, UD-157, UD-159 with their own size conditions),
+  as UD-165 did on the ring; then the two clocks' gate for their wall states, the five
+  histories (R1), the two levels and the band velocity (R3), and R7.
 
 ### M7 — `3 + 1`
 
@@ -3651,7 +3686,7 @@ Posit 1 and may not be reported as dynamical:
    firmly as the positive statement would.
 5. Identifiers are stable: add, never renumber.
 
-References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#399~~ (the return reading), ~~#400~~ (where the emission pointer stops), ~~#401~~ (the radar reading of one observer), ~~#402~~ (M6 from the top), ~~#403~~ (values for a run with a return), ~~#404~~ (the five-pointer run), ~~#405~~ (three carriers, five gates), ~~#406~~ (a clock at rest; the rate inequality), ~~#407~~ (the wall), ~~#408~~ (the carriers on the walled chain), ~~#409~~ (the walled chain with numbers), ~~#410~~ (the chain's coincidence relation), ~~#411~~ (the wall gate for wall states), ~~#412~~ (the four times), ~~#413~~ (a fast messenger), ~~#414~~ (the gates' flow times), ~~#202~~, ~~#38~~,
+References: `specs/BACKLOG.md` ~~#349~~ (M1A), ~~#350~~ (this note), ~~#351~~ (M2 part A), ~~#352~~ (M2 part B), ~~#353~~ (M2 part C), ~~#354~~ (M3 part A), ~~#355~~ (M3 part B), ~~#356~~ (M3 part C), ~~#357~~ (M4 part A), ~~#358~~ (M4 part B), ~~#359~~ (two pointers on one arena), ~~#360~~ (records in one run), ~~#361~~ (M5's propagation bound), ~~#362~~ (a response that arrives), ~~#363~~ (a record that singles out its site), ~~#364~~ (two detectors in one run), ~~#365~~ (a record written on arrival), ~~#366~~ (the count at a write), ~~#367~~ (departure and arrival in one run), ~~#368~~ (the pointer step and three tori), ~~#369~~ (a clock and two detectors in one run), ~~#370~~ (the split carrier), ~~#371~~ (site cells and the locality no-go), ~~#372~~ (a clock on its own carrier beside the messenger), ~~#373~~ (a transit in the accumulated occupancies), ~~#374~~ (the flow commutes with turning the pointers), ~~#375~~ (a family of packets, the coupled carrier at each flow time), ~~#376~~ (the composite carrier and the gated pointer), ~~#377~~ (its ticks), ~~#378~~ (many ticks, a bound at later times), ~~#379~~ (the return leg), ~~#380~~ (the return leg in ticks), ~~#381~~ (a fourth pointer, two counts), ~~#382~~ (a record on the return leg), ~~#383~~ (two records, two counts), ~~#384~~ (three records, three counts), ~~#385~~ (two readouts certify a drop), ~~#386~~ (readouts certify a rise and a dip), ~~#387~~ (one start meets every hypothesis), ~~#388~~ (a clock packet's ticks, linear dephasing), ~~#389~~ (the five-pointer arena), ~~#390~~ (coincidence gates), ~~#391~~ (narrow clock packets tick), ~~#392~~ (the clock packet's position), ~~#393~~ (two gated pointers, product rays), ~~#394~~ (the gated reading), ~~#395~~ (the gate for two packets on a ring), ~~#396~~ (the emission reading), ~~#397~~ (values for it), ~~#398~~ (the count of an offset swing), ~~#399~~ (the return reading), ~~#400~~ (where the emission pointer stops), ~~#401~~ (the radar reading of one observer), ~~#402~~ (M6 from the top), ~~#403~~ (values for a run with a return), ~~#404~~ (the five-pointer run), ~~#405~~ (three carriers, five gates), ~~#406~~ (a clock at rest; the rate inequality), ~~#407~~ (the wall), ~~#408~~ (the carriers on the walled chain), ~~#409~~ (the walled chain with numbers), ~~#410~~ (the chain's coincidence relation), ~~#411~~ (the wall gate for wall states), ~~#412~~ (the four times), ~~#413~~ (a fast messenger), ~~#414~~ (the gates' flow times), ~~#415~~ (the tolerance test for one gate), ~~#202~~, ~~#38~~,
 #39, ~~#136~~, ~~#152~~,
 ~~#194~~, ~~#195~~, #294–#298; [`POSITS.md`](POSITS.md); [`residues.tsv`](residues.tsv);
 [`records-to-spacetime-status.md`](records-to-spacetime-status.md);
