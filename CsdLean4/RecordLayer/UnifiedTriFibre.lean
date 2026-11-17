@@ -427,6 +427,98 @@ theorem freeShift_tri_pairL (hM : M₀.IsHermitian) (hA : A₀.IsHermitian) (hB 
 
 end Gates
 
+/-! ### The gates have norm at most one -/
+
+section Norms
+
+variable {n : Type*} [Fintype n] [DecidableEq n]
+
+/-- A Hermitian idempotent has norm at most `1`. -/
+theorem norm_le_one_of_isHermitian_idem {P : Matrix n n ℂ} (hP : P.IsHermitian)
+    (h : P * P = P) : ‖P‖ ≤ 1 := by
+  have h1 := CStarRing.norm_star_mul_self (x := P)
+  rw [Matrix.star_eq_conjTranspose, hP.eq, h] at h1
+  have h0 := norm_nonneg P
+  by_contra h'
+  rw [not_le] at h'
+  have h2 : 0 < (‖P‖ - 1) * ‖P‖ := mul_pos (by linarith only [h']) (by linarith only [h'])
+  nlinarith only [h1, h2]
+
+/-- A Hermitian involution has norm at most `1`. -/
+theorem norm_le_one_of_isHermitian_invol {U : Matrix n n ℂ} (hU : U.IsHermitian)
+    (h : U * U = 1) : ‖U‖ ≤ 1 := by
+  have h1 := CStarRing.norm_star_mul_self (x := U)
+  rw [Matrix.star_eq_conjTranspose, hU.eq, h] at h1
+  have h2 : ‖(1 : Matrix n n ℂ)‖ ≤ 1 :=
+    norm_le_one_of_isHermitian_idem Matrix.isHermitian_one (one_mul 1)
+  have h0 := norm_nonneg U
+  nlinarith only [h1, h2, h0]
+
+/-- A Hermitian idempotent times a Hermitian involution has norm at most `1`. -/
+theorem norm_idem_mul_invol_le_one {P U : Matrix n n ℂ} (hP : P.IsHermitian) (hPP : P * P = P)
+    (hU : U.IsHermitian) (hUU : U * U = 1) : ‖P * U‖ ≤ 1 := by
+  have h1 := norm_le_one_of_isHermitian_idem hP hPP
+  have h2 := norm_le_one_of_isHermitian_invol hU hUU
+  have h3 := norm_mul_le P U
+  nlinarith only [h1, h2, h3, norm_nonneg P, norm_nonneg U]
+
+end Norms
+
+section GateNorms
+
+variable {ι κa κb S : Type*} [Fintype ι] [DecidableEq ι] [Fintype κa] [DecidableEq κa]
+  [Fintype κb] [DecidableEq κb] (σ : ι → S) (α : κa → S) (β : κb → S)
+  (r : S → S → Prop) [DecidableRel r]
+
+/-- A gate with a Hermitian involution has norm at most `1`. -/
+theorem norm_gateOp_le_one {κ : Type*} [Fintype κ] [DecidableEq κ] (τ : κ → S)
+    {Y : Matrix κ κ ℂ} (hY : Y.IsHermitian) (hYY : Y * Y = 1) : ‖gateOp σ τ r Y‖ ≤ 1 := by
+  rw [gateOp]
+  refine norm_idem_mul_invol_le_one (coincProj_isHermitian σ τ r) (coincProj_mul_self σ τ r)
+    (kronecker_isHermitian Matrix.isHermitian_one hY) ?_
+  rw [← Matrix.mul_kronecker_mul, one_mul, hYY, Matrix.one_kronecker_one]
+
+/-- **The five gates of three carriers have norm at most `1`** when the two gated operators
+are Hermitian involutions. -/
+theorem tri_gate_norms_le_one (r₁ r₂ r₃ r₄ r₅ : S → S → Prop) [DecidableRel r₁]
+    [DecidableRel r₂] [DecidableRel r₃] [DecidableRel r₄] [DecidableRel r₅]
+    {Ya : Matrix κa κa ℂ} {Yb : Matrix κb κb ℂ} (hYa : Ya.IsHermitian) (hYaa : Ya * Ya = 1)
+    (hYb : Yb.IsHermitian) (hYbb : Yb * Yb = 1) :
+    ‖gateOp σ (fun k : κa × κb => β k.2) r₁ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)‖ ≤ 1
+      ∧ ‖gateOp σ (fun k : κa × κb => β k.2) r₂ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)‖ ≤ 1
+      ∧ ‖(1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb‖ ≤ 1
+      ∧ ‖gateOp σ (fun k : κa × κb => α k.1) r₄ (Ya ⊗ₖ (1 : Matrix κb κb ℂ))‖ ≤ 1
+      ∧ ‖(1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya‖ ≤ 1 := by
+  have i1 : ((1 : Matrix κa κa ℂ) ⊗ₖ Yb) * ((1 : Matrix κa κa ℂ) ⊗ₖ Yb) = 1 := by
+    rw [← Matrix.mul_kronecker_mul, one_mul, hYbb, Matrix.one_kronecker_one]
+  have i2 : (Ya ⊗ₖ (1 : Matrix κb κb ℂ)) * (Ya ⊗ₖ (1 : Matrix κb κb ℂ)) = 1 := by
+    rw [← Matrix.mul_kronecker_mul, one_mul, hYaa, Matrix.one_kronecker_one]
+  have h1b := kronecker_isHermitian (Matrix.isHermitian_one (n := κa)) hYb
+  have ha1 := kronecker_isHermitian hYa (Matrix.isHermitian_one (n := κb))
+  have pI : ∀ {P : Matrix (κa × κb) (κa × κb) ℂ}, P.IsHermitian → P * P = P →
+      ∀ {U : Matrix (κa × κb) (κa × κb) ℂ}, U.IsHermitian → U * U = 1 →
+      ‖(1 : Matrix ι ι ℂ) ⊗ₖ (P * U)‖ ≤ 1 := by
+    intro P hP hPP U hU hUU
+    have e : (1 : Matrix ι ι ℂ) ⊗ₖ (P * U)
+        = ((1 : Matrix ι ι ℂ) ⊗ₖ P) * ((1 : Matrix ι ι ℂ) ⊗ₖ U) := by
+      rw [← Matrix.mul_kronecker_mul, one_mul]
+    rw [e]
+    refine norm_idem_mul_invol_le_one (kronecker_isHermitian Matrix.isHermitian_one hP) ?_
+      (kronecker_isHermitian Matrix.isHermitian_one hU) ?_
+    · rw [← Matrix.mul_kronecker_mul, one_mul, hPP]
+    · rw [← Matrix.mul_kronecker_mul, one_mul, hUU, Matrix.one_kronecker_one]
+  refine ⟨norm_gateOp_le_one σ r₁ _ h1b i1, norm_gateOp_le_one σ r₂ _ h1b i1, ?_,
+    norm_gateOp_le_one σ r₄ _ ha1 i2, ?_⟩
+  · rw [gateOp]
+    exact pI (coincProj_isHermitian α β r₃) (coincProj_mul_self α β r₃)
+      (kronecker_isHermitian Matrix.isHermitian_one hYb)
+      (by rw [← Matrix.mul_kronecker_mul, one_mul, hYbb, Matrix.one_kronecker_one])
+  · rw [gateOpL]
+    exact pI (coincProj_isHermitian α β r₅) (coincProj_mul_self α β r₅) ha1 i2
+
+end GateNorms
+
+
 /-! ### An open set of pointer angles, for three carriers and five gates -/
 
 /-- **A pointer angle within `ρ` of the start `(1/12, 0)`**: its moving angle is `1/12 + η`
@@ -448,6 +540,390 @@ variable {ι κa κb S : Type*} [Fintype ι] [DecidableEq ι] [Fintype κa] [Dec
   {B₀ : Matrix κb κb ℂ} {σ : ι → S} {α : κa → S} {β : κb → S}
   {r₁ r₂ r₃ r₄ r₅ : S → S → Prop} [DecidableRel r₁] [DecidableRel r₂] [DecidableRel r₃]
   [DecidableRel r₄] [DecidableRel r₅] {Ya : Matrix κa κa ℂ} {Yb : Matrix κb κb ℂ}
+
+/-- ★★★ **M6 from the top from every pointer angle within an explicit radius, for three
+carriers and five gates.** As `tri_radar_lorentz_open`, with the radius a hypothesis: let the
+five gates have norm at most `S`, the five strengths size at most `γ`, the five reading
+windows end by `T`, and `s > 0` be a slack below every margin of the five histories. Then
+every `ρ > 0` with `ρ ≤ s/4`, `ρ C T ≤ s/4` and `ρ C (K₁ + K₂) ≤ ϵ`,
+`C = 20 γ² S² T + 14 γ S`, `K₁`, `K₂` the coefficients of the two error components, is a
+radius: from every five pointer angles within `ρ` of `(1/12, 0)` the five pointers have
+counts and the counts satisfy the Lorentz statement with the errors of #402 enlarged by
+`ϵ`. -/
+theorem tri_radar_lorentz_near (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
+    (hB : B₀.IsHermitian) (hYa : Ya.IsHermitian) (hYas : ∀ i j, α i ≠ α j → Ya i j = 0)
+    (hYb : Yb.IsHermitian) (hYbs : ∀ i j, β i ≠ β j → Yb i j = 0) (g₁ g₂ g₃ g₄ g₅ : ℝ)
+    (p : GenArena ι) (qa : GenArena κa) (qb : GenArena κb)
+    {v R₀ RB κ TE TR TRet TM tE tR tRet tMB tMA τE τR τRet τMB τMA : ℝ}
+    {δe ve tbe tce c vr η₀ η t4 t5 δμ vμ tbμ tcμ δρ vρ tbρ tcρ δm vm tbm tcm : ℝ}
+    {ce cr cμ cρ cm : ℝ}
+    (hv0 : 0 ≤ v) (hv : v < 1) (hR₀ : 0 < R₀)
+    (hκ : |RB - Real.sqrt (1 - v ^ 2) * R₀| ≤ κ * R₀)
+    (hE : TR - TE = v * (TM - TE)) (hRet : TRet - TR = v * (TM - TRet))
+    (hτE : |tE - TE| ≤ τE) (hτRet : |tRet - TRet| ≤ τRet) (hτMB : |tMB - TM| ≤ τMB)
+    (hτR : |tR - TR| ≤ τR) (hτMA : |tMA - TM| ≤ τMA)
+    (He : IsGatedHistory (coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb) RB δe ve tE tbe tce)
+    (Hr : IsAwayHistory (coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb) RB c vr η₀ η tE tbe
+      tRet t4 t5)
+    (Hμ : IsGatedHistory (coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb) RB δμ vμ tMB tbμ
+      tcμ)
+    (Hρ : IsGatedHistory (coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa) R₀ δρ vρ tR tbρ tcρ)
+    (Hm : IsGatedHistory
+      (coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa) R₀ δm vm tMA tbm
+      tcm)
+    (hce : ∀ s t, tbe ≤ s → s ≤ t → t ≤ tce →
+      |coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb t
+        - coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb s| ≤ ce)
+    (hcr : ∀ s t, t4 ≤ s → s ≤ t → t ≤ t5 →
+      |coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb t
+        - coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb s| ≤ cr)
+    (hcμ : ∀ s t, tbμ ≤ s → s ≤ t → t ≤ tcμ →
+      |coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb t
+        - coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb s| ≤ cμ)
+    (hcρ : ∀ s t, tbρ ≤ s → s ≤ t → t ≤ tcρ →
+      |coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa t
+        - coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa s| ≤ cρ)
+    (hcm : ∀ s t, tbm ≤ s → s ≤ t → t ≤ tcm →
+      |coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa t
+        - coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa s| ≤ cm)
+    {ϵ S γ T s ρ : ℝ}
+    (hS1 : ‖gateOp σ (fun k : κa × κb => β k.2) r₁ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)‖ ≤ S)
+    (hS2 : ‖gateOp σ (fun k : κa × κb => β k.2) r₂ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)‖ ≤ S)
+    (hS3 : ‖(1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb‖ ≤ S)
+    (hS4 : ‖gateOp σ (fun k : κa × κb => α k.1) r₄ (Ya ⊗ₖ (1 : Matrix κb κb ℂ))‖ ≤ S)
+    (hS5 : ‖(1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya‖ ≤ S)
+    (hγ1 : |g₁| ≤ γ) (hγ2 : |g₂| ≤ γ) (hγ3 : |g₃| ≤ γ) (hγ4 : |g₄| ≤ γ) (hγ5 : |g₅| ≤ γ)
+    (hT1 : tce ≤ T) (hT2 : t5 ≤ T) (hT3 : tcμ ≤ T) (hT4 : tcρ ≤ T) (hT5 : tcm ≤ T)
+    (sp : 0 < s) (q1 : s ≤ 1 / 12 - δe) (q2 : s ≤ 1 / 12 - η₀) (q3 : s ≤ 1 / 12 - η)
+    (q4 : s ≤ 1 / 12 - c - (-1 / 6 + η)) (q5 : s ≤ 1 / 6 - η - (1 / 12 - c))
+    (q6 : s ≤ 1 / 12 - δμ) (q7 : s ≤ 1 / 12 - δρ) (q8 : s ≤ 1 / 12 - δm)
+    (q9 : s ≤ 1 / 6 - ce) (q10 : s ≤ 1 / 6 - cr) (q11 : s ≤ 1 / 6 - cμ)
+    (q12 : s ≤ 1 / 6 - cρ) (q13 : s ≤ 1 / 6 - cm) (hρ0 : 0 < ρ) (hρs : ρ ≤ s / 4)
+    (hρA' : ρ * ((20 * γ ^ 2 * S ^ 2 * T + 14 * γ * S) * T) ≤ s / 4)
+    (hρB' : ρ * ((20 * γ ^ 2 * S ^ 2 * T + 14 * γ * S) * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe
+        - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+      + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))))) ≤ ϵ) :
+    ∀ (N : ℕ) (e : ι × (κa × κb) ≃ Fin (N + 1)) (θ ψ χ ξ ζ : KTorus),
+      NearStart ρ θ → NearStart ρ ψ → NearStart ρ χ → NearStart ρ ξ → NearStart ρ ζ →
+      ∀ se, tbe ≤ se → se ≤ tce → ∀ sr, t4 ≤ sr → sr ≤ t5 → ∀ sμ, tbμ ≤ sμ → sμ ≤ tcμ →
+      ∀ sρ, tbρ ≤ sρ → sρ ≤ tcρ → ∀ sm, tbm ≤ sm → sm ≤ tcm →
+      ∃ Ne Nr Nμ Nρ Nm : ℕ,
+        IsTickCount {x : PentaSigma N | x.1.1.1.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.1.1.1.2 ∈ displayArc}
+            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
+                (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
+              p qa qb θ ψ χ ξ ζ) se Ne
+        ∧ IsTickCount {x : PentaSigma N | x.1.1.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.1.1.2 ∈ displayArc}
+            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
+                (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
+              p qa qb θ ψ χ ξ ζ) sr Nr
+        ∧ IsTickCount {x : PentaSigma N | x.1.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.1.2 ∈ displayArc}
+            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
+                (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
+              p qa qb θ ψ χ ξ ζ) sμ Nμ
+        ∧ IsTickCount {x : PentaSigma N | x.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.2 ∈ displayArc}
+            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
+                (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
+              p qa qb θ ψ χ ξ ζ) sρ Nρ
+        ∧ IsTickCount {x : PentaSigma N | x.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.2 ∈ displayArc}
+            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
+                (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
+              p qa qb θ ψ χ ξ ζ) sm Nm
+        ∧ |(lorentzBoost 1 (-v)
+                ((Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀, 0)).1
+              - (((Ne : ℝ) * (2 * Real.pi) / R₀
+                    + ((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) / R₀) / 2
+                  - (Nμ : ℝ) * (2 * Real.pi) / R₀)|
+            ≤ ((gatedErr ve tE tbe / R₀ + κ * tE + τE)
+                + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
+                    + κ * tRet + τRet)) / 2
+              + (gatedErr vμ tMB tbμ / R₀ + κ * tMB + τMB)
+              + ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
+                / Real.sqrt (1 - v ^ 2) + ϵ
+        ∧ |(lorentzBoost 1 (-v)
+                ((Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀, 0)).2
+              - (-((((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) / R₀
+                    - (Ne : ℝ) * (2 * Real.pi) / R₀) / 2))|
+            ≤ ((gatedErr ve tE tbe / R₀ + κ * tE + τE)
+                + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
+                    + κ * tRet + τRet)) / 2
+              + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
+                / Real.sqrt (1 - v ^ 2) + ϵ
+        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀ - (tR - tMA)|
+            ≤ (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ + ϵ := by
+  have hAB := compositeH_isHermitian hA hB
+  have hH := compositeH_isHermitian hM hAB
+  have hG₁ := gateOp_snd_isHermitian (κa := κa) σ β r₁ hYb hYbs
+  have hG₂ := gateOp_snd_isHermitian (κa := κa) σ β r₂ hYb hYbs
+  have hG₃ : ((1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb).IsHermitian :=
+    kronecker_isHermitian Matrix.isHermitian_one (gateOp_isHermitian α β r₃ hYb hYbs)
+  have hG₄ := gateOp_fst_isHermitian (κb := κb) σ α r₄ hYa hYas
+  have hG₅ : ((1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya).IsHermitian :=
+    kronecker_isHermitian Matrix.isHermitian_one (gateOpL_isHermitian α β r₅ hYa hYas)
+  rw [← freeShift_tri_gate_snd σ β r₁ hM hA hB Yb (-g₁) p qa qb] at He hce
+  rw [← freeShift_tri_gate_snd σ β r₂ hM hA hB Yb (-g₂) p qa qb] at Hr hcr
+  rw [← freeShift_tri_pair α β r₃ hM hA hB Yb (-g₃) p qa qb] at Hμ hcμ
+  rw [← freeShift_tri_gate_fst σ α r₄ hM hA hB Ya (-g₄) p qa qb] at Hρ hcρ
+  rw [← freeShift_tri_pairL α β r₅ hM hA hB Ya (-g₅) p qa qb] at Hm hcm
+  have hS0 : 0 ≤ S := (norm_nonneg _).trans hS1
+  have hγ0 : 0 ≤ γ := (abs_nonneg _).trans hγ1
+  -- the times
+  have htbe0 : 0 ≤ tbe := He.ta_nonneg.trans He.ta_le
+  have htce0 : 0 ≤ tce := htbe0.trans He.tb_le
+  have ht40 : 0 ≤ t4 := (htbe0.trans Hr.tb_le).trans Hr.t3_le
+  have ht50 : 0 ≤ t5 := ht40.trans Hr.t4_le
+  have htbμ0 : 0 ≤ tbμ := Hμ.ta_nonneg.trans Hμ.ta_le
+  have htcμ0 : 0 ≤ tcμ := htbμ0.trans Hμ.tb_le
+  have htbρ0 : 0 ≤ tbρ := Hρ.ta_nonneg.trans Hρ.ta_le
+  have htcρ0 : 0 ≤ tcρ := htbρ0.trans Hρ.tb_le
+  have htbm0 : 0 ≤ tbm := Hm.ta_nonneg.trans Hm.ta_le
+  have htcm0 : 0 ≤ tcm := htbm0.trans Hm.tb_le
+  obtain ⟨Tm, hTm⟩ : ∃ Tm : ℝ, Tm = T := ⟨_, rfl⟩
+  have hTm0 : 0 ≤ Tm := by linarith only [hTm, htce0, hT1]
+  obtain ⟨C, hC⟩ : ∃ C : ℝ, C = 20 * γ ^ 2 * S ^ 2 * Tm + 14 * γ * S := ⟨_, rfl⟩
+  have hC0 : 0 ≤ C := by
+    rw [hC]
+    positivity
+  -- the error's coefficients
+  have hsq : 0 < Real.sqrt (1 - v ^ 2) := Real.sqrt_pos.2 (by nlinarith only [hv0, hv])
+  have ka : 0 ≤ (tbe - tE) / R₀ := div_nonneg (sub_nonneg.2 He.ta_le) hR₀.le
+  have kb : 0 ≤ ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀ :=
+    div_nonneg (by linarith only [He.ta_le, Hr.t3_le]) hR₀.le
+  have km : 0 ≤ (tbμ - tMB) / R₀ := div_nonneg (sub_nonneg.2 Hμ.ta_le) hR₀.le
+  have kr : 0 ≤ (tbρ - tR) / R₀ := div_nonneg (sub_nonneg.2 Hρ.ta_le) hR₀.le
+  have kq : 0 ≤ (tbm - tMA) / R₀ := div_nonneg (sub_nonneg.2 Hm.ta_le) hR₀.le
+  have hK1 : 0 ≤ (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) :=
+    mul_nonneg (by positivity) (add_nonneg (add_nonneg (div_nonneg (add_nonneg ka kb)
+      (by norm_num)) km) (div_nonneg (add_nonneg kr kq) hsq.le))
+  have hK2 : 0 ≤ (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) :=
+    mul_nonneg (by positivity) (add_nonneg (div_nonneg (add_nonneg ka kb) (by norm_num))
+      (div_nonneg (mul_nonneg hv0 (add_nonneg kr kq)) hsq.le))
+  have hρA : ρ * (C * Tm) ≤ s / 4 := by
+    rw [hC, hTm]
+    exact hρA'
+  have hρB : ρ * (C * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 -
+      tRet))) / R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) /
+          Real.sqrt (1 - v ^ 2)))
+      + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+   
+            + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))))) ≤ ϵ := by
+    rw [hC, hTm]
+    exact hρB'
+  have hρC : 0 ≤ ρ * C := mul_nonneg hρ0.le hC0
+  have mono : ∀ t : ℝ, 0 ≤ t → t ≤ Tm → ρ * C * t ≤ ρ * (C * Tm) := fun t _ ht => by
+    rw [mul_assoc]
+    exact mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left ht hC0) hρ0.le
+  have mono' : ∀ t t' : ℝ, 0 ≤ t' → ρ * C * (t - t') ≤ ρ * C * t := fun t t' ht' =>
+    mul_le_mul_of_nonneg_left (by linarith only [ht']) hρC
+  have hk1 : ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet)))
+      / R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) ≤ ϵ := by
+    have := mul_nonneg hρC hK2
+    have e : ρ * (C * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 -
+        tRet))) / R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+        + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))))
+        = ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+            R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+          + ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+              R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by ring
+    linarith only [this, e, hρB]
+  have hk2 : ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet)))
+      / R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) ≤ ϵ := by
+    have := mul_nonneg hρC hK1
+    have e : ρ * (C * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 -
+        tRet))) / R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+        + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))))
+        = ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+            R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+          + ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+              R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by ring
+    linarith only [this, e, hρB]
+  rintro N e θ ψ χ ξ ζ ⟨ηe, xe, hηe, hxe, hθ1, hθ2⟩ ⟨ηr, xr, hηr, hxr, hψ1, hψ2⟩
+    ⟨ημ, xμ, hημ, hxμ, hχ1, hχ2⟩ ⟨ηρ, xρ, hηρ, hxρ, hξ1, hξ2⟩ ⟨ηm, xm, hηm, hxm, hζ1, hζ2⟩
+  have aθ := scaledTrainF_near hθ2 hγ1 hxe.le
+  have aψ := scaledTrainF_near hψ2 hγ2 hxr.le
+  have aχ := scaledTrainF_near hχ2 hγ3 hxμ.le
+  have aξ := scaledTrainF_near hξ2 hγ4 hxρ.le
+  have aζ := scaledTrainF_near hζ2 hγ5 hxm.le
+  have hF := fibreH_isHermitian hH hG₁ hG₂ hG₃ hG₄ hG₅
+    ((scaledTrainF_periodic g₁).lift θ.2) ((scaledTrainF_periodic g₂).lift ψ.2)
+    ((scaledTrainF_periodic g₃).lift χ.2) ((scaledTrainF_periodic g₄).lift ξ.2)
+    ((scaledTrainF_periodic g₅).lift ζ.2)
+  have He' := IsGatedHistory.of_fibre (η₀ := ρ) (lam := ρ * C) hH hF He hce
+      ((fibre_rate_le (T := Tm) aθ.1 aψ.1 aχ.1 aξ.1 aζ.1 hS1 hS2 hS3 hS4 hS5 hS1 aθ.2.1 aθ.2.2
+        hρ0.le htce0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])).trans
+        (le_of_eq (by rw [hC]))) hηe.le
+      (by
+        have := mono _ htce0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        linarith only [sp, this, hρs, hρA, q1])
+      (by
+        have := mono _ htce0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        have h' := mono' tce tbe htbe0
+        linarith only [sp, this, h', hρA, q9])
+  have Hr' := IsAwayHistory.of_fibre (ρ₀ := ρ) (lam := ρ * C) hH hF Hr hcr
+      ((fibre_rate_le (T := Tm) aθ.1 aψ.1 aχ.1 aξ.1 aζ.1 hS1 hS2 hS3 hS4 hS5 hS2 aψ.2.1 aψ.2.2
+        hρ0.le ht50 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])).trans
+        (le_of_eq (by rw [hC]))) hηr.le
+      (by
+        have := mono _ ht50 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        linarith only [sp, this, hρs, hρA, q2])
+      (by
+        have := mono _ ht50 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        linarith only [sp, this, hρs, hρA, q3])
+      (Or.inl (by
+        have := mono _ ht50 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        constructor <;> linarith only [sp, this, hρs, hρA, q4, q5]))
+      (by
+        have := mono _ ht50 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        have h' := mono' t5 t4 ht40
+        linarith only [sp, this, h', hρA, q10])
+  have Hμ' := IsGatedHistory.of_fibre (η₀ := ρ) (lam := ρ * C) hH hF Hμ hcμ
+      ((fibre_rate_le (T := Tm) aθ.1 aψ.1 aχ.1 aξ.1 aζ.1 hS1 hS2 hS3 hS4 hS5 hS3 aχ.2.1 aχ.2.2
+        hρ0.le htcμ0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])).trans
+        (le_of_eq (by rw [hC]))) hημ.le
+      (by
+        have := mono _ htcμ0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        linarith only [sp, this, hρs, hρA, q6])
+      (by
+        have := mono _ htcμ0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        have h' := mono' tcμ tbμ htbμ0
+        linarith only [sp, this, h', hρA, q11])
+  have Hρ' := IsGatedHistory.of_fibre (η₀ := ρ) (lam := ρ * C) hH hF Hρ hcρ
+      ((fibre_rate_le (T := Tm) aθ.1 aψ.1 aχ.1 aξ.1 aζ.1 hS1 hS2 hS3 hS4 hS5 hS4 aξ.2.1 aξ.2.2
+        hρ0.le htcρ0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])).trans
+        (le_of_eq (by rw [hC]))) hηρ.le
+      (by
+        have := mono _ htcρ0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        linarith only [sp, this, hρs, hρA, q7])
+      (by
+        have := mono _ htcρ0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        have h' := mono' tcρ tbρ htbρ0
+        linarith only [sp, this, h', hρA, q12])
+  have Hm' := IsGatedHistory.of_fibre (η₀ := ρ) (lam := ρ * C) hH hF Hm hcm
+      ((fibre_rate_le (T := Tm) aθ.1 aψ.1 aχ.1 aξ.1 aζ.1 hS1 hS2 hS3 hS4 hS5 hS5 aζ.2.1 aζ.2.2
+        hρ0.le htcm0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])).trans
+        (le_of_eq (by rw [hC]))) hηm.le
+      (by
+        have := mono _ htcm0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        linarith only [sp, this, hρs, hρA, q8])
+      (by
+        have := mono _ htcm0 (by linarith only [hTm, hT1, hT2, hT3, hT4, hT5])
+        have h' := mono' tcm tbm htbm0
+        linarith only [sp, this, h', hρA, q13])
+  intro se h1 h2 sr h3 h4 sμ h5 h6 sρ h7 h8 sm h9 h10
+  obtain ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6, c7, c8⟩ :=
+    penta_radar_lorentz_fibre e hH hG₁ hG₂ hG₃ hG₄ hG₅ (scaledTrainF_periodic g₁)
+      (scaledTrainF_periodic g₂) (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄)
+      (scaledTrainF_periodic g₅) (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂)
+      (contDiff_scaledTrainF g₃) (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
+      (prodRay p (prodRay qa qb)) hF hθ1 hψ1 hχ1 hξ1 hζ1 hv0 hv hR₀ hκ hE hRet hτE hτRet hτMB
+      hτR hτMA He' Hr' Hμ' Hρ' Hm' se h1 h2 sr h3 h4 sμ h5 h6 sρ h7 h8 sm h9 h10
+  refine ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6.trans ?_, c7.trans ?_, c8.trans ?_⟩
+  · simp only [gatedErr_add, awayErr_add]
+    have key : ∀ x₁ x₂ x₃ x₄ x₅ : ℝ,
+        (((x₁ + 6 * Real.pi * (ρ * C) * (tbe - tE)) / R₀ + κ * tE + τE)
+          + (((x₁ + 6 * Real.pi * (ρ * C) * (tbe - tE)) + (x₂ + 6 * Real.pi * (ρ * C) * ((tbe -
+              tE) + (t4 - tRet))) + RB * (tbe - tE)) / R₀
+            + κ * tRet + τRet)) / 2
+          + ((x₃ + 6 * Real.pi * (ρ * C) * (tbμ - tMB)) / R₀ + κ * tMB + τMB)
+          + (((x₄ + 6 * Real.pi * (ρ * C) * (tbρ - tR)) / R₀ + τR)
+            + ((x₅ + 6 * Real.pi * (ρ * C) * (tbm - tMA)) / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
+        = ((x₁ / R₀ + κ * tE + τE)
+          + ((x₁ + x₂ + RB * (tbe - tE)) / R₀
+            + κ * tRet + τRet)) / 2
+          + (x₃ / R₀ + κ * tMB + τMB)
+          + ((x₄ / R₀ + τR)
+            + (x₅ / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
+          + ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+              R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by
+      intro x₁ x₂ x₃ x₄ x₅
+      ring
+    rw [key]
+    linarith only [hk1]
+  · simp only [gatedErr_add, awayErr_add]
+    have key : ∀ x₁ x₂ x₄ x₅ : ℝ,
+        (((x₁ + 6 * Real.pi * (ρ * C) * (tbe - tE)) / R₀ + κ * tE + τE)
+          + (((x₁ + 6 * Real.pi * (ρ * C) * (tbe - tE)) + (x₂ + 6 * Real.pi * (ρ * C) * ((tbe -
+              tE) + (t4 - tRet))) + RB * (tbe - tE)) / R₀
+            + κ * tRet + τRet)) / 2
+          + v * (((x₄ + 6 * Real.pi * (ρ * C) * (tbρ - tR)) / R₀ + τR)
+            + ((x₅ + 6 * Real.pi * (ρ * C) * (tbm - tMA)) / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
+        = ((x₁ / R₀ + κ * tE + τE)
+          + ((x₁ + x₂ + RB * (tbe - tE)) / R₀
+            + κ * tRet + τRet)) / 2
+          + v * ((x₄ / R₀ + τR)
+            + (x₅ / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
+          + ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+              R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by
+      intro x₁ x₂ x₄ x₅
+      ring
+    rw [key]
+    linarith only [hk2]
+  · simp only [gatedErr_add]
+    have hs1 : Real.sqrt (1 - v ^ 2) ≤ 1 := by
+      have h := Real.sqrt_le_sqrt (by nlinarith only [sq_nonneg v] : 1 - v ^ 2 ≤ 1)
+      rwa [Real.sqrt_one] at h
+    have y1 : (tbρ - tR) / R₀ + (tbm - tMA) / R₀
+        ≤ ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2) := by
+      rw [le_div_iff₀ hsq]
+      nlinarith only [add_nonneg kr kq, hs1]
+    have y2 : (tbρ - tR) / R₀ + (tbm - tMA) / R₀
+        ≤ ((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+          + (tbμ - tMB) / R₀
+          + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2) := by
+      linarith only [y1, div_nonneg (add_nonneg ka kb) (by norm_num : (0 : ℝ) ≤ 2), km]
+    have y3 : ρ * C * (6 * Real.pi * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀))
+        ≤ ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+            R₀) / 2
+          + (tbμ - tMB) / R₀
+          + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) :=
+      mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left y2 (by positivity)) hρC
+    have key : ∀ x y : ℝ,
+        (x + 6 * Real.pi * (ρ * C) * (tbρ - tR)
+            + (y + 6 * Real.pi * (ρ * C) * (tbm - tMA))) / R₀
+          = (x + y) / R₀
+            + ρ * C * (6 * Real.pi * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀)) := by
+      intro x y
+      ring
+    rw [key]
+    linarith only [y3, hk1]
 
 /-- ★★★ **M6 from the top on an open set of pointer angles, for three carriers and five
 gates.** The run `triRun` with the profiles `g_i · trainF`. Suppose the five two-carrier gate
@@ -564,20 +1040,6 @@ theorem tri_radar_lorentz_open (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
                 / Real.sqrt (1 - v ^ 2) + ϵ
         ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀ - (tR - tMA)|
             ≤ (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ + ϵ := by
-  have hAB := compositeH_isHermitian hA hB
-  have hH := compositeH_isHermitian hM hAB
-  have hG₁ := gateOp_snd_isHermitian (κa := κa) σ β r₁ hYb hYbs
-  have hG₂ := gateOp_snd_isHermitian (κa := κa) σ β r₂ hYb hYbs
-  have hG₃ : ((1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb).IsHermitian :=
-    kronecker_isHermitian Matrix.isHermitian_one (gateOp_isHermitian α β r₃ hYb hYbs)
-  have hG₄ := gateOp_fst_isHermitian (κb := κb) σ α r₄ hYa hYas
-  have hG₅ : ((1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya).IsHermitian :=
-    kronecker_isHermitian Matrix.isHermitian_one (gateOpL_isHermitian α β r₅ hYa hYas)
-  rw [← freeShift_tri_gate_snd σ β r₁ hM hA hB Yb (-g₁) p qa qb] at He hce
-  rw [← freeShift_tri_gate_snd σ β r₂ hM hA hB Yb (-g₂) p qa qb] at Hr hcr
-  rw [← freeShift_tri_pair α β r₃ hM hA hB Yb (-g₃) p qa qb] at Hμ hcμ
-  rw [← freeShift_tri_gate_fst σ α r₄ hM hA hB Ya (-g₄) p qa qb] at Hρ hcρ
-  rw [← freeShift_tri_pairL α β r₅ hM hA hB Ya (-g₅) p qa qb] at Hm hcm
   -- the sizes
   have n1 := norm_nonneg (gateOp σ (fun k : κa × κb => β k.2) r₁ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb))
   have n2 := norm_nonneg (gateOp σ (fun k : κa × κb => β k.2) r₂ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb))
@@ -620,12 +1082,6 @@ theorem tri_radar_lorentz_open (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
   have htcρ0 : 0 ≤ tcρ := htbρ0.trans Hρ.tb_le
   have htbm0 : 0 ≤ tbm := Hm.ta_nonneg.trans Hm.ta_le
   have htcm0 : 0 ≤ tcm := htbm0.trans Hm.tb_le
-  obtain ⟨Tm, hTm⟩ : ∃ Tm : ℝ, Tm = tce + t5 + tcμ + tcρ + tcm := ⟨_, rfl⟩
-  have hTm0 : 0 ≤ Tm := by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0]
-  obtain ⟨C, hC⟩ : ∃ C : ℝ, C = 20 * γ ^ 2 * S ^ 2 * Tm + 14 * γ * S := ⟨_, rfl⟩
-  have hC0 : 0 ≤ C := by
-    rw [hC]
-    positivity
   -- the error's coefficients
   have hsq : 0 < Real.sqrt (1 - v ^ 2) := Real.sqrt_pos.2 (by nlinarith only [hv0, hv])
   have ka : 0 ≤ (tbe - tE) / R₀ := div_nonneg (sub_nonneg.2 He.ta_le) hR₀.le
@@ -676,203 +1132,24 @@ theorem tri_radar_lorentz_open (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
   have q11 : s ≤ 1 / 6 - cμ := by linarith only [s12a, s11a, s10b]
   have q12 : s ≤ 1 / 6 - cρ := by linarith only [s12a, s11b]
   have q13 : s ≤ 1 / 6 - cm := s12b
-  -- the radius
-  obtain ⟨ρ, hρ0, hρ1, hρs, hρA, hρB⟩ := exists_radius (s := s / 4) (ϵ := ϵ) (A := C * Tm)
-    (B := C * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀)
-        / 2
+  obtain ⟨ρ, hρ0, -, hρs, hρA, hρB⟩ := exists_radius (s := s / 4) (ϵ := ϵ)
+    (A := (20 * γ ^ 2 * S ^ 2 * (tce + t5 + tcμ + tcρ + tcm) + 14 * γ * S) * (tce + t5 + tcμ + tcρ
+        + tcm))
+    (B := (20 * γ ^ 2 * S ^ 2 * (tce + t5 + tcμ + tcρ + tcm) + 14 * γ * S) * ((6 * Real.pi *
+        (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
       + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
       + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
       + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))))
-    (by linarith only [sp]) hϵ (mul_nonneg hC0 hTm0) (mul_nonneg hC0 (add_nonneg hK1 hK2))
-  have hρC : 0 ≤ ρ * C := mul_nonneg hρ0.le hC0
-  have mono : ∀ t : ℝ, 0 ≤ t → t ≤ Tm → ρ * C * t ≤ ρ * (C * Tm) := fun t _ ht => by
-    rw [mul_assoc]
-    exact mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left ht hC0) hρ0.le
-  have mono' : ∀ t t' : ℝ, 0 ≤ t' → ρ * C * (t - t') ≤ ρ * C * t := fun t t' ht' =>
-    mul_le_mul_of_nonneg_left (by linarith only [ht']) hρC
-  have hk1 : ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet)))
-      / R₀) / 2
-      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) ≤ ϵ := by
-    have := mul_nonneg hρC hK2
-    have e : ρ * (C * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 -
-        tRet))) / R₀) / 2
-      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
-        + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
-      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))))
-        = ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
-            R₀) / 2
-      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
-          + ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
-              R₀) / 2
-      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by ring
-    linarith only [this, e, hρB]
-  have hk2 : ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet)))
-      / R₀) / 2
-      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) ≤ ϵ := by
-    have := mul_nonneg hρC hK1
-    have e : ρ * (C * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 -
-        tRet))) / R₀) / 2
-      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
-        + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
-      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))))
-        = ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
-            R₀) / 2
-      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
-          + ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
-              R₀) / 2
-      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by ring
-    linarith only [this, e, hρB]
-  refine ⟨ρ, hρ0, ?_⟩
-  rintro N e θ ψ χ ξ ζ ⟨ηe, xe, hηe, hxe, hθ1, hθ2⟩ ⟨ηr, xr, hηr, hxr, hψ1, hψ2⟩
-    ⟨ημ, xμ, hημ, hxμ, hχ1, hχ2⟩ ⟨ηρ, xρ, hηρ, hxρ, hξ1, hξ2⟩ ⟨ηm, xm, hηm, hxm, hζ1, hζ2⟩
-  have aθ := scaledTrainF_near hθ2 hγ1 hxe.le
-  have aψ := scaledTrainF_near hψ2 hγ2 hxr.le
-  have aχ := scaledTrainF_near hχ2 hγ3 hxμ.le
-  have aξ := scaledTrainF_near hξ2 hγ4 hxρ.le
-  have aζ := scaledTrainF_near hζ2 hγ5 hxm.le
-  have hF := fibreH_isHermitian hH hG₁ hG₂ hG₃ hG₄ hG₅
-    ((scaledTrainF_periodic g₁).lift θ.2) ((scaledTrainF_periodic g₂).lift ψ.2)
-    ((scaledTrainF_periodic g₃).lift χ.2) ((scaledTrainF_periodic g₄).lift ξ.2)
-    ((scaledTrainF_periodic g₅).lift ζ.2)
-  have He' := IsGatedHistory.of_fibre (η₀ := ρ) (lam := ρ * C) hH hF He hce
-      ((fibre_rate_le (T := Tm) aθ.1 aψ.1 aχ.1 aξ.1 aζ.1 hS1 hS2 hS3 hS4 hS5 hS1 aθ.2.1 aθ.2.2
-        hρ0.le htce0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])).trans
-        (le_of_eq (by rw [hC]))) hηe.le
-      (by
-        have := mono _ htce0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        linarith only [sp, this, hρs, hρA, q1])
-      (by
-        have := mono _ htce0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        have h' := mono' tce tbe htbe0
-        linarith only [sp, this, h', hρA, q9])
-  have Hr' := IsAwayHistory.of_fibre (ρ₀ := ρ) (lam := ρ * C) hH hF Hr hcr
-      ((fibre_rate_le (T := Tm) aθ.1 aψ.1 aχ.1 aξ.1 aζ.1 hS1 hS2 hS3 hS4 hS5 hS2 aψ.2.1 aψ.2.2
-        hρ0.le ht50 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])).trans
-        (le_of_eq (by rw [hC]))) hηr.le
-      (by
-        have := mono _ ht50 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        linarith only [sp, this, hρs, hρA, q2])
-      (by
-        have := mono _ ht50 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        linarith only [sp, this, hρs, hρA, q3])
-      (Or.inl (by
-        have := mono _ ht50 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        constructor <;> linarith only [sp, this, hρs, hρA, q4, q5]))
-      (by
-        have := mono _ ht50 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        have h' := mono' t5 t4 ht40
-        linarith only [sp, this, h', hρA, q10])
-  have Hμ' := IsGatedHistory.of_fibre (η₀ := ρ) (lam := ρ * C) hH hF Hμ hcμ
-      ((fibre_rate_le (T := Tm) aθ.1 aψ.1 aχ.1 aξ.1 aζ.1 hS1 hS2 hS3 hS4 hS5 hS3 aχ.2.1 aχ.2.2
-        hρ0.le htcμ0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])).trans
-        (le_of_eq (by rw [hC]))) hημ.le
-      (by
-        have := mono _ htcμ0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        linarith only [sp, this, hρs, hρA, q6])
-      (by
-        have := mono _ htcμ0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        have h' := mono' tcμ tbμ htbμ0
-        linarith only [sp, this, h', hρA, q11])
-  have Hρ' := IsGatedHistory.of_fibre (η₀ := ρ) (lam := ρ * C) hH hF Hρ hcρ
-      ((fibre_rate_le (T := Tm) aθ.1 aψ.1 aχ.1 aξ.1 aζ.1 hS1 hS2 hS3 hS4 hS5 hS4 aξ.2.1 aξ.2.2
-        hρ0.le htcρ0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])).trans
-        (le_of_eq (by rw [hC]))) hηρ.le
-      (by
-        have := mono _ htcρ0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        linarith only [sp, this, hρs, hρA, q7])
-      (by
-        have := mono _ htcρ0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        have h' := mono' tcρ tbρ htbρ0
-        linarith only [sp, this, h', hρA, q12])
-  have Hm' := IsGatedHistory.of_fibre (η₀ := ρ) (lam := ρ * C) hH hF Hm hcm
-      ((fibre_rate_le (T := Tm) aθ.1 aψ.1 aχ.1 aξ.1 aζ.1 hS1 hS2 hS3 hS4 hS5 hS5 aζ.2.1 aζ.2.2
-        hρ0.le htcm0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])).trans
-        (le_of_eq (by rw [hC]))) hηm.le
-      (by
-        have := mono _ htcm0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        linarith only [sp, this, hρs, hρA, q8])
-      (by
-        have := mono _ htcm0 (by linarith only [hTm, htce0, ht50, htcμ0, htcρ0, htcm0])
-        have h' := mono' tcm tbm htbm0
-        linarith only [sp, this, h', hρA, q13])
-  intro se h1 h2 sr h3 h4 sμ h5 h6 sρ h7 h8 sm h9 h10
-  obtain ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6, c7, c8⟩ :=
-    penta_radar_lorentz_fibre e hH hG₁ hG₂ hG₃ hG₄ hG₅ (scaledTrainF_periodic g₁)
-      (scaledTrainF_periodic g₂) (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄)
-      (scaledTrainF_periodic g₅) (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂)
-      (contDiff_scaledTrainF g₃) (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
-      (prodRay p (prodRay qa qb)) hF hθ1 hψ1 hχ1 hξ1 hζ1 hv0 hv hR₀ hκ hE hRet hτE hτRet hτMB
-      hτR hτMA He' Hr' Hμ' Hρ' Hm' se h1 h2 sr h3 h4 sμ h5 h6 sρ h7 h8 sm h9 h10
-  refine ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6.trans ?_, c7.trans ?_, c8.trans ?_⟩
-  · simp only [gatedErr_add, awayErr_add]
-    have key : ∀ x₁ x₂ x₃ x₄ x₅ : ℝ,
-        (((x₁ + 6 * Real.pi * (ρ * C) * (tbe - tE)) / R₀ + κ * tE + τE)
-          + (((x₁ + 6 * Real.pi * (ρ * C) * (tbe - tE)) + (x₂ + 6 * Real.pi * (ρ * C) * ((tbe -
-              tE) + (t4 - tRet))) + RB * (tbe - tE)) / R₀
-            + κ * tRet + τRet)) / 2
-          + ((x₃ + 6 * Real.pi * (ρ * C) * (tbμ - tMB)) / R₀ + κ * tMB + τMB)
-          + (((x₄ + 6 * Real.pi * (ρ * C) * (tbρ - tR)) / R₀ + τR)
-            + ((x₅ + 6 * Real.pi * (ρ * C) * (tbm - tMA)) / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
-        = ((x₁ / R₀ + κ * tE + τE)
-          + ((x₁ + x₂ + RB * (tbe - tE)) / R₀
-            + κ * tRet + τRet)) / 2
-          + (x₃ / R₀ + κ * tMB + τMB)
-          + ((x₄ / R₀ + τR)
-            + (x₅ / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
-          + ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
-              R₀) / 2
-      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by
-      intro x₁ x₂ x₃ x₄ x₅
-      ring
-    rw [key]
-    linarith only [hk1]
-  · simp only [gatedErr_add, awayErr_add]
-    have key : ∀ x₁ x₂ x₄ x₅ : ℝ,
-        (((x₁ + 6 * Real.pi * (ρ * C) * (tbe - tE)) / R₀ + κ * tE + τE)
-          + (((x₁ + 6 * Real.pi * (ρ * C) * (tbe - tE)) + (x₂ + 6 * Real.pi * (ρ * C) * ((tbe -
-              tE) + (t4 - tRet))) + RB * (tbe - tE)) / R₀
-            + κ * tRet + τRet)) / 2
-          + v * (((x₄ + 6 * Real.pi * (ρ * C) * (tbρ - tR)) / R₀ + τR)
-            + ((x₅ + 6 * Real.pi * (ρ * C) * (tbm - tMA)) / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
-        = ((x₁ / R₀ + κ * tE + τE)
-          + ((x₁ + x₂ + RB * (tbe - tE)) / R₀
-            + κ * tRet + τRet)) / 2
-          + v * ((x₄ / R₀ + τR)
-            + (x₅ / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
-          + ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
-              R₀) / 2
-      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by
-      intro x₁ x₂ x₄ x₅
-      ring
-    rw [key]
-    linarith only [hk2]
-  · simp only [gatedErr_add]
-    have hs1 : Real.sqrt (1 - v ^ 2) ≤ 1 := by
-      have h := Real.sqrt_le_sqrt (by nlinarith only [sq_nonneg v] : 1 - v ^ 2 ≤ 1)
-      rwa [Real.sqrt_one] at h
-    have y1 : (tbρ - tR) / R₀ + (tbm - tMA) / R₀
-        ≤ ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2) := by
-      rw [le_div_iff₀ hsq]
-      nlinarith only [add_nonneg kr kq, hs1]
-    have y2 : (tbρ - tR) / R₀ + (tbm - tMA) / R₀
-        ≤ ((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
-          + (tbμ - tMB) / R₀
-          + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2) := by
-      linarith only [y1, div_nonneg (add_nonneg ka kb) (by norm_num : (0 : ℝ) ≤ 2), km]
-    have y3 : ρ * C * (6 * Real.pi * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀))
-        ≤ ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
-          + (tbμ - tMB) / R₀
-          + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) :=
-      mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left y2 (by positivity)) hρC
-    have key : ∀ x y : ℝ,
-        (x + 6 * Real.pi * (ρ * C) * (tbρ - tR)
-            + (y + 6 * Real.pi * (ρ * C) * (tbm - tMA))) / R₀
-          = (x + y) / R₀
-            + ρ * C * (6 * Real.pi * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀)) := by
-      intro x y
-      ring
-    rw [key]
-    linarith only [y3, hk1]
+    (by linarith only [sp]) hϵ (by positivity) (mul_nonneg (by positivity) (add_nonneg hK1 hK2))
+  exact ⟨ρ, hρ0, tri_radar_lorentz_near hM hA hB hYa hYas hYb hYbs g₁ g₂ g₃ g₄ g₅ p qa qb
+    hv0 hv hR₀ hκ hE hRet hτE hτRet hτMB hτR hτMA He Hr Hμ Hρ Hm hce hcr hcμ hcρ hcm
+    hS1 hS2 hS3 hS4 hS5 hγ1 hγ2 hγ3 hγ4 hγ5
+    (by linarith only [htce0, ht50, htcμ0, htcρ0, htcm0])
+    (by linarith only [htce0, ht50, htcμ0, htcρ0, htcm0])
+    (by linarith only [htce0, ht50, htcμ0, htcρ0, htcm0])
+    (by linarith only [htce0, ht50, htcμ0, htcρ0, htcm0])
+    (by linarith only [htce0, ht50, htcμ0, htcρ0, htcm0])
+    sp q1 q2 q3 q4 q5 q6 q7 q8 q9 q10 q11 q12 q13 hρ0 hρs hρA hρB⟩
 
 end TriOpen
 

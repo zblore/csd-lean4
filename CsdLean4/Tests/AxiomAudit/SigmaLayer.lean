@@ -22416,4 +22416,44 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.radar_rest_time_ge
 
+/-! #435 (the author's programme, obligation UO-16; finding F2 of the audit): the gates' norms and the open theorem with an explicit radius (`RecordLayer/UnifiedTriFibre.lean`). -/
+
+/-- info: 'CSD.RecordLayer.norm_le_one_of_isHermitian_idem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_le_one_of_isHermitian_idem
+
+/-- info: 'CSD.RecordLayer.norm_le_one_of_isHermitian_invol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_le_one_of_isHermitian_invol
+
+/-- info: 'CSD.RecordLayer.norm_idem_mul_invol_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_idem_mul_invol_le_one
+
+/-- info: 'CSD.RecordLayer.norm_gateOp_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_gateOp_le_one
+
+/-- info: 'CSD.RecordLayer.tri_gate_norms_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tri_gate_norms_le_one
+
+/-- info: 'CSD.RecordLayer.tri_radar_lorentz_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tri_radar_lorentz_near
+
+/-! #435 (the author's programme, obligation UO-16; finding F2 of the audit): the family's band and radius (`RecordLayer/UnifiedRadarRun.lean`). -/
+
+/-- info: 'CSD.RecordLayer.radar_band_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_band_le
+
+/-- info: 'CSD.RecordLayer.radar_radius_A' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_radius_A
+
+/-- info: 'CSD.RecordLayer.radar_radius_B' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_radius_B
+
 end CSD.Tests.AxiomAudit

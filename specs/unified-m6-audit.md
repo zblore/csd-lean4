@@ -71,8 +71,10 @@ Axioms (pinned in `Tests/AxiomAudit/SigmaLayer.lean`): `propext`, `Classical.cho
   the residual is at most `4600 K²/k`, `4600/(π² k)` of the squared distance
   (`radar_interval_error_le`, `tendsto_radar_interval_error_relative`). The residue, a lower
   bound on the interval itself, is `radar_rest_time_ge` (~~#434~~, UD-204): at least `9 K²`.
-* **F2. The open set is not explicit.** Its radius exists for each `k`; the one the proof
-  finds shrinks as `k` grows. The plan's Task 9 does not ask for a uniform bound.
+* **F2. CLOSED 2026-11-17 (~~#435~~, UD-205).** As first written: the radius of the open
+  set existed for each `k` and was not explicit. Now the open set contains the box of radius
+  `1/(12000 k²)` about the start, for every ring. It shrinks like `1/k²`; the plan's Task 9
+  does not ask for a uniform bound.
 * **F3. Reconstruction, not derivation.** The carriers are lattice Dirac particles: their
   band velocities are bounded by `1` and a moving clock's gap is the rest gap times
   `√(1 − v²)` up to `κ`. The theorem shows that records written by the flow reproduce that

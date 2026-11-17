@@ -565,6 +565,124 @@ theorem radar_rest_time_le {K X Δ gA v tR tbR tM tbM : ℝ} (hK : 0 < K) (hX : 
   rw [add_div]
   linarith only [hab, gR, gM, hq0]
 
+/-- **The band of the emission and return histories, as a number**: at most `7/120`, so a
+slack `1/40` below `1/12`. -/
+theorem radar_band_le {K X Δ R ε tE tb t3 : ℝ} (hX : 100 ≤ X) (hΔ : Δ * K = X)
+    (hR0 : 0 ≤ R) (hR : R ≤ Δ) (hE0 : 0 ≤ tE) (hEb : tE ≤ tb)
+    (e1 : tb ≤ 12 * (K / (10 ^ 5 * X))) (e5 : tE ≤ K / (10 ^ 5 * X) / 2)
+    (s1 : 2 * (R / 5) * ε * tE ≤ 16 / 2500) (s3 : 2 * (R / 5) * ε * (t3 - tb) ≤ 16 / 2500) :
+    1 / 4 * (1 - Real.cos (R * tE)) + 1 / (24 * X) + 2 * (R / 5) * ε * tE
+        + 2 * (R / 5) * (tb - tE) + (1 / (24 * X) + 2 * (R / 5) * ε * (t3 - tb))
+      ≤ 7 / 120 := by
+  have hX0 : 0 < X := by linarith only [hX]
+  have hΔ0 : 0 ≤ Δ := hR0.trans hR
+  have hΔq : Δ * (K / (10 ^ 5 * X)) = 1 / 10 ^ 5 := by
+    rw [← mul_div_assoc, hΔ]
+    field_simp
+  have htb0 : 0 ≤ tb := hE0.trans hEb
+  have x1 : R * tE ≤ Δ * (K / (10 ^ 5 * X) / 2) := mul_le_mul hR e5 hE0 hΔ0
+  have x2 : R * tb ≤ Δ * (12 * (K / (10 ^ 5 * X))) := mul_le_mul hR e1 htb0 hΔ0
+  have x0 : 0 ≤ R * tE := mul_nonneg hR0 hE0
+  have e1' : Δ * (K / (10 ^ 5 * X) / 2) = 1 / 10 ^ 5 / 2 := by rw [← mul_div_assoc, hΔq]
+  have e2' : Δ * (12 * (K / (10 ^ 5 * X))) = 12 * (1 / 10 ^ 5) := by
+    rw [mul_left_comm, hΔq]
+  rw [e1'] at x1
+  rw [e2'] at x2
+  have hc := Real.one_sub_sq_div_two_le_cos (x := R * tE)
+  have hsq : (R * tE) ^ 2 ≤ R * tE := by nlinarith only [x0, x1]
+  have h24 : 1 / (24 * X) ≤ 1 / 2400 := by
+    rw [div_le_div_iff₀ (by positivity) (by norm_num)]
+    linarith only [hX]
+  have e3 : 2 * (R / 5) * (tb - tE) = 2 / 5 * (R * tb) - 2 / 5 * (R * tE) := by ring
+  rw [e3]
+  linarith only [hc, hsq, h24, x0, x1, x2, s1, s3]
+
+/-- The first condition on the radius `1/(12000 X²)`: the drift up to `8K` stays below a
+quarter of the slack `1/40`. -/
+theorem radar_radius_A {K X Δ : ℝ} (hX : 100 ≤ X) (hΔ : Δ * K = X) :
+    1 / (12000 * X ^ 2)
+        * ((20 * (Δ / 5) ^ 2 * 1 ^ 2 * (8 * K) + 14 * (Δ / 5) * 1) * (8 * K))
+      ≤ 1 / 40 / 4 := by
+  have hX0 : 0 < X := by linarith only [hX]
+  have e : (20 * (Δ / 5) ^ 2 * 1 ^ 2 * (8 * K) + 14 * (Δ / 5) * 1) * (8 * K)
+      = 256 / 5 * (Δ * K) ^ 2 + 112 / 5 * (Δ * K) := by ring
+  rw [e, hΔ, one_div, inv_mul_le_iff₀ (by positivity)]
+  nlinarith only [hX, hX0]
+
+/-- The second condition on the radius `1/(12000 X²)`: the errors grow by at most `K/X`. -/
+theorem radar_radius_B {K X Δ RA v σ tE tb t3 t4 tM tbM tR tbR : ℝ} (hK : 0 < K)
+    (hX : 100 ≤ X) (hΔ : Δ * K = X) (hRA : RA = Δ) (hσ : 89 / 100 ≤ σ)
+    (hv1 : v ≤ 1) (hE0 : 0 ≤ tE) (hEb : tE ≤ tb) (hMb : tM ≤ tbM)
+    (hRb : tR ≤ tbR) (e1 : tb ≤ 12 * (K / (10 ^ 5 * X)))
+    (e2 : t4 - t3 ≤ 12 * (K / (10 ^ 5 * X))) (e3 : tbM - tM ≤ 18 * (K / (10 ^ 5 * X)))
+    (e4 : tbR - tR ≤ 6 * (K / (10 ^ 5 * X))) :
+    1 / (12000 * X ^ 2) * ((20 * (Δ / 5) ^ 2 * 1 ^ 2 * (8 * K) + 14 * (Δ / 5) * 1)
+        * (6 * Real.pi * (((tb - tE) / RA + ((tb - tE) + ((tb - tE) + (t4 - t3))) / RA) / 2
+              + (tbM - tM) / RA + ((tbR - tR) / RA + (tbM - tM) / RA) / σ)
+          + 6 * Real.pi * (((tb - tE) / RA + ((tb - tE) + ((tb - tE) + (t4 - t3))) / RA) / 2
+              + v * ((tbR - tR) / RA + (tbM - tM) / RA) / σ))) ≤ K / X := by
+  rw [hRA]
+  have hX0 : 0 < X := by linarith only [hX]
+  have hΔ0 : 0 < Δ := by
+    by_contra h
+    rw [not_lt] at h
+    nlinarith only [mul_nonneg (neg_nonneg.2 h) hK.le, hΔ, hX0]
+  have hσ0 : 0 < σ := by linarith only [hσ]
+  have hq0 : 0 ≤ K / (10 ^ 5 * X) := by positivity
+  have hw0 : 0 ≤ K / (10 ^ 5 * X) / Δ := div_nonneg hq0 hΔ0.le
+  have ha0 : 0 ≤ (tb - tE) / Δ := div_nonneg (sub_nonneg.2 hEb) hΔ0.le
+  have ha : (tb - tE) / Δ ≤ 12 * (K / (10 ^ 5 * X) / Δ) := by
+    have h := div_le_div_of_nonneg_right (by linarith only [e1, hE0] :
+      tb - tE ≤ 12 * (K / (10 ^ 5 * X))) hΔ0.le
+    rwa [mul_div_assoc] at h
+  have hb : ((tb - tE) + ((tb - tE) + (t4 - t3))) / Δ ≤ 36 * (K / (10 ^ 5 * X) / Δ) := by
+    have h := div_le_div_of_nonneg_right (by linarith only [e1, e2, hE0] :
+      (tb - tE) + ((tb - tE) + (t4 - t3)) ≤ 36 * (K / (10 ^ 5 * X))) hΔ0.le
+    rwa [mul_div_assoc] at h
+  have hm0 : 0 ≤ (tbM - tM) / Δ := div_nonneg (sub_nonneg.2 hMb) hΔ0.le
+  have hm : (tbM - tM) / Δ ≤ 18 * (K / (10 ^ 5 * X) / Δ) := by
+    have h := div_le_div_of_nonneg_right e3 hΔ0.le
+    rwa [mul_div_assoc] at h
+  have hr0 : 0 ≤ (tbR - tR) / Δ := div_nonneg (sub_nonneg.2 hRb) hΔ0.le
+  have hr : (tbR - tR) / Δ ≤ 6 * (K / (10 ^ 5 * X) / Δ) := by
+    have h := div_le_div_of_nonneg_right e4 hΔ0.le
+    rwa [mul_div_assoc] at h
+  have hrm0 : 0 ≤ (tbR - tR) / Δ + (tbM - tM) / Δ := add_nonneg hr0 hm0
+  have hs : ((tbR - tR) / Δ + (tbM - tM) / Δ) / σ ≤ 27 * (K / (10 ^ 5 * X) / Δ) := by
+    rw [div_le_iff₀ hσ0]
+    nlinarith only [hr, hm, hw0, hσ]
+  have hs' : v * ((tbR - tR) / Δ + (tbM - tM) / Δ) / σ ≤ 27 * (K / (10 ^ 5 * X) / Δ) := by
+    rw [div_le_iff₀ hσ0]
+    have h1 : v * ((tbR - tR) / Δ + (tbM - tM) / Δ) ≤ (tbR - tR) / Δ + (tbM - tM) / Δ := by
+      nlinarith only [hrm0, hv1]
+    nlinarith only [h1, hr, hm, hw0, hσ]
+  have hπ6 : (0 : ℝ) ≤ 6 * Real.pi := by positivity
+  have i1 := mul_le_mul_of_nonneg_left (by linarith only [ha, hb, hm, hs] :
+    ((tb - tE) / Δ + ((tb - tE) + ((tb - tE) + (t4 - t3))) / Δ) / 2 + (tbM - tM) / Δ
+        + ((tbR - tR) / Δ + (tbM - tM) / Δ) / σ ≤ 69 * (K / (10 ^ 5 * X) / Δ)) hπ6
+  have i2 := mul_le_mul_of_nonneg_left (by linarith only [ha, hb, hs'] :
+    ((tb - tE) / Δ + ((tb - tE) + ((tb - tE) + (t4 - t3))) / Δ) / 2
+        + v * ((tbR - tR) / Δ + (tbM - tM) / Δ) / σ ≤ 51 * (K / (10 ^ 5 * X) / Δ)) hπ6
+  have hπ : 6 * Real.pi * (69 * (K / (10 ^ 5 * X) / Δ))
+      + 6 * Real.pi * (51 * (K / (10 ^ 5 * X) / Δ)) ≤ 2268 * (K / (10 ^ 5 * X) / Δ) := by
+    nlinarith only [Real.pi_lt_d2, hw0]
+  have hC0 : 0 ≤ 20 * (Δ / 5) ^ 2 * 1 ^ 2 * (8 * K) + 14 * (Δ / 5) * 1 := by positivity
+  have hsum := mul_le_mul_of_nonneg_left ((add_le_add i1 i2).trans hπ) hC0
+  have eC : (20 * (Δ / 5) ^ 2 * 1 ^ 2 * (8 * K) + 14 * (Δ / 5) * 1)
+        * (2268 * (K / (10 ^ 5 * X) / Δ))
+      = 2268 * ((32 / 5 * (Δ * K) * K + 14 / 5 * K) / (10 ^ 5 * X)) := by
+    field_simp
+    ring
+  rw [eC, hΔ] at hsum
+  have h7 : (32 / 5 * X * K + 14 / 5 * K) / (10 ^ 5 * X) ≤ 7 * K / 10 ^ 5 := by
+    rw [div_le_div_iff₀ (by positivity) (by positivity)]
+    nlinarith only [hK, hX, mul_pos hK hX0]
+  rw [one_div, inv_mul_le_iff₀ (by positivity)]
+  have eR : 12000 * X ^ 2 * (K / X) = 12000 * X * K := by
+    field_simp
+  rw [eR]
+  nlinarith only [hsum, h7, hK, hX, mul_pos hK hX0]
+
 /-- ★★★ **The family's run: five counts and the Lorentz statement, with an error that
 vanishes against the length of the run.** For every `k ≥ 100` and every ring with an even
 number `M + 1 = 2H` of sites, `M ≥ 210000 N³`, `N = 10¹⁶ k⁴`: take the light messenger's wall
@@ -575,8 +693,9 @@ the moving clock's place), the clock at rest translated to the far wall, and the
 every choice of flow times in the five reading windows (the gate times of #424 for the
 family's rates) the five pointers of `wallRun` have counts, and the counts satisfy both
 components of the Lorentz statement of #402 for the velocity `v = vRel 1 1 (1/2)` within
-`150 K/k`. Moreover there is a radius `ρ > 0` such that from every five pointer angles
-within `ρ` of `(1/12, 0)` (`NearStart`, #430) the five pointers of `wallRunAt` have counts in
+`150 K/k`. Moreover from every five pointer angles within `1/(12000 k²)` of `(1/12, 0)`
+(`NearStart`, #430; the radius is explicit since #435) the five pointers of `wallRunAt` have
+counts in
 the same reading windows, and the counts satisfy both components within `151 K/k`.
 
 The run lasts about `πK/v ≈ 7K` in the flow time and holds about `1.1 k` ticks of `2πK/k`, so
@@ -607,8 +726,9 @@ theorem radar_family_lorentz {k : ℕ} (hk : 100 ≤ k) {M H : ℕ}
           (famTb k) (famT3 k) (famT4 k) (famT5 k) (famTbM k M) (famTcM k M) (famTbR k M)
           (famTcR k M) (150 * (wallK k / k)) (150 * (wallK k / k))
           (Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2)) (52 * (wallK k / k))
-      ∧ ∃ ρ : ℝ, 0 < ρ ∧ ∀ θ ψ χ ξ ζ : KTorus, NearStart ρ θ → NearStart ρ ψ →
-        NearStart ρ χ → NearStart ρ ξ → NearStart ρ ζ →
+      ∧ ∀ θ ψ χ ξ ζ : KTorus, NearStart (1 / (12000 * (k : ℝ) ^ 2)) θ →
+        NearStart (1 / (12000 * (k : ℝ) ^ 2)) ψ → NearStart (1 / (12000 * (k : ℝ) ^ 2)) χ →
+        NearStart (1 / (12000 * (k : ℝ) ^ 2)) ξ → NearStart (1 / (12000 * (k : ℝ) ^ 2)) ζ →
         WallRadarLorentz M
           (fun e => wallRunAt (wallN k) (wallN k) M (wallMu k) (wallGap k) (3 * wallDelta k)
             gA gB e (chainRay _ hψ)
@@ -791,7 +911,7 @@ theorem radar_family_lorentz {k : ℕ} (hk : 100 ≤ k) {M H : ℕ}
       have := sclA _ ((q2.trans q3).trans sM)
       linarith only [this, h24])
     ((sclA _ (by linarith only [sM, tM0, q2])).trans_lt (by norm_num))
-  obtain ⟨gA, gB, hΨA, hΨB, a1, a2, a3, a4, W, Wop⟩ := R
+  obtain ⟨gA, gB, hΨA, hΨB, a1, a2, a3, a4, W, -, Wnear⟩ := R
   refine ⟨hψ, gA, gB, hΨA, hΨB, a1, a2, a3, a4, ?_⟩
   -- the error
   have hv := vRel_half_one
@@ -868,10 +988,35 @@ theorem radar_family_lorentz {k : ℕ} (hk : 100 ≤ k) {M H : ℕ}
   rw [← hRA] at hB
   have hq0 : 0 < wallK k / k := div_pos hK0 hX0
   refine ⟨W.mono hEr.1 hEr.2 (by linarith only [hB, hq0]), ?_⟩
-  obtain ⟨ρ, hρ0, Hop⟩ := Wop (wallK k / k) hq0
-  exact ⟨ρ, hρ0, fun θ ψ χ ξ ζ h1 h2 h3 h4 h5 =>
-    (Hop θ ψ χ ξ ζ h1 h2 h3 h4 h5).mono (by linarith only [hEr.1]) (by linarith only [hEr.2])
-      (by linarith only [hB])⟩
+  have hρ0 : (0 : ℝ) < 1 / (12000 * (k : ℝ) ^ 2) := by positivity
+  have Hn := Wnear (wallK k / k) (1 / 40) (wallGap k / 5) (1 / (12000 * (k : ℝ) ^ 2))
+    (by rw [hRA]) (by linarith only [hR2]) (by norm_num)
+    ((radar_band_le hX hΔK hRB0.le hR2 o1 o2 g1 g5
+      (sclB _ (by linarith only [o2, o3, o4, o5, s5]))
+      (sclB _ (by linarith only [o4, o5, s5, t30]))).trans (by norm_num))
+    (by
+      have := sclB _ ((q2.trans q3).trans sM)
+      linarith only [this, h24])
+    (by
+      have := sclA _ ((p2.trans p3).trans sR)
+      linarith only [this, h24])
+    (by
+      have := sclA _ ((q2.trans q3).trans sM)
+      linarith only [this, h24])
+    ((sclB _ (by linarith only [o4, o5, s5, t30])).trans (by norm_num))
+    ((sclB _ (by linarith only [s5, t40])).trans (by norm_num))
+    ((sclB _ (by linarith only [sM, tM0, q2])).trans (by norm_num))
+    ((sclA _ (by linarith only [sR, p1, p2])).trans (by norm_num))
+    ((sclA _ (by linarith only [sM, tM0, q2])).trans (by norm_num))
+    hρ0 (by
+      rw [div_le_div_iff₀ (by positivity) (by norm_num)]
+      nlinarith only [hX])
+    (radar_radius_A hX hΔK)
+    (radar_radius_B hK0 hX hΔK hRA hs (by linarith only [hv.2]) o1 o2 q2 p2
+      g1 g2 g3 g4)
+  exact fun θ ψ χ ξ ζ h1 h2 h3 h4 h5 =>
+    (Hn θ ψ χ ξ ζ h1 h2 h3 h4 h5).mono (by linarith only [hEr.1]) (by linarith only [hEr.2])
+      (by linarith only [hB])
 
 end Run
 

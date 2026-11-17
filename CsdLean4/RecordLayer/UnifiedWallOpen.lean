@@ -119,7 +119,10 @@ closing sizes strict: for some strengths `0 < g_A ≤ R₀/5` and `0 < g_B ≤ R
 * for every `ϵ > 0` there is a radius `ρ > 0` such that from every five pointer angles
   within `ρ` of `(1/12, 0)`, at every choice of flow times in the same five reading windows,
   the five pointers of `wallRunAt` have counts, and the counts satisfy the Lorentz statement
-  with the errors of #423 enlarged by `ϵ`. -/
+  with the errors of #423 enlarged by `ϵ`; and
+* every `ρ > 0` is such a radius which, for a slack `s > 0` below every margin of the sizes
+  and a bound `γ` on `R₀/5` and `R_B/5`, satisfies `ρ ≤ s/4`, `ρ C T ≤ s/4` and
+  `ρ C (K₁ + K₂) ≤ ϵ` with `C = 20 γ² T + 14 γ` (the five gates have norm at most `1`). -/
 theorem tri_wall_radar_lorentz_open {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0 < N)
     (hM : 210000 * n ^ 2 * N ≤ M) {μ : ℝ} (hμ0 : 0 < μ) (hμ1 : μ ≤ 1)
     (hΔ0 : 0 < Δ) (hΔ : Δ ≤ 1 / 2) {lo : ℤ} (hlo : 0 < lo) (hhi : 2 * (lo + N) ≤ M)
@@ -222,7 +225,48 @@ theorem tri_wall_radar_lorentz_open {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN :
                     + (gatedErr (2 * gA) tM tbM / RA + |tM - radarTM d vB|))
                   / Real.sqrt (1 - vB ^ 2))
           (tR - tM) ((gatedErr (2 * gA) tR tbR + gatedErr (2 * gA) tM tbM) / RA)
-      ∧ ∀ ϵ : ℝ, 0 < ϵ → ∃ ρ : ℝ, 0 < ρ ∧ ∀ θ ψ χ ξ ζ : KTorus, NearStart ρ θ →
+      ∧ (∀ ϵ : ℝ, 0 < ϵ → ∃ ρ : ℝ, 0 < ρ ∧ ∀ θ ψ χ ξ ζ : KTorus, NearStart ρ θ →
+        NearStart ρ ψ → NearStart ρ χ → NearStart ρ ξ → NearStart ρ ζ →
+        WallRadarLorentz M
+          (fun e => wallRunAt n N M μ Δ w gA gB e (chainRay _ hψ)
+            (deviceRay (deviceShift h _) (deviceShift_ne_zero h hΨA)) (deviceRay _ hΨB)
+            θ ψ χ ξ ζ)
+          RA vB tb t3 t4 t5 tbM tcM tbR tcR
+          ((((gatedErr (2 * gB) tE tb / RA + (κB) * tE + |tE - 0|)
+                  + ((gatedErr (2 * gB) tE tb + awayErr (2 * gB) tE tb t3 t4
+                        + RB * (tb - tE)) / RA
+                      + (κB) * t3 + |t3 - radarTRet d vB|)) / 2
+                + (gatedErr (2 * gB) tM tbM / RA + (κB) * tM + |tM - radarTM d vB|)
+                + ((gatedErr (2 * gA) tR tbR / RA + |tR - radarTR d|)
+                    + (gatedErr (2 * gA) tM tbM / RA + |tM - radarTM d vB|))
+                  / Real.sqrt (1 - vB ^ 2))
+            + ϵ)
+          ((((gatedErr (2 * gB) tE tb / RA + (κB) * tE + |tE - 0|)
+                  + ((gatedErr (2 * gB) tE tb + awayErr (2 * gB) tE tb t3 t4
+                        + RB * (tb - tE)) / RA
+                      + (κB) * t3 + |t3 - radarTRet d vB|)) / 2
+                + vB * ((gatedErr (2 * gA) tR tbR / RA + |tR - radarTR d|)
+                    + (gatedErr (2 * gA) tM tbM / RA + |tM - radarTM d vB|))
+                  / Real.sqrt (1 - vB ^ 2))
+            + ϵ)
+          (tR - tM) ((gatedErr (2 * gA) tR tbR + gatedErr (2 * gA) tM tbM) / RA + ϵ))
+      ∧ ∀ ϵ s γ ρ : ℝ, RA / 5 ≤ γ → RB / 5 ≤ γ → 0 < s →
+        1 / 4 * (1 - Real.cos (RB * tE)) + 1 / (24 * (j : ℝ)) + 2 * (RB / 5) * ε * tE
+            + 2 * (RB / 5) * (tb - tE)
+            + (1 / (24 * (j : ℝ)) + 2 * (RB / 5) * ε * (t3 - tb)) ≤ 1 / 12 - s →
+        1 / (24 * (j : ℝ)) + 2 * (RB / 5) * ε * tM ≤ 1 / 12 - s →
+        1 / (24 * (j : ℝ)) + 2 * (RA / 5) * ε * tR ≤ 1 / 12 - s →
+        1 / (24 * (j : ℝ)) + 2 * (RA / 5) * ε * tM ≤ 1 / 12 - s →
+        2 * (RB / 5) * ε * (t3 - tb) ≤ 1 / 6 - s → 2 * (RB / 5) * ε * (t5 - t4) ≤ 1 / 6 - s →
+        2 * (RB / 5) * ε * (tcM - tbM) ≤ 1 / 6 - s → 2 * (RA / 5) * ε * (tcR - tbR) ≤ 1 / 6 - s →
+        2 * (RA / 5) * ε * (tcM - tbM) ≤ 1 / 6 - s →
+        0 < ρ → ρ ≤ s / 4 → ρ * ((20 * γ ^ 2 * 1 ^ 2 * T + 14 * γ * 1) * T) ≤ s / 4 →
+        ρ * ((20 * γ ^ 2 * 1 ^ 2 * T + 14 * γ * 1)
+          * ((6 * Real.pi * (((tb - tE) / RA + ((tb - tE) + ((tb - tE) + (t4 - t3))) / RA) / 2
+            + (tbM - tM) / RA + ((tbR - tR) / RA + (tbM - tM) / RA) / Real.sqrt (1 - vB ^ 2)))
+            + (6 * Real.pi * (((tb - tE) / RA + ((tb - tE) + ((tb - tE) + (t4 - t3))) / RA) / 2
+            + vB * ((tbR - tR) / RA + (tbM - tM) / RA) / Real.sqrt (1 - vB ^ 2))))) ≤ ϵ →
+        ∀ θ ψ χ ξ ζ : KTorus, NearStart ρ θ →
         NearStart ρ ψ → NearStart ρ χ → NearStart ρ ξ → NearStart ρ ζ →
         WallRadarLorentz M
           (fun e => wallRunAt n N M μ Δ w gA gB e (chainRay _ hψ)
@@ -342,7 +386,7 @@ theorem tri_wall_radar_lorentz_open {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN :
         (fun x : (ZMod (M + 1) × Fin 2) × Fin 2 => x.1.1) (fun k k' => ¬ wallNear (M + 1) w k k')]
             at h1
       exact h1)
-  refine ⟨gA, gB, hΨA, hΨB, hgA0, hgA5, hgB0, hgB5, ?_, ?_⟩
+  refine ⟨gA, gB, hΨA, hΨB, hgA0, hgA5, hgB0, hgB5, ?_, ?_, ?_⟩
   · unfold WallRadarLorentz
     intro D e
     have hrep : rep (((1 / 12 : ℝ) : CircleFibre)) = 1 / 12 :=
@@ -431,6 +475,101 @@ theorem tri_wall_radar_lorentz_open {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN :
     unfold WallRadarLorentz
     intro D e
     exact Hop D e θ ψ χ ξ ζ hθ hψ' hχ hξ hζ
+  · intro ϵ s γ ρ hγA hγB hs hsb hsμ hsρ hsm hc3 hc5 hcMB hcR hcMA hρ0 hρs hρA hρB
+      θ ψ χ ξ ζ hθ hψ' hχ hξ hζ
+    have hv := vRel_half_one
+    have hzB : |(-gB : ℝ)| = gB := by rw [abs_neg, abs_of_pos hgB0]
+    have hzA : |(-gA : ℝ)| = gA := by rw [abs_neg, abs_of_pos hgA0]
+    have k1 : 2 * gB * ε * tE ≤ 2 * (RB / 5) * ε * tE := by
+      have : 0 ≤ ε * tE := mul_nonneg hε htE
+      nlinarith only [this, hgB5]
+    have k2 : 2 * gB * ε * (t3 - tb) ≤ 2 * (RB / 5) * ε * (t3 - tb) := by
+      have : 0 ≤ ε * (t3 - tb) := mul_nonneg hε (sub_nonneg.2 hb3)
+      nlinarith only [this, hgB5]
+    have k3 : 2 * gB * ε * (t5 - t4) ≤ 2 * (RB / 5) * ε * (t5 - t4) := by
+      have : 0 ≤ ε * (t5 - t4) := mul_nonneg hε (sub_nonneg.2 h45)
+      nlinarith only [this, hgB5]
+    have k4 : 2 * gB * (tb - tE) ≤ 2 * (RB / 5) * (tb - tE) := by
+      have : 0 ≤ tb - tE := sub_nonneg.2 hEb
+      nlinarith only [this, hgB5]
+    have k5 : 2 * gB * ε * (tcM - tbM) ≤ 2 * (RB / 5) * ε * (tcM - tbM) := by
+      have : 0 ≤ ε * (tcM - tbM) := mul_nonneg hε (sub_nonneg.2 hMc)
+      nlinarith only [this, hgB5]
+    have k6 : 2 * gA * ε * (tcR - tbR) ≤ 2 * (RA / 5) * ε * (tcR - tbR) := by
+      have : 0 ≤ ε * (tcR - tbR) := mul_nonneg hε (sub_nonneg.2 hRc)
+      nlinarith only [this, hgA5]
+    have k7 : 2 * gA * ε * (tcM - tbM) ≤ 2 * (RA / 5) * ε * (tcM - tbM) := by
+      have : 0 ≤ ε * (tcM - tbM) := mul_nonneg hε (sub_nonneg.2 hMc)
+      nlinarith only [this, hgA5]
+    have hcosR : 0 ≤ 1 / 4 * (1 - Real.cos (RB * tE)) := by
+      have := Real.cos_le_one (RB * tE)
+      linarith only [this]
+    have he0 : (0 : ℝ) ≤ 1 / (24 * (j : ℝ)) := by positivity
+    have hGa : 0 ≤ 2 * (RB / 5) * ε * tE := by positivity
+    have hG3 : 0 ≤ 2 * (RB / 5) * ε * (t3 - tb) :=
+      mul_nonneg (by positivity) (sub_nonneg.2 hb3)
+    have hGab : 0 ≤ 2 * (RB / 5) * (tb - tE) :=
+      mul_nonneg (by positivity) (sub_nonneg.2 hEb)
+    have hga : 0 ≤ 2 * gB * ε * tE := by positivity
+    have hg3 : 0 ≤ 2 * gB * ε * (t3 - tb) := mul_nonneg (by positivity) (sub_nonneg.2 hb3)
+    have hgab : 0 ≤ 2 * gB * (tb - tE) := mul_nonneg (by positivity) (sub_nonneg.2 hEb)
+    have hsa := He.swing tE htE le_rfl
+    have hmid := He.mid tE tb le_rfl hEb le_rfl
+    rw [abs_le] at hsa hmid
+    have k8 : 2 * gB * ε * tM ≤ 2 * (RB / 5) * ε * tM := by
+      have : 0 ≤ ε * tM := mul_nonneg hε htM
+      nlinarith only [this, hgB5]
+    have k9 : 2 * gA * ε * tR ≤ 2 * (RA / 5) * ε * tR := by
+      have : 0 ≤ ε * tR := mul_nonneg hε htR
+      nlinarith only [this, hgA5]
+    have k10 : 2 * gA * ε * tM ≤ 2 * (RA / 5) * ε * tM := by
+      have : 0 ≤ ε * tM := mul_nonneg hε htM
+      nlinarith only [this, hgA5]
+    have hYY := levelSwap_mul_self (n := ZMod (M + 1) × Fin 2)
+    obtain ⟨n1, n2, n3, n4, n5⟩ := tri_gate_norms_le_one
+      (Prod.fst : ZMod (M + 1) × Fin 2 → ZMod (M + 1))
+      (fun x : (ZMod (M + 1) × Fin 2) × Fin 2 => x.1.1)
+      (fun x : (ZMod (M + 1) × Fin 2) × Fin 2 => x.1.1)
+      (wallNear (M + 1) w) (fun k k' => ¬ wallNear (M + 1) w k k')
+      (fun k k' => ¬ wallNear (M + 1) w k k') (fun k k' => ¬ wallNear (M + 1) w k k')
+      (fun k k' => ¬ wallNear (M + 1) w k k')
+      (levelSwap_isHermitian (ZMod (M + 1) × Fin 2)) hYY
+      (levelSwap_isHermitian (ZMod (M + 1) × Fin 2)) hYY
+    have gB' : |gB| ≤ γ := by
+      rw [abs_of_pos hgB0]
+      linarith only [hgB5, hγB]
+    have gA' : |gA| ≤ γ := by
+      rw [abs_of_pos hgA0]
+      linarith only [hgA5, hγA]
+    have Hnear := tri_radar_lorentz_near
+      (diracHam_isHermitian (L := M + 1) (ringHop (1200 * n * N) M) μ)
+      (deviceHam_isHermitian (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ))
+      (deviceHam_isHermitian (L := M + 1) (ringHop (1200 * n * N) M) 1 (1 + Δ))
+      (levelSwap_isHermitian (ZMod (M + 1) × Fin 2)) levelSwap_apply_eq_zero_of_site_ne
+      (levelSwap_isHermitian (ZMod (M + 1) × Fin 2)) levelSwap_apply_eq_zero_of_site_ne
+      gB gB gB gA gA (chainRay _ hψ)
+      (deviceRay (deviceShift h _) (deviceShift_ne_zero h hΨA)) (deviceRay _ hΨB)
+      hv.1.le (by linarith only [hv.2]) hRA
+      (wall_observer_clock_rate_relation hK M hΔ0 (p := 1 / 2) (by norm_num))
+      (radar_times_relay d hv.1) (radar_times_return d hv.1) le_rfl le_rfl le_rfl le_rfl
+      le_rfl He Hr Hμ Hρ Hm ce cr cμ cρ cm n1 n2 n3 n4 n5 gB' gB' gB' gA' gA'
+      (h34.trans (h45.trans h5T)) h5T hMT hRT hMT hs
+      (by linarith only [hsb, k1, hcosR, hGab, he0, hG3])
+      (by linarith only [hsb, k1, hcosR, hGab, he0, hG3])
+      (by linarith only [hsb, k2, hcosR, hGab, he0, hGa])
+      (by
+        linarith only [hsa.1, hsa.2, hmid.1, hmid.2, hsb, k1, k2, k4, hcosR, hga, hg3,
+          hgab, he0, hGa, hG3, hGab, hs])
+      (by
+        linarith only [hsa.1, hsa.2, hmid.1, hmid.2, hsb, k1, k2, k4, hcosR, hga, hg3,
+          hgab, he0, hGa, hG3, hGab, hs])
+      (by linarith only [hsμ, k8]) (by linarith only [hsρ, k9]) (by linarith only [hsm, k10])
+      (by rw [hzB]; linarith only [hc3, k2]) (by rw [hzB]; linarith only [hc5, k3])
+      (by rw [hzB]; linarith only [hcMB, k5]) (by rw [hzA]; linarith only [hcR, k6])
+      (by rw [hzA]; linarith only [hcMA, k7]) hρ0 hρs hρA hρB
+    unfold WallRadarLorentz
+    intro D e
+    exact Hnear D e θ ψ χ ξ ζ hθ hψ' hχ hξ hζ
 
 end Radar
 

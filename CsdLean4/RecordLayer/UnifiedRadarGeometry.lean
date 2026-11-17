@@ -10,7 +10,7 @@ public import CsdLean4.RecordLayer.UnifiedRadarRun
 /-!
 # The family's run on an open set of pointer angles
 
-**Category:** 7-SigmaLayer (the record layer). BACKLOG #431, #432, #433, #434 — milestone **M6** of the
+**Category:** 7-SigmaLayer (the record layer). BACKLOG #431 to #435 — milestone **M6** of the
     author's
 programme "From `Σ` to physical spacetime", obligation UO-16; Tasks 9 and 10 of the research
 delivery plan of 2026-11-16. No new assumption beyond UA-18.
@@ -44,10 +44,9 @@ name.
 
 * **No hypothesis on histories, on the speed of the messenger, on a dilation law or on radar
   relations.** The hypotheses are `k ≥ 100`, the size of the ring and its parity.
-* **The open set is not explicit**: a product of intervals of an unnamed radius `ρ > 0`,
-  which depends on `k`, on the ring and on the operator norms of the five gates. Its measure
-  is positive; no lower bound on it is given, and nothing says the radius does not shrink as
-  `k` grows.
+* **The open set contains an explicit box (#435)**: every pointer angle within
+  `1/(12000 k²)` of the start, in both coordinates of each of the five pointers. The radius
+  does not depend on the ring. It shrinks as `k` grows, like `1/k²`.
 * **The interval's error is a number (#433, #434)**: the rest observer's time is within
   `52 K/k` of the kinematic time `T₀ = πK − πK/v`, and the two intervals differ by at most
   `E (2(|T₀| + 52 K/k)/√(1 − v²) + E)` twice with `E = 151 K/k`, which is at most
@@ -68,7 +67,7 @@ name.
 ## References
 
 `specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md`
-(UA-18, UO-16, UD-164, UD-193, UD-196, UD-200, UD-201, UD-202, UD-203, UD-204);
+(UA-18, UO-16, UD-164, UD-193, UD-196, UD-200, UD-201, UD-202, UD-203, UD-204, UD-205);
     `RecordLayer/UnifiedRadarRun.lean`
 (#426, #431: `radar_family_lorentz`); `RecordLayer/UnifiedWallOpen.lean` (#430: `wallRunAt`,
 `tri_wall_radar_lorentz_open`); `RecordLayer/UnifiedTriFibre.lean` (#430: `NearStart`,
@@ -303,6 +302,11 @@ theorem csd_operational_lorentz_from_records {k : ℕ} (hk : 100 ≤ k) {M H : �
           ((((1 / 12 : ℝ) : CircleFibre)), (0 : AddCircle (1 : ℝ))),
           ((((1 / 12 : ℝ) : CircleFibre)), (0 : AddCircle (1 : ℝ))),
           ((((1 / 12 : ℝ) : CircleFibre)), (0 : AddCircle (1 : ℝ)))) ∈ U
+      ∧ (∀ Θ : KTorus × KTorus × KTorus × KTorus × KTorus,
+          NearStart (1 / (12000 * (k : ℝ) ^ 2)) Θ.1 → NearStart (1 / (12000 * (k : ℝ) ^ 2)) Θ.2.1 →
+          NearStart (1 / (12000 * (k : ℝ) ^ 2)) Θ.2.2.1 →
+          NearStart (1 / (12000 * (k : ℝ) ^ 2)) Θ.2.2.2.1 →
+          NearStart (1 / (12000 * (k : ℝ) ^ 2)) Θ.2.2.2.2 → Θ ∈ U)
       ∧ ∀ Θ ∈ U, WallRadarGeometry M
           (fun e => wallRunAt (wallN k) (wallN k) M (wallMu k) (wallGap k) (3 * wallDelta k)
             gA gB e (chainRay _ hψ)
@@ -314,8 +318,13 @@ theorem csd_operational_lorentz_from_records {k : ℕ} (hk : 100 ≤ k) {M H : �
           (famTcR k M) (151 * (wallK k / k)) (151 * (wallK k / k))
           (Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2))
           (52 * (wallK k / k)) := by
-  obtain ⟨hψ, gA, gB, hΨA, hΨB, a1, a2, a3, a4, -, ρ, hρ0, Hop⟩ :=
-    radar_family_lorentz hk hM hH
+  obtain ⟨hψ, gA, gB, hΨA, hΨB, a1, a2, a3, a4, -, Hop⟩ := radar_family_lorentz hk hM hH
+  have hX0 : (0 : ℝ) < k := by exact_mod_cast (by omega : 0 < k)
+  obtain ⟨ρ, hρd⟩ : ∃ ρ : ℝ, ρ = 1 / (12000 * (k : ℝ) ^ 2) := ⟨_, rfl⟩
+  rw [← hρd] at Hop
+  have hρ0 : 0 < ρ := by
+    rw [hρd]
+    positivity
   have hU : IsOpen {Θ : KTorus × KTorus × KTorus × KTorus × KTorus | NearStart ρ Θ.1 ∧ NearStart ρ
       Θ.2.1
       ∧ NearStart ρ Θ.2.2.1 ∧ NearStart ρ Θ.2.2.2.1 ∧ NearStart ρ Θ.2.2.2.2} := by
@@ -365,7 +374,10 @@ theorem csd_operational_lorentz_from_records {k : ℕ} (hk : 100 ≤ k) {M H : �
       MeasureTheory.Measure (KTorus × KTorus × KTorus × KTorus × KTorus)).IsOpenPosMeasure :=
     isOpenPosMeasure_volume_prod
   exact ⟨hψ, gA, gB, hΨA, hΨB, _, a1, a2, a3, a4, hU,
-    hU.measure_pos MeasureTheory.volume ⟨_, hmem⟩, hmem, fun Θ hΘ =>
+    hU.measure_pos MeasureTheory.volume ⟨_, hmem⟩, hmem,
+    (fun Θ h1 h2 h3 h4 h5 => by
+      rw [hρd]
+      exact ⟨h1, h2, h3, h4, h5⟩), fun Θ hΘ =>
       (Hop _ _ _ _ _ hΘ.1 hΘ.2.1 hΘ.2.2.1 hΘ.2.2.2.1 hΘ.2.2.2.2).geometry
         (by rw [abs_of_pos hv.1]; linarith only [hv.2])⟩
 
