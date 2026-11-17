@@ -484,6 +484,23 @@ for the next headline-touching landing rather than patched now. Recorded so it i
 
 ## Adding an entry
 
+## Posit 11 — the Lorentzian kinematics of the arena's carriers
+
+* **Statement.** The carriers of the arena of UA-18 (`specs/unified-record-spacetime-plan.md`)
+  are lattice Dirac particles: the messenger's packet moves at a band velocity bounded by the
+  limiting speed `1`, and a two-level clock moving at `v` has its rest gap times `√(1 − v²)`
+  as its gap, up to a stated error. The records of M6 reproduce this kinematics; they do not
+  produce it.
+* **Where it enters.** `diracHam` and `deviceHam` on the ring with `ringHop`, *definitions*,
+  as the carriers' matrices of `wallRunAt` (`RecordLayer/UnifiedWallOpen.lean`).
+* **What backs it short of derivation.** Theorems about those definitions:
+  `wall_observer_clock_rate_relation` (the rate relation with the error `κ`),
+  `radar_family_rates` (the band velocities of the family). They show the definitions have
+  the kinematics; they do not say why the carriers of `Σ` are of this kind.
+* **What would discharge it.** A theorem that derives the carriers' dispersion from the
+  structure of `Σ` and its flow, with no Dirac matrix chosen by hand. None is known, and the
+  contract calls a pass at gate B "an operational reconstruction" for this reason.
+
 A new entry belongs here when all three hold: the object is a definition or structure field; prose
 elsewhere describes it in language stronger than "posited"; and no theorem in the corpus derives it.
 Give it the five headings above, and in particular **do not add an entry without a "what would

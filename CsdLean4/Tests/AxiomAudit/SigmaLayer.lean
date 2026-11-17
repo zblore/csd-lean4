@@ -22322,4 +22322,64 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.tendsto_radar_error_relative
 
+/-! #432 (the author's programme, obligation UO-16; Task 10 of the research delivery plan): radar coordinates and the common interval (`RecordLayer/UnifiedRadarGeometry.lean`). -/
+
+/-- info: 'CSD.RecordLayer.restEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.restEvent
+
+/-- info: 'CSD.RecordLayer.movingEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.movingEvent
+
+/-- info: 'CSD.RecordLayer.radarInterval' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarInterval
+
+/-- info: 'CSD.RecordLayer.lorentzBoost_interval' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lorentzBoost_interval
+
+/-- info: 'CSD.RecordLayer.abs_sq_sub_sq_le_of_abs_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_sq_sub_sq_le_of_abs_sub_le
+
+/-- info: 'CSD.RecordLayer.WallRadarGeometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.WallRadarGeometry
+
+/-- info: 'CSD.RecordLayer.WallRadarLorentz.geometry' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.WallRadarLorentz.geometry
+
+/-- info: 'CSD.RecordLayer.isOpenPosMeasure_volume_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpenPosMeasure_volume_prod
+
+/-- info: 'CSD.RecordLayer.sFinite_volume_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sFinite_volume_prod
+
+/-! #432 (the author's programme, obligation UO-16; Task 11 of the research delivery plan): from the point of the arena to the operational geometry, the identifications (`RecordLayer/UnifiedRecordSpacetimeBridge.lean`). -/
+
+/-- info: 'CSD.RecordLayer.IsTickCount.exists_crossings' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsTickCount.exists_crossings
+
+/-- info: 'CSD.RecordLayer.pointerReady_disjoint_pointerDisplay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pointerReady_disjoint_pointerDisplay
+
+/-- info: 'CSD.RecordLayer.triRun_eq_arenaFlow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triRun_eq_arenaFlow
+
+/-- info: 'CSD.RecordLayer.triFlow_map_pentaMuL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.triFlow_map_pentaMuL
+
+/-- info: 'CSD.RecordLayer.wallRunAt_orbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallRunAt_orbit
+
 end CSD.Tests.AxiomAudit
