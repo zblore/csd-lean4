@@ -119,9 +119,13 @@ and almost invariant on Mathlib master. -/
 theorem Mixing.ergodic {α : Type*} [MeasurableSpace α] {f : α → α} {μ : Measure α}
     (h : Mixing f μ) : Ergodic f μ := by
   refine ⟨h.toMeasurePreserving, ⟨fun s hs hfs => ?_⟩⟩
-  obtain ⟨t, ht, hts, htf⟩ :=
-    h.toMeasurePreserving.quasiMeasurePreserving.exists_preimage_eq_of_preimage_ae
-      hs.nullMeasurableSet (hfs.eventuallyEq (l := ae μ))
+  obtain ⟨t, ht, hts, htf⟩ : ∃ t : Set α, MeasurableSet t ∧ t =ᵐ[μ] s ∧ f ⁻¹' t = t := by
+    -- Mathlib master's form first (it takes the measurability of `f`), the pin's form last
+    first
+      | exact h.toMeasurePreserving.quasiMeasurePreserving.exists_preimage_eq_of_preimage_ae
+          h.toMeasurePreserving.measurable hs hfs
+      | exact h.toMeasurePreserving.quasiMeasurePreserving.exists_preimage_eq_of_preimage_ae
+          hs.nullMeasurableSet (hfs.eventuallyEq (l := ae μ))
   exact (h.eventuallyEmptyOrUniv_of_preimage_eq ht htf).congr hts
 
 namespace MeasureTheory

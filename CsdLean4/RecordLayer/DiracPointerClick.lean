@@ -303,7 +303,9 @@ noncomputable def clickWindow (s : ℝ) : ℝ≥0∞ :=
 
 /-- The window is at most the measure `1/6` of the ready arc. -/
 theorem clickWindow_le (s : ℝ) : clickWindow s ≤ ENNReal.ofReal (1 / 6) := by
-  refine (measure_mono (t := rep ⁻¹' Ioc (0 : ℝ) (shearWidth 2)) fun θ hθ => hθ.1).trans ?_
+  refine (measure_mono (s := {θ : AddCircle (1 : ℝ) | rep θ ∈ Ioc (0 : ℝ) (shearWidth 2)
+      ∧ rep (θ + (s : AddCircle (1 : ℝ))) ∈ Ioc (2 * shearWidth 2) (1 - shearWidth 2)})
+    (t := rep ⁻¹' Ioc (0 : ℝ) (shearWidth 2)) fun θ hθ => hθ.1).trans ?_
   rw [shearWidth_two, volume_repPreimage le_rfl (by norm_num) (by norm_num), sub_zero]
 
 /-- Below a sixth of a turn, either way, the window is closed. -/

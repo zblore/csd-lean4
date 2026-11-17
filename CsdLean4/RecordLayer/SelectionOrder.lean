@@ -192,7 +192,7 @@ theorem rate_eq_mul_of_selection_order_indep (q : JointRates m n)
       calc (volume : Measure LF4.KTorus) (skewCell q s t)
           = volume (skewCell q s t ∩ skewCell q s t) := by rw [Set.inter_self]
         _ = volume (skewCell q s t ∩ skewCellRev q s t) :=
-            measure_congr (Filter.EventuallyEqSet.inter (Filter.EventuallyEq.refl _ _) (h s t))
+            measure_congr (ae_eq_set_inter (by rfl) (h s t))
         _ ≤ _ := measure_mono hsub
         _ = ENNReal.ofReal (q.rowSum s * q.colSum t) := by
             rw [volume_prodPartition_eq_mul,

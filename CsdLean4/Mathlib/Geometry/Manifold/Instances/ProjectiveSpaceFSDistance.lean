@@ -397,10 +397,10 @@ theorem fsMetric_smul_smul (x : ℙ ℂ (Ambient n)) (c : ℝ) (v : TangentSpace
 
 /-- The Fubini–Study norm scales with the scalar. -/
 theorem fsENormSMulClass (x : ℙ ℂ (Ambient n)) :
-    ENormSMulClass ℝ (TangentSpace (𝓘(ℝ, Fin n → ℂ)) x) where
-  enorm_smul c v := by
+    ENormSMulClass ℝ (TangentSpace (𝓘(ℝ, Fin n → ℂ)) x) :=
+  ⟨fun c v => by
     rw [fsENorm_apply, fsENorm_apply, fsMetric_smul_smul, Real.sqrt_mul (sq_nonneg c),
-      Real.sqrt_sq_eq_abs, ENNReal.ofReal_mul (abs_nonneg c), Real.enorm_eq_ofReal_abs]
+      Real.sqrt_sq_eq_abs, ENNReal.ofReal_mul (abs_nonneg c), Real.enorm_eq_ofReal_abs]⟩
 
 attribute [local instance] fsENormSMulClass
 

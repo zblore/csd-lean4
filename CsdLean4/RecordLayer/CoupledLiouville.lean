@@ -269,13 +269,11 @@ theorem exists_hasFDerivAt_planarFlow (hd2 : ∀ x, HasDerivAt P.dχ (d2 x) x)
     (continuous_planarDeriv η hc2).comp (continuous_planarFlow_time P η hm hg u)
   obtain ⟨M₀, hM₀⟩ := (isCompact_Icc (a := (0 : ℝ)) (b := T)).exists_bound_of_continuousOn
     hDc.continuousOn
-  have hM : ∀ s ∈ Icc 0 T, ‖A s‖
-      ≤ ‖ContinuousLinearMap.compL ℝ (ℝ × ℝ) (ℝ × ℝ) (ℝ × ℝ)‖ * max M₀ 0 := fun s hs =>
-    ((ContinuousLinearMap.compL ℝ (ℝ × ℝ) (ℝ × ℝ) (ℝ × ℝ)).le_opNorm _).trans
-      (mul_le_mul_of_nonneg_left ((hM₀ s hs).trans (le_max_left _ _))
-        (ContinuousLinearMap.opNorm_nonneg _))
-  have hC0 : 0 ≤ ‖ContinuousLinearMap.compL ℝ (ℝ × ℝ) (ℝ × ℝ) (ℝ × ℝ)‖ * max M₀ 0 :=
-    mul_nonneg (ContinuousLinearMap.opNorm_nonneg _) (le_max_right M₀ 0)
+  have hM : ∀ s ∈ Icc 0 T, ‖A s‖ ≤ max M₀ 0 := fun s hs =>
+    (ContinuousLinearMap.opNorm_le_bound _ (norm_nonneg _) fun Z =>
+      (planarDeriv η (m := m) (g := g) d2 (planarFlow P η hm hg s u)).opNorm_comp_le Z).trans
+      ((hM₀ s hs).trans (le_max_left _ _))
+  have hC0 : (0 : ℝ) ≤ max M₀ 0 := le_max_right M₀ 0
   obtain ⟨Y, hY0, hYd⟩ := exists_linearODE_solution_Icc A hT hC0
     (fun Z => (hAc.clm_apply continuous_const).continuousOn) hM (1 : ℝ × ℝ →L[ℝ] ℝ × ℝ)
   have hfd : ∀ z, fderiv ℝ f z = planarDeriv η (m := m) (g := g) d2 z := fun z =>

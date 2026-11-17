@@ -118,6 +118,7 @@ open scoped LinearAlgebra.Projectivization
 
 variable {n : ℕ}
 
+set_option synthInstance.maxHeartbeats 80000 in
 /-- **The Koszul functional of the model metric** at `w`:
 `z ↦ ½ (Dg(u)(v, z) + Dg(v)(z, u) − Dg(z)(u, v))`, `g = fsModelMetricCLM`. -/
 def fsKoszul (w u v : Fin n → ℂ) : (Fin n → ℂ) →L[ℝ] ℝ :=

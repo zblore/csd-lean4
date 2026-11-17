@@ -358,7 +358,7 @@ theorem convexHull_range_unitaryMomentMap :
       have hnorm : ((‖u‖ ^ 2 : ℝ) : ℂ) = 1 := by
         rw [← star_dotProduct_self]
         have h1 := congrFun (congrFun (mem_unitaryGroup_iff'.1 hMU) i) i
-        rw [star_eq_conjTranspose, mul_apply, one_apply_eq] at h1
+        rw [star_eq_conjTranspose, Matrix.mul_apply, Matrix.one_apply_eq] at h1
         rw [← h1]
         simp [dotProduct, u]
       have hu : u ≠ 0 := by
