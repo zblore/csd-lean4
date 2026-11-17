@@ -5547,4 +5547,118 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.lattice_dirac_d
 
+/-! #295 (the author's programme, milestone M7, obligation UO-17): the lattice's preferred directions (`CV/DiracAnisotropy.lean`). -/
+
+/-- info: 'CSD.CV.sNorm_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sNorm_sq
+
+/-- info: 'CSD.CV.sNorm_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sNorm_nonneg
+
+/-- info: 'CSD.CV.abs_le_sNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_le_sNorm
+
+/-- info: 'CSD.CV.sNorm_le_sum_abs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sNorm_le_sum_abs
+
+/-- info: 'CSD.CV.abs_le_dispE_sNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_le_dispE_sNorm
+
+/-- info: 'CSD.CV.abs_dispE_sNorm_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_dispE_sNorm_sub_le
+
+/-- info: 'CSD.CV.abs_div_dispE_sNorm_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_div_dispE_sNorm_sub_le
+
+/-- info: 'CSD.CV.sinS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sinS
+
+/-- info: 'CSD.CV.latticeED' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.latticeED
+
+/-- info: 'CSD.CV.groupVelD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.groupVelD
+
+/-- info: 'CSD.CV.latticeED_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.latticeED_sq
+
+/-- info: 'CSD.CV.latticeED_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.latticeED_nonneg
+
+/-- info: 'CSD.CV.modeSD_eq_sinS' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeSD_eq_sinS
+
+/-- info: 'CSD.CV.hasDerivAt_latticeED' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_latticeED
+
+/-- info: 'CSD.CV.sum_groupVelD_sq_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sum_groupVelD_sq_le
+
+/-- info: 'CSD.CV.sNorm_groupVelD_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sNorm_groupVelD_le
+
+/-- info: 'CSD.CV.sq_vRel_sNorm_div' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sq_vRel_sNorm_div
+
+/-- info: 'CSD.CV.lattice_dilation_defect_d' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lattice_dilation_defect_d
+
+/-- info: 'CSD.CV.massless_groupSpeed_defect' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.massless_groupSpeed_defect
+
+/-- info: 'CSD.CV.sq_sub_le_sin_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sq_sub_le_sin_sq
+
+/-- info: 'CSD.CV.abs_sin_pow_four_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_sin_pow_four_sub_le
+
+/-- info: 'CSD.CV.abs_sin_ratio_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_sin_ratio_sub_le
+
+/-- info: 'CSD.CV.massless_anisotropy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.massless_anisotropy
+
+/-- info: 'CSD.CV.scaledVelD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.scaledVelD
+
+/-- info: 'CSD.CV.contVelD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.contVelD
+
+/-- info: 'CSD.CV.abs_scaledVelD_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_scaledVelD_sub_le
+
+/-- info: 'CSD.CV.contVelD_map' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.contVelD_map
+
+/-- info: 'CSD.CV.rotation_residue' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.rotation_residue
+
 end CSD.Tests.AxiomAudit

@@ -73,6 +73,9 @@ Core (#292–#298), in dependency order. Every one is stuck only on its price.
    massless speed along `n` within `O((ap)²)` of `c` with the `Σ n_i⁴` term explicit, and a rotated
    preparation's velocities within `O(a²)` of the rotated velocities (the rotational
    `lattice_frame_residue`).
+   ▸ **DONE 2026-11-17**: `CV/DiracAnisotropy.lean` (`massless_anisotropy`,
+   `rotation_residue`). For the group speed the term is `(ap)² Σ n_i⁴`, coefficient `1`;
+   the `1/3` of §2.6 is the coefficient in `|s|²`.
 5. **#296 Packets in `d` dimensions** (L; needs #294, #295). One translation phase per axis, each
    drifting at the group velocity's component; normalisation, localisation independent of `L`, the
    scaled and massless limits (`dirac_packet_limit`, `dirac_massless_limit`).

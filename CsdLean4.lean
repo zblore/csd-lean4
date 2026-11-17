@@ -771,6 +771,7 @@ public import CsdLean4.CV.LocalLiebRobinson
 public import CsdLean4.CV.SigmaSlicing
 public import CsdLean4.CV.DiracClockChain
 public import CsdLean4.CV.DiracLatticeD
+public import CsdLean4.CV.DiracAnisotropy
 public import CsdLean4.CV.DiracPacket
 public import CsdLean4.CV.DiracContinuum
 public import CsdLean4.CV.DiracPacketLimit

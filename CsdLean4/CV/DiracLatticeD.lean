@@ -63,7 +63,8 @@ one, any two of them anticommuting.
 ⚠️ **Modes, not packets.** The plane waves are spread over the torus. Packets are #296.
 
 ⚠️ **`v = c |s| / E` is the defined relativistic speed**, a number. The group velocity as a
-vector, its dependence on the direction at order `(a p)²` and the bound `|v_g| ≤ c` are #295.
+vector, its dependence on the direction at order `(a p)²` and the bound `|v_g| ≤ c` are
+~~#295~~, [`DiracAnisotropy.lean`](DiracAnisotropy.lean).
 
 ⚠️ **Doublers.** `s_i = 2J sin θ` vanishes at `θ = π` as well as at `θ = 0`, on each axis. The
 theorems here hold at every momentum and do not remove the `2^d − 1` doublers (#299, optional).
