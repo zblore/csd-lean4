@@ -561,7 +561,9 @@ theorem tri_radar_lorentz_open (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
                 + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
                     + κ * tRet + τRet)) / 2
               + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
-                / Real.sqrt (1 - v ^ 2) + ϵ := by
+                / Real.sqrt (1 - v ^ 2) + ϵ
+        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀|
+            ≤ |tR - tMA| + (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ + ϵ := by
   have hAB := compositeH_isHermitian hA hB
   have hH := compositeH_isHermitian hM hAB
   have hG₁ := gateOp_snd_isHermitian (κa := κa) σ β r₁ hYb hYbs
@@ -794,14 +796,14 @@ theorem tri_radar_lorentz_open (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
         have h' := mono' tcm tbm htbm0
         linarith only [sp, this, h', hρA, q13])
   intro se h1 h2 sr h3 h4 sμ h5 h6 sρ h7 h8 sm h9 h10
-  obtain ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6, c7⟩ :=
+  obtain ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6, c7, c8⟩ :=
     penta_radar_lorentz_fibre e hH hG₁ hG₂ hG₃ hG₄ hG₅ (scaledTrainF_periodic g₁)
       (scaledTrainF_periodic g₂) (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄)
       (scaledTrainF_periodic g₅) (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂)
       (contDiff_scaledTrainF g₃) (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
       (prodRay p (prodRay qa qb)) hF hθ1 hψ1 hχ1 hξ1 hζ1 hv0 hv hR₀ hκ hE hRet hτE hτRet hτMB
       hτR hτMA He' Hr' Hμ' Hρ' Hm' se h1 h2 sr h3 h4 sμ h5 h6 sρ h7 h8 sm h9 h10
-  refine ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6.trans ?_, c7.trans ?_⟩
+  refine ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6.trans ?_, c7.trans ?_, c8.trans ?_⟩
   · simp only [gatedErr_add, awayErr_add]
     have key : ∀ x₁ x₂ x₃ x₄ x₅ : ℝ,
         (((x₁ + 6 * Real.pi * (ρ * C) * (tbe - tE)) / R₀ + κ * tE + τE)
@@ -844,6 +846,33 @@ theorem tri_radar_lorentz_open (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
       ring
     rw [key]
     linarith only [hk2]
+  · simp only [gatedErr_add]
+    have hs1 : Real.sqrt (1 - v ^ 2) ≤ 1 := by
+      have h := Real.sqrt_le_sqrt (by nlinarith only [sq_nonneg v] : 1 - v ^ 2 ≤ 1)
+      rwa [Real.sqrt_one] at h
+    have y1 : (tbρ - tR) / R₀ + (tbm - tMA) / R₀
+        ≤ ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2) := by
+      rw [le_div_iff₀ hsq]
+      nlinarith only [add_nonneg kr kq, hs1]
+    have y2 : (tbρ - tR) / R₀ + (tbm - tMA) / R₀
+        ≤ ((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+          + (tbμ - tMB) / R₀
+          + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2) := by
+      linarith only [y1, div_nonneg (add_nonneg ka kb) (by norm_num : (0 : ℝ) ≤ 2), km]
+    have y3 : ρ * C * (6 * Real.pi * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀))
+        ≤ ρ * C * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+          + (tbμ - tMB) / R₀
+          + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) :=
+      mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left y2 (by positivity)) hρC
+    have key : ∀ x y : ℝ,
+        |tR - tMA| + (x + 6 * Real.pi * (ρ * C) * (tbρ - tR)
+            + (y + 6 * Real.pi * (ρ * C) * (tbm - tMA))) / R₀
+          = |tR - tMA| + (x + y) / R₀
+            + ρ * C * (6 * Real.pi * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀)) := by
+      intro x y
+      ring
+    rw [key]
+    linarith only [y3, hk1]
 
 end TriOpen
 

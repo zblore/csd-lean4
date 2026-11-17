@@ -110,11 +110,12 @@ def wallRun (n N M : ℕ) (μ Δ w gA gB : ℝ) {D : ℕ}
 /-- **The Lorentz statement for a run on the walled chain.** For every labelling of the
 carrier's basis and every choice of flow times in the five reading windows, the five pointers
 of `run` have counts, and the counts, as times in the unit `2π/R₀`, satisfy the two
-components of the Lorentz statement of #402 for the velocity `v` within `E₁` and `E₂`. -/
+components of the Lorentz statement of #402 for the velocity `v` within `E₁` and `E₂`, and the
+rest observer's time between the relay and the meeting is at most `B` in size. -/
 def WallRadarLorentz (M : ℕ)
     (run : ∀ {D : ℕ}, ((ZMod (M + 1) × Fin 2) × (((ZMod (M + 1) × Fin 2) × Fin 2)
       × ((ZMod (M + 1) × Fin 2) × Fin 2)) ≃ Fin (D + 1)) → ℝ → PentaSigma D)
-    (R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ : ℝ) : Prop :=
+    (R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ B : ℝ) : Prop :=
   ∀ (D : ℕ) (e : (ZMod (M + 1) × Fin 2) × (((ZMod (M + 1) × Fin 2) × Fin 2)
       × ((ZMod (M + 1) × Fin 2) × Fin 2)) ≃ Fin (D + 1)),
     ∀ se, tb ≤ se → se ≤ t3 → ∀ sr, t4 ≤ sr → sr ≤ t5 → ∀ sμ, tbM ≤ sμ → sμ ≤ tcM →
@@ -139,18 +140,20 @@ def WallRadarLorentz (M : ℕ)
               ((Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀, 0)).2
             - (-((((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) / R₀
                   - (Ne : ℝ) * (2 * Real.pi) / R₀) / 2))| ≤ E₂
+      ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀| ≤ B
 
 /-- The Lorentz statement for a run holds with any larger errors. -/
 theorem WallRadarLorentz.mono {M : ℕ}
     {run : ∀ {D : ℕ}, ((ZMod (M + 1) × Fin 2) × (((ZMod (M + 1) × Fin 2) × Fin 2)
       × ((ZMod (M + 1) × Fin 2) × Fin 2)) ≃ Fin (D + 1)) → ℝ → PentaSigma D}
-    {R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ E₁' E₂' : ℝ}
-    (H : WallRadarLorentz M run R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂) (h1 : E₁ ≤ E₁')
-    (h2 : E₂ ≤ E₂') : WallRadarLorentz M run R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁' E₂' := by
+    {R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ B E₁' E₂' B' : ℝ}
+    (H : WallRadarLorentz M run R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ B) (h1 : E₁ ≤ E₁')
+    (h2 : E₂ ≤ E₂') (h3 : B ≤ B') :
+    WallRadarLorentz M run R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁' E₂' B' := by
   intro D e se a1 a2 sr a3 a4 sμ a5 a6 sρ a7 a8 sm a9 a10
-  obtain ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6, c7⟩ :=
+  obtain ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6, c7, c8⟩ :=
     H D e se a1 a2 sr a3 a4 sμ a5 a6 sρ a7 a8 sm a9 a10
-  exact ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6.trans h1, c7.trans h2⟩
+  exact ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6.trans h1, c7.trans h2, c8.trans h3⟩
 
 section Radar
 
@@ -286,7 +289,8 @@ theorem tri_wall_radar_lorentz {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN : 0 < 
                       + (κB) * t3 + |t3 - radarTRet d vB|)) / 2
                 + vB * ((gatedErr (2 * gA) tR tbR / RA + |tR - radarTR d|)
                     + (gatedErr (2 * gA) tM tbM / RA + |tM - radarTM d vB|))
-                  / Real.sqrt (1 - vB ^ 2)) := by
+                  / Real.sqrt (1 - vB ^ 2))
+          (|tR - tM| + (gatedErr (2 * gA) tR tbR + gatedErr (2 * gA) tM tbM) / RA) := by
   have hn : 0 < n := hj.trans_le hjn
   have hK : 0 < 1200 * n * N := by positivity
   have hRA : 0 < RA := by

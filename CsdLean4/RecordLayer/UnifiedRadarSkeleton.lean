@@ -262,7 +262,9 @@ theorem radar_lorentz_of_histories {X : Type*} {πe πr πμ πρ πm : X → KT
                 + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
                     + κ * tRet + τRet)) / 2
               + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
-                / Real.sqrt (1 - v ^ 2) := by
+                / Real.sqrt (1 - v ^ 2)
+        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀|
+            ≤ |tR - tMA| + (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ := by
   intro se hse1 hse2 sr hsr1 hsr2 sμ hsμ1 hsμ2 sρ hsρ1 hsρ2 sm hsm1 hsm2
   obtain ⟨Ne, hNe, be⟩ := He.exists_count hqe hγe se hse1 hse2
   obtain ⟨Nr, hNr, br⟩ := Hr.exists_count hqr hγr sr hsr1 hsr2
@@ -291,7 +293,20 @@ theorem radar_lorentz_of_histories {X : Type*} {πe πr πμ πρ πm : X → KT
   have hρ := abs_div_sub_le_of_rate hR₀ zero_le_one le_rfl hκA Hρ.ta_nonneg hτR bρ
   have hm := abs_div_sub_le_of_rate hR₀ zero_le_one le_rfl hκA Hm.ta_nonneg hτMA bm
   rw [one_mul, zero_mul, add_zero] at hρ hm
-  exact radar_lorentz_error hv0 hv hE hRet he hr hμ hρ hm
+  obtain ⟨z1, z2⟩ := radar_lorentz_error hv0 hv hE hRet he hr hμ hρ hm
+  refine ⟨z1, z2, ?_⟩
+  have hR0' := hR₀.ne'
+  have e : (Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀
+      = (((Nρ : ℝ) * (2 * Real.pi) - R₀ * tR) - ((Nm : ℝ) * (2 * Real.pi) - R₀ * tMA)) / R₀
+        + (tR - tMA) := by
+    field_simp
+    ring
+  rw [e]
+  refine (abs_add_le _ _).trans ?_
+  rw [abs_div, abs_of_pos hR₀]
+  have h2 := div_le_div_of_nonneg_right ((abs_sub _ _).trans (add_le_add bρ bm)) hR₀.le
+  unfold gatedErr
+  linarith only [h2]
 
 end CSD.RecordLayer
 

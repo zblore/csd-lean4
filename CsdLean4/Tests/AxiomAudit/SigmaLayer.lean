@@ -22382,4 +22382,28 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.wallRunAt_orbit
 
+/-! #433 (the author's programme, obligation UO-16; finding F1 of the audit): the size of the rest observer's coordinate for the family (`RecordLayer/UnifiedRadarRun.lean`). -/
+
+/-- info: 'CSD.RecordLayer.gatedErr_div_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedErr_div_le
+
+/-- info: 'CSD.RecordLayer.radar_size_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_size_le
+
+/-! #433 (the author's programme, obligation UO-16; finding F1 of the audit): the interval's error as a number (`RecordLayer/UnifiedRadarGeometry.lean`). -/
+
+/-- info: 'CSD.RecordLayer.radar_interval_error_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_interval_error_le
+
+/-- info: 'CSD.RecordLayer.radar_interval_error_relative' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_interval_error_relative
+
+/-- info: 'CSD.RecordLayer.tendsto_radar_interval_error_relative' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tendsto_radar_interval_error_relative
+
 end CSD.Tests.AxiomAudit

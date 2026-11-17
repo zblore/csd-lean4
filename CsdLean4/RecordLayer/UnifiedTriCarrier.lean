@@ -350,7 +350,9 @@ theorem tri_radar_lorentz (hM : M₀.IsHermitian) (hA : A₀.IsHermitian) (hB : 
                 + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
                     + κ * tRet + τRet)) / 2
               + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
-                / Real.sqrt (1 - v ^ 2) := by
+                / Real.sqrt (1 - v ^ 2)
+        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀|
+            ≤ |tR - tMA| + (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ := by
   have hAB := compositeH_isHermitian hA hB
   have hH := compositeH_isHermitian hM hAB
   have e1 : ∀ (rr : S → S → Prop) [DecidableRel rr] (z : ℝ),

@@ -32,7 +32,7 @@ Axioms (pinned in `Tests/AxiomAudit/SigmaLayer.lean`): `propext`, `Classical.cho
 | Histories | the five histories for wall states | UD-190 to UD-193; off the zero fibres UD-197 to UD-200 | from where the carriers are (packet bounds), on a neighbourhood of the zero fibres |
 | Family | rates, gate times, sizes | UD-194 to UD-196, UD-201 | every hypothesis discharged for `k ≥ 100` |
 | Operational | `restEvent`, `movingEvent` | UD-202 | functions of the counts alone |
-| Spacetime | boost comparison, interval comparison | `WallRadarLorentz.geometry` (UD-202) | within `151 K/k`; intervals within `E (2|b₁| + 2|b₂| + 2E)` |
+| Spacetime | boost comparison, interval comparison | `WallRadarLorentz.geometry` (UD-202) | within `151 K/k`; intervals within `4600 K²/k` (UD-203) |
 
 ## 3. The plan's nine checks
 
@@ -58,16 +58,19 @@ Axioms (pinned in `Tests/AxiomAudit/SigmaLayer.lean`): `propext`, `Classical.cho
   `|I_moving − I_rest| ≤ E₁ (2|b₁| + E₁) + E₂ (2|b₂| + E₂)`.
 * *"The residual tends to zero along a scaling family that is instantiated on the arenas."*
   For the coordinates: `151 K/k` is `151/(π k)` of the distance `π K`
-  (`radar_error_relative`, `tendsto_radar_error_relative`). **For the interval: not shown**
-  (F1).
+  (`radar_error_relative`, `tendsto_radar_error_relative`). For the interval: `4600/(π² k)`
+  of the squared distance (~~#433~~).
 * *The test.* No hypothesis fixes the messenger at speed `1` or the clock at `√(1 − v²)`:
   both are properties of the carriers' packets, proved with errors.
 
 ## 5. Findings
 
-* **F1. The interval's residual is not shown to vanish against the interval.** The bound is
-  in terms of the boosted coordinates `b`. To conclude, a bound on the size of the counts is
-  needed (`|2π N − R t| ≤ …` is inside the proof of UD-164 and is not exported).
+* **F1. CLOSED 2026-11-17 (~~#433~~, UD-203).** As first written: the interval's residual
+  was bounded in terms of the boosted coordinates and no bound on the counts was exported.
+  Now the chain exports the size of the rest observer's coordinate (`6K` for the family) and
+  the residual is at most `4600 K²/k`, `4600/(π² k)` of the squared distance
+  (`radar_interval_error_le`, `tendsto_radar_interval_error_relative`). Residue: no lower
+  bound on the interval itself is stated.
 * **F2. The open set is not explicit.** Its radius exists for each `k`; the one the proof
   finds shrinks as `k` grows. The plan's Task 9 does not ask for a uniform bound.
 * **F3. Reconstruction, not derivation.** The carriers are lattice Dirac particles: their
@@ -83,8 +86,9 @@ Axioms (pinned in `Tests/AxiomAudit/SigmaLayer.lean`): `propext`, `Classical.cho
 ## 6. Verdict
 
 The build, the tests and the guards pass, and the nine checks pass with the qualifications
-above. UO-16 is **not marked complete**: F1 is a clause of its statement, and whether F2
-bars it is the author's decision.
+above. With F1 closed (~~#433~~) each clause of UO-16's statement has a theorem on the arena
+of UA-18. UO-16 is **not marked complete by this note**: whether the qualifications (F2, F4,
+F5, the windows in flow time) bar it is the author's decision.
 
 ## References
 
