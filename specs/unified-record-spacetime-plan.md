@@ -3985,6 +3985,15 @@ time. It is not a statement about every dynamics on `Σ`.
   of five.** The group velocity as the gradient of the energy, `|v_g| ≤ c`, the exact defect,
   the direction term `(a p)² Σ_i n_i⁴` of a massless carrier within `(3/2)(a p)⁴`, and the
   rotation residue of order `a²`. Open: #296, #297, #298.
+  ▸ **Feasibility on the unified arena, 2026-11-17 → `specs/unified-m7-feasibility.md`.
+  Reading and arithmetic, no Lean theorem. Not met.** No obstruction found for the carriers
+  on the torus of UD-206 or for three record statements (a resting group's spatial chart by
+  trilateration; a moving observer's count against proper time; a moving observer's radar
+  from a wall). One obstruction: the arena's only reflectors are flat walls, so moving
+  observers who radar one event are collinear with it, and "a moving group's chart is the
+  boost of a resting group's" (#298, `trilateration_chart_boostD`) has no instance on the
+  arena as frozen in UA-18. **Open decision for the author** (the note's §7): mark M7 on the
+  three statements, admit a prepared echo, or admit a new mechanism for the return.
 
 ### M8 — which assumptions force the geometry (gate C)
 
@@ -4112,7 +4121,8 @@ Posit 1 and may not be reported as dynamical:
   pointing here is added.
 * **[`beyond-1p1-scoping.md`](beyond-1p1-scoping.md).** Its rows #292–#298 are M7's content (UO-17),
   and its "not reached" list is carried over. Its expectation that the clock results transfer to
-  `d` dimensions is marked there as expected and unchecked, and stays so.
+  `d` dimensions was checked on 2026-11-17 (UD-206). What of its rows the unified arena can
+  carry is in [`unified-m7-feasibility.md`](unified-m7-feasibility.md).
 * **[`residues.tsv`](residues.tsv).** The open rows R-012, R-016, R-019 and the boundary rows R-015
   and R-017 are each cited above where they bind. R-016 is about the shear and joint-lift
   propagators and lists the time-independent writes as proved; M1A is of that second kind and did
