@@ -67,6 +67,8 @@ Core (#292–#298), in dependency order. Every one is stuck only on its price.
    Hermitian, anticommuting, squaring to one): Hermitian, nearest-neighbour, plane-wave modes `(H(k)
    + E) e₀` exact eigenvectors, dispersion `dispE μ |s|`, clock dilation; instances `d = 2` (Pauli,
    two components) and `d = 3` (four components).
+   ▸ **DONE 2026-11-17**: `CV/DiracLatticeD.lean` (`lattice_dirac_d`); the clock results
+   do apply at `s := |s|` (§2.5, now checked).
 4. **#295 The anisotropy residue** (M; needs #294). Group velocity as a vector, `|v_g| ≤ c`, the
    massless speed along `n` within `O((ap)²)` of `c` with the `Σ n_i⁴` term explicit, and a rotated
    preparation's velocities within `O(a²)` of the rotated velocities (the rotational

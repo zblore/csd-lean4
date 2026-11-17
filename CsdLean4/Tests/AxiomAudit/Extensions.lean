@@ -5425,4 +5425,126 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.exp_smul_kronecker_add
 
+/-! #294 (the author's programme, milestone M7, obligation UO-17): the lattice Dirac Hamiltonian in `d` dimensions (`CV/DiracLatticeD.lean`). -/
+
+/-- info: 'CSD.CV.cliffordSymbol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cliffordSymbol
+
+/-- info: 'CSD.CV.sNorm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sNorm
+
+/-- info: 'CSD.CV.dispE_sNorm_sq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dispE_sNorm_sq
+
+/-- info: 'CSD.CV.cliffordSymbol_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cliffordSymbol_mul_self
+
+/-- info: 'CSD.CV.mul_cliffordSymbol_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mul_cliffordSymbol_add
+
+/-- info: 'CSD.CV.cliffordSymbol_mulVec_mode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cliffordSymbol_mulVec_mode
+
+/-- info: 'CSD.CV.cliffordMode_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cliffordMode_ne_zero
+
+/-- info: 'CSD.CV.latticeDiracHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.latticeDiracHam
+
+/-- info: 'CSD.CV.latticeDiracHam_apply_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.latticeDiracHam_apply_eq_zero
+
+/-- info: 'CSD.CV.latticeDiracHam_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.latticeDiracHam_isHermitian
+
+/-- info: 'CSD.CV.planeWaveD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.planeWaveD
+
+/-- info: 'CSD.CV.planeWaveD_add_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.planeWaveD_add_single
+
+/-- info: 'CSD.CV.planeWaveD_sub_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.planeWaveD_sub_single
+
+/-- info: 'CSD.CV.planeWaveD_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.planeWaveD_ne_zero
+
+/-- info: 'CSD.CV.spinorWave' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinorWave
+
+/-- info: 'CSD.CV.modeSD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeSD
+
+/-- info: 'CSD.CV.latticeDiracHam_mulVec_spinorWave' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.latticeDiracHam_mulVec_spinorWave
+
+/-- info: 'CSD.CV.diracModeD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.diracModeD
+
+/-- info: 'CSD.CV.latticeDiracHam_mulVec_diracModeD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.latticeDiracHam_mulVec_diracModeD
+
+/-- info: 'CSD.CV.diracModeD_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.diracModeD_ne_zero
+
+/-- info: 'CSD.CV.diracSy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.diracSy
+
+/-- info: 'CSD.CV.pauli' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pauli
+
+/-- info: 'CSD.CV.pauli_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pauli_isHermitian
+
+/-- info: 'CSD.CV.pauli_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pauli_mul_self
+
+/-- info: 'CSD.CV.pauli_anticomm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.pauli_anticomm
+
+/-- info: 'CSD.CV.cliffordOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cliffordOne
+
+/-- info: 'CSD.CV.cliffordTwo' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cliffordTwo
+
+/-- info: 'CSD.CV.cliffordThree' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cliffordThree
+
+/-- info: 'CSD.CV.latticeDiracHam_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.latticeDiracHam_one
+
+/-- info: 'CSD.CV.lattice_dirac_d' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.lattice_dirac_d
+
 end CSD.Tests.AxiomAudit
