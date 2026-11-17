@@ -7,14 +7,15 @@ module
 
 public import CsdLean4.RecordLayer.UnifiedRadarFamily
 public import CsdLean4.RecordLayer.UnifiedWallRadar
+public import CsdLean4.RecordLayer.UnifiedWallOpen
 
 /-!
 # The family's run: five counts and the Lorentz statement with a vanishing error
 
 **Category:** 7-SigmaLayer (the record layer). BACKLOG #426 — milestone **M6** of the author's
 programme "From `Σ` to physical spacetime", obligation UO-16; Tasks 8 and 10 of the research
-delivery plan of 2026-11-16, on the fibres where the five profiles vanish. No new assumption
-beyond UA-18.
+delivery plan of 2026-11-16; since #431 also on a neighbourhood of the fibres where the five
+profiles vanish (Task 9). No new assumption beyond UA-18.
 
 `tri_wall_radar_lorentz` (#423) is conditional on seven angle conditions and on sizes, and
 its error is a long expression. This module discharges every one of those hypotheses for the
@@ -28,13 +29,15 @@ family of #425 and bounds the error.
 * ★★★ `radar_family_lorentz` — for every `k ≥ 100` and every even ring large enough: the five
   pointers of the walled chain's run have counts in the five reading windows, and the counts
   satisfy the Lorentz statement for `v = vRel 1 1 (1/2)` within `150 K/k`, about `21/k` of the
-  length of the run.
+  length of the run; and (#431) from every five pointer angles within some radius `ρ > 0` of
+  the start, within `151 K/k`.
 
 ## Exact scope
 
-* **The fibres where the five profiles vanish.** Every pointer starts at `(1/12, 0)`, where
-  the carriers move freely. An open set of starts (R7, Task 9) is not in this module, and
-  without it UO-16 is not met.
+* **A neighbourhood of the fibres where the five profiles vanish.** The first statement is
+  for every pointer started at `(1/12, 0)`, where the carriers move freely; the second (#431,
+  from `tri_wall_radar_lorentz_open`, #430) for every five pointer angles within a radius
+  `ρ > 0` of that start. The radius is not explicit and may depend on `k` and on the ring.
 * **No hypothesis about angles, sizes or histories is left**: the hypotheses are `k ≥ 100`,
   the size of the ring and that its number of sites is even.
 * **The error is `150 K/k` in the flow time, for both components.** The comparison with the
@@ -48,7 +51,7 @@ family of #425 and bounds the error.
 ## References
 
 `specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md`
-(UA-18, UO-16, UD-164, UD-181, UD-193, UD-194, UD-195, UD-196);
+(UA-18, UO-16, UD-200, UD-201, UD-164, UD-181, UD-193, UD-194, UD-195, UD-196);
 `RecordLayer/UnifiedWallRadar.lean` (#423: `tri_wall_radar_lorentz`, `WallRadarLorentz`);
 `RecordLayer/UnifiedRadarFamily.lean` (#425: `radar_family_rates`,
 `radar_family_gate_conditions`, `radar_family_all_conditions`);
@@ -514,7 +517,9 @@ the moving clock's place), the clock at rest translated to the far wall, and the
 every choice of flow times in the five reading windows (the gate times of #424 for the
 family's rates) the five pointers of `wallRun` have counts, and the counts satisfy both
 components of the Lorentz statement of #402 for the velocity `v = vRel 1 1 (1/2)` within
-`150 K/k`.
+`150 K/k`. Moreover there is a radius `ρ > 0` such that from every five pointer angles
+within `ρ` of `(1/12, 0)` (`NearStart`, #430) the five pointers of `wallRunAt` have counts in
+the same reading windows, and the counts satisfy both components within `151 K/k`.
 
 The run lasts about `πK/v ≈ 7K` in the flow time and holds about `1.1 k` ticks of `2πK/k`, so
 the error is about `21/k` of the run: it tends to zero along the family, while the distance
@@ -542,7 +547,17 @@ theorem radar_family_lorentz {k : ℕ} (hk : 100 ≤ k) {M H : ℕ}
               (deviceShift_ne_zero (H : ZMod (M + 1)) hΨA)) (deviceRay _ hΨB))
           (ringRate (1200 * wallN k * wallN k) M 0 (wallGap k)) (vRel 1 1 (1 / 2))
           (famTb k) (famT3 k) (famT4 k) (famT5 k) (famTbM k M) (famTcM k M) (famTbR k M)
-          (famTcR k M) (150 * (wallK k / k)) (150 * (wallK k / k)) := by
+          (famTcR k M) (150 * (wallK k / k)) (150 * (wallK k / k))
+      ∧ ∃ ρ : ℝ, 0 < ρ ∧ ∀ θ ψ χ ξ ζ : KTorus, NearStart ρ θ → NearStart ρ ψ →
+        NearStart ρ χ → NearStart ρ ξ → NearStart ρ ζ →
+        WallRadarLorentz M
+          (fun e => wallRunAt (wallN k) (wallN k) M (wallMu k) (wallGap k) (3 * wallDelta k)
+            gA gB e (chainRay _ hψ)
+            (deviceRay (deviceShift (H : ZMod (M + 1)) _)
+              (deviceShift_ne_zero (H : ZMod (M + 1)) hΨA)) (deviceRay _ hΨB) θ ψ χ ξ ζ)
+          (ringRate (1200 * wallN k * wallN k) M 0 (wallGap k)) (vRel 1 1 (1 / 2))
+          (famTb k) (famT3 k) (famT4 k) (famT5 k) (famTbM k M) (famTcM k M) (famTbR k M)
+          (famTcR k M) (151 * (wallK k / k)) (151 * (wallK k / k)) := by
   have hk1 : 1 ≤ k := by omega
   have hX : (100 : ℝ) ≤ k := by exact_mod_cast hk
   have hX0 : (0 : ℝ) < k := by linarith only [hX]
@@ -688,34 +703,34 @@ theorem radar_family_lorentz {k : ℕ} (hk : 100 ≤ k) {M H : ℕ}
   have t40 : 0 ≤ (2 * Real.pi - wallDelta k) / (radarRateA k + radarRateB' k) :=
     t30.trans (o3.trans o4)
   have tM0 : 0 ≤ radarTau k M + (Real.pi - 6 * wallDelta k) / radarRateB k := c_τ.trans q1
-  have R := tri_wall_radar_lorentz (j := k) (n := wallN k) (N := wallN k) (M := M)
+  have R := tri_wall_radar_lorentz_open (j := k) (n := wallN k) (N := wallN k) (M := M)
     (Δ := wallGap k) (μ := wallMu k) (p₀ := 1 / 2) (w := 3 * wallDelta k) (δ := wallDelta k)
     (ε := 1 / (500 * (k : ℝ))) (T := 8 * wallK k) (d := Real.pi * wallK k)
     (by omega) hkN hNpos hM hμ0 hμ1 hΔ0 hΔ12 hlo hhi hp₀ hWD
     (radarRateB k * radarTau k M / radarRateA k) (H : ZMod (M + 1)) hψ c_δ.le hcos
     (by linarith only [c_δ]) (by linarith only [c_δπ, c_δ]) (by positivity) hbud
     o1 o2 o3 o4 o5 s5 ((o4.trans o5).trans (s5.trans sHB)) I1 I2 I3
-    ((sclB _ (by linarith only [o4, o5, s5, t30])).trans (by norm_num))
-    ((sclB _ (by linarith only [s5, t40])).trans (by norm_num)) sband
+    ((sclB _ (by linarith only [o4, o5, s5, t30])).trans_lt (by norm_num))
+    ((sclB _ (by linarith only [s5, t40])).trans_lt (by norm_num)) sband
     p1 p2 p3 sR ((p2.trans p3).trans (sR.trans sHA))
     (fun s h0 h1 => by rw [hφ]; exact I4 s h0 h1)
     (fun s h0 h1 => by rw [hφ]; exact I5 s h0 h1)
     (by
       have := sclA _ ((p2.trans p3).trans sR)
       linarith only [this, h24])
-    ((sclA _ (by linarith only [sR, p1, p2])).trans (by norm_num))
+    ((sclA _ (by linarith only [sR, p1, p2])).trans_lt (by norm_num))
     tM0 q2 q3 sM ((q2.trans q3).trans (sM.trans sHB)) ((q2.trans q3).trans (sM.trans sHA))
     (fun s h0 h1 => by rw [hφ]; exact I6 s h0 h1)
     (fun s h0 h1 => by rw [hφ]; exact I7 s h0 h1)
     (by
       have := sclB _ ((q2.trans q3).trans sM)
       linarith only [this, h24])
-    ((sclB _ (by linarith only [sM, tM0, q2])).trans (by norm_num))
+    ((sclB _ (by linarith only [sM, tM0, q2])).trans_lt (by norm_num))
     (by
       have := sclA _ ((q2.trans q3).trans sM)
       linarith only [this, h24])
-    ((sclA _ (by linarith only [sM, tM0, q2])).trans (by norm_num))
-  obtain ⟨gA, gB, hΨA, hΨB, a1, a2, a3, a4, W⟩ := R
+    ((sclA _ (by linarith only [sM, tM0, q2])).trans_lt (by norm_num))
+  obtain ⟨gA, gB, hΨA, hΨB, a1, a2, a3, a4, W, Wop⟩ := R
   refine ⟨hψ, gA, gB, hΨA, hΨB, a1, a2, a3, a4, ?_⟩
   -- the error
   have hv := vRel_half_one
@@ -787,7 +802,10 @@ theorem radar_family_lorentz {k : ℕ} (hk : 100 ≤ k) {M H : ℕ}
     hK0 hX hKX hΔK hRA hR2 a1.le (by linarith only [a2, hRA]) a3.le
     (by linarith only [a4, hR2]) hκ0 hκ hv.2 hs o1 o2 o4 q2 p2
     (by linarith only [o4, o5, s5]) (by linarith only [q2, q3, sM]) g1 g2 g3 g4 g5 g6 g7 g8
-  exact W.mono hEr.1 hEr.2
+  refine ⟨W.mono hEr.1 hEr.2, ?_⟩
+  obtain ⟨ρ, hρ0, Hop⟩ := Wop (wallK k / k) (div_pos hK0 hX0)
+  exact ⟨ρ, hρ0, fun θ ψ χ ξ ζ h1 h2 h3 h4 h5 =>
+    (Hop θ ψ χ ξ ζ h1 h2 h3 h4 h5).mono (by linarith only [hEr.1]) (by linarith only [hEr.2])⟩
 
 end Run
 

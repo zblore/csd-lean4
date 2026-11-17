@@ -848,6 +848,9 @@ public import CsdLean4.RecordLayer.UnifiedRadarStability
 public import CsdLean4.RecordLayer.UnifiedFibreRun
 public import CsdLean4.RecordLayer.UnifiedFibreDrift
 public import CsdLean4.RecordLayer.UnifiedFibreRadar
+public import CsdLean4.RecordLayer.UnifiedTriFibre
+public import CsdLean4.RecordLayer.UnifiedWallOpen
+public import CsdLean4.RecordLayer.UnifiedRadarGeometry
 public import CsdLean4.RecordLayer.DiracDeviceTicks
 public import CsdLean4.RecordLayer.DiracRateTicks
 public import CsdLean4.RecordLayer.DiracObservers

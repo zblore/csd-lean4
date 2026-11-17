@@ -22192,4 +22192,134 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.penta_radar_lorentz_fibre
 
+/-! #430 (the author's programme, obligation UO-16; Task 9 of the research delivery plan, fifth part): histories off the fibres where the profiles vanish, the general pieces (`RecordLayer/UnifiedTriFibre.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_trainF_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_trainF_le
+
+/-- info: 'CSD.RecordLayer.scaledTrainF_lift_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.scaledTrainF_lift_coe
+
+/-- info: 'CSD.RecordLayer.scaledTrainF_deriv_lift_coe' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.scaledTrainF_deriv_lift_coe
+
+/-- info: 'CSD.RecordLayer.scaledTrainF_near' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.scaledTrainF_near
+
+/-- info: 'CSD.RecordLayer.gatedErr_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gatedErr_add
+
+/-- info: 'CSD.RecordLayer.awayErr_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.awayErr_add
+
+/-- info: 'CSD.RecordLayer.exists_pos_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_pos_le
+
+/-- info: 'CSD.RecordLayer.exists_radius' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_radius
+
+/-- info: 'CSD.RecordLayer.isHermitian_real_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isHermitian_real_smul
+
+/-- info: 'CSD.RecordLayer.fibreH_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fibreH_isHermitian
+
+/-- info: 'CSD.RecordLayer.norm_fibreH_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_fibreH_sub_le
+
+/-- info: 'CSD.RecordLayer.fibre_rate_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fibre_rate_le
+
+/-- info: 'CSD.RecordLayer.IsGatedHistory.of_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsGatedHistory.of_fibre
+
+/-- info: 'CSD.RecordLayer.IsAwayHistory.of_fibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsAwayHistory.of_fibre
+
+/-- info: 'CSD.RecordLayer.coincShift_closed_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_closed_le
+
+/-- info: 'CSD.RecordLayer.gateOp_fst_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateOp_fst_isHermitian
+
+/-- info: 'CSD.RecordLayer.gateOpL_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateOpL_isHermitian
+
+/-- info: 'CSD.RecordLayer.freeShift_tri_gate_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeShift_tri_gate_snd
+
+/-- info: 'CSD.RecordLayer.freeShift_tri_gate_fst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeShift_tri_gate_fst
+
+/-- info: 'CSD.RecordLayer.freeShift_tri_pair' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeShift_tri_pair
+
+/-- info: 'CSD.RecordLayer.freeShift_tri_pairL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeShift_tri_pairL
+
+/-- info: 'CSD.RecordLayer.NearStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.NearStart
+
+/-- info: 'CSD.RecordLayer.nearStart_start' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.nearStart_start
+
+/-- info: 'CSD.RecordLayer.tri_radar_lorentz_open' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tri_radar_lorentz_open
+
+/-! #430 (the author's programme, obligation UO-16; Task 9 of the research delivery plan, sixth part): the walled chain's run from an open set of pointer angles (`RecordLayer/UnifiedWallOpen.lean`). -/
+
+/-- info: 'CSD.RecordLayer.wallRunAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallRunAt
+
+/-- info: 'CSD.RecordLayer.wallRun_eq_wallRunAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallRun_eq_wallRunAt
+
+/-- info: 'CSD.RecordLayer.tri_wall_radar_lorentz_open' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tri_wall_radar_lorentz_open
+
+/-! #431 (the author's programme, obligation UO-16; Tasks 9 and 10 of the research delivery plan): the family's run on an open set of pointer angles (`RecordLayer/UnifiedRadarGeometry.lean`). -/
+
+/-- info: 'CSD.RecordLayer.isOpen_nearStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isOpen_nearStart
+
+/-- info: 'CSD.RecordLayer.csd_operational_lorentz_from_records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.csd_operational_lorentz_from_records
+
+/-- info: 'CSD.RecordLayer.radar_error_relative' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_error_relative
+
+/-- info: 'CSD.RecordLayer.tendsto_radar_error_relative' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tendsto_radar_error_relative
+
 end CSD.Tests.AxiomAudit
