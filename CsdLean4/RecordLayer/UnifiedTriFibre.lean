@@ -562,8 +562,8 @@ theorem tri_radar_lorentz_open (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
                     + κ * tRet + τRet)) / 2
               + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
                 / Real.sqrt (1 - v ^ 2) + ϵ
-        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀|
-            ≤ |tR - tMA| + (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ + ϵ := by
+        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀ - (tR - tMA)|
+            ≤ (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ + ϵ := by
   have hAB := compositeH_isHermitian hA hB
   have hH := compositeH_isHermitian hM hAB
   have hG₁ := gateOp_snd_isHermitian (κa := κa) σ β r₁ hYb hYbs
@@ -865,9 +865,9 @@ theorem tri_radar_lorentz_open (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
           + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) :=
       mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left y2 (by positivity)) hρC
     have key : ∀ x y : ℝ,
-        |tR - tMA| + (x + 6 * Real.pi * (ρ * C) * (tbρ - tR)
+        (x + 6 * Real.pi * (ρ * C) * (tbρ - tR)
             + (y + 6 * Real.pi * (ρ * C) * (tbm - tMA))) / R₀
-          = |tR - tMA| + (x + y) / R₀
+          = (x + y) / R₀
             + ρ * C * (6 * Real.pi * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀)) := by
       intro x y
       ring

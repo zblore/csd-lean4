@@ -327,8 +327,8 @@ theorem penta_radar_lorentz (hH : H.IsHermitian) (hG₁ : G₁.IsHermitian)
                     + κ * tRet + τRet)) / 2
               + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
                 / Real.sqrt (1 - v ^ 2)
-        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀|
-            ≤ |tR - tMA| + (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ := by
+        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀ - (tR - tMA)|
+            ≤ (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ := by
   have key := pentaRun_eq (G₃ := G₃) (G₄ := G₄) (G₅ := G₅) e hH hG₁ hG₂ hf hg hk hl hr hc hcg
     hck hcl hcr p hθ hψ hχ hξ hζ
   exact radar_lorentz_of_histories (X := PentaSigma N)

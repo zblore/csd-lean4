@@ -10,7 +10,8 @@ public import CsdLean4.RecordLayer.UnifiedRadarRun
 /-!
 # The family's run on an open set of pointer angles
 
-**Category:** 7-SigmaLayer (the record layer). BACKLOG #431, #432, #433 — milestone **M6** of the author's
+**Category:** 7-SigmaLayer (the record layer). BACKLOG #431, #432, #433, #434 — milestone **M6** of the
+    author's
 programme "From `Σ` to physical spacetime", obligation UO-16; Tasks 9 and 10 of the research
 delivery plan of 2026-11-16. No new assumption beyond UA-18.
 
@@ -47,11 +48,11 @@ name.
   which depends on `k`, on the ring and on the operator norms of the five gates. Its measure
   is positive; no lower bound on it is given, and nothing says the radius does not shrink as
   `k` grows.
-* **The interval's error is a number (#433)**: `E (2B/√(1 − v²) + E)` twice, with
-  `E = 151 K/k` and the size `B = 6K` of the rest observer's time, which the chain now
-  exports. It is at most `4600 K²/k` (`radar_interval_error_le`), that is `4600/(π² k)` of
-  the square of the distance. No lower bound on the interval itself is stated, so the
-  comparison scale is the distance, not the interval.
+* **The interval's error is a number (#433, #434)**: the rest observer's time is within
+  `52 K/k` of the kinematic time `T₀ = πK − πK/v`, and the two intervals differ by at most
+  `E (2(|T₀| + 52 K/k)/√(1 − v²) + E)` twice with `E = 151 K/k`, which is at most
+  `4600 K²/k` (`radar_interval_error_le`). The rest observer's interval is at least `9 K²`
+  (`radar_rest_time_ge`), so the error is at most `512/k` of the interval itself.
 * **One family, one velocity, one distance**: the messenger of rest energy `1/k` at momentum
   `1/2`, the clock at rest at the far wall, the moving clock at momentum `1/2`, on the walled
   chain (the mirror-odd sector of the ring) of UA-18's arena. `v = vRel 1 1 (1/2)` is the
@@ -67,7 +68,8 @@ name.
 ## References
 
 `specs/future-work.md` (records to spacetime); `specs/unified-record-spacetime-plan.md`
-(UA-18, UO-16, UD-164, UD-193, UD-196, UD-200, UD-201, UD-202, UD-203); `RecordLayer/UnifiedRadarRun.lean`
+(UA-18, UO-16, UD-164, UD-193, UD-196, UD-200, UD-201, UD-202, UD-203, UD-204);
+    `RecordLayer/UnifiedRadarRun.lean`
 (#426, #431: `radar_family_lorentz`); `RecordLayer/UnifiedWallOpen.lean` (#430: `wallRunAt`,
 `tri_wall_radar_lorentz_open`); `RecordLayer/UnifiedTriFibre.lean` (#430: `NearStart`,
 `nearStart_start`, `tri_radar_lorentz_open`); `RecordLayer/UnifiedWallRadar.lean` (#423:
@@ -154,13 +156,13 @@ theorem abs_sq_sub_sq_le_of_abs_sub_le {a τ E : ℝ} (h : |a - τ| ≤ E) :
 carrier's basis and every choice of flow times in the five reading windows, the five pointers
 of `run` have counts such that: the boost by `v` of the rest observer's coordinates of the
 relay event (`restEvent`) is within `E₁`, `E₂` of the moving observer's radar coordinates of
-it (`movingEvent`), component by component; the rest observer's time is at most `B` in
-size; and the two observers' intervals of the event differ by at most
-`E₁ (2B/√(1 − v²) + E₁) + E₂ (2B/√(1 − v²) + E₂)`. -/
+it (`movingEvent`), component by component; the rest observer's time is within `B` of
+`T₀`; and the two observers' intervals of the event differ by at most
+`E₁ (2(|T₀| + B)/√(1 − v²) + E₁) + E₂ (2(|T₀| + B)/√(1 − v²) + E₂)`. -/
 def WallRadarGeometry (M : ℕ)
     (run : ∀ {D : ℕ}, ((ZMod (M + 1) × Fin 2) × (((ZMod (M + 1) × Fin 2) × Fin 2)
       × ((ZMod (M + 1) × Fin 2) × Fin 2)) ≃ Fin (D + 1)) → ℝ → PentaSigma D)
-    (R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ B : ℝ) : Prop :=
+    (R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ T₀ B : ℝ) : Prop :=
   ∀ (D : ℕ) (e : (ZMod (M + 1) × Fin 2) × (((ZMod (M + 1) × Fin 2) × Fin 2)
       × ((ZMod (M + 1) × Fin 2) × Fin 2)) ≃ Fin (D + 1)),
     ∀ se, tb ≤ se → se ≤ t3 → ∀ sr, t4 ≤ sr → sr ≤ t5 → ∀ sμ, tbM ≤ sμ → sμ ≤ tcM →
@@ -178,10 +180,10 @@ def WallRadarGeometry (M : ℕ)
           {x : PentaSigma D | x.2 ∈ displayArc} (run e) sm Nm
       ∧ |(lorentzBoost 1 (-v) (restEvent R₀ Nρ Nm)).1 - (movingEvent R₀ Ne Nr Nμ).1| ≤ E₁
       ∧ |(lorentzBoost 1 (-v) (restEvent R₀ Nρ Nm)).2 - (movingEvent R₀ Ne Nr Nμ).2| ≤ E₂
-      ∧ |(restEvent R₀ Nρ Nm).1| ≤ B
+      ∧ |(restEvent R₀ Nρ Nm).1 - T₀| ≤ B
       ∧ |radarInterval (movingEvent R₀ Ne Nr Nμ) - radarInterval (restEvent R₀ Nρ Nm)|
-          ≤ E₁ * (2 * (B / Real.sqrt (1 - v ^ 2)) + E₁)
-            + E₂ * (2 * (B / Real.sqrt (1 - v ^ 2)) + E₂)
+          ≤ E₁ * (2 * ((|T₀| + B) / Real.sqrt (1 - v ^ 2)) + E₁)
+            + E₂ * (2 * ((|T₀| + B) / Real.sqrt (1 - v ^ 2)) + E₂)
 
 /-- ★★ **From the Lorentz statement to the common interval.** The Lorentz statement of #423
 for a velocity `|v| < 1` is the comparison of the two observers' coordinates of the relay
@@ -189,9 +191,9 @@ event, and it gives the comparison of their intervals. -/
 theorem WallRadarLorentz.geometry {M : ℕ}
     {run : ∀ {D : ℕ}, ((ZMod (M + 1) × Fin 2) × (((ZMod (M + 1) × Fin 2) × Fin 2)
       × ((ZMod (M + 1) × Fin 2) × Fin 2)) ≃ Fin (D + 1)) → ℝ → PentaSigma D}
-    {R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ B : ℝ}
-    (H : WallRadarLorentz M run R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ B) (hv : |v| < 1) :
-    WallRadarGeometry M run R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ B := by
+    {R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ T₀ B : ℝ}
+    (H : WallRadarLorentz M run R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ T₀ B) (hv : |v| < 1) :
+    WallRadarGeometry M run R₀ v tb t3 t4 t5 tbM tcM tbR tcR E₁ E₂ T₀ B := by
   intro D e se a1 a2 sr a3 a4 sμ a5 a6 sρ a7 a8 sm a9 a10
   obtain ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6, c7, c8⟩ :=
     H D e se a1 a2 sr a3 a4 sμ a5 a6 sρ a7 a8 sm a9 a10
@@ -199,8 +201,11 @@ theorem WallRadarLorentz.geometry {M : ℕ}
       ≤ E₁ := c6
   have d7 : |(lorentzBoost 1 (-v) (restEvent R₀ Nρ Nm)).2 - (movingEvent R₀ Ne Nr Nμ).2|
       ≤ E₂ := c7
-  have d8 : |(restEvent R₀ Nρ Nm).1| ≤ B := c8
-  refine ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, d6, d7, d8, ?_⟩
+  have d0 : |(restEvent R₀ Nρ Nm).1 - T₀| ≤ B := c8
+  refine ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, d6, d7, d0, ?_⟩
+  have d8 : |(restEvent R₀ Nρ Nm).1| ≤ |T₀| + B := by
+    have h := abs_sub_abs_le_abs_sub ((restEvent R₀ Nρ Nm).1) T₀
+    linarith only [h, d0]
   have hv2 : v ^ 2 < 1 := (sq_lt_one_iff_abs_lt_one v).2 hv
   have hσ : 0 < Real.sqrt (1 - v ^ 2) := Real.sqrt_pos.2 (by linarith only [hv2])
   have eb1 : (lorentzBoost 1 (-v) (restEvent R₀ Nρ Nm)).1
@@ -213,15 +218,17 @@ theorem WallRadarLorentz.geometry {M : ℕ}
     simp only [lorentzBoost, restEvent]
     rw [show (1 : ℝ) - (-v) ^ 2 / 1 ^ 2 = 1 - v ^ 2 by ring]
     ring
-  have hb1 : |(lorentzBoost 1 (-v) (restEvent R₀ Nρ Nm)).1| ≤ B / Real.sqrt (1 - v ^ 2) := by
+  have hb1 : |(lorentzBoost 1 (-v) (restEvent R₀ Nρ Nm)).1| ≤ (|T₀| + B) / Real.sqrt (1 - v ^ 2)
+      := by
     rw [eb1, abs_div, abs_of_pos hσ]
     exact div_le_div_of_nonneg_right d8 hσ.le
-  have hb2 : |(lorentzBoost 1 (-v) (restEvent R₀ Nρ Nm)).2| ≤ B / Real.sqrt (1 - v ^ 2) := by
+  have hb2 : |(lorentzBoost 1 (-v) (restEvent R₀ Nρ Nm)).2| ≤ (|T₀| + B) / Real.sqrt (1 - v ^ 2)
+      := by
     rw [eb2, abs_div, abs_of_pos hσ, abs_mul]
     refine div_le_div_of_nonneg_right ?_ hσ.le
     calc |v| * |(restEvent R₀ Nρ Nm).1| ≤ 1 * |(restEvent R₀ Nρ Nm).1| :=
           mul_le_mul_of_nonneg_right hv.le (abs_nonneg _)
-      _ ≤ B := by rw [one_mul]; exact d8
+      _ ≤ |T₀| + B := by rw [one_mul]; exact d8
   have hE1 : 0 ≤ E₁ := (abs_nonneg _).trans d6
   have hE2 : 0 ≤ E₂ := (abs_nonneg _).trans d7
   have hb := lorentzBoost_interval (v := -v) (by rwa [abs_neg]) (restEvent R₀ Nρ Nm)
@@ -304,7 +311,9 @@ theorem csd_operational_lorentz_from_records {k : ℕ} (hk : 100 ≤ k) {M H : �
             Θ.1 Θ.2.1 Θ.2.2.1 Θ.2.2.2.1 Θ.2.2.2.2)
           (ringRate (1200 * wallN k * wallN k) M 0 (wallGap k)) (vRel 1 1 (1 / 2))
           (famTb k) (famT3 k) (famT4 k) (famT5 k) (famTbM k M) (famTcM k M) (famTbR k M)
-          (famTcR k M) (151 * (wallK k / k)) (151 * (wallK k / k)) (6 * wallK k) := by
+          (famTcR k M) (151 * (wallK k / k)) (151 * (wallK k / k))
+          (Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2))
+          (52 * (wallK k / k)) := by
   obtain ⟨hψ, gA, gB, hΨA, hΨB, a1, a2, a3, a4, -, ρ, hρ0, Hop⟩ :=
     radar_family_lorentz hk hM hH
   have hU : IsOpen {Θ : KTorus × KTorus × KTorus × KTorus × KTorus | NearStart ρ Θ.1 ∧ NearStart ρ
@@ -374,14 +383,56 @@ theorem tendsto_radar_error_relative :
     Tendsto (fun k : ℕ => 151 / (Real.pi * (k : ℝ))) atTop (𝓝 0) :=
   (tendsto_const_div_atTop_nhds_zero_nat (151 / Real.pi)).congr fun k => by rw [div_div]
 
+/-- The kinematic time `πK − πK/v` of the family is between `−(5/2 − 1) πK` and
+`−(20/9 − 1) πK`. -/
+theorem radar_kinematic_time_bounds {k : ℕ} (hk : 100 ≤ k) :
+    -(3 / 2 * (Real.pi * wallK k)) ≤ Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2)
+      ∧ Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2) ≤ -(11 / 9 * (Real.pi * wallK k))
+          := by
+  have hK0 : 0 < wallK k := (radar_family_rates hk 0).1
+  have hv := vRel_half_one
+  have hv2 := two_fifths_le_vRel_half_one
+  have hπK : 0 ≤ Real.pi * wallK k := mul_nonneg Real.pi_pos.le hK0.le
+  have h1 : Real.pi * wallK k / vRel 1 1 (1 / 2) ≤ Real.pi * wallK k * (5 / 2) := by
+    rw [div_le_iff₀ hv.1]
+    nlinarith only [hπK, hv2]
+  have h2 : Real.pi * wallK k * (20 / 9) ≤ Real.pi * wallK k / vRel 1 1 (1 / 2) := by
+    rw [le_div_iff₀ hv.1]
+    nlinarith only [hπK, hv.2]
+  constructor <;> linarith only [h1, h2]
+
+/-- **The rest observer's time is not small**: within `52 K/k` of the kinematic time it is at
+least `3K` in size, so its interval is at least `9 K²`. -/
+theorem radar_rest_time_ge {k : ℕ} (hk : 100 ≤ k) {T : ℝ}
+    (h : |T - (Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2))| ≤ 52 * (wallK k / k)) :
+    3 * wallK k ≤ |T| ∧ 9 * wallK k ^ 2 ≤ T ^ 2 := by
+  have hK0 : 0 < wallK k := (radar_family_rates hk 0).1
+  have hX : (100 : ℝ) ≤ k := by exact_mod_cast hk
+  have hq : wallK k / k ≤ wallK k / 100 := div_le_div_of_nonneg_left hK0.le (by norm_num) hX
+  obtain ⟨-, hu⟩ := radar_kinematic_time_bounds hk
+  have hπ : 3 * wallK k ≤ Real.pi * wallK k :=
+    mul_le_mul_of_nonneg_right Real.pi_gt_three.le hK0.le
+  have h3 : 3 * wallK k ≤ |T| := by
+    rw [abs_le] at h
+    rw [le_abs]
+    right
+    linarith only [h.2, hu, hπ, hq, hK0]
+  refine ⟨h3, ?_⟩
+  have h4 : (3 * wallK k) ^ 2 ≤ |T| ^ 2 := pow_le_pow_left₀ (by linarith only [hK0]) h3 2
+  rw [sq_abs] at h4
+  linarith only [h4]
+
 /-- **The interval's error for the family, as a number.** With the errors `151 K/k` and the
-size `6K` of `csd_operational_lorentz_from_records`, the bound on the difference of the two
-observers' intervals is at most `4600 K²/k`. -/
+rest observer's time within `52 K/k` of `πK − πK/v`, as in
+`csd_operational_lorentz_from_records`, the bound on the difference of the two observers'
+intervals is at most `4600 K²/k`. -/
 theorem radar_interval_error_le {k : ℕ} (hk : 100 ≤ k) :
     151 * (wallK k / k)
-          * (2 * (6 * wallK k / Real.sqrt (1 - vRel 1 1 (1 / 2) ^ 2)) + 151 * (wallK k / k))
+          * (2 * ((|Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2)| + 52 * (wallK k / k))
+              / Real.sqrt (1 - vRel 1 1 (1 / 2) ^ 2)) + 151 * (wallK k / k))
         + 151 * (wallK k / k)
-          * (2 * (6 * wallK k / Real.sqrt (1 - vRel 1 1 (1 / 2) ^ 2)) + 151 * (wallK k / k))
+          * (2 * ((|Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2)| + 52 * (wallK k / k))
+              / Real.sqrt (1 - vRel 1 1 (1 / 2) ^ 2)) + 151 * (wallK k / k))
       ≤ 4600 * (wallK k ^ 2 / k) := by
   have hK0 : 0 < wallK k := (radar_family_rates hk 0).1
   have hX : (100 : ℝ) ≤ k := by exact_mod_cast hk
@@ -391,10 +442,23 @@ theorem radar_interval_error_le {k : ℕ} (hk : 100 ≤ k) :
     Real.le_sqrt_of_sq_le (by nlinarith only [hv.1, hv.2])
   have hq0 : 0 < wallK k / k := div_pos hK0 hX0
   have hq : wallK k / k ≤ wallK k / 100 := div_le_div_of_nonneg_left hK0.le (by norm_num) hX
-  have h1 : 6 * wallK k / Real.sqrt (1 - vRel 1 1 (1 / 2) ^ 2) ≤ 6 * wallK k / (89 / 100) :=
-    div_le_div_of_nonneg_left (by linarith only [hK0]) (by norm_num) hs
-  have h2 : 2 * (6 * wallK k / Real.sqrt (1 - vRel 1 1 (1 / 2) ^ 2)) + 151 * (wallK k / k)
-      ≤ 15 * wallK k := by
+  obtain ⟨hl, hu⟩ := radar_kinematic_time_bounds hk
+  have hπ : Real.pi * wallK k ≤ 3.15 * wallK k :=
+    mul_le_mul_of_nonneg_right Real.pi_lt_d2.le hK0.le
+  have hT : (|Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2)| + 52 * (wallK k / k)) ≤ 6
+      * wallK k := by
+    have h0 : |Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2)| ≤ 3 / 2 * (Real.pi *
+        wallK k) := by
+      rw [abs_le]
+      constructor <;> linarith only [hl, hu, hK0, Real.pi_pos, mul_pos Real.pi_pos hK0]
+    norm_num at hπ
+    linarith only [h0, hπ, hq, hK0]
+  have h1 : (|Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2)| + 52 * (wallK k / k))
+      / Real.sqrt (1 - vRel 1 1 (1 / 2) ^ 2) ≤ 6 * wallK k / (89 / 100) :=
+    (div_le_div_of_nonneg_right hT (Real.sqrt_nonneg _)).trans
+      (div_le_div_of_nonneg_left (by linarith only [hK0]) (by norm_num) hs)
+  have h2 : 2 * ((|Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2)| + 52 * (wallK k / k))
+      / Real.sqrt (1 - vRel 1 1 (1 / 2) ^ 2)) + 151 * (wallK k / k) ≤ 15 * wallK k := by
     have e : 6 * wallK k / (89 / 100) = 600 / 89 * wallK k := by ring
     rw [e] at h1
     linarith only [h1, hq, hK0]

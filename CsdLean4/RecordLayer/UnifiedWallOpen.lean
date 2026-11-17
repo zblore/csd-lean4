@@ -221,7 +221,7 @@ theorem tri_wall_radar_lorentz_open {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN :
                 + vB * ((gatedErr (2 * gA) tR tbR / RA + |tR - radarTR d|)
                     + (gatedErr (2 * gA) tM tbM / RA + |tM - radarTM d vB|))
                   / Real.sqrt (1 - vB ^ 2))
-          (|tR - tM| + (gatedErr (2 * gA) tR tbR + gatedErr (2 * gA) tM tbM) / RA)
+          (tR - tM) ((gatedErr (2 * gA) tR tbR + gatedErr (2 * gA) tM tbM) / RA)
       ∧ ∀ ϵ : ℝ, 0 < ϵ → ∃ ρ : ℝ, 0 < ρ ∧ ∀ θ ψ χ ξ ζ : KTorus, NearStart ρ θ →
         NearStart ρ ψ → NearStart ρ χ → NearStart ρ ξ → NearStart ρ ζ →
         WallRadarLorentz M
@@ -246,7 +246,7 @@ theorem tri_wall_radar_lorentz_open {j : ℕ} (hj : 0 < j) (hjn : j ≤ n) (hN :
                     + (gatedErr (2 * gA) tM tbM / RA + |tM - radarTM d vB|))
                   / Real.sqrt (1 - vB ^ 2))
             + ϵ)
-          (|tR - tM| + (gatedErr (2 * gA) tR tbR + gatedErr (2 * gA) tM tbM) / RA + ϵ) := by
+          (tR - tM) ((gatedErr (2 * gA) tR tbR + gatedErr (2 * gA) tM tbM) / RA + ϵ) := by
   have hn : 0 < n := hj.trans_le hjn
   have hK : 0 < 1200 * n * N := by positivity
   have hRA : 0 < RA := by

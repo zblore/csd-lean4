@@ -5,7 +5,7 @@
 UD-200, UD-201, UD-202). This note audits one theorem,
 `CSD.RecordLayer.csd_operational_lorentz_from_records`
 (`RecordLayer/UnifiedRadarGeometry.lean`), against the plan's list and against the test of
-UO-16. It does not mark UO-16 complete.
+UO-16. The mark of UO-16 (§6) is the author's, made 2026-11-17 after this audit.
 
 ## 1. The theorem and its hypotheses
 
@@ -69,8 +69,8 @@ Axioms (pinned in `Tests/AxiomAudit/SigmaLayer.lean`): `propext`, `Classical.cho
   was bounded in terms of the boosted coordinates and no bound on the counts was exported.
   Now the chain exports the size of the rest observer's coordinate (`6K` for the family) and
   the residual is at most `4600 K²/k`, `4600/(π² k)` of the squared distance
-  (`radar_interval_error_le`, `tendsto_radar_interval_error_relative`). Residue: no lower
-  bound on the interval itself is stated.
+  (`radar_interval_error_le`, `tendsto_radar_interval_error_relative`). The residue, a lower
+  bound on the interval itself, is `radar_rest_time_ge` (~~#434~~, UD-204): at least `9 K²`.
 * **F2. The open set is not explicit.** Its radius exists for each `k`; the one the proof
   finds shrinks as `k` grows. The plan's Task 9 does not ask for a uniform bound.
 * **F3. Reconstruction, not derivation.** The carriers are lattice Dirac particles: their
@@ -86,9 +86,9 @@ Axioms (pinned in `Tests/AxiomAudit/SigmaLayer.lean`): `propext`, `Classical.cho
 ## 6. Verdict
 
 The build, the tests and the guards pass, and the nine checks pass with the qualifications
-above. With F1 closed (~~#433~~) each clause of UO-16's statement has a theorem on the arena
-of UA-18. UO-16 is **not marked complete by this note**: whether the qualifications (F2, F4,
-F5, the windows in flow time) bar it is the author's decision.
+above. With F1 closed (~~#433~~, ~~#434~~) each clause of UO-16's statement has a theorem on
+the arena of UA-18. **The author marked UO-16 complete on 2026-11-17**, with F2 to F6 and
+the windows in flow time standing as the scope of the mark, not as bars to it.
 
 ## References
 

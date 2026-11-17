@@ -542,37 +542,28 @@ theorem gatedErr_div_le {K X Δ gA t tb : ℝ} (hK : 0 < K) (hX : 100 ≤ X) (h�
   norm_num at hu' s1 ⊢
   linarith only [hu', s1]
 
-/-- **The size of the rest observer's coordinate.** With the relay and the meeting within
-`(3/2) K/X` and `(16/5) K/X` of the kinematic times `πK` and `πK/v`, `2/5 ≤ v ≤ 1`: the bound
-of #402 on the rest observer's time between the two, enlarged by `K/X`, is at most `6K`. -/
-theorem radar_size_le {K X Δ gA v tR tbR tM tbM : ℝ} (hK : 0 < K) (hX : 100 ≤ X)
-    (hΔ : Δ * K = X) (hgA0 : 0 ≤ gA) (hgA : gA ≤ Δ / 5) (hv : 2 / 5 ≤ v) (hv1 : v ≤ 1)
+/-- **The rest observer's time against the kinematic time.** With the relay and the meeting
+within `(3/2) K/X` and `(16/5) K/X` of the kinematic times `πK` and `πK/v`: the difference
+of the two gate times is within `(47/10) K/X` of `πK − πK/v`, and with the bound of #402 on
+the two counts and a further `K/X` the total is at most `52 K/X`. -/
+theorem radar_rest_time_le {K X Δ gA v tR tbR tM tbM : ℝ} (hK : 0 < K) (hX : 100 ≤ X)
+    (hΔ : Δ * K = X) (hgA0 : 0 ≤ gA) (hgA : gA ≤ Δ / 5)
     (hRb : tR ≤ tbR) (hMb : tM ≤ tbM) (e3 : tbM - tM ≤ 18 * (K / (10 ^ 5 * X)))
     (e4 : tbR - tR ≤ 6 * (K / (10 ^ 5 * X))) (e7 : |tM - Real.pi * K / v| ≤ 16 / 5 * (K / X))
     (e8 : |tR - Real.pi * K| ≤ 3 / 2 * (K / X)) :
-    |tR - tM| + (gatedErr (2 * gA) tR tbR + gatedErr (2 * gA) tM tbM) / Δ + K / X
-      ≤ 6 * K := by
+    |tR - tM - (Real.pi * K - Real.pi * K / v)|
+        + ((gatedErr (2 * gA) tR tbR + gatedErr (2 * gA) tM tbM) / Δ + K / X)
+      ≤ 52 * (K / X) := by
   have hX0 : 0 < X := by linarith only [hX]
   have hq0 : 0 < K / X := div_pos hK hX0
-  have hq : K / X ≤ K / 100 := div_le_div_of_nonneg_left hK.le (by norm_num) hX
   have hq5 : 0 ≤ K / (10 ^ 5 * X) := by positivity
   have gR := gatedErr_div_le hK hX hΔ hgA0 hgA hRb (by linarith only [e4, hq5])
   have gM := gatedErr_div_le hK hX hΔ hgA0 hgA hMb e3
-  have hv0 : 0 < v := by linarith only [hv]
-  have hπK : 0 ≤ Real.pi * K := mul_nonneg Real.pi_pos.le hK.le
-  have h1 : Real.pi * K / v ≤ Real.pi * K * (5 / 2) := by
-    rw [div_le_iff₀ hv0]
-    nlinarith only [hπK, hv]
-  have h2 : Real.pi * K ≤ Real.pi * K / v := by
-    rw [le_div_iff₀ hv0]
-    nlinarith only [hπK, hv1]
-  have h3 : Real.pi * K ≤ 3.15 * K := mul_le_mul_of_nonneg_right Real.pi_lt_d2.le hK.le
-  have hab : |tR - tM| ≤ Real.pi * K / v - Real.pi * K + 47 / 10 * (K / X) := by
+  have hab : |tR - tM - (Real.pi * K - Real.pi * K / v)| ≤ 47 / 10 * (K / X) := by
     rw [abs_le] at e7 e8 ⊢
-    constructor <;> linarith only [e7.1, e7.2, e8.1, e8.2, h2, hq0]
+    constructor <;> linarith only [e7.1, e7.2, e8.1, e8.2]
   rw [add_div]
-  norm_num at h3
-  linarith only [hab, gR, gM, h1, h3, hq, hq0]
+  linarith only [hab, gR, gM, hq0]
 
 /-- ★★★ **The family's run: five counts and the Lorentz statement, with an error that
 vanishes against the length of the run.** For every `k ≥ 100` and every ring with an even
@@ -614,7 +605,8 @@ theorem radar_family_lorentz {k : ℕ} (hk : 100 ≤ k) {M H : ℕ}
               (deviceShift_ne_zero (H : ZMod (M + 1)) hΨA)) (deviceRay _ hΨB))
           (ringRate (1200 * wallN k * wallN k) M 0 (wallGap k)) (vRel 1 1 (1 / 2))
           (famTb k) (famT3 k) (famT4 k) (famT5 k) (famTbM k M) (famTcM k M) (famTbR k M)
-          (famTcR k M) (150 * (wallK k / k)) (150 * (wallK k / k)) (6 * wallK k)
+          (famTcR k M) (150 * (wallK k / k)) (150 * (wallK k / k))
+          (Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2)) (52 * (wallK k / k))
       ∧ ∃ ρ : ℝ, 0 < ρ ∧ ∀ θ ψ χ ξ ζ : KTorus, NearStart ρ θ → NearStart ρ ψ →
         NearStart ρ χ → NearStart ρ ξ → NearStart ρ ζ →
         WallRadarLorentz M
@@ -624,7 +616,9 @@ theorem radar_family_lorentz {k : ℕ} (hk : 100 ≤ k) {M H : ℕ}
               (deviceShift_ne_zero (H : ZMod (M + 1)) hΨA)) (deviceRay _ hΨB) θ ψ χ ξ ζ)
           (ringRate (1200 * wallN k * wallN k) M 0 (wallGap k)) (vRel 1 1 (1 / 2))
           (famTb k) (famT3 k) (famT4 k) (famT5 k) (famTbM k M) (famTcM k M) (famTbR k M)
-          (famTcR k M) (151 * (wallK k / k)) (151 * (wallK k / k)) (6 * wallK k) := by
+          (famTcR k M) (151 * (wallK k / k)) (151 * (wallK k / k))
+          (Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2))
+          (52 * (wallK k / k)) := by
   have hk1 : 1 ≤ k := by omega
   have hX : (100 : ℝ) ≤ k := by exact_mod_cast hk
   have hX0 : (0 : ℝ) < k := by linarith only [hX]
@@ -869,9 +863,8 @@ theorem radar_family_lorentz {k : ℕ} (hk : 100 ≤ k) {M H : ℕ}
     hK0 hX hKX hΔK hRA hR2 a1.le (by linarith only [a2, hRA]) a3.le
     (by linarith only [a4, hR2]) hκ0 hκ hv.2 hs o1 o2 o4 q2 p2
     (by linarith only [o4, o5, s5]) (by linarith only [q2, q3, sM]) g1 g2 g3 g4 g5 g6 g7 g8
-  have hB := radar_size_le (v := vRel 1 1 (1 / 2)) hK0 hX hΔK a1.le
-    (by linarith only [a2, hRA]) two_fifths_le_vRel_half_one (by linarith only [hv.2]) p2 q2
-    g3 g4 g7 g8
+  have hB := radar_rest_time_le (v := vRel 1 1 (1 / 2)) hK0 hX hΔK a1.le
+    (by linarith only [a2, hRA]) p2 q2 g3 g4 g7 g8
   rw [← hRA] at hB
   have hq0 : 0 < wallK k / k := div_pos hK0 hX0
   refine ⟨W.mono hEr.1 hEr.2 (by linarith only [hB, hq0]), ?_⟩

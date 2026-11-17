@@ -263,8 +263,8 @@ theorem radar_lorentz_of_histories {X : Type*} {πe πr πμ πρ πm : X → KT
                     + κ * tRet + τRet)) / 2
               + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
                 / Real.sqrt (1 - v ^ 2)
-        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀|
-            ≤ |tR - tMA| + (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ := by
+        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀ - (tR - tMA)|
+            ≤ (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ := by
   intro se hse1 hse2 sr hsr1 hsr2 sμ hsμ1 hsμ2 sρ hsρ1 hsρ2 sm hsm1 hsm2
   obtain ⟨Ne, hNe, be⟩ := He.exists_count hqe hγe se hse1 hse2
   obtain ⟨Nr, hNr, br⟩ := Hr.exists_count hqr hγr sr hsr1 hsr2
@@ -296,17 +296,12 @@ theorem radar_lorentz_of_histories {X : Type*} {πe πr πμ πρ πm : X → KT
   obtain ⟨z1, z2⟩ := radar_lorentz_error hv0 hv hE hRet he hr hμ hρ hm
   refine ⟨z1, z2, ?_⟩
   have hR0' := hR₀.ne'
-  have e : (Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀
-      = (((Nρ : ℝ) * (2 * Real.pi) - R₀ * tR) - ((Nm : ℝ) * (2 * Real.pi) - R₀ * tMA)) / R₀
-        + (tR - tMA) := by
+  have e : (Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀ - (tR - tMA)
+      = (((Nρ : ℝ) * (2 * Real.pi) - R₀ * tR) - ((Nm : ℝ) * (2 * Real.pi) - R₀ * tMA)) / R₀ := by
     field_simp
     ring
-  rw [e]
-  refine (abs_add_le _ _).trans ?_
-  rw [abs_div, abs_of_pos hR₀]
-  have h2 := div_le_div_of_nonneg_right ((abs_sub _ _).trans (add_le_add bρ bm)) hR₀.le
-  unfold gatedErr
-  linarith only [h2]
+  rw [e, abs_div, abs_of_pos hR₀]
+  exact div_le_div_of_nonneg_right ((abs_sub _ _).trans (add_le_add bρ bm)) hR₀.le
 
 end CSD.RecordLayer
 

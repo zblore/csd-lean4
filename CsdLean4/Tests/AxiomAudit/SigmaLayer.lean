@@ -22388,9 +22388,9 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.gatedErr_div_le
 
-/-- info: 'CSD.RecordLayer.radar_size_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+/-- info: 'CSD.RecordLayer.radar_rest_time_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
-#print axioms CSD.RecordLayer.radar_size_le
+#print axioms CSD.RecordLayer.radar_rest_time_le
 
 /-! #433 (the author's programme, obligation UO-16; finding F1 of the audit): the interval's error as a number (`RecordLayer/UnifiedRadarGeometry.lean`). -/
 
@@ -22405,5 +22405,15 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 /-- info: 'CSD.RecordLayer.tendsto_radar_interval_error_relative' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.tendsto_radar_interval_error_relative
+
+/-! #434 (the author's programme, obligation UO-16): the kinematic time's bounds and the lower bound on the rest observer's interval (`RecordLayer/UnifiedRadarGeometry.lean`). -/
+
+/-- info: 'CSD.RecordLayer.radar_kinematic_time_bounds' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_kinematic_time_bounds
+
+/-- info: 'CSD.RecordLayer.radar_rest_time_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_rest_time_ge
 
 end CSD.Tests.AxiomAudit

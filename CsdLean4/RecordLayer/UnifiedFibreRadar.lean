@@ -161,8 +161,8 @@ theorem penta_radar_lorentz_fibre (hH : H.IsHermitian) (hG₁ : G₁.IsHermitian
                     + κ * tRet + τRet)) / 2
               + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
                 / Real.sqrt (1 - v ^ 2)
-        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀|
-            ≤ |tR - tMA| + (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ := by
+        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀ - (tR - tMA)|
+            ≤ (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ := by
   have key := pentaRun_fibre e hH hG₁ hG₂ hG₃ hG₄ hG₅ hf hg hk hl hr hc hcg hck hcl hcr p θ ψ
     χ ξ ζ hF
   have hrep : rep (((1 / 12 : ℝ) : CircleFibre)) = 1 / 12 :=
