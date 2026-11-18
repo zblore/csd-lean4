@@ -246,6 +246,12 @@ Items 1 and 2 are done (2026-11-19, `RecordLayer/GraphCone.lean`, UD-230):
 ring's theorems were not re-proved from the general ones; `HopsOne.hopsG` and `coe_growIter`
 show they are the ring's case.
 
+Items 3 and 4 are done in part (2026-11-19, `RecordLayer/GraphDetector.lean`, UD-231):
+`graphDetector_not_displayed`, `torusDetector_not_displayed` (no display before the growth
+reaches the carrier), `graphDetector_displayed` (display from a hypothesis on the occupancy).
+Left: the packet's box weight joined to the arena's observable; a `TickReadout` for the
+arena.
+
 1. **The cone for any nearest-neighbour graph.** *SiteSuppG*, *growG*, *growIterG* for a site
    map into any finite type with an adjacency relation, and *norm_commutator_graph_le* with
    the same factorial bound. The ring's statements become instances (rule of two); the

@@ -23034,4 +23034,70 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.norm_commutator_latticeDirac_le
 
+/-! #297, second brick (Task 9): a region detector on a graph (`RecordLayer/GraphDetector.lean`). -/
+
+/-- info: 'CSD.RecordLayer.norm_heisenbergFlow_mul_graph_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_heisenbergFlow_mul_graph_le
+
+/-- info: 'CSD.RecordLayer.arenaObs_mul_of_supp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_mul_of_supp
+
+/-- info: 'CSD.RecordLayer.mul_arenaDM_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mul_arenaDM_mk
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_flow_graph_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_flow_graph_le
+
+/-- info: 'CSD.RecordLayer.hopsG_idxCoupledGen' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hopsG_idxCoupledGen
+
+/-- info: 'CSD.RecordLayer.abs_idxPointerShift_le_graph' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_idxPointerShift_le_graph
+
+/-- info: 'CSD.RecordLayer.le_idxPointerShift_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_idxPointerShift_of_le
+
+/-- info: 'CSD.RecordLayer.idxPointerShift_le_of_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxPointerShift_le_of_le_one
+
+/-- info: 'CSD.RecordLayer.graphDetector_not_displayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.graphDetector_not_displayed
+
+/-- info: 'CSD.RecordLayer.graphDetector_displayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.graphDetector_displayed
+
+/-- info: 'CSD.RecordLayer.siteSetProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSetProj
+
+/-- info: 'CSD.RecordLayer.siteSetProj_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSetProj_isHermitian
+
+/-- info: 'CSD.RecordLayer.siteSuppG_siteSetProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSuppG_siteSetProj
+
+/-- info: 'CSD.RecordLayer.hopsG_siteSetProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hopsG_siteSetProj
+
+/-- info: 'CSD.RecordLayer.norm_siteSetProj_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_siteSetProj_le
+
+/-- info: 'CSD.RecordLayer.torusDetector_not_displayed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusDetector_not_displayed
+
 end CSD.Tests.AxiomAudit
