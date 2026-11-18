@@ -33,6 +33,8 @@ new definition of a macrostate.
 * ★★★ `compatibleSet_eq_preimage_singleton` — **a record history of the family is one
   macrostate**: the compatible region of the history that records a count at every reading
   is exactly the cell of the projection at that string of counts;
+* ★★ `map_tickMacro_singleton` (2026-11-19) — the pushed-forward measure of a string is the
+  arena measure of its history's compatible region;
 * ★★★ `csd_radar_macrostate` (2026-11-19) — the radar's instance: for the family of
   `csd_radar_history_preparation` there are five counts, a cap and a string such that the cell
   of the projection of the five readings is the compatible region of the radar's history, has
@@ -52,8 +54,9 @@ them. Non-zero measure, with no value.
 ⚠️ **The cap `B` is a parameter.** Counts above `B`, and starts with no count, share the last
 value. No canonical `B` or family of readings is claimed.
 
-⚠️ **A set of labels.** No order, geometry or causal relation on the macrostates, and no law
-for the pushed-forward measure.
+⚠️ **A set of labels.** No order, geometry or causal relation on the macrostates. The law of
+the pushed-forward measure is identified with the measure of compatible regions
+(`map_tickMacro_singleton`) and is not computed.
 
 References: `specs/BACKLOG.md` #439, ~~#438~~, ~~#436~~, ~~#99~~, ~~#102~~;
 `specs/unified-record-spacetime-plan.md` (UO-25, UD-208, UD-219, UD-223);
@@ -186,6 +189,18 @@ theorem compatibleSet_eq_preimage_singleton {k : ℕ} (ctx : Fin k → ι × ℝ
     obtain ⟨j, rfl⟩ := List.mem_ofFn.1 hf
     rw [← countEvent_eq_event]
     exact (A.tickCode_eq_castSucc_iff B (ctx j).1 (ctx j).2 x (c j)).1 (congrFun h j)
+
+/-- ★★ **The macroscopic law of a string is the measure of its history's compatible region.**
+For counts `c j ≤ B`, the measure pushed forward by the macroscopic projection gives the
+string `c` the arena measure of the compatible region of the history that records `c j` at
+every reading. -/
+theorem map_tickMacro_singleton {k : ℕ} (ctx : Fin k → ι × ℝ) (B : ℕ)
+    (c : Fin k → Fin (B + 1)) :
+    Measure.map (A.tickMacro ctx B).toFun (D.muL : Measure X) {fun j => Fin.castSucc (c j)}
+      = (D.muL : Measure X) (compatibleSet A.semantics
+          (List.ofFn fun j => startFact (ctx j).1 (ctx j).2 (c j))) := by
+  rw [Measure.map_apply (A.tickMacro ctx B).measurable_toFun (measurableSet_singleton _),
+    compatibleSet_eq_preimage_singleton]
 
 end TickReadout
 

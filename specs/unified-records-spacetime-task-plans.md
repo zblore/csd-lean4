@@ -43,9 +43,9 @@ In hand: `TickReadout.tickMacro`, `TickReadout.compatibleSet_eq_preimage_singlet
 
 1. Measurability — done (`TickReadout.measurable_tickCode`).
 2. Factorisation of the record events — done (`TickReadout.countEvent_eq_preimage`).
-3. Record probabilities under the pushforward — owed, short. *map_tickMacro_singleton*: the
-   pushed-forward measure of a string is the arena measure of the history's compatible
-   region. It is `Measure.map_apply` and the cell identity. (S)
+3. Record probabilities under the pushforward — done 2026-11-19:
+   `TickReadout.map_tickMacro_singleton`, the pushed-forward measure of a string is the arena
+   measure of the history's compatible region.
 4. A quantitative stability statement — owed, and the real content. Plan:
    * *isTickCount_of_gatedHistory_unique*: on the set where a gated history holds with
      slack, the count is a function of the history's data (the number of whole turns of
@@ -321,7 +321,7 @@ Critical path for workstream S: §6 clock on a packet → §7 items 1 to 3 → �
 
 The caused return (§9) runs beside both and joins at §8 item 7 and §3 Route A.
 
-Items that can each be done now with nothing in front of them: §1 item 3; §1 item 4; §2
+Items that can each be done now with nothing in front of them: §1 item 4; §2
 items 1 and 3; §3 Route B; §4 item 1; §6 (all three); §7 item 1; §9 item 1.
 
 ## 12. What would count as failure, by task
