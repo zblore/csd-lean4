@@ -79,6 +79,9 @@ Core (#292–#298), in dependency order. Every one is stuck only on its price.
 5. **#296 Packets in `d` dimensions** (L; needs #294, #295). One translation phase per axis, each
    drifting at the group velocity's component; normalisation, localisation independent of `L`, the
    scaled and massless limits (`dirac_packet_limit`, `dirac_massless_limit`).
+   ▸ **First part done 2026-11-18**: `CV/DiracPacketD.lean` (`transPhaseD_packetD`,
+   `transPhaseD_drift`, `chainInnerD_packetD_self`), for `μ > 0`. Open: the weight outside a
+   box, the limits, `μ = 0`.
 6. **#297 Records and the cone on any nearest-neighbour lattice** (M; needs #294). Generalise the
    detector, record-window and `ChainCone` modules from `ZMod L × Fin 2` to any finite site set with
    a nearest-neighbour graph, then instantiate on the `d`-dimensional torus.

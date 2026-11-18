@@ -5661,4 +5661,134 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.rotation_residue
 
+/-! #296, first part (the author's plan of 2026-11-18, workstream S, Task 8; milestone M7, obligation UO-17): packets on the lattice in `d` dimensions (`CV/DiracPacketD.lean`). -/
+
+/-- info: 'CSD.CV.castZ' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.castZ
+
+/-- info: 'CSD.CV.angleZD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.angleZD
+
+/-- info: 'CSD.CV.modeSD_castZ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeSD_castZ
+
+/-- info: 'CSD.CV.dispE_modeSD_castZ' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.dispE_modeSD_castZ
+
+/-- info: 'CSD.CV.angleZD_add_single' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.angleZD_add_single
+
+/-- info: 'CSD.CV.sum_star_planeWave' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sum_star_planeWave
+
+/-- info: 'CSD.CV.sum_star_planeWaveD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sum_star_planeWaveD
+
+/-- info: 'CSD.CV.chainInnerD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainInnerD
+
+/-- info: 'CSD.CV.chainInnerD_spinorWave' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainInnerD_spinorWave
+
+/-- info: 'CSD.CV.chainInnerD_sum_left' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainInnerD_sum_left
+
+/-- info: 'CSD.CV.chainInnerD_sum_right' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainInnerD_sum_right
+
+/-- info: 'CSD.CV.transMulD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transMulD
+
+/-- info: 'CSD.CV.transPhaseD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transPhaseD
+
+/-- info: 'CSD.CV.transMulD_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transMulD_sum
+
+/-- info: 'CSD.CV.transMulD_spinorWave' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transMulD_spinorWave
+
+/-- info: 'CSD.CV.modeSpinD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.modeSpinD
+
+/-- info: 'CSD.CV.diracModeD_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.diracModeD_eq
+
+/-- info: 'CSD.CV.packetD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.packetD
+
+/-- info: 'CSD.CV.hasDerivAt_packetD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_packetD
+
+/-- info: 'CSD.CV.NoWrapD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.NoWrapD
+
+/-- info: 'CSD.CV.DistinctD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.DistinctD
+
+/-- info: 'CSD.CV.noWrapD_distinctD_of_box' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.noWrapD_distinctD_of_box
+
+/-- info: 'CSD.CV.spinOverlapD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinOverlapD
+
+/-- info: 'CSD.CV.transWeightD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transWeightD
+
+/-- info: 'CSD.CV.transPhaseD_packetD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transPhaseD_packetD
+
+/-- info: 'CSD.CV.chainInnerD_packetD_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.chainInnerD_packetD_self
+
+/-- info: 'CSD.CV.abs_groupVelD_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_groupVelD_sub_le
+
+/-- info: 'CSD.CV.stepErrD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.stepErrD
+
+/-- info: 'CSD.CV.abs_latticeED_step_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.abs_latticeED_step_sub_le
+
+/-- info: 'CSD.CV.driftErrorD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.driftErrorD
+
+/-- info: 'CSD.CV.transPhaseD_drift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transPhaseD_drift
+
+/-- info: 'CSD.CV.norm_transPhaseD_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_transPhaseD_ge
+
 end CSD.Tests.AxiomAudit
