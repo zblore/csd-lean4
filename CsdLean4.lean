@@ -780,6 +780,7 @@ public import CsdLean4.CV.DiracPacketBoxD
 public import CsdLean4.CV.DiracPacketArcD
 public import CsdLean4.CV.DiracSpinorD
 public import CsdLean4.CV.DiracPacketLimitD
+public import CsdLean4.CV.DiracPacketWindowD
 public import CsdLean4.CV.DiracPacket
 public import CsdLean4.CV.DiracContinuum
 public import CsdLean4.CV.DiracPacketLimit

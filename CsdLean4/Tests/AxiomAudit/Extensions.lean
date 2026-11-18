@@ -6127,4 +6127,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.regionWeightD_flatPacket_compl_movedBoxD_le
 
+/-! #296, sixth part (Task 8; milestone M7, obligation UO-17): the drift of a flat packet from the width of its window (`CV/DiracPacketWindowD.lean`). -/
+
+/-- info: 'CSD.CV.windowStepErrD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.windowStepErrD
+
+/-- info: 'CSD.CV.stepErrD_le_windowStepErrD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.stepErrD_le_windowStepErrD
+
+/-- info: 'CSD.CV.windowStepErrD_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.windowStepErrD_nonneg
+
+/-- info: 'CSD.CV.two_pi_div_mul_windowStepErrD_scaled' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.two_pi_div_mul_windowStepErrD_scaled
+
+/-- info: 'CSD.CV.regionWeightD_flatPacket_compl_movedBoxD_le_window' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.regionWeightD_flatPacket_compl_movedBoxD_le_window
+
 end CSD.Tests.AxiomAudit
