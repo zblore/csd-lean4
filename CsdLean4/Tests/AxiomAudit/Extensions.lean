@@ -5791,4 +5791,90 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.norm_transPhaseD_ge
 
+/-! #296, second part (the author's plan of 2026-11-18, workstream S, Task 8; milestone M7, obligation UO-17): the weight of a packet outside a box of sites (`CV/DiracPacketBoxD.lean`). -/
+
+/-- info: 'CSD.CV.siteWeightD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.siteWeightD
+
+/-- info: 'CSD.CV.siteWeightD_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.siteWeightD_nonneg
+
+/-- info: 'CSD.CV.regionWeightD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.regionWeightD
+
+/-- info: 'CSD.CV.regionWeightD_nonneg' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.regionWeightD_nonneg
+
+/-- info: 'CSD.CV.regionWeightD_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.regionWeightD_mono
+
+/-- info: 'CSD.CV.re_chainInnerD_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.re_chainInnerD_self
+
+/-- info: 'CSD.CV.sum_siteWeightD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.sum_siteWeightD
+
+/-- info: 'CSD.CV.regionWeightD_add_compl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.regionWeightD_add_compl
+
+/-- info: 'CSD.CV.slabD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.slabD
+
+/-- info: 'CSD.CV.mem_slabD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mem_slabD
+
+/-- info: 'CSD.CV.regionWeightD_compl_piFinset_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.regionWeightD_compl_piFinset_le
+
+/-- info: 'CSD.CV.transPhaseD_eq_sum' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.transPhaseD_eq_sum
+
+/-- info: 'CSD.CV.regionWeightD_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.regionWeightD_mul_le
+
+/-- info: 'CSD.CV.regionWeightD_compl_box_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.regionWeightD_compl_box_le
+
+/-- info: 'CSD.CV.le_regionWeightD_box' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.le_regionWeightD_box
+
+/-- info: 'CSD.CV.re_star_mul_ge_of_norm_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.re_star_mul_ge_of_norm_sub_le
+
+/-- info: 'CSD.CV.movedDirD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.movedDirD
+
+/-- info: 'CSD.CV.norm_movedDirD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.norm_movedDirD
+
+/-- info: 'CSD.CV.re_movedDirD_transPhaseD_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.re_movedDirD_transPhaseD_ge
+
+/-- info: 'CSD.CV.regionWeightD_packetD_compl_box_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.regionWeightD_packetD_compl_box_le
+
+/-- info: 'CSD.CV.le_regionWeightD_packetD_box' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.le_regionWeightD_packetD_box
+
 end CSD.Tests.AxiomAudit

@@ -82,6 +82,9 @@ Core (#292–#298), in dependency order. Every one is stuck only on its price.
    ▸ **First part done 2026-11-18**: `CV/DiracPacketD.lean` (`transPhaseD_packetD`,
    `transPhaseD_drift`, `chainInnerD_packetD_self`), for `μ > 0`. Open: the weight outside a
    box, the limits, `μ = 0`.
+   ▸ **Second part done 2026-11-18**: `CV/DiracPacketBoxD.lean`
+   (`regionWeightD_compl_box_le`, `regionWeightD_packetD_compl_box_le`): the weight outside
+   a box from the `d` phases. Open: the limits (nothing is yet shown small), `μ = 0`.
 6. **#297 Records and the cone on any nearest-neighbour lattice** (M; needs #294). Generalise the
    detector, record-window and `ChainCone` modules from `ZMod L × Fin 2` to any finite site set with
    a nearest-neighbour graph, then instantiate on the `d`-dimensional torus.
