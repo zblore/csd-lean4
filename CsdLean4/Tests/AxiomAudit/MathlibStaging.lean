@@ -76,6 +76,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelState
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelFirstOrder
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelOrbitRemainder
+public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelSector
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonSeries
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonVertex
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
@@ -17039,5 +17040,19 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Matrix.duhamelRemainder_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.duhamelRemainder_eq
+
+/-! #437, fourth brick (obligation UO-26): the Duhamel bound for a conserved sector (`Mathlib/Analysis/Matrix/DuhamelSector.lean`). -/
+
+/-- info: 'Matrix.mul_exp_smul_eq_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.mul_exp_smul_eq_of_commute
+
+/-- info: 'Matrix.norm_mul_exp_neg_I_add_mul_le_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_mul_exp_neg_I_add_mul_le_of_commute
+
+/-- info: 'Matrix.norm_mul_exp_neg_I_add_smul_mul_le_of_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_mul_exp_neg_I_add_smul_mul_le_of_commute
 
 end CSD.Tests.AxiomAudit

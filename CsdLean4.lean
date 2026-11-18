@@ -26,6 +26,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelState
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelFirstOrder
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelOrbitRemainder
+public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelSector
 public import CsdLean4.Mathlib.Topology.Algebra.MulAction
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Metric
@@ -863,6 +864,7 @@ public import CsdLean4.RecordLayer.UnifiedWallRay
 public import CsdLean4.RecordLayer.UnifiedRadarRay
 public import CsdLean4.RecordLayer.UnifiedRadarPreparation
 public import CsdLean4.RecordLayer.UnifiedRadarMacrostate
+public import CsdLean4.RecordLayer.UnifiedTransponder
 public import CsdLean4.RecordLayer.UnifiedFibreRun
 public import CsdLean4.RecordLayer.UnifiedFibreDrift
 public import CsdLean4.RecordLayer.UnifiedFibreRadar
