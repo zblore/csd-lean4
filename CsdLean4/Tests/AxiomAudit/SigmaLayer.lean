@@ -22806,4 +22806,16 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_launch_le
 
+/-! #439, second brick (Task 3, obligation UO-25 (3)): the radar's macrostate (`RecordLayer/UnifiedRadarMacrostate.lean`). -/
+
+/-- info: 'CSD.RecordLayer.csd_radar_macrostate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.csd_radar_macrostate
+
+/-! #437, fifth brick (obligation UO-26 (1)): no launch without a meeting, for the contact term (`RecordLayer/UnifiedTransponder.lean`). -/
+
+/-- info: 'CSD.RecordLayer.transponder_launch_le_coincidence' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_launch_le_coincidence
+
 end CSD.Tests.AxiomAudit

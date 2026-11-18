@@ -1402,6 +1402,8 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-222 | **The drift of a flat packet from the width of its window (M7, sixth part of the third row).** If every momentum of the box is within `w_j` of `k₀_j` on each axis, the energy-step errors are at most `2\|J\|(w_i + h) + (4J²/μ)((w_i + h) + (Σ_j w_j + h))`, `h = 2π/L`, and the bound of UD-221 holds with them. Under `J = c L/(2 ℓ)` and `w_j = (ℓ/L) Δ_j` the drift rate `(2π/L)` times that error is `(2π c/ℓ)(ℓ Δ_i + 2π)/L + (2π c²/(ℓ² μ))(ℓ Δ_i + ℓ Σ_j Δ_j + 4π)` | `windowStepErrD`, `stepErrD_le_windowStepErrD`, `windowStepErrD_nonneg`, `two_pi_div_mul_windowStepErrD_scaled`, `regionWeightD_flatPacket_compl_movedBoxD_le_window` (`CV/DiracPacketWindowD.lean`) | bound; the terms are free of `L` under the scaling but do not shrink with it; `N_i` and the half-width are tied and no choice is optimised; the scaling is an identity about the rate, not a family of lattices; `μ > 0`; no record read |
 | UD-223 | **The macroscopic projection of tick records (UO-25 (3), first brick).** For any tick readout of a dynamics: the count of a pointer at a time, capped at `B`, is a measurable map to a finite set; for a finite indexed family of readings the capped counts are a macroscopic projection in the sense of ~~#99~~; every record event of the family is the preimage of a set of strings; and the compatible region of the history that records a count `≤ B` at every reading of the family is exactly one cell of the projection | `TickReadout.countEvent`, `TickReadout.countEvent_eq_event`, `TickReadout.measurableSet_countEvent`, `TickReadout.tickCode`, `TickReadout.tickCode_eq_castSucc_iff`, `TickReadout.tickCode_eq_last_iff`, `TickReadout.measurable_tickCode`, `TickReadout.tickMacro`, `TickReadout.countEvent_eq_preimage`, `TickReadout.factorsThrough_countEvent`, `TickReadout.compatibleSet_eq_preimage_singleton` (`RecordLayer/UnifiedRadarMacrostate.lean`) | exact; the construction only: no stability of the cells under the flow and no count of the microstates in a cell; not instantiated for the radar; the cap `B` and the family are parameters; no order or geometry on the macrostates; no law for the pushed-forward measure |
 | UD-224 | **The transponder: no launch without a meeting (UO-26 (1), fourth brick).** For Hermitian `H₀`, `V` and a `Q` that commutes with `H₀` and annihilates `X`: `‖Q e^{−it(H₀+V)} X‖ ≤ ‖Q‖ ∫₀ᵗ ‖V e^{−isH₀} X‖ ds`, `t ≥ 0`. For a messenger and a carrier whose Hamiltonian has one block for each of two levels, coupled by `g G` with `G` Hermitian, and a prepared subspace with that carrier in its first level: the part with it in its second level at `t ≥ 0` is at most `‖Q‖ \|g\| ∫₀ᵗ ‖G e^{−isH₀} X‖ ds`, `Q` the projector on the second level and `H₀` the uncoupled Hamiltonian | `Matrix.mul_exp_smul_eq_of_commute`, `Matrix.norm_mul_exp_neg_I_add_mul_le_of_commute`, `Matrix.norm_mul_exp_neg_I_add_smul_mul_le_of_commute` (`Mathlib/Analysis/Matrix/DuhamelSector.lean`); `levelProj`, `levelProj_mul_blockDiagonal`, `blockDiagonal_isHermitian`, `one_kronecker_mul_compositeH`, `transponder_launch_le` (`RecordLayer/UnifiedTransponder.lean`) | an upper bound: no launch is shown; `G` is any Hermitian matrix, the contact term of UA-19 (b) is not substituted and the integrand is not expressed as a weight at a meeting; on the carriers' Hilbert space, not on the arena; `‖Q‖` not evaluated |
+| UD-225 | **The radar's record history is a macrostate of non-zero measure (UO-25 (3), second brick).** For the family of UD-219: there are strengths such that for every labelling, reference point and reading times there are five counts, a cap `B` and a string of capped counts for which the cell of the projection of UD-223 for the five readings is the compatible region of the radar's five-fact history, has non-zero `μ_FS ⊗ vol⁵` measure, and the counts satisfy the comparisons within `152 K/k` and `53 K/k` | `csd_radar_macrostate` (`RecordLayer/UnifiedRadarMacrostate.lean`) | the counts and the cell are not named (they come from the covering argument of UD-219; the cap is the largest count); no value for the measure; no stability of the cell under the flow |
+| UD-226 | **No launch without a meeting, for the contact term (UO-26 (1), fifth brick).** UD-224 with the coupling the coincidence projector `P` of the messenger and the transponder times the transponder's level swap, for a relation between their sites that the level swap respects: the part with the transponder in its second level at `t ≥ 0` is at most `‖Q‖ \|g\| ∫₀ᵗ ‖P e^{−isH₀} X‖ ds` | `transponder_launch_le_coincidence` (`RecordLayer/UnifiedTransponder.lean`) | an upper bound: no launch is shown; the integrand is an operator norm, not yet the coincidence weight of two packets; on the carriers' Hilbert space, not on the arena |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2972,6 +2974,22 @@ launch, its weight, its place and its time. The contact term itself in place of 
 the integrand as the free orbit's weight where the two carriers coincide. Anything on the
 arena. UA-19 is used only for its structure (a), (b); no further assumption is added.
 
+Exact scope of UD-225 (BACKLOG #439, second brick; obligation UO-25 (3)). What it gives. The
+radar's records in the frame of ~~#99~~ with content: one cell of the macroscopic projection
+of the five readings is the compatible region of the radar's history, it is not a null set
+of the arena, and its counts obey the Lorentz comparisons. What it does not give. Which
+cell. Stability of the cell: nothing says a later reading of the same pointers returns the
+same string, and that is the part of Task 3 that is open. A law for the pushed-forward
+measure. No new assumption.
+
+Exact scope of UD-226 (BACKLOG #437, fifth brick; obligation UO-26 (1), assumption UA-19).
+What it gives. Item (1) of UO-26 for the contact term that UA-19 (b) names, not for a
+generic coupling: the transponder's second level is populated only as far as the free orbit
+has amplitude where the two carriers are within the gate's relation. What it does not give.
+That amplitude as the coincidence weight of two packets, or a bound for it from the
+packets' boxes (UD-221, UD-222 give the boxes). Any launch. Anything on the arena. No
+assumption beyond UA-19.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4329,6 +4347,9 @@ time. It is not a statement about every dynamics on `Σ`.
   records have a macroscopic projection in the frame of ~~#99~~, and a record history is one
   of its cells. Owed for (3): the radar's instance with its cell of non-zero measure, and
   what stability of the cells can be shown.
+  ▸ **Task 3, second brick, 2026-11-19 (BACKLOG #439, part) → UD-225. (3) not met.** The
+  radar's history is one cell of the projection of the five readings, of non-zero measure.
+  Owed for (3): what stability of the cell can be shown.
 * **UO-26.** A return caused at the event (the author's decision of 2026-11-18 under UO-17;
   choice (c) of [`unified-m7-feasibility.md`](unified-m7-feasibility.md) §7; BACKLOG #437).
   On the arena as frozen a messenger turns round only at a flat wall, so a moving group in
@@ -4364,6 +4385,9 @@ time. It is not a statement about every dynamics on `Σ`.
   prepared in the first, is in the second at `t` by at most `‖Q‖ |g| ∫₀ᵗ ‖G e^{−isH₀} X‖ ds`.
   Conditions: `G` any Hermitian matrix, the contact term not substituted; on the carriers'
   Hilbert space only. Open: (2) to (5).
+  ▸ **Fifth brick, 2026-11-19 (BACKLOG #437, part) → UD-226.** (1) for the contact term of
+  UA-19 (b) itself: the bound is `‖Q‖ |g| ∫₀ᵗ ‖P e^{−isH₀} X‖ ds` with `P` the coincidence
+  projector. Open: the integrand as the coincidence weight of two packets; (2) to (5).
 
 ---
 

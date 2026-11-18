@@ -6,6 +6,7 @@ Authors: Zayn Blore
 module
 
 public import CsdLean4.RecordLayer.UnifiedCompositeCarrier
+public import CsdLean4.RecordLayer.UnifiedTriFibre
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelSector
 
 /-!
@@ -25,7 +26,11 @@ contact term acts.
 * ★★★ `transponder_launch_le` — for a messenger and a transponder whose Hamiltonian has one
   block for each level, coupled by `g G` with `G` Hermitian, and a prepared subspace with the
   transponder in its first level: at `t ≥ 0` the part with the transponder in its second
-  level is at most `‖Q‖ |g| ∫₀ᵗ ‖G e^{−isH₀} X‖ ds`, `H₀` the uncoupled Hamiltonian.
+  level is at most `‖Q‖ |g| ∫₀ᵗ ‖G e^{−isH₀} X‖ ds`, `H₀` the uncoupled Hamiltonian;
+* ★★★ `transponder_launch_le_coincidence` (2026-11-19) — the same with the contact term of
+  UA-19 (b), the coincidence projector `P` times the transponder's level swap: the bound is
+  `‖Q‖ |g| ∫₀ᵗ ‖P e^{−isH₀} X‖ ds`, the accumulated amplitude of the free orbit where the two
+  carriers are in the relation.
 
 ## Honest scope
 
@@ -33,9 +38,10 @@ contact term acts.
 first-order term of `Mathlib/Analysis/Matrix/DuhamelFirstOrder.lean` is not evaluated for a
 contact term. Items (2) to (5) of UO-26 are open.
 
-⚠️ **`G` is any Hermitian matrix.** The coincidence projector times the level swap of UA-19
-(b) (`gateOp` with `levelSwap`) is one such `G`, but it is not substituted, and the integrand
-is not expressed as the free orbit's weight at a meeting.
+⚠️ **An amplitude in the operator norm, not yet a weight of a packet.** In
+`transponder_launch_le_coincidence` the integrand is `‖P e^{−isH₀} X‖`. For `X` the projector
+on a product of two packets this is the square root of their coincidence weight; that
+identification, and a bound for it from where the packets are, are not made here.
 
 ⚠️ **On the carriers' Hilbert space, not on the arena.** By UA-19 (b) the contact term is
 present on the fibres where a pointer's profile does not vanish; the pointer's own motion
@@ -121,6 +127,55 @@ theorem transponder_launch_le {M₀ : Matrix ι ι ℂ} (hM : M₀.IsHermitian)
   Matrix.norm_mul_exp_neg_I_add_smul_mul_le_of_commute _ G X _ g
     (compositeH_isHermitian hM (blockDiagonal_isHermitian hT)) hG ht
     (one_kronecker_mul_compositeH M₀ (levelProj_mul_blockDiagonal T 1)) hX
+
+/-- ★★★ **No launch without a meeting, for the contact term of UA-19.** As
+`transponder_launch_le` with the coupling the coincidence projector of the messenger and the
+transponder times the transponder's level swap: the part of the state with the transponder
+in its second level at the time `t ≥ 0` is at most
+
+  `‖Q‖ |g| ∫₀ᵗ ‖P e^{−i s H₀} X‖ ds`,
+
+`P` the coincidence projector: the accumulated amplitude of the free orbit on the
+configurations where the two carriers are in the relation `r`. -/
+theorem transponder_launch_le_coincidence {S : Type*}
+    (σ : ι → S) (τ : n × Fin 2 → S) (r : S → S → Prop) [DecidableRel r]
+    (hτ : ∀ i j, τ i ≠ τ j → levelSwap n i j = 0)
+    {M₀ : Matrix ι ι ℂ} (hM : M₀.IsHermitian)
+    {T : Fin 2 → Matrix n n ℂ} (hT : ∀ l, (T l).IsHermitian) (g : ℝ)
+    (X : Matrix (ι × (n × Fin 2)) (ι × (n × Fin 2)) ℂ)
+    (hX : ((1 : Matrix ι ι ℂ) ⊗ₖ levelProj n 1) * X = 0) {t : ℝ} (ht : 0 ≤ t) :
+    ‖((1 : Matrix ι ι ℂ) ⊗ₖ levelProj n 1)
+        * exp (t • ((-Complex.I) • (compositeH M₀ (Matrix.blockDiagonal T)
+            + (g : ℂ) • gateOp σ τ r (levelSwap n))))
+        * X‖
+      ≤ ‖(1 : Matrix ι ι ℂ) ⊗ₖ levelProj n 1‖
+        * (|g| * ∫ s in (0 : ℝ)..t,
+            ‖coincProj σ τ r
+              * exp (s • ((-Complex.I) • compositeH M₀ (Matrix.blockDiagonal T))) * X‖) := by
+  have hU : ‖(1 : Matrix ι ι ℂ) ⊗ₖ levelSwap n‖ ≤ 1 :=
+    norm_le_one_of_isHermitian_invol
+      (CSD.CV.kronecker_isHermitian Matrix.isHermitian_one (levelSwap_isHermitian n))
+      (by rw [← Matrix.mul_kronecker_mul, one_mul, levelSwap_mul_self,
+        Matrix.one_kronecker_one])
+  have hpt : ∀ s : ℝ,
+      ‖gateOp σ τ r (levelSwap n)
+          * exp (s • ((-Complex.I) • compositeH M₀ (Matrix.blockDiagonal T))) * X‖
+        ≤ ‖coincProj σ τ r
+          * exp (s • ((-Complex.I) • compositeH M₀ (Matrix.blockDiagonal T))) * X‖ := by
+    intro s
+    rw [gateOp, coincProj_mul_one_kronecker σ τ r hτ, mul_assoc, mul_assoc]
+    refine (norm_mul_le _ _).trans ?_
+    rw [← mul_assoc]
+    exact mul_le_of_le_one_left (norm_nonneg _) hU
+  refine (transponder_launch_le hM hT
+    (gateOp_isHermitian σ τ r (levelSwap_isHermitian n) hτ) g X hX ht).trans ?_
+  refine mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left ?_ (abs_nonneg g))
+    (norm_nonneg _)
+  exact intervalIntegral.integral_mono_on ht
+    (((continuous_const.mul (Matrix.continuous_exp_smul _)).mul
+      continuous_const).norm.intervalIntegrable _ _)
+    (((continuous_const.mul (Matrix.continuous_exp_smul _)).mul
+      continuous_const).norm.intervalIntegrable _ _) fun s _ => hpt s
 
 end CSD.RecordLayer
 

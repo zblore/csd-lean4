@@ -32,7 +32,11 @@ new definition of a macrostate.
   factors through it;
 * ★★★ `compatibleSet_eq_preimage_singleton` — **a record history of the family is one
   macrostate**: the compatible region of the history that records a count at every reading
-  is exactly the cell of the projection at that string of counts.
+  is exactly the cell of the projection at that string of counts;
+* ★★★ `csd_radar_macrostate` (2026-11-19) — the radar's instance: for the family of
+  `csd_radar_history_preparation` there are five counts, a cap and a string such that the cell
+  of the projection of the five readings is the compatible region of the radar's history, has
+  non-zero `μ_FS ⊗ vol⁵` measure, and its counts satisfy the Lorentz comparisons.
 
 ## Honest scope
 
@@ -41,9 +45,9 @@ stable under the flow and shared by overwhelmingly many microstates. Neither is 
 The cells are defined from the flow up to the reading times, so they are fixed at the
 start; nothing says a later reading returns the same string.
 
-⚠️ **Not instantiated for the radar.** `tickMacro` is for any `TickReadout`. The cell of the
-radar's history having non-zero measure (from `csd_radar_history_preparation`) is not stated
-here; it needs a bound `B` on the five counts.
+⚠️ **The radar's cell is not named.** `csd_radar_macrostate` inherits the counts of
+`csd_radar_history_preparation`, which exist by a covering argument; the cap is the largest of
+them. Non-zero measure, with no value.
 
 ⚠️ **The cap `B` is a parameter.** Counts above `B`, and starts with no count, share the last
 value. No canonical `B` or family of readings is claimed.
@@ -184,6 +188,74 @@ theorem compatibleSet_eq_preimage_singleton {k : ℕ} (ctx : Fin k → ι × ℝ
     exact (A.tickCode_eq_castSucc_iff B (ctx j).1 (ctx j).2 x (c j)).1 (congrFun h j)
 
 end TickReadout
+
+/-! ### The radar's macrostate -/
+
+section Family
+
+open CSD.LF4 CSD.CV
+
+set_option synthInstance.maxSize 4096 in
+/-- ★★★ **The radar's record history is a macrostate of non-zero measure.** For `k ≥ 100` and
+a ring with an even number `M + 1 = 2H` of sites, `M ≥ 210000 N³`: there are strengths such
+that for every labelling, every reference point of the measure and every choice of flow
+times in the five reading windows there are five counts, a cap `B` and a string `v` of
+capped counts for which
+
+* the cell of the macroscopic projection of the five readings at `v` is the compatible
+  region of the history of the five recorded facts;
+* that cell has non-zero `μ_FS ⊗ vol⁵` measure; and
+* the counts satisfy the comparisons of `RadarCountBounds` within `152 K/k` and `53 K/k`. -/
+theorem csd_radar_macrostate {k : ℕ} (hk : 100 ≤ k) {M H : ℕ}
+    (hM : 210000 * wallN k ^ 2 * wallN k ≤ M) (hH : M + 1 = 2 * H) :
+    ∃ gA gB : ℝ, 0 < gA ∧ 0 < gB
+      ∧ ∀ (D : ℕ) (e : (ZMod (M + 1) × Fin 2) × (((ZMod (M + 1) × Fin 2) × Fin 2)
+          × ((ZMod (M + 1) × Fin 2) × Fin 2)) ≃ Fin (D + 1)) (p₀ : CPN (D + 1)),
+        ∀ se, famTb k ≤ se → se ≤ famT3 k → ∀ sr, famT4 k ≤ sr → sr ≤ famT5 k →
+        ∀ sμ, famTbM k M ≤ sμ → sμ ≤ famTcM k M → ∀ sρ, famTbR k M ≤ sρ → sρ ≤ famTcR k M →
+        ∀ sm, famTbM k M ≤ sm → sm ≤ famTcM k M →
+        ∃ (Ne Nr Nμ Nρ Nm B : ℕ) (v : Fin 5 → Fin (B + 2)),
+          ((wallReadout (wallN k) (wallN k) M (wallMu k) (wallGap k) (3 * wallDelta k)
+              gA gB e p₀).tickMacro (fun j : Fin 5 => (j, ![se, sr, sμ, sρ, sm] j)) B).toFun
+              ⁻¹' {v}
+            = compatibleSet
+              (wallReadout (wallN k) (wallN k) M (wallMu k) (wallGap k) (3 * wallDelta k)
+                gA gB e p₀).semantics (radarHistory se sr sμ sρ sm Ne Nr Nμ Nρ Nm)
+          ∧ pentaMuL p₀
+              (((wallReadout (wallN k) (wallN k) M (wallMu k) (wallGap k) (3 * wallDelta k)
+                gA gB e p₀).tickMacro (fun j : Fin 5 => (j, ![se, sr, sμ, sρ, sm] j)) B).toFun
+                ⁻¹' {v}) ≠ 0
+          ∧ RadarCountBounds (ringRate (1200 * wallN k * wallN k) M 0 (wallGap k))
+              (vRel 1 1 (1 / 2)) (152 * (wallK k / k)) (152 * (wallK k / k))
+              (Real.pi * wallK k - Real.pi * wallK k / vRel 1 1 (1 / 2))
+              (53 * (wallK k / k)) Ne Nr Nμ Nρ Nm := by
+  obtain ⟨gA, gB, hA, hB, hall⟩ := csd_radar_history_preparation hk hM hH
+  refine ⟨gA, gB, hA, hB, ?_⟩
+  intro D e p₀ se h1 h2 sr h3 h4 sμ h5 h6 sρ h7 h8 sm h9 h10
+  obtain ⟨Ne, Nr, Nμ, Nρ, Nm, HP, hH', hb⟩ :=
+    hall D e p₀ se h1 h2 sr h3 h4 sμ h5 h6 sρ h7 h8 sm h9 h10
+  have hcell := (wallReadout (wallN k) (wallN k) M (wallMu k) (wallGap k) (3 * wallDelta k)
+      gA gB e p₀).compatibleSet_eq_preimage_singleton
+    (fun j : Fin 5 => (j, ![se, sr, sμ, sρ, sm] j))
+    (Finset.univ.sup ![Ne, Nr, Nμ, Nρ, Nm])
+    (fun j => ⟨![Ne, Nr, Nμ, Nρ, Nm] j,
+      Nat.lt_succ_of_le (Finset.le_sup (f := ![Ne, Nr, Nμ, Nρ, Nm]) (Finset.mem_univ j))⟩)
+  have hlist : radarHistory se sr sμ sρ sm Ne Nr Nμ Nρ Nm
+      = List.ofFn (fun j : Fin 5 => TickReadout.startFact j (![se, sr, sμ, sρ, sm] j)
+          (![Ne, Nr, Nμ, Nρ, Nm] j)) := rfl
+  have hnz := HP.nonzero_compatible
+  rw [hH'] at hnz
+  refine ⟨Ne, Nr, Nμ, Nρ, Nm, Finset.univ.sup ![Ne, Nr, Nμ, Nρ, Nm],
+    (fun j => Fin.castSucc (⟨![Ne, Nr, Nμ, Nρ, Nm] j, Nat.lt_succ_of_le
+      (Finset.le_sup (f := ![Ne, Nr, Nμ, Nρ, Nm]) (Finset.mem_univ j))⟩ :
+        Fin (Finset.univ.sup ![Ne, Nr, Nμ, Nρ, Nm] + 1))), ?_, ?_, hb⟩
+  · rw [hlist]
+    exact hcell.symm
+  · rw [← hcell]
+    rw [hlist] at hnz
+    exact hnz
+
+end Family
 
 end CSD.RecordLayer
 
