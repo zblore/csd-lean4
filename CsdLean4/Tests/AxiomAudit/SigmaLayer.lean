@@ -22456,4 +22456,174 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.radar_radius_B
 
+/-! #436 (the author's plan of 2026-11-18, workstream R, Task 1; obligation UO-25): tick counts as recorded facts (`RecordLayer/UnifiedRecordHistoryBridge.lean`). -/
+
+/-- info: 'CSD.RecordLayer.disp_time_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.disp_time_mono
+
+/-- info: 'CSD.RecordLayer.hasTicks_succ_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasTicks_succ_iff
+
+/-- info: 'CSD.RecordLayer.IsSigmaClosed' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsSigmaClosed
+
+/-- info: 'CSD.RecordLayer.IsClosed.isSigmaClosed' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsClosed.isSigmaClosed
+
+/-- info: 'CSD.RecordLayer.IsSigmaClosed.preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsSigmaClosed.preimage
+
+/-- info: 'CSD.RecordLayer.hitSet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hitSet
+
+/-- info: 'CSD.RecordLayer.isClosed_hitSet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isClosed_hitSet
+
+/-- info: 'CSD.RecordLayer.measurableSet_hitSet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_hitSet
+
+/-- info: 'CSD.RecordLayer.measurableSet_hasTicks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_hasTicks
+
+/-- info: 'CSD.RecordLayer.measurableSet_isTickCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.measurableSet_isTickCount
+
+/-- info: 'CSD.RecordLayer.tickSignature' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickSignature
+
+/-- info: 'CSD.RecordLayer.TickReadout.windowEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.windowEvent
+
+/-- info: 'CSD.RecordLayer.TickReadout.measurableSet_windowEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.measurableSet_windowEvent
+
+/-- info: 'CSD.RecordLayer.TickReadout.nowSemantics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.nowSemantics
+
+/-- info: 'CSD.RecordLayer.TickReadout.semantics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.semantics
+
+/-- info: 'CSD.RecordLayer.TickReadout.mem_semantics_event_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.mem_semantics_event_iff
+
+/-- info: 'CSD.RecordLayer.TickReadout.startFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.startFact
+
+/-- info: 'CSD.RecordLayer.TickReadout.mem_event_startFact' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.mem_event_startFact
+
+/-- info: 'CSD.RecordLayer.TickReadout.crossings_of_mem_event' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.crossings_of_mem_event
+
+/-- info: 'CSD.RecordLayer.TickReadout.model' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.model
+
+/-- info: 'CSD.RecordLayer.TickReadout.recordsEstablishedOutcome' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.recordsEstablishedOutcome
+
+/-- info: 'CSD.RecordLayer.TickReadout.establishedFact_eq_some_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.establishedFact_eq_some_iff
+
+/-- info: 'CSD.RecordLayer.TickReadout.mem_compatibleSet_startFacts' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.mem_compatibleSet_startFacts
+
+/-- info: 'CSD.RecordLayer.isSigmaClosed_repArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isSigmaClosed_repArc
+
+/-- info: 'CSD.RecordLayer.isSigmaClosed_readyArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isSigmaClosed_readyArc
+
+/-- info: 'CSD.RecordLayer.isSigmaClosed_displayArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isSigmaClosed_displayArc
+
+/-- info: 'CSD.RecordLayer.isFiniteMeasure_pentaMuL' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isFiniteMeasure_pentaMuL
+
+/-- info: 'CSD.RecordLayer.fiveCoupledFlow_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fiveCoupledFlow_zero
+
+/-- info: 'CSD.RecordLayer.fiveCoupledFlow_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.fiveCoupledFlow_add
+
+/-- info: 'CSD.RecordLayer.continuous_fiveCoupledFlow_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_fiveCoupledFlow_prod
+
+/-- info: 'CSD.RecordLayer.pentaDynamics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pentaDynamics
+
+/-- info: 'CSD.RecordLayer.pentaPointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pentaPointer
+
+/-- info: 'CSD.RecordLayer.continuous_pentaPointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_pentaPointer
+
+/-- info: 'CSD.RecordLayer.pentaReadout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pentaReadout
+
+/-- info: 'CSD.RecordLayer.wallDynamics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallDynamics
+
+/-- info: 'CSD.RecordLayer.wallReadout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallReadout
+
+/-- info: 'CSD.RecordLayer.radarStart' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarStart
+
+/-- info: 'CSD.RecordLayer.wallRunAt_eq_flow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallRunAt_eq_flow
+
+/-- info: 'CSD.RecordLayer.radarHistory' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarHistory
+
+/-- info: 'CSD.RecordLayer.WallRadarRecords' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.WallRadarRecords
+
+/-- info: 'CSD.RecordLayer.WallRadarGeometry.records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.WallRadarGeometry.records
+
+/-- info: 'CSD.RecordLayer.csd_radar_record_history' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.csd_radar_record_history
+
 end CSD.Tests.AxiomAudit
