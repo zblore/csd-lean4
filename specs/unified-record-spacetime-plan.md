@@ -711,6 +711,41 @@ what would discharge or constrain it.
   the pointer also moves under the derivative of its profile; the two effects are present
   together. (iv) A packet at rest spreads, so the first level is at rest only for a time.
 
+### UA-20 — a pointer that reads an earlier pointer (admitted 2026-11-19; nothing of it exists in Lean)
+
+* **Assumed.** Obligations UO-24 and UO-25 (5). The author's word is "Continue all of them"
+  (2026-11-19), given against a list in which this item was marked as needing the author's
+  decision; it is taken here as admitting the term, and is to be struck if that was not
+  meant. Every item below is a commitment about what will be defined.
+  (a) *The term.* A step in the sense of UA-13 (d) whose observable is `b(θ₁) · K`: `b` a
+  smooth profile of period one of an **earlier pointer's moving angle** `θ₁`, `K` a smooth
+  function on the arena before that pointer, the whole multiplied by the new pointer's
+  profile `g(ψ₂)` as in every step.
+  (b) *What it changes.* UA-13 (c) says no moving angle enters the energy. With this term
+  the earlier pointer's moving angle does. Its conserved angle `θ₂` is then conserved only
+  on the fibres where `g(ψ₂) = 0`.
+  (c) *What is read.* The new pointer's ticks. "The first record controls the second
+  apparatus" is: the new pointer's displacement is the accumulated `b(θ₁) K` along the
+  orbit, so it does not move while `b(θ₁) = 0`.
+  (d) *What may not be assumed.* That the earlier pointer displays, or the order of the two
+  records: both are to come from the flow.
+* **Where.** Nothing. The engine exists: `hamiltonianFlow_stepEnergy` (`LF4/PointerStep.lean`,
+  BACKLOG ~~#368~~) solves the flow of a step for any smooth energy and observable on any
+  compact symplectic arena, and the arena with one pointer is one. Without the term there
+  is no control: `fiveCoupledFlow_shiftPenta` (UD-227).
+* **Standing.** Choice of a term of a new kind, recommended by the charter's reading that a
+  record is the ontic selection in the fibre
+  ([`unified-records-spacetime-task-plans.md`](unified-records-spacetime-task-plans.md) §3). It
+  replaces UA-13 (c) for the arenas that use it and leaves every earlier arena as it is.
+  The author has not yet read the clause.
+* **Known risks, stated so that a failure is recognised as one.** (i) `b` has to be smooth,
+  so "the first pointer displays" is a smooth window on its angle and not the indicator of
+  the displaying arc; the two records' events are then not the same sets. (ii) Off the
+  fibres where `g(ψ₂) = 0` the earlier pointer's conserved angle moves, and with it the
+  value of its own profile: the earlier record's coupling drifts. (iii) The control is
+  one-way on the fibres where `g(ψ₂) = 0`; whether that is enough for the plan's "the second
+  interaction depends on the recorded outcome" is for the author.
+
 ## 4. Register 2 — derived properties
 
 
@@ -1399,12 +1434,13 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-219 | **A preparation of non-zero measure for the radar's record history (UO-25 (2)).** The image of the turned rays of UD-215 under a labelling of the basis has positive Fubini–Study measure; the starts of the walled chain's run with the ray turned within `r` and the five pointer angles within `ρ` of the start have positive `μ_FS ⊗ vol⁵` measure; the run from any ray is the orbit of its start under the dynamics of UD-208 and its counts are a record history of the start. For the family of UD-201, every `k ≥ 100` and every even ring with `M ≥ 210000 N³`: there are strengths such that for every labelling, every reference point of the measure and every choice of flow times in the five reading windows there are five counts whose five-fact history has a compatible region of non-zero `μ_FS ⊗ vol⁵` measure (a `HistoryPreparation`), and which satisfy the Lorentz statement within `152 K/k`, the rest observer's time within `53 K/k`, and the comparison of intervals | `fsMeasure_image_turnedRays_pos`, `RadarCountBounds`, `radarStartRay`, `wallRunRay_eq_flow`, `WallRadarGeometry.mem_compatibleSet_ray`, `radarStartSet`, `pentaMuL_radarStartSet_pos`, `csd_radar_history_preparation` (`RecordLayer/UnifiedRadarPreparation.lean`) | the counts are not named: one of countably many histories has a region of non-zero measure, by a covering argument, and it may depend on the labelling, the reference point and the times; non-zero with no value; the family's own start is not stated to lie in the region; conditioning on the history is the normalised restriction of the measure, not an interaction, and no register holds the counts; strengths exist; one family, `1 + 1` |
 | UD-220 | **The mode spinors of a Clifford family: norm and overlap (M7, fourth part of the third row).** For any Clifford family, a spinor `e₀` with `β e₀ = e₀`, `e₀† e₀ = 1`, and the spinors `u(s) = (H(s) + E) e₀` of the upper band: `H(s′) H(s) + H(s) H(s′) = 2 (μ² + s′ · s)`; `e₀† H(s) e₀ = μ`; `u(s)† u(s) = 2 E (E + μ)`; `Re u(s′)† u(s) = s′ · s + (E′ + μ)(E + μ)`; and for `μ > 0` that real part is at least the product of the two norms less `((E′ − E)² + Σ_i (s′_i − s_i)²) / 2` | `spinExp`, `spinExp_apply`, `spinExp_one`, `spinExp_mul_right_fix`, `spinExp_mul_left_fix`, `spinExp_conjTranspose`, `cliffordSymbol_add_add`, `cliffordSymbol_isHermitian`, `cliffordSymbol_mul_add_mul`, `spinExp_cliffordSymbol`, `cliffordSpinor`, `star_cliffordSpinor_dotProduct`, `star_cliffordSpinor_dotProduct_self`, `re_star_cliffordSpinor_dotProduct`, `re_star_cliffordSpinor_dotProduct_ge` (`CV/DiracSpinorD.lean`) | exact but for the last, a bound; the real part only: the imaginary part of the overlap, of first order in the step for two or more axes, is not computed; not yet applied to a packet, so nothing is shown small; no record read |
 | UD-221 | **A normalised packet in its moving box: the bound as a number (M7, fifth part of the third row).** For any Clifford family, `β e₀ = e₀`, `e₀† e₀ = 1`, `μ > 0`: the overlap of two modes has modulus at most the product of their norms, and for neighbours along an axis real part at least that product times `1 − η`, `η = (2π \|J\| / (L μ))²` (which is `(π c / (ℓ μ))²` under `J = c L / (2 ℓ)`). For amplitudes `b ≥ 0`, `Σ b² = 1`, normalised by the modes' norms, on a window without wrap-around and with energy-step errors at most `Sm_i`: at the time `t` the weight outside the box of arcs about the directions `1` turned at the group velocity is at most `Σ_i (1 − P_i (1 − η) + \|t\| P_i (2π/L) Sm_i) / (1 − γ_i)`, `P_i` the sum of the products of neighbouring amplitudes along `i`. For the flat packet on `N_j` consecutive momenta per axis, `0 < N_j < L`: `P_i = 1 − 1/N_i` and the weight outside is at most `Σ_i (1/N_i + η + \|t\| (2π/L) Sm_i) / (1 − γ_i)` | `star_dotProduct_self_eq`, `norm_star_dotProduct_le`, `ofReal_mul_inv_sqrt_mul_inv_sqrt`, `modeNormSqD`, `alignDefect`, `alignDefect_scaled`, `modeNormSqD_ge`, `modeNormSqD_pos`, `two_mul_le_sqrt_modeNormSqD`, `spinOverlapD_eq`, `spinOverlapD_self`, `norm_spinOverlapD_le`, `re_spinOverlapD_succ_ge`, `unitAmpD`, `pairSumD`, `pow_card_pos`, `chainInnerD_packetD_unitAmpD`, `transWeightD_unitAmpD`, `norm_transWeightD_unitAmpD_le`, `re_transWeightD_unitAmpD_ge`, `transPhaseD_packetD_zero`, `re_transPhaseD_unitAmpD_ge`, `driftErrorD_unitAmpD_le`, `regionWeightD_unitPacket_compl_movedBoxD_le`, `boxWindowD`, `card_boxWindowD`, `filter_succ_boxWindowD`, `card_filter_succ_boxWindowD`, `flatAmpD`, `flatAmpD_nonneg`, `card_boxWindowD_pos`, `sum_flatAmpD_sq`, `pairSumD_flatAmpD`, `regionWeightD_flatPacket_compl_movedBoxD_le` (`CV/DiracPacketLimitD.lean`) | bound, not sharp (a union over the axes; the real part of the overlap only; the box centred at the direction `1`); the energy-step errors `Sm_i` are a hypothesis, not evaluated from the window's width, and their substitution in physical units is not made; `η` does not shrink with `L`; `μ > 0`; no record read; nothing on the arena of UA-18 |
-| UD-222 | **The drift of a flat packet from the width of its window (M7, sixth part of the third row).** If every momentum of the box is within `w_j` of `k₀_j` on each axis, the energy-step errors are at most `2\|J\|(w_i + h) + (4J²/μ)((w_i + h) + (Σ_j w_j + h))`, `h = 2π/L`, and the bound of UD-221 holds with them. Under `J = c L/(2 ℓ)` and `w_j = (ℓ/L) Δ_j` the drift rate `(2π/L)` times that error is `(2π c/ℓ)(ℓ Δ_i + 2π)/L + (2π c²/(ℓ² μ))(ℓ Δ_i + ℓ Σ_j Δ_j + 4π)` | `windowStepErrD`, `stepErrD_le_windowStepErrD`, `windowStepErrD_nonneg`, `two_pi_div_mul_windowStepErrD_scaled`, `regionWeightD_flatPacket_compl_movedBoxD_le_window` (`CV/DiracPacketWindowD.lean`) | bound; the terms are free of `L` under the scaling but do not shrink with it; `N_i` and the half-width are tied and no choice is optimised; the scaling is an identity about the rate, not a family of lattices; `μ > 0`; no record read |
+| UD-222 | **The drift of a flat packet from the width of its window (M7, sixth part of the third row).** If every momentum of the box is within `w_j` of `k₀_j` on each axis, the energy-step errors are at most `2\|J\|(w_i + h) + (4J²/μ)((w_i + h) + (Σ_j w_j + h))`, `h = 2π/L`, and the bound of UD-221 holds with them. Under `J = c L/(2 ℓ)` and `w_j = (ℓ/L) Δ_j` the drift rate `(2π/L)` times that error is `(2π c/ℓ)(ℓ Δ_i + 2π)/L + (2π c²/(ℓ² μ))(ℓ Δ_i + ℓ Σ_j Δ_j + 4π)` | `windowStepErrD`, `stepErrD_le_windowStepErrD`, `windowStepErrD_nonneg`, `two_pi_div_mul_windowStepErrD_scaled`, `regionWeightD_flatPacket_compl_movedBoxD_le_window`, `tendsto_two_pi_div_mul_windowStepErrD` (added 2026-11-19: the rate tends to `(2π c²/(ℓ² μ))(ℓ Δ_i + ℓ Σ_j Δ_j + 4π)` as `L → ∞`) (`CV/DiracPacketWindowD.lean`) | bound; the terms are free of `L` under the scaling but do not shrink with it; `N_i` and the half-width are tied and no choice is optimised; the limit is of the rate alone, not of the packet or of the whole bound; `μ > 0`; no record read |
 | UD-223 | **The macroscopic projection of tick records (UO-25 (3), first brick).** For any tick readout of a dynamics: the count of a pointer at a time, capped at `B`, is a measurable map to a finite set; for a finite indexed family of readings the capped counts are a macroscopic projection in the sense of ~~#99~~; every record event of the family is the preimage of a set of strings; and the compatible region of the history that records a count `≤ B` at every reading of the family is exactly one cell of the projection | `TickReadout.countEvent`, `TickReadout.countEvent_eq_event`, `TickReadout.measurableSet_countEvent`, `TickReadout.tickCode`, `TickReadout.tickCode_eq_castSucc_iff`, `TickReadout.tickCode_eq_last_iff`, `TickReadout.measurable_tickCode`, `TickReadout.tickMacro`, `TickReadout.countEvent_eq_preimage`, `TickReadout.factorsThrough_countEvent`, `TickReadout.compatibleSet_eq_preimage_singleton`, `TickReadout.map_tickMacro_singleton` (added 2026-11-19: the pushed-forward measure of a string is the arena measure of its history's compatible region) (`RecordLayer/UnifiedRadarMacrostate.lean`) | exact; the construction only: no stability of the cells under the flow and no count of the microstates in a cell; the cap `B` and the family are parameters; no order or geometry on the macrostates; the pushed-forward law is identified, not computed |
 | UD-224 | **The transponder: no launch without a meeting (UO-26 (1), fourth brick).** For Hermitian `H₀`, `V` and a `Q` that commutes with `H₀` and annihilates `X`: `‖Q e^{−it(H₀+V)} X‖ ≤ ‖Q‖ ∫₀ᵗ ‖V e^{−isH₀} X‖ ds`, `t ≥ 0`. For a messenger and a carrier whose Hamiltonian has one block for each of two levels, coupled by `g G` with `G` Hermitian, and a prepared subspace with that carrier in its first level: the part with it in its second level at `t ≥ 0` is at most `‖Q‖ \|g\| ∫₀ᵗ ‖G e^{−isH₀} X‖ ds`, `Q` the projector on the second level and `H₀` the uncoupled Hamiltonian | `Matrix.mul_exp_smul_eq_of_commute`, `Matrix.norm_mul_exp_neg_I_add_mul_le_of_commute`, `Matrix.norm_mul_exp_neg_I_add_smul_mul_le_of_commute` (`Mathlib/Analysis/Matrix/DuhamelSector.lean`); `levelProj`, `levelProj_mul_blockDiagonal`, `blockDiagonal_isHermitian`, `one_kronecker_mul_compositeH`, `transponder_launch_le` (`RecordLayer/UnifiedTransponder.lean`) | an upper bound: no launch is shown; `G` is any Hermitian matrix, the contact term of UA-19 (b) is not substituted and the integrand is not expressed as a weight at a meeting; on the carriers' Hilbert space, not on the arena; `‖Q‖` not evaluated |
 | UD-225 | **The radar's record history is a macrostate of non-zero measure (UO-25 (3), second brick).** For the family of UD-219: there are strengths such that for every labelling, reference point and reading times there are five counts, a cap `B` and a string of capped counts for which the cell of the projection of UD-223 for the five readings is the compatible region of the radar's five-fact history, has non-zero `μ_FS ⊗ vol⁵` measure, and the counts satisfy the comparisons within `152 K/k` and `53 K/k` | `csd_radar_macrostate` (`RecordLayer/UnifiedRadarMacrostate.lean`) | the counts and the cell are not named (they come from the covering argument of UD-219; the cap is the largest count); no value for the measure; no stability of the cell under the flow |
 | UD-226 | **No launch without a meeting, for the contact term (UO-26 (1), fifth brick).** UD-224 with the coupling the coincidence projector `P` of the messenger and the transponder times the transponder's level swap, for a relation between their sites that the level swap respects: the part with the transponder in its second level at `t ≥ 0` is at most `‖Q‖ \|g\| ∫₀ᵗ ‖P e^{−isH₀} X‖ ds` | `transponder_launch_le_coincidence` (`RecordLayer/UnifiedTransponder.lean`) | an upper bound: no launch is shown; the integrand is an operator norm, not yet the coincidence weight of two packets; on the carriers' Hilbert space, not on the arena |
 | UD-227 | **The five-pointer flow commutes with turning the pointers (UO-25 (5), first brick; UO-24).** On the arena of UA-18 (d), for Hermitian matrices: starting the five pointers' moving angles further round leaves them that much further round at every time and leaves the ray and the five conserved angles as they were; so no pointer's angles and no carrier depend on where another pointer started | `isHermitian_add_ofReal_smul`, `shiftEcho`, `shiftTri`, `shiftQuad`, `shiftPenta`, `twoCoupledFlow_shiftEcho`, `threeCoupledFlow_shiftTri`, `fourCoupledFlow_shiftQuad`, `fiveCoupledFlow_shiftPenta`, `fiveCoupledFlow_shiftPenta_snd`, `fiveCoupledFlow_shiftPenta_ray` (`LF4/PentaPointerInert.lean`) | exact; an obstruction for the couplings of UA-18 (c), whose energy contains no moving angle: a record held by a pointer cannot control a later interaction there; correlation of two pointers through a carrier is not excluded; a pointer that acts back (UO-24) is not covered |
+| UD-228 | **A tick takes time (UO-25 (3), third brick).** For a history in a metric space that moves at speed at most `K` up to `T`, and resting and displaying sets at distance at least `d`: `n` ticks by `T` need `n d ≤ K T`, so a count at `T` is at most `K T / d` for `d > 0` | `HasTicks.mul_le`, `IsTickCount.mul_le`, `IsTickCount.le_div` (`RecordLayer/TickCountBound.lean`) | an upper bound; not instantiated: the speed of a pointer of the arena and the distance between its two arcs are not shown, so the radar's cap is not yet a number |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3000,6 +3036,13 @@ A carrier-mediated succession, in which a second pointer reads a carrier that th
 interaction changed, is a different statement and is planned separately; it is not record
 control. No new assumption.
 
+Exact scope of UD-228 (BACKLOG #439, third brick; obligation UO-25 (3)). What it gives. The
+reason a finite cap exists for the macroscopic projection of UD-223: a count is bounded by
+the duration of the run times the pointer's speed over the gap between its arcs. What it
+does not give. The cap for the radar: the pointer's speed bound (`|z| ‖G‖`, from the flow's
+formula) and the arcs' gap in the circle's metric are owed. A lower bound for the count.
+No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4318,6 +4361,9 @@ time. It is not a statement about every dynamics on `Σ`.
   (`fiveCoupledFlow_shiftPenta`): the obstruction holds on the radar's arena. By the
   charter a record is the ontic selection in the fibre, so "a record controls an
   apparatus" means this obligation; it is recommended, not yet decided by the author.
+  ▸ **Admitted, 2026-11-19 → UA-20.** A step whose observable carries a smooth profile of
+  an earlier pointer's moving angle. Nothing of it is in Lean; the step theorem of ~~#368~~
+  is its engine.
 
 * **UO-25.** Record unification (the author's plan "Unified records, quantum measurement and
   emergent spacetime", 2026-11-18, workstream R). Join the SigmaLayer's record histories to the
@@ -4369,6 +4415,8 @@ time. It is not a statement about every dynamics on `Σ`.
   obstruction.** On the arena of UA-18 a record held by a pointer cannot control a second
   apparatus. Owed for (5): either UO-24, or the weaker carrier-mediated succession stated as
   what it is.
+  ▸ **Task 3, third brick, 2026-11-19 (BACKLOG #439, part) → UD-228.** A count is at most
+  `K T / d`: the cap of the projection exists for a reason; the radar's numbers are owed.
 * **UO-26.** A return caused at the event (the author's decision of 2026-11-18 under UO-17;
   choice (c) of [`unified-m7-feasibility.md`](unified-m7-feasibility.md) §7; BACKLOG #437).
   On the arena as frozen a messenger turns round only at a flat wall, so a moving group in

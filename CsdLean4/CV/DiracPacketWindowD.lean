@@ -23,6 +23,8 @@ window, and the drift rate is put in physical units.
   `J = c L / (2 ℓ)` and half-widths `(ℓ/L) Δ_j`, the rate `(2π/L) · windowStepErrD_i` is
   `(2π c / ℓ)(ℓ Δ_i + 2π) / L + (2π c² / (ℓ² μ))(ℓ Δ_i + ℓ Σ_j Δ_j + 4π)`: a term of order
   `1/L` and a term with no `L` in it);
+* ★★ `tendsto_two_pi_div_mul_windowStepErrD` (2026-11-19: along the family of lattices the
+  rate tends to `(2π c² / (ℓ² μ))(ℓ Δ_i + ℓ Σ_j Δ_j + 4π)`);
 * ★★★ `regionWeightD_flatPacket_compl_movedBoxD_le_window` (**the bound from the width of
   the window alone**: weight outside the moving box at most
   `Σ_i (1/N_i + (2π |J| / (L μ))² + |t| (2π/L) windowStepErrD_i) / (1 − γ_i)`).
@@ -39,8 +41,9 @@ narrow window.
 `π N_i / ℓ`, so more modes mean a wider window: `1/N_i` and the drift pull against each
 other, as on the ring. No choice of `N_i` is optimised here.
 
-⚠️ **The window's half-widths `w j` are a hypothesis on the box** (`hw`). The scaling
-statement is an identity about the rate; it is not a limit over a family of lattices.
+⚠️ **The window's half-widths `w j` are a hypothesis on the box** (`hw`). The limit
+`tendsto_two_pi_div_mul_windowStepErrD` is of the rate alone; no limit is taken of the
+packet or of the bound as a whole.
 
 ⚠️ **Not sharp, `μ > 0`, no record read**, as `CV/DiracPacketLimitD.lean`.
 
@@ -103,6 +106,28 @@ theorem two_pi_div_mul_windowStepErrD_scaled {c ℓ μ : ℝ} (hc : 0 ≤ c) (h�
   rw [abs_of_nonneg (by positivity), ← Finset.mul_sum]
   field_simp
   ring
+
+omit [DecidableEq ι] [NeZero L] in
+/-- ★★ **The drift rate has a limit along the family of lattices**: under `J = c L / (2 ℓ)`
+and half-widths `(ℓ / L) Δ j`, as the number of sites `L` grows the rate
+`(2π/L) · windowStepErrD` tends to `(2π c² / (ℓ² μ)) (ℓ Δ_i + ℓ Σ_j Δ_j + 4π)`. -/
+theorem tendsto_two_pi_div_mul_windowStepErrD {c ℓ μ : ℝ} (hc : 0 ≤ c) (hℓ : 0 < ℓ)
+    (hμ : 0 < μ) (Δ : ι → ℝ) (i : ι) :
+    Filter.Tendsto
+      (fun L : ℕ => 2 * Real.pi / L
+        * windowStepErrD (c * L / (2 * ℓ)) μ (fun j => ℓ / L * Δ j) i (2 * Real.pi / L))
+      Filter.atTop
+      (nhds (2 * Real.pi * c ^ 2 / (ℓ ^ 2 * μ) * (ℓ * Δ i + ℓ * ∑ j, Δ j + 4 * Real.pi))) := by
+  have h1 : Filter.Tendsto
+      (fun L : ℕ => 2 * Real.pi * c / ℓ * (ℓ * Δ i + 2 * Real.pi) / (L : ℝ)
+        + 2 * Real.pi * c ^ 2 / (ℓ ^ 2 * μ) * (ℓ * Δ i + ℓ * ∑ j, Δ j + 4 * Real.pi))
+      Filter.atTop
+      (nhds (0 + 2 * Real.pi * c ^ 2 / (ℓ ^ 2 * μ) * (ℓ * Δ i + ℓ * ∑ j, Δ j + 4 * Real.pi))) :=
+    (tendsto_const_div_atTop_nhds_zero_nat _).add tendsto_const_nhds
+  rw [zero_add] at h1
+  refine h1.congr' ?_
+  filter_upwards [Filter.eventually_gt_atTop 0] with L hL
+  exact (two_pi_div_mul_windowStepErrD_scaled hc hℓ hμ hL Δ i).symm
 
 variable {α : ι → Matrix S S ℂ} {β : Matrix S S ℂ}
 

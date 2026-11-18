@@ -6149,4 +6149,10 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.regionWeightD_flatPacket_compl_movedBoxD_le_window
 
+/-! #296: the drift rate's limit along the family of lattices (`CV/DiracPacketWindowD.lean`). -/
+
+/-- info: 'CSD.CV.tendsto_two_pi_div_mul_windowStepErrD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.tendsto_two_pi_div_mul_windowStepErrD
+
 end CSD.Tests.AxiomAudit

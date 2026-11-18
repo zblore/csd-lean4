@@ -52,9 +52,10 @@ In hand: `TickReadout.tickMacro`, `TickReadout.compatibleSet_eq_preimage_singlet
    `3 v (t_b − t_a) + 7/2` ticks (`IsGatedHistory.exists_count`): between the end of the
    swing and the closing of the gate the pointer drifts at a bounded rate, not a known one.
    Two starts with the same history can have different counts. What can be proved:
-   * *radar_counts_bounded*: each of the five counts lies in an explicit finite range, from
-     the bounds of `IsGatedHistory.exists_count` and `IsAwayHistory.exists_count` with the
-     family's numbers. So the cap `B` is explicit. (M)
+   * A count is bounded by the run's duration — done 2026-11-19 for any history:
+     `HasTicks.mul_le`, `IsTickCount.le_div` (`n d ≤ K T`). Owed for the radar: the pointer's
+     speed `|z| ‖G‖` from the flow's formula and the gap between the two arcs in the
+     circle's metric; then *radar_counts_bounded*, the cap `B` as a number. (M)
    * *radar_cell_measure_ge*: the start set of UD-219 is covered by finitely many cells, at
      most the product `K` of the five ranges, so one cell has measure at least the start
      set's over `K`. This turns "non-zero" into a lower bound in terms of the start set's
@@ -141,7 +142,10 @@ Three routes:
   succession through the carrier and not as record control. (L; shares its hard step with
   the caused return)
 
-Decision for the author: whether to admit Route C's term.
+Route C's term is admitted as UA-20 of the contract (2026-11-19, on "Continue all of
+them"; to be struck if that was not meant). Its first theorem is the controlled step's
+flow, an instance of `hamiltonianFlow_stepEnergy` once the observable `b(θ₁) K` is shown
+smooth on the arena with one pointer.
 
 ## 4. Task 6 — the Born bridge or its obstruction
 
@@ -209,9 +213,9 @@ This must not block workstream S, and nothing in §§6 to 8 depends on it.
   `2 E²` and the alignment defect is `(2π |J| / (L s₀))²`). The ring's
   `dirac_massless_limit` is the template. Nothing is to be claimed for a window containing
   zero momentum. (M)
-* **A family of lattices.** A `Tendsto` statement for the bound of UD-222 along
-  `L → ∞` at fixed physical data. The terms are already shown free of `L`; this is
-  packaging. (S)
+* **A family of lattices.** Done 2026-11-19 for the drift rate:
+  `tendsto_two_pi_div_mul_windowStepErrD`. A limit of the whole bound, with the window
+  re-chosen at each `L`, is not stated.
 
 ## 7. Task 9 — detectors and the cone on the torus
 
