@@ -5927,4 +5927,66 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.le_regionWeightD_packetD_movedBoxD
 
+/-! #296, fourth part (Task 8; milestone M7, obligation UO-17): the mode spinors of a Clifford family, norm and overlap (`CV/DiracSpinorD.lean`). -/
+
+/-- info: 'CSD.CV.spinExp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinExp
+
+/-- info: 'CSD.CV.spinExp_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinExp_apply
+
+/-- info: 'CSD.CV.spinExp_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinExp_one
+
+/-- info: 'CSD.CV.spinExp_mul_right_fix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinExp_mul_right_fix
+
+/-- info: 'CSD.CV.spinExp_mul_left_fix' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinExp_mul_left_fix
+
+/-- info: 'CSD.CV.spinExp_conjTranspose' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinExp_conjTranspose
+
+/-- info: 'CSD.CV.cliffordSymbol_add_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cliffordSymbol_add_add
+
+/-- info: 'CSD.CV.cliffordSymbol_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cliffordSymbol_isHermitian
+
+/-- info: 'CSD.CV.cliffordSymbol_mul_add_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cliffordSymbol_mul_add_mul
+
+/-- info: 'CSD.CV.spinExp_cliffordSymbol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.spinExp_cliffordSymbol
+
+/-- info: 'CSD.CV.cliffordSpinor' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.cliffordSpinor
+
+/-- info: 'CSD.CV.star_cliffordSpinor_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.star_cliffordSpinor_dotProduct
+
+/-- info: 'CSD.CV.star_cliffordSpinor_dotProduct_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.star_cliffordSpinor_dotProduct_self
+
+/-- info: 'CSD.CV.re_star_cliffordSpinor_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.re_star_cliffordSpinor_dotProduct
+
+/-- info: 'CSD.CV.re_star_cliffordSpinor_dotProduct_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.re_star_cliffordSpinor_dotProduct_ge
+
 end CSD.Tests.AxiomAudit

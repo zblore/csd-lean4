@@ -1397,6 +1397,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-217 | **The box of arcs about a packet (M7, third part of the third row).** On each axis the arc of positions with `Re(ū e^{2πik/L}) > γ`, which for `u = e^{iφ}`, `γ = cos δ` is `cos(2πk/L − φ) > cos δ`; the box of arcs is their product. The bounds of UD-210 hold for it with no hypothesis on the sides: for any state, and for the packet with the arcs about the directions turned at `(2π/L) v_i(k₀) t` (`μ > 0`) | `arcSideD`, `mem_arcSideD`, `re_le_of_notMem_arcSideD`, `mem_arcSideD_expI`, `arcBoxD`, `mem_arcBoxD`, `regionWeightD_compl_arcBoxD_le`, `le_regionWeightD_arcBoxD`, `movedBoxD`, `regionWeightD_packetD_compl_movedBoxD_le`, `le_regionWeightD_packetD_movedBoxD` (`CV/DiracPacketArcD.lean`) | the sides are the largest the bound allows, by definition; the arc is described by a cosine and not shown to be a run of consecutive sites; nothing is shown small; no limit in physical units; no record read; nothing on the arena of UA-18 |
 | UD-218 | **The walled chain's and the family's run from turned rays (UO-25 (2), fourth brick).** Under the hypotheses of UD-200, for some strengths: from the three carriers' product ray turned by a unitary `W` of the composite with `‖W − 1‖ ≤ r_W`, `4 γ r_W T ≤ s/2`, `4 γ r_W (K₁ + K₂) ≤ ϵ′`, and five pointer angles within `ρ` of the start (`ρ ≤ s/8`, `ρ C T ≤ s/8`, `ρ C (K₁ + K₂) ≤ ϵ`), the five pointers have counts and the counts satisfy the Lorentz statement with the errors of UD-193 enlarged by `ϵ + ϵ′`. For the family of UD-201, every `k ≥ 100` and every even ring with `M ≥ 210000 N³`: for some strengths, from the product ray turned by any `W` with `‖W − 1‖ ≤ 1/(12000 k²)` and every five pointer angles within `1/(24000 k²)` of `(1/12, 0)`, both components of the Lorentz statement hold within `152 K/k` and the interval comparison within `53 K/k` | `wallRunRay`, `wallRunAt_eq_wallRunRay`, `tri_wall_radar_lorentz_ray` (`RecordLayer/UnifiedWallRay.lean`); `ray_error_of_radius`, `radar_family_lorentz_ray` (`RecordLayer/UnifiedRadarRay.lean`) | bound; the strengths are asserted to exist by each theorem and are not stated to be those of UD-201; a product set of starts whose measure in the arena is not computed; no record event, no preparation; both radii shrink like `1/k²`; one family, one velocity, `1 + 1` |
 | UD-219 | **A preparation of non-zero measure for the radar's record history (UO-25 (2)).** The image of the turned rays of UD-215 under a labelling of the basis has positive Fubini–Study measure; the starts of the walled chain's run with the ray turned within `r` and the five pointer angles within `ρ` of the start have positive `μ_FS ⊗ vol⁵` measure; the run from any ray is the orbit of its start under the dynamics of UD-208 and its counts are a record history of the start. For the family of UD-201, every `k ≥ 100` and every even ring with `M ≥ 210000 N³`: there are strengths such that for every labelling, every reference point of the measure and every choice of flow times in the five reading windows there are five counts whose five-fact history has a compatible region of non-zero `μ_FS ⊗ vol⁵` measure (a `HistoryPreparation`), and which satisfy the Lorentz statement within `152 K/k`, the rest observer's time within `53 K/k`, and the comparison of intervals | `fsMeasure_image_turnedRays_pos`, `RadarCountBounds`, `radarStartRay`, `wallRunRay_eq_flow`, `WallRadarGeometry.mem_compatibleSet_ray`, `radarStartSet`, `pentaMuL_radarStartSet_pos`, `csd_radar_history_preparation` (`RecordLayer/UnifiedRadarPreparation.lean`) | the counts are not named: one of countably many histories has a region of non-zero measure, by a covering argument, and it may depend on the labelling, the reference point and the times; non-zero with no value; the family's own start is not stated to lie in the region; conditioning on the history is the normalised restriction of the measure, not an interaction, and no register holds the counts; strengths exist; one family, `1 + 1` |
+| UD-220 | **The mode spinors of a Clifford family: norm and overlap (M7, fourth part of the third row).** For any Clifford family, a spinor `e₀` with `β e₀ = e₀`, `e₀† e₀ = 1`, and the spinors `u(s) = (H(s) + E) e₀` of the upper band: `H(s′) H(s) + H(s) H(s′) = 2 (μ² + s′ · s)`; `e₀† H(s) e₀ = μ`; `u(s)† u(s) = 2 E (E + μ)`; `Re u(s′)† u(s) = s′ · s + (E′ + μ)(E + μ)`; and for `μ > 0` that real part is at least the product of the two norms less `((E′ − E)² + Σ_i (s′_i − s_i)²) / 2` | `spinExp`, `spinExp_apply`, `spinExp_one`, `spinExp_mul_right_fix`, `spinExp_mul_left_fix`, `spinExp_conjTranspose`, `cliffordSymbol_add_add`, `cliffordSymbol_isHermitian`, `cliffordSymbol_mul_add_mul`, `spinExp_cliffordSymbol`, `cliffordSpinor`, `star_cliffordSpinor_dotProduct`, `star_cliffordSpinor_dotProduct_self`, `re_star_cliffordSpinor_dotProduct`, `re_star_cliffordSpinor_dotProduct_ge` (`CV/DiracSpinorD.lean`) | exact but for the last, a bound; the real part only: the imaginary part of the overlap, of first order in the step for two or more axes, is not computed; not yet applied to a packet, so nothing is shown small; no record read |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2919,6 +2920,16 @@ register, or a second apparatus that reads the record (UO-25 (5)). Any statement
 conditioning on the history is an interaction. The Born weights for these events (UO-25
 (6)). No new assumption.
 
+Exact scope of UD-220 (BACKLOG #296, fourth part; milestone M7, obligation UO-17). What it
+gives. The quantities that the bounds of UD-210 and UD-217 are sums of, for any Clifford
+family and with no choice of matrices: the norm of each mode's spinor and the real part of
+the overlap of two, with an alignment bound of second order in the momentum step. What it
+does not give. A number for a packet: the modulus of the overlap, the normalised amplitudes
+and the sums over a window are owed, so the bound of UD-217 is still not evaluated. The
+imaginary part of the overlap, which for two or more axes displaces the packet's phase at
+first order; the bounds built on the real part are valid without it and not sharp. No new
+assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4180,6 +4191,11 @@ time. It is not a statement about every dynamics on `Σ`.
   the box as arcs about the directions, and UD-210's bounds for the box of arcs with no
   hypothesis on the sides. Still nothing shown small. Open in #296: the limits in physical
   units with errors free of `L`, flat windows, the clock on a packet, `μ = 0`.
+  ▸ **Packets, fourth part, 2026-11-19 (BACKLOG #296, part) → UD-220. Not met.** The norm and
+  the real part of the overlap of the mode spinors for any Clifford family, with an
+  alignment bound. Still nothing shown small for a packet. Open in #296: the modulus of the
+  overlap, normalised amplitudes and flat windows (the bound as a number), the limits in
+  physical units, the clock on a packet, `μ = 0`.
 
 ### M8 — which assumptions force the geometry (gate C)
 
