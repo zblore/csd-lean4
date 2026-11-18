@@ -27,6 +27,8 @@ fundamental theorem; the remainder is compared with `t²/2` by
 * `exp_smul_mul_exp_neg_smul`, `duhamelKernel`, ★ `duhamelFirst`,
   `continuous_duhamelIntegrand`, `hasDerivAt_duhamelKernel`, `norm_duhamelKernel_le`,
   `norm_duhamelFirst_le` (`≤ ‖W‖ ‖X‖ |t|`);
+* `hasDerivAt_duhamelRemainder`, `duhamelRemainder_eq` (the interpolant of the remainder and
+  its derivative; shared with `DuhamelOrbitRemainder.lean`);
 * ★★★ `norm_exp_sub_exp_mul_sub_duhamelFirst_le` (skew-Hermitian `C`, `A`);
 * `conjTranspose_neg_I_smul`, ★★★ `norm_exp_neg_I_add_sub_mul_sub_duhamelFirst_le` (Hermitian
   `H₀`, `V`: remainder `‖V‖² ‖X‖ t² / 2`);
@@ -120,6 +122,49 @@ theorem norm_duhamelFirst_le (A W X : Matrix m m ℂ) (hA : Aᴴ = -A) (t : ℝ)
   rw [l2_opNorm_exp_smul_skew A hA t, one_mul]
   exact norm_duhamelKernel_le A W X hA t
 
+omit [Nonempty m] in
+/-- **The interpolant of the remainder and its derivative.** With `K` the first-order term in
+the interaction picture, `X − e^{−sC} e^{sA} (X + K s)` has derivative
+`e^{−sC} (C − A) e^{sA} K s`. -/
+theorem hasDerivAt_duhamelRemainder (C A X : Matrix m m ℂ) (s : ℝ) :
+    HasDerivAt
+      (fun u : ℝ => X - exp ((-u) • C) * exp (u • A) * (X + duhamelKernel A (C - A) X u))
+      (exp ((-s) • C) * ((C - A) * exp (s • A) * duhamelKernel A (C - A) X s)) s := by
+  have hneg : HasDerivAt (fun u : ℝ => -u) (-1) s := by
+    simpa using (hasDerivAt_id s).const_sub 0
+  have h1 : HasDerivAt (fun u : ℝ => exp ((-u) • C))
+      ((-1 : ℝ) • (exp ((-s) • C) * C)) s :=
+    (hasDerivAt_exp_smul_const C (-s)).scomp s hneg
+  have h2 : HasDerivAt (fun u : ℝ => exp (u • A)) (exp (s • A) * A) s :=
+    hasDerivAt_exp_smul_const A s
+  have h3 : HasDerivAt (fun u : ℝ => X + duhamelKernel A (C - A) X u)
+      (exp ((-s) • A) * (C - A) * exp (s • A) * X) s :=
+    (hasDerivAt_duhamelKernel A (C - A) X s).const_add X
+  have h4 := ((h1.mul h2).mul h3).const_sub X
+  have hcomm : exp (s • A) * A = A * exp (s • A) :=
+    (((Commute.refl A).smul_left s).exp_left).eq
+  have hinv : exp ((-s) • C) * exp (s • A) * (exp ((-s) • A) * (C - A) * exp (s • A) * X)
+      = exp ((-s) • C) * ((C - A) * exp (s • A) * X) := by
+    rw [mul_assoc (exp ((-s) • C)) (exp (s • A))]
+    congr 1
+    rw [← mul_assoc, ← mul_assoc, ← mul_assoc, exp_smul_mul_exp_neg_smul, one_mul]
+  refine h4.congr_deriv ?_
+  simp only [Pi.mul_apply]
+  rw [hinv, neg_one_smul, hcomm]
+  noncomm_ring
+
+omit [Nonempty m] in
+/-- **The remainder is the perturbed group applied to the interpolant.** -/
+theorem duhamelRemainder_eq (C A X : Matrix m m ℂ) (t : ℝ) :
+    (exp (t • C) - exp (t • A)) * X - duhamelFirst A (C - A) X t
+      = exp (t • C)
+        * (X - exp ((-t) • C) * exp (t • A) * (X + duhamelKernel A (C - A) X t)) := by
+  have e : exp (t • C) * (exp ((-t) • C) * exp (t • A) * (X + duhamelKernel A (C - A) X t))
+      = exp (t • A) * (X + duhamelKernel A (C - A) X t) := by
+    rw [← mul_assoc, ← mul_assoc, exp_smul_mul_exp_neg_smul, one_mul]
+  rw [mul_sub, e, duhamelFirst]
+  noncomm_ring
+
 /-- ★★★ **The perturbed group to first order, with a second-order remainder.** For
 skew-Hermitian `C`, `A`, any `X` and `t ≥ 0`,
 
@@ -132,30 +177,8 @@ theorem norm_exp_sub_exp_mul_sub_duhamelFirst_le (C A X : Matrix m m ℂ)
   set f : ℝ → Matrix m m ℂ := fun s =>
     X - exp ((-s) • C) * exp (s • A) * (X + K s) with hf
   have hderiv : ∀ s : ℝ,
-      HasDerivAt f (exp ((-s) • C) * ((C - A) * exp (s • A) * K s)) s := by
-    intro s
-    have hneg : HasDerivAt (fun u : ℝ => -u) (-1) s := by
-      simpa using (hasDerivAt_id s).const_sub 0
-    have h1 : HasDerivAt (fun u : ℝ => exp ((-u) • C))
-        ((-1 : ℝ) • (exp ((-s) • C) * C)) s :=
-      (hasDerivAt_exp_smul_const C (-s)).scomp s hneg
-    have h2 : HasDerivAt (fun u : ℝ => exp (u • A)) (exp (s • A) * A) s :=
-      hasDerivAt_exp_smul_const A s
-    have h3 : HasDerivAt (fun u : ℝ => X + K u)
-        (exp ((-s) • A) * (C - A) * exp (s • A) * X) s :=
-      (hasDerivAt_duhamelKernel A (C - A) X s).const_add X
-    have h4 := ((h1.mul h2).mul h3).const_sub X
-    have hcomm : exp (s • A) * A = A * exp (s • A) :=
-      (((Commute.refl A).smul_left s).exp_left).eq
-    have hinv : exp ((-s) • C) * exp (s • A) * (exp ((-s) • A) * (C - A) * exp (s • A) * X)
-        = exp ((-s) • C) * ((C - A) * exp (s • A) * X) := by
-      rw [mul_assoc (exp ((-s) • C)) (exp (s • A))]
-      congr 1
-      rw [← mul_assoc, ← mul_assoc, ← mul_assoc, exp_smul_mul_exp_neg_smul, one_mul]
-    refine h4.congr_deriv ?_
-    simp only [Pi.mul_apply]
-    rw [hinv, neg_one_smul, hcomm]
-    noncomm_ring
+      HasDerivAt f (exp ((-s) • C) * ((C - A) * exp (s • A) * K s)) s :=
+    fun s => hasDerivAt_duhamelRemainder C A X s
   have hKb : ∀ s : ℝ, 0 ≤ s → ‖K s‖ ≤ ‖C - A‖ * ‖X‖ * s := fun s hs => by
     have := norm_duhamelKernel_le A (C - A) X hA s
     rwa [abs_of_nonneg hs] at this
@@ -191,14 +214,7 @@ theorem norm_exp_sub_exp_mul_sub_duhamelFirst_le (C A X : Matrix m m ℂ)
     (fun x _ => (hderiv x).hasDerivWithinAt)
     (B := fun u : ℝ => ‖C - A‖ ^ 2 * ‖X‖ / 2 * u ^ 2)
     (by simp [hf0]) hB hbound (Set.right_mem_Icc.2 ht)
-  have hR : (exp (t • C) - exp (t • A)) * X - duhamelFirst A (C - A) X t
-      = exp (t • C) * f t := by
-    have e : exp (t • C) * (exp ((-t) • C) * exp (t • A) * (X + K t))
-        = exp (t • A) * (X + K t) := by
-      rw [← mul_assoc, ← mul_assoc, exp_smul_mul_exp_neg_smul, one_mul]
-    simp only [hf]
-    rw [mul_sub, e, duhamelFirst, ← hK]
-    noncomm_ring
+  have hR := duhamelRemainder_eq C A X t
   rw [hR]
   refine (norm_mul_le _ _).trans ?_
   rw [l2_opNorm_exp_smul_skew C hC t, one_mul]

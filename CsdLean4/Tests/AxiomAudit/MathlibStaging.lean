@@ -75,6 +75,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticPropagators
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelState
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelFirstOrder
+public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelOrbitRemainder
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonSeries
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonVertex
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
@@ -17002,5 +17003,41 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Matrix.le_norm_mul_exp_neg_I_add_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.le_norm_mul_exp_neg_I_add_mul
+
+/-! #437, third brick (obligation UO-26): the second-order remainder in terms of the unperturbed orbit (`Mathlib/Analysis/Matrix/DuhamelOrbitRemainder.lean`). -/
+
+/-- info: 'Matrix.continuous_norm_mul_exp_smul_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.continuous_norm_mul_exp_smul_mul
+
+/-- info: 'Matrix.integral_norm_mul_exp_smul_mul_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.integral_norm_mul_exp_smul_mul_mono
+
+/-- info: 'Matrix.norm_duhamelKernel_le_integral' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_duhamelKernel_le_integral
+
+/-- info: 'Matrix.norm_exp_sub_exp_mul_sub_duhamelFirst_le_orbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_exp_sub_exp_mul_sub_duhamelFirst_le_orbit
+
+/-- info: 'Matrix.norm_exp_neg_I_add_sub_mul_sub_duhamelFirst_le_orbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_exp_neg_I_add_sub_mul_sub_duhamelFirst_le_orbit
+
+/-- info: 'Matrix.le_norm_mul_exp_neg_I_add_mul_orbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.le_norm_mul_exp_neg_I_add_mul_orbit
+
+/-! #437, third brick: the remainder's interpolant (`Mathlib/Analysis/Matrix/DuhamelFirstOrder.lean`). -/
+
+/-- info: 'Matrix.hasDerivAt_duhamelRemainder' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.hasDerivAt_duhamelRemainder
+
+/-- info: 'Matrix.duhamelRemainder_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.duhamelRemainder_eq
 
 end CSD.Tests.AxiomAudit
