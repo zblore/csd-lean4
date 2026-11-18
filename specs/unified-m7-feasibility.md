@@ -213,6 +213,13 @@ trilateration chart to a resting group only. The choices:
 The charter does not settle this. UA-18 (c) rules out (c) as it stands. Between (a) and
 (b) the difference is what M7 is allowed to claim.
 
+**Decided by the author, 2026-11-18.** (a) now: M7 is marked on S1 to S3. (c) is to be
+worked through as obligation UO-26 of the contract (BACKLOG #437). (b) is not admitted: a
+prepared echo joins the two legs by the preparation, which assumes the causal relation it
+would show. The first brick of UO-26 is `Mathlib/Analysis/Matrix/DuhamelState.lean`
+(`norm_mul_exp_neg_I_add_mul_le`): a term of the energy moves a state off its free orbit by
+at most the time integral of that term on the free orbit.
+
 ## 8. An order of work that does not wait for the decision
 
 Every item is needed under (a), (b) and (c). Prices are the usual letters and are not

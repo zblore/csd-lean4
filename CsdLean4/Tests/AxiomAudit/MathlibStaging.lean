@@ -73,6 +73,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticIntertwiner
 public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticPhase
 public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticPropagators
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
+public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelState
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonSeries
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonVertex
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
@@ -16936,5 +16937,23 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'QuantumInfo.decode_recRun_of_forall_timeBad_eq_false' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms QuantumInfo.decode_recRun_of_forall_timeBad_eq_false
+
+/-! #437, first brick (obligation UO-26, the return caused at the event): the Duhamel bound on a prepared subspace (`Mathlib/Analysis/Matrix/DuhamelState.lean`). -/
+
+/-- info: 'Matrix.continuous_exp_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.continuous_exp_smul
+
+/-- info: 'Matrix.norm_exp_smul_sub_exp_smul_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_exp_smul_sub_exp_smul_mul_le
+
+/-- info: 'Matrix.norm_exp_neg_I_add_sub_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_exp_neg_I_add_sub_mul_le
+
+/-- info: 'Matrix.norm_mul_exp_neg_I_add_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_mul_exp_neg_I_add_mul_le
 
 end CSD.Tests.AxiomAudit
