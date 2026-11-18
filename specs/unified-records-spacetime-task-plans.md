@@ -157,27 +157,37 @@ For the tick records of Task 1 the quantity is, for a prepared carrier ray `ψ` 
 pointer angles distributed by Haar measure in a declared set, the probability that pointer
 `i` shows the count `N` at `T`.
 
-1. *tick_count_law*: that probability as a function of the displacement of pointer `i`
-   along the orbit from `ψ`: the measure of the starting angles for which the angle
-   crosses the arcs `N` times. Exact, from `TickReadout.countEvent` and Fubini on the
-   pointer's torus. (M)
-2. *tick_click_law*: for one gate and `N ≥ 1` against `N = 0` (a click), the probability is
-   a window function of `g` times the accumulated weight of the gate's projector along the
-   orbit: linear up to a cut-off, then constant. The analogue of `diracClickProb_eq_lintegral`. (M)
-3. Then one of:
-   * *tick_click_not_born* — an obstruction: there are two preparations with the same
-     weight of the projector at the reading time and different click probabilities, or the
-     converse, so the click probability is not `|⟨i|ψ⟩|²` for any fixed `i`. Expected, since
-     the click reads an accumulated weight over a window and saturates. (M)
-   * *tick_click_born_window* — a conditional bridge: for strengths and windows inside the
-     linear range and a preparation whose weight on the gate's region is constant over the
-     window, `|P − w| ≤ ε_B` with `ε_B` explicit. This would be Born for a stationary weight
-     only. (M)
-   Both can be true and both should be stated; neither is the cell law.
+1. The exact law of a count — done 2026-11-19 for a pointer that only advances:
+   `isTickCount_pointer` (the count is the number of integers `k` with `rep q ≤ 1/6 + k` and
+   `1/3 + k < rep q + D(T)`), and `integral_card_tickIndices_pointer` (its mean over the
+   starting angle is `D(T) − 1/6`). **This changes the expected conclusion.** The click
+   probability saturates because it asks only whether the count is at least one; the mean
+   count does not saturate. It is linear in the displacement with a dead zone of one gap.
+2. *pointer_displacement_monotone*: for a pointer coupled to a positive observable `G` with a
+   strength of one sign, on the fibre where the profile vanishes, the displacement is
+   `2 |z| ∫₀ᵀ ⟨G⟩` along the free orbit: continuous, non-decreasing, zero at zero. From the
+   flow's formula (`pentaRun_fibre`) and `0 ≤ ⟨G⟩`. (M)
+3. *mean_tick_count_eq*: with 1 and 2, the mean count is `2 |z| ∫₀ᵀ ⟨G⟩ − 1/6`. For a
+   projector `G = Π_i` and a preparation whose weight `w = ⟨Π_i⟩` is constant over the
+   window, that is `2 |z| w T − 1/6`: the mean tick rate is the Born weight, within
+   `1/(6 · 2|z| T)` in relative terms. This is the conditional bridge, and its assumptions
+   are: a positive observable; a stationary weight; the pointer's start uniform; the fibre
+   where the profile vanishes. (M)
+4. What is to be stated beside it, so that it is not over-read:
+   * the count's distribution is two adjacent values, and a single run's count is not the
+     weight;
+   * for a weight that varies over the window the mean count is the accumulated weight,
+     which is not `|⟨i|ψ⟩|²` at any one time (*mean_tick_count_not_instantaneous*, by two
+     preparations with the same weight at `T` and different accumulations);
+   * the click law of UD-50 is the statement about `count ≥ 1` and saturates: both are
+     true;
+   * this is not the cell law. Posit 1 asks that the *rates* that allocate cells are
+     generators; here a rate is `2 |z| ⟨G⟩`, a moment-map coordinate by construction of the
+     coupling. UO-20 is unchanged. (M)
 
 Acceptance as the author wrote it: a conditional bridge with every assumption stated, or an
-obstruction. I expect the obstruction as the general statement and the bridge in the
-stationary linear range.
+obstruction. After item 1 the expectation is a conditional bridge for the mean count of
+a pointer coupled to a projector, with the obstructions of item 4 stated beside it.
 
 ## 5. Task 7 — dynamical Born selection (UO-20), exploratory
 

@@ -22838,4 +22838,70 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.IsTickCount.le_div
 
+/-! #441, first brick (Task 6, obligation UO-25 (6)): the law of a tick count for a pointer that only advances (`RecordLayer/TickCountLaw.lean`). -/
+
+/-- info: 'CSD.RecordLayer.periodicArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.periodicArc
+
+/-- info: 'CSD.RecordLayer.tickIndices' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tickIndices
+
+/-- info: 'CSD.RecordLayer.mem_tickIndices' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_tickIndices
+
+/-- info: 'CSD.RecordLayer.card_tickIndices' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.card_tickIndices
+
+/-- info: 'CSD.RecordLayer.exists_time_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_time_eq
+
+/-- info: 'CSD.RecordLayer.lt_of_lt_of_monotoneOn' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lt_of_lt_of_monotoneOn
+
+/-- info: 'CSD.RecordLayer.hasTicks_of_le_card' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasTicks_of_le_card
+
+/-- info: 'CSD.RecordLayer.le_card_of_hasTicks' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_card_of_hasTicks
+
+/-- info: 'CSD.RecordLayer.isTickCount_line' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isTickCount_line
+
+/-- info: 'CSD.RecordLayer.integral_ceil_add_sub_ceil_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_ceil_add_sub_ceil_add
+
+/-- info: 'CSD.RecordLayer.integral_card_tickIndices' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_card_tickIndices
+
+/-- info: 'CSD.RecordLayer.coe_intCast_circleFibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coe_intCast_circleFibre
+
+/-- info: 'CSD.RecordLayer.rep_add_coe_mem_Ioc_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rep_add_coe_mem_Ioc_iff
+
+/-- info: 'CSD.RecordLayer.hasTicks_congr' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hasTicks_congr
+
+/-- info: 'CSD.RecordLayer.isTickCount_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.isTickCount_pointer
+
+/-- info: 'CSD.RecordLayer.integral_card_tickIndices_pointer' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_card_tickIndices_pointer
+
 end CSD.Tests.AxiomAudit
