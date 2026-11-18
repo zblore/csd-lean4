@@ -37,6 +37,10 @@ it specific to the walled chain.
   five gates is a two-carrier gate displacement;
 * `gatedErr_add`, `awayErr_add`, `exists_pos_le`, `exists_radius` — arithmetic;
 * `NearStart`, `nearStart_start` — a pointer angle within `ρ` of the start `(1/12, 0)`;
+* ★★★ `penta_radar_lorentz_near` (2026-11-18, BACKLOG #438) — the open statement with an
+  explicit radius for a carrier with any index type, five Hermitian observables and any
+  ray, from the histories of the five `freeShift`s; `tri_radar_lorentz_near` is its case
+  for three carriers from a product ray;
 * ★★★ `tri_radar_lorentz_open` — for three carriers and five gates with the profiles
   `g_i · trainF`: if the five two-carrier gate displacements have the histories of #402,
   each moves by less than `1/6` while its gate is closed and the band holds strictly, then
@@ -532,28 +536,24 @@ theorem nearStart_start {ρ : ℝ} (hρ : 0 < ρ) :
     NearStart ρ ((((1 / 12 : ℝ) : CircleFibre)), (0 : AddCircle (1 : ℝ))) :=
   ⟨0, 0, by rwa [abs_zero], by rwa [abs_zero], by rw [add_zero], rfl⟩
 
-section TriOpen
+section PentaNear
 
-variable {ι κa κb S : Type*} [Fintype ι] [DecidableEq ι] [Fintype κa] [DecidableEq κa]
-  [Fintype κb] [DecidableEq κb] [Fintype S] [DecidableEq S] [Nonempty ι] [Nonempty κa]
-  [Nonempty κb] {M₀ : Matrix ι ι ℂ} {A₀ : Matrix κa κa ℂ}
-  {B₀ : Matrix κb κb ℂ} {σ : ι → S} {α : κa → S} {β : κb → S}
-  {r₁ r₂ r₃ r₄ r₅ : S → S → Prop} [DecidableRel r₁] [DecidableRel r₂] [DecidableRel r₃]
-  [DecidableRel r₄] [DecidableRel r₅] {Ya : Matrix κa κa ℂ} {Yb : Matrix κb κb ℂ}
+variable {ν : Type*} [Fintype ν] [DecidableEq ν] [Nonempty ν]
+  {H G₁ G₂ G₃ G₄ G₅ : Matrix ν ν ℂ}
 
-/-- ★★★ **M6 from the top from every pointer angle within an explicit radius, for three
-carriers and five gates.** As `tri_radar_lorentz_open`, with the radius a hypothesis: let the
-five gates have norm at most `S`, the five strengths size at most `γ`, the five reading
-windows end by `T`, and `s > 0` be a slack below every margin of the five histories. Then
-every `ρ > 0` with `ρ ≤ s/4`, `ρ C T ≤ s/4` and `ρ C (K₁ + K₂) ≤ ϵ`,
-`C = 20 γ² S² T + 14 γ S`, `K₁`, `K₂` the coefficients of the two error components, is a
-radius: from every five pointer angles within `ρ` of `(1/12, 0)` the five pointers have
-counts and the counts satisfy the Lorentz statement with the errors of #402 enlarged by
-`ϵ`. -/
-theorem tri_radar_lorentz_near (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
-    (hB : B₀.IsHermitian) (hYa : Ya.IsHermitian) (hYas : ∀ i j, α i ≠ α j → Ya i j = 0)
-    (hYb : Yb.IsHermitian) (hYbs : ∀ i j, β i ≠ β j → Yb i j = 0) (g₁ g₂ g₃ g₄ g₅ : ℝ)
-    (p : GenArena ι) (qa : GenArena κa) (qb : GenArena κb)
+/-- ★★★ **M6 from the top from every pointer angle within an explicit radius, for any carrier
+and any ray.** The flow of UA-18's arena for a carrier with any index type, five Hermitian
+observables of norm at most `S` and the profiles `g_i · trainF`, from any ray `P`. If the five
+displacements `freeShift G_i (−g_i)` along the free orbit from `P` have the histories of
+`radar_lorentz_of_histories` (#402) with a slack `s` below every margin, then every `ρ > 0`
+with `ρ ≤ s/4`, `ρ C T ≤ s/4` and `ρ C (K₁ + K₂) ≤ ϵ`, `C = 20 γ² S² T + 14 γ S`, is a radius:
+from every five pointer angles within `ρ` of `(1/12, 0)` the five pointers have counts and
+the counts satisfy the Lorentz statement with the errors of #402 enlarged by `ϵ`. The ray
+need not be a product of carriers' rays; `tri_radar_lorentz_near` is the case of three
+carriers from a product ray. -/
+theorem penta_radar_lorentz_near (hH : H.IsHermitian) (hG₁ : G₁.IsHermitian)
+    (hG₂ : G₂.IsHermitian) (hG₃ : G₃.IsHermitian) (hG₄ : G₄.IsHermitian)
+    (hG₅ : G₅.IsHermitian) (g₁ g₂ g₃ g₄ g₅ : ℝ) (P : GenArena ν)
     {v R₀ RB κ TE TR TRet TM tE tR tRet tMB tMA τE τR τRet τMB τMA : ℝ}
     {δe ve tbe tce c vr η₀ η t4 t5 δμ vμ tbμ tcμ δρ vρ tbρ tcρ δm vm tbm tcm : ℝ}
     {ce cr cμ cρ cm : ℝ}
@@ -562,36 +562,23 @@ theorem tri_radar_lorentz_near (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
     (hE : TR - TE = v * (TM - TE)) (hRet : TRet - TR = v * (TM - TRet))
     (hτE : |tE - TE| ≤ τE) (hτRet : |tRet - TRet| ≤ τRet) (hτMB : |tMB - TM| ≤ τMB)
     (hτR : |tR - TR| ≤ τR) (hτMA : |tMA - TM| ≤ τMA)
-    (He : IsGatedHistory (coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb) RB δe ve tE tbe tce)
-    (Hr : IsAwayHistory (coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb) RB c vr η₀ η tE tbe
-      tRet t4 t5)
-    (Hμ : IsGatedHistory (coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb) RB δμ vμ tMB tbμ
-      tcμ)
-    (Hρ : IsGatedHistory (coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa) R₀ δρ vρ tR tbρ tcρ)
-    (Hm : IsGatedHistory
-      (coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa) R₀ δm vm tMA tbm
-      tcm)
+    (He : IsGatedHistory (freeShift hH G₁ (-g₁) P) RB δe ve tE tbe tce)
+    (Hr : IsAwayHistory (freeShift hH G₂ (-g₂) P) RB c vr η₀ η tE tbe tRet t4 t5)
+    (Hμ : IsGatedHistory (freeShift hH G₃ (-g₃) P) RB δμ vμ tMB tbμ tcμ)
+    (Hρ : IsGatedHistory (freeShift hH G₄ (-g₄) P) R₀ δρ vρ tR tbρ tcρ)
+    (Hm : IsGatedHistory (freeShift hH G₅ (-g₅) P) R₀ δm vm tMA tbm tcm)
     (hce : ∀ s t, tbe ≤ s → s ≤ t → t ≤ tce →
-      |coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb t
-        - coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb s| ≤ ce)
+      |freeShift hH G₁ (-g₁) P t - freeShift hH G₁ (-g₁) P s| ≤ ce)
     (hcr : ∀ s t, t4 ≤ s → s ≤ t → t ≤ t5 →
-      |coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb t
-        - coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb s| ≤ cr)
+      |freeShift hH G₂ (-g₂) P t - freeShift hH G₂ (-g₂) P s| ≤ cr)
     (hcμ : ∀ s t, tbμ ≤ s → s ≤ t → t ≤ tcμ →
-      |coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb t
-        - coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb s| ≤ cμ)
+      |freeShift hH G₃ (-g₃) P t - freeShift hH G₃ (-g₃) P s| ≤ cμ)
     (hcρ : ∀ s t, tbρ ≤ s → s ≤ t → t ≤ tcρ →
-      |coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa t
-        - coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa s| ≤ cρ)
+      |freeShift hH G₄ (-g₄) P t - freeShift hH G₄ (-g₄) P s| ≤ cρ)
     (hcm : ∀ s t, tbm ≤ s → s ≤ t → t ≤ tcm →
-      |coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa t
-        - coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa s| ≤ cm)
+      |freeShift hH G₅ (-g₅) P t - freeShift hH G₅ (-g₅) P s| ≤ cm)
     {ϵ S γ T s ρ : ℝ}
-    (hS1 : ‖gateOp σ (fun k : κa × κb => β k.2) r₁ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)‖ ≤ S)
-    (hS2 : ‖gateOp σ (fun k : κa × κb => β k.2) r₂ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)‖ ≤ S)
-    (hS3 : ‖(1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb‖ ≤ S)
-    (hS4 : ‖gateOp σ (fun k : κa × κb => α k.1) r₄ (Ya ⊗ₖ (1 : Matrix κb κb ℂ))‖ ≤ S)
-    (hS5 : ‖(1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya‖ ≤ S)
+    (hS1 : ‖G₁‖ ≤ S) (hS2 : ‖G₂‖ ≤ S) (hS3 : ‖G₃‖ ≤ S) (hS4 : ‖G₄‖ ≤ S) (hS5 : ‖G₅‖ ≤ S)
     (hγ1 : |g₁| ≤ γ) (hγ2 : |g₂| ≤ γ) (hγ3 : |g₃| ≤ γ) (hγ4 : |g₄| ≤ γ) (hγ5 : |g₅| ≤ γ)
     (hT1 : tce ≤ T) (hT2 : t5 ≤ T) (hT3 : tcμ ≤ T) (hT4 : tcρ ≤ T) (hT5 : tcm ≤ T)
     (sp : 0 < s) (q1 : s ≤ 1 / 12 - δe) (q2 : s ≤ 1 / 12 - η₀) (q3 : s ≤ 1 / 12 - η)
@@ -605,51 +592,56 @@ theorem tri_radar_lorentz_near (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
       + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
       + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
       + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))))) ≤ ϵ) :
-    ∀ (N : ℕ) (e : ι × (κa × κb) ≃ Fin (N + 1)) (θ ψ χ ξ ζ : KTorus),
+    ∀ (N : ℕ) (e : ν ≃ Fin (N + 1)) (θ ψ χ ξ ζ : KTorus),
       NearStart ρ θ → NearStart ρ ψ → NearStart ρ χ → NearStart ρ ξ → NearStart ρ ζ →
       ∀ se, tbe ≤ se → se ≤ tce → ∀ sr, t4 ≤ sr → sr ≤ t5 → ∀ sμ, tbμ ≤ sμ → sμ ≤ tcμ →
       ∀ sρ, tbρ ≤ sρ → sρ ≤ tcρ → ∀ sm, tbm ≤ sm → sm ≤ tcm →
       ∃ Ne Nr Nμ Nρ Nm : ℕ,
         IsTickCount {x : PentaSigma N | x.1.1.1.1.2 ∈ readyArc 2}
             {x : PentaSigma N | x.1.1.1.1.2 ∈ displayArc}
-            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
-                (scaledTrainF_periodic g₂)
+            (fun t => fiveCoupledFlow (Matrix.reindex e e H) (Matrix.reindex e e G₁)
+              (Matrix.reindex e e G₂) (Matrix.reindex e e G₃) (Matrix.reindex e e G₄)
+              (Matrix.reindex e e G₅) (scaledTrainF_periodic g₁) (scaledTrainF_periodic g₂)
               (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
               (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
-              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
-              p qa qb θ ψ χ ξ ζ) se Ne
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅) t
+              (((((idxArenaEquiv e P, θ), ψ), χ), ξ), ζ)) se Ne
         ∧ IsTickCount {x : PentaSigma N | x.1.1.1.2 ∈ readyArc 2}
             {x : PentaSigma N | x.1.1.1.2 ∈ displayArc}
-            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
-                (scaledTrainF_periodic g₂)
+            (fun t => fiveCoupledFlow (Matrix.reindex e e H) (Matrix.reindex e e G₁)
+              (Matrix.reindex e e G₂) (Matrix.reindex e e G₃) (Matrix.reindex e e G₄)
+              (Matrix.reindex e e G₅) (scaledTrainF_periodic g₁) (scaledTrainF_periodic g₂)
               (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
               (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
-              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
-              p qa qb θ ψ χ ξ ζ) sr Nr
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅) t
+              (((((idxArenaEquiv e P, θ), ψ), χ), ξ), ζ)) sr Nr
         ∧ IsTickCount {x : PentaSigma N | x.1.1.2 ∈ readyArc 2}
             {x : PentaSigma N | x.1.1.2 ∈ displayArc}
-            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
-                (scaledTrainF_periodic g₂)
+            (fun t => fiveCoupledFlow (Matrix.reindex e e H) (Matrix.reindex e e G₁)
+              (Matrix.reindex e e G₂) (Matrix.reindex e e G₃) (Matrix.reindex e e G₄)
+              (Matrix.reindex e e G₅) (scaledTrainF_periodic g₁) (scaledTrainF_periodic g₂)
               (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
               (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
-              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
-              p qa qb θ ψ χ ξ ζ) sμ Nμ
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅) t
+              (((((idxArenaEquiv e P, θ), ψ), χ), ξ), ζ)) sμ Nμ
         ∧ IsTickCount {x : PentaSigma N | x.1.2 ∈ readyArc 2}
             {x : PentaSigma N | x.1.2 ∈ displayArc}
-            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
-                (scaledTrainF_periodic g₂)
+            (fun t => fiveCoupledFlow (Matrix.reindex e e H) (Matrix.reindex e e G₁)
+              (Matrix.reindex e e G₂) (Matrix.reindex e e G₃) (Matrix.reindex e e G₄)
+              (Matrix.reindex e e G₅) (scaledTrainF_periodic g₁) (scaledTrainF_periodic g₂)
               (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
               (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
-              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
-              p qa qb θ ψ χ ξ ζ) sρ Nρ
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅) t
+              (((((idxArenaEquiv e P, θ), ψ), χ), ξ), ζ)) sρ Nρ
         ∧ IsTickCount {x : PentaSigma N | x.2 ∈ readyArc 2}
             {x : PentaSigma N | x.2 ∈ displayArc}
-            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
-                (scaledTrainF_periodic g₂)
+            (fun t => fiveCoupledFlow (Matrix.reindex e e H) (Matrix.reindex e e G₁)
+              (Matrix.reindex e e G₂) (Matrix.reindex e e G₃) (Matrix.reindex e e G₄)
+              (Matrix.reindex e e G₅) (scaledTrainF_periodic g₁) (scaledTrainF_periodic g₂)
               (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
               (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
-              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
-              p qa qb θ ψ χ ξ ζ) sm Nm
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅) t
+              (((((idxArenaEquiv e P, θ), ψ), χ), ξ), ζ)) sm Nm
         ∧ |(lorentzBoost 1 (-v)
                 ((Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀, 0)).1
               - (((Ne : ℝ) * (2 * Real.pi) / R₀
@@ -672,20 +664,6 @@ theorem tri_radar_lorentz_near (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
                 / Real.sqrt (1 - v ^ 2) + ϵ
         ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀ - (tR - tMA)|
             ≤ (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ + ϵ := by
-  have hAB := compositeH_isHermitian hA hB
-  have hH := compositeH_isHermitian hM hAB
-  have hG₁ := gateOp_snd_isHermitian (κa := κa) σ β r₁ hYb hYbs
-  have hG₂ := gateOp_snd_isHermitian (κa := κa) σ β r₂ hYb hYbs
-  have hG₃ : ((1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb).IsHermitian :=
-    kronecker_isHermitian Matrix.isHermitian_one (gateOp_isHermitian α β r₃ hYb hYbs)
-  have hG₄ := gateOp_fst_isHermitian (κb := κb) σ α r₄ hYa hYas
-  have hG₅ : ((1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya).IsHermitian :=
-    kronecker_isHermitian Matrix.isHermitian_one (gateOpL_isHermitian α β r₅ hYa hYas)
-  rw [← freeShift_tri_gate_snd σ β r₁ hM hA hB Yb (-g₁) p qa qb] at He hce
-  rw [← freeShift_tri_gate_snd σ β r₂ hM hA hB Yb (-g₂) p qa qb] at Hr hcr
-  rw [← freeShift_tri_pair α β r₃ hM hA hB Yb (-g₃) p qa qb] at Hμ hcμ
-  rw [← freeShift_tri_gate_fst σ α r₄ hM hA hB Ya (-g₄) p qa qb] at Hρ hcρ
-  rw [← freeShift_tri_pairL α β r₅ hM hA hB Ya (-g₅) p qa qb] at Hm hcm
   have hS0 : 0 ≤ S := (norm_nonneg _).trans hS1
   have hγ0 : 0 ≤ γ := (abs_nonneg _).trans hγ1
   -- the times
@@ -851,7 +829,7 @@ theorem tri_radar_lorentz_near (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
       (scaledTrainF_periodic g₂) (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄)
       (scaledTrainF_periodic g₅) (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂)
       (contDiff_scaledTrainF g₃) (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
-      (prodRay p (prodRay qa qb)) hF hθ1 hψ1 hχ1 hξ1 hζ1 hv0 hv hR₀ hκ hE hRet hτE hτRet hτMB
+      P hF hθ1 hψ1 hχ1 hξ1 hζ1 hv0 hv hR₀ hκ hE hRet hτE hτRet hτMB
       hτR hτMA He' Hr' Hμ' Hρ' Hm' se h1 h2 sr h3 h4 sμ h5 h6 sρ h7 h8 sm h9 h10
   refine ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6.trans ?_, c7.trans ?_, c8.trans ?_⟩
   · simp only [gatedErr_add, awayErr_add]
@@ -924,6 +902,167 @@ theorem tri_radar_lorentz_near (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
       ring
     rw [key]
     linarith only [y3, hk1]
+
+end PentaNear
+
+section TriOpen
+
+variable {ι κa κb S : Type*} [Fintype ι] [DecidableEq ι] [Fintype κa] [DecidableEq κa]
+  [Fintype κb] [DecidableEq κb] [Fintype S] [DecidableEq S] [Nonempty ι] [Nonempty κa]
+  [Nonempty κb] {M₀ : Matrix ι ι ℂ} {A₀ : Matrix κa κa ℂ}
+  {B₀ : Matrix κb κb ℂ} {σ : ι → S} {α : κa → S} {β : κb → S}
+  {r₁ r₂ r₃ r₄ r₅ : S → S → Prop} [DecidableRel r₁] [DecidableRel r₂] [DecidableRel r₃]
+  [DecidableRel r₄] [DecidableRel r₅] {Ya : Matrix κa κa ℂ} {Yb : Matrix κb κb ℂ}
+
+/-- ★★★ **M6 from the top from every pointer angle within an explicit radius, for three
+carriers and five gates.** As `tri_radar_lorentz_open`, with the radius a hypothesis: let the
+five gates have norm at most `S`, the five strengths size at most `γ`, the five reading
+windows end by `T`, and `s > 0` be a slack below every margin of the five histories. Then
+every `ρ > 0` with `ρ ≤ s/4`, `ρ C T ≤ s/4` and `ρ C (K₁ + K₂) ≤ ϵ`,
+`C = 20 γ² S² T + 14 γ S`, `K₁`, `K₂` the coefficients of the two error components, is a
+radius: from every five pointer angles within `ρ` of `(1/12, 0)` the five pointers have
+counts and the counts satisfy the Lorentz statement with the errors of #402 enlarged by
+`ϵ`. -/
+theorem tri_radar_lorentz_near (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
+    (hB : B₀.IsHermitian) (hYa : Ya.IsHermitian) (hYas : ∀ i j, α i ≠ α j → Ya i j = 0)
+    (hYb : Yb.IsHermitian) (hYbs : ∀ i j, β i ≠ β j → Yb i j = 0) (g₁ g₂ g₃ g₄ g₅ : ℝ)
+    (p : GenArena ι) (qa : GenArena κa) (qb : GenArena κb)
+    {v R₀ RB κ TE TR TRet TM tE tR tRet tMB tMA τE τR τRet τMB τMA : ℝ}
+    {δe ve tbe tce c vr η₀ η t4 t5 δμ vμ tbμ tcμ δρ vρ tbρ tcρ δm vm tbm tcm : ℝ}
+    {ce cr cμ cρ cm : ℝ}
+    (hv0 : 0 ≤ v) (hv : v < 1) (hR₀ : 0 < R₀)
+    (hκ : |RB - Real.sqrt (1 - v ^ 2) * R₀| ≤ κ * R₀)
+    (hE : TR - TE = v * (TM - TE)) (hRet : TRet - TR = v * (TM - TRet))
+    (hτE : |tE - TE| ≤ τE) (hτRet : |tRet - TRet| ≤ τRet) (hτMB : |tMB - TM| ≤ τMB)
+    (hτR : |tR - TR| ≤ τR) (hτMA : |tMA - TM| ≤ τMA)
+    (He : IsGatedHistory (coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb) RB δe ve tE tbe tce)
+    (Hr : IsAwayHistory (coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb) RB c vr η₀ η tE tbe
+      tRet t4 t5)
+    (Hμ : IsGatedHistory (coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb) RB δμ vμ tMB tbμ
+      tcμ)
+    (Hρ : IsGatedHistory (coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa) R₀ δρ vρ tR tbρ tcρ)
+    (Hm : IsGatedHistory
+      (coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa) R₀ δm vm tMA tbm
+      tcm)
+    (hce : ∀ s t, tbe ≤ s → s ≤ t → t ≤ tce →
+      |coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb t
+        - coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb s| ≤ ce)
+    (hcr : ∀ s t, t4 ≤ s → s ≤ t → t ≤ t5 →
+      |coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb t
+        - coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb s| ≤ cr)
+    (hcμ : ∀ s t, tbμ ≤ s → s ≤ t → t ≤ tcμ →
+      |coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb t
+        - coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb s| ≤ cμ)
+    (hcρ : ∀ s t, tbρ ≤ s → s ≤ t → t ≤ tcρ →
+      |coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa t
+        - coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa s| ≤ cρ)
+    (hcm : ∀ s t, tbm ≤ s → s ≤ t → t ≤ tcm →
+      |coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa t
+        - coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa s| ≤ cm)
+    {ϵ S γ T s ρ : ℝ}
+    (hS1 : ‖gateOp σ (fun k : κa × κb => β k.2) r₁ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)‖ ≤ S)
+    (hS2 : ‖gateOp σ (fun k : κa × κb => β k.2) r₂ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)‖ ≤ S)
+    (hS3 : ‖(1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb‖ ≤ S)
+    (hS4 : ‖gateOp σ (fun k : κa × κb => α k.1) r₄ (Ya ⊗ₖ (1 : Matrix κb κb ℂ))‖ ≤ S)
+    (hS5 : ‖(1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya‖ ≤ S)
+    (hγ1 : |g₁| ≤ γ) (hγ2 : |g₂| ≤ γ) (hγ3 : |g₃| ≤ γ) (hγ4 : |g₄| ≤ γ) (hγ5 : |g₅| ≤ γ)
+    (hT1 : tce ≤ T) (hT2 : t5 ≤ T) (hT3 : tcμ ≤ T) (hT4 : tcρ ≤ T) (hT5 : tcm ≤ T)
+    (sp : 0 < s) (q1 : s ≤ 1 / 12 - δe) (q2 : s ≤ 1 / 12 - η₀) (q3 : s ≤ 1 / 12 - η)
+    (q4 : s ≤ 1 / 12 - c - (-1 / 6 + η)) (q5 : s ≤ 1 / 6 - η - (1 / 12 - c))
+    (q6 : s ≤ 1 / 12 - δμ) (q7 : s ≤ 1 / 12 - δρ) (q8 : s ≤ 1 / 12 - δm)
+    (q9 : s ≤ 1 / 6 - ce) (q10 : s ≤ 1 / 6 - cr) (q11 : s ≤ 1 / 6 - cμ)
+    (q12 : s ≤ 1 / 6 - cρ) (q13 : s ≤ 1 / 6 - cm) (hρ0 : 0 < ρ) (hρs : ρ ≤ s / 4)
+    (hρA' : ρ * ((20 * γ ^ 2 * S ^ 2 * T + 14 * γ * S) * T) ≤ s / 4)
+    (hρB' : ρ * ((20 * γ ^ 2 * S ^ 2 * T + 14 * γ * S) * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe
+        - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+      + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))))) ≤ ϵ) :
+    ∀ (N : ℕ) (e : ι × (κa × κb) ≃ Fin (N + 1)) (θ ψ χ ξ ζ : KTorus),
+      NearStart ρ θ → NearStart ρ ψ → NearStart ρ χ → NearStart ρ ξ → NearStart ρ ζ →
+      ∀ se, tbe ≤ se → se ≤ tce → ∀ sr, t4 ≤ sr → sr ≤ t5 → ∀ sμ, tbμ ≤ sμ → sμ ≤ tcμ →
+      ∀ sρ, tbρ ≤ sρ → sρ ≤ tcρ → ∀ sm, tbm ≤ sm → sm ≤ tcm →
+      ∃ Ne Nr Nμ Nρ Nm : ℕ,
+        IsTickCount {x : PentaSigma N | x.1.1.1.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.1.1.1.2 ∈ displayArc}
+            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
+                (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
+              p qa qb θ ψ χ ξ ζ) se Ne
+        ∧ IsTickCount {x : PentaSigma N | x.1.1.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.1.1.2 ∈ displayArc}
+            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
+                (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
+              p qa qb θ ψ χ ξ ζ) sr Nr
+        ∧ IsTickCount {x : PentaSigma N | x.1.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.1.2 ∈ displayArc}
+            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
+                (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
+              p qa qb θ ψ χ ξ ζ) sμ Nμ
+        ∧ IsTickCount {x : PentaSigma N | x.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.2 ∈ displayArc}
+            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
+                (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
+              p qa qb θ ψ χ ξ ζ) sρ Nρ
+        ∧ IsTickCount {x : PentaSigma N | x.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.2 ∈ displayArc}
+            (triRun e M₀ A₀ B₀ σ α β r₁ r₂ r₃ r₄ r₅ Ya Yb (scaledTrainF_periodic g₁)
+                (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅)
+              p qa qb θ ψ χ ξ ζ) sm Nm
+        ∧ |(lorentzBoost 1 (-v)
+                ((Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀, 0)).1
+              - (((Ne : ℝ) * (2 * Real.pi) / R₀
+                    + ((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) / R₀) / 2
+                  - (Nμ : ℝ) * (2 * Real.pi) / R₀)|
+            ≤ ((gatedErr ve tE tbe / R₀ + κ * tE + τE)
+                + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
+                    + κ * tRet + τRet)) / 2
+              + (gatedErr vμ tMB tbμ / R₀ + κ * tMB + τMB)
+              + ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
+                / Real.sqrt (1 - v ^ 2) + ϵ
+        ∧ |(lorentzBoost 1 (-v)
+                ((Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀, 0)).2
+              - (-((((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) / R₀
+                    - (Ne : ℝ) * (2 * Real.pi) / R₀) / 2))|
+            ≤ ((gatedErr ve tE tbe / R₀ + κ * tE + τE)
+                + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
+                    + κ * tRet + τRet)) / 2
+              + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
+                / Real.sqrt (1 - v ^ 2) + ϵ
+        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀ - (tR - tMA)|
+            ≤ (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ + ϵ := by
+  have hAB := compositeH_isHermitian hA hB
+  have hH := compositeH_isHermitian hM hAB
+  have hG₁ := gateOp_snd_isHermitian (κa := κa) σ β r₁ hYb hYbs
+  have hG₂ := gateOp_snd_isHermitian (κa := κa) σ β r₂ hYb hYbs
+  have hG₃ : ((1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb).IsHermitian :=
+    kronecker_isHermitian Matrix.isHermitian_one (gateOp_isHermitian α β r₃ hYb hYbs)
+  have hG₄ := gateOp_fst_isHermitian (κb := κb) σ α r₄ hYa hYas
+  have hG₅ : ((1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya).IsHermitian :=
+    kronecker_isHermitian Matrix.isHermitian_one (gateOpL_isHermitian α β r₅ hYa hYas)
+  rw [← freeShift_tri_gate_snd σ β r₁ hM hA hB Yb (-g₁) p qa qb] at He hce
+  rw [← freeShift_tri_gate_snd σ β r₂ hM hA hB Yb (-g₂) p qa qb] at Hr hcr
+  rw [← freeShift_tri_pair α β r₃ hM hA hB Yb (-g₃) p qa qb] at Hμ hcμ
+  rw [← freeShift_tri_gate_fst σ α r₄ hM hA hB Ya (-g₄) p qa qb] at Hρ hcρ
+  rw [← freeShift_tri_pairL α β r₅ hM hA hB Ya (-g₅) p qa qb] at Hm hcm
+  exact penta_radar_lorentz_near hH hG₁ hG₂ hG₃ hG₄ hG₅ g₁ g₂ g₃ g₄ g₅
+    (prodRay p (prodRay qa qb)) hv0 hv hR₀ hκ hE hRet hτE hτRet hτMB hτR hτMA He Hr Hμ Hρ Hm
+    hce hcr hcμ hcρ hcm hS1 hS2 hS3 hS4 hS5 hγ1 hγ2 hγ3 hγ4 hγ5 hT1 hT2 hT3 hT4 hT5 sp q1 q2
+    q3 q4 q5 q6 q7 q8 q9 q10 q11 q12 q13 hρ0 hρs hρA' hρB'
 
 /-- ★★★ **M6 from the top on an open set of pointer angles, for three carriers and five
 gates.** The run `triRun` with the profiles `g_i · trainF`. Suppose the five two-carrier gate

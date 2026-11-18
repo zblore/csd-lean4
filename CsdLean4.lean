@@ -852,6 +852,7 @@ public import CsdLean4.RecordLayer.UnifiedRadarFamily
 public import CsdLean4.RecordLayer.UnifiedRadarRun
 public import CsdLean4.RecordLayer.UnifiedRadarStability
 public import CsdLean4.RecordLayer.UnifiedRayDrift
+public import CsdLean4.RecordLayer.UnifiedRayRadar
 public import CsdLean4.RecordLayer.UnifiedFibreRun
 public import CsdLean4.RecordLayer.UnifiedFibreDrift
 public import CsdLean4.RecordLayer.UnifiedFibreRadar

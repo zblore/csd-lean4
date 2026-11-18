@@ -1391,6 +1391,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-211 | **A perturbation acts only through the unperturbed orbit of what was prepared (UO-26, first brick).** For Hermitian `H₀` and `V` on a finite index, any `X` and `t ≥ 0`: `‖(e^{−it(H₀+V)} − e^{−itH₀}) X‖ ≤ ∫₀ᵗ ‖V e^{−isH₀} X‖ ds` in the L2 operator norm; and for `Q` with `Q e^{−itH₀} X = 0`, `‖Q e^{−it(H₀+V)} X‖ ≤ ‖Q‖ ∫₀ᵗ ‖V e^{−isH₀} X‖ ds` | `Matrix.continuous_exp_smul`, `Matrix.norm_exp_smul_sub_exp_smul_mul_le`, `Matrix.norm_exp_neg_I_add_sub_mul_le`, `Matrix.norm_mul_exp_neg_I_add_mul_le` (`Mathlib/Analysis/Matrix/DuhamelState.lean`) | an upper bound only: it does not show that anything is transferred; `t ≥ 0`; no carrier, coupling or arena; the mechanism of UO-26 is not fixed and no assumption is added |
 | UD-212 | **A perturbed evolution to first order, with a second-order remainder (UO-26, second brick).** For Hermitian `H₀` and `V` on a finite index, any `X` and `t ≥ 0`: `(e^{−it(H₀+V)} − e^{−itH₀}) X` is within `‖V‖² ‖X‖ t² / 2` of `−i ∫₀ᵗ e^{−i(t−s)H₀} V e^{−isH₀} X ds` in the L2 operator norm; and for `Q` with `Q e^{−itH₀} X = 0`, `‖Q e^{−it(H₀+V)} X‖` is at least the norm of `Q` times that integral less `‖Q‖ ‖V‖² ‖X‖ t² / 2` | `Matrix.exp_smul_mul_exp_neg_smul`, `Matrix.duhamelKernel`, `Matrix.duhamelFirst`, `Matrix.continuous_duhamelIntegrand`, `Matrix.hasDerivAt_duhamelKernel`, `Matrix.norm_duhamelKernel_le`, `Matrix.norm_duhamelFirst_le`, `Matrix.norm_exp_sub_exp_mul_sub_duhamelFirst_le`, `Matrix.conjTranspose_neg_I_smul`, `Matrix.norm_exp_neg_I_add_sub_mul_sub_duhamelFirst_le`, `Matrix.le_norm_mul_exp_neg_I_add_mul` (`Mathlib/Analysis/Matrix/DuhamelFirstOrder.lean`) | the first-order term is not evaluated or shown non-zero for any choice, so nothing is shown to be launched; the remainder is in `‖V‖`, not in the orbit; useful for weak coupling or short times only; `t ≥ 0`; no carrier, coupling or arena |
 | UD-213 | **A history survives a small turn of the carrier's ray (UO-25 (2), first brick).** For a carrier with any index type, a Hermitian matrix `H`, an observable `G`, a ray `p` and a unitary `W`: after any unitary the expectation of `G` from the ray turned by `W` is within `2 ‖G‖ ‖W − 1‖` of the one from `p`; the displacement of UD-167 from the turned ray drifts from the one from `p` at a rate at most `4 \|z\| ‖G‖ ‖W − 1‖`; so a gated or an away history of UD-164 at `p` is one at the turned ray, with error enlarged by `lam · t` and speed by `lam`, for `lam` at least that rate, under the size conditions of UD-197 | `abs_arenaObs_kick_kick_sub_le`, `freeShift_ray_drift`, `abs_freeShift_ray_sub_le`, `IsGatedHistory.of_ray`, `IsAwayHistory.of_ray` (`RecordLayer/UnifiedRayDrift.lean`) | bound; one displacement along the free orbit; the error grows with the time, so the turned rays that keep a run's histories lie within order `1/T` of the ray; no measure, no preparation, not joined with the drift over the fibres |
+| UD-214 | **The radar counts from turned rays and nearby pointer angles (UO-25 (2), second brick).** The open statement of UD-205 holds for a carrier with any index type, five Hermitian observables of norm at most `S` and any ray whose five displacements have the histories of UD-164 with a slack `s`; the three-carrier statement is its case for a product ray. With the ray turned: for every unitary `W` with `‖W − 1‖ ≤ r_W`, `4 γ S r_W T ≤ s/2`, and every `ρ > 0` with `ρ ≤ s/8`, `ρ C T ≤ s/8`, `ρ C (K₁ + K₂) ≤ ϵ`, `C = 20 γ² S² T + 14 γ S`, from the turned ray and every five pointer angles within `ρ` of `(1/12, 0)` the five pointers have counts and the counts satisfy the Lorentz statement with the errors of UD-164 at speeds enlarged by `4 γ S r_W`, plus `ϵ` | `penta_radar_lorentz_near` (`RecordLayer/UnifiedTriFibre.lean`, of which `tri_radar_lorentz_near` is now a corollary); `penta_radar_lorentz_near_ray` (`RecordLayer/UnifiedRayRadar.lean`) | bound; conditional on the five histories at the ray, which for the family of UD-201 are inside a proof and not exposed, so the family is not instantiated; no measure, no preparation; the radius in the rays is of order `s/(γ S T)` |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2859,6 +2860,15 @@ null set, so the counts have to come from the general-ray theorem UD-199
 Positive measure in the pointer fibres is not positive measure in the arena, and nothing
 here changes that. No new assumption.
 
+Exact scope of UD-214 (BACKLOG #438, second brick; obligation UO-25 (2)). What it gives. The
+counts and the Lorentz statement on a set of starts that is a product: rays turned by
+unitaries within `r_W` of the identity, times a box of pointer angles, for any carrier whose
+five displacements have the histories at the unturned ray. The turned rays are not required
+to be products of carriers' rays. What it does not give. The family's instance: the five
+histories of UD-196 with a named slack have to be stated as a theorem first. The measure of
+the set of turned rays. The `HistoryPreparation`. Positive measure in the arena is still
+not shown. No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4175,6 +4185,10 @@ time. It is not a statement about every dynamics on `Σ`.
   `4 |z| ‖G‖ ‖W − 1‖`. Owed for (2): the family's five histories at the turned rays, the
   counts at each from the general-ray theorem, the measure of the turned rays, the
   preparation.
+  ▸ **Task 2, second brick, 2026-11-18 (BACKLOG #438, part) → UD-214. (2) not met.** The
+  counts and the Lorentz statement from turned rays times a box of angles, for any carrier,
+  conditional on the five histories at the unturned ray. Owed for (2): the family's five
+  histories with their slack as a statement, the measure of the turned rays, the preparation.
 * **UO-26.** A return caused at the event (the author's decision of 2026-11-18 under UO-17;
   choice (c) of [`unified-m7-feasibility.md`](unified-m7-feasibility.md) §7; BACKLOG #437).
   On the arena as frozen a messenger turns round only at a flat wall, so a moving group in
