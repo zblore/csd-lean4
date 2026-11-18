@@ -1442,6 +1442,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-227 | **The five-pointer flow commutes with turning the pointers (UO-25 (5), first brick; UO-24).** On the arena of UA-18 (d), for Hermitian matrices: starting the five pointers' moving angles further round leaves them that much further round at every time and leaves the ray and the five conserved angles as they were; so no pointer's angles and no carrier depend on where another pointer started | `isHermitian_add_ofReal_smul`, `shiftEcho`, `shiftTri`, `shiftQuad`, `shiftPenta`, `twoCoupledFlow_shiftEcho`, `threeCoupledFlow_shiftTri`, `fourCoupledFlow_shiftQuad`, `fiveCoupledFlow_shiftPenta`, `fiveCoupledFlow_shiftPenta_snd`, `fiveCoupledFlow_shiftPenta_ray` (`LF4/PentaPointerInert.lean`) | exact; an obstruction for the couplings of UA-18 (c), whose energy contains no moving angle: a record held by a pointer cannot control a later interaction there; correlation of two pointers through a carrier is not excluded; a pointer that acts back (UO-24) is not covered |
 | UD-228 | **A tick takes time (UO-25 (3), third brick).** For a history in a metric space that moves at speed at most `K` up to `T`, and resting and displaying sets at distance at least `d`: `n` ticks by `T` need `n d ≤ K T`, so a count at `T` is at most `K T / d` for `d > 0` | `HasTicks.mul_le`, `IsTickCount.mul_le`, `IsTickCount.le_div` (`RecordLayer/TickCountBound.lean`) | an upper bound; not instantiated: the speed of a pointer of the arena and the distance between its two arcs are not shown, so the radar's cap is not yet a number |
 | UD-229 | **The law of a tick count for a pointer that only advances (UO-25 (6), first brick).** For a lifted angle that is continuous and non-decreasing on `[0, T]` from `x₀` to `x₀ + Δ`, and a resting arc `(r₁, r₂]` and a displaying arc `(p₁, p₂]` with `r₁ < r₂ ≤ p₁ < p₂ ≤ r₁ + 1`, repeated with period one: the count at `T` is the number of integers `k` with `x₀ ≤ r₂ + k` and `p₁ + k < x₀ + Δ`; averaged over `x₀` uniform on one turn it is `Δ − (p₁ − r₂)` for `Δ ≥ p₁ − r₂`. For a pointer of the arena read through any projection and turned by such a `D`, with the ready arc `(0, 1/6]` and the displaying arc `(1/3, 5/6]`: the count is that number at `x₀ = rep q`, and its mean over the starting angle is `D(T) − 1/6` | `periodicArc`, `tickIndices`, `mem_tickIndices`, `card_tickIndices`, `exists_time_eq`, `lt_of_lt_of_monotoneOn`, `hasTicks_of_le_card`, `le_card_of_hasTicks`, `isTickCount_line`, `integral_ceil_add_sub_ceil_add`, `integral_card_tickIndices`, `coe_intCast_circleFibre`, `rep_add_coe_mem_Ioc_iff`, `hasTicks_congr`, `isTickCount_pointer`, `integral_card_tickIndices_pointer` (`RecordLayer/TickCountLaw.lean`) | exact; the law of a count given a displacement: no weight, preparation or observable appears, so not a Born statement; the mean only; the average is over the starting angle's representative, not against the arena's measure; only for a pointer that never turns back, which the radar's clock pointers are not |
+| UD-230 | **The propagation bound over any site graph, and on the torus (Task 9, first brick).** For a site map into any type with an adjacency relation, a skew-Hermitian generator `S` whose nonzero entries join equal or adjacent sites, `A` supported on the sites `X` and `B` on `Y`, and `d` steps of growth from `X` missing `Y`: `‖[A(t), B]‖ ≤ 2 (2 ‖S‖ t)^d / d! · ‖A‖ ‖B‖` for `t ≥ 0`; the same against a kick that is the identity off `Y`, between two generators that differ on `Y`, and for an occupancy on the arena. The ring's predicates of `RecordLayer/UnifiedCausalOrder.lean` are the case of the ring's graph. The lattice Dirac Hamiltonian of any dimension hops along the torus's graph, so the bound holds for it with rate `2 ‖H‖`, and `d` steps of growth reach only sites `y + v` with `∑ |v_i| ≤ d` | `SiteSuppG`, `HopsG`, `IdOffG`, `growG`, `growIterG`, `subset_growG`, `growIterG_mono`, `HopsG.smul`, `HopsG.add`, `IdOffG.siteSuppG_sub_one`, `siteSuppG_adOne`, `siteSuppG_adIter`, `mul_eq_zero_of_siteSuppG_disjoint`, `commute_of_siteSuppG_disjoint`, `commute_of_siteSuppG_idOffG`, `norm_commutator_graph_le`, `norm_commutator_graph_idOffG_le`, `norm_heisenbergFlow_sub_graph_le`, `abs_arenaObs_flow_kick_sub_graph_le`, `abs_arenaObs_flow_sub_flow_graph_le`, `rank_le_of_mem_growIterG`, `disjoint_growIterG_of_rank`, `ringAdj`, `HopsOne.hopsG`, `coe_grow`, `coe_growIter`, `torusAdj`, `torusAdj_symm`, `hopsG_latticeDiracHam`, `exists_int_of_mem_growIterG_torus`, `disjoint_growIterG_torus`, `norm_commutator_latticeDirac_le` (`RecordLayer/GraphCone.lean`) | upper bounds with a factorial tail, not an exclusion; the graph is read off the generator's entries and is not derived; the rate is the generator's norm, not the group velocity, and is not a number for the torus; the ring's theorems were not re-proved from these; no detector and no record on the torus |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3055,6 +3056,17 @@ distribution of the count. The average against `μ_FS ⊗ vol⁵`. Anything for 
 swings. Whether the mean count's linearity is what Posit 1 asks for is not claimed; the
 cell law's obligation UO-20 is unchanged. No new assumption.
 
+Exact scope of UD-230 (BACKLOG #297, first brick; Task 9 of the plan of 2026-11-18, items 1
+and 2 of the task plan's §7). What it gives. The support-growth argument of
+`RecordLayer/ChainCone.lean` and `RecordLayer/UnifiedCausalOrder.lean` with the ring removed:
+it needs a site map and an adjacency relation, and nothing else. The torus of any dimension
+is an instance, with the lattice Dirac Hamiltonian of `CV/DiracLatticeD.lean` as the
+generator. What it does not give. A detector or a record on the torus (items 3 and 4 of §7).
+A lower bound: nothing says an influence arrives. A cone speed: the rate is `2 ‖H‖` and is
+not computed. An order of events or a metric: the graph is the generator's own interaction
+topology restated, as UO-15's test says. The ring's theorems keep their own proofs;
+`HopsOne.hopsG` and `coe_growIter` show they are the ring's case. No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4330,6 +4342,10 @@ time. It is not a statement about every dynamics on `Σ`.
   energy-step errors from the width of the window, and the drift rate in physical units:
   free of `L` up to a term of order `1/L`. With UD-221 this is the packet layer of the note's
   §3 for a flat window. Open in #296: the clock on a packet, `μ = 0`. Then #297, #298.
+  ▸ **The cone on the torus, 2026-11-19 (BACKLOG #297, first brick) → UD-230. Not met.** The
+  propagation bound for any site graph, with the ring and the torus as instances and the
+  lattice Dirac generator of any dimension. Upper bounds only; no detector or record on the
+  torus yet.
 
 ### M8 — which assumptions force the geometry (gate C)
 

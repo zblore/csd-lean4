@@ -22904,4 +22904,134 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.integral_card_tickIndices_pointer
 
+/-! #297, first brick (Task 9): the propagation bound over any site graph, and on the torus (`RecordLayer/GraphCone.lean`). -/
+
+/-- info: 'CSD.RecordLayer.SiteSuppG' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.SiteSuppG
+
+/-- info: 'CSD.RecordLayer.HopsG' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.HopsG
+
+/-- info: 'CSD.RecordLayer.IdOffG' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IdOffG
+
+/-- info: 'CSD.RecordLayer.growG' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.growG
+
+/-- info: 'CSD.RecordLayer.growIterG' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.growIterG
+
+/-- info: 'CSD.RecordLayer.subset_growG' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.subset_growG
+
+/-- info: 'CSD.RecordLayer.growIterG_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.growIterG_mono
+
+/-- info: 'CSD.RecordLayer.HopsG.smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.HopsG.smul
+
+/-- info: 'CSD.RecordLayer.HopsG.add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.HopsG.add
+
+/-- info: 'CSD.RecordLayer.IdOffG.siteSuppG_sub_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IdOffG.siteSuppG_sub_one
+
+/-- info: 'CSD.RecordLayer.siteSuppG_adOne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSuppG_adOne
+
+/-- info: 'CSD.RecordLayer.siteSuppG_adIter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSuppG_adIter
+
+/-- info: 'CSD.RecordLayer.mul_eq_zero_of_siteSuppG_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mul_eq_zero_of_siteSuppG_disjoint
+
+/-- info: 'CSD.RecordLayer.commute_of_siteSuppG_disjoint' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.commute_of_siteSuppG_disjoint
+
+/-- info: 'CSD.RecordLayer.commute_of_siteSuppG_idOffG' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.commute_of_siteSuppG_idOffG
+
+/-- info: 'CSD.RecordLayer.norm_commutator_graph_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_commutator_graph_le
+
+/-- info: 'CSD.RecordLayer.norm_commutator_graph_idOffG_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_commutator_graph_idOffG_le
+
+/-- info: 'CSD.RecordLayer.norm_heisenbergFlow_sub_graph_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_heisenbergFlow_sub_graph_le
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_flow_kick_sub_graph_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_flow_kick_sub_graph_le
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_flow_sub_flow_graph_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_flow_sub_flow_graph_le
+
+/-- info: 'CSD.RecordLayer.rank_le_of_mem_growIterG' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rank_le_of_mem_growIterG
+
+/-- info: 'CSD.RecordLayer.disjoint_growIterG_of_rank' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.disjoint_growIterG_of_rank
+
+/-- info: 'CSD.RecordLayer.ringAdj' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringAdj
+
+/-- info: 'CSD.RecordLayer.HopsOne.hopsG' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.HopsOne.hopsG
+
+/-- info: 'CSD.RecordLayer.coe_grow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coe_grow
+
+/-- info: 'CSD.RecordLayer.coe_growIter' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coe_growIter
+
+/-- info: 'CSD.RecordLayer.torusAdj' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusAdj
+
+/-- info: 'CSD.RecordLayer.torusAdj_symm' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusAdj_symm
+
+/-- info: 'CSD.RecordLayer.hopsG_latticeDiracHam' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hopsG_latticeDiracHam
+
+/-- info: 'CSD.RecordLayer.exists_int_of_mem_growIterG_torus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_int_of_mem_growIterG_torus
+
+/-- info: 'CSD.RecordLayer.disjoint_growIterG_torus' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.disjoint_growIterG_torus
+
+/-- info: 'CSD.RecordLayer.norm_commutator_latticeDirac_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_commutator_latticeDirac_le
+
 end CSD.Tests.AxiomAudit

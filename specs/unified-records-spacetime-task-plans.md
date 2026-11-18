@@ -185,6 +185,13 @@ pointer angles distributed by Haar measure in a declared set, the probability th
      generators; here a rate is `2 |z| ⟨G⟩`, a moment-map coordinate by construction of the
      coupling. UO-20 is unchanged. (M)
 
+**Author's instruction, 2026-11-19.** The Born weight is already proven
+(`csd_nstep_born`, `RecordLayer/NStepChain.lean`; the `globalBasin` weights) and is not to
+be re-derived. Items 2 and 3 as written build a weight from a pointer's displacement, which
+is that re-derivation. They are withdrawn until restated as a relation between the tick
+statistic of item 1 and the weights those theorems already give. Item 1 stands as the law
+of a count given a displacement.
+
 Acceptance as the author wrote it: a conditional bridge with every assumption stated, or an
 obstruction. After item 1 the expectation is a conditional bridge for the mean count of
 a pointer coupled to a projector, with the obstructions of item 4 stated beside it.
@@ -233,6 +240,11 @@ In hand: `RecordLayer/ChainCone.lean` (`SiteSupp`, `grow`, `growIter`,
 `norm_commutator_chain_le`, `chain_record_kick_order`) for ring sites;
 `RecordLayer/UnifiedCausalOrder.lean` for the coupled generators; `regionWeightD` and the
 moving box for the torus.
+
+Items 1 and 2 are done (2026-11-19, `RecordLayer/GraphCone.lean`, UD-230):
+`norm_commutator_graph_le`, `hopsG_latticeDiracHam`, `norm_commutator_latticeDirac_le`. The
+ring's theorems were not re-proved from the general ones; `HopsOne.hopsG` and `coe_growIter`
+show they are the ring's case.
 
 1. **The cone for any nearest-neighbour graph.** *SiteSuppG*, *growG*, *growIterG* for a site
    map into any finite type with an adjacency relation, and *norm_commutator_graph_le* with

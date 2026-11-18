@@ -865,6 +865,7 @@ public import CsdLean4.RecordLayer.UnifiedRadarRay
 public import CsdLean4.RecordLayer.UnifiedRadarPreparation
 public import CsdLean4.RecordLayer.TickCountBound
 public import CsdLean4.RecordLayer.TickCountLaw
+public import CsdLean4.RecordLayer.GraphCone
 public import CsdLean4.RecordLayer.UnifiedRadarMacrostate
 public import CsdLean4.RecordLayer.UnifiedTransponder
 public import CsdLean4.RecordLayer.UnifiedFibreRun
