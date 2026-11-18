@@ -5877,4 +5877,54 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.le_regionWeightD_packetD_box
 
+/-! #296, third part (Task 8; milestone M7, obligation UO-17): the box of arcs about a packet (`CV/DiracPacketArcD.lean`). -/
+
+/-- info: 'CSD.CV.arcSideD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arcSideD
+
+/-- info: 'CSD.CV.mem_arcSideD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mem_arcSideD
+
+/-- info: 'CSD.CV.re_le_of_notMem_arcSideD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.re_le_of_notMem_arcSideD
+
+/-- info: 'CSD.CV.re_star_exp_mul_toCircle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.re_star_exp_mul_toCircle
+
+/-- info: 'CSD.CV.mem_arcSideD_expI' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mem_arcSideD_expI
+
+/-- info: 'CSD.CV.arcBoxD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.arcBoxD
+
+/-- info: 'CSD.CV.mem_arcBoxD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.mem_arcBoxD
+
+/-- info: 'CSD.CV.regionWeightD_compl_arcBoxD_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.regionWeightD_compl_arcBoxD_le
+
+/-- info: 'CSD.CV.le_regionWeightD_arcBoxD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.le_regionWeightD_arcBoxD
+
+/-- info: 'CSD.CV.movedBoxD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.movedBoxD
+
+/-- info: 'CSD.CV.regionWeightD_packetD_compl_movedBoxD_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.regionWeightD_packetD_compl_movedBoxD_le
+
+/-- info: 'CSD.CV.le_regionWeightD_packetD_movedBoxD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.le_regionWeightD_packetD_movedBoxD
+
 end CSD.Tests.AxiomAudit

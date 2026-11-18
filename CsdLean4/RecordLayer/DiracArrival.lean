@@ -38,7 +38,7 @@ inside.
 * ★ `transPhase_eq_sum` — the translation phase is the sites' weights on the unit circle,
   `T = Σ_k w_k e^{2πik/L}`;
 * ★★ `regionWeight_mul_le` — **a region whose sites all lie at `Re(ū e^{2πik/L}) ≤ γ` from a
-  direction `u` holds at most `(⟨ψ, ψ⟩ − Re(ū T))/(1 − γ)`**; `re_star_exp_mul_toCircle`;
+  direction `u` holds at most `(⟨ψ, ψ⟩ − Re(ū T))/(1 − γ)`**; `re_star_exp_mul_toCircle` (in `CV/DiracPacket.lean` since 2026-11-18);
 * along a packet of ~~#261~~'s `dirac_packet_limit`, with `Ω = (2π/ℓ) v(p₀)`:
   ★★ `regionWeight_ringPacket_le` — **far from the predicted direction `Ωt` there is little
   weight**, at most `(1 − Re T(0) + |t| · limitErr)/(1 − γ)`; ★★ `le_regionWeight_ringPacket` —
@@ -396,18 +396,6 @@ theorem regionWeight_mul_le (ψ : ZMod L × Fin 2 → ℂ) {u : ℂ} (hu : ‖u�
         Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _) fun k _ _ => by
           have := mul_le_mul_of_nonneg_left (hle1 k) (siteWeight_nonneg ψ k)
           linarith
-
-/-- The direction `e^{iφ}` read against site `k`: `Re(e^{−iφ} e^{2πik/L}) = cos(2πk/L − φ)`. -/
-theorem re_star_exp_mul_toCircle (φ : ℝ) (k : ZMod L) :
-    (star (exp (I * (φ : ℂ))) * (ZMod.toCircle k : ℂ)).re
-      = Real.cos (2 * Real.pi * k.val / L - φ) := by
-  rw [ZMod.toCircle_apply, Complex.star_def, ← Complex.exp_conj, ← Complex.exp_add]
-  have h : (starRingEnd ℂ) (I * (φ : ℂ)) + 2 * (Real.pi : ℂ) * I * (k.val : ℂ) / (L : ℂ)
-      = ((2 * Real.pi * k.val / L - φ : ℝ) : ℂ) * I := by
-    simp only [map_mul, Complex.conj_I, Complex.conj_ofReal]
-    push_cast
-    ring
-  rw [h, Complex.exp_ofReal_mul_I_re]
 
 /-! ### The packet's weight, region by region -/
 

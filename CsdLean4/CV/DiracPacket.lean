@@ -642,6 +642,18 @@ theorem dirac_packet {J μ μ₀ μ₁ : ℝ} (hμ : 0 < μ) (h0 : 0 < μ₀) (h
   exact ⟨fun t => hasDerivAt_packet J μ W a t, fun t => transPhase_drift hμ hW a θ₀ t,
     fun t => norm_transPhase_ge hμ hW a θ₀ t, fun t => clockOverlap_rate h0 h1 hD a θ₀ t⟩
 
+/-- The direction `e^{iφ}` read against site `k`: `Re(e^{−iφ} e^{2πik/L}) = cos(2πk/L − φ)`. -/
+theorem re_star_exp_mul_toCircle (φ : ℝ) (k : ZMod L) :
+    (star (exp (I * (φ : ℂ))) * (ZMod.toCircle k : ℂ)).re
+      = Real.cos (2 * Real.pi * k.val / L - φ) := by
+  rw [ZMod.toCircle_apply, Complex.star_def, ← Complex.exp_conj, ← Complex.exp_add]
+  have h : (starRingEnd ℂ) (I * (φ : ℂ)) + 2 * (Real.pi : ℂ) * I * (k.val : ℂ) / (L : ℂ)
+      = ((2 * Real.pi * k.val / L - φ : ℝ) : ℂ) * I := by
+    simp only [map_mul, Complex.conj_I, Complex.conj_ofReal]
+    push_cast
+    ring
+  rw [h, Complex.exp_ofReal_mul_I_re]
+
 end CSD.CV
 
 end

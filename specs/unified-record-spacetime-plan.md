@@ -1394,6 +1394,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-214 | **The radar counts from turned rays and nearby pointer angles (UO-25 (2), second brick).** The open statement of UD-205 holds for a carrier with any index type, five Hermitian observables of norm at most `S` and any ray whose five displacements have the histories of UD-164 with a slack `s`; the three-carrier statement is its case for a product ray. With the ray turned: for every unitary `W` with `‖W − 1‖ ≤ r_W`, `4 γ S r_W T ≤ s/2`, and every `ρ > 0` with `ρ ≤ s/8`, `ρ C T ≤ s/8`, `ρ C (K₁ + K₂) ≤ ϵ`, `C = 20 γ² S² T + 14 γ S`, from the turned ray and every five pointer angles within `ρ` of `(1/12, 0)` the five pointers have counts and the counts satisfy the Lorentz statement with the errors of UD-164 at speeds enlarged by `4 γ S r_W`, plus `ϵ` | `penta_radar_lorentz_near` (`RecordLayer/UnifiedTriFibre.lean`, of which `tri_radar_lorentz_near` is now a corollary); `penta_radar_lorentz_near_ray` (`RecordLayer/UnifiedRayRadar.lean`) | bound; conditional on the five histories at the ray, which for the family of UD-201 are inside a proof and not exposed, so the family is not instantiated; no measure, no preparation; the radius in the rays is of order `s/(γ S T)` |
 | UD-215 | **The rays near a ray have positive Fubini–Study measure (UO-25 (2), third brick).** For a carrier with any non-empty index type, any reference point of the measure, any ray `q` and any `r > 0`: the set of rays `q` turned by a unitary `W` with `‖W − 1‖ < r` has positive Fubini–Study measure | `turnedRays`, `self_mem_turnedRays`, `turnedRays_mono`, `fsMeasure_turnedRays_pos` (`RecordLayer/UnifiedTurnedRays.lean`) | positive with no value; the set is not shown measurable, the statement is about its outer measure; in the carrier's own projective space, not transported to the arena or multiplied by the box of angles; no preparation |
 | UD-216 | **The second-order remainder in terms of the unperturbed orbit (UO-26, third brick).** For Hermitian `H₀` and `V` on a finite index, any `X` and `t ≥ 0`: the first-order term is at most `∫₀ᵗ ‖V e^{−isH₀} X‖ ds`, and the remainder of UD-212 is at most `‖V‖ · (∫₀ᵗ ‖V e^{−isH₀} X‖ ds) · t`; so for `Q` with `Q e^{−itH₀} X = 0`, `‖Q e^{−it(H₀+V)} X‖` is at least the norm of `Q` times the first-order term less `‖Q‖ ‖V‖ (∫₀ᵗ ‖V e^{−isH₀} X‖ ds) t` | `Matrix.continuous_norm_mul_exp_smul_mul`, `Matrix.integral_norm_mul_exp_smul_mul_mono`, `Matrix.norm_duhamelKernel_le_integral`, `Matrix.norm_exp_sub_exp_mul_sub_duhamelFirst_le_orbit`, `Matrix.norm_exp_neg_I_add_sub_mul_sub_duhamelFirst_le_orbit`, `Matrix.le_norm_mul_exp_neg_I_add_mul_orbit` (`Mathlib/Analysis/Matrix/DuhamelOrbitRemainder.lean`); `Matrix.hasDerivAt_duhamelRemainder`, `Matrix.duhamelRemainder_eq` (`Mathlib/Analysis/Matrix/DuhamelFirstOrder.lean`) | the first-order term is still not evaluated, so no launch is shown; the remainder is the first-order bound times `‖V‖ t`, smaller only for `‖V‖ t < 1`; `t ≥ 0`; no carrier, coupling or arena |
+| UD-217 | **The box of arcs about a packet (M7, third part of the third row).** On each axis the arc of positions with `Re(ū e^{2πik/L}) > γ`, which for `u = e^{iφ}`, `γ = cos δ` is `cos(2πk/L − φ) > cos δ`; the box of arcs is their product. The bounds of UD-210 hold for it with no hypothesis on the sides: for any state, and for the packet with the arcs about the directions turned at `(2π/L) v_i(k₀) t` (`μ > 0`) | `arcSideD`, `mem_arcSideD`, `re_le_of_notMem_arcSideD`, `mem_arcSideD_expI`, `arcBoxD`, `mem_arcBoxD`, `regionWeightD_compl_arcBoxD_le`, `le_regionWeightD_arcBoxD`, `movedBoxD`, `regionWeightD_packetD_compl_movedBoxD_le`, `le_regionWeightD_packetD_movedBoxD` (`CV/DiracPacketArcD.lean`) | the sides are the largest the bound allows, by definition; the arc is described by a cosine and not shown to be a run of consecutive sites; nothing is shown small; no limit in physical units; no record read; nothing on the arena of UA-18 |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2887,6 +2888,13 @@ first-order description is exact to that order, for any `V`. What it does not gi
 first-order term for the contact term of UA-19 (b): its weight, and where and when it is
 launched. Anything for `‖V‖ t ≥ 1`. Anything on the arena. No new assumption.
 
+Exact scope of UD-217 (BACKLOG #296, third part; milestone M7, obligation UO-17). What it
+gives. The region a coincidence gate on the torus would use, as a named set of sites: a box
+of arcs, one for each axis, about the packet's directions, moving at the group velocity;
+and UD-210's bounds for it without a hypothesis on the sides. What it does not give. Any
+number: the starting term and the drift error are not evaluated. That an arc is a run of
+consecutive sites, or its length. A gate. No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4144,6 +4152,10 @@ time. It is not a statement about every dynamics on `Σ`.
   at the group velocity (`μ > 0`). No window is evaluated: the bound is not yet shown small.
   Open in #296: the limits in physical units with errors free of `L`, the sides of the box,
   flat windows, the clock on a packet, `μ = 0`.
+  ▸ **Packets, third part, 2026-11-18 (BACKLOG #296, part) → UD-217. Not met.** The sides of
+  the box as arcs about the directions, and UD-210's bounds for the box of arcs with no
+  hypothesis on the sides. Still nothing shown small. Open in #296: the limits in physical
+  units with errors free of `L`, flat windows, the clock on a packet, `μ = 0`.
 
 ### M8 — which assumptions force the geometry (gate C)
 
