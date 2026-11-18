@@ -46,27 +46,31 @@ In hand: `TickReadout.tickMacro`, `TickReadout.compatibleSet_eq_preimage_singlet
 3. Record probabilities under the pushforward — done 2026-11-19:
    `TickReadout.map_tickMacro_singleton`, the pushed-forward measure of a string is the arena
    measure of the history's compatible region.
-4. A quantitative stability statement — owed, and the real content. Plan:
-   * *isTickCount_of_gatedHistory_unique*: on the set where a gated history holds with
-     slack, the count is a function of the history's data (the number of whole turns of
-     the displacement), so it is the same for every start with that history. The histories
-     of UD-214 hold on the whole start set of UD-219 with one set of margins, so the string
-     is constant there. (M)
-   * Consequence: the radar's cell contains the start set of UD-219, so the cell is named
-     (the counts of the family's own start) and its measure is at least that of the start
-     set. This also removes the condition "counts not named" from UD-219 and UD-225. (S
-     after the first)
+4. A quantitative stability statement — owed. **Corrected 2026-11-19**: the first plan
+   (the count is a function of the history, so the string is constant on the start set) is
+   not available. A gated history fixes the count only within
+   `3 v (t_b − t_a) + 7/2` ticks (`IsGatedHistory.exists_count`): between the end of the
+   swing and the closing of the gate the pointer drifts at a bounded rate, not a known one.
+   Two starts with the same history can have different counts. What can be proved:
+   * *radar_counts_bounded*: each of the five counts lies in an explicit finite range, from
+     the bounds of `IsGatedHistory.exists_count` and `IsAwayHistory.exists_count` with the
+     family's numbers. So the cap `B` is explicit. (M)
+   * *radar_cell_measure_ge*: the start set of UD-219 is covered by finitely many cells, at
+     most the product `K` of the five ranges, so one cell has measure at least the start
+     set's over `K`. This turns "non-zero" into a lower bound in terms of the start set's
+     measure. (S after the first)
+   * A sharper history that does fix the count (the drift's rate known between `t_a` and
+     `t_b`) would give constancy; whether the family's runs have it is to be examined, not
+     assumed. (M–L)
    * Stability under the flow, in the sense of `RecordLayer/MacrostateStability.lean`
-     (`recordMacro_sigmaShift`): the tick string at fixed reading times is unchanged by
-     turning a pointer's conserved angle inside the box. Persistence under later readings
-     is false in general (a count grows) and is not to be claimed; what can be claimed is
-     that a reading is fixed during its window (UA-18 (e)). (M)
+     (`recordMacro_sigmaShift`): by `fiveCoupledFlow_shiftPenta` turning a pointer's
+     starting angle turns its angle at every time, so its count can change; no stability
+     under that turn is to be claimed. A reading is fixed during its window (UA-18 (e)),
+     and that is the statement available. (M)
 5. Dependence on a declared context — done by construction: the family of readings is an
    argument of `TickReadout.tickMacro`.
 
-Possible failure: if two starts in the start set can have different counts, item 4's first
-theorem is false as stated and the cell splits; the statement would then be about a finite
-set of cells.
+The cell does split in general; the statements are about a finite set of cells.
 
 ## 2. Task 4 — the causal bridge
 
@@ -109,30 +113,35 @@ in the energy, so the flow commutes with turning a pointer
 (`hamiltonianFlow_stepEnergy_shiftMoving`, `clockMessengerFlow_shiftPointers`; UO-24,
 UD-106, UD-107). A second apparatus therefore cannot depend on what a pointer displays.
 
-Three routes, in the order I recommend:
+**Recommended by the charter (2026-11-19, on the author's "recommend CSD aligned
+solutions"; the author has not yet confirmed it).** In CSD a record is the ontic selection
+in the fibre: here, a pointer's moving angle having crossed its arcs. A carrier's level is
+part of the base ray and is not a record. So "information established by one apparatus
+controls a subsequent interaction" means that a pointer's moving angle enters the energy
+of what follows. That is UO-24 and Route C below. It is the faithful reading; it is also a
+term of a new kind, so it needs the author's word and a clause before any theorem.
 
-* **Route A: the record is a carrier's level, not a pointer's angle.** The transponder of
-  UA-19 is this. First stage: the contact term changes its level (the record: which level).
-  Second stage: a pointer gated by the projector on the second level ticks only after.
-  Theorems: *level_record_established* (the level's weight after the meeting, from the
-  first-order term of §9); *second_pointer_depends_on_level* (the gated pointer's
-  displacement is the accumulated weight of the second level, so it is zero before the
-  meeting by `transponder_launch_le_coincidence` and positive after); *one_flow* (both
-  stages are one Hamiltonian flow on one arena); *history_agrees* (the two facts are a
-  record history with the order of the flow). This needs UA-19 only. (L; shares its hard
-  step with the caused return)
-* **Route B: state the obstruction for the five-pointer arena.** *fiveCoupledFlow_shiftMoving*:
-  the flow commutes with turning each of the five pointers. Then *no_pointer_controlled_apparatus*:
-  no reading of the other four pointers or of the carriers depends on a pointer's start.
-  This is a no-go for pointer-held records on the arena of UA-18 and should be landed in
-  any case, since it says why Route A is the route. (M)
-* **Route C: a pointer whose moving angle acts back (UO-24).** A term of a new kind. Not
-  planned unless the author asks for it.
+Three routes:
 
-Decision for the author: whether Route A's record (a carrier's level, read by a gated
-pointer) counts as "information established by one apparatus controlling a subsequent
-physical interaction". By the plan's wording I think it does; the first apparatus is then
-the transponder with its contact term.
+* **Route B: the obstruction on the five-pointer arena — done 2026-11-19.**
+  `fiveCoupledFlow_shiftPenta` (`LF4/PentaPointerInert.lean`, UD-227): the flow commutes
+  with turning each of the five pointers, so nothing on the arena of UA-18 depends on a
+  record held by a pointer.
+* **Route C: a pointer whose moving angle acts back (UO-24).** The faithful route. Plan:
+  a clause for a step whose observable is multiplied by a profile of an earlier pointer's
+  moving angle; *controlledStepFlow* solved as a skew product in the other order (the
+  earlier pointer first); a two-stage run in which the second pointer ticks only when the
+  first has displayed; the two facts as a record history with `HistoryPreparation.appendFact`.
+  The symplectic form and Liouville's theorem are not at risk (the energy is still a
+  function on the same arena); what changes is that the earlier pointer's conserved angle
+  is no longer conserved. (L)
+* **Route A: carrier-mediated succession.** The transponder of UA-19: the contact term
+  changes its level, and a pointer gated by the projector on the second level ticks only
+  after. This is two apparatus reading one carrier in turn. It is to be stated as
+  succession through the carrier and not as record control. (L; shares its hard step with
+  the caused return)
+
+Decision for the author: whether to admit Route C's term.
 
 ## 4. Task 6 — the Born bridge or its obstruction
 
@@ -286,9 +295,19 @@ before the meeting).
 6. The same on one arena: the contact term is the pointer's action on the fibres where its
    profile does not vanish, and the pointer also moves there. (L)
 
-Decision that may be needed at step 4: whether the transponder may be taken at rest and
-strongly coupled (an exactly solvable two-level exchange), which gives a full-weight
-return at the cost of a prepared resonance.
+**Recommended by the charter (2026-11-19; not yet confirmed by the author): read the weak
+echo by fibre typicality, not by a tuned resonance.** A strongly coupled transponder at
+rest gives a full-weight return only when the strength times the overlap time is tuned,
+which is a calibration put in by hand. In CSD a record is an ontic selection over the
+fibre, and a weak signal writes a record on a set of fibres whose measure is proportional
+to its weight: that is the click law (`diracClickProb_eq_lintegral`), exact and linear below
+the cut-off. So step 4 becomes: *echo_click_law*, the echo's pointer displays on a set of
+starting angles of measure proportional to the launched weight; and step 5 is stated on
+that set, as a conditional statement with the record as the condition
+(`HistoryPreparation`, as in UD-219). The radar identities then hold for the runs in which
+the echo was recorded, which is how a weak return is used. The price: the echo's record
+has probability of order `g²`, and the statement is about a set of fibres of that measure,
+not about every run.
 
 ## 10. Task 12 — the capstone
 

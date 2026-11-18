@@ -2286,4 +2286,50 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.pentaMuL_map_fiveCoupledFlow
 
+/-! #440, first brick (Task 5, obligation UO-25 (5); UO-24): the five-pointer flow commutes with turning the pointers (`LF4/PentaPointerInert.lean`). -/
+
+/-- info: 'CSD.LF4.isHermitian_add_ofReal_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.isHermitian_add_ofReal_smul
+
+/-- info: 'CSD.LF4.shiftEcho' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.shiftEcho
+
+/-- info: 'CSD.LF4.shiftTri' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.shiftTri
+
+/-- info: 'CSD.LF4.shiftQuad' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.shiftQuad
+
+/-- info: 'CSD.LF4.shiftPenta' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.shiftPenta
+
+/-- info: 'CSD.LF4.twoCoupledFlow_shiftEcho' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.twoCoupledFlow_shiftEcho
+
+/-- info: 'CSD.LF4.threeCoupledFlow_shiftTri' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.threeCoupledFlow_shiftTri
+
+/-- info: 'CSD.LF4.fourCoupledFlow_shiftQuad' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fourCoupledFlow_shiftQuad
+
+/-- info: 'CSD.LF4.fiveCoupledFlow_shiftPenta' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fiveCoupledFlow_shiftPenta
+
+/-- info: 'CSD.LF4.fiveCoupledFlow_shiftPenta_snd' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fiveCoupledFlow_shiftPenta_snd
+
+/-- info: 'CSD.LF4.fiveCoupledFlow_shiftPenta_ray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.fiveCoupledFlow_shiftPenta_ray
+
 end CSD.Tests.AxiomAudit
