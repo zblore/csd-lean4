@@ -22,16 +22,17 @@ for pointer angles within a radius of the start. Here the two are joined.
 
 * ★★★ `penta_radar_lorentz_near_ray` — let the five displacements along the free orbit from
   a ray `P` have the histories of #402 with a slack `s` below every margin. Then from `P`
-  turned by any unitary `W` with `‖W − 1‖ ≤ r_W`, `4 γ S r_W T ≤ s/2`, and from every five
-  pointer angles within `ρ` of the start (`ρ ≤ s/8`, `ρ C T ≤ s/8`, `ρ C (K₁ + K₂) ≤ ϵ`), the
-  five pointers have counts and the counts satisfy the Lorentz statement, with the errors
-  of #402 at speeds enlarged by `4 γ S r_W`, plus `ϵ`.
+  turned by any unitary `W` with `‖W − 1‖ ≤ r_W`, `4 γ S r_W T ≤ s/2`,
+  `4 γ S r_W (K₁ + K₂) ≤ ϵ'`, and from every five pointer angles within `ρ` of the start
+  (`ρ ≤ s/8`, `ρ C T ≤ s/8`, `ρ C (K₁ + K₂) ≤ ϵ`), the five pointers have counts and the
+  counts satisfy the Lorentz statement with the errors of #402 enlarged by `ϵ + ϵ'`.
+* ★★★ `tri_radar_lorentz_near_ray` — the same for the composite of three carriers and the
+  five gates of `triRun`, from their product ray turned by a unitary of the composite.
 
 ## Honest scope
 
-⚠️ **Conditional on the histories at `P`.** For the family of `radar_family_lorentz` the five
-histories and their slack are inside that theorem's proof and are not exposed as a
-statement. Until they are, this theorem is not instantiated for the family.
+⚠️ **Conditional on the histories at `P`.** The walled chain and the family are instantiated
+in `RecordLayer/UnifiedWallRay.lean` and `RecordLayer/UnifiedRadarRay.lean`.
 
 ⚠️ **No measure is computed and no preparation is built.** That the rays `P` turned by such
 `W` have positive Fubini–Study measure is owed, and so is the `HistoryPreparation`.
@@ -67,11 +68,11 @@ variable {ν : Type*} [Fintype ν] [DecidableEq ν] [Nonempty ν]
 `penta_radar_lorentz_near`, with the ray turned: let the five displacements along the free
 orbit from `P` have the histories of #402 with a slack `s` below every margin, the
 observables have norm at most `S`, the strengths size at most `γ` and the windows end by `T`.
-Then for every unitary `W` with `‖W − 1‖ ≤ r_W`, `4 γ S r_W T ≤ s/2`, and every `ρ > 0` with
-`ρ ≤ s/8`, `ρ C T ≤ s/8`, `ρ C (K₁ + K₂) ≤ ϵ`: from the ray `P` turned by `W` and every five
-pointer angles within `ρ` of `(1/12, 0)` the five pointers have counts, and the counts
-satisfy the Lorentz statement with the errors of #402 at the speeds enlarged by `4 γ S r_W`,
-plus `ϵ`. -/
+Then for every unitary `W` with `‖W − 1‖ ≤ r_W`, `4 γ S r_W T ≤ s/2`,
+`4 γ S r_W (K₁ + K₂) ≤ ϵ'`, and every `ρ > 0` with `ρ ≤ s/8`, `ρ C T ≤ s/8`,
+`ρ C (K₁ + K₂) ≤ ϵ`: from the ray `P` turned by `W` and every five pointer angles within `ρ`
+of `(1/12, 0)` the five pointers have counts, and the counts satisfy the Lorentz statement
+with the errors of #402 enlarged by `ϵ + ϵ'`. -/
 theorem penta_radar_lorentz_near_ray (hH : H.IsHermitian) (hG₁ : G₁.IsHermitian)
     (hG₂ : G₂.IsHermitian) (hG₃ : G₃.IsHermitian) (hG₄ : G₄.IsHermitian)
     (hG₅ : G₅.IsHermitian) (g₁ g₂ g₃ g₄ g₅ : ℝ) (P : GenArena ν)
@@ -98,7 +99,7 @@ theorem penta_radar_lorentz_near_ray (hH : H.IsHermitian) (hG₁ : G₁.IsHermit
       |freeShift hH G₄ (-g₄) P t - freeShift hH G₄ (-g₄) P s| ≤ cρ)
     (hcm : ∀ s t, tbm ≤ s → s ≤ t → t ≤ tcm →
       |freeShift hH G₅ (-g₅) P t - freeShift hH G₅ (-g₅) P s| ≤ cm)
-    {ϵ S γ T s ρ : ℝ}
+    {ϵ ϵ' S γ T s ρ : ℝ}
     (hS1 : ‖G₁‖ ≤ S) (hS2 : ‖G₂‖ ≤ S) (hS3 : ‖G₃‖ ≤ S) (hS4 : ‖G₄‖ ≤ S) (hS5 : ‖G₅‖ ≤ S)
     (hγ1 : |g₁| ≤ γ) (hγ2 : |g₂| ≤ γ) (hγ3 : |g₃| ≤ γ) (hγ4 : |g₄| ≤ γ) (hγ5 : |g₅| ≤ γ)
     (hT1 : tce ≤ T) (hT2 : t5 ≤ T) (hT3 : tcμ ≤ T) (hT4 : tcρ ≤ T) (hT5 : tcm ≤ T)
@@ -108,6 +109,13 @@ theorem penta_radar_lorentz_near_ray (hH : H.IsHermitian) (hG₁ : G₁.IsHermit
     (q9 : s ≤ 1 / 6 - ce) (q10 : s ≤ 1 / 6 - cr) (q11 : s ≤ 1 / 6 - cμ)
     (q12 : s ≤ 1 / 6 - cρ) (q13 : s ≤ 1 / 6 - cm) (W : Matrix.unitaryGroup ν ℂ) {rW : ℝ}
     (hW : ‖W.val - 1‖ ≤ rW) (hrW : 4 * γ * S * rW * T ≤ s / 2)
+    (hrB : 4 * γ * S * rW * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE)
+        + (t4 - tRet))) /
+      R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+      + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))) ≤ ϵ')
     (hρ0 : 0 < ρ) (hρs : ρ ≤ s / 8)
     (hρA' : ρ * ((20 * γ ^ 2 * S ^ 2 * T + 14 * γ * S) * T) ≤ s / 8)
     (hρB' : ρ * ((20 * γ ^ 2 * S ^ 2 * T + 14 * γ * S) * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe
@@ -170,28 +178,23 @@ theorem penta_radar_lorentz_near_ray (hH : H.IsHermitian) (hG₁ : G₁.IsHermit
               - (((Ne : ℝ) * (2 * Real.pi) / R₀
                     + ((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) / R₀) / 2
                   - (Nμ : ℝ) * (2 * Real.pi) / R₀)|
-            ≤ ((gatedErr (ve + 4 * γ * S * rW) tE tbe / R₀ + κ * tE + τE)
-                + ((gatedErr (ve + 4 * γ * S * rW) tE tbe + awayErr (vr
-                    + 4 * γ * S * rW) tE tbe tRet t4 + RB * (tbe - tE)) / R₀
+            ≤ ((gatedErr ve tE tbe / R₀ + κ * tE + τE)
+                + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
                     + κ * tRet + τRet)) / 2
-              + (gatedErr (vμ + 4 * γ * S * rW) tMB tbμ / R₀ + κ * tMB + τMB)
-              + ((gatedErr (vρ + 4 * γ * S * rW) tR tbρ / R₀ + τR) + (gatedErr (vm
-                  + 4 * γ * S * rW) tMA tbm / R₀ + τMA))
-                / Real.sqrt (1 - v ^ 2) + ϵ
+              + (gatedErr vμ tMB tbμ / R₀ + κ * tMB + τMB)
+              + ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
+                / Real.sqrt (1 - v ^ 2) + ϵ + ϵ'
         ∧ |(lorentzBoost 1 (-v)
                 ((Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀, 0)).2
               - (-((((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) / R₀
                     - (Ne : ℝ) * (2 * Real.pi) / R₀) / 2))|
-            ≤ ((gatedErr (ve + 4 * γ * S * rW) tE tbe / R₀ + κ * tE + τE)
-                + ((gatedErr (ve + 4 * γ * S * rW) tE tbe + awayErr (vr
-                    + 4 * γ * S * rW) tE tbe tRet t4 + RB * (tbe - tE)) / R₀
+            ≤ ((gatedErr ve tE tbe / R₀ + κ * tE + τE)
+                + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
                     + κ * tRet + τRet)) / 2
-              + v * ((gatedErr (vρ + 4 * γ * S * rW) tR tbρ / R₀ + τR) + (gatedErr (vm
-                  + 4 * γ * S * rW) tMA tbm / R₀ + τMA))
-                / Real.sqrt (1 - v ^ 2) + ϵ
+              + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
+                / Real.sqrt (1 - v ^ 2) + ϵ + ϵ'
         ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀ - (tR - tMA)|
-            ≤ (gatedErr (vρ + 4 * γ * S * rW) tR tbρ + gatedErr (vm
-                + 4 * γ * S * rW) tMA tbm) / R₀ + ϵ := by
+            ≤ (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ + ϵ + ϵ' := by
   have hγ0 : 0 ≤ γ := (abs_nonneg _).trans hγ1
   have hS0 : 0 ≤ S := (norm_nonneg _).trans hS1
   obtain ⟨lam, hlam⟩ : ∃ lam : ℝ, lam = 4 * γ * S * rW := ⟨_, rfl⟩
@@ -263,8 +266,353 @@ theorem penta_radar_lorentz_near_ray (hH : H.IsHermitian) (hG₁ : G₁.IsHermit
     (by linarith only [mono2 tcρ tbρ htbρ0 hT4, q12])
     (by linarith only [mono2 tcm tbm htbm0 hT5, q13]) hρ0 (by linarith only [hρs])
     (by linarith only [hρA']) hρB'
-  subst hlam
-  exact key
+  have hrB' : lam * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+      + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))) ≤ ϵ' := by
+    rw [hlam]
+    exact hrB
+  have hsq : 0 < Real.sqrt (1 - v ^ 2) := Real.sqrt_pos.2 (by nlinarith only [hv0, hv])
+  have ka : 0 ≤ (tbe - tE) / R₀ := div_nonneg (sub_nonneg.2 He.ta_le) hR₀.le
+  have kb : 0 ≤ ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀ :=
+    div_nonneg (by linarith only [He.ta_le, Hr.t3_le]) hR₀.le
+  have km : 0 ≤ (tbμ - tMB) / R₀ := div_nonneg (sub_nonneg.2 Hμ.ta_le) hR₀.le
+  have kr : 0 ≤ (tbρ - tR) / R₀ := div_nonneg (sub_nonneg.2 Hρ.ta_le) hR₀.le
+  have kq : 0 ≤ (tbm - tMA) / R₀ := div_nonneg (sub_nonneg.2 Hm.ta_le) hR₀.le
+  have hK1 : 0 ≤ (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) :=
+    mul_nonneg (by positivity) (add_nonneg (add_nonneg (div_nonneg (add_nonneg ka kb)
+      (by norm_num)) km) (div_nonneg (add_nonneg kr kq) hsq.le))
+  have hK2 : 0 ≤ (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) :=
+    mul_nonneg (by positivity) (add_nonneg (div_nonneg (add_nonneg ka kb) (by norm_num))
+      (div_nonneg (mul_nonneg hv0 (add_nonneg kr kq)) hsq.le))
+  have hk1 : lam * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) ≤ ϵ' := by
+    have := mul_nonneg hlam0 hK2
+    have e : lam * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+      + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))))
+        = lam * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+          + lam * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by ring
+    linarith only [this, e, hrB']
+  have hk2 : lam * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) ≤ ϵ' := by
+    have := mul_nonneg hlam0 hK1
+    have e : lam * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+      + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))))
+        = lam * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+          + lam * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by ring
+    linarith only [this, e, hrB']
+  intro N e θ ψ χ ξ ζ hθ hψ hχ hξ hζ se h1 h2 sr h3 h4 sμ h5 h6 sρ h7 h8 sm h9 h10
+  obtain ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6, c7, c8⟩ :=
+    key N e θ ψ χ ξ ζ hθ hψ hχ hξ hζ se h1 h2 sr h3 h4 sμ h5 h6 sρ h7 h8 sm h9 h10
+  refine ⟨Ne, Nr, Nμ, Nρ, Nm, c1, c2, c3, c4, c5, c6.trans ?_, c7.trans ?_, c8.trans ?_⟩
+  · simp only [gatedErr_add, awayErr_add]
+    have key : ∀ x₁ x₂ x₃ x₄ x₅ : ℝ,
+        (((x₁ + 6 * Real.pi * lam * (tbe - tE)) / R₀ + κ * tE + τE)
+          + (((x₁ + 6 * Real.pi * lam * (tbe - tE)) + (x₂ + 6 * Real.pi * lam * ((tbe -
+              tE) + (t4 - tRet))) + RB * (tbe - tE)) / R₀
+            + κ * tRet + τRet)) / 2
+          + ((x₃ + 6 * Real.pi * lam * (tbμ - tMB)) / R₀ + κ * tMB + τMB)
+          + (((x₄ + 6 * Real.pi * lam * (tbρ - tR)) / R₀ + τR)
+            + ((x₅ + 6 * Real.pi * lam * (tbm - tMA)) / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
+        = ((x₁ / R₀ + κ * tE + τE)
+          + ((x₁ + x₂ + RB * (tbe - tE)) / R₀
+            + κ * tRet + τRet)) / 2
+          + (x₃ / R₀ + κ * tMB + τMB)
+          + ((x₄ / R₀ + τR)
+            + (x₅ / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
+          + lam * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+              R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by
+      intro x₁ x₂ x₃ x₄ x₅
+      ring
+    rw [key]
+    linarith only [hk1]
+  · simp only [gatedErr_add, awayErr_add]
+    have key : ∀ x₁ x₂ x₄ x₅ : ℝ,
+        (((x₁ + 6 * Real.pi * lam * (tbe - tE)) / R₀ + κ * tE + τE)
+          + (((x₁ + 6 * Real.pi * lam * (tbe - tE)) + (x₂ + 6 * Real.pi * lam * ((tbe -
+              tE) + (t4 - tRet))) + RB * (tbe - tE)) / R₀
+            + κ * tRet + τRet)) / 2
+          + v * (((x₄ + 6 * Real.pi * lam * (tbρ - tR)) / R₀ + τR)
+            + ((x₅ + 6 * Real.pi * lam * (tbm - tMA)) / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
+        = ((x₁ / R₀ + κ * tE + τE)
+          + ((x₁ + x₂ + RB * (tbe - tE)) / R₀
+            + κ * tRet + τRet)) / 2
+          + v * ((x₄ / R₀ + τR)
+            + (x₅ / R₀ + τMA)) / Real.sqrt (1 - v ^ 2)
+          + lam * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+              R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) := by
+      intro x₁ x₂ x₄ x₅
+      ring
+    rw [key]
+    linarith only [hk2]
+  · simp only [gatedErr_add]
+    have hs1 : Real.sqrt (1 - v ^ 2) ≤ 1 := by
+      have h := Real.sqrt_le_sqrt (by nlinarith only [sq_nonneg v] : 1 - v ^ 2 ≤ 1)
+      rwa [Real.sqrt_one] at h
+    have y1 : (tbρ - tR) / R₀ + (tbm - tMA) / R₀
+        ≤ ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2) := by
+      rw [le_div_iff₀ hsq]
+      nlinarith only [add_nonneg kr kq, hs1]
+    have y2 : (tbρ - tR) / R₀ + (tbm - tMA) / R₀
+        ≤ ((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+          + (tbμ - tMB) / R₀
+          + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2) := by
+      linarith only [y1, div_nonneg (add_nonneg ka kb) (by norm_num : (0 : ℝ) ≤ 2), km]
+    have y3 : lam * (6 * Real.pi * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀))
+        ≤ lam * (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+            R₀) / 2
+          + (tbμ - tMB) / R₀
+          + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))) :=
+      mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left y2 (by positivity)) hlam0
+    have key : ∀ x y : ℝ,
+        (x + 6 * Real.pi * lam * (tbρ - tR)
+            + (y + 6 * Real.pi * lam * (tbm - tMA))) / R₀
+          = (x + y) / R₀
+            + lam * (6 * Real.pi * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀)) := by
+      intro x y
+      ring
+    rw [key]
+    linarith only [y3, hk1]
+
+section TriRay
+
+variable {ι κa κb S : Type*} [Fintype ι] [DecidableEq ι] [Fintype κa] [DecidableEq κa]
+  [Fintype κb] [DecidableEq κb] [Fintype S] [DecidableEq S] [Nonempty ι] [Nonempty κa]
+  [Nonempty κb] {M₀ : Matrix ι ι ℂ} {A₀ : Matrix κa κa ℂ}
+  {B₀ : Matrix κb κb ℂ} {σ : ι → S} {α : κa → S} {β : κb → S}
+  {r₁ r₂ r₃ r₄ r₅ : S → S → Prop} [DecidableRel r₁] [DecidableRel r₂] [DecidableRel r₃]
+  [DecidableRel r₄] [DecidableRel r₅] {Ya : Matrix κa κa ℂ} {Yb : Matrix κb κb ℂ}
+
+/-- ★★★ **M6 from the top from turned rays and nearby pointer angles, for three carriers and
+five gates.** `penta_radar_lorentz_near_ray` for the composite of three carriers and the five
+gates of `triRun`: from the product ray of the three carriers turned by any unitary `W` of the
+composite with `‖W − 1‖ ≤ r_W`, and every five pointer angles within `ρ` of `(1/12, 0)`, the
+five pointers have counts and the counts satisfy the Lorentz statement with the errors of
+#402 enlarged by `ϵ + ϵ'`. The turned ray is in general not a product ray, so the run is
+written as the five-pointer flow from it; for `W = 1` it is `triRun`. -/
+theorem tri_radar_lorentz_near_ray (hM : M₀.IsHermitian) (hA : A₀.IsHermitian)
+    (hB : B₀.IsHermitian) (hYa : Ya.IsHermitian) (hYas : ∀ i j, α i ≠ α j → Ya i j = 0)
+    (hYb : Yb.IsHermitian) (hYbs : ∀ i j, β i ≠ β j → Yb i j = 0) (g₁ g₂ g₃ g₄ g₅ : ℝ)
+    (p : GenArena ι) (qa : GenArena κa) (qb : GenArena κb)
+    {v R₀ RB κ TE TR TRet TM tE tR tRet tMB tMA τE τR τRet τMB τMA : ℝ}
+    {δe ve tbe tce c vr η₀ η t4 t5 δμ vμ tbμ tcμ δρ vρ tbρ tcρ δm vm tbm tcm : ℝ}
+    {ce cr cμ cρ cm : ℝ}
+    (hv0 : 0 ≤ v) (hv : v < 1) (hR₀ : 0 < R₀)
+    (hκ : |RB - Real.sqrt (1 - v ^ 2) * R₀| ≤ κ * R₀)
+    (hE : TR - TE = v * (TM - TE)) (hRet : TRet - TR = v * (TM - TRet))
+    (hτE : |tE - TE| ≤ τE) (hτRet : |tRet - TRet| ≤ τRet) (hτMB : |tMB - TM| ≤ τMB)
+    (hτR : |tR - TR| ≤ τR) (hτMA : |tMA - TM| ≤ τMA)
+    (He : IsGatedHistory (coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb) RB δe ve tE tbe tce)
+    (Hr : IsAwayHistory (coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb) RB c vr η₀ η tE tbe
+      tRet t4 t5)
+    (Hμ : IsGatedHistory (coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb) RB δμ vμ tMB tbμ
+      tcμ)
+    (Hρ : IsGatedHistory (coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa) R₀ δρ vρ tR tbρ tcρ)
+    (Hm : IsGatedHistory
+      (coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa) R₀ δm vm tMA tbm
+      tcm)
+    (hce : ∀ s t, tbe ≤ s → s ≤ t → t ≤ tce →
+      |coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb t
+        - coincShift hM hB (gateOp σ β r₁ Yb) (-g₁) p qb s| ≤ ce)
+    (hcr : ∀ s t, t4 ≤ s → s ≤ t → t ≤ t5 →
+      |coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb t
+        - coincShift hM hB (gateOp σ β r₂ Yb) (-g₂) p qb s| ≤ cr)
+    (hcμ : ∀ s t, tbμ ≤ s → s ≤ t → t ≤ tcμ →
+      |coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb t
+        - coincShift hA hB (gateOp α β r₃ Yb) (-g₃) qa qb s| ≤ cμ)
+    (hcρ : ∀ s t, tbρ ≤ s → s ≤ t → t ≤ tcρ →
+      |coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa t
+        - coincShift hM hA (gateOp σ α r₄ Ya) (-g₄) p qa s| ≤ cρ)
+    (hcm : ∀ s t, tbm ≤ s → s ≤ t → t ≤ tcm →
+      |coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa t
+        - coincShift hB hA (gateOp β α (fun s s' => r₅ s' s) Ya) (-g₅) qb qa s| ≤ cm)
+    {ϵ ϵ' S γ T s ρ : ℝ}
+    (hS1 : ‖gateOp σ (fun k : κa × κb => β k.2) r₁ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)‖ ≤ S)
+    (hS2 : ‖gateOp σ (fun k : κa × κb => β k.2) r₂ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)‖ ≤ S)
+    (hS3 : ‖(1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb‖ ≤ S)
+    (hS4 : ‖gateOp σ (fun k : κa × κb => α k.1) r₄ (Ya ⊗ₖ (1 : Matrix κb κb ℂ))‖ ≤ S)
+    (hS5 : ‖(1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya‖ ≤ S)
+    (hγ1 : |g₁| ≤ γ) (hγ2 : |g₂| ≤ γ) (hγ3 : |g₃| ≤ γ) (hγ4 : |g₄| ≤ γ) (hγ5 : |g₅| ≤ γ)
+    (hT1 : tce ≤ T) (hT2 : t5 ≤ T) (hT3 : tcμ ≤ T) (hT4 : tcρ ≤ T) (hT5 : tcm ≤ T)
+    (sp : 0 < s) (q1 : s ≤ 1 / 12 - δe) (q2 : s ≤ 1 / 12 - η₀) (q3 : s ≤ 1 / 12 - η)
+    (q4 : s ≤ 1 / 12 - c - (-1 / 6 + η)) (q5 : s ≤ 1 / 6 - η - (1 / 12 - c))
+    (q6 : s ≤ 1 / 12 - δμ) (q7 : s ≤ 1 / 12 - δρ) (q8 : s ≤ 1 / 12 - δm)
+    (q9 : s ≤ 1 / 6 - ce) (q10 : s ≤ 1 / 6 - cr) (q11 : s ≤ 1 / 6 - cμ)
+    (q12 : s ≤ 1 / 6 - cρ) (q13 : s
+        ≤ 1 / 6 - cm) (W : Matrix.unitaryGroup (ι × (κa × κb)) ℂ) {rW : ℝ}
+    (hW : ‖W.val - 1‖ ≤ rW) (hrW : 4 * γ * S * rW * T ≤ s / 2)
+    (hrB : 4 * γ * S * rW * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE)
+        + (t4 - tRet))) /
+      R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+      + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) /
+      R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))) ≤ ϵ')
+    (hρ0 : 0 < ρ) (hρs : ρ ≤ s / 8)
+    (hρA' : ρ * ((20 * γ ^ 2 * S ^ 2 * T + 14 * γ * S) * T) ≤ s / 8)
+    (hρB' : ρ * ((20 * γ ^ 2 * S ^ 2 * T + 14 * γ * S) * ((6 * Real.pi * (((tbe - tE) / R₀ + ((tbe
+        - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+      + (tbμ - tMB) / R₀ + ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2)))
+      + (6 * Real.pi * (((tbe - tE) / R₀ + ((tbe - tE) + ((tbe - tE) + (t4 - tRet))) / R₀) / 2
+      + v * ((tbρ - tR) / R₀ + (tbm - tMA) / R₀) / Real.sqrt (1 - v ^ 2))))) ≤ ϵ) :
+    ∀ (N : ℕ) (e : ι × (κa × κb) ≃ Fin (N + 1)) (θ ψ χ ξ ζ : KTorus),
+      NearStart ρ θ → NearStart ρ ψ → NearStart ρ χ → NearStart ρ ξ → NearStart ρ ζ →
+      ∀ se, tbe ≤ se → se ≤ tce → ∀ sr, t4 ≤ sr → sr ≤ t5 → ∀ sμ, tbμ ≤ sμ → sμ ≤ tcμ →
+      ∀ sρ, tbρ ≤ sρ → sρ ≤ tcρ → ∀ sm, tbm ≤ sm → sm ≤ tcm →
+      ∃ Ne Nr Nμ Nρ Nm : ℕ,
+        IsTickCount {x : PentaSigma N | x.1.1.1.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.1.1.1.2 ∈ displayArc}
+            (fun t => fiveCoupledFlow (Matrix.reindex e e (compositeH M₀ (compositeH A₀ B₀)))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => β k.2) r₁ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => β k.2) r₂ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)))
+              (Matrix.reindex e e ((1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => α k.1) r₄ (Ya ⊗ₖ (1 : Matrix κb κb ℂ))))
+              (Matrix.reindex e e ((1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya))
+              (scaledTrainF_periodic g₁) (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅) t
+              (((((idxArenaEquiv e (arenaKick W (prodRay p (prodRay qa qb))), θ), ψ), χ), ξ),
+                ζ)) se Ne
+        ∧ IsTickCount {x : PentaSigma N | x.1.1.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.1.1.2 ∈ displayArc}
+            (fun t => fiveCoupledFlow (Matrix.reindex e e (compositeH M₀ (compositeH A₀ B₀)))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => β k.2) r₁ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => β k.2) r₂ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)))
+              (Matrix.reindex e e ((1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => α k.1) r₄ (Ya ⊗ₖ (1 : Matrix κb κb ℂ))))
+              (Matrix.reindex e e ((1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya))
+              (scaledTrainF_periodic g₁) (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅) t
+              (((((idxArenaEquiv e (arenaKick W (prodRay p (prodRay qa qb))), θ), ψ), χ), ξ),
+                ζ)) sr Nr
+        ∧ IsTickCount {x : PentaSigma N | x.1.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.1.2 ∈ displayArc}
+            (fun t => fiveCoupledFlow (Matrix.reindex e e (compositeH M₀ (compositeH A₀ B₀)))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => β k.2) r₁ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => β k.2) r₂ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)))
+              (Matrix.reindex e e ((1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => α k.1) r₄ (Ya ⊗ₖ (1 : Matrix κb κb ℂ))))
+              (Matrix.reindex e e ((1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya))
+              (scaledTrainF_periodic g₁) (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅) t
+              (((((idxArenaEquiv e (arenaKick W (prodRay p (prodRay qa qb))), θ), ψ), χ), ξ),
+                ζ)) sμ Nμ
+        ∧ IsTickCount {x : PentaSigma N | x.1.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.1.2 ∈ displayArc}
+            (fun t => fiveCoupledFlow (Matrix.reindex e e (compositeH M₀ (compositeH A₀ B₀)))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => β k.2) r₁ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => β k.2) r₂ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)))
+              (Matrix.reindex e e ((1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => α k.1) r₄ (Ya ⊗ₖ (1 : Matrix κb κb ℂ))))
+              (Matrix.reindex e e ((1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya))
+              (scaledTrainF_periodic g₁) (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅) t
+              (((((idxArenaEquiv e (arenaKick W (prodRay p (prodRay qa qb))), θ), ψ), χ), ξ),
+                ζ)) sρ Nρ
+        ∧ IsTickCount {x : PentaSigma N | x.2 ∈ readyArc 2}
+            {x : PentaSigma N | x.2 ∈ displayArc}
+            (fun t => fiveCoupledFlow (Matrix.reindex e e (compositeH M₀ (compositeH A₀ B₀)))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => β k.2) r₁ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => β k.2) r₂ ((1 : Matrix κa κa ℂ) ⊗ₖ Yb)))
+              (Matrix.reindex e e ((1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb))
+              (Matrix.reindex e e
+                (gateOp σ (fun k : κa × κb => α k.1) r₄ (Ya ⊗ₖ (1 : Matrix κb κb ℂ))))
+              (Matrix.reindex e e ((1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya))
+              (scaledTrainF_periodic g₁) (scaledTrainF_periodic g₂)
+              (scaledTrainF_periodic g₃) (scaledTrainF_periodic g₄) (scaledTrainF_periodic g₅)
+              (contDiff_scaledTrainF g₁) (contDiff_scaledTrainF g₂) (contDiff_scaledTrainF g₃)
+              (contDiff_scaledTrainF g₄) (contDiff_scaledTrainF g₅) t
+              (((((idxArenaEquiv e (arenaKick W (prodRay p (prodRay qa qb))), θ), ψ), χ), ξ),
+                ζ)) sm Nm
+        ∧ |(lorentzBoost 1 (-v)
+                ((Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀, 0)).1
+              - (((Ne : ℝ) * (2 * Real.pi) / R₀
+                    + ((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) / R₀) / 2
+                  - (Nμ : ℝ) * (2 * Real.pi) / R₀)|
+            ≤ ((gatedErr ve tE tbe / R₀ + κ * tE + τE)
+                + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
+                    + κ * tRet + τRet)) / 2
+              + (gatedErr vμ tMB tbμ / R₀ + κ * tMB + τMB)
+              + ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
+                / Real.sqrt (1 - v ^ 2) + ϵ + ϵ'
+        ∧ |(lorentzBoost 1 (-v)
+                ((Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀, 0)).2
+              - (-((((Ne : ℝ) * (2 * Real.pi) + (Nr : ℝ) * (2 * Real.pi)) / R₀
+                    - (Ne : ℝ) * (2 * Real.pi) / R₀) / 2))|
+            ≤ ((gatedErr ve tE tbe / R₀ + κ * tE + τE)
+                + ((gatedErr ve tE tbe + awayErr vr tE tbe tRet t4 + RB * (tbe - tE)) / R₀
+                    + κ * tRet + τRet)) / 2
+              + v * ((gatedErr vρ tR tbρ / R₀ + τR) + (gatedErr vm tMA tbm / R₀ + τMA))
+                / Real.sqrt (1 - v ^ 2) + ϵ + ϵ'
+        ∧ |(Nρ : ℝ) * (2 * Real.pi) / R₀ - (Nm : ℝ) * (2 * Real.pi) / R₀ - (tR - tMA)|
+            ≤ (gatedErr vρ tR tbρ + gatedErr vm tMA tbm) / R₀ + ϵ + ϵ' := by
+  have hAB := compositeH_isHermitian hA hB
+  have hH := compositeH_isHermitian hM hAB
+  have hG₁ := gateOp_snd_isHermitian (κa := κa) σ β r₁ hYb hYbs
+  have hG₂ := gateOp_snd_isHermitian (κa := κa) σ β r₂ hYb hYbs
+  have hG₃ : ((1 : Matrix ι ι ℂ) ⊗ₖ gateOp α β r₃ Yb).IsHermitian :=
+    kronecker_isHermitian Matrix.isHermitian_one (gateOp_isHermitian α β r₃ hYb hYbs)
+  have hG₄ := gateOp_fst_isHermitian (κb := κb) σ α r₄ hYa hYas
+  have hG₅ : ((1 : Matrix ι ι ℂ) ⊗ₖ gateOpL α β r₅ Ya).IsHermitian :=
+    kronecker_isHermitian Matrix.isHermitian_one (gateOpL_isHermitian α β r₅ hYa hYas)
+  rw [← freeShift_tri_gate_snd σ β r₁ hM hA hB Yb (-g₁) p qa qb] at He hce
+  rw [← freeShift_tri_gate_snd σ β r₂ hM hA hB Yb (-g₂) p qa qb] at Hr hcr
+  rw [← freeShift_tri_pair α β r₃ hM hA hB Yb (-g₃) p qa qb] at Hμ hcμ
+  rw [← freeShift_tri_gate_fst σ α r₄ hM hA hB Ya (-g₄) p qa qb] at Hρ hcρ
+  rw [← freeShift_tri_pairL α β r₅ hM hA hB Ya (-g₅) p qa qb] at Hm hcm
+  exact penta_radar_lorentz_near_ray hH hG₁ hG₂ hG₃ hG₄ hG₅ g₁ g₂ g₃ g₄ g₅
+    (prodRay p (prodRay qa qb)) hv0 hv hR₀ hκ hE hRet hτE hτRet hτMB hτR hτMA He Hr Hμ Hρ Hm
+    hce hcr hcμ hcρ hcm hS1 hS2 hS3 hS4 hS5 hγ1 hγ2 hγ3 hγ4 hγ5 hT1 hT2 hT3 hT4 hT5 sp q1 q2
+    q3 q4 q5 q6 q7 q8 q9 q10 q11 q12 q13 W hW hrW hrB hρ0 hρs hρA' hρB'
+
+end TriRay
 
 end CSD.RecordLayer
 

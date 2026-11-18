@@ -22674,4 +22674,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.fsMeasure_turnedRays_pos
 
+/-! #438, fourth brick: the three-carrier statement from turned rays (`RecordLayer/UnifiedRayRadar.lean`). -/
+
+/-- info: 'CSD.RecordLayer.tri_radar_lorentz_near_ray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tri_radar_lorentz_near_ray
+
+/-! #438, fourth brick (Task 2, obligation UO-25 (2)): the walled chain's run from turned rays (`RecordLayer/UnifiedWallRay.lean`). -/
+
+/-- info: 'CSD.RecordLayer.wallRunRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallRunRay
+
+/-- info: 'CSD.RecordLayer.wallRunAt_eq_wallRunRay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallRunAt_eq_wallRunRay
+
+/-- info: 'CSD.RecordLayer.tri_wall_radar_lorentz_ray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.tri_wall_radar_lorentz_ray
+
+/-! #438, fourth brick (Task 2, obligation UO-25 (2)): the family's run from turned rays (`RecordLayer/UnifiedRadarRay.lean`). -/
+
+/-- info: 'CSD.RecordLayer.ray_error_of_radius' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ray_error_of_radius
+
+/-- info: 'CSD.RecordLayer.radar_family_lorentz_ray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_family_lorentz_ray
+
 end CSD.Tests.AxiomAudit
