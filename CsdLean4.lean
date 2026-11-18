@@ -862,6 +862,7 @@ public import CsdLean4.RecordLayer.UnifiedTurnedRays
 public import CsdLean4.RecordLayer.UnifiedWallRay
 public import CsdLean4.RecordLayer.UnifiedRadarRay
 public import CsdLean4.RecordLayer.UnifiedRadarPreparation
+public import CsdLean4.RecordLayer.UnifiedRadarMacrostate
 public import CsdLean4.RecordLayer.UnifiedFibreRun
 public import CsdLean4.RecordLayer.UnifiedFibreDrift
 public import CsdLean4.RecordLayer.UnifiedFibreRadar

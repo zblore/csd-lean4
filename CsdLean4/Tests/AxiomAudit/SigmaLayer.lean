@@ -22738,4 +22738,50 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.csd_radar_history_preparation
 
+/-! #439, first brick (Task 3, obligation UO-25 (3)): the macroscopic projection of tick records (`RecordLayer/UnifiedRadarMacrostate.lean`). -/
+
+/-- info: 'CSD.RecordLayer.TickReadout.countEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.countEvent
+
+/-- info: 'CSD.RecordLayer.TickReadout.countEvent_eq_event' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.countEvent_eq_event
+
+/-- info: 'CSD.RecordLayer.TickReadout.measurableSet_countEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.measurableSet_countEvent
+
+/-- info: 'CSD.RecordLayer.TickReadout.tickCode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.tickCode
+
+/-- info: 'CSD.RecordLayer.TickReadout.tickCode_eq_castSucc_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.tickCode_eq_castSucc_iff
+
+/-- info: 'CSD.RecordLayer.TickReadout.tickCode_eq_last_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.tickCode_eq_last_iff
+
+/-- info: 'CSD.RecordLayer.TickReadout.measurable_tickCode' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.measurable_tickCode
+
+/-- info: 'CSD.RecordLayer.TickReadout.tickMacro' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.tickMacro
+
+/-- info: 'CSD.RecordLayer.TickReadout.countEvent_eq_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.countEvent_eq_preimage
+
+/-- info: 'CSD.RecordLayer.TickReadout.factorsThrough_countEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.factorsThrough_countEvent
+
+/-- info: 'CSD.RecordLayer.TickReadout.compatibleSet_eq_preimage_singleton' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.compatibleSet_eq_preimage_singleton
+
 end CSD.Tests.AxiomAudit
