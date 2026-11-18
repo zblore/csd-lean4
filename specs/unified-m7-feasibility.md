@@ -220,6 +220,12 @@ would show. The first brick of UO-26 is `Mathlib/Analysis/Matrix/DuhamelState.le
 (`norm_mul_exp_neg_I_add_mul_le`): a term of the energy moves a state off its free orbit by
 at most the time integral of that term on the free orbit.
 
+**The mechanism, decided by the author, 2026-11-18: a transponder** (UA-19 of the contract).
+A carrier with two levels rests at the event; the contact term with the messenger is the
+coincidence projector times its level swap, the operator UA-18 (c) admits, present in the
+carriers' energy on the fibres where a profile does not vanish. Second brick:
+`Mathlib/Analysis/Matrix/DuhamelFirstOrder.lean` (`le_norm_mul_exp_neg_I_add_mul`).
+
 ## 8. An order of work that does not wait for the decision
 
 Every item is needed under (a), (b) and (c). Prices are the usual letters and are not

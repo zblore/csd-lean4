@@ -673,6 +673,44 @@ what would discharge or constrain it.
   normalisation for `A`. (iv) The horizon of UD-138 has not been shown long enough for the
   exchange.
 
+### UA-19 — the transponder: a return caused at the event (decided 2026-11-18; nothing of it exists in Lean)
+
+* **Assumed.** Obligation UO-26. The author decided (2026-11-18): the return from a point
+  event is launched by a second carrier resting there, not read from a scattered part of
+  the messenger. Every item below is a commitment about what will be defined.
+  (a) *A transponder.* For each event that is to be radared, one more carrier, with two
+  levels as in UA-12, prepared (UA-4) as a packet at rest at the event in its first level.
+  The second level is the one that is to leave. The masses of the two levels and the window
+  of momenta are not fixed by this clause.
+  (b) *The contact term.* A term `g · G · X_T` of the carriers' energy: `G` the coincidence
+  projector of the messenger and the transponder, `X_T` the transponder's level swap. This
+  is the operator that UA-18 (c) admits. It is in the carriers' energy, with `g` the value
+  of the profile at the conserved angle, on every fibre where the profile of a pointer
+  coupled to `G · X_T` does not vanish (UD-198). So no term of a new kind is admitted. The
+  mechanism is the action of a pointer on the carriers that UA-18 (g) names, on the fibres
+  that the statements of M6 so far leave out.
+  (c) *What is read.* The transponder's second level, by a coincidence gate with an
+  observer's clock, as UA-18 (c) and (e).
+  (d) *What may not be assumed.* By the test of UO-16: the time of the launch and the speed
+  of the carrier that returns. The launch is to be shown to follow the meeting (UD-211,
+  UD-212). The speed is to come from the band of the second level.
+* **Where.** Nothing on the arena. For any Hermitian energy and any Hermitian term:
+  `Matrix.norm_mul_exp_neg_I_add_mul_le` (`Mathlib/Analysis/Matrix/DuhamelState.lean`, UD-211)
+  and `Matrix.le_norm_mul_exp_neg_I_add_mul`
+  (`Mathlib/Analysis/Matrix/DuhamelFirstOrder.lean`, UD-212), BACKLOG #437.
+* **Standing.** Choice of mechanism for UO-26. The author chose the transponder over the
+  scattered part on 2026-11-18, on the assistant's recommendation. The choices this clause
+  adds on its own are: two levels as UA-12; the contact term being exactly the operator of
+  UA-18 (c); one transponder for each event. The author has not yet read the clause.
+* **Known risks, stated so that a failure is recognised as one.** (i) The first-order term
+  is proportional to `g` and the remainder of UD-212 to `g² t²`. Where that bound says
+  anything the launched weight is small, so a reading needs a budget for a small weight or
+  a treatment beyond first order. (ii) The contact term conserves the two carriers' total
+  momentum and the level swap does not change the transponder's. Whether the second level
+  leaves toward the observer is not known. (iii) On a fibre where a profile does not vanish
+  the pointer also moves under the derivative of its profile; the two effects are present
+  together. (iv) A packet at rest spreads, so the first level is at rest only for a time.
+
 ## 4. Register 2 — derived properties
 
 
@@ -1351,6 +1389,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-209 | **Packets on the lattice in `d` dimensions (M7, first part of the third row).** For the Hamiltonian of UD-206 and a finite window of integer momenta with amplitudes `c_m`: the packet `Σ_m c_m e^{−i E_m t} ψ_m` solves Schrödinger's equation; for distinct momenta its norm does not change; its translation phase along the axis `i`, `⟨ψ, e^{2πi x̂_i/L} ψ⟩`, is exactly a sum over the pairs of the window that are neighbours along `i`, each turning at `E(m + e_i) − E(m)`; for `μ > 0` each component of the group velocity is Lipschitz in the angles (`2\|J\| \|k_i − k'_i\| + (4J²/μ)(\|k_i − k'_i\| + Σ_j \|k_j − k'_j\|)`), the energy step along an axis is the step times that component within the step times an explicit error, and so the phase along `i` rotates at `(2π/L) v_i(k₀)` within `\|t\|` times the drift error of that axis, and its modulus drops by at most that | `castZ`, `angleZD`, `modeSD_castZ`, `dispE_modeSD_castZ`, `angleZD_add_single`, `sum_star_planeWave`, `sum_star_planeWaveD`, `chainInnerD`, `chainInnerD_spinorWave`, `chainInnerD_sum_left`, `chainInnerD_sum_right`, `transMulD`, `transPhaseD`, `transMulD_sum`, `transMulD_spinorWave`, `modeSpinD`, `diracModeD_eq`, `packetD`, `hasDerivAt_packetD`, `NoWrapD`, `DistinctD`, `noWrapD_distinctD_of_box`, `spinOverlapD`, `transWeightD`, `transPhaseD_packetD`, `chainInnerD_packetD_self`, `abs_groupVelD_sub_le`, `stepErrD`, `abs_latticeED_step_sub_le`, `driftErrorD`, `transPhaseD_drift`, `norm_transPhaseD_ge` (`CV/DiracPacketD.lean`) | the exact statements for any `μ`; the drift for `μ > 0` only, as a bound whose constant is not sharp; localisation along each axis, not yet the weight outside a box; no limit in physical units; no record read; nothing on the arena of UA-18 |
 | UD-210 | **The weight of a packet outside a box of sites (M7, second part of the third row).** For any state on the torus, a unit direction `u_i` on each axis and sides `A_i` outside which `Re(ū_i e^{2πik/L}) ≤ γ_i < 1`: the weight outside the box `Π_i A_i` is at most `Σ_i (⟨ψ, ψ⟩ − Re(ū_i T_i)) / (1 − γ_i)`, and the box holds the norm less that. For the packet of UD-209 with `μ > 0`, no wrap-around and distinct momenta, and sides taken about the directions turned by `(2π/L) v_i(k₀) t`: at the time `t` the weight outside the moved box is at most `Σ_i (⟨ψ₀, ψ₀⟩ − Re(ū_i T_i(0)) + \|t\| · (drift error of the axis i)) / (1 − γ_i)` | `siteWeightD`, `siteWeightD_nonneg`, `regionWeightD`, `regionWeightD_nonneg`, `regionWeightD_mono`, `re_chainInnerD_self`, `sum_siteWeightD`, `regionWeightD_add_compl`, `slabD`, `mem_slabD`, `regionWeightD_compl_piFinset_le`, `transPhaseD_eq_sum`, `regionWeightD_mul_le`, `regionWeightD_compl_box_le`, `le_regionWeightD_box`, `re_star_mul_ge_of_norm_sub_le`, `movedDirD`, `norm_movedDirD`, `re_movedDirD_transPhaseD_ge`, `regionWeightD_packetD_compl_box_le`, `le_regionWeightD_packetD_box` (`CV/DiracPacketBoxD.lean`) | a union bound over the axes, not shown sharp; the sides are a hypothesis, none is constructed; the moving box for `μ > 0` only; the starting term and the drift error are not evaluated for any window, so nothing is shown small; no limit in physical units; no record read; nothing on the arena of UA-18 |
 | UD-211 | **A perturbation acts only through the unperturbed orbit of what was prepared (UO-26, first brick).** For Hermitian `H₀` and `V` on a finite index, any `X` and `t ≥ 0`: `‖(e^{−it(H₀+V)} − e^{−itH₀}) X‖ ≤ ∫₀ᵗ ‖V e^{−isH₀} X‖ ds` in the L2 operator norm; and for `Q` with `Q e^{−itH₀} X = 0`, `‖Q e^{−it(H₀+V)} X‖ ≤ ‖Q‖ ∫₀ᵗ ‖V e^{−isH₀} X‖ ds` | `Matrix.continuous_exp_smul`, `Matrix.norm_exp_smul_sub_exp_smul_mul_le`, `Matrix.norm_exp_neg_I_add_sub_mul_le`, `Matrix.norm_mul_exp_neg_I_add_mul_le` (`Mathlib/Analysis/Matrix/DuhamelState.lean`) | an upper bound only: it does not show that anything is transferred; `t ≥ 0`; no carrier, coupling or arena; the mechanism of UO-26 is not fixed and no assumption is added |
+| UD-212 | **A perturbed evolution to first order, with a second-order remainder (UO-26, second brick).** For Hermitian `H₀` and `V` on a finite index, any `X` and `t ≥ 0`: `(e^{−it(H₀+V)} − e^{−itH₀}) X` is within `‖V‖² ‖X‖ t² / 2` of `−i ∫₀ᵗ e^{−i(t−s)H₀} V e^{−isH₀} X ds` in the L2 operator norm; and for `Q` with `Q e^{−itH₀} X = 0`, `‖Q e^{−it(H₀+V)} X‖` is at least the norm of `Q` times that integral less `‖Q‖ ‖V‖² ‖X‖ t² / 2` | `Matrix.exp_smul_mul_exp_neg_smul`, `Matrix.duhamelKernel`, `Matrix.duhamelFirst`, `Matrix.continuous_duhamelIntegrand`, `Matrix.hasDerivAt_duhamelKernel`, `Matrix.norm_duhamelKernel_le`, `Matrix.norm_duhamelFirst_le`, `Matrix.norm_exp_sub_exp_mul_sub_duhamelFirst_le`, `Matrix.conjTranspose_neg_I_smul`, `Matrix.norm_exp_neg_I_add_sub_mul_sub_duhamelFirst_le`, `Matrix.le_norm_mul_exp_neg_I_add_mul` (`Mathlib/Analysis/Matrix/DuhamelFirstOrder.lean`) | the first-order term is not evaluated or shown non-zero for any choice, so nothing is shown to be launched; the remainder is in `‖V‖`, not in the orbit; useful for weak coupling or short times only; `t ≥ 0`; no carrier, coupling or arena |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -2796,6 +2835,16 @@ how much: the first-order term with a second-order remainder is the next theorem
 of `V`. Any statement on the arena: off the fibres where the profiles vanish the pointers
 act back on the carriers, and nothing here treats that. No new assumption.
 
+Exact scope of UD-212 (BACKLOG #437, second brick; obligation UO-26, assumption UA-19).
+What it gives. The form of what a term `V` of the energy launches: at each time `s` it acts
+on the free orbit, and the result is carried on freely; the perturbed orbit is the free one
+plus that, within `‖V‖² ‖X‖ t² / 2`. With UD-211 this is items (1) and (2) of UO-26 as
+statements about any `V`. What it does not give. Any launch. The integral is not evaluated
+for the contact term of UA-19 (b), so its weight, and where and when it is launched, are
+not known. A remainder that is small because the free orbit avoids `V`. Anything beyond
+first order. Anything on the arena. No new assumption beyond UA-19, which this row does
+not use.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4127,6 +4176,13 @@ time. It is not a statement about every dynamics on `Σ`.
   ▸ **First brick, 2026-11-18 (BACKLOG #437, part) → UD-211. Not met.** The part of (1) that
   no choice of mechanism changes: a term `V` of the energy moves the state off its free
   orbit by at most `∫₀ᵗ ‖V e^{−isH₀} X‖ ds`. No mechanism, no carrier, no lower bound.
+  ▸ **Mechanism decided by the author, 2026-11-18: the transponder → UA-19.** The contact
+  term is the operator of UA-18 (c) on the fibres where a profile does not vanish, so no
+  term of a new kind is admitted; the new thing is a carrier resting at the event.
+  ▸ **Second brick, 2026-11-18 (BACKLOG #437, part) → UD-212. Not met.** The perturbed orbit
+  is the free one plus the first-order term, within `‖V‖² ‖X‖ t² / 2`; a lower bound for the
+  part that reaches a sector the free orbit avoids. The first-order term is not evaluated
+  for the contact term, so no launch is shown. Open: (2) for UA-19's term, (3), (4), (5).
 
 ---
 

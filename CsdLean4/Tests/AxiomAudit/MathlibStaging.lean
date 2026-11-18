@@ -74,6 +74,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticPhase
 public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticPropagators
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelState
+public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelFirstOrder
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonSeries
 public import CsdLean4.Mathlib.Analysis.Matrix.DysonVertex
 public import CsdLean4.Mathlib.Analysis.Matrix.L2OpNormDiagonal
@@ -16955,5 +16956,51 @@ the plane's additive-Haar instance that master's instance search no longer reach
 /-- info: 'Matrix.norm_mul_exp_neg_I_add_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
 #guard_msgs (whitespace := lax) in
 #print axioms Matrix.norm_mul_exp_neg_I_add_mul_le
+
+/-! #437, second brick (obligation UO-26, assumption UA-19): the first-order term of a perturbed group (`Mathlib/Analysis/Matrix/DuhamelFirstOrder.lean`). -/
+
+/-- info: 'Matrix.exp_smul_mul_exp_neg_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.exp_smul_mul_exp_neg_smul
+
+/-- info: 'Matrix.duhamelKernel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.duhamelKernel
+
+/-- info: 'Matrix.duhamelFirst' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.duhamelFirst
+
+/-- info: 'Matrix.continuous_duhamelIntegrand' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.continuous_duhamelIntegrand
+
+/-- info: 'Matrix.hasDerivAt_duhamelKernel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.hasDerivAt_duhamelKernel
+
+/-- info: 'Matrix.norm_duhamelKernel_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_duhamelKernel_le
+
+/-- info: 'Matrix.norm_duhamelFirst_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_duhamelFirst_le
+
+/-- info: 'Matrix.norm_exp_sub_exp_mul_sub_duhamelFirst_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_exp_sub_exp_mul_sub_duhamelFirst_le
+
+/-- info: 'Matrix.conjTranspose_neg_I_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.conjTranspose_neg_I_smul
+
+/-- info: 'Matrix.norm_exp_neg_I_add_sub_mul_sub_duhamelFirst_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.norm_exp_neg_I_add_sub_mul_sub_duhamelFirst_le
+
+/-- info: 'Matrix.le_norm_mul_exp_neg_I_add_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms Matrix.le_norm_mul_exp_neg_I_add_mul
 
 end CSD.Tests.AxiomAudit

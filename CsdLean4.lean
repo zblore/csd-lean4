@@ -24,6 +24,7 @@ public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticPhase
 public import CsdLean4.Mathlib.Analysis.Matrix.AdiabaticConstant
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelBound
 public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelState
+public import CsdLean4.Mathlib.Analysis.Matrix.DuhamelFirstOrder
 public import CsdLean4.Mathlib.Topology.Algebra.MulAction
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Topology
 public import CsdLean4.Mathlib.LinearAlgebra.Projectivization.Metric
