@@ -1,0 +1,347 @@
+# Plans for the outstanding tasks of "Unified records, quantum measurement and emergent spacetime"
+
+Written 2026-11-19 at the author's request ("plans in place for all the outstanding tasks at
+a minimum"). The plan of twelve tasks is the author's, of 2026-11-18; its obligations are
+UO-17, UO-19, UO-25 and UO-26 of [`unified-record-spacetime-plan.md`](unified-record-spacetime-plan.md).
+This note says, for each task that is not finished, what is in hand, the theorems that are
+to be proved in order, where a decision of the author is needed, and where the honest
+outcome may be an obstruction. It claims nothing. A theorem named here in italics does not
+exist; a name in code type does.
+
+Prices are the usual letters and are not estimates of time.
+
+## 0. Where the plan stands
+
+| Task | State | Register |
+|---|---|---|
+| 1. Tick counts as recorded facts | done | UD-208 |
+| 2. A preparation of non-zero measure | done, counts not named | UD-213 to UD-215, UD-218, UD-219 |
+| 3. Macroscopic projection | projection and the radar's cell done; stability owed | UD-223, UD-225 |
+| 4. Causal bridge | not started | — |
+| 5. Recursive physical apparatus | not started | — |
+| 6. Born bridge or obstruction | not started | — |
+| 7. Dynamical Born selection | not started; exploratory | UO-20 |
+| 8. Packets in `d` dimensions | done for `μ > 0` and a flat window; clock and `μ = 0` owed | UD-209, UD-210, UD-217, UD-220 to UD-222 |
+| 9. Detectors and the cone in `d` dimensions | not started | — |
+| 10. `2 + 1` radar | not started | — |
+| 11. `3 + 1` radar | not started | UO-17 |
+| 12. Capstone | not started | UO-19 |
+| The caused return (choice (c)) | item (1) of five done for the contact term | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226 |
+
+Safeguards of the plan, which every item below keeps: a record event is not a persistent
+register; conditioning on a history is not an interaction; positive measure in a fibre is
+not positive measure in the arena; the Born weights of a `globalBasin` are not the
+probabilities of a threshold click; a causal order read off an assumed graph does not derive
+the graph; the length of a causal chain is not a Lorentzian metric; Posit 11 remains; an
+operational time does not derive the flow parameter; a conditional theorem that compiles
+does not discharge a posit.
+
+## 1. Task 3 — the macroscopic projection: what is left
+
+In hand: `TickReadout.tickMacro`, `TickReadout.compatibleSet_eq_preimage_singleton`,
+`csd_radar_macrostate`. The author's five requirements and their state:
+
+1. Measurability — done (`TickReadout.measurable_tickCode`).
+2. Factorisation of the record events — done (`TickReadout.countEvent_eq_preimage`).
+3. Record probabilities under the pushforward — owed, short. *map_tickMacro_singleton*: the
+   pushed-forward measure of a string is the arena measure of the history's compatible
+   region. It is `Measure.map_apply` and the cell identity. (S)
+4. A quantitative stability statement — owed, and the real content. Plan:
+   * *isTickCount_of_gatedHistory_unique*: on the set where a gated history holds with
+     slack, the count is a function of the history's data (the number of whole turns of
+     the displacement), so it is the same for every start with that history. The histories
+     of UD-214 hold on the whole start set of UD-219 with one set of margins, so the string
+     is constant there. (M)
+   * Consequence: the radar's cell contains the start set of UD-219, so the cell is named
+     (the counts of the family's own start) and its measure is at least that of the start
+     set. This also removes the condition "counts not named" from UD-219 and UD-225. (S
+     after the first)
+   * Stability under the flow, in the sense of `RecordLayer/MacrostateStability.lean`
+     (`recordMacro_sigmaShift`): the tick string at fixed reading times is unchanged by
+     turning a pointer's conserved angle inside the box. Persistence under later readings
+     is false in general (a count grows) and is not to be claimed; what can be claimed is
+     that a reading is fixed during its window (UA-18 (e)). (M)
+5. Dependence on a declared context — done by construction: the family of readings is an
+   argument of `TickReadout.tickMacro`.
+
+Possible failure: if two starts in the start set can have different counts, item 4's first
+theorem is false as stated and the cell splits; the statement would then be about a finite
+set of cells.
+
+## 2. Task 4 — the causal bridge
+
+Target: a module for the radar's causal relations (the plan's `UnifiedRadarCausalBridge`).
+Reuse: `CV/RecordCausalOrder.lean` (`RecordEvent`, `CausalPrecedes`,
+`isPartialOrder_causalPrecedes`), `CV/RecordInfluence.lean` (`Influences`, `Spacelike`,
+`not_influences_of_spacelike`), `CV/CausalDistance.lean` (`causalDist`),
+`RecordLayer/UnifiedCausalOrder.lean` (the cone bound for the coupled generators).
+
+The three notions the author asks to be kept apart, and what is to be proved for each:
+
+1. *Permitted by the graph.* *radarEvent*: each of the five readings as a `RecordEvent`: the
+   region is the set of sites its gate reads at the window, the time is the window's end.
+   *radarEvents_causalPrecedes*: emission precedes relay precedes return, and the two
+   meeting readings are related as the graph allows, from the gate times of UD-196 and the
+   hop of the chain. This is a statement about the graph and the times; it derives neither.
+   (M)
+2. *Demonstrated under a non-zero coupling.* The corpus shows a remote kick is felt only at
+   distance one (UD-82, UD-83). For the radar the demonstration is the experiment itself:
+   *relay_count_depends_on_messenger*: with the messenger removed (its amplitude set to
+   zero in the prepared ray) the relay reading's count differs from the count with it, by
+   the gated history. That is influence carried by the flow over the whole chain. (M–L;
+   needs the histories without a messenger, which is a new but simpler run)
+3. *The order of the flow parameter.* *radar_windows_ordered*: the reading windows are
+   ordered in flow time. Stated separately so that it is not mistaken for (1) or (2). (S)
+
+Then *radar_macrostate_causal*: the five events of (1) are the five coordinates of the
+macrostate of Task 3. (S)
+
+Not to be done: assigning an interval to a pair of records. `causalDist` counts links; it
+is not a metric and the bridge does not make it one.
+
+Possible failure: (2) may only be provable as "the two runs differ by at least so much in
+displacement", not as a difference of counts, if the margins do not separate them.
+
+## 3. Task 5 — a record that controls a second apparatus
+
+The obstacle is already a theorem. On every arena built so far no pointer's moving angle is
+in the energy, so the flow commutes with turning a pointer
+(`hamiltonianFlow_stepEnergy_shiftMoving`, `clockMessengerFlow_shiftPointers`; UO-24,
+UD-106, UD-107). A second apparatus therefore cannot depend on what a pointer displays.
+
+Three routes, in the order I recommend:
+
+* **Route A: the record is a carrier's level, not a pointer's angle.** The transponder of
+  UA-19 is this. First stage: the contact term changes its level (the record: which level).
+  Second stage: a pointer gated by the projector on the second level ticks only after.
+  Theorems: *level_record_established* (the level's weight after the meeting, from the
+  first-order term of §9); *second_pointer_depends_on_level* (the gated pointer's
+  displacement is the accumulated weight of the second level, so it is zero before the
+  meeting by `transponder_launch_le_coincidence` and positive after); *one_flow* (both
+  stages are one Hamiltonian flow on one arena); *history_agrees* (the two facts are a
+  record history with the order of the flow). This needs UA-19 only. (L; shares its hard
+  step with the caused return)
+* **Route B: state the obstruction for the five-pointer arena.** *fiveCoupledFlow_shiftMoving*:
+  the flow commutes with turning each of the five pointers. Then *no_pointer_controlled_apparatus*:
+  no reading of the other four pointers or of the carriers depends on a pointer's start.
+  This is a no-go for pointer-held records on the arena of UA-18 and should be landed in
+  any case, since it says why Route A is the route. (M)
+* **Route C: a pointer whose moving angle acts back (UO-24).** A term of a new kind. Not
+  planned unless the author asks for it.
+
+Decision for the author: whether Route A's record (a carrier's level, read by a gated
+pointer) counts as "information established by one apparatus controlling a subsequent
+physical interaction". By the plan's wording I think it does; the first apparatus is then
+the transponder with its contact term.
+
+## 4. Task 6 — the Born bridge or its obstruction
+
+What must not be confused: `globalBasin` events carry Born weights for a supplied rate field
+(`RecordLayer/GlobalBasin.lean`); a threshold click of a drift coupling does not
+(`RecordLayer/DiracPointerClick.lean`, gate A, UD-50 to UD-52).
+
+For the tick records of Task 1 the quantity is, for a prepared carrier ray `ψ` and the
+pointer angles distributed by Haar measure in a declared set, the probability that pointer
+`i` shows the count `N` at `T`.
+
+1. *tick_count_law*: that probability as a function of the displacement of pointer `i`
+   along the orbit from `ψ`: the measure of the starting angles for which the angle
+   crosses the arcs `N` times. Exact, from `TickReadout.countEvent` and Fubini on the
+   pointer's torus. (M)
+2. *tick_click_law*: for one gate and `N ≥ 1` against `N = 0` (a click), the probability is
+   a window function of `g` times the accumulated weight of the gate's projector along the
+   orbit: linear up to a cut-off, then constant. The analogue of `diracClickProb_eq_lintegral`. (M)
+3. Then one of:
+   * *tick_click_not_born* — an obstruction: there are two preparations with the same
+     weight of the projector at the reading time and different click probabilities, or the
+     converse, so the click probability is not `|⟨i|ψ⟩|²` for any fixed `i`. Expected, since
+     the click reads an accumulated weight over a window and saturates. (M)
+   * *tick_click_born_window* — a conditional bridge: for strengths and windows inside the
+     linear range and a preparation whose weight on the gate's region is constant over the
+     window, `|P − w| ≤ ε_B` with `ε_B` explicit. This would be Born for a stationary weight
+     only. (M)
+   Both can be true and both should be stated; neither is the cell law.
+
+Acceptance as the author wrote it: a conditional bridge with every assumption stated, or an
+obstruction. I expect the obstruction as the general statement and the bridge in the
+stationary linear range.
+
+## 5. Task 7 — dynamical Born selection (UO-20), exploratory
+
+In hand: `torusGenerated_eq_momentMap` (generation forces the moment map),
+`rate_field_not_forced_by_torus_symmetry` (invariance does not). Open: whether the
+interaction that writes a record forces `IsTorusGenerated`.
+
+Plan, each step ending in a theorem or a counterexample:
+
+1. *drift_rate_field*: the rate field that the drift coupling of UA-5 defines (the pointer's
+   rate as a function of the base point) and whether it is generated in the sense of
+   `IsGeneratedRateField`. For a projector `Π` the rate is `2 g ⟨Π⟩`, which is the moment
+   map coordinate of the phase rotation generated by `Π`: so the *rate* is torus-generated
+   while the *click probability* is not Born (Task 6). State both. (M)
+2. *selection_or_no_go*: either the generator condition follows for every coupling of the
+   form "profile times a Hermitian observable", or a coupling of that form with a rate
+   field that is not generated. (M–L)
+3. If neither closes: the physical assumption that is needed, named, with a proof that
+   without it the conclusion fails (the necessity the author asks for).
+
+This must not block workstream S, and nothing in §§6 to 8 depends on it.
+
+## 6. Task 8 — what is left of packets
+
+* **The two-level clock on a packet.** The carrier with two levels of different mass on the
+  torus: `deviceHam` with the `d`-dimensional Hamiltonian in each block; the clock overlap
+  rotating at the difference of the two bands' energies at the centre of the window, as
+  `clockOverlap_rate` on the ring. *deviceHamD*, *clockOverlapD_rate*. (M)
+* **`μ = 0`.** The energy is `|s|`, not differentiable at `s = 0`, and the `1/μ` bounds of
+  UD-209 and UD-221 do not apply. For a window that stays away from zero momentum
+  (`|s| ≥ s₀ > 0` on the window) the same proofs go through with `s₀` in place of `μ`:
+  *abs_groupVelD_sub_le_massless*, *re_spinOverlapD_succ_ge_massless* (the spinor norm is
+  `2 E²` and the alignment defect is `(2π |J| / (L s₀))²`). The ring's
+  `dirac_massless_limit` is the template. Nothing is to be claimed for a window containing
+  zero momentum. (M)
+* **A family of lattices.** A `Tendsto` statement for the bound of UD-222 along
+  `L → ∞` at fixed physical data. The terms are already shown free of `L`; this is
+  packaging. (S)
+
+## 7. Task 9 — detectors and the cone on the torus
+
+In hand: `RecordLayer/ChainCone.lean` (`SiteSupp`, `grow`, `growIter`,
+`norm_commutator_chain_le`, `chain_record_kick_order`) for ring sites;
+`RecordLayer/UnifiedCausalOrder.lean` for the coupled generators; `regionWeightD` and the
+moving box for the torus.
+
+1. **The cone for any nearest-neighbour graph.** *SiteSuppG*, *growG*, *growIterG* for a site
+   map into any finite type with an adjacency relation, and *norm_commutator_graph_le* with
+   the same factorial bound. The ring's statements become instances (rule of two); the
+   existing names are kept as corollaries, not duplicated. (M)
+2. **The torus instance.** Adjacency "differ by one on one axis"; `latticeDiracHam` hops one
+   (`latticeDiracHam_apply_eq_zero`). *latticeDiracHam_cone*. (S after 1)
+3. **A region detector on the torus as a tick readout.** A pointer coupled to the projector
+   on a box of sites; its record through `TickReadout` (Task 1's interface), so that it
+   enters the record histories with no new semantics. *boxDetector_record*: the pointer
+   displays once the packet's box (UD-221) has been inside the detector's box for long
+   enough, and not before it arrives, with the times from the group velocity. (M–L)
+4. **Record timing against the cone.** *boxDetector_not_before_cone*: no record before the
+   graph distance over the hop rate allows. (M)
+
+Acceptance: a two-dimensional carrier and detector whose record is a `RecordedFact`.
+
+## 8. Tasks 10 and 11 — radar in `2 + 1` and `3 + 1`
+
+Decided by the author (2026-11-18): M7 is marked on the three statements S1 to S3 of
+[`unified-m7-feasibility.md`](unified-m7-feasibility.md); the moving group's chart needs the
+caused return (§9).
+
+Order, following the note's §8, with what each needs:
+
+1. **Clocks on the torus**, at rest and moving in any direction: Task 8's clock on a packet
+   and the tick readout. (M–L)
+2. **Box gates for two carriers separating at an angle.** The coincidence of two moving
+   boxes; open while they overlap, closed after. *boxGate_open*, *boxGate_closed*, with the
+   weights from UD-221 for each carrier. This is the note's second risk and the first
+   place a real obstruction could appear. (M)
+3. **S2: a moving observer's count is its proper time**, for motion in any direction.
+   Reuse `properTime_worldline`. (M)
+4. **S1: a resting group's chart in `2 + 1`** (three observers) and `3 + 1` (four): `d + 1`
+   messengers from one place, each observer's count at arrival, `trilateration_stable`.
+   This is Task 10's and Task 11's first conjunct for a resting group. (M each)
+5. **The mirror of one axis and the wall in four components**, then **S3: a moving
+   observer's radar from a wall** with `radar_boostD`. (M, M)
+6. **`m` pointers and `m` carriers on one arena**, and the open set of angles for them. (M–L)
+7. **The moving group's chart from records** — only after §9 gives a return from a point
+   event. Then the author's Task 11 conjuncts: a common event reconstructed, two groups
+   with Lorentz-related coordinates, their intervals, a scaling family, and the anisotropy
+   of UD-207 kept explicit. (L)
+
+UO-17 is to be closed only with item 7 and an independent audit, as the author wrote.
+Items 1 to 6 give Task 10 and Task 11 for what records give on the frozen arena.
+
+## 9. The caused return (UO-26), items (2) to (5)
+
+In hand: `transponder_launch_le_coincidence` (nothing before the meeting),
+`Matrix.norm_exp_neg_I_add_sub_mul_sub_duhamelFirst_le_orbit` (first order, remainder small
+before the meeting).
+
+1. *coincidence_weight_of_boxes*: for a product of two packets, `‖P e^{−isH₀} X‖` is at most
+   the square root of the weight of each packet outside its box plus an indicator that the
+   two boxes are within the gate's relation. So the integrand of item (1) is zero until the
+   boxes meet, up to the tails of UD-221. This makes "before the meeting" a statement
+   about times. (M)
+2. *launch_first_order*: the first-order term for the contact term and a product of
+   packets, evaluated: its norm squared is `g²` times the square of the time the boxes
+   overlap times the overlap weight, to leading order, with the remainder of UD-216. This
+   is item (2): a signal does leave, with its weight. (M–L)
+3. *launch_place_and_time*: the launched part is supported, up to tails, in the box where
+   the meeting took place and is launched during the overlap. Its later motion is the free
+   motion of the second level, at that level's group velocity. (M)
+4. *echo_gate_reading*: a gate between the second level and an observer's clock, with a
+   budget for a weight of order `g²`: the present gates need nearly full weight, so this
+   needs either a strength that makes the launched weight of order one (beyond first
+   order: a two-level Rabi estimate for the pair, exact when the two packets sit still) or
+   a reading theorem for small weight. This is the first risk of UA-19 and the step most
+   likely to change the plan. (L)
+5. *radar_from_echo*: the radar identities of `RecordLayer/RadarTrilateration.lean` for a
+   moving observer from the two readings. (M after 4)
+6. The same on one arena: the contact term is the pointer's action on the fibres where its
+   profile does not vanish, and the pointer also moves there. (L)
+
+Decision that may be needed at step 4: whether the transponder may be taken at rest and
+strongly coupled (an exactly solvable two-level exchange), which gives a full-weight
+return at the cost of a prepared resonance.
+
+## 10. Task 12 — the capstone
+
+One theorem on one arena, with seven conjuncts. For each, the theorem that would supply it
+and what stands between:
+
+| Conjunct | Supplied by | Gap |
+|---|---|---|
+| 1. Records on trajectories of the flow | `wallRunRay_eq_flow`, UD-208 | none in `1 + 1` |
+| 2. A realised outcome is a record | `TickReadout.model`, `establishedFact_eq_some_iff` | none in `1 + 1` |
+| 3. Recursion | `HistoryPreparation.appendFact`, UD-219 | the physical recursion is Task 5 |
+| 4. Macroscopic description | `csd_radar_macrostate` | stability (§1) |
+| 5. Causal structure | Task 4 | not started |
+| 6. Operational geometry in `3 + 1` | Tasks 10, 11 | the arena of UD-219 is `1 + 1` |
+| 7. Born statistics | Task 6 | conditional at best |
+
+The honest shape today is a capstone in `1 + 1` on the walled chain's arena with conjuncts
+1, 2, 4 and the `1 + 1` Lorentz statement, conjunct 3 as history concatenation, and 5 and 7
+named as open. It should be written only when Task 4 has landed, and re-stated in `3 + 1`
+when Task 11 has. A capstone that conjoins witnesses from different arenas is not to be
+written.
+
+## 11. Order of work
+
+Critical path for workstream R: §1 item 4 (names the cell and the counts) → §2 → §4 → §3
+Route B → §10 in `1 + 1`.
+
+Critical path for workstream S: §6 clock on a packet → §7 items 1 to 3 → §8 items 1 to 4 →
+§8 items 5, 6.
+
+The caused return (§9) runs beside both and joins at §8 item 7 and §3 Route A.
+
+Items that can each be done now with nothing in front of them: §1 item 3; §1 item 4; §2
+items 1 and 3; §3 Route B; §4 item 1; §6 (all three); §7 item 1; §9 item 1.
+
+## 12. What would count as failure, by task
+
+* Task 3: the string is not constant on the start set, and no finite description of its
+  cells there is found.
+* Task 4: the demonstrated influence cannot be separated from the permitted one by any
+  theorem (only bounds from above exist).
+* Task 5: Route A's second stage cannot be read (the launched weight is too small for any
+  gate), and Route C is not admitted. Then the result is Route B's obstruction.
+* Task 6: neither the obstruction nor the conditional bridge can be stated exactly.
+* Task 9: the box detector's record cannot be timed against the group velocity.
+* Tasks 10, 11: the box gate for carriers separating at an angle cannot be shown open and
+  then closed with nearly full weight.
+* The caused return: no reading of the launched level within any budget.
+
+Each of these is to be reported with the inequality that fails.
+
+References: [`unified-record-spacetime-plan.md`](unified-record-spacetime-plan.md) (UA-18,
+UA-19, UO-17, UO-19, UO-20, UO-24, UO-25, UO-26, UD-50 to UD-52, UD-82, UD-83, UD-106, UD-107,
+UD-196, UD-207 to UD-226); [`unified-m7-feasibility.md`](unified-m7-feasibility.md);
+[`beyond-1p1-scoping.md`](beyond-1p1-scoping.md); `specs/BACKLOG.md` #296, #297, #298, #437,
+~~#438~~, #439; `specs/future-work.md`.
