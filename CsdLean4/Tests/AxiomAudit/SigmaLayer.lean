@@ -22626,4 +22626,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.csd_radar_record_history
 
+/-! #438, first brick (the author's plan of 2026-11-18, workstream R, Task 2; obligation UO-25 (2)): the drift of a displacement when the carrier's ray changes (`RecordLayer/UnifiedRayDrift.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_kick_kick_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_kick_kick_sub_le
+
+/-- info: 'CSD.RecordLayer.freeShift_ray_drift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.freeShift_ray_drift
+
+/-- info: 'CSD.RecordLayer.abs_freeShift_ray_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_freeShift_ray_sub_le
+
+/-- info: 'CSD.RecordLayer.IsGatedHistory.of_ray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsGatedHistory.of_ray
+
+/-- info: 'CSD.RecordLayer.IsAwayHistory.of_ray' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.IsAwayHistory.of_ray
+
 end CSD.Tests.AxiomAudit
