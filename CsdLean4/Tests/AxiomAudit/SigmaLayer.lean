@@ -23168,4 +23168,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.torusDetector_displayed_flatPacket
 
+/-! #437, part (UO-26): the coincidence weight of two carriers in boxes (`RecordLayer/CoincidenceBoxes.lean`). -/
+
+/-- info: 'CSD.RecordLayer.coincProj_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincProj_mulVec_apply
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_coincProj_mulVec_prod_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_coincProj_mulVec_prod_le
+
+/-- info: 'CSD.RecordLayer.sum_ite_fst_eq_regionWeightD_compl' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_ite_fst_eq_regionWeightD_compl
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_coincProj_mulVec_prodD_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_coincProj_mulVec_prodD_le
+
 end CSD.Tests.AxiomAudit

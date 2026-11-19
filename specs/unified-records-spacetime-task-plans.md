@@ -323,6 +323,11 @@ before the meeting).
    two boxes are within the gate's relation. So the integrand of item (1) is zero until the
    boxes meet, up to the tails of UD-221. This makes "before the meeting" a statement
    about times. (M)
+   Done in part 2026-11-19 (`RecordLayer/CoincidenceBoxes.lean`, UD-236):
+   `sum_norm_sq_coincProj_mulVec_prod_le`, the bound at one time for one product vector, with
+   the tails as `regionWeightD` of the complements on tori. Left: the composite's free orbit
+   of a product is the product of orbits; the moving boxes; the passage from the vector's
+   sum of squares to the operator norm under the integral of UD-226.
 2. *launch_first_order*: the first-order term for the contact term and a product of
    packets, evaluated: its norm squared is `g²` times the square of the time the boxes
    overlap times the overlap weight, to leading order, with the remainder of UD-216. This

@@ -872,6 +872,7 @@ public import CsdLean4.RecordLayer.PointerCountCap
 public import CsdLean4.RecordLayer.TorusDetector
 public import CsdLean4.RecordLayer.UnifiedRadarMacrostate
 public import CsdLean4.RecordLayer.UnifiedTransponder
+public import CsdLean4.RecordLayer.CoincidenceBoxes
 public import CsdLean4.RecordLayer.UnifiedFibreRun
 public import CsdLean4.RecordLayer.UnifiedFibreDrift
 public import CsdLean4.RecordLayer.UnifiedFibreRadar
