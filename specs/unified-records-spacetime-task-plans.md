@@ -257,8 +257,10 @@ show they are the ring's case.
 Items 3 and 4 are done in part (2026-11-19, `RecordLayer/GraphDetector.lean`, UD-231):
 `graphDetector_not_displayed`, `torusDetector_not_displayed` (no display before the growth
 reaches the carrier), `graphDetector_displayed` (display from a hypothesis on the occupancy).
-Left: the packet's box weight joined to the arena's observable; a `TickReadout` for the
-arena.
+The packet's box weight is joined to the arena's observable (2026-11-19,
+`RecordLayer/TorusDetector.lean`, UD-234): `arenaObs_siteSetProj_packetD`,
+`torusDetector_displayed_flatPacket`. Left: arrival and display in one run; an instance with
+numbers; a `TickReadout` for the arena.
 
 1. **The cone for any nearest-neighbour graph.** *SiteSuppG*, *growG*, *growIterG* for a site
    map into any finite type with an adjacency relation, and *norm_commutator_graph_le* with

@@ -868,6 +868,7 @@ public import CsdLean4.RecordLayer.TickCountLaw
 public import CsdLean4.RecordLayer.GraphCone
 public import CsdLean4.RecordLayer.GraphDetector
 public import CsdLean4.RecordLayer.PointerCountCap
+public import CsdLean4.RecordLayer.TorusDetector
 public import CsdLean4.RecordLayer.UnifiedRadarMacrostate
 public import CsdLean4.RecordLayer.UnifiedTransponder
 public import CsdLean4.RecordLayer.UnifiedFibreRun

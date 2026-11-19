@@ -23146,4 +23146,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.wall_exists_history_measure_ge
 
+/-! #297, third brick (Task 9): a detector on the torus displays a packet (`RecordLayer/TorusDetector.lean`). -/
+
+/-- info: 'CSD.RecordLayer.exp_mulVec_packetD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_mulVec_packetD
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteSetProj_mk' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteSetProj_mk
+
+/-- info: 'CSD.RecordLayer.arenaObs_siteSetProj_packetD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_siteSetProj_packetD
+
+/-- info: 'CSD.RecordLayer.torusDetector_displayed_of_packet' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusDetector_displayed_of_packet
+
+/-- info: 'CSD.RecordLayer.torusDetector_displayed_flatPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusDetector_displayed_flatPacket
+
 end CSD.Tests.AxiomAudit
