@@ -23186,4 +23186,14 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.sum_norm_sq_coincProj_mulVec_prodD_le
 
+/-! #439, fifth brick (Task 3): the radar history's share with the count bounds (`RecordLayer/RadarHistoryShare.lean`). -/
+
+/-- info: 'CSD.RecordLayer.TickReadout.exists_history_measure_ge_of_forall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.exists_history_measure_ge_of_forall
+
+/-- info: 'CSD.RecordLayer.csd_radar_history_share' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.csd_radar_history_share
+
 end CSD.Tests.AxiomAudit

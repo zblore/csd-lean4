@@ -58,8 +58,10 @@ In hand: `TickReadout.tickMacro`, `TickReadout.compatibleSet_eq_preimage_singlet
      `12 max(|g_A|, |g_B|) T` from every start.
    * One history's share — done 2026-11-19: `wall_exists_history_measure_ge`, for any set `S`
      of starts there are five counts at most `B` whose history's compatible region holds at
-     least `1 / (B + 1)^5` of the measure of `S`. Owed: that those counts satisfy
-     `RadarCountBounds` on the start set of UD-219 (join with that theorem's covering). (S–M)
+     least `1 / (B + 1)^5` of the measure of `S`. That those counts satisfy
+     `RadarCountBounds` on the start set of UD-219 — done 2026-11-19
+     (`RecordLayer/RadarHistoryShare.lean`, UD-237): `csd_radar_history_share`, by
+     uniqueness of a count. Owed: the reading windows in `t ≥ 0`; the start set's measure.
    * A sharper history that does fix the count (the drift's rate known between `t_a` and
      `t_b`) would give constancy; whether the family's runs have it is to be examined, not
      assumed. (M–L)
