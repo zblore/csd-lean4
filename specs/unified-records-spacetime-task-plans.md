@@ -53,13 +53,13 @@ In hand: `TickReadout.tickMacro`, `TickReadout.compatibleSet_eq_preimage_singlet
    swing and the closing of the gate the pointer drifts at a bounded rate, not a known one.
    Two starts with the same history can have different counts. What can be proved:
    * A count is bounded by the run's duration — done 2026-11-19 for any history:
-     `HasTicks.mul_le`, `IsTickCount.le_div` (`n d ≤ K T`). Owed for the radar: the pointer's
-     speed `|z| ‖G‖` from the flow's formula and the gap between the two arcs in the
-     circle's metric; then *radar_counts_bounded*, the cap `B` as a number. (M)
-   * *radar_cell_measure_ge*: the start set of UD-219 is covered by finitely many cells, at
-     most the product `K` of the five ranges, so one cell has measure at least the start
-     set's over `K`. This turns "non-zero" into a lower bound in terms of the start set's
-     measure. (S after the first)
+     `HasTicks.mul_le`, `IsTickCount.le_div` (`n d ≤ K T`). For the radar — done 2026-11-19
+     (`RecordLayer/PointerCountCap.lean`, UD-232): `wallCount_le`, a count at `T` is at most
+     `12 max(|g_A|, |g_B|) T` from every start.
+   * One history's share — done 2026-11-19: `wall_exists_history_measure_ge`, for any set `S`
+     of starts there are five counts at most `B` whose history's compatible region holds at
+     least `1 / (B + 1)^5` of the measure of `S`. Owed: that those counts satisfy
+     `RadarCountBounds` on the start set of UD-219 (join with that theorem's covering). (S–M)
    * A sharper history that does fix the count (the drift's rate known between `t_a` and
      `t_b`) would give constancy; whether the family's runs have it is to be examined, not
      assumed. (M–L)

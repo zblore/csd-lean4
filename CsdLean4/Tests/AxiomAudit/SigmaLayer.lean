@@ -23100,4 +23100,50 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.torusDetector_not_displayed
 
+/-! #439, fourth brick (Task 3): the cap of a pointer's count as a number (`RecordLayer/PointerCountCap.lean`). -/
+
+/-- info: 'CSD.RecordLayer.one_sixth_le_dist_of_mem_readyArc_of_mem_displayArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_sixth_le_dist_of_mem_readyArc_of_mem_displayArc
+
+/-- info: 'CSD.RecordLayer.dist_pshift_pshift_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.dist_pshift_pshift_le
+
+/-- info: 'CSD.RecordLayer.HasTicks.pointer_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.HasTicks.pointer_mul_le
+
+/-- info: 'CSD.RecordLayer.abs_freeShift_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_freeShift_sub_le
+
+/-- info: 'CSD.RecordLayer.exists_isTickCount_of_cap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_isTickCount_of_cap
+
+/-- info: 'CSD.RecordLayer.exists_le_card_mul_measure_inter_preimage' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exists_le_card_mul_measure_inter_preimage
+
+/-- info: 'CSD.RecordLayer.TickReadout.exists_history_measure_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.TickReadout.exists_history_measure_ge
+
+/-- info: 'CSD.RecordLayer.pentaCount_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pentaCount_le
+
+/-- info: 'CSD.RecordLayer.abs_scaledTrainF_deriv_lift_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_scaledTrainF_deriv_lift_le
+
+/-- info: 'CSD.RecordLayer.wallCount_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wallCount_le
+
+/-- info: 'CSD.RecordLayer.wall_exists_history_measure_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.wall_exists_history_measure_ge
+
 end CSD.Tests.AxiomAudit
