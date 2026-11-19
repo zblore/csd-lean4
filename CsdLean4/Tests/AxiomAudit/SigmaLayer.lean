@@ -23196,4 +23196,46 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.csd_radar_history_share
 
+/-! #442, first brick (Task 4): events at flow times and the graph's bound (`RecordLayer/FlowEventCone.lean`). -/
+
+/-- info: 'CSD.RecordLayer.HopSeparated' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.HopSeparated
+
+/-- info: 'CSD.RecordLayer.HopSeparated.mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.HopSeparated.mono
+
+/-- info: 'CSD.RecordLayer.disjoint_growG_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.disjoint_growG_comm
+
+/-- info: 'CSD.RecordLayer.growIterG_growG' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.growIterG_growG
+
+/-- info: 'CSD.RecordLayer.growIterG_add' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.growIterG_add
+
+/-- info: 'CSD.RecordLayer.hopSeparated_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hopSeparated_comm
+
+/-- info: 'CSD.RecordLayer.FlowEvent.PermittedWithin' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.FlowEvent.PermittedWithin
+
+/-- info: 'CSD.RecordLayer.FlowEvent.PermittedWithin.mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.FlowEvent.PermittedWithin.mono
+
+/-- info: 'CSD.RecordLayer.FlowEvent.kick_response_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.FlowEvent.kick_response_le
+
+/-- info: 'CSD.RecordLayer.FlowEvent.kick_response_eq_of_time_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.FlowEvent.kick_response_eq_of_time_eq
+
 end CSD.Tests.AxiomAudit

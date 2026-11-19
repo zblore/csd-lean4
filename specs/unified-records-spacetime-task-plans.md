@@ -83,6 +83,12 @@ Reuse: `CV/RecordCausalOrder.lean` (`RecordEvent`, `CausalPrecedes`,
 `not_influences_of_spacelike`), `CV/CausalDistance.lean` (`causalDist`),
 `RecordLayer/UnifiedCausalOrder.lean` (the cone bound for the coupled generators).
 
+**Decided 2026-11-19 (the author): the events keep their real flow times; the graph relation
+is stated for them directly, with no map to whole periods.** First brick done 2026-11-19
+(`RecordLayer/FlowEventCone.lean`, UD-239, BACKLOG #442): `FlowEvent`, `HopSeparated`,
+`FlowEvent.PermittedWithin`, `FlowEvent.kick_response_le`. `RecordEvent` (whole periods) is
+not used for the radar.
+
 The three notions the author asks to be kept apart, and what is to be proved for each:
 
 1. *Permitted by the graph.* *radarEvent*: each of the five readings as a `RecordEvent`: the
@@ -233,6 +239,9 @@ This must not block workstream S, and nothing in §§6 to 8 depends on it.
   `levelCoherenceD_rate`, `hasDerivAt_devicePacketD`, `deviceCoherenceD_devicePacketD`. Left:
   *levelClockRateD_dilation* (the splitting at `k₀` against the rest splitting over the
   Lorentz factor of `groupVelD`), the error from the window's width, the normalised device.
+* The two-level clock, second part — done 2026-11-19 (`CV/DiracClockDilationD.lean`, UD-238):
+  `levelClockRateD_dilation`, `sq_div_latticeED`, `levelCoherenceD_rate_width`. Left: the
+  lattice term `(Σ s_i⁴)/((2J)² E²)` against a spacing; the normalised device.
 * **The two-level clock on a packet.** The carrier with two levels of different mass on the
   torus: `deviceHam` with the `d`-dimensional Hamiltonian in each block; the clock overlap
   rotating at the difference of the two bands' energies at the centre of the window, as
@@ -373,7 +382,7 @@ and what stands between:
 | 2. A realised outcome is a record | `TickReadout.model`, `establishedFact_eq_some_iff` | none in `1 + 1` |
 | 3. Recursion | `HistoryPreparation.appendFact`, UD-219 | the physical recursion is Task 5 |
 | 4. Macroscopic description | `csd_radar_macrostate` | stability (§1) |
-| 5. Causal structure | Task 4 | not started |
+| 5. Causal structure | Task 4 | first brick (UD-239): events at flow times and the bound; the radar's events are open |
 | 6. Operational geometry in `3 + 1` | Tasks 10, 11 | the arena of UD-219 is `1 + 1` |
 | 7. Born statistics | Task 6 | conditional at best |
 

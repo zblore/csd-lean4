@@ -783,6 +783,7 @@ public import CsdLean4.CV.DiracSpinorD
 public import CsdLean4.CV.DiracPacketLimitD
 public import CsdLean4.CV.DiracPacketWindowD
 public import CsdLean4.CV.DiracClockPacketD
+public import CsdLean4.CV.DiracClockDilationD
 public import CsdLean4.CV.DiracPacket
 public import CsdLean4.CV.DiracContinuum
 public import CsdLean4.CV.DiracPacketLimit
@@ -868,6 +869,7 @@ public import CsdLean4.RecordLayer.TickCountBound
 public import CsdLean4.RecordLayer.TickCountLaw
 public import CsdLean4.RecordLayer.GraphCone
 public import CsdLean4.RecordLayer.GraphDetector
+public import CsdLean4.RecordLayer.FlowEventCone
 public import CsdLean4.RecordLayer.PointerCountCap
 public import CsdLean4.RecordLayer.RadarHistoryShare
 public import CsdLean4.RecordLayer.TorusDetector
