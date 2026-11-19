@@ -227,6 +227,10 @@ This must not block workstream S, and nothing in §§6 to 8 depends on it.
 
 ## 6. Task 8 — what is left of packets
 
+* The two-level clock, first part — done 2026-11-19 (`CV/DiracClockPacketD.lean`, UD-235):
+  `levelCoherenceD_rate`, `hasDerivAt_devicePacketD`, `deviceCoherenceD_devicePacketD`. Left:
+  *levelClockRateD_dilation* (the splitting at `k₀` against the rest splitting over the
+  Lorentz factor of `groupVelD`), the error from the window's width, the normalised device.
 * **The two-level clock on a packet.** The carrier with two levels of different mass on the
   torus: `deviceHam` with the `d`-dimensional Hamiltonian in each block; the clock overlap
   rotating at the difference of the two bands' energies at the centre of the window, as

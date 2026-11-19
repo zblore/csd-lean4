@@ -6155,4 +6155,70 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.CV.tendsto_two_pi_div_mul_windowStepErrD
 
+/-! #296, seventh part (Task 8): the two-level clock on a packet in d dimensions (`CV/DiracClockPacketD.lean`). -/
+
+/-- info: 'CSD.CV.levelSpinOverlapD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelSpinOverlapD
+
+/-- info: 'CSD.CV.levelCoherenceD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelCoherenceD
+
+/-- info: 'CSD.CV.levelWeightD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelWeightD
+
+/-- info: 'CSD.CV.levelCoherenceD_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelCoherenceD_eq
+
+/-- info: 'CSD.CV.levelErrorD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelErrorD
+
+/-- info: 'CSD.CV.levelCoherenceD_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelCoherenceD_rate
+
+/-- info: 'CSD.CV.star_symbol_add_mulVec_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.star_symbol_add_mulVec_dotProduct
+
+/-- info: 'CSD.CV.star_cliffordSpinor_dotProduct_levels' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.star_cliffordSpinor_dotProduct_levels
+
+/-- info: 'CSD.CV.levelSpinOverlapD_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelSpinOverlapD_eq
+
+/-- info: 'CSD.CV.levelSpinOverlapD_pos' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.levelSpinOverlapD_pos
+
+/-- info: 'CSD.CV.deviceHamD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.deviceHamD
+
+/-- info: 'CSD.CV.devicePacketD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.devicePacketD
+
+/-- info: 'CSD.CV.deviceHamD_mulVec_apply' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.deviceHamD_mulVec_apply
+
+/-- info: 'CSD.CV.hasDerivAt_devicePacketD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.hasDerivAt_devicePacketD
+
+/-- info: 'CSD.CV.deviceCoherenceD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.deviceCoherenceD
+
+/-- info: 'CSD.CV.deviceCoherenceD_devicePacketD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.CV.deviceCoherenceD_devicePacketD
+
 end CSD.Tests.AxiomAudit
