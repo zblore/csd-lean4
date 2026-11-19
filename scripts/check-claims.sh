@@ -1033,7 +1033,14 @@ isSymplectic"
 #   on each factor flow being measure preserving — no claim about the product form's top-form measure;
 #   #374 LF4/PointerInert.lean: hamiltonianFlow_stepEnergy_shiftMoving and _shiftMoving_fst are read
 #   off the closed form hamiltonianFlow_stepEnergy (the flow commutes with translating the new
-#   torus's moving angle) — EARNED, and no stronger than that closed form.)
+#   torus's moving angle) — EARNED, and no stronger than that closed form;
+#   #440 LF4/ControlledStep.lean (UA-20): hamiltonianFlow_controlledEnergy is hamiltonianFlow_stepEnergy
+#   applied to the one-pointer arena with the observable b(theta_1) * (-2<C>), a skew product over
+#   the new pointer's conserved angle that names the base's flow and does not solve it — EARNED;
+#   hamiltonianFlow_controlledEnergy_of_lift_eq_zero is its closed form on the fibres g(psi_2) = 0,
+#   from hamiltonianFlow_coupledEnergy — EARNED, on those fibres only;
+#   map_hamiltonianFlow_controlledEnergy is a measure statement about that flow, from
+#   kMuL_map_hamiltonianFlow for every smooth energy on the arena — no closed form claimed.)
 DECLARED_VOCAB_THEOREMS="arenaLiouville_cylinder
 hamiltonianFlow_coupledEnergy_reindex
 schrodingerHamiltonian_reindex
@@ -1232,6 +1239,9 @@ hamiltonianFlow_prodEnergy
 measurePreserving_hamiltonianFlow_prodEnergy
 hamiltonianFlow_stepEnergy_shiftMoving
 hamiltonianFlow_stepEnergy_shiftMoving_fst
+hamiltonianFlow_controlledEnergy
+hamiltonianFlow_controlledEnergy_of_lift_eq_zero
+map_hamiltonianFlow_controlledEnergy
 schrodingerHamiltonian_hamOccA
 continuous_schrodingerHamiltonian_twoCoupledOrbit
 abs_schrodingerHamiltonian_le

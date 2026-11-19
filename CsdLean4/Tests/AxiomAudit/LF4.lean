@@ -2332,4 +2332,50 @@ bridge in the corpus — the abstract `measure_bridge` and the
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.LF4.fiveCoupledFlow_shiftPenta_ray
 
+/-! #440, second brick (Task 5, UA-20): the controlled step (`LF4/ControlledStep.lean`). -/
+
+/-- info: 'CSD.LF4.torusWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.torusWindow
+
+/-- info: 'CSD.LF4.contMDiff_torusWindow' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_torusWindow
+
+/-- info: 'CSD.LF4.controlObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.controlObs
+
+/-- info: 'CSD.LF4.contMDiff_controlObs' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_controlObs
+
+/-- info: 'CSD.LF4.controlledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.controlledEnergy
+
+/-- info: 'CSD.LF4.contMDiff_controlledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.contMDiff_controlledEnergy
+
+/-- info: 'CSD.LF4.hamiltonianFlow_controlledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_controlledEnergy
+
+/-- info: 'CSD.LF4.coupledEnergy_add_zero_smul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.coupledEnergy_add_zero_smul
+
+/-- info: 'CSD.LF4.hamiltonianFlow_controlledEnergy_of_lift_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.hamiltonianFlow_controlledEnergy_of_lift_eq_zero
+
+/-- info: 'CSD.LF4.controlled_pointer_fixed_of_window_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.controlled_pointer_fixed_of_window_eq_zero
+
+/-- info: 'CSD.LF4.map_hamiltonianFlow_controlledEnergy' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.LF4.map_hamiltonianFlow_controlledEnergy
+
 end CSD.Tests.AxiomAudit

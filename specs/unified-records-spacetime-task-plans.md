@@ -142,6 +142,14 @@ Three routes:
   succession through the carrier and not as record control. (L; shares its hard step with
   the caused return)
 
+Route C's first theorem is done (2026-11-19, `LF4/ControlledStep.lean`, UD-233):
+`hamiltonianFlow_controlledEnergy_of_lift_eq_zero`, `controlled_pointer_fixed_of_window_eq_zero`,
+`map_hamiltonianFlow_controlledEnergy`. Next: the two-stage run as records. The first
+pointer's tick record on its own arena is in hand (UD-58 onward); wanted is
+*controlled_second_ticks_after_first*: with the window `b` supported in the displaying arc,
+the second pointer has no tick before the first pointer's first display, and has one after
+the first has stayed displayed for long enough; then the two facts as a record history.
+
 Route C's term is admitted as UA-20 of the contract (2026-11-19, on "Continue all of
 them"; to be struck if that was not meant). Its first theorem is the controlled step's
 flow, an instance of `hamiltonianFlow_stepEnergy` once the observable `b(θ₁) K` is shown

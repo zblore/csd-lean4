@@ -1036,6 +1036,7 @@ public import CsdLean4.LF4.TriCoupledFlow
 public import CsdLean4.LF4.QuadCoupledFlow
 public import CsdLean4.LF4.PentaCoupledFlow
 public import CsdLean4.LF4.PentaPointerInert
+public import CsdLean4.LF4.ControlledStep
 public import CsdLean4.LF4.ProductFlow
 public import CsdLean4.LF4.PointerInert
 public import CsdLean4.Empirical.QM.Darwinism

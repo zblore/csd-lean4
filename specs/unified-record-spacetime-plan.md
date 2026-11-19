@@ -711,7 +711,7 @@ what would discharge or constrain it.
   the pointer also moves under the derivative of its profile; the two effects are present
   together. (iv) A packet at rest spreads, so the first level is at rest only for a time.
 
-### UA-20 — a pointer that reads an earlier pointer (admitted 2026-11-19; nothing of it exists in Lean)
+### UA-20 — a pointer that reads an earlier pointer (admitted 2026-11-19; its step is `LF4/ControlledStep.lean`, UD-233)
 
 * **Assumed.** Obligations UO-24 and UO-25 (5). The author's word is "Continue all of them"
   (2026-11-19), given against a list in which this item was marked as needing the author's
@@ -729,7 +729,7 @@ what would discharge or constrain it.
   orbit, so it does not move while `b(θ₁) = 0`.
   (d) *What may not be assumed.* That the earlier pointer displays, or the order of the two
   records: both are to come from the flow.
-* **Where.** Nothing. The engine exists: `hamiltonianFlow_stepEnergy` (`LF4/PointerStep.lean`,
+* **Where.** `LF4/ControlledStep.lean` (`controlledEnergy`, `hamiltonianFlow_controlledEnergy_of_lift_eq_zero`, `controlled_pointer_fixed_of_window_eq_zero`; UD-233, 2026-11-19), for one earlier pointer and no record read. The engine: `hamiltonianFlow_stepEnergy` (`LF4/PointerStep.lean`,
   BACKLOG ~~#368~~) solves the flow of a step for any smooth energy and observable on any
   compact symplectic arena, and the arena with one pointer is one. Without the term there
   is no control: `fiveCoupledFlow_shiftPenta` (UD-227).
@@ -1445,6 +1445,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-230 | **The propagation bound over any site graph, and on the torus (Task 9, first brick).** For a site map into any type with an adjacency relation, a skew-Hermitian generator `S` whose nonzero entries join equal or adjacent sites, `A` supported on the sites `X` and `B` on `Y`, and `d` steps of growth from `X` missing `Y`: `‖[A(t), B]‖ ≤ 2 (2 ‖S‖ t)^d / d! · ‖A‖ ‖B‖` for `t ≥ 0`; the same against a kick that is the identity off `Y`, between two generators that differ on `Y`, and for an occupancy on the arena. The ring's predicates of `RecordLayer/UnifiedCausalOrder.lean` are the case of the ring's graph. The lattice Dirac Hamiltonian of any dimension hops along the torus's graph, so the bound holds for it with rate `2 ‖H‖`, and `d` steps of growth reach only sites `y + v` with `∑ |v_i| ≤ d` | `SiteSuppG`, `HopsG`, `IdOffG`, `growG`, `growIterG`, `subset_growG`, `growIterG_mono`, `HopsG.smul`, `HopsG.add`, `IdOffG.siteSuppG_sub_one`, `siteSuppG_adOne`, `siteSuppG_adIter`, `mul_eq_zero_of_siteSuppG_disjoint`, `commute_of_siteSuppG_disjoint`, `commute_of_siteSuppG_idOffG`, `norm_commutator_graph_le`, `norm_commutator_graph_idOffG_le`, `norm_heisenbergFlow_sub_graph_le`, `abs_arenaObs_flow_kick_sub_graph_le`, `abs_arenaObs_flow_sub_flow_graph_le`, `rank_le_of_mem_growIterG`, `disjoint_growIterG_of_rank`, `ringAdj`, `HopsOne.hopsG`, `coe_grow`, `coe_growIter`, `torusAdj`, `torusAdj_symm`, `hopsG_latticeDiracHam`, `exists_int_of_mem_growIterG_torus`, `disjoint_growIterG_torus`, `norm_commutator_latticeDirac_le` (`RecordLayer/GraphCone.lean`) | upper bounds with a factorial tail, not an exclusion; the graph is read off the generator's entries and is not derived; the rate is the generator's norm, not the group velocity, and is not a number for the torus; the ring's theorems were not re-proved from these; no detector and no record on the torus |
 | UD-231 | **A region detector on a graph: no display before the growth reaches the carrier (Task 9, second brick).** On the arena of a carrier with Hamiltonian `A₀` and one pointer coupled to an observable `B₀` supported on the sites `X` (UA-5's form, any carrier index), with `A₀` and `B₀` hopping along a graph and the carrier starting at a ray fixed by a matrix supported on `Y`: with `d` steps of growth from `X` missing `Y`, the pointer's displacement at the flow time `t ≥ 0` is at most `2 |f'(θ₂)| ‖B₀‖ (2 ‖H‖ t)^d / d! · t` on every fibre, and a ready pointer is not displayed while that is below `1/6`. On a fibre with rate `κ = −2 f'(θ₂) ≥ 0`, a ready pointer is displayed at `t` if the observable's expectation stays between `q` and `1` along the orbit up to `t`, `1/3 ≤ κ q t` and `κ t ≤ 2/3`. The first statement holds for the lattice Dirac carrier of any dimension and the projector on any set of sites of the torus | `norm_heisenbergFlow_mul_graph_le`, `arenaObs_mul_of_supp`, `mul_arenaDM_mk`, `abs_arenaObs_flow_graph_le`, `hopsG_idxCoupledGen`, `abs_idxPointerShift_le_graph`, `le_idxPointerShift_of_le`, `idxPointerShift_le_of_le_one`, `graphDetector_not_displayed`, `graphDetector_displayed`, `siteSetProj`, `siteSetProj_isHermitian`, `siteSuppG_siteSetProj`, `hopsG_siteSetProj`, `norm_siteSetProj_le`, `torusDetector_not_displayed` (`RecordLayer/GraphDetector.lean`) | flow times; the upper bound is a factorial tail with the coupled Hamiltonian's norm as its rate, not an exclusion at a sharp time; the display takes the occupancy along the orbit as a hypothesis, which no packet on the torus is shown to meet; a display at one time, not a tick count: no `TickReadout` for this arena; the graph is given |
 | UD-232 | **The cap of a pointer's count as a number, and one history's share of the measure (UO-25 (3), fourth brick).** The ready arc and the displaying arc are at distance at least `1/6`, and a pointer's displacement along a carrier's orbit changes at rate at most `2 |z| ‖G‖`; so on the five-pointer arena, from every start and for every pointer, a count at the flow time `T ≥ 0` is at most `12 Z Γ T` (`Z` a bound for the profiles' derivatives, `Γ` for the observables' norms), and on the radar's walled chain at most `12 max(|g_A|, |g_B|) T`. A history capped at `B` has a count. For a finite family of `k` readings capped at `B` and any set `S` of starts, there are counts at most `B` whose history's compatible region holds at least `1 / (B + 1)^k` of the measure of `S`; for the walled chain with `k = 5` and `B ≥ 12 max(|g_A|, |g_B|) τ_j` | `one_sixth_le_dist_of_mem_readyArc_of_mem_displayArc`, `dist_pshift_pshift_le`, `HasTicks.pointer_mul_le`, `abs_freeShift_sub_le`, `exists_isTickCount_of_cap`, `exists_le_card_mul_measure_inter_preimage`, `TickReadout.exists_history_measure_ge`, `pentaCount_le`, `abs_scaledTrainF_deriv_lift_le`, `wallCount_le`, `wall_exists_history_measure_ge` (`RecordLayer/PointerCountCap.lean`) | the cap is an upper bound from the pointer's speed, from every start, far above the family's counts; flow times; the share is a pigeonhole bound, not the size of a cell; which five counts is not said, and they are not shown to satisfy `RadarCountBounds` |
+| UD-233 | **The controlled step: a pointer that reads an earlier pointer (UA-20; UO-24, UO-25 (5), second brick).** On the one-pointer arena with one more torus, for the energy `−2⟨A⟩ − 2 f(θ₂)⟨B⟩ + g(ψ₂) b(θ₁)(−2⟨C⟩)` with `b` a smooth window of the first pointer's moving angle: the energy is smooth; its flow is a skew product over the new pointer's conserved angle `ψ₂`; on a fibre where `g(ψ₂) = 0` the ray and the first pointer run as on the one-pointer arena and the second pointer's displacement is `g'(ψ₂) ∫₀ᵗ b(θ₁(u)) (−2⟨C⟩(u)) du` along that run, so it does not move while the window is shut; the flow preserves `μ_FS ⊗ vol ⊗ vol`. The fibre statements are for Hermitian `A`, `B`; the skew product and the measure need no such hypothesis | `torusWindow`, `contMDiff_torusWindow`, `controlObs`, `contMDiff_controlObs`, `controlledEnergy`, `contMDiff_controlledEnergy`, `hamiltonianFlow_controlledEnergy`, `coupledEnergy_add_zero_smul`, `hamiltonianFlow_controlledEnergy_of_lift_eq_zero`, `controlled_pointer_fixed_of_window_eq_zero`, `map_hamiltonianFlow_controlledEnergy` (`LF4/ControlledStep.lean`) | exact; the explicit statements are on the fibres `g(ψ₂) = 0`, a null set of the second pointer's angles; off them the base's flow is named and not solved, and the first pointer's conserved angle is not conserved; a smooth window, not the displaying arc; no record is read: no ticks, no order of two records; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3094,6 +3095,20 @@ some history; the two are not joined). The measure of the start set as a number.
 of the string on the start set, which fails in general (UD-225). Stability under turning a
 pointer's starting angle, which is not to be claimed (UD-227). No new assumption.
 
+Exact scope of UD-233 (BACKLOG #440, second brick; obligations UO-24 and UO-25 (5), Task 5 of
+the plan of 2026-11-18; the term of UA-20). What it gives. The first arena on which a
+pointer's moving angle is in the energy, with its flow and its preserved measure; and the
+first statement of control: the second pointer's displacement is the accumulated window of
+the first pointer's angle times an observable, and is zero while the window is shut. What it
+does not give. A record: neither pointer's ticks are read, so "the second apparatus acts
+only after the first has recorded" is not yet a statement about two recorded facts, and the
+plan's Task 5 (a record history of two facts with `HistoryPreparation.appendFact`) is not
+met. Control off the fibres `g(ψ₂) = 0`. Control by the displaying arc itself: the window is
+smooth. That the measure statement uses Liouville for every smooth energy on the arena
+(`kMuL_map_hamiltonianFlow`), not a closed form. Assumption: UA-20, whose standing is the
+author's "Do all of these" of 2026-11-19 against a list in which this item was marked as
+needing confirmation; it is to be struck with this row if that was not meant.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4420,6 +4435,10 @@ time. It is not a statement about every dynamics on `Σ`.
   (`fiveCoupledFlow_shiftPenta`): the obstruction holds on the radar's arena. By the
   charter a record is the ontic selection in the fibre, so "a record controls an
   apparatus" means this obligation; it is recommended, not yet decided by the author.
+  ▸ **The controlled step, 2026-11-19 (BACKLOG #440, second brick) → UD-233. (5) not met.**
+  The flow of a step whose observable is a window of the first pointer's moving angle; on
+  the fibres `g(ψ₂) = 0` the second pointer does not move while the window is shut. No
+  record is read yet.
   ▸ **Admitted, 2026-11-19 → UA-20.** A step whose observable carries a smooth profile of
   an earlier pointer's moving angle. Nothing of it is in Lean; the step theorem of ~~#368~~
   is its engine.
