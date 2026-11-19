@@ -729,7 +729,7 @@ what would discharge or constrain it.
   orbit, so it does not move while `b(θ₁) = 0`.
   (d) *What may not be assumed.* That the earlier pointer displays, or the order of the two
   records: both are to come from the flow.
-* **Where.** `LF4/ControlledStep.lean` (`controlledEnergy`, `hamiltonianFlow_controlledEnergy_of_lift_eq_zero`, `controlled_pointer_fixed_of_window_eq_zero`; UD-233, 2026-11-19), for one earlier pointer and no record read. The engine: `hamiltonianFlow_stepEnergy` (`LF4/PointerStep.lean`,
+* **Where.** `LF4/ControlledStep.lean` (`controlledEnergy`, `hamiltonianFlow_controlledEnergy_of_lift_eq_zero`, `controlled_pointer_fixed_of_window_eq_zero`; UD-233, 2026-11-19); `RecordLayer/ControlledOrder.lean` (`controlled_display_after_first`; UD-241, 2026-11-19), for one earlier pointer and no record read. The engine: `hamiltonianFlow_stepEnergy` (`LF4/PointerStep.lean`,
   BACKLOG ~~#368~~) solves the flow of a step for any smooth energy and observable on any
   compact symplectic arena, and the arena with one pointer is one. Without the term there
   is no control: `fiveCoupledFlow_shiftPenta` (UD-227).
@@ -1452,6 +1452,8 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-237 | **The radar's record history holds a share of the starts, and its counts satisfy the bounds (UO-25 (3), fifth brick).** A count of one orbit at one time is unique, so the counts of the history found by the pigeonhole of UD-232 are the counts of any start in its region. For the family of UD-219: there are strengths such that for every labelling and reference point there is a set `S` of starts of positive `μ_FS ⊗ vol⁵` measure (the start set of UD-219) such that, for all non-negative reading times in the five windows and every cap `B ≥ 12 max(|g_A|, |g_B|) s` for the five times `s`, there are five counts at most `B` which satisfy `RadarCountBounds` within `152 K/k` and `53 K/k` and whose history's compatible region holds at least `1 / (B + 1)^5` of the measure of `S` | `TickReadout.exists_history_measure_ge_of_forall`, `csd_radar_history_share` (`RecordLayer/RadarHistoryShare.lean`) | the counts are not named (pigeonhole; they may depend on the labelling, the reference point, the times and the cap); a share of `S`, whose own measure is positive with no value; the reading times are assumed non-negative (the windows are not shown here to lie in `t ≥ 0`); the cap is a speed bound; no stability of the cell under the flow; no register |
 | UD-238 | **The clock on a packet in `d` dimensions is dilated, and its error is the window's width (UO-17, Task 8, eighth part).** The lattice energy in `d` dimensions is the one-dimensional dispersion at the size of the lattice momentum, so for `0 < μ₀ ≤ μ₁`: `(μ₁ − μ₀) μ₀/E⁰ ≤ E¹ − E⁰ ≤ (μ₁ − μ₀) μ₁/E¹`; for `μ₀ < μ₁` the splitting over the rest splitting is within `(μ₁ − μ₀)/E⁰` of `μ₀/E⁰`; `(μ/E)² = 1 − |v|²/(2J)² − (Σ s_i⁴)/((2J)² E²)` with `v` the group velocity; the splitting at two sets of angles differs by at most `4J² (μ₁ − μ₀)/μ₀² · Σ_i |k_i − k'_i|`; so the coherence of UD-235 turns at the splitting at the centre within `|t|` times the total weight times `4J² (μ₁ − μ₀)/μ₀² · w` for a window within `w` of the centre | `latticeED_sub_eq_levelClockRate`, `levelClockRateD_mem`, `levelClockRateD_dilation`, `groupVelD_sq_mul`, `sq_div_latticeED`, `abs_levelClockRateD_sub_le`, `levelErrorD_le`, `levelCoherenceD_rate_width` (`CV/DiracClockDilationD.lean`) | the dilation is against the lattice momentum: `μ₀/E⁰` is the Lorentz factor of the group velocity (in units of `2J`) only up to the term `(Σ s_i⁴)/((2J)² E²)`, not bounded here by a spacing; the residue `(μ₁ − μ₀)/E⁰` is the finite level splitting; the total weight is left as it stands (no normalised device); flow time; no pointer reads the clock; `μ₀ > 0` |
 | UD-239 | **Events at flow times, and what the graph permits between them (Task 4, first brick; the author's decision of 2026-11-19: the events keep their real flow times, with no map to periods).** An event is a set of sites and a real flow time. Being `d` hops apart is symmetric and growth composes. For a carrier moving by `exp (u S)` with `S` hopping along a graph: a kick on the region of `e₁` at its time changes an observable on the region of `e₂`, read at its later time, by at most `2 (2 ‖S‖ (t₂ − t₁))^d / d! · ‖D‖` when the regions are `d` hops apart; at equal times and `d ≥ 1` the response is zero | `FlowEvent`, `HopSeparated`, `HopSeparated.mono`, `disjoint_growG_comm`, `growIterG_growG`, `growIterG_add`, `hopSeparated_comm`, `FlowEvent.PermittedWithin`, `FlowEvent.PermittedWithin.mono`, `FlowEvent.kick_response_le`, `FlowEvent.kick_response_eq_of_time_eq` (`RecordLayer/FlowEventCone.lean`) | an upper bound on a response; it demonstrates no influence; no sharp cone (a factorial tail in the hop distance; no speed is chosen); the graph is a hypothesis and is not derived from the order of events; the order of the two flow times is the order of the flow parameter, not a record (UA-7); hop distance is not a metric; the radar's five readings are not yet stated as such events; the kick is on the carrier |
+| UD-240 | **The free orbit of a product of two carriers, and its coincidence weight at every time (UO-26, part of item (1)).** `e^{−i s (A ⊗ 1 + 1 ⊗ C)} (ψ ⊗ φ) = (e^{−i s A} ψ) ⊗ (e^{−i s C} φ)`; so at every time `s`, for sets of sites `A`, `B` with no pair in the gate's relation, the coincidence projector's weight on the composite's free orbit of `ψ ⊗ φ` is at most (the weight of `ψ_s` off `A`) `‖φ_s‖²` + `‖ψ_s‖²` (the weight of `φ_s` off `B`) | `exp_compositeH_mulVec_prod`, `sum_norm_sq_coincProj_freeOrbit_prod_le` (`RecordLayer/CoincidenceOrbit.lean`) | a vector in the sum of squares, not the operator norm of UD-226's integrand (the passage for a rank-one `X` is not made); the sets are those of the statement, the packets' moving boxes are not inserted; an upper bound only |
+| UD-241 | **The second pointer displays only after the first has displayed (UA-20; UO-24, UO-25 (5), third brick).** On the controlled arena of UD-233, on a fibre `g(ψ₂) = 0`: if the window `b` vanishes at every position of the first pointer outside a set `disp₁`, and the second pointer starts outside a set `disp₂` and is in `disp₂` at the flow time `T ≥ 0`, then the first pointer is in `disp₁` at some flow time of `[0, T]`. Stated also with both sets the displaying arc of the tick records | `controlled_display_after_first`, `controlled_displayArc_after_first` (`RecordLayer/ControlledOrder.lean`) | on the fibres `g(ψ₂) = 0` (a null set); positions of pointers in one run, not `RecordedFact`s: no tick readout or record semantics on the controlled arena; a window vanishing off the arc is a hypothesis, none is exhibited; only the order, not that the second pointer does display; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3171,6 +3173,22 @@ not give. The radar's readings as events with their gate regions. A demonstrated
 continuous flow there is no sharp cone, and none is defined from a chosen speed. No new
 assumption: the graph and the hopping are hypotheses of the theorem.
 
+Exact scope of UD-240 (BACKLOG #437, part; obligation UO-26, the integrand of item (1)). What
+it gives. The step UD-236 named as missing: the composite's free orbit of a product is the
+product of the two orbits, so the bound of UD-236 holds at every time with the two
+carriers' own evolved states. What it does not give. The passage to the operator norm under
+the integral of UD-226. The bound in terms of the packets' parameters (the moving boxes of
+UD-221 and UD-222 at each time). A launch when the boxes meet. No new assumption.
+
+Exact scope of UD-241 (BACKLOG #440, third brick; obligations UO-24 and UO-25 (5), Task 5 of
+the plan of 2026-11-18; under UA-20). What it gives. The first half of the plan's
+*controlled_second_ticks_after_first*: in one run, a display of the second pointer is
+preceded by a display of the first. What it does not give. The second half (the second
+pointer does tick once the first has stayed displayed long enough). The two displays as two
+`RecordedFact`s of a record semantics on the controlled arena, and their history. A window
+`b` supported in the displaying arc. Anything off the fibres `g(ψ₂) = 0`. No new assumption
+beyond UA-20.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4514,6 +4532,10 @@ time. It is not a statement about every dynamics on `Σ`.
   The flow of a step whose observable is a window of the first pointer's moving angle; on
   the fibres `g(ψ₂) = 0` the second pointer does not move while the window is shut. No
   record is read yet.
+  ▸ **The order of two displays, 2026-11-19 (BACKLOG #440, third brick) → UD-241. (5) not
+  met.** With the window vanishing off the first pointer's displaying set, a display of the
+  second pointer is preceded by a display of the first, in one run. Positions, not recorded
+  facts; that the second does display is open.
   ▸ **Admitted, 2026-11-19 → UA-20.** A step whose observable carries a smooth profile of
   an earlier pointer's moving angle. Nothing of it is in Lean; the step theorem of ~~#368~~
   is its engine.
@@ -4621,6 +4643,9 @@ time. It is not a statement about every dynamics on `Σ`.
   ▸ **Sixth brick, 2026-11-19 (BACKLOG #437, part) → UD-236.** The coincidence weight of a
   product of two carriers is at most the weights each has outside a box, when the boxes
   hold no pair in the relation. Not yet under the integral of UD-226.
+  ▸ **Seventh brick, 2026-11-19 (BACKLOG #437, part) → UD-240.** The composite's free orbit
+  of a product is the product of the orbits, so that bound holds at every time. The passage
+  to the operator norm and the moving boxes are open.
 
 ---
 

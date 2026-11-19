@@ -23238,4 +23238,24 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.FlowEvent.kick_response_eq_of_time_eq
 
+/-! #437, part (UO-26): the coincidence weight along the free orbit of a product (`RecordLayer/CoincidenceOrbit.lean`). -/
+
+/-- info: 'CSD.RecordLayer.exp_compositeH_mulVec_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_compositeH_mulVec_prod
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_coincProj_freeOrbit_prod_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_coincProj_freeOrbit_prod_le
+
+/-! #440, third brick (Task 5): the order of two displays on the controlled arena (`RecordLayer/ControlledOrder.lean`). -/
+
+/-- info: 'CSD.RecordLayer.controlled_display_after_first' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.controlled_display_after_first
+
+/-- info: 'CSD.RecordLayer.controlled_displayArc_after_first' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.controlled_displayArc_after_first
+
 end CSD.Tests.AxiomAudit

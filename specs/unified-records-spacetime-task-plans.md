@@ -152,7 +152,9 @@ Three routes:
 
 Route C's first theorem is done (2026-11-19, `LF4/ControlledStep.lean`, UD-233):
 `hamiltonianFlow_controlledEnergy_of_lift_eq_zero`, `controlled_pointer_fixed_of_window_eq_zero`,
-`map_hamiltonianFlow_controlledEnergy`. Next: the two-stage run as records. The first
+`map_hamiltonianFlow_controlledEnergy`. The order of the two displays is done (2026-11-19,
+`RecordLayer/ControlledOrder.lean`, UD-241): `controlled_display_after_first`, the first
+half of the theorem named below. Next: the two-stage run as records. The first
 pointer's tick record on its own arena is in hand (UD-58 onward); wanted is
 *controlled_second_ticks_after_first*: with the window `b` supported in the displaying arc,
 the second pointer has no tick before the first pointer's first display, and has one after
@@ -336,9 +338,10 @@ before the meeting).
    about times. (M)
    Done in part 2026-11-19 (`RecordLayer/CoincidenceBoxes.lean`, UD-236):
    `sum_norm_sq_coincProj_mulVec_prod_le`, the bound at one time for one product vector, with
-   the tails as `regionWeightD` of the complements on tori. Left: the composite's free orbit
-   of a product is the product of orbits; the moving boxes; the passage from the vector's
-   sum of squares to the operator norm under the integral of UD-226.
+   the tails as `regionWeightD` of the complements on tori. The composite's free orbit of
+   a product is the product of orbits — done 2026-11-19 (`RecordLayer/CoincidenceOrbit.lean`,
+   UD-240): `sum_norm_sq_coincProj_freeOrbit_prod_le`. Left: the moving boxes; the passage
+   from the vector's sum of squares to the operator norm under the integral of UD-226.
 2. *launch_first_order*: the first-order term for the contact term and a product of
    packets, evaluated: its norm squared is `g²` times the square of the time the boxes
    overlap times the overlap weight, to leading order, with the remainder of UD-216. This
