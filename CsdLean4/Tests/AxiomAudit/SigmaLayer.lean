@@ -23492,4 +23492,38 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.torusDetector_box_not_displayed_all_fibres
 
+/-! #297, ninth brick (Task 9): the graph-distance bound for a carrier that is only mostly on its set of sites (`RecordLayer/GraphConeTail.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_mul_le_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_mul_le_sqrt
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_flow_graph_le_tail' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_flow_graph_le_tail
+
+/-- info: 'CSD.RecordLayer.abs_idxPointerShift_le_graph_tail' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_idxPointerShift_le_graph_tail
+
+/-- info: 'CSD.RecordLayer.graphDetector_not_displayed_tail' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.graphDetector_not_displayed_tail
+
+/-- info: 'CSD.RecordLayer.siteSetProj_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSetProj_mul_self
+
+/-- info: 'CSD.RecordLayer.arenaObs_one_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_one_sub
+
+/-- info: 'CSD.RecordLayer.torusDetector_not_displayed_tail' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusDetector_not_displayed_tail
+
+/-- info: 'CSD.RecordLayer.torusDetector_not_displayed_flatPacket_tail' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusDetector_not_displayed_flatPacket_tail
+
 end CSD.Tests.AxiomAudit

@@ -286,8 +286,10 @@ profile and the Clifford family are exhibited (2026-11-20,
 detector given in advance is done (2026-11-20, `RecordLayer/TorusArrivalBox.lean`, UD-245):
 `torusDetector_arrival_box`, the fixed box of arcs `arrivalBox`. On every fibre the detector
 is not displayed before `4M/9` (2026-11-20, `RecordLayer/TorusRateBound.lean`, UD-246), by
-the pointer's rate. Left: the composition with the bound against the graph distance, which
-needs a carrier supported on a set of sites and a faster pointer than this instance has.
+the pointer's rate. The bound against the graph distance holds for a packet with a term for
+its tail (2026-11-20, `RecordLayer/GraphConeTail.lean`, UD-247):
+`torusDetector_not_displayed_flatPacket_tail`. Left: an instance with a pointer fast against
+the transit time, in which that bound and the display hold in one statement.
 
 1. **The cone for any nearest-neighbour graph.** *SiteSuppG*, *growG*, *growIterG* for a site
    map into any finite type with an adjacency relation, and *norm_commutator_graph_le* with
