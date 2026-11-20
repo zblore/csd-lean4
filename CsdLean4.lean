@@ -874,6 +874,7 @@ public import CsdLean4.RecordLayer.PointerCountCap
 public import CsdLean4.RecordLayer.ControlledOrder
 public import CsdLean4.RecordLayer.RadarHistoryShare
 public import CsdLean4.RecordLayer.TorusDetector
+public import CsdLean4.RecordLayer.TorusArrival
 public import CsdLean4.RecordLayer.UnifiedRadarMacrostate
 public import CsdLean4.RecordLayer.UnifiedTransponder
 public import CsdLean4.RecordLayer.CoincidenceBoxes

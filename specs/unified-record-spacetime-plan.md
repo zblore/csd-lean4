@@ -1454,6 +1454,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-239 | **Events at flow times, and what the graph permits between them (Task 4, first brick; the author's decision of 2026-11-19: the events keep their real flow times, with no map to periods).** An event is a set of sites and a real flow time. Being `d` hops apart is symmetric and growth composes. For a carrier moving by `exp (u S)` with `S` hopping along a graph: a kick on the region of `e₁` at its time changes an observable on the region of `e₂`, read at its later time, by at most `2 (2 ‖S‖ (t₂ − t₁))^d / d! · ‖D‖` when the regions are `d` hops apart; at equal times and `d ≥ 1` the response is zero | `FlowEvent`, `HopSeparated`, `HopSeparated.mono`, `disjoint_growG_comm`, `growIterG_growG`, `growIterG_add`, `hopSeparated_comm`, `FlowEvent.PermittedWithin`, `FlowEvent.PermittedWithin.mono`, `FlowEvent.kick_response_le`, `FlowEvent.kick_response_eq_of_time_eq` (`RecordLayer/FlowEventCone.lean`) | an upper bound on a response; it demonstrates no influence; no sharp cone (a factorial tail in the hop distance; no speed is chosen); the graph is a hypothesis and is not derived from the order of events; the order of the two flow times is the order of the flow parameter, not a record (UA-7); hop distance is not a metric; the radar's five readings are not yet stated as such events; the kick is on the carrier |
 | UD-240 | **The free orbit of a product of two carriers, and its coincidence weight at every time (UO-26, part of item (1)).** `e^{−i s (A ⊗ 1 + 1 ⊗ C)} (ψ ⊗ φ) = (e^{−i s A} ψ) ⊗ (e^{−i s C} φ)`; so at every time `s`, for sets of sites `A`, `B` with no pair in the gate's relation, the coincidence projector's weight on the composite's free orbit of `ψ ⊗ φ` is at most (the weight of `ψ_s` off `A`) `‖φ_s‖²` + `‖ψ_s‖²` (the weight of `φ_s` off `B`) | `exp_compositeH_mulVec_prod`, `sum_norm_sq_coincProj_freeOrbit_prod_le` (`RecordLayer/CoincidenceOrbit.lean`) | a vector in the sum of squares, not the operator norm of UD-226's integrand (the passage for a rank-one `X` is not made); the sets are those of the statement, the packets' moving boxes are not inserted; an upper bound only |
 | UD-241 | **The second pointer displays only after the first has displayed (UA-20; UO-24, UO-25 (5), third brick).** On the controlled arena of UD-233, on a fibre `g(ψ₂) = 0`: if the window `b` vanishes at every position of the first pointer outside a set `disp₁`, and the second pointer starts outside a set `disp₂` and is in `disp₂` at the flow time `T ≥ 0`, then the first pointer is in `disp₁` at some flow time of `[0, T]`. Stated also with both sets the displaying arc of the tick records | `controlled_display_after_first`, `controlled_displayArc_after_first` (`RecordLayer/ControlledOrder.lean`) | on the fibres `g(ψ₂) = 0` (a null set); positions of pointers in one run, not `RecordedFact`s: no tick readout or record semantics on the controlled arena; a window vanishing off the arc is a hypothesis, none is exhibited; only the order, not that the second pointer does display; flow times |
+| UD-242 | **Arrival and display in one run on the torus, and the detector's two counts as recorded facts (Task 9, fourth brick).** The one-pointer arena with any smooth energy is a `ConstraintDynamics` with the measure `μ_FS ⊗ vol`, and has a tick readout (rest in `readyArc 2`, display in `displayArc`). For a detector on a set of sites `X` and the flat packet of UD-222, on a fibre where the profile vanishes and `κ = −2 f'(θ₂) ≥ 0`, from a ready pointer: if the packet's moving box misses `X` at every flow time up to `t₁` and lies in `X` from `t₂` to `t` (`0 ≤ t₁ ≤ t₂ ≤ t`), and with `ε = flatTailD t₁`, `q = 1 − flatTailD t` one has `κ ε t₁ ≤ 1/6`, `1/3 ≤ κ q (t − t₂)`, `κ (ε t₁ + (t − t₁)) ≤ 2/3`, then the pointer is not displayed at any flow time up to `t₁`, is displayed at `t`, and the start of the run is in the compatible region of the history of the two facts "count `0` at `t₁`" and "count `1` at `t`" | `arenaDynamics`, `arenaReadout`, `graphDetector_isTickCount`, `graphDetector_arrival_display`, `graphDetector_arrival_records`, `flatTailD`, `torusDetector_arrival_flatPacket` (`RecordLayer/TorusArrival.lean`) | on the fibres where the profile vanishes (a null set); that the box misses `X` up to `t₁` and lies in it from `t₂`, and the three inequalities, are hypotheses: no instance with numbers, none shown to be met; nothing about the display between `t₁` and `t₂`, so no time of arrival is recorded; one pointer, counts from the flow time `0`; not composed with the bound against the graph distance (UD-231); flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3189,6 +3190,16 @@ pointer does tick once the first has stayed displayed long enough). The two disp
 `b` supported in the displaying arc. Anything off the fibres `g(ψ₂) = 0`. No new assumption
 beyond UA-20.
 
+Exact scope of UD-242 (BACKLOG #297, fourth brick; Task 9 of the plan of 2026-11-18, item 3 of
+the plan's §7). What it gives. The two things UD-234 named as open: arrival and display in
+one run, and a tick readout for the arena, so that the detector's readings are recorded
+facts with a history. The acceptance line of the plan's §7 ("a carrier and detector whose
+record is a `RecordedFact`") is met in this conditional form, for any dimension of the
+torus. What it does not give. An instance: no packet, detector and times are exhibited for
+which the box hypotheses and the three inequalities hold together. A time of arrival: the
+record is "count `0` at `t₁`, count `1` at `t`". Anything off the fibres where the profile
+vanishes. The timing against the graph distance in the same statement. No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4485,6 +4496,12 @@ time. It is not a statement about every dynamics on `Σ`.
   weight, so the flat packet of UD-222 is displayed by a detector whose sites contain its
   moving box, on the fibres where the profile vanishes. Arrival and display in one run, and
   a tick record, are open.
+  ▸ **Arrival, display and the two counts as recorded facts, 2026-11-20 (BACKLOG #297,
+  fourth brick) → UD-242. Not met.** With the moving box outside the detector's sites up to
+  `t₁` and inside them from `t₂`, the pointer is not displayed up to `t₁` and is displayed at
+  `t`; the one-pointer arena has a tick readout, and the counts `0` at `t₁` and `1` at `t`
+  are a record history of the start. The box hypotheses and the inequalities are not shown
+  to be met by any packet.
 
 ### M8 — which assumptions force the geometry (gate C)
 

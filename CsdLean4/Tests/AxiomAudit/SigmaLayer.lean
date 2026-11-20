@@ -23258,4 +23258,74 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.controlled_displayArc_after_first
 
+/-! #297, fourth brick (Task 9): arrival and display in one run, and the two counts as recorded facts (`RecordLayer/TorusArrival.lean`). -/
+
+/-- info: 'CSD.RecordLayer.integral_le_of_arrival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.integral_le_of_arrival
+
+/-- info: 'CSD.RecordLayer.le_integral_of_dwell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_integral_of_dwell
+
+/-- info: 'CSD.RecordLayer.continuous_arenaObs_idxCarrierU' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_arenaObs_idxCarrierU
+
+/-- info: 'CSD.RecordLayer.idxPointerShift_le_of_arrival' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxPointerShift_le_of_arrival
+
+/-- info: 'CSD.RecordLayer.le_idxPointerShift_of_dwell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.le_idxPointerShift_of_dwell
+
+/-- info: 'CSD.RecordLayer.continuous_idxPointerShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.continuous_idxPointerShift
+
+/-- info: 'CSD.RecordLayer.monotoneOn_idxPointerShift' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.monotoneOn_idxPointerShift
+
+/-- info: 'CSD.RecordLayer.arenaDynamics' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaDynamics
+
+/-- info: 'CSD.RecordLayer.arenaReadout' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaReadout
+
+/-- info: 'CSD.RecordLayer.card_tickIndices_eq_zero_of_ready' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.card_tickIndices_eq_zero_of_ready
+
+/-- info: 'CSD.RecordLayer.card_tickIndices_eq_one_of_ready' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.card_tickIndices_eq_one_of_ready
+
+/-- info: 'CSD.RecordLayer.graphDetector_isTickCount' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.graphDetector_isTickCount
+
+/-- info: 'CSD.RecordLayer.graphDetector_arrival_display' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.graphDetector_arrival_display
+
+/-- info: 'CSD.RecordLayer.graphDetector_arrival_records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.graphDetector_arrival_records
+
+/-- info: 'CSD.RecordLayer.flatTailD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatTailD
+
+/-- info: 'CSD.RecordLayer.flatTailD_mono' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatTailD_mono
+
+/-- info: 'CSD.RecordLayer.torusDetector_arrival_flatPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusDetector_arrival_flatPacket
+
 end CSD.Tests.AxiomAudit

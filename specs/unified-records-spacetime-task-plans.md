@@ -276,8 +276,11 @@ Items 3 and 4 are done in part (2026-11-19, `RecordLayer/GraphDetector.lean`, UD
 reaches the carrier), `graphDetector_displayed` (display from a hypothesis on the occupancy).
 The packet's box weight is joined to the arena's observable (2026-11-19,
 `RecordLayer/TorusDetector.lean`, UD-234): `arenaObs_siteSetProj_packetD`,
-`torusDetector_displayed_flatPacket`. Left: arrival and display in one run; an instance with
-numbers; a `TickReadout` for the arena.
+`torusDetector_displayed_flatPacket`. Arrival and display in one run, and a `TickReadout` for
+the arena, are done in conditional form (2026-11-20, `RecordLayer/TorusArrival.lean`, UD-242):
+`torusDetector_arrival_flatPacket`, `arenaReadout`, `graphDetector_arrival_records`. Left: an
+instance with numbers (a packet, a detector and times that meet the box hypotheses and the
+three inequalities); the composition with the bound against the graph distance.
 
 1. **The cone for any nearest-neighbour graph.** *SiteSuppG*, *growG*, *growIterG* for a site
    map into any finite type with an adjacency relation, and *norm_commutator_graph_le* with
