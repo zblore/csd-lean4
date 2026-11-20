@@ -23408,4 +23408,66 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.torusDetector_arrival_exhibited
 
+/-! #297, seventh brick (Task 9): arrival and display on the torus for a detector given in advance (`RecordLayer/TorusArrivalBox.lean`). -/
+
+/-- info: 'CSD.RecordLayer.lt_mul_add_mul_of_lt_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.lt_mul_add_mul_of_lt_of_le
+
+/-- info: 'CSD.RecordLayer.re_star_mul_gt_of_re_gt_of_re_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.re_star_mul_gt_of_re_gt_of_re_ge
+
+/-- info: 'CSD.RecordLayer.re_star_mul_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.re_star_mul_comm
+
+/-- info: 'CSD.RecordLayer.re_movedDirD_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.re_movedDirD_one
+
+/-- info: 'CSD.RecordLayer.groupVelD_instance_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.groupVelD_instance_one
+
+/-- info: 'CSD.RecordLayer.movedDirD_instance_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.movedDirD_instance_one
+
+/-- info: 'CSD.RecordLayer.arrivalAngle_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalAngle_eq
+
+/-- info: 'CSD.RecordLayer.cos_arrivalAngle_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_arrivalAngle_ge
+
+/-- info: 'CSD.RecordLayer.cos_arrivalAngle_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_arrivalAngle_le
+
+/-- info: 'CSD.RecordLayer.arrivalBox' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalBox
+
+/-- info: 'CSD.RecordLayer.arrivalBox_disjoint_movedBoxD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalBox_disjoint_movedBoxD
+
+/-- info: 'CSD.RecordLayer.movedBoxD_subset_arrivalBox' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.movedBoxD_subset_arrivalBox
+
+/-- info: 'CSD.RecordLayer.abs_angleZD_arrival_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_angleZD_arrival_le
+
+/-- info: 'CSD.RecordLayer.arrivalBoxRate_scaledTrainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalBoxRate_scaledTrainF
+
+/-- info: 'CSD.RecordLayer.torusDetector_arrival_box' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusDetector_arrival_box
+
 end CSD.Tests.AxiomAudit

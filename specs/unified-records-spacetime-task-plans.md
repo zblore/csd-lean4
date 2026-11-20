@@ -282,9 +282,10 @@ the arena, are done in conditional form (2026-11-20, `RecordLayer/TorusArrival.l
 instance with numbers is done (2026-11-20, `RecordLayer/TorusArrivalInstance.lean`, UD-243):
 `torusDetector_arrival_instance`, two dimensions, `L = 8M`, `M ≥ 4·10⁶`. The pointer's
 profile and the Clifford family are exhibited (2026-11-20,
-`RecordLayer/TorusArrivalExhibit.lean`, UD-244): `torusDetector_arrival_exhibited`. Left: a
-detector given as a box of sites; the composition with the bound against the graph
-distance.
+`RecordLayer/TorusArrivalExhibit.lean`, UD-244): `torusDetector_arrival_exhibited`. A
+detector given in advance is done (2026-11-20, `RecordLayer/TorusArrivalBox.lean`, UD-245):
+`torusDetector_arrival_box`, the fixed box of arcs `arrivalBox`. Left: the composition with
+the bound against the graph distance.
 
 1. **The cone for any nearest-neighbour graph.** *SiteSuppG*, *growG*, *growIterG* for a site
    map into any finite type with an adjacency relation, and *norm_commutator_graph_le* with
