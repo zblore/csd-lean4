@@ -23470,4 +23470,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.torusDetector_arrival_box
 
+/-! #297, eighth brick (Task 9): no display before the pointer's rate allows it, on every fibre (`RecordLayer/TorusRateBound.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_idxPointerShift_le_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_idxPointerShift_le_rate
+
+/-- info: 'CSD.RecordLayer.graphDetector_not_displayed_of_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.graphDetector_not_displayed_of_rate
+
+/-- info: 'CSD.RecordLayer.torusDetector_not_displayed_of_rate' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusDetector_not_displayed_of_rate
+
+/-- info: 'CSD.RecordLayer.abs_scaledTrainF_deriv_lift_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_scaledTrainF_deriv_lift_le
+
+/-- info: 'CSD.RecordLayer.torusDetector_box_not_displayed_all_fibres' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusDetector_box_not_displayed_all_fibres
+
 end CSD.Tests.AxiomAudit

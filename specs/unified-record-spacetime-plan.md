@@ -1458,6 +1458,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-243 | **Arrival and display on the torus, with numbers (Task 9, fifth brick).** The moving box of a packet at two flow times is disjoint from itself once the drift angle along one axis `a` has cosine at most `2γ_a² − 1` (`γ_a ≥ 0`); so for the detector on the sites the box sweeps during `[t₂, t]` the two box hypotheses of UD-242 follow from that one condition. Instance: two dimensions, `L = 8M` sites per axis with `M ≥ 4·10⁶`, `J = 2`, `μ = 1`, the flat packet of `400` momenta per axis starting at `(M, 0)` about `k₀ = (π/4, 0)` (group velocity `8/3` along the first axis), sides `γ = 3/4`, the detector on the sites swept during `[9M/8, 9M/4]`, the pointer's rate `−2 f'(θ₂) = 8π/(75M)` on a fibre with `f(θ₂) = 0`. From a ready pointer: not displayed at any flow time up to `3M/8`, displayed at `9M/4`, and the counts `0` at `3M/8` and `1` at `9M/4` are a record history of the start. The tail `flatTailD` is at most `1/10` up to `9M/4` | `movedBoxD_disjoint`, `sweptBoxD`, `torusDetector_arrival_sweptBox`, `flatPacketD_ne_zero`, `groupVelD_instance`, `flatTailD_instance_le`, `torusDetector_arrival_instance` (`RecordLayer/TorusArrivalInstance.lean`) | on the fibres where the profile vanishes (a null set); the profile and fibre with the two values, the Clifford family and the spinor `e₀` are hypotheses, none exhibited; the detector is the swept set of sites, not a box given in advance, and its size is not computed; nothing about the display between `3M/8` and `9M/8`; not composed with UD-231; flow times |
 | UD-244 | **Arrival and display on the torus, the profile and the Clifford family exhibited (Task 9, sixth brick).** The statement of UD-243 for the Clifford family `σ_x`, `σ_y` with `σ_z`, the spinor `(1, 0)`, the profile `(4π/(75M)) · trainF` (so `f(0) = 0` and `−2 f'(0) = 8π/(75M)`) and the pointer's start `(1/6, 0)`, a ready pointer. The flat packet of the instance is not zero. The parameters left are the ring size `L = 8M` with `M ≥ 4·10⁶`, the labelling `e` of the basis and the base point `p₀` of the measure | `pauli_two_mulVec_spinUp`, `arrivalFibre`, `arrivalFibre_mem_readyArc`, `arrivalRate_scaledTrainF`, `arrivalPacket_ne_zero`, `torusDetector_arrival_exhibited` (`RecordLayer/TorusArrivalExhibit.lean`) | one fibre, `θ₂ = 0`, where the profile vanishes (a null set); the labelling `e` is a parameter, none is chosen; the detector is the swept set of sites, not a box given in advance, and its size is not computed; nothing about the display between `3M/8` and `9M/8`; not composed with UD-231; flow times |
 | UD-245 | **Arrival and display on the torus for a detector given in advance (Task 9, seventh brick).** The detector `arrivalBox` is a fixed box of arcs: the sites whose first coordinate is on the arc `Re z < 1/4` and whose second is on the arc `Re z > 3/4`. For the packet of UD-243/UD-244 (`L = 8M`, `M ≥ 4·10⁶`, `J = 2`, `μ = 1`, `σ_x`, `σ_y` with `σ_z`, spinor `(1, 0)`, sides `3/4`) the moving box misses the detector at every flow time up to `M/4` and lies in it from `M` to `2M`. With the profile `(3/(16M)) · trainF` (rate `3/(8M)` on the fibre `θ₂ = 0`) and the start `(1/6, 0)`: not displayed at any flow time up to `M/4`, displayed at `2M`, and the counts `0` at `M/4` and `1` at `2M` are a record history of the start | `re_star_mul_gt_of_re_gt_of_re_ge`, `arrivalBox`, `arrivalBox_disjoint_movedBoxD`, `movedBoxD_subset_arrivalBox`, `torusDetector_arrival_box` (`RecordLayer/TorusArrivalBox.lean`) | one fibre, `θ₂ = 0` (a null set); the detector is wide (its first side is the arc `Re z < 1/4`) and its number of sites is not computed; the rate is fitted to the three inequalities; the labelling `e` is a parameter; nothing about the display between `M/4` and `M`; not composed with UD-231; flow times |
+| UD-246 | **No display before the pointer's rate allows it, on every fibre (Task 9, eighth brick).** On the arena of a carrier and one pointer coupled to `B₀` (UA-5's form): on every fibre, for every carrier state and `t ≥ 0`, the pointer's displacement is at most `2 |f'(θ₂)| ‖B₀‖ t`, and a ready pointer is not displayed while that is below `1/6`. For the lattice Dirac field of any dimension and the projector on any set of sites: while `2 |f'(θ₂)| t < 1/6`. For the detector `arrivalBox` and the profile `(3/(16M)) · trainF` of UD-245: from any ready pointer, on any fibre, for any carrier state, not displayed at any flow time before `4M/9` | `abs_idxPointerShift_le_rate`, `graphDetector_not_displayed_of_rate`, `torusDetector_not_displayed_of_rate`, `abs_scaledTrainF_deriv_lift_le`, `torusDetector_box_not_displayed_all_fibres` (`RecordLayer/TorusRateBound.lean`) | not the bound against the graph distance: it uses only that an occupancy is at most `1` and does not see where the carrier is; the composition of UD-245 with UD-231 is not made (UD-231 asks for a carrier supported on a set of sites the growth misses, which the flat packet is not shown to be; that the hypothesis fails is not proved); the display half stays on the fibre `θ₂ = 0`; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3229,6 +3230,17 @@ narrow detector: the first side is the arc `Re z < 1/4`. A time of arrival. Any 
 than `θ₂ = 0`. The timing against the graph distance in the same statement. No new
 assumption.
 
+Exact scope of UD-246 (BACKLOG #297, eighth brick; Task 9 of the plan of 2026-11-18, item 3 of
+the plan's §7). What it gives. The "not displayed" half of UD-245 off the null set: on every
+fibre and for every carrier state, up to `4M/9` (UD-245 has `M/4`, on one fibre, for the
+packet). What it does not give. The composition of UD-245 with the bound against the graph
+distance (UD-231), which was the row's last listed remainder. Two reasons. UD-231 needs a
+carrier supported on a set of sites; the flat packet is a finite sum of plane waves and is
+not shown to be. And for this instance UD-231 could not give a later time than `4M/9`: it
+improves on the rate bound only while `2 ‖H‖ t < d`, the free field's largest energy is
+`√33`, and no site is more than about `4.8M` steps from the detector. The second reason is
+arithmetic done by hand, not a Lean statement. No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4544,6 +4556,10 @@ time. It is not a statement about every dynamics on `Σ`.
   met.** The detector is the fixed box of arcs `arrivalBox` (`Re z₀ < 1/4`, `Re z₁ > 3/4`);
   the moving box misses it up to `M/4` and lies in it from `M` to `2M`; rate `3/(8M)`:
   count `0` at `M/4`, count `1` at `2M`. One fibre; a wide detector, size not computed.
+  ▸ **No display before `4M/9` on every fibre, 2026-11-20 (BACKLOG #297, eighth brick) →
+  UD-246. Not met.** For the detector and profile of UD-245, from any ready pointer, on any
+  fibre and for any carrier state. This is the rate bound, not the bound against the graph
+  distance; the composition with UD-231 is not made.
 
 ### M8 — which assumptions force the geometry (gate C)
 
