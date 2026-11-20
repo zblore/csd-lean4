@@ -1455,6 +1455,7 @@ fibres where the profiles vanish (`RecordLayer/UnifiedRadarRun.lean`, BACKLOG ~~
 | UD-240 | **The free orbit of a product of two carriers, and its coincidence weight at every time (UO-26, part of item (1)).** `e^{−i s (A ⊗ 1 + 1 ⊗ C)} (ψ ⊗ φ) = (e^{−i s A} ψ) ⊗ (e^{−i s C} φ)`; so at every time `s`, for sets of sites `A`, `B` with no pair in the gate's relation, the coincidence projector's weight on the composite's free orbit of `ψ ⊗ φ` is at most (the weight of `ψ_s` off `A`) `‖φ_s‖²` + `‖ψ_s‖²` (the weight of `φ_s` off `B`) | `exp_compositeH_mulVec_prod`, `sum_norm_sq_coincProj_freeOrbit_prod_le` (`RecordLayer/CoincidenceOrbit.lean`) | a vector in the sum of squares, not the operator norm of UD-226's integrand (the passage for a rank-one `X` is not made); the sets are those of the statement, the packets' moving boxes are not inserted; an upper bound only |
 | UD-241 | **The second pointer displays only after the first has displayed (UA-20; UO-24, UO-25 (5), third brick).** On the controlled arena of UD-233, on a fibre `g(ψ₂) = 0`: if the window `b` vanishes at every position of the first pointer outside a set `disp₁`, and the second pointer starts outside a set `disp₂` and is in `disp₂` at the flow time `T ≥ 0`, then the first pointer is in `disp₁` at some flow time of `[0, T]`. Stated also with both sets the displaying arc of the tick records | `controlled_display_after_first`, `controlled_displayArc_after_first` (`RecordLayer/ControlledOrder.lean`) | on the fibres `g(ψ₂) = 0` (a null set); positions of pointers in one run, not `RecordedFact`s: no tick readout or record semantics on the controlled arena; a window vanishing off the arc is a hypothesis, none is exhibited; only the order, not that the second pointer does display; flow times |
 | UD-242 | **Arrival and display in one run on the torus, and the detector's two counts as recorded facts (Task 9, fourth brick).** The one-pointer arena with any smooth energy is a `ConstraintDynamics` with the measure `μ_FS ⊗ vol`, and has a tick readout (rest in `readyArc 2`, display in `displayArc`). For a detector on a set of sites `X` and the flat packet of UD-222, on a fibre where the profile vanishes and `κ = −2 f'(θ₂) ≥ 0`, from a ready pointer: if the packet's moving box misses `X` at every flow time up to `t₁` and lies in `X` from `t₂` to `t` (`0 ≤ t₁ ≤ t₂ ≤ t`), and with `ε = flatTailD t₁`, `q = 1 − flatTailD t` one has `κ ε t₁ ≤ 1/6`, `1/3 ≤ κ q (t − t₂)`, `κ (ε t₁ + (t − t₁)) ≤ 2/3`, then the pointer is not displayed at any flow time up to `t₁`, is displayed at `t`, and the start of the run is in the compatible region of the history of the two facts "count `0` at `t₁`" and "count `1` at `t`" | `arenaDynamics`, `arenaReadout`, `graphDetector_isTickCount`, `graphDetector_arrival_display`, `graphDetector_arrival_records`, `flatTailD`, `torusDetector_arrival_flatPacket` (`RecordLayer/TorusArrival.lean`) | on the fibres where the profile vanishes (a null set); that the box misses `X` up to `t₁` and lies in it from `t₂`, and the three inequalities, are hypotheses: no instance with numbers, none shown to be met; nothing about the display between `t₁` and `t₂`, so no time of arrival is recorded; one pointer, counts from the flow time `0`; not composed with the bound against the graph distance (UD-231); flow times |
+| UD-243 | **Arrival and display on the torus, with numbers (Task 9, fifth brick).** The moving box of a packet at two flow times is disjoint from itself once the drift angle along one axis `a` has cosine at most `2γ_a² − 1` (`γ_a ≥ 0`); so for the detector on the sites the box sweeps during `[t₂, t]` the two box hypotheses of UD-242 follow from that one condition. Instance: two dimensions, `L = 8M` sites per axis with `M ≥ 4·10⁶`, `J = 2`, `μ = 1`, the flat packet of `400` momenta per axis starting at `(M, 0)` about `k₀ = (π/4, 0)` (group velocity `8/3` along the first axis), sides `γ = 3/4`, the detector on the sites swept during `[9M/8, 9M/4]`, the pointer's rate `−2 f'(θ₂) = 8π/(75M)` on a fibre with `f(θ₂) = 0`. From a ready pointer: not displayed at any flow time up to `3M/8`, displayed at `9M/4`, and the counts `0` at `3M/8` and `1` at `9M/4` are a record history of the start. The tail `flatTailD` is at most `1/10` up to `9M/4` | `movedBoxD_disjoint`, `sweptBoxD`, `torusDetector_arrival_sweptBox`, `flatPacketD_ne_zero`, `groupVelD_instance`, `flatTailD_instance_le`, `torusDetector_arrival_instance` (`RecordLayer/TorusArrivalInstance.lean`) | on the fibres where the profile vanishes (a null set); the profile and fibre with the two values, the Clifford family and the spinor `e₀` are hypotheses, none exhibited; the detector is the swept set of sites, not a box given in advance, and its size is not computed; nothing about the display between `3M/8` and `9M/8`; not composed with UD-231; flow times |
 
 Exact scope of UD-89 to UD-91. What they give. The records of UD-85 and UD-88 are written by fast
 detectors on a carrier that is at the detector from the start. Here the carrier starts away from
@@ -3200,6 +3201,15 @@ which the box hypotheses and the three inequalities hold together. A time of arr
 record is "count `0` at `t₁`, count `1` at `t`". Anything off the fibres where the profile
 vanishes. The timing against the graph distance in the same statement. No new assumption.
 
+Exact scope of UD-243 (BACKLOG #297, fifth brick; Task 9 of the plan of 2026-11-18, item 3 of
+the plan's §7). What it gives. The instance UD-242 named as missing: a packet, a detector
+and three flow times for which the box hypotheses and the three inequalities hold, in two
+dimensions, for every ring size `L = 8M` with `M ≥ 4·10⁶`. What it does not give. A pointer
+profile `f` and fibre with `f(θ₂) = 0` and `−2 f'(θ₂) = 8π/(75M)`; a Clifford family in two
+dimensions with a spinor fixed by `β`: both are hypotheses of the statement. A detector
+given as a box of sites in advance. A time of arrival. Anything off the fibres where the
+profile vanishes. No new assumption.
+
 
 ### 4.2 On other arenas — infrastructure, not yet properties of `Σ_*`
 
@@ -4502,6 +4512,11 @@ time. It is not a statement about every dynamics on `Σ`.
   `t`; the one-pointer arena has a tick readout, and the counts `0` at `t₁` and `1` at `t`
   are a record history of the start. The box hypotheses and the inequalities are not shown
   to be met by any packet.
+  ▸ **An instance with numbers, 2026-11-20 (BACKLOG #297, fifth brick) → UD-243. Not met.**
+  Two dimensions, `L = 8M`, `M ≥ 4·10⁶`, `J = 2`, `μ = 1`, `400` momenta per axis about
+  `(π/4, 0)`, the detector on the sites the box sweeps during `[9M/8, 9M/4]`, rate
+  `8π/(75M)`: count `0` at `3M/8`, count `1` at `9M/4`. The pointer's profile, the Clifford
+  family and the spinor are hypotheses.
 
 ### M8 — which assumptions force the geometry (gate C)
 
