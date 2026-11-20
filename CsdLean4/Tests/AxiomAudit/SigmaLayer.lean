@@ -23378,4 +23378,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.torusDetector_arrival_instance
 
+/-! #297, sixth brick (Task 9): arrival and display on the torus, the profile and the Clifford family exhibited (`RecordLayer/TorusArrivalExhibit.lean`). -/
+
+/-- info: 'CSD.RecordLayer.pauli_two_mulVec_spinUp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.pauli_two_mulVec_spinUp
+
+/-- info: 'CSD.RecordLayer.star_spinUp_dotProduct' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.star_spinUp_dotProduct
+
+/-- info: 'CSD.RecordLayer.arrivalFibre' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalFibre
+
+/-- info: 'CSD.RecordLayer.arrivalFibre_mem_readyArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalFibre_mem_readyArc
+
+/-- info: 'CSD.RecordLayer.arrivalRate_scaledTrainF' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalRate_scaledTrainF
+
+/-- info: 'CSD.RecordLayer.arrivalPacket_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalPacket_ne_zero
+
+/-- info: 'CSD.RecordLayer.torusDetector_arrival_exhibited' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.torusDetector_arrival_exhibited
+
 end CSD.Tests.AxiomAudit
