@@ -88,6 +88,12 @@ is stated for them directly, with no map to whole periods.** First brick done 20
 (`RecordLayer/FlowEventCone.lean`, UD-239, BACKLOG #442): `FlowEvent`, `HopSeparated`,
 `FlowEvent.PermittedWithin`, `FlowEvent.kick_response_le`. `RecordEvent` (whole periods) is
 not used for the radar.
+Second brick done 2026-11-20 (`RecordLayer/UnifiedRadarEvents.lean`, UD-248): the five
+readings as `FlowEvent`s on the ring (`radarEvent`), the order of their window openings
+(`radarEventTime_le`), the far-wall readings permitted to each other
+(`radarEvent_permitted_farWall`), the emission `d` hops from the relay
+(`radar_emission_hopSeparated_relay`). **The time of an event is its window's opening, not
+its end as item 1 below says**: with the ends the emission would not precede the relay.
 
 The three notions the author asks to be kept apart, and what is to be proved for each:
 

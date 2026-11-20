@@ -23526,4 +23526,98 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.torusDetector_not_displayed_flatPacket_tail
 
+/-! #442, second brick (Task 4): the radar's five readings as events at flow times (`RecordLayer/UnifiedRadarEvents.lean`). -/
+
+/-- info: 'CSD.RecordLayer.cos_add_lt_cos_sub' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_add_lt_cos_sub
+
+/-- info: 'CSD.RecordLayer.growG_mono' does not depend on any axioms -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.growG_mono
+
+/-- info: 'CSD.RecordLayer.growIterG_subset_of_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.growIterG_subset_of_subset
+
+/-- info: 'CSD.RecordLayer.growIterG_union_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.growIterG_union_subset
+
+/-- info: 'CSD.RecordLayer.not_hopSeparated_of_mem' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.not_hopSeparated_of_mem
+
+/-- info: 'CSD.RecordLayer.cos_two_pi_div_le_cos_site_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_two_pi_div_le_cos_site_one
+
+/-- info: 'CSD.RecordLayer.sub_one_mem_ringArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sub_one_mem_ringArc
+
+/-- info: 'CSD.RecordLayer.add_one_mem_ringArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.add_one_mem_ringArc
+
+/-- info: 'CSD.RecordLayer.ringArc_subset_of_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.ringArc_subset_of_le
+
+/-- info: 'CSD.RecordLayer.growG_ringArc_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.growG_ringArc_subset
+
+/-- info: 'CSD.RecordLayer.growIterG_ringArc_subset' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.growIterG_ringArc_subset
+
+/-- info: 'CSD.RecordLayer.disjoint_ringArc' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.disjoint_ringArc
+
+/-- info: 'CSD.RecordLayer.hopSeparated_wallArc_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.hopSeparated_wallArc_pi
+
+/-- info: 'CSD.RecordLayer.radarEventPlace' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarEventPlace
+
+/-- info: 'CSD.RecordLayer.radarEventTime' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarEventTime
+
+/-- info: 'CSD.RecordLayer.radarEvent' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarEvent
+
+/-- info: 'CSD.RecordLayer.radar_window_starts_ordered' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_window_starts_ordered
+
+/-- info: 'CSD.RecordLayer.radarEventTime_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarEventTime_le
+
+/-- info: 'CSD.RecordLayer.mem_wallArc_pi' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mem_wallArc_pi
+
+/-- info: 'CSD.RecordLayer.radarEvent_permitted_farWall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarEvent_permitted_farWall
+
+/-- info: 'CSD.RecordLayer.radarEvent_hopSeparated_farWall' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radarEvent_hopSeparated_farWall
+
+/-- info: 'CSD.RecordLayer.radar_emission_hopSeparated_relay' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_emission_hopSeparated_relay
+
+/-- info: 'CSD.RecordLayer.radar_emission_kick_response_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.radar_emission_kick_response_le
+
 end CSD.Tests.AxiomAudit
