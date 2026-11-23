@@ -393,6 +393,10 @@ before the meeting).
    instance in numbers (2026-11-23, `RecordLayer/TransponderInstance.lean`, UD-257):
    `transponder_second_level_instance`, amplitude at least `(3/100) |g| M` for
    `|g| M ≤ 1/100`. Left: levels of different energy.
+   Beyond first order (2026-11-23, `RecordLayer/TransponderRabi.lean`, UD-258):
+   `transponder_rabi_flatPacket_ge`, amplitude at least `|sin (g t)| − |g| √(tail) t` while
+   wholly in contact from the flow time `0`. This is the two-level estimate item 4 below
+   names as its first route.
 3. *launch_place_and_time*: the launched part is supported, up to tails, in the box where
    the meeting took place and is launched during the overlap. Its later motion is the free
    motion of the second level, at that level's group velocity. (M)

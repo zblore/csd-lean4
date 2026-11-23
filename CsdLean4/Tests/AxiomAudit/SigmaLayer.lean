@@ -23838,4 +23838,50 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_second_level_instance
 
+/-! #437, UO-26 item (2) beyond first order: the second level fills as sin (g t) (`RecordLayer/TransponderRabi.lean`). -/
+
+/-- info: 'CSD.RecordLayer.exp_smul_neg_I_smul_mulVec_of_invol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_smul_neg_I_smul_mulVec_of_invol
+
+/-- info: 'CSD.RecordLayer.exp_smul_neg_I_smul_of_invol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_smul_neg_I_smul_of_invol
+
+/-- info: 'CSD.RecordLayer.rabi_commute' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.rabi_commute
+
+/-- info: 'CSD.RecordLayer.norm_rabi_le_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_rabi_le_one
+
+/-- info: 'CSD.RecordLayer.exp_neg_I_add_smul_of_commute_invol' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_neg_I_add_smul_of_commute_invol
+
+/-- info: 'CSD.RecordLayer.norm_exp_sub_rabi_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_exp_sub_rabi_mul_le
+
+/-- info: 'CSD.RecordLayer.levelProj_one_mul_freeOrbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_one_mul_freeOrbit
+
+/-- info: 'CSD.RecordLayer.levelProj_one_mul_swap_freeOrbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_one_mul_swap_freeOrbit
+
+/-- info: 'CSD.RecordLayer.norm_le_norm_swap_freeOrbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_le_norm_swap_freeOrbit
+
+/-- info: 'CSD.RecordLayer.transponder_rabi_second_level_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_rabi_second_level_ge
+
+/-- info: 'CSD.RecordLayer.transponder_rabi_flatPacket_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_rabi_flatPacket_ge
+
 end CSD.Tests.AxiomAudit
