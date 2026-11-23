@@ -23676,4 +23676,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.messenger_influence_dwell
 
+/-! #437, remainder (a) (UO-26 item (1)): no launch without a meeting, for a state (`RecordLayer/TransponderLaunchState.lean`). -/
+
+/-- info: 'CSD.RecordLayer.l2_opNorm_vecMulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.l2_opNorm_vecMulVec
+
+/-- info: 'CSD.RecordLayer.norm_mul_vecMulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_mul_vecMulVec
+
+/-- info: 'CSD.RecordLayer.transponder_launch_vec_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_launch_vec_le
+
+/-- info: 'CSD.RecordLayer.transponder_launch_prod_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_launch_prod_le
+
+/-- info: 'CSD.RecordLayer.transponder_launch_flatPacket_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_launch_flatPacket_le
+
 end CSD.Tests.AxiomAudit

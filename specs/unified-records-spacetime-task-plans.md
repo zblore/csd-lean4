@@ -101,8 +101,11 @@ Fourth brick done 2026-11-23 (`RecordLayer/UnifiedMessengerInfluence.lean`, UD-2
 `messenger_influence_eq`, `messenger_influence_dwell`. **Item 2 below is not met as written**:
 what is proved is a difference of displacements, and by hand arithmetic the effect in the
 family is about `2.4 · 10⁻⁵` of a turn, so no count is expected to differ. The relay's
-count is the clock's count at a flow time fixed by the kinematics. The author is to decide
-what a demonstrated influence should be.
+count is the clock's count at a flow time fixed by the kinematics.
+**Decided 2026-11-23 (the author): *relay_count_depends_on_messenger* is retired.** A reading
+in a window fixed in flow time leans on the flow parameter, which is not a record (UA-7). A
+demonstrated influence is a record that the messenger's arrival causes: the caused return
+(§9, BACKLOG #437). Item 2 below is kept as written, as the record of what was asked.
 
 The three notions the author asks to be kept apart, and what is to be proved for each:
 
@@ -367,8 +370,10 @@ before the meeting).
    `sum_norm_sq_coincProj_mulVec_prod_le`, the bound at one time for one product vector, with
    the tails as `regionWeightD` of the complements on tori. The composite's free orbit of
    a product is the product of orbits — done 2026-11-19 (`RecordLayer/CoincidenceOrbit.lean`,
-   UD-240): `sum_norm_sq_coincProj_freeOrbit_prod_le`. Left: the moving boxes; the passage
-   from the vector's sum of squares to the operator norm under the integral of UD-226.
+   UD-240): `sum_norm_sq_coincProj_freeOrbit_prod_le`. The passage under the integral and
+   the moving boxes are done (2026-11-23, `RecordLayer/TransponderLaunchState.lean`, UD-251):
+   `transponder_launch_vec_le`, `transponder_launch_flatPacket_le`. Left: a transponder
+   state with norm at most `1` that keeps its weight on its sites along its orbit.
 2. *launch_first_order*: the first-order term for the contact term and a product of
    packets, evaluated: its norm squared is `g²` times the square of the time the boxes
    overlap times the overlap weight, to leading order, with the remainder of UD-216. This
