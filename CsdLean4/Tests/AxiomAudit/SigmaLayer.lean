@@ -23746,4 +23746,22 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.levelSwap_mul_blockDiagonal_smul_one
 
+/-! #437, items (1) and (2) of UO-26 in one run: apart, then in contact (`RecordLayer/TransponderMeeting.lean`). -/
+
+/-- info: 'CSD.RecordLayer.norm_duhamelFirst_sub_meeting_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_duhamelFirst_sub_meeting_le
+
+/-- info: 'CSD.RecordLayer.norm_exp_sub_mul_sub_first_meeting_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_exp_sub_mul_sub_first_meeting_le
+
+/-- info: 'CSD.RecordLayer.transponder_first_order_meeting' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_first_order_meeting
+
+/-- info: 'CSD.RecordLayer.transponder_launch_meeting_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_launch_meeting_ge
+
 end CSD.Tests.AxiomAudit

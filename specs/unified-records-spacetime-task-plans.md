@@ -382,8 +382,10 @@ before the meeting).
    Done in part 2026-11-23 (`RecordLayer/TransponderFirstOrder.lean`, UD-253):
    `transponder_first_order`, `transponder_launch_ge`, for contact from the flow time `0`
    and a transponder whose two levels have the same Hamiltonian, as a statement about a
-   matrix `X`. Left: "apart, then in contact" in one run; the weights for a packet; levels
-   of different energy.
+   matrix `X`. "Apart, then in contact" in one run is done (2026-11-23,
+   `RecordLayer/TransponderMeeting.lean`, UD-254): `transponder_launch_meeting_ge`, the
+   leading term `|g| (t − t₁)` for every `0 ≤ t₁ ≤ t`. Left: the three integrals for a
+   packet; levels of different energy.
 3. *launch_place_and_time*: the launched part is supported, up to tails, in the box where
    the meeting took place and is launched during the overlap. Its later motion is the free
    motion of the second level, at that level's group velocity. (M)
