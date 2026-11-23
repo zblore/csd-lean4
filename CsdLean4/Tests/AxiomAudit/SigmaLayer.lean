@@ -23808,4 +23808,34 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_second_level_flatPacket_meeting_ge
 
+/-! #437, UO-26 items (1) and (2): an instance with numbers (`RecordLayer/TransponderInstance.lean`). -/
+
+/-- info: 'CSD.RecordLayer.contactBox' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contactBox
+
+/-- info: 'CSD.RecordLayer.contactSite' depends on axioms: [propext, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contactSite
+
+/-- info: 'CSD.RecordLayer.contactRel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contactRel
+
+/-- info: 'CSD.RecordLayer.toCircle_four_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.toCircle_four_mul
+
+/-- info: 'CSD.RecordLayer.contactRel_contactSite_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contactRel_contactSite_iff
+
+/-- info: 'CSD.RecordLayer.flatTailD_instance_le_fine' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatTailD_instance_le_fine
+
+/-- info: 'CSD.RecordLayer.transponder_second_level_instance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_second_level_instance
+
 end CSD.Tests.AxiomAudit

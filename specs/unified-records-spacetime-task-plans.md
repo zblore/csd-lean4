@@ -389,8 +389,10 @@ before the meeting).
    `RecordLayer/TransponderMeetingPacket.lean`, UD-255):
    `transponder_launch_flatPacket_meeting_ge`. The same bound for the part in the second
    level (2026-11-23, `RecordLayer/TransponderSecondLevel.lean`, UD-256):
-   `transponder_second_level_flatPacket_meeting_ge`. Item 2 is done to first order. Left:
-   a relation, sites and times in numbers; levels of different energy.
+   `transponder_second_level_flatPacket_meeting_ge`. Item 2 is done to first order, with an
+   instance in numbers (2026-11-23, `RecordLayer/TransponderInstance.lean`, UD-257):
+   `transponder_second_level_instance`, amplitude at least `(3/100) |g| M` for
+   `|g| M ≤ 1/100`. Left: levels of different energy.
 3. *launch_place_and_time*: the launched part is supported, up to tails, in the box where
    the meeting took place and is launched during the overlap. Its later motion is the free
    motion of the second level, at that level's group velocity. (M)
