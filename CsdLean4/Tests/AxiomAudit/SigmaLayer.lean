@@ -23786,4 +23786,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_launch_flatPacket_meeting_ge
 
+/-! #437, UO-26 item (2): what leaves is in the transponder's second level (`RecordLayer/TransponderSecondLevel.lean`). -/
+
+/-- info: 'CSD.RecordLayer.levelProj_one_mul_levelSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_one_mul_levelSwap
+
+/-- info: 'CSD.RecordLayer.levelProj_zero_add_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_zero_add_one
+
+/-- info: 'CSD.RecordLayer.norm_one_kronecker_levelProj_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_one_kronecker_levelProj_le
+
+/-- info: 'CSD.RecordLayer.transponder_second_level_meeting_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_second_level_meeting_ge
+
+/-- info: 'CSD.RecordLayer.transponder_second_level_flatPacket_meeting_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_second_level_flatPacket_meeting_ge
+
 end CSD.Tests.AxiomAudit

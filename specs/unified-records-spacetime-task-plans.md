@@ -387,8 +387,10 @@ before the meeting).
    leading term `|g| (t − t₁)` for every `0 ≤ t₁ ≤ t`. The integrals are bounded for the
    flat packet and a transponder at rest (2026-11-23,
    `RecordLayer/TransponderMeetingPacket.lean`, UD-255):
-   `transponder_launch_flatPacket_meeting_ge`. Left: a relation, sites and times in
-   numbers; levels of different energy.
+   `transponder_launch_flatPacket_meeting_ge`. The same bound for the part in the second
+   level (2026-11-23, `RecordLayer/TransponderSecondLevel.lean`, UD-256):
+   `transponder_second_level_flatPacket_meeting_ge`. Item 2 is done to first order. Left:
+   a relation, sites and times in numbers; levels of different energy.
 3. *launch_place_and_time*: the launched part is supported, up to tails, in the box where
    the meeting took place and is launched during the overlap. Its later motion is the free
    motion of the second level, at that level's group velocity. (M)
