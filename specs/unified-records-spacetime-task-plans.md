@@ -372,8 +372,9 @@ before the meeting).
    a product is the product of orbits — done 2026-11-19 (`RecordLayer/CoincidenceOrbit.lean`,
    UD-240): `sum_norm_sq_coincProj_freeOrbit_prod_le`. The passage under the integral and
    the moving boxes are done (2026-11-23, `RecordLayer/TransponderLaunchState.lean`, UD-251):
-   `transponder_launch_vec_le`, `transponder_launch_flatPacket_le`. Left: a transponder
-   state with norm at most `1` that keeps its weight on its sites along its orbit.
+   `transponder_launch_vec_le`, `transponder_launch_flatPacket_le`. A transponder at rest
+   meets its hypotheses (2026-11-23, `RecordLayer/TransponderAtRest.lean`, UD-252):
+   `transponder_launch_flatPacket_resting_le`. Item 1 is done.
 2. *launch_first_order*: the first-order term for the contact term and a product of
    packets, evaluated: its norm squared is `g²` times the square of the time the boxes
    overlap times the overlap weight, to leading order, with the remainder of UD-216. This

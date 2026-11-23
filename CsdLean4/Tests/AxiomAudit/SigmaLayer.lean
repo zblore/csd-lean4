@@ -23698,4 +23698,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_launch_flatPacket_le
 
+/-! #437, remainder (a) (UO-26 item (1)): no launch before the box reaches a transponder at rest (`RecordLayer/TransponderAtRest.lean`). -/
+
+/-- info: 'CSD.RecordLayer.exp_mulVec_stationary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_mulVec_stationary
+
+/-- info: 'CSD.RecordLayer.norm_exp_mulVec_stationary' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_exp_mulVec_stationary
+
+/-- info: 'CSD.RecordLayer.blockDiagonal_smul_one_mulVec' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.blockDiagonal_smul_one_mulVec
+
+/-- info: 'CSD.RecordLayer.transponder_launch_flatPacket_stationary_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_launch_flatPacket_stationary_le
+
+/-- info: 'CSD.RecordLayer.transponder_launch_flatPacket_resting_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_launch_flatPacket_resting_le
+
 end CSD.Tests.AxiomAudit
