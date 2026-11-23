@@ -23638,4 +23638,42 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.csd_radar_macrostate_events
 
+/-! #442, fourth brick (Task 4): what a messenger does to a gated pointer (`RecordLayer/UnifiedMessengerInfluence.lean`). -/
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_conj_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_conj_le
+
+/-- info: 'CSD.RecordLayer.gateOp_eq_conj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.gateOp_eq_conj
+
+/-- info: 'CSD.RecordLayer.abs_arenaObs_gateOp_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_arenaObs_gateOp_le
+
+/-- info: 'CSD.RecordLayer.abs_coincShift_gateOp_sub_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_coincShift_gateOp_sub_le
+
+/-- info: 'CSD.RecordLayer.coincShift_not_sub_messenger' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_not_sub_messenger
+
+/-- info: 'CSD.RecordLayer.coincShift_gateOp_eq_zero_of_never' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_gateOp_eq_zero_of_never
+
+/-- info: 'CSD.RecordLayer.coincShift_not_eq_free_of_never' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.coincShift_not_eq_free_of_never
+
+/-- info: 'CSD.RecordLayer.messenger_influence_eq' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.messenger_influence_eq
+
+/-- info: 'CSD.RecordLayer.messenger_influence_dwell' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.messenger_influence_dwell
+
 end CSD.Tests.AxiomAudit

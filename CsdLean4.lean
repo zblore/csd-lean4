@@ -847,6 +847,7 @@ public import CsdLean4.RecordLayer.UnifiedRadarTimes
 public import CsdLean4.RecordLayer.UnifiedFastMessenger
 public import CsdLean4.RecordLayer.UnifiedGateTimes
 public import CsdLean4.RecordLayer.UnifiedWallValues
+public import CsdLean4.RecordLayer.UnifiedMessengerInfluence
 public import CsdLean4.RecordLayer.UnifiedOddChain
 public import CsdLean4.RecordLayer.UnifiedRingShift
 public import CsdLean4.RecordLayer.UnifiedEventTimes

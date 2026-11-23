@@ -97,6 +97,12 @@ its end as item 1 below says**: with the ends the emission would not precede the
 Third brick done 2026-11-20 (`RecordLayer/UnifiedRadarEventMacrostate.lean`, UD-249):
 `csd_radar_macrostate_events`, the plan's *radar_macrostate_causal*: the five events are the
 five coordinates of the macrostate of Task 3.
+Fourth brick done 2026-11-23 (`RecordLayer/UnifiedMessengerInfluence.lean`, UD-250):
+`messenger_influence_eq`, `messenger_influence_dwell`. **Item 2 below is not met as written**:
+what is proved is a difference of displacements, and by hand arithmetic the effect in the
+family is about `2.4 · 10⁻⁵` of a turn, so no count is expected to differ. The relay's
+count is the clock's count at a flow time fixed by the kinematics. The author is to decide
+what a demonstrated influence should be.
 
 The three notions the author asks to be kept apart, and what is to be proved for each:
 
