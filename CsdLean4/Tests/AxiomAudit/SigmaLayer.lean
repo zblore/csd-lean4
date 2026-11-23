@@ -23764,4 +23764,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_launch_meeting_ge
 
+/-! #437, UO-26 items (1) and (2) for a packet: the departure starts when the box reaches the transponder (`RecordLayer/TransponderMeetingPacket.lean`). -/
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_prod
+
+/-- info: 'CSD.RecordLayer.norm_vecMulVec_star_of_sum_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_vecMulVec_star_of_sum_eq_one
+
+/-- info: 'CSD.RecordLayer.sum_norm_sq_flatPacketD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.sum_norm_sq_flatPacketD
+
+/-- info: 'CSD.RecordLayer.norm_coincProj_freeOrbit_flatPacket_resting_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_coincProj_freeOrbit_flatPacket_resting_le
+
+/-- info: 'CSD.RecordLayer.transponder_launch_flatPacket_meeting_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_launch_flatPacket_meeting_ge
+
 end CSD.Tests.AxiomAudit
