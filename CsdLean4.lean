@@ -880,6 +880,7 @@ public import CsdLean4.RecordLayer.RadarHistoryShare
 public import CsdLean4.RecordLayer.TorusDetector
 public import CsdLean4.RecordLayer.TorusRateBound
 public import CsdLean4.RecordLayer.TransponderAtRest
+public import CsdLean4.RecordLayer.TransponderFirstOrder
 public import CsdLean4.RecordLayer.TransponderLaunchState
 public import CsdLean4.RecordLayer.TorusArrival
 public import CsdLean4.RecordLayer.TorusArrivalBox

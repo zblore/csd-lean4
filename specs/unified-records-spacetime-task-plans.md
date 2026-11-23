@@ -379,6 +379,11 @@ before the meeting).
    packets, evaluated: its norm squared is `g²` times the square of the time the boxes
    overlap times the overlap weight, to leading order, with the remainder of UD-216. This
    is item (2): a signal does leave, with its weight. (M–L)
+   Done in part 2026-11-23 (`RecordLayer/TransponderFirstOrder.lean`, UD-253):
+   `transponder_first_order`, `transponder_launch_ge`, for contact from the flow time `0`
+   and a transponder whose two levels have the same Hamiltonian, as a statement about a
+   matrix `X`. Left: "apart, then in contact" in one run; the weights for a packet; levels
+   of different energy.
 3. *launch_place_and_time*: the launched part is supported, up to tails, in the box where
    the meeting took place and is launched during the overlap. Its later motion is the free
    motion of the second level, at that level's group velocity. (M)
