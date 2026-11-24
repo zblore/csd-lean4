@@ -886,6 +886,7 @@ public import CsdLean4.RecordLayer.TransponderLaunchState
 public import CsdLean4.RecordLayer.TransponderMeeting
 public import CsdLean4.RecordLayer.TransponderMeetingPacket
 public import CsdLean4.RecordLayer.TransponderRabi
+public import CsdLean4.RecordLayer.TransponderRabiMeeting
 public import CsdLean4.RecordLayer.TransponderSecondLevel
 public import CsdLean4.RecordLayer.TorusArrival
 public import CsdLean4.RecordLayer.TorusArrivalBox

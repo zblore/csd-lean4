@@ -397,6 +397,10 @@ before the meeting).
    `transponder_rabi_flatPacket_ge`, amplitude at least `|sin (g t)| − |g| √(tail) t` while
    wholly in contact from the flow time `0`. This is the two-level estimate item 4 below
    names as its first route.
+   For a run that starts apart (2026-11-24, `RecordLayer/TransponderRabiMeeting.lean`,
+   UD-259): `transponder_rabi_flatPacket_meeting_ge`, amplitude at least
+   `|sin (g (t − t₂))|` less `|g|` times the tails and the time of partial contact. Left: a
+   geometry in which that time is short against the dwell.
 3. *launch_place_and_time*: the launched part is supported, up to tails, in the box where
    the meeting took place and is launched during the overlap. Its later motion is the free
    motion of the second level, at that level's group velocity. (M)

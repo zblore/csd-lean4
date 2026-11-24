@@ -23884,4 +23884,26 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_rabi_flatPacket_ge
 
+/-! #437, UO-26 items (1) and (2) beyond first order, apart then in contact (`RecordLayer/TransponderRabiMeeting.lean`). -/
+
+/-- info: 'CSD.RecordLayer.exp_add_smul_eq_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_add_smul_eq_mul
+
+/-- info: 'CSD.RecordLayer.norm_exp_sub_rabi_meeting_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_exp_sub_rabi_meeting_mul_le
+
+/-- info: 'CSD.RecordLayer.levelProj_one_mul_rabi_freeOrbit' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_one_mul_rabi_freeOrbit
+
+/-- info: 'CSD.RecordLayer.transponder_rabi_meeting_second_level_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_rabi_meeting_second_level_ge
+
+/-- info: 'CSD.RecordLayer.transponder_rabi_flatPacket_meeting_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_rabi_flatPacket_meeting_ge
+
 end CSD.Tests.AxiomAudit
