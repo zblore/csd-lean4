@@ -1,4 +1,5 @@
 name = "csd-lean4"
+keywords = ["quantum-mechanics", "born-rule", "quantum-foundations", "mathlib"]
 defaultTargets = ["CsdLean4"]
 
 # Kill accidental implicit binders (CONVENTIONS.md §8.4, BACKLOG hardening row).
