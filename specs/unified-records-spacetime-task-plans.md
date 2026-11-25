@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest with one energy for both levels; item (3) in part, with one instance | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-261 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest with one energy for both levels; item (3) in part, with one instance | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-262 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -401,6 +401,11 @@ before the meeting).
    UD-259): `transponder_rabi_flatPacket_meeting_ge`, amplitude at least
    `|sin (g (t − t₂))|` less `|g|` times the tails and the time of partial contact. Left: a
    geometry in which that time is short against the dwell.
+   Levels of different energy, in contact from the flow time `0` (2026-11-25,
+   `RecordLayer/TransponderDetuned.lean`, UD-262): `transponder_detuned_flatPacket`, the
+   amplitude is `(|g|/Ω) |sin (Ω t)|` within the tail term, `Ω² = g² + ((E₁ − E₀)/2)²`,
+   so the detuning caps it at `|g|/Ω`. Left: the run that starts apart, the reading and
+   the instance for `E₀ ≠ E₁`.
 3. *launch_place_and_time*: the launched part is supported, up to tails, in the box where
    the meeting took place and is launched during the overlap. Its later motion is the free
    motion of the second level, at that level's group velocity. (M)

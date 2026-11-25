@@ -24018,4 +24018,58 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_reading_control_instance
 
+/-! #437, UO-26 item (2) for levels of different energy (`RecordLayer/TransponderDetuned.lean`). -/
+
+/-- info: 'CSD.RecordLayer.norm_exp_sub_rabi_add_mul_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_exp_sub_rabi_add_mul_le
+
+/-- info: 'CSD.RecordLayer.detunedAxis' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detunedAxis
+
+/-- info: 'CSD.RecordLayer.levelProj_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_isHermitian
+
+/-- info: 'CSD.RecordLayer.levelProj_zero_mul_levelSwap' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_zero_mul_levelSwap
+
+/-- info: 'CSD.RecordLayer.detunedAxis_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detunedAxis_isHermitian
+
+/-- info: 'CSD.RecordLayer.detunedAxis_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detunedAxis_mul_self
+
+/-- info: 'CSD.RecordLayer.detunedAxis_apply_of_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detunedAxis_apply_of_ne
+
+/-- info: 'CSD.RecordLayer.detunedAxis_mul_blockDiagonal_smul_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.detunedAxis_mul_blockDiagonal_smul_one
+
+/-- info: 'CSD.RecordLayer.blockDiagonal_smul_one_eq_add' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.blockDiagonal_smul_one_eq_add
+
+/-- info: 'CSD.RecordLayer.mul_turn_mul_of_split' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mul_turn_mul_of_split
+
+/-- info: 'CSD.RecordLayer.transponder_detuned_second_level' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_detuned_second_level
+
+/-- info: 'CSD.RecordLayer.transponder_detuned_flatPacket' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_detuned_flatPacket
+
+/-- info: 'CSD.RecordLayer.transponder_detuned_flatPacket_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_detuned_flatPacket_le
+
 end CSD.Tests.AxiomAudit
