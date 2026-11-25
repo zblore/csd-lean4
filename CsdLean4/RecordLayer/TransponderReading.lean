@@ -48,13 +48,12 @@ the pointer across its arcs if it lasts. Two runs are compared.
 
 ## Honest scope
 
-⚠️ **No instance meets the hypotheses of `transponder_meeting_record`.** They ask that the
-amplitude bound of UD-259 stay above `ρ` on a whole window `[t₃, t]`, that
+⚠️ **The hypotheses of `transponder_meeting_record` are three inequalities.** They ask that
+the amplitude bound of UD-259 stay above `ρ` on a whole window `[t₃, t]`, that
 `κ ρ² (t − t₃) ≥ 1/3`, and that the leakage before the meeting obey
-`κ (|g| √ε₁ t₁)² t₁ ≤ 1/6`. Together: `ρ² (t − t₃) ≥ 2 (|g| √ε₁ t₁)² t₁`. For the instance of
+`κ (|g| √ε₁ t₁)² t₁ ≤ 1/6`. Together: `ρ² (t − t₃) ≥ 2 (|g| √ε₁ t₁)² t₁`. For the geometry of
 UD-257 this fails by hand arithmetic (the left side is about a thirtieth of the right). A
-geometry with a dwell long against the time of partial contact is needed, and none is
-exhibited.
+geometry that meets them is in `RecordLayer/TransponderReadingInstance.lean` (UD-261).
 
 ⚠️ **The pointer reads the transponder's second level wherever the transponder is.** It is
 not a receiver at a distance: nothing is shown to travel from the meeting. The record is

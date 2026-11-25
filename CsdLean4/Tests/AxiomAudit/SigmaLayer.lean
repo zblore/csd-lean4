@@ -23960,4 +23960,62 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_meeting_record
 
+/-! #437, UO-26 item (3): the meeting's record and its control, an instance with numbers (`RecordLayer/TransponderReadingInstance.lean`). -/
+
+/-- info: 'CSD.RecordLayer.arrivalBoxAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalBoxAt
+
+/-- info: 'CSD.RecordLayer.contactBoxAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contactBoxAt
+
+/-- info: 'CSD.RecordLayer.contactRelAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contactRelAt
+
+/-- info: 'CSD.RecordLayer.arrivalBox_eq_arrivalBoxAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalBox_eq_arrivalBoxAt
+
+/-- info: 'CSD.RecordLayer.contactBox_eq_contactBoxAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contactBox_eq_contactBoxAt
+
+/-- info: 'CSD.RecordLayer.contactRelAt_contactSite_iff' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.contactRelAt_contactSite_iff
+
+/-- info: 'CSD.RecordLayer.cos_dwellAngle_ge' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_dwellAngle_ge
+
+/-- info: 'CSD.RecordLayer.cos_dwellAngle_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.cos_dwellAngle_le
+
+/-- info: 'CSD.RecordLayer.arrivalBoxAt_disjoint_movedBoxD' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arrivalBoxAt_disjoint_movedBoxD
+
+/-- info: 'CSD.RecordLayer.movedBoxD_subset_arrivalBoxAt' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.movedBoxD_subset_arrivalBoxAt
+
+/-- info: 'CSD.RecordLayer.flatTailD_instance_le_long' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.flatTailD_instance_le_long
+
+/-- info: 'CSD.RecordLayer.meetingState_ne_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.meetingState_ne_zero
+
+/-- info: 'CSD.RecordLayer.transponder_meeting_record_instance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_meeting_record_instance
+
+/-- info: 'CSD.RecordLayer.transponder_reading_control_instance' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_reading_control_instance
+
 end CSD.Tests.AxiomAudit

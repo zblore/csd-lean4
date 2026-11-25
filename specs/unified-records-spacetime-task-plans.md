@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest with one energy for both levels; item (3) in part, with no instance | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-260 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest with one energy for both levels; item (3) in part, with one instance | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-261 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -428,11 +428,13 @@ its rate times the accumulated occupancy of what it reads, so a small occupancy 
 lasts carries it across its arcs. Step 4 is then a statement in two runs: with the
 contact term the count is `0` before the meeting and at least `1` after, and without it
 the count is `0`. Done in part 2026-11-25 (`RecordLayer/TransponderReading.lean`,
-UD-260): `transponder_meeting_record`, `transponder_reading_control`. What that leaves:
-an instance (the hypotheses ask the signal's square times the reading time to be at
-least twice the leakage's square times the time before the meeting, which the geometry
-of UD-257 does not meet, so the long dwell of item 2 is needed here too); and a pointer
-that reads the launched part at a distance, which waits for step 3.
+UD-260): `transponder_meeting_record`, `transponder_reading_control`. The hypotheses ask
+the signal's square times the reading time to be at least twice the leakage's square
+times the time before the meeting; the geometry of UD-257 does not meet this, and a
+wider contact region does (2026-11-25, `RecordLayer/TransponderReadingInstance.lean`,
+UD-261): `transponder_meeting_record_instance`, `transponder_reading_control_instance`.
+What that leaves: a pointer that reads the launched part at a distance, which waits for
+step 3; an amplitude of order one; a positive measure of fibres.
 
 ## 10. Task 12 — the capstone
 
