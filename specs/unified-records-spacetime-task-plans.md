@@ -26,7 +26,7 @@ Prices are the usual letters and are not estimates of time.
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-263 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest, with level energies `E₀`, `E₁`; item (3) in part, with one instance (`E₀ = E₁`) | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-264 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -411,6 +411,13 @@ before the meeting).
 3. *launch_place_and_time*: the launched part is supported, up to tails, in the box where
    the meeting took place and is launched during the overlap. Its later motion is the free
    motion of the second level, at that level's group velocity. (M)
+   The place is done, exactly, for a transponder that does not hop (2026-11-25,
+   `RecordLayer/TransponderPlace.lean`, UD-264): `transponder_site_conserved`. The same
+   theorem is an obstruction: such a transponder's second level never leaves
+   (`transponder_distant_reading_idle`), so the "later motion" needs a band for the second
+   level. That band and the transponder's window of momenta are the author's choice
+   (UA-19 (a), (d)) and need a clause; with them the level swap does not commute with the
+   transponder's Hamiltonian, and items 1 and 2 have to be redone for the new energy.
 4. *echo_gate_reading*: a gate between the second level and an observer's clock, with a
    budget for a weight of order `g²`: the present gates need nearly full weight, so this
    needs either a strength that makes the launched weight of order one (beyond first

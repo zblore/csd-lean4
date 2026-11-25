@@ -887,6 +887,7 @@ public import CsdLean4.RecordLayer.TransponderInstance
 public import CsdLean4.RecordLayer.TransponderLaunchState
 public import CsdLean4.RecordLayer.TransponderMeeting
 public import CsdLean4.RecordLayer.TransponderMeetingPacket
+public import CsdLean4.RecordLayer.TransponderPlace
 public import CsdLean4.RecordLayer.TransponderRabi
 public import CsdLean4.RecordLayer.TransponderRabiMeeting
 public import CsdLean4.RecordLayer.TransponderReading

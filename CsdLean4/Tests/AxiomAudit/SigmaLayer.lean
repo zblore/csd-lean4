@@ -24106,4 +24106,58 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_detuned_flatPacket_meeting
 
+/-! #437, UO-26: the place of what is launched; a transponder without hopping keeps it (`RecordLayer/TransponderPlace.lean`). -/
+
+/-- info: 'CSD.RecordLayer.diagonal_mul_of_site_preserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diagonal_mul_of_site_preserving
+
+/-- info: 'CSD.RecordLayer.siteSetProj_mul_of_site_preserving' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.siteSetProj_mul_of_site_preserving
+
+/-- info: 'CSD.RecordLayer.diagonal_ite_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diagonal_ite_isHermitian
+
+/-- info: 'CSD.RecordLayer.diagonal_ite_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.diagonal_ite_mul_self
+
+/-- info: 'CSD.RecordLayer.mul_neg_I_smul_add_smul_comm' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mul_neg_I_smul_add_smul_comm
+
+/-- info: 'CSD.RecordLayer.blockDiagonal_smul_one_apply_of_site_ne' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.blockDiagonal_smul_one_apply_of_site_ne
+
+/-- info: 'CSD.RecordLayer.levelProj_mul_siteSetProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_mul_siteSetProj
+
+/-- info: 'CSD.RecordLayer.one_kronecker_diagonal' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_kronecker_diagonal
+
+/-- info: 'CSD.RecordLayer.one_kronecker_siteSetProj_mul_coincProj' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_kronecker_siteSetProj_mul_coincProj
+
+/-- info: 'CSD.RecordLayer.one_kronecker_siteSetProj_mul_transponderH' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_kronecker_siteSetProj_mul_transponderH
+
+/-- info: 'CSD.RecordLayer.transponder_site_conserved' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_site_conserved
+
+/-- info: 'CSD.RecordLayer.one_kronecker_siteSetProj_mulVec_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_kronecker_siteSetProj_mulVec_prod
+
+/-- info: 'CSD.RecordLayer.transponder_distant_reading_idle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_distant_reading_idle
+
 end CSD.Tests.AxiomAudit
