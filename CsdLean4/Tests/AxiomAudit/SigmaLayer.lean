@@ -23906,4 +23906,58 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_rabi_flatPacket_meeting_ge
 
+/-! #437, UO-26 item (3): a pointer accumulates the transponder's second level; the control without the contact term (`RecordLayer/TransponderReading.lean`). -/
+
+/-- info: 'CSD.RecordLayer.card_tickIndices_pos_of_ready' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.card_tickIndices_pos_of_ready
+
+/-- info: 'CSD.RecordLayer.idxPointerShift_le_of_obs_le' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxPointerShift_le_of_obs_le
+
+/-- info: 'CSD.RecordLayer.idxPointerShift_eq_zero_of_obs_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.idxPointerShift_eq_zero_of_obs_eq_zero
+
+/-- info: 'CSD.RecordLayer.graphDetector_idle' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.graphDetector_idle
+
+/-- info: 'CSD.RecordLayer.graphDetector_accumulate_records' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.graphDetector_accumulate_records
+
+/-- info: 'CSD.RecordLayer.toLp_ne_zero_of_sum_norm_sq_eq_one' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.toLp_ne_zero_of_sum_norm_sq_eq_one
+
+/-- info: 'CSD.RecordLayer.mul_exp_smul_mulVec_eq_zero' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.mul_exp_smul_mulVec_eq_zero
+
+/-- info: 'CSD.RecordLayer.arenaObs_proj_kick_toLp' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.arenaObs_proj_kick_toLp
+
+/-- info: 'CSD.RecordLayer.one_kronecker_levelProj_isHermitian' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_kronecker_levelProj_isHermitian
+
+/-- info: 'CSD.RecordLayer.one_kronecker_levelProj_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_kronecker_levelProj_mul_self
+
+/-- info: 'CSD.RecordLayer.one_kronecker_levelProj_one_mulVec_prod' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.one_kronecker_levelProj_one_mulVec_prod
+
+/-- info: 'CSD.RecordLayer.transponder_reading_control' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_reading_control
+
+/-- info: 'CSD.RecordLayer.transponder_meeting_record' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_meeting_record
+
 end CSD.Tests.AxiomAudit

@@ -17,16 +17,16 @@ Prices are the usual letters and are not estimates of time.
 | 1. Tick counts as recorded facts | done | UD-208 |
 | 2. A preparation of non-zero measure | done, counts not named | UD-213 to UD-215, UD-218, UD-219 |
 | 3. Macroscopic projection | projection and the radar's cell done; stability owed | UD-223, UD-225 |
-| 4. Causal bridge | not started | — |
-| 5. Recursive physical apparatus | not started | — |
-| 6. Born bridge or obstruction | not started | — |
+| 4. Causal bridge | four bricks (BACKLOG #442); the demonstrated influence moved to the caused return | UD-239, UD-248 to UD-250 |
+| 5. Recursive physical apparatus | started (BACKLOG #440): the obstruction for a pointer-held record, the controlled step of UA-20, the order of two displays | UD-227, UD-233, UD-241 |
+| 6. Born bridge or obstruction | the mean tick count (BACKLOG #441); its parts (b) and (c) withdrawn by the author | UD-228, UD-229 |
 | 7. Dynamical Born selection | not started; exploratory | UO-20 |
 | 8. Packets in `d` dimensions | done for `μ > 0` and a flat window; clock and `μ = 0` owed | UD-209, UD-210, UD-217, UD-220 to UD-222 |
-| 9. Detectors and the cone in `d` dimensions | not started | — |
+| 9. Detectors and the cone in `d` dimensions | nine bricks (BACKLOG #297); an instance where the cone bound binds is owed | UD-230, UD-231, UD-234, UD-242 to UD-247 |
 | 10. `2 + 1` radar | not started | — |
 | 11. `3 + 1` radar | not started | UO-17 |
 | 12. Capstone | not started | UO-19 |
-| The caused return (choice (c)) | item (1) of five done for the contact term | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226 |
+| The caused return (choice (c)) | items (1) and (2) done for a transponder at rest with one energy for both levels; item (3) in part, with no instance | UA-19, UD-211, UD-212, UD-216, UD-224, UD-226, UD-236, UD-240, UD-251 to UD-260 |
 
 Safeguards of the plan, which every item below keeps: a record event is not a persistent
 register; conditioning on a history is not an interaction; positive measure in a fibre is
@@ -415,19 +415,24 @@ before the meeting).
 6. The same on one arena: the contact term is the pointer's action on the fibres where its
    profile does not vanish, and the pointer also moves there. (L)
 
-**Recommended by the charter (2026-11-19; not yet confirmed by the author): read the weak
-echo by fibre typicality, not by a tuned resonance.** A strongly coupled transponder at
-rest gives a full-weight return only when the strength times the overlap time is tuned,
-which is a calibration put in by hand. In CSD a record is an ontic selection over the
-fibre, and a weak signal writes a record on a set of fibres whose measure is proportional
-to its weight: that is the click law (`diracClickProb_eq_lintegral`), exact and linear below
-the cut-off. So step 4 becomes: *echo_click_law*, the echo's pointer displays on a set of
-starting angles of measure proportional to the launched weight; and step 5 is stated on
-that set, as a conditional statement with the record as the condition
-(`HistoryPreparation`, as in UD-219). The radar identities then hold for the runs in which
-the echo was recorded, which is how a weak return is used. The price: the echo's record
-has probability of order `g²`, and the statement is about a set of fibres of that measure,
-not about every run.
+**Decided by the author, 2026-11-25: the echo's record is written by accumulated
+displacement.** This replaces a recommendation of 2026-11-19 that stood here and was
+wrong. It said a weak signal writes a record on a set of fibres whose measure is
+proportional to its weight, and called the click law linear below its cut-off. Below the
+cut-off the click probability is `0` (`diracClickProb_eq_zero_of_weight_le`); it is the
+pointer's displacement that is linear in the weight. A detector that clicks with
+probability proportional to a weight would also put the Born weights inside the
+apparatus, which the programme does not do. The reading that stands: a record is a fact
+held by the pointer's angle, fixed by the start of the run; the pointer's displacement is
+its rate times the accumulated occupancy of what it reads, so a small occupancy that
+lasts carries it across its arcs. Step 4 is then a statement in two runs: with the
+contact term the count is `0` before the meeting and at least `1` after, and without it
+the count is `0`. Done in part 2026-11-25 (`RecordLayer/TransponderReading.lean`,
+UD-260): `transponder_meeting_record`, `transponder_reading_control`. What that leaves:
+an instance (the hypotheses ask the signal's square times the reading time to be at
+least twice the leakage's square times the time before the meeting, which the geometry
+of UD-257 does not meet, so the long dwell of item 2 is needed here too); and a pointer
+that reads the launched part at a distance, which waits for step 3.
 
 ## 10. Task 12 — the capstone
 
