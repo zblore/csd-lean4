@@ -24072,4 +24072,38 @@ open CSD CSD.LF1 CSD.LF1.OnticSetup CSD.LF2 CSD.LF3
 #guard_msgs (whitespace := lax) in
 #print axioms CSD.RecordLayer.transponder_detuned_flatPacket_le
 
+/-! #437, UO-26 items (1) and (2) in one run for levels of different energy (`RecordLayer/TransponderDetunedMeeting.lean`). -/
+
+/-- info: 'CSD.RecordLayer.norm_exp_skew_mul' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_exp_skew_mul
+
+/-- info: 'CSD.RecordLayer.abs_norm_mul_exp_sub_le_of_stages' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.abs_norm_mul_exp_sub_le_of_stages
+
+/-- info: 'CSD.RecordLayer.levelProj_sub_mul_self' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_sub_mul_self
+
+/-- info: 'CSD.RecordLayer.levelProj_zero_mul_of_firstLevel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.levelProj_zero_mul_of_firstLevel
+
+/-- info: 'CSD.RecordLayer.exp_freeOrbit_mul_of_firstLevel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.exp_freeOrbit_mul_of_firstLevel
+
+/-- info: 'CSD.RecordLayer.norm_mul_freeOrbit_of_firstLevel' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.norm_mul_freeOrbit_of_firstLevel
+
+/-- info: 'CSD.RecordLayer.transponder_detuned_meeting_second_level' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_detuned_meeting_second_level
+
+/-- info: 'CSD.RecordLayer.transponder_detuned_flatPacket_meeting' depends on axioms: [propext, Classical.choice, Quot.sound] -/
+#guard_msgs (whitespace := lax) in
+#print axioms CSD.RecordLayer.transponder_detuned_flatPacket_meeting
+
 end CSD.Tests.AxiomAudit

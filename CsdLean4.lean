@@ -881,6 +881,7 @@ public import CsdLean4.RecordLayer.TorusDetector
 public import CsdLean4.RecordLayer.TorusRateBound
 public import CsdLean4.RecordLayer.TransponderAtRest
 public import CsdLean4.RecordLayer.TransponderDetuned
+public import CsdLean4.RecordLayer.TransponderDetunedMeeting
 public import CsdLean4.RecordLayer.TransponderFirstOrder
 public import CsdLean4.RecordLayer.TransponderInstance
 public import CsdLean4.RecordLayer.TransponderLaunchState

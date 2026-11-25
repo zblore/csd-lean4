@@ -5,7 +5,7 @@ Authors: Zayn Blore
 -/
 module
 
-public import CsdLean4.RecordLayer.TransponderRabiMeeting
+public import CsdLean4.RecordLayer.TransponderDetunedMeeting
 public import CsdLean4.RecordLayer.TransponderAtRest
 public import CsdLean4.RecordLayer.TorusArrival
 
@@ -49,7 +49,7 @@ the pointer across its arcs if it lasts. Two runs are compared.
 ## Honest scope
 
 ⚠️ **The hypotheses of `transponder_meeting_record` are three inequalities.** They ask that
-the amplitude bound of UD-259 stay above `ρ` on a whole window `[t₃, t]`, that
+the amplitude bound of UD-263 stay above `ρ` on a whole window `[t₃, t]`, that
 `κ ρ² (t − t₃) ≥ 1/3`, and that the leakage before the meeting obey
 `κ (|g| √ε₁ t₁)² t₁ ≤ 1/6`. Together: `ρ² (t − t₃) ≥ 2 (|g| √ε₁ t₁)² t₁`. For the geometry of
 UD-257 this fails by hand arithmetic (the left side is about a thirtieth of the right). A
@@ -64,12 +64,12 @@ vanishes**, a null set of its conserved angle; there the carriers move as if the
 were absent. The control holds on every fibre.
 
 ⚠️ **A count of at least one**, read from the flow time `0`; its value is not bounded
-above, and the pointer need not be displayed at `t`. The two levels have one energy. The
-times are flow times. No probability is derived or used.
+above, and the pointer need not be displayed at `t`. The two levels may differ in energy
+(UD-263); the instance of UD-261 has one energy for both. The times are flow times. No probability is derived or used.
 
 References: `specs/BACKLOG.md` #437; `specs/unified-record-spacetime-plan.md` (UA-19, UO-26,
 UD-242, UD-252, UD-259, UD-260); `specs/unified-records-spacetime-task-plans.md` (§9);
-`RecordLayer/TransponderRabiMeeting.lean` (`transponder_rabi_flatPacket_meeting_ge`);
+`RecordLayer/TransponderDetunedMeeting.lean` (`transponder_detuned_flatPacket_meeting`);
 `RecordLayer/TransponderAtRest.lean` (`transponder_launch_flatPacket_resting_le`);
 `RecordLayer/TorusArrival.lean` (`graphDetector_isTickCount`, `arenaReadout`,
 `graphDetector_arrival_records`); `RecordLayer/TickCountLaw.lean` (`isTickCount_pointer`);
@@ -380,13 +380,15 @@ variable {κ Sp n : Type*} [Fintype κ] [DecidableEq κ] [Fintype Sp] [Decidable
   {α : κ → Matrix Sp Sp ℂ} {β : Matrix Sp Sp ℂ} {f : ℝ → ℝ} {N : ℕ}
 
 /-- ★★★ **The meeting writes a record.** The messenger is the flat packet of the lattice
-Dirac field of any dimension; the transponder is at rest with one energy for both levels, in
+Dirac field of any dimension; the transponder is at rest with the level energies `E 0`,
+`E 1`, in
 a state of norm `1` in its first level, supported on the sites `B`; the contact term has
-strength `g`. A pointer is coupled to the projector on the transponder's second level. Take
+strength `g`; `Ω > 0` with `Ω² = g² + ((E 1 − E 0)/2)²`. A pointer is coupled to the projector on the transponder's second level. Take
 `0 ≤ t₁ ≤ t₂ ≤ t₃ ≤ t`, with no site of the packet's moving box related to a site of `B` up
 to `t₁` and every site of it related to every site of `B` from `t₂` to `t`, and `ρ ≥ 0` with
 
-`ρ + |g| (√ε₁ t₁ + (t₂ − t₁)) + |g| √ε (t − t₂) ≤ |sin (g (s − t₂))|` for `t₃ ≤ s ≤ t`,
+`ρ + |g| (√ε₁ t₁ + (t₂ − t₁)) + |g| √ε (t − t₂) ≤ (|g|/Ω) |sin (Ω (s − t₂))|` for
+`t₃ ≤ s ≤ t`,
 
 `ε₁ = flatTailD t₁`, `ε = flatTailD t`. On a fibre where the pointer's profile vanishes and
 `κ = −2 f'(θ₂) ≥ 0`, from a ready pointer: if `κ (|g| √ε₁ t₁)² t₁ ≤ 1/6` and
@@ -398,7 +400,9 @@ theorem transponder_meeting_record
     (r : (κ → ZMod L) → (κ → ZMod L) → Prop) [DecidableRel r]
     (hτ : ∀ i j, τ i ≠ τ j → levelSwap n i j = 0)
     (h : IsCliffordFamily α β) {e₀ : Sp → ℂ} (he : β *ᵥ e₀ = e₀) (hn : star e₀ ⬝ᵥ e₀ = 1)
-    {J μ : ℝ} (hμ : 0 < μ) (E g : ℝ) (hf : Function.Periodic f 1) (hc : ContDiff ℝ ∞ f)
+    {J μ : ℝ} (hμ : 0 < μ) (E : Fin 2 → ℝ) (g : ℝ) {Ω : ℝ} (hΩ : 0 < Ω)
+    (hΩ2 : Ω ^ 2 = g ^ 2 + ((E 1 - E 0) / 2) ^ 2)
+    (hf : Function.Periodic f 1) (hc : ContDiff ℝ ∞ f)
     (p₀ : CPN (N + 1))
     (lo : κ → ℤ) {Nw : κ → ℕ} (hN : ∀ j, 0 < Nw j) (hNL : ∀ j, Nw j < L)
     (k₀ : κ → ℝ) {w : κ → ℝ} (hw0 : ∀ j, 0 ≤ w j)
@@ -421,7 +425,7 @@ theorem transponder_meeting_record
     (hamp : ∀ s, t₃ ≤ s → s ≤ t →
       ρ + |g| * (Real.sqrt (flatTailD L J μ Nw w γ t₁) * t₁ + (t₂ - t₁))
           + |g| * (Real.sqrt (flatTailD L J μ Nw w γ t) * (t - t₂))
-        ≤ |Real.sin (g * (s - t₂))|)
+        ≤ |g| / Ω * |Real.sin (Ω * (s - t₂))|)
     (hbefore : -2 * hf.deriv_periodic.lift θ.2
       * ((|g| * (Real.sqrt (flatTailD L J μ Nw w γ t₁) * t₁)) ^ 2 * t₁) ≤ 1 / 6)
     (hlo : 1 / 3 ≤ -2 * hf.deriv_periodic.lift θ.2 * (ρ ^ 2 * (t - t₃))) :
@@ -429,7 +433,7 @@ theorem transponder_meeting_record
       ((arenaForm_isSymplectic N).hamiltonianFlow
         (contMDiff_coupledEnergy
           (Matrix.reindex e e (compositeH (latticeDiracHam (L := L) α β J μ)
-              (Matrix.blockDiagonal fun _ : Fin 2 => ((E : ℝ) : ℂ) • (1 : Matrix n n ℂ))
+              (Matrix.blockDiagonal fun l : Fin 2 => ((E l : ℝ) : ℂ) • (1 : Matrix n n ℂ))
             + (g : ℂ) • gateOp Prod.fst τ r (levelSwap n)))
           (Matrix.reindex e e
             ((1 : Matrix ((κ → ZMod L) × Sp) ((κ → ZMod L) × Sp) ℂ) ⊗ₖ levelProj n 1))
@@ -438,7 +442,7 @@ theorem transponder_meeting_record
       ∧ ∃ c : ℕ, 0 < c ∧ ((idxArenaEquiv e (Projectivization.mk ℂ _ hp), θ) : KSigma (N + 1))
         ∈ compatibleSet (arenaReadout (contMDiff_coupledEnergy
             (Matrix.reindex e e (compositeH (latticeDiracHam (L := L) α β J μ)
-                (Matrix.blockDiagonal fun _ : Fin 2 => ((E : ℝ) : ℂ) • (1 : Matrix n n ℂ))
+                (Matrix.blockDiagonal fun l : Fin 2 => ((E l : ℝ) : ℂ) • (1 : Matrix n n ℂ))
               + (g : ℂ) • gateOp Prod.fst τ r (levelSwap n)))
             (Matrix.reindex e e
               ((1 : Matrix ((κ → ZMod L) × Sp) ((κ → ZMod L) × Sp) ℂ) ⊗ₖ levelProj n 1))
@@ -446,7 +450,7 @@ theorem transponder_meeting_record
           [TickReadout.startFact () t₁ 0, TickReadout.startFact () t c] := by
   have ht2 : 0 ≤ t₂ := h1.trans h12
   have hM := latticeDiracHam_isHermitian (L := L) h J μ
-  have hT : ∀ _ : Fin 2, (((E : ℝ) : ℂ) • (1 : Matrix n n ℂ)).IsHermitian := fun _ =>
+  have hT : ∀ l : Fin 2, (((E l : ℝ) : ℂ) • (1 : Matrix n n ℂ)).IsHermitian := fun _ =>
     Matrix.isHermitian_one.smul (isSelfAdjoint_iff.2 (by
       rw [Complex.star_def, Complex.conj_ofReal]))
   have hV : ((g : ℂ) • gateOp (Prod.fst : (κ → ZMod L) × Sp → κ → ZMod L) τ r
@@ -472,7 +476,7 @@ theorem transponder_meeting_record
     exact Finset.sum_nonneg fun x _ => sq_nonneg _
   · rw [idxCarrierU_of_lift_eq_zero hA hQh hf h0, arenaObs_proj_kick_toLp hQh hQQ,
       idxFreeU_val, hΨ1, div_one]
-    have hl := transponder_launch_flatPacket_resting_le τ r hτ h he hn hμ (fun _ => E) g lo
+    have hl := transponder_launch_flatPacket_resting_le τ r hτ h he hn hμ E g lo
       hN hNL k₀ hw0 hw hγ φ hφ hφn.le B hφB hs
       (fun s' hs' hs's => hsep s' hs' (hs's.trans hs1))
     have hm : Real.sqrt (flatTailD L J μ Nw w γ s) * s
@@ -487,9 +491,9 @@ theorem transponder_meeting_record
   · rw [idxCarrierU_of_lift_eq_zero hA hQh hf h0, arenaObs_proj_kick_toLp hQh hQQ,
       idxFreeU_val, hΨ1, div_one]
     have hs2 : t₂ ≤ s := h23.trans hs
-    have key := transponder_rabi_flatPacket_meeting_ge τ r hτ h he hn hμ E g lo hN hNL k₀ hw0
-      hw hγ φ hφ hφn B hφB h1 h12 hs2 hsep
-      (fun s' hs' hs's => hcon s' hs' (hs's.trans hst))
+    have key := (abs_le.1 (transponder_detuned_flatPacket_meeting τ r hτ h he hn hμ E g hΩ
+      hΩ2 lo hN hNL k₀ hw0 hw hγ φ hφ hφn B hφB h1 h12 hs2 hsep
+      (fun s' hs' hs's => hcon s' hs' (hs's.trans hst)))).1
     have hm : Real.sqrt (flatTailD L J μ Nw w γ s) * (s - t₂)
         ≤ Real.sqrt (flatTailD L J μ Nw w γ t) * (t - t₂) :=
       mul_le_mul (Real.sqrt_le_sqrt (flatTailD_mono (J := J) hμ Nw hw0 hγ hst))
@@ -499,12 +503,12 @@ theorem transponder_meeting_record
             ⊗ₖ levelProj n 1)
           * exp (s • ((-Complex.I)
             • (compositeH (latticeDiracHam (L := L) α β J μ)
-                (Matrix.blockDiagonal fun _ : Fin 2 => ((E : ℝ) : ℂ) • (1 : Matrix n n ℂ))
+                (Matrix.blockDiagonal fun l : Fin 2 => ((E l : ℝ) : ℂ) • (1 : Matrix n n ℂ))
               + (g : ℂ) • gateOp Prod.fst τ r (levelSwap n)))))
         *ᵥ fun y : ((κ → ZMod L) × Sp) × (n × Fin 2) =>
           packetD (L := L) α β J μ e₀ (boxWindowD lo Nw)
             (unitAmpD L J μ (flatAmpD lo Nw)) 0 y.1 * φ y.2) x‖ ^ 2) := by
-      linarith [hamp s hs hst]
+      linarith [hamp s hs hst, key, hm']
     have hsq := pow_le_pow_left₀ hρ hle 2
     rwa [Real.sq_sqrt (Finset.sum_nonneg fun x _ => sq_nonneg _)] at hsq
 

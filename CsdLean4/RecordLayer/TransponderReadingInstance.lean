@@ -423,7 +423,8 @@ theorem transponder_meeting_record_instance {M : ℕ} (hL : L = 8 * M) (hM : 100
       (fun _ => 400 * (2 * Real.pi / L)) (fun _ => 3 / 4) (11 * (M : ℝ) / 5))
   refine transponder_meeting_record e (fun _ : Unit × Fin 2 => contactSite L M)
     (contactRelAt L (-3 / 5)) (fun i j hij => absurd rfl hij) cliffordTwo
-    pauli_two_mulVec_spinUp star_spinUp_dotProduct one_pos E (3 / (5 * (M : ℝ)))
+    pauli_two_mulVec_spinUp star_spinUp_dotProduct one_pos (fun _ => E) (3 / (5 * (M : ℝ)))
+    (Ω := 3 / (5 * (M : ℝ))) (by positivity) (by simp)
     (scaledTrainF_periodic _) (contDiff_scaledTrainF _) p₀
     (![(M : ℤ), 0] : Fin 2 → ℤ) (Nw := fun _ => 400) (fun _ => by norm_num)
     (fun _ => by omega) (![Real.pi / 4, 0] : Fin 2 → ℝ)
@@ -449,7 +450,7 @@ theorem transponder_meeting_record_instance {M : ℕ} (hL : L = 8 * M) (hM : 100
         (movedBoxD_subset_arrivalBoxAt hL hM4 hs hst ha))
     (fun s hs hst => ?_) ?_ ?_
   · -- the amplitude on the reading window
-    rw [hg]
+    rw [hg, div_self (by positivity : (3 / (5 * (M : ℝ))) ≠ 0), one_mul]
     generalize Real.sqrt (flatTailD L 2 1 (fun _ : Fin 2 => 400)
         (fun _ => 400 * (2 * Real.pi / L)) (fun _ => 3 / 4) ((M : ℝ) / 12)) = a
       at hs1 hn1 ⊢

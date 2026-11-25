@@ -44,8 +44,8 @@ about `|g|/|δ|`. This is the phase cancellation, as an equality with an error t
 ## Honest scope
 
 ⚠️ **Contact from the flow time `0`.** As in UD-258, the error counts the amplitude "apart"
-over the whole of `[0, t]`. A run that starts apart (the two-stage comparison of UD-259) is
-not redone for levels of different energy.
+over the whole of `[0, t]`. A run that starts apart is treated in
+`RecordLayer/TransponderDetunedMeeting.lean` (UD-263).
 
 ⚠️ **The cap holds while the carriers are wholly in contact**, within the error. It is not a
 bound over a whole passage: while the packet's box is only partly on the transponder's
