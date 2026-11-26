@@ -801,6 +801,57 @@ what would discharge or constrain it.
   both. (iv) A first level with no hopping is a carrier of infinite mass: an idealisation,
   and the reason "at rest" is exact.
 
+### UA-22 — a return released by the record of the event (admitted 2026-11-26; nothing of it exists in Lean)
+
+* **Assumed.** Obligation UO-26; link L2 of §9. The author's sentence (2026-11-26):
+  "records are fixed measurements which then another measurement is made make another
+  record which is linked". It is taken here as: the return is to be caused by the
+  **record** of the meeting, not by the amplitude that the meeting leaves in the
+  transponder. The clause is to be struck if that was not meant. Every item below is a
+  commitment about what will be defined.
+  (a) *The record of the event.* As UD-260 and UD-261: a pointer coupled to the second
+  level of a transponder that rests at the event. The transponder of UA-19 with no band is
+  enough, since what is launched in it need not travel.
+  (b) *A return carrier.* One more carrier with the lattice Dirac Hamiltonian `H_R`,
+  prepared (UA-4) at the event. It has no term of its own in the energy: it moves only
+  through (c).
+  (c) *The release.* The term of UA-20, `g(ψ₂) · b(θ₁) · (−2⟨K⟩)`, on the fibres where its
+  profile does not vanish: `θ₁` the moving angle of the event's pointer, `b` a smooth window
+  that vanishes on the ready arc and is `1` on part of the displaying arc, `K = H_R − Ē`
+  with `Ē` a real number.
+  (d) *What is read.* The return carrier's arrival at a detector at a distance, as UD-242
+  to UD-245, by a clock's gated pointer as in UA-18 (e).
+  (e) *What may not be assumed.* That the event's pointer displays; the time of the
+  release; the speed of the return, which is the band's group velocity times `g(ψ₂) b(θ₁)`
+  and so depends on a fibre.
+* **Where.** Nothing. The engine: `controlledEnergy`, `hamiltonianFlow_controlledEnergy`
+  (`LF4/ControlledStep.lean`, UD-233), which off the fibres `g(ψ₂) = 0` names the base's
+  flow and does not solve it.
+* **Standing.** A choice of mechanism for UO-26, beside UA-19 and UA-21, which stay as they
+  are with their theorems. By the charter a record is the ontic selection in the fibre, and
+  a later interaction may depend on it (UO-24). The author has not read the clause.
+* **An argument on paper, not in Lean; it is the first thing to prove.** If `K` commutes
+  with the matrices of every other term, `⟨K⟩` is conserved, and the carriers' unitary is
+  the one without the release times `e^{−i c B(t) K}`, `c = g(ψ₂)`,
+  `B(t) = ∫₀ᵗ b(θ₁(u)) du`. So the occupancy that drives the event's pointer is unchanged,
+  and that pointer's conserved angle moves at a rate proportional to `c ⟨K⟩ b'(θ₁)`, which
+  is zero where `⟨K⟩ = 0`. With `Ē` the mean energy of the prepared return carrier that set
+  holds the preparation. Then the return carrier is at rest, with its whole weight, until
+  the event's pointer enters the window, and from then on it moves as a free packet with
+  the clock `c B(t)`. A return carrier prepared with equal weight in the two branches of
+  its band has `Ē = 0`, and its two halves leave in opposite directions: no direction, as
+  UA-21 (d).
+* **Known risks, stated so that a failure is recognised as one.** (i) The speed is set by
+  a fibre value and a window, not by the band alone; on an open set of fibres it has a
+  spread, which is an error of the distance at L3. (ii) Off `⟨K⟩ = 0` the event pointer's
+  conserved angle drifts and its own record is disturbed; a bound is needed before any
+  statement on an open set of states. (iii) The release acts on the return carrier
+  wherever it is; that the return leaves from the event is the preparation of (b), as it
+  was for the transponder. (iv) `b` is smooth, so the release is gradual, and it follows
+  the record's reading time: both are in the `δ` of R5. (v) `Ē` is a number of the
+  preparation. (vi) Nothing here is weaker than a record: if the event's pointer does not
+  display there is no return, which is the control of R4 and also a way to fail.
+
 ## 4. Register 2 — derived properties
 
 
@@ -5103,6 +5154,9 @@ time. It is not a statement about every dynamics on `Σ`.
   `(|g|/Ω) |sin Ωt|` within `|g| (√ε + κ t) t + κ t`. Conditions: contact from the flow
   time `0`; the messenger's place a hypothesis; a short contact; no instance. Not a
   return that travels.
+  ▸ **A second mechanism admitted, 2026-11-26 → UA-22.** The return released by the
+  record of the meeting (the author's sentence), through UA-20's term. Nothing in Lean.
+  First to prove: the flow of that term where `⟨K⟩ = 0`.
   ▸ **What the receiver has to deliver, 2026-11-26 → §9.4.** Items (2) and (3) for the
   transponder of UA-21 are restated as the seven conditions R1 to R7 of §9.4, read off what
   the chart of §9.5 needs. No theorem.
@@ -5386,6 +5440,20 @@ UA-21).
   is still broken, further on: the contact starts at the flow time `0` and not after a
   meeting, the launched part is not followed after the contact, and there is no
   receiver. Of R1 to R7 only the first control of R4 is in hand (`g = 0` gives `0`).
+
+**Two ways across.** Linking one record to a later one is not what is missing: the wall
+run has five linked records in one orbit, and UD-241 orders two displays. What L2 lacks
+is narrower. The second record has to be at a distance, written only because the event
+happened, with a delay that is the travel time, since the distance is read off that
+delay. So something has to cross. (1) *The meeting launches it* (UA-19, UA-21): the
+amplitude that the contact puts in the transponder's second level travels. Its weight
+is small and the contact has to be short (UD-269). (2) *The record releases it* (UA-22,
+the author's sentence of 2026-11-26): the pointer that recorded the meeting opens a
+window through which a carrier prepared at the event moves. Its weight is the whole
+carrier, and the control is the record itself. It needs the flow of UA-20's term on the
+fibres where its profile does not vanish, which Lean does not have; the argument of
+UA-22 says it is solved exactly where `⟨K⟩ = 0`. Either way R1 to R7 stand as written,
+and so do L3 to L5.
 * **L3 to L5.** Nothing. This arena has no clock and no observer.
 
 **What the receiver has to deliver.** For L3 to start from an encounter, L2 owes one

@@ -454,6 +454,14 @@ before the meeting).
    two stages; (iii) after the contact, the launched part as `χ` in the second level
    within `κ t`, then `transponder_band_swapped_moves` to a receiver's region (R1, R5);
    (iv) the receiver's pointer, with both controls (R2 to R4, R7).
+   A second route, UA-22 (2026-11-26): the record of the meeting releases a carrier.
+   In order: (α) on the one-pointer arena, the Hamiltonian flow of
+   `coupledEnergy + c · controlObs` for an observable commuting with the other two
+   matrices, at points where its expectation vanishes: the earlier flow times
+   `e^{−i c B(t) K}`; (β) the return carrier at rest before the event pointer's window
+   and a free packet with the clock `c B(t)` after; (γ) its arrival record at a
+   detector at a distance from UD-242 to UD-245, with the control "no meeting, no
+   display, no return"; (δ) a bound off `⟨K⟩ = 0`.
    What (c) and (d) have to deliver for the chart is R1 to R7 of the contract's §9.4
    (2026-11-26): the time located within the reading time, both controls, and for
    `d ≥ 2` a return that reaches `d + 1` receivers in general position.
